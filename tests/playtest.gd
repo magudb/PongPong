@@ -1,192 +1,515 @@
 extends SceneTree
-## Automated playthrough driver. Plays the real game flow and fails on any engine/script error.
+## Playtest harness (plan 8.1). It is ONLY the harness: boots the real game flow, discovers and runs the
+## section files other packages own, captures every engine/script error and warning, and sets the exit code.
 ##
-## Run (headless, errors only):
-##   godot --headless --path . -s res://tests/playtest.gd -- --character=fairy
-## Run with real rendering + frame capture (opens a window):
-##   godot --path . --write-movie /tmp/frames/f.png --fixed-fps 10 -s res://tests/playtest.gd -- --character=animal
+##   tests/run_playtest.sh [--character=animal|fairy|hobbit] [--only=core,farm] [--list] [--windowed ...]
+##   godot --headless --path . -s res://tests/playtest.gd -- --character=fairy --only=core        (what the script runs)
 ##
-## Options (after `--`):
-##   --character=animal|fairy|hobbit   which hero to pick on the character screen (default animal)
-##   --scenario=flow|<name>            which scenario to run (default flow); see SCENARIOS
-##   --play-seconds=N                  how long to let the world run after spawning (default 3)
+## Options after `--`:
+##   --character=animal|fairy|hobbit   hero for the boot stage and t.character (default animal)
+##   --only=a,b                        run only these sections (SECTION name or file name; unknown names are an error)
+##   --list                            print the discovered sections and exit (non-zero if one does not compile)
+##   --windowed                        real-window run: only sections with run_windowed(t), no boot stage
+##                                     (the wrapper adds --resolution 1280x720 and opens a window)
+##   --out=DIR                         screenshots (t.capture) are written here
+##   --no-boot / --boot                skip / force the boot stage (default: boot in headless runs, none windowed)
+##   --play-seconds=N                  idle seconds after the boot stage so the world can tick (default 2)
+##   --scenario=flow                   accepted for compatibility with the old harness (the only scenario)
+##   --sections-dir=PATH               sections directory (default res://tests/sections; used by the harness self-test)
+##   --section-timeout=N               default per-section watchdog in seconds (default 120; a section may set TIMEOUT_S)
+##   --max-seconds=N                   watchdog for the whole run (default 1200)
+##   --report=FILE                     also write a JSON result file
+##   --seed=N                          seed of t.rng (default 424242)
+##   --strict                          ignore tests/lib/known_issues.txt: every engine message fails the run
+##   --known-issues=PATH               one more known-issues file besides res://tests/lib/known_issues.txt (repeatable)
+##   --verbose                         print every ok line (default: at most 400 per section)
 ##
-## Autoloads are NOT visible to this script at compile time (it compiles before they exist),
-## so reach them via _autoload("Name"). Scenes/scripts loaded later compile normally.
+## Section file contract (res://tests/sections/<name>.gd, alphabetical order, files starting with "_" are ignored):
+##   extends RefCounted
+##   const SECTION := "farm"
+##   func run(t) -> void                optional func run_windowed(t) -> void       optional const TIMEOUT_S := 60.0
+## `t` is tests/lib/t.gd (check / expect / allow / frames / physics / seconds / tap / press / boot / ...).
+##
+## Failure rules: a failed check, ANY engine or script error, ANY engine warning (unless the section declared it
+## with t.allow(substring), or it is a documented known issue of the tree, see known_issues.txt: those are always
+## listed as KNOWN and never silent), a section that does not compile, or a section that times out
+## all make the run exit 1. Usage errors exit 2. A section that does not compile fails the run at once, before
+## anything else runs (with --only, an uncompilable file that was not selected is reported but not fatal).
+##
+## This script compiles BEFORE the autoloads exist: it never names an autoload (tests/lib reaches them with
+## root.get_node) and loads its libraries with load().
 
-class ErrorCatcher extends Logger:
-	var errors: Array[String] = []
-	var warnings: Array[String] = []
+const LIB := "res://tests/lib/"
+const DEFAULT_SECTIONS_DIR := "res://tests/sections"
+const WINDOW_SIZE := Vector2i(1280, 720)
+const SLOW_SECTION_S := 30.0
 
-	func _log_error(function: String, file: String, line: int, code: String, rationale: String, _editor_notify: bool, error_type: int, _script_backtraces: Array[ScriptBacktrace]) -> void:
-		var msg := "%s:%d in %s(): %s %s" % [file, line, function, code, rationale]
-		if error_type == Logger.ERROR_TYPE_WARNING:
-			warnings.append(msg)
-		else:
-			errors.append(msg)
+var _t                                   # tests/lib/t.gd (untyped on purpose: it is duck-typed, loaded at runtime)
+var _catcher                             # tests/lib/error_catcher.gd (a Logger)
 
-
-const SCENARIOS := ["flow"]
-
-var _catcher := ErrorCatcher.new()
-var _failures: Array[String] = []
 var _character := "animal"
-var _scenario := "flow"
-var _play_seconds := 3.0
-var _player: Node = null
+var _only: Array[String] = []
+var _list := false
+var _windowed := false
+var _out := ""
+var _boot_mode := "auto"                 # auto | yes | no
+var _play_seconds := 2.0
+var _sections_dir := DEFAULT_SECTIONS_DIR
+var _section_timeout := 120.0
+var _max_seconds := 1200.0
+var _report := ""
+var _seed := 424242
+var _verbose := false
+var _strict := false
+var _known_paths: Array[String] = ["res://tests/lib/known_issues.txt"]
+
+var _t0 := 0
+var _problems: Array[String] = []        # run-level failures that are not checks (compile errors, timeouts, ...)
+var _sections: Array[Dictionary] = []    # discovered: {base, name, path, script, compiled, has_run, has_win, timeout, selected}
+var _ran: Array[String] = []
+var _aborted := false                    # a timeout stopped the run
+var _finished := false
+var _usage_error := false
+var _help := false
+var _guard_done := false
 
 
 func _initialize() -> void:
+	_t0 = Time.get_ticks_msec()
+	var usage := _parse_args(OS.get_cmdline_user_args())
+	if usage != "":
+		print("PLAYTEST usage error: ", usage)
+		_print_usage()
+		quit(2)
+		return
+	if _help:
+		print("PLAYTEST help")
+		_print_usage()
+		quit(0)
+		return
+	var catcher_script: Variant = load(LIB + "error_catcher.gd")
+	var t_script: Variant = load(LIB + "t.gd")
+	if not (catcher_script is GDScript) or not (t_script is GDScript) or not (catcher_script as GDScript).can_instantiate() or not (t_script as GDScript).can_instantiate():
+		print("PLAYTEST FAIL: the harness libraries in tests/lib do not compile")
+		quit(1)
+		return
+	_catcher = (catcher_script as GDScript).new()
 	OS.add_logger(_catcher)
-	for arg in OS.get_cmdline_user_args():
-		if arg.begins_with("--character="):
-			_character = arg.get_slice("=", 1)
-		elif arg.begins_with("--scenario="):
-			_scenario = arg.get_slice("=", 1)
-		elif arg.begins_with("--play-seconds="):
-			_play_seconds = float(arg.get_slice("=", 1))
-	_autoload("EventBus").player_spawned.connect(func(p): _player = p)
+	_t = (t_script as GDScript).new()
+	_t.bind(self)
+	_t.catcher = _catcher
+	_t.character = _character
+	_t.windowed = _windowed
+	_t.out_dir = _out
+	_t.verbose = _verbose
+	_t.user_dir = OS.get_user_data_dir()
+	_t.rng.seed = _seed
+	seed(_seed)
+	_load_known_issues()
+	var isolated := OS.get_environment("PLAYTEST_ISOLATED") == "1"
+	print("PLAYTEST start mode=%s character=%s sections=%s only=%s" % ["windowed" if _windowed else "headless", _character, _sections_dir, ",".join(_only) if not _only.is_empty() else "*"])
+	print("  info  user dir %s (%s)" % [_t.user_dir, "throwaway" if isolated else "REAL user dir: run tests/run_playtest.sh for an isolated one"])
+	create_timer(_max_seconds, true, false, true).timeout.connect(_on_global_timeout)
 	_run.call_deferred()
 
 
-func _run() -> void:
-	print("PLAYTEST start scenario=%s character=%s" % [_scenario, _character])
-	match _scenario:
-		"flow":
-			await _scenario_flow()
-		_:
-			_fail("unknown scenario '%s' (known: %s)" % [_scenario, SCENARIOS])
+## tests/lib/known_issues.txt: "<substring><TAB><reason>" per line (# comments). A message containing the substring
+## is a KNOWN issue of the current tree: listed in every run, not a failure. --strict switches this off.
+func _load_known_issues() -> void:
+	if _strict:
+		print("  info  --strict: known issues are not tolerated")
+		return
+	for path in _known_paths:
+		if not FileAccess.file_exists(path):
+			continue
+		var f := FileAccess.open(path, FileAccess.READ)
+		if f == null:
+			continue
+		while not f.eof_reached():
+			var line := f.get_line().strip_edges()
+			if line == "" or line.begins_with("#"):
+				continue
+			var parts := line.split("\t", false, 1)
+			_catcher.add_known(parts[0].strip_edges(), (parts[1].strip_edges() if parts.size() > 1 else "known issue"), path)
+		f.close()
+	if not _catcher.known_rules.is_empty():
+		print("  info  %d known issue(s) of this tree are tolerated and listed as KNOWN (tests/lib/known_issues.txt; --strict ignores them)" % _catcher.known_rules.size())
+
+
+func _on_global_timeout() -> void:
+	if _finished:
+		return
+	_problems.append("the whole run exceeded --max-seconds=%d" % int(_max_seconds))
+	print("  FAIL  run watchdog: the whole run exceeded %d s" % int(_max_seconds))
 	_finish()
 
 
-# ---------------------------------------------------------------- scenarios
+# ---------------------------------------------------------------- main flow
 
-func _scenario_flow() -> void:
-	# 1. Main menu
-	change_scene_to_file("res://scenes/main/main_menu.tscn")
-	await _frames(5)
-	_expect(current_scene != null and current_scene.name == "MainMenu", "main menu loaded (got %s)" % _scene_name())
-	_press("%NewGameButton")
-	await _frames(5)
-
-	# 2. Character select
-	_expect(_scene_name() == "CharacterSelect", "character select opened (got %s)" % _scene_name())
-	if _scene_name() != "CharacterSelect":
+func _run() -> void:
+	await process_frame                  # autoload _ready() has run
+	if DisplayServer.get_name() == "headless":
+		root.size = WINDOW_SIZE          # the dummy window is 64x64: UI layout and GUI clicks need the design size
+	_discover()
+	if _usage_error:
 		return
-	_set_text("%NameInput", "Tester")
-	_set_text("%FarmNameInput", "Testgaarden")
-	match _character:
-		"fairy": _press("%FairyButton")
-		"hobbit": _press("%HobbitButton")
-		_: _press("%AnimalButton")
-	await _frames(2)
-	_press("%ConfirmButton")
-	await _frames(10)
-
-	# 3. World
-	var gm := _autoload("GameManager")
-	_expect(_scene_name() == "World", "world loaded (got %s)" % _scene_name())
-	_expect(gm.player_name == "Tester", "player name stored (got '%s')" % gm.player_name)
-	_expect(gm.farm_name == "Testgaarden", "farm name stored (got '%s')" % gm.farm_name)
-	_expect(gm.current_phase == gm.GamePhase.PLAYING, "phase is PLAYING")
-	_expect(_player != null and is_instance_valid(_player), "player spawned")
-	if _player == null:
+	if _list:
+		_print_list()
+		quit(1 if not _problems.is_empty() else 0)
 		return
-	await _frames(30)
-	_expect(_player.is_on_floor(), "player settled on the ground")
-
-	# 4. Movement
-	var start: Vector3 = _player.global_position
-	Input.action_press("move_forward")
-	await _seconds(1.0)
-	Input.action_release("move_forward")
-	var moved := start.distance_to(_player.global_position)
-	_expect(moved > 1.0, "player moves with input (moved %.2f m)" % moved)
-
-	# 5. Let the world tick (time, NPCs, animals, quests)
-	await _seconds(_play_seconds)
-
-	# 6. Pause / resume
-	_tap("pause")
-	await _frames(5)
-	_expect(gm.current_phase == gm.GamePhase.PAUSED, "pause key pauses")
-	_tap("pause")
-	await _frames(5)
-	_expect(gm.current_phase == gm.GamePhase.PLAYING, "pause key resumes")
-
-	# 7. Panels
-	_tap("inventory")
-	await _frames(5)
-	_tap("journal")
-	await _frames(5)
+	if not _problems.is_empty():
+		_finish()                   # a section does not compile: fail at once, run nothing
+		return
+	if _windowed:
+		await _prepare_window()
+		if not _problems.is_empty():
+			_finish()
+			return
+	if _boot_mode == "yes" or (_boot_mode == "auto" and not _windowed):
+		await _boot_stage()
+	for s in _sections:
+		if _aborted:
+			break
+		if not s["selected"]:
+			continue
+		await _run_section(s)
+	_finish()
 
 
-# ---------------------------------------------------------------- helpers
-
-func _autoload(autoload_name: String) -> Node:
-	return root.get_node(autoload_name)
-
-
-func _scene_name() -> String:
-	return current_scene.name if current_scene else "<none>"
-
-
-func _frames(n: int) -> void:
-	for i in n:
+func _prepare_window() -> void:
+	if DisplayServer.get_name() == "headless":
+		_problems.append("--windowed needs a display: do not combine it with --headless")
+		return
+	if Vector2i(root.size) != WINDOW_SIZE:
+		DisplayServer.window_set_size(WINDOW_SIZE)
 		await process_frame
+		await process_frame
+	print("  info  window %dx%d (%s)" % [root.size.x, root.size.y, DisplayServer.get_name()])
+	if _out != "":
+		print("  info  screenshots go to ", _out)
 
 
-func _seconds(s: float) -> void:
-	await create_timer(s).timeout
+func _boot_stage() -> void:
+	_begin_section("boot")
+	print("== boot (%s): main_menu -> character_select -> world" % _character)
+	var mark: int = _catcher.mark()
+	var done: bool = await _guarded(60.0, func() -> void:
+		await _t.boot(_character)
+		await _t.seconds(_play_seconds))
+	_end_section(mark)
+	if not done:
+		_timeout_abort("boot", 60.0)
 
 
-func _press(unique_path: String) -> void:
-	var node := current_scene.get_node_or_null(unique_path) if current_scene else null
-	if node is BaseButton:
-		node.emit_signal("pressed")
-	else:
-		_fail("button %s not found in %s" % [unique_path, _scene_name()])
+func _run_section(s: Dictionary) -> void:
+	var name_: String = s["name"]
+	var method := "run_windowed" if _windowed else "run"
+	if not (s["has_win"] if _windowed else s["has_run"]):
+		print("== section %s: no %s(t), skipped" % [name_, method])
+		return
+	_begin_section(name_)
+	print("== section %s%s  (%s)" % [name_, " [windowed]" if _windowed else "", s["path"]])
+	var obj: Object = (s["script"] as GDScript).new()
+	var mark: int = _catcher.mark()
+	var limit := float(s["timeout"])
+	var done: bool = await _guarded(limit, func() -> void:
+		if _windowed:
+			await obj.run_windowed(_t)
+		else:
+			await obj.run(_t))
+	var script_err: String = _catcher.script_error_since(mark)
+	if done and script_err != "":
+		print("  note  the script error above ended this section early: the checks after it did not run")
+	_end_section(mark)
+	_ran.append(name_)
+	if not done:
+		_timeout_abort(name_, limit)
+	elif float(_t.stats[name_]["ms"]) / 1000.0 > SLOW_SECTION_S:
+		print("  note  section %s took %.1f s (> %d s): consider splitting it" % [name_, float(_t.stats[name_]["ms"]) / 1000.0, int(SLOW_SECTION_S)])
+	if obj is Node:
+		(obj as Node).queue_free()
 
 
-func _set_text(unique_path: String, text: String) -> void:
-	var node := current_scene.get_node_or_null(unique_path) if current_scene else null
-	if node is LineEdit:
-		node.text = text
-	else:
-		_fail("line edit %s not found in %s" % [unique_path, _scene_name()])
+## Runs `work` (a coroutine Callable) and waits for it, but at most `limit` seconds. Returns false on timeout.
+## A coroutine that is stuck forever cannot be cancelled in GDScript, so a timeout aborts the whole run.
+func _guarded(limit: float, work: Callable) -> bool:
+	_guard_done = false
+	var state := {"timed_out": false}
+	create_timer(limit, true, false, true).timeout.connect(func() -> void: state["timed_out"] = true)
+	_guard_run(work)
+	while not _guard_done and not state["timed_out"]:
+		await process_frame
+	return _guard_done
 
 
-func _tap(action: String) -> void:
-	var ev := InputEventAction.new()
-	ev.action = action
-	ev.pressed = true
-	Input.parse_input_event(ev)
-	var up := InputEventAction.new()
-	up.action = action
-	up.pressed = false
-	Input.parse_input_event(up)
+func _guard_run(work: Callable) -> void:
+	await work.call()
+	_guard_done = true
 
 
-func _expect(cond: bool, label: String) -> void:
-	if cond:
-		print("  ok    ", label)
-	else:
-		_fail(label)
+func _timeout_abort(what: String, limit: float) -> void:
+	var msg := "section %s timed out after %d s (a coroutine is still waiting; look for an await on something that never happens)" % [what, int(limit)]
+	_problems.append(msg)
+	print("  FAIL  ", msg)
+	var pending: Array[String] = []
+	for s in _sections:
+		if s["selected"] and s["name"] != what and s["name"] not in _ran:
+			pending.append(s["name"])
+	if not pending.is_empty():
+		print("  note  not run because of the timeout: ", ", ".join(pending))
+	_aborted = true
 
 
-func _fail(label: String) -> void:
-	_failures.append(label)
-	print("  FAIL  ", label)
+func _begin_section(name_: String) -> void:
+	_t.begin_section(name_)
+	_catcher.section = name_
+	_catcher.clear_allow()
 
+
+func _end_section(mark: int) -> void:
+	_t.end_section()
+	var st: Dictionary = _t.stats.get(_t.section, {})
+	print("  --    %s: %d checks, %d failed, %d skipped, %.1f s" % [_t.section, int(st.get("checks", 0)), int(st.get("failed", 0)), int(st.get("skipped", 0)), float(st.get("ms", 0)) / 1000.0])
+	_t.release_all()
+	if Engine.time_scale != 1.0:
+		print("  note  section %s left Engine.time_scale at %s; reset to 1" % [_t.section, Engine.time_scale])
+		Engine.time_scale = 1.0
+	if paused:
+		print("  note  section %s left the tree paused; unpaused" % _t.section)
+		paused = false
+	for rule in _catcher.allow_hits.keys():
+		if int(_catcher.allow_hits[rule]) == 0:
+			print("  note  allow('%s') was declared but the message never appeared" % rule)
+	for m in _catcher.since(mark):
+		print("  ENGINE ", m)
+	_catcher.clear_allow()
+	_catcher.section = "-"
+
+
+# ---------------------------------------------------------------- discovery
+
+func _discover() -> void:
+	var dir := DirAccess.open(_sections_dir)
+	if dir == null:
+		if _sections_dir == DEFAULT_SECTIONS_DIR:
+			print("  info  %s does not exist yet: no sections" % _sections_dir)
+		else:
+			_problems.append("sections directory %s does not exist" % _sections_dir)
+			print("  FAIL  ", _problems[-1])
+		return
+	var files: Array[String] = []
+	for f in dir.get_files():
+		if f.ends_with(".gd") and not f.begins_with("_"):
+			files.append(f)
+	files.sort()
+	var seen_names := {}
+	for f in files:
+		var path := _sections_dir.path_join(f)
+		var base := f.get_basename()
+		_catcher.capture_begin()
+		var script: Variant = load(path)
+		var captured: Array = _catcher.capture_end()
+		var entry := {"base": base, "name": base, "path": path, "script": null, "compiled": false, "has_run": false, "has_win": false, "timeout": _section_timeout, "selected": false, "error": ""}
+		if script is GDScript and (script as GDScript).can_instantiate():
+			var gd := script as GDScript
+			entry["script"] = gd
+			entry["compiled"] = true
+			var consts := gd.get_script_constant_map()
+			if consts.has("SECTION"):
+				entry["name"] = str(consts["SECTION"])
+			if consts.has("TIMEOUT_S"):
+				entry["timeout"] = float(consts["TIMEOUT_S"])
+			for m in gd.get_script_method_list():
+				if m["name"] == "run":
+					entry["has_run"] = true
+				elif m["name"] == "run_windowed":
+					entry["has_win"] = true
+		else:
+			entry["error"] = captured[0]["text"] if not captured.is_empty() else "load() returned no usable script"
+		entry["selected"] = _only.is_empty() or base in _only or (entry["compiled"] and entry["name"] in _only)
+		if entry["selected"]:
+			_catcher.commit(captured, base)
+		if not entry["compiled"]:
+			if entry["selected"]:
+				_problems.append("section %s does not compile: %s" % [path, entry["error"]])
+				print("  FAIL  ", _problems[-1])
+			else:
+				print("  note  %s does not compile (not selected by --only, ignored): %s" % [path, str(entry["error"]).left(160)])
+		elif not entry["has_run"] and not entry["has_win"]:
+			if entry["selected"]:
+				_problems.append("%s is not a section: it defines neither run(t) nor run_windowed(t)" % path)
+				print("  FAIL  ", _problems[-1])
+		elif seen_names.has(entry["name"]):
+			_problems.append("sections %s and %s both declare SECTION \"%s\"" % [seen_names[entry["name"]], path, entry["name"]])
+			print("  FAIL  ", _problems[-1])
+		else:
+			seen_names[entry["name"]] = path
+		_sections.append(entry)
+	_sections.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return a["base"] < b["base"])
+	# --only must name real sections (a typo must not turn into a green run that checked nothing)
+	for want in _only:
+		var matched := false
+		for s in _sections:
+			if want == s["base"] or (s["compiled"] and want == s["name"]):
+				matched = true
+				if _windowed and not s["has_win"] and s["compiled"]:
+					_problems.append("--only=%s names a section without run_windowed(t)" % want)
+					print("  FAIL  ", _problems[-1])
+		if not matched:
+			var known: Array[String] = []
+			for s in _sections:
+				known.append(s["name"])
+			print("PLAYTEST usage error: --only names unknown section '%s' (known: %s)" % [want, ", ".join(known) if not known.is_empty() else "none"])
+			_usage_error = true
+			quit(2)
+			return
+
+
+func _print_list() -> void:
+	print("PLAYTEST list of %s%s" % [_sections_dir, " (windowed sections only)" if _windowed else ""])
+	var n := 0
+	for s in _sections:
+		if not s["selected"]:
+			continue
+		if not s["compiled"]:
+			print("  !! %-18s %s   DOES NOT COMPILE: %s" % [s["base"], s["path"], str(s["error"]).left(120)])
+			continue
+		if _windowed and not s["has_win"]:
+			continue
+		var kinds: Array[String] = []
+		if s["has_run"]:
+			kinds.append("run")
+		if s["has_win"]:
+			kinds.append("run_windowed")
+		print("  %-20s %s   [%s]%s" % [s["name"], s["path"], " ".join(kinds), "  timeout %ds" % int(s["timeout"]) if s["timeout"] != _section_timeout else ""])
+		n += 1
+	print("PLAYTEST list end: %d section(s)%s" % [n, ", %d problem(s)" % _problems.size() if not _problems.is_empty() else ""])
+
+
+# ---------------------------------------------------------------- result
 
 func _finish() -> void:
-	for e in _catcher.errors:
-		print("  ENGINE ERROR: ", e)
-	for w in _catcher.warnings:
-		print("  engine warning: ", w)
-	var bad := _failures.size() + _catcher.errors.size()
+	if _finished or _t == null:
+		return
+	_finished = true
+	var engine_n: int = _catcher.mark()
+	var errors: int = engine_n - _catcher.count_kind("warning")
+	var warnings: int = _catcher.count_kind("warning")
+	var bad: int = int(_t.failed) + engine_n + _problems.size()
+	var elapsed := float(Time.get_ticks_msec() - _t0) / 1000.0
+	print("== summary: %d section(s) run, %d checks (%d failed, %d skipped), %d engine error(s), %d engine warning(s), %d allowed message(s), %d problem(s), %d known-issue message(s), %.1f s" % [
+		_ran.size(), _t.checks, _t.failed, _t.skipped, errors, warnings, _catcher.allowed_entries.size(), _problems.size(), _catcher.known_entries.size(), elapsed])
+	for f in _t.failures:
+		print("  FAILED   ", f)
+	for p in _problems:
+		print("  PROBLEM  ", p)
+	for rule in _catcher.known_rules:
+		var hits: int = int(_catcher.known_rules[rule]["hits"])
+		if hits > 0:
+			print("  KNOWN    %dx '%s': %s" % [hits, rule, _catcher.known_rules[rule]["reason"]])
+		else:
+			print("  note     known issue '%s' did not occur: resolved? remove it from %s" % [rule, _catcher.known_rules[rule]["source"]])
+	var shown := 0
+	for m in _catcher.since(0):
+		if shown >= 20:
+			print("  ENGINE   ... %d more" % (engine_n - shown))
+			break
+		print("  ENGINE   ", m)
+		shown += 1
+	if _report != "":
+		_write_report(bad == 0, elapsed)
 	if bad == 0:
-		print("PLAYTEST PASS (%d warnings)" % _catcher.warnings.size())
+		print("PLAYTEST PASS (%d checks in %d sections, %d allowed engine messages, %d known-issue messages)" % [_t.checks, _ran.size(), _catcher.allowed_entries.size(), _catcher.known_entries.size()])
 	else:
-		print("PLAYTEST FAIL: %d check failures, %d engine errors" % [_failures.size(), _catcher.errors.size()])
+		print("PLAYTEST FAIL: %d check failures, %d engine errors, %d engine warnings, %d problems" % [_t.failed, errors, warnings, _problems.size()])
 	quit(0 if bad == 0 else 1)
+
+
+func _write_report(passed: bool, elapsed: float) -> void:
+	var engine: Array = []
+	for e in _catcher.entries:
+		engine.append(e)
+	var data := {
+		"result": "pass" if passed else "fail",
+		"mode": "windowed" if _windowed else "headless",
+		"character": _character,
+		"elapsed_s": snappedf(elapsed, 0.01),
+		"checks": _t.checks,
+		"failed": _t.failed,
+		"skipped": _t.skipped,
+		"sections": _t.stats,
+		"failures": _t.failures,
+		"problems": _problems,
+		"engine": engine,
+		"allowed": _catcher.allowed_entries,
+		"known": _catcher.known_entries,
+	}
+	var f := FileAccess.open(_report, FileAccess.WRITE)
+	if f == null:
+		print("  note  could not write the report to %s (error %d)" % [_report, FileAccess.get_open_error()])
+		return
+	f.store_string(JSON.stringify(data, "  "))
+	f.close()
+
+
+# ---------------------------------------------------------------- command line
+
+func _parse_args(args: PackedStringArray) -> String:
+	for a in args:
+		if a.begins_with("--character="):
+			_character = a.get_slice("=", 1)
+			if _character not in ["animal", "fairy", "hobbit"]:
+				return "--character must be animal, fairy or hobbit (got '%s')" % _character
+		elif a.begins_with("--only="):
+			for n in a.get_slice("=", 1).split(",", false):
+				_only.append(n.strip_edges())
+		elif a == "--list":
+			_list = true
+		elif a == "--windowed":
+			_windowed = true
+		elif a.begins_with("--out="):
+			_out = _absolute(a.get_slice("=", 1))
+			DirAccess.make_dir_recursive_absolute(_out)
+		elif a == "--no-boot":
+			_boot_mode = "no"
+		elif a == "--boot":
+			_boot_mode = "yes"
+		elif a.begins_with("--play-seconds="):
+			_play_seconds = float(a.get_slice("=", 1))
+		elif a.begins_with("--scenario="):
+			if a.get_slice("=", 1) != "flow":
+				return "unknown scenario '%s' (only 'flow' exists)" % a.get_slice("=", 1)
+		elif a.begins_with("--sections-dir="):
+			var d := a.get_slice("=", 1).rstrip("/")
+			_sections_dir = d if d.begins_with("res://") or d.begins_with("user://") else "res://" + d
+		elif a.begins_with("--section-timeout="):
+			_section_timeout = float(a.get_slice("=", 1))
+		elif a.begins_with("--max-seconds="):
+			_max_seconds = float(a.get_slice("=", 1))
+		elif a.begins_with("--report="):
+			_report = _absolute(a.get_slice("=", 1))
+		elif a.begins_with("--seed="):
+			_seed = int(a.get_slice("=", 1))
+		elif a == "--verbose":
+			_verbose = true
+		elif a == "--strict":
+			_strict = true
+		elif a.begins_with("--known-issues="):
+			var kp := a.get_slice("=", 1)
+			_known_paths.append(kp if kp.begins_with("res://") or kp.begins_with("user://") else "res://" + kp)
+		elif a == "--help" or a == "-h":
+			_help = true
+		else:
+			return "unknown option '%s'" % a
+	return ""
+
+
+func _absolute(path: String) -> String:
+	if path.is_absolute_path():
+		return path
+	return ProjectSettings.globalize_path("res://").path_join(path)
+
+
+func _print_usage() -> void:
+	print("usage: tests/run_playtest.sh [--character=animal|fairy|hobbit] [--only=a,b] [--list] [--windowed] [--out=DIR]")
+	print("       [--no-boot] [--play-seconds=N] [--section-timeout=N] [--max-seconds=N] [--report=FILE] [--seed=N] [--verbose] [--strict]")

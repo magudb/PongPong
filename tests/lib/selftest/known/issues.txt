@@ -1,0 +1,2 @@
+# self-test known-issues file
+KNOWN-ISSUE-SELFTEST	documented selftest issue (owner: P09, gone never)

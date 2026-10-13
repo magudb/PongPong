@@ -1,0 +1,2 @@
+# a rule that never occurs
+THIS-NEVER-HAPPENS	stale entry

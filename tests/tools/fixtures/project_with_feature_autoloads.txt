@@ -1,0 +1,30 @@
+; Fixture for tests/tools/check_project.gd (addendum 4.4, P01 task 2).
+; The 11 base autoload lines of project.godot (PLAN 3.1) plus the five feature autoload lines,
+; appended here by hand in the shape tools/features/add_autoload.py (F1, wave 3, exception E1) will
+; produce. The self-test accepts this text as is and derives its negative cases from it.
+
+config_version=5
+
+[autoload]
+
+EventBus="*res://scripts/autoload/event_bus.gd"
+GameManager="*res://scripts/autoload/game_manager.gd"
+LocalizationManager="*res://scripts/autoload/localization_manager.gd"
+SaveManager="*res://scripts/autoload/save_manager.gd"
+EconomyManager="*res://scripts/autoload/economy_manager.gd"
+QuestManager="*res://scripts/autoload/quest_manager.gd"
+LuaRuntime="*res://scripts/autoload/lua_runtime.gd"
+TimeManager="*res://scripts/autoload/time_manager.gd"
+AudioManager="*res://scripts/autoload/audio_manager.gd"
+ShopSystem="*res://scripts/economy/shop_system.gd"
+AnimalHusbandry="*res://scripts/farm/animal_husbandry.gd"
+HomeManager="*res://scripts/home/home_manager.gd"
+FurnitureManager="*res://scripts/furniture/furniture_manager.gd"
+WardrobeManager="*res://scripts/wardrobe/wardrobe_manager.gd"
+LootService="*res://scripts/loot/loot_service.gd"
+CollectionLog="*res://scripts/collection/collection_log.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720

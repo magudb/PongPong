@@ -1,0 +1,17 @@
+# Pinned from the verified art-spike environment (pip freeze of PongPong_lift/artenv: Python 3.12.11, macOS arm64, 2026-10).
+# Direct dependencies of the pipeline first, then what vtk 9.7.1 drags in (matplotlib and its helpers), exactly as frozen.
+# Install with tools/art/setup_env.sh (wheels only; vtk is a 103 MB wheel, so the first install is download-bound).
+numpy==2.5.4
+scipy==1.18.1
+Pillow==12.3.0
+vtk==9.7.1
+# transitive (vtk -> matplotlib), pinned so the env is reproducible
+matplotlib==3.11.2
+contourpy==1.4.0
+cycler==0.12.1
+fonttools==4.66.1
+kiwisolver==1.5.1
+packaging==26.3
+pyparsing==3.3.3
+python-dateutil==2.9.0.post0
+six==1.17.0

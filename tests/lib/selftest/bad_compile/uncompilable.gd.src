@@ -1,0 +1,8 @@
+extends RefCounted
+## Harness self-test (NEGATIVE): this file does not compile. tools/dev/selftest_harness.sh copies it to
+## .selftest/bad_compile/uncompilable.gd (a .gd file with a parse error must never sit in the project tree).
+const SECTION := "uncompilable"
+
+func run(t) -> void:
+	var broken := = 3
+	t.check("never", true)

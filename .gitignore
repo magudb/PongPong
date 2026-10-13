@@ -1,9 +1,30 @@
 # Godot
+# .godot/ is the engine cache. *.import and *.uid files are COMMITTED (import presets live in
+# them and a fresh clone needs them), so they are deliberately NOT ignored.
 .godot/
+# Translations load at runtime from the CSVs (LocalizationManager); the csv importer would
+# otherwise commit ~28 junk binaries (plan R.4). Every CSV ships a keep-import instead.
 *.translation
 export_presets.cfg
 export.cfg
-*.import
+
+# Feature tooling (addendum 4.4 / RV-P11)
+# flock file of tools/features/add_autoload.py (exception E1, repo root)
+project.godot.lock
+# validator stage tree and reports
+tools/features/_stage/
+tools/features/reports/
+
+# Art tooling (plan R.8)
+tools/art/.venv/
+# bake output and staging, hidden from the importer by tools/art/.gdignore
+tools/art/_stage/
+__pycache__/
+
+# Other tools' state and scratch
+.mimocode/
+.playwright-mcp/
+/scratch/
 
 # OS
 .DS_Store

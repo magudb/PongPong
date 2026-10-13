@@ -1,0 +1,297 @@
+extends RefCounted
+## P01 input contract: PLAN 3.2 plus addendum 3.3 (decorate, wardrobe, collection, rotate_item,
+## pickup_item). Shared by print_inputmap.gd and check_project.gd; load it with preload(), it has
+## no class_name on purpose (drivers run with -s before the global class cache is current).
+##
+## Per action: "keys" = PHYSICAL keycodes, "mouse" = mouse button indexes, "joy" = joypad buttons,
+## "axes" = [axis, value] pairs. The comparison is EXACT: an extra event (F10 on inventory, a wheel
+## binding on rotate_item) is as much an error as a missing one, and so is any event that only
+## matches under a qualifier (a modifier key, a key location, one device): Shift+W is NOT the plain
+## W the plan asks for, the action would not fire on W alone (see qualifiers()).
+##
+## The `ui_*` focus-navigation actions are Godot defaults, with exactly one project override
+## (PLAN 3.2 last row, "Godot defaults + D-pad, joy A/B"): see UI_OVERRIDES and ui_errors().
+
+const ACTIONS: Dictionary = {
+	"move_forward": {"keys": [KEY_W, KEY_UP], "axes": [[JOY_AXIS_LEFT_Y, -1.0]]},
+	"move_back": {"keys": [KEY_S, KEY_DOWN], "axes": [[JOY_AXIS_LEFT_Y, 1.0]]},
+	"move_left": {"keys": [KEY_A, KEY_LEFT], "axes": [[JOY_AXIS_LEFT_X, -1.0]]},
+	"move_right": {"keys": [KEY_D, KEY_RIGHT], "axes": [[JOY_AXIS_LEFT_X, 1.0]]},
+	"interact": {"keys": [KEY_E, KEY_ENTER], "joy": [JOY_BUTTON_A]},
+	"jump": {"keys": [KEY_SPACE], "joy": [JOY_BUTTON_A]},
+	"dodge": {"keys": [KEY_SPACE], "joy": [JOY_BUTTON_B]},
+	"run": {"keys": [KEY_SHIFT]},
+	"fly_toggle": {"keys": [KEY_F]},
+	"fly_descend": {"keys": [KEY_CTRL]},
+	"use_tool": {"mouse": [MOUSE_BUTTON_LEFT], "joy": [JOY_BUTTON_X]},
+	"attack": {"mouse": [MOUSE_BUTTON_LEFT], "joy": [JOY_BUTTON_X]},
+	"light": {"keys": [KEY_Q], "joy": [JOY_BUTTON_Y]},
+	"drink": {"keys": [KEY_R], "joy": [JOY_BUTTON_RIGHT_SHOULDER]},
+	"slot_1": {"keys": [KEY_1]},
+	"slot_2": {"keys": [KEY_2]},
+	"slot_3": {"keys": [KEY_3]},
+	"slot_4": {"keys": [KEY_4]},
+	"slot_5": {"keys": [KEY_5]},
+	"slot_6": {"keys": [KEY_6]},
+	"slot_7": {"keys": [KEY_7]},
+	"slot_8": {"keys": [KEY_8]},
+	"slot_9": {"keys": [KEY_9]},
+	"slot_10": {"keys": [KEY_0]},
+	"inventory": {"keys": [KEY_I, KEY_TAB]},
+	"journal": {"keys": [KEY_J]},
+	"pause": {"keys": [KEY_ESCAPE], "joy": [JOY_BUTTON_START]},
+	"build_menu": {"keys": [KEY_B]},
+	"zoom_in": {"mouse": [MOUSE_BUTTON_WHEEL_UP]},
+	"zoom_out": {"mouse": [MOUSE_BUTTON_WHEEL_DOWN]},
+	# addendum 3.3 (features); no mouse wheel binding: Indretning consumes the wheel itself
+	"decorate": {"keys": [KEY_H], "joy": [JOY_BUTTON_BACK]},
+	"wardrobe": {"keys": [KEY_G]},
+	"collection": {"keys": [KEY_C]},
+	"rotate_item": {"keys": [KEY_R], "joy": [JOY_BUTTON_RIGHT_SHOULDER]},
+	"pickup_item": {"keys": [KEY_X], "mouse": [MOUSE_BUTTON_RIGHT], "joy": [JOY_BUTTON_X]},
+}
+
+## The five actions the feature addendum adds on top of PLAN 3.2.
+const ADDENDUM: Array = ["decorate", "wardrobe", "collection", "rotate_item", "pickup_item"]
+
+const DEADZONE: float = 0.2
+
+## InputEvent.device of a binding that answers every device (what the editor writes).
+const ANY_DEVICE: int = -1
+
+## The two ui_* actions project.godot overrides. Godot 4.7.2's defaults carry the D-pad on
+## ui_up/down/left/right but NOT joy A on ui_accept nor joy B on ui_cancel (probed, see the report),
+## so a pad could not activate or cancel a focused control. The override is the engine default
+## plus the pad button: "logical" = LOGICAL keycodes, exactly like the engine's own defaults.
+const UI_OVERRIDES: Dictionary = {
+	"ui_accept": {"logical": [KEY_ENTER, KEY_KP_ENTER, KEY_SPACE], "joy": [JOY_BUTTON_A]},
+	"ui_cancel": {"logical": [KEY_ESCAPE], "joy": [JOY_BUTTON_B]},
+}
+
+## The D-pad button the engine defaults of the focus-walk actions must keep.
+const UI_DPAD: Dictionary = {
+	"ui_up": JOY_BUTTON_DPAD_UP,
+	"ui_down": JOY_BUTTON_DPAD_DOWN,
+	"ui_left": JOY_BUTTON_DPAD_LEFT,
+	"ui_right": JOY_BUTTON_DPAD_RIGHT,
+}
+
+
+## Events that intentionally trigger more than one action (the player reads the one that matches
+## the area projection or modal; PLAN 3.2 text and addendum 3.3). Anything else shared is a clash.
+static func expected_shared() -> Dictionary:
+	return {
+		"key:%d" % KEY_SPACE: ["dodge", "jump"],
+		"mouse:%d" % MOUSE_BUTTON_LEFT: ["attack", "use_tool"],
+		"joy:%d" % JOY_BUTTON_A: ["interact", "jump"],
+		"joy:%d" % JOY_BUTTON_X: ["attack", "pickup_item", "use_tool"],
+		"key:%d" % KEY_R: ["drink", "rotate_item"],
+		"joy:%d" % JOY_BUTTON_RIGHT_SHOULDER: ["drink", "rotate_item"],
+	}
+
+
+## Everything besides the code that decides WHEN an event matches an action: the modifier flags
+## (an action bound to Shift+W only fires while Shift is held), the key location (left Shift only)
+## and the device (device 0 only; keyboard events carry another device id). Empty string = the
+## plain form every contract binding must have, anything else is appended to the signature so the
+## exact comparison fails.
+static func qualifiers(ev: InputEvent) -> String:
+	var q: String = ""
+	if ev is InputEventWithModifiers:
+		var m: InputEventWithModifiers = ev
+		if m.alt_pressed:
+			q += "+alt"
+		if m.shift_pressed:
+			q += "+shift"
+		if m.ctrl_pressed:
+			q += "+ctrl"
+		if m.meta_pressed:
+			q += "+meta"
+		if m.command_or_control_autoremap:
+			q += "+cmdorctrl"
+	if ev is InputEventKey:
+		var k: InputEventKey = ev
+		if k.location != KEY_LOCATION_UNSPECIFIED:
+			q += "+loc%d" % int(k.location)
+	if ev.device != ANY_DEVICE:
+		q += "@dev%d" % ev.device
+	return q
+
+
+## Stable signature of one InputEvent: code plus qualifiers() ("other:<class>" when the event type
+## is not part of the contract).
+static func signature(ev: InputEvent) -> String:
+	var base: String = ""
+	if ev is InputEventKey:
+		var k: InputEventKey = ev
+		if k.physical_keycode != 0:
+			base = "key:%d" % k.physical_keycode
+		else:
+			base = "logicalkey:%d" % k.keycode
+	elif ev is InputEventMouseButton:
+		var m: InputEventMouseButton = ev
+		base = "mouse:%d" % m.button_index
+	elif ev is InputEventJoypadButton:
+		var jb: InputEventJoypadButton = ev
+		base = "joy:%d" % jb.button_index
+	elif ev is InputEventJoypadMotion:
+		var jm: InputEventJoypadMotion = ev
+		base = "axis:%d:%s" % [jm.axis, "+" if jm.axis_value > 0.0 else "-"]
+	else:
+		base = "other:%s" % ev.get_class()
+	return base + qualifiers(ev)
+
+
+## Signatures the contract expects for one action (a contract action or one of UI_OVERRIDES).
+static func expected_signatures(action: String) -> Array:
+	var spec: Dictionary = ACTIONS.get(action, UI_OVERRIDES.get(action, {}))
+	var out: Array = []
+	for code: int in spec.get("keys", []):
+		out.append("key:%d" % code)
+	for code: int in spec.get("logical", []):
+		out.append("logicalkey:%d" % code)
+	for code: int in spec.get("mouse", []):
+		out.append("mouse:%d" % code)
+	for code: int in spec.get("joy", []):
+		out.append("joy:%d" % code)
+	for pair: Array in spec.get("axes", []):
+		out.append("axis:%d:%s" % [int(pair[0]), "+" if float(pair[1]) > 0.0 else "-"])
+	out.sort()
+	return out
+
+
+## Signatures actually present in the live InputMap for one action.
+static func actual_signatures(action: String) -> Array:
+	var out: Array = []
+	for ev: InputEvent in InputMap.action_get_events(action):
+		out.append(signature(ev))
+	out.sort()
+	return out
+
+
+## Events of the contract actions (and the two ui overrides) that only match under a qualifier.
+## One readable message per offending event; empty = every binding is the plain form.
+static func qualifier_errors() -> Array:
+	var errors: Array = []
+	var names: Array = ACTIONS.keys() + UI_OVERRIDES.keys()
+	for action: String in names:
+		if not InputMap.has_action(action):
+			continue
+		for ev: InputEvent in InputMap.action_get_events(action):
+			var q: String = qualifiers(ev)
+			if q != "":
+				errors.append("%s: event '%s' only matches under the qualifier '%s' (not the plain binding the contract asks for)" % [action, ev.as_text(), q])
+	return errors
+
+
+## Verifies the focus-navigation contract (PLAN 3.2 last row). Structure: ui_accept/ui_cancel are
+## exactly engine default plus pad button, the four focus-walk actions keep their D-pad button.
+## Behaviour: real events, matched by the engine's own InputMap.event_is_action (the call every
+## Control makes), so the check does not rely on how the events are stored.
+static func ui_errors() -> Array:
+	var errors: Array = []
+	for action: String in UI_OVERRIDES:
+		if not InputMap.has_action(action):
+			errors.append("missing action %s" % action)
+			continue
+		var want: Array = expected_signatures(action)
+		var got: Array = actual_signatures(action)
+		if want != got:
+			errors.append("%s: expected events %s but found %s" % [action, want, got])
+	for action: String in UI_DPAD:
+		if not InputMap.has_action(action) or not actual_signatures(action).has("joy:%d" % int(UI_DPAD[action])):
+			errors.append("%s lost its D-pad button (joy:%d)" % [action, int(UI_DPAD[action])])
+	# behaviour: what a pad or keyboard really sends, device id included
+	var probes: Array = [
+		["joy A", _joy_event(JOY_BUTTON_A), "ui_accept", true],
+		["joy B", _joy_event(JOY_BUTTON_B), "ui_cancel", true],
+		["joy B", _joy_event(JOY_BUTTON_B), "ui_accept", false],
+		["joy A", _joy_event(JOY_BUTTON_A), "ui_cancel", false],
+		["joy X", _joy_event(JOY_BUTTON_X), "ui_accept", false],
+		["joy X", _joy_event(JOY_BUTTON_X), "ui_cancel", false],
+		["D-pad up", _joy_event(JOY_BUTTON_DPAD_UP), "ui_up", true],
+		["D-pad down", _joy_event(JOY_BUTTON_DPAD_DOWN), "ui_down", true],
+		["D-pad left", _joy_event(JOY_BUTTON_DPAD_LEFT), "ui_left", true],
+		["D-pad right", _joy_event(JOY_BUTTON_DPAD_RIGHT), "ui_right", true],
+		["Enter", _key_event(KEY_ENTER), "ui_accept", true],
+		["Kp Enter", _key_event(KEY_KP_ENTER), "ui_accept", true],
+		["Space", _key_event(KEY_SPACE), "ui_accept", true],
+		["Escape", _key_event(KEY_ESCAPE), "ui_cancel", true],
+	]
+	for p: Array in probes:
+		var hit: bool = InputMap.has_action(String(p[2])) and InputMap.event_is_action(p[1], String(p[2]), true)
+		if hit != bool(p[3]):
+			errors.append("%s %s %s" % [p[0], "does not trigger" if p[3] else "wrongly triggers", p[2]])
+	return errors
+
+
+static func _joy_event(button: int) -> InputEventJoypadButton:
+	var ev: InputEventJoypadButton = InputEventJoypadButton.new()
+	ev.device = 0
+	ev.button_index = button as JoyButton
+	ev.pressed = true
+	return ev
+
+
+static func _key_event(code: int) -> InputEventKey:
+	var ev: InputEventKey = InputEventKey.new()
+	ev.keycode = code as Key
+	ev.physical_keycode = code as Key
+	ev.pressed = true
+	return ev
+
+
+## Verifies the live InputMap against the contract; returns a list of error strings (empty = OK).
+static func verify() -> Array:
+	var errors: Array = []
+	# 1. every contract action exists with exactly the contract events and the contract deadzone
+	for action: String in ACTIONS:
+		if not InputMap.has_action(action):
+			errors.append("missing action %s" % action)
+			continue
+		var want: Array = expected_signatures(action)
+		var got: Array = actual_signatures(action)
+		if want != got:
+			errors.append("%s: expected events %s but found %s" % [action, want, got])
+		if not is_equal_approx(InputMap.action_get_deadzone(action), DEADZONE):
+			errors.append("%s: deadzone %.2f, expected %.2f" % [action, InputMap.action_get_deadzone(action), DEADZONE])
+	# 2. no custom (non ui_) action outside the contract
+	for action: StringName in InputMap.get_actions():
+		var s: String = String(action)
+		if s.begins_with("ui_") or ACTIONS.has(s):
+			continue
+		errors.append("unexpected custom action %s (new actions go through P01's owner)" % s)
+	# 3. no clash: the events shared between actions are exactly the intended ones
+	var shared: Dictionary = shared_bindings()
+	var expected: Dictionary = expected_shared()
+	for sig: String in shared:
+		if not expected.has(sig):
+			errors.append("clash: %s is bound to %s" % [sig, shared[sig]])
+		elif expected[sig] != shared[sig]:
+			errors.append("clash: %s is shared by %s, expected %s" % [sig, shared[sig], expected[sig]])
+	for sig: String in expected:
+		if not shared.has(sig):
+			errors.append("intended shared binding %s (%s) is gone" % [sig, expected[sig]])
+	# 4. no qualified (modifier / location / device bound) event, and the focus-navigation contract
+	errors.append_array(qualifier_errors())
+	errors.append_array(ui_errors())
+	return errors
+
+
+## Shared bindings found in the live map (contract actions only), for printing and the clash check.
+static func shared_bindings() -> Dictionary:
+	var by_sig: Dictionary = {}
+	for action: String in ACTIONS:
+		if not InputMap.has_action(action):
+			continue
+		for sig: String in actual_signatures(action):
+			if not by_sig.has(sig):
+				by_sig[sig] = []
+			by_sig[sig].append(action)
+	var out: Dictionary = {}
+	for sig: String in by_sig:
+		var list: Array = by_sig[sig]
+		if list.size() > 1:
+			list.sort()
+			out[sig] = list
+	return out
