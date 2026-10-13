@@ -1,0 +1,2299 @@
+{
+ "v": 1,
+ "note": "one entry per furniture item in the shape of spike_home furniture_catalog.CATALOG_SPEC entries (id, template, kw, style incl. tier, tier); build with TEMPLATES[template](Style(**style), **kw)",
+ "items": [
+  {
+   "id": "bed_pine",
+   "template": "bed",
+   "kw": {
+    "size": "double"
+   },
+   "style": {
+    "tier": 0,
+    "wood": "pine",
+    "fabric": "natur"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    2,
+    3
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "bed_birch_single",
+   "template": "bed",
+   "kw": {
+    "size": "single"
+   },
+   "style": {
+    "tier": 0,
+    "wood": "birch",
+    "fabric": "natur"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    2
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "bed_oak_single",
+   "template": "bed",
+   "kw": {
+    "size": "single"
+   },
+   "style": {
+    "tier": 0,
+    "wood": "oak",
+    "fabric": "groen"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    2
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "bed_sky_double",
+   "template": "bed",
+   "kw": {
+    "size": "double"
+   },
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "himmel",
+    "fabric": "roed"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    2,
+    3
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "bed_rose_single",
+   "template": "bed",
+   "kw": {
+    "size": "single"
+   },
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "rose",
+    "fabric": "blaa"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    2
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "bed_walnut",
+   "template": "bed",
+   "kw": {
+    "size": "double"
+   },
+   "style": {
+    "tier": 2,
+    "wood": "walnut",
+    "fabric": "bordeaux"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    2,
+    3
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "bed_cherry",
+   "template": "bed",
+   "kw": {
+    "size": "double"
+   },
+   "style": {
+    "tier": 2,
+    "wood": "cherry",
+    "fabric": "guld"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    2,
+    3
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "bed_toadstool",
+   "template": "bed",
+   "kw": {
+    "size": "double"
+   },
+   "style": {
+    "tier": 3,
+    "wood": "living",
+    "fabric": "groen"
+   },
+   "tier": 3,
+   "rarity": "unique",
+   "footprint": [
+    2,
+    3
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "bed_moon",
+   "template": "bed",
+   "kw": {
+    "size": "double"
+   },
+   "style": {
+    "tier": 4,
+    "wood": "moonwood",
+    "fabric": "maane",
+    "metal": "soelv"
+   },
+   "tier": 4,
+   "rarity": "legendary",
+   "footprint": [
+    2,
+    3
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "table_round_pine",
+   "template": "table",
+   "kw": {
+    "size": "round"
+   },
+   "style": {
+    "tier": 0,
+    "wood": "pine"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "table_dining_oak",
+   "template": "table",
+   "kw": {
+    "size": "dining"
+   },
+   "style": {
+    "tier": 0,
+    "wood": "oak"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "table_long_pine",
+   "template": "table",
+   "kw": {
+    "size": "long"
+   },
+   "style": {
+    "tier": 0,
+    "wood": "pine"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    3,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "table_round_mint",
+   "template": "table",
+   "kw": {
+    "size": "round"
+   },
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "mynte"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "table_dining_chalk",
+   "template": "table",
+   "kw": {
+    "size": "dining"
+   },
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "kridt"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "table_long_walnut",
+   "template": "table",
+   "kw": {
+    "size": "long"
+   },
+   "style": {
+    "tier": 2,
+    "wood": "walnut"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    3,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "table_round_cherry",
+   "template": "table",
+   "kw": {
+    "size": "round"
+   },
+   "style": {
+    "tier": 2,
+    "wood": "cherry"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "table_stump",
+   "template": "table",
+   "kw": {
+    "size": "dining"
+   },
+   "style": {
+    "tier": 3,
+    "wood": "living"
+   },
+   "tier": 3,
+   "rarity": "unique",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "chair_pine",
+   "template": "chair",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "pine"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "chair_birch",
+   "template": "chair",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "birch"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "chair_oak",
+   "template": "chair",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "oak",
+    "fabric": "groen"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "chair_mossy",
+   "template": "chair",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "mossy"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "chair_honey",
+   "template": "chair",
+   "kw": {},
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "honning",
+    "fabric": "natur"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "chair_lavender",
+   "template": "chair",
+   "kw": {},
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "lavendel",
+    "fabric": "rosendamask"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "chair_ebony",
+   "template": "chair",
+   "kw": {},
+   "style": {
+    "tier": 2,
+    "wood": "ebony",
+    "fabric": "kongeblaa"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "chair_stump",
+   "template": "chair",
+   "kw": {},
+   "style": {
+    "tier": 3,
+    "wood": "living",
+    "fabric": "groen"
+   },
+   "tier": 3,
+   "rarity": "unique",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "sofa_pine_two",
+   "template": "sofa",
+   "kw": {
+    "seats": 2
+   },
+   "style": {
+    "tier": 0,
+    "wood": "pine",
+    "fabric": "natur"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "sofa_oak_three",
+   "template": "sofa",
+   "kw": {
+    "seats": 3
+   },
+   "style": {
+    "tier": 0,
+    "wood": "oak",
+    "fabric": "groen"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    3,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "sofa_birch_two",
+   "template": "sofa",
+   "kw": {
+    "seats": 2
+   },
+   "style": {
+    "tier": 0,
+    "wood": "birch",
+    "fabric": "natur"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "sofa_sky_two",
+   "template": "sofa",
+   "kw": {
+    "seats": 2
+   },
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "himmel",
+    "fabric": "roed"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "sofa_moss_three",
+   "template": "sofa",
+   "kw": {
+    "seats": 3
+   },
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "mosgroen",
+    "fabric": "natur"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    3,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "sofa_walnut_two",
+   "template": "sofa",
+   "kw": {
+    "seats": 2
+   },
+   "style": {
+    "tier": 2,
+    "wood": "walnut",
+    "fabric": "bordeaux"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "sofa_cherry_three",
+   "template": "sofa",
+   "kw": {
+    "seats": 3
+   },
+   "style": {
+    "tier": 2,
+    "wood": "cherry",
+    "fabric": "kongeblaa"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    3,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "sofa_leaf",
+   "template": "sofa",
+   "kw": {
+    "seats": 2
+   },
+   "style": {
+    "tier": 3,
+    "wood": "living",
+    "fabric": "groen"
+   },
+   "tier": 3,
+   "rarity": "unique",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "sofa_cloud",
+   "template": "sofa",
+   "kw": {
+    "seats": 3
+   },
+   "style": {
+    "tier": 4,
+    "wood": "moonwood",
+    "fabric": "maane",
+    "crystal": "maanesten"
+   },
+   "tier": 4,
+   "rarity": "legendary",
+   "footprint": [
+    3,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "wardrobe_pine",
+   "template": "wardrobe",
+   "kw": {
+    "size": "wide"
+   },
+   "style": {
+    "tier": 0,
+    "wood": "pine"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "wardrobe_birch_narrow",
+   "template": "wardrobe",
+   "kw": {
+    "size": "narrow"
+   },
+   "style": {
+    "tier": 0,
+    "wood": "birch"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "wardrobe_oak",
+   "template": "wardrobe",
+   "kw": {
+    "size": "wide"
+   },
+   "style": {
+    "tier": 0,
+    "wood": "oak"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "wardrobe_rose",
+   "template": "wardrobe",
+   "kw": {
+    "size": "wide"
+   },
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "rose"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "wardrobe_sky_narrow",
+   "template": "wardrobe",
+   "kw": {
+    "size": "narrow"
+   },
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "himmel"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "wardrobe_walnut",
+   "template": "wardrobe",
+   "kw": {
+    "size": "wide"
+   },
+   "style": {
+    "tier": 2,
+    "wood": "walnut"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "wardrobe_hollow_log",
+   "template": "wardrobe",
+   "kw": {
+    "size": "wide"
+   },
+   "style": {
+    "tier": 3,
+    "wood": "living"
+   },
+   "tier": 3,
+   "rarity": "unique",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "bookshelf_pine",
+   "template": "bookshelf",
+   "kw": {
+    "size": "wide"
+   },
+   "style": {
+    "tier": 0,
+    "wood": "pine"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "bookshelf_oak_narrow",
+   "template": "bookshelf",
+   "kw": {
+    "size": "narrow"
+   },
+   "style": {
+    "tier": 0,
+    "wood": "oak"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "bookshelf_birch",
+   "template": "bookshelf",
+   "kw": {
+    "size": "wide"
+   },
+   "style": {
+    "tier": 0,
+    "wood": "birch"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "bookshelf_mint",
+   "template": "bookshelf",
+   "kw": {
+    "size": "wide"
+   },
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "mynte"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "bookshelf_lavender_narrow",
+   "template": "bookshelf",
+   "kw": {
+    "size": "narrow"
+   },
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "lavendel"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "bookshelf_ebony",
+   "template": "bookshelf",
+   "kw": {
+    "size": "wide"
+   },
+   "style": {
+    "tier": 2,
+    "wood": "ebony"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "bookshelf_book_tree",
+   "template": "bookshelf",
+   "kw": {
+    "size": "wide"
+   },
+   "style": {
+    "tier": 3,
+    "wood": "living"
+   },
+   "tier": 3,
+   "rarity": "unique",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "bookshelf_floating",
+   "template": "bookshelf",
+   "kw": {
+    "size": "wide"
+   },
+   "style": {
+    "tier": 4,
+    "wood": "ebony",
+    "crystal": "maanesten"
+   },
+   "tier": 4,
+   "rarity": "legendary",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "rug_natural",
+   "template": "rug",
+   "kw": {
+    "shape": "rect"
+   },
+   "style": {
+    "tier": 0,
+    "wood": "pine",
+    "fabric": "natur"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    3,
+    2
+   ],
+   "layer": "rug"
+  },
+  {
+   "id": "rug_round_red",
+   "template": "rug",
+   "kw": {
+    "shape": "round"
+   },
+   "style": {
+    "tier": 0,
+    "wood": "pine",
+    "fabric": "roed"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    2,
+    2
+   ],
+   "layer": "rug"
+  },
+  {
+   "id": "rug_runner_natural",
+   "template": "rug",
+   "kw": {
+    "shape": "runner"
+   },
+   "style": {
+    "tier": 0,
+    "wood": "pine",
+    "fabric": "natur"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    3,
+    1
+   ],
+   "layer": "rug"
+  },
+  {
+   "id": "rug_striped_blue",
+   "template": "rug",
+   "kw": {
+    "shape": "rect"
+   },
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "fabric": "blaa"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    3,
+    2
+   ],
+   "layer": "rug"
+  },
+  {
+   "id": "rug_runner_green",
+   "template": "rug",
+   "kw": {
+    "shape": "runner"
+   },
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "fabric": "groen"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    3,
+    1
+   ],
+   "layer": "rug"
+  },
+  {
+   "id": "rug_round_rose",
+   "template": "rug",
+   "kw": {
+    "shape": "round"
+   },
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "fabric": "rosendamask"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    2,
+    2
+   ],
+   "layer": "rug"
+  },
+  {
+   "id": "rug_burgundy",
+   "template": "rug",
+   "kw": {
+    "shape": "rect"
+   },
+   "style": {
+    "tier": 2,
+    "wood": "pine",
+    "fabric": "bordeaux"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    3,
+    2
+   ],
+   "layer": "rug"
+  },
+  {
+   "id": "rug_gold_round",
+   "template": "rug",
+   "kw": {
+    "shape": "round"
+   },
+   "style": {
+    "tier": 2,
+    "wood": "pine",
+    "fabric": "guld"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    2,
+    2
+   ],
+   "layer": "rug"
+  },
+  {
+   "id": "rug_flower_petal",
+   "template": "rug",
+   "kw": {
+    "shape": "round"
+   },
+   "style": {
+    "tier": 3,
+    "wood": "pine",
+    "fabric": "rosendamask"
+   },
+   "tier": 3,
+   "rarity": "unique",
+   "footprint": [
+    2,
+    2
+   ],
+   "layer": "rug"
+  },
+  {
+   "id": "rug_magic_circle",
+   "template": "rug",
+   "kw": {
+    "shape": "rect"
+   },
+   "style": {
+    "tier": 4,
+    "wood": "pine",
+    "fabric": "maane",
+    "crystal": "ametyst"
+   },
+   "tier": 4,
+   "rarity": "legendary",
+   "footprint": [
+    3,
+    2
+   ],
+   "layer": "rug"
+  },
+  {
+   "id": "floor_lamp_iron",
+   "template": "floor_lamp",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "pine"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "floor_lamp_birch",
+   "template": "floor_lamp",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "birch"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "floor_lamp_honey",
+   "template": "floor_lamp",
+   "kw": {},
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "honning"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "floor_lamp_brass",
+   "template": "floor_lamp",
+   "kw": {},
+   "style": {
+    "tier": 2,
+    "wood": "walnut",
+    "metal": "messing",
+    "fabric": "bordeaux"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "floor_lamp_glowshroom",
+   "template": "floor_lamp",
+   "kw": {},
+   "style": {
+    "tier": 3,
+    "wood": "living"
+   },
+   "tier": 3,
+   "rarity": "unique",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "floor_lamp_fairy",
+   "template": "floor_lamp",
+   "kw": {},
+   "style": {
+    "tier": 4,
+    "wood": "moonwood",
+    "metal": "soelv",
+    "crystal": "maanesten"
+   },
+   "tier": 4,
+   "rarity": "legendary",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "fireplace_granite",
+   "template": "fireplace",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "pine",
+    "stone": "granit"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "fireplace_chalk",
+   "template": "fireplace",
+   "kw": {},
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "kridt"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "fireplace_marble",
+   "template": "fireplace",
+   "kw": {},
+   "style": {
+    "tier": 2,
+    "wood": "pine",
+    "stone": "marmor"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "fireplace_slate",
+   "template": "fireplace",
+   "kw": {},
+   "style": {
+    "tier": 2,
+    "wood": "pine",
+    "stone": "skifer"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "fireplace_cauldron",
+   "template": "fireplace",
+   "kw": {},
+   "style": {
+    "tier": 3,
+    "wood": "living"
+   },
+   "tier": 3,
+   "rarity": "unique",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "fireplace_moon",
+   "template": "fireplace",
+   "kw": {},
+   "style": {
+    "tier": 4,
+    "wood": "pine",
+    "stone": "marmor",
+    "crystal": "maanesten"
+   },
+   "tier": 4,
+   "rarity": "legendary",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "chest_pine",
+   "template": "chest",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "pine"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "chest_oak",
+   "template": "chest",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "oak"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "chest_birch",
+   "template": "chest",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "birch"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "chest_sky",
+   "template": "chest",
+   "kw": {},
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "himmel"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "chest_rose",
+   "template": "chest",
+   "kw": {},
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "rose"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "chest_walnut",
+   "template": "chest",
+   "kw": {},
+   "style": {
+    "tier": 2,
+    "wood": "walnut"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "chest_snail",
+   "template": "chest",
+   "kw": {},
+   "style": {
+    "tier": 3,
+    "wood": "living"
+   },
+   "tier": 3,
+   "rarity": "unique",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "chest_rune",
+   "template": "chest",
+   "kw": {},
+   "style": {
+    "tier": 4,
+    "wood": "ebony",
+    "crystal": "ravgul"
+   },
+   "tier": 4,
+   "rarity": "legendary",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "plant_fern",
+   "template": "plant",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "pine"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "plant_rose_pot",
+   "template": "plant",
+   "kw": {},
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "rose"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "plant_flowering",
+   "template": "plant",
+   "kw": {},
+   "style": {
+    "tier": 2,
+    "wood": "pine"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "plant_teapot_bonsai",
+   "template": "plant",
+   "kw": {},
+   "style": {
+    "tier": 3,
+    "wood": "pine"
+   },
+   "tier": 3,
+   "rarity": "unique",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "clock_pine",
+   "template": "clock",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "pine"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "clock_sky",
+   "template": "clock",
+   "kw": {},
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "himmel"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "clock_walnut",
+   "template": "clock",
+   "kw": {},
+   "style": {
+    "tier": 2,
+    "wood": "walnut"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "clock_owl",
+   "template": "clock",
+   "kw": {},
+   "style": {
+    "tier": 3,
+    "wood": "living"
+   },
+   "tier": 3,
+   "rarity": "unique",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "clock_moon",
+   "template": "clock",
+   "kw": {},
+   "style": {
+    "tier": 4,
+    "wood": "ebony",
+    "crystal": "maanesten"
+   },
+   "tier": 4,
+   "rarity": "legendary",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "throne_pine",
+   "template": "throne",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "pine"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "throne_honey",
+   "template": "throne",
+   "kw": {},
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "honning",
+    "fabric": "roed"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "throne_king",
+   "template": "throne",
+   "kw": {},
+   "style": {
+    "tier": 2,
+    "wood": "walnut",
+    "fabric": "bordeaux"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "throne_root",
+   "template": "throne",
+   "kw": {},
+   "style": {
+    "tier": 3,
+    "wood": "living",
+    "fabric": "groen"
+   },
+   "tier": 3,
+   "rarity": "unique",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "throne_crystal",
+   "template": "throne",
+   "kw": {},
+   "style": {
+    "tier": 4,
+    "wood": "moonwood",
+    "fabric": "maane",
+    "crystal": "ametyst",
+    "metal": "soelv"
+   },
+   "tier": 4,
+   "rarity": "legendary",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "piano_pine",
+   "template": "piano",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "pine"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "piano_sky",
+   "template": "piano",
+   "kw": {},
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "himmel",
+    "fabric": "roed"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "piano_walnut",
+   "template": "piano",
+   "kw": {},
+   "style": {
+    "tier": 2,
+    "wood": "walnut",
+    "fabric": "bordeaux"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "piano_toadstool",
+   "template": "piano",
+   "kw": {},
+   "style": {
+    "tier": 3,
+    "wood": "oak"
+   },
+   "tier": 3,
+   "rarity": "unique",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "piano_star",
+   "template": "piano",
+   "kw": {},
+   "style": {
+    "tier": 4,
+    "wood": "ebony",
+    "fabric": "maane",
+    "crystal": "maanesten"
+   },
+   "tier": 4,
+   "rarity": "legendary",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  {
+   "id": "painting_small_pine",
+   "template": "painting",
+   "kw": {
+    "size": "small"
+   },
+   "style": {
+    "tier": 0,
+    "wood": "pine"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  {
+   "id": "painting_wide_pine",
+   "template": "painting",
+   "kw": {
+    "size": "wide"
+   },
+   "style": {
+    "tier": 0,
+    "wood": "pine"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "wall"
+  },
+  {
+   "id": "painting_small_birch",
+   "template": "painting",
+   "kw": {
+    "size": "small"
+   },
+   "style": {
+    "tier": 0,
+    "wood": "birch"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  {
+   "id": "painting_sky_small",
+   "template": "painting",
+   "kw": {
+    "size": "small"
+   },
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "himmel"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  {
+   "id": "painting_rose_wide",
+   "template": "painting",
+   "kw": {
+    "size": "wide"
+   },
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "rose"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "wall"
+  },
+  {
+   "id": "painting_gold_wide",
+   "template": "painting",
+   "kw": {
+    "size": "wide"
+   },
+   "style": {
+    "tier": 2,
+    "wood": "walnut"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "wall"
+  },
+  {
+   "id": "painting_porthole",
+   "template": "painting",
+   "kw": {
+    "size": "small"
+   },
+   "style": {
+    "tier": 3,
+    "wood": "living"
+   },
+   "tier": 3,
+   "rarity": "unique",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  {
+   "id": "shelf_pine",
+   "template": "shelf",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "pine"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  {
+   "id": "shelf_birch",
+   "template": "shelf",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "birch"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  {
+   "id": "shelf_oak",
+   "template": "shelf",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "oak"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  {
+   "id": "shelf_mint",
+   "template": "shelf",
+   "kw": {},
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "mynte"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  {
+   "id": "shelf_walnut",
+   "template": "shelf",
+   "kw": {},
+   "style": {
+    "tier": 2,
+    "wood": "walnut"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  {
+   "id": "shelf_birdhouse",
+   "template": "shelf",
+   "kw": {},
+   "style": {
+    "tier": 3,
+    "wood": "living"
+   },
+   "tier": 3,
+   "rarity": "unique",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  {
+   "id": "curtain_natural",
+   "template": "curtain",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "pine",
+    "fabric": "natur"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  {
+   "id": "curtain_green",
+   "template": "curtain",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "pine",
+    "fabric": "groen"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  {
+   "id": "curtain_red",
+   "template": "curtain",
+   "kw": {},
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "fabric": "roed"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  {
+   "id": "curtain_blue",
+   "template": "curtain",
+   "kw": {},
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "fabric": "blaa"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  {
+   "id": "sconce_iron",
+   "template": "sconce",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "pine"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  {
+   "id": "sconce_copper",
+   "template": "sconce",
+   "kw": {},
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "metal": "kobber"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  {
+   "id": "vase_clay",
+   "template": "vase",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "pine"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "tabletop"
+  },
+  {
+   "id": "vase_rose",
+   "template": "vase",
+   "kw": {},
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "rose"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "tabletop"
+  },
+  {
+   "id": "table_lamp_clay",
+   "template": "table_lamp",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "pine"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "tabletop"
+  },
+  {
+   "id": "table_lamp_sky",
+   "template": "table_lamp",
+   "kw": {},
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "paint": "himmel"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "tabletop"
+  },
+  {
+   "id": "table_lamp_brass",
+   "template": "table_lamp",
+   "kw": {},
+   "style": {
+    "tier": 2,
+    "wood": "pine",
+    "metal": "messing",
+    "fabric": "guld"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "tabletop"
+  },
+  {
+   "id": "candelabra_iron",
+   "template": "candelabra",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "pine"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "tabletop"
+  },
+  {
+   "id": "candelabra_copper",
+   "template": "candelabra",
+   "kw": {},
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "metal": "kobber"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "tabletop"
+  },
+  {
+   "id": "candelabra_brass",
+   "template": "candelabra",
+   "kw": {},
+   "style": {
+    "tier": 2,
+    "wood": "pine",
+    "metal": "messing"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "tabletop"
+  },
+  {
+   "id": "chandelier_iron",
+   "template": "chandelier",
+   "kw": {},
+   "style": {
+    "tier": 0,
+    "wood": "pine"
+   },
+   "tier": 0,
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "ceiling"
+  },
+  {
+   "id": "chandelier_copper",
+   "template": "chandelier",
+   "kw": {},
+   "style": {
+    "tier": 1,
+    "wood": "pine",
+    "metal": "kobber"
+   },
+   "tier": 1,
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "ceiling"
+  },
+  {
+   "id": "chandelier_gold",
+   "template": "chandelier",
+   "kw": {},
+   "style": {
+    "tier": 2,
+    "wood": "pine",
+    "metal": "guld"
+   },
+   "tier": 2,
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "ceiling"
+  },
+  {
+   "id": "chandelier_lantern_flower",
+   "template": "chandelier",
+   "kw": {},
+   "style": {
+    "tier": 3,
+    "wood": "pine",
+    "metal": "guld"
+   },
+   "tier": 3,
+   "rarity": "unique",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "ceiling"
+  },
+  {
+   "id": "chandelier_star",
+   "template": "chandelier",
+   "kw": {},
+   "style": {
+    "tier": 4,
+    "wood": "pine",
+    "metal": "soelv",
+    "crystal": "maanesten"
+   },
+   "tier": 4,
+   "rarity": "legendary",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "ceiling"
+  }
+ ]
+}

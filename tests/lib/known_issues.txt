@@ -2,4 +2,3 @@
 # fail the run) but is printed as KNOWN in every run; a run with --strict ignores this file. When the cause is fixed the
 # harness says "known issue ... did not occur: resolved? remove it", and the line must go.
 # Format: <substring of the engine message><TAB><reason, owner, when it goes away>
-lua_runtime.gd:42	LEGACY wave-1 window: P01 removed locale/translations, so the legacy LuaRuntime.reload_scripts() formats an untranslated key (tr() returns the bare key) and logs "String formatting error" at every boot. Goes away when P03's runtime CSV loader lands (wave 2, LocalizationManager loads before LuaRuntime) or P10 rewrites lua_runtime.gd. Reported by P01 (handoff 3).

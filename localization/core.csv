@@ -1,0 +1,38 @@
+keys,da,en
+; --- Trætoppen core copy (plan 3.4 / R.4). Overrides legacy da.csv rows without touching da.csv. Families: GAME_ NPC_ ZONE_ LANG_ + the listed legacy overrides.
+GAME_TITLE,"Trætoppen","Trætoppen"
+GAME_SUBTITLE,"En gård i Fekongens skov","A farm in the Fairy King's forest"
+; --- legacy overrides ---
+UI_GOLD,"guldagern","gold acorns"
+UI_WEATHER_KLART,"Solskin","Sunny"
+UI_JOURNAL,"Opgavebog","Quest book"
+UI_INVENTORY,"Rygsæk","Backpack"
+CHAR_SELECT_TITLE,"Hvem er du?","Who are you?"
+CHAR_ANIMAL_NAME,"Skovdyr","Forest animal"
+NOTIF_QUEST_ACCEPTED_TITLE,"Ny opgave!","New quest!"
+NOTIF_QUEST_COMPLETED_TITLE,"Opgave fuldført!","Quest complete!"
+NOTIF_LANGUAGE_CHANGED_MSG,"Sproget er nu %s.","Language is now %s."
+; --- language names (each in its own language: the toast after a switch uses the new language) ---
+LANG_DA,"dansk","Danish"
+LANG_EN,"engelsk","English"
+; --- NPC display names (roster of plan 3.8; ids stay stable, only the names are new) ---
+NPC_MAYOR_LYRA,"Borgmester Hyldeblomst","Mayor Hyldeblomst"
+NPC_BAKER_MAJA,"Bagerfe Rosmarin","Baker-fairy Rosmarin"
+NPC_MERCHANT_PIP,"Butiksfe Kløvermynte","Shop-fairy Kløvermynte"
+NPC_FAIRY_LILY,"Fe-barnet Lily","Fairy child Lily"
+NPC_SMITH_THORIN,"Smeden Thorin","Smith Thorin"
+NPC_GUARD_OAK,"Vagten Oak","Guard Oak"
+NPC_FARMER_ROSA,"Dyrehandler Rosa","Animal dealer Rosa"
+NPC_FAIRY_WIZARD,"Fe-troldmanden Zephyr","Fairy wizard Zephyr"
+NPC_PIPPIN_BOEGEKNOP,"Pippin Bøgeknop","Pippin Bøgeknop"
+NPC_FAIRY_KING,"Fekongen","The Fairy King"
+NPC_CAT_MORFAR_MIS,"Morfar Mis","Grandpa Mis"
+NPC_PENGUIN_POSTMAN,"Postpingvinen","The Postman Penguin"
+; --- area titles (@zone ids of the maps; Hyggebyen is the fairy town) ---
+ZONE_FARM,"Trætoppen","Treetop Farm"
+ZONE_CITY,"Hyggebyen","Hyggebyen"
+ZONE_DARK_FOREST,"Mørkeskoven","The Dark Wood"
+ZONE_FOREST_EDGE,"Skovkanten","The Forest Edge"
+ZONE_DYBE_BREGNER,"Dybe Bregner","Deep Ferns"
+ZONE_MUSHROOM_GROVE,"Svampelunden","Mushroom Grove"
+ZONE_CRYSTAL_CAVE,"Krystalgrotten","Crystal Cave"

@@ -1,0 +1,1826 @@
+{
+ "v": 1,
+ "tiers": [
+  {
+   "tier": 1,
+   "capacity": 11,
+   "floor": "floor_stone",
+   "walls": "plank",
+   "platform_back_rows": 0,
+   "gift_items": [],
+   "exterior": "house_t01",
+   "night": "house_t01_night",
+   "interior": "room_t01",
+   "scaffold": null
+  },
+  {
+   "tier": 2,
+   "capacity": 16,
+   "floor": "floor_stone",
+   "walls": "plank",
+   "platform_back_rows": 0,
+   "gift_items": [],
+   "exterior": "house_t02",
+   "night": "house_t02_night",
+   "interior": "room_t02",
+   "scaffold": "scaffold_to02"
+  },
+  {
+   "tier": 3,
+   "capacity": 19,
+   "floor": "floor_plank",
+   "walls": "plank",
+   "platform_back_rows": 0,
+   "gift_items": [],
+   "exterior": "house_t03",
+   "night": "house_t03_night",
+   "interior": "room_t03",
+   "scaffold": "scaffold_to03"
+  },
+  {
+   "tier": 4,
+   "capacity": 26,
+   "floor": "floor_plank",
+   "walls": "plank",
+   "platform_back_rows": 0,
+   "gift_items": [],
+   "exterior": "house_t04",
+   "night": "house_t04_night",
+   "interior": "room_t04",
+   "scaffold": "scaffold_to04"
+  },
+  {
+   "tier": 5,
+   "capacity": 30,
+   "floor": "floor_parquet",
+   "walls": "paper",
+   "platform_back_rows": 1,
+   "gift_items": [
+    "throne_root"
+   ],
+   "exterior": "house_t05",
+   "night": "house_t05_night",
+   "interior": "room_t05",
+   "scaffold": "scaffold_to05"
+  },
+  {
+   "tier": 6,
+   "capacity": 38,
+   "floor": "floor_parquet",
+   "walls": "paper",
+   "platform_back_rows": 1,
+   "gift_items": [
+    "clock_moon"
+   ],
+   "exterior": "house_t06",
+   "night": "house_t06_night",
+   "interior": "room_t06",
+   "scaffold": "scaffold_to06"
+  },
+  {
+   "tier": 7,
+   "capacity": 46,
+   "floor": "floor_parquet",
+   "walls": "paper",
+   "platform_back_rows": 1,
+   "gift_items": [
+    "piano_star"
+   ],
+   "exterior": "house_t07",
+   "night": "house_t07_night",
+   "interior": "room_t07",
+   "scaffold": "scaffold_to07"
+  },
+  {
+   "tier": 8,
+   "capacity": 57,
+   "floor": "floor_marble",
+   "walls": "marble",
+   "platform_back_rows": 2,
+   "gift_items": [
+    "bookshelf_floating"
+   ],
+   "exterior": "house_t08",
+   "night": "house_t08_night",
+   "interior": "room_t08",
+   "scaffold": "scaffold_to08"
+  },
+  {
+   "tier": 9,
+   "capacity": 65,
+   "floor": "floor_marble",
+   "walls": "marble",
+   "platform_back_rows": 2,
+   "gift_items": [
+    "throne_crystal"
+   ],
+   "exterior": "house_t09",
+   "night": "house_t09_night",
+   "interior": "room_t09",
+   "scaffold": "scaffold_to09"
+  },
+  {
+   "tier": 10,
+   "capacity": 74,
+   "floor": "floor_marble",
+   "walls": "marble",
+   "platform_back_rows": 3,
+   "gift_items": [
+    "bed_moon",
+    "chandelier_star"
+   ],
+   "exterior": "house_t10",
+   "night": "house_t10_night",
+   "interior": "room_t10",
+   "scaffold": "scaffold_to10"
+  }
+ ],
+ "furniture": {
+  "bed_birch_single": {
+   "template": "bed",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    2
+   ],
+   "layer": "floor"
+  },
+  "bed_cherry": {
+   "template": "bed",
+   "rarity": "rare",
+   "footprint": [
+    2,
+    3
+   ],
+   "layer": "floor"
+  },
+  "bed_moon": {
+   "template": "bed",
+   "rarity": "legendary",
+   "footprint": [
+    2,
+    3
+   ],
+   "layer": "floor"
+  },
+  "bed_oak_single": {
+   "template": "bed",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    2
+   ],
+   "layer": "floor"
+  },
+  "bed_pine": {
+   "template": "bed",
+   "rarity": "normal",
+   "footprint": [
+    2,
+    3
+   ],
+   "layer": "floor"
+  },
+  "bed_rose_single": {
+   "template": "bed",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    2
+   ],
+   "layer": "floor"
+  },
+  "bed_sky_double": {
+   "template": "bed",
+   "rarity": "uncommon",
+   "footprint": [
+    2,
+    3
+   ],
+   "layer": "floor"
+  },
+  "bed_toadstool": {
+   "template": "bed",
+   "rarity": "unique",
+   "footprint": [
+    2,
+    3
+   ],
+   "layer": "floor"
+  },
+  "bed_walnut": {
+   "template": "bed",
+   "rarity": "rare",
+   "footprint": [
+    2,
+    3
+   ],
+   "layer": "floor"
+  },
+  "bookshelf_birch": {
+   "template": "bookshelf",
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "bookshelf_book_tree": {
+   "template": "bookshelf",
+   "rarity": "unique",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "bookshelf_ebony": {
+   "template": "bookshelf",
+   "rarity": "rare",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "bookshelf_floating": {
+   "template": "bookshelf",
+   "rarity": "legendary",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "bookshelf_lavender_narrow": {
+   "template": "bookshelf",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "bookshelf_mint": {
+   "template": "bookshelf",
+   "rarity": "uncommon",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "bookshelf_oak_narrow": {
+   "template": "bookshelf",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "bookshelf_pine": {
+   "template": "bookshelf",
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "candelabra_brass": {
+   "template": "candelabra",
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "tabletop"
+  },
+  "candelabra_copper": {
+   "template": "candelabra",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "tabletop"
+  },
+  "candelabra_iron": {
+   "template": "candelabra",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "tabletop"
+  },
+  "chair_birch": {
+   "template": "chair",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "chair_ebony": {
+   "template": "chair",
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "chair_honey": {
+   "template": "chair",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "chair_lavender": {
+   "template": "chair",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "chair_mossy": {
+   "template": "chair",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "chair_oak": {
+   "template": "chair",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "chair_pine": {
+   "template": "chair",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "chair_stump": {
+   "template": "chair",
+   "rarity": "unique",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "chandelier_copper": {
+   "template": "chandelier",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "ceiling"
+  },
+  "chandelier_gold": {
+   "template": "chandelier",
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "ceiling"
+  },
+  "chandelier_iron": {
+   "template": "chandelier",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "ceiling"
+  },
+  "chandelier_lantern_flower": {
+   "template": "chandelier",
+   "rarity": "unique",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "ceiling"
+  },
+  "chandelier_star": {
+   "template": "chandelier",
+   "rarity": "legendary",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "ceiling"
+  },
+  "chest_birch": {
+   "template": "chest",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "chest_oak": {
+   "template": "chest",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "chest_pine": {
+   "template": "chest",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "chest_rose": {
+   "template": "chest",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "chest_rune": {
+   "template": "chest",
+   "rarity": "legendary",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "chest_sky": {
+   "template": "chest",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "chest_snail": {
+   "template": "chest",
+   "rarity": "unique",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "chest_walnut": {
+   "template": "chest",
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "clock_moon": {
+   "template": "clock",
+   "rarity": "legendary",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "clock_owl": {
+   "template": "clock",
+   "rarity": "unique",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "clock_pine": {
+   "template": "clock",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "clock_sky": {
+   "template": "clock",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "clock_walnut": {
+   "template": "clock",
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "curtain_blue": {
+   "template": "curtain",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  "curtain_green": {
+   "template": "curtain",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  "curtain_natural": {
+   "template": "curtain",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  "curtain_red": {
+   "template": "curtain",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  "fireplace_cauldron": {
+   "template": "fireplace",
+   "rarity": "unique",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "fireplace_chalk": {
+   "template": "fireplace",
+   "rarity": "uncommon",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "fireplace_granite": {
+   "template": "fireplace",
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "fireplace_marble": {
+   "template": "fireplace",
+   "rarity": "rare",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "fireplace_moon": {
+   "template": "fireplace",
+   "rarity": "legendary",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "fireplace_slate": {
+   "template": "fireplace",
+   "rarity": "rare",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "floor_lamp_birch": {
+   "template": "floor_lamp",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "floor_lamp_brass": {
+   "template": "floor_lamp",
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "floor_lamp_fairy": {
+   "template": "floor_lamp",
+   "rarity": "legendary",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "floor_lamp_glowshroom": {
+   "template": "floor_lamp",
+   "rarity": "unique",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "floor_lamp_honey": {
+   "template": "floor_lamp",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "floor_lamp_iron": {
+   "template": "floor_lamp",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "painting_gold_wide": {
+   "template": "painting",
+   "rarity": "rare",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "wall"
+  },
+  "painting_porthole": {
+   "template": "painting",
+   "rarity": "unique",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  "painting_rose_wide": {
+   "template": "painting",
+   "rarity": "uncommon",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "wall"
+  },
+  "painting_sky_small": {
+   "template": "painting",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  "painting_small_birch": {
+   "template": "painting",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  "painting_small_pine": {
+   "template": "painting",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  "painting_wide_pine": {
+   "template": "painting",
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "wall"
+  },
+  "piano_pine": {
+   "template": "piano",
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "piano_sky": {
+   "template": "piano",
+   "rarity": "uncommon",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "piano_star": {
+   "template": "piano",
+   "rarity": "legendary",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "piano_toadstool": {
+   "template": "piano",
+   "rarity": "unique",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "piano_walnut": {
+   "template": "piano",
+   "rarity": "rare",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "plant_fern": {
+   "template": "plant",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "plant_flowering": {
+   "template": "plant",
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "plant_rose_pot": {
+   "template": "plant",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "plant_teapot_bonsai": {
+   "template": "plant",
+   "rarity": "unique",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "rug_burgundy": {
+   "template": "rug",
+   "rarity": "rare",
+   "footprint": [
+    3,
+    2
+   ],
+   "layer": "rug"
+  },
+  "rug_flower_petal": {
+   "template": "rug",
+   "rarity": "unique",
+   "footprint": [
+    2,
+    2
+   ],
+   "layer": "rug"
+  },
+  "rug_gold_round": {
+   "template": "rug",
+   "rarity": "rare",
+   "footprint": [
+    2,
+    2
+   ],
+   "layer": "rug"
+  },
+  "rug_magic_circle": {
+   "template": "rug",
+   "rarity": "legendary",
+   "footprint": [
+    3,
+    2
+   ],
+   "layer": "rug"
+  },
+  "rug_natural": {
+   "template": "rug",
+   "rarity": "normal",
+   "footprint": [
+    3,
+    2
+   ],
+   "layer": "rug"
+  },
+  "rug_round_red": {
+   "template": "rug",
+   "rarity": "normal",
+   "footprint": [
+    2,
+    2
+   ],
+   "layer": "rug"
+  },
+  "rug_round_rose": {
+   "template": "rug",
+   "rarity": "uncommon",
+   "footprint": [
+    2,
+    2
+   ],
+   "layer": "rug"
+  },
+  "rug_runner_green": {
+   "template": "rug",
+   "rarity": "uncommon",
+   "footprint": [
+    3,
+    1
+   ],
+   "layer": "rug"
+  },
+  "rug_runner_natural": {
+   "template": "rug",
+   "rarity": "normal",
+   "footprint": [
+    3,
+    1
+   ],
+   "layer": "rug"
+  },
+  "rug_striped_blue": {
+   "template": "rug",
+   "rarity": "uncommon",
+   "footprint": [
+    3,
+    2
+   ],
+   "layer": "rug"
+  },
+  "sconce_copper": {
+   "template": "sconce",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  "sconce_iron": {
+   "template": "sconce",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  "shelf_birch": {
+   "template": "shelf",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  "shelf_birdhouse": {
+   "template": "shelf",
+   "rarity": "unique",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  "shelf_mint": {
+   "template": "shelf",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  "shelf_oak": {
+   "template": "shelf",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  "shelf_pine": {
+   "template": "shelf",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  "shelf_walnut": {
+   "template": "shelf",
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "wall"
+  },
+  "sofa_birch_two": {
+   "template": "sofa",
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "sofa_cherry_three": {
+   "template": "sofa",
+   "rarity": "rare",
+   "footprint": [
+    3,
+    1
+   ],
+   "layer": "floor"
+  },
+  "sofa_cloud": {
+   "template": "sofa",
+   "rarity": "legendary",
+   "footprint": [
+    3,
+    1
+   ],
+   "layer": "floor"
+  },
+  "sofa_leaf": {
+   "template": "sofa",
+   "rarity": "unique",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "sofa_moss_three": {
+   "template": "sofa",
+   "rarity": "uncommon",
+   "footprint": [
+    3,
+    1
+   ],
+   "layer": "floor"
+  },
+  "sofa_oak_three": {
+   "template": "sofa",
+   "rarity": "normal",
+   "footprint": [
+    3,
+    1
+   ],
+   "layer": "floor"
+  },
+  "sofa_pine_two": {
+   "template": "sofa",
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "sofa_sky_two": {
+   "template": "sofa",
+   "rarity": "uncommon",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "sofa_walnut_two": {
+   "template": "sofa",
+   "rarity": "rare",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "table_dining_chalk": {
+   "template": "table",
+   "rarity": "uncommon",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "table_dining_oak": {
+   "template": "table",
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "table_lamp_brass": {
+   "template": "table_lamp",
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "tabletop"
+  },
+  "table_lamp_clay": {
+   "template": "table_lamp",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "tabletop"
+  },
+  "table_lamp_sky": {
+   "template": "table_lamp",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "tabletop"
+  },
+  "table_long_pine": {
+   "template": "table",
+   "rarity": "normal",
+   "footprint": [
+    3,
+    1
+   ],
+   "layer": "floor"
+  },
+  "table_long_walnut": {
+   "template": "table",
+   "rarity": "rare",
+   "footprint": [
+    3,
+    1
+   ],
+   "layer": "floor"
+  },
+  "table_round_cherry": {
+   "template": "table",
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "table_round_mint": {
+   "template": "table",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "table_round_pine": {
+   "template": "table",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "table_stump": {
+   "template": "table",
+   "rarity": "unique",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "throne_crystal": {
+   "template": "throne",
+   "rarity": "legendary",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "throne_honey": {
+   "template": "throne",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "throne_king": {
+   "template": "throne",
+   "rarity": "rare",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "throne_pine": {
+   "template": "throne",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "throne_root": {
+   "template": "throne",
+   "rarity": "unique",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "vase_clay": {
+   "template": "vase",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "tabletop"
+  },
+  "vase_rose": {
+   "template": "vase",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "tabletop"
+  },
+  "wardrobe_birch_narrow": {
+   "template": "wardrobe",
+   "rarity": "normal",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "wardrobe_hollow_log": {
+   "template": "wardrobe",
+   "rarity": "unique",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "wardrobe_oak": {
+   "template": "wardrobe",
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "wardrobe_pine": {
+   "template": "wardrobe",
+   "rarity": "normal",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "wardrobe_rose": {
+   "template": "wardrobe",
+   "rarity": "uncommon",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  },
+  "wardrobe_sky_narrow": {
+   "template": "wardrobe",
+   "rarity": "uncommon",
+   "footprint": [
+    1,
+    1
+   ],
+   "layer": "floor"
+  },
+  "wardrobe_walnut": {
+   "template": "wardrobe",
+   "rarity": "rare",
+   "footprint": [
+    2,
+    1
+   ],
+   "layer": "floor"
+  }
+ },
+ "materials": [
+  "amber",
+  "blueprint_kongelig",
+  "blueprint_mestermurer",
+  "blueprint_solstuen",
+  "blueprint_troldmanden",
+  "brass_bar",
+  "brick",
+  "copper_plate",
+  "fabric_damask",
+  "fabric_plain",
+  "fabric_velvet",
+  "fabric_wool",
+  "glass_pane",
+  "gold_leaf",
+  "lime",
+  "marble_block",
+  "milk_paint",
+  "nails",
+  "plank_birch",
+  "plank_cherry",
+  "plank_ebony",
+  "plank_oak",
+  "plank_pine",
+  "plank_walnut",
+  "roof_tile",
+  "rope",
+  "rose_quartz",
+  "slate",
+  "stone_block",
+  "straw_bundle",
+  "timber_beam",
+  "varnish"
+ ],
+ "garments": {
+  "bracelet_copper": {
+   "slot": "jewellery",
+   "subslot": "bracelet",
+   "rarity": "normal"
+  },
+  "bracelet_rose_gold": {
+   "slot": "jewellery",
+   "subslot": "bracelet",
+   "rarity": "rare"
+  },
+  "bracelet_silver": {
+   "slot": "jewellery",
+   "subslot": "bracelet",
+   "rarity": "uncommon"
+  },
+  "bracelet_string": {
+   "slot": "jewellery",
+   "subslot": "bracelet",
+   "rarity": "normal"
+  },
+  "bracelet_vine": {
+   "slot": "jewellery",
+   "subslot": "bracelet",
+   "rarity": "unique"
+  },
+  "circlet_daisy": {
+   "slot": "jewellery",
+   "subslot": "circlet",
+   "rarity": "normal"
+  },
+  "circlet_leaves": {
+   "slot": "jewellery",
+   "subslot": "circlet",
+   "rarity": "uncommon"
+  },
+  "circlet_moon_crown": {
+   "slot": "jewellery",
+   "subslot": "circlet",
+   "rarity": "legendary"
+  },
+  "circlet_tiara_silver": {
+   "slot": "jewellery",
+   "subslot": "circlet",
+   "rarity": "rare"
+  },
+  "dress_gown_aurora": {
+   "slot": "dress",
+   "subslot": null,
+   "rarity": "legendary"
+  },
+  "dress_gown_lavender": {
+   "slot": "dress",
+   "subslot": null,
+   "rarity": "rare"
+  },
+  "dress_gown_mint": {
+   "slot": "dress",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "dress_gown_rose": {
+   "slot": "dress",
+   "subslot": null,
+   "rarity": "rare"
+  },
+  "dress_pinafore_baker": {
+   "slot": "dress",
+   "subslot": null,
+   "rarity": "unique"
+  },
+  "dress_pinafore_blue": {
+   "slot": "dress",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "dress_pinafore_brown": {
+   "slot": "dress",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "dress_pinafore_honey": {
+   "slot": "dress",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "dress_sun_cream": {
+   "slot": "dress",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "dress_sun_gold": {
+   "slot": "dress",
+   "subslot": null,
+   "rarity": "rare"
+  },
+  "dress_sun_green": {
+   "slot": "dress",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "dress_sun_meadow": {
+   "slot": "dress",
+   "subslot": null,
+   "rarity": "unique"
+  },
+  "dress_sun_rose": {
+   "slot": "dress",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "dress_sun_sky": {
+   "slot": "dress",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "earrings_copper": {
+   "slot": "jewellery",
+   "subslot": "earrings",
+   "rarity": "normal"
+  },
+  "earrings_glowcap": {
+   "slot": "jewellery",
+   "subslot": "earrings",
+   "rarity": "unique"
+  },
+  "earrings_hoops_gold": {
+   "slot": "jewellery",
+   "subslot": "earrings",
+   "rarity": "uncommon"
+  },
+  "earrings_pearl": {
+   "slot": "jewellery",
+   "subslot": "earrings",
+   "rarity": "normal"
+  },
+  "hat_acorn_gold": {
+   "slot": "hat",
+   "subslot": null,
+   "rarity": "rare"
+  },
+  "hat_acorn_plain": {
+   "slot": "hat",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "hat_cap_blue": {
+   "slot": "hat",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "hat_cap_brown": {
+   "slot": "hat",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "hat_cap_green": {
+   "slot": "hat",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "hat_cat_ears": {
+   "slot": "hat",
+   "subslot": null,
+   "rarity": "rare"
+  },
+  "hat_chef_white": {
+   "slot": "hat",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "hat_hood_green": {
+   "slot": "hat",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "hat_mushroom_glow": {
+   "slot": "hat",
+   "subslot": null,
+   "rarity": "unique"
+  },
+  "hat_mushroom_red": {
+   "slot": "hat",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "hat_mushroom_spinner": {
+   "slot": "hat",
+   "subslot": null,
+   "rarity": "legendary"
+  },
+  "hat_straw_green": {
+   "slot": "hat",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "hat_straw_harvest": {
+   "slot": "hat",
+   "subslot": null,
+   "rarity": "rare"
+  },
+  "hat_straw_plain": {
+   "slot": "hat",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "hat_straw_ribbon": {
+   "slot": "hat",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "hat_wizard_lavender": {
+   "slot": "hat",
+   "subslot": null,
+   "rarity": "rare"
+  },
+  "hat_wizard_night": {
+   "slot": "hat",
+   "subslot": null,
+   "rarity": "legendary"
+  },
+  "hat_wizard_zephyr": {
+   "slot": "hat",
+   "subslot": null,
+   "rarity": "unique"
+  },
+  "necklace_acorn": {
+   "slot": "jewellery",
+   "subslot": "necklace",
+   "rarity": "normal"
+  },
+  "necklace_beads_wood": {
+   "slot": "jewellery",
+   "subslot": "necklace",
+   "rarity": "normal"
+  },
+  "necklace_dewdrop": {
+   "slot": "jewellery",
+   "subslot": "necklace",
+   "rarity": "unique"
+  },
+  "necklace_heart_of_tree": {
+   "slot": "jewellery",
+   "subslot": "necklace",
+   "rarity": "legendary"
+  },
+  "necklace_leaf": {
+   "slot": "jewellery",
+   "subslot": "necklace",
+   "rarity": "normal"
+  },
+  "necklace_moonstone": {
+   "slot": "jewellery",
+   "subslot": "necklace",
+   "rarity": "rare"
+  },
+  "necklace_moonstone_small": {
+   "slot": "jewellery",
+   "subslot": "necklace",
+   "rarity": "uncommon"
+  },
+  "pants_breeches_tweed": {
+   "slot": "pants",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "pants_dungarees_blue": {
+   "slot": "pants",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "pants_dungarees_brown": {
+   "slot": "pants",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "pants_dungarees_gold": {
+   "slot": "pants",
+   "subslot": null,
+   "rarity": "rare"
+  },
+  "pants_dungarees_patchwork": {
+   "slot": "pants",
+   "subslot": null,
+   "rarity": "unique"
+  },
+  "pants_shorts_blue": {
+   "slot": "pants",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "pants_shorts_khaki": {
+   "slot": "pants",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "pants_trousers_brown": {
+   "slot": "pants",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "pants_trousers_cream": {
+   "slot": "pants",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "pants_trousers_green": {
+   "slot": "pants",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "pants_trousers_lavender": {
+   "slot": "pants",
+   "subslot": null,
+   "rarity": "rare"
+  },
+  "pants_trousers_moss": {
+   "slot": "pants",
+   "subslot": null,
+   "rarity": "unique"
+  },
+  "pants_trousers_starlight": {
+   "slot": "pants",
+   "subslot": null,
+   "rarity": "legendary"
+  },
+  "pants_trousers_stripe": {
+   "slot": "pants",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "shirt_knit_blue": {
+   "slot": "shirt",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "shirt_knit_cream": {
+   "slot": "shirt",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "shirt_knit_dawn": {
+   "slot": "shirt",
+   "subslot": null,
+   "rarity": "legendary"
+  },
+  "shirt_knit_lavender": {
+   "slot": "shirt",
+   "subslot": null,
+   "rarity": "rare"
+  },
+  "shirt_knit_thornberry": {
+   "slot": "shirt",
+   "subslot": null,
+   "rarity": "unique"
+  },
+  "shirt_linen_blue": {
+   "slot": "shirt",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "shirt_linen_cream": {
+   "slot": "shirt",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "shirt_linen_firefly": {
+   "slot": "shirt",
+   "subslot": null,
+   "rarity": "unique"
+  },
+  "shirt_linen_green": {
+   "slot": "shirt",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "shirt_linen_harvest": {
+   "slot": "shirt",
+   "subslot": null,
+   "rarity": "rare"
+  },
+  "shirt_linen_rose": {
+   "slot": "shirt",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "shirt_smock_brown": {
+   "slot": "shirt",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "shirt_smock_honey": {
+   "slot": "shirt",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "shirt_vest_embroidered": {
+   "slot": "shirt",
+   "subslot": null,
+   "rarity": "rare"
+  },
+  "shirt_vest_green": {
+   "slot": "shirt",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "shoes_boots_brown": {
+   "slot": "shoes",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "shoes_boots_dark": {
+   "slot": "shoes",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "shoes_boots_green": {
+   "slot": "shoes",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "shoes_boots_laced": {
+   "slot": "shoes",
+   "subslot": null,
+   "rarity": "rare"
+  },
+  "shoes_boots_star": {
+   "slot": "shoes",
+   "subslot": null,
+   "rarity": "unique"
+  },
+  "shoes_boots_wind": {
+   "slot": "shoes",
+   "subslot": null,
+   "rarity": "legendary"
+  },
+  "shoes_clogs_gilded": {
+   "slot": "shoes",
+   "subslot": null,
+   "rarity": "rare"
+  },
+  "shoes_clogs_painted": {
+   "slot": "shoes",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "shoes_clogs_wood": {
+   "slot": "shoes",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "shoes_slippers_cream": {
+   "slot": "shoes",
+   "subslot": null,
+   "rarity": "normal"
+  },
+  "shoes_slippers_lavender": {
+   "slot": "shoes",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "shoes_slippers_pompom": {
+   "slot": "shoes",
+   "subslot": null,
+   "rarity": "unique"
+  },
+  "shoes_slippers_silk": {
+   "slot": "shoes",
+   "subslot": null,
+   "rarity": "rare"
+  },
+  "shoes_wellies_blue": {
+   "slot": "shoes",
+   "subslot": null,
+   "rarity": "uncommon"
+  },
+  "shoes_wellies_yellow": {
+   "slot": "shoes",
+   "subslot": null,
+   "rarity": "normal"
+  }
+ }
+}

@@ -1,0 +1,547 @@
+{
+ "v": 1,
+ "method": "flip_h(r0) vs true r1 and flip_h(r2) vs true r3 of the 130-item bake with true rotations (critic review_art/home/mirror_all.py)",
+ "rule": "mean RGB error < 8/255 and silhouette mismatch < 1% on BOTH pairs, never unique/legendary, never patterned fabric",
+ "measured_asymmetric_items": 70,
+ "mirror_ok": [
+  "bed_pine",
+  "bed_birch_single",
+  "bed_oak_single",
+  "bed_sky_double",
+  "bed_walnut",
+  "bed_cherry",
+  "chair_pine",
+  "chair_birch",
+  "chair_oak",
+  "chair_mossy",
+  "chair_honey",
+  "chair_ebony",
+  "sofa_pine_two",
+  "sofa_oak_three",
+  "sofa_birch_two",
+  "sofa_sky_two",
+  "sofa_moss_three",
+  "sofa_walnut_two",
+  "sofa_cherry_three",
+  "wardrobe_pine",
+  "wardrobe_birch_narrow",
+  "wardrobe_oak",
+  "wardrobe_rose",
+  "wardrobe_sky_narrow",
+  "wardrobe_walnut",
+  "fireplace_granite",
+  "fireplace_chalk",
+  "chest_pine",
+  "chest_oak",
+  "chest_birch",
+  "chest_sky",
+  "chest_rose",
+  "chest_walnut",
+  "clock_pine",
+  "clock_sky",
+  "clock_walnut",
+  "throne_pine",
+  "throne_honey",
+  "throne_king",
+  "piano_walnut"
+ ],
+ "rejected": [
+  {
+   "id": "bed_rose_single",
+   "template": "bed",
+   "rarity": "uncommon",
+   "mean_err": [
+    12.5,
+    12.4
+   ],
+   "sil_pct": [
+    0.19,
+    0.18
+   ],
+   "reasons": [
+    "mean_err 12.5/255 >= 8"
+   ]
+  },
+  {
+   "id": "bed_toadstool",
+   "template": "bed",
+   "rarity": "unique",
+   "mean_err": [
+    6.5,
+    6.4
+   ],
+   "sil_pct": [
+    0.48,
+    0.29
+   ],
+   "reasons": [
+    "keepsake"
+   ]
+  },
+  {
+   "id": "bed_moon",
+   "template": "bed",
+   "rarity": "legendary",
+   "mean_err": [
+    7.6,
+    7.7
+   ],
+   "sil_pct": [
+    0.3,
+    0.25
+   ],
+   "reasons": [
+    "keepsake"
+   ]
+  },
+  {
+   "id": "chair_lavender",
+   "template": "chair",
+   "rarity": "uncommon",
+   "mean_err": [
+    3.9,
+    4.1
+   ],
+   "sil_pct": [
+    0.38,
+    0.14
+   ],
+   "reasons": [
+    "patterned fabric rosendamask"
+   ]
+  },
+  {
+   "id": "chair_stump",
+   "template": "chair",
+   "rarity": "unique",
+   "mean_err": [
+    11.8,
+    16.9
+   ],
+   "sil_pct": [
+    0.62,
+    0.64
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 16.9/255 >= 8"
+   ]
+  },
+  {
+   "id": "sofa_leaf",
+   "template": "sofa",
+   "rarity": "unique",
+   "mean_err": [
+    13.0,
+    14.6
+   ],
+   "sil_pct": [
+    2.11,
+    2.17
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 14.6/255 >= 8",
+    "silhouette_mismatch 2.2% >= 1%"
+   ]
+  },
+  {
+   "id": "sofa_cloud",
+   "template": "sofa",
+   "rarity": "legendary",
+   "mean_err": [
+    7.0,
+    8.0
+   ],
+   "sil_pct": [
+    0.25,
+    0.37
+   ],
+   "reasons": [
+    "keepsake"
+   ]
+  },
+  {
+   "id": "wardrobe_hollow_log",
+   "template": "wardrobe",
+   "rarity": "unique",
+   "mean_err": [
+    8.4,
+    7.4
+   ],
+   "sil_pct": [
+    0.74,
+    0.71
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 8.4/255 >= 8"
+   ]
+  },
+  {
+   "id": "bookshelf_pine",
+   "template": "bookshelf",
+   "rarity": "normal",
+   "mean_err": [
+    22.9,
+    5.0
+   ],
+   "sil_pct": [
+    0.16,
+    0.15
+   ],
+   "reasons": [
+    "mean_err 22.9/255 >= 8"
+   ]
+  },
+  {
+   "id": "bookshelf_oak_narrow",
+   "template": "bookshelf",
+   "rarity": "normal",
+   "mean_err": [
+    18.7,
+    3.9
+   ],
+   "sil_pct": [
+    0.26,
+    0.24
+   ],
+   "reasons": [
+    "mean_err 18.7/255 >= 8"
+   ]
+  },
+  {
+   "id": "bookshelf_birch",
+   "template": "bookshelf",
+   "rarity": "normal",
+   "mean_err": [
+    24.1,
+    6.7
+   ],
+   "sil_pct": [
+    0.16,
+    0.15
+   ],
+   "reasons": [
+    "mean_err 24.1/255 >= 8"
+   ]
+  },
+  {
+   "id": "bookshelf_mint",
+   "template": "bookshelf",
+   "rarity": "uncommon",
+   "mean_err": [
+    24.1,
+    5.7
+   ],
+   "sil_pct": [
+    0.16,
+    0.15
+   ],
+   "reasons": [
+    "mean_err 24.1/255 >= 8"
+   ]
+  },
+  {
+   "id": "bookshelf_lavender_narrow",
+   "template": "bookshelf",
+   "rarity": "uncommon",
+   "mean_err": [
+    19.4,
+    5.8
+   ],
+   "sil_pct": [
+    0.26,
+    0.24
+   ],
+   "reasons": [
+    "mean_err 19.4/255 >= 8"
+   ]
+  },
+  {
+   "id": "bookshelf_ebony",
+   "template": "bookshelf",
+   "rarity": "rare",
+   "mean_err": [
+    23.2,
+    3.8
+   ],
+   "sil_pct": [
+    0.19,
+    0.36
+   ],
+   "reasons": [
+    "mean_err 23.2/255 >= 8"
+   ]
+  },
+  {
+   "id": "bookshelf_book_tree",
+   "template": "bookshelf",
+   "rarity": "unique",
+   "mean_err": [
+    18.3,
+    11.1
+   ],
+   "sil_pct": [
+    18.49,
+    16.33
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 18.3/255 >= 8",
+    "silhouette_mismatch 18.5% >= 1%"
+   ]
+  },
+  {
+   "id": "bookshelf_floating",
+   "template": "bookshelf",
+   "rarity": "legendary",
+   "mean_err": [
+    24.5,
+    3.7
+   ],
+   "sil_pct": [
+    0.18,
+    0.36
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 24.5/255 >= 8"
+   ]
+  },
+  {
+   "id": "fireplace_marble",
+   "template": "fireplace",
+   "rarity": "rare",
+   "mean_err": [
+    8.1,
+    5.8
+   ],
+   "sil_pct": [
+    0.29,
+    0.23
+   ],
+   "reasons": [
+    "mean_err 8.1/255 >= 8"
+   ]
+  },
+  {
+   "id": "fireplace_slate",
+   "template": "fireplace",
+   "rarity": "rare",
+   "mean_err": [
+    8.1,
+    5.8
+   ],
+   "sil_pct": [
+    0.29,
+    0.23
+   ],
+   "reasons": [
+    "mean_err 8.1/255 >= 8"
+   ]
+  },
+  {
+   "id": "fireplace_cauldron",
+   "template": "fireplace",
+   "rarity": "unique",
+   "mean_err": [
+    6.9,
+    4.9
+   ],
+   "sil_pct": [
+    0.29,
+    0.23
+   ],
+   "reasons": [
+    "keepsake"
+   ]
+  },
+  {
+   "id": "fireplace_moon",
+   "template": "fireplace",
+   "rarity": "legendary",
+   "mean_err": [
+    8.4,
+    5.8
+   ],
+   "sil_pct": [
+    0.29,
+    0.23
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 8.4/255 >= 8"
+   ]
+  },
+  {
+   "id": "chest_snail",
+   "template": "chest",
+   "rarity": "unique",
+   "mean_err": [
+    34.2,
+    21.8
+   ],
+   "sil_pct": [
+    28.54,
+    20.2
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 34.2/255 >= 8",
+    "silhouette_mismatch 28.5% >= 1%"
+   ]
+  },
+  {
+   "id": "chest_rune",
+   "template": "chest",
+   "rarity": "legendary",
+   "mean_err": [
+    5.2,
+    5.1
+   ],
+   "sil_pct": [
+    1.4,
+    1.4
+   ],
+   "reasons": [
+    "keepsake",
+    "silhouette_mismatch 1.4% >= 1%"
+   ]
+  },
+  {
+   "id": "clock_owl",
+   "template": "clock",
+   "rarity": "unique",
+   "mean_err": [
+    6.8,
+    7.3
+   ],
+   "sil_pct": [
+    0.05,
+    0.05
+   ],
+   "reasons": [
+    "keepsake"
+   ]
+  },
+  {
+   "id": "clock_moon",
+   "template": "clock",
+   "rarity": "legendary",
+   "mean_err": [
+    5.0,
+    3.1
+   ],
+   "sil_pct": [
+    0.18,
+    0.17
+   ],
+   "reasons": [
+    "keepsake"
+   ]
+  },
+  {
+   "id": "throne_root",
+   "template": "throne",
+   "rarity": "unique",
+   "mean_err": [
+    9.3,
+    8.5
+   ],
+   "sil_pct": [
+    4.55,
+    4.17
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 9.3/255 >= 8",
+    "silhouette_mismatch 4.5% >= 1%"
+   ]
+  },
+  {
+   "id": "throne_crystal",
+   "template": "throne",
+   "rarity": "legendary",
+   "mean_err": [
+    8.1,
+    9.2
+   ],
+   "sil_pct": [
+    0.27,
+    0.3
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 9.2/255 >= 8"
+   ]
+  },
+  {
+   "id": "piano_pine",
+   "template": "piano",
+   "rarity": "normal",
+   "mean_err": [
+    9.1,
+    4.5
+   ],
+   "sil_pct": [
+    0.28,
+    0.27
+   ],
+   "reasons": [
+    "mean_err 9.1/255 >= 8"
+   ]
+  },
+  {
+   "id": "piano_sky",
+   "template": "piano",
+   "rarity": "uncommon",
+   "mean_err": [
+    11.1,
+    6.6
+   ],
+   "sil_pct": [
+    0.28,
+    0.27
+   ],
+   "reasons": [
+    "mean_err 11.1/255 >= 8"
+   ]
+  },
+  {
+   "id": "piano_toadstool",
+   "template": "piano",
+   "rarity": "unique",
+   "mean_err": [
+    9.0,
+    5.3
+   ],
+   "sil_pct": [
+    0.17,
+    0.15
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 9.0/255 >= 8"
+   ]
+  },
+  {
+   "id": "piano_star",
+   "template": "piano",
+   "rarity": "legendary",
+   "mean_err": [
+    7.8,
+    2.6
+   ],
+   "sil_pct": [
+    0.28,
+    0.28
+   ],
+   "reasons": [
+    "keepsake"
+   ]
+  }
+ ],
+ "saved_sprites_if_used": 80,
+ "note": "default policy is TRUE baked r1/r3 for everything (3.64 MB WebP q94 for all 130 items); this list is only a disk fallback (about 0.7 MB saved)"
+}

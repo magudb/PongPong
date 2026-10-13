@@ -1,0 +1,60 @@
+{
+ "_contract": {
+  "tile_size": [
+   128,
+   76
+  ],
+  "atlas_cell": [
+   144,
+   84
+  ],
+  "variants": [
+   4,
+   4
+  ]
+ },
+ "floor_stone": {
+  "file": "floor_stone.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ },
+ "floor_plank": {
+  "file": "floor_plank.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ },
+ "floor_parquet": {
+  "file": "floor_parquet.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ },
+ "floor_marble": {
+  "file": "floor_marble.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ }
+}

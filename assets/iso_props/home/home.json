@@ -1,0 +1,700 @@
+{
+ "_contract": {
+  "files": "relative to this json",
+  "anchor": "ground point at the centre of the DOOR on the front plane (z=0); every tier shares it, so tier swaps are in-place texture swaps",
+  "footprint_rect": "tiles relative to the anchor: [xmin, zmin, xmax, zmax]; +x = screen right-down, +z = screen left-down (front)",
+  "night": "ADDITIVE layer (BLEND_MODE_ADD), TRIMMED to the bbox of its lights: exterior.night_offset = px from the top-left of the day sprite, exterior.night_size = its size; same pivot as the day sprite",
+  "ysort": "px offset from the pivot to the y-sort key point (left-front corner if W>=D)",
+  "platform_back_rows": "extra deck rows added BEHIND the door row (towards -z); front edges + all farm coordinates stay identical",
+  "money": "none here: costs, days, materials and gates are lua/data/home_tiers.lua; names are localization/home.csv"
+ },
+ "platform_stages": {
+  "0": {
+   "back_rows": 0,
+   "tiers": [
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  "1": {
+   "back_rows": 1,
+   "tiers": [
+    5,
+    6,
+    7
+   ]
+  },
+  "2": {
+   "back_rows": 2,
+   "tiers": [
+    8,
+    9
+   ]
+  },
+  "3": {
+   "back_rows": 3,
+   "tiers": [
+    10
+   ]
+  }
+ },
+ "tiers": [
+  {
+   "tier": 1,
+   "id": "skur",
+   "visual_note": "lean-to boards, patched tarp, stovepipe",
+   "footprint_tiles": [
+    2,
+    2
+   ],
+   "footprint_rect": [
+    -1.5,
+    -2.0,
+    0.5,
+    0.0
+   ],
+   "door_column": 1,
+   "height_m": 3.45,
+   "exterior": {
+    "day": "house_t01.webp",
+    "night": "house_t01_night.webp",
+    "size": [
+     306,
+     403
+    ],
+    "pivot": [
+     123,
+     342
+    ],
+    "ysort": [
+     -96.0,
+     -56.4
+    ],
+    "night_offset": [
+     4,
+     14
+    ],
+    "night_size": [
+     298,
+     376
+    ],
+    "night_blend": "add"
+   },
+   "interior": {
+    "room": "rooms/room_t01.json",
+    "floor": "floor_stone",
+    "wall_style": "plank",
+    "max_furniture": 11
+   },
+   "platform": {
+    "stage": 0,
+    "back_rows": 0
+   }
+  },
+  {
+   "tier": 2,
+   "id": "hytte",
+   "visual_note": "honey log walls, stone chimney, porch roof",
+   "footprint_tiles": [
+    3,
+    2
+   ],
+   "footprint_rect": [
+    -1.5,
+    -2.0,
+    1.5,
+    0.0
+   ],
+   "door_column": 1,
+   "height_m": 4.81,
+   "exterior": {
+    "day": "house_t02.webp",
+    "night": "house_t02_night.webp",
+    "size": [
+     431,
+     436
+    ],
+    "pivot": [
+     152,
+     364
+    ],
+    "ysort": [
+     -96.0,
+     -56.4
+    ],
+    "night_offset": [
+     48,
+     103
+    ],
+    "night_size": [
+     380,
+     325
+    ],
+    "night_blend": "add"
+   },
+   "interior": {
+    "room": "rooms/room_t02.json",
+    "floor": "floor_stone",
+    "wall_style": "plank",
+    "max_furniture": 16
+   },
+   "platform": {
+    "stage": 0,
+    "back_rows": 0
+   },
+   "scaffold_from_previous": {
+    "file": "scaffold_to02.webp",
+    "size": [
+     534,
+     439
+    ],
+    "pivot": [
+     217,
+     300
+    ],
+    "ysort": [
+     -96.0,
+     -56.4
+    ]
+   }
+  },
+  {
+   "tier": 3,
+   "id": "straatag",
+   "visual_note": "cream plaster, golden thatch, eyebrow window",
+   "footprint_tiles": [
+    4,
+    3
+   ],
+   "footprint_rect": [
+    -2.5,
+    -3.0,
+    1.5,
+    0.0
+   ],
+   "door_column": 2,
+   "height_m": 5.41,
+   "exterior": {
+    "day": "house_t03.webp",
+    "night": "house_t03_night.webp",
+    "size": [
+     558,
+     576
+    ],
+    "pivot": [
+     215,
+     512
+    ],
+    "ysort": [
+     -160.0,
+     -94.0
+    ],
+    "night_offset": [
+     43,
+     9
+    ],
+    "night_size": [
+     510,
+     562
+    ],
+    "night_blend": "add"
+   },
+   "interior": {
+    "room": "rooms/room_t03.json",
+    "floor": "floor_plank",
+    "wall_style": "plank",
+    "max_furniture": 19
+   },
+   "platform": {
+    "stage": 0,
+    "back_rows": 0
+   },
+   "scaffold_from_previous": {
+    "file": "scaffold_to03.webp",
+    "size": [
+     662,
+     510
+    ],
+    "pivot": [
+     281,
+     364
+    ],
+    "ysort": [
+     -160.0,
+     -94.0
+    ]
+   }
+  },
+  {
+   "tier": 4,
+   "id": "bindingsvaerk",
+   "visual_note": "half-timber frame, red clay tiles, cross gable",
+   "footprint_tiles": [
+    5,
+    3
+   ],
+   "footprint_rect": [
+    -2.5,
+    -3.0,
+    2.5,
+    0.0
+   ],
+   "door_column": 2,
+   "height_m": 5.64,
+   "exterior": {
+    "day": "house_t04.webp",
+    "night": "house_t04_night.webp",
+    "size": [
+     593,
+     624
+    ],
+    "pivot": [
+     201,
+     520
+    ],
+    "ysort": [
+     -160.0,
+     -94.0
+    ],
+    "night_offset": [
+     49,
+     14
+    ],
+    "night_size": [
+     536,
+     598
+    ],
+    "night_blend": "add"
+   },
+   "interior": {
+    "room": "rooms/room_t04.json",
+    "floor": "floor_plank",
+    "wall_style": "plank",
+    "max_furniture": 26
+   },
+   "platform": {
+    "stage": 0,
+    "back_rows": 0
+   },
+   "scaffold_from_previous": {
+    "file": "scaffold_to04.webp",
+    "size": [
+     726,
+     557
+    ],
+    "pivot": [
+     281,
+     374
+    ],
+    "ysort": [
+     -160.0,
+     -94.0
+    ]
+   }
+  },
+  {
+   "tier": 5,
+   "id": "gaarden",
+   "visual_note": "two storeys, yellow plaster, barn wing, dormers",
+   "footprint_tiles": [
+    5,
+    4
+   ],
+   "footprint_rect": [
+    -2.5,
+    -4.0,
+    2.5,
+    0.0
+   ],
+   "door_column": 2,
+   "height_m": 7.21,
+   "exterior": {
+    "day": "house_t05.webp",
+    "night": "house_t05_night.webp",
+    "size": [
+     646,
+     774
+    ],
+    "pivot": [
+     200,
+     672
+    ],
+    "ysort": [
+     -160.0,
+     -94.0
+    ],
+    "night_offset": [
+     31,
+     16
+    ],
+    "night_size": [
+     612,
+     735
+    ],
+    "night_blend": "add"
+   },
+   "interior": {
+    "room": "rooms/room_t05.json",
+    "floor": "floor_parquet",
+    "wall_style": "paper",
+    "max_furniture": 30
+   },
+   "platform": {
+    "stage": 1,
+    "back_rows": 1
+   },
+   "scaffold_from_previous": {
+    "file": "scaffold_to05.webp",
+    "size": [
+     790,
+     626
+    ],
+    "pivot": [
+     281,
+     443
+    ],
+    "ysort": [
+     -160.0,
+     -94.0
+    ]
+   }
+  },
+  {
+   "tier": 6,
+   "id": "taarnhus",
+   "visual_note": "stone ground floor, round tower, balcony, slate roof",
+   "footprint_tiles": [
+    6,
+    4
+   ],
+   "footprint_rect": [
+    -3.5,
+    -4.0,
+    2.5,
+    0.0
+   ],
+   "door_column": 3,
+   "height_m": 10.4,
+   "exterior": {
+    "day": "house_t06.webp",
+    "night": "house_t06_night.webp",
+    "size": [
+     676,
+     970
+    ],
+    "pivot": [
+     217,
+     867
+    ],
+    "ysort": [
+     -224.0,
+     -131.7
+    ],
+    "night_offset": [
+     21,
+     4
+    ],
+    "night_size": [
+     652,
+     940
+    ],
+    "night_blend": "add"
+   },
+   "interior": {
+    "room": "rooms/room_t06.json",
+    "floor": "floor_parquet",
+    "wall_style": "paper",
+    "max_furniture": 38
+   },
+   "platform": {
+    "stage": 1,
+    "back_rows": 1
+   },
+   "scaffold_from_previous": {
+    "file": "scaffold_to06.webp",
+    "size": [
+     854,
+     803
+    ],
+    "pivot": [
+     345,
+     620
+    ],
+    "ysort": [
+     -224.0,
+     -131.7
+    ]
+   }
+  },
+  {
+   "tier": 7,
+   "id": "landsted",
+   "visual_note": "symmetrical villa, columns + pediment, mansard roof",
+   "footprint_tiles": [
+    7,
+    4
+   ],
+   "footprint_rect": [
+    -3.5,
+    -4.0,
+    3.5,
+    0.0
+   ],
+   "door_column": 3,
+   "height_m": 7.77,
+   "exterior": {
+    "day": "house_t07.webp",
+    "night": "house_t07_night.webp",
+    "size": [
+     772,
+     1029
+    ],
+    "pivot": [
+     258,
+     890
+    ],
+    "ysort": [
+     -224.0,
+     -131.7
+    ],
+    "night_offset": [
+     9,
+     4
+    ],
+    "night_size": [
+     750,
+     961
+    ],
+    "night_blend": "add"
+   },
+   "interior": {
+    "room": "rooms/room_t07.json",
+    "floor": "floor_parquet",
+    "wall_style": "paper",
+    "max_furniture": 46
+   },
+   "platform": {
+    "stage": 1,
+    "back_rows": 1
+   },
+   "scaffold_from_previous": {
+    "file": "scaffold_to07.webp",
+    "size": [
+     918,
+     726
+    ],
+    "pivot": [
+     345,
+     505
+    ],
+    "ysort": [
+     -224.0,
+     -131.7
+    ]
+   }
+  },
+  {
+   "tier": 8,
+   "id": "herregaard",
+   "visual_note": "brick manor, copper roofs, clock tower",
+   "footprint_tiles": [
+    7,
+    5
+   ],
+   "footprint_rect": [
+    -3.5,
+    -5.0,
+    3.5,
+    0.0
+   ],
+   "door_column": 3,
+   "height_m": 13.2,
+   "exterior": {
+    "day": "house_t08.webp",
+    "night": "house_t08_night.webp",
+    "size": [
+     828,
+     1076
+    ],
+    "pivot": [
+     237,
+     937
+    ],
+    "ysort": [
+     -224.0,
+     -131.7
+    ],
+    "night_offset": [
+     40,
+     4
+    ],
+    "night_size": [
+     747,
+     1036
+    ],
+    "night_blend": "add"
+   },
+   "interior": {
+    "room": "rooms/room_t08.json",
+    "floor": "floor_marble",
+    "wall_style": "marble",
+    "max_furniture": 57
+   },
+   "platform": {
+    "stage": 2,
+    "back_rows": 2
+   },
+   "scaffold_from_previous": {
+    "file": "scaffold_to08.webp",
+    "size": [
+     982,
+     922
+    ],
+    "pivot": [
+     345,
+     701
+    ],
+    "ysort": [
+     -224.0,
+     -131.7
+    ]
+   }
+  },
+  {
+   "tier": 9,
+   "id": "borg",
+   "visual_note": "stone fortress, gatehouse, keep, banners",
+   "footprint_tiles": [
+    9,
+    5
+   ],
+   "footprint_rect": [
+    -4.5,
+    -5.0,
+    4.5,
+    0.0
+   ],
+   "door_column": 4,
+   "height_m": 11.65,
+   "exterior": {
+    "day": "house_t09.webp",
+    "night": "house_t09_night.webp",
+    "size": [
+     890,
+     1120
+    ],
+    "pivot": [
+     282,
+     943
+    ],
+    "ysort": [
+     -288.0,
+     -169.3
+    ],
+    "night_offset": [
+     3,
+     4
+    ],
+    "night_size": [
+     885,
+     1028
+    ],
+    "night_blend": "add"
+   },
+   "interior": {
+    "room": "rooms/room_t09.json",
+    "floor": "floor_marble",
+    "wall_style": "marble",
+    "max_furniture": 65
+   },
+   "platform": {
+    "stage": 2,
+    "back_rows": 2
+   },
+   "scaffold_from_previous": {
+    "file": "scaffold_to09.webp",
+    "size": [
+     1110,
+     971
+    ],
+    "pivot": [
+     409,
+     712
+    ],
+    "ysort": [
+     -288.0,
+     -169.3
+    ]
+   }
+  },
+  {
+   "tier": 10,
+   "id": "slot",
+   "visual_note": "cream palace, gold domes, lavender + teal spires",
+   "footprint_tiles": [
+    9,
+    6
+   ],
+   "footprint_rect": [
+    -4.5,
+    -6.0,
+    4.5,
+    0.0
+   ],
+   "door_column": 4,
+   "height_m": 12.4,
+   "exterior": {
+    "day": "house_t10.webp",
+    "night": "house_t10_night.webp",
+    "size": [
+     950,
+     1312
+    ],
+    "pivot": [
+     281,
+     1135
+    ],
+    "ysort": [
+     -288.0,
+     -169.3
+    ],
+    "night_offset": [
+     21,
+     3
+    ],
+    "night_size": [
+     914,
+     1273
+    ],
+    "night_blend": "add"
+   },
+   "interior": {
+    "room": "rooms/room_t10.json",
+    "floor": "floor_marble",
+    "wall_style": "marble",
+    "max_furniture": 74
+   },
+   "platform": {
+    "stage": 3,
+    "back_rows": 3
+   },
+   "scaffold_from_previous": {
+    "file": "scaffold_to10.webp",
+    "size": [
+     1174,
+     998
+    ],
+    "pivot": [
+     409,
+     739
+    ],
+    "ysort": [
+     -288.0,
+     -169.3
+    ]
+   }
+  }
+ ]
+}

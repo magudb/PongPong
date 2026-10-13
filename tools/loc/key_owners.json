@@ -1,0 +1,318 @@
+{
+ "_doc": "Key-level ownership of localization keys (PLAN R.4 for the base files, addendum 3.7 / RV-P8 for the feature files). Resolution (LocalizationManager.owner_of, tools/loc/csv_lint.py, F1 validator K8): an `exact` entry wins; else ITEM_<id>[_DESC|_HINT] of the item ids of the Lua files named in `item_files`; else the LONGEST matching `prefix`. A key that no file claims is unconstrained (it only has to be unique). A non-legacy file may define only keys it owns; da.csv (legacy base) and zz_final.csv (copy-pass overrides of NON-voiced keys) are exempt. `owner` is the package that edits the file. A new CSV gets its key families here by a change request to P03 (new_csv.py creates the file and its keep-import but never edits this table).",
+ "files": {
+  "core.csv": {
+   "owner": "P03",
+   "prefix": [
+    "GAME_",
+    "NPC_",
+    "ZONE_",
+    "LANG_"
+   ],
+   "exact": [
+    "UI_GOLD",
+    "UI_WEATHER_KLART",
+    "UI_JOURNAL",
+    "UI_INVENTORY",
+    "NOTIF_QUEST_ACCEPTED_TITLE",
+    "NOTIF_QUEST_COMPLETED_TITLE",
+    "NOTIF_LANGUAGE_CHANGED_MSG",
+    "CHAR_SELECT_TITLE",
+    "CHAR_ANIMAL_NAME"
+   ]
+  },
+  "ui.csv": {
+   "owner": "P07",
+   "prefix": [
+    "MENU_",
+    "CHAR_",
+    "INV_",
+    "WORKSHOP_",
+    "QJ_",
+    "SET_",
+    "KEY_",
+    "FOREST_",
+    "UI_WEEKDAY_",
+    "UI_MONTH_",
+    "UI_WEATHER_",
+    "SPECIES_"
+   ],
+   "exact": [
+    "UI_CURRENCY",
+    "HUD_ACTIVE_QUESTS",
+    "HUD_ENERGY",
+    "DIALOGUE_VOICE_DA",
+    "DIALOGUE_CONTINUE_HINT",
+    "SHOP_TAB_SEEDS",
+    "SHOP_TAB_TOOLS",
+    "SHOP_TAB_GOODS",
+    "SHOP_TOTAL",
+    "SHOP_GREETING_DEFAULT"
+   ]
+  },
+  "world.csv": {
+   "owner": "P04",
+   "prefix": [],
+   "exact": [
+    "WHISPER_TOO_EARLY",
+    "WHISPER_FAINT",
+    "UI_SLEEP",
+    "NOTIF_PASSED_OUT"
+   ]
+  },
+  "farm.csv": {
+   "owner": "P06",
+   "prefix": [
+    "FARM_"
+   ],
+   "exact": [
+    "WHISPER_NOT_YET"
+   ]
+  },
+  "areas.csv": {
+   "owner": "P11",
+   "prefix": [
+    "SIGN_"
+   ],
+   "exact": []
+  },
+  "economy.csv": {
+   "owner": "P12",
+   "prefix": [
+    "ITEM_",
+    "RECIPE_",
+    "SHOP_"
+   ],
+   "exact": []
+  },
+  "animals.csv": {
+   "owner": "P20",
+   "prefix": [
+    "ITEM_BABY_",
+    "BUILDING_",
+    "ANIMAL_"
+   ],
+   "exact": [
+    "ITEM_CHICKEN",
+    "ITEM_CHICKEN_DESC",
+    "ITEM_RABBIT",
+    "ITEM_RABBIT_DESC",
+    "ITEM_DUCK",
+    "ITEM_DUCK_DESC",
+    "ITEM_CAT",
+    "ITEM_CAT_DESC",
+    "ITEM_DOG",
+    "ITEM_DOG_DESC",
+    "ITEM_SHEEP",
+    "ITEM_SHEEP_DESC",
+    "ITEM_COW",
+    "ITEM_COW_DESC",
+    "ITEM_DEER",
+    "ITEM_DEER_DESC",
+    "ITEM_FOX",
+    "ITEM_FOX_DESC",
+    "ITEM_OWL",
+    "ITEM_OWL_DESC"
+   ]
+  },
+  "quests.csv": {
+   "owner": "P13",
+   "prefix": [
+    "QUEST_",
+    "OBJ_",
+    "LUANOTIF_"
+   ],
+   "exact": []
+  },
+  "dialogue.csv": {
+   "owner": "P14",
+   "prefix": [
+    "DLG_"
+   ],
+   "exact": []
+  },
+  "menus.csv": {
+   "owner": "P16",
+   "prefix": [],
+   "exact": []
+  },
+  "hud.csv": {
+   "owner": "P17",
+   "prefix": [],
+   "exact": []
+  },
+  "shop_ui.csv": {
+   "owner": "P18",
+   "prefix": [],
+   "exact": []
+  },
+  "forest.csv": {
+   "owner": "P19",
+   "prefix": [
+    "BOSS_",
+    "ENEMY_",
+    "ABILITY_"
+   ],
+   "exact": [
+    "WHISPER_FERNS"
+   ]
+  },
+  "dialogue_builder.csv": {
+   "owner": "F1",
+   "prefix": [
+    "DLG_BUILDER_",
+    "DLG_TAILOR_",
+    "DLG_FURNISHER_"
+   ],
+   "exact": [
+    "DLG_CHOICE_HOME_UPGRADE",
+    "NPC_FAIRY_BUILDER",
+    "NPC_FAIRY_FURNISHER",
+    "NPC_FAIRY_TAILOR"
+   ]
+  },
+  "features_quests.csv": {
+   "owner": "F1",
+   "prefix": [
+    "QUEST_BOGTRAEET_",
+    "QUEST_MOONSTONE_CROWN_",
+    "QUEST_SNURRESVAMPEN_",
+    "QUEST_SLOTSDROEMMEN_",
+    "OBJ_BOGTRAEET_",
+    "OBJ_MOONSTONE_CROWN_",
+    "OBJ_SNURRESVAMPEN_",
+    "OBJ_SLOTSDROEMMEN_"
+   ],
+   "exact": []
+  },
+  "features_ui.csv": {
+   "owner": "F1",
+   "prefix": [
+    "HOME_UI_",
+    "HOME_GATE_",
+    "FURN_UI_",
+    "WARDROBE_UI_",
+    "SHOP_UI_",
+    "FIND_UI_"
+   ],
+   "exact": [
+    "HYGGE_LABEL",
+    "HYGGE_SCORE_FMT",
+    "INDRET_ONLY_HOME"
+   ]
+  },
+  "finds.csv": {
+   "owner": "F1",
+   "prefix": [
+    "FIND_AREA_",
+    "FIND_CONTAINER_",
+    "FIND_SPOT_",
+    "RARITY_",
+    "SOURCE_"
+   ],
+   "exact": [
+    "PERK_SPEED",
+    "PERK_ENERGY",
+    "PERK_LUCK",
+    "PERK_DISCOUNT"
+   ]
+  },
+  "furniture.csv": {
+   "owner": "F1",
+   "prefix": [
+    "FSET_",
+    "FURN_CAT_"
+   ],
+   "exact": [],
+   "item_files": [
+    "lua/items/furniture.lua"
+   ]
+  },
+  "home.csv": {
+   "owner": "F1",
+   "prefix": [
+    "HOME_TIER_",
+    "HOME_UNLOCK_",
+    "HOME_ROOM_",
+    "HYGGE_",
+    "SHOPTAB_",
+    "SHOP_BUILDER_",
+    "SHOP_FLEA_",
+    "SHOP_FURNITURE_",
+    "SHOP_TAILOR_"
+   ],
+   "exact": []
+  },
+  "materials.csv": {
+   "owner": "F1",
+   "prefix": [
+    "RECIPE_SAW_",
+    "RECIPE_HEW_",
+    "RECIPE_FORGE_",
+    "RECIPE_WEAVE_",
+    "RECIPE_BURN_",
+    "RECIPE_CUT_",
+    "RECIPE_TWIST_",
+    "RECIPE_BEAT_"
+   ],
+   "exact": [],
+   "item_files": [
+    "lua/items/building_materials.lua"
+   ]
+  },
+  "wardrobe.csv": {
+   "owner": "F1",
+   "prefix": [
+    "OUTFIT_",
+    "WARDROBE_SLOT_",
+    "WARDROBE_SUBSLOT_"
+   ],
+   "exact": [],
+   "item_files": [
+    "lua/items/clothing.lua"
+   ]
+  },
+  "home_world.csv": {
+   "owner": "F6",
+   "prefix": [
+    "HOME_WORLD_"
+   ],
+   "exact": []
+  },
+  "home_ui.csv": {
+   "owner": "F7",
+   "prefix": [
+    "INDRET_",
+    "FURNI_REJECT_",
+    "HUSBYG_",
+    "KISTE_"
+   ],
+   "exact": []
+  },
+  "wardrobe_ui.csv": {
+   "owner": "F8",
+   "prefix": [
+    "GARDEROBE_",
+    "SLOTCELL_",
+    "PERKLINE_"
+   ],
+   "exact": []
+  },
+  "samlerbog.csv": {
+   "owner": "F9",
+   "prefix": [
+    "COLLECT_"
+   ],
+   "exact": []
+  }
+ },
+ "notes": [
+  "INDRET_ONLY_HOME is an exact key of features_ui.csv (P06 needs it in wave 4); it wins over F7's INDRET_ prefix.",
+  "HYGGE_LABEL / HYGGE_SCORE_FMT are exact keys of features_ui.csv; they win over home.csv's HYGGE_ prefix.",
+  "PERK_SPEED|ENERGY|LUCK|DISCOUNT are exact keys of finds.csv; F8's per-line formats are PERKLINE_<KIND>_FMT (no clash).",
+  "F7 and F8 may NOT use HOME_UI_ or WARDROBE_UI_ (features_ui.csv) - their screen strings use HUSBYG_/KISTE_ and GARDEROBE_/SLOTCELL_/PERKLINE_.",
+  "P13 must not define QUEST_*/OBJ_* keys of bogtraeet, moonstone_crown, snurresvampen or slotsdroemmen (features_quests.csv owns them, incl. the dialogue choice and reminder lines QUEST_<ID>_CHOICE / _REMIND).",
+  "Base files (core ... forest) follow PLAN R.4. Where the table says `UI_*`, `HUD_*` or `DIALOGUE_*` with a qualifier (new / shared / hints) only the named keys and the named sub-families (UI_WEEKDAY_, UI_MONTH_) are claimed: other packages (P04 UI_SLEEP, P11 UI_READ, P14 DIALOGUE_CHOICE_*, P17 hud strings) keep their own keys without a collision.",
+  "P12 owns every ITEM_/RECIPE_/SHOP_ key that no more specific entry claims; P20 owns ITEM_BABY_* and the ten species keys; the feature CSVs (F1) own the ITEM_<id> keys of furniture.lua, clothing.lua and building_materials.lua."
+ ]
+}

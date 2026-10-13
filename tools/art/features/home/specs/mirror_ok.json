@@ -1,0 +1,797 @@
+{
+ "v": 1,
+ "method": "flip_h(r0) vs true r1 and flip_h(r2) vs true r3 of the 130-item bake with true rotations, measured on the exported WebP sprites by tools/art/features/home/isometric/measure_mirror.py",
+ "rule": "mean RGB error < 8/255 and silhouette mismatch < 1% on BOTH pairs, never unique/legendary, never patterned fabric (stripe, quilt, damask)",
+ "measured_asymmetric_items": 79,
+ "mirror_ok": [
+  "bed_pine",
+  "bed_birch_single",
+  "bed_sky_double",
+  "bed_walnut",
+  "chair_pine",
+  "chair_birch",
+  "chair_mossy",
+  "chair_honey",
+  "sofa_pine_two",
+  "sofa_birch_two",
+  "sofa_sky_two",
+  "sofa_moss_three",
+  "sofa_walnut_two",
+  "wardrobe_pine",
+  "wardrobe_birch_narrow",
+  "wardrobe_oak",
+  "wardrobe_rose",
+  "wardrobe_sky_narrow",
+  "wardrobe_walnut",
+  "fireplace_granite",
+  "fireplace_chalk",
+  "fireplace_slate",
+  "chest_pine",
+  "chest_oak",
+  "chest_birch",
+  "chest_sky",
+  "chest_rose",
+  "chest_walnut",
+  "clock_pine",
+  "clock_sky",
+  "clock_walnut",
+  "throne_pine",
+  "throne_honey",
+  "throne_king"
+ ],
+ "rejected": [
+  {
+   "id": "bed_oak_single",
+   "template": "bed",
+   "rarity": "normal",
+   "mean_err": [
+    6.0,
+    5.8
+   ],
+   "sil_pct": [
+    0.2,
+    0.19
+   ],
+   "reasons": [
+    "patterned fabric groen (quilt)"
+   ]
+  },
+  {
+   "id": "bed_rose_single",
+   "template": "bed",
+   "rarity": "uncommon",
+   "mean_err": [
+    13.3,
+    13.1
+   ],
+   "sil_pct": [
+    0.19,
+    0.18
+   ],
+   "reasons": [
+    "patterned fabric blaa (stripe)",
+    "mean_err 13.3/255 >= 8"
+   ]
+  },
+  {
+   "id": "bed_cherry",
+   "template": "bed",
+   "rarity": "rare",
+   "mean_err": [
+    5.2,
+    5.0
+   ],
+   "sil_pct": [
+    0.32,
+    0.3
+   ],
+   "reasons": [
+    "patterned fabric guld (damask)"
+   ]
+  },
+  {
+   "id": "bed_toadstool",
+   "template": "bed",
+   "rarity": "unique",
+   "mean_err": [
+    6.8,
+    6.7
+   ],
+   "sil_pct": [
+    0.48,
+    0.29
+   ],
+   "reasons": [
+    "keepsake",
+    "patterned fabric groen (quilt)"
+   ]
+  },
+  {
+   "id": "bed_moon",
+   "template": "bed",
+   "rarity": "legendary",
+   "mean_err": [
+    7.6,
+    7.7
+   ],
+   "sil_pct": [
+    0.3,
+    0.25
+   ],
+   "reasons": [
+    "keepsake"
+   ]
+  },
+  {
+   "id": "table_long_walnut",
+   "template": "table",
+   "rarity": "rare",
+   "mean_err": [
+    9.8,
+    9.1
+   ],
+   "sil_pct": [
+    4.81,
+    0.52
+   ],
+   "reasons": [
+    "mean_err 9.8/255 >= 8",
+    "silhouette_mismatch 4.8% >= 1%"
+   ]
+  },
+  {
+   "id": "table_stump",
+   "template": "table",
+   "rarity": "unique",
+   "mean_err": [
+    7.6,
+    6.4
+   ],
+   "sil_pct": [
+    4.81,
+    5.01
+   ],
+   "reasons": [
+    "keepsake",
+    "silhouette_mismatch 5.0% >= 1%"
+   ]
+  },
+  {
+   "id": "chair_oak",
+   "template": "chair",
+   "rarity": "normal",
+   "mean_err": [
+    3.8,
+    3.9
+   ],
+   "sil_pct": [
+    0.43,
+    0.31
+   ],
+   "reasons": [
+    "patterned fabric groen (quilt)"
+   ]
+  },
+  {
+   "id": "chair_lavender",
+   "template": "chair",
+   "rarity": "uncommon",
+   "mean_err": [
+    4.1,
+    4.3
+   ],
+   "sil_pct": [
+    0.38,
+    0.14
+   ],
+   "reasons": [
+    "patterned fabric rosendamask (damask)"
+   ]
+  },
+  {
+   "id": "chair_ebony",
+   "template": "chair",
+   "rarity": "rare",
+   "mean_err": [
+    3.8,
+    3.2
+   ],
+   "sil_pct": [
+    0.42,
+    0.16
+   ],
+   "reasons": [
+    "patterned fabric kongeblaa (damask)"
+   ]
+  },
+  {
+   "id": "chair_stump",
+   "template": "chair",
+   "rarity": "unique",
+   "mean_err": [
+    12.3,
+    17.1
+   ],
+   "sil_pct": [
+    0.62,
+    0.64
+   ],
+   "reasons": [
+    "keepsake",
+    "patterned fabric groen (quilt)",
+    "mean_err 17.1/255 >= 8"
+   ]
+  },
+  {
+   "id": "sofa_oak_three",
+   "template": "sofa",
+   "rarity": "normal",
+   "mean_err": [
+    6.7,
+    6.0
+   ],
+   "sil_pct": [
+    0.28,
+    0.4
+   ],
+   "reasons": [
+    "patterned fabric groen (quilt)"
+   ]
+  },
+  {
+   "id": "sofa_cherry_three",
+   "template": "sofa",
+   "rarity": "rare",
+   "mean_err": [
+    5.6,
+    6.1
+   ],
+   "sil_pct": [
+    0.29,
+    0.43
+   ],
+   "reasons": [
+    "patterned fabric kongeblaa (damask)"
+   ]
+  },
+  {
+   "id": "sofa_leaf",
+   "template": "sofa",
+   "rarity": "unique",
+   "mean_err": [
+    13.3,
+    14.8
+   ],
+   "sil_pct": [
+    2.11,
+    2.17
+   ],
+   "reasons": [
+    "keepsake",
+    "patterned fabric groen (quilt)",
+    "mean_err 14.8/255 >= 8",
+    "silhouette_mismatch 2.2% >= 1%"
+   ]
+  },
+  {
+   "id": "sofa_cloud",
+   "template": "sofa",
+   "rarity": "legendary",
+   "mean_err": [
+    7.0,
+    8.0
+   ],
+   "sil_pct": [
+    0.25,
+    0.37
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 8.0/255 >= 8"
+   ]
+  },
+  {
+   "id": "wardrobe_hollow_log",
+   "template": "wardrobe",
+   "rarity": "unique",
+   "mean_err": [
+    8.6,
+    7.6
+   ],
+   "sil_pct": [
+    0.74,
+    0.71
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 8.6/255 >= 8"
+   ]
+  },
+  {
+   "id": "bookshelf_pine",
+   "template": "bookshelf",
+   "rarity": "normal",
+   "mean_err": [
+    22.1,
+    5.3
+   ],
+   "sil_pct": [
+    0.16,
+    0.15
+   ],
+   "reasons": [
+    "mean_err 22.1/255 >= 8"
+   ]
+  },
+  {
+   "id": "bookshelf_oak_narrow",
+   "template": "bookshelf",
+   "rarity": "normal",
+   "mean_err": [
+    18.4,
+    4.3
+   ],
+   "sil_pct": [
+    0.26,
+    0.24
+   ],
+   "reasons": [
+    "mean_err 18.4/255 >= 8"
+   ]
+  },
+  {
+   "id": "bookshelf_birch",
+   "template": "bookshelf",
+   "rarity": "normal",
+   "mean_err": [
+    23.2,
+    6.9
+   ],
+   "sil_pct": [
+    0.16,
+    0.15
+   ],
+   "reasons": [
+    "mean_err 23.2/255 >= 8"
+   ]
+  },
+  {
+   "id": "bookshelf_mint",
+   "template": "bookshelf",
+   "rarity": "uncommon",
+   "mean_err": [
+    23.1,
+    5.8
+   ],
+   "sil_pct": [
+    0.16,
+    0.15
+   ],
+   "reasons": [
+    "mean_err 23.1/255 >= 8"
+   ]
+  },
+  {
+   "id": "bookshelf_lavender_narrow",
+   "template": "bookshelf",
+   "rarity": "uncommon",
+   "mean_err": [
+    18.7,
+    5.8
+   ],
+   "sil_pct": [
+    0.26,
+    0.24
+   ],
+   "reasons": [
+    "mean_err 18.7/255 >= 8"
+   ]
+  },
+  {
+   "id": "bookshelf_ebony",
+   "template": "bookshelf",
+   "rarity": "rare",
+   "mean_err": [
+    22.8,
+    3.9
+   ],
+   "sil_pct": [
+    0.19,
+    0.36
+   ],
+   "reasons": [
+    "mean_err 22.8/255 >= 8"
+   ]
+  },
+  {
+   "id": "bookshelf_book_tree",
+   "template": "bookshelf",
+   "rarity": "unique",
+   "mean_err": [
+    18.3,
+    11.3
+   ],
+   "sil_pct": [
+    18.49,
+    16.33
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 18.3/255 >= 8",
+    "silhouette_mismatch 18.5% >= 1%"
+   ]
+  },
+  {
+   "id": "bookshelf_floating",
+   "template": "bookshelf",
+   "rarity": "legendary",
+   "mean_err": [
+    23.6,
+    3.8
+   ],
+   "sil_pct": [
+    0.18,
+    0.36
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 23.6/255 >= 8"
+   ]
+  },
+  {
+   "id": "fireplace_marble",
+   "template": "fireplace",
+   "rarity": "rare",
+   "mean_err": [
+    8.3,
+    6.0
+   ],
+   "sil_pct": [
+    0.29,
+    0.23
+   ],
+   "reasons": [
+    "mean_err 8.3/255 >= 8"
+   ]
+  },
+  {
+   "id": "fireplace_cauldron",
+   "template": "fireplace",
+   "rarity": "unique",
+   "mean_err": [
+    7.0,
+    5.1
+   ],
+   "sil_pct": [
+    0.29,
+    0.23
+   ],
+   "reasons": [
+    "keepsake"
+   ]
+  },
+  {
+   "id": "fireplace_moon",
+   "template": "fireplace",
+   "rarity": "legendary",
+   "mean_err": [
+    8.6,
+    6.0
+   ],
+   "sil_pct": [
+    0.29,
+    0.23
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 8.6/255 >= 8"
+   ]
+  },
+  {
+   "id": "chest_snail",
+   "template": "chest",
+   "rarity": "unique",
+   "mean_err": [
+    34.7,
+    22.0
+   ],
+   "sil_pct": [
+    28.54,
+    20.2
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 34.7/255 >= 8",
+    "silhouette_mismatch 28.5% >= 1%"
+   ]
+  },
+  {
+   "id": "chest_rune",
+   "template": "chest",
+   "rarity": "legendary",
+   "mean_err": [
+    5.7,
+    5.6
+   ],
+   "sil_pct": [
+    1.4,
+    1.4
+   ],
+   "reasons": [
+    "keepsake",
+    "silhouette_mismatch 1.4% >= 1%"
+   ]
+  },
+  {
+   "id": "plant_fern",
+   "template": "plant",
+   "rarity": "normal",
+   "mean_err": [
+    15.9,
+    21.3
+   ],
+   "sil_pct": [
+    20.1,
+    22.78
+   ],
+   "reasons": [
+    "mean_err 21.3/255 >= 8",
+    "silhouette_mismatch 22.8% >= 1%"
+   ]
+  },
+  {
+   "id": "plant_rose_pot",
+   "template": "plant",
+   "rarity": "uncommon",
+   "mean_err": [
+    20.1,
+    25.7
+   ],
+   "sil_pct": [
+    19.96,
+    23.14
+   ],
+   "reasons": [
+    "mean_err 25.7/255 >= 8",
+    "silhouette_mismatch 23.1% >= 1%"
+   ]
+  },
+  {
+   "id": "plant_flowering",
+   "template": "plant",
+   "rarity": "rare",
+   "mean_err": [
+    22.3,
+    26.2
+   ],
+   "sil_pct": [
+    10.14,
+    12.3
+   ],
+   "reasons": [
+    "mean_err 26.2/255 >= 8",
+    "silhouette_mismatch 12.3% >= 1%"
+   ]
+  },
+  {
+   "id": "plant_teapot_bonsai",
+   "template": "plant",
+   "rarity": "unique",
+   "mean_err": [
+    21.4,
+    21.8
+   ],
+   "sil_pct": [
+    47.54,
+    45.25
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 21.8/255 >= 8",
+    "silhouette_mismatch 47.5% >= 1%"
+   ]
+  },
+  {
+   "id": "clock_owl",
+   "template": "clock",
+   "rarity": "unique",
+   "mean_err": [
+    7.1,
+    7.4
+   ],
+   "sil_pct": [
+    0.05,
+    0.05
+   ],
+   "reasons": [
+    "keepsake"
+   ]
+  },
+  {
+   "id": "clock_moon",
+   "template": "clock",
+   "rarity": "legendary",
+   "mean_err": [
+    5.3,
+    3.2
+   ],
+   "sil_pct": [
+    0.18,
+    0.17
+   ],
+   "reasons": [
+    "keepsake"
+   ]
+  },
+  {
+   "id": "throne_root",
+   "template": "throne",
+   "rarity": "unique",
+   "mean_err": [
+    9.6,
+    8.8
+   ],
+   "sil_pct": [
+    4.55,
+    4.17
+   ],
+   "reasons": [
+    "keepsake",
+    "patterned fabric groen (quilt)",
+    "mean_err 9.6/255 >= 8",
+    "silhouette_mismatch 4.5% >= 1%"
+   ]
+  },
+  {
+   "id": "throne_crystal",
+   "template": "throne",
+   "rarity": "legendary",
+   "mean_err": [
+    8.2,
+    9.2
+   ],
+   "sil_pct": [
+    0.27,
+    0.3
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 9.2/255 >= 8"
+   ]
+  },
+  {
+   "id": "piano_pine",
+   "template": "piano",
+   "rarity": "normal",
+   "mean_err": [
+    9.6,
+    4.9
+   ],
+   "sil_pct": [
+    0.28,
+    0.27
+   ],
+   "reasons": [
+    "mean_err 9.6/255 >= 8"
+   ]
+  },
+  {
+   "id": "piano_sky",
+   "template": "piano",
+   "rarity": "uncommon",
+   "mean_err": [
+    11.2,
+    6.6
+   ],
+   "sil_pct": [
+    0.28,
+    0.27
+   ],
+   "reasons": [
+    "mean_err 11.2/255 >= 8"
+   ]
+  },
+  {
+   "id": "piano_walnut",
+   "template": "piano",
+   "rarity": "rare",
+   "mean_err": [
+    8.0,
+    3.3
+   ],
+   "sil_pct": [
+    0.28,
+    0.27
+   ],
+   "reasons": [
+    "mean_err 8.0/255 >= 8"
+   ]
+  },
+  {
+   "id": "piano_toadstool",
+   "template": "piano",
+   "rarity": "unique",
+   "mean_err": [
+    9.3,
+    5.5
+   ],
+   "sil_pct": [
+    0.17,
+    0.15
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 9.3/255 >= 8"
+   ]
+  },
+  {
+   "id": "piano_star",
+   "template": "piano",
+   "rarity": "legendary",
+   "mean_err": [
+    7.8,
+    2.6
+   ],
+   "sil_pct": [
+    0.28,
+    0.28
+   ],
+   "reasons": [
+    "keepsake"
+   ]
+  },
+  {
+   "id": "vase_clay",
+   "template": "vase",
+   "rarity": "normal",
+   "mean_err": [
+    21.5,
+    16.6
+   ],
+   "sil_pct": [
+    14.07,
+    15.24
+   ],
+   "reasons": [
+    "mean_err 21.5/255 >= 8",
+    "silhouette_mismatch 15.2% >= 1%"
+   ]
+  },
+  {
+   "id": "vase_rose",
+   "template": "vase",
+   "rarity": "uncommon",
+   "mean_err": [
+    23.8,
+    17.9
+   ],
+   "sil_pct": [
+    14.3,
+    17.44
+   ],
+   "reasons": [
+    "mean_err 23.8/255 >= 8",
+    "silhouette_mismatch 17.4% >= 1%"
+   ]
+  },
+  {
+   "id": "chandelier_lantern_flower",
+   "template": "chandelier",
+   "rarity": "unique",
+   "mean_err": [
+    28.7,
+    29.1
+   ],
+   "sil_pct": [
+    28.41,
+    27.46
+   ],
+   "reasons": [
+    "keepsake",
+    "mean_err 29.1/255 >= 8",
+    "silhouette_mismatch 28.4% >= 1%"
+   ]
+  }
+ ],
+ "note": "default policy is TRUE baked r1/r3 for everything; this list is only a disk fallback (export_home.py --mirror-fallback drops the r1/r3 files of these ids)"
+}

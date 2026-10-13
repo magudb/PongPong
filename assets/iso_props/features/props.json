@@ -1,0 +1,175 @@
+{
+ "_contract": {
+  "tile": [
+   128,
+   76
+  ],
+  "px_per_m": 87.074,
+  "pivot": "ground origin (footprint centre), px from the PNG top-left",
+  "files": "relative to this json",
+  "blend": "props with blend \"add\" are additive soft sprites (dig_glimmer, unique_glimmer): draw with CanvasItemMaterial BLEND_MODE_ADD"
+ },
+ "chest_trae": {
+  "file": "chest_trae.webp",
+  "size": [
+   124,
+   104
+  ],
+  "pivot": [
+   58,
+   73
+  ],
+  "footprint": [
+   1,
+   1
+  ]
+ },
+ "chest_jern": {
+  "file": "chest_jern.webp",
+  "size": [
+   128,
+   105
+  ],
+  "pivot": [
+   60,
+   73
+  ],
+  "footprint": [
+   1,
+   1
+  ]
+ },
+ "chest_fe": {
+  "file": "chest_fe.webp",
+  "size": [
+   122,
+   102
+  ],
+  "pivot": [
+   57,
+   72
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "glow": {
+   "file": "chest_fe_glow.webp",
+   "center": [
+    36,
+    54
+   ],
+   "color": "#9BE7D8",
+   "size": [
+    144,
+    144
+   ],
+   "blend": "add"
+  }
+ },
+ "chest_konge": {
+  "file": "chest_konge.webp",
+  "size": [
+   138,
+   114
+  ],
+  "pivot": [
+   65,
+   81
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "glow": {
+   "file": "chest_konge_glow.webp",
+   "center": [
+    46,
+    56
+   ],
+   "color": "#F2D58A",
+   "size": [
+    168,
+    168
+   ],
+   "blend": "add"
+  }
+ },
+ "dig_glimmer": {
+  "file": "dig_glimmer.webp",
+  "size": [
+   112,
+   72
+  ],
+  "pivot": [
+   56,
+   40
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "blend": "add"
+ },
+ "unique_glimmer": {
+  "file": "unique_glimmer.webp",
+  "size": [
+   104,
+   176
+  ],
+  "pivot": [
+   52,
+   138
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "blend": "add"
+ },
+ "tent": {
+  "file": "tent.webp",
+  "size": [
+   344,
+   233
+  ],
+  "pivot": [
+   172,
+   130
+  ],
+  "footprint": [
+   2,
+   2
+  ]
+ },
+ "slate_vein": {
+  "file": "slate_vein.webp",
+  "size": [
+   156,
+   99
+  ],
+  "pivot": [
+   73,
+   66
+  ],
+  "footprint": [
+   1,
+   1
+  ]
+ },
+ "marble_vein": {
+  "file": "marble_vein.webp",
+  "size": [
+   156,
+   106
+  ],
+  "pivot": [
+   73,
+   65
+  ],
+  "footprint": [
+   1,
+   1
+  ]
+ }
+}

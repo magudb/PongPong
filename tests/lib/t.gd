@@ -128,6 +128,9 @@ func find_raw_keys(under: Node = null, include_hidden: bool = false) -> Array[St
 			txt = (n as RichTextLabel).text
 		elif n is Button:
 			txt = (n as Button).text
+		if txt != "":
+			# the property holds the translation KEY in a correctly localized scene: test what is displayed
+			txt = n.atr(txt)
 		if txt != "" and rx.search(txt) != null:
 			bad.append("%s='%s'" % [n.get_path(), txt])
 	return bad

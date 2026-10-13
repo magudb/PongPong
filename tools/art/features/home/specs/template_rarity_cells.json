@@ -1,0 +1,137 @@
+{
+ "bed": {
+  "normal": 3,
+  "uncommon": 2,
+  "rare": 2,
+  "unique": 1,
+  "legendary": 1
+ },
+ "table": {
+  "normal": 3,
+  "uncommon": 2,
+  "rare": 2,
+  "unique": 1
+ },
+ "chair": {
+  "normal": 4,
+  "uncommon": 2,
+  "rare": 1,
+  "unique": 1
+ },
+ "sofa": {
+  "normal": 3,
+  "uncommon": 2,
+  "rare": 2,
+  "unique": 1,
+  "legendary": 1
+ },
+ "wardrobe": {
+  "normal": 3,
+  "uncommon": 2,
+  "rare": 1,
+  "unique": 1
+ },
+ "bookshelf": {
+  "normal": 3,
+  "uncommon": 2,
+  "rare": 1,
+  "unique": 1,
+  "legendary": 1
+ },
+ "rug": {
+  "normal": 3,
+  "uncommon": 3,
+  "rare": 2,
+  "unique": 1,
+  "legendary": 1
+ },
+ "floor_lamp": {
+  "normal": 2,
+  "uncommon": 1,
+  "rare": 1,
+  "unique": 1,
+  "legendary": 1
+ },
+ "fireplace": {
+  "normal": 1,
+  "uncommon": 1,
+  "rare": 2,
+  "unique": 1,
+  "legendary": 1
+ },
+ "chest": {
+  "normal": 3,
+  "uncommon": 2,
+  "rare": 1,
+  "unique": 1,
+  "legendary": 1
+ },
+ "plant": {
+  "normal": 1,
+  "uncommon": 1,
+  "rare": 1,
+  "unique": 1
+ },
+ "clock": {
+  "normal": 1,
+  "uncommon": 1,
+  "rare": 1,
+  "unique": 1,
+  "legendary": 1
+ },
+ "throne": {
+  "normal": 1,
+  "uncommon": 1,
+  "rare": 1,
+  "unique": 1,
+  "legendary": 1
+ },
+ "piano": {
+  "normal": 1,
+  "uncommon": 1,
+  "rare": 1,
+  "unique": 1,
+  "legendary": 1
+ },
+ "painting": {
+  "normal": 3,
+  "uncommon": 2,
+  "rare": 1,
+  "unique": 1
+ },
+ "shelf": {
+  "normal": 3,
+  "uncommon": 1,
+  "rare": 1,
+  "unique": 1
+ },
+ "curtain": {
+  "normal": 2,
+  "uncommon": 2
+ },
+ "sconce": {
+  "normal": 1,
+  "uncommon": 1
+ },
+ "vase": {
+  "normal": 1,
+  "uncommon": 1
+ },
+ "table_lamp": {
+  "normal": 1,
+  "uncommon": 1,
+  "rare": 1
+ },
+ "candelabra": {
+  "normal": 1,
+  "uncommon": 1,
+  "rare": 1
+ },
+ "chandelier": {
+  "normal": 1,
+  "uncommon": 1,
+  "rare": 1,
+  "unique": 1,
+  "legendary": 1
+ }
+}

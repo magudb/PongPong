@@ -1,0 +1,314 @@
+{
+ "_contract": {
+  "files": "relative to this json",
+  "wall": "one tile long, pivot = centre of the tile edge on the floor line; r0 sits on the cell back-right edge facing +z, r1 (the same model yawed 90) on the back-left edge facing +x",
+  "night": "wall pieces with a window carry <piece>_night (additive)"
+ },
+ "walls": {
+  "wall_plank_a_r0": {
+   "file": "wall_plank_a_r0.webp",
+   "size": [
+    83,
+    234
+   ],
+   "pivot": [
+    38,
+    212
+   ],
+   "height_m": 2.55
+  },
+  "wall_plank_a_r1": {
+   "file": "wall_plank_a_r1.webp",
+   "size": [
+    83,
+    234
+   ],
+   "pivot": [
+    45,
+    212
+   ],
+   "height_m": 2.55
+  },
+  "wall_plank_b_r0": {
+   "file": "wall_plank_b_r0.webp",
+   "size": [
+    84,
+    234
+   ],
+   "pivot": [
+    39,
+    212
+   ],
+   "height_m": 2.55
+  },
+  "wall_plank_b_r1": {
+   "file": "wall_plank_b_r1.webp",
+   "size": [
+    83,
+    235
+   ],
+   "pivot": [
+    45,
+    212
+   ],
+   "height_m": 2.55
+  },
+  "wall_plank_win_r0": {
+   "file": "wall_plank_win_r0.webp",
+   "size": [
+    88,
+    234
+   ],
+   "pivot": [
+    43,
+    212
+   ],
+   "height_m": 2.55,
+   "night": "wall_plank_win_r0_night.webp"
+  },
+  "wall_plank_win_r1": {
+   "file": "wall_plank_win_r1.webp",
+   "size": [
+    88,
+    234
+   ],
+   "pivot": [
+    45,
+    212
+   ],
+   "height_m": 2.55,
+   "night": "wall_plank_win_r1_night.webp"
+  },
+  "corner_plank": {
+   "file": "corner_plank.webp",
+   "size": [
+    48,
+    215
+   ],
+   "pivot": [
+    24,
+    201
+   ],
+   "height_m": 2.55
+  },
+  "wall_paper_a_r0": {
+   "file": "wall_paper_a_r0.webp",
+   "size": [
+    83,
+    265
+   ],
+   "pivot": [
+    38,
+    243
+   ],
+   "height_m": 3.0
+  },
+  "wall_paper_a_r1": {
+   "file": "wall_paper_a_r1.webp",
+   "size": [
+    83,
+    265
+   ],
+   "pivot": [
+    45,
+    243
+   ],
+   "height_m": 3.0
+  },
+  "wall_paper_b_r0": {
+   "file": "wall_paper_b_r0.webp",
+   "size": [
+    86,
+    265
+   ],
+   "pivot": [
+    41,
+    243
+   ],
+   "height_m": 3.0
+  },
+  "wall_paper_b_r1": {
+   "file": "wall_paper_b_r1.webp",
+   "size": [
+    83,
+    265
+   ],
+   "pivot": [
+    45,
+    243
+   ],
+   "height_m": 3.0
+  },
+  "wall_paper_win_r0": {
+   "file": "wall_paper_win_r0.webp",
+   "size": [
+    88,
+    265
+   ],
+   "pivot": [
+    43,
+    243
+   ],
+   "height_m": 3.0,
+   "night": "wall_paper_win_r0_night.webp"
+  },
+  "wall_paper_win_r1": {
+   "file": "wall_paper_win_r1.webp",
+   "size": [
+    88,
+    265
+   ],
+   "pivot": [
+    45,
+    243
+   ],
+   "height_m": 3.0,
+   "night": "wall_paper_win_r1_night.webp"
+  },
+  "corner_paper": {
+   "file": "corner_paper.webp",
+   "size": [
+    48,
+    246
+   ],
+   "pivot": [
+    24,
+    232
+   ],
+   "height_m": 3.0
+  },
+  "wall_marble_a_r0": {
+   "file": "wall_marble_a_r0.webp",
+   "size": [
+    83,
+    315
+   ],
+   "pivot": [
+    38,
+    293
+   ],
+   "height_m": 3.7
+  },
+  "wall_marble_a_r1": {
+   "file": "wall_marble_a_r1.webp",
+   "size": [
+    83,
+    315
+   ],
+   "pivot": [
+    45,
+    293
+   ],
+   "height_m": 3.7
+  },
+  "wall_marble_b_r0": {
+   "file": "wall_marble_b_r0.webp",
+   "size": [
+    87,
+    315
+   ],
+   "pivot": [
+    42,
+    293
+   ],
+   "height_m": 3.7
+  },
+  "wall_marble_b_r1": {
+   "file": "wall_marble_b_r1.webp",
+   "size": [
+    83,
+    315
+   ],
+   "pivot": [
+    45,
+    293
+   ],
+   "height_m": 3.7
+  },
+  "wall_marble_win_r0": {
+   "file": "wall_marble_win_r0.webp",
+   "size": [
+    88,
+    315
+   ],
+   "pivot": [
+    43,
+    293
+   ],
+   "height_m": 3.7,
+   "night": "wall_marble_win_r0_night.webp"
+  },
+  "wall_marble_win_r1": {
+   "file": "wall_marble_win_r1.webp",
+   "size": [
+    88,
+    315
+   ],
+   "pivot": [
+    45,
+    293
+   ],
+   "height_m": 3.7,
+   "night": "wall_marble_win_r1_night.webp"
+  },
+  "corner_marble": {
+   "file": "corner_marble.webp",
+   "size": [
+    48,
+    296
+   ],
+   "pivot": [
+    24,
+    282
+   ],
+   "height_m": 3.7
+  }
+ },
+ "door": {
+  "doormat_r0": {
+   "file": "doormat_r0.webp",
+   "size": [
+    92,
+    59
+   ],
+   "pivot": [
+    46,
+    31
+   ]
+  },
+  "doormat_r1": {
+   "file": "doormat_r1.webp",
+   "size": [
+    92,
+    59
+   ],
+   "pivot": [
+    46,
+    31
+   ]
+  },
+  "door_post": {
+   "file": "door_post.webp",
+   "size": [
+    72,
+    160
+   ],
+   "pivot": [
+    34,
+    140
+   ],
+   "glow": {
+    "file": null,
+    "center": [
+     52,
+     36
+    ],
+    "color": "#FFD98A",
+    "size": [
+     160,
+     160
+    ]
+   }
+  }
+ }
+}

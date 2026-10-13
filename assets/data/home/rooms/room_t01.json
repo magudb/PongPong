@@ -1,0 +1,132 @@
+{
+ "_contract": {
+  "cells": "floor cells [x, z]: x = column (0 at the left end of a row), z = row (0 = the back row, the door row is the last). +x = screen right-down, +z = screen left-down",
+  "windows": "KEYS NAMED BY THE WALL, VALUES ARE THE OTHER AXIS: windows.z = the x indices of the windows on the z = 0 wall (the back-RIGHT wall, along the first row, so 0 < v < rows[0] - 1); windows.x = the z indices of the windows on the x = 0 wall (the back-LEFT wall, along the first column, so 0 < v < len(rows) - 1). windows_by_wall repeats the same two lists under unambiguous names: back_right_z0 (= windows.z), back_left_x0 (= windows.x)",
+  "numbers": "every number is a JSON number and arrives as a FLOAT in Godot (JSON.parse_string): compare with int(v), Array.has(int) is false",
+  "door": "door.cell = [x, z] on the last row, door.dir = [0, 1] (the door faces +z); spawn_cell is the cell in front of it",
+  "zoom_fit": "default interior camera zoom at the 1280x720 base: 0.85 x min(1280/W, 720/H), W = (cols + rows) x 64, H = (cols + rows) x 38 + 280"
+ },
+ "tier": 1,
+ "rows": [
+  5,
+  5,
+  5,
+  5
+ ],
+ "cells": [
+  [
+   0,
+   0
+  ],
+  [
+   1,
+   0
+  ],
+  [
+   2,
+   0
+  ],
+  [
+   3,
+   0
+  ],
+  [
+   4,
+   0
+  ],
+  [
+   0,
+   1
+  ],
+  [
+   1,
+   1
+  ],
+  [
+   2,
+   1
+  ],
+  [
+   3,
+   1
+  ],
+  [
+   4,
+   1
+  ],
+  [
+   0,
+   2
+  ],
+  [
+   1,
+   2
+  ],
+  [
+   2,
+   2
+  ],
+  [
+   3,
+   2
+  ],
+  [
+   4,
+   2
+  ],
+  [
+   0,
+   3
+  ],
+  [
+   1,
+   3
+  ],
+  [
+   2,
+   3
+  ],
+  [
+   3,
+   3
+  ],
+  [
+   4,
+   3
+  ]
+ ],
+ "floor": "floor_stone",
+ "wall_style": "plank",
+ "door": {
+  "cell": [
+   2,
+   3
+  ],
+  "dir": [
+   0,
+   1
+  ]
+ },
+ "spawn_cell": [
+  2,
+  2
+ ],
+ "windows": {
+  "z": [
+   1
+  ],
+  "x": [
+   1
+  ]
+ },
+ "windows_by_wall": {
+  "back_right_z0": [
+   1
+  ],
+  "back_left_x0": [
+   1
+  ]
+ },
+ "max_furniture": 11,
+ "zoom_fit": 0.98
+}
