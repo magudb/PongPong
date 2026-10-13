@@ -1,0 +1,24 @@
+{
+  "_doc": "FIXTURE DATA, never loaded by the game: the copy of the Traetoppen style guide v0.1 mock screens (names, quests, hotbar), used by ui_fixtures.gd so a screen can be laid out against the guide 1:1 (tests/checkpoints/compare_guide.py). The screen owners register their own state through UiFixtures.register_setup().",
+  "texts": {
+    "NPC_PIPPIN": "Pippin Bøgeknop", "NPC_ROSMARIN": "Bagerfe Rosmarin", "NPC_HYLDEBLOMST": "Borgmester Hyldeblomst", "NPC_FEKONGEN": "Fekongen",
+    "GUIDE_DLG_1": "Åh, du må være vinderen af Fekongens lotteri! Velkommen til Hyggebyen. Taget på bageriet er utæt igen. Kan du mon hjælpe?",
+    "GUIDE_CH_1": "Selvfølgelig!", "GUIDE_CH_2": "Hvad får jeg for det?",
+    "ITEM_GULEROD": "Gulerod", "ITEM_GRAESKAR": "Græskar", "ITEM_AEBLE": "Æble", "ITEM_HVEDE": "Hvede", "ITEM_HONNING": "Honning", "ITEM_SVAMP": "Svamp",
+    "ITEM_MAANESTEN": "Månesten", "ITEM_KOBBER": "Kobber", "ITEM_JERN": "Jern", "ITEM_SAFIR": "Safir", "ITEM_BREGNE": "Bregne", "ITEM_UGLE_FJER": "Ugle-fjer",
+    "ITEM_TRAE": "Træ", "ITEM_STEN": "Sten", "ITEM_FROE": "Frø", "ITEM_MAELK": "Mælk", "ITEM_KAGE": "Kage", "ITEM_FISKESTANG": "Fiskestang",
+    "ITEM_KATTEMYNTE_FROE": "Kattemynte-frø", "ITEM_HAKKE": "Hakke", "ITEM_VANDKANDE": "Vandkande", "ITEM_OEKSE": "Økse", "ITEM_LE": "Le", "ITEM_LYGTE": "Lygte",
+    "ITEM_MAANESTEN_DESC": "Lyser svagt i mørke. Fundet dybt i Mørkeskoven."
+  },
+  "hotbar": {"names": ["hakke", "vandkande", "oekse", "le", "gulerod", "graeskar", "aeble", "honning", "lygte", "fiskestang"], "counts": [0, 0, 0, 0, 12, 4, 9, 2, 0, 0], "selected": 1},
+  "gold": 1250, "day": 16, "hour": 10, "minute": 40, "season": "foraar", "weather": "klart",
+  "quests": [
+    {"id": "pippins_kat", "title": "Find Pippins kat", "description": "Morfar Mis er forsvundet igen. Han blev sidst set på vej mod Mørkeskoven med en sardin i munden.",
+      "objectives": [{"id": "ask_neighbours", "target": 1, "description": "Spørg naboerne i Hyggebyen"}, {"id": "follow_prints", "target": 1, "description": "Følg poteaftrykkene ved broen"}, {"id": "find_mis", "target": 1, "description": "Find Morfar Mis i Mørkeskoven"}],
+      "rewards": {"gold": 150, "items": {"kattemynte_froe": 3}, "friendship": {"pippin": 1}}, "meta": {"giver": "pippin", "location": "Hyggebyen", "category": "help"}, "source_path": "res://lua/quests/pippins_kat.lua", "done": ["ask_neighbours", "follow_prints"]},
+    {"id": "smaakager", "title": "Gulerødder til småkager", "objectives": [{"id": "harvest_carrot", "target": 12, "description": "Høst gulerødder"}],
+      "rewards": {"gold": 90}, "meta": {"giver": "rosmarin", "category": "farm"}, "progress": {"harvest_carrot": 5}},
+    {"id": "utaet_tag", "title": "Utæt tag på bageriet", "objectives": [{"id": "fix", "target": 1, "description": "Reparér taget"}], "rewards": {"gold": 200}, "meta": {"giver": "hyldeblomst", "category": "errand"}},
+    {"id": "maanesten_kronen", "title": "Månesten til kronen", "objectives": [{"id": "moonstone", "target": 1, "description": "Find en månesten"}], "rewards": {"gold": 400}, "meta": {"giver": "fekongen", "category": "adventure"}}
+  ]
+}

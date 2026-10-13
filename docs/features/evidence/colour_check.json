@@ -1,0 +1,23 @@
+{
+ "spike home (honey legendary)": {
+  "normal": 23.4,
+  "protan": 10.8,
+  "deutan": 16.4,
+  "tritan": 7.6,
+  "to_focus_gold": 7.6
+ },
+ "spike wardrobe (berry legendary)": {
+  "normal": 22.2,
+  "protan": 17.8,
+  "deutan": 15.2,
+  "tritan": 12.4,
+  "to_focus_gold": 26.0
+ },
+ "CHOSEN (Himmel ring on night fill)": {
+  "normal": 23.4,
+  "protan": 13.8,
+  "deutan": 16.9,
+  "tritan": 19.8,
+  "to_focus_gold": 26.0
+ }
+}

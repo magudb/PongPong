@@ -59,7 +59,6 @@ config = {
   economy = {
     starting_gold = 500,           -- guldagern at the start of a new game
     sell_price_ratio = 0.5,        -- default sell price = buy price x ratio (rarity.lua overrides it per rarity for furniture/clothing)
-    shop_refresh_hour = 8,         -- shops restock when this hour of the day is reached
     tax_per_day = 0,               -- reserved, 0 = off
     home_cost_scale = 1.0,         -- multiplier on the GOLD price of every home upgrade (lua/data/home_tiers.lua); 1.0 = as designed
   },

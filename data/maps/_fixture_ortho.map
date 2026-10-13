@@ -1,0 +1,42 @@
+# TEST FIXTURE of the area framework (P04): a 12 x 10 ORTHO area (square 96 x 56 floor, wall tiles, a bog, a glowing path,
+# cave and crystal floor). Ground chars: m n o forest floor, g glow floor, p moss path, ~ bog (ground_block), c cave floor,
+# x crystal floor, W wall (solid, y-sorted), # void.
+@id _fixture_ortho
+@title ZONE_DARK_FOREST
+@projection ortho
+@ambient forest
+@theme forest
+@zone dark_forest
+@depth 1
+@flight false
+@music forest_theme
+@prop P tree_pine_forest
+@prop G glowmush_teal
+@marker 1 spawn name=from_iso
+@marker 2 warp to=_fixture_iso spawn=from_other label=ZONE_FARM
+@marker 3 enemy kind=bat
+@marker 5 whisper text=WHISPER_FERNS r=2
+@marker 6 light kind=glow r=170
+@marker 7 node kind=moss_patch
+@ground
+WWWWWWWWWWWW
+WmmmmnnmmooW
+WmgggmmmpppW
+WmmpppppmmoW
+Wmmpmmmpm~~W
+WoopmmWWp~~W
+WmmpmmWWpgmW
+WmmpppppppmW
+WmcxmmmmmmoW
+WWWWWWWWWWWW
+@objects
+............
+..@....P....
+...6...3....
+....5.......
+............
+............
+............
+.1.......2..
+...G.7......
+............

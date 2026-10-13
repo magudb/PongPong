@@ -657,10 +657,11 @@ func _configure_before_add_child(t) -> void:
 # ---------------------------------------------------------------- fallbacks and open ids
 
 func _fallbacks_and_open_ids(t) -> void:
+	# P21 delivered the real art: every roster id now resolves to its own folder (or the head of its _base chain)
 	var cases := {
-		"hobbit_pip": "raccoon", "hobbit_moss": "raccoon", "hobbit_pip_base": "raccoon", "squirrel": "monkey", "squirrel_base": "monkey",
-		"fairy_stardust": "fairy", "fairy_dusk_base": "fairy", "fairy_king": "fairy", "fairy_builder": "fairy", "fox_base": "fox",
-		"snurresvamp": "capybara", "mouse_pippin": "rabbit", "hen": "penguin",
+		"hobbit_pip": "hobbit_pip", "hobbit_moss": "hobbit_moss", "hobbit_pip_base": "hobbit_pip", "squirrel": "squirrel", "squirrel_base": "squirrel",
+		"fairy_stardust": "fairy_stardust", "fairy_dusk_base": "fairy_dusk", "fairy_king": "fairy_king", "fairy_builder": "fairy_builder", "fox_base": "fox",
+		"snurresvamp": "snurresvamp", "mouse_pippin": "mouse_pippin", "hen": "hen",
 	}
 	var bad: Array[String] = []
 	for id in cases.keys():
@@ -670,12 +671,12 @@ func _fallbacks_and_open_ids(t) -> void:
 			bad.append("%s -> %s (want %s)" % [id, vis.resolved_id, cases[id]])
 		vis.queue_free()
 	await t.frames(3)
-	t.check("create_falls_back_along_characters_lua", bad.is_empty(), "%d ids, e.g. hobbit_pip draws raccoon until P21 lands; %s" % [cases.size(), str(bad)])
-	var raccoon = Chibi.create("hobbit_pip")
-	_holder.add_child(raccoon)
+	t.check("create_falls_back_along_characters_lua", bad.is_empty(), "%d ids resolve along characters.lua to their real art folders; %s" % [cases.size(), str(bad)])
+	var pip = Chibi.create("hobbit_pip_base")
+	_holder.add_child(pip)
 	await t.frames(2)
-	t.expect(str(raccoon.sprite.texture.resource_path).contains("/raccoon/idle.webp"), "the stand-in's sheets are on screen")
-	raccoon.queue_free()
+	t.expect(str(pip.sprite.texture.resource_path).contains("/hobbit_pip/idle.webp"), "the base id draws the real hobbit sheets (head of its chain)")
+	pip.queue_free()
 	# an id nothing resolves for warns (declared as expected) and shows the default character
 	var warns_before: int = t.allowed_count("Unknown chibi character")
 	var unknown = Chibi.create("no_such_character")

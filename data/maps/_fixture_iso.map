@@ -1,0 +1,65 @@
+# TEST FIXTURE of the area framework (P04): a 12 x 12 iso area with every kind of ground, props and marker the builder knows.
+# Orientation (layout DIAMOND_DOWN): text COLUMNS run toward screen lower-RIGHT (+x), text ROWS toward screen lower-LEFT (+y);
+# top-left char = NORTH corner, top-right = EAST, bottom-right = SOUTH, bottom-left = WEST.
+# Used by tests/sections/area.gd, the screenshot drivers (tests/shot_*) and as the start area while data/maps/farm.map does not exist.
+@id _fixture_iso
+@title ZONE_FARM
+@projection iso
+@ambient farm
+@theme farm
+@zone farm
+@flight true
+@music farm_theme
+# props: object char -> ART id (collision, strips and lights come from lua/config/props.lua)
+@prop T tree_oak_farm
+@prop B tree_blossom_hyggebyen
+@prop H house_farm
+@prop M house_mushroom_rose
+@prop F fence_x
+@prop Z fence_z
+@prop L lantern_post
+@prop R rock_grey
+@prop b bush_farm
+@prop S scarecrow
+# markers: every type of plan 3.7 (spawn warp npc enemy node whisper sign bed quest_spot animal_yard building_slot field_expansion light) + growth
+@marker 1 spawn name=from_other
+@marker 2 warp to=_fixture_ortho spawn=from_iso label=ZONE_DARK_FOREST
+@marker 3 npc id=mayor_lyra facing=SW
+@marker 4 enemy kind=bat when=night
+@marker 5 node kind=tree_chop
+@marker 6 whisper text=WHISPER_FERNS r=2
+@marker 7 sign text=ZONE_FARM
+@marker 8 bed
+@marker 9 quest_spot quest=lost_cat objective=follow_pawprints prompt=WORLD_PROMPT_USE when=quest:lost_cat
+@marker a animal_yard r=3
+@marker c building_slot type=coop
+@marker e field_expansion id=east cells=6x7 price=800
+@marker l light kind=lantern r=300
+@marker g growth stage=1 cells=3..8,1
+@marker h growth stage=2 cells=3..8,0
+@ground
+############
+############
+#..,....,.##
+#.pp...fff##
+#.p....fff==
+#.p....fff##
+#.pcc..fff##
+#...ccc...##
+#.~~~..,..##
+#.~~~..ddd##
+#.~~~.....##
+############
+@objects
+............
+...g........
+.T.....FFF..
+..Ll..H.....
+..1...Z.S..2
+.....8Z.....
+.b.75.Z.4...
+..9@.3...e..
+......R.M...
+.B...a......
+.....c..6...
+............

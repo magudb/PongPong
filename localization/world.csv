@@ -1,0 +1,9 @@
+keys,da,en
+UI_SLEEP,"E: Sov","E: Sleep"
+WHISPER_TOO_EARLY,"Det er for tidligt at sove. Kom igen efter klokken 18.","It is too early to sleep. Come back after 6 pm."
+WHISPER_FAINT,"Du vågner hjemme igen, lidt bleg om næsen.","You wake up at home again, a little pale."
+NOTIF_PASSED_OUT,"Du faldt om af træthed og vågner i din seng.","You were so tired that you collapsed, and you wake up in your bed."
+NOTIF_PASSED_OUT_TITLE,"Udmattet","Exhausted"
+WORLD_PROMPT_USE,"E: Brug","E: Use"
+WORLD_WARP_LOCKED,"Porten er endnu lukket.","The gate is still closed."
+WORLD_NEEDS_ITEMS,"Du mangler noget, før du kan gøre det her.","You are missing something before you can do this."

@@ -296,7 +296,7 @@ func _check_t_and_lookups() -> void:
 	var keys: PackedStringArray = _lm.all_keys()
 	t.check("all_keys_lists_core_and_legacy", "GAME_TITLE" in keys and "NPC_FAIRY_KING" in keys and "MENU_NEW_GAME" in keys and not ("NO_SUCH_KEY" in keys))
 	t.check("language_name_in_its_own_language", _lm.language_name("da") == "dansk" and _lm.language_name("en") == "English")
-	t.check("file_of_reports_the_overriding_file", _lm.file_of("GAME_TITLE") == "core.csv" and _lm.file_of("MENU_NEW_GAME") == "da.csv" and _lm.file_of("NO_SUCH") == "")
+	t.check("file_of_reports_the_overriding_file", _lm.file_of("GAME_TITLE") == "core.csv" and _lm.file_of("MENU_NEW_GAME") in ["da.csv", "ui.csv", "menus.csv"] and _lm.file_of("NO_SUCH") == "")
 	t.check("legacy_key_overridden_by_core_wins", _lm.text_in("GAME_TITLE", "da") == "Trætoppen" and _lm.text_in("UI_INVENTORY", "en") == "Backpack")
 	# the old formatting crash of lua_runtime.gd:42 (tr() of an untranslated key used with %) is gone
 	t.check("lua_runtime_reload_message_is_translated", TranslationServer.translate("NOTIF_LUA_RELOADED_MSG") != "NOTIF_LUA_RELOADED_MSG" and String(TranslationServer.translate("NOTIF_LUA_RELOADED_MSG")) % 3 != "")

@@ -24,6 +24,8 @@ extends Node
 ##   * api.emit(name, payload) carries the payload; api.notification(title, message) runs both through tr().
 ##   * Unknown api functions are logged once (print, not an engine warning) and answer nil.
 
+## A Lua number outside +-1e15 is clamped before int() (int(1e30) is INT64_MIN on x86 and would read as a full deduction).
+const ARG_INT_LIMIT := 1.0e15
 const LUA_ROOT := "res://lua"
 const API_VERSION := 2
 
@@ -762,9 +764,9 @@ func _int_arg(args: Array, i: int, default_value: int) -> int:
 		return default_value
 	var v: Variant = args[i]
 	if _is_number(v):
-		return int(v)
+		return int(clampf(float(v), -ARG_INT_LIMIT, ARG_INT_LIMIT))
 	if _is_text(v) and str(v).is_valid_float():
-		return int(str(v).to_float())
+		return int(clampf(str(v).to_float(), -ARG_INT_LIMIT, ARG_INT_LIMIT))
 	return default_value
 
 

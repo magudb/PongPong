@@ -1,0 +1,58 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/components/ability_slot.gd" id="1_413xr"]
+[ext_resource type="Script" path="res://scripts/ui/components/tt_item_icon.gd" id="2_rreyq"]
+
+[node name="AbilitySlot" type="VBoxContainer" unique_id=1116577231]
+theme_override_constants/separation = 6
+script = ExtResource("1_413xr")
+
+[node name="Frame" type="PanelContainer" parent="." unique_id=632453948]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+theme_type_variation = &"PanelAbilityBig"
+
+[node name="Inner" type="Control" parent="Frame" unique_id=420824445]
+clip_contents = true
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Icon" type="Control" parent="Frame/Inner" unique_id=1405448729]
+unique_name_in_owner = true
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_rreyq")
+
+[node name="Veil" type="ColorRect" parent="Frame/Inner" unique_id=1985263910]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.11, 0.129, 0.22, 0.6)
+
+[node name="CooldownLabel" type="Label" parent="Frame/Inner" unique_id=38947692]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"CooldownNumber"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyLabel" type="Label" parent="." unique_id=722151049]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_type_variation = &"KeyCap"
+text = "Q"

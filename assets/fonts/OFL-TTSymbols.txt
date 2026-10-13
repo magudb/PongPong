@@ -1,0 +1,3 @@
+TTSymbols-Regular.ttf is a subset of Noto Sans Symbols 2 (Copyright 2022 The Noto Project Authors, SIL Open Font License 1.1,
+see OFL-NotoSansSymbols2.txt) with vertical metrics adjusted so that using it as a fallback does not enlarge Godot text lines.
+It only contains ▸ ◂ ♥ ★ ✓ ✗ and a few arrows/bullets. Regenerate with tools/ui/make_symbols_font.py (fonttools).

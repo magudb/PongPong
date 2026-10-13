@@ -1,0 +1,155 @@
+{
+ "v": 1,
+ "note": "15 garment designs the catalogue needs beyond the 15 existing ones; every item using one has a working fallback design",
+ "designs": {
+  "hat_hood": {
+   "slot": "hat",
+   "fallback": "hat_cap",
+   "brief_da": "Blød hætte, der falder om nakken",
+   "brief_en": "Soft hood that drapes over the neck",
+   "used_by": [
+    "hat_hood_green"
+   ]
+  },
+  "hat_acorn": {
+   "slot": "hat",
+   "fallback": "hat_cap",
+   "brief_da": "Hue formet som en agernskål med lille stilk",
+   "brief_en": "Cap shaped like an acorn cup with a small stalk",
+   "used_by": [
+    "hat_acorn_plain",
+    "hat_acorn_gold"
+   ]
+  },
+  "hat_chef": {
+   "slot": "hat",
+   "fallback": "hat_cap",
+   "brief_da": "Høj, buet bagerhue",
+   "brief_en": "Tall, puffed baker cap",
+   "used_by": [
+    "hat_chef_white"
+   ]
+  },
+  "hat_mushroom": {
+   "slot": "hat",
+   "fallback": "hat_straw",
+   "brief_da": "Svampehat med prikker og lille hage",
+   "brief_en": "Mushroom-cap hat with spots and a small chin strap",
+   "used_by": [
+    "hat_mushroom_red",
+    "hat_mushroom_glow",
+    "hat_mushroom_spinner"
+   ]
+  },
+  "hat_cat": {
+   "slot": "hat",
+   "fallback": "hat_cap",
+   "brief_da": "Blød lue med to spidse kattelyd-ører",
+   "brief_en": "Soft beanie with two pointed cat ears",
+   "used_by": [
+    "hat_cat_ears"
+   ]
+  },
+  "shirt_smock": {
+   "slot": "shirt",
+   "fallback": "shirt_linen",
+   "brief_da": "Rummelig kittel med brede ærmer og snøre i halsen",
+   "brief_en": "Roomy smock with wide sleeves and a drawstring neck",
+   "used_by": [
+    "shirt_smock_brown",
+    "shirt_smock_honey"
+   ]
+  },
+  "shirt_vest": {
+   "slot": "shirt",
+   "fallback": "shirt_linen",
+   "brief_da": "Ærmeløs vest med lommer over hørskjorte",
+   "brief_en": "Sleeveless pocket vest over a linen shirt",
+   "used_by": [
+    "shirt_vest_green",
+    "shirt_vest_embroidered"
+   ]
+  },
+  "pants_shorts": {
+   "slot": "pants",
+   "fallback": "pants_trousers",
+   "brief_da": "Korte bukser med omslag",
+   "brief_en": "Short trousers with turn-ups",
+   "used_by": [
+    "pants_shorts_khaki",
+    "pants_shorts_blue"
+   ]
+  },
+  "pants_breeches": {
+   "slot": "pants",
+   "fallback": "pants_trousers",
+   "brief_da": "Knickers, der slutter under knæet",
+   "brief_en": "Breeches ending below the knee",
+   "used_by": [
+    "pants_breeches_tweed"
+   ]
+  },
+  "dress_pinafore": {
+   "slot": "dress",
+   "fallback": "dress_sun",
+   "brief_da": "Forklædekjole med lommer og brede stropper",
+   "brief_en": "Pinafore dress with pockets and wide straps",
+   "used_by": [
+    "dress_pinafore_brown",
+    "dress_pinafore_blue",
+    "dress_pinafore_honey",
+    "dress_pinafore_baker"
+   ]
+  },
+  "shoes_clogs": {
+   "slot": "shoes",
+   "fallback": "shoes_boots",
+   "brief_da": "Træsko med let opadbøjet snude",
+   "brief_en": "Wooden clogs with a slightly upturned toe",
+   "used_by": [
+    "shoes_clogs_wood",
+    "shoes_clogs_painted",
+    "shoes_clogs_gilded"
+   ]
+  },
+  "shoes_wellies": {
+   "slot": "shoes",
+   "fallback": "shoes_boots",
+   "brief_da": "Høje gummistøvler med bred kant",
+   "brief_en": "Tall rubber boots with a wide cuff",
+   "used_by": [
+    "shoes_wellies_yellow",
+    "shoes_wellies_blue"
+   ]
+  },
+  "circlet_flowers": {
+   "slot": "circlet",
+   "fallback": "circlet_crown",
+   "brief_da": "Krans af blomster eller blade",
+   "brief_en": "Wreath of flowers or leaves",
+   "used_by": [
+    "circlet_daisy",
+    "circlet_leaves"
+   ]
+  },
+  "necklace_beads": {
+   "slot": "necklace",
+   "fallback": "neck_pendant",
+   "brief_da": "Snor med perler",
+   "brief_en": "String of beads",
+   "used_by": [
+    "necklace_beads_wood"
+   ]
+  },
+  "bracelet_braid": {
+   "slot": "bracelet",
+   "fallback": "wrist_bangles",
+   "brief_da": "Flettet armbånd",
+   "brief_en": "Braided bracelet",
+   "used_by": [
+    "bracelet_string",
+    "bracelet_vine"
+   ]
+  }
+ }
+}

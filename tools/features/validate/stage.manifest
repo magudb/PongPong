@@ -1,0 +1,46 @@
+# stage.manifest - how run_validate.sh assembles the stage tree of the feature content validator (see docs/features/STAGES.md, review RV-P2).
+# The stage tree has the shape of the reviewed pack: lua/, localization/, data/.  One directive per line, '#' starts a comment, {a,b} and * ** work in paths.
+#
+#   own    <src> [-> <dst>] [?? <fallback>]   a file of THIS package (F1): taken from the tree under test (--src, default the repo)
+#   repo   <src> [-> <dst>] [?? <fallback>]   a file of ANOTHER package that a rule reads (rarity.lua is P10's, the art specs are A1's/A2's, the key table is P03's):
+#                                              taken from the repo; the fallback (a pending reference of F1) is used while the owner has not landed it
+#   staged <stage> <real src> ?? <pending>    the real repo file once the stage >= <stage> (p13 = P13's quests, p14 = P14's dialogue), before that the pending reference
+#
+# A missing file stops the runner ("stage p14 needs lua/dialogue/fairy_king.lua"): a stage never degrades into skipped checks.
+
+# ---- F1's own Lua: items, recipes, shop, data tables (incl. starter_kit.lua), the four feature quests, the three builder dialogues
+own    lua/items/{furniture,clothing,building_materials}.lua
+own    lua/recipes/{furniture,materials}.lua
+own    lua/shops/home_shops.lua
+own    lua/data/**/*.lua
+own    lua/quests/{bogtraeet,moonstone_crown,snurresvampen,slotsdroemmen}.lua
+own    lua/dialogue/{fairy_builder,fairy_furnisher,fairy_tailor}.lua
+
+# ---- the rarity ladder is P10's file (the same reviewed file, CD1 applied)
+repo   lua/config/rarity.lua
+
+# ---- the eight CSVs and their keep-imports
+own    localization/{furniture,wardrobe,materials,home,finds,features_ui,features_quests,dialogue_builder}.csv
+own    localization/{furniture,wardrobe,materials,home,finds,features_ui,features_quests,dialogue_builder}.csv.import
+
+# ---- F1's data/ files (data/features/** -> data/**)
+own    data/features/map_markers.json -> data/map_markers.json
+own    data/features/used_keys.txt -> data/used_keys.txt
+own    data/features/pending/lua/** -> data/pending/lua/**
+own    data/features/pending/legacy_base/lua/** -> data/legacy_base/lua/**
+
+# ---- art contracts of A1 / A2 and the key-level ownership table of P03
+repo   tools/art/features/home/specs/furniture_art_spec.json -> data/furniture_art_spec.json
+repo   tools/art/features/home/specs/content_contract.json -> data/content_contract.json
+repo   tools/art/features/wardrobe/specs/wardrobe_design_requests.json -> data/wardrobe_design_requests.json ?? data/features/pending/art/wardrobe_design_requests.json
+repo   tools/art/features/wardrobe/specs/wardrobe_art_spec.json -> data/wardrobe_art_spec.json ?? data/features/pending/art/wardrobe_art_spec.json
+repo   tools/loc/key_owners.json -> data/loc_key_owners.json
+
+# ---- what later packages finish: P13's quests (stage >= p13) and P14's dialogues (stage >= p14); pending references before that
+staged p13 lua/quests/lost_cat.lua ?? data/features/pending/lua/quests/lost_cat.lua
+staged p13 lua/quests/fix_roof.lua ?? data/features/pending/lua/quests/fix_roof.lua
+staged p13 lua/quests/birthday_cake.lua ?? data/features/pending/lua/quests/birthday_cake.lua
+staged p13 lua/quests/math_wizard_quiz.lua ?? data/features/pending/lua/quests/math_wizard_quiz.lua
+staged p14 lua/dialogue/guard_oak.lua ?? data/features/pending/lua/dialogue/guard_oak.lua
+staged p14 lua/dialogue/fairy_wizard.lua ?? data/features/pending/lua/dialogue/fairy_wizard.lua
+staged p14 lua/dialogue/fairy_king.lua ?? data/features/pending/lua/dialogue/fairy_king.lua

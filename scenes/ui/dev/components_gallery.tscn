@@ -1,0 +1,1086 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/dev/components_gallery.gd" id="1_umd6f"]
+[ext_resource type="PackedScene" path="res://scenes/ui/components/item_slot.tscn" id="2_q1pc5"]
+[ext_resource type="Script" path="res://scripts/ui/components/item_slot.gd" id="3_otpdr"]
+[ext_resource type="PackedScene" path="res://scenes/ui/components/quantity_stepper.tscn" id="4_4gqs5"]
+[ext_resource type="Script" path="res://scripts/ui/components/quantity_stepper.gd" id="5_7xcuv"]
+[ext_resource type="Script" path="res://scripts/ui/components/tt_hearts.gd" id="6_fo5gw"]
+[ext_resource type="Script" path="res://scripts/ui/components/rarity_slot.gd" id="7_ye2r2"]
+[ext_resource type="Script" path="res://scripts/ui/components/rarity_pips.gd" id="8_u5npq"]
+[ext_resource type="Script" path="res://scripts/ui/components/ladder_row.gd" id="9_dtwsw"]
+
+[node name="ComponentsGallery" type="Control" unique_id=853573470]
+layout_mode = 3
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_umd6f")
+
+[node name="Page" type="ColorRect" parent="." unique_id=2034755973]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.9411765, 0.9254902, 0.89411765, 1)
+
+[node name="Margin" type="MarginContainer" parent="." unique_id=1783810752]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 20
+
+[node name="Columns" type="HBoxContainer" parent="Margin" unique_id=47735438]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="Left" type="VBoxContainer" parent="Margin/Columns" unique_id=1343948840]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="H_Buttons" type="Label" parent="Margin/Columns/Left" unique_id=92594989]
+layout_mode = 2
+theme_type_variation = &"EyebrowL"
+text = "GALLERY_H_BUTTONS"
+
+[node name="ButtonRow" type="HFlowContainer" parent="Margin/Columns/Left" unique_id=2129973170]
+layout_mode = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 16
+
+[node name="BuyButton" type="Button" parent="Margin/Columns/Left/ButtonRow" unique_id=1968374445]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ButtonPrimary"
+text = "UI_BUY"
+
+[node name="AcceptButton" type="Button" parent="Margin/Columns/Left/ButtonRow" unique_id=931812045]
+layout_mode = 2
+theme_type_variation = &"ButtonSecondary"
+text = "UI_ACCEPT"
+
+[node name="BackButton" type="Button" parent="Margin/Columns/Left/ButtonRow" unique_id=1422510819]
+layout_mode = 2
+theme_type_variation = &"ButtonTertiary"
+text = "MENU_BACK"
+
+[node name="SoldOutButton" type="Button" parent="Margin/Columns/Left/ButtonRow" unique_id=1391196518]
+layout_mode = 2
+theme_type_variation = &"ButtonTertiary"
+disabled = true
+text = "GALLERY_SOLD_OUT"
+
+[node name="H_Slots" type="Label" parent="Margin/Columns/Left" unique_id=1361936520]
+layout_mode = 2
+theme_type_variation = &"EyebrowL"
+text = "GALLERY_H_SLOTS"
+
+[node name="SlotRow" type="HBoxContainer" parent="Margin/Columns/Left" unique_id=643973201]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="ColTom" type="VBoxContainer" parent="Margin/Columns/Left/SlotRow" unique_id=1149656287]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 6
+
+[node name="SlotTom" type="Button" parent="Margin/Columns/Left/SlotRow/ColTom" unique_id=2053073374 instance=ExtResource("2_q1pc5")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+theme_type_variation = &"SlotEmpty"
+toggle_mode = true
+action_mode = 0
+script = ExtResource("3_otpdr")
+
+[node name="Caption" type="Label" parent="Margin/Columns/Left/SlotRow/ColTom" unique_id=1366037333]
+layout_mode = 2
+theme_type_variation = &"Heavy14"
+text = "GALLERY_SLOT_EMPTY"
+horizontal_alignment = 1
+
+[node name="ColFyldt" type="VBoxContainer" parent="Margin/Columns/Left/SlotRow" unique_id=1533403838]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 6
+
+[node name="SlotFyldt" type="Button" parent="Margin/Columns/Left/SlotRow/ColFyldt" unique_id=1825911164 instance=ExtResource("2_q1pc5")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+theme_type_variation = &"SlotEmpty"
+toggle_mode = true
+action_mode = 0
+script = ExtResource("3_otpdr")
+
+[node name="Caption" type="Label" parent="Margin/Columns/Left/SlotRow/ColFyldt" unique_id=2422602]
+layout_mode = 2
+theme_type_variation = &"Heavy14"
+text = "GALLERY_SLOT_FILLED"
+horizontal_alignment = 1
+
+[node name="ColValgt" type="VBoxContainer" parent="Margin/Columns/Left/SlotRow" unique_id=1683853279]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 6
+
+[node name="SlotValgt" type="Button" parent="Margin/Columns/Left/SlotRow/ColValgt" unique_id=761608849 instance=ExtResource("2_q1pc5")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+theme_type_variation = &"SlotEmpty"
+toggle_mode = true
+action_mode = 0
+script = ExtResource("3_otpdr")
+
+[node name="Caption" type="Label" parent="Margin/Columns/Left/SlotRow/ColValgt" unique_id=1581342215]
+layout_mode = 2
+theme_type_variation = &"Heavy14"
+text = "GALLERY_SLOT_SELECTED"
+horizontal_alignment = 1
+
+[node name="ColSjælden" type="VBoxContainer" parent="Margin/Columns/Left/SlotRow" unique_id=2078341608]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 6
+
+[node name="SlotSjælden" type="Button" parent="Margin/Columns/Left/SlotRow/ColSjælden" unique_id=1151322434 instance=ExtResource("2_q1pc5")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+theme_type_variation = &"SlotEmpty"
+toggle_mode = true
+action_mode = 0
+script = ExtResource("3_otpdr")
+
+[node name="Caption" type="Label" parent="Margin/Columns/Left/SlotRow/ColSjælden" unique_id=879029707]
+layout_mode = 2
+theme_type_variation = &"Heavy14"
+text = "GALLERY_SLOT_RARE"
+horizontal_alignment = 1
+
+[node name="H_Meters" type="Label" parent="Margin/Columns/Left" unique_id=2119742495]
+layout_mode = 2
+theme_type_variation = &"EyebrowL"
+text = "GALLERY_H_METERS"
+
+[node name="Meters" type="VBoxContainer" parent="Margin/Columns/Left" unique_id=701410571]
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 12
+
+[node name="RowEnergi" type="HBoxContainer" parent="Margin/Columns/Left/Meters" unique_id=1414528727]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Name" type="Label" parent="Margin/Columns/Left/Meters/RowEnergi" unique_id=1402223271]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+theme_type_variation = &"Heavy17"
+text = "HUD_ENERGY"
+
+[node name="MeterEnergi" type="ProgressBar" parent="Margin/Columns/Left/Meters/RowEnergi" unique_id=1801655124]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"MeterGreen"
+value = 72.0
+show_percentage = false
+
+[node name="RowHjerter" type="HBoxContainer" parent="Margin/Columns/Left/Meters" unique_id=116366552]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Name" type="Label" parent="Margin/Columns/Left/Meters/RowHjerter" unique_id=1123826187]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+theme_type_variation = &"Heavy17"
+text = "GALLERY_METER_HEARTS"
+
+[node name="MeterHjerter" type="ProgressBar" parent="Margin/Columns/Left/Meters/RowHjerter" unique_id=1937024038]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"MeterRose"
+value = 60.0
+show_percentage = false
+
+[node name="RowLygteolie" type="HBoxContainer" parent="Margin/Columns/Left/Meters" unique_id=958274823]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Name" type="Label" parent="Margin/Columns/Left/Meters/RowLygteolie" unique_id=1456860943]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+theme_type_variation = &"Heavy17"
+text = "FOREST_OIL"
+
+[node name="MeterLygteolie" type="ProgressBar" parent="Margin/Columns/Left/Meters/RowLygteolie" unique_id=275541595]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_type_variation = &"MeterHoney"
+value = 45.0
+show_percentage = false
+
+[node name="H_States" type="Label" parent="Margin/Columns/Left" unique_id=398714667]
+layout_mode = 2
+theme_type_variation = &"EyebrowL"
+text = "GALLERY_H_STATES"
+
+[node name="StatesRow" type="HBoxContainer" parent="Margin/Columns/Left" unique_id=1379733736]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 76)
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Right" type="VBoxContainer" parent="Margin/Columns" unique_id=1281575161]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 14
+
+[node name="H_Tabs" type="Label" parent="Margin/Columns/Right" unique_id=1801339573]
+layout_mode = 2
+theme_type_variation = &"EyebrowL"
+text = "GALLERY_H_TABS"
+
+[node name="TabRow" type="HBoxContainer" parent="Margin/Columns/Right" unique_id=413389020]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Tab0" type="Button" parent="Margin/Columns/Right/TabRow" unique_id=1248543413]
+layout_mode = 2
+theme_type_variation = &"PillTab"
+toggle_mode = true
+button_pressed = true
+text = "SHOP_TAB_SEEDS"
+
+[node name="Tab1" type="Button" parent="Margin/Columns/Right/TabRow" unique_id=1125759130]
+layout_mode = 2
+theme_type_variation = &"PillTab"
+toggle_mode = true
+text = "SHOP_TAB_TOOLS"
+
+[node name="Tab2" type="Button" parent="Margin/Columns/Right/TabRow" unique_id=1778765326]
+layout_mode = 2
+theme_type_variation = &"PillTab"
+toggle_mode = true
+text = "UI_SELL"
+
+[node name="H_Chips" type="Label" parent="Margin/Columns/Right" unique_id=1245790706]
+layout_mode = 2
+theme_type_variation = &"EyebrowL"
+text = "GALLERY_H_CHIPS"
+
+[node name="ChipRow" type="HBoxContainer" parent="Margin/Columns/Right" unique_id=396029379]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Prefix" type="Label" parent="Margin/Columns/Right/ChipRow" unique_id=1801605315]
+layout_mode = 2
+theme_type_variation = &"Heavy18"
+text = "CHAR_SPECIES_PREFIX"
+
+[node name="Chip0" type="Button" parent="Margin/Columns/Right/ChipRow" unique_id=499530917]
+layout_mode = 2
+theme_type_variation = &"Chip"
+toggle_mode = true
+button_pressed = true
+text = "SPECIES_FOX"
+
+[node name="Chip1" type="Button" parent="Margin/Columns/Right/ChipRow" unique_id=538967602]
+layout_mode = 2
+theme_type_variation = &"Chip"
+toggle_mode = true
+text = "SPECIES_RABBIT"
+
+[node name="Chip2" type="Button" parent="Margin/Columns/Right/ChipRow" unique_id=1150741715]
+layout_mode = 2
+theme_type_variation = &"Chip"
+toggle_mode = true
+text = "SPECIES_HEDGEHOG"
+
+[node name="Chip3" type="Button" parent="Margin/Columns/Right/ChipRow" unique_id=74580368]
+layout_mode = 2
+theme_type_variation = &"Chip"
+toggle_mode = true
+text = "SPECIES_SQUIRREL"
+
+[node name="H_Stepper" type="Label" parent="Margin/Columns/Right" unique_id=1282465128]
+layout_mode = 2
+theme_type_variation = &"EyebrowL"
+text = "GALLERY_H_STEPPER"
+
+[node name="StepperRow" type="HBoxContainer" parent="Margin/Columns/Right" unique_id=2123475063]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Stepper" type="PanelContainer" parent="Margin/Columns/Right/StepperRow" unique_id=2007173377 instance=ExtResource("4_4gqs5")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"PanelField"
+script = ExtResource("5_7xcuv")
+
+[node name="TotalLabel" type="Label" parent="Margin/Columns/Right/StepperRow" unique_id=1907794429]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Bold17Muted"
+text = "SHOP_TOTAL"
+
+[node name="BuyButton2" type="Button" parent="Margin/Columns/Right/StepperRow" unique_id=1920028337]
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"ButtonPrimary"
+text = "UI_BUY"
+
+[node name="H_Hearts" type="Label" parent="Margin/Columns/Right" unique_id=1037373954]
+layout_mode = 2
+theme_type_variation = &"EyebrowL"
+text = "GALLERY_H_HEARTS"
+
+[node name="HeartRow" type="HBoxContainer" parent="Margin/Columns/Right" unique_id=2059582628]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="HeartsPanel" type="PanelContainer" parent="Margin/Columns/Right/HeartRow" unique_id=432107327]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_type_variation = &"PanelHearts"
+
+[node name="Hearts" type="Control" parent="Margin/Columns/Right/HeartRow/HeartsPanel" unique_id=193101222]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(166, 28)
+layout_mode = 2
+script = ExtResource("6_fo5gw")
+
+[node name="Tooltip" type="PanelContainer" parent="Margin/Columns/Right/HeartRow" unique_id=247202356]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_type_variation = &"PanelTooltip"
+
+[node name="V" type="VBoxContainer" parent="Margin/Columns/Right/HeartRow/Tooltip" unique_id=436299656]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Title" type="Label" parent="Margin/Columns/Right/HeartRow/Tooltip/V" unique_id=1896042102]
+layout_mode = 2
+theme_type_variation = &"Heavy19"
+text = "GALLERY_TIP_TITLE"
+
+[node name="Desc" type="Label" parent="Margin/Columns/Right/HeartRow/Tooltip/V" unique_id=553421658]
+layout_mode = 2
+theme_type_variation = &"Muted15"
+text = "GALLERY_TIP_TEXT"
+
+[node name="H_Focus" type="Label" parent="Margin/Columns/Right" unique_id=662128448]
+layout_mode = 2
+theme_type_variation = &"EyebrowL"
+text = "GALLERY_H_FOCUS"
+
+[node name="FocusRow" type="HBoxContainer" parent="Margin/Columns/Right" unique_id=1538383727]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="FocusedButton" type="Button" parent="Margin/Columns/Right/FocusRow" unique_id=1202039453]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ButtonPrimary"
+text = "GALLERY_FOCUSED"
+
+[node name="OtherButton" type="Button" parent="Margin/Columns/Right/FocusRow" unique_id=1871481015]
+layout_mode = 2
+theme_type_variation = &"ButtonSecondary"
+text = "GALLERY_OTHER"
+
+[node name="H_Rules" type="Label" parent="Margin/Columns/Right" unique_id=1261215235]
+layout_mode = 2
+theme_type_variation = &"EyebrowL"
+text = "GALLERY_H_RULES"
+
+[node name="Rules" type="GridContainer" parent="Margin/Columns/Right" unique_id=1451066776]
+layout_mode = 2
+theme_override_constants/h_separation = 14
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="Rule" type="VBoxContainer" parent="Margin/Columns/Right/Rules" unique_id=1361312481]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="Line" type="ColorRect" parent="Margin/Columns/Right/Rules/Rule" unique_id=1441072937]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+
+[node name="Pad" type="MarginContainer" parent="Margin/Columns/Right/Rules/Rule" unique_id=1905307498]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 0
+
+[node name="Col" type="VBoxContainer" parent="Margin/Columns/Right/Rules/Rule/Pad" unique_id=2115488488]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="T" type="Label" parent="Margin/Columns/Right/Rules/Rule/Pad/Col" unique_id=1778303610]
+layout_mode = 2
+theme_type_variation = &"Heavy17"
+text = "GALLERY_RULE_INK_T"
+
+[node name="D" type="Label" parent="Margin/Columns/Right/Rules/Rule/Pad/Col" unique_id=1937605256]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+theme_type_variation = &"Muted14"
+text = "GALLERY_RULE_INK_D"
+autowrap_mode = 3
+
+[node name="@VBoxContainer@12" type="VBoxContainer" parent="Margin/Columns/Right/Rules" unique_id=1325720426]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="Line" type="ColorRect" parent="Margin/Columns/Right/Rules/@VBoxContainer@12" unique_id=532126570]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+
+[node name="Pad" type="MarginContainer" parent="Margin/Columns/Right/Rules/@VBoxContainer@12" unique_id=615419839]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 0
+
+[node name="Col" type="VBoxContainer" parent="Margin/Columns/Right/Rules/@VBoxContainer@12/Pad" unique_id=1681490735]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="T" type="Label" parent="Margin/Columns/Right/Rules/@VBoxContainer@12/Pad/Col" unique_id=601511576]
+layout_mode = 2
+theme_type_variation = &"Heavy17"
+text = "GALLERY_RULE_GOLD_T"
+
+[node name="D" type="Label" parent="Margin/Columns/Right/Rules/@VBoxContainer@12/Pad/Col" unique_id=1071544892]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+theme_type_variation = &"Muted14"
+text = "GALLERY_RULE_GOLD_D"
+autowrap_mode = 3
+
+[node name="@VBoxContainer@13" type="VBoxContainer" parent="Margin/Columns/Right/Rules" unique_id=856892048]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="Line" type="ColorRect" parent="Margin/Columns/Right/Rules/@VBoxContainer@13" unique_id=1988324591]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+
+[node name="Pad" type="MarginContainer" parent="Margin/Columns/Right/Rules/@VBoxContainer@13" unique_id=826202516]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 0
+
+[node name="Col" type="VBoxContainer" parent="Margin/Columns/Right/Rules/@VBoxContainer@13/Pad" unique_id=389242423]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="T" type="Label" parent="Margin/Columns/Right/Rules/@VBoxContainer@13/Pad/Col" unique_id=689624425]
+layout_mode = 2
+theme_type_variation = &"Heavy17"
+text = "GALLERY_RULE_NUM_T"
+
+[node name="D" type="Label" parent="Margin/Columns/Right/Rules/@VBoxContainer@13/Pad/Col" unique_id=481901335]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+theme_type_variation = &"Muted14"
+text = "GALLERY_RULE_NUM_D"
+autowrap_mode = 3
+
+[node name="@VBoxContainer@14" type="VBoxContainer" parent="Margin/Columns/Right/Rules" unique_id=1171306327]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="Line" type="ColorRect" parent="Margin/Columns/Right/Rules/@VBoxContainer@14" unique_id=1985332004]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+
+[node name="Pad" type="MarginContainer" parent="Margin/Columns/Right/Rules/@VBoxContainer@14" unique_id=342947915]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 0
+
+[node name="Col" type="VBoxContainer" parent="Margin/Columns/Right/Rules/@VBoxContainer@14/Pad" unique_id=1936328782]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="T" type="Label" parent="Margin/Columns/Right/Rules/@VBoxContainer@14/Pad/Col" unique_id=994819168]
+layout_mode = 2
+theme_type_variation = &"Heavy17"
+text = "GALLERY_RULE_RED_T"
+
+[node name="D" type="Label" parent="Margin/Columns/Right/Rules/@VBoxContainer@14/Pad/Col" unique_id=1714458637]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+theme_type_variation = &"Muted14"
+text = "GALLERY_RULE_RED_D"
+autowrap_mode = 3
+
+[node name="RarityMargin" type="MarginContainer" parent="." unique_id=1030802060]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 20
+
+[node name="RarityColumns" type="HBoxContainer" parent="RarityMargin" unique_id=1969784018]
+layout_mode = 2
+theme_override_constants/separation = 48
+
+[node name="RarityLeft" type="VBoxContainer" parent="RarityMargin/RarityColumns" unique_id=1433812314]
+custom_minimum_size = Vector2(640, 0)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="H_Rarity" type="Label" parent="RarityMargin/RarityColumns/RarityLeft" unique_id=760792676]
+layout_mode = 2
+theme_type_variation = &"EyebrowL"
+text = "GALLERY_H_RARITY"
+
+[node name="RarityNote" type="Label" parent="RarityMargin/RarityColumns/RarityLeft" unique_id=2139145099]
+layout_mode = 2
+theme_type_variation = &"Muted15"
+text = "GALLERY_RARITY_NOTE"
+
+[node name="RarityHead" type="HBoxContainer" parent="RarityMargin/RarityColumns/RarityLeft" unique_id=55662243]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Col_GALLERY_COL_FILLED" type="Label" parent="RarityMargin/RarityColumns/RarityLeft/RarityHead" unique_id=1238185216]
+custom_minimum_size = Vector2(82, 0)
+layout_mode = 2
+theme_type_variation = &"Muted13"
+text = "GALLERY_COL_FILLED"
+horizontal_alignment = 1
+
+[node name="Col_GALLERY_COL_SELECTED" type="Label" parent="RarityMargin/RarityColumns/RarityLeft/RarityHead" unique_id=848126541]
+custom_minimum_size = Vector2(82, 0)
+layout_mode = 2
+theme_type_variation = &"Muted13"
+text = "GALLERY_COL_SELECTED"
+horizontal_alignment = 1
+
+[node name="Col_GALLERY_COL_UNKNOWN" type="Label" parent="RarityMargin/RarityColumns/RarityLeft/RarityHead" unique_id=1809959919]
+custom_minimum_size = Vector2(82, 0)
+layout_mode = 2
+theme_type_variation = &"Muted13"
+text = "GALLERY_COL_UNKNOWN"
+horizontal_alignment = 1
+
+[node name="Col_GALLERY_SLOT_FILLED" type="Label" parent="RarityMargin/RarityColumns/RarityLeft/RarityHead" unique_id=296791471]
+custom_minimum_size = Vector2(62, 0)
+layout_mode = 2
+theme_type_variation = &"Muted13"
+text = "GALLERY_SLOT_FILLED"
+horizontal_alignment = 1
+
+[node name="Col_GALLERY_SLOT_SELECTED" type="Label" parent="RarityMargin/RarityColumns/RarityLeft/RarityHead" unique_id=1221718437]
+custom_minimum_size = Vector2(62, 0)
+layout_mode = 2
+theme_type_variation = &"Muted13"
+text = "GALLERY_SLOT_SELECTED"
+horizontal_alignment = 1
+
+[node name="RarityRows" type="VBoxContainer" parent="RarityMargin/RarityColumns/RarityLeft" unique_id=707818266]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Row_normal" type="HBoxContainer" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows" unique_id=740883607]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 14
+
+[node name="Filled_normal" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_normal" unique_id=751967569]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+item_id = &"chair_pine"
+count = 3
+
+[node name="Selected_normal" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_normal" unique_id=764093890]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+item_id = &"chair_pine"
+count = 3
+selected = true
+
+[node name="Unknown_normal" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_normal" unique_id=1270266022]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+item_id = &"chair_pine"
+unknown = true
+
+[node name="ThemedSlot_normal" type="Button" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_normal" unique_id=904171231 instance=ExtResource("2_q1pc5")]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"SlotEmpty"
+toggle_mode = true
+action_mode = 0
+script = ExtResource("3_otpdr")
+metadata/sample = ["normal", "chair_pine"]
+
+[node name="ThemedSelected_normal" type="Button" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_normal" unique_id=1217927119 instance=ExtResource("2_q1pc5")]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"SlotEmpty"
+toggle_mode = true
+button_pressed = true
+action_mode = 0
+script = ExtResource("3_otpdr")
+metadata/sample = ["normal", "chair_pine"]
+
+[node name="Word_normal" type="VBoxContainer" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_normal" unique_id=152869672]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="WordLabel" type="Label" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_normal/Word_normal" unique_id=1407255639]
+layout_mode = 2
+theme_type_variation = &"RarityWordNormal"
+text = "RARITY_NORMAL"
+
+[node name="Pips" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_normal/Word_normal" unique_id=1502073753]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("8_u5npq")
+pip_size = 12.0
+
+[node name="Row_uncommon" type="HBoxContainer" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows" unique_id=261301230]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 14
+
+[node name="Filled_uncommon" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_uncommon" unique_id=801762119]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+rarity = &"uncommon"
+item_id = &"bed_birch_single"
+
+[node name="Selected_uncommon" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_uncommon" unique_id=1219683382]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+rarity = &"uncommon"
+item_id = &"bed_birch_single"
+selected = true
+
+[node name="Unknown_uncommon" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_uncommon" unique_id=1016503175]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+rarity = &"uncommon"
+item_id = &"bed_birch_single"
+unknown = true
+
+[node name="ThemedSlot_uncommon" type="Button" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_uncommon" unique_id=1460509103 instance=ExtResource("2_q1pc5")]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"SlotEmpty"
+toggle_mode = true
+action_mode = 0
+script = ExtResource("3_otpdr")
+metadata/sample = ["uncommon", "bed_birch_single"]
+
+[node name="ThemedSelected_uncommon" type="Button" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_uncommon" unique_id=1009657110 instance=ExtResource("2_q1pc5")]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"SlotEmpty"
+toggle_mode = true
+button_pressed = true
+action_mode = 0
+script = ExtResource("3_otpdr")
+metadata/sample = ["uncommon", "bed_birch_single"]
+
+[node name="Word_uncommon" type="VBoxContainer" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_uncommon" unique_id=989140485]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="WordLabel" type="Label" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_uncommon/Word_uncommon" unique_id=1493969838]
+layout_mode = 2
+theme_type_variation = &"RarityWordUncommon"
+text = "RARITY_UNCOMMON"
+
+[node name="Pips" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_uncommon/Word_uncommon" unique_id=757414011]
+custom_minimum_size = Vector2(12, 15)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("8_u5npq")
+rarity = &"uncommon"
+pip_size = 12.0
+
+[node name="Row_rare" type="HBoxContainer" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows" unique_id=1222005936]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 14
+
+[node name="Filled_rare" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_rare" unique_id=1694006561]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+rarity = &"rare"
+item_id = &"chair_lavender"
+
+[node name="Selected_rare" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_rare" unique_id=665109160]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+rarity = &"rare"
+item_id = &"chair_lavender"
+selected = true
+
+[node name="Unknown_rare" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_rare" unique_id=1643850600]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+rarity = &"rare"
+item_id = &"chair_lavender"
+unknown = true
+
+[node name="ThemedSlot_rare" type="Button" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_rare" unique_id=737830037 instance=ExtResource("2_q1pc5")]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"SlotEmpty"
+toggle_mode = true
+action_mode = 0
+script = ExtResource("3_otpdr")
+metadata/sample = ["rare", "chair_lavender"]
+
+[node name="ThemedSelected_rare" type="Button" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_rare" unique_id=1953574101 instance=ExtResource("2_q1pc5")]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"SlotEmpty"
+toggle_mode = true
+button_pressed = true
+action_mode = 0
+script = ExtResource("3_otpdr")
+metadata/sample = ["rare", "chair_lavender"]
+
+[node name="Word_rare" type="VBoxContainer" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_rare" unique_id=437746145]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="WordLabel" type="Label" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_rare/Word_rare" unique_id=86736243]
+layout_mode = 2
+theme_type_variation = &"RarityWordRare"
+text = "RARITY_RARE"
+
+[node name="Pips" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_rare/Word_rare" unique_id=1086105653]
+custom_minimum_size = Vector2(27, 15)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("8_u5npq")
+rarity = &"rare"
+pip_size = 12.0
+
+[node name="Row_unique" type="HBoxContainer" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows" unique_id=1815647454]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 14
+
+[node name="Filled_unique" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_unique" unique_id=175837989]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+rarity = &"unique"
+item_id = &"bed_toadstool"
+
+[node name="Selected_unique" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_unique" unique_id=1499988869]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+rarity = &"unique"
+item_id = &"bed_toadstool"
+selected = true
+
+[node name="Unknown_unique" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_unique" unique_id=559570319]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+rarity = &"unique"
+item_id = &"bed_toadstool"
+unknown = true
+
+[node name="ThemedSlot_unique" type="Button" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_unique" unique_id=49511938 instance=ExtResource("2_q1pc5")]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"SlotEmpty"
+toggle_mode = true
+action_mode = 0
+script = ExtResource("3_otpdr")
+metadata/sample = ["unique", "bed_toadstool"]
+
+[node name="ThemedSelected_unique" type="Button" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_unique" unique_id=814750213 instance=ExtResource("2_q1pc5")]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"SlotEmpty"
+toggle_mode = true
+button_pressed = true
+action_mode = 0
+script = ExtResource("3_otpdr")
+metadata/sample = ["unique", "bed_toadstool"]
+
+[node name="Word_unique" type="VBoxContainer" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_unique" unique_id=137069427]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="WordLabel" type="Label" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_unique/Word_unique" unique_id=532898298]
+layout_mode = 2
+theme_type_variation = &"RarityWordUnique"
+text = "RARITY_UNIQUE"
+
+[node name="Pips" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_unique/Word_unique" unique_id=1393874405]
+custom_minimum_size = Vector2(42, 15)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("8_u5npq")
+rarity = &"unique"
+pip_size = 12.0
+
+[node name="Row_legendary" type="HBoxContainer" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows" unique_id=1652896204]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 14
+
+[node name="Filled_legendary" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_legendary" unique_id=2134229326]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+rarity = &"legendary"
+item_id = &"bed_moon"
+
+[node name="Selected_legendary" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_legendary" unique_id=1705916231]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+rarity = &"legendary"
+item_id = &"bed_moon"
+selected = true
+
+[node name="Unknown_legendary" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_legendary" unique_id=863943322]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+rarity = &"legendary"
+item_id = &"bed_moon"
+unknown = true
+
+[node name="ThemedSlot_legendary" type="Button" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_legendary" unique_id=601428962 instance=ExtResource("2_q1pc5")]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"SlotEmpty"
+toggle_mode = true
+action_mode = 0
+script = ExtResource("3_otpdr")
+metadata/sample = ["legendary", "bed_moon"]
+
+[node name="ThemedSelected_legendary" type="Button" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_legendary" unique_id=1934831425 instance=ExtResource("2_q1pc5")]
+custom_minimum_size = Vector2(62, 62)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"SlotEmpty"
+toggle_mode = true
+button_pressed = true
+action_mode = 0
+script = ExtResource("3_otpdr")
+metadata/sample = ["legendary", "bed_moon"]
+
+[node name="Word_legendary" type="VBoxContainer" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_legendary" unique_id=240112109]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="WordLabel" type="Label" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_legendary/Word_legendary" unique_id=1512244190]
+layout_mode = 2
+theme_type_variation = &"RarityWordLegendary"
+text = "RARITY_LEGENDARY"
+
+[node name="Pips" type="Control" parent="RarityMargin/RarityColumns/RarityLeft/RarityRows/Row_legendary/Word_legendary" unique_id=555290415]
+custom_minimum_size = Vector2(57, 15)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("8_u5npq")
+rarity = &"legendary"
+pip_size = 12.0
+
+[node name="RarityRight" type="VBoxContainer" parent="RarityMargin/RarityColumns" unique_id=1960316873]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="H_Night" type="Label" parent="RarityMargin/RarityColumns/RarityRight" unique_id=298962330]
+layout_mode = 2
+theme_type_variation = &"Heavy17"
+text = "GALLERY_RARITY_LEGEND_NIGHT"
+
+[node name="NightRow" type="HBoxContainer" parent="RarityMargin/RarityColumns/RarityRight" unique_id=218456057]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="NightFile" type="Control" parent="RarityMargin/RarityColumns/RarityRight/NightRow" unique_id=1518060346]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+rarity = &"legendary"
+item_id = &"clock_moon"
+
+[node name="NightFileSelected" type="Control" parent="RarityMargin/RarityColumns/RarityRight/NightRow" unique_id=172657932]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+rarity = &"legendary"
+item_id = &"clock_moon"
+selected = true
+
+[node name="H_Disc" type="Label" parent="RarityMargin/RarityColumns/RarityRight" unique_id=122910272]
+layout_mode = 2
+theme_type_variation = &"Heavy17"
+text = "GALLERY_RARITY_LEGEND_DISC"
+
+[node name="DiscRow" type="HBoxContainer" parent="RarityMargin/RarityColumns/RarityRight" unique_id=1864374585]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="DiscNoFile" type="Control" parent="RarityMargin/RarityColumns/RarityRight/DiscRow" unique_id=700997462]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+rarity = &"legendary"
+item_id = &"chair_pine"
+
+[node name="DiscNoFileSelected" type="Control" parent="RarityMargin/RarityColumns/RarityRight/DiscRow" unique_id=292944793]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+rarity = &"legendary"
+item_id = &"chair_pine"
+selected = true
+
+[node name="H_NoIcon" type="Label" parent="RarityMargin/RarityColumns/RarityRight" unique_id=1573904412]
+layout_mode = 2
+theme_type_variation = &"Heavy17"
+text = "GALLERY_RARITY_NO_ICON"
+
+[node name="NoIconRow" type="HBoxContainer" parent="RarityMargin/RarityColumns/RarityRight" unique_id=924410557]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="NoIconRare" type="Control" parent="RarityMargin/RarityColumns/RarityRight/NoIconRow" unique_id=1388105236]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+rarity = &"rare"
+item_id = &"gizmo_unmade"
+
+[node name="NoIconLegendary" type="Control" parent="RarityMargin/RarityColumns/RarityRight/NoIconRow" unique_id=662037941]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_ye2r2")
+rarity = &"legendary"
+item_id = &"lamp_unmade"
+
+[node name="H_Ladder" type="Label" parent="RarityMargin/RarityColumns/RarityRight" unique_id=80355874]
+layout_mode = 2
+theme_type_variation = &"EyebrowL"
+text = "GALLERY_H_LADDER"
+
+[node name="Ladder" type="VBoxContainer" parent="RarityMargin/RarityColumns/RarityRight" unique_id=2059579094]
+custom_minimum_size = Vector2(360, 0)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="LadderDone" type="Control" parent="RarityMargin/RarityColumns/RarityRight/Ladder" unique_id=417282334]
+custom_minimum_size = Vector2(360, 50)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("9_dtwsw")
+state = &"done"
+metadata/title_key = "GALLERY_LADDER_1"
+metadata/chip_key = "GALLERY_CHIP_BUILT"
+
+[node name="LadderCurrent" type="Control" parent="RarityMargin/RarityColumns/RarityRight/Ladder" unique_id=794307418]
+custom_minimum_size = Vector2(360, 50)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("9_dtwsw")
+number = 2
+state = &"current"
+metadata/title_key = "GALLERY_LADDER_2"
+metadata/chip_key = "GALLERY_CHIP_HERE"
+
+[node name="LadderNext" type="Control" parent="RarityMargin/RarityColumns/RarityRight/Ladder" unique_id=562144091]
+custom_minimum_size = Vector2(360, 50)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("9_dtwsw")
+number = 3
+state = &"next"
+selected = true
+metadata/title_key = "GALLERY_LADDER_3"
+metadata/chip_key = "GALLERY_CHIP_NEXT"
+
+[node name="LadderLocked" type="Control" parent="RarityMargin/RarityColumns/RarityRight/Ladder" unique_id=474574256]
+custom_minimum_size = Vector2(360, 50)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("9_dtwsw")
+number = 4
+metadata/title_key = "GALLERY_LADDER_4"
+metadata/chip_key = "GALLERY_CHIP_LOCKED"

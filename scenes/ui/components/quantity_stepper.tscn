@@ -1,0 +1,48 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/components/quantity_stepper.gd" id="1_3v13d"]
+
+[node name="QuantityStepper" type="PanelContainer" unique_id=772406302]
+theme_type_variation = &"PanelField"
+script = ExtResource("1_3v13d")
+
+[node name="Row" type="HBoxContainer" parent="." unique_id=1619295534]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MinusButton" type="Button" parent="Row" unique_id=1596654357]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"StepperButton"
+text = "−"
+
+[node name="DividerL" type="ColorRect" parent="Row" unique_id=1231296935]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+
+[node name="ValueMargin" type="MarginContainer" parent="Row" unique_id=757667087]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 4
+
+[node name="ValueLabel" type="Label" parent="Row/ValueMargin" unique_id=1117803228]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(18, 0)
+layout_mode = 2
+theme_type_variation = &"Display20"
+text = "1"
+horizontal_alignment = 1
+
+[node name="DividerR" type="ColorRect" parent="Row" unique_id=63444266]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+
+[node name="PlusButton" type="Button" parent="Row" unique_id=176683615]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"StepperButton"
+text = "+"

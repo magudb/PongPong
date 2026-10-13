@@ -1,0 +1,95 @@
+-- recipes/materials.lua
+-- Processing recipes for building materials (planks, stone blocks, nails, rope, fabric, metal plates, gold leaf).
+
+kind = "recipes"
+
+recipes = {
+  saw_plank_pine = {
+    name_key = "RECIPE_SAW_PLANK_PINE",
+    category = "craft",
+    station = "snedkerbord",
+    min_home_tier = 1,
+    ingredients = { wood = 2 },
+    output = { item = "plank_pine", amount = 1 },
+  },
+  saw_plank_birch = {
+    name_key = "RECIPE_SAW_PLANK_BIRCH",
+    category = "craft",
+    station = "snedkerbord",
+    min_home_tier = 1,
+    ingredients = { wood = 2, lime = 1 },
+    output = { item = "plank_birch", amount = 1 },
+  },
+  hew_beam = {
+    name_key = "RECIPE_HEW_BEAM",
+    category = "craft",
+    station = "snedkerbord",
+    min_home_tier = 1,
+    ingredients = { wood = 4 },
+    output = { item = "timber_beam", amount = 1 },
+  },
+  cut_stone_block = {
+    name_key = "RECIPE_CUT_STONE_BLOCK",
+    category = "craft",
+    station = "snedkerbord",
+    min_home_tier = 1,
+    ingredients = { stone = 3 },
+    output = { item = "stone_block", amount = 1 },
+  },
+  burn_lime = {
+    name_key = "RECIPE_BURN_LIME",
+    category = "craft",
+    station = "snedkerbord",
+    min_home_tier = 1,
+    ingredients = { stone = 2 },
+    output = { item = "lime", amount = 2 },
+  },
+  twist_rope = {
+    name_key = "RECIPE_TWIST_ROPE",
+    category = "craft",
+    station = "snedkerbord",
+    min_home_tier = 1,
+    ingredients = { moss = 3 },
+    output = { item = "rope", amount = 1 },
+  },
+  forge_nails = {
+    name_key = "RECIPE_FORGE_NAILS",
+    category = "craft",
+    station = "snedkerbord",
+    min_home_tier = 1,
+    ingredients = { iron_ore = 1 },
+    output = { item = "nails", amount = 12 },
+  },
+  weave_wool_fabric = {
+    name_key = "RECIPE_WEAVE_WOOL_FABRIC",
+    category = "craft",
+    station = "vaev",
+    min_home_tier = 3,
+    ingredients = { wool = 3 },
+    output = { item = "fabric_wool", amount = 1 },
+  },
+  forge_copper_plate = {
+    name_key = "RECIPE_FORGE_COPPER_PLATE",
+    category = "forge",
+    station = "smedje",
+    min_home_tier = 5,
+    ingredients = { copper_ore = 3 },
+    output = { item = "copper_plate", amount = 1 },
+  },
+  forge_brass_bar = {
+    name_key = "RECIPE_FORGE_BRASS_BAR",
+    category = "forge",
+    station = "smedje",
+    min_home_tier = 5,
+    ingredients = { copper_ore = 2, iron_ore = 1 },
+    output = { item = "brass_bar", amount = 1 },
+  },
+  beat_gold_leaf = {
+    name_key = "RECIPE_BEAT_GOLD_LEAF",
+    category = "forge",
+    station = "smedje",
+    min_home_tier = 5,
+    ingredients = { gold_ore = 1 },
+    output = { item = "gold_leaf", amount = 3 },
+  },
+}

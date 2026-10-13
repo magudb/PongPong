@@ -1,0 +1,1270 @@
+{
+ "v": 1,
+ "existing": {
+  "shirt_linen": "shirt",
+  "shirt_knit": "shirt",
+  "pants_trousers": "pants",
+  "pants_dungarees": "pants",
+  "dress_sun": "dress",
+  "dress_gown": "dress",
+  "shoes_boots": "shoes",
+  "shoes_slippers": "shoes",
+  "hat_straw": "hat",
+  "hat_cap": "hat",
+  "hat_wizard": "hat",
+  "circlet_crown": "circlet",
+  "neck_pendant": "necklace",
+  "wrist_bangles": "bracelet",
+  "ears_hoops": "earrings"
+ },
+ "items": [
+  {
+   "id": "hat_straw_plain",
+   "layer": "hat_straw",
+   "slot": "hat",
+   "palette": [
+    "E3C07A",
+    "B3436B",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "hat_straw"
+  },
+  {
+   "id": "hat_straw_green",
+   "layer": "hat_straw",
+   "slot": "hat",
+   "palette": [
+    "D9BE78",
+    "6B9A3E",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "hat_straw"
+  },
+  {
+   "id": "hat_cap_brown",
+   "layer": "hat_cap",
+   "slot": "hat",
+   "palette": [
+    "7A4E2D",
+    "A9744A",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "hat_cap"
+  },
+  {
+   "id": "hat_cap_green",
+   "layer": "hat_cap",
+   "slot": "hat",
+   "palette": [
+    "6B9A3E",
+    "7A4E2D",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "hat_cap"
+  },
+  {
+   "id": "hat_hood_green",
+   "layer": "hat_hood",
+   "slot": "hat",
+   "palette": [
+    "2F4A3F",
+    "6B9A3E",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "requested",
+   "fallback": "hat_cap"
+  },
+  {
+   "id": "hat_acorn_plain",
+   "layer": "hat_acorn",
+   "slot": "hat",
+   "palette": [
+    "B58A52",
+    "7A4E2D",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "requested",
+   "fallback": "hat_cap"
+  },
+  {
+   "id": "hat_straw_ribbon",
+   "layer": "hat_straw",
+   "slot": "hat",
+   "palette": [
+    "EBD79E",
+    "9B86D6",
+    "E58FA6"
+   ],
+   "rarity": "uncommon",
+   "status": "existing",
+   "fallback": "hat_straw"
+  },
+  {
+   "id": "hat_cap_blue",
+   "layer": "hat_cap",
+   "slot": "hat",
+   "palette": [
+    "5B7DA8",
+    "F4E6C4",
+    "E9C06B"
+   ],
+   "rarity": "uncommon",
+   "status": "existing",
+   "fallback": "hat_cap"
+  },
+  {
+   "id": "hat_chef_white",
+   "layer": "hat_chef",
+   "slot": "hat",
+   "palette": [
+    "FBF5E6",
+    "F4E6C4",
+    "E8B04A"
+   ],
+   "rarity": "uncommon",
+   "status": "requested",
+   "fallback": "hat_cap"
+  },
+  {
+   "id": "hat_mushroom_red",
+   "layer": "hat_mushroom",
+   "slot": "hat",
+   "palette": [
+    "B3436B",
+    "FBF5E6",
+    "F4E6C4"
+   ],
+   "rarity": "uncommon",
+   "status": "requested",
+   "fallback": "hat_straw"
+  },
+  {
+   "id": "hat_wizard_lavender",
+   "layer": "hat_wizard",
+   "slot": "hat",
+   "palette": [
+    "9B86D6",
+    "E3C372",
+    "F2C14E"
+   ],
+   "rarity": "rare",
+   "status": "existing",
+   "fallback": "hat_wizard"
+  },
+  {
+   "id": "hat_cat_ears",
+   "layer": "hat_cat",
+   "slot": "hat",
+   "palette": [
+    "F4E6C4",
+    "E58FA6",
+    "7A4E2D"
+   ],
+   "rarity": "rare",
+   "status": "requested",
+   "fallback": "hat_cap"
+  },
+  {
+   "id": "hat_straw_harvest",
+   "layer": "hat_straw",
+   "slot": "hat",
+   "palette": [
+    "E3C07A",
+    "E3C372",
+    "E8B04A"
+   ],
+   "rarity": "rare",
+   "status": "existing",
+   "fallback": "hat_straw"
+  },
+  {
+   "id": "hat_acorn_gold",
+   "layer": "hat_acorn",
+   "slot": "hat",
+   "palette": [
+    "E3C372",
+    "7A4E2D",
+    "F2C14E"
+   ],
+   "rarity": "rare",
+   "status": "requested",
+   "fallback": "hat_cap"
+  },
+  {
+   "id": "hat_wizard_zephyr",
+   "layer": "hat_wizard",
+   "slot": "hat",
+   "palette": [
+    "D86A8E",
+    "6FD6C4",
+    "F2C14E"
+   ],
+   "rarity": "unique",
+   "status": "existing",
+   "fallback": "hat_wizard"
+  },
+  {
+   "id": "hat_mushroom_glow",
+   "layer": "hat_mushroom",
+   "slot": "hat",
+   "palette": [
+    "2F4A3F",
+    "6FD6C4",
+    "F4E6C4"
+   ],
+   "rarity": "unique",
+   "status": "requested",
+   "fallback": "hat_straw"
+  },
+  {
+   "id": "hat_wizard_night",
+   "layer": "hat_wizard",
+   "slot": "hat",
+   "palette": [
+    "1C2138",
+    "F2C14E",
+    "6FD6C4"
+   ],
+   "rarity": "legendary",
+   "status": "existing",
+   "fallback": "hat_wizard"
+  },
+  {
+   "id": "hat_mushroom_spinner",
+   "layer": "hat_mushroom",
+   "slot": "hat",
+   "palette": [
+    "9B86D6",
+    "F2C14E",
+    "FBF5E6"
+   ],
+   "rarity": "legendary",
+   "status": "requested",
+   "fallback": "hat_straw"
+  },
+  {
+   "id": "shirt_linen_cream",
+   "layer": "shirt_linen",
+   "slot": "shirt",
+   "palette": [
+    "F3EAD3",
+    "E58FA6",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "shirt_linen"
+  },
+  {
+   "id": "shirt_linen_green",
+   "layer": "shirt_linen",
+   "slot": "shirt",
+   "palette": [
+    "6B9A3E",
+    "F4E6C4",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "shirt_linen"
+  },
+  {
+   "id": "shirt_linen_blue",
+   "layer": "shirt_linen",
+   "slot": "shirt",
+   "palette": [
+    "A9D3E0",
+    "F4E6C4",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "shirt_linen"
+  },
+  {
+   "id": "shirt_knit_cream",
+   "layer": "shirt_knit",
+   "slot": "shirt",
+   "palette": [
+    "E9DCC0",
+    "7A4E2D",
+    "C0C6D0"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "shirt_knit"
+  },
+  {
+   "id": "shirt_smock_brown",
+   "layer": "shirt_smock",
+   "slot": "shirt",
+   "palette": [
+    "8C6B3F",
+    "F4E6C4",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "requested",
+   "fallback": "shirt_linen"
+  },
+  {
+   "id": "shirt_knit_blue",
+   "layer": "shirt_knit",
+   "slot": "shirt",
+   "palette": [
+    "5B7DA8",
+    "F4E6C4",
+    "C0C6D0"
+   ],
+   "rarity": "uncommon",
+   "status": "existing",
+   "fallback": "shirt_knit"
+  },
+  {
+   "id": "shirt_linen_rose",
+   "layer": "shirt_linen",
+   "slot": "shirt",
+   "palette": [
+    "E58FA6",
+    "FBF5E6",
+    "E3C372"
+   ],
+   "rarity": "uncommon",
+   "status": "existing",
+   "fallback": "shirt_linen"
+  },
+  {
+   "id": "shirt_vest_green",
+   "layer": "shirt_vest",
+   "slot": "shirt",
+   "palette": [
+    "6B9A3E",
+    "7A4E2D",
+    "E3C372"
+   ],
+   "rarity": "uncommon",
+   "status": "requested",
+   "fallback": "shirt_linen"
+  },
+  {
+   "id": "shirt_smock_honey",
+   "layer": "shirt_smock",
+   "slot": "shirt",
+   "palette": [
+    "E8B04A",
+    "FBF5E6",
+    "7A4E2D"
+   ],
+   "rarity": "uncommon",
+   "status": "requested",
+   "fallback": "shirt_linen"
+  },
+  {
+   "id": "shirt_knit_lavender",
+   "layer": "shirt_knit",
+   "slot": "shirt",
+   "palette": [
+    "9B86D6",
+    "F4E6C4",
+    "E3C372"
+   ],
+   "rarity": "rare",
+   "status": "existing",
+   "fallback": "shirt_knit"
+  },
+  {
+   "id": "shirt_linen_harvest",
+   "layer": "shirt_linen",
+   "slot": "shirt",
+   "palette": [
+    "E3C372",
+    "7A4E2D",
+    "E8B04A"
+   ],
+   "rarity": "rare",
+   "status": "existing",
+   "fallback": "shirt_linen"
+  },
+  {
+   "id": "shirt_vest_embroidered",
+   "layer": "shirt_vest",
+   "slot": "shirt",
+   "palette": [
+    "4C58A0",
+    "E3C372",
+    "E58FA6"
+   ],
+   "rarity": "rare",
+   "status": "requested",
+   "fallback": "shirt_linen"
+  },
+  {
+   "id": "shirt_knit_thornberry",
+   "layer": "shirt_knit",
+   "slot": "shirt",
+   "palette": [
+    "B3436B",
+    "F4E6C4",
+    "2F4A3F"
+   ],
+   "rarity": "unique",
+   "status": "existing",
+   "fallback": "shirt_knit"
+  },
+  {
+   "id": "shirt_linen_firefly",
+   "layer": "shirt_linen",
+   "slot": "shirt",
+   "palette": [
+    "2F4A3F",
+    "6FD6C4",
+    "F2C14E"
+   ],
+   "rarity": "unique",
+   "status": "existing",
+   "fallback": "shirt_linen"
+  },
+  {
+   "id": "shirt_knit_dawn",
+   "layer": "shirt_knit",
+   "slot": "shirt",
+   "palette": [
+    "F2C14E",
+    "E58FA6",
+    "FBF5E6"
+   ],
+   "rarity": "legendary",
+   "status": "existing",
+   "fallback": "shirt_knit"
+  },
+  {
+   "id": "pants_trousers_brown",
+   "layer": "pants_trousers",
+   "slot": "pants",
+   "palette": [
+    "7A4E2D",
+    "E8B04A",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "pants_trousers"
+  },
+  {
+   "id": "pants_trousers_green",
+   "layer": "pants_trousers",
+   "slot": "pants",
+   "palette": [
+    "6B9A3E",
+    "7A4E2D",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "pants_trousers"
+  },
+  {
+   "id": "pants_trousers_cream",
+   "layer": "pants_trousers",
+   "slot": "pants",
+   "palette": [
+    "F3EAD3",
+    "A9744A",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "pants_trousers"
+  },
+  {
+   "id": "pants_dungarees_brown",
+   "layer": "pants_dungarees",
+   "slot": "pants",
+   "palette": [
+    "7A4E2D",
+    "E8B04A",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "pants_dungarees"
+  },
+  {
+   "id": "pants_shorts_khaki",
+   "layer": "pants_shorts",
+   "slot": "pants",
+   "palette": [
+    "C9B58E",
+    "7A4E2D",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "requested",
+   "fallback": "pants_trousers"
+  },
+  {
+   "id": "pants_dungarees_blue",
+   "layer": "pants_dungarees",
+   "slot": "pants",
+   "palette": [
+    "5B7DA8",
+    "E8B04A",
+    "E9C06B"
+   ],
+   "rarity": "uncommon",
+   "status": "existing",
+   "fallback": "pants_dungarees"
+  },
+  {
+   "id": "pants_trousers_stripe",
+   "layer": "pants_trousers",
+   "slot": "pants",
+   "palette": [
+    "A9D3E0",
+    "FBF5E6",
+    "E9C06B"
+   ],
+   "rarity": "uncommon",
+   "status": "existing",
+   "fallback": "pants_trousers"
+  },
+  {
+   "id": "pants_breeches_tweed",
+   "layer": "pants_breeches",
+   "slot": "pants",
+   "palette": [
+    "8C6B3F",
+    "2F4A3F",
+    "E9C06B"
+   ],
+   "rarity": "uncommon",
+   "status": "requested",
+   "fallback": "pants_trousers"
+  },
+  {
+   "id": "pants_shorts_blue",
+   "layer": "pants_shorts",
+   "slot": "pants",
+   "palette": [
+    "5B7DA8",
+    "F4E6C4",
+    "E9C06B"
+   ],
+   "rarity": "uncommon",
+   "status": "requested",
+   "fallback": "pants_trousers"
+  },
+  {
+   "id": "pants_trousers_lavender",
+   "layer": "pants_trousers",
+   "slot": "pants",
+   "palette": [
+    "9B86D6",
+    "E3C372",
+    "E9C06B"
+   ],
+   "rarity": "rare",
+   "status": "existing",
+   "fallback": "pants_trousers"
+  },
+  {
+   "id": "pants_dungarees_gold",
+   "layer": "pants_dungarees",
+   "slot": "pants",
+   "palette": [
+    "E3C372",
+    "7A4E2D",
+    "E9C06B"
+   ],
+   "rarity": "rare",
+   "status": "existing",
+   "fallback": "pants_dungarees"
+  },
+  {
+   "id": "pants_dungarees_patchwork",
+   "layer": "pants_dungarees",
+   "slot": "pants",
+   "palette": [
+    "6B9A3E",
+    "E58FA6",
+    "E8B04A"
+   ],
+   "rarity": "unique",
+   "status": "existing",
+   "fallback": "pants_dungarees"
+  },
+  {
+   "id": "pants_trousers_moss",
+   "layer": "pants_trousers",
+   "slot": "pants",
+   "palette": [
+    "2F4A3F",
+    "6B9A3E",
+    "6FD6C4"
+   ],
+   "rarity": "unique",
+   "status": "existing",
+   "fallback": "pants_trousers"
+  },
+  {
+   "id": "pants_trousers_starlight",
+   "layer": "pants_trousers",
+   "slot": "pants",
+   "palette": [
+    "1C2138",
+    "F2C14E",
+    "6FD6C4"
+   ],
+   "rarity": "legendary",
+   "status": "existing",
+   "fallback": "pants_trousers"
+  },
+  {
+   "id": "dress_sun_cream",
+   "layer": "dress_sun",
+   "slot": "dress",
+   "palette": [
+    "F3EAD3",
+    "E3C372",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "dress_sun"
+  },
+  {
+   "id": "dress_sun_green",
+   "layer": "dress_sun",
+   "slot": "dress",
+   "palette": [
+    "6B9A3E",
+    "FBF5E6",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "dress_sun"
+  },
+  {
+   "id": "dress_pinafore_brown",
+   "layer": "dress_pinafore",
+   "slot": "dress",
+   "palette": [
+    "7A4E2D",
+    "F4E6C4",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "requested",
+   "fallback": "dress_sun"
+  },
+  {
+   "id": "dress_pinafore_blue",
+   "layer": "dress_pinafore",
+   "slot": "dress",
+   "palette": [
+    "5B7DA8",
+    "FBF5E6",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "requested",
+   "fallback": "dress_sun"
+  },
+  {
+   "id": "dress_sun_rose",
+   "layer": "dress_sun",
+   "slot": "dress",
+   "palette": [
+    "E58FA6",
+    "FBF5E6",
+    "E9C06B"
+   ],
+   "rarity": "uncommon",
+   "status": "existing",
+   "fallback": "dress_sun"
+  },
+  {
+   "id": "dress_sun_sky",
+   "layer": "dress_sun",
+   "slot": "dress",
+   "palette": [
+    "A9D3E0",
+    "FBF5E6",
+    "E3C372"
+   ],
+   "rarity": "uncommon",
+   "status": "existing",
+   "fallback": "dress_sun"
+  },
+  {
+   "id": "dress_pinafore_honey",
+   "layer": "dress_pinafore",
+   "slot": "dress",
+   "palette": [
+    "E8B04A",
+    "7A4E2D",
+    "FBF5E6"
+   ],
+   "rarity": "uncommon",
+   "status": "requested",
+   "fallback": "dress_sun"
+  },
+  {
+   "id": "dress_gown_mint",
+   "layer": "dress_gown",
+   "slot": "dress",
+   "palette": [
+    "7FC8A5",
+    "FBF5E6",
+    "E3C372"
+   ],
+   "rarity": "uncommon",
+   "status": "existing",
+   "fallback": "dress_gown"
+  },
+  {
+   "id": "dress_gown_lavender",
+   "layer": "dress_gown",
+   "slot": "dress",
+   "palette": [
+    "9B86D6",
+    "FBF5E6",
+    "E3C372"
+   ],
+   "rarity": "rare",
+   "status": "existing",
+   "fallback": "dress_gown"
+  },
+  {
+   "id": "dress_gown_rose",
+   "layer": "dress_gown",
+   "slot": "dress",
+   "palette": [
+    "E58FA6",
+    "FBF5E6",
+    "E3C372"
+   ],
+   "rarity": "rare",
+   "status": "existing",
+   "fallback": "dress_gown"
+  },
+  {
+   "id": "dress_sun_gold",
+   "layer": "dress_sun",
+   "slot": "dress",
+   "palette": [
+    "E3C372",
+    "FBF5E6",
+    "E58FA6"
+   ],
+   "rarity": "rare",
+   "status": "existing",
+   "fallback": "dress_sun"
+  },
+  {
+   "id": "dress_sun_meadow",
+   "layer": "dress_sun",
+   "slot": "dress",
+   "palette": [
+    "8DB86A",
+    "E58FA6",
+    "F2C14E"
+   ],
+   "rarity": "unique",
+   "status": "existing",
+   "fallback": "dress_sun"
+  },
+  {
+   "id": "dress_pinafore_baker",
+   "layer": "dress_pinafore",
+   "slot": "dress",
+   "palette": [
+    "FBF5E6",
+    "E58FA6",
+    "E8B04A"
+   ],
+   "rarity": "unique",
+   "status": "requested",
+   "fallback": "dress_sun"
+  },
+  {
+   "id": "dress_gown_aurora",
+   "layer": "dress_gown",
+   "slot": "dress",
+   "palette": [
+    "6FD6C4",
+    "9B86D6",
+    "E58FA6"
+   ],
+   "rarity": "legendary",
+   "status": "existing",
+   "fallback": "dress_gown"
+  },
+  {
+   "id": "shoes_boots_brown",
+   "layer": "shoes_boots",
+   "slot": "shoes",
+   "palette": [
+    "7A4E2D",
+    "A9744A",
+    "4A3228"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "shoes_boots"
+  },
+  {
+   "id": "shoes_boots_dark",
+   "layer": "shoes_boots",
+   "slot": "shoes",
+   "palette": [
+    "4A3228",
+    "7A4E2D",
+    "C0C6D0"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "shoes_boots"
+  },
+  {
+   "id": "shoes_slippers_cream",
+   "layer": "shoes_slippers",
+   "slot": "shoes",
+   "palette": [
+    "F4E6C4",
+    "FBF5E6",
+    "7A4E2D"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "shoes_slippers"
+  },
+  {
+   "id": "shoes_clogs_wood",
+   "layer": "shoes_clogs",
+   "slot": "shoes",
+   "palette": [
+    "C9A15E",
+    "7A4E2D",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "requested",
+   "fallback": "shoes_boots"
+  },
+  {
+   "id": "shoes_wellies_yellow",
+   "layer": "shoes_wellies",
+   "slot": "shoes",
+   "palette": [
+    "E8B04A",
+    "4A3228",
+    "FBF5E6"
+   ],
+   "rarity": "normal",
+   "status": "requested",
+   "fallback": "shoes_boots"
+  },
+  {
+   "id": "shoes_boots_green",
+   "layer": "shoes_boots",
+   "slot": "shoes",
+   "palette": [
+    "6B9A3E",
+    "2F4A3F",
+    "E9C06B"
+   ],
+   "rarity": "uncommon",
+   "status": "existing",
+   "fallback": "shoes_boots"
+  },
+  {
+   "id": "shoes_slippers_lavender",
+   "layer": "shoes_slippers",
+   "slot": "shoes",
+   "palette": [
+    "9B86D6",
+    "FBF5E6",
+    "7A4E2D"
+   ],
+   "rarity": "uncommon",
+   "status": "existing",
+   "fallback": "shoes_slippers"
+  },
+  {
+   "id": "shoes_clogs_painted",
+   "layer": "shoes_clogs",
+   "slot": "shoes",
+   "palette": [
+    "E58FA6",
+    "FBF5E6",
+    "E9C06B"
+   ],
+   "rarity": "uncommon",
+   "status": "requested",
+   "fallback": "shoes_boots"
+  },
+  {
+   "id": "shoes_wellies_blue",
+   "layer": "shoes_wellies",
+   "slot": "shoes",
+   "palette": [
+    "5B7DA8",
+    "FBF5E6",
+    "E9C06B"
+   ],
+   "rarity": "uncommon",
+   "status": "requested",
+   "fallback": "shoes_boots"
+  },
+  {
+   "id": "shoes_boots_laced",
+   "layer": "shoes_boots",
+   "slot": "shoes",
+   "palette": [
+    "7A4E2D",
+    "E3C372",
+    "4A3228"
+   ],
+   "rarity": "rare",
+   "status": "existing",
+   "fallback": "shoes_boots"
+  },
+  {
+   "id": "shoes_slippers_silk",
+   "layer": "shoes_slippers",
+   "slot": "shoes",
+   "palette": [
+    "E58FA6",
+    "E3C372",
+    "FBF5E6"
+   ],
+   "rarity": "rare",
+   "status": "existing",
+   "fallback": "shoes_slippers"
+  },
+  {
+   "id": "shoes_clogs_gilded",
+   "layer": "shoes_clogs",
+   "slot": "shoes",
+   "palette": [
+    "E3C372",
+    "7A4E2D",
+    "F2C14E"
+   ],
+   "rarity": "rare",
+   "status": "requested",
+   "fallback": "shoes_boots"
+  },
+  {
+   "id": "shoes_boots_star",
+   "layer": "shoes_boots",
+   "slot": "shoes",
+   "palette": [
+    "2B2340",
+    "F2C14E",
+    "6FD6C4"
+   ],
+   "rarity": "unique",
+   "status": "existing",
+   "fallback": "shoes_boots"
+  },
+  {
+   "id": "shoes_slippers_pompom",
+   "layer": "shoes_slippers",
+   "slot": "shoes",
+   "palette": [
+    "D86A8E",
+    "6FD6C4",
+    "7A4E2D"
+   ],
+   "rarity": "unique",
+   "status": "existing",
+   "fallback": "shoes_slippers"
+  },
+  {
+   "id": "shoes_boots_wind",
+   "layer": "shoes_boots",
+   "slot": "shoes",
+   "palette": [
+    "F4E6C4",
+    "6FD6C4",
+    "F2C14E"
+   ],
+   "rarity": "legendary",
+   "status": "existing",
+   "fallback": "shoes_boots"
+  },
+  {
+   "id": "circlet_daisy",
+   "layer": "circlet_flowers",
+   "slot": "circlet",
+   "palette": [
+    "FBF5E6",
+    "E8B04A",
+    "6B9A3E"
+   ],
+   "rarity": "normal",
+   "status": "requested",
+   "fallback": "circlet_crown"
+  },
+  {
+   "id": "necklace_beads_wood",
+   "layer": "necklace_beads",
+   "slot": "necklace",
+   "palette": [
+    "7A4E2D",
+    "C9A15E",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "requested",
+   "fallback": "neck_pendant"
+  },
+  {
+   "id": "necklace_acorn",
+   "layer": "neck_pendant",
+   "slot": "necklace",
+   "palette": [
+    "B58A52",
+    "7A4E2D",
+    "6B9A3E"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "neck_pendant"
+  },
+  {
+   "id": "necklace_leaf",
+   "layer": "neck_pendant",
+   "slot": "necklace",
+   "palette": [
+    "6B9A3E",
+    "2F4A3F",
+    "E9C06B"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "neck_pendant"
+  },
+  {
+   "id": "bracelet_string",
+   "layer": "bracelet_braid",
+   "slot": "bracelet",
+   "palette": [
+    "E58FA6",
+    "F4E6C4",
+    "E3C372"
+   ],
+   "rarity": "normal",
+   "status": "requested",
+   "fallback": "wrist_bangles"
+  },
+  {
+   "id": "bracelet_copper",
+   "layer": "wrist_bangles",
+   "slot": "bracelet",
+   "palette": [
+    "D98A5A",
+    "7A4E2D",
+    "D98A5A"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "wrist_bangles"
+  },
+  {
+   "id": "earrings_copper",
+   "layer": "ears_hoops",
+   "slot": "earrings",
+   "palette": [
+    "D98A5A",
+    "F4E6C4",
+    "D98A5A"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "ears_hoops"
+  },
+  {
+   "id": "earrings_pearl",
+   "layer": "ears_hoops",
+   "slot": "earrings",
+   "palette": [
+    "F4E6C4",
+    "E3C372",
+    "FBF5E6"
+   ],
+   "rarity": "normal",
+   "status": "existing",
+   "fallback": "ears_hoops"
+  },
+  {
+   "id": "circlet_leaves",
+   "layer": "circlet_flowers",
+   "slot": "circlet",
+   "palette": [
+    "6B9A3E",
+    "E8B04A",
+    "F2C14E"
+   ],
+   "rarity": "uncommon",
+   "status": "requested",
+   "fallback": "circlet_crown"
+  },
+  {
+   "id": "necklace_moonstone_small",
+   "layer": "neck_pendant",
+   "slot": "necklace",
+   "palette": [
+    "C9D4EE",
+    "C0C6D0",
+    "E3C372"
+   ],
+   "rarity": "uncommon",
+   "status": "existing",
+   "fallback": "neck_pendant"
+  },
+  {
+   "id": "bracelet_silver",
+   "layer": "wrist_bangles",
+   "slot": "bracelet",
+   "palette": [
+    "C0C6D0",
+    "6B9A3E",
+    "C0C6D0"
+   ],
+   "rarity": "uncommon",
+   "status": "existing",
+   "fallback": "wrist_bangles"
+  },
+  {
+   "id": "earrings_hoops_gold",
+   "layer": "ears_hoops",
+   "slot": "earrings",
+   "palette": [
+    "E9C06B",
+    "6FD6C4",
+    "E9C06B"
+   ],
+   "rarity": "uncommon",
+   "status": "existing",
+   "fallback": "ears_hoops"
+  },
+  {
+   "id": "necklace_moonstone",
+   "layer": "neck_pendant",
+   "slot": "necklace",
+   "palette": [
+    "E3C372",
+    "9B86D6",
+    "E3C372"
+   ],
+   "rarity": "rare",
+   "status": "existing",
+   "fallback": "neck_pendant"
+  },
+  {
+   "id": "circlet_tiara_silver",
+   "layer": "circlet_crown",
+   "slot": "circlet",
+   "palette": [
+    "C0C6D0",
+    "9B86D6",
+    "C0C6D0"
+   ],
+   "rarity": "rare",
+   "status": "existing",
+   "fallback": "circlet_crown"
+  },
+  {
+   "id": "bracelet_rose_gold",
+   "layer": "wrist_bangles",
+   "slot": "bracelet",
+   "palette": [
+    "E3C372",
+    "E58FA6",
+    "E3C372"
+   ],
+   "rarity": "rare",
+   "status": "existing",
+   "fallback": "wrist_bangles"
+  },
+  {
+   "id": "necklace_dewdrop",
+   "layer": "neck_pendant",
+   "slot": "necklace",
+   "palette": [
+    "A9D3E0",
+    "E3C372",
+    "6FD6C4"
+   ],
+   "rarity": "unique",
+   "status": "existing",
+   "fallback": "neck_pendant"
+  },
+  {
+   "id": "bracelet_vine",
+   "layer": "bracelet_braid",
+   "slot": "bracelet",
+   "palette": [
+    "6B9A3E",
+    "2F4A3F",
+    "F2C14E"
+   ],
+   "rarity": "unique",
+   "status": "requested",
+   "fallback": "wrist_bangles"
+  },
+  {
+   "id": "earrings_glowcap",
+   "layer": "ears_hoops",
+   "slot": "earrings",
+   "palette": [
+    "6FD6C4",
+    "F2C14E",
+    "FBF5E6"
+   ],
+   "rarity": "unique",
+   "status": "existing",
+   "fallback": "ears_hoops"
+  },
+  {
+   "id": "circlet_moon_crown",
+   "layer": "circlet_crown",
+   "slot": "circlet",
+   "palette": [
+    "E3C372",
+    "C9D4EE",
+    "F2C14E"
+   ],
+   "rarity": "legendary",
+   "status": "existing",
+   "fallback": "circlet_crown"
+  },
+  {
+   "id": "necklace_heart_of_tree",
+   "layer": "neck_pendant",
+   "slot": "necklace",
+   "palette": [
+    "E8B04A",
+    "6B9A3E",
+    "F2C14E"
+   ],
+   "rarity": "legendary",
+   "status": "existing",
+   "fallback": "neck_pendant"
+  }
+ ]
+}

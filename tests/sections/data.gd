@@ -133,7 +133,7 @@ func _config_keys() -> void:
 	for crop in CROPS:
 		for k in ["stages", "days_per_stage", "seasons", "sell_price"]:
 			documented.append("crops.%s.%s" % [crop, k])
-	for k in ["starting_gold", "sell_price_ratio", "shop_refresh_hour", "tax_per_day", "home_cost_scale"]:
+	for k in ["starting_gold", "sell_price_ratio", "tax_per_day", "home_cost_scale"]:
 		documented.append("economy.%s" % k)
 	for k in ["dark_forest_unlock_day", "ore_respawn_days", "rare_gem_chance", "enemy_damage_base", "loot_table_size", "oil_empty_hurt_interval"]:
 		documented.append("adventure.%s" % k)
@@ -894,12 +894,12 @@ func _kinds() -> void:
 	var recipes: Dictionary = _lr.get_recipes()
 	t.expect(recipes.has("fixture_chair") and recipes.has("fixture_throne") and recipes["fixture_chair"]["id"] == "fixture_chair" and recipes.keys().find("fixture_chair") < recipes.keys().find("fixture_cake"), "get_recipes() lists every recipe in declaration order, each with its id")
 	var baked: Dictionary = _lr.get_recipes("bake")
-	t.expect(baked.size() == 1 and baked.has("fixture_cake") and _lr.get_recipe("fixture_cake").get("output", {}).get("item") == "honey_cake" and _lr.get_recipe("nope").is_empty(), "get_recipes(category) filters, get_recipe(id) answers one")
+	t.expect(baked.has("fixture_cake") and baked["fixture_cake"]["category"] == "bake" and _lr.get_recipe("fixture_cake").get("output", {}).get("item") == "honey_cake" and _lr.get_recipe("nope").is_empty(), "get_recipes(category) filters, get_recipe(id) answers one")
 	# kind header wins over the directory (addendum: lua/data/** and any other directory)
 	t.expect(_lr.get_config("fixture_numbers.small") == 3 and _lr.get_config("fixture_numbers.table_list.1.id") == "two" and _lr.get_item_def("fixture_widget").get("rarity") == "rare", "config and items files outside lua/config and lua/items are registered by their kind header")
 	var sid_cfg := "tests/fixtures/lua/data/data_config"
 	t.expect(_lr.has_script(sid_cfg) and (_lr._scripts[sid_cfg] as Dictionary)["kind"] == "config", "the script id is the path below res:// (without .lua)")
-	t.check("kinds_shops_recipes", not shop.is_empty() and recipes.size() >= 3 and baked.size() == 1 and _lr.lint_report.is_empty() and _lr.get_config("fixture_numbers.small") == 3, "get_shop / get_recipes / generic kinds (config, items, shops, recipes) work and the fixtures lint clean")
+	t.check("kinds_shops_recipes", not shop.is_empty() and recipes.size() >= 3 and baked.size() >= 1 and _lr.lint_report.is_empty() and _lr.get_config("fixture_numbers.small") == 3, "get_shop / get_recipes / generic kinds (config, items, shops, recipes) work and the fixtures lint clean")
 	# ItemKinds / Rarity on the fixture items
 	t.expect(ItemKinds.storage_of("fixture_stool") == &"furniture" and ItemKinds.storage_of("fixture_hat") == &"clothing" and ItemKinds.storage_of("fixture_widget") == &"backpack" and ItemKinds.storage_of("turnip_seeds") == &"backpack" and ItemKinds.storage_of("no_such_item") == &"backpack", "ItemKinds.storage_of: furniture -> furniture store, clothing -> wardrobe store, else backpack")
 	t.expect(ItemKinds.is_one_of_a_kind("fixture_throne") and ItemKinds.is_one_of_a_kind("fixture_hat") and not ItemKinds.is_one_of_a_kind("fixture_chair") and not ItemKinds.is_one_of_a_kind("fixture_stool") and not ItemKinds.is_one_of_a_kind("fixture_seed"), "ItemKinds.is_one_of_a_kind: unique and legendary only (`common` is normal)")

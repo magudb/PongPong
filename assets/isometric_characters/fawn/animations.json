@@ -1,0 +1,73 @@
+{
+ "character": "fawn",
+ "cell_size": [
+  256,
+  256
+ ],
+ "directions": [
+  "S",
+  "SW",
+  "W",
+  "NW",
+  "N",
+  "NE",
+  "E",
+  "SE"
+ ],
+ "animations": {
+  "idle": {
+   "frames": 4,
+   "fps": 5,
+   "loop": true,
+   "sheet": "idle.webp"
+  },
+  "walk": {
+   "frames": 6,
+   "fps": 9,
+   "loop": true,
+   "sheet": "walk.webp"
+  },
+  "run": {
+   "frames": 6,
+   "fps": 12,
+   "loop": true,
+   "sheet": "run.webp"
+  },
+  "celebrate": {
+   "frames": 6,
+   "fps": 9,
+   "loop": false,
+   "sheet": "celebrate.webp"
+  },
+  "interact": {
+   "frames": 4,
+   "fps": 9,
+   "loop": false,
+   "sheet": "interact.webp"
+  },
+  "hit": {
+   "frames": 3,
+   "fps": 11,
+   "loop": false,
+   "sheet": "hit.webp"
+  },
+  "sleep": {
+   "frames": 4,
+   "fps": 3,
+   "loop": true,
+   "sheet": "sleep.webp"
+  }
+ },
+ "pivot": [
+  128,
+  200
+ ],
+ "source": "GLB-to-sprite orthographic offline bake",
+ "orientation": "screen-down = S; clockwise rows S,SW,W,NW,N,NE,E,SE",
+ "family": "fawn",
+ "clip_set": "farm_animal",
+ "flyer": false,
+ "portrait": "portrait.webp",
+ "role": "farm_animal",
+ "display_scale": 1.0
+}

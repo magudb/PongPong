@@ -1,0 +1,253 @@
+{
+ "woods": [
+  "birch",
+  "cherry",
+  "ebony",
+  "living",
+  "moonwood",
+  "mossy",
+  "oak",
+  "pine",
+  "walnut"
+ ],
+ "paints": [
+  "himmel",
+  "honning",
+  "kridt",
+  "lavendel",
+  "mosgroen",
+  "mynte",
+  "rose",
+  "tornebaer"
+ ],
+ "fabrics": [
+  "blaa",
+  "blommevelour",
+  "bordeaux",
+  "groen",
+  "guld",
+  "kongeblaa",
+  "maane",
+  "natur",
+  "roed",
+  "rosendamask"
+ ],
+ "metals": [
+  "guld",
+  "jern",
+  "kobber",
+  "messing",
+  "soelv"
+ ],
+ "crystals": [
+  "ametyst",
+  "maanesten",
+  "ravgul",
+  "rosenkvarts",
+  "smaragd"
+ ],
+ "stones": [
+  "granit",
+  "kalksten",
+  "marmor",
+  "skifer"
+ ],
+ "rarity_ladder": [
+  "normal",
+  "uncommon",
+  "rare",
+  "unique",
+  "legendary"
+ ],
+ "templates": [
+  "bed",
+  "bookshelf",
+  "candelabra",
+  "chair",
+  "chandelier",
+  "chest",
+  "clock",
+  "curtain",
+  "fireplace",
+  "floor_lamp",
+  "painting",
+  "piano",
+  "plant",
+  "rug",
+  "sconce",
+  "shelf",
+  "sofa",
+  "table",
+  "table_lamp",
+  "throne",
+  "vase",
+  "wardrobe"
+ ],
+ "home": {
+  "tier_ids": [
+   "skur",
+   "hytte",
+   "straatag",
+   "bindingsvaerk",
+   "gaarden",
+   "taarnhus",
+   "landsted",
+   "herregaard",
+   "borg",
+   "slot"
+  ],
+  "rows": {
+   "1": [
+    5,
+    5,
+    5,
+    5
+   ],
+   "2": [
+    6,
+    6,
+    6,
+    6,
+    6
+   ],
+   "3": [
+    7,
+    7,
+    7,
+    7,
+    7
+   ],
+   "4": [
+    8,
+    8,
+    8,
+    8,
+    8,
+    4,
+    4
+   ],
+   "5": [
+    9,
+    9,
+    9,
+    9,
+    9,
+    5,
+    5
+   ],
+   "6": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    5,
+    5
+   ],
+   "7": [
+    11,
+    11,
+    11,
+    11,
+    11,
+    11,
+    6,
+    6,
+    6
+   ],
+   "8": [
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    12,
+    7,
+    7,
+    7
+   ],
+   "9": [
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    8,
+    8,
+    8,
+    4
+   ],
+   "10": [
+    14,
+    14,
+    14,
+    14,
+    14,
+    14,
+    14,
+    9,
+    9,
+    9,
+    5,
+    5
+   ]
+  },
+  "floor": {
+   "1": "floor_stone",
+   "2": "floor_stone",
+   "3": "floor_plank",
+   "4": "floor_plank",
+   "5": "floor_parquet",
+   "6": "floor_parquet",
+   "7": "floor_parquet",
+   "8": "floor_marble",
+   "9": "floor_marble",
+   "10": "floor_marble"
+  },
+  "wall": {
+   "1": "plank",
+   "2": "plank",
+   "3": "plank",
+   "4": "plank",
+   "5": "paper",
+   "6": "paper",
+   "7": "paper",
+   "8": "marble",
+   "9": "marble",
+   "10": "marble"
+  },
+  "platform_stage": [
+   0,
+   0,
+   0,
+   0,
+   1,
+   1,
+   1,
+   2,
+   2,
+   3
+  ]
+ },
+ "garments": {
+  "shirt_linen": "shirt",
+  "shirt_knit": "shirt",
+  "pants_trousers": "pants",
+  "pants_dungarees": "pants",
+  "dress_sun": "dress",
+  "dress_gown": "dress",
+  "shoes_boots": "shoes",
+  "shoes_slippers": "shoes",
+  "hat_straw": "hat",
+  "hat_cap": "hat",
+  "hat_wizard": "hat",
+  "circlet_crown": "circlet",
+  "neck_pendant": "necklace",
+  "wrist_bangles": "bracelet",
+  "ears_hoops": "earrings"
+ }
+}

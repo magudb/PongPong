@@ -1,0 +1,1896 @@
+{
+ "format_version": 2,
+ "cell_size": [
+  256,
+  256
+ ],
+ "pivot": [
+  128,
+  200
+ ],
+ "directions": [
+  "S",
+  "SW",
+  "W",
+  "NW",
+  "N",
+  "NE",
+  "E",
+  "SE"
+ ],
+ "rendering": "orthographic isometric, 36 degree camera elevation, 87.07 px/m",
+ "characters": {
+  "bear_guard": {
+   "role": "npc",
+   "clip_set": "villager",
+   "family": "bear",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    }
+   }
+  },
+  "bunny": {
+   "role": "farm_animal",
+   "clip_set": "farm_animal",
+   "family": "rabbit",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    }
+   }
+  },
+  "calf": {
+   "role": "farm_animal",
+   "clip_set": "farm_animal",
+   "family": "cow",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    }
+   }
+  },
+  "cat_morfar_mis": {
+   "role": "npc",
+   "clip_set": "villager",
+   "family": "cat",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    }
+   }
+  },
+  "chick": {
+   "role": "farm_animal",
+   "clip_set": "farm_animal",
+   "family": "chick",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    }
+   }
+  },
+  "duck": {
+   "role": "farm_animal",
+   "clip_set": "farm_animal",
+   "family": "chick",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    }
+   }
+  },
+  "fairy_baker": {
+   "role": "npc",
+   "clip_set": "npc_flyer",
+   "family": "fairy",
+   "flyer": true,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    },
+    "hover": {
+     "frames": 5,
+     "fps": 8,
+     "loop": true,
+     "sheet": "hover.webp"
+    }
+   }
+  },
+  "fairy_builder": {
+   "role": "npc",
+   "clip_set": "npc_flyer",
+   "family": "fairy",
+   "flyer": true,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    },
+    "hover": {
+     "frames": 5,
+     "fps": 8,
+     "loop": true,
+     "sheet": "hover.webp"
+    }
+   }
+  },
+  "fairy_dusk": {
+   "role": "player",
+   "clip_set": "full",
+   "family": "fairy",
+   "flyer": true,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "jump": {
+     "frames": 4,
+     "fps": 10,
+     "loop": false,
+     "sheet": "jump.webp"
+    },
+    "fall": {
+     "frames": 3,
+     "fps": 6,
+     "loop": true,
+     "sheet": "fall.webp"
+    },
+    "land": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "land.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    },
+    "takeoff": {
+     "frames": 4,
+     "fps": 10,
+     "loop": false,
+     "sheet": "takeoff.webp"
+    },
+    "hover": {
+     "frames": 5,
+     "fps": 8,
+     "loop": true,
+     "sheet": "hover.webp"
+    },
+    "fly": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "fly.webp"
+    },
+    "flight_land": {
+     "frames": 4,
+     "fps": 10,
+     "loop": false,
+     "sheet": "flight_land.webp"
+    }
+   }
+  },
+  "fairy_furnisher": {
+   "role": "npc",
+   "clip_set": "npc_flyer",
+   "family": "fairy",
+   "flyer": true,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    },
+    "hover": {
+     "frames": 5,
+     "fps": 8,
+     "loop": true,
+     "sheet": "hover.webp"
+    }
+   }
+  },
+  "fairy_king": {
+   "role": "npc",
+   "clip_set": "npc_flyer",
+   "family": "fairy",
+   "flyer": true,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    },
+    "hover": {
+     "frames": 5,
+     "fps": 8,
+     "loop": true,
+     "sheet": "hover.webp"
+    }
+   }
+  },
+  "fairy_lily": {
+   "role": "npc",
+   "clip_set": "npc_flyer",
+   "family": "fairy",
+   "flyer": true,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    },
+    "hover": {
+     "frames": 5,
+     "fps": 8,
+     "loop": true,
+     "sheet": "hover.webp"
+    }
+   }
+  },
+  "fairy_mayor": {
+   "role": "npc",
+   "clip_set": "npc_flyer",
+   "family": "fairy",
+   "flyer": true,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    },
+    "hover": {
+     "frames": 5,
+     "fps": 8,
+     "loop": true,
+     "sheet": "hover.webp"
+    }
+   }
+  },
+  "fairy_shopkeeper": {
+   "role": "npc",
+   "clip_set": "npc_flyer",
+   "family": "fairy",
+   "flyer": true,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    },
+    "hover": {
+     "frames": 5,
+     "fps": 8,
+     "loop": true,
+     "sheet": "hover.webp"
+    }
+   }
+  },
+  "fairy_stardust": {
+   "role": "player",
+   "clip_set": "full",
+   "family": "fairy",
+   "flyer": true,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "jump": {
+     "frames": 4,
+     "fps": 10,
+     "loop": false,
+     "sheet": "jump.webp"
+    },
+    "fall": {
+     "frames": 3,
+     "fps": 6,
+     "loop": true,
+     "sheet": "fall.webp"
+    },
+    "land": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "land.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    },
+    "takeoff": {
+     "frames": 4,
+     "fps": 10,
+     "loop": false,
+     "sheet": "takeoff.webp"
+    },
+    "hover": {
+     "frames": 5,
+     "fps": 8,
+     "loop": true,
+     "sheet": "hover.webp"
+    },
+    "fly": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "fly.webp"
+    },
+    "flight_land": {
+     "frames": 4,
+     "fps": 10,
+     "loop": false,
+     "sheet": "flight_land.webp"
+    }
+   }
+  },
+  "fairy_tailor": {
+   "role": "npc",
+   "clip_set": "npc_flyer",
+   "family": "fairy",
+   "flyer": true,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    },
+    "hover": {
+     "frames": 5,
+     "fps": 8,
+     "loop": true,
+     "sheet": "hover.webp"
+    }
+   }
+  },
+  "fairy_wizard": {
+   "role": "npc",
+   "clip_set": "npc_flyer",
+   "family": "fairy",
+   "flyer": true,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    },
+    "hover": {
+     "frames": 5,
+     "fps": 8,
+     "loop": true,
+     "sheet": "hover.webp"
+    }
+   }
+  },
+  "fawn": {
+   "role": "farm_animal",
+   "clip_set": "farm_animal",
+   "family": "fawn",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    }
+   }
+  },
+  "fox_cub": {
+   "role": "farm_animal",
+   "clip_set": "farm_animal",
+   "family": "fox",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    }
+   }
+  },
+  "hen": {
+   "role": "farm_animal",
+   "clip_set": "farm_animal",
+   "family": "chick",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    }
+   }
+  },
+  "hobbit_bramble": {
+   "role": "player",
+   "clip_set": "full",
+   "family": "hobbit",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "jump": {
+     "frames": 4,
+     "fps": 10,
+     "loop": false,
+     "sheet": "jump.webp"
+    },
+    "fall": {
+     "frames": 3,
+     "fps": 6,
+     "loop": true,
+     "sheet": "fall.webp"
+    },
+    "land": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "land.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    }
+   }
+  },
+  "hobbit_moss": {
+   "role": "player",
+   "clip_set": "full",
+   "family": "hobbit",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "jump": {
+     "frames": 4,
+     "fps": 10,
+     "loop": false,
+     "sheet": "jump.webp"
+    },
+    "fall": {
+     "frames": 3,
+     "fps": 6,
+     "loop": true,
+     "sheet": "fall.webp"
+    },
+    "land": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "land.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    }
+   }
+  },
+  "hobbit_pip": {
+   "role": "player",
+   "clip_set": "full",
+   "family": "hobbit",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "jump": {
+     "frames": 4,
+     "fps": 10,
+     "loop": false,
+     "sheet": "jump.webp"
+    },
+    "fall": {
+     "frames": 3,
+     "fps": 6,
+     "loop": true,
+     "sheet": "fall.webp"
+    },
+    "land": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "land.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    }
+   }
+  },
+  "kitten": {
+   "role": "farm_animal",
+   "clip_set": "farm_animal",
+   "family": "cat",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    }
+   }
+  },
+  "lamb": {
+   "role": "farm_animal",
+   "clip_set": "farm_animal",
+   "family": "lamb",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    }
+   }
+  },
+  "lysesvamp": {
+   "role": "critter",
+   "clip_set": "critter",
+   "family": "mushroom",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    }
+   }
+  },
+  "mouse_pippin": {
+   "role": "npc",
+   "clip_set": "villager",
+   "family": "mouse",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    }
+   }
+  },
+  "owl": {
+   "role": "farm_animal",
+   "clip_set": "farm_animal",
+   "family": "owl",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    }
+   }
+  },
+  "penguin_postman": {
+   "role": "npc",
+   "clip_set": "villager",
+   "family": "penguin",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    }
+   }
+  },
+  "puppy": {
+   "role": "farm_animal",
+   "clip_set": "farm_animal",
+   "family": "puppy",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    }
+   }
+  },
+  "rabbit_farmer": {
+   "role": "npc",
+   "clip_set": "villager",
+   "family": "rabbit",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    }
+   }
+  },
+  "raccoon_smith": {
+   "role": "npc",
+   "clip_set": "villager",
+   "family": "raccoon",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    }
+   }
+  },
+  "snurresvamp": {
+   "role": "boss",
+   "clip_set": "boss",
+   "family": "mushroom",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "attack": {
+     "frames": 5,
+     "fps": 12,
+     "loop": false,
+     "sheet": "attack.webp"
+    },
+    "spin": {
+     "frames": 8,
+     "fps": 14,
+     "loop": true,
+     "sheet": "spin.webp"
+    }
+   }
+  },
+  "squirrel": {
+   "role": "player",
+   "clip_set": "full",
+   "family": "squirrel",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "jump": {
+     "frames": 4,
+     "fps": 10,
+     "loop": false,
+     "sheet": "jump.webp"
+    },
+    "fall": {
+     "frames": 3,
+     "fps": 6,
+     "loop": true,
+     "sheet": "fall.webp"
+    },
+    "land": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "land.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    }
+   }
+  },
+  "tornebusk": {
+   "role": "enemy",
+   "clip_set": "enemy",
+   "family": "thornbush",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "attack": {
+     "frames": 5,
+     "fps": 12,
+     "loop": false,
+     "sheet": "attack.webp"
+    }
+   }
+  },
+  "ugleoje": {
+   "role": "enemy",
+   "clip_set": "enemy",
+   "family": "owl",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "run": {
+     "frames": 6,
+     "fps": 12,
+     "loop": true,
+     "sheet": "run.webp"
+    },
+    "hit": {
+     "frames": 3,
+     "fps": 11,
+     "loop": false,
+     "sheet": "hit.webp"
+    },
+    "attack": {
+     "frames": 5,
+     "fps": 12,
+     "loop": false,
+     "sheet": "attack.webp"
+    }
+   }
+  }
+ }
+}

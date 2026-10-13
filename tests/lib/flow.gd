@@ -200,6 +200,18 @@ func go_to_neutral() -> void:
 	tree.paused = false
 
 
+## Frees the current scene (for example the world that a previous section left behind) and waits two frames, so the next
+## windowed section starts on an empty tree: its own widgets are then the only thing on screen.
+func clear_scene() -> void:
+	release_all()
+	tree.paused = false
+	var cs: Node = tree.current_scene
+	if cs != null:
+		tree.current_scene = null
+		cs.queue_free()
+	await frames(2)
+
+
 func _arg_count(obj: Object, method: String) -> int:
 	for m in obj.get_method_list():
 		if m["name"] == method:

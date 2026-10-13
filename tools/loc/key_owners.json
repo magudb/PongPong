@@ -35,7 +35,8 @@
     "UI_WEEKDAY_",
     "UI_MONTH_",
     "UI_WEATHER_",
-    "SPECIES_"
+    "SPECIES_",
+    "GALLERY_"
    ],
    "exact": [
     "UI_CURRENCY",
@@ -52,12 +53,15 @@
   },
   "world.csv": {
    "owner": "P04",
-   "prefix": [],
+   "prefix": [
+    "WORLD_"
+   ],
    "exact": [
     "WHISPER_TOO_EARLY",
     "WHISPER_FAINT",
     "UI_SLEEP",
-    "NOTIF_PASSED_OUT"
+    "NOTIF_PASSED_OUT",
+    "NOTIF_PASSED_OUT_TITLE"
    ]
   },
   "farm.csv": {
@@ -74,7 +78,9 @@
    "prefix": [
     "SIGN_"
    ],
-   "exact": []
+   "exact": [
+    "UI_READ"
+   ]
   },
   "economy.csv": {
    "owner": "P12",
@@ -133,7 +139,10 @@
   },
   "menus.csv": {
    "owner": "P16",
-   "prefix": [],
+   "prefix": [
+    "NOTIF_LOAD_",
+    "NOTIF_SAVE_FAILED_"
+   ],
    "exact": []
   },
   "hud.csv": {
