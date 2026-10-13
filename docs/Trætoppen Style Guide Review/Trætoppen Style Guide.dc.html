@@ -119,7 +119,7 @@ a{color:#5d4fa3;text-decoration:underline}a:hover{color:#2b2340}
         <div style="aspect-ratio:1;border-radius:12px;border:2px solid #2b2340;background:repeating-linear-gradient(135deg,#e2d8f4 0 10px,#d3c6ee 10px 20px);display:flex;align-items:center;justify-content:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-align:center;color:#4c4058">portræt<br>fe, glad</span></div>
         <div style="display:flex;flex-direction:column;gap:12px">
           <span style="align-self:flex-start;font-family:'Caprasimo',serif;font-size:20px;color:#fbf5e6;background:#2b2340;border-radius:8px;padding:2px 12px;box-shadow:0 0 0 2px #e3c372">Borgmester Hyldeblomst</span>
-          <p style="margin:0;font-size:20px;line-height:1.45;font-weight:500;text-wrap:pretty">Åh, du må være vinderen af Fekongens lotteri! Velkommen til Fesby. Taget på bageriet er utæt igen. Kan du mon hjælpe?</p>
+          <p style="margin:0;font-size:20px;line-height:1.45;font-weight:500;text-wrap:pretty">Åh, du må være vinderen af Fekongens lotteri! Velkommen til Hyggebyen. Taget på bageriet er utæt igen. Kan du mon hjælpe?</p>
           <div style="display:flex;flex-direction:column;gap:6px">
             <div style="padding:6px 14px;border-radius:8px;background:#e3c372;border:2px solid #2b2340;font-weight:800;font-size:18px;display:flex;gap:10px"><span>▸</span><span>Selvfølgelig!</span></div>
             <div style="padding:6px 14px;border-radius:8px;border:2px solid transparent;font-weight:700;font-size:18px;color:#4c4058;display:flex;gap:10px"><span style="opacity:0">▸</span><span>Hvad får jeg for det?</span></div>
@@ -222,7 +222,7 @@ a{color:#5d4fa3;text-decoration:underline}a:hover{color:#2b2340}
 </section>
 
 <section style="display:flex;flex-direction:column;gap:28px">
-  <div style="display:flex;align-items:baseline;gap:18px"><span style="font-family:'IBM Plex Mono',monospace;color:#6a5a48">07</span><h2 style="margin:0;font-family:'Caprasimo',serif;font-weight:400;font-size:44px">Butik i Fesby</h2></div>
+  <div style="display:flex;align-items:baseline;gap:18px"><span style="font-family:'IBM Plex Mono',monospace;color:#6a5a48">07</span><h2 style="margin:0;font-family:'Caprasimo',serif;font-weight:400;font-size:44px">Butik i Hyggebyen</h2></div>
   <div data-screen-label="Butik" style="position:relative;width:1280px;height:720px;border-radius:12px;overflow:hidden;border:2px solid #2b2340;background:repeating-linear-gradient(135deg,#d7cbe9 0 18px,#cbbde3 18px 36px)">
     <span style="position:absolute;left:24px;top:20px;font-family:'IBM Plex Mono',monospace;font-size:13px;background:rgba(251,245,230,.92);padding:5px 10px;border-radius:4px">baggrund: frøbutik i en svamp, sløret</span>
     <div style="position:absolute;left:60px;bottom:0;width:340px;height:560px;display:flex;flex-direction:column;justify-content:flex-end;gap:16px">
@@ -280,7 +280,7 @@ a{color:#5d4fa3;text-decoration:underline}a:hover{color:#2b2340}
       <div style="padding:32px 40px;display:flex;flex-direction:column;gap:20px">
         <div style="display:flex;gap:20px;align-items:center">
           <div style="width:96px;height:96px;border-radius:50%;border:2px solid #2b2340;box-shadow:0 0 0 3px #e3c372;background:repeating-linear-gradient(135deg,#e2d8f4 0 8px,#d3c6ee 8px 16px);display:flex;align-items:center;justify-content:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;text-align:center">Pippin</span></div>
-          <div style="display:flex;flex-direction:column;gap:4px"><span style="font-family:'Caprasimo',serif;font-size:40px;line-height:1">Find Pippins kat</span><span style="font-size:18px;color:#4c4058">Fra Pippin Bøgeknop · Fesby</span></div>
+          <div style="display:flex;flex-direction:column;gap:4px"><span style="font-family:'Caprasimo',serif;font-size:40px;line-height:1">Find Pippins kat</span><span style="font-size:18px;color:#4c4058">Fra Pippin Bøgeknop · Hyggebyen</span></div>
         </div>
         <p style="margin:0;font-size:20px;line-height:1.5;text-wrap:pretty">Morfar Mis er forsvundet igen. Han blev sidst set på vej mod Mørkeskoven med en sardin i munden.</p>
         <div style="display:flex;flex-direction:column;gap:10px">
@@ -399,7 +399,7 @@ class Component extends DCLogic {
       zones: [
         {name:'Trætoppen',mood:'Gården. Varm formiddagssol gennem bladene, honning og mos.',slot:'moodbillede: gård i trækronen',c0:'#cde0a6',c1:'#bfd694',
           sw:[{n:'Pergament',hex:'#f4e6c4'},{n:'Mosgrøn',hex:'#6b9a3e'},{n:'Honning',hex:'#e8b04a'},{n:'Bark',hex:'#7a4e2d'},{n:'Himmel',hex:'#a9d3e0'}]},
-        {name:'Fesby',mood:'Feernes by. Lavendel, rosenblade og fe-guld i lanternerne.',slot:'moodbillede: svampehuse og torv',c0:'#e2d8f4',c1:'#d3c6ee',
+        {name:'Hyggebyen',mood:'Feernes by. Lavendel, rosenblade og fe-guld i lanternerne.',slot:'moodbillede: svampehuse og torv',c0:'#e2d8f4',c1:'#d3c6ee',
           sw:[{n:'Lavendel',hex:'#9b86d6'},{n:'Rosenblad',hex:'#e58fa6'},{n:'Fe-guld',hex:'#e3c372'},{n:'Kridt',hex:'#fbf5e6'},{n:'Blæk',hex:'#2b2340'}]},
         {name:'Mørkeskoven',mood:'Eventyr. Natblåt mørke, lysende svampe og gule ugleøjne.',slot:'moodbillede: sti med svampelys',c0:'#2f3654',c1:'#262c48',
           sw:[{n:'Natblå',hex:'#1c2138'},{n:'Skyggemos',hex:'#2f4a3f'},{n:'Svampelys',hex:'#6fd6c4'},{n:'Ugleøje',hex:'#f2c14e'},{n:'Tornebær',hex:'#b3436b'}]}
@@ -424,7 +424,7 @@ class Component extends DCLogic {
       races: [
         {name:'Skovdyr',perk:'Stærke poter. Graver hurtigere og får mere ud af høsten.',slot:'chibi-skovdyr, helfigur',c0:'#e8cfa6',c1:'#dfc293',ring:sel,lift:'translateY(-8px)'},
         {name:'Fe',perk:'Kan flyve kort over marker og taler med blomster.',slot:'chibi-fe, helfigur',c0:'#e2d8f4',c1:'#d3c6ee',ring:'none',lift:'none'},
-        {name:'Hobbit',perk:'Bager bedre kager og får rabat i Fesbys butikker.',slot:'chibi-hobbit, helfigur',c0:'#d4e4b4',c1:'#c7dba2',ring:'none',lift:'none'}
+        {name:'Hobbit',perk:'Bager bedre kager og får rabat i Hyggebyens butikker.',slot:'chibi-hobbit, helfigur',c0:'#d4e4b4',c1:'#c7dba2',ring:'none',lift:'none'}
       ],
       species: [{n:'Ræv',bg:gold},{n:'Kanin',bg:'#fbf5e6'},{n:'Pindsvin',bg:'#fbf5e6'},{n:'Egern',bg:'#fbf5e6'}],
       trackedQuests: [{t:'Find Pippins kat',p:'Spor fundet: 2 / 3'},{t:'Gulerødder til småkager',p:'Bagerfe Rosmarin · 5 / 12'}],
@@ -437,13 +437,13 @@ class Component extends DCLogic {
         ['Kattemyntefrø','Elskes af katte','35'],['Månebønne','Gror kun om natten','120'],['Gødning','Bedre høst','15'],['Fe-støv','Vand ét felt i 3 dage','900']
       ].map((r,i)=>({n:r[0],d:r[1],p:r[2],bg:i===1?'#fbf5e6':'transparent',border:i===1?ink:'#cdb98f',priceColor:i===7?'#b3436b':ink})),
       quests: [
-        {title:'Find Pippins kat',giver:'Pippin · Fesby',tag:'FIND',color:'#e2d8f4',bg:'#fbf5e6',border:ink},
+        {title:'Find Pippins kat',giver:'Pippin · Hyggebyen',tag:'FIND',color:'#e2d8f4',bg:'#fbf5e6',border:ink},
         {title:'Gulerødder til småkager',giver:'Bagerfe Rosmarin',tag:'HØST',color:'#cde0a6',bg:'transparent',border:'#cdb98f'},
         {title:'Utæt tag på bageriet',giver:'Borgmester Hyldeblomst',tag:'BYG',color:'#f0d49a',bg:'transparent',border:'#cdb98f'},
         {title:'Månesten til kronen',giver:'Fekongen',tag:'SKOV',color:'#b9c3e3',bg:'transparent',border:'#cdb98f'}
       ],
       steps: [
-        {t:'Spørg naboerne i Fesby',mark:'✓',box:'#6b9a3e',color:'#8d7c66',deco:'line-through'},
+        {t:'Spørg naboerne i Hyggebyen',mark:'✓',box:'#6b9a3e',color:'#8d7c66',deco:'line-through'},
         {t:'Følg poteaftrykkene ved broen',mark:'✓',box:'#6b9a3e',color:'#8d7c66',deco:'line-through'},
         {t:'Find Morfar Mis i Mørkeskoven',mark:'',box:'#fbf5e6',color:ink,deco:'none'}
       ],
