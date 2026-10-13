@@ -1,0 +1,1151 @@
+{
+  "status": "PASS",
+  "test_scope": "GLB structure, textures, bind matrices, weights, numerical animation sampling, loop seams. Not a full Khronos conformance test or Godot runtime test.",
+  "characters": 12,
+  "animation_clips": 144,
+  "sampled_poses": 1296,
+  "godot_runtime": "NOT_EXECUTED: executable unavailable; supplied tests must be run in Godot 4.7.",
+  "resource_reference_warnings": [],
+  "results": [
+    {
+      "name": "bat",
+      "status": "PASS",
+      "sha256": "da8ca68c24b6ef1687775acaf82f5db30233550f4c8677bbf5bae8512cb3a171",
+      "vertices": 7810,
+      "triangles": 13854,
+      "bones": 22,
+      "bind_pose_max_error_m": 1.1920928955078125e-07,
+      "clips": [
+        {
+          "clip": "idle",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.31118,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "walk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.32103,
+          "minimum_vertex_y_m": -7e-05,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "run",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.29979,
+          "minimum_vertex_y_m": -0.0002,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "jump",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.31453,
+          "minimum_vertex_y_m": 0.03452,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "fall",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.31038,
+          "minimum_vertex_y_m": 0.07075,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "land",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.3172,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "celebrate",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.31111,
+          "minimum_vertex_y_m": 0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "talk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.31118,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "interact",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.29085,
+          "minimum_vertex_y_m": -0.0002,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "hit",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.44818,
+          "minimum_vertex_y_m": -0.0011,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "sleep",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.28869,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "takeoff",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.4667,
+          "minimum_vertex_y_m": 0.02743,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "hover",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.69977,
+          "minimum_vertex_y_m": 0.0275,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "fly",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.76389,
+          "minimum_vertex_y_m": 0.02748,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "turn_left",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.82191,
+          "minimum_vertex_y_m": 0.02748,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "turn_right",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.82191,
+          "minimum_vertex_y_m": 0.02748,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "flight_land",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.52983,
+          "minimum_vertex_y_m": 0.02671,
+          "loop_seam_error_m": null
+        }
+      ]
+    },
+    {
+      "name": "cat",
+      "status": "PASS",
+      "sha256": "6bf361dca7f96100e0cfee4c070d7af93a9b77a4f7bc2163f4ea68617025b5b9",
+      "vertices": 7520,
+      "triangles": 13322,
+      "bones": 27,
+      "bind_pose_max_error_m": 1.1920928955078125e-07,
+      "clips": [
+        {
+          "clip": "idle",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.06724,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "walk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.13422,
+          "minimum_vertex_y_m": -0.00016,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "run",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.19689,
+          "minimum_vertex_y_m": -0.00073,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "jump",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.16377,
+          "minimum_vertex_y_m": 0.01281,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "fall",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.12561,
+          "minimum_vertex_y_m": 0.06701,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "land",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.13711,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "celebrate",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.26246,
+          "minimum_vertex_y_m": 0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "talk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.12394,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "interact",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.20227,
+          "minimum_vertex_y_m": -0.0002,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "hit",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.3992,
+          "minimum_vertex_y_m": -0.00108,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "sleep",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.30977,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        }
+      ]
+    },
+    {
+      "name": "bear",
+      "status": "PASS",
+      "sha256": "42ad5bc0818779f1d0eafe9de41d1f9a8cd691d990b0f545d3bb1dace4773ed7",
+      "vertices": 8138,
+      "triangles": 14408,
+      "bones": 27,
+      "bind_pose_max_error_m": 1.1920928955078125e-07,
+      "clips": [
+        {
+          "clip": "idle",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.07852,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "walk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.15676,
+          "minimum_vertex_y_m": -0.00019,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "run",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.22905,
+          "minimum_vertex_y_m": -0.00085,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "jump",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.19125,
+          "minimum_vertex_y_m": 0.00617,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "fall",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.14669,
+          "minimum_vertex_y_m": 0.06947,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "land",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.16012,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "celebrate",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.3066,
+          "minimum_vertex_y_m": 0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "talk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.13293,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "interact",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.20241,
+          "minimum_vertex_y_m": -0.00023,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "hit",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.39829,
+          "minimum_vertex_y_m": -0.00126,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "sleep",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.3282,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        }
+      ]
+    },
+    {
+      "name": "rabbit",
+      "status": "PASS",
+      "sha256": "ccb1970ef91a613cd7b501d6d29d163fec374d6456bc22d89bd944a39ba5e154",
+      "vertices": 8715,
+      "triangles": 15492,
+      "bones": 27,
+      "bind_pose_max_error_m": 1.1920928955078125e-07,
+      "clips": [
+        {
+          "clip": "idle",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.0615,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "walk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.12269,
+          "minimum_vertex_y_m": -0.00015,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "run",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.17997,
+          "minimum_vertex_y_m": -0.00067,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "jump",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.1498,
+          "minimum_vertex_y_m": 0.01378,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "fall",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.1149,
+          "minimum_vertex_y_m": 0.06195,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "land",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.12542,
+          "minimum_vertex_y_m": 0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "celebrate",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.24007,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "talk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.13704,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "interact",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.21094,
+          "minimum_vertex_y_m": -0.00018,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "hit",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.43059,
+          "minimum_vertex_y_m": -0.00098,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "sleep",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.34314,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        }
+      ]
+    },
+    {
+      "name": "fairy",
+      "status": "PASS",
+      "sha256": "f307895cc9e87c45befc3b368936510b8ebea771dfcb8dfb9c3922f6daa4a79e",
+      "vertices": 17586,
+      "triangles": 31342,
+      "bones": 28,
+      "bind_pose_max_error_m": 1.1920928955078125e-07,
+      "clips": [
+        {
+          "clip": "idle",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.25169,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "walk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.32856,
+          "minimum_vertex_y_m": -0.00016,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "run",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.43174,
+          "minimum_vertex_y_m": -0.00073,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "jump",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.25852,
+          "minimum_vertex_y_m": 0.06815,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "fall",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.25132,
+          "minimum_vertex_y_m": 0.06831,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "land",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.26074,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "celebrate",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.58424,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "talk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.2714,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "interact",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.32336,
+          "minimum_vertex_y_m": -0.0002,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "hit",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.40454,
+          "minimum_vertex_y_m": -0.00109,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "sleep",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.2889,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "takeoff",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.37848,
+          "minimum_vertex_y_m": 0.10622,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "hover",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.56135,
+          "minimum_vertex_y_m": 0.10626,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "fly",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.61542,
+          "minimum_vertex_y_m": 0.10625,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "turn_left",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.66521,
+          "minimum_vertex_y_m": 0.10625,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "turn_right",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.66521,
+          "minimum_vertex_y_m": 0.10625,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "flight_land",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.42454,
+          "minimum_vertex_y_m": 0.10613,
+          "loop_seam_error_m": null
+        }
+      ]
+    },
+    {
+      "name": "monkey",
+      "status": "PASS",
+      "sha256": "7964fdf89b134284e0a88057e1c09a6fb8ef0b310a6fdaf4294c06679603c933",
+      "vertices": 11419,
+      "triangles": 20530,
+      "bones": 27,
+      "bind_pose_max_error_m": 1.1920928955078125e-07,
+      "clips": [
+        {
+          "clip": "idle",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.07346,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "walk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.15768,
+          "minimum_vertex_y_m": -0.00017,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "run",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.23021,
+          "minimum_vertex_y_m": -0.0008,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "jump",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.17891,
+          "minimum_vertex_y_m": 0.01646,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "fall",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.13722,
+          "minimum_vertex_y_m": 0.07399,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "land",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.14979,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "celebrate",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.30377,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "talk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.13486,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "interact",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.20358,
+          "minimum_vertex_y_m": -0.00022,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "hit",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.39354,
+          "minimum_vertex_y_m": -0.00118,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "sleep",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.31755,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        }
+      ]
+    },
+    {
+      "name": "capybara",
+      "status": "PASS",
+      "sha256": "d90beff397a7e66f00071c0c86dcfdc0d5ad5e003a83c675d40da48d1314ea6f",
+      "vertices": 9064,
+      "triangles": 15976,
+      "bones": 22,
+      "bind_pose_max_error_m": 1.1920928955078125e-07,
+      "clips": [
+        {
+          "clip": "idle",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.07402,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "walk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.13617,
+          "minimum_vertex_y_m": -0.00017,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "run",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.18935,
+          "minimum_vertex_y_m": -0.0008,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "jump",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.18209,
+          "minimum_vertex_y_m": 0.05524,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "fall",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.14022,
+          "minimum_vertex_y_m": 0.07417,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "land",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.15124,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "celebrate",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.10052,
+          "minimum_vertex_y_m": 0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "talk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.10746,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "interact",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.22659,
+          "minimum_vertex_y_m": -0.00022,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "hit",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.27855,
+          "minimum_vertex_y_m": -0.00118,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "sleep",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.30767,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        }
+      ]
+    },
+    {
+      "name": "fox",
+      "status": "PASS",
+      "sha256": "97529be0ee3f175c2d809e53b30ffe31a7d6bc5df776b81fb2be59ce5de12b05",
+      "vertices": 8821,
+      "triangles": 15694,
+      "bones": 27,
+      "bind_pose_max_error_m": 1.1920928955078125e-07,
+      "clips": [
+        {
+          "clip": "idle",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.07023,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "walk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.13615,
+          "minimum_vertex_y_m": -0.00016,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "run",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.20093,
+          "minimum_vertex_y_m": -0.00074,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "jump",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.16611,
+          "minimum_vertex_y_m": 0.02979,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "fall",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.12741,
+          "minimum_vertex_y_m": 0.0687,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "land",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.13907,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "celebrate",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.26609,
+          "minimum_vertex_y_m": 0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "talk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.13277,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "interact",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.21064,
+          "minimum_vertex_y_m": -0.0002,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "hit",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.42219,
+          "minimum_vertex_y_m": -0.00109,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "sleep",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.33303,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        }
+      ]
+    },
+    {
+      "name": "raccoon",
+      "status": "PASS",
+      "sha256": "d73ddeaf4e86234d37b579806e7203c253308908d3d595920e2341baca7fc0e0",
+      "vertices": 9092,
+      "triangles": 16218,
+      "bones": 27,
+      "bind_pose_max_error_m": 1.1920928955078125e-07,
+      "clips": [
+        {
+          "clip": "idle",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.07728,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "walk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.15425,
+          "minimum_vertex_y_m": -0.00018,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "run",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.22764,
+          "minimum_vertex_y_m": -0.00084,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "jump",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.18823,
+          "minimum_vertex_y_m": 0.03376,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "fall",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.14437,
+          "minimum_vertex_y_m": 0.07785,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "land",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.15759,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "celebrate",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.30151,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "talk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.13043,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "interact",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.20125,
+          "minimum_vertex_y_m": -0.00023,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "hit",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.39404,
+          "minimum_vertex_y_m": -0.00124,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "sleep",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.32268,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        }
+      ]
+    },
+    {
+      "name": "penguin",
+      "status": "PASS",
+      "sha256": "04657b19e2c177ec6646aaf1da4f976c5fe7342064c5f5dfbf1993bf95ab5d2b",
+      "vertices": 8001,
+      "triangles": 14316,
+      "bones": 23,
+      "bind_pose_max_error_m": 1.1920928955078125e-07,
+      "clips": [
+        {
+          "clip": "idle",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.04647,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "walk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.25792,
+          "minimum_vertex_y_m": -9e-05,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "run",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.36991,
+          "minimum_vertex_y_m": -0.00035,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "jump",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.18632,
+          "minimum_vertex_y_m": 0.03901,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "fall",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.16642,
+          "minimum_vertex_y_m": 0.08995,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "land",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.11258,
+          "minimum_vertex_y_m": 0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "celebrate",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.48655,
+          "minimum_vertex_y_m": 0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "talk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.21363,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "interact",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.2621,
+          "minimum_vertex_y_m": -0.00026,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "hit",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.37073,
+          "minimum_vertex_y_m": -0.00143,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "sleep",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.36633,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        }
+      ]
+    },
+    {
+      "name": "hedgehog",
+      "status": "PASS",
+      "sha256": "d7c57818fff9a1c8fd4f69b20ec4dfd5e20505efff9a6b1adb4aeebdb8882b32",
+      "vertices": 11177,
+      "triangles": 19650,
+      "bones": 22,
+      "bind_pose_max_error_m": 1.1920928955078125e-07,
+      "clips": [
+        {
+          "clip": "idle",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.07694,
+          "minimum_vertex_y_m": 0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "walk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.15358,
+          "minimum_vertex_y_m": -0.00018,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "run",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.22665,
+          "minimum_vertex_y_m": -0.00083,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "jump",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.1874,
+          "minimum_vertex_y_m": 0.03361,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "fall",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.14374,
+          "minimum_vertex_y_m": 0.0775,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "land",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.1569,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "celebrate",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.30019,
+          "minimum_vertex_y_m": 0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "talk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.12985,
+          "minimum_vertex_y_m": 0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "interact",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.19708,
+          "minimum_vertex_y_m": -0.00023,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "hit",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.42279,
+          "minimum_vertex_y_m": -0.00123,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "sleep",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.3222,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        }
+      ]
+    },
+    {
+      "name": "frog",
+      "status": "PASS",
+      "sha256": "3ca555efe9f3a947262e9738eb9eabdaf10ba9b38d3d6ae6b98698b1b3916cce",
+      "vertices": 8075,
+      "triangles": 14376,
+      "bones": 18,
+      "bind_pose_max_error_m": 1.1920928955078125e-07,
+      "clips": [
+        {
+          "clip": "idle",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.08694,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "walk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.17351,
+          "minimum_vertex_y_m": -0.00021,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "run",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.25607,
+          "minimum_vertex_y_m": -0.00094,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "jump",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.21175,
+          "minimum_vertex_y_m": 0.03797,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "fall",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.16241,
+          "minimum_vertex_y_m": 0.08757,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "land",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.17728,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "celebrate",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.33919,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "talk",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.14673,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        },
+        {
+          "clip": "interact",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.22514,
+          "minimum_vertex_y_m": -0.00026,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "hit",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.37843,
+          "minimum_vertex_y_m": -0.00139,
+          "loop_seam_error_m": null
+        },
+        {
+          "clip": "sleep",
+          "sampled_frames": 9,
+          "max_vertex_motion_m": 0.39249,
+          "minimum_vertex_y_m": -0.0,
+          "loop_seam_error_m": 0.0
+        }
+      ]
+    }
+  ]
+}

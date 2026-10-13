@@ -1,0 +1,91 @@
+{
+  "character": "monkey",
+  "cell_size": [
+    256,
+    256
+  ],
+  "directions": [
+    "S",
+    "SW",
+    "W",
+    "NW",
+    "N",
+    "NE",
+    "E",
+    "SE"
+  ],
+  "animations": {
+    "idle": {
+      "frames": 4,
+      "fps": 5,
+      "loop": true,
+      "sheet": "idle.png"
+    },
+    "walk": {
+      "frames": 6,
+      "fps": 9,
+      "loop": true,
+      "sheet": "walk.png"
+    },
+    "run": {
+      "frames": 6,
+      "fps": 12,
+      "loop": true,
+      "sheet": "run.png"
+    },
+    "jump": {
+      "frames": 4,
+      "fps": 10,
+      "loop": false,
+      "sheet": "jump.png"
+    },
+    "fall": {
+      "frames": 3,
+      "fps": 6,
+      "loop": true,
+      "sheet": "fall.png"
+    },
+    "land": {
+      "frames": 3,
+      "fps": 11,
+      "loop": false,
+      "sheet": "land.png"
+    },
+    "celebrate": {
+      "frames": 6,
+      "fps": 9,
+      "loop": false,
+      "sheet": "celebrate.png"
+    },
+    "interact": {
+      "frames": 4,
+      "fps": 9,
+      "loop": false,
+      "sheet": "interact.png"
+    },
+    "hit": {
+      "frames": 3,
+      "fps": 11,
+      "loop": false,
+      "sheet": "hit.png"
+    },
+    "sleep": {
+      "frames": 4,
+      "fps": 3,
+      "loop": true,
+      "sheet": "sleep.png"
+    },
+    "talk": {
+      "frames": 4,
+      "fps": 6,
+      "loop": true,
+      "sheet": "talk.png"
+    }
+  },
+  "pivot": [
+    128,
+    200
+  ],
+  "source": "GLB-to-sprite orthographic offline bake",
+  "orientation": "screen-down = S; clockwise rows S,SW,W,NW,N,NE,E,SE"
+}

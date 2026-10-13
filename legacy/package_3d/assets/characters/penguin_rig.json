@@ -1,0 +1,290 @@
+{
+  "bones": [
+    {
+      "name": "Root",
+      "parent": null,
+      "rest_position": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "Hips",
+      "parent": "Root",
+      "rest_position": [
+        0.0,
+        0.6396719630958482,
+        0.0
+      ]
+    },
+    {
+      "name": "Spine",
+      "parent": "Hips",
+      "rest_position": [
+        0.0,
+        0.9295233213736543,
+        0.0
+      ]
+    },
+    {
+      "name": "Head",
+      "parent": "Spine",
+      "rest_position": [
+        0.0,
+        1.1094310609943616,
+        0.0
+      ]
+    },
+    {
+      "name": "Eye_L",
+      "parent": "Head",
+      "rest_position": [
+        -0.22488467452588415,
+        1.5502050230650946,
+        0.4147329476617556
+      ]
+    },
+    {
+      "name": "Eye_R",
+      "parent": "Head",
+      "rest_position": [
+        0.22488467452588415,
+        1.5352127114300358,
+        0.41699337780294443
+      ]
+    },
+    {
+      "name": "UpperArm_L",
+      "parent": "Spine",
+      "rest_position": [
+        -0.40679138903126594,
+        1.0394669400307535,
+        0.011993849308047155
+      ]
+    },
+    {
+      "name": "Forearm_L",
+      "parent": "UpperArm_L",
+      "rest_position": [
+        -0.41878523833931314,
+        0.8495643259866735,
+        0.05197334700153767
+      ]
+    },
+    {
+      "name": "Hand_L",
+      "parent": "Forearm_L",
+      "rest_position": [
+        -0.4317785750896975,
+        0.6846488980010251,
+        0.08695540748334186
+      ]
+    },
+    {
+      "name": "Thigh_Foot_L",
+      "parent": "Hips",
+      "rest_position": [
+        -0.22988211173757045,
+        0.6096873398257303,
+        0.0699641209636084
+      ]
+    },
+    {
+      "name": "Shin_Foot_L",
+      "parent": "Thigh_Foot_L",
+      "rest_position": [
+        -0.22988211173757045,
+        0.3898001025115325,
+        0.0699641209636084
+      ]
+    },
+    {
+      "name": "Foot_L",
+      "parent": "Shin_Foot_L",
+      "rest_position": [
+        -0.22988211173757045,
+        0.1699128651973347,
+        0.0699641209636084
+      ]
+    },
+    {
+      "name": "UpperArm_R",
+      "parent": "Spine",
+      "rest_position": [
+        0.40679138903126594,
+        1.0394669400307535,
+        0.011993849308047155
+      ]
+    },
+    {
+      "name": "Forearm_R",
+      "parent": "UpperArm_R",
+      "rest_position": [
+        0.41878523833931314,
+        0.8495643259866735,
+        0.05197334700153767
+      ]
+    },
+    {
+      "name": "Hand_R",
+      "parent": "Forearm_R",
+      "rest_position": [
+        0.4317785750896975,
+        0.6846488980010251,
+        0.08695540748334186
+      ]
+    },
+    {
+      "name": "Thigh_Foot_R",
+      "parent": "Hips",
+      "rest_position": [
+        0.22988211173757045,
+        0.6096873398257303,
+        0.0699641209636084
+      ]
+    },
+    {
+      "name": "Shin_Foot_R",
+      "parent": "Thigh_Foot_R",
+      "rest_position": [
+        0.22988211173757045,
+        0.3898001025115325,
+        0.0699641209636084
+      ]
+    },
+    {
+      "name": "Foot_R",
+      "parent": "Shin_Foot_R",
+      "rest_position": [
+        0.22988211173757045,
+        0.1699128651973347,
+        0.0699641209636084
+      ]
+    },
+    {
+      "name": "Tail_00",
+      "parent": "Hips",
+      "rest_position": [
+        0.0,
+        0.3898001025115325,
+        -0.26986160943106097
+      ]
+    },
+    {
+      "name": "Tail_01",
+      "parent": "Tail_00",
+      "rest_position": [
+        -2.3128820549358e-18,
+        0.37480779087647353,
+        -0.3035943106099436
+      ]
+    },
+    {
+      "name": "Tail_02",
+      "parent": "Tail_01",
+      "rest_position": [
+        -4.6257641098716e-18,
+        0.35981547924141466,
+        -0.33732701178882607
+      ]
+    },
+    {
+      "name": "Tail_03",
+      "parent": "Tail_02",
+      "rest_position": [
+        -6.9386461648074006e-18,
+        0.3448231676063558,
+        -0.37105971296770857
+      ]
+    },
+    {
+      "name": "Tail_04",
+      "parent": "Tail_03",
+      "rest_position": [
+        -9.2515282197432e-18,
+        0.3298308559712968,
+        -0.4047924141465911
+      ]
+    }
+  ],
+  "stats": {
+    "name": "penguin",
+    "file": "penguin.glb",
+    "vertices": 8001,
+    "triangles": 14316,
+    "bones": 23,
+    "deforming_vertices": 774,
+    "texture_size": 1024,
+    "materials": 1,
+    "animations": [
+      {
+        "name": "idle",
+        "duration": 3.2,
+        "loop": true
+      },
+      {
+        "name": "walk",
+        "duration": 0.9,
+        "loop": true
+      },
+      {
+        "name": "run",
+        "duration": 0.58,
+        "loop": true
+      },
+      {
+        "name": "jump",
+        "duration": 0.36,
+        "loop": false
+      },
+      {
+        "name": "fall",
+        "duration": 0.9,
+        "loop": true
+      },
+      {
+        "name": "land",
+        "duration": 0.28,
+        "loop": false
+      },
+      {
+        "name": "celebrate",
+        "duration": 1.8,
+        "loop": false
+      },
+      {
+        "name": "talk",
+        "duration": 2.4,
+        "loop": true
+      },
+      {
+        "name": "interact",
+        "duration": 0.9,
+        "loop": false
+      },
+      {
+        "name": "hit",
+        "duration": 0.4,
+        "loop": false
+      },
+      {
+        "name": "sleep",
+        "duration": 3.6,
+        "loop": true
+      }
+    ],
+    "bounds_min": [
+      -0.6339490603889748,
+      0.0,
+      -0.5747052793439261
+    ],
+    "bounds_max": [
+      0.6339490603889748,
+      1.95,
+      0.5856136530413885
+    ],
+    "scale_from_source": 0.9994874423372628,
+    "flyer": false
+  }
+}

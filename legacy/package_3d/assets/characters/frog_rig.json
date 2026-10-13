@@ -1,0 +1,245 @@
+{
+  "bones": [
+    {
+      "name": "Root",
+      "parent": null,
+      "rest_position": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "Hips",
+      "parent": "Root",
+      "rest_position": [
+        0.0,
+        0.6227544910179641,
+        0.0
+      ]
+    },
+    {
+      "name": "Spine",
+      "parent": "Hips",
+      "rest_position": [
+        0.0,
+        0.904940119760479,
+        0.0
+      ]
+    },
+    {
+      "name": "Head",
+      "parent": "Spine",
+      "rest_position": [
+        0.0,
+        1.0508982035928143,
+        0.0
+      ]
+    },
+    {
+      "name": "Eye_L",
+      "parent": "Head",
+      "rest_position": [
+        -0.2928892215568862,
+        1.7437125748502993,
+        0.33104907103835546
+      ]
+    },
+    {
+      "name": "Eye_R",
+      "parent": "Head",
+      "rest_position": [
+        0.2928892215568862,
+        1.7339820359281437,
+        0.33387314780006017
+      ]
+    },
+    {
+      "name": "UpperArm_L",
+      "parent": "Spine",
+      "rest_position": [
+        -0.2724550898203593,
+        1.089820359281437,
+        0.2092065868263473
+      ]
+    },
+    {
+      "name": "Forearm_L",
+      "parent": "UpperArm_L",
+      "rest_position": [
+        -0.2841317365269461,
+        0.904940119760479,
+        0.24812874251497005
+      ]
+    },
+    {
+      "name": "Hand_L",
+      "parent": "Forearm_L",
+      "rest_position": [
+        -0.29678143712574856,
+        0.74438622754491,
+        0.28218562874251496
+      ]
+    },
+    {
+      "name": "UpperArm_R",
+      "parent": "Spine",
+      "rest_position": [
+        0.2724550898203593,
+        1.089820359281437,
+        0.2092065868263473
+      ]
+    },
+    {
+      "name": "Forearm_R",
+      "parent": "UpperArm_R",
+      "rest_position": [
+        0.2841317365269461,
+        0.904940119760479,
+        0.24812874251497005
+      ]
+    },
+    {
+      "name": "Hand_R",
+      "parent": "Forearm_R",
+      "rest_position": [
+        0.29678143712574856,
+        0.74438622754491,
+        0.28218562874251496
+      ]
+    },
+    {
+      "name": "Thigh_Foot_L",
+      "parent": "Hips",
+      "rest_position": [
+        -0.2432634730538922,
+        0.593562874251497,
+        0.029191616766467064
+      ]
+    },
+    {
+      "name": "Shin_Foot_L",
+      "parent": "Thigh_Foot_L",
+      "rest_position": [
+        -0.2432634730538922,
+        0.37949101796407186,
+        0.029191616766467064
+      ]
+    },
+    {
+      "name": "Foot_L",
+      "parent": "Shin_Foot_L",
+      "rest_position": [
+        -0.2432634730538922,
+        0.16541916167664672,
+        0.029191616766467064
+      ]
+    },
+    {
+      "name": "Thigh_Foot_R",
+      "parent": "Hips",
+      "rest_position": [
+        0.2432634730538922,
+        0.593562874251497,
+        0.029191616766467064
+      ]
+    },
+    {
+      "name": "Shin_Foot_R",
+      "parent": "Thigh_Foot_R",
+      "rest_position": [
+        0.2432634730538922,
+        0.37949101796407186,
+        0.029191616766467064
+      ]
+    },
+    {
+      "name": "Foot_R",
+      "parent": "Shin_Foot_R",
+      "rest_position": [
+        0.2432634730538922,
+        0.16541916167664672,
+        0.029191616766467064
+      ]
+    }
+  ],
+  "stats": {
+    "name": "frog",
+    "file": "frog.glb",
+    "vertices": 8075,
+    "triangles": 14376,
+    "bones": 18,
+    "deforming_vertices": 1220,
+    "texture_size": 1024,
+    "materials": 1,
+    "animations": [
+      {
+        "name": "idle",
+        "duration": 3.2,
+        "loop": true
+      },
+      {
+        "name": "walk",
+        "duration": 0.9,
+        "loop": true
+      },
+      {
+        "name": "run",
+        "duration": 0.58,
+        "loop": true
+      },
+      {
+        "name": "jump",
+        "duration": 0.36,
+        "loop": false
+      },
+      {
+        "name": "fall",
+        "duration": 0.9,
+        "loop": true
+      },
+      {
+        "name": "land",
+        "duration": 0.28,
+        "loop": false
+      },
+      {
+        "name": "celebrate",
+        "duration": 1.8,
+        "loop": false
+      },
+      {
+        "name": "talk",
+        "duration": 2.4,
+        "loop": true
+      },
+      {
+        "name": "interact",
+        "duration": 0.9,
+        "loop": false
+      },
+      {
+        "name": "hit",
+        "duration": 0.4,
+        "loop": false
+      },
+      {
+        "name": "sleep",
+        "duration": 3.6,
+        "loop": true
+      }
+    ],
+    "bounds_min": [
+      -0.6733532934131736,
+      0.0,
+      -0.34348802395209577
+    ],
+    "bounds_max": [
+      0.6733532934131736,
+      1.95,
+      0.4821129494935055
+    ],
+    "scale_from_source": 0.9730538922155688,
+    "flyer": false
+  }
+}

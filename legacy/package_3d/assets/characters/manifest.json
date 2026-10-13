@@ -1,0 +1,1013 @@
+{
+  "format_version": 2,
+  "characters": [
+    {
+      "name": "bat",
+      "file": "bat.glb",
+      "vertices": 7810,
+      "triangles": 13854,
+      "bones": 22,
+      "deforming_vertices": 2365,
+      "texture_size": 1024,
+      "materials": 1,
+      "animations": [
+        {
+          "name": "idle",
+          "duration": 3.2,
+          "loop": true
+        },
+        {
+          "name": "walk",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "run",
+          "duration": 0.58,
+          "loop": true
+        },
+        {
+          "name": "jump",
+          "duration": 0.36,
+          "loop": false
+        },
+        {
+          "name": "fall",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "land",
+          "duration": 0.28,
+          "loop": false
+        },
+        {
+          "name": "celebrate",
+          "duration": 1.8,
+          "loop": false
+        },
+        {
+          "name": "talk",
+          "duration": 2.4,
+          "loop": true
+        },
+        {
+          "name": "interact",
+          "duration": 0.9,
+          "loop": false
+        },
+        {
+          "name": "hit",
+          "duration": 0.4,
+          "loop": false
+        },
+        {
+          "name": "sleep",
+          "duration": 3.6,
+          "loop": true
+        },
+        {
+          "name": "takeoff",
+          "duration": 0.48,
+          "loop": false
+        },
+        {
+          "name": "hover",
+          "duration": 1.2,
+          "loop": true
+        },
+        {
+          "name": "fly",
+          "duration": 0.72,
+          "loop": true
+        },
+        {
+          "name": "turn_left",
+          "duration": 0.72,
+          "loop": true
+        },
+        {
+          "name": "turn_right",
+          "duration": 0.72,
+          "loop": true
+        },
+        {
+          "name": "flight_land",
+          "duration": 0.38,
+          "loop": false
+        }
+      ],
+      "bounds_min": [
+        -1.3987758683707006,
+        0.0,
+        -0.2790638531673434
+      ],
+      "bounds_max": [
+        1.3987758683707006,
+        1.6,
+        0.35976152503793835
+      ],
+      "scale_from_source": 0.7860953610347702,
+      "flyer": true
+    },
+    {
+      "name": "cat",
+      "file": "cat.glb",
+      "vertices": 7520,
+      "triangles": 13322,
+      "bones": 27,
+      "deforming_vertices": 2115,
+      "texture_size": 1024,
+      "materials": 1,
+      "animations": [
+        {
+          "name": "idle",
+          "duration": 3.2,
+          "loop": true
+        },
+        {
+          "name": "walk",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "run",
+          "duration": 0.58,
+          "loop": true
+        },
+        {
+          "name": "jump",
+          "duration": 0.36,
+          "loop": false
+        },
+        {
+          "name": "fall",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "land",
+          "duration": 0.28,
+          "loop": false
+        },
+        {
+          "name": "celebrate",
+          "duration": 1.8,
+          "loop": false
+        },
+        {
+          "name": "talk",
+          "duration": 2.4,
+          "loop": true
+        },
+        {
+          "name": "interact",
+          "duration": 0.9,
+          "loop": false
+        },
+        {
+          "name": "hit",
+          "duration": 0.4,
+          "loop": false
+        },
+        {
+          "name": "sleep",
+          "duration": 3.6,
+          "loop": true
+        }
+      ],
+      "bounds_min": [
+        -0.48916976216894203,
+        0.0,
+        -0.3047903902744946
+      ],
+      "bounds_max": [
+        0.9191446798874657,
+        1.95,
+        0.40092039297592097
+      ],
+      "scale_from_source": 0.7525688648752954,
+      "flyer": false
+    },
+    {
+      "name": "bear",
+      "file": "bear.glb",
+      "vertices": 8138,
+      "triangles": 14408,
+      "bones": 27,
+      "deforming_vertices": 1740,
+      "texture_size": 1024,
+      "materials": 1,
+      "animations": [
+        {
+          "name": "idle",
+          "duration": 3.2,
+          "loop": true
+        },
+        {
+          "name": "walk",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "run",
+          "duration": 0.58,
+          "loop": true
+        },
+        {
+          "name": "jump",
+          "duration": 0.36,
+          "loop": false
+        },
+        {
+          "name": "fall",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "land",
+          "duration": 0.28,
+          "loop": false
+        },
+        {
+          "name": "celebrate",
+          "duration": 1.8,
+          "loop": false
+        },
+        {
+          "name": "talk",
+          "duration": 2.4,
+          "loop": true
+        },
+        {
+          "name": "interact",
+          "duration": 0.9,
+          "loop": false
+        },
+        {
+          "name": "hit",
+          "duration": 0.4,
+          "loop": false
+        },
+        {
+          "name": "sleep",
+          "duration": 3.6,
+          "loop": true
+        }
+      ],
+      "bounds_min": [
+        -0.5405041433890188,
+        0.0,
+        -0.34451646212763476
+      ],
+      "bounds_max": [
+        0.5492928286473768,
+        1.95,
+        0.4398888941601895
+      ],
+      "scale_from_source": 0.8788685258358029,
+      "flyer": false
+    },
+    {
+      "name": "rabbit",
+      "file": "rabbit.glb",
+      "vertices": 8715,
+      "triangles": 15492,
+      "bones": 27,
+      "deforming_vertices": 2166,
+      "texture_size": 1024,
+      "materials": 1,
+      "animations": [
+        {
+          "name": "idle",
+          "duration": 3.2,
+          "loop": true
+        },
+        {
+          "name": "walk",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "run",
+          "duration": 0.58,
+          "loop": true
+        },
+        {
+          "name": "jump",
+          "duration": 0.36,
+          "loop": false
+        },
+        {
+          "name": "fall",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "land",
+          "duration": 0.28,
+          "loop": false
+        },
+        {
+          "name": "celebrate",
+          "duration": 1.8,
+          "loop": false
+        },
+        {
+          "name": "talk",
+          "duration": 2.4,
+          "loop": true
+        },
+        {
+          "name": "interact",
+          "duration": 0.9,
+          "loop": false
+        },
+        {
+          "name": "hit",
+          "duration": 0.4,
+          "loop": false
+        },
+        {
+          "name": "sleep",
+          "duration": 3.6,
+          "loop": true
+        }
+      ],
+      "bounds_min": [
+        -0.6639675318691057,
+        0.0,
+        -0.28085706328202303
+      ],
+      "bounds_max": [
+        0.4719698247835986,
+        1.9499999999999997,
+        0.36410206732698935
+      ],
+      "scale_from_source": 0.6883751551029977,
+      "flyer": false
+    },
+    {
+      "name": "fairy",
+      "file": "fairy.glb",
+      "vertices": 17586,
+      "triangles": 31342,
+      "bones": 28,
+      "deforming_vertices": 6880,
+      "texture_size": 2048,
+      "materials": 1,
+      "animations": [
+        {
+          "name": "idle",
+          "duration": 3.2,
+          "loop": true
+        },
+        {
+          "name": "walk",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "run",
+          "duration": 0.58,
+          "loop": true
+        },
+        {
+          "name": "jump",
+          "duration": 0.36,
+          "loop": false
+        },
+        {
+          "name": "fall",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "land",
+          "duration": 0.28,
+          "loop": false
+        },
+        {
+          "name": "celebrate",
+          "duration": 1.8,
+          "loop": false
+        },
+        {
+          "name": "talk",
+          "duration": 2.4,
+          "loop": true
+        },
+        {
+          "name": "interact",
+          "duration": 0.9,
+          "loop": false
+        },
+        {
+          "name": "hit",
+          "duration": 0.4,
+          "loop": false
+        },
+        {
+          "name": "sleep",
+          "duration": 3.6,
+          "loop": true
+        },
+        {
+          "name": "takeoff",
+          "duration": 0.48,
+          "loop": false
+        },
+        {
+          "name": "hover",
+          "duration": 1.2,
+          "loop": true
+        },
+        {
+          "name": "fly",
+          "duration": 0.72,
+          "loop": true
+        },
+        {
+          "name": "turn_left",
+          "duration": 0.72,
+          "loop": true
+        },
+        {
+          "name": "turn_right",
+          "duration": 0.72,
+          "loop": true
+        },
+        {
+          "name": "flight_land",
+          "duration": 0.38,
+          "loop": false
+        }
+      ],
+      "bounds_min": [
+        -0.9230490565746188,
+        0.0,
+        -0.3840749034408097
+      ],
+      "bounds_max": [
+        0.9230490565746188,
+        1.95,
+        0.4070744872623162
+      ],
+      "scale_from_source": 0.7590413111478452,
+      "flyer": true
+    },
+    {
+      "name": "monkey",
+      "file": "monkey.glb",
+      "vertices": 11419,
+      "triangles": 20530,
+      "bones": 27,
+      "deforming_vertices": 2515,
+      "texture_size": 1024,
+      "materials": 1,
+      "animations": [
+        {
+          "name": "idle",
+          "duration": 3.2,
+          "loop": true
+        },
+        {
+          "name": "walk",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "run",
+          "duration": 0.58,
+          "loop": true
+        },
+        {
+          "name": "jump",
+          "duration": 0.36,
+          "loop": false
+        },
+        {
+          "name": "fall",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "land",
+          "duration": 0.28,
+          "loop": false
+        },
+        {
+          "name": "celebrate",
+          "duration": 1.8,
+          "loop": false
+        },
+        {
+          "name": "talk",
+          "duration": 2.4,
+          "loop": true
+        },
+        {
+          "name": "interact",
+          "duration": 0.9,
+          "loop": false
+        },
+        {
+          "name": "hit",
+          "duration": 0.4,
+          "loop": false
+        },
+        {
+          "name": "sleep",
+          "duration": 3.6,
+          "loop": true
+        }
+      ],
+      "bounds_min": [
+        -0.723217315125423,
+        0.0,
+        -0.324744125094019
+      ],
+      "bounds_max": [
+        1.0803511194479027,
+        1.95,
+        0.479916894921602
+      ],
+      "scale_from_source": 0.8221370255544785,
+      "flyer": false
+    },
+    {
+      "name": "capybara",
+      "file": "capybara.glb",
+      "vertices": 9064,
+      "triangles": 15976,
+      "bones": 22,
+      "deforming_vertices": 2075,
+      "texture_size": 1024,
+      "materials": 1,
+      "animations": [
+        {
+          "name": "idle",
+          "duration": 3.2,
+          "loop": true
+        },
+        {
+          "name": "walk",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "run",
+          "duration": 0.58,
+          "loop": true
+        },
+        {
+          "name": "jump",
+          "duration": 0.36,
+          "loop": false
+        },
+        {
+          "name": "fall",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "land",
+          "duration": 0.28,
+          "loop": false
+        },
+        {
+          "name": "celebrate",
+          "duration": 1.8,
+          "loop": false
+        },
+        {
+          "name": "talk",
+          "duration": 2.4,
+          "loop": true
+        },
+        {
+          "name": "interact",
+          "duration": 0.9,
+          "loop": false
+        },
+        {
+          "name": "hit",
+          "duration": 0.4,
+          "loop": false
+        },
+        {
+          "name": "sleep",
+          "duration": 3.6,
+          "loop": true
+        }
+      ],
+      "bounds_min": [
+        -0.4977826828310388,
+        0.0,
+        -0.8356815238256182
+      ],
+      "bounds_max": [
+        0.4977826828310388,
+        1.48,
+        0.686885679299112
+      ],
+      "scale_from_source": 0.8241435146209253,
+      "flyer": false
+    },
+    {
+      "name": "fox",
+      "file": "fox.glb",
+      "vertices": 8821,
+      "triangles": 15694,
+      "bones": 27,
+      "deforming_vertices": 2278,
+      "texture_size": 1024,
+      "materials": 1,
+      "animations": [
+        {
+          "name": "idle",
+          "duration": 3.2,
+          "loop": true
+        },
+        {
+          "name": "walk",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "run",
+          "duration": 0.58,
+          "loop": true
+        },
+        {
+          "name": "jump",
+          "duration": 0.36,
+          "loop": false
+        },
+        {
+          "name": "fall",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "land",
+          "duration": 0.28,
+          "loop": false
+        },
+        {
+          "name": "celebrate",
+          "duration": 1.8,
+          "loop": false
+        },
+        {
+          "name": "talk",
+          "duration": 2.4,
+          "loop": true
+        },
+        {
+          "name": "interact",
+          "duration": 0.9,
+          "loop": false
+        },
+        {
+          "name": "hit",
+          "duration": 0.4,
+          "loop": false
+        },
+        {
+          "name": "sleep",
+          "duration": 3.6,
+          "loop": true
+        }
+      ],
+      "bounds_min": [
+        -0.4847352186691871,
+        0.0,
+        -0.35601209429518144
+      ],
+      "bounds_max": [
+        0.9961404799624103,
+        1.9500000000000002,
+        0.44386405886532504
+      ],
+      "scale_from_source": 0.7633429227206167,
+      "flyer": false
+    },
+    {
+      "name": "raccoon",
+      "file": "raccoon.glb",
+      "vertices": 9092,
+      "triangles": 16218,
+      "bones": 27,
+      "deforming_vertices": 2062,
+      "texture_size": 1024,
+      "materials": 1,
+      "animations": [
+        {
+          "name": "idle",
+          "duration": 3.2,
+          "loop": true
+        },
+        {
+          "name": "walk",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "run",
+          "duration": 0.58,
+          "loop": true
+        },
+        {
+          "name": "jump",
+          "duration": 0.36,
+          "loop": false
+        },
+        {
+          "name": "fall",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "land",
+          "duration": 0.28,
+          "loop": false
+        },
+        {
+          "name": "celebrate",
+          "duration": 1.8,
+          "loop": false
+        },
+        {
+          "name": "talk",
+          "duration": 2.4,
+          "loop": true
+        },
+        {
+          "name": "interact",
+          "duration": 0.9,
+          "loop": false
+        },
+        {
+          "name": "hit",
+          "duration": 0.4,
+          "loop": false
+        },
+        {
+          "name": "sleep",
+          "duration": 3.6,
+          "loop": true
+        }
+      ],
+      "bounds_min": [
+        -0.5345546486870121,
+        0.0,
+        -0.39896547136537086
+      ],
+      "bounds_max": [
+        1.03643135234359,
+        1.95,
+        0.49918312511775464
+      ],
+      "scale_from_source": 0.8649751596877218,
+      "flyer": false
+    },
+    {
+      "name": "penguin",
+      "file": "penguin.glb",
+      "vertices": 8001,
+      "triangles": 14316,
+      "bones": 23,
+      "deforming_vertices": 774,
+      "texture_size": 1024,
+      "materials": 1,
+      "animations": [
+        {
+          "name": "idle",
+          "duration": 3.2,
+          "loop": true
+        },
+        {
+          "name": "walk",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "run",
+          "duration": 0.58,
+          "loop": true
+        },
+        {
+          "name": "jump",
+          "duration": 0.36,
+          "loop": false
+        },
+        {
+          "name": "fall",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "land",
+          "duration": 0.28,
+          "loop": false
+        },
+        {
+          "name": "celebrate",
+          "duration": 1.8,
+          "loop": false
+        },
+        {
+          "name": "talk",
+          "duration": 2.4,
+          "loop": true
+        },
+        {
+          "name": "interact",
+          "duration": 0.9,
+          "loop": false
+        },
+        {
+          "name": "hit",
+          "duration": 0.4,
+          "loop": false
+        },
+        {
+          "name": "sleep",
+          "duration": 3.6,
+          "loop": true
+        }
+      ],
+      "bounds_min": [
+        -0.6339490603889748,
+        0.0,
+        -0.5747052793439261
+      ],
+      "bounds_max": [
+        0.6339490603889748,
+        1.95,
+        0.5856136530413885
+      ],
+      "scale_from_source": 0.9994874423372628,
+      "flyer": false
+    },
+    {
+      "name": "hedgehog",
+      "file": "hedgehog.glb",
+      "vertices": 11177,
+      "triangles": 19650,
+      "bones": 22,
+      "deforming_vertices": 1509,
+      "texture_size": 1024,
+      "materials": 1,
+      "animations": [
+        {
+          "name": "idle",
+          "duration": 3.2,
+          "loop": true
+        },
+        {
+          "name": "walk",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "run",
+          "duration": 0.58,
+          "loop": true
+        },
+        {
+          "name": "jump",
+          "duration": 0.36,
+          "loop": false
+        },
+        {
+          "name": "fall",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "land",
+          "duration": 0.28,
+          "loop": false
+        },
+        {
+          "name": "celebrate",
+          "duration": 1.8,
+          "loop": false
+        },
+        {
+          "name": "talk",
+          "duration": 2.4,
+          "loop": true
+        },
+        {
+          "name": "interact",
+          "duration": 0.9,
+          "loop": false
+        },
+        {
+          "name": "hit",
+          "duration": 0.4,
+          "loop": false
+        },
+        {
+          "name": "sleep",
+          "duration": 3.6,
+          "loop": true
+        }
+      ],
+      "bounds_min": [
+        -0.6241688491279369,
+        0.0,
+        -0.5796698413363656
+      ],
+      "bounds_max": [
+        0.5994358447632524,
+        1.95,
+        0.5232865027927671
+      ],
+      "scale_from_source": 0.8611667278917782,
+      "flyer": false
+    },
+    {
+      "name": "frog",
+      "file": "frog.glb",
+      "vertices": 8075,
+      "triangles": 14376,
+      "bones": 18,
+      "deforming_vertices": 1220,
+      "texture_size": 1024,
+      "materials": 1,
+      "animations": [
+        {
+          "name": "idle",
+          "duration": 3.2,
+          "loop": true
+        },
+        {
+          "name": "walk",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "run",
+          "duration": 0.58,
+          "loop": true
+        },
+        {
+          "name": "jump",
+          "duration": 0.36,
+          "loop": false
+        },
+        {
+          "name": "fall",
+          "duration": 0.9,
+          "loop": true
+        },
+        {
+          "name": "land",
+          "duration": 0.28,
+          "loop": false
+        },
+        {
+          "name": "celebrate",
+          "duration": 1.8,
+          "loop": false
+        },
+        {
+          "name": "talk",
+          "duration": 2.4,
+          "loop": true
+        },
+        {
+          "name": "interact",
+          "duration": 0.9,
+          "loop": false
+        },
+        {
+          "name": "hit",
+          "duration": 0.4,
+          "loop": false
+        },
+        {
+          "name": "sleep",
+          "duration": 3.6,
+          "loop": true
+        }
+      ],
+      "bounds_min": [
+        -0.6733532934131736,
+        0.0,
+        -0.34348802395209577
+      ],
+      "bounds_max": [
+        0.6733532934131736,
+        1.95,
+        0.4821129494935055
+      ],
+      "scale_from_source": 0.9730538922155688,
+      "flyer": false
+    }
+  ]
+}

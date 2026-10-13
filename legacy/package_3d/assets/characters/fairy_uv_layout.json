@@ -1,0 +1,709 @@
+{
+  "size": 2048,
+  "tiles": {
+    "0": {
+      "color_srgb": "#A6CEBE",
+      "pattern": "petal",
+      "pixel_box": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "padding": 6
+    },
+    "1": {
+      "color_srgb": "#C2DDCB",
+      "pattern": "petal",
+      "pixel_box": [
+        256,
+        0,
+        512,
+        256
+      ],
+      "padding": 6
+    },
+    "2": {
+      "color_srgb": "#F2C9B0",
+      "pattern": "fur",
+      "pixel_box": [
+        512,
+        0,
+        768,
+        256
+      ],
+      "padding": 6
+    },
+    "3": {
+      "color_srgb": "#E9C57C",
+      "pattern": "hair",
+      "pixel_box": [
+        768,
+        0,
+        1024,
+        256
+      ],
+      "padding": 6
+    },
+    "4": {
+      "color_srgb": "#E8A0A3",
+      "pattern": "blush",
+      "pixel_box": [
+        1024,
+        0,
+        1280,
+        256
+      ],
+      "padding": 6
+    },
+    "5": {
+      "color_srgb": "#A86270",
+      "pattern": "clean",
+      "pixel_box": [
+        1280,
+        0,
+        1536,
+        256
+      ],
+      "padding": 6
+    },
+    "6": {
+      "color_srgb": "#F8DCC8",
+      "pattern": "fur",
+      "pixel_box": [
+        1536,
+        0,
+        1792,
+        256
+      ],
+      "padding": 6
+    },
+    "7": {
+      "color_srgb": "#4E353C",
+      "pattern": "clean",
+      "pixel_box": [
+        1792,
+        0,
+        2048,
+        256
+      ],
+      "padding": 6
+    },
+    "8": {
+      "color_srgb": "#F5D99B",
+      "pattern": "hair",
+      "pixel_box": [
+        0,
+        256,
+        256,
+        512
+      ],
+      "padding": 6
+    },
+    "9": {
+      "color_srgb": "#EAD9EE",
+      "pattern": "fur",
+      "pixel_box": [
+        256,
+        256,
+        512,
+        512
+      ],
+      "padding": 6
+    },
+    "10": {
+      "color_srgb": "#E9C06B",
+      "pattern": "fur",
+      "pixel_box": [
+        512,
+        256,
+        768,
+        512
+      ],
+      "padding": 6
+    },
+    "11": {
+      "color_srgb": "#DDA3AC",
+      "pattern": "velvet",
+      "pixel_box": [
+        768,
+        256,
+        1024,
+        512
+      ],
+      "padding": 6
+    },
+    "12": {
+      "color_srgb": "#FFF9EB",
+      "pattern": "porcelain",
+      "pixel_box": [
+        1024,
+        256,
+        1280,
+        512
+      ],
+      "padding": 6
+    },
+    "13": {
+      "color_srgb": "#FFFFFF",
+      "pattern": "clean",
+      "pixel_box": [
+        1280,
+        256,
+        1536,
+        512
+      ],
+      "padding": 6
+    },
+    "14": {
+      "color_srgb": "#D9C6E9",
+      "pattern": "silk",
+      "pixel_box": [
+        1536,
+        256,
+        1792,
+        512
+      ],
+      "padding": 6
+    },
+    "15": {
+      "color_srgb": "#B49ACE",
+      "pattern": "silk",
+      "pixel_box": [
+        1792,
+        256,
+        2048,
+        512
+      ],
+      "padding": 6
+    },
+    "16": {
+      "color_srgb": "#EAD9EE",
+      "pattern": "silk",
+      "pixel_box": [
+        0,
+        512,
+        256,
+        768
+      ],
+      "padding": 6
+    },
+    "17": {
+      "color_srgb": "#FFF8E8",
+      "pattern": "clean",
+      "pixel_box": [
+        256,
+        512,
+        512,
+        768
+      ],
+      "padding": 6
+    }
+  },
+  "parts": [
+    {
+      "group": "Body",
+      "part": 0,
+      "atlas_tile": 0,
+      "vertex_start": 0,
+      "vertex_count": 366
+    },
+    {
+      "group": "Body",
+      "part": 1,
+      "atlas_tile": 0,
+      "vertex_start": 366,
+      "vertex_count": 406
+    },
+    {
+      "group": "Body",
+      "part": 2,
+      "atlas_tile": 1,
+      "vertex_start": 772,
+      "vertex_count": 149
+    },
+    {
+      "group": "Body",
+      "part": 3,
+      "atlas_tile": 1,
+      "vertex_start": 921,
+      "vertex_count": 156
+    },
+    {
+      "group": "Body",
+      "part": 4,
+      "atlas_tile": 1,
+      "vertex_start": 1077,
+      "vertex_count": 151
+    },
+    {
+      "group": "Body",
+      "part": 5,
+      "atlas_tile": 1,
+      "vertex_start": 1228,
+      "vertex_count": 151
+    },
+    {
+      "group": "Body",
+      "part": 6,
+      "atlas_tile": 1,
+      "vertex_start": 1379,
+      "vertex_count": 152
+    },
+    {
+      "group": "Body",
+      "part": 7,
+      "atlas_tile": 1,
+      "vertex_start": 1531,
+      "vertex_count": 157
+    },
+    {
+      "group": "Body",
+      "part": 8,
+      "atlas_tile": 1,
+      "vertex_start": 1688,
+      "vertex_count": 149
+    },
+    {
+      "group": "Body",
+      "part": 9,
+      "atlas_tile": 2,
+      "vertex_start": 1837,
+      "vertex_count": 237
+    },
+    {
+      "group": "Head",
+      "part": 0,
+      "atlas_tile": 3,
+      "vertex_start": 2074,
+      "vertex_count": 1080
+    },
+    {
+      "group": "Head",
+      "part": 1,
+      "atlas_tile": 2,
+      "vertex_start": 3154,
+      "vertex_count": 1080
+    },
+    {
+      "group": "Head",
+      "part": 2,
+      "atlas_tile": 3,
+      "vertex_start": 4234,
+      "vertex_count": 384
+    },
+    {
+      "group": "Head",
+      "part": 3,
+      "atlas_tile": 3,
+      "vertex_start": 4618,
+      "vertex_count": 370
+    },
+    {
+      "group": "Head",
+      "part": 4,
+      "atlas_tile": 4,
+      "vertex_start": 4988,
+      "vertex_count": 139
+    },
+    {
+      "group": "Head",
+      "part": 5,
+      "atlas_tile": 5,
+      "vertex_start": 5127,
+      "vertex_count": 49
+    },
+    {
+      "group": "Head",
+      "part": 6,
+      "atlas_tile": 5,
+      "vertex_start": 5176,
+      "vertex_count": 48
+    },
+    {
+      "group": "Head",
+      "part": 7,
+      "atlas_tile": 5,
+      "vertex_start": 5224,
+      "vertex_count": 48
+    },
+    {
+      "group": "Head",
+      "part": 8,
+      "atlas_tile": 4,
+      "vertex_start": 5272,
+      "vertex_count": 139
+    },
+    {
+      "group": "Head",
+      "part": 9,
+      "atlas_tile": 5,
+      "vertex_start": 5411,
+      "vertex_count": 48
+    },
+    {
+      "group": "Head",
+      "part": 10,
+      "atlas_tile": 5,
+      "vertex_start": 5459,
+      "vertex_count": 48
+    },
+    {
+      "group": "Head",
+      "part": 11,
+      "atlas_tile": 5,
+      "vertex_start": 5507,
+      "vertex_count": 49
+    },
+    {
+      "group": "Head",
+      "part": 12,
+      "atlas_tile": 6,
+      "vertex_start": 5556,
+      "vertex_count": 157
+    },
+    {
+      "group": "Head",
+      "part": 13,
+      "atlas_tile": 7,
+      "vertex_start": 5713,
+      "vertex_count": 180
+    },
+    {
+      "group": "Head",
+      "part": 14,
+      "atlas_tile": 3,
+      "vertex_start": 5893,
+      "vertex_count": 386
+    },
+    {
+      "group": "Head",
+      "part": 15,
+      "atlas_tile": 3,
+      "vertex_start": 6279,
+      "vertex_count": 374
+    },
+    {
+      "group": "Head",
+      "part": 16,
+      "atlas_tile": 3,
+      "vertex_start": 6653,
+      "vertex_count": 372
+    },
+    {
+      "group": "Head",
+      "part": 17,
+      "atlas_tile": 3,
+      "vertex_start": 7025,
+      "vertex_count": 472
+    },
+    {
+      "group": "Head",
+      "part": 18,
+      "atlas_tile": 8,
+      "vertex_start": 7497,
+      "vertex_count": 246
+    },
+    {
+      "group": "Head",
+      "part": 19,
+      "atlas_tile": 9,
+      "vertex_start": 7743,
+      "vertex_count": 114
+    },
+    {
+      "group": "Head",
+      "part": 20,
+      "atlas_tile": 9,
+      "vertex_start": 7857,
+      "vertex_count": 116
+    },
+    {
+      "group": "Head",
+      "part": 21,
+      "atlas_tile": 9,
+      "vertex_start": 7973,
+      "vertex_count": 114
+    },
+    {
+      "group": "Head",
+      "part": 22,
+      "atlas_tile": 9,
+      "vertex_start": 8087,
+      "vertex_count": 122
+    },
+    {
+      "group": "Head",
+      "part": 23,
+      "atlas_tile": 9,
+      "vertex_start": 8209,
+      "vertex_count": 114
+    },
+    {
+      "group": "Head",
+      "part": 24,
+      "atlas_tile": 10,
+      "vertex_start": 8323,
+      "vertex_count": 114
+    },
+    {
+      "group": "Ear_L",
+      "part": 0,
+      "atlas_tile": 2,
+      "vertex_start": 8437,
+      "vertex_count": 169
+    },
+    {
+      "group": "Ear_L",
+      "part": 1,
+      "atlas_tile": 11,
+      "vertex_start": 8606,
+      "vertex_count": 169
+    },
+    {
+      "group": "Ear_R",
+      "part": 0,
+      "atlas_tile": 2,
+      "vertex_start": 8775,
+      "vertex_count": 169
+    },
+    {
+      "group": "Ear_R",
+      "part": 1,
+      "atlas_tile": 11,
+      "vertex_start": 8944,
+      "vertex_count": 169
+    },
+    {
+      "group": "Eye_L",
+      "part": 0,
+      "atlas_tile": 12,
+      "vertex_start": 9113,
+      "vertex_count": 344
+    },
+    {
+      "group": "Eye_L",
+      "part": 1,
+      "atlas_tile": 7,
+      "vertex_start": 9457,
+      "vertex_count": 248
+    },
+    {
+      "group": "Eye_L",
+      "part": 2,
+      "atlas_tile": 13,
+      "vertex_start": 9705,
+      "vertex_count": 74
+    },
+    {
+      "group": "Eye_L",
+      "part": 3,
+      "atlas_tile": 13,
+      "vertex_start": 9779,
+      "vertex_count": 62
+    },
+    {
+      "group": "Eye_R",
+      "part": 0,
+      "atlas_tile": 12,
+      "vertex_start": 9841,
+      "vertex_count": 350
+    },
+    {
+      "group": "Eye_R",
+      "part": 1,
+      "atlas_tile": 7,
+      "vertex_start": 10191,
+      "vertex_count": 250
+    },
+    {
+      "group": "Eye_R",
+      "part": 2,
+      "atlas_tile": 13,
+      "vertex_start": 10441,
+      "vertex_count": 74
+    },
+    {
+      "group": "Eye_R",
+      "part": 3,
+      "atlas_tile": 13,
+      "vertex_start": 10515,
+      "vertex_count": 62
+    },
+    {
+      "group": "Arm_L",
+      "part": 0,
+      "atlas_tile": 1,
+      "vertex_start": 10577,
+      "vertex_count": 237
+    },
+    {
+      "group": "Arm_L",
+      "part": 1,
+      "atlas_tile": 2,
+      "vertex_start": 10814,
+      "vertex_count": 242
+    },
+    {
+      "group": "Arm_L",
+      "part": 2,
+      "atlas_tile": 6,
+      "vertex_start": 11056,
+      "vertex_count": 237
+    },
+    {
+      "group": "Foot_L",
+      "part": 0,
+      "atlas_tile": 2,
+      "vertex_start": 11293,
+      "vertex_count": 237
+    },
+    {
+      "group": "Foot_L",
+      "part": 1,
+      "atlas_tile": 0,
+      "vertex_start": 11530,
+      "vertex_count": 288
+    },
+    {
+      "group": "Foot_L",
+      "part": 2,
+      "atlas_tile": 10,
+      "vertex_start": 11818,
+      "vertex_count": 114
+    },
+    {
+      "group": "Wing_L",
+      "part": 0,
+      "atlas_tile": 14,
+      "vertex_start": 11932,
+      "vertex_count": 387
+    },
+    {
+      "group": "Wing_L",
+      "part": 1,
+      "atlas_tile": 15,
+      "vertex_start": 12319,
+      "vertex_count": 410
+    },
+    {
+      "group": "Wing_L",
+      "part": 2,
+      "atlas_tile": 16,
+      "vertex_start": 12729,
+      "vertex_count": 387
+    },
+    {
+      "group": "Wing_L",
+      "part": 3,
+      "atlas_tile": 14,
+      "vertex_start": 13116,
+      "vertex_count": 472
+    },
+    {
+      "group": "Wing_L",
+      "part": 4,
+      "atlas_tile": 16,
+      "vertex_start": 13588,
+      "vertex_count": 330
+    },
+    {
+      "group": "Arm_R",
+      "part": 0,
+      "atlas_tile": 1,
+      "vertex_start": 13918,
+      "vertex_count": 237
+    },
+    {
+      "group": "Arm_R",
+      "part": 1,
+      "atlas_tile": 2,
+      "vertex_start": 14155,
+      "vertex_count": 235
+    },
+    {
+      "group": "Arm_R",
+      "part": 2,
+      "atlas_tile": 6,
+      "vertex_start": 14390,
+      "vertex_count": 237
+    },
+    {
+      "group": "Foot_R",
+      "part": 0,
+      "atlas_tile": 2,
+      "vertex_start": 14627,
+      "vertex_count": 237
+    },
+    {
+      "group": "Foot_R",
+      "part": 1,
+      "atlas_tile": 0,
+      "vertex_start": 14864,
+      "vertex_count": 288
+    },
+    {
+      "group": "Foot_R",
+      "part": 2,
+      "atlas_tile": 10,
+      "vertex_start": 15152,
+      "vertex_count": 114
+    },
+    {
+      "group": "Wing_R",
+      "part": 0,
+      "atlas_tile": 14,
+      "vertex_start": 15266,
+      "vertex_count": 385
+    },
+    {
+      "group": "Wing_R",
+      "part": 1,
+      "atlas_tile": 15,
+      "vertex_start": 15651,
+      "vertex_count": 412
+    },
+    {
+      "group": "Wing_R",
+      "part": 2,
+      "atlas_tile": 16,
+      "vertex_start": 16063,
+      "vertex_count": 385
+    },
+    {
+      "group": "Wing_R",
+      "part": 3,
+      "atlas_tile": 14,
+      "vertex_start": 16448,
+      "vertex_count": 460
+    },
+    {
+      "group": "Wing_R",
+      "part": 4,
+      "atlas_tile": 16,
+      "vertex_start": 16908,
+      "vertex_count": 322
+    },
+    {
+      "group": "Wand",
+      "part": 0,
+      "atlas_tile": 10,
+      "vertex_start": 17230,
+      "vertex_count": 194
+    },
+    {
+      "group": "Wand",
+      "part": 1,
+      "atlas_tile": 10,
+      "vertex_start": 17424,
+      "vertex_count": 88
+    },
+    {
+      "group": "Wand",
+      "part": 2,
+      "atlas_tile": 17,
+      "vertex_start": 17512,
+      "vertex_count": 74
+    }
+  ]
+}

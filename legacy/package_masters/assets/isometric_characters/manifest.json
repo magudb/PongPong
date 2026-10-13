@@ -1,0 +1,889 @@
+{
+  "format_version": 1,
+  "rendering": "orthographic isometric, 36 degree camera elevation",
+  "number_of_directions": 8,
+  "directions": [
+    "S",
+    "SW",
+    "W",
+    "NW",
+    "N",
+    "NE",
+    "E",
+    "SE"
+  ],
+  "cell_size": [
+    256,
+    256
+  ],
+  "pivot": [
+    128,
+    200
+  ],
+  "animations_by_character": {
+    "bat": {
+      "idle": {
+        "frames": 4,
+        "fps": 5,
+        "loop": true,
+        "sheet": "idle.png"
+      },
+      "walk": {
+        "frames": 6,
+        "fps": 9,
+        "loop": true,
+        "sheet": "walk.png"
+      },
+      "run": {
+        "frames": 6,
+        "fps": 12,
+        "loop": true,
+        "sheet": "run.png"
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 10,
+        "loop": false,
+        "sheet": "jump.png"
+      },
+      "fall": {
+        "frames": 3,
+        "fps": 6,
+        "loop": true,
+        "sheet": "fall.png"
+      },
+      "land": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "land.png"
+      },
+      "celebrate": {
+        "frames": 6,
+        "fps": 9,
+        "loop": false,
+        "sheet": "celebrate.png"
+      },
+      "interact": {
+        "frames": 4,
+        "fps": 9,
+        "loop": false,
+        "sheet": "interact.png"
+      },
+      "hit": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "hit.png"
+      },
+      "sleep": {
+        "frames": 4,
+        "fps": 3,
+        "loop": true,
+        "sheet": "sleep.png"
+      },
+      "talk": {
+        "frames": 4,
+        "fps": 6,
+        "loop": true,
+        "sheet": "talk.png"
+      },
+      "takeoff": {
+        "frames": 4,
+        "fps": 10,
+        "loop": false,
+        "sheet": "takeoff.png"
+      },
+      "hover": {
+        "frames": 5,
+        "fps": 8,
+        "loop": true,
+        "sheet": "hover.png"
+      },
+      "fly": {
+        "frames": 6,
+        "fps": 12,
+        "loop": true,
+        "sheet": "fly.png"
+      },
+      "flight_land": {
+        "frames": 4,
+        "fps": 10,
+        "loop": false,
+        "sheet": "flight_land.png"
+      }
+    },
+    "cat": {
+      "idle": {
+        "frames": 4,
+        "fps": 5,
+        "loop": true,
+        "sheet": "idle.png"
+      },
+      "walk": {
+        "frames": 6,
+        "fps": 9,
+        "loop": true,
+        "sheet": "walk.png"
+      },
+      "run": {
+        "frames": 6,
+        "fps": 12,
+        "loop": true,
+        "sheet": "run.png"
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 10,
+        "loop": false,
+        "sheet": "jump.png"
+      },
+      "fall": {
+        "frames": 3,
+        "fps": 6,
+        "loop": true,
+        "sheet": "fall.png"
+      },
+      "land": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "land.png"
+      },
+      "celebrate": {
+        "frames": 6,
+        "fps": 9,
+        "loop": false,
+        "sheet": "celebrate.png"
+      },
+      "interact": {
+        "frames": 4,
+        "fps": 9,
+        "loop": false,
+        "sheet": "interact.png"
+      },
+      "hit": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "hit.png"
+      },
+      "sleep": {
+        "frames": 4,
+        "fps": 3,
+        "loop": true,
+        "sheet": "sleep.png"
+      },
+      "talk": {
+        "frames": 4,
+        "fps": 6,
+        "loop": true,
+        "sheet": "talk.png"
+      }
+    },
+    "bear": {
+      "idle": {
+        "frames": 4,
+        "fps": 5,
+        "loop": true,
+        "sheet": "idle.png"
+      },
+      "walk": {
+        "frames": 6,
+        "fps": 9,
+        "loop": true,
+        "sheet": "walk.png"
+      },
+      "run": {
+        "frames": 6,
+        "fps": 12,
+        "loop": true,
+        "sheet": "run.png"
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 10,
+        "loop": false,
+        "sheet": "jump.png"
+      },
+      "fall": {
+        "frames": 3,
+        "fps": 6,
+        "loop": true,
+        "sheet": "fall.png"
+      },
+      "land": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "land.png"
+      },
+      "celebrate": {
+        "frames": 6,
+        "fps": 9,
+        "loop": false,
+        "sheet": "celebrate.png"
+      },
+      "interact": {
+        "frames": 4,
+        "fps": 9,
+        "loop": false,
+        "sheet": "interact.png"
+      },
+      "hit": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "hit.png"
+      },
+      "sleep": {
+        "frames": 4,
+        "fps": 3,
+        "loop": true,
+        "sheet": "sleep.png"
+      },
+      "talk": {
+        "frames": 4,
+        "fps": 6,
+        "loop": true,
+        "sheet": "talk.png"
+      }
+    },
+    "rabbit": {
+      "idle": {
+        "frames": 4,
+        "fps": 5,
+        "loop": true,
+        "sheet": "idle.png"
+      },
+      "walk": {
+        "frames": 6,
+        "fps": 9,
+        "loop": true,
+        "sheet": "walk.png"
+      },
+      "run": {
+        "frames": 6,
+        "fps": 12,
+        "loop": true,
+        "sheet": "run.png"
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 10,
+        "loop": false,
+        "sheet": "jump.png"
+      },
+      "fall": {
+        "frames": 3,
+        "fps": 6,
+        "loop": true,
+        "sheet": "fall.png"
+      },
+      "land": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "land.png"
+      },
+      "celebrate": {
+        "frames": 6,
+        "fps": 9,
+        "loop": false,
+        "sheet": "celebrate.png"
+      },
+      "interact": {
+        "frames": 4,
+        "fps": 9,
+        "loop": false,
+        "sheet": "interact.png"
+      },
+      "hit": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "hit.png"
+      },
+      "sleep": {
+        "frames": 4,
+        "fps": 3,
+        "loop": true,
+        "sheet": "sleep.png"
+      },
+      "talk": {
+        "frames": 4,
+        "fps": 6,
+        "loop": true,
+        "sheet": "talk.png"
+      }
+    },
+    "fairy": {
+      "idle": {
+        "frames": 4,
+        "fps": 5,
+        "loop": true,
+        "sheet": "idle.png"
+      },
+      "walk": {
+        "frames": 6,
+        "fps": 9,
+        "loop": true,
+        "sheet": "walk.png"
+      },
+      "run": {
+        "frames": 6,
+        "fps": 12,
+        "loop": true,
+        "sheet": "run.png"
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 10,
+        "loop": false,
+        "sheet": "jump.png"
+      },
+      "fall": {
+        "frames": 3,
+        "fps": 6,
+        "loop": true,
+        "sheet": "fall.png"
+      },
+      "land": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "land.png"
+      },
+      "celebrate": {
+        "frames": 6,
+        "fps": 9,
+        "loop": false,
+        "sheet": "celebrate.png"
+      },
+      "interact": {
+        "frames": 4,
+        "fps": 9,
+        "loop": false,
+        "sheet": "interact.png"
+      },
+      "hit": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "hit.png"
+      },
+      "sleep": {
+        "frames": 4,
+        "fps": 3,
+        "loop": true,
+        "sheet": "sleep.png"
+      },
+      "talk": {
+        "frames": 4,
+        "fps": 6,
+        "loop": true,
+        "sheet": "talk.png"
+      },
+      "takeoff": {
+        "frames": 4,
+        "fps": 10,
+        "loop": false,
+        "sheet": "takeoff.png"
+      },
+      "hover": {
+        "frames": 5,
+        "fps": 8,
+        "loop": true,
+        "sheet": "hover.png"
+      },
+      "fly": {
+        "frames": 6,
+        "fps": 12,
+        "loop": true,
+        "sheet": "fly.png"
+      },
+      "flight_land": {
+        "frames": 4,
+        "fps": 10,
+        "loop": false,
+        "sheet": "flight_land.png"
+      }
+    },
+    "monkey": {
+      "idle": {
+        "frames": 4,
+        "fps": 5,
+        "loop": true,
+        "sheet": "idle.png"
+      },
+      "walk": {
+        "frames": 6,
+        "fps": 9,
+        "loop": true,
+        "sheet": "walk.png"
+      },
+      "run": {
+        "frames": 6,
+        "fps": 12,
+        "loop": true,
+        "sheet": "run.png"
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 10,
+        "loop": false,
+        "sheet": "jump.png"
+      },
+      "fall": {
+        "frames": 3,
+        "fps": 6,
+        "loop": true,
+        "sheet": "fall.png"
+      },
+      "land": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "land.png"
+      },
+      "celebrate": {
+        "frames": 6,
+        "fps": 9,
+        "loop": false,
+        "sheet": "celebrate.png"
+      },
+      "interact": {
+        "frames": 4,
+        "fps": 9,
+        "loop": false,
+        "sheet": "interact.png"
+      },
+      "hit": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "hit.png"
+      },
+      "sleep": {
+        "frames": 4,
+        "fps": 3,
+        "loop": true,
+        "sheet": "sleep.png"
+      },
+      "talk": {
+        "frames": 4,
+        "fps": 6,
+        "loop": true,
+        "sheet": "talk.png"
+      }
+    },
+    "capybara": {
+      "idle": {
+        "frames": 4,
+        "fps": 5,
+        "loop": true,
+        "sheet": "idle.png"
+      },
+      "walk": {
+        "frames": 6,
+        "fps": 9,
+        "loop": true,
+        "sheet": "walk.png"
+      },
+      "run": {
+        "frames": 6,
+        "fps": 12,
+        "loop": true,
+        "sheet": "run.png"
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 10,
+        "loop": false,
+        "sheet": "jump.png"
+      },
+      "fall": {
+        "frames": 3,
+        "fps": 6,
+        "loop": true,
+        "sheet": "fall.png"
+      },
+      "land": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "land.png"
+      },
+      "celebrate": {
+        "frames": 6,
+        "fps": 9,
+        "loop": false,
+        "sheet": "celebrate.png"
+      },
+      "interact": {
+        "frames": 4,
+        "fps": 9,
+        "loop": false,
+        "sheet": "interact.png"
+      },
+      "hit": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "hit.png"
+      },
+      "sleep": {
+        "frames": 4,
+        "fps": 3,
+        "loop": true,
+        "sheet": "sleep.png"
+      },
+      "talk": {
+        "frames": 4,
+        "fps": 6,
+        "loop": true,
+        "sheet": "talk.png"
+      }
+    },
+    "fox": {
+      "idle": {
+        "frames": 4,
+        "fps": 5,
+        "loop": true,
+        "sheet": "idle.png"
+      },
+      "walk": {
+        "frames": 6,
+        "fps": 9,
+        "loop": true,
+        "sheet": "walk.png"
+      },
+      "run": {
+        "frames": 6,
+        "fps": 12,
+        "loop": true,
+        "sheet": "run.png"
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 10,
+        "loop": false,
+        "sheet": "jump.png"
+      },
+      "fall": {
+        "frames": 3,
+        "fps": 6,
+        "loop": true,
+        "sheet": "fall.png"
+      },
+      "land": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "land.png"
+      },
+      "celebrate": {
+        "frames": 6,
+        "fps": 9,
+        "loop": false,
+        "sheet": "celebrate.png"
+      },
+      "interact": {
+        "frames": 4,
+        "fps": 9,
+        "loop": false,
+        "sheet": "interact.png"
+      },
+      "hit": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "hit.png"
+      },
+      "sleep": {
+        "frames": 4,
+        "fps": 3,
+        "loop": true,
+        "sheet": "sleep.png"
+      },
+      "talk": {
+        "frames": 4,
+        "fps": 6,
+        "loop": true,
+        "sheet": "talk.png"
+      }
+    },
+    "raccoon": {
+      "idle": {
+        "frames": 4,
+        "fps": 5,
+        "loop": true,
+        "sheet": "idle.png"
+      },
+      "walk": {
+        "frames": 6,
+        "fps": 9,
+        "loop": true,
+        "sheet": "walk.png"
+      },
+      "run": {
+        "frames": 6,
+        "fps": 12,
+        "loop": true,
+        "sheet": "run.png"
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 10,
+        "loop": false,
+        "sheet": "jump.png"
+      },
+      "fall": {
+        "frames": 3,
+        "fps": 6,
+        "loop": true,
+        "sheet": "fall.png"
+      },
+      "land": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "land.png"
+      },
+      "celebrate": {
+        "frames": 6,
+        "fps": 9,
+        "loop": false,
+        "sheet": "celebrate.png"
+      },
+      "interact": {
+        "frames": 4,
+        "fps": 9,
+        "loop": false,
+        "sheet": "interact.png"
+      },
+      "hit": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "hit.png"
+      },
+      "sleep": {
+        "frames": 4,
+        "fps": 3,
+        "loop": true,
+        "sheet": "sleep.png"
+      },
+      "talk": {
+        "frames": 4,
+        "fps": 6,
+        "loop": true,
+        "sheet": "talk.png"
+      }
+    },
+    "penguin": {
+      "idle": {
+        "frames": 4,
+        "fps": 5,
+        "loop": true,
+        "sheet": "idle.png"
+      },
+      "walk": {
+        "frames": 6,
+        "fps": 9,
+        "loop": true,
+        "sheet": "walk.png"
+      },
+      "run": {
+        "frames": 6,
+        "fps": 12,
+        "loop": true,
+        "sheet": "run.png"
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 10,
+        "loop": false,
+        "sheet": "jump.png"
+      },
+      "fall": {
+        "frames": 3,
+        "fps": 6,
+        "loop": true,
+        "sheet": "fall.png"
+      },
+      "land": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "land.png"
+      },
+      "celebrate": {
+        "frames": 6,
+        "fps": 9,
+        "loop": false,
+        "sheet": "celebrate.png"
+      },
+      "interact": {
+        "frames": 4,
+        "fps": 9,
+        "loop": false,
+        "sheet": "interact.png"
+      },
+      "hit": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "hit.png"
+      },
+      "sleep": {
+        "frames": 4,
+        "fps": 3,
+        "loop": true,
+        "sheet": "sleep.png"
+      },
+      "talk": {
+        "frames": 4,
+        "fps": 6,
+        "loop": true,
+        "sheet": "talk.png"
+      }
+    },
+    "hedgehog": {
+      "idle": {
+        "frames": 4,
+        "fps": 5,
+        "loop": true,
+        "sheet": "idle.png"
+      },
+      "walk": {
+        "frames": 6,
+        "fps": 9,
+        "loop": true,
+        "sheet": "walk.png"
+      },
+      "run": {
+        "frames": 6,
+        "fps": 12,
+        "loop": true,
+        "sheet": "run.png"
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 10,
+        "loop": false,
+        "sheet": "jump.png"
+      },
+      "fall": {
+        "frames": 3,
+        "fps": 6,
+        "loop": true,
+        "sheet": "fall.png"
+      },
+      "land": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "land.png"
+      },
+      "celebrate": {
+        "frames": 6,
+        "fps": 9,
+        "loop": false,
+        "sheet": "celebrate.png"
+      },
+      "interact": {
+        "frames": 4,
+        "fps": 9,
+        "loop": false,
+        "sheet": "interact.png"
+      },
+      "hit": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "hit.png"
+      },
+      "sleep": {
+        "frames": 4,
+        "fps": 3,
+        "loop": true,
+        "sheet": "sleep.png"
+      },
+      "talk": {
+        "frames": 4,
+        "fps": 6,
+        "loop": true,
+        "sheet": "talk.png"
+      }
+    },
+    "frog": {
+      "idle": {
+        "frames": 4,
+        "fps": 5,
+        "loop": true,
+        "sheet": "idle.png"
+      },
+      "walk": {
+        "frames": 6,
+        "fps": 9,
+        "loop": true,
+        "sheet": "walk.png"
+      },
+      "run": {
+        "frames": 6,
+        "fps": 12,
+        "loop": true,
+        "sheet": "run.png"
+      },
+      "jump": {
+        "frames": 4,
+        "fps": 10,
+        "loop": false,
+        "sheet": "jump.png"
+      },
+      "fall": {
+        "frames": 3,
+        "fps": 6,
+        "loop": true,
+        "sheet": "fall.png"
+      },
+      "land": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "land.png"
+      },
+      "celebrate": {
+        "frames": 6,
+        "fps": 9,
+        "loop": false,
+        "sheet": "celebrate.png"
+      },
+      "interact": {
+        "frames": 4,
+        "fps": 9,
+        "loop": false,
+        "sheet": "interact.png"
+      },
+      "hit": {
+        "frames": 3,
+        "fps": 11,
+        "loop": false,
+        "sheet": "hit.png"
+      },
+      "sleep": {
+        "frames": 4,
+        "fps": 3,
+        "loop": true,
+        "sheet": "sleep.png"
+      },
+      "talk": {
+        "frames": 4,
+        "fps": 6,
+        "loop": true,
+        "sheet": "talk.png"
+      }
+    }
+  }
+}

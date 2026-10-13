@@ -1,0 +1,326 @@
+{
+  "bones": [
+    {
+      "name": "Root",
+      "parent": null,
+      "rest_position": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "Hips",
+      "parent": "Root",
+      "rest_position": [
+        0.0,
+        0.44056009926591855,
+        0.0
+      ]
+    },
+    {
+      "name": "Spine",
+      "parent": "Hips",
+      "rest_position": [
+        0.0,
+        0.6814914035519678,
+        0.0
+      ]
+    },
+    {
+      "name": "Head",
+      "parent": "Spine",
+      "rest_position": [
+        0.0,
+        0.922422707838017,
+        0.0
+      ]
+    },
+    {
+      "name": "Ear_L",
+      "parent": "Head",
+      "rest_position": [
+        -0.23404755273501926,
+        1.4249365710632051,
+        0.0
+      ]
+    },
+    {
+      "name": "Ear_L_Tip",
+      "parent": "Ear_L",
+      "rest_position": [
+        -0.36366549834353334,
+        1.7255426622357257,
+        0.002759086922470683
+      ]
+    },
+    {
+      "name": "Ear_R",
+      "parent": "Head",
+      "rest_position": [
+        0.23404755273501926,
+        1.4249365710632051,
+        0.0
+      ]
+    },
+    {
+      "name": "Ear_R_Tip",
+      "parent": "Ear_R",
+      "rest_position": [
+        0.34041028161411546,
+        1.739974628425282,
+        -0.010105715334972279
+      ]
+    },
+    {
+      "name": "Eye_L",
+      "parent": "Head",
+      "rest_position": [
+        -0.1535076595879685,
+        1.2445822804262199,
+        0.2544640997957259
+      ]
+    },
+    {
+      "name": "Eye_R",
+      "parent": "Head",
+      "rest_position": [
+        0.1535076595879685,
+        1.220489149997615,
+        0.2592316204796771
+      ]
+    },
+    {
+      "name": "UpperArm_L",
+      "parent": "Spine",
+      "rest_position": [
+        -0.18104266579208841,
+        0.7916314283684474,
+        0.14800065834714451
+      ]
+    },
+    {
+      "name": "Forearm_L",
+      "parent": "UpperArm_L",
+      "rest_position": [
+        -0.1893031676533244,
+        0.6608401488988778,
+        0.17553566455126443
+      ]
+    },
+    {
+      "name": "Hand_L",
+      "parent": "Forearm_L",
+      "rest_position": [
+        -0.19825204466966337,
+        0.5472582483068832,
+        0.19962879497986932
+      ]
+    },
+    {
+      "name": "UpperArm_R",
+      "parent": "Spine",
+      "rest_position": [
+        0.18104266579208841,
+        0.7916314283684474,
+        0.14800065834714451
+      ]
+    },
+    {
+      "name": "Forearm_R",
+      "parent": "UpperArm_R",
+      "rest_position": [
+        0.1893031676533244,
+        0.6608401488988778,
+        0.17553566455126443
+      ]
+    },
+    {
+      "name": "Hand_R",
+      "parent": "Forearm_R",
+      "rest_position": [
+        0.19825204466966337,
+        0.5472582483068832,
+        0.19962879497986932
+      ]
+    },
+    {
+      "name": "Thigh_Foot_L",
+      "parent": "Hips",
+      "rest_position": [
+        -0.1521309092777625,
+        0.4199088446128286,
+        0.02065125465308993
+      ]
+    },
+    {
+      "name": "Shin_Foot_L",
+      "parent": "Thigh_Foot_L",
+      "rest_position": [
+        -0.1521309092777625,
+        0.2684663104901691,
+        0.02065125465308993
+      ]
+    },
+    {
+      "name": "Foot_L",
+      "parent": "Shin_Foot_L",
+      "rest_position": [
+        -0.1521309092777625,
+        0.11702377636750963,
+        0.02065125465308993
+      ]
+    },
+    {
+      "name": "Thigh_Foot_R",
+      "parent": "Hips",
+      "rest_position": [
+        0.1521309092777625,
+        0.4199088446128286,
+        0.02065125465308993
+      ]
+    },
+    {
+      "name": "Shin_Foot_R",
+      "parent": "Thigh_Foot_R",
+      "rest_position": [
+        0.1521309092777625,
+        0.2684663104901691,
+        0.02065125465308993
+      ]
+    },
+    {
+      "name": "Foot_R",
+      "parent": "Shin_Foot_R",
+      "rest_position": [
+        0.1521309092777625,
+        0.11702377636750963,
+        0.02065125465308993
+      ]
+    },
+    {
+      "name": "Tail_00",
+      "parent": "Hips",
+      "rest_position": [
+        0.2409313042860492,
+        0.31665257134737895,
+        -0.11702377636750963
+      ]
+    },
+    {
+      "name": "Tail_01",
+      "parent": "Tail_00",
+      "rest_position": [
+        0.26158255893913923,
+        0.32439679184228765,
+        -0.13251221735732702
+      ]
+    },
+    {
+      "name": "Tail_02",
+      "parent": "Tail_01",
+      "rest_position": [
+        0.28223381359222927,
+        0.33214101233719634,
+        -0.1480006583471444
+      ]
+    },
+    {
+      "name": "Tail_03",
+      "parent": "Tail_02",
+      "rest_position": [
+        0.3028850682453193,
+        0.33988523283210503,
+        -0.16348909933696182
+      ]
+    },
+    {
+      "name": "Tail_04",
+      "parent": "Tail_03",
+      "rest_position": [
+        0.32353632289840933,
+        0.3476294533270137,
+        -0.17897754032677923
+      ]
+    }
+  ],
+  "stats": {
+    "name": "rabbit",
+    "file": "rabbit.glb",
+    "vertices": 8715,
+    "triangles": 15492,
+    "bones": 27,
+    "deforming_vertices": 2166,
+    "texture_size": 1024,
+    "materials": 1,
+    "animations": [
+      {
+        "name": "idle",
+        "duration": 3.2,
+        "loop": true
+      },
+      {
+        "name": "walk",
+        "duration": 0.9,
+        "loop": true
+      },
+      {
+        "name": "run",
+        "duration": 0.58,
+        "loop": true
+      },
+      {
+        "name": "jump",
+        "duration": 0.36,
+        "loop": false
+      },
+      {
+        "name": "fall",
+        "duration": 0.9,
+        "loop": true
+      },
+      {
+        "name": "land",
+        "duration": 0.28,
+        "loop": false
+      },
+      {
+        "name": "celebrate",
+        "duration": 1.8,
+        "loop": false
+      },
+      {
+        "name": "talk",
+        "duration": 2.4,
+        "loop": true
+      },
+      {
+        "name": "interact",
+        "duration": 0.9,
+        "loop": false
+      },
+      {
+        "name": "hit",
+        "duration": 0.4,
+        "loop": false
+      },
+      {
+        "name": "sleep",
+        "duration": 3.6,
+        "loop": true
+      }
+    ],
+    "bounds_min": [
+      -0.6639675318691057,
+      0.0,
+      -0.28085706328202303
+    ],
+    "bounds_max": [
+      0.4719698247835986,
+      1.9499999999999997,
+      0.36410206732698935
+    ],
+    "scale_from_source": 0.6883751551029977,
+    "flyer": false
+  }
+}

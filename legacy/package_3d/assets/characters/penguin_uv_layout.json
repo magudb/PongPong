@@ -1,0 +1,344 @@
+{
+  "size": 1024,
+  "tiles": {
+    "0": {
+      "color_srgb": "#647084",
+      "pattern": "fur",
+      "pixel_box": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "padding": 6
+    },
+    "1": {
+      "color_srgb": "#FFF4DC",
+      "pattern": "fur",
+      "pixel_box": [
+        256,
+        0,
+        512,
+        256
+      ],
+      "padding": 6
+    },
+    "2": {
+      "color_srgb": "#EFBA76",
+      "pattern": "fur",
+      "pixel_box": [
+        512,
+        0,
+        768,
+        256
+      ],
+      "padding": 6
+    },
+    "3": {
+      "color_srgb": "#E6B086",
+      "pattern": "fur",
+      "pixel_box": [
+        768,
+        0,
+        1024,
+        256
+      ],
+      "padding": 6
+    },
+    "4": {
+      "color_srgb": "#E8A0A3",
+      "pattern": "blush",
+      "pixel_box": [
+        0,
+        256,
+        256,
+        512
+      ],
+      "padding": 6
+    },
+    "5": {
+      "color_srgb": "#A86270",
+      "pattern": "clean",
+      "pixel_box": [
+        256,
+        256,
+        512,
+        512
+      ],
+      "padding": 6
+    },
+    "6": {
+      "color_srgb": "#FFF9EB",
+      "pattern": "porcelain",
+      "pixel_box": [
+        512,
+        256,
+        768,
+        512
+      ],
+      "padding": 6
+    },
+    "7": {
+      "color_srgb": "#4E353C",
+      "pattern": "clean",
+      "pixel_box": [
+        768,
+        256,
+        1024,
+        512
+      ],
+      "padding": 6
+    },
+    "8": {
+      "color_srgb": "#FFFFFF",
+      "pattern": "clean",
+      "pixel_box": [
+        0,
+        512,
+        256,
+        768
+      ],
+      "padding": 6
+    }
+  },
+  "parts": [
+    {
+      "group": "Body",
+      "part": 0,
+      "atlas_tile": 0,
+      "vertex_start": 0,
+      "vertex_count": 800
+    },
+    {
+      "group": "Body",
+      "part": 1,
+      "atlas_tile": 1,
+      "vertex_start": 800,
+      "vertex_count": 366
+    },
+    {
+      "group": "Head",
+      "part": 0,
+      "atlas_tile": 0,
+      "vertex_start": 1166,
+      "vertex_count": 1080
+    },
+    {
+      "group": "Head",
+      "part": 1,
+      "atlas_tile": 1,
+      "vertex_start": 2246,
+      "vertex_count": 472
+    },
+    {
+      "group": "Head",
+      "part": 2,
+      "atlas_tile": 1,
+      "vertex_start": 2718,
+      "vertex_count": 472
+    },
+    {
+      "group": "Head",
+      "part": 3,
+      "atlas_tile": 2,
+      "vertex_start": 3190,
+      "vertex_count": 314
+    },
+    {
+      "group": "Head",
+      "part": 4,
+      "atlas_tile": 3,
+      "vertex_start": 3504,
+      "vertex_count": 216
+    },
+    {
+      "group": "Head",
+      "part": 5,
+      "atlas_tile": 4,
+      "vertex_start": 3720,
+      "vertex_count": 139
+    },
+    {
+      "group": "Head",
+      "part": 6,
+      "atlas_tile": 5,
+      "vertex_start": 3859,
+      "vertex_count": 48
+    },
+    {
+      "group": "Head",
+      "part": 7,
+      "atlas_tile": 5,
+      "vertex_start": 3907,
+      "vertex_count": 48
+    },
+    {
+      "group": "Head",
+      "part": 8,
+      "atlas_tile": 5,
+      "vertex_start": 3955,
+      "vertex_count": 48
+    },
+    {
+      "group": "Head",
+      "part": 9,
+      "atlas_tile": 4,
+      "vertex_start": 4003,
+      "vertex_count": 139
+    },
+    {
+      "group": "Head",
+      "part": 10,
+      "atlas_tile": 5,
+      "vertex_start": 4142,
+      "vertex_count": 49
+    },
+    {
+      "group": "Head",
+      "part": 11,
+      "atlas_tile": 5,
+      "vertex_start": 4191,
+      "vertex_count": 48
+    },
+    {
+      "group": "Head",
+      "part": 12,
+      "atlas_tile": 5,
+      "vertex_start": 4239,
+      "vertex_count": 48
+    },
+    {
+      "group": "Eye_L",
+      "part": 0,
+      "atlas_tile": 6,
+      "vertex_start": 4287,
+      "vertex_count": 344
+    },
+    {
+      "group": "Eye_L",
+      "part": 1,
+      "atlas_tile": 7,
+      "vertex_start": 4631,
+      "vertex_count": 248
+    },
+    {
+      "group": "Eye_L",
+      "part": 2,
+      "atlas_tile": 8,
+      "vertex_start": 4879,
+      "vertex_count": 74
+    },
+    {
+      "group": "Eye_L",
+      "part": 3,
+      "atlas_tile": 8,
+      "vertex_start": 4953,
+      "vertex_count": 62
+    },
+    {
+      "group": "Eye_R",
+      "part": 0,
+      "atlas_tile": 6,
+      "vertex_start": 5015,
+      "vertex_count": 350
+    },
+    {
+      "group": "Eye_R",
+      "part": 1,
+      "atlas_tile": 7,
+      "vertex_start": 5365,
+      "vertex_count": 250
+    },
+    {
+      "group": "Eye_R",
+      "part": 2,
+      "atlas_tile": 8,
+      "vertex_start": 5615,
+      "vertex_count": 74
+    },
+    {
+      "group": "Eye_R",
+      "part": 3,
+      "atlas_tile": 8,
+      "vertex_start": 5689,
+      "vertex_count": 62
+    },
+    {
+      "group": "Arm_L",
+      "part": 0,
+      "atlas_tile": 0,
+      "vertex_start": 5751,
+      "vertex_count": 366
+    },
+    {
+      "group": "Foot_L",
+      "part": 0,
+      "atlas_tile": 2,
+      "vertex_start": 6117,
+      "vertex_count": 266
+    },
+    {
+      "group": "Foot_L",
+      "part": 1,
+      "atlas_tile": 2,
+      "vertex_start": 6383,
+      "vertex_count": 114
+    },
+    {
+      "group": "Foot_L",
+      "part": 2,
+      "atlas_tile": 2,
+      "vertex_start": 6497,
+      "vertex_count": 114
+    },
+    {
+      "group": "Foot_L",
+      "part": 3,
+      "atlas_tile": 2,
+      "vertex_start": 6611,
+      "vertex_count": 114
+    },
+    {
+      "group": "Arm_R",
+      "part": 0,
+      "atlas_tile": 0,
+      "vertex_start": 6725,
+      "vertex_count": 380
+    },
+    {
+      "group": "Foot_R",
+      "part": 0,
+      "atlas_tile": 2,
+      "vertex_start": 7105,
+      "vertex_count": 266
+    },
+    {
+      "group": "Foot_R",
+      "part": 1,
+      "atlas_tile": 2,
+      "vertex_start": 7371,
+      "vertex_count": 114
+    },
+    {
+      "group": "Foot_R",
+      "part": 2,
+      "atlas_tile": 2,
+      "vertex_start": 7485,
+      "vertex_count": 114
+    },
+    {
+      "group": "Foot_R",
+      "part": 3,
+      "atlas_tile": 2,
+      "vertex_start": 7599,
+      "vertex_count": 114
+    },
+    {
+      "group": "Tail",
+      "part": 0,
+      "atlas_tile": 0,
+      "vertex_start": 7713,
+      "vertex_count": 288
+    }
+  ]
+}

@@ -1,0 +1,281 @@
+{
+  "bones": [
+    {
+      "name": "Root",
+      "parent": null,
+      "rest_position": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "Hips",
+      "parent": "Root",
+      "rest_position": [
+        0.0,
+        0.551146705850738,
+        0.0
+      ]
+    },
+    {
+      "name": "Spine",
+      "parent": "Hips",
+      "rest_position": [
+        0.0,
+        0.8008850569393536,
+        0.0
+      ]
+    },
+    {
+      "name": "Head",
+      "parent": "Spine",
+      "rest_position": [
+        0.0,
+        1.059235075306887,
+        0.0
+      ]
+    },
+    {
+      "name": "Ear_L",
+      "parent": "Head",
+      "rest_position": [
+        -0.353078358435629,
+        1.7051101212257207,
+        -0.025835001836753343
+      ]
+    },
+    {
+      "name": "Ear_L_Tip",
+      "parent": "Ear_L",
+      "rest_position": [
+        -0.36341235917033043,
+        1.8015263480804844,
+        -0.02325150165307801
+      ]
+    },
+    {
+      "name": "Ear_R",
+      "parent": "Head",
+      "rest_position": [
+        0.353078358435629,
+        1.7051101212257207,
+        -0.025835001836753343
+      ]
+    },
+    {
+      "name": "Ear_R_Tip",
+      "parent": "Ear_R",
+      "rest_position": [
+        0.36341235917033043,
+        1.8015263480804844,
+        -0.02325150165307801
+      ]
+    },
+    {
+      "name": "Eye_L",
+      "parent": "Head",
+      "rest_position": [
+        -0.19117901359197476,
+        1.4458989361302956,
+        0.3439541744803996
+      ]
+    },
+    {
+      "name": "Eye_R",
+      "parent": "Head",
+      "rest_position": [
+        0.19117901359197476,
+        1.4269532681166766,
+        0.3475638929345455
+      ]
+    },
+    {
+      "name": "UpperArm_L",
+      "parent": "Spine",
+      "rest_position": [
+        -0.24284901726548141,
+        0.9645067352387915,
+        0.1851508464967323
+      ]
+    },
+    {
+      "name": "Forearm_L",
+      "parent": "UpperArm_L",
+      "rest_position": [
+        -0.2531830180001828,
+        0.8008850569393536,
+        0.21959751561240343
+      ]
+    },
+    {
+      "name": "Hand_L",
+      "parent": "Forearm_L",
+      "rest_position": [
+        -0.2643781854627759,
+        0.6587925468372102,
+        0.24973835108861564
+      ]
+    },
+    {
+      "name": "UpperArm_R",
+      "parent": "Spine",
+      "rest_position": [
+        0.24284901726548141,
+        0.9645067352387915,
+        0.1851508464967323
+      ]
+    },
+    {
+      "name": "Forearm_R",
+      "parent": "UpperArm_R",
+      "rest_position": [
+        0.2531830180001828,
+        0.8008850569393536,
+        0.21959751561240343
+      ]
+    },
+    {
+      "name": "Hand_R",
+      "parent": "Forearm_R",
+      "rest_position": [
+        0.2643781854627759,
+        0.6587925468372102,
+        0.24973835108861564
+      ]
+    },
+    {
+      "name": "Thigh_Foot_L",
+      "parent": "Hips",
+      "rest_position": [
+        -0.19806834741510898,
+        0.5253117040139846,
+        0.025835001836753343
+      ]
+    },
+    {
+      "name": "Shin_Foot_L",
+      "parent": "Thigh_Foot_L",
+      "rest_position": [
+        -0.19806834741510898,
+        0.3358550238777935,
+        0.025835001836753343
+      ]
+    },
+    {
+      "name": "Foot_L",
+      "parent": "Shin_Foot_L",
+      "rest_position": [
+        -0.19806834741510898,
+        0.1463983437416023,
+        0.025835001836753343
+      ]
+    },
+    {
+      "name": "Thigh_Foot_R",
+      "parent": "Hips",
+      "rest_position": [
+        0.19806834741510898,
+        0.5253117040139846,
+        0.025835001836753343
+      ]
+    },
+    {
+      "name": "Shin_Foot_R",
+      "parent": "Thigh_Foot_R",
+      "rest_position": [
+        0.19806834741510898,
+        0.3358550238777935,
+        0.025835001836753343
+      ]
+    },
+    {
+      "name": "Foot_R",
+      "parent": "Shin_Foot_R",
+      "rest_position": [
+        0.19806834741510898,
+        0.1463983437416023,
+        0.025835001836753343
+      ]
+    }
+  ],
+  "stats": {
+    "name": "hedgehog",
+    "file": "hedgehog.glb",
+    "vertices": 11177,
+    "triangles": 19650,
+    "bones": 22,
+    "deforming_vertices": 1509,
+    "texture_size": 1024,
+    "materials": 1,
+    "animations": [
+      {
+        "name": "idle",
+        "duration": 3.2,
+        "loop": true
+      },
+      {
+        "name": "walk",
+        "duration": 0.9,
+        "loop": true
+      },
+      {
+        "name": "run",
+        "duration": 0.58,
+        "loop": true
+      },
+      {
+        "name": "jump",
+        "duration": 0.36,
+        "loop": false
+      },
+      {
+        "name": "fall",
+        "duration": 0.9,
+        "loop": true
+      },
+      {
+        "name": "land",
+        "duration": 0.28,
+        "loop": false
+      },
+      {
+        "name": "celebrate",
+        "duration": 1.8,
+        "loop": false
+      },
+      {
+        "name": "talk",
+        "duration": 2.4,
+        "loop": true
+      },
+      {
+        "name": "interact",
+        "duration": 0.9,
+        "loop": false
+      },
+      {
+        "name": "hit",
+        "duration": 0.4,
+        "loop": false
+      },
+      {
+        "name": "sleep",
+        "duration": 3.6,
+        "loop": true
+      }
+    ],
+    "bounds_min": [
+      -0.6241688491279369,
+      0.0,
+      -0.5796698413363656
+    ],
+    "bounds_max": [
+      0.5994358447632524,
+      1.95,
+      0.5232865027927671
+    ],
+    "scale_from_source": 0.8611667278917782,
+    "flyer": false
+  }
+}

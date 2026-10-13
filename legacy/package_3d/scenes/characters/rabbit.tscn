@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/characters/chibi_visual.gd" id="1"]
+[ext_resource type="PackedScene" path="res://assets/characters/rabbit.glb" id="2"]
+
+[node name="Rabbit" type="Node3D"]
+rotation = Vector3(0, 3.14159265, 0)
+script = ExtResource("1")
+character_id = &"rabbit"
+
+[node name="Asset" parent="." instance=ExtResource("2")]

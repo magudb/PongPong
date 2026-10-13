@@ -1,0 +1,5 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="PackedScene" path="res://scenes/characters/fairy.tscn" id="1"]
+[ext_resource type="Texture2D" path="res://assets/characters/fairy_stardust_basecolor.png" id="2"]
+[node name="Fairy_stardust" instance=ExtResource("1")]
+base_color_texture = ExtResource("2")

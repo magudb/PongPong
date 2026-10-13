@@ -1,0 +1,4 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="PackedScene" path="res://scenes/characters/rabbit.tscn" id="1"]
+[node name="Rabbit" instance=ExtResource("1")]
+scale = Vector3(0.48, 0.48, 0.48)

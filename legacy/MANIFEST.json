@@ -1,0 +1,3805 @@
+{
+ "source": "/Users/magnusudbjorg/Downloads/PongPong",
+ "files": [
+  {
+   "path": ".gitignore",
+   "size": 257,
+   "sha": "4d441bb3f23f392c822f589b023b3dd76f533b51",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "README.md",
+   "size": 7642,
+   "sha": "6f6575599c8803f036da9212cdf9bbe3a7535ed3",
+   "class": "D",
+   "dest": "legacy/package_3d/README.md",
+   "note": "archived"
+  },
+  {
+   "path": "icon.svg",
+   "size": 1010,
+   "sha": "a738ec577e000247ed505fc412bb69ae942e35cc",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at icon.svg"
+  },
+  {
+   "path": "icon.svg.import",
+   "size": 1013,
+   "sha": "21aa8dd8a33f629edaad9549f3fa70ad773a6781",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at icon.svg.import"
+  },
+  {
+   "path": "project.godot",
+   "size": 8857,
+   "sha": "e524cbe67470c5915cc0f64a772e573b932253c9",
+   "class": "D",
+   "dest": "legacy/package_3d/project.godot.original",
+   "note": "archived"
+  },
+  {
+   "path": "assets/audio/music/.gitkeep",
+   "size": 0,
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "class": "S",
+   "dest": null,
+   "note": "empty placeholder / OS file"
+  },
+  {
+   "path": "assets/audio/sfx/.gitkeep",
+   "size": 0,
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "class": "S",
+   "dest": null,
+   "note": "empty placeholder / OS file"
+  },
+  {
+   "path": "assets/audio/voice/.gitkeep",
+   "size": 0,
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "class": "S",
+   "dest": null,
+   "note": "empty placeholder / OS file"
+  },
+  {
+   "path": "assets/characters/bat.glb",
+   "size": 1429848,
+   "sha": "6cd59fbff0b37336a60f28cca6ed76abbe251d3f",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/bat.glb",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/bat_basecolor.png",
+   "size": 561721,
+   "sha": "2601e15f3b11a71d308dfe03945b80d11cc8c4c9",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/bat_basecolor.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/bat_orm.png",
+   "size": 4585,
+   "sha": "4957fd7ec95f8e0f23795a68b0ff358381ac20ba",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/bat_orm.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/bat_rig.json",
+   "size": 5805,
+   "sha": "c810ca5956173cebc175f856487e1f752908dce4",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/bat_rig.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/bat_uv_layout.json",
+   "size": 7507,
+   "sha": "fb3505f175fd4f083533204bb2f623ff992e4932",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/bat_uv_layout.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/bear.glb",
+   "size": 1257488,
+   "sha": "7cf843a3f333edbfc7c4fd2301af2148effb1076",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/bear.glb",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/bear_basecolor.png",
+   "size": 404730,
+   "sha": "2de9dfa870dd0684d736c9fca9aa6c91f8e4f52e",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/bear_basecolor.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/bear_orm.png",
+   "size": 4577,
+   "sha": "2dc9ed4877788439937dabe1fa5a72f80a0e0048",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/bear_orm.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/bear_rig.json",
+   "size": 6277,
+   "sha": "7f7e3946ca18598ab555d0878666c858be4bdd75",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/bear_rig.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/bear_uv_layout.json",
+   "size": 6304,
+   "sha": "222eccba222f9da396ae21738773ebaa2d7ad4ab",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/bear_uv_layout.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/capybara.glb",
+   "size": 1268412,
+   "sha": "defc8a220300e7877605fc4e0244a6deebee9b67",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/capybara.glb",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/capybara_basecolor.png",
+   "size": 405086,
+   "sha": "60746d7bd70a890f4f1480a5dcef760213e81e74",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/capybara_basecolor.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/capybara_orm.png",
+   "size": 4578,
+   "sha": "21a298a50b50671c95e759013cc06e9d30374c9a",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/capybara_orm.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/capybara_rig.json",
+   "size": 5440,
+   "sha": "c8d587b67fa0412cc41aa7e40fd2bda5246953d6",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/capybara_rig.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/capybara_uv_layout.json",
+   "size": 7960,
+   "sha": "50c8232b02659b6b16b92359b43f91195072b3fd",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/capybara_uv_layout.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/cat.glb",
+   "size": 1323988,
+   "sha": "dfb5981b2800d29f361b622cc8c3436c4c4a9870",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/cat.glb",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/cat_basecolor.png",
+   "size": 512343,
+   "sha": "72fb79b63324a9d38e18193aaba22fcef28f9c53",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/cat_basecolor.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/cat_orm.png",
+   "size": 4583,
+   "sha": "c5ce1bd6e42c1c20841248506ef235194e7d49b4",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/cat_orm.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/cat_rig.json",
+   "size": 6236,
+   "sha": "ac9c6a5dcdc8f5be65c3ebe9c7d46315c471e612",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/cat_rig.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/cat_uv_layout.json",
+   "size": 6654,
+   "sha": "21de0f460a208db013845c343230584e158b49d8",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/cat_uv_layout.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/fairy.glb",
+   "size": 2656160,
+   "sha": "7841f5917e3b4f78220f669b475a4a1c6381ccec",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/fairy.glb",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/fairy_basecolor.png",
+   "size": 1041619,
+   "sha": "5e6feb407c48621959e7a082004135c94e29417c",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/fairy_basecolor.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/fairy_dusk_basecolor.png",
+   "size": 1033410,
+   "sha": "30b38224c04b5cfeca10b106b8d8c7a8e2dfecfb",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/fairy_dusk_basecolor.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/fairy_orm.png",
+   "size": 16951,
+   "sha": "57495f41a4240bb19d379878b8e781bd7ce2048e",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/fairy_orm.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/fairy_rig.json",
+   "size": 7004,
+   "sha": "6efeca4edfe29400e9e3c4319838ff6affdbf439",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/fairy_rig.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/fairy_stardust_basecolor.png",
+   "size": 1053303,
+   "sha": "349b1ac570334b079cfb163140212e77575f824c",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/fairy_stardust_basecolor.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/fairy_uv_layout.json",
+   "size": 12659,
+   "sha": "8f425f5a0c28403b2dfd80cc24ce3ae8d5ce6983",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/fairy_uv_layout.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/fox.glb",
+   "size": 1416416,
+   "sha": "efb44a75455a09c52a425c127d49003fd1425803",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/fox.glb",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/fox_basecolor.png",
+   "size": 517658,
+   "sha": "d17d58d9cc54703d627a4367c5a7ed8c99c8ad3c",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/fox_basecolor.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/fox_orm.png",
+   "size": 4581,
+   "sha": "01a03f9ee61e146c642f76ae82260c623aba1d39",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/fox_orm.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/fox_rig.json",
+   "size": 6283,
+   "sha": "95b0179688fecc09fb9df17830b014b9ff546c7e",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/fox_rig.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/fox_uv_layout.json",
+   "size": 6791,
+   "sha": "1b474c557c8219453f6ca4e39763b20fd8a588ca",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/fox_uv_layout.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/frog.glb",
+   "size": 1165700,
+   "sha": "65c18f9768d7b34535d52b8542322f75c18771d1",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/frog.glb",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/frog_basecolor.png",
+   "size": 407985,
+   "sha": "286b1787850127ccd3f519f1fabed629f4425428",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/frog_basecolor.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/frog_orm.png",
+   "size": 4569,
+   "sha": "842144e1751a9d31f117affa709e7ba20407b381",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/frog_orm.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/frog_rig.json",
+   "size": 4618,
+   "sha": "2df5b717f953dbe92ab460bdfc49825ddceadea4",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/frog_rig.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/frog_uv_layout.json",
+   "size": 6310,
+   "sha": "90f022baf35a38701715125da210c02a2aeae674",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/frog_uv_layout.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/hedgehog.glb",
+   "size": 1539680,
+   "sha": "0841d9149b28bfc0ec3c352596f97d4e9170e048",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/hedgehog.glb",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/hedgehog_basecolor.png",
+   "size": 535920,
+   "sha": "1b8e3b7d7b50b91c0a6deda8467eebf42852bab1",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/hedgehog_basecolor.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/hedgehog_orm.png",
+   "size": 4578,
+   "sha": "f8880ed7b21e64aa57797a5b3f5915f324423b27",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/hedgehog_orm.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/hedgehog_rig.json",
+   "size": 5363,
+   "sha": "e277b496285140b0327939f8a07fc451e951ab49",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/hedgehog_rig.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/hedgehog_uv_layout.json",
+   "size": 10432,
+   "sha": "443e79bbad1ed9ea9526b0e570f39c097c1d6826",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/hedgehog_uv_layout.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/manifest.json",
+   "size": 20483,
+   "sha": "df48794641692b443130a17cb19cee2d05feded0",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/manifest.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/monkey.glb",
+   "size": 1613912,
+   "sha": "fe571afe80194b5a086eeb2ee3061a1d4a4439e3",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/monkey.glb",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/monkey_basecolor.png",
+   "size": 540617,
+   "sha": "32d48c100d9e5b5c18cabefae347ae8d67264c2c",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/monkey_basecolor.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/monkey_orm.png",
+   "size": 4577,
+   "sha": "4c37074f676f0324576c96cf4e92bd4f0c37e38c",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/monkey_orm.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/monkey_rig.json",
+   "size": 6276,
+   "sha": "cb386bf3431510a4dc3e812938eaa72b1af29e1d",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/monkey_rig.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/monkey_uv_layout.json",
+   "size": 7624,
+   "sha": "2fa0ef34d10504e49676cc7a15c9ed5e743f71c7",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/monkey_uv_layout.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/penguin.glb",
+   "size": 1203716,
+   "sha": "9ec0e1e6e2428a671bfecf39f355ff13789ac8c6",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/penguin.glb",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/penguin_basecolor.png",
+   "size": 399804,
+   "sha": "14bdad37c4c86f4298b47ab58667d2709d491b9c",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/penguin_basecolor.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/penguin_orm.png",
+   "size": 4571,
+   "sha": "0f3f3c586a7e0c02883ce89e92be28c0508ec448",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/penguin_orm.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/penguin_rig.json",
+   "size": 5538,
+   "sha": "a4a02220f3ac217f3872fb45cf454b3a433cc3e9",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/penguin_rig.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/penguin_uv_layout.json",
+   "size": 6047,
+   "sha": "9c9a557ba1b3be19bda06a15d7f409d4bab8fce3",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/penguin_uv_layout.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/rabbit.glb",
+   "size": 1402264,
+   "sha": "0cdae24eb991eea6314730856964329c5ed29173",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/rabbit.glb",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/rabbit_basecolor.png",
+   "size": 510628,
+   "sha": "e30ba3f64baf35707b1d31d4918315d143943d36",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/rabbit_basecolor.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/rabbit_orm.png",
+   "size": 4580,
+   "sha": "43a8abb5999bce99d93966cd742989d6081c980a",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/rabbit_orm.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/rabbit_rig.json",
+   "size": 6253,
+   "sha": "b89b8c3475519b2417483039ad3b42a28b552697",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/rabbit_rig.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/rabbit_uv_layout.json",
+   "size": 7312,
+   "sha": "579a333bc1de8e764580a7a33f32b5cae6de88ea",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/rabbit_uv_layout.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/raccoon.glb",
+   "size": 1373204,
+   "sha": "e575a43a4e0839559c7ec778dc5644a39f52e55a",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/raccoon.glb",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/raccoon_basecolor.png",
+   "size": 456092,
+   "sha": "a37ffc955a3663bb502ec00dfdb4c39e35eec3e3",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/raccoon_basecolor.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/raccoon_orm.png",
+   "size": 4581,
+   "sha": "01a03f9ee61e146c642f76ae82260c623aba1d39",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/raccoon_orm.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/raccoon_rig.json",
+   "size": 6279,
+   "sha": "53a97a61d6710535665991717a53d46a4e0b4153",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/raccoon_rig.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/characters/raccoon_uv_layout.json",
+   "size": 6795,
+   "sha": "1ceeb7fd62e3de9ab4d83987ccabd452c89f12bf",
+   "class": "D",
+   "dest": "legacy/package_3d/assets/characters/raccoon_uv_layout.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/manifest.json",
+   "size": 16896,
+   "sha": "d024ed9837da3ceb289a89cf04849887a6041063",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/manifest.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/shadow.png",
+   "size": 2271,
+   "sha": "d797e16df505145921a4b7c0be1e7ca75f22157d",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at assets/isometric_characters/shadow.png"
+  },
+  {
+   "path": "assets/isometric_characters/bat/animations.json",
+   "size": 1925,
+   "sha": "1f1d98551414140c10e054829cfccac9b8cf557b",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bat/animations.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bat/celebrate.png",
+   "size": 767447,
+   "sha": "c0d9ce7912e485286c34af7372df7cb8b4d9c551",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bat/celebrate.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bat/fall.png",
+   "size": 435739,
+   "sha": "5ec921f1d19c33845057e4c5577a8f1497221b9a",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bat/fall.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bat/flight_land.png",
+   "size": 527784,
+   "sha": "ab8a1fa47cf5fa6d755448272d0a95152419b1a3",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bat/flight_land.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bat/fly.png",
+   "size": 862955,
+   "sha": "921d5fb1dd4fb2f61a23eddd909c58ad0a377c5d",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bat/fly.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bat/hit.png",
+   "size": 400752,
+   "sha": "73c728cbb67a9174cb700907cdec48611c331572",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bat/hit.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bat/hover.png",
+   "size": 732942,
+   "sha": "e4aa34daf51b7224e23863f690925635be6fe013",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bat/hover.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bat/idle.png",
+   "size": 577944,
+   "sha": "311526735cf7314c4c4631ca5d7f931a1bd41b62",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bat/idle.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bat/interact.png",
+   "size": 491721,
+   "sha": "4c9fa71c81a0591e31e15ce902a6fe02316bc20b",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bat/interact.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bat/jump.png",
+   "size": 513097,
+   "sha": "f9fe6dc1848009c7872fe7b3e2f7f157397b6498",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bat/jump.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bat/land.png",
+   "size": 387782,
+   "sha": "ec9275eccdb98676144787d2f381208675fbf4dc",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bat/land.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bat/portrait.png",
+   "size": 26933,
+   "sha": "b617bc35747bacd50761022629d3e2dfe00e36ae",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bat/portrait.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bat/run.png",
+   "size": 836542,
+   "sha": "9d77c156fac02a1e5c4dd1aeaeb82d583f0e6e1c",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bat/run.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bat/sleep.png",
+   "size": 525925,
+   "sha": "bc54c97fc7d902404322386d5b067c2fc2bbc1af",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bat/sleep.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bat/takeoff.png",
+   "size": 545087,
+   "sha": "aa742c31ca3dc96e3aad4473f9c3da5da61160e9",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bat/takeoff.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bat/talk.png",
+   "size": 579957,
+   "sha": "90edd1ea64fa6948eba4d947e87ed9adbf26025a",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bat/talk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bat/walk.png",
+   "size": 863678,
+   "sha": "cd6cea83bd893a6300b39a9b1c7b49c6b1e3b30c",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bat/walk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bear/animations.json",
+   "size": 1493,
+   "sha": "99149296b79198c9fca6a4e08e49d23bafcc86c5",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bear/animations.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bear/celebrate.png",
+   "size": 654729,
+   "sha": "2cad5594f4ef7c39ec21804c8e22c52784e6170a",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bear/celebrate.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bear/fall.png",
+   "size": 414509,
+   "sha": "5f5867cc973a066cda9000afb1c8e20d45005b65",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bear/fall.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bear/hit.png",
+   "size": 383344,
+   "sha": "805b2e0e640c35b5370560d9aafdb14d93f5c3d5",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bear/hit.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bear/idle.png",
+   "size": 525162,
+   "sha": "a39fb421503b8b93dfc36c32b39937898d6b98ed",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bear/idle.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bear/interact.png",
+   "size": 413478,
+   "sha": "a72d1172ac42c1c20f0c9e2effeff4e49900d259",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bear/interact.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bear/jump.png",
+   "size": 425512,
+   "sha": "e29a15ee802cd930ec373aa4dec078ea26fae589",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bear/jump.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bear/land.png",
+   "size": 348394,
+   "sha": "a4ce132167cbec554cf4980a7188c9c00bfe2289",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bear/land.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bear/portrait.png",
+   "size": 21971,
+   "sha": "ca6478f47abe6cc7f0037f589632dce9b059dd93",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bear/portrait.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bear/run.png",
+   "size": 755180,
+   "sha": "230d1518e411a7a718514f772d89e9aee170b070",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bear/run.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bear/sleep.png",
+   "size": 429903,
+   "sha": "164d839b6ce77a4d9da1e10241c27af2cd856fb6",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bear/sleep.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bear/talk.png",
+   "size": 532161,
+   "sha": "f21eb7854386f31f988b64131f73f55283b5e88d",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bear/talk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/bear/walk.png",
+   "size": 802687,
+   "sha": "88a184d70ae533aee567129bb85c21f0244503ca",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/bear/walk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/capybara/animations.json",
+   "size": 1497,
+   "sha": "dcb0133992a084e1c3d38399dae2cc720e51553f",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/capybara/animations.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/capybara/celebrate.png",
+   "size": 681749,
+   "sha": "ad6e48d96b84e61f5e7ca161bb2db8655540e082",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/capybara/celebrate.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/capybara/fall.png",
+   "size": 423902,
+   "sha": "0ae6a50eb2422bc5333e99936377025e221eed2f",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/capybara/fall.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/capybara/hit.png",
+   "size": 397063,
+   "sha": "964d6183beb6d0ce9578d4017d7412447b8f9ae4",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/capybara/hit.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/capybara/idle.png",
+   "size": 550239,
+   "sha": "65f4f00e9df3a825896869ead930f71d4b28818d",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/capybara/idle.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/capybara/interact.png",
+   "size": 412892,
+   "sha": "3dd03aae46446744eed1558f01b2446319d49b57",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/capybara/interact.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/capybara/jump.png",
+   "size": 420458,
+   "sha": "194d434ef84dd098d380bdbacf5b673bf8d4e1f4",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/capybara/jump.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/capybara/land.png",
+   "size": 362121,
+   "sha": "25956b8d8a2f7d30d19d51124a93fa9103c04d3d",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/capybara/land.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/capybara/portrait.png",
+   "size": 16319,
+   "sha": "2cab2f84a58f9b8d170ed9935633eb2dbba4b9c9",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/capybara/portrait.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/capybara/run.png",
+   "size": 797153,
+   "sha": "7d28f4d71fe436e8df31940ac1878d25ac1c45a7",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/capybara/run.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/capybara/sleep.png",
+   "size": 446900,
+   "sha": "1797bb09c0eef3477dc3c49ff12e3bcb1f63b1c5",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/capybara/sleep.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/capybara/talk.png",
+   "size": 552920,
+   "sha": "f77a3dcc7b8b781845c65b7d13512a54c0e430d0",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/capybara/talk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/capybara/walk.png",
+   "size": 852513,
+   "sha": "0a452caff9f05b34a1cf30463a0b78273beab853",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/capybara/walk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/cat/animations.json",
+   "size": 1492,
+   "sha": "24ca2499feefa611ab49b05ad51d8986fcc7a147",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/cat/animations.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/cat/celebrate.png",
+   "size": 618965,
+   "sha": "cbb15723a9b4061767e3e7cec2cfd02e0a903732",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/cat/celebrate.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/cat/fall.png",
+   "size": 391615,
+   "sha": "b2aa1ce17c7f5fa1cd876c22b6f9199ae6730ae9",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/cat/fall.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/cat/hit.png",
+   "size": 361240,
+   "sha": "0a15b9b07f69f95dc5be63c4a11208da8a274d8d",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/cat/hit.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/cat/idle.png",
+   "size": 510243,
+   "sha": "c3249c3852772dd2c67ea5fb742c3438b4470a82",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/cat/idle.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/cat/interact.png",
+   "size": 389301,
+   "sha": "9daa4175ccb2df3348d478c268d5b8ff86b31634",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/cat/interact.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/cat/jump.png",
+   "size": 403285,
+   "sha": "1c691bda6ef97615747fd0c1e8d2cdfa03b955fb",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/cat/jump.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/cat/land.png",
+   "size": 329133,
+   "sha": "3e79b0a04ee328cf02a6faa449a2cdbd8b3e5225",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/cat/land.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/cat/portrait.png",
+   "size": 21105,
+   "sha": "8bc3e5c8f2b3b3831cff8368f1bb832369d45ecb",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/cat/portrait.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/cat/run.png",
+   "size": 722287,
+   "sha": "b919f470034b7ff06e3057602359f767ceb09741",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/cat/run.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/cat/sleep.png",
+   "size": 427923,
+   "sha": "149e870ce9c0a7324acb643de04028d3500c0add",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/cat/sleep.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/cat/talk.png",
+   "size": 518302,
+   "sha": "494924a585bd5da4c2b6add72836b03ed3ce9d8a",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/cat/talk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/cat/walk.png",
+   "size": 763943,
+   "sha": "a6ab5911b116d365cc41247c3ae75aec054ab892",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/cat/walk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fairy/animations.json",
+   "size": 1927,
+   "sha": "a5e035504f2bb1bd173565e5b241312537605f2e",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fairy/animations.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fairy/celebrate.png",
+   "size": 939881,
+   "sha": "a3fd0436172a79843031a7843e4d873ec3744977",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fairy/celebrate.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fairy/fall.png",
+   "size": 561726,
+   "sha": "7e70e5d8f94d138d4c6b24de6637266208e0f3f9",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fairy/fall.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fairy/flight_land.png",
+   "size": 676980,
+   "sha": "3882dfc91f29267e241800adc7cc63d3af0b531c",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fairy/flight_land.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fairy/fly.png",
+   "size": 1086166,
+   "sha": "c3135eaca7929c040b0ecd9af9a6f87e07b8653e",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fairy/fly.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fairy/hit.png",
+   "size": 528946,
+   "sha": "1df8123d8c6bb94bda14735aa80d1fadede1e8c7",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fairy/hit.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fairy/hover.png",
+   "size": 942538,
+   "sha": "6f604644b383117be941664552edd4b5054dd989",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fairy/hover.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fairy/idle.png",
+   "size": 742276,
+   "sha": "cdefb2311f676a843bdde409f2116254779c8340",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fairy/idle.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fairy/interact.png",
+   "size": 598276,
+   "sha": "b189026c5dfbc6aa234215ab224b0e1ccbcfd4ec",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fairy/interact.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fairy/jump.png",
+   "size": 625397,
+   "sha": "18629b44159fff1402967ff8ca5db5bc799f5c5f",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fairy/jump.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fairy/land.png",
+   "size": 498930,
+   "sha": "05e9c27133abd95129ecd167f5e7118d5802a6ce",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fairy/land.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fairy/portrait.png",
+   "size": 32403,
+   "sha": "68063ec04182aedb4b4ce1a1022ca2768f3c6f0a",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fairy/portrait.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fairy/run.png",
+   "size": 1072735,
+   "sha": "9c2f5831179f193da0a53da43559ff2cf5e888f2",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fairy/run.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fairy/sleep.png",
+   "size": 653089,
+   "sha": "62e8571718ac2d72fe5a5d9d3ca938be8e802e03",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fairy/sleep.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fairy/takeoff.png",
+   "size": 693437,
+   "sha": "b4f6f179170ef5c137cb3905ef72c00eb9e948af",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fairy/takeoff.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fairy/talk.png",
+   "size": 737773,
+   "sha": "e48d1ea45b3ea9651db0d2e7550c84bc21abc417",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fairy/talk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fairy/walk.png",
+   "size": 1110466,
+   "sha": "8336ce9298451d45ea63da4be99c77071f131584",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fairy/walk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fox/animations.json",
+   "size": 1492,
+   "sha": "6a63f1fe6a79d4134388099862d691195b7c8ec4",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fox/animations.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fox/celebrate.png",
+   "size": 677751,
+   "sha": "7d0b3d073037fea5305c95c81310e48f8bcb8cdc",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fox/celebrate.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fox/fall.png",
+   "size": 419816,
+   "sha": "50fc8bf2cafbc456c65f3fa9585bd323341d0cdc",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fox/fall.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fox/hit.png",
+   "size": 385306,
+   "sha": "dd7d98b42772e8d5333d0eb5d9aae20a35f9c7da",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fox/hit.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fox/idle.png",
+   "size": 547413,
+   "sha": "f23dd9d9ea097a9c30f52aecf0119d2a151bbd5c",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fox/idle.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fox/interact.png",
+   "size": 431455,
+   "sha": "3661975c1cc51bdf1bde9bb61ca7d8caba8157e3",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fox/interact.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fox/jump.png",
+   "size": 443038,
+   "sha": "ecff728eddb9781b59d07a05404cb4986810b0b1",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fox/jump.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fox/land.png",
+   "size": 353888,
+   "sha": "ba869efcdf83f3b011cb0d98097cb34830b8a06f",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fox/land.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fox/portrait.png",
+   "size": 22685,
+   "sha": "ea917e441736877647ec659f1d41a8484d17433b",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fox/portrait.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fox/run.png",
+   "size": 785593,
+   "sha": "b812160525a2cd032646612c075d0873b61ef1cf",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fox/run.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fox/sleep.png",
+   "size": 473959,
+   "sha": "3db15dd895f144434cf97b40b88e0e22f9a107e4",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fox/sleep.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fox/talk.png",
+   "size": 555022,
+   "sha": "6ca1e9dfb8104b624c474ac94913c95168b192a2",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fox/talk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/fox/walk.png",
+   "size": 819561,
+   "sha": "c591342cb8ef4a513e4affcd52ecc7616cb758b3",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/fox/walk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/frog/animations.json",
+   "size": 1493,
+   "sha": "7f177524a590b1667a066b869def88ec4207b65c",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/frog/animations.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/frog/celebrate.png",
+   "size": 742213,
+   "sha": "caa26dce9732c37c6cf6853596dc31052e580ca8",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/frog/celebrate.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/frog/fall.png",
+   "size": 448917,
+   "sha": "aa302ee1ec19b33795c30b452b061f62cc7d042f",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/frog/fall.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/frog/hit.png",
+   "size": 424086,
+   "sha": "6c66835cd855d9fc8230845d383585f72f226714",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/frog/hit.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/frog/idle.png",
+   "size": 586269,
+   "sha": "894df56b72b6a0c8a63c463df1055db8e6537216",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/frog/idle.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/frog/interact.png",
+   "size": 457033,
+   "sha": "60cb6d5f89d1dd5570f23fd153c286478869a309",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/frog/interact.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/frog/jump.png",
+   "size": 467712,
+   "sha": "0fccf6d0d12c567a5ce56c7778a45969cfe133cd",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/frog/jump.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/frog/land.png",
+   "size": 389989,
+   "sha": "480339abe1cabc5a6598eda675f66bbf4133be9f",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/frog/land.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/frog/portrait.png",
+   "size": 23662,
+   "sha": "9b478e98de2a52e23f75fa6648795a0192ef8cf0",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/frog/portrait.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/frog/run.png",
+   "size": 858646,
+   "sha": "d94431184fd2396350c1ac0779b2cc9db29603f3",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/frog/run.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/frog/sleep.png",
+   "size": 455747,
+   "sha": "fedafead26ab54978f72f084eff60d4311538b8c",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/frog/sleep.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/frog/talk.png",
+   "size": 596935,
+   "sha": "8ef6b783d6cd72ba8c604cb46587705b90127440",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/frog/talk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/frog/walk.png",
+   "size": 908748,
+   "sha": "ebe9daa7b1ea704ec74dfd989cc30f00e00f22ca",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/frog/walk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/hedgehog/animations.json",
+   "size": 1497,
+   "sha": "98a039ee7c68b456641271fa5def739a4e7ee959",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/hedgehog/animations.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/hedgehog/celebrate.png",
+   "size": 774731,
+   "sha": "35e516d8528bb7ad612c059b01690ac41e9567d4",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/hedgehog/celebrate.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/hedgehog/fall.png",
+   "size": 477610,
+   "sha": "0f475521ac53ada9fcf8c0f6776e8ca7d8327790",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/hedgehog/fall.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/hedgehog/hit.png",
+   "size": 448683,
+   "sha": "4f19bba7c08d7db62ffb67ddd1eb6b98f39f4103",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/hedgehog/hit.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/hedgehog/idle.png",
+   "size": 620874,
+   "sha": "193dd03430cbb12153fa0c8628047009688b0c97",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/hedgehog/idle.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/hedgehog/interact.png",
+   "size": 485451,
+   "sha": "06a9a745d9a388e02daff4d0d0f90c76066416c4",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/hedgehog/interact.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/hedgehog/jump.png",
+   "size": 504021,
+   "sha": "3d6fa6db05358489b1449d68bf1d47e889f98c2c",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/hedgehog/jump.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/hedgehog/land.png",
+   "size": 407822,
+   "sha": "497f7dcb959f1f717f42e294e8c2b1d6ab2ad7b0",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/hedgehog/land.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/hedgehog/portrait.png",
+   "size": 23657,
+   "sha": "f3ffb9b4377789757c257be695d11afaefcf3632",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/hedgehog/portrait.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/hedgehog/run.png",
+   "size": 885039,
+   "sha": "78840ae6288bcac3f27f8a70ef5e59a597825ef2",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/hedgehog/run.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/hedgehog/sleep.png",
+   "size": 496824,
+   "sha": "20a307fb031c0e67d3a9eb3d67f180a07808fa71",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/hedgehog/sleep.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/hedgehog/talk.png",
+   "size": 629321,
+   "sha": "aca09079f9f0e1c1c6df28c7c020d532bb3aa3b1",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/hedgehog/talk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/hedgehog/walk.png",
+   "size": 938159,
+   "sha": "b4b3d4c426ad9e2ee69954ed7c2f7e7020f4f3c8",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/hedgehog/walk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/monkey/animations.json",
+   "size": 1495,
+   "sha": "23a63bfc818da092613c42f6481f42251cf98fb2",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/monkey/animations.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/monkey/celebrate.png",
+   "size": 721657,
+   "sha": "326b879608304b23544419dc32459ef3ad71892b",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/monkey/celebrate.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/monkey/fall.png",
+   "size": 450000,
+   "sha": "70c387c9e8f5bb2e3ff36c80a8b81363fa6c4c0e",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/monkey/fall.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/monkey/hit.png",
+   "size": 412461,
+   "sha": "4180a56e2a8be8f85d5d471ed6b1fef10cc7f783",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/monkey/hit.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/monkey/idle.png",
+   "size": 584135,
+   "sha": "e628a811446809698fb912320f051b6d70291d1d",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/monkey/idle.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/monkey/interact.png",
+   "size": 455688,
+   "sha": "48bfdce53ff24e87c2d5a5f2114766f98ad993a5",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/monkey/interact.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/monkey/jump.png",
+   "size": 471372,
+   "sha": "d7c2878f11bdb75b1a8b90ee6f52653ac3fd561d",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/monkey/jump.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/monkey/land.png",
+   "size": 378994,
+   "sha": "b3640bf6c4819175fcda6207a4c48419d5ec54c9",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/monkey/land.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/monkey/portrait.png",
+   "size": 24541,
+   "sha": "5a997e3467bd930c459ef64ee35329a12a5a1697",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/monkey/portrait.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/monkey/run.png",
+   "size": 831232,
+   "sha": "e2ac87fd28130badf563d3cf04e5b6d919d3366a",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/monkey/run.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/monkey/sleep.png",
+   "size": 491888,
+   "sha": "019df095ed64691abf87fc362bca72c9d77cb04a",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/monkey/sleep.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/monkey/talk.png",
+   "size": 593192,
+   "sha": "43e425c91059e36edf51d2a019f24fb1dc08fb3e",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/monkey/talk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/monkey/walk.png",
+   "size": 878707,
+   "sha": "628a164f2c23cd86890ec7aa6d70812ca20b18c6",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/monkey/walk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/penguin/animations.json",
+   "size": 1496,
+   "sha": "4d4a5c3a1153b90990305b071b72a0e4b6e55bfa",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/penguin/animations.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/penguin/celebrate.png",
+   "size": 753040,
+   "sha": "53f3e1dfcc5251bc5bdbaa76e4bb46e70ace1cef",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/penguin/celebrate.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/penguin/fall.png",
+   "size": 446650,
+   "sha": "658a09e9fa049741d73b70dfd9741ec293b8928b",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/penguin/fall.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/penguin/hit.png",
+   "size": 415630,
+   "sha": "e65ba22a432160b6108abe7b5ad0fa954baa9ff3",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/penguin/hit.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/penguin/idle.png",
+   "size": 586095,
+   "sha": "5c10c68fb7d5284abcce7cfc265e3a07883ee395",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/penguin/idle.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/penguin/interact.png",
+   "size": 455194,
+   "sha": "31f613ef39d34afe6b8d7e1b19f3180716dfd387",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/penguin/interact.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/penguin/jump.png",
+   "size": 468231,
+   "sha": "79187e28660ed31f1effedc199ba0b281b7d4a10",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/penguin/jump.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/penguin/land.png",
+   "size": 382814,
+   "sha": "b454f19801eecf401ecea598d4242baf1b84111d",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/penguin/land.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/penguin/portrait.png",
+   "size": 25465,
+   "sha": "02f58b6d6bc795414b82f1aa0cfcc1eab0699530",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/penguin/portrait.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/penguin/run.png",
+   "size": 842198,
+   "sha": "020ba99ee998d32b8767388c95a18e34e333c82a",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/penguin/run.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/penguin/sleep.png",
+   "size": 465746,
+   "sha": "791bf80fd50bf8b92e4cd38726b23270199b229f",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/penguin/sleep.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/penguin/talk.png",
+   "size": 600368,
+   "sha": "84b7f7b7bd6d1b0215ea3f004bfc99b116445c09",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/penguin/talk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/penguin/walk.png",
+   "size": 920677,
+   "sha": "55e49d778debb676aba6c44f7e50185b35668ed9",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/penguin/walk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/rabbit/animations.json",
+   "size": 1495,
+   "sha": "17dedf6f17ea47cb27a253caf07750f98cf24f05",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/rabbit/animations.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/rabbit/celebrate.png",
+   "size": 551338,
+   "sha": "b62f1e8a6eabb7afa961a6c47fe071bf573a709e",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/rabbit/celebrate.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/rabbit/fall.png",
+   "size": 342056,
+   "sha": "d49924355f96620dbdfca53f37a27a6b94dcb722",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/rabbit/fall.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/rabbit/hit.png",
+   "size": 322581,
+   "sha": "c3bd76a21d6fc5a622c27ceefbbe4456db43a284",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/rabbit/hit.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/rabbit/idle.png",
+   "size": 447745,
+   "sha": "5224631eab215db793553695dced3e54ce49eb0f",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/rabbit/idle.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/rabbit/interact.png",
+   "size": 349303,
+   "sha": "a49fb9e8fde1d0582e94189d378927ebd742fdf4",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/rabbit/interact.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/rabbit/jump.png",
+   "size": 362357,
+   "sha": "e1a52b4b264f772ca3323a3fcc689a393d041f94",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/rabbit/jump.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/rabbit/land.png",
+   "size": 293842,
+   "sha": "09313db7d9fca9e650fcc721507be8a4881cb931",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/rabbit/land.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/rabbit/portrait.png",
+   "size": 18159,
+   "sha": "3e033f48a1f4b4dbaf760a9b4f4f72c5cafc2658",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/rabbit/portrait.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/rabbit/run.png",
+   "size": 646142,
+   "sha": "aee6e2215f21408d14e68e69b96b36eab92560de",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/rabbit/run.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/rabbit/sleep.png",
+   "size": 383408,
+   "sha": "d001b1c1fe1274c36b8fb3569f081154791baf3f",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/rabbit/sleep.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/rabbit/talk.png",
+   "size": 453552,
+   "sha": "b8952b5606079c162d9eb08fbefb0406d4c54b1e",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/rabbit/talk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/rabbit/walk.png",
+   "size": 671439,
+   "sha": "7c49975e5617fe011c1a286c671287d57a22b5c6",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/rabbit/walk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/raccoon/animations.json",
+   "size": 1496,
+   "sha": "b9cf17f0994de996425814843cf5b0d9cb45a725",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/raccoon/animations.json",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/raccoon/celebrate.png",
+   "size": 743694,
+   "sha": "5196b835725eed3be41e7754d05e22d3d26e791c",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/raccoon/celebrate.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/raccoon/fall.png",
+   "size": 463234,
+   "sha": "688155134d125938dc6350d33cb1ab6c84c91461",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/raccoon/fall.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/raccoon/hit.png",
+   "size": 427027,
+   "sha": "e6874641c84227c3e8170eaa16d9d96b9d004a77",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/raccoon/hit.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/raccoon/idle.png",
+   "size": 600557,
+   "sha": "ab2f08715063f27824558c7c7f64116ed1537734",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/raccoon/idle.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/raccoon/interact.png",
+   "size": 469718,
+   "sha": "b9a652a2155ae5aff8a270fc76679581c663b099",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/raccoon/interact.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/raccoon/jump.png",
+   "size": 486529,
+   "sha": "55530fff57d94fddb4db1a389976883e1000906f",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/raccoon/jump.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/raccoon/land.png",
+   "size": 391899,
+   "sha": "df83eb42c0434261d62535d6f80dc4e811cd893c",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/raccoon/land.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/raccoon/portrait.png",
+   "size": 25295,
+   "sha": "f846dae97ecdd6dc4d520a2834a629d818753e15",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/raccoon/portrait.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/raccoon/run.png",
+   "size": 860668,
+   "sha": "d618533e0adc2168dea75de38a9c6204bc11e4b2",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/raccoon/run.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/raccoon/sleep.png",
+   "size": 505404,
+   "sha": "85edb62a8efa29088997df1a378be439d8dae830",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/raccoon/sleep.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/raccoon/talk.png",
+   "size": 609053,
+   "sha": "cf293d93dc138f08f6b1e1d06c243afcbc0f7c81",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/raccoon/talk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/isometric_characters/raccoon/walk.png",
+   "size": 905967,
+   "sha": "f286a996eaa262e70401ee18c1dbdcfb9e538b21",
+   "class": "D",
+   "dest": "legacy/package_masters/assets/isometric_characters/raccoon/walk.png",
+   "note": "archived"
+  },
+  {
+   "path": "assets/models/.gitkeep",
+   "size": 0,
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "class": "S",
+   "dest": null,
+   "note": "empty placeholder / OS file"
+  },
+  {
+   "path": "assets/textures/.gitkeep",
+   "size": 0,
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "class": "S",
+   "dest": null,
+   "note": "empty placeholder / OS file"
+  },
+  {
+   "path": "assets/ui/theme.tres",
+   "size": 48,
+   "sha": "1527565a1a8b59abf541ccb08d156a376815ab07",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "data/.gitkeep",
+   "size": 0,
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "class": "S",
+   "dest": null,
+   "note": "empty placeholder / OS file"
+  },
+  {
+   "path": "docs/.gdignore",
+   "size": 0,
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "class": "S",
+   "dest": null,
+   "note": "empty placeholder / OS file"
+  },
+  {
+   "path": "docs/ISOMETRIC_2D_README.md",
+   "size": 6376,
+   "sha": "3f972b992c661ebe9b8da345cdfff05fa1d5567e",
+   "class": "D",
+   "dest": "docs/ISOMETRIC_2D_README.md",
+   "note": "archived"
+  },
+  {
+   "path": "docs/character_asset_validation.json",
+   "size": 32184,
+   "sha": "3cf40e9386afd0ce2655f773f161f0c9b414214d",
+   "class": "D",
+   "dest": "docs/character_asset_validation.json",
+   "note": "archived"
+  },
+  {
+   "path": "docs/game_design.md",
+   "size": 3342,
+   "sha": "3fc56d7dce1fdc485179b147c05dbd5ec2c8ea3c",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at docs/game_design.md"
+  },
+  {
+   "path": "docs/lua_api.md",
+   "size": 4495,
+   "sha": "32df1e207338b7024a00a6d8e6b85074b7da05b8",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at docs/lua_api.md"
+  },
+  {
+   "path": "docs/voice_lines.md",
+   "size": 2165,
+   "sha": "541748a98eebcf94740094f872967fd81a0b4944",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at docs/voice_lines.md"
+  },
+  {
+   "path": "docs/character_previews/bat.png",
+   "size": 121241,
+   "sha": "3592f40594c3b01fe74c2df70f82e21d6a828b28",
+   "class": "D",
+   "dest": "docs/character_previews/bat.png",
+   "note": "archived"
+  },
+  {
+   "path": "docs/character_previews/bear.png",
+   "size": 145521,
+   "sha": "331020036b4ecc9ce4c1f5149c4e3bac5cc62cf0",
+   "class": "D",
+   "dest": "docs/character_previews/bear.png",
+   "note": "archived"
+  },
+  {
+   "path": "docs/character_previews/capybara.png",
+   "size": 179995,
+   "sha": "49d14a79f466f8e1792490ae55ccc091fa4dfd8d",
+   "class": "D",
+   "dest": "docs/character_previews/capybara.png",
+   "note": "archived"
+  },
+  {
+   "path": "docs/character_previews/cat.png",
+   "size": 133815,
+   "sha": "a2912e54f159007cafa65372b105e3e2ae5e0dae",
+   "class": "D",
+   "dest": "docs/character_previews/cat.png",
+   "note": "archived"
+  },
+  {
+   "path": "docs/character_previews/fairy.png",
+   "size": 214790,
+   "sha": "9776160c4de3bd9d1df0e87f70feff38d660c6b9",
+   "class": "D",
+   "dest": "docs/character_previews/fairy.png",
+   "note": "archived"
+  },
+  {
+   "path": "docs/character_previews/fox.png",
+   "size": 145709,
+   "sha": "bef2262705635da6449451d35e4294db3bfe787a",
+   "class": "D",
+   "dest": "docs/character_previews/fox.png",
+   "note": "archived"
+  },
+  {
+   "path": "docs/character_previews/fox_run.png",
+   "size": 144789,
+   "sha": "6b67757b88f13e1488703f7205a8ad446ea7a1dc",
+   "class": "D",
+   "dest": "docs/character_previews/fox_run.png",
+   "note": "archived"
+  },
+  {
+   "path": "docs/character_previews/frog.png",
+   "size": 150582,
+   "sha": "d24be6a0d522e1f6ab44df693fb90bb0a6304505",
+   "class": "D",
+   "dest": "docs/character_previews/frog.png",
+   "note": "archived"
+  },
+  {
+   "path": "docs/character_previews/hedgehog.png",
+   "size": 149272,
+   "sha": "e1d7aae645cb9739fa2bbd5b36889f9ddd506b19",
+   "class": "D",
+   "dest": "docs/character_previews/hedgehog.png",
+   "note": "archived"
+  },
+  {
+   "path": "docs/character_previews/monkey.png",
+   "size": 154980,
+   "sha": "ca02cfe88e69319db99f3ec16763c90c01f2c61d",
+   "class": "D",
+   "dest": "docs/character_previews/monkey.png",
+   "note": "archived"
+  },
+  {
+   "path": "docs/character_previews/penguin.png",
+   "size": 160315,
+   "sha": "de4429153e9ffc7c569db29a7f2c3348604c10cb",
+   "class": "D",
+   "dest": "docs/character_previews/penguin.png",
+   "note": "archived"
+  },
+  {
+   "path": "docs/character_previews/rabbit.png",
+   "size": 116735,
+   "sha": "bb8015ba610fae81c9f511d5bc844693e91c4382",
+   "class": "D",
+   "dest": "docs/character_previews/rabbit.png",
+   "note": "archived"
+  },
+  {
+   "path": "docs/character_previews/raccoon.png",
+   "size": 160464,
+   "sha": "03720d92b218db44ec356759537a9f2472314daa",
+   "class": "D",
+   "dest": "docs/character_previews/raccoon.png",
+   "note": "archived"
+  },
+  {
+   "path": "docs/isometric_previews/animation_samples_2d.png",
+   "size": 252814,
+   "sha": "b3af35d0d6cf083e106bf3065038f07ade3c2ae9",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at docs/art/isometric_pack/isometric_previews/animation_samples_2d.png"
+  },
+  {
+   "path": "docs/isometric_previews/character_lineup_2d.png",
+   "size": 381648,
+   "sha": "e4b7bf98a677cdd6723387c0fc588a0dfc4d7b9b",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at docs/art/isometric_pack/isometric_previews/character_lineup_2d.png"
+  },
+  {
+   "path": "docs/isometric_previews/fox_eight_directions.png",
+   "size": 151987,
+   "sha": "007aef35dacffa39392b0f3fdbdbd397925089fc",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at docs/art/isometric_pack/isometric_previews/fox_eight_directions.png"
+  },
+  {
+   "path": "docs/original_drawings/IMG_8431.jpeg",
+   "size": 380168,
+   "sha": "7b5ec6a1552c680bd1bbb8bf1038445b6b145597",
+   "class": "D",
+   "dest": "docs/original_drawings/IMG_8431.jpeg",
+   "note": "archived"
+  },
+  {
+   "path": "docs/original_drawings/IMG_8432.jpeg",
+   "size": 296314,
+   "sha": "4a63edd44bc7b5433ade0673e7bffbfc1ad3edc8",
+   "class": "D",
+   "dest": "docs/original_drawings/IMG_8432.jpeg",
+   "note": "archived"
+  },
+  {
+   "path": "docs/original_drawings/IMG_8433.jpeg",
+   "size": 328348,
+   "sha": "33c3c409cfc8d1bb82b691d4a637b3a2441ea770",
+   "class": "D",
+   "dest": "docs/original_drawings/IMG_8433.jpeg",
+   "note": "archived"
+  },
+  {
+   "path": "docs/original_drawings/IMG_8434.jpeg",
+   "size": 295399,
+   "sha": "4e340bf79c1bcb0f892429c1478ee76e4d1565e0",
+   "class": "D",
+   "dest": "docs/original_drawings/IMG_8434.jpeg",
+   "note": "archived"
+  },
+  {
+   "path": "localization/da.csv",
+   "size": 29321,
+   "sha": "2e9155d6df44a9bf44a0f0db6b040dfbd606bc80",
+   "class": "D",
+   "dest": "legacy/package_3d/localization/da.csv",
+   "note": "archived"
+  },
+  {
+   "path": "localization/da.csv.import",
+   "size": 391,
+   "sha": "b523bd2947004847c26358448f8275393eb8d831",
+   "class": "D",
+   "dest": "legacy/package_3d/localization/da.csv.import",
+   "note": "archived"
+  },
+  {
+   "path": "localization/da.da.translation",
+   "size": 20783,
+   "sha": "f4d28eec60cbbfc227e0dfa62bfbb91fa190e568",
+   "class": "D",
+   "dest": "legacy/package_3d/localization/da.da.translation",
+   "note": "archived"
+  },
+  {
+   "path": "localization/da.en.translation",
+   "size": 19580,
+   "sha": "73c0e302b6baad32d9dabc618055d8d8975ac825",
+   "class": "D",
+   "dest": "legacy/package_3d/localization/da.en.translation",
+   "note": "archived"
+  },
+  {
+   "path": "localization/en.csv",
+   "size": 4446,
+   "sha": "74e6b3279c2f5c134eb414c7d30e86c1f589d13b",
+   "class": "D",
+   "dest": "legacy/package_3d/localization/en.csv",
+   "note": "archived"
+  },
+  {
+   "path": "localization/en.csv.import",
+   "size": 391,
+   "sha": "5f7b789db5d58d039d7a0cd7c33e52b78468e21c",
+   "class": "D",
+   "dest": "legacy/package_3d/localization/en.csv.import",
+   "note": "archived"
+  },
+  {
+   "path": "localization/en.da.translation",
+   "size": 3679,
+   "sha": "4c13ea1e9e2c2c8e01640bb0bcec879b92426653",
+   "class": "D",
+   "dest": "legacy/package_3d/localization/en.da.translation",
+   "note": "archived"
+  },
+  {
+   "path": "localization/en.en.translation",
+   "size": 3616,
+   "sha": "817c4b8ccabe6193aa8c6f9b0013e65ef88fd18e",
+   "class": "D",
+   "dest": "legacy/package_3d/localization/en.en.translation",
+   "note": "archived"
+  },
+  {
+   "path": "lua/config/game_balance.lua",
+   "size": 1398,
+   "sha": "b2cb7ca7391d8e3a5c3a57d866d1237530f0a9fd",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "lua/dialogue/baker_maja.lua",
+   "size": 6778,
+   "sha": "e92658a44ffaa04b728470fcabb042135859dee0",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/dialogue/baker_maja.lua"
+  },
+  {
+   "path": "lua/dialogue/fairy_lily.lua",
+   "size": 1326,
+   "sha": "35dd9b3e2915e2b257458df0e1b5408db720dc9f",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/dialogue/fairy_lily.lua"
+  },
+  {
+   "path": "lua/dialogue/fairy_wizard.lua",
+   "size": 5691,
+   "sha": "e68d2ad400be080eb7c9c96cf67fbbf7de536b2f",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/dialogue/fairy_wizard.lua"
+  },
+  {
+   "path": "lua/dialogue/farmer_rosa.lua",
+   "size": 1169,
+   "sha": "5b217621b3e6eda172a58278daaa7dc67a74bb96",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/dialogue/farmer_rosa.lua"
+  },
+  {
+   "path": "lua/dialogue/guard_oak.lua",
+   "size": 681,
+   "sha": "42c2e30f0ea0bf937d29179427e5d84f92688ce7",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at data/features/pending/legacy_base/lua/dialogue/guard_oak.lua"
+  },
+  {
+   "path": "lua/dialogue/mayor_lyra.lua",
+   "size": 1900,
+   "sha": "daca34bbd1b439d2128ffee9405257271c1d163b",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/dialogue/mayor_lyra.lua"
+  },
+  {
+   "path": "lua/dialogue/merchant_pip.lua",
+   "size": 690,
+   "sha": "5abc4fec90c913a17e7bd711e5671cddb4aecbcc",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/dialogue/merchant_pip.lua"
+  },
+  {
+   "path": "lua/dialogue/smith_thorin.lua",
+   "size": 1000,
+   "sha": "da572b835682f77683abfd0470660803b94cbc43",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/dialogue/smith_thorin.lua"
+  },
+  {
+   "path": "lua/items/animals.lua",
+   "size": 3614,
+   "sha": "3c67ba00b3fb5aa3c154ff1119a93f40a9d67a37",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/items/animals.lua"
+  },
+  {
+   "path": "lua/items/crops.lua",
+   "size": 1530,
+   "sha": "35494d10c132f879c3ea47676a3489bab40b3a6c",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "lua/items/magic.lua",
+   "size": 1648,
+   "sha": "7bb0b888d420af2cfdba76e89da60586448d34a7",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "lua/items/resources.lua",
+   "size": 2165,
+   "sha": "e184e48cc46134c4470c0bd06dbd54b6a307d7f6",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "lua/items/tools.lua",
+   "size": 1984,
+   "sha": "48c3ac9c7d0d4fd2ab8bdcf994813f758af5c49b",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "lua/quests/animal_products.lua",
+   "size": 1024,
+   "sha": "e7c53dcdf3b2ac729b895955c47cfe30b6dd752a",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/quests/animal_products.lua"
+  },
+  {
+   "path": "lua/quests/birthday_cake.lua",
+   "size": 1129,
+   "sha": "8bb3ad57df1ef34fe04818d7db50ad65bd84930a",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at data/features/pending/legacy_base/lua/quests/birthday_cake.lua"
+  },
+  {
+   "path": "lua/quests/cookie_delivery.lua",
+   "size": 959,
+   "sha": "3f01efb57aa2c1502a9e1564edd94c776d08f68e",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/quests/cookie_delivery.lua"
+  },
+  {
+   "path": "lua/quests/crystal_cave.lua",
+   "size": 1267,
+   "sha": "2934b7094ad481180d6923c2ae6bc4e97329cfd6",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/quests/crystal_cave.lua"
+  },
+  {
+   "path": "lua/quests/dark_forest_mining.lua",
+   "size": 1203,
+   "sha": "c54b816ac2010339da4f23a69a470bfaf0f7bd35",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/quests/dark_forest_mining.lua"
+  },
+  {
+   "path": "lua/quests/enchanted_garden.lua",
+   "size": 1175,
+   "sha": "d34e3ba2f28ea61241438eef489723812a1eed6a",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/quests/enchanted_garden.lua"
+  },
+  {
+   "path": "lua/quests/fairy_friendship.lua",
+   "size": 1188,
+   "sha": "e6c2941a6edb4edefff93772bdedb0558a820ef9",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/quests/fairy_friendship.lua"
+  },
+  {
+   "path": "lua/quests/first_animal.lua",
+   "size": 1095,
+   "sha": "20bd0521ede01d72d2656e742dac7b2408a71654",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/quests/first_animal.lua"
+  },
+  {
+   "path": "lua/quests/fix_roof.lua",
+   "size": 1012,
+   "sha": "0b38b6976f6bef3a6851b471a6aa7f69fae933b3",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at data/features/pending/legacy_base/lua/quests/fix_roof.lua"
+  },
+  {
+   "path": "lua/quests/flower_necklace.lua",
+   "size": 1053,
+   "sha": "9245af44ca8a1a99203b270c016faa7661bc4e97",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/quests/flower_necklace.lua"
+  },
+  {
+   "path": "lua/quests/forest_patrol.lua",
+   "size": 1092,
+   "sha": "65791f46b9fae5036c44c239736d21ddb2876e82",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/quests/forest_patrol.lua"
+  },
+  {
+   "path": "lua/quests/intro_lottery.lua",
+   "size": 1413,
+   "sha": "f0b5ceab922de9a18f805a409dfbe3c5807981c1",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/quests/intro_lottery.lua"
+  },
+  {
+   "path": "lua/quests/lost_cat.lua",
+   "size": 1063,
+   "sha": "24429cf50e0fc91271c567daf768f52cdc83242e",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at data/features/pending/legacy_base/lua/quests/lost_cat.lua"
+  },
+  {
+   "path": "lua/quests/math_bakery_counts.lua",
+   "size": 1210,
+   "sha": "e4da66295c47cf61026fce3a1cdf05da084efa03",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/quests/math_bakery_counts.lua"
+  },
+  {
+   "path": "lua/quests/math_harvest_puzzle.lua",
+   "size": 1131,
+   "sha": "418906946f3e10a44a5f4016115aff904eef5555",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/quests/math_harvest_puzzle.lua"
+  },
+  {
+   "path": "lua/quests/math_wizard_quiz.lua",
+   "size": 1213,
+   "sha": "8fdbea59c3738c5870d217fa8966d24f40276d8c",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at data/features/pending/legacy_base/lua/quests/math_wizard_quiz.lua"
+  },
+  {
+   "path": "lua/quests/night_flower.lua",
+   "size": 1094,
+   "sha": "ab48c077f2fb50805d12e0fb3b3f042d8445c89e",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/quests/night_flower.lua"
+  },
+  {
+   "path": "lua/quests/rare_mushroom_hunt.lua",
+   "size": 1082,
+   "sha": "4662cad5e542008571e8954e5e15a7eec8d1569e",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/quests/rare_mushroom_hunt.lua"
+  },
+  {
+   "path": "lua/quests/supply_run.lua",
+   "size": 985,
+   "sha": "f89bebff0661d14fbc93d001ceefc40fc2283422",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/quests/supply_run.lua"
+  },
+  {
+   "path": "lua/quests/sword_upgrade.lua",
+   "size": 1058,
+   "sha": "d198ca120054d14d0c59184bf082020aa5785244",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at lua/quests/sword_upgrade.lua"
+  },
+  {
+   "path": "scenes/characters/bat.tscn",
+   "size": 374,
+   "sha": "9115e5c961868215558e659405780864325c6a35",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/characters/bat.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/characters/bear.tscn",
+   "size": 377,
+   "sha": "2d7e09f119c31ef69bc12c7a5bed8013bded3d2c",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/characters/bear.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/characters/capybara.tscn",
+   "size": 389,
+   "sha": "a7bbb17a438266ecc32bea2bb5519e40616c7a4f",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/characters/capybara.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/characters/cat.tscn",
+   "size": 374,
+   "sha": "ed42b479b989093cebb6fb95c31c827b548f0ab9",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/characters/cat.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/characters/fairy.tscn",
+   "size": 380,
+   "sha": "bce11f006e427d0aa966e6d136aa67524ee7999e",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/characters/fairy.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/characters/fox.tscn",
+   "size": 374,
+   "sha": "9cb1f8895f3c14c9f42957ef3297f26d4f86da44",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/characters/fox.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/characters/frog.tscn",
+   "size": 377,
+   "sha": "947ea2ab2fe8fad2c318f2502d677c3cc244468c",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/characters/frog.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/characters/hedgehog.tscn",
+   "size": 389,
+   "sha": "8f31255ae660823f27794403e44c57ef8c092f7e",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/characters/hedgehog.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/characters/monkey.tscn",
+   "size": 383,
+   "sha": "49717192301be73ad919affcd4e24d9e1502acd8",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/characters/monkey.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/characters/penguin.tscn",
+   "size": 386,
+   "sha": "c215c477da1e4e7fc0d9a0aa59618945852270e1",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/characters/penguin.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/characters/rabbit.tscn",
+   "size": 383,
+   "sha": "3ed17db863cc22a216792c5d54602dfae24b87ee",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/characters/rabbit.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/characters/raccoon.tscn",
+   "size": 386,
+   "sha": "457b56d2ebbc7bdbabbe99eb74f11413282ce4be",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/characters/raccoon.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/farm/animals/bat.tscn",
+   "size": 192,
+   "sha": "5a3cac9b3b789b82bcf7ead01ca0fb3a81087b72",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/farm/animals/bat.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/farm/animals/bear.tscn",
+   "size": 194,
+   "sha": "169d4455ec7bbca2a1e8ec1e01dbc90a16953bf8",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/farm/animals/bear.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/farm/animals/capybara.tscn",
+   "size": 202,
+   "sha": "80d3528f43ab67ec4bc77e9c3f4e05ad62b9c5dc",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/farm/animals/capybara.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/farm/animals/cat.tscn",
+   "size": 192,
+   "sha": "253c255c210e4b4e12b6ab5bbbf57f4abc3a9859",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/farm/animals/cat.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/farm/animals/fox.tscn",
+   "size": 192,
+   "sha": "e9bd2f9ccdfe7594d170ba1a1226e3ebd5c7d90f",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/farm/animals/fox.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/farm/animals/frog.tscn",
+   "size": 194,
+   "sha": "fe5c5c84fa1470726bceb58046b3639ad1c94e21",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/farm/animals/frog.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/farm/animals/hedgehog.tscn",
+   "size": 202,
+   "sha": "81158dcd433b288d079cda1ee68bf39db95e70dc",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/farm/animals/hedgehog.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/farm/animals/monkey.tscn",
+   "size": 198,
+   "sha": "1ee4b75f018f9d74f3e8d70b96e28a0b0dd8bd0f",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/farm/animals/monkey.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/farm/animals/penguin.tscn",
+   "size": 200,
+   "sha": "50f4574c6f6bb85da1f919c9e540f271f3c6eb21",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/farm/animals/penguin.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/farm/animals/rabbit.tscn",
+   "size": 198,
+   "sha": "0c33d2776d8bd09a784126dbaef78063b394d2c1",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/farm/animals/rabbit.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/farm/animals/raccoon.tscn",
+   "size": 200,
+   "sha": "20ca9e7745e84d55b85964e73bb35fbcef849713",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/farm/animals/raccoon.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/forest/dark_forest.tscn",
+   "size": 2867,
+   "sha": "90d95801d421cb4cc85f4a58a319126050b33a33",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/forest/dark_forest.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/isometric/demo_isometric_2d.tscn",
+   "size": 2002,
+   "sha": "250e095e34945ffef0fb8d08653ba819160df240",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "scenes/isometric/npc_2d.tscn",
+   "size": 610,
+   "sha": "bb814c800138415d2a1ed35d790bc190c926452f",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "scenes/isometric/player_2d.tscn",
+   "size": 757,
+   "sha": "e05a739ab1e3084bcd72a2e7fae93654715d8084",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "scenes/isometric/characters/bat.tscn",
+   "size": 722,
+   "sha": "bef0827df0839420769ca4dad5a0c224fc8f80b1",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/isometric/characters/bat.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/isometric/characters/bear.tscn",
+   "size": 725,
+   "sha": "e055da85c6f135960ac3f0c46be78b6fd60e9cc3",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/isometric/characters/bear.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/isometric/characters/capybara.tscn",
+   "size": 737,
+   "sha": "980cb477374a13b2ef4d92d0791998440afce318",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/isometric/characters/capybara.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/isometric/characters/cat.tscn",
+   "size": 722,
+   "sha": "51a4d6cc61ac2b9e2f02d216216709c119cfdba4",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/isometric/characters/cat.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/isometric/characters/fairy.tscn",
+   "size": 728,
+   "sha": "9fb0ba374c9cf45f581d2592c36e1572f0766c57",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/isometric/characters/fairy.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/isometric/characters/fox.tscn",
+   "size": 722,
+   "sha": "afeb4760ffd62c13502e0bb6540abd7f6bf37fe3",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/isometric/characters/fox.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/isometric/characters/frog.tscn",
+   "size": 725,
+   "sha": "db999f099592487099a4d7a25cb36c3a68a253b4",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/isometric/characters/frog.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/isometric/characters/hedgehog.tscn",
+   "size": 737,
+   "sha": "851c1770a1e3f8a9e4b8e6e637f6d7b1d97a3525",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/isometric/characters/hedgehog.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/isometric/characters/monkey.tscn",
+   "size": 731,
+   "sha": "e670dd1beba1cca10f53ab5f823435737951f1be",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/isometric/characters/monkey.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/isometric/characters/penguin.tscn",
+   "size": 734,
+   "sha": "7469d06e75804b15b8f1547a3208b614f8e21288",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/isometric/characters/penguin.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/isometric/characters/rabbit.tscn",
+   "size": 731,
+   "sha": "c6758f5a62add9d7053aac4c96e5ac7519add381",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/isometric/characters/rabbit.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/isometric/characters/raccoon.tscn",
+   "size": 734,
+   "sha": "2704c57c2ac96efbeb2a4cea4ec265eaac77ea51",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/isometric/characters/raccoon.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/main/main_menu.tscn",
+   "size": 1763,
+   "sha": "377b16cd8dc2cb81a71785e7289b80f42f65e623",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scenes/main/main_menu.tscn"
+  },
+  {
+   "path": "scenes/main/world.tscn",
+   "size": 1943,
+   "sha": "d74871a5f1597aefc6d5c085b4708b5b838fd59c",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/main/world.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/npc/npc.tscn",
+   "size": 803,
+   "sha": "7a445127bc9f6990fd39487d286df2f03e693768",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scenes/npc/npc.tscn"
+  },
+  {
+   "path": "scenes/npc/skins/baker_maja.tscn",
+   "size": 202,
+   "sha": "051dd8e6d271f95e2ea7acc3c02e2f55546320b2",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/npc/skins/baker_maja.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/npc/skins/fairy_lily.tscn",
+   "size": 201,
+   "sha": "5db88efae9163b890f801c26136a7ce25aa38a22",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/npc/skins/fairy_lily.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/npc/skins/fairy_wizard.tscn",
+   "size": 203,
+   "sha": "eece35d3048f1b11c05061677a12cc31f02c2804",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/npc/skins/fairy_wizard.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/npc/skins/farmer_rosa.tscn",
+   "size": 205,
+   "sha": "c6bff9fec59885f9cc1e72d63495055c939d37cf",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/npc/skins/farmer_rosa.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/npc/skins/guard_oak.tscn",
+   "size": 199,
+   "sha": "456651d5689ff5ffc7b6b1c66ad3c9763887ea0c",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/npc/skins/guard_oak.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/npc/skins/mayor_lyra.tscn",
+   "size": 201,
+   "sha": "ae2510576d19c700dda0e118782a24d0fff4b1b6",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/npc/skins/mayor_lyra.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/npc/skins/merchant_pip.tscn",
+   "size": 204,
+   "sha": "66dd32d3f842f7bcac757cefa2def1c0d872e19d",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/npc/skins/merchant_pip.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/npc/skins/smith_thorin.tscn",
+   "size": 206,
+   "sha": "6b6392c26973b11c1e042272f55639f54028b264",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/npc/skins/smith_thorin.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/player/player.tscn",
+   "size": 924,
+   "sha": "ad2924583e972684b75da2e49a30aabefe9da907",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/player/player.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/player/skins/animal_bat.tscn",
+   "size": 165,
+   "sha": "cbbf8db0b883a666fdaeaad29100d3189a4f54ff",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/player/skins/animal_bat.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/player/skins/animal_bear.tscn",
+   "size": 167,
+   "sha": "dc12cb06c99c8a4e81db52098ee980652391cdec",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/player/skins/animal_bear.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/player/skins/animal_capybara.tscn",
+   "size": 175,
+   "sha": "6bf00cebdc1fe56ff2664fda2822750410d296db",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/player/skins/animal_capybara.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/player/skins/animal_cat.tscn",
+   "size": 165,
+   "sha": "2e40789758bc427c0ea6ffc13ec15d6dafb728b7",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/player/skins/animal_cat.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/player/skins/animal_fox.tscn",
+   "size": 165,
+   "sha": "f17be3ae1c7146d0ece0402abc5bfb2518bd5546",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/player/skins/animal_fox.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/player/skins/animal_frog.tscn",
+   "size": 167,
+   "sha": "0ff2fee5d0306313a7144be1a7e08e40d41e52f7",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/player/skins/animal_frog.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/player/skins/animal_hedgehog.tscn",
+   "size": 175,
+   "sha": "ea76a150a5db60e304d959928d4172f7f56f2714",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/player/skins/animal_hedgehog.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/player/skins/animal_monkey.tscn",
+   "size": 171,
+   "sha": "5f443acd83adbb1adebed05093b6fec55719343b",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/player/skins/animal_monkey.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/player/skins/animal_penguin.tscn",
+   "size": 173,
+   "sha": "f7dc70bfb374aefaa4834a3e76de1baab4d41c5d",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/player/skins/animal_penguin.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/player/skins/animal_rabbit.tscn",
+   "size": 171,
+   "sha": "aa89d4fdda2c5f3a1e9a459c943ec00254f56652",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/player/skins/animal_rabbit.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/player/skins/animal_raccoon.tscn",
+   "size": 173,
+   "sha": "693b4ee33512c6a200724cb0b27651bb3186de43",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/player/skins/animal_raccoon.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/player/skins/fairy_dusk.tscn",
+   "size": 300,
+   "sha": "2741931df1f00bd94d0bddc79e1c5d553fc6483d",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/player/skins/fairy_dusk.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/player/skins/fairy_meadow.tscn",
+   "size": 169,
+   "sha": "3d48b1b193628f0907d2a23fad989dd5e9dd5eef",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/player/skins/fairy_meadow.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/player/skins/fairy_stardust.tscn",
+   "size": 308,
+   "sha": "0e381a5b0b18dadc2f57a2b28b8237900d7ba8c5",
+   "class": "D",
+   "dest": "legacy/package_3d/scenes/player/skins/fairy_stardust.tscn",
+   "note": "archived"
+  },
+  {
+   "path": "scenes/ui/character_select.tscn",
+   "size": 3023,
+   "sha": "00a604549a247632a478beab6368f5785056a99a",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scenes/ui/character_select.tscn"
+  },
+  {
+   "path": "scripts/autoload/audio_manager.gd",
+   "size": 3736,
+   "sha": "ceb67f0f0d4699f13c801aaa2f1df76c0134ed38",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/autoload/audio_manager.gd"
+  },
+  {
+   "path": "scripts/autoload/audio_manager.gd.uid",
+   "size": 20,
+   "sha": "8f13eb6fe57fe302de7eb3559ee75988a22a12f1",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/autoload/audio_manager.gd.uid"
+  },
+  {
+   "path": "scripts/autoload/economy_manager.gd",
+   "size": 4315,
+   "sha": "b8cff96c566b5d285d4a69bafea87383c18a5752",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "scripts/autoload/economy_manager.gd.uid",
+   "size": 20,
+   "sha": "4d6cf28ba4c2854d2ddabbf23db3d9cd67000212",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/autoload/economy_manager.gd.uid"
+  },
+  {
+   "path": "scripts/autoload/event_bus.gd",
+   "size": 2490,
+   "sha": "84262d857be516d56ca7dba68772f9678d34d78f",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "scripts/autoload/event_bus.gd.uid",
+   "size": 20,
+   "sha": "a794c5052cb655cf3400c2e833c170bc7b7df22d",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/autoload/event_bus.gd.uid"
+  },
+  {
+   "path": "scripts/autoload/game_manager.gd",
+   "size": 4655,
+   "sha": "e1ef08e4d07e8b0b359913501f9c75a7d4e1b114",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "scripts/autoload/game_manager.gd.uid",
+   "size": 20,
+   "sha": "c641cfd4d7b06401b69ffdc3dcc243fcd22147bb",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/autoload/game_manager.gd.uid"
+  },
+  {
+   "path": "scripts/autoload/localization_manager.gd",
+   "size": 1104,
+   "sha": "c71bc81c027e5d60e6f5779092e7e2d3a6f6725f",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "scripts/autoload/localization_manager.gd.uid",
+   "size": 20,
+   "sha": "29f98c4be34d4e259397620337b751cf024c03f5",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/autoload/localization_manager.gd.uid"
+  },
+  {
+   "path": "scripts/autoload/lua_runtime.gd",
+   "size": 20948,
+   "sha": "7734b89ab374838646f3c5fa0e2968f255cb8d93",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "scripts/autoload/lua_runtime.gd.uid",
+   "size": 20,
+   "sha": "651344c20f53e1ec924154fee6532b201b1244bb",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/autoload/lua_runtime.gd.uid"
+  },
+  {
+   "path": "scripts/autoload/quest_manager.gd",
+   "size": 7189,
+   "sha": "ab722ad906076e0ab61ae62a74655e8a6eaeb14b",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/autoload/quest_manager.gd"
+  },
+  {
+   "path": "scripts/autoload/quest_manager.gd.uid",
+   "size": 20,
+   "sha": "64b44552d8d74b0622afed7025b65d034d502cd4",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/autoload/quest_manager.gd.uid"
+  },
+  {
+   "path": "scripts/autoload/save_manager.gd",
+   "size": 3415,
+   "sha": "e0e2b862c553c1c8c6e4628e458f5284e79838ea",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "scripts/autoload/save_manager.gd.uid",
+   "size": 19,
+   "sha": "751636ec447e31c380c792598ecf659242ef7b2f",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/autoload/save_manager.gd.uid"
+  },
+  {
+   "path": "scripts/autoload/time_manager.gd",
+   "size": 2620,
+   "sha": "e62b69e84148311558a6d9f00cdcf8bc79b4f83e",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "scripts/autoload/time_manager.gd.uid",
+   "size": 20,
+   "sha": "6474bde1a9a6599f4dd570698910ad2b0f63b918",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/autoload/time_manager.gd.uid"
+  },
+  {
+   "path": "scripts/characters/character_catalog.gd",
+   "size": 1224,
+   "sha": "5e9ce9810435e8c6e379c00cbcea4016ab474fc8",
+   "class": "D",
+   "dest": "legacy/package_3d/scripts/characters/character_catalog.gd",
+   "note": "archived"
+  },
+  {
+   "path": "scripts/characters/chibi_visual.gd",
+   "size": 4540,
+   "sha": "bfd3b896524ac69854a7b9cea08220d7d14776ce",
+   "class": "D",
+   "dest": "legacy/package_3d/scripts/characters/chibi_visual.gd",
+   "note": "archived"
+  },
+  {
+   "path": "scripts/economy/shop_system.gd",
+   "size": 6810,
+   "sha": "39f53079e6b3c078fb4e95c3a13fc4f39eea33be",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "scripts/economy/shop_system.gd.uid",
+   "size": 20,
+   "sha": "6af603de790e9f2a84977eae7ab144eb564da0cb",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/economy/shop_system.gd.uid"
+  },
+  {
+   "path": "scripts/farm/animal_husbandry.gd",
+   "size": 18080,
+   "sha": "85d901761f2150c7e54087dd04aecd4ff7606df1",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/farm/animal_husbandry.gd"
+  },
+  {
+   "path": "scripts/farm/animal_husbandry.gd.uid",
+   "size": 20,
+   "sha": "b7390272ab3221a4646731b96baf4c2cc50265ac",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/farm/animal_husbandry.gd.uid"
+  },
+  {
+   "path": "scripts/farm/building_placer.gd",
+   "size": 2520,
+   "sha": "1ed479e06affa06e28008aa64e296a7286be3b01",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/farm/building_placer.gd"
+  },
+  {
+   "path": "scripts/farm/building_placer.gd.uid",
+   "size": 19,
+   "sha": "dd708d1488ad3b8c0ca3efc069b7306fc15699c4",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/farm/building_placer.gd.uid"
+  },
+  {
+   "path": "scripts/farm/farm_animal.gd",
+   "size": 6840,
+   "sha": "5f3cfa6a25fef1d0d2186184a636b0ee29c33f90",
+   "class": "D",
+   "dest": "legacy/package_3d/scripts/farm/farm_animal.gd",
+   "note": "archived"
+  },
+  {
+   "path": "scripts/farm/farm_animal.gd.uid",
+   "size": 20,
+   "sha": "6da0a129d147ce95f3e462cb0f24a1fed8645ee8",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/farm/farm_animal.gd.uid"
+  },
+  {
+   "path": "scripts/farm/farm_plot_interactable.gd",
+   "size": 1824,
+   "sha": "617cc0cf7dd9dca43abbd859aff081f32f6918dd",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/farm/farm_plot_interactable.gd"
+  },
+  {
+   "path": "scripts/farm/farm_plot_interactable.gd.uid",
+   "size": 20,
+   "sha": "37bbf8795c8258c4e3acb54450b907796a9f1329",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/farm/farm_plot_interactable.gd.uid"
+  },
+  {
+   "path": "scripts/farm/farm_system.gd",
+   "size": 6032,
+   "sha": "4dc0bb4eee6b02bafbf9c0e7067d5578aab28fa7",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/farm/farm_system.gd"
+  },
+  {
+   "path": "scripts/farm/farm_system.gd.uid",
+   "size": 20,
+   "sha": "d6557199f2b79473a98633be8f590e1b32901575",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/farm/farm_system.gd.uid"
+  },
+  {
+   "path": "scripts/isometric/iso_chibi_sprite_2d.gd",
+   "size": 6824,
+   "sha": "0f94f4ed54a8e0b72440c034a7f04307c75f9e09",
+   "class": "D",
+   "dest": "legacy/package_3d/scripts/isometric/iso_chibi_sprite_2d.gd",
+   "note": "archived"
+  },
+  {
+   "path": "scripts/isometric/iso_player_controller_2d.gd",
+   "size": 3747,
+   "sha": "82e99eaed1fe29c3fcaa8223f48b8d8ecb942460",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "scripts/isometric/iso_wanderer_2d.gd",
+   "size": 1357,
+   "sha": "154759f93940e0421316047a2182608c3d0a7c28",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "scripts/isometric/isometric_demo.gd",
+   "size": 1359,
+   "sha": "0eaf57e50f7cf7b11cff6ba2f44c04f4a31e05da",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "scripts/isometric/isometric_ground_2d.gd",
+   "size": 1234,
+   "sha": "6844daa54ced080422507c98ad0d048e8995c66a",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "scripts/npc/npc_agent.gd",
+   "size": 11801,
+   "sha": "771eeac361bda9d1b545291e0622d6c6716e5f69",
+   "class": "D",
+   "dest": "legacy/package_3d/scripts/npc/npc_agent.gd",
+   "note": "archived"
+  },
+  {
+   "path": "scripts/npc/npc_agent.gd.uid",
+   "size": 20,
+   "sha": "9a5e36c060e0fdb71c2d84560a0b40f947aff980",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/npc/npc_agent.gd.uid"
+  },
+  {
+   "path": "scripts/npc/npc_base.gd",
+   "size": 4229,
+   "sha": "b71240908daaef3ed8e0854fbfca6e873159c0ab",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/npc/npc_base.gd"
+  },
+  {
+   "path": "scripts/npc/npc_base.gd.uid",
+   "size": 20,
+   "sha": "df47789cd14655c58312101decba0dffd5a2872b",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/npc/npc_base.gd.uid"
+  },
+  {
+   "path": "scripts/npc/npc_spawner.gd",
+   "size": 3495,
+   "sha": "4fb9b4df6a96755e5aa1dd49c75d81feef7dad4b",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/npc/npc_spawner.gd"
+  },
+  {
+   "path": "scripts/npc/npc_spawner.gd.uid",
+   "size": 19,
+   "sha": "085f1776bb2339f2e18153e5a97ed314e6ecf817",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/npc/npc_spawner.gd.uid"
+  },
+  {
+   "path": "scripts/player/player_controller.gd",
+   "size": 10575,
+   "sha": "f865269962794fd5e149ed2b46738c06c2a587e0",
+   "class": "D",
+   "dest": "legacy/package_3d/scripts/player/player_controller.gd",
+   "note": "archived"
+  },
+  {
+   "path": "scripts/player/player_controller.gd.uid",
+   "size": 20,
+   "sha": "9c434f905fc079107d7080d2bcbe25b79359085c",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/player/player_controller.gd.uid"
+  },
+  {
+   "path": "scripts/ui/animal_care_ui.gd",
+   "size": 5306,
+   "sha": "cfb0e74df3b4f127fe51869da69ca6d39525ef03",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/animal_care_ui.gd"
+  },
+  {
+   "path": "scripts/ui/animal_care_ui.gd.uid",
+   "size": 20,
+   "sha": "88cdbe8dd33b1821b4a506ce4b3917b75dd6c508",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/animal_care_ui.gd.uid"
+  },
+  {
+   "path": "scripts/ui/build_menu_ui.gd",
+   "size": 2616,
+   "sha": "e487acb9ac325cb1ba2904d9869a2ee8f22819cb",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/build_menu_ui.gd"
+  },
+  {
+   "path": "scripts/ui/build_menu_ui.gd.uid",
+   "size": 20,
+   "sha": "c72da89efb9ee467cbfe60681a4230461c4d28ee",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/build_menu_ui.gd.uid"
+  },
+  {
+   "path": "scripts/ui/character_select.gd",
+   "size": 6719,
+   "sha": "12688839f1b98423651639a19a0b164dcb736be7",
+   "class": "D",
+   "dest": "legacy/package_3d/scripts/ui/character_select.gd",
+   "note": "archived"
+  },
+  {
+   "path": "scripts/ui/character_select.gd.uid",
+   "size": 20,
+   "sha": "9be73526af1c941b637990e89a07294dc3db2255",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/character_select.gd.uid"
+  },
+  {
+   "path": "scripts/ui/dialogue_ui.gd",
+   "size": 2400,
+   "sha": "f2078db8390ff5f55917e220d9e931e431caeed5",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/dialogue_ui.gd"
+  },
+  {
+   "path": "scripts/ui/dialogue_ui.gd.uid",
+   "size": 20,
+   "sha": "f1dd3c69f338c3dc7c048be94e6d048d65168646",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/dialogue_ui.gd.uid"
+  },
+  {
+   "path": "scripts/ui/hud.gd",
+   "size": 4414,
+   "sha": "02926ee92d22e36556dcffbc87eaee86a08b82dd",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/hud.gd"
+  },
+  {
+   "path": "scripts/ui/hud.gd.uid",
+   "size": 19,
+   "sha": "19fb5890506e66d61af0482f85ce7a5a5440e50c",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/hud.gd.uid"
+  },
+  {
+   "path": "scripts/ui/inventory_ui.gd",
+   "size": 2826,
+   "sha": "41b534641d18b1aa742402b38a5da24d2abc78dd",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/inventory_ui.gd"
+  },
+  {
+   "path": "scripts/ui/inventory_ui.gd.uid",
+   "size": 20,
+   "sha": "ce6dffa6830627ac5f8d204b0bf0473c2ef6c06e",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/inventory_ui.gd.uid"
+  },
+  {
+   "path": "scripts/ui/main_menu.gd",
+   "size": 1522,
+   "sha": "c6ffb6c6001276af2f6bf5bff17bf9542f8d3c1c",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/main_menu.gd"
+  },
+  {
+   "path": "scripts/ui/main_menu.gd.uid",
+   "size": 20,
+   "sha": "0b8f620e545a54bc80d08be3c8f0c7aa094613a9",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/main_menu.gd.uid"
+  },
+  {
+   "path": "scripts/ui/pause_menu.gd",
+   "size": 1508,
+   "sha": "de0617919a7d81f6fd7a1dcfbdfa8a7b3ce7b000",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/pause_menu.gd"
+  },
+  {
+   "path": "scripts/ui/pause_menu.gd.uid",
+   "size": 20,
+   "sha": "eddd9ff05135511efa5dfad82835e00f265ef393",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/pause_menu.gd.uid"
+  },
+  {
+   "path": "scripts/ui/quest_journal.gd",
+   "size": 2287,
+   "sha": "2307cda1a04e9eda41848d58738aa8278349ad21",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/quest_journal.gd"
+  },
+  {
+   "path": "scripts/ui/quest_journal.gd.uid",
+   "size": 19,
+   "sha": "3784b8725cad7a68d12ce15ab52545fd5c08969e",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/quest_journal.gd.uid"
+  },
+  {
+   "path": "scripts/ui/save_load_ui.gd",
+   "size": 4524,
+   "sha": "3309b9401fc826d93b1e579b83e6e7d8fa6555c5",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/save_load_ui.gd"
+  },
+  {
+   "path": "scripts/ui/save_load_ui.gd.uid",
+   "size": 19,
+   "sha": "01a89b20c9c63070106ae0f46c8327adb1d58649",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/save_load_ui.gd.uid"
+  },
+  {
+   "path": "scripts/ui/shop_ui.gd",
+   "size": 3226,
+   "sha": "97f77e1ab14f56767f0189e4698c63f472e22a60",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/shop_ui.gd"
+  },
+  {
+   "path": "scripts/ui/shop_ui.gd.uid",
+   "size": 20,
+   "sha": "7ac3e8c726ee0bdc084fd2c990096c150e4b212b",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/ui/shop_ui.gd.uid"
+  },
+  {
+   "path": "scripts/world/crystal_cave.gd",
+   "size": 3241,
+   "sha": "50d5f3f37fc3bc0899474d3350051f49c8de9a5d",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/world/crystal_cave.gd"
+  },
+  {
+   "path": "scripts/world/crystal_cave.gd.uid",
+   "size": 20,
+   "sha": "038b7c496b76cda02386eca23646cfb74f5d9ad2",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/world/crystal_cave.gd.uid"
+  },
+  {
+   "path": "scripts/world/dark_forest.gd",
+   "size": 5008,
+   "sha": "9b754bc14987fce6d3d4faa03e91c864fce355df",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/world/dark_forest.gd"
+  },
+  {
+   "path": "scripts/world/dark_forest.gd.uid",
+   "size": 20,
+   "sha": "001371f16bd27c69997fc09fc0f4ca1f83da1c16",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/world/dark_forest.gd.uid"
+  },
+  {
+   "path": "scripts/world/dark_forest_zone.gd",
+   "size": 7537,
+   "sha": "af4d18daa2dbbfe9b7a64473a16096a7cba2ad45",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/world/dark_forest_zone.gd"
+  },
+  {
+   "path": "scripts/world/dark_forest_zone.gd.uid",
+   "size": 19,
+   "sha": "c88f86690014e6b014537e07700494d643d17039",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/world/dark_forest_zone.gd.uid"
+  },
+  {
+   "path": "scripts/world/enemy.gd",
+   "size": 5404,
+   "sha": "a23b606370e34a201eb0e2fc33d115f1e1b26cbd",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/world/enemy.gd"
+  },
+  {
+   "path": "scripts/world/enemy.gd.uid",
+   "size": 20,
+   "sha": "027184cd6d776219241d00c4d6e8098f778c334d",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/world/enemy.gd.uid"
+  },
+  {
+   "path": "scripts/world/mushroom_grove.gd",
+   "size": 3857,
+   "sha": "1244761b91404c3c2f12c0e5c2a23be2d8d65ae9",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/world/mushroom_grove.gd"
+  },
+  {
+   "path": "scripts/world/mushroom_grove.gd.uid",
+   "size": 19,
+   "sha": "e7c501576718f45c42cd63d4e51135dbc63428e6",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/world/mushroom_grove.gd.uid"
+  },
+  {
+   "path": "scripts/world/resource_node_interactable.gd",
+   "size": 900,
+   "sha": "3d8fce3eea0e5d24dc619780f8159ecd86726dfd",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/world/resource_node_interactable.gd"
+  },
+  {
+   "path": "scripts/world/resource_node_interactable.gd.uid",
+   "size": 20,
+   "sha": "d4d72b1ce044fa0a253d5be30e2378fa9af40b3d",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at scripts/world/resource_node_interactable.gd.uid"
+  },
+  {
+   "path": "scripts/world/world.gd",
+   "size": 4632,
+   "sha": "7b66dca7caa30a3ed38768a4d2277afbc550a60d",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "scripts/world/world.gd.uid",
+   "size": 20,
+   "sha": "5910210420376ba13c92dfd00d77497de7a28125",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "scripts/world/zone_trigger.gd",
+   "size": 733,
+   "sha": "882be8c868cdbd8da72ca55b244a8f2da2e3c3e8",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "scripts/world/zone_trigger.gd.uid",
+   "size": 20,
+   "sha": "c5a36b9e0b2af2de98e3ebf1a407b3034e96e913",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "tests/.gitkeep",
+   "size": 0,
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "class": "S",
+   "dest": null,
+   "note": "empty placeholder / OS file"
+  },
+  {
+   "path": "tests/character_assets.gd",
+   "size": 5878,
+   "sha": "d90272d1f412178887c9aebd7e35deb09a7493a2",
+   "class": "D",
+   "dest": "legacy/package_3d/tests/character_assets.gd",
+   "note": "archived"
+  },
+  {
+   "path": "tests/playtest.gd",
+   "size": 6041,
+   "sha": "2a2c1809a7bcf3eeb67f1e06317b85493811dd6f",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "tests/playtest.gd.uid",
+   "size": 20,
+   "sha": "926f91a1bd81a1ec1adcf6c84ba059a0468adc9a",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at tests/playtest.gd.uid"
+  },
+  {
+   "path": "tests/run_character_checks.sh",
+   "size": 488,
+   "sha": "5f15d3f9b05663fcd885039464d4d1aae3e9d5ed",
+   "class": "D",
+   "dest": "legacy/package_3d/tests/run_character_checks.sh",
+   "note": "archived"
+  },
+  {
+   "path": "tests/run_playtest.sh",
+   "size": 430,
+   "sha": "3d42b1699bb787f9de80bdab01dafdaaee03ddda",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "tests/validate_isometric.py",
+   "size": 3591,
+   "sha": "a630afd4f9f700837030aaacbfb7285d34adefc8",
+   "class": "B",
+   "dest": null,
+   "note": "same content in git history"
+  },
+  {
+   "path": "tools/.gdignore",
+   "size": 0,
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "class": "S",
+   "dest": null,
+   "note": "empty placeholder / OS file"
+  },
+  {
+   "path": "tools/characters/additions.py",
+   "size": 6339,
+   "sha": "dfa872173233497835f1b766c215e717e411c764",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at tools/art/generator/additions.py"
+  },
+  {
+   "path": "tools/characters/asset_io.py",
+   "size": 3975,
+   "sha": "e90c7f25eb376934b9001c176dc713af88f0f875",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at tools/art/generator/asset_io.py"
+  },
+  {
+   "path": "tools/characters/build_assets.py",
+   "size": 20472,
+   "sha": "dd788d73cb464fa3009a3c13db99ccb4c15b4742",
+   "class": "D",
+   "dest": "legacy/package_3d/tools/characters/build_assets.py",
+   "note": "archived"
+  },
+  {
+   "path": "tools/characters/geometry.py",
+   "size": 28042,
+   "sha": "afc6ab5f8e91dc07ddebce15a4ee524e76f82eca",
+   "class": "A",
+   "dest": null,
+   "note": "same content in working tree at tools/art/generator/geometry.py"
+  },
+  {
+   "path": "tools/characters/render_assets.py",
+   "size": 3773,
+   "sha": "46bffbbd3232e0ca592544ecfcc9f963be7c4640",
+   "class": "D",
+   "dest": "legacy/package_3d/tools/characters/render_assets.py",
+   "note": "archived"
+  },
+  {
+   "path": "tools/characters/validate_assets.py",
+   "size": 4775,
+   "sha": "12563a38914d6ea6a8369f650d34b2520070c5db",
+   "class": "D",
+   "dest": "legacy/package_3d/tools/characters/validate_assets.py",
+   "note": "archived"
+  },
+  {
+   "path": "tools/isometric/README.md",
+   "size": 867,
+   "sha": "9f23436cb22878d16e6a3bd7a8db4ece94033ce9",
+   "class": "D",
+   "dest": "legacy/package_3d/tools/isometric/README.md",
+   "note": "archived"
+  },
+  {
+   "path": "tools/isometric/bake_sprite_atlases.py",
+   "size": 7001,
+   "sha": "740ef5954d16c6ddc79d2b896a7e68a60b7a4e7f",
+   "class": "D",
+   "dest": "legacy/package_3d/tools/isometric/bake_sprite_atlases.py",
+   "note": "archived"
+  },
+  {
+   "path": "tools/isometric/requirements.txt",
+   "size": 44,
+   "sha": "a269634bb187904337b428740b8227fef68c499b",
+   "class": "D",
+   "dest": "legacy/package_3d/tools/isometric/requirements.txt",
+   "note": "archived"
+  }
+ ]
+}
