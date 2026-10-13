@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Alegreya+Sans:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#e7d8b6;color:#2b2340;font-family:'Alegreya Sans',sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#5d4fa3;text-decoration:underline}a:hover{color:#2b2340}
+*{box-sizing:border-box}
+</style>
+</helmet>
+<div style="width:1440px;margin:0 auto;padding:80px;display:flex;flex-direction:column;gap:56px">
+
+<header style="display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:end">
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;letter-spacing:.1em;color:#6a5a48">TRÆTOPPEN · FIGURER · SKITSER</span>
+    <h1 style="margin:0;font-family:'Caprasimo',serif;font-weight:400;font-size:96px;line-height:.9">Skovens beboere</h1>
+    <p style="margin:0;font-size:21px;line-height:1.5;max-width:620px;text-wrap:pretty">Fire figurer er tegnet efter de originale tegninger, og otte nye er lavet i samme stil. Dyrene er tegnet med rigtig dyreanatomi: snuder, poter, haler og naturlige stillinger. Det er formskitser til at låse proportioner og farver fast, inden den endelige malede grafik laves.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+    <div style="padding:14px 16px;border-top:2px solid #2b2340;display:flex;flex-direction:column;gap:4px"><span style="font-weight:800;font-size:17px">Hoved og krop 1:1</span><span style="font-size:15px;line-height:1.4;color:#4c4058">Rundt hoved oven på en oval krop.</span></div>
+    <div style="padding:14px 16px;border-top:2px solid #2b2340;display:flex;flex-direction:column;gap:4px"><span style="font-weight:800;font-size:17px">Store øjne</span><span style="font-size:15px;line-height:1.4;color:#4c4058">Mørk pupil med et hvidt glimt.</span></div>
+    <div style="padding:14px 16px;border-top:2px solid #2b2340;display:flex;flex-direction:column;gap:4px"><span style="font-weight:800;font-size:17px">Tre kindstreger</span><span style="font-size:15px;line-height:1.4;color:#4c4058">Lånt direkte fra originalerne.</span></div>
+  </div>
+</header>
+
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px">
+
+  <div id="kanin" style="background:#f4e6c4;border:2px solid #2b2340;border-radius:18px;overflow:hidden;display:flex;flex-direction:column">
+    <div style="position:relative;height:360px;background:#dfe8c8;border-bottom:2px solid #2b2340;display:flex;align-items:flex-end;justify-content:center">
+      <div style="position:absolute;left:16px;top:16px;width:96px;background:#fffdf6;border:2px solid #2b2340;border-radius:6px;padding:5px 5px 4px;transform:rotate(-4deg);display:flex;flex-direction:column;gap:3px;box-shadow:0 4px 10px rgba(43,35,64,.2)"><div style="width:100%;aspect-ratio:1;overflow:hidden;border-radius:3px"><img src="refs/tegning-43.jpg" alt="Original tegning af kanin" style="width:100%;height:100%;object-fit:cover;display:block"></div><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;text-align:center">original</span></div>
+      <svg viewBox="0 0 240 280" width="280" height="327" style="display:block"><g style="stroke:#2b2340;stroke-width:4;stroke-linejoin:round;stroke-linecap:round">
+        <ellipse cx="120" cy="264" rx="78" ry="8" fill="#2b2340" opacity=".12" style="stroke:none"></ellipse>
+<circle cx="190" cy="232" r="16" fill="#fffdf6"></circle>
+<ellipse cx="120" cy="214" rx="72" ry="52" fill="#f1e3cc"></ellipse>
+<ellipse cx="120" cy="204" rx="34" ry="30" fill="#fffdf6" style="stroke:none"></ellipse>
+<ellipse cx="74" cy="256" rx="28" ry="11" fill="#fbf3e2"></ellipse><ellipse cx="166" cy="256" rx="28" ry="11" fill="#fbf3e2"></ellipse>
+<path d="M54 252v6M62 251v7M178 251v7M186 252v6" style="stroke-width:2.5"></path>
+<ellipse cx="104" cy="246" rx="12" ry="10" fill="#f1e3cc"></ellipse><ellipse cx="136" cy="246" rx="12" ry="10" fill="#f1e3cc"></ellipse>
+<path d="M100 254v-5M108 254v-5M132 254v-5M140 254v-5" style="stroke-width:2"></path>
+<ellipse cx="148" cy="52" rx="16" ry="42" transform="rotate(14 148 52)" fill="#f1e3cc"></ellipse><ellipse cx="148" cy="56" rx="7" ry="28" transform="rotate(14 148 56)" fill="#f2b8c6" style="stroke:none"></ellipse>
+<path d="M100 84C92 36 54 22 38 44C28 60 40 76 54 70C64 52 80 54 88 86Z" fill="#f1e3cc"></path><path d="M90 74C84 52 64 42 52 52" fill="none" style="stroke:#f2b8c6;stroke-width:8"></path>
+<ellipse cx="120" cy="130" rx="60" ry="52" fill="#f1e3cc"></ellipse>
+<ellipse cx="111" cy="152" rx="11" ry="9" fill="#fffdf6" style="stroke-width:2.5"></ellipse><ellipse cx="129" cy="152" rx="11" ry="9" fill="#fffdf6" style="stroke-width:2.5"></ellipse>
+<path d="M114 140q6-4 12 0q-2 6-6 7q-4-1-6-7z" fill="#e58fa6" style="stroke-width:2.5"></path>
+<rect x="116" y="160" width="8" height="7" rx="2" fill="#fffdf6" style="stroke-width:2"></rect>
+<path d="M98 150l-14-3M98 156l-14 1M142 150l14-3M142 156l14 1" style="stroke-width:2"></path>
+<ellipse cx="94" cy="124" rx="10" ry="11" fill="#2b2340" style="stroke-width:3"></ellipse><circle cx="97" cy="120" r="3.5" fill="#fff" style="stroke:none"></circle><circle cx="91" cy="128" r="1.6" fill="#fff" style="stroke:none"></circle><ellipse cx="146" cy="124" rx="10" ry="11" fill="#2b2340" style="stroke-width:3"></ellipse><circle cx="149" cy="120" r="3.5" fill="#fff" style="stroke:none"></circle><circle cx="143" cy="128" r="1.6" fill="#fff" style="stroke:none"></circle><ellipse cx="74" cy="146" rx="10" ry="6" fill="#f2a7b8" opacity=".75" style="stroke:none"></ellipse><path d="M68 141v8M74 141v8M80 141v8" style="stroke-width:2.5"></path><ellipse cx="166" cy="146" rx="10" ry="6" fill="#f2a7b8" opacity=".75" style="stroke:none"></ellipse><path d="M160 141v8M166 141v8M172 141v8" style="stroke-width:2.5"></path>
+      </g></svg>
+    </div>
+    <div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-family:'Caprasimo',serif;font-size:30px;line-height:1">Hoppe</span><span style="font-weight:700;font-size:15px;color:#6a5a48">Kanin</span></div>
+      <p style="margin:0;font-size:17px;line-height:1.45;text-wrap:pretty">Gartner på nabogrenen. Bytter sjældne frø for friske gulerødder og giver gode råd om vejret.</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px">Nabo</span><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px;background:#cde0a6">Trætoppen</span></div>
+    </div>
+  </div>
+
+  <div id="bjorn" style="background:#f4e6c4;border:2px solid #2b2340;border-radius:18px;overflow:hidden;display:flex;flex-direction:column">
+    <div style="position:relative;height:360px;background:#e2d8f4;border-bottom:2px solid #2b2340;display:flex;align-items:flex-end;justify-content:center">
+      <div style="position:absolute;left:16px;top:16px;width:96px;background:#fffdf6;border:2px solid #2b2340;border-radius:6px;padding:5px 5px 4px;transform:rotate(-4deg);display:flex;flex-direction:column;gap:3px;box-shadow:0 4px 10px rgba(43,35,64,.2)"><div style="width:100%;aspect-ratio:1;overflow:hidden;border-radius:3px"><img src="refs/tegning-38.jpg" alt="Original tegning af bjørn" style="width:100%;height:100%;object-fit:cover;display:block"></div><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;text-align:center">original</span></div>
+      <svg viewBox="0 0 240 280" width="280" height="327" style="display:block"><g style="stroke:#2b2340;stroke-width:4;stroke-linejoin:round;stroke-linecap:round">
+        <ellipse cx="120" cy="264" rx="78" ry="8" fill="#2b2340" opacity=".12" style="stroke:none"></ellipse>
+<ellipse cx="120" cy="204" rx="64" ry="58" fill="#b98657"></ellipse><ellipse cx="120" cy="212" rx="38" ry="38" fill="#d3a77a" style="stroke:none"></ellipse>
+<ellipse cx="66" cy="204" rx="17" ry="30" transform="rotate(16 66 204)" fill="#b98657"></ellipse><ellipse cx="174" cy="204" rx="17" ry="30" transform="rotate(-16 174 204)" fill="#b98657"></ellipse>
+<path d="M52 226l1 6M59 229v6M188 226l-1 6M181 229v6" style="stroke-width:2.5"></path>
+<ellipse cx="84" cy="248" rx="28" ry="17" fill="#b98657"></ellipse><ellipse cx="156" cy="248" rx="28" ry="17" fill="#b98657"></ellipse>
+<ellipse cx="84" cy="252" rx="13" ry="9" fill="#e9d2b0" style="stroke-width:3"></ellipse><ellipse cx="156" cy="252" rx="13" ry="9" fill="#e9d2b0" style="stroke-width:3"></ellipse>
+<g fill="#e9d2b0" style="stroke-width:2.5"><circle cx="72" cy="239" r="4.5"></circle><circle cx="84" cy="236" r="4.5"></circle><circle cx="96" cy="239" r="4.5"></circle><circle cx="144" cy="239" r="4.5"></circle><circle cx="156" cy="236" r="4.5"></circle><circle cx="168" cy="239" r="4.5"></circle></g>
+<circle cx="70" cy="74" r="21" fill="#b98657"></circle><circle cx="170" cy="74" r="21" fill="#b98657"></circle><circle cx="72" cy="76" r="10" fill="#e6b29a" style="stroke:none"></circle><circle cx="168" cy="76" r="10" fill="#e6b29a" style="stroke:none"></circle>
+<ellipse cx="120" cy="120" rx="62" ry="56" fill="#b98657"></ellipse>
+<ellipse cx="120" cy="148" rx="28" ry="21" fill="#e9d2b0"></ellipse>
+<ellipse cx="120" cy="138" rx="10" ry="7" fill="#2b2340"></ellipse><circle cx="116" cy="136" r="2.5" fill="#fff" style="stroke:none"></circle>
+<path d="M120 145v6M110 154q10 7 20 0" fill="none" style="stroke-width:3"></path>
+<ellipse cx="94" cy="116" rx="10" ry="11" fill="#2b2340" style="stroke-width:3"></ellipse><circle cx="97" cy="112" r="3.5" fill="#fff" style="stroke:none"></circle><circle cx="91" cy="120" r="1.6" fill="#fff" style="stroke:none"></circle><ellipse cx="146" cy="116" rx="10" ry="11" fill="#2b2340" style="stroke-width:3"></ellipse><circle cx="149" cy="112" r="3.5" fill="#fff" style="stroke:none"></circle><circle cx="143" cy="120" r="1.6" fill="#fff" style="stroke:none"></circle><ellipse cx="74" cy="140" rx="10" ry="6" fill="#f2a7b8" opacity=".75" style="stroke:none"></ellipse><path d="M68 135v8M74 135v8M80 135v8" style="stroke-width:2.5"></path><ellipse cx="166" cy="140" rx="10" ry="6" fill="#f2a7b8" opacity=".75" style="stroke:none"></ellipse><path d="M160 135v8M166 135v8M172 135v8" style="stroke-width:2.5"></path>
+      </g></svg>
+    </div>
+    <div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-family:'Caprasimo',serif;font-size:30px;line-height:1">Brumme</span><span style="font-weight:700;font-size:15px;color:#6a5a48">Bjørn</span></div>
+      <p style="margin:0;font-size:17px;line-height:1.45;text-wrap:pretty">Tømrer i Hyggebyen. Løfter bjælkerne, når feerne skal have nyt tag, og sælger byggematerialer til gården.</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px">Håndværker</span><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px;background:#d3c6ee">Hyggebyen</span></div>
+    </div>
+  </div>
+
+  <div id="kat" style="background:#f4e6c4;border:2px solid #2b2340;border-radius:18px;overflow:hidden;display:flex;flex-direction:column">
+    <div style="position:relative;height:360px;background:#e2d8f4;border-bottom:2px solid #2b2340;display:flex;align-items:flex-end;justify-content:center">
+      <div style="position:absolute;left:16px;top:16px;width:96px;background:#fffdf6;border:2px solid #2b2340;border-radius:6px;padding:5px 5px 4px;transform:rotate(-4deg);display:flex;flex-direction:column;gap:3px;box-shadow:0 4px 10px rgba(43,35,64,.2)"><div style="width:100%;aspect-ratio:1;overflow:hidden;border-radius:3px"><img src="refs/tegning-34.jpg" alt="Original tegning af kat" style="width:100%;height:100%;object-fit:cover;display:block"></div><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;text-align:center">original</span></div>
+      <svg viewBox="0 0 240 280" width="280" height="327" style="display:block"><g style="stroke:#2b2340;stroke-width:4;stroke-linejoin:round;stroke-linecap:round">
+        <ellipse cx="120" cy="264" rx="78" ry="8" fill="#2b2340" opacity=".12" style="stroke:none"></ellipse>
+<path d="M76 256C64 212 80 166 120 164C160 166 176 212 164 256Z" fill="#a7adb9"></path>
+<path d="M76 208q10-2 16 6M72 226q10-2 16 6M164 208q-10-2-16 6M168 226q-10-2-16 6" fill="none" style="stroke:#7d8494;stroke-width:4"></path>
+<ellipse cx="120" cy="198" rx="26" ry="28" fill="#e7e3ea" style="stroke:none"></ellipse>
+<rect x="98" y="200" width="20" height="56" rx="10" fill="#a7adb9"></rect><rect x="122" y="200" width="20" height="56" rx="10" fill="#a7adb9"></rect>
+<path d="M98 244h20v2q0 10-10 10t-10-10zM122 244h20v2q0 10-10 10t-10-10z" fill="#e7e3ea" style="stroke-width:3"></path>
+<path d="M160 246C206 238 214 262 170 264C150 265 134 263 124 261" style="stroke:#2b2340;stroke-width:20;fill:none"></path>
+<path d="M160 246C206 238 214 262 170 264C150 265 134 263 124 261" style="stroke:#a7adb9;stroke-width:12;fill:none"></path>
+<path d="M176 244v12M192 246v12" style="stroke:#7d8494;stroke-width:4"></path>
+<path d="M66 96L72 38L112 66Z" fill="#a7adb9"></path><path d="M128 66L168 38L174 96Z" fill="#a7adb9"></path>
+<path d="M78 82L80 52L100 66ZM140 66L160 52L162 82Z" fill="#f2b8c6" style="stroke:none"></path>
+<path d="M58 122l-12 6 12 4M182 122l12 6-12 4" fill="#a7adb9" style="stroke-width:3"></path>
+<ellipse cx="120" cy="116" rx="64" ry="54" fill="#a7adb9"></ellipse>
+<path d="M120 130C108 126 94 132 94 144C94 156 108 160 120 154C132 160 146 156 146 144C146 132 132 126 120 130Z" fill="#e7e3ea" style="stroke-width:2.5"></path>
+<path d="M113 134h14l-7 7z" fill="#e58fa6" style="stroke-width:2.5"></path>
+<path d="M120 141v5M120 146q-5 5-10 1M120 146q5 5 10 1" fill="none" style="stroke-width:2.5"></path>
+<path d="M94 140l-34-6M94 147l-32 4M146 140l34-6M146 147l32 4" style="stroke-width:2"></path>
+<ellipse cx="92" cy="112" rx="13" ry="14" fill="#c9d97a" style="stroke-width:3"></ellipse><ellipse cx="92" cy="113" rx="4.5" ry="10" fill="#2b2340" style="stroke:none"></ellipse><circle cx="96" cy="107" r="3" fill="#fff" style="stroke:none"></circle>
+<ellipse cx="148" cy="112" rx="13" ry="14" fill="#c9d97a" style="stroke-width:3"></ellipse><ellipse cx="148" cy="113" rx="4.5" ry="10" fill="#2b2340" style="stroke:none"></ellipse><circle cx="152" cy="107" r="3" fill="#fff" style="stroke:none"></circle>
+<ellipse cx="74" cy="134" rx="10" ry="6" fill="#f2a7b8" opacity=".75" style="stroke:none"></ellipse><ellipse cx="166" cy="134" rx="10" ry="6" fill="#f2a7b8" opacity=".75" style="stroke:none"></ellipse>
+      </g></svg>
+    </div>
+    <div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-family:'Caprasimo',serif;font-size:30px;line-height:1">Morfar Mis</span><span style="font-weight:700;font-size:15px;color:#6a5a48">Kat</span></div>
+      <p style="margin:0;font-size:17px;line-height:1.45;text-wrap:pretty">Pippins gamle kat. Forsvinder tit ind i Mørkeskoven efter sardiner og er hovedpersonen i opgaven "Find Pippins kat".</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px">Opgave</span><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px;background:#d3c6ee">Hyggebyen</span></div>
+    </div>
+  </div>
+
+  <div id="flagermus" style="background:#f4e6c4;border:2px solid #2b2340;border-radius:18px;overflow:hidden;display:flex;flex-direction:column">
+    <div style="position:relative;height:360px;background:#2f3654;border-bottom:2px solid #2b2340;display:flex;align-items:flex-end;justify-content:center">
+      <div style="position:absolute;left:16px;top:16px;width:96px;background:#fffdf6;border:2px solid #2b2340;border-radius:6px;padding:5px 5px 4px;transform:rotate(-4deg);display:flex;flex-direction:column;gap:3px;box-shadow:0 4px 10px rgba(0,0,0,.3);z-index:1"><div style="width:100%;aspect-ratio:1;overflow:hidden;border-radius:3px"><img src="refs/tegning-24.jpg" alt="Original tegning af flagermus" style="width:100%;height:100%;object-fit:cover;display:block;transform:rotate(-90deg)"></div><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;text-align:center">original</span></div>
+      <svg viewBox="0 0 240 280" width="280" height="327" style="display:block"><g style="stroke:#2b2340;stroke-width:4;stroke-linejoin:round;stroke-linecap:round">
+        <ellipse cx="120" cy="264" rx="78" ry="8" fill="#000" opacity=".25" style="stroke:none"></ellipse>
+<path d="M90 166C72 118 34 100 8 114C18 128 16 148 24 160C36 152 48 158 52 172C62 164 76 170 86 184Z" fill="#6b5b8a"></path><path d="M90 168L12 116M88 176L26 158M86 182L54 172" fill="none" style="stroke-width:2.5"></path><path d="M8 114l-4-10" style="stroke-width:3"></path><g transform="translate(240 0) scale(-1 1)"><path d="M90 166C72 118 34 100 8 114C18 128 16 148 24 160C36 152 48 158 52 172C62 164 76 170 86 184Z" fill="#6b5b8a"></path><path d="M90 168L12 116M88 176L26 158M86 182L54 172" fill="none" style="stroke-width:2.5"></path><path d="M8 114l-4-10" style="stroke-width:3"></path></g>
+<ellipse cx="120" cy="198" rx="42" ry="52" fill="#8c7aa8"></ellipse><ellipse cx="120" cy="208" rx="26" ry="34" fill="#a896c4" style="stroke:none"></ellipse>
+<path d="M104 246l-4 12M110 248v12M130 248v12M136 246l4 12" style="stroke-width:3"></path>
+<path d="M78 98C62 64 64 30 80 24C96 30 106 60 106 80Z" fill="#8c7aa8"></path><path d="M84 84C74 62 76 42 82 36C90 44 96 62 96 76Z" fill="#c9a7d6" style="stroke:none"></path><g transform="translate(240 0) scale(-1 1)"><path d="M78 98C62 64 64 30 80 24C96 30 106 60 106 80Z" fill="#8c7aa8"></path><path d="M84 84C74 62 76 42 82 36C90 44 96 62 96 76Z" fill="#c9a7d6" style="stroke:none"></path></g>
+<ellipse cx="120" cy="120" rx="50" ry="44" fill="#8c7aa8"></ellipse>
+<path d="M84 160q9 9 18 1q9 9 18 0q9 9 18 0q9 8 18-1" fill="none" style="stroke-width:3"></path>
+<ellipse cx="120" cy="138" rx="19" ry="14" fill="#a896c4" style="stroke-width:3"></ellipse>
+<path d="M114 132q6-4 12 0q-6 6-12 0z" fill="#2b2340" style="stroke-width:2"></path>
+<path d="M112 142q8 6 16 0" fill="none" style="stroke-width:3"></path><path d="M113 143l2 6 3-4M127 143l-2 6-3-4" fill="#fffdf6" style="stroke-width:2"></path>
+<ellipse cx="98" cy="116" rx="10" ry="11" fill="#4a2416" style="stroke-width:3"></ellipse><circle cx="101" cy="112" r="3.5" fill="#fff" style="stroke:none"></circle><circle cx="95" cy="120" r="1.6" fill="#fff" style="stroke:none"></circle><ellipse cx="142" cy="116" rx="10" ry="11" fill="#4a2416" style="stroke-width:3"></ellipse><circle cx="145" cy="112" r="3.5" fill="#fff" style="stroke:none"></circle><circle cx="139" cy="120" r="1.6" fill="#fff" style="stroke:none"></circle>
+<ellipse cx="80" cy="141" rx="9" ry="5" fill="#f2a7b8" opacity=".6" style="stroke:none"></ellipse><ellipse cx="160" cy="141" rx="9" ry="5" fill="#f2a7b8" opacity=".6" style="stroke:none"></ellipse>
+<path d="M72 138h12M72 144h12M156 138h12M156 144h12" style="stroke-width:2.5"></path>
+      </g></svg>
+    </div>
+    <div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-family:'Caprasimo',serif;font-size:30px;line-height:1">Natteblik</span><span style="font-weight:700;font-size:15px;color:#6a5a48">Flagermus</span></div>
+      <p style="margin:0;font-size:17px;line-height:1.45;text-wrap:pretty">Bor i Mørkeskoven. Sælger kort over hulerne, men kun efter mørkets frembrud. Tegnet liggende i originalen.</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px">Handlende</span><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px;background:#6fd6c4">Mørkeskoven</span></div>
+    </div>
+  </div>
+
+  <div id="raev" style="background:#f4e6c4;border:2px solid #2b2340;border-radius:18px;overflow:hidden;display:flex;flex-direction:column">
+    <div style="position:relative;height:360px;background:#dfe8c8;border-bottom:2px solid #2b2340;display:flex;align-items:flex-end;justify-content:center">
+      <span style="position:absolute;left:16px;top:16px;font-family:'Caprasimo',serif;font-size:16px;color:#2b2340;background:#e3c372;border:2px solid #2b2340;border-radius:8px;padding:1px 10px">Ny</span>
+      <svg viewBox="0 0 240 280" width="280" height="327" style="display:block"><g style="stroke:#2b2340;stroke-width:4;stroke-linejoin:round;stroke-linecap:round">
+        <ellipse cx="120" cy="264" rx="78" ry="8" fill="#2b2340" opacity=".12" style="stroke:none"></ellipse>
+<ellipse cx="186" cy="204" rx="30" ry="58" transform="rotate(32 186 204)" fill="#e07b3c"></ellipse>
+<ellipse cx="210" cy="164" rx="16" ry="20" transform="rotate(32 210 164)" fill="#fbf5e6"></ellipse>
+<ellipse cx="80" cy="236" rx="26" ry="26" fill="#e07b3c"></ellipse><ellipse cx="160" cy="236" rx="26" ry="26" fill="#e07b3c"></ellipse>
+<path d="M78 256C66 214 82 170 120 168C158 170 174 214 162 256Z" fill="#e07b3c"></path>
+<ellipse cx="120" cy="206" rx="24" ry="30" fill="#fbf5e6" style="stroke:none"></ellipse>
+<ellipse cx="72" cy="258" rx="18" ry="8" fill="#4a2d22"></ellipse><ellipse cx="168" cy="258" rx="18" ry="8" fill="#4a2d22"></ellipse>
+<rect x="99" y="208" width="19" height="52" rx="9" fill="#4a2d22"></rect><rect x="122" y="208" width="19" height="52" rx="9" fill="#4a2d22"></rect>
+<path d="M62 98L64 24L112 62Z" fill="#e07b3c"></path><path d="M128 62L176 24L178 98Z" fill="#e07b3c"></path>
+<path d="M74 84L74 46L98 64ZM142 64L166 46L166 84Z" fill="#fbf5e6" style="stroke:none"></path>
+<path d="M64 24L64 46L80 36ZM176 24L176 46L160 36Z" fill="#2b2340" style="stroke-width:2"></path>
+<path d="M56 106C56 66 88 56 120 56C152 56 184 66 184 106C184 134 152 164 120 170C88 164 56 134 56 106Z" fill="#e07b3c"></path>
+<path d="M60 120C80 118 104 132 120 168C136 132 160 118 180 120C172 146 148 166 120 170C92 166 68 146 60 120Z" fill="#fbf5e6" style="stroke:none"></path>
+<path d="M56 106C56 66 88 56 120 56C152 56 184 66 184 106C184 134 152 164 120 170C88 164 56 134 56 106Z" fill="none"></path>
+<ellipse cx="120" cy="154" rx="8" ry="6" fill="#2b2340"></ellipse><circle cx="117" cy="152" r="2" fill="#fff" style="stroke:none"></circle>
+<path d="M120 160v3M114 164q6 4 12 0" fill="none" style="stroke-width:2.5"></path>
+<ellipse cx="94" cy="112" rx="10" ry="11" fill="#2b2340" style="stroke-width:3"></ellipse><circle cx="97" cy="108" r="3.5" fill="#fff" style="stroke:none"></circle><circle cx="91" cy="116" r="1.6" fill="#fff" style="stroke:none"></circle><ellipse cx="146" cy="112" rx="10" ry="11" fill="#2b2340" style="stroke-width:3"></ellipse><circle cx="149" cy="108" r="3.5" fill="#fff" style="stroke:none"></circle><circle cx="143" cy="116" r="1.6" fill="#fff" style="stroke:none"></circle><ellipse cx="80" cy="134" rx="10" ry="6" fill="#f2a7b8" opacity=".75" style="stroke:none"></ellipse><path d="M74 129v8M80 129v8M86 129v8" style="stroke-width:2.5"></path><ellipse cx="160" cy="134" rx="10" ry="6" fill="#f2a7b8" opacity=".75" style="stroke:none"></ellipse><path d="M154 129v8M160 129v8M166 129v8" style="stroke-width:2.5"></path>
+<path d="M80 168Q120 192 160 168L162 182Q120 206 78 182Z" fill="#6b9a3e"></path><path d="M138 188l6 30 14-4-4-30z" fill="#6b9a3e" style="stroke-width:3"></path>
+      </g></svg>
+    </div>
+    <div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-family:'Caprasimo',serif;font-size:30px;line-height:1">Rasmus</span><span style="font-weight:700;font-size:15px;color:#6a5a48">Ræv</span></div>
+      <p style="margin:0;font-size:17px;line-height:1.45;text-wrap:pretty">Standardfiguren, når man vælger skovdyr. Stærke poter, så han graver hurtigere og får mere ud af høsten.</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px;background:#e3c372">Spilbar</span><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px">Skovdyr</span></div>
+    </div>
+  </div>
+
+  <div id="halvling" style="background:#f4e6c4;border:2px solid #2b2340;border-radius:18px;overflow:hidden;display:flex;flex-direction:column">
+    <div style="position:relative;height:360px;background:#dfe8c8;border-bottom:2px solid #2b2340;display:flex;align-items:flex-end;justify-content:center">
+      <span style="position:absolute;left:16px;top:16px;font-family:'Caprasimo',serif;font-size:16px;color:#2b2340;background:#e3c372;border:2px solid #2b2340;border-radius:8px;padding:1px 10px">Ny</span>
+      <svg viewBox="0 0 240 280" width="280" height="327" style="display:block"><g style="stroke:#2b2340;stroke-width:4;stroke-linejoin:round;stroke-linecap:round">
+        <ellipse cx="120" cy="268" rx="76" ry="8" fill="#2b2340" opacity=".12" style="stroke:none"></ellipse>
+        <ellipse cx="120" cy="200" rx="54" ry="60" fill="#fbf5e6"></ellipse>
+        <path d="M72 168Q62 214 82 254L108 258L110 168Z" fill="#6b9a3e"></path>
+        <path d="M168 168Q178 214 158 254L132 258L130 168Z" fill="#6b9a3e"></path>
+        <circle cx="120" cy="196" r="4" fill="#e3c372" style="stroke-width:2"></circle><circle cx="120" cy="218" r="4" fill="#e3c372" style="stroke-width:2"></circle>
+        <ellipse cx="96" cy="258" rx="24" ry="12" fill="#f2c9a5"></ellipse><ellipse cx="144" cy="258" rx="24" ry="12" fill="#f2c9a5"></ellipse>
+        <path d="M84 250l3-6M92 249l2-6M148 249l-2-6M156 250l-3-6" style="stroke:#7a4e2d;stroke-width:3"></path>
+        <path d="M64 100L40 82L64 124ZM176 100L200 82L176 124Z" fill="#f2c9a5"></path>
+        <circle cx="120" cy="112" r="60" fill="#f2c9a5"></circle>
+        <g fill="#7a4e2d"><circle cx="72" cy="82" r="20"></circle><circle cx="86" cy="60" r="22"></circle><circle cx="108" cy="48" r="24"></circle><circle cx="132" cy="48" r="24"></circle><circle cx="154" cy="60" r="22"></circle><circle cx="168" cy="82" r="20"></circle></g>
+        <g fill="#7a4e2d" style="stroke:none"><circle cx="72" cy="82" r="18"></circle><circle cx="86" cy="60" r="20"></circle><circle cx="108" cy="48" r="22"></circle><circle cx="132" cy="48" r="22"></circle><circle cx="154" cy="60" r="20"></circle><circle cx="168" cy="82" r="18"></circle><rect x="78" y="56" width="84" height="30"></rect></g>
+        <circle cx="96" cy="110" r="16" fill="#fffdf6"></circle><circle cx="144" cy="110" r="16" fill="#fffdf6"></circle>
+        <circle cx="98" cy="108" r="8" fill="#5a3a22"></circle><circle cx="142" cy="108" r="8" fill="#5a3a22"></circle>
+        <circle cx="101" cy="105" r="2.5" fill="#fff" style="stroke:none"></circle><circle cx="145" cy="105" r="2.5" fill="#fff" style="stroke:none"></circle>
+        <ellipse cx="78" cy="138" rx="11" ry="7" fill="#e88f9f" opacity=".6" style="stroke:none"></ellipse><ellipse cx="162" cy="138" rx="11" ry="7" fill="#e88f9f" opacity=".6" style="stroke:none"></ellipse>
+        <path d="M73 132v9M79 132v9M85 132v9M155 132v9M161 132v9M167 132v9" style="stroke-width:2.5"></path>
+        <path d="M110 140q10 9 20 0" fill="none"></path>
+        <ellipse cx="68" cy="210" rx="15" ry="30" transform="rotate(22 68 210)" fill="#fbf5e6"></ellipse><ellipse cx="172" cy="210" rx="15" ry="30" transform="rotate(-22 172 210)" fill="#fbf5e6"></ellipse><circle cx="58" cy="235" r="11" fill="#f2c9a5"></circle><circle cx="182" cy="235" r="11" fill="#f2c9a5"></circle>
+      </g></svg>
+    </div>
+    <div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-family:'Caprasimo',serif;font-size:30px;line-height:1">Bertil Bøgeknop</span><span style="font-weight:700;font-size:15px;color:#6a5a48">Halvling</span></div>
+      <p style="margin:0;font-size:17px;line-height:1.45;text-wrap:pretty">Standardfiguren for halvlinge. Bager bedre kager, går barfodet og får rabat i Hyggebyens butikker.</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px;background:#e3c372">Spilbar</span><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px">Halvling</span></div>
+    </div>
+  </div>
+
+  <div id="halvling-pige" style="background:#f4e6c4;border:2px solid #2b2340;border-radius:18px;overflow:hidden;display:flex;flex-direction:column">
+    <div style="position:relative;height:360px;background:#dfe8c8;border-bottom:2px solid #2b2340;display:flex;align-items:flex-end;justify-content:center">
+      <span style="position:absolute;left:16px;top:16px;font-family:'Caprasimo',serif;font-size:16px;color:#2b2340;background:#e3c372;border:2px solid #2b2340;border-radius:8px;padding:1px 10px">Ny</span>
+      <svg viewBox="0 0 240 280" width="280" height="327" style="display:block"><g style="stroke:#2b2340;stroke-width:4;stroke-linejoin:round;stroke-linecap:round">
+        <ellipse cx="120" cy="268" rx="70" ry="8" fill="#2b2340" opacity=".12" style="stroke:none"></ellipse>
+        <ellipse cx="120" cy="200" rx="54" ry="60" fill="#c4506a"></ellipse>
+        <path d="M92 184h56l8 62q-36 12-72 0z" fill="#fbf5e6"></path>
+        <path d="M100 214h40v18h-40z" fill="none" style="stroke-width:2.5"></path>
+        <ellipse cx="96" cy="258" rx="24" ry="12" fill="#f2c9a5"></ellipse><ellipse cx="144" cy="258" rx="24" ry="12" fill="#f2c9a5"></ellipse>
+        <path d="M84 250l3-6M92 249l2-6M148 249l-2-6M156 250l-3-6" style="stroke:#7a4e2d;stroke-width:3"></path>
+        <ellipse cx="68" cy="210" rx="15" ry="30" transform="rotate(22 68 210)" fill="#c4506a"></ellipse><ellipse cx="172" cy="210" rx="15" ry="30" transform="rotate(-22 172 210)" fill="#c4506a"></ellipse><circle cx="58" cy="235" r="11" fill="#f2c9a5"></circle><circle cx="182" cy="235" r="11" fill="#f2c9a5"></circle>
+        <ellipse cx="62" cy="148" rx="11" ry="26" fill="#7a4e2d"></ellipse><ellipse cx="178" cy="148" rx="11" ry="26" fill="#7a4e2d"></ellipse>
+        <path d="M54 140h16M54 154h16M170 140h16M170 154h16" style="stroke-width:2.5"></path>
+        <path d="M50 176l12-6 12 6-12 6zM166 176l12-6 12 6-12 6z" fill="#e58fa6" style="stroke-width:3"></path>
+        <path d="M64 100L40 82L64 124ZM176 100L200 82L176 124Z" fill="#f2c9a5"></path>
+        <circle cx="120" cy="112" r="60" fill="#f2c9a5"></circle>
+        <g fill="#7a4e2d"><circle cx="72" cy="82" r="20"></circle><circle cx="86" cy="60" r="22"></circle><circle cx="108" cy="48" r="24"></circle><circle cx="132" cy="48" r="24"></circle><circle cx="154" cy="60" r="22"></circle><circle cx="168" cy="82" r="20"></circle></g>
+        <g fill="#7a4e2d" style="stroke:none"><circle cx="72" cy="82" r="18"></circle><circle cx="86" cy="60" r="20"></circle><circle cx="108" cy="48" r="22"></circle><circle cx="132" cy="48" r="22"></circle><circle cx="154" cy="60" r="20"></circle><circle cx="168" cy="82" r="18"></circle><rect x="78" y="56" width="84" height="30"></rect></g>
+        <g style="stroke-width:3"><circle cx="160" cy="40" r="7" fill="#fbf5e6"></circle><circle cx="172" cy="48" r="7" fill="#fbf5e6"></circle><circle cx="160" cy="56" r="7" fill="#fbf5e6"></circle><circle cx="148" cy="48" r="7" fill="#fbf5e6"></circle><circle cx="160" cy="48" r="5" fill="#e3c372"></circle></g>
+        <circle cx="96" cy="110" r="16" fill="#fffdf6"></circle><circle cx="144" cy="110" r="16" fill="#fffdf6"></circle>
+        <circle cx="98" cy="108" r="8" fill="#5a3a22"></circle><circle cx="142" cy="108" r="8" fill="#5a3a22"></circle>
+        <circle cx="101" cy="105" r="2.5" fill="#fff" style="stroke:none"></circle><circle cx="145" cy="105" r="2.5" fill="#fff" style="stroke:none"></circle>
+        <path d="M80 102l-7-4M82 96l-5-6M160 102l7-4M158 96l5-6" style="stroke-width:3"></path>
+        <ellipse cx="78" cy="138" rx="11" ry="7" fill="#e88f9f" opacity=".7" style="stroke:none"></ellipse><ellipse cx="162" cy="138" rx="11" ry="7" fill="#e88f9f" opacity=".7" style="stroke:none"></ellipse>
+        <g fill="#b0703f" style="stroke:none"><circle cx="72" cy="134" r="2"></circle><circle cx="80" cy="140" r="2"></circle><circle cx="86" cy="133" r="2"></circle><circle cx="154" cy="133" r="2"></circle><circle cx="160" cy="140" r="2"></circle><circle cx="168" cy="134" r="2"></circle></g>
+        <path d="M110 140q10 9 20 0" fill="none"></path>
+      </g></svg>
+    </div>
+    <div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-family:'Caprasimo',serif;font-size:30px;line-height:1">Bodil Bøgeknop</span><span style="font-weight:700;font-size:15px;color:#6a5a48">Halvling</span></div>
+      <p style="margin:0;font-size:17px;line-height:1.45;text-wrap:pretty">Kvindelig variant af halvlingen og Bertils søster. Samme evner: bedre kager, bare fødder og rabat i Hyggebyen.</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px;background:#e3c372">Spilbar</span><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px">Halvling</span></div>
+    </div>
+  </div>
+  <div id="fe" style="background:#f4e6c4;border:2px solid #2b2340;border-radius:18px;overflow:hidden;display:flex;flex-direction:column">
+    <div style="position:relative;height:360px;background:#e2d8f4;border-bottom:2px solid #2b2340;display:flex;align-items:flex-end;justify-content:center">
+      <span style="position:absolute;left:16px;top:16px;font-family:'Caprasimo',serif;font-size:16px;color:#2b2340;background:#e3c372;border:2px solid #2b2340;border-radius:8px;padding:1px 10px">Ny</span>
+      <svg viewBox="0 0 240 280" width="280" height="327" style="display:block"><g style="stroke:#2b2340;stroke-width:4;stroke-linejoin:round;stroke-linecap:round">
+        <ellipse cx="120" cy="268" rx="66" ry="8" fill="#2b2340" opacity=".12" style="stroke:none"></ellipse>
+        <ellipse cx="62" cy="150" rx="32" ry="50" transform="rotate(-38 62 150)" fill="#cfe6f2" opacity=".9"></ellipse>
+        <ellipse cx="178" cy="150" rx="32" ry="50" transform="rotate(38 178 150)" fill="#cfe6f2" opacity=".9"></ellipse>
+        <ellipse cx="78" cy="208" rx="20" ry="30" transform="rotate(32 78 208)" fill="#cfe6f2" opacity=".9"></ellipse>
+        <ellipse cx="162" cy="208" rx="20" ry="30" transform="rotate(-32 162 208)" fill="#cfe6f2" opacity=".9"></ellipse>
+        <circle cx="120" cy="116" r="70" fill="#9b86d6"></circle>
+        <path d="M120 162C92 162 74 228 66 256Q120 272 174 256C166 228 148 162 120 162Z" fill="#e58fa6"></path>
+        <path d="M86 236q34 10 68 0" fill="none" style="stroke-width:2.5"></path>
+        <circle cx="120" cy="112" r="58" fill="#f6d3c0"></circle>
+        <path d="M60 108Q62 48 120 46Q178 48 180 108Q162 78 142 86Q124 66 104 86Q82 74 60 108Z" fill="#9b86d6"></path>
+        <circle cx="90" cy="58" r="7" fill="#e3c372" style="stroke-width:3"></circle><circle cx="120" cy="48" r="8" fill="#fbf5e6" style="stroke-width:3"></circle><circle cx="150" cy="58" r="7" fill="#e3c372" style="stroke-width:3"></circle>
+        <circle cx="97" cy="112" r="16" fill="#fffdf6"></circle><circle cx="143" cy="112" r="16" fill="#fffdf6"></circle>
+        <circle cx="99" cy="110" r="8" fill="#5d4fa3"></circle><circle cx="141" cy="110" r="8" fill="#5d4fa3"></circle>
+        <circle cx="102" cy="107" r="2.5" fill="#fff" style="stroke:none"></circle><circle cx="144" cy="107" r="2.5" fill="#fff" style="stroke:none"></circle>
+        <ellipse cx="80" cy="138" rx="10" ry="6" fill="#e88f9f" opacity=".7" style="stroke:none"></ellipse><ellipse cx="160" cy="138" rx="10" ry="6" fill="#e88f9f" opacity=".7" style="stroke:none"></ellipse>
+        <path d="M75 133v8M80 133v8M85 133v8M155 133v8M160 133v8M165 133v8" style="stroke-width:2.5"></path>
+        <path d="M112 142q8 7 16 0" fill="none"></path>
+        <ellipse cx="88" cy="204" rx="10" ry="24" transform="rotate(25 88 204)" fill="#f6d3c0"></ellipse><ellipse cx="152" cy="204" rx="10" ry="24" transform="rotate(-25 152 204)" fill="#f6d3c0"></ellipse><circle cx="78" cy="224" r="8" fill="#f6d3c0"></circle><circle cx="162" cy="224" r="8" fill="#f6d3c0"></circle>
+        <g fill="#e3c372" style="stroke-width:2.5"><rect x="26" y="52" width="10" height="10" transform="rotate(45 31 57)"></rect><rect x="204" y="44" width="12" height="12" transform="rotate(45 210 50)"></rect><rect x="208" y="226" width="9" height="9" transform="rotate(45 212 230)"></rect></g>
+      </g></svg>
+    </div>
+    <div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-family:'Caprasimo',serif;font-size:30px;line-height:1">Kløvermynte</span><span style="font-weight:700;font-size:15px;color:#6a5a48">Fe</span></div>
+      <p style="margin:0;font-size:17px;line-height:1.45;text-wrap:pretty">Driver frøbutikken i Hyggebyen. Samme grundfigur bruges, når spilleren vælger at være fe: kort flyvning over marker.</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px;background:#e3c372">Spilbar</span><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px;background:#d3c6ee">Hyggebyen</span></div>
+    </div>
+  </div>
+
+  <div id="fe-dreng" style="background:#f4e6c4;border:2px solid #2b2340;border-radius:18px;overflow:hidden;display:flex;flex-direction:column">
+    <div style="position:relative;height:360px;background:#e2d8f4;border-bottom:2px solid #2b2340;display:flex;align-items:flex-end;justify-content:center">
+      <span style="position:absolute;left:16px;top:16px;font-family:'Caprasimo',serif;font-size:16px;color:#2b2340;background:#e3c372;border:2px solid #2b2340;border-radius:8px;padding:1px 10px">Ny</span>
+      <svg viewBox="0 0 240 280" width="280" height="327" style="display:block"><g style="stroke:#2b2340;stroke-width:4;stroke-linejoin:round;stroke-linecap:round">
+        <ellipse cx="120" cy="268" rx="66" ry="8" fill="#2b2340" opacity=".12" style="stroke:none"></ellipse>
+        <ellipse cx="64" cy="146" rx="28" ry="52" transform="rotate(-30 64 146)" fill="#cfe6f2" opacity=".9"></ellipse>
+        <ellipse cx="176" cy="146" rx="28" ry="52" transform="rotate(30 176 146)" fill="#cfe6f2" opacity=".9"></ellipse>
+        <ellipse cx="80" cy="206" rx="16" ry="28" transform="rotate(28 80 206)" fill="#cfe6f2" opacity=".9"></ellipse>
+        <ellipse cx="160" cy="206" rx="16" ry="28" transform="rotate(-28 160 206)" fill="#cfe6f2" opacity=".9"></ellipse>
+        <path d="M64 146L40 116M176 146L200 116" fill="none" style="stroke-width:2"></path>
+        <path d="M104 228h12v26h-12zM124 228h12v26h-12z" fill="#7a4e2d"></path>
+        <ellipse cx="108" cy="256" rx="14" ry="7" fill="#5e3b20"></ellipse><ellipse cx="132" cy="256" rx="14" ry="7" fill="#5e3b20"></ellipse>
+        <path d="M120 164C94 164 82 200 80 236L98 230L108 240L120 232L132 240L142 230L160 236C158 200 146 164 120 164Z" fill="#6b9a3e"></path>
+        <path d="M90 206h60" fill="none" style="stroke:#7a4e2d;stroke-width:6"></path>
+        <rect x="114" y="200" width="12" height="12" rx="2" fill="#e3c372" style="stroke-width:2.5"></rect>
+        <ellipse cx="88" cy="200" rx="10" ry="24" transform="rotate(25 88 200)" fill="#6b9a3e"></ellipse><ellipse cx="152" cy="200" rx="10" ry="24" transform="rotate(-25 152 200)" fill="#6b9a3e"></ellipse>
+        <circle cx="78" cy="220" r="8" fill="#f6d3c0"></circle><circle cx="162" cy="220" r="8" fill="#f6d3c0"></circle>
+        <path d="M64 108L46 92L66 126ZM176 108L194 92L174 126Z" fill="#f6d3c0"></path>
+        <circle cx="120" cy="112" r="58" fill="#f6d3c0"></circle>
+        <path d="M62 104Q60 52 120 50Q180 52 178 104Q170 86 158 92L150 76L138 90L124 72L112 90L98 76L90 94Q74 84 62 104Z" fill="#c98a3a"></path>
+        <path d="M88 60Q120 20 152 60Q120 48 88 60Z" fill="#6b9a3e"></path>
+        <path d="M120 30q4-12 14-14" fill="none" style="stroke-width:3"></path>
+        <circle cx="97" cy="114" r="15" fill="#fffdf6"></circle><circle cx="143" cy="114" r="15" fill="#fffdf6"></circle>
+        <circle cx="99" cy="112" r="8" fill="#3f8f6a"></circle><circle cx="141" cy="112" r="8" fill="#3f8f6a"></circle>
+        <circle cx="102" cy="109" r="2.5" fill="#fff" style="stroke:none"></circle><circle cx="144" cy="109" r="2.5" fill="#fff" style="stroke:none"></circle>
+        <ellipse cx="80" cy="138" rx="10" ry="6" fill="#e88f9f" opacity=".7" style="stroke:none"></ellipse><ellipse cx="160" cy="138" rx="10" ry="6" fill="#e88f9f" opacity=".7" style="stroke:none"></ellipse>
+        <path d="M75 133v8M80 133v8M85 133v8M155 133v8M160 133v8M165 133v8" style="stroke-width:2.5"></path>
+        <path d="M110 142q10 8 20 0" fill="none"></path>
+        <g fill="#e3c372" style="stroke-width:2.5"><rect x="26" y="56" width="10" height="10" transform="rotate(45 31 61)"></rect><rect x="204" y="48" width="12" height="12" transform="rotate(45 210 54)"></rect><rect x="20" y="222" width="9" height="9" transform="rotate(45 24 226)"></rect></g>
+      </g></svg>
+    </div>
+    <div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-family:'Caprasimo',serif;font-size:30px;line-height:1">Birk</span><span style="font-weight:700;font-size:15px;color:#6a5a48">Fe</span></div>
+      <p style="margin:0;font-size:17px;line-height:1.45;text-wrap:pretty">Mandlig variant af feen og Kløvermyntes bror. Samme evne: kort flyvning over marker. Passer bierne i Hyggebyen.</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px;background:#e3c372">Spilbar</span><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px;background:#d3c6ee">Hyggebyen</span></div>
+    </div>
+  </div>
+
+  <div id="pindsvin" style="background:#f4e6c4;border:2px solid #2b2340;border-radius:18px;overflow:hidden;display:flex;flex-direction:column">
+    <div style="position:relative;height:360px;background:#dfe8c8;border-bottom:2px solid #2b2340;display:flex;align-items:flex-end;justify-content:center">
+      <span style="position:absolute;left:16px;top:16px;font-family:'Caprasimo',serif;font-size:16px;color:#2b2340;background:#e3c372;border:2px solid #2b2340;border-radius:8px;padding:1px 10px">Ny</span>
+      <svg viewBox="0 0 240 280" width="280" height="327" style="display:block"><g style="stroke:#2b2340;stroke-width:4;stroke-linejoin:round;stroke-linecap:round">
+        <ellipse cx="120" cy="264" rx="78" ry="8" fill="#2b2340" opacity=".12" style="stroke:none"></ellipse>
+<polygon points="33.4,200.0 46.7,176.7 21.5,167.4 42.0,150.0 21.5,132.6 46.7,123.3 33.4,100.0 60.2,99.9 55.7,73.4 81.0,82.5 85.8,56.0 106.5,73.2 120.0,50.0 133.5,73.2 154.2,56.0 159.0,82.5 184.3,73.4 179.8,99.9 206.6,100.0 193.3,123.3 218.5,132.6 198.0,150.0 218.5,167.4 193.3,176.7 206.6,200.0 120,210" fill="#7a4e2d"></polygon>
+<path d="M60 120l18 8M66 92l18 14M88 68l10 18M120 58v20M152 68l-10 18M174 92l-18 14M180 120l-18 8" style="stroke:#5e3b20;stroke-width:3"></path>
+<ellipse cx="120" cy="212" rx="52" ry="48" fill="#8a5a32"></ellipse><ellipse cx="120" cy="218" rx="36" ry="38" fill="#f0dcc0" style="stroke:none"></ellipse>
+<ellipse cx="96" cy="258" rx="16" ry="8" fill="#5e3b20"></ellipse><ellipse cx="144" cy="258" rx="16" ry="8" fill="#5e3b20"></ellipse>
+<path d="M84 176L162 232" style="stroke:#7a4e2d;stroke-width:6"></path>
+<rect x="148" y="222" width="40" height="32" rx="6" fill="#5d8fc4"></rect><path d="M148 232h40" fill="none" style="stroke-width:3"></path>
+<rect x="100" y="206" width="40" height="28" rx="3" fill="#fffdf6" style="stroke-width:3"></rect><path d="M100 206l20 14 20-14" fill="none" style="stroke-width:2.5"></path><circle cx="120" cy="222" r="4" fill="#c4506a" style="stroke:none"></circle>
+<ellipse cx="98" cy="222" rx="9" ry="8" fill="#e0c4a0"></ellipse><ellipse cx="142" cy="222" rx="9" ry="8" fill="#e0c4a0"></ellipse>
+<circle cx="84" cy="88" r="11" fill="#e0c4a0"></circle><circle cx="156" cy="88" r="11" fill="#e0c4a0"></circle>
+<path d="M74 114C74 84 96 74 120 74C144 74 166 84 166 114C166 138 142 152 130 162Q120 170 110 162C98 152 74 138 74 114Z" fill="#f0dcc0"></path>
+<path d="M80 98L88 78L100 90L110 72L120 86L130 72L140 90L152 78L160 98Q120 86 80 98Z" fill="#7a4e2d"></path>
+<ellipse cx="120" cy="152" rx="9" ry="7" fill="#2b2340"></ellipse><circle cx="117" cy="150" r="2.5" fill="#fff" style="stroke:none"></circle>
+<path d="M114 162q6 4 12 0" fill="none" style="stroke-width:2.5"></path>
+<ellipse cx="102" cy="114" rx="8" ry="9" fill="#2b2340" style="stroke-width:3"></ellipse><circle cx="105" cy="110" r="3.5" fill="#fff" style="stroke:none"></circle><circle cx="99" cy="118" r="1.6" fill="#fff" style="stroke:none"></circle><ellipse cx="138" cy="114" rx="8" ry="9" fill="#2b2340" style="stroke-width:3"></ellipse><circle cx="141" cy="110" r="3.5" fill="#fff" style="stroke:none"></circle><circle cx="135" cy="118" r="1.6" fill="#fff" style="stroke:none"></circle><ellipse cx="88" cy="134" rx="10" ry="6" fill="#f2a7b8" opacity=".75" style="stroke:none"></ellipse><path d="M82 129v8M88 129v8M94 129v8" style="stroke-width:2.5"></path><ellipse cx="152" cy="134" rx="10" ry="6" fill="#f2a7b8" opacity=".75" style="stroke:none"></ellipse><path d="M146 129v8M152 129v8M158 129v8" style="stroke-width:2.5"></path>
+      </g></svg>
+    </div>
+    <div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-family:'Caprasimo',serif;font-size:30px;line-height:1">Pip</span><span style="font-weight:700;font-size:15px;color:#6a5a48">Pindsvin</span></div>
+      <p style="margin:0;font-size:17px;line-height:1.45;text-wrap:pretty">Postbud. Kommer forbi gården hver morgen med breve, pakker og nye opgaver fra Hyggebyens borgere.</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px">Opgavegiver</span><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px;background:#cde0a6">Trætoppen</span></div>
+    </div>
+  </div>
+
+  <div id="ugle" style="background:#f4e6c4;border:2px solid #2b2340;border-radius:18px;overflow:hidden;display:flex;flex-direction:column">
+    <div style="position:relative;height:360px;background:#2f3654;border-bottom:2px solid #2b2340;display:flex;align-items:flex-end;justify-content:center">
+      <span style="position:absolute;left:16px;top:16px;font-family:'Caprasimo',serif;font-size:16px;color:#2b2340;background:#e3c372;border:2px solid #2b2340;border-radius:8px;padding:1px 10px">Ny</span>
+      <svg viewBox="0 0 240 280" width="280" height="327" style="display:block"><g style="stroke:#2b2340;stroke-width:4;stroke-linejoin:round;stroke-linecap:round">
+        <ellipse cx="120" cy="264" rx="78" ry="8" fill="#000" opacity=".25" style="stroke:none"></ellipse>
+<path d="M10 254Q120 246 230 256" style="stroke:#14112a;stroke-width:22;fill:none"></path><path d="M10 254Q120 246 230 256" style="stroke:#7a5a3a;stroke-width:14;fill:none"></path>
+<path d="M200 250q14-16 30-10q-12 16-30 10z" fill="#6b9a3e" style="stroke-width:3"></path>
+<path d="M72 82L58 36L104 58Z" fill="#a07a55"></path><path d="M136 58L182 36L168 82Z" fill="#a07a55"></path>
+<path d="M120 44C178 44 192 104 188 162C184 222 160 248 120 248C80 248 56 222 52 162C48 104 62 44 120 44Z" fill="#a07a55"></path>
+<ellipse cx="120" cy="200" rx="40" ry="42" fill="#e2c9a4" style="stroke:none"></ellipse>
+<path d="M102 182l6 6 6-6M126 182l6 6 6-6M112 200l6 6 6-6M92 206l5 5 5-5M138 206l5 5 5-5M102 222l6 6 6-6M126 222l6 6 6-6" fill="none" style="stroke:#7a5a3a;stroke-width:3"></path>
+<path d="M60 136C42 178 52 224 86 242C88 206 84 168 74 138Z" fill="#7a5a3a"></path><path d="M180 136C198 178 188 224 154 242C152 206 156 168 166 138Z" fill="#7a5a3a"></path>
+<path d="M58 176q10 4 18 0M62 202q10 4 20 0M182 176q-10 4-18 0M178 202q-10 4-20 0" fill="none" style="stroke-width:2.5"></path>
+<path d="M120 84C104 64 62 68 62 106C62 142 96 158 120 150C144 158 178 142 178 106C178 68 136 64 120 84Z" fill="#f0dcc0"></path>
+<circle cx="94" cy="108" r="17" fill="#f2c14e" style="stroke-width:3"></circle><circle cx="94" cy="108" r="10" fill="#2b2340" style="stroke:none"></circle><circle cx="98" cy="103" r="3.5" fill="#fff" style="stroke:none"></circle>
+<circle cx="146" cy="108" r="17" fill="#f2c14e" style="stroke-width:3"></circle><circle cx="146" cy="108" r="10" fill="#2b2340" style="stroke:none"></circle><circle cx="150" cy="103" r="3.5" fill="#fff" style="stroke:none"></circle>
+<path d="M113 120h14l-7 16z" fill="#e8b04a" style="stroke-width:3"></path>
+<ellipse cx="80" cy="136" rx="10" ry="6" fill="#f2a7b8" opacity=".75" style="stroke:none"></ellipse><path d="M74 131v8M80 131v8M86 131v8" style="stroke-width:2.5"></path><ellipse cx="160" cy="136" rx="10" ry="6" fill="#f2a7b8" opacity=".75" style="stroke:none"></ellipse><path d="M154 131v8M160 131v8M166 131v8" style="stroke-width:2.5"></path>
+<path d="M100 244v12M108 244v12M132 244v12M140 244v12" style="stroke:#e8b04a;stroke-width:6"></path>
+      </g></svg>
+    </div>
+    <div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-family:'Caprasimo',serif;font-size:30px;line-height:1">Fru Ugle</span><span style="font-weight:700;font-size:15px;color:#6a5a48">Ugle</span></div>
+      <p style="margin:0;font-size:17px;line-height:1.45;text-wrap:pretty">Fekongens rådgiver og skovens klogeste. Vurderer de ædelsten og mineraler, du finder i Mørkeskoven.</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px">Vurderer</span><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px;background:#6fd6c4">Mørkeskoven</span></div>
+    </div>
+  </div>
+
+  <div id="kapivar" style="background:#f4e6c4;border:2px solid #2b2340;border-radius:18px;overflow:hidden;display:flex;flex-direction:column">
+    <div style="position:relative;height:360px;background:#dfe8c8;border-bottom:2px solid #2b2340;display:flex;align-items:flex-end;justify-content:center">
+      <span style="position:absolute;left:16px;top:16px;font-family:'Caprasimo',serif;font-size:16px;color:#2b2340;background:#e3c372;border:2px solid #2b2340;border-radius:8px;padding:1px 10px">Ny</span>
+      <svg viewBox="0 0 240 280" width="280" height="327" style="display:block"><g style="stroke:#2b2340;stroke-width:4;stroke-linejoin:round;stroke-linecap:round">
+        <ellipse cx="120" cy="264" rx="80" ry="8" fill="#2b2340" opacity=".12" style="stroke:none"></ellipse>
+        <circle cx="74" cy="70" r="15" fill="#d99a64"></circle><circle cx="166" cy="70" r="15" fill="#d99a64"></circle>
+        <circle cx="75" cy="71" r="7" fill="#a8714a" style="stroke:none"></circle><circle cx="165" cy="71" r="7" fill="#a8714a" style="stroke:none"></circle>
+        <path d="M120 54C164 54 186 78 188 118C190 152 192 190 194 222C196 250 176 258 120 258C64 258 44 250 46 222C48 190 50 152 52 118C54 78 76 54 120 54Z" fill="#d99a64"></path>
+        <ellipse cx="120" cy="216" rx="42" ry="36" fill="#f2cfa6" style="stroke:none"></ellipse>
+        <path d="M60 176q-4 24 2 44M180 176q4 24-2 44" fill="none" style="stroke:#b07a4a;stroke-width:3"></path>
+        <path d="M84 130C84 118 100 112 120 112C140 112 156 118 156 130L156 146C156 162 140 172 120 172C100 172 84 162 84 146Z" fill="#a8714a" style="stroke-width:3"></path>
+        <ellipse cx="108" cy="128" rx="4.5" ry="3" fill="#2b2340"></ellipse><ellipse cx="132" cy="128" rx="4.5" ry="3" fill="#2b2340"></ellipse>
+        <path d="M120 138v8M110 152q10 8 20 0" fill="none" style="stroke-width:3"></path>
+        <ellipse cx="86" cy="102" rx="9" ry="10" fill="#2b2340" style="stroke-width:3"></ellipse><circle cx="89" cy="98" r="3.2" fill="#fff" style="stroke:none"></circle><circle cx="83" cy="106" r="1.5" fill="#fff" style="stroke:none"></circle>
+        <ellipse cx="154" cy="102" rx="9" ry="10" fill="#2b2340" style="stroke-width:3"></ellipse><circle cx="157" cy="98" r="3.2" fill="#fff" style="stroke:none"></circle><circle cx="151" cy="106" r="1.5" fill="#fff" style="stroke:none"></circle>
+        <ellipse cx="68" cy="134" rx="10" ry="6" fill="#f2a7b8" opacity=".75" style="stroke:none"></ellipse><ellipse cx="172" cy="134" rx="10" ry="6" fill="#f2a7b8" opacity=".75" style="stroke:none"></ellipse>
+        <path d="M62 129v8M68 129v8M74 129v8M166 129v8M172 129v8M178 129v8" style="stroke-width:2.5"></path>
+        <ellipse cx="98" cy="190" rx="12" ry="9" fill="#d99a64" style="stroke-width:3"></ellipse><ellipse cx="142" cy="190" rx="12" ry="9" fill="#d99a64" style="stroke-width:3"></ellipse>
+        <path d="M93 196v-4M99 197v-4M137 197v-4M143 196v-4" style="stroke-width:2"></path>
+        <ellipse cx="86" cy="256" rx="22" ry="9" fill="#a8714a"></ellipse><ellipse cx="154" cy="256" rx="22" ry="9" fill="#a8714a"></ellipse>
+        <path d="M78 252v6M86 251v7M94 252v6M146 252v6M154 251v7M162 252v6" style="stroke-width:2"></path>
+        <circle cx="120" cy="46" r="15" fill="#f29a3a"></circle><path d="M120 31q8-12 20-4q-10 10-20 4z" fill="#6b9a3e" style="stroke-width:3"></path>
+      </g></svg>
+    </div>
+    <div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-family:'Caprasimo',serif;font-size:30px;line-height:1">Sofus</span><span style="font-weight:700;font-size:15px;color:#6a5a48">Kapivar</span></div>
+      <p style="margin:0;font-size:17px;line-height:1.45;text-wrap:pretty">Driver badehuset i Trætoppen. Altid rolig, altid med en appelsin på hovedet, og ved hvem der har brug for en pause.</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px">Badehus</span><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px;background:#cde0a6">Trætoppen</span></div>
+    </div>
+  </div>
+  <div id="abe" style="background:#f4e6c4;border:2px solid #2b2340;border-radius:18px;overflow:hidden;display:flex;flex-direction:column">
+    <div style="position:relative;height:360px;background:#dfe8c8;border-bottom:2px solid #2b2340;display:flex;align-items:flex-end;justify-content:center">
+      <span style="position:absolute;left:16px;top:16px;font-family:'Caprasimo',serif;font-size:16px;color:#2b2340;background:#e3c372;border:2px solid #2b2340;border-radius:8px;padding:1px 10px">Ny</span>
+      <svg viewBox="0 0 240 280" width="280" height="327" style="display:block"><g style="stroke:#2b2340;stroke-width:4;stroke-linejoin:round;stroke-linecap:round">
+        <ellipse cx="120" cy="264" rx="78" ry="8" fill="#2b2340" opacity=".12" style="stroke:none"></ellipse>
+<path d="M160 236C210 244 224 190 200 170C184 158 168 176 180 190C188 198 200 188 194 180" style="stroke:#2b2340;stroke-width:16;fill:none"></path>
+<path d="M160 236C210 244 224 190 200 170C184 158 168 176 180 190C188 198 200 188 194 180" style="stroke:#9a6a40;stroke-width:9;fill:none"></path>
+<ellipse cx="120" cy="208" rx="52" ry="52" fill="#9a6a40"></ellipse><ellipse cx="120" cy="214" rx="32" ry="36" fill="#f0d2b0" style="stroke:none"></ellipse>
+<ellipse cx="82" cy="234" rx="24" ry="26" fill="#9a6a40"></ellipse><ellipse cx="158" cy="234" rx="24" ry="26" fill="#9a6a40"></ellipse>
+<ellipse cx="80" cy="258" rx="20" ry="8" fill="#f0d2b0"></ellipse><ellipse cx="160" cy="258" rx="20" ry="8" fill="#f0d2b0"></ellipse>
+<path d="M100 214Q120 236 146 208Q144 226 124 232Q106 232 100 214Z" fill="#f2d24e" style="stroke-width:3"></path>
+<path d="M80 178Q66 214 104 224" style="stroke:#2b2340;stroke-width:24;fill:none"></path><path d="M80 178Q66 214 104 224" style="stroke:#9a6a40;stroke-width:16;fill:none"></path>
+<path d="M160 178Q174 214 136 224" style="stroke:#2b2340;stroke-width:24;fill:none"></path><path d="M160 178Q174 214 136 224" style="stroke:#9a6a40;stroke-width:16;fill:none"></path>
+<circle cx="106" cy="224" r="10" fill="#f0d2b0"></circle><circle cx="134" cy="224" r="10" fill="#f0d2b0"></circle>
+<circle cx="60" cy="114" r="20" fill="#9a6a40"></circle><circle cx="180" cy="114" r="20" fill="#9a6a40"></circle><circle cx="60" cy="114" r="11" fill="#f0d2b0" style="stroke:none"></circle><circle cx="180" cy="114" r="11" fill="#f0d2b0" style="stroke:none"></circle>
+<circle cx="120" cy="112" r="58" fill="#9a6a40"></circle>
+<path d="M106 58q2-16 14-14q6-12 18-4" fill="none"></path>
+<path d="M120 86C100 64 68 74 68 108C68 146 94 164 120 164C146 164 172 146 172 108C172 74 140 64 120 86Z" fill="#f0d2b0" style="stroke-width:3"></path>
+<ellipse cx="120" cy="140" rx="24" ry="16" fill="#f6dfc4" style="stroke-width:2.5"></ellipse>
+<circle cx="115" cy="134" r="2.5" fill="#2b2340" style="stroke:none"></circle><circle cx="125" cy="134" r="2.5" fill="#2b2340" style="stroke:none"></circle>
+<path d="M110 144q10 9 20 0" fill="none" style="stroke-width:3"></path>
+<ellipse cx="98" cy="110" rx="10" ry="11" fill="#2b2340" style="stroke-width:3"></ellipse><circle cx="101" cy="106" r="3.5" fill="#fff" style="stroke:none"></circle><circle cx="95" cy="114" r="1.6" fill="#fff" style="stroke:none"></circle><ellipse cx="142" cy="110" rx="10" ry="11" fill="#2b2340" style="stroke-width:3"></ellipse><circle cx="145" cy="106" r="3.5" fill="#fff" style="stroke:none"></circle><circle cx="139" cy="114" r="1.6" fill="#fff" style="stroke:none"></circle><ellipse cx="82" cy="132" rx="10" ry="6" fill="#f2a7b8" opacity=".75" style="stroke:none"></ellipse><path d="M76 127v8M82 127v8M88 127v8" style="stroke-width:2.5"></path><ellipse cx="158" cy="132" rx="10" ry="6" fill="#f2a7b8" opacity=".75" style="stroke:none"></ellipse><path d="M152 127v8M158 127v8M164 127v8" style="stroke-width:2.5"></path>
+<g style="stroke-width:3"><circle cx="156" cy="58" r="8" fill="#e58fa6"></circle><circle cx="170" cy="64" r="8" fill="#e58fa6"></circle><circle cx="164" cy="76" r="8" fill="#e58fa6"></circle><circle cx="164" cy="66" r="5" fill="#e3c372"></circle></g>
+      </g></svg>
+    </div>
+    <div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-family:'Caprasimo',serif;font-size:30px;line-height:1">Kiki</span><span style="font-weight:700;font-size:15px;color:#6a5a48">Abe</span></div>
+      <p style="margin:0;font-size:17px;line-height:1.45;text-wrap:pretty">Klatrer op ad stammer og lianer, hvor andre må tage stigen. Finder skjulte kister i trækronerne.</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px;background:#e3c372">Spilbar</span><span style="padding:3px 12px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:14px">Skovdyr</span></div>
+    </div>
+  </div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
