@@ -11,7 +11,7 @@ EXTRA_PATTERNS / EXTRA_CLIPS, m.slug, m.base_height, m.cam_scale, m.clip_set, ..
   * addendum 4.4 wardrobe patch (4 lines): export(m, out, rig=None, anim_from=None), rig = rig or make_rig(m),
     make_clips(anim_from or m, rig), scale = m.scale_fixed when present.  Default behaviour is byte-identical.
   * path change only: GLBs are generated into tools/art/_stage/glb (gitignored, hidden by tools/art/.gdignore) or into
-    $TT_ART_GLB instead of assets/characters of the old 3D project; the 25 MB of GLBs are never committed.
+    $TT_ART_GLB instead of assets/characters of the old 3D project; the generated GLBs are never committed (the old package's GLBs are archived in legacy/package_3d/assets/characters).
   * hook import: a missing traetoppen_additions module still means "no extra builders", but a module that exists and
     fails to import (for example a broken builder file of the art packages) now raises instead of being swallowed.
 Extra builder modules are found through PYTHONPATH (tools/art/characters of P21, or a shim of a feature package).

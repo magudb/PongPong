@@ -5,6 +5,7 @@
 # Translations load at runtime from the CSVs (LocalizationManager); the csv importer would
 # otherwise commit ~28 junk binaries (plan R.4). Every CSV ships a keep-import instead.
 *.translation
+!legacy/**/*.translation
 export_presets.cfg
 export.cfg
 

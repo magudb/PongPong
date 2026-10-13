@@ -105,7 +105,7 @@ Environment and icons (produced by P22 / P23 with the same renderer, `core/stati
 ## Pipeline, stage and install
 
 ```
-generator/build_assets.py   ->  _stage/glb/<id>.glb + <id>_rig.json         (regenerated in ~1 s each; the 25 MB GLBs are NOT committed)
+generator/build_assets.py   ->  _stage/glb/<id>.glb + <id>_rig.json         (regenerated in ~1 s each; these stage GLBs are NOT committed - the old package's GLBs are archived in legacy/package_3d/assets/characters)
 core/bake_sprite_atlases.py ->  _stage/masters/isometric_characters/<id>/   (lossless PNG masters + animations.json + portrait.png)
 core/validate_new_assets.py     MANDATORY: sheet size, blank frames, border-opaque (alpha > 24 on the cell edge = clipped), metadata
 export/export_game_assets.py->  _stage/assets/...                          (WebP q97 m4, icons lossless, role/clip_set fields, S3TC stubs)
