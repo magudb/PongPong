@@ -1,0 +1,33 @@
+# Godot
+.godot/
+*.translation
+export_presets.cfg
+export.cfg
+*.import
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Builds
+build/
+dist/
+*.pck
+*.exe
+*.x86_64
+*.app
+*.dmg
+*.apk
+*.aab
+
+# Lua hot-reload temp
+*.lua.tmp
+
+# Saves (user://)
+saves/

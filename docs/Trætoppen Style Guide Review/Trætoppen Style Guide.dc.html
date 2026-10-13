@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Alegreya+Sans:ital,wght@0,500;0,700;0,800;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#e7d8b6;color:#2b2340;font-family:'Alegreya Sans',sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#5d4fa3;text-decoration:underline}a:hover{color:#2b2340}
+*{box-sizing:border-box}
+</style>
+</helmet>
+<div style="width:1440px;margin:0 auto;padding:80px;display:flex;flex-direction:column;gap:96px">
+
+<header style="display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:end">
+  <div style="display:flex;flex-direction:column;gap:18px">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;letter-spacing:.1em;color:#6a5a48">VISUEL STIL · V0.1 · GODOT · PC 16:9</span>
+    <h1 style="margin:0;font-family:'Caprasimo',serif;font-weight:400;font-size:112px;line-height:.9;color:#2b2340">Trætoppen</h1>
+    <p style="margin:0;font-size:22px;line-height:1.5;max-width:620px;text-wrap:pretty">Et hyggeligt gårdspil i en fortryllet skov. Du har vundet en gård i trækronerne i Fekongens lotteri. Håndmalede 2D-figurer, pergament og blæk med guldkant, og en mørk skov der er mere uhyggelig-sød end farlig.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+    <sc-for list="{{ facts }}" as="f" hint-placeholder-count="6">
+      <div style="padding:14px 18px;background:#f4e6c4;border:2px solid #2b2340;border-radius:12px;display:flex;flex-direction:column;gap:2px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6a5a48">{{ f.k }}</span>
+        <span style="font-weight:800;font-size:18px;line-height:1.25">{{ f.v }}</span>
+      </div>
+    </sc-for>
+  </div>
+</header>
+
+<section style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;align-items:baseline;gap:18px"><span style="font-family:'IBM Plex Mono',monospace;color:#6a5a48">01</span><h2 style="margin:0;font-family:'Caprasimo',serif;font-weight:400;font-size:44px">Tre zoner, tre paletter</h2></div>
+  <p style="margin:0;max-width:720px;font-size:19px;line-height:1.55;text-wrap:pretty">UI-rammen er den samme overalt: pergament, blæk og fe-guld. Kun verdenens lys skifter. Figurer har altid en blækkontur, så de læses på både lys og mørk baggrund.</p>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px">
+    <sc-for list="{{ zones }}" as="z" hint-placeholder-count="3">
+      <div style="background:#f4e6c4;border:2px solid #2b2340;border-radius:16px;overflow:hidden;display:flex;flex-direction:column">
+        <div style="height:170px;background:repeating-linear-gradient(135deg,{{ z.c0 }} 0 14px,{{ z.c1 }} 14px 28px);display:flex;align-items:flex-end;padding:14px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;background:rgba(251,245,230,.92);padding:4px 8px;border-radius:4px;color:#2b2340">{{ z.slot }}</span>
+        </div>
+        <div style="padding:20px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:4px"><span style="font-family:'Caprasimo',serif;font-size:28px">{{ z.name }}</span><span style="font-size:16px;line-height:1.45;color:#4c4058">{{ z.mood }}</span></div>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px">
+            <sc-for list="{{ z.sw }}" as="s" hint-placeholder-count="5">
+              <div style="display:flex;flex-direction:column;gap:4px"><div style="aspect-ratio:1;border-radius:10px;border:2px solid #2b2340;background:{{ s.hex }}"></div><span style="font-size:13px;font-weight:800;line-height:1.1">{{ s.n }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#6a5a48">{{ s.hex }}</span></div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;align-items:baseline;gap:18px"><span style="font-family:'IBM Plex Mono',monospace;color:#6a5a48">02</span><h2 style="margin:0;font-family:'Caprasimo',serif;font-weight:400;font-size:44px">Typografi</h2></div>
+  <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:28px">
+    <div style="background:#f4e6c4;border:2px solid #2b2340;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:12px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6a5a48">OVERSKRIFT &amp; TAL · CAPRASIMO</span>
+      <span style="font-family:'Caprasimo',serif;font-size:56px;line-height:1">Fekongens Lotteri</span>
+      <span style="font-family:'Caprasimo',serif;font-size:36px;line-height:1;color:#a5781f">1.250 · 10:40</span>
+      <span style="font-size:16px;color:#4c4058">Titler, navne, knapper, penge og tid. Kun i store størrelser, aldrig under 20 px.</span>
+    </div>
+    <div style="background:#f4e6c4;border:2px solid #2b2340;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:12px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6a5a48">BRØDTEKST · ALEGREYA SANS 500/800</span>
+      <span style="font-size:22px;line-height:1.45;font-weight:500">Åh, du må være den heldige vinder! Trætoppen er din nu. Pas godt på æbletræet.</span>
+      <span style="font-size:16px;color:#4c4058">Dialog, beskrivelser og opgaver. Æ, ø og å står tydeligt ved 18 px.</span>
+    </div>
+    <div style="background:#f4e6c4;border:2px solid #2b2340;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:12px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6a5a48">TONE I TEKSTEN</span>
+      <div style="display:flex;flex-direction:column;gap:8px;font-size:17px;line-height:1.4">
+        <span><b>Venlig og lun.</b> "Du har vist glemt at vande gulerødderne."</span>
+        <span><b>Korte knapper.</b> Køb, Sælg, Lav, Tilbage.</span>
+        <span><b>Mørkeskoven hvisker.</b> "Noget rasler i bregnerne…"</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;align-items:baseline;gap:18px"><span style="font-family:'IBM Plex Mono',monospace;color:#6a5a48">03</span><h2 style="margin:0;font-family:'Caprasimo',serif;font-weight:400;font-size:44px">UI-byggeklodser</h2></div>
+  <p style="margin:0;max-width:720px;font-size:19px;line-height:1.55;text-wrap:pretty">Paneler er pergament med blækkontur og en dobbelt guldkant. Knapper har en mørk underkant, så de ser ud til at kunne trykkes ned. Alt interaktivt får en guldring ved fokus, så spillet også kan styres med tastatur.</p>
+  <div style="display:grid;grid-template-columns:1fr 1.2fr;gap:48px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6a5a48">KNAPPER</span>
+      <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center">
+        <button style="font-family:'Caprasimo',serif;font-size:22px;color:#fbf5e6;background:#6b9a3e;border:2px solid #2b2340;border-radius:12px;padding:10px 26px;box-shadow:inset 0 -5px 0 rgba(43,35,64,.3),0 4px 0 #2b2340;cursor:pointer" style-hover="background:#7aac49;transform:translateY(-2px)" style-active="transform:translateY(3px);box-shadow:inset 0 -2px 0 rgba(43,35,64,.3),0 1px 0 #2b2340">Køb</button>
+        <button style="font-family:'Caprasimo',serif;font-size:22px;color:#2b2340;background:#e3c372;border:2px solid #2b2340;border-radius:12px;padding:10px 26px;box-shadow:inset 0 -5px 0 rgba(43,35,64,.2),0 4px 0 #2b2340;cursor:pointer" style-hover="background:#ecd189;transform:translateY(-2px)" style-active="transform:translateY(3px);box-shadow:inset 0 -2px 0 rgba(43,35,64,.2),0 1px 0 #2b2340">Acceptér</button>
+        <button style="font-family:'Caprasimo',serif;font-size:22px;color:#2b2340;background:#fbf5e6;border:2px solid #2b2340;border-radius:12px;padding:10px 26px;box-shadow:0 4px 0 #2b2340;cursor:pointer" style-hover="transform:translateY(-2px)" style-active="transform:translateY(3px);box-shadow:0 1px 0 #2b2340">Tilbage</button>
+        <button style="font-family:'Caprasimo',serif;font-size:22px;color:#a3957f;background:#e7d8b6;border:2px dashed #a3957f;border-radius:12px;padding:10px 26px;cursor:not-allowed">Udsolgt</button>
+      </div>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6a5a48;margin-top:14px">FELTER I INVENTAR</span>
+      <div style="display:flex;gap:14px">
+        <sc-for list="{{ slotStates }}" as="s" hint-placeholder-count="4">
+          <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+            <div style="width:72px;height:72px;border-radius:12px;background:{{ s.bg }};border:2px solid #2b2340;box-shadow:{{ s.ring }};position:relative;display:flex;align-items:center;justify-content:center">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#6a5a48;text-align:center;line-height:1.1">{{ s.icon }}</span>
+              <span style="position:absolute;right:5px;bottom:2px;font-family:'Caprasimo',serif;font-size:16px;color:#2b2340">{{ s.count }}</span>
+            </div>
+            <span style="font-size:14px;font-weight:800">{{ s.label }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6a5a48;margin-top:14px">MÅLERE</span>
+      <div style="display:flex;flex-direction:column;gap:12px;max-width:420px">
+        <sc-for list="{{ meters }}" as="m" hint-placeholder-count="3">
+          <div style="display:grid;grid-template-columns:110px 1fr;align-items:center;gap:12px"><span style="font-weight:800;font-size:17px">{{ m.n }}</span><div style="height:20px;border:2px solid #2b2340;border-radius:10px;background:#e7d8b6;overflow:hidden"><div style="width:{{ m.w }};height:100%;background:{{ m.c }};box-shadow:inset 0 4px 0 rgba(255,255,255,.35)"></div></div></div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6a5a48">DIALOGBOKS</span>
+      <div style="margin:6px;background:#f4e6c4;border:2px solid #2b2340;border-radius:16px;box-shadow:0 0 0 4px #e3c372,0 0 0 6px #2b2340,0 12px 28px rgba(43,35,64,.3);display:grid;grid-template-columns:150px 1fr;gap:20px;padding:20px;position:relative">
+        <div style="aspect-ratio:1;border-radius:12px;border:2px solid #2b2340;background:repeating-linear-gradient(135deg,#e2d8f4 0 10px,#d3c6ee 10px 20px);display:flex;align-items:center;justify-content:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-align:center;color:#4c4058">portræt<br>fe, glad</span></div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <span style="align-self:flex-start;font-family:'Caprasimo',serif;font-size:20px;color:#fbf5e6;background:#2b2340;border-radius:8px;padding:2px 12px;box-shadow:0 0 0 2px #e3c372">Borgmester Hyldeblomst</span>
+          <p style="margin:0;font-size:20px;line-height:1.45;font-weight:500;text-wrap:pretty">Åh, du må være vinderen af Fekongens lotteri! Velkommen til Fesby. Taget på bageriet er utæt igen. Kan du mon hjælpe?</p>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="padding:6px 14px;border-radius:8px;background:#e3c372;border:2px solid #2b2340;font-weight:800;font-size:18px;display:flex;gap:10px"><span>▸</span><span>Selvfølgelig!</span></div>
+            <div style="padding:6px 14px;border-radius:8px;border:2px solid transparent;font-weight:700;font-size:18px;color:#4c4058;display:flex;gap:10px"><span style="opacity:0">▸</span><span>Hvad får jeg for det?</span></div>
+          </div>
+        </div>
+        <span style="position:absolute;right:18px;bottom:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6a5a48">🔊 dansk stemme · E for at fortsætte</span>
+      </div>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6a5a48;margin-top:14px">REGLER</span>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <sc-for list="{{ rules }}" as="r" hint-placeholder-count="4">
+          <div style="display:flex;flex-direction:column;gap:4px;padding:14px 16px;border-top:2px solid #2b2340"><span style="font-weight:800;font-size:17px">{{ r.t }}</span><span style="font-size:15px;line-height:1.45;color:#4c4058">{{ r.d }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;align-items:baseline;gap:18px"><span style="font-family:'IBM Plex Mono',monospace;color:#6a5a48">04</span><h2 style="margin:0;font-family:'Caprasimo',serif;font-weight:400;font-size:44px">Titelskærm</h2></div>
+  <div data-screen-label="Titel" style="position:relative;width:1280px;height:720px;border-radius:12px;overflow:hidden;border:2px solid #2b2340;background:repeating-linear-gradient(135deg,#b9d7c4 0 18px,#aacbb6 18px 36px)">
+    <span style="position:absolute;left:24px;bottom:20px;font-family:'IBM Plex Mono',monospace;font-size:13px;background:rgba(251,245,230,.92);padding:5px 10px;border-radius:4px">key art: kæmpetræ med gården i kronen, feer og lanterner, solnedgang</span>
+    <sc-if value="{{ showSafeArea }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:36px;border:2px dashed #c4506a;border-radius:6px;pointer-events:none"></div></sc-if>
+    <div style="position:absolute;left:110px;top:110px;display:flex;flex-direction:column;gap:6px">
+      <span style="font-family:'Caprasimo',serif;font-size:132px;line-height:.9;color:#fbf5e6;-webkit-text-stroke:3px #2b2340;text-shadow:0 6px 0 #2b2340,0 0 0 #e3c372">Trætoppen</span>
+      <span style="align-self:flex-start;margin-left:8px;font-family:'Caprasimo',serif;font-size:26px;color:#2b2340;background:#e3c372;border:2px solid #2b2340;border-radius:10px;padding:2px 16px">En gård i Fekongens skov</span>
+    </div>
+    <div style="position:absolute;left:116px;bottom:96px;width:320px;background:#f4e6c4;border:2px solid #2b2340;border-radius:16px;box-shadow:0 0 0 4px #e3c372,0 0 0 6px #2b2340,0 14px 30px rgba(43,35,64,.35);padding:14px;display:flex;flex-direction:column;gap:4px">
+      <sc-for list="{{ menu }}" as="m" hint-placeholder-count="4">
+        <div style="padding:10px 16px;border-radius:10px;background:{{ m.bg }};border:2px solid {{ m.border }};font-family:'Caprasimo',serif;font-size:24px;display:flex;justify-content:space-between;align-items:center;cursor:pointer"><span>{{ m.t }}</span><span style="font-family:'Alegreya Sans',sans-serif;font-size:15px;font-weight:700;color:#6a5a48">{{ m.sub }}</span></div>
+      </sc-for>
+    </div>
+    <span style="position:absolute;right:40px;bottom:30px;font-family:'Alegreya Sans',sans-serif;font-weight:700;font-size:15px;color:#2b2340;background:rgba(251,245,230,.85);padding:3px 10px;border-radius:6px">v0.1 · Dansk</span>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;align-items:baseline;gap:18px"><span style="font-family:'IBM Plex Mono',monospace;color:#6a5a48">05</span><h2 style="margin:0;font-family:'Caprasimo',serif;font-weight:400;font-size:44px">Vælg figur</h2></div>
+  <div data-screen-label="Vælg figur" style="position:relative;width:1280px;height:720px;border-radius:12px;overflow:hidden;border:2px solid #2b2340;background:#e7d8b6;padding:48px 64px;display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end">
+      <div style="display:flex;flex-direction:column;gap:4px"><span style="font-family:'Caprasimo',serif;font-size:48px;line-height:1">Hvem er du?</span><span style="font-size:20px;color:#4c4058">Fekongen vil gerne vide, hvem der har vundet hans gård.</span></div>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#6a5a48">1 / 2</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;flex:1">
+      <sc-for list="{{ races }}" as="r" hint-placeholder-count="3">
+        <div style="background:#f4e6c4;border:2px solid #2b2340;border-radius:18px;box-shadow:{{ r.ring }};padding:16px;display:flex;flex-direction:column;gap:14px;transform:{{ r.lift }}">
+          <div style="flex:1;border-radius:12px;border:2px solid #2b2340;background:repeating-linear-gradient(135deg,{{ r.c0 }} 0 14px,{{ r.c1 }} 14px 28px);display:flex;align-items:flex-end;justify-content:center;padding:12px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;background:rgba(251,245,230,.92);padding:4px 8px;border-radius:4px">{{ r.slot }}</span></div>
+          <div style="display:flex;flex-direction:column;gap:4px"><span style="font-family:'Caprasimo',serif;font-size:32px;line-height:1">{{ r.name }}</span><span style="font-size:17px;line-height:1.4;color:#4c4058">{{ r.perk }}</span></div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="display:flex;gap:10px;align-items:center">
+        <span style="font-weight:800;font-size:18px;margin-right:6px">Dyr:</span>
+        <sc-for list="{{ species }}" as="s" hint-placeholder-count="4">
+          <span style="padding:6px 16px;border-radius:999px;border:2px solid #2b2340;background:{{ s.bg }};font-weight:800;font-size:17px">{{ s.n }}</span>
+        </sc-for>
+      </div>
+      <button style="font-family:'Caprasimo',serif;font-size:24px;color:#fbf5e6;background:#6b9a3e;border:2px solid #2b2340;border-radius:12px;padding:12px 30px;box-shadow:inset 0 -5px 0 rgba(43,35,64,.3),0 4px 0 #2b2340;cursor:pointer">Videre ▸</button>
+    </div>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;align-items:baseline;gap:18px"><span style="font-family:'IBM Plex Mono',monospace;color:#6a5a48">06</span><h2 style="margin:0;font-family:'Caprasimo',serif;font-weight:400;font-size:44px">HUD på gården</h2></div>
+  <p style="margin:0;max-width:720px;font-size:19px;line-height:1.55;text-wrap:pretty">Isometrisk kamera. Dato, tid og penge oppe til venstre, opgaver til højre, værktøjslinjen nederst i midten. Resten af skærmen hører til gården.</p>
+  <div data-screen-label="Gård HUD" style="position:relative;width:1280px;height:720px;border-radius:12px;overflow:hidden;border:2px solid #2b2340;background:repeating-linear-gradient(135deg,#a9c97a 0 22px,#9cbf6c 22px 44px)">
+    <span style="position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);font-family:'IBM Plex Mono',monospace;font-size:14px;background:rgba(251,245,230,.92);padding:6px 12px;border-radius:4px">scene: isometrisk trætopsgård, marker og hængebro, formiddag</span>
+    <sc-if value="{{ showSafeArea }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:36px;border:2px dashed #c4506a;border-radius:6px;pointer-events:none"></div></sc-if>
+    <div style="position:absolute;left:40px;top:40px;display:flex;flex-direction:column;gap:12px">
+      <div style="background:#f4e6c4;border:2px solid #2b2340;border-radius:14px;box-shadow:0 0 0 4px #e3c372,0 0 0 6px #2b2340;padding:10px 18px;display:flex;flex-direction:column;gap:2px">
+        <span style="font-weight:800;font-size:17px">Tirsdag 14. Blomstermåned</span>
+        <span style="font-family:'Caprasimo',serif;font-size:30px;line-height:1.05">10:40 <span style="font-family:'Alegreya Sans',sans-serif;font-weight:700;font-size:17px;color:#4c4058">· Solskin</span></span>
+      </div>
+      <div style="align-self:flex-start;background:#2b2340;border:2px solid #e3c372;border-radius:999px;padding:4px 16px 4px 6px;display:flex;align-items:center;gap:8px">
+        <div style="width:24px;height:24px;border-radius:50%;background:#e3c372;border:2px solid #fbf5e6"></div>
+        <span style="font-family:'Caprasimo',serif;font-size:22px;color:#fbf5e6">1.250</span><span style="font-weight:700;font-size:15px;color:#e3c372">guldagern</span>
+      </div>
+    </div>
+    <div style="position:absolute;right:40px;top:40px;width:300px;background:#f4e6c4;border:2px solid #2b2340;border-radius:14px;padding:14px 18px;display:flex;flex-direction:column;gap:10px;box-shadow:0 8px 20px rgba(43,35,64,.25)">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6a5a48">AKTIVE OPGAVER</span>
+      <sc-for list="{{ trackedQuests }}" as="q" hint-placeholder-count="2">
+        <div style="display:flex;flex-direction:column;gap:2px;padding-bottom:8px;border-bottom:1px solid #cdb98f"><span style="font-family:'Caprasimo',serif;font-size:19px;line-height:1.15">{{ q.t }}</span><span style="font-size:15px;color:#4c4058">{{ q.p }}</span></div>
+      </sc-for>
+    </div>
+    <div style="position:absolute;right:40px;bottom:40px;display:flex;flex-direction:column;gap:6px;align-items:center">
+      <div style="width:30px;height:150px;border:2px solid #2b2340;border-radius:15px;background:#e7d8b6;overflow:hidden;display:flex;align-items:flex-end"><div style="width:100%;height:72%;background:#6b9a3e;box-shadow:inset 4px 0 0 rgba(255,255,255,.3)"></div></div>
+      <span style="font-weight:800;font-size:14px;color:#fbf5e6;background:#2b2340;padding:0 8px;border-radius:6px">Energi</span>
+    </div>
+    <div style="position:absolute;left:50%;bottom:30px;transform:translateX(-50%);background:#f4e6c4;border:2px solid #2b2340;border-radius:16px;box-shadow:0 0 0 4px #e3c372,0 0 0 6px #2b2340,0 10px 20px rgba(43,35,64,.3);padding:8px;display:flex;gap:6px">
+      <sc-for list="{{ hotbar }}" as="h" hint-placeholder-count="10">
+        <div style="width:58px;height:58px;border-radius:10px;background:{{ h.bg }};border:2px solid #2b2340;box-shadow:{{ h.ring }};position:relative;display:flex;align-items:center;justify-content:center">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;line-height:1;color:#6a5a48;text-align:center">{{ h.name }}</span>
+          <span style="position:absolute;left:4px;top:1px;font-weight:800;font-size:11px;color:#8d7c66">{{ h.key }}</span>
+          <span style="position:absolute;right:4px;bottom:0;font-family:'Caprasimo',serif;font-size:15px">{{ h.count }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="position:absolute;left:50%;bottom:118px;transform:translateX(-50%);font-family:'Caprasimo',serif;font-size:20px;color:#fbf5e6;-webkit-text-stroke:1px #2b2340;text-shadow:0 2px 0 #2b2340">Vandkande</div>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;align-items:baseline;gap:18px"><span style="font-family:'IBM Plex Mono',monospace;color:#6a5a48">07</span><h2 style="margin:0;font-family:'Caprasimo',serif;font-weight:400;font-size:44px">Butik i Fesby</h2></div>
+  <div data-screen-label="Butik" style="position:relative;width:1280px;height:720px;border-radius:12px;overflow:hidden;border:2px solid #2b2340;background:repeating-linear-gradient(135deg,#d7cbe9 0 18px,#cbbde3 18px 36px)">
+    <span style="position:absolute;left:24px;top:20px;font-family:'IBM Plex Mono',monospace;font-size:13px;background:rgba(251,245,230,.92);padding:5px 10px;border-radius:4px">baggrund: frøbutik i en svamp, sløret</span>
+    <div style="position:absolute;left:60px;bottom:0;width:340px;height:560px;display:flex;flex-direction:column;justify-content:flex-end;gap:16px">
+      <div style="background:#fbf5e6;border:2px solid #2b2340;border-radius:16px;padding:14px 18px;font-size:19px;line-height:1.4;font-weight:500;position:relative">Frisk fra regnbuen i morges! Græskarfrø giver gode penge til høstfesten.</div>
+      <div style="height:380px;border-radius:16px 16px 0 0;border:2px solid #2b2340;border-bottom:0;background:repeating-linear-gradient(135deg,#e7b7c6 0 14px,#dea9ba 14px 28px);display:flex;align-items:flex-start;justify-content:center;padding:14px;position:relative">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;background:rgba(251,245,230,.92);padding:4px 8px;border-radius:4px">butiksfe Kløvermynte, halvfigur</span>
+        <span style="position:absolute;left:16px;bottom:18px;font-family:'Caprasimo',serif;font-size:20px;color:#fbf5e6;background:#2b2340;border-radius:8px;padding:2px 12px;box-shadow:0 0 0 2px #e3c372">Kløvermynte</span>
+      </div>
+    </div>
+    <div style="position:absolute;right:60px;top:60px;width:780px;height:600px;background:#f4e6c4;border:2px solid #2b2340;border-radius:18px;box-shadow:0 0 0 4px #e3c372,0 0 0 6px #2b2340,0 16px 36px rgba(43,35,64,.35);display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:2px solid #2b2340">
+        <span style="font-family:'Caprasimo',serif;font-size:32px">Kløvermyntes Frø</span>
+        <div style="display:flex;gap:6px">
+          <sc-for list="{{ shopTabs }}" as="t" hint-placeholder-count="3"><span style="padding:5px 14px;border-radius:999px;border:2px solid #2b2340;background:{{ t.bg }};font-weight:800;font-size:16px">{{ t.n }}</span></sc-for>
+        </div>
+      </div>
+      <div style="flex:1;display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:18px 24px;align-content:start">
+        <sc-for list="{{ shopItems }}" as="i" hint-placeholder-count="8">
+          <div style="display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;padding:8px 12px 8px 8px;border-radius:12px;border:2px solid {{ i.border }};background:{{ i.bg }}">
+            <div style="width:56px;height:56px;border-radius:10px;border:2px solid #2b2340;background:#fbf5e6;display:flex;align-items:center;justify-content:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#6a5a48">ikon</span></div>
+            <div style="display:flex;flex-direction:column;gap:0;min-width:0"><span style="font-weight:800;font-size:18px;line-height:1.15">{{ i.n }}</span><span style="font-size:14px;color:#4c4058">{{ i.d }}</span></div>
+            <span style="font-family:'Caprasimo',serif;font-size:20px;color:{{ i.priceColor }}">{{ i.p }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-top:2px solid #2b2340;background:#ecdcb4;border-radius:0 0 16px 16px">
+        <div style="display:flex;align-items:center;gap:8px"><div style="width:24px;height:24px;border-radius:50%;background:#e3c372;border:2px solid #2b2340"></div><span style="font-family:'Caprasimo',serif;font-size:24px">1.250</span></div>
+        <div style="display:flex;align-items:center;gap:14px">
+          <div style="display:flex;align-items:center;border:2px solid #2b2340;border-radius:10px;background:#fbf5e6;overflow:hidden"><span style="padding:4px 12px;font-weight:800;font-size:20px;border-right:2px solid #2b2340">−</span><span style="padding:4px 16px;font-family:'Caprasimo',serif;font-size:20px">5</span><span style="padding:4px 12px;font-weight:800;font-size:20px;border-left:2px solid #2b2340">+</span></div>
+          <span style="font-weight:700;font-size:17px;color:#4c4058">I alt 300</span>
+          <button style="font-family:'Caprasimo',serif;font-size:22px;color:#fbf5e6;background:#6b9a3e;border:2px solid #2b2340;border-radius:12px;padding:8px 26px;box-shadow:inset 0 -5px 0 rgba(43,35,64,.3),0 4px 0 #2b2340;cursor:pointer">Køb</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;align-items:baseline;gap:18px"><span style="font-family:'IBM Plex Mono',monospace;color:#6a5a48">08</span><h2 style="margin:0;font-family:'Caprasimo',serif;font-weight:400;font-size:44px">Opgavebog</h2></div>
+  <p style="margin:0;max-width:720px;font-size:19px;line-height:1.55;text-wrap:pretty">Hver opgave er en Lua-fil med titel, giver, trin og belønning. Bogen læser bare felterne, så nye opgaver kræver ingen ny UI.</p>
+  <div data-screen-label="Opgavebog" style="position:relative;width:1280px;height:720px;border-radius:12px;overflow:hidden;border:2px solid #2b2340;background:#3a3150;display:flex;align-items:center;justify-content:center">
+    <div style="width:1120px;height:620px;background:#f4e6c4;border:2px solid #2b2340;border-radius:18px;box-shadow:0 0 0 4px #e3c372,0 0 0 6px #2b2340,0 20px 40px rgba(0,0,0,.4);display:grid;grid-template-columns:420px 1fr;overflow:hidden">
+      <div style="border-right:2px solid #2b2340;padding:26px;display:flex;flex-direction:column;gap:16px;background:#ecdcb4">
+        <span style="font-family:'Caprasimo',serif;font-size:34px;line-height:1">Opgaver</span>
+        <div style="display:flex;gap:6px"><span style="padding:5px 14px;border-radius:999px;border:2px solid #2b2340;background:#e3c372;font-weight:800;font-size:16px">Aktive · 4</span><span style="padding:5px 14px;border-radius:999px;border:2px solid #2b2340;font-weight:800;font-size:16px">Fuldført · 11</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <sc-for list="{{ quests }}" as="q" hint-placeholder-count="4">
+            <div style="display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:center;padding:10px 12px;border-radius:12px;border:2px solid {{ q.border }};background:{{ q.bg }}">
+              <div style="width:44px;height:44px;border-radius:10px;border:2px solid #2b2340;background:{{ q.color }};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px">{{ q.tag }}</div>
+              <div style="display:flex;flex-direction:column;min-width:0"><span style="font-weight:800;font-size:18px;line-height:1.15">{{ q.title }}</span><span style="font-size:14px;color:#4c4058">{{ q.giver }}</span></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="padding:32px 40px;display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;gap:20px;align-items:center">
+          <div style="width:96px;height:96px;border-radius:50%;border:2px solid #2b2340;box-shadow:0 0 0 3px #e3c372;background:repeating-linear-gradient(135deg,#e2d8f4 0 8px,#d3c6ee 8px 16px);display:flex;align-items:center;justify-content:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;text-align:center">Pippin</span></div>
+          <div style="display:flex;flex-direction:column;gap:4px"><span style="font-family:'Caprasimo',serif;font-size:40px;line-height:1">Find Pippins kat</span><span style="font-size:18px;color:#4c4058">Fra Pippin Bøgeknop · Fesby</span></div>
+        </div>
+        <p style="margin:0;font-size:20px;line-height:1.5;text-wrap:pretty">Morfar Mis er forsvundet igen. Han blev sidst set på vej mod Mørkeskoven med en sardin i munden.</p>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+            <div style="display:flex;gap:12px;align-items:center;font-size:19px;color:{{ s.color }}"><div style="width:24px;height:24px;border-radius:6px;border:2px solid #2b2340;background:{{ s.box }};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:#fbf5e6">{{ s.mark }}</div><span style="text-decoration:{{ s.deco }};font-weight:700">{{ s.t }}</span></div>
+          </sc-for>
+        </div>
+        <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;padding-top:18px;border-top:2px dashed #cdb98f">
+          <div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6a5a48">BELØNNING</span><div style="display:flex;gap:10px"><span style="padding:6px 14px;border-radius:10px;border:2px solid #2b2340;background:#fbf5e6;font-family:'Caprasimo',serif;font-size:20px">150 guldagern</span><span style="padding:6px 14px;border-radius:10px;border:2px solid #2b2340;background:#fbf5e6;font-weight:800;font-size:18px">Kattemynte-frø × 3</span><span style="padding:6px 14px;border-radius:10px;border:2px solid #2b2340;background:#e58fa6;font-weight:800;font-size:18px">♥ Pippin</span></div></div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8d7c66">quests/pippins_kat.lua</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;align-items:baseline;gap:18px"><span style="font-family:'IBM Plex Mono',monospace;color:#6a5a48">09</span><h2 style="margin:0;font-family:'Caprasimo',serif;font-weight:400;font-size:44px">Rygsæk og værksted</h2></div>
+  <div data-screen-label="Inventar" style="position:relative;width:1280px;height:720px;border-radius:12px;overflow:hidden;border:2px solid #2b2340;background:#3a3150;padding:50px 60px;display:grid;grid-template-columns:auto 1fr;gap:28px">
+    <div style="background:#f4e6c4;border:2px solid #2b2340;border-radius:18px;box-shadow:0 0 0 4px #e3c372,0 0 0 6px #2b2340;padding:24px;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Caprasimo',serif;font-size:32px">Rygsæk</span><span style="font-weight:700;font-size:16px;color:#4c4058">18 / 24</span></div>
+      <div style="display:grid;grid-template-columns:repeat(6,66px);gap:8px">
+        <sc-for list="{{ inventory }}" as="i" hint-placeholder-count="24">
+          <div style="width:66px;height:66px;border-radius:10px;background:{{ i.bg }};border:2px solid #2b2340;box-shadow:{{ i.ring }};position:relative;display:flex;align-items:center;justify-content:center">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#6a5a48;text-align:center;line-height:1.1">{{ i.n }}</span>
+            <span style="position:absolute;right:4px;bottom:0;font-family:'Caprasimo',serif;font-size:15px">{{ i.c }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:72px 1fr;gap:14px;padding:14px;border-radius:12px;background:#fbf5e6;border:2px solid #2b2340">
+        <div style="width:72px;height:72px;border-radius:10px;border:2px solid #2b2340;background:#cfe6f2;display:flex;align-items:center;justify-content:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:9px">ikon</span></div>
+        <div style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:800;font-size:19px">Månesten <span style="font-size:14px;color:#5d4fa3">· Sjælden</span></span><span style="font-size:15px;line-height:1.4;color:#4c4058">Lyser svagt i mørke. Fundet dybt i Mørkeskoven. Sælges for 220.</span></div>
+      </div>
+    </div>
+    <div style="background:#f4e6c4;border:2px solid #2b2340;border-radius:18px;box-shadow:0 0 0 4px #e3c372,0 0 0 6px #2b2340;padding:24px;display:flex;flex-direction:column;gap:16px">
+      <span style="font-family:'Caprasimo',serif;font-size:32px">Værksted</span>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <sc-for list="{{ recipes }}" as="r" hint-placeholder-count="4">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-radius:10px;border:2px solid {{ r.border }};background:{{ r.bg }};color:{{ r.color }}"><span style="font-weight:800;font-size:18px">{{ r.n }}</span><span style="font-size:14px;font-weight:700">{{ r.s }}</span></div>
+        </sc-for>
+      </div>
+      <div style="margin-top:auto;padding:16px;border-radius:12px;background:#fbf5e6;border:2px solid #2b2340;display:flex;flex-direction:column;gap:12px">
+        <span style="font-weight:800;font-size:19px">Lygte med svampelys</span>
+        <div style="display:flex;gap:10px">
+          <sc-for list="{{ ingredients }}" as="g" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:58px;height:58px;border-radius:10px;border:2px solid #2b2340;background:#ecdcb4;display:flex;align-items:center;justify-content:center"><span style="font-family:'IBM Plex Mono',monospace;font-size:9px">ikon</span></div><span style="font-size:14px;font-weight:800;color:{{ g.color }}">{{ g.q }}</span><span style="font-size:13px;color:#4c4058">{{ g.n }}</span></div>
+          </sc-for>
+        </div>
+        <button style="align-self:flex-start;font-family:'Caprasimo',serif;font-size:22px;color:#fbf5e6;background:#6b9a3e;border:2px solid #2b2340;border-radius:12px;padding:8px 28px;box-shadow:inset 0 -5px 0 rgba(43,35,64,.3),0 4px 0 #2b2340;cursor:pointer">Lav</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;align-items:baseline;gap:18px"><span style="font-family:'IBM Plex Mono',monospace;color:#6a5a48">10</span><h2 style="margin:0;font-family:'Caprasimo',serif;font-weight:400;font-size:44px">Mørkeskoven</h2></div>
+  <p style="margin:0;max-width:720px;font-size:19px;line-height:1.55;text-wrap:pretty">Top-down kamera og action i realtid. Verden er mørk og kølig, men UI'et er det samme pergament, så det stadig føles trygt. Lygteolien fungerer som en blid tidsgrænse.</p>
+  <div data-screen-label="Mørkeskoven HUD" style="position:relative;width:1280px;height:720px;border-radius:12px;overflow:hidden;border:2px solid #2b2340;background:repeating-linear-gradient(135deg,#232a44 0 22px,#1c2138 22px 44px)">
+    <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 52%,rgba(111,214,196,.18) 0,rgba(111,214,196,0) 260px),radial-gradient(ellipse at center,rgba(0,0,0,0) 40%,rgba(10,10,24,.7) 100%)"></div>
+    <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'IBM Plex Mono',monospace;font-size:14px;background:rgba(251,245,230,.92);padding:6px 12px;border-radius:4px">scene: top-down sti med lysende svampe, spiller i midten</span>
+    <sc-if value="{{ showSafeArea }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:36px;border:2px dashed #c4506a;border-radius:6px;pointer-events:none"></div></sc-if>
+    <div style="position:absolute;left:40px;top:40px;display:flex;flex-direction:column;gap:10px">
+      <div style="background:#f4e6c4;border:2px solid #2b2340;border-radius:14px;box-shadow:0 0 0 4px #e3c372,0 0 0 6px #2b2340;padding:8px 14px;display:flex;gap:4px">
+        <sc-for list="{{ hearts }}" as="h" hint-placeholder-count="5"><span style="font-size:30px;line-height:1;color:{{ h.c }};-webkit-text-stroke:1.5px #2b2340">♥</span></sc-for>
+      </div>
+      <div style="display:grid;grid-template-columns:auto 180px;gap:10px;align-items:center;background:rgba(28,33,56,.85);border:2px solid #e3c372;border-radius:999px;padding:4px 14px">
+        <span style="font-weight:800;font-size:15px;color:#f2c14e">Lygteolie</span>
+        <div style="height:12px;border-radius:6px;background:#2f3654;overflow:hidden"><div style="width:58%;height:100%;background:#f2c14e"></div></div>
+      </div>
+    </div>
+    <div style="position:absolute;right:40px;top:40px;width:180px;height:180px;border-radius:50%;background:repeating-linear-gradient(135deg,#2f4a3f 0 10px,#29413a 10px 20px);border:2px solid #2b2340;box-shadow:0 0 0 4px #e3c372,0 0 0 6px #2b2340;display:flex;align-items:center;justify-content:center">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#fbf5e6">minikort</span>
+      <span style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-family:'Caprasimo',serif;font-size:16px;color:#2b2340;background:#e3c372;border:2px solid #2b2340;border-radius:8px;padding:0 10px;white-space:nowrap">Dybe Bregner · 2</span>
+    </div>
+    <div style="position:absolute;right:40px;top:262px;display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+      <sc-for list="{{ loot }}" as="l" hint-placeholder-count="3">
+        <div style="display:flex;align-items:center;gap:10px;background:#f4e6c4;border:2px solid #2b2340;border-radius:10px;padding:6px 12px 6px 6px;opacity:{{ l.o }}"><div style="width:30px;height:30px;border-radius:8px;border:2px solid #2b2340;background:{{ l.c }}"></div><span style="font-weight:800;font-size:17px">{{ l.t }}</span></div>
+      </sc-for>
+    </div>
+    <div style="position:absolute;left:50%;top:40px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;width:420px">
+      <span style="font-family:'Caprasimo',serif;font-size:24px;color:#fbf5e6;-webkit-text-stroke:1px #2b2340;text-shadow:0 2px 0 #2b2340">Snurresvampen</span>
+      <div style="width:100%;height:16px;border:2px solid #2b2340;border-radius:8px;background:#2f3654;overflow:hidden;box-shadow:0 0 0 2px #e3c372"><div style="width:64%;height:100%;background:#b3436b"></div></div>
+    </div>
+    <div style="position:absolute;left:50%;bottom:30px;transform:translateX(-50%);display:flex;gap:12px;align-items:flex-end">
+      <sc-for list="{{ abilities }}" as="a" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+          <div style="width:{{ a.size }};height:{{ a.size }};border-radius:14px;background:#f4e6c4;border:2px solid #2b2340;box-shadow:0 0 0 3px #e3c372,0 0 0 5px #2b2340;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#6a5a48;text-align:center">{{ a.n }}</span>
+            <div style="position:absolute;left:0;right:0;bottom:0;height:{{ a.cd }};background:rgba(28,33,56,.6)"></div>
+            <span style="position:absolute;font-family:'Caprasimo',serif;font-size:22px;color:#fbf5e6">{{ a.cdText }}</span>
+          </div>
+          <span style="font-weight:800;font-size:13px;color:#fbf5e6;background:#2b2340;border:1px solid #e3c372;padding:0 8px;border-radius:6px">{{ a.key }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="position:absolute;left:40px;bottom:40px;max-width:360px;background:rgba(28,33,56,.85);border:2px solid #6fd6c4;border-radius:12px;padding:10px 14px;font-style:italic;font-size:18px;color:#e6f5f1">Noget rasler i bregnerne…</div>
+  </div>
+</section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showSafeArea&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const ink = '#2b2340', gold = '#e3c372';
+    const sel = `0 0 0 3px ${gold},0 0 0 5px ${ink}`;
+    const inv = ['Gulerod','Græskar','Æble','Hvede','Honning','Svamp','Månesten','Kobber','Jern','Safir','Bregne','Ugle-fjer','Træ','Sten','Frø','Mælk','Kage','Fiskestang'];
+    const counts = ['12','4','9','30','2','7','1','8','5','1','14','3','40','25','6','2','1',''];
+    return {
+      showSafeArea: this.props.showSafeArea ?? false,
+      facts: [
+        {k:'KAMERA',v:'Isometrisk på gården, top-down i skoven'},{k:'GRAFIK',v:'Håndmalede 2D-sprites'},
+        {k:'FIGURER',v:'Chibi, ca. 2,5 hoveder høje'},{k:'UI',v:'Pergament og blæk med guldkant'},
+        {k:'KAMP',v:'Action i realtid, uhyggelig-sød'},{k:'SPROG',v:'Dansk tekst og stemmer'}
+      ],
+      zones: [
+        {name:'Trætoppen',mood:'Gården. Varm formiddagssol gennem bladene, honning og mos.',slot:'moodbillede: gård i trækronen',c0:'#cde0a6',c1:'#bfd694',
+          sw:[{n:'Pergament',hex:'#f4e6c4'},{n:'Mosgrøn',hex:'#6b9a3e'},{n:'Honning',hex:'#e8b04a'},{n:'Bark',hex:'#7a4e2d'},{n:'Himmel',hex:'#a9d3e0'}]},
+        {name:'Fesby',mood:'Feernes by. Lavendel, rosenblade og fe-guld i lanternerne.',slot:'moodbillede: svampehuse og torv',c0:'#e2d8f4',c1:'#d3c6ee',
+          sw:[{n:'Lavendel',hex:'#9b86d6'},{n:'Rosenblad',hex:'#e58fa6'},{n:'Fe-guld',hex:'#e3c372'},{n:'Kridt',hex:'#fbf5e6'},{n:'Blæk',hex:'#2b2340'}]},
+        {name:'Mørkeskoven',mood:'Eventyr. Natblåt mørke, lysende svampe og gule ugleøjne.',slot:'moodbillede: sti med svampelys',c0:'#2f3654',c1:'#262c48',
+          sw:[{n:'Natblå',hex:'#1c2138'},{n:'Skyggemos',hex:'#2f4a3f'},{n:'Svampelys',hex:'#6fd6c4'},{n:'Ugleøje',hex:'#f2c14e'},{n:'Tornebær',hex:'#b3436b'}]}
+      ],
+      slotStates: [
+        {label:'Tom',icon:'',count:'',bg:'#ecdcb4',ring:'inset 0 3px 0 rgba(43,35,64,.15)'},
+        {label:'Fyldt',icon:'gulerod',count:'12',bg:'#fbf5e6',ring:'none'},
+        {label:'Valgt',icon:'gulerod',count:'12',bg:'#fbf5e6',ring:sel},
+        {label:'Sjælden',icon:'månesten',count:'1',bg:'#e2d8f4',ring:'0 0 0 3px #9b86d6'}
+      ],
+      meters: [{n:'Energi',w:'72%',c:'#6b9a3e'},{n:'Hjerter',w:'60%',c:'#e58fa6'},{n:'Lygteolie',w:'45%',c:'#e8b04a'}],
+      rules: [
+        {t:'Blæk omkring alt',d:'2 px mørk kontur på paneler, felter og figurer.'},
+        {t:'Guld betyder valgt',d:'Guldringen bruges kun til fokus og det valgte.'},
+        {t:'Tal i Caprasimo',d:'Penge, tid og antal står altid i display-skriften.'},
+        {t:'Ingen rød fare',d:'Skade vises med tornebær-rosa, aldrig skrigende rød.'}
+      ],
+      menu: [
+        {t:'Fortsæt',sub:'Dag 14',bg:gold,border:ink},{t:'Nyt spil',sub:'',bg:'transparent',border:'transparent'},
+        {t:'Indstillinger',sub:'',bg:'transparent',border:'transparent'},{t:'Afslut',sub:'',bg:'transparent',border:'transparent'}
+      ],
+      races: [
+        {name:'Skovdyr',perk:'Stærke poter. Graver hurtigere og får mere ud af høsten.',slot:'chibi-skovdyr, helfigur',c0:'#e8cfa6',c1:'#dfc293',ring:sel,lift:'translateY(-8px)'},
+        {name:'Fe',perk:'Kan flyve kort over marker og taler med blomster.',slot:'chibi-fe, helfigur',c0:'#e2d8f4',c1:'#d3c6ee',ring:'none',lift:'none'},
+        {name:'Hobbit',perk:'Bager bedre kager og får rabat i Fesbys butikker.',slot:'chibi-hobbit, helfigur',c0:'#d4e4b4',c1:'#c7dba2',ring:'none',lift:'none'}
+      ],
+      species: [{n:'Ræv',bg:gold},{n:'Kanin',bg:'#fbf5e6'},{n:'Pindsvin',bg:'#fbf5e6'},{n:'Egern',bg:'#fbf5e6'}],
+      trackedQuests: [{t:'Find Pippins kat',p:'Spor fundet: 2 / 3'},{t:'Gulerødder til småkager',p:'Bagerfe Rosmarin · 5 / 12'}],
+      hotbar: ['Hakke','Vandkande','Økse','Le','Gulerod','Græskar','Æble','Honning','Lygte','Fiskestang'].map((n,i)=>({
+        name:n.toLowerCase(),key:String((i+1)%10),count:['','','','','12','4','9','2','',''][i],
+        bg:'#fbf5e6',ring:i===1?sel:'none'})),
+      shopTabs: [{n:'Frø',bg:gold},{n:'Redskaber',bg:'transparent'},{n:'Sælg',bg:'transparent'}],
+      shopItems: [
+        ['Gulerodsfrø','Høst efter 4 dage','20'],['Græskarfrø','Høst efter 10 dage','60'],['Jordbærfrø','Bær hele foråret','45'],['Solsikkefrø','Høst efter 7 dage','30'],
+        ['Kattemyntefrø','Elskes af katte','35'],['Månebønne','Gror kun om natten','120'],['Gødning','Bedre høst','15'],['Fe-støv','Vand ét felt i 3 dage','900']
+      ].map((r,i)=>({n:r[0],d:r[1],p:r[2],bg:i===1?'#fbf5e6':'transparent',border:i===1?ink:'#cdb98f',priceColor:i===7?'#b3436b':ink})),
+      quests: [
+        {title:'Find Pippins kat',giver:'Pippin · Fesby',tag:'FIND',color:'#e2d8f4',bg:'#fbf5e6',border:ink},
+        {title:'Gulerødder til småkager',giver:'Bagerfe Rosmarin',tag:'HØST',color:'#cde0a6',bg:'transparent',border:'#cdb98f'},
+        {title:'Utæt tag på bageriet',giver:'Borgmester Hyldeblomst',tag:'BYG',color:'#f0d49a',bg:'transparent',border:'#cdb98f'},
+        {title:'Månesten til kronen',giver:'Fekongen',tag:'SKOV',color:'#b9c3e3',bg:'transparent',border:'#cdb98f'}
+      ],
+      steps: [
+        {t:'Spørg naboerne i Fesby',mark:'✓',box:'#6b9a3e',color:'#8d7c66',deco:'line-through'},
+        {t:'Følg poteaftrykkene ved broen',mark:'✓',box:'#6b9a3e',color:'#8d7c66',deco:'line-through'},
+        {t:'Find Morfar Mis i Mørkeskoven',mark:'',box:'#fbf5e6',color:ink,deco:'none'}
+      ],
+      inventory: Array.from({length:24},(_,i)=>({n:inv[i]?inv[i].toLowerCase():'',c:counts[i]||'',
+        bg:inv[i]?(i===6||i===9?'#e2d8f4':'#fbf5e6'):'#ecdcb4',ring:i===6?sel:'none'})),
+      recipes: [
+        {n:'Lygte med svampelys',s:'Kan laves',bg:'#fbf5e6',border:ink,color:ink},
+        {n:'Fugleskræmsel',s:'Kan laves',bg:'transparent',border:'#cdb98f',color:ink},
+        {n:'Honningkage',s:'Mangler mel',bg:'transparent',border:'#cdb98f',color:'#8d7c66'},
+        {n:'Kobberhakke',s:'Mangler 2 kobber',bg:'transparent',border:'#cdb98f',color:'#8d7c66'}
+      ],
+      ingredients: [{n:'Svamp',q:'3 / 7',color:'#4d7a2a'},{n:'Jern',q:'1 / 5',color:'#4d7a2a'},{n:'Månesten',q:'1 / 1',color:'#4d7a2a'}],
+      hearts: [1,1,1,0.5,0].map(v=>({c:v===1?'#e58fa6':v===0.5?'#f2c3cf':'#4a4560'})),
+      loot: [{t:'+1 Månesten',c:'#cfe6f2',o:1},{t:'+3 Jern',c:'#b8b2a8',o:.85},{t:'+2 Svamp',c:'#6fd6c4',o:.6}],
+      abilities: [
+        {n:'slag',key:'Venstre klik',size:'78px',cd:'0%',cdText:''},
+        {n:'undvig',key:'Mellemrum',size:'64px',cd:'40%',cdText:'2'},
+        {n:'fe-lys',key:'Q',size:'64px',cd:'0%',cdText:''},
+        {n:'drik',key:'R',size:'64px',cd:'0%',cdText:''}
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

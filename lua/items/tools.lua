@@ -1,0 +1,88 @@
+-- items/tools.lua
+-- Tools and equipment.
+
+kind = "items"
+
+items = {
+  hoe_wooden = {
+    name_key = "ITEM_HOE_WOODEN",
+    category = "tool",
+    tool_type = "hoe",
+    power = 1,
+    buy_price = 0,
+    sell_price = 25,
+    description_key = "ITEM_HOE_WOODEN_DESC",
+  },
+  hoe_iron = {
+    name_key = "ITEM_HOE_IRON",
+    category = "tool",
+    tool_type = "hoe",
+    power = 2,
+    buy_price = 400,
+    sell_price = 150,
+    description_key = "ITEM_HOE_IRON_DESC",
+  },
+  watering_can_copper = {
+    name_key = "ITEM_WATERING_CAN_COPPER",
+    category = "tool",
+    tool_type = "watering",
+    power = 1,
+    capacity = 20,
+    buy_price = 0,
+    sell_price = 40,
+    description_key = "ITEM_WATERING_CAN_DESC",
+  },
+  watering_can_gold = {
+    name_key = "ITEM_WATERING_CAN_GOLD",
+    category = "tool",
+    tool_type = "watering",
+    power = 2,
+    capacity = 40,
+    buy_price = 600,
+    sell_price = 250,
+    description_key = "ITEM_WATERING_CAN_GOLD_DESC",
+  },
+  pickaxe_wooden = {
+    name_key = "ITEM_PICKAXE_WOODEN",
+    category = "tool",
+    tool_type = "pickaxe",
+    power = 1,
+    buy_price = 0,
+    sell_price = 30,
+    description_key = "ITEM_PICKAXE_WOODEN_DESC",
+  },
+  pickaxe_iron = {
+    name_key = "ITEM_PICKAXE_IRON",
+    category = "tool",
+    tool_type = "pickaxe",
+    power = 2,
+    buy_price = 500,
+    sell_price = 200,
+    description_key = "ITEM_PICKAXE_IRON_DESC",
+  },
+  axe_wooden = {
+    name_key = "ITEM_AXE_WOODEN",
+    category = "tool",
+    tool_type = "axe",
+    power = 1,
+    buy_price = 0,
+    sell_price = 30,
+    description_key = "ITEM_AXE_WOODEN_DESC",
+  },
+  sword_rusty = {
+    name_key = "ITEM_SWORD_RUSTY",
+    category = "weapon",
+    damage = 5,
+    buy_price = 0,
+    sell_price = 20,
+    description_key = "ITEM_SWORD_RUSTY_DESC",
+  },
+  iron_sword = {
+    name_key = "ITEM_IRON_SWORD",
+    category = "weapon",
+    damage = 12,
+    buy_price = 750,
+    sell_price = 300,
+    description_key = "ITEM_IRON_SWORD_DESC",
+  },
+}

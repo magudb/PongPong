@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/isometric/isometric_demo.gd" id="1_main"]
+[ext_resource type="Script" path="res://scripts/isometric/isometric_ground_2d.gd" id="2_ground"]
+[ext_resource type="PackedScene" path="res://scenes/isometric/player_2d.tscn" id="3_player"]
+
+[node name="PongPongIso2D" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="Backdrop" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="Background" type="ColorRect" parent="Backdrop"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.82, 0.9, 0.83, 1)
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Ground" type="Node2D" parent="World"]
+script = ExtResource("2_ground")
+
+[node name="Actors" type="Node2D" parent="World"]
+y_sort_enabled = true
+
+[node name="Player" parent="World/Actors" instance=ExtResource("3_player")]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="PanelContainer" parent="HUD"]
+offset_left = 18.0
+offset_top = 18.0
+offset_right = 486.0
+offset_bottom = 192.0
+
+[node name="Margin" type="MarginContainer" parent="HUD/Panel"]
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="HUD/Panel/Margin"]
+theme_override_constants/separation = 7
+
+[node name="Header" type="Label" parent="HUD/Panel/Margin/VBox"]
+text = "PONGPONG  /  ISOMETRIC 2D"
+
+[node name="CharacterName" type="Label" parent="HUD/Panel/Margin/VBox"]
+text = "Playing as: Fox"
+
+[node name="Actions" type="Label" parent="HUD/Panel/Margin/VBox"]
+text = "WASD / arrows: Move    Shift: Run    Space: Jump"
+
+[node name="MoreActions" type="Label" parent="HUD/Panel/Margin/VBox"]
+text = "TAB: Change character    C: Cheer    E: Interact"
+
+[node name="Flight" type="Label" parent="HUD/Panel/Margin/VBox"]
+text = "Bat / Fairy only: F = Fly    Space / Ctrl = Climb / Descend"
