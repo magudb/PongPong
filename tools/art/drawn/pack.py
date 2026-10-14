@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import re
 from pathlib import Path
 
 import numpy as np
@@ -21,6 +22,10 @@ ROOT = Path(__file__).resolve().parents[3]
 HERE = Path(__file__).resolve().parent
 SOURCES = HERE / "sources"
 CHARACTERS = ROOT / "assets/isometric_characters"
+# Read the game's geometry instead of maintaining a second projection ratio.
+_iso_source = (ROOT / "scripts/world2d/iso.gd").read_text()
+TILE_W, TILE_H = (float(re.search(r"const " + name + r"\s*:=\s*(\d+)", _iso_source)[1])
+                  for name in ["TILE_W", "TILE_H"])
 QUADRUPEDS = {"capybara", "calf", "lamb", "puppy", "fawn"}
 PACK = {"bat", "cat", "bear", "rabbit", "fairy", "monkey", "capybara",
         "fox", "raccoon", "penguin", "hedgehog", "frog"}
@@ -290,17 +295,118 @@ def window_light(image: Image.Image) -> tuple[Image.Image, tuple[int, int, int, 
     return glow.crop(bounds), bounds
 
 
+def building_footprint(fx: int, fy: int) -> np.ndarray:
+    """The same centre-relative T/R/B/L corners as Iso.iso_footprint()."""
+    x, y = (fx - fy) * TILE_W / 4, (fx + fy) * TILE_H / 4
+    width, side_y = (fx + fy) * TILE_W / 4, (fx - fy) * TILE_H / 4
+    return np.array([[-x, -y], [width, side_y], [x, y], [-width, -side_y]])
+
+
+def project_building(drawing: Image.Image, planes: list, footprint: np.ndarray) -> tuple[Image.Image, list[int]]:
+    """Align both wall planes with the tile axes while keeping verticals upright.
+
+    Each facade receives one affine projection. Unlike tracing the ragged alpha
+    bottom, the measured wall junctions keep windows, balconies, and roof eaves
+    parallel. Potted plants and steps retain their small natural overhangs.
+    """
+    source = np.array(planes) * [drawing.width, drawing.height]
+    left, front, right = source
+    target_left, target_front, target_right = footprint[[3, 2, 1]]
+    horizontal = (target_right[0] - target_left[0]) / (right[0] - left[0])
+    scale_left = (target_front[0] - target_left[0]) / (front[0] - left[0])
+    scale_right = (target_right[0] - target_front[0]) / (right[0] - front[0])
+    source_slopes = [(left[1] - front[1]) / (left[0] - front[0]),
+                     (right[1] - front[1]) / (right[0] - front[0])]
+
+    def forward(x: float, y: float) -> tuple[float, float]:
+        side = 0 if x < front[0] else 1
+        scale_x = scale_left if side == 0 else scale_right
+        screen_x = target_front[0] + (x - front[0]) * scale_x
+        ground_y = target_front[1] - abs(screen_x - target_front[0]) * (TILE_H / TILE_W)
+        source_y = front[1] + (x - front[0]) * source_slopes[side]
+        return screen_x, ground_y + (y - source_y) * horizontal
+
+    corners = np.array([forward(x, y) for x in [0, front[0], drawing.width]
+                        for y in [0, drawing.height]])
+    origin = np.floor(corners.min(axis=0)).astype(int) - 6
+    size = np.ceil(corners.max(axis=0)).astype(int) - origin + 6
+    yy, xx = np.mgrid[:size[1], :size[0]]
+    world_x, world_y = xx + origin[0], yy + origin[1]
+    sample_x = front[0] + (world_x - target_front[0]) / np.where(world_x < target_front[0], scale_left, scale_right)
+    source_base = front[1] + (sample_x - front[0]) * np.where(sample_x < front[0], source_slopes[0], source_slopes[1])
+    ground_y = target_front[1] - np.abs(world_x - target_front[0]) * (TILE_H / TILE_W)
+    sample_y = source_base + (world_y - ground_y) / horizontal
+    raw = np.asarray(drawing, dtype=np.float32) / 255
+    raw[:, :, :3] *= raw[:, :, 3:4]
+    sampled = np.stack([ndimage.map_coordinates(raw[:, :, k], [sample_y, sample_x],
+                                                order=1, mode="constant", cval=0)
+                        for k in range(4)], axis=-1)
+    sampled[:, :, :3] /= np.maximum(sampled[:, :, 3:4], 1 / 255)
+    image = Image.fromarray(np.uint8(np.clip(sampled * 255, 0, 255)))
+    # Trim transparent padding only. The pivot stays the footprint centre.
+    bounds = image.getchannel("A").getbbox()
+    image = image.crop(bounds)
+    pivot = [-int(origin[0]) - bounds[0], -int(origin[1]) - bounds[1]]
+    return image, pivot
+
+
+def building_ground(footprint: np.ndarray) -> tuple[Image.Image, list[int]]:
+    """Soft soil contact and an upper-left-lit cast shadow, on the ground plane."""
+    offset = np.array([23., 14.])
+    origin = np.floor(footprint.min(axis=0) - 26).astype(int)
+    end = np.ceil(footprint.max(axis=0) + offset + 32).astype(int)
+    size = tuple(end - origin)
+    points = [tuple(point - origin) for point in footprint]
+    contact = Image.new("L", size)
+    ImageDraw.Draw(contact).polygon(points, fill=255)
+    soil = contact.filter(ImageFilter.GaussianBlur(10))
+    shadow = Image.new("L", size)
+    # The projected roof shadow extends toward screen lower-right.
+    painter = ImageDraw.Draw(shadow)
+    painter.polygon(points, fill=255)
+    painter.polygon([tuple(point + offset - origin) for point in footprint], fill=255)
+    for i in range(4):
+        edge = footprint[[i, (i + 1) % 4]]
+        painter.polygon([tuple(point - origin) for point in [edge[0], edge[1], edge[1] + offset, edge[0] + offset]], fill=255)
+    shadow = shadow.filter(ImageFilter.GaussianBlur(8))
+    yy, xx = np.mgrid[:size[1], :size[0]]
+    # Slight pigment variation removes a mechanically smooth oval/polygon edge.
+    grain = .92 + .06 * np.sin(xx * .31 + np.sin(yy * .17)) * np.cos(yy * .23)
+    rgba = np.zeros((size[1], size[0], 4), dtype=np.uint8)
+    rgba[:, :, :3] = [74, 66, 56]
+    rgba[:, :, 3] = np.uint8(np.clip((np.asarray(soil) * .13 + np.asarray(shadow) * .25) * grain, 0, 255))
+    return Image.fromarray(rgba), [-int(origin[0]), -int(origin[1])]
+
+
+def building_sprite(drawing: Image.Image, name: str, fx: int, fy: int, planes: list, manifest: dict) -> None:
+    footprint = building_footprint(fx, fy)
+    image, pivot = project_building(drawing, planes, footprint)
+    folder = ROOT / "assets/iso_props/drawn"
+    save_webp(image, folder / (name + ".webp"))
+    ground, ground_pivot = building_ground(footprint)
+    save_webp(ground, folder / (name + "_ground.webp"))
+    glow, bounds = window_light(image)
+    save_webp(glow, folder / (name + "_glow.webp"))
+    manifest[name] = {
+        "file": name + ".webp", "size": list(image.size), "pivot": pivot,
+        "footprint": [fx, fy], "proj": "iso",
+        "ground": {"file": name + "_ground.webp", "pivot": ground_pivot},
+        "base_corners": (footprint[[3, 2, 1]] + pivot).tolist(),
+        "glow": {"file": name + "_glow.webp",
+                 "center": [bounds[0] + glow.width * .5, bounds[1] + glow.height * .5],
+                 "size": list(glow.size), "color": "#ffffff", "blend": "add"},
+    }
+
+
 def props() -> None:
     manifest = {"_source": "Painted sprites, tools/art/drawn/sources; existing Lua collision and y-sort contracts."}
     buildings = extract(SOURCES / "buildings.png", 2, 2)
+    planes = json.loads((HERE / "building_planes.json").read_text())
     for i, (name, fx, fy) in enumerate([
         ("house_farm", 3, 2), ("house_mushroom_rose", 2, 2),
         ("house_mushroom_lavender", 2, 2), ("house_mushroom_mint", 2, 2),
     ]):
-        width = (fx + fy) * 64 + 80
-        height = (fx + fy) * 38 + 230
-        prop_sprite(buildings[i], width, height, (width // 2, height - 24 - (fx + fy) * 19),
-                    name, (fx, fy), manifest)
+        building_sprite(buildings[i], name, fx, fy, planes[name], manifest)
     nature = extract(SOURCES / "nature.png", 3, 3)
     recipes = [
         (0, "tree_oak_farm", 230, 280, (115, 260), False),

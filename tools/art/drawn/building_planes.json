@@ -1,0 +1,7 @@
+{
+  "_note": "Normalized wall/foundation junctions in each extracted source painting: left, front corner, right. Plants and projecting doorsteps are outside these wall planes.",
+  "house_farm": [[0.10, 0.89], [0.56, 0.965], [0.93, 0.88]],
+  "house_mushroom_rose": [[0.10, 0.90], [0.54, 0.965], [0.94, 0.86]],
+  "house_mushroom_lavender": [[0.08, 0.86], [0.55, 0.97], [0.95, 0.86]],
+  "house_mushroom_mint": [[0.07, 0.88], [0.55, 0.97], [0.95, 0.86]]
+}

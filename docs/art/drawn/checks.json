@@ -9,327 +9,328 @@
   "strict_playtests": {
     "animal": {
       "result": "pass",
-      "checks": 2775,
+      "checks": 2778,
       "failed": 0,
       "skipped": 32,
-      "elapsed_s": 132.52,
+      "elapsed_s": 99.4,
       "sections": {
         "area": {
-          "checks": 227,
+          "checks": 230,
           "failed": 0,
-          "ms": 17490,
+          "ms": 16571,
           "skipped": 2
         },
         "art_characters": {
           "checks": 27,
           "failed": 0,
-          "ms": 14161,
+          "ms": 17165,
           "skipped": 0
         },
         "art_home": {
           "checks": 29,
           "failed": 0,
-          "ms": 8176,
+          "ms": 5361,
           "skipped": 0
         },
         "boot": {
           "checks": 8,
           "failed": 0,
-          "ms": 2831,
+          "ms": 2193,
           "skipped": 0
         },
         "characters": {
           "checks": 108,
           "failed": 0,
-          "ms": 4862,
+          "ms": 2822,
           "skipped": 0
         },
         "content_features": {
           "checks": 141,
           "failed": 0,
-          "ms": 12400,
+          "ms": 5499,
           "skipped": 0
         },
         "core": {
           "checks": 111,
           "failed": 0,
-          "ms": 484,
+          "ms": 237,
           "skipped": 1
         },
         "data": {
           "checks": 314,
           "failed": 0,
-          "ms": 7027,
+          "ms": 3550,
           "skipped": 1
         },
         "economy": {
           "checks": 296,
           "failed": 0,
-          "ms": 2026,
+          "ms": 936,
           "skipped": 2
         },
         "loc": {
           "checks": 114,
           "failed": 0,
-          "ms": 22499,
+          "ms": 14860,
           "skipped": 0
         },
         "rarity": {
           "checks": 74,
           "failed": 0,
-          "ms": 51,
+          "ms": 41,
           "skipped": 0
         },
         "save": {
           "checks": 234,
           "failed": 0,
-          "ms": 5172,
+          "ms": 7253,
           "skipped": 2
         },
         "ui_audit": {
           "checks": 439,
           "failed": 0,
-          "ms": 9484,
+          "ms": 7110,
           "skipped": 23
         },
         "ui_audit_blind": {
           "checks": 121,
           "failed": 0,
-          "ms": 6246,
+          "ms": 4760,
           "skipped": 0
         },
         "ui_audit_pins": {
           "checks": 344,
           "failed": 0,
-          "ms": 2948,
+          "ms": 1412,
           "skipped": 0
         },
         "ui_foundation": {
           "checks": 188,
           "failed": 0,
-          "ms": 13352,
+          "ms": 8201,
           "skipped": 1
         }
       }
     },
     "fairy": {
       "result": "pass",
-      "checks": 2775,
+      "checks": 2778,
       "failed": 0,
       "skipped": 32,
-      "elapsed_s": 139.49,
+      "elapsed_s": 79.06,
       "sections": {
         "area": {
-          "checks": 227,
+          "checks": 230,
           "failed": 0,
-          "ms": 16753,
+          "ms": 16218,
           "skipped": 2
         },
         "art_characters": {
           "checks": 27,
           "failed": 0,
-          "ms": 14180,
+          "ms": 7280,
           "skipped": 0
         },
         "art_home": {
           "checks": 29,
           "failed": 0,
-          "ms": 9264,
+          "ms": 4300,
           "skipped": 0
         },
         "boot": {
           "checks": 8,
           "failed": 0,
-          "ms": 2301,
+          "ms": 2177,
           "skipped": 0
         },
         "characters": {
           "checks": 108,
           "failed": 0,
-          "ms": 5517,
+          "ms": 2359,
           "skipped": 0
         },
         "content_features": {
           "checks": 141,
           "failed": 0,
-          "ms": 11112,
+          "ms": 4799,
           "skipped": 0
         },
         "core": {
           "checks": 111,
           "failed": 0,
-          "ms": 575,
+          "ms": 237,
           "skipped": 1
         },
         "data": {
           "checks": 314,
           "failed": 0,
-          "ms": 7717,
+          "ms": 3199,
           "skipped": 1
         },
         "economy": {
           "checks": 296,
           "failed": 0,
-          "ms": 3532,
+          "ms": 908,
           "skipped": 2
         },
         "loc": {
           "checks": 114,
           "failed": 0,
-          "ms": 27919,
+          "ms": 11025,
           "skipped": 0
         },
         "rarity": {
           "checks": 74,
           "failed": 0,
-          "ms": 50,
+          "ms": 36,
           "skipped": 0
         },
         "save": {
           "checks": 234,
           "failed": 0,
-          "ms": 5075,
+          "ms": 4178,
           "skipped": 2
         },
         "ui_audit": {
           "checks": 439,
           "failed": 0,
-          "ms": 6640,
+          "ms": 5533,
           "skipped": 23
         },
         "ui_audit_blind": {
           "checks": 121,
           "failed": 0,
-          "ms": 5891,
+          "ms": 4640,
           "skipped": 0
         },
         "ui_audit_pins": {
           "checks": 344,
           "failed": 0,
-          "ms": 3899,
+          "ms": 2065,
           "skipped": 0
         },
         "ui_foundation": {
           "checks": 188,
           "failed": 0,
-          "ms": 16593,
+          "ms": 8862,
           "skipped": 1
         }
       }
     },
     "hobbit": {
       "result": "pass",
-      "checks": 2775,
+      "checks": 2778,
       "failed": 0,
       "skipped": 32,
-      "elapsed_s": 144.22,
+      "elapsed_s": 92.17,
       "sections": {
         "area": {
-          "checks": 227,
+          "checks": 230,
           "failed": 0,
-          "ms": 18082,
+          "ms": 16233,
           "skipped": 2
         },
         "art_characters": {
           "checks": 27,
           "failed": 0,
-          "ms": 18081,
+          "ms": 7917,
           "skipped": 0
         },
         "art_home": {
           "checks": 29,
           "failed": 0,
-          "ms": 9552,
+          "ms": 4501,
           "skipped": 0
         },
         "boot": {
           "checks": 8,
           "failed": 0,
-          "ms": 2784,
+          "ms": 2208,
           "skipped": 0
         },
         "characters": {
           "checks": 108,
           "failed": 0,
-          "ms": 5480,
+          "ms": 2566,
           "skipped": 0
         },
         "content_features": {
           "checks": 141,
           "failed": 0,
-          "ms": 15350,
+          "ms": 6433,
           "skipped": 0
         },
         "core": {
           "checks": 111,
           "failed": 0,
-          "ms": 499,
+          "ms": 372,
           "skipped": 1
         },
         "data": {
           "checks": 314,
           "failed": 0,
-          "ms": 7676,
+          "ms": 5228,
           "skipped": 1
         },
         "economy": {
           "checks": 296,
           "failed": 0,
-          "ms": 1866,
+          "ms": 1582,
           "skipped": 2
         },
         "loc": {
           "checks": 114,
           "failed": 0,
-          "ms": 20278,
+          "ms": 14041,
           "skipped": 0
         },
         "rarity": {
           "checks": 74,
           "failed": 0,
-          "ms": 81,
+          "ms": 40,
           "skipped": 0
         },
         "save": {
           "checks": 234,
           "failed": 0,
-          "ms": 6872,
+          "ms": 5057,
           "skipped": 2
         },
         "ui_audit": {
           "checks": 439,
           "failed": 0,
-          "ms": 8924,
+          "ms": 6402,
           "skipped": 23
         },
         "ui_audit_blind": {
           "checks": 121,
           "failed": 0,
-          "ms": 5885,
+          "ms": 4579,
           "skipped": 0
         },
         "ui_audit_pins": {
           "checks": 344,
           "failed": 0,
-          "ms": 2223,
+          "ms": 1494,
           "skipped": 0
         },
         "ui_foundation": {
           "checks": 188,
           "failed": 0,
-          "ms": 15939,
+          "ms": 12123,
           "skipped": 1
         }
       }
     }
   },
-  "total_checks": 8325,
+  "total_checks": 8334,
   "unexpected_engine_messages": 0,
   "home_art_mb": 11.79,
   "home_art_budget_mb": 12,
   "native_review": [
     "world.png",
     "world-close.png",
+    "world-footprints.png",
     "world-night.png",
     "cast.png",
     "buildings.png"
@@ -342,7 +343,8 @@
     "house mass and height progression",
     "house ground contact and night masks",
     "window glow placement on sliced buildings",
-    "S3TC import presets and existing VRAM budget"
-  ],
-  "retry_note": "One earlier fairy run exceeded the unchanged 10-second UI audit timing limit (10.792 seconds). The unchanged final suites passed for all three heroes."
+    "S3TC import presets and existing VRAM budget",
+    "painted wall planes and foundation edges follow the tile axes",
+    "building contact shadows share the collision footprint and follow hiding and removal"
+  ]
 }

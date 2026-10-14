@@ -945,7 +945,20 @@ func place_prop(prop_id: String, cell: Vector2i, params: Dictionary = {}) -> Nod
 		l.position = Vector2(float(off[0]) if off.size() > 0 else 0.0, float(off[1]) if off.size() > 1 else -60.0)
 		first.add_child(l)
 		_lights.append({"node": l, "base": float(light_def.get("energy", 0.85))})
-	prop_nodes.append({"id": prop_id, "cell": cell, "nodes": nodes, "body": body})
+	# Ground contact belongs below every y-sorted actor, independent of which
+	# building strip is nearest. Its pivot is the same footprint centre.
+	var contact: Dictionary = art.get("ground", {})
+	var ground_contact: Sprite2D = null
+	if not contact.is_empty():
+		ground_contact = Sprite2D.new()
+		ground_contact.name = "%s_GroundContact" % prop_id
+		ground_contact.texture = contact["texture"]
+		ground_contact.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		ground_contact.centered = false
+		ground_contact.offset = -(contact["pivot"] as Vector2)
+		ground_contact.position = pivot_pos
+		ground_fx.add_child(ground_contact)
+	prop_nodes.append({"id": prop_id, "cell": cell, "nodes": nodes, "body": body, "ground": ground_contact})
 	if night_factor > 0.0:
 		_apply_night()
 	return first
@@ -1047,27 +1060,35 @@ func _make_collider(def: Dictionary, cell: Vector2i, fp: Vector2i, p_pos: Vector
 
 
 ## Everything one placed prop is made of: ALL its sprite nodes (every y-sort strip) plus its StaticBody2D collider. `node` is any
-## sprite node of the prop (place_prop returns the first). This is what a `when=` condition has to switch: the strips of a big
+## sprite node of the prop (place_prop returns the first), including its ground contact. A `when=` condition switches all parts: the strips of a big
 ## sprite hide together and the solid body leaves the world layer, otherwise a hidden house stays an invisible wall.
 ## Returns [] when the node does not belong to a placed prop.
 func prop_parts(node: Node) -> Array:
+	if node == null:
+		return []
 	for rec in prop_nodes:
-		if node in (rec["nodes"] as Array):
+		if node in (rec["nodes"] as Array) or node == rec.get("ground"):
 			var parts: Array = (rec["nodes"] as Array).duplicate()
+			if rec.get("ground") != null:
+				parts.append(rec["ground"])
 			if rec["body"] != null:
 				parts.append(rec["body"])
 			return parts
 	return []
 
 
-## Frees a prop placed by place_prop (its sprites, strips, collider). Returns whether the node belonged to a placed prop.
+## Frees a prop placed by place_prop (its sprites, strips, ground contact, collider). Returns whether the node belonged to a placed prop.
 func remove_prop(node: Node) -> bool:
+	if node == null:
+		return false
 	for i in prop_nodes.size():
 		var rec: Dictionary = prop_nodes[i]
-		if node in (rec["nodes"] as Array):
+		if node in (rec["nodes"] as Array) or node == rec.get("ground"):
 			for n in (rec["nodes"] as Array):
 				_forget_glows(n)
 				(n as Node).queue_free()
+			if rec.get("ground") != null:
+				(rec["ground"] as Node).queue_free()
 			if rec["body"] != null:
 				(rec["body"] as Node).queue_free()
 			prop_nodes.remove_at(i)

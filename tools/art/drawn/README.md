@@ -35,7 +35,16 @@ individually illustrated frames. There is no additional runtime material.
 
 The 21 world props are resolved through `assets/iso_props/drawn/props.json`.
 Collision and depth sorting still come from the Lua prop definitions. Buildings
-have additive window masks derived from the new paintings. Sliced building
+use measured wall-plane junctions from `building_planes.json`. The packer reads
+the 128 by 76 tile geometry from `Iso`, projects each facade onto those tile
+axes, and computes the sprite pivot from its actual footprint. Verticals stay
+upright, and roof edges, balconies and foundations share the ground perspective.
+Soft contact shadows and soil shading are separate `ground` textures, drawn
+below every character and tracked with the building when hidden or removed.
+The `world-footprints.png` review image overlays the real tile grid and foundation
+edges; the overlay is only part of the capture tool.
+
+Buildings have additive window masks derived from the new paintings. Sliced building
 masks use the complete image origin, so their light stays on the windows. All ten home tiers
 retain their door anchors, dimensions, footprints and depth sorting; their
 paintings are projected onto the existing isometric ground plane. The thin stone
@@ -56,7 +65,8 @@ The native-engine review script is:
   -s res://tools/art/drawn/capture.gd
 ```
 
-It saves dawn, daylight close view, night, full cast and building previews in `docs/art/drawn/`.
+It saves dawn, daylight close view, tile alignment, night, full cast and building
+previews in `docs/art/drawn/`.
 It starts a review game in memory and does not write a save. The previous
 `storybook/` shader and geometry generators remain available for the other
 assets and for source experiments; use this packer to restore the shipped look

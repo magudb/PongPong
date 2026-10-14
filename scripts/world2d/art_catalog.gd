@@ -11,6 +11,7 @@ extends RefCounted
 ##   props      res://assets/iso_props/props.json UNION res://assets/iso_props/*/props.json (feature props live in features/; home/,
 ##              furniture/ and interior/ have their own jsons - home.json ... - which are NOT read here)
 ##              {id: {file, size [w, h], pivot [x, y], footprint [fx, fz], glow?: {file, center, color, size, blend}, blend?, proj?}}
+##              ground?: {file, pivot [x,y]} is a ground-plane contact layer, anchored at the same footprint centre.
 ##   backdrops  res://assets/backdrops/<theme>_sky.webp and <theme>_far.webp
 ##   icons      res://assets/icons/items/<id>.webp, then icons/home/<id>.webp, then icons/wardrobe/<id>.webp
 ##              (+ <id>_night.webp, the pale-rimmed variant of legendary icons for the night tile)
@@ -229,6 +230,7 @@ static func _placeholder_terrain(id: StringName) -> Dictionary:
 ## {id, texture, pivot: Vector2, size: Vector2, footprint: Vector2i, proj, blend: "" | "add", glow: {} | {texture, center: Vector2,
 ## color: Color, size: Vector2, blend}, real: bool}. pivot = ground origin in px from the image top-left; place the sprite with
 ## `centered = false, offset = -pivot` under a node at the ground origin.
+## Optional ground: {texture, pivot} draws below y-sorted objects and follows the prop's lifecycle.
 static func prop(id: StringName) -> Dictionary:
 	if _props.has(id):
 		return _props[id]
@@ -252,6 +254,11 @@ static func prop(id: StringName) -> Dictionary:
 					res["glow"] = {"texture": gtex, "center": _vec2(gd.get("center", null), Vector2.ZERO),
 						"color": Color.from_string(str(gd.get("color", "#ffffff")), Color.WHITE),
 						"size": _vec2(gd.get("size", null), gtex.get_size()), "blend": str(gd.get("blend", "add"))}
+			var contact: Dictionary = ed.get("ground", {})
+			if not contact.is_empty():
+				var ground_tex := _load_tex(dir + str(contact.get("file", "")))
+				if ground_tex != null:
+					res["ground"] = {"texture": ground_tex, "pivot": _vec2(contact.get("pivot", null), Vector2.ZERO)}
 	if res.is_empty():
 		res = _placeholder_prop(id)
 		_note_missing("prop", String(id))

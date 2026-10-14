@@ -3,27 +3,48 @@
   "house_farm": {
     "file": "house_farm.webp",
     "size": [
-      400,
-      420
+      385,
+      406
     ],
     "pivot": [
-      200,
-      301
+      201,
+      298
     ],
     "footprint": [
       3,
       2
     ],
     "proj": "iso",
+    "ground": {
+      "file": "house_farm_ground.webp",
+      "pivot": [
+        186,
+        121
+      ]
+    },
+    "base_corners": [
+      [
+        41.0,
+        279.0
+      ],
+      [
+        233.0,
+        393.0
+      ],
+      [
+        361.0,
+        317.0
+      ]
+    ],
     "glow": {
       "file": "house_farm_glow.webp",
       "center": [
-        200.0,
-        217.5
+        192.5,
+        200.5
       ],
       "size": [
-        388,
-        393
+        381,
+        397
       ],
       "color": "#ffffff",
       "blend": "add"
@@ -32,27 +53,48 @@
   "house_mushroom_rose": {
     "file": "house_mushroom_rose.webp",
     "size": [
-      336,
-      382
+      304,
+      357
     ],
     "pivot": [
-      168,
-      282
+      157,
+      271
     ],
     "footprint": [
       2,
       2
     ],
     "proj": "iso",
+    "ground": {
+      "file": "house_mushroom_rose_ground.webp",
+      "pivot": [
+        154,
+        102
+      ]
+    },
+    "base_corners": [
+      [
+        29.0,
+        271.0
+      ],
+      [
+        157.0,
+        347.0
+      ],
+      [
+        285.0,
+        271.0
+      ]
+    ],
     "glow": {
       "file": "house_mushroom_rose_glow.webp",
       "center": [
-        168.5,
-        191.0
+        152.5,
+        178.0
       ],
       "size": [
-        323,
-        370
+        301,
+        350
       ],
       "color": "#ffffff",
       "blend": "add"
@@ -61,27 +103,48 @@
   "house_mushroom_lavender": {
     "file": "house_mushroom_lavender.webp",
     "size": [
-      336,
-      382
+      293,
+      289
     ],
     "pivot": [
-      168,
-      282
+      149,
+      207
     ],
     "footprint": [
       2,
       2
     ],
     "proj": "iso",
+    "ground": {
+      "file": "house_mushroom_lavender_ground.webp",
+      "pivot": [
+        154,
+        102
+      ]
+    },
+    "base_corners": [
+      [
+        21.0,
+        207.0
+      ],
+      [
+        149.0,
+        283.0
+      ],
+      [
+        277.0,
+        207.0
+      ]
+    ],
     "glow": {
       "file": "house_mushroom_lavender_glow.webp",
       "center": [
-        164.5,
-        222.5
+        143.5,
+        143.5
       ],
       "size": [
-        321,
-        307
+        287,
+        281
       ],
       "color": "#ffffff",
       "blend": "add"
@@ -90,27 +153,48 @@
   "house_mushroom_mint": {
     "file": "house_mushroom_mint.webp",
     "size": [
-      336,
-      382
+      290,
+      312
     ],
     "pivot": [
-      168,
-      282
+      146,
+      227
     ],
     "footprint": [
       2,
       2
     ],
     "proj": "iso",
+    "ground": {
+      "file": "house_mushroom_mint_ground.webp",
+      "pivot": [
+        154,
+        102
+      ]
+    },
+    "base_corners": [
+      [
+        18.0,
+        227.0
+      ],
+      [
+        146.0,
+        303.0
+      ],
+      [
+        274.0,
+        227.0
+      ]
+    ],
     "glow": {
       "file": "house_mushroom_mint_glow.webp",
       "center": [
-        168.5,
-        209.0
+        145.5,
+        155.0
       ],
       "size": [
-        323,
-        334
+        287,
+        304
       ],
       "color": "#ffffff",
       "blend": "add"
