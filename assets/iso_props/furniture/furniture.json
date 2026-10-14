@@ -331,8 +331,7 @@
      "file": "bed_birch_single_r3.webp"
     }
    },
-   "icon": "../../icons/home/bed_birch_single.webp",
-   "mirror_ok": true
+   "icon": "../../icons/home/bed_birch_single.webp"
   },
   "bed_oak_single": {
    "template": "bed",
@@ -650,8 +649,7 @@
      "file": "bed_sky_double_r3.webp"
     }
    },
-   "icon": "../../icons/home/bed_sky_double.webp",
-   "mirror_ok": true
+   "icon": "../../icons/home/bed_sky_double.webp"
   },
   "bed_rose_single": {
    "template": "bed",
@@ -2736,8 +2734,7 @@
      "file": "chair_birch_r3.webp"
     }
    },
-   "icon": "../../icons/home/chair_birch.webp",
-   "mirror_ok": true
+   "icon": "../../icons/home/chair_birch.webp"
   },
   "chair_oak": {
    "template": "chair",
@@ -3853,8 +3850,7 @@
      "file": "sofa_pine_two_r3.webp"
     }
    },
-   "icon": "../../icons/home/sofa_pine_two.webp",
-   "mirror_ok": true
+   "icon": "../../icons/home/sofa_pine_two.webp"
   },
   "sofa_oak_three": {
    "template": "sofa",
@@ -4174,8 +4170,7 @@
      "file": "sofa_birch_two_r3.webp"
     }
    },
-   "icon": "../../icons/home/sofa_birch_two.webp",
-   "mirror_ok": true
+   "icon": "../../icons/home/sofa_birch_two.webp"
   },
   "sofa_sky_two": {
    "template": "sofa",
@@ -4335,8 +4330,7 @@
      "file": "sofa_sky_two_r3.webp"
     }
    },
-   "icon": "../../icons/home/sofa_sky_two.webp",
-   "mirror_ok": true
+   "icon": "../../icons/home/sofa_sky_two.webp"
   },
   "sofa_moss_three": {
    "template": "sofa",
@@ -4496,8 +4490,7 @@
      "file": "sofa_moss_three_r3.webp"
     }
    },
-   "icon": "../../icons/home/sofa_moss_three.webp",
-   "mirror_ok": true
+   "icon": "../../icons/home/sofa_moss_three.webp"
   },
   "sofa_walnut_two": {
    "template": "sofa",
@@ -5509,8 +5502,7 @@
      "file": "wardrobe_birch_narrow_r3.webp"
     }
    },
-   "icon": "../../icons/home/wardrobe_birch_narrow.webp",
-   "mirror_ok": true
+   "icon": "../../icons/home/wardrobe_birch_narrow.webp"
   },
   "wardrobe_oak": {
    "template": "wardrobe",
@@ -5977,8 +5969,7 @@
      "file": "wardrobe_sky_narrow_r3.webp"
     }
    },
-   "icon": "../../icons/home/wardrobe_sky_narrow.webp",
-   "mirror_ok": true
+   "icon": "../../icons/home/wardrobe_sky_narrow.webp"
   },
   "wardrobe_walnut": {
    "template": "wardrobe",
@@ -8632,8 +8623,7 @@
      "file": "fireplace_granite_r3.webp"
     }
    },
-   "icon": "../../icons/home/fireplace_granite.webp",
-   "mirror_ok": true
+   "icon": "../../icons/home/fireplace_granite.webp"
   },
   "fireplace_chalk": {
    "template": "fireplace",
@@ -10097,8 +10087,7 @@
      "file": "chest_birch_r3.webp"
     }
    },
-   "icon": "../../icons/home/chest_birch.webp",
-   "mirror_ok": true
+   "icon": "../../icons/home/chest_birch.webp"
   },
   "chest_sky": {
    "template": "chest",
@@ -11633,8 +11622,7 @@
      "file": "clock_sky_r3.webp"
     }
    },
-   "icon": "../../icons/home/clock_sky.webp",
-   "mirror_ok": true
+   "icon": "../../icons/home/clock_sky.webp"
   },
   "clock_walnut": {
    "template": "clock",

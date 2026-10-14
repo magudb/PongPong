@@ -13,7 +13,7 @@ extends RefCounted
 ##
 ## Terrain ids are the art-spike catalogue ids of plan 6.2 (grass, grass_flowers, ..., water_0..3, ortho ids forest_floor_o ...).
 
-const INK := Color(0.294, 0.231, 0.290, 0.80)   # pack outline colour #4b3b4a, softened
+const INK := Color(0.29, 0.21, 0.25, 0.86)   # warm plum pencil, legible against the night palette
 const LIGHT_DIR := Vector3(-0.45, -0.70, 0.55)
 ## Painting resolution as a fraction of the design size (1.0 = full size, slow).
 const QUALITY := 0.4
@@ -119,22 +119,19 @@ static func blob(img: Image, c: Vector2, r: Vector2, col: Color, ink: float = 2.
 	var y0: int = maxi(int(floorf(cy - ry - ik - 2.0)), 0)
 	var y1: int = mini(int(ceilf(cy + ry + ik + 2.0)), img.get_height() - 1)
 	var rm: float = minf(rx, ry)
-	var l3: Vector3 = LIGHT_DIR.normalized()
-	var dark: Color = col.darkened(0.38)
-	var lit: Color = col.lightened(0.28 * glow)
+	var dark: Color = col.darkened(0.18)
+	var lit: Color = col.lightened(0.12 * glow)
 	var dr: float = col.r - dark.r
 	var dg: float = col.g - dark.g
 	var db: float = col.b - dark.b
-	var lr: float = lit.r - col.r
-	var lg: float = lit.g - col.g
-	var lb: float = lit.b - col.b
 	for y in range(y0, y1 + 1):
 		var ny: float = (y + 0.5 - cy) / ry
 		for x in range(x0, x1 + 1):
 			var nx: float = (x + 0.5 - cx) / rx
 			var len2: float = nx * nx + ny * ny
 			var len: float = sqrt(len2)
-			var d: float = (len - 1.0) * rm
+			# A fixed, slight wandering edge keeps the illustrator's hand in every shape.
+			var d: float = (len - 1.0) * rm + sin(nx * 8.0 + ny * 5.0) * k * 0.55
 			var a_out: float = clampf(0.5 - (d - ik), 0.0, 1.0)
 			if a_out <= 0.0:
 				continue
@@ -142,14 +139,15 @@ static func blob(img: Image, c: Vector2, r: Vector2, col: Color, ink: float = 2.
 			var a_in: float = clampf(0.5 - d, 0.0, 1.0)
 			if a_in <= 0.0:
 				continue
-			var z: float = sqrt(maxf(1.0 - minf(len2, 1.0), 0.0))
-			var diff: float = clampf(nx * l3.x + ny * l3.y + z * l3.z, 0.0, 1.0)
-			var t1: float = smoothstep(0.0, 0.45, diff)
-			var t2: float = smoothstep(0.55, 1.0, diff)
+			# Broad gouache washes instead of spherical specular shading.
+			var diff: float = clampf(0.62 - nx * 0.16 - ny * 0.22, 0.0, 1.0)
+			var t1: float = smoothstep(0.15, 0.55, diff)
+			var t2: float = smoothstep(0.66, 0.84, diff)
+			var grain: float = (_hash(float(x), float(y)) - 0.5) * 0.045
 			var rr: float = dark.r + dr * t1
 			var gg: float = dark.g + dg * t1
 			var bb: float = dark.b + db * t1
-			_put(img, x, y, rr + (lit.r - rr) * t2, gg + (lit.g - gg) * t2, bb + (lit.b - bb) * t2, a_in)
+			_put(img, x, y, rr + (lit.r - rr) * t2 + grain, gg + (lit.g - gg) * t2 + grain, bb + (lit.b - bb) * t2 + grain, a_in)
 
 
 static func soft_ellipse(img: Image, c: Vector2, r: Vector2, col: Color) -> void:
@@ -237,7 +235,7 @@ static func poly(img: Image, pts_design: PackedVector2Array, col_top: Color, col
 		cs.append(nx * a1.x + ny * a1.y)
 	for y in range(y0, y1 + 1):
 		var py: float = y + 0.5
-		var tcol: float = clampf((py - mn.y) / hspan, 0.0, 1.0)
+		var tcol: float = 0.25 + 0.5 * clampf((py - mn.y) / hspan, 0.0, 1.0)
 		var c_row: Color = col_top.lerp(col_bot, tcol)
 		for x in range(x0, x1 + 1):
 			var px: float = x + 0.5
@@ -247,6 +245,7 @@ static func poly(img: Image, pts_design: PackedVector2Array, col_top: Color, col
 					d = maxf(d, nxs[i] * px + nys[i] * py - cs[i])
 			else:
 				d = _dist_to_poly(Vector2(px, py), pts)
+			d += sin(px * 0.62 + py * 0.31) * k * 0.4
 			var a_out: float = clampf(0.5 - (d - ik), 0.0, 1.0)
 			if a_out <= 0.0:
 				continue
@@ -254,7 +253,8 @@ static func poly(img: Image, pts_design: PackedVector2Array, col_top: Color, col
 				_put(img, x, y, ink_col.r, ink_col.g, ink_col.b, a_out * ink_col.a)
 			var a_in: float = clampf(0.5 - d, 0.0, 1.0)
 			if a_in > 0.0:
-				_put(img, x, y, c_row.r, c_row.g, c_row.b, a_in)
+				var grain: float = (_hash(px, py) - 0.5) * 0.04
+				_put(img, x, y, c_row.r + grain, c_row.g + grain, c_row.b + grain, a_in)
 
 
 static func line(img: Image, p0_design: Vector2, p1_design: Vector2, width: float, c: Color) -> void:
@@ -266,11 +266,14 @@ static func line(img: Image, p0_design: Vector2, p1_design: Vector2, width: floa
 	var maxp := Vector2(maxf(p0.x, p1.x), maxf(p0.y, p1.y)) + Vector2.ONE * (wk + 1.0)
 	var seg: Vector2 = p1 - p0
 	var l2: float = maxf(seg.length_squared(), 0.0001)
+	var normal: Vector2 = Vector2(-seg.y, seg.x).normalized()
 	for y in range(maxi(int(minp.y), 0), mini(int(maxp.y) + 1, img.get_height())):
 		for x in range(maxi(int(minp.x), 0), mini(int(maxp.x) + 1, img.get_width())):
 			var p := Vector2(x + 0.5, y + 0.5)
 			var t: float = clampf((p - p0).dot(seg) / l2, 0.0, 1.0)
-			var d: float = p.distance_to(p0 + seg * t) - wk * 0.5
+			var wander: float = sin(t * TAU * 1.4 + p0.x * 0.07) * sin(t * PI) * 0.8 * k
+			var pressure: float = 0.85 + 0.15 * sin(t * PI)
+			var d: float = p.distance_to(p0 + seg * t + normal * wander) - wk * pressure * 0.5
 			var al: float = clampf(0.5 - d, 0.0, 1.0)
 			if al > 0.0:
 				_blend_px(img, x, y, Color(c.r, c.g, c.b, c.a * al))
