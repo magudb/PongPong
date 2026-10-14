@@ -2,6 +2,25 @@ extends SceneTree
 ## Capture the imported sprites in the engine. No saves are written.
 const OUT := "res://docs/art/drawn/"
 
+class FootprintOverlay extends Node2D:
+	# Keep this dynamic: -s drivers compile before the project's autoloads exist.
+	var area
+
+	func _draw() -> void:
+		for y in area.map.height:
+			for x in area.map.width:
+				if area.map.ground_at(Vector2i(x, y)) == "#":
+					continue
+				var tile := Iso.iso_diamond(Vector2i(x, y))
+				tile.append(tile[0])
+				draw_polyline(tile, Color(0.12, 0.26, 0.27, .22), 1.0, true)
+		for rec in area.prop_nodes:
+			if not String(rec["id"]).begins_with("house_"):
+				continue
+			var fp := GameData.footprint_of(rec["id"])
+			var corners := Iso.iso_footprint(rec["cell"], fp.x, fp.y)
+			draw_polyline(PackedVector2Array([corners[3], corners[2], corners[1]]), Color("5fdbe3"), 2.0, true)
+
 func _initialize() -> void:
 	call_deferred("_run")
 
@@ -31,6 +50,13 @@ func _run() -> void:
 	for frame in 30:
 		await process_frame
 	await _shot("world-close.png")
+	var overlay := FootprintOverlay.new()
+	overlay.area = world.get("area")
+	overlay.z_index = 99
+	overlay.area.add_child(overlay)
+	await _shot("world-footprints.png")
+	overlay.queue_free()
+	await process_frame
 	manager.hour = 21
 	for frame in 60:
 		await process_frame
