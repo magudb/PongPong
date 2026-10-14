@@ -2,7 +2,7 @@
  "_doc": "Key-level ownership of localization keys (PLAN R.4 for the base files, addendum 3.7 / RV-P8 for the feature files). Resolution (LocalizationManager.owner_of, tools/loc/csv_lint.py, F1 validator K8): an `exact` entry wins; else ITEM_<id>[_DESC|_HINT] of the item ids of the Lua files named in `item_files`; else the LONGEST matching `prefix`. A key that no file claims is unconstrained (it only has to be unique). A non-legacy file may define only keys it owns; da.csv (legacy base) and zz_final.csv (copy-pass overrides of NON-voiced keys) are exempt. `owner` is the package that edits the file. A new CSV gets its key families here by a change request to P03 (new_csv.py creates the file and its keep-import but never edits this table).",
  "files": {
   "core.csv": {
-   "owner": "P03",
+   "owner": "V1",
    "prefix": [
     "GAME_",
     "NPC_",
@@ -141,18 +141,29 @@
    "owner": "P16",
    "prefix": [
     "NOTIF_LOAD_",
-    "NOTIF_SAVE_FAILED_"
+    "NOTIF_SAVE_FAILED_",
+    "TITLE_",
+    "PAUSE_",
+    "SAVELOAD_",
+    "SETTINGS_",
+    "SELECT_"
    ],
    "exact": []
   },
   "hud.csv": {
    "owner": "P17",
-   "prefix": [],
+   "prefix": [
+    "HUD_",
+    "TOAST_",
+    "AREA_"
+   ],
    "exact": []
   },
   "shop_ui.csv": {
    "owner": "P18",
-   "prefix": [],
+   "prefix": [
+    "STORE_"
+   ],
    "exact": []
   },
   "forest.csv": {
@@ -211,7 +222,7 @@
    ]
   },
   "finds.csv": {
-   "owner": "F1",
+   "owner": "DL4",
    "prefix": [
     "FIND_AREA_",
     "FIND_CONTAINER_",
@@ -311,6 +322,259 @@
    "owner": "F9",
    "prefix": [
     "COLLECT_"
+   ],
+   "exact": []
+  },
+  "dungeon.csv": {
+   "owner": "D1",
+   "prefix": [
+    "DUNGEON_",
+    "RUNE_",
+    "HULEN_"
+   ],
+   "exact": []
+  },
+  "dungeon_run.csv": {
+   "owner": "DR1",
+   "prefix": [
+    "DEXP_",
+    "DPICK_",
+    "ASSIST_",
+    "DTUT_",
+    "FUND_",
+    "WEAPON_FAMILY_"
+   ],
+   "exact": []
+  },
+  "dungeon_services.csv": {
+   "owner": "DR7",
+   "prefix": [
+    "QUEST_SKOVLIFT_INTRO_",
+    "OBJ_SKOVLIFT_INTRO_",
+    "QUEST_RUNE_VANDRING_",
+    "OBJ_RUNE_VANDRING_",
+    "QUEST_UGLES_NOEGLE_",
+    "OBJ_UGLES_NOEGLE_",
+    "QUEST_BOSSERNES_VEJ_",
+    "OBJ_BOSSERNES_VEJ_"
+   ],
+   "exact": [
+    "RECIPE_LYSDRAABE",
+    "RECIPE_SVAMPE_ELIKSIR",
+    "SHOP_NATTEBLIK_MAPS",
+    "SHOP_NATTEBLIK_MAPS_GREETING"
+   ]
+  },
+  "dungeon_items.csv": {
+   "owner": "DL2",
+   "prefix": [
+    "WEFFECT_",
+    "WSTAT_",
+    "GEMFX_",
+    "RECIPE_DNG_"
+   ],
+   "exact": []
+  },
+  "loot_dungeon.csv": {
+   "owner": "F4",
+   "prefix": [
+    "LOOT_"
+   ],
+   "exact": []
+  },
+  "levels.csv": {
+   "owner": "V3",
+   "prefix": [
+    "LEVEL_"
+   ],
+   "exact": []
+  },
+  "cast.csv": {
+   "owner": "V1",
+   "prefix": [
+    "CAST_",
+    "HERO_",
+    "SHOP_TIMBER_",
+    "QUEST_PIPS_RUNDE_",
+    "OBJ_PIPS_RUNDE_"
+   ],
+   "exact": []
+  },
+  "dialogue_cast.csv": {
+   "owner": "V7",
+   "prefix": [
+    "DLG_HOPPE_",
+    "DLG_BRUMME_",
+    "DLG_PIP_",
+    "DLG_SOFUS_",
+    "DLG_UGLE_",
+    "DLG_NATTEBLIK_",
+    "DLG_BIRK_"
+   ],
+   "exact": []
+  },
+  "life.csv": {
+   "owner": "V6",
+   "prefix": [
+    "LIFE_"
+   ],
+   "exact": []
+  },
+  "look.csv": {
+   "owner": "V8",
+   "prefix": [
+    "LOOK_"
+   ],
+   "exact": []
+  },
+  "traetoppen.csv": {
+   "owner": "V4",
+   "prefix": [
+    "TRAE_"
+   ],
+   "exact": []
+  },
+  "appraisal.csv": {
+   "owner": "DL7",
+   "prefix": [
+    "APPRAISE_"
+   ],
+   "exact": []
+  },
+  "farm_signs.csv": {
+   "owner": "N01-farm-map",
+   "prefix": [],
+   "exact": [
+    "SIGN_ORCHARD",
+    "SIGN_FARM_BRIDGE",
+    "SIGN_FARM_FOREST"
+   ]
+  },
+  "farm_site.csv": {
+   "owner": "N02-farm-objects",
+   "prefix": [
+    "FARMSITE_"
+   ],
+   "exact": []
+  },
+  "farm_tutorial.csv": {
+   "owner": "N04-farm-first-morning",
+   "prefix": [
+    "TUT_",
+    "DLG_FARMINTRO_",
+    "QUEST_FORSTE_DAGE_",
+    "OBJ_FORSTE_DAGE_"
+   ],
+   "exact": []
+  },
+  "farm_greenhouse.csv": {
+   "owner": "N07-farm-greenhouse",
+   "prefix": [
+    "GHOUSE_"
+   ],
+   "exact": []
+  },
+  "towns.csv": {
+   "owner": "T-towns-core",
+   "prefix": [
+    "BLD_",
+    "HOURS_",
+    "ACT_",
+    "COUNTER_"
+   ],
+   "exact": []
+  },
+  "keepers.csv": {
+   "owner": "T-greetings",
+   "prefix": [
+    "KEEP_"
+   ],
+   "exact": []
+  },
+  "post.csv": {
+   "owner": "T-post-office",
+   "prefix": [
+    "POST_",
+    "WHERE_"
+   ],
+   "exact": []
+  },
+  "social_sys.csv": {
+   "owner": "S-core",
+   "prefix": [
+    "SOC_SYS_",
+    "REL_STAGE_"
+   ],
+   "exact": []
+  },
+  "social_talk.csv": {
+   "owner": "S-data",
+   "prefix": [
+    "SOC_"
+   ],
+   "exact": []
+  },
+  "social_arch.csv": {
+   "owner": "S-data",
+   "prefix": [
+    "SOC_ARCH_"
+   ],
+   "exact": []
+  },
+  "gifts.csv": {
+   "owner": "S-data",
+   "prefix": [
+    "GIFT_"
+   ],
+   "exact": []
+  },
+  "birthdays.csv": {
+   "owner": "S-data",
+   "prefix": [
+    "BDAY_"
+   ],
+   "exact": []
+  },
+  "rel_ui.csv": {
+   "owner": "S-ui",
+   "prefix": [
+    "REL_"
+   ],
+   "exact": []
+  },
+  "social_events.csv": {
+   "owner": "S-events",
+   "prefix": [
+    "SOC_EV_"
+   ],
+   "exact": []
+  },
+  "heart_events.csv": {
+   "owner": "S-heart-content",
+   "prefix": [
+    "HEART_"
+   ],
+   "exact": []
+  },
+  "festivals.csv": {
+   "owner": "S-fest-content",
+   "prefix": [
+    "FEST_"
+   ],
+   "exact": []
+  },
+  "partner.csv": {
+   "owner": "S-marriage",
+   "prefix": [
+    "PARTNER_"
+   ],
+   "exact": []
+  },
+  "nav.csv": {
+   "owner": "P28",
+   "prefix": [
+    "NAV_",
+    "HINT_"
    ],
    "exact": []
   }
