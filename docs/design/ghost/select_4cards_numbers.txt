@@ -1,0 +1,25 @@
+--- select_4cards_fixture (selected card Ghost)
+card column width 270.0, gap 24, grid y 153..587 (height 434)
+Animal  card x    64.0..  334.0  y 153.0..587.0  frame    80.0,169.0 238.0 x 304.4  perk lines 2
+Fairy   card x   358.0..  628.0  y 153.0..587.0  frame   374.0,169.0 238.0 x 304.4  perk lines 2
+Hobbit  card x   652.0..  922.0  y 153.0..587.0  frame   668.0,169.0 238.0 x 304.4  perk lines 2
+Ghost   card x   946.0.. 1216.0  y 145.0..579.0  frame   962.0,161.0 238.0 x 304.4  perk lines 2
+footer y 615..672; chips [(150.9, 615, 228.9, 668), (238.9, 615, 341.1, 668)]; blurb x 365.1..1038.0 (673 px) lines 1
+Videre 1052..1216 x 615..668
+--- select_4cards_live (selected card Ghost)
+card column width 270.0, gap 24, grid y 153..587 (height 434)
+Animal  card x    64.0..  334.0  y 153.0..587.0  frame    80.0,169.0 238.0 x 304.4  perk lines 2
+Fairy   card x   358.0..  628.0  y 153.0..587.0  frame   374.0,169.0 238.0 x 304.4  perk lines 2
+Hobbit  card x   652.0..  922.0  y 153.0..587.0  frame   668.0,169.0 238.0 x 304.4  perk lines 2
+Ghost   card x   946.0.. 1216.0  y 145.0..579.0  frame   962.0,161.0 238.0 x 304.4  perk lines 2
+footer y 615..672; chips [(150.9, 615, 228.9, 668), (238.9, 615, 341.1, 668)]; blurb x 365.1..906.0 (541 px) lines 2
+Videre 1052..1216 x 615..668
+Tilbage 920..1040; HintBar centred at y 692
+--- select_4cards_animal_selected (selected card Animal)
+card column width 270.0, gap 24, grid y 153..587 (height 434)
+Animal  card x    64.0..  334.0  y 145.0..579.0  frame    80.0,161.0 238.0 x 304.4  perk lines 2
+Fairy   card x   358.0..  628.0  y 153.0..587.0  frame   374.0,169.0 238.0 x 304.4  perk lines 2
+Hobbit  card x   652.0..  922.0  y 153.0..587.0  frame   668.0,169.0 238.0 x 304.4  perk lines 2
+Ghost   card x   946.0.. 1216.0  y 153.0..587.0  frame   962.0,169.0 238.0 x 304.4  perk lines 2
+footer y 615..672; chips [(150.9, 615, 261.8, 668), (271.8, 615, 349.3, 668)]; blurb x 373.3..1038.0 (665 px) lines 2
+Videre 1052..1216 x 615..668
