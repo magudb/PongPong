@@ -1,67 +1,79 @@
 {
- "character": "rabbit_farmer",
- "cell_size": [
-  256,
-  256
- ],
- "directions": [
-  "S",
-  "SW",
-  "W",
-  "NW",
-  "N",
-  "NE",
-  "E",
-  "SE"
- ],
- "animations": {
-  "idle": {
-   "frames": 4,
-   "fps": 5,
-   "loop": true,
-   "sheet": "idle.webp"
+  "character": "rabbit_farmer",
+  "cell_size": [
+    256,
+    256
+  ],
+  "directions": [
+    "S",
+    "SW",
+    "W",
+    "NW",
+    "N",
+    "NE",
+    "E",
+    "SE"
+  ],
+  "animations": {
+    "idle": {
+      "frames": 4,
+      "fps": 5,
+      "loop": true,
+      "sheet": "idle.webp"
+    },
+    "walk": {
+      "frames": 6,
+      "fps": 9,
+      "loop": true,
+      "sheet": "walk.webp"
+    },
+    "celebrate": {
+      "frames": 6,
+      "fps": 9,
+      "loop": false,
+      "sheet": "celebrate.webp"
+    },
+    "interact": {
+      "frames": 4,
+      "fps": 9,
+      "loop": false,
+      "sheet": "interact.webp"
+    },
+    "sleep": {
+      "frames": 4,
+      "fps": 3,
+      "loop": true,
+      "sheet": "sleep.webp"
+    },
+    "talk": {
+      "frames": 4,
+      "fps": 6,
+      "loop": true,
+      "sheet": "talk.webp"
+    }
   },
-  "walk": {
-   "frames": 6,
-   "fps": 9,
-   "loop": true,
-   "sheet": "walk.webp"
-  },
-  "celebrate": {
-   "frames": 6,
-   "fps": 9,
-   "loop": false,
-   "sheet": "celebrate.webp"
-  },
-  "interact": {
-   "frames": 4,
-   "fps": 9,
-   "loop": false,
-   "sheet": "interact.webp"
-  },
-  "sleep": {
-   "frames": 4,
-   "fps": 3,
-   "loop": true,
-   "sheet": "sleep.webp"
-  },
-  "talk": {
-   "frames": 4,
-   "fps": 6,
-   "loop": true,
-   "sheet": "talk.webp"
+  "pivot": [
+    128,
+    200
+  ],
+  "source": "Painted imagegen turnaround + offline continuous 2D puppet bake",
+  "orientation": "screen-down = S; clockwise rows S,SW,W,NW,N,NE,E,SE",
+  "family": "rabbit",
+  "clip_set": "villager",
+  "flyer": false,
+  "portrait": "portrait.webp",
+  "role": "npc",
+  "display_scale": 1.0,
+  "illustration": {
+    "source": "tools/art/drawn/sources/villagers1.png",
+    "views": [
+      "front",
+      "front_left",
+      "left",
+      "rear_left",
+      "back"
+    ],
+    "opposite_views": "mirrored",
+    "north_source": "tools/art/drawn/sources/backs2.png"
   }
- },
- "pivot": [
-  128,
-  200
- ],
- "source": "GLB-to-sprite orthographic offline bake",
- "orientation": "screen-down = S; clockwise rows S,SW,W,NW,N,NE,E,SE",
- "family": "rabbit",
- "clip_set": "villager",
- "flyer": false,
- "portrait": "portrait.webp",
- "role": "npc",
- "display_scale": 1.0
 }

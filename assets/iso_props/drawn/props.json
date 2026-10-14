@@ -1,0 +1,391 @@
+{
+  "_source": "Painted sprites, tools/art/drawn/sources; existing Lua collision and y-sort contracts.",
+  "house_farm": {
+    "file": "house_farm.webp",
+    "size": [
+      400,
+      420
+    ],
+    "pivot": [
+      200,
+      301
+    ],
+    "footprint": [
+      3,
+      2
+    ],
+    "proj": "iso",
+    "glow": {
+      "file": "house_farm_glow.webp",
+      "center": [
+        200.0,
+        217.5
+      ],
+      "size": [
+        388,
+        393
+      ],
+      "color": "#ffffff",
+      "blend": "add"
+    }
+  },
+  "house_mushroom_rose": {
+    "file": "house_mushroom_rose.webp",
+    "size": [
+      336,
+      382
+    ],
+    "pivot": [
+      168,
+      282
+    ],
+    "footprint": [
+      2,
+      2
+    ],
+    "proj": "iso",
+    "glow": {
+      "file": "house_mushroom_rose_glow.webp",
+      "center": [
+        168.5,
+        191.0
+      ],
+      "size": [
+        323,
+        370
+      ],
+      "color": "#ffffff",
+      "blend": "add"
+    }
+  },
+  "house_mushroom_lavender": {
+    "file": "house_mushroom_lavender.webp",
+    "size": [
+      336,
+      382
+    ],
+    "pivot": [
+      168,
+      282
+    ],
+    "footprint": [
+      2,
+      2
+    ],
+    "proj": "iso",
+    "glow": {
+      "file": "house_mushroom_lavender_glow.webp",
+      "center": [
+        164.5,
+        222.5
+      ],
+      "size": [
+        321,
+        307
+      ],
+      "color": "#ffffff",
+      "blend": "add"
+    }
+  },
+  "house_mushroom_mint": {
+    "file": "house_mushroom_mint.webp",
+    "size": [
+      336,
+      382
+    ],
+    "pivot": [
+      168,
+      282
+    ],
+    "footprint": [
+      2,
+      2
+    ],
+    "proj": "iso",
+    "glow": {
+      "file": "house_mushroom_mint_glow.webp",
+      "center": [
+        168.5,
+        209.0
+      ],
+      "size": [
+        323,
+        334
+      ],
+      "color": "#ffffff",
+      "blend": "add"
+    }
+  },
+  "tree_oak_farm": {
+    "file": "tree_oak_farm.webp",
+    "size": [
+      230,
+      280
+    ],
+    "pivot": [
+      115,
+      260
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "tree_oak_farm_b": {
+    "file": "tree_oak_farm_b.webp",
+    "size": [
+      230,
+      280
+    ],
+    "pivot": [
+      115,
+      260
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "tree_blossom_hyggebyen": {
+    "file": "tree_blossom_hyggebyen.webp",
+    "size": [
+      230,
+      280
+    ],
+    "pivot": [
+      115,
+      260
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "tree_pine_forest": {
+    "file": "tree_pine_forest.webp",
+    "size": [
+      190,
+      290
+    ],
+    "pivot": [
+      95,
+      270
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "tree_pine_forest_b": {
+    "file": "tree_pine_forest_b.webp",
+    "size": [
+      190,
+      290
+    ],
+    "pivot": [
+      95,
+      270
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "tree_twisted": {
+    "file": "tree_twisted.webp",
+    "size": [
+      190,
+      290
+    ],
+    "pivot": [
+      95,
+      270
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "bush_farm": {
+    "file": "bush_farm.webp",
+    "size": [
+      112,
+      90
+    ],
+    "pivot": [
+      56,
+      76
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "bush_berry": {
+    "file": "bush_berry.webp",
+    "size": [
+      112,
+      90
+    ],
+    "pivot": [
+      56,
+      76
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "bush_forest": {
+    "file": "bush_forest.webp",
+    "size": [
+      112,
+      90
+    ],
+    "pivot": [
+      56,
+      76
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "rock_grey": {
+    "file": "rock_grey.webp",
+    "size": [
+      112,
+      92
+    ],
+    "pivot": [
+      56,
+      76
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "rock_mossy": {
+    "file": "rock_mossy.webp",
+    "size": [
+      112,
+      92
+    ],
+    "pivot": [
+      56,
+      76
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "rock_dark": {
+    "file": "rock_dark.webp",
+    "size": [
+      112,
+      92
+    ],
+    "pivot": [
+      56,
+      76
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "lantern_post": {
+    "file": "lantern_post.webp",
+    "size": [
+      100,
+      172
+    ],
+    "pivot": [
+      72,
+      155
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "fence_x": {
+    "file": "fence_x.webp",
+    "size": [
+      130,
+      106
+    ],
+    "pivot": [
+      65,
+      78
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "fence_z": {
+    "file": "fence_z.webp",
+    "size": [
+      130,
+      106
+    ],
+    "pivot": [
+      65,
+      78
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "scarecrow": {
+    "file": "scarecrow.webp",
+    "size": [
+      120,
+      155
+    ],
+    "pivot": [
+      60,
+      143
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "signpost": {
+    "file": "signpost.webp",
+    "size": [
+      86,
+      118
+    ],
+    "pivot": [
+      43,
+      106
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  }
+}

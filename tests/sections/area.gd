@@ -572,6 +572,18 @@ func _fixture_build(t) -> void:
 		width_h = maxf(width_h, absf(p3.x))
 	var inner_w: float = (fpg[1].x - fpg[3].x) * 0.5
 	t.check("house_collider_is_the_padded_footprint", width_h > inner_w + 15.0 and hb.position.distance_to(Iso.iso_footprint_center(house["cell"], 3, 2)) < 0.01, "footprint half-width %.0f + pad -> %.0f; the body sits at the footprint centre" % [inner_w, width_h])
+	# The facade's light mask must stay on its painted windows when the building
+	# is sliced for sorting; the first strip's origin is not the house origin.
+	var house_art: Dictionary = ArtCatalog.prop(&"house_farm")
+	var window_glow: Dictionary = house_art.get("glow", {})
+	var house_parts: Array = house["nodes"]
+	var halo_node := (house_parts[0] as Node2D).get_node_or_null("Glow") as Sprite2D
+	var glow_aligned := false
+	if halo_node != null and not window_glow.is_empty():
+		var image_origin: Vector2 = Iso.iso_footprint_center(house["cell"], 3, 2) - (house_art["pivot"] as Vector2)
+		var expected: Vector2 = a.objects.to_global(image_origin + (window_glow["center"] as Vector2))
+		glow_aligned = halo_node.global_position.distance_to(expected) < 0.01
+	t.check("sliced_house_glow_matches_windows", glow_aligned and house_parts.size() > 1, "the sliced farmhouse light mask stays on the painted facade's image coordinates")
 	# glow and lights ramp in with the night factor
 	a.set_night_factor(0.0)
 	var halo_off: bool = true

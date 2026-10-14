@@ -922,7 +922,9 @@ func place_prop(prop_id: String, cell: Vector2i, params: Dictionary = {}) -> Nod
 		var halo := Sprite2D.new()
 		halo.name = "Glow"
 		halo.texture = glow["texture"]
-		halo.position = (glow["center"] as Vector2) - pivot
+		# A sliced building's first strip has its own sorting origin. Window
+		# coordinates belong to the complete image, anchored at the footprint.
+		halo.position = pivot_pos + (glow["center"] as Vector2) - pivot - first.position
 		var gsize: Vector2 = glow["size"]
 		var gt: Texture2D = glow["texture"]
 		halo.scale = Vector2(gsize.x / maxf(gt.get_width(), 1.0), gsize.y / maxf(gt.get_height(), 1.0))
