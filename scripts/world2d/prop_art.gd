@@ -98,6 +98,9 @@ static func tree(variant: int = 0, conifer: bool = false, blossom: bool = false)
 	var ay: float = 226.0
 	PlaceholderArt.soft_ellipse(img, Vector2(ax, ay), Vector2(54, 18), SHADOW)
 	PlaceholderArt.poly(img, PackedVector2Array([Vector2(ax - 13, ay + 4), Vector2(ax + 14, ay + 4), Vector2(ax + 8, ay - 20), Vector2(ax + 7, ay - 92), Vector2(ax - 7, ay - 92), Vector2(ax - 8, ay - 20)]), BARK.lightened(0.1), BARK.darkened(0.2), 1.6)
+	for stroke in 4:
+		var bx: float = ax - 8.0 + float(stroke) * 5.0
+		PlaceholderArt.line(img, Vector2(bx, ay - 12), Vector2(bx + 2.0, ay - 75 + stroke * 5), 1.2, Color(BARK.darkened(0.3), 0.65))
 	var greens: Array[Color] = [MOSS_D, MOSS, MOSS_L]
 	if variant == 1:
 		greens = [Color("5a8a3a"), Color("77a84a"), Color("9cc86a")]
@@ -113,6 +116,11 @@ static func tree(variant: int = 0, conifer: bool = false, blossom: bool = false)
 	]
 	for s in spots:
 		PlaceholderArt.blob(img, s[0] as Vector2, s[1] as Vector2, greens[s[2] as int], 1.6, 1.0)
+		var leaf: Vector2 = s[0]
+		var leaf_ink := Color(greens[s[2] as int].darkened(0.2), 0.6)
+		PlaceholderArt.line(img, leaf + Vector2(-12, 5), leaf + Vector2(-5, -3), 1.3, leaf_ink)
+		PlaceholderArt.line(img, leaf + Vector2(-5, -3), leaf + Vector2(3, 3), 1.3, leaf_ink)
+		PlaceholderArt.line(img, leaf + Vector2(3, 3), leaf + Vector2(10, -4), 1.3, leaf_ink)
 	for i in 7:
 		var p := Vector2(ax - 55.0 + 110.0 * PlaceholderArt._hash(float(i), 1.0 + variant), ay - 205.0 + 100.0 * PlaceholderArt._hash(2.0 + variant, float(i)))
 		PlaceholderArt.dot(img, p, 2.4, MOSS_L.lightened(0.25) if i % 2 == 0 else Color(0.35, 0.55, 0.22, 0.8))

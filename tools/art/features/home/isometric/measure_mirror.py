@@ -94,6 +94,7 @@ def main():
     ap.add_argument('--dir', default=str(homepaths.REPO / 'assets' / 'iso_props' / 'furniture'))
     ap.add_argument('--spec', default=str(homepaths.SPECS / 'furniture_art_spec.json'))
     ap.add_argument('--write', metavar='FILE'); ap.add_argument('--check', metavar='FILE', nargs='?', const=str(homepaths.SPECS / 'mirror_ok.json'))
+    ap.add_argument('--update-manifest', action='store_true', help='update optional mirror fallback flags to match the measured artwork; keep every true rotation')
     ap.add_argument('--reference', default=str(homepaths.SPECS / 'mirror_ok.measured.json'))
     a = ap.parse_args()
     import spec_reader as sp
@@ -108,6 +109,17 @@ def main():
         print(f'  reference of the review (FR/artifacts/mirror_ok.measured.json): {len(want)} ids; here {len(got)}; only in reference {sorted(want - got)}; only here {sorted(got - want)}')
     if a.write:
         Path(a.write).write_text(json.dumps(document(res), indent=1) + '\n'); print('wrote', a.write)
+    if a.update_manifest:
+        manifest = Path(a.dir) / 'furniture.json'
+        doc = json.loads(manifest.read_text())
+        allowed = set(res['ok'])
+        for iid, entry in doc['items'].items():
+            if iid in allowed:
+                entry['mirror_ok'] = True
+            else:
+                entry.pop('mirror_ok', None)
+        manifest.write_text(json.dumps(doc, indent=1) + '\n')
+        print('updated', manifest)
     if a.check:
         have = json.loads(Path(a.check).read_text())['mirror_ok']
         same = sorted(have) == sorted(res['ok'])

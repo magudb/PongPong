@@ -285,6 +285,8 @@ static func backdrop(theme: StringName) -> Dictionary:
 		return _backdrops[theme]
 	var key: StringName = theme if BACKDROP_THEMES.has(theme) else &"farm"
 	var sky: Texture2D = _load_tex("%s%s_sky.webp" % [BACKDROP_DIR, theme])
+	if sky == null:
+		sky = _load_tex("%s%s_sky.png" % [BACKDROP_DIR, theme])
 	var far: Texture2D = _load_tex("%s%s_far.webp" % [BACKDROP_DIR, theme])
 	var real: bool = sky != null and far != null
 	if not real:
