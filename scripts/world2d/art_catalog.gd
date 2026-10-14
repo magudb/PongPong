@@ -285,15 +285,15 @@ static func _placeholder_prop(id: StringName) -> Dictionary:
 
 # ----------------------------------------------------------------------------- backdrops
 
-## {theme, sky: Texture2D, far: Texture2D, real: bool}. Real files: assets/backdrops/<theme>_sky.webp (a sky) and <theme>_far.webp
+## {theme, sky: Texture2D, far: Texture2D, real: bool}. Prefer the painted <theme>_sky.png; otherwise use <theme>_sky.webp, plus <theme>_far.webp
 ## (a far canopy strip, seamless horizontally). Missing files fall back to a gradient sky and a soft painted canopy haze.
 static func backdrop(theme: StringName) -> Dictionary:
 	if _backdrops.has(theme):
 		return _backdrops[theme]
 	var key: StringName = theme if BACKDROP_THEMES.has(theme) else &"farm"
-	var sky: Texture2D = _load_tex("%s%s_sky.webp" % [BACKDROP_DIR, theme])
+	var sky: Texture2D = _load_tex("%s%s_sky.png" % [BACKDROP_DIR, theme])
 	if sky == null:
-		sky = _load_tex("%s%s_sky.png" % [BACKDROP_DIR, theme])
+		sky = _load_tex("%s%s_sky.webp" % [BACKDROP_DIR, theme])
 	var far: Texture2D = _load_tex("%s%s_far.webp" % [BACKDROP_DIR, theme])
 	var real: bool = sky != null and far != null
 	if not real:

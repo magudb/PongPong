@@ -1,0 +1,411 @@
+{
+  "mode": "built-in imagegen",
+  "prompts": {
+    "cast_extra_a": "Use case: illustration-story. Production transparent sprite atlas for the existing cozy game. STRICT uniform 4 COLUMN by 4 ROW grid, sixteen isolated full-body figures, equal invisible cells, square canvas ideally 2048x2048, generous transparent gutters. NO labels, text, grid lines, ground, cast shadows, paper, white background or die-cut border. Each ROW is ONE character in four views: column 1 front, column 2 front three-quarter LEFT, column 3 LEFT profile, column 4 back three-quarter LEFT. Same identity, size, clothes and colors in every column. Full body and feet clear of cell edges, 75% cell height. Style: the user's soft hand-drawn comic characters: simple tiny DARK bean eyes, tiny expressive mouth, cheek blush and little blush hatches, gently wobbly warm-grey pencil contours, soft matte pastel watercolor-gouache fills, irregular fluffy silhouettes. No white eyeballs, glossy sphere eyes, 3D rendering, plastic, faceted shapes, cylinders, perfect circles, gradients or vector emoji. \nROW 1: Brumme the carpenter bear: warm caramel brown b98657, pale tan belly d3a77a and cream muzzle e9d2b0, small rounded ears, pear-shaped compact body, brown carpenter tool belt with pouches, tiny hammer and pencil, pink toe pads, tiny kind dark eyes. Standing upright, no huge handheld tools.\nROW 2: Natteblik the bat map seller: muted lavender body 8c7aa8, deep mauve wing membranes 6b5b8a, lighter lilac belly a896c4 and ear linings c9a7d6, very large soft pointed ears, little folded-open wings at sides, two tiny dark brown eyes, little teeth and friendly shy smile. Keep wings compact enough to fit every cell, no clipping.\nROW 3: Pip the hedgehog postman: chocolate ragged tufted spines 7a4e2d, soft cream face f0dcc0, warm belly 8a5a32, tiny stubby feet 5e3b20, faded BLUE mail satchel 5d8fc4 on a shoulder strap, little white letter with RED wax seal c4506a held in paws. Organic fluffy spines, not triangles.\nROW 4: Fru Ugle the wise owl appraiser: softly rounded brown owl a07a55 with darker wings 7a5a3a, cream face discs f0dcc0/e2c9a4, small gold rings f2c14e around TINY charcoal bean eyes, small honey beak e8b04a, gentle chest chevrons and small ear tufts, tiny feet, warm gentle expression. No giant circular eyes.",
+    "cast_extra_b": "Use case: illustration-story. Production transparent sprite atlas for the existing cozy game. STRICT uniform 4 COLUMN by 4 ROW grid, sixteen isolated full-body figures, equal invisible cells, square canvas ideally 2048x2048, generous transparent gutters. NO labels, text, grid lines, ground, cast shadows, paper, white background or die-cut border. Each ROW is ONE character in four views: column 1 front, column 2 front three-quarter LEFT, column 3 LEFT profile, column 4 back three-quarter LEFT. Same identity, size, clothes and colors in every column. Full body and feet clear of cell edges, 75% cell height. Style: the user's soft hand-drawn comic characters: simple tiny DARK bean eyes, tiny expressive mouth, cheek blush and little blush hatches, gently wobbly warm-grey pencil contours, soft matte pastel watercolor-gouache fills, irregular fluffy silhouettes. No white eyeballs, glossy sphere eyes, 3D rendering, plastic, faceted shapes, cylinders, perfect circles, gradients or vector emoji. \nROW 1: Sofus the capybara bathkeeper: a cute UPRIGHT plump caramel capybara d99a64, broad darker warm brown muzzle a8714a, cream belly f2cfa6, small round ears, two tiny dark eyes and calm little smile, short mitten paws and feet. A SMALL ORANGE f29a3a with one green leaf balances on his head. No clothes.\nROW 2: Birk the boy meadow fairy beekeeper: pale peach skin f6d3c0, short tousled honey auburn fringe c98a3a under a green leaf cap 6b9a3e with a sprout, green leaf tunic 6b9a3e with brown belt and little brown boots 5e3b20, pale translucent blue butterfly wings cfe6f2, tiny dark bean eyes, cheek blush and friendly smile. Big soft head, tiny body. No realistic eyeballs.\nROW 3: Bodil the barefoot hobbit girl: pale peach skin f2c9a5, chestnut hair 7a4e2d in TWO soft braids tied with rose ribbons e58fa6, one small cream daisy in her hair, moss green vest 6b9a3e over a dusty rose blouse c4506a with cream sleeves, warm brown knee-length shorts, tiny bare feet, small pointed ears, tiny dark bean eyes and rosy cheeks, happy gentle expression. Keep both braids visible in rear-left view.\nROW 4: Bu / Pedro the friendly ghost hero: pale sky-blue white body e6efff, pale blue collar b9cef2, a light blue hem 93bbee. Soft pear-shaped LEGLESS sheet body with a gently scalloped hem, large round head blending into body, little mitten hands, one small wispy curl, two TINY dark bean eyes with minute highlights, blush and small gentle smile. No legs or feet, no shadow, no halo, no floating particles. The same simple whole silhouette in every view, soft hand-drawn and matte, not a rendered jelly blob.",
+    "icons_tools": "Use case: illustration-story. Asset type: production inventory ICON ATLAS, transparent background, strict 4 COLUMN by 4 ROW grid of SIXTEEN distinct isolated objects in row-major order, square canvas ideally 2048x2048. Equal invisible cells, each object centred at about 70% cell width/height with wide transparent gutters. No overlap, labels, letters, numerals, visible grid, white background, paper, ground, cast shadows, circles behind items or white die-cut border. Style matches detailed cozy painted cottage art and soft comic characters: hand-painted watercolor/gouache, gently wobbly warm charcoal-brown contour, earthy muted colors, small worn material detail and subtle paper tooth. Clear recognizable silhouette at 64 px. Mostly front three-quarter object view, restrained soft shading. No 3D render, plastic, pixel art, vector geometry or photo. \nExact row-major objects:\n1: a small weathered wood-handled woodcutter axe with a stone-grey wedge head.\n2: an animal grooming brush, honey-brown wooden handle, short cream bristles.\n3: a short wood fishing rod with a small reel, curled line and tiny hook, fully inside the cell.\n4: a simple wooden hoe with a wooden angled head.\n5: an iron gardening hoe with a dark grey metal head and worn wood handle.\n6: a primitive pickaxe with brown wooden pointed head and wood handle.\n7: a copper pickaxe, warm red copper pointed head and wood handle.\n8: an iron pickaxe, dark silver pointed head and wood handle.\n9: a small curved silver scythe blade on a wood handle, entire handle visible.\n10: a rounded warm copper watering can, curved handle and perforated rose spout.\n11: a little gold brass watering can with curved handle and perforated rose spout.\n12: a galvanized grey milking pail with a wood-grip arched handle.\n13: a short old rusty sword, orange-brown worn blade, brown grip.\n14: a short polished iron sword with a simple warm brass guard and brown grip.\n15: a small corked round glass flask of rose-red health tonic with a blank cream tag.\n16: a small corked tapered glass flask of muted lavender-blue potion.",
+    "icons_resources": "Use case: illustration-story. Asset type: production inventory ICON ATLAS, transparent background, strict 4 COLUMN by 4 ROW grid of SIXTEEN distinct isolated objects in row-major order, square canvas ideally 2048x2048. Equal invisible cells, each object centred at about 70% cell width/height with wide transparent gutters. No overlap, labels, letters, numerals, visible grid, white background, paper, ground, cast shadows, circles behind items or white die-cut border. Style matches detailed cozy painted cottage art and soft comic characters: hand-painted watercolor/gouache, gently wobbly warm charcoal-brown contour, earthy muted colors, small worn material detail and subtle paper tooth. Clear recognizable silhouette at 64 px. Mostly front three-quarter object view, restrained soft shading. No 3D render, plastic, pixel art, vector geometry or photo. \nExact row-major objects:\n1: a tied bundle of three small cut wood logs with visible rings and bark.\n2: three irregular warm grey rocks with pencil hatching and pale worn edges.\n3: a rough grey-brown rock with small warm copper-red mineral inclusions.\n4: a rough dark grey ore chunk with steely silver patches.\n5: a rough stone ore chunk with warm golden yellow veins.\n6: a single matte dark silver iron ingot with softly worn corners.\n7: a little cluster of purple amethyst crystal points, soft painted facets.\n8: a green emerald crystal chunk, matte painted facets, no gloss.\n9: a rounded pale blue moonstone with subtle milky lavender mineral sheen.\n10: a few pale lilac translucent crystal shards, clearly irregular pointed silhouette.\n11: a small brown drawstring pouch holding a few colored tiny gems.\n12: a little stoppered glass jar of pale gold fairy dust with three tiny star flecks.\n13: a small rolled cream parchment tied with a muted purple ribbon, no writing.\n14: an amber glass oil bottle with a cork and blank cream label.\n15: a little burlap sack of dark compost with a tiny green sprout motif, no letters.\n16: a squat pale turquoise watering bottle with a cork, a little gold dust floating inside.",
+    "icons_food": "Use case: illustration-story. Asset type: production inventory ICON ATLAS, transparent background, strict 4 COLUMN by 4 ROW grid of SIXTEEN distinct isolated objects in row-major order, square canvas ideally 2048x2048. Equal invisible cells, each object centred at about 70% cell width/height with wide transparent gutters. No overlap, labels, letters, numerals, visible grid, white background, paper, ground, cast shadows, circles behind items or white die-cut border. Style matches detailed cozy painted cottage art and soft comic characters: hand-painted watercolor/gouache, gently wobbly warm charcoal-brown contour, earthy muted colors, small worn material detail and subtle paper tooth. Clear recognizable silhouette at 64 px. Mostly front three-quarter object view, restrained soft shading. No 3D render, plastic, pixel art, vector geometry or photo. \nExact row-major objects:\n1: one red-green orchard apple with a small leaf.\n2: one rustic golden cookie with a few chocolate chips and a small broken crumb.\n3: an open cream cloth sack of flour with a small wood scoop, no writing.\n4: a squat honey jar, warm amber contents, cream cloth cap and string, no text.\n5: a slice of honey sponge cake with pale cream frosting and a tiny honey drizzle.\n6: two small cream chicken eggs, one upright and one tilted.\n7: one larger pale blue-green duck egg with subtle natural speckling.\n8: a little glass milk bottle with a cream cap.\n9: a loose soft cream wool bundle, wispy organic tufts.\n10: a small soft rust-orange fur tuft with a cream tip, no animal attached.\n11: one soft owl feather, tan with warm brown bars.\n12: a little tied bunch of sage green herbs with tiny pale violet blossoms.\n13: a small canvas pouch holding a few rounded animal biscuits.\n14: a small opened sack of golden grain with a few kernels spilled next to it.\n15: a small carved wooden HEART charm tied on a short red thread.\n16: a necklace garland of small daisies and rose flowers, a complete loose loop.",
+    "icons_plants": "Use case: illustration-story. Asset type: production inventory ICON ATLAS, transparent background, strict 4 COLUMN by 4 ROW grid of SIXTEEN distinct isolated objects in row-major order, square canvas ideally 2048x2048. Equal invisible cells, each object centred at about 70% cell width/height with wide transparent gutters. No overlap, labels, letters, numerals, visible grid, white background, paper, ground, cast shadows, circles behind items or white die-cut border. Style matches detailed cozy painted cottage art and soft comic characters: hand-painted watercolor/gouache, gently wobbly warm charcoal-brown contour, earthy muted colors, small worn material detail and subtle paper tooth. Clear recognizable silhouette at 64 px. Mostly front three-quarter object view, restrained soft shading. No 3D render, plastic, pixel art, vector geometry or photo. \nExact row-major objects:\n1: a fresh orange carrot with feathery green tops.\n2: a little tied catnip sprig, soft grey-green leaves.\n3: a cluster of three soft turquoise-blue berries with two moss green leaves.\n4: a single cream-white moonflower on a curved green stem, pale lavender throat.\n5: a small rustic orange pumpkin with an organic curled stem.\n6: a single red strawberry with green leafy crown and little cream seeds.\n7: a single small sunflower head on a short stem, honey petals and brown centre.\n8: a round creamy white turnip with lilac shoulders and green leaves.\n9: a pair of organically curving fern fronds.\n10: a cluster of three little turquoise-blue glowing mushrooms, softly painted no external halo.\n11: one four-leaf green clover with a curved stem.\n12: a soft irregular cushion of moss with small leafy tufts, no container.\n13: a little deep violet flower with pale lavender inner petals on a dark green stem.\n14: one unusual lavender mushroom cap with small cream speckles and a soft cream stem.\n15: a small loose bunch of cream daisies and dusty rose wild flowers.\n16: a small glowing mushroom lamp, teal cap with cream spots, wood stem stand and hanging loop.",
+    "icons_clothes_a": "Use case: illustration-story. Asset type: production inventory ICON ATLAS, transparent background, strict 4 COLUMN by 4 ROW grid of SIXTEEN distinct isolated objects in row-major order, square canvas ideally 2048x2048. Equal invisible cells, each object centred at about 70% cell width/height with wide transparent gutters. No overlap, labels, letters, numerals, visible grid, white background, paper, ground, cast shadows, circles behind items or white die-cut border. Style matches detailed cozy painted cottage art and soft comic characters: hand-painted watercolor/gouache, gently wobbly warm charcoal-brown contour, earthy muted colors, small worn material detail and subtle paper tooth. Clear recognizable silhouette at 64 px. Mostly front three-quarter object view, restrained soft shading. No 3D render, plastic, pixel art, vector geometry or photo.  All clothing cloth surfaces use light SAGE GREEN #84b89d as a neutral recolorable base, secondary fabric/trim uses LAVENDER #b2a1c8, tiny buttons warm brass, soles and leather warm brown. Preserve visible hand-painted fabric seams, texture and fine warm grey outlines. No mannequin, body, head or hands inside the clothes. \nExact row-major objects:\n1: a simple knee-length sleeveless sundress, soft gathered skirt and sash.\n2: a long fairy gown with gently flowing skirt, fitted bodice and tiny embroidery at hem.\n3: a practical pinafore dress with apron bib, two pockets and narrow straps.\n4: a soft linen long-sleeve shirt, small collar and three buttons.\n5: a cosy hand-knitted sweater with a cable-knit collar and cuffs.\n6: a tiny waistcoat over a cream long-sleeve shirt, three buttons and embroidered edge.\n7: a work smock shirt with long loose sleeves and a practical front pocket.\n8: a pair of soft long trousers with two patch pockets and cuffs.\n9: a pair of casual knee-length shorts with small pockets.\n10: dungaree overalls with bib, straps, metal buttons and two patch pockets.\n11: a pair of short traditional tweed breeches with soft cuffs.\n12: a pair of small laced boots, rounded toes, wood-brown soles.\n13: a pair of rustic rounded wooden clogs with little painted trim.\n14: a pair of soft house slippers with rounded toes and small pompoms.\n15: a pair of rounded rubber rain boots with folded cuffs.\n16: a soft woven straw sun hat with a broad organic brim and a cloth ribbon.",
+    "icons_clothes_b": "Use case: illustration-story. Asset type: production inventory ICON ATLAS, transparent background, strict 4 COLUMN by 4 ROW grid of SIXTEEN distinct isolated objects in row-major order, square canvas ideally 2048x2048. Equal invisible cells, each object centred at about 70% cell width/height with wide transparent gutters. No overlap, labels, letters, numerals, visible grid, white background, paper, ground, cast shadows, circles behind items or white die-cut border. Style matches detailed cozy painted cottage art and soft comic characters: hand-painted watercolor/gouache, gently wobbly warm charcoal-brown contour, earthy muted colors, small worn material detail and subtle paper tooth. Clear recognizable silhouette at 64 px. Mostly front three-quarter object view, restrained soft shading. No 3D render, plastic, pixel art, vector geometry or photo.  All clothing cloth surfaces use light SAGE GREEN #84b89d as a neutral recolorable base, secondary fabric/trim uses LAVENDER #b2a1c8, tiny buttons warm brass, soles and leather warm brown. Preserve visible hand-painted fabric seams, texture and fine warm grey outlines. No mannequin, body, head or hands inside the clothes. \nExact row-major objects:\n1: a small soft cloth cap with a short brim.\n2: a soft pointed wizard hat with a bent tip, narrow band and tiny star stitches.\n3: a soft folded woodland hood and collar, no head inside.\n4: a little acorn-cap hat, textured organic nut cap with a leaf accent.\n5: a soft red-spotted mushroom cap hat, no face or head inside.\n6: a small chef's toque with a softly pleated round crown.\n7: a soft cloth cap with two little triangular cat ears.\n8: a small complete circlet of hand-painted daisies with leafy stems.\n9: a delicate small metal tiara with tiny painted gem settings.\n10: a complete cord necklace with one small leaf-shaped gemstone pendant.\n11: a complete loose necklace loop of small carved wooden beads.\n12: a pair of simple small hammered metal bangles.\n13: a small complete bracelet loop of three softly braided threads.\n14: a pair of small pendant earrings, each with one little bead and a simple hook.\n15: a small folded cream PAPER SEED ENVELOPE with a blank central front panel, a few tiny brown seeds next to it, NO text or motif.\n16: a small rustic wood crate of building supplies: a few short timber planks, rope and a folded blank blueprint, no text."
+  },
+  "groups": {
+    "icons_tools": [
+      [
+        "axe_wooden",
+        "a small weathered wood-handled woodcutter axe with a stone-grey wedge head"
+      ],
+      [
+        "brush",
+        "an animal grooming brush, honey-brown wooden handle, short cream bristles"
+      ],
+      [
+        "fishing_rod",
+        "a short wood fishing rod with a small reel, curled line and tiny hook, fully inside the cell"
+      ],
+      [
+        "hoe_wooden",
+        "a simple wooden hoe with a wooden angled head"
+      ],
+      [
+        "hoe_iron",
+        "an iron gardening hoe with a dark grey metal head and worn wood handle"
+      ],
+      [
+        "pickaxe_wooden",
+        "a primitive pickaxe with brown wooden pointed head and wood handle"
+      ],
+      [
+        "pickaxe_copper",
+        "a copper pickaxe, warm red copper pointed head and wood handle"
+      ],
+      [
+        "pickaxe_iron",
+        "an iron pickaxe, dark silver pointed head and wood handle"
+      ],
+      [
+        "scythe",
+        "a small curved silver scythe blade on a wood handle, entire handle visible"
+      ],
+      [
+        "watering_can_copper",
+        "a rounded warm copper watering can, curved handle and perforated rose spout"
+      ],
+      [
+        "watering_can_gold",
+        "a little gold brass watering can with curved handle and perforated rose spout"
+      ],
+      [
+        "milking_pail",
+        "a galvanized grey milking pail with a wood-grip arched handle"
+      ],
+      [
+        "sword_rusty",
+        "a short old rusty sword, orange-brown worn blade, brown grip"
+      ],
+      [
+        "iron_sword",
+        "a short polished iron sword with a simple warm brass guard and brown grip"
+      ],
+      [
+        "health_tonic",
+        "a small corked round glass flask of rose-red health tonic with a blank cream tag"
+      ],
+      [
+        "mana_potion",
+        "a small corked tapered glass flask of muted lavender-blue potion"
+      ]
+    ],
+    "icons_resources": [
+      [
+        "wood",
+        "a tied bundle of three small cut wood logs with visible rings and bark"
+      ],
+      [
+        "stone",
+        "three irregular warm grey rocks with pencil hatching and pale worn edges"
+      ],
+      [
+        "copper_ore",
+        "a rough grey-brown rock with small warm copper-red mineral inclusions"
+      ],
+      [
+        "iron_ore",
+        "a rough dark grey ore chunk with steely silver patches"
+      ],
+      [
+        "gold_ore",
+        "a rough stone ore chunk with warm golden yellow veins"
+      ],
+      [
+        "iron_ingot",
+        "a single matte dark silver iron ingot with softly worn corners"
+      ],
+      [
+        "amethyst",
+        "a little cluster of purple amethyst crystal points, soft painted facets"
+      ],
+      [
+        "emerald",
+        "a green emerald crystal chunk, matte painted facets, no gloss"
+      ],
+      [
+        "moonstone",
+        "a rounded pale blue moonstone with subtle milky lavender mineral sheen"
+      ],
+      [
+        "crystal_shard",
+        "a few pale lilac translucent crystal shards, clearly irregular pointed silhouette"
+      ],
+      [
+        "gem_bag",
+        "a small brown drawstring pouch holding a few colored tiny gems"
+      ],
+      [
+        "fairy_dust",
+        "a little stoppered glass jar of pale gold fairy dust with three tiny star flecks"
+      ],
+      [
+        "magic_scroll",
+        "a small rolled cream parchment tied with a muted purple ribbon, no writing"
+      ],
+      [
+        "lantern_oil",
+        "an amber glass oil bottle with a cork and blank cream label"
+      ],
+      [
+        "fertilizer",
+        "a little burlap sack of dark compost with a tiny green sprout motif, no letters"
+      ],
+      [
+        "fairy_dust_water",
+        "a squat pale turquoise watering bottle with a cork, a little gold dust floating inside"
+      ]
+    ],
+    "icons_food": [
+      [
+        "apple",
+        "one red-green orchard apple with a small leaf"
+      ],
+      [
+        "cookie",
+        "one rustic golden cookie with a few chocolate chips and a small broken crumb"
+      ],
+      [
+        "flour",
+        "an open cream cloth sack of flour with a small wood scoop, no writing"
+      ],
+      [
+        "honey",
+        "a squat honey jar, warm amber contents, cream cloth cap and string, no text"
+      ],
+      [
+        "honey_cake",
+        "a slice of honey sponge cake with pale cream frosting and a tiny honey drizzle"
+      ],
+      [
+        "egg",
+        "two small cream chicken eggs, one upright and one tilted"
+      ],
+      [
+        "duck_egg",
+        "one larger pale blue-green duck egg with subtle natural speckling"
+      ],
+      [
+        "milk",
+        "a little glass milk bottle with a cream cap"
+      ],
+      [
+        "wool",
+        "a loose soft cream wool bundle, wispy organic tufts"
+      ],
+      [
+        "lucky_fur",
+        "a small soft rust-orange fur tuft with a cream tip, no animal attached"
+      ],
+      [
+        "wisdom_feather",
+        "one soft owl feather, tan with warm brown bars"
+      ],
+      [
+        "magic_herb",
+        "a little tied bunch of sage green herbs with tiny pale violet blossoms"
+      ],
+      [
+        "animal_treats",
+        "a small canvas pouch holding a few rounded animal biscuits"
+      ],
+      [
+        "chicken_feed",
+        "a small opened sack of golden grain with a few kernels spilled next to it"
+      ],
+      [
+        "friendship_token",
+        "a small carved wooden HEART charm tied on a short red thread"
+      ],
+      [
+        "flower_necklace",
+        "a necklace garland of small daisies and rose flowers, a complete loose loop"
+      ]
+    ],
+    "icons_plants": [
+      [
+        "carrot",
+        "a fresh orange carrot with feathery green tops"
+      ],
+      [
+        "catnip",
+        "a little tied catnip sprig, soft grey-green leaves"
+      ],
+      [
+        "glow_berry",
+        "a cluster of three soft turquoise-blue berries with two moss green leaves"
+      ],
+      [
+        "moonflower",
+        "a single cream-white moonflower on a curved green stem, pale lavender throat"
+      ],
+      [
+        "pumpkin",
+        "a small rustic orange pumpkin with an organic curled stem"
+      ],
+      [
+        "strawberry",
+        "a single red strawberry with green leafy crown and little cream seeds"
+      ],
+      [
+        "sunflower",
+        "a single small sunflower head on a short stem, honey petals and brown centre"
+      ],
+      [
+        "turnip",
+        "a round creamy white turnip with lilac shoulders and green leaves"
+      ],
+      [
+        "fern",
+        "a pair of organically curving fern fronds"
+      ],
+      [
+        "glow_mushroom",
+        "a cluster of three little turquoise-blue glowing mushrooms, softly painted no external halo"
+      ],
+      [
+        "lucky_clover",
+        "one four-leaf green clover with a curved stem"
+      ],
+      [
+        "moss",
+        "a soft irregular cushion of moss with small leafy tufts, no container"
+      ],
+      [
+        "night_bloom",
+        "a little deep violet flower with pale lavender inner petals on a dark green stem"
+      ],
+      [
+        "rare_mushroom",
+        "one unusual lavender mushroom cap with small cream speckles and a soft cream stem"
+      ],
+      [
+        "wild_flower",
+        "a small loose bunch of cream daisies and dusty rose wild flowers"
+      ],
+      [
+        "mushroom_lantern",
+        "a small glowing mushroom lamp, teal cap with cream spots, wood stem stand and hanging loop"
+      ]
+    ],
+    "icons_clothes_a": [
+      [
+        "dress_sun",
+        "a simple knee-length sleeveless sundress, soft gathered skirt and sash"
+      ],
+      [
+        "dress_gown",
+        "a long fairy gown with gently flowing skirt, fitted bodice and tiny embroidery at hem"
+      ],
+      [
+        "dress_pinafore",
+        "a practical pinafore dress with apron bib, two pockets and narrow straps"
+      ],
+      [
+        "shirt_linen",
+        "a soft linen long-sleeve shirt, small collar and three buttons"
+      ],
+      [
+        "shirt_knit",
+        "a cosy hand-knitted sweater with a cable-knit collar and cuffs"
+      ],
+      [
+        "shirt_vest",
+        "a tiny waistcoat over a cream long-sleeve shirt, three buttons and embroidered edge"
+      ],
+      [
+        "shirt_smock",
+        "a work smock shirt with long loose sleeves and a practical front pocket"
+      ],
+      [
+        "pants_trousers",
+        "a pair of soft long trousers with two patch pockets and cuffs"
+      ],
+      [
+        "pants_shorts",
+        "a pair of casual knee-length shorts with small pockets"
+      ],
+      [
+        "pants_dungarees",
+        "dungaree overalls with bib, straps, metal buttons and two patch pockets"
+      ],
+      [
+        "pants_breeches",
+        "a pair of short traditional tweed breeches with soft cuffs"
+      ],
+      [
+        "shoes_boots",
+        "a pair of small laced boots, rounded toes, wood-brown soles"
+      ],
+      [
+        "shoes_clogs",
+        "a pair of rustic rounded wooden clogs with little painted trim"
+      ],
+      [
+        "shoes_slippers",
+        "a pair of soft house slippers with rounded toes and small pompoms"
+      ],
+      [
+        "shoes_wellies",
+        "a pair of rounded rubber rain boots with folded cuffs"
+      ],
+      [
+        "hat_straw",
+        "a soft woven straw sun hat with a broad organic brim and a cloth ribbon"
+      ]
+    ],
+    "icons_clothes_b": [
+      [
+        "hat_cap",
+        "a small soft cloth cap with a short brim"
+      ],
+      [
+        "hat_wizard",
+        "a soft pointed wizard hat with a bent tip, narrow band and tiny star stitches"
+      ],
+      [
+        "hat_hood",
+        "a soft folded woodland hood and collar, no head inside"
+      ],
+      [
+        "hat_acorn",
+        "a little acorn-cap hat, textured organic nut cap with a leaf accent"
+      ],
+      [
+        "hat_mushroom",
+        "a soft red-spotted mushroom cap hat, no face or head inside"
+      ],
+      [
+        "hat_chef",
+        "a small chef's toque with a softly pleated round crown"
+      ],
+      [
+        "hat_cat_ears",
+        "a soft cloth cap with two little triangular cat ears"
+      ],
+      [
+        "circlet_flowers",
+        "a small complete circlet of hand-painted daisies with leafy stems"
+      ],
+      [
+        "circlet_tiara",
+        "a delicate small metal tiara with tiny painted gem settings"
+      ],
+      [
+        "necklace_pendant",
+        "a complete cord necklace with one small leaf-shaped gemstone pendant"
+      ],
+      [
+        "necklace_beads",
+        "a complete loose necklace loop of small carved wooden beads"
+      ],
+      [
+        "bracelet_metal",
+        "a pair of simple small hammered metal bangles"
+      ],
+      [
+        "bracelet_braid",
+        "a small complete bracelet loop of three softly braided threads"
+      ],
+      [
+        "earrings_pair",
+        "a pair of small pendant earrings, each with one little bead and a simple hook"
+      ],
+      [
+        "seed_packet",
+        "a small folded cream PAPER SEED ENVELOPE with a blank central front panel, a few tiny brown seeds next to it, NO text or motif"
+      ],
+      [
+        "building_kit",
+        "a small rustic wood crate of building supplies: a few short timber planks, rope and a folded blank blueprint, no text"
+      ]
+    ]
+  }
+}

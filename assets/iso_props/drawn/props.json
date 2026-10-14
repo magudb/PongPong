@@ -406,7 +406,20 @@
       1,
       1
     ],
-    "proj": "iso"
+    "proj": "iso",
+    "glow": {
+      "file": "lantern_post_glow.webp",
+      "center": [
+        50.5,
+        102.0
+      ],
+      "size": [
+        93,
+        130
+      ],
+      "color": "#ffffff",
+      "blend": "add"
+    }
   },
   "fence_x": {
     "file": "fence_x.webp",

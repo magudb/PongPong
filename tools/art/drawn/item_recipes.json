@@ -1,0 +1,1795 @@
+{
+  "_source": "Registered runtime items missing real pictures before the art sync; all source paintings are saved under tools/art/drawn/sources.",
+  "items": {
+    "amethyst": {
+      "kind": "painted",
+      "category": "gem",
+      "rarity": "uncommon",
+      "sheet": "icons_resources",
+      "index": 6
+    },
+    "animal_treats": {
+      "kind": "painted",
+      "category": "animal_care",
+      "rarity": "normal",
+      "sheet": "icons_food",
+      "index": 12
+    },
+    "apple": {
+      "kind": "painted",
+      "category": "food",
+      "rarity": "normal",
+      "sheet": "icons_food",
+      "index": 0
+    },
+    "axe_wooden": {
+      "kind": "painted",
+      "category": "tool",
+      "rarity": "normal",
+      "sheet": "icons_tools",
+      "index": 0
+    },
+    "baby_bunny": {
+      "kind": "animal",
+      "category": "animal",
+      "rarity": "normal",
+      "character": "bunny"
+    },
+    "baby_calf": {
+      "kind": "animal",
+      "category": "animal",
+      "rarity": "normal",
+      "character": "calf"
+    },
+    "baby_chick": {
+      "kind": "animal",
+      "category": "animal",
+      "rarity": "normal",
+      "character": "chick"
+    },
+    "baby_duck": {
+      "kind": "animal",
+      "category": "animal",
+      "rarity": "normal",
+      "character": "duck"
+    },
+    "baby_fawn": {
+      "kind": "animal",
+      "category": "animal",
+      "rarity": "normal",
+      "character": "fawn"
+    },
+    "baby_fox": {
+      "kind": "animal",
+      "category": "animal",
+      "rarity": "uncommon",
+      "character": "fox_cub"
+    },
+    "baby_kitten": {
+      "kind": "animal",
+      "category": "animal",
+      "rarity": "normal",
+      "character": "kitten"
+    },
+    "baby_lamb": {
+      "kind": "animal",
+      "category": "animal",
+      "rarity": "normal",
+      "character": "lamb"
+    },
+    "baby_owl": {
+      "kind": "animal",
+      "category": "animal",
+      "rarity": "rare",
+      "character": "owl"
+    },
+    "baby_puppy": {
+      "kind": "animal",
+      "category": "animal",
+      "rarity": "normal",
+      "character": "puppy"
+    },
+    "barn_kit": {
+      "kind": "painted",
+      "category": "building",
+      "rarity": "normal",
+      "sheet": "icons_trinkets",
+      "index": 15
+    },
+    "bracelet_copper": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_b",
+      "index": 11,
+      "palette": [
+        "D98A5A",
+        "7A4E2D",
+        "D98A5A"
+      ],
+      "pattern": "metal",
+      "material": "metal"
+    },
+    "bracelet_rose_gold": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "rare",
+      "sheet": "icons_clothes_b",
+      "index": 11,
+      "palette": [
+        "E3C372",
+        "E58FA6",
+        "E3C372"
+      ],
+      "pattern": "metal",
+      "material": "metal"
+    },
+    "bracelet_silver": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_b",
+      "index": 11,
+      "palette": [
+        "C0C6D0",
+        "6B9A3E",
+        "C0C6D0"
+      ],
+      "pattern": "metal",
+      "material": "metal"
+    },
+    "bracelet_string": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_b",
+      "index": 12,
+      "palette": [
+        "E58FA6",
+        "F4E6C4",
+        "E3C372"
+      ],
+      "pattern": "braid"
+    },
+    "bracelet_vine": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "unique",
+      "sheet": "icons_clothes_b",
+      "index": 12,
+      "palette": [
+        "6B9A3E",
+        "2F4A3F",
+        "F2C14E"
+      ],
+      "pattern": "braid"
+    },
+    "brush": {
+      "kind": "painted",
+      "category": "tool",
+      "rarity": "normal",
+      "sheet": "icons_tools",
+      "index": 1
+    },
+    "carrot": {
+      "kind": "painted",
+      "category": "crop",
+      "rarity": "normal",
+      "sheet": "icons_plants",
+      "index": 0
+    },
+    "carrot_seeds": {
+      "kind": "seed",
+      "category": "seed",
+      "rarity": "normal",
+      "sheet": "icons_clothes_b",
+      "index": 14,
+      "crop": "carrot"
+    },
+    "catnip": {
+      "kind": "painted",
+      "category": "crop",
+      "rarity": "normal",
+      "sheet": "icons_plants",
+      "index": 1
+    },
+    "catnip_seeds": {
+      "kind": "seed",
+      "category": "seed",
+      "rarity": "normal",
+      "sheet": "icons_clothes_b",
+      "index": 14,
+      "crop": "catnip"
+    },
+    "chicken_feed": {
+      "kind": "painted",
+      "category": "animal_care",
+      "rarity": "normal",
+      "sheet": "icons_food",
+      "index": 13
+    },
+    "circlet_daisy": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_trinkets",
+      "index": 5
+    },
+    "circlet_leaves": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_trinkets",
+      "index": 6
+    },
+    "circlet_moon_crown": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "legendary",
+      "sheet": "icons_trinkets",
+      "index": 7
+    },
+    "circlet_tiara_silver": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "rare",
+      "sheet": "icons_clothes_b",
+      "index": 8,
+      "palette": [
+        "C0C6D0",
+        "9B86D6",
+        "C0C6D0"
+      ],
+      "pattern": "metal",
+      "material": "metal"
+    },
+    "cookie": {
+      "kind": "painted",
+      "category": "food",
+      "rarity": "normal",
+      "sheet": "icons_food",
+      "index": 1
+    },
+    "coop_kit": {
+      "kind": "coop_kit",
+      "category": "building",
+      "rarity": "normal",
+      "sheet": "icons_clothes_b",
+      "index": 15
+    },
+    "copper_ore": {
+      "kind": "painted",
+      "category": "mineral",
+      "rarity": "normal",
+      "sheet": "icons_resources",
+      "index": 2
+    },
+    "crystal_shard": {
+      "kind": "painted",
+      "category": "gem",
+      "rarity": "uncommon",
+      "sheet": "icons_resources",
+      "index": 9
+    },
+    "dress_gown_aurora": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "legendary",
+      "sheet": "icons_clothes_a",
+      "index": 1,
+      "palette": [
+        "6FD6C4",
+        "9B86D6",
+        "E58FA6"
+      ],
+      "pattern": "silk"
+    },
+    "dress_gown_lavender": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "rare",
+      "sheet": "icons_clothes_a",
+      "index": 1,
+      "palette": [
+        "9B86D6",
+        "FBF5E6",
+        "E3C372"
+      ],
+      "pattern": "silk"
+    },
+    "dress_gown_mint": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_a",
+      "index": 1,
+      "palette": [
+        "7FC8A5",
+        "FBF5E6",
+        "E3C372"
+      ],
+      "pattern": "silk"
+    },
+    "dress_gown_rose": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "rare",
+      "sheet": "icons_clothes_a",
+      "index": 1,
+      "palette": [
+        "E58FA6",
+        "FBF5E6",
+        "E3C372"
+      ],
+      "pattern": "silk"
+    },
+    "dress_pinafore_baker": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "unique",
+      "sheet": "icons_clothes_a",
+      "index": 2,
+      "palette": [
+        "FBF5E6",
+        "E58FA6",
+        "E8B04A"
+      ],
+      "pattern": "cotton"
+    },
+    "dress_pinafore_blue": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 2,
+      "palette": [
+        "5B7DA8",
+        "FBF5E6",
+        "E9C06B"
+      ],
+      "pattern": "cotton"
+    },
+    "dress_pinafore_brown": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 2,
+      "palette": [
+        "7A4E2D",
+        "F4E6C4",
+        "E9C06B"
+      ],
+      "pattern": "cotton"
+    },
+    "dress_pinafore_honey": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_a",
+      "index": 2,
+      "palette": [
+        "E8B04A",
+        "7A4E2D",
+        "FBF5E6"
+      ],
+      "pattern": "cotton"
+    },
+    "dress_sun_cream": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 0,
+      "palette": [
+        "F3EAD3",
+        "E3C372",
+        "E9C06B"
+      ],
+      "pattern": "cotton"
+    },
+    "dress_sun_gold": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "rare",
+      "sheet": "icons_clothes_a",
+      "index": 0,
+      "palette": [
+        "E3C372",
+        "FBF5E6",
+        "E58FA6"
+      ],
+      "pattern": "cotton"
+    },
+    "dress_sun_green": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 0,
+      "palette": [
+        "6B9A3E",
+        "FBF5E6",
+        "E9C06B"
+      ],
+      "pattern": "cotton"
+    },
+    "dress_sun_meadow": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "unique",
+      "sheet": "icons_clothes_a",
+      "index": 0,
+      "palette": [
+        "8DB86A",
+        "E58FA6",
+        "F2C14E"
+      ],
+      "pattern": "cotton"
+    },
+    "dress_sun_rose": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_a",
+      "index": 0,
+      "palette": [
+        "E58FA6",
+        "FBF5E6",
+        "E9C06B"
+      ],
+      "pattern": "cotton"
+    },
+    "dress_sun_sky": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_a",
+      "index": 0,
+      "palette": [
+        "A9D3E0",
+        "FBF5E6",
+        "E3C372"
+      ],
+      "pattern": "cotton"
+    },
+    "duck_egg": {
+      "kind": "painted",
+      "category": "product",
+      "rarity": "normal",
+      "sheet": "icons_food",
+      "index": 6
+    },
+    "earrings_copper": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_trinkets",
+      "index": 8
+    },
+    "earrings_glowcap": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "unique",
+      "sheet": "icons_trinkets",
+      "index": 9
+    },
+    "earrings_hoops_gold": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_trinkets",
+      "index": 10
+    },
+    "earrings_pearl": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_trinkets",
+      "index": 11
+    },
+    "egg": {
+      "kind": "painted",
+      "category": "product",
+      "rarity": "normal",
+      "sheet": "icons_food",
+      "index": 5
+    },
+    "emerald": {
+      "kind": "painted",
+      "category": "gem",
+      "rarity": "rare",
+      "sheet": "icons_resources",
+      "index": 7
+    },
+    "fairy_dust": {
+      "kind": "painted",
+      "category": "magic",
+      "rarity": "rare",
+      "sheet": "icons_resources",
+      "index": 11
+    },
+    "fairy_dust_water": {
+      "kind": "painted",
+      "category": "farm",
+      "rarity": "uncommon",
+      "sheet": "icons_resources",
+      "index": 15
+    },
+    "fence": {
+      "kind": "painted",
+      "category": "placeable",
+      "rarity": "normal",
+      "sheet": "icons_trinkets",
+      "index": 12
+    },
+    "fern": {
+      "kind": "painted",
+      "category": "forage",
+      "rarity": "normal",
+      "sheet": "icons_plants",
+      "index": 8
+    },
+    "fertilizer": {
+      "kind": "painted",
+      "category": "farm",
+      "rarity": "normal",
+      "sheet": "icons_resources",
+      "index": 14
+    },
+    "fishing_rod": {
+      "kind": "painted",
+      "category": "tool",
+      "rarity": "normal",
+      "sheet": "icons_tools",
+      "index": 2
+    },
+    "flour": {
+      "kind": "painted",
+      "category": "food",
+      "rarity": "normal",
+      "sheet": "icons_food",
+      "index": 2
+    },
+    "flower_necklace": {
+      "kind": "painted",
+      "category": "quest",
+      "rarity": "normal",
+      "sheet": "icons_food",
+      "index": 15
+    },
+    "friendship_token": {
+      "kind": "painted",
+      "category": "special",
+      "rarity": "normal",
+      "sheet": "icons_food",
+      "index": 14
+    },
+    "gem_bag": {
+      "kind": "painted",
+      "category": "gem",
+      "rarity": "uncommon",
+      "sheet": "icons_resources",
+      "index": 10
+    },
+    "glow_berry": {
+      "kind": "painted",
+      "category": "crop",
+      "rarity": "uncommon",
+      "sheet": "icons_plants",
+      "index": 2
+    },
+    "glow_berry_seeds": {
+      "kind": "seed",
+      "category": "seed",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_b",
+      "index": 14,
+      "crop": "glow_berry"
+    },
+    "glow_mushroom": {
+      "kind": "painted",
+      "category": "forage",
+      "rarity": "normal",
+      "sheet": "icons_plants",
+      "index": 9
+    },
+    "gold_ore": {
+      "kind": "painted",
+      "category": "mineral",
+      "rarity": "uncommon",
+      "sheet": "icons_resources",
+      "index": 4
+    },
+    "hat_acorn_gold": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "rare",
+      "sheet": "icons_clothes_b",
+      "index": 3,
+      "palette": [
+        "E3C372",
+        "7A4E2D",
+        "F2C14E"
+      ],
+      "pattern": "felt",
+      "material": "wood"
+    },
+    "hat_acorn_plain": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_b",
+      "index": 3,
+      "palette": [
+        "B58A52",
+        "7A4E2D",
+        "E9C06B"
+      ],
+      "pattern": "felt",
+      "material": "wood"
+    },
+    "hat_cap_blue": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_b",
+      "index": 0,
+      "palette": [
+        "5B7DA8",
+        "F4E6C4",
+        "E9C06B"
+      ],
+      "pattern": "wool"
+    },
+    "hat_cap_brown": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_b",
+      "index": 0,
+      "palette": [
+        "7A4E2D",
+        "A9744A",
+        "E9C06B"
+      ],
+      "pattern": "wool"
+    },
+    "hat_cap_green": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_b",
+      "index": 0,
+      "palette": [
+        "6B9A3E",
+        "7A4E2D",
+        "E9C06B"
+      ],
+      "pattern": "wool"
+    },
+    "hat_cat_ears": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "rare",
+      "sheet": "icons_clothes_b",
+      "index": 6
+    },
+    "hat_chef_white": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_b",
+      "index": 5,
+      "palette": [
+        "FBF5E6",
+        "F4E6C4",
+        "E8B04A"
+      ],
+      "pattern": "linen"
+    },
+    "hat_hood_green": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_b",
+      "index": 2,
+      "palette": [
+        "2F4A3F",
+        "6B9A3E",
+        "E9C06B"
+      ],
+      "pattern": "wool"
+    },
+    "hat_mushroom_glow": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "unique",
+      "sheet": "icons_clothes_b",
+      "index": 4,
+      "palette": [
+        "2F4A3F",
+        "6FD6C4",
+        "F4E6C4"
+      ],
+      "pattern": "felt",
+      "material": "red"
+    },
+    "hat_mushroom_red": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_b",
+      "index": 4,
+      "palette": [
+        "B3436B",
+        "FBF5E6",
+        "F4E6C4"
+      ],
+      "pattern": "felt",
+      "material": "red"
+    },
+    "hat_mushroom_spinner": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "legendary",
+      "sheet": "icons_clothes_b",
+      "index": 4,
+      "palette": [
+        "9B86D6",
+        "F2C14E",
+        "FBF5E6"
+      ],
+      "pattern": "felt",
+      "material": "red"
+    },
+    "hat_straw_green": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 15,
+      "palette": [
+        "D9BE78",
+        "6B9A3E",
+        "E9C06B"
+      ],
+      "pattern": "straw"
+    },
+    "hat_straw_harvest": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "rare",
+      "sheet": "icons_clothes_a",
+      "index": 15,
+      "palette": [
+        "E3C07A",
+        "E3C372",
+        "E8B04A"
+      ],
+      "pattern": "straw"
+    },
+    "hat_straw_plain": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 15,
+      "palette": [
+        "E3C07A",
+        "B3436B",
+        "E9C06B"
+      ],
+      "pattern": "straw"
+    },
+    "hat_straw_ribbon": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_a",
+      "index": 15,
+      "palette": [
+        "EBD79E",
+        "9B86D6",
+        "E58FA6"
+      ],
+      "pattern": "straw"
+    },
+    "hat_wizard_lavender": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "rare",
+      "sheet": "icons_clothes_b",
+      "index": 1,
+      "palette": [
+        "9B86D6",
+        "E3C372",
+        "F2C14E"
+      ],
+      "pattern": "felt"
+    },
+    "hat_wizard_night": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "legendary",
+      "sheet": "icons_clothes_b",
+      "index": 1,
+      "palette": [
+        "1C2138",
+        "F2C14E",
+        "6FD6C4"
+      ],
+      "pattern": "felt"
+    },
+    "hat_wizard_zephyr": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "unique",
+      "sheet": "icons_clothes_b",
+      "index": 1,
+      "palette": [
+        "D86A8E",
+        "6FD6C4",
+        "F2C14E"
+      ],
+      "pattern": "felt"
+    },
+    "health_tonic": {
+      "kind": "painted",
+      "category": "consumable",
+      "rarity": "normal",
+      "sheet": "icons_tools",
+      "index": 14
+    },
+    "hoe_iron": {
+      "kind": "painted",
+      "category": "tool",
+      "rarity": "uncommon",
+      "sheet": "icons_tools",
+      "index": 4
+    },
+    "hoe_wooden": {
+      "kind": "painted",
+      "category": "tool",
+      "rarity": "normal",
+      "sheet": "icons_tools",
+      "index": 3
+    },
+    "honey": {
+      "kind": "painted",
+      "category": "food",
+      "rarity": "normal",
+      "sheet": "icons_food",
+      "index": 3
+    },
+    "honey_cake": {
+      "kind": "painted",
+      "category": "food",
+      "rarity": "uncommon",
+      "sheet": "icons_food",
+      "index": 4
+    },
+    "iron_ingot": {
+      "kind": "painted",
+      "category": "material",
+      "rarity": "normal",
+      "sheet": "icons_resources",
+      "index": 5
+    },
+    "iron_ore": {
+      "kind": "painted",
+      "category": "mineral",
+      "rarity": "normal",
+      "sheet": "icons_resources",
+      "index": 3
+    },
+    "iron_sword": {
+      "kind": "painted",
+      "category": "weapon",
+      "rarity": "uncommon",
+      "sheet": "icons_tools",
+      "index": 13
+    },
+    "lantern_oil": {
+      "kind": "painted",
+      "category": "consumable",
+      "rarity": "normal",
+      "sheet": "icons_resources",
+      "index": 13
+    },
+    "lantern_post": {
+      "kind": "painted",
+      "category": "placeable",
+      "rarity": "normal",
+      "sheet": "icons_trinkets",
+      "index": 13
+    },
+    "lucky_clover": {
+      "kind": "painted",
+      "category": "forage",
+      "rarity": "uncommon",
+      "sheet": "icons_plants",
+      "index": 10
+    },
+    "lucky_fur": {
+      "kind": "painted",
+      "category": "product",
+      "rarity": "uncommon",
+      "sheet": "icons_food",
+      "index": 9
+    },
+    "magic_herb": {
+      "kind": "painted",
+      "category": "product",
+      "rarity": "uncommon",
+      "sheet": "icons_food",
+      "index": 11
+    },
+    "magic_scroll": {
+      "kind": "painted",
+      "category": "magic",
+      "rarity": "uncommon",
+      "sheet": "icons_resources",
+      "index": 12
+    },
+    "mana_potion": {
+      "kind": "painted",
+      "category": "consumable",
+      "rarity": "normal",
+      "sheet": "icons_tools",
+      "index": 15
+    },
+    "milk": {
+      "kind": "painted",
+      "category": "product",
+      "rarity": "normal",
+      "sheet": "icons_food",
+      "index": 7
+    },
+    "milking_pail": {
+      "kind": "painted",
+      "category": "tool",
+      "rarity": "normal",
+      "sheet": "icons_tools",
+      "index": 11
+    },
+    "moonflower": {
+      "kind": "painted",
+      "category": "crop",
+      "rarity": "uncommon",
+      "sheet": "icons_plants",
+      "index": 3
+    },
+    "moonflower_seeds": {
+      "kind": "seed",
+      "category": "seed",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_b",
+      "index": 14,
+      "crop": "moonflower"
+    },
+    "moonstone": {
+      "kind": "painted",
+      "category": "gem",
+      "rarity": "rare",
+      "sheet": "icons_resources",
+      "index": 8
+    },
+    "moss": {
+      "kind": "painted",
+      "category": "forage",
+      "rarity": "normal",
+      "sheet": "icons_plants",
+      "index": 11
+    },
+    "mushroom_lantern": {
+      "kind": "painted",
+      "category": "placeable",
+      "rarity": "uncommon",
+      "sheet": "icons_plants",
+      "index": 15
+    },
+    "necklace_acorn": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_trinkets",
+      "index": 0
+    },
+    "necklace_beads_wood": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_b",
+      "index": 10,
+      "palette": [
+        "7A4E2D",
+        "C9A15E",
+        "E9C06B"
+      ],
+      "pattern": "beads"
+    },
+    "necklace_dewdrop": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "unique",
+      "sheet": "icons_trinkets",
+      "index": 1
+    },
+    "necklace_heart_of_tree": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "legendary",
+      "sheet": "icons_trinkets",
+      "index": 2
+    },
+    "necklace_leaf": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_trinkets",
+      "index": 3
+    },
+    "necklace_moonstone": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "rare",
+      "sheet": "icons_trinkets",
+      "index": 4
+    },
+    "necklace_moonstone_small": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_trinkets",
+      "index": 4,
+      "scale": 0.82
+    },
+    "night_bloom": {
+      "kind": "painted",
+      "category": "forage",
+      "rarity": "uncommon",
+      "sheet": "icons_plants",
+      "index": 12
+    },
+    "pants_breeches_tweed": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_a",
+      "index": 10,
+      "palette": [
+        "8C6B3F",
+        "2F4A3F",
+        "E9C06B"
+      ],
+      "pattern": "tweed"
+    },
+    "pants_dungarees_blue": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_a",
+      "index": 9,
+      "palette": [
+        "5B7DA8",
+        "E8B04A",
+        "E9C06B"
+      ],
+      "pattern": "canvas"
+    },
+    "pants_dungarees_brown": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 9,
+      "palette": [
+        "7A4E2D",
+        "E8B04A",
+        "E9C06B"
+      ],
+      "pattern": "canvas"
+    },
+    "pants_dungarees_gold": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "rare",
+      "sheet": "icons_clothes_a",
+      "index": 9,
+      "palette": [
+        "E3C372",
+        "7A4E2D",
+        "E9C06B"
+      ],
+      "pattern": "canvas"
+    },
+    "pants_dungarees_patchwork": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "unique",
+      "sheet": "icons_clothes_a",
+      "index": 9,
+      "palette": [
+        "6B9A3E",
+        "E58FA6",
+        "E8B04A"
+      ],
+      "pattern": "canvas"
+    },
+    "pants_shorts_blue": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_a",
+      "index": 8,
+      "palette": [
+        "5B7DA8",
+        "F4E6C4",
+        "E9C06B"
+      ],
+      "pattern": "twill"
+    },
+    "pants_shorts_khaki": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 8,
+      "palette": [
+        "C9B58E",
+        "7A4E2D",
+        "E9C06B"
+      ],
+      "pattern": "twill"
+    },
+    "pants_trousers_brown": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 7,
+      "palette": [
+        "7A4E2D",
+        "E8B04A",
+        "E9C06B"
+      ],
+      "pattern": "twill"
+    },
+    "pants_trousers_cream": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 7,
+      "palette": [
+        "F3EAD3",
+        "A9744A",
+        "E9C06B"
+      ],
+      "pattern": "twill"
+    },
+    "pants_trousers_green": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 7,
+      "palette": [
+        "6B9A3E",
+        "7A4E2D",
+        "E9C06B"
+      ],
+      "pattern": "twill"
+    },
+    "pants_trousers_lavender": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "rare",
+      "sheet": "icons_clothes_a",
+      "index": 7,
+      "palette": [
+        "9B86D6",
+        "E3C372",
+        "E9C06B"
+      ],
+      "pattern": "twill"
+    },
+    "pants_trousers_moss": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "unique",
+      "sheet": "icons_clothes_a",
+      "index": 7,
+      "palette": [
+        "2F4A3F",
+        "6B9A3E",
+        "6FD6C4"
+      ],
+      "pattern": "twill"
+    },
+    "pants_trousers_starlight": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "legendary",
+      "sheet": "icons_clothes_a",
+      "index": 7,
+      "palette": [
+        "1C2138",
+        "F2C14E",
+        "6FD6C4"
+      ],
+      "pattern": "twill"
+    },
+    "pants_trousers_stripe": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_a",
+      "index": 7,
+      "palette": [
+        "A9D3E0",
+        "FBF5E6",
+        "E9C06B"
+      ],
+      "pattern": "twill"
+    },
+    "pickaxe_copper": {
+      "kind": "painted",
+      "category": "tool",
+      "rarity": "normal",
+      "sheet": "icons_tools",
+      "index": 6
+    },
+    "pickaxe_iron": {
+      "kind": "painted",
+      "category": "tool",
+      "rarity": "uncommon",
+      "sheet": "icons_tools",
+      "index": 7
+    },
+    "pickaxe_wooden": {
+      "kind": "painted",
+      "category": "tool",
+      "rarity": "normal",
+      "sheet": "icons_tools",
+      "index": 5
+    },
+    "pumpkin": {
+      "kind": "painted",
+      "category": "crop",
+      "rarity": "normal",
+      "sheet": "icons_plants",
+      "index": 4
+    },
+    "pumpkin_seeds": {
+      "kind": "seed",
+      "category": "seed",
+      "rarity": "normal",
+      "sheet": "icons_clothes_b",
+      "index": 14,
+      "crop": "pumpkin"
+    },
+    "rare_mushroom": {
+      "kind": "painted",
+      "category": "forage",
+      "rarity": "uncommon",
+      "sheet": "icons_plants",
+      "index": 13
+    },
+    "scarecrow": {
+      "kind": "painted",
+      "category": "placeable",
+      "rarity": "normal",
+      "sheet": "icons_trinkets",
+      "index": 14
+    },
+    "scythe": {
+      "kind": "painted",
+      "category": "tool",
+      "rarity": "normal",
+      "sheet": "icons_tools",
+      "index": 8
+    },
+    "shirt_knit_blue": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_a",
+      "index": 4,
+      "palette": [
+        "5B7DA8",
+        "F4E6C4",
+        "C0C6D0"
+      ],
+      "pattern": "knit"
+    },
+    "shirt_knit_cream": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 4,
+      "palette": [
+        "E9DCC0",
+        "7A4E2D",
+        "C0C6D0"
+      ],
+      "pattern": "knit"
+    },
+    "shirt_knit_dawn": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "legendary",
+      "sheet": "icons_clothes_a",
+      "index": 4,
+      "palette": [
+        "F2C14E",
+        "E58FA6",
+        "FBF5E6"
+      ],
+      "pattern": "knit"
+    },
+    "shirt_knit_lavender": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "rare",
+      "sheet": "icons_clothes_a",
+      "index": 4,
+      "palette": [
+        "9B86D6",
+        "F4E6C4",
+        "E3C372"
+      ],
+      "pattern": "knit"
+    },
+    "shirt_knit_thornberry": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "unique",
+      "sheet": "icons_clothes_a",
+      "index": 4,
+      "palette": [
+        "B3436B",
+        "F4E6C4",
+        "2F4A3F"
+      ],
+      "pattern": "knit"
+    },
+    "shirt_linen_blue": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 3,
+      "palette": [
+        "A9D3E0",
+        "F4E6C4",
+        "E9C06B"
+      ],
+      "pattern": "linen"
+    },
+    "shirt_linen_cream": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 3,
+      "palette": [
+        "F3EAD3",
+        "E58FA6",
+        "E9C06B"
+      ],
+      "pattern": "linen"
+    },
+    "shirt_linen_firefly": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "unique",
+      "sheet": "icons_clothes_a",
+      "index": 3,
+      "palette": [
+        "2F4A3F",
+        "6FD6C4",
+        "F2C14E"
+      ],
+      "pattern": "linen"
+    },
+    "shirt_linen_green": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 3,
+      "palette": [
+        "6B9A3E",
+        "F4E6C4",
+        "E9C06B"
+      ],
+      "pattern": "linen"
+    },
+    "shirt_linen_harvest": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "rare",
+      "sheet": "icons_clothes_a",
+      "index": 3,
+      "palette": [
+        "E3C372",
+        "7A4E2D",
+        "E8B04A"
+      ],
+      "pattern": "linen"
+    },
+    "shirt_linen_rose": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_a",
+      "index": 3,
+      "palette": [
+        "E58FA6",
+        "FBF5E6",
+        "E3C372"
+      ],
+      "pattern": "linen"
+    },
+    "shirt_smock_brown": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 6,
+      "palette": [
+        "8C6B3F",
+        "F4E6C4",
+        "E9C06B"
+      ],
+      "pattern": "linen"
+    },
+    "shirt_smock_honey": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_a",
+      "index": 6,
+      "palette": [
+        "E8B04A",
+        "FBF5E6",
+        "7A4E2D"
+      ],
+      "pattern": "linen"
+    },
+    "shirt_vest_embroidered": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "rare",
+      "sheet": "icons_clothes_a",
+      "index": 5,
+      "palette": [
+        "4C58A0",
+        "E3C372",
+        "E58FA6"
+      ],
+      "pattern": "wool"
+    },
+    "shirt_vest_green": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_a",
+      "index": 5,
+      "palette": [
+        "6B9A3E",
+        "7A4E2D",
+        "E3C372"
+      ],
+      "pattern": "wool"
+    },
+    "shoes_boots_brown": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 11,
+      "palette": [
+        "7A4E2D",
+        "A9744A",
+        "4A3228"
+      ],
+      "pattern": "leather",
+      "material": "leather"
+    },
+    "shoes_boots_dark": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 11,
+      "palette": [
+        "4A3228",
+        "7A4E2D",
+        "C0C6D0"
+      ],
+      "pattern": "leather",
+      "material": "leather"
+    },
+    "shoes_boots_green": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_a",
+      "index": 11,
+      "palette": [
+        "6B9A3E",
+        "2F4A3F",
+        "E9C06B"
+      ],
+      "pattern": "leather",
+      "material": "leather"
+    },
+    "shoes_boots_laced": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "rare",
+      "sheet": "icons_clothes_a",
+      "index": 11,
+      "palette": [
+        "7A4E2D",
+        "E3C372",
+        "4A3228"
+      ],
+      "pattern": "leather",
+      "material": "leather"
+    },
+    "shoes_boots_star": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "unique",
+      "sheet": "icons_clothes_a",
+      "index": 11,
+      "palette": [
+        "2B2340",
+        "F2C14E",
+        "6FD6C4"
+      ],
+      "pattern": "leather",
+      "material": "leather"
+    },
+    "shoes_boots_wind": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "legendary",
+      "sheet": "icons_clothes_a",
+      "index": 11,
+      "palette": [
+        "F4E6C4",
+        "6FD6C4",
+        "F2C14E"
+      ],
+      "pattern": "leather",
+      "material": "leather"
+    },
+    "shoes_clogs_gilded": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "rare",
+      "sheet": "icons_clothes_a",
+      "index": 12,
+      "palette": [
+        "E3C372",
+        "7A4E2D",
+        "F2C14E"
+      ],
+      "pattern": "wood",
+      "material": "wood"
+    },
+    "shoes_clogs_painted": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_a",
+      "index": 12,
+      "palette": [
+        "E58FA6",
+        "FBF5E6",
+        "E9C06B"
+      ],
+      "pattern": "wood",
+      "material": "wood"
+    },
+    "shoes_clogs_wood": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 12,
+      "palette": [
+        "C9A15E",
+        "7A4E2D",
+        "E9C06B"
+      ],
+      "pattern": "wood",
+      "material": "wood"
+    },
+    "shoes_slippers_cream": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 13,
+      "palette": [
+        "F4E6C4",
+        "FBF5E6",
+        "7A4E2D"
+      ],
+      "pattern": "wool"
+    },
+    "shoes_slippers_lavender": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_a",
+      "index": 13,
+      "palette": [
+        "9B86D6",
+        "FBF5E6",
+        "7A4E2D"
+      ],
+      "pattern": "wool"
+    },
+    "shoes_slippers_pompom": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "unique",
+      "sheet": "icons_clothes_a",
+      "index": 13,
+      "palette": [
+        "D86A8E",
+        "6FD6C4",
+        "7A4E2D"
+      ],
+      "pattern": "wool"
+    },
+    "shoes_slippers_silk": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "rare",
+      "sheet": "icons_clothes_a",
+      "index": 13,
+      "palette": [
+        "E58FA6",
+        "E3C372",
+        "FBF5E6"
+      ],
+      "pattern": "wool"
+    },
+    "shoes_wellies_blue": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "uncommon",
+      "sheet": "icons_clothes_a",
+      "index": 14,
+      "palette": [
+        "5B7DA8",
+        "FBF5E6",
+        "E9C06B"
+      ],
+      "pattern": "rubber"
+    },
+    "shoes_wellies_yellow": {
+      "kind": "painted",
+      "category": "clothing",
+      "rarity": "normal",
+      "sheet": "icons_clothes_a",
+      "index": 14,
+      "palette": [
+        "E8B04A",
+        "4A3228",
+        "FBF5E6"
+      ],
+      "pattern": "rubber"
+    },
+    "stone": {
+      "kind": "painted",
+      "category": "resource",
+      "rarity": "normal",
+      "sheet": "icons_resources",
+      "index": 1
+    },
+    "strawberry": {
+      "kind": "painted",
+      "category": "crop",
+      "rarity": "normal",
+      "sheet": "icons_plants",
+      "index": 5
+    },
+    "strawberry_seeds": {
+      "kind": "seed",
+      "category": "seed",
+      "rarity": "normal",
+      "sheet": "icons_clothes_b",
+      "index": 14,
+      "crop": "strawberry"
+    },
+    "sunflower": {
+      "kind": "painted",
+      "category": "crop",
+      "rarity": "normal",
+      "sheet": "icons_plants",
+      "index": 6
+    },
+    "sunflower_seeds": {
+      "kind": "seed",
+      "category": "seed",
+      "rarity": "normal",
+      "sheet": "icons_clothes_b",
+      "index": 14,
+      "crop": "sunflower"
+    },
+    "sword_rusty": {
+      "kind": "painted",
+      "category": "weapon",
+      "rarity": "normal",
+      "sheet": "icons_tools",
+      "index": 12
+    },
+    "turnip": {
+      "kind": "painted",
+      "category": "crop",
+      "rarity": "normal",
+      "sheet": "icons_plants",
+      "index": 7
+    },
+    "turnip_seeds": {
+      "kind": "seed",
+      "category": "seed",
+      "rarity": "normal",
+      "sheet": "icons_clothes_b",
+      "index": 14,
+      "crop": "turnip"
+    },
+    "watering_can_copper": {
+      "kind": "painted",
+      "category": "tool",
+      "rarity": "normal",
+      "sheet": "icons_tools",
+      "index": 9
+    },
+    "watering_can_gold": {
+      "kind": "painted",
+      "category": "tool",
+      "rarity": "uncommon",
+      "sheet": "icons_tools",
+      "index": 10
+    },
+    "wild_flower": {
+      "kind": "painted",
+      "category": "forage",
+      "rarity": "normal",
+      "sheet": "icons_plants",
+      "index": 14
+    },
+    "wisdom_feather": {
+      "kind": "painted",
+      "category": "product",
+      "rarity": "rare",
+      "sheet": "icons_food",
+      "index": 10
+    },
+    "wood": {
+      "kind": "painted",
+      "category": "resource",
+      "rarity": "normal",
+      "sheet": "icons_resources",
+      "index": 0
+    },
+    "wool": {
+      "kind": "painted",
+      "category": "product",
+      "rarity": "normal",
+      "sheet": "icons_food",
+      "index": 8
+    }
+  }
+}

@@ -6,6 +6,8 @@ extends RefCounted
 ##   characters.ids_resolve, pack_all_directions_all_clips_render, create_fox_and_fairy, flight_clips_only_fairy_bat,
 ##   warm_clips_finishes_cheap, memory_report, skins_resolve_with_and_without_bases, wardrobe_contract_members,
 ##   import_stub_audit_layers_lossless, shadow_floor_z, sprite_filter_is_4.
+## v2 (package V1-cast-data): heroes_two_per_race (four races, eight heroes), catalog_heroes_api, species_chips (the two animal chips),
+##   skins, skin_chains_match_the_addendum (all 15 skins), retired_skins_resolve.
 ## Needs the project imported (godot --headless --import, twice on a fresh clone): the sheets are S3TC textures.
 
 const SECTION := "characters"
@@ -36,14 +38,34 @@ const SKIN_CHAINS := {
 	"hobbit_pip": ["hobbit_pip_base", "hobbit_pip", "raccoon"],
 	"hobbit_moss": ["hobbit_moss_base", "hobbit_moss", "raccoon"],
 	"hobbit_bramble": ["hobbit_bramble_base", "hobbit_bramble", "raccoon"],
+	# The v2 heroes use their own dressed character while wardrobe bases are pending.
+	"animal_monkey": ["monkey_base", "monkey"],
+	"fairy_birk": ["fairy_birk_base", "fairy_birk", "fairy"],
+	"hobbit_bodil": ["hobbit_bodil_base", "hobbit_bodil", "hobbit_pip", "raccoon"],
+	# the ghost (AG1): two skins, the pack rabbit at the end of the chain
+	"ghost_bu": ["ghost_bu_base", "ghost_bu", "rabbit"],
+	"ghost_hviske": ["ghost_hviske_base", "ghost_hviske", "rabbit"],
 }
+# The bodies.json hero id of every skin: a live hero has its own body, a RETIRED skin points at a live hero's body (the six v2 bodies
+# fox monkey fairy fairy_birk hobbit_pip hobbit_bodil + the two ghost bodies), so A2's bodies.json can dress it.
 const WARDROBE_BODIES := {
-	"animal_fox": "fox", "animal_rabbit": "rabbit", "animal_hedgehog": "hedgehog", "animal_squirrel": "squirrel",
-	"fairy_meadow": "fairy", "fairy_stardust": "fairy_stardust", "fairy_dusk": "fairy_dusk",
-	"hobbit_pip": "hobbit_pip", "hobbit_moss": "hobbit_moss", "hobbit_bramble": "hobbit_bramble",
+	"animal_fox": "fox", "animal_rabbit": "fox", "animal_hedgehog": "fox", "animal_squirrel": "monkey",
+	"fairy_meadow": "fairy", "fairy_stardust": "fairy", "fairy_dusk": "fairy",
+	"hobbit_pip": "hobbit_pip", "hobbit_moss": "hobbit_pip", "hobbit_bramble": "hobbit_pip",
+	"animal_monkey": "monkey", "fairy_birk": "fairy_birk", "hobbit_bodil": "hobbit_bodil",
+	"ghost_bu": "ghost_bu", "ghost_hviske": "ghost_hviske",
 }
-# Sheets the stock folders of P21 will add (used to simulate "stock sheets exist, bases do not").
-const NEW_STOCK_IDS: Array[String] = ["squirrel", "fairy_stardust", "fairy_dusk", "hobbit_pip", "hobbit_moss", "hobbit_bramble"]
+## The seven skins of the first guide: retired rows (never offered, kept for old saves and the pinned chains of art_characters).
+const RETIRED_SKINS: Array[String] = ["animal_rabbit", "animal_hedgehog", "animal_squirrel", "fairy_stardust", "fairy_dusk", "hobbit_moss", "hobbit_bramble"]
+## The heroes in card order: [id, race, skin] (Figurer v2: two per race; the ghost's two follow the other six).
+const HEROES: Array = [
+	["rasmus", "animal", "animal_fox"], ["kiki", "animal", "animal_monkey"],
+	["kloevermynte", "fairy", "fairy_meadow"], ["birk", "fairy", "fairy_birk"],
+	["bertil", "hobbit", "hobbit_pip"], ["bodil", "hobbit", "hobbit_bodil"],
+	["bu", "ghost", "ghost_bu"], ["hviske", "ghost", "ghost_hviske"],
+]
+# Sheets the stock folders of P21 and the ghost art (G-ghost-art) will add (used to simulate "stock sheets exist, bases do not").
+const NEW_STOCK_IDS: Array[String] = ["squirrel", "fairy_stardust", "fairy_dusk", "fairy_birk", "hobbit_pip", "hobbit_moss", "hobbit_bramble", "hobbit_bodil", "ghost_bu", "ghost_hviske"]
 
 var _holder: Node2D
 
@@ -83,20 +105,22 @@ func _data(t) -> void:
 	var d: Dictionary = Catalog.data()
 	t.check("data_loaded", d.has("races") and d.has("skins") and d.has("species") and d.has("animals") and d.has("enemies") and d.has("fallbacks"), "keys %s" % str(d.keys()))
 	var races: Dictionary = d.get("races", {})
-	var ok := races.size() == 3
-	for race in ["animal", "fairy", "hobbit"]:
+	var ok := races.size() == 4
+	for race in ["animal", "fairy", "hobbit", "ghost"]:
 		var row: Dictionary = Catalog.race(race)
 		ok = ok and str(row.get("name_key", "")).begins_with("CHAR_") and str(row.get("perk_key", "")).ends_with("_PERK")
 		ok = ok and str(Catalog.skin(Catalog.default_skin(race)).get("race", "")) == race
-	t.check("races_perk_keys_and_default_skins", ok, "animal -> %s, fairy -> %s, hobbit -> %s" % [Catalog.default_skin("animal"), Catalog.default_skin("fairy"), Catalog.default_skin("hobbit")])
-	t.expect_eq([Catalog.default_skin("animal"), Catalog.default_skin("fairy"), Catalog.default_skin("hobbit")], ["animal_fox", "fairy_meadow", "hobbit_pip"], "race -> default skin (plan 3.8)")
+	t.check("races_perk_keys_and_default_skins", ok, "animal -> %s, fairy -> %s, hobbit -> %s, ghost -> %s" % [Catalog.default_skin("animal"), Catalog.default_skin("fairy"), Catalog.default_skin("hobbit"), Catalog.default_skin("ghost")])
+	t.expect_eq([Catalog.default_skin("animal"), Catalog.default_skin("fairy"), Catalog.default_skin("hobbit"), Catalog.default_skin("ghost")], ["animal_fox", "fairy_meadow", "hobbit_pip", "ghost_bu"], "race -> default skin (plan 3.8)")
+	# the species chips of the animal card: two since the Figurer v2 heroes (Rasmus the fox, Kiki the monkey); their key is the KIND line of the hero card
 	var sp: Array = Catalog.species()
 	var ids: Array = []
-	var species_ok := sp.size() == 4
+	var species_ok := sp.size() == 2
 	for row in sp:
 		ids.append(str((row as Dictionary).get("id", "")))
-		species_ok = species_ok and str((row as Dictionary).get("name_key", "")).begins_with("SPECIES_") and not Catalog.skin((row as Dictionary).get("skin", "")).is_empty()
-	t.check("species_chips", species_ok and ids == ["fox", "rabbit", "hedgehog", "squirrel"], str(ids))
+		species_ok = species_ok and str((row as Dictionary).get("name_key", "")).begins_with("HERO_") and str((row as Dictionary).get("name_key", "")).ends_with("_KIND") and not Catalog.skin((row as Dictionary).get("skin", "")).is_empty()
+	t.check("species_chips", species_ok and ids == ["fox", "monkey"] and str((sp[0] as Dictionary).get("skin", "")) == "animal_fox" and str((sp[1] as Dictionary).get("skin", "")) == "animal_monkey", "chips %s (the two animal heroes; no SPECIES_ key)" % str(ids))
+	_heroes(t, d)
 	var animals: Dictionary = d.get("animals", {})
 	var animal_ok := animals.size() == 10
 	for species in ["chicken", "rabbit", "duck", "cat", "dog", "sheep", "cow", "deer", "fox", "owl"]:
@@ -106,6 +130,77 @@ func _data(t) -> void:
 		animal_ok = animal_ok and float(look_baby["scale"]) > 0.0 and float(look_baby["scale"]) < float(look_adult["scale"])
 	t.check("farm_animals_cover_every_species", animal_ok, "chicken: %s / %s" % [str(Catalog.animal_look("chicken", "baby")), str(Catalog.animal_look("chicken", "adult"))])
 	t.check("enemy_visuals", Catalog.enemy_visual("bat") == "bat" and Catalog.enemy_visual("snurresvamp") == "snurresvamp" and Catalog.enemy_visual("lysesvamp") != "" and Catalog.enemy_visual("nope") == "", "bat stays the bat (never a scaled-up boss)")
+
+
+## The `heroes` table (V1-cast-data, Figurer v2 + the ghost): four races, two heroes each, in card order; every hero wears a LIVE skin of
+## its race, the first hero of a race is the race's default skin, and every text key of the cards is defined in da and en.
+## Then the CharacterCatalog API on top of it (heroes(race), hero_of_skin(skin), is_retired(skin)), also with injected data.
+func _heroes(t, d: Dictionary) -> void:
+	var rows: Array = d.get("heroes", [])
+	var problems: Array[String] = []
+	if rows.size() != HEROES.size():
+		problems.append("%d rows, want %d" % [rows.size(), HEROES.size()])
+	for i in mini(rows.size(), HEROES.size()):
+		var row: Dictionary = rows[i] if rows[i] is Dictionary else {}
+		var want: Array = HEROES[i]
+		var up := str(want[0]).to_upper()
+		if str(row.get("id", "")) != want[0] or str(row.get("race", "")) != want[1] or str(row.get("skin", "")) != want[2]:
+			problems.append("row %d is %s/%s/%s, want %s" % [i, row.get("id"), row.get("race"), row.get("skin"), str(want)])
+		for pair in [["name_key", "HERO_%s_NAME" % up], ["kind_key", "HERO_%s_KIND" % up], ["blurb_key", "HERO_%s_BLURB" % up]]:
+			if str(row.get(pair[0], "")) != pair[1]:
+				problems.append("%s: %s is %s, want %s" % [want[0], pair[0], row.get(pair[0]), pair[1]])
+		var skin_row: Dictionary = Catalog.skin(want[2])
+		if skin_row.is_empty() or str(skin_row.get("race", "")) != want[1] or Catalog.is_retired(want[2]):
+			problems.append("%s: skin %s is missing, of another race or retired" % [want[0], want[2]])
+	var lm: Node = t.autoload("LocalizationManager")
+	var untranslated: Array[String] = []
+	for row in rows:
+		for k in ["name_key", "kind_key", "blurb_key"]:
+			for loc in ["da", "en"]:
+				if lm != null and str(lm.call("text_in", str((row as Dictionary).get(k, "")), loc)) == "":
+					untranslated.append("%s/%s" % [(row as Dictionary).get(k, ""), loc])
+	var per_race := true
+	var first_is_default := true
+	for race in ["animal", "fairy", "hobbit", "ghost"]:
+		var hs: Array[Dictionary] = Catalog.heroes(race)
+		per_race = per_race and hs.size() == 2 and hs.all(func(h: Dictionary) -> bool: return str(h.get("race", "")) == race)
+		first_is_default = first_is_default and not hs.is_empty() and str(hs[0].get("skin", "")) == Catalog.default_skin(race)
+	t.check("heroes_two_per_race", problems.is_empty() and per_race and first_is_default and untranslated.is_empty() and Catalog.heroes("dragon").is_empty(),
+		"four races, eight heroes in card order rasmus kiki | kloevermynte birk | bertil bodil | bu hviske; the first of a race is its default skin; every card text in da + en; problems %s %s" % [str(problems), str(untranslated.slice(0, 3))])
+	# the API: rows in order, hero_of_skin both ways, retired / unknown skins are no heroes, is_retired
+	var api_ok := true
+	var detail: Array[String] = []
+	var kiki: Array[Dictionary] = Catalog.heroes("animal")
+	if not (kiki.size() == 2 and str(kiki[0].get("id", "")) == "rasmus" and str(kiki[1].get("id", "")) == "kiki"):
+		api_ok = false
+		detail.append("heroes(animal) %s" % str(kiki))
+	for h in HEROES:
+		var of_skin: Dictionary = Catalog.hero_of_skin(h[2])
+		if str(of_skin.get("id", "")) != h[0] or str(of_skin.get("blurb_key", "")) != "HERO_%s_BLURB" % str(h[0]).to_upper():
+			api_ok = false
+			detail.append("hero_of_skin(%s) -> %s" % [h[2], str(of_skin)])
+		if Catalog.is_retired(h[2]):
+			api_ok = false
+			detail.append("%s is retired" % h[2])
+	for retired in RETIRED_SKINS:
+		if not Catalog.hero_of_skin(retired).is_empty() or not Catalog.is_retired(retired):
+			api_ok = false
+			detail.append("%s: hero_of_skin %s is_retired %s" % [retired, str(Catalog.hero_of_skin(retired)), Catalog.is_retired(retired)])
+	if not (Catalog.hero_of_skin("no_such_skin").is_empty() and Catalog.hero_of_skin(&"").is_empty() and not Catalog.is_retired("no_such_skin") and not Catalog.is_retired(&"animal_fox")):
+		api_ok = false
+		detail.append("unknown skin")
+	# the same functions over injected data: rows of other races are skipped, a missing table is an empty answer, StringName ids work
+	Catalog.set_data_override({"heroes": [{"id": "a", "race": "x", "skin": "s1"}, {"id": "b", "race": "y", "skin": "s2"}, {"id": "c", "race": "x", "skin": "s3"}], "skins": {"s1": {"retired": true}, "s2": {}}})
+	var xs: Array[Dictionary] = Catalog.heroes("x")
+	if not (xs.size() == 2 and str(xs[0]["id"]) == "a" and str(xs[1]["id"]) == "c" and Catalog.heroes("y").size() == 1 and Catalog.hero_of_skin(&"s2").get("id") == "b" and Catalog.is_retired(&"s1") and not Catalog.is_retired(&"s2")):
+		api_ok = false
+		detail.append("injected data")
+	Catalog.set_data_override({})
+	if not (Catalog.heroes("x").is_empty() and Catalog.hero_of_skin("s1").is_empty() and Catalog.species().is_empty()):
+		api_ok = false
+		detail.append("empty data")
+	Catalog.clear_overrides()
+	t.check("catalog_heroes_api", api_ok, "CharacterCatalog.heroes(race) in card order, hero_of_skin(skin) ({} for a retired or unknown skin), is_retired(skin); also over injected and empty data %s" % str(detail))
 
 
 func _ids_resolve(t) -> void:
@@ -141,7 +236,7 @@ func _skins_resolve(t) -> void:
 	skins.sort()
 	var want: Array = SKIN_CHAINS.keys()
 	want.sort()
-	t.expect_eq(skins, want, "all ten skins are in characters.lua")
+	t.check("skins", skins == want, "all %d skins are in characters.lua: the six v2 hero skins + the two ghost skins + the seven retired rows of the first guide (got %d)" % [want.size(), skins.size()])
 	var chain_ok := true
 	var fallback_ok := true
 	var body_ok := true
@@ -155,9 +250,10 @@ func _skins_resolve(t) -> void:
 			fallback_ok = false
 		if Catalog.wardrobe_body(skin) != WARDROBE_BODIES[skin]:
 			body_ok = false
-	t.check("skin_chains_match_the_addendum", chain_ok, str(detail))
+	t.check("skin_chains_match_the_addendum", chain_ok and SKIN_CHAINS.size() == 15, "%d skin chains, including Birk and Bodil's dedicated stock art before their legacy stand-ins %s" % [SKIN_CHAINS.size(), str(detail)])
 	t.check("skin_fallback_is_the_end_of_the_chain", fallback_ok)
-	t.check("wardrobe_body_is_the_bodies_json_hero_id", body_ok, "fox rabbit hedgehog squirrel hobbit_* fairy fairy_stardust fairy_dusk")
+	t.check("wardrobe_body_is_the_bodies_json_hero_id", body_ok, "live hero bodies fox monkey fairy fairy_birk hobbit_pip hobbit_bodil ghost_bu ghost_hviske; retired skins point at a live body (fox fox monkey fairy fairy hobbit_pip hobbit_pip)")
+	_retired_skins(t)
 	# 1. the real disk: the first id of the chain with a folder wins
 	var real_ok := true
 	for skin in SKIN_CHAINS.keys():
@@ -216,6 +312,40 @@ func _skins_resolve(t) -> void:
 	t.expect_eq(Catalog.visual_for_skin("animal_bear", "animal"), "fox_base", "old saves: unknown animal skin -> fox")
 	t.expect_eq(Catalog.visual_for_skin("zzz", "hobbit"), "hobbit_pip_base", "unknown hobbit skin -> hobbit_pip")
 	t.expect_eq(Catalog.wardrobe_body("animal_owl", "fairy"), "fairy", "unknown skin -> default skin of the race for the wardrobe body")
+
+
+## The seven retired skins (V1-cast-data) are rows of the data and no hero: they keep resolving through their pinned chains on the REAL disk
+## (old saves and art_characters.gd name them), their wardrobe body is the body of a LIVE hero, and nothing offers them (no hero row, no chip).
+func _retired_skins(t) -> void:
+	var live_bodies := {}
+	for skin in Catalog.skin_ids():
+		if not Catalog.is_retired(skin):
+			live_bodies[Catalog.wardrobe_body(skin)] = true
+	var chips := {}
+	for row in Catalog.species():
+		chips[str((row as Dictionary).get("skin", ""))] = true
+	var problems: Array[String] = []
+	for skin in RETIRED_SKINS:
+		var chain: Array = SKIN_CHAINS[skin]
+		var first_with_art := ""
+		for id in chain:
+			if FileAccess.file_exists(DIR + id + "/animations.json"):
+				first_with_art = id
+				break
+		if not Catalog.is_retired(skin):
+			problems.append("%s is not retired" % skin)
+		if Catalog.skin_chain(skin) != chain or first_with_art == "" or Catalog.resolved_visual_for_skin(skin) != first_with_art:
+			problems.append("%s: chain %s resolves to '%s', want %s" % [skin, str(Catalog.skin_chain(skin)), Catalog.resolved_visual_for_skin(skin), first_with_art])
+		if not live_bodies.has(Catalog.wardrobe_body(skin)):
+			problems.append("%s: wardrobe body %s is no live hero body" % [skin, Catalog.wardrobe_body(skin)])
+		if not Catalog.hero_of_skin(skin).is_empty() or chips.has(skin):
+			problems.append("%s is offered (hero row or chip)" % skin)
+	var live := 0
+	for skin in Catalog.skin_ids():
+		if not Catalog.is_retired(skin):
+			live += 1
+	t.check("retired_skins_resolve", problems.is_empty() and live == HEROES.size() and Catalog.skin_ids().size() - live == RETIRED_SKINS.size(),
+		"%d retired skins (%s) still resolve on the real disk through their chains, dress with a live hero body (%s) and are offered nowhere; %d live skins = the %d heroes %s" % [RETIRED_SKINS.size(), ", ".join(RETIRED_SKINS), ", ".join(PackedStringArray(live_bodies.keys())), live, HEROES.size(), str(problems.slice(0, 3))])
 
 
 # D19: stand-ins are data in ONE place. lua/config/npcs.lua (P10) documents a per-NPC `fallback`; it is never read at runtime

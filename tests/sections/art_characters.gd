@@ -1,11 +1,12 @@
 extends RefCounted
-## Section art_characters (package P21-art-characters, wave 3): the 36 characters baked by tools/art/characters as they ship in res://assets
+## Section art_characters (package P21-art-characters, wave 3; carved out to V2-cast-art, which owns this file): the 42 characters baked by tools/art/characters (36, P21) and
+## tools/art/cast_v2 (the six Figurer v2 NPCs of V2-cast-art) as they ship in res://assets
 ## (hobbits, squirrel, fairy skins, NPC fairies, named villagers, farm animals, forest creatures, boss) plus the 12 pack busts, against the
 ## art contract of plan 6.2 / addendum 3.5 and the roles of lua/config/npcs.lua + characters.lua.
 ##
 ## Headless (tests/run_playtest.sh --only=art_characters --no-boot), independent of the Python validator (tools/art/core/validate_new_assets.py checks
 ## the same things a second time on the WebP masters; this section checks what the GAME loads: the imported S3TC textures):
-##   roster_is_36  lily_and_feature_fairies_are_baked  roles_and_clip_sets  players_have_all_clips  manifest_lists_the_roster
+##   roster_is_42  lily_and_feature_fairies_are_baked  roles_and_clip_sets  players_have_all_clips  manifest_lists_the_roster
 ##   sheet_sizes_and_cells  sheets_are_vram_compressed  figures_on_the_pivot  pivot_check_has_teeth  clips_animate  boss_spin_all_sides
 ##   portraits_exist_and_are_busts  pack_busts  portrait_lookup_order  pack_busts_replace_the_full_body_crops  import_presets_and_s3tc
 ##   roster_resolves_without_fallback  roster_visuals_resolve  feature_fairies_do_not_use_the_shopkeeper_fallback  all_character_ids_resolve
@@ -13,7 +14,7 @@ extends RefCounted
 ##   readme_points_at_the_review_sheets  docs_match_the_code  no_old_town_name
 ## (roster_visuals_resolve covers the npcs.lua visuals, the skins of characters.lua, the farm animals and the enemies; docs_match_the_code keeps this
 ## list and the docstring of tools/art/characters/measure_cast.py honest.)
-## figures_on_the_pivot: every frame of every clip of the 36 new characters AND of the 12 pack characters (the contract by example) stands on the art
+## figures_on_the_pivot: every frame of every clip of the 42 new characters AND of the 12 pack characters (the contract by example) stands on the art
 ## contract pivot (128, 200): the 8 direction rows are rotations about the vertical axis through the pivot, so the mean of their bounding-box centres
 ## is x 127.5 and opposed rows mirror each other; the lowest pixel (the feet line) is inside the window of the body class.  The same numbers as
 ## tools/art/characters/measure_cast.py (pivot section of its docstring); pivot_check_has_teeth runs the checker on synthetic sheets.
@@ -48,12 +49,12 @@ const VRAM_BUDGET_MB := 400.0
 const REVIEW_DIR := "res://tools/art/characters/review/"
 const REVIEW_MAX_BYTES := 700000
 
-## The pivot contract (numbers measured on the pack and the 36 new characters, see tools/art/characters/measure_cast.py):
+## The pivot contract (numbers measured on the pack and the 42 new characters, see tools/art/characters/measure_cast.py):
 const PIVOT_X_CENTRE := 127.5               # pivot x 128 as the centre of a bounding box in pixel indices
 const PIVOT_X_TOL := 3.0                    # |mean of the 8 row centres - 127.5|
 const MIRROR_TOL := 5.0                     # |centre(row) + centre(opposed row) - 255|
 const QUADRUPEDS: Array[String] = ["calf", "lamb", "puppy", "fawn", "capybara"]
-const FLYERS: Array[String] = ["bat"]
+const FLYERS: Array[String] = ["bat", "bat_natteblik"]
 ## 8-row mean of the lowest figure pixel by body class / every single row (pivot y 200)
 const FEET_WINDOW := {"upright": [197, 216], "quadruped": [212, 228], "glow": [208, 222], "flyer": [197, 216]}
 const ROW_FEET_LIMITS := {"upright": [188, 226], "quadruped": [206, 244], "glow": [204, 232], "flyer": [178, 226]}
@@ -79,11 +80,12 @@ const SET_CLIPS := {
 }
 const FLIGHT_CLIPS := ["takeoff", "hover", "fly", "flight_land"]
 const ROLE_OF_SET := {"full": "player", "npc_flyer": "npc", "villager": "npc", "farm_animal": "farm_animal", "enemy": "enemy", "boss": "boss", "critter": "critter"}
-## the roster: clip set -> ids (task 1 of the work order + addendum 4.4: 33 + fairy_builder, fairy_furnisher, fairy_tailor = 36)
+## the roster: clip set -> ids (task 1 of the P21 work order + addendum 4.4: 33 + fairy_builder, fairy_furnisher, fairy_tailor = 36; V2-cast-art: + bear_brumme hedgehog_pip owl_fru_ugle
+## capybara_sofus (villager) and bat_natteblik fairy_birk_npc (npc_flyer) = 42)
 const ROSTER := {
 	"full": ["hobbit_pip", "hobbit_moss", "hobbit_bramble", "squirrel", "fairy_dusk", "fairy_stardust"],
-	"npc_flyer": ["fairy_mayor", "fairy_baker", "fairy_shopkeeper", "fairy_king", "fairy_wizard", "fairy_lily", "fairy_builder", "fairy_furnisher", "fairy_tailor"],
-	"villager": ["mouse_pippin", "cat_morfar_mis", "bear_guard", "rabbit_farmer", "raccoon_smith", "penguin_postman"],
+	"npc_flyer": ["fairy_mayor", "fairy_baker", "fairy_shopkeeper", "fairy_king", "fairy_wizard", "fairy_lily", "fairy_builder", "fairy_furnisher", "fairy_tailor", "bat_natteblik", "fairy_birk_npc"],
+	"villager": ["mouse_pippin", "cat_morfar_mis", "bear_guard", "rabbit_farmer", "raccoon_smith", "penguin_postman", "bear_brumme", "hedgehog_pip", "owl_fru_ugle", "capybara_sofus"],
 	"farm_animal": ["chick", "hen", "duck", "kitten", "bunny", "fox_cub", "lamb", "calf", "owl", "puppy", "fawn"],
 	"enemy": ["ugleoje", "tornebusk"],
 	"boss": ["snurresvamp"],
@@ -94,8 +96,12 @@ const FLYING_PLAYERS := ["fairy_dusk", "fairy_stardust"]
 ## people-sized characters: the height gate applies; baby animals, small creatures and the boss are sized by design (reported, not gated)
 const PEOPLE: Array[String] = ["hobbit_pip", "hobbit_moss", "hobbit_bramble", "squirrel", "fairy_dusk", "fairy_stardust", "fairy_mayor", "fairy_baker",
 	"fairy_shopkeeper", "fairy_king", "fairy_wizard", "fairy_lily", "fairy_builder", "fairy_furnisher", "fairy_tailor", "mouse_pippin", "cat_morfar_mis",
-	"bear_guard", "rabbit_farmer", "raccoon_smith", "penguin_postman"]
+	"bear_guard", "rabbit_farmer", "raccoon_smith", "penguin_postman", "bear_brumme", "hedgehog_pip", "owl_fru_ugle", "capybara_sofus", "bat_natteblik", "fairy_birk_npc"]
 const GLOWING: Array[String] = ["lysesvamp"]
+## npc visuals that are DECLARED stand-ins (lua/config/npcs.lua: `bodil = { visual = "hobbit_bodil", fallback = "hobbit_pip" }`, "Bodil draws as hobbit_pip until hobbit_bodil exists"):
+## no package of milestone M1a bakes a folder `hobbit_bodil` (A2's hero base is `hobbit_bodil_base`), so the visual draws through its fallback.  The check accepts exactly this
+## stand-in and nothing else, and says so in its info line; the day a folder hobbit_bodil exists the first branch of the check (resolve(visual) == visual) takes over.
+const DRAWS_AS_STAND_IN := {"hobbit_bodil": "hobbit_pip"}
 ## the characters.lua stand-ins that must NOT draw a skin any more once the stock art exists (index 0 = wardrobe base, 1 = stock sheet)
 const SKIN_CHAINS := {
 	"animal_squirrel": ["squirrel_base", "squirrel", "monkey"], "fairy_stardust": ["fairy_stardust_base", "fairy_stardust", "fairy"],
@@ -103,6 +109,8 @@ const SKIN_CHAINS := {
 	"hobbit_moss": ["hobbit_moss_base", "hobbit_moss", "raccoon"], "hobbit_bramble": ["hobbit_bramble_base", "hobbit_bramble", "raccoon"],
 	"animal_fox": ["fox_base", "fox"], "animal_rabbit": ["rabbit_base", "rabbit"], "animal_hedgehog": ["hedgehog_base", "hedgehog"],
 	"fairy_meadow": ["fairy_base", "fairy"],
+	"animal_monkey": ["monkey_base", "monkey"], "fairy_birk": ["fairy_birk_base", "fairy_birk", "fairy"], "hobbit_bodil": ["hobbit_bodil_base", "hobbit_bodil", "hobbit_pip", "raccoon"],
+	"ghost_bu": ["ghost_bu_base", "ghost_bu", "rabbit"], "ghost_hviske": ["ghost_hviske_base", "ghost_hviske", "rabbit"],
 }
 
 var _t
@@ -229,7 +237,7 @@ func _roster(t, ids: Array[String]) -> void:
 	for id in ids:
 		if (_meta[id] as Dictionary).is_empty():
 			missing.append(id)
-	t.check("roster_is_36", ids.size() == 36 and dup.is_empty() and missing.is_empty(),
+	t.check("roster_is_42", ids.size() == 42 and dup.is_empty() and missing.is_empty(),
 		"%d ids (%s), duplicates %s, without animations.json %s" % [ids.size(), ", ".join(counts), str(dup), str(missing)])
 	var feature: Array[String] = []
 	for id in ["fairy_lily", "fairy_builder", "fairy_furnisher", "fairy_tailor"]:
@@ -253,7 +261,7 @@ func _roles_and_clips(t) -> void:
 			problems.append("%s clip_set %s want %s" % [id, str(meta.get("clip_set", "")), set_name])
 		if str(meta.get("family", "")) == "":
 			problems.append("%s has no family" % id)
-		if bool(meta.get("flyer", false)) != (id.begins_with("fairy_")):
+		if bool(meta.get("flyer", false)) != (id.begins_with("fairy_") or id.begins_with("bat_")):   # a bat flies
 			problems.append("%s flyer %s" % [id, str(meta.get("flyer", false))])
 		if float(meta.get("display_scale", 0.0)) != 1.0:
 			problems.append("%s display_scale %s (sprites are never scaled individually)" % [id, str(meta.get("display_scale", "?"))])
@@ -278,7 +286,7 @@ func _roles_and_clips(t) -> void:
 			var a: Dictionary = anims[clip]
 			if int(a.get("frames", 0)) != int(spec[0]) or int(a.get("fps", 0)) != int(spec[1]) or bool(a.get("loop", not bool(spec[2]))) != bool(spec[2]) or str(a.get("sheet", "")) != clip + ".webp":
 				problems.append("%s/%s frames/fps/loop/sheet %s want %s" % [id, clip, str(a), str(spec)])
-	t.check("roles_and_clip_sets", problems.is_empty() and checked == 36, "%d folders: role, clip set, flyer, display_scale 1.0, portrait, glow only on lysesvamp, cell 256 pivot [128,200], every clip of the role's set with its frames/fps/loop; %s" % [checked, str(problems.slice(0, 6))])
+	t.check("roles_and_clip_sets", problems.is_empty() and checked == 42, "%d folders: role, clip set, flyer, display_scale 1.0, portrait, glow only on lysesvamp, cell 256 pivot [128,200], every clip of the role's set with its frames/fps/loop; %s" % [checked, str(problems.slice(0, 6))])
 	var players: Array[String] = []
 	for id in ROSTER["full"]:
 		players.append("%s %d" % [id, ((_meta[id] as Dictionary).get("animations", {}) as Dictionary).size()])
@@ -300,7 +308,7 @@ func _manifest(t) -> void:
 				problems.append("%s.%s manifest %s vs animations.json %s" % [id, k, str(row.get(k)), str(meta.get(k))])
 		if (row.get("animations", {}) as Dictionary).keys().size() != ((meta.get("animations", {}) as Dictionary)).keys().size():
 			problems.append("%s clip count differs" % id)
-	t.check("manifest_lists_the_roster", problems.is_empty() and chars.size() >= 36 and int(man.get("format_version", 0)) == 2, "manifest_traetoppen.json: %d characters, %s" % [chars.size(), str(problems.slice(0, 4))])
+	t.check("manifest_lists_the_roster", problems.is_empty() and chars.size() >= 42 and int(man.get("format_version", 0)) == 2, "manifest_traetoppen.json: %d characters, %s" % [chars.size(), str(problems.slice(0, 4))])
 
 
 # ---------------------------------------------------------------- the sheets: size, imported S3TC texture, cells
@@ -366,7 +374,7 @@ func _scan_sheets(t) -> void:
 		total_bytes += id_bytes
 	_sheet_count = sheets
 	t.check("sheet_sizes_and_cells", size_bad.is_empty() and cell_bad.is_empty() and sheets >= 250,
-		"%d sheets of 36 characters: WebP header = import size = 256 x frames by 2048 and the S3TC texture decodes; %d cells (8 directions x frames), none blank, none cut by its border; %s %s" % [sheets, cells, str(size_bad.slice(0, 4)), str(cell_bad.slice(0, 4))])
+		"%d sheets of 42 characters: WebP header = import size = 256 x frames by 2048 and the S3TC texture decodes; %d cells (8 directions x frames), none blank, none cut by its border; %s %s" % [sheets, cells, str(size_bad.slice(0, 4)), str(cell_bad.slice(0, 4))])
 	t.check("sheets_are_vram_compressed", format_bad.is_empty() and sheets > 0, "every imported sheet is S3TC (%.0f MB resident with mipmaps for all %d sheets, scan took %.1f s) %s" % [_mb(total_bytes), sheets, float(Time.get_ticks_msec() - t0) / 1000.0, str(format_bad.slice(0, 3))])
 
 
@@ -533,8 +541,8 @@ func _pivot_checks(t) -> void:
 	for id in ["hobbit_pip", "calf", "fairy_lily", "lysesvamp", "bear"]:
 		if _pivot.has(id):
 			y_info.append("%s %.0f..%.0f" % [id, float((_pivot[id] as Dictionary)["y_min"]), float((_pivot[id] as Dictionary)["y_max"])])
-	t.check("figures_on_the_pivot", bad.is_empty() and pack_bad.is_empty() and _pivot.size() == 48 and frames > 1500,
-		"%d frames of %d sheets of the 36 new characters + the 12 pack characters stand on the contract pivot (128, 200): the 8-row mean of the bbox centres is x %.1f..%.1f (want %.1f +/- %d), opposed rows mirror each other (+/-%d), the feet line (8-row mean of the lowest pixel, grounded clips) is inside its body-class window (%s); new cast %s, pack %s" % [frames, sheets, x_min, x_max, PIVOT_X_CENTRE, int(PIVOT_X_TOL), int(MIRROR_TOL), ", ".join(y_info), str(bad.slice(0, 3)), str(pack_bad.slice(0, 3))])
+	t.check("figures_on_the_pivot", bad.is_empty() and pack_bad.is_empty() and _pivot.size() == 54 and frames > 1500,
+		"%d frames of %d sheets of the 42 new characters + the 12 pack characters stand on the contract pivot (128, 200): the 8-row mean of the bbox centres is x %.1f..%.1f (want %.1f +/- %d), opposed rows mirror each other (+/-%d), the feet line (8-row mean of the lowest pixel, grounded clips) is inside its body-class window (%s); new cast %s, pack %s" % [frames, sheets, x_min, x_max, PIVOT_X_CENTRE, int(PIVOT_X_TOL), int(MIRROR_TOL), ", ".join(y_info), str(bad.slice(0, 3)), str(pack_bad.slice(0, 3))])
 	_pivot_has_teeth(t)
 
 
@@ -642,7 +650,7 @@ func _portraits(t) -> void:
 	var bad: Array[String] = []
 	for id in _all_ids():
 		bad.append_array(_bust_problems(DIR + id + "/portrait.webp"))
-	t.check("portraits_exist_and_are_busts", bad.is_empty(), "36 portrait.webp: 256 x 256 head-and-shoulders busts from the 14 degree camera, none blank or cut at the top/sides %s" % str(bad.slice(0, 4)))
+	t.check("portraits_exist_and_are_busts", bad.is_empty(), "42 portrait.webp: 256 x 256 head-and-shoulders busts from the 14 degree camera, none blank or cut at the top/sides %s" % str(bad.slice(0, 4)))
 	var pack_bad: Array[String] = []
 	for id in PACK:
 		pack_bad.append_array(_bust_problems(PORTRAIT_DIR + id + ".webp"))
@@ -659,7 +667,7 @@ func _portraits(t) -> void:
 
 ## portrait_lookup_order: the REAL resolver of P07 (scripts/ui/theme/tt_portraits.gd), not a copy of its rule in this file.  Against the real files:
 ##  - portrait_paths(id) is [assets/portraits/<id>.webp, <id>/portrait.webp] (the lookup order);
-##  - resolve_visual_path([id]) is the bust for the 12 pack ids and the character folder's own portrait for the 36 new ids;
+##  - resolve_visual_path([id]) is the bust for the 12 pack ids and the character folder's own portrait for the 42 new ids;
 ##  - the `exists` seam: when BOTH files exist the bust wins (a new id gets its own bust file later without a code change);
 ##  - resolve_path(npc) of every npc of npcs.lua ends at the NPC's own visual (no stand-in), and the texture loads as 256 x 256.
 func _portrait_resolver(t) -> void:
@@ -694,6 +702,8 @@ func _portrait_resolver(t) -> void:
 	for npc_id in npcs.keys():
 		var row: Dictionary = npcs[npc_id] if npcs[npc_id] is Dictionary else {}
 		var own := str(row.get("portrait", "")) if str(row.get("portrait", "")) != "" else str(row.get("visual", ""))
+		if DRAWS_AS_STAND_IN.has(own) and Catalog.resolve(own) == DRAWS_AS_STAND_IN[own]:
+			own = str(DRAWS_AS_STAND_IN[own])          # a declared stand-in: its portrait is the stand-in's
 		var want: String = Portraits.resolve_visual_path([own])
 		var got: String = Portraits.resolve_path(StringName(str(npc_id)))
 		npc_n += 1
@@ -702,7 +712,7 @@ func _portrait_resolver(t) -> void:
 	if npcs.is_empty():
 		t.skip("portrait_lookup_order: lua/config/npcs.lua is not loaded (the per-NPC part of the check)")
 	t.check("portrait_lookup_order", bad.is_empty() and (npc_n >= 15 or npcs.is_empty()),
-		"TTPortraits (P07's resolver): portrait_paths = [assets/portraits/<id>.webp, <id>/portrait.webp]; the bust wins for the 12 pack ids, the folder portrait serves the 36 new ids, both-present -> bust, %d NPCs of npcs.lua resolve to their own visual's portrait, 48 portraits load as 256 x 256 %s" % [npc_n, str(bad.slice(0, 4))])
+		"TTPortraits (P07's resolver): portrait_paths = [assets/portraits/<id>.webp, <id>/portrait.webp]; the bust wins for the 12 pack ids, the folder portrait serves the 42 new ids, both-present -> bust, %d NPCs of npcs.lua resolve to their own visual's portrait, 54 portraits load as 256 x 256 %s" % [npc_n, str(bad.slice(0, 4))])
 
 
 # ---------------------------------------------------------------- import presets
@@ -739,12 +749,13 @@ func _resolve(t) -> void:
 	for id in _all_ids():
 		if Catalog.resolve(id) != id:
 			via_fallback.append("%s -> %s" % [id, Catalog.resolve(id)])
-	t.check("roster_resolves_without_fallback", via_fallback.is_empty(), "CharacterCatalog.resolve(id) == id for all 36 (no stand-in) %s" % str(via_fallback))
+	t.check("roster_resolves_without_fallback", via_fallback.is_empty(), "CharacterCatalog.resolve(id) == id for all 42 (no stand-in) %s" % str(via_fallback))
 	# every npc.visual of lua/config/npcs.lua
 	var lua: Node = t.root.get_node_or_null("LuaRuntime")
 	var npcs: Dictionary = lua.call("get_npcs") if lua != null and lua.has_method("get_npcs") else {}
 	var bad: Array[String] = []
 	var visuals: Array[String] = []
+	var stand_ins: Array[String] = []
 	if npcs.is_empty():
 		t.skip("roster_visuals_resolve: lua/config/npcs.lua is not loaded (no LuaRuntime or no npcs table)")
 	else:
@@ -753,7 +764,10 @@ func _resolve(t) -> void:
 			var visual := str(row.get("visual", ""))
 			visuals.append(visual)
 			if visual == "" or Catalog.resolve(visual) != visual:
-				bad.append("%s: %s resolves to %s" % [npc_id, visual, Catalog.resolve(visual)])
+				if DRAWS_AS_STAND_IN.has(visual) and Catalog.resolve(visual) == DRAWS_AS_STAND_IN[visual]:
+					stand_ins.append("%s (%s) draws as %s" % [npc_id, visual, Catalog.resolve(visual)])
+				else:
+					bad.append("%s: %s resolves to %s" % [npc_id, visual, Catalog.resolve(visual)])
 	# every skin of characters.lua: the first TWO entries of its chain (the wardrobe base of A2 or the stock sheet), never the pack stand-in at the end
 	var skin_bad: Array[String] = []
 	var skin_report: Array[String] = []
@@ -780,6 +794,8 @@ func _resolve(t) -> void:
 		var ev := Catalog.enemy_visual(kind)
 		if ev == "" or Catalog.resolve(ev) != ev:
 			other_bad.append("enemy %s: %s -> %s" % [kind, ev, Catalog.resolve(ev)])
+	if not stand_ins.is_empty():
+		t.info("roster_visuals_resolve: declared stand-in(s) (npcs.lua fallback, no folder of their own in milestone M1a): %s" % "; ".join(stand_ins))
 	t.check("roster_visuals_resolve", bad.is_empty() and skin_bad.is_empty() and other_bad.is_empty() and (not npcs.is_empty()) and visuals.size() >= 15,
 		"%d npc.visual of npcs.lua incl. fairy_builder/furnisher/tailor, %d skins (%s), 10 farm animal species x 2 stages and 5 enemy kinds all resolve to REAL art, no fallback; %s %s %s" % [visuals.size(), skin_report.size(), "; ".join(skin_report.slice(0, 4)) + " ...", str(bad.slice(0, 3)), str(skin_bad.slice(0, 3)), str(other_bad.slice(0, 3))])
 	# the three feature NPCs must draw themselves, not fairy_shopkeeper (until baked characters.lua points them there)
@@ -865,22 +881,44 @@ func _heights_and_outline(t) -> void:
 			if oc.x < 0.0 or absf(oc.x - ref_outline.x) > OUTLINE_TOLERANCE or absf(oc.y - ref_outline.y) > OUTLINE_TOLERANCE or absf(oc.z - ref_outline.z) > OUTLINE_TOLERANCE:
 				outline_bad.append("%s outline %s vs pack %s" % [id, str(oc.round()), str(ref_outline.round())])
 	t.check("figure_heights_match_pack", bad.is_empty() and ref_heights.size() == PACK_REFERENCE.size(),
-		"21 people-sized figures within +/-%d%% of the pack mean %.0f px (bear cat rabbit fox fairy, idle SE): %s %s" % [int(HEIGHT_TOLERANCE * 100.0), mean, ", ".join(report), str(bad)])
+		"27 people-sized figures within +/-%d%% of the pack mean %.0f px (bear cat rabbit fox fairy, idle SE): %s %s" % [int(HEIGHT_TOLERANCE * 100.0), mean, ", ".join(report), str(bad)])
 	t.check("outline_colour_matches_pack", outline_bad.is_empty() and ref_n == PACK_REFERENCE.size(),
 		"world outline (75,60,73) at alpha .55 on every character except the glowing lysesvamp: pack mean %s, deviations > %d: %s" % [str(ref_outline.round()), OUTLINE_TOLERANCE, str(outline_bad.slice(0, 4))])
 
 
 # ---------------------------------------------------------------- VRAM budget (S3TC) of Hyggebyen
 
-## npcs of lua/config/npcs.lua whose home_area is hyggebyen
+## animations.json of any character id (roster ids are loaded up front; pack visuals and stand-ins on demand)
+func _meta_of(id: String) -> Dictionary:
+	if not _meta.has(id):
+		_meta[id] = _json(DIR + id + "/animations.json")
+	return _meta[id]
+
+
+## imported S3TC bytes of every sheet of an id (the sheet scan filled the roster ids; any other visual is measured on demand)
+func _bytes_of(id: String) -> float:
+	if not _bytes_s3tc.has(id):
+		var b := 0.0
+		for clip in (_meta_of(id).get("animations", {}) as Dictionary).keys():
+			var tex := load(DIR + id + "/" + str(clip) + ".webp") as Texture2D
+			if tex != null:
+				b += float(tex.get_image().get_data().size())
+		_bytes_s3tc[id] = b
+	return float(_bytes_s3tc[id])
+
+
+## npcs of lua/config/npcs.lua whose home_area is hyggebyen (a declared stand-in visual is counted as the sprite it draws)
 func _hyggebyen_visuals(t) -> Array[String]:
 	var out: Array[String] = []
 	var lua: Node = t.root.get_node_or_null("LuaRuntime")
 	var npcs: Dictionary = lua.call("get_npcs") if lua != null and lua.has_method("get_npcs") else {}
 	for npc_id in npcs.keys():
 		var row: Dictionary = npcs[npc_id] if npcs[npc_id] is Dictionary else {}
-		if str(row.get("home_area", "")) == "hyggebyen" and str(row.get("visual", "")) != "" and not out.has(str(row["visual"])):
-			out.append(str(row["visual"]))
+		var v := str(row.get("visual", ""))
+		if DRAWS_AS_STAND_IN.has(v):
+			v = str(DRAWS_AS_STAND_IN[v])
+		if str(row.get("home_area", "")) == "hyggebyen" and v != "" and not out.has(v):
+			out.append(v)
 	return out
 
 
@@ -893,7 +931,7 @@ func _vram_budget(t) -> void:
 	var town_bytes := 0.0
 	var parts: Array[String] = []
 	for id in town:
-		var b: float = float(_bytes_s3tc.get(id, 0.0))
+		var b: float = _bytes_of(id)
 		town_bytes += b
 		parts.append("%s %.0f" % [id, _mb(b)])
 	var best_player := ""
@@ -907,7 +945,7 @@ func _vram_budget(t) -> void:
 	# the plan's residency rule (6.2): idle + walk/hover + talk of the NPCs, the player's 10 clips: far less
 	var resident := 0.0
 	for id in town:
-		var anims: Dictionary = (_meta[id] as Dictionary).get("animations", {})
+		var anims: Dictionary = _meta_of(id).get("animations", {})
 		var frames_total := 0
 		var frames_resident := 0
 		for clip in anims.keys():
@@ -915,13 +953,13 @@ func _vram_budget(t) -> void:
 			frames_total += fr
 			if clip in ["idle", "walk", "hover", "talk"]:
 				frames_resident += fr
-		resident += float(_bytes_s3tc.get(id, 0.0)) * float(frames_resident) / maxf(float(frames_total), 1.0)
+		resident += _bytes_of(id) * float(frames_resident) / maxf(float(frames_total), 1.0)
 	t.info("VRAM S3TC+mips of every baked clip, MB: %s; player %s %.0f MB" % [", ".join(parts), best_player, _mb(best_bytes)])
 	t.info("VRAM Hyggebyen worst case (all clips of %d NPC visuals + the player %s): %.0f MB; with the residency rule (idle walk/hover talk of the NPCs): %.0f MB" % [town.size(), best_player, _mb(total), _mb(resident + best_bytes)])
 	var everyone := 0.0
 	for id in _bytes_s3tc.keys():
 		everyone += float(_bytes_s3tc[id])
-	t.info("VRAM all 36 new characters with every clip resident: %.0f MB (never the case: areas keep what they show, plan 6.2)" % _mb(everyone))
+	t.info("VRAM all 42 new characters with every clip resident: %.0f MB (never the case: areas keep what they show, plan 6.2)" % _mb(everyone))
 	t.check("vram_budget_hyggebyen", _mb(total) < VRAM_BUDGET_MB and town.size() >= 12, "%.0f MB (worst case, every clip of %d Hyggebyen NPC visuals + player %s) < %.0f MB; residency rule %.0f MB" % [_mb(total), town.size(), best_player, VRAM_BUDGET_MB, _mb(resident + best_bytes)])
 
 
@@ -1043,6 +1081,7 @@ const CAST_ROWS := [
 	["npc_fairies", ["fairy_mayor", "fairy_baker", "fairy_shopkeeper", "fairy_king", "fairy_wizard", "fairy_lily", "fairy_builder", "fairy_furnisher", "fairy_tailor", "mouse_pippin", "cat_morfar_mis", "bear_guard"]],
 	["villagers_and_farm", ["rabbit_farmer", "raccoon_smith", "penguin_postman", "chick", "hen", "duck", "kitten", "bunny", "fox_cub", "lamb", "calf", "owl"]],
 	["creatures_and_pack", ["puppy", "fawn", "ugleoje", "tornebusk", "lysesvamp", "snurresvamp", "bear", "cat", "rabbit", "bat", "fox", "fairy"]],
+	["figurer_v2_npcs", ["bear_brumme", "bat_natteblik", "hedgehog_pip", "owl_fru_ugle", "capybara_sofus", "fairy_birk_npc"]],
 ]
 const CAST_STEP := Vector2(240.0, 250.0)
 
@@ -1084,7 +1123,7 @@ func _cast(t) -> void:
 		if not good:
 			flat_bad.append(id)
 		report.append("%s:%d" % [id, int(s["distinct"])])
-	t.check("cast_pixels", flat_bad.is_empty() and placed.size() == 48, "all %d figures (36 new + the pack's bear cat rabbit bat fox fairy twice) have pixels at game zoom 0.4 on grass; ground %d colours; flat: %s" % [placed.size(), int(ground["distinct"]), str(flat_bad)])
+	t.check("cast_pixels", flat_bad.is_empty() and placed.size() == 54, "all %d figures (42 new + the pack's bear cat rabbit bat fox fairy twice) have pixels at game zoom 0.4 on grass; ground %d colours; flat: %s" % [placed.size(), int(ground["distinct"]), str(flat_bad)])
 	# the same cast on a flat colour, so that the figure height can be MEASURED in rendered pixels (the ground diamonds are green like many figures)
 	var ground_node := (world["root"] as Node).get_child(0) as CanvasItem
 	var old_clear: Color = RenderingServer.get_default_clear_color()
@@ -1125,7 +1164,7 @@ func _cast(t) -> void:
 		if absf(ratio - 1.0) > HEIGHT_TOLERANCE:
 			bad.append("%s %.0f px = %d%% of %.0f" % [id4, float(heights.get(id4, 0.0)), int(round(ratio * 100.0)), ref])
 	t.check("cast_matches_pack", bad.is_empty() and ref > 40.0 and flat_bad.is_empty(),
-		"rendered at zoom 0.4: the pack's bear cat rabbit fox fairy stand %.0f px tall; 21 people-sized new figures within +/-%d%% (%s) %s" % [ref, int(HEIGHT_TOLERANCE * 100.0), ", ".join(rep2), str(bad)])
+		"rendered at zoom 0.4: the pack's bear cat rabbit fox fairy stand %.0f px tall; 27 people-sized new figures within +/-%d%% (%s) %s" % [ref, int(HEIGHT_TOLERANCE * 100.0), ", ".join(rep2), str(bad)])
 	# four close-ups for the human (zoom 0.9 = about the dialogue scale): columns 0-5 / 6-11, rows 0-1 / 2-3 of the cast
 	camera.zoom = Vector2(0.9, 0.9)
 	var left_x := origin.x + CAST_STEP.x * 2.5
@@ -1173,7 +1212,7 @@ func _vram_measured(t) -> void:
 	ids.append(best)
 	var sheets := 0
 	for id in ids:
-		for clip in ((_meta[id] as Dictionary).get("animations", {}) as Dictionary).keys():
+		for clip in (_meta_of(id).get("animations", {}) as Dictionary).keys():
 			var tex := load(DIR + id + "/" + clip + ".webp") as Texture2D
 			if tex != null:
 				keep.append(tex)

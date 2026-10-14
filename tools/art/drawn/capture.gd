@@ -28,6 +28,11 @@ func _initialize() -> void:
 func _run() -> void:
 	root.size = Vector2i(1280, 720)
 	DirAccess.make_dir_recursive_absolute(OUT)
+	if "--items-only" in OS.get_cmdline_user_args():
+		await _items()
+		print("DRAWN ART captured every registered item")
+		quit()
+		return
 	var manager := root.get_node("GameManager")
 	manager.start_new_game("Art review", 0)
 	var world := load("res://scenes/main/world.tscn").instantiate() as Node2D
@@ -67,7 +72,8 @@ func _run() -> void:
 	await _cast()
 	await _buildings()
 	await _terrain()
-	print("DRAWN ART captured world, daylight close view, night, cast, buildings and terrain")
+	await _items()
+	print("DRAWN ART captured world, daylight close view, night, full cast, buildings, every terrain and every item")
 	quit()
 
 
@@ -78,8 +84,8 @@ func _shot(file: String) -> void:
 
 
 func _terrain() -> void:
-	var canvas := _paper(Vector2i(1280, 1200))
-	var ids := AreaTileSet.ISO_TERRAINS + AreaTileSet.ORTHO_TERRAINS
+	var ids := ArtCatalog.terrain_manifest_ids()
+	var canvas := _paper(Vector2i(1280, ceili(float(ids.size()) / 4) * 200))
 	for index in ids.size():
 		var row := floori(float(index) / 4)
 		var id: StringName = ids[index]
@@ -117,6 +123,28 @@ func _paper(size: Vector2i) -> Control:
 	return canvas
 
 
+func _items() -> void:
+	var lua := root.get_node("LuaRuntime")
+	var ids: Array = lua.get_all_item_ids()
+	ids.sort()
+	for page in ceili(float(ids.size()) / 96):
+		var canvas := _paper(Vector2i(1536, 1080))
+		for index in mini(96, ids.size() - page * 96):
+			var id: String = ids[page * 96 + index]
+			var def: Dictionary = lua.get_item_def(id)
+			var item := TTItemIcon.new()
+			item.item_id = StringName(id)
+			item.rarity = StringName(str(def.get("rarity", "normal")))
+			item.id_fallback = false
+			item.position = Vector2((index % 12) * 128 + 12, floori(float(index) / 12) * 132 + 4)
+			item.size = Vector2(104, 104)
+			canvas.add_child(item)
+			_caption(canvas, id, Vector2((index % 12) * 128, floori(float(index) / 12) * 132 + 110), 128)
+		await _shot("items-%d.png" % (page + 1))
+		canvas.queue_free()
+		await process_frame
+
+
 func _caption(canvas: Control, text: String, at: Vector2, width: float) -> void:
 	var label := Label.new()
 	label.text = text
@@ -129,12 +157,12 @@ func _caption(canvas: Control, text: String, at: Vector2, width: float) -> void:
 
 
 func _cast() -> void:
-	var canvas := _paper(Vector2i(1280, 1080))
 	var ids: Array[String] = []
 	for id in DirAccess.get_directories_at("res://assets/isometric_characters"):
 		if FileAccess.file_exists("res://assets/isometric_characters/" + id + "/animations.json"):
 			ids.append(id)
 	ids.sort()
+	var canvas := _paper(Vector2i(1280, ceili(float(ids.size()) / 8) * 175 + 30))
 	for i in ids.size():
 		var row := floori(float(i) / 8.0)
 		var character := IsoChibiSprite2D.create(ids[i])

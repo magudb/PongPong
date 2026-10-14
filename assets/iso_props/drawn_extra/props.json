@@ -1,0 +1,240 @@
+{
+  "_source": "Painted terrain materials for orthographic walls; collision-only names reuse their exact visual source.",
+  "forest_wall_a": {
+    "file": "forest_wall_a.webp",
+    "size": [
+      96,
+      126
+    ],
+    "pivot": [
+      48.0,
+      98.0
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "ortho"
+  },
+  "forest_wall_b": {
+    "file": "forest_wall_b.webp",
+    "size": [
+      96,
+      126
+    ],
+    "pivot": [
+      48.0,
+      98.0
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "ortho"
+  },
+  "forest_wall_c": {
+    "file": "forest_wall_c.webp",
+    "size": [
+      96,
+      126
+    ],
+    "pivot": [
+      48.0,
+      98.0
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "ortho"
+  },
+  "cave_wall_a": {
+    "file": "cave_wall_a.webp",
+    "size": [
+      96,
+      126
+    ],
+    "pivot": [
+      48.0,
+      98.0
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "ortho"
+  },
+  "cave_wall_b": {
+    "file": "cave_wall_b.webp",
+    "size": [
+      96,
+      126
+    ],
+    "pivot": [
+      48.0,
+      98.0
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "ortho"
+  },
+  "cave_stone": {
+    "file": "../cave_stone_a.png",
+    "size": [
+      113,
+      103
+    ],
+    "pivot": [
+      48,
+      57
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "palette": "cave_stone",
+    "grade": "4d5e85",
+    "clamped": true,
+    "visual_alias_of": "cave_stone_a"
+  },
+  "crown_s_a_solid": {
+    "file": "../crown_s_a.png",
+    "size": [
+      399,
+      447
+    ],
+    "pivot": [
+      169,
+      300
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "disc": {
+      "radius": 170,
+      "center_above_pivot": 138,
+      "shadow_offset_ground": [
+        48,
+        60
+      ],
+      "shadow_offset_screen": [
+        48,
+        35
+      ],
+      "shadow_squash": 0.588
+    },
+    "palette": "crown",
+    "grade": "4d5e85",
+    "ground_collider_r": 128,
+    "visual_alias_of": "crown_s_a"
+  },
+  "crown_s_b_solid": {
+    "file": "../crown_s_b.png",
+    "size": [
+      411,
+      447
+    ],
+    "pivot": [
+      181,
+      300
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "disc": {
+      "radius": 170,
+      "center_above_pivot": 138,
+      "shadow_offset_ground": [
+        48,
+        60
+      ],
+      "shadow_offset_screen": [
+        48,
+        35
+      ],
+      "shadow_squash": 0.588
+    },
+    "palette": "crown",
+    "grade": "4d5e85",
+    "ground_collider_r": 128,
+    "visual_alias_of": "crown_s_b"
+  },
+  "crown_m_a_solid": {
+    "file": "../crown_m_a.png",
+    "size": [
+      513,
+      589
+    ],
+    "pivot": [
+      223,
+      407
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "disc": {
+      "radius": 230,
+      "center_above_pivot": 186,
+      "shadow_offset_ground": [
+        48,
+        60
+      ],
+      "shadow_offset_screen": [
+        48,
+        35
+      ],
+      "shadow_squash": 0.588
+    },
+    "palette": "crown",
+    "grade": "4d5e85",
+    "ground_collider_r": 172,
+    "visual_alias_of": "crown_m_a"
+  },
+  "crown_m_b_solid": {
+    "file": "../crown_m_b.png",
+    "size": [
+      525,
+      593
+    ],
+    "pivot": [
+      235,
+      411
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "disc": {
+      "radius": 230,
+      "center_above_pivot": 186,
+      "shadow_offset_ground": [
+        48,
+        60
+      ],
+      "shadow_offset_screen": [
+        48,
+        35
+      ],
+      "shadow_squash": 0.588
+    },
+    "palette": "crown",
+    "grade": "4d5e85",
+    "ground_collider_r": 172,
+    "visual_alias_of": "crown_m_b"
+  }
+}

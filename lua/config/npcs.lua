@@ -1,25 +1,36 @@
 -- config/npcs.lua
--- The canonical NPC roster (plan 3.8, addendum 4.4).  ONE table, read by npc_2d (P14), tt_portraits (P07), the maps (P11),
--- the voice generator (P24), the quest book (P14) and the shops/home UI.  Top-level table of this file: npcs.
+-- The canonical NPC roster (plan 3.8, addendum 4.4; v2: 22 citizens of the Figurer v2 cast, 30 with the towns track).  ONE table, read
+-- by npc_2d (P14), tt_portraits (P07), the maps (P11), the voice generator (P24), the quest book (P14), the shops/home UI and the
+-- towns / social tracks.  Top-level tables of this file: npcs, npc_vocab.
 -- Read with LuaRuntime.get_npc("<id>") / get_config("npcs.<id>.<key>") / get_npcs().
 --
 -- Ids are STABLE (D11): the display names come from the CSVs (name_key), never from here.
 --
 -- Fields of one NPC (optional ones are simply omitted, a list is never written as `{}`):
 --   name_key        translation key of the display name (core.csv NPC_<ID>; the three builder fairies: dialogue_builder.csv)
---   visual          art id of the sprite (assets/isometric_characters/<visual>), may not be baked yet
+--   visual          art id of the sprite (assets/isometric_characters/<visual>), may not be baked yet.  A visual that IS a pack character
+--                   (rabbit, fox, monkey, frog, bear, cat, hedgehog ...) is its own stand-in: fallback may then equal visual
 --   fallback        visual used until `visual` exists (chain ends at a character of the pack); resolved by lua/config/characters.lua
+--   scale           OPTIONAL display scale of the sprite (1.0 = the baked size; Bamse the bear cub is 0.72)
 --   portrait        OPTIONAL portrait id when it differs from `visual` (assets/portraits/<portrait>.webp)
 --   voice           { pitch, rate } of the placeholder voice (P24): pitch factor and speaking-rate factor, 1.0 = neutral
---   home_area       area id the NPC lives in (farm hyggebyen skovkant dybe_bregner svampelunden krystalgrotten)
---   role            what the NPC is (mayor baker shopkeeper king child smith guard animal_keeper wizard builder furnisher tailor villager elder postman)
---   shop_id         OPTIONAL shop id (lua/shops/*.lua) opened by the dialogue action open_shop
---   dialogue        file id of lua/dialogue/<dialogue>.lua
+--   home_area       area id the NPC lives in: one of npc_vocab.areas (farm hyggebyen traetoppen moerkeskoven).  The home is informational: where the
+--                   NPC STANDS is the map marker `npc id=` or the routine of the towns track; moerkeskoven = placed by the dungeon generator
+--                   (a generated floor moerkeskoven_f<N> is never a home)
+--   role            what the NPC is: one of npc_vocab.roles
+--   shop_id         OPTIONAL shop id (lua/shops/*.lua) opened by the dialogue action open_shop.  The shop file names this NPC as its keeper.
+--                   Natteblik has NO shop_id on purpose: his shop natteblik_maps (DR7) names him as keeper and his dialogue opens it
+--   dialogue        file id of lua/dialogue/<dialogue>.lua (a citizen without the file is still talked to: the engine passes an empty module)
 --   wander          { radius, speed }: radius in map CELLS around the marker (0 = stands still), speed as a fraction of the player's walk_speed
 --   facing          standing direction: S SW W NW N NE E SE (Iso.DIR8 names)
---   hover           OPTIONAL true for fairies: they glide with the hover clip instead of walking
---   schedule        sleep (goes home and sleeps at night, default) | patrol (guard walks his beat) | stay (never sleeps)
+--   hover           OPTIONAL true for fairies and bats: they glide with the hover clip instead of walking
+--   schedule        one of npc_vocab.schedules: sleep (goes home and sleeps at night, default) | patrol (guard walks his beat) | stay (never sleeps)
 --   friendship      true when the NPC can reach hearts (the first finished chat per 7 game days adds one heart, P14)
+--   routine         true when the citizen has a DAILY ROUTINE of the towns track (all 30 rows).  Where a town director controls the area the
+--                   citizen is placed by the director, elsewhere the static `npc` marker keeps working (NpcDirector.controls, DT47)
+--   age             adult | child | elder (npc_vocab.ages): data for the social track (children and elders are never marriage candidates)
+--   family          OPTIONAL family id: two citizens with the same id are relatives (the social track's marriage exclusion); siblings Bertil and
+--                   Bodil Boegeknop (boegeknop), Kloevermynte and Birk (kloevermynte), the children Lily (hyldeblomst) and Bamse (oak)
 --   quests_offered  OPTIONAL quest ids the NPC gives (P14 shows the "!" bubble while one is not accepted yet)
 
 kind = "config"
@@ -39,6 +50,9 @@ config = {
       hover = true,
       schedule = "sleep",
       friendship = true,
+      routine = true,
+      age = "adult",
+      family = "hyldeblomst",
       quests_offered = { "intro_lottery", "fix_roof", "enchanted_garden", "fairy_friendship" },
     },
     baker_maja = {
@@ -55,6 +69,8 @@ config = {
       hover = true,
       schedule = "sleep",
       friendship = true,
+      routine = true,
+      age = "adult",
       quests_offered = { "cookie_delivery", "birthday_cake", "math_bakery_counts" },
     },
     merchant_pip = {
@@ -71,6 +87,9 @@ config = {
       hover = true,
       schedule = "sleep",
       friendship = true,
+      routine = true,
+      age = "adult",
+      family = "kloevermynte",
       quests_offered = { "supply_run" },
     },
     pippin_boegeknop = {
@@ -86,6 +105,8 @@ config = {
       facing = "E",
       schedule = "sleep",
       friendship = true,
+      routine = true,
+      age = "adult",
       quests_offered = { "lost_cat" },
     },
     fairy_king = {
@@ -101,6 +122,8 @@ config = {
       hover = true,
       schedule = "stay",
       friendship = true,
+      routine = true,
+      age = "elder",
       quests_offered = { "moonstone_crown", "slotsdroemmen" },
     },
     fairy_lily = {
@@ -116,6 +139,9 @@ config = {
       hover = true,
       schedule = "sleep",
       friendship = true,
+      routine = true,
+      age = "child",
+      family = "hyldeblomst",
       quests_offered = { "flower_necklace", "rare_mushroom_hunt" },
     },
     smith_thorin = {
@@ -131,6 +157,8 @@ config = {
       facing = "W",
       schedule = "sleep",
       friendship = true,
+      routine = true,
+      age = "adult",
       quests_offered = { "dark_forest_mining", "sword_upgrade", "crystal_cave" },
     },
     guard_oak = {
@@ -138,14 +166,17 @@ config = {
       visual = "bear_guard",
       fallback = "bear",
       voice = { pitch = 0.72, rate = 0.88 },
-      home_area = "hyggebyen",
+      home_area = "traetoppen",
       role = "guard",
       dialogue = "guard_oak",
       wander = { radius = 3, speed = 0.4 },
       facing = "E",
       schedule = "patrol",
       friendship = true,
-      quests_offered = { "forest_patrol", "night_flower", "snurresvampen" },
+      routine = true,
+      age = "adult",
+      family = "oak",
+      quests_offered = { "forest_patrol", "night_flower", "snurresvampen", "skovlift_intro", "bossernes_vej" },
     },
     farmer_rosa = {
       name_key = "NPC_FARMER_ROSA",
@@ -160,6 +191,8 @@ config = {
       facing = "NW",
       schedule = "sleep",
       friendship = true,
+      routine = true,
+      age = "adult",
       quests_offered = { "first_animal", "animal_products", "math_harvest_puzzle" },
     },
     fairy_wizard = {
@@ -176,6 +209,8 @@ config = {
       hover = true,
       schedule = "sleep",
       friendship = true,
+      routine = true,
+      age = "elder",
       quests_offered = { "math_wizard_quiz", "bogtraeet" },
     },
     cat_morfar_mis = {
@@ -183,13 +218,15 @@ config = {
       visual = "cat_morfar_mis",
       fallback = "cat",
       voice = { pitch = 0.85, rate = 0.8 },
-      home_area = "dybe_bregner",
+      home_area = "hyggebyen",
       role = "elder",
       dialogue = "cat_morfar_mis",
       wander = { radius = 1, speed = 0.3 },
       facing = "S",
       schedule = "stay",
       friendship = false,
+      routine = true,
+      age = "elder",
     },
     penguin_postman = {
       name_key = "NPC_PENGUIN_POSTMAN",
@@ -203,6 +240,8 @@ config = {
       facing = "SW",
       schedule = "sleep",
       friendship = true,
+      routine = true,
+      age = "adult",
     },
     fairy_builder = {
       name_key = "NPC_FAIRY_BUILDER",
@@ -218,6 +257,8 @@ config = {
       hover = true,
       schedule = "sleep",
       friendship = true,
+      routine = true,
+      age = "adult",
     },
     fairy_furnisher = {
       name_key = "NPC_FAIRY_FURNISHER",
@@ -233,6 +274,8 @@ config = {
       hover = true,
       schedule = "sleep",
       friendship = true,
+      routine = true,
+      age = "adult",
     },
     fairy_tailor = {
       name_key = "NPC_FAIRY_TAILOR",
@@ -248,6 +291,261 @@ config = {
       hover = true,
       schedule = "sleep",
       friendship = true,
+      routine = true,
+      age = "adult",
     },
+
+    -- ---- the seven figures of the Figurer v2 cast (package V1-cast-data; the art is V2's, until it is baked the pack body stands in) ----
+    gardener_hoppe = {
+      name_key = "NPC_GARDENER_HOPPE",
+      visual = "rabbit",
+      fallback = "rabbit",
+      voice = { pitch = 1.10, rate = 0.95 },
+      home_area = "traetoppen",
+      role = "gardener",
+      dialogue = "gardener_hoppe",
+      wander = { radius = 2, speed = 0.5 },
+      facing = "SE",
+      schedule = "sleep",
+      friendship = true,
+      routine = true,
+      age = "adult",
+    },
+    carpenter_brumme = {
+      name_key = "NPC_CARPENTER_BRUMME",
+      visual = "bear_brumme",
+      fallback = "bear",
+      voice = { pitch = 0.68, rate = 0.85 },
+      home_area = "traetoppen",
+      role = "carpenter",
+      shop_id = "timber_yard",
+      dialogue = "carpenter_brumme",
+      wander = { radius = 1, speed = 0.3 },
+      facing = "SE",
+      schedule = "sleep",
+      friendship = true,
+      routine = true,
+      age = "adult",
+    },
+    postman_pip = {
+      name_key = "NPC_POSTMAN_PIP",
+      visual = "hedgehog_pip",
+      fallback = "hedgehog",
+      voice = { pitch = 1.22, rate = 1.18 },
+      home_area = "traetoppen",
+      role = "postman",
+      dialogue = "postman_pip",
+      wander = { radius = 2, speed = 0.5 },
+      facing = "W",
+      schedule = "sleep",
+      friendship = true,
+      routine = true,
+      age = "adult",
+      quests_offered = { "pips_runde", "forste_dage" },
+    },
+    bathkeeper_sofus = {
+      name_key = "NPC_BATHKEEPER_SOFUS",
+      visual = "capybara_sofus",
+      fallback = "capybara",
+      voice = { pitch = 0.80, rate = 0.72 },
+      home_area = "traetoppen",
+      role = "bathkeeper",
+      dialogue = "bathkeeper_sofus",
+      wander = { radius = 0, speed = 0 },
+      facing = "S",
+      schedule = "stay",
+      friendship = true,
+      routine = true,
+      age = "adult",
+    },
+    appraiser_fru_ugle = {
+      name_key = "NPC_APPRAISER_FRU_UGLE",
+      visual = "owl_fru_ugle",
+      fallback = "penguin",
+      voice = { pitch = 0.92, rate = 0.82 },
+      home_area = "traetoppen",
+      role = "appraiser",
+      dialogue = "appraiser_fru_ugle",
+      wander = { radius = 0, speed = 0 },
+      facing = "SE",
+      schedule = "stay",
+      friendship = true,
+      routine = true,
+      age = "elder",
+      quests_offered = { "ugles_noegle", "rune_vandring" },
+    },
+    mapseller_natteblik = {
+      name_key = "NPC_MAPSELLER_NATTEBLIK",
+      visual = "bat_natteblik",
+      fallback = "bat",
+      voice = { pitch = 1.28, rate = 0.90 },
+      home_area = "moerkeskoven",
+      role = "mapseller",
+      dialogue = "mapseller_natteblik",
+      wander = { radius = 1, speed = 0.3 },
+      facing = "S",
+      hover = true,
+      schedule = "stay",
+      friendship = true,
+      routine = true,
+      age = "adult",
+    },
+    beekeeper_birk = {
+      name_key = "NPC_BEEKEEPER_BIRK",
+      visual = "fairy_birk_npc",
+      fallback = "fairy",
+      voice = { pitch = 1.00, rate = 1.05 },
+      home_area = "hyggebyen",
+      role = "beekeeper",
+      dialogue = "beekeeper_birk",
+      wander = { radius = 3, speed = 0.5 },
+      facing = "SW",
+      hover = true,
+      schedule = "sleep",
+      friendship = true,
+      routine = true,
+      age = "adult",
+      family = "kloevermynte",
+    },
+
+    -- ---- the eight citizens of the towns track (RT20): unused talk-capable bodies of the 36-character roster ----
+    rasmus = {
+      name_key = "NPC_RASMUS",
+      visual = "fox",
+      fallback = "fox",
+      voice = { pitch = 1.0, rate = 1.0 },
+      home_area = "traetoppen",
+      role = "apprentice",
+      dialogue = "rasmus",
+      wander = { radius = 3, speed = 0.5 },
+      facing = "S",
+      schedule = "sleep",
+      friendship = true,
+      routine = true,
+      age = "adult",
+    },
+    lamplighter_kiki = {
+      name_key = "NPC_LAMPLIGHTER_KIKI",
+      visual = "monkey",
+      fallback = "monkey",
+      voice = { pitch = 1.15, rate = 1.1 },
+      home_area = "traetoppen",
+      role = "lamplighter",
+      dialogue = "lamplighter_kiki",
+      wander = { radius = 3, speed = 0.5 },
+      facing = "S",
+      schedule = "sleep",
+      friendship = true,
+      routine = true,
+      age = "adult",
+    },
+    bertil = {
+      name_key = "NPC_BERTIL",
+      visual = "hobbit_pip",
+      fallback = "raccoon",
+      voice = { pitch = 1.0, rate = 1.0 },
+      home_area = "traetoppen",
+      role = "gardener",
+      dialogue = "bertil",
+      wander = { radius = 2, speed = 0.5 },
+      facing = "S",
+      schedule = "sleep",
+      friendship = true,
+      routine = true,
+      age = "adult",
+      family = "boegeknop",
+    },
+    bodil = {
+      name_key = "NPC_BODIL",
+      visual = "hobbit_bodil",
+      fallback = "hobbit_pip",
+      voice = { pitch = 1.1, rate = 1.0 },
+      home_area = "hyggebyen",
+      role = "baker_helper",
+      dialogue = "bodil",
+      wander = { radius = 2, speed = 0.5 },
+      facing = "S",
+      schedule = "sleep",
+      friendship = true,
+      routine = true,
+      age = "adult",
+      family = "boegeknop",
+    },
+    innkeeper_kvak = {
+      name_key = "NPC_INNKEEPER_KVAK",
+      visual = "frog",
+      fallback = "frog",
+      voice = { pitch = 0.9, rate = 0.9 },
+      home_area = "traetoppen",
+      role = "innkeeper",
+      dialogue = "innkeeper_kvak",
+      wander = { radius = 1, speed = 0.3 },
+      facing = "S",
+      schedule = "sleep",
+      friendship = true,
+      routine = true,
+      age = "adult",
+    },
+    cub_bamse = {
+      name_key = "NPC_CUB_BAMSE",
+      visual = "bear",
+      fallback = "bear",
+      scale = 0.72,
+      voice = { pitch = 1.3, rate = 1.1 },
+      home_area = "traetoppen",
+      role = "child",
+      dialogue = "cub_bamse",
+      wander = { radius = 3, speed = 0.5 },
+      facing = "S",
+      schedule = "sleep",
+      friendship = true,
+      routine = true,
+      age = "child",
+      family = "oak",
+    },
+    clerk_fjerpen = {
+      name_key = "NPC_CLERK_FJERPEN",
+      visual = "cat",
+      fallback = "cat",
+      voice = { pitch = 1.0, rate = 1.0 },
+      home_area = "traetoppen",
+      role = "clerk",
+      dialogue = "clerk_fjerpen",
+      wander = { radius = 1, speed = 0.3 },
+      facing = "S",
+      schedule = "sleep",
+      friendship = true,
+      routine = true,
+      age = "adult",
+    },
+    fiddler_strimmel = {
+      name_key = "NPC_FIDDLER_STRIMMEL",
+      visual = "hedgehog",
+      fallback = "hedgehog",
+      voice = { pitch = 1.1, rate = 1.0 },
+      home_area = "traetoppen",
+      role = "musician",
+      dialogue = "fiddler_strimmel",
+      wander = { radius = 2, speed = 0.4 },
+      facing = "S",
+      schedule = "sleep",
+      friendship = true,
+      routine = true,
+      age = "adult",
+    },
+  },
+
+  -- The closed vocabularies of the fields above.  tests/sections/data.gd validates EVERY row against THESE lists (not against copies in
+  -- the test), so a data-only citizen with a new role or age only adds the word here.  `areas` are the zone graph's homes (the maps of
+  -- data/maps, the treetop city of data/traetoppen, the forest hub): tests/sections/cast_data.gd keeps the list equal to the real graph.
+  npc_vocab = {
+    areas = { "farm", "hyggebyen", "traetoppen", "moerkeskoven" },
+    roles = {
+      "mayor", "baker", "shopkeeper", "villager", "king", "child", "smith", "guard", "animal_keeper", "wizard", "builder", "furnisher", "tailor", "elder", "postman",
+      "gardener", "carpenter", "bathkeeper", "appraiser", "mapseller", "beekeeper",
+      "apprentice", "lamplighter", "baker_helper", "innkeeper", "clerk", "musician",
+    },
+    schedules = { "sleep", "patrol", "stay" },
+    ages = { "adult", "child", "elder" },
   },
 }

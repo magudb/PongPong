@@ -10,7 +10,7 @@ BEFORE the first `godot --import`; there is no "import, rewrite, re-import" pass
         [params] compress/mode=2 compress/high_quality=false mipmaps/generate=true process/fix_alpha_border=true
         (S3TC: BPTC does not exist in the Compatibility renderer on macOS). EVERY folder counts, including the
         wardrobe-ready `*_base` folders. NOT portrait.webp (UI, lossless), NOT shadow.png.
-  tile atlases            assets/iso_tiles/<atlas>.png.import
+  tile atlases            assets/iso_tiles/<atlas>.{png,webp}.import
         compress/mode=0 mipmaps/generate=false (periodic atlas cells would bleed into each other at mip >= 1, R.1)
   wardrobe layers         assets/wardrobe/layers/**  - NEVER a stub and NEVER VRAM compressed: tint-ready data must stay
         lossless RGBA8 (S3TC measured 14-19/255 mean error). The audit FAILS when a `.import` there carries a lossy or
@@ -119,7 +119,7 @@ def sheets_of(char_dir: Path) -> list:
 
 def tile_atlases(root: Path) -> list:
     base = root / TILES
-    return sorted(base.glob("*.png")) if base.is_dir() else []
+    return sorted(f for f in base.iterdir() if f.suffix in {".png", ".webp"}) if base.is_dir() else []
 
 
 def has_preset(asset: Path, kind: str) -> bool:

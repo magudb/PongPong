@@ -4,7 +4,7 @@ extends RefCounted
 ## follow the fallback chain until an id has art (res://assets/isometric_characters/<id>/animations.json).
 ##
 ## Who looks like what is DATA (lua/config/characters.lua, package P05): skins -> visual id with fallbacks,
-## species chips, races, farm animals, enemy visuals. Nothing in code names a stand-in character, so when the new art
+## heroes (V1-cast-data) and species chips, races, farm animals, enemy visuals. Nothing in code names a stand-in character, so when the new art
 ## lands (P21 hobbits, squirrel, NPCs, animals; A2 wardrobe bases) no code changes: the first id of the chain
 ## that has a folder simply starts to win.
 ##
@@ -115,7 +115,7 @@ static func resolve(id: String) -> String:
 
 # ---------------------------------------------------------------- races and skins
 
-## Race table row (name_key, perk_key, default_skin) of "animal" | "fairy" | "hobbit".
+## Race table row (name_key, perk_key, default_skin) of "animal" | "fairy" | "hobbit" | "ghost".
 static func race(race_key: String) -> Dictionary:
 	return _dict(_section("races").get(race_key, {}))
 
@@ -124,7 +124,7 @@ static func default_skin(race_key: String) -> String:
 	return str(race(race_key).get("default_skin", ""))
 
 
-## Skin row (race, name_key, visual, fallback, wardrobe_body).
+## Skin row (race, name_key, visual, fallback, wardrobe_body, and `retired` = true for a skin that is kept for old saves but never offered).
 static func skin(skin_id: Variant) -> Dictionary:
 	return _dict(_section("skins").get(str(skin_id), {}))
 
@@ -164,7 +164,8 @@ static func stock_visual_for_skin(skin_id: Variant, race_key: String = "animal")
 	return resolve(next if next != "" else head)
 
 
-## bodies.json hero id of the wardrobe (fox, rabbit, hedgehog, squirrel, hobbit_pip|moss|bramble, fairy, fairy_stardust, fairy_dusk).
+## bodies.json hero id of the wardrobe: the body of a LIVE hero (fox, monkey, fairy, fairy_birk, hobbit_pip, hobbit_bodil, ghost_bu,
+## ghost_hviske); a retired skin points at the live body that dresses it (see lua/config/characters.lua).
 static func wardrobe_body(skin_id: Variant, race_key: String = "animal") -> String:
 	var row := skin(skin_id)
 	if row.is_empty():
@@ -172,9 +173,35 @@ static func wardrobe_body(skin_id: Variant, race_key: String = "animal") -> Stri
 	return str(row.get("wardrobe_body", ""))
 
 
-## The four species chips of the animal card: [{id, name_key, skin}].
+## The species chips of the animal card (Rasmus the fox, Kiki the monkey): [{id, name_key, skin}]. Their name_key is the KIND line of
+## the hero card (HERO_<ID>_KIND), not a SPECIES_* key.
 static func species() -> Array:
 	return _arr(data().get("species", []))
+
+
+# ---------------------------------------------------------------- heroes (Figurer v2: two per race)
+
+## The playable heroes of one race in card order: [{id, race, skin, name_key, kind_key, blurb_key}] (two per race; [] for an unknown race).
+static func heroes(race_key: String) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for row in _arr(data().get("heroes", [])):
+		if row is Dictionary and str((row as Dictionary).get("race", "")) == race_key:
+			out.append(row as Dictionary)
+	return out
+
+
+## The hero row that wears a skin; {} for a retired or an unknown skin (a retired skin is never a hero).
+static func hero_of_skin(skin_id: Variant) -> Dictionary:
+	var wanted := str(skin_id)
+	for row in _arr(data().get("heroes", [])):
+		if row is Dictionary and str((row as Dictionary).get("skin", "")) == wanted:
+			return row as Dictionary
+	return {}
+
+
+## True for a skin that is kept in the data for old saves and tests but never offered (`retired = true`); false for a live or unknown skin.
+static func is_retired(skin_id: Variant) -> bool:
+	return bool(skin(skin_id).get("retired", false))
 
 
 # ---------------------------------------------------------------- farm animals and enemies

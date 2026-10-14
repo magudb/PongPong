@@ -1,0 +1,22 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 9,
+  "elapsed_s": 10.74,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "art_farm": {
+      "checks": 9,
+      "failed": 0,
+      "ms": 8836,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

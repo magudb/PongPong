@@ -1,0 +1,109 @@
+{
+  "character": "ghost_bu",
+  "cell_size": [
+    256,
+    256
+  ],
+  "directions": [
+    "S",
+    "SW",
+    "W",
+    "NW",
+    "N",
+    "NE",
+    "E",
+    "SE"
+  ],
+  "animations": {
+    "idle": {
+      "frames": 4,
+      "fps": 5,
+      "loop": true,
+      "sheet": "idle.webp"
+    },
+    "walk": {
+      "frames": 6,
+      "fps": 9,
+      "loop": true,
+      "sheet": "walk.webp"
+    },
+    "run": {
+      "frames": 6,
+      "fps": 12,
+      "loop": true,
+      "sheet": "run.webp"
+    },
+    "jump": {
+      "frames": 4,
+      "fps": 10,
+      "loop": false,
+      "sheet": "jump.webp"
+    },
+    "fall": {
+      "frames": 3,
+      "fps": 6,
+      "loop": true,
+      "sheet": "fall.webp"
+    },
+    "land": {
+      "frames": 3,
+      "fps": 11,
+      "loop": false,
+      "sheet": "land.webp"
+    },
+    "celebrate": {
+      "frames": 6,
+      "fps": 9,
+      "loop": false,
+      "sheet": "celebrate.webp"
+    },
+    "interact": {
+      "frames": 4,
+      "fps": 9,
+      "loop": false,
+      "sheet": "interact.webp"
+    },
+    "hit": {
+      "frames": 3,
+      "fps": 11,
+      "loop": false,
+      "sheet": "hit.webp"
+    },
+    "sleep": {
+      "frames": 4,
+      "fps": 3,
+      "loop": true,
+      "sheet": "sleep.webp"
+    },
+    "talk": {
+      "frames": 4,
+      "fps": 6,
+      "loop": true,
+      "sheet": "talk.webp"
+    }
+  },
+  "pivot": [
+    128,
+    200
+  ],
+  "source": "Painted imagegen turnaround + offline continuous 2D puppet bake",
+  "orientation": "screen-down = S; clockwise rows S,SW,W,NW,N,NE,E,SE",
+  "family": "ghost",
+  "clip_set": "full",
+  "flyer": false,
+  "portrait": "portrait.webp",
+  "role": "player",
+  "display_scale": 1.0,
+  "illustration": {
+    "source": "tools/art/drawn/sources/cast_extra_b.png",
+    "views": [
+      "front",
+      "front_left",
+      "left",
+      "rear_left",
+      "back"
+    ],
+    "opposite_views": "mirrored",
+    "north_source": "tools/art/drawn/sources/backs_extra.png"
+  }
+}

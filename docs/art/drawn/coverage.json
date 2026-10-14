@@ -1,0 +1,5821 @@
+{
+  "characters": [
+    {
+      "clips": 15,
+      "id": "bat",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs3.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/animals3.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 5,
+      "id": "bat_natteblik",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs_extra.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/cast_extra_a.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 11,
+      "id": "bear",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs2.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/villagers2.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 6,
+      "id": "bear_brumme",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs_extra.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/cast_extra_a.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 6,
+      "id": "bear_guard",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs2.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/villagers1.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 7,
+      "id": "bunny",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs3.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/animals2.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 7,
+      "id": "calf",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs3.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/animals3.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 11,
+      "id": "capybara",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs2.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/pack.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 6,
+      "id": "capybara_sofus",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs_extra.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/cast_extra_b.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 11,
+      "id": "cat",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs2.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/villagers2.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 6,
+      "id": "cat_morfar_mis",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs_revised.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/cast_revised.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 7,
+      "id": "chick",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs3.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/animals1.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 7,
+      "id": "duck",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs3.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/animals1.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 15,
+      "id": "fairy",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs1.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/heroes.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 5,
+      "id": "fairy_baker",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs1.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/fairies1.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 15,
+      "id": "fairy_birk",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs_extra.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/cast_extra_b.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 5,
+      "id": "fairy_birk_npc",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs_extra.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/cast_extra_b.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 5,
+      "id": "fairy_builder",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs2.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/fairies2.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 15,
+      "id": "fairy_dusk",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs1.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/players3.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 5,
+      "id": "fairy_furnisher",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs2.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/fairies2.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 5,
+      "id": "fairy_king",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs1.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/fairies1.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 5,
+      "id": "fairy_lily",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs1.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/players3.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 5,
+      "id": "fairy_mayor",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs1.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/heroes.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 5,
+      "id": "fairy_shopkeeper",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs_revised.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/cast_revised.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 15,
+      "id": "fairy_stardust",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs1.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/players2.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 5,
+      "id": "fairy_tailor",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs2.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/fairies2.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 5,
+      "id": "fairy_wizard",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs1.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/fairies1.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 7,
+      "id": "fawn",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs3.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/animals3.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 11,
+      "id": "fox",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs1.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/heroes.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 7,
+      "id": "fox_cub",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs3.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/animals2.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 11,
+      "id": "frog",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs2.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/pack.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 11,
+      "id": "ghost_bu",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs_extra.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/cast_extra_b.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 11,
+      "id": "ghost_hviske",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs_extra.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/cast_extra_b.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 11,
+      "id": "hedgehog",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs1.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/players2.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 6,
+      "id": "hedgehog_pip",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs_extra.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/cast_extra_a.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 7,
+      "id": "hen",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs3.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/animals1.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 11,
+      "id": "hobbit_bodil",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs_extra.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/cast_extra_b.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 11,
+      "id": "hobbit_bramble",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs1.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/players3.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 11,
+      "id": "hobbit_moss",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs1.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/players3.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 11,
+      "id": "hobbit_pip",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs1.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/heroes.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 7,
+      "id": "kitten",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs3.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/animals1.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 7,
+      "id": "lamb",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs3.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/animals2.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 5,
+      "id": "lysesvamp",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs3.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/creatures.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 11,
+      "id": "monkey",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs2.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/pack.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 6,
+      "id": "mouse_pippin",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs2.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/fairies2.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 7,
+      "id": "owl",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs3.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/animals3.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 6,
+      "id": "owl_fru_ugle",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs_revised.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/cast_revised.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 11,
+      "id": "penguin",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs2.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/pack.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 6,
+      "id": "penguin_postman",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs2.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/villagers2.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 7,
+      "id": "puppy",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs3.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/animals2.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 11,
+      "id": "rabbit",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs1.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/players2.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 6,
+      "id": "rabbit_farmer",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs2.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/villagers1.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 11,
+      "id": "raccoon",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs2.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/villagers2.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 6,
+      "id": "raccoon_smith",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs2.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/villagers1.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 5,
+      "id": "snurresvamp",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs3.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/creatures.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 11,
+      "id": "squirrel",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs1.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/players2.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 5,
+      "id": "tornebusk",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs3.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/creatures.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    },
+    {
+      "clips": 5,
+      "id": "ugleoje",
+      "illustration": {
+        "north_source": "tools/art/drawn/sources/backs3.png",
+        "opposite_views": "mirrored",
+        "source": "tools/art/drawn/sources/creatures.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ]
+      },
+      "missing_sheets": []
+    }
+  ],
+  "failures": [],
+  "items": [
+    {
+      "catalog_path": "res://assets/icons/home/amber.webp",
+      "category": "gem",
+      "id": "amber",
+      "name_key": "ITEM_AMBER",
+      "path": "res://assets/icons/home/amber.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/amethyst.webp",
+      "category": "gem",
+      "id": "amethyst",
+      "name_key": "ITEM_AMETHYST",
+      "path": "res://assets/icons/items/amethyst.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/animal_treats.webp",
+      "category": "animal_care",
+      "id": "animal_treats",
+      "name_key": "ITEM_ANIMAL_TREATS",
+      "path": "res://assets/icons/items/animal_treats.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/apple.webp",
+      "category": "food",
+      "id": "apple",
+      "name_key": "ITEM_APPLE",
+      "path": "res://assets/icons/items/apple.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/axe_wooden.webp",
+      "category": "tool",
+      "id": "axe_wooden",
+      "name_key": "ITEM_AXE_WOODEN",
+      "path": "res://assets/icons/items/axe_wooden.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/baby_bunny.webp",
+      "category": "animal",
+      "id": "baby_bunny",
+      "name_key": "ITEM_BABY_BUNNY",
+      "path": "res://assets/icons/items/baby_bunny.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/baby_calf.webp",
+      "category": "animal",
+      "id": "baby_calf",
+      "name_key": "ITEM_BABY_CALF",
+      "path": "res://assets/icons/items/baby_calf.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/baby_chick.webp",
+      "category": "animal",
+      "id": "baby_chick",
+      "name_key": "ITEM_BABY_CHICK",
+      "path": "res://assets/icons/items/baby_chick.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/baby_duck.webp",
+      "category": "animal",
+      "id": "baby_duck",
+      "name_key": "ITEM_BABY_DUCK",
+      "path": "res://assets/icons/items/baby_duck.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/baby_fawn.webp",
+      "category": "animal",
+      "id": "baby_fawn",
+      "name_key": "ITEM_BABY_FAWN",
+      "path": "res://assets/icons/items/baby_fawn.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/baby_fox.webp",
+      "category": "animal",
+      "id": "baby_fox",
+      "name_key": "ITEM_BABY_FOX",
+      "path": "res://assets/icons/items/baby_fox.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/baby_kitten.webp",
+      "category": "animal",
+      "id": "baby_kitten",
+      "name_key": "ITEM_BABY_KITTEN",
+      "path": "res://assets/icons/items/baby_kitten.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/baby_lamb.webp",
+      "category": "animal",
+      "id": "baby_lamb",
+      "name_key": "ITEM_BABY_LAMB",
+      "path": "res://assets/icons/items/baby_lamb.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/baby_owl.webp",
+      "category": "animal",
+      "id": "baby_owl",
+      "name_key": "ITEM_BABY_OWL",
+      "path": "res://assets/icons/items/baby_owl.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/baby_puppy.webp",
+      "category": "animal",
+      "id": "baby_puppy",
+      "name_key": "ITEM_BABY_PUPPY",
+      "path": "res://assets/icons/items/baby_puppy.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/barn_kit.webp",
+      "category": "building",
+      "id": "barn_kit",
+      "name_key": "ITEM_BARN_KIT",
+      "path": "res://assets/icons/items/barn_kit.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/bed_birch_single.webp",
+      "category": "furniture",
+      "id": "bed_birch_single",
+      "name_key": "ITEM_BED_BIRCH_SINGLE",
+      "path": "res://assets/icons/home/bed_birch_single.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/bed_cherry.webp",
+      "category": "furniture",
+      "id": "bed_cherry",
+      "name_key": "ITEM_BED_CHERRY",
+      "path": "res://assets/icons/home/bed_cherry.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/bed_moon.webp",
+      "category": "furniture",
+      "id": "bed_moon",
+      "name_key": "ITEM_BED_MOON",
+      "path": "res://assets/icons/home/bed_moon_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/bed_oak_single.webp",
+      "category": "furniture",
+      "id": "bed_oak_single",
+      "name_key": "ITEM_BED_OAK_SINGLE",
+      "path": "res://assets/icons/home/bed_oak_single.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/bed_pine.webp",
+      "category": "furniture",
+      "id": "bed_pine",
+      "name_key": "ITEM_BED_PINE",
+      "path": "res://assets/icons/home/bed_pine.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/bed_rose_single.webp",
+      "category": "furniture",
+      "id": "bed_rose_single",
+      "name_key": "ITEM_BED_ROSE_SINGLE",
+      "path": "res://assets/icons/home/bed_rose_single.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/bed_sky_double.webp",
+      "category": "furniture",
+      "id": "bed_sky_double",
+      "name_key": "ITEM_BED_SKY_DOUBLE",
+      "path": "res://assets/icons/home/bed_sky_double.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/bed_toadstool.webp",
+      "category": "furniture",
+      "id": "bed_toadstool",
+      "name_key": "ITEM_BED_TOADSTOOL",
+      "path": "res://assets/icons/home/bed_toadstool.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/bed_walnut.webp",
+      "category": "furniture",
+      "id": "bed_walnut",
+      "name_key": "ITEM_BED_WALNUT",
+      "path": "res://assets/icons/home/bed_walnut.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/blueprint_kongelig.webp",
+      "category": "blueprint",
+      "id": "blueprint_kongelig",
+      "name_key": "ITEM_BLUEPRINT_KONGELIG",
+      "path": "res://assets/icons/home/blueprint_kongelig.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/blueprint_mestermurer.webp",
+      "category": "blueprint",
+      "id": "blueprint_mestermurer",
+      "name_key": "ITEM_BLUEPRINT_MESTERMURER",
+      "path": "res://assets/icons/home/blueprint_mestermurer.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/blueprint_solstuen.webp",
+      "category": "blueprint",
+      "id": "blueprint_solstuen",
+      "name_key": "ITEM_BLUEPRINT_SOLSTUEN",
+      "path": "res://assets/icons/home/blueprint_solstuen.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/blueprint_troldmanden.webp",
+      "category": "blueprint",
+      "id": "blueprint_troldmanden",
+      "name_key": "ITEM_BLUEPRINT_TROLDMANDEN",
+      "path": "res://assets/icons/home/blueprint_troldmanden.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/bookshelf_birch.webp",
+      "category": "furniture",
+      "id": "bookshelf_birch",
+      "name_key": "ITEM_BOOKSHELF_BIRCH",
+      "path": "res://assets/icons/home/bookshelf_birch.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/bookshelf_book_tree.webp",
+      "category": "furniture",
+      "id": "bookshelf_book_tree",
+      "name_key": "ITEM_BOOKSHELF_BOOK_TREE",
+      "path": "res://assets/icons/home/bookshelf_book_tree.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/bookshelf_ebony.webp",
+      "category": "furniture",
+      "id": "bookshelf_ebony",
+      "name_key": "ITEM_BOOKSHELF_EBONY",
+      "path": "res://assets/icons/home/bookshelf_ebony.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/bookshelf_floating.webp",
+      "category": "furniture",
+      "id": "bookshelf_floating",
+      "name_key": "ITEM_BOOKSHELF_FLOATING",
+      "path": "res://assets/icons/home/bookshelf_floating_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/bookshelf_lavender_narrow.webp",
+      "category": "furniture",
+      "id": "bookshelf_lavender_narrow",
+      "name_key": "ITEM_BOOKSHELF_LAVENDER_NARROW",
+      "path": "res://assets/icons/home/bookshelf_lavender_narrow.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/bookshelf_mint.webp",
+      "category": "furniture",
+      "id": "bookshelf_mint",
+      "name_key": "ITEM_BOOKSHELF_MINT",
+      "path": "res://assets/icons/home/bookshelf_mint.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/bookshelf_oak_narrow.webp",
+      "category": "furniture",
+      "id": "bookshelf_oak_narrow",
+      "name_key": "ITEM_BOOKSHELF_OAK_NARROW",
+      "path": "res://assets/icons/home/bookshelf_oak_narrow.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/bookshelf_pine.webp",
+      "category": "furniture",
+      "id": "bookshelf_pine",
+      "name_key": "ITEM_BOOKSHELF_PINE",
+      "path": "res://assets/icons/home/bookshelf_pine.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/bracelet_copper.webp",
+      "category": "clothing",
+      "id": "bracelet_copper",
+      "name_key": "ITEM_BRACELET_COPPER",
+      "path": "res://assets/icons/wardrobe/bracelet_copper.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/bracelet_rose_gold.webp",
+      "category": "clothing",
+      "id": "bracelet_rose_gold",
+      "name_key": "ITEM_BRACELET_ROSE_GOLD",
+      "path": "res://assets/icons/wardrobe/bracelet_rose_gold.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/bracelet_silver.webp",
+      "category": "clothing",
+      "id": "bracelet_silver",
+      "name_key": "ITEM_BRACELET_SILVER",
+      "path": "res://assets/icons/wardrobe/bracelet_silver.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/bracelet_string.webp",
+      "category": "clothing",
+      "id": "bracelet_string",
+      "name_key": "ITEM_BRACELET_STRING",
+      "path": "res://assets/icons/wardrobe/bracelet_string.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/bracelet_vine.webp",
+      "category": "clothing",
+      "id": "bracelet_vine",
+      "name_key": "ITEM_BRACELET_VINE",
+      "path": "res://assets/icons/wardrobe/bracelet_vine.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/brass_bar.webp",
+      "category": "building_material",
+      "id": "brass_bar",
+      "name_key": "ITEM_BRASS_BAR",
+      "path": "res://assets/icons/home/brass_bar.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/brick.webp",
+      "category": "building_material",
+      "id": "brick",
+      "name_key": "ITEM_BRICK",
+      "path": "res://assets/icons/home/brick.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/brush.webp",
+      "category": "tool",
+      "id": "brush",
+      "name_key": "ITEM_BRUSH",
+      "path": "res://assets/icons/items/brush.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/candelabra_brass.webp",
+      "category": "furniture",
+      "id": "candelabra_brass",
+      "name_key": "ITEM_CANDELABRA_BRASS",
+      "path": "res://assets/icons/home/candelabra_brass.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/candelabra_copper.webp",
+      "category": "furniture",
+      "id": "candelabra_copper",
+      "name_key": "ITEM_CANDELABRA_COPPER",
+      "path": "res://assets/icons/home/candelabra_copper.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/candelabra_iron.webp",
+      "category": "furniture",
+      "id": "candelabra_iron",
+      "name_key": "ITEM_CANDELABRA_IRON",
+      "path": "res://assets/icons/home/candelabra_iron.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/carrot.webp",
+      "category": "crop",
+      "id": "carrot",
+      "name_key": "ITEM_CARROT",
+      "path": "res://assets/icons/items/carrot.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/carrot_seeds.webp",
+      "category": "seed",
+      "id": "carrot_seeds",
+      "name_key": "ITEM_CARROT_SEEDS",
+      "path": "res://assets/icons/items/carrot_seeds.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/catnip.webp",
+      "category": "crop",
+      "id": "catnip",
+      "name_key": "ITEM_CATNIP",
+      "path": "res://assets/icons/items/catnip.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/catnip_seeds.webp",
+      "category": "seed",
+      "id": "catnip_seeds",
+      "name_key": "ITEM_CATNIP_SEEDS",
+      "path": "res://assets/icons/items/catnip_seeds.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chair_birch.webp",
+      "category": "furniture",
+      "id": "chair_birch",
+      "name_key": "ITEM_CHAIR_BIRCH",
+      "path": "res://assets/icons/home/chair_birch.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chair_ebony.webp",
+      "category": "furniture",
+      "id": "chair_ebony",
+      "name_key": "ITEM_CHAIR_EBONY",
+      "path": "res://assets/icons/home/chair_ebony.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chair_honey.webp",
+      "category": "furniture",
+      "id": "chair_honey",
+      "name_key": "ITEM_CHAIR_HONEY",
+      "path": "res://assets/icons/home/chair_honey.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chair_lavender.webp",
+      "category": "furniture",
+      "id": "chair_lavender",
+      "name_key": "ITEM_CHAIR_LAVENDER",
+      "path": "res://assets/icons/home/chair_lavender.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chair_mossy.webp",
+      "category": "furniture",
+      "id": "chair_mossy",
+      "name_key": "ITEM_CHAIR_MOSSY",
+      "path": "res://assets/icons/home/chair_mossy.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chair_oak.webp",
+      "category": "furniture",
+      "id": "chair_oak",
+      "name_key": "ITEM_CHAIR_OAK",
+      "path": "res://assets/icons/home/chair_oak.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chair_pine.webp",
+      "category": "furniture",
+      "id": "chair_pine",
+      "name_key": "ITEM_CHAIR_PINE",
+      "path": "res://assets/icons/home/chair_pine.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chair_stump.webp",
+      "category": "furniture",
+      "id": "chair_stump",
+      "name_key": "ITEM_CHAIR_STUMP",
+      "path": "res://assets/icons/home/chair_stump.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chandelier_copper.webp",
+      "category": "furniture",
+      "id": "chandelier_copper",
+      "name_key": "ITEM_CHANDELIER_COPPER",
+      "path": "res://assets/icons/home/chandelier_copper.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chandelier_gold.webp",
+      "category": "furniture",
+      "id": "chandelier_gold",
+      "name_key": "ITEM_CHANDELIER_GOLD",
+      "path": "res://assets/icons/home/chandelier_gold.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chandelier_iron.webp",
+      "category": "furniture",
+      "id": "chandelier_iron",
+      "name_key": "ITEM_CHANDELIER_IRON",
+      "path": "res://assets/icons/home/chandelier_iron.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chandelier_lantern_flower.webp",
+      "category": "furniture",
+      "id": "chandelier_lantern_flower",
+      "name_key": "ITEM_CHANDELIER_LANTERN_FLOWER",
+      "path": "res://assets/icons/home/chandelier_lantern_flower.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chandelier_star.webp",
+      "category": "furniture",
+      "id": "chandelier_star",
+      "name_key": "ITEM_CHANDELIER_STAR",
+      "path": "res://assets/icons/home/chandelier_star_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chest_birch.webp",
+      "category": "furniture",
+      "id": "chest_birch",
+      "name_key": "ITEM_CHEST_BIRCH",
+      "path": "res://assets/icons/home/chest_birch.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chest_oak.webp",
+      "category": "furniture",
+      "id": "chest_oak",
+      "name_key": "ITEM_CHEST_OAK",
+      "path": "res://assets/icons/home/chest_oak.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chest_pine.webp",
+      "category": "furniture",
+      "id": "chest_pine",
+      "name_key": "ITEM_CHEST_PINE",
+      "path": "res://assets/icons/home/chest_pine.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chest_rose.webp",
+      "category": "furniture",
+      "id": "chest_rose",
+      "name_key": "ITEM_CHEST_ROSE",
+      "path": "res://assets/icons/home/chest_rose.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chest_rune.webp",
+      "category": "furniture",
+      "id": "chest_rune",
+      "name_key": "ITEM_CHEST_RUNE",
+      "path": "res://assets/icons/home/chest_rune_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chest_sky.webp",
+      "category": "furniture",
+      "id": "chest_sky",
+      "name_key": "ITEM_CHEST_SKY",
+      "path": "res://assets/icons/home/chest_sky.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chest_snail.webp",
+      "category": "furniture",
+      "id": "chest_snail",
+      "name_key": "ITEM_CHEST_SNAIL",
+      "path": "res://assets/icons/home/chest_snail.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/chest_walnut.webp",
+      "category": "furniture",
+      "id": "chest_walnut",
+      "name_key": "ITEM_CHEST_WALNUT",
+      "path": "res://assets/icons/home/chest_walnut.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/chicken_feed.webp",
+      "category": "animal_care",
+      "id": "chicken_feed",
+      "name_key": "ITEM_CHICKEN_FEED",
+      "path": "res://assets/icons/items/chicken_feed.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/circlet_daisy.webp",
+      "category": "clothing",
+      "id": "circlet_daisy",
+      "name_key": "ITEM_CIRCLET_DAISY",
+      "path": "res://assets/icons/wardrobe/circlet_daisy.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/circlet_leaves.webp",
+      "category": "clothing",
+      "id": "circlet_leaves",
+      "name_key": "ITEM_CIRCLET_LEAVES",
+      "path": "res://assets/icons/wardrobe/circlet_leaves.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/circlet_moon_crown.webp",
+      "category": "clothing",
+      "id": "circlet_moon_crown",
+      "name_key": "ITEM_CIRCLET_MOON_CROWN",
+      "path": "res://assets/icons/wardrobe/circlet_moon_crown_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/circlet_tiara_silver.webp",
+      "category": "clothing",
+      "id": "circlet_tiara_silver",
+      "name_key": "ITEM_CIRCLET_TIARA_SILVER",
+      "path": "res://assets/icons/wardrobe/circlet_tiara_silver.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/clock_moon.webp",
+      "category": "furniture",
+      "id": "clock_moon",
+      "name_key": "ITEM_CLOCK_MOON",
+      "path": "res://assets/icons/home/clock_moon_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/clock_owl.webp",
+      "category": "furniture",
+      "id": "clock_owl",
+      "name_key": "ITEM_CLOCK_OWL",
+      "path": "res://assets/icons/home/clock_owl.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/clock_pine.webp",
+      "category": "furniture",
+      "id": "clock_pine",
+      "name_key": "ITEM_CLOCK_PINE",
+      "path": "res://assets/icons/home/clock_pine.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/clock_sky.webp",
+      "category": "furniture",
+      "id": "clock_sky",
+      "name_key": "ITEM_CLOCK_SKY",
+      "path": "res://assets/icons/home/clock_sky.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/clock_walnut.webp",
+      "category": "furniture",
+      "id": "clock_walnut",
+      "name_key": "ITEM_CLOCK_WALNUT",
+      "path": "res://assets/icons/home/clock_walnut.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/cookie.webp",
+      "category": "food",
+      "id": "cookie",
+      "name_key": "ITEM_COOKIE",
+      "path": "res://assets/icons/items/cookie.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/coop_kit.webp",
+      "category": "building",
+      "id": "coop_kit",
+      "name_key": "ITEM_COOP_KIT",
+      "path": "res://assets/icons/items/coop_kit.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/copper_ore.webp",
+      "category": "mineral",
+      "id": "copper_ore",
+      "name_key": "ITEM_COPPER_ORE",
+      "path": "res://assets/icons/items/copper_ore.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/copper_plate.webp",
+      "category": "building_material",
+      "id": "copper_plate",
+      "name_key": "ITEM_COPPER_PLATE",
+      "path": "res://assets/icons/home/copper_plate.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/crystal_shard.webp",
+      "category": "gem",
+      "id": "crystal_shard",
+      "name_key": "ITEM_CRYSTAL_SHARD",
+      "path": "res://assets/icons/items/crystal_shard.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/curtain_blue.webp",
+      "category": "furniture",
+      "id": "curtain_blue",
+      "name_key": "ITEM_CURTAIN_BLUE",
+      "path": "res://assets/icons/home/curtain_blue.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/curtain_green.webp",
+      "category": "furniture",
+      "id": "curtain_green",
+      "name_key": "ITEM_CURTAIN_GREEN",
+      "path": "res://assets/icons/home/curtain_green.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/curtain_natural.webp",
+      "category": "furniture",
+      "id": "curtain_natural",
+      "name_key": "ITEM_CURTAIN_NATURAL",
+      "path": "res://assets/icons/home/curtain_natural.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/curtain_red.webp",
+      "category": "furniture",
+      "id": "curtain_red",
+      "name_key": "ITEM_CURTAIN_RED",
+      "path": "res://assets/icons/home/curtain_red.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/dress_gown_aurora.webp",
+      "category": "clothing",
+      "id": "dress_gown_aurora",
+      "name_key": "ITEM_DRESS_GOWN_AURORA",
+      "path": "res://assets/icons/wardrobe/dress_gown_aurora_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/dress_gown_lavender.webp",
+      "category": "clothing",
+      "id": "dress_gown_lavender",
+      "name_key": "ITEM_DRESS_GOWN_LAVENDER",
+      "path": "res://assets/icons/wardrobe/dress_gown_lavender.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/dress_gown_mint.webp",
+      "category": "clothing",
+      "id": "dress_gown_mint",
+      "name_key": "ITEM_DRESS_GOWN_MINT",
+      "path": "res://assets/icons/wardrobe/dress_gown_mint.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/dress_gown_rose.webp",
+      "category": "clothing",
+      "id": "dress_gown_rose",
+      "name_key": "ITEM_DRESS_GOWN_ROSE",
+      "path": "res://assets/icons/wardrobe/dress_gown_rose.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/dress_pinafore_baker.webp",
+      "category": "clothing",
+      "id": "dress_pinafore_baker",
+      "name_key": "ITEM_DRESS_PINAFORE_BAKER",
+      "path": "res://assets/icons/wardrobe/dress_pinafore_baker.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/dress_pinafore_blue.webp",
+      "category": "clothing",
+      "id": "dress_pinafore_blue",
+      "name_key": "ITEM_DRESS_PINAFORE_BLUE",
+      "path": "res://assets/icons/wardrobe/dress_pinafore_blue.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/dress_pinafore_brown.webp",
+      "category": "clothing",
+      "id": "dress_pinafore_brown",
+      "name_key": "ITEM_DRESS_PINAFORE_BROWN",
+      "path": "res://assets/icons/wardrobe/dress_pinafore_brown.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/dress_pinafore_honey.webp",
+      "category": "clothing",
+      "id": "dress_pinafore_honey",
+      "name_key": "ITEM_DRESS_PINAFORE_HONEY",
+      "path": "res://assets/icons/wardrobe/dress_pinafore_honey.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/dress_sun_cream.webp",
+      "category": "clothing",
+      "id": "dress_sun_cream",
+      "name_key": "ITEM_DRESS_SUN_CREAM",
+      "path": "res://assets/icons/wardrobe/dress_sun_cream.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/dress_sun_gold.webp",
+      "category": "clothing",
+      "id": "dress_sun_gold",
+      "name_key": "ITEM_DRESS_SUN_GOLD",
+      "path": "res://assets/icons/wardrobe/dress_sun_gold.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/dress_sun_green.webp",
+      "category": "clothing",
+      "id": "dress_sun_green",
+      "name_key": "ITEM_DRESS_SUN_GREEN",
+      "path": "res://assets/icons/wardrobe/dress_sun_green.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/dress_sun_meadow.webp",
+      "category": "clothing",
+      "id": "dress_sun_meadow",
+      "name_key": "ITEM_DRESS_SUN_MEADOW",
+      "path": "res://assets/icons/wardrobe/dress_sun_meadow.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/dress_sun_rose.webp",
+      "category": "clothing",
+      "id": "dress_sun_rose",
+      "name_key": "ITEM_DRESS_SUN_ROSE",
+      "path": "res://assets/icons/wardrobe/dress_sun_rose.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/dress_sun_sky.webp",
+      "category": "clothing",
+      "id": "dress_sun_sky",
+      "name_key": "ITEM_DRESS_SUN_SKY",
+      "path": "res://assets/icons/wardrobe/dress_sun_sky.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/duck_egg.webp",
+      "category": "product",
+      "id": "duck_egg",
+      "name_key": "ITEM_DUCK_EGG",
+      "path": "res://assets/icons/items/duck_egg.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/earrings_copper.webp",
+      "category": "clothing",
+      "id": "earrings_copper",
+      "name_key": "ITEM_EARRINGS_COPPER",
+      "path": "res://assets/icons/wardrobe/earrings_copper.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/earrings_glowcap.webp",
+      "category": "clothing",
+      "id": "earrings_glowcap",
+      "name_key": "ITEM_EARRINGS_GLOWCAP",
+      "path": "res://assets/icons/wardrobe/earrings_glowcap.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/earrings_hoops_gold.webp",
+      "category": "clothing",
+      "id": "earrings_hoops_gold",
+      "name_key": "ITEM_EARRINGS_HOOPS_GOLD",
+      "path": "res://assets/icons/wardrobe/earrings_hoops_gold.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/earrings_pearl.webp",
+      "category": "clothing",
+      "id": "earrings_pearl",
+      "name_key": "ITEM_EARRINGS_PEARL",
+      "path": "res://assets/icons/wardrobe/earrings_pearl.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/egg.webp",
+      "category": "product",
+      "id": "egg",
+      "name_key": "ITEM_EGG",
+      "path": "res://assets/icons/items/egg.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/emerald.webp",
+      "category": "gem",
+      "id": "emerald",
+      "name_key": "ITEM_EMERALD",
+      "path": "res://assets/icons/items/emerald.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/fabric_damask.webp",
+      "category": "building_material",
+      "id": "fabric_damask",
+      "name_key": "ITEM_FABRIC_DAMASK",
+      "path": "res://assets/icons/home/fabric_damask.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/fabric_plain.webp",
+      "category": "building_material",
+      "id": "fabric_plain",
+      "name_key": "ITEM_FABRIC_PLAIN",
+      "path": "res://assets/icons/home/fabric_plain.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/fabric_velvet.webp",
+      "category": "building_material",
+      "id": "fabric_velvet",
+      "name_key": "ITEM_FABRIC_VELVET",
+      "path": "res://assets/icons/home/fabric_velvet.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/fabric_wool.webp",
+      "category": "building_material",
+      "id": "fabric_wool",
+      "name_key": "ITEM_FABRIC_WOOL",
+      "path": "res://assets/icons/home/fabric_wool.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/fairy_dust.webp",
+      "category": "magic",
+      "id": "fairy_dust",
+      "name_key": "ITEM_FAIRY_DUST",
+      "path": "res://assets/icons/items/fairy_dust.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/fairy_dust_water.webp",
+      "category": "farm",
+      "id": "fairy_dust_water",
+      "name_key": "ITEM_FAIRY_DUST_WATER",
+      "path": "res://assets/icons/items/fairy_dust_water.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/fence.webp",
+      "category": "placeable",
+      "id": "fence",
+      "name_key": "ITEM_FENCE",
+      "path": "res://assets/icons/items/fence.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/fern.webp",
+      "category": "forage",
+      "id": "fern",
+      "name_key": "ITEM_FERN",
+      "path": "res://assets/icons/items/fern.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/fertilizer.webp",
+      "category": "farm",
+      "id": "fertilizer",
+      "name_key": "ITEM_FERTILIZER",
+      "path": "res://assets/icons/items/fertilizer.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/fireplace_cauldron.webp",
+      "category": "furniture",
+      "id": "fireplace_cauldron",
+      "name_key": "ITEM_FIREPLACE_CAULDRON",
+      "path": "res://assets/icons/home/fireplace_cauldron.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/fireplace_chalk.webp",
+      "category": "furniture",
+      "id": "fireplace_chalk",
+      "name_key": "ITEM_FIREPLACE_CHALK",
+      "path": "res://assets/icons/home/fireplace_chalk.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/fireplace_granite.webp",
+      "category": "furniture",
+      "id": "fireplace_granite",
+      "name_key": "ITEM_FIREPLACE_GRANITE",
+      "path": "res://assets/icons/home/fireplace_granite.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/fireplace_marble.webp",
+      "category": "furniture",
+      "id": "fireplace_marble",
+      "name_key": "ITEM_FIREPLACE_MARBLE",
+      "path": "res://assets/icons/home/fireplace_marble.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/fireplace_moon.webp",
+      "category": "furniture",
+      "id": "fireplace_moon",
+      "name_key": "ITEM_FIREPLACE_MOON",
+      "path": "res://assets/icons/home/fireplace_moon_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/fireplace_slate.webp",
+      "category": "furniture",
+      "id": "fireplace_slate",
+      "name_key": "ITEM_FIREPLACE_SLATE",
+      "path": "res://assets/icons/home/fireplace_slate.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/fishing_rod.webp",
+      "category": "tool",
+      "id": "fishing_rod",
+      "name_key": "ITEM_FISHING_ROD",
+      "path": "res://assets/icons/items/fishing_rod.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/floor_lamp_birch.webp",
+      "category": "furniture",
+      "id": "floor_lamp_birch",
+      "name_key": "ITEM_FLOOR_LAMP_BIRCH",
+      "path": "res://assets/icons/home/floor_lamp_birch.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/floor_lamp_brass.webp",
+      "category": "furniture",
+      "id": "floor_lamp_brass",
+      "name_key": "ITEM_FLOOR_LAMP_BRASS",
+      "path": "res://assets/icons/home/floor_lamp_brass.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/floor_lamp_fairy.webp",
+      "category": "furniture",
+      "id": "floor_lamp_fairy",
+      "name_key": "ITEM_FLOOR_LAMP_FAIRY",
+      "path": "res://assets/icons/home/floor_lamp_fairy_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/floor_lamp_glowshroom.webp",
+      "category": "furniture",
+      "id": "floor_lamp_glowshroom",
+      "name_key": "ITEM_FLOOR_LAMP_GLOWSHROOM",
+      "path": "res://assets/icons/home/floor_lamp_glowshroom.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/floor_lamp_honey.webp",
+      "category": "furniture",
+      "id": "floor_lamp_honey",
+      "name_key": "ITEM_FLOOR_LAMP_HONEY",
+      "path": "res://assets/icons/home/floor_lamp_honey.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/floor_lamp_iron.webp",
+      "category": "furniture",
+      "id": "floor_lamp_iron",
+      "name_key": "ITEM_FLOOR_LAMP_IRON",
+      "path": "res://assets/icons/home/floor_lamp_iron.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/flour.webp",
+      "category": "food",
+      "id": "flour",
+      "name_key": "ITEM_FLOUR",
+      "path": "res://assets/icons/items/flour.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/flower_necklace.webp",
+      "category": "quest",
+      "id": "flower_necklace",
+      "name_key": "ITEM_FLOWER_NECKLACE",
+      "path": "res://assets/icons/items/flower_necklace.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/friendship_token.webp",
+      "category": "special",
+      "id": "friendship_token",
+      "name_key": "ITEM_FRIENDSHIP_TOKEN",
+      "path": "res://assets/icons/items/friendship_token.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/gem_bag.webp",
+      "category": "gem",
+      "id": "gem_bag",
+      "name_key": "ITEM_GEM_BAG",
+      "path": "res://assets/icons/items/gem_bag.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/glass_pane.webp",
+      "category": "building_material",
+      "id": "glass_pane",
+      "name_key": "ITEM_GLASS_PANE",
+      "path": "res://assets/icons/home/glass_pane.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/glow_berry.webp",
+      "category": "crop",
+      "id": "glow_berry",
+      "name_key": "ITEM_GLOW_BERRY",
+      "path": "res://assets/icons/items/glow_berry.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/glow_berry_seeds.webp",
+      "category": "seed",
+      "id": "glow_berry_seeds",
+      "name_key": "ITEM_GLOW_BERRY_SEEDS",
+      "path": "res://assets/icons/items/glow_berry_seeds.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/glow_mushroom.webp",
+      "category": "forage",
+      "id": "glow_mushroom",
+      "name_key": "ITEM_GLOW_MUSHROOM",
+      "path": "res://assets/icons/items/glow_mushroom.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/gold_leaf.webp",
+      "category": "building_material",
+      "id": "gold_leaf",
+      "name_key": "ITEM_GOLD_LEAF",
+      "path": "res://assets/icons/home/gold_leaf.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/gold_ore.webp",
+      "category": "mineral",
+      "id": "gold_ore",
+      "name_key": "ITEM_GOLD_ORE",
+      "path": "res://assets/icons/items/gold_ore.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/hat_acorn_gold.webp",
+      "category": "clothing",
+      "id": "hat_acorn_gold",
+      "name_key": "ITEM_HAT_ACORN_GOLD",
+      "path": "res://assets/icons/wardrobe/hat_acorn_gold.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/hat_acorn_plain.webp",
+      "category": "clothing",
+      "id": "hat_acorn_plain",
+      "name_key": "ITEM_HAT_ACORN_PLAIN",
+      "path": "res://assets/icons/wardrobe/hat_acorn_plain.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/hat_cap_blue.webp",
+      "category": "clothing",
+      "id": "hat_cap_blue",
+      "name_key": "ITEM_HAT_CAP_BLUE",
+      "path": "res://assets/icons/wardrobe/hat_cap_blue.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/hat_cap_brown.webp",
+      "category": "clothing",
+      "id": "hat_cap_brown",
+      "name_key": "ITEM_HAT_CAP_BROWN",
+      "path": "res://assets/icons/wardrobe/hat_cap_brown.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/hat_cap_green.webp",
+      "category": "clothing",
+      "id": "hat_cap_green",
+      "name_key": "ITEM_HAT_CAP_GREEN",
+      "path": "res://assets/icons/wardrobe/hat_cap_green.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/hat_cat_ears.webp",
+      "category": "clothing",
+      "id": "hat_cat_ears",
+      "name_key": "ITEM_HAT_CAT_EARS",
+      "path": "res://assets/icons/wardrobe/hat_cat_ears.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/hat_chef_white.webp",
+      "category": "clothing",
+      "id": "hat_chef_white",
+      "name_key": "ITEM_HAT_CHEF_WHITE",
+      "path": "res://assets/icons/wardrobe/hat_chef_white.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/hat_hood_green.webp",
+      "category": "clothing",
+      "id": "hat_hood_green",
+      "name_key": "ITEM_HAT_HOOD_GREEN",
+      "path": "res://assets/icons/wardrobe/hat_hood_green.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/hat_mushroom_glow.webp",
+      "category": "clothing",
+      "id": "hat_mushroom_glow",
+      "name_key": "ITEM_HAT_MUSHROOM_GLOW",
+      "path": "res://assets/icons/wardrobe/hat_mushroom_glow.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/hat_mushroom_red.webp",
+      "category": "clothing",
+      "id": "hat_mushroom_red",
+      "name_key": "ITEM_HAT_MUSHROOM_RED",
+      "path": "res://assets/icons/wardrobe/hat_mushroom_red.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/hat_mushroom_spinner.webp",
+      "category": "clothing",
+      "id": "hat_mushroom_spinner",
+      "name_key": "ITEM_HAT_MUSHROOM_SPINNER",
+      "path": "res://assets/icons/wardrobe/hat_mushroom_spinner_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/hat_straw_green.webp",
+      "category": "clothing",
+      "id": "hat_straw_green",
+      "name_key": "ITEM_HAT_STRAW_GREEN",
+      "path": "res://assets/icons/wardrobe/hat_straw_green.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/hat_straw_harvest.webp",
+      "category": "clothing",
+      "id": "hat_straw_harvest",
+      "name_key": "ITEM_HAT_STRAW_HARVEST",
+      "path": "res://assets/icons/wardrobe/hat_straw_harvest.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/hat_straw_plain.webp",
+      "category": "clothing",
+      "id": "hat_straw_plain",
+      "name_key": "ITEM_HAT_STRAW_PLAIN",
+      "path": "res://assets/icons/wardrobe/hat_straw_plain.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/hat_straw_ribbon.webp",
+      "category": "clothing",
+      "id": "hat_straw_ribbon",
+      "name_key": "ITEM_HAT_STRAW_RIBBON",
+      "path": "res://assets/icons/wardrobe/hat_straw_ribbon.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/hat_wizard_lavender.webp",
+      "category": "clothing",
+      "id": "hat_wizard_lavender",
+      "name_key": "ITEM_HAT_WIZARD_LAVENDER",
+      "path": "res://assets/icons/wardrobe/hat_wizard_lavender.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/hat_wizard_night.webp",
+      "category": "clothing",
+      "id": "hat_wizard_night",
+      "name_key": "ITEM_HAT_WIZARD_NIGHT",
+      "path": "res://assets/icons/wardrobe/hat_wizard_night_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/hat_wizard_zephyr.webp",
+      "category": "clothing",
+      "id": "hat_wizard_zephyr",
+      "name_key": "ITEM_HAT_WIZARD_ZEPHYR",
+      "path": "res://assets/icons/wardrobe/hat_wizard_zephyr.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/health_tonic.webp",
+      "category": "consumable",
+      "id": "health_tonic",
+      "name_key": "ITEM_HEALTH_TONIC",
+      "path": "res://assets/icons/items/health_tonic.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/hoe_iron.webp",
+      "category": "tool",
+      "id": "hoe_iron",
+      "name_key": "ITEM_HOE_IRON",
+      "path": "res://assets/icons/items/hoe_iron.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/hoe_wooden.webp",
+      "category": "tool",
+      "id": "hoe_wooden",
+      "name_key": "ITEM_HOE_WOODEN",
+      "path": "res://assets/icons/items/hoe_wooden.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/honey.webp",
+      "category": "food",
+      "id": "honey",
+      "name_key": "ITEM_HONEY",
+      "path": "res://assets/icons/items/honey.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/honey_cake.webp",
+      "category": "food",
+      "id": "honey_cake",
+      "name_key": "ITEM_HONEY_CAKE",
+      "path": "res://assets/icons/items/honey_cake.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/iron_ingot.webp",
+      "category": "material",
+      "id": "iron_ingot",
+      "name_key": "ITEM_IRON_INGOT",
+      "path": "res://assets/icons/items/iron_ingot.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/iron_ore.webp",
+      "category": "mineral",
+      "id": "iron_ore",
+      "name_key": "ITEM_IRON_ORE",
+      "path": "res://assets/icons/items/iron_ore.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/iron_sword.webp",
+      "category": "weapon",
+      "id": "iron_sword",
+      "name_key": "ITEM_IRON_SWORD",
+      "path": "res://assets/icons/items/iron_sword.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/lantern_oil.webp",
+      "category": "consumable",
+      "id": "lantern_oil",
+      "name_key": "ITEM_LANTERN_OIL",
+      "path": "res://assets/icons/items/lantern_oil.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/lantern_post.webp",
+      "category": "placeable",
+      "id": "lantern_post",
+      "name_key": "ITEM_LANTERN_POST",
+      "path": "res://assets/icons/items/lantern_post.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/lime.webp",
+      "category": "building_material",
+      "id": "lime",
+      "name_key": "ITEM_LIME",
+      "path": "res://assets/icons/home/lime.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/lucky_clover.webp",
+      "category": "forage",
+      "id": "lucky_clover",
+      "name_key": "ITEM_LUCKY_CLOVER",
+      "path": "res://assets/icons/items/lucky_clover.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/lucky_fur.webp",
+      "category": "product",
+      "id": "lucky_fur",
+      "name_key": "ITEM_LUCKY_FUR",
+      "path": "res://assets/icons/items/lucky_fur.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/magic_herb.webp",
+      "category": "product",
+      "id": "magic_herb",
+      "name_key": "ITEM_MAGIC_HERB",
+      "path": "res://assets/icons/items/magic_herb.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/magic_scroll.webp",
+      "category": "magic",
+      "id": "magic_scroll",
+      "name_key": "ITEM_MAGIC_SCROLL",
+      "path": "res://assets/icons/items/magic_scroll.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/mana_potion.webp",
+      "category": "consumable",
+      "id": "mana_potion",
+      "name_key": "ITEM_MANA_POTION",
+      "path": "res://assets/icons/items/mana_potion.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/marble_block.webp",
+      "category": "building_material",
+      "id": "marble_block",
+      "name_key": "ITEM_MARBLE_BLOCK",
+      "path": "res://assets/icons/home/marble_block.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/milk.webp",
+      "category": "product",
+      "id": "milk",
+      "name_key": "ITEM_MILK",
+      "path": "res://assets/icons/items/milk.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/milk_paint.webp",
+      "category": "building_material",
+      "id": "milk_paint",
+      "name_key": "ITEM_MILK_PAINT",
+      "path": "res://assets/icons/home/milk_paint.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/milking_pail.webp",
+      "category": "tool",
+      "id": "milking_pail",
+      "name_key": "ITEM_MILKING_PAIL",
+      "path": "res://assets/icons/items/milking_pail.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/moonflower.webp",
+      "category": "crop",
+      "id": "moonflower",
+      "name_key": "ITEM_MOONFLOWER",
+      "path": "res://assets/icons/items/moonflower.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/moonflower_seeds.webp",
+      "category": "seed",
+      "id": "moonflower_seeds",
+      "name_key": "ITEM_MOONFLOWER_SEEDS",
+      "path": "res://assets/icons/items/moonflower_seeds.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/moonstone.webp",
+      "category": "gem",
+      "id": "moonstone",
+      "name_key": "ITEM_MOONSTONE",
+      "path": "res://assets/icons/items/moonstone.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/moss.webp",
+      "category": "forage",
+      "id": "moss",
+      "name_key": "ITEM_MOSS",
+      "path": "res://assets/icons/items/moss.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/mushroom_lantern.webp",
+      "category": "placeable",
+      "id": "mushroom_lantern",
+      "name_key": "ITEM_MUSHROOM_LANTERN",
+      "path": "res://assets/icons/items/mushroom_lantern.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/nails.webp",
+      "category": "building_material",
+      "id": "nails",
+      "name_key": "ITEM_NAILS",
+      "path": "res://assets/icons/home/nails.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/necklace_acorn.webp",
+      "category": "clothing",
+      "id": "necklace_acorn",
+      "name_key": "ITEM_NECKLACE_ACORN",
+      "path": "res://assets/icons/wardrobe/necklace_acorn.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/necklace_beads_wood.webp",
+      "category": "clothing",
+      "id": "necklace_beads_wood",
+      "name_key": "ITEM_NECKLACE_BEADS_WOOD",
+      "path": "res://assets/icons/wardrobe/necklace_beads_wood.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/necklace_dewdrop.webp",
+      "category": "clothing",
+      "id": "necklace_dewdrop",
+      "name_key": "ITEM_NECKLACE_DEWDROP",
+      "path": "res://assets/icons/wardrobe/necklace_dewdrop.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/necklace_heart_of_tree.webp",
+      "category": "clothing",
+      "id": "necklace_heart_of_tree",
+      "name_key": "ITEM_NECKLACE_HEART_OF_TREE",
+      "path": "res://assets/icons/wardrobe/necklace_heart_of_tree_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/necklace_leaf.webp",
+      "category": "clothing",
+      "id": "necklace_leaf",
+      "name_key": "ITEM_NECKLACE_LEAF",
+      "path": "res://assets/icons/wardrobe/necklace_leaf.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/necklace_moonstone.webp",
+      "category": "clothing",
+      "id": "necklace_moonstone",
+      "name_key": "ITEM_NECKLACE_MOONSTONE",
+      "path": "res://assets/icons/wardrobe/necklace_moonstone.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/necklace_moonstone_small.webp",
+      "category": "clothing",
+      "id": "necklace_moonstone_small",
+      "name_key": "ITEM_NECKLACE_MOONSTONE_SMALL",
+      "path": "res://assets/icons/wardrobe/necklace_moonstone_small.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/night_bloom.webp",
+      "category": "forage",
+      "id": "night_bloom",
+      "name_key": "ITEM_NIGHT_BLOOM",
+      "path": "res://assets/icons/items/night_bloom.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/painting_gold_wide.webp",
+      "category": "furniture",
+      "id": "painting_gold_wide",
+      "name_key": "ITEM_PAINTING_GOLD_WIDE",
+      "path": "res://assets/icons/home/painting_gold_wide.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/painting_porthole.webp",
+      "category": "furniture",
+      "id": "painting_porthole",
+      "name_key": "ITEM_PAINTING_PORTHOLE",
+      "path": "res://assets/icons/home/painting_porthole.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/painting_rose_wide.webp",
+      "category": "furniture",
+      "id": "painting_rose_wide",
+      "name_key": "ITEM_PAINTING_ROSE_WIDE",
+      "path": "res://assets/icons/home/painting_rose_wide.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/painting_sky_small.webp",
+      "category": "furniture",
+      "id": "painting_sky_small",
+      "name_key": "ITEM_PAINTING_SKY_SMALL",
+      "path": "res://assets/icons/home/painting_sky_small.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/painting_small_birch.webp",
+      "category": "furniture",
+      "id": "painting_small_birch",
+      "name_key": "ITEM_PAINTING_SMALL_BIRCH",
+      "path": "res://assets/icons/home/painting_small_birch.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/painting_small_pine.webp",
+      "category": "furniture",
+      "id": "painting_small_pine",
+      "name_key": "ITEM_PAINTING_SMALL_PINE",
+      "path": "res://assets/icons/home/painting_small_pine.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/painting_wide_pine.webp",
+      "category": "furniture",
+      "id": "painting_wide_pine",
+      "name_key": "ITEM_PAINTING_WIDE_PINE",
+      "path": "res://assets/icons/home/painting_wide_pine.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/pants_breeches_tweed.webp",
+      "category": "clothing",
+      "id": "pants_breeches_tweed",
+      "name_key": "ITEM_PANTS_BREECHES_TWEED",
+      "path": "res://assets/icons/wardrobe/pants_breeches_tweed.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/pants_dungarees_blue.webp",
+      "category": "clothing",
+      "id": "pants_dungarees_blue",
+      "name_key": "ITEM_PANTS_DUNGAREES_BLUE",
+      "path": "res://assets/icons/wardrobe/pants_dungarees_blue.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/pants_dungarees_brown.webp",
+      "category": "clothing",
+      "id": "pants_dungarees_brown",
+      "name_key": "ITEM_PANTS_DUNGAREES_BROWN",
+      "path": "res://assets/icons/wardrobe/pants_dungarees_brown.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/pants_dungarees_gold.webp",
+      "category": "clothing",
+      "id": "pants_dungarees_gold",
+      "name_key": "ITEM_PANTS_DUNGAREES_GOLD",
+      "path": "res://assets/icons/wardrobe/pants_dungarees_gold.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/pants_dungarees_patchwork.webp",
+      "category": "clothing",
+      "id": "pants_dungarees_patchwork",
+      "name_key": "ITEM_PANTS_DUNGAREES_PATCHWORK",
+      "path": "res://assets/icons/wardrobe/pants_dungarees_patchwork.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/pants_shorts_blue.webp",
+      "category": "clothing",
+      "id": "pants_shorts_blue",
+      "name_key": "ITEM_PANTS_SHORTS_BLUE",
+      "path": "res://assets/icons/wardrobe/pants_shorts_blue.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/pants_shorts_khaki.webp",
+      "category": "clothing",
+      "id": "pants_shorts_khaki",
+      "name_key": "ITEM_PANTS_SHORTS_KHAKI",
+      "path": "res://assets/icons/wardrobe/pants_shorts_khaki.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/pants_trousers_brown.webp",
+      "category": "clothing",
+      "id": "pants_trousers_brown",
+      "name_key": "ITEM_PANTS_TROUSERS_BROWN",
+      "path": "res://assets/icons/wardrobe/pants_trousers_brown.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/pants_trousers_cream.webp",
+      "category": "clothing",
+      "id": "pants_trousers_cream",
+      "name_key": "ITEM_PANTS_TROUSERS_CREAM",
+      "path": "res://assets/icons/wardrobe/pants_trousers_cream.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/pants_trousers_green.webp",
+      "category": "clothing",
+      "id": "pants_trousers_green",
+      "name_key": "ITEM_PANTS_TROUSERS_GREEN",
+      "path": "res://assets/icons/wardrobe/pants_trousers_green.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/pants_trousers_lavender.webp",
+      "category": "clothing",
+      "id": "pants_trousers_lavender",
+      "name_key": "ITEM_PANTS_TROUSERS_LAVENDER",
+      "path": "res://assets/icons/wardrobe/pants_trousers_lavender.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/pants_trousers_moss.webp",
+      "category": "clothing",
+      "id": "pants_trousers_moss",
+      "name_key": "ITEM_PANTS_TROUSERS_MOSS",
+      "path": "res://assets/icons/wardrobe/pants_trousers_moss.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/pants_trousers_starlight.webp",
+      "category": "clothing",
+      "id": "pants_trousers_starlight",
+      "name_key": "ITEM_PANTS_TROUSERS_STARLIGHT",
+      "path": "res://assets/icons/wardrobe/pants_trousers_starlight_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/pants_trousers_stripe.webp",
+      "category": "clothing",
+      "id": "pants_trousers_stripe",
+      "name_key": "ITEM_PANTS_TROUSERS_STRIPE",
+      "path": "res://assets/icons/wardrobe/pants_trousers_stripe.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/piano_pine.webp",
+      "category": "furniture",
+      "id": "piano_pine",
+      "name_key": "ITEM_PIANO_PINE",
+      "path": "res://assets/icons/home/piano_pine.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/piano_sky.webp",
+      "category": "furniture",
+      "id": "piano_sky",
+      "name_key": "ITEM_PIANO_SKY",
+      "path": "res://assets/icons/home/piano_sky.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/piano_star.webp",
+      "category": "furniture",
+      "id": "piano_star",
+      "name_key": "ITEM_PIANO_STAR",
+      "path": "res://assets/icons/home/piano_star_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/piano_toadstool.webp",
+      "category": "furniture",
+      "id": "piano_toadstool",
+      "name_key": "ITEM_PIANO_TOADSTOOL",
+      "path": "res://assets/icons/home/piano_toadstool.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/piano_walnut.webp",
+      "category": "furniture",
+      "id": "piano_walnut",
+      "name_key": "ITEM_PIANO_WALNUT",
+      "path": "res://assets/icons/home/piano_walnut.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/pickaxe_copper.webp",
+      "category": "tool",
+      "id": "pickaxe_copper",
+      "name_key": "ITEM_PICKAXE_COPPER",
+      "path": "res://assets/icons/items/pickaxe_copper.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/pickaxe_iron.webp",
+      "category": "tool",
+      "id": "pickaxe_iron",
+      "name_key": "ITEM_PICKAXE_IRON",
+      "path": "res://assets/icons/items/pickaxe_iron.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/pickaxe_wooden.webp",
+      "category": "tool",
+      "id": "pickaxe_wooden",
+      "name_key": "ITEM_PICKAXE_WOODEN",
+      "path": "res://assets/icons/items/pickaxe_wooden.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/plank_birch.webp",
+      "category": "building_material",
+      "id": "plank_birch",
+      "name_key": "ITEM_PLANK_BIRCH",
+      "path": "res://assets/icons/home/plank_birch.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/plank_cherry.webp",
+      "category": "building_material",
+      "id": "plank_cherry",
+      "name_key": "ITEM_PLANK_CHERRY",
+      "path": "res://assets/icons/home/plank_cherry.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/plank_ebony.webp",
+      "category": "building_material",
+      "id": "plank_ebony",
+      "name_key": "ITEM_PLANK_EBONY",
+      "path": "res://assets/icons/home/plank_ebony.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/plank_oak.webp",
+      "category": "building_material",
+      "id": "plank_oak",
+      "name_key": "ITEM_PLANK_OAK",
+      "path": "res://assets/icons/home/plank_oak.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/plank_pine.webp",
+      "category": "building_material",
+      "id": "plank_pine",
+      "name_key": "ITEM_PLANK_PINE",
+      "path": "res://assets/icons/home/plank_pine.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/plank_walnut.webp",
+      "category": "building_material",
+      "id": "plank_walnut",
+      "name_key": "ITEM_PLANK_WALNUT",
+      "path": "res://assets/icons/home/plank_walnut.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/plant_fern.webp",
+      "category": "furniture",
+      "id": "plant_fern",
+      "name_key": "ITEM_PLANT_FERN",
+      "path": "res://assets/icons/home/plant_fern.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/plant_flowering.webp",
+      "category": "furniture",
+      "id": "plant_flowering",
+      "name_key": "ITEM_PLANT_FLOWERING",
+      "path": "res://assets/icons/home/plant_flowering.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/plant_rose_pot.webp",
+      "category": "furniture",
+      "id": "plant_rose_pot",
+      "name_key": "ITEM_PLANT_ROSE_POT",
+      "path": "res://assets/icons/home/plant_rose_pot.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/plant_teapot_bonsai.webp",
+      "category": "furniture",
+      "id": "plant_teapot_bonsai",
+      "name_key": "ITEM_PLANT_TEAPOT_BONSAI",
+      "path": "res://assets/icons/home/plant_teapot_bonsai.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/pumpkin.webp",
+      "category": "crop",
+      "id": "pumpkin",
+      "name_key": "ITEM_PUMPKIN",
+      "path": "res://assets/icons/items/pumpkin.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/pumpkin_seeds.webp",
+      "category": "seed",
+      "id": "pumpkin_seeds",
+      "name_key": "ITEM_PUMPKIN_SEEDS",
+      "path": "res://assets/icons/items/pumpkin_seeds.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/rare_mushroom.webp",
+      "category": "forage",
+      "id": "rare_mushroom",
+      "name_key": "ITEM_RARE_MUSHROOM",
+      "path": "res://assets/icons/items/rare_mushroom.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/roof_tile.webp",
+      "category": "building_material",
+      "id": "roof_tile",
+      "name_key": "ITEM_ROOF_TILE",
+      "path": "res://assets/icons/home/roof_tile.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/rope.webp",
+      "category": "building_material",
+      "id": "rope",
+      "name_key": "ITEM_ROPE",
+      "path": "res://assets/icons/home/rope.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/rose_quartz.webp",
+      "category": "gem",
+      "id": "rose_quartz",
+      "name_key": "ITEM_ROSE_QUARTZ",
+      "path": "res://assets/icons/home/rose_quartz.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/rug_burgundy.webp",
+      "category": "furniture",
+      "id": "rug_burgundy",
+      "name_key": "ITEM_RUG_BURGUNDY",
+      "path": "res://assets/icons/home/rug_burgundy.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/rug_flower_petal.webp",
+      "category": "furniture",
+      "id": "rug_flower_petal",
+      "name_key": "ITEM_RUG_FLOWER_PETAL",
+      "path": "res://assets/icons/home/rug_flower_petal.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/rug_gold_round.webp",
+      "category": "furniture",
+      "id": "rug_gold_round",
+      "name_key": "ITEM_RUG_GOLD_ROUND",
+      "path": "res://assets/icons/home/rug_gold_round.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/rug_magic_circle.webp",
+      "category": "furniture",
+      "id": "rug_magic_circle",
+      "name_key": "ITEM_RUG_MAGIC_CIRCLE",
+      "path": "res://assets/icons/home/rug_magic_circle_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/rug_natural.webp",
+      "category": "furniture",
+      "id": "rug_natural",
+      "name_key": "ITEM_RUG_NATURAL",
+      "path": "res://assets/icons/home/rug_natural.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/rug_round_red.webp",
+      "category": "furniture",
+      "id": "rug_round_red",
+      "name_key": "ITEM_RUG_ROUND_RED",
+      "path": "res://assets/icons/home/rug_round_red.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/rug_round_rose.webp",
+      "category": "furniture",
+      "id": "rug_round_rose",
+      "name_key": "ITEM_RUG_ROUND_ROSE",
+      "path": "res://assets/icons/home/rug_round_rose.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/rug_runner_green.webp",
+      "category": "furniture",
+      "id": "rug_runner_green",
+      "name_key": "ITEM_RUG_RUNNER_GREEN",
+      "path": "res://assets/icons/home/rug_runner_green.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/rug_runner_natural.webp",
+      "category": "furniture",
+      "id": "rug_runner_natural",
+      "name_key": "ITEM_RUG_RUNNER_NATURAL",
+      "path": "res://assets/icons/home/rug_runner_natural.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/rug_striped_blue.webp",
+      "category": "furniture",
+      "id": "rug_striped_blue",
+      "name_key": "ITEM_RUG_STRIPED_BLUE",
+      "path": "res://assets/icons/home/rug_striped_blue.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/scarecrow.webp",
+      "category": "placeable",
+      "id": "scarecrow",
+      "name_key": "ITEM_SCARECROW",
+      "path": "res://assets/icons/items/scarecrow.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/sconce_copper.webp",
+      "category": "furniture",
+      "id": "sconce_copper",
+      "name_key": "ITEM_SCONCE_COPPER",
+      "path": "res://assets/icons/home/sconce_copper.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/sconce_iron.webp",
+      "category": "furniture",
+      "id": "sconce_iron",
+      "name_key": "ITEM_SCONCE_IRON",
+      "path": "res://assets/icons/home/sconce_iron.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/scythe.webp",
+      "category": "tool",
+      "id": "scythe",
+      "name_key": "ITEM_SCYTHE",
+      "path": "res://assets/icons/items/scythe.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/shelf_birch.webp",
+      "category": "furniture",
+      "id": "shelf_birch",
+      "name_key": "ITEM_SHELF_BIRCH",
+      "path": "res://assets/icons/home/shelf_birch.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/shelf_birdhouse.webp",
+      "category": "furniture",
+      "id": "shelf_birdhouse",
+      "name_key": "ITEM_SHELF_BIRDHOUSE",
+      "path": "res://assets/icons/home/shelf_birdhouse.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/shelf_mint.webp",
+      "category": "furniture",
+      "id": "shelf_mint",
+      "name_key": "ITEM_SHELF_MINT",
+      "path": "res://assets/icons/home/shelf_mint.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/shelf_oak.webp",
+      "category": "furniture",
+      "id": "shelf_oak",
+      "name_key": "ITEM_SHELF_OAK",
+      "path": "res://assets/icons/home/shelf_oak.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/shelf_pine.webp",
+      "category": "furniture",
+      "id": "shelf_pine",
+      "name_key": "ITEM_SHELF_PINE",
+      "path": "res://assets/icons/home/shelf_pine.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/shelf_walnut.webp",
+      "category": "furniture",
+      "id": "shelf_walnut",
+      "name_key": "ITEM_SHELF_WALNUT",
+      "path": "res://assets/icons/home/shelf_walnut.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shirt_knit_blue.webp",
+      "category": "clothing",
+      "id": "shirt_knit_blue",
+      "name_key": "ITEM_SHIRT_KNIT_BLUE",
+      "path": "res://assets/icons/wardrobe/shirt_knit_blue.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shirt_knit_cream.webp",
+      "category": "clothing",
+      "id": "shirt_knit_cream",
+      "name_key": "ITEM_SHIRT_KNIT_CREAM",
+      "path": "res://assets/icons/wardrobe/shirt_knit_cream.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shirt_knit_dawn.webp",
+      "category": "clothing",
+      "id": "shirt_knit_dawn",
+      "name_key": "ITEM_SHIRT_KNIT_DAWN",
+      "path": "res://assets/icons/wardrobe/shirt_knit_dawn_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shirt_knit_lavender.webp",
+      "category": "clothing",
+      "id": "shirt_knit_lavender",
+      "name_key": "ITEM_SHIRT_KNIT_LAVENDER",
+      "path": "res://assets/icons/wardrobe/shirt_knit_lavender.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shirt_knit_thornberry.webp",
+      "category": "clothing",
+      "id": "shirt_knit_thornberry",
+      "name_key": "ITEM_SHIRT_KNIT_THORNBERRY",
+      "path": "res://assets/icons/wardrobe/shirt_knit_thornberry.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shirt_linen_blue.webp",
+      "category": "clothing",
+      "id": "shirt_linen_blue",
+      "name_key": "ITEM_SHIRT_LINEN_BLUE",
+      "path": "res://assets/icons/wardrobe/shirt_linen_blue.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shirt_linen_cream.webp",
+      "category": "clothing",
+      "id": "shirt_linen_cream",
+      "name_key": "ITEM_SHIRT_LINEN_CREAM",
+      "path": "res://assets/icons/wardrobe/shirt_linen_cream.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shirt_linen_firefly.webp",
+      "category": "clothing",
+      "id": "shirt_linen_firefly",
+      "name_key": "ITEM_SHIRT_LINEN_FIREFLY",
+      "path": "res://assets/icons/wardrobe/shirt_linen_firefly.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shirt_linen_green.webp",
+      "category": "clothing",
+      "id": "shirt_linen_green",
+      "name_key": "ITEM_SHIRT_LINEN_GREEN",
+      "path": "res://assets/icons/wardrobe/shirt_linen_green.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shirt_linen_harvest.webp",
+      "category": "clothing",
+      "id": "shirt_linen_harvest",
+      "name_key": "ITEM_SHIRT_LINEN_HARVEST",
+      "path": "res://assets/icons/wardrobe/shirt_linen_harvest.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shirt_linen_rose.webp",
+      "category": "clothing",
+      "id": "shirt_linen_rose",
+      "name_key": "ITEM_SHIRT_LINEN_ROSE",
+      "path": "res://assets/icons/wardrobe/shirt_linen_rose.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shirt_smock_brown.webp",
+      "category": "clothing",
+      "id": "shirt_smock_brown",
+      "name_key": "ITEM_SHIRT_SMOCK_BROWN",
+      "path": "res://assets/icons/wardrobe/shirt_smock_brown.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shirt_smock_honey.webp",
+      "category": "clothing",
+      "id": "shirt_smock_honey",
+      "name_key": "ITEM_SHIRT_SMOCK_HONEY",
+      "path": "res://assets/icons/wardrobe/shirt_smock_honey.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shirt_vest_embroidered.webp",
+      "category": "clothing",
+      "id": "shirt_vest_embroidered",
+      "name_key": "ITEM_SHIRT_VEST_EMBROIDERED",
+      "path": "res://assets/icons/wardrobe/shirt_vest_embroidered.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shirt_vest_green.webp",
+      "category": "clothing",
+      "id": "shirt_vest_green",
+      "name_key": "ITEM_SHIRT_VEST_GREEN",
+      "path": "res://assets/icons/wardrobe/shirt_vest_green.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shoes_boots_brown.webp",
+      "category": "clothing",
+      "id": "shoes_boots_brown",
+      "name_key": "ITEM_SHOES_BOOTS_BROWN",
+      "path": "res://assets/icons/wardrobe/shoes_boots_brown.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shoes_boots_dark.webp",
+      "category": "clothing",
+      "id": "shoes_boots_dark",
+      "name_key": "ITEM_SHOES_BOOTS_DARK",
+      "path": "res://assets/icons/wardrobe/shoes_boots_dark.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shoes_boots_green.webp",
+      "category": "clothing",
+      "id": "shoes_boots_green",
+      "name_key": "ITEM_SHOES_BOOTS_GREEN",
+      "path": "res://assets/icons/wardrobe/shoes_boots_green.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shoes_boots_laced.webp",
+      "category": "clothing",
+      "id": "shoes_boots_laced",
+      "name_key": "ITEM_SHOES_BOOTS_LACED",
+      "path": "res://assets/icons/wardrobe/shoes_boots_laced.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shoes_boots_star.webp",
+      "category": "clothing",
+      "id": "shoes_boots_star",
+      "name_key": "ITEM_SHOES_BOOTS_STAR",
+      "path": "res://assets/icons/wardrobe/shoes_boots_star.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shoes_boots_wind.webp",
+      "category": "clothing",
+      "id": "shoes_boots_wind",
+      "name_key": "ITEM_SHOES_BOOTS_WIND",
+      "path": "res://assets/icons/wardrobe/shoes_boots_wind_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shoes_clogs_gilded.webp",
+      "category": "clothing",
+      "id": "shoes_clogs_gilded",
+      "name_key": "ITEM_SHOES_CLOGS_GILDED",
+      "path": "res://assets/icons/wardrobe/shoes_clogs_gilded.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shoes_clogs_painted.webp",
+      "category": "clothing",
+      "id": "shoes_clogs_painted",
+      "name_key": "ITEM_SHOES_CLOGS_PAINTED",
+      "path": "res://assets/icons/wardrobe/shoes_clogs_painted.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shoes_clogs_wood.webp",
+      "category": "clothing",
+      "id": "shoes_clogs_wood",
+      "name_key": "ITEM_SHOES_CLOGS_WOOD",
+      "path": "res://assets/icons/wardrobe/shoes_clogs_wood.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shoes_slippers_cream.webp",
+      "category": "clothing",
+      "id": "shoes_slippers_cream",
+      "name_key": "ITEM_SHOES_SLIPPERS_CREAM",
+      "path": "res://assets/icons/wardrobe/shoes_slippers_cream.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shoes_slippers_lavender.webp",
+      "category": "clothing",
+      "id": "shoes_slippers_lavender",
+      "name_key": "ITEM_SHOES_SLIPPERS_LAVENDER",
+      "path": "res://assets/icons/wardrobe/shoes_slippers_lavender.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shoes_slippers_pompom.webp",
+      "category": "clothing",
+      "id": "shoes_slippers_pompom",
+      "name_key": "ITEM_SHOES_SLIPPERS_POMPOM",
+      "path": "res://assets/icons/wardrobe/shoes_slippers_pompom.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shoes_slippers_silk.webp",
+      "category": "clothing",
+      "id": "shoes_slippers_silk",
+      "name_key": "ITEM_SHOES_SLIPPERS_SILK",
+      "path": "res://assets/icons/wardrobe/shoes_slippers_silk.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shoes_wellies_blue.webp",
+      "category": "clothing",
+      "id": "shoes_wellies_blue",
+      "name_key": "ITEM_SHOES_WELLIES_BLUE",
+      "path": "res://assets/icons/wardrobe/shoes_wellies_blue.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/wardrobe/shoes_wellies_yellow.webp",
+      "category": "clothing",
+      "id": "shoes_wellies_yellow",
+      "name_key": "ITEM_SHOES_WELLIES_YELLOW",
+      "path": "res://assets/icons/wardrobe/shoes_wellies_yellow.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/slate.webp",
+      "category": "building_material",
+      "id": "slate",
+      "name_key": "ITEM_SLATE",
+      "path": "res://assets/icons/home/slate.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/sofa_birch_two.webp",
+      "category": "furniture",
+      "id": "sofa_birch_two",
+      "name_key": "ITEM_SOFA_BIRCH_TWO",
+      "path": "res://assets/icons/home/sofa_birch_two.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/sofa_cherry_three.webp",
+      "category": "furniture",
+      "id": "sofa_cherry_three",
+      "name_key": "ITEM_SOFA_CHERRY_THREE",
+      "path": "res://assets/icons/home/sofa_cherry_three.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/sofa_cloud.webp",
+      "category": "furniture",
+      "id": "sofa_cloud",
+      "name_key": "ITEM_SOFA_CLOUD",
+      "path": "res://assets/icons/home/sofa_cloud_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/sofa_leaf.webp",
+      "category": "furniture",
+      "id": "sofa_leaf",
+      "name_key": "ITEM_SOFA_LEAF",
+      "path": "res://assets/icons/home/sofa_leaf.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/sofa_moss_three.webp",
+      "category": "furniture",
+      "id": "sofa_moss_three",
+      "name_key": "ITEM_SOFA_MOSS_THREE",
+      "path": "res://assets/icons/home/sofa_moss_three.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/sofa_oak_three.webp",
+      "category": "furniture",
+      "id": "sofa_oak_three",
+      "name_key": "ITEM_SOFA_OAK_THREE",
+      "path": "res://assets/icons/home/sofa_oak_three.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/sofa_pine_two.webp",
+      "category": "furniture",
+      "id": "sofa_pine_two",
+      "name_key": "ITEM_SOFA_PINE_TWO",
+      "path": "res://assets/icons/home/sofa_pine_two.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/sofa_sky_two.webp",
+      "category": "furniture",
+      "id": "sofa_sky_two",
+      "name_key": "ITEM_SOFA_SKY_TWO",
+      "path": "res://assets/icons/home/sofa_sky_two.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/sofa_walnut_two.webp",
+      "category": "furniture",
+      "id": "sofa_walnut_two",
+      "name_key": "ITEM_SOFA_WALNUT_TWO",
+      "path": "res://assets/icons/home/sofa_walnut_two.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/stone.webp",
+      "category": "resource",
+      "id": "stone",
+      "name_key": "ITEM_STONE",
+      "path": "res://assets/icons/items/stone.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/stone_block.webp",
+      "category": "building_material",
+      "id": "stone_block",
+      "name_key": "ITEM_STONE_BLOCK",
+      "path": "res://assets/icons/home/stone_block.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/straw_bundle.webp",
+      "category": "building_material",
+      "id": "straw_bundle",
+      "name_key": "ITEM_STRAW_BUNDLE",
+      "path": "res://assets/icons/home/straw_bundle.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/strawberry.webp",
+      "category": "crop",
+      "id": "strawberry",
+      "name_key": "ITEM_STRAWBERRY",
+      "path": "res://assets/icons/items/strawberry.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/strawberry_seeds.webp",
+      "category": "seed",
+      "id": "strawberry_seeds",
+      "name_key": "ITEM_STRAWBERRY_SEEDS",
+      "path": "res://assets/icons/items/strawberry_seeds.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/sunflower.webp",
+      "category": "crop",
+      "id": "sunflower",
+      "name_key": "ITEM_SUNFLOWER",
+      "path": "res://assets/icons/items/sunflower.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/sunflower_seeds.webp",
+      "category": "seed",
+      "id": "sunflower_seeds",
+      "name_key": "ITEM_SUNFLOWER_SEEDS",
+      "path": "res://assets/icons/items/sunflower_seeds.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/sword_rusty.webp",
+      "category": "weapon",
+      "id": "sword_rusty",
+      "name_key": "ITEM_SWORD_RUSTY",
+      "path": "res://assets/icons/items/sword_rusty.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/table_dining_chalk.webp",
+      "category": "furniture",
+      "id": "table_dining_chalk",
+      "name_key": "ITEM_TABLE_DINING_CHALK",
+      "path": "res://assets/icons/home/table_dining_chalk.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/table_dining_oak.webp",
+      "category": "furniture",
+      "id": "table_dining_oak",
+      "name_key": "ITEM_TABLE_DINING_OAK",
+      "path": "res://assets/icons/home/table_dining_oak.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/table_lamp_brass.webp",
+      "category": "furniture",
+      "id": "table_lamp_brass",
+      "name_key": "ITEM_TABLE_LAMP_BRASS",
+      "path": "res://assets/icons/home/table_lamp_brass.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/table_lamp_clay.webp",
+      "category": "furniture",
+      "id": "table_lamp_clay",
+      "name_key": "ITEM_TABLE_LAMP_CLAY",
+      "path": "res://assets/icons/home/table_lamp_clay.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/table_lamp_sky.webp",
+      "category": "furniture",
+      "id": "table_lamp_sky",
+      "name_key": "ITEM_TABLE_LAMP_SKY",
+      "path": "res://assets/icons/home/table_lamp_sky.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/table_long_pine.webp",
+      "category": "furniture",
+      "id": "table_long_pine",
+      "name_key": "ITEM_TABLE_LONG_PINE",
+      "path": "res://assets/icons/home/table_long_pine.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/table_long_walnut.webp",
+      "category": "furniture",
+      "id": "table_long_walnut",
+      "name_key": "ITEM_TABLE_LONG_WALNUT",
+      "path": "res://assets/icons/home/table_long_walnut.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/table_round_cherry.webp",
+      "category": "furniture",
+      "id": "table_round_cherry",
+      "name_key": "ITEM_TABLE_ROUND_CHERRY",
+      "path": "res://assets/icons/home/table_round_cherry.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/table_round_mint.webp",
+      "category": "furniture",
+      "id": "table_round_mint",
+      "name_key": "ITEM_TABLE_ROUND_MINT",
+      "path": "res://assets/icons/home/table_round_mint.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/table_round_pine.webp",
+      "category": "furniture",
+      "id": "table_round_pine",
+      "name_key": "ITEM_TABLE_ROUND_PINE",
+      "path": "res://assets/icons/home/table_round_pine.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/table_stump.webp",
+      "category": "furniture",
+      "id": "table_stump",
+      "name_key": "ITEM_TABLE_STUMP",
+      "path": "res://assets/icons/home/table_stump.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/throne_crystal.webp",
+      "category": "furniture",
+      "id": "throne_crystal",
+      "name_key": "ITEM_THRONE_CRYSTAL",
+      "path": "res://assets/icons/home/throne_crystal_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/throne_honey.webp",
+      "category": "furniture",
+      "id": "throne_honey",
+      "name_key": "ITEM_THRONE_HONEY",
+      "path": "res://assets/icons/home/throne_honey.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/throne_king.webp",
+      "category": "furniture",
+      "id": "throne_king",
+      "name_key": "ITEM_THRONE_KING",
+      "path": "res://assets/icons/home/throne_king.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/throne_pine.webp",
+      "category": "furniture",
+      "id": "throne_pine",
+      "name_key": "ITEM_THRONE_PINE",
+      "path": "res://assets/icons/home/throne_pine.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/throne_root.webp",
+      "category": "furniture",
+      "id": "throne_root",
+      "name_key": "ITEM_THRONE_ROOT",
+      "path": "res://assets/icons/home/throne_root.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/timber_beam.webp",
+      "category": "building_material",
+      "id": "timber_beam",
+      "name_key": "ITEM_TIMBER_BEAM",
+      "path": "res://assets/icons/home/timber_beam.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/turnip.webp",
+      "category": "crop",
+      "id": "turnip",
+      "name_key": "ITEM_TURNIP",
+      "path": "res://assets/icons/items/turnip.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/turnip_seeds.webp",
+      "category": "seed",
+      "id": "turnip_seeds",
+      "name_key": "ITEM_TURNIP_SEEDS",
+      "path": "res://assets/icons/items/turnip_seeds.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/varnish.webp",
+      "category": "building_material",
+      "id": "varnish",
+      "name_key": "ITEM_VARNISH",
+      "path": "res://assets/icons/home/varnish.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/vase_clay.webp",
+      "category": "furniture",
+      "id": "vase_clay",
+      "name_key": "ITEM_VASE_CLAY",
+      "path": "res://assets/icons/home/vase_clay.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/vase_rose.webp",
+      "category": "furniture",
+      "id": "vase_rose",
+      "name_key": "ITEM_VASE_ROSE",
+      "path": "res://assets/icons/home/vase_rose.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/wardrobe_birch_narrow.webp",
+      "category": "furniture",
+      "id": "wardrobe_birch_narrow",
+      "name_key": "ITEM_WARDROBE_BIRCH_NARROW",
+      "path": "res://assets/icons/home/wardrobe_birch_narrow.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/wardrobe_hollow_log.webp",
+      "category": "furniture",
+      "id": "wardrobe_hollow_log",
+      "name_key": "ITEM_WARDROBE_HOLLOW_LOG",
+      "path": "res://assets/icons/home/wardrobe_hollow_log.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/wardrobe_oak.webp",
+      "category": "furniture",
+      "id": "wardrobe_oak",
+      "name_key": "ITEM_WARDROBE_OAK",
+      "path": "res://assets/icons/home/wardrobe_oak.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/wardrobe_pine.webp",
+      "category": "furniture",
+      "id": "wardrobe_pine",
+      "name_key": "ITEM_WARDROBE_PINE",
+      "path": "res://assets/icons/home/wardrobe_pine.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/wardrobe_rose.webp",
+      "category": "furniture",
+      "id": "wardrobe_rose",
+      "name_key": "ITEM_WARDROBE_ROSE",
+      "path": "res://assets/icons/home/wardrobe_rose.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/wardrobe_sky_narrow.webp",
+      "category": "furniture",
+      "id": "wardrobe_sky_narrow",
+      "name_key": "ITEM_WARDROBE_SKY_NARROW",
+      "path": "res://assets/icons/home/wardrobe_sky_narrow.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/home/wardrobe_walnut.webp",
+      "category": "furniture",
+      "id": "wardrobe_walnut",
+      "name_key": "ITEM_WARDROBE_WALNUT",
+      "path": "res://assets/icons/home/wardrobe_walnut.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/watering_can_copper.webp",
+      "category": "tool",
+      "id": "watering_can_copper",
+      "name_key": "ITEM_WATERING_CAN_COPPER",
+      "path": "res://assets/icons/items/watering_can_copper.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/watering_can_gold.webp",
+      "category": "tool",
+      "id": "watering_can_gold",
+      "name_key": "ITEM_WATERING_CAN_GOLD",
+      "path": "res://assets/icons/items/watering_can_gold.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wild_flower.webp",
+      "category": "forage",
+      "id": "wild_flower",
+      "name_key": "ITEM_WILD_FLOWER",
+      "path": "res://assets/icons/items/wild_flower.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wisdom_feather.webp",
+      "category": "product",
+      "id": "wisdom_feather",
+      "name_key": "ITEM_WISDOM_FEATHER",
+      "path": "res://assets/icons/items/wisdom_feather.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wood.webp",
+      "category": "resource",
+      "id": "wood",
+      "name_key": "ITEM_WOOD",
+      "path": "res://assets/icons/items/wood.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wool.webp",
+      "category": "product",
+      "id": "wool",
+      "name_key": "ITEM_WOOL",
+      "path": "res://assets/icons/items/wool.webp",
+      "rarity": "normal"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "mayor_lyra",
+      "requested": "fairy_mayor",
+      "resolved": "fairy_mayor"
+    },
+    {
+      "id": "baker_maja",
+      "requested": "fairy_baker",
+      "resolved": "fairy_baker"
+    },
+    {
+      "id": "merchant_pip",
+      "requested": "fairy_shopkeeper",
+      "resolved": "fairy_shopkeeper"
+    },
+    {
+      "id": "pippin_boegeknop",
+      "requested": "mouse_pippin",
+      "resolved": "mouse_pippin"
+    },
+    {
+      "id": "fairy_king",
+      "requested": "fairy_king",
+      "resolved": "fairy_king"
+    },
+    {
+      "id": "fairy_lily",
+      "requested": "fairy_lily",
+      "resolved": "fairy_lily"
+    },
+    {
+      "id": "smith_thorin",
+      "requested": "raccoon_smith",
+      "resolved": "raccoon_smith"
+    },
+    {
+      "id": "guard_oak",
+      "requested": "bear_guard",
+      "resolved": "bear_guard"
+    },
+    {
+      "id": "farmer_rosa",
+      "requested": "rabbit_farmer",
+      "resolved": "rabbit_farmer"
+    },
+    {
+      "id": "fairy_wizard",
+      "requested": "fairy_wizard",
+      "resolved": "fairy_wizard"
+    },
+    {
+      "id": "cat_morfar_mis",
+      "requested": "cat_morfar_mis",
+      "resolved": "cat_morfar_mis"
+    },
+    {
+      "id": "penguin_postman",
+      "requested": "penguin_postman",
+      "resolved": "penguin_postman"
+    },
+    {
+      "id": "fairy_builder",
+      "requested": "fairy_builder",
+      "resolved": "fairy_builder"
+    },
+    {
+      "id": "fairy_furnisher",
+      "requested": "fairy_furnisher",
+      "resolved": "fairy_furnisher"
+    },
+    {
+      "id": "fairy_tailor",
+      "requested": "fairy_tailor",
+      "resolved": "fairy_tailor"
+    },
+    {
+      "id": "gardener_hoppe",
+      "requested": "rabbit",
+      "resolved": "rabbit"
+    },
+    {
+      "id": "carpenter_brumme",
+      "requested": "bear_brumme",
+      "resolved": "bear_brumme"
+    },
+    {
+      "id": "postman_pip",
+      "requested": "hedgehog_pip",
+      "resolved": "hedgehog_pip"
+    },
+    {
+      "id": "bathkeeper_sofus",
+      "requested": "capybara_sofus",
+      "resolved": "capybara_sofus"
+    },
+    {
+      "id": "appraiser_fru_ugle",
+      "requested": "owl_fru_ugle",
+      "resolved": "owl_fru_ugle"
+    },
+    {
+      "id": "mapseller_natteblik",
+      "requested": "bat_natteblik",
+      "resolved": "bat_natteblik"
+    },
+    {
+      "id": "beekeeper_birk",
+      "requested": "fairy_birk_npc",
+      "resolved": "fairy_birk_npc"
+    },
+    {
+      "id": "rasmus",
+      "requested": "fox",
+      "resolved": "fox"
+    },
+    {
+      "id": "lamplighter_kiki",
+      "requested": "monkey",
+      "resolved": "monkey"
+    },
+    {
+      "id": "bertil",
+      "requested": "hobbit_pip",
+      "resolved": "hobbit_pip"
+    },
+    {
+      "id": "bodil",
+      "requested": "hobbit_bodil",
+      "resolved": "hobbit_bodil"
+    },
+    {
+      "id": "innkeeper_kvak",
+      "requested": "frog",
+      "resolved": "frog"
+    },
+    {
+      "id": "cub_bamse",
+      "requested": "bear",
+      "resolved": "bear"
+    },
+    {
+      "id": "clerk_fjerpen",
+      "requested": "cat",
+      "resolved": "cat"
+    },
+    {
+      "id": "fiddler_strimmel",
+      "requested": "hedgehog",
+      "resolved": "hedgehog"
+    }
+  ],
+  "props": [
+    {
+      "id": "animal_house",
+      "path": "res://assets/iso_props/animal_house.png",
+      "real": true
+    },
+    {
+      "id": "apple_tree",
+      "path": "res://assets/iso_props/apple_tree.png",
+      "real": true
+    },
+    {
+      "id": "barn_small",
+      "path": "res://assets/iso_props/barn_small.png",
+      "real": true
+    },
+    {
+      "id": "bat_hang",
+      "path": "res://assets/iso_props/city/bat_hang.webp",
+      "real": true
+    },
+    {
+      "id": "bat_hang_f1",
+      "path": "res://assets/iso_props/city/bat_hang_f1.webp",
+      "real": true
+    },
+    {
+      "id": "bat_house_hanging",
+      "path": "res://assets/iso_props/city/bat_house_hanging.webp",
+      "real": true
+    },
+    {
+      "id": "bath_tub_back",
+      "path": "res://assets/iso_props/city/bath_tub_back.webp",
+      "real": true
+    },
+    {
+      "id": "bath_tub_front",
+      "path": "res://assets/iso_props/city/bath_tub_front.webp",
+      "real": true
+    },
+    {
+      "id": "bed",
+      "path": "res://assets/iso_props/bed.png",
+      "real": true
+    },
+    {
+      "id": "beehive_stand",
+      "path": "res://assets/iso_props/beehive_stand.png",
+      "real": true
+    },
+    {
+      "id": "bench",
+      "path": "res://assets/iso_props/bench.png",
+      "real": true
+    },
+    {
+      "id": "boss_arena_ring",
+      "path": "res://assets/iso_props/boss_arena_ring.png",
+      "real": true
+    },
+    {
+      "id": "bridge_deck_tile_w28",
+      "path": "res://assets/iso_props/city/bridge_deck_tile_w28.webp",
+      "real": true
+    },
+    {
+      "id": "bridge_deck_tile_w43",
+      "path": "res://assets/iso_props/city/bridge_deck_tile_w43.webp",
+      "real": true
+    },
+    {
+      "id": "bridge_post",
+      "path": "res://assets/iso_props/city/bridge_post.webp",
+      "real": true
+    },
+    {
+      "id": "bridge_x",
+      "path": "res://assets/iso_props/drawn_terrain/bridge_x.webp",
+      "real": true
+    },
+    {
+      "id": "bridge_z",
+      "path": "res://assets/iso_props/drawn_terrain/bridge_z.webp",
+      "real": true
+    },
+    {
+      "id": "build_stake",
+      "path": "res://assets/iso_props/farm/build_stake.png",
+      "real": true
+    },
+    {
+      "id": "bush_berry",
+      "path": "res://assets/iso_props/drawn/bush_berry.webp",
+      "real": true
+    },
+    {
+      "id": "bush_eyes_a",
+      "path": "res://assets/iso_props/bush_eyes_a.png",
+      "real": true
+    },
+    {
+      "id": "bush_eyes_b",
+      "path": "res://assets/iso_props/bush_eyes_b.png",
+      "real": true
+    },
+    {
+      "id": "bush_farm",
+      "path": "res://assets/iso_props/drawn/bush_farm.webp",
+      "real": true
+    },
+    {
+      "id": "bush_forest",
+      "path": "res://assets/iso_props/drawn/bush_forest.webp",
+      "real": true
+    },
+    {
+      "id": "canopy_top_strip",
+      "path": "res://assets/iso_props/city/canopy_top_strip.webp",
+      "real": true
+    },
+    {
+      "id": "cave_ring",
+      "path": "res://assets/iso_props/cave_ring.png",
+      "real": true
+    },
+    {
+      "id": "cave_ring_up",
+      "path": "res://assets/iso_props/cave_ring_up.png",
+      "real": true
+    },
+    {
+      "id": "cave_stone",
+      "path": "res://assets/iso_props/cave_stone_a.png",
+      "real": true
+    },
+    {
+      "id": "cave_stone_a",
+      "path": "res://assets/iso_props/cave_stone_a.png",
+      "real": true
+    },
+    {
+      "id": "cave_stone_b",
+      "path": "res://assets/iso_props/cave_stone_b.png",
+      "real": true
+    },
+    {
+      "id": "cave_stone_c",
+      "path": "res://assets/iso_props/cave_stone_c.png",
+      "real": true
+    },
+    {
+      "id": "cave_stone_d",
+      "path": "res://assets/iso_props/cave_stone_d.png",
+      "real": true
+    },
+    {
+      "id": "cave_stone_e",
+      "path": "res://assets/iso_props/cave_stone_e.png",
+      "real": true
+    },
+    {
+      "id": "cave_wall_a",
+      "path": "res://assets/iso_props/drawn_extra/cave_wall_a.webp",
+      "real": true
+    },
+    {
+      "id": "cave_wall_b",
+      "path": "res://assets/iso_props/drawn_extra/cave_wall_b.webp",
+      "real": true
+    },
+    {
+      "id": "chest_closed",
+      "path": "res://assets/iso_props/chest_closed.png",
+      "real": true
+    },
+    {
+      "id": "chest_fe",
+      "path": "res://assets/iso_props/features/chest_fe.webp",
+      "real": true
+    },
+    {
+      "id": "chest_jern",
+      "path": "res://assets/iso_props/features/chest_jern.webp",
+      "real": true
+    },
+    {
+      "id": "chest_konge",
+      "path": "res://assets/iso_props/features/chest_konge.webp",
+      "real": true
+    },
+    {
+      "id": "chest_noegle",
+      "path": "res://assets/iso_props/chest_noegle.png",
+      "real": true
+    },
+    {
+      "id": "chest_open",
+      "path": "res://assets/iso_props/chest_open.png",
+      "real": true
+    },
+    {
+      "id": "chest_trae",
+      "path": "res://assets/iso_props/features/chest_trae.webp",
+      "real": true
+    },
+    {
+      "id": "coop_small",
+      "path": "res://assets/iso_props/coop_small.png",
+      "real": true
+    },
+    {
+      "id": "crop_carrot_0",
+      "path": "res://assets/iso_props/crop_carrot_0.png",
+      "real": true
+    },
+    {
+      "id": "crop_carrot_1",
+      "path": "res://assets/iso_props/crop_carrot_1.png",
+      "real": true
+    },
+    {
+      "id": "crop_carrot_2",
+      "path": "res://assets/iso_props/crop_carrot_2.png",
+      "real": true
+    },
+    {
+      "id": "crop_carrot_3",
+      "path": "res://assets/iso_props/crop_carrot_3.png",
+      "real": true
+    },
+    {
+      "id": "crop_catnip_0",
+      "path": "res://assets/iso_props/crop_catnip_0.png",
+      "real": true
+    },
+    {
+      "id": "crop_catnip_1",
+      "path": "res://assets/iso_props/crop_catnip_1.png",
+      "real": true
+    },
+    {
+      "id": "crop_catnip_2",
+      "path": "res://assets/iso_props/crop_catnip_2.png",
+      "real": true
+    },
+    {
+      "id": "crop_catnip_3",
+      "path": "res://assets/iso_props/crop_catnip_3.png",
+      "real": true
+    },
+    {
+      "id": "crop_glow_berry_0",
+      "path": "res://assets/iso_props/crop_glow_berry_0.png",
+      "real": true
+    },
+    {
+      "id": "crop_glow_berry_1",
+      "path": "res://assets/iso_props/crop_glow_berry_1.png",
+      "real": true
+    },
+    {
+      "id": "crop_glow_berry_2",
+      "path": "res://assets/iso_props/crop_glow_berry_2.png",
+      "real": true
+    },
+    {
+      "id": "crop_glow_berry_3",
+      "path": "res://assets/iso_props/crop_glow_berry_3.png",
+      "real": true
+    },
+    {
+      "id": "crop_moonflower_0",
+      "path": "res://assets/iso_props/crop_moonflower_0.png",
+      "real": true
+    },
+    {
+      "id": "crop_moonflower_1",
+      "path": "res://assets/iso_props/crop_moonflower_1.png",
+      "real": true
+    },
+    {
+      "id": "crop_moonflower_2",
+      "path": "res://assets/iso_props/crop_moonflower_2.png",
+      "real": true
+    },
+    {
+      "id": "crop_moonflower_3",
+      "path": "res://assets/iso_props/crop_moonflower_3.png",
+      "real": true
+    },
+    {
+      "id": "crop_pumpkin_0",
+      "path": "res://assets/iso_props/crop_pumpkin_0.png",
+      "real": true
+    },
+    {
+      "id": "crop_pumpkin_1",
+      "path": "res://assets/iso_props/crop_pumpkin_1.png",
+      "real": true
+    },
+    {
+      "id": "crop_pumpkin_2",
+      "path": "res://assets/iso_props/crop_pumpkin_2.png",
+      "real": true
+    },
+    {
+      "id": "crop_pumpkin_3",
+      "path": "res://assets/iso_props/crop_pumpkin_3.png",
+      "real": true
+    },
+    {
+      "id": "crop_strawberry_0",
+      "path": "res://assets/iso_props/crop_strawberry_0.png",
+      "real": true
+    },
+    {
+      "id": "crop_strawberry_1",
+      "path": "res://assets/iso_props/crop_strawberry_1.png",
+      "real": true
+    },
+    {
+      "id": "crop_strawberry_2",
+      "path": "res://assets/iso_props/crop_strawberry_2.png",
+      "real": true
+    },
+    {
+      "id": "crop_strawberry_3",
+      "path": "res://assets/iso_props/crop_strawberry_3.png",
+      "real": true
+    },
+    {
+      "id": "crop_sunflower_0",
+      "path": "res://assets/iso_props/crop_sunflower_0.png",
+      "real": true
+    },
+    {
+      "id": "crop_sunflower_1",
+      "path": "res://assets/iso_props/crop_sunflower_1.png",
+      "real": true
+    },
+    {
+      "id": "crop_sunflower_2",
+      "path": "res://assets/iso_props/crop_sunflower_2.png",
+      "real": true
+    },
+    {
+      "id": "crop_sunflower_3",
+      "path": "res://assets/iso_props/crop_sunflower_3.png",
+      "real": true
+    },
+    {
+      "id": "crop_turnip_0",
+      "path": "res://assets/iso_props/crop_turnip_0.png",
+      "real": true
+    },
+    {
+      "id": "crop_turnip_1",
+      "path": "res://assets/iso_props/crop_turnip_1.png",
+      "real": true
+    },
+    {
+      "id": "crop_turnip_2",
+      "path": "res://assets/iso_props/crop_turnip_2.png",
+      "real": true
+    },
+    {
+      "id": "crop_turnip_3",
+      "path": "res://assets/iso_props/crop_turnip_3.png",
+      "real": true
+    },
+    {
+      "id": "crown_l_a",
+      "path": "res://assets/iso_props/crown_l_a.png",
+      "real": true
+    },
+    {
+      "id": "crown_l_b",
+      "path": "res://assets/iso_props/crown_l_b.png",
+      "real": true
+    },
+    {
+      "id": "crown_m_a",
+      "path": "res://assets/iso_props/crown_m_a.png",
+      "real": true
+    },
+    {
+      "id": "crown_m_a_solid",
+      "path": "res://assets/iso_props/crown_m_a.png",
+      "real": true
+    },
+    {
+      "id": "crown_m_b",
+      "path": "res://assets/iso_props/crown_m_b.png",
+      "real": true
+    },
+    {
+      "id": "crown_m_b_solid",
+      "path": "res://assets/iso_props/crown_m_b.png",
+      "real": true
+    },
+    {
+      "id": "crown_s_a",
+      "path": "res://assets/iso_props/crown_s_a.png",
+      "real": true
+    },
+    {
+      "id": "crown_s_a_solid",
+      "path": "res://assets/iso_props/crown_s_a.png",
+      "real": true
+    },
+    {
+      "id": "crown_s_b",
+      "path": "res://assets/iso_props/crown_s_b.png",
+      "real": true
+    },
+    {
+      "id": "crown_s_b_solid",
+      "path": "res://assets/iso_props/crown_s_b.png",
+      "real": true
+    },
+    {
+      "id": "crown_spark",
+      "path": "res://assets/iso_props/crown_spark.png",
+      "real": true
+    },
+    {
+      "id": "crystal_amethyst",
+      "path": "res://assets/iso_props/crystal_amethyst.png",
+      "real": true
+    },
+    {
+      "id": "crystal_emerald",
+      "path": "res://assets/iso_props/crystal_emerald.png",
+      "real": true
+    },
+    {
+      "id": "crystal_moonstone",
+      "path": "res://assets/iso_props/crystal_moonstone.png",
+      "real": true
+    },
+    {
+      "id": "dig_glimmer",
+      "path": "res://assets/iso_props/features/dig_glimmer.webp",
+      "real": true
+    },
+    {
+      "id": "empty_bush",
+      "path": "res://assets/iso_props/empty_bush.png",
+      "real": true
+    },
+    {
+      "id": "eyes_glow",
+      "path": "res://assets/iso_props/eyes_glow.png",
+      "real": true
+    },
+    {
+      "id": "fence_gate_x",
+      "path": "res://assets/iso_props/fence_gate_x.png",
+      "real": true
+    },
+    {
+      "id": "fence_x",
+      "path": "res://assets/iso_props/drawn/fence_x.webp",
+      "real": true
+    },
+    {
+      "id": "fence_z",
+      "path": "res://assets/iso_props/drawn/fence_z.webp",
+      "real": true
+    },
+    {
+      "id": "fire_flame",
+      "path": "res://assets/iso_props/city/fire_flame.webp",
+      "real": true
+    },
+    {
+      "id": "fire_flame_f1",
+      "path": "res://assets/iso_props/city/fire_flame_f1.webp",
+      "real": true
+    },
+    {
+      "id": "fire_flame_f2",
+      "path": "res://assets/iso_props/city/fire_flame_f2.webp",
+      "real": true
+    },
+    {
+      "id": "fire_pit",
+      "path": "res://assets/iso_props/city/fire_pit.webp",
+      "real": true
+    },
+    {
+      "id": "firefly_dot",
+      "path": "res://assets/iso_props/firefly_dot.png",
+      "real": true
+    },
+    {
+      "id": "floor_patch_a",
+      "path": "res://assets/iso_props/floor_patch_a.png",
+      "real": true
+    },
+    {
+      "id": "floor_patch_b",
+      "path": "res://assets/iso_props/floor_patch_b.png",
+      "real": true
+    },
+    {
+      "id": "floor_patch_c",
+      "path": "res://assets/iso_props/floor_patch_c.png",
+      "real": true
+    },
+    {
+      "id": "foliage_front_a",
+      "path": "res://assets/iso_props/city/foliage_front_a.webp",
+      "real": true
+    },
+    {
+      "id": "foliage_front_b",
+      "path": "res://assets/iso_props/city/foliage_front_b.webp",
+      "real": true
+    },
+    {
+      "id": "forest_wall_a",
+      "path": "res://assets/iso_props/drawn_extra/forest_wall_a.webp",
+      "real": true
+    },
+    {
+      "id": "forest_wall_b",
+      "path": "res://assets/iso_props/drawn_extra/forest_wall_b.webp",
+      "real": true
+    },
+    {
+      "id": "forest_wall_c",
+      "path": "res://assets/iso_props/drawn_extra/forest_wall_c.webp",
+      "real": true
+    },
+    {
+      "id": "fountain",
+      "path": "res://assets/iso_props/fountain.png",
+      "real": true
+    },
+    {
+      "id": "fx_heal_sparkle",
+      "path": "res://assets/iso_props/fx_heal_sparkle.png",
+      "real": true
+    },
+    {
+      "id": "fx_hit_spark",
+      "path": "res://assets/iso_props/fx_hit_spark.png",
+      "real": true
+    },
+    {
+      "id": "glowmush_blue",
+      "path": "res://assets/iso_props/glowmush_blue.png",
+      "real": true
+    },
+    {
+      "id": "glowmush_pink",
+      "path": "res://assets/iso_props/glowmush_pink.png",
+      "real": true
+    },
+    {
+      "id": "glowmush_teal",
+      "path": "res://assets/iso_props/glowmush_teal.png",
+      "real": true
+    },
+    {
+      "id": "halo_amber",
+      "path": "res://assets/iso_props/halo_amber.png",
+      "real": true
+    },
+    {
+      "id": "halo_violet",
+      "path": "res://assets/iso_props/halo_violet.png",
+      "real": true
+    },
+    {
+      "id": "home_rope",
+      "path": "res://assets/iso_props/home_rope.png",
+      "real": true
+    },
+    {
+      "id": "house_animalstore",
+      "path": "res://assets/iso_props/house_animalstore.png",
+      "real": true
+    },
+    {
+      "id": "house_bakery",
+      "path": "res://assets/iso_props/house_bakery.png",
+      "real": true
+    },
+    {
+      "id": "house_farm",
+      "path": "res://assets/iso_props/drawn/house_farm.webp",
+      "real": true
+    },
+    {
+      "id": "house_king_treetop",
+      "path": "res://assets/iso_props/house_king_treetop.png",
+      "real": true
+    },
+    {
+      "id": "house_mushroom_lavender",
+      "path": "res://assets/iso_props/drawn/house_mushroom_lavender.webp",
+      "real": true
+    },
+    {
+      "id": "house_mushroom_mint",
+      "path": "res://assets/iso_props/drawn/house_mushroom_mint.webp",
+      "real": true
+    },
+    {
+      "id": "house_mushroom_rose",
+      "path": "res://assets/iso_props/drawn/house_mushroom_rose.webp",
+      "real": true
+    },
+    {
+      "id": "house_seedshop",
+      "path": "res://assets/iso_props/house_seedshop.png",
+      "real": true
+    },
+    {
+      "id": "house_smithy",
+      "path": "res://assets/iso_props/house_smithy.png",
+      "real": true
+    },
+    {
+      "id": "house_town_hall",
+      "path": "res://assets/iso_props/house_town_hall.png",
+      "real": true
+    },
+    {
+      "id": "hulen_eyes",
+      "path": "res://assets/iso_props/hulen_eyes.png",
+      "real": true
+    },
+    {
+      "id": "hut_l_dark",
+      "path": "res://assets/iso_props/city/hut_l_dark.webp",
+      "real": true
+    },
+    {
+      "id": "hut_l_dark_night",
+      "path": "res://assets/iso_props/city/hut_l_dark_night.webp",
+      "real": true
+    },
+    {
+      "id": "hut_l_moss",
+      "path": "res://assets/iso_props/city/hut_l_moss.webp",
+      "real": true
+    },
+    {
+      "id": "hut_l_moss_night",
+      "path": "res://assets/iso_props/city/hut_l_moss_night.webp",
+      "real": true
+    },
+    {
+      "id": "hut_l_straw",
+      "path": "res://assets/iso_props/city/hut_l_straw.webp",
+      "real": true
+    },
+    {
+      "id": "hut_l_straw_night",
+      "path": "res://assets/iso_props/city/hut_l_straw_night.webp",
+      "real": true
+    },
+    {
+      "id": "hut_m_dark",
+      "path": "res://assets/iso_props/city/hut_m_dark.webp",
+      "real": true
+    },
+    {
+      "id": "hut_m_dark_night",
+      "path": "res://assets/iso_props/city/hut_m_dark_night.webp",
+      "real": true
+    },
+    {
+      "id": "hut_m_moss",
+      "path": "res://assets/iso_props/city/hut_m_moss.webp",
+      "real": true
+    },
+    {
+      "id": "hut_m_moss_night",
+      "path": "res://assets/iso_props/city/hut_m_moss_night.webp",
+      "real": true
+    },
+    {
+      "id": "hut_m_straw",
+      "path": "res://assets/iso_props/city/hut_m_straw.webp",
+      "real": true
+    },
+    {
+      "id": "hut_m_straw_night",
+      "path": "res://assets/iso_props/city/hut_m_straw_night.webp",
+      "real": true
+    },
+    {
+      "id": "hut_raadhus",
+      "path": "res://assets/iso_props/city/hut_raadhus.webp",
+      "real": true
+    },
+    {
+      "id": "hut_raadhus_night",
+      "path": "res://assets/iso_props/city/hut_raadhus_night.webp",
+      "real": true
+    },
+    {
+      "id": "hut_s_dark",
+      "path": "res://assets/iso_props/city/hut_s_dark.webp",
+      "real": true
+    },
+    {
+      "id": "hut_s_dark_night",
+      "path": "res://assets/iso_props/city/hut_s_dark_night.webp",
+      "real": true
+    },
+    {
+      "id": "hut_s_moss",
+      "path": "res://assets/iso_props/city/hut_s_moss.webp",
+      "real": true
+    },
+    {
+      "id": "hut_s_moss_night",
+      "path": "res://assets/iso_props/city/hut_s_moss_night.webp",
+      "real": true
+    },
+    {
+      "id": "hut_s_straw",
+      "path": "res://assets/iso_props/city/hut_s_straw.webp",
+      "real": true
+    },
+    {
+      "id": "hut_s_straw_night",
+      "path": "res://assets/iso_props/city/hut_s_straw_night.webp",
+      "real": true
+    },
+    {
+      "id": "ladder_tile",
+      "path": "res://assets/iso_props/city/ladder_tile.webp",
+      "real": true
+    },
+    {
+      "id": "lamp_door",
+      "path": "res://assets/iso_props/city/lamp_door.webp",
+      "real": true
+    },
+    {
+      "id": "lantern_hand",
+      "path": "res://assets/iso_props/lantern_hand.png",
+      "real": true
+    },
+    {
+      "id": "lantern_hang",
+      "path": "res://assets/iso_props/city/lantern_hang.webp",
+      "real": true
+    },
+    {
+      "id": "lantern_light",
+      "path": "res://assets/iso_props/lantern_light.png",
+      "real": true
+    },
+    {
+      "id": "lantern_post",
+      "path": "res://assets/iso_props/drawn/lantern_post.webp",
+      "real": true
+    },
+    {
+      "id": "lantern_post_lavender",
+      "path": "res://assets/iso_props/lantern_post_lavender.png",
+      "real": true
+    },
+    {
+      "id": "lantern_post_mint",
+      "path": "res://assets/iso_props/lantern_post_mint.png",
+      "real": true
+    },
+    {
+      "id": "lantern_post_rose",
+      "path": "res://assets/iso_props/lantern_post_rose.png",
+      "real": true
+    },
+    {
+      "id": "lift_basket",
+      "path": "res://assets/iso_props/city/lift_basket.webp",
+      "real": true
+    },
+    {
+      "id": "lift_pulley",
+      "path": "res://assets/iso_props/city/lift_pulley.webp",
+      "real": true
+    },
+    {
+      "id": "log_stack",
+      "path": "res://assets/iso_props/city/log_stack.webp",
+      "real": true
+    },
+    {
+      "id": "mailbox_red",
+      "path": "res://assets/iso_props/mailbox_red.png",
+      "real": true
+    },
+    {
+      "id": "marble_vein",
+      "path": "res://assets/iso_props/features/marble_vein.webp",
+      "real": true
+    },
+    {
+      "id": "market_stall",
+      "path": "res://assets/iso_props/market_stall.png",
+      "real": true
+    },
+    {
+      "id": "market_stall_furniture",
+      "path": "res://assets/iso_props/market_stall_furniture.png",
+      "real": true
+    },
+    {
+      "id": "market_stall_tailor",
+      "path": "res://assets/iso_props/market_stall_tailor.png",
+      "real": true
+    },
+    {
+      "id": "market_stall_traetoppen",
+      "path": "res://assets/iso_props/city/market_stall_traetoppen.webp",
+      "real": true
+    },
+    {
+      "id": "mist_patch_a",
+      "path": "res://assets/iso_props/mist_patch_a.png",
+      "real": true
+    },
+    {
+      "id": "mist_patch_b",
+      "path": "res://assets/iso_props/mist_patch_b.png",
+      "real": true
+    },
+    {
+      "id": "notice_board",
+      "path": "res://assets/iso_props/city/notice_board.webp",
+      "real": true
+    },
+    {
+      "id": "ore_copper",
+      "path": "res://assets/iso_props/ore_copper.png",
+      "real": true
+    },
+    {
+      "id": "ore_gold",
+      "path": "res://assets/iso_props/ore_gold.png",
+      "real": true
+    },
+    {
+      "id": "ore_iron",
+      "path": "res://assets/iso_props/ore_iron.png",
+      "real": true
+    },
+    {
+      "id": "owl_shelf",
+      "path": "res://assets/iso_props/city/owl_shelf.webp",
+      "real": true
+    },
+    {
+      "id": "path_tile_o",
+      "path": "res://assets/iso_props/path_tile_o.png",
+      "real": true
+    },
+    {
+      "id": "paw_prints",
+      "path": "res://assets/iso_props/paw_prints.png",
+      "real": true
+    },
+    {
+      "id": "pennant_blue",
+      "path": "res://assets/iso_props/city/pennant_blue.webp",
+      "real": true
+    },
+    {
+      "id": "pennant_blue_f1",
+      "path": "res://assets/iso_props/city/pennant_blue_f1.webp",
+      "real": true
+    },
+    {
+      "id": "pennant_gold",
+      "path": "res://assets/iso_props/city/pennant_gold.webp",
+      "real": true
+    },
+    {
+      "id": "pennant_gold_f1",
+      "path": "res://assets/iso_props/city/pennant_gold_f1.webp",
+      "real": true
+    },
+    {
+      "id": "pennant_mint",
+      "path": "res://assets/iso_props/city/pennant_mint.webp",
+      "real": true
+    },
+    {
+      "id": "pennant_mint_f1",
+      "path": "res://assets/iso_props/city/pennant_mint_f1.webp",
+      "real": true
+    },
+    {
+      "id": "pennant_pink",
+      "path": "res://assets/iso_props/city/pennant_pink.webp",
+      "real": true
+    },
+    {
+      "id": "pennant_pink_f1",
+      "path": "res://assets/iso_props/city/pennant_pink_f1.webp",
+      "real": true
+    },
+    {
+      "id": "plank_stack",
+      "path": "res://assets/iso_props/plank_stack.png",
+      "real": true
+    },
+    {
+      "id": "planter_box",
+      "path": "res://assets/iso_props/city/planter_box.webp",
+      "real": true
+    },
+    {
+      "id": "planter_box_berry",
+      "path": "res://assets/iso_props/city/planter_box_berry.webp",
+      "real": true
+    },
+    {
+      "id": "platform_corner",
+      "path": "res://assets/iso_props/drawn_terrain/platform_corner.webp",
+      "real": true
+    },
+    {
+      "id": "platform_disc_171",
+      "path": "res://assets/iso_props/city/platform_disc_171.webp",
+      "real": true
+    },
+    {
+      "id": "platform_disc_184",
+      "path": "res://assets/iso_props/city/platform_disc_184.webp",
+      "real": true
+    },
+    {
+      "id": "platform_disc_196",
+      "path": "res://assets/iso_props/city/platform_disc_196.webp",
+      "real": true
+    },
+    {
+      "id": "platform_disc_306",
+      "path": "res://assets/iso_props/city/platform_disc_306.webp",
+      "real": true
+    },
+    {
+      "id": "platform_se",
+      "path": "res://assets/iso_props/drawn_terrain/platform_se.webp",
+      "real": true
+    },
+    {
+      "id": "platform_sw",
+      "path": "res://assets/iso_props/drawn_terrain/platform_sw.webp",
+      "real": true
+    },
+    {
+      "id": "pond_lily",
+      "path": "res://assets/iso_props/pond_lily.png",
+      "real": true
+    },
+    {
+      "id": "pond_ripple",
+      "path": "res://assets/iso_props/pond_ripple.png",
+      "real": true
+    },
+    {
+      "id": "pond_sheen",
+      "path": "res://assets/iso_props/pond_sheen.png",
+      "real": true
+    },
+    {
+      "id": "pond_water_o",
+      "path": "res://assets/iso_props/pond_water_o.png",
+      "real": true
+    },
+    {
+      "id": "rock_dark",
+      "path": "res://assets/iso_props/drawn/rock_dark.webp",
+      "real": true
+    },
+    {
+      "id": "rock_grey",
+      "path": "res://assets/iso_props/drawn/rock_grey.webp",
+      "real": true
+    },
+    {
+      "id": "rock_mossy",
+      "path": "res://assets/iso_props/drawn/rock_mossy.webp",
+      "real": true
+    },
+    {
+      "id": "roof_patch",
+      "path": "res://assets/iso_props/roof_patch.png",
+      "real": true
+    },
+    {
+      "id": "rope_stake_x",
+      "path": "res://assets/iso_props/farm/rope_stake_x.png",
+      "real": true
+    },
+    {
+      "id": "rope_stake_z",
+      "path": "res://assets/iso_props/farm/rope_stake_z.png",
+      "real": true
+    },
+    {
+      "id": "rope_tile",
+      "path": "res://assets/iso_props/city/rope_tile.webp",
+      "real": true
+    },
+    {
+      "id": "rune_glow",
+      "path": "res://assets/iso_props/rune_glow.png",
+      "real": true
+    },
+    {
+      "id": "runestone_active",
+      "path": "res://assets/iso_props/runestone_active.png",
+      "real": true
+    },
+    {
+      "id": "runestone_dormant",
+      "path": "res://assets/iso_props/runestone_dormant.png",
+      "real": true
+    },
+    {
+      "id": "scarecrow",
+      "path": "res://assets/iso_props/drawn/scarecrow.webp",
+      "real": true
+    },
+    {
+      "id": "seed_basket",
+      "path": "res://assets/iso_props/city/seed_basket.webp",
+      "real": true
+    },
+    {
+      "id": "shadow_soft",
+      "path": "res://assets/iso_props/city/shadow_soft.webp",
+      "real": true
+    },
+    {
+      "id": "shipping_bin",
+      "path": "res://assets/iso_props/farm/shipping_bin.png",
+      "real": true
+    },
+    {
+      "id": "signpost",
+      "path": "res://assets/iso_props/drawn/signpost.webp",
+      "real": true
+    },
+    {
+      "id": "slate_vein",
+      "path": "res://assets/iso_props/features/slate_vein.webp",
+      "real": true
+    },
+    {
+      "id": "stake_sign",
+      "path": "res://assets/iso_props/farm/stake_sign.png",
+      "real": true
+    },
+    {
+      "id": "stone_path_a",
+      "path": "res://assets/iso_props/stone_path_a.png",
+      "real": true
+    },
+    {
+      "id": "stone_path_b",
+      "path": "res://assets/iso_props/stone_path_b.png",
+      "real": true
+    },
+    {
+      "id": "stone_path_c",
+      "path": "res://assets/iso_props/stone_path_c.png",
+      "real": true
+    },
+    {
+      "id": "telegraph_line",
+      "path": "res://assets/iso_props/telegraph_line.png",
+      "real": true
+    },
+    {
+      "id": "telegraph_ring_l",
+      "path": "res://assets/iso_props/telegraph_ring_l.png",
+      "real": true
+    },
+    {
+      "id": "telegraph_ring_m",
+      "path": "res://assets/iso_props/telegraph_ring_m.png",
+      "real": true
+    },
+    {
+      "id": "telegraph_ring_s",
+      "path": "res://assets/iso_props/telegraph_ring_s.png",
+      "real": true
+    },
+    {
+      "id": "tent",
+      "path": "res://assets/iso_props/features/tent.webp",
+      "real": true
+    },
+    {
+      "id": "tool_shed",
+      "path": "res://assets/iso_props/farm/tool_shed.png",
+      "real": true
+    },
+    {
+      "id": "tornebaer",
+      "path": "res://assets/iso_props/tornebaer.png",
+      "real": true
+    },
+    {
+      "id": "tower_wizard",
+      "path": "res://assets/iso_props/tower_wizard.png",
+      "real": true
+    },
+    {
+      "id": "tree_blossom_hyggebyen",
+      "path": "res://assets/iso_props/drawn/tree_blossom_hyggebyen.webp",
+      "real": true
+    },
+    {
+      "id": "tree_giant_crown",
+      "path": "res://assets/iso_props/tree_giant_crown.webp",
+      "real": true
+    },
+    {
+      "id": "tree_oak_farm",
+      "path": "res://assets/iso_props/drawn/tree_oak_farm.webp",
+      "real": true
+    },
+    {
+      "id": "tree_oak_farm_b",
+      "path": "res://assets/iso_props/drawn/tree_oak_farm_b.webp",
+      "real": true
+    },
+    {
+      "id": "tree_pine_forest",
+      "path": "res://assets/iso_props/drawn/tree_pine_forest.webp",
+      "real": true
+    },
+    {
+      "id": "tree_pine_forest_b",
+      "path": "res://assets/iso_props/drawn/tree_pine_forest_b.webp",
+      "real": true
+    },
+    {
+      "id": "tree_twisted",
+      "path": "res://assets/iso_props/drawn/tree_twisted.webp",
+      "real": true
+    },
+    {
+      "id": "trunk_bark_w367",
+      "path": "res://assets/iso_props/city/trunk_bark_w367.webp",
+      "real": true
+    },
+    {
+      "id": "trunk_bark_w404",
+      "path": "res://assets/iso_props/city/trunk_bark_w404.webp",
+      "real": true
+    },
+    {
+      "id": "trunk_bark_w441",
+      "path": "res://assets/iso_props/city/trunk_bark_w441.webp",
+      "real": true
+    },
+    {
+      "id": "trunk_bark_w698",
+      "path": "res://assets/iso_props/city/trunk_bark_w698.webp",
+      "real": true
+    },
+    {
+      "id": "trunk_foot_w367",
+      "path": "res://assets/iso_props/city/trunk_foot_w367.webp",
+      "real": true
+    },
+    {
+      "id": "trunk_foot_w404",
+      "path": "res://assets/iso_props/city/trunk_foot_w404.webp",
+      "real": true
+    },
+    {
+      "id": "trunk_foot_w441",
+      "path": "res://assets/iso_props/city/trunk_foot_w441.webp",
+      "real": true
+    },
+    {
+      "id": "trunk_foot_w698",
+      "path": "res://assets/iso_props/city/trunk_foot_w698.webp",
+      "real": true
+    },
+    {
+      "id": "trunk_giant_a",
+      "path": "res://assets/iso_props/farm/trunk_giant_a.png",
+      "real": true
+    },
+    {
+      "id": "trunk_giant_b",
+      "path": "res://assets/iso_props/farm/trunk_giant_b.png",
+      "real": true
+    },
+    {
+      "id": "trunk_hole_owl",
+      "path": "res://assets/iso_props/city/trunk_hole_owl.webp",
+      "real": true
+    },
+    {
+      "id": "trunk_hole_owl_b",
+      "path": "res://assets/iso_props/city/trunk_hole_owl_b.webp",
+      "real": true
+    },
+    {
+      "id": "trunk_root_w367",
+      "path": "res://assets/iso_props/city/trunk_root_w367.webp",
+      "real": true
+    },
+    {
+      "id": "trunk_root_w404",
+      "path": "res://assets/iso_props/city/trunk_root_w404.webp",
+      "real": true
+    },
+    {
+      "id": "trunk_root_w441",
+      "path": "res://assets/iso_props/city/trunk_root_w441.webp",
+      "real": true
+    },
+    {
+      "id": "trunk_root_w698",
+      "path": "res://assets/iso_props/city/trunk_root_w698.webp",
+      "real": true
+    },
+    {
+      "id": "trunk_under_a",
+      "path": "res://assets/iso_props/farm/trunk_under_a.png",
+      "real": true
+    },
+    {
+      "id": "trunk_under_b",
+      "path": "res://assets/iso_props/farm/trunk_under_b.png",
+      "real": true
+    },
+    {
+      "id": "unique_glimmer",
+      "path": "res://assets/iso_props/features/unique_glimmer.webp",
+      "real": true
+    },
+    {
+      "id": "warp_gate_stone",
+      "path": "res://assets/iso_props/warp_gate_stone.png",
+      "real": true
+    },
+    {
+      "id": "well",
+      "path": "res://assets/iso_props/well.png",
+      "real": true
+    },
+    {
+      "id": "wheat_sack",
+      "path": "res://assets/iso_props/wheat_sack.png",
+      "real": true
+    }
+  ],
+  "references": [
+    {
+      "group": "animals",
+      "id": "chicken",
+      "requested": "chick",
+      "resolved": "chick",
+      "view": "baby"
+    },
+    {
+      "group": "animals",
+      "id": "chicken",
+      "requested": "hen",
+      "resolved": "hen",
+      "view": "adult"
+    },
+    {
+      "group": "animals",
+      "id": "rabbit",
+      "requested": "bunny",
+      "resolved": "bunny",
+      "view": "baby"
+    },
+    {
+      "group": "animals",
+      "id": "rabbit",
+      "requested": "bunny",
+      "resolved": "bunny",
+      "view": "adult"
+    },
+    {
+      "group": "animals",
+      "id": "duck",
+      "requested": "duck",
+      "resolved": "duck",
+      "view": "baby"
+    },
+    {
+      "group": "animals",
+      "id": "duck",
+      "requested": "duck",
+      "resolved": "duck",
+      "view": "adult"
+    },
+    {
+      "group": "animals",
+      "id": "cat",
+      "requested": "kitten",
+      "resolved": "kitten",
+      "view": "baby"
+    },
+    {
+      "group": "animals",
+      "id": "cat",
+      "requested": "kitten",
+      "resolved": "kitten",
+      "view": "adult"
+    },
+    {
+      "group": "animals",
+      "id": "dog",
+      "requested": "puppy",
+      "resolved": "puppy",
+      "view": "baby"
+    },
+    {
+      "group": "animals",
+      "id": "dog",
+      "requested": "puppy",
+      "resolved": "puppy",
+      "view": "adult"
+    },
+    {
+      "group": "animals",
+      "id": "sheep",
+      "requested": "lamb",
+      "resolved": "lamb",
+      "view": "baby"
+    },
+    {
+      "group": "animals",
+      "id": "sheep",
+      "requested": "lamb",
+      "resolved": "lamb",
+      "view": "adult"
+    },
+    {
+      "group": "animals",
+      "id": "cow",
+      "requested": "calf",
+      "resolved": "calf",
+      "view": "baby"
+    },
+    {
+      "group": "animals",
+      "id": "cow",
+      "requested": "calf",
+      "resolved": "calf",
+      "view": "adult"
+    },
+    {
+      "group": "animals",
+      "id": "deer",
+      "requested": "fawn",
+      "resolved": "fawn",
+      "view": "baby"
+    },
+    {
+      "group": "animals",
+      "id": "deer",
+      "requested": "fawn",
+      "resolved": "fawn",
+      "view": "adult"
+    },
+    {
+      "group": "animals",
+      "id": "fox",
+      "requested": "fox_cub",
+      "resolved": "fox_cub",
+      "view": "baby"
+    },
+    {
+      "group": "animals",
+      "id": "fox",
+      "requested": "fox_cub",
+      "resolved": "fox_cub",
+      "view": "adult"
+    },
+    {
+      "group": "animals",
+      "id": "owl",
+      "requested": "owl",
+      "resolved": "owl",
+      "view": "baby"
+    },
+    {
+      "group": "animals",
+      "id": "owl",
+      "requested": "owl",
+      "resolved": "owl",
+      "view": "adult"
+    },
+    {
+      "group": "enemies",
+      "id": "bat",
+      "requested": "bat",
+      "resolved": "bat",
+      "view": "visual"
+    },
+    {
+      "group": "enemies",
+      "id": "ugleoje",
+      "requested": "ugleoje",
+      "resolved": "ugleoje",
+      "view": "visual"
+    },
+    {
+      "group": "enemies",
+      "id": "tornebusk",
+      "requested": "tornebusk",
+      "resolved": "tornebusk",
+      "view": "visual"
+    },
+    {
+      "group": "enemies",
+      "id": "lysesvamp",
+      "requested": "lysesvamp",
+      "resolved": "lysesvamp",
+      "view": "visual"
+    },
+    {
+      "group": "enemies",
+      "id": "snurresvamp",
+      "requested": "snurresvamp",
+      "resolved": "snurresvamp",
+      "view": "visual"
+    }
+  ],
+  "result": "pass",
+  "skins": [
+    {
+      "id": "animal_fox",
+      "requested": "fox_base",
+      "resolved": "fox",
+      "retired": false
+    },
+    {
+      "id": "animal_monkey",
+      "requested": "monkey_base",
+      "resolved": "monkey",
+      "retired": false
+    },
+    {
+      "id": "fairy_meadow",
+      "requested": "fairy_base",
+      "resolved": "fairy",
+      "retired": false
+    },
+    {
+      "id": "fairy_birk",
+      "requested": "fairy_birk_base",
+      "resolved": "fairy_birk",
+      "retired": false
+    },
+    {
+      "id": "hobbit_pip",
+      "requested": "hobbit_pip_base",
+      "resolved": "hobbit_pip",
+      "retired": false
+    },
+    {
+      "id": "hobbit_bodil",
+      "requested": "hobbit_bodil_base",
+      "resolved": "hobbit_bodil",
+      "retired": false
+    },
+    {
+      "id": "ghost_bu",
+      "requested": "ghost_bu_base",
+      "resolved": "ghost_bu",
+      "retired": false
+    },
+    {
+      "id": "ghost_hviske",
+      "requested": "ghost_hviske_base",
+      "resolved": "ghost_hviske",
+      "retired": false
+    },
+    {
+      "id": "animal_rabbit",
+      "requested": "rabbit_base",
+      "resolved": "rabbit",
+      "retired": true
+    },
+    {
+      "id": "animal_hedgehog",
+      "requested": "hedgehog_base",
+      "resolved": "hedgehog",
+      "retired": true
+    },
+    {
+      "id": "animal_squirrel",
+      "requested": "squirrel_base",
+      "resolved": "squirrel",
+      "retired": true
+    },
+    {
+      "id": "fairy_stardust",
+      "requested": "fairy_stardust_base",
+      "resolved": "fairy_stardust",
+      "retired": true
+    },
+    {
+      "id": "fairy_dusk",
+      "requested": "fairy_dusk_base",
+      "resolved": "fairy_dusk",
+      "retired": true
+    },
+    {
+      "id": "hobbit_moss",
+      "requested": "hobbit_moss_base",
+      "resolved": "hobbit_moss",
+      "retired": true
+    },
+    {
+      "id": "hobbit_bramble",
+      "requested": "hobbit_bramble_base",
+      "resolved": "hobbit_bramble",
+      "retired": true
+    }
+  ],
+  "tiles": [
+    {
+      "cell": [
+        112,
+        64
+      ],
+      "id": "bog_o",
+      "path": "res://assets/iso_tiles/drawn_bog_o.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        112,
+        64
+      ],
+      "id": "cave_floor_o",
+      "path": "res://assets/iso_tiles/drawn_cave_floor_o.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "cobble_hyggebyen",
+      "path": "res://assets/iso_tiles/drawn_cobble_hyggebyen.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        112,
+        64
+      ],
+      "id": "crystal_floor_o",
+      "path": "res://assets/iso_tiles/drawn_crystal_floor_o.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "deck_farm",
+      "path": "res://assets/iso_tiles/drawn_deck_farm.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "deck_hyggebyen",
+      "path": "res://assets/iso_tiles/drawn_deck_hyggebyen.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "field_grass",
+      "path": "res://assets/iso_tiles/drawn_field_grass.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "floor_marble",
+      "path": "res://assets/iso_tiles/drawn_floor_marble.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "floor_parquet",
+      "path": "res://assets/iso_tiles/drawn_floor_parquet.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "floor_plank",
+      "path": "res://assets/iso_tiles/drawn_floor_plank.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "floor_stone",
+      "path": "res://assets/iso_tiles/drawn_floor_stone.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "forest_floor",
+      "path": "res://assets/iso_tiles/drawn_forest_floor.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "forest_floor_glow",
+      "path": "res://assets/iso_tiles/drawn_forest_floor_glow.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        112,
+        64
+      ],
+      "id": "forest_floor_glow_o",
+      "path": "res://assets/iso_tiles/drawn_forest_floor_glow_o.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        112,
+        64
+      ],
+      "id": "forest_floor_o",
+      "path": "res://assets/iso_tiles/drawn_forest_floor_o.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "grass",
+      "path": "res://assets/iso_tiles/drawn_grass.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "grass_flowers",
+      "path": "res://assets/iso_tiles/drawn_grass_flowers.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "grass_hyggebyen",
+      "path": "res://assets/iso_tiles/drawn_grass_hyggebyen.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "grass_hyggebyen_flowers",
+      "path": "res://assets/iso_tiles/drawn_grass_hyggebyen_flowers.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        112,
+        64
+      ],
+      "id": "moss_path_o",
+      "path": "res://assets/iso_tiles/drawn_moss_path_o.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "path_dirt",
+      "path": "res://assets/iso_tiles/drawn_path_dirt.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "soil_tilled",
+      "path": "res://assets/iso_tiles/drawn_soil_tilled.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "soil_watered",
+      "path": "res://assets/iso_tiles/drawn_soil_watered.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "void_haze",
+      "path": "res://assets/iso_tiles/drawn_void_haze.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        112,
+        64
+      ],
+      "id": "wall_void_o",
+      "path": "res://assets/iso_tiles/drawn_wall_void_o.webp",
+      "real": true,
+      "variants": [
+        4,
+        4
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "water_0",
+      "path": "res://assets/iso_tiles/drawn_water_0.webp",
+      "real": true,
+      "variants": [
+        2,
+        2
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "water_1",
+      "path": "res://assets/iso_tiles/drawn_water_1.webp",
+      "real": true,
+      "variants": [
+        2,
+        2
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "water_2",
+      "path": "res://assets/iso_tiles/drawn_water_2.webp",
+      "real": true,
+      "variants": [
+        2,
+        2
+      ]
+    },
+    {
+      "cell": [
+        144,
+        84
+      ],
+      "id": "water_3",
+      "path": "res://assets/iso_tiles/drawn_water_3.webp",
+      "real": true,
+      "variants": [
+        2,
+        2
+      ]
+    }
+  ]
+}

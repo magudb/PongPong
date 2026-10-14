@@ -42,7 +42,7 @@
   }
  },
  "bog_o": {
-  "file": "ortho_bog.png",
+  "file": "ortho_bog.webp",
   "variants": [
    4,
    4
@@ -58,7 +58,7 @@
   ]
  },
  "cave_floor_o": {
-  "file": "ortho_cave_floor.png",
+  "file": "ortho_cave_floor.webp",
   "variants": [
    4,
    4
@@ -74,7 +74,7 @@
   ]
  },
  "cobble_hyggebyen": {
-  "file": "cobble_hyggebyen.png",
+  "file": "cobble_hyggebyen.webp",
   "variants": [
    4,
    4
@@ -85,7 +85,7 @@
   ]
  },
  "crystal_floor_o": {
-  "file": "ortho_crystal_floor.png",
+  "file": "ortho_crystal_floor.webp",
   "variants": [
    4,
    4
@@ -101,7 +101,7 @@
   ]
  },
  "deck_farm": {
-  "file": "deck_farm.png",
+  "file": "deck_farm.webp",
   "variants": [
    4,
    4
@@ -112,7 +112,7 @@
   ]
  },
  "deck_hyggebyen": {
-  "file": "deck_hyggebyen.png",
+  "file": "deck_hyggebyen.webp",
   "variants": [
    4,
    4
@@ -123,7 +123,7 @@
   ]
  },
  "forest_floor": {
-  "file": "forest_floor.png",
+  "file": "forest_floor.webp",
   "variants": [
    4,
    4
@@ -134,7 +134,7 @@
   ]
  },
  "forest_floor_glow": {
-  "file": "forest_floor_glow.png",
+  "file": "forest_floor_glow.webp",
   "variants": [
    4,
    4
@@ -145,7 +145,7 @@
   ]
  },
  "forest_floor_glow_o": {
-  "file": "ortho_forest_floor_glow.png",
+  "file": "ortho_forest_floor_glow.webp",
   "variants": [
    4,
    4
@@ -161,7 +161,7 @@
   ]
  },
  "forest_floor_o": {
-  "file": "ortho_forest_floor.png",
+  "file": "ortho_forest_floor.webp",
   "variants": [
    4,
    4
@@ -188,7 +188,7 @@
   ]
  },
  "grass_flowers": {
-  "file": "grass_flowers.png",
+  "file": "grass_flowers.webp",
   "variants": [
    4,
    4
@@ -199,7 +199,7 @@
   ]
  },
  "grass_hyggebyen": {
-  "file": "grass_hyggebyen.png",
+  "file": "grass_hyggebyen.webp",
   "variants": [
    4,
    4
@@ -210,7 +210,7 @@
   ]
  },
  "grass_hyggebyen_flowers": {
-  "file": "grass_hyggebyen_flowers.png",
+  "file": "grass_hyggebyen_flowers.webp",
   "variants": [
    4,
    4
@@ -221,7 +221,7 @@
   ]
  },
  "moss_path_o": {
-  "file": "ortho_moss_path.png",
+  "file": "ortho_moss_path.webp",
   "variants": [
    4,
    4
@@ -237,7 +237,7 @@
   ]
  },
  "path_dirt": {
-  "file": "path_dirt.png",
+  "file": "path_dirt.webp",
   "variants": [
    4,
    4
@@ -248,7 +248,7 @@
   ]
  },
  "soil_tilled": {
-  "file": "soil_tilled.png",
+  "file": "soil_tilled.webp",
   "variants": [
    4,
    4
@@ -259,7 +259,7 @@
   ]
  },
  "soil_watered": {
-  "file": "soil_watered.png",
+  "file": "soil_watered.webp",
   "variants": [
    4,
    4
@@ -270,7 +270,7 @@
   ]
  },
  "void_haze": {
-  "file": "void_haze.png",
+  "file": "void_haze.webp",
   "variants": [
    4,
    4
@@ -281,7 +281,7 @@
   ]
  },
  "wall_void_o": {
-  "file": "ortho_wall_void.png",
+  "file": "ortho_wall_void.webp",
   "variants": [
    4,
    4
@@ -297,7 +297,7 @@
   ]
  },
  "water_0": {
-  "file": "water_0.png",
+  "file": "water_0.webp",
   "variants": [
    2,
    2
@@ -308,7 +308,7 @@
   ]
  },
  "water_1": {
-  "file": "water_1.png",
+  "file": "water_1.webp",
   "variants": [
    2,
    2
@@ -319,7 +319,7 @@
   ]
  },
  "water_2": {
-  "file": "water_2.png",
+  "file": "water_2.webp",
   "variants": [
    2,
    2
@@ -330,7 +330,7 @@
   ]
  },
  "water_3": {
-  "file": "water_3.png",
+  "file": "water_3.webp",
   "variants": [
    2,
    2

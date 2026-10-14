@@ -34,7 +34,9 @@ HEIGHTS = {"bat": 153, "bunny": 125, "calf": 139, "capybara": 141,
            "chick": 87, "duck": 98, "fawn": 131, "fox_cub": 136,
            "hen": 112, "kitten": 113, "lamb": 126, "lysesvamp": 133,
            "owl": 129, "puppy": 138, "snurresvamp": 190,
-           "tornebusk": 157, "ugleoje": 160}
+           "tornebusk": 157, "ugleoje": 160,
+           "ghost_bu": 160, "ghost_hviske": 160,
+           "owl_fru_ugle": 153, "bat_natteblik": 153}
 CAST = {
     "heroes": ["fox", "fairy", "hobbit_pip", "fairy_mayor"],
     "players2": ["rabbit", "hedgehog", "squirrel", "fairy_stardust"],
@@ -48,6 +50,8 @@ CAST = {
     "animals2": ["bunny", "puppy", "fox_cub", "lamb"],
     "animals3": ["calf", "fawn", "owl", "bat"],
     "creatures": ["ugleoje", "tornebusk", "lysesvamp", "snurresvamp"],
+    "cast_extra_a": ["bear_brumme", "bat_natteblik", "hedgehog_pip", "owl_fru_ugle"],
+    "cast_extra_b": ["capybara_sofus", "fairy_birk_npc", "hobbit_bodil", "ghost_bu"],
 }
 # Five authored views: front, front-left, left profile, rear-left and straight back.
 # Three opposite-side views are mirrored; the N entry is replaced by its own drawing.
@@ -57,7 +61,10 @@ NORTH_GROUPS = {
     "backs1": ["heroes", "players2", "players3", "fairies1"],
     "backs2": ["fairies2", "villagers1", "villagers2", "pack"],
     "backs3": ["animals1", "animals2", "animals3", "creatures"],
+    "backs_extra": ["cast_extra_a", "cast_extra_b"],
 }
+REVISED_ROWS = {"owl_fru_ugle": 0, "cat_morfar_mis": 1, "fairy_shopkeeper": 2}
+_revised_cache: dict = {}
 YY, XX = np.mgrid[:256, :256].astype(np.float32)
 
 
@@ -113,7 +120,9 @@ def fitted(image: Image.Image, height: int, feet: int) -> Image.Image:
 def outlined(image: Image.Image) -> Image.Image:
     """A clean two-pixel separation band survives the game's S3TC mipmaps."""
     image = image.copy()
-    alpha = image.getchannel("A").point(lambda v: v if v > 32 else 0)
+    # Near-opaque imagegen paper fills are matte surfaces. Keep genuine wing
+    # transparency and edge coverage, but do not leave whole bodies at 253/255.
+    alpha = image.getchannel("A").point(lambda v: 255 if v >= 248 else (v if v > 32 else 0))
     image.putalpha(alpha)
     outer = alpha.point(lambda v: 255 if v > 0 else 0).filter(ImageFilter.MaxFilter(5))
     rim = Image.new("RGBA", image.size, (75, 60, 73, 0))
@@ -205,6 +214,37 @@ def save_webp(image: Image.Image, path: Path, quality: int = 97, method: int = 2
     image.save(path, "WEBP", quality=quality, method=method, exact=True)
 
 
+def ghost_pink(image: Image.Image) -> Image.Image:
+    """Hviske shares Bu's silhouette and motion; only the cloth pigment changes."""
+    rgba = np.asarray(image, dtype=float).copy()
+    blue = np.maximum(rgba[:, :, 2] - rgba[:, :, 0], 0)
+    rgba[:, :, 0] += .48 * blue + .006 * blue**2
+    rgba[:, :, 1] -= .33 * blue
+    rgba[:, :, 2] -= .5 * blue
+    return Image.fromarray(np.uint8(np.clip(rgba, 0, 255)))
+
+
+def ensure_extra_metadata() -> None:
+    # Standalone dressed heroes fit the current fallback chain. A2 still owns
+    # the wardrobe-ready *_base bodies and can install those independently.
+    manifest_path = CHARACTERS / "manifest_traetoppen.json"
+    manifest = json.loads(manifest_path.read_text())
+    for name, template in (("hobbit_bodil", "hobbit_pip"), ("fairy_birk", "fairy_stardust")):
+        folder = CHARACTERS / name
+        path = folder / "animations.json"
+        if not path.exists() or "role" not in json.loads(path.read_text()):
+            folder.mkdir(exist_ok=True)
+            metadata = json.loads((CHARACTERS / template / "animations.json").read_text())
+            metadata["character"] = name
+            metadata.pop("illustration", None)
+            (folder / "animations.json").write_text(json.dumps(metadata, indent=2) + "\n")
+        metadata = json.loads((folder / "animations.json").read_text())
+        manifest["characters"][name] = {key: metadata[key] for key in
+            ("role", "clip_set", "family", "flyer", "display_scale", "portrait", "animations")}
+    manifest["characters"] = dict(sorted(manifest["characters"].items()))
+    manifest_path.write_text(json.dumps(manifest, indent=1) + "\n")
+
+
 def align_rows(cells: list[Image.Image]) -> list[Image.Image]:
     """Opposed silhouettes balance about the ground pivot, including long tails."""
     for row in range(4):
@@ -223,11 +263,33 @@ def align_rows(cells: list[Image.Image]) -> list[Image.Image]:
 
 def character(name: str, drawings: list[Image.Image], source: str, north: Image.Image,
               north_source: str, portraits_only: bool = False) -> None:
+    if name in REVISED_ROWS:
+        if not _revised_cache:
+            _revised_cache["views"] = extract(SOURCES / "cast_revised.png", 3, 4)
+            _revised_cache["backs"] = extract(SOURCES / "backs_revised.png", 1, 3)
+        row = REVISED_ROWS[name]
+        drawings = _revised_cache["views"][row * 4:(row + 1) * 4]
+        north = _revised_cache["backs"][row]
+        source, north_source = "cast_revised", "backs_revised"
     folder = CHARACTERS / name
     metadata = json.loads((folder / "animations.json").read_text())
     # Fixed measurements make repeated builds independent of installed output.
     height = HEIGHTS.get(name, 168)
-    feet = 219 if name in QUADRUPEDS else (215 if name == "lysesvamp" else 207)
+    if name == "cat_morfar_mis":
+        # Calibrate the neutral tabby pigment to the cast's cool grey palette.
+        # Keep warm cream highlights, pink ears, ink and every alpha byte.
+        def cool_fur(image: Image.Image) -> Image.Image:
+            pixels = np.array(image).astype(float)
+            rgb = pixels[:, :, :3]
+            hi, lo = rgb.max(axis=2), rgb.min(axis=2)
+            neutral = np.clip((.20 - (hi - lo) / np.maximum(hi, 1)) / .10, 0, 1)
+            mid = np.clip((hi - 55) / 35, 0, 1) * np.clip((235 - hi) / 25, 0, 1)
+            pixels[:, :, 1] += 13 * neutral * mid
+            pixels[:, :, 2] += 27 * neutral * mid
+            return Image.fromarray(np.uint8(np.clip(pixels, 0, 255)))
+        drawings = [cool_fur(image) for image in drawings]
+        north = cool_fur(north)
+    feet = 219 if name in QUADRUPEDS else (215 if name == "lysesvamp" else (211 if name.startswith("ghost_") else 207))
     bases = [fitted(ImageOps.mirror(drawings[view]) if mirror else drawings[view], height, feet)
              for view, mirror in VIEWS]
     bases[4] = fitted(north, height, feet)
@@ -239,13 +301,21 @@ def character(name: str, drawings: list[Image.Image], source: str, north: Image.
                             clip, frame, frames, height, feet) for row in range(8)]
             for row, cell in enumerate(align_rows(cells)):
                 atlas.alpha_composite(cell, (frame * 256, row * 256))
-        save_webp(atlas, folder / spec["sheet"])
+        save_webp(atlas, folder / spec["sheet"], quality=90 if source.startswith("cast_") else 97,
+                  method=6 if source.startswith("cast_") else 2)
     # A head-and-shoulders crop, with breathing room at the top and sides.
     front = drawings[0]
     bust = front.crop((0, 0, front.width, round(front.height * .77)))
     bust.thumbnail((228, 248), Image.Resampling.LANCZOS)
     portrait = Image.new("RGBA", (256, 256))
     portrait.alpha_composite(bust, ((256 - bust.width) // 2, 256 - bust.height))
+    portrait.putalpha(portrait.getchannel("A").point(lambda v: 255 if v >= 248 else (v if v > 32 else 0)))
+    if name in {"bear_brumme", "bat_natteblik", "hedgehog_pip", "owl_fru_ugle", "capybara_sofus", "fairy_birk_npc", "cat_morfar_mis", "fairy_shopkeeper"}:
+        rim = Image.new("RGBA", portrait.size, (43, 35, 64, 0))
+        outer = portrait.getchannel("A").point(lambda v: 255 if v > 32 else 0).filter(ImageFilter.MaxFilter(5))
+        rim.putalpha(outer.point(lambda v: 224 if v else 0))
+        rim.alpha_composite(portrait)
+        portrait = rim
     if name in PACK:
         # The pack keeps a full-body thumbnail as well as its dialogue bust.
         save_webp(fitted(front, 224, 246), folder / "portrait.webp")
@@ -273,7 +343,7 @@ def prop_sprite(image: Image.Image, width: int, height: int, pivot: tuple[int, i
     save_webp(canvas, target)
     manifest[name] = {"file": target.name, "size": [width, height], "pivot": list(pivot),
                       "footprint": list(footprint), "proj": "iso"}
-    if name.startswith("house_"):
+    if name.startswith("house_") or name == "lantern_post":
         glow, bounds = window_light(canvas)
         glow_path = target.with_name(name + "_glow.webp")
         save_webp(glow, glow_path)
@@ -519,11 +589,18 @@ def homes() -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--only", choices=["characters", "props", "homes", "terrain"])
+    parser.add_argument("--only", choices=["characters", "props", "homes", "terrain", "items"])
     parser.add_argument("--sheet", choices=list(CAST), nargs="+")
+    parser.add_argument("--character", nargs="+", help="Rebuild only these character IDs (shared hero/NPC sources stay paired)")
     parser.add_argument("--portraits-only", action="store_true")
     args = parser.parse_args()
     if args.only in (None, "characters"):
+        selected = {({"ghost_hviske": "ghost_bu", "fairy_birk": "fairy_birk_npc"}).get(name, name) for name in args.character} if args.character else set()
+        valid = {name for cast in CAST.values() for name in cast}
+        if selected - valid:
+            parser.error("unknown characters: " + ", ".join(sorted(selected - valid)))
+        if not args.portraits_only and (not args.sheet or "cast_extra_b" in args.sheet):
+            ensure_extra_metadata()
         north_cache = {}
         for sheet, cast in CAST.items():
             if args.sheet and sheet not in args.sheet:
@@ -534,17 +611,30 @@ def main() -> None:
             drawings = extract(path, 4, 4)
             north_source, north_sheets = next((name, sheets) for name, sheets in NORTH_GROUPS.items() if sheet in sheets)
             if north_source not in north_cache:
-                north_cache[north_source] = extract(SOURCES / (north_source + ".png"), 4, 4)
+                north_cache[north_source] = extract(SOURCES / (north_source + ".png"), 4, 2 if north_source == "backs_extra" else 4)
             norths = north_cache[north_source]
             for row, name in enumerate(cast):
+                if selected and name not in selected:
+                    continue
                 character(name, drawings[row * 4:(row + 1) * 4], sheet,
                           norths[north_sheets.index(sheet) * 4 + row], north_source, args.portraits_only)
+                if name == "fairy_birk_npc":
+                    character("fairy_birk", drawings[row * 4:(row + 1) * 4], sheet,
+                              norths[north_sheets.index(sheet) * 4 + row], north_source, args.portraits_only)
+                elif name == "ghost_bu":
+                    character("ghost_hviske", [ghost_pink(im) for im in drawings[row * 4:(row + 1) * 4]], sheet,
+                              ghost_pink(norths[north_sheets.index(sheet) * 4 + row]), north_source, args.portraits_only)
     if args.only in (None, "props"):
         props()
     if args.only in (None, "homes"):
         homes()
     if args.only in (None, "terrain"):
         from terrain import build
+        build()
+        from extra_props import build as extra_props
+        extra_props()
+    if args.only in (None, "items"):
+        from items import build
         build()
 
 

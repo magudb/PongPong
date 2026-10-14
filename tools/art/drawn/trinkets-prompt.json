@@ -1,0 +1,70 @@
+{
+  "mode": "built-in imagegen",
+  "prompt": "Use case: illustration-story. Production transparent inventory ICON ATLAS, strict 4 COLUMN by 4 ROW grid of SIXTEEN isolated objects in row-major order on a square canvas, ideally 2048x2048. Equal invisible cells, each object centred at 70% cell size with wide clear gutters. Hand-painted watercolor/gouache for a cozy cottage game: earthy muted colors, gently wobbly warm charcoal-brown contour, tiny worn material detail, soft paper tooth, clear silhouette at 64 px. Transparent background, no white paper, no cast shadows, no labels, writing, grid, numerals, circles, die-cut borders, plastic, vector icons, photos or glossy 3D. Entire complete object inside each cell. Exact objects, row-major:\n1: a complete cord necklace with a small golden-brown ACORN pendant.\n2: a complete fine cord necklace with one pale blue DEWDROP-shaped glass pendant.\n3: a complete green braided cord necklace with a small carved wood HEART pendant and leaf.\n4: a complete thin cord necklace with one delicate GREEN LEAF pendant.\n5: a complete silver-chain necklace with a pale lavender-blue moonstone pendant.\n6: a complete delicate DAISY flower circlet with cream petals, honey centres and green stems.\n7: a complete circlet of overlapping small fresh green LEAVES.\n8: a small delicate gold crescent MOON CROWN circlet with three tiny star decorations.\n9: a pair of simple small warm copper hoop earrings.\n10: a pair of tiny turquoise MUSHROOM-shaped pendant earrings, no external halo.\n11: a pair of delicate gold hoop earrings.\n12: a pair of small pearl drop earrings with fine gold hooks.\n13: a short rustic worn wooden garden fence section with two posts and two rails, little moss at the base.\n14: a short crooked weathered wood garden post with a small hanging warm amber lantern and tiny green climbing leaves.\n15: a tiny friendly garden scarecrow in a straw hat, patched honey-brown shirt and blue neckerchief on a wood cross, no ground.\n16: a compact construction kit: a tiny folded red-brown wood barn facade, a bundle of timber planks tied with rope and a rolled blank blueprint, clearly a building kit.",
+  "groups": [
+    [
+      "necklace_acorn",
+      "a complete cord necklace with a small golden-brown ACORN pendant"
+    ],
+    [
+      "necklace_dewdrop",
+      "a complete fine cord necklace with one pale blue DEWDROP-shaped glass pendant"
+    ],
+    [
+      "necklace_heart_of_tree",
+      "a complete green braided cord necklace with a small carved wood HEART pendant and leaf"
+    ],
+    [
+      "necklace_leaf",
+      "a complete thin cord necklace with one delicate GREEN LEAF pendant"
+    ],
+    [
+      "necklace_moonstone",
+      "a complete silver-chain necklace with a pale lavender-blue moonstone pendant"
+    ],
+    [
+      "circlet_daisy",
+      "a complete delicate DAISY flower circlet with cream petals, honey centres and green stems"
+    ],
+    [
+      "circlet_leaves",
+      "a complete circlet of overlapping small fresh green LEAVES"
+    ],
+    [
+      "circlet_moon_crown",
+      "a small delicate gold crescent MOON CROWN circlet with three tiny star decorations"
+    ],
+    [
+      "earrings_copper",
+      "a pair of simple small warm copper hoop earrings"
+    ],
+    [
+      "earrings_glowcap",
+      "a pair of tiny turquoise MUSHROOM-shaped pendant earrings, no external halo"
+    ],
+    [
+      "earrings_hoops_gold",
+      "a pair of delicate gold hoop earrings"
+    ],
+    [
+      "earrings_pearl",
+      "a pair of small pearl drop earrings with fine gold hooks"
+    ],
+    [
+      "fence",
+      "a short rustic worn wooden garden fence section with two posts and two rails, little moss at the base"
+    ],
+    [
+      "lantern_post",
+      "a short crooked weathered wood garden post with a small hanging warm amber lantern and tiny green climbing leaves"
+    ],
+    [
+      "scarecrow",
+      "a tiny friendly garden scarecrow in a straw hat, patched honey-brown shirt and blue neckerchief on a wood cross, no ground"
+    ],
+    [
+      "barn_kit",
+      "a compact construction kit: a tiny folded red-brown wood barn facade, a bundle of timber planks tied with rope and a rolled blank blueprint, clearly a building kit"
+    ]
+  ]
+}

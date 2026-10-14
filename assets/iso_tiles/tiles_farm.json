@@ -1,0 +1,13 @@
+{
+ "field_grass": {
+  "file": "field_grass.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ }
+}

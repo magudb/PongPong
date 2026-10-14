@@ -1,0 +1,384 @@
+{
+  "assets": [
+    {
+      "asset": "assets/backdrops/cave_sky.png",
+      "master": "tools/art/drawn/sources/environment_masters/cave_sky.png",
+      "before_bytes": 3199402,
+      "after_bytes": 1109676,
+      "mean_visible_rgb_error": 2.613,
+      "p99_visible_rgb_error": 11.0,
+      "alpha_identical": true,
+      "palette_colours": 128,
+      "size": [
+        1920,
+        1080
+      ],
+      "import": "S3TC with mipmaps"
+    },
+    {
+      "asset": "assets/backdrops/forest_sky.png",
+      "master": "tools/art/drawn/sources/environment_masters/forest_sky.png",
+      "before_bytes": 3182766,
+      "after_bytes": 1177708,
+      "mean_visible_rgb_error": 2.119,
+      "p99_visible_rgb_error": 9.0,
+      "alpha_identical": true,
+      "palette_colours": 128,
+      "size": [
+        1920,
+        1080
+      ],
+      "import": "S3TC with mipmaps"
+    },
+    {
+      "asset": "assets/backdrops/hyggebyen_sky.png",
+      "master": "tools/art/drawn/sources/environment_masters/hyggebyen_sky.png",
+      "before_bytes": 2534625,
+      "after_bytes": 905653,
+      "mean_visible_rgb_error": 1.984,
+      "p99_visible_rgb_error": 10.0,
+      "alpha_identical": true,
+      "palette_colours": 128,
+      "size": [
+        1920,
+        1080
+      ],
+      "import": "S3TC with mipmaps"
+    },
+    {
+      "asset": "assets/backdrops/home_sky.png",
+      "master": "tools/art/drawn/sources/environment_masters/home_sky.png",
+      "before_bytes": 2533941,
+      "after_bytes": 809589,
+      "mean_visible_rgb_error": 2.18,
+      "p99_visible_rgb_error": 11.0,
+      "alpha_identical": true,
+      "palette_colours": 128,
+      "size": [
+        1920,
+        1080
+      ],
+      "import": "S3TC with mipmaps"
+    },
+    {
+      "asset": "assets/backdrops/farm_sky.png",
+      "master": "tools/art/drawn/sources/environment_masters/farm_sky.png",
+      "before_bytes": 2377062,
+      "after_bytes": 1010894,
+      "mean_visible_rgb_error": 1.497,
+      "p99_visible_rgb_error": 10.0,
+      "alpha_identical": true,
+      "palette_colours": 128,
+      "size": [
+        1920,
+        1080
+      ],
+      "import": "S3TC with mipmaps"
+    },
+    {
+      "asset": "assets/iso_props/tree_giant_crown.webp",
+      "master": "tools/art/drawn/sources/environment_masters/tree_giant_crown.png",
+      "before_bytes": 3605840,
+      "after_bytes": 1860942,
+      "mean_visible_rgb_error": 0.683,
+      "p99_visible_rgb_error": 6.0,
+      "alpha_identical": true,
+      "palette_colours": 256,
+      "size": [
+        2218,
+        2893
+      ],
+      "import": "lossless"
+    },
+    {
+      "asset": "assets/iso_tiles/ortho_bog.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/ortho_bog.png",
+      "before_bytes": 59076,
+      "after_bytes": 35474,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        448,
+        256
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/ortho_cave_floor.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/ortho_cave_floor.png",
+      "before_bytes": 116663,
+      "after_bytes": 68976,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        448,
+        256
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/cobble_hyggebyen.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/cobble_hyggebyen.png",
+      "before_bytes": 236596,
+      "after_bytes": 125794,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        576,
+        336
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/ortho_crystal_floor.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/ortho_crystal_floor.png",
+      "before_bytes": 131460,
+      "after_bytes": 77144,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        448,
+        256
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/deck_farm.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/deck_farm.png",
+      "before_bytes": 187251,
+      "after_bytes": 105350,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        576,
+        336
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/deck_hyggebyen.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/deck_hyggebyen.png",
+      "before_bytes": 197411,
+      "after_bytes": 113690,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        576,
+        336
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/forest_floor.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/forest_floor.png",
+      "before_bytes": 175526,
+      "after_bytes": 103612,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        576,
+        336
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/forest_floor_glow.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/forest_floor_glow.png",
+      "before_bytes": 181249,
+      "after_bytes": 107916,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        576,
+        336
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/ortho_forest_floor_glow.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/ortho_forest_floor_glow.png",
+      "before_bytes": 175490,
+      "after_bytes": 110438,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        448,
+        256
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/ortho_forest_floor.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/ortho_forest_floor.png",
+      "before_bytes": 166193,
+      "after_bytes": 104154,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        448,
+        256
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/grass.png",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/grass.png",
+      "before_bytes": 185441,
+      "after_bytes": 177144,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        576,
+        336
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/grass_flowers.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/grass_flowers.png",
+      "before_bytes": 189779,
+      "after_bytes": 109146,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        576,
+        336
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/grass_hyggebyen.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/grass_hyggebyen.png",
+      "before_bytes": 186429,
+      "after_bytes": 104914,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        576,
+        336
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/grass_hyggebyen_flowers.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/grass_hyggebyen_flowers.png",
+      "before_bytes": 190421,
+      "after_bytes": 109344,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        576,
+        336
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/ortho_moss_path.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/ortho_moss_path.png",
+      "before_bytes": 107940,
+      "after_bytes": 66216,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        448,
+        256
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/path_dirt.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/path_dirt.png",
+      "before_bytes": 161556,
+      "after_bytes": 90246,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        576,
+        336
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/soil_tilled.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/soil_tilled.png",
+      "before_bytes": 184842,
+      "after_bytes": 100040,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        576,
+        336
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/soil_watered.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/soil_watered.png",
+      "before_bytes": 175466,
+      "after_bytes": 102382,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        576,
+        336
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/void_haze.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/void_haze.png",
+      "before_bytes": 91541,
+      "after_bytes": 44006,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        576,
+        336
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/ortho_wall_void.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/ortho_wall_void.png",
+      "before_bytes": 32009,
+      "after_bytes": 19178,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        448,
+        256
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/water_0.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/water_0.png",
+      "before_bytes": 42859,
+      "after_bytes": 23864,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        288,
+        168
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/water_1.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/water_1.png",
+      "before_bytes": 43016,
+      "after_bytes": 23828,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        288,
+        168
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/water_2.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/water_2.png",
+      "before_bytes": 42963,
+      "after_bytes": 24092,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        288,
+        168
+      ]
+    },
+    {
+      "asset": "assets/iso_tiles/water_3.webp",
+      "master": "tools/art/drawn/sources/environment_masters/legacy_terrain/water_3.png",
+      "before_bytes": 43555,
+      "after_bytes": 24100,
+      "alpha_identical": true,
+      "visible_rgba_identical": true,
+      "size": [
+        288,
+        168
+      ]
+    }
+  ],
+  "top_level_environment_bytes": 21177382,
+  "budget_bytes": 22000000
+}

@@ -1,0 +1,119 @@
+{
+  "allowed": [
+    {
+      "kind": "warning",
+      "rule": "Unknown chibi character",
+      "section": "characters",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): Unknown chibi character: no_such_character (at load_character res://scripts/isometric/iso_chibi_sprite_2d.gd:233)"
+    },
+    {
+      "kind": "warning",
+      "rule": "Unknown chibi character",
+      "section": "characters",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): Unknown chibi character: ../fox (at load_character res://scripts/isometric/iso_chibi_sprite_2d.gd:233)"
+    },
+    {
+      "kind": "warning",
+      "rule": "Unknown chibi character",
+      "section": "characters",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): Unknown chibi character: FOX (at load_character res://scripts/isometric/iso_chibi_sprite_2d.gd:233)"
+    }
+  ],
+  "character": "ghost",
+  "checks": 618,
+  "elapsed_s": 114.57,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "area": {
+      "checks": 232,
+      "failed": 0,
+      "ms": 18107,
+      "skipped": 0
+    },
+    "art_cast_v2": {
+      "checks": 21,
+      "failed": 0,
+      "ms": 17916,
+      "skipped": 4
+    },
+    "art_characters": {
+      "checks": 27,
+      "failed": 0,
+      "ms": 12055,
+      "skipped": 0
+    },
+    "art_city": {
+      "checks": 17,
+      "failed": 0,
+      "ms": 696,
+      "skipped": 0
+    },
+    "art_environment": {
+      "checks": 32,
+      "failed": 0,
+      "ms": 1047,
+      "skipped": 3
+    },
+    "art_farm": {
+      "checks": 23,
+      "failed": 0,
+      "ms": 451,
+      "skipped": 0
+    },
+    "art_ghost": {
+      "checks": 18,
+      "failed": 0,
+      "ms": 16388,
+      "skipped": 0
+    },
+    "art_home": {
+      "checks": 29,
+      "failed": 0,
+      "ms": 4920,
+      "skipped": 0
+    },
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 2362,
+      "skipped": 0
+    },
+    "cast_data": {
+      "checks": 15,
+      "failed": 0,
+      "ms": 527,
+      "skipped": 3
+    },
+    "characters": {
+      "checks": 116,
+      "failed": 0,
+      "ms": 3098,
+      "skipped": 0
+    },
+    "city_levels": {
+      "checks": 69,
+      "failed": 0,
+      "ms": 34286,
+      "skipped": 0
+    },
+    "ghost": {
+      "checks": 7,
+      "failed": 0,
+      "ms": 22,
+      "skipped": 0
+    },
+    "ghost_data": {
+      "checks": 4,
+      "failed": 0,
+      "ms": 2,
+      "skipped": 0
+    }
+  },
+  "skipped": 10
+}

@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cdvupberxbqmy"
-path="res://.godot/imported/cave_sky.png-e81a593055564eb77dd1f88bc98f320b.ctex"
+path.s3tc="res://.godot/imported/cave_sky.png-e81a593055564eb77dd1f88bc98f320b.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/backdrops/cave_sky.png"
-dest_files=["res://.godot/imported/cave_sky.png-e81a593055564eb77dd1f88bc98f320b.ctex"]
+dest_files=["res://.godot/imported/cave_sky.png-e81a593055564eb77dd1f88bc98f320b.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
