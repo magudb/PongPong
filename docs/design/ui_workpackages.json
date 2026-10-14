@@ -1,0 +1,377 @@
+{
+ "_doc": "Machine-readable companion of UI_NAVIGATION.md (version 1.1, final edit 2026-10-14). amendments: changes to existing packages (ownsAdd / ownsRemove / addDependsOn / removeDependsOn / addTasks / notes); optionalAmendments: packages that are NOT in owners.json (F9-collection) and apply only if the lead schedules them, so a merge keyed by package id never meets an unknown one; newPackages: P28; waveChanges: P17 5 -> 4 and P28 in 3b.",
+ "amendments": [
+  {
+   "package": "P07-ui-foundation",
+   "ownsAdd": [],
+   "ownsRemove": [
+    "assets/ui/theme.tres"
+   ],
+   "addDependsOn": [],
+   "addTasks": [],
+   "notes": "Built (wave 3). The theme file moves to P28 (explicit entries for assets/ui/theme.tres, tools/ui/build_theme.gd, scripts/ui/dev/ui_fixtures.gd and the two slider SVGs overlap P07's remaining globs tools/ui/**, scripts/ui/dev/**, assets/ui/icons/** on purpose: P07 has no active wave, and ownership.py counts a change as mine when ANY package of the running wave owns it). P07's checks (ui_foundation.theme_matches_builder) stay and must stay green after the regeneration. The quantity_stepper (scripts/ui/components/quantity_stepper.gd, scenes/ui/components/quantity_stepper.tscn) is the one P07 component P28 amends (UI_NAVIGATION.md 4.6 item 3d): explicit entries in P28's owns."
+  },
+  {
+   "package": "P01-project-config",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "addTasks": [
+    "project.godot [input]: `ui_page_up` gains pad LB (joy 9), `ui_page_down` gains pad RB (joy 10) next to PageUp / PageDown and nothing else (two more UI_OVERRIDES, 39 actions); tests/tools/input_contract.gd UI_OVERRIDES + the probe table of ui_errors() (LB triggers ui_page_up, RB triggers ui_page_down, RB still triggers drink and rotate_item), check_project.gd keeps ACTIONS.size() == 35 and adds the two overrides -> verify: project.ui_page_pad_bindings"
+   ],
+   "notes": "Built package (wave 1) reopened for a tiny change, because 'any other new custom input action must go through P01's owner'. The hotbar D-pad cycle needs no action (P06 reads the pad events). Do not add other actions."
+  },
+  {
+   "package": "P03-loc-core",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "addTasks": [
+    "tools/loc/key_owners.json: add nav.csv (owner P28: NAV_, HINT_), extend menus.csv (P16: TITLE_, PAUSE_, SAVELOAD_, SETTINGS_, SELECT_ next to the NOTIF_LOAD_ / NOTIF_SAVE_FAILED_ prefixes), hud.csv (P17: HUD_, TOAST_, AREA_; the exact HUD_ACTIVE_QUESTS and HUD_ENERGY stay in ui.csv), shop_ui.csv (P18: STORE_); python tools/loc/new_csv.py nav creates the CSV + keep-import -> verify: loc.key_owners_ui_families"
+   ],
+   "notes": "Built (wave 2); the lead applies the table change (the table is P03's). Appendix B of UI_NAVIGATION.md lists the families and the nav.csv strings."
+  },
+  {
+   "package": "P09-test-harness",
+   "ownsAdd": [
+    "tests/sections/ui_audit.gd",
+    "tests/sections/ui_audit_blind.gd",
+    "tests/sections/ui_audit_pins.gd",
+    "tests/fixtures/ui_audit/**"
+   ],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "addTasks": [
+    "tests/lib/ui_audit.gd (class UiAudit), tests/lib/ui_audit_rules.gd and tests/lib/ui_screens.json (= ui_screens.proposed.json) exactly per UI_NAVIGATION.md section 10 and Appendix D (screens, focusable_report, focus_walk, initial_focus, escape_chain, rule_report, rule_report_pages, focusable_report_pages, radio_groups, validate_options, theme_report, ring_pixels, panel_pixels, button_pixels, scene_text_report, script_text_report, open_screen, device_swap, mouse_walk, text_field_audit, locale_flip_report, selftest, expect) with a planted negative for every defect code and every branch -> verify: ui_audit.selftest_every_control_behaves, ui_audit.every_defect_code_has_a_negative_test, ui_audit.every_raised_code_is_catalogued, ui_audit.registry_valid, the sections ui_audit, ui_audit_blind and ui_audit_pins"
+   ],
+   "notes": "Built by the library agent in worktree ui-audit and reviewed twice; the lead merges it before wave 3b. tests/lib/** is already P09's; the three sections ui_audit*.gd and the fixtures under tests/fixtures/ui_audit/** are added here (they had no owner). The rows of ui_screens.json are ui_screens.proposed.json byte for byte; `status` is derived, so no package edits the file. Windowed proof: tools/dev/run_windowed.sh --only=ui_audit,ui_audit_blind,ui_audit_pins (ring_pixels / panel_pixels / button_pixels, a ring cut off by a clipping parent, a plain HSlider with a theme focus style)."
+  },
+  {
+   "package": "P06-player-farm-core",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [
+    "P28-ui-nav-foundation"
+   ],
+   "addTasks": [
+    "World input contract (UI_NAVIGATION.md 3.3): interact, use_tool, attack, jump, dodge, slot_n, fly and the zoom wheel are read in _unhandled_input (event-driven; only movement polls Input.get_vector) and are refused while GameManager.is_modal_open() or the player is TALKING, so a key a modal consumed never also acts in the world -> verify: player.world_input_guarded_by_modals, player.interact_event_driven",
+    "Hotbar: InputEventJoypadButton D-pad left / right cycle the selected slot when no modal is open (no new action); slot_1..slot_10 and the wheel do nothing while a modal is open (the backpack reads the digits itself); hotbar_changed(entries, selected) keeps the contract shape {id, amount, name?, rare?} + int -> verify: player.hotbar_dpad_cycle, player.slot_keys_ignored_in_modals, player.zoom_ignored_in_modals, player.hotbar_signal_shape"
+   ],
+   "notes": "Wave 4. P17 (now also wave 4) reads hotbar_changed and player_stats_changed as a contract; the shape test pins it so a drift is caught in this package's own run."
+  },
+  {
+   "package": "P16-ui-menus",
+   "ownsAdd": [
+    "docs/qa/ui_baseline/settings.png",
+    "docs/qa/ui_baseline/select_2.png",
+    "docs/qa/ui_baseline/saveload.png",
+    "docs/qa/ui_baseline/pause.png"
+   ],
+   "ownsRemove": [],
+   "addDependsOn": [
+    "P28-ui-nav-foundation"
+   ],
+   "addTasks": [
+    "Title (card S01, guide 04): rows Fortsæt / (Indlæs spil only with 2+ loadable saves) / Nyt spil / Indstillinger / Afslut as MenuRow in PanelMenu, tag %LanguageButton, key art with the stripes placeholder, HintBar below the panel, an instance of P28's ToastStack (the title has no GameUI: a failed Fortsæt / Indlæs and the language toast would otherwise be silent); initial focus on the first enabled row; ring rows + tag; Left / Right row <-> tag; hover focuses rows; Esc / Start / B do nothing (the registry row presses all three); scene-level opener memory (UiNav.remember) so the title refocuses the row that opened a child; _ready: change_phase(MENU), tree unpaused, SettingsUI.apply_saved(); Continue only SaveManager.continue_latest() -> verify: menus.title_focus_ring, menus.title_continue_states, menus.title_esc_inert, menus.title_load_row_conditional, menus.title_failure_toast_visible, menus.harness_unique_names, menus.guide_diff_title",
+    "Language (card S03): the version tag and the settings chips switch da <-> en through LocalizationManager.set_locale with a NOTIFICATION_TRANSLATION_CHANGED refresh and no signal re-connection; the legacy Sprog row and screen are deleted -> verify: menus.language_switch_no_errors",
+    "Vælg figur page 1 (card S04, guide 05): CardButton race cards with the real sprite / equipped bust, radio focus-selects (Left / Right moves focus AND selection, hover does not, the selected card lifts 8 px with the ring), species chips Ræv / Kanin / Pindsvin / Egern for Skovdyr, optional variant chips, bottom bar [chips, Tilbage, Videre], HintBar, ToastStack; Esc / Tilbage to the title; LB / RB = Tilbage / Videre; the select_guide fixture hides %BackButton and the HintBar -> verify: menus.select_radio_focus_selects, menus.select_species_chips_all, menus.guide_diff_select",
+    "Vælg figur page 2 (card S05): name + farm LineEdits (max 20 / 24, select-all on focus, Enter chain, Tab ring, Up / Down yield through UiNav.yield_updown_from_fields, Esc back keeping the names, empty = defaults), Tilbage / Start; entering the bottom pair from above focuses Start (Down, Down, A accepts the defaults on a pad); start_new_game(name, type, farm, skin) with the 4th argument -> verify: menus.select_page2_fields, menus.new_game_flow_all_races",
+    "Settings (card S02): language chips, four TTSlider rows (P28's slider: Left / Right +/-5, its own gold ring), fullscreen check (Left off / Right on), window-size chips dimmed while fullscreen, Færdig; persisted in the shared settings.cfg, static apply_saved(); on the title it pushes the modal with pauses_tree false -> verify: menus.settings_sliders_keyboard, menus.settings_chips, menus.settings_fullscreen_disables_sizes, menus.settings_persist_across_restart",
+    "Pause (card S07): opens on `pause` only on the free PLAYING world and never while WorldRoot2D.sleeping / traveling; rows Fortsæt, Rygsæk, Opgavebog, Byg (the farm only), Garderobe, Samlerbog, Gem, Indlæs, Indstillinger, Til titelskærmen, Afslut spil with key hints; the five transfer rows are created only when GameUI.get_screen(inventory_ui | quest_journal | build_menu_ui | garderobe | samlerbog) finds the screen (no dead row in wave 4: P14 and P20 land in wave 5) and transfer (pause closes first); Gem / Indlæs / Indstillinger nest; Byg is how a gamepad opens the build menu (build_menu has no pad button); eleven rows fit 1280 x 720; quit to menu = autosave, pop_all_modals, change_phase(MENU), unpaused live title; remove Input.mouse_mode = CAPTURED -> verify: menus.pause_resume_on_second_esc, menus.pause_opens_only_on_free_world, menus.pause_refused_while_sleeping_or_traveling, menus.pause_rows_optional_screens, menus.pause_build_row_farm_only, menus.pause_panel_fits_720, menus.pause_rows_transfer_vs_nest, menus.quit_to_menu_is_live",
+    "Save / load (card S06): seven RowButton rows from SaveManager.describe_slots() (6 manual + read-only auto), state chips in thorn-berry text, per-row Slet + the Delete key, Tilbage; save: empty slot saves at once, occupied asks UiConfirm (default Fortryd), current_slot NO_SLOT opens the picker and never calls save_game(-1); load: confirm only in game, SaveManager.load_and_enter(slot); focus rules of the card -> verify: menus.saveload_focus_map, menus.saveload_save_flow, menus.saveload_load_flow, menus.saveload_delete_confirm, menus.saveload_auto_read_only, menus.pause_save_load_roundtrip",
+    "Every P16 screen: extends TTScreen (select and title are scenes using UiNav), initial focus per card, Esc depths of 3.5, HintBar per card, no Window-based control (no ConfirmationDialog / AcceptDialog / OptionButton: UiConfirm and chips), cursor always visible, zero raw keys in both locales, rule_report clean -> verify: menus.initial_focus_all_screens, menus.esc_chain_depths, menus.no_window_dialogs, menus.cursor_always_visible, menus.no_raw_keys_all_screens_both_locales, menus.rule_report_clean",
+    "Real-event flows: title -> Nyt spil -> page 1 -> page 2 -> Start with InputEventKey only, and with InputEventJoypadButton only (defaults accepted) -> verify: menus.keyboard_only_new_game, menus.pad_only_new_game",
+    "localization/menus.csv: the nine NOTIF_LOAD_* / NOTIF_SAVE_FAILED_* rows of the P15 handoff plus TITLE_ / PAUSE_ / SAVELOAD_ / SETTINGS_ / SELECT_ strings (UI_OK / UI_CANCEL of the order do not exist: use NAV_OK / NAV_CANCEL from nav.csv) -> verify: save.feedback_keys_defined"
+   ],
+   "notes": "Wave 4. The compare fixtures title_guide and select_guide keep the focus of the gold MenuRow (Fortsæt) and release it for ring controls; they hide the HintBar, %BackButton and toasts. The order's ConfirmationDialog task is replaced by UiConfirm (Window dialogs are banned, UI_NAVIGATION.md F12). Pause rows Rygsæk / Opgavebog / Byg are new (a gamepad has no I / J / B). The baselines docs/qa/ui_baseline/{settings,select_2,saveload,pause}.png are committed by this package after the lead has looked at the wave-gate captures."
+  },
+  {
+   "package": "P17-ui-hud",
+   "ownsAdd": [
+    "scripts/ui/components/area_banner.gd",
+    "scenes/ui/components/area_banner.tscn",
+    "docs/qa/ui_baseline/area_banner.png"
+   ],
+   "ownsRemove": [],
+   "addDependsOn": [
+    "P28-ui-nav-foundation"
+   ],
+   "removeDependsOn": [
+    "P06-player-farm-core",
+    "P13-quests-lua-runtime"
+   ],
+   "addTasks": [
+    "Wave 5 -> 4 with contract-only dependencies on P06 and P13 (the EventBus signals exist since P02, hotbar_changed entries {id, amount, name?, rare?}); checks that need the real Player2D hotbar / stats or QuestManager.get_tracked are capability-guarded (t.skip while absent) and run for real in the wave-4 gate on the merged tree -> verify: hud.integration_player_quests",
+    "HUD on the farm (card S09, guide 06): date block, money pill, always-visible hearts row, the construction chip (PillGold under the hearts row, left 40, only while a home upgrade runs), quest card (max 3, hidden when empty), vertical Energi, 10-slot hotbar with key digits / counts / selected ring / dimmed 0-count entries, tool name above; instances P28's whisper_line at left 40 bottom 40 so that every refusal (bed too early, faint, locked warp, missing items, Indretning outside home, wrong-season planting) is visible on the farm; everything event-driven, refresh on new_game_started and on language change; anchors 40 / 40 / 40 / 30 at every window shape -> verify: hud.values_after_signals, hud.hotbar_ten_slots, hud.date_text_real_keys, hud.quest_card, hud.hearts_row_always_visible, hud.whisper_on_farm, hud.construction_chip_position, hud.stretch_anchors, hud.guide_diff",
+    "Focus NONE on every HUD control (also those added later), mouse_filter IGNORE on roots and STOP on tray / card / blocks, a click on a hotbar slot sends the synthetic slot_n action (no player API), HUD visible in PAUSED and CUTSCENE phases -> verify: hud.all_controls_focus_none, hud.mouse_filters, hud.slot_click_sends_action, hud.visible_in_cutscene_and_paused",
+    "Instance P28's toast_stack in hud.tscn (toasts at y = 96; the construction chip stays in the HUD): the HUD wiring of notification_posted, quest and item notifications -> verify: hud.toast, hud.toast_rarity_style, hud.construction_chip",
+    "Instance P28's prompt_pill in hud.tscn (the HUD wiring of interaction_prompt_changed) -> verify: hud.prompt",
+    "components/area_banner (card S24, Miljøer v2 sketch): the area @title in Caprasimo 30 with a 3 px ink outline (outline_size 3: the sketch's CSS 6 px stroke with paint-order stroke fill shows only 3 px) fades in top-centre for 2.5 s on area_changed in iso areas, not on load -> verify: hud.area_banner_on_area_changed",
+    "No raw keys in both locales and rule_report clean on the HUD -> verify: hud.no_raw_keys, hud.rule_report_clean"
+   ],
+   "notes": "Moved to wave 4 (UI_NAVIGATION.md 9.2): dependsOn becomes [P02, P07, P28]; P06 and P13 are integration contracts only. toast_stack, prompt_pill and whisper_line moved to P28 (wave 3b): P17 instances them, only area_banner is P17's. The Miljøer v2 sketch HUD is an open question for the user (Appendix G, Q1): this package builds guide section 06."
+  },
+  {
+   "package": "P18-ui-shop-inventory",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [
+    "P28-ui-nav-foundation"
+   ],
+   "addTasks": [
+    "Shop (card S13, guide 07): focus rules - initial focus on the first item row, ring tabs [..., x] -> 2-column grid -> footer [stepper, Køb], stepper keys (Left / Right +/-1 with echo, PageUp / PageDown +/-5, accept buys), ui_page_up/down switch tabs, accept on a row focuses the stepper, too dear = thorn-berry price + disabled non-focusable Køb, Esc / Start / B / x close with shop_closed and no focus owner left -> verify: shop_ui.initial_focus, shop_ui.focus_map_shop, shop_ui.stepper_keys, shop_ui.tab_switch_page_actions, shop_ui.esc_closes_and_restores",
+    "Backpack + workshop (card S15, guide 09): ring grid -> actions -> recipes -> Lav, Right at column 5 crosses to the workshop and back, empty cells are focus stops, the `inventory` action is read in _input so Tab closes the backpack while a slot has focus, a selected slot shows the gold ring instead of the rarity ring -> verify: shop_ui.inventory_focus_map, shop_ui.inventory_toggle_i_tab, shop_ui.rarity_ring_replaced_by_selection",
+    "Hotbar assignment: slot_1..slot_10 with an item focused emits hotbar_assign_requested(n - 1, item_id) + toast; the Hurtigplads button opens a ten-cell picker row for pad users -> verify: shop_ui.hotbar_assign_by_digit, shop_ui.hotbar_assign_by_picker_pad",
+    "Pad-only buy / craft path and the guide recipes through the UI -> verify: shop_ui.gamepad_only_buy, shop_ui.craft_guide_recipes",
+    "No Window-based control (the lifted AcceptDialog / ItemList go), rule_report clean, windowed guide diffs shop <= 18 and inventory <= 22 -> verify: shop_ui.no_window_dialogs, shop_ui.rule_report_clean, shop_ui.guide_diff_shop, shop_ui.guide_diff_inventory"
+   ],
+   "notes": "Wave 4. The order's 'I and Tab toggle' is made true by reading `inventory` in _input (engine fact F2). Existing check names of the order and the feature amendment stay. The stepper is P28's amended quantity_stepper (one focus stop, +/-1 / +/-5 / accept): the shop wires it and does not edit it. The shop asks UiConfirm 'Tag på nu?' after a garment is bought (F8 owns the Garderobe side, shop_ui.* the ask): verify the ask in shop_ui.buy_sell_through_controls."
+  },
+  {
+   "package": "P13-quests-lua-runtime",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "addTasks": [
+    "QuestManager.get_tracked(max = 3): active quests oldest-accepted first, capped, never completed or failed ones, stable across save / load (the farm HUD card reads it) -> verify: quests.tracked_order_and_cap",
+    "Journal list API for the quest book (P14): get_active_ids() / get_completed_ids() in display order (active oldest first, completed most recent first) and the two counts for 'Aktive · n' / 'Fuldført · m' -> verify: quests.journal_lists_api"
+   ],
+   "notes": "Wave 4. Small API additions only; the Lua schema (3.12) is unchanged."
+  },
+  {
+   "package": "P14-npc-dialogue",
+   "ownsAdd": [
+    "localization/ui.csv",
+    "docs/qa/ui_baseline/intro.png"
+   ],
+   "ownsRemove": [],
+   "addDependsOn": [
+    "P28-ui-nav-foundation"
+   ],
+   "addTasks": [
+    "DialogueUI (cards S11 / S12, guide 03): panel bottom-centre 880 wide, bottom margin 120; the dialogue is one of the two screens that dispatch the press themselves (the other is Indretning PLACE): it handles interact / ui_accept in _input and picks the focused ChoiceRow itself (no Button is pressed by the key); text lines have no focus owner (_wants_focus() false); with choices the first ChoiceRow takes focus, Up / Down wrap, interact / ui_accept / click pick the focused choice once (the closing event is consumed so the world's interact never re-fires); Esc / Start / B end the dialogue; dialogue_ended exactly once on every path; a choice whose action opens a screen (open_shop, open_journal, home_upgrade -> open_home_builder) ends the dialogue first and then opens the target; hint = UiHints.format(HINT_CONTINUE, interact) + the voice label only while a voice plays; delete DIALOGUE_CONTINUE_HINT from localization/ui.csv (P07's file, ownsAdd for this one key) when nothing references it any more; push_modal(\"dialogue\", false) -> verify: npc.dialogue_input_modes, npc.dialogue_choice_focus, npc.dialogue_interact_not_double, npc.dialogue_esc_ends_once, npc.dialogue_actions_transfer, npc.dialogue_hint_glyph",
+    "IntroSequence through the same DialogueUI; Esc skips the rest and intro_lottery is accepted either way -> verify: npc.intro_once, npc.intro_skippable_with_esc",
+    "Quest book (card S14, guide 08): initial focus on the first row of the active tab (else the tab), ring tabs <-> list, Left / Right in the list switch tabs, the detail follows focus, J / Esc / Start / B close (the journal action is read in _input), ui_page_up/down switch tabs, content straight from the Lua fields through TTQuestText -> verify: npc.journal_focus_map, npc.journal_tabs_page_actions, npc.journal_esc_and_pad, npc.journal_toggle_j, npc.journal_shows_lua_fields_of_lost_cat",
+    "NPC prompt strings carry no baked key (the HUD prompt pill adds the key cap): 'Tal med <name>' instead of 'E · Tal med <name>' -> verify: npc.prompt_verb_only",
+    "Windowed guide diffs: quest book <= 12 (fixture journal_guide) and the dialogue crop <= 16 (fixture dialogue_guide: panel border box 660 x 266 at (10, 10), ratcheted), focus released for the capture -> verify: npc.guide_diff_journal, npc.guide_diff_dialogue_crop"
+   ],
+   "notes": "Wave 5. Dependency on P28 is new; P14's existing talk_every_roster_npc stays."
+  },
+  {
+   "package": "P19-forest-combat",
+   "ownsAdd": [
+    "docs/qa/ui_baseline/minimap.png"
+   ],
+   "ownsRemove": [],
+   "addDependsOn": [
+    "P28-ui-nav-foundation"
+   ],
+   "addTasks": [
+    "Forest HUD (card S10, guide 10) with focus NONE everywhere; it instances P28's prompt_pill, toast_stack and whisper_line (toasts at y = 96, item notifications go to the loot feed); GameUI.set_mode switches the two HUDs -> verify: forest.hud_focus_none, forest.hud_shares_prompt_and_toasts, forest.hud_hides_farm_hud",
+    "Ability slots read their key caps from the InputMap through UiHints (keyboard 'Venstre klik, Mellemrum, Q, R'; pad 'X, B, Y, RB') and re-render on a device change -> verify: forest.hud_ability_keys_follow_device",
+    "Minimap + zone chip (card S26): non-empty texture, chip 'Dybe Bregner · 2' from @depth -> verify: forest.minimap_texture_and_chip",
+    "rule_report clean and windowed guide diff forest <= 15 -> verify: forest.hud_rule_report_clean, forest.guide_diff"
+   ],
+   "notes": "Wave 5. P19 depends on P28 (the shared widgets), not on P17."
+  },
+  {
+   "package": "P20-animals-buildings",
+   "ownsAdd": [
+    "docs/qa/ui_baseline/animal_care.png",
+    "docs/qa/ui_baseline/build_menu.png"
+   ],
+   "ownsRemove": [],
+   "addDependsOn": [
+    "P28-ui-nav-foundation"
+   ],
+   "addTasks": [
+    "Animal care (card S16) on TTScreen: RowButton list replaces ItemList, ring list -> food chips -> actions -> Luk, initial focus on the interacted animal, Esc closes; rename = UiConfirm.ask_text (no Window) -> verify: animals.care_focus_map, animals.rename_inline, animals.esc_closes, animals.no_itemlist_no_window",
+    "Build menu (card S17) on TTScreen: B toggles (read in _input, refused while another modal is open), ring list -> Byg -> Luk, Byg disabled and non-focusable with the reason when a cost is missing -> verify: animals.build_menu_toggle_b, animals.build_menu_opens"
+   ],
+   "notes": "Wave 5. Screens designed by analogy to the guide (UI_NAVIGATION.md S16 / S17). The pause row Byg (P16) opens the build menu on the farm: the screen must be openable from there (open(opener) with the pause row as opener is not needed: pause closes first, the build menu opens as a transfer)."
+  },
+  {
+   "package": "F7-home-ui",
+   "ownsAdd": [
+    "docs/qa/ui_baseline/home_chest.png"
+   ],
+   "ownsRemove": [],
+   "addDependsOn": [
+    "P28-ui-nav-foundation"
+   ],
+   "addTasks": [
+    "Husbyggeri (card S18): LadderRows wrapped in FocusProxy buttons (selected mirrors focus, the only gold ring is the focus ring), ring ladder -> footer, initial focus on the next-tier row, confirm = UiConfirm.ask(default Fortryd), Esc closes the confirm first -> verify: home_ui.husbyggeri_focus_walk, home_ui.ladder_selected_mirrors_focus, home_ui.confirm_default_focus_fortryd, home_ui.building_state, home_ui.keyboard_only_upgrade",
+    "Indretning (card S19): BROWSE (drawer, focus) and PLACE (focus released, _wants_focus() false, keys in _input) with the Esc chain PLACE -> BROWSE -> closed, H / Back closes from either, outside the home H shows the whisper INDRET_ONLY_HOME (the key of features_ui.csv; the order's INDRET_NOT_HOME does not exist), pad flow (D-pad / stick move the ghost, A places, RB rotates, X picks up, LB / RB switch filters in BROWSE), HintBar per mode and device -> verify: home_ui.indretning_place_rotate_pickup, home_ui.reject_reason_text, home_ui.indretning_modes_and_esc_chain, home_ui.indretning_gamepad_flow, home_ui.indretning_hint_bar, home_ui.drawer_focus_map",
+    "Hjemmekiste (card S20): backpack grid -> centre stepper + Læg / Tag -> chest grid ring with the edge crossings of the card -> verify: home_ui.home_chest_transfer, home_ui.chest_focus_map",
+    "Windowed guide diffs against the Godot-rendered mocks (--ref ... --no-frame-crop): Husbyggeri <= 18, Indretning <= 22, focus released for the capture -> verify: home_ui.guide_diff_husbyggeri, home_ui.guide_diff_indretning"
+   ],
+   "notes": "Wave 5b. The draw-only components (RaritySlot, LadderRow) never take focus themselves: the FocusProxy pattern of UI_NAVIGATION.md 3.4 / 4.6 applies."
+  },
+  {
+   "package": "F8-wardrobe-ui",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [
+    "P28-ui-nav-foundation"
+   ],
+   "addTasks": [
+    "Garderobe (card S21): ring turn arrows -> 7 cells (FocusProxy over RaritySlot) -> filter chips -> grid -> Tag på / Tag af -> outfit chips, edge crossings of the card, initial focus on the first grid item, ui_page_up/down switch filter chips, accept on a worn cell unequips -> verify: wardrobe_ui.focus_map, wardrobe_ui.cells_and_exclusions, wardrobe_ui.equip_unequip_through_controls, wardrobe_ui.turn_arrows_keyboard",
+    "Opening: G toggles (read in _input; refused in the forest with the whisper), the pause row transfers, and the shop's 'Tag på nu?' UiConfirm (default Fortryd, asked after a garment is bought) opens it as a transfer: Ja closes the shop first, Fortryd / Esc keeps the shop open -> verify: wardrobe_ui.g_key_and_pause_row, wardrobe_ui.after_buy_prompt",
+    "Windowed guide diff against ui_garderobe.png <= 20, focus released -> verify: wardrobe_ui.guide_diff"
+   ],
+   "notes": "Wave 5b."
+  },
+  {
+   "package": "P25-docs-refresh",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [
+    "P28-ui-nav-foundation"
+   ],
+   "addTasks": [
+    "README controls table generated from the live InputMap (keyboard, mouse, gamepad columns; replaces the stale list incl. F10) and a short 'Navigation' section pointing at docs/design/UI_NAVIGATION.md -> verify: docs.readme_controls_match_inputmap",
+    "docs/howto/add_a_screen.md with a complete worked example: scene on TTScreen, scenes/ui/<id>.tscn in GameUI.SCREEN_ORDER, initial focus, hint bar, ui_screens.json row, fixture, the audit checks; example compiled and swept in a temp copy -> verify: docs.add_a_screen_howto_example",
+    "docs/design/UI_NAVIGATION.md is the lead's copy of the spec; every check name in it is defined -> verify: docs.ui_navigation_present"
+   ],
+   "notes": "Wave 6. P25 already lists P16, P17, P18 as dependencies."
+  },
+  {
+   "package": "P26-loc-final",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [
+    "P28-ui-nav-foundation"
+   ],
+   "addTasks": [
+    "Danish copy pass of nav.csv (HINT_*, NAV_*) and the new menu strings (pause rows incl. Byg, save / load confirms, state chips) in the guide's tone: short buttons, friendly; English column real text -> verify: loc.hint_strings_strict",
+    "Screen sweep: rule_report(locale_sweep = [da, en]) raw_keys empty on every live screen of UiAudit.screens() -> verify: loc.ui_sweep_both_locales"
+   ],
+   "notes": "Wave 6. DIALOGUE_CONTINUE_HINT lives in P07's localization/ui.csv and is deleted by P14 (its ownsAdd), not here."
+  },
+  {
+   "package": "P27-qa-acceptance",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [
+    "P28-ui-nav-foundation"
+   ],
+   "addTasks": [
+    "zz_acceptance.keyboard_only_flow: title -> Nyt spil -> page 1 -> page 2 -> Start -> intro -> farm -> pause -> save -> load -> resume -> backpack -> shop buy -> journal -> dialogue -> quit to title, with InputEventKey only; zz_acceptance.gamepad_only_flow: every screen reachable and closable with InputEventJoypadButton only -> verify: zz_acceptance.keyboard_only_flow, zz_acceptance.gamepad_only_flow",
+    "Sleep and pass-out: bed at night and the midnight pass-out show the fade and the toast, ignore input, refuse pause, leave no focus owner -> verify: zz_acceptance.sleep_and_passout_ui",
+    "Windowed run of the ui_conformance section once per character (rings, panels, buttons, sliders, guide diffs) with the PNGs looked at; QA_REPORT.md carries the table of every guide-diff number against its target (7.3) and links FEATURES_QA_REPORT.md; the screens without a mock are guarded by docs/qa/ui_baseline/<id>.png, which each OWNER committed in its own wave (later runs must stay within 1.5; a missing pin fails) -> verify: zz_acceptance.ui_conformance_windowed, zz_acceptance.guide_diff_table, zz_acceptance.ui_baseline_no_regression"
+   ],
+   "notes": "Wave 7."
+  },
+  {
+   "package": "F10-features-qa",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "addTasks": [
+    "zz_features: tier upgrade, Indretning and Garderobe with InputEventKey only; Indretning and Garderobe with InputEventJoypadButton only -> verify: zz_features.keyboard_only_home_flow, zz_features.gamepad_only_indretning"
+   ],
+   "notes": "Wave 7."
+  }
+ ],
+ "newPackages": [
+  {
+   "id": "P28-ui-nav-foundation",
+   "title": "UI navigation foundation: UiNav, TTScreen, UiHints, HintBar, UiConfirm, toast / prompt / whisper widgets, TTSlider, the stepper fix, theme conformance, guide crops, ui_nav + ui_conformance sections",
+   "wave": "3b",
+   "size": "M",
+   "dependsOn": [
+    "P02-bus-gamemanager-time",
+    "P03-loc-core",
+    "P07-ui-foundation",
+    "P09-test-harness"
+   ],
+   "owns": [
+    "scripts/ui/nav/**",
+    "scripts/ui/components/hint_bar.gd",
+    "scenes/ui/components/hint_bar.tscn",
+    "scripts/ui/components/ui_confirm.gd",
+    "scenes/ui/components/ui_confirm.tscn",
+    "assets/ui/theme.tres",
+    "tools/ui/build_theme.gd",
+    "assets/ui/icons/slider_grabber.svg",
+    "assets/ui/icons/slider_grabber_hi.svg",
+    "scripts/ui/dev/ui_fixtures.gd",
+    "localization/nav.csv",
+    "localization/nav.csv.import",
+    "tests/sections/ui_nav.gd",
+    "tests/sections/ui_conformance.gd",
+    "tests/checkpoints/guide_ref_ui/**",
+    "tools/ui/crop_guide_refs.py",
+    "scripts/ui/components/toast_stack.gd",
+    "scenes/ui/components/toast_stack.tscn",
+    "scripts/ui/components/prompt_pill.gd",
+    "scenes/ui/components/prompt_pill.tscn",
+    "scripts/ui/components/whisper_line.gd",
+    "scenes/ui/components/whisper_line.tscn",
+    "scripts/ui/components/tt_slider.gd",
+    "scripts/ui/components/quantity_stepper.gd",
+    "scenes/ui/components/quantity_stepper.tscn",
+    "docs/qa/ui_baseline/confirm.png",
+    "docs/qa/ui_baseline/toasts.png",
+    "docs/qa/ui_baseline/prompt.png"
+   ],
+   "lift": [
+    "tests/lib/ui_audit.gd, ui_audit_rules.gd, ui_screens.json + tests/sections/ui_audit*.gd + tests/fixtures/ui_audit/** (library builder, branch ui-audit, merged by the lead)",
+    "tools/ui/build_theme.gd and scripts/ui/dev/ui_fixtures.gd (P07, built)",
+    "docs/design/UI_NAVIGATION.md sections 3, 4 and Appendices A, B, E",
+    "work/design_ui/probes/probe_nav1..6.gd and final_probe_accept.gd (the engine probes behind facts F1-F14, to be re-implemented as ui_nav.engine_facts)"
+   ],
+   "tasks": [
+    "UiNav statics (4.1): device(), watcher() signals, text_field_focused, release_world_focus, set_enabled, first_enabled, link, wire_ring / wire_row / wire_grid / wire_groups, hover_focus, yield_updown_from_fields, wasd_as_arrows, remember / recall, swallow() + swallowing() (set_input_as_handled AND the one-frame flag every TTScreen._unhandled_input honours: set_input_as_handled() alone does not stop the unhandled stage when called from a pressed handler); no wrap on echo -> verify: ui_nav.wire_helpers, ui_nav.hover_focus_lists, ui_nav.text_field_yields_updown, ui_nav.wasd_navigates, ui_nav.no_wrap_on_echo, ui_nav.disabled_not_focusable",
+    "TTScreen base class (4.2): hidden + ALWAYS after _ready, open(opener) / close() push and pop the modal exactly once, initial focus one frame after open, opener restore or release_world_focus, focus-loss guard that respects _wants_focus(), _input for Esc / the hotkeys / ui_page_* (ui_cancel / pause close the TOP modal, own hotkey with the text-field guard, WASD translation) that NEVER touches ui_accept / interact, _unhandled_input that marks ui_accept / interact handled while top and honours UiNav.swallowing() (close() swallows the closing press), consumed_actions empty by default, ui_panel_toggled answered as a request, NOTIFICATION_TRANSLATION_CHANGED refresh -> verify: ui_nav.screen_lifecycle, ui_nav.initial_focus_and_restore, ui_nav.focus_loss_guard, ui_nav.wants_focus_guard, ui_nav.esc_uses_input_not_unhandled, ui_nav.accept_presses_focused_button, ui_nav.closing_press_does_not_reach_the_world",
+    "Text-field guard: no hotkey of any screen acts while a LineEdit / TextEdit has focus -> verify: ui_nav.text_field_typing_is_inert",
+    "UiHints + HintBar + localization/nav.csv (4.3, 4.4, Appendix A and B): device-aware glyphs from the live InputMap, split_prompt, KeyCap rendering in Plex Mono 11, refresh on device change and language switch -> verify: ui_nav.hint_glyphs_follow_device, ui_nav.hint_bar_localized, ui_nav.prompt_prefix_glyph",
+    "UiConfirm (4.5): ask(...) and ask_text(...) as the only dialog, pattern C focus, default answer, pushes confirm with the current pause state, Esc / B cancel -> verify: ui_nav.confirm_default_focus_and_escape, ui_nav.confirm_traps_focus, ui_nav.confirm_ask_text",
+    "Shared HUD widgets (S22 / S23, 5.1, S09): components/toast_stack (notification_posted -> notification_toast, max 3, newest on top at y = 96, stacked counts, Rarity.ui style, loc keys run tr(), instanced by hud, forest_hud, main_menu and character_select), components/prompt_pill (the leading key token replaced by a KeyCap with UiHints.glyph(interact), verb kept), components/whisper_line (PanelWhisper, left 40 bottom 40, max 360, Whisper italic 18, teal border; whisper_requested(text_key) shows tr(key) for 3.5 s) -> verify: ui_nav.toast_stack_caps_and_rarity, ui_nav.prompt_pill_follows_device, ui_nav.whisper_line",
+    "TTSlider (4.6 item 2): class_name TTSlider extends HSlider, paints get_theme_stylebox(\"focus\") in _draw while focused, redraws on focus changes, sets the meta tt_focus_style; Godot's Slider never draws a theme focus StyleBox -> verify: ui_nav.slider_focus_ring (windowed), ui_conformance.sliders_are_ttslider",
+    "quantity_stepper amendment (4.6 item 3d): one focus stop (root FOCUS_ALL, buttons FOCUS_NONE), Left / Right +/-1 with echo, PageUp / PageDown +/-5, accept commits, its own ring, a disabled '-' never a stop -> verify: ui_nav.stepper_one_stop_keys",
+    "Theme conformance (4.6, Appendix E): hover not gold, moss sliders with chalk grabber and an HSlider/focus entry, chalk-hover scrollbars, FocusProxy variation, PillTab / Chip +2 px vertical margins each side (33 / 37 px), Bold14 and Bold16 label variations; regenerate assets/ui/theme.tres with tools/ui/build_theme.gd; delete the temporary options.hit_min of the foundation_gallery row in tests/lib/ui_screens.json (the one edit of that file P28 makes) -> verify: ui_conformance.theme_no_gold_hover, ui_conformance.theme_no_red, ui_conformance.theme_ink_outline, ui_conformance.theme_font_scale, ui_conformance.theme_focus_styles, ui_conformance.pill_heights, ui_foundation.theme_matches_builder, ui_foundation.game_ui_no_key_handling, ui_foundation.toast_second_setup",
+    "Engine facts F1-F14 as a section check, so an engine update that changes the focus or event order fails loudly (probes: work/design_ui/probes/probe_nav1..6.gd and final_probe_accept.gd) -> verify: ui_nav.engine_facts",
+    "tests/checkpoints/guide_ref_ui: dialogue_box.png = region (684, 1844, 680, 300) of refs/style_guide_render.png, SHA256SUMS, README, tools/ui/crop_guide_refs.py; UiFixtures: SCREENS gains confirm, toasts, prompt, area_banner (components), animal_care (animal_care_ui.tscn), build_menu (build_menu_ui.tscn), intro (dialogue_ui) and minimap (forest_hud) so that every fixture named in ui_screens.json resolves; every <screen>_guide fixture releases focus for RING controls and keeps it where the mock paints the focus (title_guide: Fortsæt, dialogue_guide: the first choice); title_guide and select_guide hide the HintBar, %BackButton and toasts; new fixtures dialogue_guide / select2 / confirm / toasts / prompt / area_banner -> verify: ui_conformance.guide_crops_pinned, ui_conformance.fixtures_guide_focus_released, ui_conformance.fixtures_guide_extras_hidden",
+    "tests/sections/ui_conformance.gd: the sweep over UiAudit.screens() (U1-U6, U9 of 7.1, both locales; screens with radio tabs through the page-aware reports) and the legacy-screen gate -> verify: ui_conformance.live_screens_sweep, ui_conformance.no_legacy_screens_left",
+    "Mutation checks on a clone of the foundation gallery -> verify: ui_conformance.mutant_gold_hover_caught, ui_conformance.mutant_focus_none_caught, ui_conformance.mutant_override_caught, ui_conformance.mutant_red_caught, ui_conformance.mutant_hud_focus_caught, ui_conformance.mutant_no_initial_focus_caught, ui_conformance.mutant_window_dialog_caught, ui_conformance.mutant_hotkey_in_field_caught, ui_conformance.mutant_plain_slider_caught, ui_conformance.mutant_tab_page_defect_caught, ui_conformance.mutant_accept_eaten_caught",
+    "Windowed pixel checks (run_windowed): ring / fill, panel edge, button underside on the gallery and on every live screen -> verify: ui_conformance.windowed_rings, ui_conformance.windowed_panels, ui_conformance.windowed_buttons",
+    "The baselines of the screens P28 owns without a guide mock (confirm, toasts, prompt) are committed as docs/qa/ui_baseline/<id>.png after the lead looked at the wave-gate capture"
+   ],
+   "acceptance": {
+    "headless": "tests/run_playtest.sh --only=ui_nav,ui_conformance,ui_foundation,ui_audit,ui_audit_blind,ui_audit_pins green for animal / fairy / hobbit; ui_audit.selftest_every_control_behaves green",
+    "screenshot": "foundation gallery pages guide + rarity with a focused control, a focused row and a UiConfirm over the gallery (windowed), looked at",
+    "validator": "csv_lint.py (nav.csv), loc_check, check_project.gd (project.ui_page_pad_bindings via P01)"
+   },
+   "honest": "Pure infrastructure plus three small widgets: no screen except UiConfirm. If the lead prefers no new wave, P16 builds UiNav, TTScreen, UiHints, HintBar, UiConfirm, toast_stack, prompt_pill and whisper_line as its first tasks and P17 / P18 code against the signatures of UI_NAVIGATION.md section 4 until it merges."
+  }
+ ],
+ "waveChanges": [
+  {
+   "package": "P17-ui-hud",
+   "fromWave": "5",
+   "toWave": "4",
+   "reason": "The farm has no HUD today and wave 4 lands the menus, shop, backpack, player and quests. P17's dependencies are P02 / P07 (built) and the contracts of P06 / P13 (EventBus signals hotbar_changed, player_stats_changed, player_health_changed, interaction_prompt_changed, quest_*, notification_posted, all declared and arity-linted since wave 2; hotbar entries {id, amount, name?, rare?}); QuestManager.get_tracked has a working fallback; the one player-API call (slot click) becomes a synthetic slot_n action. Nothing in waves 4-5 depends on P17 (P19 depends on P28, which now owns the toast / prompt / whisper widgets). dependsOn becomes [P02, P07, P28]; hud.integration_player_quests runs after the wave-4 merge."
+  },
+  {
+   "package": "P28-ui-nav-foundation",
+   "fromWave": null,
+   "toWave": "3b",
+   "reason": "New package. UiNav, TTScreen, UiHints, HintBar, UiConfirm, the shared toast / prompt / whisper widgets, TTSlider, the stepper fix and the theme fixes must exist before P16, P17 and P18 (wave 4) so that seven screen owners do not each re-implement focus, Esc depth, hints, confirm and the notification widgets, and so that the title (which has no GameUI) can show toasts without P16 depending on P17 code. Wave 3b sits between 3 and 4 like the existing 5b."
+  }
+ ],
+ "optionalAmendments": [
+  {
+   "package": "F9-collection",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [
+    "P28-ui-nav-foundation"
+   ],
+   "addTasks": [
+    "Samlerbog (card S27) only if the lead schedules F9: category chips + tile grid (FocusProxy wrappers), C toggles (read in _input), pause row guarded by get_screen, windowed compare against ui_samlerbog.png <= 20 (by analogy with Garderobe) -> verify: collection.focus_map, collection.screen_counts"
+   ],
+   "notes": "F9-collection is NOT in owners.json (optional package of the feature plan). This entry applies only if the lead adds it; with F9 absent every other check still passes (menus.pause_rows_optional_screens)."
+  }
+ ]
+}
