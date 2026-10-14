@@ -2,11 +2,11 @@ extends SceneTree
 ## Playtest harness (plan 8.1). It is ONLY the harness: boots the real game flow, discovers and runs the
 ## section files other packages own, captures every engine/script error and warning, and sets the exit code.
 ##
-##   tests/run_playtest.sh [--character=animal|fairy|hobbit] [--only=core,farm] [--list] [--windowed ...]
+##   tests/run_playtest.sh [--character=animal|fairy|hobbit|ghost] [--only=core,farm] [--list] [--windowed ...]
 ##   godot --headless --path . -s res://tests/playtest.gd -- --character=fairy --only=core        (what the script runs)
 ##
 ## Options after `--`:
-##   --character=animal|fairy|hobbit   hero for the boot stage and t.character (default animal)
+##   --character=animal|fairy|hobbit|ghost   hero for the boot stage and t.character (default animal)
 ##   --only=a,b                        run only these sections (SECTION name or file name; unknown names are an error)
 ##   --list                            print the discovered sections and exit (non-zero if one does not compile)
 ##   --windowed                        real-window run: only sections with run_windowed(t), no boot stage
@@ -460,8 +460,8 @@ func _parse_args(args: PackedStringArray) -> String:
 	for a in args:
 		if a.begins_with("--character="):
 			_character = a.get_slice("=", 1)
-			if _character not in ["animal", "fairy", "hobbit"]:
-				return "--character must be animal, fairy or hobbit (got '%s')" % _character
+			if _character not in ["animal", "fairy", "hobbit", "ghost"]:
+				return "--character must be animal, fairy, hobbit or ghost (got '%s')" % _character
 		elif a.begins_with("--only="):
 			for n in a.get_slice("=", 1).split(",", false):
 				_only.append(n.strip_edges())
@@ -513,5 +513,5 @@ func _absolute(path: String) -> String:
 
 
 func _print_usage() -> void:
-	print("usage: tests/run_playtest.sh [--character=animal|fairy|hobbit] [--only=a,b] [--list] [--windowed] [--out=DIR]")
+	print("usage: tests/run_playtest.sh [--character=animal|fairy|hobbit|ghost] [--only=a,b] [--list] [--windowed] [--out=DIR]")
 	print("       [--no-boot] [--play-seconds=N] [--section-timeout=N] [--max-seconds=N] [--report=FILE] [--seed=N] [--verbose] [--strict]")

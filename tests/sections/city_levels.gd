@@ -45,7 +45,7 @@ const GENERATOR_PATH := "res://scripts/world2d/levels/source/build_traetoppen_js
 const PINNED := {
 	"res://scripts/world2d/iso_area.gd": "7aa8c8ae31fdc106fc936727c4fef02e83e3e3ad74be7d4a389f38cca82722e5",
 	"res://scripts/world2d/world_2d.gd": "ad9c64e2cbac20976a84dbcccd936f4657a07a566f630d3bd7ea4d3bf32c5d13",
-	"res://scripts/world2d/game_data.gd": "ec498ad1f6980f8cf6bd570f0fecc91354014ab393d30147c41fd9db6dd07a36",
+	"res://scripts/world2d/game_data.gd": "03a66479819a83799b98fbd2db1e5cad4cbdb9b5e52d0113ba73f525160e5a0c",
 	"res://scripts/world2d/art_catalog.gd": "b2cb5b3ef99b02347710e01d828a6cbecd246ec6c7522309326020fbc422963d",
 	"res://scripts/isometric/iso_chibi_sprite_2d.gd": "86b330d2fde4d26d40cc9fcdd0f06dd12522fc7a774053dae542dde673554b4b",
 	"res://scripts/isometric/character_catalog.gd": "b080112c6398d5555c0677249cc5cab44db7f42f50d67d52c7310b37d21788a6",

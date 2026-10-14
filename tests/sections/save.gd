@@ -1454,11 +1454,11 @@ func _test_summaries() -> void:
 	sm.delete_save(2)
 	# every character
 	var kinds := {}
-	for type_id in 3:
+	for type_id in 4:
 		gm.start_new_game("X", type_id, "F")
 		sm.save_game(1)
 		kinds[sm.get_save_summary(1).get("character")] = true
-	t.check("summary_character_keys", kinds.has("animal") and kinds.has("fairy") and kinds.has("hobbit"), "%s" % [kinds.keys()])
+	t.check("summary_character_keys", kinds.has("animal") and kinds.has("fairy") and kinds.has("hobbit") and kinds.has("ghost"), "%s" % [kinds.keys()])
 	sm.autosave()
 	t.check("summary_auto_slot", sm.get_save_summary(sm.AUTO_SLOT).get("is_auto") == true and sm.get_save_summary(sm.AUTO_SLOT).get("slot") == 6, "")
 	t.check("summary_empty_or_damaged_is_empty", sm.get_save_summary(5).is_empty() and sm.get_save_summary(9).is_empty(), "")

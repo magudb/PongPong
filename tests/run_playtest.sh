@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Playtest runner (plan 8.1, 7.2, Appendix C).
 #
-#   tests/run_playtest.sh [--character=animal|fairy|hobbit] [--only=core,farm] [--list]
+#   tests/run_playtest.sh [--character=animal|fairy|hobbit|ghost] [--only=core,farm] [--list]
 #   tests/run_playtest.sh --windowed [--only=area] [--out=DIR]      real 1280x720 window, run_windowed(t) sections only
 #                                                                    (use tools/dev/run_windowed.sh: it takes the one-window lock)
 #

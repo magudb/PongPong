@@ -142,7 +142,7 @@ run_case run_watchdog 1 40 'run watchdog: the whole run exceeded 3 s' 'never_rea
 run_case wrapper_timeout_kills_a_spinning_godot 124 60 'TIMEOUT after 6s' '' --no-boot --sections-dir="$ST/spin" --timeout=6
 run_case unknown_only_is_usage_error 2 30 'unknown section .nope.' '' --no-boot --sections-dir="$ST/pass" --only=nope
 run_case unknown_option_is_usage_error 2 30 'unknown option' '' --no-boot --bogus-flag
-run_case bad_character_is_usage_error 2 30 'must be animal, fairy or hobbit' '' --character=dragon
+run_case bad_character_is_usage_error 2 30 'must be animal, fairy, hobbit or ghost' '' --character=dragon
 
 # ---- the flow helpers on the real game (new_game, start_world, days, go_menu, boot)
 run_case flow_helpers $PASS_RC 90 "\\(0 failed, [0-9]+ skipped\\), $BASE_N engine error" 'FAIL  |FAILED|PROBLEM' --no-boot --sections-dir="$ST/flow"

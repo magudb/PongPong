@@ -509,7 +509,7 @@ func _player_stub_contract(t) -> void:
 	# GameData (P05 handoff): skins through CharacterCatalog
 	t.check("game_data_skins_through_character_catalog", GameData.visual_for_skin(&"animal_fox") == CharacterCatalog.visual_for_skin(&"animal_fox", "animal") and GameData.resolved_visual_for_skin(&"animal_fox") == CharacterCatalog.resolved_visual_for_skin(&"animal_fox", "animal") and GameData.visual_for_skin(&"fairy_stardust") == CharacterCatalog.visual_for_skin(&"fairy_stardust", GameData.race_key()) and GameData.stock_visual_for_skin(&"animal_fox") == "fox",
 		"fox_base head of the chain, art folder %s, stock %s" % [GameData.resolved_visual_for_skin(&"animal_fox"), GameData.stock_visual_for_skin(&"animal_fox")])
-	t.check("game_data_race_and_config", GameData.race_key() in ["animal", "fairy", "hobbit"] and not CharacterCatalog.race(GameData.race_key()).is_empty() and is_equal_approx(float(GameData.player_cfg("walk_speed", 0.0)), 285.0) and is_equal_approx(float(GameData.combat("swing_radius", 0.0)), 197.0), "race %s, player.walk_speed 285 and combat.swing_radius 197 from lua/config" % GameData.race_key())
+	t.check("game_data_race_and_config", GameData.race_key() in ["animal", "fairy", "hobbit", "ghost"] and not CharacterCatalog.race(GameData.race_key()).is_empty() and is_equal_approx(float(GameData.player_cfg("walk_speed", 0.0)), 285.0) and is_equal_approx(float(GameData.combat("swing_radius", 0.0)), 197.0), "race %s, player.walk_speed 285 and combat.swing_radius 197 from lua/config" % GameData.race_key())
 
 
 # ================================================================== registry, default area, fixtures through the world

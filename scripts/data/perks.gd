@@ -19,7 +19,7 @@ extends RefCounted
 ## return natural units (fractions for speed/luck/discount, points for energy); they never apply caps themselves.
 
 const KINDS: Array[String] = ["speed", "energy", "luck", "discount"]
-const RACE_KEYS := ["animal", "fairy", "hobbit"]       # GameManager.CharacterType 0 1 2
+const RACE_KEYS := ["animal", "fairy", "hobbit", "ghost"]       # GameManager.CharacterType 0 1 2 3
 const _DEFAULT_CAPS := {"speed": 0.15, "energy": 20.0, "luck": 0.2, "discount": 0.15, "energy_total": 60.0, "discount_total": 0.2}
 
 

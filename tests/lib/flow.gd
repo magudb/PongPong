@@ -14,7 +14,7 @@ const MENU_SCENE := "res://scenes/main/main_menu.tscn"
 const SELECT_SCENE := "res://scenes/ui/character_select.tscn"
 const WORLD_SCENE := "res://scenes/main/world.tscn"
 
-const CHARACTER_TYPES := {"animal": 0, "fairy": 1, "hobbit": 2}
+const CHARACTER_TYPES := {"animal": 0, "fairy": 1, "hobbit": 2, "ghost": 3}
 const PLAYER_NAME := "Tester"
 const FARM_NAME := "Testgaarden"
 
@@ -23,7 +23,7 @@ const FARM_NAME := "Testgaarden"
 const UI_NEW_GAME := "%NewGameButton"
 const UI_NAME := "%NameInput"
 const UI_FARM := "%FarmNameInput"
-const UI_RACE := {"animal": "%AnimalButton", "fairy": "%FairyButton", "hobbit": "%HobbitButton"}
+const UI_RACE := {"animal": "%AnimalButton", "fairy": "%FairyButton", "hobbit": "%HobbitButton", "ghost": "%GhostButton"}
 const UI_NEXT := "%NextButton"          # optional: page 1 -> page 2 of the two-page Vaelg figur screen
 const UI_CONFIRM := "%ConfirmButton"
 const UI_CONTINUE := "%ContinueButton"
@@ -31,7 +31,7 @@ const UI_CONTINUE := "%ContinueButton"
 
 # ---------------------------------------------------------------- scenes
 
-## 0 animal, 1 fairy, 2 hobbit (GameManager.CharacterType). `id` defaults to the run's --character.
+## 0 animal, 1 fairy, 2 hobbit, 3 ghost (GameManager.CharacterType). `id` defaults to the run's --character.
 func character_type(id: String = "") -> int:
 	return int(CHARACTER_TYPES.get(character if id == "" else id, 0))
 
@@ -133,7 +133,7 @@ func boot(char_id: String = "") -> bool:
 	if char_id != "":
 		character = char_id
 	if not CHARACTER_TYPES.has(character):
-		fail("unknown character '%s' (animal|fairy|hobbit)" % character)
+		fail("unknown character '%s' (animal|fairy|hobbit|ghost)" % character)
 		return false
 	release_all()
 	tree.paused = false

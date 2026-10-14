@@ -8,7 +8,7 @@ extends RefCounted
 ## GameManager.set_config_override(path, value) (the same seam the clock uses).
 
 ## Fallback only: the race keys really come from lua/config/characters.lua `races` (CharacterCatalog.race()).
-const RACE_KEYS := {0: "animal", 1: "fairy", 2: "hobbit"}
+const RACE_KEYS := {0: "animal", 1: "fairy", 2: "hobbit", 3: "ghost"}
 
 
 static func _root() -> Window:
@@ -59,7 +59,7 @@ static func array_of(v: Variant) -> Array:
 
 # ----------------------------------------------------------------------------- race, perks, combat, player
 
-## "animal" | "fairy" | "hobbit": the enum name of GameManager.character_type, checked against lua/config/characters.lua `races`.
+## "animal" | "fairy" | "hobbit" | "ghost": the enum name of GameManager.character_type, checked against lua/config/characters.lua `races`.
 static func race_key() -> String:
 	var g: Node = gm()
 	if g == null:
@@ -100,7 +100,7 @@ static func item_def(item_id: StringName) -> Dictionary:
 
 ## Pack stand-ins the hero falls back to when characters.lua knows neither the skin nor its race (ids of the 12 pack characters;
 ## the real chains live in lua/config/characters.lua and CharacterCatalog follows them, this is only the last resort).
-const FALLBACK_VISUALS := {"animal": "fox", "fairy": "fairy", "hobbit": "raccoon"}
+const FALLBACK_VISUALS := {"animal": "fox", "fairy": "fairy", "hobbit": "raccoon", "ghost": "rabbit"}
 
 
 ## The id the player body asks for first (head of the skin's chain, e.g. "fox_base"): IsoChibiSprite2D.create(...) of it

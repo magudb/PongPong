@@ -577,6 +577,24 @@
     "HINT_"
    ],
    "exact": []
+  },
+  "ghost.csv": {
+   "owner": "G-ghost-data",
+   "prefix": [
+    "CHAR_GHOST_",
+    "SKIN_GHOST_",
+    "HERO_BU_",
+    "HERO_HVISKE_",
+    "GHOST_"
+   ],
+   "exact": []
+  },
+  "ghost_dialogue.csv": {
+   "owner": "G-ghost-lines",
+   "prefix": [
+    "DLG_GHOST_"
+   ],
+   "exact": []
   }
  },
  "notes": [

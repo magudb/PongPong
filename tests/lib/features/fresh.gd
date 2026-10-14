@@ -3,7 +3,7 @@ extends RefCounted
 ## A clean new game for every section from wave 3 on (plan 6.5): the harness's own new-game helper + the reset() of every feature manager that exists.
 ## Wave-1/2 sections use the harness helper (`t.new_game`) alone - this class exists from wave 3 (package F1).
 ##
-##   Fresh.new_game(t)                          t.new_game("animal"|"fairy"|"hobbit" per --character) then reset() of HomeManager FurnitureManager WardrobeManager LootService CollectionLog
+##   Fresh.new_game(t)                          t.new_game("animal"|"fairy"|"hobbit"|"ghost" per --character) then reset() of HomeManager FurnitureManager WardrobeManager LootService CollectionLog
 ##   Fresh.new_game(t, "fairy", "Ida", "Gaard", "fairy_stardust")
 ##   Fresh.new_game(null)                       without a harness object: GameManager.start_new_game (+ new_game_started) directly
 ## Autoloads are reached through Svc (late bound), so this compiles in `-s` drivers and before the feature managers exist; a manager that does not exist yet is skipped.
@@ -87,4 +87,4 @@ static func gold(amount: int) -> void:
 
 
 static func _character_type(character: String) -> int:
-	return {"animal": 0, "fairy": 1, "hobbit": 2}.get(character, 0)
+	return {"animal": 0, "fairy": 1, "hobbit": 2, "ghost": 3}.get(character, 0)
