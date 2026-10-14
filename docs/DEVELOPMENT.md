@@ -24,6 +24,12 @@ Rules of thumb: one Godot instance per worktree at a time (the editor and a head
 moved by hand run `git worktree repair`. Saves live in Godot's `user://` of the project name, which all worktrees share:
 play-test with a throwaway profile (the harness does this automatically).
 
+## Trying the game by hand
+
+`tools/dev/play.sh` opens the game in a 1280x720 window (add `--throwaway` for a temporary profile). Controls today: WASD or arrows move,
+Shift runs, E interacts, mouse wheel zooms, Esc pauses, Space jumps (F toggles flight for the fairy). Until the playable waves land the
+world is a test platform (title -> New game -> pick a hero -> a floating farm island with a stub player). Close the Godot editor first.
+
 ## Tests
 
 `tests/run_playtest.sh` is the harness (see its header): headless sections in `tests/sections/`, `--only=a,b`,
