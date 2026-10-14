@@ -1,0 +1,820 @@
+{
+	"version": 2,
+	"_doc": [
+		"The UI screen registry read by UiAudit.screens() / UiAudit.audit_screen(t, id) (tests/lib/ui_audit.gd): one row per screen of UI_NAVIGATION.md section 5.1 that has a scene or a fixture, plus the two P07 gallery pages.",
+		"It is the SAME file as design_ui/ui_screens.proposed.json: the lead copies it as it is. The rows `language` (parts of the title and of the settings) and `sleep` (a fade in world_2d.gd) have no scene of their own: they have no row, their proofs are named checks (menus.language_switch_no_errors, zz_acceptance.sleep_and_passout_ui).",
+		"A row has NO status: UiAudit derives it (pending = no scene, legacy = the old scaffold main_menu / character_select that is not on the guide theme yet, live = the scene exists). A row that is part of another screen's scene (the intro, the minimap) has no scene of its own: its `tripwire` is the file whose appearance makes it live.",
+		"kind: scene | modal | hud | component | surface | fade. focus: initial | none (none = audited like a HUD: no control may take focus). modal: the GameManager modal name. esc_depth: how many Esc presses close the screen; 0 = Esc does nothing (the audit presses it once).",
+		"checks: initial_focus | focus_walk | focusable_report | rule_report | text_field_audit | escape_chain | ring_pixels | panel_pixels | button_pixels | i18n_flip | mouse_walk | theme_report | compare_guide (compare_guide is the windowed python tool: info only).",
+		"  escape: {vias: [key, pad_b, start]} (only for esc_depth 0 rows: the same screen is pressed three ways), {settle_seconds}, {expect_focus}, {release_world_focus}. A row with esc_depth 1 and a `modal` is proved by the audit itself; deeper chains and scene-backs by the owner's own UiAudit.escape_chain call.",
+		"options (validated by UiAudit.validate_options('registry', ...): a typo fails the row): ignore [globs] | max_steps (0 = auto) | wrap + wrap_axes | via | tabs | replay | accept | consumes | expect_edges | echo | pad_check | dirs | start | pages + max_pages + tab_groups (the page behind every radio tab / chip is audited too) |",
+		"  strict_typography | strict_gold | gold_source | hit_min (default 32) | same_ok | forbid_disabled_focus | forbid_windows | list_like | click | panel | button | settle_seconds.",
+		"compare: informational only (tests/checkpoints/compare_guide.py is a separate windowed tool; the guide mocks show their focus-ring-free state, a MenuRow / ChoiceRow keeps its gold FOCUS fill: UI_NAVIGATION.md D12).",
+		"WHEN A PACKAGE LANDS A SCREEN nothing is edited here: the scene appears and the derived status becomes live; the owner calls `await UiAudit.audit_screen(t, \"<id>\")` from the section. The gold fill / ring, the walk, the rules and the Esc depth are then enforced."
+	],
+	"screens": [
+		{
+			"id": "foundation_gallery",
+			"title": "Components gallery, guide page (section 03 building blocks)",
+			"kind": "gallery",
+			"package": "P07-ui-foundation",
+			"guide": "03 UI-byggeklodser",
+			"checks": [
+				"initial_focus",
+				"focusable",
+				"focus_walk",
+				"rules",
+				"i18n_flip",
+				"theme"
+			],
+			"options": {
+				"ignore": [
+					"**/StatesRow/**"
+				],
+				"hit_min": 28.0
+			},
+			"status": "live",
+			"open": {
+				"fixture": "components"
+			},
+			"note": "options.hit_min 28 is TEMPORARY: the built PillTab is 29 px high, the guide's 33 (UI_NAVIGATION.md Appendix E); P28 fixes the theme and deletes the option"
+		},
+		{
+			"id": "foundation_gallery_rarity",
+			"title": "Components gallery, rarity page (feature addendum 2.1)",
+			"kind": "gallery",
+			"package": "P07-ui-foundation",
+			"guide": "addendum 2.1",
+			"checks": [
+				"focusable",
+				"rules",
+				"i18n_flip"
+			],
+			"options": {},
+			"status": "live",
+			"open": {
+				"fixture": "components_rarity"
+			}
+		},
+		{
+			"id": "title",
+			"title": "Titelskærm",
+			"kind": "scene",
+			"scene": "res://scenes/main/main_menu.tscn",
+			"fixture": "title",
+			"package": "P16-ui-menus",
+			"guide": "04 Titelskærm",
+			"focus": "initial",
+			"modal": "",
+			"esc_depth": 0,
+			"compare": {
+				"screen": "title",
+				"fixture": "title_guide",
+				"target": 8.0
+			},
+			"checks": [
+				"initial_focus",
+				"focus_walk",
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"escape_chain",
+				"ring_pixels",
+				"panel_pixels",
+				"button_pixels",
+				"compare_guide"
+			],
+			"escape": {
+				"vias": [
+					"key",
+					"pad_b",
+					"start"
+				]
+			},
+			"known_gaps": [
+				"no_initial_focus",
+				"hardcoded_literal",
+				"not_localized"
+			],
+			"note": "scenes/main/main_menu.tscn is the old scaffold (flat dark background, plain pills, no panel, no key art, no 'Dag N'); Esc must do nothing on the title (D2): pressed as Esc, Start and B"
+		},
+		{
+			"id": "settings",
+			"title": "Indstillinger",
+			"kind": "modal",
+			"scene": "res://scenes/ui/settings_ui.tscn",
+			"fixture": "settings",
+			"package": "P16-ui-menus",
+			"guide": "none (same language)",
+			"focus": "initial",
+			"modal": "settings",
+			"esc_depth": 1,
+			"compare": {
+				"baseline": "docs/qa/ui_baseline/settings.png",
+				"fixture": "settings",
+				"no_frame_crop": true,
+				"target": 1.5,
+				"pinned_after_lead_review": true
+			},
+			"checks": [
+				"initial_focus",
+				"focus_walk",
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"escape_chain",
+				"ring_pixels",
+				"panel_pixels",
+				"button_pixels",
+				"compare_guide"
+			],
+			"options": {
+				"pages": false
+			},
+			"note": "P16 builds scenes/ui/settings_ui.tscn (nested on the title and on the pause menu); options.pages is false because the language and window-size chips are radio groups with side effects (set_locale, the window size) and no page behind them: menus.settings_chips proves them"
+		},
+		{
+			"id": "select_1",
+			"title": "Vælg figur 1 / 2",
+			"kind": "scene",
+			"scene": "res://scenes/ui/character_select.tscn",
+			"fixture": "select",
+			"package": "P16-ui-menus",
+			"guide": "05 Vælg figur",
+			"focus": "initial",
+			"modal": "",
+			"esc_depth": 1,
+			"compare": {
+				"screen": "select",
+				"fixture": "select_guide",
+				"target": 15.0
+			},
+			"checks": [
+				"initial_focus",
+				"focus_walk",
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"escape_chain",
+				"ring_pixels",
+				"panel_pixels",
+				"button_pixels",
+				"compare_guide"
+			],
+			"known_gaps": [
+				"no_initial_focus",
+				"window_in_screen",
+				"disabled_focusable",
+				"only_via_tab",
+				"trap",
+				"hardcoded_literal",
+				"not_localized"
+			],
+			"note": "scenes/ui/character_select.tscn is the old scaffold (no race cards, no ring, no chips, no preview)"
+		},
+		{
+			"id": "select_2",
+			"title": "Vælg figur 2 / 2",
+			"kind": "scene",
+			"scene": "res://scenes/ui/character_select.tscn",
+			"fixture": "select2",
+			"package": "P16-ui-menus",
+			"guide": "none (page 2 by analogy)",
+			"focus": "initial",
+			"modal": "",
+			"esc_depth": 2,
+			"compare": {
+				"baseline": "docs/qa/ui_baseline/select_2.png",
+				"fixture": "select2",
+				"no_frame_crop": true,
+				"target": 1.5,
+				"pinned_after_lead_review": true
+			},
+			"checks": [
+				"initial_focus",
+				"focus_walk",
+				"focusable_report",
+				"text_field_audit",
+				"rule_report",
+				"i18n_flip",
+				"escape_chain",
+				"ring_pixels",
+				"panel_pixels",
+				"button_pixels",
+				"compare_guide"
+			],
+			"note": "page 2 is the same scene as page 1 today; Esc goes page 2 > page 1 > title (two presses, the owner's own escape_chain call)"
+		},
+		{
+			"id": "saveload",
+			"title": "Gem / Indlæs",
+			"kind": "modal",
+			"scene": "res://scenes/ui/save_load_ui.tscn",
+			"fixture": "saveload",
+			"package": "P16-ui-menus",
+			"guide": "none",
+			"focus": "initial",
+			"modal": "save_load",
+			"esc_depth": 3,
+			"compare": {
+				"baseline": "docs/qa/ui_baseline/saveload.png",
+				"fixture": "saveload",
+				"no_frame_crop": true,
+				"target": 1.5,
+				"pinned_after_lead_review": true
+			},
+			"checks": [
+				"initial_focus",
+				"focus_walk",
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"escape_chain",
+				"ring_pixels",
+				"panel_pixels",
+				"button_pixels",
+				"compare_guide"
+			],
+			"note": "scripts/ui/save_load_ui.gd has no scene today; the chain pause > Gem / Indlaes > confirm is 3 deep (the owner's own escape_chain call)"
+		},
+		{
+			"id": "pause",
+			"title": "Pause",
+			"kind": "modal",
+			"scene": "res://scenes/ui/pause_menu.tscn",
+			"fixture": "pause",
+			"package": "P16-ui-menus",
+			"guide": "none (same language)",
+			"focus": "initial",
+			"modal": "pause",
+			"esc_depth": 1,
+			"compare": {
+				"baseline": "docs/qa/ui_baseline/pause.png",
+				"fixture": "pause",
+				"no_frame_crop": true,
+				"target": 1.5,
+				"pinned_after_lead_review": true
+			},
+			"checks": [
+				"initial_focus",
+				"focus_walk",
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"escape_chain",
+				"ring_pixels",
+				"panel_pixels",
+				"button_pixels",
+				"compare_guide"
+			],
+			"note": "scripts/ui/pause_menu.gd has no scene today (Esc shows nothing); P16 builds scenes/ui/pause_menu.tscn"
+		},
+		{
+			"id": "confirm",
+			"title": "Bekræft",
+			"kind": "component",
+			"scene": "res://scenes/ui/components/ui_confirm.tscn",
+			"fixture": "confirm",
+			"package": "P28-ui-nav-foundation",
+			"guide": "none (AcceptDialog theme)",
+			"focus": "initial",
+			"modal": "confirm",
+			"esc_depth": 1,
+			"compare": {
+				"baseline": "docs/qa/ui_baseline/confirm.png",
+				"fixture": "confirm",
+				"no_frame_crop": true,
+				"target": 1.5,
+				"pinned_after_lead_review": true
+			},
+			"checks": [
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"panel_pixels",
+				"compare_guide"
+			],
+			"note": "P28 builds UiConfirm; the row is a component audited on its own fixture"
+		},
+		{
+			"id": "hud",
+			"title": "HUD på gården",
+			"kind": "hud",
+			"scene": "res://scenes/ui/hud.tscn",
+			"fixture": "hud",
+			"package": "P17-ui-hud",
+			"guide": "06 HUD på gården",
+			"focus": "none",
+			"modal": "",
+			"esc_depth": 0,
+			"compare": {
+				"screen": "hud",
+				"fixture": "hud_guide",
+				"target": 9.0
+			},
+			"checks": [
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"panel_pixels",
+				"compare_guide"
+			],
+			"note": "the farm shows NO HUD today (scripts/ui/hud.gd has no scene); every HUD control is FOCUS_NONE (plan R.14)"
+		},
+		{
+			"id": "toasts",
+			"title": "Notifikationer",
+			"kind": "component",
+			"scene": "res://scenes/ui/components/toast_stack.tscn",
+			"fixture": "toasts",
+			"package": "P28-ui-nav-foundation",
+			"guide": "none (foundation toast)",
+			"focus": "none",
+			"modal": "",
+			"esc_depth": 0,
+			"compare": {
+				"baseline": "docs/qa/ui_baseline/toasts.png",
+				"fixture": "toasts",
+				"no_frame_crop": true,
+				"target": 1.5,
+				"pinned_after_lead_review": true
+			},
+			"checks": [
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"panel_pixels",
+				"compare_guide"
+			],
+			"note": "the toast stack (and the whisper line, and the prompt pill) are P28 components instanced by BOTH HUDs and by the title / select scenes (they have no GameUI): UI_NAVIGATION.md 5.1"
+		},
+		{
+			"id": "prompt",
+			"title": "Interaktions-prompt",
+			"kind": "component",
+			"scene": "res://scenes/ui/components/prompt_pill.tscn",
+			"fixture": "prompt",
+			"package": "P28-ui-nav-foundation",
+			"guide": "none",
+			"focus": "none",
+			"modal": "",
+			"esc_depth": 0,
+			"compare": {
+				"baseline": "docs/qa/ui_baseline/prompt.png",
+				"fixture": "prompt",
+				"no_frame_crop": true,
+				"target": 1.5,
+				"pinned_after_lead_review": true
+			},
+			"checks": [
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"panel_pixels",
+				"compare_guide"
+			]
+		},
+		{
+			"id": "area_banner",
+			"title": "Områdenavn",
+			"kind": "component",
+			"scene": "res://scenes/ui/components/area_banner.tscn",
+			"fixture": "area_banner",
+			"package": "P17-ui-hud",
+			"guide": "Miljøer v2 sketch",
+			"focus": "none",
+			"modal": "",
+			"esc_depth": 0,
+			"compare": {
+				"baseline": "docs/qa/ui_baseline/area_banner.png",
+				"fixture": "area_banner",
+				"no_frame_crop": true,
+				"target": 1.5,
+				"pinned_after_lead_review": true
+			},
+			"checks": [
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"panel_pixels",
+				"compare_guide"
+			]
+		},
+		{
+			"id": "forest_hud",
+			"title": "Mørkeskoven HUD",
+			"kind": "hud",
+			"scene": "res://scenes/ui/forest_hud.tscn",
+			"fixture": "forest",
+			"package": "P19-forest-combat",
+			"guide": "10 Mørkeskoven",
+			"focus": "none",
+			"modal": "",
+			"esc_depth": 0,
+			"compare": {
+				"screen": "forest",
+				"fixture": "forest_guide",
+				"target": 15.0
+			},
+			"checks": [
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"panel_pixels",
+				"compare_guide"
+			]
+		},
+		{
+			"id": "minimap",
+			"title": "Minikort + zone chip",
+			"kind": "component",
+			"scene": "",
+			"fixture": "forest",
+			"package": "P19-forest-combat",
+			"guide": "10 Mørkeskoven",
+			"focus": "none",
+			"modal": "",
+			"esc_depth": 0,
+			"compare": {
+				"baseline": "docs/qa/ui_baseline/minimap.png",
+				"fixture": "forest",
+				"no_frame_crop": true,
+				"target": 1.5,
+				"pinned_after_lead_review": true
+			},
+			"checks": [
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"panel_pixels",
+				"compare_guide"
+			],
+			"tripwire": "res://scenes/ui/forest_hud.tscn"
+		},
+		{
+			"id": "dialogue",
+			"title": "Dialogboks",
+			"kind": "modal",
+			"scene": "res://scenes/ui/dialogue_ui.tscn",
+			"fixture": "dialogue",
+			"package": "P14-npc-dialogue",
+			"guide": "03 Dialogboks",
+			"focus": "initial",
+			"modal": "dialogue",
+			"esc_depth": 1,
+			"compare": {
+				"ref": "tests/checkpoints/guide_ref_ui/dialogue_box.png",
+				"region": "0,0,680,300",
+				"no_frame_crop": true,
+				"fixture": "dialogue_guide",
+				"target": 16.0,
+				"ratchet": true
+			},
+			"checks": [
+				"initial_focus",
+				"focus_walk",
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"escape_chain",
+				"ring_pixels",
+				"panel_pixels",
+				"button_pixels",
+				"compare_guide"
+			]
+		},
+		{
+			"id": "intro",
+			"title": "Fekongens brev",
+			"kind": "modal",
+			"scene": "",
+			"fixture": "dialogue",
+			"package": "P14-npc-dialogue",
+			"guide": "03 Dialogboks",
+			"focus": "initial",
+			"modal": "dialogue",
+			"esc_depth": 1,
+			"compare": {
+				"baseline": "docs/qa/ui_baseline/intro.png",
+				"fixture": "dialogue",
+				"no_frame_crop": true,
+				"target": 1.5,
+				"pinned_after_lead_review": true
+			},
+			"checks": [
+				"initial_focus",
+				"focus_walk",
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"escape_chain",
+				"ring_pixels",
+				"panel_pixels",
+				"button_pixels",
+				"compare_guide"
+			],
+			"tripwire": "res://scenes/ui/dialogue_ui.tscn"
+		},
+		{
+			"id": "shop",
+			"title": "Butik i Hyggebyen",
+			"kind": "modal",
+			"scene": "res://scenes/ui/shop_ui.tscn",
+			"fixture": "shop",
+			"package": "P18-ui-shop-inventory",
+			"guide": "07 Butik",
+			"focus": "initial",
+			"modal": "shop",
+			"esc_depth": 1,
+			"compare": {
+				"screen": "shop",
+				"fixture": "shop_guide",
+				"target": 18.0
+			},
+			"checks": [
+				"initial_focus",
+				"focus_walk",
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"escape_chain",
+				"ring_pixels",
+				"panel_pixels",
+				"button_pixels",
+				"compare_guide"
+			]
+		},
+		{
+			"id": "journal",
+			"title": "Opgavebog",
+			"kind": "modal",
+			"scene": "res://scenes/ui/quest_journal.tscn",
+			"fixture": "journal",
+			"package": "P14-npc-dialogue",
+			"guide": "08 Opgavebog",
+			"focus": "initial",
+			"modal": "journal",
+			"esc_depth": 1,
+			"compare": {
+				"screen": "quest",
+				"fixture": "journal_guide",
+				"target": 12.0
+			},
+			"checks": [
+				"initial_focus",
+				"focus_walk",
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"escape_chain",
+				"ring_pixels",
+				"panel_pixels",
+				"button_pixels",
+				"compare_guide"
+			]
+		},
+		{
+			"id": "inventory",
+			"title": "Rygsæk og værksted",
+			"kind": "modal",
+			"scene": "res://scenes/ui/inventory_ui.tscn",
+			"fixture": "inventory",
+			"package": "P18-ui-shop-inventory",
+			"guide": "09 Rygsæk og værksted",
+			"focus": "initial",
+			"modal": "inventory",
+			"esc_depth": 1,
+			"compare": {
+				"screen": "inventory",
+				"fixture": "inventory_guide",
+				"target": 22.0
+			},
+			"checks": [
+				"initial_focus",
+				"focus_walk",
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"escape_chain",
+				"ring_pixels",
+				"panel_pixels",
+				"button_pixels",
+				"compare_guide"
+			]
+		},
+		{
+			"id": "animal_care",
+			"title": "Dyrepleje",
+			"kind": "modal",
+			"scene": "res://scenes/ui/animal_care_ui.tscn",
+			"fixture": "animal_care",
+			"package": "P20-animals-buildings",
+			"guide": "none (by analogy)",
+			"focus": "initial",
+			"modal": "animal_care",
+			"esc_depth": 1,
+			"compare": {
+				"baseline": "docs/qa/ui_baseline/animal_care.png",
+				"fixture": "animal_care",
+				"no_frame_crop": true,
+				"target": 1.5,
+				"pinned_after_lead_review": true
+			},
+			"checks": [
+				"initial_focus",
+				"focus_walk",
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"escape_chain",
+				"ring_pixels",
+				"panel_pixels",
+				"button_pixels",
+				"compare_guide"
+			]
+		},
+		{
+			"id": "build_menu",
+			"title": "Byg",
+			"kind": "modal",
+			"scene": "res://scenes/ui/build_menu_ui.tscn",
+			"fixture": "build_menu",
+			"package": "P20-animals-buildings",
+			"guide": "none (by analogy)",
+			"focus": "initial",
+			"modal": "build_menu",
+			"esc_depth": 1,
+			"compare": {
+				"baseline": "docs/qa/ui_baseline/build_menu.png",
+				"fixture": "build_menu",
+				"no_frame_crop": true,
+				"target": 1.5,
+				"pinned_after_lead_review": true
+			},
+			"checks": [
+				"initial_focus",
+				"focus_walk",
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"escape_chain",
+				"ring_pixels",
+				"panel_pixels",
+				"button_pixels",
+				"compare_guide"
+			]
+		},
+		{
+			"id": "husbyggeri",
+			"title": "Husbyggeri",
+			"kind": "modal",
+			"scene": "res://scenes/ui/husbyggeri.tscn",
+			"fixture": "husbyggeri",
+			"package": "F7-home-ui",
+			"guide": "F7 mock",
+			"focus": "initial",
+			"modal": "husbyggeri",
+			"esc_depth": 2,
+			"compare": {
+				"ref": "tests/checkpoints/guide_ref_features/ui_husbyggeri.png",
+				"no_frame_crop": true,
+				"fixture": "husbyggeri_guide",
+				"target": 18.0
+			},
+			"checks": [
+				"initial_focus",
+				"focus_walk",
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"escape_chain",
+				"ring_pixels",
+				"panel_pixels",
+				"button_pixels",
+				"compare_guide"
+			]
+		},
+		{
+			"id": "indretning",
+			"title": "Indretning",
+			"kind": "modal",
+			"scene": "res://scenes/ui/indretning.tscn",
+			"fixture": "indretning",
+			"package": "F7-home-ui",
+			"guide": "F7 mock",
+			"focus": "initial",
+			"modal": "indretning",
+			"esc_depth": 2,
+			"compare": {
+				"ref": "tests/checkpoints/guide_ref_features/ui_indretning.png",
+				"no_frame_crop": true,
+				"fixture": "indretning_guide",
+				"target": 22.0
+			},
+			"checks": [
+				"initial_focus",
+				"focus_walk",
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"escape_chain",
+				"ring_pixels",
+				"panel_pixels",
+				"button_pixels",
+				"compare_guide"
+			]
+		},
+		{
+			"id": "home_chest",
+			"title": "Hjemmekiste",
+			"kind": "modal",
+			"scene": "res://scenes/ui/home_chest.tscn",
+			"fixture": "home_chest",
+			"package": "F7-home-ui",
+			"guide": "none (by analogy)",
+			"focus": "initial",
+			"modal": "home_chest",
+			"esc_depth": 1,
+			"compare": {
+				"baseline": "docs/qa/ui_baseline/home_chest.png",
+				"fixture": "home_chest",
+				"no_frame_crop": true,
+				"target": 1.5,
+				"pinned_after_lead_review": true
+			},
+			"checks": [
+				"initial_focus",
+				"focus_walk",
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"escape_chain",
+				"ring_pixels",
+				"panel_pixels",
+				"button_pixels",
+				"compare_guide"
+			]
+		},
+		{
+			"id": "garderobe",
+			"title": "Garderobe",
+			"kind": "modal",
+			"scene": "res://scenes/ui/garderobe.tscn",
+			"fixture": "garderobe",
+			"package": "F8-wardrobe-ui",
+			"guide": "F8 mock",
+			"focus": "initial",
+			"modal": "garderobe",
+			"esc_depth": 1,
+			"compare": {
+				"ref": "tests/checkpoints/guide_ref_features/ui_garderobe.png",
+				"no_frame_crop": true,
+				"fixture": "garderobe_guide",
+				"target": 20.0
+			},
+			"checks": [
+				"initial_focus",
+				"focus_walk",
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"escape_chain",
+				"ring_pixels",
+				"panel_pixels",
+				"button_pixels",
+				"compare_guide"
+			]
+		},
+		{
+			"id": "samlerbog",
+			"title": "Samlerbog (optional)",
+			"kind": "modal",
+			"scene": "res://scenes/ui/samlerbog.tscn",
+			"fixture": "samlerbog",
+			"package": "F9-collection",
+			"guide": "F9 mock",
+			"focus": "initial",
+			"modal": "samlerbog",
+			"esc_depth": 1,
+			"compare": {
+				"ref": "tests/checkpoints/guide_ref_features/ui_samlerbog.png",
+				"no_frame_crop": true,
+				"fixture": "samlerbog_guide",
+				"target": 20.0
+			},
+			"checks": [
+				"initial_focus",
+				"focus_walk",
+				"focusable_report",
+				"rule_report",
+				"i18n_flip",
+				"escape_chain",
+				"ring_pixels",
+				"panel_pixels",
+				"button_pixels",
+				"compare_guide"
+			],
+			"note": "F9 is optional (not in owners.json): the row stays pending until, and unless, the package ships"
+		}
+	]
+}

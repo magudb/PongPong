@@ -1,0 +1,609 @@
+{
+	"version": 1,
+	"_doc": "The fixture registry of tests/sections/ui_audit.gd (UiAudit.use_registry): one entry per status / route so audit_screen can be tested end to end against a spy `t`.",
+	"screens": [
+		{
+			"id": "fx_live",
+			"title": "conforming fixture screen through a driver",
+			"status": "live",
+			"package": "FX",
+			"kind": "screen",
+			"open": {
+				"driver": "res://tests/fixtures/ui_audit/driver_screen.gd",
+				"ctx": {}
+			},
+			"checks": [
+				"initial_focus",
+				"focusable",
+				"focus_walk",
+				"text_fields",
+				"rules",
+				"i18n_flip",
+				"theme"
+			],
+			"options": {
+				"accept": [
+					"*/Button1"
+				]
+			}
+		},
+		{
+			"id": "fx_scene",
+			"title": "conforming fixture screen through a scene (copy scan of a .tscn)",
+			"status": "live",
+			"package": "FX",
+			"kind": "screen",
+			"open": {
+				"scene": "res://tests/fixtures/ui_audit/conforming.tscn"
+			},
+			"checks": [
+				"initial_focus",
+				"r1",
+				"r2",
+				"r3",
+				"r4",
+				"typography",
+				"i18n",
+				"hit_targets"
+			],
+			"options": {}
+		},
+		{
+			"id": "fx_hud",
+			"title": "conforming HUD fixture (no control takes focus)",
+			"status": "live",
+			"package": "FX",
+			"kind": "hud",
+			"open": {
+				"driver": "res://tests/fixtures/ui_audit/driver_screen.gd",
+				"ctx": {
+					"layout": "hud"
+				}
+			},
+			"checks": [
+				"focusable",
+				"rules",
+				"i18n_flip"
+			],
+			"options": {}
+		},
+		{
+			"id": "fx_hidden",
+			"title": "a LIVE entry whose screen is hidden after opening (must fail the visible precondition)",
+			"status": "live",
+			"package": "FX",
+			"kind": "screen",
+			"open": {
+				"driver": "res://tests/fixtures/ui_audit/driver_screen.gd",
+				"ctx": {
+					"hidden": true
+				}
+			},
+			"checks": [
+				"focusable"
+			],
+			"options": {}
+		},
+		{
+			"id": "fx_unopenable",
+			"title": "a LIVE entry whose scene does not exist (must fail, never skip silently)",
+			"status": "live",
+			"package": "FX",
+			"kind": "screen",
+			"open": {
+				"scene": "res://scenes/ui/fx_missing_scene.tscn"
+			},
+			"checks": [
+				"initial_focus"
+			],
+			"options": {}
+		},
+		{
+			"id": "fx_modal",
+			"title": "two nested modals, Esc key",
+			"status": "live",
+			"package": "FX",
+			"kind": "modal",
+			"open": {
+				"driver": "res://tests/fixtures/ui_audit/driver_modals.gd",
+				"ctx": {}
+			},
+			"checks": [
+				"initial_focus",
+				"escape"
+			],
+			"escape": {
+				"depth": 2,
+				"via": "key"
+			},
+			"options": {}
+		},
+		{
+			"id": "fx_modal_pad",
+			"title": "two nested modals, gamepad B (ui_cancel alone)",
+			"status": "live",
+			"package": "FX",
+			"kind": "modal",
+			"open": {
+				"driver": "res://tests/fixtures/ui_audit/driver_modals.gd",
+				"ctx": {}
+			},
+			"checks": [
+				"escape"
+			],
+			"escape": {
+				"depth": 2,
+				"via": "action"
+			},
+			"options": {}
+		},
+		{
+			"id": "fx_broken",
+			"title": "a LIVE entry whose screen has a planted defect (must fail)",
+			"status": "live",
+			"package": "FX",
+			"kind": "screen",
+			"open": {
+				"driver": "res://tests/fixtures/ui_audit/driver_screen.gd",
+				"ctx": {
+					"defect": "red_label"
+				}
+			},
+			"checks": [
+				"initial_focus",
+				"rules"
+			],
+			"options": {}
+		},
+		{
+			"id": "fx_modal_broken",
+			"title": "a LIVE modal that ignores Esc (must fail)",
+			"status": "live",
+			"package": "FX",
+			"kind": "modal",
+			"open": {
+				"driver": "res://tests/fixtures/ui_audit/driver_modals.gd",
+				"ctx": {
+					"defect": "ignore"
+				}
+			},
+			"checks": [
+				"escape"
+			],
+			"escape": {
+				"depth": 1,
+				"via": "key"
+			},
+			"options": {}
+		},
+		{
+			"id": "fx_legacy",
+			"title": "a legacy screen with a known gap",
+			"status": "legacy",
+			"package": "FX",
+			"kind": "screen",
+			"open": {
+				"driver": "res://tests/fixtures/ui_audit/driver_screen.gd",
+				"ctx": {
+					"defect": "no_initial_focus"
+				}
+			},
+			"checks": [
+				"initial_focus",
+				"focusable"
+			],
+			"known_gaps": [
+				"no_initial_focus"
+			],
+			"options": {}
+		},
+		{
+			"id": "fx_legacy_stale",
+			"title": "a legacy entry whose screen was fixed but not flipped (must fail the tripwire)",
+			"status": "legacy",
+			"package": "FX",
+			"kind": "screen",
+			"open": {
+				"driver": "res://tests/fixtures/ui_audit/driver_screen.gd",
+				"ctx": {}
+			},
+			"checks": [
+				"initial_focus"
+			],
+			"known_gaps": [
+				"no_initial_focus"
+			],
+			"options": {}
+		},
+		{
+			"id": "fx_pending",
+			"title": "a pending screen whose scene does not exist",
+			"status": "pending",
+			"package": "FX-package",
+			"kind": "screen",
+			"open": {
+				"scene": "res://scenes/ui/fx_does_not_exist.tscn"
+			},
+			"checks": [
+				"initial_focus"
+			],
+			"note": "not built yet",
+			"options": {}
+		},
+		{
+			"id": "fx_pending_landed",
+			"title": "a pending entry whose scene appeared (must fail the tripwire)",
+			"status": "pending",
+			"package": "FX-package",
+			"kind": "screen",
+			"open": {
+				"scene": "res://tests/fixtures/ui_audit/conforming.tscn"
+			},
+			"checks": [
+				"initial_focus"
+			],
+			"options": {}
+		},
+		{
+			"id": "sp_live",
+			"title": "a spec-shaped row (no status): the scene exists -> derived live",
+			"kind": "scene",
+			"scene": "res://tests/fixtures/ui_audit/conforming.tscn",
+			"fixture": "",
+			"package": "FX",
+			"guide": "-",
+			"focus": "initial",
+			"modal": "",
+			"esc_depth": 0,
+			"compare": null,
+			"checks": [
+				"initial_focus",
+				"focusable_report",
+				"rule_report"
+			]
+		},
+		{
+			"id": "sp_pending",
+			"title": "a spec-shaped surface with no scene -> derived pending",
+			"kind": "surface",
+			"scene": "",
+			"fixture": "",
+			"package": "FX-spec",
+			"guide": "-",
+			"focus": "initial",
+			"modal": "",
+			"esc_depth": 0,
+			"compare": null,
+			"checks": [
+				"rule_report"
+			]
+		},
+		{
+			"id": "sp_legacy",
+			"title": "a spec-shaped row whose scene is the old scaffold title -> derived legacy",
+			"kind": "scene",
+			"scene": "res://scenes/main/main_menu.tscn",
+			"fixture": "",
+			"package": "FX-spec",
+			"guide": "-",
+			"focus": "initial",
+			"modal": "",
+			"esc_depth": 0,
+			"compare": null,
+			"checks": [
+				"initial_focus"
+			]
+		},
+		{
+			"id": "sp_nofocus",
+			"title": "focus: none on a screen that has focusable buttons -> audited like a HUD, fails",
+			"kind": "scene",
+			"scene": "res://tests/fixtures/ui_audit/conforming.tscn",
+			"fixture": "",
+			"package": "FX",
+			"guide": "-",
+			"focus": "none",
+			"modal": "",
+			"esc_depth": 0,
+			"compare": null,
+			"checks": [
+				"focusable_report"
+			]
+		},
+		{
+			"title": "a spec row whose scene opens its own modal layer",
+			"guide": "-",
+			"focus": "initial",
+			"modal": "audit_modal_0",
+			"compare": null,
+			"package": "FX",
+			"id": "sp_modal",
+			"kind": "modal",
+			"scene": "res://tests/fixtures/ui_audit/modal_screen.tscn",
+			"fixture": "",
+			"esc_depth": 1,
+			"checks": [
+				"initial_focus",
+				"focusable_report",
+				"escape_chain"
+			]
+		},
+		{
+			"title": "a scene that opens TWO layers while the row says esc_depth 1: the escape check must fail",
+			"guide": "-",
+			"focus": "initial",
+			"modal": "audit_modal_1",
+			"compare": null,
+			"package": "FX",
+			"id": "sp_modal_two_layers",
+			"kind": "modal",
+			"scene": "res://tests/fixtures/ui_audit/modal_screen_two.tscn",
+			"fixture": "",
+			"esc_depth": 1,
+			"checks": [
+				"escape_chain"
+			]
+		},
+		{
+			"title": "no scene but a fixture whose scene exists (the gallery): derived pending, no tripwire",
+			"guide": "-",
+			"focus": "initial",
+			"modal": "",
+			"compare": null,
+			"package": "FX",
+			"id": "sp_pending_fx",
+			"kind": "scene",
+			"scene": "",
+			"fixture": "components",
+			"esc_depth": 0,
+			"checks": [
+				"rule_report"
+			]
+		},
+		{
+			"title": "windowed pixel checks with no options: the audit picks a panel and a button, or notes there is none",
+			"guide": "-",
+			"focus": "initial",
+			"modal": "",
+			"compare": null,
+			"package": "FX",
+			"id": "sp_pixels",
+			"kind": "scene",
+			"scene": "res://tests/fixtures/ui_audit/conforming.tscn",
+			"fixture": "",
+			"esc_depth": 0,
+			"checks": [
+				"ring_pixels",
+				"panel_pixels",
+				"button_pixels",
+				"compare_guide"
+			]
+		},
+		{
+			"title": "esc_depth 2: only the owner's own opener can prove it, so the generic escape check is skipped with a note",
+			"guide": "-",
+			"focus": "initial",
+			"compare": null,
+			"package": "FX",
+			"id": "sp_modal_owner",
+			"kind": "modal",
+			"scene": "res://tests/fixtures/ui_audit/modal_screen.tscn",
+			"fixture": "",
+			"modal": "audit_modal_0",
+			"esc_depth": 2,
+			"checks": [
+				"escape_chain"
+			]
+		},
+		{
+			"title": "a scene-back row (no modal name, esc_depth 1): skipped with a note",
+			"guide": "-",
+			"focus": "initial",
+			"compare": null,
+			"package": "FX",
+			"id": "sp_scene_back",
+			"kind": "scene",
+			"scene": "res://tests/fixtures/ui_audit/conforming.tscn",
+			"fixture": "",
+			"modal": "",
+			"esc_depth": 1,
+			"checks": [
+				"escape_chain"
+			]
+		},
+		{
+			"title": "esc_depth 0 with escape_chain listed: trivially clean",
+			"guide": "-",
+			"focus": "initial",
+			"compare": null,
+			"package": "FX",
+			"id": "sp_esc_inert",
+			"kind": "scene",
+			"scene": "res://tests/fixtures/ui_audit/conforming.tscn",
+			"fixture": "",
+			"modal": "",
+			"esc_depth": 0,
+			"checks": [
+				"escape_chain"
+			]
+		},
+		{
+			"title": "a spec row whose fixture exists: opened through the fixture",
+			"guide": "-",
+			"focus": "initial",
+			"compare": null,
+			"package": "FX",
+			"modal": "",
+			"esc_depth": 0,
+			"id": "sp_fixture",
+			"kind": "scene",
+			"scene": "res://scenes/ui/dev/components_gallery.tscn",
+			"fixture": "components",
+			"checks": [
+				"focusable_report"
+			]
+		},
+		{
+			"id": "fx_esc_inert_vias",
+			"title": "Esc must do nothing: the Esc key, gamepad B and gamepad Start (a title screen)",
+			"status": "live",
+			"package": "FX",
+			"kind": "screen",
+			"open": {
+				"driver": "res://tests/fixtures/ui_audit/driver_screen.gd",
+				"ctx": {}
+			},
+			"esc_depth": 0,
+			"escape": {
+				"vias": [
+					"key",
+					"pad_b",
+					"start"
+				]
+			},
+			"checks": [
+				"escape"
+			],
+			"options": {}
+		},
+		{
+			"id": "fx_esc_opens_pause",
+			"title": "a title that opens Pause on Esc (must fail)",
+			"status": "live",
+			"package": "FX",
+			"kind": "screen",
+			"open": {
+				"driver": "res://tests/fixtures/ui_audit/driver_esc_opens.gd",
+				"ctx": {}
+			},
+			"esc_depth": 0,
+			"escape": {
+				"vias": [
+					"key"
+				]
+			},
+			"checks": [
+				"escape"
+			],
+			"options": {}
+		},
+		{
+			"id": "fx_pages_row",
+			"title": "a screen whose second radio tab page is full of defects (the row audits the pages)",
+			"status": "live",
+			"package": "FX",
+			"kind": "screen",
+			"open": {
+				"driver": "res://tests/fixtures/ui_audit/driver_screen.gd",
+				"ctx": {
+					"layout": "radio_tabs",
+					"defect": "radio_page_defects"
+				}
+			},
+			"checks": [
+				"focusable",
+				"rules"
+			],
+			"options": {}
+		},
+		{
+			"kind": "scene",
+			"package": "FX-spec",
+			"guide": "-",
+			"focus": "initial",
+			"modal": "",
+			"compare": null,
+			"options": {},
+			"id": "sp_part_live",
+			"title": "a part of another scene: no scene of its own, a tripwire that exists -> derived live",
+			"fixture": "",
+			"scene": "",
+			"tripwire": "res://tests/fixtures/ui_audit/conforming.tscn",
+			"open": {
+				"scene": "res://tests/fixtures/ui_audit/conforming.tscn"
+			},
+			"checks": [
+				"initial_focus"
+			],
+			"esc_depth": 0
+		},
+		{
+			"kind": "scene",
+			"package": "FX-spec",
+			"guide": "-",
+			"focus": "initial",
+			"modal": "",
+			"compare": null,
+			"options": {},
+			"id": "sp_part_pending",
+			"title": "a part of another scene whose tripwire file does not exist -> pending",
+			"fixture": "",
+			"scene": "",
+			"tripwire": "res://scenes/ui/fx_no_such_host.tscn",
+			"open": {
+				"scene": "res://tests/fixtures/ui_audit/conforming.tscn"
+			},
+			"checks": [
+				"initial_focus"
+			],
+			"esc_depth": 0
+		},
+		{
+			"kind": "scene",
+			"package": "FX-spec",
+			"guide": "-",
+			"focus": "initial",
+			"modal": "",
+			"compare": null,
+			"options": {},
+			"id": "sp_scene_empty",
+			"title": "no scene and no tripwire -> pending",
+			"fixture": "",
+			"scene": "",
+			"open": {
+				"scene": "res://tests/fixtures/ui_audit/conforming.tscn"
+			},
+			"checks": [
+				"initial_focus"
+			],
+			"esc_depth": 0
+		},
+		{
+			"kind": "scene",
+			"package": "FX-spec",
+			"guide": "-",
+			"focus": "initial",
+			"modal": "x",
+			"compare": null,
+			"options": {},
+			"id": "sp_esc_defaults",
+			"title": "esc_depth 1 and a modal name: escape gets via key and pre_opened",
+			"fixture": "",
+			"scene": "res://tests/fixtures/ui_audit/modal_screen.tscn",
+			"esc_depth": 1,
+			"checks": [
+				"escape_chain"
+			]
+		},
+		{
+			"kind": "scene",
+			"package": "FX-spec",
+			"guide": "-",
+			"focus": "initial",
+			"modal": "x",
+			"compare": null,
+			"options": {},
+			"id": "sp_esc_partial",
+			"title": "esc_depth with an escape object that only adds settle_seconds: depth and via are filled in",
+			"fixture": "",
+			"scene": "res://tests/fixtures/ui_audit/modal_screen.tscn",
+			"esc_depth": 1,
+			"escape": {
+				"settle_seconds": 0.5
+			},
+			"checks": [
+				"escape_chain"
+			]
+		}
+	]
+}

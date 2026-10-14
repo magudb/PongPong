@@ -1,0 +1,32 @@
+[gd_scene format=3]
+
+[node name="BadLiteral" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Caption" type="Label" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = 400.0
+offset_bottom = 80.0
+text = "Hard coded caption in the scene"
+
+[node name="Key" type="Label" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 100.0
+offset_right = 400.0
+offset_bottom = 140.0
+text = "INV_TITLE"
+
+[node name="Tip" type="Button" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 160.0
+offset_right = 300.0
+offset_bottom = 212.0
+tooltip_text = "Another hard coded tooltip"
+text = "MENU_CONTINUE"
