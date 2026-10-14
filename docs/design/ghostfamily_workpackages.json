@@ -1,0 +1,662 @@
+{
+ "newPackages": [
+  {
+   "id": "GF-art",
+   "title": "Familien Natlys, art: Mormor Dyne, Far Gnist, Mor Silke and Lille Blund as four citizens of the ghost rig (round grandmother with spectacles / tall father with a nightcap / mother with a bow and a lantern / small child with a striped scarf), built on G-ghost-art's model, baked through the real pipeline as clip set villager and given the storybook finish of main (contour, painted colour) so that they stand next to the drawn roster, with the cast gates, the distinctness gates (silhouette first, graded colour second) and the review sheets",
+   "wave": "4",
+   "size": "M",
+   "class": "CORE (M1b)",
+   "dependsOn": [
+    "P08-art-tools",
+    "P09-test-harness",
+    "P05-characters-pack",
+    "P21-art-characters",
+    "G-ghost-art"
+   ],
+   "owns": [
+    "tools/art/ghost_family/**",
+    "assets/isometric_characters/ghostfam_dyne/**",
+    "assets/isometric_characters/ghostfam_gnist/**",
+    "assets/isometric_characters/ghostfam_silke/**",
+    "assets/isometric_characters/ghostfam_blund/**",
+    "tests/sections/art_ghostfam.gd"
+   ],
+   "lift": [
+    "design5/proto/builder/family_model.py (the PROTOTYPE builder: eleven visual iterations, the real pipeline end to end) -> tools/art/ghost_family/family_model.py; design5/proto/builder/traetoppen_additions.py (the shim) -> tools/art/ghost_family/traetoppen_additions.py",
+    "design5/scripts/{measure_family.py (the gates G1-G7 WITH an exit code), produce_family.sh (build + bake + storybook finish + import + gates), vram_per_member.py, contact_family.py, compose_family.py, agf2_patch_clone.py} -> tools/art/ghost_family/ (palette_check.py, palette_distance.py and quick_rows.py are SUPERSEDED: measure_family.py carries the colour maths)",
+    "design5/proto/shot_family.gd + shot_family.tscn -> tools/art/ghost_family/shot_family.gd + shot_family.tscn (windowed cast shot driver; NOT tests/shot_*, which P04-area-framework owns; Godot writes the .uid next to it); design5/proto/{contact_sheet_family,gamezoom_check_family,style_before_after,silhouette_check}.png (the evidence)",
+    "design4/proto/builder/traetoppen_additions.py = tools/art/ghost/ghost_model.py of G-ghost-art (imported, never edited: bell, ring_path, ghost_eyes, PALETTES, pat_sheet, the glide hook)"
+   ],
+   "tasks": [
+    "tools/art/ghost_family/family_model.py: make_member(key) for dyne gnist silke blund exactly as the prototype: ONE rig family `ghost` (stock rig without legs, so the glide hook and every clip name are Bu's), the bell profile from four numbers (visible body height `vis` .36 / .77 / .68 / .22, width factor `wide` 1.40 / .76 / .62 / .74, head ellipsoid (.72,.58,.50) (.58,.54,.42) (.64,.60,.47) (.56,.48,.43), hem lift `hem_dy` .12 / 0 / -.06 / -.04; Dyne and Silke were re-shaped in the final edit so that their silhouettes carry the distinctness gate under the night grade (see the gate task); `hem_dy` > 0 lifts the hem = the lowest pixel gets SMALLER, and the feet window 197-216 bounds both signs), the palette of a member derived from its body hex and its hem accent with the relations of Bu's sheet (light 70 % to white, belly 35 %, sheet_dark 45 % to the hem), one px-per-unit scale for all four (scale_fixed = 1.92 / 2.075, the scale of Bu), the signature part modelled into the body: Dyne = round spectacles with temples + a knitted stole with two tails + a bun + a coral yarn ball in the right mitten; Gnist = a drooping striped NIGHTCAP (lathe dome, cream band and two stripe rings, a tip that falls over the right cheek, a pompom) + sleepy eyes (a short heavy lid arc, never wider than the eye: wider read as sunglasses); Silke = a bow (two lobes, a knot, two tails) + a lantern on a chain from the right mitten (brass ring, cap, glowing cage, foot); Blund = a striped scarf (ten alternating arcs, a tail down the front, a flag behind) + the big eyes -> verify: art_ghostfam.builders_resolve",
+    "tools/art/ghost_family/traetoppen_additions.py = the shim of the SAME module name that generator/build_assets.py imports (the caller's PYTHONPATH wins, produce_all.sh header; the pattern of V2's tools/art/cast_v2 and G-ghost-art's tools/art/ghost): BUILDERS {ghostfam_dyne, ghostfam_gnist, ghostfam_silke, ghostfam_blund}, EXTRA_PATTERNS = the ghost `sheet` weave + `knit` (vertical ribs) + `cloth`, EXTRA_CLIPS = the ghost walk / run hook (a no-op for every model that is not the ghost family); imports ghost_model from tools/art/ghost under another module name (importlib); tools/art/ghost_family/produce_family.sh puts tools/art/ghost_family first and tools/art/ghost second on PYTHONPATH and calls tools/art/produce_all.sh --only=characters ghostfam_dyne ghostfam_gnist ghostfam_silke ghostfam_blund; no file of tools/art/core, generator, P21, V2 or G-ghost-art is edited -> verify: art_ghostfam.builders_resolve (produce_all.sh --stage-only lists the four ids), art_ghostfam.shim_does_not_edit_ghost_or_p21",
+    "bake through the real pipeline with the NPC clip set `villager` (role npc: idle 4, walk 6, talk 4, celebrate 6, interact 4, sleep 4 = 28 frames x 8 directions, pack outline (75, 60, 73) at .55, no baked glow): MEASURED build + bake + both validators + WebP export + install 8-18 s wall per member on the M3 (8-9 s on a quiet machine, 13-18 s at load 18-29; the FIRST bake in a fresh clone is a warm-up of 55-225 s: the macOS scan of the new binaries that tools/art/README.md documents, 55 s measured there, 132 s and 225 s measured here; not a budget number); no jump / fall / land / run / hit clips (the family never fights, runs or falls: the villager set of Hoppe, Sofus and Fru Ugle) -> verify: art_ghostfam.roles_and_clip_sets, art_ghostfam.sheets_valid, art_ghostfam.import_stubs_s3tc",
+    "the STORYBOOK FINISH (final edit, review defect A1; main 75c6fd8 repainted every sheet of the roster with ink contours, paper grain, banded paint and pencil: tools/art/README.md, 'the shipped sprites now have warm ink contours, textured painted color and pencil accents'; main 1ab4d2b then REPLACED the 48 roster sheets by painted ones, see the next task): tools/art/ghost_family/produce_family.sh stages the PRISTINE export copy of exactly the family folders (tools/art/_stage/ghostfam_pristine/isometric_characters/<id>/, taken from the export stage, never from the installed assets) and runs ONCE `godot --path . --rendering-method gl_compatibility --minimized -s res://tools/art/storybook/bake.gd -- --source=<that dir> --install` under the global window lock (--headless is Godot's dummy renderer and cannot do it; a second run over finished sheets compounds the colour, tools/art/README.md), then `godot --headless --import`; MEASURED 33-113 s wall for 52 images (the six ghosts; the load of the machine decides), 28 images for the four; the finish touches RGB only: alpha, atlas size, pivot and frame count are untouched (measure_family G7: 0 alpha pixels move, mean |dRGB| 14.7-15.7 on the idle sheets) -> verify: art_ghostfam.storybook_finished (every finished sheet equals its stage master on alpha and differs on RGB), art_ghostfam.finish_ran_once (the installed sheet differs from the master by one pass: mean |dRGB| < 40), art_ghostfam.cast_gates_hold_after_the_finish (the gate task below, run on the finished sheets)",
+    "STYLE TARGET AND HONEST LIMIT (final edit; found after the two reviews, which were made against main d6eb82d): main 1ab4d2b (the `drawn/` commit) replaced all 48 roster sheets by imagegen paintings packaged by tools/art/drawn/pack.py (flat pastel watercolour, loose grey contour, tiny dark bean eyes, blush hatching, a 2D puppet bake from five authored views; docs/art/drawn/cast.png is the roster). A 3D-baked ghost WITH the storybook finish is closer than the first-draft smooth CG (proto/style_before_after.png: contour, grain, flat bands) but is still a different hand: the ghosts' large dark eyes (the user's decision 'dark eyes yes') and their rounded volume read as cute CG ghosts among drawn animals at game zoom (proto/gamezoom_check_family.png). The painted route that matches the roster exactly needs the USER'S imagegen: tools/art/ghost_family/prompts_ghosts.json (the 'villagers1' prompt of tools/art/drawn/prompts.json adapted; the baked sheets of this package are the shape reference) -> tools/art/ghost_family/sources/ghosts1.png (+ a rear-view sheet) -> tools/art/ghost_family/pack_ghosts.py, which imports tools/art/drawn/pack.py WITHOUT editing it (pack.character(), pack.extract(), pack.HEIGHTS updated at run time with the family heights so that the baked heights stay 165 / 184 / 160 / 118) and re-runs the same measure_family gates; Pedro and Hviske are painted in the same sitting (amendment AGF3). Until the paintings exist this task is a named SKIP and the finished 3D bake is what ships -> verify: art_ghostfam.painted_route_skipped_until_sources_exist, art_ghostfam.painted_route_gates_equal (runs the gate task on the packed sheets when sources/ghosts1.png exists)",
+    "cast gates through tools/art/ghost_family/measure_family.py --check (exit 1 on a failed gate; it IMPORTS tools/art/characters/measure_cast.py for the pack reference, the outline, the pivot and the feet window; P21's PEOPLE list is not edited; measure_cast itself gates NOTHING for a ghostfam_* id: it prints 'ok' for Blund at 70 % of the pack and would for any height, so the +-10 % gate on Dyne, Gnist and Silke is applied by measure_family.py): figure height SE 165 / 184 / 160 / 118 px = 97.2 / 108.4 / 94.2 / 69.5 % of the pack mean 169.8 px (the pack mean is MEASURED from assets/isometric_characters and moved from 167.4 to 169.8 when main 1ab4d2b drew the roster at one height: the tallest member's margin is 2.8 px, Gnist 108.4 % against 110 %, and was one pixel (+9.92 %) against the old mean; a re-baked pack moves it) (the three adults inside the +-10 % gate; the child is 70 % by design and only reported within a 60-80 % band, like Lily and Bamse), outline [76,60,71] [75,61,71] [76,61,72] [76,61,72] = the pack's [75,61,71] within 8 (after the finish [78,61,73] [78,61,74] [76,60,73] [78,61,73]), x pivot 127.4-127.6, feet line 208.5-214.8 / 199.2-205.9 / 198.4-204.9 / 200.4-206.9 over all 28 frames of 6 sheets inside the upright window 197-216 (Silke's margin is 1.4 px); the gate FIRED three times while building: Blund's celebrate frame 196.6, idle f1 196.8 after the wrong-signed first fix, and in the final edit Silke's first re-shape (feet 193.9; fixed with hem_dy -.06 -> 198.4): hem_dy is positive = hem HIGHER = lowest pixel SMALLER -> verify: art_ghostfam.heights_and_pivot, art_ghostfam.feet_window_every_clip",
+    "palette gate (G4): the dominant region of the idle S frame equals the declared body hex within CIEDE2000 <= 6: MEASURED on the unfinished bake 1.1 Dyne FFF4DC, 2.3 Gnist CBE8C0, 2.0 Silke A4EFE6, 1.4 Blund FFF3A8 and on the finished sheets 3.4 / 1.1 / 1.6 / 3.6 (the storybook pass lifts and warms the colours; Pedro's E6EFFF reads 5.9 after the finish, which passes by 0.1: G-ghost-art's palette gate must be measured on the finished sheet too, amendment AGF3). DISTINCTNESS (the hero-twin rule's art consequence), GRADE INDEPENDENT (final edit, review defect A2): the family is out 17:15-24:00 and 06:00-06:55, under the CanvasModulate grade of lua/config/ambient.lua, which MULTIPLIES every sprite; measured with the real keyframes (both presets, four seasons, clear and rain, nine hours) the colour distance of every pair falls to 2.8-8.6 dE00 (lowest: Pedro - Dyne 2.8 at 19:00 in autumn, Hviske - Dyne 3.2, Pedro - Silke 3.6, Gnist - Silke 4.1), so a gate on baked colour alone guarantees nothing when it matters. The gate rests on SHAPE: for every pair of {Pedro, Hviske, Dyne, Gnist, Silke, Blund} except Pedro - Hviske (the two heroes' own twin design, exempt) the silhouette IoU of idle S and SE (aligned on the pivot) is <= 0.80 and over all eight directions <= 0.85; a pair that is not shape-distinct must be colour-distinct (graded dE00 >= 12 at every sampled hour). MEASURED on the final art (S / SE): Pedro and Hviske - Dyne .77 / .76, - Gnist .68 / .68, - Silke .79 / .74, - Blund .62 / .64; Dyne - Gnist .63 / .60, - Silke .67 / .64, - Blund .49 / .49; Gnist - Silke .79 / .76 (all eight directions .82: the closest pair), - Blund .54 / .54; Silke - Blund .59 / .58 (notes/measure_family_final.txt). Dyne (wide 1.40, low) and Silke (slim body, large head) were re-shaped from the first draft (IoU .85 / .86 against Pedro: the same silhouette at night) by review_a's seven variants and 56 further bakes (final_edit/variants, final_edit/search_variant.py); the shape space of one bell rig is crowded: no variant of Silke with a height inside the +-10 % gate got below .80 against Gnist in all eight directions -> verify: art_ghostfam.palette_within_de, art_ghostfam.distinct_shape_every_pair, art_ghostfam.graded_colour_for_shape_close_pairs, art_ghostfam.measure_family_check_exits_zero (and its --selftest)",
+    "texture budget = the villager figure's: 9.33 MB S3TC with mipmaps for the warm clips (idle talk walk) and 18.67 MB for all six clips per member, EQUAL to cat_morfar_mis and bear_guard measured with the same script (vram_per_member.py reads the imported .ctex sizes of the FINISHED sheets: the finish changes pixels, not sizes); the family is capped by the existing rule R-V5 (<= 16 distinct live looks per area): the planned peak of 14 plus 2 festival guests is unchanged, so no area's VRAM total moves above the table of the towns addendum 7.5 -> verify: art_ghostfam.vram_budget",
+    "portraits: portrait.webp 256 x 256 bust per member from the 14 degree camera (Gnist's cap is inside the default window: no fit_bust shift; validated not cut at the top or the sides on masters and WebP) and the manifest rows (role npc, clip_set villager, family ghost, flyer false, display_scale 1.0, portrait portrait.webp) arrive through the MERGE of tools/art/export/install_assets.py into assets/isometric_characters/manifest_traetoppen.json (sanctioned edit SE-GF2; V2 owns the file, the installer's merge is order independent of V2's own) -> verify: art_ghostfam.portraits_are_busts, art_ghostfam.manifest_rows",
+    "hero-twin rule, art side: for every hero of CharacterCatalog.heroes() (eight: rasmus kiki kloevermynte birk bertil bodil bu hviske) no family visual id, base folder or dominant body colour equals the hero's (the family shares only the RIG with the ghost heroes, never a look); the four ids are not skins and not wardrobe bases (no ghostfam_*_base folder, no A2 bake: NPCs wear no wardrobe) -> verify: art_ghostfam.no_hero_twin, art_ghostfam.no_wardrobe_layers",
+    "review sheets in tools/art/ghost_family/review/: contact_sheet_family.png (size ladder Blund 118 / Pedro 160 / Silke 160 / Dyne 165 / Gnist 184 px, 8 directions per member, walk SE and walk SW all 6 frames, talk celebrate interact sleep, busts; built from the FINISHED sheets), gamezoom_check_family.png (the real windowed Godot shots at zoom 0.4 and 0.9 against the roster of the CURRENT main: noon, dusk 19:00 and night 22:00 in the M1b look WITHOUT halos on the NPC ghosts, the crowd at the fire, and one M3 night shot with halos, magnified x3 with nearest neighbour next to Pedro, Hviske and the drawn fox, hobbit and fairy), style_before_after.png (smooth bake vs finished bake beside the drawn roster: the evidence of the style decision), silhouette_check.png; README.md with the honest verdict (what is weak: see honest) -> verify: art_ghostfam.review_sheets_exist_and_readme_names_them",
+    "windowed (tools/art/ghost_family/shot_family.gd through the global window lock; tools/dev/run_windowed.sh --only=art_ghostfam for the section): the cast shot (the four + Pedro + Hviske + the drawn fox, hobbit and fairy on the iso fixture ground at zoom 0.4, 0.9, dusk 19:00 and night 22:00; `--npc_halo=0` = the M1b look, where only Pedro, the player, has a halo and a light; the default = the M3 look with the additive halo of the NPC ghosts) is regenerated against the roster of the current main and LOOKED at; run_windowed(t) of the section measures the rendered pixel heights Blund < Pedro = Silke < Dyne < Gnist against the sheet x zoom within 5 % -> verify: art_ghostfam.windowed_cast_shot",
+    "the glide hook must not touch any other character: build fox, bat, fairy and ghost_bu with and without the family shim and compare the GLB sha256 (the same proof as G-ghost-art task 3) -> verify: art_ghostfam.hook_leaves_other_characters_byte_identical"
+   ],
+   "acceptance": {
+    "headless": "tests/run_playtest.sh --only=art_ghostfam,art_ghost,art_characters --character=animal --no-boot green with the four folders installed. art_characters is ROSTER driven (36 ids on main today, roster_is_36, figures_on_the_pivot 48): it does NOT inspect the four folders until amendment AGF2 adds them to ROSTER and PEOPLE, which lands at the wave-5b gate with GF-data; its 27/0 at wave 4 says nothing about the family, the package's own section is the proof at wave 4, and design5/scripts/agf2_patch_clone.py + notes/harness_final_sections.log are the evidence that the section stays green WITH the family (real art, the AGF2 literals, 36 -> 40 ids, 48 -> 52 sheets on the pivot)",
+    "screenshot": "tools/art/ghost_family/review/*.png looked at by the lead; the windowed cast shot at zoom 0.4 next to the drawn roster of the current main: four distinct sweet ghosts next to Pedro and Hviske, each readable at a glance",
+    "validator": "tools/art/ghost_family/produce_family.sh exits 0 (it ends in measure_family.py --check: G1 height, G2 outline, G3 pivot and feet, G4 palette, G5 shape, G6 graded colour, G7 finish); tools/art/.venv/bin/python -I tools/art/core/validate_new_assets.py --root assets/isometric_characters ghostfam_dyne ghostfam_gnist ghostfam_silke ghostfam_blund: OK, 6 clips each; measure_family.py --selftest exit 0 (the distinctness gate fires on near-identical pairs)"
+   },
+   "budgets": {
+    "bake_wall_s_per_member": "8-9 on a quiet machine, 13-18 at load 18-29 (the whole produce_all pipeline); the FIRST bake of a fresh clone 55-225 (macOS scan, warm-up, not a budget number)",
+    "finish_wall_s": "33-113 for the six ghosts (windowed, load dependent)",
+    "webp_kb_sheets": "unfinished 1949 + 1740 + 1360 + 1119 = 6168; FINISHED, what ships: 2468 + 2148 + 1774 + 1367 = 7757 (+26 %; the drawn villagers of main are 2232-2669 KB per folder, cat_morfar_mis 2447)",
+    "glb_vertices": "10387 / 11044 / 8585 / 8427 (first draft; GLB 1.2-1.5 MB each, stage only, never committed)",
+    "vram_mb_per_member_warm_idle_talk_walk": 9.33,
+    "vram_mb_per_member_all_6_clips": 18.67,
+    "clips": 6,
+    "figure_height_px_SE": "165 / 184 / 160 / 118 (97.2 / 108.4 / 94.2 / 69.5 % of the pack mean 169.8)",
+    "figure_size_at_zoom_0_4_px": "61x66 / 44x74 / 42x64 / 38x47",
+    "figure_size_at_zoom_0_9_px": "138x148 / 99x166 / 95x144 / 86x106"
+   },
+   "honest": "The art is a 3D bake with the storybook finish, NOT the painted style of the 48 roster sheets that main 1ab4d2b shipped: next to the drawn fox, hobbit and fairy the six ghosts read as cute rounded CG figures with a grey contour and grain (proto/style_before_after.png, proto/gamezoom_check_family.png). The look is closer than the first draft's smooth CG, not identical; the painted route needs the user's imagegen (task 'STYLE TARGET AND HONEST LIMIT', open question 6). The four share Bu's rig, face grammar (a large dark eye with a glint, blush and three cheek strokes) and wisp, so the ghosts are each other's cousins: SIX ghosts of one body plan; only size, hue and ONE modelled accessory tell them apart, and the shape space of the rig is crowded (Gnist - Silke IoU .79 / .76 at S / SE, .82 over all eight directions; Pedro - Silke .79 / .74; Pedro - Dyne .77 / .76: every pair is inside the gate by one to three hundredths). The gate numbers move with main: the pack mean was 167.4 px and is 169.8 px (Gnist's margin 2.8 px), and Pedro's palette reads 5.9 against the gate 6 after the finish. Weak: (1) at night the grade pushes every colour towards blue-violet (identification there rests on silhouette and accessory: the graded colour distance of every pair is 2.8-8.6); (2) Gnist's sleepy eyes read 'smug' from some angles; (3) Silke's lantern is a baked yellow cage next to her mitten, a small brass jar at zoom 0.4, and gives no light until GF-play; (4) Dyne's bun reads as a bump on the head from the front; (5) the back rows (N NW NE) are eggs with a wisp, as for Bu; (6) the walk is the ghost glide (5 px bob), not a step; (7) NPC ghosts have NO baked glow (a baked halo is darkened by the night grade): the glow is GF-play (M3). Eleven iterations were looked at (proto/it1_rows.png ... it9_rows.png and the final edit's variant sheets): peach and mango bodies read as skin or biscuit and were dropped, lime read olive on grass, greige read dull, mint for the grandmother read as a frog."
+  },
+  {
+   "id": "GF-data",
+   "title": "Familien Natlys, data: the four citizens' routines (evening and dawn people), the lantern house shop (Natlys' Lygtehus, 17-23, closed Wednesday), the building row of hut 11, four dialogue modules, the family copy (115 rows da + en) and the proof of the whole layer (sim, validators, section)",
+   "wave": "5b",
+   "size": "M",
+   "class": "CORE (M1b)",
+   "dependsOn": [
+    "P03-loc-core",
+    "P10-data-contracts",
+    "P12-economy-shop-crafting",
+    "F1-feature-data",
+    "V1-cast-data",
+    "V2-cast-art",
+    "S-core",
+    "T-towns-core",
+    "T-routes",
+    "T-interiors-core",
+    "S-data",
+    "S-talk",
+    "GF-art"
+   ],
+   "softDependsOn": [
+    "S-gifts",
+    "P14-npc-dialogue",
+    "I1-copy-system",
+    "G-ghost-lines"
+   ],
+   "owns": [
+    "lua/routines/ghostfam/**",
+    "lua/buildings/ghostfam.lua",
+    "lua/shops/lantern_house.lua",
+    "lua/dialogue/ghostfam_dyne.lua",
+    "lua/dialogue/ghostfam_gnist.lua",
+    "lua/dialogue/ghostfam_silke.lua",
+    "lua/dialogue/ghostfam_blund.lua",
+    "localization/ghostfamily.csv",
+    "localization/ghostfamily.csv.import",
+    "tools/ghostfam/**",
+    "tests/sections/ghostfam_data.gd"
+   ],
+   "lift": [
+    "design5/data/lua/routines/ghostfam/*.lua (4 files, GENERATED by design5/sim/gen_family_lua.py from design5/sim/family_data.py with design3's emitter; the real parser of main reads them back identical: notes/verify_routines_lua.txt, incl. the fest plans)",
+    "design5/data/lua/buildings/ghostfam.lua, design5/data/lua/shops/lantern_house.lua, design5/data/lua/dialogue/ghostfam_{dyne,gnist,silke,blund}.lua (loaded through the REAL LuaRuntime of main in a clone: notes/gf_probe.json, every branch evaluated)",
+    "design5/data/localization/ghostfamily.csv (115 rows, 1527 Danish words, 10 voiced rows of <= 14 words; scripts/gen_family_copy.py = the copy gates: voiced rows <= 14 words (I1 rule C3), barks 3-5 words, gift rows free of item names and item pronouns)",
+    "design5/sim/{family_data,check_family,verify_routines_lua,gen_family_lua}.py + design3/towns_scripts/{model,plans,sim,gen_lua}.py (unchanged copies) + routes_base.json -> tools/ghostfam/authoring/ (the authoring source and the fast loop; the Lua and CSV are the truth)",
+    "design5/scripts/{economy_check,social_check,room_check,gen_family_copy,check_probe}.py + design3/social_scripts/validate_social.py -> tools/ghostfam/ (the validators of the numbers in design_ghostfamily.md); design5/proto/gf_probe.gd -> tools/ghostfam/gf_probe.gd (the real-runtime probe: weekday / hour driven dialogue contexts)"
+   ],
+   "tasks": [
+    "lua/routines/ghostfam/<id>.lua x4 (kind registry, registry routines, KEY = npc id; one file per citizen like lua/routines/core): Mormor Dyne {plan work: 06:00 f_bench (stand) -> 06:40 inside the Gaestehytten, bed (sleep) -> 16:30 table (eat) -> 17:15 leaves, Torvet fire t_fire_e (stand) 17:40-21:50 = the evening story -> f_bench}, Far Gnist {work: 06:00 f_porch -> bed -> 16:20 table -> 16:58 counter (work) until 23:00 -> f_porch; family (Wednesday): table until 18:15, then t_fire_s 19:00-21:45; fest (hoestfesten, vinterlysene, aarsskiftet only): 06:00 f_porch -> bed until 08:30 -> table until 09:00 -> f_porch until 16:20 -> COUNTER from 16:58 until 23:00 -> f_porch: the final counter block is the final-edit fix, the first draft parked him on the porch until midnight and left the shop open and keeperless 1-6 h on four of the five festival days}, Mor Silke {work: 06:00 f_lamp (lamp, she puts out the last lamp) -> f_bench -> bed -> table -> 18:25 t_ladder (stand) -> 20:05 Hyggebyen round_s / round_e / round_n (patrol, 35 min each) -> well 21:50 -> f_lamp (lamp) = the night watch; family: Wednesday at t_fire_s from 19:00}, Lille Blund {hide_0 .. hide_6 (not 2): 06:00 f_porch (SLEEP: he falls asleep on the porch) -> bed -> table -> 18:30-20:30 a new hiding post per weekday (Mon g_planter2, Tue c_logs, Thu a_beds2, Fri e_bench, Sat g_bench, Sun u_terrace) -> t_fire_e with Dyne until 22:15 -> f_porch (sleep); family (Wednesday): t_fire_e from 17:45}; select: the festival ids = fest FIRST (the alarm clock: bed until 08:30, breakfast until 09:00, then awake at the night post: without it a family that sleeps until 16:20-17:00 would be skipped by the festival overlay of the windows that start at 10, 12, 15 and 16): for Dyne, Silke and Blund all five Traetoppen festivals (badedagen hoestfesten midsommerlanterner vinterlysene aarsskiftet), for Gnist hoestfesten, vinterlysene and aarsskiftet ONLY (not badedagen, a `closes none` festival: on his ordinary plan he sleeps until 16:20, the overlay skips a sleeper and the shop keeps its keeper; not midsommerlanterner: amendment AGF14 lists lantern_house in that festival's stays_open, so the overlay leaves the keeper at his shop, DT46); then weekday 2 = family, else work / hide_<weekday>; shelter home.table; home gaestehytten, priority 3 / 4 / 4 / 3; every plan WRAPS (the first and the last block are the same post: a night of lamp-watching / sleeping on the porch), ghosts FLOAT: no outdoor `sit` act anywhere (acts stand lamp sleep patrol), so the rain rule (sit tend play fish 08-19 move to the shelter) never moves the family -> verify: ghostfam_data.routines_load, ghostfam_data.plans_wrap, ghostfam_data.no_sit_act_outdoors, ghostfam_data.festival_days_use_the_fest_plan, ghostfam_data.festival_keeper_covers_hours (on each festival day of the six, five of Traetoppen and the Moon Fair, the lantern house is never open and keeperless longer than the keeper's walk back from the festival: sim table 0 / 0 / 34 / 34 / 0 / 0 game minutes for Midsommerlanterne, Badedagen, Hoestfesten, Vinterlysene, Aarsskiftet and Maanemarkedet, worst case = he attends; SKIPS loudly while no festival file exists, FAILS when a festival file exists and midsommerlanterner or maanemarkedet lacks lantern_house in stays_open), ghostfam_data.lua_equals_the_sim (the section re-computes every block of the sim's reading)",
+    "lua/buildings/ghostfam.lua (registry buildings, ONE id): gaestehytten = {area traetoppen, kind shop, name_key BLD_GAESTEHYTTEN (unchanged text 'Gæstehytten': the sign reads 'Gæstehytten - åbent 17-23', the lore: they came as guests and stayed), interior int_gaestehytten, size S, shop lantern_house, keeper ghostfam_gnist, post int_gaestehytten.counter, hours {open 17, close 23, closed {2}}, wave core}; open >= 6 game hours without short_ok (6.0); Wednesday is the family evening -> verify: ghostfam_data.building_row, ghostfam_data.hours_17_23_closed_wednesday, ghostfam_data.keeper_covers_hours_every_open_day (Hours / Routines: Gnist at the counter 17:00-23:00 on the six open weekdays, clear and rain, hearts 0 and 5)",
+    "lua/shops/lantern_house.lua (kind shops): keeper ghostfam_gnist, buy_multiplier 1.0, sell_multiplier 1.25, buys {forage}, tabs {dark: consumable, light: furniture_types lamp}, stock lantern_oil 30/30 (25 g, the item's own price; the magic store charges 27.5) and health_tonic 8/4 (60 g), ONE rotation dagens_lys (period 1, pick 2, qty 2, normal, pool floor_lamp_birch floor_lamp_iron candelabra_iron sconce_iron table_lamp_clay chandelier_iron at their own prices 70-135 g); NO new item id, NO new icon; NOT stocked on purpose: glow_mushroom (7 + 5 iron ore + 1 moonstone craft a mushroom_lantern that sells for 300) and lantern_post (a PointLight2D per placed post); the forage premium is worth +0.25 .. +8.75 gold per unit (rare_mushroom the dearest) -> verify: ghostfam_data.shop_loads_through_lua_runtime, ghostfam_data.stock_items_exist_and_are_normal, ghostfam_data.no_buy_sell_loop_and_no_craft_arbitrage (economy_check.py ported: every stocked item against every recipe), ghostfam_data.oil_sold_every_weekday (magic_store 11-19 closed Tuesday + lantern house 17-23 closed Wednesday: the UNION of the open hours is 6 h on Tuesday, 8 h on Wednesday and 12 h (11-23) otherwise)",
+    "lua/dialogue/ghostfam_<name>.lua x4 (kind dialogue, get_dialogue(context)): the speaker's OWN lines only (the social layer prepends the greeting and appends Giv en gave / Fortæl mig om dig): branches on context.race == ghost (and context.hero bu / hviske for Dyne and Blund: the family greets the two looks differently), context.daypart morgen (the dawn lines: 'Godnat! Eller godmorgen...') and nat (Silke: 'Skal jeg følge dig hjem, før klokken slår?'), Dyne's night branch (daypart nat: the bench line after she leaves the fire at 21:50), Gnist's closed / early branches decided by context.weekday (0 = Monday, S-core) and context.hour with the hours of his own building row (closed = weekday 2 or hour >= 23: 'i morgen aften'; hour < 17: 'i aften klokken sytten', the dawn line on the porch; otherwise the greeting and his ONE shop choice, action open_shop, shop_id lantern_house; the ghost player gets the same rule after the ghost line): P14's context carries `shop_<id> = true` for EVERY shop that exists and never false (impl/orders/P14 task 2), so the first draft's `shop_lantern_house == false` branch could never run and Gnist offered 'Se varer' and 'Hvad skal det være?' on Wednesday, after 23:00 and at dawn; a festival closure is not known to the dialogue, the shop panel refuses it; only actions the P14 list knows (open_shop, close); voice keys voice/<npc_id>/<line_id> -> verify: ghostfam_data.dialogue_branches_run (every branch evaluates in the project interpreter, 18 contexts x 4 modules: race ghost x hero bu / hviske / other, daypart morgen / nat, Tuesday 06 / 16 / 17 / 19 / 22 / 23 h, Wednesday 06 / 19 h and the ghost player on three of them; the contexts drive weekday and hour, never the shop flag), ghostfam_data.gnist_shop_choice_only_while_open, ghostfam_data.dialogue_actions_declared, ghostfam_data.voice_keys_shape, ghostfam_data.no_double_reaction (RaceReactions of G-ghost-lines never lists a family id: the modules react themselves)",
+    "localization/ghostfamily.csv + keep-import (115 rows da + en, header keys,da,en): NPC_GHOSTFAM_<NAME> (4), GHOSTFAM_FAMILY_NAME / _LORE, SHOP_LANTERN_HOUSE / _GREETING, SHOPTAB_LANTERN_DARK / _LIGHT, DLG_GHOSTFAM_* (20: greetings, dawn, night, closed, early, ghost, ghost look bu / hviske), SOC_GHOSTFAM_* (57: Dyne tier A 27 rows = FIRST, GREET H0-H3, H0_MORGEN, H0_NAT, WX x4, SEASON x4, CHAT 2 4 6 8 10, TOPIC x3, BARK x3, BIO; Gnist / Silke / Blund tier B 10 rows each = FIRST, GREET H0, H0_MORGEN and H3, CHAT 4 and 8, TOPIC, BARK x2, BIO), GIFT_GHOSTFAM_<NAME>_<CLASS>_1 (20: ITEM-NEUTRAL, because the cascade GIFT_<NPC>_<CLASS>_<n> -> SOC_ARCH_ -> SOC_ANY_ picks one line per CLASS and shows it for every item of the class: no item name, no item pronoun), BDAY_GHOSTFAM_<NAME>_GREET_1 / THANKS_1 (8; the thanks line is shown for any gift: item-neutral too); key_owners entry SE-GF1 (longest prefix beats core.csv NPC_, S-data's SOC_ GIFT_ BDAY_, dialogue.csv DLG_, economy.csv SHOP_, home.csv SHOPTAB_; GHOSTFAM_ does not start with ghost.csv's GHOST_); the tone gate has NO allow-list entry (not a single banned stem skræm bange uhyggelig frygt gyser forskræk rædsel død in either language); 10 voiced rows (FIRST of all four, GREET H0 and H3 and CHAT 2 and 8 of Dyne, and her H1 and H2) of <= 14 words (I1 rule C3: the first draft had seven rows of 15-22 words), no digits, % or onomatopoeia; barks 3-5 words (S-data slot rule: 'Ikke kig!' had 2); day-part rows: H0_MORGEN for all four (they are met at dawn on the porch) and H0_NAT for Dyne, so 'Godaften' / 'i aften' never greets a player at 06:00; display names only (never ids); Danish by an AI writer, no native check (status draft) -> verify: ghostfam_data.keys_da_en_complete, ghostfam_data.copy_lint_clean (docs/copy copy_lint C1-C10 on the CSV, incl. C3: voiced rows <= 14 words), ghostfam_data.tone_gate_no_allow_list, ghostfam_data.voiced_rows_clean, ghostfam_data.barks_three_to_five_words, ghostfam_data.gift_rows_item_neutral, ghostfam_data.daypart_rows_cover_dawn, loc.ownership_lint",
+    "tests/sections/ghostfam_data.gd (>= 80 checks) on the REAL data: the visual budget with the family (towns.visual_budget: Traetoppen peak 11 and Hyggebyen peak 14 UNCHANGED by the family at 5-minute steps over 7 weekdays x clear / rain x hearts 0 / 5; sim: with 30 citizens 11 / 14 at Mon 17:10 / Tue 17:10, with 34 citizens 11 / 14; on a festival Saturday / Sunday with the family on its fest plan Traetoppen rises from 10 to 14 = the planned cap, Hyggebyen stays 14), post capacity with the family (no post above its cap), the dawn scene (all four outdoors in Traetoppen at 06:00 on every weekday: Gnist + Blund on f_porch, Dyne on f_bench, Silke at f_lamp), the Wednesday evening (all four at the Torvet fire t_fire_e / t_fire_s from 19:00), Silke's Hyggebyen patrol 20:05-22:15, Blund's hiding post differs on six weekdays, the family is present for every one of the eight heroes (NpcDirector.is_absent false: no hero twin) and for all four races, no new save section and no new flag (static data; friend_<npc> mirrors are SocialManager's), the four visuals resolve without fallback (art folders exist) -> verify: ghostfam_data.visual_budget_with_family, ghostfam_data.post_capacity_with_family, ghostfam_data.dawn_scene_four_outdoors, ghostfam_data.wednesday_family_evening, ghostfam_data.hiding_post_per_weekday, ghostfam_data.present_for_every_hero_and_race, ghostfam_data.static_data_no_save_section, ghostfam_data.visuals_resolve_without_fallback",
+    "tools/ghostfam/: authoring/ (family_data.py, check_family.py, gen_family_lua.py, verify_routines_lua.py, design3's model.py / plans.py / sim.py / gen_lua.py unchanged, routes_base.json + the estimated rows for the new door / porch / room: the REAL walking times come from T-routes' bake, the lead regenerates data/towns/routes.json at the wave-5b gate (sanctioned edit E3) once GF-data and the AGF5/AGF6 data have landed and the validator towns_routes.table_fresh recomputes it), gen_family_copy.py, economy_check.py, social_check.py, room_check.py, README with the honest estimates; every generated file is regenerated identically by the tools -> verify: ghostfam_data.authoring_tools_regenerate_identical_files",
+    "windowed (tools/dev/run_windowed.sh --only=ghostfam_data): the family at dawn at 06:10 (porch, bench, lamp), the Lygtehus room with Gnist at 17:30 and the shop panel over it, the Torvet fire on a Wednesday at 19:30 with all four, Silke at the Hyggebyen patrol 20:30; each PNG LOOKED at -> verify: ghostfam_data.windowed_family_shots",
+    "sanctioned shared edits by the lead: SE-GF1 tools/loc/key_owners.json (ghostfam_data/ghostfamily.csv entry at the START of wave 5b, longest prefix; the entries of GF-quests and GF-events at the start of wave 6), SE-GF2 assets/isometric_characters/manifest_traetoppen.json (GF-art's installer merge), SE-GF3 docs/copy/review_status.json (amendment AGF8) -> verify: ghostfam_data.key_owners_entry_merged"
+   ],
+   "acceptance": {
+    "headless": "tests/run_playtest.sh --only=ghostfam_data,towns_routines,towns_routes,towns_interiors_core,towns_data,social_data,characters,data,art_characters --character=animal and --character=ghost green (the family is a data layer: it must be green under all four heroes, and the 34-citizen sweep of T-routes passes)",
+    "screenshot": "the four windowed shots of task 9 looked at; the Lygtehus room next to Pippins Loppeloft in style (the same S room grammar)",
+    "validator": "python3 tools/ghostfam/economy_check.py (0 problems), tools/ghostfam/check_family.py (0 problems), tools/ghostfam/social_check.py (validate_social SV1-SV14: 0 errors with 34 citizens), tools/ghostfam/room_check.py (0 problems), tools/loc/csv_lint.py PASS"
+   },
+   "budgets": {
+    "lua_kb_routines_4": 10.4,
+    "lua_kb_dialogue_4": 11.9,
+    "lua_kb_shop": 1.8,
+    "csv_rows": 115,
+    "da_words": 1527,
+    "voiced_rows": 10,
+    "review_hours_native_assumed_400_words_per_hour": 3.8,
+    "new_item_ids": 0,
+    "new_autoloads": 0,
+    "new_save_sections": 0,
+    "new_input_actions": 0,
+    "visual_peak_traetoppen_hyggebyen": "11 / 14 (unchanged on ordinary days); 14 / 14 on festival Saturdays and Sundays (Traetoppen 10 without the family)",
+    "family_outdoors_together_max": "4 (dawn, Wednesday evening)"
+   },
+   "honest": "The route times of the NEW door / porch / room are ESTIMATES (sketch distance x 6.3 ground px through f_bench, the mean of two measured pairs): the plans stay feasible while the real walks are up to 1.6 times the estimates (sim/robustness.py: 1.7 times is the first factor with a problem; the longest leg, Blund to Hoppe's beds, takes 60 estimated minutes and leaves at 17:30 for 18:30), and wherever the next block has an arrive-by hour the engine computes the departure from the baked walk anyway; T-routes' bake replaces the estimates. FESTIVAL DAYS: on Sofus' badedag (closes none) and Midsommerlanterne the keeper is never away (asleep until 16:20, resp. stays_open), at Aarsskiftet the shop is closed for all its hours; after Hoestfesten (window end 20:00) and Vinterlysene (21:00) the shop reopens while Gnist walks back from the Torvet: 34 game minutes (17 real seconds, an ESTIMATE through f_bench) with the counter empty, twice a year, worst case (he attends with probability about 88 %); the one-line cure is lantern_house in those two festivals' stays_open. Hide and seek is a ROUTINE (a new post per weekday), not a mini-game: talking to Blund anywhere pays the ordinary weekly heart, the 'Du fandt mig' line is his evening greeting. Silke being the night watch is LORE: the curfew's whisper 'Nattevagten følger dig hjem' and the 23:45 walk home are T-director's and unchanged. The social layer is LEAN (tier A Dyne, tier B the rest): heart-event scenes, quests and festival lines are GF-events / GF-quests / the S-fest-content amendment (M3). No marriage (partner = false for all four). The Danish is AI-drafted (status draft) until the native review."
+  },
+  {
+   "id": "GF-play",
+   "title": "Familien Natlys, glow: the evening glow of the NPC ghosts as additive halos (alpha 0.9, scale 1.25, no PointLight2D) and Silke's lantern as ONE small PointLight2D inside the city's light budget",
+   "wave": "6",
+   "size": "S",
+   "class": "EXTENDED (M3)",
+   "dependsOn": [
+    "GF-data",
+    "P14-npc-dialogue",
+    "V8-forest-look",
+    "G-ghost-play",
+    "T-director"
+   ],
+   "owns": [
+    "scripts/ghostfam/**",
+    "lua/config/npc_glow.lua",
+    "tests/sections/ghostfam_play.gd"
+   ],
+   "lift": [
+    "design5/proto/shot_family.gd (_add_glow: halo = Glow.halo_texture, scale (150/128) x 1.25, modulate per member alpha 0.9; the lantern halo at the right mitten)",
+    "design4/FINAL/DESIGN_GHOST.md 7.3 (the budget rule: 12 map lights + player lights <= 15)"
+   ],
+   "tasks": [
+    "lua/config/npc_glow.lua (config key `npc_glow`, one row per VISUAL id): ghostfam_dyne / gnist / silke / blund = {halo = {color body tint, alpha 0.9, scale 1.25, offset (0, -70) px}, night_only = true (energy = area.night_factor, 0 at noon: the same DayNight rule as the lamps)}; ghostfam_silke adds light = {texture_scale 0.45, energy 0.30, color ffd98a, offset (34, -22) px} = the lantern -> verify: ghostfam_play.config_loads",
+    "scripts/ghostfam/npc_glow.gd (class NpcGlow, static + a Node2D): attach(npc_node) adds the additive halo sprite behind the visual and, for rows with a light, ONE PointLight2D; called late bound (Svc.static_call) by Npc2D._ready (amendment AGF12 of P14: three lines, null-safe) and by TownDirector's citizen spawn path; frees with the node; nothing is attached while the area has no night factor (rooms, the farm at noon) -> verify: ghostfam_play.halo_attached_to_each_member, ghostfam_play.light_only_for_silke, ghostfam_play.freed_with_the_node",
+    "LIGHT BUDGET: the city's budget is <= 12 map PointLight2D + the player's lights <= 15 (V8's measured safe number; the engine drops the 17th silently): city map 12 + the ghost player's glow 1 + Silke's lantern 1 = 14 <= 15; in the forest the lantern + glow are 2 (design4 7.3) and Silke is never there; the section counts the lights of the live city at 21:00 on a Tuesday with Silke on her round and the player a ghost -> verify: ghostfam_play.city_light_budget_with_silke_and_a_ghost_player"
+   ],
+   "acceptance": {
+    "headless": "tests/run_playtest.sh --only=ghostfam_play green; windowed night shot at 22:00 at the Torvet fire with the family and Pedro looked at (design5/proto/shots_m3/f_crowd_zoom09_night.png is the prototype of the halo look; proto/shots/ is the M1b look without halos)",
+    "screenshot": "the night crowd shot",
+    "validator": "light count <= 15 in the city at the worst minute"
+   },
+   "budgets": {
+    "extra_point_lights": 1,
+    "halo_sprites_max_live": 4,
+    "scripts": 1
+   },
+   "honest": "Prototype evidence (design5/proto/shots_m3): halo ALONE on an NPC ghost reads as a soft aura, clearly weaker than Pedro's halo + light (a nice hierarchy: the player is the brightest ghost); at 22:00 the family is dim but readable. If the city's light count is above 14 at a festival (decor lights), Silke's lantern is the first light to go (halo only)."
+  },
+  {
+   "id": "GF-quests",
+   "title": "Familien Natlys, three small quests: Dyne's wool for a scarf, Gnist's lantern maker's test, Silke's lost property round (repeatable)",
+   "wave": "6",
+   "size": "S",
+   "class": "EXTENDED (M3)",
+   "dependsOn": [
+    "GF-data",
+    "P13-quests-lua-runtime",
+    "S-data"
+   ],
+   "owns": [
+    "lua/quests/ghostfam_garn.lua",
+    "lua/quests/ghostfam_lygtemager.lua",
+    "lua/quests/ghostfam_hittegods.lua",
+    "localization/ghostfamily_quests.csv",
+    "localization/ghostfamily_quests.csv.import",
+    "tests/sections/ghostfam_quests.gd"
+   ],
+   "lift": [
+    "lua/quests/night_flower.lua (built: the file shape; meta.giver, repeatable, cooldown_days)",
+    "design5/data/localization/ghostfamily.csv (the tone)"
+   ],
+   "tasks": [
+    "ghostfam_garn (giver ghostfam_dyne, hearts >= 2): bring 3 wool (the item, 12 g each) -> she knits the first garment of the family's coral: reward shirt_knit_cream x1 (normal, a SHIRT: a ghost shows it) + add_hearts(ghostfam_dyne, 1); not repeatable. ghostfam_lygtemager (giver ghostfam_gnist, hearts >= 3): 3 glow_mushroom + 1 night_bloom (forage of the dark forest) -> reward 120 gold + 3 lantern_oil (75 g of oil: about 195 gold in all against ~42 gold of forage), once; ghostfam_hittegods (giver ghostfam_silke, hearts >= 4, repeatable with cooldown_days 7): a lost item of a named citizen is waiting in her lantern basket (data table of 6 items: apple -> Oak, cookie -> Pippin, wild_flower -> Lily, rope -> Brumme, honey -> Sofus, moss -> Fru Ugle; NEVER one of the four hero twins rasmus, kiki, bertil, bodil, who are absent from the world while the player is that hero: the first draft named Kiki, an owner who cannot be met and cannot pay a heart; the offer also filters every owner through NpcDirector.is_absent): bring it to the owner (objective item_given via the gift_given quest sugar of S-gifts) -> reward 60 gold + 1 heart with the owner; rewards stay below the existing quests' (night_flower pays 350) and never give a rare or unique item -> verify: ghostfam_quests.files_load_and_offer, ghostfam_quests.rewards_capped, ghostfam_quests.hittegods_repeat_cooldown, ghostfam_quests.hittegods_owner_never_a_hero_twin, ghostfam_quests.keys_da_en_complete"
+   ],
+   "acceptance": {
+    "headless": "tests/run_playtest.sh --only=ghostfam_quests green (>= 20 checks)",
+    "screenshot": "the quest journal with one family quest accepted (P14's journal, looked at once)",
+    "validator": "csv_lint PASS; rewards table within the caps"
+   },
+   "budgets": {
+    "quests": 3,
+    "csv_rows": "about 40"
+   },
+   "honest": "Numbers are first drafts to tune in play. The delivery items are existing normal items: the quest only moves them between hands."
+  },
+  {
+   "id": "GF-events",
+   "title": "Familien Natlys, heart events: Dyne's four scenes (4, 6, 8, 10 hearts) and a 4- and an 8-heart scene for Gnist, Silke and Blund (10 scenes) as registry events in the format of S-heart-content",
+   "wave": "6",
+   "size": "M",
+   "class": "EXTENDED (M3)",
+   "dependsOn": [
+    "GF-data",
+    "S-events",
+    "S-core",
+    "S-data"
+   ],
+   "owns": [
+    "lua/events/ghostfam/**",
+    "localization/ghostfamily_events.csv",
+    "localization/ghostfamily_events.csv.import",
+    "tests/sections/ghostfam_events.gd"
+   ],
+   "lift": [
+    "design3/social_proto/lua/events/ev_hoppe_h4.lua (the scene format: meta {npc hearts once cooldown trigger}, steps stand walk face camera clip emote say choice give points flag wait end)",
+    "design5/data/localization/ghostfamily.csv (CHAT beats: the scenes continue them)"
+   ],
+   "tasks": [
+    "lua/events/ghostfam/ev_ghostfam_dyne_h4 / _h6 / _h8 / _h10 + ev_ghostfam_<gnist|silke|blund>_h4 / _h8 (registry events, KEY = event id; player-initiated: a rose-heart bubble and the dialogue choice 'Hvad har du på hjerte?' when hearts, once and cooldown hold; never a surprise): Dyne h4 'Det første garn' (she knits the player's colour into the yarn ball: the ball in her mitten turns), h6 'Familiebilledet' (a lantern-lit portrait of the four at the Torvet fire: the player stands in it), h8 'Den lange aften' (she tells the story of why the Gæstehytten is still called the guest hut; reward: the recipe of nothing, points only), h10 'Pladsen ved bålet' (a seat is kept: flag natlys_seat, +100 points); Gnist h4 'Lanternen over døren' (the player smiles at the lantern and it glows: rewards 3 lantern_oil), h8 'Sidste kunde' (he closes the shop on purpose to talk); Silke h4 'Runden' (the player walks the Torvet round with her at 20:00), h8 'Det sidste lys' (dawn: she lets the player put out the last lamp: a toast); Blund h4 'Find mig!' (a counted hide and seek of three posts), h8 'Bu' (he practises; the ghost player is asked to help: race branch); rewards points <= 100 (SV10), items <= normal -> verify: ghostfam_events.ten_scenes_load, ghostfam_events.sv10_rules, ghostfam_events.player_initiated_only, ghostfam_events.race_branch_in_blund_h8",
+    "localization/ghostfamily_events.csv: HEART_GHOSTFAM_<NAME>_<HEARTS>_<nn> (about 9 rows per scene = about 90 rows da + en) + GF_FEST_* helper rows; ONLY existing step kinds; Esc skips with a confirm like every event -> verify: ghostfam_events.keys_da_en_complete, ghostfam_events.copy_lint_clean"
+   ],
+   "acceptance": {
+    "headless": "tests/run_playtest.sh --only=ghostfam_events green (>= 30 checks), SocialValidator SV10 clean",
+    "screenshot": "windowed: Dyne h6 (the family portrait) and Blund h8, looked at",
+    "validator": "csv_lint PASS"
+   },
+   "budgets": {
+    "scenes": 10,
+    "csv_rows": "about 90",
+    "da_words_estimate": 1200
+   },
+   "honest": "Ten scenes against S-heart-content's forty: the family is lean content on purpose and droppable. A fifth scene (2 hearts) per member and a yearly birthday card are the roadmap, as for every citizen."
+  },
+  {
+   "id": "GF-qa",
+   "title": "Familien Natlys, acceptance: the family over a week and a year (presence, hours, hero twin, race reactions, save / load) and the windowed evidence",
+   "wave": "7",
+   "size": "S",
+   "class": "QA (M4)",
+   "dependsOn": [
+    "GF-data",
+    "GF-art"
+   ],
+   "softDependsOn": [
+    "GF-play",
+    "GF-quests",
+    "GF-events"
+   ],
+   "owns": [
+    "tests/sections/zz_ghostfam.gd",
+    "docs/qa/ghostfam/**"
+   ],
+   "lift": [
+    "design5/notes/check_family_final.txt (the 7 x 2 x 2 sweep and the festival-day keeper table), design5/proto/shots/*.png (the M1b look)"
+   ],
+   "tasks": [
+    "zz_ghostfam: a 7-day week in the real world with the clock at 06:10, 12:00, 17:30, 20:30 and 23:10 on each weekday: who is where (the presence table of design_ghostfamily.md 4.4), the lantern house open / closed (Wednesday closed, 23:00 bell and the shown-out sequence, the festival closure at a festival; the festival-day table of check_family: no keeperless open minute on Sofus' badedag, Midsommerlanterne, Aarsskiftet and the Moon Fair, and the named known gap of 34 game minutes after Hoestfesten and Vinterlysene), the door whispers (HOURS_CLOSED_NOW 'Åbner kl. 17:00', HOURS_CLOSED_DAY), every hero x every race meets the family (no twin absence), the ghost player gets the race / look lines, save / load at 20:30 gives the same positions (pure function of the clock), a 3-day soak finds nobody stuck -> verify: zz_ghostfam.week_presence, zz_ghostfam.shop_hours_and_closing, zz_ghostfam.hero_twin_none_for_eight_heroes, zz_ghostfam.ghost_player_lines, zz_ghostfam.save_load_same_state, zz_ghostfam.three_day_soak",
+    "docs/qa/ghostfam/: the numbers (visual peak with and without the family, the longest legs, the presence table), the windowed PNGs (dawn, the room, the Wednesday evening, the patrol), the honest list of what is a stub -> verify: zz_ghostfam.evidence_files_exist"
+   ],
+   "acceptance": {
+    "headless": "tests/run_playtest.sh --only=zz_ghostfam green under all four races (soft: the EXTENDED packages' checks SKIP with a visible line when they are not built)",
+    "screenshot": "docs/qa/ghostfam/*.png looked at",
+    "validator": "none"
+   },
+   "budgets": {
+    "checks": ">= 40"
+   },
+   "honest": "QA packages never hard-depend on EXTENDED ones: the GF-play / quests / events checks skip loudly until those land."
+  }
+ ],
+ "amendments": [
+  {
+   "id": "AGF1",
+   "package": "V1-cast-data",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "lua/config/npcs.lua: four new rows ghostfam_dyne / ghostfam_gnist / ghostfam_silke / ghostfam_blund, EXACTLY design5/data/lua/config/ghostfam_npcs_rows.lua.txt (name_key NPC_GHOSTFAM_<NAME> per the data.gd rule, visual = the art id, fallback = rabbit (data.gd roster_fields: the fallback chain must END at one of the 12 pack characters, the ghost skins use the same ending), home_area traetoppen, roles elder / shopkeeper / guard / child = EXISTING roles of data.gd ROLES: no ROLES edit, the social role -> archetype table already maps guard to watcher and child to child, wander {radius 0, speed 0}, schedule stay / stay / patrol / stay, friendship true, routine = true, voice pitch / rate 0.86/0.82, 1.08/1.02, 0.93/0.94, 1.34/1.10 = each INSIDE the archetype preset of the voice table (towns addendum 7.2: elder 0.84/0.82, shopkeeper 1.10/1.02, watcher 0.92/0.94, child 1.32/1.10, each with a deterministic +-4 % pitch / +-3 % rate jitter per citizen), because the voiced rows are generated from the archetype preset of citizens.lua and the runtime row must agree with it (the first draft's 0.80/0.90 for Gnist was 27 % below the shopkeeper preset; a deeper father voice is a one-word choice: archetype craftsman 0.74/0.88 in citizens.lua and a voice row 0.76/0.89), NO hover, NO shop_id on Gnist's row (the Natteblik rule: the shop is named by the building row, the room's shop marker and his dialogue)) -> verify: cast_data.family_rows_valid (data.roster_fields green with 34 rows), cast_data.family_roles_are_existing_roles, cast_data.family_voice_inside_archetype_preset",
+    "tests/sections/data.gd / cast_data.gd pin ids and field validity, not `size == 30` (integration conflict X5), so no count edit; the test `cast_data.postman_pip_offers_forste_dage` and the other pins are untouched -> verify: data.roster_34_rows_valid"
+   ],
+   "acceptanceAdd": "",
+   "notes": "A FIX-ROUND of the BUILT package V1 (M1a stage 2), applied at the wave-5b gate TOGETHER with GF-data (its dialogue files and the CSV rows NPC_GHOSTFAM_*), AGF2 and AGF7. The first draft applied it at wave 4 with GF-art, which left the four name keys missing (loc_check MISS from wave 4 to 5b) and four `routine = true` citizens without a routine file for a wave and a half, and needed a PENDING_CITIZENS rule in T-routes; now nothing dangles. GF-art (wave 4) only installs the art: the roster-driven art_characters ignores a folder that is not in its ROSTER.",
+   "built": true,
+   "wave": "5b",
+   "fixRound": true,
+   "applyAt": "THE G5c GATE: one merge with GF-data (rows, routine files, building, shop, room, sidecar, CSV and the amendments land together)"
+  },
+  {
+   "id": "AGF2",
+   "package": "V2-cast-art",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "tests/sections/art_characters.gd (carved out of P21, roster driven over lua/config/npcs.lua): ROSTER gains the four ids with clip set villager, PEOPLE gains ghostfam_dyne ghostfam_gnist ghostfam_silke (the three adults; Blund is sized by design like Lily and Bamse and is only reported). The fixed counts, in terms of the literals the file carries: on main today roster_is_36 (`ids.size() == 36`) and roles_and_clip_sets (`checked == 36`) become 40 and figures_on_the_pivot (`_pivot.size() == 48` = every ROSTER id + the 12 pack characters, Blund included) becomes 52; after V2's own edit (36 -> 42, 48 -> 54) the totals are 46 and 58; the windowed cast_pixels counts the literal CAST_ROWS (4 rows x 12 ids = 48, V2: 54): AGF2 adds a fifth row with the four ghostfam ids (58 once V2 has landed); the header list of check names that docs_match_the_code guards follows the rename roster_is_NN; SKIN_CHAINS needs NO row (the family are NPCs, not skins); the four folders are measured by tools/art/ghost_family/measure_family.py as well -> verify: art_characters.roster_is_46, art_characters.roster_visuals_resolve, art_characters.figures_on_the_pivot, art_characters.figure_heights_match_pack (lists the three adults), art_characters.cast_pixels (windowed)",
+    "assets/isometric_characters/manifest_traetoppen.json gets the four rows through GF-art's installer merge (sanctioned edit SE-GF2, at wave 4); each real row also carries the `animations` table of the folder's animations.json (the installer writes it), which art_characters.manifest_lists_the_roster compares: the row is NOT six hand-written fields; the check accepts extra rows and checks the roster ids -> verify: art_characters.manifest_lists_the_roster"
+   ],
+   "acceptanceAdd": "",
+   "notes": "A FIX-ROUND of V2's section at the 5b gate. MEASURED: design5/scripts/agf2_patch_clone.py applies the +4 literals to a clone of main 70f4bed with the real art, and art_characters stays green (notes/harness_final_sections.log). WITHOUT the edit the section says '36 ids' and lists 21 people-sized figures, none of them a ghost: the first draft's 'art_characters 27/0' never looked at the family. The edit also fails two checks on the hard-coded counts alone if the ids are added without the count edits.",
+   "built": true,
+   "wave": "5b",
+   "fixRound": true,
+   "applyAt": "THE G5c GATE: one merge with GF-data (rows, routine files, building, shop, room, sidecar, CSV and the amendments land together)"
+  },
+  {
+   "id": "AGF3",
+   "package": "G-ghost-art",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "tests/sections/art_ghost.gd: ONE new check, `model_api_for_family`: tools/art/ghost/ghost_model.py exports the names the family builder imports (bell, ring_path, ghost_eyes, PALETTES['ghost'], pat_sheet, GHOST_CLIP_HOOKS) with the prototype's signatures; the prototype module is imported by tools/art/ghost_family WITHOUT edit -> verify: art_ghost.model_api_for_family",
+    "tools/art/ghost/produce_ghost.sh gives ghost_bu and ghost_hviske the SAME storybook finish as the family (final edit, review defect A1): stage the pristine export copy of the two folders, run tools/art/storybook/bake.gd --source=<stage> --install ONCE under the window lock, import; the six ghosts stand next to each other and next to a roster that main finished (75c6fd8) and then painted (1ab4d2b), and a ghost player would otherwise be the only smooth CG figure on screen (proto/style_before_after.png); alpha is untouched, so G-ghost-art's own cast gates hold (measured on the finished sheets: heights 160 / 160, feet 206.1-214.2, pivot 127.4-127.6); art_ghost's palette gate is measured on the FINISHED sheet, where Pedro's E6EFFF reads dE 5.9 against the gate 6: widen the gate for finished sheets to 8 or declare the hex EEF4FF; when the user supplies painted sources the same package paints Pedro and Hviske (GF-art task 'STYLE TARGET') -> verify: art_ghost.storybook_finished, art_ghost.palette_within_de_after_finish"
+   ],
+   "acceptanceAdd": "",
+   "notes": "Task 1: no code change, the names exist in the prototype (design4/proto/builder/traetoppen_additions.py = design5/proto/builder/ghost_model_proto.py, byte-identical but its docstring); the check makes the coupling explicit. Task 2: if G-ghost-art is already BUILT when this lands (the lead's build may be running) it is a FIX-ROUND task.",
+   "built": false,
+   "wave": "3b"
+  },
+  {
+   "id": "AGF4",
+   "package": "T-towns-core",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "lua/buildings/traetoppen.lua: REMOVE the row `gaestehytten` (kind decor, no door: 'nobody lives there yet') - the id moves to lua/buildings/ghostfam.lua of GF-data (a duplicate id across registry files is a claim error); the core counts become 19 buildings (14 with a room, 3 locked nameplate doors, 2 stalls, 0 decor) in the packages' tests; BLD_GAESTEHYTTEN stays in towns.csv with the text 'Gæstehytten' (the sign of the family shop reads the old name on purpose) -> verify: towns_data.buildings_schema, towns_data.decor_row_removed_family_owns_the_id",
+    "NO late shop id is needed any more (the first draft listed lantern_house as a third one): the building row, the shop file, the room and the dialogue all land at the same 5b gate, so towns_data.shop_ids_exist and towns_interiors_core.every_shop_marker_resolves see lantern_house as an ordinary shop id of an existing file -> verify: towns_data.shop_ids_exist, towns_interiors_core.every_shop_marker_resolves"
+   ],
+   "acceptanceAdd": "",
+   "notes": "If the family layer is NOT built, the hut stays a hut without a row: V4 / V5 draw its door and its lit window, the sidecar door (AGF6) is a locked nameplate (a door marker whose building has no registry row, DT49): nothing breaks, nobody lives there.",
+   "built": true,
+   "wave": "5b",
+   "fixRound": true,
+   "applyAt": "THE G5c GATE: one merge with GF-data (rows, routine files, building, shop, room, sidecar, CSV and the amendments land together)"
+  },
+  {
+   "id": "AGF5",
+   "package": "T-interiors-core",
+   "ownsAdd": [
+    "data/maps/int_gaestehytten.map"
+   ],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "data/interiors/core/int_gaestehytten.json + data/maps/int_gaestehytten.map: EXACTLY design5/data/data/interiors/core/int_gaestehytten.json (S 7x5 like int_uglehulen: door (3,4), spawn (3,3), counter band row 2 = hatch (0,2) (1,2) (5,2) (6,2) + counter table_long_pine (2,2) 3x1, keeper post counter (3,1), the family corners table (1,1) capacity 4 and bed (5,1) capacity 4 behind the band, customer posts (1,4) (5,3) (5,4), shop marker lantern_house keeper ghostfam_gnist at (3,3), the two talk markers (2,3) and (4,3), pieces bookshelf_oak_narrow clock_owl shelf_birdhouse table_round_pine floor_lamp_glowshroom candelabra_iron, all in assets/iso_props/furniture/furniture.json) and the 7-line stub map (@id int_gaestehytten, @title BLD_GAESTEHYTTEN, @projection iso, @ambient home, @zone traetoppen, @builder res://scripts/towns/interior_room.gd, @room int_gaestehytten); validated by design3's room validator: flood fill with the real hatch bars, keeper / table / bed unreachable for the player, every customer post and the shop host reachable (notes/room_check.txt: 0 problems) -> verify: towns_interiors_core.json_schema_15, towns_interiors_core.flood_fill_15, towns_interiors_core.zone_header_15, towns_interiors_core.keeper_reachable_from_counter_front",
+    "the checks named *_14 count the files of data/interiors/core and become *_15 (round_trip_all_15, windowed_15_rooms): derive the number from the directory, never a literal; the shop wiring list gains lantern_house -> verify: towns_interiors_core.round_trip_all_15, towns_interiors_core.every_shop_marker_resolves"
+   ],
+   "acceptanceAdd": "",
+   "notes": "data/interiors/core/** is already T-interiors-core's glob; only the stub map is a new literal path. Budgets per room unchanged (<= 130 nodes, <= 12 ms warm, <= 4 lights): the family room is the smallest class.",
+   "built": true,
+   "wave": "5b",
+   "fixRound": true,
+   "applyAt": "THE G5c GATE: one merge with GF-data (rows, routine files, building, shop, room, sidecar, CSV and the amendments land together)"
+  },
+  {
+   "id": "AGF6",
+   "package": "T-routes",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "data/towns/traetoppen.json (the city sidecar): ADD one door {building gaestehytten, sx 693.8, sy 1043.7, level 6} (= V3's building h12, data/traetoppen/traetoppen.json door 693.8 / 1043.7: the coordinates are already in V3's file) and one post {name f_porch, level 6, sx 690, sy 1068, act stand, cap 2} (inside platform 6: ((690-588.25)/183.7)^2 + ((1068-1010)/106.1)^2 = 0.607 < 1); the counts become 14 doors, 37 posts, the route table 28 areas (27 + int_gaestehytten) -> verify: towns_routes.sidecar_loads, towns_routes.sidecar_door_and_post_added, towns_routes.complete",
+    "the sweep counts (`stay + move + inside + absent = 23 or 30`, `core_only_passes (23 citizens, 20 buildings, 14 rooms)`) are derived from the registry (23 + the 4 family ids, 14 / 15 rooms), never literals; with the family landing in ONE merge (rows, routine files, building, room, sidecar) there is no window with a `routine = true` citizen and no routine file, so the PENDING_CITIZENS rule of the first draft is NOT needed -> verify: towns_routines.sweep_every_citizen_once, towns_routines.core_only_passes",
+    "the visual-budget rule runs with the family in the table: the proof that the planned peaks stay 14 (Hyggebyen) and 11 (Traetoppen) is GF-data's section; T-routes' rule is unchanged -> verify: towns_routines.rule_visual_budget"
+   ],
+   "acceptanceAdd": "",
+   "notes": "COUNTS TO UPDATE in packages that quote them as literals: T-routes (13 doors -> 14, 36 posts -> 37, 27 areas -> 28), T-director (towns_city doors), T-towns-core / T-interiors-core (14 core rooms -> 15, 24 rooms -> 25), T-ext-content (towns_ext.full_30_pass_all_9_rules -> derived 34), T-qa and I6 (zz_towns / zz_town: 30 citizens -> 34 where they count the registry). Derive, do not hard-code. The lead regenerates data/towns/routes.json at this gate (sanctioned edit E3).",
+   "built": true,
+   "wave": "5b",
+   "fixRound": true,
+   "applyAt": "THE G5c GATE: one merge with GF-data (rows, routine files, building, shop, room, sidecar, CSV and the amendments land together)"
+  },
+  {
+   "id": "AGF7",
+   "package": "S-data",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "lua/social/citizens.lua: four rows EXACTLY design5/data/lua/social/ghostfam_citizens_rows.lua.txt (Dyne tier A elder vinter 10, Gnist tier B shopkeeper efteraar 4, Silke tier B watcher sommer 19, Blund tier B child foraar 23; partner = false for all four): the birthdays are not on or next to a festival day, >= 2 days from each of the 30 others (the planner rule), two on a Thursday / Friday, Dyne's on a WEDNESDAY (the family evening); lua/social/gift_tastes.lua: four npc rows EXACTLY design5/data/lua/social/ghostfam_gift_tastes_rows.lua.txt (existing items only; 4 loved items each, the elder archetype's hate lantern_oil overridden for Dyne): SV1-SV14 with 34 citizens = 0 errors (notes/social_validate_family.txt: love 9 / 7 / 5 / 5 items of 278 = 1.8-3.2 %, dislike + hate 15 / 9 / 15 / 23 = 3-8 % against the caps 8 % and 12 %, cheapest loved glow_mushroom / fabric_wool at 8 gold) -> verify: social_data.citizens_cover_friends, social_data.birthdays_rules, social_data.partner_flags_adults_only, social_data.tastes_love_counts, social_data.taste_distribution_sane",
+    "the marriage track's exclusion list (family and age, data of V1) gains the four ids; the copy plan C1 grows by the family's own CSV (115 rows, 1527 words) which lives in localization/ghostfamily.csv (GF-data), NOT in social_talk.csv, so S-data's row budgets (346 / 300 / 133 / 25) stay exact -> verify: social_data.family_not_partnerable"
+   ],
+   "acceptanceAdd": "",
+   "notes": "A FIX-ROUND of the BUILT S-data (wave 5), applied at the 5b gate in the SAME merge as GF-data's CSV: S-data's section runs its slot-coverage rules on the real data (social_data.slots_complete_per_tier, skeleton_has_no_missing_core_keys: a tier-A citizen needs FIRST, 4 GREET, 4 WX, 4 SEASON, CHAT x5 ...), so it must run after ghostfamily.csv is in place; the first draft applied it at wave 5, where the section would have seen four citizens without copy. The cascade finds the family's lines by key (SOC_GHOSTFAM_<NAME>_*, GIFT_GHOSTFAM_*, BDAY_GHOSTFAM_*): the longest-prefix owner table (SE-GF1) assigns them to ghostfamily.csv; SocialTalk reads them without knowing the file.",
+   "built": true,
+   "wave": "5b",
+   "fixRound": true,
+   "applyAt": "THE G5c GATE: one merge with GF-data (rows, routine files, building, shop, room, sidecar, CSV and the amendments land together)"
+  },
+  {
+   "id": "AGF8",
+   "package": "I1-copy-system",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "docs/copy/review_status.json gains `ghostfamily.csv` with status draft (ai_reviewed by a fresh-context agent in the same wave: GF-data's own gate), the copy lint scope (tools/copy/copy_lint.py) takes every localization/*.csv so the new file is checked by C1-C10 without an edit (C3: voiced rows <= 14 words; the family's 10 are); the review queue (docs/copy/REVIEW_QUEUE.md) lists ghostfamily.csv by exposure (the shop keeper and the evening storyteller first) -> verify: copy_rules.review_status_lists_the_family_csv, copy_rules.lint_covers_every_csv"
+   ],
+   "acceptanceAdd": "",
+   "notes": "The Danish is AI-drafted: native review 3.8 h at the assumed 400 words per hour; the 10 voiced rows (_V) stay unvoiced until ai_reviewed and the user's listening test (towns addendum Q4).",
+   "built": true,
+   "wave": "5b",
+   "fixRound": true,
+   "applyAt": "THE G5c GATE: one merge with GF-data (rows, routine files, building, shop, room, sidecar, CSV and the amendments land together)"
+  },
+  {
+   "id": "AGF9",
+   "package": "P12-economy-shop-crafting",
+   "ownsAdd": [],
+   "ownsRemove": [
+    "lua/shops/lantern_house.lua"
+   ],
+   "addDependsOn": [],
+   "tasks": [],
+   "acceptanceAdd": "",
+   "notes": "CARVE-OUT only (P12 owns lua/shops/**; the shop file moves to GF-data like festival_markets.lua moved to S-fest-content): no task, no file changes, the file does not exist before GF-data. Against impl/owners.json this exact-string removal matches nothing when the owner holds a glob (apply_designs.py removes strings): the overlap with the glob owner is the same kind as the 134 existing overlaps, and impl/tools/ownership.py counts a file as the wave's when ANY of its owners is in the wave, so the gate still passes; design5/scripts/check_gf_ownership.py proves disjointness against design3's EFFECTIVE table, where the exclusions are real; re-run design5/scripts/check_own_against_owners.py after the merge.",
+   "built": true,
+   "wave": "3"
+  },
+  {
+   "id": "AGF10",
+   "package": "P14-npc-dialogue",
+   "ownsAdd": [],
+   "ownsRemove": [
+    "lua/dialogue/ghostfam_dyne.lua",
+    "lua/dialogue/ghostfam_gnist.lua",
+    "lua/dialogue/ghostfam_silke.lua",
+    "lua/dialogue/ghostfam_blund.lua"
+   ],
+   "addDependsOn": [],
+   "tasks": [],
+   "acceptanceAdd": "",
+   "notes": "CARVE-OUT only (P14 owns lua/dialogue/**): the four modules belong to GF-data. P14's dialogue context carries race and hero (design4 7.5), weekday, hour and the S-core fields (daypart ...) and `shop_<id> = true` for a shop that EXISTS (never false); no code change. Against impl/owners.json this exact-string removal matches nothing when the owner holds a glob (apply_designs.py removes strings): the overlap with the glob owner is the same kind as the 134 existing overlaps, and impl/tools/ownership.py counts a file as the wave's when ANY of its owners is in the wave, so the gate still passes; design5/scripts/check_gf_ownership.py proves disjointness against design3's EFFECTIVE table, where the exclusions are real; re-run design5/scripts/check_own_against_owners.py after the merge.",
+   "built": false,
+   "wave": "5"
+  },
+  {
+   "id": "AGF11",
+   "package": "P27-qa-acceptance",
+   "ownsAdd": [],
+   "ownsRemove": [
+    "docs/qa/ghostfam/**"
+   ],
+   "addDependsOn": [],
+   "tasks": [],
+   "acceptanceAdd": "",
+   "notes": "CARVE-OUT only (P27 owns docs/qa/**): the family's evidence folder belongs to GF-qa (the pattern of docs/qa/ghost/**). Against impl/owners.json this exact-string removal matches nothing when the owner holds a glob (apply_designs.py removes strings): the overlap with the glob owner is the same kind as the 134 existing overlaps, and impl/tools/ownership.py counts a file as the wave's when ANY of its owners is in the wave, so the gate still passes; design5/scripts/check_gf_ownership.py proves disjointness against design3's EFFECTIVE table, where the exclusions are real; re-run design5/scripts/check_own_against_owners.py after the merge.",
+   "built": false,
+   "wave": "7"
+  },
+  {
+   "id": "AGF12",
+   "package": "P14-npc-dialogue",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "scripts/world2d/npc_2d.gd (the Npc2D of P14; scripts/npc/ holds only the legacy agent / base / spawner): in _ready, after the visual exists, ONE late-bound, null-safe call `Svc.static_call(\"res://scripts/ghostfam/npc_glow.gd\", &\"attach\", [self])` (a missing script is a silent skip by the Svc rule): the NPC glow of GF-play (M3); no other change -> verify: npc.glow_hook_is_null_safe"
+   ],
+   "acceptanceAdd": "",
+   "notes": "A FIX-ROUND of the BUILT P14 (wave 5), applied only when GF-play (wave 6) is built: until then Npc2D is untouched. apply_designs.py has no deferral concept (it decides `built` from the amendment's flags or the PACKAGE wave and ignores the amendment's own wave), so the gate is stated here; the first draft marked it unbuilt at wave 5 and it would have been merged into P14's wave-5 order as a plain task.",
+   "built": true,
+   "wave": "6",
+   "fixRound": true,
+   "applyAt": "with GF-play (wave 6, M3)"
+  },
+  {
+   "id": "AGF13",
+   "package": "P13-quests-lua-runtime",
+   "ownsAdd": [],
+   "ownsRemove": [
+    "lua/quests/ghostfam_garn.lua",
+    "lua/quests/ghostfam_lygtemager.lua",
+    "lua/quests/ghostfam_hittegods.lua"
+   ],
+   "addDependsOn": [],
+   "tasks": [],
+   "acceptanceAdd": "",
+   "notes": "CARVE-OUT only (P13 owns lua/quests/**): three quest files belong to GF-quests (M3). Against impl/owners.json this exact-string removal matches nothing when the owner holds a glob (apply_designs.py removes strings): the overlap with the glob owner is the same kind as the 134 existing overlaps, and impl/tools/ownership.py counts a file as the wave's when ANY of its owners is in the wave, so the gate still passes; design5/scripts/check_gf_ownership.py proves disjointness against design3's EFFECTIVE table, where the exclusions are real; re-run design5/scripts/check_own_against_owners.py after the merge.",
+   "built": false,
+   "wave": "4"
+  },
+  {
+   "id": "AGF14",
+   "package": "S-fest-content",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "lua/festivals/fixed/maanemarkedet.lua AND lua/festivals/fixed/midsommerlanterner.lua: meta.stays_open gains `lantern_house` (Maanemarkedet is efteraar 27 = a Saturday 18-23, Midsommerlanterne sommer 14 = a Sunday 18-23: the lantern house is open on both weekdays by its own rule, so social_fest_content.stays_open_is_possible_on_the_festival_weekday holds; DT46: the keeper of a stays_open shop stays at his shop, so Gnist is never pulled away from the counter in the hour before Midsommerlanterne's window, which the first draft left open and keeperless for 1 h); the family attends the festivals of TRAETOPPEN by the attendance rule (home area = the spot's area) with their `fest` plan (awake from 09:00: the overlay skips a citizen who is not in the world then, towns addendum 4.8): Dyne, Silke and Blund all five (Midsommerlanterne, Sofus' badedag, Hoestfesten, Vinterlysene, Aarsskiftet), Gnist Hoestfesten, Vinterlysene and Aarsskiftet only (Badedagen: he sleeps until 16:20 and keeps the shop; Midsommerlanterne: he stays at the counter); the four Hyggebyen festivals are NOT attended (Hyggebyen has 16 home citizens against the cap of 15 + the host, DT46); Traetoppen gets 14 + 4 = 18 home citizens, so at a Traetoppen festival 15 of at most 17 non-host candidates attend by the SocialRng order (DT46): each family member attends with probability about 88 %; a `meta.first` list in the festival file is the one-line S-core option if the user wants the ghosts at every festival (open question 5); the lantern house is closed by the festival wherever it is not listed (`closes = all`). KNOWN GAP (named in zz_ghostfam): after Hoestfesten (window end 20:00) and Vinterlysene (21:00) the shop reopens at the window end while Gnist walks back from the Torvet, 34 game minutes (an estimate) with the counter empty; the one-line cure is lantern_house in those two festivals' stays_open too -> verify: social_fest_content.stays_open_is_possible_on_the_festival_weekday, social_fest_content.stays_open_ids_exist, ghostfam_data.festival_keeper_covers_hours",
+    "localization/festivals.csv: the cascade rows FEST_<ID>_GHOSTFAM_<NAME> (festival today, 5 festivals x 4 members = 20 rows da + en; lines like Dyne at Midsommerlanterne 'Lanternerne er min families yndlingsfest. Så meget lys, og ingen skal løbe hjem.', Gnist at Vinterlysene 'Jeg lukker butikken i aften. Lys skal man dele ud.') -> verify: social_fest_content.loc_pairs_da_en, social_fest_content.copy_lint_clean"
+   ],
+   "acceptanceAdd": "",
+   "notes": "M3. The FEST_<ID>_<NPC> keys are owned by festivals.csv (the prefix FEST_ cannot be claimed twice), which is why they are an amendment and not GF-events rows.",
+   "built": false,
+   "wave": "6"
+  },
+  {
+   "id": "AGF1b",
+   "package": "V1-cast-data",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "lua/config/npcs.lua: quests_offered on the four family rows (M3, applied with GF-quests): ghostfam_dyne = { \"ghostfam_garn\" }, ghostfam_gnist = { \"ghostfam_lygtemager\" }, ghostfam_silke = { \"ghostfam_hittegods\" } (Blund offers none); P14 shows the '!' bubble while a quest is not accepted -> verify: cast_data.family_quests_offered_exist"
+   ],
+   "acceptanceAdd": "",
+   "notes": "A FIX-ROUND of the BUILT V1. The quest ids must exist when it lands: tests/sections/data.gd skips only FEATURE_QUESTS in its quest-id check (lines 312-320), so on main `npc ghostfam_dyne offers quest ghostfam_garn which does not exist` FAILS data.roster_fields; apply it in the same commit as the three quest files of GF-quests (the first draft claimed the check skips until the file lands, which is false on main). apply_designs.py routes built / fixRound amendments to impl/fixround4.json and has no concept of a later wave: the gate is stated here.",
+   "built": true,
+   "wave": "6",
+   "fixRound": true,
+   "applyAt": "in the SAME commit as GF-quests (wave 6, M3)"
+  },
+  {
+   "id": "AGF15",
+   "package": "GF-data",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "lua/dialogue/ghostfam_dyne.lua / gnist / silke: one quest branch each (the P14 pattern of baker_maja.lua: `quest_accept` choice when the quest is offerable and hearts allow, a reminder line while it runs, a thank-you line when done) with the keys QUEST_GHOSTFAM_* / OBJ_GHOSTFAM_* of ghostfamily_quests.csv -> verify: ghostfam_data.dialogue_branches_run, ghostfam_quests.dialogue_offers_the_quest_when_hearts_allow"
+   ],
+   "acceptanceAdd": "",
+   "notes": "An amendment of a NEW package by another new package, applied to GF-data's owned files after GF-quests exists (GF-quests cannot own the dialogue files): a FIX-ROUND of the built GF-data. Skipped when GF-quests is not built. Gnist's branch keeps the weekday / hour rule of his closed / early lines.",
+   "built": true,
+   "wave": "6",
+   "fixRound": true,
+   "applyAt": "with GF-quests (wave 6, M3)"
+  },
+  {
+   "id": "AGF16",
+   "package": "S-heart-content",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "the tier-A set and the counts of social_heart_content.scene_per_tier_a_4_6_8_and_10 and forty_scenes_registered are DERIVED, not pinned: tier A = the tier-A citizens of lua/social/citizens.lua whose events this package owns, i.e. minus the ids whose events live in another package (the family's ev_ghostfam_dyne_h4 / _h6 / _h8 / _h10 are GF-events', lua/events/ghostfam/**); Dyne is the 11th tier-A citizen from M1b, so the first draft's '10 tier A citizens, 40 scenes' either fails the rule for Dyne (when GF-events is dropped) or the pinned count of 40 (when GF-events adds 10 scenes to the registry); the rule accepts ev_ghostfam_dyne_h* as satisfying it for Dyne and SKIPS loudly (named) when GF-events is not built; SV10 applies to the family's scenes as to all -> verify: social_heart_content.scene_per_tier_a_4_6_8_and_10, social_heart_content.forty_scenes_registered"
+   ],
+   "acceptanceAdd": "",
+   "notes": "Plain amendment (S-heart-content is unbuilt, wave 6). Read from the order, not run: S-heart-content is not built. The designer's social validator prints Dyne's missing events only as a stub list until GF-events lands (notes/social_validate_family.txt: tier A heart events missing (stub list): ghostfam_dyne).",
+   "built": false,
+   "wave": "6"
+  }
+ ],
+ "milestones": {
+  "M1a": {
+   "contains": [],
+   "reason": "NOT part of M1a (the city preview being built now). The art can be baked at any time after G-ghost-art; the family has no value in a preview without citizens. V3's built city data already holds the door of hut 11 (h12)."
+  },
+  "M1b (usable towns)": {
+   "newPackages": [
+    "GF-art (wave 4: assets only)",
+    "GF-data (wave 5b)"
+   ],
+   "amendments": [
+    "AT THE 5b GATE, ONE MERGE with GF-data, all FIX-ROUNDS of built packages: AGF1 V1 (rows), AGF2 V2 (art_characters literals), AGF4 T-towns-core, AGF5 T-interiors-core, AGF6 T-routes, AGF7 S-data, AGF8 I1 (the first draft spread them over waves 4 and 5 and needed same-wave couplings, PENDING_CITIZENS and a late shop id; the layer now has none of them)",
+    "AGF3 G-ghost-art (wave 3b, plain amendment: the family API check and the same finish for Pedro and Hviske)",
+    "carve-outs AGF9 P12, AGF10 P14, AGF11 P27, AGF13 P13 (glob owners: see the ownership note)"
+   ],
+   "gate": "G5c = the G5b gate with the family layer: ghostfam_data + art_ghostfam green under all four heroes, the 34-citizen sweep of T-routes green, the four windowed shots looked at; the family is DROPPABLE (not building the GF packages and not merging the AGF amendments leaves G5b unchanged: the decor hut stays a hut, 30 citizens, 14 rooms)",
+   "load": "GF-art M = 2 points, GF-data M = 2 points, amendments about 1.5 points: about 5.5 load points, about 4.7 M tokens at the 0.85 M per point measured in wave 3 (an ESTIMATE of the lead's own figure); the painted route of GF-art is extra and needs the user's imagegen",
+   "reuses_G_ghost_art": true
+  },
+  "M3 (extended social)": {
+   "newPackages": [
+    "GF-play (wave 6)",
+    "GF-quests (wave 6)",
+    "GF-events (wave 6)"
+   ],
+   "amendments": [
+    "AGF12 P14 (the NPC glow hook, a fix-round merged with GF-play)",
+    "AGF14 S-fest-content (stays_open for the Moon Fair and Midsommerlanterne + 20 festival lines)",
+    "AGF1b V1 (quests_offered, a fix-round, in the same commit as GF-quests) + AGF15 GF-data (quest branches, a fix-round)",
+    "AGF16 S-heart-content (tier A derived: Dyne's events are GF-events')"
+   ],
+   "load": "S + S + M = 4 points plus 0.5"
+  },
+  "M4 (polish / QA)": {
+   "newPackages": [
+    "GF-qa (wave 7)"
+   ],
+   "load": "S = 1 point"
+  }
+ },
+ "honestStubs": [
+  "Hide and seek is a routine (a new hiding post per weekday), not a mini-game and not a reward: the 'Du fandt mig' line is Blund's evening greeting; talking to him anywhere pays the ordinary weekly heart.",
+  "Silke being 'Nattevagten' is lore: the curfew whisper and the 23:45 walk home are T-director's mechanism and unchanged; nothing walks the player home visibly (no escort animation).",
+  "The family has NO glow in M1b (art only): the halo / lantern light is GF-play (M3). At night the baked colours shift with the grade (every pair falls to 2.8-8.6 dE00); silhouette and accessory carry the identification there.",
+  "Lantern, spectacles, nightcap, bow, scarf, yarn ball are baked geometry of the sprite: they cast no light, do not swing independently of the arm / head and cannot be removed.",
+  "The route times of the new door, porch and room are estimates until T-routes' bake; the validator reports a late leg loudly.",
+  "The social layer is lean (tier A Dyne, tier B the rest): chat beats instead of heart events until GF-events; no quests until GF-quests; festival lines only through the S-fest-content amendment.",
+  "The family does not attend the four Hyggebyen festivals (the cap of 15 attendees is already full there); the lantern house stays open at the Moon Fair and at Midsommerlanterne (AGF14). At the five Traetoppen festivals the cap of 15 + the host has 18 home citizens to choose from, so each family member attends about 88 % of the time (random by festival, citizen and year); Gnist attends three of the five (Badedagen and Midsommerlanterne he keeps the shop).",
+  "Festival-day keeper coverage: the lantern house is never open and keeperless on Badedagen, Midsommerlanterne, Aarsskiftet and the Moon Fair; after Hoestfesten and Vinterlysene the shop reopens at the window end while Gnist walks back from the Torvet: 34 game minutes (an estimate), twice a year, worst case. Named in zz_ghostfam; the cure is lantern_house in those two festivals' stays_open.",
+  "Gnist's dialogue knows the weekday and the hour, not a festival closure: on a festival evening the greeting 'Hvad skal det være?' can precede the shop panel's refusal.",
+  "The art is a 3D bake with the storybook finish, NOT the painted style of the 48 roster sheets of main (1ab4d2b): closer than the first draft, still a different hand (large dark ghost eyes, rounded volume). The painted route (imagegen sheets + pack_ghosts.py) is described and gated but needs the user's imagegen: named SKIP until then. The same holds for Pedro and Hviske (G-ghost-art, AGF3).",
+  "No ghost voice (text only until P24 voices the 10 `_V` rows after ai_reviewed and the user's listening test); the Danish is AI-drafted, with no native check and no Danish language tool.",
+  "No marriage: partner = false for all four; no children are added; the family never changes with the seasons.",
+  "No fallback drawing: if the art is missing the NPC would draw as a pack rabbit; GF-art is a hard dependency and a check proves the four visuals resolve without fallback.",
+  "The clock of the repository runs 06:00-24:00 (game_balance.lua:78-79, pass-out at 24:00); the brief's '06-26' does not exist in code or docs: the family plans end at 24:00 and wrap to 06:00; if the day is ever extended the night blocks are the first to stretch."
+ ],
+ "openQuestions": [
+  "Names: the family Natlys (nightlight) and Mormor Dyne (duvet), Far Gnist (spark), Mor Silke (silk), Lille Blund (a nap). Keep? Default: keep; a rename is ONE csv column and one id-free edit (ids are ghostfam_<name>: rename them only if the user wants the ids to match).",
+  "The clock: the brief says '06-26' but the game runs 06:00-24:00 (pass-out at 24:00). Should the day be extended past midnight so the ghosts get a real night? Default: no (the family fits 06-24: evening and dawn people).",
+  "Should the ghost family be RELATED to the player's ghost hero in the story (Pedro / Hviske as a cousin who arrives)? Default: no; the lines treat a ghost player as a welcome new neighbour and the 10-heart line makes everyone, ghost or not, a Natlys at heart.",
+  "Hide and seek: pure routine (default) or a small reward / counter for finding Blund (an achievement-like count, GF-events h4 has a counted version)? Default: no reward in M1b.",
+  "Should the ghost family ALWAYS attend the five Traetoppen light festivals (a `first` list in the festival file, one line in SocialManager.override_for) and visit the four Hyggebyen ones (needs a guests field and the cap of 15 raised)? Default: no: about 88 % attendance in Traetoppen, none in Hyggebyen.",
+  "The look of the six ghosts: main now has a PAINTED roster (imagegen, commit 1ab4d2b). Ship the 3D bake with the storybook finish (default: closer than before, still a different hand, ready now) or paint Pedro, Hviske and the family with the user's imagegen from the prompts and shape references of tools/art/ghost_family (the painted route is wired and gated, but only the user can generate the sheets)?"
+ ],
+ "_doc": "design5 / ghost family (Familien Natlys), FINAL after two reviews. Schema of design4/ghost_packages.json and design3's packages.json. New ids prefix GF. The packages are DROPPABLE as a layer. All numbers are measured in design5/notes/*.txt (scripts in design5/scripts and design5/sim). Amendments with built = true and fixRound = true are FIX-ROUNDS of built packages; apply_designs.py has no deferral concept, so each carries an `applyAt` gate that the lead keeps (the 5b merge, or the wave-6 package they belong to).",
+ "sanctionedEdits": [
+  {
+   "id": "SE-GF1",
+   "file": "tools/loc/key_owners.json",
+   "by": "the lead at the START of wave 5b (ghostfamily.csv) and of wave 6 (ghostfamily_quests.csv, ghostfamily_events.csv); the file does not exist before 5b, so an earlier merge would register a missing file",
+   "lines": "merge the `files` of design5/data/tools/loc/ghostfam_key_owners_additions.json whose wave is the wave about to start (prefixes NPC_GHOSTFAM_ GHOSTFAM_ SHOP_LANTERN_ SHOPTAB_LANTERN_ DLG_GHOSTFAM_ SOC_GHOSTFAM_ BDAY_GHOSTFAM_ GIFT_GHOSTFAM_ / QUEST_GHOSTFAM_ OBJ_GHOSTFAM_ / HEART_GHOSTFAM_ GF_FEST_)"
+  },
+  {
+   "id": "SE-GF2",
+   "file": "assets/isometric_characters/manifest_traetoppen.json",
+   "by": "tools/art/export/install_assets.py (merge) run by tools/art/ghost_family/produce_family.sh (wave 4, GF-art)",
+   "lines": "four rows ghostfam_dyne ghostfam_gnist ghostfam_silke ghostfam_blund: role npc, clip_set villager, family ghost, flyer false, display_scale 1.0, portrait portrait.webp AND the `animations` table of the folder (the installer writes it; art_characters.manifest_lists_the_roster compares it)"
+  },
+  {
+   "id": "SE-GF3",
+   "file": "docs/copy/review_status.json",
+   "by": "I1 (amendment AGF8)",
+   "lines": "ghostfamily.csv: draft"
+  },
+  {
+   "id": "E3",
+   "file": "data/towns/routes.json",
+   "by": "the lead with tools/towns/bake_routes.sh at the wave-5b gate (the existing sanctioned edit E3)",
+   "lines": "regenerated: 28 areas, the new door / porch / room baked from the real nav grids"
+  }
+ ]
+}
