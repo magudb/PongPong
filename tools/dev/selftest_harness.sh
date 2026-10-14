@@ -149,7 +149,7 @@ run_case flow_helpers $PASS_RC 90 "\\(0 failed, [0-9]+ skipped\\), $BASE_N engin
 
 # ---- the real flow on the current tree (legacy 3D tree: known failures are reported, never a crash)
 CHARS="animal"
-[ "$ALL_CHARS" = 1 ] && CHARS="animal fairy hobbit"
+[ "$ALL_CHARS" = 1 ] && CHARS="animal fairy hobbit ghost"
 for c in $CHARS; do
 	if grep -q 'Node3D' scenes/main/world.tscn 2>/dev/null; then
 		run_case "boot_legacy_$c" "*" 90 'PLAYTEST (PASS|FAIL)' '' --character="$c" --sections-dir="$ST/legacy"
@@ -161,7 +161,7 @@ for c in $CHARS; do
 			note_fail "boot_legacy_$c: expected a green boot and exactly the known legacy failure pause_resumes ($NFAIL FAIL lines)"
 		fi
 	else
-		run_case "boot_2d_$c" "*" 120 'ok +boot\.phase_playing' '' --character="$c" --sections-dir="$ST/legacy"
+		run_case "boot_2d_$c" "*" 120 'ok +boot\.phase_playing' 'FAIL(ED)? +boot\.' --character="$c" --sections-dir="$ST/legacy"
 	fi
 done
 

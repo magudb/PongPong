@@ -43,12 +43,12 @@ const GENERATOR_PATH := "res://scripts/world2d/levels/source/build_traetoppen_js
 ## sha256 of the BUILT framework files this package must not edit (git-free proof, taken when V3 landed): a legitimate later edit of one of
 ## them by its owner (P04 / P05) makes this check fail on purpose - update the hash in the same commit.
 const PINNED := {
-	"res://scripts/world2d/iso_area.gd": "7aa8c8ae31fdc106fc936727c4fef02e83e3e3ad74be7d4a389f38cca82722e5",
+	"res://scripts/world2d/iso_area.gd": "3fda87115a5b555835b79dda3034549f881c1485a7dd7d946b314abcf6c7186f",
 	"res://scripts/world2d/world_2d.gd": "ad9c64e2cbac20976a84dbcccd936f4657a07a566f630d3bd7ea4d3bf32c5d13",
 	"res://scripts/world2d/game_data.gd": "03a66479819a83799b98fbd2db1e5cad4cbdb9b5e52d0113ba73f525160e5a0c",
-	"res://scripts/world2d/art_catalog.gd": "b2cb5b3ef99b02347710e01d828a6cbecd246ec6c7522309326020fbc422963d",
+	"res://scripts/world2d/art_catalog.gd": "066db66b5c732da903f94e02a19638b3e5444eb00923aa34d9c64d01f540830a",
 	"res://scripts/isometric/iso_chibi_sprite_2d.gd": "86b330d2fde4d26d40cc9fcdd0f06dd12522fc7a774053dae542dde673554b4b",
-	"res://scripts/isometric/character_catalog.gd": "b080112c6398d5555c0677249cc5cab44db7f42f50d67d52c7310b37d21788a6",
+	"res://scripts/isometric/character_catalog.gd": "2a56f24f8abf4312709284391e5f605e0894b386a68e6f08d8093b86dc11e556",
 }
 
 ## open floor of every platform (sketch px): level_at must answer with that platform
