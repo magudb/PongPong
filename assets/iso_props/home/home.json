@@ -73,14 +73,15 @@
      -56.4
     ],
     "night_offset": [
-     4,
-     14
+     16,
+     5
     ],
     "night_size": [
-     298,
-     376
+     277,
+     347
     ],
-    "night_blend": "add"
+    "night_blend": "add",
+    "illustration": "tools/art/drawn/sources/homes1.png"
    },
    "interior": {
     "room": "rooms/room_t01.json",
@@ -125,14 +126,15 @@
      -56.4
     ],
     "night_offset": [
-     48,
-     103
+     47,
+     25
     ],
     "night_size": [
-     380,
-     325
+     337,
+     390
     ],
-    "night_blend": "add"
+    "night_blend": "add",
+    "illustration": "tools/art/drawn/sources/homes1.png"
    },
    "interior": {
     "room": "rooms/room_t02.json",
@@ -192,14 +194,15 @@
      -94.0
     ],
     "night_offset": [
-     43,
-     9
+     39,
+     5
     ],
     "night_size": [
-     510,
-     562
+     476,
+     565
     ],
-    "night_blend": "add"
+    "night_blend": "add",
+    "illustration": "tools/art/drawn/sources/homes1.png"
    },
    "interior": {
     "room": "rooms/room_t03.json",
@@ -259,14 +262,15 @@
      -94.0
     ],
     "night_offset": [
-     49,
-     14
+     24,
+     5
     ],
     "night_size": [
-     536,
-     598
+     540,
+     605
     ],
-    "night_blend": "add"
+    "night_blend": "add",
+    "illustration": "tools/art/drawn/sources/homes1.png"
    },
    "interior": {
     "room": "rooms/room_t04.json",
@@ -326,14 +330,15 @@
      -94.0
     ],
     "night_offset": [
-     31,
-     16
+     27,
+     2
     ],
     "night_size": [
-     612,
-     735
+     606,
+     761
     ],
-    "night_blend": "add"
+    "night_blend": "add",
+    "illustration": "tools/art/drawn/sources/homes2.png"
    },
    "interior": {
     "room": "rooms/room_t05.json",
@@ -393,14 +398,15 @@
      -131.7
     ],
     "night_offset": [
-     21,
-     4
+     0,
+     9
     ],
     "night_size": [
-     652,
-     940
+     649,
+     951
     ],
-    "night_blend": "add"
+    "night_blend": "add",
+    "illustration": "tools/art/drawn/sources/homes2.png"
    },
    "interior": {
     "room": "rooms/room_t06.json",
@@ -460,14 +466,15 @@
      -131.7
     ],
     "night_offset": [
-     9,
-     4
+     27,
+     6
     ],
     "night_size": [
-     750,
-     961
+     724,
+     1012
     ],
-    "night_blend": "add"
+    "night_blend": "add",
+    "illustration": "tools/art/drawn/sources/homes2.png"
    },
    "interior": {
     "room": "rooms/room_t07.json",
@@ -527,14 +534,15 @@
      -131.7
     ],
     "night_offset": [
-     40,
+     0,
      4
     ],
     "night_size": [
-     747,
-     1036
+     801,
+     1062
     ],
-    "night_blend": "add"
+    "night_blend": "add",
+    "illustration": "tools/art/drawn/sources/homes2.png"
    },
    "interior": {
     "room": "rooms/room_t08.json",
@@ -594,14 +602,15 @@
      -169.3
     ],
     "night_offset": [
-     3,
-     4
+     0,
+     6
     ],
     "night_size": [
-     885,
-     1028
+     890,
+     1095
     ],
-    "night_blend": "add"
+    "night_blend": "add",
+    "illustration": "tools/art/drawn/sources/homes3.png"
    },
    "interior": {
     "room": "rooms/room_t09.json",
@@ -661,14 +670,15 @@
      -169.3
     ],
     "night_offset": [
-     21,
-     3
+     0,
+     7
     ],
     "night_size": [
-     914,
-     1273
+     950,
+     1282
     ],
-    "night_blend": "add"
+    "night_blend": "add",
+    "illustration": "tools/art/drawn/sources/homes3.png"
    },
    "interior": {
     "room": "rooms/room_t10.json",
