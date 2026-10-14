@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Package the painted turnarounds as the game's native sprite atlases.
 
-The imagegen drawings are the artwork; this only extracts alpha islands, fits
-them to the existing pivots, and bakes a small continuous 2D puppet deformation.
+The imagegen drawings are the artwork; this extracts alpha islands, fits them
+to the existing pivots, bakes a small continuous 2D puppet deformation, and
+projects the painted terrain materials into seamless native tile atlases.
 No runtime shader, image generation, 3D model, or new sprite API is involved.
 Run with tools/art/.venv/bin/python tools/art/drawn/pack.py.
 """
@@ -518,7 +519,7 @@ def homes() -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--only", choices=["characters", "props", "homes"])
+    parser.add_argument("--only", choices=["characters", "props", "homes", "terrain"])
     parser.add_argument("--sheet", choices=list(CAST), nargs="+")
     parser.add_argument("--portraits-only", action="store_true")
     args = parser.parse_args()
@@ -542,6 +543,9 @@ def main() -> None:
         props()
     if args.only in (None, "homes"):
         homes()
+    if args.only in (None, "terrain"):
+        from terrain import build
+        build()
 
 
 if __name__ == "__main__":

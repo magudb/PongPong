@@ -1,0 +1,291 @@
+{
+  "_source": "Painted materials: tools/art/drawn/sources/terrain.png; continuous four-tile lattice.",
+  "grass": {
+    "file": "drawn_grass.png",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "iso"
+  },
+  "grass_flowers": {
+    "file": "drawn_grass_flowers.png",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "iso"
+  },
+  "grass_hyggebyen": {
+    "file": "drawn_grass_hyggebyen.png",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "iso"
+  },
+  "grass_hyggebyen_flowers": {
+    "file": "drawn_grass_hyggebyen_flowers.png",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "iso"
+  },
+  "soil_tilled": {
+    "file": "drawn_soil_tilled.png",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "iso"
+  },
+  "soil_watered": {
+    "file": "drawn_soil_watered.png",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "iso"
+  },
+  "path_dirt": {
+    "file": "drawn_path_dirt.png",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "iso"
+  },
+  "deck_farm": {
+    "file": "drawn_deck_farm.png",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "iso"
+  },
+  "deck_hyggebyen": {
+    "file": "drawn_deck_hyggebyen.png",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "iso"
+  },
+  "cobble_hyggebyen": {
+    "file": "drawn_cobble_hyggebyen.png",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "iso"
+  },
+  "forest_floor": {
+    "file": "drawn_forest_floor.png",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "iso"
+  },
+  "forest_floor_glow": {
+    "file": "drawn_forest_floor_glow.png",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "iso"
+  },
+  "void_haze": {
+    "file": "drawn_void_haze.png",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "iso"
+  },
+  "forest_floor_o": {
+    "file": "drawn_forest_floor_o.png",
+    "cell": [
+      112,
+      64
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "ortho"
+  },
+  "forest_floor_glow_o": {
+    "file": "drawn_forest_floor_glow_o.png",
+    "cell": [
+      112,
+      64
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "ortho"
+  },
+  "moss_path_o": {
+    "file": "drawn_moss_path_o.png",
+    "cell": [
+      112,
+      64
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "ortho"
+  },
+  "bog_o": {
+    "file": "drawn_bog_o.png",
+    "cell": [
+      112,
+      64
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "ortho"
+  },
+  "cave_floor_o": {
+    "file": "drawn_cave_floor_o.png",
+    "cell": [
+      112,
+      64
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "ortho"
+  },
+  "crystal_floor_o": {
+    "file": "drawn_crystal_floor_o.png",
+    "cell": [
+      112,
+      64
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "ortho"
+  },
+  "wall_void_o": {
+    "file": "drawn_wall_void_o.png",
+    "cell": [
+      112,
+      64
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "ortho"
+  },
+  "water_0": {
+    "file": "drawn_water_0.png",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      2,
+      2
+    ],
+    "proj": "iso"
+  },
+  "water_1": {
+    "file": "drawn_water_1.png",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      2,
+      2
+    ],
+    "proj": "iso"
+  },
+  "water_2": {
+    "file": "drawn_water_2.png",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      2,
+      2
+    ],
+    "proj": "iso"
+  },
+  "water_3": {
+    "file": "drawn_water_3.png",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      2,
+      2
+    ],
+    "proj": "iso"
+  }
+}

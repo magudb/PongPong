@@ -1,113 +1,113 @@
 {
   "date": "2026-10-14",
-  "generation": "built-in image_gen; committed transparent source paintings and exact prompts",
+  "generation": "built-in image_gen; committed source paintings and exact prompts",
   "characters": 48,
   "animation_sheets": 392,
-  "world_props": 21,
+  "world_props": 26,
   "building_designs": 14,
-  "source_atlases": 20,
+  "source_atlases": 21,
   "strict_playtests": {
     "animal": {
       "result": "pass",
       "checks": 2778,
       "failed": 0,
       "skipped": 32,
-      "elapsed_s": 99.4,
+      "elapsed_s": 165.62,
       "sections": {
         "area": {
           "checks": 230,
           "failed": 0,
-          "ms": 16571,
+          "ms": 16949,
           "skipped": 2
         },
         "art_characters": {
           "checks": 27,
           "failed": 0,
-          "ms": 17165,
+          "ms": 11126,
           "skipped": 0
         },
         "art_home": {
           "checks": 29,
           "failed": 0,
-          "ms": 5361,
+          "ms": 6950,
           "skipped": 0
         },
         "boot": {
           "checks": 8,
           "failed": 0,
-          "ms": 2193,
+          "ms": 3102,
           "skipped": 0
         },
         "characters": {
           "checks": 108,
           "failed": 0,
-          "ms": 2822,
+          "ms": 4671,
           "skipped": 0
         },
         "content_features": {
           "checks": 141,
           "failed": 0,
-          "ms": 5499,
+          "ms": 12105,
           "skipped": 0
         },
         "core": {
           "checks": 111,
           "failed": 0,
-          "ms": 237,
+          "ms": 1343,
           "skipped": 1
         },
         "data": {
           "checks": 314,
           "failed": 0,
-          "ms": 3550,
+          "ms": 9003,
           "skipped": 1
         },
         "economy": {
           "checks": 296,
           "failed": 0,
-          "ms": 936,
+          "ms": 2882,
           "skipped": 2
         },
         "loc": {
           "checks": 114,
           "failed": 0,
-          "ms": 14860,
+          "ms": 34302,
           "skipped": 0
         },
         "rarity": {
           "checks": 74,
           "failed": 0,
-          "ms": 41,
+          "ms": 49,
           "skipped": 0
         },
         "save": {
           "checks": 234,
           "failed": 0,
-          "ms": 7253,
+          "ms": 9320,
           "skipped": 2
         },
         "ui_audit": {
           "checks": 439,
           "failed": 0,
-          "ms": 7110,
+          "ms": 8689,
           "skipped": 23
         },
         "ui_audit_blind": {
           "checks": 121,
           "failed": 0,
-          "ms": 4760,
+          "ms": 5291,
           "skipped": 0
         },
         "ui_audit_pins": {
           "checks": 344,
           "failed": 0,
-          "ms": 1412,
+          "ms": 2119,
           "skipped": 0
         },
         "ui_foundation": {
           "checks": 188,
           "failed": 0,
-          "ms": 8201,
+          "ms": 33423,
           "skipped": 1
         }
       }
@@ -117,102 +117,102 @@
       "checks": 2778,
       "failed": 0,
       "skipped": 32,
-      "elapsed_s": 79.06,
+      "elapsed_s": 127.43,
       "sections": {
         "area": {
           "checks": 230,
           "failed": 0,
-          "ms": 16218,
+          "ms": 16852,
           "skipped": 2
         },
         "art_characters": {
           "checks": 27,
           "failed": 0,
-          "ms": 7280,
+          "ms": 17820,
           "skipped": 0
         },
         "art_home": {
           "checks": 29,
           "failed": 0,
-          "ms": 4300,
+          "ms": 6866,
           "skipped": 0
         },
         "boot": {
           "checks": 8,
           "failed": 0,
-          "ms": 2177,
+          "ms": 2681,
           "skipped": 0
         },
         "characters": {
           "checks": 108,
           "failed": 0,
-          "ms": 2359,
+          "ms": 5278,
           "skipped": 0
         },
         "content_features": {
           "checks": 141,
           "failed": 0,
-          "ms": 4799,
+          "ms": 12109,
           "skipped": 0
         },
         "core": {
           "checks": 111,
           "failed": 0,
-          "ms": 237,
+          "ms": 750,
           "skipped": 1
         },
         "data": {
           "checks": 314,
           "failed": 0,
-          "ms": 3199,
+          "ms": 6796,
           "skipped": 1
         },
         "economy": {
           "checks": 296,
           "failed": 0,
-          "ms": 908,
+          "ms": 1660,
           "skipped": 2
         },
         "loc": {
           "checks": 114,
           "failed": 0,
-          "ms": 11025,
+          "ms": 17925,
           "skipped": 0
         },
         "rarity": {
           "checks": 74,
           "failed": 0,
-          "ms": 36,
+          "ms": 38,
           "skipped": 0
         },
         "save": {
           "checks": 234,
           "failed": 0,
-          "ms": 4178,
+          "ms": 9878,
           "skipped": 2
         },
         "ui_audit": {
           "checks": 439,
           "failed": 0,
-          "ms": 5533,
+          "ms": 9881,
           "skipped": 23
         },
         "ui_audit_blind": {
           "checks": 121,
           "failed": 0,
-          "ms": 4640,
+          "ms": 4889,
           "skipped": 0
         },
         "ui_audit_pins": {
           "checks": 344,
           "failed": 0,
-          "ms": 2065,
+          "ms": 1715,
           "skipped": 0
         },
         "ui_foundation": {
           "checks": 188,
           "failed": 0,
-          "ms": 8862,
+          "ms": 9118,
           "skipped": 1
         }
       }
@@ -222,108 +222,108 @@
       "checks": 2778,
       "failed": 0,
       "skipped": 32,
-      "elapsed_s": 92.17,
+      "elapsed_s": 139.01,
       "sections": {
         "area": {
           "checks": 230,
           "failed": 0,
-          "ms": 16233,
+          "ms": 18816,
           "skipped": 2
         },
         "art_characters": {
           "checks": 27,
           "failed": 0,
-          "ms": 7917,
+          "ms": 34556,
           "skipped": 0
         },
         "art_home": {
           "checks": 29,
           "failed": 0,
-          "ms": 4501,
+          "ms": 6404,
           "skipped": 0
         },
         "boot": {
           "checks": 8,
           "failed": 0,
-          "ms": 2208,
+          "ms": 2669,
           "skipped": 0
         },
         "characters": {
           "checks": 108,
           "failed": 0,
-          "ms": 2566,
+          "ms": 3731,
           "skipped": 0
         },
         "content_features": {
           "checks": 141,
           "failed": 0,
-          "ms": 6433,
+          "ms": 6786,
           "skipped": 0
         },
         "core": {
           "checks": 111,
           "failed": 0,
-          "ms": 372,
+          "ms": 321,
           "skipped": 1
         },
         "data": {
           "checks": 314,
           "failed": 0,
-          "ms": 5228,
+          "ms": 4875,
           "skipped": 1
         },
         "economy": {
           "checks": 296,
           "failed": 0,
-          "ms": 1582,
+          "ms": 1290,
           "skipped": 2
         },
         "loc": {
           "checks": 114,
           "failed": 0,
-          "ms": 14041,
+          "ms": 15388,
           "skipped": 0
         },
         "rarity": {
           "checks": 74,
           "failed": 0,
-          "ms": 40,
+          "ms": 49,
           "skipped": 0
         },
         "save": {
           "checks": 234,
           "failed": 0,
-          "ms": 5057,
+          "ms": 17401,
           "skipped": 2
         },
         "ui_audit": {
           "checks": 439,
           "failed": 0,
-          "ms": 6402,
+          "ms": 6074,
           "skipped": 23
         },
         "ui_audit_blind": {
           "checks": 121,
           "failed": 0,
-          "ms": 4579,
+          "ms": 4745,
           "skipped": 0
         },
         "ui_audit_pins": {
           "checks": 344,
           "failed": 0,
-          "ms": 1494,
+          "ms": 1715,
           "skipped": 0
         },
         "ui_foundation": {
           "checks": 188,
           "failed": 0,
-          "ms": 12123,
+          "ms": 12238,
           "skipped": 1
         }
       }
     }
   },
-  "total_checks": 8334,
+  "total_checks": 8349,
   "unexpected_engine_messages": 0,
   "home_art_mb": 11.79,
   "home_art_budget_mb": 12,
@@ -333,7 +333,8 @@
     "world-footprints.png",
     "world-night.png",
     "cast.png",
-    "buildings.png"
+    "buildings.png",
+    "terrain.png"
   ],
   "verified": [
     "all eight sprite directions are distinct",
@@ -345,6 +346,29 @@
     "window glow placement on sliced buildings",
     "S3TC import presets and existing VRAM budget",
     "painted wall planes and foundation edges follow the tile axes",
-    "building contact shadows share the collision footprint and follow hiding and removal"
-  ]
+    "building contact shadows share the collision footprint and follow hiding and removal",
+    "all 24 outdoor terrain IDs use committed painted atlases",
+    "continuous grass, stone and grain across the real tile lattice",
+    "native seam probes at zoom 0.3, 0.4 and 0.7 with a planted hairline negative control",
+    "dry and watered soil remain distinct and the luminous forest path keeps its teal cue",
+    "painted platform bark and bridge decks keep the original pivots and dimensions"
+  ],
+  "terrain_atlases": 24,
+  "terrain_art_mb": 6.65,
+  "render_playtest": {
+    "result": "pass",
+    "checks": 15,
+    "failed": 0,
+    "skipped": 0,
+    "elapsed_s": 29.41,
+    "sections": {
+      "area": {
+        "checks": 15,
+        "failed": 0,
+        "ms": 18648,
+        "skipped": 0
+      }
+    }
+  },
+  "retry_note": "Initial animal and fairy runs exceeded the unchanged 10-second UI audit timing limit (11.557 and 11.849 seconds) during concurrent machine load. The final full strict runs passed for all three heroes; no test or timing limit was changed."
 }

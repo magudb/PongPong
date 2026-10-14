@@ -4,14 +4,16 @@ Everything that makes sprites: the procedural character generator (Python + VTK)
 exporter and the scripts that run it all. Owned by package **P08-art-tools**; the art packages P21 (characters), P22
 (environment) and P23 (icons, key art) plug their builders into it, and the feature packages A1 (home) and A2 (wardrobe)
 import it. The shipped sprites now have **warm ink contours, textured painted color and pencil accents**, baked at one scale.
-The current characters and buildings use the new drawings in `drawn/`; see below.
+The current characters, buildings and outdoor terrain use the new drawings in `drawn/`; see below.
 
-## Current character and building art
+## Current character, building and terrain art
 
 `drawn/` packages original imagegen paintings into the game's existing sprite contracts: all 48 characters and their portraits,
 21 world props (including the live scene's previously missing houses and trees), and ten home exteriors with matching night light.
 Characters have expressive small eyes, soft silhouettes and hand-drawn linework. Buildings have layered roofs, worn materials,
 plants, balconies and pipes. This changes the drawings themselves, beyond the texture finish described below.
+All 24 outdoor terrain surfaces, the island bark sides and the bridge decks now use painted materials too.
+Continuous material atlases keep grass, stones and grain flowing across tile borders.
 
 Regenerate the shipped art with `tools/art/.venv/bin/python tools/art/drawn/pack.py`.
 The source paintings, exact prompts, animation method, limits and preview command are documented in

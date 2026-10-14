@@ -39,7 +39,7 @@ world is a test platform (title -> New game -> pick a hero -> a floating farm is
 
 ## Art
 
-`tools/art/drawn/` packages the painted character and building sources into the shipped sprite sheets (see its README).
+`tools/art/drawn/` packages the painted character, building and outdoor terrain sources into the shipped atlases (see its README).
 The other `tools/art/` bakers still supply floors, furniture, icons and source experiments. The Python environment is `tools/art/.venv`
 (`tools/art/setup_env.sh`, Python 3.12); worktrees link to the main one. Baked output is committed under `assets/`; the
 staging area `tools/art/_stage/` is not.
