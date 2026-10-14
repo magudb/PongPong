@@ -1,0 +1,900 @@
+{
+ "version": 1,
+ "scale": 3.0,
+ "source": "docs/Trætoppen Style Guide Review/Trætoppen Miljøer v2.dc.html (viewBox 1800 x 1240) via scripts/world2d/levels/source/v2_city_extract.json",
+ "bounds": [-200.0, 0.0, 2250.0, 1300.0],
+ "zoom": {"default": 0.4, "min": 0.2, "max": 0.7},
+ "body_radius": 25.0,
+ "rim": 16.0,
+ "levels": [
+  {
+   "id": "a",
+   "kind": "platform",
+   "tree": "tree_hoppe",
+   "rank": 10,
+   "bit": 12,
+   "z": 520,
+   "centre": [519.0, 190.0],
+   "rx": 183.7,
+   "ry": 106.1,
+   "rim": 16.0,
+   "trunk": {"rx": 61.2, "ry": 35.4},
+   "walk": {
+    "inset": 0.96,
+    "keepout": [
+     {"circle": "trunk"},
+     {"hut": "h1"},
+     {"hut": "h2"},
+     {"prop": "seed_basket"}
+    ]
+   }
+  },
+  {
+   "id": "b",
+   "kind": "platform",
+   "tree": "tree_post",
+   "rank": 20,
+   "bit": 13,
+   "z": 470,
+   "centre": [1281.0, 240.0],
+   "rx": 183.7,
+   "ry": 106.1,
+   "rim": 16.0,
+   "trunk": {"rx": 67.4, "ry": 38.9},
+   "walk": {
+    "inset": 0.96,
+    "keepout": [
+     {"circle": "trunk"},
+     {"hut": "h3"},
+     {"hut": "h4"},
+     {"prop": "mailbox"}
+    ]
+   }
+  },
+  {
+   "id": "c",
+   "kind": "platform",
+   "tree": "tree_brumme",
+   "rank": 70,
+   "bit": 14,
+   "z": 400,
+   "centre": [276.5, 610.0],
+   "rx": 196.0,
+   "ry": 113.1,
+   "rim": 16.0,
+   "trunk": {"rx": 73.5, "ry": 42.4},
+   "walk": {
+    "inset": 0.96,
+    "keepout": [
+     {"circle": "trunk"},
+     {"hut": "h5"},
+     {"hut": "h6"},
+     {"prop": "log_stack"}
+    ]
+   }
+  },
+  {
+   "id": "torvet",
+   "kind": "platform",
+   "tree": "tree_torv",
+   "rank": 80,
+   "bit": 15,
+   "z": 380,
+   "centre": [900.0, 630.0],
+   "rx": 306.2,
+   "ry": 176.8,
+   "rim": 16.0,
+   "trunk": {"rx": 116.3, "ry": 67.2},
+   "walk": {
+    "inset": 0.96,
+    "keepout": [
+     {"circle": "trunk"},
+     {"ellipse": "upper_deck_shadow"},
+     {"hut": "h7"},
+     {"hut": "h8"},
+     {"hut": "h9"},
+     {"prop": "stall"},
+     {"prop": "fire_pit"}
+    ]
+   }
+  },
+  {
+   "id": "upper",
+   "kind": "platform",
+   "tree": "tree_torv",
+   "rank": 90,
+   "bit": 16,
+   "z": 560,
+   "centre": [900.0, 450.0],
+   "rx": 171.5,
+   "ry": 99.0,
+   "rim": 16.0,
+   "trunk": {"rx": 116.3, "ry": 67.2},
+   "walk": {
+    "inset": 0.96,
+    "keepout": [
+     {"circle": "trunk"},
+     {"hut": "raadhus"},
+     {"prop": "notice_board"}
+    ]
+   }
+  },
+  {
+   "id": "e",
+   "kind": "platform",
+   "tree": "tree_bad",
+   "rank": 100,
+   "bit": 17,
+   "z": 420,
+   "centre": [1523.5, 590.0],
+   "rx": 183.7,
+   "ry": 106.1,
+   "rim": 16.0,
+   "trunk": {"rx": 67.4, "ry": 38.9},
+   "walk": {
+    "inset": 0.96,
+    "keepout": [
+     {"circle": "trunk"},
+     {"hut": "h10"},
+     {"prop": "bath_tub"}
+    ]
+   }
+  },
+  {
+   "id": "f",
+   "kind": "platform",
+   "tree": "tree_front_left",
+   "rank": 150,
+   "bit": 18,
+   "z": 300,
+   "centre": [588.2, 1010.0],
+   "rx": 183.7,
+   "ry": 106.1,
+   "rim": 16.0,
+   "trunk": {"rx": 73.5, "ry": 42.4},
+   "walk": {
+    "inset": 0.96,
+    "keepout": [
+     {"circle": "trunk"},
+     {"hut": "h11"},
+     {"hut": "h12"}
+    ]
+   },
+   "stubs": [
+    {
+     "id": "hyggebyen_stub",
+     "path": [[430.0, 1018.0], [140.0, 1110.0]],
+     "width": 44.0,
+     "sag": 12,
+     "exit": {"area": "hyggebyen", "spawn": "from_traetoppen", "label": "ZONE_CITY"}
+    }
+   ]
+  },
+  {
+   "id": "g",
+   "kind": "platform",
+   "tree": "tree_kitchen",
+   "rank": 160,
+   "bit": 19,
+   "z": 340,
+   "centre": [1211.8, 970.0],
+   "rx": 196.0,
+   "ry": 113.1,
+   "rim": 16.0,
+   "trunk": {"rx": 73.5, "ry": 42.4},
+   "walk": {
+    "inset": 0.96,
+    "keepout": [
+     {"circle": "trunk"},
+     {"hut": "h13"},
+     {"prop": "planter1"},
+     {"prop": "planter2"},
+     {"prop": "planter3"}
+    ]
+   },
+   "stubs": [
+    {
+     "id": "farm_stub",
+     "path": [[1390.0, 975.0], [1690.0, 1005.0]],
+     "width": 44.0,
+     "sag": 12,
+     "exit": {"area": "farm", "spawn": "from_traetoppen", "label": "ZONE_FARM"}
+    }
+   ]
+  }
+ ],
+ "bridges": [
+  {
+   "id": "b0",
+   "from": "a",
+   "to": "upper",
+   "rank": 30,
+   "bit": 20,
+   "path": [[621.9, 271.0], [804.4, 374.8]],
+   "width": 42.9,
+   "sag": 14,
+   "ends": ["over", "under"]
+  },
+  {
+   "id": "b1",
+   "from": "b",
+   "to": "upper",
+   "rank": 40,
+   "bit": 21,
+   "path": [[1178.2, 321.0], [995.6, 374.8]],
+   "width": 42.9,
+   "sag": 14,
+   "ends": ["over", "under"]
+  },
+  {
+   "id": "b2",
+   "from": "a",
+   "to": "c",
+   "rank": 50,
+   "bit": 22,
+   "path": [[445.4, 281.0], [355.2, 512.6]],
+   "width": 46.0,
+   "sag": 16,
+   "ends": ["over", "under"]
+  },
+  {
+   "id": "b3",
+   "from": "b",
+   "to": "e",
+   "rank": 60,
+   "bit": 23,
+   "path": [[1354.6, 331.0], [1450.0, 499.0]],
+   "width": 46.0,
+   "sag": 16,
+   "ends": ["over", "under"]
+  },
+  {
+   "id": "b4",
+   "from": "c",
+   "to": "torvet",
+   "rank": 110,
+   "bit": 24,
+   "path": [[462.6, 610.0], [603.6, 630.0]],
+   "width": 28.2,
+   "sag": 10,
+   "ends": ["over", "over"]
+  },
+  {
+   "id": "b5",
+   "from": "e",
+   "to": "torvet",
+   "rank": 120,
+   "bit": 25,
+   "path": [[1349.6, 590.0], [1196.4, 630.0]],
+   "width": 28.2,
+   "sag": 10,
+   "ends": ["over", "over"]
+  },
+  {
+   "id": "b6",
+   "from": "f",
+   "to": "torvet",
+   "rank": 130,
+   "bit": 26,
+   "path": [[677.7, 923.9], [747.5, 776.8]],
+   "width": 44.5,
+   "sag": 14,
+   "ends": ["under", "over"]
+  },
+  {
+   "id": "b7",
+   "from": "g",
+   "to": "torvet",
+   "rank": 140,
+   "bit": 27,
+   "path": [[1116.0, 877.9], [1052.5, 776.8]],
+   "width": 44.4,
+   "sag": 14,
+   "ends": ["under", "over"]
+  },
+  {
+   "id": "b8",
+   "from": "f",
+   "to": "g",
+   "rank": 170,
+   "bit": 28,
+   "path": [[762.1, 1010.0], [1025.6, 970.0]],
+   "width": 28.2,
+   "sag": 14,
+   "ends": ["over", "over"]
+  }
+ ],
+ "ladders": [
+  {
+   "id": "main_ladder",
+   "from": "torvet",
+   "to": "upper",
+   "lane": [[835.3, 690.9], [835.3, 510.9]],
+   "width": 20.0,
+   "seconds": 1.1,
+   "rungs": 9,
+   "prompt": "LEVEL_PROMPT_CLIMB"
+  }
+ ],
+ "climb_zones": [
+  {
+   "id": "main_trunk_climb",
+   "from": "torvet",
+   "to": "upper",
+   "a": [900.0, 712.0],
+   "b": [900.0, 530.0],
+   "r": 70.0,
+   "seconds": 1.1,
+   "perk": "climb_speed_mult",
+   "prompt": "LEVEL_PROMPT_CLIMB"
+  }
+ ],
+ "lifts": [
+  {
+   "id": "skovlift",
+   "level": "b",
+   "top": [1393.6, 345.0],
+   "basket": [1393.6, 845.0],
+   "stand": [1388.0, 310.0],
+   "to_area": "moerkeskoven",
+   "spawn": "from_traetoppen",
+   "seconds": 1.6,
+   "prompt": "LEVEL_PROMPT_LIFT"
+  }
+ ],
+ "buildings": [
+  {
+   "id": "h1",
+   "level": "a",
+   "cx": 407.6,
+   "base_y": 200.1,
+   "wall_r": 49.0,
+   "wall_h": 44.0,
+   "roof": {"fill": "c9a052", "h": 70.0, "rx": 63.7, "ry": 36.8},
+   "door": {"x": 397.7, "y": 228.4},
+   "occlude_fade": true,
+   "pennant": "e58fa6"
+  },
+  {
+   "id": "h2",
+   "level": "a",
+   "cx": 584.0,
+   "base_y": 246.6,
+   "wall_r": 36.7,
+   "wall_h": 36.0,
+   "roof": {"fill": "8fb85a", "h": 56.0, "rx": 47.8, "ry": 27.6},
+   "door": {"x": 573.9, "y": 267.8},
+   "occlude_fade": true
+  },
+  {
+   "id": "h3",
+   "level": "b",
+   "cx": 1396.6,
+   "base_y": 252.5,
+   "wall_r": 51.4,
+   "wall_h": 44.0,
+   "roof": {"fill": "c9a052", "h": 70.0, "rx": 66.9, "ry": 38.6},
+   "door": {"x": 1386.6, "y": 282.2},
+   "occlude_fade": true,
+   "pennant": "6fa8e0",
+   "smoke": true
+  },
+  {
+   "id": "h4",
+   "level": "b",
+   "cx": 1175.5,
+   "base_y": 262.7,
+   "wall_r": 36.7,
+   "wall_h": 34.0,
+   "roof": {"fill": "c9a052", "h": 54.0, "rx": 47.8, "ry": 27.6},
+   "door": {"x": 1165.4, "y": 283.9},
+   "occlude_fade": true
+  },
+  {
+   "id": "h5",
+   "level": "c",
+   "cx": 157.6,
+   "base_y": 592.9,
+   "wall_r": 39.2,
+   "wall_h": 36.0,
+   "roof": {"fill": "8fb85a", "h": 58.0, "rx": 50.9, "ry": 29.4},
+   "door": {"x": 147.6, "y": 615.6},
+   "occlude_fade": true
+  },
+  {
+   "id": "h6",
+   "level": "c",
+   "cx": 384.8,
+   "base_y": 643.0,
+   "wall_r": 53.9,
+   "wall_h": 44.0,
+   "roof": {"fill": "b88a3e", "h": 70.0, "rx": 70.1, "ry": 40.4},
+   "door": {"x": 374.8, "y": 674.1},
+   "occlude_fade": true,
+   "smoke": true
+  },
+  {
+   "id": "h7",
+   "level": "torvet",
+   "cx": 1042.8,
+   "base_y": 542.6,
+   "wall_r": 58.8,
+   "wall_h": 44.0,
+   "roof": {"fill": "c9a052", "h": 70.0, "rx": 76.4, "ry": 44.1},
+   "door": {"x": 1032.9, "y": 576.5},
+   "occlude_fade": true
+  },
+  {
+   "id": "h8",
+   "level": "torvet",
+   "cx": 733.5,
+   "base_y": 557.8,
+   "wall_r": 49.0,
+   "wall_h": 44.0,
+   "roof": {"fill": "c9a052", "h": 70.0, "rx": 63.7, "ry": 36.8},
+   "door": {"x": 723.5, "y": 586.1},
+   "occlude_fade": true
+  },
+  {
+   "id": "h9",
+   "level": "torvet",
+   "cx": 1081.7,
+   "base_y": 699.5,
+   "wall_r": 44.1,
+   "wall_h": 38.0,
+   "roof": {"fill": "8fb85a", "h": 60.0, "rx": 57.3, "ry": 33.1},
+   "door": {"x": 1071.7, "y": 725.0},
+   "occlude_fade": true
+  },
+  {
+   "id": "h10",
+   "level": "e",
+   "cx": 1633.6,
+   "base_y": 576.1,
+   "wall_r": 49.0,
+   "wall_h": 44.0,
+   "roof": {"fill": "c9a052", "h": 70.0, "rx": 63.7, "ry": 36.8},
+   "door": {"x": 1623.6, "y": 604.4},
+   "occlude_fade": true,
+   "smoke": true
+  },
+  {
+   "id": "h11",
+   "level": "f",
+   "cx": 552.8,
+   "base_y": 949.7,
+   "wall_r": 49.0,
+   "wall_h": 44.0,
+   "roof": {"fill": "c9a052", "h": 70.0, "rx": 63.7, "ry": 36.8},
+   "door": {"x": 542.8, "y": 978.0},
+   "occlude_fade": true
+  },
+  {
+   "id": "h12",
+   "level": "f",
+   "cx": 703.8,
+   "base_y": 1022.5,
+   "wall_r": 36.7,
+   "wall_h": 34.0,
+   "roof": {"fill": "8fb85a", "h": 54.0, "rx": 47.8, "ry": 27.6},
+   "door": {"x": 693.8, "y": 1043.7},
+   "occlude_fade": true
+  },
+  {
+   "id": "h13",
+   "level": "g",
+   "cx": 1319.3,
+   "base_y": 942.7,
+   "wall_r": 51.4,
+   "wall_h": 44.0,
+   "roof": {"fill": "b88a3e", "h": 70.0, "rx": 66.9, "ry": 38.6},
+   "door": {"x": 1309.4, "y": 972.4},
+   "occlude_fade": true,
+   "pennant": "6fd6c4"
+  },
+  {
+   "id": "raadhus",
+   "level": "upper",
+   "cx": 1002.9,
+   "base_y": 449.1,
+   "wall_r": 63.7,
+   "wall_h": 52.0,
+   "roof": {"fill": "9b86d6", "h": 88.0, "rx": 82.8, "ry": 47.8},
+   "door": {"x": 993.0, "y": 480.0},
+   "pennant": "f2c14e",
+   "occlude_fade": true
+  }
+ ],
+ "trunks": [
+  {
+   "id": "t_a_lower",
+   "level": "a",
+   "part": "lower",
+   "cx": 519.0,
+   "y_top": 190.0,
+   "y_bot": 710.0,
+   "rx": 61.2,
+   "ry": 35.4,
+   "rank": 4
+  },
+  {
+   "id": "t_a_upper",
+   "level": "a",
+   "part": "upper",
+   "cx": 519.0,
+   "y_top": -690.0,
+   "y_bot": 190.0,
+   "rx": 61.2,
+   "ry": 35.4,
+   "rank": 10,
+   "occlude_fade": true
+  },
+  {
+   "id": "t_b_lower",
+   "level": "b",
+   "part": "lower",
+   "cx": 1281.1,
+   "y_top": 240.0,
+   "y_bot": 710.0,
+   "rx": 67.4,
+   "ry": 38.9,
+   "rank": 14
+  },
+  {
+   "id": "t_b_upper",
+   "level": "b",
+   "part": "upper",
+   "cx": 1281.1,
+   "y_top": -690.0,
+   "y_bot": 240.0,
+   "rx": 67.4,
+   "ry": 38.9,
+   "rank": 20,
+   "occlude_fade": true
+  },
+  {
+   "id": "t_c_lower",
+   "level": "c",
+   "part": "lower",
+   "cx": 276.5,
+   "y_top": 610.0,
+   "y_bot": 1010.0,
+   "rx": 73.5,
+   "ry": 42.4,
+   "rank": 64
+  },
+  {
+   "id": "t_c_upper",
+   "level": "c",
+   "part": "upper",
+   "cx": 276.5,
+   "y_top": -390.0,
+   "y_bot": 610.0,
+   "rx": 73.5,
+   "ry": 42.4,
+   "rank": 70,
+   "occlude_fade": true
+  },
+  {
+   "id": "t_e_lower",
+   "level": "e",
+   "part": "lower",
+   "cx": 1523.6,
+   "y_top": 590.0,
+   "y_bot": 1010.0,
+   "rx": 67.4,
+   "ry": 38.9,
+   "rank": 94
+  },
+  {
+   "id": "t_e_upper",
+   "level": "e",
+   "part": "upper",
+   "cx": 1523.6,
+   "y_top": -390.0,
+   "y_bot": 590.0,
+   "rx": 67.4,
+   "ry": 38.9,
+   "rank": 100,
+   "occlude_fade": true
+  },
+  {
+   "id": "t_f_lower",
+   "level": "f",
+   "part": "lower",
+   "cx": 588.2,
+   "y_top": 1010.0,
+   "y_bot": 1310.0,
+   "rx": 73.5,
+   "ry": 42.4,
+   "rank": 144
+  },
+  {
+   "id": "t_f_upper",
+   "level": "f",
+   "part": "upper",
+   "cx": 588.2,
+   "y_top": 840.0,
+   "y_bot": 1010.0,
+   "rx": 73.5,
+   "ry": 42.4,
+   "rank": 150,
+   "occlude_fade": true
+  },
+  {
+   "id": "t_g_lower",
+   "level": "g",
+   "part": "lower",
+   "cx": 1211.8,
+   "y_top": 970.0,
+   "y_bot": 1310.0,
+   "rx": 73.5,
+   "ry": 42.4,
+   "rank": 154
+  },
+  {
+   "id": "t_g_upper",
+   "level": "g",
+   "part": "upper",
+   "cx": 1211.8,
+   "y_top": 800.0,
+   "y_bot": 970.0,
+   "rx": 73.5,
+   "ry": 42.4,
+   "rank": 160,
+   "occlude_fade": true
+  },
+  {
+   "id": "t_torvet_lower",
+   "level": "torvet",
+   "part": "lower",
+   "cx": 900.0,
+   "y_top": 630.0,
+   "y_bot": 1010.0,
+   "rx": 116.3,
+   "ry": 67.2,
+   "rank": 74
+  },
+  {
+   "id": "t_torvet_upper",
+   "level": "torvet",
+   "part": "upper",
+   "cx": 900.0,
+   "y_top": 450.0,
+   "y_bot": 630.0,
+   "rx": 116.3,
+   "ry": 67.2,
+   "rank": 80,
+   "occlude_fade": true
+  },
+  {
+   "id": "t_upper_upper",
+   "level": "upper",
+   "part": "upper",
+   "cx": 900.0,
+   "y_top": -390.0,
+   "y_bot": 450.0,
+   "rx": 116.3,
+   "ry": 67.2,
+   "rank": 90,
+   "occlude_fade": true
+  }
+ ],
+ "props": [
+  {
+   "id": "stall",
+   "level": "torvet",
+   "at": [702.1, 670.0],
+   "keep": [44.0, 18.0],
+   "art": "market_stall_traetoppen",
+   "decor": true
+  },
+  {
+   "id": "fire_pit",
+   "level": "torvet",
+   "at": [879.0, 735.4],
+   "keep": [40.0, 20.0],
+   "art": "fire_pit",
+   "decor": true
+  },
+  {
+   "id": "mailbox",
+   "level": "b",
+   "at": [1255.0, 309.1],
+   "keep": [10.0, 6.0],
+   "art": "mailbox_red",
+   "decor": true
+  },
+  {
+   "id": "log_stack",
+   "level": "c",
+   "at": [194.2, 666.0],
+   "keep": [38.0, 18.0],
+   "art": "log_stack",
+   "decor": true
+  },
+  {
+   "id": "bath_tub",
+   "level": "e",
+   "at": [1454.5, 635.9],
+   "keep": [50.0, 25.0],
+   "art": "bath_tub_back",
+   "decor": true
+  },
+  {
+   "id": "notice_board",
+   "level": "upper",
+   "at": [930.0, 520.0],
+   "keep": [14.0, 8.0],
+   "art": "notice_board",
+   "decor": true
+  },
+  {
+   "id": "seed_basket",
+   "level": "a",
+   "at": [437.0, 237.0],
+   "keep": [12.0, 7.0],
+   "art": "seed_basket",
+   "decor": true,
+   "source": "design"
+  },
+  {
+   "id": "planter1",
+   "level": "g",
+   "at": [1124.4, 1022.1],
+   "keep": [28.0, 14.0],
+   "art": "planter_box",
+   "decor": true
+  },
+  {
+   "id": "planter2",
+   "level": "g",
+   "at": [1164.4, 1042.1],
+   "keep": [28.0, 14.0],
+   "art": "planter_box",
+   "decor": true
+  },
+  {
+   "id": "planter3",
+   "level": "g",
+   "at": [1204.4, 1062.1],
+   "keep": [28.0, 14.0],
+   "art": "planter_box",
+   "decor": true
+  }
+ ],
+ "lanterns": [
+  {"at": [433.2, 323.6], "level": "a"},
+  {"at": [349.8, 199.6], "level": "a"},
+  {"at": [564.7, 133.2], "level": "a"},
+  {"at": [690.4, 262.3], "level": "a"},
+  {"at": [1195.3, 373.6], "level": "b"},
+  {"at": [1111.8, 249.6], "level": "b"},
+  {"at": [1326.7, 183.2], "level": "b"},
+  {"at": [1452.5, 312.3], "level": "b"},
+  {"at": [184.9, 749.8], "level": "c"},
+  {"at": [95.7, 617.3], "level": "c"},
+  {"at": [325.3, 546.4], "level": "c"},
+  {"at": [459.7, 684.3], "level": "c"},
+  {"at": [755.6, 825.7], "level": "torvet"},
+  {"at": [614.9, 616.8], "level": "torvet"},
+  {"at": [977.0, 504.8], "level": "upper"},
+  {"at": [1188.9, 722.3], "level": "torvet"},
+  {"at": [820.1, 577.4], "level": "torvet"},
+  {"at": [742.4, 461.9], "level": "upper"},
+  {"at": [942.6, 400.0], "level": "upper"},
+  {"at": [1059.7, 520.3], "level": "torvet"},
+  {"at": [1437.8, 723.6], "level": "e"},
+  {"at": [1354.3, 599.6], "level": "e"},
+  {"at": [1569.2, 533.2], "level": "e"},
+  {"at": [1695.0, 662.3], "level": "e"},
+  {"at": [502.5, 1143.6], "level": "f"},
+  {"at": [419.0, 1019.6], "level": "f"},
+  {"at": [633.9, 953.2], "level": "f"},
+  {"at": [759.7, 1082.3], "level": "f"},
+  {"at": [1120.2, 1109.8], "level": "g"},
+  {"at": [1031.0, 977.3], "level": "g"},
+  {"at": [1260.6, 906.4], "level": "g"},
+  {"at": [1395.0, 1044.3], "level": "g"}
+ ],
+ "door_lamps": [
+  {"at": [370.9, 194.6], "level": "a", "building": "h1"},
+  {"at": [556.3, 240.8], "level": "a", "building": "h2"},
+  {"at": [1358.0, 247.9], "level": "b", "building": "h3"},
+  {"at": [1147.8, 258.0], "level": "b", "building": "h4"},
+  {"at": [128.2, 588.1], "level": "c", "building": "h5"},
+  {"at": [344.3, 639.3], "level": "c", "building": "h6"},
+  {"at": [998.7, 540.8], "level": "torvet", "building": "h7"},
+  {"at": [696.7, 552.3], "level": "torvet", "building": "h8"},
+  {"at": [1048.6, 695.4], "level": "torvet", "building": "h9"},
+  {"at": [955.0, 444.8], "level": "upper", "building": "raadhus"},
+  {"at": [1596.8, 570.6], "level": "e", "building": "h10"},
+  {"at": [516.0, 944.2], "level": "f", "building": "h11"},
+  {"at": [676.2, 1017.8], "level": "f", "building": "h12"},
+  {"at": [1280.7, 938.1], "level": "g", "building": "h13"}
+ ],
+ "lights": [
+  {"id": "fire_pit", "at": [879.0, 725.4], "r_px": 420.0, "color": "ffb35a", "energy": 0.9},
+  {"id": "bath_steam", "at": [1454.5, 612.0], "r_px": 300.0, "color": "ffe0a0", "energy": 0.6},
+  {"id": "post_door", "at": [1358.0, 247.9], "r_px": 300.0, "color": "ffd98a", "energy": 0.8},
+  {"id": "raadhus_door", "at": [955.0, 444.8], "r_px": 300.0, "color": "ffd98a", "energy": 0.8},
+  {"id": "lantern_a", "at": [564.7, 133.2], "r_px": 300.0, "color": "ffd98a", "energy": 0.8},
+  {"id": "lantern_b", "at": [1326.7, 183.2], "r_px": 300.0, "color": "ffd98a", "energy": 0.8},
+  {"id": "lantern_c", "at": [325.3, 546.4], "r_px": 300.0, "color": "ffd98a", "energy": 0.8},
+  {"id": "lantern_torvet", "at": [820.1, 577.4], "r_px": 300.0, "color": "ffd98a", "energy": 0.8},
+  {"id": "lantern_upper", "at": [942.6, 400.0], "r_px": 300.0, "color": "ffd98a", "energy": 0.8},
+  {"id": "lantern_e", "at": [1569.2, 533.2], "r_px": 300.0, "color": "ffd98a", "energy": 0.8},
+  {"id": "lantern_f", "at": [633.9, 953.2], "r_px": 300.0, "color": "ffd98a", "energy": 0.8},
+  {"id": "lantern_g", "at": [1260.6, 906.4], "r_px": 300.0, "color": "ffd98a", "energy": 0.8}
+ ],
+ "owl_holes": [
+  {"at": [519.0, 370.0], "tree": "tree_hoppe", "rank": 175},
+  {"at": [519.0, 520.0], "tree": "tree_hoppe", "rank": 175},
+  {"at": [1281.0, 400.0], "tree": "tree_post", "rank": 175}
+ ],
+ "bat_houses": [
+  {"cx": 1590.0, "y_top": 762.0, "tip_y": 846.0, "w": 116.0, "rank": 180},
+  {"cx": 1460.0, "y_top": 774.0, "tip_y": 858.0, "w": 116.0, "rank": 180},
+  {"cx": 232.0, "y_top": 796.0, "tip_y": 880.0, "w": 116.0, "rank": 180}
+ ],
+ "foliage": [
+  {"id": "foliage_f", "level": "f", "at": [588.2, 730.0], "rx": 136.0, "ry": 96.0, "rank": 155, "alpha": 0.5},
+  {"id": "foliage_g", "level": "g", "at": [1211.8, 690.0], "rx": 136.0, "ry": 96.0, "rank": 165, "alpha": 0.5}
+ ],
+ "decor_ranks": {"lift_rope": 125, "foliage_f": 155, "foliage_g": 165, "owl_holes": 175, "bat_houses": 180},
+ "spawns": {
+  "default": [870.0, 700.0],
+  "from_farm": [1385.0, 975.0],
+  "from_hyggebyen": [430.0, 1018.0],
+  "from_skovlift": [1380.0, 305.0]
+ },
+ "landmarks": [
+  {"n": 1, "id": "torvet", "level": "torvet", "circle": [900.0, 630.0, 230.0], "name_key": "TRAE_LANDMARK_1"},
+  {"n": 2, "id": "raadhuset", "level": "upper", "circle": [1003.0, 470.0, 150.0], "name_key": "TRAE_LANDMARK_2"},
+  {"n": 3, "id": "postkontoret", "level": "b", "circle": [1397.0, 265.0, 130.0], "name_key": "TRAE_LANDMARK_3"},
+  {"n": 4, "id": "hoppes_hytte", "level": "a", "circle": [408.0, 215.0, 130.0], "name_key": "TRAE_LANDMARK_4"},
+  {
+   "n": 5,
+   "id": "brummes_vaerksted",
+   "level": "c",
+   "circle": [190.0, 630.0, 150.0],
+   "name_key": "TRAE_LANDMARK_5"
+  },
+  {"n": 6, "id": "badehuset", "level": "e", "circle": [1454.0, 620.0, 150.0], "name_key": "TRAE_LANDMARK_6"},
+  {
+   "n": 7,
+   "id": "koekkenhaverne",
+   "level": "g",
+   "circle": [1164.0, 1042.0, 110.0],
+   "name_key": "TRAE_LANDMARK_7"
+  },
+  {"n": 8, "id": "haengebroer", "level": "b8", "circle": [894.0, 990.0, 120.0], "name_key": "TRAE_LANDMARK_8"},
+  {"n": 9, "id": "uglehulerne", "level": "b2", "circle": [399.0, 400.0, 150.0], "name_key": "TRAE_LANDMARK_9"},
+  {
+   "n": 10,
+   "id": "flagermusenes_huse",
+   "level": "e",
+   "circle": [1525.0, 680.0, 150.0],
+   "name_key": "TRAE_LANDMARK_10"
+  }
+ ],
+ "markers": [
+  {"type": "npc", "id": "gardener_hoppe", "at": [509.2, 203.2], "level": "a"},
+  {"type": "npc", "id": "postman_pip", "at": [1420.0, 292.0], "level": "b"},
+  {"type": "npc", "id": "carpenter_brumme", "at": [225.0, 640.0], "level": "c", "when": "flag:brumme_at_work"},
+  {
+   "type": "npc",
+   "id": "carpenter_brumme",
+   "at": [753.2, 590.3],
+   "level": "torvet",
+   "when": "flag:brumme_at_stall"
+  },
+  {"type": "npc", "id": "bathkeeper_sofus", "at": [1454.5, 600.0], "level": "e"},
+  {"type": "npc", "id": "appraiser_fru_ugle", "at": [519.0, 380.0], "level": "a", "window": true, "reach": 420},
+  {"type": "npc", "id": "guard_oak", "at": [1350.0, 298.0], "level": "b"},
+  {"type": "seed_basket", "at": [437.0, 237.0], "level": "a"},
+  {"type": "lift", "id": "skovlift", "at": [1388.0, 310.0], "level": "b"},
+  {"type": "climb", "id": "main_ladder", "level": "torvet"}
+ ],
+ "canopy": {"layer": 3}
+}

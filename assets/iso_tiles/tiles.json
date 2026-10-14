@@ -1,0 +1,343 @@
+{
+ "_contract": {
+  "tile_size": [
+   128,
+   76
+  ],
+  "atlas_cell": [
+   144,
+   84
+  ],
+  "variants": [
+   4,
+   4
+  ],
+  "overscan": 0.06,
+  "rule": "atlas_coords = Vector2i(cell.x % 4, cell.y % 4)  (periodic: any neighbour matches)",
+  "tile_edge_m": 1.0394,
+  "diamond_px": [
+   128,
+   75.2
+  ],
+  "ortho": {
+   "tile_size": [
+    96,
+    56
+   ],
+   "atlas_cell": [
+    112,
+    64
+   ],
+   "camera": "azimuth 0, elevation 36, rectangular mask",
+   "tile_edge_m": [
+    1.1025,
+    1.0941
+   ],
+   "files": "ortho_<terrain id without _o>.png, tiles.json entries carry proj: ortho"
+  },
+  "ambient": {
+   "forest": "4d5e85",
+   "cave": "343b5c",
+   "rule": "ortho forest / cave terrains are baked as sketch colour / ambient (final = albedo x ambient)"
+  }
+ },
+ "bog_o": {
+  "file": "ortho_bog.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   112,
+   64
+  ],
+  "proj": "ortho",
+  "tile": [
+   96,
+   56
+  ]
+ },
+ "cave_floor_o": {
+  "file": "ortho_cave_floor.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   112,
+   64
+  ],
+  "proj": "ortho",
+  "tile": [
+   96,
+   56
+  ]
+ },
+ "cobble_hyggebyen": {
+  "file": "cobble_hyggebyen.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ },
+ "crystal_floor_o": {
+  "file": "ortho_crystal_floor.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   112,
+   64
+  ],
+  "proj": "ortho",
+  "tile": [
+   96,
+   56
+  ]
+ },
+ "deck_farm": {
+  "file": "deck_farm.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ },
+ "deck_hyggebyen": {
+  "file": "deck_hyggebyen.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ },
+ "forest_floor": {
+  "file": "forest_floor.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ },
+ "forest_floor_glow": {
+  "file": "forest_floor_glow.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ },
+ "forest_floor_glow_o": {
+  "file": "ortho_forest_floor_glow.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   112,
+   64
+  ],
+  "proj": "ortho",
+  "tile": [
+   96,
+   56
+  ]
+ },
+ "forest_floor_o": {
+  "file": "ortho_forest_floor.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   112,
+   64
+  ],
+  "proj": "ortho",
+  "tile": [
+   96,
+   56
+  ]
+ },
+ "grass": {
+  "file": "grass.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ },
+ "grass_flowers": {
+  "file": "grass_flowers.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ },
+ "grass_hyggebyen": {
+  "file": "grass_hyggebyen.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ },
+ "grass_hyggebyen_flowers": {
+  "file": "grass_hyggebyen_flowers.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ },
+ "moss_path_o": {
+  "file": "ortho_moss_path.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   112,
+   64
+  ],
+  "proj": "ortho",
+  "tile": [
+   96,
+   56
+  ]
+ },
+ "path_dirt": {
+  "file": "path_dirt.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ },
+ "soil_tilled": {
+  "file": "soil_tilled.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ },
+ "soil_watered": {
+  "file": "soil_watered.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ },
+ "void_haze": {
+  "file": "void_haze.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ },
+ "wall_void_o": {
+  "file": "ortho_wall_void.png",
+  "variants": [
+   4,
+   4
+  ],
+  "cell": [
+   112,
+   64
+  ],
+  "proj": "ortho",
+  "tile": [
+   96,
+   56
+  ]
+ },
+ "water_0": {
+  "file": "water_0.png",
+  "variants": [
+   2,
+   2
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ },
+ "water_1": {
+  "file": "water_1.png",
+  "variants": [
+   2,
+   2
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ },
+ "water_2": {
+  "file": "water_2.png",
+  "variants": [
+   2,
+   2
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ },
+ "water_3": {
+  "file": "water_3.png",
+  "variants": [
+   2,
+   2
+  ],
+  "cell": [
+   144,
+   84
+  ]
+ }
+}

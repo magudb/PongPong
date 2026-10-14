@@ -441,6 +441,9 @@ func _art_and_boot_cost(t) -> void:
 # ================================================================== geometry of the live world
 
 func _geometry(t) -> void:
+	var start_id: StringName = _world.area.map.id
+	if start_id != &"_fixture_iso":
+		_world._enter(&"_fixture_iso", &"default")
 	var a: IsoArea = _world.area
 	var ok: bool = true
 	var seen: String = ""
@@ -472,6 +475,8 @@ func _geometry(t) -> void:
 	t.check("farmable_cells", a.is_farmable(Vector2i(8, 4)) and not a.is_farmable(Vector2i(2, 4)) and a.farmable.size() == 12, "'f' ground chars are tillable: %d cells" % a.farmable.size())
 	t.check("spawns_parsed", a.spawns.has("default") and a.spawns.has("from_other") and a.get_spawn("nope") == a.spawns["default"], "spawn markers + the default spawn char, unknown names fall back to default")
 	t.check("backdrop_parallax", a.backdrop.get_child_count() == 2 and a.backdrop.get_child(0) is Parallax2D and a.backdrop.get_child(1) is Parallax2D and a.backdrop.z_index == -20, "sky + far canopy as two Parallax2D behind the platform")
+	if start_id != &"_fixture_iso":
+		_world._enter(start_id, &"default")
 
 
 # ================================================================== the player stub
@@ -2370,6 +2375,8 @@ func run_windowed(t) -> void:
 	if not await t.start_world():
 		return
 	var w: WorldRoot2D = t.world()
+	if w.area.map.id != &"_fixture_iso":
+		w._enter(&"_fixture_iso", &"default")
 	w.warm_in_headless = true
 	await w.warm_clips()
 	var p: Node2D = w.player

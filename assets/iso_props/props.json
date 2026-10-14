@@ -1,0 +1,3136 @@
+{
+ "_contract": {
+  "tile": [
+   128,
+   76
+  ],
+  "tile_edge_m": 1.0394,
+  "px_per_m": 87.075,
+  "camera": "orthographic, az 45, elevation 36",
+  "pivot": "ground origin (footprint centre), px from PNG top-left",
+  "files": "relative to this json",
+  "blend": "props with blend \"add\" are additive soft sprites: draw with CanvasItemMaterial BLEND_MODE_ADD",
+  "seamless": "props with seamless true are 256 px repeating ground textures (texture repeat), not placed sprites"
+ },
+ "animal_house": {
+  "file": "animal_house.png",
+  "size": [
+   319,
+   270
+  ],
+  "pivot": [
+   143,
+   199
+  ],
+  "footprint": [
+   3,
+   2
+  ],
+  "elev": 36.0
+ },
+ "apple_tree": {
+  "file": "apple_tree.png",
+  "size": [
+   359,
+   398
+  ],
+  "pivot": [
+   172,
+   355
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "barn_small": {
+  "file": "barn_small.png",
+  "size": [
+   472,
+   424
+  ],
+  "pivot": [
+   208,
+   313
+  ],
+  "footprint": [
+   4,
+   3
+  ],
+  "elev": 36.0
+ },
+ "bed": {
+  "file": "bed.png",
+  "size": [
+   92,
+   58
+  ],
+  "pivot": [
+   46,
+   31
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "beehive_stand": {
+  "file": "beehive_stand.png",
+  "size": [
+   161,
+   147
+  ],
+  "pivot": [
+   79,
+   103
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "bench": {
+  "file": "bench.png",
+  "size": [
+   174,
+   144
+  ],
+  "pivot": [
+   78,
+   107
+  ],
+  "footprint": [
+   2,
+   1
+  ],
+  "elev": 36.0
+ },
+ "boss_arena_ring": {
+  "file": "boss_arena_ring.png",
+  "size": [
+   1108,
+   659
+  ],
+  "pivot": [
+   554,
+   329
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "blend": "add",
+  "kind": "decal",
+  "colour": "fbf5e6",
+  "radius_ground_px": 520,
+  "proj": "iso"
+ },
+ "bridge_x": {
+  "file": "bridge_x.png",
+  "size": [
+   138,
+   142
+  ],
+  "pivot": [
+   71,
+   102
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "bridge_z": {
+  "file": "bridge_z.png",
+  "size": [
+   138,
+   132
+  ],
+  "pivot": [
+   71,
+   85
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "bush_berry": {
+  "file": "bush_berry.png",
+  "size": [
+   171,
+   116
+  ],
+  "pivot": [
+   79,
+   79
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "bush_eyes_a": {
+  "file": "bush_eyes_a.png",
+  "size": [
+   297,
+   260
+  ],
+  "pivot": [
+   132,
+   155
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "proj": "iso",
+  "palette": "bush",
+  "grade": "4d5e85",
+  "eyes": {
+   "prop": "eyes_glow",
+   "offset_from_pivot": [
+    0,
+    -17
+   ],
+   "separation_px": 47
+  }
+ },
+ "bush_eyes_b": {
+  "file": "bush_eyes_b.png",
+  "size": [
+   293,
+   249
+  ],
+  "pivot": [
+   130,
+   145
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "proj": "iso",
+  "palette": "bush",
+  "grade": "4d5e85",
+  "eyes": {
+   "prop": "eyes_glow",
+   "offset_from_pivot": [
+    0,
+    -16
+   ],
+   "separation_px": 44
+  }
+ },
+ "bush_farm": {
+  "file": "bush_farm.png",
+  "size": [
+   172,
+   123
+  ],
+  "pivot": [
+   80,
+   86
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "bush_forest": {
+  "file": "bush_forest.png",
+  "size": [
+   172,
+   114
+  ],
+  "pivot": [
+   80,
+   77
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "cave_ring": {
+  "file": "cave_ring.png",
+  "size": [
+   543,
+   390
+  ],
+  "pivot": [
+   272,
+   201
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "proj": "iso",
+  "palette": "cave_ring",
+  "grade": "4d5e85",
+  "decal": true,
+  "ring": {
+   "outer_px": [
+    528,
+    370
+   ],
+   "hole_px": [
+    300,
+    200
+   ]
+  }
+ },
+ "cave_ring_up": {
+  "file": "cave_ring_up.png",
+  "size": [
+   543,
+   390
+  ],
+  "pivot": [
+   272,
+   201
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "proj": "iso",
+  "palette": "cave_ring",
+  "grade": "4d5e85",
+  "decal": true,
+  "ring": {
+   "outer_px": [
+    528,
+    370
+   ],
+   "hole_px": [
+    300,
+    200
+   ]
+  }
+ },
+ "cave_stone_a": {
+  "file": "cave_stone_a.png",
+  "size": [
+   113,
+   103
+  ],
+  "pivot": [
+   48,
+   57
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "proj": "iso",
+  "palette": "cave_stone",
+  "grade": "4d5e85",
+  "clamped": true
+ },
+ "cave_stone_b": {
+  "file": "cave_stone_b.png",
+  "size": [
+   127,
+   105
+  ],
+  "pivot": [
+   55,
+   59
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "proj": "iso",
+  "palette": "cave_stone",
+  "grade": "4d5e85",
+  "clamped": true
+ },
+ "cave_stone_c": {
+  "file": "cave_stone_c.png",
+  "size": [
+   127,
+   106
+  ],
+  "pivot": [
+   55,
+   60
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "proj": "iso",
+  "palette": "cave_stone",
+  "grade": "4d5e85",
+  "clamped": true
+ },
+ "cave_stone_d": {
+  "file": "cave_stone_d.png",
+  "size": [
+   115,
+   106
+  ],
+  "pivot": [
+   49,
+   60
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "proj": "iso",
+  "palette": "cave_stone",
+  "grade": "4d5e85",
+  "clamped": true
+ },
+ "cave_stone_e": {
+  "file": "cave_stone_e.png",
+  "size": [
+   125,
+   105
+  ],
+  "pivot": [
+   54,
+   59
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "proj": "iso",
+  "palette": "cave_stone",
+  "grade": "4d5e85",
+  "clamped": true
+ },
+ "chest_closed": {
+  "file": "chest_closed.png",
+  "size": [
+   138,
+   102
+  ],
+  "pivot": [
+   62,
+   75
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "chest_noegle": {
+  "file": "chest_noegle.png",
+  "size": [
+   148,
+   106
+  ],
+  "pivot": [
+   66,
+   78
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "chest_noegle_glow.png",
+   "center": [
+    66,
+    49
+   ],
+   "color": "#BFD8FF",
+   "size": [
+    120,
+    120
+   ]
+  },
+  "proj": "iso",
+  "unshaded": true,
+  "tier": "noegle"
+ },
+ "chest_open": {
+  "file": "chest_open.png",
+  "size": [
+   146,
+   133
+  ],
+  "pivot": [
+   62,
+   106
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "chest_open_glow.png",
+   "center": [
+    62,
+    73
+   ],
+   "color": "#FFE49A",
+   "size": [
+    120,
+    120
+   ]
+  }
+ },
+ "coop_small": {
+  "file": "coop_small.png",
+  "size": [
+   350,
+   295
+  ],
+  "pivot": [
+   155,
+   218
+  ],
+  "footprint": [
+   3,
+   2
+  ],
+  "elev": 36.0
+ },
+ "crop_carrot_0": {
+  "file": "crop_carrot_0.png",
+  "size": [
+   84,
+   36
+  ],
+  "pivot": [
+   38,
+   17
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_carrot_1": {
+  "file": "crop_carrot_1.png",
+  "size": [
+   84,
+   48
+  ],
+  "pivot": [
+   38,
+   29
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_carrot_2": {
+  "file": "crop_carrot_2.png",
+  "size": [
+   84,
+   65
+  ],
+  "pivot": [
+   38,
+   46
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_carrot_3": {
+  "file": "crop_carrot_3.png",
+  "size": [
+   84,
+   79
+  ],
+  "pivot": [
+   38,
+   60
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_catnip_0": {
+  "file": "crop_catnip_0.png",
+  "size": [
+   84,
+   36
+  ],
+  "pivot": [
+   38,
+   17
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_catnip_1": {
+  "file": "crop_catnip_1.png",
+  "size": [
+   84,
+   41
+  ],
+  "pivot": [
+   38,
+   22
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_catnip_2": {
+  "file": "crop_catnip_2.png",
+  "size": [
+   84,
+   52
+  ],
+  "pivot": [
+   38,
+   33
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_catnip_3": {
+  "file": "crop_catnip_3.png",
+  "size": [
+   84,
+   74
+  ],
+  "pivot": [
+   38,
+   55
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_glow_berry_0": {
+  "file": "crop_glow_berry_0.png",
+  "size": [
+   84,
+   36
+  ],
+  "pivot": [
+   38,
+   17
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_glow_berry_1": {
+  "file": "crop_glow_berry_1.png",
+  "size": [
+   84,
+   38
+  ],
+  "pivot": [
+   38,
+   19
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_glow_berry_2": {
+  "file": "crop_glow_berry_2.png",
+  "size": [
+   84,
+   48
+  ],
+  "pivot": [
+   38,
+   29
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_glow_berry_3": {
+  "file": "crop_glow_berry_3.png",
+  "size": [
+   84,
+   63
+  ],
+  "pivot": [
+   38,
+   44
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "crop_glow_berry_3_glow.png",
+   "center": [
+    38,
+    26
+   ],
+   "color": "#9FB4FF",
+   "size": [
+    104,
+    104
+   ]
+  }
+ },
+ "crop_moonflower_0": {
+  "file": "crop_moonflower_0.png",
+  "size": [
+   84,
+   36
+  ],
+  "pivot": [
+   38,
+   17
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_moonflower_1": {
+  "file": "crop_moonflower_1.png",
+  "size": [
+   84,
+   37
+  ],
+  "pivot": [
+   38,
+   18
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_moonflower_2": {
+  "file": "crop_moonflower_2.png",
+  "size": [
+   84,
+   75
+  ],
+  "pivot": [
+   38,
+   56
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_moonflower_3": {
+  "file": "crop_moonflower_3.png",
+  "size": [
+   84,
+   105
+  ],
+  "pivot": [
+   38,
+   86
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "crop_moonflower_3_glow.png",
+   "center": [
+    38,
+    49
+   ],
+   "color": "#CFE0FF",
+   "size": [
+    104,
+    104
+   ]
+  }
+ },
+ "crop_pumpkin_0": {
+  "file": "crop_pumpkin_0.png",
+  "size": [
+   84,
+   36
+  ],
+  "pivot": [
+   38,
+   17
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_pumpkin_1": {
+  "file": "crop_pumpkin_1.png",
+  "size": [
+   84,
+   45
+  ],
+  "pivot": [
+   38,
+   26
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_pumpkin_2": {
+  "file": "crop_pumpkin_2.png",
+  "size": [
+   84,
+   60
+  ],
+  "pivot": [
+   38,
+   39
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_pumpkin_3": {
+  "file": "crop_pumpkin_3.png",
+  "size": [
+   101,
+   71
+  ],
+  "pivot": [
+   49,
+   50
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_strawberry_0": {
+  "file": "crop_strawberry_0.png",
+  "size": [
+   84,
+   36
+  ],
+  "pivot": [
+   38,
+   17
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_strawberry_1": {
+  "file": "crop_strawberry_1.png",
+  "size": [
+   84,
+   38
+  ],
+  "pivot": [
+   38,
+   19
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_strawberry_2": {
+  "file": "crop_strawberry_2.png",
+  "size": [
+   84,
+   45
+  ],
+  "pivot": [
+   38,
+   26
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_strawberry_3": {
+  "file": "crop_strawberry_3.png",
+  "size": [
+   84,
+   50
+  ],
+  "pivot": [
+   38,
+   31
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_sunflower_0": {
+  "file": "crop_sunflower_0.png",
+  "size": [
+   84,
+   36
+  ],
+  "pivot": [
+   38,
+   17
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_sunflower_1": {
+  "file": "crop_sunflower_1.png",
+  "size": [
+   84,
+   40
+  ],
+  "pivot": [
+   38,
+   21
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_sunflower_2": {
+  "file": "crop_sunflower_2.png",
+  "size": [
+   84,
+   91
+  ],
+  "pivot": [
+   38,
+   72
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_sunflower_3": {
+  "file": "crop_sunflower_3.png",
+  "size": [
+   84,
+   149
+  ],
+  "pivot": [
+   38,
+   130
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_turnip_0": {
+  "file": "crop_turnip_0.png",
+  "size": [
+   84,
+   36
+  ],
+  "pivot": [
+   38,
+   17
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_turnip_1": {
+  "file": "crop_turnip_1.png",
+  "size": [
+   84,
+   39
+  ],
+  "pivot": [
+   38,
+   20
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_turnip_2": {
+  "file": "crop_turnip_2.png",
+  "size": [
+   84,
+   50
+  ],
+  "pivot": [
+   38,
+   31
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crop_turnip_3": {
+  "file": "crop_turnip_3.png",
+  "size": [
+   84,
+   68
+  ],
+  "pivot": [
+   38,
+   49
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "crown_l_a": {
+  "file": "crown_l_a.png",
+  "size": [
+   671,
+   758
+  ],
+  "pivot": [
+   311,
+   535
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "proj": "iso",
+  "disc": {
+   "radius": 300,
+   "center_above_pivot": 243,
+   "shadow_offset_ground": [
+    48,
+    60
+   ],
+   "shadow_offset_screen": [
+    48,
+    35
+   ],
+   "shadow_squash": 0.588
+  },
+  "palette": "crown",
+  "grade": "4d5e85",
+  "ground_collider_r": 225
+ },
+ "crown_l_b": {
+  "file": "crown_l_b.png",
+  "size": [
+   674,
+   756
+  ],
+  "pivot": [
+   314,
+   533
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "proj": "iso",
+  "disc": {
+   "radius": 300,
+   "center_above_pivot": 243,
+   "shadow_offset_ground": [
+    48,
+    60
+   ],
+   "shadow_offset_screen": [
+    48,
+    35
+   ],
+   "shadow_squash": 0.588
+  },
+  "palette": "crown",
+  "grade": "4d5e85",
+  "ground_collider_r": 225
+ },
+ "crown_m_a": {
+  "file": "crown_m_a.png",
+  "size": [
+   513,
+   589
+  ],
+  "pivot": [
+   223,
+   407
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "proj": "iso",
+  "disc": {
+   "radius": 230,
+   "center_above_pivot": 186,
+   "shadow_offset_ground": [
+    48,
+    60
+   ],
+   "shadow_offset_screen": [
+    48,
+    35
+   ],
+   "shadow_squash": 0.588
+  },
+  "palette": "crown",
+  "grade": "4d5e85",
+  "ground_collider_r": 172
+ },
+ "crown_m_b": {
+  "file": "crown_m_b.png",
+  "size": [
+   525,
+   593
+  ],
+  "pivot": [
+   235,
+   411
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "proj": "iso",
+  "disc": {
+   "radius": 230,
+   "center_above_pivot": 186,
+   "shadow_offset_ground": [
+    48,
+    60
+   ],
+   "shadow_offset_screen": [
+    48,
+    35
+   ],
+   "shadow_squash": 0.588
+  },
+  "palette": "crown",
+  "grade": "4d5e85",
+  "ground_collider_r": 172
+ },
+ "crown_s_a": {
+  "file": "crown_s_a.png",
+  "size": [
+   399,
+   447
+  ],
+  "pivot": [
+   169,
+   300
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "proj": "iso",
+  "disc": {
+   "radius": 170,
+   "center_above_pivot": 138,
+   "shadow_offset_ground": [
+    48,
+    60
+   ],
+   "shadow_offset_screen": [
+    48,
+    35
+   ],
+   "shadow_squash": 0.588
+  },
+  "palette": "crown",
+  "grade": "4d5e85",
+  "ground_collider_r": 128
+ },
+ "crown_s_b": {
+  "file": "crown_s_b.png",
+  "size": [
+   411,
+   447
+  ],
+  "pivot": [
+   181,
+   300
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "proj": "iso",
+  "disc": {
+   "radius": 170,
+   "center_above_pivot": 138,
+   "shadow_offset_ground": [
+    48,
+    60
+   ],
+   "shadow_offset_screen": [
+    48,
+    35
+   ],
+   "shadow_squash": 0.588
+  },
+  "palette": "crown",
+  "grade": "4d5e85",
+  "ground_collider_r": 128
+ },
+ "crown_spark": {
+  "file": "crown_spark.png",
+  "size": [
+   112,
+   80
+  ],
+  "pivot": [
+   56,
+   40
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "blend": "add",
+  "kind": "fx",
+  "colour": "f2c14e",
+  "proj": "iso"
+ },
+ "crystal_amethyst": {
+  "file": "crystal_amethyst.png",
+  "size": [
+   156,
+   142
+  ],
+  "pivot": [
+   70,
+   112
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "crystal_amethyst_glow.png",
+   "center": [
+    70,
+    58
+   ],
+   "color": "#D2B4F5",
+   "size": [
+    104,
+    104
+   ]
+  }
+ },
+ "crystal_emerald": {
+  "file": "crystal_emerald.png",
+  "size": [
+   156,
+   142
+  ],
+  "pivot": [
+   70,
+   112
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "crystal_emerald_glow.png",
+   "center": [
+    70,
+    58
+   ],
+   "color": "#9BE7BC",
+   "size": [
+    104,
+    104
+   ]
+  }
+ },
+ "crystal_moonstone": {
+  "file": "crystal_moonstone.png",
+  "size": [
+   156,
+   142
+  ],
+  "pivot": [
+   70,
+   112
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "crystal_moonstone_glow.png",
+   "center": [
+    70,
+    58
+   ],
+   "color": "#F2F8FF",
+   "size": [
+    104,
+    104
+   ]
+  }
+ },
+ "empty_bush": {
+  "file": "empty_bush.png",
+  "size": [
+   270,
+   233
+  ],
+  "pivot": [
+   114,
+   133
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "proj": "iso",
+  "palette": "bush",
+  "grade": "4d5e85"
+ },
+ "eyes_glow": {
+  "file": "eyes_glow.png",
+  "size": [
+   256,
+   64
+  ],
+  "pivot": [
+   64,
+   32
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "blend": "add",
+  "kind": "fx",
+  "frames": 2,
+  "frame_size": [
+   128,
+   64
+  ],
+  "fps": 3,
+  "colour": "f25a6a",
+  "proj": "iso"
+ },
+ "fence_gate_x": {
+  "file": "fence_gate_x.png",
+  "size": [
+   110,
+   122
+  ],
+  "pivot": [
+   50,
+   96
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "fence_x": {
+  "file": "fence_x.png",
+  "size": [
+   110,
+   122
+  ],
+  "pivot": [
+   50,
+   96
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "fence_z": {
+  "file": "fence_z.png",
+  "size": [
+   110,
+   122
+  ],
+  "pivot": [
+   50,
+   96
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "firefly_dot": {
+  "file": "firefly_dot.png",
+  "size": [
+   24,
+   24
+  ],
+  "pivot": [
+   12,
+   12
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "blend": "add",
+  "kind": "fx",
+  "colour": "f2e9a0",
+  "proj": "iso"
+ },
+ "floor_patch_a": {
+  "file": "floor_patch_a.png",
+  "size": [
+   256,
+   256
+  ],
+  "pivot": [
+   128,
+   128
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "texture",
+  "seamless": true,
+  "texture": true,
+  "repeat": true,
+  "proj": "iso",
+  "size_px": 256,
+  "palette": "floor_patch",
+  "sketch": "2a3352",
+  "baked": "8B8A9D"
+ },
+ "floor_patch_b": {
+  "file": "floor_patch_b.png",
+  "size": [
+   256,
+   256
+  ],
+  "pivot": [
+   128,
+   128
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "texture",
+  "seamless": true,
+  "texture": true,
+  "repeat": true,
+  "proj": "iso",
+  "size_px": 256,
+  "palette": "floor_patch",
+  "sketch": "2c3354",
+  "baked": "928AA1"
+ },
+ "floor_patch_c": {
+  "file": "floor_patch_c.png",
+  "size": [
+   256,
+   256
+  ],
+  "pivot": [
+   128,
+   128
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "texture",
+  "seamless": true,
+  "texture": true,
+  "repeat": true,
+  "proj": "iso",
+  "size_px": 256,
+  "palette": "floor_patch",
+  "sketch": "28405a",
+  "baked": "84AEAD"
+ },
+ "fountain": {
+  "file": "fountain.png",
+  "size": [
+   298,
+   249
+  ],
+  "pivot": [
+   132,
+   181
+  ],
+  "footprint": [
+   2,
+   2
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "fountain_glow.png",
+   "center": [
+    132,
+    47
+   ],
+   "color": "#BFE6F2",
+   "size": [
+    96,
+    96
+   ]
+  }
+ },
+ "fx_heal_sparkle": {
+  "file": "fx_heal_sparkle.png",
+  "size": [
+   96,
+   96
+  ],
+  "pivot": [
+   48,
+   48
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "blend": "add",
+  "kind": "fx",
+  "colour": "bef5e4",
+  "proj": "iso"
+ },
+ "fx_hit_spark": {
+  "file": "fx_hit_spark.png",
+  "size": [
+   96,
+   96
+  ],
+  "pivot": [
+   48,
+   48
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "blend": "add",
+  "kind": "fx",
+  "colour": "fff6e2",
+  "proj": "iso"
+ },
+ "glowmush_blue": {
+  "file": "glowmush_blue.png",
+  "size": [
+   138,
+   100
+  ],
+  "pivot": [
+   62,
+   71
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "glowmush_blue_glow.png",
+   "center": [
+    62,
+    42
+   ],
+   "color": "#8FA9F2",
+   "size": [
+    120,
+    120
+   ]
+  }
+ },
+ "glowmush_pink": {
+  "file": "glowmush_pink.png",
+  "size": [
+   138,
+   100
+  ],
+  "pivot": [
+   62,
+   71
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "glowmush_pink_glow.png",
+   "center": [
+    62,
+    42
+   ],
+   "color": "#E58FA6",
+   "size": [
+    120,
+    120
+   ]
+  }
+ },
+ "glowmush_teal": {
+  "file": "glowmush_teal.png",
+  "size": [
+   138,
+   100
+  ],
+  "pivot": [
+   62,
+   71
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "glowmush_teal_glow.png",
+   "center": [
+    62,
+    42
+   ],
+   "color": "#6FD6C4",
+   "size": [
+    120,
+    120
+   ]
+  }
+ },
+ "halo_amber": {
+  "file": "halo_amber.png",
+  "size": [
+   256,
+   256
+  ],
+  "pivot": [
+   128,
+   128
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "blend": "add",
+  "kind": "fx",
+  "colour": "e8b04a",
+  "proj": "iso"
+ },
+ "halo_violet": {
+  "file": "halo_violet.png",
+  "size": [
+   256,
+   256
+  ],
+  "pivot": [
+   128,
+   128
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "blend": "add",
+  "kind": "fx",
+  "colour": "7b6bb8",
+  "proj": "iso"
+ },
+ "home_rope": {
+  "file": "home_rope.png",
+  "size": [
+   126,
+   373
+  ],
+  "pivot": [
+   60,
+   331
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "home_rope_glow.png",
+   "center": [
+    60,
+    232
+   ],
+   "color": "#FFE9A8",
+   "size": [
+    160,
+    160
+   ]
+  },
+  "proj": "iso",
+  "palette": "cave_stone",
+  "grade": "4d5e85",
+  "clamped": true
+ },
+ "house_animalstore": {
+  "file": "house_animalstore.png",
+  "size": [
+   324,
+   308
+  ],
+  "pivot": [
+   148,
+   219
+  ],
+  "footprint": [
+   2,
+   2
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "house_animalstore_glow.png",
+   "center": [
+    148,
+    119
+   ],
+   "color": "#FFD98A",
+   "size": [
+    80,
+    80
+   ]
+  }
+ },
+ "house_bakery": {
+  "file": "house_bakery.png",
+  "size": [
+   318,
+   373
+  ],
+  "pivot": [
+   142,
+   284
+  ],
+  "footprint": [
+   2,
+   2
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "house_bakery_glow.png",
+   "center": [
+    142,
+    137
+   ],
+   "color": "#FFD98A",
+   "size": [
+    96,
+    96
+   ]
+  }
+ },
+ "house_farm": {
+  "file": "house_farm.png",
+  "size": [
+   436,
+   406
+  ],
+  "pivot": [
+   192,
+   310
+  ],
+  "footprint": [
+   3,
+   2
+  ],
+  "elev": 36.0
+ },
+ "house_king_treetop": {
+  "file": "house_king_treetop.png",
+  "size": [
+   505,
+   571
+  ],
+  "pivot": [
+   227,
+   458
+  ],
+  "footprint": [
+   3,
+   3
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "house_king_treetop_glow.png",
+   "center": [
+    227,
+    231
+   ],
+   "color": "#FFD98A",
+   "size": [
+    104,
+    104
+   ]
+  }
+ },
+ "house_mushroom_lavender": {
+  "file": "house_mushroom_lavender.png",
+  "size": [
+   318,
+   275
+  ],
+  "pivot": [
+   142,
+   219
+  ],
+  "footprint": [
+   2,
+   2
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "house_mushroom_lavender_glow.png",
+   "center": [
+    142,
+    119
+   ],
+   "color": "#FFD98A",
+   "size": [
+    80,
+    80
+   ]
+  }
+ },
+ "house_mushroom_mint": {
+  "file": "house_mushroom_mint.png",
+  "size": [
+   318,
+   275
+  ],
+  "pivot": [
+   142,
+   219
+  ],
+  "footprint": [
+   2,
+   2
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "house_mushroom_mint_glow.png",
+   "center": [
+    142,
+    119
+   ],
+   "color": "#FFD98A",
+   "size": [
+    80,
+    80
+   ]
+  }
+ },
+ "house_mushroom_rose": {
+  "file": "house_mushroom_rose.png",
+  "size": [
+   318,
+   275
+  ],
+  "pivot": [
+   142,
+   219
+  ],
+  "footprint": [
+   2,
+   2
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "house_mushroom_rose_glow.png",
+   "center": [
+    142,
+    119
+   ],
+   "color": "#FFD98A",
+   "size": [
+    80,
+    80
+   ]
+  }
+ },
+ "house_seedshop": {
+  "file": "house_seedshop.png",
+  "size": [
+   343,
+   308
+  ],
+  "pivot": [
+   167,
+   219
+  ],
+  "footprint": [
+   2,
+   2
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "house_seedshop_glow.png",
+   "center": [
+    167,
+    119
+   ],
+   "color": "#FFD98A",
+   "size": [
+    80,
+    80
+   ]
+  }
+ },
+ "house_smithy": {
+  "file": "house_smithy.png",
+  "size": [
+   329,
+   337
+  ],
+  "pivot": [
+   153,
+   248
+  ],
+  "footprint": [
+   2,
+   2
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "house_smithy_glow.png",
+   "center": [
+    153,
+    130
+   ],
+   "color": "#FF9A4A",
+   "size": [
+    96,
+    96
+   ]
+  }
+ },
+ "house_town_hall": {
+  "file": "house_town_hall.png",
+  "size": [
+   505,
+   607
+  ],
+  "pivot": [
+   227,
+   491
+  ],
+  "footprint": [
+   3,
+   3
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "house_town_hall_glow.png",
+   "center": [
+    227,
+    248
+   ],
+   "color": "#FFD98A",
+   "size": [
+    104,
+    104
+   ]
+  }
+ },
+ "hulen_eyes": {
+  "file": "hulen_eyes.png",
+  "size": [
+   96,
+   48
+  ],
+  "pivot": [
+   48,
+   24
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "blend": "add",
+  "kind": "fx",
+  "colour": "f2c14e",
+  "proj": "iso"
+ },
+ "lantern_hand": {
+  "file": "lantern_hand.png",
+  "size": [
+   36,
+   56
+  ],
+  "pivot": [
+   18,
+   48
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "lantern_hand_glow.png",
+   "center": [
+    18,
+    26
+   ],
+   "color": "#FFD98A",
+   "size": [
+    160,
+    160
+   ]
+  }
+ },
+ "lantern_light": {
+  "file": "lantern_light.png",
+  "size": [
+   512,
+   512
+  ],
+  "pivot": [
+   256,
+   256
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "light",
+  "texture": true,
+  "profile": [
+   [
+    0,
+    1.0
+   ],
+   [
+    0.6,
+    0.31
+   ],
+   [
+    1.0,
+    0.0
+   ]
+  ],
+  "radius_px": 256,
+  "proj": "iso"
+ },
+ "lantern_post": {
+  "file": "lantern_post.png",
+  "size": [
+   90,
+   176
+  ],
+  "pivot": [
+   38,
+   157
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "lantern_post_glow.png",
+   "center": [
+    38,
+    76
+   ],
+   "color": "#FFD98A",
+   "size": [
+    184,
+    184
+   ]
+  }
+ },
+ "lantern_post_lavender": {
+  "file": "lantern_post_lavender.png",
+  "size": [
+   90,
+   176
+  ],
+  "pivot": [
+   38,
+   157
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "lantern_post_lavender_glow.png",
+   "center": [
+    38,
+    76
+   ],
+   "color": "#D2C0FF",
+   "size": [
+    184,
+    184
+   ]
+  }
+ },
+ "lantern_post_mint": {
+  "file": "lantern_post_mint.png",
+  "size": [
+   90,
+   176
+  ],
+  "pivot": [
+   38,
+   157
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "lantern_post_mint_glow.png",
+   "center": [
+    38,
+    76
+   ],
+   "color": "#B8F0D4",
+   "size": [
+    184,
+    184
+   ]
+  }
+ },
+ "lantern_post_rose": {
+  "file": "lantern_post_rose.png",
+  "size": [
+   90,
+   176
+  ],
+  "pivot": [
+   38,
+   157
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "lantern_post_rose_glow.png",
+   "center": [
+    38,
+    76
+   ],
+   "color": "#FFB8CC",
+   "size": [
+    184,
+    184
+   ]
+  }
+ },
+ "mailbox_red": {
+  "file": "mailbox_red.png",
+  "size": [
+   104,
+   137
+  ],
+  "pivot": [
+   47,
+   116
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "market_stall": {
+  "file": "market_stall.png",
+  "size": [
+   234,
+   279
+  ],
+  "pivot": [
+   104,
+   223
+  ],
+  "footprint": [
+   2,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "market_stall_glow.png",
+   "center": [
+    65,
+    115
+   ],
+   "color": "#FFD98A",
+   "size": [
+    72,
+    72
+   ]
+  }
+ },
+ "market_stall_furniture": {
+  "file": "market_stall_furniture.png",
+  "size": [
+   234,
+   279
+  ],
+  "pivot": [
+   104,
+   223
+  ],
+  "footprint": [
+   2,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "market_stall_furniture_glow.png",
+   "center": [
+    65,
+    115
+   ],
+   "color": "#FFD98A",
+   "size": [
+    72,
+    72
+   ]
+  }
+ },
+ "market_stall_tailor": {
+  "file": "market_stall_tailor.png",
+  "size": [
+   234,
+   279
+  ],
+  "pivot": [
+   104,
+   223
+  ],
+  "footprint": [
+   2,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "market_stall_tailor_glow.png",
+   "center": [
+    65,
+    115
+   ],
+   "color": "#FFD98A",
+   "size": [
+    72,
+    72
+   ]
+  }
+ },
+ "mist_patch_a": {
+  "file": "mist_patch_a.png",
+  "size": [
+   1560,
+   300
+  ],
+  "pivot": [
+   780,
+   150
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "decal",
+  "alpha_hint": 0.06,
+  "colour": "cfd6f2",
+  "proj": "iso"
+ },
+ "mist_patch_b": {
+  "file": "mist_patch_b.png",
+  "size": [
+   1800,
+   360
+  ],
+  "pivot": [
+   900,
+   180
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "decal",
+  "alpha_hint": 0.06,
+  "colour": "cfd6f2",
+  "proj": "iso"
+ },
+ "ore_copper": {
+  "file": "ore_copper.png",
+  "size": [
+   174,
+   110
+  ],
+  "pivot": [
+   78,
+   74
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "ore_gold": {
+  "file": "ore_gold.png",
+  "size": [
+   174,
+   112
+  ],
+  "pivot": [
+   78,
+   76
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "ore_gold_glow.png",
+   "center": [
+    78,
+    50
+   ],
+   "color": "#FFE49A",
+   "size": [
+    56,
+    56
+   ]
+  }
+ },
+ "ore_iron": {
+  "file": "ore_iron.png",
+  "size": [
+   174,
+   113
+  ],
+  "pivot": [
+   78,
+   77
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "path_tile_o": {
+  "file": "path_tile_o.png",
+  "size": [
+   256,
+   256
+  ],
+  "pivot": [
+   128,
+   128
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "texture",
+  "seamless": true,
+  "texture": true,
+  "repeat": true,
+  "proj": "iso",
+  "size_px": 256,
+  "palette": "path",
+  "sketch": "3b3c5e",
+  "baked": "C3A3B4"
+ },
+ "paw_prints": {
+  "file": "paw_prints.png",
+  "size": [
+   39,
+   49
+  ],
+  "pivot": [
+   16,
+   29
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "plank_stack": {
+  "file": "plank_stack.png",
+  "size": [
+   192,
+   130
+  ],
+  "pivot": [
+   86,
+   93
+  ],
+  "footprint": [
+   2,
+   1
+  ],
+  "elev": 36.0
+ },
+ "platform_corner": {
+  "file": "platform_corner.png",
+  "size": [
+   146,
+   146
+  ],
+  "pivot": [
+   73,
+   13
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "platform_se": {
+  "file": "platform_se.png",
+  "size": [
+   79,
+   143
+  ],
+  "pivot": [
+   6,
+   13
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "platform_sw": {
+  "file": "platform_sw.png",
+  "size": [
+   79,
+   143
+  ],
+  "pivot": [
+   73,
+   13
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "pond_lily": {
+  "file": "pond_lily.png",
+  "size": [
+   66,
+   41
+  ],
+  "pivot": [
+   33,
+   22
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "proj": "iso",
+  "palette": "pond_lily",
+  "grade": "4d5e85",
+  "clamped": true
+ },
+ "pond_ripple": {
+  "file": "pond_ripple.png",
+  "size": [
+   576,
+   90
+  ],
+  "pivot": [
+   72,
+   45
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "blend": "add",
+  "kind": "fx",
+  "frames": 4,
+  "frame_size": [
+   144,
+   90
+  ],
+  "fps": 4,
+  "colour": "bef5e8",
+  "proj": "iso"
+ },
+ "pond_sheen": {
+  "file": "pond_sheen.png",
+  "size": [
+   280,
+   164
+  ],
+  "pivot": [
+   140,
+   82
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "blend": "add",
+  "kind": "decal",
+  "colour": "6fd6c4",
+  "proj": "iso"
+ },
+ "pond_water_o": {
+  "file": "pond_water_o.png",
+  "size": [
+   256,
+   256
+  ],
+  "pivot": [
+   128,
+   128
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "texture",
+  "seamless": true,
+  "texture": true,
+  "repeat": true,
+  "proj": "iso",
+  "size_px": 256,
+  "palette": "water",
+  "sketch": "1c4a5a",
+  "baked": "5DC9AD"
+ },
+ "rock_dark": {
+  "file": "rock_dark.png",
+  "size": [
+   142,
+   85
+  ],
+  "pivot": [
+   64,
+   55
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "rock_grey": {
+  "file": "rock_grey.png",
+  "size": [
+   174,
+   100
+  ],
+  "pivot": [
+   78,
+   64
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "rock_mossy": {
+  "file": "rock_mossy.png",
+  "size": [
+   190,
+   117
+  ],
+  "pivot": [
+   85,
+   78
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "roof_patch": {
+  "file": "roof_patch.png",
+  "size": [
+   174,
+   164
+  ],
+  "pivot": [
+   78,
+   123
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "rune_glow": {
+  "file": "rune_glow.png",
+  "size": [
+   138,
+   198
+  ],
+  "pivot": [
+   59,
+   131
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "blend": "add",
+  "kind": "fx",
+  "colour": "6fd6c4",
+  "glyph": true,
+  "proj": "iso"
+ },
+ "runestone_active": {
+  "file": "runestone_active.png",
+  "size": [
+   138,
+   198
+  ],
+  "pivot": [
+   59,
+   131
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "proj": "iso",
+  "palette": "runestone",
+  "grade": "4d5e85",
+  "clamped": true,
+  "glyph": "6fd6c4",
+  "state": "active"
+ },
+ "runestone_dormant": {
+  "file": "runestone_dormant.png",
+  "size": [
+   138,
+   198
+  ],
+  "pivot": [
+   59,
+   131
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "proj": "iso",
+  "palette": "runestone",
+  "grade": "4d5e85",
+  "clamped": true,
+  "glyph": "6fd6c4",
+  "state": "dormant"
+ },
+ "scarecrow": {
+  "file": "scarecrow.png",
+  "size": [
+   122,
+   189
+  ],
+  "pivot": [
+   55,
+   166
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "signpost": {
+  "file": "signpost.png",
+  "size": [
+   84,
+   130
+  ],
+  "pivot": [
+   38,
+   112
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "stone_path_a": {
+  "file": "stone_path_a.png",
+  "size": [
+   92,
+   60
+  ],
+  "pivot": [
+   43,
+   32
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "stone_path_b": {
+  "file": "stone_path_b.png",
+  "size": [
+   90,
+   60
+  ],
+  "pivot": [
+   46,
+   33
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "stone_path_c": {
+  "file": "stone_path_c.png",
+  "size": [
+   109,
+   72
+  ],
+  "pivot": [
+   58,
+   38
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "telegraph_line": {
+  "file": "telegraph_line.png",
+  "size": [
+   512,
+   96
+  ],
+  "pivot": [
+   0,
+   48
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "blend": "add",
+  "kind": "decal",
+  "colour": "fbf5e6",
+  "direction": "x",
+  "proj": "iso"
+ },
+ "telegraph_ring_l": {
+  "file": "telegraph_ring_l.png",
+  "size": [
+   692,
+   414
+  ],
+  "pivot": [
+   346,
+   207
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "blend": "add",
+  "kind": "decal",
+  "colour": "fbf5e6",
+  "radius_ground_px": 320,
+  "proj": "iso"
+ },
+ "telegraph_ring_m": {
+  "file": "telegraph_ring_m.png",
+  "size": [
+   500,
+   301
+  ],
+  "pivot": [
+   250,
+   150
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "blend": "add",
+  "kind": "decal",
+  "colour": "fbf5e6",
+  "radius_ground_px": 224,
+  "proj": "iso"
+ },
+ "telegraph_ring_s": {
+  "file": "telegraph_ring_s.png",
+  "size": [
+   308,
+   189
+  ],
+  "pivot": [
+   154,
+   94
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "blend": "add",
+  "kind": "decal",
+  "colour": "fbf5e6",
+  "radius_ground_px": 128,
+  "proj": "iso"
+ },
+ "tornebaer": {
+  "file": "tornebaer.png",
+  "size": [
+   64,
+   43
+  ],
+  "pivot": [
+   29,
+   27
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "tornebaer_glow.png",
+   "center": [
+    29,
+    9
+   ],
+   "color": "#E58FA6",
+   "size": [
+    56,
+    56
+   ]
+  },
+  "proj": "iso",
+  "unshaded": true
+ },
+ "tower_wizard": {
+  "file": "tower_wizard.png",
+  "size": [
+   280,
+   511
+  ],
+  "pivot": [
+   124,
+   422
+  ],
+  "footprint": [
+   2,
+   2
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "tower_wizard_glow.png",
+   "center": [
+    124,
+    252
+   ],
+   "color": "#C8B0FF",
+   "size": [
+    104,
+    104
+   ]
+  }
+ },
+ "tree_blossom_hyggebyen": {
+  "file": "tree_blossom_hyggebyen.png",
+  "size": [
+   324,
+   405
+  ],
+  "pivot": [
+   150,
+   363
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "tree_giant_crown": {
+  "file": "tree_giant_crown.png",
+  "size": [
+   2218,
+   2893
+  ],
+  "pivot": [
+   1133,
+   1104
+  ],
+  "footprint": [
+   9,
+   9
+  ],
+  "elev": 36.0
+ },
+ "tree_oak_farm": {
+  "file": "tree_oak_farm.png",
+  "size": [
+   331,
+   409
+  ],
+  "pivot": [
+   173,
+   367
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "tree_oak_farm_b": {
+  "file": "tree_oak_farm_b.png",
+  "size": [
+   308,
+   356
+  ],
+  "pivot": [
+   150,
+   314
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "tree_pine_forest": {
+  "file": "tree_pine_forest.png",
+  "size": [
+   226,
+   315
+  ],
+  "pivot": [
+   100,
+   277
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "tree_pine_forest_b": {
+  "file": "tree_pine_forest_b.png",
+  "size": [
+   226,
+   266
+  ],
+  "pivot": [
+   100,
+   228
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "tree_twisted": {
+  "file": "tree_twisted.png",
+  "size": [
+   263,
+   380
+  ],
+  "pivot": [
+   117,
+   329
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "tree_twisted_glow.png",
+   "center": [
+    117,
+    172
+   ],
+   "color": "#F2C14E",
+   "size": [
+    88,
+    88
+   ]
+  }
+ },
+ "warp_gate_stone": {
+  "file": "warp_gate_stone.png",
+  "size": [
+   179,
+   251
+  ],
+  "pivot": [
+   83,
+   212
+  ],
+  "footprint": [
+   2,
+   1
+  ],
+  "elev": 36.0,
+  "glow": {
+   "file": "warp_gate_stone_glow.png",
+   "center": [
+    86,
+    72
+   ],
+   "color": "#FFD98A",
+   "size": [
+    144,
+    144
+   ]
+  }
+ },
+ "well": {
+  "file": "well.png",
+  "size": [
+   182,
+   204
+  ],
+  "pivot": [
+   81,
+   170
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "wheat_sack": {
+  "file": "wheat_sack.png",
+  "size": [
+   104,
+   117
+  ],
+  "pivot": [
+   47,
+   95
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ }
+}

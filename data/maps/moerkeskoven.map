@@ -1,0 +1,125 @@
+# data/maps/moerkeskoven.map - SKOVKANTEN, the hub of Moerkeskoven (package P11-maps-iso): a hand-authored ORTHO map, a 31 x 26 cell clearing in a 48 x 42 grid.
+# Started from the generator exporter's draft (design2/generator/hub_moerkeskoven.map.draft) and changed by the merged zone graph (decision DX2):
+# the Skovlift of Traetoppen is the ONLY way in and out, so the draft's three gates (farm, Hyggebyen, city) are replaced by ONE gate arch (warp_gate_stone)
+# on the tip of the southern funnel, to traetoppen:from_skovlift; the Hulen mouth (cave_ring, east) leads to floor 1 (D2 generates and registers the floor
+# when the hub is entered); the Port-runen (north) is the rune picker (D2); there is no npc slot (Fru Ugle lives in the city, Natteblik stands beside the
+# Hulen of floors 2 / 6 / 10); the rim is void (rim.wall_depth 0: invisible blockers keep the player in) and the 37 rim crowns are @prop rows, three
+# rings (touching the clearing, 4..7 cells out, 9..12 cells out) of the three crown sizes, none inside the funnel and none hiding a marker.
+# Spawns: `default` and `from_traetoppen` lie on neighbouring cells in front of the gate (a cell holds ONE object char, so the Skovlift arrival is the
+# neighbour of `default`), `from_floor` beside the Hulen mouth. Orthogonal map: text columns run right, rows run down.
+# Ground chars: m forest floor, g glow floor (around the three glow lights), p moss path, ~ bog (ground_block), # void.
+# This file is AUTHORITATIVE and hand-editable (it was derived once from the draft with a throwaway script that is not part of the repository);
+# tests/sections/maps_iso.gd keeps it honest (one gate, reachability from the real colliders, the strings of areas.csv).
+@id moerkeskoven
+@title ZONE_FOREST_EDGE
+@projection ortho
+@ambient forest
+@theme forest
+@zone dark_forest
+@depth 0
+@flight false
+@music forest_theme
+# --- rim crowns (scenery, solid none; sizes S 170 / M 230 / L 300 px radius)
+@prop N crown_s_b
+@prop O crown_s_a
+@prop P crown_m_b
+@prop Q crown_m_a
+@prop R crown_l_a
+@prop S crown_l_b
+# --- spawns (the default spawn is the '@' char), the ONE gate to the Skovlift of the city, the Hulen mouth, the Port-runen
+@marker I spawn name=from_traetoppen
+@marker A spawn name=from_floor
+@marker E warp to=traetoppen spawn=from_skovlift label=ZONE_TRAETOPPEN prop=warp_gate_stone r=0
+@marker B warp to=moerkeskoven_f1 spawn=default label=ZONE_DARK_FOREST prop=cave_ring r=0
+@marker C runestone id=rune_hub hub=1
+# --- the strings of this package's areas.csv: the sign, the whisper zone; three glow lights; the look marker of V8
+@marker K sign text=SIGN_MOERKESKOVEN_HUB
+@marker L whisper text=SIGN_MOERKESKOVEN_WHISPER r=2
+@marker M light kind=glow r=170 h=30
+@marker D forest_dress fireflies=40 mist=2 unshaded=1
+@ground
+################################################
+################################################
+################################################
+################################################
+################################################
+################################################
+################################################
+########################m#######################
+##################mmmmmmmmmmmmm#################
+###############~mmmmmmmmmmmmmmmmm###############
+#############~~~~~mmmmmmmmmmmmmmmmm#############
+############~~~~~~~mmmmmmmmmmmmmmggg############
+###########~~~~~~~~~mmmmmmmmmmmmmgggm###########
+###########m~~~~~~~mmmmmmmmmmmmmmgggmm##########
+###########mm~~~~~mmmmmmmmmmmmmmmmmmmm##########
+##########mmmmm~mmmmmmmmmmmmmmmmmmmmmmm#########
+##########mgggmmmmmmmmmmmmmmmmmmmmmmmmm#########
+##########mgggmmmmmmpppppppppppmmmmmmmm#########
+#########mmgggmmmpppppppppppppppppmmmmmm########
+##########mmmmmmppppppppppppppppppppmmm#########
+##########mmmmppppppmmmpppmmmmmppppppmm#########
+##########mmpppppmmmmmmpppmmmmmmmmppppp#########
+##########ppppppmmmmmmmpppmgggmmmmmmpppp########
+##########ppppmmmmmmmmmpppmgggmmmmmmmppp########
+##########ppmmmmmmmmmmmpppmgggmmmmmmm##p########
+#############mmmmmmmmmmpppmmmmmmmmmm############
+##############mmmmmmmmmpppmmmmmmmmm#############
+################mmmmmmmpppmmmmmmm###############
+##################mmmmmpppmmmmm#################
+####################mmmpppmmm###################
+######################mpppm#####################
+#######################ppp######################
+########################m#######################
+################################################
+################################################
+################################################
+################################################
+################################################
+################################################
+################################################
+################################################
+################################################
+@objects
+...............................Q.....P........S.
+..........S.....................................
+................................................
+................................................
+..........................P.....................
+.................S....Q.........................
+.....Q.......Q..................................
+N..............................P..........P.....
+................................................
+...................................Q...........O
+......................................O.........
+..........R.....................................
+..................................M.............
+................................................
+........................C.......................
+...S............................L.......Q...Q...
+................................................
+............M...................................
+........R..........................A..B.........
+................................................
+........................................O.......
+........................D.......................
+....R........................................Q..
+............................M...................
+................................................
+........P.......................................
+......................K..................S......
+................................................
+P...............................................
+........................@I...................S..
+................................................
+.....P..........................................
+.................O......E.......................
+................................................
+....................................P...........
+..........R..............................Q......
+..............................R.................
+.N..............................................
+...............S................................
+.............................................N..
+................................................
+.......P........................................

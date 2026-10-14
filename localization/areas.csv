@@ -1,0 +1,16 @@
+keys,da,en
+; --- Area strings of the hand-authored maps (package P11-maps-iso). Families: SIGN_* (the three farm signs SIGN_ORCHARD / SIGN_FARM_BRIDGE / SIGN_FARM_FOREST are farm_signs.csv's, N01) and the exact key UI_READ.
+; UI_SLEEP, WHISPER_* and WORLD_* belong to world.csv, ZONE_* (area and warp-label titles) to core.csv: this file never redefines them.
+UI_READ,"E: Læs","E: Read"
+; --- Hyggebyen (data/maps/hyggebyen.map): one sign per place a visitor wants a word about
+SIGN_HYGGEBYEN_TORV,"Hyggebyen. Her er der altid plads ved bordet.","Hyggebyen. There is always room at the table."
+SIGN_HYGGEBYEN_BRO,"Hængebroen til Trætoppen. Hold fast i rækværket, og kig ikke ned.","The hanging bridge to Trætoppen. Hold on to the rail, and don't look down."
+SIGN_HYGGEBYEN_BYGGEPLADS,"Byggepladsen. Tømrerfe Hasselnød skaffer brædder og søm til hele byen.","The building site. Carpenter fairy Hasselnød has boards and nails for the whole town."
+SIGN_HYGGEBYEN_MARKED,"Torvemarked. Kig forbi, og tag en snak med sælgerne.","Market square. Drop by and have a chat with the sellers."
+SIGN_HYGGEBYEN_BIER,"Birks bistade. Bierne er søde, men lad dem være i fred.","Birk's apiary. The bees are sweet, but leave them in peace."
+SIGN_HYGGEBYEN_DAMMEN,"Dammen. Sæt dig ned, og lyt efter frøerne.","The pond. Sit down and listen for the frogs."
+SIGN_HYGGEBYEN_KONGEN,"Fekongens træhus. Bank pænt på, og tør dine fødder.","The Fairy King's treehouse. Knock politely, and wipe your feet."
+SIGN_HYGGEBYEN_DYRENE,"Rosas dyrefold. Dyrene hilser gerne på, hvis du er stille.","Rosa's animal pen. The animals gladly say hello if you are quiet."
+; --- Skovkanten, the hub of Mørkeskoven (data/maps/moerkeskoven.map): the two hub strings are P11's, so the hub never names a key of a later wave
+SIGN_MOERKESKOVEN_HUB,"Her begynder Mørkeskoven. Husk lygten.","The Dark Wood begins here. Remember your lantern."
+SIGN_MOERKESKOVEN_WHISPER,"Her dufter af vådt mos og gamle eventyr.","It smells of wet moss and old fairy tales here."
