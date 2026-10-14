@@ -577,6 +577,28 @@ func _fixture_build(t) -> void:
 		width_h = maxf(width_h, absf(p3.x))
 	var inner_w: float = (fpg[1].x - fpg[3].x) * 0.5
 	t.check("house_collider_is_the_padded_footprint", width_h > inner_w + 15.0 and hb.position.distance_to(Iso.iso_footprint_center(house["cell"], 3, 2)) < 0.01, "footprint half-width %.0f + pad -> %.0f; the body sits at the footprint centre" % [inner_w, width_h])
+	# The facade's light mask must stay on its painted windows when the building
+	# is sliced for sorting; the first strip's origin is not the house origin.
+	var house_art: Dictionary = ArtCatalog.prop(&"house_farm")
+	var window_glow: Dictionary = house_art.get("glow", {})
+	var house_parts: Array = house["nodes"]
+	var halo_node := (house_parts[0] as Node2D).get_node_or_null("Glow") as Sprite2D
+	var glow_aligned := false
+	if halo_node != null and not window_glow.is_empty():
+		var image_origin: Vector2 = Iso.iso_footprint_center(house["cell"], 3, 2) - (house_art["pivot"] as Vector2)
+		var expected: Vector2 = a.objects.to_global(image_origin + (window_glow["center"] as Vector2))
+		glow_aligned = halo_node.global_position.distance_to(expected) < 0.01
+	t.check("sliced_house_glow_matches_windows", glow_aligned and house_parts.size() > 1, "the sliced farmhouse light mask stays on the painted facade's image coordinates")
+	var contact := house.get("ground") as Sprite2D
+	t.check("building_contact_is_on_ground", contact != null and contact.get_parent() == a.ground_fx and contact.position.distance_to(hb.position) < 0.01 and a.ground_fx.z_index < a.objects.z_index,
+		"building contact shares the collision footprint centre and draws below the y-sorted actors")
+	t.check("building_contact_is_part_of_prop", contact != null and contact in a.prop_parts(house_parts[0]) and house_parts[0] in a.prop_parts(contact),
+		"ground contact follows the building's visibility and lifecycle, from either part")
+	var temporary := a.place_prop("house_farm", Vector2i(2, 2))
+	var temporary_contact := a.prop_nodes.back().get("ground") as Sprite2D
+	var removed := a.remove_prop(temporary)
+	t.check("removing_building_removes_contact", removed and temporary_contact != null and temporary_contact.is_queued_for_deletion() and a.prop_parts(temporary_contact).is_empty() and a.prop_parts(null).is_empty() and not a.remove_prop(null),
+		"removing a building also removes its ground layer, and null never matches an unrelated prop")
 	# glow and lights ramp in with the night factor
 	a.set_night_factor(0.0)
 	var halo_off: bool = true
@@ -971,7 +993,7 @@ func _when_hides_whole_props(t) -> void:
 	var strips_total: int = (house["nodes"] as Array).size()
 	var off: Dictionary = _when_prop_state(area, control_cell, false)
 	var off_hit: bool = _solid_hit(holder, house_body)
-	t.check("when_hides_prop_strips_and_collider", strips_total >= 8 and int(off["sprites"]) == strips_total + 4 and off["sprites_ok"] == off["sprites"] and int(off["bodies"]) >= 4 and off["bodies_ok"] == off["bodies"] and off["control_ok"] and not off_hit,
+	t.check("when_hides_prop_strips_and_collider", strips_total >= 8 and int(off["sprites"]) == strips_total + 5 and off["sprites_ok"] == off["sprites"] and int(off["bodies"]) >= 4 and off["bodies_ok"] == off["bodies"] and off["control_ok"] and not off_hit,
 		"flag false: %d of %d sprite nodes hidden (the house alone has %d strips) and %d of %d collider layers are 0; the house body no longer answers a physics point query (hit %s); the un-conditioned tree stays (%s)" % [off["sprites_ok"], off["sprites"], strips_total, off["bodies_ok"], off["bodies"], off_hit, off["control_ok"]])
 	# the same prop comes back whole: every strip visible, every collider back on the world layer, solid again
 	gm.set_flag(&"t_wp_flag", true)
@@ -1015,7 +1037,10 @@ func _when_prop_state(a: IsoArea, control_cell: Vector2i, want_on: bool) -> Dict
 				vis_ok = vis_ok and (n as CanvasItem).visible
 			out["control_ok"] = vis_ok and body != null and body.collision_layer == Iso.LAYER_WORLD
 			continue
-		for n2 in (rec["nodes"] as Array):
+		var sprites: Array = (rec["nodes"] as Array).duplicate()
+		if rec.get("ground") != null:
+			sprites.append(rec["ground"])
+		for n2 in sprites:
 			out["sprites"] += 1
 			if (n2 as CanvasItem).visible == want_on:
 				out["sprites_ok"] += 1

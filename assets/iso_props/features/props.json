@@ -56,13 +56,13 @@
   "glow": {
    "file": "chest_fe_glow.webp",
    "center": [
-    36,
-    54
+	36,
+	54
    ],
    "color": "#9BE7D8",
    "size": [
-    144,
-    144
+	144,
+	144
    ],
    "blend": "add"
   }
@@ -84,13 +84,13 @@
   "glow": {
    "file": "chest_konge_glow.webp",
    "center": [
-    46,
-    56
+	46,
+	56
    ],
    "color": "#F2D58A",
    "size": [
-    168,
-    168
+	168,
+	168
    ],
    "blend": "add"
   }

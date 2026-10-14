@@ -1,9 +1,52 @@
 # tools/art - the Trætoppen art pipeline
 
 Everything that makes sprites: the procedural character generator (Python + VTK), the shared bakers and validators, the
-exporter and the one script that runs it all. Owned by package **P08-art-tools**; the art packages P21 (characters), P22
+exporter and the scripts that run it all. Owned by package **P08-art-tools**; the art packages P21 (characters), P22
 (environment) and P23 (icons, key art) plug their builders into it, and the feature packages A1 (home) and A2 (wardrobe)
-import it. The look is **soft 3D-rendered sprites baked at one scale, never pixel art**.
+import it. The shipped sprites now have **warm ink contours, textured painted color and pencil accents**, baked at one scale.
+The current characters, buildings and outdoor terrain use the new drawings in `drawn/`; see below.
+
+## Current character, building and terrain art
+
+`drawn/` packages original imagegen paintings into the game's existing sprite contracts: all 48 characters and their portraits,
+21 world props (including the live scene's previously missing houses and trees), and ten home exteriors with matching night light.
+Characters have expressive small eyes, soft silhouettes and hand-drawn linework. Buildings have layered roofs, worn materials,
+plants, balconies and pipes. This changes the drawings themselves, beyond the texture finish described below.
+All 24 outdoor terrain surfaces, the island bark sides and the bridge decks now use painted materials too.
+Continuous material atlases keep grass, stones and grain flowing across tile borders.
+
+Regenerate the shipped art with `tools/art/.venv/bin/python tools/art/drawn/pack.py`.
+The source paintings, exact prompts, animation method, limits and preview command are documented in
+[`drawn/README.md`](drawn/README.md). The older geometry export commands remain useful for the other art packages and source experiments.
+
+## Illustrated finish
+
+`storybook/illustrate.gdshader` renders the existing code-authored artwork offline in Godot. Its paper grain, broken
+pencil strokes and uneven color washes repeat inside the 256 px character cells without using animation time. It leaves
+every alpha pixel, atlas dimension, pivot, frame count, direction, furniture rotation and spatial manifest intact. Floors use a
+gentler pass without contours or value bands. Additive lights, night layers, floating effects and contact shadows retain
+their source files. UI SVGs and the runtime prop painters have matching wandering lines and painted shading.
+
+The title illustration, five zone skies and watercolor-paper material were created with the built-in imagegen tool,
+using the original drawings and the existing style guides. Exact prompts are in `storybook/prompts.json`. The source
+designs remain in `docs/original_drawings/` and `generator/`.
+
+To finish a **pristine** asset export (use a separate checkout for source; applying the pass twice compounds the color):
+
+```sh
+/Applications/Godot.app/Contents/MacOS/Godot --path . --rendering-method gl_compatibility --minimized \
+  -s res://tools/art/storybook/bake.gd -- --source=/absolute/path/to/pristine/assets --install
+# --resume continues an interrupted bake using the same source and settings.
+tools/art/.venv/bin/python tools/art/features/home/isometric/measure_mirror.py --dir assets/iso_props/furniture \
+  --write tools/art/features/home/specs/mirror_ok.json --update-manifest
+tools/art/.venv/bin/python tools/art/storybook/verify.py /absolute/path/to/pristine/assets assets \
+  tools/art/_stage/storybook/audit.json --report=docs/art/storybook/verification.json
+```
+
+The bake requires a graphics renderer; `--headless` uses Godot's dummy renderer and cannot produce these sprites.
+The finish is stored directly in the assets, so the game needs no extra material or per-frame illustration pass.
+The optional mirror fallback list is remeasured after illustration: directional pencil marks can require a true view.
+`docs/art/storybook/comparison.png` shows representative characters, houses, icons and portraits before and after.
 
 `tools/art/.gdignore` hides this whole folder (and `_stage/`, `.venv/`) from Godot's importer. Nothing in here is ever a
 `res://` resource.

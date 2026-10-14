@@ -1,0 +1,27 @@
+{
+  "raster_audit": {
+    "audited": 1143,
+    "illustrated": 1083,
+    "preserved_effects": 60,
+    "maximum_alpha_error": 0
+  },
+  "character_validation": "48/48 character folders valid",
+  "home_art_validation": "22 passed, 0 failed; 11.02 MB",
+  "import_presets": "48 character folders, 392 sheets S3TC, four floor atlases without mipmaps",
+  "strict_playtests": {
+    "hobbit": [
+      "== summary: 15 section(s) run, 2774 checks (0 failed, 32 skipped), 0 engine error(s), 0 engine warning(s), 26 allowed message(s), 0 problem(s), 0 known-issue message(s), 88.8 s",
+      "PLAYTEST PASS (2774 checks in 15 sections, 26 allowed engine messages, 0 known-issue messages)"
+    ],
+    "animal": [
+      "== summary: 15 section(s) run, 2774 checks (0 failed, 32 skipped), 0 engine error(s), 0 engine warning(s), 26 allowed message(s), 0 problem(s), 0 known-issue message(s), 88.6 s",
+      "PLAYTEST PASS (2774 checks in 15 sections, 26 allowed engine messages, 0 known-issue messages)"
+    ],
+    "fairy": [
+      "== summary: 15 section(s) run, 2774 checks (0 failed, 32 skipped), 0 engine error(s), 0 engine warning(s), 26 allowed message(s), 0 problem(s), 0 known-issue message(s), 80.5 s",
+      "PLAYTEST PASS (2774 checks in 15 sections, 26 allowed engine messages, 0 known-issue messages)"
+    ]
+  },
+  "generated_art": "Built-in imagegen: title illustration, five zone skies, watercolor-paper material",
+  "prompts": "tools/art/storybook/prompts.json"
+}

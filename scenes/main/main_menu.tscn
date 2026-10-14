@@ -1,71 +1,400 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/ui/main_menu.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/ui/main_menu.gd" id="1_nm0l4"]
+[ext_resource type="Texture2D" path="res://assets/ui/keyart/title.png" id="2_bxtry"]
+[ext_resource type="FontFile" path="res://assets/fonts/Caprasimo-Regular.ttf" id="3_75pso"]
+[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-ExtraBold.ttf" id="4_cnht7"]
+[ext_resource type="FontFile" path="res://assets/fonts/TTSymbols-Regular.ttf" id="5_s2sug"]
+[ext_resource type="Script" path="res://scripts/ui/theme/tt_box_style.gd" id="6_ygj4d"]
+[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-Bold.ttf" id="7_001j1"]
 
-[node name="MainMenu" type="Control"]
+[sub_resource type="FontVariation" id="FontVariation_y7wg7"]
+fallbacks = Array[Font]([ExtResource("4_cnht7"), ExtResource("5_s2sug")])
+base_font = ExtResource("3_75pso")
+
+[sub_resource type="StyleBox" id="StyleBox_rufe6"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 18.0
+content_margin_top = 2.0
+content_margin_right = 18.0
+content_margin_bottom = 2.0
+script = ExtResource("6_ygj4d")
+fill = Color(0.8901961, 0.7647059, 0.44705883, 1)
+radius = 10.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_8jdwu"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+script = ExtResource("6_ygj4d")
+ring_colors = PackedColorArray(0.8901961, 0.7647059, 0.44705883, 1, 0.16862746, 0.13725491, 0.2509804, 1)
+ring_widths = PackedFloat32Array(4, 2)
+soft_shadow_color = Color(0.169, 0.137, 0.251, 0.35)
+soft_shadow_blur = 30.0
+soft_shadow_offset = Vector2(0, 14)
+
+[sub_resource type="StyleBox" id="StyleBox_a3pev"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+script = ExtResource("6_ygj4d")
+fill = Color(0, 0, 0, 0)
+border_color = Color(0, 0, 0, 0)
+radius = 10.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_7n1ok"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+script = ExtResource("6_ygj4d")
+fill = Color(0.9254902, 0.81960785, 0.5372549, 1)
+radius = 10.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_fvvuv"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+script = ExtResource("6_ygj4d")
+fill = Color(0.8901961, 0.7647059, 0.44705883, 1)
+radius = 10.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_8m2ig"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+script = ExtResource("6_ygj4d")
+fill = Color(0.9254902, 0.81960785, 0.5372549, 1)
+radius = 10.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_t04ia"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+script = ExtResource("6_ygj4d")
+fill = Color(0, 0, 0, 0)
+border_color = Color(0, 0, 0, 0)
+radius = 10.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_y7jag"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+script = ExtResource("6_ygj4d")
+fill = Color(0.8901961, 0.7647059, 0.44705883, 1)
+radius = 10.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="FontVariation" id="FontVariation_il2qg"]
+fallbacks = Array[Font]([ExtResource("5_s2sug")])
+base_font = ExtResource("7_001j1")
+opentype_features = {
+"lnum": 1
+}
+
+[sub_resource type="StyleBox" id="StyleBox_rybao"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 10.0
+content_margin_top = 3.0
+content_margin_right = 10.0
+content_margin_bottom = 3.0
+script = ExtResource("6_ygj4d")
+fill = Color(0.984, 0.961, 0.902, 0.85)
+border_width = 0.0
+radius = 6.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_ffypd"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 10.0
+content_margin_top = 3.0
+content_margin_right = 10.0
+content_margin_bottom = 3.0
+script = ExtResource("6_ygj4d")
+fill = Color(0.8901961, 0.7647059, 0.44705883, 1)
+border_width = 0.0
+radius = 6.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_kxv1w"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 10.0
+content_margin_top = 3.0
+content_margin_right = 10.0
+content_margin_bottom = 3.0
+script = ExtResource("6_ygj4d")
+fill = Color(0.9843137, 0.9607843, 0.9019608, 1)
+border_width = 0.0
+radius = 6.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_hxq2c"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 10.0
+content_margin_top = 3.0
+content_margin_right = 10.0
+content_margin_bottom = 3.0
+script = ExtResource("6_ygj4d")
+fill = Color(0.8901961, 0.7647059, 0.44705883, 1)
+border_width = 0.0
+radius = 6.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_jaryi"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 10.0
+content_margin_top = 3.0
+content_margin_right = 10.0
+content_margin_bottom = 3.0
+script = ExtResource("6_ygj4d")
+radius = 6.0
+draw_body = false
+ring_colors = PackedColorArray(0.8901961, 0.7647059, 0.44705883, 1, 0.16862746, 0.13725491, 0.2509804, 1)
+ring_widths = PackedFloat32Array(3, 2)
+
+[node name="MainMenu" type="Control" unique_id=87335121]
 layout_mode = 3
-anchors_preset = 15
+anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource("1")
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nm0l4")
 
-[node name="Background" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
+[node name="KeyArt" type="TextureRect" parent="." unique_id=1624640196]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.12, 0.18, 0.14, 1)
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_bxtry")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -250.0
-offset_right = 200.0
-offset_bottom = 250.0
+[node name="TitleBlock" type="VBoxContainer" parent="." unique_id=1142283126]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 94.0
+offset_right = 110.0
+offset_bottom = 94.0
+mouse_filter = 2
+theme_override_constants/separation = -27
 
-[node name="TitleLabel" type="Label" parent="VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="TitleBlock" unique_id=1525003874]
 unique_name_in_owner = true
 layout_mode = 2
-text = "PongPong"
-horizontal_alignment = 1
-label_settings = null
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = SubResource("FontVariation_y7wg7")
+theme_override_font_sizes/font_size = 132
+theme_override_colors/font_color = Color(0.9843137, 0.9607843, 0.9019608, 1)
+theme_override_colors/font_shadow_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 7
+theme_override_constants/outline_size = 9
+theme_override_constants/shadow_outline_size = 9
+text = "Trætoppen"
 
-[node name="SubtitleLabel" type="Label" parent="VBoxContainer"]
+[node name="TaglineMargin" type="MarginContainer" parent="TitleBlock" unique_id=99046556]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="SubtitleLabel" type="Label" parent="TitleBlock/TaglineMargin" unique_id=502195250]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Et fortryllet landbrugseventyr"
-horizontal_alignment = 1
+theme_override_styles/normal = SubResource("StyleBox_rufe6")
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = SubResource("FontVariation_y7wg7")
+theme_override_font_sizes/font_size = 26
+theme_override_colors/font_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+text = "En gård i Fekongens skov"
 
-[node name="Spacer" type="Control" parent="VBoxContainer"]
+[node name="MenuPanel" type="PanelContainer" parent="." unique_id=1859637803]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 116.0
+offset_top = -96.0
+offset_right = 116.0
+offset_bottom = -96.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBox_8jdwu")
+
+[node name="MenuList" type="VBoxContainer" parent="MenuPanel" unique_id=1970583305]
 layout_mode = 2
-custom_minimum_size = Vector2(0, 40)
+theme_override_constants/separation = 4
 
-[node name="NewGameButton" type="Button" parent="VBoxContainer"]
+[node name="ContinueButton" type="Button" parent="MenuPanel/MenuList" unique_id=937456787]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Nyt spil"
-
-[node name="ContinueButton" type="Button" parent="VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBox_a3pev")
+theme_override_styles/pressed = SubResource("StyleBox_7n1ok")
+theme_override_styles/hover = SubResource("StyleBox_fvvuv")
+theme_override_styles/hover_pressed = SubResource("StyleBox_8m2ig")
+theme_override_styles/disabled = SubResource("StyleBox_t04ia")
+theme_override_styles/focus = SubResource("StyleBox_y7jag")
+theme_override_colors/font_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_focus_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_hover_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_disabled_color = Color(0.6392157, 0.58431375, 0.49803922, 1)
+theme_override_fonts/font = SubResource("FontVariation_y7wg7")
+theme_override_font_sizes/font_size = 24
+theme_override_constants/h_separation = 8
 text = "Fortsæt"
+alignment = 0
 
-[node name="SettingsButton" type="Button" parent="VBoxContainer"]
+[node name="ContinueInfo" type="Label" parent="MenuPanel/MenuList/ContinueButton" unique_id=2004383536]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_right = -18.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = SubResource("FontVariation_il2qg")
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.41568628, 0.3529412, 0.28235295, 1)
+
+[node name="NewGameButton" type="Button" parent="MenuPanel/MenuList" unique_id=1381843044]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBox_a3pev")
+theme_override_styles/pressed = SubResource("StyleBox_7n1ok")
+theme_override_styles/hover = SubResource("StyleBox_fvvuv")
+theme_override_styles/hover_pressed = SubResource("StyleBox_8m2ig")
+theme_override_styles/disabled = SubResource("StyleBox_t04ia")
+theme_override_styles/focus = SubResource("StyleBox_y7jag")
+theme_override_colors/font_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_focus_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_hover_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_disabled_color = Color(0.6392157, 0.58431375, 0.49803922, 1)
+theme_override_fonts/font = SubResource("FontVariation_y7wg7")
+theme_override_font_sizes/font_size = 24
+theme_override_constants/h_separation = 8
+text = "Nyt spil"
+alignment = 0
+
+[node name="SettingsButton" type="Button" parent="MenuPanel/MenuList" unique_id=81558558]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBox_a3pev")
+theme_override_styles/pressed = SubResource("StyleBox_7n1ok")
+theme_override_styles/hover = SubResource("StyleBox_fvvuv")
+theme_override_styles/hover_pressed = SubResource("StyleBox_8m2ig")
+theme_override_styles/disabled = SubResource("StyleBox_t04ia")
+theme_override_styles/focus = SubResource("StyleBox_y7jag")
+theme_override_colors/font_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_focus_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_hover_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_disabled_color = Color(0.6392157, 0.58431375, 0.49803922, 1)
+theme_override_fonts/font = SubResource("FontVariation_y7wg7")
+theme_override_font_sizes/font_size = 24
+theme_override_constants/h_separation = 8
 text = "Indstillinger"
+alignment = 0
 
-[node name="LanguageButton" type="Button" parent="VBoxContainer"]
+[node name="QuitButton" type="Button" parent="MenuPanel/MenuList" unique_id=226227140]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Sprog"
-
-[node name="QuitButton" type="Button" parent="VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBox_a3pev")
+theme_override_styles/pressed = SubResource("StyleBox_7n1ok")
+theme_override_styles/hover = SubResource("StyleBox_fvvuv")
+theme_override_styles/hover_pressed = SubResource("StyleBox_8m2ig")
+theme_override_styles/disabled = SubResource("StyleBox_t04ia")
+theme_override_styles/focus = SubResource("StyleBox_y7jag")
+theme_override_colors/font_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_focus_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_hover_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_disabled_color = Color(0.6392157, 0.58431375, 0.49803922, 1)
+theme_override_fonts/font = SubResource("FontVariation_y7wg7")
+theme_override_font_sizes/font_size = 24
+theme_override_constants/h_separation = 8
 text = "Afslut"
+alignment = 0
+
+[node name="LanguageButton" type="Button" parent="." unique_id=1643139056]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -30.0
+offset_right = -40.0
+offset_bottom = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBox_rybao")
+theme_override_styles/pressed = SubResource("StyleBox_ffypd")
+theme_override_styles/hover = SubResource("StyleBox_kxv1w")
+theme_override_styles/hover_pressed = SubResource("StyleBox_hxq2c")
+theme_override_styles/focus = SubResource("StyleBox_jaryi")
+theme_override_colors/font_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_focus_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_hover_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+theme_override_fonts/font = SubResource("FontVariation_il2qg")
+theme_override_font_sizes/font_size = 15
+text = "v0.1 · Dansk"

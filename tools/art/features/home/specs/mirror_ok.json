@@ -5,35 +5,23 @@
  "measured_asymmetric_items": 79,
  "mirror_ok": [
   "bed_pine",
-  "bed_birch_single",
-  "bed_sky_double",
   "bed_walnut",
   "chair_pine",
-  "chair_birch",
   "chair_mossy",
   "chair_honey",
-  "sofa_pine_two",
-  "sofa_birch_two",
-  "sofa_sky_two",
-  "sofa_moss_three",
   "sofa_walnut_two",
   "wardrobe_pine",
-  "wardrobe_birch_narrow",
   "wardrobe_oak",
   "wardrobe_rose",
-  "wardrobe_sky_narrow",
   "wardrobe_walnut",
-  "fireplace_granite",
   "fireplace_chalk",
   "fireplace_slate",
   "chest_pine",
   "chest_oak",
-  "chest_birch",
   "chest_sky",
   "chest_rose",
   "chest_walnut",
   "clock_pine",
-  "clock_sky",
   "clock_walnut",
   "throne_pine",
   "throne_honey",
@@ -41,12 +29,28 @@
  ],
  "rejected": [
   {
+   "id": "bed_birch_single",
+   "template": "bed",
+   "rarity": "normal",
+   "mean_err": [
+    9.9,
+    9.3
+   ],
+   "sil_pct": [
+    0.2,
+    0.19
+   ],
+   "reasons": [
+    "mean_err 9.9/255 >= 8"
+   ]
+  },
+  {
    "id": "bed_oak_single",
    "template": "bed",
    "rarity": "normal",
    "mean_err": [
     6.0,
-    5.8
+    5.9
    ],
    "sil_pct": [
     0.2,
@@ -57,12 +61,28 @@
    ]
   },
   {
+   "id": "bed_sky_double",
+   "template": "bed",
+   "rarity": "uncommon",
+   "mean_err": [
+    8.3,
+    8.9
+   ],
+   "sil_pct": [
+    0.31,
+    0.31
+   ],
+   "reasons": [
+    "mean_err 8.9/255 >= 8"
+   ]
+  },
+  {
    "id": "bed_rose_single",
    "template": "bed",
    "rarity": "uncommon",
    "mean_err": [
-    13.3,
-    13.1
+    13.6,
+    13.6
    ],
    "sil_pct": [
     0.19,
@@ -70,7 +90,7 @@
    ],
    "reasons": [
     "patterned fabric blaa (stripe)",
-    "mean_err 13.3/255 >= 8"
+    "mean_err 13.6/255 >= 8"
    ]
   },
   {
@@ -78,8 +98,8 @@
    "template": "bed",
    "rarity": "rare",
    "mean_err": [
-    5.2,
-    5.0
+    5.5,
+    5.6
    ],
    "sil_pct": [
     0.32,
@@ -94,8 +114,8 @@
    "template": "bed",
    "rarity": "unique",
    "mean_err": [
-    6.8,
-    6.7
+    7.3,
+    7.0
    ],
    "sil_pct": [
     0.48,
@@ -111,15 +131,16 @@
    "template": "bed",
    "rarity": "legendary",
    "mean_err": [
-    7.6,
-    7.7
+    7.7,
+    8.2
    ],
    "sil_pct": [
     0.3,
     0.25
    ],
    "reasons": [
-    "keepsake"
+    "keepsake",
+    "mean_err 8.2/255 >= 8"
    ]
   },
   {
@@ -128,7 +149,7 @@
    "rarity": "rare",
    "mean_err": [
     9.8,
-    9.1
+    9.3
    ],
    "sil_pct": [
     4.81,
@@ -144,8 +165,8 @@
    "template": "table",
    "rarity": "unique",
    "mean_err": [
-    7.6,
-    6.4
+    9.0,
+    8.1
    ],
    "sil_pct": [
     4.81,
@@ -153,7 +174,24 @@
    ],
    "reasons": [
     "keepsake",
+    "mean_err 9.0/255 >= 8",
     "silhouette_mismatch 5.0% >= 1%"
+   ]
+  },
+  {
+   "id": "chair_birch",
+   "template": "chair",
+   "rarity": "normal",
+   "mean_err": [
+    9.3,
+    9.3
+   ],
+   "sil_pct": [
+    0.43,
+    0.31
+   ],
+   "reasons": [
+    "mean_err 9.3/255 >= 8"
    ]
   },
   {
@@ -161,8 +199,8 @@
    "template": "chair",
    "rarity": "normal",
    "mean_err": [
-    3.8,
-    3.9
+    4.7,
+    4.9
    ],
    "sil_pct": [
     0.43,
@@ -177,8 +215,8 @@
    "template": "chair",
    "rarity": "uncommon",
    "mean_err": [
-    4.1,
-    4.3
+    5.9,
+    6.5
    ],
    "sil_pct": [
     0.38,
@@ -193,8 +231,8 @@
    "template": "chair",
    "rarity": "rare",
    "mean_err": [
-    3.8,
-    3.2
+    4.5,
+    4.2
    ],
    "sil_pct": [
     0.42,
@@ -209,8 +247,8 @@
    "template": "chair",
    "rarity": "unique",
    "mean_err": [
-    12.3,
-    17.1
+    11.5,
+    16.7
    ],
    "sil_pct": [
     0.62,
@@ -219,7 +257,23 @@
    "reasons": [
     "keepsake",
     "patterned fabric groen (quilt)",
-    "mean_err 17.1/255 >= 8"
+    "mean_err 16.7/255 >= 8"
+   ]
+  },
+  {
+   "id": "sofa_pine_two",
+   "template": "sofa",
+   "rarity": "normal",
+   "mean_err": [
+    8.3,
+    7.0
+   ],
+   "sil_pct": [
+    0.22,
+    0.3
+   ],
+   "reasons": [
+    "mean_err 8.3/255 >= 8"
    ]
   },
   {
@@ -227,8 +281,8 @@
    "template": "sofa",
    "rarity": "normal",
    "mean_err": [
-    6.7,
-    6.0
+    7.9,
+    6.1
    ],
    "sil_pct": [
     0.28,
@@ -239,12 +293,60 @@
    ]
   },
   {
+   "id": "sofa_birch_two",
+   "template": "sofa",
+   "rarity": "normal",
+   "mean_err": [
+    10.2,
+    11.0
+   ],
+   "sil_pct": [
+    0.22,
+    0.3
+   ],
+   "reasons": [
+    "mean_err 11.0/255 >= 8"
+   ]
+  },
+  {
+   "id": "sofa_sky_two",
+   "template": "sofa",
+   "rarity": "uncommon",
+   "mean_err": [
+    8.1,
+    9.2
+   ],
+   "sil_pct": [
+    0.21,
+    0.29
+   ],
+   "reasons": [
+    "mean_err 9.2/255 >= 8"
+   ]
+  },
+  {
+   "id": "sofa_moss_three",
+   "template": "sofa",
+   "rarity": "uncommon",
+   "mean_err": [
+    9.8,
+    10.3
+   ],
+   "sil_pct": [
+    0.27,
+    0.4
+   ],
+   "reasons": [
+    "mean_err 10.3/255 >= 8"
+   ]
+  },
+  {
    "id": "sofa_cherry_three",
    "template": "sofa",
    "rarity": "rare",
    "mean_err": [
-    5.6,
-    6.1
+    7.0,
+    6.9
    ],
    "sil_pct": [
     0.29,
@@ -259,8 +361,8 @@
    "template": "sofa",
    "rarity": "unique",
    "mean_err": [
-    13.3,
-    14.8
+    14.1,
+    15.0
    ],
    "sil_pct": [
     2.11,
@@ -269,7 +371,7 @@
    "reasons": [
     "keepsake",
     "patterned fabric groen (quilt)",
-    "mean_err 14.8/255 >= 8",
+    "mean_err 15.0/255 >= 8",
     "silhouette_mismatch 2.2% >= 1%"
    ]
   },
@@ -278,8 +380,8 @@
    "template": "sofa",
    "rarity": "legendary",
    "mean_err": [
-    7.0,
-    8.0
+    8.8,
+    7.9
    ],
    "sil_pct": [
     0.25,
@@ -287,7 +389,39 @@
    ],
    "reasons": [
     "keepsake",
-    "mean_err 8.0/255 >= 8"
+    "mean_err 8.8/255 >= 8"
+   ]
+  },
+  {
+   "id": "wardrobe_birch_narrow",
+   "template": "wardrobe",
+   "rarity": "normal",
+   "mean_err": [
+    9.2,
+    8.7
+   ],
+   "sil_pct": [
+    0.34,
+    0.36
+   ],
+   "reasons": [
+    "mean_err 9.2/255 >= 8"
+   ]
+  },
+  {
+   "id": "wardrobe_sky_narrow",
+   "template": "wardrobe",
+   "rarity": "uncommon",
+   "mean_err": [
+    9.2,
+    9.4
+   ],
+   "sil_pct": [
+    0.34,
+    0.36
+   ],
+   "reasons": [
+    "mean_err 9.4/255 >= 8"
    ]
   },
   {
@@ -295,8 +429,8 @@
    "template": "wardrobe",
    "rarity": "unique",
    "mean_err": [
-    8.6,
-    7.6
+    9.3,
+    8.6
    ],
    "sil_pct": [
     0.74,
@@ -304,7 +438,7 @@
    ],
    "reasons": [
     "keepsake",
-    "mean_err 8.6/255 >= 8"
+    "mean_err 9.3/255 >= 8"
    ]
   },
   {
@@ -312,15 +446,15 @@
    "template": "bookshelf",
    "rarity": "normal",
    "mean_err": [
-    22.1,
-    5.3
+    22.0,
+    4.4
    ],
    "sil_pct": [
     0.16,
     0.15
    ],
    "reasons": [
-    "mean_err 22.1/255 >= 8"
+    "mean_err 22.0/255 >= 8"
    ]
   },
   {
@@ -328,15 +462,15 @@
    "template": "bookshelf",
    "rarity": "normal",
    "mean_err": [
-    18.4,
-    4.3
+    17.7,
+    4.8
    ],
    "sil_pct": [
     0.26,
     0.24
    ],
    "reasons": [
-    "mean_err 18.4/255 >= 8"
+    "mean_err 17.7/255 >= 8"
    ]
   },
   {
@@ -344,15 +478,15 @@
    "template": "bookshelf",
    "rarity": "normal",
    "mean_err": [
-    23.2,
-    6.9
+    23.7,
+    6.3
    ],
    "sil_pct": [
     0.16,
     0.15
    ],
    "reasons": [
-    "mean_err 23.2/255 >= 8"
+    "mean_err 23.7/255 >= 8"
    ]
   },
   {
@@ -360,15 +494,15 @@
    "template": "bookshelf",
    "rarity": "uncommon",
    "mean_err": [
-    23.1,
-    5.8
+    21.5,
+    4.0
    ],
    "sil_pct": [
     0.16,
     0.15
    ],
    "reasons": [
-    "mean_err 23.1/255 >= 8"
+    "mean_err 21.5/255 >= 8"
    ]
   },
   {
@@ -376,15 +510,15 @@
    "template": "bookshelf",
    "rarity": "uncommon",
    "mean_err": [
-    18.7,
-    5.8
+    17.0,
+    3.4
    ],
    "sil_pct": [
     0.26,
     0.24
    ],
    "reasons": [
-    "mean_err 18.7/255 >= 8"
+    "mean_err 17.0/255 >= 8"
    ]
   },
   {
@@ -392,15 +526,15 @@
    "template": "bookshelf",
    "rarity": "rare",
    "mean_err": [
-    22.8,
-    3.9
+    20.4,
+    4.0
    ],
    "sil_pct": [
     0.19,
     0.36
    ],
    "reasons": [
-    "mean_err 22.8/255 >= 8"
+    "mean_err 20.4/255 >= 8"
    ]
   },
   {
@@ -408,8 +542,8 @@
    "template": "bookshelf",
    "rarity": "unique",
    "mean_err": [
-    18.3,
-    11.3
+    18.4,
+    12.7
    ],
    "sil_pct": [
     18.49,
@@ -417,7 +551,7 @@
    ],
    "reasons": [
     "keepsake",
-    "mean_err 18.3/255 >= 8",
+    "mean_err 18.4/255 >= 8",
     "silhouette_mismatch 18.5% >= 1%"
    ]
   },
@@ -426,8 +560,8 @@
    "template": "bookshelf",
    "rarity": "legendary",
    "mean_err": [
-    23.6,
-    3.8
+    21.1,
+    4.0
    ],
    "sil_pct": [
     0.18,
@@ -435,7 +569,23 @@
    ],
    "reasons": [
     "keepsake",
-    "mean_err 23.6/255 >= 8"
+    "mean_err 21.1/255 >= 8"
+   ]
+  },
+  {
+   "id": "fireplace_granite",
+   "template": "fireplace",
+   "rarity": "normal",
+   "mean_err": [
+    9.3,
+    7.7
+   ],
+   "sil_pct": [
+    0.29,
+    0.23
+   ],
+   "reasons": [
+    "mean_err 9.3/255 >= 8"
    ]
   },
   {
@@ -443,15 +593,15 @@
    "template": "fireplace",
    "rarity": "rare",
    "mean_err": [
-    8.3,
-    6.0
+    9.3,
+    7.0
    ],
    "sil_pct": [
     0.29,
     0.23
    ],
    "reasons": [
-    "mean_err 8.3/255 >= 8"
+    "mean_err 9.3/255 >= 8"
    ]
   },
   {
@@ -459,15 +609,16 @@
    "template": "fireplace",
    "rarity": "unique",
    "mean_err": [
-    7.0,
-    5.1
+    9.4,
+    7.9
    ],
    "sil_pct": [
     0.29,
     0.23
    ],
    "reasons": [
-    "keepsake"
+    "keepsake",
+    "mean_err 9.4/255 >= 8"
    ]
   },
   {
@@ -475,8 +626,8 @@
    "template": "fireplace",
    "rarity": "legendary",
    "mean_err": [
-    8.6,
-    6.0
+    8.3,
+    5.4
    ],
    "sil_pct": [
     0.29,
@@ -484,7 +635,23 @@
    ],
    "reasons": [
     "keepsake",
-    "mean_err 8.6/255 >= 8"
+    "mean_err 8.3/255 >= 8"
+   ]
+  },
+  {
+   "id": "chest_birch",
+   "template": "chest",
+   "rarity": "normal",
+   "mean_err": [
+    9.1,
+    9.1
+   ],
+   "sil_pct": [
+    0.88,
+    0.88
+   ],
+   "reasons": [
+    "mean_err 9.1/255 >= 8"
    ]
   },
   {
@@ -492,8 +659,8 @@
    "template": "chest",
    "rarity": "unique",
    "mean_err": [
-    34.7,
-    22.0
+    37.0,
+    25.0
    ],
    "sil_pct": [
     28.54,
@@ -501,7 +668,7 @@
    ],
    "reasons": [
     "keepsake",
-    "mean_err 34.7/255 >= 8",
+    "mean_err 37.0/255 >= 8",
     "silhouette_mismatch 28.5% >= 1%"
    ]
   },
@@ -510,8 +677,8 @@
    "template": "chest",
    "rarity": "legendary",
    "mean_err": [
-    5.7,
-    5.6
+    6.6,
+    6.3
    ],
    "sil_pct": [
     1.4,
@@ -527,15 +694,15 @@
    "template": "plant",
    "rarity": "normal",
    "mean_err": [
-    15.9,
-    21.3
+    19.8,
+    24.7
    ],
    "sil_pct": [
     20.1,
     22.78
    ],
    "reasons": [
-    "mean_err 21.3/255 >= 8",
+    "mean_err 24.7/255 >= 8",
     "silhouette_mismatch 22.8% >= 1%"
    ]
   },
@@ -544,15 +711,15 @@
    "template": "plant",
    "rarity": "uncommon",
    "mean_err": [
-    20.1,
-    25.7
+    23.3,
+    27.4
    ],
    "sil_pct": [
     19.96,
     23.14
    ],
    "reasons": [
-    "mean_err 25.7/255 >= 8",
+    "mean_err 27.4/255 >= 8",
     "silhouette_mismatch 23.1% >= 1%"
    ]
   },
@@ -561,15 +728,15 @@
    "template": "plant",
    "rarity": "rare",
    "mean_err": [
-    22.3,
-    26.2
+    23.3,
+    27.9
    ],
    "sil_pct": [
     10.14,
     12.3
    ],
    "reasons": [
-    "mean_err 26.2/255 >= 8",
+    "mean_err 27.9/255 >= 8",
     "silhouette_mismatch 12.3% >= 1%"
    ]
   },
@@ -578,8 +745,8 @@
    "template": "plant",
    "rarity": "unique",
    "mean_err": [
-    21.4,
-    21.8
+    25.4,
+    25.1
    ],
    "sil_pct": [
     47.54,
@@ -587,8 +754,24 @@
    ],
    "reasons": [
     "keepsake",
-    "mean_err 21.8/255 >= 8",
+    "mean_err 25.4/255 >= 8",
     "silhouette_mismatch 47.5% >= 1%"
+   ]
+  },
+  {
+   "id": "clock_sky",
+   "template": "clock",
+   "rarity": "uncommon",
+   "mean_err": [
+    9.3,
+    10.6
+   ],
+   "sil_pct": [
+    0.19,
+    0.19
+   ],
+   "reasons": [
+    "mean_err 10.6/255 >= 8"
    ]
   },
   {
@@ -596,15 +779,16 @@
    "template": "clock",
    "rarity": "unique",
    "mean_err": [
-    7.1,
-    7.4
+    8.5,
+    8.6
    ],
    "sil_pct": [
     0.05,
     0.05
    ],
    "reasons": [
-    "keepsake"
+    "keepsake",
+    "mean_err 8.6/255 >= 8"
    ]
   },
   {
@@ -612,8 +796,8 @@
    "template": "clock",
    "rarity": "legendary",
    "mean_err": [
-    5.3,
-    3.2
+    7.4,
+    5.2
    ],
    "sil_pct": [
     0.18,
@@ -628,8 +812,8 @@
    "template": "throne",
    "rarity": "unique",
    "mean_err": [
-    9.6,
-    8.8
+    9.9,
+    9.3
    ],
    "sil_pct": [
     4.55,
@@ -638,7 +822,7 @@
    "reasons": [
     "keepsake",
     "patterned fabric groen (quilt)",
-    "mean_err 9.6/255 >= 8",
+    "mean_err 9.9/255 >= 8",
     "silhouette_mismatch 4.5% >= 1%"
    ]
   },
@@ -647,8 +831,8 @@
    "template": "throne",
    "rarity": "legendary",
    "mean_err": [
-    8.2,
-    9.2
+    9.1,
+    8.2
    ],
    "sil_pct": [
     0.27,
@@ -656,7 +840,7 @@
    ],
    "reasons": [
     "keepsake",
-    "mean_err 9.2/255 >= 8"
+    "mean_err 9.1/255 >= 8"
    ]
   },
   {
@@ -664,15 +848,15 @@
    "template": "piano",
    "rarity": "normal",
    "mean_err": [
-    9.6,
-    4.9
+    9.1,
+    4.6
    ],
    "sil_pct": [
     0.28,
     0.27
    ],
    "reasons": [
-    "mean_err 9.6/255 >= 8"
+    "mean_err 9.1/255 >= 8"
    ]
   },
   {
@@ -680,15 +864,15 @@
    "template": "piano",
    "rarity": "uncommon",
    "mean_err": [
-    11.2,
-    6.6
+    12.2,
+    8.5
    ],
    "sil_pct": [
     0.28,
     0.27
    ],
    "reasons": [
-    "mean_err 11.2/255 >= 8"
+    "mean_err 12.2/255 >= 8"
    ]
   },
   {
@@ -696,15 +880,15 @@
    "template": "piano",
    "rarity": "rare",
    "mean_err": [
-    8.0,
-    3.3
+    8.2,
+    4.0
    ],
    "sil_pct": [
     0.28,
     0.27
    ],
    "reasons": [
-    "mean_err 8.0/255 >= 8"
+    "mean_err 8.2/255 >= 8"
    ]
   },
   {
@@ -712,8 +896,8 @@
    "template": "piano",
    "rarity": "unique",
    "mean_err": [
-    9.3,
-    5.5
+    10.3,
+    6.2
    ],
    "sil_pct": [
     0.17,
@@ -721,7 +905,7 @@
    ],
    "reasons": [
     "keepsake",
-    "mean_err 9.3/255 >= 8"
+    "mean_err 10.3/255 >= 8"
    ]
   },
   {
@@ -729,15 +913,16 @@
    "template": "piano",
    "rarity": "legendary",
    "mean_err": [
-    7.8,
-    2.6
+    8.4,
+    4.1
    ],
    "sil_pct": [
     0.28,
     0.28
    ],
    "reasons": [
-    "keepsake"
+    "keepsake",
+    "mean_err 8.4/255 >= 8"
    ]
   },
   {
@@ -745,15 +930,15 @@
    "template": "vase",
    "rarity": "normal",
    "mean_err": [
-    21.5,
-    16.6
+    19.2,
+    17.8
    ],
    "sil_pct": [
     14.07,
     15.24
    ],
    "reasons": [
-    "mean_err 21.5/255 >= 8",
+    "mean_err 19.2/255 >= 8",
     "silhouette_mismatch 15.2% >= 1%"
    ]
   },
@@ -762,15 +947,15 @@
    "template": "vase",
    "rarity": "uncommon",
    "mean_err": [
-    23.8,
-    17.9
+    21.2,
+    19.3
    ],
    "sil_pct": [
     14.3,
     17.44
    ],
    "reasons": [
-    "mean_err 23.8/255 >= 8",
+    "mean_err 21.2/255 >= 8",
     "silhouette_mismatch 17.4% >= 1%"
    ]
   },
@@ -779,8 +964,8 @@
    "template": "chandelier",
    "rarity": "unique",
    "mean_err": [
-    28.7,
-    29.1
+    31.0,
+    31.5
    ],
    "sil_pct": [
     28.41,
@@ -788,7 +973,7 @@
    ],
    "reasons": [
     "keepsake",
-    "mean_err 29.1/255 >= 8",
+    "mean_err 31.5/255 >= 8",
     "silhouette_mismatch 28.4% >= 1%"
    ]
   }

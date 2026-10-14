@@ -1,0 +1,1103 @@
+{
+ "v": 2,
+ "role": "final editor (design4: the fourth playable race, Spoegelse; review defects 1-11 fixed)",
+ "note": "Package file of the ghost addendum (DESIGN_GHOST.md). newPackages G-ghost-data / -art (wave 3b), G-ghost-play / -lines (wave 5), G-ghost-qa (wave 7); amendments RG1-RG7 are the FIX ROUND of BUILT packages (built: true, done by a fixer before wave 3b, listed after FR-4 RT1-RT9 of design3), the rest amend UNBUILT packages. WAVE PLACEMENT (review defect 5): the design3 checker allows a dependency only on a STRICTLY EARLIER wave (check_ownership.py D), so the three same-wave couplings of the first draft became hard edges: G-ghost-data and G-ghost-art moved 4 -> 3b (V1 and A2 depend on them: AG1, AG3), G-ghost-play moved 4 -> 5 (it depends on V1, P06 and DR1; P06 stays null-safe: AG4). Ownership is disjoint from owners.json + the features, ui, design2 and design3 layers (design4/scripts/check_ghost_ownership.py). Every numeric claim in a task is a measurement of design4 (notes/*.txt, final_logs/*.log, proto/*.png) or a source quoted in the text.",
+ "waves": {
+  "3b": "NEW G-ghost-data G-ghost-art (right after the fix round; independent of each other)",
+  "4": "AMENDED V1-cast-data (+ ownsAdd tests/sections/ghost_data.gd; after G-ghost-data) V2-cast-art A2-art-wardrobe (after G-ghost-art) P06-player-farm-core DR1-rules P16-ui-menus N01-farm-map | LEAD PATCH SE-G5 (legacy select) right after V1",
+  "5": "NEW G-ghost-play (after V1, P06, DR1) G-ghost-lines | AMENDED P14-npc-dialogue F5-wardrobe-core V8-forest-look N02-farm-objects I2-loop-harness",
+  "5b": "AMENDED F8-wardrobe-ui V9-keyart-v2 N04-farm-first-morning",
+  "6": "AMENDED P24-audio-voice P25-docs-refresh",
+  "7": "NEW G-ghost-qa | AMENDED P27-qa-acceptance F10-features-qa I6-town-qa N08-farm-qa DQ-dungeon-acceptance V10-v2-qa",
+  "fixRound": "RG1 P02, RG2 P10, RG3 P04, RG4 P15, RG5 P09, RG6 F1, RG7 P01 (before wave 3b, after RT1-RT9); gate: the built harness for animal, fairy and hobbit, strict"
+ },
+ "mergeOrderWithinWave": {
+  "4": [
+   "V1-cast-data",
+   "V2-cast-art / A2-art-wardrobe / DR1-rules / P06-player-farm-core / N01-farm-map (any order)",
+   "SE-G5 lead patch (needs the V1 skins)",
+   "P16-ui-menus (reads CharacterCatalog.heroes(): after V1)"
+  ]
+ },
+ "milestones": {
+  "M1a (the lead's city preview: stage 1 P22 V3 N01 P11, stage 2 V1 V2 V5 + the ghost, stage 3 V4)": [
+   "fix round RG1-RG7 (its gate: the built harness for animal, fairy, hobbit; the seven ghost.* guards of G-ghost-data in wave 3b are the first gate right after it)",
+   "wave 3b: G-ghost-data, G-ghost-art",
+   "wave 4 data: V1 (AG1, incl. ghost_data.gd), V2 (AG2)",
+   "SE-G5: the legacy select screen gets a fourth button (the lead applies it in the V1 commit)",
+   "RESULT: the ghost can be PICKED (legacy \"Vælg din helt\": %GhostButton, Bu / Hviske in the dropdown) and WALKED around the farm and the towns with its own baked sprite (hover, idle, glide walk / run) by the built stub player; harness green for all four heroes WITH the boot stage",
+   "NOT in M1a: perks, bob, glow (P06 + G-ghost-play), hat / shirt layers (A2, F5), the four-card page with hero chips and Danish blurbs (P16), citizens greeting (P14)"
+  ],
+  "M1b (usable: wave 4 leftovers + wave 5-5b)": [
+   "P06 (AG4 hooks), DR1 (AG5), P16 (AG6: the four-card page, hero chips, blurbs; rewrites the legacy screen), A2 (AG3), N01 acceptance",
+   "wave 5: G-ghost-play (bob, glow, run cost, lantern), G-ghost-lines (greetings), P14 / F5 / V8 amendments",
+   "wave 5b: F8 (Garderobe), V9 key art"
+  ],
+  "M4 (wave 6-7: polish and QA)": [
+   "P24 / P25",
+   "G-ghost-qa and the matrices"
+  ]
+ },
+ "sanctionedEdits": [
+  {
+   "id": "SE-G1",
+   "file": "tools/loc/key_owners.json",
+   "owner": "P03-loc-core",
+   "edit": "the two files of ghost_key_owners_additions.json (ghost.csv at the start of wave 3b, ghost_dialogue.csv at the start of wave 5), merged by the lead",
+   "who": "lead"
+  },
+  {
+   "id": "SE-G2",
+   "file": "assets/isometric_characters/manifest_traetoppen.json",
+   "owner": "V2-cast-art",
+   "edit": "two merged rows (ghost_bu, ghost_hviske) written by tools/art/export/install_assets.py when produce_ghost.sh runs; order independent",
+   "who": "G-ghost-art"
+  },
+  {
+   "id": "SE-G3",
+   "file": "tests/lib/ui_screens.json",
+   "owner": "P09-test-harness",
+   "edit": "select_1.compare re-based on tests/checkpoints/guide_ref_ghost/select_4cards.png (RG5)",
+   "who": "fixer"
+  },
+  {
+   "id": "SE-G4",
+   "file": "docs/design/UI_NAVIGATION.md",
+   "owner": "P01-project-config",
+   "edit": "cards S04 and S05 replaced by the amendment text of DESIGN_GHOST.md 6.6 (RG7)",
+   "who": "fixer / lead"
+  },
+  {
+   "id": "SE-G5",
+   "file": "scenes/ui/character_select.tscn + scripts/ui/character_select.gd + tools/dev/selftest_harness.sh (two lines)",
+   "owner": "P16-ui-menus (the two legacy files; P09 for the self-test)",
+   "edit": "LEAD PATCH for M1a (review defect 2): the legacy \"Vælg din helt\" screen gets a fourth button %GhostButton (label from CHAR_GHOST_NAME, preview from CHAR_GHOST_PERK) and the two ghost skins in its dropdown, so the ghost can be PICKED in the real game before P16 exists; the self-test lines add the ghost to --all-characters and make boot_2d_<hero> fail on any failed boot-stage check. Exact pairs: ghost_edits.py with `--when sel` (9 edits, 3 files); applied by the lead in the commit that lands V1 (the skins must exist). P16 rewrites both legacy files in place later and keeps %GhostButton",
+   "who": "lead"
+  }
+ ],
+ "newPackages": [
+  {
+   "id": "G-ghost-data",
+   "title": "Spoegelse data: the fourth race's Danish copy (race card, two heroes, wardrobe rule, whispers), its key families, and the section that proves the save-stable enum, the data rows, the perk numbers and that the ghost inherits nothing from the hobbit",
+   "wave": "3b",
+   "size": "S",
+   "dependsOn": [
+    "P03-loc-core",
+    "P09-test-harness",
+    "P10-data-contracts",
+    "P02-bus-gamemanager-time",
+    "P04-area-framework",
+    "P15-save-system"
+   ],
+   "owns": [
+    "localization/ghost.csv",
+    "localization/ghost.csv.import",
+    "tests/sections/ghost.gd"
+   ],
+   "lift": [
+    "design4/loc/ghost.csv (15 rows da + en, every hero blurb fits two lines of the select bottom bar (541 px wide for the ghost with the Tilbage button, 477 px for Fe, the narrowest; measured per race with Alegreya Sans Medium 17 and the in-scale chips, notes/blurb_fit.txt: Bu 658 px, Hviske 613 px of one line); tools/loc/csv_lint.py PASS in the clone)",
+    "design4/proto/tests/ghost.gd (7 named checks that need ONLY the fix round RG1-RG7 and ghost.csv: PROVEN in a clone with exactly those, final_logs/t3b_*.log; mutation: without the perks.gd edit ghost.no_hobbit_perks_leak and ghost.every_enum_value_has_a_perk_row fail with discount 0.1 / bake 0.25). The four checks that read V1's rows are design4/proto/tests/ghost_data.gd (V1, AG1)",
+    "design4/ghost_key_owners_additions.json"
+   ],
+   "tasks": [
+    "localization/ghost.csv + ghost.csv.import (python tools/loc/new_csv.py ghost): the 15 rows of the lift, family prefixes CHAR_GHOST_ SKIN_GHOST_ HERO_BU_ HERO_HVISKE_ GHOST_ (longest prefix wins over ui.csv CHAR_ and cast.csv HERO_); the lead merges ghost_key_owners_additions.json into tools/loc/key_owners.json at the START of wave 3b (sanctioned edit SE-G1); the Danish text is the lift and nothing else (no Danish literal in any script of this addendum) -> verify: loc.ownership_lint, ghost.keys_translate",
+    "tests/sections/ghost.gd, the 7 checks of the lift (final form after the review: only what the fix round + ghost.csv make true): enum_order_is_save_stable (ANIMAL 0, FAIRY 1, HOBBIT 2, GHOST 3), new_game_default_and_explicit_skin, every_enum_value_has_a_perk_row, no_hobbit_perks_leak, save_roundtrip_and_old_saves (type 3 survives, 0 1 2 load as before, a type beyond the enum clamps to the LAST race, meta.summary.character == ghost), keys_translate, harness_helpers_know_the_ghost. MOVED OUT (review defect 3): race_key_and_visual_chain, data_rows_agree, perk_keys_defined_for_every_race, perk_numbers read V1's rows and fail until V1 has landed (MEASURED: 5 failures on a fix-round-only clone, review/logs/f4_ghost_section_on_fixround_clone.log), so they are V1's section tests/sections/ghost_data.gd (AG1) -> verify: ghost.enum_order_is_save_stable, ghost.no_hobbit_perks_leak, ghost.save_roundtrip_and_old_saves, ghost.harness_helpers_know_the_ghost",
+    "the section must stay independent of --character (it sets its own hero and puts animal back at the end) and compile without V1, the ghost art and P16 (nothing here reads characters.lua / race_perks.lua rows or presses a button): wave 3b exists so that it runs DIRECTLY AFTER the fix round and is its first gate (MEASURED: all 7 pass on a clone with the fix round + ghost.csv only, under --character=animal, fairy, hobbit and ghost) -> verify: --only=ghost green under --character=animal|fairy|hobbit|ghost (--no-boot)"
+   ],
+   "acceptance": {
+    "headless": "tests/run_playtest.sh --only=ghost --character=animal|fairy|hobbit|ghost --strict --no-boot: 7 checks green; and the whole harness stays green for animal, fairy and hobbit (--strict, built sections; MEASURED with the fix round + this package: final_logs/t3b_*.log)",
+    "screenshot": "none (data)",
+    "validator": "python tools/loc/csv_lint.py PASS (MEASURED in the full clone, which also holds ghost_dialogue.csv: 15 files, 1572 keys, 0 errors, the 5 legacy issues of da.csv are pre-existing and tolerated)"
+   },
+   "budgets": {
+    "new_csv": 1,
+    "keys": 15,
+    "autoloads_added": 0,
+    "input_actions_added": 0,
+    "eventbus_signals_added": 0,
+    "new_lua_config_files": 0
+   },
+   "honest": "The data ROWS of the race are V1's (characters.lua, race_perks.lua, character_catalog.gd, tests/sections/characters.gd + data.gd + ghost_data.gd are carved out of P05 / P10 into V1) and the code lines are the fix round's (P02, P10, P04): this package owns the copy and the proof of the fix round. It sits in wave 3b so that V1 (wave 4) can DEPEND on it: V1's name_key / kind_key / blurb_key literals name keys of ghost.csv, and the loc check of V1 fails without the CSV (the design3 checker allows only strictly earlier waves for a dependency, so the same-wave coupling of the first draft became a hard edge). The two heroes' look is not part of this package: until G-ghost-art and V1 land, a ghost run falls back to the pack rabbit."
+  },
+  {
+   "id": "G-ghost-art",
+   "title": "Spoegelse art: the two ghost heroes Bu and Hviske as a new rig family (legless bell body, scalloped hem, big dark eyes with a white glint, blush and three cheek strokes, a wisp), built and baked through the real pipeline, with the cast gates and the review sheets",
+   "wave": "3b",
+   "size": "M",
+   "dependsOn": [
+    "P08-art-tools",
+    "P09-test-harness",
+    "P05-characters-pack",
+    "P21-art-characters"
+   ],
+   "owns": [
+    "tools/art/ghost/**",
+    "assets/isometric_characters/ghost_bu/**",
+    "assets/isometric_characters/ghost_hviske/**",
+    "tests/sections/art_ghost.gd"
+   ],
+   "lift": [
+    "design4/proto/builder/traetoppen_additions.py (the PROTOTYPE builder, five visual iterations v1-v5, the real pipeline end to end: build, bake, validate, export, install, import, windowed shot)",
+    "design4/proto/contact_sheet_ghost.png, gamezoom_check.png, sketch_vs_baked.png, shots/g_*.png (the evidence)",
+    "design4/scripts/{measure_fig,palette_check,occluder_equality,bob_probe,contact_ghosts,compose_checks}.py",
+    "design4/scripts/hem_fade.py (the REJECTED translucent-hem experiment: kept as a documented non-feature)"
+   ],
+   "tasks": [
+    "tools/art/ghost/ghost_model.py: make_ghost(hero) for hero in (bu, hviske) exactly as the prototype (head = the pack ellipsoid (.64, .575, .45) at y 1.50; bell body = a surface of revolution with an elliptical section 0.84, five scallops dropping .13, rolled hem tube, collar fold; stub mittens as the stock Arm_L / Arm_R groups; a tapering wisp on the stock Tail chain; the family eye of geometry.eyes() flattened to z .055 so it does not bulge in the W / E rows; ONE smile for both heroes), the palette table (Bu E6EFFF sheet / B9CEF2 collar / 93BBEE hem; Hviske F6E7F6 / E2BEE6 / F29DC2, pinker blush, pupils a little down: inside the sclera so the silhouette stays the one of Bu), HEROES and GHOST_CLIP_HOOKS (walk, run: hips bob x3 of the stock bob, lean, mittens paddle, wisp sways x2; a no-op for every model that is not the ghost) -> importable by A2 through PYTHONPATH -> verify: art_ghost.builders_resolve",
+    "tools/art/ghost/traetoppen_additions.py = the shim of the SAME module name that the generator imports (build_assets.py:28-32; the caller's PYTHONPATH wins, produce_all.sh header; the pattern of V2's tools/art/cast_v2), exposing BUILDERS {ghost_bu, ghost_hviske}, EXTRA_PATTERNS {sheet: a quiet cloth weave with long folds, no fur strokes}, EXTRA_CLIPS = GHOST_CLIP_HOOKS; tools/art/ghost/produce_ghost.sh puts the shim first on PYTHONPATH and calls tools/art/produce_all.sh --only=characters ghost_bu ghost_hviske -> verify: art_ghost.builders_resolve (produce_all.sh --stage-only lists the two ids)",
+    "the hook must not touch any other character: build fox, bat and fairy with and without the shim and compare the GLB sha256 (MEASURED equal: f3b254a5.. fox, 015c1bf9.. bat, ff43bd98.. fairy; notes/glide_hook_is_ghost_only.txt) -> the base generator, the pack and P21's 36 characters stay byte-identical -> verify: art_ghost.hook_leaves_other_characters_byte_identical",
+    "bake through the real pipeline, clip set `full` (role player: idle 4, walk 6, run 6, jump 4, fall 3, land 3, celebrate 6, interact 4, hit 3, sleep 4, talk 4 = 47 frames x 8 directions, pack outline (75, 60, 73) at .55, no baked glow): MEASURED build + bake + both validators + WebP export + install for BOTH heroes 10-13 s wall on the M3 at load 5; 2.15 + 1.98 MB WebP; 6.7 MB PNG masters per hero; GLB 7132 vertices, 13048 triangles, 17 bones; S3TC import stubs written by the exporter (fix_alpha_border true) -> verify: art_ghost.sheets_valid, art_ghost.import_stubs_s3tc",
+    "texture budget = the hobbit's: 32.9 MB of S3TC with mipmaps per hero when every clip is resident (measured on the imported .ctex: ghost_bu 32.89 MB = hobbit_pip 32.90 MB), 12.6 MB for the four warm clips (idle walk run interact); a save plays ONE hero so the budget of the world does not change -> verify: art_ghost.vram_budget",
+    "cast gates through tools/art/ghost/measure_ghost.py (imports tools/art/characters/measure_cast.py like V2's measure_cast_v2.py; P21's file is not edited): figure height 160 px = 96 % of the pack mean 167.4 (+/-10 % gate), outline [75, 61, 73] = the pack's, x pivot 127.4-127.6, lowest pixel (feet line) 206.1-214.2 inside the upright window 197-216 of EVERY clip incl. hit / interact / land -> verify: art_ghost.heights_and_pivot",
+    "hover: the bell's lowest lobes are baked ~10 px above the contract pivot (the near edge of a 0.66 m skirt on the ground would project 22 px BELOW the pivot and fail the feet window: the first prototype with the hem on the ground had its lowest pixel at 222 px, the first small hover still failed with 216.6 in the hit clip, the final ~10 px hover passes at 214.2); the shadow of chibi.tscn (118 x 38 px) is wider than the ghost and stays on the floor; the runtime only adds a +-2.5 px bob (G-ghost-play) -> verify: art_ghost.hover_baked_feet_window",
+    "palette gate: the dominant region of the idle S frame equals the palette hex within CIEDE2000 <= 6 (MEASURED 1.3 Bu, 1.1 Hviske with design4/scripts/palette_check.py); the two heroes share ONE silhouette: 1460 of 5 370 860 figure pixels differ (0.027 %), all of them in the face band (y 60-130) of the W / E rows (the shy pupils), recorded for A2 (shared layers) -> verify: art_ghost.palette_within_de, art_ghost.silhouette_shared_outside_the_face_band",
+    "portrait.webp (256 x 256 bust, 14 degree camera, not cut at the top or the sides: validate_new_assets.py on masters and WebP), animations.json (family ghost, flyer false, display_scale 1.0, no glow block) and the manifest rows (the installer merges them into assets/isometric_characters/manifest_traetoppen.json: sanctioned edit SE-G2, V2 owns the file) -> verify: art_ghost.portraits_are_busts, art_ghost.manifest_rows",
+    "review sheets in tools/art/ghost/review/ (contact_sheet_ghost.png: 8 directions x 2 heroes, walk / run frames, 8 other clips, the two busts; gamezoom_check.png: the real windowed screenshots at zoom 0.4 / 0.9 / night; sketch_vs_baked.png: the Figurer v2 cards next to the baked roster and the ghost) + README.md with the honest verdict (what is weak: see honest) and the verdict log row -> verify: art_ghost.review_sheets_exist_and_readme_names_them",
+    "windowed (tools/dev/run_windowed.sh --only=art_ghost): the cast shot of the prototype (ghost next to fox, hobbit and fairy on the iso fixture ground, zoom 0.4, 0.9 and night 23:00) is regenerated and LOOKED at; run_windowed(t) of the section measures the rendered pixel height of the ghost against the fox within 10 % -> verify: art_ghost.windowed_cast_shot"
+   ],
+   "acceptance": {
+    "headless": "tests/run_playtest.sh --only=art_ghost,art_characters,characters --character=animal --no-boot green with ONLY the fix round and this package (V1 has not landed: the two skins are not in characters.lua yet, so art_characters and characters are untouched; MEASURED final_logs/t3b_*.log); tools/art/.venv/bin/python -I tools/art/core/validate_new_assets.py --root assets/isometric_characters ghost_bu ghost_hviske: OK, 11 clips; measure_ghost.py --check exit 0",
+    "screenshot": "tools/art/ghost/review/*.png looked at by the lead; windowed cast shot at zoom 0.4: the ghost reads as a friendly white / pink figure with two big dark eyes next to the fox, hobbit and fairy (the prototype shot did)",
+    "validator": "produce_ghost.sh exit 0; the hook byte-identity check; palette dE00 <= 6; feet window"
+   },
+   "budgets": {
+    "bake_wall_s_both_heroes": 13,
+    "webp_mb_both": 4.1,
+    "vram_mb_per_hero_all_clips": 32.9,
+    "vram_mb_per_hero_warm_clips": 12.6,
+    "clips": 11,
+    "figure_height_px": 160,
+    "glb_vertices": 7132
+   },
+   "honest": "Wave 3b, so that A2 (wave 4) can DEPEND on it: A2 imports tools/art/ghost/ghost_model.py for the two wardrobe bases (a same-wave import without an edge failed when A2 was verified before this package merged). Soft CG render in the pack's family, not hand-painted. The EYES are dark with a white glint and have no white sclera (the other 12 figures have one): cuter and more ghostly in the prototype, a taste decision for the user. The stock-rig walk is a gentle glide (5 px bob measured, the fox 3, the hobbit 2); the back rows (N, NW, NE) are an egg with a wisp; the wisp reads as a tail from the side; Bu and Hviske differ by colour, hem trim and a shy glance only (one silhouette on purpose). The translucent hem was built, baked and compared in the real game at zoom 0.4 and 0.9: invisible at game scale, REJECTED (hem_fade.py is kept as a record). The figure is 96 % of the pack height. No baked glow (a baked halo is darkened by the night grade; the glow is a light, G-ghost-play)."
+  },
+  {
+   "id": "G-ghost-play",
+   "title": "Spoegelse in the world: the float (baked hover + a runtime bob through set_altitude), the soft glow as a PointLight2D on the existing night factor, the three pure rules (run cost, lantern oil, light radius) read from race_perks, and the proof against the REAL Player2D",
+   "wave": "5",
+   "size": "S",
+   "dependsOn": [
+    "P04-area-framework",
+    "P05-characters-pack",
+    "P10-data-contracts",
+    "P09-test-harness",
+    "V1-cast-data",
+    "P06-player-farm-core",
+    "DR1-rules"
+   ],
+   "owns": [
+    "scripts/ghost/**",
+    "tests/sections/ghost_play.gd"
+   ],
+   "lift": [
+    "design4/proto/shot_ghost.gd (the night shot: halo-only vs halo + PointLight2D; the light version read, the halo-only version did not)",
+    "scripts/isometric/iso_chibi_sprite_2d.gd set_altitude() (the shadow stays on the floor, fades and widens: the built float mechanism of the Fe)",
+    "scripts/world2d/iso_area.gd night_factor (the built day / night rule for glow sprites and lights)"
+   ],
+   "tasks": [
+    "GhostFloat (scripts/ghost/ghost_float.gd, class_name GhostFloat, all static): altitude(t, moving) = float_bob_px * (1 + sin(TAU * 0.55 * t)) * (0.4 if moving else 1.0), i.e. 0 .. 5 px for the ghost and 0 for every other race (float_bob_px 0); the ONE writer of IsoChibiSprite2D.set_altitude is P06's Player2D._apply_altitude (hop + fairy flight + this bob), so nothing fights over the altitude; the wardrobe layers mirror sprite.position every frame (F5) and follow it -> verify: ghost_play.float_range_and_period, ghost_play.zero_for_other_races",
+    "GhostGlow (scripts/ghost/ghost_glow.gd, class_name GhostGlow extends PointLight2D): static attach(player) when race_perks.<race>.glow_energy > 0 builds ONE PointLight2D (texture Glow.light_texture(), texture_scale glow_scale 0.9 = radius 115 px, colour glow_color bfe0ff, shadows off, position (0, -70)); every frame energy = glow_energy 0.35 * area.night_factor in iso areas (the existing DayNight glow curve: 0 at noon, ramps in at dusk) and glow_energy_dark 0.08 in an area whose map.ambient is forest or cave (the lantern is E 0.10 there); visible only above 0.004 like IsoArea's own lights. MEASURED in the clone (windowed, 23:00, zoom 0.4): halo sprite ALONE is barely visible, halo + PointLight2D (energy .42, scale .95) reads as a soft friendly glow and lights the grass around it; the prototype energy was a little strong, 0.35 is the recommendation -> verify: ghost_play.glow_follows_night_factor, ghost_play.glow_in_dark_zone, ghost_play.no_glow_for_other_races",
+    "light budget: the ghost glow is a PLAYER light like the lantern: 12 map lights + lantern + glow = 14 <= 15 (the engine drops the 17th silently, V8 measured the 15 as safe); the city (V3) keeps its <= 12 MAP lights because the glow is not a map light -> verify: ghost_play.player_lights_at_most_two",
+    "GhostRules (scripts/ghost/ghost_rules.gd, pure and static): run_cost_mult(skin), oil_use_mult(skin), dark_light_mult(skin) = SpeciesPerks.value(skin, key, GameData.perk(key, 1.0)) (V1's only species-layer resolver, falls through to race_perks.<race>.<key>; V1 is a hard dependency since the move to wave 5, so the call is direct); P06 and DR1's callers read the numbers ONLY through it -> verify: ghost_play.rules_read_the_species_layer, ghost_play.neutral_for_the_other_races",
+    "the behaviour of P06's hooks, proven with the REAL Player2D (these four checks were `player.*` checks of AG4 in the first draft; they could not pass at P06's own gate because they need GhostFloat / GhostGlow / GhostRules, so they moved here): the altitude of the sprite is the hop (or the fairy flight) PLUS GhostFloat.altitude, written only by Player2D._apply_altitude; the run drain is 15 x 0.6 = 9 energy/s for the ghost and 15 for everybody else; GhostGlow is attached for the ghost only and re-attached by set_character(); the lantern radius is 630 x light_ratio x gem x dark_light_mult (787.5 px at full oil, 275.6 px at the 35 % floor) and the oil drain gets ctx.race_mult 0.75 through DR1's OilRules -> verify: ghost_play.player_float_and_hop_compose, ghost_play.player_run_cost_applied, ghost_play.player_glow_attached_only_for_the_ghost, ghost_play.player_lantern_radius_and_oil_drain",
+    "honest stub, cut first: the whisper GHOST_WHISPER_WATER (\"you only float a little\") when the ghost walks into a water edge for the first time of a save; NOT built in M1 (the key exists in ghost.csv); the ghost does not cross water: collisions are the figure's ellipse of every race, the float is only a look -> verify: ghost_play.water_whisper_is_a_flagged_stub",
+    "tests/sections/ghost_play.gd: the pure checks of GhostFloat / GhostGlow / GhostRules use a fake Player node and a fake IsoArea (night_factor settable), the four integration checks use the real Player2D (P06 is a hard dependency); no check reads a ghost row before V1 (hard dependency too) -> verify: ghost_play.section_clean"
+   ],
+   "acceptance": {
+    "headless": "tests/run_playtest.sh --only=ghost_play,ghost,player --character=ghost --strict green, WITH the boot stage: %GhostButton exists in the legacy select screen since SE-G5 and in P16's four-card page after (review defect 4: the first draft ran this in wave 4 where the boot stage was red)",
+    "screenshot": "tests/shot_world.tscn --character=ghost --part=farm at 12:00 and 23:00: the ghost floats above its shadow, glows only at dusk and night (windowed, looked at)",
+    "validator": "none"
+   },
+   "budgets": {
+    "point_lights_added": 1,
+    "player_lights_max": 2,
+    "draw_calls_added": 1,
+    "autoloads_added": 0,
+    "input_actions_added": 0,
+    "eventbus_signals_added": 0
+   },
+   "honest": "Wave 5, after P06 and V1: P06's Player2D calls these static classes late-bound (Svc), so P06 lands and passes WITHOUT this package (without the classes the ghost still walks, runs at the full cost and has no glow: AG4's fallback check) and this package then switches the behaviour on. In M1a (the lead's city preview: the built stub player, no P06) the ghost has the baked hover and the glide walk but no bob, no glow and no perks. The bob is smooth because it is code, not a baked clip (the baked idle bobs 1 px at 5 fps)."
+  },
+  {
+   "id": "G-ghost-lines",
+   "title": "Spoegelse reactions: how nine citizens (and the Fairy King after the letter) greet a ghost, as data (lua/config/race_reactions.lua) with Danish lines in localization/ghost_dialogue.csv and one static class that P14 calls",
+   "wave": "5",
+   "size": "S",
+   "dependsOn": [
+    "P03-loc-core",
+    "P10-data-contracts",
+    "V1-cast-data",
+    "V7-dialogue-v2"
+   ],
+   "owns": [
+    "lua/config/race_reactions.lua",
+    "scripts/reactions/**",
+    "localization/ghost_dialogue.csv",
+    "localization/ghost_dialogue.csv.import",
+    "tests/sections/ghost_lines.gd"
+   ],
+   "lift": [
+    "design4/loc/ghost_dialogue.csv (9 lines da + en)",
+    "design4/scripts/tone_check.py (the tone gate as an allow-list, draft: 24 strings checked, exit 0)",
+    "lua/dialogue/*.lua (get_dialogue(context) returns {speaker, lines[{id, text_key, voice_key}], choices[]}: the shape the reaction line is prepended to)"
+   ],
+   "tasks": [
+    "lua/config/race_reactions.lua (kind = \"config\", ONE new top-level key `race_reactions`): race_reactions.ghost = { fairy_king = {text_key DLG_GHOST_KING_INTRO, voice_key voice/fairy_king/ghost_intro, when \"intro\"}, mayor_lyra, baker_maja, cat_morfar_mis, guard_oak, appraiser_fru_ugle, bathkeeper_sofus, postman_pip, mapseller_natteblik = {text_key DLG_GHOST_<ROLE>, voice_key voice/<npc>/ghost_first, when \"first_meet\"} }; every *_key a literal (loc_check only sees literals); no other race has a table (the structure serves the other races later, data only) -> verify: ghost_lines.table_loads_through_lua_runtime, ghost_lines.every_key_resolves_da_en",
+    "RaceReactions (scripts/reactions/race_reactions.gd, class_name RaceReactions, static, pure): apply(npc_id, ctx, dialogue) -> dialogue: when ctx.race has a table with this NPC, when == first_meet and the flag ghost_met_<npc> is not set, the line {id \"ghost_first\", text_key, voice_key} is PREPENDED to dialogue.lines and the flag is set (JSON-safe int, GameManager.set_flag); line_for(npc_id, \"intro\", ctx) -> Dictionary for the king's letter (P14's IntroSequence appends it once after the letter); returns the dialogue unchanged for every other race, NPC or state -> verify: ghost_lines.reaction_once_per_npc, ghost_lines.no_reaction_for_other_races, ghost_lines.intro_line_after_the_letter",
+    "localization/ghost_dialogue.csv + keep-import: 9 rows (the lift), prefix DLG_GHOST_ (longest prefix wins over dialogue.csv DLG_); every voice key is listed in the table so P24's generator can voice them in wave 6 (text-only until then: honest) -> verify: loc.ownership_lint, ghost_lines.keys_defined_da_en",
+    "the lines are kid-friendly by test, as an ALLOW-LIST not a word match: a banned stem (skræm, bange, uhyggelig, frygt, gyser, forskrække, rædsel; scare, frighten, afraid, creepy, terrif, horror, spooky in the English) in any line fails the check UNLESS the key is on the allow-list of the section, whose one entry is DLG_GHOST_KING_INTRO (the king's reassurance \"Her er der ingen, der skal skræmmes\" uses the stem on purpose: review defect 10); an entry of the allow-list that no longer contains a banned stem is reported, so the list cannot rot; the Danish register is the guide's \"Venlig og lun\" (short, warm, one joke at most) -> verify: ghost_lines.tone_gate, ghost_lines.tone_allow_list_is_minimal"
+   ],
+   "acceptance": {
+    "headless": "tests/run_playtest.sh --only=ghost_lines,ghost,loc --character=ghost green; npc.ghost_reaction_once_per_npc (P14) drives the real Npc2D",
+    "screenshot": "none (the dialogue box shot of P14 with the ghost line is looked at once)",
+    "validator": "loc_check.gd + csv_lint.py PASS"
+   },
+   "budgets": {
+    "new_csv": 1,
+    "lines": 9,
+    "new_lua_config_files": 1,
+    "autoloads_added": 0
+   },
+   "honest": "Text only until P24 voices the lines in wave 6. The reactions are the FIRST meeting only (a weekly chat heart is P14's): nine NPCs of the 22, not all. No ghost citizens exist (decision: the player is the only ghost; the hero-twin rule of design3 DT9 needs no change)."
+  },
+  {
+   "id": "G-ghost-qa",
+   "title": "Spoegelse acceptance: the four-race row set (select with the keyboard and the pad, farm day and night, wardrobe, forest, citizens), the screenshots and the doc pins",
+   "wave": "7",
+   "size": "S",
+   "dependsOn": [
+    "G-ghost-data",
+    "G-ghost-art",
+    "G-ghost-play",
+    "G-ghost-lines",
+    "P16-ui-menus",
+    "P06-player-farm-core",
+    "P14-npc-dialogue",
+    "F5-wardrobe-core",
+    "F8-wardrobe-ui",
+    "A2-art-wardrobe",
+    "V8-forest-look",
+    "DR1-rules"
+   ],
+   "owns": [
+    "tests/sections/zz_ghost.gd",
+    "docs/qa/ghost/**"
+   ],
+   "lift": [
+    "design4/proto/select_4cards_fixture.png (the pixel reference of the select page)",
+    "design4/notes/perk_balance.txt (the numbers the acceptance rows assert)"
+   ],
+   "tasks": [
+    "zz_ghost runs after zz_acceptance and drives REAL APIs and real input events for --character=ghost: row G1 title > Nyt spil > the fourth card > Hviske > Videre > Start with InputEventKey only and with InputEventJoypadButton only; row G2 the farm at 12:00 (no glow) and 23:00 (glow energy > 0), the float altitude range, run cost 9/s; row G3 buy at a shop: NO discount (price == base), bake: no bonus; row G4 wardrobe: the two maximal outfits (no dress: pants, shoes, shirt, bracelet, necklace, earrings, hat = 7 worn, 5 drawn, 2 hidden-but-counted; with a dress: dress, shoes, bracelet, necklace, earrings, hat = 6 worn, 5 drawn, 1 hidden), perks, set bonuses and the RarityAura still count the hidden slots; row G5 Moerkeskoven floor 1: oil lasts 200 s, lantern radius 787 px at full oil; row G6 the first talk with nine NPCs gives the reaction once, the king's line after the letter -> verify: zz_ghost.rows_g1_to_g6_green_for_the_ghost",
+    "the same rows without the ghost-specific numbers run for animal, fairy and hobbit (the four-hero matrix of zz_acceptance / zz_features / zz_town stays green): row G7 aggregates them -> verify: zz_ghost.row_g7_four_hero_matrix",
+    "doc pins: docs/design/UI_NAVIGATION.md S04 / S05 name %GhostButton and the 4-card numbers (270 px cards at x 64 / 358 / 652 / 946), PLAN / README say four races -> verify: zz_ghost.docs_name_four_races",
+    "windowed shots (tools/dev/run_windowed.sh), looked at: select_ghost_selected (guide diff against tests/checkpoints/guide_ref_ghost/select_4cards.png), farm_ghost_noon, farm_ghost_night, garderobe_ghost, forest_ghost, dialogue_ghost_king; docs/qa/ghost/GHOST_QA_REPORT.md links them and records the measured numbers -> verify: zz_ghost.windowed_shots (windowed)"
+   ],
+   "acceptance": {
+    "headless": "tests/run_playtest.sh --only=zz_ghost --character=ghost green; the four-hero matrix of zz_acceptance, zz_features and zz_town green for ghost",
+    "screenshot": "the six shots above looked at",
+    "validator": "none"
+   },
+   "budgets": {
+    "rows": 7,
+    "shots": 6
+   },
+   "honest": "Depends on every earlier ghost package; a dropped package makes its row SKIP with the capability name (the wave rule of design3)."
+  }
+ ],
+ "amendments": [
+  {
+   "id": "RG1",
+   "package": "P02-bus-gamemanager-time",
+   "wave": "2",
+   "built": true,
+   "fixRound": "FR-4",
+   "tasks": [
+    "scripts/autoload/game_manager.gd: append GHOST to the enum LAST and give it its default skin arm: `scripts/autoload/game_manager.gd`: `enum CharacterType { ANIMAL, FAIRY, HOBBIT }` -> `enum CharacterType { ANIMAL, FAIRY, HOBBIT, GHOST }` | `scripts/autoload/game_manager.gd`: `        CharacterType.HOBBIT: /             return &\"hobbit_pip\" / ` -> `        CharacterType.HOBBIT: /             return &\"hobbit_pip\" /         CharacterType.GHOST: /             return &\"ghost_bu\" / ` -> verify: tests/run_playtest.sh --character=animal|fairy|hobbit --strict green (the built sections, MEASURED on a clone with exactly the fix-round edits: final_logs/fix_<hero>.log); re-asserted by ghost.enum_order_is_save_stable and ghost.new_game_default_and_explicit_skin of G-ghost-data (wave 3b)",
+    "tests/sections/core.gd: the new-game default-skin check starts a ghost too: `tests/sections/core.gd`: `    var hobbit_skin: StringName = gm.character_skin / ` -> `    var hobbit_skin: StringName = gm.character_skin /     gm.start_new_game(\"G\", gm.CharacterType.GHOST, \"F\") /     var ghost_skin: StringName = gm.character_skin / ` | `tests/sections/core.gd`: `animal_skin == &\"animal_fox\" and hobbit_skin == &\"hobbit_pip\" and explicit_skin == &\"fairy_dusk\", \"animal %s hobbit %s explicit %s\" % [anima` -> `animal_skin == &\"animal_fox\" and hobbit_skin == &\"hobbit_pip\" and ghost_skin == &\"ghost_bu\" and explicit_skin == &\"fairy_dusk\", \"animal %s hobbit %s ghost %s explicit %s\" % [animal_skin, hobbit_skin, ` -> verify: core.new_game_default_and_explicit_skin (built)"
+   ],
+   "acceptanceAdd": [
+    "core.new_game_default_and_explicit_skin (the ghost leg)"
+   ],
+   "notes": "Saves store the enum as an int (game_manager.gd to_dict \"character_type\") and meta.summary.character as the lower-case key: appending GHOST as 3 needs no migration and no PAYLOAD_VERSION bump; from_dict clamps to 0..size-1, so a damaged save with type 99 now loads as the ghost instead of the hobbit (documented, tested). An OLDER build loading a ghost save clamps it to the hobbit with an unknown skin and falls back to the race default skin: forward compatibility is not promised. EXACT TEXT: the quoted edits are shortened; the full before / after pairs are design4/scripts/ghost_edits.py (python3 -I ghost_edits.py json | md | apply CLONE) and section 11 of design_ghost.md.",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": []
+  },
+  {
+   "id": "RG2",
+   "package": "P10-data-contracts",
+   "wave": "2",
+   "built": true,
+   "fixRound": "FR-4",
+   "tasks": [
+    "scripts/data/perks.gd: extend the race table: `scripts/data/perks.gd`: `const RACE_KEYS := [\"animal\", \"fairy\", \"hobbit\"]       # GameManager.CharacterType 0 1 2` -> `const RACE_KEYS := [\"animal\", \"fairy\", \"hobbit\", \"ghost\"]       # GameManager.CharacterType 0 1 2 3` -> verify: tests/run_playtest.sh --character=animal|fairy|hobbit --strict green (the built sections, MEASURED on a clone with exactly the fix-round edits: final_logs/fix_<hero>.log); the leak guards ghost.every_enum_value_has_a_perk_row and ghost.no_hobbit_perks_leak of G-ghost-data (wave 3b) are mutation-proven there"
+   ],
+   "acceptanceAdd": [
+    "tests/run_playtest.sh --character=animal|fairy|hobbit --strict green (the built sections, MEASURED on a clone with exactly the fix-round edits: final_logs/fix_<hero>.log)"
+   ],
+   "notes": "THE silent bug of this whole change: Perks._race() and CraftingSystem.bake_bonus_chance() both clamp the enum index to RACE_KEYS.size() - 1. With the enum extended and this table not, the ghost (index 3) clamps to the hobbit and gets 10 % off every shop price and +25 % bake output. MEASURED by mutation in the clone: Perks.total(discount) 0.1 and bake_bonus_chance 0.25 for a ghost; economy.gd and rarity.gd do not catch it because they set character_type explicitly. crafting_system.gd and shop_system.gd need NO edit (they read Perks.RACE_KEYS / Perks.total). EXACT TEXT: the quoted edits are shortened; the full before / after pairs are design4/scripts/ghost_edits.py (python3 -I ghost_edits.py json | md | apply CLONE) and section 11 of design_ghost.md.",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": []
+  },
+  {
+   "id": "RG3",
+   "package": "P04-area-framework",
+   "wave": "3",
+   "built": true,
+   "fixRound": "FR-4",
+   "tasks": [
+    "scripts/world2d/game_data.gd: the two fallbacks of the race lookup: `scripts/world2d/game_data.gd`: `const RACE_KEYS := {0: \"animal\", 1: \"fairy\", 2: \"hobbit\"}` -> `const RACE_KEYS := {0: \"animal\", 1: \"fairy\", 2: \"hobbit\", 3: \"ghost\"}` | `scripts/world2d/game_data.gd`: `const FALLBACK_VISUALS := {\"animal\": \"fox\", \"fairy\": \"fairy\", \"hobbit\": \"raccoon\"}` -> `const FALLBACK_VISUALS := {\"animal\": \"fox\", \"fairy\": \"fairy\", \"hobbit\": \"raccoon\", \"ghost\": \"rabbit\"}` | `scripts/world2d/game_data.gd`: `## \"animal\" | \"fairy\" | \"hobbit\": the enum name of GameManager.character_type, checked against lua/config/characters.lua `races`.` -> `## \"animal\" | \"fairy\" | \"hobbit\" | \"ghost\": the enum name of GameManager.character_type, checked against lua/config/characters.lua `races`.` -> verify: area.game_data_race_and_config (built: green for animal, fairy and hobbit at the fix round; under --character=ghost it needs V1's race row and is green from V1 on); the ghost's race key and visual chain are asserted by ghost_data.race_key_and_visual_chain (V1, wave 4)",
+    "tests/sections/area.gd: the race membership pin: `tests/sections/area.gd`: `GameData.race_key() in [\"animal\", \"fairy\", \"hobbit\"]` -> `GameData.race_key() in [\"animal\", \"fairy\", \"hobbit\", \"ghost\"]` -> verify: area.game_data_race_and_config (MEASURED: the one built check that fails only under --character=ghost, and only until V1 has landed)",
+    "tests/shot_world.gd: --character=ghost for the screenshot driver (an unknown name silently gave the animal): `tests/shot_world.gd`: `character = {\"animal\": 0, \"fairy\": 1, \"hobbit\": 2}.get(a.get_slice(\"=\", 1), 0)` -> `character = {\"animal\": 0, \"fairy\": 1, \"hobbit\": 2, \"ghost\": 3}.get(a.get_slice(\"=\", 1), 0)` | `tests/shot_world.gd`: `var character := 0          # GameManager.CharacterType: 0 animal 1 fairy 2 hobbit` -> `var character := 0          # GameManager.CharacterType: 0 animal 1 fairy 2 hobbit 3 ghost` | `tests/shot_world.gd`: `[--character=animal|fairy|hobbit] [--part=fixtures|cast|rim|farm|hyggebyen|forest]` -> `[--character=animal|fairy|hobbit|ghost] [--part=fixtures|cast|rim|farm|hyggebyen|forest]` -> verify: no section reads this driver: the argument map is exercised by G-ghost-art's windowed cast shot (tests/shot_world.tscn --character=ghost --part=cast, looked at), the comment line by a diff review"
+   ],
+   "notes": "The cast part of shot_world.gd lists the 12 pack ids only; the ghost shots are G-ghost-art's run_windowed part, shot_world.gd is not extended with ghost ids. EXACT TEXT: the quoted edits are shortened; the full before / after pairs are design4/scripts/ghost_edits.py (python3 -I ghost_edits.py json | md | apply CLONE) and section 11 of design_ghost.md.",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "acceptanceAdd": []
+  },
+  {
+   "id": "RG4",
+   "package": "P15-save-system",
+   "wave": "3",
+   "built": true,
+   "fixRound": "FR-4",
+   "tasks": [
+    "tests/sections/save.gd: the slot summary is tried for every race (the loop stopped at three): `tests/sections/save.gd`: `    for type_id in 3: /         gm.start_new_game(\"X\", type_id, \"F\")` -> `    for type_id in 4: /         gm.start_new_game(\"X\", type_id, \"F\")` | `tests/sections/save.gd`: `kinds.has(\"animal\") and kinds.has(\"fairy\") and kinds.has(\"hobbit\"), \"%s\" % [kinds.keys()])` -> `kinds.has(\"animal\") and kinds.has(\"fairy\") and kinds.has(\"hobbit\") and kinds.has(\"ghost\"), \"%s\" % [kinds.keys()])` -> verify: save.summary_character_keys (built); re-asserted by ghost.save_roundtrip_and_old_saves of G-ghost-data (wave 3b)"
+   ],
+   "notes": "scripts/autoload/save_manager.gd needs NO edit: _summarize() and _summary_valid() derive the race string from GameManager.CharacterType.keys(), so \"ghost\" is valid the moment the enum has it (measured: meta.summary.character == \"ghost\" in ghost.save_roundtrip_and_old_saves). No migration: payload v2 unchanged, character_type 0..2 load exactly as before (v1_loads, the hobbit v1 save, stays green). EXACT TEXT: the quoted edits are shortened; the full before / after pairs are design4/scripts/ghost_edits.py (python3 -I ghost_edits.py json | md | apply CLONE) and section 11 of design_ghost.md.",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "acceptanceAdd": []
+  },
+  {
+   "id": "RG5",
+   "package": "P09-test-harness",
+   "wave": "1",
+   "built": true,
+   "fixRound": "FR-4",
+   "tasks": [
+    "tests/lib/flow.gd, tests/playtest.gd, tests/run_playtest.sh, tests/lib/drive.gd, tools/dev/selftest_harness.sh: `--character=ghost` (CHARACTER_TYPES 3, UI_RACE %GhostButton, the argument check and its message, the usage lines, the usage-message pin of the self-test; NOT the self-test hero list, see the notes): `tests/lib/flow.gd`: `const CHARACTER_TYPES := {\"animal\": 0, \"fairy\": 1, \"hobbit\": 2}` -> `const CHARACTER_TYPES := {\"animal\": 0, \"fairy\": 1, \"hobbit\": 2, \"ghost\": 3}` | `tests/lib/flow.gd`: `const UI_RACE := {\"animal\": \"%AnimalButton\", \"fairy\": \"%FairyButton\", \"hobbit\": \"%HobbitButton\"}` -> `const UI_RACE := {\"animal\": \"%AnimalButton\", \"fairy\": \"%FairyButton\", \"hobbit\": \"%HobbitButton\", \"ghost\": \"%GhostButton\"}` | `tests/lib/flow.gd`: `## 0 animal, 1 fairy, 2 hobbit (GameManager.CharacterType).` -> `## 0 animal, 1 fairy, 2 hobbit, 3 ghost (GameManager.CharacterType).` | `tests/lib/flow.gd`: `fail(\"unknown character '%s' (animal|fairy|hobbit)\" % character)` -> `fail(\"unknown character '%s' (animal|fairy|hobbit|ghost)\" % character)` | `tests/playtest.gd`: `if _character not in [\"animal\", \"fairy\", \"hobbit\"]: /                 return \"--character must be animal, fairy or hobbit (got '%s')\" % _cha` -> `if _character not in [\"animal\", \"fairy\", \"hobbit\", \"ghost\"]: /                 return \"--character must be animal, fairy, hobbit or ghost (got '%s')\" % _character` | `tests/playtest.gd`: `##   tests/run_playtest.sh [--character=animal|fairy|hobbit] [--only=core,farm] [--list] [--windowed ...]` -> `##   tests/run_playtest.sh [--character=animal|fairy|hobbit|ghost] [--only=core,farm] [--list] [--windowed ...]` | `tests/playtest.gd`: `##   --character=animal|fairy|hobbit   hero for the boot stage and t.character (default animal)` -> `##   --character=animal|fairy|hobbit|ghost   hero for the boot stage and t.character (default animal)` | `tests/playtest.gd`: `print(\"usage: tests/run_playtest.sh [--character=animal|fairy|hobbit] [--only=a,b]` -> `print(\"usage: tests/run_playtest.sh [--character=animal|fairy|hobbit|ghost] [--only=a,b]` | `tests/run_playtest.sh`: `#   tests/run_playtest.sh [--character=animal|fairy|hobbit] [--only=core,farm] [--list]` -> `#   tests/run_playtest.sh [--character=animal|fairy|hobbit|ghost] [--only=core,farm] [--list]` | `tests/lib/drive.gd`: `## Hero the run was started with: \"animal\" | \"fairy\" | \"hobbit\" (--character=).` -> `## Hero the run was started with: \"animal\" | \"fairy\" | \"hobbit\" | \"ghost\" (--character=).` | `tools/dev/selftest_harness.sh`: `run_case bad_character_is_usage_error 2 30 'must be animal, fairy or hobbit' '' --character=dragon` -> `run_case bad_character_is_usage_error 2 30 'must be animal, fairy, hobbit or ghost' '' --character=dragon` -> verify: selftest case bad_character_is_usage_error (built, in tools/dev/selftest_harness.sh); re-asserted by ghost.harness_helpers_know_the_ghost of G-ghost-data (wave 3b)",
+    "tests/lib/ui_screens.json select_1.compare: the guide shows THREE cards, so the diff against pw1x_select.png cannot stay <= 15 with four; the reference becomes the 4-card layout (design4/proto/select_4cards_fixture.png copied to tests/checkpoints/guide_ref_ghost/select_4cards.png by P16) and the target is re-pinned at the first windowed build: `tests/lib/ui_screens.json`: `            \"compare\": { /                 \"screen\": \"select\", /                 \"fixture\": \"select_guide\", /                 \"target\": 15.0` -> `            \"compare\": { /                 \"baseline\": \"tests/checkpoints/guide_ref_ghost/select_4cards.png\", /                 \"fixture\": \"select_guide4\", /                 \"no_frame_crop\": true, /  ` -> verify: ui_audit / ui_audit_pins sections stay green (built: the registry shape; MEASURED at the fix round); the windowed compare itself is P16's menus.guide_diff_select (AG6)"
+   ],
+   "notes": "TIMING (review defect 4): the self-test lines that add the ghost to `--all-characters` and make `boot_2d_<hero>` red on any failed boot-stage check are NOT part of the fix round: they need %GhostButton and travel with the legacy-select patch SE-G5 (ghost_edits.py when = sel). MEASURED on the review clone: `tests/run_playtest.sh --character=ghost` with the boot stage fails with \"button %GhostButton not found in CharacterSelect\" and boot.character_matches until a select screen has the button, and the first draft's case read `ok boot_2d_ghost (exit 1)` because it matched only `ok boot.phase_playing` with exit *. PRE-EXISTING, unrelated: tools/dev/selftest_harness.sh fails ONE case on pristine main (live_known_issues_file_is_reported: tests/lib/known_issues.txt has no entries), 41 ok 1 failed before and after. EXACT TEXT: the quoted edits are shortened; the full before / after pairs are design4/scripts/ghost_edits.py (python3 -I ghost_edits.py json | md | apply CLONE) and section 11 of design_ghost.md.",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "acceptanceAdd": []
+  },
+  {
+   "id": "RG6",
+   "package": "F1-feature-data",
+   "wave": "3",
+   "built": true,
+   "fixRound": "FR-4",
+   "tasks": [
+    "tests/lib/features/fresh.gd: Fresh.new_game(t) maps --character to the enum with a dictionary whose .get(character, 0) hid an unknown name as the animal: `tests/lib/features/fresh.gd`: `return {\"animal\": 0, \"fairy\": 1, \"hobbit\": 2}.get(character, 0)` -> `return {\"animal\": 0, \"fairy\": 1, \"hobbit\": 2, \"ghost\": 3}.get(character, 0)` | `tests/lib/features/fresh.gd`: `##   Fresh.new_game(t)                          t.new_game(\"animal\"|\"fairy\"|\"hobbit\" per --character)` -> `##   Fresh.new_game(t)                          t.new_game(\"animal\"|\"fairy\"|\"hobbit\"|\"ghost\" per --character)` -> verify: tests/run_playtest.sh --character=animal|fairy|hobbit --strict green (the built sections, MEASURED on a clone with exactly the fix-round edits: final_logs/fix_<hero>.log); re-asserted by ghost.harness_helpers_know_the_ghost of G-ghost-data (wave 3b)"
+   ],
+   "notes": " EXACT TEXT: the quoted edits are shortened; the full before / after pairs are design4/scripts/ghost_edits.py (python3 -I ghost_edits.py json | md | apply CLONE) and section 11 of design_ghost.md.",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "acceptanceAdd": []
+  },
+  {
+   "id": "RG7",
+   "package": "P01-project-config",
+   "wave": "1",
+   "built": true,
+   "fixRound": "FR-4",
+   "tasks": [
+    "docs/design/**: copy design4/FINAL/DESIGN_GHOST.md to docs/design/GHOST_ADDENDUM.md and design4/FINAL/ghost_packages.json to docs/design/ghost_workpackages.json (the pattern of the dungeon and towns addenda), and apply the S04 / S05 amendment text of section 6.6 of the addendum to docs/design/UI_NAVIGATION.md (cards S04 `select_1` and S05 `select_2`; the task text of this work said S03 / S04: S03 is the language card) -> verify: a diff review (a doc edit has no section): `grep -c %GhostButton docs/design/UI_NAVIGATION.md` >= 1 and the 270 px card numbers present; zz_ghost.docs_name_four_races (G-ghost-qa, wave 7) re-asserts it"
+   ],
+   "notes": "Doc-only; the ownership table gives docs/design/** to P01.",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "acceptanceAdd": []
+  },
+  {
+   "id": "AG1",
+   "package": "V1-cast-data",
+   "wave": "4",
+   "tasks": [
+    "characters.lua (carved out of P05): races.ghost, skins ghost_bu and ghost_hviske (race ghost, visual <skin>_base, fallback rabbit, wardrobe_body = the skin id), fallbacks ghost_bu_base = ghost_bu, ghost_hviske_base = ghost_hviske, ghost_bu = rabbit, ghost_hviske = rabbit, and TWO more rows of the V1 `heroes` table after the six: {id bu, race ghost, skin ghost_bu, name_key HERO_BU_NAME, kind_key HERO_BU_KIND, blurb_key HERO_BU_BLURB} and the same for hviske (the keys are ghost.csv's); exact lines: `lua/config/characters.lua`: `      hobbit = { name_key = \"CHAR_HOBBIT_NAME\", perk_key = \"CHAR_HOBBIT_PERK\", default_skin = \"hobbit_pip\" }, / ` -> `      hobbit = { name_key = \"CHAR_HOBBIT_NAME\", perk_key = \"CHAR_HOBBIT_PERK\", default_skin = \"hobbit_pip\" }, /       ghost = { name_key = \"CHAR_GHOST_NAME\", perk_key = \"CHAR_GHOST_PERK\", default_skin` | `lua/config/characters.lua`: `      hobbit_bramble = { race = \"hobbit\", name_key = \"SKIN_HOBBIT_BRAMBLE\", visual = \"hobbit_bramble_base\", fallback = \"raccoon\", wardrobe_b` -> `      hobbit_bramble = { race = \"hobbit\", name_key = \"SKIN_HOBBIT_BRAMBLE\", visual = \"hobbit_bramble_base\", fallback = \"raccoon\", wardrobe_body = \"hobbit_bramble\" }, /       ghost_bu = { race = \"ghost` | `lua/config/characters.lua`: `      hobbit_bramble_base = \"hobbit_bramble\", / ` -> `      hobbit_bramble_base = \"hobbit_bramble\", /       ghost_bu_base = \"ghost_bu\", /       ghost_hviske_base = \"ghost_hviske\", / ` | `lua/config/characters.lua`: `      hobbit_bramble = \"raccoon\", / ` -> `      hobbit_bramble = \"raccoon\", /       ghost_bu = \"rabbit\", /       ghost_hviske = \"rabbit\", / ` | `lua/config/characters.lua`: `    -- The three races of \"Vaelg figur\".` -> `    -- The four races of \"Vaelg figur\".` -> verify: characters.heroes_two_per_race (4 races, 8 rows in the order rasmus kiki | kloevermynte birk | bertil bodil | bu hviske), characters.skin_chains_match_the_addendum, characters.retired_skins_resolve",
+    "race_perks.lua (carved out of P10): the ghost row (species = the two hero ids bu / hviske = the chips, skins = the two skin ids, default_skin ghost_bu, every old perk key neutral: dig 1.0, tool cost 1.0, harvest 0, no flight, no flowers, discount 0, bake 0) and the EIGHT new keys on ALL four races (run_cost_mult, oil_use_mult, dark_light_mult, float_bob_px, glow_energy, glow_energy_dark, glow_scale, glow_color), neutral 1.0 1.0 1.0 0.0 0.0 0.0 0.0 \"\" except the ghost 0.6 0.75 1.25 2.5 0.35 0.08 0.9 \"bfe0ff\"; the sources of the numbers are in design4/notes/perk_balance.txt; exact lines: `lua/config/race_perks.lua`: `      bake_bonus = 0.0,              -- extra output chance in the crafting category bake /     }, /     -- Fairy` -> `      bake_bonus = 0.0,              -- extra output chance in the crafting category bake /       run_cost_mult = 1.0,           -- running energy cost x this (ghost 0.6) /       oil_use_mult = 1.0,  ` | `lua/config/race_perks.lua`: `      shop_discount = 0.0, /       bake_bonus = 0.0, /     }, /     -- Hobbit` -> `      shop_discount = 0.0, /       bake_bonus = 0.0, /       run_cost_mult = 1.0, /       oil_use_mult = 1.0, /       dark_light_mult = 1.0, /       float_bob_px = 0.0, /       glow_energy = 0.0, /   ` | `lua/config/race_perks.lua`: `      bake_bonus = 0.25,             -- +25% chance of one more output in the crafting category bake (P12) /     }, /   }, / ` -> `      bake_bonus = 0.25,             -- +25% chance of one more output in the crafting category bake (P12) /       run_cost_mult = 1.0, /       oil_use_mult = 1.0, /       dark_light_mult = 1.0, /    ` | `lua/config/race_perks.lua`: `Race ids: animal fairy hobbit / -- (GameManager.CharacterType 0 1 2).` -> `Race ids: animal fairy hobbit ghost / -- (GameManager.CharacterType 0 1 2 3).` -> verify: data.race_perks_complete, data.race_skins_match_characters, ghost_data.perk_numbers",
+    "character_catalog.gd (carved out of P05): NO code change (heroes(race), hero_of_skin and stock_visual_for_skin are id-driven); one doc-comment line learns \"ghost\" (review defect 11): `scripts/isometric/character_catalog.gd`: `## Race table row (name_key, perk_key, default_skin) of \"animal\" | \"fairy\" | \"hobbit\".` -> `## Race table row (name_key, perk_key, default_skin) of \"animal\" | \"fairy\" | \"hobbit\" | \"ghost\".` -> verify: characters.catalog_heroes_api",
+    "tests/sections/characters.gd and tests/sections/data.gd (carved out of P05 / P10): the ghost edits in their FINAL form after V1's own rewrite: races.size() == 4 and the race loop includes ghost, the default-skin list has ghost_bu, SKIN_CHAINS / WARDROBE_BODIES / NEW_STOCK_IDS gain the two ghost skins, the skin count reads \"all <N> skins\", RACES gains ghost, PERK_KEYS gains the eight keys, the species / skins bound reads `skins.size() >= 2` (V1 already makes it species == heroes), the only-hobbit-discounts pin names the ghost, one pin of the ghost numbers; MEASURED on main + the ghost data edits (before V1): exactly characters.races_perk_keys_and_default_skins and characters.all ten skins failed without them. Where V1 has rewritten a table, APPEND the ghost entries to the last row of the table instead of quoting the closing lines: the exact before / after pairs of design_ghost.md section 11 are main at b909274 (review defect 11). Pairs: `tests/sections/characters.gd`: `    \"hobbit_bramble\": [\"hobbit_bramble_base\", \"hobbit_bramble\", \"raccoon\"], / }` -> `    \"hobbit_bramble\": [\"hobbit_bramble_base\", \"hobbit_bramble\", \"raccoon\"], /     \"ghost_bu\": [\"ghost_bu_base\", \"ghost_bu\", \"rabbit\"], /     \"ghost_hviske\": [\"ghost_hviske_base\", \"ghost_hviske\", \"rabb` | `tests/sections/characters.gd`: `    \"hobbit_pip\": \"hobbit_pip\", \"hobbit_moss\": \"hobbit_moss\", \"hobbit_bramble\": \"hobbit_bramble\", / }` -> `    \"hobbit_pip\": \"hobbit_pip\", \"hobbit_moss\": \"hobbit_moss\", \"hobbit_bramble\": \"hobbit_bramble\", /     \"ghost_bu\": \"ghost_bu\", \"ghost_hviske\": \"ghost_hviske\", / }` | `tests/sections/characters.gd`: `const NEW_STOCK_IDS: Array[String] = [\"squirrel\", \"fairy_stardust\", \"fairy_dusk\", \"hobbit_pip\", \"hobbit_moss\", \"hobbit_bramble\"]` -> `const NEW_STOCK_IDS: Array[String] = [\"squirrel\", \"fairy_stardust\", \"fairy_dusk\", \"hobbit_pip\", \"hobbit_moss\", \"hobbit_bramble\", \"ghost_bu\", \"ghost_hviske\"]` | `tests/sections/characters.gd`: `var ok := races.size() == 3 /     for race in [\"animal\", \"fairy\", \"hobbit\"]:` -> `var ok := races.size() == 4 /     for race in [\"animal\", \"fairy\", \"hobbit\", \"ghost\"]:` | `tests/sections/characters.gd`: `t.check(\"races_perk_keys_and_default_skins\", ok, \"animal -> %s, fairy -> %s, hobbit -> %s\" % [Catalog.default_skin(\"animal\"), Catalog.defaul` -> `t.check(\"races_perk_keys_and_default_skins\", ok, \"animal -> %s, fairy -> %s, hobbit -> %s, ghost -> %s\" % [Catalog.default_skin(\"animal\"), Catalog.default_skin(\"fairy\"), Catalog.default_skin(\"hobbit\")` | `tests/sections/characters.gd`: `t.expect_eq([Catalog.default_skin(\"animal\"), Catalog.default_skin(\"fairy\"), Catalog.default_skin(\"hobbit\")], [\"animal_fox\", \"fairy_meadow\", ` -> `t.expect_eq([Catalog.default_skin(\"animal\"), Catalog.default_skin(\"fairy\"), Ca -> verify: characters.races_perk_keys_and_default_skins, characters.skins, data.race_perks_complete",
+    "tests/sections/ghost_data.gd (NEW, owned by V1 through ownsAdd; lift design4/proto/tests/ghost_data.gd): the four checks that read V1's rows and used to be part of ghost.gd: race_key_and_visual_chain (GameData.race_key() == ghost, hviske head of chain ghost_hviske_base, chain ghost_bu_base > ghost_bu > rabbit), data_rows_agree (4 races, the 2 ghost skins = race_perks.ghost.skins, default skin, name / perk keys, wardrobe body = skin id, every chain ends at the pack rabbit), perk_keys_defined_for_every_race (the 8 new keys on all four races, neutral except the ghost), perk_numbers (0.6 / 0.75 / 1.25 / 2.5 / glow 0.35 0.08 0.9 bfe0ff; no discount, no bake, no harvest, no dig, no flight) -> verify: ghost_data.race_key_and_visual_chain, ghost_data.data_rows_agree, ghost_data.perk_keys_defined_for_every_race, ghost_data.perk_numbers"
+   ],
+   "acceptanceAdd": [
+    "characters.heroes_two_per_race: four races, eight heroes",
+    "ghost_data.race_key_and_visual_chain, ghost_data.data_rows_agree, ghost_data.perk_keys_defined_for_every_race, ghost_data.perk_numbers"
+   ],
+   "ownsAdd": [
+    "tests/sections/ghost_data.gd"
+   ],
+   "addDependsOn": [
+    "G-ghost-data"
+   ],
+   "notes": "G-ghost-data (wave 3b) is a HARD dependency since the review (defect 5): ghost.csv holds the keys V1's rows name, and the loc check of V1 fails without it. V1 owns tests/sections/ghost_data.gd, the four checks that read its rows (moved out of ghost.gd, defect 3). The wardrobe body ids ghost_bu / ghost_hviske are the contract with A2. SpeciesPerks needs no ghost rows: its fall-through to race_perks.ghost.<key> IS the ghost's perk layer; the two ghost skins are not retired. The race name key CHAR_GHOST_NAME and the hero keys live in ghost.csv, not in cast.csv / ui.csv (longest prefix wins). EXACT TEXT: the quoted edits are shortened; the full before / after pairs are design4/scripts/ghost_edits.py (python3 -I ghost_edits.py json | md | apply CLONE) and section 11 of design_ghost.md.",
+   "ownsRemove": [],
+   "built": false
+  },
+  {
+   "id": "AG2",
+   "package": "V2-cast-art",
+   "wave": "4",
+   "tasks": [
+    "tests/sections/art_characters.gd (carved out of P21): SKIN_CHAINS gains ghost_bu and ghost_hviske. Do NOT quote the closing lines of the table: V2's own task adds animal_monkey, fairy_birk and hobbit_bodil to the SAME table, so APPEND the two ghost rows as the last row(s) of whatever the table looks like after V2's edit (plain additions, order independent: an extra chain is never read when V1 has not added the skin). Pair on main at b909274 (review defect 11): `tests/sections/art_characters.gd`: `    \"fairy_meadow\": [\"fairy_base\", \"fairy\"], / }` -> `    \"fairy_meadow\": [\"fairy_base\", \"fairy\"], /     \"ghost_bu\": [\"ghost_bu_base\", \"ghost_bu\", \"rabbit\"], \"ghost_hviske\": [\"ghost_hviske_base\", \"ghost_hviske\", \"rabbit\"], / }` ROSTER, PEOPLE and every fixed count stay as V2 sets them (the ghost art is checked by tests/sections/art_ghost.gd); MEASURED: without the rows art_characters.roster_visuals_resolve fails (\"draws through a fallback\") once V1 has added the skins -> verify: art_characters.roster_visuals_resolve",
+    "assets/isometric_characters/manifest_traetoppen.json: two rows (ghost_bu, ghost_hviske: role player, clip_set full, family ghost, flyer false, display_scale 1.0, portrait portrait.webp) arrive through the MERGE of tools/art/export/install_assets.py run by tools/art/ghost/produce_ghost.sh (sanctioned edit SE-G2, order independent of V2's own merge); art_characters.manifest_lists_the_roster checks the roster ids and accepts extra rows -> verify: art_characters.manifest_lists_the_roster"
+   ],
+   "notes": "Measured: with the two ghost folders installed and no edit of art_characters.gd only roster_visuals_resolve fails; roles_and_clip_sets, players_have_all_clips and the pivot checks count the ROSTER, not the folder listing. EXACT TEXT: the quoted edits are shortened; the full before / after pairs are design4/scripts/ghost_edits.py (python3 -I ghost_edits.py json | md | apply CLONE) and section 11 of design_ghost.md.",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "acceptanceAdd": [],
+   "built": false
+  },
+  {
+   "id": "AG3",
+   "package": "A2-art-wardrobe",
+   "wave": "4",
+   "addDependsOn": [
+    "G-ghost-art"
+   ],
+   "ownsAdd": [
+    "assets/isometric_characters/ghost_bu_base/**",
+    "assets/isometric_characters/ghost_hviske_base/**"
+   ],
+   "tasks": [
+    "EIGHT heroes, not six: ghost_bu_base and ghost_hviske_base = ghost_model.make_ghost(hero) from tools/art/ghost (G-ghost-art) through PYTHONPATH, the same builder as the stock sheets; A2's shim re-exports GHOST_CLIP_HOOKS into EXTRA_CLIPS so the base animates exactly like ghost_bu (the walk / run glide is a hook, not part of the rig); all 11 clips, no flight clips, portrait.webp + assets/portraits/ghost_*_base.webp bust with the starter outfit (only the shirt is visible: the trousers and boots of lua/data/starter_kit.lua are worn but hidden); bodies.json hero ids ghost_bu and ghost_hviske -> verify: art_wardrobe.catalogue_shapes (8 heroes), art_wardrobe.bases_and_busts_for_eight",
+    "bodies.json gains per hero `family` (\"G\" for the ghost) and `hidden_slots` ([\"pants\", \"shoes\"] for the ghost, [] for everybody else): the runtime (F5 PlayerOutfit) skips the layers of a hidden slot and the Garderobe (F8) shows them as hidden, while WardrobeManager still counts their perks; the body scope G is native (bell, no legs): garment designs of the body scope = shirt 2 + 2, dress 2 + 1, necklace 1 + 1, bracelet 1 + 1 = 11 bakes (Phase A 6, Phase B 5; NO pants, NO feet scope), the head scope hat 3 + 5, circlet 1 + 1, earrings 1 = 11 bakes: the ghost head is the pack ellipsoid .64 x .575 at the ghost's 0.93 px/unit = 1.19 u wide against the fox head 2 x .62 x .80 = .99 u, 20 % wider, so the borrow of the fox head scope is NOT expected to fit: native `ghost` head scope by default (+11), borrow only if fit_test.py reports a mismatch <= 0.28; cost model of the design2 amendment (0.482 CPU-min and 0.67 MB per bake): +22 bakes = +10.6 CPU-min and +14.7 MB (123 total, 145 with Bodil / Birk's own head scopes), +11 bakes if the head is borrowed -> verify: art_wardrobe.ghost_scope_fit, art_wardrobe.disk_budget",
+    "shared layers between the two heroes: validate_wardrobe_assets.py's occluder rule for Bu / Hviske is relaxed to \"<= 0.05 % differing silhouette pixels and none below the neck line\" (MEASURED 0.027 %, 1460 of 5 370 860, all in the face band y 60-130 of the W / E rows: the shy pupils; design4/scripts/occluder_equality.py); when exceeded, Hviske gets her own body and head scope (+22 bakes) -> verify: art_wardrobe.ghost_occluder_equality_face_band",
+    "hero palettes: one table in tools/art/features/wardrobe/hero_designs.py, the Bu / Hviske hex of ghost_model.PALETTES / HEROES (sheet E6EFFF / F6E7F6, collar B9CEF2 / E2BEE6, hem 93BBEE / F29DC2, eye 34305A / 3B2F5C), dE00 <= 6 against the baked idle S (MEASURED 1.3 / 1.1); the same-palette ladder sheet and F5's windowed walk8 run for FOUR heroes (fox, fairy, hobbit, ghost) -> verify: art_wardrobe.hero_palettes_within_de, art_wardrobe.same_palette_ladder_sheet",
+    "the ghost is lock-stepped with its layers INCLUDING the runtime float: the layers mirror the body sprite's position every frame (F5), the bob is a sprite.position change through set_altitude, so no layer art depends on it; A2 documents it in the README; the acceptance texts \"10 bases / 6 heroes\" read 8 -> verify: art_wardrobe.readme_names_eight_heroes"
+   ],
+   "acceptanceAdd": [
+    "art_wardrobe.catalogue_shapes: 8 heroes"
+   ],
+   "notes": "G-ghost-art (wave 3b) is a HARD dependency since the review (defect 5): A2 imports tools/art/ghost/ghost_model.py. Order of bakes: the six heroes first; the ghost scopes (22 bakes) last in Phase A so a failure never blocks the others. Tint-ready layer atlases are lossless WebP exact (unchanged rule), so the translucent-hem question does not arise for garments.",
+   "ownsRemove": [],
+   "built": false
+  },
+  {
+   "id": "AG4",
+   "package": "P06-player-farm-core",
+   "wave": "4",
+   "tasks": [
+    "Player2D._apply_altitude(): the ONE writer of visual.set_altitude = hop altitude (or the fairy flight altitude) + GhostFloat.altitude(t, moving) when GameData.perk(\"float_bob_px\", 0.0) > 0 (late-bound through Svc: a missing class adds 0); the dodge roll's set_spin keeps working with the altitude (the layers mirror position and rotation) -> verify: player.ghost_hooks_are_null_safe",
+    "run cost: the stamina drain while running is run_cost_per_second x GhostRules.run_cost_mult(skin) (late-bound: a missing class means 1.0; ghost 0.6: 15 -> 9 energy/s; MEASURED by simulating the built rule, perk_balance.py: first sprint 6.7 s -> 11.1 s, +6.2 % average travel speed when sprinting all the time); nothing else about the run (hysteresis at 0, recovery at 20 %) changes -> verify: player.ghost_hooks_are_null_safe",
+    "glow: GhostGlow.attach(self) in _ready when race_perks.<race>.glow_energy > 0 (the ghost only; late-bound); it is removed with the player and re-attached by set_character() -> verify: player.ghost_hooks_are_null_safe",
+    "lantern in Moerkeskoven: the lantern PointLight2D radius = 630 px x DungeonRun light_ratio(oil) x the gem radius multiplier x GhostRules.dark_light_mult(skin) (late-bound, 1.0 without the class; ghost 787.5 px at full oil, 275.6 px at the 35 % floor; everybody else 630 / 220.5, DUNGEON_V2_ADDENDUM 6.4); the oil drain passes ctx.race_mult = GhostRules.oil_use_mult(skin) to DR1's OilRules.oil_step (one fill lasts 200 s instead of 150 s) -> verify: player.ghost_hooks_are_null_safe",
+    "every ghost call is NULL-SAFE without G-ghost-play (wave 5: it lands AFTER this package): without GhostFloat / GhostGlow / GhostRules the player moves, runs at the full cost, has no glow and the lantern is the plain 630 px one; no new autoload, input action or EventBus signal (review defect 5: the behaviour checks that need the classes are G-ghost-play's ghost_play.player_* checks, they could not pass at this package's own gate) -> verify: player.ghost_hooks_are_null_safe, player.no_new_contracts"
+   ],
+   "notes": "All hooks read race_perks through GhostRules -> SpeciesPerks.value (V1): a later species layer (Kiki's climb speed) uses the same door. P06 has NO dependency on the ghost packages: the hooks are inert until G-ghost-play lands.",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "acceptanceAdd": [],
+   "built": false
+  },
+  {
+   "id": "AG5",
+   "package": "DR1-rules",
+   "wave": "4",
+   "tasks": [
+    "oil_rules.gd: oil_step(oil, dt, ctx) takes ctx.race_mult (float, default 1.0) and multiplies the drain: dt x assist_factor x gem oil_mult x race_mult; new pure light_radius_px(oil, oil_max, gem_mult = 1.0, race_mult = 1.0) = lantern_radius_px (config dungeon_run.oil.lantern_radius_px = 630) x light_ratio(oil) x gem_mult x race_mult; the ghost does NOT lose the bite: at oil 0 the dark still takes 1 half heart per 12 s and never below 2 half hearts (the gold sink and the safety rule are the same for every race) -> verify: dungeon_run.oil_race_mult, dungeon_run.light_radius_race_mult, dungeon_run.darkness_bite_unchanged_for_the_ghost",
+    "tools/dungeon_run/sim: the claims of run_sim.sh --check are re-run with oil_use_mult 0.75 (a typical full dive saves 72 gold of 1471 = 4.9 %; at 1.6 x the typical pace 236 gold; design4/notes/perk_balance.txt) and must stay inside the model's bounds -> verify: dungeon_sim.claims_hold"
+   ],
+   "notes": "DR1 stays pure: it never reads GameManager; P06 passes the multipliers in.",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "acceptanceAdd": [],
+   "built": false
+  },
+  {
+   "id": "AG6",
+   "package": "P16-ui-menus",
+   "wave": "4",
+   "ownsAdd": [
+    "tests/checkpoints/guide_ref_ghost/**"
+   ],
+   "tasks": [
+    "Vælg figur page 1 for FOUR races (amendment text S04 in design_ghost.md section 6.6, rendered reference design4/proto/select_4cards_fixture.png / _live.png, numbers design4/proto/select_4cards_numbers.txt): the card row is one row of four CardButtons %AnimalButton %FairyButton %HobbitButton %GhostButton (unique names, %GhostFace / %GhostName / %GhostPerk), column gap 24 (the guide's three have 32), card 270 wide at x 64 / 358 / 652 / 946, grid y 153..587, frame 238 x 304.4, perk text 2 lines; the selected card lifts 8 px with RING_SEL (5 px outside, still inside the 48 px safe area); the ghost card tint = moon blue stripes #cfe6f2 / #c0dceb; the ghost card shows ghost_bu (stock_visual_for_skin) in TTSpriteFace direction SE, sprite_scale 1.25, feet_y .93; the race label CHAR_GHOST_NAME \"Spøgelse\" -> verify: menus.select_four_cards_layout_rects, menus.select_radio_focus_selects",
+    "focus map for four: the cards are ONE radio group in enum order (Skovdyr, Fe, Halvling, Spøgelse) with wrap both ways; Down from a card goes to the selected hero chip, Up from the bottom bar to the selected card; Esc / B / Start to the title (focus on Nyt spil); Accept on a card = Videre; the bottom bar is [%Heroes chips ..., Tilbage, Videre] in one row; Up from a card ALSO goes to the selected hero chip (the ring of UI_NAVIGATION 3.4: ui_up from the first item of the first group goes to the last group; the first draft left Up on a card as a dead end, which UiAudit reports as dead_end); hover never selects; unchanged keys otherwise -> verify: menus.select_four_cards_wrap, menus.select_focus_map_four (incl. Up / Down from every card reach the selected chip and no direction is a dead end)",
+    "bottom bar (replaces the card-internal %HeroBlurb of design2's amendment, which cannot fit under a 270 px card): prefix label SELECT_HERO_PREFIX \"Udseende:\" (menus.csv, replaces \"Dyr:\" for every race), the two hero chips of the SELECTED race (stadium chips 53 px high; name `Display20` over the kind line `Muted13`, BOTH variations of the built theme (build_theme.gd:141 / :168) so `UiAudit.rule_report(root)[\"typography\"]` stays empty and no per-node override is needed: the first draft used a Display17 / Bold13 that are not in the scale (review defect 1); 78 / 102 px wide at x 151..229 / 239..341 for Bu / Hviske, y 615..668), %HeroBlurb in the middle (Muted17, <= 2 lines; it starts after the chip row of the SELECTED race: x 365..906 = 541 px for the ghost, 477 px for Fe, with the Tilbage button; 673 px for the ghost without it), Tilbage 120 px, Videre 164 px at x 1052..1216, HintBar centred at y 692 with the UNCHANGED hint `[←→] Vælg · [Enter] Videre · [Esc] Tilbage` (the first draft added `[↓] Udseende`, a key that no package defines); every hero blurb fits two lines at EVERY race's width (MEASURED per race with the real fonts, notes/blurb_fit.txt: all eight, incl. the six VERBATIM sheet blurbs with Hyggebyen, need at most two lines; the narrowest bar, Fe, is 477 px and the longest blurb, Kløvermynte, 772 px of one line) -> verify: menus.hero_blurb_fits_two_lines (per race), menus.hero_chips_two_per_race, UiAudit.rule_report(root)[\"typography\"] empty on select_1",
+    "page 2 keeps the read-only preview card at 320 wide (the ghost card with the chosen hero); start_new_game(name, GHOST, farm, skin) with the 4th argument; the flow test covers EIGHT looks (renames design2's new_game_all_six_heroes): 4 races x 2 hero chips through real key events and through real pad events -> verify: menus.new_game_all_eight_heroes, menus.keyboard_only_new_game, menus.pad_only_new_game",
+    "the guide diff of the select screen is re-based: tests/checkpoints/guide_ref_ghost/select_4cards.png (a copy of the fixture render of this design, NOT the user's drawing) is the reference of the fixture select_guide4 (Tilbage button, HintBar and toasts hidden, the ghost selected), target 12 re-pinned at the first windowed build after the lead has looked at it; tests/lib/ui_screens.json carries the row (RG5) -> verify: menus.guide_diff_select"
+   ],
+   "acceptanceAdd": [
+    "menus.new_game_all_eight_heroes"
+   ],
+   "notes": "The select scene is built by P16 (the spike builder tools/ui/scenes/screens/s_select.gd of P07 is a lift source and is NOT edited: it still builds three cards). LEGACY SCREEN (review defect 2): scenes/ui/character_select.tscn and scripts/ui/character_select.gd are REWRITTEN in place by P16 (UI_NAVIGATION.md line 764). Until P16 runs (the lead schedules it in M1b) they carry the lead patch SE-G5 (a fourth button %GhostButton, the two ghost skins in the dropdown, ghost_edits.py when = sel, MEASURED green: final_logs/full_ghost.log, boot stage included): the rewrite must keep the unique name %GhostButton (tests/lib/flow.gd UI_RACE presses it) and the SE-G5 lines of tools/dev/selftest_harness.sh stay. P16 reads CharacterCatalog.heroes() (V1): the same-wave coupling is inherited from design2's six-hero P16 amendment and is solved the same way, V1 merges first.",
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "built": false
+  },
+  {
+   "id": "AG7",
+   "package": "P14-npc-dialogue",
+   "wave": "5",
+   "tasks": [
+    "dialogue context: race now takes four values (animal fairy hobbit ghost) and gains hero (the hero id of the skin, CharacterCatalog.hero_of_skin) next to the world flags: Npc2D.interact builds it and passes it to LuaRuntime.get_dialogue -> verify: npc.dialogue_context_has_race_and_hero",
+    "two calls, late-bound through Svc.static_call so P14 compiles without G-ghost-lines: Npc2D.interact: dialogue = RaceReactions.apply(npc_id, ctx, dialogue) right after get_dialogue; IntroSequence: after the letter of fairy_king, the dictionary of RaceReactions.line_for(\"fairy_king\", \"intro\", ctx) when it is not empty is shown once as one more line -> verify: npc.ghost_reaction_once_per_npc, npc.ghost_intro_line_after_the_letter, npc.no_reaction_for_other_races"
+   ],
+   "notes": "The Lua dialogue files stay as they are: the reaction is a prepended line from data, not a branch in nine files owned by P14 / V7 / F1.",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "acceptanceAdd": [],
+   "built": false
+  },
+  {
+   "id": "AG8",
+   "package": "F5-wardrobe-core",
+   "wave": "5",
+   "tasks": [
+    "PlayerOutfit reads bodies.json `hidden_slots` of the hero: the layers of a hidden slot (pants, shoes for the ghost) are NOT loaded and NOT attached (saves their atlases: 4-8 MB), but the slot stays equippable, equipped{slot} is saved, outfit_changed carries it and WardrobeManager.gear_points counts its perks and set bonuses exactly as for the other heroes; equipping an item of a hidden slot shows the toast GHOST_EQUIP_HIDDEN_FMT with the item name -> verify: wardrobe.hidden_slots_not_drawn_but_counted, wardrobe.hidden_slot_toast",
+    "DECISION (review defect 8): the RarityAura and the set bonuses count the WORN items, not the drawn layers. RarityAura decides on the HIGHEST rarity among the worn pieces (PLAN_2D_FEATURES.md 2.4 task 8: unique ffd9e6 / legendary ffd86a) and is the only rarity cue of clothes that is readable at game zoom (RV-A4), so a legendary pair of trousers or boots the ghost cannot show STILL gives the ghost the gold aura; 29 of the 96 wearables are pants (14) or shoes (15) and 6 of the 21 unique / legendary pieces are among them (lua/items/clothing.lua, counted by design4/scripts/clothing_counts.py), among them the capstone pants_trousers_starlight of the set nattevandreren and the legendary shoes_boots_wind. No reroll or race-aware drop (loot tables stay race-blind: shop prices, drop tables and the four-hero matrices stay identical); the invisible cue is accepted and flagged by the Garderobe tag, the equip toast and the aura. Flavour lines such as \"De glimter, når du går\" (localization/wardrobe.csv:105) are item text and unchanged -> verify: wardrobe.hidden_slot_counts_for_aura_and_sets (the ghost wears the five other nattevandreren pieces plus pants_trousers_starlight: the set tier, gear_points and the RarityAura tier equal the fox's with the same equipment; the aura is present although no layer of the pants exists)",
+    "the hero list of every per-hero check is CATALOG-DRIVEN (design2's F5 amendment, wardrobe.heroes_from_catalog: CharacterCatalog.heroes(), six heroes); with this amendment the catalogue lists EIGHT (bu and hviske added by V1), so the built check wardrobe.three_heroes_all_slots is defined over CharacterCatalog.heroes() and renamed wardrobe.heroes_all_slots (review defect 7: the first draft renamed it to a fixed four-hero list): every hero wears the TWO maximal outfits of the exclusion rules (wardrobe_rules.lua: exclusive {dress, shirt}, {dress, pants}, {hat, circlet}; sets.lua header: at most 7 worn, 6 with a dress): WITHOUT a dress pants, shoes, shirt, bracelet, necklace, earrings and hat = 7 worn; WITH a dress dress, shoes, bracelet, necklace, earrings and hat = 6 worn (9 slots can never be worn at once). For the ghost 5 parts are DRAWN in both outfits (shirt or dress, bracelet, necklace, earrings, hat or circlet; 7 is the number of drawable slots, not of parts) and 2 respectively 1 are hidden-but-counted (pants + shoes / shoes); headless part counts + windowed pixel diff; lock-step for every base x every clip x 8 directions x frame INCLUDING the runtime float altitude for the ghost (>= 8,960 checks as a FLOOR: the loops grow with the hero list, 0 failed) -> verify: wardrobe.heroes_all_slots, wardrobe.heroes_from_catalog, wardrobe.lockstep_all_clips_dirs, wardrobe.lockstep_ghost_float"
+   ],
+   "notes": "RarityAura is child 0 of the hero and the ghost glow is a PointLight2D child: both are independent of the layers (the aura reads the equipped items, see the decision).",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "acceptanceAdd": [],
+   "built": false
+  },
+  {
+   "id": "AG9",
+   "package": "V8-forest-look",
+   "wave": "5",
+   "tasks": [
+    "light budget with the ghost: the assertion counts PLAYER lights (the lantern and at most one GhostGlow) separately from the map lights: <= 12 map lights + 2 player lights = 14 <= 15 per canvas item (the engine cap is 16, V8 measured 15 as safe); a floor build with a ghost player never refuses a map light that a fox build accepts -> verify: forest_look.light_budget_with_the_ghost_glow",
+    "ForestDress makes the player actor unshaded in the forest like every actor (the ghost keeps its white): its glow is the dark-zone energy 0.08; the windowed lantern-lift profile (the path lifts 1.15-1.35x within 480 px) is measured for the fox AND for the ghost with radius x1.25: the band for the ghost is set from the measurement, not assumed -> verify: forest_look.lantern_lift_profile_ghost (windowed)"
+   ],
+   "notes": "Numbers: lantern radius 630 -> 787.5 px at full oil, 220.5 -> 275.6 px at the 35 % floor; the lantern colour and energy (ffe9a8, 0.10) are unchanged for every race.",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "acceptanceAdd": [],
+   "built": false
+  },
+  {
+   "id": "AG10",
+   "package": "F8-wardrobe-ui",
+   "wave": "5b",
+   "tasks": [
+    "Garderobe for a ghost: the cells Ben and Fødder carry the tag GHOST_HIDDEN_TAG (\"Skjult\") and the one-line note GHOST_WARDROBE_NOTE under the preview (\"Spøgelser har ingen ben: bukser og sko ses ikke, men de tæller stadig med\") when bodies.json hidden_slots lists them; the items stay selectable, wearable and counted in the perks panel and in the set bonus card (the decision of AG8: they count); the list row of a pants / shoes item carries the same tag; the live preview shows the ghost without trousers and boots but WITH the rarity aura of the worn set (honest) -> verify: wardrobe_ui.ghost_hidden_cells, wardrobe_ui.ghost_note_visible_only_for_hidden_slots",
+    "the Garderobe preview and its windowed checks use EIGHT heroes, one per hero chip of the character select (4 races x 2): design2's F8 amendment pinned `wardrobe_ui.preview_six_heroes` for six, which is renamed wardrobe_ui.preview_eight_heroes and takes its list from CharacterCatalog.heroes() (review defect 7); no screen names rabbit, hedgehog or squirrel -> verify: wardrobe_ui.preview_eight_heroes"
+   ],
+   "notes": "design2's F8 text said \"the six heroes (one per chip of the character select)\": with the ghost the chips are eight.",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "acceptanceAdd": [],
+   "built": false
+  },
+  {
+   "id": "AG11",
+   "package": "V9-keyart-v2",
+   "wave": "5b",
+   "tasks": [
+    "title key art v2: the three hero races become FOUR: a ghost (Bu) floats among the lanterns of the treetop city at dusk, built from the baked ghost_bu sprite and its glow (a soft pale-blue halo, no scary element) -> verify: keyart_v2.four_hero_races_present (windowed, looked at)"
+   ],
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "acceptanceAdd": [],
+   "notes": "",
+   "built": false
+  },
+  {
+   "id": "AG12",
+   "package": "P24-audio-voice",
+   "wave": "6",
+   "tasks": [
+    "tools/voice/generate_voice.py also walks lua/config/race_reactions.lua: the nine voice keys voice/<npc>/ghost_first and voice/fairy_king/ghost_intro (text from localization/ghost_dialogue.csv, the npc's pitch and rate); no player voice exists, so the ghost has none -> verify: voice.ghost_reaction_lines_have_ogg",
+    "SFX names only (silent when the file is missing, like every other name): sfx/ghost_whoosh for the ghost's movement; NOTE: no footstep sound exists for ANY race in the plan (P24's hook list has none), so the ghost replaces nothing: the whoosh is a name reserved for the day footsteps are added -> verify: voice.missing_sfx_is_silent"
+   ],
+   "notes": "Honest stub: movement audio does not exist for any hero in this plan.",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "acceptanceAdd": [],
+   "built": false
+  },
+  {
+   "id": "AG13",
+   "package": "P25-docs-refresh",
+   "wave": "6",
+   "tasks": [
+    "README.md, docs/game_design.md, docs/DEVELOPMENT.md, tools/art/README.md (roster + the new tools/art/ghost folder) say FOUR playable races (Skovdyr, Fe, Halvling, Spøgelse) and name the ghost's perk in one line; the how-to of adding a race (enum LAST, race_perks.lua + characters.lua rows, Perks.RACE_KEYS, GameData fallbacks, the 6 pinned tests of design_ghost.md section 11) goes to docs/howto/new_race.md -> verify: docs_refresh.four_races_named"
+   ],
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "acceptanceAdd": [],
+   "notes": "",
+   "built": false
+  },
+  {
+   "id": "AQ-P27",
+   "package": "P27-qa-acceptance",
+   "wave": "7",
+   "tasks": [
+    "zz_acceptance: one linear playthrough per character becomes FOUR (animal + Ræv, fairy, hobbit, ghost); the ghost playthrough also checks that no shop discount and no bake bonus are applied -> verify: zz_acceptance.ghost_playthrough"
+   ],
+   "ownsRemove": [
+    "docs/qa/ghost/**"
+   ],
+   "notes": "carve-out: docs/qa/ghost/** moves to G-ghost-qa (the design2 pattern docs/qa/dungeon/** etc.)",
+   "ownsAdd": [],
+   "addDependsOn": [],
+   "acceptanceAdd": [],
+   "built": false
+  },
+  {
+   "id": "AQ-F10",
+   "package": "F10-features-qa",
+   "wave": "7",
+   "tasks": [
+    "zz_features rows 14-21 and rows 19 / 6 (\"shoes, pants, dresses, shirts, hats, jewellery worn\") run for --character=ghost: for the ghost row 19 wears the TWO maximal outfits (nine slots can never be worn at once: wardrobe_rules.lua excludes {dress, shirt}, {dress, pants}, {hat, circlet}): WITHOUT a dress pants, shoes, shirt, bracelet, necklace, earrings, hat = 7 worn, 5 drawn parts, 2 hidden-but-counted; WITH a dress dress, shoes, bracelet, necklace, earrings, hat = 6 worn, 5 drawn, 1 hidden; it asserts the drawn part count (5, not 7) and that perks, set bonus and RarityAura count the hidden pieces -> verify: zz_features.row19_ghost_hidden_slots_counted"
+   ],
+   "ownsRemove": [],
+   "notes": "",
+   "ownsAdd": [],
+   "addDependsOn": [],
+   "acceptanceAdd": [],
+   "built": false
+  },
+  {
+   "id": "AQ-I6",
+   "package": "I6-town-qa",
+   "wave": "7",
+   "tasks": [
+    "zz_town rows 31-39 run for the four heroes (--character=animal|fairy|hobbit|ghost); the buy leg: hobbit -10 %, ghost and animal and fairy pay the listed price; 14 shots per hero for the ghost too -> verify: zz_town.rows_31_to_39_green_for_all_heroes"
+   ],
+   "ownsRemove": [],
+   "notes": "",
+   "ownsAdd": [],
+   "addDependsOn": [],
+   "acceptanceAdd": [],
+   "built": false
+  },
+  {
+   "id": "AQ-N08",
+   "package": "N08-farm-qa",
+   "wave": "7",
+   "tasks": [
+    "FIRST_MORNING.md: new game for the four races (skip with Esc, till-plant-water, bridge, sleep, mail on day 2); the ghost floats above its shadow in farm_t01 / farm_t05 shots -> verify: zz_farm.first_morning_checklist_exists"
+   ],
+   "ownsRemove": [],
+   "notes": "",
+   "ownsAdd": [],
+   "addDependsOn": [],
+   "acceptanceAdd": [],
+   "built": false
+  },
+  {
+   "id": "AQ-DQ",
+   "package": "DQ-dungeon-acceptance",
+   "wave": "7",
+   "tasks": [
+    "a ghost leg of the E rows: on floor 1 the oil lasts 200 s (drain x0.75), the lantern radius is 787.5 px at full oil and 275.6 px at the 35 % floor, the bite at oil 0 is unchanged, defeat is gentle as for everybody -> verify: dungeon_acceptance.ghost_oil_and_light"
+   ],
+   "ownsRemove": [],
+   "notes": "",
+   "ownsAdd": [],
+   "addDependsOn": [],
+   "acceptanceAdd": [],
+   "built": false
+  },
+  {
+   "id": "AQ-V10",
+   "package": "V10-v2-qa",
+   "wave": "7",
+   "tasks": [
+    "sketch_coverage.json gains the ghost row (no Figurer v2 sketch exists: the coverage row points at design4/proto/sketch_vs_baked.png and the user's verdict on it); the palette gate for the ghost heroes is the baked-vs-hex gate (dE00 <= 6), not a sketch fill -> verify: zz_v2.sketch_coverage_complete"
+   ],
+   "ownsRemove": [],
+   "notes": "",
+   "ownsAdd": [],
+   "addDependsOn": [],
+   "acceptanceAdd": [],
+   "built": false
+  },
+  {
+   "id": "AQ-N01-farm",
+   "package": "N01-farm-map",
+   "wave": "4",
+   "tasks": [
+    "the character matrix of this package's acceptance gains the ghost (acceptance: tests/run_playtest.sh --only=maps_farm,area --character=animal|fairy|hobbit as the package gate, and --character=ghost at the first STAGE gate that contains V1 (the ghost race row is V1's: area.game_data_race_and_config fails under --character=ghost before it; V1 is in the same wave and N01 has no edge to it)): the section is hero-agnostic, the gate runs one more hero -> verify: n01.runs_green_for_the_ghost"
+   ],
+   "acceptanceAdd": [
+    "acceptance: tests/run_playtest.sh --only=maps_farm,area --character=animal|fairy|hobbit as the package gate, and --character=ghost at the first STAGE gate that contains V1 (the ghost race row is V1's: area.game_data_race_and_config fails under --character=ghost before it; V1 is in the same wave and N01 has no edge to it)"
+   ],
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "notes": "",
+   "built": false
+  },
+  {
+   "id": "AQ-N02-farm",
+   "package": "N02-farm-objects",
+   "wave": "5",
+   "tasks": [
+    "the character matrix of this package's acceptance gains the ghost (acceptance: tests/run_playtest.sh --only=farm_site --character=animal|fairy|hobbit|ghost): the section is hero-agnostic, the gate runs one more hero -> verify: n02.runs_green_for_the_ghost"
+   ],
+   "acceptanceAdd": [
+    "acceptance: tests/run_playtest.sh --only=farm_site --character=animal|fairy|hobbit|ghost"
+   ],
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "notes": "",
+   "built": false
+  },
+  {
+   "id": "AQ-I2-loop",
+   "package": "I2-loop-harness",
+   "wave": "5",
+   "tasks": [
+    "the character matrix of this package's acceptance gains the ghost (acceptance: --only=town_loop,town_budgets --character=animal|fairy|hobbit|ghost (L06 buy: the ghost pays the listed price)): the section is hero-agnostic, the gate runs one more hero -> verify: i2.runs_green_for_the_ghost"
+   ],
+   "acceptanceAdd": [
+    "acceptance: --only=town_loop,town_budgets --character=animal|fairy|hobbit|ghost (L06 buy: the ghost pays the listed price)"
+   ],
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "notes": "",
+   "built": false
+  },
+  {
+   "id": "AQ-N04-farm",
+   "package": "N04-farm-first-morning",
+   "wave": "5b",
+   "tasks": [
+    "the character matrix of this package's acceptance gains the ghost (acceptance: tests/run_playtest.sh --only=farm_first_morning --character=animal|fairy|hobbit|ghost): the section is hero-agnostic, the gate runs one more hero -> verify: n04.runs_green_for_the_ghost"
+   ],
+   "acceptanceAdd": [
+    "acceptance: tests/run_playtest.sh --only=farm_first_morning --character=animal|fairy|hobbit|ghost"
+   ],
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "notes": "",
+   "built": false
+  }
+ ],
+ "contracts": {
+  "eventBusSignals": [],
+  "gameEvents": [],
+  "inputActions": {},
+  "autoloads": [],
+  "saveSections": [],
+  "worldFlags": [
+   {
+    "name": "ghost_met_<npc_id>",
+    "type": "int",
+    "owner": "G-ghost-lines",
+    "note": "set once per NPC by RaceReactions.apply (JSON-safe, in the built game section)"
+   }
+  ],
+  "luaConfigKeys": [
+   {
+    "key": "race_reactions",
+    "file": "lua/config/race_reactions.lua",
+    "owner": "G-ghost-lines"
+   },
+   {
+    "key": "race_perks (8 new keys per race)",
+    "file": "lua/config/race_perks.lua",
+    "owner": "V1-cast-data",
+    "note": "run_cost_mult oil_use_mult dark_light_mult float_bob_px glow_energy glow_energy_dark glow_scale glow_color"
+   }
+  ],
+  "staticClasses": [
+   {
+    "class": "GhostFloat",
+    "file": "scripts/ghost/ghost_float.gd",
+    "owner": "G-ghost-play"
+   },
+   {
+    "class": "GhostGlow",
+    "file": "scripts/ghost/ghost_glow.gd",
+    "owner": "G-ghost-play"
+   },
+   {
+    "class": "GhostRules",
+    "file": "scripts/ghost/ghost_rules.gd",
+    "owner": "G-ghost-play"
+   },
+   {
+    "class": "RaceReactions",
+    "file": "scripts/reactions/race_reactions.gd",
+    "owner": "G-ghost-lines"
+   }
+  ],
+  "csvFiles": [
+   {
+    "file": "ghost.csv",
+    "owner": "G-ghost-data",
+    "wave": "4",
+    "prefix": [
+     "CHAR_GHOST_",
+     "SKIN_GHOST_",
+     "HERO_BU_",
+     "HERO_HVISKE_",
+     "GHOST_"
+    ],
+    "exact": []
+   },
+   {
+    "file": "ghost_dialogue.csv",
+    "owner": "G-ghost-lines",
+    "wave": "5",
+    "prefix": [
+     "DLG_GHOST_"
+    ],
+    "exact": []
+   }
+  ],
+  "assetRoots": [
+   "assets/isometric_characters/ghost_bu",
+   "assets/isometric_characters/ghost_hviske",
+   "assets/isometric_characters/ghost_bu_base (A2)",
+   "assets/isometric_characters/ghost_hviske_base (A2)"
+  ],
+  "enum": {
+   "GameManager.CharacterType": [
+    "ANIMAL 0",
+    "FAIRY 1",
+    "HOBBIT 2",
+    "GHOST 3 (appended last: saves store the int)"
+   ]
+  },
+  "ids": {
+   "race": "ghost",
+   "skins": [
+    "ghost_bu",
+    "ghost_hviske"
+   ],
+   "heroes": [
+    "bu",
+    "hviske"
+   ],
+   "bases": [
+    "ghost_bu_base",
+    "ghost_hviske_base"
+   ],
+   "wardrobeBodies": [
+    "ghost_bu",
+    "ghost_hviske"
+   ],
+   "bodiesJsonFamily": "G"
+  },
+  "uiNames": [
+   "%GhostButton",
+   "%GhostFace",
+   "%GhostName",
+   "%GhostPerk"
+  ]
+ },
+ "acceptanceRows": [
+  {
+   "row": "G1",
+   "requirement": "Spøgelse can be chosen with a keyboard or a pad, with a look (Bu or Hviske), and starts a game: in M1a in the legacy select screen (SE-G5, boot stage of --character=ghost), from M1b on on the four-card Vælg figur page",
+   "section": "boot + zz_ghost + menus",
+   "owners": [
+    "lead (SE-G5)",
+    "P16",
+    "G-ghost-data",
+    "G-ghost-qa"
+   ]
+  },
+  {
+   "row": "G2",
+   "requirement": "The ghost floats above its shadow, glows at dusk and night, runs 40 % cheaper",
+   "section": "ghost_play + player",
+   "owners": [
+    "G-ghost-play",
+    "P06"
+   ]
+  },
+  {
+   "row": "G3",
+   "requirement": "The ghost has no shop discount and no bake bonus",
+   "section": "ghost + economy",
+   "owners": [
+    "P10",
+    "G-ghost-data"
+   ]
+  },
+  {
+   "row": "G4",
+   "requirement": "Pants and shoes are worn, counted (perks, set bonuses, RarityAura) and not drawn; the Garderobe says so",
+   "section": "wardrobe + wardrobe_ui",
+   "owners": [
+    "A2",
+    "F5",
+    "F8"
+   ]
+  },
+  {
+   "row": "G5",
+   "requirement": "In Mørkeskoven one lantern fill lasts 200 s and the light reaches 787 px",
+   "section": "dungeon_run + player",
+   "owners": [
+    "DR1",
+    "P06",
+    "V8"
+   ]
+  },
+  {
+   "row": "G6",
+   "requirement": "Nine citizens greet a ghost once, the Fairy King after the letter",
+   "section": "ghost_lines + npc",
+   "owners": [
+    "G-ghost-lines",
+    "P14"
+   ]
+  },
+  {
+   "row": "G7",
+   "requirement": "Every matrix that ran for three heroes runs for four",
+   "section": "zz_*",
+   "owners": [
+    "P27",
+    "F10",
+    "I6",
+    "N08",
+    "G-ghost-qa"
+   ]
+  }
+ ],
+ "honestStubs": [
+  {
+   "what": "the ghost in M1a (the lead's city preview)",
+   "state": "The ghost can be PICKED in the legacy select screen (SE-G5: a fourth button, Bu / Hviske in the dropdown) and WALKED around with its own baked sprite (hover, idle, glide walk and run) because the built stub player draws any skin. It has NO perks, NO bob, NO glow and NO hat / shirt layers there: those need P06 (Player2D), G-ghost-play and the wardrobe packages (M1b). The four-card page, the hero chips and the Danish hero blurbs arrive with P16 (M1b)."
+  },
+  {
+   "what": "ghost over water",
+   "state": "The ghost only LOOKS floaty: collisions are the figure ellipse of every race, ponds block the ghost like everybody (the fairy's flight is the only crossing perk). The whisper GHOST_WHISPER_WATER exists as a key but is a stub, cut first."
+  },
+  {
+   "what": "movement audio",
+   "state": "No footstep sound exists for ANY race in the plan; the name sfx/ghost_whoosh is only reserved (silent without a file)."
+  },
+  {
+   "what": "walk animation",
+   "state": "The stock-rig glide: 5 px bob, leaning, paddling mittens, a swaying wisp. A dedicated hover / glide clip set (the fairy's four flight clips) would add 4 clips x 2 heroes and 4 more layer groups per garment and was not built."
+  },
+  {
+   "what": "translucent hem",
+   "state": "Built, baked, imported and compared at zoom 0.4 / 0.9: invisible at game scale; REJECTED. S3TC (DXT5) handled the alpha ramp without artefacts (fix_alpha_border true), so the door stays open."
+  },
+  {
+   "what": "ghost voice",
+   "state": "The player has no voice; the nine reaction lines are text-only until P24 voices them in wave 6."
+  },
+  {
+   "what": "ghost citizens",
+   "state": "None. The player is the only ghost; the hero-twin rule needs no change."
+  },
+  {
+   "what": "pants and shoes of a ghost",
+   "state": "Worn, counted in perks, set bonuses and the RarityAura, never drawn (29 of 96 wearables are pants or shoes, 6 of 21 unique / legendary pieces, among them the capstone pants_trousers_starlight and the legendary shoes_boots_wind). The cue of a legendary piece is the gold aura, the Garderobe tag and the equip toast, not a layer; item flavour text such as \"De glimter, når du går\" stays. A tint-ready hem layer in the colour of the worn piece (every item has art.palette: +1 bake, +0.5 CPU-min, +0.7 MB) is the known upgrade if play shows the invisible cue disappoints; not built."
+  },
+  {
+   "what": "ghost glow in the farm at dusk",
+   "state": "A PointLight2D that lights the grass around the ghost at dusk and night; at noon it is invisible by the night factor. It is the ghost's second player light in the forest (lantern + glow = 2)."
+  },
+  {
+   "what": "damage flash on Hviske",
+   "state": "The thorn-berry-pink flash tints a pink-lilac sprite: less contrast than on the others; the heart bar, the knock-back and the hit clip carry the feedback."
+  }
+ ],
+ "risks": [
+  {
+   "risk": "Silent perk leak (enum extended, Perks.RACE_KEYS not): the ghost gets the hobbit's discount and bake bonus",
+   "severity": "high",
+   "guard": "RG2 + ghost.no_hobbit_perks_leak (mutation-proven) + ghost.every_enum_value_has_a_perk_row"
+  },
+  {
+   "risk": "The select page diff against the guide cannot stay <= 15 with four cards (the guide shows three)",
+   "severity": "medium",
+   "guard": "RG5 re-bases the reference on the 4-card render; the user may redraw it"
+  },
+  {
+   "risk": "A2 cost: +22 bakes (+10.6 CPU-min, +14.7 MB), more if Hviske needs her own scope",
+   "severity": "medium",
+   "guard": "the ghost scopes are baked last in Phase A; the borrow / own-scope rule is A2's measurement"
+  },
+  {
+   "risk": "Runtime float vs the wardrobe lock-step (the layers must follow the bob)",
+   "severity": "medium",
+   "guard": "wardrobe.lockstep_ghost_float; the bob goes through set_altitude, which F5 already mirrors for the fairy"
+  },
+  {
+   "risk": "Light budget in the forest and the city",
+   "severity": "low",
+   "guard": "forest_look.light_budget_with_the_ghost_glow; 12 map + lantern + glow = 14 <= 15"
+  },
+  {
+   "risk": "Two writers of the sprite altitude (hop, flight, bob)",
+   "severity": "low",
+   "guard": "P06 _apply_altitude is the only caller; player.ghost_float_and_hop_compose"
+  },
+  {
+   "risk": "Same-wave couplings of the first draft (V1 <-> G-ghost-data keys, A2 <-> G-ghost-art import, P06 <-> G-ghost-play)",
+   "severity": "low",
+   "guard": "now hard edges across waves (the design3 checker allows only strictly earlier waves): G-ghost-data and G-ghost-art in wave 3b, G-ghost-play in wave 5, P06 null-safe (AG4); one id table in the contracts block"
+  },
+  {
+   "risk": "A ghost cannot show 30 % of the loot (pants, shoes), among them 2 of the 8 legendaries and the set capstone pants_trousers_starlight",
+   "severity": "medium",
+   "guard": "hidden slots count for perks, set bonuses and the RarityAura (wardrobe.hidden_slot_counts_for_aura_and_sets); Garderobe tag + equip toast; no reroll (loot stays race-blind); upgrade path = a tinted hem layer (+1 bake)"
+  },
+  {
+   "risk": "The legacy-select patch (SE-G5) is a lead patch to a file P16 owns",
+   "severity": "low",
+   "guard": "mechanical (9 edits, proven by the boot stage of --character=ghost), applied after V1, replaced when P16 rewrites the two files; P16 keeps %GhostButton"
+  },
+  {
+   "risk": "The ghost's dark eyes differ from the family's white-sclera eyes",
+   "severity": "low",
+   "guard": "open question 1; flipping it is a palette entry (eye colour) and a re-bake of 2 heroes (13 s)"
+  }
+ ],
+ "openQuestions": [
+  {
+   "id": "GQ1",
+   "question": "Is the look right? The ghost has big DARK eyes with a white glint and no white of the eye (the other twelve figures have a white sclera), and a white / pale-blue sheet (Bu) and a pale-pink one (Hviske). Look at proto/contact_sheet_ghost.png, gamezoom_check.png and sketch_vs_baked.png.",
+   "default": "dark eyes (cuter and more ghostly in the prototype); switching to the family eye is one palette entry and a 13 second re-bake of both heroes"
+  },
+  {
+   "id": "GQ2",
+   "question": "The names: race \"Spøgelse\", looks \"Bu\" and \"Hviske\" (the lead's defaults, kept because Bu = boo and Hviske = whisper are what a child expects). Keep them?",
+   "default": "keep"
+  },
+  {
+   "id": "GQ3",
+   "question": "Should the ghost be allowed to float over water (a real perk, needs the maps to allow it) instead of only looking floaty?",
+   "default": "no: only looks floaty (the fairy keeps the flight perk)"
+  },
+  {
+   "id": "GQ4",
+   "question": "Should there be other ghosts as citizens of Trætoppen / Hyggebyen (e.g. a ghost baker's apprentice)?",
+   "default": "no: the player is the only ghost (the look cap per area is 16 and the hero-twin rule would need two more twins)"
+  }
+ ],
+ "ownershipCheck": {
+  "script": "design4/scripts/check_ghost_ownership.py",
+  "result": "see design4/notes/check_ghost_ownership.txt"
+ }
+}

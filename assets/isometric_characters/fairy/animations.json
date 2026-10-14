@@ -110,6 +110,18 @@
     128,
     200
   ],
-  "source": "GLB-to-sprite orthographic offline bake",
-  "orientation": "screen-down = S; clockwise rows S,SW,W,NW,N,NE,E,SE"
+  "source": "Painted imagegen turnaround + offline continuous 2D puppet bake",
+  "orientation": "screen-down = S; clockwise rows S,SW,W,NW,N,NE,E,SE",
+  "illustration": {
+    "source": "tools/art/drawn/sources/heroes.png",
+    "views": [
+      "front",
+      "front_left",
+      "left",
+      "rear_left",
+      "back"
+    ],
+    "opposite_views": "mirrored",
+    "north_source": "tools/art/drawn/sources/backs1.png"
+  }
 }

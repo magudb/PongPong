@@ -6,8 +6,7 @@
 # one worktree = one Godot project directory with its own .godot cache; the git history and objects are shared.
 #
 #   tools/dev/worktree.sh new <name> [base]   create branch <name> (from base, default main) and its worktree; links the
-#                                             art venv, clones main's .godot import cache (APFS clone, instant) and
-#                                             runs one headless import so the worktree starts warm
+#                                             art venv and runs two headless imports so the worktree starts warm
 #   tools/dev/worktree.sh list                all worktrees (path, branch, clean/dirty)
 #   tools/dev/worktree.sh path <name>         print the worktree path
 #   tools/dev/worktree.sh refresh <name>      re-link the venv and re-import (after switching base or a failed import)
@@ -33,9 +32,8 @@ link_and_warm() {   # $1 = worktree path, $2 = "import" | "noimport"
   if [ -d "$MAIN/tools/art/.venv" ] && [ ! -e "$wt/tools/art/.venv" ]; then
     ln -s "$MAIN/tools/art/.venv" "$wt/tools/art/.venv"
   fi
-  if [ -d "$MAIN/.godot" ] && [ ! -e "$wt/.godot" ]; then
-    cp -Rc "$MAIN/.godot" "$wt/.godot" 2>/dev/null || cp -R "$MAIN/.godot" "$wt/.godot"
-  fi
+  # No cloned cache: main's .godot can be stale, and a stale cache makes Godot rewrite tracked files (props.json) on the first
+  # import. A fresh import is slower (about a minute) but leaves the worktree clean.
   if [ "$2" = import ] && [ -x "$GODOT" ]; then
     "$GODOT" --headless --path "$wt" --import >/dev/null 2>&1 || true
     "$GODOT" --headless --path "$wt" --import >/dev/null 2>&1 || true

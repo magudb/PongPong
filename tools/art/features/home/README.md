@@ -6,6 +6,10 @@ Everything is baked by the same procedural VTK pipeline as the cast (one orthogr
 world sprites, ink `#2b2340` on icons) - soft 3D-rendered sprites, **not** hand-painted brushwork. The tools only import `tools/art/generator` and `tools/art/core`
 (P08) through `PYTHONPATH`; they never edit them.
 
+The shipped day sprites and icons additionally receive the offline illustrated finish documented in `tools/art/README.md`:
+warm ink, textured color washes and pencil accents. The original VTK export is the input to that finish; night and float
+layers remain additive source artwork. Regenerating this package needs the illustration pass before installing final art.
+
 ## Run (repo root)
 
 ```
