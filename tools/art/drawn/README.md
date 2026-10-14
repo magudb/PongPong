@@ -6,7 +6,7 @@ calls for layered roofs, worn materials, balconies, pipes, plants and warm
 windows. This replaces the model-derived character drawings and the live world's
 placeholder houses and trees, rather than adding another texture finish.
 
-The original transparent paintings are in `sources/`. They were generated with
+The original paintings are in `sources/`. They were generated with
 the built-in imagegen tool using the user's two references. The exact prompt set
 and reference roles are in [prompts.json](prompts.json). No API key is needed to
 rebuild the installed sprites from these committed paintings.
@@ -21,7 +21,7 @@ tests/run_playtest.sh --strict --character=fairy
 tests/run_playtest.sh --strict --character=hobbit
 ```
 
-`--only=characters|props|homes` rebuilds a slice. `--sheet heroes players2`
+`--only=characters|props|homes|terrain` rebuilds a slice. `--sheet heroes players2`
 restricts the character sources. `--portraits-only --only=characters` updates
 portraits without rebuilding animation sheets. Run one Godot instance at a time.
 
@@ -44,6 +44,22 @@ below every character and tracked with the building when hidden or removed.
 The `world-footprints.png` review image overlays the real tile grid and foundation
 edges; the overlay is only part of the capture tool.
 
+The 24 outdoor terrain atlases replace the runtime placeholder surfaces in both
+isometric and orthographic areas. `terrain.py` cuts the twelve painted materials
+from `sources/terrain.png`, removes their edge lighting mismatch with a periodic
+Poisson solve, and projects each continuous material across the complete 4 by 4
+tile period. Grass blades, stones and wood grain continue through tile borders.
+Water retains four animation frames and a 2 by 2 period; watered soil stays
+darker than dry soil. Atlas dimensions, collision, and terrain IDs stay in the
+existing contract. Tiles use lossless imports without mipmaps, with the existing
+1.4 px overscan to prevent hairline seams at low zoom.
+
+The same source supplies three painted bark sidewalls and two timber bridge
+decks, installed separately in `assets/iso_props/drawn_terrain/`. Their original
+pivots and dimensions keep the platform rim aligned with the terrain. The source
+was generated using the built-in imagegen tool; its exact prompt is in
+`terrain-prompt.txt`.
+
 Buildings have additive window masks derived from the new paintings. Sliced building
 masks use the complete image origin, so their light stays on the windows. All ten home tiers
 retain their door anchors, dimensions, footprints and depth sorting; their
@@ -65,8 +81,8 @@ The native-engine review script is:
   -s res://tools/art/drawn/capture.gd
 ```
 
-It saves dawn, daylight close view, tile alignment, night, full cast and building
-previews in `docs/art/drawn/`.
+It saves dawn, daylight close view, tile alignment, night, full cast, building
+and terrain previews in `docs/art/drawn/`.
 It starts a review game in memory and does not write a save. The previous
 `storybook/` shader and geometry generators remain available for the other
 assets and for source experiments; use this packer to restore the shipped look

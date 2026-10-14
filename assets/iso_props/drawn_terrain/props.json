@@ -1,0 +1,83 @@
+{
+  "_source": "Bark sidewalls and timber bridge decks from tools/art/drawn/sources/terrain.png",
+  "platform_sw": {
+    "file": "platform_sw.webp",
+    "size": [
+      79,
+      143
+    ],
+    "pivot": [
+      73,
+      13
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "platform_se": {
+    "file": "platform_se.webp",
+    "size": [
+      79,
+      143
+    ],
+    "pivot": [
+      6,
+      13
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "platform_corner": {
+    "file": "platform_corner.webp",
+    "size": [
+      146,
+      146
+    ],
+    "pivot": [
+      73,
+      13
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "bridge_x": {
+    "file": "bridge_x.webp",
+    "size": [
+      138,
+      142
+    ],
+    "pivot": [
+      69,
+      100
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  },
+  "bridge_z": {
+    "file": "bridge_z.webp",
+    "size": [
+      138,
+      142
+    ],
+    "pivot": [
+      69,
+      100
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "iso"
+  }
+}

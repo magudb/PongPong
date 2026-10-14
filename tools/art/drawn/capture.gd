@@ -66,7 +66,8 @@ func _run() -> void:
 	current_scene = null
 	await _cast()
 	await _buildings()
-	print("DRAWN ART captured world, daylight close view, night, cast and buildings")
+	await _terrain()
+	print("DRAWN ART captured world, daylight close view, night, cast, buildings and terrain")
 	quit()
 
 
@@ -74,6 +75,34 @@ func _shot(file: String) -> void:
 	await process_frame
 	RenderingServer.force_draw(false)
 	root.get_texture().get_image().save_png(OUT + file)
+
+
+func _terrain() -> void:
+	var canvas := _paper(Vector2i(1280, 1200))
+	var ids := AreaTileSet.ISO_TERRAINS + AreaTileSet.ORTHO_TERRAINS
+	for index in ids.size():
+		var row := floori(float(index) / 4)
+		var id: StringName = ids[index]
+		var art := ArtCatalog.terrain(id)
+		var ortho: bool = art["proj"] == &"ortho"
+		var panel := Node2D.new()
+		panel.position = Vector2(160 + (index % 4) * 320, 80 + row * 200)
+		panel.scale = Vector2.ONE * .48
+		canvas.add_child(panel)
+		for y in 4:
+			for x in 4:
+				var tile := Sprite2D.new()
+				var texture := AtlasTexture.new()
+				texture.atlas = art["texture"]
+				texture.region = Rect2(Vector2(Iso.atlas_coords(Vector2i(x, y), art["variants"]) * art["cell"]), Vector2(art["cell"]))
+				tile.texture = texture
+				tile.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+				tile.position = Vector2((x - 1.5) * Iso.ORTHO_W, (y - 1.5) * Iso.ORTHO_H) if ortho else Iso.iso_center(Vector2i(x, y)) - Vector2(0, 3 * Iso.TILE_H / 2)
+				panel.add_child(tile)
+		_caption(canvas, String(id), Vector2((index % 4) * 320, row * 200 + 165), 320)
+	await _shot("terrain.png")
+	canvas.queue_free()
+	await process_frame
 
 
 func _paper(size: Vector2i) -> Control:
