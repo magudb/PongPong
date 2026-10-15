@@ -1,5 +1,10 @@
 extends Node
 ## Farm animal husbandry: feeding, happiness, products, care, buildings.
+##
+## DATA (lua/config/husbandry.lua, `husbandry.species` / `husbandry.buildings`): species balance, feed
+## tables, products and build costs. The literals below are a LOAD-FAILURE FALLBACK only (tests assert
+## the Lua tables match). `product_interval` is the ProductType name in Lua ("daily", "every_2_days",
+## "every_3_days", "on_bond") and is mapped onto the enum at load.
 
 signal animal_added(animal_id: StringName, species: StringName)
 signal animal_fed(animal_id: StringName, food_id: StringName)
@@ -12,7 +17,16 @@ enum ProductType { DAILY, EVERY_2_DAYS, EVERY_3_DAYS, ON_BOND }
 
 const SAVE_VERSION := 2
 const PRODUCT_DAYS := {ProductType.DAILY: 1, ProductType.EVERY_2_DAYS: 2, ProductType.EVERY_3_DAYS: 3}
+## Lua product_interval name -> ProductType.
+const PRODUCT_INTERVALS := {
+	"daily": ProductType.DAILY, "every_2_days": ProductType.EVERY_2_DAYS,
+	"every_3_days": ProductType.EVERY_3_DAYS, "on_bond": ProductType.ON_BOND,
+}
 
+## Fallback only: the live tables come from lua/config/husbandry.lua (tests/sections/husbandry_data.gd
+## checks they are identical). Keys: name_key, product, product_amount, product_interval (enum),
+## max_happiness, happiness_decay_per_day, feed_types, favorite_feed, favorite_feed_bonus, building,
+## base_value, grow_days.
 const SPECIES_DATA := {
 	"chicken": {
 		"name_key": "ITEM_BABY_CHICK",
@@ -190,6 +204,9 @@ const BUILDINGS := {
 var animals: Dictionary = {}  # animal_id -> AnimalData
 var buildings: Dictionary = {}  # building_id -> BuildingData
 var _animal_counter: int = 0
+## Live tables (lua/config/husbandry.lua; the consts above are the fallback only).
+var species_data: Dictionary = SPECIES_DATA
+var buildings_data: Dictionary = BUILDINGS
 
 
 class AnimalData:
@@ -263,8 +280,35 @@ class BuildingData:
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	_load_husbandry_config()
 	EventBus.day_started.connect(_on_day_started)
 	EventBus.new_game_started.connect(reset)
+
+
+## Replaces the fallback tables with lua/config/husbandry.lua (`husbandry.species` / `husbandry.buildings`).
+## product_interval strings become ProductType enums so the rest of the file is unchanged. A missing or
+## partial config keeps the fallback rows for the species it does not name.
+func _load_husbandry_config() -> void:
+	var cfg: Variant = GameData.cfg("husbandry", {})
+	if not (cfg is Dictionary):
+		return
+	var live: Dictionary = {}
+	var src: Dictionary = (cfg as Dictionary).get("species", {})
+	if src is Dictionary:
+		for id in src:
+			var raw: Variant = src[id]
+			if not (raw is Dictionary):
+				continue
+			var row: Dictionary = (raw as Dictionary).duplicate()
+			if row.has("product_interval"):
+				row["product_interval"] = PRODUCT_INTERVALS.get(str(row["product_interval"]), ProductType.DAILY)
+			row.erase("species_enum")
+			live[str(id)] = row
+	if not live.is_empty():
+		species_data = live
+	var bsrc: Variant = (cfg as Dictionary).get("buildings", {})
+	if bsrc is Dictionary and not (bsrc as Dictionary).is_empty():
+		buildings_data = (bsrc as Dictionary).duplicate(true)
 
 
 func reset() -> void:
@@ -316,7 +360,7 @@ func adopt_animal(item_id: StringName) -> bool:
 
 	EventBus.notification_posted.emit(
 		tr("NOTIF_ANIMAL_ADOPTED_TITLE"),
-		"%s (%s)" % [animal.name, tr(SPECIES_DATA[str(species)]["name_key"])],
+		"%s (%s)" % [animal.name, tr(species_data[str(species)]["name_key"])],
 		"animal"
 	)
 	return true
@@ -326,7 +370,7 @@ func feed_animal(animal_id: StringName, food_id: StringName) -> bool:
 	if not animals.has(animal_id):
 		return false
 	var animal: AnimalData = animals[animal_id]
-	var spec: Dictionary = SPECIES_DATA[str(animal.species)]
+	var spec: Dictionary = species_data[str(animal.species)]
 
 	if not EconomyManager.has_item(food_id, 1):
 		return false
@@ -412,7 +456,7 @@ func collect_product(animal_id: StringName) -> int:
 	if not animals.has(animal_id):
 		return 0
 	var animal: AnimalData = animals[animal_id]
-	var spec: Dictionary = SPECIES_DATA[str(animal.species)]
+	var spec: Dictionary = species_data[str(animal.species)]
 
 	if animal.products_ready <= 0:
 		return 0
@@ -442,7 +486,7 @@ func collect_product(animal_id: StringName) -> int:
 # --- Buildings ---
 
 func build_building(building_type: StringName) -> bool:
-	var spec: Dictionary = BUILDINGS.get(str(building_type), {})
+	var spec: Dictionary = buildings_data.get(str(building_type), {})
 	if spec.is_empty():
 		return false
 
@@ -498,7 +542,7 @@ func get_building_capacity(building_type: StringName) -> int:
 	for bid in buildings:
 		var b: BuildingData = buildings[bid]
 		if b.building_type == building_type and b.is_built:
-			total += BUILDINGS[str(building_type)]["capacity"]
+			total += buildings_data[str(building_type)]["capacity"]
 	return total
 
 
@@ -518,7 +562,7 @@ func _on_day_started(_day: int, _season: StringName) -> void:
 	var today := GameManager.total_day()
 	for aid in animals:
 		var animal: AnimalData = animals[aid]
-		var spec: Dictionary = SPECIES_DATA[str(animal.species)]
+		var spec: Dictionary = species_data[str(animal.species)]
 
 		# Age
 		animal.age_days += 1
@@ -555,7 +599,7 @@ func _check_bond_level(animal: AnimalData) -> void:
 	if animal.bond_xp >= xp_needed:
 		animal.bond_xp -= xp_needed
 		animal.bond_level += 1
-		var spec: Dictionary = SPECIES_DATA[str(animal.species)]
+		var spec: Dictionary = species_data[str(animal.species)]
 		if int(spec["product_interval"]) == ProductType.ON_BOND:
 			animal.products_ready += int(spec["product_amount"][1])
 		animal_bonded.emit(animal.id, animal.bond_level)
@@ -586,21 +630,21 @@ func _item_to_species(item_id: StringName) -> StringName:
 
 
 func _has_space_for(species: StringName) -> bool:
-	var spec: Dictionary = SPECIES_DATA[str(species)]
+	var spec: Dictionary = species_data[str(species)]
 	var needed_building: String = spec["building"]
 	var capacity := get_building_capacity(StringName(needed_building))
 	var current := 0
 	for aid in animals:
 		var a: AnimalData = animals[aid]
-		if SPECIES_DATA[str(a.species)]["building"] == needed_building:
+		if species_data[str(a.species)]["building"] == needed_building:
 			current += 1
 	return current < capacity or capacity == 0
 
 
 func _find_building_with_space(species: StringName) -> StringName:
-	var spec: Dictionary = SPECIES_DATA[str(species)]
+	var spec: Dictionary = species_data[str(species)]
 	var needed_building: String = spec["building"]
-	var capacity: int = BUILDINGS[needed_building]["capacity"]
+	var capacity: int = buildings_data[needed_building]["capacity"]
 
 	for bid in buildings:
 		var b: BuildingData = buildings[bid]
@@ -680,7 +724,7 @@ func validate_dict(data: Dictionary) -> bool:
 		if not _valid_id(id) or not (record is Dictionary):
 			return false
 		var d: Dictionary = record
-		if not _valid_id(d.get("species")) or not SPECIES_DATA.has(str(d["species"])):
+		if not _valid_id(d.get("species")) or not species_data.has(str(d["species"])):
 			return false
 		if not _valid_id(d.get("id", id)) or str(d.get("id", id)) != str(id):
 			return false
@@ -698,7 +742,7 @@ func validate_dict(data: Dictionary) -> bool:
 		if not _valid_id(id) or not (record is Dictionary):
 			return false
 		var d: Dictionary = record
-		if not _valid_id(d.get("building_type")) or not BUILDINGS.has(str(d["building_type"])):
+		if not _valid_id(d.get("building_type")) or not buildings_data.has(str(d["building_type"])):
 			return false
 		if not _valid_id(d.get("id", id)) or str(d.get("id", id)) != str(id):
 			return false

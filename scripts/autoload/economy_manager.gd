@@ -49,6 +49,8 @@ const RARE_RANK := 3
 const UNSELLABLE_CATEGORIES: Array[String] = ["quest", "special"]
 
 ## What a new game starts with, given silently (plan 7.3 P12 task 1): [item id, amount].
+## Live source: lua/data/starter_kit.lua `starter_kit.tools` (id = amount). This literal is a
+## load-failure fallback only (tests/sections/review_regressions.gd asserts the two are identical).
 const STARTER_KIT: Array = [
 	["hoe_wooden", 1], ["watering_can_copper", 1], ["axe_wooden", 1], ["pickaxe_wooden", 1], ["sword_rusty", 1], ["scythe", 1],
 	["turnip_seeds", 5], ["lantern_oil", 2], ["health_tonic", 1],
@@ -85,10 +87,22 @@ func reset() -> void:
 	inventory.clear()
 	equipment = _empty_equipment()
 	_misrouted = false
-	for entry in STARTER_KIT:
+	for entry in _starter_kit():
 		add_item(StringName(entry[0]), int(entry[1]), true)
 	EventBus.player_inventory_changed.emit(get_inventory_dict())
 	EventBus.gold_changed.emit(gold, 0)
+
+
+## The starter tools of lua/data/starter_kit.lua `starter_kit.tools` as [[id, amount], ...];
+## the STARTER_KIT literal when the config is missing or empty.
+func _starter_kit() -> Array:
+	var tools: Variant = _Svc.lua_config("starter_kit.tools", null)
+	if tools is Dictionary and not (tools as Dictionary).is_empty():
+		var out: Array = []
+		for id in tools:
+			out.append([str(id), int((tools as Dictionary)[id])])
+		return out
+	return STARTER_KIT
 
 
 static func _empty_equipment() -> Dictionary:

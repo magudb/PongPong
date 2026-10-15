@@ -209,6 +209,7 @@ func _ready() -> void:
 	if music != null and music.has_method("play_music") and area.map.music != "":
 		music.call("play_music", area.map.music)
 	_welcome_toast(saved)
+	ContractManifest.report()
 	await warm_clips()
 	_maybe_intro()
 
