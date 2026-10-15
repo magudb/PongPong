@@ -412,11 +412,17 @@ func _props_and_footprints(t) -> void:
 # ================================================================== D. the warp graph
 
 ## Every warp of a map: [{to, spawn, label, cell, params, prop}].
-func _warps(s: Dictionary) -> Array:
+func _warps(s: Dictionary, m: AreaMap = null) -> Array:
 	var out: Array = []
 	for rec in _of(s, "warp"):
 		var p: Dictionary = rec["params"]
 		out.append({"to": str(p.get("to", "")), "spawn": str(p.get("spawn", "default")), "label": str(p.get("label", "")), "cell": rec["cell"], "prop": str(p.get("prop", "")), "params": p})
+	# a header-only builder map declares its ways out in the header (the two bridge stubs and the Skovlift of the city)
+	if m != null and m.is_builder():
+		for ch in m.markers:
+			var d: Dictionary = m.markers[ch]
+			if str(d.get("marker", "")) == "warp":
+				out.append({"to": str(d.get("to", "")), "spawn": str(d.get("spawn", "default")), "label": str(d.get("label", "")), "cell": Vector2i(-1, -1), "prop": "", "params": d})
 	return out
 
 
@@ -447,6 +453,14 @@ func _spawn_names(m: AreaMap, s: Dictionary) -> Array[String]:
 		out.append("default")
 	for rec in _of(s, "spawn"):
 		out.append(str((rec["params"] as Dictionary).get("name", "default")))
+	# a header-only BUILDER map (traetoppen, the levelled city) has no object rows: it declares its arrival spawns with @marker lines in the header
+	# (data/maps/traetoppen.map; city_map.header_declarations_match_the_data keeps them equal to the data) and `default` is implicit
+	if m.is_builder():
+		if not out.has("default"):
+			out.append("default")
+		for ch in m.markers:
+			if str((m.markers[ch] as Dictionary).get("marker", "")) == "spawn":
+				out.append(str((m.markers[ch] as Dictionary).get("name", "default")))
 	return out
 
 
@@ -464,7 +478,7 @@ func _graph(t) -> void:
 		if m == null:
 			continue
 		var s: Dictionary = _scan(m)
-		for w in _warps(s):
+		for w in _warps(s, m):
 			checked += 1
 			var to: String = w["to"]
 			if REMOVED_FOREST_AREAS.has(to):
@@ -482,7 +496,7 @@ func _graph(t) -> void:
 			var tm: AreaMap = WorldRoot2D.load_map(StringName(to))
 			# round trip: the target has a warp back to this area (the arrival spawn of that warp is checked on its own turn)
 			var back: bool = false
-			for w2 in _warps(_scan(tm)):
+			for w2 in _warps(_scan(tm), tm):
 				if str(w2["to"]) == String(id):
 					back = true
 			if not back:
