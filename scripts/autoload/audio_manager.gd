@@ -8,6 +8,8 @@ const MUSIC_DIR := "res://assets/audio/music"
 
 var _sfx_pool: Array[AudioStreamPlayer] = []
 var _music_player: AudioStreamPlayer
+var _music_tween: Tween
+var _music_request: int = 0
 var _voice_player: AudioStreamPlayer
 var _ambient_players: Array[AudioStreamPlayer3D] = []
 
@@ -67,29 +69,50 @@ func play_music(track_id: String, fade_seconds: float = 1.0) -> void:
 	var stream := _load_stream(MUSIC_DIR, track_id)
 	if stream == null:
 		return
+	_cancel_music_transition()
+	var request := _music_request
 	if _music_player.playing and _music_player.stream == stream:
+		_music_player.volume_db = music_volume_db
 		return
 	if _music_player.playing and fade_seconds > 0:
-		var tween := create_tween()
-		tween.tween_property(_music_player, "volume_db", -40.0, fade_seconds * 0.5)
-		await tween.finished
+		_music_tween = create_tween()
+		_music_tween.tween_property(_music_player, "volume_db", -40.0, fade_seconds * 0.5)
+		_music_tween.tween_callback(_start_music.bind(stream, fade_seconds, request))
+	else:
+		_start_music(stream, fade_seconds, request)
+
+
+func _start_music(stream: AudioStream, fade_seconds: float, request: int) -> void:
+	if request != _music_request:
+		return
 	_music_player.stream = stream
 	_music_player.volume_db = -40.0 if fade_seconds > 0.0 else music_volume_db
 	_music_player.play()
 	if fade_seconds > 0:
-		var tween2 := create_tween()
-		tween2.tween_property(_music_player, "volume_db", music_volume_db, fade_seconds)
+		_music_tween = create_tween()
+		_music_tween.tween_property(_music_player, "volume_db", music_volume_db, fade_seconds)
 
 
 func stop_music(fade_seconds: float = 1.0) -> void:
+	_cancel_music_transition()
+	var request := _music_request
 	if not _music_player.playing:
 		return
 	if fade_seconds <= 0:
 		_music_player.stop()
 		return
-	var tween := create_tween()
-	tween.tween_property(_music_player, "volume_db", -40.0, fade_seconds)
-	tween.tween_callback(_music_player.stop)
+	_music_tween = create_tween()
+	_music_tween.tween_property(_music_player, "volume_db", -40.0, fade_seconds)
+	_music_tween.tween_callback(func() -> void:
+		if request == _music_request:
+			_music_player.stop())
+
+
+func _cancel_music_transition() -> void:
+	_music_request += 1
+	if _music_tween != null and _music_tween.is_valid():
+		_music_tween.kill()
+	_music_tween = null
 
 
 func play_voice(voice_key: String, volume_db: float = NAN) -> void:

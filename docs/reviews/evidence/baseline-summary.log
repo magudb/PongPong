@@ -1,0 +1,61 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=*
+  --    boot: 8 checks, 0 failed, 0 skipped, 2.8 s
+== section area  (res://tests/sections/area.gd)
+  --    area: 232 checks, 0 failed, 0 skipped, 20.3 s
+== section art_cast_v2  (res://tests/sections/art_cast_v2.gd)
+  --    art_cast_v2: 21 checks, 0 failed, 4 skipped, 76.3 s
+== section art_characters  (res://tests/sections/art_characters.gd)
+  --    art_characters: 27 checks, 0 failed, 0 skipped, 68.0 s
+== section art_city  (res://tests/sections/art_city.gd)
+  --    art_city: 17 checks, 0 failed, 0 skipped, 12.2 s
+== section art_environment  (res://tests/sections/art_environment.gd)
+  --    art_environment: 32 checks, 0 failed, 3 skipped, 18.5 s
+== section art_farm  (res://tests/sections/art_farm.gd)
+  --    art_farm: 23 checks, 0 failed, 0 skipped, 3.0 s
+== section art_ghost  (res://tests/sections/art_ghost.gd)
+  --    art_ghost: 18 checks, 0 failed, 0 skipped, 71.5 s
+== section art_home  (res://tests/sections/art_home.gd)
+  --    art_home: 29 checks, 0 failed, 0 skipped, 26.9 s
+== section cast_data  (res://tests/sections/cast_data.gd)
+  --    cast_data: 15 checks, 0 failed, 3 skipped, 81.9 s
+== section characters  (res://tests/sections/characters.gd)
+  --    characters: 116 checks, 0 failed, 0 skipped, 61.2 s
+== section city_levels  (res://tests/sections/city_levels.gd)
+  --    city_levels: 69 checks, 0 failed, 0 skipped, 40.6 s
+== section city_map  (res://tests/sections/city_map.gd)
+  --    city_map: 53 checks, 0 failed, 7 skipped, 57.0 s
+== section content_features  (res://tests/sections/content_features.gd)
+  --    content_features: 141 checks, 0 failed, 0 skipped, 20.5 s
+== section core  (res://tests/sections/core.gd)
+  --    core: 113 checks, 0 failed, 0 skipped, 2.2 s
+== section data  (res://tests/sections/data.gd)
+  --    data: 325 checks, 0 failed, 1 skipped, 12.2 s
+== section economy  (res://tests/sections/economy.gd)
+  --    economy: 296 checks, 0 failed, 2 skipped, 2.6 s
+== section ghost  (res://tests/sections/ghost.gd)
+  --    ghost: 7 checks, 0 failed, 0 skipped, 0.0 s
+== section ghost_data  (res://tests/sections/ghost_data.gd)
+  --    ghost_data: 4 checks, 0 failed, 0 skipped, 0.0 s
+== section loc  (res://tests/sections/loc.gd)
+  --    loc: 115 checks, 0 failed, 0 skipped, 50.7 s
+== section maps_farm  (res://tests/sections/maps_farm.gd)
+  --    maps_farm: 62 checks, 0 failed, 0 skipped, 14.9 s
+== section maps_iso  (res://tests/sections/maps_iso.gd)
+  --    maps_iso: 39 checks, 0 failed, 9 skipped, 7.3 s
+== section rarity  (res://tests/sections/rarity.gd)
+  --    rarity: 74 checks, 0 failed, 0 skipped, 0.1 s
+== section review_regressions  (res://tests/sections/review_regressions.gd)
+  --    review_regressions: 85 checks, 0 failed, 0 skipped, 2.2 s
+== section save  (res://tests/sections/save.gd)
+  --    save: 236 checks, 0 failed, 1 skipped, 23.1 s
+== section ui_audit  (res://tests/sections/ui_audit.gd)
+  --    ui_audit: 439 checks, 0 failed, 23 skipped, 9.7 s
+== section ui_audit_blind  (res://tests/sections/ui_audit_blind.gd)
+  --    ui_audit_blind: 121 checks, 0 failed, 0 skipped, 5.3 s
+== section ui_audit_pins  (res://tests/sections/ui_audit_pins.gd)
+  --    ui_audit_pins: 344 checks, 0 failed, 0 skipped, 2.5 s
+== section ui_foundation  (res://tests/sections/ui_foundation.gd)
+  --    ui_foundation: 188 checks, 0 failed, 1 skipped, 23.0 s
+== summary: 28 section(s) run, 3249 checks (0 failed, 54 skipped), 0 engine error(s), 0 engine warning(s), 26 allowed message(s), 0 problem(s), 0 known-issue message(s), 729.2 s
+PLAYTEST PASS (3249 checks in 28 sections, 26 allowed engine messages, 0 known-issue messages)

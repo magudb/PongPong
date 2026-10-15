@@ -23,7 +23,7 @@ tests/run_playtest.sh --strict --character=fairy
 tests/run_playtest.sh --strict --character=hobbit
 ```
 
-`--only=characters|props|homes|terrain|items` rebuilds a slice. `--sheet heroes players2`
+`--only=characters|props|homes|terrain|items|world` rebuilds a slice. `--sheet heroes players2`
 restricts the character sources; `--character <ids...>` restricts individual IDs.
 `--portraits-only --only=characters` updates
 portraits without rebuilding animation sheets. Run one Godot instance at a time.
@@ -109,6 +109,41 @@ uses 256 colours with its alpha unchanged.
 Legacy terrain masters are exported as lossless WebP with identical visible
 RGBA and no mipmaps. `environment-export.json` records dimensions, colour error,
 alpha comparisons and the combined 22 MB environment budget.
+
+The treetop city and Mørkeskoven use the same painted source family through
+`world.py` (`pack.py --only=world`). `city_painted.png`,
+`city_details_painted.png` and `forest_painted.png` are saved imagegen masters;
+`docs/art/world-consistency/prompts.json` and `detail-prompt.txt` in that folder
+retain the exact prompts and reference roles; `asset-repair-prompt.txt` provides
+a reusable correction template. The packer extracts their alpha islands and exports the city
+huts, furniture, lanterns, lift, woodland crowns, cave stones and runestones to
+`assets/iso_props/painted_world/`. Timber decks and bark use the same painted
+material sheet as the approved tiles. City canopy leaves come from the forest
+master and hanging bats from the existing drawn character master.
+The distant city trees reuse the approved nature painting. Rope rails take their
+warm timber colour from the city art settings; other level builders retain their
+own defaults. Forest glow patches keep the painted leaf litter, with mushrooms
+and radial lights supplying the glow instead of bright square tiles.
+
+The effective pack overrides the original generator exports. Canvas dimensions,
+floor pivots, level ranks and collision data stay in their existing contracts.
+Hut night masks are derived from the new amber windows; CityData reads their
+effective pivots and offsets from ArtCatalog so old window positions cannot leak
+through a painted hut. `art_world_style` verifies the effective resources and
+their source paintings, rather than only checking that an old asset exists.
+The effective city textures, sky and distant trees use 69.4 MB of RGBA8 upload
+space including imported mipmaps, within the existing 70 MB contract. The
+magnified far backdrop keeps the original backdrop's no-mipmap import preset.
+
+Native engine comparisons use the same camera poses for the original and new pack:
+
+```sh
+GODOT_EXTRA_ARGS=--minimized tools/dev/run_windowed.sh --strict --no-boot \
+  --sections-dir=res://tests/art_review --only=world_views --out=/tmp/world-views
+```
+
+The five captures show the city overview, close view and night, plus the forest
+overview and cave clearing. Inspect them together with the character/tile sheets.
 
 After importing the project, audit the effective catalogs and map references:
 

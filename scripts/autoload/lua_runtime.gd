@@ -109,6 +109,9 @@ func load_file(path: String) -> String:
 	if sid != "":
 		_register_script(sid)
 		_post_register()
+		var gm := _node("GameManager")
+		if gm != null and gm.has_method("invalidate_config_cache"):
+			gm.call("invalidate_config_cache")
 	return sid
 
 

@@ -42,6 +42,14 @@ static func city_props() -> Dictionary:
 	if _props_cache.is_empty():
 		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(PROPS_PATH)) if FileAccess.file_exists(PROPS_PATH) else null
 		_props_cache = parsed as Dictionary if parsed is Dictionary else {}
+		# Geometry mappings remain V5's data; image dimensions, pivots and night
+		# anchors follow the effective art pack, just like the builder's textures.
+		for id in _props_cache.keys():
+			if str(id).begins_with("_"):
+				continue
+			var effective: Dictionary = ArtCatalog.prop_metadata(StringName(str(id)))
+			if not effective.is_empty():
+				_props_cache[id] = effective
 	return _props_cache
 
 

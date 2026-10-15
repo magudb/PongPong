@@ -1,0 +1,60 @@
+Reusable asset correction prompt — chosen painted style
+
+Use with the built-in imagegen editor. Attach the existing asset and the relevant
+approved source paintings before submitting the prompt below. Paths are relative
+to the repository root. Save the edited master and the final prompt with its
+reference roles, then export it through the native packer and inspect it in Godot.
+
+Reference selection
+
+Character style / proportions: tools/art/drawn/sources/heroes.png, plus the
+specific character's existing master listed in tools/art/drawn/pack.py.
+Buildings / warm windows: tools/art/drawn/sources/buildings.png.
+Organic foliage / props: tools/art/drawn/sources/nature.png.
+Tile pigments / painted materials: tools/art/drawn/sources/terrain.png.
+Current environment masters: city_painted.png, city_details_painted.png and
+forest_painted.png in tools/art/drawn/sources/.
+
+Prompt template
+
+Use case: illustration-story / style-transfer. Edit the attached EXISTING game
+asset [ASSET ID / TARGET IMAGE] so it belongs beside our approved characters,
+buildings and tiles. The attached approved paintings are the authoritative style
+references. The existing asset is a shape, footprint and camera reference; its
+old rendering style is not authoritative.
+
+Match the approved hand-painted storybook gouache / watercolor: gently uneven
+warm grey-brown pencil contours, matte painted pigments, subtle paper tooth,
+organic worn materials, delicate moss and plants, restrained earthy olive / sage /
+honey / muted lavender colours, and clear readable silhouettes. Characters retain
+their approved rounded proportions, simple tiny eyes and existing identity. Match
+the reference's detail density; keep focal shapes readable at the game's low zoom.
+Use the tile master for timber grain, bark, stone and forest litter instead of
+introducing a different material language. Preserve warm amber windows and cool
+teal forest accents where appropriate.
+
+Preserve [EXACT CANVAS DIMENSIONS], [PIVOT / GROUND ANCHOR], [FOOTPRINT], the
+authored camera and the complete silhouette. The camera is elevated about
+36 degrees, orthographic, with ground ellipses about .58 as tall as wide; match
+the actual target's orientation. Keep interaction points, doors, openings, water
+anchors and night-light positions compatible with the target. If a night mask
+changes, derive it from the final painting and update its native offset.
+
+Change only [REQUESTED CORRECTION]. Keep all other approved features. Render
+neutral readable albedo: the engine supplies day/night grading, shadows and bloom.
+Retain true transparency and anti-aliased organic edges. No ground rectangle,
+paper background, cropped foliage, baked halo, labels, characters added to props,
+glossy 3D surfaces, smooth geometric blobs, vector icons or photorealism.
+
+For a sheet, use [ROWS x COLUMNS] separate complete alpha islands in the exact
+listed order, generous transparent gutters and no overlap. Avoid detached tiny
+pieces that the packer's island extraction could confuse with another asset.
+
+Delivery: an edited transparent raster master at [OUTPUT PATH]. After packing,
+inspect it beside the approved fox and tiles in the real city / forest at zoom
+.2, .4 and a close view, including night. Check silhouette edges, window alignment,
+sorting, visibility, bridge joins, and the existing texture budget.
+
+Exact prompts used for this correction are in prompts.json and detail-prompt.txt
+beside this template. They record the actual inputs and instructions, rather than
+the placeholders above.

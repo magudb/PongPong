@@ -353,6 +353,24 @@ func remove_items(needs: Dictionary) -> bool:
 	return true
 
 
+## Backpack transaction for quest costs and adoption. No callbacks run until every
+## backpack deduction and the caller's state commit have finished.
+func consume_backpack_items(needs: Dictionary, commit: Callable) -> bool:
+	if not commit.is_valid():
+		return false
+	for id in needs:
+		var amount := _Data.int_of(needs[id])
+		var item_id := StringName(str(id))
+		if amount <= 0 or _Kinds.storage_of(item_id) != _Kinds.BACKPACK or _backpack_count(item_id) < amount:
+			return false
+	for id in needs:
+		_take_from_backpack(StringName(str(id)), _Data.int_of(needs[id]))
+	commit.call()
+	if not needs.is_empty():
+		EventBus.player_inventory_changed.emit(get_inventory_dict())
+	return true
+
+
 ## Copies the player owns (placed and worn pieces count: they are still the player's).
 func count_item(item_id: StringName) -> int:
 	var n := _backpack_count(item_id)

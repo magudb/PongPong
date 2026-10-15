@@ -1,0 +1,52 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=headless character=animal sections=res://tests/review_codex only=review_performance
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.iQbu5w/Library/Application Support/Traetoppen (throwaway)
+== section review_performance  (res://tests/review_codex/performance.gd)
+  info  REVIEW_PERF initial_farm_with_scene_frames_ms=4435.730 static_mib=80.27
+preview citizens: 7 placed, P14 absent
+preview hints: prompt / whisper / toast overlay placed, no HUD (P17) yet
+  ok    review_performance.area_traetoppen_0
+  info  REVIEW_PERF area=traetoppen cycle=0 enter_ms=7582.985 area_build_ms=7573 nodes=835 static_mib=164.75
+  ok    review_performance.area_hyggebyen_0
+  info  REVIEW_PERF area=hyggebyen cycle=0 enter_ms=4361.766 area_build_ms=4357 nodes=564 static_mib=180.02
+  ok    review_performance.area_moerkeskoven_0
+  info  REVIEW_PERF area=moerkeskoven cycle=0 enter_ms=2326.069 area_build_ms=2317 nodes=79 static_mib=194.83
+  ok    review_performance.area_farm_0
+  info  REVIEW_PERF area=farm cycle=0 enter_ms=3.721 area_build_ms=3628 nodes=430 static_mib=194.61
+preview citizens: 7 placed, P14 absent
+preview hints: prompt / whisper / toast overlay placed, no HUD (P17) yet
+  ok    review_performance.area_traetoppen_1
+  info  REVIEW_PERF area=traetoppen cycle=1 enter_ms=209.154 area_build_ms=196 nodes=835 static_mib=215.47
+  ok    review_performance.area_hyggebyen_1
+  info  REVIEW_PERF area=hyggebyen cycle=1 enter_ms=3.509 area_build_ms=4357 nodes=564 static_mib=194.52
+  ok    review_performance.area_moerkeskoven_1
+  info  REVIEW_PERF area=moerkeskoven cycle=1 enter_ms=27.206 area_build_ms=24 nodes=79 static_mib=194.83
+  ok    review_performance.area_farm_1
+  info  REVIEW_PERF area=farm cycle=1 enter_ms=2.440 area_build_ms=3628 nodes=430 static_mib=194.61
+preview citizens: 7 placed, P14 absent
+preview hints: prompt / whisper / toast overlay placed, no HUD (P17) yet
+  ok    review_performance.area_traetoppen_2
+  info  REVIEW_PERF area=traetoppen cycle=2 enter_ms=38.997 area_build_ms=37 nodes=835 static_mib=215.47
+  ok    review_performance.area_hyggebyen_2
+  info  REVIEW_PERF area=hyggebyen cycle=2 enter_ms=3.430 area_build_ms=4357 nodes=564 static_mib=194.53
+  ok    review_performance.area_moerkeskoven_2
+  info  REVIEW_PERF area=moerkeskoven cycle=2 enter_ms=25.878 area_build_ms=23 nodes=79 static_mib=194.83
+  ok    review_performance.area_farm_2
+  info  REVIEW_PERF area=farm cycle=2 enter_ms=3.280 area_build_ms=3628 nodes=430 static_mib=194.62
+preview citizens: 7 placed, P14 absent
+preview hints: prompt / whisper / toast overlay placed, no HUD (P17) yet
+  ok    review_performance.area_traetoppen_3
+  info  REVIEW_PERF area=traetoppen cycle=3 enter_ms=40.919 area_build_ms=38 nodes=835 static_mib=215.47
+  info  REVIEW_PERF tracker_actual_actors=1 median_ms=0.0070 p95_ms=0.0090
+  ok    review_performance.area_hyggebyen_3
+  info  REVIEW_PERF area=hyggebyen cycle=3 enter_ms=4.202 area_build_ms=4357 nodes=564 static_mib=194.53
+  ok    review_performance.area_moerkeskoven_3
+  info  REVIEW_PERF area=moerkeskoven cycle=3 enter_ms=24.270 area_build_ms=22 nodes=79 static_mib=194.84
+  ok    review_performance.area_farm_3
+  info  REVIEW_PERF area=farm cycle=3 enter_ms=1.894 area_build_ms=3628 nodes=430 static_mib=194.62
+  info  REVIEW_PERF after_quit_to_menu_static_mib=192.35
+  --    review_performance: 16 checks, 0 failed, 0 skipped, 19.8 s
+== summary: 1 section(s) run, 16 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 31.9 s
+PLAYTEST PASS (16 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

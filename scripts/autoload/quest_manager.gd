@@ -169,6 +169,28 @@ func update_objective(quest_id: StringName, objective_id: StringName, amount: in
 	_check_completion(quest_id)
 
 
+func can_complete_manual(quest_id: StringName, objective_id: StringName) -> bool:
+	if not active_quests.has(quest_id):
+		return false
+	var rt: QuestRuntime = active_quests[quest_id]
+	return rt.objectives.has(objective_id) and not bool(rt.objectives[objective_id]["done"])
+
+
+## Manual map interactions commit all resource costs before publishing quest or inventory signals.
+func complete_manual(quest_id: StringName, objective_id: StringName, needs: Dictionary = {}, consume: bool = false) -> bool:
+	if not can_complete_manual(quest_id, objective_id):
+		return false
+	var rt: QuestRuntime = active_quests[quest_id]
+	var remaining := int(rt.objectives[objective_id]["target"]) - int(rt.objectives[objective_id]["current"])
+	var commit := func() -> void: update_objective(quest_id, objective_id, remaining)
+	if consume:
+		return EconomyManager.consume_backpack_items(needs, commit)
+	if not EconomyManager.has_items(needs):
+		return false
+	commit.call()
+	return true
+
+
 func complete_quest(quest_id: StringName) -> void:
 	if quest_id not in active_quests:
 		return
@@ -345,8 +367,37 @@ func to_dict() -> Dictionary:
 	}
 
 
-## Validate the new persisted reward ledger and cooldown dates before a slot can be selected or applied.
+## Validate the complete runtime shape before a slot is selected, rotated or applied.
 func validate_dict(data: Dictionary) -> bool:
+	var active: Variant = data.get("active", {})
+	if not (active is Dictionary) or not (data.get("flags", {}) is Dictionary):
+		return false
+	for list_key in ["completed", "failed", "offered"]:
+		var ids: Variant = data.get(list_key, [])
+		if not (ids is Array):
+			return false
+		for id in ids:
+			if not _valid_id(id):
+				return false
+	for quest_id in active:
+		var record: Variant = active[quest_id]
+		if not _valid_id(quest_id) or not (record is Dictionary):
+			return false
+		if not _valid_id(record.get("id", "")) or str(record["id"]) != str(quest_id):
+			return false
+		var state: Variant = record.get("state", QuestState.ACTIVE)
+		if not _valid_count(state) or int(state) > QuestState.FAILED or not _valid_count(record.get("started_day", 0)):
+			return false
+		if not (record.get("meta", {}) is Dictionary) or not (record.get("objectives", {}) is Dictionary):
+			return false
+		for objective_id in record.get("objectives", {}):
+			var objective: Variant = record["objectives"][objective_id]
+			if not _valid_id(objective_id) or not (objective is Dictionary):
+				return false
+			if not _valid_count(objective.get("current")) or not _valid_count(objective.get("target")):
+				return false
+			if int(objective["target"]) <= 0 or int(objective["current"]) > int(objective["target"]) or not (objective.get("done") is bool):
+				return false
 	var days: Variant = data.get("completed_days", {})
 	var pending: Variant = data.get("pending_rewards", {})
 	if not (days is Dictionary) or not (pending is Dictionary):
@@ -378,10 +429,11 @@ static func _valid_count(value: Variant) -> bool:
 func from_dict(data: Dictionary) -> bool:
 	if not validate_dict(data):
 		return false
-	active_quests.clear()
+	var restored: Dictionary = {}
 	var active: Dictionary = data.get("active", {})
 	for qid in active:
-		active_quests[qid] = QuestRuntime.from_dict(active[qid])
+		restored[qid] = QuestRuntime.from_dict(active[qid])
+	active_quests = restored
 	completed_quests.assign(data.get("completed", []))
 	failed_quests.assign(data.get("failed", []))
 	offered_quests.assign(data.get("offered", []))
