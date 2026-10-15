@@ -1,0 +1,12 @@
+{
+  "masters": 6,
+  "asset_records": 103,
+  "room_studies": 34,
+  "native_previews": 39,
+  "native_previews_bytes": 21232472,
+  "art_webp_bytes": 2594012,
+  "notes": [
+    "Fixed front-right views; not a four-rotation replacement pack.",
+    "Gallery uses native resources; live doors and upgrade services are separate gameplay packages."
+  ]
+}

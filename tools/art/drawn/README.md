@@ -23,7 +23,7 @@ tests/run_playtest.sh --strict --character=fairy
 tests/run_playtest.sh --strict --character=hobbit
 ```
 
-`--only=characters|props|homes|terrain|items|world` rebuilds a slice. `--sheet heroes players2`
+`--only=characters|props|homes|terrain|items|world|interiors` rebuilds a slice. `--sheet heroes players2`
 restricts the character sources; `--character <ids...>` restricts individual IDs.
 `--portraits-only --only=characters` updates
 portraits without rebuilding animation sheets. Run one Godot instance at a time.
@@ -144,6 +144,15 @@ GODOT_EXTRA_ARGS=--minimized tools/dev/run_windowed.sh --strict --no-boot \
 
 The five captures show the city overview, close view and night, plus the forest
 overview and cave clearing. Inspect them together with the character/tile sheets.
+
+`interiors.py` exports the painted modular interior kit, including four wall
+materials, aligned window masks, domestic and later-tier furniture, profession
+emblems and the functional shop pieces. The 34 furnishing studies cover all ten
+home upgrades and the 24 town interiors. Their design, saved imagegen prompts,
+scope and rebuild/capture commands are in `docs/art/interiors/design.txt`.
+`interiors_gallery.tscn` previews them with native tiles and character sprites;
+left/right changes room and N switches daylight/evening. These are art studies:
+live door, home ownership and shop services remain their planned gameplay packages.
 
 After importing the project, audit the effective catalogs and map references:
 

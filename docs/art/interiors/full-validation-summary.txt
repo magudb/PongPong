@@ -1,0 +1,35 @@
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=*
+  --    boot: 8 checks, 0 failed, 0 skipped, 2.2 s
+  --    area: 232 checks, 0 failed, 0 skipped, 18.0 s
+  --    art_cast_v2: 21 checks, 0 failed, 4 skipped, 13.1 s
+  --    art_characters: 27 checks, 0 failed, 0 skipped, 12.5 s
+  --    art_city: 17 checks, 0 failed, 0 skipped, 0.8 s
+  --    art_environment: 32 checks, 0 failed, 3 skipped, 0.9 s
+  --    art_farm: 23 checks, 0 failed, 0 skipped, 0.4 s
+  --    art_ghost: 18 checks, 0 failed, 0 skipped, 13.5 s
+  --    art_home: 29 checks, 0 failed, 0 skipped, 4.8 s
+  --    art_interiors: 266 checks, 0 failed, 0 skipped, 0.2 s
+  --    art_world_style: 106 checks, 0 failed, 0 skipped, 0.5 s
+  --    cast_data: 15 checks, 0 failed, 3 skipped, 1.2 s
+  --    characters: 116 checks, 0 failed, 0 skipped, 3.0 s
+  --    city_levels: 69 checks, 0 failed, 0 skipped, 34.1 s
+  --    city_map: 53 checks, 0 failed, 7 skipped, 45.0 s
+  --    codex_review: 37 checks, 0 failed, 0 skipped, 5.2 s
+  --    content_features: 141 checks, 0 failed, 0 skipped, 7.3 s
+  --    core: 113 checks, 0 failed, 0 skipped, 0.4 s
+  --    data: 325 checks, 0 failed, 1 skipped, 4.3 s
+  --    economy: 296 checks, 0 failed, 2 skipped, 1.1 s
+  --    ghost: 7 checks, 0 failed, 0 skipped, 0.0 s
+  --    ghost_data: 4 checks, 0 failed, 0 skipped, 0.0 s
+  --    loc: 115 checks, 0 failed, 0 skipped, 13.1 s
+  --    maps_farm: 62 checks, 0 failed, 0 skipped, 13.9 s
+  --    maps_iso: 39 checks, 0 failed, 9 skipped, 5.0 s
+  --    rarity: 74 checks, 0 failed, 0 skipped, 0.0 s
+  --    review_regressions: 85 checks, 0 failed, 0 skipped, 0.9 s
+  --    save: 236 checks, 0 failed, 1 skipped, 4.4 s
+  --    ui_audit: 439 checks, 0 failed, 23 skipped, 5.6 s
+  --    ui_audit_blind: 121 checks, 0 failed, 0 skipped, 4.5 s
+  --    ui_audit_pins: 344 checks, 0 failed, 0 skipped, 1.5 s
+  --    ui_foundation: 188 checks, 0 failed, 1 skipped, 17.6 s
+== summary: 31 section(s) run, 3658 checks (0 failed, 54 skipped), 0 engine error(s), 0 engine warning(s), 26 allowed message(s), 0 problem(s), 0 known-issue message(s), 237.1 s
+PLAYTEST PASS (3658 checks in 31 sections, 26 allowed engine messages, 0 known-issue messages)

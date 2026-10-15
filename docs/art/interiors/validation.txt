@@ -1,0 +1,57 @@
+Painted interiors validation
+
+Host: macOS, Apple M3, Godot 4.7.2 stable.
+Worktree: codex-review. All evidence refers to the saved painted kit and layouts.
+
+Full strict regression run
+  tests/run_playtest.sh --strict --report=/tmp/pongpong-interiors-full.json
+  PASS: 3,658 checks across 31 sections plus boot; 0 failed, 54 existing skips.
+  0 unexpected engine errors or warnings, 0 problems, 26 allowed messages from
+  existing negative-path tests. Elapsed: 237.1 seconds.
+  Evidence: full-validation.json and full-validation-summary.txt.
+
+Targeted strict headless run
+  tests/run_playtest.sh --strict --no-boot \
+    --only=art_interiors,art_home,art_world_style,art_environment \
+    --report=/tmp/pongpong-interiors-headless.json
+  PASS: 433 checks, 0 failed, 3 existing skips, no engine errors or warnings.
+  The new art_interiors section supplies 266 checks. It verifies effective
+  resources, original home floor/door/capacity contracts, non-overlapping furniture
+  footprints, connected public floor, clear entrances, staff separation and rugs
+  within the actual floor. All 34 native rooms assemble in daylight and evening.
+  Evidence: headless-validation.json.
+
+Native capture run
+  GODOT_EXTRA_ARGS=--minimized tools/dev/run_windowed.sh --strict --no-boot \
+    --sections-dir=res://tests/art_review --only=interior_views \
+    --out=/tmp/pongpong-interiors-native --report=/tmp/pongpong-interiors-native.json
+  PASS: 39 captures, no failures, engine errors or warnings. Includes every room
+  in daylight and evening views of home tiers 1, 5, 10, the bakery and wizard shop.
+  The preview PNGs are native 1280x720 captures. Detailed visual inspection covered
+  starter/farmhouse/palace progression, daylight/evening, bakery, seed and wizard
+  shops, the bathhouse and a citizen cottage. Capture success alone is not a
+  judgment of visual quality.
+  Evidence: native-validation.json and previews/.
+
+Resource limits
+  Each room stays within the checked 3 MB room-specific texture estimate,
+  130 scene nodes and 4 local lights. The tier-10 evening room uses an estimated
+  1.84 MB, 98 nodes and 2 lights. Texture estimates count padded S3TC RGBA mip
+  blocks plus the floor, including evening window masks and wall dressing;
+  globally shared character atlases are excluded. These are resource estimates,
+  not whole-game GPU measurements.
+  Warm-resource native-view assembly peaked at 3.05 ms in the full headless run
+  (2.56 ms in the targeted run). These are observations on this host, not rendering
+  frame times or a claim about target-device FPS.
+
+Additional checks
+  All 103 exported images agree with their manifest dimensions; all six source
+  PNG masters have transparency; saved prompt reference paths exist. Python
+  compilation and git diff --check pass. The final legacy-manifest whitespace
+  cleanup was checked for semantic equality after the full regression run.
+
+Scope
+  These are an art kit and native furnishing studies. Live door transitions,
+  shop services, home ownership and upgrade mechanics are not implemented here.
+  Furnishings provide their authored front-right view; this is not a replacement
+  for the existing four-rotation furniture collection.

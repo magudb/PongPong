@@ -1,0 +1,102 @@
+Painted interiors — homes, shops and home upgrades
+
+Visual direction
+
+Stardew Valley is the inspiration for cozy functional rooms, recognizable work
+areas, welcoming everyday clutter and a home that grows with the player. Our
+interpretation keeps Trætoppen's approved painted characters, buildings and tiles:
+matte gouache, warm grey pencil edges, worn honey timber, sage cloth, cream plaster,
+quiet lavender, terracotta and small brass details. Rooms retain the game's
+128x76 isometric grid and elevated 36-degree camera. This is not a pixel-art pack.
+Reference pointer: https://www.stardewvalley.net/media/
+
+The cut-away back walls keep the whole room readable. Beds, storage and work
+areas have space beside them; entrances stay clear. Public shop areas sit in
+front of the counter and the keeper's work corridor sits behind it. The bathhouse
+and fairy king's hall use open layouts rather than a counter across the room.
+No words are painted onto signs: emblems communicate the profession and localized
+labels remain the UI's responsibility. Window light comes from aligned masks.
+
+Home progression
+
+  1 Skur: patched pine bed, storage chest and small workbench; plain timber/stone.
+  2 Hytte: first fitted kitchen, warm hearth, tea table, chair and houseplant.
+  3 Straatag: a loom and bookcase join the cottage; timber floor, sprig plaster.
+  4 Bindingsvaerk: oak double bed, wardrobe and soft sage sofa; more living space.
+  5 Gaarden: separate-feeling cooking, craft and sitting areas; paper/parquet.
+  6 Taarnhus: writing desk, comfortable reading chair and taller library bookcase.
+  7 Landsted: piano, long dining table and an inviting carved stone fireplace.
+  8 Herregaard: canopy bed, richer chairs, library and plants; warm marble shell.
+  9 Borg: leaf-crystal throne joins the established home furnishings.
+ 10 Slot: chandelier, library, music, dining and craft furnishings share the larger
+    authored footprint. The palace still contains familiar useful furniture.
+
+Every tier study reads the existing room_tNN.json floor, doorway and capacity.
+The furnishings are composition examples, not new upgrade rewards or free items.
+Material choices can be selected independently of footprint growth. Costs, gates,
+ownership, upgrade timing and player-arranged furniture remain gameplay data.
+
+Town rooms
+
+The 24 room IDs and dimensions follow TOWNS_FARM_SOCIAL_ADDENDUM sections 4.1/4.4:
+the nine Hyggebyen shops, Brumme's workshop, the post office, owl appraisal room,
+bathhouse, town hall, inn, fairy king's hall and eight citizens' homes. Each has a
+furnishing study. Professions have their own main silhouettes: bread oven/racks,
+forge/anvil, tailor's mannequin/loom, postal pigeonholes/parcels, seed plants/sacks,
+timber workbench/planks, furniture displays, and a magic cauldron/library.
+Citizens' homes reuse the common kit with occupation-specific accents.
+
+Deliverables
+
+Six imagegen masters: tools/art/drawn/sources/interior_{domestic,shops,regal,
+walls,emblems,dressing}.png. Generated with the built-in imagegen tool; the exact prompts,
+reference roles and saved master paths are in prompts.json beside this document.
+
+103 native exports in assets/iso_props/painted_interiors/:
+  52 furnishing/service/dressing sprites, including the 20 functional shop-kit
+     pieces, three floor rugs, lamps and seed/potion/fabric displays;
+  15 profession/home emblem plates;
+  28 wall/corner pieces for timber, sprig plaster, ivory paper and warm marble;
+   8 additive window masks, derived from those painted window panes.
+The existing painted floor atlases supply stone, plank, parquet and marble.
+The original interior manifest now resolves its 21 wall/corner pieces to this
+painted pack, with the existing sizes/pivots and unchanged door-piece entries.
+
+assets/data/interiors/painted.json contains the 34 furnishing studies, floor
+footprints, placed pieces, clear public floor and staff bands. It is generated,
+not an alternative source of gameplay room dimensions. Home geometry comes from
+the existing tier room JSON files; town dimensions come from the towns addendum.
+scripts/art/painted_interior_art.gd provides read access and footprint positioning.
+
+Scope
+
+This delivers the art kit, exported assets and inspectable native room studies.
+The current M1a checkout has no live home/town interior builder or upgrade service.
+The gallery does not install doors, opening hours, shops, ownership or a second
+upgrade system. Those existing planned gameplay packages can consume this kit.
+Sprites claim their one authored front-right view. They do not claim to replace
+all 130 existing furniture items or supply their four rotation views. The original
+furniture collection remains intact. Service-specific graphics are ready as art;
+this is not a claim that the I3 gameplay/integration work package is complete.
+
+Rebuild and inspect
+
+  tools/art/.venv/bin/python tools/art/drawn/pack.py --only=interiors
+  tests/run_playtest.sh --strict --no-boot --only=art_interiors,art_home,art_world_style,art_environment
+
+Interactive native art gallery (left/right to browse, N for day/evening):
+  tools/dev/play.sh --throwaway tools/art/drawn/interiors_gallery.tscn
+
+Reproduce the native captures using the project's window lock and throwaway profile:
+  GODOT_EXTRA_ARGS=--minimized tools/dev/run_windowed.sh --strict --no-boot \
+    --sections-dir=res://tests/art_review --only=interior_views --out=/tmp/interior-views
+
+The renderer is tools/art/drawn/interiors_view.gd. It uses the real tile atlases,
+painted prop resources, authored geometry and character animation sprites.
+The scene is an art gallery, not a gameplay screenshot. The headless checks cover
+resource selection, home geometry, overlapping footprints, clear entrances and
+connected public floor. Room-specific texture estimates exclude shared character
+atlases; they are not whole-game VRAM or frame-time measurements.
+
+Saved checks and measured limits are in validation.txt. The previews directory
+contains all 34 daylight studies and five evening variants captured in Godot.
