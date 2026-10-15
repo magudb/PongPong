@@ -225,3 +225,14 @@ day/evening art studies in both native towns (arrows season, T town, N evening,
 D bare/decorated). Exact prompts, pole correction, review captures, budget
 definitions and the Torvet post-layout limitation are in
 `docs/art/festival/review.txt` and `handoff.txt`.
+
+`pack.py --only=equipment-fit` exports the next equipment art step under
+`assets/art_studies/equipment_fit/`: Rasmus and Pedro, four removable starter
+garments, iron sword, body/hand/ear parts and explicit grips for 320 poses across
+eight directions of idle/walk/run/reach. These use a common offline deformation
+field, sampled from the existing actor clock in the native art consumer. Open
+`equipment_fit_gallery.tscn` through `tools/dev/play.sh --throwaway` (arrows turn,
+H hero, 1–4 motion, F flash, S spin, individual garment toggles). Selected and
+rejected masters, generation/repair prompts, native captures, measured budgets
+and the remaining complete-clip/other-body/runtime gates are documented under
+`docs/art/equipment-fit/`. No production wardrobe base is enabled by this proof.

@@ -79,6 +79,8 @@ and pole repair prompts are in prompts.json, their source hashes in sources.json
 and future corrections in asset-repair-prompt.txt. Native evidence and measured
 budgets are linked from review.txt and validation.json.
 
-Remaining art production after this delivery: fitted wardrobe layers, held-item
-sockets and occlusion for the supported character bodies, following the existing
-docs/art/equipment/design.txt. Those outfit/held-item drawings remain concepts.
+Next art production progressed in docs/art/equipment-fit/: a two-body fitted
+Rasmus/Pedro proof now supplies idle/walk/run/reach layers, grips and occluders.
+Complete clip sets, the other six heroes and live wardrobe integration remain
+pending under docs/art/equipment/design.txt. The original outfit/held-item
+concept drawings remain concepts.

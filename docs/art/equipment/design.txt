@@ -202,6 +202,12 @@ timings from PLAN_2D_FEATURES as measurements of these painted assets.
 
 Implementation sequence
 
+Progress: the first two-body fit proof now lives in docs/art/equipment-fit/.
+It supplies Rasmus/Pedro layered idle/walk/run/reach poses, grips, hand/ear
+occlusion and a native review gallery. Motion is an offline puppet bake; it is
+not the full production clip/wardrobe integration gate. The original flattened
+concepts and illustrative schema below remain unchanged historical design work.
+
   1. Fit proof: Rasmus + Pedro, starter shirt/pants/shoes, hat and sword. Author all
      idle/walk/run directions plus one action; test hand masks, turns and spin.
   2. Complete their required clips before enabling those wardrobe bases. Keep
