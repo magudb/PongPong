@@ -993,7 +993,7 @@ func _when_hides_whole_props(t) -> void:
 	var strips_total: int = (house["nodes"] as Array).size()
 	var off: Dictionary = _when_prop_state(area, control_cell, false)
 	var off_hit: bool = _solid_hit(holder, house_body)
-	t.check("when_hides_prop_strips_and_collider", strips_total >= 8 and int(off["sprites"]) == strips_total + 5 and off["sprites_ok"] == off["sprites"] and int(off["bodies"]) >= 4 and off["bodies_ok"] == off["bodies"] and off["control_ok"] and not off_hit,
+	t.check("when_hides_prop_strips_and_collider", strips_total >= 4 and int(off["sprites"]) == strips_total + 5 and off["sprites_ok"] == off["sprites"] and int(off["bodies"]) >= 4 and off["bodies_ok"] == off["bodies"] and off["control_ok"] and not off_hit,
 		"flag false: %d of %d sprite nodes hidden (the house alone has %d strips) and %d of %d collider layers are 0; the house body no longer answers a physics point query (hit %s); the un-conditioned tree stays (%s)" % [off["sprites_ok"], off["sprites"], strips_total, off["bodies_ok"], off["bodies"], off_hit, off["control_ok"]])
 	# the same prop comes back whole: every strip visible, every collider back on the world layer, solid again
 	gm.set_flag(&"t_wp_flag", true)
@@ -1078,7 +1078,7 @@ func _strips(t) -> void:
 	var L: Vector2 = poly[3]
 	var B: Vector2 = poly[2]
 	var R: Vector2 = poly[1]
-	var count_ok: bool = nodes.size() == 14
+	var count_ok: bool = nodes.size() == 7
 	var region_sum: int = 0
 	var formula_ok: bool = true
 	var offsets_ok: bool = true
@@ -1103,9 +1103,9 @@ func _strips(t) -> void:
 			offsets_ok = false
 		min_y = minf(min_y, s.position.y)
 		max_y = maxf(max_y, s.position.y)
-	t.check("strips_count_and_width", count_ok and region_sum == 436 and (nodes[0].texture as AtlasTexture).region.size.x == 32.0, "%d strips of 32 px cover %d px (house_farm 436 px: 14 strips)" % [nodes.size(), region_sum])
-	t.check("strips_sort", formula_ok and offsets_ok and max_y <= B.y + 0.001 and min_y >= minf(L.y, R.y) - 0.001 and absf(max_y - B.y) < Iso.squash() * 16.0 + 0.5,
-		"sort y = B.y - squash * |xc - B.x| clamped by L.y / R.y for all 14 strips (range %.1f .. %.1f, B.y %.1f); offsets draw the full sprite unchanged" % [min_y, max_y, B.y])
+	t.check("strips_count_and_width", count_ok and region_sum == 436 and (nodes[0].texture as AtlasTexture).region.size.x == 64.0, "%d strips of at least 64 px cover %d px (house_farm 436 px: asks 14 strips, STRIP_W floor 64)" % [nodes.size(), region_sum])
+	t.check("strips_sort", formula_ok and offsets_ok and max_y <= B.y + 0.001 and min_y >= minf(L.y, R.y) - 0.001 and absf(max_y - B.y) < Iso.squash() * 32.0 + 0.5,
+		"sort y = B.y - squash * |xc - B.x| clamped by L.y / R.y for all %d strips (range %.1f .. %.1f, B.y %.1f); offsets draw the full sprite unchanged" % [nodes.size(), min_y, max_y, B.y])
 	for loose in nodes:                   # built for the formula check only, never added to a tree: free them or the run leaks 14 sprites at exit
 		loose.free()
 	# the placed house of the fixture is cut into strips directly under Objects (y-sort flattens children of a plain wrapper)
@@ -1134,22 +1134,22 @@ func _strips(t) -> void:
 	var control_blind: bool = not _draws_before(a.objects, p0, first_strip) and not _draws_before(a.objects, first_strip, p0)
 	a.objects.y_sort_enabled = true
 	p0.global_position = saved_at
-	t.check("ysort_probes", probed >= 8 and probed == (rec["nodes"] as Array).size() and behind_ok and front_ok and control_blind and a.objects.y_sort_enabled and p0.get_parent() == a.objects,
+	t.check("ysort_probes", probed >= 4 and probed == (rec["nodes"] as Array).size() and behind_ok and front_ok and control_blind and a.objects.y_sort_enabled and p0.get_parent() == a.objects,
 		"player's feet at strip sort y - 5 draw behind and at + 5 in front of each of the %d strips of the placed house (behind %s, in front %s; probe blind without y-sorting %s). Pixel proof: windowed area.sort_pixels" % [probed, behind_ok, front_ok, control_blind])
 	var spr_tex: Texture2D = ArtCatalog.prop(&"house_farm")["texture"]
-	var strip_w: int = maxi(32, ceili(float(spr_tex.get_width()) / 14.0))
+	var strip_w: int = maxi(IsoArea.STRIP_W, ceili(float(spr_tex.get_width()) / 14.0))
 	var expect_n: int = ceili(float(spr_tex.get_width()) / float(strip_w))
 	var all_direct: bool = true
 	for n3 in rec["nodes"]:
 		if (n3 as Node).get_parent() != a.objects or not (n3 as Sprite2D).texture is AtlasTexture:
 			all_direct = false
-	t.check("fixture_house_is_sliced", (rec["nodes"] as Array).size() == expect_n and all_direct and (rec["nodes"] as Array).size() >= 8, "%d strips directly under Objects for the %d px house" % [(rec["nodes"] as Array).size(), spr_tex.get_width()])
+	t.check("fixture_house_is_sliced", (rec["nodes"] as Array).size() == expect_n and all_direct and (rec["nodes"] as Array).size() >= 4, "%d strips directly under Objects for the %d px house" % [(rec["nodes"] as Array).size(), spr_tex.get_width()])
 	var mush: Dictionary = {}
 	for r2 in a.prop_nodes:
 		if r2["id"] == "house_mushroom_rose":
 			mush = r2
 	var mw: int = (ArtCatalog.prop(&"house_mushroom_rose")["texture"] as Texture2D).get_width()
-	t.check("fixture_mushroom_house_is_sliced", (mush["nodes"] as Array).size() == ceili(float(mw) / float(maxi(32, ceili(float(mw) / 10.0)))), "2 x 2 mushroom houses are sliced too (%d strips)" % (mush["nodes"] as Array).size())
+	t.check("fixture_mushroom_house_is_sliced", (mush["nodes"] as Array).size() == ceili(float(mw) / float(maxi(IsoArea.STRIP_W, ceili(float(mw) / 10.0)))), "2 x 2 mushroom houses are sliced too (%d strips)" % (mush["nodes"] as Array).size())
 	# one-cell props keep ONE sort key at their pivot (the tile centre)
 	var tree_rec: Dictionary = {}
 	for r3 in a.prop_nodes:
@@ -2463,7 +2463,7 @@ func run_windowed(t) -> void:
 	#
 	# What the old probe measured: the figure's magenta pixels at +-5 px around the FRONT CORNER, compared by count. That does not test the
 	# rule: strip k is drawn in front of the figure iff ITS sort y (B.y - squash * |xc - B.x|, clamped, R.10) is greater than the figure's feet
-	# y, and the strips are 32 px wide, so which strip centres lie within 5 px / 0.59 = 8.5 px of the corner depends on the phase of the strip
+	# y, and the strips are at least STRIP_W px wide, so which strip centres lie within 5 px / 0.59 = 8.5 px of the corner depends on the phase of the strip
 	# lattice against the footprint: with the placeholder art one strip sits there (-5 px hides most of the figure), with the spike's real
 	# house none does (-5 px shows all of it, 45 pixels like +5 px) - the old assertion `-5 < +5` held or failed with the art, not with the sort.
 	#

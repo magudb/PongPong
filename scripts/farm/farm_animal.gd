@@ -17,6 +17,7 @@ var _wander_timer: float = 0.0
 var _is_wandering: bool = false
 var _is_following: bool = false
 var _player_nearby: bool = false
+var _player_ref: Node = null
 var _gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
 var _velocity_y: float = 0.0
 
@@ -70,10 +71,13 @@ func _wander(delta: float) -> void:
 
 
 func _follow_player(delta: float) -> void:
-	var player := get_tree().get_first_node_in_group("player")
+	# Cached lookup: get_first_node_in_group per animal per physics tick was O(n) tree walks.
+	var player := _player_ref if is_instance_valid(_player_ref) else get_tree().get_first_node_in_group("player")
 	if player == null:
+		_player_ref = null
 		_is_following = false
 		return
+	_player_ref = player
 
 	var dist := global_position.distance_to(player.global_position)
 	if dist < 2.0:
