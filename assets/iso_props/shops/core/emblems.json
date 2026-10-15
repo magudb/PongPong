@@ -1,0 +1,185 @@
+{
+  "_doc": "Text-free profession badges, front-on, 96 px lossless exports; bracket is a separate piece.",
+  "emblems": {
+    "seed": {
+      "file": "emblem_seed.webp",
+      "size": [
+        96,
+        96
+      ],
+      "pivot": [
+        48,
+        48
+      ],
+      "illustration": "tools/art/drawn/sources/shop_core/emblems.png"
+    },
+    "loaf": {
+      "file": "emblem_loaf.webp",
+      "size": [
+        96,
+        96
+      ],
+      "pivot": [
+        48,
+        48
+      ],
+      "illustration": "tools/art/drawn/sources/shop_core/emblems.png"
+    },
+    "anvil": {
+      "file": "emblem_anvil.webp",
+      "size": [
+        96,
+        96
+      ],
+      "pivot": [
+        48,
+        48
+      ],
+      "illustration": "tools/art/drawn/sources/shop_core/emblems.png"
+    },
+    "paw": {
+      "file": "emblem_paw.webp",
+      "size": [
+        96,
+        96
+      ],
+      "pivot": [
+        48,
+        48
+      ],
+      "illustration": "tools/art/drawn/sources/shop_core/emblems.png"
+    },
+    "crystal": {
+      "file": "emblem_crystal.webp",
+      "size": [
+        96,
+        96
+      ],
+      "pivot": [
+        48,
+        48
+      ],
+      "illustration": "tools/art/drawn/sources/shop_core/emblems.png"
+    },
+    "chair": {
+      "file": "emblem_chair.webp",
+      "size": [
+        96,
+        96
+      ],
+      "pivot": [
+        48,
+        48
+      ],
+      "illustration": "tools/art/drawn/sources/shop_core/emblems.png"
+    },
+    "thread": {
+      "file": "emblem_thread.webp",
+      "size": [
+        96,
+        96
+      ],
+      "pivot": [
+        48,
+        48
+      ],
+      "illustration": "tools/art/drawn/sources/shop_core/emblems.png"
+    },
+    "log": {
+      "file": "emblem_log.webp",
+      "size": [
+        96,
+        96
+      ],
+      "pivot": [
+        48,
+        48
+      ],
+      "illustration": "tools/art/drawn/sources/shop_core/emblems.png"
+    },
+    "junk": {
+      "file": "emblem_junk.webp",
+      "size": [
+        96,
+        96
+      ],
+      "pivot": [
+        48,
+        48
+      ],
+      "illustration": "tools/art/drawn/sources/shop_core/emblems.png"
+    },
+    "posthorn": {
+      "file": "emblem_posthorn.webp",
+      "size": [
+        96,
+        96
+      ],
+      "pivot": [
+        48,
+        48
+      ],
+      "illustration": "tools/art/drawn/sources/shop_core/emblems.png"
+    },
+    "tub": {
+      "file": "emblem_tub.webp",
+      "size": [
+        96,
+        96
+      ],
+      "pivot": [
+        48,
+        48
+      ],
+      "illustration": "tools/art/drawn/sources/shop_core/emblems.png"
+    },
+    "scroll": {
+      "file": "emblem_scroll.webp",
+      "size": [
+        96,
+        96
+      ],
+      "pivot": [
+        48,
+        48
+      ],
+      "illustration": "tools/art/drawn/sources/shop_core/emblems.png"
+    },
+    "hammer": {
+      "file": "emblem_hammer.webp",
+      "size": [
+        96,
+        96
+      ],
+      "pivot": [
+        48,
+        48
+      ],
+      "illustration": "tools/art/drawn/sources/shop_core/emblems.png"
+    },
+    "plank": {
+      "file": "emblem_plank.webp",
+      "size": [
+        96,
+        96
+      ],
+      "pivot": [
+        48,
+        48
+      ],
+      "illustration": "tools/art/drawn/sources/shop_core/emblems.png"
+    },
+    "carrot": {
+      "file": "emblem_carrot.webp",
+      "size": [
+        96,
+        96
+      ],
+      "pivot": [
+        48,
+        48
+      ],
+      "illustration": "tools/art/drawn/sources/shop_core/emblems.png"
+    }
+  }
+}

@@ -18,14 +18,14 @@ The eight heroes
   Birk / fairy_birk / fairy_birk: auburn hair and blue wings; removable leaf cap.
   Bertil / hobbit_pip / hobbit_pip: roomy short torso, curls and pointed ears.
   Bodil / hobbit_bodil / hobbit_bodil: braids outside collar, hat behind front hair.
-  Bu / ghost_bu / ghost_bu: round blue-white wisp, floating hands, scalloped hem.
+  Pedro / ghost_bu / ghost_bu: round blue-white wisp, floating hands, scalloped hem.
   Hviske / ghost_hviske / ghost_hviske: the same ghost silhouette in pink/lilac.
 
 Hero, skin and body IDs come from lua/config/characters.lua. Retired skins are
 not additional production bodies. Animal, fairy, hobbit and ghost are fit families,
 not permission to share pixel masks. Fox and monkey require their own fitted art;
 the two fairies and two hobbits also have individual hair and silhouette masks.
-Bu/Hviske may share geometry only after an automated alpha-and-pose equality check.
+Pedro/Hviske may share geometry only after an automated alpha-and-pose equality check.
 Their pigment/material treatment remains separate. Do not silently share a rig
 because two characters happen to have the same frame size.
 
@@ -202,7 +202,7 @@ timings from PLAN_2D_FEATURES as measurements of these painted assets.
 
 Implementation sequence
 
-  1. Fit proof: Rasmus + Bu, starter shirt/pants/shoes, hat and sword. Author all
+  1. Fit proof: Rasmus + Pedro, starter shirt/pants/shoes, hat and sword. Author all
      idle/walk/run directions plus one action; test hand masks, turns and spin.
   2. Complete their required clips before enabling those wardrobe bases. Keep
      base + starter layer availability atomic in CharacterCatalog resolution.
@@ -234,7 +234,7 @@ Saved deliverables and review
 
 Four built-in imagegen masters live in tools/art/drawn/sources/:
   equipment_looks_a.png: Rasmus, Kiki, Kloevermynte, Bertil; three outfit directions.
-  equipment_looks_b.png: Birk, Bodil, Bu, Hviske; the same three directions.
+  equipment_looks_b.png: Birk, Bodil, Pedro, Hviske; the same three directions.
   equipment_kit.png: twenty clothing, weapon, tool and action-item studies.
   equipment_held_examples.png: all eight heroes visibly holding fitted equipment,
     including the five weapon families and both one- and two-hand poses.

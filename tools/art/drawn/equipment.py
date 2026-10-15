@@ -19,7 +19,7 @@ HEROES = [
     ("bertil", "Bertil", "hobbit_pip", "hobbit_pip", "Curls, pointed ears and bare toes; fitted ankle-wrap footwear."),
     ("birk", "Birk", "fairy_birk", "fairy_birk", "Blue wing roots clear; the stock leaf cap is removable clothing."),
     ("bodil", "Bodil", "hobbit_bodil", "hobbit_bodil", "Braids outside the collar; front hair over the hat brim."),
-    ("bu", "Bu", "ghost_bu", "ghost_bu", "Floating wisp and hands; footwear becomes hem tabs, with no legs."),
+    ("bu", "Pedro", "ghost_bu", "ghost_bu", "Floating wisp and hands; footwear becomes hem tabs, with no legs."),
     ("hviske", "Hviske", "ghost_hviske", "ghost_hviske", "Pink/lilac ghost material stays distinct from worn fabric."),
 ]
 OUTFITS = [("work", "Work"), ("forest", "Forest"), ("festival", "Festival")]

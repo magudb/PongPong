@@ -589,7 +589,7 @@ def homes() -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--only", choices=["characters", "props", "homes", "terrain", "items", "world", "interiors", "consistency"])
+    parser.add_argument("--only", choices=["characters", "props", "homes", "terrain", "items", "world", "interiors", "consistency", "shop-core"])
     parser.add_argument("--sheet", choices=list(CAST), nargs="+")
     parser.add_argument("--character", nargs="+", help="Rebuild only these character IDs (shared hero/NPC sources stay paired)")
     parser.add_argument("--portraits-only", action="store_true")
@@ -646,6 +646,9 @@ def main() -> None:
         from consistency import furniture, props as consistency_props
         furniture()
         consistency_props()
+    if args.only in (None, "shop-core"):
+        from shop_core import main as shop_core
+        shop_core()
 
 
 if __name__ == "__main__":

@@ -1,0 +1,268 @@
+{
+  "_doc": "Art integration contract snapshot from Claude's I3 order and T-towns-core tables. Gameplay tables remain owned by the towns package. Paint replaces the historical CG instructions; IDs, layers, footprints and authored view counts are retained.",
+  "pieces": {
+    "counter_pine": {
+      "id": "counter_pine",
+      "footprint": [
+        3,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 4,
+      "template": "counter",
+      "set": "I3-counter",
+      "fallback_id": "table_long_pine"
+    },
+    "counter_end": {
+      "id": "counter_end",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 4,
+      "template": "counter",
+      "set": "I3-counter",
+      "fallback_id": ""
+    },
+    "counter_hatch": {
+      "id": "counter_hatch",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 4,
+      "template": "counter",
+      "set": "I3-counter",
+      "fallback_id": ""
+    },
+    "sign_bracket": {
+      "id": "sign_bracket",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "wall",
+      "rot_baked": 2,
+      "template": "sign_bracket",
+      "set": "I3-sign",
+      "fallback_id": ""
+    },
+    "pigeonhole_wall": {
+      "id": "pigeonhole_wall",
+      "footprint": [
+        3,
+        1
+      ],
+      "layer": "wall",
+      "rot_baked": 2,
+      "template": "pigeonholes",
+      "set": "I3-rooms",
+      "fallback_id": "shelf_pine"
+    },
+    "mail_sack": {
+      "id": "mail_sack",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "sack",
+      "set": "I3-rooms",
+      "fallback_id": "chest_oak"
+    },
+    "letter_desk": {
+      "id": "letter_desk",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "table",
+      "set": "I3-rooms",
+      "fallback_id": "table_dining_oak"
+    },
+    "parcel_stack": {
+      "id": "parcel_stack",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "crate",
+      "set": "I3-rooms",
+      "fallback_id": "chest_birch"
+    },
+    "wooden_tub": {
+      "id": "wooden_tub",
+      "footprint": [
+        2,
+        2
+      ],
+      "layer": "floor",
+      "rot_baked": 4,
+      "template": "tub",
+      "set": "I3-rooms",
+      "fallback_id": "rug_round_rose"
+    },
+    "notice_board_indoor": {
+      "id": "notice_board_indoor",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "wall",
+      "rot_baked": 2,
+      "template": "painting",
+      "set": "I3-rooms",
+      "fallback_id": "painting_wide_pine"
+    },
+    "brick_oven": {
+      "id": "brick_oven",
+      "footprint": [
+        2,
+        2
+      ],
+      "layer": "floor",
+      "rot_baked": 4,
+      "template": "fireplace",
+      "set": "I3-rooms",
+      "fallback_id": "fireplace_chalk"
+    },
+    "bread_rack": {
+      "id": "bread_rack",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "rack",
+      "set": "I3-rooms",
+      "fallback_id": "shelf_birch"
+    },
+    "anvil": {
+      "id": "anvil",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 4,
+      "template": "anvil",
+      "set": "I3-rooms",
+      "fallback_id": "table_stump"
+    },
+    "forge": {
+      "id": "forge",
+      "footprint": [
+        2,
+        2
+      ],
+      "layer": "floor",
+      "rot_baked": 4,
+      "template": "fireplace",
+      "set": "I3-rooms",
+      "fallback_id": "fireplace_granite"
+    },
+    "cauldron_stand": {
+      "id": "cauldron_stand",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "fireplace",
+      "set": "I3-rooms",
+      "fallback_id": "fireplace_cauldron"
+    },
+    "hay_bale": {
+      "id": "hay_bale",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "hay",
+      "set": "I3-rooms",
+      "fallback_id": "rug_natural"
+    },
+    "feed_sack_stack": {
+      "id": "feed_sack_stack",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "sack",
+      "set": "I3-rooms",
+      "fallback_id": "chest_oak"
+    },
+    "plank_stack": {
+      "id": "plank_stack",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "plank_stack",
+      "set": "I3-rooms",
+      "fallback_id": "bookshelf_oak_narrow"
+    },
+    "mannequin": {
+      "id": "mannequin",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 4,
+      "template": "mannequin",
+      "set": "I3-rooms",
+      "fallback_id": "floor_lamp_birch"
+    },
+    "workbench": {
+      "id": "workbench",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "saw_bench",
+      "set": "I3-rooms",
+      "fallback_id": "table_long_walnut"
+    }
+  },
+  "emblems": [
+    "seed",
+    "loaf",
+    "anvil",
+    "crystal",
+    "paw",
+    "plank",
+    "chair",
+    "thread",
+    "posthorn",
+    "tub",
+    "scroll",
+    "carrot",
+    "hammer",
+    "junk",
+    "log"
+  ],
+  "budgets": {
+    "disk_mb": 0.8,
+    "rgba8_mips_mb": 8.8,
+    "mean_sprite_kb": 150,
+    "typical_room_mb": 3
+  }
+}

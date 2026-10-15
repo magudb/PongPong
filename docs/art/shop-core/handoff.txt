@@ -1,0 +1,47 @@
+To the towns/interiors implementation owner
+
+Consume assets/iso_props/shops/core/shops.json through your existing PieceCatalog
+kit_manifest_paths. The items map has the 20 contracted IDs, layer, footprint,
+baked rotation list, template, set, fallback_id and rot entries. Each rotation supplies
+relative file, native size, pivot, footprint and ysort. No gameplay or collision
+field needs to be copied from the art studio. PieceCatalog already reads the
+explicit ysort: retain it when placing the sprite and offset its pixels once.
+
+Wall cabinet/board pivots refer to the FIRST wall cell's edge midpoint, as the
+towns builder expects. Their faces follow the 64:38 wall axis, with 45 px between
+the mounting baseline and the ground anchor. A sloped wall sprite's far corner
+can extend below pivot.y; do not re-centre its anchor from the bounding box.
+
+Consume emblems.json through the existing emblem(id) method. The bracket and
+96 x 96 plate use the same local origin: the plate centre under the chain. Labels
+remain BLD_* UI text. The two bracket drawings have different pivot.x values.
+
+Five front-facing warm-light layers are provided for brick_oven r0/r1, forge
+r0/r1 and cauldron_stand r0. Each rot entry has night, night_size, night_offset
+and glow. night_offset is measured from the FULL body image's top-left; position
+the overlay at body position with body offset + night_offset. Additive blending.
+The solid rear masonry intentionally has no mask. Keep at most one PointLight2D
+service-fire hint per room within the existing four-light room budget.
+
+At this handoff the unfinished m1b InteriorRoom._make_piece_sprite reads only the
+body image. Its implementation owner still needs to consume these light fields.
+The art gallery demonstrates the alignment but does not wire gameplay lighting.
+
+Snapshot-based art checks cover all 14 core layouts and find no unresolved piece
+or requested rotation. The live towns-table check runs automatically when
+data/interiors/kit_footprints.json exists in the checkout. The m1b wave remains
+unfinished; this is not a claim that its integration or the full I3 package gate
+has passed. Its live rooms/door/counter interaction and performance gate should
+run after integration. Existing town-builder geometry and access rules remain
+owned by that package.
+
+Remaining art/design work from the existing package plan:
+  I4: 69 specialist dressing pieces (shops/special/); not included here.
+  I5: 24 festival decorations; not included here.
+  Wardrobe: fitted per-body animation layers, sockets and occlusion remain the
+    next production step described in docs/art/equipment/design.txt. Existing
+    outfit/held-item illustrations remain design studies.
+
+Use the saved style-audit/asset-repair-prompt.txt for the approved style, and
+shop-core/prompts.json as the exact rotation-sheet precedent. Reuse the painted
+masters instead of re-running a legacy CG bake over accepted assets.

@@ -1,0 +1,22 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 51,
+  "elapsed_s": 4.44,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "art_shops": {
+      "checks": 51,
+      "failed": 0,
+      "ms": 2537,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

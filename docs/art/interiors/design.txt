@@ -100,3 +100,11 @@ atlases; they are not whole-game VRAM or frame-time measurements.
 
 Saved checks and measured limits are in validation.txt. The previews directory
 contains all 34 daylight studies and five evening variants captured in Godot.
+
+Core shop integration follow-up
+
+The production core kit now lives under assets/iso_props/shops/core/, matching
+Claude's towns PieceCatalog interface with 20 IDs, 51 authored views and 15
+emblem plates. The 103 exports and 34 fixed studies above remain available.
+See ../shop-core/review.txt and ../shop-core/handoff.txt for the new kit, native
+comparisons, light-mask contract and the remaining specialist/festival art.

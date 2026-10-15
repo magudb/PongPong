@@ -1,0 +1,22 @@
+{
+  "counters.png": {
+    "path": "tools/art/drawn/sources/shop_core/counters.png",
+    "sha256": "aaf6995e170f2d1b3315a9c40bdfd9d9ef25a1c997f3b4d2bc2fbd5142028ed3"
+  },
+  "emblems.png": {
+    "path": "tools/art/drawn/sources/shop_core/emblems.png",
+    "sha256": "bb7eb56c3d5cbd1fec58f8627326b4c58202ad977209a98f98d93465a2a33983"
+  },
+  "service.png": {
+    "path": "tools/art/drawn/sources/shop_core/service.png",
+    "sha256": "055319c783361713dc9c9f064d23331f56b1f2c52571e68cdf84d8f9c53fe1b1"
+  },
+  "small.png": {
+    "path": "tools/art/drawn/sources/shop_core/small.png",
+    "sha256": "8ba3a8a28c1bee56ad36e10c8981fa4e4463a1325854abe1fdf05c6eefa45114"
+  },
+  "workroom.png": {
+    "path": "tools/art/drawn/sources/shop_core/workroom.png",
+    "sha256": "110fb2c3be9a041b995fcdd57f75089d662cfac59346a5d94c7676ca537b8c0d"
+  }
+}

@@ -23,7 +23,7 @@ tests/run_playtest.sh --strict --character=fairy
 tests/run_playtest.sh --strict --character=hobbit
 ```
 
-`--only=characters|props|homes|terrain|items|world|interiors|consistency` rebuilds a slice. `--sheet heroes players2`
+`--only=characters|props|homes|terrain|items|world|interiors|consistency|shop-core` rebuilds a slice. `--sheet heroes players2`
 restricts the character sources; `--character <ids...>` restricts individual IDs.
 `--portraits-only --only=characters` updates
 portraits without rebuilding animation sheets. Run one Godot instance at a time.
@@ -192,3 +192,13 @@ The old symmetry/mirror measurements describe the geometry generator; they do
 not authorize flipping the painted grain or embroidery. Native checks enforce
 the painted rotation policy and still test anchors, icon outlines, distinctness
 and the unchanged 12 MB home art budget.
+
+The painted core shop kit exports the towns `PieceCatalog` interface under
+`assets/iso_props/shops/core/`: 20 pieces with 51 authored views, 15 emblem plates
+and five trimmed ember masks. Run `pack.py --only=shop-core`; open
+`shop_core_gallery.tscn` through `tools/dev/play.sh --throwaway` to browse the 14
+core room snapshots or compare their former stand-ins. Exact prompts, masters,
+budgets, native evidence and implementation handoffs are recorded in
+`docs/art/shop-core/review.txt`. This is the core art delivery; the unfinished
+m1b town gameplay, specialist dressing, festivals and fitted wardrobe animations
+remain their respective packages.

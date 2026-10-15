@@ -1,0 +1,64 @@
+{
+  "reports": {
+    "headless-tests": {
+      "result": "pass",
+      "checks": 627,
+      "failed": 0,
+      "skipped": 1
+    },
+    "native-tests": {
+      "result": "pass",
+      "checks": 51,
+      "failed": 0,
+      "skipped": 0
+    },
+    "equipment-tests": {
+      "result": "pass",
+      "checks": 129,
+      "failed": 0,
+      "skipped": 0
+    },
+    "full-tests": {
+      "result": "pass",
+      "checks": 3990,
+      "failed": 0,
+      "skipped": 55
+    }
+  },
+  "packing": {
+    "pieces": 20,
+    "authored_views": 51,
+    "emblems": 15,
+    "night_layers": 5,
+    "disk_mb": 0.719856,
+    "rgba8_mips_mb": 8.77748
+  },
+  "native_png_sha256": {
+    "art_shops_shop_badehuset_day.png": "0e94ddb9b42b94515a1bfe3ae915b741175713a9cb65d52694227e39c04fbf20",
+    "art_shops_shop_badehuset_night.png": "c7b23518f2fa84ae7df2ee59deac016933e739949058d625296c44e1b629077b",
+    "art_shops_shop_badehuset_stand_in.png": "b709035648cdab0a0ac4cfc069578a70534e9c941a9bf1dbbfa058e13f2a2f10",
+    "art_shops_shop_bageriet_day.png": "f06a1135513a18d11815824d84620a191697fa383336abb08a8d8fa9e4bdf6a4",
+    "art_shops_shop_bageriet_night.png": "d46e979c7e873b2ef107d19486c7b98c6746fe2188b9fe18c9f19bcc28f25628",
+    "art_shops_shop_bageriet_stand_in.png": "45f92e66b785ed80f1fe6c51e78b80f6cfca1ad8e8759a0fe43e10868a750a66",
+    "art_shops_shop_brummes_vaerksted_day.png": "944c830e4110db3908c86ddb2d2d4941c0ced1dca1cb550727fb20942ab6e39f",
+    "art_shops_shop_dyrehuset_day.png": "9968caf6f252927b732d0c7884317aaa4926fa91f4df3f49353991d537a0fc7b",
+    "art_shops_shop_emblems_01.png": "b17d1bb0464630a130b2a049ebfdae18aa2541b9fd20ace0319b634a97934b01",
+    "art_shops_shop_froebutikken_day.png": "96ddb282e7473152f20249be644e0269c47c68f7312df01edfeb1323c57caeba",
+    "art_shops_shop_loppeloftet_day.png": "d42de27067226044a908aa40d65ffc2493dfaa65b94ab770a54e8421bfd0396b",
+    "art_shops_shop_moebelbutikken_day.png": "ac6ae385257486c6bde6efb3e9a5a33329a8f99c8f7e23a063ad68edc2fee08f",
+    "art_shops_shop_postkontoret_day.png": "94ee5e7145c4a30cce4d64703cd7afe3b15f64d5f78f3c8dbf7a3acec95b05a8",
+    "art_shops_shop_raadhuset_day.png": "b9eb4c0cd59e924f571501e0e8e63a91f766fb5dfd1af11e3a10d52e3fab06d8",
+    "art_shops_shop_skraedderiet_day.png": "7373f742a6e1bb1469d341104a1e573e1c29423b36050d1dc7faf2f84736c0da",
+    "art_shops_shop_smedjen_day.png": "0f9063ba2a106ea286d6e1fcde0b427cb9c37f2ebbfd40a84ce6027032ab0f72",
+    "art_shops_shop_smedjen_night.png": "b0827256cf038d5aebc0fb30cba7674a93e7e8e5293c34a23b8d823fc20d51b6",
+    "art_shops_shop_smedjen_stand_in.png": "0df3812b966dfe0d65f94376b06cd2d081b20d476b65e4ca9da0645d7f8a0ed0",
+    "art_shops_shop_toemmerhandlen_day.png": "6d10d2026d2bb3a1a28d9489eec474147f0b4c5ca226e99da105d2ce0c975c65",
+    "art_shops_shop_troldmandstaarnet_day.png": "ba06eacd1414d536e41b88f77e10cf22e1226551e86bc6c407ebb58992f53d6e",
+    "art_shops_shop_uglehulen_day.png": "68357477da34cff6db46c6e6e993f4c461bb962b61862efec11fea1a3e6d5275",
+    "art_shops_shop_views_01.png": "c03abf5f8d7a9f3a14a59401f35cf4c65455687704bfa1b27bb51cec97ef3795",
+    "art_shops_shop_views_02.png": "ea7b99043d6bf745368ee0be31854b09c84a5f350346d1c49d6618535681fa32",
+    "art_shops_shop_views_03.png": "6016d489a1a20b503d55d35f8a307f79ebe4490bde26b7fa5f33fda56e404e68",
+    "art_shops_shop_views_04.png": "49e483d76d8b402c230bc8b6ffe2af45a85197a9a197a1d0076aaceb1ae42d2a"
+  },
+  "review": "All source paintings, all 51 imported views, 15 signs and all 14 daytime room captures inspected, with three former-stand-in/evening comparisons. Gameplay integration remains the towns owner's handoff."
+}
