@@ -91,3 +91,14 @@ returns home without a fee. Native NPC warming respects flyers and stationary
 keepers. The boss quest now binds moerkeskoven_f4. The targeted gate passed
 400 checks with no engine errors/warnings. Replaced social fixture nodes are
 freed together; its 132-check leak probe exits cleanly.
+
+Copy and social data — 2026-10-16
+
+I1 copy rules, glossary, eight voice sheets, font measurements, C1–C10 lint,
+review states/queue and mutation tests are installed. S-data covers all 30
+citizens, birthdays, gift preferences, nine keeper samples, personal topics and
+765 da/en copy rows. All new copy is draft. The 100 indexed voice hooks do not
+generate audio. Shared weather/season pools keep the LEAN row budgets. The
+approved names need a 272px nameplate rather than the old 241px estimate.
+The strict copy/social/localization gate passed 461 checks, with no unexpected
+engine messages or leaked objects. Legacy dialogue copy remains P14’s next task.

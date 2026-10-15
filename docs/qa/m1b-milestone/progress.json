@@ -51,7 +51,8 @@
         },
         {
           "id": "I1-copy-system",
-          "status": "pending"
+          "status": "validated",
+          "evidence": "copy-social-data.json: 461 checks, zero failures, 3 later-package skips; copy mutants and font remeasurement pass"
         },
         {
           "id": "V7-dialogue-v2",
@@ -81,7 +82,8 @@
         },
         {
           "id": "S-data",
-          "status": "pending"
+          "status": "validated",
+          "evidence": "copy-social-data.json: 461 checks, zero failures, 3 later-package skips; copy mutants and font remeasurement pass"
         },
         {
           "id": "S-gifts",
@@ -157,7 +159,9 @@
     "Production wardrobe animation remains the separate painted-equipment asset track recorded by Claude; preserve the fit proof coverage without presenting it as a complete wardrobe.",
     "Obsolete core-only matrix stopped during fairy after the user expanded scope. Its interrupted result is not a milestone approval.",
     "Full furniture/home-world feature screens and production wardrobe layers were optional later packages in the original M1b plan; they are separate from the four-stage town/farm loop.",
-    "Social fixture replacement leak fixed and validated: 132 checks, clean ObjectDB exit. D0 targeted gate: 400 checks, no errors or warnings."
+    "Social fixture replacement leak fixed and validated: 132 checks, clean ObjectDB exit. D0 targeted gate: 400 checks, no errors or warnings.",
+    "LEAN copy keeps situational weather/season pools shared: 335/285/125/20 rows, within the 346/300/133/25 budgets. Exactly 100 voice hooks indexed; chat milestones remain text pending listening approval. No audio generated. All new copy stays draft.",
+    "The old 21-character / 241px name estimate contradicts approved names measured at up to 267.25px. The name budget is 26 characters / 272px; preserve canonical names and give the P14 runtime plate that width plus padding."
   ],
   "scope_basis": "The four-stage 27-package M1b plan in the original durable LEAD_NOTES.md (2026-10-15); package amendments remain binding. This is the usable-towns milestone, before the later dungeon and feature milestones.",
   "followup_layers": [

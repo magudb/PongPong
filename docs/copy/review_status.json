@@ -1,0 +1,212 @@
+{
+  "localization/da.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 414
+  },
+  "localization/areas.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 11
+  },
+  "localization/cast.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 40
+  },
+  "localization/core.csv": {
+    "status": "ai_reviewed",
+    "reviewed_by": "canonical guide baseline",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 48
+  },
+  "localization/dialogue_builder.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 43
+  },
+  "localization/dialogue_cast.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 73
+  },
+  "localization/dungeon_services.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 49
+  },
+  "localization/economy.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 162
+  },
+  "localization/farm_signs.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 3
+  },
+  "localization/features_quests.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 44
+  },
+  "localization/features_ui.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 55
+  },
+  "localization/finds.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 39
+  },
+  "localization/furniture.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 322
+  },
+  "localization/ghost.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 15
+  },
+  "localization/home.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 90
+  },
+  "localization/levels.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 3
+  },
+  "localization/loot_dungeon.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 11
+  },
+  "localization/materials.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 75
+  },
+  "localization/nav.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 32
+  },
+  "localization/quests.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 147
+  },
+  "localization/social_sys.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 10
+  },
+  "localization/towns.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 69
+  },
+  "localization/traetoppen.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 21
+  },
+  "localization/ui.csv": {
+    "status": "ai_reviewed",
+    "reviewed_by": "canonical guide baseline",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 140
+  },
+  "localization/wardrobe.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 238
+  },
+  "localization/world.csv": {
+    "status": "ai_reviewed",
+    "reviewed_by": "canonical guide baseline",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 8
+  },
+  "localization/birthdays.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 20
+  },
+  "localization/gifts.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 125
+  },
+  "localization/social_arch.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 285
+  },
+  "localization/social_talk.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 335
+  }
+}

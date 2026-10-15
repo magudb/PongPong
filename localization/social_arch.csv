@@ -1,0 +1,286 @@
+keys,da,en
+SOC_ARCH_CHILD_GREET_H0_1,"Kom, der er plads ved min lille legehule.","Come, there is room by my little play den."
+SOC_ARCH_CHILD_GREET_H0_2,"Jeg blev glad, da jeg så dig ved min lille legehule.",I was happy to see you by my little play den.
+SOC_ARCH_CHILD_GREET_H0_3,Skal vi dele en lille stund ved min lille legehule?,Shall we share a little time by my little play den?
+SOC_ARCH_CHILD_GREET_H1_1,"Kom, der er plads ved min lille legehule. Det er rart at kende dig.","Come, there is room by my little play den. It is lovely to know you."
+SOC_ARCH_CHILD_GREET_H1_2,"Jeg blev glad, da jeg så dig ved min lille legehule. Det er rart at kende dig.",I was happy to see you by my little play den. It is lovely to know you.
+SOC_ARCH_CHILD_GREET_H1_3,Skal vi dele en lille stund ved min lille legehule? Det er rart at kende dig.,Shall we share a little time by my little play den? It is lovely to know you.
+SOC_ARCH_CHILD_GREET_H2_1,"Kom, der er plads ved min lille legehule. Jeg har savnet dit selskab.","Come, there is room by my little play den. I missed your company."
+SOC_ARCH_CHILD_GREET_H2_2,"Jeg blev glad, da jeg så dig ved min lille legehule. Jeg har savnet dit selskab.",I was happy to see you by my little play den. I missed your company.
+SOC_ARCH_CHILD_GREET_H2_3,Skal vi dele en lille stund ved min lille legehule? Jeg har savnet dit selskab.,Shall we share a little time by my little play den? I missed your company.
+SOC_ARCH_CHILD_GREET_H3_1,"Kom, der er plads ved min lille legehule. Du er altid velkommen her.","Come, there is room by my little play den. You are always welcome here."
+SOC_ARCH_CHILD_GREET_H3_2,"Jeg blev glad, da jeg så dig ved min lille legehule. Du er altid velkommen her.",I was happy to see you by my little play den. You are always welcome here.
+SOC_ARCH_CHILD_GREET_H3_3,Skal vi dele en lille stund ved min lille legehule? Du er altid velkommen her.,Shall we share a little time by my little play den? You are always welcome here.
+SOC_ARCH_CHILD_GIFT_LOVE_1,Den her betyder noget særligt for mig.,This means something special to me.
+SOC_ARCH_CHILD_GIFT_LOVE_2,Du kender mig godt. Tusind tak!,You know me well. Thank you so much!
+SOC_ARCH_CHILD_GIFT_LIKE_1,Hvor er det en fin tanke.,What a lovely thought.
+SOC_ARCH_CHILD_GIFT_LIKE_2,Den her vil jeg nyde.,I will enjoy this.
+SOC_ARCH_CHILD_GIFT_NEUTRAL_1,"Tak, fordi du kom med en gave.",Thank you for bringing a gift.
+SOC_ARCH_CHILD_GIFT_NEUTRAL_2,Du tænkte på mig. Det var rart.,You thought of me. That was lovely.
+SOC_ARCH_CHILD_GIFT_DISLIKE_1,"Tak for tanken, selv om den ikke helt passer til mig.","Thank you for the thought, though it is not quite for me."
+SOC_ARCH_CHILD_GIFT_DISLIKE_2,Måske kan en nabo få glæde af den.,Perhaps a neighbour can enjoy it.
+SOC_ARCH_CHILD_GIFT_HATE_1,Det var venligt. Jeg holder bare mere af andre ting.,That was kind. I just prefer other things.
+SOC_ARCH_CHILD_GIFT_HATE_2,"Tak. Du må gerne spørge, hvad jeg kan lide en anden gang.",Thank you. You can ask what I like another time.
+SOC_ARCH_CHILD_BDAY_1,En fødselsdag bliver rarere med besøg.,A birthday is lovelier with visitors.
+SOC_ARCH_CHILD_BDAY_2,I dag er min fødselsdag. Vil du holde mig med selskab?,Today is my birthday. Will you keep me company?
+SOC_ARCH_CHILD_BARK_1,Der kom et vindpust.,A little breeze arrived.
+SOC_ARCH_CHILD_BARK_2,En nabo går forbi.,A neighbour passes by.
+SOC_ARCH_CHILD_BARK_3,Lyset falder så fint.,The light falls so softly.
+SOC_ARCH_CHILD_BARK_4,Der dufter af træ.,It smells of timber.
+SOC_ARCH_CHILD_BARK_5,En lille pause nu.,A little break now.
+SOC_ARCH_CHILD_BARK_6,Jeg lytter til bladene.,I listen to the leaves.
+SOC_ARCH_CHILD_SHOP_1,Kig dig bare omkring.,Feel free to look around.
+SOC_ARCH_CHILD_SHOP_2,Jeg hjælper gerne ved disken.,I am happy to help at the counter.
+SOC_ARCH_CHILD_SHOP_3,Der er mange små ting på hylderne.,There are many little things on the shelves.
+SOC_ARCH_CHILD_SHOP_4,Tag dig tid. Vi finder det sammen.,Take your time. We will find it together.
+SOC_ARCH_WANDERER_GREET_H0_1,"Kom, der er plads ved stien mellem grenene.","Come, there is room by the path between the branches."
+SOC_ARCH_WANDERER_GREET_H0_2,"Jeg blev glad, da jeg så dig ved stien mellem grenene.",I was happy to see you by the path between the branches.
+SOC_ARCH_WANDERER_GREET_H0_3,Skal vi dele en lille stund ved stien mellem grenene?,Shall we share a little time by the path between the branches?
+SOC_ARCH_WANDERER_GREET_H1_1,"Kom, der er plads ved stien mellem grenene. Det er rart at kende dig.","Come, there is room by the path between the branches. It is lovely to know you."
+SOC_ARCH_WANDERER_GREET_H1_2,"Jeg blev glad, da jeg så dig ved stien mellem grenene. Det er rart at kende dig.",I was happy to see you by the path between the branches. It is lovely to know you.
+SOC_ARCH_WANDERER_GREET_H1_3,Skal vi dele en lille stund ved stien mellem grenene? Det er rart at kende dig.,Shall we share a little time by the path between the branches? It is lovely to know you.
+SOC_ARCH_WANDERER_GREET_H2_1,"Kom, der er plads ved stien mellem grenene. Jeg har savnet dit selskab.","Come, there is room by the path between the branches. I missed your company."
+SOC_ARCH_WANDERER_GREET_H2_2,"Jeg blev glad, da jeg så dig ved stien mellem grenene. Jeg har savnet dit selskab.",I was happy to see you by the path between the branches. I missed your company.
+SOC_ARCH_WANDERER_GREET_H2_3,Skal vi dele en lille stund ved stien mellem grenene? Jeg har savnet dit selskab.,Shall we share a little time by the path between the branches? I missed your company.
+SOC_ARCH_WANDERER_GREET_H3_1,"Kom, der er plads ved stien mellem grenene. Du er altid velkommen her.","Come, there is room by the path between the branches. You are always welcome here."
+SOC_ARCH_WANDERER_GREET_H3_2,"Jeg blev glad, da jeg så dig ved stien mellem grenene. Du er altid velkommen her.",I was happy to see you by the path between the branches. You are always welcome here.
+SOC_ARCH_WANDERER_GREET_H3_3,Skal vi dele en lille stund ved stien mellem grenene? Du er altid velkommen her.,Shall we share a little time by the path between the branches? You are always welcome here.
+SOC_ARCH_WANDERER_GIFT_LOVE_1,Den her betyder noget særligt for mig.,This means something special to me.
+SOC_ARCH_WANDERER_GIFT_LOVE_2,Du kender mig godt. Tusind tak!,You know me well. Thank you so much!
+SOC_ARCH_WANDERER_GIFT_LIKE_1,Hvor er det en fin tanke.,What a lovely thought.
+SOC_ARCH_WANDERER_GIFT_LIKE_2,Den her vil jeg nyde.,I will enjoy this.
+SOC_ARCH_WANDERER_GIFT_NEUTRAL_1,"Tak, fordi du kom med en gave.",Thank you for bringing a gift.
+SOC_ARCH_WANDERER_GIFT_NEUTRAL_2,Du tænkte på mig. Det var rart.,You thought of me. That was lovely.
+SOC_ARCH_WANDERER_GIFT_DISLIKE_1,"Tak for tanken, selv om den ikke helt passer til mig.","Thank you for the thought, though it is not quite for me."
+SOC_ARCH_WANDERER_GIFT_DISLIKE_2,Måske kan en nabo få glæde af den.,Perhaps a neighbour can enjoy it.
+SOC_ARCH_WANDERER_GIFT_HATE_1,Det var venligt. Jeg holder bare mere af andre ting.,That was kind. I just prefer other things.
+SOC_ARCH_WANDERER_GIFT_HATE_2,"Tak. Du må gerne spørge, hvad jeg kan lide en anden gang.",Thank you. You can ask what I like another time.
+SOC_ARCH_WANDERER_BDAY_1,En fødselsdag bliver rarere med besøg.,A birthday is lovelier with visitors.
+SOC_ARCH_WANDERER_BDAY_2,I dag er min fødselsdag. Vil du holde mig med selskab?,Today is my birthday. Will you keep me company?
+SOC_ARCH_WANDERER_BARK_1,Der kom et vindpust.,A little breeze arrived.
+SOC_ARCH_WANDERER_BARK_2,En nabo går forbi.,A neighbour passes by.
+SOC_ARCH_WANDERER_BARK_3,Lyset falder så fint.,The light falls so softly.
+SOC_ARCH_WANDERER_BARK_4,Der dufter af træ.,It smells of timber.
+SOC_ARCH_WANDERER_BARK_5,En lille pause nu.,A little break now.
+SOC_ARCH_WANDERER_BARK_6,Jeg lytter til bladene.,I listen to the leaves.
+SOC_ARCH_WANDERER_SHOP_1,Kig dig bare omkring.,Feel free to look around.
+SOC_ARCH_WANDERER_SHOP_2,Jeg hjælper gerne ved disken.,I am happy to help at the counter.
+SOC_ARCH_WANDERER_SHOP_3,Der er mange små ting på hylderne.,There are many little things on the shelves.
+SOC_ARCH_WANDERER_SHOP_4,Tag dig tid. Vi finder det sammen.,Take your time. We will find it together.
+SOC_ARCH_FAIRY_GREET_H0_1,"Kom, der er plads ved lyset mellem bladene.","Come, there is room by the light among the leaves."
+SOC_ARCH_FAIRY_GREET_H0_2,"Jeg blev glad, da jeg så dig ved lyset mellem bladene.",I was happy to see you by the light among the leaves.
+SOC_ARCH_FAIRY_GREET_H0_3,Skal vi dele en lille stund ved lyset mellem bladene?,Shall we share a little time by the light among the leaves?
+SOC_ARCH_FAIRY_GREET_H1_1,"Kom, der er plads ved lyset mellem bladene. Det er rart at kende dig.","Come, there is room by the light among the leaves. It is lovely to know you."
+SOC_ARCH_FAIRY_GREET_H1_2,"Jeg blev glad, da jeg så dig ved lyset mellem bladene. Det er rart at kende dig.",I was happy to see you by the light among the leaves. It is lovely to know you.
+SOC_ARCH_FAIRY_GREET_H1_3,Skal vi dele en lille stund ved lyset mellem bladene? Det er rart at kende dig.,Shall we share a little time by the light among the leaves? It is lovely to know you.
+SOC_ARCH_FAIRY_GREET_H2_1,"Kom, der er plads ved lyset mellem bladene. Jeg har savnet dit selskab.","Come, there is room by the light among the leaves. I missed your company."
+SOC_ARCH_FAIRY_GREET_H2_2,"Jeg blev glad, da jeg så dig ved lyset mellem bladene. Jeg har savnet dit selskab.",I was happy to see you by the light among the leaves. I missed your company.
+SOC_ARCH_FAIRY_GREET_H2_3,Skal vi dele en lille stund ved lyset mellem bladene? Jeg har savnet dit selskab.,Shall we share a little time by the light among the leaves? I missed your company.
+SOC_ARCH_FAIRY_GREET_H3_1,"Kom, der er plads ved lyset mellem bladene. Du er altid velkommen her.","Come, there is room by the light among the leaves. You are always welcome here."
+SOC_ARCH_FAIRY_GREET_H3_2,"Jeg blev glad, da jeg så dig ved lyset mellem bladene. Du er altid velkommen her.",I was happy to see you by the light among the leaves. You are always welcome here.
+SOC_ARCH_FAIRY_GREET_H3_3,Skal vi dele en lille stund ved lyset mellem bladene? Du er altid velkommen her.,Shall we share a little time by the light among the leaves? You are always welcome here.
+SOC_ARCH_FAIRY_GIFT_LOVE_1,Den her betyder noget særligt for mig.,This means something special to me.
+SOC_ARCH_FAIRY_GIFT_LOVE_2,Du kender mig godt. Tusind tak!,You know me well. Thank you so much!
+SOC_ARCH_FAIRY_GIFT_LIKE_1,Hvor er det en fin tanke.,What a lovely thought.
+SOC_ARCH_FAIRY_GIFT_LIKE_2,Den her vil jeg nyde.,I will enjoy this.
+SOC_ARCH_FAIRY_GIFT_NEUTRAL_1,"Tak, fordi du kom med en gave.",Thank you for bringing a gift.
+SOC_ARCH_FAIRY_GIFT_NEUTRAL_2,Du tænkte på mig. Det var rart.,You thought of me. That was lovely.
+SOC_ARCH_FAIRY_GIFT_DISLIKE_1,"Tak for tanken, selv om den ikke helt passer til mig.","Thank you for the thought, though it is not quite for me."
+SOC_ARCH_FAIRY_GIFT_DISLIKE_2,Måske kan en nabo få glæde af den.,Perhaps a neighbour can enjoy it.
+SOC_ARCH_FAIRY_GIFT_HATE_1,Det var venligt. Jeg holder bare mere af andre ting.,That was kind. I just prefer other things.
+SOC_ARCH_FAIRY_GIFT_HATE_2,"Tak. Du må gerne spørge, hvad jeg kan lide en anden gang.",Thank you. You can ask what I like another time.
+SOC_ARCH_FAIRY_BDAY_1,En fødselsdag bliver rarere med besøg.,A birthday is lovelier with visitors.
+SOC_ARCH_FAIRY_BDAY_2,I dag er min fødselsdag. Vil du holde mig med selskab?,Today is my birthday. Will you keep me company?
+SOC_ARCH_FAIRY_BARK_1,Der kom et vindpust.,A little breeze arrived.
+SOC_ARCH_FAIRY_BARK_2,En nabo går forbi.,A neighbour passes by.
+SOC_ARCH_FAIRY_BARK_3,Lyset falder så fint.,The light falls so softly.
+SOC_ARCH_FAIRY_BARK_4,Der dufter af træ.,It smells of timber.
+SOC_ARCH_FAIRY_BARK_5,En lille pause nu.,A little break now.
+SOC_ARCH_FAIRY_BARK_6,Jeg lytter til bladene.,I listen to the leaves.
+SOC_ARCH_FAIRY_SHOP_1,Kig dig bare omkring.,Feel free to look around.
+SOC_ARCH_FAIRY_SHOP_2,Jeg hjælper gerne ved disken.,I am happy to help at the counter.
+SOC_ARCH_FAIRY_SHOP_3,Der er mange små ting på hylderne.,There are many little things on the shelves.
+SOC_ARCH_FAIRY_SHOP_4,Tag dig tid. Vi finder det sammen.,Take your time. We will find it together.
+SOC_ARCH_SHOPKEEPER_GREET_H0_1,"Kom, der er plads ved den lille disk.","Come, there is room by the little counter."
+SOC_ARCH_SHOPKEEPER_GREET_H0_2,"Jeg blev glad, da jeg så dig ved den lille disk.",I was happy to see you by the little counter.
+SOC_ARCH_SHOPKEEPER_GREET_H0_3,Skal vi dele en lille stund ved den lille disk?,Shall we share a little time by the little counter?
+SOC_ARCH_SHOPKEEPER_GREET_H1_1,"Kom, der er plads ved den lille disk. Det er rart at kende dig.","Come, there is room by the little counter. It is lovely to know you."
+SOC_ARCH_SHOPKEEPER_GREET_H1_2,"Jeg blev glad, da jeg så dig ved den lille disk. Det er rart at kende dig.",I was happy to see you by the little counter. It is lovely to know you.
+SOC_ARCH_SHOPKEEPER_GREET_H1_3,Skal vi dele en lille stund ved den lille disk? Det er rart at kende dig.,Shall we share a little time by the little counter? It is lovely to know you.
+SOC_ARCH_SHOPKEEPER_GREET_H2_1,"Kom, der er plads ved den lille disk. Jeg har savnet dit selskab.","Come, there is room by the little counter. I missed your company."
+SOC_ARCH_SHOPKEEPER_GREET_H2_2,"Jeg blev glad, da jeg så dig ved den lille disk. Jeg har savnet dit selskab.",I was happy to see you by the little counter. I missed your company.
+SOC_ARCH_SHOPKEEPER_GREET_H2_3,Skal vi dele en lille stund ved den lille disk? Jeg har savnet dit selskab.,Shall we share a little time by the little counter? I missed your company.
+SOC_ARCH_SHOPKEEPER_GREET_H3_1,"Kom, der er plads ved den lille disk. Du er altid velkommen her.","Come, there is room by the little counter. You are always welcome here."
+SOC_ARCH_SHOPKEEPER_GREET_H3_2,"Jeg blev glad, da jeg så dig ved den lille disk. Du er altid velkommen her.",I was happy to see you by the little counter. You are always welcome here.
+SOC_ARCH_SHOPKEEPER_GREET_H3_3,Skal vi dele en lille stund ved den lille disk? Du er altid velkommen her.,Shall we share a little time by the little counter? You are always welcome here.
+SOC_ARCH_SHOPKEEPER_GIFT_LOVE_1,Den her betyder noget særligt for mig.,This means something special to me.
+SOC_ARCH_SHOPKEEPER_GIFT_LOVE_2,Du kender mig godt. Tusind tak!,You know me well. Thank you so much!
+SOC_ARCH_SHOPKEEPER_GIFT_LIKE_1,Hvor er det en fin tanke.,What a lovely thought.
+SOC_ARCH_SHOPKEEPER_GIFT_LIKE_2,Den her vil jeg nyde.,I will enjoy this.
+SOC_ARCH_SHOPKEEPER_GIFT_NEUTRAL_1,"Tak, fordi du kom med en gave.",Thank you for bringing a gift.
+SOC_ARCH_SHOPKEEPER_GIFT_NEUTRAL_2,Du tænkte på mig. Det var rart.,You thought of me. That was lovely.
+SOC_ARCH_SHOPKEEPER_GIFT_DISLIKE_1,"Tak for tanken, selv om den ikke helt passer til mig.","Thank you for the thought, though it is not quite for me."
+SOC_ARCH_SHOPKEEPER_GIFT_DISLIKE_2,Måske kan en nabo få glæde af den.,Perhaps a neighbour can enjoy it.
+SOC_ARCH_SHOPKEEPER_GIFT_HATE_1,Det var venligt. Jeg holder bare mere af andre ting.,That was kind. I just prefer other things.
+SOC_ARCH_SHOPKEEPER_GIFT_HATE_2,"Tak. Du må gerne spørge, hvad jeg kan lide en anden gang.",Thank you. You can ask what I like another time.
+SOC_ARCH_SHOPKEEPER_BDAY_1,En fødselsdag bliver rarere med besøg.,A birthday is lovelier with visitors.
+SOC_ARCH_SHOPKEEPER_BDAY_2,I dag er min fødselsdag. Vil du holde mig med selskab?,Today is my birthday. Will you keep me company?
+SOC_ARCH_SHOPKEEPER_BARK_1,Der kom et vindpust.,A little breeze arrived.
+SOC_ARCH_SHOPKEEPER_BARK_2,En nabo går forbi.,A neighbour passes by.
+SOC_ARCH_SHOPKEEPER_BARK_3,Lyset falder så fint.,The light falls so softly.
+SOC_ARCH_SHOPKEEPER_BARK_4,Der dufter af træ.,It smells of timber.
+SOC_ARCH_SHOPKEEPER_BARK_5,En lille pause nu.,A little break now.
+SOC_ARCH_SHOPKEEPER_BARK_6,Jeg lytter til bladene.,I listen to the leaves.
+SOC_ARCH_SHOPKEEPER_SHOP_1,Kig dig bare omkring.,Feel free to look around.
+SOC_ARCH_SHOPKEEPER_SHOP_2,Jeg hjælper gerne ved disken.,I am happy to help at the counter.
+SOC_ARCH_SHOPKEEPER_SHOP_3,Der er mange små ting på hylderne.,There are many little things on the shelves.
+SOC_ARCH_SHOPKEEPER_SHOP_4,Tag dig tid. Vi finder det sammen.,Take your time. We will find it together.
+SOC_ARCH_GARDENER_GREET_H0_1,"Kom, der er plads ved haven i trækronen.","Come, there is room by the garden in the treetop."
+SOC_ARCH_GARDENER_GREET_H0_2,"Jeg blev glad, da jeg så dig ved haven i trækronen.",I was happy to see you by the garden in the treetop.
+SOC_ARCH_GARDENER_GREET_H0_3,Skal vi dele en lille stund ved haven i trækronen?,Shall we share a little time by the garden in the treetop?
+SOC_ARCH_GARDENER_GREET_H1_1,"Kom, der er plads ved haven i trækronen. Det er rart at kende dig.","Come, there is room by the garden in the treetop. It is lovely to know you."
+SOC_ARCH_GARDENER_GREET_H1_2,"Jeg blev glad, da jeg så dig ved haven i trækronen. Det er rart at kende dig.",I was happy to see you by the garden in the treetop. It is lovely to know you.
+SOC_ARCH_GARDENER_GREET_H1_3,Skal vi dele en lille stund ved haven i trækronen? Det er rart at kende dig.,Shall we share a little time by the garden in the treetop? It is lovely to know you.
+SOC_ARCH_GARDENER_GREET_H2_1,"Kom, der er plads ved haven i trækronen. Jeg har savnet dit selskab.","Come, there is room by the garden in the treetop. I missed your company."
+SOC_ARCH_GARDENER_GREET_H2_2,"Jeg blev glad, da jeg så dig ved haven i trækronen. Jeg har savnet dit selskab.",I was happy to see you by the garden in the treetop. I missed your company.
+SOC_ARCH_GARDENER_GREET_H2_3,Skal vi dele en lille stund ved haven i trækronen? Jeg har savnet dit selskab.,Shall we share a little time by the garden in the treetop? I missed your company.
+SOC_ARCH_GARDENER_GREET_H3_1,"Kom, der er plads ved haven i trækronen. Du er altid velkommen her.","Come, there is room by the garden in the treetop. You are always welcome here."
+SOC_ARCH_GARDENER_GREET_H3_2,"Jeg blev glad, da jeg så dig ved haven i trækronen. Du er altid velkommen her.",I was happy to see you by the garden in the treetop. You are always welcome here.
+SOC_ARCH_GARDENER_GREET_H3_3,Skal vi dele en lille stund ved haven i trækronen? Du er altid velkommen her.,Shall we share a little time by the garden in the treetop? You are always welcome here.
+SOC_ARCH_GARDENER_GIFT_LOVE_1,Den her betyder noget særligt for mig.,This means something special to me.
+SOC_ARCH_GARDENER_GIFT_LOVE_2,Du kender mig godt. Tusind tak!,You know me well. Thank you so much!
+SOC_ARCH_GARDENER_GIFT_LIKE_1,Hvor er det en fin tanke.,What a lovely thought.
+SOC_ARCH_GARDENER_GIFT_LIKE_2,Den her vil jeg nyde.,I will enjoy this.
+SOC_ARCH_GARDENER_GIFT_NEUTRAL_1,"Tak, fordi du kom med en gave.",Thank you for bringing a gift.
+SOC_ARCH_GARDENER_GIFT_NEUTRAL_2,Du tænkte på mig. Det var rart.,You thought of me. That was lovely.
+SOC_ARCH_GARDENER_GIFT_DISLIKE_1,"Tak for tanken, selv om den ikke helt passer til mig.","Thank you for the thought, though it is not quite for me."
+SOC_ARCH_GARDENER_GIFT_DISLIKE_2,Måske kan en nabo få glæde af den.,Perhaps a neighbour can enjoy it.
+SOC_ARCH_GARDENER_GIFT_HATE_1,Det var venligt. Jeg holder bare mere af andre ting.,That was kind. I just prefer other things.
+SOC_ARCH_GARDENER_GIFT_HATE_2,"Tak. Du må gerne spørge, hvad jeg kan lide en anden gang.",Thank you. You can ask what I like another time.
+SOC_ARCH_GARDENER_BDAY_1,En fødselsdag bliver rarere med besøg.,A birthday is lovelier with visitors.
+SOC_ARCH_GARDENER_BDAY_2,I dag er min fødselsdag. Vil du holde mig med selskab?,Today is my birthday. Will you keep me company?
+SOC_ARCH_GARDENER_BARK_1,Der kom et vindpust.,A little breeze arrived.
+SOC_ARCH_GARDENER_BARK_2,En nabo går forbi.,A neighbour passes by.
+SOC_ARCH_GARDENER_BARK_3,Lyset falder så fint.,The light falls so softly.
+SOC_ARCH_GARDENER_BARK_4,Der dufter af træ.,It smells of timber.
+SOC_ARCH_GARDENER_BARK_5,En lille pause nu.,A little break now.
+SOC_ARCH_GARDENER_BARK_6,Jeg lytter til bladene.,I listen to the leaves.
+SOC_ARCH_GARDENER_SHOP_1,Kig dig bare omkring.,Feel free to look around.
+SOC_ARCH_GARDENER_SHOP_2,Jeg hjælper gerne ved disken.,I am happy to help at the counter.
+SOC_ARCH_GARDENER_SHOP_3,Der er mange små ting på hylderne.,There are many little things on the shelves.
+SOC_ARCH_GARDENER_SHOP_4,Tag dig tid. Vi finder det sammen.,Take your time. We will find it together.
+SOC_ARCH_WATCHER_GREET_H0_1,"Kom, der er plads ved broen ved skovkanten.","Come, there is room by the bridge by the forest edge."
+SOC_ARCH_WATCHER_GREET_H0_2,"Jeg blev glad, da jeg så dig ved broen ved skovkanten.",I was happy to see you by the bridge by the forest edge.
+SOC_ARCH_WATCHER_GREET_H0_3,Skal vi dele en lille stund ved broen ved skovkanten?,Shall we share a little time by the bridge by the forest edge?
+SOC_ARCH_WATCHER_GREET_H1_1,"Kom, der er plads ved broen ved skovkanten. Det er rart at kende dig.","Come, there is room by the bridge by the forest edge. It is lovely to know you."
+SOC_ARCH_WATCHER_GREET_H1_2,"Jeg blev glad, da jeg så dig ved broen ved skovkanten. Det er rart at kende dig.",I was happy to see you by the bridge by the forest edge. It is lovely to know you.
+SOC_ARCH_WATCHER_GREET_H1_3,Skal vi dele en lille stund ved broen ved skovkanten? Det er rart at kende dig.,Shall we share a little time by the bridge by the forest edge? It is lovely to know you.
+SOC_ARCH_WATCHER_GREET_H2_1,"Kom, der er plads ved broen ved skovkanten. Jeg har savnet dit selskab.","Come, there is room by the bridge by the forest edge. I missed your company."
+SOC_ARCH_WATCHER_GREET_H2_2,"Jeg blev glad, da jeg så dig ved broen ved skovkanten. Jeg har savnet dit selskab.",I was happy to see you by the bridge by the forest edge. I missed your company.
+SOC_ARCH_WATCHER_GREET_H2_3,Skal vi dele en lille stund ved broen ved skovkanten? Jeg har savnet dit selskab.,Shall we share a little time by the bridge by the forest edge? I missed your company.
+SOC_ARCH_WATCHER_GREET_H3_1,"Kom, der er plads ved broen ved skovkanten. Du er altid velkommen her.","Come, there is room by the bridge by the forest edge. You are always welcome here."
+SOC_ARCH_WATCHER_GREET_H3_2,"Jeg blev glad, da jeg så dig ved broen ved skovkanten. Du er altid velkommen her.",I was happy to see you by the bridge by the forest edge. You are always welcome here.
+SOC_ARCH_WATCHER_GREET_H3_3,Skal vi dele en lille stund ved broen ved skovkanten? Du er altid velkommen her.,Shall we share a little time by the bridge by the forest edge? You are always welcome here.
+SOC_ARCH_WATCHER_GIFT_LOVE_1,Den her betyder noget særligt for mig.,This means something special to me.
+SOC_ARCH_WATCHER_GIFT_LOVE_2,Du kender mig godt. Tusind tak!,You know me well. Thank you so much!
+SOC_ARCH_WATCHER_GIFT_LIKE_1,Hvor er det en fin tanke.,What a lovely thought.
+SOC_ARCH_WATCHER_GIFT_LIKE_2,Den her vil jeg nyde.,I will enjoy this.
+SOC_ARCH_WATCHER_GIFT_NEUTRAL_1,"Tak, fordi du kom med en gave.",Thank you for bringing a gift.
+SOC_ARCH_WATCHER_GIFT_NEUTRAL_2,Du tænkte på mig. Det var rart.,You thought of me. That was lovely.
+SOC_ARCH_WATCHER_GIFT_DISLIKE_1,"Tak for tanken, selv om den ikke helt passer til mig.","Thank you for the thought, though it is not quite for me."
+SOC_ARCH_WATCHER_GIFT_DISLIKE_2,Måske kan en nabo få glæde af den.,Perhaps a neighbour can enjoy it.
+SOC_ARCH_WATCHER_GIFT_HATE_1,Det var venligt. Jeg holder bare mere af andre ting.,That was kind. I just prefer other things.
+SOC_ARCH_WATCHER_GIFT_HATE_2,"Tak. Du må gerne spørge, hvad jeg kan lide en anden gang.",Thank you. You can ask what I like another time.
+SOC_ARCH_WATCHER_BDAY_1,En fødselsdag bliver rarere med besøg.,A birthday is lovelier with visitors.
+SOC_ARCH_WATCHER_BDAY_2,I dag er min fødselsdag. Vil du holde mig med selskab?,Today is my birthday. Will you keep me company?
+SOC_ARCH_WATCHER_BARK_1,Der kom et vindpust.,A little breeze arrived.
+SOC_ARCH_WATCHER_BARK_2,En nabo går forbi.,A neighbour passes by.
+SOC_ARCH_WATCHER_BARK_3,Lyset falder så fint.,The light falls so softly.
+SOC_ARCH_WATCHER_BARK_4,Der dufter af træ.,It smells of timber.
+SOC_ARCH_WATCHER_BARK_5,En lille pause nu.,A little break now.
+SOC_ARCH_WATCHER_BARK_6,Jeg lytter til bladene.,I listen to the leaves.
+SOC_ARCH_WATCHER_SHOP_1,Kig dig bare omkring.,Feel free to look around.
+SOC_ARCH_WATCHER_SHOP_2,Jeg hjælper gerne ved disken.,I am happy to help at the counter.
+SOC_ARCH_WATCHER_SHOP_3,Der er mange små ting på hylderne.,There are many little things on the shelves.
+SOC_ARCH_WATCHER_SHOP_4,Tag dig tid. Vi finder det sammen.,Take your time. We will find it together.
+SOC_ARCH_ELDER_GREET_H0_1,"Kom, der er plads ved den varme vindueskrog.","Come, there is room by the warm window nook."
+SOC_ARCH_ELDER_GREET_H0_2,"Jeg blev glad, da jeg så dig ved den varme vindueskrog.",I was happy to see you by the warm window nook.
+SOC_ARCH_ELDER_GREET_H0_3,Skal vi dele en lille stund ved den varme vindueskrog?,Shall we share a little time by the warm window nook?
+SOC_ARCH_ELDER_GREET_H1_1,"Kom, der er plads ved den varme vindueskrog. Det er rart at kende dig.","Come, there is room by the warm window nook. It is lovely to know you."
+SOC_ARCH_ELDER_GREET_H1_2,"Jeg blev glad, da jeg så dig ved den varme vindueskrog. Det er rart at kende dig.",I was happy to see you by the warm window nook. It is lovely to know you.
+SOC_ARCH_ELDER_GREET_H1_3,Skal vi dele en lille stund ved den varme vindueskrog? Det er rart at kende dig.,Shall we share a little time by the warm window nook? It is lovely to know you.
+SOC_ARCH_ELDER_GREET_H2_1,"Kom, der er plads ved den varme vindueskrog. Jeg har savnet dit selskab.","Come, there is room by the warm window nook. I missed your company."
+SOC_ARCH_ELDER_GREET_H2_2,"Jeg blev glad, da jeg så dig ved den varme vindueskrog. Jeg har savnet dit selskab.",I was happy to see you by the warm window nook. I missed your company.
+SOC_ARCH_ELDER_GREET_H2_3,Skal vi dele en lille stund ved den varme vindueskrog? Jeg har savnet dit selskab.,Shall we share a little time by the warm window nook? I missed your company.
+SOC_ARCH_ELDER_GREET_H3_1,"Kom, der er plads ved den varme vindueskrog. Du er altid velkommen her.","Come, there is room by the warm window nook. You are always welcome here."
+SOC_ARCH_ELDER_GREET_H3_2,"Jeg blev glad, da jeg så dig ved den varme vindueskrog. Du er altid velkommen her.",I was happy to see you by the warm window nook. You are always welcome here.
+SOC_ARCH_ELDER_GREET_H3_3,Skal vi dele en lille stund ved den varme vindueskrog? Du er altid velkommen her.,Shall we share a little time by the warm window nook? You are always welcome here.
+SOC_ARCH_ELDER_GIFT_LOVE_1,Den her betyder noget særligt for mig.,This means something special to me.
+SOC_ARCH_ELDER_GIFT_LOVE_2,Du kender mig godt. Tusind tak!,You know me well. Thank you so much!
+SOC_ARCH_ELDER_GIFT_LIKE_1,Hvor er det en fin tanke.,What a lovely thought.
+SOC_ARCH_ELDER_GIFT_LIKE_2,Den her vil jeg nyde.,I will enjoy this.
+SOC_ARCH_ELDER_GIFT_NEUTRAL_1,"Tak, fordi du kom med en gave.",Thank you for bringing a gift.
+SOC_ARCH_ELDER_GIFT_NEUTRAL_2,Du tænkte på mig. Det var rart.,You thought of me. That was lovely.
+SOC_ARCH_ELDER_GIFT_DISLIKE_1,"Tak for tanken, selv om den ikke helt passer til mig.","Thank you for the thought, though it is not quite for me."
+SOC_ARCH_ELDER_GIFT_DISLIKE_2,Måske kan en nabo få glæde af den.,Perhaps a neighbour can enjoy it.
+SOC_ARCH_ELDER_GIFT_HATE_1,Det var venligt. Jeg holder bare mere af andre ting.,That was kind. I just prefer other things.
+SOC_ARCH_ELDER_GIFT_HATE_2,"Tak. Du må gerne spørge, hvad jeg kan lide en anden gang.",Thank you. You can ask what I like another time.
+SOC_ARCH_ELDER_BDAY_1,En fødselsdag bliver rarere med besøg.,A birthday is lovelier with visitors.
+SOC_ARCH_ELDER_BDAY_2,I dag er min fødselsdag. Vil du holde mig med selskab?,Today is my birthday. Will you keep me company?
+SOC_ARCH_ELDER_BARK_1,Der kom et vindpust.,A little breeze arrived.
+SOC_ARCH_ELDER_BARK_2,En nabo går forbi.,A neighbour passes by.
+SOC_ARCH_ELDER_BARK_3,Lyset falder så fint.,The light falls so softly.
+SOC_ARCH_ELDER_BARK_4,Der dufter af træ.,It smells of timber.
+SOC_ARCH_ELDER_BARK_5,En lille pause nu.,A little break now.
+SOC_ARCH_ELDER_BARK_6,Jeg lytter til bladene.,I listen to the leaves.
+SOC_ARCH_ELDER_SHOP_1,Kig dig bare omkring.,Feel free to look around.
+SOC_ARCH_ELDER_SHOP_2,Jeg hjælper gerne ved disken.,I am happy to help at the counter.
+SOC_ARCH_ELDER_SHOP_3,Der er mange små ting på hylderne.,There are many little things on the shelves.
+SOC_ARCH_ELDER_SHOP_4,Tag dig tid. Vi finder det sammen.,Take your time. We will find it together.
+SOC_ARCH_CRAFTSMAN_GREET_H0_1,"Kom, der er plads ved mit gamle arbejdsbord.","Come, there is room by my old workbench."
+SOC_ARCH_CRAFTSMAN_GREET_H0_2,"Jeg blev glad, da jeg så dig ved mit gamle arbejdsbord.",I was happy to see you by my old workbench.
+SOC_ARCH_CRAFTSMAN_GREET_H0_3,Skal vi dele en lille stund ved mit gamle arbejdsbord?,Shall we share a little time by my old workbench?
+SOC_ARCH_CRAFTSMAN_GREET_H1_1,"Kom, der er plads ved mit gamle arbejdsbord. Det er rart at kende dig.","Come, there is room by my old workbench. It is lovely to know you."
+SOC_ARCH_CRAFTSMAN_GREET_H1_2,"Jeg blev glad, da jeg så dig ved mit gamle arbejdsbord. Det er rart at kende dig.",I was happy to see you by my old workbench. It is lovely to know you.
+SOC_ARCH_CRAFTSMAN_GREET_H1_3,Skal vi dele en lille stund ved mit gamle arbejdsbord? Det er rart at kende dig.,Shall we share a little time by my old workbench? It is lovely to know you.
+SOC_ARCH_CRAFTSMAN_GREET_H2_1,"Kom, der er plads ved mit gamle arbejdsbord. Jeg har savnet dit selskab.","Come, there is room by my old workbench. I missed your company."
+SOC_ARCH_CRAFTSMAN_GREET_H2_2,"Jeg blev glad, da jeg så dig ved mit gamle arbejdsbord. Jeg har savnet dit selskab.",I was happy to see you by my old workbench. I missed your company.
+SOC_ARCH_CRAFTSMAN_GREET_H2_3,Skal vi dele en lille stund ved mit gamle arbejdsbord? Jeg har savnet dit selskab.,Shall we share a little time by my old workbench? I missed your company.
+SOC_ARCH_CRAFTSMAN_GREET_H3_1,"Kom, der er plads ved mit gamle arbejdsbord. Du er altid velkommen her.","Come, there is room by my old workbench. You are always welcome here."
+SOC_ARCH_CRAFTSMAN_GREET_H3_2,"Jeg blev glad, da jeg så dig ved mit gamle arbejdsbord. Du er altid velkommen her.",I was happy to see you by my old workbench. You are always welcome here.
+SOC_ARCH_CRAFTSMAN_GREET_H3_3,Skal vi dele en lille stund ved mit gamle arbejdsbord? Du er altid velkommen her.,Shall we share a little time by my old workbench? You are always welcome here.
+SOC_ARCH_CRAFTSMAN_GIFT_LOVE_1,Den her betyder noget særligt for mig.,This means something special to me.
+SOC_ARCH_CRAFTSMAN_GIFT_LOVE_2,Du kender mig godt. Tusind tak!,You know me well. Thank you so much!
+SOC_ARCH_CRAFTSMAN_GIFT_LIKE_1,Hvor er det en fin tanke.,What a lovely thought.
+SOC_ARCH_CRAFTSMAN_GIFT_LIKE_2,Den her vil jeg nyde.,I will enjoy this.
+SOC_ARCH_CRAFTSMAN_GIFT_NEUTRAL_1,"Tak, fordi du kom med en gave.",Thank you for bringing a gift.
+SOC_ARCH_CRAFTSMAN_GIFT_NEUTRAL_2,Du tænkte på mig. Det var rart.,You thought of me. That was lovely.
+SOC_ARCH_CRAFTSMAN_GIFT_DISLIKE_1,"Tak for tanken, selv om den ikke helt passer til mig.","Thank you for the thought, though it is not quite for me."
+SOC_ARCH_CRAFTSMAN_GIFT_DISLIKE_2,Måske kan en nabo få glæde af den.,Perhaps a neighbour can enjoy it.
+SOC_ARCH_CRAFTSMAN_GIFT_HATE_1,Det var venligt. Jeg holder bare mere af andre ting.,That was kind. I just prefer other things.
+SOC_ARCH_CRAFTSMAN_GIFT_HATE_2,"Tak. Du må gerne spørge, hvad jeg kan lide en anden gang.",Thank you. You can ask what I like another time.
+SOC_ARCH_CRAFTSMAN_BDAY_1,En fødselsdag bliver rarere med besøg.,A birthday is lovelier with visitors.
+SOC_ARCH_CRAFTSMAN_BDAY_2,I dag er min fødselsdag. Vil du holde mig med selskab?,Today is my birthday. Will you keep me company?
+SOC_ARCH_CRAFTSMAN_BARK_1,Der kom et vindpust.,A little breeze arrived.
+SOC_ARCH_CRAFTSMAN_BARK_2,En nabo går forbi.,A neighbour passes by.
+SOC_ARCH_CRAFTSMAN_BARK_3,Lyset falder så fint.,The light falls so softly.
+SOC_ARCH_CRAFTSMAN_BARK_4,Der dufter af træ.,It smells of timber.
+SOC_ARCH_CRAFTSMAN_BARK_5,En lille pause nu.,A little break now.
+SOC_ARCH_CRAFTSMAN_BARK_6,Jeg lytter til bladene.,I listen to the leaves.
+SOC_ARCH_CRAFTSMAN_SHOP_1,Kig dig bare omkring.,Feel free to look around.
+SOC_ARCH_CRAFTSMAN_SHOP_2,Jeg hjælper gerne ved disken.,I am happy to help at the counter.
+SOC_ARCH_CRAFTSMAN_SHOP_3,Der er mange små ting på hylderne.,There are many little things on the shelves.
+SOC_ARCH_CRAFTSMAN_SHOP_4,Tag dig tid. Vi finder det sammen.,Take your time. We will find it together.
+SOC_ANY_WX_REGN_1,Regnen trommer blidt på bladene.,The rain taps softly on the leaves.
+SOC_ANY_WX_TAAGE_2,Tågen pakker broerne ind i dag.,The mist wraps up the bridges today.
+SOC_ANY_WX_SNE_3,Der ligger sne på de små grene.,Snow rests on the little branches.
+SOC_ANY_WX_TORDEN_4,Det buldrer. Her er en rar krog at vente i.,Thunder rumbles. Here is a cosy nook to wait in.
+SOC_ANY_SEASON_FORAAR_5,Der kommer nye knopper på træet.,New buds are appearing on the tree.
+SOC_ANY_SEASON_SOMMER_6,Bladene giver en dejlig skygge i dag.,The leaves give lovely shade today.
+SOC_ANY_SEASON_EFTERAAR_7,Jeg fandt et gyldent blad på broen.,I found a golden leaf on the bridge.
+SOC_ANY_SEASON_VINTER_8,Vi holder varmen sammen heroppe.,We keep warm together up here.
+SOC_ANY_FEST_9,Der er fest mellem grenene.,There is a celebration among the branches.
+SOC_ANY_FEST_10,Jeg glæder mig til at møde naboerne.,I look forward to seeing the neighbours.
+SOC_ANY_GREET_1,Godt at se dig heroppe.,Good to see you up here.
+SOC_ANY_GREET_2,"Kom nærmere, hvis du har lyst.",Come closer if you like.
+SOC_ANY_GREET_3,Vi har en rar dag mellem grenene.,We are having a lovely day among the branches.

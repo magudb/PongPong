@@ -520,7 +520,8 @@
   "social_arch.csv": {
    "owner": "S-data",
    "prefix": [
-    "SOC_ARCH_"
+    "SOC_ARCH_",
+    "SOC_ANY_"
    ],
    "exact": []
   },

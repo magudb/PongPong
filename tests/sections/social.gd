@@ -274,14 +274,18 @@ func _data() -> void:
 	sorted_copy.sort()
 	var expect_ids: Array[String] = []
 	for id in SocialData.npcs():
-		if bool(LuaData.dict(SocialData.npcs()[id]).get("friendship", false)):
+		if bool(LuaData.dict(SocialData.npcs()[id]).get("friendship", false)) or not SocialData.unlock_of(str(id)).is_empty():
 			expect_ids.append(str(id))
 	expect_ids.sort()
-	t.check("data_friend_ids_sorted", friends == sorted_copy and friends == expect_ids and not friends.is_empty(), "%d friend ids, sorted, = npcs.lua friendship = true" % friends.size())
+	t.check("data_friend_ids_sorted", friends == sorted_copy and friends == expect_ids and not friends.is_empty(), "%d friend ids, sorted, = friendship rows plus authored unlocks" % friends.size())
 	# a citizens row with an `unlock` makes an NPC without the flag a friend (Morfar Mis), and the list is still sorted
 	SocialFixture.install({"citizens": {"cat_morfar_mis": {"tier": "C", "unlock": {"quest": "lost_cat", "day": 60}}}}, {})
 	var with_unlock := SocialData.friend_ids()
-	t.expect("cat_morfar_mis" in with_unlock and with_unlock.size() == friends.size() + 1 and with_unlock == with_unlock.duplicate(), "a citizens row with an unlock adds the NPC to the friend ids (%d -> %d)" % [friends.size(), with_unlock.size()])
+	var expected_with_unlock := expect_ids.duplicate()
+	if not "cat_morfar_mis" in expected_with_unlock:
+		expected_with_unlock.append("cat_morfar_mis")
+	expected_with_unlock.sort()
+	t.expect("cat_morfar_mis" in with_unlock and with_unlock == expected_with_unlock, "a citizens row with an unlock includes the NPC exactly once (%d -> %d)" % [friends.size(), with_unlock.size()])
 	SocialFixture.uninstall()
 	var none := SocialData.citizen("no_row_npc")
 	var again := SocialData.citizen("no_row_npc")
@@ -755,7 +759,9 @@ func _birthdays() -> void:
 	checks.append(m2.birthday_state("gardener_hoppe") == "belated" and m2.last_birthday("gardener_hoppe") == year_two)
 	t.check("birthday_state_machine", not checks.has(false), "day -> celebrated -> belated (+1) -> none (+2), the year wrap and a birthday that has not come yet (%s)" % str(checks))
 	_done()
-	# derived defaults: a friend without a citizens row (all of them, until S-data) has a stable, valid birthday on every call and after adding an NPC
+	# Explicitly remove authored facts to keep the fallback regression after S-data lands.
+	var m3 := _fresh(1)
+	SocialFixture.install({"citizens": {}}, {})
 	var derived_ok := true
 	var seen_days := {}
 	for id in SocialData.friend_ids():
@@ -763,7 +769,6 @@ func _birthdays() -> void:
 		var b: Dictionary = c["birthday"]
 		derived_ok = derived_ok and bool(c["derived"]) and b == SocialData.derived_birthday(id) and int(b["day"]) >= 1 and int(b["day"]) <= 28 and CalendarUtil.seasons().has(StringName(str(b["season"])))
 		seen_days[CalendarUtil.date_key(StringName(str(b["season"])), int(b["day"]))] = true
-	var m3 := _fresh(1)
 	var every_day_indexed := true
 	for td in range(1, 113):
 		for id in m3.birthdays_on(td):

@@ -1,0 +1,242 @@
+{
+  "mayor_lyra": {
+    "first_da": "Jeg er Hyldeblomst. Vi finder en plads til dig i Trætoppen.",
+    "first_en": "I am Hyldeblomst. We will find you a place in Trætoppen.",
+    "detail_da": "de små broer",
+    "detail_en": "the little bridges",
+    "place_da": "rådhusets vindue",
+    "place_en": "the town hall window"
+  },
+  "baker_maja": {
+    "first_da": "Jeg er Rosmarin. Kom ind til duften af lune boller.",
+    "first_en": "I am Rosmarin. Come in and smell the warm buns.",
+    "detail_da": "min surdej",
+    "detail_en": "my sourdough",
+    "place_da": "bageriets ovn",
+    "place_en": "the bakery oven"
+  },
+  "merchant_pip": {
+    "first_da": "Jeg hedder Kløvermynte. Her begynder de små frø deres rejse.",
+    "first_en": "My name is Kløvermynte. Little seeds begin their journey here.",
+    "detail_da": "mine frøposer",
+    "detail_en": "my seed packets",
+    "place_da": "butikkens hylder",
+    "place_en": "the shop shelves"
+  },
+  "gardener_hoppe": {
+    "first_da": "Jeg er Hoppe. Pas på de små spirer ved dine fødder.",
+    "first_en": "I am Hoppe. Mind the little sprouts by your feet.",
+    "detail_da": "de skæve gulerødder",
+    "detail_en": "the crooked carrots",
+    "place_da": "min urtehave",
+    "place_en": "my kitchen garden"
+  },
+  "carpenter_brumme": {
+    "first_da": "Brumme, det er mig. Jeg giver gerne en hjælpende pote.",
+    "first_en": "Brumme, that is me. I am happy to lend a helping paw.",
+    "detail_da": "træets årer",
+    "detail_en": "the grain of wood",
+    "place_da": "mit tømmerlager",
+    "place_en": "my timber yard"
+  },
+  "postman_pip": {
+    "first_da": "Jeg er Postbud Pip. Min taske er fuld af hilsner.",
+    "first_en": "I am Postbud Pip. My bag is full of greetings.",
+    "detail_da": "de små breve",
+    "detail_en": "the little letters",
+    "place_da": "min posttaske",
+    "place_en": "my mailbag"
+  },
+  "bathkeeper_sofus": {
+    "first_da": "Sofus er mit navn. Her har vi god tid til at hvile.",
+    "first_en": "Sofus is my name. Here we have time to rest.",
+    "detail_da": "appelsinerne ved badet",
+    "detail_en": "the oranges by the bath",
+    "place_da": "det varme bad",
+    "place_en": "the warm bath"
+  },
+  "beekeeper_birk": {
+    "first_da": "Jeg hedder Birk. Bierne er mine flittigste naboer.",
+    "first_en": "My name is Birk. The bees are my busiest neighbours.",
+    "detail_da": "biernes blomster",
+    "detail_en": "the bees’ flowers",
+    "place_da": "mine bistader",
+    "place_en": "my beehives"
+  },
+  "smith_thorin": {
+    "first_da": "Jeg er Thorin. Der er altid en lun krog ved essen.",
+    "first_en": "I am Thorin. There is always a warm corner by the forge.",
+    "detail_da": "jernets glød",
+    "detail_en": "the glow of iron",
+    "place_da": "min esse",
+    "place_en": "my forge"
+  },
+  "farmer_rosa": {
+    "first_da": "Jeg er Rosa. Dyrene kommer nok hen for at hilse.",
+    "first_en": "I am Rosa. The animals will come over to say hello.",
+    "detail_da": "de bløde muler",
+    "detail_en": "the soft muzzles",
+    "place_da": "min dyrefold",
+    "place_en": "my animal pen"
+  },
+  "pippin_boegeknop": {
+    "first_da": "Jeg hedder Pippin Bøgeknop. Vil du se, hvad jeg har fundet?",
+    "first_en": "My name is Pippin Bøgeknop. Want to see what I found?",
+    "detail_da": "mine små fund",
+    "detail_en": "my little finds",
+    "place_da": "min samlekasse",
+    "place_en": "my collection box"
+  },
+  "fairy_lily": {
+    "first_da": "Jeg er Lilje. Skal vi finde et blad, der ligner et hjerte?",
+    "first_en": "I am Lilje. Shall we find a leaf shaped like a heart?",
+    "detail_da": "blade som hjerter",
+    "detail_en": "heart shaped leaves",
+    "place_da": "min blomsterkrans",
+    "place_en": "my flower crown"
+  },
+  "guard_oak": {
+    "first_da": "Jeg er Eg. Jeg passer på broen, mens du finder vej.",
+    "first_en": "I am Eg. I watch the bridge while you find your way.",
+    "detail_da": "skovens lyde",
+    "detail_en": "the forest sounds",
+    "place_da": "min vagtplads",
+    "place_en": "my lookout"
+  },
+  "fairy_wizard": {
+    "first_da": "Jeg hedder Zephyr. Selv de mindste glimt kan gemme på magi.",
+    "first_en": "My name is Zephyr. Even tiny sparkles can hold magic.",
+    "detail_da": "de lysende svampe",
+    "detail_en": "the glowing mushrooms",
+    "place_da": "mit læsehjørne",
+    "place_en": "my reading corner"
+  },
+  "fairy_builder": {
+    "first_da": "Hasselnød, til tjeneste. Et godt hjem begynder med en lille planke.",
+    "first_en": "Hasselnød, at your service. A good home begins with a little plank.",
+    "detail_da": "de solide samlinger",
+    "detail_en": "the sturdy joints",
+    "place_da": "mit arbejdsbord",
+    "place_en": "my workbench"
+  },
+  "fairy_furnisher": {
+    "first_da": "Jeg er Stokrose. Vi kan gøre en lille stue rigtig rar.",
+    "first_en": "I am Stokrose. We can make a little room feel lovely.",
+    "detail_da": "de lune farver",
+    "detail_en": "the warm colours",
+    "place_da": "min møbelstue",
+    "place_en": "my furniture room"
+  },
+  "fairy_tailor": {
+    "first_da": "Fingerbøl er mit navn. Jeg gemmer altid en tråd i en fin farve.",
+    "first_en": "Fingerbøl is my name. I always save a thread in a lovely colour.",
+    "detail_da": "de små sting",
+    "detail_en": "the little stitches",
+    "place_da": "mit sybord",
+    "place_en": "my sewing table"
+  },
+  "appraiser_fru_ugle": {
+    "first_da": "Fru Ugle, om jeg må bede. Lad os se på dine små skatte.",
+    "first_en": "Mrs Owl, if you please. Let us look at your little treasures.",
+    "detail_da": "stenenes mønstre",
+    "detail_en": "the patterns in stones",
+    "place_da": "mit forstørrelsesglas",
+    "place_en": "my magnifying glass"
+  },
+  "mapseller_natteblik": {
+    "first_da": "Jeg er Natteblik. Mine kort følger røddernes hemmelige veje.",
+    "first_en": "I am Natteblik. My maps follow the roots’ secret paths.",
+    "detail_da": "de skjulte stier",
+    "detail_en": "the hidden paths",
+    "place_da": "min kortsamling",
+    "place_en": "my map collection"
+  },
+  "fairy_king": {
+    "first_da": "Velkommen. Dit nye hjem er begyndelsen på en god historie.",
+    "first_en": "Welcome. Your new home is the start of a good story.",
+    "detail_da": "træets gamle historier",
+    "detail_en": "the tree’s old stories",
+    "place_da": "min udsigt over kronen",
+    "place_en": "my view across the crown"
+  },
+  "rasmus": {
+    "first_da": "Jeg er Rasmus. Jeg finder altid en lille sti mere.",
+    "first_en": "I am Rasmus. I always find one more little trail.",
+    "detail_da": "de små omveje",
+    "detail_en": "the little detours",
+    "place_da": "min rygsæk",
+    "place_en": "my backpack"
+  },
+  "lamplighter_kiki": {
+    "first_da": "Jeg er Kiki. Jeg tænder lys, når bladene bliver mørke.",
+    "first_en": "I am Kiki. I light the lamps when the leaves grow dark.",
+    "detail_da": "lygternes varme skær",
+    "detail_en": "the lanterns’ warm glow",
+    "place_da": "min lygtestang",
+    "place_en": "my lamplighting pole"
+  },
+  "bertil": {
+    "first_da": "Bertil er mit navn. Kom og se, hvad der spirer i dag.",
+    "first_en": "Bertil is my name. Come and see what is sprouting today.",
+    "detail_da": "de første spirer",
+    "detail_en": "the first sprouts",
+    "place_da": "min frøkurv",
+    "place_en": "my seed basket"
+  },
+  "bodil": {
+    "first_da": "Jeg er Bodil. Der er plads til en blomst mere ved min dør.",
+    "first_en": "I am Bodil. There is room for one more flower by my door.",
+    "detail_da": "blomsterne ved døren",
+    "detail_en": "the flowers by the door",
+    "place_da": "min blomsterbænk",
+    "place_en": "my flower bench"
+  },
+  "cat_morfar_mis": {
+    "first_da": "Morfar Mis, det er mig. Her er en god plads i solen.",
+    "first_en": "Morfar Mis, that is me. Here is a lovely sunny spot.",
+    "detail_da": "solens varme pletter",
+    "detail_en": "the warm patches of sun",
+    "place_da": "min bløde pude",
+    "place_en": "my soft cushion"
+  },
+  "penguin_postman": {
+    "first_da": "Goddag! Jeg bringer post over de små broer.",
+    "first_en": "Hello! I carry the mail across the little bridges.",
+    "detail_da": "brevene fra fjerne grene",
+    "detail_en": "letters from distant branches",
+    "place_da": "min postrute",
+    "place_en": "my postal route"
+  },
+  "innkeeper_kvak": {
+    "first_da": "Jeg er Kvak. Der er en lun kop og en ledig stol.",
+    "first_en": "I am Kvak. There is a warm cup and a spare chair.",
+    "detail_da": "gæsternes historier",
+    "detail_en": "the guests’ stories",
+    "place_da": "kroens fællesbord",
+    "place_en": "the inn’s shared table"
+  },
+  "cub_bamse": {
+    "first_da": "Jeg er Bamse. Du må gerne være med til at lege.",
+    "first_en": "I am Bamse. You are welcome to play with me.",
+    "detail_da": "små honningkrummer",
+    "detail_en": "little honey crumbs",
+    "place_da": "min legehule",
+    "place_en": "my play den"
+  },
+  "clerk_fjerpen": {
+    "first_da": "Jeg er Fjerpen. Jeg finder nok den seddel, du leder efter.",
+    "first_en": "I am Fjerpen. I will find the note you are looking for.",
+    "detail_da": "de ordnede papirer",
+    "detail_en": "the tidy papers",
+    "place_da": "mit skrivebord",
+    "place_en": "my writing desk"
+  },
+  "fiddler_strimmel": {
+    "first_da": "Jeg hedder Strimmel. Lyt, der er en melodi mellem bladene.",
+    "first_en": "My name is Strimmel. Listen, there is a tune among the leaves.",
+    "detail_da": "tonerne mellem bladene",
+    "detail_en": "the notes among the leaves",
+    "place_da": "min lille violin",
+    "place_en": "my little violin"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "sample": "Du må gerne komme indenfor. Her dufter af træ og varme boller. Æblegrød, hygge, blåbær og små spirer.",
+  "slots": {
+    "dialogue": {
+      "font": "AlegreyaSans-Medium.ttf",
+      "font_sha256": "4b89fe7804fd1485ec2757795a53ffdb66e1206dd56f844c2d72b3c944815b43",
+      "size": 20,
+      "width_px": 670,
+      "lines": 3,
+      "max_chars": 240,
+      "average_char_px": 8.0128,
+      "chars_per_line": 83,
+      "sample_px": 809.2969
+    },
+    "shop": {
+      "font": "AlegreyaSans-Medium.ttf",
+      "font_sha256": "4b89fe7804fd1485ec2757795a53ffdb66e1206dd56f844c2d72b3c944815b43",
+      "size": 19,
+      "width_px": 304,
+      "lines": 3,
+      "max_chars": 110,
+      "average_char_px": 7.6108,
+      "chars_per_line": 39,
+      "sample_px": 768.6875
+    },
+    "choice": {
+      "font": "AlegreyaSans-Bold.ttf",
+      "font_sha256": "a3055a1893759bdbd7504bb22abc583769e7974c49353176eac0b03792c9fb8e",
+      "size": 18,
+      "width_px": 233,
+      "lines": 1,
+      "max_chars": 32,
+      "average_char_px": 7.3114,
+      "chars_per_line": 31,
+      "sample_px": 738.4531
+    },
+    "name": {
+      "font": "Caprasimo-Regular.ttf",
+      "font_sha256": "786ab84ee787d40df55be78cb4361e485a1c6687195cbcccf3538cb5e46ced90",
+      "size": 20,
+      "width_px": 272,
+      "lines": 1,
+      "max_chars": 26,
+      "average_char_px": 10.4196,
+      "chars_per_line": 26,
+      "sample_px": 1052.375
+    },
+    "button": {
+      "font": "Caprasimo-Regular.ttf",
+      "font_sha256": "786ab84ee787d40df55be78cb4361e485a1c6687195cbcccf3538cb5e46ced90",
+      "size": 22,
+      "width_px": 180,
+      "lines": 1,
+      "max_chars": 10,
+      "average_char_px": 11.4612,
+      "chars_per_line": 15,
+      "sample_px": 1157.5781
+    }
+  }
+}
