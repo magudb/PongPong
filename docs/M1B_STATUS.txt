@@ -66,10 +66,9 @@ gold focus match the chosen guide. Painted illustrations were retained.
 
 Active remaining usable-towns work
 
-The repository still has later owner packages to build: the production player/
-farm loop, live town/NPC routing and population, installed core/extended room
-content, social dialogue/gifting/content/screens, the guide menu/HUD/dialogue/
-shop/inventory screens. Furniture/home-world and production wardrobe screens
+The remaining milestone work includes live town/NPC population and dialogue,
+social interaction screens, the guide menu/HUD/shop/inventory screens, farm
+objects, town services, the first morning and the full loop acceptance gate. Furniture/home-world and production wardrobe screens
 remain separate optional feature packages in the original milestone plan.
 Current art studies and equipment fit proofs retain their documented coverage;
 full production clothing animation coverage is a separate asset task.
@@ -123,3 +122,19 @@ doors, garden posts and Fru Ugle's window; this placement gate is still open.
 The old circular sketch approximation must not silently replace actual geometry.
 Pip's 1.6 courier pace preserves his 07:10 farm stop and 09:00 counter. Small
 Hoppe/Rosa timetable margins now fit the measured walks.
+
+P06 production player and farming — 2026-10-16
+
+The production scene now uses the tested common body/camera/query code, a separate
+combat controller, eight visible hotbar slots and the approved character sprites.
+Tools, safe flight landing, raw-hour moon watering, growth, fertilizer, automatic
+watering, inventory-safe harvest, consumables and event/camera hooks are wired.
+The remaining legacy 3D farm scripts were removed after porting their save tests.
+No approved art or theme asset was changed. All eight crops use stages 0..3.
+
+All four race suites pass: 247 / 248 / 247 / 247 checks, no skips, errors or
+warnings. Native player/crops/lantern checks: 8 passed. The wider twelve-section
+regression: 2322 checks, 13 named later-package skips, no unexpected engine
+messages or ObjectDB leaks. Idle controller: 57–59 microseconds per tick.
+Evidence and remaining gates: docs/qa/m1b-milestone/. Menus, HUD and live dialogue
+are next; the full milestone remains in progress and has not been merged.

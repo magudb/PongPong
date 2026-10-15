@@ -1,0 +1,645 @@
+class_name Player2D
+extends PlayerBody2D
+## Gameplay controller. The shared body owns collision, camera bounds and cached E queries.
+## Combat owns its hit windows; crops and inventory retain their own persistent state.
+signal fainted
+signal swung(dir_screen: Vector2)
+signal dodged
+signal light_burst(radius_ground: float)
+signal damaged(half_hearts: int)
+signal tool_used(item_id: StringName, cell: Vector2i, ok: bool)
+
+var hotbar := Hotbar.new()
+var max_oil: float = 150.0
+var oil: float = 150.0
+var oil_draining: bool = false
+var lantern: PointLight2D
+var ghost_light: PointLight2D
+var combat: PlayerCombat2D
+var is_jumping: bool = false
+var invulnerable: bool = false
+var mouse_aim: bool = false
+var _marker: TargetMarker2D
+var _last_stats: Dictionary = {}
+var _stats_timer: float = 0.0
+var _exhausted: bool = false
+var _regen_delay: float = 0.0
+var _tool_time: float = 0.0
+var _altitude: float = 0.0
+var _vertical_speed: float = 0.0
+var _flight_time: float = 0.0
+var _climb_up: bool = false
+var _climb_down: bool = false
+var _landing: bool = false
+var _landing_at: Vector2
+var _oil_empty_time: float = 0.0
+var _oil_low_said: bool = false
+var _event_active: bool = false
+var _event_generation: int = 0
+var _camera_tween: Tween
+var _camera_zoom_before: float = Iso.DEFAULT_ZOOM
+var _bob_time: float = 0.0
+var _flower_time: float = 0.0
+var _flower_cell := Vector2i(-999, -999)
+const RULES := "res://scripts/dungeon_run/dungeon_run.gd"
+const GEM := "res://scripts/loot/lantern_gem.gd"
+
+func _ready() -> void:
+	super._ready()
+	refresh_stats()
+	stamina = max_stamina
+	half_hearts = max_half_hearts
+	max_oil = float(GameData.combat("oil_seconds", 150))
+	oil = max_oil
+	lantern = PointLight2D.new()
+	lantern.name = "Lantern"
+	lantern.texture = Glow.light_texture()
+	lantern.position.y = -40.0 * Iso.S
+	lantern.enabled = false
+	add_child(lantern)
+	ghost_light = PointLight2D.new()
+	ghost_light.name = "GhostLight"
+	ghost_light.texture = Glow.light_texture()
+	ghost_light.position.y = -45.0 * Iso.S
+	add_child(ghost_light)
+	combat = PlayerCombat2D.new()
+	combat.name = "Combat"
+	add_child(combat)
+	combat.setup(self)
+	hotbar.changed.connect(_emit_hotbar)
+	hotbar.fill_defaults()
+	EventBus.hotbar_assign_requested.connect(hotbar.assign)
+	EventBus.player_inventory_changed.connect(_on_inventory_changed)
+	EventBus.outfit_changed.connect(func(_outfit: Dictionary): refresh_stats())
+	EventBus.home_upgraded.connect(func(_old: int, _new: int): refresh_stats())
+	EventBus.hygge_changed.connect(func(_score: int, _level: StringName): refresh_stats())
+	EventBus.game_event.connect(_on_game_event)
+	_emit_stats_on_bus()
+	EventBus.player_oil_changed.emit(oil, max_oil)
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PREDELETE and is_instance_valid(_marker):
+		_marker.queue_free()
+
+func refresh_stats() -> void:
+	_walk = float(GameData.player_cfg("walk_speed", 285)) * (1.0 + Perks.total("speed"))
+	_run = float(GameData.player_cfg("run_speed", 450)) * (1.0 + Perks.total("speed"))
+	max_stamina = float(GameData.player_cfg("max_stamina", 100)) + Perks.total("energy")
+	stamina = minf(stamina, max_stamina)
+	max_half_hearts = maxi(1, int(Svc.static_call(RULES, &"hearts_max", [], GameData.combat("max_half_hearts", 10))))
+	half_hearts = mini(half_hearts, max_half_hearts)
+	_emit_stats_on_bus()
+
+func _on_character_changed(character_id: StringName) -> void:
+	super._on_character_changed(character_id)
+	refresh_stats()
+
+func _on_game_event(event: StringName, _data: Dictionary) -> void:
+	if event in [&"assist_changed", &"skovhjerte_grown"]:
+		refresh_stats()
+
+func enter_area(target: IsoArea, at: Vector2) -> void:
+	_event_generation += 1
+	_cancel_flight()
+	super.enter_area(target, at)
+	if combat != null:
+		combat.cancel_action()
+	if _marker == null or not is_instance_valid(_marker):
+		_marker = TargetMarker2D.new()
+	if _marker.get_parent() != null:
+		_marker.get_parent().remove_child(_marker)
+	area.ground_fx.add_child(_marker)
+	_marker.projection = area.projection
+	oil_draining = _is_action_area() and area.map.ambient in [&"forest", &"cave"]
+	lantern.enabled = oil_draining
+	_update_lantern()
+
+func world_input_allowed() -> bool:
+	return area != null and not GameData.gm().is_modal_open() and state not in [S.TALKING, S.FAINTED] and not _event_active
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not world_input_allowed():
+		return
+	if event.is_action_released("attack"):
+		combat.attack_held = false
+	if event.is_action_released("jump"):
+		_climb_up = false
+	if event.is_action_released("fly_descend"):
+		_climb_down = false
+	if is_flying and event.is_action_pressed("jump"):
+		_climb_up = true
+		return
+	if is_flying and event.is_action_pressed("fly_descend"):
+		_climb_down = true
+		return
+	if event is InputEventMouseMotion:
+		mouse_aim = true
+	if event is InputEventJoypadButton and event.pressed:
+		if event.button_index == JOY_BUTTON_DPAD_LEFT or event.button_index == JOY_BUTTON_DPAD_RIGHT:
+			hotbar.cycle(-1 if event.button_index == JOY_BUTTON_DPAD_LEFT else 1)
+			get_viewport().set_input_as_handled()
+			return
+	for index in 10:
+		if event.is_action_pressed("slot_%d" % (index + 1)):
+			hotbar.select(index) # 9/0 remain defined inputs; this eight-slot layout ignores them.
+			get_viewport().set_input_as_handled()
+			return
+	if event.is_action_pressed("zoom_in"):
+		_set_zoom(_target_zoom + 0.05)
+	elif event.is_action_pressed("zoom_out"):
+		_set_zoom(_target_zoom - 0.05)
+	elif event.is_action_pressed("interact"):
+		try_interact()
+	elif event.is_action_pressed("fly_toggle"):
+		toggle_flight()
+	elif _is_action_area():
+		if event.is_action_pressed("attack"):
+			combat.request(&"slash")
+		elif event.is_action_pressed("dodge"):
+			combat.request(&"dodge")
+		elif event.is_action_pressed("light"):
+			fairy_light()
+		elif event.is_action_pressed("drink"):
+			drink()
+	elif event.is_action_pressed("jump"):
+		hop()
+	elif event.is_action_pressed("use_tool"):
+		use_selected()
+	for action in ["zoom_in", "zoom_out", "interact", "fly_toggle", "attack", "dodge", "light", "drink", "jump", "use_tool"]:
+		if event.is_action_pressed(action):
+			get_viewport().set_input_as_handled()
+			break
+
+func _is_action_area() -> bool:
+	return area != null and area.projection == &"ortho"
+
+func set_zoom(value: float) -> void:
+	if area != null:
+		_set_zoom(value)
+
+func _physics_process(delta: float) -> void:
+	if area == null or combat == null:
+		return
+	var paused: bool = GameData.gm().is_modal_open() or state in [S.TALKING, S.FAINTED] or _event_active
+	if paused:
+		combat.attack_held = false
+		_climb_up = false
+		_climb_down = false
+		velocity = Vector2.ZERO
+		_gvel = Vector2.ZERO
+		_update_prompt(delta)
+		return
+	combat.tick(delta)
+	if combat.hit_stop > 0 or combat.stopped_this_tick:
+		return
+	_tool_time = maxf(0.0, _tool_time - delta)
+	_regen_delay = maxf(0.0, _regen_delay - delta)
+	if state == S.USING and _tool_time == 0.0:
+		state = S.FREE
+	var direction := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	var running := false
+	if _exhausted and stamina >= max_stamina * float(GameData.player_cfg("run_recover_ratio", 0.2)):
+		_exhausted = false
+	if state == S.FREE and not is_flying and not _landing and direction != Vector2.ZERO and Input.is_action_pressed("run") and not _exhausted:
+		running = true
+		_spend_stamina(float(GameData.player_cfg("run_cost_per_second", 15)) * float(GameData.perk("run_cost_mult", 1.0)) * delta)
+		if stamina <= 0:
+			_exhausted = true
+	if not running and not is_flying and _regen_delay == 0.0 and state == S.FREE:
+		stamina = minf(max_stamina, stamina + float(GameData.player_cfg("stamina_regen_per_second", 12)) * delta)
+	var speed := _run if running else _walk
+	if is_flying:
+		speed = _run * 0.9
+	elif state in [S.SWING, S.USING]:
+		speed *= 0.35
+	if _landing:
+		direction = Iso.to_ground(_landing_at - global_position).normalized()
+		speed = minf(_walk, Iso.ground_dist(global_position, _landing_at) / maxf(delta, 0.001))
+	_gvel = _gvel.move_toward(direction * speed, (_accel if direction != Vector2.ZERO else _decel) * delta)
+	_gvel = combat.movement(_gvel, delta)
+	velocity = Iso.to_screen(_gvel)
+	move_and_slide()
+	_gvel = Iso.to_ground(velocity)
+	if direction != Vector2.ZERO and state != S.DODGE:
+		facing8 = Iso.dir8_of(direction)
+		facing_vec = Iso.dir8_vector(facing8)
+	_update_vertical(delta)
+	if forced_clip != &"":
+		visual.play_loop(forced_clip)
+	else:
+		visual.update_motion(velocity, running, is_jumping or _landing, is_flying, direction)
+	_update_target(delta)
+	_update_prompt(delta)
+	_update_oil(delta)
+	_update_ghost(delta)
+	_stats_timer += delta
+	if _stats_timer >= 0.1:
+		_stats_timer = 0.0
+		_emit_stats_on_bus()
+
+func _update_target(delta: float = 0.0) -> void:
+	_flower_time = maxf(0.0, _flower_time - delta)
+	_marker.global_position = target_global()
+	_marker.valid = _at_farm() and farm.can_till(target_cell())
+	_marker.visible = state == S.FREE and not is_flying and not _is_action_area()
+	if bool(GameData.perk("talks_to_flowers", false)) and _at_farm():
+		var current := area.global_to_cell(global_position)
+		if current != _flower_cell and _flower_time == 0.0:
+			_flower_cell = current
+			for cell in farm.plots:
+				if Vector2(cell - current).length() <= 2.0 and farm.get_plot(cell).crop_id != &"":
+					_flower_time = 10.0
+					EventBus.whisper_requested.emit("WHISPER_FLOWER_%d" % (posmod(cell.x + cell.y, 6) + 1))
+					break
+
+func _at_farm() -> bool:
+	return farm != null and area != null and farm.map != null and area.map.id == farm.map.id
+
+func try_interact() -> bool:
+	if not world_input_allowed() or state != S.FREE or is_flying:
+		return false
+	if super.try_interact():
+		return true
+	if _at_farm() and farm.state_of(target_cell()) == FarmGrid.State.READY:
+		return farm.harvest(target_cell()) > 0
+	return false
+
+func use_selected() -> bool:
+	if not world_input_allowed() or state != S.FREE or is_flying:
+		return false
+	var item := hotbar.current()
+	var def := GameData.item_def(item)
+	if item == &"" or not GameData.eco().has_item(item):
+		return false
+	if str(def.get("placeable", "")) == "home":
+		EventBus.whisper_requested.emit("INDRET_ONLY_HOME")
+		return false
+	if str(def.get("tool_type", "")) in ["fishing", "fishing_rod"]:
+		EventBus.whisper_requested.emit("WHISPER_FISHING_CLOSED")
+		return false
+	var cost := float(def.get("stamina_cost", 4.0)) * float(SpeciesPerks.current("tool_cost_mult", 1.0))
+	if stamina < cost:
+		EventBus.whisper_requested.emit("UI_TIRED")
+		return false
+	var cell := target_cell()
+	var ok := false
+	match str(def.get("category", "")):
+		"tool":
+			match str(def.get("tool_type", "")):
+				"hoe":
+					if _at_farm():
+						if str(Svc.static_call("res://scripts/farm/steading/objects/farm_reserve.gd", &"blocked", [area, cell], "")) != "":
+							EventBus.whisper_requested.emit("FARM_CELL_RESERVED")
+						else:
+							ok = farm.till(cell)
+				"watering":
+					ok = _at_farm() and farm.water(cell)
+				"scythe":
+					if _at_farm():
+						for direction in [posmod(facing8 - 1, 8), facing8, posmod(facing8 + 1, 8)]:
+							var harvest_cell := area.global_to_cell(global_position) + area.facing_step(direction)
+							ok = farm.harvest(harvest_cell) > 0 or ok
+				"axe", "pickaxe":
+					var host := nearest_interactable()
+					if host != null and host.has_method("tool_hit"):
+						ok = bool(host.call("tool_hit", str(def.tool_type), int(def.get("power", 1)), self))
+		"seed":
+			if _at_farm():
+				var reason: String = farm.plant(cell, item)
+				ok = reason == ""
+				if not ok:
+					EventBus.whisper_requested.emit(reason)
+		"farm":
+			ok = _at_farm() and farm.apply_supply(cell, item)
+		"consumable", "food":
+			ok = GameData.eco().use_item(item)
+		"weapon":
+			return swing()
+		_:
+			if str(def.get("placeable", "")) == "farm":
+				ok = bool(Svc.static_call("res://scripts/world2d/placement_service.gd", &"place", [item, cell], false))
+				if not ok:
+					EventBus.whisper_requested.emit("WHISPER_NOT_YET")
+	if ok:
+		_spend_stamina(cost)
+		state = S.USING
+		var dig := maxf(0.1, float(SpeciesPerks.current("dig_speed", 1.0)))
+		_tool_time = 0.34 / dig
+		visual.play_action(&"interact", 1.4 * dig)
+	tool_used.emit(item, cell, ok)
+	return ok
+
+func _spend_stamina(amount: float) -> void:
+	stamina = maxf(0.0, stamina - maxf(0.0, amount))
+	_regen_delay = 1.0
+
+func _emit_stats_on_bus() -> void:
+	var values := {"half_hearts": half_hearts, "max_half_hearts": max_half_hearts, "stamina": stamina, "max_stamina": max_stamina}
+	if values == _last_stats:
+		return
+	if _last_stats.get("half_hearts", -1) != half_hearts or _last_stats.get("max_half_hearts", -1) != max_half_hearts:
+		EventBus.player_health_changed.emit(half_hearts, max_half_hearts)
+	_last_stats = values.duplicate()
+	stats_changed.emit()
+	EventBus.player_stats_changed.emit(values)
+
+func _emit_hotbar() -> void:
+	EventBus.hotbar_changed.emit(hotbar.entries(), hotbar.selected)
+
+func _on_inventory_changed(_items: Dictionary) -> void:
+	_emit_hotbar()
+
+func heal_half(amount: int) -> void:
+	half_hearts = clampi(half_hearts + maxi(0, amount), 0, max_half_hearts)
+	_emit_stats_on_bus()
+
+func heal_full() -> void:
+	heal_half(max_half_hearts)
+
+func restore_stamina(amount: float) -> void:
+	stamina = clampf(stamina + maxf(0.0, amount), 0.0, max_stamina)
+	_emit_stats_on_bus()
+
+func add_oil(seconds: float) -> void:
+	var before := oil
+	oil = clampf(oil + maxf(0.0, seconds), 0.0, max_oil)
+	_oil_low_said = false
+	_oil_empty_time = 0.0
+	_update_lantern()
+	if oil != before:
+		EventBus.player_oil_changed.emit(oil, max_oil)
+
+func restore_oil() -> void:
+	add_oil(max_oil)
+
+func apply_consumable(health: int, oil_seconds: float, energy: float) -> void:
+	# The inventory owner already removed the item. Commit every stat before publishing any one of them.
+	half_hearts = mini(max_half_hearts, half_hearts + maxi(0, health))
+	stamina = minf(max_stamina, stamina + maxf(0.0, energy))
+	var before := oil
+	oil = minf(max_oil, oil + maxf(0.0, oil_seconds))
+	_oil_low_said = false
+	_update_lantern()
+	_emit_stats_on_bus()
+	if before != oil:
+		EventBus.player_oil_changed.emit(oil, max_oil)
+
+func restore_after_sleep() -> void:
+	refresh_stats()
+	half_hearts = max_half_hearts
+	stamina = max_stamina
+	_exhausted = false
+	_regen_delay = 0.0
+	restore_oil()
+	_emit_stats_on_bus()
+
+func revive(at: Vector2) -> void:
+	global_position = at
+	state = S.FREE
+	forced_clip = &""
+	_cancel_flight()
+	combat.reset()
+	visual.cancel_action()
+	restore_after_sleep()
+
+func _update_oil(delta: float) -> void:
+	if not oil_draining:
+		return
+	var owned := {"lantern_oil": GameData.eco().count_item(&"lantern_oil"), "lysdraabe": GameData.eco().count_item(&"lysdraabe")}
+	var refill: Variant = Svc.static_call(RULES, &"auto_refuel_item", [oil, owned], null)
+	if refill == null:
+		refill = ""
+		if oil <= 15.0:
+			for item in ["lantern_oil", "lysdraabe"]:
+				if owned[item] > 0:
+					refill = item
+					break
+	if str(refill) != "":
+		GameData.eco().use_item(StringName(str(refill)))
+	var before := oil
+	var gem := _gem_effects()
+	var mult := float(GameData.perk("oil_use_mult", 1.0)) * float(gem.get("oil_mult", 1.0))
+	var context := {"paused": false, "on_floor": oil_draining, "race_mult": float(GameData.perk("oil_use_mult", 1.0)), "gem_mult": float(gem.get("oil_mult", 1.0)), "assist_oil": _assist_oil()}
+	oil = clampf(float(Svc.static_call(RULES, &"oil_step", [oil, delta, context], maxf(0.0, oil - delta * mult))), 0.0, max_oil)
+	if int(before) != int(oil):
+		EventBus.player_oil_changed.emit(oil, max_oil)
+	if oil / max_oil < float(GameData.combat("oil_whisper_ratio", 0.2)) and not _oil_low_said:
+		_oil_low_said = true
+		EventBus.whisper_requested.emit("WHISPER_OIL_LOW")
+	if oil == 0.0:
+		_oil_empty_time += delta
+		var interval := float(GameData.cfg("adventure.oil_empty_hurt_interval", 12))
+		if bool(Svc.static_call(RULES, &"bite_due", [oil, half_hearts, _oil_empty_time], interval > 0.0 and _oil_empty_time >= interval)):
+			_oil_empty_time = 0.0
+			if half_hearts > 2:
+				take_damage(1, global_position)
+	_update_lantern()
+
+func _assist_oil() -> Variant:
+	return Svc.static_call(RULES, &"assist", ["assist_oil"], false)
+
+func _gem_effects() -> Dictionary:
+	var equipped: Variant = Svc.static_call(GEM, &"equipped", [], "")
+	return GameData.dict_of(Svc.static_call(GEM, &"effects", [equipped], {}))
+
+func _update_lantern() -> void:
+	if lantern == null:
+		return
+	var fallback := lerpf(float(GameData.combat("oil_min_light", 0.35)), 1.0, clampf(oil / max_oil, 0.0, 1.0))
+	var ratio := float(Svc.static_call(RULES, &"light_ratio", [oil], fallback))
+	var gem := _gem_effects()
+	lantern.texture_scale = 630.0 / 128.0 * ratio * float(GameData.perk("dark_light_mult", 1.0)) * float(gem.get("radius_mult", 1.0))
+	lantern.color = Color.from_string(str(gem.get("tint", GameData.cfg("forest_look.lantern.color", "ffe9a8"))), Color("ffe9a8"))
+	lantern.energy = float(GameData.cfg("forest_look.lantern.energy", 0.10))
+
+func _update_ghost(delta: float) -> void:
+	_bob_time += delta
+	var bob := sin(_bob_time * TAU * 0.55) * float(GameData.perk("float_bob_px", 0.0))
+	visual.set_altitude(_altitude + bob + combat.extra_altitude)
+	var night := area.night_factor if area != null else 0.0
+	ghost_light.energy = float(GameData.perk("glow_energy_dark" if oil_draining else "glow_energy", 0.0)) * (1.0 if oil_draining else night)
+	ghost_light.texture_scale = float(GameData.perk("glow_scale", 0.0))
+	ghost_light.color = Color.from_string(str(GameData.perk("glow_color", "bfe0ff")), Color("bfe0ff"))
+	ghost_light.enabled = ghost_light.energy > 0.0
+
+func can_fly_here() -> bool:
+	return area != null and area.map.flight_allowed and bool(GameData.perk("can_fly", false))
+
+func hop() -> bool:
+	if state != S.FREE or is_flying or is_jumping or _landing:
+		return false
+	is_jumping = true
+	_vertical_speed = float(GameData.player_cfg("hop_impulse", 620))
+	visual.play_action(&"jump")
+	return true
+
+func toggle_flight() -> void:
+	if is_flying:
+		_try_land(false)
+	elif state == S.FREE and can_fly_here() and stamina >= 15.0:
+		is_flying = true
+		is_jumping = false
+		_flight_time = 0.0
+		z_index = Iso.Z_FLYING
+		collision_mask = Iso.MASK_FLYING
+		visual.play_action(&"takeoff")
+
+func _update_vertical(delta: float) -> void:
+	if is_flying:
+		_flight_time += delta
+		var climb := float(_climb_up) - float(_climb_down)
+		var height := float(GameData.player_cfg("flight_altitude", 150))
+		_altitude = clampf(_altitude + climb * float(GameData.player_cfg("flight_climb", 225)) * delta, 0.0, height * 1.8)
+		if absf(climb) < 0.1:
+			_altitude = move_toward(_altitude, height, delta * 100.0 * Iso.S)
+		_spend_stamina(float(GameData.perk("flight_energy_per_second", 10)) * delta)
+		if stamina <= 0.0 or _flight_time >= float(GameData.perk("flight_max_seconds", 8)):
+			_try_land(true)
+	elif _landing:
+		if Iso.ground_dist(global_position, _landing_at) <= 8.0:
+			_altitude = move_toward(_altitude, 0.0, delta * 220.0 * Iso.S)
+			if _altitude == 0.0:
+				_cancel_flight()
+				visual.play_action(&"land")
+	elif is_jumping:
+		_vertical_speed -= float(GameData.player_cfg("gravity", 1750)) * delta
+		_altitude = maxf(0.0, _altitude + _vertical_speed * delta)
+		if _altitude == 0.0 and _vertical_speed < 0:
+			is_jumping = false
+			visual.play_action(&"land")
+	visual.set_altitude(_altitude)
+
+func _landing_safe(at: Vector2) -> bool:
+	if not area.is_walkable(area.global_to_cell(at)):
+		return false
+	var body: CollisionShape2D = get_node("Body")
+	var query := PhysicsShapeQueryParameters2D.new()
+	query.shape = body.shape
+	query.transform = Transform2D(0.0, at)
+	query.collision_mask = Iso.MASK_WALKING
+	query.exclude = [get_rid()]
+	return get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
+
+func _try_land(forced: bool) -> bool:
+	if not is_flying:
+		return false
+	_landing_at = global_position
+	if not _landing_safe(_landing_at):
+		if not forced:
+			EventBus.whisper_requested.emit("UI_NO_ROOM_TO_LAND")
+			return false
+		var candidates: Array[Vector2] = []
+		for y in area.map.height:
+			for x in area.map.width:
+				if area.is_walkable(Vector2i(x, y)):
+					candidates.append(area.cell_to_global(Vector2i(x, y)))
+		candidates.sort_custom(func(a: Vector2, b: Vector2): return Iso.ground_dist(global_position, a) < Iso.ground_dist(global_position, b))
+		var found := false
+		for at in candidates:
+			if _landing_safe(at):
+				_landing_at = at
+				found = true
+				break
+		if not found:
+			return false
+	is_flying = false
+	_landing = true
+	return true
+
+func _cancel_flight() -> void:
+	is_flying = false
+	_climb_up = false
+	_climb_down = false
+	is_jumping = false
+	_landing = false
+	_altitude = 0.0
+	_vertical_speed = 0.0
+	collision_mask = Iso.MASK_WALKING
+	z_index = 0
+	if visual != null:
+		visual.set_altitude(0.0)
+
+func swing() -> bool:
+	return combat.swing()
+
+func dodge() -> bool:
+	return combat.dodge()
+
+func fairy_light() -> bool:
+	return combat.fairy_light()
+
+func drink() -> bool:
+	return combat.drink()
+
+func take_damage(amount: int, from: Vector2 = Vector2.ZERO) -> bool:
+	return combat.take_damage(amount, from)
+
+func cd_ratio(ability: String) -> float:
+	return combat.cd_ratio(ability)
+
+func cd_seconds(ability: String) -> float:
+	return float(combat.cooldowns.get(ability, 0.0))
+
+func begin_talk(at: Vector2 = Vector2.ZERO) -> void:
+	if combat != null:
+		combat.cancel_action()
+	super.begin_talk(at)
+	if at != Vector2.ZERO:
+		event_face(at - global_position)
+
+func end_talk() -> void:
+	if state == S.TALKING and not _event_active:
+		state = S.FREE
+	forced_clip = &""
+
+func event_begin() -> void:
+	_event_active = true
+	begin_talk()
+
+func event_end() -> void:
+	_event_generation += 1
+	_event_active = false
+	end_talk()
+
+func event_face(direction: Vector2) -> void:
+	if direction.length_squared() > 0.01:
+		facing8 = Iso.dir8_of(direction)
+		facing_vec = Iso.dir8_vector(facing8)
+		visual.set_facing_direction(facing_vec)
+
+func event_walk_to(at: Vector2, speed: float = 185.0) -> bool:
+	var generation := _event_generation
+	var elapsed := 0.0
+	while is_inside_tree() and generation == _event_generation and Iso.ground_dist(global_position, at) > 4.0 and elapsed < 20.0:
+		var delta := get_physics_process_delta_time()
+		var direction := Iso.to_ground(at - global_position).normalized()
+		velocity = Iso.to_screen(direction * minf(speed, Iso.ground_dist(global_position, at) / maxf(delta, 0.001)))
+		move_and_slide()
+		event_face(Iso.to_screen(direction))
+		visual.update_motion(velocity, false, false, false, facing_vec)
+		elapsed += delta
+		await get_tree().physics_frame
+	velocity = Vector2.ZERO
+	return generation == _event_generation and Iso.ground_dist(global_position, at) <= 4.0
+
+func camera_focus(target: Variant, zoom: float, seconds: float = 0.25) -> void:
+	if _camera_tween != null and _camera_tween.is_running():
+		_camera_tween.kill()
+	_camera_zoom_before = _target_zoom
+	var at: Vector2 = target.global_position if target is Node2D else target
+	_camera_tween = create_tween().set_parallel(true)
+	_camera_tween.tween_property(camera, "offset", at - global_position, seconds)
+	_camera_tween.tween_property(camera, "zoom", Vector2.ONE * clampf(zoom, area.zoom_range.x, area.zoom_range.y), seconds)
+	while _camera_tween != null and _camera_tween.is_running():
+		await get_tree().process_frame
+	_apply_camera_limits()
+
+func camera_release(seconds: float = 0.25) -> void:
+	if _camera_tween != null and _camera_tween.is_running():
+		_camera_tween.kill()
+	_camera_tween = create_tween().set_parallel(true)
+	_camera_tween.tween_property(camera, "offset", Vector2.ZERO, seconds)
+	_camera_tween.tween_property(camera, "zoom", Vector2.ONE * _camera_zoom_before, seconds)
+	while _camera_tween != null and _camera_tween.is_running():
+		await get_tree().process_frame
+	_set_zoom(_camera_zoom_before)

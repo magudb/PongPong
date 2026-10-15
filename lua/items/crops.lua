@@ -154,6 +154,7 @@ items = {
     sell_price = 55,
   },
   fertilizer = {
+    farm_effect = "fertilizer",
     name_key = "ITEM_FERTILIZER",
     description_key = "ITEM_FERTILIZER_DESC",
     category = "farm",
@@ -164,6 +165,7 @@ items = {
     sell_price = 4,
   },
   fairy_dust_water = {
+    farm_effect = "auto_water",
     name_key = "ITEM_FAIRY_DUST_WATER",
     description_key = "ITEM_FAIRY_DUST_WATER_DESC",
     category = "farm",

@@ -502,7 +502,11 @@ func _player_stub_contract(t) -> void:
 		"group player, in Objects, layer 2 / mask 197, camera current, IsoChibiSprite2D visual, methods; absent: %s" % [absent])
 	var hearts_before: int = int(p.get("half_hearts"))
 	p.call("take_damage", 3, Vector2(10, 10))
-	t.check("player_stub_take_damage_is_a_noop", int(p.get("half_hearts")) == hearts_before, "hearts %d unchanged" % hearts_before)
+	if p is PlayerStub2D:
+		t.check("player_stub_take_damage_is_a_noop", int(p.get("half_hearts")) == hearts_before, "area fixture is invulnerable")
+	else:
+		t.check("production_player_damage_contract", int(p.get("half_hearts")) == maxi(0, hearts_before - 3), "production body honours damage")
+		p.call("revive", p.global_position)
 	var cam: Camera2D = p.get("camera")
 	t.check("player_stub_camera_settings", cam.position_smoothing_enabled and is_equal_approx(cam.position_smoothing_speed, 6.0) and cam.limit_smoothed and is_equal_approx(cam.zoom.x, Iso.DEFAULT_ZOOM), "smoothing 6, limit_smoothed, zoom %.2f" % cam.zoom.x)
 	# camera limits follow the playable rect (centred when smaller than the view)

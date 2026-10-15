@@ -66,7 +66,8 @@
       "packages": [
         {
           "id": "P06-player-farm-core",
-          "status": "pending"
+          "status": "validated",
+          "evidence": "player-farm-{animal,fairy,hobbit,ghost}.json: 247/248/247/247 checks; player-native.json: 8 checks; player-integration.json: 2322 checks, 13 named later-package skips"
         },
         {
           "id": "P16-ui-menus",
@@ -167,7 +168,8 @@
     "LEAN copy keeps situational weather/season pools shared: 335/285/125/20 rows, within the 346/300/133/25 budgets. Exactly 100 voice hooks indexed; chat milestones remain text pending listening approval. No audio generated. All new copy stays draft.",
     "The old 21-character / 241px name estimate contradicts approved names measured at up to 267.25px. The name budget is 26 characters / 272px; preserve canonical names and give the P14 runtime plate that width plus padding.",
     "Route bake uses the real level polygons/holes/keepouts and all 14 installed room colliders. routes.json records 44 input hashes, authored/resolved city coordinates and approach shifts. Seventeen city anchors shift more than 64 ground px; inspect live placement and door approach at T-director before accepting the milestone. Never silently restore the old circle approximation.",
-    "The real routes require Pip courier speed_mult=1.6 to cover the 07:10 farm mailbox and 09:00 counter. Hoppe leaves 15 minutes earlier for the farm and keeps a 6 minute return margin; Rosa keeps a 6 minute errand margin. Normal/festival compiler travel shares the same pace."
+    "The real routes require Pip courier speed_mult=1.6 to cover the 07:10 farm mailbox and 09:00 counter. Hoppe leaves 15 minutes earlier for the farm and keeps a 6 minute return margin; Rosa keeps a 6 minute errand margin. Normal/festival compiler travel shares the same pace.",
+    "P06 production player/farm installed with cached shared body/camera/query, isolated combat, eight-slot hotbar and all eight painted crops. Harvest/plant/consumables commit before observers; failed full-bag harvest preserves crop and rolled yield. Moon eligibility preserves the actual raw watering hour. Native lantern cap tested with exactly fourteen other lights; the fixture mushroom lamp is disabled only in that controlled probe. Idle controller measured 57–59 microseconds per tick."
   ],
   "scope_basis": "The four-stage 27-package M1b plan in the original durable LEAD_NOTES.md (2026-10-15); package amendments remain binding. This is the usable-towns milestone, before the later dungeon and feature milestones.",
   "followup_layers": [

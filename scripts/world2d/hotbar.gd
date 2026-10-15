@@ -1,0 +1,70 @@
+class_name Hotbar
+extends RefCounted
+## Eight visible item slots; counts always come from the inventory owner.
+signal changed
+const SIZE := 8
+var slots: Array[StringName] = []
+var selected: int = 0
+
+func _init() -> void:
+	slots.resize(SIZE)
+	slots.fill(&"")
+
+func current() -> StringName:
+	return slots[selected]
+
+func select(index: int) -> void:
+	if index < 0 or index >= SIZE or index == selected:
+		return
+	selected = index
+	changed.emit()
+
+func cycle(direction: int) -> void:
+	select(posmod(selected + direction, SIZE))
+
+func assign(index: int, item: StringName) -> void:
+	if item != &"" and GameData.item_def(item).is_empty():
+		return
+	if index == -1:
+		index = slots.find(&"")
+		if index == -1:
+			index = selected
+	if index < 0 or index >= SIZE or slots[index] == item:
+		return
+	slots[index] = item
+	changed.emit()
+
+func fill_defaults() -> void:
+	slots.fill(&"")
+	var items := GameData.dict_of(GameData.cfg("starter_kit.tools", {}))
+	# Keep authored starter-kit order, with zero-count slots retained after use.
+	var index := 0
+	for item in items:
+		if index == SIZE:
+			break
+		if GameData.eco().has_item(StringName(item)):
+			slots[index] = StringName(item)
+			index += 1
+	changed.emit()
+
+func entries() -> Array:
+	var out: Array = []
+	for item in slots:
+		var def := GameData.item_def(item)
+		out.append({"id": String(item), "amount": int(GameData.eco().count_item(item)),
+			"name": str(def.get("name_key", "")), "rare": str(def.get("rarity", "normal"))})
+	return out
+
+func to_dict() -> Dictionary:
+	return {"slots": slots.map(func(item): return String(item)), "selected": selected}
+
+func from_dict(value: Dictionary) -> void:
+	slots.fill(&"")
+	var incoming: Variant = value.get("slots", [])
+	if incoming is Array:
+		for i in mini(incoming.size(), SIZE):
+			if incoming[i] is String and not GameData.item_def(StringName(incoming[i])).is_empty():
+				slots[i] = StringName(incoming[i])
+	var index: Variant = value.get("selected", 0)
+	selected = clampi(int(index), 0, SIZE - 1) if index is int or index is float else 0
+	changed.emit()

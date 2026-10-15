@@ -685,6 +685,9 @@ func validate_payload(data: Variant) -> Dictionary:
 			return _verdict(false, "invalid", "section '%s' is missing" % section_name)
 	if payload.has("world") and typeof(payload["world"]) != TYPE_DICTIONARY:
 		return _verdict(false, "invalid", "world is not an object")
+	var saved_world: Dictionary = payload.get("world", {})
+	if saved_world.has("farm") and not SvcLib.static_call("res://scripts/world2d/farm_grid.gd", &"validate_dict", [saved_world.farm], true):
+		return _verdict(false, "invalid", "world contains invalid crop records")
 	return _verdict(true, "", "", payload)
 
 

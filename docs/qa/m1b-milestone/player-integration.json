@@ -1,0 +1,227 @@
+{
+  "allowed": [
+    {
+      "kind": "error",
+      "rule": "a modal needs a name",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): GameManager.push_modal: a modal needs a name (at push_modal res://scripts/autoload/game_manager.gd:250)"
+    },
+    {
+      "kind": "error",
+      "rule": "(use bool, int, float or String)",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): GameManager.set_flag(bad_array): Array is not JSON-safe (use bool, int, float or String) (at set_flag res://scripts/autoload/game_manager.gd:347)"
+    },
+    {
+      "kind": "error",
+      "rule": "(use bool, int, float or String)",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): GameManager.set_flag(bad_vector): Vector2 is not JSON-safe (use bool, int, float or String) (at set_flag res://scripts/autoload/game_manager.gd:347)"
+    },
+    {
+      "kind": "error",
+      "rule": "(use bool, int, float or String)",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): GameManager.set_flag(bad_nan): float is not JSON-safe (use bool, int, float or String) (at set_flag res://scripts/autoload/game_manager.gd:347)"
+    },
+    {
+      "kind": "warning",
+      "rule": "and was dropped",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): GameManager.from_dict: world flag 'bad' is not JSON-safe and was dropped (at _sanitized_flags res://scripts/autoload/game_manager.gd:589)"
+    },
+    {
+      "kind": "error",
+      "rule": "unknown weather id",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): TimeManager.set_weather: unknown weather id 'hagl' (at set_weather res://scripts/autoload/time_manager.gd:146)"
+    },
+    {
+      "kind": "warning",
+      "rule": "unsupported locale",
+      "section": "loc",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): LocalizationManager.set_locale: unsupported locale 'xx' (supported: da, en) (at set_locale res://scripts/autoload/localization_manager.gd:126)"
+    },
+    {
+      "kind": "error",
+      "rule": "ConfigFile parse error",
+      "section": "loc",
+      "text": "core/io/config_file.cpp:293 in _parse(): ConfigFile parse error at user://settings.cfg:0: Unexpected EOF while parsing simple tag. (at _persist_locale res://scripts/autoload/localization_manager.gd:105)"
+    },
+    {
+      "kind": "warning",
+      "rule": "is unreadable",
+      "section": "loc",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): LocalizationManager: user://settings.cfg is unreadable (error 43); the language choice was not saved so that no other setting is destroyed (at _persist_locale res://scripts/autoload/localization_manager.gd:107)"
+    },
+    {
+      "kind": "warning",
+      "rule": "takes 1 argument(s)",
+      "section": "loc",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): LocalizationManager.t: 'NOTIF_LANGUAGE_CHANGED_MSG' (Sproget er nu %s.) takes 1 argument(s), got 2 (at t res://scripts/autoload/localization_manager.gd:171)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'Bad Name' is not a valid section name (a-z, 0-9, _) (at register_section res://scripts/autoload/save_manager.gd:466)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'world' is a built-in name (at register_section res://scripts/autoload/save_manager.gd:469)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'game' is a built-in name (at register_section res://scripts/autoload/save_manager.gd:469)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section('nomethods'): the node has no to_dict() (at register_section res://scripts/autoload/save_manager.gd:476)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section('nullnode'): the node is null or freed (at register_section res://scripts/autoload/save_manager.gd:472)"
+    },
+    {
+      "kind": "warning",
+      "rule": "which cannot be saved",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'jsonrules' holds a Object, which cannot be saved (written as null) (at _json_safe res://scripts/autoload/save_manager.gd:646)"
+    },
+    {
+      "kind": "error",
+      "rule": "did not return a Dictionary",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved (at gather_payload res://scripts/autoload/save_manager.gd:576)"
+    },
+    {
+      "kind": "error",
+      "rule": "did not return a Dictionary",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved (at gather_payload res://scripts/autoload/save_manager.gd:576)"
+    },
+    {
+      "kind": "warning",
+      "rule": "nested deeper than 64",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped (at _json_safe res://scripts/autoload/save_manager.gd:616)"
+    },
+    {
+      "kind": "warning",
+      "rule": "nested deeper than 64",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped (at _json_safe res://scripts/autoload/save_manager.gd:616)"
+    },
+    {
+      "kind": "error",
+      "rule": "fake section failure",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): fake section failure boom (at from_dict res://tests/sections/save.gd:64)"
+    },
+    {
+      "kind": "error",
+      "rule": "fake section failure",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): fake section failure late_boom (at from_dict res://tests/sections/save.gd:64)"
+    },
+    {
+      "kind": "error",
+      "rule": "save_4.bak.json.tmp",
+      "section": "save",
+      "text": "core/io/dir_access.cpp:429 in copy(): Condition \"err != OK\" is true. Returning: err Failed to open '/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.9qg3Rv/Library/Application Support/Traetoppen/save_test_51639/save_4.bak.json.tmp'. (at _roll_backup res://scripts/autoload/save_manager.gd:1004)"
+    }
+  ],
+  "character": "animal",
+  "checks": 2322,
+  "elapsed_s": 55.19,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "area": {
+      "checks": 239,
+      "failed": 0,
+      "ms": 18039,
+      "skipped": 1
+    },
+    "copy_rules": {
+      "checks": 98,
+      "failed": 0,
+      "ms": 1286,
+      "skipped": 0
+    },
+    "core": {
+      "checks": 114,
+      "failed": 0,
+      "ms": 564,
+      "skipped": 0
+    },
+    "dungeon_defeat": {
+      "checks": 37,
+      "failed": 0,
+      "ms": 2168,
+      "skipped": 0
+    },
+    "economy": {
+      "checks": 296,
+      "failed": 0,
+      "ms": 1246,
+      "skipped": 2
+    },
+    "farm": {
+      "checks": 209,
+      "failed": 0,
+      "ms": 40,
+      "skipped": 0
+    },
+    "home": {
+      "checks": 719,
+      "failed": 0,
+      "ms": 2012,
+      "skipped": 1
+    },
+    "loc": {
+      "checks": 115,
+      "failed": 0,
+      "ms": 15385,
+      "skipped": 0
+    },
+    "loot": {
+      "checks": 170,
+      "failed": 0,
+      "ms": 4883,
+      "skipped": 4
+    },
+    "player": {
+      "checks": 31,
+      "failed": 0,
+      "ms": 84,
+      "skipped": 0
+    },
+    "quests": {
+      "checks": 55,
+      "failed": 0,
+      "ms": 2383,
+      "skipped": 4
+    },
+    "save": {
+      "checks": 239,
+      "failed": 0,
+      "ms": 4216,
+      "skipped": 1
+    }
+  },
+  "skipped": 13
+}

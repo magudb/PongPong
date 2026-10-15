@@ -70,7 +70,19 @@
     "FARM_"
    ],
    "exact": [
-    "WHISPER_NOT_YET"
+    "UI_TOOL_NO_EFFECT",
+    "UI_NOT_IN_SEASON",
+    "UI_TIRED",
+    "UI_NO_ROOM_TO_LAND",
+    "WHISPER_NOT_YET",
+    "WHISPER_FISHING_CLOSED",
+    "WHISPER_OIL_LOW",
+    "WHISPER_FLOWER_1",
+    "WHISPER_FLOWER_2",
+    "WHISPER_FLOWER_3",
+    "WHISPER_FLOWER_4",
+    "WHISPER_FLOWER_5",
+    "WHISPER_FLOWER_6"
    ]
   },
   "areas.csv": {

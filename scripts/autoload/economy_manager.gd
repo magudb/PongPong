@@ -70,6 +70,7 @@ var inventory: Array[Dictionary] = []
 var equipment: Dictionary = {}
 
 var _misrouted: bool = false          # a furniture / clothing item may sit in the backpack (its store did not exist yet)
+var _consuming: bool = false
 var _logged: Dictionary = {}
 
 
@@ -405,13 +406,13 @@ func consume_backpack_items(needs: Dictionary, commit: Callable, gold_cost: int 
 
 ## Silent chest withdrawal: credit the backpack and commit the source deduction
 ## before equipment/inventory listeners can save or request another transfer.
-func receive_backpack_item(item_id: StringName, amount: int, commit: Callable) -> bool:
+func receive_backpack_item(item_id: StringName, amount: int, commit: Callable, silent: bool = true) -> bool:
 	if not commit.is_valid() or _Kinds.storage_of(item_id) != _Kinds.BACKPACK or not can_add_item(item_id, amount):
 		return false
 	_stack_into_backpack(item_id, amount)
 	commit.call()
 	_auto_equip(item_id)
-	_gained(item_id, amount, true)
+	_gained(item_id, amount, silent)
 	return true
 
 
@@ -649,8 +650,18 @@ func use_item(item_id: StringName) -> bool:
 ## Applies heal / oil / energy through the player; the item is used up when at least one effect had room to work.
 func _consume(item_id: StringName, heal: int, oil: float, energy: float) -> bool:
 	var player := get_tree().get_first_node_in_group("player") if get_tree() != null else null
-	if player == null:
+	if player == null or _consuming:
 		return false
+	if player.has_method("apply_consumable"):
+		var has_room := (heal > 0 and int(player.get("half_hearts")) < int(player.get("max_half_hearts"))) or (oil > 0 and float(player.get("oil")) < float(player.get("max_oil"))) or (energy > 0 and float(player.get("stamina")) < float(player.get("max_stamina")))
+		if not has_room:
+			return false
+		_consuming = true
+		var ok := consume_backpack_items({item_id: 1}, func() -> void:
+			player.call("apply_consumable", heal, oil, energy)
+		)
+		_consuming = false
+		return ok
 	var used := false
 	if heal > 0 and "half_hearts" in player and "max_half_hearts" in player and int(player.get("half_hearts")) < int(player.get("max_half_hearts")):
 		if player.has_method("heal_half"):
