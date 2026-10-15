@@ -1,0 +1,15 @@
+# Open questions - the 06:00-02:00 clock (CLOCK_26), after the user's answer "until 2 at night"
+
+Only decisions that belong to the user. Each has a default and the design is complete and buildable with every default (the exact lines of every alternative are in `CLOCK_26_ADDENDUM.md` section 9).
+
+**ANSWERED by the user on 2026-10-14 and applied:** the game day runs until 02:00 at night (hours 24 and 25 belong to the SAME game day and are shown 00:xx and 01:xx; the player passes out at 02:00 and wakes at 06:00 of the next date at home).
+
+**Q1. Does the night watch move with the pass-out?** The town curfew (whisper, then "the night watch walks you home") is 23:30 / 23:45 in the towns design. *Default: yes, it moves to 01:30 / 01:45* (the same 30 / 15 minute cushions before the pass-out), so the two new hours can be spent in town. Alternative: keep 23:30 / 23:45 - the towns go quiet at 23:45 and the extra two hours exist only on the farm and in the forest (one config line, `towns.curfew`, no code).
+
+**Q2. Should any more shops stay open after midnight?** The inn on Friday and Saturday, the bat window of Natteblik. *Default: no* - every shop of Trætoppen and Hyggebyen closes by 23:30, so after midnight the town is shut and the player has the farm, the forest and the street. Alternative: data only (a close of 25 or 25.5 in the building row, plus the keeper at his counter until then): the exact lines are in section 9.2. (The ghost family's lantern house, open 17-01, is NOT this question: it is question 1 of the family design, `design6/family/OPEN_QUESTIONS.md`, default yes.)
+
+**Q3. May a festival run past midnight?** *Default: no* - every festival window ends by 23:00; the validators already allow up to 01:00. Alternative: Årsskiftet (New Year's Eve) 15:00-01:00 with a real "midnight toast" needs ONE new game event (`clock_midnight`, fired once when the clock crosses 24:00); the lines are in section 9.3.
+
+**Q6. Is the extra night short enough for you?** At the current speed (2 game minutes per real second, so a game hour is 30 real seconds) the day grows from 9 to **10 real minutes**: the two new hours are exactly ONE real minute. *Default: keep the speed* - every "x game minutes = y real seconds" figure of the towns, social and ghost designs stays true. Alternatives: a later pass-out (up to 05:00, `time.day_end_hour` 28 = 04:00 gives two real minutes of night; the bed and the pass-out follow), or a faster clock (2.2222 keeps the day at 9 minutes but turns every figure expressed in game minutes into a lie).
+
+*(The numbers are those of the addendum, section 3: the other four of that table, Q4, Q5, Q7 and Q8, are not user decisions: Q4: an autosave taken at the 02:00 roll resumes awake at 02:xx of the new date - the 00:00 roll did the same, leave it; Q5: the clock reads 00:30 / 01:30 while the date still says the same weekday until 02:00 - that is the user's own rule; Q7: an optional bedtime whisper at 01:30 - the family's late lines already say it, default no; Q8: a richer night for the ghost family - answered by the family design.)*
