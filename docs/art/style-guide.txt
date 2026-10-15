@@ -1,0 +1,99 @@
+Trætoppen — asset style rules
+
+The visual reference is docs/Trætoppen Style Guide Review/Trætoppen Style Guide.dc.html,
+its local rendered references, and the accepted character/terrain paintings in
+tools/art/drawn/sources/. The chosen direction is hand-painted storybook 2D:
+matte gouache/watercolor, visible pigment/paper/wood grain, slightly irregular
+warm pencil contours, friendly chibi silhouettes and readable functional parts.
+Old soft-CG/geometry bake instructions describe historical prototypes and do not
+replace this direction. Use the approved paintings as references when fixing art.
+
+Characters and objects
+
+Preserve each hero's head/body proportions, face, ears, hair, wings, tail and
+material identity. Keep natural warm contours rather than glossy plastic or
+uniform thick black strokes. Furniture and props use honey timber, woven cream
+linen, sage, muted lavender, terracotta, restrained iron and small dull brass.
+Keep distinct materials and rarity silhouettes: worn timber is not glossy metal;
+a mushroom, snail chest or root throne must remain recognizable as that object.
+Avoid photorealism, vector-looking world props, low-poly/faceted geometry and
+unmotivated neon bloom. Do not repaint correctly matched art merely to change it.
+
+Zone pigments and lighting
+
+Farm: moss/sage, honey/bark, cream and open sky. Town: lavender, rose, chalk and
+small warm gold details. Dark forest: night blue #1c2138, shadow moss #2f4a3f,
+quiet teal #6fd6c4 and owl gold #f2c14e. These are pigment families and light
+relationships, not a command to flatten every texture to a hex color. Backdrops
+are softer and lower contrast than actors. Keep a legible character contour on
+both light/dark floors. Review daytime and evening together; the forest remains
+dark by design, with local accents rather than broad neon washes.
+
+Native geometry and variants
+
+Respect the existing projection and placement contract. Native isometric tiles
+are 128x76; verticals stay upright. Preserve each object's canvas, footprint,
+pivot, mount height, ground contact, interaction anchor and sorting data. A
+wall, floor textile and free-standing object need different placement handling.
+Do not stretch a floor runner to a diamond just because its bounding box fits.
+
+New prop rotations must show the same physical object turning, including
+credible backs and concealed front-only handles/buttons. No silent mirrored
+asymmetry. Existing stock character mirrors are declared and reviewed as that
+pack's contract; fitted handed equipment requires explicit directional grips
+and occluders. Preserve cutout alpha and generous clear source gutters. Do not
+bake a floor rectangle, cast glow or unwanted shadow into an illustrated sprite.
+Keep terrain periods continuous and tile atlas mipmaps off.
+
+Fitted equipment uses the existing 256x256 body canvas and ground anchor
+(128,200). Clothing, hands, hair/ears, wings and tails must stay registered to the
+same body pose. Keep safe base coverage when clothes are removed. Ghost trousers
+and shoes become hem bands/tabs, never human legs. Cloth stays its own material.
+Do not present a flattened concept or incomplete clip set as production clothing.
+
+UI assets and typography
+
+The UI stays parchment #f4e6c4 / cream #fbf5e6, ink #2b2340 and fairy gold
+#e3c372 across all zones. UI symbols remain simple theme vectors; they do not
+need the detail of a world painting. White mask symbols are tinted by their
+actual control. Buttons have depth and visible gold focus. Inventory silhouettes
+need readable ink edges; legendary night icons retain their pale #e4eff5 rim.
+
+Caprasimo is the display/numeral font and is never below 20 px in controls.
+Alegreya Sans is the body/dialogue font, with Danish Æ Ø Å at 18 px or larger.
+Small developer asset IDs, contact-sheet labels and diagnostic annotations are
+inspection aids, not the game's dialogue or control typography. Bundled symbol
+and monospace fonts keep their specific UI/inspection roles and license files.
+
+Explicit non-illustration roles
+
+Shadows, contact masks, light/halo masks, telegraphs, mist and small readability
+particles are technical layers. Review their contrast, placement and effect in
+context; do not turn them into textured furniture or scene paintings. Keep the
+existing light, compression and memory limits for each kit.
+
+Historical generator/regression fixture paths must follow the painted style too.
+Their explicit recipes are in tools/art/drawn/fixture_recipes.json; approved
+masters supply the drawings without moving their canvas or ground anchor.
+Trimmed city window masks use the painted windows' own dimensions and offsets.
+Original channel sums and alpha measurements are manufacturing geometry only,
+stored outside assets/; never use them as illustration references. Functional
+radial light kernels remain technical layers. Concepts and art-only kits retain
+their declared production status rather than claiming finished gameplay.
+
+Review and repair
+
+Inventory every assets/ file and resolve the actual game catalogs, night/base
+icon variants, secondary masks and outdoor parallax. Decode every raster and
+check JSON/SVG/font validity. Inspect changed/new art against the accepted source
+paintings, including rotations, alpha edges, material identity and native scale.
+Byte-identical earlier exports may keep their earlier recorded visual evidence;
+record that reuse explicitly. A hash match or path name alone is not an aesthetic
+judgment. Native light/dark, day/evening and character-adjacent previews remain
+part of the review. For animation, name the exact sampled/all-frame scope.
+
+Save exact generation/edit prompts, reference roles, selected masters and repair
+instructions in docs/art/<package>/. Rebuild from saved sources rather than
+editing lossy exports by hand. Run the relevant native and regression checks.
+The reviewed snapshot detects additions/replacements; it never grants automatic
+aesthetic approval just because a file decodes or has a painted-looking filename.

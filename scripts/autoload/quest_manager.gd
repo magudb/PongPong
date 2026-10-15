@@ -28,7 +28,7 @@ extends Node
 ## `have = true` (on = item_gained: progress = how many the player owns, stays done once reached), `needs = { item = n }` (+ `consume = true`: a
 ## delivery - the items leave the backpack in the same commit as the progress; also read by item_in_use for quest_spot objectives).
 ## An objective without `on` is manual, except for the old id convention that review_regressions pins: harvest_<crop> / harvest_any are fed by
-## crop_harvested and collect_<item> by resource_node_depleted.
+## crop_harvested and collect_<item> by item_gained or resource_node_depleted (for direct node loot).
 ##
 ## OFFERS (QuestManager.offerable / offerable_for): quests available RIGHT NOW (Lua is_available, not active, not done or cooled down, the zone
 ## of meta.requires_zone unlocked) per giver. requires_zone gates offers only: accept_quest by an explicit dialogue choice is never blocked by it.

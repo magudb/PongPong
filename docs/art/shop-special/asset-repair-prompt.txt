@@ -1,0 +1,36 @@
+Built-in imagegen edit template — specialist shop assets
+
+Attach the selected source master to repair first, followed by the approved core
+workroom painting, the core small-prop painting and the fox portrait. Use edit
+mode with transparent_background=true. Replace the bracketed fields below from
+prompts.json and shop_special_layout.json before generating.
+
+Use case: stylized-concept. Edit only [MASTER / ROW / PIECE / VIEW]. Preserve
+every accepted design and its position in this [ROWS] by [COLUMNS] source sheet.
+Match the next two painted prop references and the friendly character world of
+the final reference: matte storybook gouache/watercolor, fine irregular warm
+grey-brown pencil contours, honey timber, cream linen, sage, muted lavender,
+terracotta, charcoal iron and small dull brass details. Keep tactile grain and
+clear small-scale silhouettes. No plastic CG finish, photorealism, vector-flat
+shapes, pixel art, harsh black contours or dramatic cinematic light.
+
+Repair [SPECIFIC VISIBLE PROBLEM]. Preserve the physical identity, dimensions,
+material, hinges and functional details of [PIECE] across its [AUTHORED VIEWS].
+Use the 36 degree orthographic camera with upright verticals; ground axes slope
+about +30.7/-30.7 degrees. Front/back views must be independent quarter-turn
+drawings. The back shows the correct rear construction. Do not mirror the front
+and call it a new view. Wall faces must correspond to the isometric wall axes.
+
+Keep exactly [ROWS] rows and [COLUMNS] columns in the same order. Every whole
+object must remain inside its cell with at least 40 px transparent gutters.
+Include all feet, hooks, stems, wisps and strings. Use actual transparent RGBA
+outside the paint: no floor, scenery, cast shadow, gradient, checkerboard, text,
+labels, numbers, logos or watermark. Boards and paper labels stay blank so UI
+can localize them. Do not draw a room or any people or animals on the sheet.
+
+After generation: inspect the saved source including its alpha, retain the exact
+filled prompt, replace only the chosen master, and repack with --only=shop-special.
+Do not hand-edit the placement contract to hide a visual defect. Check all
+affected authored views, actual tabletop support, wall/window visibility,
+keeper/door access, imported room memory, day/evening masks and native captures.
+Keep the existing piece IDs, footprint, layer, view count and room access rules.

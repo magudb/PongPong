@@ -56,7 +56,7 @@ func _populate_list() -> void:
 		building_list.set_item_metadata(building_list.item_count - 1, btype)
 
 	if building_list.item_count > 0:
-		building_list.selected = 0
+		building_list.select(0)
 		_on_building_selected(0)
 
 

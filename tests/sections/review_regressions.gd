@@ -47,6 +47,9 @@ func run(p_t) -> void:
 	await t.go_menu()
 	t.autoload("LuaRuntime").reload_scripts()
 	_fresh()
+	await _ui_modal_contract()
+	_quest_collect_binding()
+	_flag_changed_signal()
 	for key in qm.quest_defs.keys():
 		if str(key).begins_with("review_"):
 			qm.quest_defs.erase(key)
@@ -149,6 +152,137 @@ func _menus() -> void:
 	await t.frames(2)
 	t.check("selected_skin_reaches_world", entered and gm.character_skin == &"fairy_birk", "")
 	await t.go_menu()
+
+
+## The screen scripts' %named node requirements (their real .tscn land with P16/P17): a bare Control carries
+## them, so the modal contract of the SHIPPED scripts is exercised headless - push on open, pop on close,
+## Esc closes the top modal only.
+static var MODAL_SCREEN_NODES := {
+	"res://scripts/ui/inventory_ui.gd": {
+		"toggle": &"inventory", "modal": &"inventory",
+		"nodes": {"ItemGrid": GridContainer, "GoldLabel": Label, "CloseButton": Button, "Tooltip": PanelContainer}},
+	"res://scripts/ui/quest_journal.gd": {
+		"toggle": &"journal", "modal": &"journal",
+		"nodes": {"TabContainer": TabContainer, "ActiveList": VBoxContainer, "CompletedList": VBoxContainer, "DetailPanel": VBoxContainer, "CloseButton": Button}},
+	"res://scripts/ui/animal_care_ui.gd": {
+		"toggle": &"animal_care", "modal": &"animal_care",
+		"nodes": {"AnimalList": ItemList, "DetailPanel": VBoxContainer, "NameLabel": Label, "SpeciesLabel": Label,
+			"HappinessBar": ProgressBar, "HungerBar": ProgressBar, "BondLabel": Label, "AgeLabel": Label, "StatusLabel": Label,
+			"ProductLabel": Label, "FeedButton": Button, "BrushButton": Button, "PlayButton": Button, "CollectButton": Button,
+			"RenameButton": Button, "FoodOption": OptionButton, "CloseButton": Button}},
+	"res://scripts/ui/build_menu_ui.gd": {
+		"toggle": &"build_menu", "modal": &"build_menu",
+		"nodes": {"BuildingList": ItemList, "DetailPanel": VBoxContainer, "NameLabel": Label, "DescLabel": Label,
+			"CostLabel": Label, "CapacityLabel": Label, "BuildButton": Button, "CloseButton": Button}},
+	"res://scripts/ui/save_load_ui.gd": {
+		"toggle": &"save_menu", "modal": &"save_load",   # the one modal of the two toggles (ui_screens.json)
+		"nodes": {"TitleLabel": Label, "SlotList": VBoxContainer, "ConfirmDialog": ConfirmationDialog,
+			"DeleteDialog": ConfirmationDialog, "InfoLabel": Label, "CloseButton": Button}},
+}
+
+
+func _make_screen(script_path: String, named: Dictionary) -> Control:
+	var root := Control.new()
+	root.process_mode = Node.PROCESS_MODE_ALWAYS      # like GameUI: a modal works while the tree is paused
+	for node_name in named:
+		var child: Node = (named[node_name] as Variant).new()
+		child.name = node_name
+		root.add_child(child)
+		child.owner = root                            # owner + unique_name make %Name resolve in the code-built tree
+		child.unique_name_in_owner = true
+	root.set_script(load(script_path))              # @onready runs on enter_tree
+	return root
+
+
+func _ui_modal_contract() -> void:
+	var host := Control.new()
+	t.tree.current_scene.add_child(host)
+	var stack_before: Array = gm.modal_stack()
+	var errors: Array[String] = []
+	var made := {}
+
+	for script_path in MODAL_SCREEN_NODES:
+		var spec: Dictionary = MODAL_SCREEN_NODES[script_path]
+		var scr := _make_screen(script_path, spec["nodes"])
+		made[spec["modal"]] = scr
+		host.add_child(scr)
+		await t.frames(1)
+		bus.ui_panel_toggled.emit(spec["toggle"], true)
+		await t.frames(1)
+		if not scr.visible or not gm.is_modal_open(spec["modal"]):
+			errors.append("%s did not push %s" % [script_path.get_file(), spec["modal"]])
+		bus.ui_panel_toggled.emit(spec["toggle"], false)
+		await t.frames(1)
+		if scr.visible or gm.is_modal_open(spec["modal"]):
+			errors.append("%s did not pop %s" % [script_path.get_file(), spec["modal"]])
+	t.check("toggle_modals_push_and_pop", errors.is_empty(), str(errors))
+
+	# the shop opens on its own signal, not a toggle
+	var shop := _make_screen("res://scripts/ui/shop_ui.gd", {
+		"ShopNameLabel": Label, "TabContainer": TabContainer, "BuyList": ItemList, "SellList": ItemList,
+		"QuantitySpin": SpinBox, "BuyButton": Button, "SellButton": Button, "GoldLabel": Label, "CloseButton": Button})
+	host.add_child(shop)
+	await t.frames(1)
+	bus.shop_opened.emit(&"seed_shop")
+	await t.frames(1)
+	t.check("shop_modal_on_opened", shop.visible and gm.is_modal_open(&"shop"), "")
+	bus.shop_closed.emit(&"seed_shop")
+	await t.frames(1)
+	t.check("shop_modal_on_closed", not shop.visible and not gm.is_modal_open(&"shop"), "")
+
+	# pause: Esc opens when nothing is modal, closes the top modal only; a modal stacked on top owns Esc
+	var pause := _make_screen("res://scripts/ui/pause_menu.gd", {
+		"ResumeButton": Button, "SaveButton": Button, "LoadButton": Button, "SettingsButton": Button,
+		"QuitButton": Button, "PanelContainer": PanelContainer})
+	host.add_child(pause)
+	await t.frames(1)
+	var released_before := Input.get_mouse_mode()
+	t.tap_key(KEY_ESCAPE)
+	await t.frames(1)
+	t.check("esc_opens_pause", pause.visible and gm.top_modal() == &"pause" and t.tree.paused, "")
+	var saveload: Control = made[&"save_load"]
+	bus.ui_panel_toggled.emit(&"save_menu", true)
+	await t.frames(1)
+	t.check("modal_stacks_on_pause", gm.modal_stack() == [&"pause", &"save_load"], str(gm.modal_stack()))
+	t.tap_key(KEY_ESCAPE)
+	await t.frames(1)
+	t.check("esc_closes_top_only", gm.top_modal() == &"pause" and pause.visible and not saveload.visible, "")
+	t.tap_key(KEY_ESCAPE)
+	await t.frames(1)
+	t.check("esc_then_closes_pause", gm.modal_stack().is_empty() and not t.tree.paused and not pause.visible, "")
+	t.check("esc_never_captures_mouse", Input.get_mouse_mode() == released_before, "")
+
+	gm.pop_all_modals()
+	host.queue_free()
+	await t.frames(1)
+	t.check("ui_modal_contract_leaves_clean_stack", gm.modal_stack() == stack_before, str(gm.modal_stack()))
+
+
+## `collect_<item>` advances when an item ENTERS the backpack (harvest, shop, gift: all through add_item -> item_gained);
+## the shipped cookie_delivery's collect_turnip used to sit uncompletable on harvest (crop_harvested only moved harvest_*).
+func _quest_collect_binding() -> void:
+	eco.inventory.clear()                       # a left-over full backpack would refuse the add (no item_gained then)
+	_quest("review_collect", "collect_turnip")
+	qm.accept_quest(&"review_collect")
+	var rt: Variant = qm.active_quests.get(&"review_collect")
+	t.check("collect_not_advanced_before_gain", rt != null and rt.objectives["collect_turnip"]["current"] == 0, "")
+	eco.add_item(&"turnip", 2)
+	t.check("collect_advances_on_item_gained", rt.objectives["collect_turnip"]["done"], "collect_turnip after item_gained(turnip, 2): %s" % [rt.objectives["collect_turnip"]])
+	t.check("collect_quest_completes", &"review_collect" in qm.completed_quests, "")
+
+
+## flag_changed is the `when=flag:` driver (IsoArea's 4 Hz poll is gone): fires on set / clear / same-value skip.
+func _flag_changed_signal() -> void:
+	var seen: Array = []
+	var cb := func(flag: StringName, value: Variant) -> void: seen.append([String(flag), value])
+	bus.flag_changed.connect(cb)
+	gm.set_flag(&"review_flag", true)
+	gm.set_flag(&"review_flag", true)       # same value: no second fire
+	gm.set_flag(&"review_flag", 7)
+	gm.clear_flag(&"review_flag")
+	gm.clear_flag(&"review_flag")           # not there: no fire
+	bus.flag_changed.disconnect(cb)
+	t.check("flag_changed_fires", seen == [["review_flag", true], ["review_flag", 7], ["review_flag", false]], str(seen))
 
 
 func _new_game() -> void:

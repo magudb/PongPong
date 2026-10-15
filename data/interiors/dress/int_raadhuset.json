@@ -1,0 +1,54 @@
+{
+  "items": [
+    {
+      "id": "mayor_desk",
+      "cell": [
+        0,
+        1
+      ],
+      "rot": 0
+    },
+    {
+      "id": "flag_stand",
+      "cell": [
+        0,
+        6
+      ],
+      "rot": 0
+    },
+    {
+      "id": "banner_wall",
+      "cell": [
+        5,
+        0
+      ],
+      "rot": 0,
+      "wall": true
+    },
+    {
+      "id": "scale_brass",
+      "cell": [
+        0,
+        1
+      ],
+      "rot": 0
+    },
+    {
+      "id": "price_board",
+      "cell": [
+        2,
+        0
+      ],
+      "rot": 0,
+      "wall": true
+    },
+    {
+      "id": "lantern_hanging",
+      "cell": [
+        0,
+        0
+      ],
+      "rot": 0
+    }
+  ]
+}

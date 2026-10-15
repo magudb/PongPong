@@ -1,0 +1,3268 @@
+{
+  "_doc": "Read-only art review snapshots of Claude's 14 generated core room layouts. They are not installed as gameplay rooms. Regenerate the gameplay source through T-towns-core when that branch lands.",
+  "rooms": {
+    "uglehulen": {
+      "id": "int_uglehulen",
+      "building": "uglehulen",
+      "size": "S",
+      "cols": 7,
+      "rows": 5,
+      "wall_style": "plank",
+      "floor": "floor_plank",
+      "door": {
+        "cell": [
+          3,
+          4
+        ],
+        "dir": [
+          0,
+          1
+        ]
+      },
+      "spawn_cell": [
+        3,
+        3
+      ],
+      "windows": {
+        "z": [
+          1
+        ],
+        "x": [
+          2
+        ]
+      },
+      "exit": {
+        "area": "traetoppen",
+        "spawn": "from_int_uglehulen"
+      },
+      "zoom_fit": 0.832,
+      "items": [
+        {
+          "id": "counter_pine",
+          "cell": [
+            2,
+            2
+          ],
+          "rot": 0,
+          "role": "counter"
+        },
+        {
+          "id": "bookshelf_oak_narrow",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "clock_owl",
+          "cell": [
+            1,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chest_snail",
+          "cell": [
+            2,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "shelf_birdhouse",
+          "cell": [
+            2,
+            0
+          ],
+          "rot": 0,
+          "wall": true
+        },
+        {
+          "id": "table_round_pine",
+          "cell": [
+            0,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "plant_teapot_bonsai",
+          "cell": [
+            6,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "floor_lamp_glowshroom",
+          "cell": [
+            1,
+            3
+          ],
+          "rot": 0
+        }
+      ],
+      "posts": [
+        {
+          "id": "counter",
+          "cell": [
+            3,
+            1
+          ],
+          "act": "work",
+          "facing": "S",
+          "capacity": 1,
+          "kind": "keeper"
+        },
+        {
+          "id": "cust1",
+          "cell": [
+            1,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust2",
+          "cell": [
+            5,
+            3
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust3",
+          "cell": [
+            5,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "perch",
+          "cell": [
+            5,
+            1
+          ],
+          "act": "perch",
+          "facing": "S",
+          "capacity": 1,
+          "kind": "bed"
+        }
+      ],
+      "markers": [
+        {
+          "type": "hatch",
+          "cells": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              5,
+              2
+            ],
+            [
+              6,
+              2
+            ]
+          ]
+        },
+        {
+          "type": "appraisal",
+          "keeper": "appraiser_fru_ugle",
+          "cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "appraiser_fru_ugle",
+          "cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "appraiser_fru_ugle",
+          "cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "type": "door",
+          "cell": [
+            3,
+            4
+          ],
+          "to": "traetoppen",
+          "spawn": "from_int_uglehulen"
+        }
+      ],
+      "notes": []
+    },
+    "postkontoret": {
+      "id": "int_postkontoret",
+      "building": "postkontoret",
+      "size": "M",
+      "cols": 8,
+      "rows": 5,
+      "wall_style": "plank",
+      "floor": "floor_plank",
+      "door": {
+        "cell": [
+          4,
+          4
+        ],
+        "dir": [
+          0,
+          1
+        ]
+      },
+      "spawn_cell": [
+        4,
+        3
+      ],
+      "windows": {
+        "z": [
+          1,
+          5
+        ],
+        "x": [
+          2
+        ]
+      },
+      "exit": {
+        "area": "traetoppen",
+        "spawn": "from_int_postkontoret"
+      },
+      "zoom_fit": 0.791,
+      "items": [
+        {
+          "id": "counter_pine",
+          "cell": [
+            3,
+            2
+          ],
+          "rot": 0,
+          "role": "counter"
+        },
+        {
+          "id": "mail_sack",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "mail_sack",
+          "cell": [
+            1,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "parcel_stack",
+          "cell": [
+            2,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chest_pine",
+          "cell": [
+            3,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "pigeonhole_wall",
+          "cell": [
+            3,
+            0
+          ],
+          "rot": 0,
+          "wall": true
+        },
+        {
+          "id": "letter_desk",
+          "cell": [
+            0,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chair_pine",
+          "cell": [
+            7,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "plant_fern",
+          "cell": [
+            6,
+            3
+          ],
+          "rot": 0
+        }
+      ],
+      "posts": [
+        {
+          "id": "counter",
+          "cell": [
+            4,
+            1
+          ],
+          "act": "work",
+          "facing": "S",
+          "capacity": 1,
+          "kind": "keeper"
+        },
+        {
+          "id": "cust1",
+          "cell": [
+            1,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust2",
+          "cell": [
+            6,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust3",
+          "cell": [
+            5,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "bed",
+          "cell": [
+            6,
+            1
+          ],
+          "act": "sleep",
+          "facing": "S",
+          "capacity": 1,
+          "kind": "bed"
+        }
+      ],
+      "markers": [
+        {
+          "type": "hatch",
+          "cells": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              7,
+              2
+            ]
+          ]
+        },
+        {
+          "type": "post_counter",
+          "keeper": "postman_pip",
+          "cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "postman_pip",
+          "cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "postman_pip",
+          "cell": [
+            5,
+            3
+          ]
+        },
+        {
+          "type": "mailbox",
+          "cell": [
+            0,
+            4
+          ]
+        },
+        {
+          "type": "door",
+          "cell": [
+            4,
+            4
+          ],
+          "to": "traetoppen",
+          "spawn": "from_int_postkontoret"
+        }
+      ],
+      "notes": [
+        "no room for clock_pine"
+      ]
+    },
+    "brummes_vaerksted": {
+      "id": "int_brummes_vaerksted",
+      "building": "brummes_vaerksted",
+      "size": "L",
+      "cols": 9,
+      "rows": 7,
+      "wall_style": "plank",
+      "floor": "floor_stone",
+      "door": {
+        "cell": [
+          4,
+          6
+        ],
+        "dir": [
+          0,
+          1
+        ]
+      },
+      "spawn_cell": [
+        4,
+        5
+      ],
+      "windows": {
+        "z": [
+          1,
+          6
+        ],
+        "x": [
+          1,
+          4
+        ]
+      },
+      "exit": {
+        "area": "traetoppen",
+        "spawn": "from_int_brummes_vaerksted"
+      },
+      "zoom_fit": 0.689,
+      "items": [
+        {
+          "id": "counter_pine",
+          "cell": [
+            3,
+            2
+          ],
+          "rot": 0,
+          "role": "counter"
+        },
+        {
+          "id": "plank_stack",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "plank_stack",
+          "cell": [
+            2,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "shelf_oak",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chest_oak",
+          "cell": [
+            4,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "workbench",
+          "cell": [
+            5,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "table_dining_oak",
+          "cell": [
+            0,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "plank_stack",
+          "cell": [
+            0,
+            4
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chest_pine",
+          "cell": [
+            8,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "floor_lamp_iron",
+          "cell": [
+            8,
+            4
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chair_stump",
+          "cell": [
+            0,
+            5
+          ],
+          "rot": 0
+        }
+      ],
+      "posts": [
+        {
+          "id": "counter",
+          "cell": [
+            4,
+            1
+          ],
+          "act": "work",
+          "facing": "S",
+          "capacity": 1,
+          "kind": "keeper"
+        },
+        {
+          "id": "work",
+          "cell": [
+            0,
+            1
+          ],
+          "act": "work",
+          "facing": "E",
+          "capacity": 1,
+          "kind": "staff"
+        },
+        {
+          "id": "cust1",
+          "cell": [
+            2,
+            3
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust2",
+          "cell": [
+            7,
+            3
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust3",
+          "cell": [
+            6,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        }
+      ],
+      "markers": [
+        {
+          "type": "hatch",
+          "cells": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              7,
+              2
+            ],
+            [
+              8,
+              2
+            ]
+          ]
+        },
+        {
+          "type": "shop",
+          "id": "timber_yard",
+          "keeper": "carpenter_brumme",
+          "cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "carpenter_brumme",
+          "cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "carpenter_brumme",
+          "cell": [
+            5,
+            3
+          ]
+        },
+        {
+          "type": "door",
+          "cell": [
+            4,
+            6
+          ],
+          "to": "traetoppen",
+          "spawn": "from_int_brummes_vaerksted"
+        }
+      ],
+      "notes": []
+    },
+    "badehuset": {
+      "id": "int_badehuset",
+      "building": "badehuset",
+      "size": "M",
+      "cols": 9,
+      "rows": 7,
+      "wall_style": "marble",
+      "floor": "floor_marble",
+      "door": {
+        "cell": [
+          4,
+          6
+        ],
+        "dir": [
+          0,
+          1
+        ]
+      },
+      "spawn_cell": [
+        4,
+        5
+      ],
+      "windows": {
+        "z": [
+          1,
+          6
+        ],
+        "x": [
+          1,
+          4
+        ]
+      },
+      "exit": {
+        "area": "traetoppen",
+        "spawn": "from_int_badehuset"
+      },
+      "zoom_fit": 0.689,
+      "items": [
+        {
+          "id": "counter_pine",
+          "cell": [
+            3,
+            2
+          ],
+          "rot": 0,
+          "role": "counter"
+        },
+        {
+          "id": "wooden_tub",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "wooden_tub",
+          "cell": [
+            6,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "wardrobe_birch_narrow",
+          "cell": [
+            2,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "plant_flowering",
+          "cell": [
+            3,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chair_birch",
+          "cell": [
+            0,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "plant_fern",
+          "cell": [
+            8,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "floor_lamp_honey",
+          "cell": [
+            0,
+            4
+          ],
+          "rot": 0
+        }
+      ],
+      "posts": [
+        {
+          "id": "tub",
+          "cell": [
+            4,
+            1
+          ],
+          "act": "work",
+          "facing": "S",
+          "capacity": 1,
+          "kind": "keeper"
+        },
+        {
+          "id": "cust1",
+          "cell": [
+            1,
+            3
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust2",
+          "cell": [
+            7,
+            3
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust3",
+          "cell": [
+            6,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "bed",
+          "cell": [
+            8,
+            1
+          ],
+          "act": "sleep",
+          "facing": "S",
+          "capacity": 1,
+          "kind": "bed"
+        }
+      ],
+      "markers": [
+        {
+          "type": "hatch",
+          "cells": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              7,
+              2
+            ],
+            [
+              8,
+              2
+            ]
+          ]
+        },
+        {
+          "type": "bath",
+          "keeper": "bathkeeper_sofus",
+          "cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "bathkeeper_sofus",
+          "cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "bathkeeper_sofus",
+          "cell": [
+            5,
+            3
+          ]
+        },
+        {
+          "type": "door",
+          "cell": [
+            4,
+            6
+          ],
+          "to": "traetoppen",
+          "spawn": "from_int_badehuset"
+        }
+      ],
+      "notes": []
+    },
+    "raadhuset": {
+      "id": "int_raadhuset",
+      "building": "raadhuset",
+      "size": "L",
+      "cols": 10,
+      "rows": 8,
+      "wall_style": "marble",
+      "floor": "floor_marble",
+      "door": {
+        "cell": [
+          5,
+          7
+        ],
+        "dir": [
+          0,
+          1
+        ]
+      },
+      "spawn_cell": [
+        5,
+        6
+      ],
+      "windows": {
+        "z": [
+          1,
+          7
+        ],
+        "x": [
+          1,
+          5
+        ]
+      },
+      "exit": {
+        "area": "traetoppen",
+        "spawn": "from_int_raadhuset"
+      },
+      "zoom_fit": 0.635,
+      "items": [
+        {
+          "id": "table_long_walnut",
+          "cell": [
+            4,
+            2
+          ],
+          "rot": 0,
+          "role": "counter"
+        },
+        {
+          "id": "bookshelf_pine",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "notice_board_indoor",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "throne_honey",
+          "cell": [
+            2,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "bookshelf_birch",
+          "cell": [
+            3,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "sofa_oak_three",
+          "cell": [
+            0,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "sofa_oak_three",
+          "cell": [
+            0,
+            4
+          ],
+          "rot": 0
+        },
+        {
+          "id": "clock_sky",
+          "cell": [
+            9,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "floor_lamp_brass",
+          "cell": [
+            9,
+            4
+          ],
+          "rot": 0
+        },
+        {
+          "id": "plant_flowering",
+          "cell": [
+            0,
+            5
+          ],
+          "rot": 0
+        }
+      ],
+      "posts": [
+        {
+          "id": "counter",
+          "cell": [
+            5,
+            1
+          ],
+          "act": "work",
+          "facing": "S",
+          "capacity": 1,
+          "kind": "keeper"
+        },
+        {
+          "id": "cust1",
+          "cell": [
+            1,
+            5
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust2",
+          "cell": [
+            8,
+            3
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust3",
+          "cell": [
+            7,
+            5
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "mayor_desk",
+          "cell": [
+            7,
+            1
+          ],
+          "act": "work",
+          "facing": "S",
+          "capacity": 1,
+          "kind": "staff"
+        }
+      ],
+      "markers": [
+        {
+          "type": "hatch",
+          "cells": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              7,
+              2
+            ],
+            [
+              8,
+              2
+            ],
+            [
+              9,
+              2
+            ]
+          ]
+        },
+        {
+          "type": "board",
+          "keeper": "clerk_fjerpen",
+          "cell": [
+            5,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "clerk_fjerpen",
+          "cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "clerk_fjerpen",
+          "cell": [
+            6,
+            3
+          ]
+        },
+        {
+          "type": "door",
+          "cell": [
+            5,
+            7
+          ],
+          "to": "traetoppen",
+          "spawn": "from_int_raadhuset"
+        }
+      ],
+      "notes": []
+    },
+    "froebutikken": {
+      "id": "int_froebutikken",
+      "building": "froebutikken",
+      "size": "M",
+      "cols": 8,
+      "rows": 6,
+      "wall_style": "plank",
+      "floor": "floor_plank",
+      "door": {
+        "cell": [
+          4,
+          5
+        ],
+        "dir": [
+          0,
+          1
+        ]
+      },
+      "spawn_cell": [
+        4,
+        4
+      ],
+      "windows": {
+        "z": [
+          1,
+          5
+        ],
+        "x": [
+          2
+        ]
+      },
+      "exit": {
+        "area": "hyggebyen",
+        "spawn": "from_int_froebutikken"
+      },
+      "zoom_fit": 0.754,
+      "items": [
+        {
+          "id": "counter_pine",
+          "cell": [
+            3,
+            2
+          ],
+          "rot": 0,
+          "role": "counter"
+        },
+        {
+          "id": "bookshelf_pine",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "bookshelf_birch",
+          "cell": [
+            2,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chest_pine",
+          "cell": [
+            4,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "clock_pine",
+          "cell": [
+            5,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "shelf_pine",
+          "cell": [
+            3,
+            0
+          ],
+          "rot": 0,
+          "wall": true
+        },
+        {
+          "id": "table_round_pine",
+          "cell": [
+            0,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "plant_fern",
+          "cell": [
+            7,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "floor_lamp_birch",
+          "cell": [
+            0,
+            4
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chest_oak",
+          "cell": [
+            7,
+            4
+          ],
+          "rot": 0
+        }
+      ],
+      "posts": [
+        {
+          "id": "counter",
+          "cell": [
+            4,
+            1
+          ],
+          "act": "work",
+          "facing": "S",
+          "capacity": 1,
+          "kind": "keeper"
+        },
+        {
+          "id": "cust1",
+          "cell": [
+            1,
+            3
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust2",
+          "cell": [
+            6,
+            3
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust3",
+          "cell": [
+            6,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        }
+      ],
+      "markers": [
+        {
+          "type": "hatch",
+          "cells": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              7,
+              2
+            ]
+          ]
+        },
+        {
+          "type": "shop",
+          "id": "seed_shop",
+          "keeper": "merchant_pip",
+          "cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "merchant_pip",
+          "cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "merchant_pip",
+          "cell": [
+            5,
+            3
+          ]
+        },
+        {
+          "type": "door",
+          "cell": [
+            4,
+            5
+          ],
+          "to": "hyggebyen",
+          "spawn": "from_int_froebutikken"
+        }
+      ],
+      "notes": []
+    },
+    "bageriet": {
+      "id": "int_bageriet",
+      "building": "bageriet",
+      "size": "M",
+      "cols": 8,
+      "rows": 6,
+      "wall_style": "paper",
+      "floor": "floor_parquet",
+      "door": {
+        "cell": [
+          4,
+          5
+        ],
+        "dir": [
+          0,
+          1
+        ]
+      },
+      "spawn_cell": [
+        4,
+        4
+      ],
+      "windows": {
+        "z": [
+          1,
+          5
+        ],
+        "x": [
+          2
+        ]
+      },
+      "exit": {
+        "area": "hyggebyen",
+        "spawn": "from_int_bageriet"
+      },
+      "zoom_fit": 0.754,
+      "items": [
+        {
+          "id": "counter_pine",
+          "cell": [
+            3,
+            2
+          ],
+          "rot": 0,
+          "role": "counter"
+        },
+        {
+          "id": "brick_oven",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "bread_rack",
+          "cell": [
+            2,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "bread_rack",
+          "cell": [
+            4,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "bookshelf_birch",
+          "cell": [
+            6,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "clock_pine",
+          "cell": [
+            0,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "table_round_mint",
+          "cell": [
+            7,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "table_round_mint",
+          "cell": [
+            0,
+            4
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chair_birch",
+          "cell": [
+            7,
+            4
+          ],
+          "rot": 0
+        },
+        {
+          "id": "plant_rose_pot",
+          "cell": [
+            1,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "floor_lamp_honey",
+          "cell": [
+            6,
+            3
+          ],
+          "rot": 0
+        }
+      ],
+      "posts": [
+        {
+          "id": "counter",
+          "cell": [
+            4,
+            1
+          ],
+          "act": "work",
+          "facing": "S",
+          "capacity": 1,
+          "kind": "keeper"
+        },
+        {
+          "id": "work",
+          "cell": [
+            0,
+            2
+          ],
+          "act": "work",
+          "facing": "E",
+          "capacity": 1,
+          "kind": "staff"
+        },
+        {
+          "id": "cust1",
+          "cell": [
+            1,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust2",
+          "cell": [
+            6,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust3",
+          "cell": [
+            5,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        }
+      ],
+      "markers": [
+        {
+          "type": "hatch",
+          "cells": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              7,
+              2
+            ]
+          ]
+        },
+        {
+          "type": "shop",
+          "id": "bakery",
+          "keeper": "baker_maja",
+          "cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "baker_maja",
+          "cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "baker_maja",
+          "cell": [
+            5,
+            3
+          ]
+        },
+        {
+          "type": "door",
+          "cell": [
+            4,
+            5
+          ],
+          "to": "hyggebyen",
+          "spawn": "from_int_bageriet"
+        }
+      ],
+      "notes": []
+    },
+    "smedjen": {
+      "id": "int_smedjen",
+      "building": "smedjen",
+      "size": "M",
+      "cols": 8,
+      "rows": 6,
+      "wall_style": "plank",
+      "floor": "floor_stone",
+      "door": {
+        "cell": [
+          4,
+          5
+        ],
+        "dir": [
+          0,
+          1
+        ]
+      },
+      "spawn_cell": [
+        4,
+        4
+      ],
+      "windows": {
+        "z": [
+          1,
+          5
+        ],
+        "x": [
+          2
+        ]
+      },
+      "exit": {
+        "area": "hyggebyen",
+        "spawn": "from_int_smedjen"
+      },
+      "zoom_fit": 0.754,
+      "items": [
+        {
+          "id": "counter_pine",
+          "cell": [
+            3,
+            2
+          ],
+          "rot": 0,
+          "role": "counter"
+        },
+        {
+          "id": "forge",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "shelf_oak",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "shelf_oak",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "forge",
+          "cell": [
+            6,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "anvil",
+          "cell": [
+            0,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chest_oak",
+          "cell": [
+            7,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "bookshelf_oak_narrow",
+          "cell": [
+            0,
+            4
+          ],
+          "rot": 0
+        },
+        {
+          "id": "floor_lamp_iron",
+          "cell": [
+            7,
+            4
+          ],
+          "rot": 0
+        }
+      ],
+      "posts": [
+        {
+          "id": "counter",
+          "cell": [
+            4,
+            1
+          ],
+          "act": "work",
+          "facing": "S",
+          "capacity": 1,
+          "kind": "keeper"
+        },
+        {
+          "id": "cust1",
+          "cell": [
+            1,
+            3
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust2",
+          "cell": [
+            6,
+            3
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust3",
+          "cell": [
+            6,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        }
+      ],
+      "markers": [
+        {
+          "type": "hatch",
+          "cells": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              7,
+              2
+            ]
+          ]
+        },
+        {
+          "type": "shop",
+          "id": "smithy",
+          "keeper": "smith_thorin",
+          "cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "smith_thorin",
+          "cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "smith_thorin",
+          "cell": [
+            5,
+            3
+          ]
+        },
+        {
+          "type": "door",
+          "cell": [
+            4,
+            5
+          ],
+          "to": "hyggebyen",
+          "spawn": "from_int_smedjen"
+        }
+      ],
+      "notes": []
+    },
+    "dyrehuset": {
+      "id": "int_dyrehuset",
+      "building": "dyrehuset",
+      "size": "L",
+      "cols": 9,
+      "rows": 7,
+      "wall_style": "plank",
+      "floor": "floor_plank",
+      "door": {
+        "cell": [
+          4,
+          6
+        ],
+        "dir": [
+          0,
+          1
+        ]
+      },
+      "spawn_cell": [
+        4,
+        5
+      ],
+      "windows": {
+        "z": [
+          1,
+          6
+        ],
+        "x": [
+          1,
+          4
+        ]
+      },
+      "exit": {
+        "area": "hyggebyen",
+        "spawn": "from_int_dyrehuset"
+      },
+      "zoom_fit": 0.689,
+      "items": [
+        {
+          "id": "counter_pine",
+          "cell": [
+            3,
+            2
+          ],
+          "rot": 0,
+          "role": "counter"
+        },
+        {
+          "id": "hay_bale",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "feed_sack_stack",
+          "cell": [
+            1,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "feed_sack_stack",
+          "cell": [
+            2,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "shelf_pine",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "shelf_birch",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "table_dining_oak",
+          "cell": [
+            0,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "feed_sack_stack",
+          "cell": [
+            8,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "plant_fern",
+          "cell": [
+            0,
+            4
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chest_pine",
+          "cell": [
+            8,
+            4
+          ],
+          "rot": 0
+        },
+        {
+          "id": "floor_lamp_birch",
+          "cell": [
+            0,
+            5
+          ],
+          "rot": 0
+        }
+      ],
+      "posts": [
+        {
+          "id": "counter",
+          "cell": [
+            4,
+            1
+          ],
+          "act": "work",
+          "facing": "S",
+          "capacity": 1,
+          "kind": "keeper"
+        },
+        {
+          "id": "cust1",
+          "cell": [
+            1,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust2",
+          "cell": [
+            7,
+            3
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust3",
+          "cell": [
+            6,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        }
+      ],
+      "markers": [
+        {
+          "type": "hatch",
+          "cells": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              7,
+              2
+            ],
+            [
+              8,
+              2
+            ]
+          ]
+        },
+        {
+          "type": "shop",
+          "id": "animal_store",
+          "keeper": "farmer_rosa",
+          "cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "farmer_rosa",
+          "cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "farmer_rosa",
+          "cell": [
+            5,
+            3
+          ]
+        },
+        {
+          "type": "door",
+          "cell": [
+            4,
+            6
+          ],
+          "to": "hyggebyen",
+          "spawn": "from_int_dyrehuset"
+        }
+      ],
+      "notes": []
+    },
+    "troldmandstaarnet": {
+      "id": "int_troldmandstaarnet",
+      "building": "troldmandstaarnet",
+      "size": "M",
+      "cols": 7,
+      "rows": 6,
+      "wall_style": "paper",
+      "floor": "floor_parquet",
+      "door": {
+        "cell": [
+          3,
+          5
+        ],
+        "dir": [
+          0,
+          1
+        ]
+      },
+      "spawn_cell": [
+        3,
+        4
+      ],
+      "windows": {
+        "z": [
+          1
+        ],
+        "x": [
+          2
+        ]
+      },
+      "exit": {
+        "area": "hyggebyen",
+        "spawn": "from_int_troldmandstaarnet"
+      },
+      "zoom_fit": 0.791,
+      "items": [
+        {
+          "id": "counter_pine",
+          "cell": [
+            2,
+            2
+          ],
+          "rot": 0,
+          "role": "counter"
+        },
+        {
+          "id": "bookshelf_lavender_narrow",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "bookshelf_mint",
+          "cell": [
+            1,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "cauldron_stand",
+          "cell": [
+            3,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "clock_owl",
+          "cell": [
+            4,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "table_round_mint",
+          "cell": [
+            0,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "floor_lamp_glowshroom",
+          "cell": [
+            6,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "plant_teapot_bonsai",
+          "cell": [
+            0,
+            4
+          ],
+          "rot": 0
+        }
+      ],
+      "posts": [
+        {
+          "id": "counter",
+          "cell": [
+            3,
+            1
+          ],
+          "act": "work",
+          "facing": "S",
+          "capacity": 1,
+          "kind": "keeper"
+        },
+        {
+          "id": "cust1",
+          "cell": [
+            1,
+            3
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust2",
+          "cell": [
+            5,
+            3
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust3",
+          "cell": [
+            5,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        }
+      ],
+      "markers": [
+        {
+          "type": "hatch",
+          "cells": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              5,
+              2
+            ],
+            [
+              6,
+              2
+            ]
+          ]
+        },
+        {
+          "type": "shop",
+          "id": "magic_store",
+          "keeper": "fairy_wizard",
+          "cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "fairy_wizard",
+          "cell": [
+            2,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "fairy_wizard",
+          "cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "type": "door",
+          "cell": [
+            3,
+            5
+          ],
+          "to": "hyggebyen",
+          "spawn": "from_int_troldmandstaarnet"
+        }
+      ],
+      "notes": []
+    },
+    "moebelbutikken": {
+      "id": "int_moebelbutikken",
+      "building": "moebelbutikken",
+      "size": "L",
+      "cols": 10,
+      "rows": 7,
+      "wall_style": "paper",
+      "floor": "floor_parquet",
+      "door": {
+        "cell": [
+          5,
+          6
+        ],
+        "dir": [
+          0,
+          1
+        ]
+      },
+      "spawn_cell": [
+        5,
+        5
+      ],
+      "windows": {
+        "z": [
+          1,
+          7
+        ],
+        "x": [
+          1,
+          4
+        ]
+      },
+      "exit": {
+        "area": "hyggebyen",
+        "spawn": "from_int_moebelbutikken"
+      },
+      "zoom_fit": 0.661,
+      "items": [
+        {
+          "id": "counter_pine",
+          "cell": [
+            4,
+            2
+          ],
+          "rot": 0,
+          "role": "counter"
+        },
+        {
+          "id": "wardrobe_oak",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "bookshelf_birch",
+          "cell": [
+            2,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "clock_pine",
+          "cell": [
+            4,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "piano_pine",
+          "cell": [
+            5,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "sofa_pine_two",
+          "cell": [
+            0,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "sofa_oak_three",
+          "cell": [
+            0,
+            4
+          ],
+          "rot": 0
+        },
+        {
+          "id": "table_dining_oak",
+          "cell": [
+            0,
+            5
+          ],
+          "rot": 0
+        },
+        {
+          "id": "bed_birch_single",
+          "cell": [
+            9,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chair_oak",
+          "cell": [
+            9,
+            5
+          ],
+          "rot": 0
+        },
+        {
+          "id": "floor_lamp_honey",
+          "cell": [
+            8,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "plant_fern",
+          "cell": [
+            8,
+            4
+          ],
+          "rot": 0
+        }
+      ],
+      "posts": [
+        {
+          "id": "counter",
+          "cell": [
+            5,
+            1
+          ],
+          "act": "work",
+          "facing": "S",
+          "capacity": 1,
+          "kind": "keeper"
+        },
+        {
+          "id": "cust1",
+          "cell": [
+            2,
+            3
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust2",
+          "cell": [
+            7,
+            3
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust3",
+          "cell": [
+            7,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        }
+      ],
+      "markers": [
+        {
+          "type": "hatch",
+          "cells": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              7,
+              2
+            ],
+            [
+              8,
+              2
+            ],
+            [
+              9,
+              2
+            ]
+          ]
+        },
+        {
+          "type": "shop",
+          "id": "furniture_shop",
+          "keeper": "fairy_furnisher",
+          "cell": [
+            5,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "fairy_furnisher",
+          "cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "fairy_furnisher",
+          "cell": [
+            6,
+            3
+          ]
+        },
+        {
+          "type": "door",
+          "cell": [
+            5,
+            6
+          ],
+          "to": "hyggebyen",
+          "spawn": "from_int_moebelbutikken"
+        }
+      ],
+      "notes": []
+    },
+    "skraedderiet": {
+      "id": "int_skraedderiet",
+      "building": "skraedderiet",
+      "size": "M",
+      "cols": 8,
+      "rows": 6,
+      "wall_style": "paper",
+      "floor": "floor_parquet",
+      "door": {
+        "cell": [
+          4,
+          5
+        ],
+        "dir": [
+          0,
+          1
+        ]
+      },
+      "spawn_cell": [
+        4,
+        4
+      ],
+      "windows": {
+        "z": [
+          1,
+          5
+        ],
+        "x": [
+          2
+        ]
+      },
+      "exit": {
+        "area": "hyggebyen",
+        "spawn": "from_int_skraedderiet"
+      },
+      "zoom_fit": 0.754,
+      "items": [
+        {
+          "id": "counter_pine",
+          "cell": [
+            3,
+            2
+          ],
+          "rot": 0,
+          "role": "counter"
+        },
+        {
+          "id": "wardrobe_pine",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "wardrobe_rose",
+          "cell": [
+            2,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "mannequin",
+          "cell": [
+            4,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "mannequin",
+          "cell": [
+            5,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "table_round_pine",
+          "cell": [
+            0,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "mannequin",
+          "cell": [
+            7,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chair_honey",
+          "cell": [
+            0,
+            4
+          ],
+          "rot": 0
+        },
+        {
+          "id": "floor_lamp_honey",
+          "cell": [
+            7,
+            4
+          ],
+          "rot": 0
+        }
+      ],
+      "posts": [
+        {
+          "id": "counter",
+          "cell": [
+            4,
+            1
+          ],
+          "act": "work",
+          "facing": "S",
+          "capacity": 1,
+          "kind": "keeper"
+        },
+        {
+          "id": "cust1",
+          "cell": [
+            1,
+            3
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust2",
+          "cell": [
+            6,
+            3
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust3",
+          "cell": [
+            6,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        }
+      ],
+      "markers": [
+        {
+          "type": "hatch",
+          "cells": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              7,
+              2
+            ]
+          ]
+        },
+        {
+          "type": "shop",
+          "id": "tailor_shop",
+          "keeper": "fairy_tailor",
+          "cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "fairy_tailor",
+          "cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "fairy_tailor",
+          "cell": [
+            5,
+            3
+          ]
+        },
+        {
+          "type": "door",
+          "cell": [
+            4,
+            5
+          ],
+          "to": "hyggebyen",
+          "spawn": "from_int_skraedderiet"
+        }
+      ],
+      "notes": []
+    },
+    "toemmerhandlen": {
+      "id": "int_toemmerhandlen",
+      "building": "toemmerhandlen",
+      "size": "M",
+      "cols": 9,
+      "rows": 6,
+      "wall_style": "plank",
+      "floor": "floor_stone",
+      "door": {
+        "cell": [
+          4,
+          5
+        ],
+        "dir": [
+          0,
+          1
+        ]
+      },
+      "spawn_cell": [
+        4,
+        4
+      ],
+      "windows": {
+        "z": [
+          1,
+          6
+        ],
+        "x": [
+          2
+        ]
+      },
+      "exit": {
+        "area": "hyggebyen",
+        "spawn": "from_int_toemmerhandlen"
+      },
+      "zoom_fit": 0.72,
+      "items": [
+        {
+          "id": "counter_pine",
+          "cell": [
+            3,
+            2
+          ],
+          "rot": 0,
+          "role": "counter"
+        },
+        {
+          "id": "plank_stack",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "plank_stack",
+          "cell": [
+            2,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "shelf_pine",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chest_pine",
+          "cell": [
+            4,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chest_oak",
+          "cell": [
+            5,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "table_dining_oak",
+          "cell": [
+            0,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chest_birch",
+          "cell": [
+            8,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chest_pine",
+          "cell": [
+            0,
+            4
+          ],
+          "rot": 0
+        },
+        {
+          "id": "floor_lamp_iron",
+          "cell": [
+            8,
+            4
+          ],
+          "rot": 0
+        }
+      ],
+      "posts": [
+        {
+          "id": "counter",
+          "cell": [
+            4,
+            1
+          ],
+          "act": "work",
+          "facing": "S",
+          "capacity": 1,
+          "kind": "keeper"
+        },
+        {
+          "id": "cust1",
+          "cell": [
+            1,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust2",
+          "cell": [
+            7,
+            3
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust3",
+          "cell": [
+            6,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        }
+      ],
+      "markers": [
+        {
+          "type": "hatch",
+          "cells": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              7,
+              2
+            ],
+            [
+              8,
+              2
+            ]
+          ]
+        },
+        {
+          "type": "shop",
+          "id": "builder_yard",
+          "keeper": "fairy_builder",
+          "cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "fairy_builder",
+          "cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "fairy_builder",
+          "cell": [
+            5,
+            3
+          ]
+        },
+        {
+          "type": "desk",
+          "keeper": "fairy_builder",
+          "cell": [
+            6,
+            3
+          ]
+        },
+        {
+          "type": "door",
+          "cell": [
+            4,
+            5
+          ],
+          "to": "hyggebyen",
+          "spawn": "from_int_toemmerhandlen"
+        }
+      ],
+      "notes": []
+    },
+    "loppeloftet": {
+      "id": "int_loppeloftet",
+      "building": "loppeloftet",
+      "size": "S",
+      "cols": 8,
+      "rows": 5,
+      "wall_style": "plank",
+      "floor": "floor_plank",
+      "door": {
+        "cell": [
+          4,
+          4
+        ],
+        "dir": [
+          0,
+          1
+        ]
+      },
+      "spawn_cell": [
+        4,
+        3
+      ],
+      "windows": {
+        "z": [
+          1,
+          5
+        ],
+        "x": [
+          2
+        ]
+      },
+      "exit": {
+        "area": "hyggebyen",
+        "spawn": "from_int_loppeloftet"
+      },
+      "zoom_fit": 0.791,
+      "items": [
+        {
+          "id": "counter_pine",
+          "cell": [
+            3,
+            2
+          ],
+          "rot": 0,
+          "role": "counter"
+        },
+        {
+          "id": "wardrobe_birch_narrow",
+          "cell": [
+            0,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chest_sky",
+          "cell": [
+            1,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "bookshelf_oak_narrow",
+          "cell": [
+            2,
+            0
+          ],
+          "rot": 0
+        },
+        {
+          "id": "chair_mossy",
+          "cell": [
+            0,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "table_stump",
+          "cell": [
+            1,
+            3
+          ],
+          "rot": 0
+        },
+        {
+          "id": "clock_sky",
+          "cell": [
+            7,
+            3
+          ],
+          "rot": 0
+        }
+      ],
+      "posts": [
+        {
+          "id": "counter",
+          "cell": [
+            4,
+            1
+          ],
+          "act": "work",
+          "facing": "S",
+          "capacity": 1,
+          "kind": "keeper"
+        },
+        {
+          "id": "cust1",
+          "cell": [
+            1,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust2",
+          "cell": [
+            6,
+            3
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        },
+        {
+          "id": "cust3",
+          "cell": [
+            6,
+            4
+          ],
+          "act": "stand",
+          "facing": "N",
+          "capacity": 1,
+          "kind": "customer"
+        }
+      ],
+      "markers": [
+        {
+          "type": "hatch",
+          "cells": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              7,
+              2
+            ]
+          ]
+        },
+        {
+          "type": "shop",
+          "id": "flea_market",
+          "keeper": "pippin_boegeknop",
+          "cell": [
+            4,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "pippin_boegeknop",
+          "cell": [
+            3,
+            3
+          ]
+        },
+        {
+          "type": "talk",
+          "keeper": "pippin_boegeknop",
+          "cell": [
+            5,
+            3
+          ]
+        },
+        {
+          "type": "door",
+          "cell": [
+            4,
+            4
+          ],
+          "to": "hyggebyen",
+          "spawn": "from_int_loppeloftet"
+        }
+      ],
+      "notes": [
+        "no room for plant_rose_pot"
+      ]
+    }
+  },
+  "keepers": {
+    "uglehulen": "appraiser_fru_ugle",
+    "postkontoret": "postman_pip",
+    "brummes_vaerksted": "carpenter_brumme",
+    "badehuset": "bathkeeper_sofus",
+    "raadhuset": "clerk_fjerpen",
+    "froebutikken": "merchant_pip",
+    "bageriet": "baker_maja",
+    "smedjen": "smith_thorin",
+    "dyrehuset": "farmer_rosa",
+    "troldmandstaarnet": "fairy_wizard",
+    "moebelbutikken": "fairy_furnisher",
+    "skraedderiet": "fairy_tailor",
+    "toemmerhandlen": "fairy_builder",
+    "loppeloftet": "pippin_boegeknop"
+  }
+}

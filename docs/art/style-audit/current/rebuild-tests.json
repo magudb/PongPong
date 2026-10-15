@@ -1,0 +1,17 @@
+{
+  "scope": "Second home export, six pigment variants plus four geometry/material samples, optimized skies and all painted fixtures. World exporter separately verified all 89 images unchanged.",
+  "raster_files_checked": 2518,
+  "changed": [],
+  "world": {
+    "checked": 89,
+    "changed": []
+  },
+  "final_fixture_check": {
+    "result": "pass",
+    "painted_reexports": 285,
+    "technical_kernels": 13,
+    "exporter_sha256": "84d44960fdaa86584a41da3bce914cf11e80af71bb1027a0647e02bfde85f4b7",
+    "recipes_sha256": "5ee9f9f5fbbf7e46abc4b8bebc5401f33856901c2de90e8c877af32d40e70dd9",
+    "includes": "Final doormat uses a 90 degree floor-plane rotation, preserving painted braid/sprig handedness."
+  }
+}

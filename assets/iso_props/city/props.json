@@ -390,12 +390,12 @@
  "hut_l_dark_night": {
   "file": "hut_l_dark_night.webp",
   "size": [
-   302,
-   96
+   335,
+   163
   ],
   "pivot": [
-   151.0,
-   -10.0
+   164.0,
+   35.0
   ],
   "footprint": [
    4,
@@ -405,8 +405,8 @@
   "kind": "hut_night",
   "night_of": "hut_l_dark",
   "night_offset": [
-   78,
-   261
+   65,
+   216
   ]
  },
  "hut_l_dark": {
@@ -438,19 +438,19 @@
   "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
   "night": "hut_l_dark_night",
   "night_offset": [
-   78,
-   261
+   65,
+   216
   ]
  },
  "hut_l_moss_night": {
   "file": "hut_l_moss_night.webp",
   "size": [
-   302,
-   96
+   343,
+   162
   ],
   "pivot": [
-   151.0,
-   -10.0
+   170.0,
+   35.0
   ],
   "footprint": [
    4,
@@ -460,8 +460,8 @@
   "kind": "hut_night",
   "night_of": "hut_l_moss",
   "night_offset": [
-   78,
-   261
+   59,
+   216
   ]
  },
  "hut_l_moss": {
@@ -493,19 +493,19 @@
   "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
   "night": "hut_l_moss_night",
   "night_offset": [
-   78,
-   261
+   59,
+   216
   ]
  },
  "hut_l_straw_night": {
   "file": "hut_l_straw_night.webp",
   "size": [
-   302,
-   96
+   342,
+   163
   ],
   "pivot": [
-   151.0,
-   -10.0
+   170.0,
+   35.0
   ],
   "footprint": [
    4,
@@ -515,8 +515,8 @@
   "kind": "hut_night",
   "night_of": "hut_l_straw",
   "night_offset": [
-   78,
-   261
+   59,
+   216
   ]
  },
  "hut_l_straw": {
@@ -548,19 +548,19 @@
   "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
   "night": "hut_l_straw_night",
   "night_offset": [
-   78,
-   261
+   59,
+   216
   ]
  },
  "hut_m_dark_night": {
   "file": "hut_m_dark_night.webp",
   "size": [
-   254,
-   88
+   328,
+   158
   ],
   "pivot": [
-   127.0,
-   0.0
+   163.0,
+   48.0
   ],
   "footprint": [
    4,
@@ -570,8 +570,8 @@
   "kind": "hut_night",
   "night_of": "hut_m_dark",
   "night_offset": [
-   65,
-   260
+   29,
+   212
   ]
  },
  "hut_m_dark": {
@@ -603,19 +603,19 @@
   "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
   "night": "hut_m_dark_night",
   "night_offset": [
-   65,
-   260
+   29,
+   212
   ]
  },
  "hut_m_moss_night": {
   "file": "hut_m_moss_night.webp",
   "size": [
-   254,
-   88
+   343,
+   158
   ],
   "pivot": [
-   127.0,
-   0.0
+   171.0,
+   49.0
   ],
   "footprint": [
    4,
@@ -625,8 +625,8 @@
   "kind": "hut_night",
   "night_of": "hut_m_moss",
   "night_offset": [
-   65,
-   260
+   21,
+   211
   ]
  },
  "hut_m_moss": {
@@ -658,19 +658,19 @@
   "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
   "night": "hut_m_moss_night",
   "night_offset": [
-   65,
-   260
+   21,
+   211
   ]
  },
  "hut_m_straw_night": {
   "file": "hut_m_straw_night.webp",
   "size": [
-   254,
-   88
+   337,
+   159
   ],
   "pivot": [
-   127.0,
-   0.0
+   166.0,
+   49.0
   ],
   "footprint": [
    4,
@@ -680,8 +680,8 @@
   "kind": "hut_night",
   "night_of": "hut_m_straw",
   "night_offset": [
-   65,
-   260
+   26,
+   211
   ]
  },
  "hut_m_straw": {
@@ -713,19 +713,19 @@
   "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
   "night": "hut_m_straw_night",
   "night_offset": [
-   65,
-   260
+   26,
+   211
   ]
  },
  "hut_raadhus_night": {
   "file": "hut_raadhus_night.webp",
   "size": [
-   326,
-   112
+   348,
+   205
   ],
   "pivot": [
-   163.0,
-   -4.0
+   175.0,
+   66.0
   ],
   "footprint": [
    5,
@@ -735,8 +735,8 @@
   "kind": "hut_night",
   "night_of": "hut_raadhus",
   "night_offset": [
-   86,
-   342
+   74,
+   272
   ]
  },
  "hut_raadhus": {
@@ -768,19 +768,19 @@
   "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
   "night": "hut_raadhus_night",
   "night_offset": [
-   86,
-   342
+   74,
+   272
   ]
  },
  "hut_s_dark_night": {
   "file": "hut_s_dark_night.webp",
   "size": [
-   196,
-   69
+   260,
+   121
   ],
   "pivot": [
-   98.0,
-   3.0
+   127.0,
+   32.0
   ],
   "footprint": [
    3,
@@ -790,8 +790,8 @@
   "kind": "hut_night",
   "night_of": "hut_s_dark",
   "night_offset": [
-   46,
-   189
+   17,
+   160
   ]
  },
  "hut_s_dark": {
@@ -823,19 +823,19 @@
   "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
   "night": "hut_s_dark_night",
   "night_offset": [
-   46,
-   189
+   17,
+   160
   ]
  },
  "hut_s_moss_night": {
   "file": "hut_s_moss_night.webp",
   "size": [
-   196,
-   69
+   270,
+   121
   ],
   "pivot": [
-   98.0,
-   3.0
+   134.0,
+   33.0
   ],
   "footprint": [
    3,
@@ -845,8 +845,8 @@
   "kind": "hut_night",
   "night_of": "hut_s_moss",
   "night_offset": [
-   46,
-   189
+   10,
+   159
   ]
  },
  "hut_s_moss": {
@@ -878,19 +878,19 @@
   "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
   "night": "hut_s_moss_night",
   "night_offset": [
-   46,
-   189
+   10,
+   159
   ]
  },
  "hut_s_straw_night": {
   "file": "hut_s_straw_night.webp",
   "size": [
-   196,
-   69
+   256,
+   122
   ],
   "pivot": [
-   98.0,
-   3.0
+   127.0,
+   33.0
   ],
   "footprint": [
    3,
@@ -900,8 +900,8 @@
   "kind": "hut_night",
   "night_of": "hut_s_straw",
   "night_offset": [
-   46,
-   189
+   17,
+   159
   ]
  },
  "hut_s_straw": {
@@ -933,8 +933,8 @@
   "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
   "night": "hut_s_straw_night",
   "night_offset": [
-   46,
-   189
+   17,
+   159
   ]
  },
  "ladder_tile": {

@@ -1,0 +1,1673 @@
+{
+  "_doc": "Painted core room art. IDs/footprints/layers/authored-view counts follow the I3 / towns contract; no gameplay installed.",
+  "_style": "approved matte gouache and warm pencil; saved built-in imagegen paintings",
+  "items": {
+    "counter_pine": {
+      "id": "counter_pine",
+      "footprint": [
+        3,
+        1
+      ],
+      "layer": "floor",
+      "template": "counter",
+      "set": "I3-counter",
+      "fallback_id": "table_long_pine",
+      "baked": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "counter_pine_r0.webp",
+          "size": [
+            225,
+            210
+          ],
+          "pivot": [
+            112,
+            142
+          ],
+          "footprint": [
+            3,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/counters.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "counter_pine_r1.webp",
+          "size": [
+            225,
+            211
+          ],
+          "pivot": [
+            113,
+            144
+          ],
+          "footprint": [
+            1,
+            3
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/counters.png",
+          "view": 1,
+          "flip": false
+        },
+        "2": {
+          "file": "counter_pine_r2.webp",
+          "size": [
+            225,
+            208
+          ],
+          "pivot": [
+            112,
+            142
+          ],
+          "footprint": [
+            3,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/counters.png",
+          "view": 2,
+          "flip": false
+        },
+        "3": {
+          "file": "counter_pine_r3.webp",
+          "size": [
+            225,
+            209
+          ],
+          "pivot": [
+            113,
+            142
+          ],
+          "footprint": [
+            1,
+            3
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/counters.png",
+          "view": 3,
+          "flip": false
+        }
+      }
+    },
+    "counter_end": {
+      "id": "counter_end",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "template": "counter",
+      "set": "I3-counter",
+      "fallback_id": "",
+      "baked": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "counter_end_r0.webp",
+          "size": [
+            115,
+            124
+          ],
+          "pivot": [
+            57,
+            88
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/counters.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "counter_end_r1.webp",
+          "size": [
+            115,
+            125
+          ],
+          "pivot": [
+            57,
+            89
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/counters.png",
+          "view": 1,
+          "flip": false
+        },
+        "2": {
+          "file": "counter_end_r2.webp",
+          "size": [
+            115,
+            124
+          ],
+          "pivot": [
+            57,
+            89
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/counters.png",
+          "view": 2,
+          "flip": false
+        },
+        "3": {
+          "file": "counter_end_r3.webp",
+          "size": [
+            115,
+            126
+          ],
+          "pivot": [
+            57,
+            90
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/counters.png",
+          "view": 3,
+          "flip": false
+        }
+      }
+    },
+    "counter_hatch": {
+      "id": "counter_hatch",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "template": "counter",
+      "set": "I3-counter",
+      "fallback_id": "",
+      "baked": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "counter_hatch_r0.webp",
+          "size": [
+            115,
+            131
+          ],
+          "pivot": [
+            57,
+            96
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/counters.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "counter_hatch_r1.webp",
+          "size": [
+            115,
+            131
+          ],
+          "pivot": [
+            57,
+            96
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/counters.png",
+          "view": 1,
+          "flip": false
+        },
+        "2": {
+          "file": "counter_hatch_r2.webp",
+          "size": [
+            115,
+            131
+          ],
+          "pivot": [
+            57,
+            96
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/counters.png",
+          "view": 2,
+          "flip": false
+        },
+        "3": {
+          "file": "counter_hatch_r3.webp",
+          "size": [
+            115,
+            132
+          ],
+          "pivot": [
+            57,
+            97
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/counters.png",
+          "view": 3,
+          "flip": false
+        }
+      }
+    },
+    "sign_bracket": {
+      "id": "sign_bracket",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "wall",
+      "template": "sign_bracket",
+      "set": "I3-sign",
+      "fallback_id": "",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "wall2",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "sign_bracket_r0.webp",
+          "size": [
+            80,
+            71
+          ],
+          "pivot": [
+            71,
+            96
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/small.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "sign_bracket_r1.webp",
+          "size": [
+            80,
+            71
+          ],
+          "pivot": [
+            7,
+            99
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/small.png",
+          "view": 1,
+          "flip": false
+        }
+      }
+    },
+    "pigeonhole_wall": {
+      "id": "pigeonhole_wall",
+      "footprint": [
+        3,
+        1
+      ],
+      "layer": "wall",
+      "template": "pigeonholes",
+      "set": "I3-rooms",
+      "fallback_id": "shelf_pine",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "wall2",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "pigeonhole_wall_r0.webp",
+          "size": [
+            189,
+            193
+          ],
+          "pivot": [
+            29,
+            140
+          ],
+          "footprint": [
+            3,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/workroom.png",
+          "view": 0,
+          "flip": false,
+          "wall_axis": [
+            64,
+            38
+          ],
+          "mounting_height_px": 45,
+          "anchor": "first_wall_cell"
+        },
+        "1": {
+          "file": "pigeonhole_wall_r1.webp",
+          "size": [
+            189,
+            193
+          ],
+          "pivot": [
+            157,
+            143
+          ],
+          "footprint": [
+            1,
+            3
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/workroom.png",
+          "view": 1,
+          "flip": false,
+          "wall_axis": [
+            -64,
+            38
+          ],
+          "mounting_height_px": 45,
+          "anchor": "first_wall_cell"
+        }
+      }
+    },
+    "mail_sack": {
+      "id": "mail_sack",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "template": "sack",
+      "set": "I3-rooms",
+      "fallback_id": "chest_oak",
+      "baked": [
+        0
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "mail_sack_r0.webp",
+          "size": [
+            115,
+            103
+          ],
+          "pivot": [
+            57,
+            68
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/small.png",
+          "view": 0,
+          "flip": false
+        }
+      }
+    },
+    "letter_desk": {
+      "id": "letter_desk",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "template": "table",
+      "set": "I3-rooms",
+      "fallback_id": "table_dining_oak",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "letter_desk_r0.webp",
+          "size": [
+            169,
+            135
+          ],
+          "pivot": [
+            84,
+            84
+          ],
+          "footprint": [
+            2,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/workroom.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "letter_desk_r1.webp",
+          "size": [
+            169,
+            135
+          ],
+          "pivot": [
+            84,
+            84
+          ],
+          "footprint": [
+            1,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/workroom.png",
+          "view": 1,
+          "flip": false
+        }
+      }
+    },
+    "parcel_stack": {
+      "id": "parcel_stack",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "template": "crate",
+      "set": "I3-rooms",
+      "fallback_id": "chest_birch",
+      "baked": [
+        0
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "parcel_stack_r0.webp",
+          "size": [
+            115,
+            101
+          ],
+          "pivot": [
+            57,
+            66
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/small.png",
+          "view": 0,
+          "flip": false
+        }
+      }
+    },
+    "wooden_tub": {
+      "id": "wooden_tub",
+      "footprint": [
+        2,
+        2
+      ],
+      "layer": "floor",
+      "template": "tub",
+      "set": "I3-rooms",
+      "fallback_id": "rug_round_rose",
+      "baked": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "wooden_tub_r0.webp",
+          "size": [
+            224,
+            173
+          ],
+          "pivot": [
+            112,
+            105
+          ],
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "wooden_tub_r1.webp",
+          "size": [
+            224,
+            179
+          ],
+          "pivot": [
+            112,
+            111
+          ],
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 1,
+          "flip": false
+        },
+        "2": {
+          "file": "wooden_tub_r2.webp",
+          "size": [
+            224,
+            177
+          ],
+          "pivot": [
+            112,
+            109
+          ],
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 2,
+          "flip": false
+        },
+        "3": {
+          "file": "wooden_tub_r3.webp",
+          "size": [
+            224,
+            175
+          ],
+          "pivot": [
+            112,
+            107
+          ],
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 3,
+          "flip": false
+        }
+      }
+    },
+    "notice_board_indoor": {
+      "id": "notice_board_indoor",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "wall",
+      "template": "painting",
+      "set": "I3-rooms",
+      "fallback_id": "painting_wide_pine",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "wall2",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "notice_board_indoor_r0.webp",
+          "size": [
+            128,
+            156
+          ],
+          "pivot": [
+            30,
+            141
+          ],
+          "footprint": [
+            2,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/workroom.png",
+          "view": 0,
+          "flip": false,
+          "wall_axis": [
+            64,
+            38
+          ],
+          "mounting_height_px": 45,
+          "anchor": "first_wall_cell"
+        },
+        "1": {
+          "file": "notice_board_indoor_r1.webp",
+          "size": [
+            128,
+            156
+          ],
+          "pivot": [
+            94,
+            143
+          ],
+          "footprint": [
+            1,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/workroom.png",
+          "view": 1,
+          "flip": false,
+          "wall_axis": [
+            -64,
+            38
+          ],
+          "mounting_height_px": 45,
+          "anchor": "first_wall_cell"
+        }
+      }
+    },
+    "brick_oven": {
+      "id": "brick_oven",
+      "footprint": [
+        2,
+        2
+      ],
+      "layer": "floor",
+      "template": "fireplace",
+      "set": "I3-rooms",
+      "fallback_id": "fireplace_chalk",
+      "baked": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "brick_oven_r0.webp",
+          "size": [
+            224,
+            233
+          ],
+          "pivot": [
+            112,
+            168
+          ],
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 0,
+          "flip": false,
+          "night": "brick_oven_r0_night.webp",
+          "night_size": [
+            144,
+            160
+          ],
+          "night_offset": [
+            67,
+            17
+          ],
+          "glow": {
+            "size": [
+              144,
+              160
+            ],
+            "center": [
+              139.0,
+              97.0
+            ],
+            "color": "#ffb36b",
+            "blend": "add",
+            "light_hint": "at_most_one_per_room"
+          }
+        },
+        "1": {
+          "file": "brick_oven_r1.webp",
+          "size": [
+            224,
+            230
+          ],
+          "pivot": [
+            112,
+            166
+          ],
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 1,
+          "flip": false,
+          "night": "brick_oven_r1_night.webp",
+          "night_size": [
+            126,
+            141
+          ],
+          "night_offset": [
+            35,
+            31
+          ],
+          "glow": {
+            "size": [
+              126,
+              141
+            ],
+            "center": [
+              98.0,
+              101.5
+            ],
+            "color": "#ffb36b",
+            "blend": "add",
+            "light_hint": "at_most_one_per_room"
+          }
+        },
+        "2": {
+          "file": "brick_oven_r2.webp",
+          "size": [
+            224,
+            231
+          ],
+          "pivot": [
+            112,
+            165
+          ],
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 2,
+          "flip": false
+        },
+        "3": {
+          "file": "brick_oven_r3.webp",
+          "size": [
+            224,
+            238
+          ],
+          "pivot": [
+            112,
+            170
+          ],
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 3,
+          "flip": false
+        }
+      }
+    },
+    "bread_rack": {
+      "id": "bread_rack",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "template": "rack",
+      "set": "I3-rooms",
+      "fallback_id": "shelf_birch",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "bread_rack_r0.webp",
+          "size": [
+            159,
+            216
+          ],
+          "pivot": [
+            79,
+            165
+          ],
+          "footprint": [
+            2,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/workroom.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "bread_rack_r1.webp",
+          "size": [
+            159,
+            216
+          ],
+          "pivot": [
+            79,
+            165
+          ],
+          "footprint": [
+            1,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/workroom.png",
+          "view": 1,
+          "flip": false
+        }
+      }
+    },
+    "anvil": {
+      "id": "anvil",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "template": "anvil",
+      "set": "I3-rooms",
+      "fallback_id": "table_stump",
+      "baked": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "anvil_r0.webp",
+          "size": [
+            115,
+            131
+          ],
+          "pivot": [
+            57,
+            96
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "anvil_r1.webp",
+          "size": [
+            115,
+            138
+          ],
+          "pivot": [
+            57,
+            103
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 1,
+          "flip": false
+        },
+        "2": {
+          "file": "anvil_r2.webp",
+          "size": [
+            115,
+            135
+          ],
+          "pivot": [
+            57,
+            100
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 2,
+          "flip": false
+        },
+        "3": {
+          "file": "anvil_r3.webp",
+          "size": [
+            115,
+            126
+          ],
+          "pivot": [
+            57,
+            91
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 3,
+          "flip": false
+        }
+      }
+    },
+    "forge": {
+      "id": "forge",
+      "footprint": [
+        2,
+        2
+      ],
+      "layer": "floor",
+      "template": "fireplace",
+      "set": "I3-rooms",
+      "fallback_id": "fireplace_granite",
+      "baked": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "forge_r0.webp",
+          "size": [
+            224,
+            226
+          ],
+          "pivot": [
+            112,
+            158
+          ],
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 0,
+          "flip": false,
+          "night": "forge_r0_night.webp",
+          "night_size": [
+            172,
+            144
+          ],
+          "night_offset": [
+            38,
+            59
+          ],
+          "glow": {
+            "size": [
+              172,
+              144
+            ],
+            "center": [
+              124.0,
+              131.0
+            ],
+            "color": "#ffb36b",
+            "blend": "add",
+            "light_hint": "at_most_one_per_room"
+          }
+        },
+        "1": {
+          "file": "forge_r1.webp",
+          "size": [
+            224,
+            257
+          ],
+          "pivot": [
+            112,
+            191
+          ],
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 1,
+          "flip": false,
+          "night": "forge_r1_night.webp",
+          "night_size": [
+            164,
+            172
+          ],
+          "night_offset": [
+            16,
+            73
+          ],
+          "glow": {
+            "size": [
+              164,
+              172
+            ],
+            "center": [
+              98.0,
+              159.0
+            ],
+            "color": "#ffb36b",
+            "blend": "add",
+            "light_hint": "at_most_one_per_room"
+          }
+        },
+        "2": {
+          "file": "forge_r2.webp",
+          "size": [
+            224,
+            249
+          ],
+          "pivot": [
+            112,
+            180
+          ],
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 2,
+          "flip": false
+        },
+        "3": {
+          "file": "forge_r3.webp",
+          "size": [
+            224,
+            238
+          ],
+          "pivot": [
+            112,
+            174
+          ],
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 3,
+          "flip": false
+        }
+      }
+    },
+    "cauldron_stand": {
+      "id": "cauldron_stand",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "template": "fireplace",
+      "set": "I3-rooms",
+      "fallback_id": "fireplace_cauldron",
+      "baked": [
+        0
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "cauldron_stand_r0.webp",
+          "size": [
+            115,
+            126
+          ],
+          "pivot": [
+            57,
+            91
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/small.png",
+          "view": 0,
+          "flip": false,
+          "night": "cauldron_stand_r0_night.webp",
+          "night_size": [
+            105,
+            82
+          ],
+          "night_offset": [
+            6,
+            39
+          ],
+          "glow": {
+            "size": [
+              105,
+              82
+            ],
+            "center": [
+              58.5,
+              80.0
+            ],
+            "color": "#ffb36b",
+            "blend": "add",
+            "light_hint": "at_most_one_per_room"
+          }
+        }
+      }
+    },
+    "hay_bale": {
+      "id": "hay_bale",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "template": "hay",
+      "set": "I3-rooms",
+      "fallback_id": "rug_natural",
+      "baked": [
+        0
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "hay_bale_r0.webp",
+          "size": [
+            115,
+            86
+          ],
+          "pivot": [
+            57,
+            51
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/small.png",
+          "view": 0,
+          "flip": false
+        }
+      }
+    },
+    "feed_sack_stack": {
+      "id": "feed_sack_stack",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "template": "sack",
+      "set": "I3-rooms",
+      "fallback_id": "chest_oak",
+      "baked": [
+        0
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "feed_sack_stack_r0.webp",
+          "size": [
+            115,
+            92
+          ],
+          "pivot": [
+            57,
+            57
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/small.png",
+          "view": 0,
+          "flip": false
+        }
+      }
+    },
+    "plank_stack": {
+      "id": "plank_stack",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "template": "plank_stack",
+      "set": "I3-rooms",
+      "fallback_id": "bookshelf_oak_narrow",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "plank_stack_r0.webp",
+          "size": [
+            169,
+            118
+          ],
+          "pivot": [
+            84,
+            67
+          ],
+          "footprint": [
+            2,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/workroom.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "plank_stack_r1.webp",
+          "size": [
+            169,
+            119
+          ],
+          "pivot": [
+            84,
+            68
+          ],
+          "footprint": [
+            1,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/workroom.png",
+          "view": 1,
+          "flip": false
+        }
+      }
+    },
+    "mannequin": {
+      "id": "mannequin",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "template": "mannequin",
+      "set": "I3-rooms",
+      "fallback_id": "floor_lamp_birch",
+      "baked": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "mannequin_r0.webp",
+          "size": [
+            93,
+            216
+          ],
+          "pivot": [
+            46,
+            181
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "mannequin_r1.webp",
+          "size": [
+            91,
+            216
+          ],
+          "pivot": [
+            45,
+            181
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 1,
+          "flip": false
+        },
+        "2": {
+          "file": "mannequin_r2.webp",
+          "size": [
+            93,
+            216
+          ],
+          "pivot": [
+            46,
+            181
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 2,
+          "flip": false
+        },
+        "3": {
+          "file": "mannequin_r3.webp",
+          "size": [
+            92,
+            216
+          ],
+          "pivot": [
+            46,
+            181
+          ],
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/service.png",
+          "view": 3,
+          "flip": false
+        }
+      }
+    },
+    "workbench": {
+      "id": "workbench",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "template": "saw_bench",
+      "set": "I3-rooms",
+      "fallback_id": "table_long_walnut",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "workbench_r0.webp",
+          "size": [
+            169,
+            121
+          ],
+          "pivot": [
+            84,
+            70
+          ],
+          "footprint": [
+            2,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/workroom.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "workbench_r1.webp",
+          "size": [
+            169,
+            125
+          ],
+          "pivot": [
+            84,
+            74
+          ],
+          "footprint": [
+            1,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/shop_core/workroom.png",
+          "view": 1,
+          "flip": false
+        }
+      }
+    }
+  }
+}

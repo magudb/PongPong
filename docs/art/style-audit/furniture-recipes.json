@@ -1,0 +1,1881 @@
+{
+  "bed_pine": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine",
+      "fabric": "natur"
+    }
+  },
+  "bed_birch_single": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_f.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "birch",
+      "fabric": "natur"
+    }
+  },
+  "bed_oak_single": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_f.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "oak",
+      "fabric": "groen"
+    }
+  },
+  "bed_sky_double": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "himmel",
+      "fabric": "roed"
+    }
+  },
+  "bed_rose_single": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_f.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "rose",
+      "fabric": "blaa"
+    }
+  },
+  "bed_walnut": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "walnut",
+      "fabric": "bordeaux"
+    }
+  },
+  "bed_cherry": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "cherry",
+      "fabric": "guld"
+    }
+  },
+  "bed_toadstool": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_g.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 3,
+      "wood": "living",
+      "fabric": "groen"
+    }
+  },
+  "bed_moon": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_k.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 4,
+      "wood": "moonwood",
+      "fabric": "maane",
+      "metal": "soelv"
+    }
+  },
+  "table_round_pine": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_f.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine"
+    }
+  },
+  "table_dining_oak": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "oak"
+    }
+  },
+  "table_long_pine": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine"
+    }
+  },
+  "table_round_mint": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_f.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "mynte"
+    }
+  },
+  "table_dining_chalk": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "kridt"
+    }
+  },
+  "table_long_walnut": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "walnut"
+    }
+  },
+  "table_round_cherry": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_f.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "cherry"
+    }
+  },
+  "table_stump": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_g.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 3,
+      "wood": "living"
+    }
+  },
+  "chair_pine": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine"
+    }
+  },
+  "chair_birch": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "birch"
+    }
+  },
+  "chair_oak": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "oak",
+      "fabric": "groen"
+    }
+  },
+  "chair_mossy": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "mossy"
+    }
+  },
+  "chair_honey": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "honning",
+      "fabric": "natur"
+    }
+  },
+  "chair_lavender": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "lavendel",
+      "fabric": "rosendamask"
+    }
+  },
+  "chair_ebony": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "ebony",
+      "fabric": "kongeblaa"
+    }
+  },
+  "chair_stump": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_g.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 3,
+      "wood": "living",
+      "fabric": "groen"
+    }
+  },
+  "sofa_pine_two": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine",
+      "fabric": "natur"
+    }
+  },
+  "sofa_oak_three": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_n.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "oak",
+      "fabric": "groen"
+    }
+  },
+  "sofa_birch_two": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "birch",
+      "fabric": "natur"
+    }
+  },
+  "sofa_sky_two": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "himmel",
+      "fabric": "roed"
+    }
+  },
+  "sofa_moss_three": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_n.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "mosgroen",
+      "fabric": "natur"
+    }
+  },
+  "sofa_walnut_two": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "walnut",
+      "fabric": "bordeaux"
+    }
+  },
+  "sofa_cherry_three": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_n.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "cherry",
+      "fabric": "kongeblaa"
+    }
+  },
+  "sofa_leaf": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_g.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 3,
+      "wood": "living",
+      "fabric": "groen"
+    }
+  },
+  "sofa_cloud": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_k.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 4,
+      "wood": "moonwood",
+      "fabric": "maane",
+      "crystal": "maanesten"
+    }
+  },
+  "wardrobe_pine": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_b.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine"
+    }
+  },
+  "wardrobe_birch_narrow": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_n.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "birch"
+    }
+  },
+  "wardrobe_oak": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_b.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "oak"
+    }
+  },
+  "wardrobe_rose": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_b.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "rose"
+    }
+  },
+  "wardrobe_sky_narrow": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_n.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "himmel"
+    }
+  },
+  "wardrobe_walnut": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_b.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "walnut"
+    }
+  },
+  "wardrobe_hollow_log": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_h.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 3,
+      "wood": "living"
+    }
+  },
+  "bookshelf_pine": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_b.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine"
+    }
+  },
+  "bookshelf_oak_narrow": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_n.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "oak"
+    }
+  },
+  "bookshelf_birch": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_b.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "birch"
+    }
+  },
+  "bookshelf_mint": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_b.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "mynte"
+    }
+  },
+  "bookshelf_lavender_narrow": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_n.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "lavendel"
+    }
+  },
+  "bookshelf_ebony": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_b.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "ebony"
+    }
+  },
+  "bookshelf_book_tree": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_h.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 3,
+      "wood": "living"
+    }
+  },
+  "bookshelf_floating": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_k.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 4,
+      "wood": "ebony",
+      "crystal": "maanesten"
+    }
+  },
+  "rug_natural": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_d.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine",
+      "fabric": "natur"
+    }
+  },
+  "rug_round_red": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_n.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine",
+      "fabric": "roed"
+    }
+  },
+  "rug_runner_natural": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_d.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine",
+      "fabric": "natur"
+    }
+  },
+  "rug_striped_blue": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_d.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "fabric": "blaa"
+    }
+  },
+  "rug_runner_green": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_d.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "fabric": "groen"
+    }
+  },
+  "rug_round_rose": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_n.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "fabric": "rosendamask"
+    }
+  },
+  "rug_burgundy": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_d.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "pine",
+      "fabric": "bordeaux"
+    }
+  },
+  "rug_gold_round": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_n.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "pine",
+      "fabric": "guld"
+    }
+  },
+  "rug_flower_petal": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_h.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 3,
+      "wood": "pine",
+      "fabric": "rosendamask"
+    }
+  },
+  "rug_magic_circle": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_l_fixed.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 4,
+      "wood": "pine",
+      "fabric": "maane",
+      "crystal": "ametyst"
+    }
+  },
+  "floor_lamp_iron": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_c.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine"
+    }
+  },
+  "floor_lamp_birch": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_c.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "birch"
+    }
+  },
+  "floor_lamp_honey": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_c.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "honning"
+    }
+  },
+  "floor_lamp_brass": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_c.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "walnut",
+      "metal": "messing",
+      "fabric": "bordeaux"
+    }
+  },
+  "floor_lamp_glowshroom": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_h.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 3,
+      "wood": "living"
+    }
+  },
+  "floor_lamp_fairy": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_l_fixed.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 4,
+      "wood": "moonwood",
+      "metal": "soelv",
+      "crystal": "maanesten"
+    }
+  },
+  "fireplace_granite": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_b.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine",
+      "stone": "granit"
+    }
+  },
+  "fireplace_chalk": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_b.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "kridt"
+    }
+  },
+  "fireplace_marble": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_b.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "pine",
+      "stone": "marmor"
+    }
+  },
+  "fireplace_slate": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_b.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "pine",
+      "stone": "skifer"
+    }
+  },
+  "fireplace_cauldron": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_i.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 3,
+      "wood": "living"
+    }
+  },
+  "fireplace_moon": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_l_fixed.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 4,
+      "wood": "pine",
+      "stone": "marmor",
+      "crystal": "maanesten"
+    }
+  },
+  "chest_pine": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_b.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine"
+    }
+  },
+  "chest_oak": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_b.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "oak"
+    }
+  },
+  "chest_birch": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_b.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "birch"
+    }
+  },
+  "chest_sky": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_b.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "himmel"
+    }
+  },
+  "chest_rose": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_b.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "rose"
+    }
+  },
+  "chest_walnut": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_b.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "walnut"
+    }
+  },
+  "chest_snail": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_i.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 3,
+      "wood": "living"
+    }
+  },
+  "chest_rune": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_l_fixed.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 4,
+      "wood": "ebony",
+      "crystal": "ravgul"
+    }
+  },
+  "plant_fern": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_d.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine"
+    }
+  },
+  "plant_rose_pot": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_e.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "rose"
+    }
+  },
+  "plant_flowering": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_e.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "pine"
+    }
+  },
+  "plant_teapot_bonsai": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_i.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 3,
+      "wood": "pine"
+    }
+  },
+  "clock_pine": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_c.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine"
+    }
+  },
+  "clock_sky": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_c.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "himmel"
+    }
+  },
+  "clock_walnut": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_c.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "walnut"
+    }
+  },
+  "clock_owl": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_i.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 3,
+      "wood": "living"
+    }
+  },
+  "clock_moon": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_m.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 4,
+      "wood": "ebony",
+      "crystal": "maanesten"
+    }
+  },
+  "throne_pine": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_c.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine"
+    }
+  },
+  "throne_honey": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_c.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "honning",
+      "fabric": "roed"
+    }
+  },
+  "throne_king": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_c.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "walnut",
+      "fabric": "bordeaux"
+    }
+  },
+  "throne_root": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_j_spaced.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 3,
+      "wood": "living",
+      "fabric": "groen"
+    }
+  },
+  "throne_crystal": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_m.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 4,
+      "wood": "moonwood",
+      "fabric": "maane",
+      "crystal": "ametyst",
+      "metal": "soelv"
+    }
+  },
+  "piano_pine": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_c.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine"
+    }
+  },
+  "piano_sky": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_c.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "himmel",
+      "fabric": "roed"
+    }
+  },
+  "piano_walnut": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_c.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "walnut",
+      "fabric": "bordeaux"
+    }
+  },
+  "piano_toadstool": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_j_spaced.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 3,
+      "wood": "oak"
+    }
+  },
+  "piano_star": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_m.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 4,
+      "wood": "ebony",
+      "fabric": "maane",
+      "crystal": "maanesten"
+    }
+  },
+  "painting_small_pine": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_d.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine"
+    }
+  },
+  "painting_wide_pine": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_d.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine"
+    }
+  },
+  "painting_small_birch": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_d.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "birch"
+    }
+  },
+  "painting_sky_small": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_d.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "himmel"
+    }
+  },
+  "painting_rose_wide": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_d.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "rose"
+    }
+  },
+  "painting_gold_wide": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_d.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "walnut"
+    }
+  },
+  "painting_porthole": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_j_spaced.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1
+    ],
+    "palette": {
+      "tier": 3,
+      "wood": "living"
+    }
+  },
+  "shelf_pine": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_d.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine"
+    }
+  },
+  "shelf_birch": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_d.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "birch"
+    }
+  },
+  "shelf_oak": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_d.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "oak"
+    }
+  },
+  "shelf_mint": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_d.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "mynte"
+    }
+  },
+  "shelf_walnut": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_d.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "walnut"
+    }
+  },
+  "shelf_birdhouse": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_j_spaced.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1
+    ],
+    "palette": {
+      "tier": 3,
+      "wood": "living"
+    }
+  },
+  "curtain_natural": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_e.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine",
+      "fabric": "natur"
+    }
+  },
+  "curtain_green": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_e.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine",
+      "fabric": "groen"
+    }
+  },
+  "curtain_red": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_e.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "fabric": "roed"
+    }
+  },
+  "curtain_blue": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_e.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "fabric": "blaa"
+    }
+  },
+  "sconce_iron": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_e.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine"
+    }
+  },
+  "sconce_copper": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_e.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "metal": "kobber"
+    }
+  },
+  "vase_clay": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_e.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine"
+    }
+  },
+  "vase_rose": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_e.png",
+    "row": 2,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "rose"
+    }
+  },
+  "table_lamp_clay": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_e.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine"
+    }
+  },
+  "table_lamp_sky": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_e.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "paint": "himmel"
+    }
+  },
+  "table_lamp_brass": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_e.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "pine",
+      "metal": "messing",
+      "fabric": "guld"
+    }
+  },
+  "candelabra_iron": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_f.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine"
+    }
+  },
+  "candelabra_copper": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_f.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "metal": "kobber"
+    }
+  },
+  "candelabra_brass": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_f.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "pine",
+      "metal": "messing"
+    }
+  },
+  "chandelier_iron": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_f.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 0,
+      "wood": "pine"
+    }
+  },
+  "chandelier_copper": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_f.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 1,
+      "wood": "pine",
+      "metal": "kobber"
+    }
+  },
+  "chandelier_gold": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_f.png",
+    "row": 1,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 2,
+      "wood": "pine",
+      "metal": "guld"
+    }
+  },
+  "chandelier_lantern_flower": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_k.png",
+    "row": 0,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 3,
+      "wood": "pine",
+      "metal": "guld"
+    }
+  },
+  "chandelier_star": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_m.png",
+    "row": 3,
+    "rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "palette": {
+      "tier": 4,
+      "wood": "pine",
+      "metal": "soelv",
+      "crystal": "maanesten"
+    }
+  }
+}

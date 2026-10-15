@@ -1,0 +1,54 @@
+{
+  "items": [
+    {
+      "id": "cloth_rolls_rack",
+      "cell": [
+        0,
+        1
+      ],
+      "rot": 0
+    },
+    {
+      "id": "sewing_table",
+      "cell": [
+        1,
+        4
+      ],
+      "rot": 0
+    },
+    {
+      "id": "standing_mirror",
+      "cell": [
+        7,
+        0
+      ],
+      "rot": 0
+    },
+    {
+      "id": "fitting_curtain",
+      "cell": [
+        6,
+        0
+      ],
+      "rot": 0,
+      "wall": true
+    },
+    {
+      "id": "price_board",
+      "cell": [
+        7,
+        0
+      ],
+      "rot": 0,
+      "wall": true
+    },
+    {
+      "id": "lantern_hanging",
+      "cell": [
+        0,
+        0
+      ],
+      "rot": 0
+    }
+  ]
+}

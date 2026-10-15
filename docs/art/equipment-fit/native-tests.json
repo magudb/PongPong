@@ -1,0 +1,22 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 8,
+  "elapsed_s": 4.62,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "art_equipment_fit": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 2650,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

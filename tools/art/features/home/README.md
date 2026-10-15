@@ -168,6 +168,15 @@ the pixel anchor checks catch a pivot shifted by 20 px or more, not a drift of a
 
 ## Lift history
 
+The current shipped furniture artwork supersedes the geometry bake described
+below. The painted consistency pass in `tools/art/drawn/consistency.py` retains
+all 130 content IDs and native anchors, with 482 authored views and 44 separate
+legendary overlays. Wall pieces retain two views; free-standing pieces retain
+four, without mirror or symmetry reduction. The original measurement reports
+remain generator evidence. Run `tools/art/drawn/pack.py --only=consistency`
+after a legacy bake to restore the chosen painted style. Current prompts,
+inventories and visual evidence are in `docs/art/style-audit/`.
+
 | File | Source | Changes |
 |---|---|---|
 | `characters/{home_kit,home_traetoppen,home_scaffold,furniture_traetoppen,icons_materials}.py` | `SH/tools/characters` | sys.path hacks removed; `home_data` without Danish texts and money (`UPGRADE`), with `zoom_fit`; `icons_materials` decoupled from `icons_traetoppen`, +5 builders; tiers 7 and 9 re-modelled (tall belvedere, raised keep and towers) |

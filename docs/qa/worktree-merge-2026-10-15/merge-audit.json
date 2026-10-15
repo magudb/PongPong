@@ -1,0 +1,97 @@
+{
+  "base_main": "71ee42da28c10e47392c3375997045b3dc880059",
+  "branches": [
+    {
+      "branch": "codex-review",
+      "head": "be1d3191a7ec233e852f7cd61f9ac0606a83dca9",
+      "committed_head_in_integrated_history": true
+    },
+    {
+      "branch": "devin-review",
+      "head": "283d8014760fb3d3d9a710c5aeabd8f76ab2957e",
+      "committed_head_in_integrated_history": true
+    },
+    {
+      "branch": "review-fixes-4",
+      "head": "71ee42da28c10e47392c3375997045b3dc880059",
+      "committed_head_in_integrated_history": true
+    },
+    {
+      "branch": "m1b",
+      "head": "71ee42da28c10e47392c3375997045b3dc880059",
+      "committed_head_in_integrated_history": true
+    }
+  ],
+  "merges": {
+    "codex-review": "0810695",
+    "devin-review": "abefa77"
+  },
+  "merge_conflicts": [],
+  "art_snapshot": {
+    "reviewed_visual_and_theme_files": 2534,
+    "changed_or_missing": []
+  },
+  "devin_finished_files": {
+    "checked": 13,
+    "differences_from_source_commit": []
+  },
+  "unfinished_m1b": "Committed baseline already contained; dirty and untracked implementation work deliberately excluded.",
+  "duplicate_review_fixes_4_uids": "Both generated untracked farm UIDs match files committed in devin-review; no extra changes required.",
+  "integration_fix": {
+    "file": "lua/config/festival_decor.lua.import",
+    "reason": "main now checks keep-import stubs for every exported Lua file; festival art introduced a new Lua config without its stub.",
+    "result": "81 keep files pass the export-stub validator."
+  },
+  "source_branches_retained": true,
+  "validation_status": "passed; ready to fast-forward main",
+  "existing_main_preservation": {
+    "files_outside_incoming_changes": 4587,
+    "changed_or_removed": []
+  },
+  "m1b_preservation": {
+    "working_files_checked": 855,
+    "changed_or_removed": [],
+    "git_status_unchanged": true
+  },
+  "merged_head": "abefa77651a3918fe68e4747379dd27d446d4bb9",
+  "validation": {
+    "full-tests": {
+      "result": "pass",
+      "checks": 5914,
+      "failed": 0,
+      "skipped": 64,
+      "elapsed_s": 230.07,
+      "unexpected_engine_messages": 0
+    },
+    "native-tests": {
+      "result": "pass",
+      "checks": 96,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 26.02,
+      "unexpected_engine_messages": 0
+    },
+    "design-native-tests": {
+      "result": "pass",
+      "checks": 6,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 2.17,
+      "unexpected_engine_messages": 0
+    },
+    "import_stubs": {
+      "result": "pass",
+      "keep_files": 81
+    },
+    "snapshot_unit_tests": {
+      "result": "pass",
+      "checks": 6
+    }
+  },
+  "design_comparison": {
+    "captures": 17,
+    "pixel_identical": 9,
+    "maximum_mean_rgba_channel_difference": 0.033503,
+    "visual_review": "City day/night, forest, guide UI and the existing accepted home/equipment/material preview evidence; no repaint or font/theme replacement."
+  }
+}

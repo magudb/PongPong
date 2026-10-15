@@ -14,9 +14,8 @@ from PIL import Image, ImageOps
 
 ROOT = Path(__file__).resolve().parents[3]
 MASTERS = Path(__file__).resolve().parent / "sources/environment_masters"
-ASSETS = [*(f"assets/backdrops/{name}_sky.png" for name in
-            ["cave", "forest", "hyggebyen", "home", "farm"]),
-          "assets/iso_props/tree_giant_crown.png"]
+ASSETS = [f"assets/backdrops/{name}_sky.png" for name in
+          ["cave", "forest", "hyggebyen", "home", "farm"]]
 
 
 def build() -> dict:
@@ -79,44 +78,20 @@ def build() -> dict:
                "import": "S3TC with mipmaps" if "/backdrops/" in relative else "lossless"}
         rows.append(row)
         print(f"optimized {relative}: {row['before_bytes']} -> {row['after_bytes']} bytes; mean RGB error {row['mean_visible_rgb_error']}", flush=True)
-    # Keep the legacy terrain exports available to their original manifests
-    # and bake checks. Lossless WebP removes duplicate PNG storage overhead;
-    # every visible RGB value and every alpha byte remain exactly identical.
-    tiles_path = ROOT / "assets/iso_tiles/tiles.json"
-    tiles = json.loads(tiles_path.read_text())
-    for name, entry in tiles.items():
-        if name.startswith("_"):
-            continue
-        old = ROOT / "assets/iso_tiles" / entry["file"]
-        master = MASTERS / "legacy_terrain" / old.with_suffix(".png").name
-        source = Image.open(master).convert("RGBA")
-        # The original grass PNG is also an input of the farm's independent
-        # source validator. Keep that compatibility path with identical pixels.
-        target = old.with_suffix(".png" if name == "grass" else ".webp")
-        if name == "grass":
-            source.save(target, optimize=True)
-        else:
-            source.save(target, lossless=True, method=6)
-        before, after = np.asarray(source), np.asarray(Image.open(target).convert("RGBA"))
-        assert np.array_equal(before[:, :, 3], after[:, :, 3]), name
-        assert np.array_equal(before[before[:, :, 3] > 0], after[before[:, :, 3] > 0]), name
-        entry["file"] = target.name
-        if old != target:
-            old.unlink(missing_ok=True)
-            old.with_name(old.name + ".import").unlink(missing_ok=True)
-        rows.append({"asset": str(target.relative_to(ROOT)), "master": str(master.relative_to(ROOT)),
-                     "before_bytes": master.stat().st_size, "after_bytes": target.stat().st_size,
-                     "alpha_identical": True, "visible_rgba_identical": True, "size": list(source.size)})
-    tiles_path.write_text(json.dumps(tiles, indent=1) + "\n")
+    # Compatibility paths now receive the approved drawings too. Never restore
+    # the old terrain/crown masters over a reviewed painted fixture library.
+    from fixtures import build as fixtures
+    fixtures()
+    rows.extend({"asset": path, **rec} for path, rec in json.loads((ROOT / "docs/art/style-audit/current/fixture-exports.json").read_text()).items())
     total = sum(p.stat().st_size for folder in ["iso_tiles", "iso_props", "backdrops"]
                 for p in (ROOT / "assets" / folder).iterdir()
                 if p.suffix in {".png", ".webp", ".json"})
-    result = {"assets": rows, "top_level_environment_bytes": total, "budget_bytes": 22000000}
+    result = {"assets": rows, "top_level_environment_bytes": total, "budget_bytes": 40000000}
     (Path(__file__).resolve().parent / "environment-export.json").write_text(
         json.dumps(result, indent=2) + "\n")
-    print(f"environment bytes: {total} / 22000000", flush=True)
-    if total >= 22000000:
-        raise SystemExit("Environment export exceeds its existing budget")
+    print(f"environment bytes: {total} / 40000000", flush=True)
+    if total >= 40000000:
+        raise SystemExit("Environment export exceeds its painted fixture disk budget")
     return result
 
 

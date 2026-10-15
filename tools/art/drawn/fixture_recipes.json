@@ -1,0 +1,4713 @@
+{
+  "version": 1,
+  "description": "Painted replacements at historical fixture paths. Geometry archive contains channel sums and alpha only, never the original coloured illustrations. Technical light kernels remain functional masks.",
+  "assets": {
+    "assets/backdrops/farm_canopy.webp": {
+      "size": [
+        2048,
+        360
+      ],
+      "prior_sha256": "640f887f8a3194cd2aed907c1ad673e6aebd8c146859fdd3a0f8190337c89577",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/canopy_top_strip.webp",
+      "body_bounds": [
+        0,
+        0,
+        2048,
+        297
+      ]
+    },
+    "assets/backdrops/farm_far.webp": {
+      "size": [
+        2048,
+        1024
+      ],
+      "prior_sha256": "e39edc9752a7f7a33bf1c466137f248cc1a36ee849998761ec8ac6af014e2750",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/backdrop_farm_far.webp",
+      "body_bounds": [
+        0,
+        173,
+        2048,
+        1024
+      ]
+    },
+    "assets/backdrops/forest_far.webp": {
+      "size": [
+        2048,
+        1280
+      ],
+      "prior_sha256": "839829da183041d09fc176136cee65aa75b776de2433878d72bc9dd4da19df42",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/backdrop_forest_far.webp",
+      "body_bounds": [
+        0,
+        439,
+        2048,
+        1280
+      ]
+    },
+    "assets/backdrops/forest_sky.webp": {
+      "size": [
+        1920,
+        1080
+      ],
+      "prior_sha256": "dd50b04480c147c68e56a7693ff23310bc3fd3fbbd77851eecef09d9d5e06918",
+      "mode": "canvas",
+      "source": "assets/backdrops/forest_sky.png",
+      "body_bounds": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    "assets/backdrops/hyggebyen_far.webp": {
+      "size": [
+        2048,
+        1280
+      ],
+      "prior_sha256": "6484a724bcc627a29c82a54b1660f0521d715ca807761d17ee69115ec42f857a",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/backdrop_hyggebyen_far.webp",
+      "body_bounds": [
+        0,
+        445,
+        2048,
+        1280
+      ]
+    },
+    "assets/backdrops/hyggebyen_sky.webp": {
+      "size": [
+        1920,
+        1080
+      ],
+      "prior_sha256": "c303b3ea6bca5c8143aad200c423b799f45d7e875b8dedb23a8ad8f6294f109b",
+      "mode": "canvas",
+      "source": "assets/backdrops/hyggebyen_sky.png",
+      "body_bounds": [
+        0,
+        0,
+        1920,
+        1080
+      ]
+    },
+    "assets/backdrops/treetop_far.webp": {
+      "size": [
+        2048,
+        1024
+      ],
+      "prior_sha256": "75c4c38dbe4f335e7a4376d28db0be5e4d0c35826b5475d0a023b8e9c5a3a88d",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/backdrop_treetop_far.webp",
+      "body_bounds": [
+        0,
+        0,
+        2048,
+        1024
+      ]
+    },
+    "assets/backdrops/treetop_sky.webp": {
+      "size": [
+        16,
+        1024
+      ],
+      "prior_sha256": "30e20b01c5819f064d6826152edfcf1a714cd82caeb0c6e36540e85fab9e7322",
+      "mode": "canvas",
+      "source": "assets/backdrops/treetop_sky.png",
+      "body_bounds": [
+        0,
+        0,
+        16,
+        1024
+      ]
+    },
+    "assets/iso_props/animal_house.png": {
+      "size": [
+        319,
+        270
+      ],
+      "prior_sha256": "86ac241e73e139791b9be834455e384074b7b03dd043bcd283cedb7982ffd778",
+      "mode": "anchored",
+      "source": "assets/iso_props/zz_painted_consistency/animal_house.webp",
+      "pivot": [
+        143,
+        199
+      ],
+      "source_pivot": [
+        187,
+        200
+      ],
+      "body_bounds": [
+        3,
+        4,
+        282,
+        267
+      ]
+    },
+    "assets/iso_props/apple_tree.png": {
+      "size": [
+        359,
+        398
+      ],
+      "prior_sha256": "b0b6bc67ed0372a0d133b7ceb471c014fbccae5ef861881c952d905ea8f3f3fc",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/apple_tree.webp",
+      "body_bounds": [
+        3,
+        3,
+        356,
+        393
+      ]
+    },
+    "assets/iso_props/barn_small.png": {
+      "size": [
+        472,
+        424
+      ],
+      "prior_sha256": "80ecbccbfb7e794e69bb03fab9a80c0ad100763412b01940fc6fe33b477f3934",
+      "mode": "anchored",
+      "source": "assets/iso_props/zz_painted_consistency/barn_small.webp",
+      "pivot": [
+        208,
+        313
+      ],
+      "source_pivot": [
+        261,
+        339
+      ],
+      "body_bounds": [
+        5,
+        3,
+        410,
+        421
+      ]
+    },
+    "assets/iso_props/bed.png": {
+      "size": [
+        92,
+        58
+      ],
+      "prior_sha256": "a7e6daf2ca7417b879643d9ac8780a5c31794499a1081cfd4a37bda31a6f2e2d",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/bed.webp",
+      "body_bounds": [
+        3,
+        4,
+        89,
+        54
+      ]
+    },
+    "assets/iso_props/beehive_stand.png": {
+      "size": [
+        161,
+        147
+      ],
+      "prior_sha256": "b098afd703ef4fbde589a25bc7d89e4554b8e6099d9ce65fca7356ffcbff3b3c",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/beehive_stand.webp",
+      "body_bounds": [
+        3,
+        3,
+        126,
+        144
+      ]
+    },
+    "assets/iso_props/bench.png": {
+      "size": [
+        174,
+        144
+      ],
+      "prior_sha256": "0414cf59f99bbaeaa8a84a22d629456faf48cbd3d6d7505d70d832518b3f82d6",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/bench.webp",
+      "body_bounds": [
+        13,
+        4,
+        147,
+        140
+      ]
+    },
+    "assets/iso_props/bridge_x.png": {
+      "size": [
+        138,
+        142
+      ],
+      "prior_sha256": "158afe10f92f96dd8fd20601237584a6b579ab9a211cba6452779a8b1a73711b",
+      "mode": "canvas",
+      "source": "assets/iso_props/drawn_terrain/bridge_x.webp",
+      "body_bounds": [
+        4,
+        3,
+        134,
+        139
+      ]
+    },
+    "assets/iso_props/bridge_z.png": {
+      "size": [
+        138,
+        132
+      ],
+      "prior_sha256": "f0f97c9ee9a5e65d2cd12424cd8d7ffa66d2029bd8f948379dfab6d453465661",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn_terrain/bridge_z.webp",
+      "pivot": [
+        71,
+        85
+      ],
+      "source_pivot": [
+        69,
+        100
+      ],
+      "body_bounds": [
+        4,
+        3,
+        134,
+        128
+      ]
+    },
+    "assets/iso_props/bush_berry.png": {
+      "size": [
+        171,
+        116
+      ],
+      "prior_sha256": "f4364787149869fea8c628484775129787bf00aaf1003b878bd50d34a2d463af",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/bush_berry.webp",
+      "pivot": [
+        79,
+        79
+      ],
+      "source_pivot": [
+        56,
+        76
+      ],
+      "body_bounds": [
+        3,
+        3,
+        152,
+        113
+      ]
+    },
+    "assets/iso_props/bush_eyes_a.png": {
+      "size": [
+        297,
+        260
+      ],
+      "prior_sha256": "c27fe483d0202e8423e687ae65ab7932280832ec3d182afe70b2fe42189eb40f",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/bush_eyes_a.webp",
+      "body_bounds": [
+        4,
+        4,
+        281,
+        244
+      ]
+    },
+    "assets/iso_props/bush_eyes_b.png": {
+      "size": [
+        293,
+        249
+      ],
+      "prior_sha256": "81da5d9763a1d3ea46de0182ca6d2250a56be4dc6ee49d2e72ebb88f40a42bf9",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/bush_eyes_b.webp",
+      "body_bounds": [
+        3,
+        3,
+        277,
+        233
+      ]
+    },
+    "assets/iso_props/bush_farm.png": {
+      "size": [
+        172,
+        123
+      ],
+      "prior_sha256": "b5a51140f5959fa2644da6f9eaed9238e6563942dfc805eb865b1df2601a76ab",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/bush_farm.webp",
+      "pivot": [
+        80,
+        86
+      ],
+      "source_pivot": [
+        56,
+        76
+      ],
+      "body_bounds": [
+        4,
+        3,
+        152,
+        120
+      ]
+    },
+    "assets/iso_props/bush_forest.png": {
+      "size": [
+        172,
+        114
+      ],
+      "prior_sha256": "1f4a51efbebcacf2629b3efdcc98b38ff5c934f3f3520669428b9d1e86d62e17",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/bush_forest.webp",
+      "pivot": [
+        80,
+        77
+      ],
+      "source_pivot": [
+        56,
+        76
+      ],
+      "body_bounds": [
+        3,
+        4,
+        155,
+        111
+      ]
+    },
+    "assets/iso_props/cave_ring.png": {
+      "size": [
+        543,
+        390
+      ],
+      "prior_sha256": "28f218d66c25113da3aab6dfa617954b76edf10f8bd52bb62b9562a9b5212a54",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/cave_ring.webp",
+      "body_bounds": [
+        1,
+        2,
+        541,
+        388
+      ]
+    },
+    "assets/iso_props/cave_ring_up.png": {
+      "size": [
+        543,
+        390
+      ],
+      "prior_sha256": "fc79428520aabb0cc57fbe2122172d145748b136e816a88046eda6c617c195ff",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/cave_ring_up.webp",
+      "body_bounds": [
+        1,
+        2,
+        541,
+        388
+      ]
+    },
+    "assets/iso_props/cave_stone_a.png": {
+      "size": [
+        113,
+        103
+      ],
+      "prior_sha256": "551491edfd907e7038ac09c0f4b2632804d3dbafa156551733853976532c2069",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/cave_stone_a.webp",
+      "body_bounds": [
+        2,
+        2,
+        104,
+        87
+      ]
+    },
+    "assets/iso_props/cave_stone_b.png": {
+      "size": [
+        127,
+        105
+      ],
+      "prior_sha256": "b0bcb3dd02b5953e02a0c0129df22a264801d94efbd39b9fdd4d67efccdcd9ec",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/cave_stone_b.webp",
+      "body_bounds": [
+        2,
+        2,
+        111,
+        89
+      ]
+    },
+    "assets/iso_props/cave_stone_c.png": {
+      "size": [
+        127,
+        106
+      ],
+      "prior_sha256": "2edb6c64da3e1f94189e7b3e0fad47677eb6303ac237cd33254675108783de3a",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/cave_stone_c.webp",
+      "body_bounds": [
+        2,
+        2,
+        111,
+        90
+      ]
+    },
+    "assets/iso_props/cave_stone_d.png": {
+      "size": [
+        115,
+        106
+      ],
+      "prior_sha256": "1cbb651a64258306f30fd94270d781955b2f2d8d247b3f60697b9db9bc11fa00",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/cave_stone_d.webp",
+      "body_bounds": [
+        2,
+        2,
+        105,
+        90
+      ]
+    },
+    "assets/iso_props/cave_stone_e.png": {
+      "size": [
+        125,
+        105
+      ],
+      "prior_sha256": "5bd29989d1b62600fba3e23bdd20ce629a244958acda41c10541f9a0c0ea626a",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/cave_stone_e.webp",
+      "body_bounds": [
+        2,
+        2,
+        110,
+        89
+      ]
+    },
+    "assets/iso_props/chest_closed.png": {
+      "size": [
+        138,
+        102
+      ],
+      "prior_sha256": "b39ca60566b90ebcc25f01ac2c7a4e31e11e215980a0c84db276f967dcff1c94",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/chest_closed.webp",
+      "body_bounds": [
+        20,
+        3,
+        105,
+        96
+      ]
+    },
+    "assets/iso_props/chest_noegle.png": {
+      "size": [
+        148,
+        106
+      ],
+      "prior_sha256": "eb398db6122a87964da6c035992a4b1a379364513fd1f794b18ef17007db8514",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/chest_noegle.webp",
+      "body_bounds": [
+        20,
+        3,
+        113,
+        101
+      ]
+    },
+    "assets/iso_props/chest_open.png": {
+      "size": [
+        146,
+        133
+      ],
+      "prior_sha256": "d0a1f9f6508cac80ed5d8c603ef5fdc3932df90aec4024ea09d05cc45a745989",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/chest_open.webp",
+      "body_bounds": [
+        20,
+        4,
+        143,
+        127
+      ]
+    },
+    "assets/iso_props/city/bat_hang.webp": {
+      "size": [
+        84,
+        102
+      ],
+      "prior_sha256": "358deeacd485b2bc1dd7ac299aa6e6bab8d14a0a6a35ae9bbfcafa425faa4c26",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/bat_hang.webp",
+      "body_bounds": [
+        13,
+        0,
+        76,
+        100
+      ]
+    },
+    "assets/iso_props/city/bat_hang_f1.webp": {
+      "size": [
+        84,
+        102
+      ],
+      "prior_sha256": "cf99ea56be8b26ff53d97baf2724034894e920e78c9bf237979406598bca3531",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/bat_hang_f1.webp",
+      "body_bounds": [
+        8,
+        0,
+        71,
+        99
+      ]
+    },
+    "assets/iso_props/city/bat_house_hanging.webp": {
+      "size": [
+        348,
+        574
+      ],
+      "prior_sha256": "4e7333487c0cb890326c836b3179a3ec051e539e91663d0f18a9a4e38334d12b",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/bat_house_hanging.webp",
+      "body_bounds": [
+        3,
+        3,
+        345,
+        571
+      ]
+    },
+    "assets/iso_props/city/bath_tub_back.webp": {
+      "size": [
+        276,
+        120
+      ],
+      "prior_sha256": "1f902a400df99fb1ee421c6d6158dda8f8605fbfe99d95c1883f33c5237ad7b1",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/bath_tub_back.webp",
+      "body_bounds": [
+        3,
+        15,
+        273,
+        116
+      ]
+    },
+    "assets/iso_props/city/bath_tub_front.webp": {
+      "size": [
+        276,
+        120
+      ],
+      "prior_sha256": "edd9bdc3004fe4682d9117b6ecda236c78a991171265e430705c62705f0aa14e",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/bath_tub_front.webp",
+      "body_bounds": [
+        3,
+        4,
+        273,
+        117
+      ]
+    },
+    "assets/iso_props/city/bridge_deck_tile_w28.webp": {
+      "size": [
+        85,
+        128
+      ],
+      "prior_sha256": "9ae966395d42eefbe2e3ce18e7b46537e81d7070f2463926b51ce1f1c41dd487",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/bridge_deck_tile_w28.webp",
+      "body_bounds": [
+        0,
+        0,
+        85,
+        128
+      ]
+    },
+    "assets/iso_props/city/bridge_deck_tile_w43.webp": {
+      "size": [
+        129,
+        128
+      ],
+      "prior_sha256": "e6a13c1ba8bb8f776e9e495e938cb4af810f7fd55283faaa6003c72aafe5f72b",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/bridge_deck_tile_w43.webp",
+      "body_bounds": [
+        0,
+        0,
+        129,
+        128
+      ]
+    },
+    "assets/iso_props/city/bridge_post.webp": {
+      "size": [
+        30,
+        84
+      ],
+      "prior_sha256": "7b3cc50977929597c4292756e5f01d750a304b879d25d3b9c4010075f85aec3f",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/bridge_post.webp",
+      "body_bounds": [
+        5,
+        0,
+        25,
+        83
+      ]
+    },
+    "assets/iso_props/city/canopy_top_strip.webp": {
+      "size": [
+        2048,
+        320
+      ],
+      "prior_sha256": "1b5fc8bd97391856926815273f576da6a635487c14eba3041c8872b2039e80bf",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/canopy_top_strip.webp",
+      "body_bounds": [
+        0,
+        0,
+        2048,
+        320
+      ]
+    },
+    "assets/iso_props/city/fire_pit.webp": {
+      "size": [
+        216,
+        168
+      ],
+      "prior_sha256": "46c8bc40f8c34069b055f498bd4ed486c0b84e26354be2fd7462b957ed6f96b7",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/fire_pit.webp",
+      "body_bounds": [
+        3,
+        4,
+        213,
+        165
+      ]
+    },
+    "assets/iso_props/city/foliage_front_a.webp": {
+      "size": [
+        1020,
+        720
+      ],
+      "prior_sha256": "f793715fcbe786b252e638f7aa6580359de52d56c1bf7a15acbaaa7edaddc1ea",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/foliage_front_a.webp",
+      "body_bounds": [
+        185,
+        145,
+        839,
+        627
+      ]
+    },
+    "assets/iso_props/city/foliage_front_b.webp": {
+      "size": [
+        1020,
+        720
+      ],
+      "prior_sha256": "bf41deb833170a69c982715cd9352b653ef38c5e30c2b37e0eb41a074e5d2a53",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/foliage_front_b.webp",
+      "body_bounds": [
+        181,
+        117,
+        824,
+        517
+      ]
+    },
+    "assets/iso_props/city/hut_l_dark.webp": {
+      "size": [
+        459,
+        384
+      ],
+      "prior_sha256": "a0eb86cf25c0a43dac79c34e188fa851f20433f61032578c120861c055ad4414",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/hut_l_dark.webp",
+      "body_bounds": [
+        3,
+        4,
+        455,
+        381
+      ]
+    },
+    "assets/iso_props/city/hut_l_dark_night.webp": {
+      "size": [
+        302,
+        96
+      ],
+      "prior_sha256": "851766998476d1a2b20177bdfb2be780398f3fc32e602a13b95d6c137bdf4d28",
+      "mode": "night",
+      "source": "assets/iso_props/painted_world/hut_l_dark_night.webp",
+      "manifest": "assets/iso_props/city/props.json",
+      "id": "hut_l_dark_night",
+      "body_bounds": [
+        1,
+        0,
+        301,
+        96
+      ]
+    },
+    "assets/iso_props/city/hut_l_moss.webp": {
+      "size": [
+        459,
+        384
+      ],
+      "prior_sha256": "e4ca4ed9d20757592385b276f1a5580171102ae180cdbe72220ea9fdc2f5f253",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/hut_l_moss.webp",
+      "body_bounds": [
+        3,
+        4,
+        455,
+        381
+      ]
+    },
+    "assets/iso_props/city/hut_l_moss_night.webp": {
+      "size": [
+        302,
+        96
+      ],
+      "prior_sha256": "bba464152377ecdf5744afb932a70a2335061c83aa884a3d5b2ff969c4e714de",
+      "mode": "night",
+      "source": "assets/iso_props/painted_world/hut_l_moss_night.webp",
+      "manifest": "assets/iso_props/city/props.json",
+      "id": "hut_l_moss_night",
+      "body_bounds": [
+        1,
+        0,
+        301,
+        96
+      ]
+    },
+    "assets/iso_props/city/hut_l_straw.webp": {
+      "size": [
+        459,
+        384
+      ],
+      "prior_sha256": "a046028d5547271fc68bf66955f077740abf3ce45830e44bf01e4a06283ac196",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/hut_l_straw.webp",
+      "body_bounds": [
+        3,
+        4,
+        455,
+        381
+      ]
+    },
+    "assets/iso_props/city/hut_l_straw_night.webp": {
+      "size": [
+        302,
+        96
+      ],
+      "prior_sha256": "e1df8327ba0d2544fdaa96b6422e4f987d5803b48c1b39912ee2a7b7e4f40aed",
+      "mode": "night",
+      "source": "assets/iso_props/painted_world/hut_l_straw_night.webp",
+      "manifest": "assets/iso_props/city/props.json",
+      "id": "hut_l_straw_night",
+      "body_bounds": [
+        1,
+        0,
+        301,
+        96
+      ]
+    },
+    "assets/iso_props/city/hut_m_dark.webp": {
+      "size": [
+        384,
+        375
+      ],
+      "prior_sha256": "1e17a13ea17a27d3767c500ac4e2d07e868577fda17212b469eae7e7678f93f6",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/hut_m_dark.webp",
+      "body_bounds": [
+        4,
+        3,
+        380,
+        372
+      ]
+    },
+    "assets/iso_props/city/hut_m_dark_night.webp": {
+      "size": [
+        254,
+        88
+      ],
+      "prior_sha256": "39638df88525cb100fcde2ac54affd055553b45dc66e3b946cbf654f247aa9a1",
+      "mode": "night",
+      "source": "assets/iso_props/painted_world/hut_m_dark_night.webp",
+      "manifest": "assets/iso_props/city/props.json",
+      "id": "hut_m_dark_night",
+      "body_bounds": [
+        0,
+        1,
+        254,
+        88
+      ]
+    },
+    "assets/iso_props/city/hut_m_moss.webp": {
+      "size": [
+        384,
+        375
+      ],
+      "prior_sha256": "820971be29cbc90198b8c59f828ed66a917fa3eba66c81cd7f9ca0ec4ebf14a7",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/hut_m_moss.webp",
+      "body_bounds": [
+        4,
+        3,
+        380,
+        372
+      ]
+    },
+    "assets/iso_props/city/hut_m_moss_night.webp": {
+      "size": [
+        254,
+        88
+      ],
+      "prior_sha256": "d8dcaf5bb6dddad165e01fb30b8b121a5c849b94c1e3a242493a15b058c407bb",
+      "mode": "night",
+      "source": "assets/iso_props/painted_world/hut_m_moss_night.webp",
+      "manifest": "assets/iso_props/city/props.json",
+      "id": "hut_m_moss_night",
+      "body_bounds": [
+        0,
+        1,
+        254,
+        88
+      ]
+    },
+    "assets/iso_props/city/hut_m_straw.webp": {
+      "size": [
+        384,
+        375
+      ],
+      "prior_sha256": "549fda5065df187aeb84016ad01ea6b6a2ff4de44f1bc104ce936023ff7b5caa",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/hut_m_straw.webp",
+      "body_bounds": [
+        4,
+        3,
+        380,
+        372
+      ]
+    },
+    "assets/iso_props/city/hut_m_straw_night.webp": {
+      "size": [
+        254,
+        88
+      ],
+      "prior_sha256": "8c999cae2ecbe07b780e073b3bbdf546e13f72f90b742ce55bbb0cae220c22fc",
+      "mode": "night",
+      "source": "assets/iso_props/painted_world/hut_m_straw_night.webp",
+      "manifest": "assets/iso_props/city/props.json",
+      "id": "hut_m_straw_night",
+      "body_bounds": [
+        0,
+        1,
+        254,
+        88
+      ]
+    },
+    "assets/iso_props/city/hut_raadhus.webp": {
+      "size": [
+        498,
+        481
+      ],
+      "prior_sha256": "f41dc83ceb6f7d5dfd4a01d5096782cdfbb4659a28d43897aa8bcc3856a584e5",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/hut_raadhus.webp",
+      "body_bounds": [
+        3,
+        3,
+        495,
+        478
+      ]
+    },
+    "assets/iso_props/city/hut_raadhus_night.webp": {
+      "size": [
+        326,
+        112
+      ],
+      "prior_sha256": "45854c062eee7eb23f2b079714a3990857a73ba2695940847e9690308cc85e3e",
+      "mode": "night",
+      "source": "assets/iso_props/painted_world/hut_raadhus_night.webp",
+      "manifest": "assets/iso_props/city/props.json",
+      "id": "hut_raadhus_night",
+      "body_bounds": [
+        1,
+        1,
+        325,
+        111
+      ]
+    },
+    "assets/iso_props/city/hut_s_dark.webp": {
+      "size": [
+        288,
+        285
+      ],
+      "prior_sha256": "402e40eb08296519463a533daace7d2e591690f2882b153d571a27b7c935d340",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/hut_s_dark.webp",
+      "body_bounds": [
+        3,
+        3,
+        285,
+        281
+      ]
+    },
+    "assets/iso_props/city/hut_s_dark_night.webp": {
+      "size": [
+        196,
+        69
+      ],
+      "prior_sha256": "063a8f8a9a165e87a6fc57b01c99d2c0fb0bc685dc1947c63c108443bcc832e6",
+      "mode": "night",
+      "source": "assets/iso_props/painted_world/hut_s_dark_night.webp",
+      "manifest": "assets/iso_props/city/props.json",
+      "id": "hut_s_dark_night",
+      "body_bounds": [
+        1,
+        1,
+        195,
+        68
+      ]
+    },
+    "assets/iso_props/city/hut_s_moss.webp": {
+      "size": [
+        288,
+        285
+      ],
+      "prior_sha256": "26ad3af956a9cb91a0666243d5cf16e5c4c88b892debcca7afe6112da1789c71",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/hut_s_moss.webp",
+      "body_bounds": [
+        3,
+        3,
+        285,
+        281
+      ]
+    },
+    "assets/iso_props/city/hut_s_moss_night.webp": {
+      "size": [
+        196,
+        69
+      ],
+      "prior_sha256": "1c50866a78e580d016079ce834fc8f736acbd6655ac6ef738740b1f09b39bcdb",
+      "mode": "night",
+      "source": "assets/iso_props/painted_world/hut_s_moss_night.webp",
+      "manifest": "assets/iso_props/city/props.json",
+      "id": "hut_s_moss_night",
+      "body_bounds": [
+        1,
+        1,
+        195,
+        68
+      ]
+    },
+    "assets/iso_props/city/hut_s_straw.webp": {
+      "size": [
+        288,
+        285
+      ],
+      "prior_sha256": "6341e4e5750912598225897573817bbf2b6da4f6100e6e46b83d8b9ca559a2a7",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/hut_s_straw.webp",
+      "body_bounds": [
+        3,
+        3,
+        285,
+        281
+      ]
+    },
+    "assets/iso_props/city/hut_s_straw_night.webp": {
+      "size": [
+        196,
+        69
+      ],
+      "prior_sha256": "4449f732b8b4093984a309cf8842c74e00bb26012ced58645655abc5cd177ba4",
+      "mode": "night",
+      "source": "assets/iso_props/painted_world/hut_s_straw_night.webp",
+      "manifest": "assets/iso_props/city/props.json",
+      "id": "hut_s_straw_night",
+      "body_bounds": [
+        1,
+        1,
+        195,
+        68
+      ]
+    },
+    "assets/iso_props/city/ladder_tile.webp": {
+      "size": [
+        60,
+        112
+      ],
+      "prior_sha256": "da034ed6fd7a53b1d3052b8b26a159bfe4863701b477b56976a4afe02786127b",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/ladder_tile.webp",
+      "body_bounds": [
+        0,
+        0,
+        60,
+        112
+      ]
+    },
+    "assets/iso_props/city/lamp_door.webp": {
+      "size": [
+        54,
+        54
+      ],
+      "prior_sha256": "7c52bccbb232401be9f75f7a04dbb2d335568009c396397332886bbd28fe27f5",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/lamp_door.webp",
+      "body_bounds": [
+        15,
+        7,
+        45,
+        46
+      ]
+    },
+    "assets/iso_props/city/lantern_hang.webp": {
+      "size": [
+        54,
+        96
+      ],
+      "prior_sha256": "dcc0850ad25b1683580b4ccfc48b8ba6c7126541df4fb883a34874e6517e702d",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/lantern_hang.webp",
+      "body_bounds": [
+        7,
+        0,
+        47,
+        90
+      ]
+    },
+    "assets/iso_props/city/lift_basket.webp": {
+      "size": [
+        145,
+        90
+      ],
+      "prior_sha256": "12ab40a5704eefbd7a18c0463fd54b04111f9207a5295d5b74e3eeaa708b013b",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/lift_basket.webp",
+      "body_bounds": [
+        3,
+        0,
+        142,
+        87
+      ]
+    },
+    "assets/iso_props/city/lift_pulley.webp": {
+      "size": [
+        72,
+        72
+      ],
+      "prior_sha256": "a979ef5e925bf759e79172ff9aa0764c1757e8a8f10d967214668e9d60d81ecf",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/lift_pulley.webp",
+      "body_bounds": [
+        14,
+        2,
+        58,
+        62
+      ]
+    },
+    "assets/iso_props/city/log_stack.webp": {
+      "size": [
+        240,
+        150
+      ],
+      "prior_sha256": "c84c382b96debe92417fd237e5e3dabf7e54ae131ce6cd160caad76cd74ccf74",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/log_stack.webp",
+      "body_bounds": [
+        3,
+        3,
+        237,
+        146
+      ]
+    },
+    "assets/iso_props/city/market_stall_traetoppen.webp": {
+      "size": [
+        252,
+        239
+      ],
+      "prior_sha256": "9bbc70a991e8f82f78cdbd45760b6d6099a8a9452b1e612c8f611f2fd2a94cde",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/market_stall_traetoppen.webp",
+      "body_bounds": [
+        3,
+        3,
+        249,
+        236
+      ]
+    },
+    "assets/iso_props/city/notice_board.webp": {
+      "size": [
+        168,
+        216
+      ],
+      "prior_sha256": "a47e1a30ccf0453f89c26deba74465fdafbf995e305c25f797b1ce05e45bd0a8",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/notice_board.webp",
+      "body_bounds": [
+        4,
+        3,
+        165,
+        213
+      ]
+    },
+    "assets/iso_props/city/owl_shelf.webp": {
+      "size": [
+        204,
+        66
+      ],
+      "prior_sha256": "1239dad942dd0e9420a5d0d0c02691c37ddcbc973e73d564507b2da64fdf7445",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/owl_shelf.webp",
+      "body_bounds": [
+        3,
+        6,
+        197,
+        61
+      ]
+    },
+    "assets/iso_props/city/pennant_blue.webp": {
+      "size": [
+        66,
+        102
+      ],
+      "prior_sha256": "ff3d6432164cd163ee97ecf35d9ef8d3c4c0c83d6180f56eae19dbb51e59ab43",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/pennant_blue.webp",
+      "body_bounds": [
+        6,
+        1,
+        61,
+        100
+      ]
+    },
+    "assets/iso_props/city/pennant_blue_f1.webp": {
+      "size": [
+        66,
+        102
+      ],
+      "prior_sha256": "6e3da2cc58dc4850222f7c0f8a0f4f275c7b64a04f11285070572c054a5715cd",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/pennant_blue_f1.webp",
+      "body_bounds": [
+        6,
+        1,
+        61,
+        100
+      ]
+    },
+    "assets/iso_props/city/pennant_gold.webp": {
+      "size": [
+        66,
+        102
+      ],
+      "prior_sha256": "74a2ee691cb1aad5bf5052448000484010c396136b41eb798d4ef98ef469750e",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/pennant_gold.webp",
+      "body_bounds": [
+        6,
+        1,
+        61,
+        100
+      ]
+    },
+    "assets/iso_props/city/pennant_gold_f1.webp": {
+      "size": [
+        66,
+        102
+      ],
+      "prior_sha256": "7ccd0a23e4fe85cb7650b2419761ce617cc6fc3d422d128c008abe633673c1bf",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/pennant_gold_f1.webp",
+      "body_bounds": [
+        6,
+        1,
+        61,
+        100
+      ]
+    },
+    "assets/iso_props/city/pennant_mint.webp": {
+      "size": [
+        66,
+        102
+      ],
+      "prior_sha256": "499a0796a1bbc3b7c9c200ee69e4dd9dbeedf1efe59891f7ed5073a2c87989ca",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/pennant_mint.webp",
+      "body_bounds": [
+        6,
+        1,
+        61,
+        100
+      ]
+    },
+    "assets/iso_props/city/pennant_mint_f1.webp": {
+      "size": [
+        66,
+        102
+      ],
+      "prior_sha256": "cc3485e68426d5f729122fe4099d6d972ea8af303647d70926b2871922772b6d",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/pennant_mint_f1.webp",
+      "body_bounds": [
+        6,
+        1,
+        61,
+        100
+      ]
+    },
+    "assets/iso_props/city/pennant_pink.webp": {
+      "size": [
+        66,
+        102
+      ],
+      "prior_sha256": "1e7e49f31d2d331fe0248512f9d9c94216d5234555d2f7161c1cdf12ffeb8c41",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/pennant_pink.webp",
+      "body_bounds": [
+        6,
+        1,
+        61,
+        100
+      ]
+    },
+    "assets/iso_props/city/pennant_pink_f1.webp": {
+      "size": [
+        66,
+        102
+      ],
+      "prior_sha256": "600c6c44527391630f35d29a841ea84940ffe703fe0229cad822c5be45b98840",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/pennant_pink_f1.webp",
+      "body_bounds": [
+        6,
+        1,
+        61,
+        100
+      ]
+    },
+    "assets/iso_props/city/planter_box.webp": {
+      "size": [
+        168,
+        150
+      ],
+      "prior_sha256": "689161b26436e3fba3921b48eabed090d191f6f3a20983481da7595170661e71",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/planter_box.webp",
+      "body_bounds": [
+        3,
+        3,
+        165,
+        146
+      ]
+    },
+    "assets/iso_props/city/planter_box_berry.webp": {
+      "size": [
+        168,
+        150
+      ],
+      "prior_sha256": "621213fadb7f4187ee29dc91d594739c1921d6700e11af260c39d98358a0e2aa",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/planter_box_berry.webp",
+      "body_bounds": [
+        3,
+        3,
+        165,
+        146
+      ]
+    },
+    "assets/iso_props/city/platform_disc_171.webp": {
+      "size": [
+        1029,
+        642
+      ],
+      "prior_sha256": "177fc3576b9740382b7155f68f3313de0f28def52d0c3c7a40f3bf5bd6a8a917",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/platform_disc_171.webp",
+      "body_bounds": [
+        2,
+        2,
+        1027,
+        639
+      ]
+    },
+    "assets/iso_props/city/platform_disc_184.webp": {
+      "size": [
+        1102,
+        684
+      ],
+      "prior_sha256": "4dbda08d9dd3ffb40a41fdf492844bf178c64ed3e9436285afc934c78f170e19",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/platform_disc_184.webp",
+      "body_bounds": [
+        2,
+        2,
+        1100,
+        681
+      ]
+    },
+    "assets/iso_props/city/platform_disc_196.webp": {
+      "size": [
+        1176,
+        726
+      ],
+      "prior_sha256": "ea55733a1f8990bf079a91d33b720bf75544e0fce42c1695367afb7cbb5d7f01",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/platform_disc_196.webp",
+      "body_bounds": [
+        2,
+        2,
+        1174,
+        723
+      ]
+    },
+    "assets/iso_props/city/platform_disc_306.webp": {
+      "size": [
+        1837,
+        1108
+      ],
+      "prior_sha256": "ae11e6fd8ec6a1e1b539629a314b5e78e1e75367545d4b5b4c22954796d57300",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/platform_disc_306.webp",
+      "body_bounds": [
+        2,
+        2,
+        1835,
+        1105
+      ]
+    },
+    "assets/iso_props/city/rope_tile.webp": {
+      "size": [
+        30,
+        186
+      ],
+      "prior_sha256": "c568cdf0f2731898967df75278df5644ae800c100f55e029acf1201536476e90",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/rope_tile.webp",
+      "body_bounds": [
+        9,
+        0,
+        21,
+        186
+      ]
+    },
+    "assets/iso_props/city/seed_basket.webp": {
+      "size": [
+        90,
+        72
+      ],
+      "prior_sha256": "90630397806bb5b2b5b6218df218c3184ebf236a3c148657d74c365b61a88658",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/seed_basket.webp",
+      "body_bounds": [
+        3,
+        3,
+        87,
+        69
+      ]
+    },
+    "assets/iso_props/city/trunk_bark_w367.webp": {
+      "size": [
+        367,
+        512
+      ],
+      "prior_sha256": "0538e43f8b27d8f2bc5352c931bdfc2969bf3bdbb52b23c44dc9179734a5a7bd",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/trunk_bark_w367.webp",
+      "body_bounds": [
+        0,
+        0,
+        367,
+        512
+      ]
+    },
+    "assets/iso_props/city/trunk_bark_w404.webp": {
+      "size": [
+        404,
+        512
+      ],
+      "prior_sha256": "af84b6a0791c01e1a51dcd68d99e80906724c5634fccd933368bf47c8b4260f4",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/trunk_bark_w404.webp",
+      "body_bounds": [
+        0,
+        0,
+        404,
+        512
+      ]
+    },
+    "assets/iso_props/city/trunk_bark_w441.webp": {
+      "size": [
+        441,
+        512
+      ],
+      "prior_sha256": "c2ba1b55b3bbf0b27174309ecfb579de8dcac125e1bf58452696c580a830caf1",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/trunk_bark_w441.webp",
+      "body_bounds": [
+        0,
+        0,
+        441,
+        512
+      ]
+    },
+    "assets/iso_props/city/trunk_bark_w698.webp": {
+      "size": [
+        698,
+        512
+      ],
+      "prior_sha256": "124c0b6e44a1f22cc5adcaa2a46d869e06d58716b1ff92fb07621e71849ae5f3",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/trunk_bark_w698.webp",
+      "body_bounds": [
+        0,
+        0,
+        698,
+        512
+      ]
+    },
+    "assets/iso_props/city/trunk_foot_w367.webp": {
+      "size": [
+        367,
+        137
+      ],
+      "prior_sha256": "79bdafb25cecd0bb822cdfd83cca2d4dc8350908a84389ae36016cf951da2fc9",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/trunk_foot_w367.webp",
+      "body_bounds": [
+        0,
+        0,
+        367,
+        136
+      ]
+    },
+    "assets/iso_props/city/trunk_foot_w404.webp": {
+      "size": [
+        404,
+        147
+      ],
+      "prior_sha256": "4976a2dbabb40b5e7c3eebf717a71c1c91c60f7a3c375865e1bb8bc07439ec45",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/trunk_foot_w404.webp",
+      "body_bounds": [
+        0,
+        0,
+        404,
+        147
+      ]
+    },
+    "assets/iso_props/city/trunk_foot_w441.webp": {
+      "size": [
+        441,
+        158
+      ],
+      "prior_sha256": "0183ca60ec5e5eddd74f544f42d06bec0295400af8d1c71762ad79087d3b5ffc",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/trunk_foot_w441.webp",
+      "body_bounds": [
+        0,
+        0,
+        441,
+        157
+      ]
+    },
+    "assets/iso_props/city/trunk_foot_w698.webp": {
+      "size": [
+        698,
+        232
+      ],
+      "prior_sha256": "b760f36d513de42b0877cb2be31275eb8f23af243b09939a25949c381bdb009d",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/trunk_foot_w698.webp",
+      "body_bounds": [
+        0,
+        0,
+        698,
+        231
+      ]
+    },
+    "assets/iso_props/city/trunk_hole_owl.webp": {
+      "size": [
+        180,
+        228
+      ],
+      "prior_sha256": "6cd732891006928cc767a8380a196fae10bf03f7035b56ff421c94c4c1890b98",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/trunk_hole_owl.webp",
+      "body_bounds": [
+        5,
+        7,
+        175,
+        225
+      ]
+    },
+    "assets/iso_props/city/trunk_hole_owl_b.webp": {
+      "size": [
+        180,
+        228
+      ],
+      "prior_sha256": "ec47e3d5efd928cc939f2734b61636a8d4be19e94dd25206d3af6037a9cc9465",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/trunk_hole_owl_b.webp",
+      "body_bounds": [
+        5,
+        7,
+        175,
+        225
+      ]
+    },
+    "assets/iso_props/city/trunk_root_w367.webp": {
+      "size": [
+        496,
+        281
+      ],
+      "prior_sha256": "22fb2836e19a892f3d7a217d003206650b7d5ae852daa45d30743e23979ce795",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/trunk_root_w367.webp",
+      "body_bounds": [
+        1,
+        0,
+        495,
+        280
+      ]
+    },
+    "assets/iso_props/city/trunk_root_w404.webp": {
+      "size": [
+        546,
+        301
+      ],
+      "prior_sha256": "bba2049bbbc6eab12b1cbee867e3796bd1536b96f67e35ffa2f3299859f2e52a",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/trunk_root_w404.webp",
+      "body_bounds": [
+        1,
+        0,
+        545,
+        300
+      ]
+    },
+    "assets/iso_props/city/trunk_root_w441.webp": {
+      "size": [
+        596,
+        320
+      ],
+      "prior_sha256": "ebf1c74d0071f6b5e30eda362a4db8c603e668bbb6a1795c0b9e6a6112460cd3",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/trunk_root_w441.webp",
+      "body_bounds": [
+        1,
+        0,
+        595,
+        319
+      ]
+    },
+    "assets/iso_props/city/trunk_root_w698.webp": {
+      "size": [
+        943,
+        453
+      ],
+      "prior_sha256": "42af21873b94c69c5805623c47f21008267207993964288b0face73bf3926adb",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/trunk_root_w698.webp",
+      "body_bounds": [
+        1,
+        0,
+        942,
+        452
+      ]
+    },
+    "assets/iso_props/coop_small.png": {
+      "size": [
+        350,
+        295
+      ],
+      "prior_sha256": "a6b5021c002e12a9fdb9e4a68c85606c69e64a1702ba07d13b4d800b74103a24",
+      "mode": "anchored",
+      "source": "assets/iso_props/zz_painted_consistency/coop_small.webp",
+      "pivot": [
+        155,
+        218
+      ],
+      "source_pivot": [
+        188,
+        315
+      ],
+      "body_bounds": [
+        6,
+        3,
+        304,
+        292
+      ]
+    },
+    "assets/iso_props/crop_carrot_0.png": {
+      "size": [
+        84,
+        36
+      ],
+      "prior_sha256": "9740217c74955af41145aa8b11c6d79061e5be3486c94b4222700444cfc183ad",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_carrot_0.webp",
+      "body_bounds": [
+        22,
+        5,
+        55,
+        26
+      ]
+    },
+    "assets/iso_props/crop_carrot_1.png": {
+      "size": [
+        84,
+        48
+      ],
+      "prior_sha256": "8979ff85cceb84aff943c3aa28c2506f74031504f0693b9adbd6e214bfca438d",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_carrot_1.webp",
+      "body_bounds": [
+        22,
+        4,
+        55,
+        38
+      ]
+    },
+    "assets/iso_props/crop_carrot_2.png": {
+      "size": [
+        84,
+        65
+      ],
+      "prior_sha256": "8511718e1f5f0a89001db0de6aec68e06ce28ca7fa7399da2296dbda342b0674",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_carrot_2.webp",
+      "body_bounds": [
+        24,
+        4,
+        52,
+        42
+      ]
+    },
+    "assets/iso_props/crop_carrot_3.png": {
+      "size": [
+        84,
+        79
+      ],
+      "prior_sha256": "8461f46a7e308164064f7eb36cba9852089821b886c8e768339a9ab54aa4cab5",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_carrot_3.webp",
+      "body_bounds": [
+        19,
+        3,
+        58,
+        61
+      ]
+    },
+    "assets/iso_props/crop_catnip_0.png": {
+      "size": [
+        84,
+        36
+      ],
+      "prior_sha256": "28fb62a4cab92c95af52800ad5a56fb802de5e5463751aba7cbfc558f81b666d",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_catnip_0.webp",
+      "body_bounds": [
+        22,
+        5,
+        55,
+        26
+      ]
+    },
+    "assets/iso_props/crop_catnip_1.png": {
+      "size": [
+        84,
+        41
+      ],
+      "prior_sha256": "29b2ec2c0a834e0fbb6ee900a6b0386a656764cc8fa2dca7280a74440aa126d5",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_catnip_1.webp",
+      "body_bounds": [
+        22,
+        3,
+        55,
+        31
+      ]
+    },
+    "assets/iso_props/crop_catnip_2.png": {
+      "size": [
+        84,
+        52
+      ],
+      "prior_sha256": "4922ec652baa9ef7612018bf9e25c13608feefc9651949d160dd3ea5d0135d50",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_catnip_2.webp",
+      "body_bounds": [
+        16,
+        4,
+        56,
+        33
+      ]
+    },
+    "assets/iso_props/crop_catnip_3.png": {
+      "size": [
+        84,
+        74
+      ],
+      "prior_sha256": "006f9dbf17c4126df0510caf97784ed2890ef59510ed4c116906bc0ebddf08a7",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_catnip_3.webp",
+      "body_bounds": [
+        12,
+        4,
+        67,
+        56
+      ]
+    },
+    "assets/iso_props/crop_glow_berry_0.png": {
+      "size": [
+        84,
+        36
+      ],
+      "prior_sha256": "aa493e79cd9af80b0d3ecd285683e5fa345f51f982cd678a0fe818ddb7454804",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_glow_berry_0.webp",
+      "body_bounds": [
+        22,
+        5,
+        55,
+        26
+      ]
+    },
+    "assets/iso_props/crop_glow_berry_1.png": {
+      "size": [
+        84,
+        38
+      ],
+      "prior_sha256": "f856596ac515f4d4d59a237592bde74ca7e7bf266daebf85fd05da6b28db4c7f",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_glow_berry_1.webp",
+      "body_bounds": [
+        22,
+        4,
+        55,
+        28
+      ]
+    },
+    "assets/iso_props/crop_glow_berry_2.png": {
+      "size": [
+        84,
+        48
+      ],
+      "prior_sha256": "1a32e588e3acb32539ff27ba0211dec89ed9670385f4485a010d2f96b840b298",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_glow_berry_2.webp",
+      "body_bounds": [
+        16,
+        4,
+        57,
+        32
+      ]
+    },
+    "assets/iso_props/crop_glow_berry_3.png": {
+      "size": [
+        84,
+        63
+      ],
+      "prior_sha256": "287dcf6f6e122539125f858f5e5f4b382711a76948c487d24583a13374a833db",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_glow_berry_3.webp",
+      "body_bounds": [
+        8,
+        3,
+        70,
+        51
+      ]
+    },
+    "assets/iso_props/crop_moonflower_0.png": {
+      "size": [
+        84,
+        36
+      ],
+      "prior_sha256": "9740217c74955af41145aa8b11c6d79061e5be3486c94b4222700444cfc183ad",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_moonflower_0.webp",
+      "body_bounds": [
+        22,
+        5,
+        55,
+        26
+      ]
+    },
+    "assets/iso_props/crop_moonflower_1.png": {
+      "size": [
+        84,
+        37
+      ],
+      "prior_sha256": "6a3d27981990561a42eec738eeb44eebffe7716a87c62f443468aa77d36d9400",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_moonflower_1.webp",
+      "body_bounds": [
+        22,
+        4,
+        55,
+        27
+      ]
+    },
+    "assets/iso_props/crop_moonflower_2.png": {
+      "size": [
+        84,
+        75
+      ],
+      "prior_sha256": "012b381076f69bd03d5cd48e619c28a7c5df1e432bc55895d4ef00ad3d07e83c",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_moonflower_2.webp",
+      "body_bounds": [
+        18,
+        3,
+        53,
+        55
+      ]
+    },
+    "assets/iso_props/crop_moonflower_3.png": {
+      "size": [
+        84,
+        105
+      ],
+      "prior_sha256": "6d0d9a53496a4093fd398697390265bd7fe4b5d30a56e743df5513d39b5e1915",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_moonflower_3.webp",
+      "body_bounds": [
+        12,
+        3,
+        64,
+        85
+      ]
+    },
+    "assets/iso_props/crop_pumpkin_0.png": {
+      "size": [
+        84,
+        36
+      ],
+      "prior_sha256": "9740217c74955af41145aa8b11c6d79061e5be3486c94b4222700444cfc183ad",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_pumpkin_0.webp",
+      "body_bounds": [
+        22,
+        5,
+        55,
+        26
+      ]
+    },
+    "assets/iso_props/crop_pumpkin_1.png": {
+      "size": [
+        84,
+        45
+      ],
+      "prior_sha256": "e6a2e7bb851d208b965f1e86d2ad20142e9ef21af069497c44bb9546956f3308",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_pumpkin_1.webp",
+      "body_bounds": [
+        22,
+        3,
+        55,
+        35
+      ]
+    },
+    "assets/iso_props/crop_pumpkin_2.png": {
+      "size": [
+        84,
+        60
+      ],
+      "prior_sha256": "9247276a0646a87f76aadb341e71a2c8aafeecb0c75c551bf53f1d9283121f33",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_pumpkin_2.webp",
+      "body_bounds": [
+        5,
+        3,
+        73,
+        55
+      ]
+    },
+    "assets/iso_props/crop_pumpkin_3.png": {
+      "size": [
+        101,
+        71
+      ],
+      "prior_sha256": "79dff4f25794cc5736debc4177c2c1b810bf91b879ce59e93320fb3af47dcbfe",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_pumpkin_3.webp",
+      "body_bounds": [
+        3,
+        4,
+        98,
+        66
+      ]
+    },
+    "assets/iso_props/crop_strawberry_0.png": {
+      "size": [
+        84,
+        36
+      ],
+      "prior_sha256": "47aa28f5e4fb70a53161ae4ecbd699deaf962db1e2e2bea2625fd495f2169ac6",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_strawberry_0.webp",
+      "body_bounds": [
+        22,
+        5,
+        55,
+        26
+      ]
+    },
+    "assets/iso_props/crop_strawberry_1.png": {
+      "size": [
+        84,
+        38
+      ],
+      "prior_sha256": "bb797513ac082767bc5280ed562a54dde4312bf28b66b721d9b419087de67e1e",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_strawberry_1.webp",
+      "body_bounds": [
+        22,
+        4,
+        55,
+        28
+      ]
+    },
+    "assets/iso_props/crop_strawberry_2.png": {
+      "size": [
+        84,
+        45
+      ],
+      "prior_sha256": "b2ffbd6bf7c6b7c92b292e15ef7cbda52d676c67e79a7ae8e1280b1779d28486",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_strawberry_2.webp",
+      "body_bounds": [
+        18,
+        4,
+        58,
+        30
+      ]
+    },
+    "assets/iso_props/crop_strawberry_3.png": {
+      "size": [
+        84,
+        50
+      ],
+      "prior_sha256": "25225a98781020a2314e7f124eddcb2f93c86bee7cd367322507dc648402047d",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_strawberry_3.webp",
+      "body_bounds": [
+        10,
+        4,
+        67,
+        42
+      ]
+    },
+    "assets/iso_props/crop_sunflower_0.png": {
+      "size": [
+        84,
+        36
+      ],
+      "prior_sha256": "0073eb7b18659d0645f1245b83199d273d20e7167a675b041fe01079beb17d41",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_sunflower_0.webp",
+      "body_bounds": [
+        22,
+        5,
+        55,
+        26
+      ]
+    },
+    "assets/iso_props/crop_sunflower_1.png": {
+      "size": [
+        84,
+        40
+      ],
+      "prior_sha256": "54bb74afe8c2b36fe5f11fa245f768d2308e1debe067d8e70be7117b79a7ce22",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_sunflower_1.webp",
+      "body_bounds": [
+        22,
+        3,
+        55,
+        30
+      ]
+    },
+    "assets/iso_props/crop_sunflower_2.png": {
+      "size": [
+        84,
+        91
+      ],
+      "prior_sha256": "6d555dc5d631e08ad76060e6a8ab090232f741f80a57438da930065bb1c38b10",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_sunflower_2.webp",
+      "body_bounds": [
+        19,
+        4,
+        53,
+        75
+      ]
+    },
+    "assets/iso_props/crop_sunflower_3.png": {
+      "size": [
+        84,
+        149
+      ],
+      "prior_sha256": "da8d94b2a61f9e5d52d48519205cdd028c42e2d6ef1df9523d5d49a7a15ba8c6",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_sunflower_3.webp",
+      "body_bounds": [
+        11,
+        4,
+        64,
+        136
+      ]
+    },
+    "assets/iso_props/crop_turnip_0.png": {
+      "size": [
+        84,
+        36
+      ],
+      "prior_sha256": "9740217c74955af41145aa8b11c6d79061e5be3486c94b4222700444cfc183ad",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_turnip_0.webp",
+      "body_bounds": [
+        22,
+        5,
+        55,
+        26
+      ]
+    },
+    "assets/iso_props/crop_turnip_1.png": {
+      "size": [
+        84,
+        39
+      ],
+      "prior_sha256": "2dfa6381e4d73cf5ff0edcddc755f1ccedfc0583ae62546d823936fef02caa5d",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_turnip_1.webp",
+      "body_bounds": [
+        22,
+        4,
+        55,
+        29
+      ]
+    },
+    "assets/iso_props/crop_turnip_2.png": {
+      "size": [
+        84,
+        50
+      ],
+      "prior_sha256": "db4ef1e43e86e3d6d923855830663d5b637e7ea34bfcfd346df13697640fb1f6",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_turnip_2.webp",
+      "body_bounds": [
+        26,
+        4,
+        51,
+        32
+      ]
+    },
+    "assets/iso_props/crop_turnip_3.png": {
+      "size": [
+        84,
+        68
+      ],
+      "prior_sha256": "5e39d5d5d6bfe46b97d7d28e1a257924543a17f592bdf57f8bfbbdfde1bb5b55",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crop_turnip_3.webp",
+      "body_bounds": [
+        19,
+        3,
+        57,
+        55
+      ]
+    },
+    "assets/iso_props/crown_l_a.png": {
+      "size": [
+        671,
+        758
+      ],
+      "prior_sha256": "cf44a260907abb0bd0ef4a00249e5ec0acd8c211f2bc90273c5fdec425502693",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/crown_l_a.webp",
+      "body_bounds": [
+        3,
+        3,
+        656,
+        743
+      ]
+    },
+    "assets/iso_props/crown_l_b.png": {
+      "size": [
+        674,
+        756
+      ],
+      "prior_sha256": "f4e232f11381fb64454408a8888dab822781d9984b8869bbf3f8faf248207e09",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/crown_l_b.webp",
+      "body_bounds": [
+        4,
+        4,
+        659,
+        741
+      ]
+    },
+    "assets/iso_props/crown_m_a.png": {
+      "size": [
+        513,
+        589
+      ],
+      "prior_sha256": "b449d83e8214960e1e0aba795002c74e6658d40dd8b85930840161cb2534abe5",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/crown_m_a.webp",
+      "body_bounds": [
+        3,
+        4,
+        498,
+        574
+      ]
+    },
+    "assets/iso_props/crown_m_b.png": {
+      "size": [
+        525,
+        593
+      ],
+      "prior_sha256": "565dc2fe2712a2fc9efb6d6a0ec4f5ebb95e425b33741226734930b88822b060",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/crown_m_b.webp",
+      "body_bounds": [
+        3,
+        3,
+        510,
+        578
+      ]
+    },
+    "assets/iso_props/crown_s_a.png": {
+      "size": [
+        399,
+        447
+      ],
+      "prior_sha256": "98c562565309f5753465c2ceb7e766bc9c560dd89b5463d43284f3b5fae7386d",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/crown_s_a.webp",
+      "body_bounds": [
+        4,
+        4,
+        384,
+        432
+      ]
+    },
+    "assets/iso_props/crown_s_b.png": {
+      "size": [
+        411,
+        447
+      ],
+      "prior_sha256": "6579641c3ad562c07f615505f95cc570ba55bb02c395eeedfff21d8b3e4ba72b",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/crown_s_b.webp",
+      "body_bounds": [
+        3,
+        3,
+        396,
+        432
+      ]
+    },
+    "assets/iso_props/crystal_amethyst.png": {
+      "size": [
+        156,
+        142
+      ],
+      "prior_sha256": "612c566b52ef8c3babf8bf62e2bd3f419c3a496a0f1fa5bbd2f45f3ee4263048",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crystal_amethyst.webp",
+      "body_bounds": [
+        22,
+        4,
+        125,
+        136
+      ]
+    },
+    "assets/iso_props/crystal_emerald.png": {
+      "size": [
+        156,
+        142
+      ],
+      "prior_sha256": "35890bb3871c3af7ddc2d75344217cfe717f990e44a10ce98aa45fe5c8507adb",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crystal_emerald.webp",
+      "body_bounds": [
+        25,
+        4,
+        121,
+        136
+      ]
+    },
+    "assets/iso_props/crystal_moonstone.png": {
+      "size": [
+        156,
+        142
+      ],
+      "prior_sha256": "c567613c33804fa8765ecbe714b131a565da7805fcb08b0ae9a9b33e4dc717a7",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/crystal_moonstone.webp",
+      "body_bounds": [
+        18,
+        4,
+        114,
+        136
+      ]
+    },
+    "assets/iso_props/empty_bush.png": {
+      "size": [
+        270,
+        233
+      ],
+      "prior_sha256": "9e72de97250a843161df5672e6a04b82cb52224b57a9cc17050edba8ecdf6aed",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/empty_bush.webp",
+      "body_bounds": [
+        3,
+        4,
+        254,
+        217
+      ]
+    },
+    "assets/iso_props/farm/build_stake.png": {
+      "size": [
+        76,
+        118
+      ],
+      "prior_sha256": "3100b71d5b9e22d5711d5dd29df248254e6a31bdd18434cb61e7847eab975863",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/build_stake.webp",
+      "body_bounds": [
+        30,
+        3,
+        62,
+        103
+      ]
+    },
+    "assets/iso_props/farm/rope_stake_x.png": {
+      "size": [
+        87,
+        97
+      ],
+      "prior_sha256": "d396417ce18727bf7c1babd3bd89a1cb4fe4011c18396cba0e364c276665e62f",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/rope_stake_x.webp",
+      "body_bounds": [
+        4,
+        4,
+        78,
+        93
+      ]
+    },
+    "assets/iso_props/farm/rope_stake_z.png": {
+      "size": [
+        87,
+        97
+      ],
+      "prior_sha256": "af393111b2ab5aaade1e0d56a0efd2cd5baac0213b80b4ef5461279a404f0526",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/rope_stake_z.webp",
+      "body_bounds": [
+        4,
+        4,
+        78,
+        93
+      ]
+    },
+    "assets/iso_props/farm/shipping_bin.png": {
+      "size": [
+        226,
+        182
+      ],
+      "prior_sha256": "6097af2cedf632a23629766bf83ae3442d02b687ef163bf430ff019fba2f36e5",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/shipping_bin.webp",
+      "body_bounds": [
+        15,
+        3,
+        207,
+        178
+      ]
+    },
+    "assets/iso_props/farm/stake_sign.png": {
+      "size": [
+        84,
+        124
+      ],
+      "prior_sha256": "9f4c7d67f04028b3f1b7318c1bd2e4d36b3030d5382dde38625f82f663a9f21e",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/stake_sign.webp",
+      "body_bounds": [
+        18,
+        3,
+        58,
+        109
+      ]
+    },
+    "assets/iso_props/farm/tool_shed.png": {
+      "size": [
+        316,
+        313
+      ],
+      "prior_sha256": "7cf025c25aa3c0503b7bae57443372d734381e7c54a7c0c506a991d41eee58be",
+      "mode": "anchored",
+      "source": "assets/iso_props/zz_painted_consistency/tool_shed.webp",
+      "pivot": [
+        140,
+        246
+      ],
+      "source_pivot": [
+        146,
+        236
+      ],
+      "body_bounds": [
+        9,
+        4,
+        280,
+        310
+      ]
+    },
+    "assets/iso_props/farm/trunk_giant_a.png": {
+      "size": [
+        1227,
+        2405
+      ],
+      "prior_sha256": "14e3c7c480533b4c52bd3f7b649c12cc67a72cf92a7a9c3baa9962079208b387",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/trunk_giant_a.webp",
+      "body_bounds": [
+        4,
+        3,
+        1223,
+        2402
+      ]
+    },
+    "assets/iso_props/farm/trunk_giant_b.png": {
+      "size": [
+        1274,
+        2142
+      ],
+      "prior_sha256": "1c19f2b3146ac3e7e3d86af96c052be29db55cdb5b1b291f8a8d85b0af7b25a0",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/trunk_giant_b.webp",
+      "body_bounds": [
+        4,
+        3,
+        1270,
+        2138
+      ]
+    },
+    "assets/iso_props/farm/trunk_under_a.png": {
+      "size": [
+        907,
+        1352
+      ],
+      "prior_sha256": "23a360b7738b22ec8e16591dbb1370f4c358f0863294c4281dfd9d35f689dcf7",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/trunk_under_a.webp",
+      "body_bounds": [
+        4,
+        3,
+        903,
+        1348
+      ]
+    },
+    "assets/iso_props/farm/trunk_under_b.png": {
+      "size": [
+        746,
+        1306
+      ],
+      "prior_sha256": "19860b808080ec3ae503487822018e4e1bbfd9dcbc7f2ec92d0b0c6ab56ebcec",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/trunk_under_b.webp",
+      "body_bounds": [
+        3,
+        3,
+        742,
+        1303
+      ]
+    },
+    "assets/iso_props/features/chest_fe.webp": {
+      "size": [
+        122,
+        102
+      ],
+      "prior_sha256": "c0d9da30bc65c8f6bdee1fe6a0330439de63ce171ba84fff20a2d6f3253d245d",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/chest_fe.webp",
+      "body_bounds": [
+        10,
+        3,
+        103,
+        99
+      ]
+    },
+    "assets/iso_props/features/chest_jern.webp": {
+      "size": [
+        128,
+        105
+      ],
+      "prior_sha256": "c30c6c24e2c9d79ea5d53b5b24676d6c1acd45f89736563b42450c90253ed4cb",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/chest_jern.webp",
+      "body_bounds": [
+        10,
+        3,
+        109,
+        101
+      ]
+    },
+    "assets/iso_props/features/chest_konge.webp": {
+      "size": [
+        138,
+        114
+      ],
+      "prior_sha256": "9d5c93af51ba72a01862e7a7f698b2cd978b417ca90fc6f11edf4c85b097055c",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/chest_konge.webp",
+      "body_bounds": [
+        11,
+        3,
+        117,
+        109
+      ]
+    },
+    "assets/iso_props/features/chest_trae.webp": {
+      "size": [
+        124,
+        104
+      ],
+      "prior_sha256": "3f6686d22b5b7d9486a8c10574f770855829fb5f34d122803e024afdefac8dec",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/chest_trae.webp",
+      "body_bounds": [
+        10,
+        3,
+        105,
+        100
+      ]
+    },
+    "assets/iso_props/features/marble_vein.webp": {
+      "size": [
+        156,
+        106
+      ],
+      "prior_sha256": "303cefb23bdb8dd986f93f38d104d87ade893833380f975f1f90e7347f7f3273",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/marble_vein.webp",
+      "body_bounds": [
+        7,
+        4,
+        143,
+        102
+      ]
+    },
+    "assets/iso_props/features/slate_vein.webp": {
+      "size": [
+        156,
+        99
+      ],
+      "prior_sha256": "50af2e58844226793355d521dbfd0e37c59322b1932d38e4d088de621ff29eda",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/slate_vein.webp",
+      "body_bounds": [
+        18,
+        3,
+        124,
+        93
+      ]
+    },
+    "assets/iso_props/features/tent.webp": {
+      "size": [
+        344,
+        233
+      ],
+      "prior_sha256": "442bfb80cb2fe72f787354be7a2b4f617aeb415281b9fd3fc30dd8d2daa5894c",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/tent.webp",
+      "body_bounds": [
+        4,
+        3,
+        340,
+        230
+      ]
+    },
+    "assets/iso_props/fence_gate_x.png": {
+      "size": [
+        110,
+        122
+      ],
+      "prior_sha256": "9c4f3a86ea3910a20875db75a071f65e818c0a8c0ed1339b047c98fcc4416ed7",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/fence_gate_x.webp",
+      "body_bounds": [
+        11,
+        3,
+        89,
+        119
+      ]
+    },
+    "assets/iso_props/fence_x.png": {
+      "size": [
+        110,
+        122
+      ],
+      "prior_sha256": "4925fff1fe97b3bb5647b6148481ac250b1a9c6ab2c9650daa919c0fcfedc83b",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/fence_x.webp",
+      "pivot": [
+        50,
+        96
+      ],
+      "source_pivot": [
+        65,
+        78
+      ],
+      "body_bounds": [
+        11,
+        3,
+        89,
+        119
+      ]
+    },
+    "assets/iso_props/fence_z.png": {
+      "size": [
+        110,
+        122
+      ],
+      "prior_sha256": "d2c1c089ec7e76177f22ee96c338a3c678e63fb00d3294241cf6282684a38709",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/fence_z.webp",
+      "pivot": [
+        50,
+        96
+      ],
+      "source_pivot": [
+        65,
+        78
+      ],
+      "body_bounds": [
+        11,
+        3,
+        89,
+        119
+      ]
+    },
+    "assets/iso_props/floor_patch_a.png": {
+      "size": [
+        256,
+        256
+      ],
+      "prior_sha256": "3076133ce48a260b2839587d746193318f3bdd73560cfd3217e881b8561c32c2",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/floor_patch_a.webp",
+      "body_bounds": [
+        0,
+        0,
+        256,
+        256
+      ]
+    },
+    "assets/iso_props/floor_patch_b.png": {
+      "size": [
+        256,
+        256
+      ],
+      "prior_sha256": "61362cef6d974dbdf2c8d501a9bd166207d21575f817bfac425b61cd505274e6",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/floor_patch_b.webp",
+      "body_bounds": [
+        0,
+        0,
+        256,
+        256
+      ]
+    },
+    "assets/iso_props/floor_patch_c.png": {
+      "size": [
+        256,
+        256
+      ],
+      "prior_sha256": "6f0c733aebdb2a84295d448a7db610c53bab9fc7ced4224b9fd2f47364986c0a",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/floor_patch_c.webp",
+      "body_bounds": [
+        0,
+        0,
+        256,
+        256
+      ]
+    },
+    "assets/iso_props/fountain.png": {
+      "size": [
+        298,
+        249
+      ],
+      "prior_sha256": "2d812693e5242bd98b51fb7352e426ac932a91aa0d122717af267b3c01e63646",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/fountain.webp",
+      "body_bounds": [
+        7,
+        4,
+        256,
+        245
+      ]
+    },
+    "assets/iso_props/fx/glow_soft.webp": {
+      "size": [
+        256,
+        256
+      ],
+      "prior_sha256": "7f8081e5770681f7a491ee0186dcbc6f9b34e0f1f9454f96866f1265fd59f3cc",
+      "mode": "technical",
+      "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
+      "body_bounds": [
+        84,
+        84,
+        173,
+        173
+      ]
+    },
+    "assets/iso_props/glowmush_blue.png": {
+      "size": [
+        138,
+        100
+      ],
+      "prior_sha256": "ac74103e7d1fa2f7a7cb8f7e30a890a6050a36919b498c5a11bcb17a9505bfd8",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/glowmush_blue.webp",
+      "body_bounds": [
+        5,
+        3,
+        110,
+        95
+      ]
+    },
+    "assets/iso_props/glowmush_pink.png": {
+      "size": [
+        138,
+        100
+      ],
+      "prior_sha256": "65c99f5e7c7d35da7a380d8e43ba63dc938d25c70969fd6777d6bc5e7ed90bd8",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/glowmush_pink.webp",
+      "body_bounds": [
+        5,
+        3,
+        110,
+        95
+      ]
+    },
+    "assets/iso_props/glowmush_teal.png": {
+      "size": [
+        138,
+        100
+      ],
+      "prior_sha256": "62e2acd21a9ed10e046a656fec5b218343f09135c9d87f4d932455bf450b5f47",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/glowmush_teal.webp",
+      "body_bounds": [
+        5,
+        3,
+        110,
+        95
+      ]
+    },
+    "assets/iso_props/home_rope.png": {
+      "size": [
+        126,
+        373
+      ],
+      "prior_sha256": "39c2a4f75640c4405e5dd0c7a6f0d5981d7f33280ccb9a75341962a9a41ca84d",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/home_rope.webp",
+      "body_bounds": [
+        2,
+        2,
+        109,
+        361
+      ]
+    },
+    "assets/iso_props/house_animalstore.png": {
+      "size": [
+        324,
+        308
+      ],
+      "prior_sha256": "9852d77238bc8973bc90a9dd3a6c987283d84860abcb0bee0c26f6de2d1d3ed3",
+      "mode": "anchored",
+      "source": "assets/iso_props/zz_painted_consistency/house_animalstore.webp",
+      "pivot": [
+        148,
+        219
+      ],
+      "source_pivot": [
+        146,
+        244
+      ],
+      "body_bounds": [
+        3,
+        3,
+        287,
+        305
+      ]
+    },
+    "assets/iso_props/house_animalstore_glow.png": {
+      "size": [
+        80,
+        80
+      ],
+      "prior_sha256": "7f6caba5c30ba3f6d22d41b4110d09c152c276926e8dc941b640d01e3e70da94",
+      "mode": "technical",
+      "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
+      "body_bounds": null
+    },
+    "assets/iso_props/house_bakery.png": {
+      "size": [
+        318,
+        373
+      ],
+      "prior_sha256": "57234c1954047a10de238f303bcafb5310589e3eba6b518d354d810723676eab",
+      "mode": "anchored",
+      "source": "assets/iso_props/zz_painted_consistency/house_bakery.webp",
+      "pivot": [
+        142,
+        284
+      ],
+      "source_pivot": [
+        146,
+        258
+      ],
+      "body_bounds": [
+        3,
+        3,
+        281,
+        370
+      ]
+    },
+    "assets/iso_props/house_bakery_glow.png": {
+      "size": [
+        96,
+        96
+      ],
+      "prior_sha256": "ed54e86eab7c2621f3dd773d328fa076d2f478c8d13b7d4b5d6ed5a271fa4e3b",
+      "mode": "technical",
+      "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
+      "body_bounds": null
+    },
+    "assets/iso_props/house_farm.png": {
+      "size": [
+        436,
+        406
+      ],
+      "prior_sha256": "9e1bd4b3e5316ad57fb8d994d2fbf31ed7170086a49695aa6d8b37df97079c54",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/house_farm.webp",
+      "pivot": [
+        192,
+        310
+      ],
+      "source_pivot": [
+        201,
+        298
+      ],
+      "body_bounds": [
+        29,
+        3,
+        355,
+        403
+      ]
+    },
+    "assets/iso_props/house_king_treetop.png": {
+      "size": [
+        505,
+        571
+      ],
+      "prior_sha256": "fa16404befd1df656bb4fa718668adaff161b41d4e0b72d105f0c57627ed3fa8",
+      "mode": "anchored",
+      "source": "assets/iso_props/zz_painted_consistency/house_king_treetop.webp",
+      "pivot": [
+        227,
+        458
+      ],
+      "source_pivot": [
+        220,
+        428
+      ],
+      "body_bounds": [
+        3,
+        3,
+        451,
+        568
+      ]
+    },
+    "assets/iso_props/house_king_treetop_glow.png": {
+      "size": [
+        104,
+        104
+      ],
+      "prior_sha256": "0822a340230bf073cac3bbe7fc2ed267792bfe1091fff7d576603d56a6de0d26",
+      "mode": "technical",
+      "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
+      "body_bounds": null
+    },
+    "assets/iso_props/house_mushroom_lavender.png": {
+      "size": [
+        318,
+        275
+      ],
+      "prior_sha256": "290b69ded9e009a6e82b898917aa41ffb4269f1378e42beea271679236c16f89",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/house_mushroom_lavender.webp",
+      "pivot": [
+        142,
+        219
+      ],
+      "source_pivot": [
+        149,
+        207
+      ],
+      "body_bounds": [
+        3,
+        3,
+        281,
+        269
+      ]
+    },
+    "assets/iso_props/house_mushroom_lavender_glow.png": {
+      "size": [
+        80,
+        80
+      ],
+      "prior_sha256": "7f6caba5c30ba3f6d22d41b4110d09c152c276926e8dc941b640d01e3e70da94",
+      "mode": "technical",
+      "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
+      "body_bounds": null
+    },
+    "assets/iso_props/house_mushroom_mint.png": {
+      "size": [
+        318,
+        275
+      ],
+      "prior_sha256": "51eb3af9c1ec20c519350b70eb167658079692af0718227fa06669689a929f32",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/house_mushroom_mint.webp",
+      "pivot": [
+        142,
+        219
+      ],
+      "source_pivot": [
+        146,
+        227
+      ],
+      "body_bounds": [
+        3,
+        3,
+        281,
+        269
+      ]
+    },
+    "assets/iso_props/house_mushroom_mint_glow.png": {
+      "size": [
+        80,
+        80
+      ],
+      "prior_sha256": "7f6caba5c30ba3f6d22d41b4110d09c152c276926e8dc941b640d01e3e70da94",
+      "mode": "technical",
+      "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
+      "body_bounds": null
+    },
+    "assets/iso_props/house_mushroom_rose.png": {
+      "size": [
+        318,
+        275
+      ],
+      "prior_sha256": "2eee5641fa81c6604cd30b30b41de292cdd46eb07156b23a9885ebb9eeb6eac3",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/house_mushroom_rose.webp",
+      "pivot": [
+        142,
+        219
+      ],
+      "source_pivot": [
+        157,
+        271
+      ],
+      "body_bounds": [
+        3,
+        3,
+        281,
+        269
+      ]
+    },
+    "assets/iso_props/house_mushroom_rose_glow.png": {
+      "size": [
+        80,
+        80
+      ],
+      "prior_sha256": "7f6caba5c30ba3f6d22d41b4110d09c152c276926e8dc941b640d01e3e70da94",
+      "mode": "technical",
+      "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
+      "body_bounds": null
+    },
+    "assets/iso_props/house_seedshop.png": {
+      "size": [
+        343,
+        308
+      ],
+      "prior_sha256": "5ae835abd6f531d019ea7a25c89b74e4816f059b62db8b986175c5644657d638",
+      "mode": "anchored",
+      "source": "assets/iso_props/zz_painted_consistency/house_seedshop.webp",
+      "pivot": [
+        167,
+        219
+      ],
+      "source_pivot": [
+        146,
+        228
+      ],
+      "body_bounds": [
+        3,
+        3,
+        306,
+        305
+      ]
+    },
+    "assets/iso_props/house_seedshop_glow.png": {
+      "size": [
+        80,
+        80
+      ],
+      "prior_sha256": "7f6caba5c30ba3f6d22d41b4110d09c152c276926e8dc941b640d01e3e70da94",
+      "mode": "technical",
+      "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
+      "body_bounds": null
+    },
+    "assets/iso_props/house_smithy.png": {
+      "size": [
+        329,
+        337
+      ],
+      "prior_sha256": "16bf7825b8467fafddc0c385c4607043fa036906bff2487596795cc9b460a6e7",
+      "mode": "anchored",
+      "source": "assets/iso_props/zz_painted_consistency/house_smithy.webp",
+      "pivot": [
+        153,
+        248
+      ],
+      "source_pivot": [
+        146,
+        230
+      ],
+      "body_bounds": [
+        3,
+        3,
+        292,
+        334
+      ]
+    },
+    "assets/iso_props/house_smithy_glow.png": {
+      "size": [
+        96,
+        96
+      ],
+      "prior_sha256": "b76c67f3e359e5a66614625f63276995f308c8b568580c3e4680bdd874e4b074",
+      "mode": "technical",
+      "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
+      "body_bounds": null
+    },
+    "assets/iso_props/house_town_hall.png": {
+      "size": [
+        505,
+        607
+      ],
+      "prior_sha256": "85cc36211d12124faec089f797ac1a4da387c95fb66ad4e83b244bd6beb088dd",
+      "mode": "anchored",
+      "source": "assets/iso_props/zz_painted_consistency/house_town_hall.webp",
+      "pivot": [
+        227,
+        491
+      ],
+      "source_pivot": [
+        220,
+        351
+      ],
+      "body_bounds": [
+        3,
+        3,
+        451,
+        604
+      ]
+    },
+    "assets/iso_props/house_town_hall_glow.png": {
+      "size": [
+        104,
+        104
+      ],
+      "prior_sha256": "0822a340230bf073cac3bbe7fc2ed267792bfe1091fff7d576603d56a6de0d26",
+      "mode": "technical",
+      "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
+      "body_bounds": null
+    },
+    "assets/iso_props/interior/corner_marble.webp": {
+      "size": [
+        48,
+        296
+      ],
+      "prior_sha256": "bffbafb91705a4b14f4a2843e0a5c394d40e732f9267a9c400568f7451f321d2",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/corner_marble.webp",
+      "body_bounds": [
+        3,
+        4,
+        45,
+        293
+      ]
+    },
+    "assets/iso_props/interior/corner_paper.webp": {
+      "size": [
+        48,
+        246
+      ],
+      "prior_sha256": "f084e358ddded5f74da64e3f9fc3f260f10c53fe41b354c94625103dbc29ea24",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/corner_paper.webp",
+      "body_bounds": [
+        3,
+        3,
+        45,
+        243
+      ]
+    },
+    "assets/iso_props/interior/corner_plank.webp": {
+      "size": [
+        48,
+        215
+      ],
+      "prior_sha256": "96bf4fbc9e10c2de692f28bfa66d6f363721a4ee924a84fd4c1e9132bc44e9c0",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/corner_plank.webp",
+      "body_bounds": [
+        3,
+        4,
+        45,
+        212
+      ]
+    },
+    "assets/iso_props/interior/door_post.webp": {
+      "size": [
+        72,
+        160
+      ],
+      "prior_sha256": "74af4afb691c482fe07647ebc93aa7f86633db5ca76d3a44ca811227701a2d7c",
+      "mode": "timber",
+      "source": "tools/art/drawn/sources/terrain.png",
+      "body_bounds": [
+        28,
+        3,
+        60,
+        144
+      ]
+    },
+    "assets/iso_props/interior/doormat_r0.webp": {
+      "size": [
+        92,
+        59
+      ],
+      "prior_sha256": "021b2897ac64155cdef10890ded427e83fedd4c4996a69488d78e370ba4d854f",
+      "mode": "doormat",
+      "source": "assets/iso_props/painted_interiors/rug_braid.webp",
+      "body_bounds": [
+        3,
+        4,
+        89,
+        56
+      ]
+    },
+    "assets/iso_props/interior/doormat_r1.webp": {
+      "size": [
+        92,
+        59
+      ],
+      "prior_sha256": "e817f648a84609f9cd3424c648474d1335c6013bd63e36a1367a25286e259ac5",
+      "mode": "doormat",
+      "source": "assets/iso_props/painted_interiors/rug_braid.webp",
+      "body_bounds": [
+        3,
+        4,
+        89,
+        56
+      ]
+    },
+    "assets/iso_props/interior/wall_marble_a_r0.webp": {
+      "size": [
+        83,
+        315
+      ],
+      "prior_sha256": "513522f481a583d72a92f78d6f3bbb17b2708bbaba23cf91e80506d71a2516b2",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_marble_a_r0.webp",
+      "body_bounds": [
+        3,
+        4,
+        80,
+        312
+      ]
+    },
+    "assets/iso_props/interior/wall_marble_a_r1.webp": {
+      "size": [
+        83,
+        315
+      ],
+      "prior_sha256": "538e28618eba3402350d143ad0bdd33bf7eac9a0d246d07c13188e14d8be4a2e",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_marble_a_r1.webp",
+      "body_bounds": [
+        3,
+        4,
+        80,
+        312
+      ]
+    },
+    "assets/iso_props/interior/wall_marble_b_r0.webp": {
+      "size": [
+        87,
+        315
+      ],
+      "prior_sha256": "889e0e7f7c94ad7c72d1c1f69516f4c16bf905014d7f31cd638285f8e83d78da",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_marble_b_r0.webp",
+      "body_bounds": [
+        3,
+        4,
+        84,
+        312
+      ]
+    },
+    "assets/iso_props/interior/wall_marble_b_r1.webp": {
+      "size": [
+        83,
+        315
+      ],
+      "prior_sha256": "1a9cde03d6df3ac083ea327280f286f8f5c548fee184c361f752b8b67ab63586",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_marble_b_r1.webp",
+      "body_bounds": [
+        3,
+        4,
+        80,
+        312
+      ]
+    },
+    "assets/iso_props/interior/wall_marble_win_r0.webp": {
+      "size": [
+        88,
+        315
+      ],
+      "prior_sha256": "6f161d3ce0000f145b6fa60da0b5c1b9d62d4ca509601613bc3dcb85f03465f3",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_marble_win_r0.webp",
+      "body_bounds": [
+        3,
+        4,
+        85,
+        312
+      ]
+    },
+    "assets/iso_props/interior/wall_marble_win_r0_night.webp": {
+      "size": [
+        88,
+        315
+      ],
+      "prior_sha256": "14cd1777daab4a7c980f06fbcc65e095e5e7da566bfb01bf82458257d8b914c4",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_marble_win_r0_night.webp",
+      "body_bounds": [
+        21,
+        143,
+        57,
+        249
+      ]
+    },
+    "assets/iso_props/interior/wall_marble_win_r1.webp": {
+      "size": [
+        88,
+        315
+      ],
+      "prior_sha256": "a9589834fb1cd35075d14e6f1fb630fbe6c863e01e8ca14a67f4c0eb9b976c20",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_marble_win_r1.webp",
+      "body_bounds": [
+        3,
+        4,
+        85,
+        312
+      ]
+    },
+    "assets/iso_props/interior/wall_marble_win_r1_night.webp": {
+      "size": [
+        88,
+        315
+      ],
+      "prior_sha256": "89dbdddbe2d0d2c0064f2f9ddcf598932c2034e615fc269188d4adc34f5842be",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_marble_win_r1_night.webp",
+      "body_bounds": [
+        31,
+        143,
+        67,
+        250
+      ]
+    },
+    "assets/iso_props/interior/wall_paper_a_r0.webp": {
+      "size": [
+        83,
+        265
+      ],
+      "prior_sha256": "a225c822f28a94a9b16b177d38bd913fcd3509f5b9a149a8d8adccf90049b98b",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_paper_a_r0.webp",
+      "body_bounds": [
+        3,
+        3,
+        80,
+        262
+      ]
+    },
+    "assets/iso_props/interior/wall_paper_a_r1.webp": {
+      "size": [
+        83,
+        265
+      ],
+      "prior_sha256": "7e038dc82b3c6477297a366a5c8c86e017f362c942e1d9af76e8ec7119603fd0",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_paper_a_r1.webp",
+      "body_bounds": [
+        3,
+        3,
+        80,
+        262
+      ]
+    },
+    "assets/iso_props/interior/wall_paper_b_r0.webp": {
+      "size": [
+        86,
+        265
+      ],
+      "prior_sha256": "8e598e5ffcff37c955ec602dd5d295b40e4bd563a25d3ec41b5562d72b8bd458",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_paper_b_r0.webp",
+      "body_bounds": [
+        3,
+        3,
+        83,
+        262
+      ]
+    },
+    "assets/iso_props/interior/wall_paper_b_r1.webp": {
+      "size": [
+        83,
+        265
+      ],
+      "prior_sha256": "d37eb7e52859f9727125eaeba3c30ceefb520f6315ca3424621bac67fb4ecd1d",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_paper_b_r1.webp",
+      "body_bounds": [
+        3,
+        3,
+        80,
+        262
+      ]
+    },
+    "assets/iso_props/interior/wall_paper_win_r0.webp": {
+      "size": [
+        88,
+        265
+      ],
+      "prior_sha256": "77c11383c4d4e69e60d52dca8e45d389938596488c64be0521316653dfb719b2",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_paper_win_r0.webp",
+      "body_bounds": [
+        3,
+        3,
+        85,
+        262
+      ]
+    },
+    "assets/iso_props/interior/wall_paper_win_r0_night.webp": {
+      "size": [
+        88,
+        265
+      ],
+      "prior_sha256": "1f2130d5df4699e83c0c5c424feea0eaa3aa053d0dec2104b9913b481f6b227c",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_paper_win_r0_night.webp",
+      "body_bounds": [
+        21,
+        104,
+        57,
+        189
+      ]
+    },
+    "assets/iso_props/interior/wall_paper_win_r1.webp": {
+      "size": [
+        88,
+        265
+      ],
+      "prior_sha256": "7c8c1a1b03f87481aa01da7d11b333de1274ed5f96232b1184dac17ba181680f",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_paper_win_r1.webp",
+      "body_bounds": [
+        3,
+        3,
+        85,
+        262
+      ]
+    },
+    "assets/iso_props/interior/wall_paper_win_r1_night.webp": {
+      "size": [
+        88,
+        265
+      ],
+      "prior_sha256": "4334e483067c90b892de791a3c4e6a34108d0ce32b4876201d8c91ba0059e0dc",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_paper_win_r1_night.webp",
+      "body_bounds": [
+        31,
+        104,
+        67,
+        189
+      ]
+    },
+    "assets/iso_props/interior/wall_plank_a_r0.webp": {
+      "size": [
+        83,
+        234
+      ],
+      "prior_sha256": "bcbb652329302f685debf53ace3d73a95fcca946bf1a5fae85f079c107cfc969",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_plank_a_r0.webp",
+      "body_bounds": [
+        3,
+        4,
+        80,
+        231
+      ]
+    },
+    "assets/iso_props/interior/wall_plank_a_r1.webp": {
+      "size": [
+        83,
+        234
+      ],
+      "prior_sha256": "0c30eb9f3591564bd7246f679ddd563cdde6765b91bd93c35d2b53b997382e14",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_plank_a_r1.webp",
+      "body_bounds": [
+        3,
+        4,
+        80,
+        231
+      ]
+    },
+    "assets/iso_props/interior/wall_plank_b_r0.webp": {
+      "size": [
+        84,
+        234
+      ],
+      "prior_sha256": "50a861cb0b0fab1b6c29b87fa0b4f08c2a7125d88c8ea017fd401fa26c515f51",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_plank_b_r0.webp",
+      "body_bounds": [
+        3,
+        4,
+        81,
+        231
+      ]
+    },
+    "assets/iso_props/interior/wall_plank_b_r1.webp": {
+      "size": [
+        83,
+        235
+      ],
+      "prior_sha256": "5c4a38bd50601625637bf15962e61d2cb857a402c576a58f20b9e91732b0d653",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_plank_b_r1.webp",
+      "body_bounds": [
+        3,
+        4,
+        80,
+        231
+      ]
+    },
+    "assets/iso_props/interior/wall_plank_win_r0.webp": {
+      "size": [
+        88,
+        234
+      ],
+      "prior_sha256": "ed26129e22613f21f11be2406c82a759123f83fbba072aade86cb908a282fee6",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_plank_win_r0.webp",
+      "body_bounds": [
+        3,
+        4,
+        85,
+        231
+      ]
+    },
+    "assets/iso_props/interior/wall_plank_win_r0_night.webp": {
+      "size": [
+        88,
+        234
+      ],
+      "prior_sha256": "aeaffa026de1368a2b0dfa808cef477ffb8bc2f32f6c50b6d9a39755b17ccf07",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_plank_win_r0_night.webp",
+      "body_bounds": [
+        21,
+        75,
+        57,
+        161
+      ]
+    },
+    "assets/iso_props/interior/wall_plank_win_r1.webp": {
+      "size": [
+        88,
+        234
+      ],
+      "prior_sha256": "9dc65a44f616d9fcf6a08cecfa3540a76fce6b424214c7095600babe0cc42afa",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_plank_win_r1.webp",
+      "body_bounds": [
+        3,
+        4,
+        85,
+        231
+      ]
+    },
+    "assets/iso_props/interior/wall_plank_win_r1_night.webp": {
+      "size": [
+        88,
+        234
+      ],
+      "prior_sha256": "5e54c204ac85153d285afedbdc6786802aa02c3c7b710c9cc36d5eee9c959706",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_interiors/wall_plank_win_r1_night.webp",
+      "body_bounds": [
+        31,
+        75,
+        67,
+        161
+      ]
+    },
+    "assets/iso_props/lantern_hand.png": {
+      "size": [
+        36,
+        56
+      ],
+      "prior_sha256": "3efad8b190efe00c208409e18f4d00dcce91b000b4647df365ee2af9f5aa562a",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/lantern_hand.webp",
+      "body_bounds": [
+        3,
+        4,
+        33,
+        52
+      ]
+    },
+    "assets/iso_props/lantern_post.png": {
+      "size": [
+        90,
+        176
+      ],
+      "prior_sha256": "31ffcf5ac17e5d509b76453dc4a7b34c5ee8a819f96ebd9eb5d04185647f4c56",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/lantern_post.webp",
+      "pivot": [
+        38,
+        157
+      ],
+      "source_pivot": [
+        72,
+        155
+      ],
+      "body_bounds": [
+        30,
+        3,
+        86,
+        162
+      ]
+    },
+    "assets/iso_props/lantern_post_glow.png": {
+      "size": [
+        184,
+        184
+      ],
+      "prior_sha256": "2bb0966c943a79764205da10c8ff464bbf4283878b045d4ededa1db69a5828ed",
+      "mode": "technical",
+      "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
+      "body_bounds": [
+        80,
+        80,
+        105,
+        105
+      ]
+    },
+    "assets/iso_props/lantern_post_lavender.png": {
+      "size": [
+        90,
+        176
+      ],
+      "prior_sha256": "32da4378c9b75367ca2209084e0a1c9f72c3fc8d1caed15ab18f0bb4a8b85261",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/lantern_post_lavender.webp",
+      "body_bounds": [
+        30,
+        3,
+        86,
+        162
+      ]
+    },
+    "assets/iso_props/lantern_post_mint.png": {
+      "size": [
+        90,
+        176
+      ],
+      "prior_sha256": "3598cd2ae0a27468ab01be576c0472f26ec9620461ae81529cc8c1adecbc318f",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/lantern_post_mint.webp",
+      "body_bounds": [
+        30,
+        3,
+        86,
+        162
+      ]
+    },
+    "assets/iso_props/lantern_post_rose.png": {
+      "size": [
+        90,
+        176
+      ],
+      "prior_sha256": "6d448d3da45811df28a1ff63133006df23f8295de43a79b373dcd884bde13feb",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/lantern_post_rose.webp",
+      "body_bounds": [
+        30,
+        3,
+        86,
+        162
+      ]
+    },
+    "assets/iso_props/mailbox_red.png": {
+      "size": [
+        104,
+        137
+      ],
+      "prior_sha256": "2b69df02194b33a4a07afb5dad04c0c977670739746d6aa91fa700fa72cbae01",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/mailbox_red.webp",
+      "body_bounds": [
+        18,
+        3,
+        76,
+        125
+      ]
+    },
+    "assets/iso_props/market_stall.png": {
+      "size": [
+        234,
+        279
+      ],
+      "prior_sha256": "58d728f20843ac969898a389740817105c6bc9f526c5d7fa305ed3595aeac71a",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/market_stall.webp",
+      "body_bounds": [
+        8,
+        3,
+        198,
+        276
+      ]
+    },
+    "assets/iso_props/market_stall_furniture.png": {
+      "size": [
+        234,
+        279
+      ],
+      "prior_sha256": "b022c0545cc4db64eede2b01f20f31c0abc0a987e4edf73b457f3408889fd637",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/market_stall_furniture.webp",
+      "body_bounds": [
+        8,
+        3,
+        198,
+        276
+      ]
+    },
+    "assets/iso_props/market_stall_tailor.png": {
+      "size": [
+        234,
+        279
+      ],
+      "prior_sha256": "c5e480c1a52da1304feaeb660110ef2cbcae9437e9d5c6819ab1154bb907980a",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/market_stall_tailor.webp",
+      "body_bounds": [
+        8,
+        3,
+        198,
+        276
+      ]
+    },
+    "assets/iso_props/ore_copper.png": {
+      "size": [
+        174,
+        110
+      ],
+      "prior_sha256": "1cf4e3a46aa61e974783a3d0c2521d0610811e5fdeb927fa81aed3052930ac8d",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/ore_copper.webp",
+      "body_bounds": [
+        20,
+        3,
+        136,
+        106
+      ]
+    },
+    "assets/iso_props/ore_gold.png": {
+      "size": [
+        174,
+        112
+      ],
+      "prior_sha256": "d50aeffba9e12c46523e1841de3d9eeee09a15788b69718bfaa2893fa9308620",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/ore_gold.webp",
+      "body_bounds": [
+        20,
+        3,
+        136,
+        108
+      ]
+    },
+    "assets/iso_props/ore_iron.png": {
+      "size": [
+        174,
+        113
+      ],
+      "prior_sha256": "8990b88fb19c0755411c2e3b641e587f3ea29a61a6cf4cb11cdf5acc4d60f374",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/ore_iron.webp",
+      "body_bounds": [
+        20,
+        4,
+        136,
+        109
+      ]
+    },
+    "assets/iso_props/path_tile_o.png": {
+      "size": [
+        256,
+        256
+      ],
+      "prior_sha256": "c060a62adacc1483fa45ccad1ab10281b81e74d562b154b3d31276d0c7a0e28e",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/path_tile_o.webp",
+      "body_bounds": [
+        0,
+        0,
+        256,
+        256
+      ]
+    },
+    "assets/iso_props/plank_stack.png": {
+      "size": [
+        192,
+        130
+      ],
+      "prior_sha256": "a5fdd2bb549a93b1d9d4569cb7fc9c2dbd617b26e533879a5ef1d1dcc786693c",
+      "mode": "anchored",
+      "source": "assets/iso_props/painted_interiors/plank_stack.webp",
+      "pivot": [
+        86,
+        93
+      ],
+      "source_pivot": [
+        86.5,
+        70
+      ],
+      "body_bounds": [
+        17,
+        3,
+        152,
+        127
+      ]
+    },
+    "assets/iso_props/platform_corner.png": {
+      "size": [
+        146,
+        146
+      ],
+      "prior_sha256": "d5138a51d9795e936b69367d065ee3605f30e9eaedf5ab6f638e4b58044b98f1",
+      "mode": "canvas",
+      "source": "assets/iso_props/drawn_terrain/platform_corner.webp",
+      "body_bounds": [
+        4,
+        3,
+        142,
+        143
+      ]
+    },
+    "assets/iso_props/platform_se.png": {
+      "size": [
+        79,
+        143
+      ],
+      "prior_sha256": "0b3ba1178353798567558ad4870e5ec467781005df717b220fb7fa95a296d835",
+      "mode": "canvas",
+      "source": "assets/iso_props/drawn_terrain/platform_se.webp",
+      "body_bounds": [
+        3,
+        3,
+        75,
+        139
+      ]
+    },
+    "assets/iso_props/platform_sw.png": {
+      "size": [
+        79,
+        143
+      ],
+      "prior_sha256": "e12cccc217d5b474ae9f76d0747f13441b071739d36b33d8d595ecc625c89cc2",
+      "mode": "canvas",
+      "source": "assets/iso_props/drawn_terrain/platform_sw.webp",
+      "body_bounds": [
+        4,
+        3,
+        76,
+        139
+      ]
+    },
+    "assets/iso_props/pond_lily.png": {
+      "size": [
+        66,
+        41
+      ],
+      "prior_sha256": "69f42a4ddb586066c9a8f5c13e783d060a8f060e70ae2091e12c022c23680ba7",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/pond_lily.webp",
+      "body_bounds": [
+        2,
+        2,
+        64,
+        39
+      ]
+    },
+    "assets/iso_props/pond_water_o.png": {
+      "size": [
+        256,
+        256
+      ],
+      "prior_sha256": "5cfbc528c98c5777aec9b18e0e2357fc74beab8b8fe0e67d4d631ef36d511d0c",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/pond_water_o.webp",
+      "body_bounds": [
+        0,
+        0,
+        256,
+        256
+      ]
+    },
+    "assets/iso_props/rock_dark.png": {
+      "size": [
+        142,
+        85
+      ],
+      "prior_sha256": "38b88de51f8c889c5e507067e3d81439335a64bd3055fd4bd7f0f63d49647ada",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/rock_dark.webp",
+      "pivot": [
+        64,
+        55
+      ],
+      "source_pivot": [
+        56,
+        76
+      ],
+      "body_bounds": [
+        20,
+        3,
+        108,
+        81
+      ]
+    },
+    "assets/iso_props/rock_grey.png": {
+      "size": [
+        174,
+        100
+      ],
+      "prior_sha256": "45048e9bfa9d5b734e77e9386cc62b999026abb554a028ed29083ea7c4843f97",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/rock_grey.webp",
+      "pivot": [
+        78,
+        64
+      ],
+      "source_pivot": [
+        56,
+        76
+      ],
+      "body_bounds": [
+        24,
+        3,
+        132,
+        97
+      ]
+    },
+    "assets/iso_props/rock_mossy.png": {
+      "size": [
+        190,
+        117
+      ],
+      "prior_sha256": "9114bd33577d52bcca8822e4047313238cf5a247af16e0066a68adaa004fe514",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/rock_mossy.webp",
+      "pivot": [
+        85,
+        78
+      ],
+      "source_pivot": [
+        56,
+        76
+      ],
+      "body_bounds": [
+        24,
+        4,
+        146,
+        114
+      ]
+    },
+    "assets/iso_props/roof_patch.png": {
+      "size": [
+        174,
+        164
+      ],
+      "prior_sha256": "2626b244f62bc06de0e55ebcdbc7a3df8681aea20f74270818d0d157ac462d77",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/roof_patch.webp",
+      "body_bounds": [
+        34,
+        4,
+        149,
+        161
+      ]
+    },
+    "assets/iso_props/rune_glow.png": {
+      "size": [
+        138,
+        198
+      ],
+      "prior_sha256": "bb011c2ddff44642605c7b55b848d997820e56fb9cd4dff8314aadafdcccff4a",
+      "mode": "canvas",
+      "body_bounds": [
+        30,
+        68,
+        52,
+        105
+      ],
+      "source": "assets/iso_props/painted_world/rune_glow.webp"
+    },
+    "assets/iso_props/runestone_active.png": {
+      "size": [
+        138,
+        198
+      ],
+      "prior_sha256": "ca09a360547c33600d87a8bbc41f8cd5b42df85f5c7eed30eae6243eb8720200",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/runestone_active.webp",
+      "body_bounds": [
+        4,
+        2,
+        137,
+        182
+      ]
+    },
+    "assets/iso_props/runestone_dormant.png": {
+      "size": [
+        138,
+        198
+      ],
+      "prior_sha256": "6fbed28d5c8d6fea04a352b1d1e8f2b255d53e8ca1ca11533b1699981a2422c4",
+      "mode": "canvas",
+      "source": "assets/iso_props/painted_world/runestone_dormant.webp",
+      "body_bounds": [
+        4,
+        2,
+        137,
+        182
+      ]
+    },
+    "assets/iso_props/scarecrow.png": {
+      "size": [
+        122,
+        189
+      ],
+      "prior_sha256": "cdbb2b50c107e03264b018e8c22e060aae5efca6413ff511872e0c3cbb6919a4",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/scarecrow.webp",
+      "pivot": [
+        55,
+        166
+      ],
+      "source_pivot": [
+        60,
+        143
+      ],
+      "body_bounds": [
+        9,
+        4,
+        101,
+        171
+      ]
+    },
+    "assets/iso_props/signpost.png": {
+      "size": [
+        84,
+        130
+      ],
+      "prior_sha256": "552f52afcb59147a667eb8242c727dc17f8eb617d243ba0efd7287be8f1a797d",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/signpost.webp",
+      "pivot": [
+        38,
+        112
+      ],
+      "source_pivot": [
+        43,
+        106
+      ],
+      "body_bounds": [
+        8,
+        4,
+        72,
+        116
+      ]
+    },
+    "assets/iso_props/stone_path_a.png": {
+      "size": [
+        92,
+        60
+      ],
+      "prior_sha256": "9517b7028c409f96d37bd875bdadaeff89ae9e18e1a1026e5513751797b6cd2d",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/stone_path_a.webp",
+      "body_bounds": [
+        3,
+        3,
+        89,
+        57
+      ]
+    },
+    "assets/iso_props/stone_path_b.png": {
+      "size": [
+        90,
+        60
+      ],
+      "prior_sha256": "d090268b0b7d57316d07183554db688db9a1548afbe07c3e4dccec7f49c8a3b4",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/stone_path_b.webp",
+      "body_bounds": [
+        3,
+        3,
+        87,
+        56
+      ]
+    },
+    "assets/iso_props/stone_path_c.png": {
+      "size": [
+        109,
+        72
+      ],
+      "prior_sha256": "3b5cecccdef941ea3d5f44836c8a8b406adeeb27171bc769d978918b92ecd1f6",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/stone_path_c.webp",
+      "body_bounds": [
+        3,
+        3,
+        106,
+        68
+      ]
+    },
+    "assets/iso_props/tornebaer.png": {
+      "size": [
+        64,
+        43
+      ],
+      "prior_sha256": "004d0202549038dfa54b1d62429b78d156d58591c5b3b1c28219e85cde01f75f",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/tornebaer.webp",
+      "body_bounds": [
+        12,
+        4,
+        46,
+        31
+      ]
+    },
+    "assets/iso_props/tower_wizard.png": {
+      "size": [
+        280,
+        511
+      ],
+      "prior_sha256": "133565861a58ff083951c7a51dc11f9327a9e2ae388f63baa5e8448c73edef19",
+      "mode": "anchored",
+      "source": "assets/iso_props/zz_painted_consistency/tower_wizard.webp",
+      "pivot": [
+        124,
+        422
+      ],
+      "source_pivot": [
+        146,
+        312
+      ],
+      "body_bounds": [
+        24,
+        4,
+        220,
+        508
+      ]
+    },
+    "assets/iso_props/tower_wizard_glow.png": {
+      "size": [
+        104,
+        104
+      ],
+      "prior_sha256": "c079961a72d600f981845f906f52caac968657ca4f9cddd9dfd031d0acbf9ecf",
+      "mode": "technical",
+      "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
+      "body_bounds": null
+    },
+    "assets/iso_props/tree_blossom_hyggebyen.png": {
+      "size": [
+        324,
+        405
+      ],
+      "prior_sha256": "b6c17622ddaa245d3a170835c3b7e92a8bd328f341b335655b307b0d6f1c574f",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/tree_blossom_hyggebyen.webp",
+      "pivot": [
+        150,
+        363
+      ],
+      "source_pivot": [
+        115,
+        260
+      ],
+      "body_bounds": [
+        3,
+        3,
+        321,
+        396
+      ]
+    },
+    "assets/iso_props/tree_giant_crown.webp": {
+      "size": [
+        2218,
+        2893
+      ],
+      "prior_sha256": "c9fd0d6c6d3332279e402407d52fc165d9bff40e5cbd44c97109c3c4f518556e",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/tree_giant_crown.webp",
+      "body_bounds": [
+        3,
+        3,
+        2214,
+        2890
+      ]
+    },
+    "assets/iso_props/tree_oak_farm.png": {
+      "size": [
+        331,
+        409
+      ],
+      "prior_sha256": "569d4bb9e9998a162728ef86e4b5c72f15f35f7330508c7a17536190ef4433d4",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/tree_oak_farm.webp",
+      "pivot": [
+        173,
+        367
+      ],
+      "source_pivot": [
+        115,
+        260
+      ],
+      "body_bounds": [
+        3,
+        3,
+        327,
+        403
+      ]
+    },
+    "assets/iso_props/tree_oak_farm_b.png": {
+      "size": [
+        308,
+        356
+      ],
+      "prior_sha256": "3bc30398781e11a3879239cebb187e746d35e65237357997b7c9cc09481e787c",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/tree_oak_farm_b.webp",
+      "pivot": [
+        150,
+        314
+      ],
+      "source_pivot": [
+        115,
+        260
+      ],
+      "body_bounds": [
+        4,
+        4,
+        304,
+        345
+      ]
+    },
+    "assets/iso_props/tree_pine_forest.png": {
+      "size": [
+        226,
+        315
+      ],
+      "prior_sha256": "3bfc2a679768aaceddc3a78af9cb7c8bed2741361d009251b3fb095420066e12",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/tree_pine_forest.webp",
+      "pivot": [
+        100,
+        277
+      ],
+      "source_pivot": [
+        95,
+        270
+      ],
+      "body_bounds": [
+        12,
+        4,
+        188,
+        289
+      ]
+    },
+    "assets/iso_props/tree_pine_forest_b.png": {
+      "size": [
+        226,
+        266
+      ],
+      "prior_sha256": "dd18aee043ebc0b1790cf6383fe90493f7b74fac28c0c369eb887007a3e5c624",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/tree_pine_forest_b.webp",
+      "pivot": [
+        100,
+        228
+      ],
+      "source_pivot": [
+        95,
+        270
+      ],
+      "body_bounds": [
+        28,
+        4,
+        172,
+        238
+      ]
+    },
+    "assets/iso_props/tree_twisted.png": {
+      "size": [
+        263,
+        380
+      ],
+      "prior_sha256": "012ba91a37df9be87e9ff3152a4bf2513a60f2844252d9e7350162ea77d8c3e0",
+      "mode": "anchored",
+      "source": "assets/iso_props/drawn/tree_twisted.webp",
+      "pivot": [
+        117,
+        329
+      ],
+      "source_pivot": [
+        95,
+        270
+      ],
+      "body_bounds": [
+        3,
+        3,
+        260,
+        377
+      ]
+    },
+    "assets/iso_props/tree_twisted_glow.png": {
+      "size": [
+        88,
+        88
+      ],
+      "prior_sha256": "6b894622f9e82c30968a337d44e73ae1e20306792b3e5376f9ee34287009e629",
+      "mode": "technical",
+      "reason": "Neutral/additive light kernel; geometry and brightness are functional, not a world-object illustration.",
+      "body_bounds": null
+    },
+    "assets/iso_props/warp_gate_stone.png": {
+      "size": [
+        179,
+        251
+      ],
+      "prior_sha256": "a1ab1dbe277779743cbc0d5db1192fb9261ad636eaff6197922b797887e123f8",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/warp_gate_stone.webp",
+      "body_bounds": [
+        3,
+        3,
+        161,
+        248
+      ]
+    },
+    "assets/iso_props/well.png": {
+      "size": [
+        182,
+        204
+      ],
+      "prior_sha256": "5333c4fcd988b480e997883cd59a05c1f8ee8375d53e61c86fd28f6e92796083",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/well.webp",
+      "body_bounds": [
+        6,
+        3,
+        156,
+        199
+      ]
+    },
+    "assets/iso_props/wheat_sack.png": {
+      "size": [
+        104,
+        117
+      ],
+      "prior_sha256": "809781febbc0f283c9781fa3a031544613757a2b19246af7f6fc07b577f8948f",
+      "mode": "canvas",
+      "source": "assets/iso_props/zz_painted_consistency/wheat_sack.webp",
+      "body_bounds": [
+        17,
+        4,
+        77,
+        104
+      ]
+    },
+    "assets/iso_tiles/cobble_hyggebyen.webp": {
+      "size": [
+        576,
+        336
+      ],
+      "prior_sha256": "85907a775ae2785b498e61e738a5e4778b789968dd4411bacc74d8ba8cfa2588",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_cobble_hyggebyen.webp",
+      "body_bounds": [
+        7,
+        4,
+        569,
+        332
+      ]
+    },
+    "assets/iso_tiles/deck_farm.webp": {
+      "size": [
+        576,
+        336
+      ],
+      "prior_sha256": "410167fc8f0ef3f9506888b630398050ca00f2f5347ba086801c3a710e0b3f5d",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_deck_farm.webp",
+      "body_bounds": [
+        7,
+        4,
+        569,
+        332
+      ]
+    },
+    "assets/iso_tiles/deck_hyggebyen.webp": {
+      "size": [
+        576,
+        336
+      ],
+      "prior_sha256": "20a7e0efe9c747e1a73171c7057fe0aaa34d2c613d665755a419144bc0f1e455",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_deck_hyggebyen.webp",
+      "body_bounds": [
+        7,
+        4,
+        569,
+        332
+      ]
+    },
+    "assets/iso_tiles/field_grass.png": {
+      "size": [
+        576,
+        336
+      ],
+      "prior_sha256": "c5974f7465faf2d97d2d107c09580aa3c09e83470fb341be13c8c0f0815e4b56",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_field_grass.webp",
+      "body_bounds": [
+        7,
+        4,
+        569,
+        332
+      ]
+    },
+    "assets/iso_tiles/floor_marble.png": {
+      "size": [
+        576,
+        336
+      ],
+      "prior_sha256": "70f1ecc40120d4e5ae89efcbdf745e3034c55c3cadf431bc5f67d7c98412aed7",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_floor_marble.webp",
+      "body_bounds": [
+        7,
+        4,
+        569,
+        332
+      ]
+    },
+    "assets/iso_tiles/floor_parquet.png": {
+      "size": [
+        576,
+        336
+      ],
+      "prior_sha256": "60eb73ac950e300f973d31ecea6d06d4123bd899b068b10d85b85df9dce154af",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_floor_parquet.webp",
+      "body_bounds": [
+        7,
+        4,
+        569,
+        332
+      ]
+    },
+    "assets/iso_tiles/floor_plank.png": {
+      "size": [
+        576,
+        336
+      ],
+      "prior_sha256": "c91bbfc58371891fc95b69a73f54a19cb0b3ed0c7f1f97b4154fbffd621546c4",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_floor_plank.webp",
+      "body_bounds": [
+        7,
+        4,
+        569,
+        332
+      ]
+    },
+    "assets/iso_tiles/floor_stone.png": {
+      "size": [
+        576,
+        336
+      ],
+      "prior_sha256": "1c87f5c734f40a438aedad84192568924525fadfc81cb873e41c377b8faea2de",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_floor_stone.webp",
+      "body_bounds": [
+        7,
+        4,
+        569,
+        332
+      ]
+    },
+    "assets/iso_tiles/forest_floor.webp": {
+      "size": [
+        576,
+        336
+      ],
+      "prior_sha256": "36bbf902d8685280b95d3e564f1ee94375ed84b1dfd06bda3ce41de8679c480c",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_forest_floor.webp",
+      "body_bounds": [
+        7,
+        4,
+        569,
+        332
+      ]
+    },
+    "assets/iso_tiles/forest_floor_glow.webp": {
+      "size": [
+        576,
+        336
+      ],
+      "prior_sha256": "2870af4b08bde6c3ad5e1936d445e6b2ff2acc17494f0e9f0148b57d451f19c6",
+      "mode": "canvas",
+      "body_bounds": [
+        7,
+        4,
+        569,
+        332
+      ],
+      "source": "assets/iso_tiles/drawn_forest_floor_glow.webp"
+    },
+    "assets/iso_tiles/grass.png": {
+      "size": [
+        576,
+        336
+      ],
+      "prior_sha256": "35b05cf08046fb73fcec95d40157a0c0ac59756ae5d2b07127041ab075312186",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_grass.webp",
+      "body_bounds": [
+        7,
+        4,
+        569,
+        332
+      ]
+    },
+    "assets/iso_tiles/grass_flowers.webp": {
+      "size": [
+        576,
+        336
+      ],
+      "prior_sha256": "4f5c065c647ea421367cded2bf39beb1757cb637c85d3f81d04ce4a4e7a360b3",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_grass_flowers.webp",
+      "body_bounds": [
+        7,
+        4,
+        569,
+        332
+      ]
+    },
+    "assets/iso_tiles/grass_hyggebyen.webp": {
+      "size": [
+        576,
+        336
+      ],
+      "prior_sha256": "e73f948d0a75f9dd1df1ebe1c963b2a573c3c34913fba80feb50f7b81ea62614",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_grass_hyggebyen.webp",
+      "body_bounds": [
+        7,
+        4,
+        569,
+        332
+      ]
+    },
+    "assets/iso_tiles/grass_hyggebyen_flowers.webp": {
+      "size": [
+        576,
+        336
+      ],
+      "prior_sha256": "e5d34230721dae21022dc364c78df35b65d627da43801634b6314206d86a0aa9",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_grass_hyggebyen_flowers.webp",
+      "body_bounds": [
+        7,
+        4,
+        569,
+        332
+      ]
+    },
+    "assets/iso_tiles/ortho_bog.webp": {
+      "size": [
+        448,
+        256
+      ],
+      "prior_sha256": "20176672a56f9ee298f90b9cb1bca0471e58c21331020a2dd227612435255505",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_bog_o.webp",
+      "body_bounds": [
+        7,
+        3,
+        441,
+        253
+      ]
+    },
+    "assets/iso_tiles/ortho_cave_floor.webp": {
+      "size": [
+        448,
+        256
+      ],
+      "prior_sha256": "84d16514d3a2db852dd2646a383812f49a541eb5a642e5906c2d94ae30018072",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_cave_floor_o.webp",
+      "body_bounds": [
+        7,
+        3,
+        441,
+        253
+      ]
+    },
+    "assets/iso_tiles/ortho_crystal_floor.webp": {
+      "size": [
+        448,
+        256
+      ],
+      "prior_sha256": "7c32075ecab71f70cc91591e6caf337ffc7ee38acc3385de1ea2da459c95d0d5",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_crystal_floor_o.webp",
+      "body_bounds": [
+        7,
+        3,
+        441,
+        253
+      ]
+    },
+    "assets/iso_tiles/ortho_forest_floor.webp": {
+      "size": [
+        448,
+        256
+      ],
+      "prior_sha256": "2f0250d39093b7b89aaa7ea790c6133d9af9a351cd7e4c6a8d0e1964cc5ed21b",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_forest_floor_o.webp",
+      "body_bounds": [
+        7,
+        3,
+        441,
+        253
+      ]
+    },
+    "assets/iso_tiles/ortho_forest_floor_glow.webp": {
+      "size": [
+        448,
+        256
+      ],
+      "prior_sha256": "abdf0e85a852c8c9bb92d8a1857c6316ce1c56a569a34873d38150f88f2bec04",
+      "mode": "canvas",
+      "body_bounds": [
+        7,
+        3,
+        441,
+        253
+      ],
+      "source": "assets/iso_tiles/drawn_forest_floor_glow_o.webp"
+    },
+    "assets/iso_tiles/ortho_moss_path.webp": {
+      "size": [
+        448,
+        256
+      ],
+      "prior_sha256": "9731c379fa643f4a6b4fc60b5a44871a0c52499f549a5810b84b8a866010bc4e",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_moss_path_o.webp",
+      "body_bounds": [
+        7,
+        3,
+        441,
+        253
+      ]
+    },
+    "assets/iso_tiles/ortho_wall_void.webp": {
+      "size": [
+        448,
+        256
+      ],
+      "prior_sha256": "07babf5f448be8ce8d001ff21e63ed4262452d6869b46058c73a7ac8d351b669",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_wall_void_o.webp",
+      "body_bounds": [
+        7,
+        3,
+        441,
+        253
+      ]
+    },
+    "assets/iso_tiles/path_dirt.webp": {
+      "size": [
+        576,
+        336
+      ],
+      "prior_sha256": "2e83775ab732632e8821d48a85a59fb9d3b6911250ec6a6e264263a4075de609",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_path_dirt.webp",
+      "body_bounds": [
+        7,
+        4,
+        569,
+        332
+      ]
+    },
+    "assets/iso_tiles/soil_tilled.webp": {
+      "size": [
+        576,
+        336
+      ],
+      "prior_sha256": "97cc1ec33833d801bcc0ee58526979466265750e7b43d039471ce386c320fc99",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_soil_tilled.webp",
+      "body_bounds": [
+        7,
+        4,
+        569,
+        332
+      ]
+    },
+    "assets/iso_tiles/soil_watered.webp": {
+      "size": [
+        576,
+        336
+      ],
+      "prior_sha256": "3a3d5a57778ee26cabaa1d1f4bdbebaa64122971c8e68a1fb158970caf7f83f2",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_soil_watered.webp",
+      "body_bounds": [
+        7,
+        4,
+        569,
+        332
+      ]
+    },
+    "assets/iso_tiles/void_haze.webp": {
+      "size": [
+        576,
+        336
+      ],
+      "prior_sha256": "8faf41854b3e9d055b1f8ae77559772df6f7965ee5955e99fc00bb030d2bec3e",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_void_haze.webp",
+      "body_bounds": [
+        7,
+        4,
+        569,
+        332
+      ]
+    },
+    "assets/iso_tiles/water_0.webp": {
+      "size": [
+        288,
+        168
+      ],
+      "prior_sha256": "82110624f34ab5956349d6988e957fb9acdf1b604aa7d71e4f3679a8b1c6287b",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_water_0.webp",
+      "body_bounds": [
+        7,
+        4,
+        281,
+        164
+      ]
+    },
+    "assets/iso_tiles/water_1.webp": {
+      "size": [
+        288,
+        168
+      ],
+      "prior_sha256": "a6bccd99dab1034845c88c17f7ab5c6acd122501242d7ed48cdc2e70b2f36cd4",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_water_1.webp",
+      "body_bounds": [
+        7,
+        4,
+        281,
+        164
+      ]
+    },
+    "assets/iso_tiles/water_2.webp": {
+      "size": [
+        288,
+        168
+      ],
+      "prior_sha256": "77f8a7a8ef8abb0a81c7956e2ef644543674c3908e16f6a6792c9dcaf62cc8ab",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_water_2.webp",
+      "body_bounds": [
+        7,
+        4,
+        281,
+        164
+      ]
+    },
+    "assets/iso_tiles/water_3.webp": {
+      "size": [
+        288,
+        168
+      ],
+      "prior_sha256": "20af8efa30622c63bd1ed914a194042624088f67b86f22fafd2ca28d1d712a45",
+      "mode": "canvas",
+      "source": "assets/iso_tiles/drawn_water_3.webp",
+      "body_bounds": [
+        7,
+        4,
+        281,
+        164
+      ]
+    }
+  }
+}

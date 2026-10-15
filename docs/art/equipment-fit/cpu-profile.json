@@ -1,0 +1,14 @@
+{
+  "pedro": {
+    "added_canvas_items": 10,
+    "changed_direction_update_mean_ms": 0.0123375,
+    "note": "CPU direction change + presenter only on this development host, not renderer/GPU or target-device frame time",
+    "samples": 1200
+  },
+  "rasmus": {
+    "added_canvas_items": 10,
+    "changed_direction_update_mean_ms": 0.0129083333333333,
+    "note": "CPU direction change + presenter only on this development host, not renderer/GPU or target-device frame time",
+    "samples": 1200
+  }
+}

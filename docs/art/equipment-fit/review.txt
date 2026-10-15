@@ -1,0 +1,112 @@
+Rasmus and Pedro fitted equipment proof — 15 October 2026
+
+Continues the next art step on codex-review after the festival kit. This package
+is isolated presentation/art tooling. No m1b gameplay is merged, no live hero
+fallback is switched, and no inventory, wardrobe ownership, combat, save or
+CharacterCatalog rules change.
+
+Delivered
+
+Two safe base turnarounds, four separately removable garments per body, one
+shared iron sword with eight authored views, body-space hand/ear occluders,
+and explicit grips for all eight directions of idle, walk, run and reach.
+There are 160 poses per body, 320 total and 640 explicit grip records. Direction
+order is S, SW, W, NW, N, NE, E, SE; no source direction is mirrored at export.
+The four clips match the existing IsoChibiSprite2D frame counts/rates.
+
+The selected five imagegen masters are in tools/art/drawn/sources/equipment_fit/:
+rasmus_base.png, pedro_base.png, rasmus_garments_v2.png, pedro_garments.png and
+sword.png. rasmus_garments.png is the rejected pre-repair input retained because
+the saved correction prompt references it. It is not exported. Exact generation
+and targeted correction prompts, input roles and tool mode are in prompts.json.
+All images used the built-in imagegen tool, not the CLI/API fallback.
+
+The chosen matte gouache/watercolor/pencil style remains authoritative. Rasmus's
+face, ears, cream fur and tail stay visible. Pedro has a rounded floating wisp,
+short opaque cream shirt, brown woven hem band and paired leather hem charms;
+he never gains human legs or boots. The same existing clothing item IDs map to
+those body-specific presentations. Garment removal reveals each safe base,
+rather than remnants of an old baked costume. The hat repair removes baked fox
+ears and corrects a front-facing shirt in the rear-right row.
+
+The frames are an offline continuous 2D puppet bake from the separate paintings,
+using the established painted pack's motion vocabulary. They are not individually
+hand-painted walk/action poses. Every body/cloth/ear/hand part shares exactly one
+sampling field. Grip positions and local bases are solved against that field
+(maximum recorded inverse error below 0.0001 px). The sword remains rigid and
+has an authored per-direction angle plus a short reach accent. This is a reach
+presentation proof, not a finished attack animation or combat timing change.
+Far-side sword/hand regions can be occluded by the body and Rasmus's large tail;
+a future attack needs dedicated extended arm poses, not a global front z plane.
+
+Export and native review
+
+Rebuild:
+  tools/art/.venv/bin/python tools/art/drawn/pack.py --only=equipment-fit
+
+Review:
+  tools/dev/play.sh --throwaway tools/art/drawn/equipment_fit_gallery.tscn
+
+Arrows turn the close previews; H changes hero; 1–4 select idle/walk/run/reach;
+F flashes, S spins, and the five independent toggles remove individual garments
+or the sword. Buttons expose the same controls. The eight small figures show
+all directions; close views compare painted timber with shaded forest tiles.
+There is no Equip action and no new gameplay screen.
+
+All 320 baked poses appear in the eight native frame contact sheets. Additional
+captures show both floor palettes, hat/shirt removal, and shared spin/altitude/
+tint. Files are in native/. The source drawings and native imports were inspected
+for identity, rear views, cloth fit, hem/ear/tail clearance and adjacent-frame
+continuity. Native source size is 256x256 with ground anchor (128,200); atlas trims
+retain that canvas offset. File names and source hashes are in packing.json.
+
+The presenter lives entirely under tools/art/drawn/. It samples the stock actor's
+current_clip, direction_index and rendered region AFTER the actor ticks, with
+no second animation timer and no private frame access. The fitted group mirrors
+Sprite position, rotation, scale, tint and spin offset delta exactly once. All
+pieces stay in the actor subtree with no elevated global z index. An unsupported
+clip switches the entire proof off and shows the complete dressed stock hero;
+there is no incomplete production base. Proof textures load during studio setup,
+never in sync_pose. Leaving the studio releases its selected resources.
+
+Budgets and limits
+
+Atlases are lossless RGBA8 WebP imports, no mipmaps, with two clear gutter pixels
+around every packed rectangle. These are final painted colors, not tint-ready
+clothing data. Do not put them in the tint-driven wardrobe layer directory or
+apply a uniform tint as a garment recoloring system. Small-scale close review
+uses linear filtering; target-device minification still needs later validation.
+
+Locomotion residency counts complete idle/walk/run proof atlases, including body,
+all starter clothing, hands/ears and sword. Rasmus is 27.56 MiB and Pedro 18.36 MiB,
+each below the proposed 32 MiB target. Reach adds approximately 6.94 MiB / 4.58 MiB.
+The studio deliberately holds those four groups at once. Shared stock sheets
+used by the animation clock, tile textures, scene overhead and GPU pools are
+separate. The integrated presenter should stop needing duplicate stock body
+sheets when a complete production body exists. This proof is not evidence that
+the full wardrobe catalog fits these budgets.
+
+Each figure adds one group and nine Sprite2D nodes: ten CanvasItems, below the
+16-item target. That is a node bound, not a measured renderer draw-call claim.
+No light, body collider, navigation obstacle or combat hitbox is added. CPU update
+sampling on this development host is saved separately in cpu-profile.json; it
+excludes setup, renderer/GPU time and target-device frame time. Lossless texture
+size/residency and build time are recorded in packing.json. Production still
+needs hardware draw-call, mip/filtering, streaming and total actor memory QA.
+
+To update the CPU sample explicitly (ordinary tests leave the saved sample alone):
+  EQUIPMENT_FIT_PROFILE=1 tests/run_playtest.sh --strict --no-boot --only=art_equipment_fit
+
+Validation reports: headless-tests.json, native-tests.json, full-tests.json and
+validation.json. The full delivery and remaining ownership gates are in
+handoff.txt. This is the completed two-body fit proof, not the complete wardrobe.
+
+Final verification: 5,760 full regression checks in 36 sections, zero failures,
+59 documented pending-owner skips and 26 scoped intentional engine messages.
+There were no unhandled engine errors/warnings or shutdown leak warnings.
+Focused art/character verification passed 861 checks, including 745 fit checks,
+with zero skips. The native gate passed eight contact-sheet checks and saved
+14 inspected captures. Rebuilding all eight atlases and the manifest was byte
+identical; the measured rebuild took 25.05 seconds on this development host.
+The mean changed-direction + presenter update was approximately 0.013 ms per
+hero over 1,200 CPU samples; this is not a GPU or target-hardware timing.

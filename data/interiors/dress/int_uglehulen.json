@@ -1,0 +1,54 @@
+{
+  "items": [
+    {
+      "id": "owl_perch",
+      "cell": [
+        0,
+        1
+      ],
+      "rot": 0
+    },
+    {
+      "id": "book_stack",
+      "cell": [
+        6,
+        0
+      ],
+      "rot": 0
+    },
+    {
+      "id": "potion_shelf",
+      "cell": [
+        3,
+        0
+      ],
+      "rot": 0,
+      "wall": true
+    },
+    {
+      "id": "crystal_ball_stand",
+      "cell": [
+        1,
+        1
+      ],
+      "rot": 0
+    },
+    {
+      "id": "price_board",
+      "cell": [
+        5,
+        0
+      ],
+      "rot": 0,
+      "wall": true
+    },
+    {
+      "id": "lantern_hanging",
+      "cell": [
+        0,
+        0
+      ],
+      "rot": 0
+    }
+  ]
+}

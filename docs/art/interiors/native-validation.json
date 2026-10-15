@@ -1,0 +1,22 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 39,
+  "elapsed_s": 4.02,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "interior_views": {
+      "checks": 39,
+      "failed": 0,
+      "ms": 3246,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

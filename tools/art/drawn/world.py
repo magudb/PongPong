@@ -3,7 +3,8 @@
 
 This is the deterministic atlas/export stage, like pack.py and terrain.py. Artwork
 comes from the saved imagegen masters; geometry, pivots and collisions stay data.
-The original V5/V22 exports remain available for their generator regression tests.
+Historical V5/V22 paths receive the same paintings through fixtures.py; immutable
+geometry measurements keep re-exports independent of their new surface pigments.
 """
 from __future__ import annotations
 
@@ -12,6 +13,7 @@ import json
 from pathlib import Path
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageOps
+from fixtures import geometry_source
 
 from pack import extract, window_light
 from terrain import HERE, ROOT, periodic, sample
@@ -83,7 +85,7 @@ def city(drawings: list[Image.Image], forest: list[Image.Image], details: list[I
     for name, record in original.items():
         if name.startswith("_") or not isinstance(record, dict) or "file" not in record:
             continue
-        old = Image.open(folder / record["file"]).convert("RGBA")
+        old = geometry_source(folder / record["file"])
         size = old.size
         if record.get("kind") == "hut":
             index = 3 if name == "hut_raadhus" else hut_roofs[name.rsplit("_", 1)[1]]

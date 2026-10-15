@@ -292,7 +292,8 @@ func _static_checks(t) -> void:
 		var text: String = FileAccess.get_file_as_string(path)
 		if text.contains("zone_entered.emit(") and not path.ends_with("scripts/world2d/world_2d.gd"):
 			offenders_zone.append(path)
-		if text.contains("mouse_mode") and path.contains("scripts/world2d/"):
+		# mouse_mode is forbidden in world AND ui scripts (pause_menu captured the cursor once; the autoload lint did not reach it)
+		if text.contains("mouse_mode") and (path.contains("scripts/world2d/") or path.contains("scripts/ui/")):
 			offenders_mouse.append(path)
 		if path.contains("scripts/world2d/"):
 			for line in text.split("\n"):
@@ -300,7 +301,7 @@ func _static_checks(t) -> void:
 				if rx_da.search(code) != null:
 					offenders_da.append("%s: %s" % [path, line.strip_edges().left(50)])
 	t.check("zone_entered_only_from_world_root", offenders_zone.is_empty(), "other emitters: %s" % [offenders_zone])
-	t.check("no_mouse_capture_in_world_scripts", offenders_mouse.is_empty(), "%s" % [offenders_mouse])
+	t.check("no_mouse_capture_in_world_scripts", offenders_mouse.is_empty(), "world2d + ui scripts: %s" % [offenders_mouse])
 	t.check("no_danish_literals_in_world_scripts", offenders_da.is_empty(), "%s" % [offenders_da.slice(0, 3)])
 	var da_in_lua: Array[String] = []
 	for path2 in ["res://lua/config/props.lua", "res://lua/config/ambient.lua"]:

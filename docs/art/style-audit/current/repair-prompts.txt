@@ -1,0 +1,76 @@
+Current asset repair prompt set
+
+The selected art matched the chosen style. Historical fixtures now reuse those
+accepted drawings too: 285 deterministic re-exports, with 13 neutral radial light
+kernels retained as functional masks. No new drawing generation was necessary.
+Exact prior built-in imagegen generation/edit prompts remain in:
+  docs/art/world-consistency/prompts.json
+  docs/art/interiors/prompts.json
+  docs/art/equipment/prompts.json
+  docs/art/shop-core/prompts.json
+  docs/art/shop-special/prompts.json
+  docs/art/festival/prompts.json
+  docs/art/equipment-fit/prompts.json
+The earlier consistency repairs also retain their *prompts*.json files directly
+under docs/art/style-audit/. Selected master hashes are kept in each handoff.
+Use the native captures and docs/art/style-guide.txt alongside those references.
+
+Historical fixture repair recipe
+
+Target list: tools/art/drawn/fixture_recipes.json (all 298 paths).
+Drawing references: each entry's source; characters/terrain remain authoritative.
+Instruction: replace the old CG/prototype drawing with that approved painting.
+Keep historical filenames, tile cells, cutout canvas and ground anchor. Fit a
+different source canvas uniformly around its measured ground pivot; do not warp
+the character-facing proportions. Use the painted city hut's trimmed window
+mask and matching offset rather than fitting its lights into an old rectangle.
+Copy terrain variants cell for cell; keep all four water phases. Use the painted
+window/rune masks and painted forest-glow material, not the old neon tile fills.
+Keep neutral radial light kernels functional. Backdrop foliage must repeat at
+the edges and leave transparent sky above its canopy. Doormat and timber parts
+reuse accepted textile/terrain pigments. Export losslessly at the fixture path.
+
+Reproduce: tools/art/.venv/bin/python tools/art/drawn/pack.py --only=fixtures
+Verify: tools/art/.venv/bin/python tools/art/drawn/fixtures.py --check
+The geometry archive contains only channel sums/alpha for joints and silhouettes;
+it prevents repeated exports from compounding painted shading. It is not an art
+reference. The production packer and optimizer restore these fixtures last.
+
+Reusable future correction
+
+Use case: precise-object-edit / identity-preserve / style-transfer.
+Target: [master file, asset ID, cell/direction/frame and actual native capture].
+Image 1: the exact target master; retain object identity and all unaffected cells.
+Image 2: approved heroes.png or that hero's accepted body; proportions/contour.
+Image 3: terrain.png or the matching selected furnishing master; material grain.
+Problem: [specific contour/material/perspective/alpha/occlusion mismatch].
+Change only: [the visible defect]. Preserve [canvas, pivot, footprint, projection,
+rotation order, object parts, source spacing, hand identity and local palette].
+
+Match matte storybook gouache/watercolor with subtle paper/pigment grain and
+thin, slightly uneven warm pencil edges. Honey timber, sage/cream linen, quiet
+lavender/terracotta, small dull brass and restrained iron. Keep the original
+object's functional silhouette and rarity identity. No glossy/plastic/faceted
+3D rendering, photoreal texture pasted onto a flat shape, thick black strokes,
+vector-looking world objects or broad neon bloom. Turn the same physical object;
+rear views hide front-only buttons, handles, glass contents and decorations.
+Never silently mirror asymmetric texture, hand position or occluder order.
+
+True alpha transparency; complete silhouettes and clear gutters. No floor card,
+cast shadow, cell fill, guide grid, baked lighting wash or labels in cutouts.
+Technical light/shadow/telegraph masks retain their functional native design;
+do not paint them as furniture. UI vectors remain editable vectors in the theme
+system, with parchment, ink and fairy gold. Caprasimo controls stay >=20 px.
+
+For equipment preserve the safe body, native 256x256 canvas and (128,200) ground
+anchor. Clothing, grips and hands must share the actual pose. Keep ears, hair,
+wings, tail and ghost hem clear. Empty garment masters contain no character
+parts. Do not give ghosts human legs or tint cloth as if it were ghost skin.
+Do not present flattened concepts or missing clips as completed fitted layers.
+
+Save the exact prompt, reference roles and a non-destructive corrected master
+under the relevant package. Repack from source using that package's exporter;
+keep transforms, trim offsets, material masks and light count/memory limits.
+Review in Godot beside the actual heroes/tiles, on light/dark floors and in
+appropriate day/evening states. Update the per-file review evidence only after
+inspection, then run style_audit_current.py --check and relevant art tests.

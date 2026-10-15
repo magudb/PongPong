@@ -1,0 +1,40 @@
+{
+  "status": "accepted for the documented runtime/design roles; retained prototype exceptions are explicit",
+  "date": "2026-10-15",
+  "worktree": "codex-review",
+  "reference": "docs/Tr\u00e6toppen Style Guide Review/Tr\u00e6toppen Style Guide.dc.html",
+  "scope": "Every assets/ file inventoried; every raster decoded; every character clip sampled at a middle frame plus all eight idle directions; all effective prop/terrain/icon and furniture-view sheets reviewed by family. This is not a frame-by-frame animation review or an automated aesthetic score.",
+  "repairs": {
+    "furniture_designs": 130,
+    "furniture_views": 482,
+    "legendary_effect_overlays": 44,
+    "furniture_and_material_icons": 162,
+    "world_prop_and_parallax_entries": 111,
+    "construction_frames": 9
+  },
+  "generation": "Built-in imagegen; exact prompts and full-resolution masters saved. Deterministic packing/projection uses the existing native contracts.",
+  "reports": [
+    "scan-before.json",
+    "scan-after.json",
+    "catalog-after.json",
+    "full-tests.json",
+    "focused-tests.json",
+    "native-tests.json",
+    "provenance-tests.json"
+  ],
+  "inventory": {
+    "files": 4656,
+    "rasters": 2263,
+    "decode_errors": 0
+  },
+  "validation": {
+    "full_checks": 3773,
+    "native_checks": 48,
+    "provenance_checks": 115,
+    "failures": 0,
+    "engine_errors": 0,
+    "engine_warnings": 0,
+    "home_art_mb": 10.73,
+    "city_rgba_estimate_mb": 69.8
+  }
+}

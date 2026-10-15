@@ -1,0 +1,73 @@
+{
+  "reviewer": "Codex visual inspection of native Godot imports",
+  "captures": [
+    {
+      "file": "docs/art/equipment-fit/native/art_equipment_fit_fit_pedro_floors.png",
+      "sha256": "f083057c6e870c0e18721db40d40733bda155133c0b567faf2f8e4186038069c"
+    },
+    {
+      "file": "docs/art/equipment-fit/native/art_equipment_fit_fit_pedro_idle_all_frames.png",
+      "sha256": "aa78f6f721789ff1b5239be0e29930cb5b92c53a4fb5b2a571cfd2b90849dcc8"
+    },
+    {
+      "file": "docs/art/equipment-fit/native/art_equipment_fit_fit_pedro_interact_all_frames.png",
+      "sha256": "820d71edac3740055f191efa4571c1a979897dc8cc9752b85734e76c716ecc77"
+    },
+    {
+      "file": "docs/art/equipment-fit/native/art_equipment_fit_fit_pedro_removed_layers.png",
+      "sha256": "98ba40a4e46c6192fa648d8efd7ab1de30817d520795493c2b7c899bf06770b4"
+    },
+    {
+      "file": "docs/art/equipment-fit/native/art_equipment_fit_fit_pedro_run_all_frames.png",
+      "sha256": "c8f6560cb1db8aa308cf89657caa9a391e8e7325c936e6a1b9611eba8eb0b0b0"
+    },
+    {
+      "file": "docs/art/equipment-fit/native/art_equipment_fit_fit_pedro_spin_altitude_tint.png",
+      "sha256": "c7ed5430f65f49cc34f454764fc9d4cfce2df0b277597dc864690423d28deff3"
+    },
+    {
+      "file": "docs/art/equipment-fit/native/art_equipment_fit_fit_pedro_walk_all_frames.png",
+      "sha256": "874f66d5a7d86bb4b14eb6351afb070445bf6daafb8cb5915c6dec8d787cdc43"
+    },
+    {
+      "file": "docs/art/equipment-fit/native/art_equipment_fit_fit_rasmus_floors.png",
+      "sha256": "bc6c40dc4503adbb5e006e1d483594276e95552d481ffc11acf9bfb2430c9295"
+    },
+    {
+      "file": "docs/art/equipment-fit/native/art_equipment_fit_fit_rasmus_idle_all_frames.png",
+      "sha256": "a1e098cea0025e46c0c071372db35c4eb0878538fb5f96b8eecc8dc6cc06dfcf"
+    },
+    {
+      "file": "docs/art/equipment-fit/native/art_equipment_fit_fit_rasmus_interact_all_frames.png",
+      "sha256": "1feed02f606e7b6443b359889af1dced0d8227daa4d6f0e9a28c866a3683415e"
+    },
+    {
+      "file": "docs/art/equipment-fit/native/art_equipment_fit_fit_rasmus_removed_layers.png",
+      "sha256": "99fa0cd1709115d83000b20740335769921976576311eaacb461089f0623fd3b"
+    },
+    {
+      "file": "docs/art/equipment-fit/native/art_equipment_fit_fit_rasmus_run_all_frames.png",
+      "sha256": "51d0122415b702be307432f538acfca634c3b0fc9a15ae61ad94d60edd7a8526"
+    },
+    {
+      "file": "docs/art/equipment-fit/native/art_equipment_fit_fit_rasmus_spin_altitude_tint.png",
+      "sha256": "344ad933233b438f327f4d53002297107766d197bf96ec0e5431cd66ca8bf9c9"
+    },
+    {
+      "file": "docs/art/equipment-fit/native/art_equipment_fit_fit_rasmus_walk_all_frames.png",
+      "sha256": "9aa78f18b3f65690d4a9013b1626bbe4b22f10a1f073754be76fcfbf77c51436"
+    }
+  ],
+  "pose_sheets": 8,
+  "pose_coverage": 320,
+  "floor_and_layer_removal_studies": 4,
+  "spin_altitude_tint_studies": 2,
+  "findings": [
+    "Chosen matte painted finish retained beside the native timber/forest surfaces.",
+    "Rasmus ear occluders preserve the straw hat brim; tail and face stay clear of clothes.",
+    "Pedro uses an opaque short shirt, woven hem band and paired leather tabs, with no human legs.",
+    "Every idle/walk/run/reach frame is present; common deformation keeps layers registered.",
+    "Far-side relaxed sword regions can be hidden by body/tail; dedicated attack arms remain a production task.",
+    "The gallery uses a common transformed group; spin, altitude and tint do not separate cloth or hands."
+  ]
+}

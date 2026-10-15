@@ -1,0 +1,39 @@
+{
+  "source": "read-only m1b tools/towns/interiors/validate.py",
+  "validator_sha256": "ea16dd8f78cab5baa5a5953eddeed21b8f33a4e15c437759135c14f1c2d1cc4e",
+  "inputs_sha256": {
+    "data/interiors/dress/int_froebutikken.json": "912243be396665daf240ff6e3e68a5aeb18a91db5f07a99d73d96e9a9875e474",
+    "data/interiors/dress/int_postkontoret.json": "5f1c7470d28921cd6522a52c11ced73d64de6f4d015e65160dc551c1fce6b9c0",
+    "data/interiors/dress/int_badehuset.json": "3ba3cfd70b38a49845806b64c2609fc1085562897fc4aa4b00ab811e046184a5",
+    "data/interiors/dress/int_raadhuset.json": "5fc80bbf70a5ddb37883d4d85dadc593d1082b740fa1408b95c631753a00d0b9",
+    "data/interiors/dress/int_hoppe_hut.json": "fb787a81bf0254a2b6e207309139ffd7bfbd438e20e1f40b3ed767b12180b038",
+    "data/interiors/dress/int_bageriet.json": "b34797f41638a212014833384d39fcc9d3a67c9c2116aef8702d829d253ec43a",
+    "data/interiors/dress/int_smedjen.json": "5f901395bb3a7449754315224a8d3ae5e0f2437c0ce8a8ce2695109a4fe20833",
+    "data/interiors/dress/int_troldmandstaarnet.json": "68c2f535025866dfca7f948a9eeb984843ffc9da5b812c0ad9bfed898f112fd7",
+    "data/interiors/dress/int_uglehulen.json": "1376858e461789c2152769a78e3b1c6c90090d663da3bb658dd7e1bb099a89a7",
+    "data/interiors/dress/int_dyrehuset.json": "b7e840726ed013c6d5f6251f2b8696300dcd912238af918531265fc6461da781",
+    "data/interiors/dress/int_toemmerhandlen.json": "bddd371431eb4524b4fcfd721e46d3f391fa9dfc3b4ea639de87588eb43c9312",
+    "data/interiors/dress/int_moebelbutikken.json": "b3216a8749eed587b384f2b0818fc8b776a43b032a94038dd0eafc9d94a41706",
+    "data/interiors/dress/int_skraedderiet.json": "6b1f1db122c0c0fa2d8c2fbc2c2bcdc86769bc19414c98b237de1be86a46d4f8",
+    "data/interiors/dress/int_brummes_vaerksted.json": "4d749245baeeb0ad8c105f0523b077d686aac7845b458d250be80225040ba49f",
+    "data/interiors/dress/int_loppeloftet.json": "1550bdc9aca8777f777075c4400f741abea412c610cba708ccf6fc34990794f0",
+    "docs/art/shop-special/room-contracts.json": "0c5fcd61cda8caf16b5c696efa6afdf83393cf6188c1964cd8203f8707773796"
+  },
+  "rooms": {
+    "froebutikken": [],
+    "postkontoret": [],
+    "badehuset": [],
+    "raadhuset": [],
+    "hoppe_hut": [],
+    "bageriet": [],
+    "smedjen": [],
+    "troldmandstaarnet": [],
+    "uglehulen": [],
+    "dyrehuset": [],
+    "toemmerhandlen": [],
+    "moebelbutikken": [],
+    "skraedderiet": [],
+    "brummes_vaerksted": [],
+    "loppeloftet": []
+  }
+}

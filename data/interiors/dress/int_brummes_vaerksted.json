@@ -1,0 +1,54 @@
+{
+  "items": [
+    {
+      "id": "plank_rack",
+      "cell": [
+        1,
+        1
+      ],
+      "rot": 0
+    },
+    {
+      "id": "log_stack_indoor",
+      "cell": [
+        8,
+        0
+      ],
+      "rot": 0
+    },
+    {
+      "id": "tool_hooks",
+      "cell": [
+        2,
+        0
+      ],
+      "rot": 0,
+      "wall": true
+    },
+    {
+      "id": "bell_counter",
+      "cell": [
+        0,
+        3
+      ],
+      "rot": 0
+    },
+    {
+      "id": "price_board",
+      "cell": [
+        4,
+        0
+      ],
+      "rot": 0,
+      "wall": true
+    },
+    {
+      "id": "lantern_hanging",
+      "cell": [
+        0,
+        0
+      ],
+      "rot": 0
+    }
+  ]
+}

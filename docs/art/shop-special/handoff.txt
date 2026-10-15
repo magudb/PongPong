@@ -1,0 +1,67 @@
+To the towns/interiors implementation owner
+
+Consume assets/iso_props/shops/special/shops.json through the existing
+PieceCatalog kit_manifest_paths. The 69 IDs retain the published I4 footprint,
+layer, template, set and baked rotation list. Each rot entry supplies relative
+file, native size, pivot, footprint, ysort, illustration and flip=false.
+Keep core and specialist lookup priority above generic furniture: some IDs such
+as potion_shelf have older domestic furniture with the same name.
+
+Wall pivots use the first wall cell's edge midpoint, like the core kit and
+InteriorRoom. Respect the supplied mounting height/pivot; do not centre a
+multi-cell shelf using its bounding box. Tabletop and ceiling sprites retain a
+ground anchor with their elevation baked into pivot.y; do not raise them twice.
+Tabletop ysort=[0,19] sorts the accessory just after its support while retaining
+its pixel position. Only floor pieces receive floor collision. Ceiling pieces
+need their own foreground plane so actors cannot sort above a hanging object.
+The art gallery demonstrates this with z_index=2; use the appropriate existing
+runtime plane rather than importing the gallery.
+
+Two accents exist: steam_vent r0 and hanging_stars r0. Their night, night_size,
+night_offset and glow fields describe trimmed additive sprites. night_offset
+is relative to the full body image's top-left. Use body offset + night_offset
+once; these accents have light_hint=none and point_lights=0. No additional
+PointLight2D is needed. The core fire masks retain their separate one-light cap.
+At this handoff m1b InteriorRoom still consumes body images only; mask placement,
+time-of-day fading and ceiling ordering remain runtime owner work.
+
+The optional overlays are data/interiors/dress/int_<room>.json and follow the
+existing {items:[{id,cell,rot,wall?}]} schema. The art source snapshots cover all
+24 generator rooms; only the prescribed 15 specialist rooms receive dressing.
+The Hoppe overlay is ready for T-ext-content, but that live room is not installed
+on this branch. The live towns kit-table and Hoppe integration gates are explicit
+skips until their owning packages land. Their future gameplay, collision, E-query
+and runtime performance gates must still run after integration.
+
+There is a contract discrepancy in I4's prose: it asks for bell/scale on the
+counter, while the actual current towns validator rejects tabletop dressing in
+the counter and keeper/customer approach bands. This art delivery follows the
+validator. Scale, bell and stamp are placed on supported customer/work tables
+outside those bands. No gameplay rule is weakened to make a screenshot pass.
+The post office omits the wide wall shelf because its window/cabinet spans are
+already occupied; the bakery omits the extra flour sack for access/space. Both
+assets are still fully exported and reviewed in the contact sheets.
+The furniture showroom already uses 2.984 MB of imported room textures by
+evening before I4. Its overlay therefore keeps only the supported sample tag
+and wall price board. The screen, plinth, tall shelf and extra lantern are
+omitted there for the existing whole-room texture cap; all remain exported.
+The measured evening total is recorded in native-room-budgets.json.
+
+The exporter rebuilds dressing deterministically from the saved room snapshots.
+After a room geometry change, regenerate the snapshots from the owning generator,
+repack, re-run its validator and the native review; do not use a stale evidence
+file as a substitute for validating the new live layout. Review the conservative
+combined core/specialist room-kit totals, native node counts and light counts in
+the reports. Full live-room memory and frame-time measurements belong to the
+runtime integration gate.
+
+Remaining art/design packages after this delivery:
+  I5 art and placement design are now delivered separately: 24 designs / 53
+    authored views, four seasonal sets and a native art studio. Its live
+    festival state/director hookup is still pending; see docs/art/festival/handoff.txt.
+  Wardrobe: fitted animation layers, attachment sockets and occlusion for each
+    supported body, following docs/art/equipment/design.txt. The current outfit
+    and held-item illustrations are flattened design studies.
+
+All generation/repair prompts are in prompts.json. Reuse the selected painted
+masters and the style-audit/asset-repair-prompt.txt template for future fixes.

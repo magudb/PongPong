@@ -1,0 +1,1896 @@
+{
+  "_source": "Painted interior masters; docs/art/interiors/prompts.json. Fixed-view modular assets, not four-rotation replacements.",
+  "bed_patch": {
+    "pivot": [
+      86.5,
+      121
+    ],
+    "footprint": [
+      1,
+      2
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "bed_patch.webp",
+    "size": [
+      173,
+      166
+    ],
+    "illustration": "tools/art/drawn/sources/interior_domestic.png"
+  },
+  "bed_oak": {
+    "pivot": [
+      144.0,
+      179
+    ],
+    "footprint": [
+      2,
+      3
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "bed_oak.webp",
+    "size": [
+      288,
+      254
+    ],
+    "illustration": "tools/art/drawn/sources/interior_domestic.png"
+  },
+  "table_tea": {
+    "pivot": [
+      57.5,
+      82
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "table_tea.webp",
+    "size": [
+      115,
+      112
+    ],
+    "illustration": "tools/art/drawn/sources/interior_domestic.png"
+  },
+  "chair_cottage": {
+    "pivot": [
+      57.5,
+      141
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "chair_cottage.webp",
+    "size": [
+      115,
+      171
+    ],
+    "illustration": "tools/art/drawn/sources/interior_domestic.png"
+  },
+  "sofa_sage": {
+    "pivot": [
+      86.5,
+      78
+    ],
+    "footprint": [
+      2,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "sofa_sage.webp",
+    "size": [
+      173,
+      123
+    ],
+    "illustration": "tools/art/drawn/sources/interior_domestic.png"
+  },
+  "hearth_cottage": {
+    "pivot": [
+      57.5,
+      99
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "hearth_cottage.webp",
+    "size": [
+      115,
+      129
+    ],
+    "illustration": "tools/art/drawn/sources/interior_domestic.png"
+  },
+  "kitchen_hutch": {
+    "pivot": [
+      86.5,
+      208
+    ],
+    "footprint": [
+      2,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "kitchen_hutch.webp",
+    "size": [
+      173,
+      253
+    ],
+    "illustration": "tools/art/drawn/sources/interior_domestic.png"
+  },
+  "bookcase_cottage": {
+    "pivot": [
+      57.5,
+      131
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "bookcase_cottage.webp",
+    "size": [
+      115,
+      161
+    ],
+    "illustration": "tools/art/drawn/sources/interior_domestic.png"
+  },
+  "wardrobe_cottage": {
+    "pivot": [
+      57.5,
+      115
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "wardrobe_cottage.webp",
+    "size": [
+      115,
+      145
+    ],
+    "illustration": "tools/art/drawn/sources/interior_domestic.png"
+  },
+  "chest_cottage": {
+    "pivot": [
+      57.5,
+      63
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "chest_cottage.webp",
+    "size": [
+      115,
+      93
+    ],
+    "illustration": "tools/art/drawn/sources/interior_domestic.png"
+  },
+  "plant_cottage": {
+    "pivot": [
+      57.5,
+      69
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "plant_cottage.webp",
+    "size": [
+      115,
+      99
+    ],
+    "illustration": "tools/art/drawn/sources/interior_domestic.png"
+  },
+  "loom_cottage": {
+    "pivot": [
+      57.5,
+      83
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "loom_cottage.webp",
+    "size": [
+      115,
+      113
+    ],
+    "illustration": "tools/art/drawn/sources/interior_domestic.png"
+  },
+  "counter_pine": {
+    "pivot": [
+      132,
+      141
+    ],
+    "footprint": [
+      3,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "source_ground_planes": [
+      [
+        0.02,
+        0.76
+      ],
+      [
+        0.8,
+        0.99
+      ],
+      [
+        0.98,
+        0.8
+      ]
+    ],
+    "file": "counter_pine.webp",
+    "size": [
+      267,
+      218
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "counter_end": {
+    "pivot": [
+      65,
+      93
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "source_ground_planes": [
+      [
+        0.02,
+        0.78
+      ],
+      [
+        0.68,
+        0.99
+      ],
+      [
+        0.98,
+        0.78
+      ]
+    ],
+    "file": "counter_end.webp",
+    "size": [
+      133,
+      132
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "counter_hatch": {
+    "pivot": [
+      68,
+      104
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "source_ground_planes": [
+      [
+        0.06,
+        0.72
+      ],
+      [
+        0.93,
+        0.98
+      ],
+      [
+        0.98,
+        0.9
+      ]
+    ],
+    "file": "counter_hatch.webp",
+    "size": [
+      152,
+      144
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "sign_bracket": {
+    "pivot": [
+      58.0,
+      139
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "view": "front_right",
+    "layer": "wall",
+    "file": "sign_bracket.webp",
+    "size": [
+      116,
+      145
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "brick_oven": {
+    "pivot": [
+      103,
+      162
+    ],
+    "footprint": [
+      2,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "source_ground_planes": [
+      [
+        0.04,
+        0.83
+      ],
+      [
+        0.75,
+        0.99
+      ],
+      [
+        0.97,
+        0.8
+      ]
+    ],
+    "file": "brick_oven.webp",
+    "size": [
+      207,
+      219
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "bread_rack": {
+    "pivot": [
+      57.5,
+      115
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "bread_rack.webp",
+    "size": [
+      115,
+      145
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "anvil": {
+    "pivot": [
+      57.5,
+      97
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "anvil.webp",
+    "size": [
+      115,
+      127
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "forge": {
+    "pivot": [
+      86.5,
+      114
+    ],
+    "footprint": [
+      2,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "forge.webp",
+    "size": [
+      173,
+      159
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "cauldron_stand": {
+    "pivot": [
+      57.5,
+      90
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "cauldron_stand.webp",
+    "size": [
+      115,
+      120
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "hay_bale": {
+    "pivot": [
+      57.5,
+      48
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "hay_bale.webp",
+    "size": [
+      115,
+      78
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "feed_sack_stack": {
+    "pivot": [
+      57.5,
+      57
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "feed_sack_stack.webp",
+    "size": [
+      115,
+      87
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "plank_stack": {
+    "pivot": [
+      86.5,
+      70
+    ],
+    "footprint": [
+      2,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "plank_stack.webp",
+    "size": [
+      173,
+      115
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "workbench": {
+    "pivot": [
+      101,
+      128
+    ],
+    "footprint": [
+      2,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "source_ground_planes": [
+      [
+        0.03,
+        0.83
+      ],
+      [
+        0.76,
+        0.99
+      ],
+      [
+        0.96,
+        0.83
+      ]
+    ],
+    "file": "workbench.webp",
+    "size": [
+      209,
+      186
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "mannequin": {
+    "pivot": [
+      54.0,
+      226
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "mannequin.webp",
+    "size": [
+      108,
+      256
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "pigeonhole_wall": {
+    "pivot": [
+      86.5,
+      115
+    ],
+    "footprint": [
+      2,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "pigeonhole_wall.webp",
+    "size": [
+      173,
+      160
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "mail_sack": {
+    "pivot": [
+      57.5,
+      83
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "mail_sack.webp",
+    "size": [
+      115,
+      113
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "parcel_stack": {
+    "pivot": [
+      57.5,
+      75
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "parcel_stack.webp",
+    "size": [
+      115,
+      105
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "letter_desk": {
+    "pivot": [
+      57.5,
+      72
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "letter_desk.webp",
+    "size": [
+      115,
+      102
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "wooden_tub": {
+    "pivot": [
+      115.0,
+      106
+    ],
+    "footprint": [
+      2,
+      2
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "wooden_tub.webp",
+    "size": [
+      230,
+      166
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "notice_board_indoor": {
+    "pivot": [
+      86.5,
+      129
+    ],
+    "footprint": [
+      2,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "notice_board_indoor.webp",
+    "size": [
+      173,
+      174
+    ],
+    "illustration": "tools/art/drawn/sources/interior_shops.png"
+  },
+  "bed_canopy": {
+    "pivot": [
+      144.0,
+      200
+    ],
+    "footprint": [
+      2,
+      3
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "bed_canopy.webp",
+    "size": [
+      288,
+      275
+    ],
+    "illustration": "tools/art/drawn/sources/interior_regal.png"
+  },
+  "table_manor": {
+    "pivot": [
+      115.0,
+      108
+    ],
+    "footprint": [
+      3,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "table_manor.webp",
+    "size": [
+      230,
+      168
+    ],
+    "illustration": "tools/art/drawn/sources/interior_regal.png"
+  },
+  "chair_manor": {
+    "pivot": [
+      57.5,
+      138
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "chair_manor.webp",
+    "size": [
+      115,
+      168
+    ],
+    "illustration": "tools/art/drawn/sources/interior_regal.png"
+  },
+  "piano_manor": {
+    "pivot": [
+      86.5,
+      125
+    ],
+    "footprint": [
+      2,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "piano_manor.webp",
+    "size": [
+      173,
+      170
+    ],
+    "illustration": "tools/art/drawn/sources/interior_regal.png"
+  },
+  "bookcase_manor": {
+    "pivot": [
+      86.5,
+      152
+    ],
+    "footprint": [
+      2,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "bookcase_manor.webp",
+    "size": [
+      173,
+      197
+    ],
+    "illustration": "tools/art/drawn/sources/interior_regal.png"
+  },
+  "hearth_manor": {
+    "pivot": [
+      86.5,
+      133
+    ],
+    "footprint": [
+      2,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "hearth_manor.webp",
+    "size": [
+      173,
+      178
+    ],
+    "illustration": "tools/art/drawn/sources/interior_regal.png"
+  },
+  "throne_leaf": {
+    "pivot": [
+      57.5,
+      135
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "throne_leaf.webp",
+    "size": [
+      115,
+      165
+    ],
+    "illustration": "tools/art/drawn/sources/interior_regal.png"
+  },
+  "chandelier_leaf": {
+    "pivot": [
+      58.0,
+      0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "view": "front_right",
+    "layer": "ceiling",
+    "file": "chandelier_leaf.webp",
+    "size": [
+      116,
+      119
+    ],
+    "illustration": "tools/art/drawn/sources/interior_regal.png"
+  },
+  "rug_braid": {
+    "pivot": [
+      128.0,
+      76.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "view": "front_right",
+    "layer": "ground",
+    "ground_span": [
+      2,
+      2
+    ],
+    "file": "rug_braid.webp",
+    "size": [
+      256,
+      152
+    ],
+    "illustration": "tools/art/drawn/sources/interior_dressing.png"
+  },
+  "rug_sprig": {
+    "pivot": [
+      160.0,
+      95.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "view": "front_right",
+    "layer": "ground",
+    "ground_span": [
+      3,
+      2
+    ],
+    "file": "rug_sprig.webp",
+    "size": [
+      320,
+      190
+    ],
+    "illustration": "tools/art/drawn/sources/interior_dressing.png"
+  },
+  "rug_manor": {
+    "pivot": [
+      160.0,
+      95.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "view": "front_right",
+    "layer": "ground",
+    "ground_span": [
+      3,
+      2
+    ],
+    "file": "rug_manor.webp",
+    "size": [
+      320,
+      190
+    ],
+    "illustration": "tools/art/drawn/sources/interior_dressing.png"
+  },
+  "wall_lantern": {
+    "pivot": [
+      23.0,
+      36.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "view": "front_right",
+    "layer": "wall",
+    "file": "wall_lantern.webp",
+    "size": [
+      46,
+      72
+    ],
+    "illustration": "tools/art/drawn/sources/interior_dressing.png"
+  },
+  "picture_leaf": {
+    "pivot": [
+      31.0,
+      36.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "view": "front_right",
+    "layer": "wall",
+    "file": "picture_leaf.webp",
+    "size": [
+      62,
+      72
+    ],
+    "illustration": "tools/art/drawn/sources/interior_dressing.png"
+  },
+  "seed_display": {
+    "pivot": [
+      86.5,
+      111
+    ],
+    "footprint": [
+      2,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "seed_display.webp",
+    "size": [
+      173,
+      156
+    ],
+    "illustration": "tools/art/drawn/sources/interior_dressing.png"
+  },
+  "potion_shelf": {
+    "pivot": [
+      57.5,
+      169
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "potion_shelf.webp",
+    "size": [
+      115,
+      199
+    ],
+    "illustration": "tools/art/drawn/sources/interior_dressing.png"
+  },
+  "fabric_rack": {
+    "pivot": [
+      86.5,
+      120
+    ],
+    "footprint": [
+      2,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "fabric_rack.webp",
+    "size": [
+      173,
+      165
+    ],
+    "illustration": "tools/art/drawn/sources/interior_dressing.png"
+  },
+  "flowers_cottage": {
+    "pivot": [
+      57.5,
+      114
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "flowers_cottage.webp",
+    "size": [
+      115,
+      144
+    ],
+    "illustration": "tools/art/drawn/sources/interior_dressing.png"
+  },
+  "table_coffee": {
+    "pivot": [
+      57.5,
+      52
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "table_coffee.webp",
+    "size": [
+      115,
+      82
+    ],
+    "illustration": "tools/art/drawn/sources/interior_dressing.png"
+  },
+  "armchair_sage": {
+    "pivot": [
+      57.5,
+      77
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "view": "front_right",
+    "layer": "floor",
+    "file": "armchair_sage.webp",
+    "size": [
+      115,
+      107
+    ],
+    "illustration": "tools/art/drawn/sources/interior_dressing.png"
+  },
+  "herb_shelf": {
+    "pivot": [
+      45.5,
+      50.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "view": "front_right",
+    "layer": "wall",
+    "file": "herb_shelf.webp",
+    "size": [
+      91,
+      100
+    ],
+    "illustration": "tools/art/drawn/sources/interior_dressing.png"
+  },
+  "emblem_seed": {
+    "pivot": [
+      40.0,
+      38.5
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "layer": "wall",
+    "file": "emblem_seed.webp",
+    "size": [
+      80,
+      77
+    ],
+    "illustration": "tools/art/drawn/sources/interior_emblems.png"
+  },
+  "emblem_bakery": {
+    "pivot": [
+      40.0,
+      39.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "layer": "wall",
+    "file": "emblem_bakery.webp",
+    "size": [
+      80,
+      78
+    ],
+    "illustration": "tools/art/drawn/sources/interior_emblems.png"
+  },
+  "emblem_smith": {
+    "pivot": [
+      40.0,
+      39.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "layer": "wall",
+    "file": "emblem_smith.webp",
+    "size": [
+      80,
+      78
+    ],
+    "illustration": "tools/art/drawn/sources/interior_emblems.png"
+  },
+  "emblem_animal": {
+    "pivot": [
+      40.0,
+      38.5
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "layer": "wall",
+    "file": "emblem_animal.webp",
+    "size": [
+      80,
+      77
+    ],
+    "illustration": "tools/art/drawn/sources/interior_emblems.png"
+  },
+  "emblem_magic": {
+    "pivot": [
+      40.0,
+      39.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "layer": "wall",
+    "file": "emblem_magic.webp",
+    "size": [
+      80,
+      78
+    ],
+    "illustration": "tools/art/drawn/sources/interior_emblems.png"
+  },
+  "emblem_furniture": {
+    "pivot": [
+      40.0,
+      38.5
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "layer": "wall",
+    "file": "emblem_furniture.webp",
+    "size": [
+      80,
+      77
+    ],
+    "illustration": "tools/art/drawn/sources/interior_emblems.png"
+  },
+  "emblem_tailor": {
+    "pivot": [
+      40.0,
+      38.5
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "layer": "wall",
+    "file": "emblem_tailor.webp",
+    "size": [
+      80,
+      77
+    ],
+    "illustration": "tools/art/drawn/sources/interior_emblems.png"
+  },
+  "emblem_timber": {
+    "pivot": [
+      40.0,
+      38.5
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "layer": "wall",
+    "file": "emblem_timber.webp",
+    "size": [
+      80,
+      77
+    ],
+    "illustration": "tools/art/drawn/sources/interior_emblems.png"
+  },
+  "emblem_flea": {
+    "pivot": [
+      40.0,
+      38.5
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "layer": "wall",
+    "file": "emblem_flea.webp",
+    "size": [
+      80,
+      77
+    ],
+    "illustration": "tools/art/drawn/sources/interior_emblems.png"
+  },
+  "emblem_post": {
+    "pivot": [
+      40.0,
+      38.5
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "layer": "wall",
+    "file": "emblem_post.webp",
+    "size": [
+      80,
+      77
+    ],
+    "illustration": "tools/art/drawn/sources/interior_emblems.png"
+  },
+  "emblem_bath": {
+    "pivot": [
+      40.0,
+      39.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "layer": "wall",
+    "file": "emblem_bath.webp",
+    "size": [
+      80,
+      78
+    ],
+    "illustration": "tools/art/drawn/sources/interior_emblems.png"
+  },
+  "emblem_hall": {
+    "pivot": [
+      40.0,
+      39.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "layer": "wall",
+    "file": "emblem_hall.webp",
+    "size": [
+      80,
+      78
+    ],
+    "illustration": "tools/art/drawn/sources/interior_emblems.png"
+  },
+  "emblem_owl": {
+    "pivot": [
+      40.0,
+      39.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "layer": "wall",
+    "file": "emblem_owl.webp",
+    "size": [
+      80,
+      78
+    ],
+    "illustration": "tools/art/drawn/sources/interior_emblems.png"
+  },
+  "emblem_carpenter": {
+    "pivot": [
+      40.0,
+      38.5
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "layer": "wall",
+    "file": "emblem_carpenter.webp",
+    "size": [
+      80,
+      77
+    ],
+    "illustration": "tools/art/drawn/sources/interior_emblems.png"
+  },
+  "emblem_home": {
+    "pivot": [
+      40.0,
+      39.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "layer": "wall",
+    "file": "emblem_home.webp",
+    "size": [
+      80,
+      78
+    ],
+    "illustration": "tools/art/drawn/sources/interior_emblems.png"
+  },
+  "wall_plank_a_r0": {
+    "file": "wall_plank_a_r0.webp",
+    "size": [
+      83,
+      234
+    ],
+    "pivot": [
+      38,
+      212
+    ],
+    "height_m": 2.55,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_plank_a_r1": {
+    "file": "wall_plank_a_r1.webp",
+    "size": [
+      83,
+      234
+    ],
+    "pivot": [
+      45,
+      212
+    ],
+    "height_m": 2.55,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_plank_b_r0": {
+    "file": "wall_plank_b_r0.webp",
+    "size": [
+      84,
+      234
+    ],
+    "pivot": [
+      39,
+      212
+    ],
+    "height_m": 2.55,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_plank_b_r1": {
+    "file": "wall_plank_b_r1.webp",
+    "size": [
+      83,
+      235
+    ],
+    "pivot": [
+      45,
+      212
+    ],
+    "height_m": 2.55,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_plank_win_r0_night": {
+    "pivot": [
+      43,
+      212
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "blend": "add",
+    "file": "wall_plank_win_r0_night.webp",
+    "size": [
+      88,
+      234
+    ],
+    "illustration": "tools/art/drawn/sources/interior_walls.png"
+  },
+  "wall_plank_win_r0": {
+    "file": "wall_plank_win_r0.webp",
+    "size": [
+      88,
+      234
+    ],
+    "pivot": [
+      43,
+      212
+    ],
+    "height_m": 2.55,
+    "night": "wall_plank_win_r0_night.webp",
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_plank_win_r1_night": {
+    "pivot": [
+      45,
+      212
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "blend": "add",
+    "file": "wall_plank_win_r1_night.webp",
+    "size": [
+      88,
+      234
+    ],
+    "illustration": "tools/art/drawn/sources/interior_walls.png"
+  },
+  "wall_plank_win_r1": {
+    "file": "wall_plank_win_r1.webp",
+    "size": [
+      88,
+      234
+    ],
+    "pivot": [
+      45,
+      212
+    ],
+    "height_m": 2.55,
+    "night": "wall_plank_win_r1_night.webp",
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "corner_plank": {
+    "file": "corner_plank.webp",
+    "size": [
+      48,
+      215
+    ],
+    "pivot": [
+      24,
+      201
+    ],
+    "height_m": 2.55,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_plaster_a_r0": {
+    "file": "wall_plaster_a_r0.webp",
+    "size": [
+      83,
+      234
+    ],
+    "pivot": [
+      38,
+      212
+    ],
+    "height_m": 2.55,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_plaster_a_r1": {
+    "file": "wall_plaster_a_r1.webp",
+    "size": [
+      83,
+      234
+    ],
+    "pivot": [
+      45,
+      212
+    ],
+    "height_m": 2.55,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_plaster_b_r0": {
+    "file": "wall_plaster_b_r0.webp",
+    "size": [
+      84,
+      234
+    ],
+    "pivot": [
+      39,
+      212
+    ],
+    "height_m": 2.55,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_plaster_b_r1": {
+    "file": "wall_plaster_b_r1.webp",
+    "size": [
+      83,
+      235
+    ],
+    "pivot": [
+      45,
+      212
+    ],
+    "height_m": 2.55,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_plaster_win_r0_night": {
+    "pivot": [
+      43,
+      212
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "blend": "add",
+    "file": "wall_plaster_win_r0_night.webp",
+    "size": [
+      88,
+      234
+    ],
+    "illustration": "tools/art/drawn/sources/interior_walls.png"
+  },
+  "wall_plaster_win_r0": {
+    "file": "wall_plaster_win_r0.webp",
+    "size": [
+      88,
+      234
+    ],
+    "pivot": [
+      43,
+      212
+    ],
+    "height_m": 2.55,
+    "night": "wall_plaster_win_r0_night.webp",
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_plaster_win_r1_night": {
+    "pivot": [
+      45,
+      212
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "blend": "add",
+    "file": "wall_plaster_win_r1_night.webp",
+    "size": [
+      88,
+      234
+    ],
+    "illustration": "tools/art/drawn/sources/interior_walls.png"
+  },
+  "wall_plaster_win_r1": {
+    "file": "wall_plaster_win_r1.webp",
+    "size": [
+      88,
+      234
+    ],
+    "pivot": [
+      45,
+      212
+    ],
+    "height_m": 2.55,
+    "night": "wall_plaster_win_r1_night.webp",
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "corner_plaster": {
+    "file": "corner_plaster.webp",
+    "size": [
+      48,
+      215
+    ],
+    "pivot": [
+      24,
+      201
+    ],
+    "height_m": 2.55,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_paper_a_r0": {
+    "file": "wall_paper_a_r0.webp",
+    "size": [
+      83,
+      265
+    ],
+    "pivot": [
+      38,
+      243
+    ],
+    "height_m": 3.0,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_paper_a_r1": {
+    "file": "wall_paper_a_r1.webp",
+    "size": [
+      83,
+      265
+    ],
+    "pivot": [
+      45,
+      243
+    ],
+    "height_m": 3.0,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_paper_b_r0": {
+    "file": "wall_paper_b_r0.webp",
+    "size": [
+      86,
+      265
+    ],
+    "pivot": [
+      41,
+      243
+    ],
+    "height_m": 3.0,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_paper_b_r1": {
+    "file": "wall_paper_b_r1.webp",
+    "size": [
+      83,
+      265
+    ],
+    "pivot": [
+      45,
+      243
+    ],
+    "height_m": 3.0,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_paper_win_r0_night": {
+    "pivot": [
+      43,
+      243
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "blend": "add",
+    "file": "wall_paper_win_r0_night.webp",
+    "size": [
+      88,
+      265
+    ],
+    "illustration": "tools/art/drawn/sources/interior_walls.png"
+  },
+  "wall_paper_win_r0": {
+    "file": "wall_paper_win_r0.webp",
+    "size": [
+      88,
+      265
+    ],
+    "pivot": [
+      43,
+      243
+    ],
+    "height_m": 3.0,
+    "night": "wall_paper_win_r0_night.webp",
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_paper_win_r1_night": {
+    "pivot": [
+      45,
+      243
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "blend": "add",
+    "file": "wall_paper_win_r1_night.webp",
+    "size": [
+      88,
+      265
+    ],
+    "illustration": "tools/art/drawn/sources/interior_walls.png"
+  },
+  "wall_paper_win_r1": {
+    "file": "wall_paper_win_r1.webp",
+    "size": [
+      88,
+      265
+    ],
+    "pivot": [
+      45,
+      243
+    ],
+    "height_m": 3.0,
+    "night": "wall_paper_win_r1_night.webp",
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "corner_paper": {
+    "file": "corner_paper.webp",
+    "size": [
+      48,
+      246
+    ],
+    "pivot": [
+      24,
+      232
+    ],
+    "height_m": 3.0,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_marble_a_r0": {
+    "file": "wall_marble_a_r0.webp",
+    "size": [
+      83,
+      315
+    ],
+    "pivot": [
+      38,
+      293
+    ],
+    "height_m": 3.7,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_marble_a_r1": {
+    "file": "wall_marble_a_r1.webp",
+    "size": [
+      83,
+      315
+    ],
+    "pivot": [
+      45,
+      293
+    ],
+    "height_m": 3.7,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_marble_b_r0": {
+    "file": "wall_marble_b_r0.webp",
+    "size": [
+      87,
+      315
+    ],
+    "pivot": [
+      42,
+      293
+    ],
+    "height_m": 3.7,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_marble_b_r1": {
+    "file": "wall_marble_b_r1.webp",
+    "size": [
+      83,
+      315
+    ],
+    "pivot": [
+      45,
+      293
+    ],
+    "height_m": 3.7,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_marble_win_r0_night": {
+    "pivot": [
+      43,
+      293
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "blend": "add",
+    "file": "wall_marble_win_r0_night.webp",
+    "size": [
+      88,
+      315
+    ],
+    "illustration": "tools/art/drawn/sources/interior_walls.png"
+  },
+  "wall_marble_win_r0": {
+    "file": "wall_marble_win_r0.webp",
+    "size": [
+      88,
+      315
+    ],
+    "pivot": [
+      43,
+      293
+    ],
+    "height_m": 3.7,
+    "night": "wall_marble_win_r0_night.webp",
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "wall_marble_win_r1_night": {
+    "pivot": [
+      45,
+      293
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "blend": "add",
+    "file": "wall_marble_win_r1_night.webp",
+    "size": [
+      88,
+      315
+    ],
+    "illustration": "tools/art/drawn/sources/interior_walls.png"
+  },
+  "wall_marble_win_r1": {
+    "file": "wall_marble_win_r1.webp",
+    "size": [
+      88,
+      315
+    ],
+    "pivot": [
+      45,
+      293
+    ],
+    "height_m": 3.7,
+    "night": "wall_marble_win_r1_night.webp",
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  },
+  "corner_marble": {
+    "file": "corner_marble.webp",
+    "size": [
+      48,
+      296
+    ],
+    "pivot": [
+      24,
+      282
+    ],
+    "height_m": 3.7,
+    "illustration": "tools/art/drawn/sources/interior_walls.png",
+    "footprint": [
+      0,
+      0
+    ]
+  }
+}
