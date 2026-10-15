@@ -87,11 +87,13 @@
         },
         {
           "id": "S-gifts",
-          "status": "pending"
+          "status": "mechanics_validated_live_NPC_UI_gate_pending",
+          "evidence": "social-dialogue.json: 617 checks, zero failures, 7 later-package skips. Picker/Npc2D chain remains at S-ui/P14/I2."
         },
         {
           "id": "S-talk",
-          "status": "pending"
+          "status": "mechanics_validated_live_NPC_UI_gate_pending",
+          "evidence": "social-dialogue.json: 617 checks, zero failures, 7 later-package skips. Picker/Npc2D chain remains at S-ui/P14/I2."
         },
         {
           "id": "T-routes",

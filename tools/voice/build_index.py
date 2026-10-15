@@ -12,7 +12,7 @@ def render(root=ROOT):
     for key in sorted(k for k in rows if k.endswith('_V')):
         npc=next((n for n in sorted(npcs,key=len,reverse=True) if any(key.startswith(p+n.upper()+'_') for p in ['SOC_','GIFT_','BDAY_'])),None)
         if npc is None:raise ValueError('Unknown speaker for '+key)
-        line=key.lower()
+        line=key.removeprefix('SOC_'+npc.upper()+'_').lower()
         lines.append(f'      {{ id = "{line}", text_key = "{key}", voice_key = "voice/{npc}/{line}" }},')
     return '\n'.join(lines+['  },','}',''])
 

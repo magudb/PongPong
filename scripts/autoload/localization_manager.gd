@@ -34,6 +34,8 @@ const SETTINGS_KEY := "locale"
 
 ## Current locale ("da" | "en"). Read-only for callers: change it with set_locale().
 var current_locale: String = DEFAULT_LOCALE
+## Changes only when the CSV corpus is reloaded. Consumers can cache key families.
+var revision: int = 0
 
 var _translations: Array[Translation] = []
 var _rows: Dictionary = {}          # key -> {file: String, line: int, text: {locale: String}} (effective, after overrides)
@@ -66,6 +68,7 @@ func _load_translations() -> void:
 	_translations.clear()
 	var parsed := parse_dir(LOC_DIR)
 	_rows = parsed["rows"]
+	revision += 1
 	_files = parsed["files"]
 	if _files.is_empty():
 		push_error("LocalizationManager: no *.csv files found in %s - every text will show its raw key" % LOC_DIR)

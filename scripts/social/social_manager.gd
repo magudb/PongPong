@@ -26,7 +26,7 @@ const LAST_GIFTS := 3                          # the `ls` list of a row: the las
 
 ## Fields of a saved row (zero fields are omitted; wk and gwk default to -1 = "never"). pc = the purchase counter packed as week * 100000 + points * 1000 + gold
 ## remainder (shop friendliness; a deviation from the order's field list that is zero-omitted and exists only on keepers, see the report).
-const ROW_INT_KEYS: Array[String] = ["p", "wk", "gt", "gd", "gwk", "gw", "bd", "bk", "rv", "rs", "pc"]
+const ROW_INT_KEYS: Array[String] = ["p", "wk", "gt", "gd", "gwk", "gw", "bd", "bk", "rv", "rs", "pc", "tp"]
 const ROW_NEVER_KEYS: Array[String] = ["wk", "gwk"]
 
 const EV_POINTS := &"social_points"
@@ -244,7 +244,7 @@ func _row(npc: String, create: bool = true) -> Dictionary:
 	if not _rows.has(npc):
 		if not create:
 			return {}
-		_rows[npc] = {"p": 0, "wk": -1, "gt": 0, "gd": 0, "gwk": -1, "gw": 0, "bd": 0, "bk": 0, "ls": [], "kn": {}, "rv": 0, "rs": 0, "pc": 0}
+		_rows[npc] = {"p": 0, "wk": -1, "gt": 0, "gd": 0, "gwk": -1, "gw": 0, "bd": 0, "bk": 0, "ls": [], "kn": {}, "rv": 0, "rs": 0, "pc": 0, "tp": 0}
 	return _rows[npc]
 
 
