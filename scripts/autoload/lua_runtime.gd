@@ -96,6 +96,11 @@ func reload_scripts(announce: bool = false) -> void:
 	var gm := _node("GameManager")
 	if gm != null and gm.has_method("invalidate_config_cache"):
 		gm.call("invalidate_config_cache")
+	# marker_handlers.lua may have changed: drop the memoised marker registry and entry-point scripts (late-bound,
+	# like Svc.static_call: an autoload must compile without the global class cache, so no class_name reference)
+	var iso_area: Variant = load("res://scripts/world2d/iso_area.gd")
+	if iso_area is Script:
+		(iso_area as Script).callv(&"clear_handler_cache", [])
 	if announce:
 		var bus := _node("EventBus")
 		if bus != null:

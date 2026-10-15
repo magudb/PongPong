@@ -72,6 +72,7 @@ func _on_body_entered(body: Node) -> void:
 			_told = true
 			EventBus.whisper_requested.emit("WORLD_WARP_LOCKED")
 		return
+	# a target the world does not know still fires the request: travel() owns the refusal (and whispers it)
 	EventBus.area_change_requested.emit(to_area, to_spawn)
 
 

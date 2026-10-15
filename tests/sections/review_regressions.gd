@@ -47,9 +47,9 @@ func run(p_t) -> void:
 	await t.go_menu()
 	t.autoload("LuaRuntime").reload_scripts()
 	_fresh()
-	for key in qm.quest_flags.keys():
-		if str(key).begins_with("def_review_"):
-			qm.quest_flags.erase(key)
+	for key in qm.quest_defs.keys():
+		if str(key).begins_with("review_"):
+			qm.quest_defs.erase(key)
 	sm.save_dir = keep_dir
 	sm.clock_override = keep_clock
 	sm.autosave_enabled = keep_auto
@@ -132,8 +132,9 @@ func _menus() -> void:
 	await t.change_scene("res://scenes/ui/character_select.tscn")
 	var select: Node = t.tree.current_scene
 	select.get_node("%FairyButton").pressed.emit()
-	select.get_node("%SkinOption").select(2)
-	select.get_node("%SkinOption").item_selected.emit(2)
+	# a retired skin (fairy_dusk) is never offered: index 1 is the second LIVE fairy skin (fairy_birk)
+	select.get_node("%SkinOption").select(1)
+	select.get_node("%SkinOption").item_selected.emit(1)
 	var announced: Array = []
 	var reset_skins: Array = []
 	var on_character := func(skin: StringName) -> void: announced.append(skin)
@@ -143,10 +144,10 @@ func _menus() -> void:
 	select.get_node("%ConfirmButton").pressed.emit()
 	bus.player_character_changed.disconnect(on_character)
 	bus.new_game_started.disconnect(on_new)
-	t.check("selected_skin_announced_before_reset", announced == [&"fairy_dusk"] and reset_skins == [&"fairy_dusk"], str(announced))
+	t.check("selected_skin_announced_before_reset", announced == [&"fairy_birk"] and reset_skins == [&"fairy_birk"], str(announced))
 	entered = await t.until(func() -> bool: return t.in_world())
 	await t.frames(2)
-	t.check("selected_skin_reaches_world", entered and gm.character_skin == &"fairy_dusk", "")
+	t.check("selected_skin_reaches_world", entered and gm.character_skin == &"fairy_birk", "")
 	await t.go_menu()
 
 

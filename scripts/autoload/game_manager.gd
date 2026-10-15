@@ -148,7 +148,7 @@ func day_start_hour() -> int:
 ## The hour at which the clock wraps into the next day (24 by default).
 func day_end_hour() -> int:
 	var end_hour := int(config_value("time.day_end_hour", DEFAULT_DAY_END_HOUR))
-	if end_hour <= day_start_hour() or end_hour > 48:
+	if end_hour <= day_start_hour() or end_hour > 24:   # hour stays a plain 0..23 clock (header contract)
 		return DEFAULT_DAY_END_HOUR
 	return end_hour
 

@@ -10,6 +10,8 @@ var completed_quests: Array[StringName] = []
 var failed_quests: Array[StringName] = []
 var offered_quests: Array[StringName] = []
 var quest_flags: Dictionary = {}
+## Lua quest definitions by id (registered at LuaRuntime load, never saved, survive reset()/from_dict()).
+var quest_defs: Dictionary = {}
 ## Absolute completion day per quest; completed_quests remains the history used by dialogue and map conditions.
 var completed_days: Dictionary = {}
 ## quest id -> {item id: amount} still owed. Successful deliveries are removed before another claim can run.
@@ -66,9 +68,7 @@ func reset() -> void:
 	completed_days.clear()
 	pending_rewards.clear()
 	_reward_claim_queued = false
-	for key in quest_flags.keys():
-		if not str(key).begins_with("def_"):
-			quest_flags.erase(key)
+	quest_flags.clear()
 
 
 func register_quest_from_lua(quest_data: Dictionary) -> void:
@@ -77,7 +77,7 @@ func register_quest_from_lua(quest_data: Dictionary) -> void:
 		push_error("Lua quest is missing an id")
 		return
 	# Lua defines availability; we only store the definition cache
-	quest_flags["def_%s" % quest_id] = quest_data
+	quest_defs[quest_id] = quest_data
 
 
 func offer_quest(quest_id: StringName) -> void:
@@ -275,7 +275,7 @@ func fail_quest(quest_id: StringName) -> void:
 
 
 func get_quest_def(quest_id: StringName) -> Dictionary:
-	return quest_flags.get("def_%s" % quest_id, {})
+	return quest_defs.get(quest_id, {})
 
 
 func get_active_quests() -> Array:
@@ -437,11 +437,9 @@ func from_dict(data: Dictionary) -> bool:
 	completed_quests.assign(data.get("completed", []))
 	failed_quests.assign(data.get("failed", []))
 	offered_quests.assign(data.get("offered", []))
-	for key in quest_flags.keys():
-		if not str(key).begins_with("def_"):
-			quest_flags.erase(key)
+	quest_flags.clear()
 	for key in data.get("flags", {}):
-		if not str(key).begins_with("def_"):
+		if not str(key).begins_with("def_"):   # v1 saves carried quest defs as flags; defs are never loaded
 			quest_flags[key] = data["flags"][key]
 	completed_days.clear()
 	var saved_days: Dictionary = data.get("completed_days", {})

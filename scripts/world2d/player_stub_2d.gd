@@ -214,6 +214,7 @@ func revive(at_global: Vector2) -> void:
 	state = S.FREE
 	forced_clip = &""
 	stats_changed.emit()
+	_emit_stats_on_bus()
 
 
 ## Restores energy and hearts (the bed and the pass-out of WorldRoot2D call it).
@@ -221,6 +222,13 @@ func restore_after_sleep() -> void:
 	stamina = max_stamina
 	half_hearts = max_half_hearts
 	stats_changed.emit()
+	_emit_stats_on_bus()
+
+
+## Mirrors the local stats_changed on the contract signals: the HUD screens listen to the bus, not to this stub.
+func _emit_stats_on_bus() -> void:
+	EventBus.player_health_changed.emit(half_hearts, max_half_hearts)
+	EventBus.player_stats_changed.emit({"half_hearts": half_hearts, "max_half_hearts": max_half_hearts, "stamina": stamina, "max_stamina": max_stamina})
 
 
 ## The cell in front of the feet (the one a tool or E acts on).

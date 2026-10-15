@@ -18,6 +18,8 @@ const MAX_SLOTS := 6
 
 var _selected_slot: int = -1
 var _pending_action: String = ""
+## The request name that opened the panel ("save_menu" | "load_menu"): the modal it pushes and the toggle it answers.
+var _open_panel: StringName = &""
 
 
 func _ready() -> void:
@@ -29,12 +31,20 @@ func _ready() -> void:
 	_populate_slots()
 
 
-func open(save_mode: int) -> void:
+func open(save_mode: int, panel: StringName = &"save_menu") -> void:
 	mode = save_mode
+	_open_panel = panel
 	title_label.text = tr("UI_SAVE_GAME") if mode == Mode.SAVE else tr("UI_LOAD_GAME")
 	visible = true
 	_populate_slots()
-	GameManager.change_phase(GameManager.GamePhase.PAUSED)
+	GameManager.push_modal(&"save_load")
+
+
+## Esc is this panel's key (while it is the top modal): closes the browser, not the pause menu under it.
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and GameManager.top_modal() == &"save_load" and event.is_action_pressed(&"ui_cancel"):
+		_close()
+		get_viewport().set_input_as_handled()
 
 
 func _populate_slots() -> void:
@@ -116,10 +126,12 @@ func _on_confirm() -> void:
 				slot_selected.emit(_selected_slot, true)
 				EventBus.notification_posted.emit(tr("NOTIF_SAVED_TITLE"), tr("NOTIF_SAVED_MSG") % (_selected_slot + 1), "save")
 		"load":
-			if SaveManager.load_game(_selected_slot):
+			# a failed load keeps the browser open (load_and_enter already posted the failure notification);
+			# on success it pops every modal itself and enters the world
+			if SaveManager.load_and_enter(_selected_slot):
+				visible = false
+				_open_panel = &""
 				slot_selected.emit(_selected_slot, false)
-				_close()
-				get_tree().change_scene_to_file("res://scenes/main/world.tscn")
 	_pending_action = ""
 
 
@@ -139,17 +151,16 @@ func _format_playtime(seconds: float) -> String:
 
 func _close() -> void:
 	visible = false
-	GameManager.change_phase(GameManager.GamePhase.PLAYING)
+	var panel := _open_panel
+	_open_panel = &""
+	GameManager.pop_modal(&"save_load")
+	if panel != &"":
+		EventBus.ui_panel_toggled.emit(panel, false)
 
 
 func _on_panel_toggled(panel: StringName, is_open: bool) -> void:
-	if panel == &"save_menu":
+	if panel == &"save_menu" or panel == &"load_menu":
 		if is_open:
-			open(Mode.SAVE)
-		else:
-			_close()
-	elif panel == &"load_menu":
-		if is_open:
-			open(Mode.LOAD)
-		else:
+			open(Mode.SAVE if panel == &"save_menu" else Mode.LOAD, panel)
+		elif _open_panel == panel:
 			_close()

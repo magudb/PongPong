@@ -876,7 +876,6 @@ func _apply_payload(payload: Dictionary) -> Dictionary:
 		if node != null and node.has_method("to_dict"):
 			var before: Variant = node.call("to_dict")
 			snapshot[entry["name"]] = (before as Dictionary).duplicate(true) if typeof(before) == TYPE_DICTIONARY else {}
-	var legacy_defs := _legacy_quest_defs()
 	var guard := ApplyGuard.new()
 	OS.add_logger(guard)
 	var failure := ""
@@ -901,7 +900,6 @@ func _apply_payload(payload: Dictionary) -> Dictionary:
 		if failure != "":
 			break
 	if failure == "":
-		_restore_legacy_quest_defs(legacy_defs)
 		pending_world = _dict_of(payload.get("world")).duplicate(true)
 	else:
 		for entry in touched:                      # sections that were never reached still hold their own state
@@ -910,30 +908,6 @@ func _apply_payload(payload: Dictionary) -> Dictionary:
 				node.call("from_dict", (snapshot[entry["name"]] as Dictionary).duplicate(true))
 	OS.remove_logger(guard)
 	return {"ok": failure == "", "detail": failure}
-
-
-## QuestManager of the first waves keeps the Lua definitions inside quest_flags ("def_<id>") and its from_dict replaces
-## quest_flags wholesale, which would drop them (audit T1). The definitions are never in a save, so they are carried over.
-## A QuestManager with separate quest_defs (P13) has no def_ flags and this does nothing.
-func _legacy_quest_defs() -> Dictionary:
-	var defs := {}
-	var quest_manager := SvcLib.node("QuestManager")
-	var flags: Variant = quest_manager.get("quest_flags") if quest_manager != null else null
-	if typeof(flags) == TYPE_DICTIONARY:
-		for key in flags:
-			if str(key).begins_with("def_"):
-				defs[key] = flags[key]
-	return defs
-
-
-func _restore_legacy_quest_defs(defs: Dictionary) -> void:
-	if defs.is_empty():
-		return
-	var flags: Variant = SvcLib.node("QuestManager").get("quest_flags")
-	if typeof(flags) == TYPE_DICTIONARY:
-		for key in defs:
-			if not (flags as Dictionary).has(key):
-				flags[key] = defs[key]
 
 
 # ------------------------------------------------------------------ files

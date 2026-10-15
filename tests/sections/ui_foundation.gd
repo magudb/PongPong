@@ -822,9 +822,8 @@ func _raw_key_words(t, line: String) -> Array[String]:
 func _real_quest_ids(t) -> Array[StringName]:
 	var qm: Node = t.autoload("QuestManager")
 	var ids: Array[StringName] = []
-	for k in qm.quest_flags:
-		if str(k).begins_with("def_"):
-			ids.append(StringName(str(k).substr(4)))
+	for k in qm.quest_defs:
+		ids.append(StringName(str(k)))
 	return ids
 
 

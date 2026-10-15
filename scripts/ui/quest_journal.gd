@@ -12,7 +12,7 @@ var _selected_quest: StringName = &""
 
 func _ready() -> void:
 	visible = false
-	close_btn.pressed.connect(func(): visible = false; EventBus.ui_panel_toggled.emit(&"journal", false))
+	close_btn.pressed.connect(func(): EventBus.ui_panel_toggled.emit(&"journal", false))
 	EventBus.ui_panel_toggled.connect(_on_panel_toggled)
 	EventBus.quest_accepted.connect(func(_id): _refresh())
 	EventBus.quest_completed.connect(func(_id): _refresh())
@@ -59,8 +59,18 @@ func _show_details(quest_id: StringName) -> void:
 		detail_panel.add_child(obj_label)
 
 
+## Esc closes the journal while it is the top modal.
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and GameManager.top_modal() == &"journal" and event.is_action_pressed(&"ui_cancel"):
+		EventBus.ui_panel_toggled.emit(&"journal", false)
+		get_viewport().set_input_as_handled()
+
+
 func _on_panel_toggled(panel: StringName, is_open: bool) -> void:
 	if panel == &"journal":
 		visible = is_open
 		if is_open:
+			GameManager.push_modal(&"journal")
 			_refresh()
+		else:
+			GameManager.pop_modal(&"journal")

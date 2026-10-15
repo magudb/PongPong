@@ -127,6 +127,7 @@ var _has_water: bool = false                # a `~` cell was painted: the four s
 var _hooked: bool = false
 
 static var _handler_cache: Dictionary = {}  # script path -> {"mode": String, "script": Script}
+static var _registry_cache: Dictionary = {} # marker_registry(), memoised: a map resolves ~once per marker cell
 
 
 # ------------------------------------------------------------------ marker registry (static)
@@ -134,6 +135,8 @@ static var _handler_cache: Dictionary = {}  # script path -> {"mode": String, "s
 ## type -> {"script": path ("" for built-in types), "builtin": bool}: the built-in table with lua/config/marker_handlers.lua merged
 ## OVER it (a Lua entry replaces the script of a lazy type, adds new types, and may replace a built-in one when its script exists).
 static func marker_registry() -> Dictionary:
+	if not _registry_cache.is_empty():
+		return _registry_cache
 	var reg: Dictionary = {}
 	for t in BUILTIN_MARKERS:
 		reg[t] = {"script": "", "builtin": true}
@@ -151,6 +154,7 @@ static func marker_registry() -> Dictionary:
 			continue
 		var key: String = str(t)
 		reg[key] = {"script": path, "builtin": bool((reg.get(key, {}) as Dictionary).get("builtin", false))}
+	_registry_cache = reg
 	return reg
 
 
@@ -198,6 +202,7 @@ static func _handler_api(path: String, legacy: bool) -> Dictionary:
 ## Forgets the cached entry points (tests that add handler scripts, hot reload).
 static func clear_handler_cache() -> void:
 	_handler_cache.clear()
+	_registry_cache.clear()
 
 
 # ------------------------------------------------------------------ setup
@@ -232,7 +237,8 @@ func _make_skeleton() -> void:
 	ground.name = "Ground"
 	ground.tile_set = ts
 	ground.z_index = Z_GROUND
-	ground.y_sort_enabled = true
+	# no y_sort: the ground diamonds never overlap another cell; the sort pass is per-frame waste on big maps
+	ground.y_sort_enabled = false
 	ground.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	add_child(ground)
 	if projection == &"iso":
@@ -948,7 +954,9 @@ func _attach_glow_and_light(first: Node2D, art: Dictionary, def: Dictionary, piv
 		halo.material = Glow.additive_material()
 		halo.z_index = 1
 		first.add_child(halo)
-		_glows.append({"node": halo, "base": 0.9})
+		var grec := {"node": halo, "base": 0.9}
+		_glows.append(grec)
+		_apply_night_one(grec)
 	var light_def: Dictionary = GameData.dict_of(def.get("light", {}))
 	if not light_def.is_empty():
 		var off: Array = GameData.array_of(light_def.get("offset", [0, -60]))
@@ -960,7 +968,9 @@ func _attach_glow_and_light(first: Node2D, art: Dictionary, def: Dictionary, piv
 		l.energy = 0.0
 		l.position = Vector2(float(off[0]) if off.size() > 0 else 0.0, float(off[1]) if off.size() > 1 else -60.0)
 		first.add_child(l)
-		_lights.append({"node": l, "base": float(light_def.get("energy", 0.85))})
+		var lrec := {"node": l, "base": float(light_def.get("energy", 0.85))}
+		_lights.append(lrec)
+		_apply_night_one(lrec)
 
 
 ## The soft contact shadow under a prop (GroundFx, not y-sorted); null when the art has none.
@@ -1459,6 +1469,20 @@ func _apply_night() -> void:
 			pl.visible = night_factor > 0.004
 
 
+## The same for ONE record (a prop placed mid-life, at night): place_prop must not re-walk every glow in the area.
+func _apply_night_one(rec: Dictionary) -> void:
+	var n: Variant = rec["node"]
+	if not is_instance_valid(n):
+		return
+	if n is PointLight2D:
+		(n as PointLight2D).energy = night_factor * float(rec["base"])
+	else:
+		var col: Color = (n as CanvasItem).modulate
+		col.a = night_factor * float(rec["base"])
+		(n as CanvasItem).modulate = col
+	(n as CanvasItem).visible = night_factor > 0.004
+
+
 ## The visible water frame (0..3).
 func water_frame() -> int:
 	return _water_frame
@@ -1512,6 +1536,8 @@ func _on_clock_event(_hour: int, _minute: int) -> void:
 
 
 func _on_game_event(_event_name: StringName, _payload: Dictionary) -> void:
+	if _when_nodes.is_empty():   # game_event is the catch-all channel: most fires cannot change a `when=`
+		return
 	refresh_when()
 
 
