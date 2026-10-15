@@ -102,6 +102,14 @@ func reload_scripts(announce: bool = false) -> void:
 	_register_all()
 	load_ms = Time.get_ticks_msec() - t0
 	_print_lint_summary()
+	var gm := _node("GameManager")
+	if gm != null and gm.has_method("invalidate_config_cache"):
+		gm.call("invalidate_config_cache")
+	# marker_handlers.lua may have changed: drop the memoised marker registry and entry-point scripts (late-bound,
+	# like Svc.static_call: an autoload must compile without the global class cache, so no class_name reference)
+	var iso_area: Variant = load("res://scripts/world2d/iso_area.gd")
+	if iso_area is Script:
+		(iso_area as Script).callv(&"clear_handler_cache", [])
 	if announce:
 		var bus := _node("EventBus")
 		if bus != null:
@@ -115,6 +123,9 @@ func load_file(path: String) -> String:
 	if sid != "":
 		_register_script(sid)
 		_post_register()
+		var gm := _node("GameManager")
+		if gm != null and gm.has_method("invalidate_config_cache"):
+			gm.call("invalidate_config_cache")
 	return sid
 
 
@@ -130,6 +141,21 @@ func get_dialogue(dialogue_id: String, context: Dictionary = {}) -> Dictionary:
 	if sid == "":
 		return {}
 	return _invoke_module_function(sid, "get_dialogue", [context])
+
+
+## Runs the quest's is_available(context); a quest without the hook is always available — including quest defs that
+## were registered without a script (QuestManager.register_quest_from_lua is the source of truth for existence).
+## `context` is whatever the caller passes (QuestManager sends day / gold / home_tier; a bare identifier in the
+## function still reads world flags). A hook answering a falsy value means not available (Lua truthiness: only nil
+## and false are false).
+func is_quest_available(quest_id: String, context: Dictionary = {}) -> bool:
+	var sid: String = _quest_modules.get(str(quest_id), "")
+	if sid == "":
+		return true
+	var script: Dictionary = _scripts.get(sid, {})
+	if not script.get("functions", {}).has("is_available"):
+		return true
+	return _truthy(_invoke_function(sid, "is_available", [context]))
 
 
 func get_item_def(item_id: String) -> Dictionary:

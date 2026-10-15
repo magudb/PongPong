@@ -26,11 +26,21 @@ func _ready() -> void:
 	EventBus.ui_panel_toggled.connect(_on_panel_toggled)
 
 
+## Esc closes the build menu while it is the top modal.
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and GameManager.top_modal() == &"build_menu" and event.is_action_pressed(&"ui_cancel"):
+		_close()
+		get_viewport().set_input_as_handled()
+
+
 func _on_panel_toggled(panel: StringName, is_open: bool) -> void:
 	if panel == &"build_menu":
 		visible = is_open
 		if is_open:
+			GameManager.push_modal(&"build_menu")
 			_populate_list()
+		else:
+			GameManager.pop_modal(&"build_menu")
 
 
 func _populate_list() -> void:
@@ -87,3 +97,5 @@ func _on_build() -> void:
 
 func _close() -> void:
 	visible = false
+	GameManager.pop_modal(&"build_menu")
+	EventBus.ui_panel_toggled.emit(&"build_menu", false)

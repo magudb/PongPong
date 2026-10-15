@@ -48,7 +48,10 @@ signal growth_changed(rows: int)
 const Z_GROUND := Iso.Z_GROUND
 const Z_GROUND_FX := Iso.Z_GROUND_FX
 const Z_SKIRTS := Iso.Z_SKIRTS
-const STRIP_W := 32
+## Minimum y-sort strip width. Wider strips = fewer CanvasItems under the y-sorted Objects node
+## (Hyggebyen is budgeted at 1200 nodes); the sort y is still computed per strip, so the only cost
+## is coarser depth granularity across a single big prop. 32 was the R.10 prototype width.
+const STRIP_W := 64
 const WATER_PERIOD := 0.5
 const FLAG_POLL_PERIOD := 0.25
 
@@ -129,9 +132,11 @@ var _water_t: float = 0.0
 var _poll_t: float = 0.0
 var _has_flag_when: bool = false
 var _when_hour: int = -1                    # the raw game hour (6..25) the `when=` nodes were last evaluated at: the hour edge test
+var _has_water: bool = false                # a `~` cell was painted: the four swap layers and the 0.5 s tick are needed
 var _hooked: bool = false
 
 static var _handler_cache: Dictionary = {}  # script path -> {"mode": String, "script": Script}
+static var _registry_cache: Dictionary = {} # marker_registry(), memoised: a map resolves ~once per marker cell
 
 
 # ------------------------------------------------------------------ marker registry (static)
@@ -139,6 +144,8 @@ static var _handler_cache: Dictionary = {}  # script path -> {"mode": String, "s
 ## type -> {"script": path ("" for built-in types), "builtin": bool}: the built-in table with lua/config/marker_handlers.lua merged
 ## OVER it (a Lua entry replaces the script of a lazy type, adds new types, and may replace a built-in one when its script exists).
 static func marker_registry() -> Dictionary:
+	if not _registry_cache.is_empty():
+		return _registry_cache
 	var reg: Dictionary = {}
 	for t in BUILTIN_MARKERS:
 		reg[t] = {"script": "", "builtin": true}
@@ -156,6 +163,7 @@ static func marker_registry() -> Dictionary:
 			continue
 		var key: String = str(t)
 		reg[key] = {"script": path, "builtin": bool((reg.get(key, {}) as Dictionary).get("builtin", false))}
+	_registry_cache = reg
 	return reg
 
 
@@ -203,6 +211,7 @@ static func _handler_api(path: String, legacy: bool) -> Dictionary:
 ## Forgets the cached entry points (tests that add handler scripts, hot reload).
 static func clear_handler_cache() -> void:
 	_handler_cache.clear()
+	_registry_cache.clear()
 
 
 # ------------------------------------------------------------------ setup
@@ -222,7 +231,7 @@ func setup(p_map: AreaMap) -> void:
 		_build_standard()
 	_ensure_default_spawn()
 	build_ms = Time.get_ticks_msec() - t0
-	set_process(not water_layers.is_empty() or _has_flag_when)
+	set_process(_has_water or _has_flag_when)
 	built.emit()
 
 
@@ -237,7 +246,8 @@ func _make_skeleton() -> void:
 	ground.name = "Ground"
 	ground.tile_set = ts
 	ground.z_index = Z_GROUND
-	ground.y_sort_enabled = true
+	# no y_sort: the ground diamonds never overlap another cell; the sort pass is per-frame waste on big maps
+	ground.y_sort_enabled = false
 	ground.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	add_child(ground)
 	if projection == &"iso":
@@ -532,6 +542,7 @@ func _paint_cell(c: Vector2i) -> void:
 			var wid: StringName = AreaTileSet.WATER_FRAMES[i]
 			water_layers[i].set_cell(c, AreaTileSet.source_for(projection, wid), AreaTileSet.atlas_coords_for(wid, c))
 		_terrain_of[c] = &"water_0"
+		_has_water = true
 		return
 	set_terrain(c, id)
 
@@ -925,7 +936,18 @@ func place_prop(prop_id: String, cell: Vector2i, params: Dictionary = {}) -> Nod
 		n.set_meta("prop_id", prop_id)
 		n.set_meta("cell", cell)
 		objects.add_child(n)
-	# glow (additive halo) and light ride on the first node; both ramp in with the night factor
+	_attach_glow_and_light(first, art, def, pivot_pos, pivot)
+	# Ground contact belongs below every y-sorted actor, independent of which
+	# building strip is nearest. Its pivot is the same footprint centre.
+	var ground_contact: Sprite2D = _attach_ground_contact(art, pivot_pos, prop_id)
+	prop_nodes.append({"id": prop_id, "cell": cell, "nodes": nodes, "body": body, "ground": ground_contact})
+	if night_factor > 0.0:
+		_apply_night()
+	return first
+
+
+## Additive halo and PointLight2D on the first sprite node; both ramp in with the night factor.
+func _attach_glow_and_light(first: Node2D, art: Dictionary, def: Dictionary, pivot_pos: Vector2, pivot: Vector2) -> void:
 	var glow: Dictionary = art.get("glow", {}) as Dictionary
 	if not glow.is_empty():
 		var halo := Sprite2D.new()
@@ -941,7 +963,9 @@ func place_prop(prop_id: String, cell: Vector2i, params: Dictionary = {}) -> Nod
 		halo.material = Glow.additive_material()
 		halo.z_index = 1
 		first.add_child(halo)
-		_glows.append({"node": halo, "base": 0.9})
+		var grec := {"node": halo, "base": 0.9}
+		_glows.append(grec)
+		_apply_night_one(grec)
 	var light_def: Dictionary = GameData.dict_of(def.get("light", {}))
 	if not light_def.is_empty():
 		var off: Array = GameData.array_of(light_def.get("offset", [0, -60]))
@@ -953,24 +977,25 @@ func place_prop(prop_id: String, cell: Vector2i, params: Dictionary = {}) -> Nod
 		l.energy = 0.0
 		l.position = Vector2(float(off[0]) if off.size() > 0 else 0.0, float(off[1]) if off.size() > 1 else -60.0)
 		first.add_child(l)
-		_lights.append({"node": l, "base": float(light_def.get("energy", 0.85))})
-	# Ground contact belongs below every y-sorted actor, independent of which
-	# building strip is nearest. Its pivot is the same footprint centre.
+		var lrec := {"node": l, "base": float(light_def.get("energy", 0.85))}
+		_lights.append(lrec)
+		_apply_night_one(lrec)
+
+
+## The soft contact shadow under a prop (GroundFx, not y-sorted); null when the art has none.
+func _attach_ground_contact(art: Dictionary, pivot_pos: Vector2, prop_id: String) -> Sprite2D:
 	var contact: Dictionary = art.get("ground", {})
-	var ground_contact: Sprite2D = null
-	if not contact.is_empty():
-		ground_contact = Sprite2D.new()
-		ground_contact.name = "%s_GroundContact" % prop_id
-		ground_contact.texture = contact["texture"]
-		ground_contact.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-		ground_contact.centered = false
-		ground_contact.offset = -(contact["pivot"] as Vector2)
-		ground_contact.position = pivot_pos
-		ground_fx.add_child(ground_contact)
-	prop_nodes.append({"id": prop_id, "cell": cell, "nodes": nodes, "body": body, "ground": ground_contact})
-	if night_factor > 0.0:
-		_apply_night()
-	return first
+	if contact.is_empty():
+		return null
+	var ground_contact := Sprite2D.new()
+	ground_contact.name = "%s_GroundContact" % prop_id
+	ground_contact.texture = contact["texture"]
+	ground_contact.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	ground_contact.centered = false
+	ground_contact.offset = -(contact["pivot"] as Vector2)
+	ground_contact.position = pivot_pos
+	ground_fx.add_child(ground_contact)
+	return ground_contact
 
 
 ## y-sort strips of a big sprite (R.10): strip k covers sprite columns [u0, u1); its centre xc = P.x + (u0 + u1) / 2 - pivot.x gets
@@ -1279,37 +1304,51 @@ func _make_light(m: Dictionary, pos: Vector2) -> Node2D:
 	holder.add_child(halo)
 	_glows.append({"node": halo, "base": 0.55})
 	objects.add_child(holder)
+	var prop_id := StringName(str(m.get("prop", "")))
+	if prop_id != &"":
+		var art: Dictionary = ArtCatalog.prop(prop_id)
+		var sprite := Sprite2D.new()
+		sprite.name = "PaintedLight"
+		sprite.texture = art["texture"] as Texture2D
+		sprite.centered = false
+		sprite.offset = -(art["pivot"] as Vector2)
+		holder.add_child(sprite)
 	return holder
 
 
-## quest_spot interaction: `needs=item:n,...` (`consume=1` takes them) then QuestManager.complete_manual(quest, objective) (P13;
-## update_objective as long as that does not exist yet).
+## quest_spot interaction: the quest manager owns eligibility, resource costs and completion.
 func _on_quest_spot(_player: Node, m: Dictionary) -> void:
-	var needs: Array = []
-	for part in str(m.get("needs", "")).split(",", false):
-		var kv: PackedStringArray = part.split(":", false)
-		if kv.size() == 2:
-			needs.append([kv[0], int(kv[1])])
-	var eco: Node = GameData.eco()
-	if not needs.is_empty():
-		if eco == null:
-			return
-		for n in needs:
-			if not bool(eco.call("has_item", StringName(n[0]), int(n[1]))):
-				EventBus.whisper_requested.emit("WORLD_NEEDS_ITEMS")
-				return
-		if str(m.get("consume", "0")) == "1":
-			for n2 in needs:
-				eco.call("remove_item", StringName(n2[0]), int(n2[1]))
 	var qm: Node = GameData.autoload("QuestManager")
-	var quest: StringName = StringName(str(m.get("quest", "")))
-	var objective: StringName = StringName(str(m.get("objective", "")))
+	var quest := StringName(str(m.get("quest", "")))
+	var objective := StringName(str(m.get("objective", "")))
 	if qm == null or quest == &"":
 		return
-	if qm.has_method("complete_manual"):
-		qm.call("complete_manual", quest, objective)
-	elif qm.has_method("update_objective"):
-		qm.call("update_objective", quest, objective, 1)
+	var transactional: bool = qm.has_method("can_complete_manual")
+	if transactional and not bool(qm.call("can_complete_manual", quest, objective)):
+		return
+	var needs: Dictionary = {}
+	for part in str(m.get("needs", "")).split(",", false):
+		var kv: PackedStringArray = part.split(":", false)
+		if kv.size() != 2 or not kv[1].is_valid_int() or int(kv[1]) <= 0:
+			return
+		needs[kv[0]] = int(needs.get(kv[0], 0)) + int(kv[1])
+	var eco: Node = GameData.eco()
+	if eco == null:
+		return
+	if not bool(eco.call("has_items", needs)):
+		EventBus.whisper_requested.emit("WORLD_NEEDS_ITEMS")
+		return
+	var consume: bool = str(m.get("consume", "0")) == "1"
+	if transactional:
+		qm.call("complete_manual", quest, objective, needs, consume)
+	else:
+		# Retain the documented adapter for older quest providers and recorder stubs.
+		if consume and not bool(eco.call("remove_items", needs)):
+			return
+		if qm.has_method("complete_manual"):
+			qm.call("complete_manual", quest, objective)
+		elif qm.has_method("update_objective"):
+			qm.call("update_objective", quest, objective, 1)
 
 
 # ------------------------------------------------------------------ when= conditions
@@ -1322,11 +1361,12 @@ func _track_when(params: Dictionary, nodes: Array) -> void:
 	_report_when_errors(params)
 	if nodes.is_empty():
 		return
-	var rec: Dictionary = {"nodes": nodes, "when": w, "active": true, "delegated": when_is_delegated(w.strip_edges()), "flag": _when_uses(w, "flag")}
+	var rec: Dictionary = {"nodes": nodes, "when": w, "active": true, "delegated": when_is_delegated(w.strip_edges()), "flag": _when_uses(w, "flag"), "is_flag": _when_uses(w, "flag")}
 	_has_flag_when = _has_flag_when or bool(rec["flag"])
 	_when_nodes.append(rec)
 	_apply_when(rec)
-	set_process(true)
+	if _has_flag_when:
+		set_process(true)                     # only flag: whens need the _process poll; quest / night arrive by signal
 
 
 ## A `when=` the grammar does not know goes to map.errors once as `when_unknown_kind: when=<spec> (<what>)`: a map test that asserts
@@ -1533,6 +1573,20 @@ func _apply_night() -> void:
 			pl.visible = night_factor > 0.004
 
 
+## The same for ONE record (a prop placed mid-life, at night): place_prop must not re-walk every glow in the area.
+func _apply_night_one(rec: Dictionary) -> void:
+	var n: Variant = rec["node"]
+	if not is_instance_valid(n):
+		return
+	if n is PointLight2D:
+		(n as PointLight2D).energy = night_factor * float(rec["base"])
+	else:
+		var col: Color = (n as CanvasItem).modulate
+		col.a = night_factor * float(rec["base"])
+		(n as CanvasItem).modulate = col
+	(n as CanvasItem).visible = night_factor > 0.004
+
+
 ## The visible water frame (0..3).
 func water_frame() -> int:
 	return _water_frame
@@ -1595,6 +1649,8 @@ func _on_clock_event(hour: int, minute: int) -> void:
 ## Every game event re-evaluates every `when=` (also the events of SocialManager.WHEN_REFRESH_EVENTS: town_festival_*, birthday_today,
 ## relationship_changed, routine_changed, shop_open_changed ...): a narrower filter would let `open:<shop>` and `&` specs of an old kind go stale.
 func _on_game_event(_event_name: StringName, _payload: Dictionary) -> void:
+	if _when_nodes.is_empty():   # game_event is the catch-all channel: most fires cannot change a `when=`
+		return
 	refresh_when()
 
 
@@ -1604,7 +1660,7 @@ func _on_friend_event(_npc_id: StringName, _hearts: int) -> void:
 
 
 func _process(delta: float) -> void:
-	if not water_layers.is_empty():
+	if _has_water:
 		_water_t += delta
 		if _water_t >= WATER_PERIOD:
 			_water_t -= WATER_PERIOD

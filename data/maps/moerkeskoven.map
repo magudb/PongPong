@@ -35,7 +35,7 @@
 # --- the strings of this package's areas.csv: the sign, the whisper zone; three glow lights; the look marker of V8
 @marker K sign text=SIGN_MOERKESKOVEN_HUB
 @marker L whisper text=SIGN_MOERKESKOVEN_WHISPER r=2
-@marker M light kind=glow r=170 h=30
+@marker M light kind=glow r=170 h=30 prop=glow_mushroom_cluster
 @marker D forest_dress fireflies=40 mist=2 unshaded=1
 @ground
 ################################################

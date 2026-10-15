@@ -141,7 +141,8 @@ func _tex(id: StringName) -> Texture2D:
 
 
 func _stage_art() -> Dictionary:
-	return {"deck": _tex(&"bridge_deck_tile_w43"), "post": _tex(&"bridge_post"), "basket": _tex(&"lift_basket")}
+	return {"deck": _tex(&"bridge_deck_tile_w43"), "post": _tex(&"bridge_post"), "basket": _tex(&"lift_basket"),
+		"rope_color": Color("76614d"), "outline_color": Color("4b3c49")}
 
 
 ## A sprite of an ArtCatalog prop at `pos` under `parent` (ground-origin pivot: centered = false, offset = -pivot), additive when the art says so.
@@ -631,12 +632,18 @@ class LandmarkTrigger extends Node2D:
 	var radius: float = 0.0
 	var number: int = 0
 	var entered: bool = false
+	var _player_ref: Node2D = null
 
 	func _physics_process(_delta: float) -> void:
 		if entered:
 			return
-		var tree: SceneTree = get_tree()
-		var p: Node2D = tree.get_first_node_in_group("player") as Node2D if tree != null else null
+		var p: Node2D = null
+		if is_instance_valid(_player_ref):
+			p = _player_ref
+		else:
+			var tree: SceneTree = get_tree()
+			p = tree.get_first_node_in_group("player") as Node2D if tree != null else null
+			_player_ref = p
 		if p == null or p.global_position.distance_to(global_position) > radius or ActorLevel.level_id(p) != level_id:
 			return
 		entered = true

@@ -1,8 +1,8 @@
 # PongPong — The Enchanted Forest
 
-Et Stardew Valley-inspireret 3D-farm- og eventyrspil i **Godot 4.3**, sat i en fortryllet skov blandt søde chibi-skovdyr og feer.
+Et Stardew Valley-inspireret 2D-isometrisk farm- og eventyrspil i **Godot 4.7**, sat i en fortryllet skov blandt søde chibi-skovdyr og feer.
 
-A Stardew Valley-inspired 3D farming and adventure game in **Godot 4.3**, set in an enchanted forest among cute chibi forest animals and fairies.
+A Stardew Valley-inspired 2D isometric farming and adventure game in **Godot 4.7**, set in an enchanted forest among cute chibi forest animals and fairies.
 
 ---
 
@@ -25,7 +25,7 @@ A Stardew Valley-inspired 3D farming and adventure game in **Godot 4.3**, set in
 
 ```
 PongPong/
-├── project.godot              # Godot 4.3 project config
+├── project.godot              # Godot 4.7 project config
 ├── icon.svg
 ├── assets/
 │   ├── models/                # 3D models (chibi animals, fairies, hobbits)
@@ -195,14 +195,14 @@ Voice-lines placeres i `assets/audio/voice/<npc>/<line>.ogg`.
 
 ## 🚀 Kom i gang / Getting Started
 
-1. **Åbn projektet** i Godot 4.3+
+1. **Åbn projektet** i Godot 4.7+
 2. **Kør** (F5) — main menu → Nyt spil → Vælg karakter
 3. **Tilføj Lua-quests** i `lua/quests/`
 4. **Tilføj dansk tekst** i `localization/da.csv`
 5. **Tilføj 3D-modeller** i `scenes/player/skins/` og `assets/models/`
 
 ### Krav / Requirements
-- Godot 4.3+ (Forward Plus renderer)
+- Godot 4.7+ (GL Compatibility renderer)
 - Valgfrit: Lua GDExtension (f.eks. GodotLuaAPI) for fuld Lua-support
   — den indbyggede fallback-tolker dækker vores quest-format
 

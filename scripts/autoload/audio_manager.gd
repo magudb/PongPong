@@ -7,9 +7,13 @@ const SFX_DIR := "res://assets/audio/sfx"
 const MUSIC_DIR := "res://assets/audio/music"
 
 var _sfx_pool: Array[AudioStreamPlayer] = []
+var _sfx_rr: int = 0                    # round-robin cursor: the slot stolen next when the pool is full (the "oldest" in FIFO order)
 var _music_player: AudioStreamPlayer
+var _music_tween: Tween
+var _music_request: int = 0
 var _voice_player: AudioStreamPlayer
 var _ambient_players: Array[AudioStreamPlayer3D] = []
+var _stream_paths: Dictionary = {}      # "dir|id" -> resolved path ("" = does not exist): ResourceLoader.exists is hit once per id
 
 var master_volume_db: float = 0.0
 var sfx_volume_db: float = -4.0
@@ -56,39 +60,63 @@ func play_sfx(sfx_id: String, volume_db: float = NAN, pitch: float = 1.0) -> voi
 			p.pitch_scale = pitch
 			p.play()
 			return
-	# Steal oldest
-	_sfx_pool[0].stream = stream
-	_sfx_pool[0].play()
+	# Steal the slot the pool used longest ago (FIFO over SFX_POOL_SIZE, not always slot 0)
+	var stolen := _sfx_pool[_sfx_rr]
+	_sfx_rr = (_sfx_rr + 1) % _sfx_pool.size()
+	stolen.stream = stream
+	stolen.volume_db = sfx_volume_db if is_nan(volume_db) else volume_db
+	stolen.pitch_scale = pitch
+	stolen.play()
 
 
 func play_music(track_id: String, fade_seconds: float = 1.0) -> void:
 	var stream := _load_stream(MUSIC_DIR, track_id)
 	if stream == null:
 		return
+	_cancel_music_transition()
+	var request := _music_request
 	if _music_player.playing and _music_player.stream == stream:
+		_music_player.volume_db = music_volume_db
 		return
 	if _music_player.playing and fade_seconds > 0:
-		var tween := create_tween()
-		tween.tween_property(_music_player, "volume_db", -40.0, fade_seconds * 0.5)
-		await tween.finished
+		_music_tween = create_tween()
+		_music_tween.tween_property(_music_player, "volume_db", -40.0, fade_seconds * 0.5)
+		_music_tween.tween_callback(_start_music.bind(stream, fade_seconds, request))
+	else:
+		_start_music(stream, fade_seconds, request)
+
+
+func _start_music(stream: AudioStream, fade_seconds: float, request: int) -> void:
+	if request != _music_request:
+		return
 	_music_player.stream = stream
-	_music_player.volume_db = music_volume_db
+	_music_player.volume_db = -40.0 if fade_seconds > 0.0 else music_volume_db
 	_music_player.play()
 	if fade_seconds > 0:
-		_music_player.volume_db = -40.0
-		var tween2 := create_tween()
-		tween2.tween_property(_music_player, "volume_db", music_volume_db, fade_seconds)
+		_music_tween = create_tween()
+		_music_tween.tween_property(_music_player, "volume_db", music_volume_db, fade_seconds)
 
 
 func stop_music(fade_seconds: float = 1.0) -> void:
+	_cancel_music_transition()
+	var request := _music_request
 	if not _music_player.playing:
 		return
 	if fade_seconds <= 0:
 		_music_player.stop()
 		return
-	var tween := create_tween()
-	tween.tween_property(_music_player, "volume_db", -40.0, fade_seconds)
-	tween.tween_callback(_music_player.stop)
+	_music_tween = create_tween()
+	_music_tween.tween_property(_music_player, "volume_db", -40.0, fade_seconds)
+	_music_tween.tween_callback(func() -> void:
+		if request == _music_request:
+			_music_player.stop())
+
+
+func _cancel_music_transition() -> void:
+	_music_request += 1
+	if _music_tween != null and _music_tween.is_valid():
+		_music_tween.kill()
+	_music_tween = null
 
 
 func play_voice(voice_key: String, volume_db: float = NAN) -> void:
@@ -101,6 +129,11 @@ func play_voice(voice_key: String, volume_db: float = NAN) -> void:
 	_voice_player.stream = stream
 	_voice_player.volume_db = voice_volume_db if is_nan(volume_db) else volume_db
 	_voice_player.play()
+
+
+## True when a voice line with this key exists (the same lookup play_voice does, without loading the stream).
+func voice_exists(voice_key: String) -> bool:
+	return _find_stream("", voice_key) != "" or _find_stream(VOICE_DIR, voice_key.get_file()) != ""
 
 
 func is_voice_playing() -> bool:
@@ -116,7 +149,10 @@ func set_master_volume(db: float) -> void:
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), db)
 
 
-func _load_stream(base_dir: String, id: String) -> AudioStream:
+func _find_stream(base_dir: String, id: String) -> String:
+	var key := base_dir + "|" + id
+	if _stream_paths.has(key):
+		return _stream_paths[key]
 	var candidates: Array[String] = []
 	if base_dir != "":
 		candidates.append(base_dir.path_join(id + ".ogg"))
@@ -128,5 +164,12 @@ func _load_stream(base_dir: String, id: String) -> AudioStream:
 
 	for path in candidates:
 		if ResourceLoader.exists(path):
-			return load(path) as AudioStream
-	return null
+			_stream_paths[key] = path
+			return path
+	_stream_paths[key] = ""
+	return ""
+
+
+func _load_stream(base_dir: String, id: String) -> AudioStream:
+	var path := _find_stream(base_dir, id)
+	return load(path) as AudioStream if path != "" else null

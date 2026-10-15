@@ -162,6 +162,12 @@ static func prop_manifest_ids() -> Array[String]:
 	return out
 
 
+## Effective metadata after all art-pack overrides (the city reads night offsets here too).
+static func prop_metadata(id: StringName) -> Dictionary:
+	_scan()
+	return (_prop_manifest.get(String(id), {}) as Dictionary).duplicate(true)
+
+
 static func has_real_terrain(id: StringName) -> bool:
 	_scan()
 	var e: Variant = _terrain_manifest.get(String(id), null)
@@ -294,7 +300,14 @@ static func backdrop(theme: StringName) -> Dictionary:
 	var sky: Texture2D = _load_tex("%s%s_sky.png" % [BACKDROP_DIR, theme])
 	if sky == null:
 		sky = _load_tex("%s%s_sky.webp" % [BACKDROP_DIR, theme])
-	var far: Texture2D = _load_tex("%s%s_far.webp" % [BACKDROP_DIR, theme])
+	var far: Texture2D = null
+	var painted_far: Dictionary = prop_metadata(StringName("backdrop_%s_far" % theme))
+	if not painted_far.is_empty():
+		var replacement: Texture2D = _load_tex(str(painted_far["_dir"]) + str(painted_far["file"]))
+		if replacement != null:
+			far = replacement
+	if far == null:
+		far = _load_tex("%s%s_far.webp" % [BACKDROP_DIR, theme])
 	var real: bool = sky != null and far != null
 	if not real:
 		var t0: int = Time.get_ticks_usec()

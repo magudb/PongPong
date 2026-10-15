@@ -15,12 +15,15 @@ BEFORE the first `godot --import`; there is no "import, rewrite, re-import" pass
   wardrobe layers         assets/wardrobe/layers/**  - NEVER a stub and NEVER VRAM compressed: tint-ready data must stay
         lossless RGBA8 (S3TC measured 14-19/255 mean error). The audit FAILS when a `.import` there carries a lossy or
         VRAM-compressed preset (compress/mode 1, 2 or 4).
+  content files           lua/**/*.lua, data/maps/*.map  - importer="keep" stubs (the localization .csv convention):
+        non-resource extensions are dropped by an export unless they are keep-imported or named in the export preset's
+        filters; a missing stub is an export bug that only shows in a shipped build
 
 Usage (no other arguments needed; the repo root is found from this file's location):
-  tools/import/write_import_stubs.py             write every missing / stale stub (characters and tile atlases)
+  tools/import/write_import_stubs.py             write every missing / stale stub (characters, tile atlases, keep files)
   tools/import/write_import_stubs.py --check     audit: exit 1 on ANY mismatch (run by tests/run_playtest.sh whenever
                                                  files under assets/ changed, and by tools/art/produce_all.sh after an install)
-  options: --root DIR (another project root, tests), --only characters|tiles (write mode), -q/--quiet
+  options: --root DIR (another project root, tests), --only characters|tiles|keep (write mode), -q/--quiet
 
 A stub is minimal on purpose: Godot adds uid/path/dest_files itself on the first import. An existing `.import` that already
 carries the wanted preset (including the complete files Godot wrote after the import) is never touched, so the Godot-assigned
@@ -62,6 +65,15 @@ process/fix_alpha_border=true
 # compress/mode values of Godot's texture importer: 0 lossless, 1 lossy, 2 VRAM compressed, 3 VRAM uncompressed, 4 basis universal
 LOSSLESS_MODES = {"0", "3"}
 VRAM_MODES = {"2", "4"}
+
+KEEP_FILE = """[remap]
+
+importer="keep"
+"""
+
+# (directory, glob) of content files an export must ship verbatim (not imported resources): a `keep` stub is what a
+# non-resource extension needs to ride into the PCK (the localization .csv files do the same, written by tools/loc/new_csv.py)
+KEEP_CONTENT = [(Path("lua"), "*.lua"), (Path("data/maps"), "*.map")]
 
 MAX_LISTED = 25   # failures printed by --check (a missing preset repeats for every sheet)
 
@@ -120,6 +132,25 @@ def sheets_of(char_dir: Path) -> list:
 def tile_atlases(root: Path) -> list:
     base = root / TILES
     return sorted(f for f in base.iterdir() if f.suffix in {".png", ".webp"}) if base.is_dir() else []
+
+
+def keep_files(root: Path) -> list:
+    """Every content file that ships verbatim: lua/**/*.lua, data/maps/*.map."""
+    out = []
+    for base, pattern in KEEP_CONTENT:
+        d = root / base
+        if d.is_dir():
+            out.extend(sorted(d.rglob(pattern)))
+    return out
+
+
+def problems_of_keep(f: Path) -> list:
+    imp = import_path(f)
+    if not imp.is_file():
+        return ["no %s.import (a non-resource file needs importer=\"keep\" to be exported)" % f.name]
+    if unquote(parse_import(imp).get("remap", {}).get("importer", "")) != "keep":
+        return ["importer is not \"keep\""]
+    return []
 
 
 def has_preset(asset: Path, kind: str) -> bool:
@@ -222,6 +253,12 @@ def check(root: Path, quiet: bool = False) -> int:
                 failures.append("%s: wardrobe layer is lossy / VRAM compressed (compress/mode=%s); tint-ready layers must stay lossless RGBA8"
                                 % (imp.relative_to(root).as_posix(), mode))
 
+    n_keep = 0
+    for f in keep_files(root):
+        n_keep += 1
+        for why in problems_of_keep(f):
+            failures.append("%s: %s" % (f.relative_to(root).as_posix(), why))
+
     if not quiet:
         for n in notes:
             print("note  " + n)
@@ -230,12 +267,12 @@ def check(root: Path, quiet: bool = False) -> int:
             print("FAIL  " + f)
         if len(failures) > MAX_LISTED:
             print("FAIL  ... and %d more (the first problem of a kind is the cause of the rest)" % (len(failures) - MAX_LISTED))
-        print("write_import_stubs --check: FAILED (%d problem(s)); %d character folders, %d sheets, %d tile atlases, %d layer imports looked at"
-              % (len(failures), n_dirs, n_sheets, n_tiles, n_layers))
+        print("write_import_stubs --check: FAILED (%d problem(s)); %d character folders, %d sheets, %d tile atlases, %d layer imports, %d keep files looked at"
+              % (len(failures), n_dirs, n_sheets, n_tiles, n_layers, n_keep))
         return 1
     if not quiet:
-        print("write_import_stubs --check: ok (%d character folders, %d sheets with the S3TC preset, %d tile atlases, %d wardrobe layer imports lossless)"
-              % (n_dirs, n_sheets, n_tiles, n_layers))
+        print("write_import_stubs --check: ok (%d character folders, %d sheets with the S3TC preset, %d tile atlases, %d wardrobe layer imports lossless, %d keep files)"
+              % (n_dirs, n_sheets, n_tiles, n_layers, n_keep))
     return 0
 
 
@@ -253,6 +290,22 @@ def write_stub(asset: Path, body: str, kind: str, quiet: bool, root: Path) -> st
     return state
 
 
+def has_keep(f: Path) -> bool:
+    """True when f.import exists and carries importer="keep"."""
+    return not problems_of_keep(f)
+
+
+def write_keep(f: Path, quiet: bool, root: Path) -> str:
+    if has_keep(f):
+        return "kept"
+    imp = import_path(f)
+    state = "replaced" if imp.is_file() else "wrote"
+    imp.write_text(KEEP_FILE, encoding="utf-8")
+    if not quiet:
+        print("%-8s %s" % (state, imp.relative_to(root).as_posix()))
+    return state
+
+
 def write_all(root: Path, only: str, quiet: bool) -> int:
     counts = {"kept": 0, "wrote": 0, "replaced": 0}
     if only in ("all", "characters"):
@@ -262,6 +315,9 @@ def write_all(root: Path, only: str, quiet: bool) -> int:
     if only in ("all", "tiles"):
         for a in tile_atlases(root):
             counts[write_stub(a, TILE_ATLAS, "tile", quiet, root)] += 1
+    if only in ("all", "keep"):
+        for f in keep_files(root):
+            counts[write_keep(f, quiet, root)] += 1
     if not quiet or counts["wrote"] or counts["replaced"]:
         print("write_import_stubs: %d written, %d replaced, %d already fine" % (counts["wrote"], counts["replaced"], counts["kept"]))
     if counts["replaced"]:
@@ -274,7 +330,7 @@ def main(argv: list) -> int:
     ap = argparse.ArgumentParser(description="Write the S3TC / tile-atlas .import stubs before the first import, or audit them (--check).")
     ap.add_argument("--check", action="store_true", help="audit only; exit 1 on any mismatch")
     ap.add_argument("--root", default=None, help="project root (default: the repo this file lives in)")
-    ap.add_argument("--only", choices=["all", "characters", "tiles"], default="all", help="write mode: which stubs")
+    ap.add_argument("--only", choices=["all", "characters", "tiles", "keep"], default="all", help="write mode: which stubs")
     ap.add_argument("-q", "--quiet", action="store_true")
     args = ap.parse_args(argv)
     root = Path(args.root).resolve() if args.root else Path(__file__).resolve().parents[2]

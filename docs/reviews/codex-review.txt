@@ -1,0 +1,358 @@
+Code, performance and architecture review — 15 October 2026
+
+Reviewed commit: 863a583 (main at the start of this review).
+Worktree and branch: ../PongPong-worktrees/codex-review, codex-review.
+Implementation status: all eight reproduced behavioral defects below and the
+failed-rename persistence risk have been repaired on this branch. The defect
+probe is now tests/sections/codex_review.gd in normal test discovery; the original
+failure logs remain in evidence/. The performance probe stays isolated under
+tests/review_codex. Findings and original line references below describe 863a583.
+
+The highest priority is persistence: two distinct paths make a usable manual-save
+backup inaccessible. Eight behavioral defects were reproduced, producing ten
+failing assertions. The review also identified a destructive write fallback and
+gaps in performance and CI coverage. The intended preview limitations were not
+counted as defects: the stub player, visual-only citizens, missing future feature
+packages, and absent gameplay panels are explicitly part of M1a.
+
+Scope and method
+
+The runtime has 25,563 lines of GDScript under scripts/. The review traced the live
+menu -> character select -> WorldRoot2D path, all eleven autoloads, save inspection
+and rollback, economy and quest mutations, husbandry, the Lua configuration bridge,
+area caching, character animation loading, and city levels and interactions. It
+also sampled the art/import tools, harness, CI workflow, and archived 3D boundaries.
+This was a risk-focused review, not a claim that every line of every asset tool was
+audited. Recent merged fixes were checked against the current source and were not
+re-reported as open issues.
+
+Runtime experiments used Godot 4.7.2, a throwaway user profile, and the existing
+harness. The probes ran in a disposable APFS copy of this worktree while the normal
+suite ran here, so two Godot instances never wrote the same project cache.
+The initial code review opened no real window. The later art correction includes
+native windowed comparisons in docs/art/world-consistency/. Audio experiments injected silent generated WAV streams
+because the current checkout has no shipped audio streams.
+
+Prioritized behavioral findings at baseline (repaired)
+
+1. P1 — Malformed active quest records bypass inspection and block backup recovery.
+   scripts/autoload/quest_manager.gd:349 and :384
+   scripts/autoload/save_manager.gd:292 and :371
+
+   validate_dict checks the new reward ledger and completion dates, but does not
+   validate active quest records or their objectives. A valid JSON primary with
+   quests.active.bad.objectives=[] is advertised as state=ok. load_game then raises
+   an assignment error in QuestRuntime.from_dict, rolls back, and returns code=apply;
+   the valid .bak is never tried. The same incomplete inspection can allow such a
+   primary to replace a good backup during _roll_backup. Continue therefore cannot
+   reliably distinguish loadable saves from these damaged saves.
+
+   Reproduced: inspect=ok, load=false, valid backup present. The experiment declares
+   this one script error as expected; the normal suite does not suppress it.
+   Fix: validate every active record and nested objective before selecting/rotating
+   a slot; stage the restored quest state before publishing it. Consider a backup
+   attempt after an apply failure only once full rollback has succeeded.
+   Probe: invalid_quest_primary_uses_good_backup.
+
+2. P2 — A backup-only manual slot is treated as empty.
+   scripts/autoload/save_manager.gd:368
+
+   inspect_slot returns as soon as the primary is missing, before inspecting its
+   backup. After two successful saves, deleting only save_0.json leaves a valid
+   save_0.bak.json that load_game cannot recover. Continue also overlooks the slot.
+   This matters for interrupted replacement, synchronization loss, and recovery
+   from a manually removed damaged primary; delete_save deliberately removes both
+   files, so accepting a surviving backup does not undo an intentional slot delete.
+
+   Reproduced: backup exists=true, inspect=empty, load=false.
+   Fix: inspect the backup when the primary is absent as well as corrupt.
+   Probe: missing_primary_recovers_backup.
+
+3. P2 — Repeating an already completed quest interaction charges materials again.
+   scripts/world2d/iso_area.gd:1293
+   data/maps/hyggebyen.map:123, lua/quests/fix_roof.lua:7
+
+   The roof marker consumes wood and moss before checking whether repair_roof is
+   still an incomplete objective. A player can accept fix_roof with materials
+   already in inventory, repair the roof, and leave its gathering objectives
+   incomplete. The quest remains active and so does the marker. A second interaction
+   consumes another 8 wood and 4 moss while update_objective immediately returns
+   because repair_roof is already done.
+
+   Reproduced: wood 16 -> 8 -> 0, quest still active after both interactions.
+   Fix: let the quest operation validate eligibility and consume all materials as
+   one operation; publish events only after both progress and inventory commit.
+   Probe: completed_roof_objective_does_not_charge_again.
+
+4. P2 — Animal collection exposes a snapshot that can grant products twice.
+   scripts/farm/animal_husbandry.gd:427
+   scripts/autoload/economy_manager.gd:711
+
+   collect_product calls EconomyManager.add_item before clearing products_ready.
+   add_item synchronously emits item_gained and inventory signals. A listener that
+   saves at that point captures both the added eggs and the still-pending product.
+   Loading that snapshot allows the product to be collected again. A reentrant
+   collection listener has the same exposure. QuestManager already takes account
+   of this callback contract in its reward ledger; husbandry does not.
+
+   Reproduced with an injected item_gained save listener: 2 ready eggs become 4
+   inventory eggs after loading and collecting again. This is a callback-boundary
+   defect, not a claim that the present timer autosave interrupts synchronous code.
+   Fix: reserve/clear the owed product before the grant, restore it on refusal,
+   and guard reentrancy; prefer post-commit notifications across the economy.
+   Probe: product_snapshot_cannot_be_claimed_twice.
+
+5. P2 — Midnight pass-out is silently discarded during an area transition.
+   scripts/world2d/world_2d.gd:631
+
+   GameManager rolls the day and emits midnight_passed once. WorldRoot2D drops that
+   event while traveling=true and never rechecks after arrival. A transition that
+   overlaps midnight leaves the player awake at 00:00 instead of performing the
+   normal pass-out/wake sequence. Normal clock ticking continues throughout travel.
+
+   Reproduced by starting travel at 23:59 and advancing one minute: day=2, hour=0,
+   sleeping=false, traveling=false after arrival.
+   Fix: remember a pending pass-out and drain it after travel, with the day already
+   rolled; include this case in the transition state machine.
+   Probe: midnight_during_travel_still_wakes_at_morning.
+
+6. P2 — Config caching changes fallback semantics and misses incremental updates.
+   scripts/autoload/game_manager.gd:104
+   scripts/autoload/lua_runtime.gd:110
+
+   config_value passes the caller's fallback into LuaRuntime and caches the returned
+   value whenever it is non-null. A missing key is consequently negatively cached
+   despite the cache comment promising otherwise. An absent key queried with 11,
+   then 22, returns 11 both times. Loading a config file that defines the key as 99
+   leaves GameManager returning 11 while LuaRuntime returns 99. Existing cached keys
+   updated through load_file also have no invalidation path; full reload does clear.
+
+   Fix: resolve the underlying value with a missing sentinel/null before applying
+   the per-call fallback, and invalidate on every config registry mutation.
+   Probes: config_fallback_is_per_call, config_sees_loaded_key.
+
+7. P2 — Zero housing capacity allows unlimited animal adoption.
+   scripts/farm/animal_husbandry.gd:597
+
+   _has_space_for returns true when capacity==0. With no coop, adopting a chick
+   consumes the item and creates an animal with no building. The same rule permits
+   further adoptions while the species has no housing. Building a coop afterwards
+   does not place those animals into its animals_inside list, so the two occupancy
+   calculations can diverge. This is in the currently autoloaded husbandry API;
+   the final 2D animal-care gameplay is still planned.
+
+   Reproduced: adopted=true, buildings=0, animals=1.
+   Fix: require an actual completed building with a free slot before consuming the
+   animal item, and use that selected slot for both capacity and placement.
+   Probe: chicken_requires_a_coop.
+
+8. P2 — Old music fades can replace or stop a newer request.
+   scripts/autoload/audio_manager.gd:75 and :92
+
+   Each play_music/stop_music call creates independent tweens against the same
+   player. A fading request resumes after await and installs its old stream even
+   after a newer immediate request won. A prior stop tween likewise calls stop()
+   after a new track has started. These are verified audio-manager defects; they
+   remain latent in the silent preview until streams and switching are exercised.
+
+   Reproduced using generated looped WAV streams: stale replaces latest; an earlier
+   delayed stop stops new_after_stop.
+   Fix: keep one transition owner, cancel prior tweens, and check a request generation
+   after every await and before delayed callbacks.
+   Probes: latest_music_request_wins, old_stop_cannot_stop_new_track.
+
+Additional static persistence risk at baseline (repaired)
+
+scripts/autoload/save_manager.gd:1006 removes the existing target after ANY failed
+rename, then retries. A crash between removal and replacement, or a second rename
+failure, leaves no primary. The auto slot has no backup. _roll_backup uses a similar
+delete-and-retry fallback. This contradicts the stated guarantee that a failed
+write leaves the old file untouched. It was established by control-flow inspection;
+no filesystem failure or power-loss experiment was performed.
+
+Treat this as P2 resilience work alongside findings 1 and 2. Keep the old target on
+replacement failure, or use a platform-supported atomic replacement/recoverable
+journal. Fault-injection tests should cover each rename failure and interruption
+boundary, including backup-only startup. The current short-write regression covers
+temporary-file verification but cannot cover this rename branch.
+
+Performance evidence and interpretation
+
+Actual-world probe: tests/review_codex/performance.gd. Four visits to each area in
+a fresh process, with three process frames after each entry and the clock paused.
+The headless renderer skips the threaded character warm-up by the existing design.
+Times below measure synchronous _enter(), not the fade, GPU upload, or player FPS.
+
+                         First entry ms    Later entry ms     Area nodes
+   Traetoppen                 7583          209 / 39 / 41          835
+   Hyggebyen                  4362          3.5 / 3.4 / 4.2        564
+   Moerkeskoven               2326          27 / 26 / 24             79
+   Farm (already built)        3.7          2.4 / 3.3 / 1.9         430
+
+The machine was an 8-core Mac15,12 with 16 GiB RAM and exceptionally heavy external
+load (1-minute load average about 42, later 180). These are observations of this
+run, not representative quiet-machine latency or a release-budget verdict. The
+initial farm scene, including harness frame waits, took 4436 ms. OS file caches
+were not flushed, so 'first' means first use in the process, not a cold disk.
+
+The cold/warm separation is nevertheless structurally clear: _create_area calls
+IsoArea.setup synchronously, which loads props and character idle sheets while
+constructing the scene. warm_clips runs afterwards. A threaded animation warm-up
+cannot hide that earlier cost. Non-builder iso areas are parked; the city and
+ortho forest are rebuilt on every visit. The existing city build gate checks the
+BEST warm result (tests/sections/city_map.gd:690), so it has no first-visit or tail
+latency ceiling.
+
+Suggested performance work: first record phase timings for map read, manifest
+lookup, texture decode/load, topology and node construction; then prefetch the
+destination's declared art before setup and pace necessary main-thread work behind
+the transition. Gate representative first-visit latency and warm p95 separately.
+Do not expand memoization without fixing cache ownership and invalidation first.
+
+Static allocator memory was 80.3 MiB after initial farm load, about 194.6 MiB after
+the first area tour, and stable near 194.6 MiB on subsequent returns to the farm.
+While the city was active, later peaks were about 215.5 MiB. After quit to menu it
+remained 192.4 MiB. These are Godot MEMORY_STATIC readings, not RSS or VRAM. The
+plateau does not establish an unbounded leak. ArtCatalog and AreaTileSet keep strong
+static texture/tileset references for the lifetime of the process; parked areas
+are explicitly freed on world deletion. Add cache counters and a menu/world memory
+budget, and decide which assets should survive returning to the title before
+changing the eviction policy.
+
+The level tracker measured median 0.007 ms, p95 0.009 ms for the actual preview's
+ONE CharacterBody2D. The seven preview citizens are visual Node2Ds. This result
+does not establish the cost of a future moving NPC population. Existing synthetic
+crowd/windowed tests remain relevant, but this review made no GPU/FPS claim.
+
+Architecture assessment
+
+The current dependency direction is workable for this milestone: Lua/config and
+map/JSON data define content; the autoload managers own persistent models;
+WorldRoot2D owns scene/session orchestration; IsoArea owns area assembly and the
+builder/marker extension points; LevelRegistry/ActorLevel own geometry and collision
+level rules; IsoChibiSprite2D owns character presentation. The section save registry,
+pure content validators, explicit new-game reset signal, and preview capability
+checks provide useful seams. Retain those seams during later packages.
+
+The next changes should address four concrete boundaries:
+
+* Transactions and notifications. Economy calls currently mutate and synchronously
+  emit signals inside operations whose callers have more work to commit (animal
+  collection, shop stock, crafting ingredients/output). Introduce a small mutation
+  scope that validates/reserves, commits all owners, then publishes queued events.
+  This also makes persistence snapshots consistent. The existing quest reward
+  reservation pattern is a useful starting point; a global event-bus rewrite is
+  unnecessary.
+
+* Persistence validation. Keep schema validation pure and complete, stage restored
+  data before publishing it, and make slot inspection agree with loadability.
+  Rollback of dictionaries alone is not a general rollback of already-emitted
+  notifications or external side effects. Stage/commit gives a stronger contract
+  than relying on ApplyGuard after partially applying live managers.
+
+* World transitions. WorldRoot2D is 852 lines and owns registry, scene construction,
+  caching, travel, warm-up, sleep, fainting, rebuild queues, chrome and serialization.
+  Extract a transition coordinator with explicit pending work/cancellation, plus
+  an area lifecycle/cache owner. Keep WorldRoot2D as the composition point. The
+  dropped-midnight case is a concrete acceptance test for this split.
+
+* Configuration and content lifetime. GameData, Svc, CharacterCatalog and direct
+  autoload lookups use different access/override paths. Use one documented config
+  resolution contract and one service/test override convention. Give the config
+  registry a revision changed by every mutation and make derived caches subscribe
+  or compare revisions. Keep immutable content definitions distinct from saved
+  quest flags; the current def_<id> convention requires repeated strip/preserve
+  compatibility code in multiple managers.
+
+There is also active-directory migration debt: scripts/player, scripts/npc,
+scripts/world and scripts/farm still contain 3D implementations, while the actual
+world uses 2D extension paths. Some autoload model logic is shared and live. Mark
+the composition boundary explicitly and archive only code shown to be unreferenced;
+do not delete whole folders or load old panels merely because a new scene is absent.
+
+Validation and delivery coverage
+
+The behavioral probes assert correct intended behavior and are EXPECTED TO FAIL
+at the reviewed commit: 15 checks, 10 failures covering the eight findings, one
+explicitly allowed malformed-save script error, no other engine errors/warnings.
+The observational performance probe passed all 16 area-entry checks, with no
+engine errors/warnings. Logs and JSON results accompany this report under evidence/.
+
+The normal strict animal baseline PASSED: 3,249 checks across 28 sections, zero
+failed checks, 54 skips, zero unexpected engine errors/warnings, 26 intentionally
+allowed messages, in 729.2 seconds. The report is evidence/baseline.json and the
+section summary is evidence/baseline-summary.log. The art Python environment was
+available for this local run. Only the animal baseline was selected for this
+review; no claim of rerunning all four character baselines is made.
+
+CI is a useful new headless matrix, but it does not set up tools/art/.venv. For
+example art_cast_v2.gd:113 and :185 skip Python gates when that interpreter is
+absent, and --strict does not reject skips. CI can therefore pass without running
+those validator/palette/shim checks that ran locally. Add a separate pinned Python
+validation job (and an explicit expected-skip policy) instead of assuming the
+four-character matrix supplies that coverage. Windowed rendering/performance also
+remains outside this workflow. No Linux CI run was performed in this review.
+
+No export_presets.cfg is present. The runtime reads raw .lua, .map, JSON manifests
+and CSV files with FileAccess/DirAccess; the eventual export needs explicit data
+inclusion and a packaged smoke test. This is a delivery gap to close before a
+release, not evidence that an existing shipped export is broken.
+
+Original reproduction commands (checkout 0fd6435 to reproduce the failures)
+
+  tests/run_playtest.sh --no-import --strict --character=animal --report=/tmp/codex-baseline.json
+
+  tests/run_playtest.sh --no-import --strict --no-boot --sections-dir=res://tests/review_codex --only=review_defects --report=/tmp/codex-defects.json
+
+  tests/run_playtest.sh --no-import --strict --no-boot --sections-dir=res://tests/review_codex --only=review_performance --report=/tmp/codex-performance.json
+
+The original defects command intentionally exits 1 on 0fd6435. Its reproductions
+were subsequently promoted into tests/sections/codex_review.gd with the fixes.
+
+Implemented fixes
+
+* Quest inspection validates active records, nested objectives, metadata, typed
+  ID lists and counts before backup selection/rotation. Restoration builds the
+  active runtime dictionary before publishing it. A damaged primary now selects
+  its valid backup without emitting a script error.
+* A missing manual primary checks its surviving backup. Intentional delete still
+  removes both files. Failed primary or backup replacement never unlinks the old
+  target; injected rename failures verify that old bytes survive and temporary
+  files are removed.
+* Manual quest interactions check incomplete-objective eligibility and aggregate
+  their costs. EconomyManager.consume_backpack_items deducts the complete cost
+  and commits progress before any quest/inventory observer runs. Reentrant calls
+  and immediate save snapshots see one complete transaction. This narrow API
+  supports backpack costs and deliberately refuses clothing/furniture stores.
+  The existing adapter contract for legacy quest providers is retained.
+* Animal collection clears owed products and sets its collection day before
+  item delivery callbacks; rejected grants restore both fields. Adoption selects
+  an actual completed building and commits the item deduction and occupancy
+  together. Missing, unfinished or full housing leaves the item untouched.
+* Midnight during travel queues pass-out and drains it after arrival, using the
+  already-rolled calendar. Config caching stores resolved values, applies missing
+  fallbacks per call, and invalidates after incremental Lua loads as well as reloads.
+* Music owns a single cancellable transition and checks request generations in
+  delayed callbacks. Later plays/stops, including a request for the current track,
+  cancel the previous transition without retaining an awaiting coroutine.
+
+The normal codex_review section adds 37 regression checks, including callback
+snapshots/reentry, malformed nested records, full housing and injected replacement
+failures. The area fixture now uses a real objective and restores its quest/world
+flags after the interaction, so its subsequent condition checks remain isolated.
+
+The painted world correction is committed as 661fd27. Its source masters, exact
+prompts, reusable asset-repair prompt and native before/after captures are described
+in docs/art/world-consistency/review.txt. Prompts live under that docs directory.
+
+Validation after fixes
+
+The focused area + codex_review run passed 269 checks, zero skips, errors or
+warnings. The full strict animal run passed 3,392 checks across 30 sections, with 54 existing
+skips, 26 intentionally allowed messages, zero unexpected errors/warnings and zero
+failed checks in 261.1 seconds. Evidence: evidence/fixed-full.json and
+fixed-full-summary.log. This includes all 106 effective painted-art checks and
+37 new code regressions. Host load differed from the initial baseline, so the
+shorter suite duration is not evidence of a game performance improvement. The architecture splits, exported-build
+smoke test and CI Python coverage above remain recommendations; this patch does
+not claim to have completed those larger delivery/refactoring projects.

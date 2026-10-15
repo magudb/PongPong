@@ -43,11 +43,11 @@ const GENERATOR_PATH := "res://scripts/world2d/levels/source/build_traetoppen_js
 ## sha256 of the BUILT framework files this package must not edit (git-free proof, taken when V3 landed): a legitimate later edit of one of
 ## them by its owner (P04 / P05) makes this check fail on purpose - update the hash in the same commit.
 const PINNED := {
-	"res://scripts/world2d/iso_area.gd": "ab4d7845a60a3adc19d82e78984fe11e932374f90da9fb5216d13603798bd248",
-	"res://scripts/world2d/world_2d.gd": "ad9c64e2cbac20976a84dbcccd936f4657a07a566f630d3bd7ea4d3bf32c5d13",
+	"res://scripts/world2d/iso_area.gd": "1b282864c4680925b76ec7477f631de137365232877a2dfda959a433d693f1bd",
+	"res://scripts/world2d/world_2d.gd": "b7650d15d442c05be266fb6835221d63b3e8970173c33582a4185379543ef961",
 	"res://scripts/world2d/game_data.gd": "03a66479819a83799b98fbd2db1e5cad4cbdb9b5e52d0113ba73f525160e5a0c",
-	"res://scripts/world2d/art_catalog.gd": "6f0f99ba439ab1eba0a2f81fc8dadb2616e240edca7bcedb676e3a7efae6b99b",
-	"res://scripts/isometric/iso_chibi_sprite_2d.gd": "86b330d2fde4d26d40cc9fcdd0f06dd12522fc7a774053dae542dde673554b4b",
+	"res://scripts/world2d/art_catalog.gd": "ef0719d05c87deb342fc95f1ef937f64d83bfcdc6c6f2c50a5ac8bab611f0439",
+	"res://scripts/isometric/iso_chibi_sprite_2d.gd": "e59e77a8e97c3b27aa39de75e960f26ca0f93acce522bddc8be736d211683aca",
 	"res://scripts/isometric/character_catalog.gd": "2a56f24f8abf4312709284391e5f605e0894b386a68e6f08d8093b86dc11e556",
 }
 

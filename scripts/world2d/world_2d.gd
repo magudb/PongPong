@@ -49,6 +49,7 @@ var weather_fx: WeatherFx
 var holder: Node2D
 var traveling: bool = false
 var sleeping: bool = false
+var _pass_out_pending: bool = false
 ## Items placed in the world by PlacementService (P20): [{item, cell}], saved by to_dict().
 var placed_items: Array = []
 ## Per-area JSON-safe flags: area id -> {key: value} (opened chests, picked nodes ...), saved by to_dict().
@@ -209,6 +210,7 @@ func _ready() -> void:
 	if music != null and music.has_method("play_music") and area.map.music != "":
 		music.call("play_music", area.map.music)
 	_welcome_toast(saved)
+	ContractManifest.report()
 	await warm_clips()
 	_maybe_intro()
 
@@ -473,6 +475,8 @@ func travel(area_id: StringName, spawn: StringName) -> void:
 	if traveling or not has_area(area_id):
 		if not has_area(area_id):
 			last_travel_error = "no such area: %s" % area_id
+			# a walk-in door to a place that is not built yet would refuse in silence: the player hears the gate is closed
+			EventBus.whisper_requested.emit("WORLD_WARP_LOCKED")
 		return
 	traveling = true
 	var tw: Tween = create_tween()
@@ -486,6 +490,9 @@ func travel(area_id: StringName, spawn: StringName) -> void:
 	await tw2.finished
 	traveling = false
 	_flush_rebuild()                         # one that arrived during the fade-in
+	if _pass_out_pending:
+		_pass_out_pending = false
+		await _sleep_sequence(true)
 
 
 ## The sprite warm-ups the next seconds need: [[visual, clips], ...] = the player's visual and the NPCs in view (pure: tests read it).
@@ -628,7 +635,10 @@ func sleep() -> void:
 func _on_game_event(event_name: StringName, _payload: Dictionary) -> void:
 	if event_name != &"midnight_passed":
 		return
-	if sleeping or traveling or player == null or area == null or area.projection != &"iso":
+	if sleeping or player == null or area == null or area.projection != &"iso":
+		return
+	if traveling:
+		_pass_out_pending = true
 		return
 	_sleep_sequence(true)
 
@@ -692,6 +702,11 @@ func _on_player_defeated() -> void:
 		return
 	_faint_pending = true
 	await get_tree().create_timer(1.3).timeout
+	# travel() refuses while a fade / sleep sequence runs: wait it out so the rescue teleport is not silently skipped
+	var guard := 0
+	while (traveling or sleeping) and guard < 600:
+		await get_tree().process_frame
+		guard += 1
 	await travel(&"farm" if has_area(&"farm") else default_area_id(), &"from_skovkant")
 	if player.has_method("revive"):
 		player.call("revive", player.global_position)

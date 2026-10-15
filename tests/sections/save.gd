@@ -1973,7 +1973,6 @@ func _test_roundtrip_all_systems() -> void:
 	gm.minute = 5
 	gm.play_time_seconds = 1234.5
 	gm.set_flag(&"home_tier", 3)
-	gm.set_flag(&"intro_done", true)
 	gm.set_flag(&"ratio", 0.5)
 	gm.set_flag(&"nickname", "Mia æøå")
 	gm.unlock_zone(&"dark_forest")
@@ -2010,6 +2009,9 @@ func _test_roundtrip_all_systems() -> void:
 	qm.complete_quest(&"cookie_delivery")
 	qm.accept_quest(&"supply_run")
 	qm.fail_quest(&"supply_run")
+	# intro_done must arrive AFTER intro_lottery is active: the Lua is_available gate refuses it otherwise
+	# (the flag is set before the save so the loaded state still shows an active quest beside it).
+	gm.set_flag(&"intro_done", true)
 	eco.gold = 777                                   # after every purchase and quest reward
 	var world := _make_world({"area": "farm", "player_pos": [100.5, 200], "farm": {"plots": {}}})
 	var before := {"game": gm.to_dict(), "time": tm.to_dict(), "economy": eco.to_dict(), "quests": qm.to_dict(), "husbandry": ah.to_dict()}

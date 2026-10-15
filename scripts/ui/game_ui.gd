@@ -49,6 +49,8 @@ var mode: StringName = MODE_FARM
 var _screens: Dictionary = {}            # id -> Node
 var _order: Array[StringName] = SCREEN_ORDER
 var _dir: String = SCENE_DIR
+## How many of NO_FOCUS_SCREENS are loaded: node_added is a no-op until then.
+var _no_focus_loaded: int = 0
 
 
 func _init() -> void:
@@ -107,6 +109,7 @@ func load_screens(dir: String = "", order: Array = []) -> Array[StringName]:
 		move_child(node, _index_for(id))
 		if id in NO_FOCUS_SCREENS:
 			_enforce_no_focus(node)
+			_no_focus_loaded += 1
 		loaded.append(id)
 		screen_loaded.emit(id, node)
 	if not loaded.is_empty():
@@ -173,6 +176,9 @@ func _enforce_no_focus(root: Node) -> void:
 
 func _on_node_added(n: Node) -> void:
 	if not (n is Control):
+		return
+	# Cheap early-out: nothing to enforce until a no-focus screen is loaded.
+	if _no_focus_loaded == 0:
 		return
 	for id in NO_FOCUS_SCREENS:
 		var hud: Node = _screens.get(id)

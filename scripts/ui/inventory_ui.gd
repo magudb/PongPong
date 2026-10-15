@@ -17,7 +17,7 @@ var _slots: Array[Dictionary] = []
 
 func _ready() -> void:
 	visible = false
-	close_btn.pressed.connect(func(): visible = false; EventBus.ui_panel_toggled.emit(&"inventory", false))
+	close_btn.pressed.connect(func(): EventBus.ui_panel_toggled.emit(&"inventory", false))
 	EventBus.ui_panel_toggled.connect(_on_panel_toggled)
 	EventBus.player_inventory_changed.connect(_on_inventory_changed)
 	EventBus.gold_changed.connect(_on_gold_changed)
@@ -91,8 +91,18 @@ func _on_slot_hover(index: int) -> void:
 		desc.text = tr(def.get("description_key", ""))
 
 
+## Esc closes the inventory while it is the top modal (a screen stacked on top owns Esc then).
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and GameManager.top_modal() == &"inventory" and event.is_action_pressed(&"ui_cancel"):
+		EventBus.ui_panel_toggled.emit(&"inventory", false)
+		get_viewport().set_input_as_handled()
+
+
 func _on_panel_toggled(panel: StringName, is_open: bool) -> void:
 	if panel == &"inventory":
 		visible = is_open
 		if is_open:
+			GameManager.push_modal(&"inventory")
 			_refresh()
+		else:
+			GameManager.pop_modal(&"inventory")

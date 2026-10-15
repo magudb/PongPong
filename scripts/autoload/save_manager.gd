@@ -3,7 +3,7 @@ extends Node
 ##
 ## FILES (user://saves). save_0.json .. save_5.json are the six MANUAL slots, save_auto.json is the one AUTO slot
 ## (AUTO_SLOT = 6, an int so it travels through EventBus.save_completed(slot: int)). A manual save rolls the previous
-## file of its slot to save_N.bak.json first (only when that file was readable JSON); the auto slot has no backup.
+## file of its slot to save_N.bak.json first (only when that file is a valid save payload); the auto slot has no backup.
 ## Every write goes to <file>.tmp, is read back and compared, and only then renamed over the real file: a crash or a
 ## full disk never leaves half a save behind and never replaces a good save with a bad one.
 ##
@@ -23,7 +23,8 @@ extends Node
 ##
 ## SECTION REGISTRY (addendum 3.2). A feature manager calls register_section("home", self, 10) in _ready and offers
 ## to_dict() -> Dictionary, from_dict(d) (may return false to reject the data) and reset(); each section carries its own
-## "v" (the payload version stays 2). gather = {name: node.to_dict()}.
+## "v" (the payload version stays 2). gather = {name: node.to_dict()}. An optional pure validate_dict(d) -> bool
+## checks nested records during slot inspection, before any live state changes or a backup is rotated.
 ##
 ## LOADING. load_game(slot) VALIDATES first (root is an object, meta.version is a whole number <= PAYLOAD_VERSION,
 ## older versions go through the _migrate chain, required sections are objects with their required keys), then
@@ -364,8 +365,6 @@ func inspect_slot(slot: int) -> Dictionary:
 		return out
 	var primary := _read_json_file(slot_path(slot))
 	var failure := {"code": "corrupt", "detail": str(primary.get("detail", ""))}
-	if primary["state"] == "missing":
-		return out
 	if primary["state"] == "ok":
 		var checked := validate_payload(primary["data"])
 		if checked["ok"]:
@@ -383,6 +382,8 @@ func inspect_slot(slot: int) -> Dictionary:
 			var bak_checked := validate_payload(backup["data"])
 			if bak_checked["ok"]:
 				return _inspect_result(out, &"backup", bak_checked["payload"], true)
+	if primary["state"] == "missing" and (bak_path == "" or not FileAccess.file_exists(bak_path)):
+		return out
 	out["state"] = &"corrupt"
 	out["code"] = failure["code"]
 	out["detail"] = failure["detail"]
@@ -404,7 +405,12 @@ func _inspect_result(out: Dictionary, state: StringName, payload: Dictionary, fr
 ## only a cache: when it lacks a key or holds a value of the wrong type (a hand-edited or half-written file) the summary is
 ## rebuilt from the sections, so the values always have the types SUMMARY_TYPES lists and a "%d" never meets a string.
 func get_save_summary(slot: int = 0) -> Dictionary:
-	var info := inspect_slot(slot)
+	return _summary_of(inspect_slot(slot), slot)
+
+
+## The summary row of an already-inspected slot: {} when it is not loadable. Lets describe_slots() reuse the payload it
+## just read instead of reading and validating the file a second time.
+func _summary_of(info: Dictionary, slot: int) -> Dictionary:
 	if info["state"] != &"ok" and info["state"] != &"backup":
 		return {}
 	var payload: Dictionary = info["payload"]
@@ -444,7 +450,7 @@ func describe_slots() -> Array[Dictionary]:
 	var rows: Array[Dictionary] = []
 	for slot in all_slots():
 		var info := inspect_slot(slot)
-		rows.append({"slot": slot, "is_auto": slot == AUTO_SLOT, "state": info["state"], "summary": get_save_summary(slot)})
+		rows.append({"slot": slot, "is_auto": slot == AUTO_SLOT, "state": info["state"], "summary": _summary_of(info, slot)})
 	return rows
 
 
@@ -672,6 +678,9 @@ func validate_payload(data: Variant) -> Dictionary:
 					return _verdict(false, "invalid", "section '%s' lacks '%s'" % [section_name, key])
 				if not _has_type((section as Dictionary)[key], str(keys[key])):
 					return _verdict(false, "invalid", "section '%s': '%s' should be %s" % [section_name, key, keys[key]])
+			var node := _node_of(entry)
+			if node != null and node.has_method("validate_dict") and not bool(node.call("validate_dict", section)):
+				return _verdict(false, "invalid", "section '%s' contains invalid records" % section_name)
 		elif entry.get("required", false):
 			return _verdict(false, "invalid", "section '%s' is missing" % section_name)
 	if payload.has("world") and typeof(payload["world"]) != TYPE_DICTIONARY:
@@ -867,7 +876,6 @@ func _apply_payload(payload: Dictionary) -> Dictionary:
 		if node != null and node.has_method("to_dict"):
 			var before: Variant = node.call("to_dict")
 			snapshot[entry["name"]] = (before as Dictionary).duplicate(true) if typeof(before) == TYPE_DICTIONARY else {}
-	var legacy_defs := _legacy_quest_defs()
 	var guard := ApplyGuard.new()
 	OS.add_logger(guard)
 	var failure := ""
@@ -892,7 +900,6 @@ func _apply_payload(payload: Dictionary) -> Dictionary:
 		if failure != "":
 			break
 	if failure == "":
-		_restore_legacy_quest_defs(legacy_defs)
 		pending_world = _dict_of(payload.get("world")).duplicate(true)
 	else:
 		for entry in touched:                      # sections that were never reached still hold their own state
@@ -901,30 +908,6 @@ func _apply_payload(payload: Dictionary) -> Dictionary:
 				node.call("from_dict", (snapshot[entry["name"]] as Dictionary).duplicate(true))
 	OS.remove_logger(guard)
 	return {"ok": failure == "", "detail": failure}
-
-
-## QuestManager of the first waves keeps the Lua definitions inside quest_flags ("def_<id>") and its from_dict replaces
-## quest_flags wholesale, which would drop them (audit T1). The definitions are never in a save, so they are carried over.
-## A QuestManager with separate quest_defs (P13) has no def_ flags and this does nothing.
-func _legacy_quest_defs() -> Dictionary:
-	var defs := {}
-	var quest_manager := SvcLib.node("QuestManager")
-	var flags: Variant = quest_manager.get("quest_flags") if quest_manager != null else null
-	if typeof(flags) == TYPE_DICTIONARY:
-		for key in flags:
-			if str(key).begins_with("def_"):
-				defs[key] = flags[key]
-	return defs
-
-
-func _restore_legacy_quest_defs(defs: Dictionary) -> void:
-	if defs.is_empty():
-		return
-	var flags: Variant = SvcLib.node("QuestManager").get("quest_flags")
-	if typeof(flags) == TYPE_DICTIONARY:
-		for key in defs:
-			if not (flags as Dictionary).has(key):
-				flags[key] = defs[key]
 
 
 # ------------------------------------------------------------------ files
@@ -992,31 +975,34 @@ func _write_atomic(path: String, text: String) -> bool:
 	if write_error != OK or FileAccess.get_file_as_bytes(temp) != text.to_utf8_buffer():
 		DirAccess.remove_absolute(temp)
 		return false
-	var rename_error := DirAccess.rename_absolute(temp, path)
-	if rename_error != OK and FileAccess.file_exists(path):
-		DirAccess.remove_absolute(path)            # a platform whose rename does not replace
-		rename_error = DirAccess.rename_absolute(temp, path)
+	var rename_error := _replace_file(temp, path)
 	if rename_error != OK:
 		DirAccess.remove_absolute(temp)
 		return false
 	return true
 
 
-## A manual save keeps the file it replaces as save_N.bak.json, but only when that file is readable JSON, so a damaged
+## Replacement failure must preserve the existing file; also a seam for disk-failure probes.
+func _replace_file(source: String, destination: String) -> Error:
+	return DirAccess.rename_absolute(source, destination)
+
+
+## A manual save keeps the file it replaces as save_N.bak.json, but only when that file is a valid payload, so a damaged
 ## file never replaces a good .bak.
 func _roll_backup(slot: int) -> void:
 	var path := slot_path(slot)
 	var backup := backup_path(slot)
-	if backup == "" or not FileAccess.file_exists(path) or _read_json_file(path)["state"] != "ok":
+	if backup == "" or not FileAccess.file_exists(path):
+		return
+	var previous := _read_json_file(path)
+	if previous["state"] != "ok" or not validate_payload(previous["data"])["ok"]:
 		return
 	var temp := backup + ".tmp"
 	if DirAccess.copy_absolute(path, temp) != OK:
 		DirAccess.remove_absolute(temp)
 		return
-	if DirAccess.rename_absolute(temp, backup) != OK:
-		DirAccess.remove_absolute(backup)
-		if DirAccess.rename_absolute(temp, backup) != OK:
-			DirAccess.remove_absolute(temp)
+	if _replace_file(temp, backup) != OK:
+		DirAccess.remove_absolute(temp)
 
 
 # ------------------------------------------------------------------ feedback

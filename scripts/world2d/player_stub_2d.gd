@@ -35,6 +35,17 @@ var _accel: float = 2500.0
 var _decel: float = 3300.0
 var _target_zoom: float = Iso.DEFAULT_ZOOM
 var _prompt: String = ""
+## Cached E-query (rebuilt only when the range changes): allocating a shape + params every
+## physics tick was steady garbage at 60 Hz.
+var _interact_shape: CircleShape2D
+var _interact_query: PhysicsShapeQueryParameters2D
+var _interact_range: float = 45.0
+## Skip the prompt query when the body has not moved and the facing has not changed (a slow
+## fallback still catches an interactable that appears while standing still).
+var _prompt_last_pos: Vector2 = Vector2(INF, INF)
+var _prompt_last_facing: int = -1
+var _prompt_stale: float = 0.0
+const PROMPT_REFRESH_S := 0.5
 
 
 func _ready() -> void:
@@ -76,6 +87,19 @@ func _read_config() -> void:
 	_decel = float(GameData.player_cfg("decel", 3300.0))
 	max_stamina = float(GameData.player_cfg("max_stamina", 100.0))
 	stamina = max_stamina
+	_interact_range = float(GameData.player_cfg("interaction_range", 45.0))
+	_ensure_interact_query()
+
+
+func _ensure_interact_query() -> void:
+	if _interact_shape == null:
+		_interact_shape = CircleShape2D.new()
+		_interact_query = PhysicsShapeQueryParameters2D.new()
+		_interact_query.shape = _interact_shape
+		_interact_query.collision_mask = Iso.LAYER_INTERACTABLE
+		_interact_query.collide_with_areas = true
+		_interact_query.collide_with_bodies = false
+	_interact_shape.radius = _interact_range
 
 
 ## The body asks for the head of the skin's chain (fox_base ...); IsoChibiSprite2D walks the fallback chain to real art.
@@ -164,7 +188,7 @@ func _physics_process(delta: float) -> void:
 			visual.play_loop(forced_clip)
 		else:
 			visual.update_motion(velocity, Input.is_action_pressed("run"), false, false, in_dir)
-	_update_prompt()
+	_update_prompt(delta)
 
 
 # ------------------------------------------------------------------ the Player contract
@@ -190,6 +214,7 @@ func revive(at_global: Vector2) -> void:
 	state = S.FREE
 	forced_clip = &""
 	stats_changed.emit()
+	_emit_stats_on_bus()
 
 
 ## Restores energy and hearts (the bed and the pass-out of WorldRoot2D call it).
@@ -197,6 +222,13 @@ func restore_after_sleep() -> void:
 	stamina = max_stamina
 	half_hearts = max_half_hearts
 	stats_changed.emit()
+	_emit_stats_on_bus()
+
+
+## Mirrors the local stats_changed on the contract signals: the HUD screens listen to the bus, not to this stub.
+func _emit_stats_on_bus() -> void:
+	EventBus.player_health_changed.emit(half_hearts, max_half_hearts)
+	EventBus.player_stats_changed.emit({"half_hearts": half_hearts, "max_half_hearts": max_half_hearts, "stamina": stamina, "max_stamina": max_stamina})
 
 
 ## The cell in front of the feet (the one a tool or E acts on).
@@ -208,21 +240,15 @@ func target_global() -> Vector2:
 	return area.cell_to_global(target_cell())
 
 
-## E-query: a circle of r = 45 ground px at the facing cell on layer `interactable` (D20), nearest host wins.
+## E-query: a circle of r = interaction_range ground px at the facing cell on layer `interactable` (D20), nearest host wins.
 func nearest_interactable() -> Node:
 	if state != S.FREE or area == null:
 		return null
-	var q := PhysicsShapeQueryParameters2D.new()
-	var sh := CircleShape2D.new()
-	sh.radius = float(GameData.player_cfg("interaction_range", 45.0))
-	q.shape = sh
-	q.transform = Transform2D(0.0, target_global())
-	q.collision_mask = Iso.LAYER_INTERACTABLE
-	q.collide_with_areas = true
-	q.collide_with_bodies = false
+	_ensure_interact_query()
+	_interact_query.transform = Transform2D(0.0, target_global())
 	var best: Node = null
 	var best_d: float = 1e9
-	for r in get_world_2d().direct_space_state.intersect_shape(q, 8):
+	for r in get_world_2d().direct_space_state.intersect_shape(_interact_query, 8):
 		var a: Object = r["collider"]
 		var host: Node = (a as Node).get_parent() if a is Area2D else null
 		if host != null and host != self and host.has_method("interact") and host is Node2D:
@@ -241,7 +267,16 @@ func try_interact() -> bool:
 	return true
 
 
-func _update_prompt() -> void:
+func _update_prompt(delta: float = 0.0) -> void:
+	_prompt_stale += delta
+	# The prompt only changes when the player moves or turns; skip the physics query otherwise,
+	# but still refresh at PROMPT_REFRESH_S so a newly-available interactable is not missed.
+	if global_position.is_equal_approx(_prompt_last_pos) and facing8 == _prompt_last_facing \
+			and _prompt_stale < PROMPT_REFRESH_S:
+		return
+	_prompt_stale = 0.0
+	_prompt_last_pos = global_position
+	_prompt_last_facing = facing8
 	var it: Node = nearest_interactable()
 	var text: String = str(it.call("get_interaction_prompt")) if it != null and it.has_method("get_interaction_prompt") else ""
 	if text != _prompt:
