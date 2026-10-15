@@ -649,7 +649,7 @@ func _test_new_game() -> void:
 			skin_args.append(entry[1][0])
 	t.check("new_game_skin_announced_final", skin_args == [&"fairy_meadow"] and seen.get("skin") == &"fairy_meadow", "player_character_changed %s" % [skin_args])
 	t.check("new_game_state_reset_before_signal", seen.get("day") == 1 and seen.get("season") == &"foraar" and seen.get("year") == 1 and seen.get("hour") == 6
-		and seen.get("flags") == {&"intro_pending": true} and seen.get("zones") == [&"farm", &"city"] and seen.get("modals") == [] and seen.get("phase") == PH.PLAYING,
+		and seen.get("flags") == {&"intro_pending": true, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0} and seen.get("zones") == [&"farm", &"city"] and seen.get("modals") == [] and seen.get("phase") == PH.PLAYING,
 		"day/season/year/clock, flags %s, zones, modals gone, phase PLAYING" % [seen.get("flags")])
 	t.check("new_game_intro_pending", gm.get_flag(gm.FLAG_INTRO_PENDING, false) == true and not gm.world_flags.has(&"dirty_flag"), "intro_pending=true, the dirty flag is gone")
 	t.check("new_game_resets_own_state", gm.player_name == "Mia" and gm.farm_name == "Farmen" and gm.character_type == gm.CharacterType.FAIRY and gm.discovered_locations.is_empty()

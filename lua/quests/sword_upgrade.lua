@@ -1,13 +1,38 @@
 -- quests/sword_upgrade.lua
--- Thorin can upgrade your sword with iron ingots from the dark forest.
+-- Smith Thorin can forge your sword anew: three iron ingots (smelted at the forge from the ore of the Dark Wood) and a little fairy dust, handed
+-- over to him (the delivery takes the goods out of the backpack).  Offered once the player has been in the wood (meta.requires_zone).
+-- The vocabulary is documented in quests/lost_cat.lua.
 
 kind = "quest"
 id = "sword_upgrade"
 
 objectives = {
-  { id = "collect_iron_ingots", target = 3, description = "Saml 3 jernbarrer" },
-  { id = "collect_fairy_dust", target = 1, description = "Saml 1 fe-støv" },
-  { id = "deliver_to_smith", target = 1, description = "Aflever materialer til Thorin" },
+  {
+    id = "collect_iron_ingots",
+    target = 3,
+    on = "item_gained",
+    item = "iron_ingot",
+    have = true,
+    description_key = "OBJ_SWORD_UPGRADE_COLLECT_IRON_INGOTS",
+  },
+  {
+    id = "collect_fairy_dust",
+    target = 1,
+    on = "item_gained",
+    item = "fairy_dust",
+    have = true,
+    description_key = "OBJ_SWORD_UPGRADE_COLLECT_FAIRY_DUST",
+  },
+  {
+    id = "deliver_to_smith",
+    target = 1,
+    on = "dialogue_started",
+    npc = "smith_thorin",
+    after_others = true,
+    needs = { iron_ingot = 3, fairy_dust = 1 },
+    consume = true,
+    description_key = "OBJ_SWORD_UPGRADE_DELIVER_TO_SMITH",
+  },
 }
 
 rewards = {
@@ -19,8 +44,11 @@ rewards = {
 
 meta = {
   giver = "smith_thorin",
+  location = "ZONE_CITY",
+  tag = "BYG",
   category = "adventure",
   repeatable = false,
+  cooldown_days = 0,
   requires_zone = "dark_forest",
 }
 

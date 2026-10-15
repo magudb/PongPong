@@ -1,0 +1,19 @@
+{
+ "claims": {
+  "dedicated.gift_share": 0.2298,
+  "four.free.A8.median": 70,
+  "four.free.A8.p90": 94,
+  "four.mixed.A8.median": 69,
+  "four.mixed.A8.p90": 105,
+  "lean.free.A8.median": 75,
+  "lean.free.A8.p90": 101,
+  "lean.mixed.A8.median": 74,
+  "lean.mixed.A8.p90": 112,
+  "mixed.never_AB_4h_citizen": 0.02,
+  "mixed.never_AB_8h": 0.02,
+  "mixed.never_AB_8h_citizen": 0.05,
+  "typical.social_time": 0.2173
+ },
+ "margin_days": 4,
+ "version": 1
+}

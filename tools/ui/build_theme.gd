@@ -22,6 +22,10 @@ var f_italic: Font
 var f_display: Font
 var f_mono: Font
 
+## The hover of rows, chips and tabs is NEVER gold (UI_NAVIGATION.md 2.2 / 4.6, P28): a chalk wash (#fbf5e6 at 55 %, the RowButton hover).
+const CHALK_WASH := Color(0.984, 0.961, 0.902, 0.55)
+## a wash for a control that sits on a chalk field (the stepper buttons): a chalk wash would not show there
+const PARCHMENT_WASH := Color(0.925, 0.863, 0.706, 0.8)
 const RING_PANEL_COLORS := [C.GOLD, C.INK]
 const RING_PANEL_W := [4.0, 2.0]
 const RING_SEL_COLORS := [C.GOLD, C.INK]
@@ -172,6 +176,8 @@ func _labels() -> void:
 	set_label_var("Heavy16", f_heavy, 16, C.INK)
 	set_label_var("Heavy14", f_heavy, 14, C.INK)
 	set_label_var("Bold19", f_bold, 19, C.INK)
+	set_label_var("Bold16", f_bold, 16, C.INK)             # "18 / 24" of the backpack (P28, UI_NAVIGATION.md 4.6 item 3c)
+	set_label_var("Bold14", f_bold, 14, C.INK)             # the recipe state "Kan laves"
 	set_label_var("Bold18", f_bold, 18, C.INK)
 	set_label_var("Bold17Muted", f_bold, 17, C.TEXT_MUTED)
 	set_label_var("Bold15Mono", f_bold, 15, C.TEXT_MONO)   # "Dag 14" next to menu rows
@@ -211,6 +217,7 @@ func _labels() -> void:
 	set_label_var("ZoneChip", f_display, 16, C.INK)
 	t.set_stylebox("normal", "ZoneChip", box({"fill": C.GOLD, "border_color": C.INK, "border_width": 2.0, "radius": 8.0}, Vector4(12, 0, 12, 0)))
 
+	set_label_var("PromptVerb", f_heavy, 18, C.CHALK)     # the verb inside the prompt pill (the pill itself is a container wearing the PromptPill look)
 	set_label_var("PromptPill", f_heavy, 18, C.CHALK)
 	t.set_stylebox("normal", "PromptPill", box({"fill": C.INK, "border_color": C.GOLD, "border_width": 2.0, "radius": 999.0}, Vector4(16, 4, 16, 4)))
 
@@ -286,6 +293,8 @@ func _panels() -> void:
 		"border_sides": Vector4(0, 2, 0, 0)}, Vector4(24, 16, 24, 16))
 	panel_var("PanelHeader", {"fill": Color(0, 0, 0, 0), "radius": 0.0, "border_sides": Vector4(0, 0, 0, 2)}, Vector4(24, 18, 24, 18))
 	panel_var("PanelField", {"fill": C.CHALK, "radius": 10.0}, Vector4(0, 0, 0, 0))
+	# the stepper is ONE focus stop painted by its root: its ring is this style (quantity_stepper.gd draws it, like TTSlider)
+	t.set_stylebox("focus", "PanelField", box(merge(rings(RING_SEL_COLORS, RING_SEL_W), {"draw_body": false, "radius": 10.0})))
 	panel_var("PanelDetail", {"fill": C.CHALK, "radius": 12.0}, Vector4(16, 16, 16, 16))
 	panel_var("PanelRecipe", {"fill": C.CHALK, "radius": 12.0}, Vector4(18, 18, 18, 18))
 	# Toast / notification
@@ -329,7 +338,7 @@ func _panels() -> void:
 
 	# Popup menus (OptionButton drop-downs)
 	t.set_stylebox("panel", "PopupMenu", box(merge(panel_ring, {"radius": 12.0}), Vector4(10, 10, 10, 10)))
-	t.set_stylebox("hover", "PopupMenu", box({"fill": C.GOLD, "radius": 8.0}, Vector4(10, 4, 10, 4)))
+	t.set_stylebox("hover", "PopupMenu", box({"fill": CHALK_WASH, "border_width": 0.0, "radius": 8.0}, Vector4(10, 4, 10, 4)))
 	t.set_color("font_color", "PopupMenu", C.INK)
 	t.set_color("font_hover_color", "PopupMenu", C.INK)
 	t.set_font("font", "PopupMenu", f_heavy)
@@ -438,7 +447,7 @@ func _buttons() -> void:
 	var mr_m := Vector4(18, 12, 18, 12)
 	var clear := Color(0, 0, 0, 0)
 	t.set_stylebox("normal", "MenuRow", box({"fill": clear, "border_color": clear, "radius": 10.0}, mr_m))
-	t.set_stylebox("hover", "MenuRow", box({"fill": C.GOLD, "radius": 10.0}, mr_m))
+	t.set_stylebox("hover", "MenuRow", box({"fill": CHALK_WASH, "border_color": clear, "radius": 10.0}, mr_m))
 	t.set_stylebox("pressed", "MenuRow", box({"fill": C.GOLD_HOVER, "radius": 10.0}, mr_m))
 	t.set_stylebox("hover_pressed", "MenuRow", box({"fill": C.GOLD_HOVER, "radius": 10.0}, mr_m))
 	t.set_stylebox("disabled", "MenuRow", box({"fill": clear, "border_color": clear, "radius": 10.0}, mr_m))
@@ -466,7 +475,7 @@ func _buttons() -> void:
 	for k in ["font_color", "font_hover_color", "font_pressed_color", "font_hover_pressed_color", "font_focus_color"]:
 		t.set_color(k, "HintButton", C.TEXT_MONO)
 	t.set_stylebox("normal", "HintButton", box({"fill": clear, "border_width": 0.0, "radius": 6.0}, Vector4(6, 2, 6, 2)))
-	t.set_stylebox("hover", "HintButton", box({"fill": Color(0.89, 0.76, 0.45, 0.35), "border_width": 0.0, "radius": 6.0}, Vector4(6, 2, 6, 2)))
+	t.set_stylebox("hover", "HintButton", box({"fill": CHALK_WASH, "border_width": 0.0, "radius": 6.0}, Vector4(6, 2, 6, 2)))
 	t.set_stylebox("pressed", "HintButton", box({"fill": C.GOLD, "border_width": 0.0, "radius": 6.0}, Vector4(6, 2, 6, 2)))
 	t.set_stylebox("focus", "HintButton", box(merge(rings(RING_SEL_COLORS, RING_SEL_W), {"draw_body": false, "radius": 6.0}), Vector4(6, 2, 6, 2)))
 	t.set_color("icon_normal_color", "HintButton", C.TEXT_MONO)
@@ -482,7 +491,7 @@ func _buttons() -> void:
 		t.set_color(k, "ChoiceRow", C.INK)
 	var ch_m := Vector4(16, 8, 16, 8)
 	t.set_stylebox("normal", "ChoiceRow", box({"fill": clear, "border_color": clear, "radius": 8.0}, ch_m))
-	t.set_stylebox("hover", "ChoiceRow", box({"fill": C.GOLD, "radius": 8.0}, ch_m))
+	t.set_stylebox("hover", "ChoiceRow", box({"fill": CHALK_WASH, "border_color": clear, "radius": 8.0}, ch_m))
 	t.set_stylebox("pressed", "ChoiceRow", box({"fill": C.GOLD_HOVER, "radius": 8.0}, ch_m))
 	t.set_stylebox("hover_pressed", "ChoiceRow", box({"fill": C.GOLD_HOVER, "radius": 8.0}, ch_m))
 	t.set_stylebox("focus", "ChoiceRow", box({"fill": C.GOLD, "radius": 8.0}, ch_m))
@@ -497,6 +506,7 @@ func _buttons() -> void:
 # ------------------------------------------------------------------ pills, rows, slots, cards
 func _pills_rows_slots() -> void:
 	var clear := Color(0, 0, 0, 0)
+	var rm_zero := Vector4(0, 0, 0, 0)
 
 	# Tab pill (shop tabs, quest tabs): transparent, gold when active (toggle pressed)
 	t.set_type_variation("PillTab", "Button")
@@ -504,7 +514,7 @@ func _pills_rows_slots() -> void:
 	t.set_font_size("font_size", "PillTab", 16)
 	for k in ["font_color", "font_hover_color", "font_pressed_color", "font_hover_pressed_color", "font_focus_color"]:
 		t.set_color(k, "PillTab", C.INK)
-	var pm := Vector4(16, 5, 16, 5)
+	var pm := Vector4(16, 7, 16, 7)          # +2 px each side: the 2 px border is outside the guide's 5 px padding -> 33 px high (P28, 4.6 item 3b)
 	t.set_stylebox("normal", "PillTab", box({"fill": clear, "radius": 999.0}, pm))
 	t.set_stylebox("hover", "PillTab", box({"fill": C.CHALK, "radius": 999.0}, pm))
 	t.set_stylebox("pressed", "PillTab", box({"fill": C.GOLD, "radius": 999.0}, pm))
@@ -514,9 +524,9 @@ func _pills_rows_slots() -> void:
 	# Species chip: cream, gold when selected
 	t.set_type_variation("Chip", "PillTab")
 	t.set_font_size("font_size", "Chip", 17)
-	var cm := Vector4(18, 6, 18, 6)
+	var cm := Vector4(18, 8, 18, 8)          # +2 px each side -> 37 px high
 	t.set_stylebox("normal", "Chip", box({"fill": C.CHALK, "radius": 999.0}, cm))
-	t.set_stylebox("hover", "Chip", box({"fill": C.GOLD_HOVER, "radius": 999.0}, cm))
+	t.set_stylebox("hover", "Chip", box({"fill": Color("#fffdf6"), "radius": 999.0}, cm))      # a lighter face (idle is chalk already: a chalk wash would not show)
 	t.set_stylebox("pressed", "Chip", box({"fill": C.GOLD, "radius": 999.0}, cm))
 	t.set_stylebox("hover_pressed", "Chip", box({"fill": C.GOLD_HOVER, "radius": 999.0}, cm))
 	t.set_stylebox("focus", "Chip", box(merge(rings(RING_SEL_COLORS, RING_SEL_W), {"draw_body": false, "radius": 999.0}), cm))
@@ -595,7 +605,7 @@ func _pills_rows_slots() -> void:
 	t.set_font_size("font_size", "StepperButton", 20)
 	var sm := Vector4(12, 4, 12, 4)
 	t.set_stylebox("normal", "StepperButton", box({"fill": clear, "radius": 8.0, "border_width": 0.0}, sm))
-	t.set_stylebox("hover", "StepperButton", box({"fill": C.GOLD, "radius": 8.0, "border_width": 0.0}, sm))
+	t.set_stylebox("hover", "StepperButton", box({"fill": PARCHMENT_WASH, "radius": 8.0, "border_width": 0.0}, sm))
 	t.set_stylebox("pressed", "StepperButton", box({"fill": C.GOLD_HOVER, "radius": 8.0, "border_width": 0.0}, sm))
 	t.set_stylebox("hover_pressed", "StepperButton", box({"fill": C.GOLD_HOVER, "radius": 8.0, "border_width": 0.0}, sm))
 	t.set_stylebox("disabled", "StepperButton", box({"fill": clear, "radius": 8.0, "border_width": 0.0}, sm))
@@ -605,6 +615,41 @@ func _pills_rows_slots() -> void:
 	# Round close "x"
 	t.set_type_variation("CloseButton", "ButtonTertiary")
 	t.set_font_size("font_size", "CloseButton", 20)
+	t.set_stylebox("focus", "CloseButton", t.get_stylebox("focus", "ButtonTertiary"))     # every interactive type names its own focus ring (ui_conformance.theme_focus_styles)
+
+	# Focus proxy (P28, UI_NAVIGATION.md 4.6 item 3): a Button that draws NOTHING in any state. A draw-only component (RaritySlot, LadderRow,
+	# RarityPips) is wrapped in one so the keyboard can reach it; the wrapped component paints the ring from `selected = proxy.has_focus()`.
+	t.set_type_variation("FocusProxy", "Button")
+	for st in ["normal", "hover", "pressed", "hover_pressed", "disabled", "focus"]:
+		t.set_stylebox(st, "FocusProxy", StyleBoxEmpty.new())
+
+	# Calendar day cells (RT10, the calendar tab of the quest book): the RowButton look with a parchment-dark fill; festival days lavender with an ink
+	# border; today a 3 px ink border. No gold anywhere but the focus ring: today is ringed in INK, gold stays for focus (the guide's rule).
+	# The idle cell is a ROW look like RowButton (2 px #cdb98f divider, the page shows through): its fill is parchment-dark at alpha .9, so it is a
+	# translucent row and not an opaque light box (UiAudit R1 asks an ink outline of those only; the guide's own list rows carry the divider).
+	var cal_idle_fill := Color(C.PARCHMENT_DARK, 0.9)
+	var cal_focus := box(merge(rings(RING_SEL_COLORS, RING_SEL_W), {"draw_body": false, "radius": 10.0}), rm_zero)
+	t.set_type_variation("CalCell", "Button")
+	t.set_stylebox("normal", "CalCell", box({"fill": cal_idle_fill, "border_color": C.DIVIDER, "border_width": 2.0, "radius": 10.0}, rm_zero))
+	t.set_stylebox("hover", "CalCell", box({"fill": C.PARCHMENT_DARK.lerp(C.CHALK, 0.55), "border_color": C.DIVIDER, "border_width": 2.0, "radius": 10.0}, rm_zero))
+	t.set_stylebox("pressed", "CalCell", box({"fill": C.CHALK, "radius": 10.0}, rm_zero))
+	t.set_stylebox("hover_pressed", "CalCell", box({"fill": C.CHALK, "radius": 10.0}, rm_zero))
+	t.set_stylebox("disabled", "CalCell", box({"fill": cal_idle_fill, "border_color": C.DIVIDER, "border_width": 2.0, "radius": 10.0}, rm_zero))
+	t.set_stylebox("focus", "CalCell", cal_focus)
+	t.set_type_variation("CalCellFest", "Button")
+	t.set_stylebox("normal", "CalCellFest", box({"fill": C.LAVENDER_PALE, "radius": 10.0}, rm_zero))
+	t.set_stylebox("hover", "CalCellFest", box({"fill": C.LAVENDER_PALE2, "radius": 10.0}, rm_zero))
+	t.set_stylebox("pressed", "CalCellFest", box({"fill": C.LAVENDER_PALE2, "radius": 10.0}, rm_zero))
+	t.set_stylebox("hover_pressed", "CalCellFest", box({"fill": C.LAVENDER_PALE2, "radius": 10.0}, rm_zero))
+	t.set_stylebox("disabled", "CalCellFest", box({"fill": C.LAVENDER_PALE, "radius": 10.0}, rm_zero))
+	t.set_stylebox("focus", "CalCellFest", cal_focus)
+	t.set_type_variation("CalCellToday", "Button")
+	t.set_stylebox("normal", "CalCellToday", box({"fill": C.PARCHMENT_DARK, "border_width": 3.0, "radius": 10.0}, rm_zero))
+	t.set_stylebox("hover", "CalCellToday", box({"fill": C.PARCHMENT_DARK.lerp(C.CHALK, 0.55), "border_width": 3.0, "radius": 10.0}, rm_zero))
+	t.set_stylebox("pressed", "CalCellToday", box({"fill": C.CHALK, "border_width": 3.0, "radius": 10.0}, rm_zero))
+	t.set_stylebox("hover_pressed", "CalCellToday", box({"fill": C.CHALK, "border_width": 3.0, "radius": 10.0}, rm_zero))
+	t.set_stylebox("disabled", "CalCellToday", box({"fill": C.PARCHMENT_DARK, "border_width": 3.0, "radius": 10.0}, rm_zero))
+	t.set_stylebox("focus", "CalCellToday", cal_focus)
 
 
 # ------------------------------------------------------------------ meters
@@ -658,22 +703,28 @@ func _inputs_misc() -> void:
 	t.set_type_variation("OptionButtonTT", "OptionButton")
 	for st in ["normal", "hover", "pressed", "hover_pressed", "disabled", "focus"]:
 		t.set_stylebox(st, "OptionButton", t.get_stylebox(st, "Button"))
+	t.set_stylebox("focus", "OptionButtonTT", t.get_stylebox("focus", "Button"))
 	t.set_font("font", "OptionButton", f_display)
 	t.set_font_size("font_size", "OptionButton", 20)
 	for k in ["font_color", "font_hover_color", "font_pressed_color", "font_hover_pressed_color", "font_focus_color"]:
 		t.set_color(k, "OptionButton", C.INK)
 
-	# Sliders (settings): inked track, gold fill, round gold grabber
+	# Sliders (settings), UI_NAVIGATION.md 4.6 item 2: the inked track, a MOSS fill with the 4 px highlight band (the Energi meter: gold is for focus / selected
+	# only), a chalk grabber disc with an ink outline. Godot's Slider never draws a theme `focus` StyleBox: HSlider/focus below is the ring that TTSlider
+	# (scripts/ui/components/tt_slider.gd) paints itself while it has focus. center_grabber = 0 keeps the grabber INSIDE the control rect, so the ring hugs the slider.
 	var trk := box({"fill": C.DISABLED_BG, "radius": 8.0}, Vector4(0, 8, 0, 8))   # content margins give the track its 16 px height
 	t.set_stylebox("slider", "HSlider", trk)
-	var fill := box({"fill": C.GOLD, "border_width": 0.0, "radius": 6.0, "body_inset": Vector4(2, 2, 2, 2),
-		"band_side": BoxStyle.BandSide.TOP, "band_size": 3.0, "band_color": Color(1, 1, 1, 0.35)}, Vector4(0, 8, 0, 8))
+	var fill := box({"fill": C.MOSS, "border_width": 0.0, "radius": 6.0, "body_inset": Vector4(2, 2, 2, 2),
+		"band_side": BoxStyle.BandSide.TOP, "band_size": 4.0, "band_color": Color(1, 1, 1, 0.35)}, Vector4(0, 8, 0, 8))
+	var fill_hi := box({"fill": C.MOSS_HOVER, "border_width": 0.0, "radius": 6.0, "body_inset": Vector4(2, 2, 2, 2),
+		"band_side": BoxStyle.BandSide.TOP, "band_size": 4.0, "band_color": Color(1, 1, 1, 0.35)}, Vector4(0, 8, 0, 8))
 	t.set_stylebox("grabber_area", "HSlider", fill)
-	t.set_stylebox("grabber_area_highlight", "HSlider", fill)
+	t.set_stylebox("grabber_area_highlight", "HSlider", fill_hi)
+	t.set_stylebox("focus", "HSlider", box(merge(rings(RING_SEL_COLORS, RING_SEL_W), {"draw_body": false, "radius": 999.0})))
 	t.set_icon("grabber", "HSlider", load("res://assets/ui/icons/slider_grabber.svg"))
 	t.set_icon("grabber_highlight", "HSlider", load("res://assets/ui/icons/slider_grabber_hi.svg"))
 	t.set_icon("grabber_disabled", "HSlider", load("res://assets/ui/icons/slider_grabber.svg"))
-	t.set_constant("center_grabber", "HSlider", 1)
+	t.set_constant("center_grabber", "HSlider", 0)
 	t.set_constant("grabber_offset", "HSlider", 0)
 	t.set_stylebox("slider", "HSlider", trk)
 	# Check boxes (full-screen toggle): ink-outlined square, moss when on
@@ -700,11 +751,11 @@ func _inputs_misc() -> void:
 	t.set_font("font", "AcceptDialog", f_body)
 	t.set_font_size("font_size", "AcceptDialog", 20)
 
-	# Scrollbars: slim parchment track, gold thumb with ink outline
+	# Scrollbars: slim parchment track, a divider-coloured thumb with a 2 px ink outline (hover chalk, pressed moss): gold is for focus / selected only
 	for tn in ["VScrollBar", "HScrollBar"]:
 		t.set_stylebox("scroll", tn, box({"fill": Color(0.804, 0.725, 0.561, 0.45), "border_width": 0.0, "radius": 6.0}, Vector4(0, 0, 0, 0)))
 		t.set_stylebox("scroll_focus", tn, box({"fill": Color(0.804, 0.725, 0.561, 0.45), "border_width": 0.0, "radius": 6.0}))
-		t.set_stylebox("grabber", tn, box({"fill": C.GOLD, "radius": 6.0}))
-		t.set_stylebox("grabber_highlight", tn, box({"fill": C.GOLD_HOVER, "radius": 6.0}))
-		t.set_stylebox("grabber_pressed", tn, box({"fill": C.MOSS_HOVER, "radius": 6.0}))
+		t.set_stylebox("grabber", tn, box({"fill": C.DIVIDER, "radius": 6.0}, Vector4(6, 6, 6, 6)))
+		t.set_stylebox("grabber_highlight", tn, box({"fill": C.CHALK, "radius": 6.0}, Vector4(6, 6, 6, 6)))
+		t.set_stylebox("grabber_pressed", tn, box({"fill": C.MOSS_HOVER, "radius": 6.0}, Vector4(6, 6, 6, 6)))
 	t.set_constant("scrollbar_margin_top", "ScrollContainer", 0)

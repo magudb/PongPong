@@ -1,12 +1,98 @@
 extends Node
-## Quest state machine. Quest *definitions* live in Lua; this tracks runtime progress.
+## QuestManager: quest state machine and the objective-binding runtime (package P13, PLAN 3.12 + the addenda).
+##
+## Quest DEFINITIONS live in Lua (lua/quests/*.lua, registered by LuaRuntime through register_quest_from_lua) and are never saved;
+## this node keeps the RUNTIME: active quests with their objective progress, the completed / failed / offered lists, the repeatable-quest
+## cooldowns, the rewards still owed (review fixes: a full backpack keeps them in the save) and the free `quest_flags`.
+##
+## OBJECTIVE BINDINGS. An objective is a Lua table `{ id, target, on = "<kind>", <filter fields>, description_key, ... }`; the field `on`
+## says which game event feeds it, the filter fields narrow the event down (a missing filter matches anything; every filter value may be a
+## comma list "a,b"). Progress is `amount` per event (the event's own amount for item / harvest / product events, 1 for the rest; the field
+## `amount = n` overrides it).
+##   item_gained(item)              EventBus.item_gained            crop_planted(crop?)         EventBus.crop_planted
+##   crop_watered                   EventBus.crop_watered           crop_harvested(crop?)       EventBus.crop_harvested
+##   zone_entered(zone)             EventBus.zone_entered          (fires on EVERY area change: harmless for target 1)
+##   area_changed(area)             EventBus.area_changed (a MAP id: moerkeskoven_f4 - zone ids are shared by several maps)
+##   dialogue_started(npc | any_of) EventBus.dialogue_started       any_of = { ... }: each listed NPC counts once (target <= size)
+##   animal_adopted(species?) animal_fed(food?) animal_product_collected(product) building_built(type) enemy_defeated(kind) recipe_crafted(recipe)
+##   quest_completed(quest? category?)   another quest was completed (category / quest id narrow it down)
+##   game_event(event, rarity?, min_level?, match?)   EventBus.game_event(name, payload): `rarity` = comma list against payload.rarity,
+##                                  `min_level` = payload.level >= n for ANY event (dungeon: level = floor; furniture: hygge level index),
+##                                  `match = { npc = "..", item = "..", id = ".." }` = payload entries that must be equal
+##   gift_given(npc? item?) festival_attended heart_event_finished(npc?)   sugar over game_event of the same name (a payload id: match = { id = ".." })
+##   state(state = placed_by_rarity | hygge_level_at_least | home_tier_at_least | friend_hearts_at_least, rarity | min_level | npc + hearts)
+##                                  a QUERY, not an event: evaluated when the quest is accepted, on load and on furniture_changed,
+##                                  hygge_changed, home_upgraded, friend_changed; progress = min(target, answer) and it stays done once reached
+##   manual                         finished by a quest_spot marker (complete_manual), a dialogue action (update_objective) or a Lua hook
+## Flags: `after_others = true` (a turn-in: counts only when every objective that is not itself a turn-in was done BEFORE the event),
+## `have = true` (on = item_gained: progress = how many the player owns, stays done once reached), `needs = { item = n }` (+ `consume = true`: a
+## delivery - the items leave the backpack in the same commit as the progress; also read by item_in_use for quest_spot objectives).
+## An objective without `on` is manual, except for the old id convention that review_regressions pins: harvest_<crop> / harvest_any are fed by
+## crop_harvested and collect_<item> by resource_node_depleted.
+##
+## OFFERS (QuestManager.offerable / offerable_for): quests available RIGHT NOW (Lua is_available, not active, not done or cooled down, the zone
+## of meta.requires_zone unlocked) per giver. requires_zone gates offers only: accept_quest by an explicit dialogue choice is never blocked by it.
+##
+## SAVE: to_dict() carries only runtime state (active records incl. objective progress, completed / failed / offered, flags, completion days,
+## owed rewards); definitions are re-registered by LuaRuntime at boot and survive reset() and from_dict().
 
 enum QuestState { LOCKED, AVAILABLE, ACTIVE, COMPLETED, FAILED }
 
+const _Svc := preload("res://scripts/data/svc.gd")
+const _Data := preload("res://scripts/data/lua_data.gd")
+
 const QUEST_LUA_DIR := "res://lua/quests"
+const FRIEND_CAP := 10
+const DEFAULT_TRACKED := 3
+const QUEST_TAGS: Array[String] = ["FIND", "HØST", "BYG", "SKOV", "LÆR", "VENSKAB"]
+
+## on = <kind> -> the objective fields that must equal the same-named entry of the event. `dialogue_started` also reads any_of, the
+## game_event family reads event / rarity / min_level / match (see _game_event_matches).
+const FILTERS := {
+	"item_gained": ["item"],
+	"crop_planted": ["crop"],
+	"crop_watered": [],
+	"crop_harvested": ["crop"],
+	"zone_entered": ["zone"],
+	"dialogue_started": ["npc", "dialogue"],
+	"animal_adopted": ["species"],
+	"animal_fed": ["food"],
+	"animal_product_collected": ["product"],
+	"building_built": ["type"],
+	"enemy_defeated": ["kind"],
+	"recipe_crafted": ["recipe"],
+	"quest_completed": ["quest", "category"],
+	"area_changed": ["area"],
+}
+## sugar over game_event: on = <event name>, the listed objective fields must equal the payload entries of the same name. The payload `id` (a
+## festival, a heart event) cannot be a field here - `id` is the objective's own - so it is named through `match = { id = ".." }`.
+const GAME_EVENT_SUGAR := {
+	"gift_given": ["npc", "item"],
+	"festival_attended": [],
+	"heart_event_finished": ["npc"],
+}
+## fields an `on` cannot do without (the binding lint, validate_definition)
+const REQUIRED_FIELDS := {
+	"item_gained": ["item"],
+	"zone_entered": ["zone"],
+	"area_changed": ["area"],
+	"game_event": ["event"],
+	"recipe_crafted": ["recipe"],
+	"building_built": ["type"],
+	"enemy_defeated": ["kind"],
+	"animal_product_collected": ["product"],
+	"state": ["state"],
+}
+## state queries that exist, with the fields each one needs. `threshold` queries answer 1 when the value reaches the field `min_level` / `hearts`.
+const STATE_QUERIES := {
+	"placed_by_rarity": {"fields": ["rarity"], "threshold": false},
+	"hygge_level_at_least": {"fields": ["min_level"], "threshold": true},
+	"home_tier_at_least": {"fields": ["min_level"], "threshold": true},
+	"friend_hearts_at_least": {"fields": ["npc", "hearts"], "threshold": true},
+}
 
 var active_quests: Dictionary = {}   # quest_id -> QuestRuntime
-var completed_quests: Array[StringName] = []
+var completed_quests: Array[StringName] = []     # oldest completion first; a repeated completion moves the id to the end
 var failed_quests: Array[StringName] = []
 var offered_quests: Array[StringName] = []
 var quest_flags: Dictionary = {}
@@ -19,13 +105,18 @@ var pending_rewards: Dictionary = {}
 
 var _claiming_rewards: bool = false
 var _reward_claim_queued: bool = false
+var _refresh_queued: bool = false
+var _accept_counter: int = 0
+var _state_queries: Dictionary = {}      # query name -> Callable(objective def) -> int, registered by the owner of the data
+var _objective_cache: Dictionary = {}    # quest id -> {"def": the definition it was built from, "map": {objective id: def}}
 
 
 class QuestRuntime:
 	var id: StringName
 	var state: int
-	var objectives: Dictionary = {}  # objective_id -> {current, target, done}
+	var objectives: Dictionary = {}  # objective_id -> {current, target, done[, seen: [npc ids]]}
 	var started_day: int = 0
+	var order: int = 0               # acceptance order: get_tracked / the journal list the oldest first
 	var meta: Dictionary = {}
 
 	func to_dict() -> Dictionary:
@@ -34,6 +125,7 @@ class QuestRuntime:
 			"state": state,
 			"objectives": objectives.duplicate(true),
 			"started_day": started_day,
+			"order": order,
 			"meta": meta.duplicate(),
 		}
 
@@ -43,6 +135,7 @@ class QuestRuntime:
 		q.state = d.get("state", QuestState.ACTIVE)
 		q.objectives = d.get("objectives", {}).duplicate(true)
 		q.started_day = d.get("started_day", 0)
+		q.order = int(d.get("order", -1))
 		q.meta = d.get("meta", {}).duplicate()
 		return q
 
@@ -50,16 +143,34 @@ class QuestRuntime:
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	EventBus.lua_event.connect(_on_lua_event)
-	EventBus.item_purchased.connect(_on_item_purchased)
-	EventBus.crop_harvested.connect(_on_crop_harvested)
-	EventBus.resource_node_depleted.connect(_on_resource_depleted)
 	EventBus.day_started.connect(_on_day_started)
 	EventBus.new_game_started.connect(reset)
 	EventBus.player_inventory_changed.connect(_on_inventory_changed)
 	EventBus.load_completed.connect(_on_load_completed)
+	EventBus.item_gained.connect(_on_item_gained)
+	EventBus.crop_planted.connect(_on_crop_planted)
+	EventBus.crop_watered.connect(_on_crop_watered)
+	EventBus.crop_harvested.connect(_on_crop_harvested)
+	EventBus.zone_entered.connect(_on_zone_entered)
+	EventBus.area_changed.connect(_on_area_changed)
+	EventBus.dialogue_started.connect(_on_dialogue_started)
+	EventBus.animal_adopted.connect(_on_animal_adopted)
+	EventBus.animal_fed.connect(_on_animal_fed)
+	EventBus.animal_product_collected.connect(_on_animal_product_collected)
+	EventBus.building_built.connect(_on_building_built)
+	EventBus.enemy_defeated.connect(_on_enemy_defeated)
+	EventBus.recipe_crafted.connect(_on_recipe_crafted)
+	EventBus.quest_completed.connect(_on_quest_completed_signal)
+	EventBus.resource_node_depleted.connect(_on_resource_depleted)
+	EventBus.game_event.connect(_on_game_event)
+	EventBus.furniture_changed.connect(_on_furniture_changed)
+	EventBus.hygge_changed.connect(_on_hygge_changed)
+	EventBus.home_upgraded.connect(_on_home_upgraded)
+	EventBus.friend_changed.connect(_on_friend_changed)
 
 
-## A new run forgets progress and rewards, but keeps the definitions registered by LuaRuntime at boot.
+## A new run forgets progress and rewards, but keeps the definitions registered by LuaRuntime at boot (and the state queries the
+## furniture / home / social managers registered: they belong to the game, not to the run).
 func reset() -> void:
 	active_quests.clear()
 	completed_quests.clear()
@@ -68,8 +179,12 @@ func reset() -> void:
 	completed_days.clear()
 	pending_rewards.clear()
 	_reward_claim_queued = false
+	_refresh_queued = false
+	_accept_counter = 0
 	quest_flags.clear()
 
+
+# =============================================================================================== definitions
 
 func register_quest_from_lua(quest_data: Dictionary) -> void:
 	var quest_id: StringName = quest_data.get("id", &"")
@@ -78,14 +193,234 @@ func register_quest_from_lua(quest_data: Dictionary) -> void:
 		return
 	# Lua defines availability; we only store the definition cache
 	quest_defs[quest_id] = quest_data
+	_objective_cache.erase(str(quest_id))
+	if str(quest_data.get("source_path", "")) != "":
+		_report_binding_findings(quest_data)
 
+
+func get_quest_def(quest_id: StringName) -> Dictionary:
+	return quest_defs.get(quest_id, {})
+
+
+## State queries (on = "state"): the owner of the data registers `query: Callable(objective_def: Dictionary) -> int` under the query name and
+## the answer is the progress COUNT (a threshold query answers 1 when it holds, 0 when not). Without a registration the four built-in names
+## ask the owner autoload late bound: FurnitureManager.count_placed_by_rarity(rarities) / hygge_level_index(), HomeManager.tier (else the world
+## flag home_tier), SocialManager.hearts(npc) (else the flag friend_<npc>); no manager means 0.
+func register_state_query(query_name: StringName, query: Callable) -> void:
+	_state_queries[str(query_name)] = query
+
+
+func unregister_state_query(query_name: StringName) -> void:
+	_state_queries.erase(str(query_name))
+
+
+func known_state_queries() -> Array[String]:
+	var out: Array[String] = []
+	for query_name in STATE_QUERIES:
+		out.append(str(query_name))
+	for query_name in _state_queries:
+		if not (str(query_name) in out):
+			out.append(str(query_name))
+	return out
+
+
+## The binding lint of one definition (what LuaRuntime hands to register_quest_from_lua): a list of {path, line, rule = "quest_binding",
+## token, message}; empty = every objective can be completed with the vocabulary above. Findings of file-based definitions are also
+## appended to LuaRuntime.lint_report when the quest is registered.
+func validate_definition(def: Dictionary) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var path := str(def.get("source_path", ""))
+	var qid := str(def.get("id", ""))
+	var add := func(token: String, message: String) -> void:
+		out.append({"path": path, "line": 0, "rule": "quest_binding", "token": token, "message": "quest `%s`: %s" % [qid, message]})
+	if qid == "":
+		add.call("id", "the quest has no id")
+	var objectives: Variant = def.get("objectives", [])
+	if not (objectives is Array) and not (objectives is Dictionary and (objectives as Dictionary).is_empty()):
+		add.call("objectives", "`objectives` must be a list of tables")
+	var list: Array = _objective_list(def)
+	var ids := {}
+	for od_variant in list:
+		if not (od_variant is Dictionary):
+			add.call("objectives", "an objective is not a table")
+			continue
+		_lint_objective(od_variant, ids, add)
+	var rewards := _Data.dict(def.get("rewards", {}))
+	if rewards.has("gold") and (not _is_number(rewards["gold"]) or _Data.int_of(rewards["gold"]) < 0):
+		add.call("rewards.gold", "gold must be a number >= 0")
+	for reward_field in ["items", "friendship"]:
+		var table: Variant = rewards.get(reward_field, {})
+		if not (table is Dictionary):
+			if not (table is Array and (table as Array).is_empty()):
+				add.call("rewards." + reward_field, "`%s` must be a table { id = n }" % reward_field)
+			continue
+		for key in table:
+			var n := _Data.int_of(table[key], -1)
+			var top := FRIEND_CAP if reward_field == "friendship" else 999999
+			if not _is_number(table[key]) or n < 1 or n > top:
+				add.call("rewards.%s.%s" % [reward_field, key], "%s of `%s` must be a whole number 1..%d" % [reward_field, key, top])
+	var meta := _Data.dict(def.get("meta", {}))
+	if meta.has("tag") and not (str(meta["tag"]) in QUEST_TAGS):
+		add.call("meta.tag", "tag `%s` is not one of %s" % [meta["tag"], ", ".join(QUEST_TAGS)])
+	if meta.has("cooldown_days") and (not _is_number(meta["cooldown_days"]) or _Data.int_of(meta["cooldown_days"]) < 0):
+		add.call("meta.cooldown_days", "cooldown_days must be a number >= 0")
+	return out
+
+
+func _lint_objective(od: Dictionary, ids: Dictionary, add: Callable) -> void:
+	var oid := str(od.get("id", ""))
+	if oid == "" or not _is_id(oid):
+		add.call("id", "objective id `%s` must be lower-case letters, digits and underscores" % oid)
+	elif ids.has(oid):
+		add.call(oid, "objective id `%s` is used twice" % oid)
+	ids[oid] = true
+	var target_value: Variant = od.get("target", 1)
+	if not _is_number(target_value) or _Data.int_of(target_value, 0) < 1:
+		add.call(oid, "objective `%s`: target must be a number >= 1" % oid)
+	var on := str(od.get("on", ""))
+	var known_on := on == "" or on == "manual" or on == "state" or on == "game_event" or FILTERS.has(on) or GAME_EVENT_SUGAR.has(on)
+	if not known_on:
+		add.call(oid, "objective `%s`: on = \"%s\" is not in the binding vocabulary" % [oid, on])
+		return
+	for field in REQUIRED_FIELDS.get(on, []):
+		if str(od.get(field, "")) == "":
+			add.call(oid, "objective `%s`: on = \"%s\" needs the field `%s`" % [oid, on, field])
+	if od.has("any_of"):
+		var any_of := _Data.strings(od["any_of"])
+		if on != "dialogue_started" or any_of.is_empty():
+			add.call(oid, "objective `%s`: any_of belongs to on = \"dialogue_started\" and needs at least one npc id" % oid)
+		elif _Data.int_of(target_value, 1) > any_of.size():
+			add.call(oid, "objective `%s`: target %d is more than the %d npcs of any_of (each counts once)" % [oid, _Data.int_of(target_value, 1), any_of.size()])
+	if bool(od.get("have", false)) and (on != "item_gained" or str(od.get("item", "")) == ""):
+		add.call(oid, "objective `%s`: have = true belongs to on = \"item_gained\" with an item" % oid)
+	if od.has("needs"):
+		var needs: Variant = od["needs"]
+		if not (needs is Dictionary) or (needs as Dictionary).is_empty():
+			add.call(oid, "objective `%s`: needs must be a table { item = n }" % oid)
+		else:
+			for item_id in needs:
+				if not _is_number(needs[item_id]) or _Data.int_of(needs[item_id]) < 1:
+					add.call(oid, "objective `%s`: needs.%s must be a number >= 1" % [oid, item_id])
+	if bool(od.get("consume", false)) and not od.has("needs"):
+		add.call(oid, "objective `%s`: consume = true needs `needs = { item = n }`" % oid)
+	if on == "game_event" or GAME_EVENT_SUGAR.has(on):
+		if od.has("min_level") and not _is_number(od["min_level"]):
+			add.call(oid, "objective `%s`: min_level must be a number" % oid)
+		if od.has("match") and not (od["match"] is Dictionary):
+			add.call(oid, "objective `%s`: match must be a table { npc = \"..\" }" % oid)
+	if on == "state":
+		var query_name := str(od.get("state", ""))
+		if query_name != "" and not STATE_QUERIES.has(query_name) and not _state_queries.has(query_name):
+			add.call(oid, "objective `%s`: unknown state query `%s` (known: %s)" % [oid, query_name, ", ".join(known_state_queries())])
+		elif STATE_QUERIES.has(query_name):
+			for field in (STATE_QUERIES[query_name] as Dictionary)["fields"]:
+				if str(od.get(field, "")) == "":
+					add.call(oid, "objective `%s`: state `%s` needs the field `%s`" % [oid, query_name, field])
+			if bool((STATE_QUERIES[query_name] as Dictionary)["threshold"]) and _Data.int_of(target_value, 1) != 1:
+				add.call(oid, "objective `%s`: state `%s` is a threshold: target must be 1" % [oid, query_name])
+
+
+func _report_binding_findings(def: Dictionary) -> void:
+	var findings := validate_definition(def)
+	if findings.is_empty():
+		return
+	var runtime := get_node_or_null("/root/LuaRuntime")
+	if runtime == null:
+		return
+	var report: Variant = runtime.get("lint_report")
+	if report is Array:
+		for finding in findings:
+			(report as Array).append(finding)
+
+
+## The objectives of a definition as a list, however the Lua reader handed them over (an empty table arrives as a Dictionary).
+func _objective_list(def: Dictionary) -> Array:
+	var raw: Variant = def.get("objectives", [])
+	return raw if raw is Array else []
+
+
+## objective id (String) -> its Lua table, cached per definition (the cache notices a replaced definition).
+func _objective_defs(quest_id: Variant) -> Dictionary:
+	var key := str(quest_id)
+	var def: Dictionary = quest_defs.get(StringName(key), {})
+	var cached: Variant = _objective_cache.get(key)
+	if cached is Dictionary and is_same((cached as Dictionary)["def"], def):
+		return (cached as Dictionary)["map"]
+	var map := {}
+	for od in _objective_list(def):
+		if od is Dictionary and str((od as Dictionary).get("id", "")) != "":
+			map[str((od as Dictionary)["id"])] = od
+	_objective_cache[key] = {"def": def, "map": map}
+	return map
+
+
+# =============================================================================================== offers
 
 func offer_quest(quest_id: StringName) -> void:
-	if get_quest_def(quest_id).is_empty() or not _can_start(quest_id) or quest_id in offered_quests:
+	if get_quest_def(quest_id).is_empty() or not _can_start(quest_id) or not _requirements_met(quest_id) or quest_id in offered_quests:
 		return
 	offered_quests.append(quest_id)
 	EventBus.quest_offered.emit(quest_id)
 
+
+## The quests `npc_id` can give RIGHT NOW, in the order of lua/config/npcs.lua `quests_offered` (quests that only name the giver in their own
+## meta follow in id order): is_available true, not active, not done (a repeatable quest again after its cooldown), requires_zone unlocked.
+## P14 shows the "!" bubble from this list and V6's mailbox / notice board use offerable_for.
+func offerable(npc_id: Variant) -> Array[StringName]:
+	var out: Array[StringName] = []
+	for quest_id in _quests_of_giver(str(npc_id)):
+		if _is_offerable_now(quest_id):
+			out.append(quest_id)
+	return out
+
+
+## offerable() of several givers at once: [{quest_id, giver}], the givers in the order given.
+func offerable_for(givers: Array) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for giver in givers:
+		for quest_id in offerable(giver):
+			out.append({"quest_id": quest_id, "giver": StringName(str(giver))})
+	return out
+
+
+func _quests_of_giver(giver: String) -> Array[StringName]:
+	var out: Array[StringName] = []
+	if giver == "":
+		return out
+	var runtime := get_node_or_null("/root/LuaRuntime")
+	var row: Variant = runtime.call("get_npc", giver) if runtime != null else {}
+	for q in _Data.strings(_Data.dict(row).get("quests_offered", [])):
+		var quest_id := StringName(q)
+		var meta_giver := str(_Data.dict(get_quest_def(quest_id).get("meta", {})).get("giver", ""))
+		if quest_defs.has(quest_id) and (meta_giver == "" or meta_giver == giver) and not (quest_id in out):
+			out.append(quest_id)
+	var extra: Array[String] = []
+	for quest_id in quest_defs:
+		if str(_Data.dict(_Data.dict(quest_defs[quest_id]).get("meta", {})).get("giver", "")) == giver and not (StringName(str(quest_id)) in out):
+			extra.append(str(quest_id))
+	extra.sort()
+	for q in extra:
+		out.append(StringName(q))
+	return out
+
+
+## One quest of offerable(): defined, not active, startable (not done / cooled down, Lua is_available) and its zone unlocked. P14's offer
+## choice and V6's notice board ask this before they show an accept button.
+func is_offerable(quest_id: StringName) -> bool:
+	return _is_offerable_now(quest_id)
+
+
+func _is_offerable_now(quest_id: StringName) -> bool:
+	return not get_quest_def(quest_id).is_empty() and not (quest_id in active_quests) and _can_start(quest_id) and _requirements_met(quest_id)
+
+
+## meta.requires_zone: the zone has been unlocked (entered once, or unlocked by a quest hook). Only offers read it.
+func _requirements_met(quest_id: StringName) -> bool:
+	var zone := str(_Data.dict(get_quest_def(quest_id).get("meta", {})).get("requires_zone", ""))
+	return zone == "" or GameManager.is_zone_unlocked(StringName(zone))
+
+
+# =============================================================================================== accept / progress / complete
 
 func accept_quest(quest_id: StringName) -> bool:
 	if not _can_start(quest_id):
@@ -96,16 +431,26 @@ func accept_quest(quest_id: StringName) -> bool:
 		push_warning("Unknown quest: %s" % quest_id)
 		return false
 
+	_activate(quest_id, def)
+	return true
+
+
+## The part of accept_quest after the checks (the table-driven completability test also starts quests whose hidden Lua gate it cannot open).
+func _activate(quest_id: StringName, def: Dictionary) -> void:
 	var rt := QuestRuntime.new()
 	rt.id = quest_id
 	rt.state = QuestState.ACTIVE
 	rt.started_day = GameManager.day
-	rt.meta = def.get("meta", {}).duplicate()
+	rt.order = _accept_counter
+	_accept_counter += 1
+	rt.meta = _Data.dict(def.get("meta", {})).duplicate()
 
-	for obj in def.get("objectives", []):
-		rt.objectives[obj["id"]] = {
+	for obj in _objective_list(def):
+		if not (obj is Dictionary) or str((obj as Dictionary).get("id", "")) == "":
+			continue
+		rt.objectives[(obj as Dictionary)["id"]] = {
 			"current": 0,
-			"target": obj.get("target", 1),
+			"target": maxi(_Data.int_of((obj as Dictionary).get("target", 1), 1), 1),
 			"done": false,
 		}
 
@@ -114,11 +459,13 @@ func accept_quest(quest_id: StringName) -> bool:
 	EventBus.quest_accepted.emit(quest_id)
 	EventBus.notification_posted.emit(
 		tr("NOTIF_QUEST_ACCEPTED_TITLE"),
-		tr("QUEST_%s_TITLE" % quest_id.to_upper()),
+		get_title(quest_id),
 		"quest"
 	)
 	_lua_notify("quest_accepted", quest_id)
-	return true
+	# what the player already owns / stands in counts from the first moment (have and state objectives)
+	if quest_id in active_quests:
+		_refresh_quest(quest_id)
 
 
 func _can_start(quest_id: StringName) -> bool:
@@ -169,6 +516,26 @@ func update_objective(quest_id: StringName, objective_id: StringName, amount: in
 	_check_completion(quest_id)
 
 
+## Progress that is a VALUE (have / state objectives): set to `value` (0..target), done once the target is reached. Unchanged = no signal.
+func _set_progress(quest_id: StringName, objective_id: Variant, value: int) -> void:
+	if quest_id not in active_quests:
+		return
+	var rt: QuestRuntime = active_quests[quest_id]
+	if not rt.objectives.has(objective_id):
+		return
+	var obj: Dictionary = rt.objectives[objective_id]
+	if bool(obj["done"]):
+		return
+	var current := clampi(value, 0, int(obj["target"]))
+	if current == int(obj["current"]):
+		return
+	obj["current"] = current
+	if current >= int(obj["target"]):
+		obj["done"] = true
+	EventBus.quest_objective_updated.emit(quest_id, StringName(str(objective_id)), current, obj["target"])
+	_check_completion(quest_id)
+
+
 func can_complete_manual(quest_id: StringName, objective_id: StringName) -> bool:
 	if not active_quests.has(quest_id):
 		return false
@@ -195,30 +562,52 @@ func complete_quest(quest_id: StringName) -> void:
 	if quest_id not in active_quests:
 		return
 	var def := get_quest_def(quest_id)
-	var rewards: Dictionary = def.get("rewards", {})
+	var rewards: Dictionary = _Data.dict(def.get("rewards", {}))
 
 	# Commit completion before grants: inventory and gold listeners may synchronously call back into the quest manager.
 	active_quests.erase(quest_id)
-	if quest_id not in completed_quests:
-		completed_quests.append(quest_id)
+	completed_quests.erase(quest_id)               # a repeated completion is the most recent one
+	completed_quests.append(quest_id)
 	completed_days[quest_id] = GameManager.total_day()
 	var owed: Dictionary = pending_rewards.get(quest_id, {})
-	for item_id in rewards.get("items", {}):
-		var amount := int(rewards["items"][item_id])
+	var items := _Data.int_map(rewards.get("items", {}))
+	for item_id in items:
+		var amount := int(items[item_id])
 		if amount > 0:
 			owed[str(item_id)] = int(owed.get(str(item_id), 0)) + amount
 	if not owed.is_empty():
 		pending_rewards[quest_id] = owed
 	if rewards.has("gold"):
-		EconomyManager.add_gold(int(rewards["gold"]))
+		EconomyManager.add_gold(_Data.int_of(rewards["gold"]))
+	_grant_friendship(_Data.int_map(rewards.get("friendship", {})))
 	claim_rewards()
 	EventBus.quest_completed.emit(quest_id)
 	EventBus.notification_posted.emit(
 		tr("NOTIF_QUEST_COMPLETED_TITLE"),
-		tr("QUEST_%s_TITLE" % quest_id.to_upper()),
+		get_title(quest_id),
 		"quest_done"
 	)
 	_lua_notify("quest_completed", quest_id)
+
+
+## rewards.friendship = { npc = hearts }. SocialManager (S-core, the one writer of hearts) when it exists; else the world flag friend_<npc>
+## (whole hearts, capped at FRIEND_CAP) and EventBus.friend_changed when the hearts changed.
+func _grant_friendship(hearts_by_npc: Dictionary) -> void:
+	for npc in hearts_by_npc:
+		var hearts := int(hearts_by_npc[npc])
+		if hearts <= 0:
+			continue
+		var social := _Svc.node("SocialManager")
+		if social != null and social.has_method("add_hearts"):
+			social.call("add_hearts", StringName(str(npc)), hearts, &"quest")
+			continue
+		var flag := StringName("friend_%s" % npc)
+		var before := GameManager.flag_int(flag, 0)
+		var after := mini(before + hearts, FRIEND_CAP)
+		if after == before:
+			continue
+		GameManager.set_flag(flag, after)
+		EventBus.friend_changed.emit(StringName(str(npc)), after)
 
 
 ## Delivers what fits, retaining the rest in the save. Called again after inventory changes and successful loads.
@@ -245,10 +634,13 @@ func claim_rewards() -> bool:
 
 func _on_inventory_changed(_inventory: Dictionary) -> void:
 	_queue_reward_claim()
+	_queue_refresh()
 
 
 func _on_load_completed(_slot: int) -> void:
 	_queue_reward_claim()
+	# every section of the save is applied now (home, furniture, social come after the quests): have and state objectives read the new world
+	refresh_objectives()
 
 
 func _queue_reward_claim() -> void:
@@ -272,10 +664,6 @@ func fail_quest(quest_id: StringName) -> void:
 	failed_quests.append(quest_id)
 	EventBus.quest_failed.emit(quest_id)
 	_lua_notify("quest_failed", quest_id)
-
-
-func get_quest_def(quest_id: StringName) -> Dictionary:
-	return quest_defs.get(quest_id, {})
 
 
 func get_active_quests() -> Array:
@@ -326,30 +714,450 @@ func _on_lua_event(event_name: StringName, payload: Dictionary) -> void:
 			fail_quest(StringName(payload.get("quest_id", "")))
 
 
-func _on_item_purchased(_item_id: StringName, _amount: int, _cost: int) -> void:
-	# Hook for shopping quests
-	pass
-
-
-func _on_crop_harvested(_plot: StringName, crop_id: StringName, amount: int) -> void:
-	for quest_id in active_quests.keys():
-		update_objective(quest_id, &"harvest_%s" % crop_id, amount)
-		update_objective(quest_id, &"harvest_any", amount)
-
-
-func _on_resource_depleted(_node_id: StringName, loot: Array) -> void:
-	for quest_id in active_quests.keys():
-		for entry in loot:
-			var item_id: StringName = entry.get("id", &"")
-			var amount: int = entry.get("amount", 1)
-			update_objective(quest_id, &"collect_%s" % item_id, amount)
-
-
 func _on_day_started(_day: int, _season: StringName) -> void:
 	for quest_id in active_quests.keys():
 		if quest_id in active_quests:
 			_lua_notify("day_started", quest_id)
 
+
+# =============================================================================================== event bindings
+
+func _on_item_gained(item_id: StringName, amount: int) -> void:
+	_dispatch(&"item_gained", {"item": str(item_id), "amount": amount})
+	_queue_refresh()
+
+
+func _on_crop_planted(plot_id: StringName, crop_id: StringName) -> void:
+	_dispatch(&"crop_planted", {"plot": str(plot_id), "crop": str(crop_id)})
+
+
+func _on_crop_watered(plot_id: StringName) -> void:
+	_dispatch(&"crop_watered", {"plot": str(plot_id)})
+
+
+func _on_crop_harvested(plot_id: StringName, crop_id: StringName, amount: int) -> void:
+	_dispatch(&"crop_harvested", {"plot": str(plot_id), "crop": str(crop_id), "amount": amount})
+
+
+func _on_zone_entered(zone_id: StringName) -> void:
+	_dispatch(&"zone_entered", {"zone": str(zone_id)})
+
+
+func _on_area_changed(area_id: StringName) -> void:
+	_dispatch(&"area_changed", {"area": str(area_id)})
+
+
+func _on_dialogue_started(npc_id: StringName, dialogue_id: StringName) -> void:
+	_dispatch(&"dialogue_started", {"npc": str(npc_id), "dialogue": str(dialogue_id)})
+
+
+func _on_animal_adopted(animal_id: StringName, species: StringName) -> void:
+	_dispatch(&"animal_adopted", {"animal": str(animal_id), "species": str(species)})
+
+
+func _on_animal_fed(animal_id: StringName, food_id: StringName) -> void:
+	_dispatch(&"animal_fed", {"animal": str(animal_id), "food": str(food_id)})
+
+
+func _on_animal_product_collected(animal_id: StringName, product_id: StringName, amount: int) -> void:
+	_dispatch(&"animal_product_collected", {"animal": str(animal_id), "product": str(product_id), "amount": amount})
+
+
+func _on_building_built(building_id: StringName, building_type: StringName) -> void:
+	_dispatch(&"building_built", {"building": str(building_id), "type": str(building_type)})
+
+
+func _on_enemy_defeated(enemy_id: StringName, kind: StringName, _loot: Array) -> void:
+	_dispatch(&"enemy_defeated", {"enemy": str(enemy_id), "kind": str(kind)})
+
+
+func _on_recipe_crafted(recipe_id: StringName, amount: int) -> void:
+	_dispatch(&"recipe_crafted", {"recipe": str(recipe_id), "amount": amount})
+
+
+## Another quest was completed (this node emits the signal itself): the finished quest is no longer active, so it never counts for itself.
+func _on_quest_completed_signal(quest_id: StringName) -> void:
+	var meta := _Data.dict(get_quest_def(quest_id).get("meta", {}))
+	_dispatch(&"quest_completed", {"quest": str(quest_id), "category": str(meta.get("category", ""))})
+
+
+func _on_game_event(event_name: StringName, payload: Dictionary) -> void:
+	_dispatch(&"game_event", {"event": str(event_name), "payload": payload})
+
+
+## The old id convention (objectives WITHOUT `on`): collect_<item> is fed by what a resource node dropped. Objectives with an `on` never
+## read it (their item_gained already counts the drop: this is what the old double counting was).
+func _on_resource_depleted(_node_id: StringName, loot: Array) -> void:
+	for entry in loot:
+		if entry is Dictionary:
+			_dispatch(&"resource_loot", {"item": str((entry as Dictionary).get("id", "")), "amount": int((entry as Dictionary).get("amount", 1))})
+
+
+func _on_furniture_changed(_reason: StringName) -> void:
+	refresh_objectives()
+
+
+func _on_hygge_changed(_score: int, _level: StringName) -> void:
+	refresh_objectives()
+
+
+func _on_home_upgraded(_old_tier: int, _new_tier: int) -> void:
+	refresh_objectives()
+
+
+func _on_friend_changed(_npc_id: StringName, _hearts: int) -> void:
+	refresh_objectives()
+
+
+## One event, every active quest, every open objective. A turn-in (after_others) is judged on the state BEFORE the event, so the progress this
+## very event made never lets it through; keys() copies everywhere because progress can complete (and erase) a quest in the middle of the loop.
+func _dispatch(kind: StringName, ctx: Dictionary) -> void:
+	if active_quests.is_empty():
+		return
+	for quest_id in active_quests.keys():
+		if active_quests.has(quest_id):
+			_dispatch_to_quest(quest_id, kind, ctx)
+
+
+func _dispatch_to_quest(quest_id: StringName, kind: StringName, ctx: Dictionary) -> void:
+	var rt: QuestRuntime = active_quests[quest_id]
+	var defs := _objective_defs(quest_id)
+	var others_done := _non_turn_ins_done(rt, defs)
+	var hits: Array = []
+	for objective_id in rt.objectives.keys():
+		var obj: Dictionary = rt.objectives[objective_id]
+		if bool(obj.get("done", false)):
+			continue
+		var od: Dictionary = defs.get(str(objective_id), {})
+		var step := _step_for(od, str(objective_id), kind, ctx, obj)
+		if step <= 0:
+			continue
+		if bool(od.get("after_others", false)) and not others_done:
+			continue
+		hits.append([objective_id, step, od])
+	for hit in hits:
+		if not active_quests.has(quest_id) or active_quests[quest_id] != rt:
+			return
+		var od_hit: Dictionary = hit[2]
+		_apply_hit(quest_id, hit[0], int(hit[1]), od_hit, ctx)
+
+
+## Progress one event gives to one objective: 0 = the event does not bind to it.
+func _step_for(od: Dictionary, objective_id: String, kind: StringName, ctx: Dictionary, obj: Dictionary) -> int:
+	var on := str(od.get("on", ""))
+	if on == "":
+		return _legacy_step(objective_id, kind, ctx)
+	if on == "manual" or on == "state" or bool(od.get("have", false)):
+		return 0                      # finished by complete_manual / evaluated by refresh_objectives, never counted from events
+	var step := _amount_of(od, ctx)
+	if step <= 0:
+		return 0
+	if on == "game_event" or GAME_EVENT_SUGAR.has(on):
+		return step if kind == &"game_event" and _game_event_matches(od, on, ctx) else 0
+	if str(kind) != on:
+		return 0
+	if on == "dialogue_started":
+		var npc := str(ctx.get("npc", ""))
+		var any_of := _Data.strings(od.get("any_of", []))
+		if not any_of.is_empty():
+			if not (npc in any_of) or npc in _Data.strings(obj.get("seen", [])):
+				return 0
+		elif not _csv_contains(od.get("npc", ""), npc):
+			return 0
+		return step if _csv_contains(od.get("dialogue", ""), str(ctx.get("dialogue", ""))) else 0
+	for field in FILTERS.get(on, []):
+		if not _csv_contains(od.get(field, ""), str(ctx.get(field, ""))):
+			return 0
+	return step
+
+
+func _amount_of(od: Dictionary, ctx: Dictionary) -> int:
+	if od.has("amount"):
+		return _Data.int_of(od["amount"], 1)
+	return int(ctx["amount"]) if ctx.has("amount") else 1
+
+
+func _legacy_step(objective_id: String, kind: StringName, ctx: Dictionary) -> int:
+	if kind == &"crop_harvested" and (objective_id == "harvest_%s" % ctx.get("crop", "") or objective_id == "harvest_any"):
+		return int(ctx.get("amount", 1))
+	if kind == &"resource_loot" and objective_id == "collect_%s" % ctx.get("item", ""):
+		return int(ctx.get("amount", 1))
+	return 0
+
+
+func _game_event_matches(od: Dictionary, on: String, ctx: Dictionary) -> bool:
+	var wanted := str(od.get("event", "")) if on == "game_event" else on
+	if wanted == "" or wanted != str(ctx.get("event", "")):
+		return false
+	var payload := _Data.dict(ctx.get("payload", {}))
+	if od.has("rarity") and not _csv_contains(od["rarity"], str(payload.get("rarity", ""))):
+		return false
+	if od.has("min_level"):
+		var level: Variant = payload.get("level")
+		if not _is_number(level) or float(level) < float(_Data.num(od["min_level"])):
+			return false
+	var wanted_entries := _Data.dict(od.get("match", {}))
+	for key in wanted_entries:
+		if not payload.has(key) or not _same_value(payload[key], wanted_entries[key]):
+			return false
+	if GAME_EVENT_SUGAR.has(on):
+		for field in GAME_EVENT_SUGAR[on]:
+			if od.has(field) and not _csv_contains(od[field], str(payload.get(field, ""))):
+				return false
+	return true
+
+
+## A matched event becomes progress. A delivery (`needs`) first checks and takes the goods: all of it in one commit with the progress.
+func _apply_hit(quest_id: StringName, objective_id: Variant, step: int, od: Dictionary, ctx: Dictionary) -> void:
+	var rt: QuestRuntime = active_quests[quest_id]
+	var obj: Dictionary = rt.objectives[objective_id]
+	var needs := _needs_of(od)
+	if not needs.is_empty() and not EconomyManager.has_items(needs):
+		_toast_missing_items()
+		return
+	var commit := func() -> void:
+		if not _Data.strings(od.get("any_of", [])).is_empty():
+			var seen: Array = _Data.arr(obj.get("seen", []))
+			seen.append(str(ctx.get("npc", "")))
+			obj["seen"] = seen
+		update_objective(quest_id, StringName(str(objective_id)), step)
+	if bool(od.get("consume", false)) and not needs.is_empty():
+		if not EconomyManager.consume_backpack_items(needs, commit):
+			_toast_missing_items()
+		return
+	commit.call()
+
+
+func _toast_missing_items() -> void:
+	EventBus.notification_posted.emit(tr("QUEST_NEEDS_ITEMS_TITLE"), tr("QUEST_NEEDS_ITEMS_TEXT"), "quest")
+
+
+## Every objective that is not a turn-in is done: the moment a turn-in (after_others) may count.
+func _non_turn_ins_done(rt: QuestRuntime, defs: Dictionary) -> bool:
+	for objective_id in rt.objectives:
+		var od: Dictionary = defs.get(str(objective_id), {})
+		if bool(od.get("after_others", false)):
+			continue
+		if not bool((rt.objectives[objective_id] as Dictionary).get("done", false)):
+			return false
+	return true
+
+
+# =============================================================================================== have / state objectives
+
+## Re-evaluates the derived objectives (have = true: the inventory count, on = "state": the query) of every active quest. Runs when a quest
+## is accepted, on load, on the state signals and, coalesced to once per frame, after every inventory change; call it to settle a test.
+func refresh_objectives() -> void:
+	_refresh_queued = false
+	for quest_id in active_quests.keys():
+		if active_quests.has(quest_id):
+			_refresh_quest(quest_id)
+
+
+func _queue_refresh() -> void:
+	if _refresh_queued or active_quests.is_empty():
+		return
+	_refresh_queued = true
+	_run_refresh.call_deferred()
+
+
+func _run_refresh() -> void:
+	if _refresh_queued:
+		refresh_objectives()
+
+
+func _refresh_quest(quest_id: StringName) -> void:
+	var rt: QuestRuntime = active_quests[quest_id]
+	var defs := _objective_defs(quest_id)
+	for objective_id in rt.objectives.keys():
+		if not active_quests.has(quest_id) or active_quests[quest_id] != rt:
+			return
+		var obj: Dictionary = rt.objectives[objective_id]
+		if bool(obj.get("done", false)):
+			continue
+		var od: Dictionary = defs.get(str(objective_id), {})
+		var value := -1
+		if str(od.get("on", "")) == "state":
+			value = _state_value(od)
+		elif bool(od.get("have", false)):
+			value = _have_value(od)
+		if value < 0:
+			continue
+		if bool(od.get("after_others", false)) and not _non_turn_ins_done(rt, defs):
+			continue
+		_set_progress(quest_id, objective_id, value)
+
+
+func _have_value(od: Dictionary) -> int:
+	return EconomyManager.count_item(StringName(str(od.get("item", ""))))
+
+
+func _state_value(od: Dictionary) -> int:
+	var query_name := str(od.get("state", ""))
+	var registered: Variant = _state_queries.get(query_name)
+	if registered is Callable and (registered as Callable).is_valid():
+		return maxi(_Data.int_of((registered as Callable).call(od)), 0)
+	return maxi(_builtin_state_value(query_name, od), 0)
+
+
+func _builtin_state_value(query_name: String, od: Dictionary) -> int:
+	match query_name:
+		"placed_by_rarity":
+			var furniture := _Svc.node("FurnitureManager")
+			if furniture == null or not furniture.has_method("count_placed_by_rarity"):
+				return 0
+			return _Data.int_of(furniture.call("count_placed_by_rarity", _csv(od.get("rarity", ""))))
+		"hygge_level_at_least":
+			var furniture_level := _Svc.node("FurnitureManager")
+			if furniture_level == null or not furniture_level.has_method("hygge_level_index"):
+				return 0
+			return 1 if _Data.int_of(furniture_level.call("hygge_level_index")) >= _Data.int_of(od.get("min_level", 0)) else 0
+		"home_tier_at_least":
+			return 1 if _home_tier() >= _Data.int_of(od.get("min_level", 1)) else 0
+		"friend_hearts_at_least":
+			return 1 if _hearts_of(str(od.get("npc", ""))) >= _Data.int_of(od.get("hearts", 1)) else 0
+	return 0
+
+
+func _home_tier() -> int:
+	var home := _Svc.node("HomeManager")
+	if home != null and home.get("tier") != null:
+		return _Data.int_of(home.get("tier"), 1)
+	return GameManager.flag_int(GameManager.FLAG_HOME_TIER, 1)
+
+
+func _hearts_of(npc: String) -> int:
+	var social := _Svc.node("SocialManager")
+	if social != null and social.has_method("hearts"):
+		return _Data.int_of(social.call("hearts", StringName(npc)))
+	return GameManager.flag_int(StringName("friend_%s" % npc), 0)
+
+
+# =============================================================================================== journal, tracker, text
+
+## The HUD card: the active quests, oldest accepted first, at most `max_count`; never a completed or failed one; the order survives save / load.
+func get_tracked(max_count: int = DEFAULT_TRACKED) -> Array[StringName]:
+	var out: Array[StringName] = []
+	for quest_id in get_active_ids():
+		if out.size() >= max_count:
+			break
+		out.append(quest_id)
+	return out
+
+
+## The quest book, tab "Aktive": every active quest, oldest accepted first.
+func get_active_ids() -> Array[StringName]:
+	var rows: Array = []
+	var index := 0
+	for quest_id in active_quests:
+		rows.append([(active_quests[quest_id] as QuestRuntime).order, index, StringName(str(quest_id))])
+		index += 1
+	rows.sort_custom(func(a: Array, b: Array) -> bool: return a[0] < b[0] or (a[0] == b[0] and a[1] < b[1]))
+	var out: Array[StringName] = []
+	for row in rows:
+		out.append(row[2])
+	return out
+
+
+## The quest book, tab "Fuldført": every completed quest, the most recently completed first.
+func get_completed_ids() -> Array[StringName]:
+	var out: Array[StringName] = []
+	for i in range(completed_quests.size() - 1, -1, -1):
+		out.append(completed_quests[i])
+	return out
+
+
+func get_active_count() -> int:
+	return active_quests.size()
+
+
+func get_completed_count() -> int:
+	return completed_quests.size()
+
+
+## {current, target, done} of one objective of an ACTIVE quest ({} when it is not active / unknown).
+func get_objective_progress(quest_id: StringName, objective_id: StringName) -> Dictionary:
+	if not active_quests.has(quest_id):
+		return {}
+	var rt: QuestRuntime = active_quests[quest_id]
+	return (rt.objectives.get(objective_id, {}) as Dictionary).duplicate()
+
+
+## The objective the player should work on now: the first open one in Lua order (a turn-in only once nothing else is open).
+func get_current_objective(quest_id: StringName) -> StringName:
+	if not active_quests.has(quest_id):
+		return &""
+	var rt: QuestRuntime = active_quests[quest_id]
+	var defs := _objective_defs(quest_id)
+	var turn_in: StringName = &""
+	for objective_id in rt.objectives:
+		if bool((rt.objectives[objective_id] as Dictionary).get("done", false)):
+			continue
+		if bool((defs.get(str(objective_id), {}) as Dictionary).get("after_others", false)):
+			if turn_in == &"":
+				turn_in = StringName(str(objective_id))
+			continue
+		return StringName(str(objective_id))
+	return turn_in
+
+
+## Text of one objective: its description_key -> OBJ_<QUEST>_<OBJ> -> OBJ_<OBJ> -> the Lua `description` -> the readable id. Never a raw key.
+func get_objective_text(quest_id: StringName, objective_id: StringName) -> String:
+	var od: Dictionary = _objective_defs(quest_id).get(str(objective_id), {})
+	var described := str(od.get("description_key", ""))
+	if described != "" and _has_key(described):
+		return tr(described)
+	var specific := "OBJ_%s_%s" % [str(quest_id).to_upper(), str(objective_id).to_upper()]
+	if _has_key(specific):
+		return tr(specific)
+	var generic := "OBJ_%s" % str(objective_id).to_upper()
+	if _has_key(generic):
+		return tr(generic)
+	var literal := str(od.get("description", ""))
+	if literal != "":
+		return tr(literal) if _is_key_shaped(literal) and _has_key(literal) else literal
+	return str(objective_id).capitalize()
+
+
+## The quest title: its title_key -> QUEST_<ID>_TITLE -> the Lua `title` -> the readable id. Never a raw key.
+func get_title(quest_id: Variant) -> String:
+	var def := get_quest_def(StringName(str(quest_id)))
+	var title_key := str(def.get("title_key", ""))
+	if title_key != "" and _has_key(title_key):
+		return tr(title_key)
+	var derived := "QUEST_%s_TITLE" % str(quest_id).to_upper()
+	if _has_key(derived):
+		return tr(derived)
+	var literal := str(def.get("title", ""))
+	return literal if literal != "" else str(quest_id).capitalize()
+
+
+## True while an ACTIVE quest still needs the item: a have objective that is open, the `needs` of an open objective (a delivery or a quest_spot
+## cost) or an ingredient of a recipe an open recipe_crafted objective asks for. S-gifts hides such items from the gift picker.
+func item_in_use(item_id: Variant) -> bool:
+	var item := str(item_id)
+	if item == "":
+		return false
+	for quest_id in active_quests:
+		var rt: QuestRuntime = active_quests[quest_id]
+		var defs := _objective_defs(quest_id)
+		for objective_id in rt.objectives:
+			if bool((rt.objectives[objective_id] as Dictionary).get("done", false)):
+				continue
+			var od: Dictionary = defs.get(str(objective_id), {})
+			if bool(od.get("have", false)) and str(od.get("item", "")) == item:
+				return true
+			if _needs_of(od).has(item):
+				return true
+			if str(od.get("on", "")) == "recipe_crafted":
+				var runtime := get_node_or_null("/root/LuaRuntime")
+				var recipe: Variant = runtime.call("get_recipe", str(od.get("recipe", ""))) if runtime != null else {}
+				if _Data.int_map(_Data.dict(recipe).get("ingredients", {})).has(item):
+					return true
+	return false
+
+
+# =============================================================================================== save
 
 func to_dict() -> Dictionary:
 	var active := {}
@@ -388,6 +1196,8 @@ func validate_dict(data: Dictionary) -> bool:
 		var state: Variant = record.get("state", QuestState.ACTIVE)
 		if not _valid_count(state) or int(state) > QuestState.FAILED or not _valid_count(record.get("started_day", 0)):
 			return false
+		if record.has("order") and not _valid_count(record["order"]):
+			return false
 		if not (record.get("meta", {}) is Dictionary) or not (record.get("objectives", {}) is Dictionary):
 			return false
 		for objective_id in record.get("objectives", {}):
@@ -398,6 +1208,12 @@ func validate_dict(data: Dictionary) -> bool:
 				return false
 			if int(objective["target"]) <= 0 or int(objective["current"]) > int(objective["target"]) or not (objective.get("done") is bool):
 				return false
+			if objective.has("seen"):
+				if not (objective["seen"] is Array):
+					return false
+				for npc in objective["seen"]:
+					if not _valid_id(npc):
+						return false
 	var days: Variant = data.get("completed_days", {})
 	var pending: Variant = data.get("pending_rewards", {})
 	if not (days is Dictionary) or not (pending is Dictionary):
@@ -431,8 +1247,17 @@ func from_dict(data: Dictionary) -> bool:
 		return false
 	var restored: Dictionary = {}
 	var active: Dictionary = data.get("active", {})
+	var next_order := 0
 	for qid in active:
-		restored[qid] = QuestRuntime.from_dict(active[qid])
+		var runtime := QuestRuntime.from_dict(active[qid])
+		restored[qid] = runtime
+		next_order = maxi(next_order, runtime.order + 1)
+	for qid in restored:                      # a save of before the acceptance order existed: the saved order of the records is the order
+		var legacy: QuestRuntime = restored[qid]
+		if legacy.order < 0:
+			legacy.order = next_order
+			next_order += 1
+	_accept_counter = next_order
 	active_quests = restored
 	completed_quests.assign(data.get("completed", []))
 	failed_quests.assign(data.get("failed", []))
@@ -448,4 +1273,55 @@ func from_dict(data: Dictionary) -> bool:
 		completed_days[quest_id] = int(saved_days.get(quest_id, GameManager.total_day()))
 	pending_rewards = (data.get("pending_rewards", {}) as Dictionary).duplicate(true)
 	_reward_claim_queued = false
+	_refresh_queued = false
 	return true
+
+
+# =============================================================================================== small helpers
+
+## {item: amount} an objective needs (a delivery or the cost of its quest_spot), ints, {} when it names none.
+func _needs_of(od: Dictionary) -> Dictionary:
+	return _Data.int_map(od.get("needs", {}))
+
+
+func _has_key(key: String) -> bool:
+	return str(TranslationServer.translate(key)) != key
+
+
+static func _is_key_shaped(text: String) -> bool:
+	var rx := RegEx.new()
+	rx.compile("^[A-Z0-9_]+$")
+	return rx.search(text) != null
+
+
+static func _is_id(text: String) -> bool:
+	var rx := RegEx.new()
+	rx.compile("^[a-z][a-z0-9_]*$")
+	return rx.search(text) != null
+
+
+static func _is_number(value: Variant) -> bool:
+	return typeof(value) == TYPE_INT or typeof(value) == TYPE_FLOAT
+
+
+## "a, b,c" -> ["a", "b", "c"] (a single value gives one entry, "" none).
+static func _csv(value: Variant) -> Array[String]:
+	var out: Array[String] = []
+	for part in str(value).split(",", false):
+		var trimmed := part.strip_edges()
+		if trimmed != "":
+			out.append(trimmed)
+	return out
+
+
+## The filter value (a single value or a comma list) names `actual`; an empty filter matches anything.
+static func _csv_contains(filter_value: Variant, actual: String) -> bool:
+	var wanted := _csv(filter_value)
+	return wanted.is_empty() or actual in wanted
+
+
+## Payload entries compare as numbers when both are numbers (JSON gives 5.0 for 5), otherwise as text.
+static func _same_value(a: Variant, b: Variant) -> bool:
+	if _is_number(a) and _is_number(b):
+		return is_equal_approx(float(a), float(b))
+	return str(a) == str(b)

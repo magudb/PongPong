@@ -1,0 +1,36 @@
+{
+  "_doc": "T-post-office registry row (TOWNS_FARM_SOCIAL_ADDENDUM 8.10, DT21). Pending until the scene lands.",
+  "screens": [
+    {
+      "id": "post",
+      "title": "Hvor er ...?",
+      "kind": "modal",
+      "scene": "res://scenes/ui/post.tscn",
+      "fixture": "post",
+      "package": "T-post-office",
+      "guide": "addendum 4.6",
+      "focus": "initial",
+      "modal": "post",
+      "esc_depth": 1,
+      "compare": {
+        "baseline": "docs/qa/ui_baseline/post.png",
+        "fixture": "post",
+        "no_frame_crop": true,
+        "target": 1.5
+      },
+      "checks": [
+        "initial_focus",
+        "focus_walk",
+        "focusable_report",
+        "rule_report",
+        "i18n_flip",
+        "escape_chain",
+        "ring_pixels",
+        "panel_pixels",
+        "button_pixels",
+        "compare_guide"
+      ],
+      "note": "Pip's post office: where every known citizen is right now"
+    }
+  ]
+}

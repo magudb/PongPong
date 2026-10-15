@@ -1,0 +1,52 @@
+{
+ "$schema": "http://json-schema.org/draft-07/schema#",
+ "title": "Room spec of a walk-in interior (data/interiors/<core|ext>/int_<id>.json)",
+ "description": "A room is DATA (TOWNS addendum DT13). Cells: x = column (+x = screen lower-right), z = row (+z = screen lower-left), z = 0 is the BACK wall row, the door sits on the last row. Item ids are ids of the kit (data/interiors/kit_footprints.json) or of assets/iso_props/furniture/furniture.json; there is NO stand_in field: PieceCatalog resolves the art (baked kit manifest > furniture.json > data/interiors/stand_ins.json > a labelled box). The counter band, the hosts and the posts are checked by tools/towns/interiors/validate.py. A spec marked hand_edited is exempt from the regeneration check only.",
+ "type": "object",
+ "required": ["id", "building", "size", "cols", "rows", "wall_style", "floor", "door", "spawn_cell", "windows", "exit", "items", "posts", "markers"],
+ "additionalProperties": false,
+ "properties": {
+  "id": {"type": "string", "pattern": "^int_[a-z0-9_]+$"},
+  "building": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+  "size": {"enum": ["S", "M", "L"]},
+  "cols": {"type": "integer", "minimum": 5, "maximum": 14},
+  "rows": {"type": "integer", "minimum": 5, "maximum": 10},
+  "wall_style": {"enum": ["plank", "paper", "marble"]},
+  "floor": {"enum": ["floor_plank", "floor_parquet", "floor_stone", "floor_marble"]},
+  "door": {"type": "object", "required": ["cell", "dir"], "additionalProperties": false, "properties": {"cell": {"$ref": "#/$defs/cell"}, "dir": {"$ref": "#/$defs/cell"}}},
+  "spawn_cell": {"$ref": "#/$defs/cell"},
+  "windows": {"type": "object", "required": ["z", "x"], "additionalProperties": false, "properties": {"z": {"$ref": "#/$defs/ints"}, "x": {"$ref": "#/$defs/ints"}}},
+  "exit": {"type": "object", "required": ["area", "spawn"], "additionalProperties": false, "properties": {"area": {"type": "string", "pattern": "^[a-z0-9_]+$"}, "spawn": {"type": "string", "pattern": "^from_[a-z0-9_]+$"}}},
+  "zoom_fit": {"type": "number", "minimum": 0.3, "maximum": 1.6},
+  "items": {"type": "array", "items": {"$ref": "#/$defs/item"}},
+  "posts": {"type": "array", "items": {"$ref": "#/$defs/post"}},
+  "markers": {"type": "array", "items": {"$ref": "#/$defs/marker"}},
+  "notes": {"type": "array", "items": {"type": "string"}},
+  "hand_edited": {"type": "boolean"}
+ },
+ "$defs": {
+  "cell": {"type": "array", "items": {"type": "integer"}, "minItems": 2, "maxItems": 2},
+  "ints": {"type": "array", "items": {"type": "integer"}},
+  "item": {"type": "object", "required": ["id", "cell", "rot"], "additionalProperties": false, "properties": {
+   "id": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+   "cell": {"$ref": "#/$defs/cell"},
+   "rot": {"type": "integer", "minimum": 0, "maximum": 3},
+   "role": {"enum": ["counter", "bed"]},
+   "wall": {"type": "boolean"}}},
+  "post": {"type": "object", "required": ["id", "cell", "act", "facing", "capacity"], "additionalProperties": false, "properties": {
+   "id": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+   "cell": {"$ref": "#/$defs/cell"},
+   "act": {"enum": ["sit", "eat", "inside", "sleep", "work", "tend", "stand", "play", "fish", "patrol", "perch", "guard", "lamp", "away", "hide"]},
+   "facing": {"enum": ["S", "SW", "W", "NW", "N", "NE", "E", "SE"]},
+   "capacity": {"type": "integer", "minimum": 1, "maximum": 8},
+   "kind": {"enum": ["keeper", "staff", "customer", "bed", "seat", "stage"]}}},
+  "marker": {"type": "object", "required": ["type"], "additionalProperties": false, "properties": {
+   "type": {"enum": ["hatch", "shop", "post_counter", "bar", "appraisal", "desk", "talk", "bath", "board", "mailbox", "door"]},
+   "cell": {"$ref": "#/$defs/cell"},
+   "cells": {"type": "array", "items": {"$ref": "#/$defs/cell"}},
+   "id": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+   "keeper": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+   "to": {"type": "string"},
+   "spawn": {"type": "string"}}}
+ }
+}

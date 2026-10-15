@@ -691,6 +691,10 @@ static func _skip_dirs(c: Control, consumes: Array = []) -> Array[StringName]:
 		out.append_array([&"ui_left", &"ui_right"])
 	elif c is VSlider:
 		out.append_array([&"ui_up", &"ui_down"])
+	elif c.has_method("step_by"):
+		# QuantityStepper (and any value stepper): Left / Right adjust the value, they are not focus navigation
+		# (UI_NAVIGATION.md 4.6 item 3d). The walk must not expect an edge from them, exactly like HSlider.
+		out.append_array([&"ui_left", &"ui_right"])
 	for d in consumes:                                         # directions a control declares as consumed (options.consumes: {path: ["left", "right"]})
 		var long_name := StringName("ui_" + str(d))
 		if long_name in SHORT_DIRS and not out.has(long_name):

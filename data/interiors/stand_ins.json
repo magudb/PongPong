@@ -1,0 +1,22 @@
+{
+ "_doc": "Pieces of the integration kit (data/interiors/kit_footprints.json) that are drawn by an EXISTING furniture piece until the kit is baked (I3, wave 5b): an oven is a fireplace, a tub is a rug. Room JSON carries kit ids only (no stand_in field); PieceCatalog resolves baked kit manifest > furniture.json > this table > a labelled box, and reports every stand-in it used (towns_interiors.stand_ins_listed, tools/towns/interiors/validate.py --stand-ins). Footprint and layer of a stand-in piece come from the KIT table, so the room does not change when the art lands. The 14 core rooms use the first 16 (design_towns.md 4.3); counter_pine is the counter of every shop band (table_long_pine until the counter is baked); counter_end, counter_hatch and sign_bracket have no stand-in: nothing is drawn while their art is missing.",
+ "stand_ins": {
+  "anvil": "table_stump",
+  "bread_rack": "shelf_birch",
+  "brick_oven": "fireplace_chalk",
+  "cauldron_stand": "fireplace_cauldron",
+  "counter_pine": "table_long_pine",
+  "feed_sack_stack": "chest_oak",
+  "forge": "fireplace_granite",
+  "hay_bale": "rug_natural",
+  "letter_desk": "table_dining_oak",
+  "mail_sack": "chest_oak",
+  "mannequin": "floor_lamp_birch",
+  "notice_board_indoor": "painting_wide_pine",
+  "parcel_stack": "chest_birch",
+  "pigeonhole_wall": "shelf_pine",
+  "plank_stack": "bookshelf_oak_narrow",
+  "wooden_tub": "rug_round_rose",
+  "workbench": "table_long_walnut"
+ }
+}

@@ -1,0 +1,120 @@
+{
+  "_doc": "S-ui registry rows (TOWNS_FARM_SOCIAL_ADDENDUM 8.10, DT21). Pending until the scenes land; status is derived from the scene path.",
+  "screens": [
+    {
+      "id": "people",
+      "title": "Folk",
+      "kind": "modal",
+      "scene": "res://scenes/ui/people.tscn",
+      "fixture": "people",
+      "package": "S-ui",
+      "guide": "addendum 5.2",
+      "focus": "initial",
+      "modal": "people",
+      "esc_depth": 1,
+      "compare": {
+        "baseline": "docs/qa/ui_baseline/people.png",
+        "fixture": "people",
+        "no_frame_crop": true,
+        "target": 1.5
+      },
+      "checks": [
+        "initial_focus",
+        "focus_walk",
+        "focusable_report",
+        "rule_report",
+        "i18n_flip",
+        "escape_chain",
+        "ring_pixels",
+        "panel_pixels",
+        "button_pixels",
+        "compare_guide"
+      ],
+      "note": "People book (key P, pause row 'Folk'); read-only, only MET citizens"
+    },
+    {
+      "id": "gift",
+      "title": "Giv gave",
+      "kind": "modal",
+      "scene": "res://scenes/ui/gift_ui.tscn",
+      "fixture": "gift",
+      "package": "S-ui",
+      "guide": "addendum 5.2",
+      "focus": "initial",
+      "modal": "gift",
+      "esc_depth": 1,
+      "compare": {
+        "baseline": "docs/qa/ui_baseline/gift.png",
+        "fixture": "gift",
+        "no_frame_crop": true,
+        "target": 1.5
+      },
+      "checks": [
+        "initial_focus",
+        "focus_walk",
+        "focusable_report",
+        "rule_report",
+        "i18n_flip",
+        "escape_chain",
+        "ring_pixels",
+        "panel_pixels",
+        "button_pixels",
+        "compare_guide"
+      ],
+      "note": "Gift picker; opens AFTER dialogue_ended"
+    },
+    {
+      "id": "calendar",
+      "title": "Kalender",
+      "kind": "component",
+      "scene": "",
+      "fixture": "calendar",
+      "package": "S-ui",
+      "guide": "addendum 5.2",
+      "focus": "initial",
+      "modal": "",
+      "esc_depth": 0,
+      "compare": {
+        "baseline": "docs/qa/ui_baseline/calendar.png",
+        "fixture": "calendar",
+        "no_frame_crop": true,
+        "target": 1.5
+      },
+      "checks": [
+        "focusable_report",
+        "rule_report",
+        "i18n_flip",
+        "panel_pixels",
+        "compare_guide"
+      ],
+      "tripwire": "res://scenes/ui/social/calendar_tab.tscn",
+      "note": "Third tab 'Kalender' of the journal (J); P14's journal instances the tab scene when it exists"
+    },
+    {
+      "id": "social_hud",
+      "title": "Social HUD",
+      "kind": "hud",
+      "scene": "res://scenes/ui/social_hud.tscn",
+      "fixture": "social_hud",
+      "package": "S-ui",
+      "guide": "addendum 5.2",
+      "focus": "none",
+      "modal": "",
+      "esc_depth": 0,
+      "compare": {
+        "baseline": "docs/qa/ui_baseline/social_hud.png",
+        "fixture": "social_hud",
+        "no_frame_crop": true,
+        "target": 1.5
+      },
+      "checks": [
+        "focusable_report",
+        "rule_report",
+        "i18n_flip",
+        "panel_pixels",
+        "compare_guide"
+      ],
+      "note": "Festival ribbon and birthday chips; focus none (HUD surface)"
+    }
+  ]
+}

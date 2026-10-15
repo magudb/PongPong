@@ -1,0 +1,32 @@
+{
+  "_doc": "S-events registry row (TOWNS_FARM_SOCIAL_ADDENDUM 8.10, DT21). Pending until the scene lands.",
+  "screens": [
+    {
+      "id": "event_overlay",
+      "title": "Begivenhed",
+      "kind": "modal",
+      "scene": "res://scenes/ui/event_overlay.tscn",
+      "fixture": "event_overlay",
+      "package": "S-events",
+      "guide": "addendum 5.3",
+      "focus": "none",
+      "modal": "event",
+      "esc_depth": 2,
+      "compare": {
+        "baseline": "docs/qa/ui_baseline/event_overlay.png",
+        "fixture": "event_overlay",
+        "no_frame_crop": true,
+        "target": 1.5
+      },
+      "checks": [
+        "focusable_report",
+        "rule_report",
+        "i18n_flip",
+        "escape_chain",
+        "panel_pixels",
+        "compare_guide"
+      ],
+      "note": "NON-pausing modal `event`, letterbox + HintBar; Esc -> UiConfirm (depth 2)"
+    }
+  ]
+}

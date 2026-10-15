@@ -1,13 +1,32 @@
 -- quests/enchanted_garden.lua
--- Unlock and tend a special enchanted garden plot.
+-- Wake an enchanted garden with rare seeds: find the seeds, water the garden, plant enchanted crops.  Repeatable after the cooldown.
+-- The vocabulary is documented in quests/lost_cat.lua.
 
 kind = "quest"
 id = "enchanted_garden"
 
 objectives = {
-  { id = "collect_rare_seeds", target = 3, description = "Find 3 sjældne frø" },
-  { id = "water_garden", target = 3, description = "Vand haven 3 gange" },
-  { id = "plant_enchanted", target = 2, description = "Plant 2 fortryllede afgrøder" },
+  {
+    id = "collect_rare_seeds",
+    target = 3,
+    on = "item_gained",
+    item = "moonflower_seeds",
+    have = true,
+    description_key = "OBJ_ENCHANTED_GARDEN_COLLECT_RARE_SEEDS",
+  },
+  {
+    id = "water_garden",
+    target = 3,
+    on = "crop_watered",
+    description_key = "OBJ_ENCHANTED_GARDEN_WATER_GARDEN",
+  },
+  {
+    id = "plant_enchanted",
+    target = 2,
+    on = "crop_planted",
+    crop = "moonflower",
+    description_key = "OBJ_ENCHANTED_GARDEN_PLANT_ENCHANTED",
+  },
 }
 
 rewards = {
@@ -21,6 +40,8 @@ rewards = {
 
 meta = {
   giver = "mayor_lyra",
+  location = "ZONE_FARM",
+  tag = "HØST",
   category = "farm",
   repeatable = true,
   cooldown_days = 10,
@@ -35,7 +56,7 @@ end
 
 function on_accept(context)
   api.set_flag("enchanted_garden_active", true)
-  api.notification("Den Fortryllede Have", "En magisk have venter!")
+  api.notification("LUANOTIF_ENCHANTED_GARDEN_ACCEPT_TITLE", "LUANOTIF_ENCHANTED_GARDEN_ACCEPT_TEXT")
   return { ok = true }
 end
 
@@ -47,5 +68,5 @@ function handle_event(event, payload)
 end
 
 function is_available(context)
-  return not api.has_flag("enchanted_garden_unlocked")
+  return not api.has_flag("enchanted_garden_active")
 end

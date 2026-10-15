@@ -31,6 +31,9 @@ TimeManager="*res://scripts/autoload/time_manager.gd"
 AudioManager="*res://scripts/autoload/audio_manager.gd"
 ShopSystem="*res://scripts/economy/shop_system.gd"
 AnimalHusbandry="*res://scripts/farm/animal_husbandry.gd"
+LootService="*res://scripts/loot/loot_service.gd"
+SocialManager="*res://scripts/social/social_manager.gd"
+HomeManager="*res://scripts/home/home_manager.gd"
 
 [display]
 

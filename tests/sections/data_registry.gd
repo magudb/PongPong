@@ -202,7 +202,11 @@ func _registry_headers() -> void:
 	var leaked := false
 	for name in ["", "fixture_ghosts", "functions", "fixture_orphans", "fixture_ghost"]:
 		leaked = leaked or (_lr._registries.has(name) and not (_lr._registries[name] as Dictionary).is_empty())
-	t.expect(not leaked and _lr._registries.is_empty() and _lr.get_registry("functions").is_empty() and _lr.get_registry_entry("fixture_orphans", "fixture_nobody").is_empty(), "a file with a bad header registers nothing (no registry named \"\", fixture_ghosts, functions or fixture_orphans)")
+	# Real registry files (lua/buildings/*.lua) load through reload_scripts(); the bad fixtures must add nothing on top of them.
+	var only_real := true
+	for name in _lr._registries:
+		only_real = only_real and str(name) != "" and not str(name).begins_with("fixture_") and str(name) != "functions" and str(name) != "fixture_orphans"
+	t.expect(not leaked and only_real and _lr.get_registry("functions").is_empty() and _lr.get_registry_entry("fixture_orphans", "fixture_nobody").is_empty(), "a file with a bad header registers nothing (no registry named \"\", fixture_ghosts, functions or fixture_orphans)")
 	# the lint TOOL reports it too (default root = res://lua: add a bad file there is not allowed, so assert the rule is on the list)
 	var rules: Dictionary = _t.run_godot_script("res://tools/lua/lint.gd", PackedStringArray(["--list-rules"]))
 	t.expect(str(rules["output"]).contains("registry_header") and str(rules["output"]).contains("reserved_key"), "tools/lua/lint.gd --list-rules names registry_header and reserved_key")
@@ -214,8 +218,12 @@ func _registry_reload() -> void:
 		_lr.load_file(FIX + f)
 	t.expect(not _lr.get_registry("fixture_routines").is_empty() and not _lr.lint_report.is_empty(), "precondition: registries and a finding are loaded")
 	_lr.reload_scripts()
-	t.check("registry_reload_clears", _lr.get_registry("fixture_routines").is_empty() and _lr.get_registry("fixture_buildings").is_empty() and _lr._registries.is_empty() and _lr.lint_report.is_empty() and not _lr.has_script("tests/fixtures/lua/registry_routines_a"),
-		"reload_scripts() forgets every registry, finding and fixture script (F9 hot reload leaves no stale ids)")
+	# Real registry files (lua/buildings/*.lua) are reloaded by reload_scripts(); the FIXTURE registries and findings must be gone.
+	var fixtures_gone := true
+	for name in ["fixture_routines", "fixture_buildings", "fixture_stalls", "fixture_ghosts", ""]:
+		fixtures_gone = fixtures_gone and _lr.get_registry(name).is_empty()
+	t.check("registry_reload_clears", fixtures_gone and _lr.lint_report.is_empty() and not _lr.has_script("tests/fixtures/lua/registry_routines_a"),
+		"reload_scripts() forgets every fixture registry, finding and fixture script (F9 hot reload leaves no stale ids)")
 
 
 # ------------------------------------------------------------------------------------------------ the four api functions

@@ -1,12 +1,28 @@
 -- quests/night_flower.lua
--- A rare night flower blooms only in the dark forest after midnight.
+-- A rare night bloom opens only in the dark of the wood (the resource node `night_bloom` is there at night, on floor 2 of the generated forest;
+-- DUNGEON_V2_ADDENDUM 2.7).  Find it, show it to Guard Oak.  Offered once the player has been in the wood (meta.requires_zone).  Repeatable after
+-- the cooldown.  The vocabulary is documented in quests/lost_cat.lua.
 
 kind = "quest"
 id = "night_flower"
 
 objectives = {
-  { id = "collect_night_bloom", target = 1, description = "Find natteblomsten" },
-  { id = "return_before_dawn", target = 1, description = "Vend tilbage før daggry" },
+  {
+    id = "collect_night_bloom",
+    target = 1,
+    on = "item_gained",
+    item = "night_bloom",
+    have = true,
+    description_key = "OBJ_NIGHT_FLOWER_COLLECT_NIGHT_BLOOM",
+  },
+  {
+    id = "return_to_oak",
+    target = 1,
+    on = "dialogue_started",
+    npc = "guard_oak",
+    after_others = true,
+    description_key = "OBJ_NIGHT_FLOWER_RETURN_TO_OAK",
+  },
 }
 
 rewards = {
@@ -18,7 +34,9 @@ rewards = {
 }
 
 meta = {
-  giver = "baker_maja",
+  giver = "guard_oak",
+  location = "ZONE_DARK_FOREST",
+  tag = "SKOV",
   category = "adventure",
   repeatable = true,
   cooldown_days = 5,
@@ -34,7 +52,7 @@ end
 
 function on_accept(context)
   api.set_flag("night_flower_active", true)
-  api.notification("Natteblomsten", "Den blomstrer kun i mørket...")
+  api.notification("LUANOTIF_NIGHT_FLOWER_ACCEPT_TITLE", "LUANOTIF_NIGHT_FLOWER_ACCEPT_TEXT")
   return { ok = true }
 end
 

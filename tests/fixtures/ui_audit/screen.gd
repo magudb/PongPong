@@ -343,6 +343,9 @@ func _build_components() -> void:
 	var stepper: PanelContainer = STEPPER.instantiate()
 	slot_row.add_child(stepper)
 	stepper.get_node("%MinusButton").focus_mode = Control.FOCUS_NONE        # at its minimum the "-" is disabled: a disabled control is not a focus stop
+	# Left / Right are the stepper's value keys (skipped by the walk, like HSlider); Up must lead to the slot row above so the
+	# stepper is never a trap (the geometric Up lands on the non-focusable rarity row).
+	(stepper as Control).focus_neighbor_top = (stepper as Control).get_path_to(slots[0] as Control)
 	for ab in [[&"slash", &"attack", 78.0], [&"dodge", &"dodge", 64.0]]:
 		var a: VBoxContainer = ABILITY.instantiate()
 		a.setup(ab[0], ab[1], ab[2])

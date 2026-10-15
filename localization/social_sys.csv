@@ -1,0 +1,12 @@
+keys,da,en
+; --- social_sys.csv (package S-core): the few system texts of SocialManager itself. Families: SOC_SYS_ (toasts) and REL_STAGE_ (the six friendship stages by hearts). The citizens' own lines (SOC_, GIFT_, BDAY_) are S-data's; the People book texts (REL_) are S-ui's ---
+SOC_SYS_TOAST_TITLE,"Venskab","Friendship"
+SOC_SYS_TOAST_HEART_FMT,"%s holder lidt mere af dig nu: %d af %d hjerter","%s likes you a little more now: %d of %d hearts"
+SOC_SYS_TOAST_STAGE_FMT,"Dit venskab med %s: %s","Your friendship with %s: %s"
+SOC_SYS_TOAST_SAMPLE_FMT,"%s rækker dig en lille smagsprøve: %s","%s hands you a little sample: %s"
+REL_STAGE_FREMMED,"Fremmed","Stranger"
+REL_STAGE_BEKENDT,"Bekendt","Acquaintance"
+REL_STAGE_NABO,"Nabo","Neighbour"
+REL_STAGE_VEN,"Ven","Friend"
+REL_STAGE_GOD_VEN,"God ven","Good friend"
+REL_STAGE_BEDSTE_VEN,"Bedste ven","Best friend"

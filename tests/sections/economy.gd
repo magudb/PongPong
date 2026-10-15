@@ -106,6 +106,10 @@ func run(p_t) -> void:
 	if eco == null or shop == null or gm == null or lr == null or bus == null or loc == null:
 		return
 	_restore_character = int(gm.get("character_type"))
+	# DT55: most of this section is about shop defs and prices, not about opening hours. The towns' hours rule (ShopHoursGate ->
+	# Hours) would close every shop whose building is outside its hours at the test's clock, so the def's own fields decide alone.
+	# The hours rule itself is proved in clock26 and the towns sections.
+	gm.set_config_override("towns.hours_enabled", false)
 	await t.go_menu()
 	_gold()
 	_item_defs()
@@ -1765,6 +1769,7 @@ func _cleanup() -> void:
 	shop.set_price_curve_source(Callable())
 	gm.set("character_type", _restore_character)
 	gm.clear_flag(&"home_tier")
+	gm.clear_config_overrides()
 	if _fixtures_loaded:
 		lr.reload_scripts()
 		for p in [FIXTURE_ITEMS, FIXTURE_SHOPS, FIXTURE_RECIPES]:

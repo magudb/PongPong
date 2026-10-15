@@ -1,14 +1,15 @@
 -- quests/math_bakery_counts.lua
--- Baker Maja has lost track of her baked goods. Addition and subtraction
--- word problems for the player to solve via dialogue choices.
+-- Baker-fairy Rosmarin has lost count of her baked goods: addition and subtraction problems the player solves through dialogue choices.
+-- The three objectives are manual: the dialogue action math_answer (lua/dialogue/baker_maja.lua, objective_id) finishes them.
+-- The vocabulary is documented in quests/lost_cat.lua.
 
 kind = "quest"
 id = "math_bakery_counts"
 
 objectives = {
-  { id = "math_maja_q1", target = 1, description = "Hjælp Maja: 35 boller − 17 solgte" },
-  { id = "math_maja_q2", target = 1, description = "Hjælp Maja: 28 småkager + 15 nye" },
-  { id = "math_maja_q3", target = 1, description = "Hjælp Maja: 64 æbler − 29 spiste" },
+  { id = "math_maja_q1", target = 1, on = "manual", description_key = "OBJ_MATH_BAKERY_COUNTS_MATH_MAJA_Q1" },
+  { id = "math_maja_q2", target = 1, on = "manual", description_key = "OBJ_MATH_BAKERY_COUNTS_MATH_MAJA_Q2" },
+  { id = "math_maja_q3", target = 1, on = "manual", description_key = "OBJ_MATH_BAKERY_COUNTS_MATH_MAJA_Q3" },
 }
 
 rewards = {
@@ -20,8 +21,11 @@ rewards = {
 
 meta = {
   giver = "baker_maja",
+  location = "ZONE_CITY",
+  tag = "LÆR",
   category = "learning",
   repeatable = false,
+  cooldown_days = 0,
 }
 
 function on_offer(context)
@@ -33,7 +37,7 @@ end
 
 function on_accept(context)
   api.set_flag("math_bakery_active", true)
-  api.notification("Bageri-regning", "Tal til Maja og hjælp hende med regnskabet!")
+  api.notification("LUANOTIF_MATH_BAKERY_COUNTS_ACCEPT_TITLE", "LUANOTIF_MATH_BAKERY_COUNTS_ACCEPT_TEXT")
   return { ok = true }
 end
 

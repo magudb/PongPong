@@ -1,0 +1,41 @@
+{
+ "id": "int_postkontoret",
+ "building": "postkontoret",
+ "size": "M",
+ "cols": 8,
+ "rows": 5,
+ "wall_style": "plank",
+ "floor": "floor_plank",
+ "door": {"cell": [4, 4], "dir": [0, 1]},
+ "spawn_cell": [4, 3],
+ "windows": {"z": [1, 5], "x": [2]},
+ "exit": {"area": "traetoppen", "spawn": "from_int_postkontoret"},
+ "zoom_fit": 0.791,
+ "items": [
+  {"id": "counter_pine", "cell": [3, 2], "rot": 0, "role": "counter"},
+  {"id": "mail_sack", "cell": [0, 0], "rot": 0},
+  {"id": "mail_sack", "cell": [1, 0], "rot": 0},
+  {"id": "parcel_stack", "cell": [2, 0], "rot": 0},
+  {"id": "chest_pine", "cell": [3, 0], "rot": 0},
+  {"id": "pigeonhole_wall", "cell": [3, 0], "rot": 0, "wall": true},
+  {"id": "letter_desk", "cell": [0, 3], "rot": 0},
+  {"id": "chair_pine", "cell": [7, 3], "rot": 0},
+  {"id": "plant_fern", "cell": [6, 3], "rot": 0}
+ ],
+ "posts": [
+  {"id": "counter", "cell": [4, 1], "act": "work", "facing": "S", "capacity": 1, "kind": "keeper"},
+  {"id": "cust1", "cell": [1, 4], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"},
+  {"id": "cust2", "cell": [6, 4], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"},
+  {"id": "cust3", "cell": [5, 4], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"},
+  {"id": "bed", "cell": [6, 1], "act": "sleep", "facing": "S", "capacity": 1, "kind": "bed"}
+ ],
+ "markers": [
+  {"type": "hatch", "cells": [[0, 2], [1, 2], [2, 2], [6, 2], [7, 2]]},
+  {"type": "post_counter", "keeper": "postman_pip", "cell": [4, 3]},
+  {"type": "talk", "keeper": "postman_pip", "cell": [3, 3]},
+  {"type": "talk", "keeper": "postman_pip", "cell": [5, 3]},
+  {"type": "mailbox", "cell": [0, 4]},
+  {"type": "door", "cell": [4, 4], "to": "traetoppen", "spawn": "from_int_postkontoret"}
+ ],
+ "notes": ["no room for clock_pine"]
+}

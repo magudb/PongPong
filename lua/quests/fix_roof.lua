@@ -1,28 +1,51 @@
 -- quests/fix_roof.lua
--- Help a fairy citizen fix their mushroom-house roof after a storm.
+-- The storm loosened the roof of the bakery.  Eight wood and four moss, then patch the roof at the bakery (the quest_spot of hyggebyen.map takes
+-- exactly these goods: needs=wood:8,moss:4 consume=1; the same numbers stand in `needs` below, tests/sections/quests.gd keeps the two equal).
+-- The vocabulary is documented in quests/lost_cat.lua.
 
 kind = "quest"
 id = "fix_roof"
 
 objectives = {
-  { id = "collect_wood", target = 8, description = "Saml 8 træstykker" },
-  { id = "collect_moss", target = 4, description = "Saml 4 mos" },
-  { id = "repair_roof", target = 1, description = "Reparer taget hos Fe-Byens bager" },
+  {
+    id = "collect_wood",
+    target = 8,
+    on = "item_gained",
+    item = "wood",
+    have = true,
+    description_key = "OBJ_FIX_ROOF_COLLECT_WOOD",
+  },
+  {
+    id = "collect_moss",
+    target = 4,
+    on = "item_gained",
+    item = "moss",
+    have = true,
+    description_key = "OBJ_FIX_ROOF_COLLECT_MOSS",
+  },
+  {
+    id = "repair_roof",
+    target = 1,
+    on = "manual",
+    needs = { wood = 8, moss = 4 },
+    consume = true,
+    description_key = "OBJ_FIX_ROOF_REPAIR_ROOF",
+  },
 }
 
 rewards = {
   gold = 320,
-  items = {
-    rare_mushroom = 1,
-    friendship_token = 2,
-  },
+  items = { rare_mushroom = 1, friendship_token = 2, hat_chef_white = 1 },
+  friendship = { baker_maja = 2 },
 }
 
 meta = {
-  giver = "baker_maja",
+  giver = "mayor_lyra",
+  location = "ZONE_CITY",
+  tag = "BYG",
   category = "help",
   repeatable = false,
-  weather_trigger = "torden",
+  cooldown_days = 0,
 }
 
 function on_offer(context)
@@ -33,7 +56,7 @@ function on_offer(context)
 end
 
 function on_accept(context)
-  api.notification("Reparation", "Saml materialer til taget!")
+  api.notification("LUANOTIF_FIX_ROOF_ACCEPT_TITLE", "LUANOTIF_FIX_ROOF_ACCEPT_TEXT")
   return { ok = true }
 end
 

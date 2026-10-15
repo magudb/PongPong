@@ -1,13 +1,30 @@
 -- quests/first_animal.lua
--- Rosa helps you adopt your first farm animal.
+-- Animal dealer Rosa helps you get your first farm animal: build a coop, adopt an animal, feed it three times.
+-- The vocabulary is documented in quests/lost_cat.lua.
 
 kind = "quest"
 id = "first_animal"
 
 objectives = {
-  { id = "build_coop", target = 1, description = "Byg et hønsehus" },
-  { id = "adopt_animal", target = 1, description = "Adoptér dit første dyr" },
-  { id = "feed_animal", target = 3, description = "Fodr dit dyr 3 gange" },
+  {
+    id = "build_coop",
+    target = 1,
+    on = "building_built",
+    type = "coop",
+    description_key = "OBJ_FIRST_ANIMAL_BUILD_COOP",
+  },
+  {
+    id = "adopt_animal",
+    target = 1,
+    on = "animal_adopted",
+    description_key = "OBJ_FIRST_ANIMAL_ADOPT_ANIMAL",
+  },
+  {
+    id = "feed_animal",
+    target = 3,
+    on = "animal_fed",
+    description_key = "OBJ_FIRST_ANIMAL_FEED_ANIMAL",
+  },
 }
 
 rewards = {
@@ -21,8 +38,11 @@ rewards = {
 
 meta = {
   giver = "farmer_rosa",
+  location = "ZONE_FARM",
+  tag = "BYG",
   category = "farm",
   repeatable = false,
+  cooldown_days = 0,
 }
 
 function on_offer(context)
@@ -34,7 +54,7 @@ end
 
 function on_accept(context)
   api.set_flag("first_animal_active", true)
-  api.notification("Dit første dyr!", "Rosa hjælper dig med at komme i gang!")
+  api.notification("LUANOTIF_FIRST_ANIMAL_ACCEPT_TITLE", "LUANOTIF_FIRST_ANIMAL_ACCEPT_TEXT")
   return { ok = true }
 end
 

@@ -30,14 +30,13 @@
 			"options": {
 				"ignore": [
 					"**/StatesRow/**"
-				],
-				"hit_min": 28.0
+				]
 			},
 			"status": "live",
 			"open": {
 				"fixture": "components"
 			},
-			"note": "options.hit_min 28 is TEMPORARY: the built PillTab is 29 px high, the guide's 33 (UI_NAVIGATION.md Appendix E); P28 fixes the theme and deletes the option"
+			"note": "the temporary options.hit_min 28 is gone: P28 gave PillTab / Chip the guide's heights (33 / 37 px, UI_NAVIGATION.md Appendix E, ui_conformance.pill_heights)"
 		},
 		{
 			"id": "foundation_gallery_rarity",

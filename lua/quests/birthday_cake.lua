@@ -1,28 +1,52 @@
 -- quests/birthday_cake.lua
--- Maja's birthday is coming — gather ingredients for a surprise cake.
+-- Baker-fairy Rosmarin bakes a birthday cake for a friend and is short of turnips and a moonflower.  Collect them and hand them over: the
+-- delivery takes the goods out of the backpack.  The vocabulary is documented in quests/lost_cat.lua.
 
 kind = "quest"
 id = "birthday_cake"
 
 objectives = {
-  { id = "collect_turnip", target = 3, description = "Saml 3 majroe" },
-  { id = "collect_moonflower", target = 1, description = "Saml 1 måneblomst" },
-  { id = "deliver_cake", target = 1, description = "Bag og lever kagen" },
+  {
+    id = "collect_turnip",
+    target = 3,
+    on = "item_gained",
+    item = "turnip",
+    have = true,
+    description_key = "OBJ_BIRTHDAY_CAKE_COLLECT_TURNIP",
+  },
+  {
+    id = "collect_moonflower",
+    target = 1,
+    on = "item_gained",
+    item = "moonflower",
+    have = true,
+    description_key = "OBJ_BIRTHDAY_CAKE_COLLECT_MOONFLOWER",
+  },
+  {
+    id = "deliver_cake",
+    target = 1,
+    on = "dialogue_started",
+    npc = "baker_maja",
+    after_others = true,
+    needs = { turnip = 3, moonflower = 1 },
+    consume = true,
+    description_key = "OBJ_BIRTHDAY_CAKE_DELIVER_CAKE",
+  },
 }
 
 rewards = {
   gold = 280,
-  items = {
-    cookie = 5,
-    friendship_token = 2,
-    lucky_clover = 1,
-  },
+  items = { cookie = 5, friendship_token = 2, lucky_clover = 1, plant_teapot_bonsai = 1 },
+  friendship = { baker_maja = 2 },
 }
 
 meta = {
   giver = "baker_maja",
+  location = "ZONE_CITY",
+  tag = "HØST",
   category = "help",
   repeatable = false,
+  cooldown_days = 0,
 }
 
 function on_offer(context)
@@ -34,7 +58,7 @@ end
 
 function on_accept(context)
   api.set_flag("birthday_cake_active", true)
-  api.notification("Fødselsdagskage", "Saml ingredienser til overraskelsen!")
+  api.notification("LUANOTIF_BIRTHDAY_CAKE_ACCEPT_TITLE", "LUANOTIF_BIRTHDAY_CAKE_ACCEPT_TEXT")
   return { ok = true }
 end
 

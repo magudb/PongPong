@@ -1,0 +1,12 @@
+keys,da,en
+LOOT_DAY_TIRED,"Skoven har givet, hvad den kan i dag. Kom igen i morgen.","The forest has given what it can today. Come back tomorrow."
+LOOT_KEEPSAKE_FOUND_FMT,"Et sjældent fund: %s","A rare find: %s"
+LOOT_RUNE_VAULT_NEEDS,"Hvælvingen mangler runeskår. Tre skal der til.","The vault is missing rune shards. It needs three."
+LOOT_LAKE_LOCKED,"Låst. Måske kender Fru Ugle en nøgle?","Locked. Maybe Mrs Owl knows a key?"
+LOOT_PROMPT_OPEN,"E: Åbn","E: Open"
+LOOT_PROMPT_DIG,"E: Grav","E: Dig"
+LOOT_PROMPT_SEARCH,"E: Undersøg","E: Look closer"
+LOOT_TOO_TIRED,"Du er for træt til at grave. Hvil dig lidt.","You are too tired to dig. Rest a little."
+LOOT_CHEST_RESTING,"Kassen er tom lige nu. Kig forbi igen om nogle dage.","The chest is empty for now. Come back in a few days."
+LOOT_DIG_RESTING,"Her er gravet nok for i dag. Prøv igen i morgen.","That is enough digging here for today. Try again tomorrow."
+LOOT_SPOT_PACED,"Skoven har givet dig noget sjældent for nylig. Kom igen om nogle dage.","The forest gave you something rare not long ago. Come back in a few days."
