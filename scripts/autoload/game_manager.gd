@@ -86,24 +86,42 @@ func _process(delta: float) -> void:
 
 # ------------------------------------------------------------------ configuration (single source of truth)
 
+## Memo of config_value lookups that hit LuaRuntime: the dotted path is split and walked on every call, and
+## hot paths (TimeManager.tick, DayNight.target_color, the player's interact query) ask for the same handful
+## of keys every frame. Overrides and Lua reloads clear the cache; a miss is never cached negatively, so a
+## key that appears later still resolves.
+var _config_cache: Dictionary = {}
+
 ## lua/config value by dotted path ("time.days_per_season"); `default_value` when LuaRuntime or the key is missing.
 ## LuaRuntime is looked up lazily: it is autoload #7 and does not exist yet while this node's _ready() runs.
 func config_value(path: String, default_value: Variant = null) -> Variant:
 	if _config_overrides.has(path):
 		return _config_overrides[path]
+	if _config_cache.has(path):
+		return _config_cache[path]
 	var lua := get_node_or_null("/root/LuaRuntime")
 	if lua != null and lua.has_method("get_config"):
-		return lua.get_config(path, default_value)
+		var v: Variant = lua.get_config(path, default_value)
+		if v != null:
+			_config_cache[path] = v
+		return v
 	return default_value
 
 
 ## Test / debug seam: makes config_value(path) return `value` until clear_config_overrides().
 func set_config_override(path: String, value: Variant) -> void:
 	_config_overrides[path] = value
+	_config_cache.erase(path)
 
 
 func clear_config_overrides() -> void:
 	_config_overrides.clear()
+	_config_cache.clear()
+
+
+## Drops memoised Lua config (LuaRuntime.reload_scripts calls it after the tables are rebuilt).
+func invalidate_config_cache() -> void:
+	_config_cache.clear()
 
 
 func days_per_season() -> int:
