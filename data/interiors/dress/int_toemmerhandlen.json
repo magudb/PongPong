@@ -1,0 +1,53 @@
+{
+  "items": [
+    {
+      "id": "saw_bench",
+      "cell": [
+        0,
+        1
+      ],
+      "rot": 0
+    },
+    {
+      "id": "blueprint_table",
+      "cell": [
+        7,
+        0
+      ],
+      "rot": 0
+    },
+    {
+      "id": "nail_kegs",
+      "cell": [
+        8,
+        1
+      ],
+      "rot": 0
+    },
+    {
+      "id": "rope_coil",
+      "cell": [
+        2,
+        1
+      ],
+      "rot": 0
+    },
+    {
+      "id": "price_board",
+      "cell": [
+        2,
+        0
+      ],
+      "rot": 0,
+      "wall": true
+    },
+    {
+      "id": "lantern_hanging",
+      "cell": [
+        0,
+        0
+      ],
+      "rot": 0
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "froebutikken": {
+    "pieces": 6,
+    "omitted_for_space_or_support": [],
+    "omitted_for_texture_budget": [],
+    "errors": []
+  },
+  "postkontoret": {
+    "pieces": 5,
+    "omitted_for_space_or_support": [
+      "shelf_wall_wide"
+    ],
+    "omitted_for_texture_budget": [],
+    "errors": []
+  },
+  "badehuset": {
+    "pieces": 6,
+    "omitted_for_space_or_support": [],
+    "omitted_for_texture_budget": [],
+    "errors": []
+  },
+  "raadhuset": {
+    "pieces": 6,
+    "omitted_for_space_or_support": [],
+    "omitted_for_texture_budget": [],
+    "errors": []
+  },
+  "hoppe_hut": {
+    "pieces": 6,
+    "omitted_for_space_or_support": [],
+    "omitted_for_texture_budget": [],
+    "errors": []
+  },
+  "bageriet": {
+    "pieces": 5,
+    "omitted_for_space_or_support": [
+      "flour_sack"
+    ],
+    "omitted_for_texture_budget": [],
+    "errors": []
+  },
+  "smedjen": {
+    "pieces": 6,
+    "omitted_for_space_or_support": [],
+    "omitted_for_texture_budget": [],
+    "errors": []
+  },
+  "troldmandstaarnet": {
+    "pieces": 6,
+    "omitted_for_space_or_support": [],
+    "omitted_for_texture_budget": [],
+    "errors": []
+  },
+  "uglehulen": {
+    "pieces": 6,
+    "omitted_for_space_or_support": [],
+    "omitted_for_texture_budget": [],
+    "errors": []
+  },
+  "dyrehuset": {
+    "pieces": 6,
+    "omitted_for_space_or_support": [],
+    "omitted_for_texture_budget": [],
+    "errors": []
+  },
+  "toemmerhandlen": {
+    "pieces": 6,
+    "omitted_for_space_or_support": [],
+    "omitted_for_texture_budget": [],
+    "errors": []
+  },
+  "moebelbutikken": {
+    "pieces": 2,
+    "omitted_for_space_or_support": [],
+    "omitted_for_texture_budget": [
+      "folding_screen",
+      "display_plinth",
+      "shelf_floor_tall",
+      "lantern_hanging"
+    ],
+    "errors": []
+  },
+  "skraedderiet": {
+    "pieces": 6,
+    "omitted_for_space_or_support": [],
+    "omitted_for_texture_budget": [],
+    "errors": []
+  },
+  "brummes_vaerksted": {
+    "pieces": 6,
+    "omitted_for_space_or_support": [],
+    "omitted_for_texture_budget": [],
+    "errors": []
+  },
+  "loppeloftet": {
+    "pieces": 6,
+    "omitted_for_space_or_support": [],
+    "omitted_for_texture_budget": [],
+    "errors": []
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "items": [
+    {
+      "id": "feed_trough",
+      "cell": [
+        0,
+        1
+      ],
+      "rot": 0
+    },
+    {
+      "id": "pen_fence",
+      "cell": [
+        1,
+        5
+      ],
+      "rot": 0
+    },
+    {
+      "id": "cage_hanging",
+      "cell": [
+        0,
+        0
+      ],
+      "rot": 0
+    },
+    {
+      "id": "bird_perch",
+      "cell": [
+        8,
+        0
+      ],
+      "rot": 0
+    },
+    {
+      "id": "price_board",
+      "cell": [
+        2,
+        0
+      ],
+      "rot": 0,
+      "wall": true
+    },
+    {
+      "id": "lantern_hanging",
+      "cell": [
+        0,
+        1
+      ],
+      "rot": 0
+    }
+  ]
+}

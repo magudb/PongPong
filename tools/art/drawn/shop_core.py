@@ -97,7 +97,8 @@ def body(drawing: Image.Image, item: dict, rotation: int) -> tuple[Image.Image, 
     return canvas, [int(pivot[0] + pad), int(pivot[1] + pad)]
 
 
-def wall_body(drawing: Image.Image, item: dict, rotation: int) -> tuple[Image.Image, list[int]]:
+def wall_body(drawing: Image.Image, item: dict, rotation: int, *, face_height: int = 72,
+              mount_height: int = 45) -> tuple[Image.Image, list[int]]:
     """Project a cabinet/board onto its wall axis, anchored at the FIRST wall cell.
 
     The towns builder positions wall pieces at that cell's edge midpoint, not
@@ -110,7 +111,7 @@ def wall_body(drawing: Image.Image, item: dict, rotation: int) -> tuple[Image.Im
     ly, ry = (drawing.height * (.78 if direction == 1 else .98),
               drawing.height * (.98 if direction == 1 else .78))
     sx = width / (rx - lx)
-    sy = 72 / (drawing.height * .72)
+    sy = face_height / (drawing.height * .72)
     slope = (ry - ly) / (rx - lx)
     target_slope = direction * 38 / 64
     def forward(x, y):
@@ -126,7 +127,7 @@ def wall_body(drawing: Image.Image, item: dict, rotation: int) -> tuple[Image.Im
     anchor_x = 32 - (span - width) / 2
     if direction == -1:
         anchor_x = width - anchor_x
-    pivot = [round(anchor_x - origin[0]), round(target_slope * anchor_x + 45 - origin[1])]
+    pivot = [round(anchor_x - origin[0]), round(target_slope * anchor_x + mount_height - origin[1])]
     return image, pivot
 
 

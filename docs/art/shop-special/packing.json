@@ -1,0 +1,84 @@
+{
+  "pieces": 69,
+  "authored_views": 115,
+  "sets": {
+    "I4-generic": {
+      "pieces": 10,
+      "authored_views": 13,
+      "rgba8_mips_bytes": 1094756
+    },
+    "I4-seed": {
+      "pieces": 6,
+      "authored_views": 9,
+      "rgba8_mips_bytes": 877948
+    },
+    "I4-post": {
+      "pieces": 2,
+      "authored_views": 3,
+      "rgba8_mips_bytes": 242968
+    },
+    "I4-bath": {
+      "pieces": 4,
+      "authored_views": 5,
+      "rgba8_mips_bytes": 336396
+    },
+    "I4-hall": {
+      "pieces": 3,
+      "authored_views": 5,
+      "rgba8_mips_bytes": 739632
+    },
+    "I4-hut": {
+      "pieces": 4,
+      "authored_views": 6,
+      "rgba8_mips_bytes": 551016
+    },
+    "I4-bakery": {
+      "pieces": 4,
+      "authored_views": 8,
+      "rgba8_mips_bytes": 996244
+    },
+    "I4-smithy": {
+      "pieces": 5,
+      "authored_views": 13,
+      "rgba8_mips_bytes": 1194132
+    },
+    "I4-magic": {
+      "pieces": 6,
+      "authored_views": 13,
+      "rgba8_mips_bytes": 1191292
+    },
+    "I4-animal": {
+      "pieces": 4,
+      "authored_views": 6,
+      "rgba8_mips_bytes": 542680
+    },
+    "I4-builder": {
+      "pieces": 5,
+      "authored_views": 7,
+      "rgba8_mips_bytes": 633928
+    },
+    "I4-furniture": {
+      "pieces": 3,
+      "authored_views": 4,
+      "rgba8_mips_bytes": 337460
+    },
+    "I4-tailor": {
+      "pieces": 5,
+      "authored_views": 11,
+      "rgba8_mips_bytes": 1126320
+    },
+    "I4-timber": {
+      "pieces": 3,
+      "authored_views": 5,
+      "rgba8_mips_bytes": 432652
+    },
+    "I4-flea": {
+      "pieces": 5,
+      "authored_views": 7,
+      "rgba8_mips_bytes": 572400
+    }
+  },
+  "night_layers": 2,
+  "disk_mb": 0.873474,
+  "rgba8_mips_mb": 10.869824
+}

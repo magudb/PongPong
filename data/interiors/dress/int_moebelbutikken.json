@@ -1,0 +1,21 @@
+{
+  "items": [
+    {
+      "id": "sample_tag_stand",
+      "cell": [
+        0,
+        5
+      ],
+      "rot": 0
+    },
+    {
+      "id": "price_board",
+      "cell": [
+        5,
+        0
+      ],
+      "rot": 0,
+      "wall": true
+    }
+  ]
+}

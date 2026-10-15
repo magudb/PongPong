@@ -1,0 +1,38 @@
+{
+  "civic.png": {
+    "path": "tools/art/drawn/sources/shop_special/civic.png",
+    "sha256": "a1c9906d57ca8a42697f3376442f0be852a88154a6767d41f680a49349b046a4"
+  },
+  "display.png": {
+    "path": "tools/art/drawn/sources/shop_special/display.png",
+    "sha256": "6ebabe802e89b5557e7460a9702c5717f4258c09e7ff10c3154488b0ada57006"
+  },
+  "mechanical.png": {
+    "path": "tools/art/drawn/sources/shop_special/mechanical.png",
+    "sha256": "b32d4fa99d25dc33ca4c78bbd7bc64db8e6a3e845e7ec517291cce28ee4a382b"
+  },
+  "small_a.png": {
+    "path": "tools/art/drawn/sources/shop_special/small_a.png",
+    "sha256": "69e70e53b2efcb50e6bfb8b7c8b2e427354530640100a595e2da947c4a845f77"
+  },
+  "small_b.png": {
+    "path": "tools/art/drawn/sources/shop_special/small_b.png",
+    "sha256": "96dc34e636e372808f0c882e15fc127ed45187ae9dff3aca36f14cd8c606df36"
+  },
+  "small_c.png": {
+    "path": "tools/art/drawn/sources/shop_special/small_c.png",
+    "sha256": "0a1e7628cecae92232f00ff11343dd904af85b83b77bee2a223ca82ac73c188c"
+  },
+  "specialties.png": {
+    "path": "tools/art/drawn/sources/shop_special/specialties.png",
+    "sha256": "83a90727c1a7850349dd5bdf7e7f3b0e59bae3f1ac78deb6d22f36f06ef649eb"
+  },
+  "storage.png": {
+    "path": "tools/art/drawn/sources/shop_special/storage.png",
+    "sha256": "90dbc43426eaa4529f004497ecb93103ac885e6e18e6888c683cad69893dbc11"
+  },
+  "workshop.png": {
+    "path": "tools/art/drawn/sources/shop_special/workshop.png",
+    "sha256": "5a314dd496fcbbec80a8dbd534bbec341e6aebe462d7cc325a9aabf5aeaa3d02"
+  }
+}

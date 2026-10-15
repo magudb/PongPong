@@ -1,0 +1,46 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 1352,
+  "elapsed_s": 12.43,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "art_home": {
+      "checks": 29,
+      "failed": 0,
+      "ms": 5014,
+      "skipped": 0
+    },
+    "art_interiors": {
+      "checks": 266,
+      "failed": 0,
+      "ms": 1104,
+      "skipped": 0
+    },
+    "art_shops": {
+      "checks": 217,
+      "failed": 0,
+      "ms": 540,
+      "skipped": 1
+    },
+    "art_shops_b": {
+      "checks": 725,
+      "failed": 0,
+      "ms": 261,
+      "skipped": 2
+    },
+    "art_style_consistency": {
+      "checks": 115,
+      "failed": 0,
+      "ms": 3572,
+      "skipped": 0
+    }
+  },
+  "skipped": 3
+}

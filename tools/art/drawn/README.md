@@ -200,5 +200,15 @@ and five trimmed ember masks. Run `pack.py --only=shop-core`; open
 core room snapshots or compare their former stand-ins. Exact prompts, masters,
 budgets, native evidence and implementation handoffs are recorded in
 `docs/art/shop-core/review.txt`. This is the core art delivery; the unfinished
-m1b town gameplay, specialist dressing, festivals and fitted wardrobe animations
-remain their respective packages.
+m1b town gameplay, festivals and fitted wardrobe animations remain their
+respective packages.
+
+The specialist shop kit adds 69 designs with 115 authored views across 15 sets,
+plus two trimmed additive accents, under `assets/iso_props/shops/special/`.
+Repack with `pack.py --only=shop-special`; it also builds the optional 2–6-piece
+room overlays in `data/interiors/dress/`. The generator reads saved room contract
+snapshots rather than changing gameplay room geometry. Open
+`shop_special_gallery.tscn` with `tools/dev/play.sh --throwaway` to browse the 15
+dressed rooms, press D for the bare core room and N for evening. All generation
+and repair prompts, source hashes, budgets, native evidence and pending consumer
+work are in `docs/art/shop-special/review.txt` and `handoff.txt`.
