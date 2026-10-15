@@ -1,0 +1,653 @@
+{
+ "_doc": "design6 / the 02:00 clock (CLOCK_26), FINAL. Schema of ghostfamily_workpackages.json. New ids prefix CK. The fix round (amendments with built = true, fixRound = true) is ONE commit, applyAt names the gate; the edits are data in design6/FINAL/clock/clock_edits.py (python3 -I clock_edits.py apply <clone> / check / md / json), proven in APFS clones of the base: 0 failures attributable to the clock under animal, fairy, hobbit and ghost.",
+ "newPackages": [
+  {
+   "id": "CK1-clock-section",
+   "title": "The clock contract proven: tests/sections/clock26.gd (19 named checks + 1 SKIP + 1 windowed) and the evidence of the fix round of the 06:00-02:00 game day",
+   "wave": "4",
+   "size": "S",
+   "class": "CORE (the user rule \"until 2 at night\")",
+   "dependsOn": [
+    "P02-bus-gamemanager-time",
+    "P04-area-framework",
+    "P07-ui-foundation",
+    "P09-test-harness",
+    "P10-data-contracts",
+    "P15-save-system"
+   ],
+   "owns": [
+    "tests/sections/clock26.gd"
+   ],
+   "lift": [
+    "design6/FINAL/clock/sections/clock26.gd (the PROPOSED section, proven in a clone of the base: 19 checks green under all four heroes) -> tests/sections/clock26.gd",
+    "design6/FINAL/clock/clock_edits.py (the exact edits of the built files: the amendments CK-A-* below list the edit ids per package; CK1 applies them in ONE commit with `python3 -I clock_edits.py apply <repo> --stage data|code|tests`)",
+    "design6/FINAL/clock/logs/ (the four-hero strict runs, the baseline control run and the mutation runs: the .done / summary lines go into the lead's gate log)"
+   ],
+   "tasks": [
+    "tests/sections/clock26.gd = design6/FINAL/clock/sections/clock26.gd: config_day_runs_06_to_26, day_end_hour_config_edges (24 = the old midnight roll, 99 / 6 / 30 fall back, 29 accepted; a day end below 24 restarts the clock at 00:00, never at a negative hour: 21:30 + 1 h with day_end_hour 22 = day + 1 at 00:30; the OLD advance_time arithmetic as a model for the day ends 7 / 12 / 22 / 23 / 24 = 210 cases, 0 differ; a modded day start of 1 / 2 falls back to the end 24 / 25 and the pass-out roll then skips NO second day), advance_time_conserves_calendar_minutes (272 cases over day_end_hour 26 / 24 / 29, season and year wrap: total_day * 1440 + hour * 60 + minute grows by exactly the advanced minutes), hours_24_25_are_the_same_game_day, real_time_day_is_10_minutes (tick(1 s) x 600 from 06:00: 540 s = raw 24:00 of the same day, 599 s = 25:58, 600 s = the roll), display_hours_wrap (also clock_hour_of_day(0) = 0 and the default argument), game_hour_normaliser, from_dict_old_and_new_saves, save_payload_at_01_40, night_rules_after_midnight, date_and_shop_day_until_the_roll, shop_opening_weekday_after_midnight (WEEKDAY of the game day only: it sets config towns.hours_enabled = false around its ShopSystem.is_open calls, DT55 of TOWNS_FARM_SOCIAL_ADDENDUM: once T-towns-core and P12 RT5 are merged ShopSystem.is_open asks Hours.shop_open first and the flea market building loppeloftet is open 10-16 only, so without the switch the check fails at every sampled hour; T-towns-core cannot edit this file, so the section carries the switch itself; the Hours rule on the 26 hour day is proven by towns_data.hours_weekday_is_the_game_day and towns_data.hours_after_midnight, CK-A-TC), towns_hours_after_midnight (SKIP until T-towns-core), no_pass_out_at_midnight, whole_day_passes_out_at_02_00 (06:00 + 599 s of tick(1 s) = raw 25:58 awake, the 600th second starts the pass-out), bed_after_midnight_passes_one_day, pass_out_at_02_00, bed_after_the_roll_skips_no_second_day, bed_hours_18_to_06, night_after_midnight (colour and glow wrap, also glow_at(30.5) = glow_at(6.5)) -> verify: clock26.config_day_runs_06_to_26, clock26.day_end_hour_config_edges, clock26.shop_opening_weekday_after_midnight, clock26.advance_time_conserves_calendar_minutes, clock26.hours_24_25_are_the_same_game_day, clock26.real_time_day_is_10_minutes, clock26.whole_day_passes_out_at_02_00, clock26.pass_out_at_02_00, clock26.bed_after_midnight_passes_one_day, clock26.night_after_midnight",
+    "run_windowed(t): the real farm at 12:00, 23:30 and 01:30 (raw 25:30) with the clock paused: the three PNGs go to the --out directory of the gate (docs/qa/** belongs to P27, nothing is committed from it), the night look of 23:30 and 01:30 differs by less than 12 mean-abs (0-255) and noon differs from 01:30 by more than three times that; LOOK at the PNGs (the navy night with lantern halos at both times, the dawn tint after the pass-out) -> verify: clock26.night_look_is_continuous_across_midnight",
+    "MUTATION PROOF recorded in the gate log (the lead keeps it next to the four-hero run summary): `clock_edits.py apply CLONE --except C04` (the old advance_time arithmetic under day_end_hour 26) makes hours_24_25_are_the_same_game_day, advance_time_conserves_calendar_minutes, real_time_day_is_10_minutes and core.advance_time_multiday fail; `--except C12` (TTFormat.clock without posmod) makes display_hours_wrap fail; `--except C07` (the from_dict clamp) makes from_dict_old_and_new_saves fail; the 24 text mutants of design6/FINAL/clock/mutants.json (run_all_mutants.py: the 20 mutants of reviewer A pass 2 plus four for the day-end fallback and the old-arithmetic model) must ALL be killed by a check of clock26, core, area or save (the result: logs/mutants_summary.txt) -> verify: clock26.hours_24_25_are_the_same_game_day, clock26.display_hours_wrap, clock26.from_dict_old_and_new_saves, clock26.day_end_hour_config_edges",
+    "the section is hero independent (the clock is): it runs under animal, fairy, hobbit and ghost; the ghost run uses --no-boot until the legacy character-select patch (SE-G5) or P16 gives the fourth card a %GhostButton -> verify: clock26.config_day_runs_06_to_26",
+    "RUN GATE: `tests/run_playtest.sh --strict` for the four heroes after the fix round: 0 failures except the ones that exist on the unmodified base (art_environment.budget 35.4 MB > 22 MB, city_levels.built_framework_files_untouched: iso_area.gd and art_catalog.gd differ from the pinned sha: Codex's painted art; under the ghost hero also area.game_data_race_and_config until V1 adds the ghost race row); ui_audit.fast_enough is a wall-clock check that flaked once under load (16 s > 10 s) and passes on a re-run -> verify: clock26.pass_out_at_02_00"
+   ],
+   "acceptance": {
+    "headless": "tests/run_playtest.sh --only=clock26,core,area,save --strict (all green), then the full harness for the four heroes",
+    "screenshot": "run_windowed: farm_1200, farm_2330, farm_2530 (the --out directory of the gate), looked at",
+    "validator": "clock_edits.py check (every before matches once, every owner right, no pinned or Codex file)"
+   },
+   "budgets": {
+    "section_seconds_headless": "1.7 pure part + about 25 world part (measured 31 s for --only=clock26,area,save)",
+    "new_files": 1
+   },
+   "honest": "Godot writes tests/sections/clock26.gd.uid when the file is first imported: commit it with the section (the ownership tool attributes .uid / .import siblings to their file). There is no HUD in the base (no scenes/ui/hud.tscn; ui_screens.json: \"the farm shows NO HUD today\"), so the clock is proven through the state, TTFormat.clock and the real farm picture, not through a clock label. CK2 proves the HUD text once P17 exists. towns_hours_after_midnight is a SKIP until T-towns-core builds the Hours rule: it is not a promise that the rule is right, only that the proof has an owner (towns_data.hours_after_midnight, CK-A-TC). The switch towns.hours_enabled is unknown to the base and harmless there (config_value reads an override dictionary); the section was run twice in a simulated wave-4 tree (sim_hours_gate.sh: the lift draft Hours + the P12 helper ShopHoursGate + the registry row of the flea market): the designer's first version FAILED shop_opening_weekday_after_midnight at every sampled hour, the final one passes."
+  },
+  {
+   "id": "CK2-clock-acceptance",
+   "title": "The night after midnight, end to end: tests/sections/zz_clock26.gd (HUD text, curfew, citizens, shops, ghost family, moon crop, pass-out wake) after every system that reads the clock exists",
+   "wave": "7",
+   "size": "S",
+   "class": "QA",
+   "dependsOn": [
+    "CK1-clock-section",
+    "P17-ui-hud",
+    "P06-player-farm-core",
+    "D0-dungeon-world-hooks",
+    "T-towns-core",
+    "T-routes",
+    "T-director"
+   ],
+   "owns": [
+    "tests/sections/zz_clock26.gd"
+   ],
+   "lift": [
+    "design6/FINAL/clock/sections/clock26.gd (the helpers _watch / _set_clock and the pass-out pattern)"
+   ],
+   "tasks": [
+    "HUD: with the real GameUI at raw 24:05, 25:30 and 25:59 the clock text of the date block is \"00:05\", \"01:30\" and \"01:59\" and the weekday line is unchanged across the signal; one shot of the farm HUD at raw 25:30 (windowed, looked at: \"Tirsdag · 01:30 · Solskin\" in the Miljøer v2 sketch HUD) -> verify: zz_clock26.hud_text_after_midnight, zz_clock26.hud_shot_at_01_30",
+    "Which clock the section runs at (DT55): the fixture sets config towns.hours_enabled = false for every leg that is NOT about opening hours (HUD, citizens, farm, pass-out, ghost family presence); the three legs that are about hours (curfew, shop_open_after_midnight, hours_weekday_is_the_game_day) set it true and the clock explicitly -> verify: zz_clock26.curfew_at_the_configured_times",
+    "Towns: with Hyggebyen loaded the curfew whisper and the walk home fire at the CONFIGURED towns.curfew times (default 25.5 / 25.75 = 01:30 / 01:45), never at 23:30 / 23:45 and never during a modal; the night watch lands the player at farm:from_home; a shop whose hours say close 25.5 (a test building) is open at raw 24:30 and closed at 25:40; the weekday of the hours rule is the game day's -> verify: zz_clock26.curfew_at_the_configured_times, zz_clock26.shop_open_after_midnight, zz_clock26.hours_weekday_is_the_game_day",
+    "Citizens: every citizen has a state at raw 24:30 and 25:30 on all seven weekdays (stay, move, inside or absent: nobody vanishes at 24:00), no capacity-1 anchor is used twice, the visual budget holds -> verify: zz_clock26.citizens_present_after_midnight",
+    "Ghost family (only when GF-data is built, else SKIP naming it; DATA-AGNOSTIC: the family design owns the posts, GHOST_FAMILY_ADDENDUM 4.4): at raw 24:30 and 25:30 every one of the four has a state (stay, move, inside or absent by a plan, never by accident), the lantern house is open exactly as its Hours row says and is never open without its keeper at the counter, and at 06:00 of the next date all four stand at their night posts outdoors (the plans wrap: nobody teleports in view) -> verify: zz_clock26.ghost_family_at_night",
+    "Farm: a moon crop (water_window 20..6) watered at raw 25:50 counts and grows at the 02:00 roll; watered at 19:59 or 12:00 it does not; the bin pays and the shop restocks at the roll exactly once -> verify: zz_clock26.moon_crop_watered_after_midnight",
+    "Pass-out: from a town building at raw 25:50 + 20 min the player wakes at farm:from_home at 06:00 of the next date (D0), no gold lost, NOTIF_PASSED_OUT once, and the same sequence at 23:50 does NOT start -> verify: zz_clock26.pass_out_wakes_at_home_at_02_00, zz_clock26.no_pass_out_at_23_50"
+   ],
+   "acceptance": {
+    "headless": "tests/run_playtest.sh --only=zz_clock26 (every leg whose package is missing SKIPs with the package named; at the G5b gate none may skip)",
+    "screenshot": "the farm HUD at 01:30",
+    "validator": "none"
+   },
+   "budgets": {
+    "section_seconds_headless": 40
+   },
+   "newChecks": [
+    "zz_clock26.hud_text_after_midnight",
+    "zz_clock26.hud_shot_at_01_30",
+    "zz_clock26.curfew_at_the_configured_times",
+    "zz_clock26.shop_open_after_midnight",
+    "zz_clock26.hours_weekday_is_the_game_day",
+    "zz_clock26.citizens_present_after_midnight",
+    "zz_clock26.ghost_family_at_night",
+    "zz_clock26.moon_crop_watered_after_midnight",
+    "zz_clock26.pass_out_wakes_at_home_at_02_00",
+    "zz_clock26.no_pass_out_at_23_50"
+   ],
+   "honest": "A leg whose package is not built SKIPs visibly; the wave-7 gate requires zero skips for the packages that landed. The 10 real-minute day itself is proven headless by clock26 (tick arithmetic), not by waiting 10 wall minutes."
+  }
+ ],
+ "amendments": [
+  {
+   "id": "CK-A-P10",
+   "package": "P10-data-contracts",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "lua/config/game_balance.lua: edit D01 (time.day_end_hour 24 -> 26, the comment 06:00-02:00 = 10 real minutes, the one-paragraph clock contract) and D02 (the water_window comment: the window is on the stored axis, { 20, 6 } = the raw hours 20..25 and 2..5); minutes_per_real_second stays 2.0, day_start_hour 6, night_start_hour 20, night_end_hour 5 -> verify: clock26.config_day_runs_06_to_26, data.config_documented_keys, data.lint_clean"
+   ],
+   "acceptanceAdd": "",
+   "notes": "edit ids D01 D02 of design6/FINAL/clock/clock_edits.py. data.config_documented_keys only checks that the time.* keys EXIST (no value pin): the value is pinned by clock26.config_day_runs_06_to_26 and core.config_literal_defaults. Lua lint and the data section were green with day_end_hour = 26 in the measured runs.",
+   "built": true,
+   "wave": "2",
+   "newChecks": [],
+   "fixRound": true,
+   "applyAt": "THE CLOCK FIX ROUND: one commit with CK1-clock-section, after M1a stage 2 (V1 V2 V5 G-ghost-art N03) has merged and before wave 4; never in the running worktree"
+  },
+  {
+   "id": "CK-A-P02",
+   "package": "P02-bus-gamemanager-time",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "scripts/autoload/game_manager.gd: edits C01 (header = the contract), C02 (DEFAULT_DAY_END_HOUR := 26), C03 (day_end_hour() valid range day_start < value < 24 + day_start; an invalid value falls back to min(26, 23 + day_start), so the fallback is always valid: 24 at a modded day start 1, 25 at 2, 26 from 3 on; new helpers day_roll_restart_hour(), clock_hour_of_day(raw = -1), game_hour(clock_hour: float) = +24 below the day start), C04 (advance_time: the roll restarts the clock at day_end_hour - 24 = 02:00 of the NEW date, 00:00 when day_end_hour <= 24, so the clock never jumps backwards and every calendar day is exactly 24 clock hours), C05 / C06 (comments), C07 (from_dict clamps the hour to restart..end-1: an old 00:xx / 01:xx save becomes 02:00, 24 / 25 are valid, 26+ -> 25; SAVE_VERSION unchanged) -> verify: clock26.advance_time_conserves_calendar_minutes, clock26.hours_24_25_are_the_same_game_day, clock26.day_end_hour_config_edges, clock26.game_hour_normaliser, clock26.from_dict_old_and_new_saves",
+    "scripts/autoload/time_manager.gd: edits C08 (get_day_fraction = minutes of the 24 hour clock face / 1440, noon stays 0.5, passes 1.0 between 24:00 and 02:00; is_night() code UNCHANGED, doc only: raw 24 and 25 are night) and C09 (comment); scripts/autoload/event_bus.gd: C10 (time_of_day_changed carries the raw hour 2..25) and C11 (midnight_passed keeps its id and means \"the day-end roll\"; real midnight emits nothing) -> verify: core.day_fraction, core.is_night_from_config, clock26.night_rules_after_midnight",
+    "tests/sections/core.gd: edits T01-T05 (the pins of the 24 hour day: config_literal_defaults, advance_time_multiday, time_of_day_changed_range, season_rollover / year_rollover, sleep_after_passout_no_double_day, tick_crosses_midnight keep their ids and their intent; advance_time_25h, advance_time_25h_signals, midnight_passed_event, day_fraction and is_night_from_config stay UNCHANGED and green) -> verify: core.config_literal_defaults, core.advance_time_multiday, core.time_of_day_changed_range, core.season_rollover, core.year_rollover, core.sleep_after_passout_no_double_day, core.tick_crosses_midnight"
+   ],
+   "acceptanceAdd": "",
+   "notes": "edit ids C01-C11, T01-T05. Final round (reviewer A, pass 2): the first version of C03 returned the literal 26 from its own guard, which is itself outside the range for a day start of 0..2, so a roll restarted the clock at the wake-up hour and sleep_until_morning() ended a second day (probe: day 6 -> 7); clock26.day_end_hour_config_edges now pins the fallback and the no-second-day case. MEASURED: with ONLY day_end_hour = 26 (no code change) the base fails 9 core checks and 2 area checks and the clock jumps back from 02:00 to 00:00 at the roll (design6/analyst1/logs/probe_m1_cfg26.lines: 25:59 + 1 min = 00:00, 06:00 + 25 h = 05:00, 06:00 + 50 h = day 3 04:00); with C04 the 24 hour arithmetic checks stay true unchanged (06:00 + 25 h = 07:00, + 50 h = day 3 08:00, 29 days 90 min = sommer day 2 07:30). world_2d.gd and iso_area.gd are NOT edited here (sha-pinned by city_levels.built_framework_files_untouched; D0 owns world_2d.gd).",
+   "built": true,
+   "wave": "2",
+   "newChecks": [],
+   "fixRound": true,
+   "applyAt": "THE CLOCK FIX ROUND: one commit with CK1-clock-section, after M1a stage 2 (V1 V2 V5 G-ghost-art N03) has merged and before wave 4; never in the running worktree"
+  },
+  {
+   "id": "CK-A-P07",
+   "package": "P07-ui-foundation",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "scripts/ui/theme/tt_format.gd: edit C12 (TTFormat.clock(hour, minute) reads the hour mod 24: raw 25:30 -> \"01:30\", 24:05 -> \"00:05\"; the ONE clock formatter of the UI: P17 / P16 / S-ui / the festival ribbon / door signs call it, nothing prints a raw \"%02d\" of the game hour) -> verify: clock26.display_hours_wrap, ui_foundation.tt_helpers"
+   ],
+   "acceptanceAdd": "",
+   "notes": "edit id C12. MEASURED before the edit: clock(24, 5) = \"24:05\", clock(25, 59) = \"25:59\" (nothing in the base tests an hour >= 24; ui_foundation.tt_helpers and ui_smoke only test 07:05 and 10:40 and stay green).",
+   "built": true,
+   "wave": "3",
+   "newChecks": [],
+   "fixRound": true,
+   "applyAt": "THE CLOCK FIX ROUND: one commit with CK1-clock-section, after M1a stage 2 (V1 V2 V5 G-ghost-art N03) has merged and before wave 4; never in the running worktree"
+  },
+  {
+   "id": "CK-A-P04",
+   "package": "P04-area-framework",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "tests/sections/area.gd: edits T06-T10 (the two pass-out literals 23:50 move to gm.day_end_hour() - 1 : 50, the check area.pass_out_at_midnight is renamed area.pass_out_at_day_end (nothing outside the file references the id), messages) -> verify: area.rebuild_queued_during_the_pass_out, area.pass_out_at_day_end, area.bed_hours",
+    "lua/config/ambient.lua: edit C14 (header comment only: the keys wrap by fposmod 24, so the raw game hours 24..26 sample the keys 0.0..2.0; NO key edit: every preset has equal keys at 0.0 and 24.0 and area.daynight_farm_keyframes already asserts color(24.0) == color(0.0)) -> verify: clock26.night_after_midnight, area.daynight_farm_keyframes",
+    "scripts/world2d/world_2d.gd and scripts/world2d/iso_area.gd are NOT edited (code needs no change: can_sleep_now() = hour >= 18 or hour < 6 is true for the raw hours 18..25 and 2..5; _on_game_event starts the pass-out on midnight_passed, which now fires at 02:00; both files are sha-pinned): their three stale comments are D0's (CK-A-D0) -> verify: clock26.bed_hours_18_to_06, clock26.pass_out_at_02_00"
+   ],
+   "acceptanceAdd": "",
+   "notes": "edit ids T06-T10, C14. MEASURED: area section 240 checks, 0 failed once the clock literal moved (design6/a2/harness_area_25h50.log); the real farm at raw 25:30 looks like 23:30 (design6/analyst1/shots/m2, and clock26.night_after_midnight: luminance 0.392 at 23:30, 0.405 at 01:30, 0.982 at noon).",
+   "built": true,
+   "wave": "3",
+   "newChecks": [
+    "area.pass_out_at_day_end"
+   ],
+   "fixRound": true,
+   "applyAt": "THE CLOCK FIX ROUND: one commit with CK1-clock-section, after M1a stage 2 (V1 V2 V5 G-ghost-art N03) has merged and before wave 4; never in the running worktree"
+  },
+  {
+   "id": "CK-A-P15",
+   "package": "P15-save-system",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "scripts/autoload/save_manager.gd: edit C13 (the autosave comment: day_ended fires at the bed and at every crossed DAY END, game hour 26 = 02:00; nothing saves at 24:00; the NEW check autosave_on_the_day_end_roll of T11 proves it) -> verify: save.autosave_on_the_day_end_roll",
+    "tests/sections/save.gd: edits T11 (NEW check autosave_on_the_day_end_roll: 23:55 + 10 min = raw 24:05 writes NO auto save; 01:55 + 10 min = the roll writes ONE, of the new date at the restart hour 2) and T12 (NEW check save_late_hour_roundtrip_and_old_midnight_save: a slot written at raw 25:40 round-trips with summary hour 25 and loads back 25:40; an old file with hour 0 loads at 02:xx, not 24 h later) -> verify: save.autosave_on_the_day_end_roll, save.save_late_hour_roundtrip_and_old_midnight_save"
+   ],
+   "acceptanceAdd": "",
+   "notes": "edit ids C13, T11, T12. No SAVE_VERSION / PAYLOAD_VERSION bump: no field changes meaning for the hours 6..23 and the summary validator has no hour range. Known quirk, unchanged in kind (open question Q4): the deferred day-end save runs in the roll's own frame, before the sleep fade has woken the player, so Continue after it resumes awake at 02:00 of the new date.",
+   "built": true,
+   "wave": "3",
+   "newChecks": [
+    "save.autosave_on_the_day_end_roll",
+    "save.save_late_hour_roundtrip_and_old_midnight_save"
+   ],
+   "fixRound": true,
+   "applyAt": "THE CLOCK FIX ROUND: one commit with CK1-clock-section, after M1a stage 2 (V1 V2 V5 G-ghost-art N03) has merged and before wave 4; never in the running worktree"
+  },
+  {
+   "id": "CK-A-F1",
+   "package": "F1-feature-data",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "tools/features/sim/balance_sim.py: edits B01 / B02 (REAL_MIN_PER_DAY = 10.0, DAYS_PER_HOUR = 6.0, the printed header) and docs/features/BALANCE.md: edits B03 / B04 (the clock sentence), then re-run `tools/features/sim/run_balance.sh --quests stage` and replace ONLY the real-hours columns of the tables with the sim output (the DAY numbers 345 / 919 / 185 do not change; typical 51.8 h -> 57.5 h, casual 137.8 h -> 153.2 h, dedicated 27.8 h -> 30.8 h) -> verify: content_features.validator_gate_files_exist"
+   ],
+   "acceptanceAdd": "",
+   "notes": "edit ids B01-B04. DL4-loot-data lifts balance_sim.py later (wave 5): it must lift the file AFTER this edit. The economy per game DAY is unchanged (energy and chores bound the day, the clock is paused in the forest); only the real time per day grows by 11 %.",
+   "built": true,
+   "wave": "3",
+   "newChecks": [],
+   "fixRound": true,
+   "applyAt": "THE CLOCK FIX ROUND: one commit with CK1-clock-section, after M1a stage 2 (V1 V2 V5 G-ghost-art N03) has merged and before wave 4; never in the running worktree"
+  },
+  {
+   "id": "CK-A-P01",
+   "package": "P01-project-config",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "docs/design/PLAN_2D.md, UI_NAVIGATION.md, TOWNS_FARM_SOCIAL_ADDENDUM.md and DUNGEON_V2_ADDENDUM.md: edits X01-X18 (the 9-minute day, the 24:00 / midnight pass-out, \"close < open wraps midnight\", the 23:30 / 23:45 curfew in its five places of the towns addendum: the player story X08, the contract row X09, DT24 X12, Q6 X14, the module overview X16; the RT22 row X13 and the D0 task text X15 \"the 24:00 PASS-OUT\"; \"festival windows end by 23:00 (the pass-out is at 24:00)\", DT50 title; the dungeon defeat sentence X17 / X18); the new documents docs/design/CLOCK_26_ADDENDUM.md and docs/design/clock_packages.json land in the same commit (the lead edits docs/design/**; owner P01) -> verify: clock26.config_day_runs_06_to_26"
+   ],
+   "acceptanceAdd": "",
+   "notes": "edit ids X01-X18 (proven against main's CURRENT docs with `clock_edits.py check --docs-from <main>/docs/design`; X12-X18 were added in the final round: reviewer A found the five statements of the towns addendum that still said 23:30 / 23:45 / 24:00 after X01-X11, my own grep of the other binding documents found the dungeon sentence). The ghost family addendum is NOT edited here: the design6 rewrite (design6/family) already consumes CLOCK_26; its handoff is CLOCK_26_ADDENDUM.md section 11.",
+   "built": true,
+   "wave": "1",
+   "newChecks": [],
+   "fixRound": true,
+   "applyAt": "THE CLOCK FIX ROUND: one commit with CK1-clock-section, after M1a stage 2 (V1 V2 V5 G-ghost-art N03) has merged and before wave 4; never in the running worktree"
+  },
+  {
+   "id": "CK-A-D0",
+   "package": "D0-dungeon-world-hooks",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "RT22 task 2 reads \"the day-end PASS-OUT (game hour 26 = 02:00; the trigger is game_event midnight_passed = the day-end roll)\": the wake-up relocation to farm:from_home, no gold loss, NOTIF_PASSED_OUT once; the section drives the pass-out with gm.day_end_hour() - 1 : 50 + 20 minutes, never the literal 23:50 -> verify: dungeon_defeat.passout.wake_at_farm_from_home, dungeon_defeat.passout.no_gold_loss",
+    "NEW negative: 23:50 + 20 min (raw 24:10, 00:10 of the same game day) starts no sleep sequence, relocates nobody and keeps the bed open -> verify: dungeon_defeat.passout.not_at_midnight",
+    "the \"defeat after midnight\" edge case of the design (6.8) is now two cases: a defeat at raw 24:30 or 25:30 (the day has NOT ended) wakes at 06:00 of the NEXT date through sleep_until_morning() (one day passes), a defeat at raw 03:10 (after the roll, before the wake-up) wakes at 06:00 of the SAME date (no second day) -> verify: dungeon_defeat.defeat.after_midnight_next_morning, dungeon_defeat.defeat.after_the_roll_same_date",
+    "world_2d.gd: three comments (the header line \"Pass-out: EventBus.game_event(&\\\"midnight_passed\\\")\", can_sleep_now() \"the night after midnight counts too\", _on_game_event \"Pass-out at 24:00\") say \"the day-end roll, game hour 26 = 02:00; the raw hours 24 and 25 and the transient 2..5 count too\"; NO code change (can_sleep_now() and _on_game_event are already right); in the SAME commit the sha of world_2d.gd in PINNED of tests/sections/city_levels.gd is updated (sanctioned edit SE-CK1) -> verify: city_levels.built_framework_files_untouched"
+   ],
+   "acceptanceAdd": "",
+   "notes": "The mechanism does not change, only the hour: the roll that emits midnight_passed is at 26:00. The bed between 24:00 and 26:00 passes exactly one day through end_day() (before: a 0-day skip because midnight had already rolled the day): proven by clock26.bed_after_midnight_passes_one_day. A defeat inside the forest cannot meet a pass-out (the forest clock is paused). Q7 (the optional bedtime whisper at 01:30) is NOT part of D0 unless the user says yes: the exact lines are in CLOCK_26_ADDENDUM.md section 9.",
+   "built": false,
+   "wave": "4",
+   "newChecks": [
+    "dungeon_defeat.passout.not_at_midnight",
+    "dungeon_defeat.defeat.after_midnight_next_morning",
+    "dungeon_defeat.defeat.after_the_roll_same_date"
+   ]
+  },
+  {
+   "id": "CK-A-P17",
+   "package": "P17-ui-hud",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "HANDOFF FROM WAVE 2 / P02 is replaced: \"time_of_day_changed carries the RAW game hour (6..25 in play, 2..5 only between the 02:00 roll and the wake-up): 24 and 25 are 00:xx and 01:xx of the SAME game day, the date block keeps the weekday and the date of the game day until the roll. Format every clock with TTFormat.clock(hour, minute); never print the raw hour.\" -> verify: hud.clock_text_after_midnight",
+    "the second line of the date block (\"Tirsdag · 10:20 · Solskin\", IBM Plex Mono 14) is composed with TTFormat.clock: with a signal 24:05 the text reads \"Tirsdag · 00:05 · Solskin\", with 25:59 \"Tirsdag · 01:59 · Solskin\", the first line \"Forår · Dag 16\" is unchanged across both signals and changes with day_started at the roll -> verify: hud.clock_text_after_midnight, hud.v2_date_block_text, hud.values_after_signals",
+    "no HUD element formats an hour itself (the festival ribbon, the construction chip, the whisper templates go through TTFormat.clock or Hours.format_hour): a static scan of scripts/ui/hud.gd and the social HUD scripts finds no \"%02d:%02d\" outside tt_format.gd; the legacy scripts/ui/hud.gd line `time_label.text = \"%02d:%02d\" % [hour, minute]` is replaced with the rewrite of the file -> verify: hud.no_raw_hour_format"
+   ],
+   "acceptanceAdd": "",
+   "notes": "The base has NO HUD scene (no scenes/ui/hud.tscn; tests/lib/ui_screens.json: \"the farm shows NO HUD today (scripts/ui/hud.gd has no scene)\"): this amendment is the only place where the clock label is born, so it must be born right. TTFormat.clock is fixed by CK-A-P07 in the fix round.",
+   "built": false,
+   "wave": "4",
+   "newChecks": [
+    "hud.clock_text_after_midnight",
+    "hud.no_raw_hour_format"
+   ]
+  },
+  {
+   "id": "CK-A-P06",
+   "package": "P06-player-farm-core",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "FarmGrid water window: in_water_window(hour: int) on the RAW stored hour 6..25: from <= to -> hour >= from and hour < to, from > to (the moon crop { 20, 6 }) -> hour >= from or hour < to, no modulo; so the raw hours 20..25 and 2..5 count (the playable part of the window grows from 4 h to 6 h = from 2 to 3 real minutes), a watering at 01:30 belongs to the day that rolls at 02:00 and grows the crop at that roll -> verify: farm.water_window_moon_crop_edges, farm.moon_crop_watered_at_01_30_grows_at_the_roll",
+    "edges tested: 19:59 no, 20:00 yes, 23:59 yes, raw 24:30 yes, raw 25:59 yes, 06:00 no, 12:00 no; a crop without water_window ignores the hour -> verify: farm.water_window_moon_crop_edges"
+   ],
+   "acceptanceAdd": "",
+   "notes": "lua/config/game_balance.lua crops.moonflower.water_window = { from = 20, to = 6 } is unchanged (P10 fix round CK-A-P10 only rewrites its comment). Balance: the extra night time makes the moon crop easier, not the economy per day.",
+   "built": false,
+   "wave": "4",
+   "newChecks": [
+    "farm.water_window_moon_crop_edges",
+    "farm.moon_crop_watered_at_01_30_grows_at_the_roll"
+   ]
+  },
+  {
+   "id": "CK-A-P14",
+   "package": "P14-npc-dialogue",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "the Lua dialogue context documents and tests `hour` = the stored game hour 6..25 (int; 24 = 00:xx, 25 = 01:xx), `weekday` and `day` of the GAME day, `daypart` \"nat\" for 21..25 and for 2..5 (S-core daypart, CK-A-SC) -> verify: npc.context_hour_after_midnight",
+    "the Npc2D night schedule and the `when=night` marker key on TimeManager.is_night() (compared state), never on `hour < 24`; at raw 24:30 and 25:30 a night-gated NPC (Natteblik at the bat window, the hulen_keeper) is present and a day-only NPC is hidden -> verify: npc.when_night_holds_after_midnight"
+   ],
+   "acceptanceAdd": "",
+   "notes": "No built Lua dialogue file reads the hour (grep); the first file that does is the ghost family's Gnist (hour >= 23 closed, hour < 17 dawn), which is correct on raw hours.",
+   "built": false,
+   "wave": "5",
+   "newChecks": [
+    "npc.context_hour_after_midnight",
+    "npc.when_night_holds_after_midnight"
+   ]
+  },
+  {
+   "id": "CK-A-V6",
+   "package": "V6-city-life",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "BathTub2D refuses with ONE new whisper of V6's own CSV localization/life.csv (family LIFE_, the V6 task 8 list of refusals): key LIFE_BATH_LATE, da \"Badet er lukket for i aften.\", en \"The bath is closed for tonight.\" (EventBus.whisper_requested.emit(\"LIFE_BATH_LATE\"); the CSV row `LIFE_BATH_LATE,\"Badet er lukket for i aften.\",\"The bath is closed for tonight.\"`; the only Danish string this addendum adds) when hour * 60 + minute + traetoppen.bath.minutes >= day_end_hour * 60: advance_time(30) across the day end would roll the day INSIDE the bath fade and start the pass-out while the bath's own 1.2 s fade runs (two sleep fades at once; measured: 25:50 + 30 min = day + 1, 00:20, midnight_passed); the bath hours are data (10-21), so this is a guard, not a rule -> verify: city_life.bath_refused_when_it_would_cross_the_day_end, city_life.keys_da_en_complete",
+    "the once-per-day flags (bath_day, swap_day, post_read_day) are proven across a bed at raw 24:30 and across the 02:00 roll: both advance total_day by exactly one -> verify: city_life.daily_flags_across_bed_after_midnight"
+   ],
+   "acceptanceAdd": "",
+   "notes": "The flags use GameManager.total_day(), which changes at the roll or at the bed: consistent with \"the hours 24 and 25 are the same game day\". LIFE_BATH_LATE is the ONLY Danish string of the whole clock layer (found by reviewer A: the first version named no key and no English text); it lives in V6's own CSV and V6's existing copy check covers it (city_life.keys_da_en_complete) and so does I1's copy_lint.py, which reads every localization/*.csv.",
+   "built": false,
+   "wave": "5",
+   "newChecks": [
+    "city_life.bath_refused_when_it_would_cross_the_day_end",
+    "city_life.daily_flags_across_bed_after_midnight"
+   ]
+  },
+  {
+   "id": "CK-A-TC",
+   "package": "T-towns-core",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "Hours (lift: D3/final_editor/te1/drafts/hours.gd): every hour is a float of GAME HOURS on the axis 6..26 (the contract of CLOCK_26_ADDENDUM.md); state(): `var c2 := c + 24.0 if c < o else c` (the notation close < open means after midnight of the SAME game day: close 1 = 25.0, close 0 = 24.0 (the existing check towns_data.hours_wrap_midnight is REWRITTEN to prove exactly that); GameManager.game_hour() is the normaliser) and `inside = hour >= o and hour < c2` on the RAW hour (the old branch `hour >= o or hour < c` kept a night shop open until 26:00); a row without hours reports closes_at = GameManager.day_end_hour() (the draft said 24.0); the default close of an hours row without `close` is day_end_hour; the WEEKDAY of the rule is the game day's (TimeManager.weekday_index), so a Friday shop that closes at 25.5 is still Friday at 00:30 -> verify: towns_data.hours_after_midnight, towns_data.hours_wrap_midnight, towns_data.hours_weekday_is_the_game_day",
+    "minutes_to_close(): `d = c2 - hour` with the normalised close (the draft added 24 when negative: wrong at 25:30 for close 1); format_hour(h) keeps the draft's `int(floor(h)) % 24` for the hour part, which is already right and is now PROVEN: 25.0 prints \"01:00\", 24.5 \"00:30\" (HOURS_SIGN \"%s - åbent %s-%s\", the door whispers) -> verify: towns_data.hours_minutes_to_close_after_midnight, towns_data.hours_format_hour_wraps",
+    "config towns.curfew {enabled true, whisper 25.5, go_home 25.75} (game hours; was 23.5 / 23.75: the same 30 / 15 minute cushions before the pass-out, moved with it, open question Q1); the validator hours.consistency: close <= day_end_hour (26) and open >= 6 game hours unless short_ok, evaluated on the normalised close -> verify: towns_data.curfew_config_on_the_26_hour_day, towns_data.hours_validator_accepts_close_up_to_the_day_end"
+   ],
+   "acceptanceAdd": "",
+   "notes": "A shop that really closes after midnight is DATA (the natteblik window, the inn): none does by default (open question Q2: every shipped close is <= 23:30), so the rule is proven with a test building (open 20 close 25.5), not with shipped data.",
+   "built": false,
+   "wave": "4",
+   "newChecks": [
+    "towns_data.hours_after_midnight",
+    "towns_data.hours_weekday_is_the_game_day",
+    "towns_data.hours_minutes_to_close_after_midnight",
+    "towns_data.hours_format_hour_wraps",
+    "towns_data.curfew_config_on_the_26_hour_day",
+    "towns_data.hours_validator_accepts_close_up_to_the_day_end"
+   ]
+  },
+  {
+   "id": "CK-A-TR",
+   "package": "T-routes",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "the DAY AXIS of the routine compiler is [6, GameManager.day_end_hour()) = [6, 26): constants DAY_START = 6.0 and DAY_END = float(GameManager.day_end_hour()) replace the literals `arr = 6.0` (the draft's _compile) and the two `t1 = 24.0` (the draft's _compile tail and the festival tail \"he stays on the green\"); the LAST block of every plan holds until DAY_END and the plan wraps to its first block at the 06:00 of the next date (the pass-out sleeps through the wrap: nobody teleports in view); where_is(npc, ctx) accepts a raw hour up to 25.999 -> verify: towns_routines.day_axis_is_the_game_day, towns_routines.state_defined_at_24_25",
+    "every sweep and validator runs on the 20 hour day: towns_routines.sweep_every_citizen_once covers 7 weekdays x 06:00-26:00 x clear / rain (still exactly once per minute: stay + move + inside + absent = the registry size), towns_validate.gd loops `range(6 * 60, DAY_END * 60, step)` (216 -> 240 samples at 5 minutes; the draft's three loops at lines 127, 150 and b2_resolver_sweep.gd:55 name 24 * 60, and the end-of-day exemption of routines.no_short_visits `float(vis[2]) < 23.9` at line 205 becomes DAY_END - 0.1), hours.keeper_covers_hours compares against the same DAY_END (a keeper standing until the end of his last block: `17-25` PASSES only when t1 = DAY_END), the visual-budget rule samples to 26:00 -> verify: towns_routines.sweep_every_citizen_once, towns_routines.rule_keeper_covers_hours, towns_routines.rule_visual_budget",
+    "NEW check state_defined_at_24_25: every citizen has a state at raw 24:30 and 25:30 on all seven weekdays AND at raw 2..5 (the transient hours of an autosave resumed at 02:10: where_is answers the LAST place of the plan, the wrap, never `absent` by accident), nobody is on a capacity-1 anchor twice, no state changes without a route (the 30 shipped plans all end indoors or asleep by 23:30, so no data edit is needed: MEASURED in design6/a2/sim26_day26_unchanged_plans.out, 0 problems; the four family plans are the family design's own data to 26:00, GHOST_FAMILY_ADDENDUM 4.4) -> verify: towns_routines.state_defined_at_24_25",
+    "budgets scale by +11 % (1200 instead of 1080 minutes): compile_134_timelines_ms and full_sweep_30_citizens_us are re-measured, the asserted limits stay the ones of the order -> verify: towns_routines.where_is_under_20us"
+   ],
+   "acceptanceAdd": "",
+   "notes": "Routine data is NOT edited by default. Plans that want a real night (open question Q8: the ghost family walking a round after midnight) are data-only additions of the owning packages.",
+   "built": false,
+   "wave": "5",
+   "newChecks": [
+    "towns_routines.day_axis_is_the_game_day",
+    "towns_routines.state_defined_at_24_25"
+   ]
+  },
+  {
+   "id": "CK-A-TD",
+   "package": "T-director",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "the curfew reads whisper and go_home from config towns.curfew (default 25.5 / 25.75 after CK-A-TC), no literal 23:30 / 23:45 in code or tests; the four checks drive the clock to the CONFIGURED times (the helper sets the clock one minute before, then advances): curfew_whisper_then_home (whisper once, then HOURS_CURFEW_HOME + area_change_requested(farm, from_home)), curfew_held_during_modal, curfew_off_on_farm (unchanged) and passout_in_shop_is_evicted_by_hours: a pass-out at raw 25:50 + 20 min inside a shop wakes at farm:from_home (D0) and the closing sequence has already run at <= 23:30 -> verify: towns_director.curfew_whisper_then_home, towns_director.curfew_held_during_modal, towns_director.curfew_off_on_farm, towns_director.passout_in_shop_is_evicted_by_hours",
+    "game_event routine_changed {hour} fires on every full game HOUR the clock shows while the area is loaded: with the 20 hour day that is 20 events (06 .. 25: the payload is the raw hour, 24 and 25 included); the `when=at:` / `away:` markers refresh on it and must resolve at raw 24 and 25 -> verify: towns_director.routine_changed_every_full_hour"
+   ],
+   "acceptanceAdd": "",
+   "notes": "The curfew cushions are the same 30 / 15 minutes before the pass-out as in DT24; only the clock moved (open question Q1: default MOVED; the alternative is to keep 23.5 / 23.75, which makes the two new hours a farm-only night).",
+   "built": false,
+   "wave": "5b",
+   "newChecks": []
+  },
+  {
+   "id": "CK-A-SC",
+   "package": "S-core",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "CalendarUtil.hour_in(h, from_h, to_h) normalises the two window ends with GameManager.game_hour (< day start -> +24) and compares the RAW hour: `hour:22-2` is [22, 26) (true at 24 and 25), `hour:0-2` is [24, 26) (true at 24 and 25, the draft was false there), `hour:22-6` wraps (22..25 and 2..5), `hour:8-18` is unchanged; from_h == to_h is still always true; the when= grammar accepts `hour:6-26` -> verify: social.calendar_hour_in_raw_hours",
+    "SocialManager.daypart(h) returns \"nat\" for the transient raw hours 2..5 as well (morgen < 11 <= dag < 17 <= aften < 21 <= nat; below the day start = nat): the dialogue context after an autosave resumed at 02:00 reads \"nat\", not \"morgen\" -> verify: social.daypart_bands",
+    "validator SV9 / festival rows: a festival window ends by day_end_hour - 1 (25.0) instead of 23:00 so that the bed hold keeps one hour before the pass-out; the shipped data still ends by 23:00 (nothing moves) -> verify: social.validator_festival_window_margin"
+   ],
+   "acceptanceAdd": "",
+   "notes": "No S-core code reads GameManager.hour as 0..23 except daypart() and hour_in(); the daily flush is coalesced and runs on day_started, so the 02:00 roll is the daily boundary, not midnight.",
+   "built": false,
+   "wave": "4",
+   "newChecks": [
+    "social.calendar_hour_in_raw_hours",
+    "social.validator_festival_window_margin"
+   ]
+  },
+  {
+   "id": "CK-A-SE",
+   "package": "S-events",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "a `time` step of an event advances at most min(requested, 120, day_end_hour * 60 - 1 - (hour * 60 + minute)) minutes: it never reaches the pass-out (the draft clamped at 23:59, which stopped a step 2 h 1 min before the real end of the day) -> verify: social_events.time_step_never_triggers_the_pass_out",
+    "validators SV9 / SV10: festival windows end <= day_end_hour - 1 and span >= 5 game hours (2.5 real minutes); a window whose end is above 24 prints as 00:xx / 01:xx in the ribbon text -> verify: social_events.validator_window_end_margin"
+   ],
+   "acceptanceAdd": "",
+   "notes": "The shipped festivals all end by 23:00 and keep doing so (open question Q3). A true-midnight toast for Årsskiftet would need a NEW game_event (clock_midnight, emitted once when raw 24:00 is crossed); it must not reuse midnight_passed.",
+   "built": false,
+   "wave": "5b",
+   "newChecks": [
+    "social_events.time_step_never_triggers_the_pass_out",
+    "social_events.validator_window_end_margin"
+   ]
+  },
+  {
+   "id": "CK-A-SU",
+   "package": "S-ui",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "the festival ribbon text (\"Høstfesten · åben til 20:00\" / \"Høstfesten i dag · fra 12:00\") formats its hours with TTFormat.clock(floor(h), minutes) so that a window end of 25.0 would read \"01:00\"; the existing check social_ui.hud_festival_ribbon_follows_state gains a fixture festival whose window ends at 25.0 -> verify: social_ui.hud_festival_ribbon_follows_state"
+   ],
+   "acceptanceAdd": "",
+   "notes": "The shipped festival data never ends after 23:00; the check proves the formatter, not the data.",
+   "built": false,
+   "wave": "5b",
+   "newChecks": []
+  },
+  {
+   "id": "CK-A-I2",
+   "package": "I2-loop-harness",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "leg L11: the night watch is driven to the time READ from config towns.curfew (default 25.5 / 25.75), the pass-out from raw 25:50 + 20 minutes (the existing check l11_pass_out_wakes_on_farm gains the 02:00 clock: the player wakes at farm:from_home at 06:00 of the next date), and the negative \"no pass-out at 00:10 (raw 24:10)\" is part of the leg -> verify: town_loop.l11_curfew_at_the_configured_time, town_loop.l11_pass_out_wakes_on_farm, town_loop.l11_no_pass_out_at_midnight"
+   ],
+   "acceptanceAdd": "",
+   "notes": "The leg text said \"the night watch sends the player home at 23:45\".",
+   "built": false,
+   "wave": "5",
+   "newChecks": [
+    "town_loop.l11_curfew_at_the_configured_time",
+    "town_loop.l11_no_pass_out_at_midnight"
+   ]
+  },
+  {
+   "id": "CK-A-TQ",
+   "package": "T-qa",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "zz_towns.closing_and_curfew reads the curfew from config towns.curfew and the day end from GameManager.day_end_hour(); the 3-day soak with sleeps runs one night through 24:00-02:00 (nobody stuck, no leak) -> verify: zz_towns.closing_and_curfew, zz_towns.soak_3_days"
+   ],
+   "acceptanceAdd": "",
+   "notes": "Both checks only move their clock values.",
+   "built": false,
+   "wave": "7",
+   "newChecks": []
+  },
+  {
+   "id": "CK-A-P27",
+   "package": "P27-qa-acceptance",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "zz_acceptance.sleep_and_passout_ui drives the pass-out across the DAY END (raw 25:50 + 20 min), not 23:50 + 20; fade, toast, input ignored, pause refused, focus clean as before; the leg adds the negative: at 23:50 + 20 min (raw 24:10) nothing sleeps -> verify: zz_acceptance.sleep_and_passout_ui"
+   ],
+   "acceptanceAdd": "",
+   "notes": "UI_NAVIGATION 406 / 1120 are edited by the docs edits of CK-A-P01.",
+   "built": false,
+   "wave": "7",
+   "newChecks": []
+  },
+  {
+   "id": "CK-A-P25",
+   "package": "P25-docs-refresh",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "docs/lua_api.md and docs/howto/*.md state the clock contract in one paragraph (hours of Lua tables are game hours 6..26, 25.5 = 01:30, the notation close < open, GameManager.game_hour / TTFormat.clock) and the how-to for a late shop or a routine block after midnight; docs/game_design.md and README.md say \"the day runs 06:00-02:00 = 10 real minutes\" -> verify: docs.clock_contract_documented",
+    "no file under README.md, docs/** (outside docs/design/** and CHANGELOGs) says \"9 real minutes\", \"06:00-24:00\", \"24:00 passes the player out\" or \"midnight pass-out\" (a grep check) -> verify: docs.no_stale_clock_statements"
+   ],
+   "acceptanceAdd": "",
+   "notes": "tests/sections/docs.gd is P25's.",
+   "built": false,
+   "wave": "6",
+   "newChecks": [
+    "docs.clock_contract_documented",
+    "docs.no_stale_clock_statements"
+   ]
+  },
+  {
+   "id": "CK-A-P24",
+   "package": "P24-audio-voice",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "the ambience night / day state of the AudioDirector is TimeManager.is_night() compared each clock tick (raw hour: 20..25 and 2..4 are night); at raw 24:30 and 25:30 the farm plays farm_night and the city town_night -> verify: audio_town.night_ambience_after_midnight"
+   ],
+   "acceptanceAdd": "",
+   "notes": "The order says \"ambience by area and by state night/day (compared state, not edge)\" without naming the source of the state; this names it.",
+   "built": false,
+   "wave": "6",
+   "newChecks": [
+    "audio_town.night_ambience_after_midnight"
+   ]
+  },
+  {
+   "id": "CK-A-GFD",
+   "package": "GF-data",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "CONTRACT LEVEL ONLY (the final round; the family's own night is the family design's DATA, GHOST_FAMILY_ADDENDUM 4.4 of the design6 rewrite: Silke's round and vigil, Dyne's bench and midnight story, Blund's goodnight at 25:00, the lantern house 17-25 with Gnist at the counter until 25.0; its own check ghostfam_data.presence_after_midnight proves the posts at 24:30 / 25:00 / 25:30 on seven weekdays, and the first version of this amendment, which asked for \"Dyne on f_bench, Gnist on f_porch, Silke at f_lamp\" and a CLOSED lantern house after midnight, is SUPERSEDED): this amendment prescribes no post and no hour after midnight and introduces no check of its own. What the clock owns on the family's data: ghostfam_data.plans_wrap asserts that the LAST block of every plan holds until DAY_END (26) and is the same post as the first block (the wrap at 06:00, nobody teleports in view) -> verify: ghostfam_data.plans_wrap",
+    "ghostfam_data.keeper_covers_hours_every_open_day compares against the day axis [6, 26): the keeper stands at the counter at every minute the lantern house is open, whatever its closing hour (the building row and Gnist's counter block end at the same number) -> verify: ghostfam_data.keeper_covers_hours_every_open_day",
+    "ghostfam_data.dialogue_branches_run gains the contexts Tuesday raw 24 and 25 (Gnist's closed / early branches read the RAW stored hour: hour >= 23 closed, hour < 17 dawn, and the weekday of the game day) -> verify: ghostfam_data.dialogue_branches_run",
+    "the family addendum statements \"the plan WRAPS to 06:00; the world sleeps 24:00-06:00 and nothing is simulated\" and the \"honest\" item 8 are replaced by \"the day runs 06:00-02:00 (CLOCK_26); the family is simulated until 26:00\": the design6 rewrite carries it (handoff in CLOCK_26_ADDENDUM.md section 11) -> verify: ghostfam_data.plans_wrap"
+   ],
+   "acceptanceAdd": "",
+   "notes": "No routine edit is needed for the 30 shipped citizens (MEASURED design6/a2/sim26_day26_unchanged_plans.out: 0 problems). For the family the design6 rewrite is the data (its own sim to 26:00: 0 problems; the lantern house is open 17-25, one number, its own open question): this amendment is deliberately agnostic of it, so that it holds whichever version of the family data is in the order (verified: the three check names exist in the design5 and in the design6 version of ghostfamily_workpackages.json).",
+   "built": false,
+   "wave": "5b",
+   "newChecks": []
+  },
+  {
+   "id": "CK-A-GFQ",
+   "package": "GF-qa",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "zz_ghostfam: the clock list 06:10, 12:00, 17:30, 20:30 and 23:10 gains 00:30 and 01:30 (raw 24:30 and 25:30; the design6 rewrite of GF-qa already lists 00:30, 01:00 and 01:30, then there is nothing to add): who is where (the presence table of the family design), the lantern house open exactly as its Hours row says with nobody keeperless in any open minute, the family glow follows the night factor (1.0) -> verify: zz_ghostfam.week_presence, zz_ghostfam.shop_hours_and_closing"
+   ],
+   "acceptanceAdd": "",
+   "notes": "The presence table rows of the evidence document gain the two lines.",
+   "built": false,
+   "wave": "7",
+   "newChecks": []
+  },
+  {
+   "id": "CK-A-GGQ",
+   "package": "G-ghost-qa",
+   "ownsAdd": [],
+   "ownsRemove": [],
+   "addDependsOn": [],
+   "tasks": [
+    "row G2 (the farm at 12:00 with no glow and at 23:00 with glow energy > 0) gains a third look at raw 25:30: glow energy > 0 (the night factor is 1.0 from 20:00 to 05:30, proven by clock26.night_after_midnight) -> verify: zz_ghost.rows_g1_to_g6_green_for_the_ghost"
+   ],
+   "acceptanceAdd": "",
+   "notes": "The ghost hero's own glow rides IsoArea.night_factor like every glow: nothing to change in G-ghost-play.",
+   "built": false,
+   "wave": "7",
+   "newChecks": []
+  }
+ ],
+ "milestones": {
+  "CLOCK FIX ROUND (before wave 4)": {
+   "contains": [
+    "CK1-clock-section"
+   ],
+   "amendments": [
+    "CK-A-P10",
+    "CK-A-P02",
+    "CK-A-P07",
+    "CK-A-P04",
+    "CK-A-P15",
+    "CK-A-F1",
+    "CK-A-P01"
+   ],
+   "gate": "clock26 + core + area + save green, then the full strict harness for the four heroes with only the two base failures; the two mutation runs recorded"
+  },
+  "with the owning package": {
+   "amendments": [
+    "CK-A-D0",
+    "CK-A-P17",
+    "CK-A-P06",
+    "CK-A-P14",
+    "CK-A-V6",
+    "CK-A-TC",
+    "CK-A-TR",
+    "CK-A-TD",
+    "CK-A-SC",
+    "CK-A-SE",
+    "CK-A-SU",
+    "CK-A-I2",
+    "CK-A-TQ",
+    "CK-A-P27",
+    "CK-A-P25",
+    "CK-A-P24",
+    "CK-A-GFD",
+    "CK-A-GFQ",
+    "CK-A-GGQ"
+   ],
+   "rule": "each amendment lands in the work order of its package and is built with it"
+  },
+  "wave 7 (QA)": {
+   "contains": [
+    "CK2-clock-acceptance"
+   ]
+  }
+ },
+ "honestStubs": [
+  "There is no HUD in the base (no scenes/ui/hud.tscn): the 01:30 look is the real farm picture, not a clock label; the label is born in P17 with TTFormat.clock (CK-A-P17) and proven by CK2.",
+  "A modded day_start_hour of 0 has no hour below it: the pass-out roll lands on the wake-up hour and sleep_until_morning() ends a second day in ANY version (the 24 hour base included); the supported range of day_start_hour is 1..23 (a day start of 1 or 2 gets the day end 24 / 25, the final round fixed their fallback).",
+  "The proof of the unbuilt packages (Hours, routines, curfew, calendar selectors, festival windows) is from reading the work orders, the lift sources and the analyst ports (design6/a2/*.out), not from running the built code: each amendment names the check that will prove it when the package exists.",
+  "The full strict harness has TWO failures on the unmodified base (art_environment.budget, city_levels.built_framework_files_untouched: Codex's painted art) and a THIRD under the ghost hero (area.game_data_race_and_config: characters.lua has no ghost race row until V1 lands); \"0 failed\" in this addendum means 0 failures that the unmodified base does not also have, with those named.",
+  "world_2d.gd and iso_area.gd keep three stale comments until D0 edits world_2d.gd (they are sha-pinned): no behaviour depends on them.",
+  "Known edge, pre-existing and unchanged in kind: a day-end roll that lands during an area change starts no pass-out (WorldRoot2D guards on traveling / sleeping); the player then plays on at 02:xx of the new date until the bed. D0 may keep the event pending with one flag; nothing here depends on it.",
+  "The day grows from 9 to 10 real minutes (+11 %): every real-time figure that was derived from a 9 minute day is re-derived, the per-game-day figures are not."
+ ],
+ "openQuestions": [
+  "Q1 Curfew: move towns.curfew with the pass-out (whisper 25.5 = 01:30, night watch 25.75 = 01:45; DEFAULT) or keep 23.5 / 23.75 (the towns go quiet at 23:45, the two new hours exist only on the farm)?",
+  "Q2 Do shops or stalls stay open after midnight (the inn on Friday and Saturday, Natteblik 20-25.5)? DEFAULT: no, every shipped close stays <= 23:30; the exact data lines are in CLOCK_26_ADDENDUM.md section 9.2 when the user says yes. (The ghost family's lantern house 17-25 is the family design's own question, its Q1 in design6/family/OPEN_QUESTIONS.md, default yes, one number.)",
+  "Q3 Festivals: keep every window ending by 23:00 (DEFAULT) or let Midsommerlanterne / Årsskiftet run past midnight (Årsskiftet 15-25 with a true-midnight toast needs a NEW game_event, never midnight_passed)?",
+  "Q4 An autosave taken at the 02:00 roll resumes awake at 02:00 of the new date (the 00:00 roll did the same). DEFAULT: leave it. Alternative: lift every saved hour below 06:00 to 06:00 on load (one line in GameManager.from_dict).",
+  "Q5 Confirm the display: the clock reads 00:30 and 01:30 while the date block still says \"Tirsdag 16.\" until the 02:00 roll (the user's rule: the hours 24 and 25 belong to the same game day). DEFAULT: yes.",
+  "Q6 Confirm the rate: minutes_per_real_second stays 2.0, so the day is 10 real minutes (a game hour = 30 real seconds, +11 % per day). Alternative 2.222 keeps 9 minutes but changes every \"game minutes = real seconds\" figure of the towns, social and ghost designs. DEFAULT: keep 2.0.",
+  "Q7 Optional bedtime nudge: one whisper at 01:30 (\"Det er sent. Gå i seng, før du falder om.\", one new key WHISPER_SLEEPY in world.csv, 10 lines in D0). DEFAULT: no (the pass-out toast already says it, and the player loses nothing).",
+  "Q8 A richer night for the ghost family: ANSWERED by the family design (design6 rewrite, GHOST_FAMILY_ADDENDUM 4.4: Silke's round and vigil, Dyne's midnight story, Blund's goodnight, 0 problems in its sim); nothing is left to decide here."
+ ],
+ "sanctionedEdits": [
+  {
+   "id": "SE-CK1",
+   "file": "tests/sections/city_levels.gd",
+   "by": "D0-dungeon-world-hooks, in the SAME commit that edits world_2d.gd (the pin says: \"a legitimate later edit of one of them by its owner makes this check fail on purpose - update the hash in the same commit\")",
+   "lines": "the sha256 of scripts/world2d/world_2d.gd in the PINNED table (V3 owns the file; the update is the sanctioned cross-package line)"
+  },
+  {
+   "id": "SE-CK2",
+   "file": "docs/design/CLOCK_26_ADDENDUM.md + docs/design/clock_packages.json",
+   "by": "the lead (P01 owns docs/design/**), with the docs edits X01-X18",
+   "lines": "copy design6/FINAL/clock/CLOCK_26_ADDENDUM.md and design6/FINAL/clock/clock_packages.json; add (CLOCK, <path>/clock_packages.json, docs/design/CLOCK_26_ADDENDUM.md, docs/design/clock_packages.json) as the LAST entry of SRC in impl/tools/apply_designs.py (after GHOSTFAM: it amends the GF packages)"
+  }
+ ]
+}
