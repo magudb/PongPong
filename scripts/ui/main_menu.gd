@@ -11,6 +11,16 @@ extends Control
 
 
 func _ready() -> void:
+	_refresh_labels()
+	new_game_btn.pressed.connect(_on_new_game)
+	continue_btn.pressed.connect(_on_continue)
+	settings_btn.pressed.connect(_on_settings)
+	quit_btn.pressed.connect(_on_quit)
+	language_btn.pressed.connect(_on_language)
+	continue_btn.disabled = not SaveManager.has_any_save()
+
+
+func _refresh_labels() -> void:
 	title_label.text = tr("GAME_TITLE")
 	subtitle_label.text = tr("GAME_SUBTITLE")
 	new_game_btn.text = tr("MENU_NEW_GAME")
@@ -19,22 +29,13 @@ func _ready() -> void:
 	quit_btn.text = tr("MENU_QUIT")
 	language_btn.text = tr("MENU_LANGUAGE")
 
-	new_game_btn.pressed.connect(_on_new_game)
-	continue_btn.pressed.connect(_on_continue)
-	settings_btn.pressed.connect(_on_settings)
-	quit_btn.pressed.connect(_on_quit)
-	language_btn.pressed.connect(_on_language)
-
-	continue_btn.disabled = not SaveManager.has_save(0)
-
 
 func _on_new_game() -> void:
 	get_tree().change_scene_to_file("res://scenes/ui/character_select.tscn")
 
 
 func _on_continue() -> void:
-	if SaveManager.load_game(0):
-		get_tree().change_scene_to_file("res://scenes/main/world.tscn")
+	SaveManager.continue_latest()
 
 
 func _on_settings() -> void:
@@ -50,5 +51,4 @@ func _on_language() -> void:
 		LocalizationManager.set_locale("en")
 	else:
 		LocalizationManager.set_locale("da")
-	# Refresh labels
-	_ready()
+	_refresh_labels()

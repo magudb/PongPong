@@ -10,6 +10,9 @@ signal animal_bonded(animal_id: StringName, bond_level: int)
 enum Species { CHICKEN, RABBIT, DUCK, CAT, DOG, SHEEP, COW, DEER, FOX, OWL }
 enum ProductType { DAILY, EVERY_2_DAYS, EVERY_3_DAYS, ON_BOND }
 
+const SAVE_VERSION := 2
+const PRODUCT_DAYS := {ProductType.DAILY: 1, ProductType.EVERY_2_DAYS: 2, ProductType.EVERY_3_DAYS: 3}
+
 const SPECIES_DATA := {
 	"chicken": {
 		"name_key": "ITEM_BABY_CHICK",
@@ -59,7 +62,7 @@ const SPECIES_DATA := {
 	"cat": {
 		"name_key": "ITEM_BABY_KITTEN",
 		"species": Species.CAT,
-		"product": "companionship",
+		"product": "friendship_token",
 		"product_amount": [1, 1],
 		"product_interval": ProductType.ON_BOND,
 		"max_happiness": 100,
@@ -74,7 +77,7 @@ const SPECIES_DATA := {
 	"dog": {
 		"name_key": "ITEM_BABY_PUPPY",
 		"species": Species.DOG,
-		"product": "companionship",
+		"product": "friendship_token",
 		"product_amount": [1, 1],
 		"product_interval": ProductType.ON_BOND,
 		"max_happiness": 100,
@@ -261,6 +264,13 @@ class BuildingData:
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	EventBus.day_started.connect(_on_day_started)
+	EventBus.new_game_started.connect(reset)
+
+
+func reset() -> void:
+	animals.clear()
+	buildings.clear()
+	_animal_counter = 0
 
 
 # --- Animal management ---
@@ -293,6 +303,7 @@ func adopt_animal(item_id: StringName) -> bool:
 	animal.is_baby = true
 	animal.happiness = 60.0
 	animal.hunger = 70.0
+	animal.last_product_day = GameManager.total_day()
 
 	# Place in building
 	var building_id := _find_building_with_space(species)
@@ -346,7 +357,7 @@ func feed_animal(animal_id: StringName, food_id: StringName) -> bool:
 
 	animal.hunger = minf(animal.hunger + hunger_restore, 100.0)
 	animal.happiness = minf(animal.happiness + happiness_boost, spec["max_happiness"])
-	animal.last_fed_day = GameManager.day
+	animal.last_fed_day = GameManager.total_day()
 
 	_add_bond_xp(animal, 5.0)
 	animal_fed.emit(animal_id, food_id)
@@ -407,15 +418,16 @@ func collect_product(animal_id: StringName) -> int:
 		return 0
 
 	var product_id: StringName = StringName(spec["product"])
-	var amount: int = spec["product_amount"][randi() % spec["product_amount"].size()]
+	var amount: int = animal.products_ready
 
 	# Happiness modifier
 	if animal.happiness >= 80.0:
 		amount += 1
 
-	EconomyManager.add_item(product_id, amount)
+	if not EconomyManager.add_item(product_id, amount):
+		return 0
 	animal.products_ready = 0
-	animal.last_product_day = GameManager.day
+	animal.last_product_day = GameManager.total_day()
 
 	animal_product_collected.emit(animal_id, product_id, amount)
 
@@ -461,7 +473,7 @@ func build_building(building_type: StringName) -> bool:
 	var building := BuildingData.new()
 	building.id = StringName("%s_%d" % [building_type, _animal_counter])
 	building.building_type = building_type
-	building.built_day = GameManager.day
+	building.built_day = GameManager.total_day()
 	building.is_built = true
 	buildings[building.id] = building
 
@@ -502,7 +514,8 @@ func get_animals_in_building(building_id: StringName) -> Array:
 
 # --- Daily updates ---
 
-func _on_day_started(day: int, _season: StringName) -> void:
+func _on_day_started(_day: int, _season: StringName) -> void:
+	var today := GameManager.total_day()
 	for aid in animals:
 		var animal: AnimalData = animals[aid]
 		var spec: Dictionary = SPECIES_DATA[str(animal.species)]
@@ -522,12 +535,11 @@ func _on_day_started(day: int, _season: StringName) -> void:
 		animal.happiness = maxf(animal.happiness - decay, 0.0)
 
 		# Product generation
-		if not animal.is_baby and animal.happiness >= 30.0:
-			var interval: int = spec["product_interval"]
-			var days_since_product: int = day - animal.last_product_day
-			if days_since_product >= interval:
-				animal.products_ready = spec["product_amount"][1]
-				animal.last_product_day = day
+		if not animal.is_baby and animal.happiness >= 30.0 and animal.products_ready == 0:
+			var interval: int = int(PRODUCT_DAYS.get(spec["product_interval"], 0))
+			if interval > 0 and today - animal.last_product_day >= interval:
+				animal.products_ready = randi_range(int(spec["product_amount"][0]), int(spec["product_amount"][1]))
+				animal.last_product_day = today
 
 		# Bond level up check
 		_check_bond_level(animal)
@@ -543,6 +555,9 @@ func _check_bond_level(animal: AnimalData) -> void:
 	if animal.bond_xp >= xp_needed:
 		animal.bond_xp -= xp_needed
 		animal.bond_level += 1
+		var spec: Dictionary = SPECIES_DATA[str(animal.species)]
+		if int(spec["product_interval"]) == ProductType.ON_BOND:
+			animal.products_ready += int(spec["product_amount"][1])
 		animal_bonded.emit(animal.id, animal.bond_level)
 
 		EventBus.notification_posted.emit(
@@ -647,19 +662,95 @@ func to_dict() -> Dictionary:
 	for bid in buildings:
 		building_dict[bid] = (buildings[bid] as BuildingData).to_dict()
 	return {
+		"v": SAVE_VERSION,
 		"animals": animal_dict,
 		"buildings": building_dict,
 		"counter": _animal_counter,
 	}
 
 
-func from_dict(data: Dictionary) -> void:
-	animals.clear()
-	buildings.clear()
+## Pure validation also used by SaveManager before selecting a slot or replacing a backup.
+func validate_dict(data: Dictionary) -> bool:
+	if not _valid_count(data.get("v", 1)) or int(data.get("v", 1)) < 1 or int(data.get("v", 1)) > SAVE_VERSION:
+		return false
+	if not (data.get("animals", {}) is Dictionary) or not (data.get("buildings", {}) is Dictionary) or not _valid_count(data.get("counter", 0)):
+		return false
+	for id in data.get("animals", {}):
+		var record: Variant = data["animals"][id]
+		if not _valid_id(id) or not (record is Dictionary):
+			return false
+		var d: Dictionary = record
+		if not _valid_id(d.get("species")) or not SPECIES_DATA.has(str(d["species"])):
+			return false
+		if not _valid_id(d.get("id", id)) or str(d.get("id", id)) != str(id):
+			return false
+		for field in ["age_days", "bond_level", "last_fed_day", "last_product_day", "products_ready"]:
+			if not _valid_count(d.get(field, 0)):
+				return false
+		for field in ["happiness", "hunger", "bond_xp"]:
+			var value: Variant = d.get(field, 0.0)
+			if not _valid_number(value) or float(value) < 0.0 or (field != "bond_xp" and float(value) > 100.0):
+				return false
+		if not (d.get("name", "") is String) or not (d.get("is_baby", true) is bool) or not (d.get("building_id", "") is String or d.get("building_id", "") is StringName):
+			return false
+	for id in data.get("buildings", {}):
+		var record: Variant = data["buildings"][id]
+		if not _valid_id(id) or not (record is Dictionary):
+			return false
+		var d: Dictionary = record
+		if not _valid_id(d.get("building_type")) or not BUILDINGS.has(str(d["building_type"])):
+			return false
+		if not _valid_id(d.get("id", id)) or str(d.get("id", id)) != str(id):
+			return false
+		if not _valid_count(d.get("built_day", 0)) or not (d.get("is_built", false) is bool) or not (d.get("animals_inside", []) is Array):
+			return false
+		for animal_id in d.get("animals_inside", []):
+			if not _valid_id(animal_id):
+				return false
+	return true
+
+
+static func _valid_id(value: Variant) -> bool:
+	return (value is String or value is StringName) and str(value) != ""
+
+
+static func _valid_number(value: Variant) -> bool:
+	return (typeof(value) == TYPE_INT or typeof(value) == TYPE_FLOAT) and is_finite(float(value))
+
+
+static func _valid_count(value: Variant) -> bool:
+	return _valid_number(value) and float(value) >= 0.0 and float(value) <= 9007199254740991.0 and float(value) == floorf(float(value))
+
+
+## Old records used the seasonal day number. Resolve it to the most recent occurrence on the loaded calendar.
+func _legacy_day(value: int) -> int:
+	if value == 0:
+		return 0
+	return maxi(GameManager.total_day() - posmod(GameManager.day - value, GameManager.days_per_season()), 0)
+
+
+func from_dict(data: Dictionary) -> bool:
+	if not validate_dict(data):
+		return false
+	var restored_animals := {}
+	var restored_buildings := {}
+	var legacy := int(data.get("v", 1)) < SAVE_VERSION
 	var animal_dict: Dictionary = data.get("animals", {})
 	for aid in animal_dict:
-		animals[aid] = AnimalData.from_dict(animal_dict[aid])
+		var animal := AnimalData.from_dict(animal_dict[aid])
+		animal.id = StringName(str(aid))
+		if legacy:
+			animal.last_fed_day = _legacy_day(animal.last_fed_day)
+			animal.last_product_day = _legacy_day(animal.last_product_day)
+		restored_animals[animal.id] = animal
 	var building_dict: Dictionary = data.get("buildings", {})
 	for bid in building_dict:
-		buildings[bid] = BuildingData.from_dict(building_dict[bid])
-	_animal_counter = data.get("counter", 0)
+		var building := BuildingData.from_dict(building_dict[bid])
+		building.id = StringName(str(bid))
+		if legacy:
+			building.built_day = _legacy_day(building.built_day)
+		restored_buildings[building.id] = building
+	animals = restored_animals
+	buildings = restored_buildings
+	_animal_counter = int(data.get("counter", 0))
+	return true
