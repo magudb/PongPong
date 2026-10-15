@@ -110,6 +110,5 @@ func _on_confirm() -> void:
 
 	character_chosen.emit(selected_type, selected_skin, p_name)
 	# Hand off to game manager and load world
-	GameManager.start_new_game(p_name, selected_type, farm_name)
-	GameManager.character_skin = selected_skin
+	GameManager.start_new_game(p_name, selected_type, farm_name, selected_skin)
 	get_tree().change_scene_to_file("res://scenes/main/world.tscn")

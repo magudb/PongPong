@@ -1990,12 +1990,16 @@ func _day_night_and_weather(t) -> void:
 	for s in ["foraar", "sommer", "efteraar", "vinter"]:
 		tints[s] = dn.season_color(StringName(s))
 	t.check("season_tints", tints["foraar"].is_equal_approx(Color.WHITE) and tints["sommer"].r >= tints["sommer"].b and tints["efteraar"].r > tints["efteraar"].g and tints["efteraar"].g > tints["efteraar"].b and tints["vinter"].b > tints["vinter"].r, "foraar neutral, sommer warm, efteraar orange, vinter cool")
+	# season_changed refreshes DayNight's cached tint: assigning season alone leaves it stale (same as the game).
 	gm.set("season", &"efteraar")
+	t.autoload("EventBus").season_changed.emit(&"efteraar")
 	dn.override_hour = 12.0
 	var autumn: Color = dn.target_color()
 	gm.set("season", &"foraar")
+	t.autoload("EventBus").season_changed.emit(&"foraar")
 	var spring: Color = dn.target_color()
 	gm.set("season", StringName(saved_season))
+	t.autoload("EventBus").season_changed.emit(StringName(saved_season))
 	dn.override_hour = -1.0
 	t.check("target_color_includes_the_season", autumn.b < spring.b, "autumn blue %.2f < spring blue %.2f at noon" % [autumn.b, spring.b])
 	# rain: the only weather with a visual

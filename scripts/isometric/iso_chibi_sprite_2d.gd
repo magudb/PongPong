@@ -165,11 +165,13 @@ static func parse_meta(id: String, text: String) -> Dictionary:
 		if not raw is Dictionary:
 			continue
 		var spec := raw as Dictionary
-		anims[String(clip)] = {
+		# StringName keys: play_loop/has_clip take StringName and are called every tick per character.
+		var key := StringName(str(clip))
+		anims[key] = {
 			"frames": maxi(int(spec.get("frames", 1)), 1),
 			"fps": maxf(float(spec.get("fps", 6.0)), 0.5),
 			"loop": bool(spec.get("loop", false)),
-			"sheet": String(spec.get("sheet", String(clip) + TEXTURE_EXTENSION)),
+			"sheet": String(spec.get("sheet", str(clip) + TEXTURE_EXTENSION)),
 		}
 	var scale_value := float(source.get("display_scale", 1.0))
 	var glow_data: Dictionary = {}
@@ -302,14 +304,14 @@ func update_motion(
 
 
 func play_loop(clip: StringName) -> void:
-	if clip != current_clip and _animations.has(String(clip)):
+	if clip != current_clip and _animations.has(clip):
 		_play(clip)
 
 
 ## Plays a clip once and locks locomotion until it ends (then back to idle, action_finished is emitted).
 ## `rate` multiplies the clip's fps for this play only.
 func play_action(clip: StringName, rate: float = 1.0) -> void:
-	if not _animations.has(String(clip)):
+	if not _animations.has(clip):
 		return
 	_locked = true
 	_action_rate = rate
@@ -323,14 +325,14 @@ func is_action_playing() -> bool:
 
 ## Seconds one full play of `clip` takes at the given rate (0.0 for a clip the character does not have).
 func clip_duration(clip: StringName, rate: float = 1.0) -> float:
-	var spec: Dictionary = _animations.get(String(clip), {})
+	var spec: Dictionary = _animations.get(clip, {})
 	if spec.is_empty():
 		return 0.0
 	return float(spec["frames"]) / maxf(float(spec["fps"]) * playback_rate * rate, 0.5)
 
 
 func has_clip(clip: StringName) -> bool:
-	return _animations.has(String(clip))
+	return _animations.has(clip)
 
 
 ## Names of every clip this character has (the role's clip set: player = all 11, + 4 flight clips for fliers).
@@ -349,7 +351,7 @@ func resident_clip_count() -> int:
 
 ## Frame count and fps of a clip ({} when absent).
 func get_clip_spec(clip: StringName) -> Dictionary:
-	var spec: Dictionary = _animations.get(String(clip), {})
+	var spec: Dictionary = _animations.get(clip, {})
 	return spec.duplicate()
 
 
@@ -386,7 +388,7 @@ func get_portrait() -> Texture2D:
 ## Loads sheets ahead of use on worker threads (call during a fade). Returns immediately.
 func preload_clips(clips: Array) -> void:
 	for clip in clips:
-		var path := _sheet_path(String(clip))
+		var path := _sheet_path(StringName(str(clip)))
 		if path != "":
 			ResourceLoader.load_threaded_request(path)
 
@@ -397,10 +399,10 @@ func preload_clips(clips: Array) -> void:
 func warm_clips(clips: Array) -> void:
 	if not is_inside_tree():
 		return
-	var keys: Array[String] = []
+	var keys: Array[StringName] = []
 	var paths: Dictionary = {}
 	for clip in clips:
-		var key := String(clip)
+		var key := StringName(str(clip))
 		if _animations.has(key) and not _textures.has(key) and not paths.has(key):
 			var path := _sheet_path(key)
 			if path != "":
@@ -448,9 +450,9 @@ func _apply_sprite_transform() -> void:
 func _play(clip: StringName, force: bool = false) -> void:
 	if clip == current_clip and not force:
 		return
-	if not _animations.has(String(clip)):
+	if not _animations.has(clip):
 		clip = &"idle"
-	if not _animations.has(String(clip)):
+	if not _animations.has(clip):
 		return
 	# Maintain stride continuity when changing walk/run state.
 	var old_frames: int = _clip_frames
@@ -464,7 +466,7 @@ func _play(clip: StringName, force: bool = false) -> void:
 
 
 func _cache_clip() -> void:
-	var spec: Dictionary = _animations.get(String(current_clip), {})
+	var spec: Dictionary = _animations.get(current_clip, {})
 	_clip_frames = int(spec.get("frames", 1))
 	_clip_fps = float(spec.get("fps", 6.0))
 	_clip_loop = bool(spec.get("loop", false))
@@ -502,17 +504,17 @@ func _process(delta: float) -> void:
 
 
 ## res://.../<art id>/<sheet> of a clip ("" when the character does not have it).
-func _sheet_path(clip_key: String) -> String:
+func _sheet_path(clip_key: StringName) -> String:
 	var spec: Dictionary = _animations.get(clip_key, {})
 	if spec.is_empty():
 		return ""
-	return CHARACTERS_DIR + resolved_id + "/" + String(spec.get("sheet", clip_key + TEXTURE_EXTENSION))
+	return CHARACTERS_DIR + resolved_id + "/" + String(spec.get("sheet", String(clip_key) + TEXTURE_EXTENSION))
 
 
 func _sync_sprite() -> void:
-	if not is_node_ready() or not _animations.has(String(current_clip)):
+	if not is_node_ready() or not _animations.has(current_clip):
 		return
-	var clip_key := String(current_clip)
+	var clip_key := current_clip
 	if not _textures.has(clip_key):
 		_textures[clip_key] = load(_sheet_path(clip_key)) as Texture2D
 	var image := _textures[clip_key] as Texture2D

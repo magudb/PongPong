@@ -120,6 +120,7 @@ var _water_frame: int = 0
 var _water_t: float = 0.0
 var _poll_t: float = 0.0
 var _has_flag_when: bool = false
+var _has_water: bool = false                # a `~` cell was painted: the four swap layers and the 0.5 s tick are needed
 var _hooked: bool = false
 
 static var _handler_cache: Dictionary = {}  # script path -> {"mode": String, "script": Script}
@@ -213,7 +214,7 @@ func setup(p_map: AreaMap) -> void:
 		_build_standard()
 	_ensure_default_spawn()
 	build_ms = Time.get_ticks_msec() - t0
-	set_process(not water_layers.is_empty() or _has_flag_when)
+	set_process(_has_water or _has_flag_when)
 	built.emit()
 
 
@@ -523,6 +524,7 @@ func _paint_cell(c: Vector2i) -> void:
 			var wid: StringName = AreaTileSet.WATER_FRAMES[i]
 			water_layers[i].set_cell(c, AreaTileSet.source_for(projection, wid), AreaTileSet.atlas_coords_for(wid, c))
 		_terrain_of[c] = &"water_0"
+		_has_water = true
 		return
 	set_terrain(c, id)
 
@@ -1310,10 +1312,11 @@ func _track_when(params: Dictionary, nodes: Array) -> void:
 	if w == "" or nodes.is_empty():
 		return
 	_has_flag_when = _has_flag_when or w.begins_with("flag:")
-	var rec: Dictionary = {"nodes": nodes, "when": w, "active": true}
+	var rec: Dictionary = {"nodes": nodes, "when": w, "active": true, "is_flag": w.begins_with("flag:")}
 	_when_nodes.append(rec)
 	_apply_when(rec)
-	set_process(true)
+	if _has_flag_when:
+		set_process(true)                     # only flag: whens need the _process poll; quest / night arrive by signal
 
 
 static func evaluate_when(spec: String) -> bool:
@@ -1486,7 +1489,7 @@ func _on_game_event(_event_name: StringName, _payload: Dictionary) -> void:
 
 
 func _process(delta: float) -> void:
-	if not water_layers.is_empty():
+	if _has_water:
 		_water_t += delta
 		if _water_t >= WATER_PERIOD:
 			_water_t -= WATER_PERIOD
@@ -1496,7 +1499,7 @@ func _process(delta: float) -> void:
 		if _poll_t >= FLAG_POLL_PERIOD:
 			_poll_t = 0.0
 			for rec in _when_nodes:
-				if str(rec["when"]).begins_with("flag:"):
+				if rec.get("is_flag", false):
 					_apply_when(rec)
 
 

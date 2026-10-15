@@ -1,0 +1,78 @@
+name: playtest
+
+# Headless gate for every push and PR. `main` is expected to stay green
+# (docs/DEVELOPMENT.md); this workflow is what enforces that on GitHub.
+#
+# tests/run_playtest.sh already has a CI-ready contract:
+#   exit 0 = PASS, 1 = failed checks / engine errors or warnings,
+#   2 = usage or infrastructure, 124 = timeout.
+# --strict ignores tests/lib/known_issues.txt so tolerated warnings cannot pile up here.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: playtest-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  playtest:
+    name: headless harness (${{ matrix.character }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        character: [animal, fairy, hobbit, ghost]
+
+    env:
+      GODOT_VERSION: 4.7.2
+      # run_playtest.sh defaults to the macOS app path; point it at the downloaded binary.
+      GODOT: ${{ github.workspace }}/.godot-bin/godot
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache Godot binary
+        id: cache-godot
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.godot-bin
+          key: godot-${{ env.GODOT_VERSION }}-linux-x86_64
+
+      - name: Download Godot ${{ env.GODOT_VERSION }}
+        if: steps.cache-godot.outputs.cache-hit != 'true'
+        run: |
+          set -euo pipefail
+          mkdir -p .godot-bin
+          url="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          curl -fsSL -o /tmp/godot.zip "$url"
+          unzip -q /tmp/godot.zip -d /tmp/godot-dist
+          mv /tmp/godot-dist/Godot_v${GODOT_VERSION}-stable_linux.x86_64 .godot-bin/godot
+          chmod +x .godot-bin/godot
+          .godot-bin/godot --version
+
+      - name: Import project
+        # Fresh runners have no .godot cache; the harness would import anyway, but doing it
+        # here surfaces import errors as their own step and warms the cache for the run.
+        run: |
+          set -euo pipefail
+          "$GODOT" --headless --path . --import
+          "$GODOT" --headless --path . --import
+
+      - name: Run playtest (strict)
+        run: |
+          set -euo pipefail
+          tests/run_playtest.sh --strict --character=${{ matrix.character }} --report=/tmp/playtest-${{ matrix.character }}.json
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playtest-report-${{ matrix.character }}
+          path: /tmp/playtest-${{ matrix.character }}.json
+          if-no-files-found: ignore

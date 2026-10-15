@@ -25,10 +25,41 @@ var _keys: Array[Dictionary] = []     # [{hour: float, color: Color}]
 var _glow_keys: Array[Dictionary] = []   # [{hour: float, v: float}]
 var _preset_id: StringName = &""
 var _snap_next: bool = true
+## Cached season / weather tints: recomputed on the EventBus signals, never walked out of Lua
+## config per frame (that path splits the dotted key and reparses a colour string every tick).
+var _season_tint: Color = Color.WHITE
+var _weather_tint: Color = Color.WHITE
+var _season_of: StringName = &""
+var _weather_of: StringName = &""
 
 
 func _ready() -> void:
 	set_ambient(ambient)
+	EventBus.season_changed.connect(_on_season_changed)
+	EventBus.weather_changed.connect(_on_weather_changed)
+	_refresh_tints()
+
+
+func _on_season_changed(season: StringName) -> void:
+	_season_tint = season_color(season)
+	_season_of = season
+
+
+func _on_weather_changed(weather: StringName) -> void:
+	_weather_tint = weather_color(weather)
+	_weather_of = weather
+
+
+## Recomputes both cached tints from the live GameManager / TimeManager state.
+func _refresh_tints() -> void:
+	var gm: Node = GameData.gm()
+	if gm != null:
+		_season_of = StringName(str(gm.get("season")))
+		_season_tint = season_color(_season_of)
+	var tm: Node = GameData.tm()
+	if tm != null:
+		_weather_of = StringName(str(tm.get("weather")))
+		_weather_tint = weather_color(_weather_of)
 
 
 ## Picks the preset of a map header (`farm`, `farm_day`, `forest`, ...). Unknown ids use the default preset of the Lua file.
@@ -119,21 +150,18 @@ func weather_color(weather: StringName) -> Color:
 	return Color.from_string(str(table.get(String(weather), "ffffff")), Color.WHITE)
 
 
-## The colour the modulate is heading for right now.
+## The colour the modulate is heading for right now (uses the cached season / weather tints).
 func target_color() -> Color:
-	var c: Color = preset_color_at(hour_now())
-	var gm: Node = GameData.gm()
-	if gm != null:
-		c = c * season_color(StringName(str(gm.get("season"))))
-	var tm: Node = GameData.tm()
-	if weather_allowed and tm != null:
-		c = c * weather_color(StringName(str(tm.get("weather"))))
+	var c: Color = preset_color_at(hour_now()) * _season_tint
+	if weather_allowed:
+		c = c * _weather_tint
 	c.a = 1.0
 	return c
 
 
 ## Colour and glow jump to their targets at once (behind the fade of an area switch, in tests).
 func snap() -> void:
+	_refresh_tints()
 	color = target_color()
 	_set_glow(glow_at(hour_now()))
 	_snap_next = false

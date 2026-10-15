@@ -3,7 +3,7 @@ extends Node
 ##
 ## FILES (user://saves). save_0.json .. save_5.json are the six MANUAL slots, save_auto.json is the one AUTO slot
 ## (AUTO_SLOT = 6, an int so it travels through EventBus.save_completed(slot: int)). A manual save rolls the previous
-## file of its slot to save_N.bak.json first (only when that file was readable JSON); the auto slot has no backup.
+## file of its slot to save_N.bak.json first (only when that file is a valid save payload); the auto slot has no backup.
 ## Every write goes to <file>.tmp, is read back and compared, and only then renamed over the real file: a crash or a
 ## full disk never leaves half a save behind and never replaces a good save with a bad one.
 ##
@@ -23,7 +23,8 @@ extends Node
 ##
 ## SECTION REGISTRY (addendum 3.2). A feature manager calls register_section("home", self, 10) in _ready and offers
 ## to_dict() -> Dictionary, from_dict(d) (may return false to reject the data) and reset(); each section carries its own
-## "v" (the payload version stays 2). gather = {name: node.to_dict()}.
+## "v" (the payload version stays 2). gather = {name: node.to_dict()}. An optional pure validate_dict(d) -> bool
+## checks nested records during slot inspection, before any live state changes or a backup is rotated.
 ##
 ## LOADING. load_game(slot) VALIDATES first (root is an object, meta.version is a whole number <= PAYLOAD_VERSION,
 ## older versions go through the _migrate chain, required sections are objects with their required keys), then
@@ -404,7 +405,12 @@ func _inspect_result(out: Dictionary, state: StringName, payload: Dictionary, fr
 ## only a cache: when it lacks a key or holds a value of the wrong type (a hand-edited or half-written file) the summary is
 ## rebuilt from the sections, so the values always have the types SUMMARY_TYPES lists and a "%d" never meets a string.
 func get_save_summary(slot: int = 0) -> Dictionary:
-	var info := inspect_slot(slot)
+	return _summary_of(inspect_slot(slot), slot)
+
+
+## The summary row of an already-inspected slot: {} when it is not loadable. Lets describe_slots() reuse the payload it
+## just read instead of reading and validating the file a second time.
+func _summary_of(info: Dictionary, slot: int) -> Dictionary:
 	if info["state"] != &"ok" and info["state"] != &"backup":
 		return {}
 	var payload: Dictionary = info["payload"]
@@ -444,7 +450,7 @@ func describe_slots() -> Array[Dictionary]:
 	var rows: Array[Dictionary] = []
 	for slot in all_slots():
 		var info := inspect_slot(slot)
-		rows.append({"slot": slot, "is_auto": slot == AUTO_SLOT, "state": info["state"], "summary": get_save_summary(slot)})
+		rows.append({"slot": slot, "is_auto": slot == AUTO_SLOT, "state": info["state"], "summary": _summary_of(info, slot)})
 	return rows
 
 
@@ -672,6 +678,9 @@ func validate_payload(data: Variant) -> Dictionary:
 					return _verdict(false, "invalid", "section '%s' lacks '%s'" % [section_name, key])
 				if not _has_type((section as Dictionary)[key], str(keys[key])):
 					return _verdict(false, "invalid", "section '%s': '%s' should be %s" % [section_name, key, keys[key]])
+			var node := _node_of(entry)
+			if node != null and node.has_method("validate_dict") and not bool(node.call("validate_dict", section)):
+				return _verdict(false, "invalid", "section '%s' contains invalid records" % section_name)
 		elif entry.get("required", false):
 			return _verdict(false, "invalid", "section '%s' is missing" % section_name)
 	if payload.has("world") and typeof(payload["world"]) != TYPE_DICTIONARY:
@@ -1002,12 +1011,15 @@ func _write_atomic(path: String, text: String) -> bool:
 	return true
 
 
-## A manual save keeps the file it replaces as save_N.bak.json, but only when that file is readable JSON, so a damaged
+## A manual save keeps the file it replaces as save_N.bak.json, but only when that file is a valid payload, so a damaged
 ## file never replaces a good .bak.
 func _roll_backup(slot: int) -> void:
 	var path := slot_path(slot)
 	var backup := backup_path(slot)
-	if backup == "" or not FileAccess.file_exists(path) or _read_json_file(path)["state"] != "ok":
+	if backup == "" or not FileAccess.file_exists(path):
+		return
+	var previous := _read_json_file(path)
+	if previous["state"] != "ok" or not validate_payload(previous["data"])["ok"]:
 		return
 	var temp := backup + ".tmp"
 	if DirAccess.copy_absolute(path, temp) != OK:
