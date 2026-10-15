@@ -1,0 +1,164 @@
+{
+  "crops_a.png": {
+    "path": "tools/art/drawn/sources/style_audit/crops_a.png",
+    "selected": false,
+    "sha256": "50b9b1188adfd6614ddde035b20ae8e9ad2c7f45d5bd30731959886bdd3e9646",
+    "role": "retained edit input; superseded by rotation/gutter correction"
+  },
+  "crops_a_spaced.png": {
+    "path": "tools/art/drawn/sources/style_audit/crops_a_spaced.png",
+    "selected": true,
+    "sha256": "81a5ecf9a8f20e0c99e3c7560e00ebd17f59444797c7ec887b3aa7c32dca0e5a",
+    "role": "selected painting"
+  },
+  "crops_b.png": {
+    "path": "tools/art/drawn/sources/style_audit/crops_b.png",
+    "selected": true,
+    "sha256": "1835465a2a950d29429c064b0abdc4d19d9d3b8cfabe7dd17b6bd72c27c5bd1d",
+    "role": "selected painting"
+  },
+  "farm_buildings.png": {
+    "path": "tools/art/drawn/sources/style_audit/farm_buildings.png",
+    "selected": true,
+    "sha256": "94de988bef08d1c35a0d4e1b57052ce76be3c6ee6c8f0a66fa176a7918f39359",
+    "role": "selected painting"
+  },
+  "furniture_a.png": {
+    "path": "tools/art/drawn/sources/style_audit/furniture_a.png",
+    "selected": false,
+    "sha256": "4b70e26099609f97b5f9ae28b36a294c49f12bd803fb25f59dc2d6a78bbe1622",
+    "role": "retained edit input; superseded by rotation/gutter correction"
+  },
+  "furniture_a_fixed.png": {
+    "path": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "selected": true,
+    "sha256": "ab41dfd00774ab06471bfe3b2a1d85aca2161bc618faa959c4e223b144346fd9",
+    "role": "selected painting"
+  },
+  "furniture_b.png": {
+    "path": "tools/art/drawn/sources/style_audit/furniture_b.png",
+    "selected": true,
+    "sha256": "b55424d565a39b3352ed93c82cb9f0d89de27013e4a3422d134c74135414b297",
+    "role": "selected painting"
+  },
+  "furniture_c.png": {
+    "path": "tools/art/drawn/sources/style_audit/furniture_c.png",
+    "selected": true,
+    "sha256": "39b2d5f3cd634d01815436e3d73b293b92ff0c5d402b65f7d2388fbc96f309ac",
+    "role": "selected painting"
+  },
+  "furniture_d.png": {
+    "path": "tools/art/drawn/sources/style_audit/furniture_d.png",
+    "selected": true,
+    "sha256": "3f267012b65d06fbd2a684d7d0fc05b9274d39151f129b6bcb42e697b9882ebf",
+    "role": "selected painting"
+  },
+  "furniture_e.png": {
+    "path": "tools/art/drawn/sources/style_audit/furniture_e.png",
+    "selected": true,
+    "sha256": "0030944630adab3e750ab97c783c042495244f590c45ebcd5c0ffc6f87b17fab",
+    "role": "selected painting"
+  },
+  "furniture_f.png": {
+    "path": "tools/art/drawn/sources/style_audit/furniture_f.png",
+    "selected": true,
+    "sha256": "f1bdb3794954b78d40fbf68bdaf3446ef2fd72c310eac84d38aa2a828f5e506e",
+    "role": "selected painting"
+  },
+  "furniture_g.png": {
+    "path": "tools/art/drawn/sources/style_audit/furniture_g.png",
+    "selected": true,
+    "sha256": "c3acf960f881237616b1501262301e1075cc4e6e68fe52e2939ee812b390b0e5",
+    "role": "selected painting"
+  },
+  "furniture_h.png": {
+    "path": "tools/art/drawn/sources/style_audit/furniture_h.png",
+    "selected": true,
+    "sha256": "16b5de878c54e009414bde1ead875903e201bc8994b528957d6679bc7fe78902",
+    "role": "selected painting"
+  },
+  "furniture_i.png": {
+    "path": "tools/art/drawn/sources/style_audit/furniture_i.png",
+    "selected": true,
+    "sha256": "d87238dc9c3ab2d6a13422e1c809b97657d4b7c802f6adeab1b529b5d9f5f353",
+    "role": "selected painting"
+  },
+  "furniture_j.png": {
+    "path": "tools/art/drawn/sources/style_audit/furniture_j.png",
+    "selected": false,
+    "sha256": "cdbb4ea82e891ca413c201eb140fdaf0a8646a3638839c4cf257f3ee486bde55",
+    "role": "retained edit input; superseded by rotation/gutter correction"
+  },
+  "furniture_j_spaced.png": {
+    "path": "tools/art/drawn/sources/style_audit/furniture_j_spaced.png",
+    "selected": true,
+    "sha256": "9189860a56f9b2c2697477ce417f9c4dbe05d9480c7a13895bc17d422496c567",
+    "role": "selected painting"
+  },
+  "furniture_k.png": {
+    "path": "tools/art/drawn/sources/style_audit/furniture_k.png",
+    "selected": true,
+    "sha256": "e4cb61ef5bf2dbfa0e9062c7a5ccdedf17d4864737389b72f16b1e2126bde33e",
+    "role": "selected painting"
+  },
+  "furniture_l.png": {
+    "path": "tools/art/drawn/sources/style_audit/furniture_l.png",
+    "selected": false,
+    "sha256": "44ba43a9ddeba7a30516c7b81cb19e9af7734181b1d0c538d2fceda1203d2bf0",
+    "role": "retained edit input; superseded by rotation/gutter correction"
+  },
+  "furniture_l_fixed.png": {
+    "path": "tools/art/drawn/sources/style_audit/furniture_l_fixed.png",
+    "selected": true,
+    "sha256": "27c7a33cf7ceb3bfe7744e501766696432ff7ffe50a0764b781006e3e9383fd3",
+    "role": "selected painting"
+  },
+  "furniture_m.png": {
+    "path": "tools/art/drawn/sources/style_audit/furniture_m.png",
+    "selected": true,
+    "sha256": "9fb9efbde1975323f476bfd19a463c21bace358e088e3ad227f08841dafcc025",
+    "role": "selected painting"
+  },
+  "furniture_n.png": {
+    "path": "tools/art/drawn/sources/style_audit/furniture_n.png",
+    "selected": true,
+    "sha256": "e9f204b4712c606c30260ad221fbbd1cdf40f2984b5ea6a28a7cd72d0f0276b3",
+    "role": "selected painting"
+  },
+  "giant_trees.png": {
+    "path": "tools/art/drawn/sources/style_audit/giant_trees.png",
+    "selected": true,
+    "sha256": "b27f893520080742a6ad49bdc01e9cfa7ec9716b1fe25da1eb7cfe97e2b43ab5",
+    "role": "selected painting"
+  },
+  "materials_a.png": {
+    "path": "tools/art/drawn/sources/style_audit/materials_a.png",
+    "selected": true,
+    "sha256": "afabd64fe5a0ef3763b52d34dbc21ddf30423767b6f2ccc2ac93ef43e5e49947",
+    "role": "selected painting"
+  },
+  "materials_b.png": {
+    "path": "tools/art/drawn/sources/style_audit/materials_b.png",
+    "selected": true,
+    "sha256": "ae417fabbd32e98488c18d1bc1e21dc13cf9e586bcea1fafc5cea37d89e64e50",
+    "role": "selected painting"
+  },
+  "utility_a.png": {
+    "path": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "selected": true,
+    "sha256": "6506d738b02f4983550070f1628495db69cc629283e5fb706ec50d42e9ef7f06",
+    "role": "selected painting"
+  },
+  "utility_b.png": {
+    "path": "tools/art/drawn/sources/style_audit/utility_b.png",
+    "selected": true,
+    "sha256": "57c6b5824bbe3ef4fcb216b4189814f2fab46d63833c9edd368e9c135ee351e5",
+    "role": "selected painting"
+  },
+  "utility_c.png": {
+    "path": "tools/art/drawn/sources/style_audit/utility_c.png",
+    "selected": true,
+    "sha256": "7efd315c0f3ac055ebd1020a84c7bbda776eb1828a566812b016708f613310fe",
+    "role": "selected painting"
+  }
+}

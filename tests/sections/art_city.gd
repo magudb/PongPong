@@ -584,7 +584,9 @@ func _backdrop() -> void:
 		bad.append("backdrop(treetop).real is false: ArtCatalog fell back to the farm palette")
 	var sky: Texture2D = b.get("sky", null)
 	var far: Texture2D = b.get("far", null)
-	if sky == null or sky.get_width() != 16 or sky.get_height() != 1024:
+	var painted_sky := FileAccess.file_exists(BACKDROP_DIR + "treetop_sky.png")
+	var sky_size := Vector2(384, 216) if painted_sky else Vector2(16, 1024)
+	if sky == null or sky.get_size() != sky_size or (painted_sky and sky.resource_path != BACKDROP_DIR + "treetop_sky.png"):
 		bad.append("sky %s" % [str(sky.get_size()) if sky != null else "null"])
 	if far == null or far.get_width() != 2048 or far.get_height() != 1024:
 		bad.append("far %s" % [str(far.get_size()) if far != null else "null"])
@@ -617,7 +619,7 @@ func _backdrop() -> void:
 	var mm: Array[String] = ArtCatalog.missing()
 	if mm.has("backdrop:treetop"):
 		bad.append("ArtCatalog.missing() lists backdrop:treetop")
-	_t.check("backdrop_loads_through_artcatalog", bad.is_empty(), "ArtCatalog.backdrop(&\"treetop\") is real: sky 16x1024 cfe0a8 > 9cbf74 > 4f6f3a, far 2048x1024 seamless in x with trunk bars, mist and a dark ground strip; %s" % str(bad.slice(0, 3)))
+	_t.check("backdrop_loads_through_artcatalog", bad.is_empty(), "runtime sky %s (painted PNG takes priority); original gradient/far exports retain their measured seam and color contracts; %s" % [sky_size, str(bad.slice(0, 3))])
 
 
 ## no lossy WebP: every file is VP8L (lossless) or a PNG; a 'VP8 ' chunk is lossy

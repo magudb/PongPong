@@ -23,7 +23,7 @@ tests/run_playtest.sh --strict --character=fairy
 tests/run_playtest.sh --strict --character=hobbit
 ```
 
-`--only=characters|props|homes|terrain|items|world|interiors` rebuilds a slice. `--sheet heroes players2`
+`--only=characters|props|homes|terrain|items|world|interiors|consistency` rebuilds a slice. `--sheet heroes players2`
 restricts the character sources; `--character <ids...>` restricts individual IDs.
 `--portraits-only --only=characters` updates
 portraits without rebuilding animation sheets. Run one Godot instance at a time.
@@ -176,3 +176,19 @@ The report is `docs/art/drawn/coverage.json`. It checks every installed characte
 clip and portrait, hero and NPC resolution, animal/enemy references, every live
 item icon, all terrain IDs and every declared or mapped prop. Run it again when
 the content registry changes.
+
+The full asset consistency review is recorded in `docs/art/style-audit/` with
+before/after file inventories, labeled review sheets, native captures and exact
+built-in imagegen prompts. `consistency.py` packs the saved replacement paintings
+for 130 furniture designs, 32 crafting materials and the remaining world props.
+It also projects painted timber onto the construction frames. Run it after a
+legacy geometry bake; the complete `pack.py` command runs it as the final stage.
+Use `--only=consistency` to rebuild this stage without redoing the character pack.
+
+The furniture manifest now retains 482 authored views: four per free-standing
+piece and two per wall piece, plus 44 separate legendary effect overlays. All
+130 IDs retain their footprint, original placement anchors and gameplay fields.
+The old symmetry/mirror measurements describe the geometry generator; they do
+not authorize flipping the painted grain or embroidery. Native checks enforce
+the painted rotation policy and still test anchors, icon outlines, distinctness
+and the unchanged 12 MB home art budget.

@@ -1,0 +1,18 @@
+{
+  "crops_a_spaced": {
+    "tool": "built-in imagegen",
+    "prompt": "Use case: precise-object-edit. Edit target is the crops_a.png sprite atlas. Keep all sixteen painted objects, materials, details, colors, identities, stages/orientations and 4-column by4-row ordering. Fix the production separation: adjacent ROWS TOUCH each other and cannot be exported as separate sprites. SHRINK every object to at most80percent of its current cell width and height, place it CENTRED inside its own cell, leaving at least35 clear transparent pixels on EVERY cell edge and large empty gutters between all16 objects. Do not crop or cut any leaves, heads, limbs, canopy, mushroom cap, piano or stool. No object or its paint edge may touch another object or cross a grid line. Preserve all complete silhouettes at the same relative size across each row. TRUE ALPHA TRANSPARENCY in all gutters, no brown/color backdrop or ground shadows, no text or labels. Only change spacing and canvas arrangement, not the artwork.",
+    "master": "tools/art/drawn/sources/style_audit/crops_a_spaced.png",
+    "ordered_input_paths": [
+      "tools/art/drawn/sources/style_audit/crops_a.png"
+    ]
+  },
+  "furniture_j_spaced": {
+    "tool": "built-in imagegen",
+    "prompt": "Use case: precise-object-edit. Edit target is the furniture_j.png sprite atlas. Keep all sixteen painted objects, materials, details, colors, identities, stages/orientations and 4-column by4-row ordering. Fix the production separation: adjacent ROWS TOUCH each other and cannot be exported as separate sprites. SHRINK every object to at most80percent of its current cell width and height, place it CENTRED inside its own cell, leaving at least35 clear transparent pixels on EVERY cell edge and large empty gutters between all16 objects. Do not crop or cut any leaves, heads, limbs, canopy, mushroom cap, piano or stool. No object or its paint edge may touch another object or cross a grid line. Preserve all complete silhouettes at the same relative size across each row. TRUE ALPHA TRANSPARENCY in all gutters, no brown/color backdrop or ground shadows, no text or labels. Only change spacing and canvas arrangement, not the artwork.",
+    "master": "tools/art/drawn/sources/style_audit/furniture_j_spaced.png",
+    "ordered_input_paths": [
+      "tools/art/drawn/sources/style_audit/furniture_j.png"
+    ]
+  }
+}

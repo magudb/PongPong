@@ -1,0 +1,91 @@
+Trætoppen asset consistency review — 2026-10-15 — codex-review
+
+The current runtime illustrations and the furnishing/equipment design packs
+follow the chosen painted character-and-tile direction after this repair pass.
+The authoritative reference is the local Trætoppen Style Guide Review HTML,
+together with the accepted paintings under tools/art/drawn/sources/. Historical
+3D-bake plans describe prototype exports and do not override that art direction.
+
+The initial inventory covered 4,249 files and 2,060 rasters. The completed asset
+tree contains 4,656 files and 2,263 rasters, including the added replacement
+views and masks. All raster files decode, all JSON/SVG files parse, and all eight
+bundled typefaces load. The CSV inventories include dimensions, bytes and SHA256;
+the final inventory also labels effective assets, technical layers and retained
+exports. This is a technical inventory plus a visual review, not an automatic
+style classifier.
+
+Reviewed and corrected:
+- All 58 characters: each clip at a middle frame, all eight idle directions and
+  portraits. Their existing loose contours, chibi proportions, faces and painted
+  colors fit the chosen references. This was not a frame-by-frame animation review.
+- All 345 registered item pictures and all 29 terrain IDs. The 130 furniture and
+  32 crafting-material icons now use painted sources, readable native UI ink
+  outlines and the existing legendary night rim. Clothing/food/tool pictures
+  already fit the direction. UI vectors and typography retain their own guide roles.
+- All 130 furniture designs, now 482 authored views: four for free-standing
+  objects and two for wall objects. Mushroom, root, snail, moon and crystal
+  keepsakes retain their distinguishing designs. Material variants preserve
+  painted grain. Runners are projected to their actual floor quadrilateral;
+  granite, marble and slate remain visibly different. No mirror fallback is used.
+- 111 world/structural/parallax entries: all 32 crop stages, farm structures,
+  town buildings, chests, ore/crystals, mushrooms, tools/utility props, giant
+  trees and trunks, lantern colorways, stone paths, floor surfaces and pennants.
+  The thorn-berry pickup remains fruit, and the roof kit retains its ladder,
+  terracotta shingles, metal bucket and hammer. Seven building light masks
+  follow the newly painted windows. Gameplay IDs and collision definitions remain.
+- Farm, forest and town horizons share approved nature paintings in atmospheric
+  palettes. The treetop sky uses a soft export of the approved sky painting.
+  Existing painted skies and title artwork were accepted without repainting.
+- All ten house upgrades and nine construction frames. Construction timber now
+  uses the approved painted grain while retaining its native geometry and anchors.
+- All 52 equipment study exports. These remain flattened design studies, not
+  newly implemented fitted equipment animations or equipping gameplay.
+
+The native review captured all 482 furniture views, 111 replacement entries and
+162 icons, plus farm, town, treetop city and dark forest at hours 11 and 21.
+The screenshots and review montages are under native/. The dark forest retains
+its deliberately dark ambient preset at both sampled hours. Some tabletop
+objects and crop stages retain very small native canvases; inventory artwork is
+exported from the high-resolution paintings rather than enlarged world sprites.
+
+Intentional exceptions are explicit. Shadows, light/halo masks, telegraphs,
+mist, small effect glyphs and decorative particles serve technical/readability
+roles; they are not repainted as illustrated objects. Older CG exports, duplicate
+lookup pictures and superseded atlases remain where generator regression tests
+still depend on their paths. The inventory labels these retained exports. Their
+presence does not mean they are the accepted runtime illustration. The effective
+catalog and the provenance regression check verify the selected paths.
+
+Evidence and checks:
+- catalog-after.json: 58 characters, 345 items, 29 terrains, 360 prop IDs; zero gaps.
+- full-tests.json: 3,773 checks in 32 sections; zero failures, engine errors or
+  engine warnings; 54 expected headless skips. The 26 scoped allowed messages
+  belong to the suite's explicit test cases, not new unhandled engine failures.
+- native-tests.json: 48 checks, zero failures/errors/warnings/skips.
+- focused-tests.json: 461 art/UI checks; zero failures/errors/warnings.
+- provenance-tests.json: 115 checks after extending the guard to every current
+  prop ID; zero failures/errors/warnings. All 357 prior IDs remain available.
+- Home art: 10.73 MB on disk within the unchanged 12 MB budget. Conservative city
+  RGBA8 upload estimate including mipmaps: 69.8 MB within the unchanged 70 MB cap.
+- Original native furniture anchors, footprints, sorting and interaction fields
+  are checked against consistency_layout.json. Icons retain fill/outline/night
+  contrast checks; same-template variants retain near-duplicate checks.
+
+Exact built-in imagegen prompts are in the adjacent JSON prompt files. The
+reusable asset-repair-prompt.txt describes the chosen style, reference roles and
+production constraints. Full-resolution masters are saved in
+tools/art/drawn/sources/style_audit/. source-index.json distinguishes selected
+paintings from the retained inputs used by the spacing/rotation repair prompts.
+No API credentials or live generation are needed to rebuild the installed art.
+
+Rebuild from the worktree root:
+  tools/art/.venv/bin/python tools/art/drawn/pack.py --only=consistency
+  tools/art/.venv/bin/python tools/import/write_import_stubs.py --check
+  tests/run_playtest.sh --strict --character=animal
+  tools/dev/run_windowed.sh --strict --no-boot --only=art_style_consistency --out=<directory>
+
+The complete pack.py command runs this consistency stage last. Run that stage
+again after a legacy geometry bake. after/ contains labeled current-file review
+pages; before/ records the starting exports. Native gallery documentation uses
+quality-97 WebP copies to limit repository size; native-captures.json records
+the original PNG hashes. The eight original world screenshots remain PNG.

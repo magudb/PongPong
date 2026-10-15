@@ -6,7 +6,8 @@
   "night": "ADDITIVE layer (BLEND_MODE_ADD), TRIMMED to the bbox of its lights: exterior.night_offset = px from the top-left of the day sprite, exterior.night_size = its size; same pivot as the day sprite",
   "ysort": "px offset from the pivot to the y-sort key point (left-front corner if W>=D)",
   "platform_back_rows": "extra deck rows added BEHIND the door row (towards -z); front edges + all farm coordinates stay identical",
-  "money": "none here: costs, days, materials and gates are lua/data/home_tiers.lua; names are localization/home.csv"
+  "money": "none here: costs, days, materials and gates are lua/data/home_tiers.lua; names are localization/home.csv",
+  "scaffold_illustration": "tools/art/drawn/sources/terrain.png; painted timber projected over unchanged construction geometry"
  },
  "platform_stages": {
   "0": {

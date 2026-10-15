@@ -1,0 +1,9 @@
+{
+  "tool": "built-in imagegen",
+  "prompt": "Use case: illustration-story. Two production replacement sprites for EXISTING Trætoppen game, on TRUE alpha transparent background. References nature.png and interior_shops.png are authoritative material/line style: matte watercolor/gouache, fine warm grey-brown pencil contours, worn honey wood, organic outlines, handmade surfaces, quiet sage/cream/rose palette. Fixed36degree elevated orthographic camera, verticals upright, front bottom-left. ONE ROW TWO COLUMNS, exactly TWO complete isolated objects with wide transparent gutters; no text, room/floor/ground tiles, cast shadows, glow halo or characters.\nLEFT: tiny thorn-berry PICKUP, exactly three plump muted rose-pink berries clustered together, a few tiny maroon thorn dots on their skin, one small sage leaf at their attached stems. It is a small bunch of fruit, NO bush, stalk, pot, soil, roots or mushroom.\nRIGHT: the bakery roof REPAIR KIT: one small honey timber ladder leaning slightly upright, a neat short bundle of terracotta roof shingles at its foot, one little worn cool grey metal bucket with curved handle and a tiny wooden-handled hammer. Keep all pieces arranged close together as a single compact connected kit silhouette. Distinct metal bucket, terracotta tiles and timber ladder retain their own materials; not all brown timber. No extra objects. All ladder rails and rungs fully inside the cell.",
+  "master": "tools/art/drawn/sources/style_audit/utility_c.png",
+  "references": [
+    "tools/art/drawn/sources/nature.png",
+    "tools/art/drawn/sources/interior_shops.png"
+  ]
+}
