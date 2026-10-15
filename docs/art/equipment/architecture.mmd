@@ -1,0 +1,12 @@
+flowchart LR
+    Garments[Existing clothing IDs and wardrobe rules] --> Wardrobe[Planned WardrobeManager: owned outfit and presets]
+    Inventory[Existing backpack and item definitions] --> Economy[EconomyManager: tools and weapon]
+    Economy --> Action[Player action controller: active held item]
+    Wardrobe --> Snapshot[Immutable visual snapshot]
+    Action --> Snapshot
+    Clock[IsoChibiSprite2D: clip, direction, frame] --> Presenter[EquipmentVisuals presenter]
+    Snapshot --> Presenter
+    Art[Per-body fitted layers, sockets and occluders] --> Presenter
+    Presenter --> Actor[One actor y-sort subtree]
+    Wardrobe --> Save[Existing owner save sections]
+    Economy --> Save

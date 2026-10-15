@@ -1,0 +1,271 @@
+Equipping the playable cast
+
+The player should recognize their hero first and their equipment second. Clothing
+changes the silhouette and fabric; a held tool or weapon makes the current action
+clear. The same item is fitted to each hero rather than stretching one overlay
+across every body. Keep the approved painted storybook finish: warm pencil edges,
+matte linen, honey leather, sage, cream, muted lavender and small brass details.
+
+This delivery is an equipment design, concept art and an inspectable art studio.
+It does not install a second inventory, wardrobe, combat controller or save format.
+The concepts have one authored view. They are not fitted animation layers.
+
+The eight heroes
+
+  Rasmus / animal_fox / fox: ears above hat brim, muzzle clear, tail behind tunic.
+  Kiki / animal_monkey / monkey: rounded ear openings, curled tail clear of belt.
+  Kloevermynte / fairy_meadow / fairy: hair buns and purple wings remain readable.
+  Birk / fairy_birk / fairy_birk: auburn hair and blue wings; removable leaf cap.
+  Bertil / hobbit_pip / hobbit_pip: roomy short torso, curls and pointed ears.
+  Bodil / hobbit_bodil / hobbit_bodil: braids outside collar, hat behind front hair.
+  Bu / ghost_bu / ghost_bu: round blue-white wisp, floating hands, scalloped hem.
+  Hviske / ghost_hviske / ghost_hviske: the same ghost silhouette in pink/lilac.
+
+Hero, skin and body IDs come from lua/config/characters.lua. Retired skins are
+not additional production bodies. Animal, fairy, hobbit and ghost are fit families,
+not permission to share pixel masks. Fox and monkey require their own fitted art;
+the two fairies and two hobbits also have individual hair and silhouette masks.
+Bu/Hviske may share geometry only after an automated alpha-and-pose equality check.
+Their pigment/material treatment remains separate. Do not silently share a rig
+because two characters happen to have the same frame size.
+
+Three initial looks
+
+  Work: straw hat, cream linen, patched brown trousers or a wing-friendly skirt,
+        soft leather and useful seams. A watering can or hoe makes the role clear.
+  Forest: soft green cap, moss shirt/leaf tunic, dark brown lower layer, leaf clasp.
+          A compact sword, staff, spear, dagger or club gives a clear outer shape.
+  Festival: leaf circlet, cream/lavender embroidery and small brass jewellery.
+            No large weapon silhouette in the social pose.
+
+These are art directions for the existing clothing catalog, not three locked
+costumes. Individual slots remain mixable. Clothing has no class, sex or race
+restriction; the fit changes with the body. Hobbits show bare toes through an
+ankle-wrap version of shoes. Ghost footwear becomes paired hem tabs/charms, and
+trousers become an under-hem band. The same item ID, ownership and existing perks
+apply; the presentation does not grant extra stats. Ghost shirts/dresses are short
+open-sided layers around the torso, never human legs under a sheet. Wings and
+tails belong to the body and cannot be covered accidentally by a universal tunic.
+
+Slots and ownership
+
+Keep the existing nine wardrobe slots and seven visible wardrobe cells:
+
+  Head       hat OR circlet           Neck      necklace
+  Body       shirt OR dress          Ears      earrings
+  Legs       pants                    Wrist     bracelet
+  Feet       shoes
+
+Equipping a dress clears shirt and pants. Equipping shirt or pants clears dress.
+Hat and circlet replace one another. A displaced garment stays owned. Resolve all
+exclusions and inventory checks before committing one outfit change; publish one
+outfit_changed after the whole operation. Removing clothing reveals the safe
+base underlayer; it must not expose remnants of the old baked-in outfit.
+Use lua/data/wardrobe_rules.lua for exclusions and slot ordering, existing
+lua/items/clothing.lua IDs, and lua/data/starter_kit.lua for new-game clothing.
+Do not copy these into a competing gameplay rules file.
+
+Tools and weapons retain EconomyManager's existing tool_* and weapon slots.
+The reserved accessory slot does not become a second clothing store. A selected
+backpack item is not necessarily equipped, and an equipped weapon is not always
+in the hand. A potion or seed packet is a temporary action presentation, not a
+new saved equipment slot. No shield/offhand mechanic or backpack capacity bonus
+is introduced by the art. A future cosmetic bag would need a separate decision;
+the little bags in existing stock art are not functional inventory containers.
+
+What appears in the hands
+
+Use one presentation resolver owned by the player/action controller:
+  active action item -> selected usable tool -> drawn equipped weapon -> empty.
+Only one action owns the hands. Two-handed tools reserve both grips. A separate
+lantern/system light does not add a persistent offhand slot. During an action,
+snapshot the source item and action token; item swaps take effect after release
+or explicit cancellation. A stale async asset load must not replace a newer item.
+Hand visibility clears on cancel, death, sleep, dialogue and scene exit. Flying
+uses a fitted hover/flight grip; the actor's altitude is applied exactly once.
+The visual resolver never changes damage, tool power or inventory ownership.
+
+Weapon silhouette guide
+
+  Sword: broad short iron blade, little leaf-shaped guard, brown leather grip.
+  Dagger: compact flint/thorn shape, visibly shorter than sword, no huge guard.
+  Spear: slim timber shaft with one readable leaf/iron point; two-hand thrust.
+  Staff: bent hazel with a modest leaf/crystal tip; warm local effect when used.
+  Club: rounded carved branch head, clearly heavier than the sword.
+
+Keep weapons friendly to the world: worn natural materials, restrained iron and
+small botanical motifs. Rarity improves silhouette, engraving and one focal
+detail; a hue swap alone is not the design. Unique/legendary effects stay within
+the planned rarity vocabulary, never cover the face or create a permanent full
+screen glow. The five families and planned catalog of 24 weapons belong to the
+existing dungeon addendum; two swords already exist in tools.lua. This art pass
+does not add damage numbers, new rarity tiers or affixes.
+
+Tools read by head shape: hoe blade, axe wedge, pickaxe crossbar, watering spout,
+fishing rod and line. Held sprites are drawn for their grip/perspective, not scaled
+inventory icons. The supplied front-view object studies establish materials and
+silhouettes; production needs directional held views and action grips.
+
+Wardrobe and hands screen
+
+Open the planned Garderobe from the existing wardrobe input. Put a large live
+hero preview in the center, the seven clothing cells beside it, and an owned-item
+grid with name, slot, rarity word/pips and existing perk text. A separate Hands
+tab shows the equipped weapon, tools and hotbar; it does not repeat clothing.
+Selecting an owned item previews it locally. Equip/Remove commits explicitly;
+closing/back cancels an uncommitted preview. Show which slots a dress will replace
+before applying it. Drag/drop is optional; click/tap and keyboard/controller paths
+must support every action. Rotate preview, zoom, and idle/walk/action toggles help
+inspect fit. Keep focus on the chosen item after an update and preserve filters.
+Locked/unowned entries explain their source rather than offering an Equip button.
+
+Work / Forest / Festival map onto the existing three planned outfit presets.
+They store clothing IDs, not copies of items or a new combat loadout. Loading a
+preset skips missing owned pieces and reports the omissions together. It never
+duplicates, buys or destroys equipment. Race changes refit the current owned
+outfit atomically. Static character-select portraits continue to show stock art;
+the wardrobe preview is the equipped view. Jewellery is assessed in that close
+preview and in item icons, not promised to be legible at normal world zoom.
+
+Rendering contract
+
+IsoChibiSprite2D remains the animation clock. A fitted layer/attachment samples
+its current_clip, direction_index and rendered region after the body updates.
+The current frame is int(sprite.region_rect.position.x / FRAME_SIZE); a future
+read-only pose accessor could expose that without reading the private _frame.
+No independent AnimationPlayer, free-running timer or second facing calculation.
+Frame canvases remain 256x256; body ground anchor stays (128,200). Directions are
+S, SW, W, NW, N, NE, E, SE. Store explicit pose records for every required frame
+and direction. An art mirror is never an unreviewed swap of left/right hands.
+
+The build pipeline must prepare base-body, hair/front-hair, wing, tail and
+hand/forearm occluder parts before painting fitted garments. Current stock sheets
+have baked outfits and hands. Drawing another shirt over them cannot remove a
+long sleeve, dress hem or existing belt. Preserve the dressed stock sheets for
+selection/fallback until a COMPLETE base + starter outfit is ready. Resolve a
+base only when all required layers exist; never show an undressed fallback hero.
+
+Per-pose body-space sockets: head, neck, torso, waist, foot_l, foot_r, grip_l,
+grip_r and back. Each grip carries position, angle/basis, depth and visibility;
+a two-handed item also stores the support grip and the authored hand pose.
+Coordinates are in the same untrimmed 256x256 body canvas, not screen/world px.
+Each held asset has its own grip pivot. Transform the grip pivot to the sampled
+body socket, then apply actor transform/altitude once. Trimmed atlas rectangles
+retain their canvas offsets so packing never moves a cuff or handle.
+
+Painter's order is explicit per direction: rear attachment/garment parts, rear
+body features, body, clothing ordered by wardrobe slot, front hands/hair/ear and
+tail masks as appropriate, front attachment parts, then small local effects.
+Split a held object into rear/front parts when it crosses the torso; hands must
+occlude the handle. The exact front hand is pose data, not guessed from weapon
+position.y. Outfit and equipment parts stay inside the actor's y-sort subtree;
+do not assign global z_index values that lift a weapon over the room's furniture.
+Preserve the existing WardrobeLayers sibling-halo and child-order contract.
+
+Mirror sprite.position/rotation/scale/modulate and the offset delta relative to
+base_sprite_offset. Damage flash and dodge spin affect body, clothes and weapon
+together. Fairy wings keep translucent edges; ghost body material and worn cloth
+material are independent. A uniform tint cannot turn all cloth into ghost skin.
+Long spears and rods use trimmed attachment atlases with explicit bounds instead
+of clipping them into the body cell. Trails/effects use their own small resources.
+
+Data and loading
+
+WardrobeManager (planned F5) owns clothing state/presets and its save section.
+EconomyManager owns the already implemented tool/weapon selection. Future Arsenal
+or dungeon services must integrate through those contracts, not duplicate them.
+An EquipmentVisuals presenter consumes immutable outfit + held-item snapshots;
+it owns no inventory, save data, combat hitbox or item rarity rule. An art registry
+maps (body ID, garment design, clip group) to packed rectangles and occluders, and
+(body ID, weapon family, action) to sockets. Item definitions select art IDs.
+See render-contract.example.json for a proposed record shape, not authored poses.
+
+Preload the selected locomotion groups before committing an outfit. Request
+action/flight groups before the action begins and keep a complete prior outfit
+while loading. Cache by body/design/palette/group; release previous groups with
+reference counts. Never decode textures or rebuild atlases in the frame loop.
+Do not load the whole 96-garment catalog for one character. Trim transparent
+rectangles, share material/palette resources, and pack compatible parts together.
+All eight directions still need authored fit checks even when color variants
+share one drawing. Existing 30-layer design IDs are a starting inventory, not a
+claim that painted and animated layers already exist in this checkout.
+
+Proposed production gates (targets, not measurements of the concept art)
+  <=32 MiB incremental resident locomotion textures for one fully dressed hero;
+  <=16 additional CanvasItems and <=16 additional draws in the representative
+  hero scene before trails; profile the actual renderer to confirm batching;
+  <=0.3 ms equipment update for one hero on the reference development host;
+  no missing frame/direction/occluder records and no synchronous loads mid-action.
+Use padded compressed-block + mip accounting, and separately report shared body
+and portrait atlases. Re-measure on target hardware; don't reuse the old prototype
+timings from PLAN_2D_FEATURES as measurements of these painted assets.
+
+Implementation sequence
+
+  1. Fit proof: Rasmus + Bu, starter shirt/pants/shoes, hat and sword. Author all
+     idle/walk/run directions plus one action; test hand masks, turns and spin.
+  2. Complete their required clips before enabling those wardrobe bases. Keep
+     base + starter layer availability atomic in CharacterCatalog resolution.
+  3. Fit the remaining six heroes; special checks for Birk/fairy wing roots,
+     Bodil's braids, monkey tail and the two ghost material treatments.
+  4. Wire the existing wardrobe ownership/preset/perk contracts and screen.
+     Add held-item presentation beside the existing action controller, with no
+     changes to combat timing or item balance just to match an illustration.
+  5. Expand garment silhouettes and five weapon-family poses; bake directional
+     silhouettes, sockets and occlusion from one reviewed pose source.
+
+Acceptance matrix
+
+Every live hero x every supported garment slot x all eight directions x all
+required idle/walk/run/action/flight frames. Also: hat/circlet and dress exclusions;
+mixed outfits; equipped weapon vs active tool; one/two-hand transitions; rapid
+selection during loads; flight/landing; damage flash; dodge spin; room y-sort;
+missing art; race switch; cancel/death/dialogue; saved preset missing an item.
+Check gameplay ownership/stats independently from pixels. Review at normal world
+zoom and wardrobe close-up on both light and dark floors, with automated native
+captures for known poses. Visual continuity must be reviewed across adjacent
+frames; a valid JSON rig is not proof of clothing fit.
+
+The supplied art studio is for reviewing these choices. Its outfit images are
+flattened concept drawings, and its equipment objects are front-view studies.
+It does not pretend they are production-ready animated garment layers.
+
+Saved deliverables and review
+
+Four built-in imagegen masters live in tools/art/drawn/sources/:
+  equipment_looks_a.png: Rasmus, Kiki, Kloevermynte, Bertil; three outfit directions.
+  equipment_looks_b.png: Birk, Bodil, Bu, Hviske; the same three directions.
+  equipment_kit.png: twenty clothing, weapon, tool and action-item studies.
+  equipment_held_examples.png: all eight heroes visibly holding fitted equipment,
+    including the five weapon families and both one- and two-hand poses.
+
+The eight held examples are additional pose studies, not a fourth outfit preset.
+They illustrate grip and silhouette intent, including an alternate straw/woodland
+hat treatment on Rasmus. The art kit maps existing item IDs as design references,
+and marks future dungeon weapons separately. It does not replace live item icons.
+All 52 exported studies are under assets/art_studies/equipment/, outside the live
+prop, character and item catalogs. The manifest explicitly labels them concepts.
+
+Exact generation prompts, ordered references and future layer/fit repair prompts
+are saved in prompts.json. render-contract.example.json is an illustrative shape
+for production data, not a completed rig. architecture.mmd diagrams ownership.
+
+Repack the saved paintings:
+  tools/art/.venv/bin/python tools/art/drawn/equipment.py
+
+Open the native design studio:
+  tools/dev/play.sh --throwaway tools/art/drawn/equipment_studio.tscn
+  Choose a hero, Work / Forest / Festival / In hand, and an object study.
+  Keyboard: left/right hero, 1/2/3 outfit direction, 4 equipped pose.
+
+Validate the exports and review controls without touching gameplay equipment:
+  tests/run_playtest.sh --strict --no-boot --sections-dir=res://tests/art_review \
+    --only=equipment_design
+
+Capture all 32 hero/mode combinations in Godot using the project's window lock:
+  GODOT_EXTRA_ARGS=--minimized tools/dev/run_windowed.sh --strict --no-boot \
+    --sections-dir=res://tests/art_review --only=equipment_design \
+    --out=/tmp/equipment-design-views
+
+Saved headless/native reports, inspection notes and limits are in validation.txt;
+the previews directory contains the 32 native hero/mode captures.

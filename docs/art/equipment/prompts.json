@@ -1,0 +1,119 @@
+{
+  "mode": "built-in imagegen",
+  "scope": "Visual design references; none of these masters is an animated garment atlas.",
+  "prompts": {
+    "held_examples": {
+      "master": "tools/art/drawn/sources/equipment_held_examples.png",
+      "prompt": "Use case: stylized-concept. Asset type: eight equipped-character pose studies for EXISTING Trætoppen playable heroes.\nReference image 1 (equipment_looks_a.png) contains columns Rasmus fox, Kiki monkey, Kløvermynte blonde fairy, Bertil curly-haired hobbit; its middle row is the FOREST clothing direction. Reference image 2 (equipment_looks_b.png) contains columns Birk auburn boy fairy, Bodil braided hobbit, Bu blue ghost, Hviske pink ghost; its middle row is their FOREST clothing direction. Reference image 3 (equipment_kit.png) is the exact designed object set. Identity, outfit, tool and style references only, not edit targets.\nCreate one landscape transparent sheet, STRICT 4 COLUMNS by 2 ROWS, exactly EIGHT complete full-body equipped heroes, generous empty gutters and no text. Preserve the faces, head/body proportions, ears, tails, hair, wings, ghost shapes and moss-green forest clothes of the reference characters. Each has its specified object visibly and plausibly gripped, with fingers/paws in front of the handle and the object not covering the face. Let hand/arm pose change naturally to fit the object; do not add extra limbs.\nROW 1:\n1. Rasmus the orange fox holding the short iron sword from reference row 2 column 2 in one paw, blade angled outward and down, relaxed ready pose; ears and cream-tipped tail visible.\n2. Kiki the brown monkey holding the wooden hoe from reference row 3 column 2 with BOTH paws spaced along the handle, hoe head to the side and low; curled tail visible.\n3. Kløvermynte the blonde twin-bun fairy holding the hazel staff from reference row 2 column 5 upright in one hand, staff outside the wing silhouette, other hand relaxed; lavender wings fully visible.\n4. Bertil the curly brown-haired hobbit holding the twig spear from reference row 2 column 4 in BOTH hands spaced along its shaft, spear diagonally upright outside his face, full shaft/tip; broad bare feet and pointed ears visible.\nROW 2:\n5. Birk the auburn-haired boy fairy holding the small wood-handled axe from reference row 3 column 3 down beside one leg in one hand; blue wings fully visible.\n6. Bodil the braided hobbit carrying the copper watering can from reference row 3 column 5 by its top handle in one hand, other hand gently supporting it, spout toward open space; braids and bare feet visible.\n7. Bu the blue-white ghost holding the spruce club from reference row 3 column 1 with one rounded mitten hand clearly wrapping around its handle, club outside his face; floating scalloped hem and curled wisp remain ghostlike, no legs.\n8. Hviske the pale pink ghost holding the short thorn dagger from reference row 2 column 3 at the side in one rounded mitten hand, clear wrapped grip, no face overlap; floating hem and wisp remain intact.\nStyle exactly matches our reference sheets: matte watercolor/gouache, warm grey-brown pencil edges, sage cloth, cream, honey leather, restrained brass, quiet iron, soft chibi forms. Full uncropped equipment shafts, all silhouettes inside their own cells, no detached objects, ground, cast shadows, labels, UI, floor bases or effects. True alpha transparent background. These are static equipment-pose concepts, not animated or fitted overlay layers.",
+      "ordered_input_paths": [
+        "tools/art/drawn/sources/equipment_looks_a.png",
+        "tools/art/drawn/sources/equipment_looks_b.png",
+        "tools/art/drawn/sources/equipment_kit.png"
+      ],
+      "saved_size": [
+        1774,
+        887
+      ],
+      "sha256": "6f3fd18f7d333753af24be9983ba15bdd24cda8196dbd5f3267bed30d007004e",
+      "references": [
+        {
+          "path": "tools/art/drawn/sources/equipment_looks_a.png",
+          "sha256": "bb6698845c7c4697cca62afa8c5cf2805f02bb940cd48505df8b7c0acd9d2789"
+        },
+        {
+          "path": "tools/art/drawn/sources/equipment_looks_b.png",
+          "sha256": "2fec2d8f4ebee39b9f95e1eafeaad3e5a4ce3fa904bec1682dc899a3ab9d5cdd"
+        },
+        {
+          "path": "tools/art/drawn/sources/equipment_kit.png",
+          "sha256": "56fc4548c86bc697daf1dbbc0d19c4df57c40df6924a693dceb7475714a40271"
+        }
+      ]
+    },
+    "looks_a": {
+      "master": "tools/art/drawn/sources/equipment_looks_a.png",
+      "prompt": "Use case: stylized-concept. Asset type: outfit exploration sheet for our existing Trætoppen playable characters.\nReference image 1 (heroes.png) defines the exact fox, blonde fairy and curly brown-haired hobbit identities and their gentle hand-painted chibi style. Reference image 2 (pack.png) defines the monkey in its SECOND ROW. Reference image 3 (interior_domestic.png) defines our approved sage, cream, lavender and honey-brown materials. References are identity/style references, not edit targets.\nCreate ONE landscape transparent sheet, STRICT 4 COLUMNS by 3 ROWS, twelve completely separate full-body figures, generous empty gutters, no captions or text. Fixed columns: 1 Rasmus the orange fox with cream muzzle and belly, triangular ears and large cream-tipped tail; 2 Kiki the brown monkey with round ears, cream face and curled tail; 3 Kløvermynte the blonde fairy with two hair buns and pale lavender butterfly wings; 4 Bertil the curly brown-haired hobbit with pointed ears, broad bare feet and no facial hair. Keep the SAME face, head/body proportions and identity within each column. All stand in a calm front three-quarter pose, facing slightly left, with relaxed clearly separated arms. Full silhouette, nothing cropped.\nROW 1: WORK outfit. A soft handmade straw hat with sage ribbon, cream short-sleeved linen shirt, honey-brown patched trousers, simple brown ankle boots; fairy can use a wing-friendly cream blouse and short sage petal skirt; hobbit wears cropped trousers with bare feet. Animal hats have openings so their ears remain visible. No tools in hands.\nROW 2: FOREST outfit. Soft moss green woodland cap, sage collared shirt or fairy leaf tunic, dark warm brown trousers or fairy split petal overskirt, little leather belt and sturdy soft shoes. Fairy wings stay entirely visible. Small brass leaf clasp, restrained stitching, no plate armor, capes or huge backpacks. No weapons in hands.\nROW 3: FESTIVAL outfit. Thin brass leaf circlet, cream-and-muted-lavender embroidered shirt with brown trousers for fox, monkey and hobbit; layered muted lavender petal dress for fairy. Tiny warm brass necklace. Hobbit remains barefoot. No held flowers or other props.\nMatte storybook watercolor/gouache, softly uneven warm grey-brown pencil contours, broad readable shapes and subtle cloth folds. Preserve the actual reference identities; don't invent taller adult bodies or change faces. Allow each body its fitted version of the same outfit. Tails, animal ears, hobbit curls, fairy wings remain recognizable. Characters are cute, gentle, uncluttered and not glossy or photorealistic. True transparent background, no ground planes, no cast shadows, no letters, no UI, no grids. This is a visual design sheet, not an animation atlas.",
+      "ordered_input_paths": [
+        "tools/art/drawn/sources/heroes.png",
+        "tools/art/drawn/sources/pack.png",
+        "tools/art/drawn/sources/interior_domestic.png"
+      ],
+      "saved_size": [
+        1448,
+        1086
+      ],
+      "sha256": "bb6698845c7c4697cca62afa8c5cf2805f02bb940cd48505df8b7c0acd9d2789",
+      "references": [
+        {
+          "path": "tools/art/drawn/sources/heroes.png",
+          "sha256": "88d72df31657e17df3d76e3ac088d13fdd2f7f3380c94c7834b97aaa41c09470"
+        },
+        {
+          "path": "tools/art/drawn/sources/pack.png",
+          "sha256": "cc82e3d62fe39a418262780212201ad2b180a292c5ea6317231ee933323b9c93"
+        },
+        {
+          "path": "tools/art/drawn/sources/interior_domestic.png",
+          "sha256": "b7909200fc191eac0f92f8187aab878590bb3166a0150d98a50eeb877a9ddef9"
+        }
+      ]
+    },
+    "looks_b": {
+      "master": "tools/art/drawn/sources/equipment_looks_b.png",
+      "prompt": "Use case: stylized-concept. Asset type: twelve outfit concepts for FOUR EXISTING Trætoppen playable heroes.\nReference image 1 (cast_extra_b.png): the SECOND ROW is Birk, the green leaf-clad auburn-haired boy fairy with translucent blue wings; THIRD ROW is Bodil, the brown-haired hobbit with two long braids, ribbons and a tiny flower; FOURTH ROW is Bu, the soft blue-white floating ghost with a curled wisp head and scalloped hem. Ignore the capybara in row 1. Reference image 2 (ghost_hviske/portrait.webp) is Hviske, the pink-lilac version of Bu, a complete floating ghost body is the same shape as Bu. Reference image 3 (heroes.png) establishes the approved soft outlines and storybook style. These are identity/style references, not edit targets.\nCreate ONE landscape transparent sheet, STRICT 4 COLUMNS by 3 ROWS, twelve separated full-body figures, generous empty gutters. Fixed columns: 1 Birk the auburn-haired boy fairy, 2 Bodil the braided hobbit, 3 Bu the blue-white ghost, 4 Hviske the pale pink-lilac ghost. Preserve exact faces, hair, wings, pointed hobbit ears and ghost silhouettes in every row. Front three-quarter calm relaxed pose facing slightly left, arms lowered and separated from torso. All body parts remain visible. No labels, words, UI, ground or cast shadows.\nROW 1 WORK: natural straw hat with sage band, cream linen short-sleeved shirt or blouse, honey-brown patched cropped trousers or short oversmock; small useful stitching and brown belt. Birk has wing openings, brown ankle boots and all wings visible. Bodil keeps her braids and broad bare feet. Ghosts wear a small straw hat resting around their wisp, a short cream linen work vest over their ethereal torso and tiny leather tabs at the floating scalloped hem, no invented legs or feet. Ghost body stays visibly floating and white/blue or pink, never turns human.\nROW 2 FOREST: soft sage woodland cap, moss-green collared tunic or leaf vest, warm brown cropped trousers on the two humanoids, little leaf-shaped brass clasp and modest leather belt. No armor plates, cloak or backpack. Ghosts get short moss-green open-sided tunics over the middle body; original curled head and flowing ethereal hems remain visible. Keep Birk's blue wings and Bodil's hair/ears unmistakable.\nROW 3 FESTIVAL: thin warm-brass leaf circlet replacing each hat; cream and muted lavender embroidered shirt/tunic on Birk, a gentle lavender embroidered dress on Bodil with braids and bare toes visible; Bu and Hviske have open-sided little lavender festival waistcoats and tiny brass leaf neck clasps above the original flowing ghost hems. Ghosts remain round floating ghost shapes, not clothed human children. No weapons or objects in hands.\nMatte gouache and watercolor, warm grey-brown pencil contours, soft tactile cloth, cream, sage, honey oak, restrained lavender and small brass details. Gentle cute game characters with their original large heads and short bodies. No pixel art, photorealism, shiny 3D, superhero costumes or harsh black vector contours. True alpha transparent background. This is an outfit-design sheet, not an animation atlas.",
+      "ordered_input_paths": [
+        "tools/art/drawn/sources/cast_extra_b.png",
+        "assets/isometric_characters/ghost_hviske/portrait.webp",
+        "tools/art/drawn/sources/heroes.png"
+      ],
+      "saved_size": [
+        1448,
+        1086
+      ],
+      "sha256": "2fec2d8f4ebee39b9f95e1eafeaad3e5a4ce3fa904bec1682dc899a3ab9d5cdd",
+      "references": [
+        {
+          "path": "tools/art/drawn/sources/cast_extra_b.png",
+          "sha256": "6e5716f6005327cbc9a4ad59a341807d98b7f037b75d701bbb602193a33eadc5"
+        },
+        {
+          "path": "assets/isometric_characters/ghost_hviske/portrait.webp",
+          "sha256": "625a74155b7e95f81b723bc5b2d0971455784abe68ebe0fa30a17e0ebf9d6a55"
+        },
+        {
+          "path": "tools/art/drawn/sources/heroes.png",
+          "sha256": "88d72df31657e17df3d76e3ac088d13fdd2f7f3380c94c7834b97aaa41c09470"
+        }
+      ]
+    },
+    "kit": {
+      "master": "tools/art/drawn/sources/equipment_kit.png",
+      "prompt": "Use case: stylized-concept. Asset type: clothing, held-item and weapon shape studies for the EXISTING Trætoppen game.\nReference image 1 (equipment_looks_a.png) establishes our new approved-direction equipment silhouettes, muted sage/cream/lavender cloth and cute character scale. Reference image 2 (icons_tools.png) establishes the existing copper/iron/wood tool designs. These are style/material references, not edit targets.\nCreate ONE transparent landscape atlas in a STRICT 5 COLUMNS by 4 ROWS grid of TWENTY isolated objects. Each cell has exactly one complete substantial object with generous empty gutters; no captions, text, grid lines, background or shadows. Show a clean mostly frontal three-quarter object view, all handles and tips complete. Keep the entire object within its own cell. Each silhouette is connected; the boot cell has ONE boot, not a disconnected pair. No people, hands, mannequins or bodies.\nROW 1 left to right: (1) handmade straw hat with muted sage ribbon and ear-friendly brim; (2) soft green woodland cap with a tiny brass leaf; (3) cream short-sleeved linen shirt with brown buttons and soft stitching, no head or skin; (4) muted lavender petal dress with cream underskirt, tiny brass clasp, no head/arms/legs; (5) one soft honey-brown ankle boot with a cuff and visible stitching.\nROW 2: (6) short worn rusty sword with simple iron guard and brown leather grip; (7) clean short iron sword with a broad leaf-like blade and little brass guard; (8) tiny thorn/flint dagger with a wrapped grip, distinctly shorter than a sword; (9) twig spear, slim straight honey-wood shaft and single small pale iron leaf point; (10) gently bent hazel staff with a small sage leaf and modest pale crystal nestled in its tip. Spears and staves are complete, no cut shafts.\nROW 3: (11) stout rounded spruce-branch club with a natural knot and leather grip; (12) simple wooden-handled hoe with a small iron blade; (13) wooden axe with a worn small iron wedge; (14) wooden-handled pickaxe with a clearly readable crossbar; (15) squat copper watering can with a long spout and arched handle, matching the reference copper can.\nROW 4: (16) simple wood fishing rod with reel and line connected to the rod, complete tip; (17) small warm brass hand lantern with a useful closed top carry loop, visible amber candle, not a floating magical orb; (18) squat corked red health-tonic bottle with a tiny blank cream tag; (19) sealed cream paper seed packet with a simple hand-painted turnip picture, no letters; (20) small brass leaf pendant on one closed fine necklace loop, all connected.\nMatte storybook watercolor/gouache, soft warm grey-brown pencil edges, worn honey wood, quiet iron, aged copper, linen, sage and muted lavender. These are cozy handmade tools and woodland weapons that belong beside our existing painted characters; no grimdark spikes, modern tactical parts, chrome or glossy 3D. Broad readable silhouettes and restrained detail, true alpha transparent background. This is a shape/material study, not a directional held-animation sheet and not an inventory screenshot.",
+      "ordered_input_paths": [
+        "tools/art/drawn/sources/equipment_looks_a.png",
+        "tools/art/drawn/sources/icons_tools.png"
+      ],
+      "saved_size": [
+        1402,
+        1122
+      ],
+      "sha256": "56fc4548c86bc697daf1dbbc0d19c4df57c40df6924a693dceb7475714a40271",
+      "references": [
+        {
+          "path": "tools/art/drawn/sources/equipment_looks_a.png",
+          "sha256": "bb6698845c7c4697cca62afa8c5cf2805f02bb940cd48505df8b7c0acd9d2789"
+        },
+        {
+          "path": "tools/art/drawn/sources/icons_tools.png",
+          "sha256": "59196537b24ccf19a3d8b399d33cf5193949caa996ff7e0b647f28446dabe3fd"
+        }
+      ]
+    }
+  },
+  "production_templates": {
+    "fitted_garment": "Use case: identity-preserve / precise-object-edit. Input 1 is the approved hero pose and immutable body silhouette; input 2 is the chosen outfit concept for material/silhouette only; input 3 is the exact body-part/occluder layout. Paint ONLY the specified garment parts on a transparent canvas, preserving canvas dimensions, pose, head, face, hands, ears, hair, tail/wing roots and all named attachment points. Preserve cloth seams and the chosen muted palette across directions and frames. Do not repaint or include skin/body pixels in garment exports. Draw front/rear parts independently where the supplied masks require them. Keep the supplied grip and cuff boundaries exact. No ground shadow, letters, labels or painted rarity glow. Output is a single reviewed pose; the deterministic packer must retain its original canvas offset. Do not invent missing pose or mask inputs.",
+    "held_item": "Use case: stylized-concept. Input 1 is the approved equipment shape study; input 2 is the exact hero hand/action pose with grip and support-grip markers; input 3 is the directional camera/perspective reference. Paint the same complete weapon/tool in the specified facing, keeping the grip pivot, head shape, material details and proportions consistent. Split rear/front segments exactly where the supplied hand/torso occluders require. Preserve a complete long shaft outside the body canvas using an explicitly sized attachment canvas; do not shrink it to fit an inventory cell. Hands and body are guides and must not be present in the exported object. No extra hand, text, cast shadow, baked swing trail or independent glow. One authored direction/pose only; all other poses require their own supplied references.",
+    "fit_repair": "Use case: precise-object-edit. Input 1 is the composed hero pose with the fit defect marked; input 2 is its matching garment/attachment layer; input 3 is the immutable body, hand and silhouette mask. Change ONLY the marked garment edge, fold or grip junction. Keep face, body silhouette, all unmarked pixels, canvas size, ground anchor, grip coordinates, garment palette and neighboring frame continuity unchanged. Keep ears, tails, hair braids, fairy wing roots and ghost hem readable. Export the corrected transparent layer, not a repainted flattened hero. If immutable masks or adjacent frames are absent, request the missing authoring references before producing a production repair."
+  },
+  "template_status": "Reusable future authoring prompts; these templates have not been executed and require actual pose/mask inputs."
+}

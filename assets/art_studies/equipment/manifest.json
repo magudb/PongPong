@@ -1,0 +1,832 @@
+{
+  "version": 1,
+  "scope": "Flattened outfit concepts and equipment shape studies. No fitted animation layers or gameplay changes.",
+  "heroes": [
+    {
+      "id": "rasmus",
+      "name": "Rasmus",
+      "skin": "animal_fox",
+      "body": "fox",
+      "fit": "Ear openings; tail stays outside the lower layer."
+    },
+    {
+      "id": "kiki",
+      "name": "Kiki",
+      "skin": "animal_monkey",
+      "body": "monkey",
+      "fit": "Round ear openings; curled tail stays clear of the belt."
+    },
+    {
+      "id": "kloevermynte",
+      "name": "Kløvermynte",
+      "skin": "fairy_meadow",
+      "body": "fairy",
+      "fit": "Hair buns and lavender wings remain visible."
+    },
+    {
+      "id": "bertil",
+      "name": "Bertil",
+      "skin": "hobbit_pip",
+      "body": "hobbit_pip",
+      "fit": "Curls, pointed ears and bare toes; fitted ankle-wrap footwear."
+    },
+    {
+      "id": "birk",
+      "name": "Birk",
+      "skin": "fairy_birk",
+      "body": "fairy_birk",
+      "fit": "Blue wing roots clear; the stock leaf cap is removable clothing."
+    },
+    {
+      "id": "bodil",
+      "name": "Bodil",
+      "skin": "hobbit_bodil",
+      "body": "hobbit_bodil",
+      "fit": "Braids outside the collar; front hair over the hat brim."
+    },
+    {
+      "id": "bu",
+      "name": "Bu",
+      "skin": "ghost_bu",
+      "body": "ghost_bu",
+      "fit": "Floating wisp and hands; footwear becomes hem tabs, with no legs."
+    },
+    {
+      "id": "hviske",
+      "name": "Hviske",
+      "skin": "ghost_hviske",
+      "body": "ghost_hviske",
+      "fit": "Pink/lilac ghost material stays distinct from worn fabric."
+    }
+  ],
+  "outfits": [
+    {
+      "id": "work",
+      "name": "Work"
+    },
+    {
+      "id": "forest",
+      "name": "Forest"
+    },
+    {
+      "id": "festival",
+      "name": "Festival"
+    }
+  ],
+  "review_modes": [
+    {
+      "id": "work",
+      "name": "Work"
+    },
+    {
+      "id": "forest",
+      "name": "Forest"
+    },
+    {
+      "id": "festival",
+      "name": "Festival"
+    },
+    {
+      "id": "held",
+      "name": "In hand"
+    }
+  ],
+  "looks": {
+    "rasmus_work": {
+      "file": "assets/art_studies/equipment/rasmus_work.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_a.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "kiki_work": {
+      "file": "assets/art_studies/equipment/kiki_work.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_a.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "kloevermynte_work": {
+      "file": "assets/art_studies/equipment/kloevermynte_work.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_a.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "bertil_work": {
+      "file": "assets/art_studies/equipment/bertil_work.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_a.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "rasmus_forest": {
+      "file": "assets/art_studies/equipment/rasmus_forest.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_a.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "kiki_forest": {
+      "file": "assets/art_studies/equipment/kiki_forest.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_a.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "kloevermynte_forest": {
+      "file": "assets/art_studies/equipment/kloevermynte_forest.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_a.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "bertil_forest": {
+      "file": "assets/art_studies/equipment/bertil_forest.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_a.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "rasmus_festival": {
+      "file": "assets/art_studies/equipment/rasmus_festival.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_a.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "kiki_festival": {
+      "file": "assets/art_studies/equipment/kiki_festival.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_a.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "kloevermynte_festival": {
+      "file": "assets/art_studies/equipment/kloevermynte_festival.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_a.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "bertil_festival": {
+      "file": "assets/art_studies/equipment/bertil_festival.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_a.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "birk_work": {
+      "file": "assets/art_studies/equipment/birk_work.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_b.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "bodil_work": {
+      "file": "assets/art_studies/equipment/bodil_work.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_b.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "bu_work": {
+      "file": "assets/art_studies/equipment/bu_work.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_b.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "hviske_work": {
+      "file": "assets/art_studies/equipment/hviske_work.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_b.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "birk_forest": {
+      "file": "assets/art_studies/equipment/birk_forest.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_b.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "bodil_forest": {
+      "file": "assets/art_studies/equipment/bodil_forest.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_b.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "bu_forest": {
+      "file": "assets/art_studies/equipment/bu_forest.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_b.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "hviske_forest": {
+      "file": "assets/art_studies/equipment/hviske_forest.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_b.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "birk_festival": {
+      "file": "assets/art_studies/equipment/birk_festival.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_b.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "bodil_festival": {
+      "file": "assets/art_studies/equipment/bodil_festival.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_b.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "bu_festival": {
+      "file": "assets/art_studies/equipment/bu_festival.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_b.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    },
+    "hviske_festival": {
+      "file": "assets/art_studies/equipment/hviske_festival.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_looks_b.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ]
+    }
+  },
+  "held_examples": {
+    "rasmus": {
+      "file": "assets/art_studies/equipment/rasmus_held.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_held_examples.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "equipment": "iron_sword"
+    },
+    "kiki": {
+      "file": "assets/art_studies/equipment/kiki_held.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_held_examples.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "equipment": "hoe_wooden"
+    },
+    "kloevermynte": {
+      "file": "assets/art_studies/equipment/kloevermynte_held.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_held_examples.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "equipment": "staff_branch"
+    },
+    "bertil": {
+      "file": "assets/art_studies/equipment/bertil_held.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_held_examples.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "equipment": "spear_twig"
+    },
+    "birk": {
+      "file": "assets/art_studies/equipment/birk_held.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_held_examples.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "equipment": "axe_wooden"
+    },
+    "bodil": {
+      "file": "assets/art_studies/equipment/bodil_held.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_held_examples.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "equipment": "watering_can"
+    },
+    "bu": {
+      "file": "assets/art_studies/equipment/bu_held.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_held_examples.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "equipment": "club_spruce"
+    },
+    "hviske": {
+      "file": "assets/art_studies/equipment/hviske_held.webp",
+      "size": [
+        256,
+        320
+      ],
+      "source": "tools/art/drawn/sources/equipment_held_examples.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "equipment": "dagger_thorn"
+    }
+  },
+  "items": {
+    "hat_straw": {
+      "file": "assets/art_studies/equipment/hat_straw.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Straw hat",
+      "kind": "clothing",
+      "reference_id": "hat_straw_plain",
+      "reference_status": "existing",
+      "presentation_slot": "hat"
+    },
+    "hat_forest": {
+      "file": "assets/art_studies/equipment/hat_forest.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Woodland cap",
+      "kind": "clothing",
+      "reference_id": "hat_cap_green",
+      "reference_status": "existing",
+      "presentation_slot": "hat"
+    },
+    "shirt_linen": {
+      "file": "assets/art_studies/equipment/shirt_linen.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Linen shirt",
+      "kind": "clothing",
+      "reference_id": "shirt_linen_cream",
+      "reference_status": "existing",
+      "presentation_slot": "shirt"
+    },
+    "dress_petal": {
+      "file": "assets/art_studies/equipment/dress_petal.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Petal dress",
+      "kind": "clothing",
+      "reference_id": "dress_gown_lavender",
+      "reference_status": "existing",
+      "presentation_slot": "dress"
+    },
+    "shoes_boots": {
+      "file": "assets/art_studies/equipment/shoes_boots.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Soft boots",
+      "kind": "clothing",
+      "reference_id": "shoes_boots_brown",
+      "reference_status": "existing",
+      "presentation_slot": "shoes"
+    },
+    "sword_rusty": {
+      "file": "assets/art_studies/equipment/sword_rusty.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Rusty sword",
+      "kind": "weapon",
+      "reference_id": "sword_rusty",
+      "reference_status": "existing",
+      "presentation_slot": "weapon"
+    },
+    "iron_sword": {
+      "file": "assets/art_studies/equipment/iron_sword.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Iron sword",
+      "kind": "weapon",
+      "reference_id": "iron_sword",
+      "reference_status": "existing",
+      "presentation_slot": "weapon"
+    },
+    "dagger_thorn": {
+      "file": "assets/art_studies/equipment/dagger_thorn.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Thorn dagger",
+      "kind": "weapon",
+      "reference_id": "wpn_dagger_thorn",
+      "reference_status": "planned",
+      "presentation_slot": "weapon"
+    },
+    "spear_twig": {
+      "file": "assets/art_studies/equipment/spear_twig.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Twig spear",
+      "kind": "weapon",
+      "reference_id": "wpn_spear_twig",
+      "reference_status": "planned",
+      "presentation_slot": "weapon"
+    },
+    "staff_branch": {
+      "file": "assets/art_studies/equipment/staff_branch.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Hazel staff",
+      "kind": "weapon",
+      "reference_id": "wpn_staff_branch",
+      "reference_status": "planned",
+      "presentation_slot": "weapon"
+    },
+    "club_spruce": {
+      "file": "assets/art_studies/equipment/club_spruce.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Spruce club",
+      "kind": "weapon",
+      "reference_id": "wpn_club_spruce",
+      "reference_status": "planned",
+      "presentation_slot": "weapon"
+    },
+    "hoe_wooden": {
+      "file": "assets/art_studies/equipment/hoe_wooden.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Wooden hoe",
+      "kind": "tool",
+      "reference_id": "hoe_wooden",
+      "reference_status": "existing",
+      "presentation_slot": "tool_hoe"
+    },
+    "axe_wooden": {
+      "file": "assets/art_studies/equipment/axe_wooden.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Wooden axe",
+      "kind": "tool",
+      "reference_id": "axe_wooden",
+      "reference_status": "existing",
+      "presentation_slot": "tool_axe"
+    },
+    "pickaxe_copper": {
+      "file": "assets/art_studies/equipment/pickaxe_copper.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Copper pickaxe",
+      "kind": "tool",
+      "reference_id": "pickaxe_copper",
+      "reference_status": "existing",
+      "presentation_slot": "tool_pickaxe"
+    },
+    "watering_can": {
+      "file": "assets/art_studies/equipment/watering_can.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Copper watering can",
+      "kind": "tool",
+      "reference_id": "watering_can_copper",
+      "reference_status": "existing",
+      "presentation_slot": "tool_watering"
+    },
+    "fishing_rod": {
+      "file": "assets/art_studies/equipment/fishing_rod.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Fishing rod",
+      "kind": "tool",
+      "reference_id": "fishing_rod",
+      "reference_status": "existing",
+      "presentation_slot": "hotbar_action"
+    },
+    "lantern": {
+      "file": "assets/art_studies/equipment/lantern.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Hand lantern",
+      "kind": "system_prop",
+      "reference_id": "",
+      "reference_status": "presentation_only",
+      "presentation_slot": "action"
+    },
+    "health_tonic": {
+      "file": "assets/art_studies/equipment/health_tonic.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Health tonic",
+      "kind": "consumable",
+      "reference_id": "health_tonic",
+      "reference_status": "existing",
+      "presentation_slot": "action"
+    },
+    "turnip_seeds": {
+      "file": "assets/art_studies/equipment/turnip_seeds.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Seed packet",
+      "kind": "consumable",
+      "reference_id": "turnip_seeds",
+      "reference_status": "existing",
+      "presentation_slot": "action"
+    },
+    "necklace_leaf": {
+      "file": "assets/art_studies/equipment/necklace_leaf.webp",
+      "size": [
+        160,
+        160
+      ],
+      "source": "tools/art/drawn/sources/equipment_kit.png",
+      "status": "concept",
+      "views": [
+        "front_three_quarter"
+      ],
+      "name": "Leaf necklace",
+      "kind": "clothing",
+      "reference_id": "necklace_leaf",
+      "reference_status": "existing",
+      "presentation_slot": "necklace"
+    }
+  }
+}

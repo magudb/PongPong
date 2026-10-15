@@ -1,0 +1,11 @@
+{
+  "masters": 4,
+  "outfit_concepts": 24,
+  "equipped_pose_concepts": 8,
+  "object_studies": 20,
+  "exported_studies": 52,
+  "native_previews": 32,
+  "native_previews_bytes": 9091574,
+  "exported_webp_bytes": 2874992,
+  "scope": "Single-view design studies, not production animation layers; no live gameplay catalogs are modified."
+}

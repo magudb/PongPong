@@ -1,0 +1,56 @@
+Equipment design validation
+
+Host: macOS, Apple M3, Godot 4.7.2 stable. Worktree: codex-review.
+Scope: design documents, four generated masters, 52 exported art studies and a
+native review studio. Production clothing/equipment rendering is not installed.
+
+Strict design checks
+  tests/run_playtest.sh --strict --no-boot --sections-dir=res://tests/art_review \
+    --only=equipment_design --report=/tmp/pongpong-equipment-design-headless.json
+  PASS: 129 checks, no failures, skips, engine warnings or errors.
+  Covers all eight live hero/skin/body mappings, export/source paths and dimensions,
+  explicit single-view concept metadata, existing item references, all 32 native
+  hero/mode button combinations, all 20 object selections and unchanged gameplay
+  economy state after browsing. The review scene grants and equips no items.
+  Evidence: headless-validation.json.
+
+Strict regression checks
+  tests/run_playtest.sh --strict --no-boot \
+    --only=characters,art_characters,cast_data,data \
+    --report=/tmp/pongpong-equipment-regression.json
+  PASS: 483 checks, no failures, 4 existing skips, no unexpected engine errors or
+  warnings. Three allowed messages are expected invalid-character checks.
+  Evidence: regression-validation.json and regression-summary.txt.
+
+Native capture checks
+  GODOT_EXTRA_ARGS=--minimized tools/dev/run_windowed.sh --strict --no-boot \
+    --sections-dir=res://tests/art_review --only=equipment_design \
+    --out=/tmp/pongpong-equipment-design-native \
+    --report=/tmp/pongpong-equipment-design-native.json
+  PASS: 32 native 1280x720 captures, no engine errors/warnings or failed checks.
+  Includes Work, Forest, Festival and In hand for every hero. Visual inspection
+  covered the concept masters, sword and ghost club views, fairy dress/staff,
+  hobbit spear and watering-can poses. The final capture run includes the corrected
+  white icon modulation so painted object thumbnails retain their actual colors.
+  Evidence: native-validation.json and previews/.
+
+Art provenance and packaging
+  Four masters have true alpha, near/full-opacity painted surfaces and no opaque
+  pixels touching their outer canvas edges. Exact prompts, ordered reference
+  files, master sizes and SHA256 hashes are recorded in prompts.json. Future
+  layer-authoring and fit-repair templates are explicitly marked unexecuted.
+  All 52 lossless WebP exports match manifest dimensions and use Godot lossless
+  import mode 0 for the review UI. inventory.csv identifies
+  each source/export and existing, planned or presentation-only item references.
+  The standalone packer writes only assets/art_studies/equipment/. Live character,
+  clothing, prop and item catalogs are unchanged. Python compilation and
+  git diff --check pass.
+
+Limits
+  The studio changes between flattened illustrations; it does not mix garment
+  layers, animate equipment, synchronize real action grips, apply item effects or
+  write wardrobe saves. One- and two-hand poses communicate art intent. The rig
+  example contains illustrative coordinates and cannot be used as authored data.
+  Small-scale silhouette views are review thumbnails, not a measurement of normal
+  world-camera scale. Resource/update limits in design.txt are future production
+  targets, not performance measurements of a working equipment renderer.

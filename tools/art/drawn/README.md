@@ -154,6 +154,17 @@ scope and rebuild/capture commands are in `docs/art/interiors/design.txt`.
 left/right changes room and N switches daylight/evening. These are art studies:
 live door, home ownership and shop services remain their planned gameplay packages.
 
+`equipment.py` packs the equipment design studies: three outfit directions for
+the eight playable heroes, eight equipped-pose concepts, and twenty clothing,
+weapon, tool and action-item shapes. It writes only `assets/art_studies/equipment/`;
+the drawings are flattened concepts, not fitted animation layers or live item
+catalog replacements. Review them with
+`tools/dev/play.sh --throwaway tools/art/drawn/equipment_studio.tscn`.
+The design, animation/ownership
+contracts, exact imagegen prompts and future fit-repair prompts are saved under
+`docs/art/equipment/`. Rebuild with
+`tools/art/.venv/bin/python tools/art/drawn/equipment.py`.
+
 After importing the project, audit the effective catalogs and map references:
 
 ```sh

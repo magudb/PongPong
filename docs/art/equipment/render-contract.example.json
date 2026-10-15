@@ -1,0 +1,41 @@
+{
+  "status": "proposed schema example; coordinates below are illustrative, not authored fit data",
+  "version": 1,
+  "body": "fox",
+  "canvas": [256, 256],
+  "ground_anchor": [128, 200],
+  "directions": ["S", "SW", "W", "NW", "N", "NE", "E", "SE"],
+  "animation_owner": "IsoChibiSprite2D",
+  "pose_key": ["current_clip", "direction_index", "int(sprite.region_rect.position.x / FRAME_SIZE)"],
+  "example_pose": {
+    "clip": "idle",
+    "direction": "S",
+    "frame": 0,
+    "sockets": {
+      "grip_r": {"position": [165, 160], "angle_deg": -15, "depth": "front", "visible": true},
+      "grip_l": {"position": [91, 160], "angle_deg": 15, "depth": "rear", "visible": true}
+    },
+    "occluders": ["hand_r", "hand_l", "tail_front", "hair_front"]
+  },
+  "example_attachment": {
+    "art_id": "iron_sword_held",
+    "item_id": "iron_sword",
+    "grip_pivot_px": [24, 112],
+    "socket": "grip_r",
+    "support_socket": null,
+    "hands_required": 1,
+    "trimmed_rect": [2, 2, 48, 128],
+    "canvas_offset": [0, 0],
+    "parts": ["rear", "front"],
+    "note": "Example rectangle and pivot illustrate the contract; no texture or authored action is claimed."
+  },
+  "required_production_validation": [
+    "complete body clip/direction/frame coverage",
+    "socket and occluder coordinates in body canvas",
+    "support grip present for two-handed pose",
+    "all atlas rectangles inside texture with padded gutters",
+    "trim offsets preserve original canvas positions",
+    "handedness reviewed for mirrored directions",
+    "body/garment/attachment share spin, flash and altitude exactly once"
+  ]
+}
