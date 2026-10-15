@@ -74,14 +74,14 @@ func reset() -> void:
 func register_quest_from_lua(quest_data: Dictionary) -> void:
 	var quest_id: StringName = quest_data.get("id", &"")
 	if quest_id == &"":
-		push_error("Lua quest mangler id")
+		push_error("Lua quest is missing an id")
 		return
 	# Lua defines availability; we only store the definition cache
 	quest_flags["def_%s" % quest_id] = quest_data
 
 
 func offer_quest(quest_id: StringName) -> void:
-	if not _can_start(quest_id) or quest_id in offered_quests:
+	if get_quest_def(quest_id).is_empty() or not _can_start(quest_id) or quest_id in offered_quests:
 		return
 	offered_quests.append(quest_id)
 	EventBus.quest_offered.emit(quest_id)
@@ -93,7 +93,7 @@ func accept_quest(quest_id: StringName) -> bool:
 
 	var def := get_quest_def(quest_id)
 	if def.is_empty():
-		push_warning("Ukendt quest: %s" % quest_id)
+		push_warning("Unknown quest: %s" % quest_id)
 		return false
 
 	var rt := QuestRuntime.new()
@@ -124,13 +124,33 @@ func accept_quest(quest_id: StringName) -> bool:
 func _can_start(quest_id: StringName) -> bool:
 	if quest_id in active_quests:
 		return false
-	if quest_id not in completed_quests:
+	if quest_id in completed_quests:
+		var meta: Dictionary = get_quest_def(quest_id).get("meta", {})
+		if not bool(meta.get("repeatable", false)):
+			return false
+		var cooldown := maxi(int(meta.get("cooldown_days", 0)), 0)
+		if GameManager.total_day() - int(completed_days.get(quest_id, GameManager.total_day())) < cooldown:
+			return false
+	return _lua_available(quest_id)
+
+
+## The Lua is_available(context) hook of the quest (a quest without one is always available). An unknown quest id is
+## never available; the runtime refuses it too (accept_quest checks the def as well).
+func _lua_available(quest_id: StringName) -> bool:
+	var lr := get_node_or_null("/root/LuaRuntime")
+	if lr == null or not lr.has_method("is_quest_available"):
 		return true
-	var meta: Dictionary = get_quest_def(quest_id).get("meta", {})
-	if not bool(meta.get("repeatable", false)):
-		return false
-	var cooldown := maxi(int(meta.get("cooldown_days", 0)), 0)
-	return GameManager.total_day() - int(completed_days.get(quest_id, GameManager.total_day())) >= cooldown
+	return bool(lr.call("is_quest_available", str(quest_id), _quest_context()))
+
+
+## The context table handed to is_available / on_offer: day, gold and home_tier; world flags are still reachable as
+## bare identifiers inside the Lua function (slotsdroemmen reads context.home_tier).
+func _quest_context() -> Dictionary:
+	return {
+		"day": GameManager.total_day(),
+		"gold": EconomyManager.gold,
+		"home_tier": GameManager.flag_int(GameManager.FLAG_HOME_TIER, 1),
+	}
 
 
 func update_objective(quest_id: StringName, objective_id: StringName, amount: int = 1) -> void:

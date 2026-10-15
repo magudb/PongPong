@@ -25,11 +25,8 @@ func _ready() -> void:
 	EventBus.quest_accepted.connect(_on_quest_changed)
 	EventBus.quest_completed.connect(_on_quest_changed)
 	EventBus.quest_objective_updated.connect(_on_quest_objective)
+	EventBus.interaction_prompt_changed.connect(_on_interaction_prompt)
 	_refresh_all()
-
-
-func _process(_delta: float) -> void:
-	_update_interaction_prompt()
 
 
 func _refresh_all() -> void:
@@ -125,11 +122,10 @@ func _refresh_quest_tracker() -> void:
 			quest_tracker.add_child(obj_label)
 
 
-func _update_interaction_prompt() -> void:
+## The player's facing-cell query emits the prompt text (EventBus.interaction_prompt_changed): the 2D player has no
+## get_interaction_prompt() method, so polling one would never show anything.
+func _on_interaction_prompt(text: String) -> void:
 	if interaction_prompt == null:
 		return
-	var player := get_tree().get_first_node_in_group("player")
-	if player and player.has_method("get_interaction_prompt"):
-		var prompt: String = player.get_interaction_prompt()
-		interaction_prompt.text = prompt
-		interaction_prompt.visible = prompt != ""
+	interaction_prompt.text = text
+	interaction_prompt.visible = text != ""

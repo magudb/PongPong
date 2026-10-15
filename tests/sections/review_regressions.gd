@@ -39,6 +39,7 @@ func run(p_t) -> void:
 	_quest_batch()
 	await _quest_rewards()
 	await _repeatable_quests()
+	_availability_gate()
 	_animal_products()
 	_animal_calendar()
 	_animal_validation()
@@ -294,6 +295,39 @@ func _repeatable_quests() -> void:
 	t.check("old_quest_save_preserves_definitions_and_starts_cooldown", not qm.accept_quest(&"review_repeat") and not qm.get_quest_def(&"intro_lottery").is_empty(), "")
 
 
+## The Lua is_available(context) hook gates offer AND accept (it was never invoked before the review): a closed gate
+## refuses the quest, opening the flag lets it through, and context.home_tier reaches the hook (slotsdroemmen reads it).
+func _availability_gate() -> void:
+	_fresh()
+	var path := "user://review_available.lua"
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	file.store_string('kind = "quest"\nid = "review_available"\nobjectives = { { id = "x", target = 1 } }\nfunction is_available(context)\n  return api.has_flag("review_gate_open")\nend\n')
+	file.close()
+	t.check("gate_quest_loaded", t.autoload("LuaRuntime").load_file(path) != "", "")
+	DirAccess.remove_absolute(path)
+	qm.offer_quest(&"review_available")
+	t.check("closed_gate_blocks_offer_and_accept", &"review_available" not in qm.offered_quests and not qm.accept_quest(&"review_available"), "")
+	gm.set_flag(&"review_gate_open", true)
+	qm.offer_quest(&"review_available")
+	t.check("open_gate_allows_offer_and_accept", &"review_available" in qm.offered_quests and qm.accept_quest(&"review_available"), "")
+	_quest("review_no_hook")
+	qm.offer_quest(&"review_no_hook")
+	t.check("missing_hook_stays_available", &"review_no_hook" in qm.offered_quests, "")
+	qm.offer_quest(&"review_nonexistent")
+	t.check("unknown_quest_never_offerable", &"review_nonexistent" not in qm.offered_quests, "")
+	var tier_path := "user://review_tier.lua"
+	var tf := FileAccess.open(tier_path, FileAccess.WRITE)
+	tf.store_string('kind = "quest"\nid = "review_tier"\nobjectives = { { id = "x", target = 1 } }\nfunction is_available(context)\n  local tier = context.home_tier or 1\n  return tier >= 3\nend\n')
+	tf.close()
+	t.check("tier_quest_loaded", t.autoload("LuaRuntime").load_file(tier_path) != "", "")
+	DirAccess.remove_absolute(tier_path)
+	qm.offer_quest(&"review_tier")
+	t.check("context_tier_gates_offer", &"review_tier" not in qm.offered_quests, "")
+	gm.set_flag(&"home_tier", 3)
+	qm.offer_quest(&"review_tier")
+	t.check("context_tier_opens_gate", &"review_tier" in qm.offered_quests and qm.accept_quest(&"review_tier"), "")
+
+
 func _animal_products() -> void:
 	_fresh()
 	ah.from_dict(_animal("chicken", {"products_ready": 2}))
@@ -380,7 +414,12 @@ func _animal_validation() -> void:
 	file.close()
 	var state_before: Dictionary = sm.gather_payload()
 	t.check("invalid_husbandry_slot_not_loadable", sm.inspect_slot(1)["state"] == &"corrupt" and not sm.load_game(1), "")
-	t.check("invalid_husbandry_load_leaves_state_unchanged", sm.gather_payload() == state_before, "")
+	# Sections only: meta.timestamp / saved_at are wall clock, so two gathers can legitimately differ between them.
+	var before_sections: Dictionary = state_before.duplicate(true)
+	before_sections.erase("meta")
+	var after_sections: Dictionary = sm.gather_payload()
+	after_sections.erase("meta")
+	t.check("invalid_husbandry_load_leaves_state_unchanged", after_sections == before_sections, "")
 	gm.end_day()
 	t.check("daily_tick_after_rejected_load_is_safe", ah.get_animal(&"animal_1").age_days == 11, "")
 

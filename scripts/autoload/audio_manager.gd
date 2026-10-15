@@ -58,6 +58,8 @@ func play_sfx(sfx_id: String, volume_db: float = NAN, pitch: float = 1.0) -> voi
 			return
 	# Steal oldest
 	_sfx_pool[0].stream = stream
+	_sfx_pool[0].volume_db = sfx_volume_db if is_nan(volume_db) else volume_db
+	_sfx_pool[0].pitch_scale = pitch
 	_sfx_pool[0].play()
 
 
@@ -72,10 +74,9 @@ func play_music(track_id: String, fade_seconds: float = 1.0) -> void:
 		tween.tween_property(_music_player, "volume_db", -40.0, fade_seconds * 0.5)
 		await tween.finished
 	_music_player.stream = stream
-	_music_player.volume_db = music_volume_db
+	_music_player.volume_db = -40.0 if fade_seconds > 0.0 else music_volume_db
 	_music_player.play()
 	if fade_seconds > 0:
-		_music_player.volume_db = -40.0
 		var tween2 := create_tween()
 		tween2.tween_property(_music_player, "volume_db", music_volume_db, fade_seconds)
 
@@ -103,6 +104,11 @@ func play_voice(voice_key: String, volume_db: float = NAN) -> void:
 	_voice_player.play()
 
 
+## True when a voice line with this key exists (the same lookup play_voice does, without loading the stream).
+func voice_exists(voice_key: String) -> bool:
+	return _find_stream("", voice_key) != "" or _find_stream(VOICE_DIR, voice_key.get_file()) != ""
+
+
 func is_voice_playing() -> bool:
 	return _voice_player.playing
 
@@ -116,7 +122,7 @@ func set_master_volume(db: float) -> void:
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), db)
 
 
-func _load_stream(base_dir: String, id: String) -> AudioStream:
+func _find_stream(base_dir: String, id: String) -> String:
 	var candidates: Array[String] = []
 	if base_dir != "":
 		candidates.append(base_dir.path_join(id + ".ogg"))
@@ -128,5 +134,10 @@ func _load_stream(base_dir: String, id: String) -> AudioStream:
 
 	for path in candidates:
 		if ResourceLoader.exists(path):
-			return load(path) as AudioStream
-	return null
+			return path
+	return ""
+
+
+func _load_stream(base_dir: String, id: String) -> AudioStream:
+	var path := _find_stream(base_dir, id)
+	return load(path) as AudioStream if path != "" else null

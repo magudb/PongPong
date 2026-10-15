@@ -405,7 +405,12 @@ func _inspect_result(out: Dictionary, state: StringName, payload: Dictionary, fr
 ## only a cache: when it lacks a key or holds a value of the wrong type (a hand-edited or half-written file) the summary is
 ## rebuilt from the sections, so the values always have the types SUMMARY_TYPES lists and a "%d" never meets a string.
 func get_save_summary(slot: int = 0) -> Dictionary:
-	var info := inspect_slot(slot)
+	return _summary_of(inspect_slot(slot), slot)
+
+
+## The summary row of an already-inspected slot: {} when it is not loadable. Lets describe_slots() reuse the payload it
+## just read instead of reading and validating the file a second time.
+func _summary_of(info: Dictionary, slot: int) -> Dictionary:
 	if info["state"] != &"ok" and info["state"] != &"backup":
 		return {}
 	var payload: Dictionary = info["payload"]
@@ -445,7 +450,7 @@ func describe_slots() -> Array[Dictionary]:
 	var rows: Array[Dictionary] = []
 	for slot in all_slots():
 		var info := inspect_slot(slot)
-		rows.append({"slot": slot, "is_auto": slot == AUTO_SLOT, "state": info["state"], "summary": get_save_summary(slot)})
+		rows.append({"slot": slot, "is_auto": slot == AUTO_SLOT, "state": info["state"], "summary": _summary_of(info, slot)})
 	return rows
 
 
