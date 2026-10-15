@@ -1,0 +1,34 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 424,
+  "elapsed_s": 10.88,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "social_data": {
+      "checks": 118,
+      "failed": 0,
+      "ms": 878,
+      "skipped": 0
+    },
+    "towns_routes": {
+      "checks": 98,
+      "failed": 0,
+      "ms": 1972,
+      "skipped": 0
+    },
+    "towns_routines": {
+      "checks": 208,
+      "failed": 0,
+      "ms": 5194,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

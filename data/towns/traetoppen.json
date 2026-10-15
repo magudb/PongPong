@@ -1,0 +1,420 @@
+{
+ "area": "traetoppen",
+ "kind": "city",
+ "doors": [
+  {
+   "building": "hoppe_hut",
+   "sx": 397.7,
+   "sy": 228.4,
+   "level": 0
+  },
+  {
+   "building": "uglehulen",
+   "sx": 573.9,
+   "sy": 267.8,
+   "level": 0
+  },
+  {
+   "building": "postkontoret",
+   "sx": 1386.6,
+   "sy": 282.2,
+   "level": 1
+  },
+  {
+   "building": "vagthytten",
+   "sx": 1165.4,
+   "sy": 283.9,
+   "level": 1
+  },
+  {
+   "building": "brummes_vaerksted",
+   "sx": 147.6,
+   "sy": 615.6,
+   "level": 2
+  },
+  {
+   "building": "brummes_hus",
+   "sx": 374.8,
+   "sy": 674.1,
+   "level": 2
+  },
+  {
+   "building": "kikis_hytte",
+   "sx": 1032.9,
+   "sy": 576.5,
+   "level": 3
+  },
+  {
+   "building": "torvekroen",
+   "sx": 723.5,
+   "sy": 586.1,
+   "level": 3
+  },
+  {
+   "building": "fjerpens_hytte",
+   "sx": 1071.7,
+   "sy": 725.0,
+   "level": 3
+  },
+  {
+   "building": "badehuset",
+   "sx": 1623.6,
+   "sy": 604.4,
+   "level": 5
+  },
+  {
+   "building": "musikstuen",
+   "sx": 542.8,
+   "sy": 978.0,
+   "level": 6
+  },
+  {
+   "building": "koekkenhave_skuret",
+   "sx": 1309.4,
+   "sy": 972.4,
+   "level": 7
+  },
+  {
+   "building": "raadhuset",
+   "sx": 993.0,
+   "sy": 480.0,
+   "level": 4
+  }
+ ],
+ "posts": [
+  {
+   "name": "a_beds1",
+   "level": 0,
+   "sx": 505,
+   "sy": 250,
+   "act": "tend",
+   "cap": 1
+  },
+  {
+   "name": "a_beds2",
+   "level": 0,
+   "sx": 448,
+   "sy": 262,
+   "act": "tend",
+   "cap": 1
+  },
+  {
+   "name": "a_bench",
+   "level": 0,
+   "sx": 470,
+   "sy": 150,
+   "act": "sit",
+   "cap": 3
+  },
+  {
+   "name": "a_ugle_perch",
+   "level": 0,
+   "sx": 560,
+   "sy": 300,
+   "act": "perch",
+   "cap": 1
+  },
+  {
+   "name": "a_lamp",
+   "level": 0,
+   "sx": 349,
+   "sy": 200,
+   "act": "lamp",
+   "cap": 1
+  },
+  {
+   "name": "b_mailbox",
+   "level": 1,
+   "sx": 1352,
+   "sy": 300,
+   "act": "stand",
+   "cap": 1
+  },
+  {
+   "name": "b_lift",
+   "level": 1,
+   "sx": 1370,
+   "sy": 305,
+   "act": "guard",
+   "cap": 1
+  },
+  {
+   "name": "b_bench",
+   "level": 1,
+   "sx": 1290,
+   "sy": 300,
+   "act": "sit",
+   "cap": 3
+  },
+  {
+   "name": "b_lamp",
+   "level": 1,
+   "sx": 1111,
+   "sy": 250,
+   "act": "lamp",
+   "cap": 1
+  },
+  {
+   "name": "c_logs",
+   "level": 2,
+   "sx": 118,
+   "sy": 650,
+   "act": "work",
+   "cap": 1
+  },
+  {
+   "name": "c_bench",
+   "level": 2,
+   "sx": 300,
+   "sy": 700,
+   "act": "sit",
+   "cap": 3
+  },
+  {
+   "name": "c_lamp",
+   "level": 2,
+   "sx": 325,
+   "sy": 546,
+   "act": "lamp",
+   "cap": 1
+  },
+  {
+   "name": "t_fire_n",
+   "level": 3,
+   "sx": 880,
+   "sy": 698,
+   "act": "sit",
+   "cap": 2
+  },
+  {
+   "name": "t_fire_e",
+   "level": 3,
+   "sx": 928,
+   "sy": 742,
+   "act": "sit",
+   "cap": 2
+  },
+  {
+   "name": "t_fire_s",
+   "level": 3,
+   "sx": 880,
+   "sy": 778,
+   "act": "sit",
+   "cap": 2
+  },
+  {
+   "name": "t_fire_w",
+   "level": 3,
+   "sx": 835,
+   "sy": 742,
+   "act": "sit",
+   "cap": 2
+  },
+  {
+   "name": "t_stall",
+   "level": 3,
+   "sx": 720,
+   "sy": 690,
+   "act": "work",
+   "cap": 2
+  },
+  {
+   "name": "t_bench1",
+   "level": 3,
+   "sx": 1000,
+   "sy": 705,
+   "act": "sit",
+   "cap": 3
+  },
+  {
+   "name": "t_bench2",
+   "level": 3,
+   "sx": 800,
+   "sy": 800,
+   "act": "sit",
+   "cap": 3
+  },
+  {
+   "name": "t_ladder",
+   "level": 3,
+   "sx": 835,
+   "sy": 692,
+   "act": "stand",
+   "cap": 1
+  },
+  {
+   "name": "t_lamp",
+   "level": 3,
+   "sx": 977,
+   "sy": 505,
+   "act": "lamp",
+   "cap": 1
+  },
+  {
+   "name": "u_ladder",
+   "level": 4,
+   "sx": 835,
+   "sy": 512,
+   "act": "stand",
+   "cap": 1
+  },
+  {
+   "name": "u_board",
+   "level": 4,
+   "sx": 905,
+   "sy": 525,
+   "act": "stand",
+   "cap": 1
+  },
+  {
+   "name": "u_terrace",
+   "level": 4,
+   "sx": 950,
+   "sy": 420,
+   "act": "sit",
+   "cap": 2
+  },
+  {
+   "name": "u_lamp",
+   "level": 4,
+   "sx": 942,
+   "sy": 400,
+   "act": "lamp",
+   "cap": 1
+  },
+  {
+   "name": "e_tub",
+   "level": 5,
+   "sx": 1454,
+   "sy": 626,
+   "act": "stand",
+   "cap": 1
+  },
+  {
+   "name": "e_bench",
+   "level": 5,
+   "sx": 1560,
+   "sy": 690,
+   "act": "sit",
+   "cap": 3
+  },
+  {
+   "name": "e_bat_window",
+   "level": 5,
+   "sx": 1555,
+   "sy": 650,
+   "act": "perch",
+   "cap": 1
+  },
+  {
+   "name": "e_lamp",
+   "level": 5,
+   "sx": 1437,
+   "sy": 724,
+   "act": "lamp",
+   "cap": 1
+  },
+  {
+   "name": "f_bench",
+   "level": 6,
+   "sx": 640,
+   "sy": 1060,
+   "act": "sit",
+   "cap": 3
+  },
+  {
+   "name": "f_lamp",
+   "level": 6,
+   "sx": 633,
+   "sy": 953,
+   "act": "lamp",
+   "cap": 1
+  },
+  {
+   "name": "g_planter1",
+   "level": 7,
+   "sx": 1124,
+   "sy": 1040,
+   "act": "tend",
+   "cap": 1
+  },
+  {
+   "name": "g_planter2",
+   "level": 7,
+   "sx": 1164,
+   "sy": 1062,
+   "act": "tend",
+   "cap": 1
+  },
+  {
+   "name": "g_planter3",
+   "level": 7,
+   "sx": 1204,
+   "sy": 1080,
+   "act": "tend",
+   "cap": 1
+  },
+  {
+   "name": "g_bench",
+   "level": 7,
+   "sx": 1250,
+   "sy": 1050,
+   "act": "sit",
+   "cap": 3
+  },
+  {
+   "name": "g_lamp",
+   "level": 7,
+   "sx": 1260,
+   "sy": 906,
+   "act": "lamp",
+   "cap": 1
+  }
+ ],
+ "gates": [
+  {
+   "name": "gate_hyggebyen",
+   "level": 6,
+   "sx": 404,
+   "sy": 1010,
+   "to": "hyggebyen",
+   "to_gate": "gate_traetoppen"
+  },
+  {
+   "name": "gate_farm",
+   "level": 7,
+   "sx": 1408,
+   "sy": 970,
+   "to": "farm",
+   "to_gate": "gate_traetoppen"
+  },
+  {
+   "name": "gate_skovlift",
+   "level": 1,
+   "sx": 1380,
+   "sy": 312,
+   "to": "moerkeskoven",
+   "to_gate": "gate_traetoppen"
+  }
+ ],
+ "fest_sets": [
+  {
+   "spot": "torvet",
+   "level": 3,
+   "sx": 880,
+   "sy": 735
+  },
+  {
+   "spot": "badehus",
+   "level": 5,
+   "sx": 1500,
+   "sy": 662
+  },
+  {
+   "spot": "raadhus",
+   "level": 4,
+   "sx": 880,
+   "sy": 470
+  }
+ ]
+}

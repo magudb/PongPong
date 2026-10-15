@@ -102,3 +102,24 @@ generate audio. Shared weather/season pools keep the LEAN row budgets. The
 approved names need a 272px nameplate rather than the old 241px estimate.
 The strict copy/social/localization gate passed 461 checks, with no unexpected
 engine messages or leaked objects. Legacy dialogue copy remains P14’s next task.
+
+Social flow, core rooms and route engine — 2026-10-16
+
+Gift and talk mechanics pass the 617-check social/quest integration gate.
+The actual NPC/dialogue/picker chain remains with P14 and S-ui. All 14 installed
+painted rooms pass 128 checks: real collision floods, both keeper talk hosts,
+shop/service wiring, warm build/node/light budgets. Native live-keeper and
+shop-panel captures remain with T-director/P18.
+
+T-routes now bakes the real maps, room colliders and LevelRegistry polygons,
+including holes/keepouts and correct diagonal distances. The 424-check routing
+gate passes all nine rules, 386,400 citizen-minutes and eleven mutation probes.
+Lookup was measured below 20 microseconds. The bake records 44 source hashes.
+
+Seventeen prototype city anchors shift by more than 64 ground pixels to a
+walkable approach. routes.json retains authored and resolved coordinates and
+reports every shift. T-director must use those positions and visually validate
+doors, garden posts and Fru Ugle's window; this placement gate is still open.
+The old circular sketch approximation must not silently replace actual geometry.
+Pip's 1.6 courier pace preserves his 07:10 farm stop and 09:00 counter. Small
+Hoppe/Rosa timetable margins now fit the measured walks.

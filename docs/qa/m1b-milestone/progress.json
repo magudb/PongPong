@@ -97,7 +97,8 @@
         },
         {
           "id": "T-routes",
-          "status": "pending"
+          "status": "core_logic_validated_live_placement_gate_pending",
+          "evidence": "towns-routing-integration.json: 424 checks, no failed/skipped checks or engine messages; 386400 citizen-minutes, all 9 rules, 11 mutants. Large city anchor shifts require T-director native review."
         }
       ]
     },
@@ -164,7 +165,9 @@
     "Full furniture/home-world feature screens and production wardrobe layers were optional later packages in the original M1b plan; they are separate from the four-stage town/farm loop.",
     "Social fixture replacement leak fixed and validated: 132 checks, clean ObjectDB exit. D0 targeted gate: 400 checks, no errors or warnings.",
     "LEAN copy keeps situational weather/season pools shared: 335/285/125/20 rows, within the 346/300/133/25 budgets. Exactly 100 voice hooks indexed; chat milestones remain text pending listening approval. No audio generated. All new copy stays draft.",
-    "The old 21-character / 241px name estimate contradicts approved names measured at up to 267.25px. The name budget is 26 characters / 272px; preserve canonical names and give the P14 runtime plate that width plus padding."
+    "The old 21-character / 241px name estimate contradicts approved names measured at up to 267.25px. The name budget is 26 characters / 272px; preserve canonical names and give the P14 runtime plate that width plus padding.",
+    "Route bake uses the real level polygons/holes/keepouts and all 14 installed room colliders. routes.json records 44 input hashes, authored/resolved city coordinates and approach shifts. Seventeen city anchors shift more than 64 ground px; inspect live placement and door approach at T-director before accepting the milestone. Never silently restore the old circle approximation.",
+    "The real routes require Pip courier speed_mult=1.6 to cover the 07:10 farm mailbox and 09:00 counter. Hoppe leaves 15 minutes earlier for the farm and keeps a 6 minute return margin; Rosa keeps a 6 minute errand margin. Normal/festival compiler travel shares the same pace."
   ],
   "scope_basis": "The four-stage 27-package M1b plan in the original durable LEAD_NOTES.md (2026-10-15); package amendments remain binding. This is the usable-towns milestone, before the later dungeon and feature milestones.",
   "followup_layers": [
