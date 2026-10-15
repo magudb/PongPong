@@ -46,7 +46,8 @@
         },
         {
           "id": "DR7-dungeon-services",
-          "status": "pending"
+          "status": "data_validated_runtime_hooks_pending_P14",
+          "evidence": "services-cast.json: 819 checks, zero failures, 7 named later-package skips"
         },
         {
           "id": "I1-copy-system",
@@ -54,7 +55,8 @@
         },
         {
           "id": "V7-dialogue-v2",
-          "status": "pending"
+          "status": "data_validated_runtime_hooks_pending_P14",
+          "evidence": "services-cast.json: 819 checks, zero failures, 7 named later-package skips"
         }
       ]
     },

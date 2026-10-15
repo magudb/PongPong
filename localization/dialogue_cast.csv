@@ -1,0 +1,74 @@
+keys,da,en
+DLG_HOPPE_GREET,Kom bare nærmere. Der er plads mellem gulerødderne!,Come closer. There is room between the carrots!
+DLG_HOPPE_KLART,Solen er fremme. Dine spirer bliver tørstige.,The sun is out. Your seedlings will be thirsty.
+DLG_HOPPE_REGN,Hører du regnen? Så skal du ikke vande i dag.,Hear the rain? You need not water today.
+DLG_HOPPE_TAAGE,Tågen putter sig om bladene. Jeg kan næsten høre dem vokse.,The mist curls around the leaves. I can almost hear them grow.
+DLG_HOPPE_SNE,Sne er som en dyne. Frøene må vente lidt.,Snow is like a quilt. The seeds can wait a little.
+DLG_HOPPE_TORDEN,Det buldrer! Jeg passer frøene herinde i dag.,What a rumble! I will mind the seeds indoors today.
+DLG_HOPPE_SWAP_OFFER,To gulerødder for en lille pose frø?,Two carrots for a little bag of seeds?
+DLG_HOPPE_SWAP_DONE,Tak for gulerødderne. Jeg gemmer frø til dig igen i morgen.,Thanks for the carrots. I will save you seeds again tomorrow.
+DLG_HOPPE_ONCE,Min kurv rækker til én byttehandel om dagen.,My basket holds enough for one swap a day.
+DLG_HOPPE_SPROUTS,Små spirer kan blive til store glæder.,Little sprouts can grow into great joys.
+DLG_HOPPE_CHOICE_SWAP,Byt to gulerødder,Swap two carrots
+DLG_HOPPE_CHOICE_GOODBYE,Vi ses!,See you!
+DLG_BRUMME_GREET,Velkommen! Her dufter af frisk træ.,Welcome! It smells of fresh timber here.
+DLG_BRUMME_MARKET,Torvedag! Jeg har taget de lige planker med.,Market day! I brought the straight planks.
+DLG_BRUMME_ROOF,Feerne skal have nyt tag? Så løfter jeg bjælkerne.,The fairies need a new roof? I will lift the beams.
+DLG_BRUMME_TIMBER,Mærk bare på træet. Hver planke har sit eget mønster.,Feel the timber. Every plank has its own pattern.
+DLG_BRUMME_SLOW,Et godt hus må gerne tage lidt tid.,A good house can take a little time.
+DLG_BRUMME_TOOLS,"Mit yndlingsværktøj? Det, der ligger lige ved hånden.",My favourite tool? The one close at hand.
+DLG_BRUMME_REST,Selv en bjørn har brug for en pause.,Even a bear needs a break.
+DLG_BRUMME_HELP,"Kom tilbage, hvis du mangler en hjælpende pote.",Come back if you need a helping paw.
+DLG_BRUMME_CHOICE_SHOP,Se tømmerlageret,Browse the timber yard
+DLG_BRUMME_CHOICE_GOODBYE,Vi ses!,See you!
+DLG_PIP_GREET,Godmorgen! Eller goddag. Min posttaske holder ikke øje med klokken.,Good morning! Or good day. My mailbag does not watch the clock.
+DLG_PIP_OFFER,"Vil du hilse på Hoppe, Brumme og Sofus? De venter på dig.","Will you greet Hoppe, Brumme and Sofus? They are waiting for you."
+DLG_PIP_REMIND,Har du hilst på mine tre venner? Jeg er lige her bagefter.,Have you greeted my three friends? I will be right here afterwards.
+DLG_PIP_THANKS,Nu kender du nogle af os. Det føles allerede mere hjemligt!,Now you know some of us. It already feels more like home!
+DLG_PIP_MAIL,Der ligger post til dig i din postkasse.,There is mail for you in your mailbox.
+DLG_PIP_ROUND,Jeg kender hver en lille bro heroppe.,I know every little bridge up here.
+DLG_PIP_BAG,Min taske er fuld af små hilsner.,My bag is full of little greetings.
+DLG_PIP_REST,"Jeg tager en pause, når det sidste brev er fremme.",I will rest when the last letter arrives.
+DLG_PIP_CHOICE_QUEST,Jeg tager en runde,I will make the rounds
+DLG_PIP_CHOICE_GOODBYE,Vi ses!,See you!
+DLG_SOFUS_GREET,Velkommen til det varme vand. Her må du gerne være langsom.,Welcome to the warm water. You may take your time here.
+DLG_SOFUS_OFFER,"Et bad, lidt ro, og så er du klar igen.","A bath, a little rest, and you will be ready again."
+DLG_SOFUS_ONCE,Du har allerede badet i dag. Kom igen i morgen.,You have already bathed today. Come back tomorrow.
+DLG_SOFUS_ORANGE,Jeg har lagt en appelsin ved kanten. Den dufter af sol.,I put an orange by the edge. It smells of sunshine.
+DLG_SOFUS_TIRED,Dine skuldre ser trætte ud. Skal vandet varme dem?,Your shoulders look tired. Shall the water warm them?
+DLG_SOFUS_EVENING,Aftenvandet er ekstra stille.,The evening water is especially still.
+DLG_SOFUS_STEAM,Se dampen. Den har slet ikke travlt.,Look at the steam. It is in no hurry.
+DLG_SOFUS_TOWEL,Der ligger et rent håndklæde til dig.,There is a clean towel for you.
+DLG_SOFUS_CHOICE_BATH,Tag et bad,Take a bath
+DLG_SOFUS_CHOICE_GOODBYE,Vi ses!,See you!
+DLG_UGLE_GREET,"Hvem kommer dér? Åh, en samler med nysgerrige øjne.","Who comes there? Ah, a collector with curious eyes."
+DLG_UGLE_FINDS,Læg dine fund her. Vi ser på dem sammen.,Put your finds here. We will look at them together.
+DLG_UGLE_LAKE,Kisten ved søen har ventet længe på sin nøgle.,The chest by the lake has waited a long time for its key.
+DLG_UGLE_RUNES,"Runerne husker de fødder, der går forbi.",The runes remember the feet that pass by.
+DLG_UGLE_GLASS,Mit forstørrelsesglas finder de mindste glimt.,My magnifying glass finds the tiniest sparkles.
+DLG_UGLE_PATIENCE,Nogle sten åbner sig kun for tålmodige øjne.,Some stones reveal themselves only to patient eyes.
+DLG_UGLE_WINDOW,Du må gerne tale med mig gennem vinduet.,You may talk to me through the window.
+DLG_UGLE_FAREWELL,Pas på dine små skatte derude.,Take care of your little treasures out there.
+DLG_UGLE_CHOICE_APPRAISE,Vurdér mine fund,Appraise my finds
+DLG_UGLE_CHOICE_KEY,Spørg om kisten ved søen,Ask about the lake chest
+DLG_UGLE_CHOICE_RUNES,Spørg om runerne,Ask about the runes
+DLG_UGLE_CHOICE_GOODBYE,Vi ses!,See you!
+DLG_NATTEBLIK_GREET,Et kort? Jeg kender de mørke stier.,A map? I know the dark paths.
+DLG_NATTEBLIK_NIGHT,God aften. Nu vågner skovens små lys.,Good evening. The little forest lights are waking.
+DLG_NATTEBLIK_MAPS,Et lille kryds kan vise en stor omvej.,A little cross can reveal a long way round.
+DLG_NATTEBLIK_NO_MAPS,Kortene er ikke tegnet endnu. Kom igen senere.,The maps are not drawn yet. Come back later.
+DLG_NATTEBLIK_ROOTS,Rødderne flytter sig. Jeg tegner nye streger.,The roots move. I draw new lines.
+DLG_NATTEBLIK_EARS,"Mine ører finder vej, hvor øjnene må vente.",My ears find the way where eyes must wait.
+DLG_NATTEBLIK_LANTERN,Tag lygten med. Selv et kort har brug for lys.,Bring your lantern. Even a map needs light.
+DLG_NATTEBLIK_FAREWELL,Må dine skridt finde en venlig sti.,May your footsteps find a friendly path.
+DLG_NATTEBLIK_CHOICE_SHOP,Se kortene,Browse the maps
+DLG_NATTEBLIK_CHOICE_GOODBYE,Vi ses!,See you!
+DLG_BIRK_GREET,Vær forsigtig! Bierne er i godt humør i dag.,Take care! The bees are in a good mood today.
+DLG_BIRK_BEES,De har fundet blomster ved den store bro.,They found flowers by the great bridge.
+DLG_BIRK_FAMILY,Du ligner nogen fra min familie!,You look like someone from my family!
+DLG_BIRK_HONEY,"Honning smager lidt af de blomster, bierne har besøgt.",Honey tastes a little like the flowers the bees visited.
+DLG_BIRK_WINGS,Små vinger kan nå langt.,Little wings can travel far.
+DLG_BIRK_QUIET,Stå stille et øjeblik. Kan du høre dem summe?,Stand still a moment. Can you hear them hum?
+DLG_BIRK_FLOWERS,Jeg planter lidt ekstra til mine små naboer.,I plant a little extra for my tiny neighbours.
+DLG_BIRK_FAREWELL,"Vi ses, når blomsterne kalder igen.",See you when the flowers call again.
+DLG_BIRK_CHOICE_GOODBYE,Vi ses!,See you!

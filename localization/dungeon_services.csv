@@ -1,0 +1,50 @@
+keys,da,en
+ITEM_TORNEBAER,Tornebær,Thornberry
+ITEM_TORNEBAER_DESC,"Et lille bær, som giver kræfter.",A little berry that restores health.
+ITEM_LYSDRAABE,Lysdråbe,Light drop
+ITEM_LYSDRAABE_DESC,Svampelys til din lygte.,Mushroom light for your lantern.
+ITEM_SVAMPE_ELIKSIR,Svampeeliksir,Mushroom elixir
+ITEM_SVAMPE_ELIKSIR_DESC,En lun drik til trætte eventyrere.,A warm drink for weary explorers.
+ITEM_ETAGEKORT,Etagekort,Floor map
+ITEM_ETAGEKORT_DESC,Viser vejen på den næste etage.,Reveals the paths on the next floor.
+ITEM_UGLE_NOEGLE,Ugles nøgle,Owl’s key
+ITEM_UGLE_NOEGLE_DESC,En lille nøgle til kisten ved søen.,A little key to the chest by the lake.
+RECIPE_LYSDRAABE,Lysdråbe,Light drop
+RECIPE_SVAMPE_ELIKSIR,Svampeeliksir,Mushroom elixir
+SHOP_NATTEBLIK_MAPS,Nattebliks kort,Natteblik’s maps
+SHOP_NATTEBLIK_MAPS_GREETING,Skal vi finde en vej mellem rødderne?,Shall we find a path between the roots?
+QUEST_SKOVLIFT_INTRO_TITLE,Første tur ned,First trip down
+QUEST_SKOVLIFT_INTRO_DESC,"Vil du se, hvor runerne lyser? Kom hjem og fortæl mig om turen.",Will you find the glowing runes? Come home and tell me about your trip.
+QUEST_SKOVLIFT_INTRO_OFFER,"Vil du se, hvor runerne lyser? Kom hjem og fortæl mig om turen.",Will you find the glowing runes? Come home and tell me about your trip.
+QUEST_SKOVLIFT_INTRO_CHOICE,Første tur ned,First trip down
+QUEST_SKOVLIFT_INTRO_REMIND,Jeg glæder mig til at høre om din tur.,I look forward to hearing about your trip.
+OBJ_SKOVLIFT_INTRO_GO_DOWN,Gå ned i Mørkeskoven,Enter the Dark Wood
+OBJ_SKOVLIFT_INTRO_LIGHT_RUNE,Væk en rune,Wake a rune
+OBJ_SKOVLIFT_INTRO_BRING_HOME,Kom tilbage fra skoven,Return from the wood
+OBJ_SKOVLIFT_INTRO_REPORT,Tal med Eg,Talk to Oak
+QUEST_RUNE_VANDRING_TITLE,Runernes vej,The rune trail
+QUEST_RUNE_VANDRING_DESC,Runerne gemmer på gamle spor. Find dem længere nede i skoven.,The runes hold old trails. Find them deeper in the wood.
+QUEST_RUNE_VANDRING_OFFER,Runerne gemmer på gamle spor. Find dem længere nede i skoven.,The runes hold old trails. Find them deeper in the wood.
+QUEST_RUNE_VANDRING_CHOICE,Runernes vej,The rune trail
+QUEST_RUNE_VANDRING_REMIND,Jeg glæder mig til at høre om din tur.,I look forward to hearing about your trip.
+OBJ_RUNE_VANDRING_RUNE_5,Væk en rune fra etage 5,Wake a rune on floor 5 or deeper
+OBJ_RUNE_VANDRING_RUNE_9,Væk en rune fra etage 9,Wake a rune on floor 9 or deeper
+OBJ_RUNE_VANDRING_REPORT,Tal med Fru Ugle,Talk to Mrs Owl
+QUEST_UGLES_NOEGLE_TITLE,Ugles nøgle,Owl’s key
+QUEST_UGLES_NOEGLE_DESC,Har du tre fine sten? Så har jeg en nøgle til dig.,Have you three lovely stones? Then I have a key for you.
+QUEST_UGLES_NOEGLE_OFFER,Har du tre fine sten? Så har jeg en nøgle til dig.,Have you three lovely stones? Then I have a key for you.
+QUEST_UGLES_NOEGLE_CHOICE,Ugles nøgle,Owl’s key
+QUEST_UGLES_NOEGLE_REMIND,Jeg glæder mig til at høre om din tur.,I look forward to hearing about your trip.
+OBJ_UGLES_NOEGLE_AMETHYST,Find en ametyst,Find an amethyst
+OBJ_UGLES_NOEGLE_ROSE_QUARTZ,Find en rosenkvarts,Find a rose quartz
+OBJ_UGLES_NOEGLE_AMBER,Find et stykke rav,Find a piece of amber
+OBJ_UGLES_NOEGLE_REPORT,Tal med Fru Ugle,Talk to Mrs Owl
+QUEST_BOSSERNES_VEJ_TITLE,Skovens tre vogtere,The three forest guardians
+QUEST_BOSSERNES_VEJ_DESC,Tre store svampe vogter skoven. Vil du finde dem?,Three great mushrooms guard the wood. Will you find them?
+QUEST_BOSSERNES_VEJ_OFFER,Tre store svampe vogter skoven. Vil du finde dem?,Three great mushrooms guard the wood. Will you find them?
+QUEST_BOSSERNES_VEJ_CHOICE,Skovens tre vogtere,The three forest guardians
+QUEST_BOSSERNES_VEJ_REMIND,Jeg glæder mig til at høre om din tur.,I look forward to hearing about your trip.
+OBJ_BOSSERNES_VEJ_SNURRESVAMP,Mød Snurresvampen,Meet the Spinning Mushroom
+OBJ_BOSSERNES_VEJ_SNURRESVAMP_GLOED,Mød Glødesvampen,Meet the Ember Mushroom
+OBJ_BOSSERNES_VEJ_SNURRESVAMP_KONGE,Mød Svampekongen,Meet the Mushroom King
+OBJ_BOSSERNES_VEJ_REPORT,Tal med Eg,Talk to Oak

@@ -363,6 +363,9 @@
     "RECIPE_SVAMPE_ELIKSIR",
     "SHOP_NATTEBLIK_MAPS",
     "SHOP_NATTEBLIK_MAPS_GREETING"
+   ],
+   "item_files": [
+    "lua/items/dungeon_supplies.lua"
    ]
   },
   "dungeon_items.csv": {

@@ -1,0 +1,71 @@
+{
+  "allowed": [
+    {
+      "kind": "warning",
+      "rule": "unsupported locale",
+      "section": "loc",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): LocalizationManager.set_locale: unsupported locale 'xx' (supported: da, en) (at set_locale res://scripts/autoload/localization_manager.gd:123)"
+    },
+    {
+      "kind": "error",
+      "rule": "ConfigFile parse error",
+      "section": "loc",
+      "text": "core/io/config_file.cpp:293 in _parse(): ConfigFile parse error at user://settings.cfg:0: Unexpected EOF while parsing simple tag. (at _persist_locale res://scripts/autoload/localization_manager.gd:102)"
+    },
+    {
+      "kind": "warning",
+      "rule": "is unreadable",
+      "section": "loc",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): LocalizationManager: user://settings.cfg is unreadable (error 43); the language choice was not saved so that no other setting is destroyed (at _persist_locale res://scripts/autoload/localization_manager.gd:104)"
+    },
+    {
+      "kind": "warning",
+      "rule": "takes 1 argument(s)",
+      "section": "loc",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): LocalizationManager.t: 'NOTIF_LANGUAGE_CHANGED_MSG' (Sproget er nu %s.) takes 1 argument(s), got 2 (at t res://scripts/autoload/localization_manager.gd:168)"
+    }
+  ],
+  "character": "animal",
+  "checks": 819,
+  "elapsed_s": 19.62,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "dungeon_services": {
+      "checks": 7,
+      "failed": 0,
+      "ms": 49,
+      "skipped": 1
+    },
+    "economy": {
+      "checks": 296,
+      "failed": 0,
+      "ms": 1006,
+      "skipped": 2
+    },
+    "loc": {
+      "checks": 115,
+      "failed": 0,
+      "ms": 13743,
+      "skipped": 0
+    },
+    "npc_cast": {
+      "checks": 346,
+      "failed": 0,
+      "ms": 9,
+      "skipped": 0
+    },
+    "quests": {
+      "checks": 55,
+      "failed": 0,
+      "ms": 2107,
+      "skipped": 4
+    }
+  },
+  "skipped": 7
+}
