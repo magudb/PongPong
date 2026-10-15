@@ -11,12 +11,13 @@ extends SceneTree
 ##                 FAIL <path>:<line>:<rule> <message>          one line per finding
 ##                 lint: <files> file(s), <findings> finding(s) summary line
 ## The data-level lint findings of LuaRuntime (a config key defined by two files, a rarity not on the ladder, a `tables`
-## header without its table) are added when the default root res://lua is linted; they need the loaded runtime, the token
-## rules do not. Consistency notes (an id defined twice) are printed as NOTE lines and never fail the run.
+## header without its table, a `kind = "registry"` file without its `registry = "<name>"` header and table) are added when
+## the default root res://lua is linted; they need the loaded runtime, the token rules do not. Consistency notes (an id
+## defined twice) are printed as NOTE lines and never fail the run.
 ## Autoloads do not exist when this script compiles: everything is reached through load() and root.get_node().
 
 const _Lint := preload("res://scripts/data/lua_lint.gd")
-const DATA_LEVEL_RULES := ["duplicate_key", "rarity", "tables_header"]
+const DATA_LEVEL_RULES := ["duplicate_key", "rarity", "tables_header", "registry_header"]
 
 
 func _initialize() -> void:
@@ -37,7 +38,7 @@ func _run() -> void:
 		elif a == "--quiet":
 			quiet = true
 		elif a == "--list-rules":
-			print("rules: else elseif loop long_bracket local_function module_function escape length stdlib method_call vararg arithmetic bitwise mixed_table table_value nil_value kind_missing kind_unknown unbalanced unterminated_string stray_character | data level: duplicate_key rarity tables_header")
+			print("rules: else elseif loop long_bracket local_function module_function escape length stdlib method_call vararg arithmetic bitwise mixed_table reserved_key table_value nil_value kind_missing kind_unknown unbalanced unterminated_string stray_character | data level: duplicate_key rarity tables_header registry_header")
 			quit(0)
 			return
 	var default_root := roots.is_empty() and files.is_empty()

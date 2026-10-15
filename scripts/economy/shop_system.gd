@@ -23,10 +23,13 @@ extends Node
 ## of arguments is a contract violation and fails LOUDLY (an engine error in the gate of the package that broke it).
 ##
 ## STOCK. Fixed stock refreshes on EventBus.day_started (+restock, never above `stock`); rotation rows (ShopRotation) are cached
-## per game day and a bought count is kept until the item leaves the offer. A shop with open_weekdays (0 = Monday) is closed on
-## the other days: get_shop_info()["closed"], buying and selling are refused (last_refusal = &"closed"), the UI shows
-## SHOP_UI_CLOSED_TODAY. A garment the player owns cannot be bought again (row.already_owned, last_refusal = &"owned": the UI
-## shows SHOP_UI_ALREADY_OWNED).
+## per game day and a bought count is kept until the item leaves the offer. OPENING HOURS (RT5): is_open asks the towns track's rule
+## first, through the helper ShopHoursGate (res://scripts/towns/hours.gd, buildings registry; true / false, or null = no building claims
+## the shop, the config switch towns.hours_enabled is false, or the towns track is absent), then the def's own open_weekdays (0 = Monday).
+## A closed shop: get_shop_info()["closed"] (+ closed_reason / opens_at / next_open_weekday when the hours rule closed it), buying and
+## selling are refused (last_refusal = &"closed"), the UI shows SHOP_UI_CLOSED_TODAY. A festival closes a shop inside the hours rule
+## (SocialManager.shop_closed_by_festival is asked there): this file knows no festival. A garment the player owns cannot be bought
+## again (row.already_owned, last_refusal = &"owned": the UI shows SHOP_UI_ALREADY_OWNED).
 ##
 ## SELLING. get_sell_price(shop, item) = max(1, sell_value x sell_multiplier); 0 = this shop does not buy it (price 0, quest and
 ## special items, keepsakes, categories outside the shop's `buys`, a sell_multiplier of 0). The sell list is EconomyManager.list_sellable().
@@ -38,6 +41,7 @@ extends Node
 signal shop_transaction(shop_id: StringName, item_id: StringName, amount: int, is_buy: bool)
 
 const _Svc := preload("res://scripts/data/svc.gd")
+const _HoursGate := preload("res://scripts/economy/shop_hours_gate.gd")     # the towns track's opening-hours rule, asked in ONE place (RT5)
 const _Data := preload("res://scripts/data/lua_data.gd")
 const _Kinds := preload("res://scripts/data/item_kinds.gd")
 const _Perks := preload("res://scripts/data/perks.gd")
@@ -126,11 +130,18 @@ func get_shop_info(shop_id: Variant) -> Dictionary:
 	info["npc_id"] = str(d.get("keeper", ""))
 	info["open"] = is_open(shop_id)
 	info["closed"] = not info["open"]
+	if info["closed"]:
+		info.merge(_HoursGate.closed_info(str(info["id"])), true)       # closed_reason / opens_at / next_open_weekday, when the hours rule closed it
 	return info
 
 
-## Shops without open_weekdays are always open; else today's weekday (0 = Monday) has to be listed.
+## The towns track's opening hours decide first (ShopHoursGate: true / false; null = no building claims the shop, the switch
+## towns.hours_enabled is off, or scripts/towns is absent). Then: shops without open_weekdays are always open; else today's weekday
+## (0 = Monday) has to be listed.
 func is_open(shop_id: Variant) -> bool:
+	var rule: Variant = _HoursGate.open_override(str(resolve_shop_id(shop_id)))
+	if rule != null:
+		return bool(rule)
 	var days := _Data.arr(_def(shop_id).get("open_weekdays", []))
 	if days.is_empty():
 		return true

@@ -27,7 +27,9 @@ extends Node2D
 ## A type nobody handles, a script that does not exist yet and a script without an entry point are skipped SILENTLY and counted in
 ## skipped_markers (type -> count), so packages of later waves land independently. Every marker is also recorded in `markers`
 ## (find_markers(type)), so data markers (animal_yard, building_slot, field_expansion) can be read by their consumers.
-## `when=` (quest:<id> | done:<id> | flag:<name> | night) is evaluated on enter and on quest / clock / flag changes.
+## `when=` (quest:<id> | done:<id> | flag:<name> | night, plus `&`, a leading `!` and the kinds of WHEN_DELEGATED_KINDS, which
+## SocialManager.eval_when answers) is evaluated on enter and on quest / clock / flag / friend changes (evaluate_when). A kind
+## nobody knows is false and a `when_unknown_kind` entry of map.errors.
 ## Built-in marker parameters: warp `to= spawn= label= [req_day=N] [r=cells] [prop=<art id>]`; sign `text=<key> [prop=]`; bed (no parameters);
 ## quest_spot `quest= objective= prompt=<key> [needs=item:n,item:n] [consume=1] [prop=]`; light `kind=lantern|glow [r=px color=hex h=px]`;
 ## growth `stage=1..3 cells=x,y;x0..x1,y0..y1` (plus every char of that marker in the @objects rows): void cells that become deck while
@@ -49,6 +51,12 @@ const Z_SKIRTS := Iso.Z_SKIRTS
 const STRIP_W := 32
 const WATER_PERIOD := 0.5
 const FLAG_POLL_PERIOD := 0.25
+
+## The `when=` grammar (design_social section 8, ONE implementation in SocialManager.eval_when). The four OLD kinds keep their fast path
+## in evaluate_when; a spec with `&`, a leading `!` or one of the DELEGATED kinds is answered by SocialManager.eval_when (late bound
+## through Svc). A kind in neither list is a typo: false, and a `when_unknown_kind` entry in map.errors (when_errors).
+const WHEN_OLD_KINDS: Array[String] = ["quest", "done", "flag", "night"]
+const WHEN_DELEGATED_KINDS: Array[String] = ["at", "away", "open", "hearts", "fest", "hour", "weekday", "season", "birthday", "stage"]
 
 ## Marker types the area builds itself.
 const BUILTIN_MARKERS: Array[String] = ["spawn", "warp", "sign", "bed", "quest_spot", "light", "growth"]
@@ -111,7 +119,7 @@ var builder_error: String = ""
 var night_factor: float = 0.0
 
 var _terrain_of: Dictionary = {}            # Vector2i -> terrain id of the ground tile
-var _when_nodes: Array[Dictionary] = []     # {nodes: Array[Node], when: String, active: bool}
+var _when_nodes: Array[Dictionary] = []     # {nodes: Array[Node], when: String, active: bool, delegated: bool, flag: bool}
 var _glows: Array[Dictionary] = []          # {node: CanvasItem, base: float}
 var _lights: Array[Dictionary] = []         # {node: PointLight2D, base: float}
 var _growth_cells: Dictionary = {}          # stage -> Array[Vector2i]
@@ -120,6 +128,7 @@ var _water_frame: int = 0
 var _water_t: float = 0.0
 var _poll_t: float = 0.0
 var _has_flag_when: bool = false
+var _when_hour: int = -1                    # the raw game hour (6..25) the `when=` nodes were last evaluated at: the hour edge test
 var _hooked: bool = false
 
 static var _handler_cache: Dictionary = {}  # script path -> {"mode": String, "script": Script}
@@ -1124,6 +1133,7 @@ func _build_marker(ch: String, m: Dictionary, c: Vector2i, pos: Vector2) -> void
 	var type: String = str(m["marker"])
 	var rec: Dictionary = {"type": type, "params": m, "cell": c, "pos": pos, "char": ch, "node": null, "nodes": []}
 	markers.append(rec)
+	_report_when_errors(m)           # a typo is reported whether or not a handler exists yet (a skipped marker is never tracked)
 	# a per-area override (the world spike's way) wins over everything
 	if marker_handlers.has(type):
 		var made: Variant = (marker_handlers[type] as Callable).call(m, pos, c, self)
@@ -1304,23 +1314,108 @@ func _on_quest_spot(_player: Node, m: Dictionary) -> void:
 
 # ------------------------------------------------------------------ when= conditions
 
-## Registers nodes behind a `when=` condition and applies it at once.
+## Registers nodes behind a `when=` condition and applies it at once. A typo in the spec is reported even when nobody is registered.
 func _track_when(params: Dictionary, nodes: Array) -> void:
 	var w: String = str(params.get("when", ""))
-	if w == "" or nodes.is_empty():
+	if w == "":
 		return
-	_has_flag_when = _has_flag_when or w.begins_with("flag:")
-	var rec: Dictionary = {"nodes": nodes, "when": w, "active": true}
+	_report_when_errors(params)
+	if nodes.is_empty():
+		return
+	var rec: Dictionary = {"nodes": nodes, "when": w, "active": true, "delegated": when_is_delegated(w.strip_edges()), "flag": _when_uses(w, "flag")}
+	_has_flag_when = _has_flag_when or bool(rec["flag"])
 	_when_nodes.append(rec)
 	_apply_when(rec)
 	set_process(true)
 
 
+## A `when=` the grammar does not know goes to map.errors once as `when_unknown_kind: when=<spec> (<what>)`: a map test that asserts
+## `area.map.errors.is_empty()` then catches a typo that used to show the prop forever.
+func _report_when_errors(params: Dictionary) -> void:
+	var w: String = str(params.get("when", ""))
+	if w == "" or map == null:
+		return
+	for e in when_errors(w):
+		var msg: String = "when_unknown_kind: when=%s (%s)" % [w, e]
+		if not map.errors.has(msg):
+			map.errors.append(msg)
+
+
+## `spec` is answered by SocialManager.eval_when instead of the fast path: it has a `&`, begins with `!` or is of a delegated kind.
+static func when_is_delegated(spec: String) -> bool:
+	return spec.contains("&") or spec.begins_with("!") or spec.get_slice(":", 0) in WHEN_DELEGATED_KINDS
+
+
+## The kind of one term: "!hearts:pip:4" -> "hearts".
+static func _when_kind_of(term: String) -> String:
+	return term.strip_edges().trim_prefix("!").strip_edges().get_slice(":", 0).strip_edges()
+
+
+## The terms of `spec` whose kind is in neither WHEN_OLD_KINDS nor WHEN_DELEGATED_KINDS (typos, an empty kind); [] when the spec is fine.
+static func when_unknown_terms(spec: String) -> Array[String]:
+	var bad: Array[String] = []
+	for part in spec.split("&", false):
+		var kind: String = _when_kind_of(part)
+		if not (kind in WHEN_OLD_KINDS or kind in WHEN_DELEGATED_KINDS):
+			bad.append(part.strip_edges())
+	return bad
+
+
+## What is wrong with `spec`: the unknown kinds found here plus whatever SocialManager.when_spec_errors(spec) reports when that autoload
+## offers it (it owns the grammar). [] = fine.
+static func when_errors(spec: String) -> Array[String]:
+	var out: Array[String] = []
+	for term in when_unknown_terms(spec):
+		out.append("unknown kind in '%s'" % term)
+	var sm: Node = Svc.node("SocialManager")
+	if sm != null and sm.has_method("when_spec_errors"):
+		var reported: Variant = sm.call("when_spec_errors", spec)
+		if reported is Array:
+			for e in (reported as Array):
+				if not out.has(str(e)):
+					out.append(str(e))
+	return out
+
+
+## Does one term of `spec` have this kind?
+static func _when_uses(spec: String, kind: String) -> bool:
+	for part in spec.split("&", false):
+		if _when_kind_of(part) == kind:
+			return true
+	return false
+
+
+## The grammar of design_social section 8: quest:<id> (active) | done:<id> | flag:<name> | night keep their fast path here; `&`, a leading `!`
+## and the delegated kinds (at away open hearts fest hour weekday season birthday stage) go to SocialManager.eval_when. An unknown kind is false.
 static func evaluate_when(spec: String) -> bool:
-	## quest:<id> (active) | done:<id> | flag:<name> | night; an empty spec is true.
+	spec = spec.strip_edges()
 	if spec == "":
 		return true
-	var kind: String = spec.get_slice(":", 0)
+	if not when_is_delegated(spec):
+		return _when_term(spec)
+	if not when_unknown_terms(spec).is_empty():
+		return false
+	var sm: Node = Svc.node("SocialManager")
+	if sm != null and sm.has_method("eval_when"):
+		return bool(sm.call("eval_when", spec))
+	return _when_local(spec)
+
+
+## Without a SocialManager (a build without the social track, a test): the terms of the old kinds are evaluated here (`&` and `!`
+## included); a term of a delegated kind has nobody to ask, so it is false and so is the whole spec.
+static func _when_local(spec: String) -> bool:
+	for part in spec.split("&", false):
+		var term: String = part.strip_edges()
+		var neg: bool = term.begins_with("!")
+		term = term.trim_prefix("!").strip_edges()
+		if not (term.get_slice(":", 0).strip_edges() in WHEN_OLD_KINDS) or _when_term(term) == neg:
+			return false
+	return true
+
+
+## One term of an OLD kind (the fast path); a kind that is not one of the four is false (it used to be true).
+static func _when_term(spec: String) -> bool:
+	var kind: String = spec.get_slice(":", 0).strip_edges()
 	var arg: String = spec.get_slice(":", 1) if spec.contains(":") else ""
 	match kind:
 		"quest":
@@ -1337,7 +1432,7 @@ static func evaluate_when(spec: String) -> bool:
 		"night":
 			var tm: Node = GameData.tm()
 			return tm != null and tm.has_method("is_night") and bool(tm.call("is_night"))
-	return true
+	return false
 
 
 ## A world flag counts as set when it is true, a non-zero number or a non-empty string.
@@ -1356,10 +1451,19 @@ static func _truthy(v: Variant) -> bool:
 	return true
 
 
-## Re-evaluates every `when=` of this area (called on enter and on quest / clock / flag changes).
+## Re-evaluates every `when=` of this area (called on enter and on quest / day / game event changes).
 func refresh_when() -> void:
+	var gm: Node = GameData.gm()
+	_when_hour = int(gm.get("hour")) if gm != null else -1
 	for rec in _when_nodes:
 		_apply_when(rec)
+
+
+## Re-evaluates the `when=` nodes whose spec SocialManager answers (the hour edge, a change of hearts).
+func _refresh_delegated() -> void:
+	for rec in _when_nodes:
+		if bool(rec["delegated"]):
+			_apply_when(rec)
 
 
 func _apply_when(rec: Dictionary) -> void:
@@ -1451,6 +1555,7 @@ func _enter_tree() -> void:
 	EventBus.day_started.connect(_on_day_event)
 	EventBus.time_of_day_changed.connect(_on_clock_event)
 	EventBus.game_event.connect(_on_game_event)
+	EventBus.friend_changed.connect(_on_friend_event)
 	if map != null:
 		refresh_when()
 
@@ -1465,6 +1570,7 @@ func _exit_tree() -> void:
 	EventBus.day_started.disconnect(_on_day_event)
 	EventBus.time_of_day_changed.disconnect(_on_clock_event)
 	EventBus.game_event.disconnect(_on_game_event)
+	EventBus.friend_changed.disconnect(_on_friend_event)
 
 
 func _on_quest_event(_quest_id: StringName) -> void:
@@ -1475,14 +1581,26 @@ func _on_day_event(_day: int, _season: StringName) -> void:
 	refresh_when()
 
 
-func _on_clock_event(_hour: int, _minute: int) -> void:
+## `night` follows every clock tick (as before). The specs SocialManager answers (hour:, open:, fest:, at: ...) are re-evaluated on the HOUR
+## EDGE: minute 0, or an hour other than the one they were last evaluated at (a time skip lands on any minute). `hour` is the raw game
+## hour 6..25 of CLOCK_26: 24:00 and 01:00 are edges too, and the roll back to 02:00 is one (the hour changes).
+func _on_clock_event(hour: int, minute: int) -> void:
+	var edge: bool = minute == 0 or hour != _when_hour
+	_when_hour = hour
 	for rec in _when_nodes:
-		if str(rec["when"]) == "night":
+		if str(rec["when"]) == "night" or (edge and bool(rec["delegated"])):
 			_apply_when(rec)
 
 
+## Every game event re-evaluates every `when=` (also the events of SocialManager.WHEN_REFRESH_EVENTS: town_festival_*, birthday_today,
+## relationship_changed, routine_changed, shop_open_changed ...): a narrower filter would let `open:<shop>` and `&` specs of an old kind go stale.
 func _on_game_event(_event_name: StringName, _payload: Dictionary) -> void:
 	refresh_when()
+
+
+## `hearts:<npc>:<n>` and `stage:<npc>:<stage>` change with friend_changed (a typed signal, not a game event).
+func _on_friend_event(_npc_id: StringName, _hearts: int) -> void:
+	_refresh_delegated()
 
 
 func _process(delta: float) -> void:
@@ -1496,7 +1614,7 @@ func _process(delta: float) -> void:
 		if _poll_t >= FLAG_POLL_PERIOD:
 			_poll_t = 0.0
 			for rec in _when_nodes:
-				if str(rec["when"]).begins_with("flag:"):
+				if bool(rec["flag"]):
 					_apply_when(rec)
 
 

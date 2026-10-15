@@ -15,6 +15,12 @@
 #   section timeout        exit 1 after the section's TIMEOUT_S, not after minutes; --max-seconds stops a whole run;
 #                          a Godot stuck in a synchronous loop is killed by the wrapper (exit 124)
 #   bad usage              unknown --only name / unknown option -> exit 2
+#   --fast (RT8)           the wrapper turns --fast into `--fixed-fps 60` ahead of the script and never hands --fast to the harness
+#                          (a stand-in engine prints its argv), a windowed run ignores it, an own --fixed-fps / other engine argument
+#                          is kept; on the real engine 300 physics ticks cost a few ms with it and about 5 s without
+#                          (the case harness.fast_flag_forwards_fixed_fps is the verify id of the addendum, RT8); the section and run watchdogs
+#                          count WALL-CLOCK time, so a section that waits on the wall clock is not stopped under --fast, a hang still is,
+#                          and the UI audit's settle wait (a fade) counts process time (fast_flag_ui_audit_settle_waits_process_time)
 #   legacy flow            real main_menu -> character_select -> world boot of the 3D tree, its known failure is reported
 #   --with-window          trivial run_windowed section opens a real window (takes the one-window lock; run by lead/user)
 #   --with-slow            a 35 s statistical section passes under the default watchdog (plan: sections up to 30 s)
@@ -120,7 +126,12 @@ run_case allow_is_section_scoped 1 60 '\[b_leak\] warning: .*SCOPED-WARNING' '\[
 run_case known_issue_is_tolerated_and_listed 0 60 "KNOWN +1x 'KNOWN-ISSUE-SELFTEST'" 'ENGINE   \[' --no-boot --sections-dir="$ST/known" --known-issues="$ST/known/issues.txt"
 run_case known_issue_fails_in_strict_mode 1 60 'ENGINE .*KNOWN-ISSUE-SELFTEST' "KNOWN +1x" --no-boot --strict --sections-dir="$ST/known" --known-issues="$ST/known/issues.txt"
 run_case known_issue_without_hit_is_reported 0 60 "known issue 'THIS-NEVER-HAPPENS' did not occur: resolved\\? remove it" '' --no-boot --sections-dir="$ST/pass" --known-issues="$ST/known/gone.txt"
-run_case live_known_issues_file_is_reported 0 60 "KNOWN +[0-9]+x|known issue '.*' did not occur" '' --no-boot --sections-dir="$ST/pass"
+if grep -qvE '^[[:space:]]*(#|$)' tests/lib/known_issues.txt; then
+	run_case live_known_issues_file_is_reported 0 60 "KNOWN +[0-9]+x|known issue '.*' did not occur" '' --no-boot --sections-dir="$ST/pass"
+else
+	# the live file lists nothing today (comments only): the run is as clean as the baseline and prints neither a KNOWN line nor a "did not occur" note
+	run_case live_known_issues_file_is_empty $PASS_RC 60 "$CLEAN" "KNOWN +[0-9]+x|known issue '.*' did not occur" --no-boot --sections-dir="$ST/pass"
+fi
 
 # ---- wrapping external tools that print PASS/FAIL ids (tests/tools/check_project.gd style)
 run_case tool_wrapping_helpers $PASS_RC 60 "\\(0 failed, [0-9]+ skipped\\), $BASE_N engine error" 'FAIL  |FAILED|PROBLEM' --no-boot --sections-dir="$ST/tool_ok"
@@ -143,6 +154,51 @@ run_case wrapper_timeout_kills_a_spinning_godot 124 60 'TIMEOUT after 6s' '' --n
 run_case unknown_only_is_usage_error 2 30 'unknown section .nope.' '' --no-boot --sections-dir="$ST/pass" --only=nope
 run_case unknown_option_is_usage_error 2 30 'unknown option' '' --no-boot --bogus-flag
 run_case bad_character_is_usage_error 2 30 'must be animal, fairy, hobbit or ghost' '' --character=dragon
+
+# ---- --fast (RT8): the wrapper adds `--fixed-fps 60`; a stand-in engine (tests/lib/selftest/fast/fake_godot.sh) prints its argv
+FAKE_GODOT="$ST/fast/fake_godot.sh"
+# fake_run NAME WANT_RC MAX_SECONDS MUST_MATCH MUST_NOT_MATCH ARGS...  (run_case with the stand-in engine; GODOT_EXTRA_ARGS is whatever the caller exported)
+fake_run() { GODOT="$FAKE_GODOT" run_case "$@"; }
+# fake_argv NAME -> the engine's argv of that case on one line ("--path . --headless --fixed-fps 60 -s res://tests/playtest.gd -- ...")
+fake_argv() { grep '^FAKE_ARG ' "$WORK/$1.log" | cut -d' ' -f3- | tr '\n' ' '; }
+fake_expect() { # fake_expect LABEL ARGV_PATTERN WANT(yes|no) CASE   (the argv matches / does not match the pattern)
+	local argv
+	argv="$(fake_argv "$4")"
+	if { [ "$3" = yes ] && printf '%s' "$argv" | grep -Eq -- "$2"; } || { [ "$3" = no ] && ! printf '%s' "$argv" | grep -Eq -- "$2"; }; then
+		note_ok "$1"
+	else
+		note_fail "$1: engine argv was: $argv"
+	fi
+}
+fake_run harness.fast_flag_forwards_fixed_fps 0 30 'PLAYTEST PASS' '' --fast --no-boot
+fake_expect "--fast becomes '--fixed-fps 60' ahead of the harness script" '--headless --fixed-fps 60 -s res://tests/playtest.gd -- ' yes harness.fast_flag_forwards_fixed_fps
+fake_expect "--fast itself never reaches the harness (it would be an unknown option there)" '(^| )--fast( |$)' no harness.fast_flag_forwards_fixed_fps
+fake_run no_fast_flag_keeps_real_time 0 30 'PLAYTEST PASS' '' --no-boot
+fake_expect "without --fast no --fixed-fps is passed" '--fixed-fps' no no_fast_flag_keeps_real_time
+GODOT_EXTRA_ARGS="--verbose" fake_run fast_flag_with_extra_engine_args 0 30 'PLAYTEST PASS' '' --fast --no-boot
+fake_expect "GODOT_EXTRA_ARGS are kept next to --fixed-fps 60" '--headless --fixed-fps 60 --verbose -s res://tests/playtest.gd' yes fast_flag_with_extra_engine_args
+GODOT_EXTRA_ARGS="--fixed-fps 30" fake_run fast_flag_keeps_an_own_fixed_fps 0 30 'PLAYTEST PASS' '' --fast --no-boot
+fake_expect "an own --fixed-fps 30 is kept and not doubled" '--headless --fixed-fps 30 -s res://tests/playtest.gd' yes fast_flag_keeps_an_own_fixed_fps
+fake_expect "an own --fixed-fps 30 is not followed by a second --fixed-fps 60" '--fixed-fps 60' no fast_flag_keeps_an_own_fixed_fps
+fake_run fast_flag_is_ignored_in_a_windowed_run 0 30 'PLAYTEST PASS|--fast is ignored in a windowed run' '' --windowed --fast --out="$WORK/win_shots"
+fake_expect "a windowed run opens its 1280x720 window and gets no --fixed-fps" '--resolution 1280x720 -s res://tests/playtest.gd' yes fast_flag_is_ignored_in_a_windowed_run
+fake_expect "a windowed run does not pass --fixed-fps" '--fixed-fps' no fast_flag_is_ignored_in_a_windowed_run
+fake_expect "a windowed run does not hand --fast to the harness either" '(^| )--fast( |$)' no fast_flag_is_ignored_in_a_windowed_run
+if grep -q 'run_playtest: --fast is ignored in a windowed run' "$WORK/fast_flag_is_ignored_in_a_windowed_run.log"; then note_ok "a windowed run says that --fast is ignored"; else note_fail "a windowed run with --fast printed no notice"; fi
+# the real engine: the flag is only worth something if physics really runs ahead of the wall clock
+run_case fast_flag_runs_physics_ahead_of_the_wall_clock 0 60 'FASTPROBE ticks=300 wall_ms=' 'FAIL  |FAILED|PROBLEM' --fast --no-boot --sections-dir="$ST/fast"
+FAST_MS=$(sed -n 's/.*FASTPROBE ticks=300 wall_ms=\([0-9]*\).*/\1/p' "$WORK/fast_flag_runs_physics_ahead_of_the_wall_clock.log" | head -1)
+if [ -n "$FAST_MS" ] && [ "$FAST_MS" -lt 2500 ]; then note_ok "5 game seconds (300 physics ticks) with --fast: ${FAST_MS} ms of wall time"; else note_fail "5 game seconds with --fast took '${FAST_MS}' ms (want < 2500)"; fi
+run_case real_time_without_the_fast_flag 0 60 'FASTPROBE ticks=300 wall_ms=' 'FAIL  |FAILED|PROBLEM' --no-boot --sections-dir="$ST/fast"
+REAL_MS=$(sed -n 's/.*FASTPROBE ticks=300 wall_ms=\([0-9]*\).*/\1/p' "$WORK/real_time_without_the_fast_flag.log" | head -1)
+if [ -n "$REAL_MS" ] && [ "$REAL_MS" -ge 3500 ]; then note_ok "the same 5 game seconds without --fast wait for the wall clock: ${REAL_MS} ms (the control of the check above)"; else note_fail "5 game seconds without --fast took '${REAL_MS}' ms (want >= 3500: without the flag the engine paces physics by the wall clock)"; fi
+run_case fast_flag_with_list 0 30 'PLAYTEST list end: 2 section' '' --list --fast --sections-dir="$ST/pass"
+# the watchdogs count wall-clock time: under --fast a frame is a fraction of a millisecond, so a game-time timer would stop a section that only waits on the wall clock
+run_case fast_flag_section_watchdog_counts_wall_time 0 30 'ok +wall_wait\.waited_on_the_wall_clock' 'timed out|FAIL  |PROBLEM' --fast --no-boot --sections-dir="$ST/fast_wall"
+run_case fast_flag_run_watchdog_counts_wall_time 0 30 'ok +wall_wait\.waited_on_the_wall_clock' 'run watchdog|timed out|FAIL  |PROBLEM' --fast --no-boot --sections-dir="$ST/fast_wall" --max-seconds=4
+run_case fast_flag_ui_audit_settle_waits_process_time $PASS_RC 90 'ok +ui_audit_blind\.blind_two_modals_fade_longer_than_the_default' 'FAIL  |FAILED|PROBLEM|timed out' --fast --no-boot --only=ui_audit_blind
+run_case fast_flag_hang_is_still_stopped 1 30 'timed out after 2 s' 'never_reached' --fast --no-boot --sections-dir="$ST/hang"
+run_case fast_flag_run_watchdog_still_stops_a_hang 1 40 'run watchdog: the whole run exceeded 3 s' 'never_reached' --fast --no-boot --sections-dir="$ST/hang_global" --max-seconds=3
 
 # ---- the flow helpers on the real game (new_game, start_world, days, go_menu, boot)
 run_case flow_helpers $PASS_RC 90 "\\(0 failed, [0-9]+ skipped\\), $BASE_N engine error" 'FAIL  |FAILED|PROBLEM' --no-boot --sections-dir="$ST/flow"

@@ -1,5 +1,6 @@
 ; Fixture for tests/tools/check_project.gd (addendum 4.4, P01 task 2).
-; The 11 base autoload lines of project.godot (PLAN 3.1) plus the five feature autoload lines,
+; The 11 base autoload lines of project.godot (PLAN 3.1) plus the six feature autoload lines (the five of
+; the features addendum and SocialManager of the towns addendum, fix round RT3),
 ; appended here by hand in the shape tools/features/add_autoload.py (F1, wave 3, exception E1) will
 ; produce. The self-test accepts this text as is and derives its negative cases from it.
 
@@ -23,6 +24,7 @@ FurnitureManager="*res://scripts/furniture/furniture_manager.gd"
 WardrobeManager="*res://scripts/wardrobe/wardrobe_manager.gd"
 LootService="*res://scripts/loot/loot_service.gd"
 CollectionLog="*res://scripts/collection/collection_log.gd"
+SocialManager="*res://scripts/social/social_manager.gd"
 
 [display]
 

@@ -1,0 +1,14 @@
+{
+	"screens": [
+		{
+			"id": "mg_x",
+			"title": "the registry file's row",
+			"kind": "surface",
+			"package": "MG-lib",
+			"checks": [
+				"rules"
+			],
+			"tripwire": "res://tests/fixtures/ui_audit/never_built.tscn"
+		}
+	]
+}

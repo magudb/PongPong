@@ -1,0 +1,16 @@
+{
+	"version": 2,
+	"_doc": "fixture: one base row plus two folder files; merge order = base, then the folder files by file name",
+	"screens": [
+		{
+			"id": "mg_base",
+			"title": "mg_base",
+			"kind": "surface",
+			"package": "MG-lib",
+			"checks": [
+				"rules"
+			],
+			"tripwire": "res://tests/fixtures/ui_audit/never_built.tscn"
+		}
+	]
+}

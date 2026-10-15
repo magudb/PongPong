@@ -7,6 +7,9 @@ extends RefCounted
 ## save.missing_section_resets, save.validate_before_apply, save.atomic_apply_rolls_back, save.world_dict_contract.
 ## Fix round 2 (review of wave 3): autosave_default_interval_five_minutes, autosave_disabled_day_end*, latest_sub_second_*,
 ## delete_save_*, load_auto_slot_keeps_*, summary_wrong_types_*, v1_time_stamp_is_local_time*, short_write_*.
+## M1b fix round 0 (RT1): the registry checks (registry_*, feature_orders_*, section_registry_order_and_reset, missing_section_resets) run with
+## the REAL feature sections (HomeManager ... SocialManager) detached and registered again afterwards, so they hold whatever feature manager
+## exists: registry_tests_keep_real_sections (two stand-ins named like real sections, home and social, must come back unchanged).
 ##
 ## The section is a sandbox. Every file it writes goes to a scratch directory below user:// (SaveManager.save_dir is
 ## redirected, the real user://saves is compared before and after), and tests/run_playtest.sh runs it in a throwaway
@@ -550,7 +553,69 @@ func _test_autosave_defaults() -> void:
 
 # ================================================================ section registry (addendum 4.4)
 
+## Real feature sections (HomeManager, FurnitureManager, WardrobeManager, LootService, CollectionLog, SocialManager, ...) register themselves on the
+## live SaveManager in their _ready. The registry checks assert the EXACT list of registered names and the apply order of it, which must be the
+## fakes of the test, so the real sections are detached for the duration of _test_registry_inner and registered again afterwards: same node, same
+## order, and (found in apply order, re-registered in that order) equal orders keep their registration order. [[name, node, order], ...].
+func _detach_real_sections() -> Array:
+	var out: Array = []
+	for section_name in sm.registered_section_names():
+		var order: int = 100
+		for entry in sm._sections:
+			if entry["name"] == section_name:
+				order = int(entry["order"])
+		out.append([section_name, sm.section_node(section_name), order])
+	for e in out:
+		sm.unregister_section(e[0])
+	return out
+
+
+func _reattach_real_sections(detached: Array) -> void:
+	for e in detached:
+		if is_instance_valid(e[1]):
+			sm.register_section(e[0], e[1], e[2])
+
+
+## "name@order#node" of every registered (feature) section in apply order: what a detach / re-attach must leave unchanged.
+func _registry_rows() -> Array[String]:
+	var out: Array[String] = []
+	for section_name in sm.registered_section_names():
+		var order: int = -1
+		for entry in sm._sections:
+			if entry["name"] == section_name:
+				order = int(entry["order"])
+		out.append("%s@%d#%d" % [section_name, order, sm.section_node(section_name).get_instance_id()])
+	return out
+
+
 func _test_registry() -> void:
+	# whatever the live tree registered is put aside first, then two stand-ins for real feature managers take its place so the
+	# round trip is proven whatever is (not) installed: "home" has the NAME of a fake of the checks below (the fake replaces it,
+	# and its cleanup unregisters the name: the real node would be lost), "social" sits behind every order of the addendum
+	var installed := _detach_real_sections()
+	var stand_home := FakeSection.new()
+	stand_home.tag = "home"
+	var stand_social := FakeSection.new()
+	stand_social.tag = "social"
+	sm.register_section("home", stand_home, 10)
+	sm.register_section("social", stand_social, 60)
+	var before := _registry_rows()
+	var detached := _detach_real_sections()
+	var seen_empty: bool = sm.registered_section_names().is_empty()
+	_test_registry_inner()
+	var emptied_after: bool = sm.registered_section_names().is_empty()
+	_reattach_real_sections(detached)
+	var after := _registry_rows()
+	t.check("registry_tests_keep_real_sections", detached.size() == 2 and seen_empty and emptied_after and before.size() == 2 and after == before,
+		"%d feature sections detached for the registry checks (registry empty before: %s, after: %s), then registered again unchanged: before %s, after %s" % [detached.size(), seen_empty, emptied_after, before, after])
+	sm.unregister_section("home")
+	sm.unregister_section("social")
+	stand_home.free()
+	stand_social.free()
+	_reattach_real_sections(installed)
+
+
+func _test_registry_inner() -> void:
 	_fresh()
 	_set_state(999, 9)
 	tm.set_weather(&"klart")

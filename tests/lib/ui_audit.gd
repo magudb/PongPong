@@ -1,7 +1,8 @@
 class_name UiAudit
 extends RefCounted
 ## UI conformance audit library: "do the menus and navigations follow the Trætoppen style guide?" as code.
-## The recipe for a package that builds a screen is in the header of tests/sections/ui_audit.gd; the screen registry is tests/lib/ui_screens.json.
+## The recipe for a package that builds a screen is in the header of tests/sections/ui_audit.gd; the screen registry is tests/lib/ui_screens.json
+## plus one file per owning package in tests/lib/ui_screens.d/*.json (merged by screens(), see the registry section below).
 ## Everything here is static; the audits that press keys are coroutines (`await`) and take the harness object `t` (tests/lib/t.gd).
 ##
 ## API (names are fixed, the navigation spec is written against them; every function has an optional last `options` Dictionary):
@@ -14,6 +15,7 @@ extends RefCounted
 ##   UiAudit.rule_report(root)                      -> Dictionary   R1 ink, R2 gold, R3 numbers, R4 red, typography, copy, hit targets
 ##   await UiAudit.ring_pixels(t, control)          -> Dictionary   windowed: the gold focus ring is really in the frame (with a negative control)
 ##   UiAudit.screens() / await UiAudit.audit_screen(t, id)           the registry and "run every check listed for the screen" (live / legacy / pending)
+##   UiAudit.registry_report()                      -> Dictionary   problems of the registry FILES themselves (a duplicate id, a file that does not parse), code registry_error
 ## Extras: initial_focus_report (the check behind initial_focus), text_field_audit, locale_flip_report, rule_report_locales (the rule scan once per language),
 ## rule_report_pages / focusable_report_pages / radio_groups (the same reports on the page behind every radio tab or chip: N-1 of N pages would otherwise never be
 ## scanned), validate_options (every option name and value is checked: a typo is the defect `bad_option`, never a silent switch-off),
@@ -21,7 +23,7 @@ extends RefCounted
 ## scene_text_report / script_text_report (hard-coded copy in a .tscn / .gd), expect (a report as one harness check), open_screen / close_screen (a registry screen by
 ## hand), selftest (planted controls built in code: proves the library on this machine), device_swap (one real event of the keyboard / pad / mouse), press /
 ## press_key / press_pad / press_cancel / accept_works (input helpers for the packages' own tests), audit_all, screen / screens_by_status, entry_kind / entry_checks
-## (how a registry row is read), use_registry, summary / lines (printing).
+## (how a registry row is read), use_registry, registry_files / registry_file_of (where a row was read from), summary / lines (printing).
 ## escape_chain options beyond the contract: internal_layers + internal_depth (pages inside a screen close first, the modal stack does not move), pre_opened +
 ## base_stack / base_phase / base_paused (the screen opened itself: a registry row), world_probe, expect_focus, release_world_focus, key / via, settle_seconds
 ## (real time for a modal that fades out before it pops). Depth 0 with pre_opened presses the key once ("Esc does nothing": the title, the sleep fade).
@@ -38,6 +40,8 @@ extends RefCounted
 
 const Rules = preload("res://tests/lib/ui_audit_rules.gd")
 const REGISTRY_PATH := "res://tests/lib/ui_screens.json"
+## The folder next to the registry file whose `*.json` files are merged into the registry (one file per package that registers screens).
+const REGISTRY_DIR_NAME := "ui_screens.d"
 const FIXTURES = preload("res://scripts/ui/dev/ui_fixtures.gd")
 
 const DIR_ACTIONS: Array[StringName] = [&"ui_down", &"ui_right", &"ui_up", &"ui_left"]
@@ -112,7 +116,7 @@ const DEFECTS := {
 	"hover_no_focus": ["mouse_walk", "a list-like row did not take focus when the mouse entered it"],
 	"click_drops_focus": ["mouse_walk", "after a click no control owns keyboard focus"],
 	"opens_failed": ["registry", "a live or legacy registry entry could not be opened (missing scene, driver returned null)"],
-	"registry_error": ["registry", "a registry entry is inconsistent (unknown check name, an escape check without a driver)"],
+	"registry_error": ["registry", "a registry entry or file is inconsistent (unknown check name, an escape check without a driver, a duplicate id across tests/lib/ui_screens.json and tests/lib/ui_screens.d/*.json, a registry file that does not parse)"],
 	"theme_gold_hover": ["theme", "gold in a normal / hover / disabled style of a variation that is not a guide ornament (options.strict_gold_hover)"],
 	"theme_focus_empty": ["theme", "an interactive theme type has no focus StyleBox (options.strict_focus_styles)"],
 	"theme_font_scale": ["theme", "a text variation is below the smallest guide size (options.strict_font_scale)"],
@@ -1607,13 +1611,15 @@ static func escape_chain(t, opener: Callable, expected_depth: int, options: Dict
 const DEFAULT_SETTLE_SECONDS := 0.25
 
 
-## After a press: `settle` frames, then (up to `seconds`) until the modal stack - or the screen's internal depth - differs from what it was before the press.
+## After a press: `settle` frames, then (up to `seconds` of process time) until the modal stack - or the screen's internal depth - differs from what it was before the press.
 static func _settle_press(t, gm: Node, before: Array, settle: int, seconds: float, internal_depth: Callable, internal_before: int) -> void:
 	await t.frames(settle)
 	if seconds <= 0.0:
 		return
-	var t0 := Time.get_ticks_msec()
-	while Time.get_ticks_msec() - t0 < int(seconds * 1000.0):
+	# PROCESS time (a SceneTreeTimer: the frame deltas, unscaled), not Time.get_ticks_msec: the fade it waits for is a Tween / Timer that runs on the frame deltas, and
+	# under `tests/run_playtest.sh --fast` (--fixed-fps 60) a wall-clock second is thousands of frames: a wall-clock wait would see a 0.6 s fade as finished within 0.25 s
+	var settle_timer: SceneTreeTimer = t.tree.create_timer(seconds, true, false, true)
+	while settle_timer.time_left > 0.0:
 		var changed: bool = (gm.call("modal_stack") as Array) != before
 		if not changed and internal_depth.is_valid() and internal_before >= 0:
 			changed = int(internal_depth.call()) != internal_before
@@ -2523,14 +2529,50 @@ static func _selftest_clean(r: Dictionary, name: String, report: Dictionary) -> 
 
 # ---------------------------------------------------------------------------------------------------- the registry
 
-## The screen registry (tests/lib/ui_screens.json): an Array of screen entries (Dictionaries), in file order, each normalized (see _normalize_entry) and with a
+## The screen registry: an Array of screen entries (Dictionaries), in file order, each normalized (see _normalize_entry) and with a
 ## `status` ("live" | "pending" | "legacy"): the one written in the file, or - when the row has none (the navigation spec's rows, D17) - DERIVED: pending = no scene,
 ## legacy = the scene exists but is one of the two old scaffold scenes that is not on the guide theme yet, live = the rest.
+## The rows come from tests/lib/ui_screens.json (the library's own screens) FOLLOWED BY every `*.json` of the folder tests/lib/ui_screens.d/ next to it, in file-name
+## order (alphabetical), each file's rows in file order: one file per owning package (social.json of S-ui, social_events.json of S-events, towns.json of T-post-office),
+## so a package registers its screens without editing a file it does not own. A folder file has the shape of the registry file: {"screens": [rows]}, the same row
+## schema. A screen id exists once: a second row with the same id (in one file or across files), a row without an id and a file that does not parse are NOT merged
+## (the first row of an id wins) and are failures: registry_report() lists them (code registry_error), the section ui_audit fails on them
+## (ui_audit.screens_merge_dir_unique_ids, registry_valid) and audit_screen(t, id) fails for the id.
 static func screens() -> Array:
 	var out: Array = []
 	for e in _load_registry().get("screens", []):
 		out.append(_normalize_entry((e as Dictionary).duplicate(true)))
 	return out
+
+
+## The registry files that were read: the registry file itself, then the folder files in merge order (res:// paths).
+static func registry_files() -> Array[String]:
+	var out: Array[String] = []
+	for f in _load_registry().get("files", []):
+		out.append(str(f))
+	return out
+
+
+## The registry file a screen's row was read from ("" for an unknown id).
+static func registry_file_of(id: String) -> String:
+	return str((_load_registry().get("sources", {}) as Dictionary).get(id, ""))
+
+
+## The problems of the registry files themselves, as a report ({ok, defects, notes}): a duplicate screen id, a row without an id or that is not an object, a
+## folder file that does not parse or has no "screens" array, the registry file that does not parse. Every defect has the code registry_error, `path` is the
+## screen id (or ""), and the message names the file.
+static func registry_report() -> Dictionary:
+	var r := _report()
+	for e in _load_registry().get("errors", []):
+		_defect(r, "registry_error", str(e.get("id", "")), "%s: %s" % [_short_path(str(e.get("file", ""))), str(e.get("msg", ""))])
+	var reg := _load_registry()
+	_note(r, "%d screen rows from %d registry file(s): %s" % [(reg.get("screens", []) as Array).size(), (reg.get("files", []) as Array).size(), ", ".join((reg.get("files", []) as Array).map(func(f: Variant) -> String: return _short_path(str(f))))])
+	return r
+
+
+## "res://tests/lib/ui_screens.json" -> "tests/lib/ui_screens.json" (the way the messages name a file).
+static func _short_path(path: String) -> String:
+	return path.trim_prefix("res://")
 
 
 static func screens_by_status(status: String) -> Array:
@@ -2616,10 +2658,82 @@ const LEGACY_SCENES: Array[String] = ["res://scenes/main/main_menu.tscn", "res:/
 static func _load_registry() -> Dictionary:
 	if not _registry.is_empty():
 		return _registry
-	var txt := FileAccess.get_file_as_string(_registry_path)
-	var parsed: Variant = JSON.parse_string(txt)
-	_registry = parsed if parsed is Dictionary else {"screens": [], "error": "tests/lib/ui_screens.json does not parse"}
+	var reg := {}
+	var rows: Array = []
+	var sources := {}                                          # screen id -> the registry file its row was read from
+	var errors: Array = []                                     # {file, id, msg}
+	var files: Array = [_registry_path]
+	var base: Variant = _read_registry_file(_registry_path, errors)
+	if base == null:
+		reg = {"screens": [], "error": "%s does not parse" % _short_path(_registry_path)}
+	else:
+		reg = (base as Dictionary).duplicate()
+		_merge_rows(rows, sources, errors, _registry_path, reg.get("screens", []))
+	for path in _registry_dir_files():
+		files.append(path)
+		var part: Variant = _read_registry_file(path, errors)
+		if part == null:
+			continue
+		if not ((part as Dictionary).get("screens") is Array):
+			errors.append({"file": path, "id": "", "msg": "has no \"screens\" array: a registry file is {\"screens\": [rows]}"})
+			continue
+		_merge_rows(rows, sources, errors, path, (part as Dictionary)["screens"])
+	reg["screens"] = rows
+	reg["files"] = files
+	reg["sources"] = sources
+	reg["errors"] = errors
+	_registry = reg
 	return _registry
+
+
+## The `*.json` files of the registry folder (res:// paths), in file-name order. No folder = no files.
+static func _registry_dir_files() -> Array[String]:
+	var out: Array[String] = []
+	var dir := _registry_path.get_base_dir().path_join(REGISTRY_DIR_NAME)
+	if not DirAccess.dir_exists_absolute(dir):
+		return out
+	var names: Array = Array(DirAccess.get_files_at(dir))
+	names.sort()
+	for n in names:
+		if str(n).get_extension().to_lower() == "json":
+			out.append(dir.path_join(str(n)))
+	return out
+
+
+## One registry file as a Dictionary; null (and an entry in `errors`) when it cannot be read or is not a JSON object. JSON.new().parse, not JSON.parse_string:
+## the latter prints an engine error for a broken file, which the harness would report as an engine message instead of the registry defect.
+static func _read_registry_file(path: String, errors: Array) -> Variant:
+	if not FileAccess.file_exists(path):
+		errors.append({"file": path, "id": "", "msg": "does not exist"})
+		return null
+	var json := JSON.new()
+	var err := json.parse(FileAccess.get_file_as_string(path))
+	if err != OK:
+		errors.append({"file": path, "id": "", "msg": "does not parse (line %d: %s)" % [json.get_error_line(), json.get_error_message()]})
+		return null
+	if not (json.data is Dictionary):
+		errors.append({"file": path, "id": "", "msg": "is not a JSON object: a registry file is {\"screens\": [rows]}"})
+		return null
+	return json.data
+
+
+## Appends the rows of one registry file: a row that is not an object, has no id, or repeats an id that is already registered is recorded as an error and dropped.
+static func _merge_rows(rows: Array, sources: Dictionary, errors: Array, file: String, list: Variant) -> void:
+	if not (list is Array):
+		return
+	for e in list:
+		if not (e is Dictionary):
+			errors.append({"file": file, "id": "", "msg": "a row that is not a JSON object: %s" % str(e).left(60)})
+			continue
+		var id := str((e as Dictionary).get("id", ""))
+		if id == "":
+			errors.append({"file": file, "id": "", "msg": "a row without an id: %s" % str(e).left(60)})
+			continue
+		if sources.has(id):
+			errors.append({"file": file, "id": id, "msg": "duplicate screen id '%s' (the row of %s is kept, this one is dropped): a screen id exists once" % [id, _short_path(str(sources[id]))]})
+			continue
+		sources[id] = file
+		rows.append(e)
 
 
 ## Drops the cached registry (a test that edits the file, or a section that wants a fresh read).
@@ -2627,7 +2741,7 @@ static func reload_registry() -> void:
 	_registry = {}
 
 
-## Reads the registry from another file (the section's own fixture registry); use_registry("") switches back to tests/lib/ui_screens.json.
+## Reads the registry from another file (the section's own fixture registry; its folder is the `ui_screens.d` next to it); use_registry("") switches back to tests/lib/ui_screens.json.
 static func use_registry(path := "") -> void:
 	_registry_path = path if path != "" else REGISTRY_PATH
 	_registry = {}
@@ -2669,7 +2783,7 @@ static func _tripwire_path(entry: Dictionary) -> String:
 	return ""
 
 
-## Runs every check listed for the screen in tests/lib/ui_screens.json and records them on `t`:
+## Runs every check listed for the screen in the registry (tests/lib/ui_screens.json or tests/lib/ui_screens.d/*.json) and records them on `t`:
 ##   live     every check is a harness check named "<section>.<id>.<check>"; a defect fails the run.
 ##   legacy   the old scaffold screen: the checks run, every finding is a visible "KNOWN-GAP" line, never silently green; each gap listed in
 ##            `known_gaps` is a check that passes while the defect still exists (and fails when it is gone: flip the entry to live).
@@ -2679,8 +2793,11 @@ static func audit_screen(t, id: String, overrides: Dictionary = {}) -> Dictionar
 	var entry := screen(id)
 	var out := {"id": id, "status": "unknown", "ok": false, "skipped": false, "checks": {}, "defects": [] as Array}
 	if entry.is_empty():
-		t.fail("ui_audit: no screen '%s' in tests/lib/ui_screens.json" % id)
+		t.fail("ui_audit: no screen '%s' in the registry (tests/lib/ui_screens.json, tests/lib/ui_screens.d/*.json)" % id)
 		return out
+	for reg_err in _load_registry().get("errors", []):
+		if str(reg_err.get("id", "")) == id:
+			t.check("%s.registry_unique_id" % id, false, "%s: %s" % [_short_path(str(reg_err.get("file", ""))), str(reg_err.get("msg", ""))])
 	entry.merge(overrides, true)
 	var status := str(entry.get("status", "pending"))
 	var pkg := str(entry.get("package", "?"))
@@ -2696,7 +2813,7 @@ static func audit_screen(t, id: String, overrides: Dictionary = {}) -> Dictionar
 		return out
 	if status == "pending":
 		if not bool(entry.get("status_derived", false)) and _pending_scene_exists(entry):
-			t.check("%s.pending_scene_exists" % id, false, "%s now exists: package %s must flip '%s' to \"live\" in tests/lib/ui_screens.json so its checks run" % [_tripwire_path(entry), pkg, id])
+			t.check("%s.pending_scene_exists" % id, false, "%s now exists: package %s must flip '%s' to \"live\" in %s so its checks run" % [_tripwire_path(entry), pkg, id, _short_path(registry_file_of(id))])
 			return out
 		t.skip("ui_audit %s: pending (%s): %s" % [id, pkg, str(entry.get("note", "the screen does not exist yet"))])
 		out["skipped"] = true
@@ -2764,7 +2881,7 @@ static func audit_screen(t, id: String, overrides: Dictionary = {}) -> Dictionar
 		for d2 in all_defects:
 			present[str(d2["code"])] = true
 		for gap in entry.get("known_gaps", []):
-			t.check("%s.legacy_gap_%s" % [id, gap], present.has(str(gap)), "the legacy screen still has '%s'; when %s fixes it, flip '%s' to live in tests/lib/ui_screens.json" % [gap, pkg, id] if present.has(str(gap)) else "'%s' is gone from the legacy screen: flip '%s' to \"live\" in tests/lib/ui_screens.json" % [gap, id])
+			t.check("%s.legacy_gap_%s" % [id, gap], present.has(str(gap)), "the legacy screen still has '%s'; when %s fixes it, flip '%s' to live in %s" % [gap, pkg, id, _short_path(registry_file_of(id))] if present.has(str(gap)) else "'%s' is gone from the legacy screen: flip '%s' to \"live\" in %s" % [gap, id, _short_path(registry_file_of(id))])
 		out["ok"] = true
 	await _close_screen(t, opened)
 	return out

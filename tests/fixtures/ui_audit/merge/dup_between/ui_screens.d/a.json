@@ -1,0 +1,14 @@
+{
+	"screens": [
+		{
+			"id": "mg_z",
+			"title": "mg_z",
+			"kind": "surface",
+			"package": "MG-a",
+			"checks": [
+				"rules"
+			],
+			"tripwire": "res://tests/fixtures/ui_audit/never_built.tscn"
+		}
+	]
+}

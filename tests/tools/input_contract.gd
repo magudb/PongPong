@@ -1,7 +1,8 @@
 extends RefCounted
 ## P01 input contract: PLAN 3.2 plus addendum 3.3 (decorate, wardrobe, collection, rotate_item,
-## pickup_item). Shared by print_inputmap.gd and check_project.gd; load it with preload(), it has
-## no class_name on purpose (drivers run with -s before the global class cache is current).
+## pickup_item) plus the towns addendum (people, fix round RT3). Shared by print_inputmap.gd and
+## check_project.gd; load it with preload(), it has no class_name on purpose (drivers run with -s
+## before the global class cache is current).
 ##
 ## Per action: "keys" = PHYSICAL keycodes, "mouse" = mouse button indexes, "joy" = joypad buttons,
 ## "axes" = [axis, value] pairs. The comparison is EXACT: an extra event (F10 on inventory, a wheel
@@ -9,8 +10,9 @@ extends RefCounted
 ## matches under a qualifier (a modifier key, a key location, one device): Shift+W is NOT the plain
 ## W the plan asks for, the action would not fire on W alone (see qualifiers()).
 ##
-## The `ui_*` focus-navigation actions are Godot defaults, with exactly one project override
-## (PLAN 3.2 last row, "Godot defaults + D-pad, joy A/B"): see UI_OVERRIDES and ui_errors().
+## The `ui_*` focus-navigation actions are Godot defaults, with four project overrides (PLAN 3.2
+## last row, "Godot defaults + D-pad, joy A/B", and UI_NAVIGATION.md F10, pad paging on LB / RB):
+## see UI_OVERRIDES, ui_errors() and ui_page_errors().
 
 const ACTIONS: Dictionary = {
 	"move_forward": {"keys": [KEY_W, KEY_UP], "axes": [[JOY_AXIS_LEFT_Y, -1.0]]},
@@ -49,23 +51,37 @@ const ACTIONS: Dictionary = {
 	"collection": {"keys": [KEY_C]},
 	"rotate_item": {"keys": [KEY_R], "joy": [JOY_BUTTON_RIGHT_SHOULDER]},
 	"pickup_item": {"keys": [KEY_X], "mouse": [MOUSE_BUTTON_RIGHT], "joy": [JOY_BUTTON_X]},
+	# towns addendum (RT3): the People book. P is free (the used keys are W A S D arrows E Enter Space
+	# Shift F Ctrl Q R 0-9 I Tab J Esc B H G C X); no pad button: the pause menu has a row "Folk"
+	"people": {"keys": [KEY_P]},
 }
 
 ## The five actions the feature addendum adds on top of PLAN 3.2.
 const ADDENDUM: Array = ["decorate", "wardrobe", "collection", "rotate_item", "pickup_item"]
+
+## The one action the towns addendum adds (RT3): ACTIONS.size() is 30 + 5 + 1 = 36.
+const TOWN: Array = ["people"]
+
+## The `ui_*` overrides that give a pad the paging keys (UI_NAVIGATION.md F10): the tab / page
+## actions of every screen (`ui_page_up` = LB, `ui_page_down` = RB).
+const UI_PAGE_ACTIONS: Array = ["ui_page_up", "ui_page_down"]
 
 const DEADZONE: float = 0.2
 
 ## InputEvent.device of a binding that answers every device (what the editor writes).
 const ANY_DEVICE: int = -1
 
-## The two ui_* actions project.godot overrides. Godot 4.7.2's defaults carry the D-pad on
-## ui_up/down/left/right but NOT joy A on ui_accept nor joy B on ui_cancel (probed, see the report),
-## so a pad could not activate or cancel a focused control. The override is the engine default
-## plus the pad button: "logical" = LOGICAL keycodes, exactly like the engine's own defaults.
+## The four ui_* actions project.godot overrides. Godot 4.7.2's defaults carry the D-pad on
+## ui_up/down/left/right but NOT joy A on ui_accept, joy B on ui_cancel nor LB / RB on
+## ui_page_up / ui_page_down (probed), so a pad could not activate, cancel or page a focused
+## screen. Every override is the engine default plus the pad button: "logical" = LOGICAL keycodes,
+## exactly like the engine's own defaults (PageUp / PageDown stay on the page actions). 36 contract
+## actions + these four = 40 actions (UI_NAVIGATION.md says 39 before `people`).
 const UI_OVERRIDES: Dictionary = {
 	"ui_accept": {"logical": [KEY_ENTER, KEY_KP_ENTER, KEY_SPACE], "joy": [JOY_BUTTON_A]},
 	"ui_cancel": {"logical": [KEY_ESCAPE], "joy": [JOY_BUTTON_B]},
+	"ui_page_up": {"logical": [KEY_PAGEUP], "joy": [JOY_BUTTON_LEFT_SHOULDER]},
+	"ui_page_down": {"logical": [KEY_PAGEDOWN], "joy": [JOY_BUTTON_RIGHT_SHOULDER]},
 }
 
 ## The D-pad button the engine defaults of the focus-walk actions must keep.
@@ -184,13 +200,56 @@ static func qualifier_errors() -> Array:
 	return errors
 
 
-## Verifies the focus-navigation contract (PLAN 3.2 last row). Structure: ui_accept/ui_cancel are
-## exactly engine default plus pad button, the four focus-walk actions keep their D-pad button.
-## Behaviour: real events, matched by the engine's own InputMap.event_is_action (the call every
-## Control makes), so the check does not rely on how the events are stored.
-static func ui_errors() -> Array:
+## The behaviour table of the focus-navigation contract: [label, event, action, must it trigger,
+## group]. Real events, matched by the engine's own InputMap.event_is_action (the call every Control
+## makes), so the rows do not rely on how the events are stored. Group "nav" = ui_accept / ui_cancel
+## / the D-pad (PLAN 3.2 last row), group "page" = the pad paging of UI_NAVIGATION.md F10: LB pages
+## up, RB pages down, and RB keeps its gameplay meaning (drink, rotate_item: the screens consume the
+## event on top, see UI_NAVIGATION.md "Shared bindings are intentional").
+static func ui_probes() -> Array:
+	return [
+		["joy A", _joy_event(JOY_BUTTON_A), "ui_accept", true, "nav"],
+		["joy B", _joy_event(JOY_BUTTON_B), "ui_cancel", true, "nav"],
+		["joy B", _joy_event(JOY_BUTTON_B), "ui_accept", false, "nav"],
+		["joy A", _joy_event(JOY_BUTTON_A), "ui_cancel", false, "nav"],
+		["joy X", _joy_event(JOY_BUTTON_X), "ui_accept", false, "nav"],
+		["joy X", _joy_event(JOY_BUTTON_X), "ui_cancel", false, "nav"],
+		["D-pad up", _joy_event(JOY_BUTTON_DPAD_UP), "ui_up", true, "nav"],
+		["D-pad down", _joy_event(JOY_BUTTON_DPAD_DOWN), "ui_down", true, "nav"],
+		["D-pad left", _joy_event(JOY_BUTTON_DPAD_LEFT), "ui_left", true, "nav"],
+		["D-pad right", _joy_event(JOY_BUTTON_DPAD_RIGHT), "ui_right", true, "nav"],
+		["Enter", _key_event(KEY_ENTER), "ui_accept", true, "nav"],
+		["Kp Enter", _key_event(KEY_KP_ENTER), "ui_accept", true, "nav"],
+		["Space", _key_event(KEY_SPACE), "ui_accept", true, "nav"],
+		["Escape", _key_event(KEY_ESCAPE), "ui_cancel", true, "nav"],
+		["LB", _joy_event(JOY_BUTTON_LEFT_SHOULDER), "ui_page_up", true, "page"],
+		["RB", _joy_event(JOY_BUTTON_RIGHT_SHOULDER), "ui_page_down", true, "page"],
+		["LB", _joy_event(JOY_BUTTON_LEFT_SHOULDER), "ui_page_down", false, "page"],
+		["RB", _joy_event(JOY_BUTTON_RIGHT_SHOULDER), "ui_page_up", false, "page"],
+		["PageUp", _key_event(KEY_PAGEUP), "ui_page_up", true, "page"],
+		["PageDown", _key_event(KEY_PAGEDOWN), "ui_page_down", true, "page"],
+		["PageUp", _key_event(KEY_PAGEUP), "ui_page_down", false, "page"],
+		["PageDown", _key_event(KEY_PAGEDOWN), "ui_page_up", false, "page"],
+		["joy A", _joy_event(JOY_BUTTON_A), "ui_page_up", false, "page"],
+		["joy A", _joy_event(JOY_BUTTON_A), "ui_page_down", false, "page"],
+		["joy X", _joy_event(JOY_BUTTON_X), "ui_page_up", false, "page"],
+		["joy X", _joy_event(JOY_BUTTON_X), "ui_page_down", false, "page"],
+		# the pad paging must not take the shoulder buttons away from the game actions
+		["RB", _joy_event(JOY_BUTTON_RIGHT_SHOULDER), "drink", true, "page"],
+		["RB", _joy_event(JOY_BUTTON_RIGHT_SHOULDER), "rotate_item", true, "page"],
+		["LB", _joy_event(JOY_BUTTON_LEFT_SHOULDER), "drink", false, "page"],
+		["LB", _joy_event(JOY_BUTTON_LEFT_SHOULDER), "rotate_item", false, "page"],
+		["LB", _joy_event(JOY_BUTTON_LEFT_SHOULDER), "ui_accept", false, "page"],
+		["LB", _joy_event(JOY_BUTTON_LEFT_SHOULDER), "ui_cancel", false, "page"],
+		["RB", _joy_event(JOY_BUTTON_RIGHT_SHOULDER), "ui_accept", false, "page"],
+		["RB", _joy_event(JOY_BUTTON_RIGHT_SHOULDER), "ui_cancel", false, "page"],
+	]
+
+
+## Structure of the given ui overrides: exactly the engine default plus the pad button.
+static func _override_errors(actions: Array) -> Array:
 	var errors: Array = []
-	for action: String in UI_OVERRIDES:
+	for action: String in actions:
 		if not InputMap.has_action(action):
 			errors.append("missing action %s" % action)
 			continue
@@ -198,31 +257,54 @@ static func ui_errors() -> Array:
 		var got: Array = actual_signatures(action)
 		if want != got:
 			errors.append("%s: expected events %s but found %s" % [action, want, got])
-	for action: String in UI_DPAD:
-		if not InputMap.has_action(action) or not actual_signatures(action).has("joy:%d" % int(UI_DPAD[action])):
-			errors.append("%s lost its D-pad button (joy:%d)" % [action, int(UI_DPAD[action])])
-	# behaviour: what a pad or keyboard really sends, device id included
-	var probes: Array = [
-		["joy A", _joy_event(JOY_BUTTON_A), "ui_accept", true],
-		["joy B", _joy_event(JOY_BUTTON_B), "ui_cancel", true],
-		["joy B", _joy_event(JOY_BUTTON_B), "ui_accept", false],
-		["joy A", _joy_event(JOY_BUTTON_A), "ui_cancel", false],
-		["joy X", _joy_event(JOY_BUTTON_X), "ui_accept", false],
-		["joy X", _joy_event(JOY_BUTTON_X), "ui_cancel", false],
-		["D-pad up", _joy_event(JOY_BUTTON_DPAD_UP), "ui_up", true],
-		["D-pad down", _joy_event(JOY_BUTTON_DPAD_DOWN), "ui_down", true],
-		["D-pad left", _joy_event(JOY_BUTTON_DPAD_LEFT), "ui_left", true],
-		["D-pad right", _joy_event(JOY_BUTTON_DPAD_RIGHT), "ui_right", true],
-		["Enter", _key_event(KEY_ENTER), "ui_accept", true],
-		["Kp Enter", _key_event(KEY_KP_ENTER), "ui_accept", true],
-		["Space", _key_event(KEY_SPACE), "ui_accept", true],
-		["Escape", _key_event(KEY_ESCAPE), "ui_cancel", true],
-	]
-	for p: Array in probes:
+	return errors
+
+
+## Behaviour: what a pad or keyboard really sends, device id included, for the probe rows of the
+## given group ("" = every row). A row naming an action that does not exist cannot trigger it.
+static func _probe_errors(group: String) -> Array:
+	var errors: Array = []
+	for p: Array in ui_probes():
+		if group != "" and String(p[4]) != group:
+			continue
 		var hit: bool = InputMap.has_action(String(p[2])) and InputMap.event_is_action(p[1], String(p[2]), true)
 		if hit != bool(p[3]):
 			errors.append("%s %s %s" % [p[0], "does not trigger" if p[3] else "wrongly triggers", p[2]])
 	return errors
+
+
+## The four focus-walk actions keep the D-pad button of the engine defaults.
+static func _dpad_errors() -> Array:
+	var errors: Array = []
+	for action: String in UI_DPAD:
+		if not InputMap.has_action(action) or not actual_signatures(action).has("joy:%d" % int(UI_DPAD[action])):
+			errors.append("%s lost its D-pad button (joy:%d)" % [action, int(UI_DPAD[action])])
+	return errors
+
+
+## ui_accept / ui_cancel and the four D-pad carrying actions (PLAN 3.2 last row): ui_accept and
+## ui_cancel are exactly engine default plus the pad button, the four focus-walk actions keep their
+## D-pad button, and the "nav" probe rows hold.
+static func ui_nav_errors() -> Array:
+	var errors: Array = _override_errors(["ui_accept", "ui_cancel"])
+	errors.append_array(_dpad_errors())
+	errors.append_array(_probe_errors("nav"))
+	return errors
+
+
+## Pad paging (UI_NAVIGATION.md F10, task UI.1): ui_page_up = PageUp + LB (joy 9) and nothing else,
+## ui_page_down = PageDown + RB (joy 10) and nothing else; LB pages up, RB pages down, neither the
+## other way round, and RB still triggers drink and rotate_item.
+static func ui_page_errors() -> Array:
+	var errors: Array = _override_errors(UI_PAGE_ACTIONS)
+	errors.append_array(_probe_errors("page"))
+	return errors
+
+
+## Verifies the whole focus-navigation contract (PLAN 3.2 last row plus the pad paging): the
+## structure of every UI_OVERRIDES action, the D-pad and every probe row.
+static func ui_errors() -> Array:
+	return ui_nav_errors() + ui_page_errors()
 
 
 static func _joy_event(button: int) -> InputEventJoypadButton:

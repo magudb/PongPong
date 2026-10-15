@@ -2,7 +2,11 @@
 
 supersedes for the features: PITCH 6 note 'House interior and festivals: cut' (2.1) and the CUT row 'Farmhouse interior, festivals, friendship hearts UI, gifting, relationship events' (9.2): the home interior, a partial festival (button + event), friend gifts and the weekly chat heart are IN
 
+supersedes for the towns, the farm and the social sim: PLAN 4.0's flat farm beside Hyggebyen, the CUT rows 'friendship hearts UI, gifting, relationship events' and 'festivals' (9.2) and the idea that shops are only a panel: the farm is the treetop farm Min Trækronsgård on its own branch, the citizens follow daily routines, every shop is a walk-in room with opening hours, and friendship hearts, gifts, birthdays, nine festivals, heart events and marriage-style relationships are IN: TOWNS_FARM_SOCIAL_ADDENDUM.md
+
 Feature addendum (binding; it WINS over this plan wherever the two disagree on a feature topic): [PLAN_2D_FEATURES.md](PLAN_2D_FEATURES.md). Machine-readable work packages of the addendum: [features_workpackages.json](features_workpackages.json).
+
+Towns, farm and social addendum (binding; it WINS over this plan wherever the two disagree on a town, farm or social topic): [TOWNS_FARM_SOCIAL_ADDENDUM.md](TOWNS_FARM_SOCIAL_ADDENDUM.md). Machine-readable work packages of the addendum: [towns_farm_social_workpackages.json](towns_farm_social_workpackages.json).
 
 Published copy of the reviewed plan (`docs/design` is owned by P01 and is hidden from the Godot importer by `docs/.gdignore`). Read-only reference for every package: a contract change is announced in the commit/PR message of the package that makes it and re-published by editing this file only through P01's owner at the next wave boundary.
 

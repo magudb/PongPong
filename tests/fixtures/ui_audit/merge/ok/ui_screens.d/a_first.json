@@ -1,0 +1,15 @@
+{
+	"_doc": "first by file name",
+	"screens": [
+		{
+			"id": "mg_a1",
+			"title": "mg_a1",
+			"kind": "surface",
+			"package": "MG-a",
+			"checks": [
+				"rules"
+			],
+			"tripwire": "res://tests/fixtures/ui_audit/never_built.tscn"
+		}
+	]
+}

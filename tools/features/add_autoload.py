@@ -3,8 +3,10 @@
 
     python3 tools/features/add_autoload.py [--project FILE] [--root DIR] [--dry-run] [NAME ...]
 
-NAME is one of HomeManager FurnitureManager WardrobeManager LootService CollectionLog (default: all five).  Each owner package runs this tool as its LAST task
-(F2 HomeManager, F3 FurnitureManager, F5 WardrobeManager, F4 LootService, F9 CollectionLog), so packages of one wave never edit the file by hand and a missing script can never break boot.
+NAME is one of HomeManager FurnitureManager WardrobeManager LootService CollectionLog SocialManager (default: all six).  Each owner package runs this tool as its LAST task
+(F2 HomeManager, F3 FurnitureManager, F5 WardrobeManager, F4 LootService, F9 CollectionLog, S-core SocialManager), so packages of one wave never edit the file by hand and a missing script can never break boot.
+The list is CLOSED: a seventh name needs this CONTRACT, tools/features/test_add_autoload.py NAMES, tests/lib/features/fresh.gd FEATURE_NODES and tests/tools/check_project.gd FEATURE_AUTOLOADS widened together
+(the self-test compares CONTRACT, NAMES and FEATURE_NODES with each other; check_project.gd is P01's file and carries its own pin).
 
 Rules (all enforced, none of them optional):
   * a line is appended only when its script file exists (scripts/<dir>/<name>.gd under --root, default = the folder of the project file) and the entry is absent;
@@ -36,6 +38,7 @@ CONTRACT = {
     'WardrobeManager': 'scripts/wardrobe/wardrobe_manager.gd',
     'LootService': 'scripts/loot/loot_service.gd',
     'CollectionLog': 'scripts/collection/collection_log.gd',
+    'SocialManager': 'scripts/social/social_manager.gd',          # the sixth (towns / farm / social addendum DT17, fix round RT2)
 }
 ENTRY = re.compile(r'^([A-Za-z_][A-Za-z0-9_]*)="(\*?)res://([^"]+)"\s*$')
 
@@ -70,7 +73,7 @@ def plan(text: str, names: list[str], root: Path) -> tuple[str, list[str]]:
     last_base = names_here.index('AnimalHusbandry')
     for n in names_here[last_base + 1:]:
         if n not in CONTRACT:
-            raise Refused(f'unexpected autoload {n} behind AnimalHusbandry (only the five feature autoloads may follow)')
+            raise Refused(f'unexpected autoload {n} behind AnimalHusbandry (only the {len(CONTRACT)} feature autoloads of the contract may follow)')
     report = []
     insert_after = entries[-1][0]                      # behind the last entry (base block + feature lines already there)
     add: list[str] = []

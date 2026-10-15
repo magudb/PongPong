@@ -1,0 +1,24 @@
+{
+	"screens": [
+		{
+			"id": "mg_x",
+			"title": "mg_x",
+			"kind": "surface",
+			"package": "MG-lib",
+			"checks": [
+				"rules"
+			],
+			"tripwire": "res://tests/fixtures/ui_audit/never_built.tscn"
+		},
+		{
+			"id": "mg_x",
+			"title": "mg_x",
+			"kind": "surface",
+			"package": "MG-lib again",
+			"checks": [
+				"rules"
+			],
+			"tripwire": "res://tests/fixtures/ui_audit/never_built.tscn"
+		}
+	]
+}

@@ -23,10 +23,17 @@ signal mode_changed(new_mode: StringName)
 signal screen_loaded(screen_id: StringName, screen: Node)
 
 const SCENE_DIR := "res://scenes/ui/"
-## Back to front. The home screens of the feature addendum (husbyggeri, indretning, home_chest, garderobe, samlerbog) are
-## modals of the same rank as the backpack: above the shops, below the pause menu and everything it opens.
+## Back to front (21 ids; only the ones whose scene exists are instanced, so an id is inert until its package lands).
+##  * The home screens of the feature addendum (husbyggeri, indretning, home_chest, garderobe, samlerbog) are modals of the same
+##    rank as the backpack: above the shops, below the pause menu and everything it opens.
+##  * The towns / social screens (RT7): `social_hud` (festival ribbon, birthday chips) sits right behind the HUDs; `event_overlay`
+##    (the letterbox of an event scene) is between the HUDs and `dialogue_ui`, so the bars are drawn BEHIND the dialogue;
+##    `people`, `gift_ui` and `post` are modals of the quest book's rank: above it, above the shops, below the pause menu.
+## Invariants (pinned by ui_foundation.game_ui_loads_new_ids_in_order and the foundation smoke): order[0] == hud,
+## order[1] == forest_hud, order[-3] == pause_menu, order[-1] == settings_ui.
 const SCREEN_ORDER: Array[StringName] = [
-	&"hud", &"forest_hud", &"dialogue_ui", &"inventory_ui", &"quest_journal", &"shop_ui", &"animal_care_ui", &"build_menu_ui",
+	&"hud", &"forest_hud", &"social_hud", &"event_overlay", &"dialogue_ui", &"inventory_ui", &"quest_journal",
+	&"people", &"gift_ui", &"post", &"shop_ui", &"animal_care_ui", &"build_menu_ui",
 	&"husbyggeri", &"indretning", &"home_chest", &"garderobe", &"samlerbog",
 	&"pause_menu", &"save_load_ui", &"settings_ui",
 ]

@@ -1,12 +1,16 @@
 extends SceneTree
-## P01 project contract check (PLAN 3.1 + 3.2 + 3.3, review R.1/R.11, addendum 4.4).
+## P01 project contract check (PLAN 3.1 + 3.2 + 3.3, review R.1/R.11, addendum 4.4, fix round RT3:
+## the sixth feature autoload SocialManager, the `people` action, the towns addendum links, and the
+## pad paging of UI_NAVIGATION.md F10).
 ##
 ##   godot --headless --path . -s res://tests/tools/check_project.gd            live project + fixture self-test
 ##   godot --headless --path . -s res://tests/tools/check_project.gd -- --text=res://project.godot
 ##                                                                              only the [autoload] rules on one file
 ##
 ## Exit code 0 only when every check passes. Check ids are printed as PASS/FAIL <id> so a harness
-## section can wrap them one to one. Only built-in classes and preload() are used: the driver
+## section can wrap them one to one. Two checks (input_map_matches_contract, input_has_36_actions_...)
+## answer to two ids, the `p01.` id of this tool and the `project.` id the design documents name in
+## their verify lists: see _check_alias(). Only built-in classes and preload() are used: the driver
 ## compiles before the autoloads exist.
 
 const Contract := preload("res://tests/tools/input_contract.gd")
@@ -27,14 +31,16 @@ const BASE_AUTOLOADS: Array = [
 	["AnimalHusbandry", "*res://scripts/farm/animal_husbandry.gd"],
 ]
 
-## Feature autoloads (addendum 3.2): accepted ONLY after AnimalHusbandry, each at most once, in any
-## order (parallel packages append them with tools/features/add_autoload.py, exception E1).
+## Feature autoloads (addendum 3.2, plus the towns addendum's SocialManager, the sixth): accepted ONLY
+## after AnimalHusbandry, each at most once, in any order (parallel packages append them with
+## tools/features/add_autoload.py, exception E1). The tool's CONTRACT (F1) lists the same names.
 const FEATURE_AUTOLOADS: Dictionary = {
 	"HomeManager": "*res://scripts/home/home_manager.gd",
 	"FurnitureManager": "*res://scripts/furniture/furniture_manager.gd",
 	"WardrobeManager": "*res://scripts/wardrobe/wardrobe_manager.gd",
 	"LootService": "*res://scripts/loot/loot_service.gd",
 	"CollectionLog": "*res://scripts/collection/collection_log.gd",
+	"SocialManager": "*res://scripts/social/social_manager.gd",
 }
 
 ## PLAN 3.3 layer names 1..11.
@@ -42,6 +48,12 @@ const LAYER_NAMES: Array = ["world", "player", "npc", "interactable", "enemy", "
 	"resource_node", "ground_block", "player_attack", "enemy_attack", "pickup"]
 
 const SUPERSEDE_LINE := "supersedes for the features: PITCH 6 note 'House interior and festivals: cut' (2.1) and the CUT row 'Farmhouse interior, festivals, friendship hearts UI, gifting, relationship events' (9.2): the home interior, a partial festival (button + event), friend gifts and the weekly chat heart are IN"
+
+## The header line of the towns addendum (RT3, DECISION DT39: a NEW line, SUPERSEDE_LINE above never moves).
+const TOWNS_SUPERSEDE_LINE := "supersedes for the towns, the farm and the social sim: PLAN 4.0's flat farm beside Hyggebyen, the CUT rows 'friendship hearts UI, gifting, relationship events' and 'festivals' (9.2) and the idea that shops are only a panel: the farm is the treetop farm Min Trækronsgård on its own branch, the citizens follow daily routines, every shop is a walk-in room with opening hours, and friendship hearts, gifts, birthdays, nine festivals, heart events and marriage-style relationships are IN: TOWNS_FARM_SOCIAL_ADDENDUM.md"
+
+## Extensions of files that are not text (docs/design carries a few PNGs): skipped by the town name scan.
+const BINARY_SUFFIXES: Array = ["png", "jpg", "jpeg", "webp", "gif", "ogg", "mp3", "wav", "ttf", "otf", "pck"]
 
 ## The retired town name, split on purpose: the team rule is that the name appears nowhere in the repo
 ## except the user's own Style Guide export, so a repo-wide grep for it must not hit this file.
@@ -78,6 +90,14 @@ func _check(id: String, ok: bool, detail: String = "") -> void:
 	else:
 		_failed += 1
 		print("FAIL %s: %s" % [id, detail])
+
+
+## One verdict under two ids: the `p01.` id of this tool and the `project.` id the design documents
+## (UI_NAVIGATION.md, TOWNS_FARM_SOCIAL_ADDENDUM.md) name in their verify lists. Both lines are
+## printed (and counted) so a harness wrapper finds either one.
+func _check_alias(id: String, alias_id: String, ok: bool, detail: String = "") -> void:
+	_check(id, ok, detail)
+	_check(alias_id, ok, detail)
 
 
 func _setting(path: String, default: Variant = null) -> Variant:
@@ -118,8 +138,8 @@ static func autoload_entries(sections: Dictionary) -> Array:
 	return out
 
 
-## The autoload rules: 11 base lines first, in order, paths unchanged; afterwards only the five
-## feature autoloads, each once, with their contract path. Returns error strings.
+## The autoload rules: 11 base lines first, in order, paths unchanged; afterwards only the feature
+## autoloads of FEATURE_AUTOLOADS (six), each once, with their contract path. Returns error strings.
 static func autoload_errors(entries: Array) -> Array:
 	var errors: Array = []
 	var n: int = BASE_AUTOLOADS.size()
@@ -138,13 +158,20 @@ static func autoload_errors(entries: Array) -> Array:
 	for i: int in range(n, entries.size()):
 		var e: Array = entries[i]
 		if not FEATURE_AUTOLOADS.has(e[0]):
-			errors.append("unexpected autoload %s after the base block (only the five feature autoloads are allowed)" % e[0])
+			errors.append("unexpected autoload %s after the base block (only the %s feature autoloads are allowed)" % [e[0], _count_word(FEATURE_AUTOLOADS.size())])
 		elif seen.has(e[0]):
 			errors.append("feature autoload %s appears more than once" % e[0])
 		elif e[1] != FEATURE_AUTOLOADS[e[0]]:
 			errors.append("%s: path %s, expected %s" % [e[0], e[1], FEATURE_AUTOLOADS[e[0]]])
 		seen[e[0]] = true
 	return errors
+
+
+## "six" for 6: the messages follow FEATURE_AUTOLOADS.size() instead of a literal that goes stale
+## with the next feature autoload (the five became six in fix round RT3).
+static func _count_word(n: int) -> String:
+	var words: Array = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"]
+	return String(words[n]) if n >= 0 and n < words.size() else str(n)
 
 
 func _has_key(section: String, key: String) -> bool:
@@ -177,6 +204,25 @@ func _gitignore_rules() -> Array:
 		if line != "" and not line.begins_with("#"):
 			rules.append(line)
 	return rules
+
+
+## Every file under a directory, at any depth (no suffix filter, no skipped directories).
+func _list_files(dir_path: String) -> Array:
+	var found: Array = []
+	var d: DirAccess = DirAccess.open(dir_path)
+	if d == null:
+		return found
+	d.list_dir_begin()
+	var name: String = d.get_next()
+	while name != "":
+		var full: String = dir_path.path_join(name)
+		if d.current_is_dir():
+			found.append_array(_list_files(full))
+		else:
+			found.append(full)
+		name = d.get_next()
+	d.list_dir_end()
+	return found
 
 
 func _find_files(dir_path: String, suffix: String, skip_dirs: Array) -> Array:
@@ -303,9 +349,11 @@ func _run_live() -> void:
 
 	# [input]
 	var ierr: Array = Contract.verify()
-	_check("p01.input_map_matches_contract", ierr.is_empty(), "; ".join(ierr))
-	_check("p01.input_has_35_actions_incl_5_addendum", Contract.ACTIONS.size() == 35 and Contract.ADDENDUM.size() == 5 and _all_present(Contract.ADDENDUM),
-		"addendum actions missing from the InputMap")
+	_check_alias("p01.input_map_matches_contract", "project.input_map_matches_contract", ierr.is_empty(), "; ".join(ierr))
+	_check_alias("p01.input_has_36_actions_incl_5_addendum_1_town", "project.input_has_36_actions_incl_5_addendum_1_town",
+		Contract.ACTIONS.size() == 36 and Contract.ADDENDUM.size() == 5 and Contract.TOWN.size() == 1 and Contract.ACTIONS.size() - Contract.ADDENDUM.size() - Contract.TOWN.size() == 30
+		and _all_present(Contract.ADDENDUM) and _all_present(Contract.TOWN) and InputMap.has_action("people"),
+		"the contract has %d actions (want 36 = 30 + 5 addendum + 1 town); addendum actions in the InputMap: %s, people in the InputMap: %s" % [Contract.ACTIONS.size(), _all_present(Contract.ADDENDUM), InputMap.has_action("people")])
 	var inv: Array = Contract.actual_signatures("inventory")
 	var inv_want: Array = ["key:%d" % KEY_I, "key:%d" % KEY_TAB]
 	inv_want.sort()
@@ -319,8 +367,15 @@ func _run_live() -> void:
 	_check("p01.wheel_only_on_zoom", wheel_actions == ["zoom_in", "zoom_out"], "mouse wheel is bound to %s (rotate_item must not use it)" % str(wheel_actions))
 	var qerr: Array = Contract.qualifier_errors()
 	_check("p01.input_events_are_plain_unqualified", qerr.is_empty(), "; ".join(qerr))
-	var uerr: Array = Contract.ui_errors()
+	var uerr: Array = Contract.ui_nav_errors()
 	_check("p01.ui_accept_cancel_take_joy_a_b_dpad_walks_focus", uerr.is_empty(), "; ".join(uerr))
+	var perr: Array = Contract.ui_page_errors()
+	# 36 contract actions + the four ui_* overrides (accept, cancel, page up, page down) = 40 (UI_NAVIGATION.md counts 39 before `people`)
+	_check("project.ui_page_pad_bindings",
+		perr.is_empty() and Contract.UI_OVERRIDES.size() == 4 and Contract.ACTIONS.size() + Contract.UI_OVERRIDES.size() == 40 and Contract.UI_PAGE_ACTIONS.size() == 2
+		and Contract.actual_signatures("ui_page_up") == ["joy:%d" % JOY_BUTTON_LEFT_SHOULDER, "logicalkey:%d" % KEY_PAGEUP]
+		and Contract.actual_signatures("ui_page_down") == ["joy:%d" % JOY_BUTTON_RIGHT_SHOULDER, "logicalkey:%d" % KEY_PAGEDOWN],
+		"; ".join(perr) if not perr.is_empty() else "ui_page_up must be PageUp + LB (joy 9) and ui_page_down PageDown + RB (joy 10), nothing else; 36 + 4 overrides = 40 actions")
 
 	# repo hygiene
 	_check_hygiene()
@@ -382,9 +437,30 @@ func _check_hygiene() -> void:
 	_check("p01.design_plan_links_addendum_and_supersede_line",
 		plan.contains("](PLAN_2D_FEATURES.md)") and plan.contains("](features_workpackages.json)") and plan.contains(SUPERSEDE_LINE) and plan.begins_with("# TRÆTOPPEN"),
 		"PLAN_2D.md must link both files and carry the supersede line in its header")
+	# the towns addendum (RT3 task 3, DT39): its files exist, PLAN_2D.md links both and carries the NEW header line
+	var towns: String = _read_text("res://docs/design/TOWNS_FARM_SOCIAL_ADDENDUM.md")
+	var towns_json_text: String = _read_text("res://docs/design/towns_farm_social_workpackages.json")
+	var towns_parsed: Variant = JSON.parse_string(towns_json_text) if towns_json_text != "" else null
+	_check("p01.design_plan_links_towns_addendum",
+		towns != "" and towns_parsed is Dictionary and (towns_parsed as Dictionary).has("newPackages")
+		and plan.contains("](TOWNS_FARM_SOCIAL_ADDENDUM.md)") and plan.contains("](towns_farm_social_workpackages.json)")
+		and plan.contains(TOWNS_SUPERSEDE_LINE) and plan.contains(SUPERSEDE_LINE) and plan.begins_with("# TRÆTOPPEN"),
+		"docs/design/{TOWNS_FARM_SOCIAL_ADDENDUM.md, towns_farm_social_workpackages.json} must exist (the json must parse) and PLAN_2D.md must link both and carry the towns supersede line (the features line stays too)")
+	# the retired town name: no file of docs/design (any depth, every text file, file names included)
 	var old_town: String = OLD_TOWN_NAME_PARTS[0] + OLD_TOWN_NAME_PARTS[1]
-	_check("p01.design_files_use_current_town_name", not (plan + addendum + json_text).to_lower().contains(old_town),
-		"the retired town name appears in docs/design (the town is Hyggebyen, genitive Hyggebyens)")
+	var scanned: int = 0
+	var name_hits: Array = []
+	for f: String in _list_files("res://docs/design"):
+		var suffix: String = f.get_extension().to_lower()
+		if f.to_lower().contains(old_town):
+			name_hits.append(f)
+		if BINARY_SUFFIXES.has(suffix):
+			continue
+		scanned += 1
+		if _read_text(f).to_lower().contains(old_town):
+			name_hits.append(f)
+	_check("p01.design_files_use_current_town_name", name_hits.is_empty() and scanned >= 10,
+		"the retired town name appears in %s (the town is Hyggebyen, genitive Hyggebyens); %d text files scanned (the scan must really see docs/design)" % [str(name_hits.slice(0, 4)), scanned])
 
 
 # --------------------------------------------------------------------------------------------
@@ -495,18 +571,104 @@ func _run_input_negative_controls() -> void:
 		if not InputMap.action_has_event("ui_accept", e):
 			InputMap.action_add_event("ui_accept", e)
 	_check("p01.control_ui_accept_without_joy_a_is_rejected", not ui_without_pad.is_empty(), "ui_accept without joy A was not detected")
+	_run_page_and_town_controls()
+
 	var errors_after: Array = Contract.verify()
-	_check("p01.control_restored_live_input_map", errors_after == errors_before,
+	# the order of the messages follows InputMap.get_actions(), which a re-added action changes: compare the sorted lists
+	var sorted_before: Array = errors_before.duplicate()
+	var sorted_after: Array = errors_after.duplicate()
+	sorted_before.sort()
+	sorted_after.sort()
+	_check("p01.control_restored_live_input_map", sorted_after == sorted_before,
 		"the negative controls left the InputMap changed: before %s, after %s" % [str(errors_before), str(errors_after)])
+
+
+## Takes the joypad button events off one action of the live InputMap and returns them.
+func _strip_pad_events(action: String) -> Array:
+	var removed: Array = []
+	if not InputMap.has_action(action):
+		return removed
+	for e: InputEvent in InputMap.action_get_events(action):
+		if e is InputEventJoypadButton:
+			removed.append(e)
+	for e: InputEvent in removed:
+		InputMap.action_erase_event(action, e)
+	return removed
+
+
+func _pad_button_event(button: int) -> InputEventJoypadButton:
+	var ev: InputEventJoypadButton = InputEventJoypadButton.new()
+	ev.device = Contract.ANY_DEVICE
+	ev.button_index = button as JoyButton
+	return ev
+
+
+## Negative controls of the pad paging (UI.1) and the `people` action (RT3.2), in the live process
+## like the controls above: break the live InputMap on purpose, require the rules to see it, restore.
+func _run_page_and_town_controls() -> void:
+	# ui_page_up without LB (the 4.7.2 engine default: PageUp only)
+	var lost_lb: Array = _strip_pad_events("ui_page_up")
+	var without_lb: Array = Contract.ui_page_errors()
+	for e: InputEvent in lost_lb:
+		InputMap.action_add_event("ui_page_up", e)
+	_check("p01.control_ui_page_up_without_lb_is_rejected", not lost_lb.is_empty() and not without_lb.is_empty() and str(without_lb).contains("ui_page_up"),
+		"ui_page_up without LB was not detected: %s" % str(without_lb))
+	# ui_page_down on LB instead of RB (the two shoulder buttons swapped)
+	var lost_rb: Array = _strip_pad_events("ui_page_down")
+	var lb_event: InputEventJoypadButton = _pad_button_event(JOY_BUTTON_LEFT_SHOULDER)
+	InputMap.action_add_event("ui_page_down", lb_event)
+	var on_lb: Array = Contract.ui_page_errors()
+	InputMap.action_erase_event("ui_page_down", lb_event)
+	for e: InputEvent in lost_rb:
+		InputMap.action_add_event("ui_page_down", e)
+	_check("p01.control_ui_page_down_on_lb_is_rejected", not lost_rb.is_empty() and not on_lb.is_empty() and str(on_lb).contains("ui_page_down"),
+		"ui_page_down on LB instead of RB was not detected: %s" % str(on_lb))
+	# the paging must keep RB on drink and rotate_item: take it off drink and the page probes see it
+	var lost_drink: Array = _strip_pad_events("drink")
+	var without_drink: Array = Contract.ui_page_errors()
+	for e: InputEvent in lost_drink:
+		InputMap.action_add_event("drink", e)
+	_check("p01.control_drink_without_rb_is_rejected_by_the_page_probes", not lost_drink.is_empty() and str(without_drink).contains("does not trigger drink"),
+		"RB taken off drink was not detected: %s" % str(without_drink))
+	# the `people` action: gone from the InputMap = rejected by the contract and by the count check's premise
+	if not InputMap.has_action("people"):
+		_check("p01.control_people_removed_is_rejected", false, "the live project has no people action: the control cannot run (see p01.input_map_matches_contract)")
+		_check("p01.control_people_extra_key_is_rejected", false, "the live project has no people action: the control cannot run (see p01.input_map_matches_contract)")
+		return
+	var people_events: Array = InputMap.action_get_events("people")
+	var people_deadzone: float = InputMap.action_get_deadzone("people")
+	InputMap.erase_action("people")
+	var without_people: Array = Contract.verify()
+	var has_people: bool = InputMap.has_action("people")
+	InputMap.add_action("people", people_deadzone)
+	for e: InputEvent in people_events:
+		InputMap.action_add_event("people", e)
+	_check("p01.control_people_removed_is_rejected", not people_events.is_empty() and not has_people and str(without_people).contains("missing action people"),
+		"a project without the people action was not detected: %s" % str(without_people))
+	# `people` on a second key (an extra binding) is as wrong as a missing one
+	var extra_key: InputEventKey = _key_ev(KEY_O)
+	InputMap.action_add_event("people", extra_key)
+	var extra: Array = Contract.verify()
+	InputMap.action_erase_event("people", extra_key)
+	_check("p01.control_people_extra_key_is_rejected", str(extra).contains("people: expected events"), "an extra key on people was not detected: %s" % str(extra))
 
 
 func _run_selftest() -> void:
 	var fixture_text: String = _read_text(FIXTURE_PATH)
 	_check("p01.fixture_present", fixture_text != "", "%s is missing" % FIXTURE_PATH)
 	var fixture: Array = autoload_entries(parse_sections(fixture_text))
-	_check("p01.fixture_is_11_base_plus_5_feature_lines", fixture.size() == 16, "fixture has %d autoload lines" % fixture.size())
-	var base: Array = fixture.slice(0, 11)
-	var feats: Array = fixture.slice(11)
+	_check("p01.fixture_is_11_base_plus_6_feature_lines", fixture.size() == BASE_AUTOLOADS.size() + FEATURE_AUTOLOADS.size(),
+		"fixture has %d autoload lines, the contract is %d base + %d feature lines" % [fixture.size(), BASE_AUTOLOADS.size(), FEATURE_AUTOLOADS.size()])
+	var base: Array = fixture.slice(0, BASE_AUTOLOADS.size())
+	var feats: Array = fixture.slice(BASE_AUTOLOADS.size())
+	var feat_names: Array = []
+	for f: Array in feats:
+		feat_names.append(f[0])
+	feat_names.sort()
+	var contract_names: Array = FEATURE_AUTOLOADS.keys()
+	contract_names.sort()
+	_check("p01.fixture_features_are_exactly_the_contract", feat_names == contract_names and FEATURE_AUTOLOADS.get("SocialManager", "") == "*res://scripts/social/social_manager.gd",
+		"fixture feature lines %s, contract %s (SocialManager, the sixth, is part of both)" % [str(feat_names), str(contract_names)])
 
 	_expect_ok("p01.fixture_accepted_base_plus_feature_lines", fixture)
 	_expect_ok("p01.fixture_accepted_base_only", base)
@@ -515,12 +677,12 @@ func _run_selftest() -> void:
 	reversed.reverse()
 	_expect_ok("p01.fixture_accepted_features_reversed", base + reversed)
 
-	# the real project.godot plus the five lines appended by hand, exactly what add_autoload.py will do
+	# the real project.godot plus the feature lines appended by hand, exactly what add_autoload.py will do
 	var live: Array = []
 	for e: Array in autoload_entries(_sections):
 		if not FEATURE_AUTOLOADS.has(e[0]):
 			live.append(e)
-	_expect_ok("p01.live_project_accepts_five_appended_feature_lines", live + feats)
+	_expect_ok("p01.live_project_accepts_appended_feature_lines", live + feats)
 
 	var swapped: Array = fixture.duplicate()
 	var tmp: Array = swapped[1]
@@ -538,5 +700,10 @@ func _run_selftest() -> void:
 	_expect_reject("p01.fixture_rejects_changed_base_path", moved, "path changed")
 	var wrong_path: Array = base + [["HomeManager", "*res://scripts/elsewhere/home.gd"]]
 	_expect_reject("p01.fixture_rejects_feature_autoload_with_wrong_path", wrong_path, "expected *res://scripts/home/home_manager.gd")
+	# the sixth feature autoload (SocialManager, towns addendum RT3): accepted at its contract path only, once, and the list stays closed behind it
+	_expect_ok("p01.fixture_accepts_social_manager_alone_after_the_base", base + [["SocialManager", "*res://scripts/social/social_manager.gd"]])
+	_expect_reject("p01.fixture_rejects_social_manager_with_wrong_path", base + [["SocialManager", "*res://scripts/elsewhere/social.gd"]], "expected *res://scripts/social/social_manager.gd")
+	_expect_reject("p01.fixture_rejects_social_manager_inside_the_base_block", base.slice(0, 4) + [["SocialManager", "*res://scripts/social/social_manager.gd"]] + base.slice(4), "before/inside the base block")
+	_expect_reject("p01.fixture_rejects_seventh_unknown_autoload_behind_social_manager", fixture + [["PeopleManager", "*res://scripts/social/people_manager.gd"]], "unexpected autoload PeopleManager")
 
 	_run_input_negative_controls()

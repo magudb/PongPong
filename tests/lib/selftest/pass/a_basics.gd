@@ -26,6 +26,9 @@ func run(t) -> void:
 	var p0 := Engine.get_physics_frames()
 	await t.physics(4)
 	t.expect(Engine.get_physics_frames() >= p0 + 4, "physics(4) advances four physics ticks")
+	var g0: float = t.game_seconds()
+	await t.physics(30)
+	t.expect_near(t.game_seconds() - g0, 0.5, 0.05, "game_seconds() advances 30 physics ticks = 0.5 game seconds (the clock to measure durations with)")
 	var t0 := Time.get_ticks_msec()
 	await t.seconds(0.2)
 	var waited := Time.get_ticks_msec() - t0

@@ -1,0 +1,18 @@
+{
+	"screens": [
+		7,
+		{
+			"title": "a row without an id"
+		},
+		{
+			"id": "mg_ok",
+			"title": "mg_ok",
+			"kind": "surface",
+			"package": "MG-rows",
+			"checks": [
+				"rules"
+			],
+			"tripwire": "res://tests/fixtures/ui_audit/never_built.tscn"
+		}
+	]
+}

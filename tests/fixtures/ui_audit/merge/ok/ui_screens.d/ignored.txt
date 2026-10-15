@@ -1,0 +1,1 @@
+{"screens": [{"id": "mg_ignored", "title": "mg_ignored", "kind": "surface", "package": "MG-x", "checks": ["rules"], "tripwire": "res://tests/fixtures/ui_audit/never_built.tscn"}]}

@@ -1,0 +1,25 @@
+{
+	"_doc": "second by file name",
+	"screens": [
+		{
+			"id": "mg_b1",
+			"title": "mg_b1",
+			"kind": "surface",
+			"package": "MG-b",
+			"checks": [
+				"rules"
+			],
+			"tripwire": "res://tests/fixtures/ui_audit/never_built.tscn"
+		},
+		{
+			"id": "mg_b2",
+			"title": "mg_b2",
+			"kind": "surface",
+			"package": "MG-b",
+			"checks": [
+				"rules"
+			],
+			"tripwire": "res://tests/fixtures/ui_audit/never_built.tscn"
+		}
+	]
+}

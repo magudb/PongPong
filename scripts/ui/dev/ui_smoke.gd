@@ -386,9 +386,17 @@ func _game_ui() -> void:
 	print("-- GameUI (dynamic loader)")
 	await _clear()
 	var order := GameUI.SCREEN_ORDER
-	_ok(order.size() == 16 and order[0] == &"hud" and order[1] == &"forest_hud" and order[-1] == &"settings_ui" and order[-3] == &"pause_menu", "the ordered list: 16 screens, hud first, settings_ui last (%s)" % str(order))
+	# the pin follows the list (no literal count): the ends are fixed, no id is twice, the rest is relative order
+	var distinct := {}
+	for id in order:
+		distinct[id] = true
+	_ok(distinct.size() == order.size() and order[0] == &"hud" and order[1] == &"forest_hud" and order[-1] == &"settings_ui" and order[-3] == &"pause_menu", "the ordered list: %d distinct screens, hud and forest_hud first, pause_menu / save_load_ui / settings_ui last (%s)" % [order.size(), str(order)])
 	for added in ["husbyggeri", "indretning", "home_chest", "garderobe", "samlerbog"]:
 		_ok(order.has(StringName(added)) and order.find(StringName(added)) < order.find(&"pause_menu"), "the home screen %s is in the list, below the pause menu" % added)
+	for added in ["social_hud", "event_overlay", "people", "gift_ui", "post"]:
+		_ok(order.has(StringName(added)) and order.find(StringName(added)) < order.find(&"pause_menu"), "the towns / social screen %s is in the list, below the pause menu" % added)
+	_ok(order.find(&"social_hud") == order.find(&"forest_hud") + 1 and order.find(&"event_overlay") > order.find(&"social_hud") and order.find(&"event_overlay") < order.find(&"dialogue_ui"), "social_hud right behind the HUDs, event_overlay before dialogue_ui (the letterbox is behind the dialogue)")
+	_ok(order.find(&"people") > order.find(&"quest_journal") and order.find(&"gift_ui") > order.find(&"people") and order.find(&"post") > order.find(&"gift_ui") and order.find(&"post") < order.find(&"shop_ui"), "people, gift_ui, post sit after quest_journal and before the shops")
 	var existing: Array[StringName] = []
 	for id in order:
 		if ResourceLoader.exists(GameUI.scene_path(id)):
