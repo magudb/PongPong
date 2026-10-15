@@ -1,0 +1,18 @@
+{
+ "_about": "Figurer v2 sketch palette, one entry per figure (docs/design/DUNGEON_V2_ADDENDUM.md section 7 / design_v2.md section 3.4, measured from the SVG fills of docs/Traetoppen Style Guide Review/Traetoppen Figurer v2.dc.html). Hex is lower-case, six digits, no '#'. The hero twins of A2 (tools/art/features/wardrobe/hero_designs.py) carry the same hex; V10 asserts equality (zz_v2.cast_palettes_match_hero_palettes). Nothing imports this file in the other direction.",
+ "figures": {
+  "hoppe": {"body": "f1e3cc", "tummy": "fffdf6", "ear_inner": "f2b8c6", "paws": "fbf3e2", "nose": "e58fa6"},
+  "brumme": {"body": "b98657", "belly": "d3a77a", "muzzle": "e9d2b0", "ear_inner": "e6b29a", "pads": ["f2a7b8", "e9d2b0"]},
+  "morfar_mis": {"body": "a7adb9", "belly": "e7e3ea", "irises": "c9d97a", "stripes": "7d8494", "ear_inner": "f2b8c6"},
+  "natteblik": {"body": "8c7aa8", "membrane": "6b5b8a", "belly": "a896c4", "ear_inner": "c9a7d6", "eyes": "4a2416"},
+  "rasmus": {"body": "e07b3c", "chest": "fbf5e6", "legs_feet": "4a2d22", "scarf": "6b9a3e"},
+  "bertil": {"skin": "f2c9a5", "hair": "7a4e2d", "hair_shade": "5a3a22", "vest": "6b9a3e", "shirt": "fbf5e6", "buttons": "e3c372"},
+  "bodil": {"skin": "f2c9a5", "hair": "7a4e2d", "hair_shade": "5a3a22", "vest": "6b9a3e", "shirt": "fbf5e6", "buttons": "e3c372", "braids": "7a4e2d", "ribbons": "e58fa6", "flower": ["fffdf6", "e3c372"], "blouse": "c4506a"},
+  "kloevermynte": {"skin": "f6d3c0", "hair": "9b86d6", "hair_rim": "5d4fa3", "coronet": ["e3c372", "fffdf6"], "wings": "cfe6f2", "dress": "e88f9f"},
+  "birk": {"skin": "f6d3c0", "cap": "6b9a3e", "fringe": "c98a3a", "irises": "3f8f6a", "tunic": "6b9a3e", "belt_boots": "5e3b20", "wings": "cfe6f2"},
+  "pip": {"spines": "7a4e2d", "face": "f0dcc0", "belly_ring": "8a5a32", "feet": "5e3b20", "satchel": "5d8fc4", "seal": "c4506a"},
+  "fru_ugle": {"body": "a07a55", "wings": "7a5a3a", "discs": ["f0dcc0", "e2c9a4"], "eye_rings": "f2c14e", "beak": "e8b04a", "chevrons": "7a5a3a"},
+  "sofus": {"body": "d99a64", "muzzle_hands_feet": "a8714a", "belly": "f2cfa6", "orange": "f29a3a", "leaf": "6b9a3e"},
+  "kiki": {"fur": "9a6a40", "face_belly": "f0d2b0", "flower": ["e58fa6", "e3c372"]}
+ }
+}

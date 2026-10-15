@@ -59,7 +59,7 @@
   "role": "npc",
   "display_scale": 1.0,
   "illustration": {
-    "source": "tools/art/drawn/sources/fairies1.png",
+    "source": "tools/art/drawn/sources/cast_revised.png",
     "views": [
       "front",
       "front_left",
@@ -68,6 +68,6 @@
       "back"
     ],
     "opposite_views": "mirrored",
-    "north_source": "tools/art/drawn/sources/backs1.png"
+    "north_source": "tools/art/drawn/sources/backs_revised.png"
   }
 }

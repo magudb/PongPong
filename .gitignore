@@ -23,6 +23,11 @@ tools/art/.venv
 tools/art/_stage/
 __pycache__/
 
+# Dungeon tooling output (stress, simulation, bake) - design addendum, lead patch
+tools/dungeon/_stage/
+tools/dungeon_run/_stage/
+tools/dungeon_loot/_stage/
+
 # Other tools' state and scratch
 .mimocode/
 .playwright-mcp/

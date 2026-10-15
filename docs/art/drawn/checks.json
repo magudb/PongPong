@@ -1,332 +1,189 @@
 {
   "date": "2026-10-14",
-  "generation": "built-in image_gen; committed source paintings and exact prompts",
-  "characters": 48,
-  "animation_sheets": 392,
-  "world_props": 26,
-  "building_designs": 14,
-  "source_atlases": 21,
-  "strict_playtests": {
-    "animal": {
-      "result": "pass",
-      "checks": 2778,
-      "failed": 0,
-      "skipped": 32,
-      "elapsed_s": 165.62,
-      "sections": {
-        "area": {
-          "checks": 230,
-          "failed": 0,
-          "ms": 16949,
-          "skipped": 2
-        },
-        "art_characters": {
-          "checks": 27,
-          "failed": 0,
-          "ms": 11126,
-          "skipped": 0
-        },
-        "art_home": {
-          "checks": 29,
-          "failed": 0,
-          "ms": 6950,
-          "skipped": 0
-        },
-        "boot": {
-          "checks": 8,
-          "failed": 0,
-          "ms": 3102,
-          "skipped": 0
-        },
-        "characters": {
-          "checks": 108,
-          "failed": 0,
-          "ms": 4671,
-          "skipped": 0
-        },
-        "content_features": {
-          "checks": 141,
-          "failed": 0,
-          "ms": 12105,
-          "skipped": 0
-        },
-        "core": {
-          "checks": 111,
-          "failed": 0,
-          "ms": 1343,
-          "skipped": 1
-        },
-        "data": {
-          "checks": 314,
-          "failed": 0,
-          "ms": 9003,
-          "skipped": 1
-        },
-        "economy": {
-          "checks": 296,
-          "failed": 0,
-          "ms": 2882,
-          "skipped": 2
-        },
-        "loc": {
-          "checks": 114,
-          "failed": 0,
-          "ms": 34302,
-          "skipped": 0
-        },
-        "rarity": {
-          "checks": 74,
-          "failed": 0,
-          "ms": 49,
-          "skipped": 0
-        },
-        "save": {
-          "checks": 234,
-          "failed": 0,
-          "ms": 9320,
-          "skipped": 2
-        },
-        "ui_audit": {
-          "checks": 439,
-          "failed": 0,
-          "ms": 8689,
-          "skipped": 23
-        },
-        "ui_audit_blind": {
-          "checks": 121,
-          "failed": 0,
-          "ms": 5291,
-          "skipped": 0
-        },
-        "ui_audit_pins": {
-          "checks": 344,
-          "failed": 0,
-          "ms": 2119,
-          "skipped": 0
-        },
-        "ui_foundation": {
-          "checks": 188,
-          "failed": 0,
-          "ms": 33423,
-          "skipped": 1
-        }
+  "worktree": "PongPong-worktrees/m1a",
+  "merge_commit": "df5d641",
+  "claude_followup_commit": "38b78ce",
+  "working_tree_additions": true,
+  "generation": "built-in image_gen; sources and exact prompts saved under tools/art/drawn/",
+  "characters": 58,
+  "animation_sheets": 474,
+  "item_icons": 345,
+  "item_icons_added": 183,
+  "wardrobe_icons_added": 96,
+  "terrain_atlases": 29,
+  "prop_resources": 253,
+  "coverage_result": "pass",
+  "coverage_gaps": 0,
+  "source_atlases": 34,
+  "environment_disk_bytes": 21177382,
+  "environment_budget_bytes": 22000000,
+  "farm_texture_memory_mb": 16.2,
+  "farm_texture_budget_mb": 20,
+  "six_new_npc_folders_mb": 7.6,
+  "headless": {
+    "allowed": [
+      {
+        "kind": "warning",
+        "rule": "Unknown chibi character",
+        "section": "characters",
+        "text": "core/variant/variant_utility.cpp:1033 in push_warning(): Unknown chibi character: no_such_character (at load_character res://scripts/isometric/iso_chibi_sprite_2d.gd:233)"
+      },
+      {
+        "kind": "warning",
+        "rule": "Unknown chibi character",
+        "section": "characters",
+        "text": "core/variant/variant_utility.cpp:1033 in push_warning(): Unknown chibi character: ../fox (at load_character res://scripts/isometric/iso_chibi_sprite_2d.gd:233)"
+      },
+      {
+        "kind": "warning",
+        "rule": "Unknown chibi character",
+        "section": "characters",
+        "text": "core/variant/variant_utility.cpp:1033 in push_warning(): Unknown chibi character: FOX (at load_character res://scripts/isometric/iso_chibi_sprite_2d.gd:233)"
+      }
+    ],
+    "character": "ghost",
+    "checks": 618,
+    "elapsed_s": 114.57,
+    "engine": [],
+    "failed": 0,
+    "failures": [],
+    "known": [],
+    "mode": "headless",
+    "problems": [],
+    "result": "pass",
+    "sections": {
+      "area": {
+        "checks": 232,
+        "failed": 0,
+        "ms": 18107,
+        "skipped": 0
+      },
+      "art_cast_v2": {
+        "checks": 21,
+        "failed": 0,
+        "ms": 17916,
+        "skipped": 4
+      },
+      "art_characters": {
+        "checks": 27,
+        "failed": 0,
+        "ms": 12055,
+        "skipped": 0
+      },
+      "art_city": {
+        "checks": 17,
+        "failed": 0,
+        "ms": 696,
+        "skipped": 0
+      },
+      "art_environment": {
+        "checks": 32,
+        "failed": 0,
+        "ms": 1047,
+        "skipped": 3
+      },
+      "art_farm": {
+        "checks": 23,
+        "failed": 0,
+        "ms": 451,
+        "skipped": 0
+      },
+      "art_ghost": {
+        "checks": 18,
+        "failed": 0,
+        "ms": 16388,
+        "skipped": 0
+      },
+      "art_home": {
+        "checks": 29,
+        "failed": 0,
+        "ms": 4920,
+        "skipped": 0
+      },
+      "boot": {
+        "checks": 8,
+        "failed": 0,
+        "ms": 2362,
+        "skipped": 0
+      },
+      "cast_data": {
+        "checks": 15,
+        "failed": 0,
+        "ms": 527,
+        "skipped": 3
+      },
+      "characters": {
+        "checks": 116,
+        "failed": 0,
+        "ms": 3098,
+        "skipped": 0
+      },
+      "city_levels": {
+        "checks": 69,
+        "failed": 0,
+        "ms": 34286,
+        "skipped": 0
+      },
+      "ghost": {
+        "checks": 7,
+        "failed": 0,
+        "ms": 22,
+        "skipped": 0
+      },
+      "ghost_data": {
+        "checks": 4,
+        "failed": 0,
+        "ms": 2,
+        "skipped": 0
       }
     },
-    "fairy": {
-      "result": "pass",
-      "checks": 2778,
-      "failed": 0,
-      "skipped": 32,
-      "elapsed_s": 127.43,
-      "sections": {
-        "area": {
-          "checks": 230,
-          "failed": 0,
-          "ms": 16852,
-          "skipped": 2
-        },
-        "art_characters": {
-          "checks": 27,
-          "failed": 0,
-          "ms": 17820,
-          "skipped": 0
-        },
-        "art_home": {
-          "checks": 29,
-          "failed": 0,
-          "ms": 6866,
-          "skipped": 0
-        },
-        "boot": {
-          "checks": 8,
-          "failed": 0,
-          "ms": 2681,
-          "skipped": 0
-        },
-        "characters": {
-          "checks": 108,
-          "failed": 0,
-          "ms": 5278,
-          "skipped": 0
-        },
-        "content_features": {
-          "checks": 141,
-          "failed": 0,
-          "ms": 12109,
-          "skipped": 0
-        },
-        "core": {
-          "checks": 111,
-          "failed": 0,
-          "ms": 750,
-          "skipped": 1
-        },
-        "data": {
-          "checks": 314,
-          "failed": 0,
-          "ms": 6796,
-          "skipped": 1
-        },
-        "economy": {
-          "checks": 296,
-          "failed": 0,
-          "ms": 1660,
-          "skipped": 2
-        },
-        "loc": {
-          "checks": 114,
-          "failed": 0,
-          "ms": 17925,
-          "skipped": 0
-        },
-        "rarity": {
-          "checks": 74,
-          "failed": 0,
-          "ms": 38,
-          "skipped": 0
-        },
-        "save": {
-          "checks": 234,
-          "failed": 0,
-          "ms": 9878,
-          "skipped": 2
-        },
-        "ui_audit": {
-          "checks": 439,
-          "failed": 0,
-          "ms": 9881,
-          "skipped": 23
-        },
-        "ui_audit_blind": {
-          "checks": 121,
-          "failed": 0,
-          "ms": 4889,
-          "skipped": 0
-        },
-        "ui_audit_pins": {
-          "checks": 344,
-          "failed": 0,
-          "ms": 1715,
-          "skipped": 0
-        },
-        "ui_foundation": {
-          "checks": 188,
-          "failed": 0,
-          "ms": 9118,
-          "skipped": 1
-        }
-      }
-    },
-    "hobbit": {
-      "result": "pass",
-      "checks": 2778,
-      "failed": 0,
-      "skipped": 32,
-      "elapsed_s": 139.01,
-      "sections": {
-        "area": {
-          "checks": 230,
-          "failed": 0,
-          "ms": 18816,
-          "skipped": 2
-        },
-        "art_characters": {
-          "checks": 27,
-          "failed": 0,
-          "ms": 34556,
-          "skipped": 0
-        },
-        "art_home": {
-          "checks": 29,
-          "failed": 0,
-          "ms": 6404,
-          "skipped": 0
-        },
-        "boot": {
-          "checks": 8,
-          "failed": 0,
-          "ms": 2669,
-          "skipped": 0
-        },
-        "characters": {
-          "checks": 108,
-          "failed": 0,
-          "ms": 3731,
-          "skipped": 0
-        },
-        "content_features": {
-          "checks": 141,
-          "failed": 0,
-          "ms": 6786,
-          "skipped": 0
-        },
-        "core": {
-          "checks": 111,
-          "failed": 0,
-          "ms": 321,
-          "skipped": 1
-        },
-        "data": {
-          "checks": 314,
-          "failed": 0,
-          "ms": 4875,
-          "skipped": 1
-        },
-        "economy": {
-          "checks": 296,
-          "failed": 0,
-          "ms": 1290,
-          "skipped": 2
-        },
-        "loc": {
-          "checks": 114,
-          "failed": 0,
-          "ms": 15388,
-          "skipped": 0
-        },
-        "rarity": {
-          "checks": 74,
-          "failed": 0,
-          "ms": 49,
-          "skipped": 0
-        },
-        "save": {
-          "checks": 234,
-          "failed": 0,
-          "ms": 17401,
-          "skipped": 2
-        },
-        "ui_audit": {
-          "checks": 439,
-          "failed": 0,
-          "ms": 6074,
-          "skipped": 23
-        },
-        "ui_audit_blind": {
-          "checks": 121,
-          "failed": 0,
-          "ms": 4745,
-          "skipped": 0
-        },
-        "ui_audit_pins": {
-          "checks": 344,
-          "failed": 0,
-          "ms": 1715,
-          "skipped": 0
-        },
-        "ui_foundation": {
-          "checks": 188,
-          "failed": 0,
-          "ms": 12238,
-          "skipped": 1
-        }
-      }
-    }
+    "skipped": 10
   },
-  "total_checks": 8349,
-  "unexpected_engine_messages": 0,
-  "home_art_mb": 11.79,
-  "home_art_budget_mb": 12,
+  "area_render": {
+    "allowed": [],
+    "character": "animal",
+    "checks": 15,
+    "elapsed_s": 14.41,
+    "engine": [],
+    "failed": 0,
+    "failures": [],
+    "known": [],
+    "mode": "windowed",
+    "problems": [],
+    "result": "pass",
+    "sections": {
+      "area": {
+        "checks": 15,
+        "failed": 0,
+        "ms": 11492,
+        "skipped": 0
+      }
+    },
+    "skipped": 0
+  },
+  "farm_render": {
+    "allowed": [],
+    "character": "animal",
+    "checks": 9,
+    "elapsed_s": 10.74,
+    "engine": [],
+    "failed": 0,
+    "failures": [],
+    "known": [],
+    "mode": "windowed",
+    "problems": [],
+    "result": "pass",
+    "sections": {
+      "art_farm": {
+        "checks": 9,
+        "failed": 0,
+        "ms": 8836,
+        "skipped": 0
+      }
+    },
+    "skipped": 0
+  },
+  "total_validation_checks": 642,
   "native_review": [
     "world.png",
     "world-close.png",
@@ -334,41 +191,25 @@
     "world-night.png",
     "cast.png",
     "buildings.png",
-    "terrain.png"
+    "terrain.png",
+    "items-1.png",
+    "items-2.png",
+    "items-3.png",
+    "items-4.png"
   ],
-  "verified": [
-    "all eight sprite directions are distinct",
-    "all clips animate",
-    "ground pivots and opposing silhouettes",
-    "portrait lookup and framing",
-    "house mass and height progression",
-    "house ground contact and night masks",
-    "window glow placement on sliced buildings",
-    "S3TC import presets and existing VRAM budget",
-    "painted wall planes and foundation edges follow the tile axes",
-    "building contact shadows share the collision footprint and follow hiding and removal",
-    "all 24 outdoor terrain IDs use committed painted atlases",
-    "continuous grass, stone and grain across the real tile lattice",
-    "native seam probes at zoom 0.3, 0.4 and 0.7 with a planted hairline negative control",
-    "dry and watered soil remain distinct and the luminous forest path keeps its teal cue",
-    "painted platform bark and bridge decks keep the original pivots and dimensions"
-  ],
-  "terrain_atlases": 24,
-  "terrain_art_mb": 6.65,
-  "render_playtest": {
-    "result": "pass",
-    "checks": 15,
-    "failed": 0,
-    "skipped": 0,
-    "elapsed_s": 29.41,
-    "sections": {
-      "area": {
-        "checks": 15,
-        "failed": 0,
-        "ms": 18648,
-        "skipped": 0
-      }
-    }
+  "coverage_report": "coverage.json",
+  "integration_notes": "coverage.md",
+  "historical_main_validation": "checks-main-before-sync.json",
+  "preserved_pre_sync_work": {
+    "snapshot_files": 420,
+    "byte_identical_files": 340,
+    "missing_files": 0,
+    "unexpected_changes_outside_art_and_known_claude_edits": 0,
+    "backup": "../.codex-backups/m1a-art-sync-20261014-202636/snapshot.json"
   },
-  "retry_note": "Initial animal and fairy runs exceeded the unchanged 10-second UI audit timing limit (11.557 and 11.849 seconds) during concurrent machine load. The final full strict runs passed for all three heroes; no test or timing limit was changed."
+  "scope_notes": [
+    "The current runtime registries are covered. Natlys citizens and wardrobe bases remain separate design packages.",
+    "Prop coverage checks real resources; it does not claim every city or farm structure was repainted.",
+    "The headless skips retain prototype/package checks; the coverage audit independently checks the effective resources."
+  ]
 }

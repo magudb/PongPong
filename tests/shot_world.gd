@@ -1,7 +1,7 @@
 extends Node
 ## NON-headless screenshot driver (P04). Plays a short scripted session through the REAL world scene and saves PNGs.
 ##   tests/shot_world.tscn, run through impl/tools/windowed.sh (one window at a time), always with --quit-after:
-##   godot --path . --resolution 1280x720 res://tests/shot_world.tscn --quit-after 3600 -- --out=DIR [--character=animal|fairy|hobbit] [--part=fixtures|cast|rim|farm|hyggebyen|forest]
+##   godot --path . --resolution 1280x720 res://tests/shot_world.tscn --quit-after 3600 -- --out=DIR [--character=animal|fairy|hobbit|ghost] [--part=fixtures|cast|rim|farm|hyggebyen|forest]
 ## Parts:
 ##   fixtures    the iso fixture at noon / dusk / night / zoomed out / grown platform, then the ortho fixture (real tiles and props
 ##               appear as soon as assets/iso_tiles and assets/iso_props carry them: nothing here names an asset)
@@ -11,7 +11,7 @@ extends Node
 ##   farm | hyggebyen | forest   the real maps when data/maps/<id>.map exists (skovkant for forest), else a note and no picture
 ## Every picture is also a pixel check target of tests/sections/area.gd run_windowed().
 var out_dir := ""
-var character := 0          # GameManager.CharacterType: 0 animal 1 fairy 2 hobbit
+var character := 0          # GameManager.CharacterType: 0 animal 1 fairy 2 hobbit 3 ghost
 var part := "fixtures"
 var world: Node2D
 
@@ -21,7 +21,7 @@ func _ready() -> void:
 		if a.begins_with("--out="):
 			out_dir = a.get_slice("=", 1)
 		elif a.begins_with("--character="):
-			character = {"animal": 0, "fairy": 1, "hobbit": 2}.get(a.get_slice("=", 1), 0)
+			character = {"animal": 0, "fairy": 1, "hobbit": 2, "ghost": 3}.get(a.get_slice("=", 1), 0)
 		elif a.begins_with("--part="):
 			part = a.get_slice("=", 1)
 	_run.call_deferred()

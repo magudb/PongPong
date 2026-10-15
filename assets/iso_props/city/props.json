@@ -1,0 +1,1705 @@
+{
+ "_city": {
+  "k": 3.0,
+  "k_ref": 3.0,
+  "scale_source": "lua/config/traetoppen.lua (traetoppen.scale)",
+  "outline": "pack warm outline (75,60,73) 55 %, 2 px",
+  "bark_tile_h": 512,
+  "shadow": "none baked (the engine draws shadows; shadow_soft is an optional shared one)",
+  "hut_of": {
+   "h1": "hut_m_straw",
+   "h2": "hut_s_moss",
+   "h3": "hut_m_straw",
+   "h4": "hut_s_straw",
+   "h5": "hut_s_moss",
+   "h6": "hut_l_dark",
+   "h7": "hut_l_straw",
+   "h8": "hut_m_straw",
+   "h9": "hut_m_moss",
+   "h10": "hut_m_straw",
+   "h11": "hut_m_straw",
+   "h12": "hut_s_moss",
+   "h13": "hut_m_dark",
+   "raadhus": "hut_raadhus"
+  },
+  "ids": [
+   "bat_hang",
+   "bat_hang_f1",
+   "bat_house_hanging",
+   "bath_tub_back",
+   "bath_tub_front",
+   "bridge_deck_tile_w28",
+   "bridge_deck_tile_w43",
+   "bridge_post",
+   "canopy_top_strip",
+   "fire_flame",
+   "fire_flame_f1",
+   "fire_flame_f2",
+   "fire_pit",
+   "foliage_front_a",
+   "foliage_front_b",
+   "hut_l_dark",
+   "hut_l_moss",
+   "hut_l_straw",
+   "hut_m_dark",
+   "hut_m_moss",
+   "hut_m_straw",
+   "hut_raadhus",
+   "hut_s_dark",
+   "hut_s_moss",
+   "hut_s_straw",
+   "ladder_tile",
+   "lamp_door",
+   "lantern_hang",
+   "lift_basket",
+   "lift_pulley",
+   "log_stack",
+   "market_stall_traetoppen",
+   "notice_board",
+   "owl_shelf",
+   "pennant_blue",
+   "pennant_blue_f1",
+   "pennant_gold",
+   "pennant_gold_f1",
+   "pennant_mint",
+   "pennant_mint_f1",
+   "pennant_pink",
+   "pennant_pink_f1",
+   "planter_box",
+   "planter_box_berry",
+   "platform_disc_171",
+   "platform_disc_184",
+   "platform_disc_196",
+   "platform_disc_306",
+   "rope_tile",
+   "seed_basket",
+   "shadow_soft",
+   "treetop_far",
+   "treetop_sky",
+   "trunk_bark_w367",
+   "trunk_bark_w404",
+   "trunk_bark_w441",
+   "trunk_bark_w698",
+   "trunk_foot_w367",
+   "trunk_foot_w404",
+   "trunk_foot_w441",
+   "trunk_foot_w698",
+   "trunk_hole_owl",
+   "trunk_hole_owl_b",
+   "trunk_root_w367",
+   "trunk_root_w404",
+   "trunk_root_w441",
+   "trunk_root_w698"
+  ],
+  "tiles": {
+   "bridge_deck_tile_*": "Line2D tile, X along the bridge",
+   "trunk_bark_w*": "Sprite2D region + repeat, vertical",
+   "ladder_tile": "region + repeat, vertical",
+   "rope_tile": "region + repeat, vertical"
+  },
+  "frames": "multi-frame pieces list their frame ids in `frames` on the first frame (base id, base_f1, base_f2)",
+  "night": "a hut's `night` entry is an ADDITIVE layer (blend add) trimmed to its lights: draw it at day_origin + night_offset with the same pivot rule (its pivot is relative to the trimmed image)"
+ },
+ "bat_hang": {
+  "file": "bat_hang.webp",
+  "size": [
+   84,
+   102
+  ],
+  "pivot": [
+   42.0,
+   4.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "bat",
+  "note": "static sleeping bat (the pack has no hang clip: honest stub); pivot = the hook at the top centre",
+  "frames": [
+   "bat_hang",
+   "bat_hang_f1"
+  ],
+  "fps": 1.0
+ },
+ "bat_hang_f1": {
+  "file": "bat_hang_f1.webp",
+  "size": [
+   84,
+   102
+  ],
+  "pivot": [
+   42.0,
+   4.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "bat",
+  "note": "static sleeping bat (the pack has no hang clip: honest stub); pivot = the hook at the top centre"
+ },
+ "bat_house_hanging": {
+  "file": "bat_house_hanging.webp",
+  "size": [
+   348,
+   574
+  ],
+  "pivot": [
+   174.0,
+   531.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "bat_house",
+  "note": "drum with the door on top, cone below; pivot = the cone tip (the `tip_y` of the data); hang bat_hang under it",
+  "fit": [
+   1.814,
+   2.4
+  ]
+ },
+ "bath_tub_back": {
+  "file": "bath_tub_back.webp",
+  "size": [
+   276,
+   120
+  ],
+  "pivot": [
+   138.0,
+   109.9
+  ],
+  "footprint": [
+   2,
+   2
+  ],
+  "kind": "tub",
+  "half": "back",
+  "scale": 1.0299,
+  "content_h": 109,
+  "note": "both halves share the pivot = the water-surface centre of the tub; Sofus is drawn BETWEEN them (back, Sofus, front)"
+ },
+ "bath_tub_front": {
+  "file": "bath_tub_front.webp",
+  "size": [
+   276,
+   120
+  ],
+  "pivot": [
+   138.0,
+   23.9
+  ],
+  "footprint": [
+   2,
+   2
+  ],
+  "kind": "tub",
+  "half": "front",
+  "scale": 1.0299,
+  "content_h": 120,
+  "note": "both halves share the pivot = the water-surface centre of the tub; Sofus is drawn BETWEEN them (back, Sofus, front)"
+ },
+ "bridge_deck_tile_w28": {
+  "file": "bridge_deck_tile_w28.webp",
+  "size": [
+   85,
+   128
+  ],
+  "pivot": [
+   42.5,
+   64.0
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "bridge_deck",
+  "tile": "x",
+  "note": "Line2D tile: X runs along the bridge, Y across; planks are vertical bars; periodic in x"
+ },
+ "bridge_deck_tile_w43": {
+  "file": "bridge_deck_tile_w43.webp",
+  "size": [
+   129,
+   128
+  ],
+  "pivot": [
+   64.5,
+   64.0
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "bridge_deck",
+  "tile": "x",
+  "note": "Line2D tile: X runs along the bridge, Y across; planks are vertical bars; periodic in x"
+ },
+ "bridge_post": {
+  "file": "bridge_post.webp",
+  "size": [
+   30,
+   84
+  ],
+  "pivot": [
+   15.0,
+   82.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "post",
+  "note": "pivot = the foot; the rail rope ties at 72 px (24 sketch px) above it"
+ },
+ "canopy_top_strip": {
+  "file": "canopy_top_strip.webp",
+  "size": [
+   2048,
+   320
+  ],
+  "pivot": [
+   1024.0,
+   0.0
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "canopy",
+  "note": "screen-space frame for CanvasLayer 3: periodic in x, 2048 wide (draw at viewport_width / 2048)"
+ },
+ "fire_flame": {
+  "file": "fire_flame.webp",
+  "size": [
+   120,
+   168
+  ],
+  "pivot": [
+   60.0,
+   156.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "flame",
+  "blend": "add",
+  "note": "additive; pivot = the base centre of the flame",
+  "frames": [
+   "fire_flame",
+   "fire_flame_f1",
+   "fire_flame_f2"
+  ],
+  "fps": 8.0
+ },
+ "fire_flame_f1": {
+  "file": "fire_flame_f1.webp",
+  "size": [
+   120,
+   168
+  ],
+  "pivot": [
+   60.0,
+   156.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "flame",
+  "blend": "add",
+  "note": "additive; pivot = the base centre of the flame"
+ },
+ "fire_flame_f2": {
+  "file": "fire_flame_f2.webp",
+  "size": [
+   120,
+   168
+  ],
+  "pivot": [
+   60.0,
+   156.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "flame",
+  "blend": "add",
+  "note": "additive; pivot = the base centre of the flame"
+ },
+ "fire_pit": {
+  "file": "fire_pit.webp",
+  "size": [
+   216,
+   168
+  ],
+  "pivot": [
+   108.0,
+   108.0
+  ],
+  "footprint": [
+   2,
+   2
+  ],
+  "kind": "fire",
+  "note": "stone ring + logs; draw fire_flame (additive) with the same pivot",
+  "fit": [
+   0.953,
+   1.33
+  ]
+ },
+ "foliage_front_a": {
+  "file": "foliage_front_a.webp",
+  "size": [
+   1020,
+   720
+  ],
+  "pivot": [
+   510.0,
+   360.0
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "foliage",
+  "alpha_baked": 0.5,
+  "note": "five leaf circles at alpha .5 baked; draw at z 155 (trunk F) / 165 (trunk G)"
+ },
+ "foliage_front_b": {
+  "file": "foliage_front_b.webp",
+  "size": [
+   1020,
+   720
+  ],
+  "pivot": [
+   510.0,
+   360.0
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "foliage",
+  "alpha_baked": 0.5,
+  "note": "five leaf circles at alpha .5 baked; draw at z 155 (trunk F) / 165 (trunk G)"
+ },
+ "hut_l_dark_night": {
+  "file": "hut_l_dark_night.webp",
+  "size": [
+   302,
+   96
+  ],
+  "pivot": [
+   151.0,
+   -10.0
+  ],
+  "footprint": [
+   4,
+   4
+  ],
+  "blend": "add",
+  "kind": "hut_night",
+  "night_of": "hut_l_dark",
+  "night_offset": [
+   78,
+   261
+  ]
+ },
+ "hut_l_dark": {
+  "file": "hut_l_dark.webp",
+  "size": [
+   459,
+   384
+  ],
+  "pivot": [
+   229.0,
+   251.0
+  ],
+  "footprint": [
+   4,
+   4
+  ],
+  "kind": "hut",
+  "fit": [
+   0.985,
+   0.865
+  ],
+  "wall_r": 58.8,
+  "wall_r_px": 180.8,
+  "roof_fill": "b88a3e",
+  "apex": [
+   229,
+   9
+  ],
+  "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+  "night": "hut_l_dark_night",
+  "night_offset": [
+   78,
+   261
+  ]
+ },
+ "hut_l_moss_night": {
+  "file": "hut_l_moss_night.webp",
+  "size": [
+   302,
+   96
+  ],
+  "pivot": [
+   151.0,
+   -10.0
+  ],
+  "footprint": [
+   4,
+   4
+  ],
+  "blend": "add",
+  "kind": "hut_night",
+  "night_of": "hut_l_moss",
+  "night_offset": [
+   78,
+   261
+  ]
+ },
+ "hut_l_moss": {
+  "file": "hut_l_moss.webp",
+  "size": [
+   459,
+   384
+  ],
+  "pivot": [
+   229.0,
+   251.0
+  ],
+  "footprint": [
+   4,
+   4
+  ],
+  "kind": "hut",
+  "fit": [
+   0.985,
+   0.865
+  ],
+  "wall_r": 58.8,
+  "wall_r_px": 180.8,
+  "roof_fill": "8fb85a",
+  "apex": [
+   229,
+   9
+  ],
+  "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+  "night": "hut_l_moss_night",
+  "night_offset": [
+   78,
+   261
+  ]
+ },
+ "hut_l_straw_night": {
+  "file": "hut_l_straw_night.webp",
+  "size": [
+   302,
+   96
+  ],
+  "pivot": [
+   151.0,
+   -10.0
+  ],
+  "footprint": [
+   4,
+   4
+  ],
+  "blend": "add",
+  "kind": "hut_night",
+  "night_of": "hut_l_straw",
+  "night_offset": [
+   78,
+   261
+  ]
+ },
+ "hut_l_straw": {
+  "file": "hut_l_straw.webp",
+  "size": [
+   459,
+   384
+  ],
+  "pivot": [
+   229.0,
+   251.0
+  ],
+  "footprint": [
+   4,
+   4
+  ],
+  "kind": "hut",
+  "fit": [
+   0.985,
+   0.865
+  ],
+  "wall_r": 58.8,
+  "wall_r_px": 180.8,
+  "roof_fill": "c9a052",
+  "apex": [
+   229,
+   9
+  ],
+  "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+  "night": "hut_l_straw_night",
+  "night_offset": [
+   78,
+   261
+  ]
+ },
+ "hut_m_dark_night": {
+  "file": "hut_m_dark_night.webp",
+  "size": [
+   254,
+   88
+  ],
+  "pivot": [
+   127.0,
+   0.0
+  ],
+  "footprint": [
+   4,
+   4
+  ],
+  "blend": "add",
+  "kind": "hut_night",
+  "night_of": "hut_m_dark",
+  "night_offset": [
+   65,
+   260
+  ]
+ },
+ "hut_m_dark": {
+  "file": "hut_m_dark.webp",
+  "size": [
+   384,
+   375
+  ],
+  "pivot": [
+   192.0,
+   260.0
+  ],
+  "footprint": [
+   4,
+   4
+  ],
+  "kind": "hut",
+  "fit": [
+   0.981,
+   0.875
+  ],
+  "wall_r": 49.0,
+  "wall_r_px": 150.4,
+  "roof_fill": "b88a3e",
+  "apex": [
+   192,
+   9
+  ],
+  "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+  "night": "hut_m_dark_night",
+  "night_offset": [
+   65,
+   260
+  ]
+ },
+ "hut_m_moss_night": {
+  "file": "hut_m_moss_night.webp",
+  "size": [
+   254,
+   88
+  ],
+  "pivot": [
+   127.0,
+   0.0
+  ],
+  "footprint": [
+   4,
+   4
+  ],
+  "blend": "add",
+  "kind": "hut_night",
+  "night_of": "hut_m_moss",
+  "night_offset": [
+   65,
+   260
+  ]
+ },
+ "hut_m_moss": {
+  "file": "hut_m_moss.webp",
+  "size": [
+   384,
+   375
+  ],
+  "pivot": [
+   192.0,
+   260.0
+  ],
+  "footprint": [
+   4,
+   4
+  ],
+  "kind": "hut",
+  "fit": [
+   0.981,
+   0.875
+  ],
+  "wall_r": 49.0,
+  "wall_r_px": 150.4,
+  "roof_fill": "8fb85a",
+  "apex": [
+   192,
+   9
+  ],
+  "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+  "night": "hut_m_moss_night",
+  "night_offset": [
+   65,
+   260
+  ]
+ },
+ "hut_m_straw_night": {
+  "file": "hut_m_straw_night.webp",
+  "size": [
+   254,
+   88
+  ],
+  "pivot": [
+   127.0,
+   0.0
+  ],
+  "footprint": [
+   4,
+   4
+  ],
+  "blend": "add",
+  "kind": "hut_night",
+  "night_of": "hut_m_straw",
+  "night_offset": [
+   65,
+   260
+  ]
+ },
+ "hut_m_straw": {
+  "file": "hut_m_straw.webp",
+  "size": [
+   384,
+   375
+  ],
+  "pivot": [
+   192.0,
+   260.0
+  ],
+  "footprint": [
+   4,
+   4
+  ],
+  "kind": "hut",
+  "fit": [
+   0.981,
+   0.875
+  ],
+  "wall_r": 49.0,
+  "wall_r_px": 150.4,
+  "roof_fill": "c9a052",
+  "apex": [
+   192,
+   9
+  ],
+  "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+  "night": "hut_m_straw_night",
+  "night_offset": [
+   65,
+   260
+  ]
+ },
+ "hut_raadhus_night": {
+  "file": "hut_raadhus_night.webp",
+  "size": [
+   326,
+   112
+  ],
+  "pivot": [
+   163.0,
+   -4.0
+  ],
+  "footprint": [
+   5,
+   5
+  ],
+  "blend": "add",
+  "kind": "hut_night",
+  "night_of": "hut_raadhus",
+  "night_offset": [
+   86,
+   342
+  ]
+ },
+ "hut_raadhus": {
+  "file": "hut_raadhus.webp",
+  "size": [
+   498,
+   481
+  ],
+  "pivot": [
+   249.0,
+   338.0
+  ],
+  "footprint": [
+   5,
+   5
+  ],
+  "kind": "hut",
+  "fit": [
+   0.99,
+   0.898
+  ],
+  "wall_r": 63.7,
+  "wall_r_px": 196.0,
+  "roof_fill": "9b86d6",
+  "apex": [
+   249,
+   9
+  ],
+  "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+  "night": "hut_raadhus_night",
+  "night_offset": [
+   86,
+   342
+  ]
+ },
+ "hut_s_dark_night": {
+  "file": "hut_s_dark_night.webp",
+  "size": [
+   196,
+   69
+  ],
+  "pivot": [
+   98.0,
+   3.0
+  ],
+  "footprint": [
+   3,
+   3
+  ],
+  "blend": "add",
+  "kind": "hut_night",
+  "night_of": "hut_s_dark",
+  "night_offset": [
+   46,
+   189
+  ]
+ },
+ "hut_s_dark": {
+  "file": "hut_s_dark.webp",
+  "size": [
+   288,
+   285
+  ],
+  "pivot": [
+   144.0,
+   192.0
+  ],
+  "footprint": [
+   3,
+   3
+  ],
+  "kind": "hut",
+  "fit": [
+   0.976,
+   0.833
+  ],
+  "wall_r": 36.7,
+  "wall_r_px": 112.0,
+  "roof_fill": "b88a3e",
+  "apex": [
+   144,
+   9
+  ],
+  "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+  "night": "hut_s_dark_night",
+  "night_offset": [
+   46,
+   189
+  ]
+ },
+ "hut_s_moss_night": {
+  "file": "hut_s_moss_night.webp",
+  "size": [
+   196,
+   69
+  ],
+  "pivot": [
+   98.0,
+   3.0
+  ],
+  "footprint": [
+   3,
+   3
+  ],
+  "blend": "add",
+  "kind": "hut_night",
+  "night_of": "hut_s_moss",
+  "night_offset": [
+   46,
+   189
+  ]
+ },
+ "hut_s_moss": {
+  "file": "hut_s_moss.webp",
+  "size": [
+   288,
+   285
+  ],
+  "pivot": [
+   144.0,
+   192.0
+  ],
+  "footprint": [
+   3,
+   3
+  ],
+  "kind": "hut",
+  "fit": [
+   0.976,
+   0.833
+  ],
+  "wall_r": 36.7,
+  "wall_r_px": 112.0,
+  "roof_fill": "8fb85a",
+  "apex": [
+   144,
+   9
+  ],
+  "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+  "night": "hut_s_moss_night",
+  "night_offset": [
+   46,
+   189
+  ]
+ },
+ "hut_s_straw_night": {
+  "file": "hut_s_straw_night.webp",
+  "size": [
+   196,
+   69
+  ],
+  "pivot": [
+   98.0,
+   3.0
+  ],
+  "footprint": [
+   3,
+   3
+  ],
+  "blend": "add",
+  "kind": "hut_night",
+  "night_of": "hut_s_straw",
+  "night_offset": [
+   46,
+   189
+  ]
+ },
+ "hut_s_straw": {
+  "file": "hut_s_straw.webp",
+  "size": [
+   288,
+   285
+  ],
+  "pivot": [
+   144.0,
+   192.0
+  ],
+  "footprint": [
+   3,
+   3
+  ],
+  "kind": "hut",
+  "fit": [
+   0.976,
+   0.833
+  ],
+  "wall_r": 36.7,
+  "wall_r_px": 112.0,
+  "roof_fill": "c9a052",
+  "apex": [
+   144,
+   9
+  ],
+  "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+  "night": "hut_s_straw_night",
+  "night_offset": [
+   46,
+   189
+  ]
+ },
+ "ladder_tile": {
+  "file": "ladder_tile.webp",
+  "size": [
+   60,
+   112
+  ],
+  "pivot": [
+   30.0,
+   56.0
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "ladder",
+  "tile": "y",
+  "rungs_per_tile": 2,
+  "note": "two rails and two rungs (56 px pitch); periodic in y"
+ },
+ "lamp_door": {
+  "file": "lamp_door.webp",
+  "size": [
+   54,
+   54
+  ],
+  "pivot": [
+   30.2,
+   31.3
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "lantern",
+  "note": "pivot = the lamp centre; halo = fx/glow_soft"
+ },
+ "lantern_hang": {
+  "file": "lantern_hang.webp",
+  "size": [
+   54,
+   96
+  ],
+  "pivot": [
+   27.0,
+   57.6
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "lantern",
+  "note": "pivot = the centre of the glass body (the sketch point of a hanging lantern); halo = fx/glow_soft"
+ },
+ "lift_basket": {
+  "file": "lift_basket.webp",
+  "size": [
+   145,
+   90
+  ],
+  "pivot": [
+   72.5,
+   88.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "lift",
+  "note": "pivot = the bottom centre (the basket point of the data); the rope Line2D runs down its centre line"
+ },
+ "lift_pulley": {
+  "file": "lift_pulley.webp",
+  "size": [
+   72,
+   72
+  ],
+  "pivot": [
+   36.0,
+   40.3
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "lift",
+  "note": "pivot = the wheel centre"
+ },
+ "log_stack": {
+  "file": "log_stack.webp",
+  "size": [
+   240,
+   150
+  ],
+  "pivot": [
+   120.0,
+   97.0
+  ],
+  "footprint": [
+   2,
+   1
+  ],
+  "kind": "timber",
+  "note": "Brumme's timber stack; the cut ends face screen right-down",
+  "fit": [
+   0.832,
+   0.797
+  ]
+ },
+ "market_stall_traetoppen": {
+  "file": "market_stall_traetoppen.webp",
+  "size": [
+   252,
+   239
+  ],
+  "pivot": [
+   128.0,
+   168.0
+  ],
+  "footprint": [
+   2,
+   1
+  ],
+  "kind": "stall",
+  "note": "P22 market_stall recoloured: striped awning e3c372 / cream; pivot = the ground centre",
+  "fit": [
+   1.295,
+   0.572
+  ]
+ },
+ "notice_board": {
+  "file": "notice_board.webp",
+  "size": [
+   168,
+   216
+  ],
+  "pivot": [
+   84.0,
+   209.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "board",
+  "note": "the Raadhus notice board facing the viewer",
+  "fit": [
+   1.037,
+   1.453
+  ]
+ },
+ "owl_shelf": {
+  "file": "owl_shelf.webp",
+  "size": [
+   204,
+   66
+  ],
+  "pivot": [
+   102.0,
+   26.4
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "decal",
+  "note": "the ledge under the hole; pivot = the top-surface centre"
+ },
+ "pennant_blue": {
+  "file": "pennant_blue.webp",
+  "size": [
+   66,
+   102
+  ],
+  "pivot": [
+   11.0,
+   99.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "pennant",
+  "colour": "6fa8e0",
+  "frames": [
+   "pennant_blue",
+   "pennant_blue_f1"
+  ],
+  "fps": 2.0
+ },
+ "pennant_blue_f1": {
+  "file": "pennant_blue_f1.webp",
+  "size": [
+   66,
+   102
+  ],
+  "pivot": [
+   11.0,
+   99.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "pennant",
+  "colour": "6fa8e0"
+ },
+ "pennant_gold": {
+  "file": "pennant_gold.webp",
+  "size": [
+   66,
+   102
+  ],
+  "pivot": [
+   11.0,
+   99.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "pennant",
+  "colour": "f2c14e",
+  "frames": [
+   "pennant_gold",
+   "pennant_gold_f1"
+  ],
+  "fps": 2.0
+ },
+ "pennant_gold_f1": {
+  "file": "pennant_gold_f1.webp",
+  "size": [
+   66,
+   102
+  ],
+  "pivot": [
+   11.0,
+   99.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "pennant",
+  "colour": "f2c14e"
+ },
+ "pennant_mint": {
+  "file": "pennant_mint.webp",
+  "size": [
+   66,
+   102
+  ],
+  "pivot": [
+   11.0,
+   99.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "pennant",
+  "colour": "6fd6c4",
+  "frames": [
+   "pennant_mint",
+   "pennant_mint_f1"
+  ],
+  "fps": 2.0
+ },
+ "pennant_mint_f1": {
+  "file": "pennant_mint_f1.webp",
+  "size": [
+   66,
+   102
+  ],
+  "pivot": [
+   11.0,
+   99.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "pennant",
+  "colour": "6fd6c4"
+ },
+ "pennant_pink": {
+  "file": "pennant_pink.webp",
+  "size": [
+   66,
+   102
+  ],
+  "pivot": [
+   11.0,
+   99.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "pennant",
+  "colour": "e58fa6",
+  "frames": [
+   "pennant_pink",
+   "pennant_pink_f1"
+  ],
+  "fps": 2.0
+ },
+ "pennant_pink_f1": {
+  "file": "pennant_pink_f1.webp",
+  "size": [
+   66,
+   102
+  ],
+  "pivot": [
+   11.0,
+   99.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "pennant",
+  "colour": "e58fa6"
+ },
+ "planter_box": {
+  "file": "planter_box.webp",
+  "size": [
+   168,
+   150
+  ],
+  "pivot": [
+   84.0,
+   100.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "planter",
+  "variant": "herb",
+  "note": "raised bed; the kind (herb / berry) is the node kind of the kitchen gardens",
+  "fit": [
+   0.919,
+   1.301
+  ]
+ },
+ "planter_box_berry": {
+  "file": "planter_box_berry.webp",
+  "size": [
+   168,
+   150
+  ],
+  "pivot": [
+   84.0,
+   100.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "planter",
+  "variant": "berry",
+  "note": "raised bed; the kind (herb / berry) is the node kind of the kitchen gardens",
+  "fit": [
+   0.919,
+   1.094
+  ]
+ },
+ "platform_disc_171": {
+  "file": "platform_disc_171.webp",
+  "size": [
+   1029,
+   642
+  ],
+  "pivot": [
+   514.5,
+   298.1
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "platform_disc",
+  "rx": 171.5,
+  "ry": 99.0,
+  "rim": 16.0,
+  "uses": 1,
+  "note": "pivot = the centre of the top ellipse; draw at z = rank - 4 in a non-sorted node; no trunk hole"
+ },
+ "platform_disc_184": {
+  "file": "platform_disc_184.webp",
+  "size": [
+   1102,
+   684
+  ],
+  "pivot": [
+   551.0,
+   319.3
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "platform_disc",
+  "rx": 183.7,
+  "ry": 106.1,
+  "rim": 16.0,
+  "uses": 4,
+  "note": "pivot = the centre of the top ellipse; draw at z = rank - 4 in a non-sorted node; no trunk hole"
+ },
+ "platform_disc_196": {
+  "file": "platform_disc_196.webp",
+  "size": [
+   1176,
+   726
+  ],
+  "pivot": [
+   588.0,
+   340.4
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "platform_disc",
+  "rx": 196.0,
+  "ry": 113.1,
+  "rim": 16.0,
+  "uses": 2,
+  "note": "pivot = the centre of the top ellipse; draw at z = rank - 4 in a non-sorted node; no trunk hole"
+ },
+ "platform_disc_306": {
+  "file": "platform_disc_306.webp",
+  "size": [
+   1837,
+   1108
+  ],
+  "pivot": [
+   918.5,
+   531.4
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "platform_disc",
+  "rx": 306.2,
+  "ry": 176.8,
+  "rim": 16.0,
+  "uses": 1,
+  "note": "pivot = the centre of the top ellipse; draw at z = rank - 4 in a non-sorted node; no trunk hole"
+ },
+ "rope_tile": {
+  "file": "rope_tile.webp",
+  "size": [
+   30,
+   186
+  ],
+  "pivot": [
+   15.0,
+   93.0
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "rope",
+  "tile": "y",
+  "note": "a vertical twisted rope, periodic in y: Sprite2D region + repeat (the lift rope)"
+ },
+ "seed_basket": {
+  "file": "seed_basket.webp",
+  "size": [
+   90,
+   72
+  ],
+  "pivot": [
+   45.0,
+   52.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "basket",
+  "note": "Hoppe's seed basket",
+  "fit": [
+   0.795,
+   0.636
+  ]
+ },
+ "shadow_soft": {
+  "file": "shadow_soft.webp",
+  "size": [
+   256,
+   128
+  ],
+  "pivot": [
+   128.0,
+   64.0
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "kind": "shadow",
+  "note": "optional shared soft contact shadow, scaled per object by the engine; pivot = centre"
+ },
+ "trunk_bark_w367": {
+  "file": "trunk_bark_w367.webp",
+  "size": [
+   367,
+   512
+  ],
+  "pivot": [
+   183.5,
+   256.0
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "trunk_bark",
+  "tile": "y",
+  "rx": 61.2,
+  "note": "vertically seamless; repeat with a Sprite2D region (texture_repeat); end an upper segment at tile row 512 so its foot continues the pattern"
+ },
+ "trunk_bark_w404": {
+  "file": "trunk_bark_w404.webp",
+  "size": [
+   404,
+   512
+  ],
+  "pivot": [
+   202.0,
+   256.0
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "trunk_bark",
+  "tile": "y",
+  "rx": 67.4,
+  "note": "vertically seamless; repeat with a Sprite2D region (texture_repeat); end an upper segment at tile row 512 so its foot continues the pattern"
+ },
+ "trunk_bark_w441": {
+  "file": "trunk_bark_w441.webp",
+  "size": [
+   441,
+   512
+  ],
+  "pivot": [
+   220.5,
+   256.0
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "trunk_bark",
+  "tile": "y",
+  "rx": 73.5,
+  "note": "vertically seamless; repeat with a Sprite2D region (texture_repeat); end an upper segment at tile row 512 so its foot continues the pattern"
+ },
+ "trunk_bark_w698": {
+  "file": "trunk_bark_w698.webp",
+  "size": [
+   698,
+   512
+  ],
+  "pivot": [
+   349.0,
+   256.0
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "trunk_bark",
+  "tile": "y",
+  "rx": 116.3,
+  "note": "vertically seamless; repeat with a Sprite2D region (texture_repeat); end an upper segment at tile row 512 so its foot continues the pattern"
+ },
+ "trunk_foot_w367": {
+  "file": "trunk_foot_w367.webp",
+  "size": [
+   367,
+   137
+  ],
+  "pivot": [
+   183.5,
+   30.0
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "trunk_foot",
+  "bark": "trunk_bark_w367",
+  "neck_px": 30,
+  "note": "pivot = the centre of the trunk base ellipse; the first rows are bark tile rows 0..neck"
+ },
+ "trunk_foot_w404": {
+  "file": "trunk_foot_w404.webp",
+  "size": [
+   404,
+   147
+  ],
+  "pivot": [
+   202.0,
+   30.0
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "trunk_foot",
+  "bark": "trunk_bark_w404",
+  "neck_px": 30,
+  "note": "pivot = the centre of the trunk base ellipse; the first rows are bark tile rows 0..neck"
+ },
+ "trunk_foot_w441": {
+  "file": "trunk_foot_w441.webp",
+  "size": [
+   441,
+   158
+  ],
+  "pivot": [
+   220.5,
+   30.0
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "trunk_foot",
+  "bark": "trunk_bark_w441",
+  "neck_px": 30,
+  "note": "pivot = the centre of the trunk base ellipse; the first rows are bark tile rows 0..neck"
+ },
+ "trunk_foot_w698": {
+  "file": "trunk_foot_w698.webp",
+  "size": [
+   698,
+   232
+  ],
+  "pivot": [
+   349.0,
+   30.0
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "trunk_foot",
+  "bark": "trunk_bark_w698",
+  "neck_px": 30,
+  "note": "pivot = the centre of the trunk base ellipse; the first rows are bark tile rows 0..neck"
+ },
+ "trunk_hole_owl": {
+  "file": "trunk_hole_owl.webp",
+  "size": [
+   180,
+   228
+  ],
+  "pivot": [
+   90.0,
+   116.0
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "decal",
+  "note": "a decal on the trunk face; pivot = the centre of the hole (the owl is drawn inside)"
+ },
+ "trunk_hole_owl_b": {
+  "file": "trunk_hole_owl_b.webp",
+  "size": [
+   180,
+   228
+  ],
+  "pivot": [
+   90.0,
+   116.0
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "decal",
+  "note": "a decal on the trunk face; pivot = the centre of the hole (the owl is drawn inside)"
+ },
+ "trunk_root_w367": {
+  "file": "trunk_root_w367.webp",
+  "size": [
+   496,
+   281
+  ],
+  "pivot": [
+   248.0,
+   137.3
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "trunk_root",
+  "bark": "trunk_bark_w367",
+  "note": "ground-contact flare of a lower trunk; pivot = the centre of the ground ellipse"
+ },
+ "trunk_root_w404": {
+  "file": "trunk_root_w404.webp",
+  "size": [
+   546,
+   301
+  ],
+  "pivot": [
+   273.0,
+   142.9
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "trunk_root",
+  "bark": "trunk_bark_w404",
+  "note": "ground-contact flare of a lower trunk; pivot = the centre of the ground ellipse"
+ },
+ "trunk_root_w441": {
+  "file": "trunk_root_w441.webp",
+  "size": [
+   596,
+   320
+  ],
+  "pivot": [
+   298.0,
+   147.5
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "trunk_root",
+  "bark": "trunk_bark_w441",
+  "note": "ground-contact flare of a lower trunk; pivot = the centre of the ground ellipse"
+ },
+ "trunk_root_w698": {
+  "file": "trunk_root_w698.webp",
+  "size": [
+   943,
+   453
+  ],
+  "pivot": [
+   471.5,
+   180.2
+  ],
+  "footprint": [
+   0,
+   0
+  ],
+  "kind": "trunk_root",
+  "bark": "trunk_bark_w698",
+  "note": "ground-contact flare of a lower trunk; pivot = the centre of the ground ellipse"
+ }
+}

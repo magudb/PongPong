@@ -13,7 +13,7 @@ extends "res://tests/lib/asserts.gd"
 ## The SceneTree the harness runs in and its root window (set by bind()).
 var tree: SceneTree
 var root: Window
-## Hero the run was started with: "animal" | "fairy" | "hobbit" (--character=).
+## Hero the run was started with: "animal" | "fairy" | "hobbit" | "ghost" (--character=).
 var character: String = "animal"
 ## True in --windowed runs (real window, run_windowed sections).
 var windowed: bool = false

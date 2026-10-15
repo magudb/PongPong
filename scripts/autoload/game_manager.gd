@@ -28,7 +28,7 @@ extends Node
 ## and new_game_started LAST, so EconomyManager, QuestManager, TimeManager, ShopSystem, AnimalHusbandry, SaveManager and
 ## FarmGrid reset themselves from that one signal. It does NOT emit day_started (a new run has no "previous day").
 
-enum CharacterType { ANIMAL, FAIRY, HOBBIT }
+enum CharacterType { ANIMAL, FAIRY, HOBBIT, GHOST }
 enum GamePhase { MENU, CHARACTER_SELECT, PLAYING, PAUSED, CUTSCENE }
 
 const SAVE_VERSION := 1
@@ -177,6 +177,8 @@ func _default_skin_for(type: CharacterType) -> StringName:
 			return &"fairy_meadow"
 		CharacterType.HOBBIT:
 			return &"hobbit_pip"
+		CharacterType.GHOST:
+			return &"ghost_bu"
 	return &"default"
 
 

@@ -9,23 +9,26 @@ placeholder houses and trees, rather than adding another texture finish.
 The original paintings are in `sources/`. They were generated with
 the built-in imagegen tool using the user's two references. The exact prompt set
 and reference roles are in [prompts.json](prompts.json). No API key is needed to
-rebuild the installed sprites from these committed paintings.
+rebuild the installed sprites from these saved paintings.
 
 From the project root:
 
 ```sh
 tools/art/.venv/bin/python tools/art/drawn/pack.py
+tools/art/.venv/bin/python tools/art/drawn/optimize_environment.py
+tools/art/.venv/bin/python tools/import/write_import_stubs.py
 tools/art/.venv/bin/python tools/import/write_import_stubs.py --check
 tests/run_playtest.sh --strict --character=animal
 tests/run_playtest.sh --strict --character=fairy
 tests/run_playtest.sh --strict --character=hobbit
 ```
 
-`--only=characters|props|homes|terrain` rebuilds a slice. `--sheet heroes players2`
-restricts the character sources. `--portraits-only --only=characters` updates
+`--only=characters|props|homes|terrain|items` rebuilds a slice. `--sheet heroes players2`
+restricts the character sources; `--character <ids...>` restricts individual IDs.
+`--portraits-only --only=characters` updates
 portraits without rebuilding animation sheets. Run one Godot instance at a time.
 
-The 48 characters keep their original clip sets, frame counts, timing, role and
+The 58 characters keep their original clip sets, frame counts, timing, role and
 256 px cells with the ground pivot at (128, 200). Five authored views supply
 eight directions: front, front-left, left, rear-left and a separate full rear
 view, with three opposite-side views mirrored. Continuous offline 2D puppet
@@ -44,14 +47,16 @@ below every character and tracked with the building when hidden or removed.
 The `world-footprints.png` review image overlays the real tile grid and foundation
 edges; the overlay is only part of the capture tool.
 
-The 24 outdoor terrain atlases replace the runtime placeholder surfaces in both
+The 25 outdoor and four interior terrain atlases replace the runtime surfaces in both
 isometric and orthographic areas. `terrain.py` cuts the twelve painted materials
 from `sources/terrain.png`, removes their edge lighting mismatch with a periodic
 Poisson solve, and projects each continuous material across the complete 4 by 4
 tile period. Grass blades, stones and wood grain continue through tile borders.
 Water retains four animation frames and a 2 by 2 period; watered soil stays
 darker than dry soil. Atlas dimensions, collision, and terrain IDs stay in the
-existing contract. Tiles use lossless imports without mipmaps, with the existing
+existing contract. `interior_terrain.png` supplies stone, plank, parquet and marble;
+the separate field material keeps the farm's lighter untilled furrows.
+Tiles use lossless WebP exports and lossless imports without mipmaps, with the existing
 1.4 px overscan to prevent hairline seams at low zoom.
 
 The same source supplies three painted bark sidewalls and two timber bridge
@@ -66,11 +71,12 @@ retain their door anchors, dimensions, footprints and depth sorting; their
 paintings are projected onto the existing isometric ground plane. The thin stone
 foundation uses the game's floor material. Night masks are rebuilt from the new
 windows, trimmed, and placed by the updated offsets. Home exterior WebPs use
-quality 90 to stay inside the existing 12 MB home art budget; character sheets
-remain quality 97 and use the existing S3TC import presets.
+quality 90 to stay inside the existing 12 MB home art budget. Original character
+sheets use quality 97; the additional cast uses quality 90 with method 6 to keep
+the existing cast disk budget. All use the existing S3TC import presets.
 
 The 12 original pack characters keep distinct full-body thumbnails and dialogue
-busts. The other 36 keep their bust in the character folder, preserving the
+busts. The other 46 keep their bust in the character folder, preserving the
 portrait lookup order.
 
 The native-engine review script is:
@@ -82,8 +88,36 @@ The native-engine review script is:
 ```
 
 It saves dawn, daylight close view, tile alignment, night, full cast, building
-and terrain previews in `docs/art/drawn/`.
+and terrain previews plus four pages of every registered item in `docs/art/drawn/`.
 It starts a review game in memory and does not write a save. The previous
 `storybook/` shader and geometry generators remain available for the other
 assets and for source experiments; use this packer to restore the shipped look
 after a geometry export.
+
+The coverage additions use the built-in imagegen tool. Their exact prompts are
+in `coverage-prompts.json`, `trinkets-prompt.json`, `extra-backs-prompt.txt`,
+`revised-prompts.json` and `interior-terrain-prompt.txt`; all paintings are in
+`sources/`. `item_recipes.json` and `items.py` map the 183 additional pictures to
+the registered tools, resources, food, seeds, animals and wardrobe items.
+Birk and Bodil have their own canonical hero drawings. Bu and Hviske share the
+same alpha and animation; the pink cloth is a palette variant.
+
+`optimize_environment.py` exports the retained full-colour masters in
+`sources/environment_masters/`. Painted sky PNGs use 128 colours and the native
+1920 by 1080 crop and the farm's S3TC/mipmap background preset; the large crown
+uses 256 colours with its alpha unchanged.
+Legacy terrain masters are exported as lossless WebP with identical visible
+RGBA and no mipmaps. `environment-export.json` records dimensions, colour error,
+alpha comparisons and the combined 22 MB environment budget.
+
+After importing the project, audit the effective catalogs and map references:
+
+```sh
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path . \
+  -s res://tools/art/drawn/coverage.gd -- --strict
+```
+
+The report is `docs/art/drawn/coverage.json`. It checks every installed character
+clip and portrait, hero and NPC resolution, animal/enemy references, every live
+item icon, all terrain IDs and every declared or mapped prop. Run it again when
+the content registry changes.

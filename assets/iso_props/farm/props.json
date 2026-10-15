@@ -1,0 +1,175 @@
+{
+ "_contract": {
+  "tile": [
+   128,
+   76
+  ],
+  "tile_edge_m": 1.0394,
+  "px_per_m": 87.075,
+  "camera": "orthographic, az 45, elevation 36",
+  "pivot": "ground origin (footprint centre), px from PNG top-left",
+  "files": "relative to this json",
+  "package": "N03-farm-art",
+  "import": "compress/mode=2 (S3TC), mipmaps on - written by tools/art/environment/farm/write_farm_imports.py"
+ },
+ "build_stake": {
+  "file": "build_stake.png",
+  "size": [
+   76,
+   118
+  ],
+  "pivot": [
+   35,
+   100
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "rope_stake_x": {
+  "file": "rope_stake_x.png",
+  "size": [
+   87,
+   97
+  ],
+  "pivot": [
+   41,
+   72
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "rope_stake_z": {
+  "file": "rope_stake_z.png",
+  "size": [
+   87,
+   97
+  ],
+  "pivot": [
+   41,
+   72
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "shipping_bin": {
+  "file": "shipping_bin.png",
+  "size": [
+   226,
+   182
+  ],
+  "pivot": [
+   100,
+   138
+  ],
+  "footprint": [
+   2,
+   1
+  ],
+  "elev": 36.0
+ },
+ "stake_sign": {
+  "file": "stake_sign.png",
+  "size": [
+   84,
+   124
+  ],
+  "pivot": [
+   38,
+   105
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "tool_shed": {
+  "file": "tool_shed.png",
+  "size": [
+   316,
+   313
+  ],
+  "pivot": [
+   140,
+   246
+  ],
+  "footprint": [
+   2,
+   2
+  ],
+  "elev": 36.0
+ },
+ "trunk_giant_a": {
+  "file": "trunk_giant_a.png",
+  "size": [
+   1227,
+   2405
+  ],
+  "pivot": [
+   622,
+   2092
+  ],
+  "footprint": [
+   5,
+   3
+  ],
+  "elev": 36.0
+ },
+ "trunk_giant_b": {
+  "file": "trunk_giant_b.png",
+  "size": [
+   1274,
+   2142
+  ],
+  "pivot": [
+   685,
+   1903
+  ],
+  "footprint": [
+   3,
+   3
+  ],
+  "elev": 36.0
+ },
+ "trunk_under_a": {
+  "file": "trunk_under_a.png",
+  "size": [
+   907,
+   1352
+  ],
+  "pivot": [
+   454,
+   139
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ },
+ "trunk_under_b": {
+  "file": "trunk_under_b.png",
+  "size": [
+   746,
+   1306
+  ],
+  "pivot": [
+   371,
+   117
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "elev": 36.0
+ }
+}

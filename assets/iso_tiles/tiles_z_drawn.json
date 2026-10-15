@@ -1,0 +1,62 @@
+{
+  "field_grass": {
+    "file": "drawn_field_grass.webp",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "iso"
+  },
+  "floor_stone": {
+    "file": "drawn_floor_stone.webp",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "iso"
+  },
+  "floor_plank": {
+    "file": "drawn_floor_plank.webp",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "iso"
+  },
+  "floor_parquet": {
+    "file": "drawn_floor_parquet.webp",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "iso"
+  },
+  "floor_marble": {
+    "file": "drawn_floor_marble.webp",
+    "cell": [
+      144,
+      84
+    ],
+    "variants": [
+      4,
+      4
+    ],
+    "proj": "iso"
+  }
+}

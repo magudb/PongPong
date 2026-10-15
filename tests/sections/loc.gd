@@ -2,6 +2,7 @@ extends RefCounted
 ## Section "loc" (P03-loc-core): runtime CSV localization, locale persistence, lint, key ownership, loc_check, tools.
 ##
 ## Named checks (plan 7.3 task 7): loc.csv_keep_imports, loc.ownership_lint. Everything else is listed in run().
+## V1-cast-data (carved out of P03): loc.core_csv_pins (ZONE_FARM 'Min Trækronsgård', ZONE_TRAETOPPEN, ZONE_CITY, the NPC names of the v2 cast and the towns citizens).
 ## The fixtures (tiny localization folders and project roots) are written to the user dir and removed again.
 
 const SECTION := "loc"
@@ -129,7 +130,8 @@ func _check_core_copy() -> void:
 		"NPC_MERCHANT_PIP": ["Butiksfe Kløvermynte", "Shop-fairy Kløvermynte"],
 		"NPC_FAIRY_KING": ["Fekongen", "The Fairy King"],
 		"NPC_CAT_MORFAR_MIS": ["Morfar Mis", "Grandpa Mis"],
-		"ZONE_FARM": ["Trætoppen", "Treetop Farm"],
+		"ZONE_FARM": ["Min Trækronsgård", "My Treetop Farm"],
+		"ZONE_TRAETOPPEN": ["Trætoppen", "Trætoppen"],
 		"ZONE_CITY": ["Hyggebyen", "Hyggebyen"],
 		"ZONE_DARK_FOREST": ["Mørkeskoven", "The Dark Wood"],
 		"ZONE_FOREST_EDGE": ["Skovkanten", "The Forest Edge"],
@@ -152,6 +154,24 @@ func _check_core_copy() -> void:
 		if _lm.file_of(key) != "core.csv" or _lm.text_in(key, "da") == "" or _lm.text_in(key, "en") == "":
 			owned.append(key)
 	t.check("core_csv_defines_the_roster_names", owned.is_empty(), str(owned))
+	# V1-cast-data: the farm is its own branch (Min Trækronsgård), the treetop city is Trætoppen, Hyggebyen keeps its name (zone id `city` is kept on
+	# purpose), and the seven new figures of the Figurer v2 cast + the eight citizens of the towns track have their names in core.csv (NPC_<ID>)
+	var v1_pins := {
+		"ZONE_FARM": ["Min Trækronsgård", "My Treetop Farm"], "ZONE_TRAETOPPEN": ["Trætoppen", "Trætoppen"], "ZONE_CITY": ["Hyggebyen", "Hyggebyen"],
+		"NPC_GARDENER_HOPPE": ["Gartner Hoppe", "Gardener Hoppe"], "NPC_CARPENTER_BRUMME": ["Tømrer Brumme", "Carpenter Brumme"], "NPC_POSTMAN_PIP": ["Postbud Pip", "Postman Pip"],
+		"NPC_BATHKEEPER_SOFUS": ["Sofus", "Sofus"], "NPC_APPRAISER_FRU_UGLE": ["Fru Ugle", "Mrs Owl"], "NPC_MAPSELLER_NATTEBLIK": ["Natteblik", "Natteblik"], "NPC_BEEKEEPER_BIRK": ["Birk", "Birk"],
+		"NPC_RASMUS": ["Rasmus", "Rasmus"], "NPC_LAMPLIGHTER_KIKI": ["Kiki", "Kiki"], "NPC_BERTIL": ["Bertil Bøgeknop", "Bertil Bøgeknop"], "NPC_BODIL": ["Bodil Bøgeknop", "Bodil Bøgeknop"],
+		"NPC_INNKEEPER_KVAK": ["Værten Kvak", "Innkeeper Kvak"], "NPC_CUB_BAMSE": ["Bamse", "Bamse"], "NPC_CLERK_FJERPEN": ["Skriver Fjerpen", "Clerk Fjerpen"], "NPC_FIDDLER_STRIMMEL": ["Spillemand Strimmel", "Fiddler Strimmel"],
+	}
+	var pin_bad: Array[String] = []
+	for key in v1_pins:
+		if _lm.file_of(key) != "core.csv":
+			pin_bad.append("%s is defined in '%s', not core.csv" % [key, _lm.file_of(key)])
+		for i in 2:
+			var loc2 := "da" if i == 0 else "en"
+			if _lm.text_in(key, loc2) != v1_pins[key][i]:
+				pin_bad.append("%s/%s='%s'" % [key, loc2, _lm.text_in(key, loc2)])
+	t.check("core_csv_pins", pin_bad.is_empty() and _lm.text_in("ZONE_FARM", "da") != _lm.text_in("ZONE_TRAETOPPEN", "da"), "ZONE_FARM 'Min Trækronsgård' / 'My Treetop Farm' (no longer 'Trætoppen'), ZONE_TRAETOPPEN, ZONE_CITY and the %d NPC names of the v2 cast and the towns citizens, all in core.csv %s" % [v1_pins.size() - 3, str(pin_bad.slice(0, 4))])
 	# core.csv only holds the key families of the R.4 table
 	var strays: Array[String] = []
 	var rep := LM.parse_dir("res://localization", "res://", false)
@@ -472,7 +492,7 @@ func _check_ownership() -> void:
 	var t = _t
 	var owners := LM.load_owners("res://")
 	var files: Dictionary = owners.get("files", {})
-	t.check("key_owners_table_loads", not owners.is_empty() and files.has("core.csv") and files.has("finds.csv") and files.has("features_ui.csv") and files.has("home_ui.csv") and files.has("samlerbog.csv"), "files %s" % str(files.keys()))
+	t.check("key_owners_table_loads", not owners.is_empty() and files.has("core.csv") and files.has("finds.csv") and files.has("features_ui.csv") and files.has("home_ui.csv") and files.has("samlerbog.csv") and files.has("cast.csv") and files.has("ghost.csv"), "files %s" % str(files.keys()))
 	var shape_ok := true
 	for fname in files:
 		var spec: Dictionary = files[fname]
@@ -501,6 +521,10 @@ func _check_ownership() -> void:
 		"FURNI_REJECT_FULL": "home_ui.csv", "HUSBYG_TITLE": "home_ui.csv", "KISTE_TITLE": "home_ui.csv", "GARDEROBE_TITLE": "wardrobe_ui.csv", "SLOTCELL_HAT": "wardrobe_ui.csv",
 		"PERKLINE_SPEED_FMT": "wardrobe_ui.csv", "COLLECT_TITLE": "samlerbog.csv", "FSET_BONDEGAARD": "furniture.csv", "FURN_CAT_BED": "furniture.csv", "OUTFIT_BAGEREN": "wardrobe.csv",
 		"RECIPE_SAW_PLANK": "materials.csv", "RECIPE_FORGE_NAILS": "materials.csv",
+		# V1-cast-data: cast.csv owns the hero cards, the card texts, Brumme's shop and Pip's quest (the longest prefix beats SHOP_ / QUEST_ / OBJ_ of the base files; the ghost heroes stay in ghost.csv)
+		"HERO_KIKI_NAME": "cast.csv", "HERO_BIRK_BLURB": "cast.csv", "HERO_BODIL_KIND": "cast.csv", "HERO_BU_NAME": "ghost.csv", "HERO_HVISKE_BLURB": "ghost.csv",
+		"CAST_GARDENER_HOPPE_DESC": "cast.csv", "SHOP_TIMBER_YARD": "cast.csv", "SHOP_TIMBER_YARD_GREETING": "cast.csv",
+		"QUEST_PIPS_RUNDE_TITLE": "cast.csv", "QUEST_PIPS_RUNDE_ACCEPT_TEXT": "cast.csv", "OBJ_PIPS_RUNDE_GREET_HOPPE": "cast.csv", "NPC_POSTMAN_PIP": "core.csv", "ZONE_TRAETOPPEN": "core.csv",
 		# unclaimed families are unconstrained
 		"ABILITY_SLASH": "forest.csv", "UI_PAUSED": "", "SKIN_ANIMAL_FOX": "", "DEFAULT_PLAYER_NAME": "",
 	}

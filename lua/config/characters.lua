@@ -10,42 +10,72 @@
 -- Role and clip sets live in each animations.json, not here.
 -- ONE source of truth for stand-ins: the per-NPC `fallback` field of lua/config/npcs.lua is documentation only and must
 -- equal the entry of that NPC's visual in `fallbacks` below (tests/sections/characters.gd npc_fallbacks_match_characters_lua).
+--
+-- v2 (package V1-cast-data, Style Guide v2 "Figurer"): the player chooses between HEROES, two per race (table `heroes`);
+-- the cards are LOOKS, the player still types a name. The ghost (the fourth race) has its two heroes at the end of the table.
+-- The seven skins of the first guide (animal_rabbit animal_hedgehog animal_squirrel fairy_stardust fairy_dusk hobbit_moss
+-- hobbit_bramble) are RETIRED: they stay as rows (`retired = true`) because old saves and built tests name them, but no screen
+-- offers them and no wardrobe base is baked for them (their wardrobe_body points at a live hero body).
 
 kind = "config"
 
 config = {
   characters = {
 
-    -- The three races of "Vaelg figur". default_skin is what a new game of that race starts with;
+    -- The four races of "Vaelg figur". default_skin is what a new game of that race starts with;
     -- name_key / perk_key are the texts of the race card (localization CSVs).
     races = {
       animal = { name_key = "CHAR_ANIMAL_NAME", perk_key = "CHAR_ANIMAL_PERK", default_skin = "animal_fox" },
       fairy = { name_key = "CHAR_FAIRY_NAME", perk_key = "CHAR_FAIRY_PERK", default_skin = "fairy_meadow" },
       hobbit = { name_key = "CHAR_HOBBIT_NAME", perk_key = "CHAR_HOBBIT_PERK", default_skin = "hobbit_pip" },
+      ghost = { name_key = "CHAR_GHOST_NAME", perk_key = "CHAR_GHOST_PERK", default_skin = "ghost_bu" },
     },
 
     -- Player skins. visual = the id the player body asks for first = the wardrobe-ready base (A2, naked body that
-    -- WardrobeLayers dresses); the chain behind it (fallbacks) is e.g. squirrel_base -> squirrel -> monkey.
+    -- WardrobeLayers dresses); the chain behind it (fallbacks) is e.g. monkey_base -> monkey. A skin whose own art is not
+    -- baked yet simply draws through its chain (Bodil: hobbit_bodil_base -> hobbit_pip -> raccoon).
     -- fallback = the pack character that stands in at the END of the chain. wardrobe_body = the bodies.json hero id.
+    -- retired = true: kept for old saves and tests, never offered (see the header).
     skins = {
       animal_fox = { race = "animal", name_key = "SPECIES_FOX", visual = "fox_base", fallback = "fox", wardrobe_body = "fox" },
-      animal_rabbit = { race = "animal", name_key = "SPECIES_RABBIT", visual = "rabbit_base", fallback = "rabbit", wardrobe_body = "rabbit" },
-      animal_hedgehog = { race = "animal", name_key = "SPECIES_HEDGEHOG", visual = "hedgehog_base", fallback = "hedgehog", wardrobe_body = "hedgehog" },
-      animal_squirrel = { race = "animal", name_key = "SPECIES_SQUIRREL", visual = "squirrel_base", fallback = "monkey", wardrobe_body = "squirrel" },
+      animal_monkey = { race = "animal", name_key = "HERO_KIKI_NAME", visual = "monkey_base", fallback = "monkey", wardrobe_body = "monkey" },
       fairy_meadow = { race = "fairy", name_key = "SKIN_FAIRY_MEADOW", visual = "fairy_base", fallback = "fairy", wardrobe_body = "fairy" },
-      fairy_stardust = { race = "fairy", name_key = "SKIN_FAIRY_STARDUST", visual = "fairy_stardust_base", fallback = "fairy", wardrobe_body = "fairy_stardust" },
-      fairy_dusk = { race = "fairy", name_key = "SKIN_FAIRY_DUSK", visual = "fairy_dusk_base", fallback = "fairy", wardrobe_body = "fairy_dusk" },
+      fairy_birk = { race = "fairy", name_key = "HERO_BIRK_NAME", visual = "fairy_birk_base", fallback = "fairy", wardrobe_body = "fairy_birk" },
       hobbit_pip = { race = "hobbit", name_key = "SKIN_HOBBIT_PIP", visual = "hobbit_pip_base", fallback = "raccoon", wardrobe_body = "hobbit_pip" },
-      hobbit_moss = { race = "hobbit", name_key = "SKIN_HOBBIT_MOSS", visual = "hobbit_moss_base", fallback = "raccoon", wardrobe_body = "hobbit_moss" },
-      hobbit_bramble = { race = "hobbit", name_key = "SKIN_HOBBIT_BRAMBLE", visual = "hobbit_bramble_base", fallback = "raccoon", wardrobe_body = "hobbit_bramble" },
+      hobbit_bodil = { race = "hobbit", name_key = "HERO_BODIL_NAME", visual = "hobbit_bodil_base", fallback = "raccoon", wardrobe_body = "hobbit_bodil" },
+      ghost_bu = { race = "ghost", name_key = "SKIN_GHOST_BU", visual = "ghost_bu_base", fallback = "rabbit", wardrobe_body = "ghost_bu" },
+      ghost_hviske = { race = "ghost", name_key = "SKIN_GHOST_HVISKE", visual = "ghost_hviske_base", fallback = "rabbit", wardrobe_body = "ghost_hviske" },
+
+      -- retired (the looks of the first guide)
+      animal_rabbit = { race = "animal", name_key = "SPECIES_RABBIT", visual = "rabbit_base", fallback = "rabbit", wardrobe_body = "fox", retired = true },
+      animal_hedgehog = { race = "animal", name_key = "SPECIES_HEDGEHOG", visual = "hedgehog_base", fallback = "hedgehog", wardrobe_body = "fox", retired = true },
+      animal_squirrel = { race = "animal", name_key = "SPECIES_SQUIRREL", visual = "squirrel_base", fallback = "monkey", wardrobe_body = "monkey", retired = true },
+      fairy_stardust = { race = "fairy", name_key = "SKIN_FAIRY_STARDUST", visual = "fairy_stardust_base", fallback = "fairy", wardrobe_body = "fairy", retired = true },
+      fairy_dusk = { race = "fairy", name_key = "SKIN_FAIRY_DUSK", visual = "fairy_dusk_base", fallback = "fairy", wardrobe_body = "fairy", retired = true },
+      hobbit_moss = { race = "hobbit", name_key = "SKIN_HOBBIT_MOSS", visual = "hobbit_moss_base", fallback = "raccoon", wardrobe_body = "hobbit_pip", retired = true },
+      hobbit_bramble = { race = "hobbit", name_key = "SKIN_HOBBIT_BRAMBLE", visual = "hobbit_bramble_base", fallback = "raccoon", wardrobe_body = "hobbit_pip", retired = true },
     },
 
-    -- The four species chips of the animal card (Fox, Rabbit, Hedgehog, Squirrel); each picks the skin of the same name.
+    -- The two species chips of the animal card (Rasmus the fox, Kiki the monkey); each picks the skin it names.
+    -- The other races have their two heroes in `heroes` only; this table is the animal chip row of the select screen.
     species = {
-      { id = "fox", name_key = "SPECIES_FOX", skin = "animal_fox" },
-      { id = "rabbit", name_key = "SPECIES_RABBIT", skin = "animal_rabbit" },
-      { id = "hedgehog", name_key = "SPECIES_HEDGEHOG", skin = "animal_hedgehog" },
-      { id = "squirrel", name_key = "SPECIES_SQUIRREL", skin = "animal_squirrel" },
+      { id = "fox", name_key = "HERO_RASMUS_KIND", skin = "animal_fox" },
+      { id = "monkey", name_key = "HERO_KIKI_KIND", skin = "animal_monkey" },
+    },
+
+    -- The playable HEROES of the Figurer v2 sheet, two per race, in card order (CharacterCatalog.heroes(race), hero_of_skin(skin)).
+    -- name_key / kind_key / blurb_key are the card texts (localization/cast.csv, the ghost's in localization/ghost.csv): the hero
+    -- NAME, the KIND line under it (Ræv, Abe, Fe, Halvling, Spøgelse) and the card blurb. The first hero of a race is its default
+    -- (races.<race>.default_skin).
+    heroes = {
+      { id = "rasmus", race = "animal", skin = "animal_fox", name_key = "HERO_RASMUS_NAME", kind_key = "HERO_RASMUS_KIND", blurb_key = "HERO_RASMUS_BLURB" },
+      { id = "kiki", race = "animal", skin = "animal_monkey", name_key = "HERO_KIKI_NAME", kind_key = "HERO_KIKI_KIND", blurb_key = "HERO_KIKI_BLURB" },
+      { id = "kloevermynte", race = "fairy", skin = "fairy_meadow", name_key = "HERO_KLOEVERMYNTE_NAME", kind_key = "HERO_KLOEVERMYNTE_KIND", blurb_key = "HERO_KLOEVERMYNTE_BLURB" },
+      { id = "birk", race = "fairy", skin = "fairy_birk", name_key = "HERO_BIRK_NAME", kind_key = "HERO_BIRK_KIND", blurb_key = "HERO_BIRK_BLURB" },
+      { id = "bertil", race = "hobbit", skin = "hobbit_pip", name_key = "HERO_BERTIL_NAME", kind_key = "HERO_BERTIL_KIND", blurb_key = "HERO_BERTIL_BLURB" },
+      { id = "bodil", race = "hobbit", skin = "hobbit_bodil", name_key = "HERO_BODIL_NAME", kind_key = "HERO_BODIL_KIND", blurb_key = "HERO_BODIL_BLURB" },
+      { id = "bu", race = "ghost", skin = "ghost_bu", name_key = "HERO_BU_NAME", kind_key = "HERO_BU_KIND", blurb_key = "HERO_BU_BLURB" },
+      { id = "hviske", race = "ghost", skin = "ghost_hviske", name_key = "HERO_HVISKE_NAME", kind_key = "HERO_HVISKE_KIND", blurb_key = "HERO_HVISKE_BLURB" },
     },
 
     -- Farm animals (species id of AnimalHusbandry -> baby / adult sprite and the display scale of each stage).
@@ -86,6 +116,14 @@ config = {
       hobbit_moss_base = "hobbit_moss",
       hobbit_bramble_base = "hobbit_bramble",
 
+      -- The v2 hero bases use their own dressed character while A2's wardrobe bodies are pending.
+      monkey_base = "monkey",
+      fairy_birk_base = "fairy_birk",
+      hobbit_bodil_base = "hobbit_bodil",
+      fairy_birk = "fairy",
+      ghost_bu_base = "ghost_bu",
+      ghost_hviske_base = "ghost_hviske",
+
       -- new player skins (P21), pack stand-ins
       squirrel = "monkey",
       fairy_stardust = "fairy",
@@ -93,6 +131,10 @@ config = {
       hobbit_pip = "raccoon",
       hobbit_moss = "raccoon",
       hobbit_bramble = "raccoon",
+
+      -- the ghost (G-ghost-art bakes the stock sheets): the pack rabbit stands in while they are missing
+      ghost_bu = "rabbit",
+      ghost_hviske = "rabbit",
 
       -- named NPC fairies (P21)
       fairy_lily = "fairy",
@@ -112,6 +154,16 @@ config = {
       rabbit_farmer = "rabbit",
       raccoon_smith = "raccoon",
       penguin_postman = "penguin",
+
+      -- the v2 cast (V2-cast-art bakes the folders; until then the pack body stands in). Hoppe needs no entry: he IS the pack rabbit.
+      -- Fru Ugle's nearest upright pack bird is the penguin (the data.gd rule: an NPC chain ends at a PACK character within four hops).
+      bear_brumme = "bear",
+      bat_natteblik = "bat",
+      hedgehog_pip = "hedgehog",
+      owl_fru_ugle = "penguin",
+      capybara_sofus = "capybara",
+      fairy_birk_npc = "fairy",
+      hobbit_bodil = "hobbit_pip",
 
       -- farm animals (P21)
       chick = "penguin",

@@ -145,9 +145,11 @@
 			"modal": "",
 			"esc_depth": 1,
 			"compare": {
-				"screen": "select",
-				"fixture": "select_guide",
-				"target": 15.0
+				"baseline": "tests/checkpoints/guide_ref_ghost/select_4cards.png",
+				"fixture": "select_guide4",
+				"no_frame_crop": true,
+				"target": 12.0,
+				"pinned_after_lead_review": true
 			},
 			"checks": [
 				"initial_focus",

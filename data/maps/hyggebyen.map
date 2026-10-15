@@ -1,0 +1,207 @@
+# data/maps/hyggebyen.map - HYGGEBYEN, the fairy shopping district (package P11-maps-iso; zone id `city`, shown as ZONE_CITY).
+# Orientation (layout DIAMOND_DOWN): text COLUMNS run toward screen lower-RIGHT (+x), text ROWS toward screen lower-LEFT (+y);
+# top-left char = NORTH corner, top-right = EAST, bottom-right = SOUTH, bottom-left = WEST. 40 x 40 cells, land x,y 3..36.
+# Layout: the cobble torv (x,y 14..26) with the fountain in its middle, the three market stalls along its north edge and the festival set below
+# the fountain; the king's treehouse on a deck at the north end; the 14 houses of the towns addendum 4.1, each with its `door` marker on the
+# doorstep cell IN FRONT of the house (the cell below the 2 x 2 footprint, the king's house is 3 x 3); the cobble main street leads east to the
+# bridgehead and the ONE hanging bridge (plank cells '=' x 34..39 of row 21, the warp on the last plank); the pond with its pier in the south west,
+# Rosa's pen and Birk's hives in the south east, the builder yard on a deck by the bridge end. Blossom trees stand on the rims only: their canopy
+# is 4 cells tall and would hide houses and doors anywhere else.
+# Doors (building -> doorstep cell x,y): bageriet 27,12, birks_bistade 32,34, dyrehuset 27,32, fekongens_hus 21,9, froebutikken 13,12, hyldeblomsts_hus 8,27, loppeloftet 6,23, moebelbutikken 15,32, pingvinens_hus 34,13, pippins_hus 8,32, skraedderiet 20,32, smedjen 31,18, toemmerhandlen 31,27, troldmandstaarnet 8,19
+# Props are chosen by ART id (footprint, solid shape and strips from lua/config/props.lua + props_extra.lua); markers: spawn warp sign light quest_spot
+# are built in, the rest is resolved by the handler registry (a type without a handler script yet is skipped silently, see tests/sections/maps_iso.gd).
+# The farm bridge and the west gate of the first plan are gone (decision DX2: the Skovlift of the city is the way to the forest); `npc` markers are
+# the static fallback of the citizens (the towns director places a citizen with a routine itself where it controls the area).
+# This file is AUTHORITATIVE and hand-editable: it was laid out once with a throwaway script (not part of the repository); tests/sections/maps_iso.gd
+# is what keeps it honest (footprints, free cells, reachability from the real colliders, the door / post / festival contracts).
+@id hyggebyen
+@title ZONE_CITY
+@projection iso
+@ambient hyggebyen
+@theme hyggebyen
+@zone city
+@flight true
+@music city_theme
+# --- props (object char -> art id)
+@prop R house_mushroom_rose
+@prop N house_mushroom_mint
+@prop L house_mushroom_lavender
+@prop K house_king_treetop
+@prop S house_seedshop
+@prop B house_bakery
+@prop H house_smithy
+@prop T tower_wizard
+@prop A house_animalstore
+@prop 1 lantern_post_rose
+@prop 2 lantern_post_lavender
+@prop 3 lantern_post_mint
+@prop t tree_blossom_hyggebyen
+@prop O fountain
+@prop w well
+@prop b bench
+@prop m market_stall
+@prop e market_stall_furniture
+@prop y market_stall_tailor
+@prop - fence_x
+@prop | fence_z
+@prop G fence_gate_x
+@prop h beehive_stand
+@prop p plank_stack
+@prop u bush_farm
+@prop r rock_grey
+@prop v bush_berry
+@prop x wheat_sack
+# --- spawn (the default spawn is the '@' char) and the bridge warp
+@marker W spawn name=from_traetoppen
+@marker X warp to=traetoppen spawn=from_hyggebyen label=ZONE_TRAETOPPEN
+# --- towns addendum: one town anchor, 14 doors, 24 named posts + the festival set
+@marker Y town
+@marker 0 door building=froebutikken
+@marker 4 door building=bageriet
+@marker 9 door building=pingvinens_hus
+@marker C door building=fekongens_hus
+@marker D door building=smedjen
+@marker E door building=troldmandstaarnet
+@marker F door building=loppeloftet
+@marker I door building=hyldeblomsts_hus
+@marker J door building=toemmerhandlen
+@marker M door building=pippins_hus
+@marker P door building=moebelbutikken
+@marker Q door building=skraedderiet
+@marker U door building=dyrehuset
+@marker V door building=birks_bistade
+@marker Z post set=fest spot=hyggetorv
+@marker % post name=torv_fountain_n act=sit cap=2
+@marker & post name=torv_fountain_e act=sit cap=2
+@marker * post name=torv_fountain_s act=sit cap=2
+@marker + post name=torv_fountain_w act=sit cap=2
+@marker / post name=torv_bench1 act=sit cap=3
+@marker : post name=torv_bench2 act=sit cap=3
+@marker < post name=torv_playground act=play cap=4
+@marker > post name=well act=stand cap=2
+@marker ? post name=blossom_bench1 act=sit cap=3
+@marker ^ post name=blossom_bench2 act=sit cap=3
+@marker _ post name=bakery_terrace act=sit cap=2
+@marker æ post name=forge_front act=work cap=1
+@marker ø post name=pond_dock act=fish cap=2
+@marker å post name=bees1 act=tend cap=1
+@marker Æ post name=bees2 act=tend cap=1
+@marker Ø post name=rosa_pen act=tend cap=1
+@marker Å post name=market_row1 act=stand cap=2
+@marker é post name=market_row2 act=stand cap=2
+@marker É post name=market_row3 act=stand cap=2
+@marker ü post name=king_balcony act=sit cap=1
+@marker Ü post name=round_n act=patrol cap=1
+@marker ñ post name=round_e act=patrol cap=1
+@marker À post name=round_s act=patrol cap=1
+@marker Á post name=round_w act=patrol cap=1
+# --- citizens (static fallback markers)
+@marker a npc id=merchant_pip
+@marker c npc id=baker_maja
+@marker d npc id=smith_thorin
+@marker f npc id=farmer_rosa
+@marker g npc id=fairy_wizard
+@marker i npc id=fairy_furnisher
+@marker j npc id=fairy_tailor
+@marker k npc id=fairy_builder
+@marker n npc id=pippin_boegeknop
+@marker o npc id=fairy_king
+@marker q npc id=fairy_lily
+@marker s npc id=penguin_postman
+@marker z npc id=mayor_lyra
+@marker ! npc id=beekeeper_birk
+@marker $ npc id=cat_morfar_mis when=done:lost_cat
+# --- signs, the bakery roof of fix_roof, the unique spot of the feature addendum, glow light
+@marker Â sign text=SIGN_HYGGEBYEN_TORV
+@marker Ã sign text=SIGN_HYGGEBYEN_BRO
+@marker Ä sign text=SIGN_HYGGEBYEN_BYGGEPLADS
+@marker È sign text=SIGN_HYGGEBYEN_MARKED
+@marker Ê sign text=SIGN_HYGGEBYEN_BIER
+@marker Ë sign text=SIGN_HYGGEBYEN_DAMMEN
+@marker Ì sign text=SIGN_HYGGEBYEN_KONGEN
+@marker Í sign text=SIGN_HYGGEBYEN_DYRENE
+@marker Î quest_spot quest=fix_roof objective=repair_roof prompt=WORLD_PROMPT_USE needs=wood:8,moss:4 consume=1 prop=roof_patch when=quest:fix_roof
+@marker Ï unique_spot id=kufferten
+@marker Ò light kind=glow r=170 h=30
+@ground
+########################################
+########################################
+########################################
+######............................######
+#####....................,,........#####
+####..,,.........ddddddddd,,...,,,..####
+###..,,,,........ddddddddd,...,,,,,..###
+###..,,,,........ddddddddd....,,,,,..###
+###...,,.........ddddddddd...,.,,,...###
+###..............ddddddddd...,.......###
+###..............ddddddddd........,,.###
+###....,.........ddddddddd........,,.###
+###....,,,pppppppppppppppppppppppp...###
+###.....,,pppppppppppppppppppppppppp.###
+###..,..,,pp..ccccccccccccc.ddd..,...###
+###.,,,...pp..ccccccccccccc.ddd..,...###
+###.,,,...pp..ccccccccccccc......,...###
+###..,....pp..ccccccccccccc......,...###
+###.,,....pp..ccccccccccccc..........###
+###.,,..pppp..ccccccccccccc....p..######
+###.,,....pp..cccccccccccccccccccc######
+###.......pp..cccccccccccccccccccc======
+###.......pp..cccccccccccccccccccc######
+###...pppppp..ccccccccccccc.......######
+###.......pp..ccccccccccccc.....ddddd###
+###.......pp..ccccccccccccc.....ddddd###
+###.......pp..ccccccccccccc.....ddddd###
+###.....pppp..........pp........ddddd###
+###.,.....pp..........pp......,,.....###
+###.,.....pp..........pp.,....,,...,.###
+###.,.....pp..........pp..........,,,###
+###..~~...pp..........pp...........,.###
+###.~~~~pppppppppppppppppppppp.......###
+###.~~~~pppppppppppppppppppppp.......###
+####~dddd....,...............ppppp...###
+#####~~~.........,,.................####
+######~.......,..,,....,,..........#####
+########################################
+########################################
+########################################
+@objects
+........................................
+........................................
+........................................
+........t...t...t...t...t......t........
+........................................
+..........u.....u...........t.....t.....
+...t.....b..............................
+........................................
+.....................K.........b....t...
+......Ï..............C..................
+..........u...x...1...oÌ2x..............
+...t.........Sx.......ü..x.BÎ...........
+.............0.......Ü.....4......L.....
+..............a.......Y.....c.....9.....
+........r.....1i..j.......2._...........
+................e.y.....m....b....u.....
+...t............Å.é.....É...............
+....................%.È..w.....H........
+........T................>....dDæ...t...
+........E...?b..................2Ã......
+.........g........+.O.&.................
+..........Á..n.<....Z.........ñ.....W..X
+....u.R......m...q@*....................
+......F...............s.........3.......
+................/b.....:b...............
+................................Ä..p....
+...t....L.....3.........Â.1....N..k.....
+........I..................^b..J....p...
+.........z..............................
+........................................
+...r.............................u......
+........N......L....R......A............
+........M......P....Q......U............
+...t.................À...Í..f...RÊ......
+.....ø...Ë$.v.v.v.v.....--G---..V.håh...
+........Ò...............|.Øu.|...!Æ.....
+................t....t..|....|....h.....
+........................................
+........................................
+........................................

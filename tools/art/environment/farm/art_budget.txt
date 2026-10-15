@@ -1,0 +1,20 @@
+kind   id                      w      h pivot                 MB   MB s3tc
+props  build_stake            76    118 [35, 100]           0.05      0.01
+props  rope_stake_x           87     97 [41, 72]            0.04      0.01
+props  rope_stake_z           87     97 [41, 72]            0.04      0.01
+props  shipping_bin          226    182 [100, 138]          0.21      0.05
+props  stake_sign             84    124 [38, 105]           0.05      0.01
+props  tool_shed             316    313 [140, 246]          0.50      0.13
+props  trunk_giant_a        1227   2405 [622, 2092]        15.01      3.75
+props  trunk_giant_b        1274   2142 [685, 1903]        13.88      3.47
+props  trunk_under_a         907   1352 [454, 139]          6.24      1.56
+props  trunk_under_b         746   1306 [371, 117]          4.96      1.24
+back   farm_canopy.webp     2048    360 -                   3.75      0.94
+back   farm_far.webp        2048   1024 -                  10.67      2.67
+tiles  field_grass.png       576    336 -                   0.74      0.74
+
+props  total   40.98 MB lossless    10.24 MB s3tc
+back   total   14.42 MB lossless     3.60 MB s3tc
+tiles  total    0.74 MB lossless     0.74 MB s3tc
+kit    total   56.13 MB lossless    14.59 MB s3tc   (trunks 40.1 / 10.0, other props 0.9 / 0.2, backdrops 14.4 / 3.6, field_grass 0.74)
+prototype (measured in a window, with the 1024 x 1024 farm_sky this package does not ship): 65.5 MB lossless, 15.8 MB with S3TC; budget kit <= 20 MB compressed

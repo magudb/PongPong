@@ -155,6 +155,18 @@ def main() -> int:
         code, out = run(r, "--check")
         check("check_fails_on_mipmapped_tile_atlas", code == 1 and "mipmaps/generate" in out)
 
+        # Painted material exports use lossless WebP. They need the same
+        # no-mipmap preset, including when an imported file has a stale preset.
+        (t / "drawn_grass.webp").write_bytes(b"RIFF0000WEBPVP8L")
+        code, out = run(r, "--check")
+        check("check_fails_on_webp_tile_without_stub", code == 1 and "drawn_grass.webp" in out)
+        code, out = run(r, "--only", "tiles")
+        body = (t / "drawn_grass.webp.import").read_text()
+        check("webp_tile_is_lossless_no_mipmaps", code == 0 and "compress/mode=0" in body and "mipmaps/generate=false" in body)
+        (t / "drawn_grass.webp.import").write_text(godot_complete(2))
+        code, out = run(r, "--check")
+        check("check_fails_on_vram_webp_tile", code == 1 and "drawn_grass.webp" in out and "compress/mode=2" in out)
+
         # 6. wardrobe layers must stay lossless (addendum 4.4 P05 task 3)
         r = base / "t6"
         lay = r / "assets" / "wardrobe" / "layers" / "fox"

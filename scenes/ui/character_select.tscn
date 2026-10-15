@@ -55,6 +55,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Hobbit"
 
+[node name="GhostButton" type="Button" parent="HBoxContainer/LeftPanel/TypeButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = ""
+
 [node name="PreviewLabel" type="Label" parent="HBoxContainer/LeftPanel"]
 unique_name_in_owner = true
 layout_mode = 2

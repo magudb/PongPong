@@ -1,0 +1,33 @@
+# data/maps/traetoppen.map - TRAETOPPEN, the levelled treetop city (design: DUNGEON_V2_ADDENDUM 7.3, design_v2.md 4; package V4-city-map).
+# HEADER ONLY: there is no ground grid. scripts/traetoppen/city_builder.gd (CityBuilder.build(area, header)) builds the whole area from
+# data/traetoppen/traetoppen.json (8 platforms, 9 bridges, the ladder, the Skovlift, 14 buildings ...): the levels, the physics bits and the
+# draw order are DATA, and a position is walkable when a level holds it (area.walkable_test), which is what a Continue is put back through.
+# The @marker lines below are DECLARATIONS for readers and tools (a builder area places no object chars): the arrival spawns and the three
+# ways out. The data file owns the numbers (spawns, the two bridge stubs, the lift); the section city_map checks that these lines and the data
+# say the same (city_map.header_declarations_match_the_data). `default` (the Torvet, beside the fire pit) is implicit like in every map.
+#   from_farm       tree G, east rim        the farm bridge lands here        warp at the end of the farm stub  -> farm:from_traetoppen
+#   from_hyggebyen  tree F, west rim        the Hyggebyen bridge lands here   warp at the end of the F stub     -> hyggebyen:from_traetoppen
+#   from_skovlift   tree B rim at the rope  the forest hub's gate lands here  the Skovlift (RopeLift, E)        -> moerkeskoven:from_traetoppen
+# @zoom_min 0.2 shows the whole composition of the sketch (it fits at 0.237 wide / 0.19 high); the area sizes its own sky and far backdrop.
+# The camera may scroll 450 world px above the sketch's top edge (area.bounds, CityBuilder.HEADROOM_PX) so the top platforms A and B are not drawn under the
+# canopy frame, and the frame thins out when zoomed out (16 percent of the screen at 0.4, 4 percent at 0.2): the whole composition is visible at the minimum zoom.
+# A builder area is never parked: every visit builds again (warm rebuild budget 40 ms; if a real-art rebuild ever exceeds the 0.22 s fade the
+# decision is ONE header line `@cache true`, not a code change).
+@id traetoppen
+@title ZONE_TRAETOPPEN
+@projection iso
+@ambient farm
+@theme treetop
+@zone traetoppen
+@flight false
+@music city_theme
+@zoom 0.4
+@zoom_min 0.2
+@zoom_max 0.7
+@builder res://scripts/traetoppen/city_builder.gd
+@marker f spawn name=from_farm
+@marker h spawn name=from_hyggebyen
+@marker s spawn name=from_skovlift
+@marker F warp to=farm spawn=from_traetoppen label=ZONE_FARM
+@marker H warp to=hyggebyen spawn=from_traetoppen label=ZONE_CITY
+@marker S warp to=moerkeskoven spawn=from_traetoppen label=ZONE_FOREST_EDGE

@@ -142,14 +142,14 @@ run_case run_watchdog 1 40 'run watchdog: the whole run exceeded 3 s' 'never_rea
 run_case wrapper_timeout_kills_a_spinning_godot 124 60 'TIMEOUT after 6s' '' --no-boot --sections-dir="$ST/spin" --timeout=6
 run_case unknown_only_is_usage_error 2 30 'unknown section .nope.' '' --no-boot --sections-dir="$ST/pass" --only=nope
 run_case unknown_option_is_usage_error 2 30 'unknown option' '' --no-boot --bogus-flag
-run_case bad_character_is_usage_error 2 30 'must be animal, fairy or hobbit' '' --character=dragon
+run_case bad_character_is_usage_error 2 30 'must be animal, fairy, hobbit or ghost' '' --character=dragon
 
 # ---- the flow helpers on the real game (new_game, start_world, days, go_menu, boot)
 run_case flow_helpers $PASS_RC 90 "\\(0 failed, [0-9]+ skipped\\), $BASE_N engine error" 'FAIL  |FAILED|PROBLEM' --no-boot --sections-dir="$ST/flow"
 
 # ---- the real flow on the current tree (legacy 3D tree: known failures are reported, never a crash)
 CHARS="animal"
-[ "$ALL_CHARS" = 1 ] && CHARS="animal fairy hobbit"
+[ "$ALL_CHARS" = 1 ] && CHARS="animal fairy hobbit ghost"
 for c in $CHARS; do
 	if grep -q 'Node3D' scenes/main/world.tscn 2>/dev/null; then
 		run_case "boot_legacy_$c" "*" 90 'PLAYTEST (PASS|FAIL)' '' --character="$c" --sections-dir="$ST/legacy"
@@ -161,7 +161,7 @@ for c in $CHARS; do
 			note_fail "boot_legacy_$c: expected a green boot and exactly the known legacy failure pause_resumes ($NFAIL FAIL lines)"
 		fi
 	else
-		run_case "boot_2d_$c" "*" 120 'ok +boot\.phase_playing' '' --character="$c" --sections-dir="$ST/legacy"
+		run_case "boot_2d_$c" "*" 120 'ok +boot\.phase_playing' 'FAIL(ED)? +boot\.' --character="$c" --sections-dir="$ST/legacy"
 	fi
 done
 

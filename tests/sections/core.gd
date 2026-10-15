@@ -662,9 +662,11 @@ func _test_new_game() -> void:
 	var animal_skin: StringName = gm.character_skin
 	gm.start_new_game("B", gm.CharacterType.HOBBIT, "F")
 	var hobbit_skin: StringName = gm.character_skin
+	gm.start_new_game("G", gm.CharacterType.GHOST, "F")
+	var ghost_skin: StringName = gm.character_skin
 	gm.start_new_game("C", gm.CharacterType.FAIRY, "F", &"fairy_dusk")
 	var explicit_skin: StringName = gm.character_skin
-	t.check("new_game_default_and_explicit_skin", animal_skin == &"animal_fox" and hobbit_skin == &"hobbit_pip" and explicit_skin == &"fairy_dusk", "animal %s hobbit %s explicit %s" % [animal_skin, hobbit_skin, explicit_skin])
+	t.check("new_game_default_and_explicit_skin", animal_skin == &"animal_fox" and hobbit_skin == &"hobbit_pip" and ghost_skin == &"ghost_bu" and explicit_skin == &"fairy_dusk", "animal %s hobbit %s ghost %s explicit %s" % [animal_skin, hobbit_skin, ghost_skin, explicit_skin])
 	gm.start_new_game("", gm.CharacterType.ANIMAL, "")
 	t.check("new_game_default_names", gm.player_name != "" and gm.farm_name != "", "empty names fall back to the translated defaults (%s / %s)" % [gm.player_name, gm.farm_name])
 	# every system that has a reset() must be wired to the signal; the others land in waves 3-4 (P12 / P13 / P15 / P20)

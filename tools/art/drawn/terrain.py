@@ -163,12 +163,15 @@ def build() -> None:
             swatches.append(periodic(source.crop(box).resize((512, 512), Image.Resampling.LANCZOS)))
     grass, path, cobble, timber, soil, water, forest, bog, cave, crystal, canopy, bark = swatches
     grass = grass * .82 + np.array([142, 151, 87]) * .18
+    # The untilled farm field keeps its lighter, faintly furrowed cue.
+    field_x = np.arange(grass.shape[1])[None, :, None] / grass.shape[1]
+    field_grass = grass * .72 + np.array([164, 166, 106]) * .28 + 6 * np.cos(2 * np.pi * field_x * 12)
     water = ndimage.gaussian_filter(water, (1.8, 1.8, 0), mode="wrap") * .70 + np.array([82, 143, 148]) * .30
     town_grass = grass * .88 + np.array([145, 169, 129]) * .12
     # Keep the luminous path distinct from ordinary forest litter at night.
     glow_forest = forest * .35 + np.array([64, 152, 146]) * .65
     terrains = {
-        "grass": grass, "grass_flowers": flowers(grass),
+        "grass": grass, "grass_flowers": flowers(grass), "field_grass": field_grass,
         "grass_hyggebyen": town_grass, "grass_hyggebyen_flowers": flowers(town_grass, True),
         "soil_tilled": soil, "soil_watered": soil * np.array([.72, .74, .76]),
         "path_dirt": path, "deck_farm": timber,
@@ -180,17 +183,31 @@ def build() -> None:
         "cave_floor_o": cave, "crystal_floor_o": crystal, "wall_void_o": canopy,
     }
     terrains.update({"water_" + str(i): water for i in range(4)})
+    interior = Image.open(HERE / "sources/interior_terrain.png").convert("RGB")
+    for index, name in enumerate(["floor_stone", "floor_plank", "floor_parquet", "floor_marble"]):
+        col, row = index % 2, index // 2
+        box = (round(col * interior.width / 2) + 4, round(row * interior.height / 2) + 4,
+               round((col + 1) * interior.width / 2) - 4, round((row + 1) * interior.height / 2) - 4)
+        terrains[name] = periodic(interior.crop(box).resize((512, 512), Image.Resampling.LANCZOS))
     folder = ROOT / "assets/iso_tiles"
     manifest = {"_source": "Painted materials: tools/art/drawn/sources/terrain.png; continuous four-tile lattice."}
     for name, surface in terrains.items():
         ortho, animated = name.endswith("_o"), name.startswith("water_")
         period = 2 if animated else 4
         image = atlas(surface, ortho, period, int(name[-1]) if animated else None)
-        file = "drawn_" + name + ".png"
-        image.save(folder / file)
+        file = "drawn_" + name + ".webp"
+        image.save(folder / file, lossless=True, method=6)
+        # Retire only the previous export of this same material. The source
+        # painting and all pristine farm/environment atlases remain intact.
+        (folder / ("drawn_" + name + ".png")).unlink(missing_ok=True)
+        (folder / ("drawn_" + name + ".png.import")).unlink(missing_ok=True)
         manifest[name] = {"file": file, "cell": [OCW, OCH] if ortho else [CW, CH],
                           "variants": [period, period], "proj": "ortho" if ortho else "iso"}
     (folder / "tiles_drawn.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    # Farm/interior manifests sort after tiles_drawn.json. Override their
+    # materials without changing the pristine source atlases or bake tools.
+    overrides = {name: manifest[name] for name in terrains if name == "field_grass" or name.startswith("floor_")}
+    (folder / "tiles_z_drawn.json").write_text(json.dumps(overrides, indent=2) + "\n")
     edges(bark, timber)
     print(f"Packed {len(terrains)} painted terrain atlases, 3 bark sides and 2 bridges")
 

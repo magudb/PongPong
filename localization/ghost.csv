@@ -1,0 +1,17 @@
+keys,da,en
+; --- Spøgelse (the fourth playable race, design4): race card, hero cards, wardrobe rule, whispers. Owner: G-ghost-data (localization/ghost.csv). Families: CHAR_GHOST_ SKIN_GHOST_ HERO_BU_ HERO_HVISKE_ GHOST_ ---
+CHAR_GHOST_NAME,"Spøgelse","Ghost"
+CHAR_GHOST_PERK,"Svæver lydløst og ser i mørket. Løber længere og sparer lygteolie.","Floats silently and sees in the dark. Runs further and saves lantern oil."
+SKIN_GHOST_BU,"Pedro","Pedro"
+SKIN_GHOST_HVISKE,"Hviske","Whisper"
+HERO_BU_NAME,"Pedro","Pedro"
+HERO_BU_KIND,"Spøgelse","Ghost"
+HERO_BU_BLURB,"Standardfiguren for spøgelser. Svæver lydløst og siger »bu!« for sjov. Ser i mørket og sparer lygteolie.","The default ghost. Floats silently and says 'boo!' for fun. Sees in the dark and saves lantern oil."
+HERO_HVISKE_NAME,"Hviske","Whisper"
+HERO_HVISKE_KIND,"Spøgelse","Ghost"
+HERO_HVISKE_BLURB,"Blid og lidt genert variant af spøgelset. Samme evner: svæver, ser i mørket og sparer lygteolie.","A gentle, slightly shy variant of the ghost. Same abilities: floats, sees in the dark, saves lantern oil."
+GHOST_WARDROBE_NOTE,"Spøgelser har ingen ben: bukser og sko ses ikke, men de tæller stadig med.","Ghosts have no legs: trousers and shoes cannot be seen, but they still count."
+GHOST_HIDDEN_TAG,"Skjult","Hidden"
+GHOST_EQUIP_HIDDEN_FMT,"%s ses ikke på et spøgelse, men tæller stadig med.","%s cannot be seen on a ghost, but it still counts."
+GHOST_WHISPER_WATER,"Du svæver kun lidt. Vandet er for bredt at krydse.","You only float a little. The water is too wide to cross."
+GHOST_WHISPER_DARK,"Du ser godt i mørket. Lygteolien holder længere, og lyset rækker videre.","You see well in the dark. The lantern oil lasts longer and the light reaches further."
