@@ -56,7 +56,9 @@ the reports. Full live-room memory and frame-time measurements belong to the
 runtime integration gate.
 
 Remaining art/design packages after this delivery:
-  I5: the 24 festival decorations from the existing package plan.
+  I5 art and placement design are now delivered separately: 24 designs / 53
+    authored views, four seasonal sets and a native art studio. Its live
+    festival state/director hookup is still pending; see docs/art/festival/handoff.txt.
   Wardrobe: fitted animation layers, attachment sockets and occlusion for each
     supported body, following docs/art/equipment/design.txt. The current outfit
     and held-item illustrations are flattened design studies.

@@ -1,0 +1,22 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 57,
+  "elapsed_s": 8.31,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "art_festival": {
+      "checks": 57,
+      "failed": 0,
+      "ms": 6286,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

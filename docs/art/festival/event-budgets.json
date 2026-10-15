@@ -1,0 +1,52 @@
+{
+  "aarsskiftet": {
+    "scope": "views used by this fixture, shared cast/town separate; not every rotation in a season's library",
+    "selected_view_rgba8_mips_bytes": 1107140,
+    "unique_textures": 12
+  },
+  "badedagen": {
+    "scope": "views used by this fixture, shared cast/town separate; not every rotation in a season's library",
+    "selected_view_rgba8_mips_bytes": 1102520,
+    "unique_textures": 9
+  },
+  "bagedagen": {
+    "scope": "views used by this fixture, shared cast/town separate; not every rotation in a season's library",
+    "selected_view_rgba8_mips_bytes": 1109160,
+    "unique_textures": 12
+  },
+  "blomsterfesten": {
+    "scope": "views used by this fixture, shared cast/town separate; not every rotation in a season's library",
+    "selected_view_rgba8_mips_bytes": 982580,
+    "unique_textures": 10
+  },
+  "bryllupsfesten": {
+    "scope": "views used by this fixture, shared cast/town separate; not every rotation in a season's library",
+    "selected_view_rgba8_mips_bytes": 982580,
+    "unique_textures": 10
+  },
+  "hoestfesten": {
+    "scope": "views used by this fixture, shared cast/town separate; not every rotation in a season's library",
+    "selected_view_rgba8_mips_bytes": 974844,
+    "unique_textures": 11
+  },
+  "honningdagen": {
+    "scope": "views used by this fixture, shared cast/town separate; not every rotation in a season's library",
+    "selected_view_rgba8_mips_bytes": 1062392,
+    "unique_textures": 11
+  },
+  "maanemarkedet": {
+    "scope": "views used by this fixture, shared cast/town separate; not every rotation in a season's library",
+    "selected_view_rgba8_mips_bytes": 967220,
+    "unique_textures": 10
+  },
+  "midsommerlanterner": {
+    "scope": "views used by this fixture, shared cast/town separate; not every rotation in a season's library",
+    "selected_view_rgba8_mips_bytes": 1068028,
+    "unique_textures": 10
+  },
+  "vinterlysene": {
+    "scope": "views used by this fixture, shared cast/town separate; not every rotation in a season's library",
+    "selected_view_rgba8_mips_bytes": 1107140,
+    "unique_textures": 12
+  }
+}

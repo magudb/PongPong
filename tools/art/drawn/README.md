@@ -200,7 +200,7 @@ and five trimmed ember masks. Run `pack.py --only=shop-core`; open
 core room snapshots or compare their former stand-ins. Exact prompts, masters,
 budgets, native evidence and implementation handoffs are recorded in
 `docs/art/shop-core/review.txt`. This is the core art delivery; the unfinished
-m1b town gameplay, festivals and fitted wardrobe animations remain their
+m1b town gameplay, live festival integration and fitted wardrobe animations remain their
 respective packages.
 
 The specialist shop kit adds 69 designs with 115 authored views across 15 sets,
@@ -212,3 +212,16 @@ snapshots rather than changing gameplay room geometry. Open
 dressed rooms, press D for the bare core room and N for evening. All generation
 and repair prompts, source hashes, budgets, native evidence and pending consumer
 work are in `docs/art/shop-special/review.txt` and `handoff.txt`.
+
+`pack.py --only=festival` exports the I5 painted festival kit: 24 designs,
+53 authored views, six cropped additive accents and four seasonal slot sets.
+The literal `lua/config/festival_decor.lua` describes nine festivals and the
+wedding without starting or scheduling an event. `PaintedFestivalArt` is a
+stateless presentation example; the live director/lifecycle hookup remains
+the towns/social owner's work. Exported textures carry `render_scale` so their
+world dimensions stay fixed while the all-view texture budget remains bounded.
+Open `festival_gallery.tscn` through `tools/dev/play.sh --throwaway` for the
+day/evening art studies in both native towns (arrows season, T town, N evening,
+D bare/decorated). Exact prompts, pole correction, review captures, budget
+definitions and the Torvet post-layout limitation are in
+`docs/art/festival/review.txt` and `handoff.txt`.

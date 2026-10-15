@@ -1,0 +1,197 @@
+{
+  "_doc": "Read-only design contracts; no social/towns runtime installed by this art snapshot. Wedding is date-dependent and belongs to S-marriage.",
+  "calendar_source": "design3/social_scripts/gen_festivals.py",
+  "calendar_sha256": "e360f64b003db8c8b299eb8f64784dd6aebbed3be613cc8e4d4a7895d44a9144",
+  "festivals": {
+    "blomsterfesten": {
+      "season": "foraar",
+      "day": 7,
+      "frm": 12,
+      "to": 20,
+      "area": "hyggebyen",
+      "spot": "hyggetorv",
+      "host": "mayor_lyra"
+    },
+    "honningdagen": {
+      "season": "foraar",
+      "day": 21,
+      "frm": 11,
+      "to": 19,
+      "area": "hyggebyen",
+      "spot": "hyggetorv",
+      "host": "beekeeper_birk"
+    },
+    "midsommerlanterner": {
+      "season": "sommer",
+      "day": 14,
+      "frm": 18,
+      "to": 23,
+      "area": "traetoppen",
+      "spot": "torvet",
+      "host": "gardener_hoppe"
+    },
+    "badedagen": {
+      "season": "sommer",
+      "day": 27,
+      "frm": 10,
+      "to": 18,
+      "area": "traetoppen",
+      "spot": "badehus",
+      "host": "bathkeeper_sofus"
+    },
+    "hoestfesten": {
+      "season": "efteraar",
+      "day": 14,
+      "frm": 12,
+      "to": 20,
+      "area": "traetoppen",
+      "spot": "torvet",
+      "host": "mayor_lyra"
+    },
+    "maanemarkedet": {
+      "season": "efteraar",
+      "day": 27,
+      "frm": 18,
+      "to": 23,
+      "area": "hyggebyen",
+      "spot": "hyggetorv",
+      "host": "appraiser_fru_ugle"
+    },
+    "vinterlysene": {
+      "season": "vinter",
+      "day": 7,
+      "frm": 16,
+      "to": 21,
+      "area": "traetoppen",
+      "spot": "torvet",
+      "host": "fairy_lily"
+    },
+    "bagedagen": {
+      "season": "vinter",
+      "day": 21,
+      "frm": 12,
+      "to": 20,
+      "area": "hyggebyen",
+      "spot": "hyggetorv",
+      "host": "baker_maja"
+    },
+    "aarsskiftet": {
+      "season": "vinter",
+      "day": 28,
+      "frm": 15,
+      "to": 23,
+      "area": "traetoppen",
+      "spot": "raadhus",
+      "host": "fairy_king"
+    }
+  },
+  "post_source": "design3/towns_scripts/proto/fest_set.gd",
+  "post_source_sha256": "1c13092ea99f69e19ca97937cc4ecb3c546a49189cbf8709c24f97ac893e26c7",
+  "standard_posts": {
+    "host": [
+      0,
+      0
+    ],
+    "judge": [
+      2,
+      0
+    ],
+    "stall_1": [
+      -4,
+      -2
+    ],
+    "stall_2": [
+      -2,
+      -2
+    ],
+    "stall_3": [
+      2,
+      -2
+    ],
+    "stall_4": [
+      4,
+      -2
+    ],
+    "table_1": [
+      -3,
+      1
+    ],
+    "table_2": [
+      3,
+      1
+    ],
+    "gather_1": [
+      -1,
+      2
+    ],
+    "gather_2": [
+      0,
+      2
+    ],
+    "gather_3": [
+      1,
+      2
+    ],
+    "gather_4": [
+      2,
+      2
+    ],
+    "gather_5": [
+      -1,
+      3
+    ],
+    "gather_6": [
+      0,
+      3
+    ],
+    "gather_7": [
+      1,
+      3
+    ],
+    "gather_8": [
+      2,
+      3
+    ],
+    "gather_9": [
+      -1,
+      4
+    ],
+    "gather_10": [
+      0,
+      4
+    ],
+    "gather_11": [
+      1,
+      4
+    ],
+    "gather_12": [
+      2,
+      4
+    ],
+    "gather_13": [
+      -1,
+      5
+    ],
+    "gather_14": [
+      0,
+      5
+    ],
+    "gather_15": [
+      1,
+      5
+    ],
+    "gather_16": [
+      2,
+      5
+    ]
+  },
+  "city_fixture_anchor": {
+    "spot": "torvet",
+    "screen": [
+      2640,
+      2205
+    ],
+    "level": "torvet",
+    "status": "design anchor; live post snapping not available"
+  }
+}

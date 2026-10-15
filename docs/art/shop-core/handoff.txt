@@ -39,7 +39,9 @@ Remaining art/design work from the existing package plan:
   I4 art is now delivered separately in shops/special/ with optional room overlays;
     see docs/art/shop-special/handoff.txt for its 69 designs / 115 views and
     the remaining runtime consumer work.
-  I5: 24 festival decorations; not included here.
+  I5 art is now delivered separately in assets/iso_props/festival/; see
+    docs/art/festival/handoff.txt for the 24 designs / 53 views, art studio,
+    placement data and pending live festival integration.
   Wardrobe: fitted per-body animation layers, sockets and occlusion remain the
     next production step described in docs/art/equipment/design.txt. Existing
     outfit/held-item illustrations remain design studies.

@@ -1,0 +1,84 @@
+To the towns/social implementation owner
+
+Delivered here: I5 art and declarative placement design only, on codex-review.
+No unfinished m1b gameplay is merged or edited. The 24 designs / 53 authored
+views, six light masks, four seasonal sets, ten event art rows, stateless art
+presentation example and native review gallery are ready. This is not a claim
+that the full I5 lifecycle acceptance gate has passed.
+
+Load assets/iso_props/festival/festival.json. Its items follow the shop/furniture
+shape: footprint, layer, baked rotation list, template, mirror_ok=false,
+solid=false and rot entries with file, native size, pivot, ysort and source.
+sets contains pole/string/stage/bench/centre/awning/door for each season.
+season_accents adds spring's flower arch and autumn's wheat sheaves.
+
+Important export field: render_scale. The selected textures use 82% resolution
+and are drawn at the reciprocal scale to retain the original world dimensions.
+Set body.scale once from render_scale, centered=false and offset=-pivot in
+TEXTURE pixels; its position and ysort remain WORLD pixels. Do not scale the
+placement coordinates, footprints or ysort. A mask parented under the body
+inherits this scale; do not apply it twice. PaintedFestivalArt.create demonstrates
+these transforms. Full-resolution masters are retained for later export choices.
+
+Rope strings refer to the FIRST support post at ground height, not the footprint
+centre or first wall cell. The span_px field is (+192,+114) for r0 and
+(-192,+114) for r1; both are three cells. elevation_px=225 is already in the
+pivot. Wreaths refer to a door/wall ground anchor and carry their 95 px mounting
+height in the pivot. Do not raise either sprite again. Floor art sorts at its
+ground centre. Overhead strings belong on the appropriate foreground plane of
+the current platform, not above every platform in the city. Door wreaths on
+other levels require the building's own rank; the art helper accepts door.rank.
+
+All festival art is non-solid: no body, area, collision shape or navigation
+obstacle. Keep existing routes intact. The six night masks are additive cropped
+paint accents for lantern_string_a r0/r1, lantern_string_b r0/r1, bonfire_festival
+r0 and ice_lantern r0. night_offset is relative to the full BODY texture's
+top-left; add it once to body.offset. Their glow hint requests zero point lights.
+Keep the existing <=12 city light cap. Fade the accents through the existing
+time-of-day mechanism; the studio's evening tone is an art preview.
+
+lua/config/festival_decor.lua is art placement data, with one row for each of the
+nine fixed festivals and the date-dependent wedding. The calendar remains owned
+by S-core/S-fest-content/S-marriage. Each row selects a season, centre override,
+slots used and a door-wreath choice. Generic layout rows refer to standard post
+suffixes, never hardcoded world coordinates. Resolve them with the LIVE
+director.post_ground("fest_<spot>_<suffix>") and supply live door anchors/ranks.
+Retain both string end posts when doing any clearance adjustment.
+
+Pending runtime work: FestivalDecor.attach(director), late-bound from the owning
+TownDirector hook, no new autoload or authored scene node. Read
+SocialManager.festival_active() as STATE when attaching and when entering an
+area; then refresh on town_festival_started, town_festival_ended and area_changed.
+Do not rely only on event edges: an already-active festival must appear when
+entering or loading. Missing SocialManager/director capability must stay harmless.
+Free old art before switching season/event or leaving an area; disconnect any
+listeners. The art helper has no event subscriptions or lifecycle of its own.
+Only its JSON manifest is cached; no global texture collection is required.
+
+The 1.8 MB event budget counts selected orientations and masks, not every
+authored rotation available to a seasonal set. Four awnings reuse one selected
+image, two benches/poles reuse their two orientations, and unused library views
+stay unloaded. event-budgets.json covers all ten event rows including cross-season
+centre overrides and both door orientations. The full 53-view library with masks
+retains the independent 7 MB conservative RGBA8/mips cap. Shared cast/town art
+is separate. The art gate observes the selected texture resource releasing when
+its owner is freed; renderer allocator pools are a separate measurement.
+
+Native gallery scope: four seasons in both installed towns, day and evening.
+Hyggebyen uses the standard design post block. The Torvet study uses hand-placed
+positions, two temporary stalls and four guests to fit the existing platform.
+The untouched standard block otherwise spills over the front rim and puts the
+host on the current fire pit. The native art study therefore does NOT prove the
+live director's 24 post positions, crowd capacity, bridge approaches or routes.
+The two live-integration skips name this pending work. Runtime clearance/routing
+and state/load/exit QA must run against the actual TownDirector after integration.
+Do not copy the art fixture's world coordinates into a second gameplay layout.
+
+Rebuild from the six saved masters with pack.py --only=festival. Exact generation
+and pole repair prompts are in prompts.json, their source hashes in sources.json,
+and future corrections in asset-repair-prompt.txt. Native evidence and measured
+budgets are linked from review.txt and validation.json.
+
+Remaining art production after this delivery: fitted wardrobe layers, held-item
+sockets and occlusion for the supported character bodies, following the existing
+docs/art/equipment/design.txt. Those outfit/held-item drawings remain concepts.
