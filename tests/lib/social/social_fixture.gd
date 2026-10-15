@@ -14,6 +14,7 @@ const SEED := 777
 const DESIGN_DUMP := "res://tests/lib/social/fixtures/design_dump.json"
 
 static var _design: Dictionary = {}
+static var _installed: Array[WeakRef] = []
 
 
 ## A clean new game for the social checks: Fresh.new_game + reset + world seed 777 on `total_day` at `hour`:`minute` (game clock, RAW hours).
@@ -78,6 +79,7 @@ static func install(config_over: Dictionary, registries: Dictionary) -> Node:
 	fake.config_over = config_over
 	fake.registries = registries
 	Svc.override("LuaRuntime", fake)
+	_installed.append(weakref(fake))
 	return fake
 
 
@@ -88,10 +90,13 @@ static func drop(autoload_name: String) -> void:
 
 
 static func uninstall() -> void:
-	var fake := Svc.node("LuaRuntime")
 	Svc.clear_overrides()
-	if fake != null and fake is FakeLua:
-		fake.free()
+	# Replacing an override (or Fresh clearing it) does not free the old Node.
+	for ref in _installed:
+		var fake: Variant = ref.get_ref()
+		if is_instance_valid(fake):
+			fake.free()
+	_installed.clear()
 
 
 ## total_day of the nth Sunday... helpers for week logic: the Monday of the week that holds `td`.

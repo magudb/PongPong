@@ -1,0 +1,11 @@
+{
+  "baseline": "f478296",
+  "unchanged_visual_assets": 2531,
+  "reviewed_ui_changes": [
+    "assets/ui/icons/slider_grabber.svg",
+    "assets/ui/icons/slider_grabber_hi.svg",
+    "assets/ui/theme.tres"
+  ],
+  "removed_visual_assets": [],
+  "new_visual_assets": []
+}

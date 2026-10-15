@@ -1,6 +1,12 @@
-M1b core handoff — 2026-10-15
+M1b milestone in progress — 2026-10-16
 
-Scope
+Active scope
+
+The user explicitly confirmed the FULL usable-towns milestone on 2026-10-16.
+Continue through all remaining packages and milestone gates before merging.
+The machine-readable checklist is docs/qa/m1b-milestone/progress.json.
+
+Completed core checkpoint
 
 This integration completes the unfinished systems that were already present in
 PongPong-worktrees/m1b: P13 quest bindings, F2 home state/progression/chest,
@@ -58,12 +64,13 @@ byte-identical to main f478296. The three UI changes were inspected natively:
 cream handles, moss tracks, ink contours, parchment panels, raised buttons and
 gold focus match the chosen guide. Painted illustrations were retained.
 
-Remaining planned usable-towns work
+Active remaining usable-towns work
 
 The repository still has later owner packages to build: the production player/
 farm loop, live town/NPC routing and population, installed core/extended room
 content, social dialogue/gifting/content/screens, the guide menu/HUD/dialogue/
-shop/inventory screens, and furniture/wardrobe runtime and feature screens.
+shop/inventory screens. Furniture/home-world and production wardrobe screens
+remain separate optional feature packages in the original milestone plan.
 Current art studies and equipment fit proofs retain their documented coverage;
 full production clothing animation coverage is a separate asset task.
 The tests name these absent packages in SKIPs. The native shop-panel-over-room
@@ -72,5 +79,15 @@ gate requires P18's shop_ui scene, which is not yet present.
 Evidence
 
 docs/qa/m1b-completion-2026-10-15/ contains targeted transaction/integration
-reports, the final strict character matrix, native checks and inspected captures,
-and the asset preservation record. Final matrix results are recorded there.
+reports, a core-only animal run, native checks and inspected captures, and the
+asset preservation record. The expanded milestone final matrix is still pending.
+The interrupted fairy log is retained only as an explicitly incomplete diagnostic.
+
+D0 and fixture follow-up — 2026-10-16
+
+Defeat now wakes at the configured farm door after the fade, charges the rounded
+10 percent fee, restores stats and saves the final state. The day-end pass-out
+returns home without a fee. Native NPC warming respects flyers and stationary
+keepers. The boss quest now binds moerkeskoven_f4. The targeted gate passed
+400 checks with no engine errors/warnings. Replaced social fixture nodes are
+freed together; its 132-check leak probe exits cleanly.

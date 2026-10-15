@@ -508,7 +508,9 @@ func warm_jobs() -> Array:
 			continue
 		var nv: Variant = n.get("visual") if "visual" in n else null
 		if nv is Object and (nv as Object).has_method("warm_clips") and _in_view(n as Node2D):
-			jobs.append([nv, NPC_WARM_CLIPS])
+			var flyer: bool = "flyer" in nv and bool(nv.get("flyer"))
+			var walks: bool = ("wander_radius" in n and float(n.get("wander_radius")) > 0.0) or ("routine_id" in n and str(n.get("routine_id")) != "")
+			jobs.append([nv, ["idle", "talk", "hover"] if flyer else (["idle", "talk", "walk"] if walks else ["idle", "talk"])])
 	return jobs
 
 
@@ -654,6 +656,8 @@ func _sleep_sequence(passed_out: bool) -> void:
 	# whole night, so a room that has to change is only QUEUED here and rebuilt below, behind the black screen, before the fade-in.
 	GameManager.sleep_until_morning()
 	if passed_out:
+		_enter(_wake_area(), StringName(str(GameData.cfg("dungeon.hub.wake_spawn", "from_home"))))
+		_pose_for_sleep()
 		EventBus.notification_posted.emit(tr("NOTIF_PASSED_OUT_TITLE"), tr("NOTIF_PASSED_OUT"), "sleep")
 	_restore_player()
 	await get_tree().create_timer(0.9).timeout
@@ -696,7 +700,12 @@ func _restore_player() -> void:
 		EventBus.player_health_changed.emit(int(player.get("half_hearts")), int(player.get("max_half_hearts")))
 
 
-## Fainting (EventBus.player_defeated, emitted by Player2D): back to the farm gate with full hearts and a whisper.
+func _wake_area() -> StringName:
+	var id := StringName(str(GameData.cfg("dungeon.hub.wake_area", "farm")))
+	return id if has_area(id) else default_area_id()
+
+
+## Gentle defeat: the next morning at home, all items kept, a rounded-down gold fee.
 func _on_player_defeated() -> void:
 	if _faint_pending:
 		return
@@ -707,10 +716,29 @@ func _on_player_defeated() -> void:
 	while (traveling or sleeping) and guard < 600:
 		await get_tree().process_frame
 		guard += 1
-	await travel(&"farm" if has_area(&"farm") else default_area_id(), &"from_skovkant")
+	traveling = true
+	var fade_out := create_tween()
+	fade_out.tween_property(_fade, "color:a", 1.0, FADE_OUT)
+	await fade_out.finished
+	var floors: Variant = Svc.static_call("res://scripts/dungeon/floors/dungeon_floors.gd", &"inst", [])
+	if floors is Node and floors.has_method("end_run"):
+		floors.call("end_run", &"defeated")
+	GameManager.sleep_until_morning()
+	var loss := floori(float(EconomyManager.gold) * clampf(float(GameData.cfg("dungeon.defeat.gold_loss_pct", 10)), 0.0, 100.0) / 100.0)
+	EconomyManager.spend_gold(loss)
+	_enter(_wake_area(), StringName(str(GameData.cfg("dungeon.hub.wake_spawn", "from_home"))))
 	if player.has_method("revive"):
 		player.call("revive", player.global_position)
+	_restore_player()
 	EventBus.whisper_requested.emit("WHISPER_FAINT")
+	Svc.static_call("res://scripts/dungeon_run/dungeon_run.gd", &"after_defeat", [loss])
+	if SaveManager.autosave_enabled:
+		SaveManager.autosave()
+	var fade_in := create_tween()
+	fade_in.tween_property(_fade, "color:a", 0.0, FADE_IN)
+	await fade_in.finished
+	traveling = false
+	_pass_out_pending = false
 	_faint_pending = false
 
 

@@ -1,0 +1,11 @@
+[
+  {
+    "character": "animal",
+    "exit_code": 0,
+    "result": "pass",
+    "checks": 7646,
+    "failed": 0,
+    "skipped": 84,
+    "elapsed_s": 289.67
+  }
+]

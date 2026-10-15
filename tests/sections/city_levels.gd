@@ -44,7 +44,7 @@ const GENERATOR_PATH := "res://scripts/world2d/levels/source/build_traetoppen_js
 ## them by its owner (P04 / P05) makes this check fail on purpose - update the hash in the same commit.
 const PINNED := {
 	"res://scripts/world2d/iso_area.gd": "4fb83e03b1bf9b6e6a98b7c0a6191c96e9f88136692434dc49b51834e7e8eb8a",
-	"res://scripts/world2d/world_2d.gd": "b7650d15d442c05be266fb6835221d63b3e8970173c33582a4185379543ef961",
+	"res://scripts/world2d/world_2d.gd": "93647ee0b6207cfc951645a7a0e9ae91a8a5c94765c4b3595b0939d64941e2a9",
 	"res://scripts/world2d/game_data.gd": "03a66479819a83799b98fbd2db1e5cad4cbdb9b5e52d0113ba73f525160e5a0c",
 	"res://scripts/world2d/art_catalog.gd": "ef0719d05c87deb342fc95f1ef937f64d83bfcdc6c6f2c50a5ac8bab611f0439",
 	"res://scripts/isometric/iso_chibi_sprite_2d.gd": "e59e77a8e97c3b27aa39de75e960f26ca0f93acce522bddc8be736d211683aca",

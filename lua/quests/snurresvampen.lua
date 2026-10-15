@@ -1,6 +1,6 @@
 -- quests/snurresvampen.lua
 -- Boss quest.  First-kill legendary: the Spinner Hat.  Gate of home tier 8.  Offered by Guard Oak (dialogue guard_oak, quest_accept).
--- enter_dybe_bregner listens to EventBus.area_changed(area_id): the map id dybe_bregner (its @zone is dark_forest, shared with skovkant).
+-- enter_dybe_bregner listens to EventBus.area_changed(area_id): the stable boss floor moerkeskoven_f4 (the procedural floors share @zone dark_forest).
 
 kind = "quest"
 id = "snurresvampen"
@@ -10,7 +10,7 @@ objectives = {
     id = "enter_dybe_bregner",
     target = 1,
     on = "area_changed",
-    area = "dybe_bregner",
+    area = "moerkeskoven_f4",
     description_key = "OBJ_SNURRESVAMPEN_ENTER_DYBE_BREGNER",
   },
   {

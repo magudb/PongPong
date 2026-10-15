@@ -1,0 +1,40 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 400,
+  "elapsed_s": 58.99,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "area": {
+      "checks": 239,
+      "failed": 0,
+      "ms": 17848,
+      "skipped": 1
+    },
+    "city_levels": {
+      "checks": 69,
+      "failed": 0,
+      "ms": 33881,
+      "skipped": 0
+    },
+    "dungeon_defeat": {
+      "checks": 37,
+      "failed": 0,
+      "ms": 1864,
+      "skipped": 0
+    },
+    "quests": {
+      "checks": 55,
+      "failed": 0,
+      "ms": 2175,
+      "skipped": 4
+    }
+  },
+  "skipped": 5
+}

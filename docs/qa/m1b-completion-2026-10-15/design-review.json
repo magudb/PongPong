@@ -1,0 +1,31 @@
+{
+  "baseline": "f478296",
+  "comparison": [
+    {
+      "file": "ui_foundation_gallery_guide.png",
+      "mean_rgba_difference_255": 6.598907877604167,
+      "changed_pixels": 79692
+    },
+    {
+      "file": "ui_foundation_ability_slots.png",
+      "mean_rgba_difference_255": 0.0,
+      "changed_pixels": 0
+    }
+  ],
+  "inspected": [
+    "native/ui_foundation_gallery_guide.png",
+    "native/ui_conformance_accept_gallery_confirm.png",
+    "native/ui_conformance_sheet_disabled.png",
+    "native/ui_nav_slider_ring.png",
+    "native/towns_interiors_froebutikken.png",
+    "native/towns_interiors_postkontoret.png",
+    "native/towns_interiors_painted_int_bageriet_day.png",
+    "native/towns_interiors_painted_int_bageriet_night.png",
+    "native/towns_interiors_painted_int_smedjen_day.png",
+    "native/towns_interiors_painted_int_smedjen_night.png",
+    "native/towns_interiors_painted_int_troldmandstaarnet_night.png",
+    "native/towns_interiors_painted_int_hoppe_hut_day.png"
+  ],
+  "verdict": "Approved painted art remains selected. The reviewed theme preserves parchment/ink/focus and button depth; slider handles and hover now follow UI_NAVIGATION.md. Night study captures temporarily disable shop hours solely to keep closed rooms available for art inspection.",
+  "comparison_notes": "Ability slots are pixel-identical. The gallery right column shifts down by 8px below the chips because P28 sets their guide minimum height to 40px; this accounts for much of the whole-frame difference. The before/after gallery captures were inspected at native resolution."
+}

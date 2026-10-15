@@ -1,0 +1,165 @@
+{
+  "objective": "Complete the full documented M1b usable-towns milestone, preserve the approved painted design and merge only after milestone validation.",
+  "user_scope_confirmed": "2026-10-16",
+  "branch": "m1b",
+  "main_baseline": "f478296",
+  "core_checkpoint": "136fecc",
+  "sources": [
+    "docs/design/PLAN_2D.md",
+    "docs/design/TOWNS_FARM_SOCIAL_ADDENDUM.md",
+    "docs/design/UI_NAVIGATION.md",
+    "docs/design/GHOST_FAMILY_ADDENDUM.md",
+    "/Users/magnusudbjorg/Documents/projects/.pongpong-build/work/impl/orders"
+  ],
+  "stages": [
+    {
+      "id": "foundations",
+      "packages": [
+        {
+          "id": "P28-ui-nav-foundation",
+          "status": "core_validated"
+        },
+        {
+          "id": "P13-quests-lua-runtime",
+          "status": "core_validated"
+        },
+        {
+          "id": "S-core",
+          "status": "core_validated"
+        },
+        {
+          "id": "T-towns-core",
+          "status": "core_validated"
+        },
+        {
+          "id": "F2-home-core",
+          "status": "core_validated"
+        },
+        {
+          "id": "F4-loot-shops",
+          "status": "core_validated"
+        },
+        {
+          "id": "D0-dungeon-world-hooks",
+          "status": "validated",
+          "evidence": "defeat-tests.json: 400 checks, 0 failed, 5 later-dungeon skips"
+        },
+        {
+          "id": "DR7-dungeon-services",
+          "status": "pending"
+        },
+        {
+          "id": "I1-copy-system",
+          "status": "pending"
+        },
+        {
+          "id": "V7-dialogue-v2",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "playable_loop",
+      "packages": [
+        {
+          "id": "P06-player-farm-core",
+          "status": "pending"
+        },
+        {
+          "id": "P16-ui-menus",
+          "status": "pending"
+        },
+        {
+          "id": "P17-ui-hud",
+          "status": "pending"
+        },
+        {
+          "id": "P18-ui-shop-inventory",
+          "status": "pending"
+        },
+        {
+          "id": "S-data",
+          "status": "pending"
+        },
+        {
+          "id": "S-gifts",
+          "status": "pending"
+        },
+        {
+          "id": "S-talk",
+          "status": "pending"
+        },
+        {
+          "id": "T-routes",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "town_and_farm",
+      "packages": [
+        {
+          "id": "P14-npc-dialogue",
+          "status": "pending"
+        },
+        {
+          "id": "T-interiors-core",
+          "status": "pending"
+        },
+        {
+          "id": "N02-farm-objects",
+          "status": "pending"
+        },
+        {
+          "id": "V6-city-life",
+          "status": "pending"
+        },
+        {
+          "id": "I2-loop-harness",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "usable_towns",
+      "packages": [
+        {
+          "id": "S-ui",
+          "status": "pending"
+        },
+        {
+          "id": "T-director",
+          "status": "pending"
+        },
+        {
+          "id": "N04-farm-first-morning",
+          "status": "pending"
+        },
+        {
+          "id": "I3-art-shops",
+          "status": "art_delivered_runtime_gate_pending"
+        }
+      ]
+    }
+  ],
+  "remaining_gates": [
+    "Real keyboard and gamepad new-game flows for all four races",
+    "Farm till/plant/water/grow/harvest/shipping/save loop",
+    "Both towns populated by live citizens with schedules and walk-in shop interactions",
+    "Dialogue quest acceptance and turn-in, gifts/hearts, people/calendar screens",
+    "First morning and farm-town-shop-farm loop acceptance",
+    "Ghost family data and painted NPC art integrated at G5c",
+    "Final strict suites for all four heroes; required native art/UI/performance gates"
+  ],
+  "notes": [
+    "Production wardrobe animation remains the separate painted-equipment asset track recorded by Claude; preserve the fit proof coverage without presenting it as a complete wardrobe.",
+    "Obsolete core-only matrix stopped during fairy after the user expanded scope. Its interrupted result is not a milestone approval.",
+    "Full furniture/home-world feature screens and production wardrobe layers were optional later packages in the original M1b plan; they are separate from the four-stage town/farm loop.",
+    "Social fixture replacement leak fixed and validated: 132 checks, clean ObjectDB exit. D0 targeted gate: 400 checks, no errors or warnings."
+  ],
+  "scope_basis": "The four-stage 27-package M1b plan in the original durable LEAD_NOTES.md (2026-10-15); package amendments remain binding. This is the usable-towns milestone, before the later dungeon and feature milestones.",
+  "followup_layers": [
+    "Ghost perks integrated with the production player",
+    "Painted ghost family/data G5c layer after the base towns gate"
+  ]
+}

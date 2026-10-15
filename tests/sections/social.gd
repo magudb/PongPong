@@ -112,6 +112,11 @@ func run(p_t) -> void:
 	_balance()
 	_wrappers()
 	_perf()
+	var replaced: WeakRef = weakref(SocialFixture.install({}, {}))
+	var current: WeakRef = weakref(SocialFixture.install({}, {}))
+	SocialFixture.uninstall()
+	t.check("fixture_replacements_freed", replaced.get_ref() == null and current.get_ref() == null,
+		"uninstall frees both the current fixture and an override it replaced")
 	_cleanup()
 
 

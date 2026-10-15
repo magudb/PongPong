@@ -2048,6 +2048,9 @@ func _builder_rebuild_while_traveling(t) -> void:
 	t.check("rebuilt_room_leaves_the_player_awake_and_free", int(p.get("state")) == 0 and p.get("forced_clip") == &"" and not _world.sleeping and not _world.traveling and _world._fade.color.a == 0.0, "after the night the player is free (state %s, forced clip '%s'), the fade is clear" % [p.get("state"), p.get("forced_clip")])
 	# --- 2. the pass-out: the day rolled INSIDE advance_time before midnight_passed starts the sequence; the deferred rebuild of that
 	# frame finds `traveling` set and used to be dropped
+	# D0 wakes at the configured home; this fixture is the home whose rebuild we exercise.
+	gm.set_config_override("dungeon.hub.wake_area", "_t_room")
+	gm.set_config_override("dungeon.hub.wake_spawn", "default")
 	var room2: IsoArea = _world.area
 	gm.set("hour", gm.day_end_hour() - 1)         # the last hour of the game day (01:50 at day_end_hour 26): +20 min crosses the day end
 	gm.set("minute", 50)
@@ -2151,6 +2154,7 @@ func _builder_rebuild_while_traveling(t) -> void:
 	await t.frames(1)
 	_world._enter(&"_fixture_iso", &"default")
 	WorldRoot2D.unregister_map(&"_t_room")
+	gm.clear_config_overrides()
 
 
 # ================================================================== ArtCatalog: feature directories, icons, merge order
