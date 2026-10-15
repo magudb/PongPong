@@ -15168,16 +15168,16 @@
       "evidence": "byte-identical prior visual review, supplemented by current context checks"
     },
     "assets/ui/icons/slider_grabber.svg": {
-      "sha256": "66692e6ae331ff8e984a90e7a62f41827b5960d32694bf94ebc216ceee272125",
+      "sha256": "cbafd46f175d96c60c41a06d6fd989697b0320f6379f2b1c9eb40da70224fc8e",
       "disposition": "accepted-theme-asset",
       "role": "theme-vector-symbol",
-      "evidence": "byte-identical prior visual review, supplemented by current context checks"
+      "evidence": "M1b native visual review: docs/qa/m1b-completion-2026-10-15/native/ and native-tests.json; cream slider handles, moss track, ink contours, gold focus, raised buttons and parchment panels retained; UI_NAVIGATION.md hover/focus corrections."
     },
     "assets/ui/icons/slider_grabber_hi.svg": {
-      "sha256": "b66b284f5efe49500cd4a84957d28f21907d3c1f64462116e67fe66c6bc204a7",
+      "sha256": "56dd765819ead452644c61b039e269c4f8426ea8dd9e667900dc62338fb0a41b",
       "disposition": "accepted-theme-asset",
       "role": "theme-vector-symbol",
-      "evidence": "byte-identical prior visual review, supplemented by current context checks"
+      "evidence": "M1b native visual review: docs/qa/m1b-completion-2026-10-15/native/ and native-tests.json; cream slider handles, moss track, ink contours, gold focus, raised buttons and parchment panels retained; UI_NAVIGATION.md hover/focus corrections."
     },
     "assets/ui/icons/speaker.svg": {
       "sha256": "3968bc649b85048cc0789efa42fdde6603f8e23bbc6a45aaf50000dfd4380566",
@@ -15204,10 +15204,16 @@
       "evidence": "byte-identical prior visual review, supplemented by current context checks"
     },
     "assets/ui/theme.tres": {
-      "sha256": "a3531a4935477d0cea9beaf989df9fef242f43e02f1af1d6d27bb47108f5dae2",
+      "sha256": "29fa8501182ad364d4380bb18fd78098fad5977b51cd4e8592a3b06d15d0c1f3",
       "disposition": "accepted-theme-asset",
       "role": "import-license-or-theme-metadata",
-      "evidence": "byte-identical prior visual review, supplemented by current context checks"
+      "evidence": "M1b native visual review: docs/qa/m1b-completion-2026-10-15/native/ and native-tests.json; cream slider handles, moss track, ink contours, gold focus, raised buttons and parchment panels retained; UI_NAVIGATION.md hover/focus corrections."
     }
+  },
+  "m1b_followup": {
+    "date": "2026-10-15",
+    "scope": "P28 theme and two slider vectors only; all 2531 other reviewed visual assets remain byte-identical.",
+    "evidence": "docs/qa/m1b-completion-2026-10-15/native-tests.json",
+    "review": "Native gallery, confirmation, disabled controls, slider endpoints, focus rings, Danish labels and painted rooms inspected; no illustration replaced."
   }
 }

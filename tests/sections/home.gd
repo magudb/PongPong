@@ -242,12 +242,68 @@ func run(t) -> void:
 	_absolute_days(t)
 	_gifts(t)
 	_chest(t)
+	_atomic_transfers(t)
 	_festival(t)
 	_visits(t)
 	_guests(t)
 	_save_section(t)
 	_project_godot(t)
 	_cleanup(t)
+
+
+func _atomic_transfers(t) -> void:
+	Fresh.new_game(t)
+	_eco.reset()
+	_eco.add_item(&"wood", 12, true)
+	var totals: Array = []
+	var record := func(_inventory: Dictionary) -> void:
+		totals.append(_eco.count_item(&"wood") + _hm.chest_count(&"wood"))
+	_bus.player_inventory_changed.connect(record)
+	var deposited: int = _hm.deposit(&"wood", 7)
+	var withdrawn: int = _hm.withdraw(&"wood", 3)
+	var consumed: bool = _hm.consume_material(&"wood", 9)
+	_bus.player_inventory_changed.disconnect(record)
+	t.check("chest_transfers_commit_before_observers", deposited == 7 and withdrawn == 3 and consumed and totals == [12, 12, 3],
+		"inventory listeners see the complete backpack/chest transfer: totals %s; consumption is also committed before notification" % str(totals))
+	Fresh.new_game(t)
+	Grant.requirements(2)
+	var materials: Dictionary = _hm.material_cost(2)
+	for id in materials:
+		_hm.deposit(StringName(str(id)), maxi(1, floori(float(materials[id]) / 2.0)))
+	var gold_before: int = _eco.gold
+	var cost: int = _hm.gold_cost(2)
+	var before := {}
+	for id in materials:
+		before[id] = _hm.count_material(id)
+	var samples: Array = []
+	var snapshot := func() -> void:
+		var valid: bool = _hm.is_under_construction() and _gm.flag_int(&"home_building", 0) == 2 and _eco.gold == gold_before - cost
+		for id in materials:
+			valid = valid and _hm.count_material(id) == int(before[id]) - int(materials[id])
+		samples.append(valid)
+	var gold_record := func(_gold: int, _delta: int) -> void: snapshot.call()
+	var inventory_record := func(_inventory: Dictionary) -> void: snapshot.call()
+	_bus.gold_changed.connect(gold_record)
+	_bus.player_inventory_changed.connect(inventory_record)
+	_hm.chest_changed.connect(snapshot)
+	var result: Dictionary = _hm.start_upgrade()
+	_bus.gold_changed.disconnect(gold_record)
+	_bus.player_inventory_changed.disconnect(inventory_record)
+	_hm.chest_changed.disconnect(snapshot)
+	t.check("construction_commits_before_observers", bool(result["ok"]) and samples.size() >= 3 and samples.all(func(valid: bool) -> bool: return valid),
+		"gold, inventory and chest listeners all see the paid construction and home_building flag together (%d snapshots)" % samples.size())
+	Fresh.new_game(t)
+	_eco.reset()
+	_hm._pending_gifts = ["chair_pine", "chest_pine"] as Array[String]
+	var gift_snapshots: Array = []
+	var on_gift := func(item: StringName, _amount: int) -> void:
+		gift_snapshots.append(not str(item) in _hm.pending_gifts())
+		_hm._retry_pending_gifts()
+	_bus.item_gained.connect(on_gift)
+	_hm._retry_pending_gifts()
+	_bus.item_gained.disconnect(on_gift)
+	t.check("pending_gifts_safe_during_gain", gift_snapshots == [true, true] and _hm.pending_gifts().is_empty() and _eco.count_item(&"chair_pine") == 1 and _eco.count_item(&"chest_pine") == 1,
+		"saving or retrying inside item_gained never leaves a delivered gift owed or grants it twice")
 
 
 func _cleanup(t) -> void:

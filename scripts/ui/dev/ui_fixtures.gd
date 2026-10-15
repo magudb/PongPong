@@ -44,6 +44,12 @@ const SCREENS := {
 	"home_chest": "res://scenes/ui/home_chest.tscn",
 	"garderobe": "res://scenes/ui/garderobe.tscn",
 	"samlerbog": "res://scenes/ui/samlerbog.tscn",
+	"people": "res://scenes/ui/people.tscn",
+	"gift": "res://scenes/ui/gift_ui.tscn",
+	"calendar": "res://scenes/ui/social/calendar_tab.tscn",
+	"social_hud": "res://scenes/ui/social_hud.tscn",
+	"event_overlay": "res://scenes/ui/event_overlay.tscn",
+	"post": "res://scenes/ui/post.tscn",
 }
 ## stand-in for the world behind a HUD or a blurred modal: [colour a, colour b, band]
 const BACKDROPS := {

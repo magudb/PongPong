@@ -68,6 +68,15 @@ func _exit_tree() -> void:
 	var vp := get_viewport()
 	if vp != null and vp.gui_focus_changed.is_connected(_on_gui_focus_changed):
 		vp.gui_focus_changed.disconnect(_on_gui_focus_changed)
+	if _open:
+		_open = false
+		_focus_gen += 1
+		_opener = null
+		_last_good = null
+		var gm := Svc.node("GameManager")
+		if gm != null and modal_name != &"":
+			gm.call("pop_modal", modal_name)
+		closed.emit()
 
 
 func _connect_bus() -> void:

@@ -93,6 +93,18 @@ func _ready() -> void:
 	UiNav.watcher()
 
 
+func _exit_tree() -> void:
+	if not _open:
+		return
+	_open = false
+	_prev_focus = null
+	var gm := Svc.node("GameManager")
+	if gm != null:
+		gm.call("pop_modal", MODAL)
+	# Removing the asker cancels the request and releases any surviving awaiter.
+	answered.emit("" if _text_mode else false)
+
+
 # ----------------------------------------------------------------------------------------------------------------- setup
 
 func setup(title_key: String, text: String, ok_key: String, cancel_key := "NAV_CANCEL", default := &"cancel", text_args: Array = []) -> void:

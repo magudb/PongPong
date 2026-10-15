@@ -374,13 +374,20 @@ def dress_for(path: Path, explicit: str | None) -> list[dict]:
     return []
 
 
-def stand_in_lines(spec: dict, dress: list[dict]) -> list[str]:
+def stand_in_lines(spec: dict, dress: list[dict], without_kit: bool = False) -> list[str]:
     table = json.loads(STAND_INS_PATH.read_text(encoding="utf-8"))["stand_ins"]
-    used = sorted({it["id"] for it in list(spec["items"]) + dress if it["id"] in table})
+    baked = set()
+    if not without_kit:
+        for kit in ("core", "special"):
+            manifest = ROOT / "assets" / "iso_props" / "shops" / kit / "shops.json"
+            if manifest.exists():
+                baked.update(json.loads(manifest.read_text(encoding="utf-8")).get("items", {}))
+    used = sorted({it["id"] for it in list(spec["items"]) + dress
+                   if it["id"] in table and it["id"] not in baked and it["id"] not in G.furniture()})
     return [f"stand-in {spec['id']}: {k} -> {table[k]}" for k in used]
 
 
-def run_paths(paths: list[str], dress_dir: str | None, show_stand_ins: bool) -> tuple[int, int]:
+def run_paths(paths: list[str], dress_dir: str | None, show_stand_ins: bool, without_kit: bool = False) -> tuple[int, int]:
     schema = load_schema()
     rooms = 0
     total = 0
@@ -396,7 +403,7 @@ def run_paths(paths: list[str], dress_dir: str | None, show_stand_ins: bool) -> 
         else:
             print(f"PASS {spec['id']}" + (f" (+{len(dress)} dressing pieces)" if dress else ""))
         if show_stand_ins:
-            for line in stand_in_lines(spec, dress):
+            for line in stand_in_lines(spec, dress, without_kit):
                 print(line)
     return rooms, total
 
@@ -458,6 +465,7 @@ def main() -> int:
     ap.add_argument("paths", nargs="*")
     ap.add_argument("--dress-dir")
     ap.add_argument("--stand-ins", action="store_true")
+    ap.add_argument("--without-kit", action="store_true", help="report fallback art as if shop kits were absent (regression fixtures)")
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--reach", action="store_true", help="print the cells the player and a citizen reach from the spawn per room as JSON (the Godot section compares them with the real colliders)")
     a = ap.parse_args()
@@ -473,7 +481,7 @@ def main() -> int:
         return 0
     if not a.paths:
         ap.error("give at least one directory or spec file (or --selftest)")
-    rooms, total = run_paths(a.paths, a.dress_dir, a.stand_ins)
+    rooms, total = run_paths(a.paths, a.dress_dir, a.stand_ins, a.without_kit)
     print(f"validate: {rooms} room(s), {total} problem(s)")
     return 1 if total else 0
 

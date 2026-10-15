@@ -404,7 +404,7 @@ func _budget_and_leaks() -> void:
 				warm.append(p.build_ms)
 				t.expect(p.build_ms <= 50.0, "%s warm build %d: %.2f ms, %d nodes, %d sprites, %d lights" % [r, pass_no, p.build_ms, int(InteriorRoom.stats.get("nodes", 0)), int(InteriorRoom.stats.get("sprites", 0)), int(InteriorRoom.stats.get("lights", 0))])
 			nodes.append(int(InteriorRoom.stats.get("nodes", 0)))
-			sprites.append(int(InteriorRoom.stats.get("sprites", 0)))
+			sprites.append(int(InteriorRoom.stats.get("base_sprites", 0)))
 			lights.append(int(InteriorRoom.stats.get("lights", 0)))
 			if pass_no == 0:
 				piece_report[r] = [int(InteriorRoom.stats.get("pieces", 0)), int(InteriorRoom.stats.get("placeholders", 0))]
@@ -424,7 +424,7 @@ func _budget_and_leaks() -> void:
 	var worst_cold: float = cold[cold.size() - 1]
 	night_layers.sort()
 	t.check("build_all_under_budget", errs.is_empty() and boxes.is_empty() and warm_p50 <= 12.0 and worst_cold <= 5000.0 and nodes[nodes.size() - 1] <= 130 and sprites[sprites.size() - 1] <= 31 and lights.max() <= 4 and night_layers[night_layers.size() - 1] <= 4,
-		"%d builds (1 cold + 2 warm) of the %d rooms the generator writes (%s), each from its JSON: warm p50 %.2f ms (budget <= 12; design measured 6.2), worst cold %.2f ms (the first build of a room decodes its wall and furniture textures from disk: a sanity bound of 5000 ms that only catches a runaway build, the design measured 27.5 ms with its lighter placeholder art, a quiet machine here measures 130 - 520 ms and a load average of 30 gave 1,510 ms; the user-facing number is the windowed first frame <= 250 ms), sprites (walls, corner, doormat, pieces: the design's own count) p50 %d max %d (<= 31; design 25 / 31) plus at most %d additive window night layers, nodes p50 %d max %d (hard budget <= 130; design 76 / 96 was measured before the SE1 amendment added the two talk hosts of a shop band (ShopCounter + Area2D + shape + Timer = 4 nodes each)), lights max %d (<= 4), no builder error %s, no labelled box (every piece resolves to art or a stand-in) %s; per room %s" % [
+		"%d builds (1 cold + 2 warm) of the %d rooms the generator writes (%s), each from its JSON: warm p50 %.2f ms (budget <= 12; design measured 6.2), worst cold %.2f ms (the first build of a room decodes its wall and furniture textures from disk: a sanity bound of 5000 ms that only catches a runaway build, the design measured 27.5 ms with its lighter placeholder art, a quiet machine here measures 130 - 520 ms and a load average of 30 gave 1,510 ms; the user-facing number is the windowed first frame <= 250 ms), base sprites (walls, corner, doormat, room pieces; dressing and hatch art also count toward the 130-node whole-room limit) p50 %d max %d (<= 31; design 25 / 31) plus at most %d additive window night layers, nodes p50 %d max %d (hard budget <= 130; design 76 / 96 was measured before the SE1 amendment added the two talk hosts of a shop band (ShopCounter + Area2D + shape + Timer = 4 nodes each)), lights max %d (<= 4), no builder error %s, no labelled box (every piece resolves to art or a stand-in) %s; per room %s" % [
 			nodes.size(), set_ids.size(), "14 CORE + 10 EXTENDED" if set_ids.size() == 24 else "the 3 fixtures: python3 is missing", warm_p50, worst_cold, sprites[_mid(sprites.size())], sprites[sprites.size() - 1], night_layers[night_layers.size() - 1], nodes[_mid(nodes.size())], nodes[nodes.size() - 1], lights.max(), str(errs), str(boxes), str(sizes)])
 	# a rebuild leaks nothing: nodes, orphans, bus connections, interactables and the catalog's caches stay where they were after the first build
 	var p0 = await _room(ROOMS[0])
@@ -612,6 +612,8 @@ func _hatch_walk() -> void:
 
 func _pieces() -> void:
 	PieceCatalog.reset()
+	PieceCatalog.kit_manifest_paths = [] as Array[String]
+	PieceCatalog.forget()
 	var furn: Dictionary = PieceCatalog.furniture()
 	var kit: Dictionary = PieceCatalog.kit_table()
 	var table: Dictionary = PieceCatalog.stand_in_table()
@@ -649,11 +651,14 @@ func _pieces() -> void:
 		"a room item id resolves: baked kit manifest > furniture.json > data/interiors/stand_ins.json > a labelled box. Without a manifest: chair_pine is furniture %s, anvil is the stand-in table_stump %s (placed at the KIT footprint 1 x 1 and layer floor, not the borrowed art's 2 x 1 %s), a kit id without a stand-in (seed_drawers_wall) and an unknown id are boxes %s; counter_pine at rotation 1 is 1 x 3 %s. With a baked manifest the kit piece wins over furniture (chair_oak) and over the stand-in (anvil) %s, furniture.json still beats the stand-in table (chair_pine) %s" % [
 			chair["source"] == "furniture", anvil["art_id"] == "table_stump", kit_fp, drawers["source"] == "placeholder" and unknown["source"] == "placeholder", rotated["footprint"] == Vector2i(1, 3), kit_anvil["source"] == "kit" and kit_chair["source"] == "kit", fur_chair["source"] == "furniture"])
 	await _stand_ins_listed(table, kit, furn)
+	PieceCatalog.reset()
 	_kit_table(kit)
 
 
 func _stand_ins_listed(table: Dictionary, kit: Dictionary, furn: Dictionary) -> void:
 	PieceCatalog.reset()
+	PieceCatalog.kit_manifest_paths = [] as Array[String]
+	PieceCatalog.forget()
 	# the table: every key is an I3 kit id, every target an existing furniture id; 16 room pieces + the counter
 	var keys: Array = table.keys()
 	keys.sort()
@@ -664,7 +669,7 @@ func _stand_ins_listed(table: Dictionary, kit: Dictionary, furn: Dictionary) -> 
 		var probe: Object = await _room(r)
 		_dispose(probe)
 	seen = PieceCatalog.used_stand_ins.duplicate()
-	var py: Dictionary = _py("validate.py", [_abs(FIXTURES), "--stand-ins"])
+	var py: Dictionary = _py("validate.py", [_abs(FIXTURES), "--stand-ins", "--without-kit"])
 	var listed: Dictionary = {}
 	for l in (py["lines"] as PackedStringArray):
 		if str(l).begins_with("stand-in "):
@@ -763,6 +768,8 @@ func _overlay_and_hatch_art() -> void:
 
 func _hatch_art() -> void:
 	PieceCatalog.reset()
+	PieceCatalog.kit_manifest_paths = [] as Array[String]
+	PieceCatalog.forget()
 	# the invisible bars stay the collision; the baked piece counter_hatch is drawn on every hatch cell ONLY when it resolves to a manifest piece
 	var bare = await _room("int_froebutikken")
 	var bare_sprites: int = int(InteriorRoom.stats["sprites"])
@@ -817,6 +824,55 @@ func _windows() -> void:
 		"the additive night layers of the %d windows fade with the OUTDOOR hour (the farm glow curve of lua/config/ambient.lua, not the room's own always-warm `home` preset): dark at 12:00 and 17:30 (alpha %.2f / %.2f), %.2f at dawn 06:00, lit at 19:30 (%.2f), 22:00 (%.2f) and through midnight 24:30 / 25:30 (%.2f / %.2f), listening to time_of_day_changed" % [
 			sprites.size(), samples[12.0], samples[17.5], samples[6.0], samples[19.5], samples[22.0], samples[24.5], samples[25.5]])
 	_dispose(p)
+	Ctx.set_clock(gm, 1, 10.0)
+	await _painted_lights()
+
+
+func _painted_lights() -> void:
+	PieceCatalog.reset()
+	_use_room_set()
+	var aligned := true
+	var faded := true
+	var capped := true
+	var foreground := true
+	var masks := 0
+	var ceilings := 0
+	for room_id in _room_set():
+		var probe = await _room(room_id)
+		var spec := InteriorRoom.load_spec(room_id)
+		var expected := 0
+		for item in InteriorRoom.items_of(spec):
+			var piece := PieceCatalog.resolve(str(item["id"]), int(item.get("rot", 0)))
+			if str(piece.get("night", "")) != "":
+				expected += 1
+		var clock: Node = probe.area.get_node_or_null("PieceLightClock")
+		var accents: Array = clock.accents if clock != null else []
+		aligned = aligned and accents.size() == expected
+		for accent: Sprite2D in accents:
+			var body := accent.get_parent() as Sprite2D
+			var found := false
+			for item in InteriorRoom.items_of(spec):
+				var piece := PieceCatalog.resolve(str(item["id"]), int(item.get("rot", 0)))
+				if piece.get("night", "") == accent.texture.resource_path:
+					found = accent.offset.is_equal_approx(body.offset + piece["night_offset"])
+			aligned = aligned and found and accent.material == Glow.additive_material()
+		masks += accents.size()
+		for hour in [12.0, 22.0, 24.5]:
+			Ctx.set_clock(gm, 1, hour)
+			bus.time_of_day_changed.emit(gm.hour, gm.minute)
+			for accent: Sprite2D in accents:
+				faded = faded and is_equal_approx(accent.modulate.a, InteriorRoom.outdoor_glow(hour))
+		capped = capped and int(InteriorRoom.stats["service_lights"]) <= 1 and int(InteriorRoom.stats["lights"]) <= 4
+		for sprite in probe.area.objects.get_children():
+			if sprite is Sprite2D and sprite.z_index == 2:
+				ceilings += 1
+				foreground = foreground and not sprite.y_sort_enabled
+		_dispose(probe)
+	t.check("painted_light_masks_follow_body_and_clock", aligned and faded and capped and masks >= 5,
+		"%d painted accents align with the final body offset plus the trimmed source offset, use additive blending, fade at noon/night/after midnight, and add at most one service light per room" % masks)
+	t.check("ceiling_dressing_stays_in_foreground", foreground and ceilings > 0,
+		"%d hanging pieces use the foreground plane above the y-sorted actors" % ceilings)
+	InteriorRoom.use_spec_dirs([FIXTURES] as Array[String])
 	Ctx.set_clock(gm, 1, 10.0)
 
 
@@ -1455,6 +1511,10 @@ func _nameplates() -> void:
 
 
 func _sign_and_emblem() -> void:
+	PieceCatalog.reset()
+	PieceCatalog.kit_manifest_paths = [] as Array[String]
+	PieceCatalog.emblems_path = WORK + "absent_emblems.json"
+	PieceCatalog.forget()
 	# the world: a small outer area with a real player body so the sign zone reacts to him
 	await t.start_world()
 	var world: Node = t.world()
@@ -1857,6 +1917,7 @@ func _tool() -> void:
 
 ## The 14 door markers of the REAL hyggebyen.map get their Door2D (T-director's TownMarker will do this by itself): the sign of the seed shop and of the bakery, 12:00 on a Tuesday.
 func _windowed_doors(world: Node, pl: Node2D) -> void:
+	ShopCounter.keeper_resolver = Callable()
 	world.travel(&"hyggebyen", &"default")
 	await t.until(func() -> bool: return not world.traveling, 10.0)
 	var area: IsoArea = world.area
@@ -1896,6 +1957,7 @@ func run_windowed(p_t) -> void:
 	for r in ROOMS:
 		var spec: Dictionary = InteriorRoom.load_spec(r)
 		var t0: int = Time.get_ticks_msec()
+		ShopCounter.keeper_resolver = Callable()
 		world.call("_enter", StringName(r), &"default")                                   # the room is built and put in the tree: what the player waits for behind the fade
 		await RenderingServer.frame_post_draw
 		firsts.append(float(Time.get_ticks_msec() - t0))
@@ -1920,6 +1982,7 @@ func run_windowed(p_t) -> void:
 		await t.seconds(0.8)
 		await t.capture(r.trim_prefix("int_"))
 	await _windowed_doors(world, pl)
+	await _windowed_painted_rooms(world)
 	var first_ok: bool = true
 	for f in firsts:
 		first_ok = first_ok and f <= 250.0
@@ -1943,3 +2006,24 @@ func run_windowed(p_t) -> void:
 	for r in ROOMS:
 		WorldRoot2D.unregister_map(StringName(r))
 	_reset()
+
+
+func _windowed_painted_rooms(world: Node) -> void:
+	_generate_all24()
+	_use_room_set()
+	# Keep closed shops available solely for the night-art inspection.
+	gm.set_config_override("towns.hours_enabled", false)
+	var room_ids := ["int_bageriet", "int_smedjen", "int_troldmandstaarnet", "int_hoppe_hut"]
+	for room_id in room_ids:
+		var spec := InteriorRoom.load_spec(room_id)
+		WorldRoot2D.register_map(StringName(room_id), AreaMap.parse_text(InteriorRoom.stub_map(room_id, str(spec["building"]), "city")))
+		for hour in [12.0, 22.0]:
+			Ctx.set_clock(gm, 1, hour)
+			world.travel(StringName(room_id), &"default")
+			await t.until(func() -> bool: return not world.traveling, 10.0)
+			await t.seconds(0.25)
+			t.expect(str(world.area.map.id) == room_id, "the inspected room stays loaded at night")
+			var frame: Image = await t.capture("painted_%s_%s" % [room_id, "day" if hour == 12.0 else "night"])
+			t.expect_not_blank(frame, Rect2i(0, 0, 1280, 720), "%s at %02d:00 renders painted body art and room-owned accents" % [room_id, int(hour)])
+		WorldRoot2D.unregister_map(StringName(room_id))
+	gm.clear_config_overrides()

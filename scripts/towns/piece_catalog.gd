@@ -144,7 +144,7 @@ static func _items_of(data: Dictionary) -> Dictionary:
 static func resolve(item_id: String, rot: int = 0) -> Dictionary:
 	var r: int = posmod(rot, 4)
 	var out: Dictionary = {"id": item_id, "source": "placeholder", "art_id": "", "layer": "floor", "footprint": Vector2i.ONE, "file": "", "size": Vector2i.ZERO,
-			"pivot": Vector2.ZERO, "ysort": Vector2.ZERO, "flip": false, "night": "", "glow": {}, "label": item_id}
+			"pivot": Vector2.ZERO, "ysort": Vector2.ZERO, "flip": false, "night": "", "night_offset": Vector2.ZERO, "glow": {}, "label": item_id}
 	var kit_row: Dictionary = kit_table().get(item_id, {}) as Dictionary
 	var manifest: Dictionary = kit_manifest()
 	var furn: Dictionary = furniture()
@@ -198,6 +198,7 @@ static func resolve(item_id: String, rot: int = 0) -> Dictionary:
 		out["ysort"] = _v2(ent.get("ysort", [0, 0]))
 	if ent.has("night"):
 		out["night"] = dir + str(ent["night"])
+		out["night_offset"] = _v2(ent.get("night_offset", [0, 0]))
 	if ent.has("glow"):
 		out["glow"] = ent["glow"]
 	return out

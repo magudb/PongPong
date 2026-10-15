@@ -880,7 +880,7 @@ func _amount_of(od: Dictionary, ctx: Dictionary) -> int:
 func _legacy_step(objective_id: String, kind: StringName, ctx: Dictionary) -> int:
 	if kind == &"crop_harvested" and (objective_id == "harvest_%s" % ctx.get("crop", "") or objective_id == "harvest_any"):
 		return int(ctx.get("amount", 1))
-	if kind == &"resource_loot" and objective_id == "collect_%s" % ctx.get("item", ""):
+	if kind in [&"item_gained", &"resource_loot"] and objective_id == "collect_%s" % ctx.get("item", ""):
 		return int(ctx.get("amount", 1))
 	return 0
 

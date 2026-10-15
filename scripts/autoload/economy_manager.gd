@@ -89,8 +89,8 @@ func reset() -> void:
 	_misrouted = false
 	for entry in _starter_kit():
 		add_item(StringName(entry[0]), int(entry[1]), true)
-	EventBus.player_inventory_changed.emit(get_inventory_dict())
-	EventBus.gold_changed.emit(gold, 0)
+	_publish(&"player_inventory_changed", [get_inventory_dict()])
+	_publish(&"gold_changed", [gold, 0])
 
 
 ## The starter tools of lua/data/starter_kit.lua `starter_kit.tools` as [[id, amount], ...];
@@ -114,6 +114,35 @@ static func _empty_equipment() -> Dictionary:
 	return out
 
 
+var _notification_depth := 0
+var _deferred_notifications: Array[Callable] = []
+
+
+## Execute an already-validated multi-item transaction before observers can save or
+## re-enter it. This batches notifications, not validation or rollback. Nested calls
+## share the outer transaction; normal calls keep their existing synchronous events.
+func defer_notifications(action: Callable) -> void:
+	_notification_depth += 1
+	action.call()
+	_notification_depth -= 1
+	if _notification_depth == 0:
+		var queued := _deferred_notifications
+		_deferred_notifications = []
+		for notification in queued:
+			notification.call()
+
+
+func after_transaction(action: Callable) -> void:
+	if _notification_depth > 0:
+		_deferred_notifications.append(action)
+	else:
+		action.call()
+
+
+func _publish(event_name: StringName, args: Array) -> void:
+	after_transaction(func() -> void: EventBus.emit_signal.callv([event_name] + args))
+
+
 # ================================================================================================ gold
 
 ## Adds (or, negative, takes) gold, clamped to 0..MAX_GOLD. gold_changed(gold, delta) fires when the amount really changed.
@@ -123,7 +152,7 @@ func add_gold(amount: int) -> void:
 	var before := gold
 	gold = clampi(gold + clampi(amount, -MAX_GOLD, MAX_GOLD), 0, MAX_GOLD)
 	if gold != before:
-		EventBus.gold_changed.emit(gold, gold - before)
+		_publish(&"gold_changed", [gold, gold - before])
 
 
 ## unit_price x amount WITHOUT int64 wrap-around (0 for a price or amount <= 0): a total that no wallet can hold (above MAX_GOLD)
@@ -148,7 +177,7 @@ func spend_gold(amount: int) -> bool:
 	if amount == 0:
 		return true
 	gold -= amount
-	EventBus.gold_changed.emit(gold, -amount)
+	_publish(&"gold_changed", [gold, -amount])
 	return true
 
 
@@ -260,7 +289,7 @@ func add_item(item_id: StringName, amount: int = 1, silent: bool = false) -> boo
 		_log_once("unknown item `%s` entered the backpack: no Lua def, no name and no price" % item_id)
 	if backpack_room_for(item_id) < amount:
 		if not silent:
-			EventBus.notification_posted.emit(tr("NOTIF_INVENTORY_FULL_TITLE"), tr("NOTIF_INVENTORY_FULL_MSG"), "inventory")
+			_publish(&"notification_posted", [tr("NOTIF_INVENTORY_FULL_TITLE"), tr("NOTIF_INVENTORY_FULL_MSG"), "inventory"])
 		return false
 	if kind != _Kinds.BACKPACK:
 		_misrouted = true                 # its store does not exist yet: the item waits in the backpack to be adopted
@@ -289,7 +318,7 @@ func remove_item(item_id: StringName, amount: int = 1) -> bool:
 	if amount > from_store:
 		if not _take_from_backpack(item_id, amount - from_store):
 			return false
-	EventBus.player_inventory_changed.emit(get_inventory_dict())
+	_publish(&"player_inventory_changed", [get_inventory_dict()])
 	return true
 
 
@@ -353,10 +382,10 @@ func remove_items(needs: Dictionary) -> bool:
 	return true
 
 
-## Backpack transaction for quest costs and adoption. No callbacks run until every
-## backpack deduction and the caller's state commit have finished.
-func consume_backpack_items(needs: Dictionary, commit: Callable) -> bool:
-	if not commit.is_valid():
+## Backpack transaction for quest costs, adoption and home construction. All deductions
+## (including optional gold) precede the caller's state commit and observer signals.
+func consume_backpack_items(needs: Dictionary, commit: Callable, gold_cost: int = 0) -> bool:
+	if not commit.is_valid() or not can_afford(gold_cost):
 		return false
 	for id in needs:
 		var amount := _Data.int_of(needs[id])
@@ -365,9 +394,24 @@ func consume_backpack_items(needs: Dictionary, commit: Callable) -> bool:
 			return false
 	for id in needs:
 		_take_from_backpack(StringName(str(id)), _Data.int_of(needs[id]))
+	gold -= gold_cost
 	commit.call()
+	if gold_cost > 0:
+		_publish(&"gold_changed", [gold, -gold_cost])
 	if not needs.is_empty():
-		EventBus.player_inventory_changed.emit(get_inventory_dict())
+		_publish(&"player_inventory_changed", [get_inventory_dict()])
+	return true
+
+
+## Silent chest withdrawal: credit the backpack and commit the source deduction
+## before equipment/inventory listeners can save or request another transfer.
+func receive_backpack_item(item_id: StringName, amount: int, commit: Callable) -> bool:
+	if not commit.is_valid() or _Kinds.storage_of(item_id) != _Kinds.BACKPACK or not can_add_item(item_id, amount):
+		return false
+	_stack_into_backpack(item_id, amount)
+	commit.call()
+	_auto_equip(item_id)
+	_gained(item_id, amount, true)
 	return true
 
 
@@ -437,7 +481,7 @@ func adopt_misrouted() -> void:
 		i -= 1
 	_misrouted = still
 	if moved:
-		EventBus.player_inventory_changed.emit(get_inventory_dict())
+		_publish(&"player_inventory_changed", [get_inventory_dict()])
 
 
 ## The legacy shop primitive: pays unit_price x amount and adds the item. All or nothing: no room -> nothing is spent.
@@ -446,17 +490,17 @@ func buy_item(item_id: StringName, amount: int, unit_price: int) -> bool:
 		return false
 	var total := total_of(unit_price, amount)       # saturating: an absurd amount can never wrap into an affordable total
 	if not can_afford(total):
-		EventBus.notification_posted.emit(tr("NOTIF_NO_GOLD_TITLE"), tr("NOTIF_NO_GOLD_MSG"), "gold")
+		_publish(&"notification_posted", [tr("NOTIF_NO_GOLD_TITLE"), tr("NOTIF_NO_GOLD_MSG"), "gold"])
 		return false
 	if not can_add_item(item_id, amount):
 		if backpack_room_for(item_id) < amount and _Kinds.storage_of(item_id) == _Kinds.BACKPACK:
-			EventBus.notification_posted.emit(tr("NOTIF_INVENTORY_FULL_TITLE"), tr("NOTIF_INVENTORY_FULL_MSG"), "inventory")
+			_publish(&"notification_posted", [tr("NOTIF_INVENTORY_FULL_TITLE"), tr("NOTIF_INVENTORY_FULL_MSG"), "inventory"])
 		return false
 	spend_gold(total)
 	if not add_item(item_id, amount):
 		add_gold(total)                   # refund: the add failed after the gold was taken
 		return false
-	EventBus.item_purchased.emit(item_id, amount, total)
+	_publish(&"item_purchased", [item_id, amount, total])
 	return true
 
 
@@ -468,7 +512,7 @@ func sell_item(item_id: StringName, amount: int, unit_price: int) -> bool:
 		return false
 	var total := total_of(unit_price, amount)
 	add_gold(total)
-	EventBus.item_sold.emit(item_id, amount, total)
+	_publish(&"item_sold", [item_id, amount, total])
 	return true
 
 
@@ -500,7 +544,7 @@ func equip(slot: StringName, item_id: StringName) -> bool:
 	if item_id != &"" and (_backpack_count(item_id) <= 0 or equip_slot_of(item_id) != str(slot)):
 		return false
 	equipment[slot] = item_id
-	EventBus.player_inventory_changed.emit(get_inventory_dict())
+	_publish(&"player_inventory_changed", [get_inventory_dict()])
 	return true
 
 
@@ -579,8 +623,8 @@ func use_item(item_id: StringName) -> bool:
 		gm.call("set_flag", StringName(flag), true)
 		if bool(d.get("consumed", true)):
 			remove_item(item_id, 1)
-		EventBus.game_event.emit(&"blueprint_learned", {"item": str(item_id), "flag": flag})
-		EventBus.notification_posted.emit(tr("ITEM_BLUEPRINT_LEARNED_TITLE"), tr("ITEM_BLUEPRINT_LEARNED_MSG"), "item")
+		_publish(&"game_event", [&"blueprint_learned", {"item": str(item_id), "flag": flag}])
+		_publish(&"notification_posted", [tr("ITEM_BLUEPRINT_LEARNED_TITLE"), tr("ITEM_BLUEPRINT_LEARNED_MSG"), "item"])
 		return true
 	var slot := equip_slot_of(item_id)
 	if slot != "":
@@ -594,10 +638,10 @@ func use_item(item_id: StringName) -> bool:
 		var husbandry := _Svc.node("AnimalHusbandry")
 		return husbandry != null and husbandry.has_method("adopt_animal") and bool(husbandry.call("adopt_animal", item_id))
 	if category == "animal_care":
-		EventBus.game_event.emit(&"animal_care_item_used", {"item": str(item_id)})
+		_publish(&"game_event", [&"animal_care_item_used", {"item": str(item_id)}])
 		return false                      # feeding needs an animal: the animal care screen handles the event
 	if str(d.get("placeable", "")) == "farm":
-		EventBus.hotbar_assign_requested.emit(-1, item_id)
+		_publish(&"hotbar_assign_requested", [-1, item_id])
 		return true
 	return false
 
@@ -618,7 +662,7 @@ func _consume(item_id: StringName, heal: int, oil: float, energy: float) -> bool
 		else:
 			var now := minf(float(player.get("oil")) + oil, float(player.get("max_oil")))
 			player.set("oil", now)
-			EventBus.player_oil_changed.emit(now, float(player.get("max_oil")))
+			_publish(&"player_oil_changed", [now, float(player.get("max_oil"))])
 		used = true
 	if energy > 0.0 and "stamina" in player and "max_stamina" in player and float(player.get("stamina")) < float(player.get("max_stamina")):
 		if player.has_method("restore_stamina"):
@@ -699,8 +743,8 @@ func from_dict(data: Dictionary) -> bool:
 		if slot_of_entry != "" and not decided.has(StringName(slot_of_entry)):
 			_auto_equip(entry["id"])
 	_misrouted = true                          # a save made before a store existed may hold its items in the backpack
-	EventBus.player_inventory_changed.emit(get_inventory_dict())
-	EventBus.gold_changed.emit(gold, 0)
+	_publish(&"player_inventory_changed", [get_inventory_dict()])
+	_publish(&"gold_changed", [gold, 0])
 	return true
 
 
@@ -741,14 +785,14 @@ func _stack_into_backpack(item_id: StringName, amount: int) -> void:
 
 ## One successful add: the backpack signal always, the rest unless silent.
 func _gained(item_id: StringName, amount: int, silent: bool) -> void:
-	EventBus.player_inventory_changed.emit(get_inventory_dict())
+	_publish(&"player_inventory_changed", [get_inventory_dict()])
 	if silent:
 		return
-	EventBus.item_gained.emit(item_id, amount)
+	_publish(&"item_gained", [item_id, amount])
 	var rarity := _Kinds.rarity_of(item_id)
 	if _RarityScript.rank(rarity) >= RARE_RANK:
-		EventBus.rare_item_found.emit(item_id, rarity)
-	EventBus.notification_posted.emit(tr("NOTIF_ITEM_GAINED_TITLE"), "%s x%d" % [tr("ITEM_%s" % str(item_id).to_upper()), amount], "item")
+		_publish(&"rare_item_found", [item_id, rarity])
+	_publish(&"notification_posted", [tr("NOTIF_ITEM_GAINED_TITLE"), "%s x%d" % [tr("ITEM_%s" % str(item_id).to_upper()), amount], "item"])
 
 
 func _log_once(message: String) -> void:

@@ -195,6 +195,7 @@ func run(t) -> void:
 	await _confirm_default_focus_and_escape(t)
 	await _confirm_traps_focus(t)
 	await _confirm_ask_text(t)
+	await _modal_disposal(t)
 	await _toast_stack_caps_and_rarity(t)
 	await _prompt_pill_follows_device(t)
 	await _whisper_line(t)
@@ -205,6 +206,35 @@ func run(t) -> void:
 
 
 # ---------------------------------------------------------------------------------------------------- helpers
+
+func _modal_disposal(t) -> void:
+	var host := _fresh(t)
+	var parent := await _screen(t, host, &"nav_dispose")
+	var nested := await _screen(t, host, &"nav_dispose_nested")
+	nested.nested_under = &"nav_dispose"
+	nested.pauses_tree = false
+	parent.open()
+	nested.open()
+	nested.free()
+	await t.frames(2)
+	var keeps_parent: bool = t.tree.paused and (_gm.call("modal_stack") as Array) == [&"nav_dispose"]
+	parent.free()
+	await t.frames(2)
+	var released: bool = not t.tree.paused and (_gm.call("modal_stack") as Array).is_empty()
+	# The dialog is owned by its asker, but the request may be awaited elsewhere.
+	var asker := Control.new()
+	host.add_child(asker)
+	var dialog := load("res://scenes/ui/components/ui_confirm.tscn").instantiate() as UiConfirm
+	asker.add_child(dialog)
+	var answers: Array = []
+	dialog.answered.connect(func(value: Variant) -> void: answers.append(value))
+	dialog.setup("NAV_OK", "NAV_CANCEL", "NAV_OK")
+	dialog.begin()
+	asker.free()
+	await t.frames(2)
+	t.check("freeing_modal_releases_stack", keeps_parent and released and not t.tree.paused and (_gm.call("modal_stack") as Array).is_empty() and answers == [false],
+		"freeing a nested modal preserves the parent; freeing the last modal resumes play; removing a confirmation's asker cancels exactly once and clears its pause")
+	await _finish_test(t)
 
 func _reset_game_state() -> void:
 	_gm.call("pop_all_modals")

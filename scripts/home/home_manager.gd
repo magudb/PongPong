@@ -58,6 +58,7 @@ var visit_week: int = NO_VISIT_WEEK
 
 var _party: Array[String] = []              # the friends of the Fe-fest held on festival_day
 var _pending_gifts: Array[String] = []      # tier gifts that could not be delivered yet (retried every morning)
+var _claiming_gifts := false
 var _visit_day: int = 0                     # total day of the last guest visit (idempotence, never saved)
 var _visit: Dictionary = {}                 # {npc, item, week, index} of that visit
 var _dialogue_npc: StringName = &""
@@ -153,10 +154,9 @@ func _take_material(item_id: Variant, amount: int) -> Dictionary:
 	var from_chest := amount - from_pack
 	if amount <= 0 or from_chest > chest_count(item_id):
 		return {"ok": false, "from_pack": 0, "from_chest": 0}
-	if from_pack > 0 and not EconomyManager.remove_item(id, from_pack):
+	var needs := {id: from_pack} if from_pack > 0 else {}
+	if not EconomyManager.consume_backpack_items(needs, func() -> void: _chest_take(str(item_id), from_chest)):
 		return {"ok": false, "from_pack": 0, "from_chest": 0}
-	if from_chest > 0:
-		_chest_take(str(item_id), from_chest)
 	return {"ok": true, "from_pack": from_pack, "from_chest": from_chest}
 
 
@@ -218,29 +218,25 @@ func start_upgrade() -> Dictionary:
 	var n := tier + 1
 	var cost := gold_cost(n)
 	var mats := material_cost(n)
-	if not EconomyManager.spend_gold(cost):
-		return {"ok": false, "reason": "gold", "reasons": ["gold"], "rows": chk["rows"]}
-	var paid: Array = []                                    # [id, from_pack, from_chest] of what already left
-	for m in mats:
-		var taken := _take_material(m, int(mats[m]))
-		if not bool(taken["ok"]):
-			EconomyManager.add_gold(cost)                  # cannot happen after can_start_upgrade(); if it does, everything goes back
-			for p in paid:
-				if int(p[1]) > 0:
-					EconomyManager.add_item(StringName(str(p[0])), int(p[1]), true)
-				if int(p[2]) > 0:
-					chest[str(p[0])] = chest_count(p[0]) + int(p[2])
-			if not paid.is_empty():
-				chest_changed.emit()
-			return {"ok": false, "reason": "materials", "reasons": ["materials"], "rows": chk["rows"]}
-		paid.append([str(m), int(taken["from_pack"]), int(taken["from_chest"])])
-	for p in paid:
-		if int(p[2]) > 0:
-			chest_changed.emit()
-			break
+	var pack_needs := {}
+	var chest_needs := {}
+	for material in mats:
+		var from_pack := mini(int(mats[material]), EconomyManager.count_item(StringName(str(material))))
+		if from_pack > 0:
+			pack_needs[material] = from_pack
+		if int(mats[material]) > from_pack:
+			chest_needs[material] = int(mats[material]) - from_pack
 	var start := GameManager.total_day()
-	construction = {"target": n, "start_day": start, "ready_day": start + build_days(n)}
-	_sync_flags()
+	var commit := func() -> void:
+		for material in chest_needs:
+			_chest_take(str(material), int(chest_needs[material]))
+		construction = {"target": n, "start_day": start, "ready_day": start + build_days(n)}
+		_sync_flags()
+	if not EconomyManager.consume_backpack_items(pack_needs, commit, cost):
+		var reason := "gold" if not EconomyManager.can_afford(cost) else "materials"
+		return {"ok": false, "reason": reason, "reasons": [reason], "rows": chk["rows"]}
+	if not chest_needs.is_empty():
+		chest_changed.emit()
 	EventBus.home_upgrade_started.emit(tier, n, int(construction["ready_day"]))
 	_toast("HOME_UI_TITLE", _format(tr("HOME_UI_BUILDING_FMT"), [build_days(n)]))
 	return {"ok": true, "reason": "ok", "reasons": [], "ready_day": int(construction["ready_day"]), "rows": chk["rows"]}
@@ -276,10 +272,12 @@ func finish_upgrade() -> void:
 	var old := tier
 	tier = clampi(int(construction["target"]), 1, last_tier())
 	construction = {}
+	for id in gift_items(tier):
+		if id not in _pending_gifts:
+			_pending_gifts.append(id)
 	_sync_flags()
 	GameManager.set_flag(GameManager.FLAG_HOME_UPGRADE_DONE, tier)
-	for id in gift_items(tier):
-		_deliver_gift(id)
+	_retry_pending_gifts()
 	EventBus.home_upgraded.emit(old, tier)
 	EventBus.game_event.emit(&"home_upgraded", {"tier": tier})
 	_toast("HOME_UI_TITLE", _format(tr("HOME_UI_UPGRADED_FMT"), [tr(_HomeData.tier_name_key(tier))]))
@@ -333,25 +331,22 @@ func _on_dialogue_ended() -> void:
 
 ## one tier gift through EconomyManager (routed to the furniture store). A keepsake the player already owns is not given twice; a gift that cannot
 ## be delivered right now is kept and retried every morning, never dropped.
-func _deliver_gift(item_id: String) -> void:
-	var id := StringName(item_id)
-	if _Kinds.is_one_of_a_kind(id) and EconomyManager.count_item(id) >= 1:
-		return
-	if not EconomyManager.add_item(id, 1) and item_id not in _pending_gifts:
-		_pending_gifts.append(item_id)
-
-
 func _retry_pending_gifts() -> void:
-	if _pending_gifts.is_empty():
+	if _pending_gifts.is_empty() or _claiming_gifts:
 		return
-	var still: Array[String] = []
-	for item_id in _pending_gifts:
+	_claiming_gifts = true
+	for item_id in _pending_gifts.duplicate():
 		var id := StringName(item_id)
 		if _Kinds.is_one_of_a_kind(id) and EconomyManager.count_item(id) >= 1:
+			_pending_gifts.erase(item_id)
 			continue
-		if not EconomyManager.can_add_item(id, 1) or not EconomyManager.add_item(id, 1):       # can_add_item first: a retry that cannot succeed posts no "backpack full" toast
-			still.append(item_id)
-	_pending_gifts = still
+		if not EconomyManager.can_add_item(id, 1):
+			continue
+		# item_gained observers may save or ask for another retry synchronously.
+		_pending_gifts.erase(item_id)
+		if not EconomyManager.add_item(id, 1):
+			_pending_gifts.append(item_id)
+	_claiming_gifts = false
 
 
 func pending_gifts() -> Array[String]:
@@ -446,9 +441,8 @@ func deposit(item_id: StringName, amount: int) -> int:
 	if amount <= 0 or item_id == &"" or _Kinds.storage_of(item_id) != _Kinds.BACKPACK:
 		return 0
 	var moved := mini(mini(amount, EconomyManager.count_item(item_id)), chest_room_for(item_id))
-	if moved <= 0 or not EconomyManager.remove_item(item_id, moved):
+	if moved <= 0 or not EconomyManager.consume_backpack_items({item_id: moved}, func() -> void: chest[str(item_id)] = chest_count(item_id) + moved):
 		return 0
-	chest[str(item_id)] = chest_count(item_id) + moved
 	chest_changed.emit()
 	return moved
 
@@ -458,9 +452,8 @@ func withdraw(item_id: StringName, amount: int) -> int:
 	if amount <= 0:
 		return 0
 	var moved := mini(mini(amount, chest_count(item_id)), EconomyManager.backpack_room_for(item_id))
-	if moved <= 0 or not EconomyManager.add_item(item_id, moved, true):
+	if moved <= 0 or not EconomyManager.receive_backpack_item(item_id, moved, func() -> void: _chest_take(str(item_id), moved)):
 		return 0
-	_chest_take(str(item_id), moved)
 	chest_changed.emit()
 	return moved
 

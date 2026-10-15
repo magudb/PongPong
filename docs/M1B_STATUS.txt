@@ -1,0 +1,76 @@
+M1b core handoff — 2026-10-15
+
+Scope
+
+This integration completes the unfinished systems that were already present in
+PongPong-worktrees/m1b: P13 quest bindings, F2 home state/progression/chest,
+F4 loot/shop rotation/pricing, S-core social state, T-towns-core building hours
+and interior construction, and P28 UI navigation/components/conformance.
+The existing work was preserved in commit 2491b21 before merging main f478296.
+
+Implemented and exercised
+
+- Twenty revised Lua quests, explicit objective bindings, offers, turn-ins,
+  state queries, reward persistence and legacy collection bindings.
+- All ten home tiers, gates, construction, housewarming gifts, home chest,
+  save registration, guest/festival hooks and their documented fallback behavior.
+- Seeded loot, container fitting, cooldowns, keepsakes, duplicate handling,
+  rotating shops, one price calculation and the loot marker handlers.
+- Friendship state, calendar/rng helpers, save migration and social validators.
+- Building data, opening/closing rules, interior geometry/collision/doors/counters,
+  deterministic room generation and validation of all 24 generated layouts.
+- Keyboard/gamepad focus, modal ownership, confirmations, hints, prompts,
+  toasts, quantity stepper and the corresponding native pixel checks.
+- Painted shop masks use their native trim offsets and final body sort offset.
+  Ceiling pieces use the foreground plane; service fires add at most one light.
+
+Integration corrections
+
+- Legacy collect_<item> objectives count item_gained as well as direct resource
+  loot. Resource producers must keep the existing rule: resource_node_depleted
+  carries direct loot that did not already enter through item_gained.
+- Home transfers and construction commit both sides before notifying observers.
+  Pending gifts are acknowledged before item_gained, with reentry guarded.
+- Multi-roll loot finishes inventory, fees, keepsake records and its state commit
+  before acquisition observers run, preventing saves/reentry during partial delivery.
+- Disposing a modal releases its stack entry. Removing a confirmation's asker
+  cancels its outstanding answer rather than leaving the game paused.
+- Missing-art regressions explicitly remove the kit through test seams. Live kit
+  coverage stays enabled. Stand-in reporting now reflects the art actually selected.
+- Base-layout sprite accounting excludes optional hatch/dressing art. The unchanged
+  whole-room limits still cover every node/light: 130 nodes, four lights, median
+  warm build <=12 ms; the native first-frame gate remains <=250 ms.
+
+Economy API extension
+
+consume_backpack_items(needs, commit, gold_cost=0) now optionally debits gold in
+the same commit. receive_backpack_item(item, amount, commit) handles silent chest
+withdrawals. defer_notifications(action) runs an already-validated transaction
+before EconomyManager observers; after_transaction(action) lets related loot
+announcements join it. These helpers do not replace validation or add rollback.
+Storage owners joining a loot transaction should also defer their notifications
+through after_transaction so observers see the completed transaction.
+
+Art preservation
+
+All 2,531 reviewed visual assets outside the theme/two slider vectors remain
+byte-identical to main f478296. The three UI changes were inspected natively:
+cream handles, moss tracks, ink contours, parchment panels, raised buttons and
+gold focus match the chosen guide. Painted illustrations were retained.
+
+Remaining planned usable-towns work
+
+The repository still has later owner packages to build: the production player/
+farm loop, live town/NPC routing and population, installed core/extended room
+content, social dialogue/gifting/content/screens, the guide menu/HUD/dialogue/
+shop/inventory screens, and furniture/wardrobe runtime and feature screens.
+Current art studies and equipment fit proofs retain their documented coverage;
+full production clothing animation coverage is a separate asset task.
+The tests name these absent packages in SKIPs. The native shop-panel-over-room
+gate requires P18's shop_ui scene, which is not yet present.
+
+Evidence
+
+docs/qa/m1b-completion-2026-10-15/ contains targeted transaction/integration
+reports, the final strict character matrix, native checks and inspected captures,
+and the asset preservation record. Final matrix results are recorded there.

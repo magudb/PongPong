@@ -113,7 +113,7 @@ static func build(area: IsoArea, header: Dictionary) -> void:
 	var cols: int = int(spec["cols"])
 	var rows: int = int(spec["rows"])
 	var building: String = str(spec.get("building", ""))
-	var st: Dictionary = {"sprites": 0, "night": 0, "bodies": 0, "lights": 0, "furniture": 0, "walls": 0, "hatch": 0, "stand_ins": 0, "placeholders": 0, "counters": 0, "handlers": 0, "pieces": 0}
+	var st: Dictionary = {"sprites": 0, "night": 0, "bodies": 0, "lights": 0, "furniture": 0, "walls": 0, "hatch": 0, "stand_ins": 0, "placeholders": 0, "counters": 0, "handlers": 0, "pieces": 0, "accent_masks": 0, "service_lights": 0}
 	var inter: Dictionary = _json_of(INTERIOR_JSON)
 	var walls: Dictionary = inter.get("walls", {}) as Dictionary
 	var night_sprites: Array[Sprite2D] = []
@@ -141,7 +141,10 @@ static func build(area: IsoArea, header: Dictionary) -> void:
 		_sprite(area.ground_fx, mat, PROPS + "interior/", cell_local(float(door.x), float(door.y)))
 		st["sprites"] += 1
 	# --- the pieces (the room's own, then the dressing overlay)
-	for it in items_of(spec):
+	for it in spec.get("items", []):
+		_item(area, it as Dictionary, st)
+	st["base_sprites"] = st["sprites"]
+	for it in load_dress(id):
 		_item(area, it as Dictionary, st)
 	# --- the hatch: invisible bars on the NPC layer between the counter ends and the side walls (the player is stopped, citizens pass)
 	var hatch_art: Dictionary = {}
@@ -296,6 +299,7 @@ static func _item(area: IsoArea, it: Dictionary, st: Dictionary) -> void:
 			ws.position = wp
 			ws.z_index = WALL_Z
 			area.objects.add_child(ws)
+			_piece_light(area, ws, pc, st)
 			st["sprites"] += 1
 		return
 	var centre: Vector2 = cell_local(float(cx) + float(fp.x - 1) * 0.5, float(cz) + float(fp.y - 1) * 0.5)
@@ -307,7 +311,10 @@ static func _item(area: IsoArea, it: Dictionary, st: Dictionary) -> void:
 		if layer == "rug":
 			area.ground_fx.add_child(spr)
 		else:
+			if layer == "ceiling":
+				spr.z_index = 2
 			area.objects.add_child(spr)
+		_piece_light(area, spr, pc, st)
 		st["sprites"] += 1
 		if layer != "rug":
 			st["furniture"] += 1
@@ -323,6 +330,53 @@ static func _item(area: IsoArea, it: Dictionary, st: Dictionary) -> void:
 		body.add_child(cs)
 		area.colliders.add_child(body)
 		st["bodies"] += 1
+
+
+## Trimmed painted masks share the body's final offset and sort owner. Their source coordinates already include the mounting height.
+static func _piece_light(area: IsoArea, body: Sprite2D, pc: Dictionary, st: Dictionary) -> void:
+	if str(pc.get("night", "")) == "":
+		return
+	var tex := PieceCatalog.texture(str(pc["night"]))
+	if tex == null:
+		return
+	var clock := area.get_node_or_null("PieceLightClock") as PieceLightClock
+	if clock == null:
+		clock = PieceLightClock.new()
+		clock.name = "PieceLightClock"
+		area.add_child(clock)
+	var mask := Sprite2D.new()
+	mask.name = "PaintedLight"
+	mask.texture = tex
+	mask.centered = false
+	mask.material = Glow.additive_material()
+	mask.flip_h = body.flip_h
+	var trim: Vector2 = pc.get("night_offset", Vector2.ZERO)
+	if body.flip_h:
+		trim.x = body.texture.get_width() - trim.x - tex.get_width()
+	mask.offset = body.offset + trim
+	body.add_child(mask)
+	clock.accents.append(mask)
+	st["accent_masks"] += 1
+	var glow: Dictionary = pc.get("glow", {})
+	if str(glow.get("light_hint", "")) == "at_most_one_per_room" and int(st["service_lights"]) == 0:
+		var light := PointLight2D.new()
+		light.name = "ServiceFire"
+		light.texture = Glow.light_texture()
+		light.texture_scale = 1.25
+		light.color = Color(str(glow.get("color", "#ffb36b")))
+		var centre := _v2_of(glow.get("center", [0, 0]))
+		if body.flip_h:
+			centre.x = body.texture.get_width() - centre.x
+		light.position = body.offset + centre
+		body.add_child(light)
+		clock.lights.append(light)
+		st["service_lights"] += 1
+		st["lights"] += 1
+	clock.refresh()
+
+
+static func _v2_of(v: Array) -> Vector2:
+	return Vector2(float(v[0]), float(v[1]))
 
 
 ## The sprite of a resolved piece (pivot at the ground anchor; position and sort point are set by the caller), or null when there is no texture. A placeholder carries its label.
@@ -459,3 +513,28 @@ class WindowClock extends Node:
 		for s in sprites:
 			if is_instance_valid(s):
 				s.modulate = Color(0.55, 0.7, 1.0, a)
+
+
+## A room owns one clock connection for all painted service and decorative masks. Window light keeps its separate cool tint.
+class PieceLightClock extends Node:
+	var accents: Array[Sprite2D] = []
+	var lights: Array[PointLight2D] = []
+
+	func _ready() -> void:
+		EventBus.time_of_day_changed.connect(_on_clock)
+
+	func _exit_tree() -> void:
+		if EventBus.time_of_day_changed.is_connected(_on_clock):
+			EventBus.time_of_day_changed.disconnect(_on_clock)
+
+	func _on_clock(_hour: int, _minute: int) -> void:
+		refresh()
+
+	func refresh() -> void:
+		var gm := GameData.gm()
+		var hour: float = float(gm.get("hour")) + float(gm.get("minute")) / 60.0 if gm != null else 12.0
+		var factor := InteriorRoom.outdoor_glow(hour)
+		for accent in accents:
+			accent.modulate.a = factor
+		for light in lights:
+			light.energy = factor * 0.35

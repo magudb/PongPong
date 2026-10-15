@@ -929,6 +929,19 @@ func _duplicates() -> void:
 # ============================================================================================ two-phase and the backpack
 
 func _full_backpack() -> void:
+	_fresh(60)
+	ls.set_loot_config(_pool_cfg(["wood"], 3, "material", "normal"))
+	var wood_before: int = eco.count_item(&"wood")
+	var observations: Array = []
+	var reentry: Array = []
+	var on_gain := func(_id: StringName, _amount: int) -> void:
+		observations.append(ls.opened.has("zz:atomic") and eco.count_item(&"wood") == wood_before + 3)
+		reentry.append(ls.open_container("zz", "trae", "zz:atomic")["ok"])
+	bus.item_gained.connect(on_gain)
+	var atomic: Dictionary = ls.open_container("zz", "trae", "zz:atomic")
+	bus.item_gained.disconnect(on_gain)
+	t.check("loot_commits_before_gain_observers", bool(atomic["ok"]) and observations == [true, true, true] and reentry == [false, false, false] and eco.count_item(&"wood") == wood_before + 3,
+		"each gain observer sees all three rolls and the opened record; re-entering the same chest is refused")
 	_fresh(61)
 	var cfg := _pool_cfg(["iron_sword"], 3, "material", "normal")
 	ls.set_loot_config(cfg)

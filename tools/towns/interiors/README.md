@@ -17,6 +17,10 @@ Run with `python3 -B -I <script>` (isolated, no bytecode: the tools never leave 
 | `e_query_replay.py PATH [--emit FILE]` | replays the BUILT E-query (circle r = 45 at the facing cell, 12-gon ellipses, the host nearest to the player wins): rule A (an end cell selects its `talk` host), B (the middle cell selects the centre host), C (a talk host is never selected from the middle cell); `--emit` writes the selection table the Godot twin must reproduce sample by sample |
 | `make_kit_table.py --source integration_shop_kit.json` | writes `data/interiors/kit_footprints.json` (footprint and layer of the 104 kit ids: 89 pieces + 15 emblem plates; I3 = 35, I4 = 69) |
 
+`--stand-ins` reports only fallbacks actually selected after the shipped core/specialist kits and furniture. Add `--without-kit` to exercise the missing-kit regression fixtures.
+
+The 31-sprite layout gate covers the base walls, corner, doormat and room pieces. Painted hatch sprites and optional dressing also count toward the unchanged whole-room limit of 130 nodes, four lights and a 12 ms median warm build. Painted light masks use one clock connection per room and at most one additional service-fire light; ceiling art stays above actors.
+
 ## Grammars (`grammar.py`)
 
 * **shop band**: a 3 x 1 counter on row 2 (`counter_pine`), invisible hatch bars on the NPC layer from the counter ends to the side walls, the keeper post on row 1,

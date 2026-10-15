@@ -479,6 +479,12 @@ func missing_items(spot_id: String) -> Array[String]:
 ## registry `dungeon.found` and announced once. {ok, sold, reason, gold}: ok = false only when the item could not enter and may not be sold (a full backpack: the pickup
 ## orb stays on the ground).
 func deliver(item_id: Variant, amount: int = 1) -> Dictionary:
+	var result := {}
+	EconomyManager.defer_notifications(func() -> void: result.merge(_deliver(item_id, amount)))
+	return result
+
+
+func _deliver(item_id: Variant, amount: int) -> Dictionary:
 	var id := StringName(str(item_id))
 	if id == &"" or amount <= 0:
 		return {"ok": false, "sold": false, "reason": &"invalid", "gold": 0}
@@ -494,7 +500,7 @@ func deliver(item_id: Variant, amount: int = 1) -> Dictionary:
 			EconomyManager.add_gold(gold)
 		_note_keepsake(id)
 		var shown := tr(str(def.get("name_key", "ITEM_%s" % str(id).to_upper())))
-		EventBus.whisper_requested.emit(tr("FIND_UI_DUPLICATE_FMT") % [shown, gold])
+		_announce_after_transaction(&"whisper_requested", [tr("FIND_UI_DUPLICATE_FMT") % [shown, gold]])
 		return {"ok": true, "sold": true, "reason": &"sold", "gold": gold}
 	return {"ok": false, "sold": false, "reason": &"full" if no_room else &"refused", "gold": 0}
 
@@ -508,9 +514,13 @@ func _note_keepsake(id: StringName) -> void:
 	registry[str(id)] = _today()
 	dungeon["found"] = registry
 	var rarity := _Kinds.rarity_of(id)
-	EventBus.game_event.emit(&"loot_keepsake_found", {"item": str(id), "rarity": str(rarity), "source": _source})
+	_announce_after_transaction(&"game_event", [&"loot_keepsake_found", {"item": str(id), "rarity": str(rarity), "source": _source}])
 	var shown := tr(str(_Kinds.def(id).get("name_key", "ITEM_%s" % str(id).to_upper())))
-	EventBus.whisper_requested.emit(tr(KEY_KEEPSAKE_FMT) % shown)
+	_announce_after_transaction(&"whisper_requested", [tr(KEY_KEEPSAKE_FMT) % shown])
+
+
+func _announce_after_transaction(event_name: StringName, args: Array) -> void:
+	EconomyManager.after_transaction(func() -> void: EventBus.emit_signal.callv([event_name] + args))
 
 
 # ================================================================================================ the container algorithm (base)
@@ -580,24 +590,26 @@ func _finish(source: StringName, plan: Dictionary, ctx: Dictionary, r: RandomNum
 		_restore(r, rng_before, own_stream)
 		_announce_full(bool(ctx.get("dungeon", false)) or str(ctx.get("uid", "")).begins_with(DUNGEON_UID_PREFIX))
 		return _answer(false, [], &"full")
-	if not consume.is_empty():
-		EconomyManager.remove_items(consume)
-	if fee > 0:
-		EconomyManager.spend_gold(fee)
-	var prior := _source
-	_source = str(source)
 	var out_rows: Array = []
 	var sold: Array = []
-	if orbs:
-		out_rows = rows.duplicate(true)
-	else:
-		for row in rows:
-			var res := deliver(str(row["id"]), int(row["amount"]))
-			out_rows.append(row)
-			if bool(res.get("sold", false)):
-				sold.append({"id": str(row["id"]), "gold": int(res.get("gold", 0))})
-	_source = prior
-	_commit(plan)
+	EconomyManager.defer_notifications(func() -> void:
+		if not consume.is_empty():
+			EconomyManager.remove_items(consume)
+		if fee > 0:
+			EconomyManager.spend_gold(fee)
+		var prior := _source
+		_source = str(source)
+		if orbs:
+			out_rows.append_array(rows.duplicate(true))
+		else:
+			for row in rows:
+				var res := deliver(str(row["id"]), int(row["amount"]))
+				out_rows.append(row)
+				if bool(res.get("sold", false)):
+					sold.append({"id": str(row["id"]), "gold": int(res.get("gold", 0))})
+		_source = prior
+		_commit(plan)
+	)
 	if not orbs and not out_rows.is_empty():
 		EventBus.loot_rolled.emit(source, out_rows)
 	_announce_cap()
