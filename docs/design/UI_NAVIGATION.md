@@ -403,7 +403,7 @@ A scrim (`PanelScrim`, `mouse_filter = STOP`) + `AcceptDialog`-styled panel (par
 | `home_chest` | Hjemmekiste | none (by analogy) | `scenes/ui/home_chest.tscn` | F7 | `home_chest` (yes) | `game_event open_home_chest` | Esc / Luk |
 | `garderobe` | Garderobe | F8 mock | `scenes/ui/garderobe.tscn` | F8 | `garderobe` (yes) | G, pause row, "Tag på nu?" after a purchase (a `UiConfirm` asked by the shop, 3.5) | G / Esc |
 | `samlerbog` | Samlerbog (**optional**, F9 is not in `owners.json`) | F9 mock | `scenes/ui/samlerbog.tscn` | F9 (only if the lead schedules it) | `samlerbog` (yes) | C, pause row | C / Esc |
-| `sleep` | Søvn og besvimelse (a fade + a toast, no widget) | none | `FadeLayer` in `scripts/world2d/world_2d.gd` (**no registry row**: proved by `zz_acceptance.sleep_and_passout_ui`) | P04 (built, no change) | - | bed `interact` / midnight | fade-in |
+| `sleep` | Søvn og besvimelse (a fade + a toast, no widget) | none | `FadeLayer` in `scripts/world2d/world_2d.gd` (**no registry row**: proved by `zz_acceptance.sleep_and_passout_ui`) | P04 (built, no change) | - | bed `interact` / the 02:00 pass-out | fade-in |
 
 `GameUI.SCREEN_ORDER` (P07) already lists every scene id above except the components, which are not screens; its ids are the scene names (`inventory_ui`, `quest_journal`, `shop_ui`, `build_menu_ui`, `dialogue_ui`), which differ from the registry ids of this table (`inventory`, `journal`, `shop`, `build_menu`, `dialogue`): `GameUI.get_screen(...)` and `TTScreen.screen_id` always take the list id. `toast_stack`, `prompt_pill` and `whisper_line` are **P28 components** (wave 3b, so that P16 and P17 both build on them): they are children of `hud.tscn` AND `forest_hud.tscn` (a mode switch hides the whole HUD node, so each HUD owns its own instance) and of `main_menu.tscn` and `character_select.tscn`, which have no GameUI at all. `area_banner` stays P17's.
 
@@ -1117,7 +1117,7 @@ Every check name used in the cards, the matrix and `ui_packages.json` (the gener
 | `zz_acceptance.gamepad_only_flow` | P27 | headless+windowed | new | every screen reachable and closable with `InputEventJoypadButton` only |
 | `zz_acceptance.guide_diff_table` | P27 | headless+windowed | new | the QA report lists every guide-diff number against its target |
 | `zz_acceptance.keyboard_only_flow` | P27 | headless+windowed | new | the whole acceptance walk of 7.5 with `InputEventKey` only |
-| `zz_acceptance.sleep_and_passout_ui` | P27 | headless+windowed | new | bed and midnight pass-out: fade, toast, input ignored, pause refused, focus clean |
+| `zz_acceptance.sleep_and_passout_ui` | P27 | headless+windowed | new | bed and the 02:00 pass-out (and no pass-out at midnight): fade, toast, input ignored, pause refused, focus clean |
 | `zz_acceptance.ui_baseline_no_regression` | P27 | headless+windowed | new | every live screen without an HTML mock matches its pinned `docs/qa/ui_baseline/<id>.png` within 1.5; the PNGs are committed by the OWNER of each screen in its own wave after the lead looked at the capture (so the guard is live from the first capture), P27 re-runs the guard and fails a missing pin |
 | `zz_acceptance.ui_conformance_windowed` | P27 | headless+windowed | new | `run_windowed.sh --only=ui_conformance` once per character |
 | `zz_features.gamepad_only_indretning` | F10 | headless | new | Indretning and Garderobe with pad events only |

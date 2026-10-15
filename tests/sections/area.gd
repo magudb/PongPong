@@ -1800,7 +1800,7 @@ func _builder_rebuild_while_traveling(t) -> void:
 	# --- 2. the pass-out: the day rolled INSIDE advance_time before midnight_passed starts the sequence; the deferred rebuild of that
 	# frame finds `traveling` set and used to be dropped
 	var room2: IsoArea = _world.area
-	gm.set("hour", 23)
+	gm.set("hour", gm.day_end_hour() - 1)         # the last hour of the game day (01:50 at day_end_hour 26): +20 min crosses the day end
 	gm.set("minute", 50)
 	var built1: int = built_calls.size()
 	fade_at_rebuild.clear()
@@ -1812,7 +1812,7 @@ func _builder_rebuild_while_traveling(t) -> void:
 	var passed: bool = await t.until(func() -> bool: return not _world.sleeping, 12.0)
 	Engine.time_scale = 1.0
 	t.check("rebuild_queued_during_the_pass_out", passing_out and passed and _world.area != room2 and built_calls.size() == built1 + 1 and not _world._rebuild_queued and fade_at_rebuild.size() == 1 and fade_at_rebuild[0] >= 0.99 and p.get_parent() == _world.area.objects,
-		"the day roll of advance_time (before midnight_passed) queued the rebuild, the pass-out night ran it exactly once behind the black screen (builder calls %d -> %d)" % [built1, built_calls.size()])
+		"the day roll of advance_time at the day end (before midnight_passed) queued the rebuild, the pass-out night ran it exactly once behind the black screen (builder calls %d -> %d)" % [built1, built_calls.size()])
 	# --- 3. a travel keeps the request too (the primitive: rebuild_current_area() while traveling does not drop it)
 	var room3: IsoArea = _world.area
 	var built2: int = built_calls.size()
@@ -2052,8 +2052,8 @@ func _sleep_and_passout(t) -> void:
 	t.check("bed_sleeps_until_morning", was_sleeping and slept and day1 == day0 % 28 + 1 and gm.get("hour") == gm.day_start_hour() and gm.get("minute") < 10 and float(p.get("stamina")) >= float(p.get("max_stamina")) - 0.01 and _world._fade.color.a == 0.0 and int(p.get("state")) == 0,
 		"19:00 -> next morning %02d:00 on day %d (was %d), energy restored, fade clear, took %d ms at time scale 4 [sleeping %s slept %s stamina %s/%s fade %s state %s]" % [gm.get("hour"), day1, day0, Time.get_ticks_msec() - started, was_sleeping, slept, p.get("stamina"), p.get("max_stamina"), _world._fade.color.a, p.get("state")])
 	bus.notification_posted.disconnect(ncb)
-	# pass-out: the clock crosses midnight (GameManager emits game_event midnight_passed) -> sleep clip, fade, wake at day_start_hour, NOT a skipped day
-	gm.set("hour", 23)
+	# pass-out: the clock crosses the DAY END 26:00 = 02:00 (GameManager emits game_event midnight_passed) -> sleep clip, fade, wake at day_start_hour, NOT a skipped day
+	gm.set("hour", gm.day_end_hour() - 1)
 	gm.set("minute", 50)
 	var day2: int = gm.get("day")
 	var notes2: Array = []
@@ -2069,8 +2069,8 @@ func _sleep_and_passout(t) -> void:
 	for n in notes2:
 		if n[2] == "sleep":
 			passed_note = n
-	t.check("pass_out_at_midnight", sleeping_now and done and gm.get("day") == day2 % 28 + 1 and gm.get("hour") == gm.day_start_hour() and not passed_note.is_empty() and passed_note[1] == _world.tr("NOTIF_PASSED_OUT") and passed_note[0] == _world.tr("NOTIF_PASSED_OUT_TITLE"),
-		"23:50 + 20 min crosses midnight: one new day (%d -> %d), wake at 06:00, NOTIF_PASSED_OUT posted" % [day2, gm.get("day")])
+	t.check("pass_out_at_day_end", sleeping_now and done and gm.get("day") == day2 % 28 + 1 and gm.get("hour") == gm.day_start_hour() and not passed_note.is_empty() and passed_note[1] == _world.tr("NOTIF_PASSED_OUT") and passed_note[0] == _world.tr("NOTIF_PASSED_OUT_TITLE"),
+		"01:50 (raw 25:50) + 20 min crosses the day end 02:00: one new day (%d -> %d), wake at 06:00, NOTIF_PASSED_OUT posted" % [day2, gm.get("day")])
 	bus.notification_posted.disconnect(ncb2)
 	# no pass-out in the forest (time is paused there; nothing may trigger it)
 	_world._enter(&"_fixture_ortho", &"default")

@@ -13,15 +13,22 @@ extends Node
 ##
 ## CLOCK AND CALENDAR. One calendar, one source of truth: days per season, the season list and the clock hours come from
 ## lua/config time.* (LuaRuntime.get_config) with the literals below as defaults (days_per_season(), seasons(),
-## day_start_hour(), day_end_hour(), minutes_per_real_second()). The clock is a plain 24 hour clock:
-##   advance_time(minutes) is exact arithmetic. Crossing day_end_hour (24:00) rolls the day and carries the overflow, so
-##     06:00 + 25 h is 07:00 of the next day and a 50 h skip crosses two midnights (day_ended .. day_started per midnight).
-##     time_of_day_changed always carries hour 0..23.
+## day_start_hour(), day_end_hour(), minutes_per_real_second()). THE GAME DAY RUNS 06:00 TO 02:00 AT NIGHT (user answer 2026-10-14; the contract is
+## docs/design/CLOCK_26_ADDENDUM.md). The clock is READ with a RAW hour:
+##   `hour` is the raw game hour 6..25: the hours 24 and 25 belong to the SAME game day (same `day`, weekday, weather, shop opening day, festival
+##     day) and are DISPLAYED 00:xx and 01:xx (TTFormat.clock / clock_hour_of_day(): hour % 24). The player passes out at game hour 26 = 02:00
+##     (day_end_hour()). Hours of Lua tables are floats on the same axis (25.5 = 01:30); game_hour() maps an authored 1.5 onto it.
+##   advance_time(minutes) is exact arithmetic. Crossing day_end_hour (26:00) rolls the day: the calendar steps and the clock restarts at
+##     day_end_hour - 24 = 02:00 of the NEW date (00:00 when day_end_hour <= 24, the old behaviour), so the clock never jumps backwards (01:59
+##     -> 02:00) and every calendar day is exactly 24 clock hours: 06:00 + 25 h is 07:00 of the next day and a 50 h skip crosses two rolls
+##     (day_ended .. day_started per roll). time_of_day_changed carries the raw hour: 2..25 (6..25 in play, 2..5 only between the roll and the wake-up).
 ##   end_day() ends the current day NOW and starts the next morning at day_start_hour (bed, harness t.days()).
-##   sleep_until_morning() is the helper for WorldRoot2D: the bed (before midnight) and the pass-out (the clock already
-##     crossed midnight, so the new day has begun) both wake the player at day_start_hour; it never skips a day twice.
-##   WorldRoot2D detects the pass-out through EventBus.game_event(&"midnight_passed", {day, season}), emitted once per
-##     midnight that advance_time() crosses (after day_started; never by end_day or the bed). The clock hour is never 24.
+##   sleep_until_morning() is the helper for WorldRoot2D: the bed (any raw hour >= day_start_hour, so also 24:xx and 25:xx) and the pass-out
+##     (the clock already crossed the roll, so the new day has begun and the raw hour is 2..5) both wake the player at day_start_hour; it
+##     never skips a day twice.
+##   WorldRoot2D detects the pass-out through EventBus.game_event(&"midnight_passed", {day, season}), emitted once per roll that
+##     advance_time() crosses (after day_started; never by end_day or the bed). The id is kept from the 24:00 days: it means "the day-end
+##     roll" (02:00); real midnight (raw 24:00) emits nothing. The clock hour is never 26.
 ## Weather for a new day is rolled by TimeManager BEFORE day_started is emitted (end_day and the midnight roll call it).
 ##
 ## NEW GAME (D15, reset contract 3.6): start_new_game() resets this node, then emits player_character_changed (skin final)
@@ -37,7 +44,7 @@ const SAVE_VERSION := 1
 const DEFAULT_DAYS_PER_SEASON := 28
 const DEFAULT_SEASONS: Array[StringName] = [&"foraar", &"sommer", &"efteraar", &"vinter"]
 const DEFAULT_DAY_START_HOUR := 6
-const DEFAULT_DAY_END_HOUR := 24
+const DEFAULT_DAY_END_HOUR := 26
 const DEFAULT_MINUTES_PER_REAL_SECOND := 2.0
 
 ## World flags with a contract (JSON-safe scalars, read with flag_int()).
@@ -127,12 +134,34 @@ func day_start_hour() -> int:
 	return start
 
 
-## The hour at which the clock wraps into the next day (24 by default).
+## The raw game hour at which the day rolls and the player passes out (26 = 02:00 by default; 24 = midnight, the old value).
+## Valid: day_start_hour < value < 24 + day_start_hour (the restart hour after the roll must stay BEFORE the wake-up hour, or
+## sleep_until_morning() could not tell the pass-out from the bed). Anything else falls back to the default 26 or, when 26 itself breaks the
+## range for a modded day start of 0..2 (26 >= 24 + start), to the largest valid value 23 + day_start_hour (24 at start 1, 25 at start 2).
+## (A day start of 0 has no hour below it: there the pass-out can not be told from the bed in ANY version, the 24 hour one included.)
 func day_end_hour() -> int:
+	var fallback := mini(DEFAULT_DAY_END_HOUR, 23 + day_start_hour())
 	var end_hour := int(config_value("time.day_end_hour", DEFAULT_DAY_END_HOUR))
-	if end_hour <= day_start_hour() or end_hour > 48:
-		return DEFAULT_DAY_END_HOUR
+	if end_hour <= day_start_hour() or end_hour >= 24 + day_start_hour():
+		return fallback
 	return end_hour
+
+
+## The raw clock hour the new calendar day starts with right after the roll: day_end_hour() - 24 (02:00 at 26), never negative.
+func day_roll_restart_hour() -> int:
+	return maxi(day_end_hour() - 24, 0)
+
+
+## The hour as the player reads it: the raw hours 24 and 25 (the same game day) read 0 and 1. Default: the current hour.
+func clock_hour_of_day(raw_hour: int = -1) -> int:
+	return posmod(hour if raw_hour < 0 else raw_hour, 24)
+
+
+## An hour as AUTHORED (a Lua value, a window end, a person typing 1.5 for 01:30) mapped onto the raw game-hour axis: everything below the
+## day start is after midnight of the SAME game day and gets +24 (1.5 -> 25.5, 0.0 -> 24.0); 6.0 and up stay. The ONE normaliser of the
+## opening-hours rule, the routine compiler and the when= hour selectors: nothing re-implements the wrap.
+func game_hour(clock_hour: float) -> float:
+	return clock_hour + 24.0 if clock_hour < float(day_start_hour()) else clock_hour
 
 
 func minutes_per_real_second() -> float:
@@ -368,20 +397,25 @@ func _format_one(template: String, arg: String) -> String:
 # ------------------------------------------------------------------ clock and calendar
 
 ## Advances the clock by `minutes` with exact arithmetic (see the header): crossing day_end_hour rolls the day and carries
-## the overflow, as often as needed. time_of_day_changed fires once at the end with the settled hour 0..23.
+## the overflow, as often as needed. Each roll puts the clock back by one calendar day (24 h; E h when day_end_hour E < 24), so
+## the clock restarts at day_roll_restart_hour(). time_of_day_changed fires once at the end with the settled raw hour (2..25).
 func advance_time(minutes: int) -> void:
 	if minutes < 0:
 		return
-	var day_minutes := day_end_hour() * 60
+	var end_minutes := day_end_hour() * 60
+	var restart_minutes := day_roll_restart_hour() * 60
+	var day_minutes := end_minutes - restart_minutes
 	var total := hour * 60 + minute + minutes
-	var midnights := floori(float(total) / float(day_minutes))
-	var settled := total - midnights * day_minutes
-	for i in midnights:
-		hour = 0
+	var rolls := 0
+	if total >= end_minutes:
+		rolls = floori(float(total - restart_minutes) / float(day_minutes))
+		total -= rolls * day_minutes
+	for i in rolls:
+		hour = floori(float(restart_minutes) / 60.0)
 		minute = 0
 		_roll_day()
-	hour = floori(float(settled) / 60.0)
-	minute = settled - hour * 60
+	hour = floori(float(total) / 60.0)
+	minute = total - hour * 60
 	EventBus.time_of_day_changed.emit(hour, minute)
 
 
@@ -395,8 +429,9 @@ func end_day() -> void:
 	EventBus.time_of_day_changed.emit(hour, minute)
 
 
-## Sleep helper for WorldRoot2D (bed and pass-out). Wakes at day_start_hour: before midnight the day ends first
-## (end_day), after midnight (the pass-out: advance_time already rolled the day) only the rest of the night is skipped.
+## Sleep helper for WorldRoot2D (bed and pass-out). Wakes at day_start_hour: while the raw hour is still >= day_start_hour (also
+## 24:xx and 25:xx) the day ends first (end_day), after the roll (the pass-out: advance_time already rolled the day, the raw hour
+## is 2..5) only the rest of the night is skipped.
 ## Returns the number of calendar days that passed (1 or 0).
 func sleep_until_morning() -> int:
 	var wake_hour := day_start_hour()
@@ -422,7 +457,7 @@ func total_day_for(p_day: int, p_season: StringName, p_year: int) -> int:
 	return ((maxi(p_year, 1) - 1) * season_list.size() + season_idx) * per_season + clampi(p_day, 1, per_season)
 
 
-## One midnight of advance_time: the clock is 00:00 here, the calendar steps, the weather is rolled, a new day starts.
+## One day-end roll of advance_time: the clock is at the restart hour (02:00) here, the calendar steps, the weather is rolled, a new day starts.
 func _roll_day() -> void:
 	EventBus.day_ended.emit(day, season)
 	_step_calendar()
@@ -492,7 +527,9 @@ func from_dict(data: Dictionary) -> void:
 	day = clampi(int(data.get("day", 1)), 1, days_per_season())
 	season = StringName(str(data.get("season", seasons()[0])))
 	year = maxi(int(data.get("year", 1)), 1)
-	hour = clampi(int(data.get("hour", day_start_hour())), 0, day_end_hour() - 1)
+	# a saved raw hour below the restart hour (an old save taken at 00:xx / 01:xx right after the old midnight roll) is the same night:
+	# it is lifted to the restart hour (02:00) instead of being read as 24 h later; 24 and 25 are valid (a save at 01:40 of the same game day)
+	hour = clampi(int(data.get("hour", day_start_hour())), day_roll_restart_hour(), day_end_hour() - 1)
 	minute = clampi(int(data.get("minute", 0)), 0, 59)
 	world_flags = _sanitized_flags(data.get("world_flags", {}))
 	unlocked_zones.assign(_string_names(data.get("unlocked_zones", _default_zones())))

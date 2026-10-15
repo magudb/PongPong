@@ -7,7 +7,7 @@ extends Node
 ## "Tuesday 16. Month of Blooms" from the translation keys UI_WEEKDAY_1..7 and UI_MONTH_<SEASON> (they live in ui.csv).
 ##
 ## WEATHER. Ids klart regn taage sne torden. One roll per new day, made BEFORE day_started is emitted
-## (GameManager.end_day / the midnight roll call roll_weather_for_day(); the day_started handler below is only a guarded
+## (GameManager.end_day / the day-end roll call roll_weather_for_day(); the day_started handler below is only a guarded
 ## safety net, so a day is never rolled twice). The odds are `time.weather_chances.<season>` in game_balance.lua: WEIGHTS
 ## per weather id, normalised here; a season without a klart weight gets klart as the remainder up to 1.0; snow only ever
 ## happens in vinter. The old literals are the default when the config has no entry. EventBus.weather_changed fires
@@ -88,11 +88,14 @@ func reset() -> void:
 	_apply_weather(&"klart")
 
 
+## The clock as a fraction of the 24 hour clock face (noon = 0.5). It passes 1.0 between 24:00 and 02:00 (the raw hours 24 and 25 of the
+## same game day); nothing divides by the day length any more, so changing day_end_hour never moves noon. No script reads it today.
 func get_day_fraction() -> float:
-	return (GameManager.hour * 60.0 + GameManager.minute) / (GameManager.day_end_hour() * 60.0)
+	return (GameManager.hour * 60.0 + GameManager.minute) / 1440.0
 
 
-## `time.night_start_hour` / `time.night_end_hour` (defaults 20 and 5).
+## `time.night_start_hour` / `time.night_end_hour` (defaults 20 and 5). The raw hours 24 and 25 (00:xx and 01:xx of the same game
+## day) are >= night_start and the hours 2..4 after the day roll are < night_end: the whole stretch 20:00-05:00 is night.
 func is_night() -> bool:
 	var night_start := int(GameManager.config_value("time.night_start_hour", 20))
 	var night_end := int(GameManager.config_value("time.night_end_hour", 5))

@@ -23,6 +23,8 @@ signal interaction_prompt_changed(text: String)
 # --- Time / Day / Weather ---
 signal day_started(day: int, season: StringName)
 signal day_ended(day: int, season: StringName)
+# hour is the RAW game hour 2..25 (6..25 in normal play): 24 and 25 are 00:xx and 01:xx of the SAME game day (the day runs to 02:00);
+# show it with TTFormat.clock() / GameManager.clock_hour_of_day(), compare it raw (night = hour >= 20 or hour < 5 holds for 24 and 25 too).
 signal time_of_day_changed(hour: int, minute: int)
 signal season_changed(season: StringName)
 signal weather_changed(weather: StringName)
@@ -110,7 +112,8 @@ signal lua_event(event_name: StringName, payload: Dictionary)
 ## For signals nobody foresaw (R.13). Quest bindings of the feature content use it with these names, emitted by the
 ## owner next to the dedicated signal: furniture_placed {item, rarity}, hygge_level {level}, festival_held {},
 ## home_upgraded {tier}, garment_equipped {slot, item, rarity}, open_home_builder {tier}, open_home_chest {}.
-## GameManager.advance_time() emits midnight_passed {day, season} for every midnight the clock crosses (the pass-out trigger).
+## GameManager.advance_time() emits midnight_passed {day, season} for every day-end roll the clock crosses (the pass-out trigger; the id is kept from the
+## days that ended at 24:00, the roll is now at game hour 26 = 02:00; real midnight, raw hour 24, emits nothing; a hook for a true midnight needs a NEW name).
 ## Consumers must ignore names they do not know.
 signal game_event(name: StringName, payload: Dictionary)
 

@@ -7,7 +7,7 @@ expected loot of the chests / digs / creatures, hearts come from one weekly chat
 
 ## The numbers (reviewed pack = this repo's rerun)
 
-Hours are REAL hours (one game day = 9 real minutes, 6.67 days per hour) until the Slottet (tier 10) is finished.
+Hours are REAL hours (one game day = 10 real minutes, 6.0 days per hour: the day runs 06:00-02:00, CLOCK_26) until the Slottet (tier 10) is finished. The day numbers do not depend on the clock; the real-hour figures of the tables below were computed for a 9 minute day (multiply them by 10 / 9) and are re-derived by `tools/features/sim/run_balance.sh --quests stage` (re-run in a clone: typical 345 d = 57.5 h, casual 919 d = 153.2 h, dedicated 185 d = 30.8 h).
 
 | profile | game day | real hours | what the profile is |
 |---|---|---|---|
@@ -68,6 +68,6 @@ C totals, then drop rates per container, recipe margins (no craft-and-sell loop:
 ## Honest limits
 
 * Income is an assumption per profile; a real player's farm, forest and shop habits will differ.  The model has no randomness: it prices EXPECTED finds (legendary pieces only through the boss pool with its pity counter).
-* The hours do not include talking, walking or menus; 9 real minutes per game day is the PLAN's clock.
+* The hours do not include talking, walking or menus; 10 real minutes per game day is the clock of CLOCK_26 (06:00-02:00 at 2 game minutes per real second; it was 9 minutes in PLAN 3.9 when the day ended at 24:00).
 * Hearts come from the weekly chat heart (DF3, P14); if P14 changes that mechanic the gate rows of tiers 4, 7 and 10 move (rule FG1 only proves the hearts are earnable at all).
 * The prices of furniture and clothing in shops are the data; "furnishing the castle costs about 43,000" assumes a 40 / 40 / 20 normal / uncommon / rare mix.

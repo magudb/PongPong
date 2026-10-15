@@ -1360,6 +1360,23 @@ func _test_autosave() -> void:
 	gm.advance_time(50 * 60)
 	await t.frames(2)
 	t.check("autosave_coalesces_midnights", _saved_slots == [6], "50 hours crossed two midnights, save_completed %s" % [_saved_slots])
+	# the pass-out roll (02:00) is a day end too: ONE auto save, taken at the restart hour of the new date (the sleep sequence has not woken the player yet);
+	# real midnight (raw 24:00) is NOT a day end: nothing is saved there (the 5 minute timer covers 00:00-02:00)
+	DirAccess.remove_absolute(sm.slot_path(sm.AUTO_SLOT))
+	_saved_slots.clear()
+	gm.hour = 23
+	gm.minute = 55
+	gm.advance_time(10)
+	await t.frames(2)
+	var no_save_at_midnight: bool = _saved_slots.is_empty() and not sm.has_save(sm.AUTO_SLOT) and gm.hour == 24
+	gm.hour = gm.day_end_hour() - 1
+	gm.minute = 55
+	var roll_day: int = gm.day
+	gm.advance_time(10)
+	await t.frames(2)
+	var roll_doc: Variant = _read_json(sm.slot_path(sm.AUTO_SLOT))
+	t.check("autosave_on_the_day_end_roll", no_save_at_midnight and _saved_slots == [6] and roll_doc != null and roll_doc["game"]["day"] == roll_day + 1 and roll_doc["game"]["hour"] == gm.day_roll_restart_hour(),
+		"23:55 + 10 min = raw 24:05: no save; 01:55 + 10 min = the day-end roll: one auto save of day %s at raw hour %s (restart hour %d); save_completed %s" % [roll_doc["game"]["day"] if roll_doc != null else "-", roll_doc["game"]["hour"] if roll_doc != null else "-", gm.day_roll_restart_hour(), _saved_slots])
 	# the switch stops the DAY-END trigger as well as the timer: at the day end itself, and for a save that is already queued
 	DirAccess.remove_absolute(sm.slot_path(sm.AUTO_SLOT))
 	_saved_slots.clear()
@@ -1447,6 +1464,24 @@ func _test_summaries() -> void:
 		"%s" % [s])
 	t.check("summary_meta", s.get("slot") == 0 and s.get("is_auto") == false and str(s.get("timestamp")).length() >= 19 and float(s.get("saved_at")) > 1.0e9 and s.get("from_backup") == false, "slot, is_auto, timestamp, saved_at")
 	t.check("summary_types", typeof(s["day"]) == TYPE_INT and typeof(s["gold"]) == TYPE_INT and typeof(s["total_day"]) == TYPE_INT and typeof(s["play_time_seconds"]) == TYPE_FLOAT, "ints after the JSON round trip")
+	# the game day runs to 02:00: a save at raw 25:40 (01:40, the same game day) keeps hour 25 in the summary and loads back as 25:40 (the summary validator has no hour range);
+	# a file that a build of the 24:00 days wrote right after its midnight roll (hour 0) loads as 02:00, not 24 h later; hours 6..23 of old saves are untouched (core.from_dict_* of clock26)
+	gm.hour = 25
+	gm.minute = 40
+	sm.save_game(3)
+	var late: Dictionary = sm.get_save_summary(3)
+	gm.hour = 6
+	gm.minute = 0
+	var late_loaded: bool = sm.load_game(3)
+	var late_back: bool = gm.hour == 25 and gm.minute == 40 and gm.day == 16
+	var old_doc: Variant = _read_json(sm.slot_path(3))
+	old_doc["game"]["hour"] = 0
+	old_doc["meta"]["summary"]["hour"] = 0
+	_put(3, old_doc)
+	var old_loaded: bool = sm.load_game(3)
+	t.check("save_late_hour_roundtrip_and_old_midnight_save", late.get("hour") == 25 and late.get("minute") == 40 and late_loaded and late_back and old_loaded and gm.hour == 2 and gm.day == 16,
+		"raw 25:40 -> summary %s:%s, loads back %s; an old save at hour 0 loads at raw %02d:%02d (day %d)" % [late.get("hour"), late.get("minute"), late_back, gm.hour, gm.minute, gm.day])
+	sm.delete_save(3)
 	gm.play_time_seconds = 600.0                                     # a whole number of seconds is an int after the JSON load, the summary says float
 	sm.save_game(2)
 	t.check("summary_whole_play_time_is_float", typeof(sm.get_save_summary(2)["play_time_seconds"]) == TYPE_FLOAT and sm.get_save_summary(2)["play_time_seconds"] == 600.0, "600 s -> %s" % [type_string(typeof(sm.get_save_summary(2)["play_time_seconds"]))])
