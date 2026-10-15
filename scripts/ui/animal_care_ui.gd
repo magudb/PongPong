@@ -105,7 +105,7 @@ func _refresh_details() -> void:
 	var happy_level: String = _husbandry.get_happiness_level(animal)
 	status_label.text = tr("HAPPY_%s" % happy_level.to_upper())
 
-	var spec: Dictionary = _husbandry.SPECIES_DATA[str(animal.species)]
+	var spec: Dictionary = _husbandry.species_data[str(animal.species)]
 	var product_id: String = spec["product"]
 	product_label.text = tr("UI_PRODUCT_READY") % [tr("ITEM_%s" % product_id.to_upper()), animal.products_ready]
 
