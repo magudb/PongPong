@@ -10,7 +10,7 @@ func _run() -> void:
 	var strict := "--strict" in OS.get_cmdline_user_args()
 	var details := "--details" in OS.get_cmdline_user_args()
 	var lua := root.get_node("LuaRuntime")
-	var report := {"characters": [], "skins": [], "npcs": [], "items": [], "tiles": [], "props": [], "references": [], "failures": []}
+	var report := {"characters": [], "skins": [], "npcs": [], "items": [], "icon_variants": [], "tiles": [], "props": [], "backdrops": [], "references": [], "failures": []}
 	for id in DirAccess.get_directories_at("res://assets/isometric_characters"):
 		var path := "res://assets/isometric_characters/" + id + "/animations.json"
 		if not FileAccess.file_exists(path):
@@ -65,6 +65,10 @@ func _run() -> void:
 		if details:
 			item["definition"] = def
 		report["items"].append(item)
+		for night in [false, true]:
+			var variant_path := ArtCatalog.icon_path(StringName(id), night)
+			if not variant_path.is_empty():
+				report["icon_variants"].append({"id": id, "night": night, "path": variant_path})
 		if item["path"] == "" or item["catalog_path"] == "":
 			report["failures"].append("item picture: " + str(id))
 	var terrain_ids := ArtCatalog.terrain_manifest_ids()
@@ -109,9 +113,21 @@ func _run() -> void:
 	prop_ids.sort()
 	for id in prop_ids:
 		var art := ArtCatalog.prop(StringName(id))
-		report["props"].append({"id": id, "path": (art["texture"] as Texture2D).resource_path, "real": art["real"]})
+		var entry := {"id": id, "path": (art["texture"] as Texture2D).resource_path, "real": art["real"], "auxiliary": []}
+		for role in ["ground", "glow"]:
+			var secondary: Dictionary = art.get(role, {})
+			if secondary.get("texture") is Texture2D:
+				entry["auxiliary"].append({"role": role, "path": (secondary["texture"] as Texture2D).resource_path})
+		report["props"].append(entry)
 		if not art["real"]:
 			report["failures"].append("prop picture: " + id)
+	# These four themes are consumed by the installed outdoor builders. Cave
+	# ambient/orthographic areas skip the parallax builder; home is an interior.
+	for theme in [&"farm", &"hyggebyen", &"forest", &"treetop"]:
+		var art := ArtCatalog.backdrop(theme)
+		report["backdrops"].append({"theme": theme, "sky": (art["sky"] as Texture2D).resource_path, "far": (art["far"] as Texture2D).resource_path, "real": art["real"]})
+		if not art["real"]:
+			report["failures"].append("outdoor backdrop lacks selected art: " + str(theme))
 	if details:
 		report["character_data"] = characters
 	report["result"] = "pass" if report["failures"].is_empty() else "fail"

@@ -1,0 +1,6 @@
+{
+  "tool": "built-in imagegen",
+  "prompt": "Use case: precise-object-edit. Edit this furniture atlas, preserving its exact painted style, objects, colors and 4x4 layout. Correct SECOND COLUMN ONLY, which currently repeats the first column orientation for rows1,3,4. The camera stays fixed. Column1 fronts point screen BOTTOM LEFT. In column2 turn the object 90 degrees so its front points screen BOTTOM RIGHT: ROW1 long rug axis must tilt from UPPER LEFT to LOWER RIGHT, opposite diagonal from column1, and the moon embroidery turns with it; ROW3 fireplace front opening/crescent face must point BOTTOM RIGHT with left stone side visible, not bottom left with right side visible; ROW4 chest clasp/front face must point BOTTOM RIGHT with left side visible, opposite corner to column1. Keep columns1,3,4 completely unchanged and keep row2 fairy lamps unchanged. The four columns must be distinct quarter-turn orientations, not duplicate front views. True alpha transparency, no backdrop, labels, ground, shadows, text, particles, glow or extra elements.",
+  "target": "tools/art/drawn/sources/style_audit/furniture_l.png",
+  "output": "tools/art/drawn/sources/style_audit/furniture_l_fixed.png"
+}

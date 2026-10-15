@@ -1,0 +1,53 @@
+{
+  "items": [
+    {
+      "id": "junk_table",
+      "cell": [
+        0,
+        1
+      ],
+      "rot": 0
+    },
+    {
+      "id": "old_trunk_flea",
+      "cell": [
+        7,
+        0
+      ],
+      "rot": 0
+    },
+    {
+      "id": "umbrella_stand",
+      "cell": [
+        7,
+        1
+      ],
+      "rot": 0
+    },
+    {
+      "id": "crates_mixed",
+      "cell": [
+        6,
+        0
+      ],
+      "rot": 0
+    },
+    {
+      "id": "price_board",
+      "cell": [
+        3,
+        0
+      ],
+      "rot": 0,
+      "wall": true
+    },
+    {
+      "id": "lantern_hanging",
+      "cell": [
+        0,
+        0
+      ],
+      "rot": 0
+    }
+  ]
+}

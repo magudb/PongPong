@@ -1,0 +1,100 @@
+{
+  "scope": "Completed two-body art fit proof on codex-review; production wardrobe integration remains separate.",
+  "heroes": 2,
+  "directions": 8,
+  "poses": 320,
+  "grips": 640,
+  "starter_garments_per_body": 4,
+  "source_tool_mode": "built-in imagegen",
+  "selected_masters": 5,
+  "retained_rejected_repair_input": 1,
+  "native_captures": 14,
+  "pose_sheets": 8,
+  "texture_budget_mib": 32,
+  "textures": {
+    "rasmus": {
+      "locomotion_rgba8_bytes": 28901376,
+      "locomotion_mib": 27.5625,
+      "reach_rgba8_bytes": 7274496,
+      "all_four_groups_rgba8_bytes": 36175872,
+      "all_disk_bytes": 8071522,
+      "shared_stock_clock_and_floor_textures": "excluded and explicitly documented"
+    },
+    "pedro": {
+      "locomotion_rgba8_bytes": 19251200,
+      "locomotion_mib": 18.359375,
+      "reach_rgba8_bytes": 4800512,
+      "all_four_groups_rgba8_bytes": 24051712,
+      "all_disk_bytes": 5406832,
+      "shared_stock_clock_and_floor_textures": "excluded and explicitly documented"
+    }
+  },
+  "reports": {
+    "headless-tests": {
+      "checks": 861,
+      "failed": 0,
+      "skipped": 0,
+      "mode": "headless",
+      "elapsed_s": 5.25,
+      "sections": 2,
+      "allowed_messages": 3
+    },
+    "native-tests": {
+      "checks": 8,
+      "failed": 0,
+      "skipped": 0,
+      "mode": "windowed",
+      "elapsed_s": 4.62,
+      "sections": 1,
+      "allowed_messages": 0
+    },
+    "full-tests": {
+      "checks": 5760,
+      "failed": 0,
+      "skipped": 59,
+      "mode": "headless",
+      "elapsed_s": 232.79,
+      "sections": 36,
+      "allowed_messages": 26,
+      "boot_checks": 8
+    }
+  },
+  "rebuild": {
+    "byte_identical": true,
+    "exports_checked": 9,
+    "hashes": {
+      "manifest.json": "1922f4821002cf7362a13e9bc7915e5f5ab9804effd3c44d8122ff3dd7ff79aa",
+      "pedro_idle.webp": "32d69c2fb5db6a58043599e9dd321a42e1ed4303c5e66393ecc858f33a048010",
+      "pedro_interact.webp": "242eb790cc7e5e8e67f7f584f9134a7d26f3f6361951cf4f69a3bd17ead903b8",
+      "pedro_run.webp": "d662eca14881563d576910103fc4380f7bfbf609d2bbec0fd3a5998d03ef9a49",
+      "pedro_walk.webp": "c2e9f33173194c9ce72acf83ffd5d35aa252ec682052715c45edbc9ca7f09d79",
+      "rasmus_idle.webp": "c70a9174ee0d34ee0b7c78cd4b2769cc73b87191f887a5cb8462367024008fb7",
+      "rasmus_interact.webp": "da5e61d0270812f419eecec590010843871fa0a5e85a2cb85ab5daa8459a0a8f",
+      "rasmus_run.webp": "4458c351a926933ec0d3a83a643e5d66bd229252bb104b1bc4aa5e41935deb49",
+      "rasmus_walk.webp": "33fe839dd132801a2a64be44229dec824fa3ed2c113c1fb4a0384a1b92d05811"
+    },
+    "wall_seconds": 25.048,
+    "scope": "Eight lossless atlas WebPs and the manifest; build elapsed time is intentionally excluded from byte identity."
+  },
+  "cpu_profile": {
+    "pedro": {
+      "added_canvas_items": 10,
+      "changed_direction_update_mean_ms": 0.0123375,
+      "note": "CPU direction change + presenter only on this development host, not renderer/GPU or target-device frame time",
+      "samples": 1200
+    },
+    "rasmus": {
+      "added_canvas_items": 10,
+      "changed_direction_update_mean_ms": 0.0129083333333333,
+      "note": "CPU direction change + presenter only on this development host, not renderer/GPU or target-device frame time",
+      "samples": 1200
+    }
+  },
+  "ordinary_tests_preserve_cpu_sample": true,
+  "remaining": [
+    "Complete both required clip sets and final attack/two-hand poses.",
+    "Fit the remaining six playable heroes.",
+    "Integrate complete wardrobe bases atomically with the existing gameplay owners.",
+    "Profile actual renderer draws, streaming and total actor memory on target hardware."
+  ]
+}

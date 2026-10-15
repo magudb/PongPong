@@ -1,0 +1,39 @@
+Built-in imagegen edit template — painted seasonal festival kit
+
+Attach the selected master to repair as image 1. Attach the approved painted
+city master and specialist civic sheet as supporting style references. Use
+transparent_background=true. Fill the bracketed fields from prompts.json and
+festival_layout.json; save the exact filled prompt and selected result in docs/.
+
+Use case: precise-object-edit. Edit [MASTER / PIECE / ROW / VIEW] to fix
+[SPECIFIC OBSERVED PROBLEM]. Preserve all accepted objects, their sheet order,
+materials, seasonal identities, emblems and functional construction. Keep the
+same physical object through each authored quarter-turn. Closed rear stall/stage
+views show the correct plain back. Do not mirror a front and call it a rear.
+
+Match the accepted painted city, props and chibi world: matte storybook gouache
+and watercolor, visible soft paper/brush texture, irregular warm grey-brown
+pencil lines, honey timber, cream, sage, muted lavender, terracotta, a little
+sky-blue and dull brass. No plastic CG, photorealism, thick black/vector-flat
+outlines, pixel art, cinematic glare or strong gloss. No effigies or faces.
+No text, numbers, labels, logos or watermark. UI owns localized copy.
+
+Camera: orthographic 36 degree isometric with upright verticals and floor axes
+at +30.7/-30.7 degrees. Keep the whole [FOOTPRINT] object and every rope loop,
+foot, ribbon and leaf inside its [ROWS] by [COLUMNS] sheet cell, with at least
+40 px actual transparent gutters. No room, scenery, gradient, checkerboard,
+floor, cast shadow or painted radial glow outside the object.
+
+For poles: retain a long exposed shaft and narrow banner high on its top third,
+with a small weighted cross base. The exported pole must support a rope 225
+world pixels above its ground origin while nearby characters remain readable.
+For strings: retain both attachment loops and independent r0/r1 orientations;
+do not add support posts or let adjacent drawings join through a stray rope.
+For lanterns/fire/ice: keep the warm light inside the painted object; the exporter
+will derive the aligned additive accent. Do not paint a giant glow rectangle.
+
+Inspect source alpha and every affected view after editing. Repack and use the
+native gallery at the real camera scale. Preserve footprint/layer/view count,
+render_scale, mounting conventions and existing texture limits. Keep full-size
+master drawings; do not change character size or the placement contract to
+disguise a proportion problem. Review day and evening on both town palettes.

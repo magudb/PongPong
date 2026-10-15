@@ -1,0 +1,166 @@
+{
+  "tool": "built-in imagegen",
+  "references": [
+    "tools/art/drawn/sources/shop_core/workroom.png",
+    "tools/art/drawn/sources/shop_core/small.png",
+    "assets/isometric_characters/fox/portrait.webp"
+  ],
+  "jobs": [
+    {
+      "name": "mechanical",
+      "rows": 3,
+      "cols": 4,
+      "ids": [
+        "glass_display_case",
+        "bellows",
+        "grindstone"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: production sprite atlas for Tr\u00e6toppen's specialist shop interiors.\nUse images 1 and 2 as the approved painted prop style and material references; image 3 establishes the friendly chibi character world, do not draw characters.\nMatte storybook gouache and watercolor, fine irregular warm grey-brown pencil contours, worn honey timber, sage, cream linen, muted lavender, terracotta, restrained charcoal iron and small brass. Soft organic imperfect edges and tactile painted grain; clear functional silhouettes at small game scale. No plastic CG, photorealism, pixel art or thick black vector strokes.\nOrthographic camera elevated 36 degrees. Floor axes slope about +30.7/-30.7 degrees, verticals upright. Wall pieces follow those wall planes. All objects separate, fully visible and centered in strict equal-size grid cells with at least 40 px transparent gutters INSIDE EVERY cell boundary. No objects may touch or cross a cell edge. True transparent alpha background, no shadows, floor, room, scenery, labels, text, letters, numbers, logos or watermark. Paper labels and price boards stay BLANK. Do not include people or animals.\nCreate exactly THREE ROWS and FOUR COLUMNS, 12 separate drawings, landscape 2048 x 1536.\nColumns are four TRUE quarter-turns of the SAME physical object: r0 front-right, r1 front-left, r2 rear-left, r3 rear-right. Preserve physical dimensions, details and materials; rear views show the back with correct hinges/seams, not a cloned front. No mirrored image substitutes.\nRow 1: 2 by 1 timber bakery display case, clear slightly teal glass box with thin brass frame over honey wood cabinet, two little loaves on an inner tray. Front door hinge on its right; rear shows glass and wood back seam.\nRow 2: 1 by 1 freestanding old smith's bellows, pine boards, folded charcoal-brown leather accordion, short brass nozzle and small handle; no fire or forge.\nRow 3: 1 by 1 round grey grinding wheel on a low wooden trestle, side crank with wooden grip, small shallow water tray. Keep the wheel and crank on their correct physical sides."
+    },
+    {
+      "name": "display",
+      "rows": 3,
+      "cols": 4,
+      "ids": [
+        "star_globe",
+        "owl_perch",
+        "standing_mirror"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: production sprite atlas for Tr\u00e6toppen's specialist shop interiors.\nUse images 1 and 2 as the approved painted prop style and material references; image 3 establishes the friendly chibi character world, do not draw characters.\nMatte storybook gouache and watercolor, fine irregular warm grey-brown pencil contours, worn honey timber, sage, cream linen, muted lavender, terracotta, restrained charcoal iron and small brass. Soft organic imperfect edges and tactile painted grain; clear functional silhouettes at small game scale. No plastic CG, photorealism, pixel art or thick black vector strokes.\nOrthographic camera elevated 36 degrees. Floor axes slope about +30.7/-30.7 degrees, verticals upright. Wall pieces follow those wall planes. All objects separate, fully visible and centered in strict equal-size grid cells with at least 40 px transparent gutters INSIDE EVERY cell boundary. No objects may touch or cross a cell edge. True transparent alpha background, no shadows, floor, room, scenery, labels, text, letters, numbers, logos or watermark. Paper labels and price boards stay BLANK. Do not include people or animals.\nCreate exactly THREE ROWS and FOUR COLUMNS, 12 separate drawings, landscape 2048 x 1536.\nColumns are four TRUE quarter-turns of the SAME physical object: r0 front-right, r1 front-left, r2 rear-left, r3 rear-right. Preserve physical dimensions, details and materials; rear views show the back with correct hinges/seams, not a cloned front. No mirrored image substitutes.\nRow 1: 1 by 1 tabletop-height astronomical globe on three carved wooden legs, muted midnight blue sphere with tiny cream constellation dots and thin warm brass meridian arc, no labels or symbols.\nRow 2: 1 by 1 empty owl perch, honey hazel branch upright on a carved stable wooden base, asymmetric forked T-shaped top bar and little landing ledge. No bird, no nest.\nRow 3: 1 by 1 tall oval standing mirror, softly carved honey pine frame with small leaf motif, two supporting legs, dull pale blue-grey reflective glass. Rear views show the plain timber back board and support brace, no glass."
+    },
+    {
+      "name": "storage",
+      "rows": 7,
+      "cols": 2,
+      "ids": [
+        "shelf_wall_wide",
+        "shelf_floor_tall",
+        "price_board",
+        "seed_drawers_wall",
+        "watering_can_rack",
+        "seed_display_table",
+        "mailbox_indoor_red"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: production sprite atlas for Tr\u00e6toppen's specialist shop interiors.\nUse images 1 and 2 as the approved painted prop style and material references; image 3 establishes the friendly chibi character world, do not draw characters.\nMatte storybook gouache and watercolor, fine irregular warm grey-brown pencil contours, worn honey timber, sage, cream linen, muted lavender, terracotta, restrained charcoal iron and small brass. Soft organic imperfect edges and tactile painted grain; clear functional silhouettes at small game scale. No plastic CG, photorealism, pixel art or thick black vector strokes.\nOrthographic camera elevated 36 degrees. Floor axes slope about +30.7/-30.7 degrees, verticals upright. Wall pieces follow those wall planes. All objects separate, fully visible and centered in strict equal-size grid cells with at least 40 px transparent gutters INSIDE EVERY cell boundary. No objects may touch or cross a cell edge. True transparent alpha background, no shadows, floor, room, scenery, labels, text, letters, numbers, logos or watermark. Paper labels and price boards stay BLANK. Do not include people or animals.\nCreate exactly SEVEN ROWS and TWO COLUMNS, 14 separate drawings, portrait 1536 x 3072. Generous empty gutters between every row. Left column r0 front-right, right column r1 front-left, a true quarter-turn of the SAME physical object, not a mirror. Preserve materials and shape. Wall pieces have no floor legs; show the two corresponding wall-plane views.\nRow 1: wall-mounted three-cell wide honey pine display shelf with two open shelves, a few cream folded linens, small sage jars and one little plant; no floor feet.\nRow 2: two-cell wide tall floor-standing honey pine cupboard with three open shelves, a few restrained baskets and jars, carved feet and one small leaf finial.\nRow 3: one-cell wide small wall-mounted wooden price board, honey frame around COMPLETELY BLANK muted slate green panel; no writing, marks, numbers or chalk.\nRow 4: wall-mounted three-cell wide honey timber seed cabinet with three rows of small square drawers, tiny round brass pulls, all label plates completely blank.\nRow 5: one-cell wide short wooden floor rack supporting two sage and dull grey watering cans, stable feet.\nRow 6: two-cell long wooden shop table, little shallow seed trays and blank cream seed envelopes, warm worn top, straight legs.\nRow 7: one-cell standing postbox in muted terracotta red painted wood, small brass envelope slot and short stable pedestal, no letters or logo."
+    },
+    {
+      "name": "civic",
+      "rows": 7,
+      "cols": 2,
+      "ids": [
+        "towel_rack",
+        "mayor_desk",
+        "banner_wall",
+        "seed_baskets_wall",
+        "potting_bench",
+        "dough_table",
+        "weapon_rack"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: production sprite atlas for Tr\u00e6toppen's specialist shop interiors.\nUse images 1 and 2 as the approved painted prop style and material references; image 3 establishes the friendly chibi character world, do not draw characters.\nMatte storybook gouache and watercolor, fine irregular warm grey-brown pencil contours, worn honey timber, sage, cream linen, muted lavender, terracotta, restrained charcoal iron and small brass. Soft organic imperfect edges and tactile painted grain; clear functional silhouettes at small game scale. No plastic CG, photorealism, pixel art or thick black vector strokes.\nOrthographic camera elevated 36 degrees. Floor axes slope about +30.7/-30.7 degrees, verticals upright. Wall pieces follow those wall planes. All objects separate, fully visible and centered in strict equal-size grid cells with at least 40 px transparent gutters INSIDE EVERY cell boundary. No objects may touch or cross a cell edge. True transparent alpha background, no shadows, floor, room, scenery, labels, text, letters, numbers, logos or watermark. Paper labels and price boards stay BLANK. Do not include people or animals.\nCreate exactly SEVEN ROWS and TWO COLUMNS, 14 separate drawings, portrait 1536 x 3072. Generous empty gutters between every row. Left column r0 front-right, right column r1 front-left, a true quarter-turn of the SAME physical object, not a mirror. Preserve materials and shape. Wall pieces have no floor legs; show the two corresponding wall-plane views.\nRow 1: one-cell freestanding wooden towel rack, two rails, neatly folded cream and sage towels, short feet.\nRow 2: three-cell long civic desk in honey oak, modest carved leaf on front, two side drawer cabinets, cream blank documents and one ink pot, no chair.\nRow 3: two-cell wide wall-hung fabric banner, muted sage cloth with cream embroidered botanical sprig, simple honey timber rod, gentle pointed hem, no heraldic letters.\nRow 4: two-cell wide wall-mounted wooden rack with three small woven seed baskets and a few blank cream envelopes, no floor legs.\nRow 5: two-cell long worn pine gardening bench, shallow soil tray, little terracotta pots, small scoop and sage watering jug, open lower shelf.\nRow 6: two-cell long cream-floured bakery table, honey timber legs, small dough ball and wooden rolling pin on the top, lower shelf with a folded cloth.\nRow 7: two-cell wide wall-mounted wooden rack with one short friendly iron sword, a slim hazel staff and blunt practice club, small leather loops, no text, no armour."
+    },
+    {
+      "name": "workshop",
+      "rows": 7,
+      "cols": 2,
+      "ids": [
+        "tool_wall",
+        "potion_shelf",
+        "feed_trough",
+        "pen_fence",
+        "saw_bench",
+        "blueprint_table",
+        "folding_screen"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: production sprite atlas for Tr\u00e6toppen's specialist shop interiors.\nUse images 1 and 2 as the approved painted prop style and material references; image 3 establishes the friendly chibi character world, do not draw characters.\nMatte storybook gouache and watercolor, fine irregular warm grey-brown pencil contours, worn honey timber, sage, cream linen, muted lavender, terracotta, restrained charcoal iron and small brass. Soft organic imperfect edges and tactile painted grain; clear functional silhouettes at small game scale. No plastic CG, photorealism, pixel art or thick black vector strokes.\nOrthographic camera elevated 36 degrees. Floor axes slope about +30.7/-30.7 degrees, verticals upright. Wall pieces follow those wall planes. All objects separate, fully visible and centered in strict equal-size grid cells with at least 40 px transparent gutters INSIDE EVERY cell boundary. No objects may touch or cross a cell edge. True transparent alpha background, no shadows, floor, room, scenery, labels, text, letters, numbers, logos or watermark. Paper labels and price boards stay BLANK. Do not include people or animals.\nCreate exactly SEVEN ROWS and TWO COLUMNS, 14 separate drawings, portrait 1536 x 3072. Generous empty gutters between every row. Left column r0 front-right, right column r1 front-left, a true quarter-turn of the SAME physical object, not a mirror. Preserve materials and shape. Wall pieces have no floor legs; show the two corresponding wall-plane views.\nRow 1: three-cell wide wall-mounted honey timber peg board carrying a small mallet, saw, tongs and iron hammer in a clear uncluttered arrangement.\nRow 2: two-cell wide wall-mounted honey timber shelf, two rails with a few round glass bottles in muted sage, lavender and amber, no labels or glowing halo.\nRow 3: two-cell long shallow wooden animal-feed trough on four squat feet, a little pale oats inside, simple friendly form.\nRow 4: two-cell long low indoor animal pen fence segment, two stout honey timber posts, two rails and small vertical slats, no ground patch.\nRow 5: two-cell long carpenter's saw bench, worn honey pine worktop, small iron hand saw resting on one end, robust straight legs and cross brace.\nRow 6: two-cell long draughting table, large cream paper with a faint simple rectangle-and-lines floor plan, no words, numbers or glyphs, one small brass ruler, no chair.\nRow 7: two-cell wide folding room screen, three hinged honey timber frames with muted sage and cream linen panels and gentle leaf stitching, short feet."
+    },
+    {
+      "name": "specialties",
+      "rows": 7,
+      "cols": 2,
+      "ids": [
+        "cloth_rolls_rack",
+        "sewing_table",
+        "plank_rack",
+        "tool_hooks",
+        "fitting_curtain",
+        "junk_table",
+        "old_trunk_flea"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: production sprite atlas for Tr\u00e6toppen's specialist shop interiors.\nUse images 1 and 2 as the approved painted prop style and material references; image 3 establishes the friendly chibi character world, do not draw characters.\nMatte storybook gouache and watercolor, fine irregular warm grey-brown pencil contours, worn honey timber, sage, cream linen, muted lavender, terracotta, restrained charcoal iron and small brass. Soft organic imperfect edges and tactile painted grain; clear functional silhouettes at small game scale. No plastic CG, photorealism, pixel art or thick black vector strokes.\nOrthographic camera elevated 36 degrees. Floor axes slope about +30.7/-30.7 degrees, verticals upright. Wall pieces follow those wall planes. All objects separate, fully visible and centered in strict equal-size grid cells with at least 40 px transparent gutters INSIDE EVERY cell boundary. No objects may touch or cross a cell edge. True transparent alpha background, no shadows, floor, room, scenery, labels, text, letters, numbers, logos or watermark. Paper labels and price boards stay BLANK. Do not include people or animals.\nCreate exactly SEVEN ROWS and TWO COLUMNS, 14 separate drawings, portrait 1536 x 3072. Generous empty gutters between every row. Left column r0 front-right, right column r1 front-left, a true quarter-turn of the SAME physical object, not a mirror. Preserve materials and shape. Wall pieces have no floor legs; show the two corresponding wall-plane views.\nRow 1: two-cell wide honey pine floor rack holding three rolls of cream, sage and lavender cloth, visible wooden roll ends, stable feet.\nRow 2: two-cell long tailor's wooden table, small old hand-crank sewing machine of charcoal iron and brass, cream linen drape and one lavender thread spool, no text.\nRow 3: two-cell wide low floor-standing wooden rack with a few long honey pine boards arranged neatly, no tools or lettering.\nRow 4: two-cell wide wall-mounted wooden strip with four iron hooks, little mallet, saw and gardening hand fork; no floor legs.\nRow 5: one-cell wall-mounted privacy curtain, floor-length sage linen on a short honey timber rail, tied slightly at one side, no mirror and no person.\nRow 6: two-cell long flea-market wooden table, a few old teacups, small brass key, battered kettle and folded cloth arranged into a readable silhouette.\nRow 7: one-cell old squat travel trunk, faded sage leather and honey wood, dulled brass corners and front latch, asymmetric small patch and leather side handle."
+    },
+    {
+      "name": "small_a",
+      "rows": 3,
+      "cols": 4,
+      "ids": [
+        "crate_stack",
+        "barrel",
+        "sack_pile",
+        "basket_woven",
+        "scale_brass",
+        "bell_counter",
+        "lantern_hanging",
+        "seed_sack_open",
+        "flowerpot_row",
+        "hanging_herbs",
+        "stamp_press",
+        "bath_stool"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: production sprite atlas for Tr\u00e6toppen's specialist shop interiors.\nUse images 1 and 2 as the approved painted prop style and material references; image 3 establishes the friendly chibi character world, do not draw characters.\nMatte storybook gouache and watercolor, fine irregular warm grey-brown pencil contours, worn honey timber, sage, cream linen, muted lavender, terracotta, restrained charcoal iron and small brass. Soft organic imperfect edges and tactile painted grain; clear functional silhouettes at small game scale. No plastic CG, photorealism, pixel art or thick black vector strokes.\nOrthographic camera elevated 36 degrees. Floor axes slope about +30.7/-30.7 degrees, verticals upright. Wall pieces follow those wall planes. All objects separate, fully visible and centered in strict equal-size grid cells with at least 40 px transparent gutters INSIDE EVERY cell boundary. No objects may touch or cross a cell edge. True transparent alpha background, no shadows, floor, room, scenery, labels, text, letters, numbers, logos or watermark. Paper labels and price boards stay BLANK. Do not include people or animals.\nCreate exactly THREE ROWS and FOUR COLUMNS, 12 separate drawings, landscape 2048 x 1536. All are single front-right isometric views except the explicitly ceiling-mounted pieces, which retain their hanging attachments. Keep each complete object and its small accents inside its own cell.\nRow 1 column 1: one-cell floor stack of two empty slatted timber crates, top crate slightly offset.\nRow 1 column 2: one-cell honey timber barrel, iron hoops, closed round wooden lid, no marks.\nRow 1 column 3: one-cell pile of three small tied cream linen sacks with slightly different folds.\nRow 1 column 4: one-cell empty round woven willow basket with one arched handle.\nRow 2 column 1: small tabletop brass balance scale with two hanging dishes on a warm timber base, no text or dial numbers.\nRow 2 column 2: tiny tabletop brass service bell on a round dark wooden base, one central push button.\nRow 2 column 3: ceiling-hung small honey timber and charcoal iron lantern with warm amber glass, short chain and top hook, no outside glow.\nRow 2 column 4: one-cell open cream seed sack, pale seeds and a little wooden scoop, small blank sage cloth patch.\nRow 3 column 1: two-cell tabletop row of three small terracotta pots, tiny herbs and cream blossoms, no tray legs.\nRow 3 column 2: ceiling-hung three small sage herb bundles tied to one connected honey timber crossbar and hook.\nRow 3 column 3: small tabletop post-office stamp press, charcoal iron arch and brass lever on a honey wood base, no words.\nRow 3 column 4: one-cell low honey pine bath stool, round seat and three stout legs, soft worn edges."
+    },
+    {
+      "name": "small_b",
+      "rows": 3,
+      "cols": 4,
+      "ids": [
+        "bucket",
+        "steam_vent",
+        "flag_stand",
+        "drying_herbs",
+        "carrot_crate",
+        "flour_sack",
+        "bread_basket",
+        "quench_barrel",
+        "crystal_ball_stand",
+        "book_stack",
+        "hanging_stars",
+        "cage_hanging"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: production sprite atlas for Tr\u00e6toppen's specialist shop interiors.\nUse images 1 and 2 as the approved painted prop style and material references; image 3 establishes the friendly chibi character world, do not draw characters.\nMatte storybook gouache and watercolor, fine irregular warm grey-brown pencil contours, worn honey timber, sage, cream linen, muted lavender, terracotta, restrained charcoal iron and small brass. Soft organic imperfect edges and tactile painted grain; clear functional silhouettes at small game scale. No plastic CG, photorealism, pixel art or thick black vector strokes.\nOrthographic camera elevated 36 degrees. Floor axes slope about +30.7/-30.7 degrees, verticals upright. Wall pieces follow those wall planes. All objects separate, fully visible and centered in strict equal-size grid cells with at least 40 px transparent gutters INSIDE EVERY cell boundary. No objects may touch or cross a cell edge. True transparent alpha background, no shadows, floor, room, scenery, labels, text, letters, numbers, logos or watermark. Paper labels and price boards stay BLANK. Do not include people or animals.\nCreate exactly THREE ROWS and FOUR COLUMNS, 12 separate drawings, landscape 2048 x 1536. All are single front-right isometric views except the explicitly ceiling-mounted pieces, which retain their hanging attachments. Keep each complete object and its small accents inside its own cell.\nRow 1 column 1: one-cell small coopered honey timber water bucket, dull iron handle and a hint of clear teal water.\nRow 1 column 2: small round grey metal floor vent grate with one connected soft pale blue-white painted steam wisp directly above it, gentle partly transparent steam, no broad mist cloud.\nRow 1 column 3: one-cell freestanding honey timber flag pole on a carved stable base, small sage cloth pennant with a cream botanical sprig, no text.\nRow 1 column 4: ceiling-hung drying rack, connected thin timber crossbar with tied muted lavender flowers and sage herb bundles, short top hook.\nRow 2 column 1: one-cell low slatted timber crate full of orange carrots and sage tops, no sign.\nRow 2 column 2: one-cell tied plain cream flour sack, a little pale flour dust on its fold, no labels or wheat graphic.\nRow 2 column 3: small tabletop woven oval bread basket lined with cream cloth, three little golden rolls.\nRow 2 column 4: one-cell open darkened timber smith's quench barrel with iron hoops, calm pale blue-grey water, pair of tongs hooked at rim.\nRow 3 column 1: one-cell low carved honey timber pedestal with a modest pale lilac glass crystal ball, little brass cradle, no global glow.\nRow 3 column 2: one-cell small floor stack of four worn cream, sage and muted lavender books, blank spines, no glyphs.\nRow 3 column 3: ceiling-hung connected small timber mobile with three cream and muted brass star ornaments on thin strings, one top hook, no dust cloud, no text.\nRow 3 column 4: ceiling-hung EMPTY rounded old brass bird cage, tiny wooden perch inside, a single top hook, no animal."
+    },
+    {
+      "name": "small_c",
+      "rows": 3,
+      "cols": 4,
+      "ids": [
+        "bird_perch",
+        "nail_kegs",
+        "log_pile",
+        "rope_coil",
+        "display_plinth",
+        "sample_tag_stand",
+        "hat_stand",
+        "log_stack_indoor",
+        "umbrella_stand",
+        "crates_mixed",
+        "hanging_pots",
+        "_unused_folded_towel"
+      ],
+      "prompt": "Use case: stylized-concept. Asset type: production sprite atlas for Tr\u00e6toppen's specialist shop interiors.\nUse images 1 and 2 as the approved painted prop style and material references; image 3 establishes the friendly chibi character world, do not draw characters.\nMatte storybook gouache and watercolor, fine irregular warm grey-brown pencil contours, worn honey timber, sage, cream linen, muted lavender, terracotta, restrained charcoal iron and small brass. Soft organic imperfect edges and tactile painted grain; clear functional silhouettes at small game scale. No plastic CG, photorealism, pixel art or thick black vector strokes.\nOrthographic camera elevated 36 degrees. Floor axes slope about +30.7/-30.7 degrees, verticals upright. Wall pieces follow those wall planes. All objects separate, fully visible and centered in strict equal-size grid cells with at least 40 px transparent gutters INSIDE EVERY cell boundary. No objects may touch or cross a cell edge. True transparent alpha background, no shadows, floor, room, scenery, labels, text, letters, numbers, logos or watermark. Paper labels and price boards stay BLANK. Do not include people or animals.\nCreate exactly THREE ROWS and FOUR COLUMNS, 12 separate drawings, landscape 2048 x 1536. All are single front-right isometric views except the explicitly ceiling-mounted pieces, which retain their hanging attachments. Keep each complete object and its small accents inside its own cell.\nRow 1 column 1: one-cell empty short honey timber T-shaped bird perch on a round stable base, no animal.\nRow 1 column 2: one-cell two short open timber kegs showing a few dull iron nails, no scattered sharp pile.\nRow 1 column 3: one-cell rough triangular pile of six short cut honey wood logs with visible end rings, no rack.\nRow 1 column 4: one-cell thick natural hemp rope neatly coiled, soft fibres, no pole.\nRow 2 column 1: one-cell low honey timber display plinth with a square cream top and simple carved leaf on the front.\nRow 2 column 2: tiny tabletop wooden label stand carrying a completely BLANK cream paper tag, no characters or marks.\nRow 2 column 3: one-cell wooden hat stand with three short pegs, one soft sage cap and one small straw hat, stable base.\nRow 2 column 4: one-cell neat rectangular indoor firewood stack, small honey timber support at each end and thin hemp tie.\nRow 3 column 1: one-cell narrow honey timber umbrella basket holding one muted lavender folded umbrella and one sage cane.\nRow 3 column 2: one-cell two mismatched old timber crates, one pale and one darker worn wood, a small blank cream cloth over one corner.\nRow 3 column 3: ceiling-hung connected honey timber rail with two dull copper cooking pots and one small iron pan on hooks.\nRow 3 column 4: a small folded cream linen towel with a sage edge stripe, unused supplemental study."
+    }
+  ],
+  "repairs": [
+    {
+      "name": "workshop",
+      "mode": "built-in imagegen edit",
+      "prompt_file": "docs/art/shop-special/workshop-transparency-repair.txt",
+      "reference": "docs/art/shop-special/repair-inputs/workshop.png",
+      "transparent_background": true,
+      "selected_source": "tools/art/drawn/sources/shop_special/workshop.png",
+      "reference_sha256": "045676bdc242e77720010444e2c3210e3534fb87ca86a88a9db62db8d4aa877e"
+    }
+  ],
+  "mode": "generate from approved style references; explicit edit listed under repairs",
+  "transparent_background": true,
+  "future_repair_template": "docs/art/shop-special/asset-repair-prompt.txt"
+}

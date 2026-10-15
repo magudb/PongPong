@@ -1,0 +1,47 @@
+{
+  "allowed": [
+    {
+      "kind": "warning",
+      "rule": "Unknown chibi character",
+      "section": "characters",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): Unknown chibi character: no_such_character (at load_character res://scripts/isometric/iso_chibi_sprite_2d.gd:235)"
+    },
+    {
+      "kind": "warning",
+      "rule": "Unknown chibi character",
+      "section": "characters",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): Unknown chibi character: ../fox (at load_character res://scripts/isometric/iso_chibi_sprite_2d.gd:235)"
+    },
+    {
+      "kind": "warning",
+      "rule": "Unknown chibi character",
+      "section": "characters",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): Unknown chibi character: FOX (at load_character res://scripts/isometric/iso_chibi_sprite_2d.gd:235)"
+    }
+  ],
+  "character": "animal",
+  "checks": 861,
+  "elapsed_s": 5.25,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "art_equipment_fit": {
+      "checks": 745,
+      "failed": 0,
+      "ms": 575,
+      "skipped": 0
+    },
+    "characters": {
+      "checks": 116,
+      "failed": 0,
+      "ms": 2763,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

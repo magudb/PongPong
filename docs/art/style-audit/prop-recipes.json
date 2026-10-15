@@ -1,0 +1,434 @@
+{
+  "ore_copper": {
+    "master": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "building_projection": false
+  },
+  "ore_iron": {
+    "master": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "building_projection": false
+  },
+  "ore_gold": {
+    "master": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "building_projection": false
+  },
+  "marble_vein": {
+    "master": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "building_projection": false
+  },
+  "slate_vein": {
+    "master": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "building_projection": false
+  },
+  "crystal_amethyst": {
+    "master": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "building_projection": false
+  },
+  "crystal_emerald": {
+    "master": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "building_projection": false
+  },
+  "crystal_moonstone": {
+    "master": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "building_projection": false
+  },
+  "glowmush_blue": {
+    "master": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "building_projection": false
+  },
+  "glowmush_pink": {
+    "master": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "building_projection": false
+  },
+  "glowmush_teal": {
+    "master": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "building_projection": false
+  },
+  "well": {
+    "master": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "building_projection": false
+  },
+  "fountain": {
+    "master": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "building_projection": false
+  },
+  "chest_closed": {
+    "master": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "building_projection": false
+  },
+  "chest_open": {
+    "master": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "building_projection": false
+  },
+  "chest_konge": {
+    "master": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "building_projection": false
+  },
+  "beehive_stand": {
+    "master": "tools/art/drawn/sources/style_audit/utility_b.png",
+    "building_projection": false
+  },
+  "mailbox_red": {
+    "master": "tools/art/drawn/sources/style_audit/utility_b.png",
+    "building_projection": false
+  },
+  "shipping_bin": {
+    "master": "tools/art/drawn/sources/style_audit/utility_b.png",
+    "building_projection": false
+  },
+  "tent": {
+    "master": "tools/art/drawn/sources/style_audit/utility_b.png",
+    "building_projection": false
+  },
+  "wheat_sack": {
+    "master": "tools/art/drawn/sources/style_audit/utility_b.png",
+    "building_projection": false
+  },
+  "build_stake": {
+    "master": "tools/art/drawn/sources/style_audit/utility_b.png",
+    "building_projection": false
+  },
+  "rope_stake_x": {
+    "master": "tools/art/drawn/sources/style_audit/utility_b.png",
+    "building_projection": false
+  },
+  "rope_stake_z": {
+    "master": "tools/art/drawn/sources/style_audit/utility_b.png",
+    "building_projection": false
+  },
+  "fence_gate_x": {
+    "master": "tools/art/drawn/sources/style_audit/utility_b.png",
+    "building_projection": false
+  },
+  "bench": {
+    "master": "tools/art/drawn/sources/style_audit/utility_b.png",
+    "building_projection": false
+  },
+  "stake_sign": {
+    "master": "tools/art/drawn/sources/style_audit/utility_b.png",
+    "building_projection": false
+  },
+  "chest_fe": {
+    "master": "tools/art/drawn/sources/style_audit/utility_b.png",
+    "building_projection": false
+  },
+  "apple_tree": {
+    "master": "tools/art/drawn/sources/style_audit/utility_b.png",
+    "building_projection": false
+  },
+  "tornebaer": {
+    "master": "tools/art/drawn/sources/style_audit/utility_c.png",
+    "building_projection": false
+  },
+  "lantern_hand": {
+    "master": "tools/art/drawn/sources/style_audit/utility_b.png",
+    "building_projection": false
+  },
+  "market_stall": {
+    "master": "tools/art/drawn/sources/style_audit/utility_b.png",
+    "building_projection": false
+  },
+  "chest_trae": {
+    "master": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "building_projection": false
+  },
+  "chest_jern": {
+    "master": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "building_projection": false
+  },
+  "chest_noegle": {
+    "master": "tools/art/drawn/sources/style_audit/utility_a.png",
+    "building_projection": false
+  },
+  "market_stall_furniture": {
+    "master": "tools/art/drawn/sources/style_audit/utility_b.png",
+    "building_projection": false
+  },
+  "market_stall_tailor": {
+    "master": "tools/art/drawn/sources/style_audit/utility_b.png",
+    "building_projection": false
+  },
+  "coop_small": {
+    "master": "tools/art/drawn/sources/style_audit/farm_buildings.png",
+    "building_projection": true
+  },
+  "barn_small": {
+    "master": "tools/art/drawn/sources/style_audit/farm_buildings.png",
+    "building_projection": true
+  },
+  "animal_house": {
+    "master": "tools/art/drawn/sources/style_audit/farm_buildings.png",
+    "building_projection": true
+  },
+  "tool_shed": {
+    "master": "tools/art/drawn/sources/style_audit/farm_buildings.png",
+    "building_projection": true
+  },
+  "crop_carrot_0": {
+    "master": "tools/art/drawn/sources/style_audit/crops_a_spaced.png",
+    "building_projection": false
+  },
+  "crop_carrot_1": {
+    "master": "tools/art/drawn/sources/style_audit/crops_a_spaced.png",
+    "building_projection": false
+  },
+  "crop_carrot_2": {
+    "master": "tools/art/drawn/sources/style_audit/crops_a_spaced.png",
+    "building_projection": false
+  },
+  "crop_carrot_3": {
+    "master": "tools/art/drawn/sources/style_audit/crops_a_spaced.png",
+    "building_projection": false
+  },
+  "crop_pumpkin_0": {
+    "master": "tools/art/drawn/sources/style_audit/crops_a_spaced.png",
+    "building_projection": false
+  },
+  "crop_pumpkin_1": {
+    "master": "tools/art/drawn/sources/style_audit/crops_a_spaced.png",
+    "building_projection": false
+  },
+  "crop_pumpkin_2": {
+    "master": "tools/art/drawn/sources/style_audit/crops_a_spaced.png",
+    "building_projection": false
+  },
+  "crop_pumpkin_3": {
+    "master": "tools/art/drawn/sources/style_audit/crops_a_spaced.png",
+    "building_projection": false
+  },
+  "crop_strawberry_0": {
+    "master": "tools/art/drawn/sources/style_audit/crops_a_spaced.png",
+    "building_projection": false
+  },
+  "crop_strawberry_1": {
+    "master": "tools/art/drawn/sources/style_audit/crops_a_spaced.png",
+    "building_projection": false
+  },
+  "crop_strawberry_2": {
+    "master": "tools/art/drawn/sources/style_audit/crops_a_spaced.png",
+    "building_projection": false
+  },
+  "crop_strawberry_3": {
+    "master": "tools/art/drawn/sources/style_audit/crops_a_spaced.png",
+    "building_projection": false
+  },
+  "crop_sunflower_0": {
+    "master": "tools/art/drawn/sources/style_audit/crops_a_spaced.png",
+    "building_projection": false
+  },
+  "crop_sunflower_1": {
+    "master": "tools/art/drawn/sources/style_audit/crops_a_spaced.png",
+    "building_projection": false
+  },
+  "crop_sunflower_2": {
+    "master": "tools/art/drawn/sources/style_audit/crops_a_spaced.png",
+    "building_projection": false
+  },
+  "crop_sunflower_3": {
+    "master": "tools/art/drawn/sources/style_audit/crops_a_spaced.png",
+    "building_projection": false
+  },
+  "crop_turnip_0": {
+    "master": "tools/art/drawn/sources/style_audit/crops_b.png",
+    "building_projection": false
+  },
+  "crop_turnip_1": {
+    "master": "tools/art/drawn/sources/style_audit/crops_b.png",
+    "building_projection": false
+  },
+  "crop_turnip_2": {
+    "master": "tools/art/drawn/sources/style_audit/crops_b.png",
+    "building_projection": false
+  },
+  "crop_turnip_3": {
+    "master": "tools/art/drawn/sources/style_audit/crops_b.png",
+    "building_projection": false
+  },
+  "crop_catnip_0": {
+    "master": "tools/art/drawn/sources/style_audit/crops_b.png",
+    "building_projection": false
+  },
+  "crop_catnip_1": {
+    "master": "tools/art/drawn/sources/style_audit/crops_b.png",
+    "building_projection": false
+  },
+  "crop_catnip_2": {
+    "master": "tools/art/drawn/sources/style_audit/crops_b.png",
+    "building_projection": false
+  },
+  "crop_catnip_3": {
+    "master": "tools/art/drawn/sources/style_audit/crops_b.png",
+    "building_projection": false
+  },
+  "crop_glow_berry_0": {
+    "master": "tools/art/drawn/sources/style_audit/crops_b.png",
+    "building_projection": false
+  },
+  "crop_glow_berry_1": {
+    "master": "tools/art/drawn/sources/style_audit/crops_b.png",
+    "building_projection": false
+  },
+  "crop_glow_berry_2": {
+    "master": "tools/art/drawn/sources/style_audit/crops_b.png",
+    "building_projection": false
+  },
+  "crop_glow_berry_3": {
+    "master": "tools/art/drawn/sources/style_audit/crops_b.png",
+    "building_projection": false
+  },
+  "crop_moonflower_0": {
+    "master": "tools/art/drawn/sources/style_audit/crops_b.png",
+    "building_projection": false
+  },
+  "crop_moonflower_1": {
+    "master": "tools/art/drawn/sources/style_audit/crops_b.png",
+    "building_projection": false
+  },
+  "crop_moonflower_2": {
+    "master": "tools/art/drawn/sources/style_audit/crops_b.png",
+    "building_projection": false
+  },
+  "crop_moonflower_3": {
+    "master": "tools/art/drawn/sources/style_audit/crops_b.png",
+    "building_projection": false
+  },
+  "bed": {
+    "master": "tools/art/drawn/sources/style_audit/furniture_a_fixed.png",
+    "building_projection": false
+  },
+  "house_seedshop": {
+    "master": "tools/art/drawn/sources/buildings.png",
+    "building_projection": true
+  },
+  "house_bakery": {
+    "master": "tools/art/drawn/sources/buildings.png",
+    "building_projection": true
+  },
+  "house_smithy": {
+    "master": "tools/art/drawn/sources/homes1.png",
+    "building_projection": true
+  },
+  "house_animalstore": {
+    "master": "tools/art/drawn/sources/homes1.png",
+    "building_projection": true
+  },
+  "house_town_hall": {
+    "master": "tools/art/drawn/sources/homes2.png",
+    "building_projection": true
+  },
+  "house_king_treetop": {
+    "master": "tools/art/drawn/sources/homes3.png",
+    "building_projection": true
+  },
+  "tower_wizard": {
+    "master": "tools/art/drawn/sources/homes2.png",
+    "building_projection": true
+  },
+  "warp_gate_stone": {
+    "master": "tools/art/drawn/sources/forest_painted.png",
+    "building_projection": false
+  },
+  "tree_giant_crown": {
+    "master": "tools/art/drawn/sources/style_audit/giant_trees.png",
+    "building_projection": false
+  },
+  "trunk_giant_a": {
+    "master": "tools/art/drawn/sources/style_audit/giant_trees.png",
+    "building_projection": false
+  },
+  "trunk_giant_b": {
+    "master": "tools/art/drawn/sources/style_audit/giant_trees.png",
+    "building_projection": false
+  },
+  "trunk_under_a": {
+    "master": "tools/art/drawn/sources/style_audit/giant_trees.png",
+    "building_projection": false
+  },
+  "trunk_under_b": {
+    "master": "tools/art/drawn/sources/style_audit/giant_trees.png",
+    "building_projection": false
+  },
+  "lantern_post_lavender": {
+    "master": "tools/art/drawn/sources/nature.png",
+    "building_projection": false
+  },
+  "lantern_post_mint": {
+    "master": "tools/art/drawn/sources/nature.png",
+    "building_projection": false
+  },
+  "lantern_post_rose": {
+    "master": "tools/art/drawn/sources/nature.png",
+    "building_projection": false
+  },
+  "floor_patch_a": {
+    "master": "tools/art/drawn/sources/terrain.png",
+    "operation": "painted material projection over native technical shape"
+  },
+  "floor_patch_b": {
+    "master": "tools/art/drawn/sources/terrain.png",
+    "operation": "painted material projection over native technical shape"
+  },
+  "floor_patch_c": {
+    "master": "tools/art/drawn/sources/terrain.png",
+    "operation": "painted material projection over native technical shape"
+  },
+  "path_tile_o": {
+    "master": "tools/art/drawn/sources/terrain.png",
+    "operation": "painted material projection over native technical shape"
+  },
+  "pond_water_o": {
+    "master": "tools/art/drawn/sources/terrain.png",
+    "operation": "painted material projection over native technical shape"
+  },
+  "roof_patch": {
+    "master": "tools/art/drawn/sources/style_audit/utility_c.png",
+    "building_projection": false
+  },
+  "home_rope": {
+    "master": "tools/art/drawn/sources/terrain.png",
+    "operation": "painted material projection over native technical shape"
+  },
+  "stone_path_a": {
+    "master": "tools/art/drawn/sources/terrain.png",
+    "operation": "painted material projection over native technical shape"
+  },
+  "stone_path_b": {
+    "master": "tools/art/drawn/sources/terrain.png",
+    "operation": "painted material projection over native technical shape"
+  },
+  "stone_path_c": {
+    "master": "tools/art/drawn/sources/terrain.png",
+    "operation": "painted material projection over native technical shape"
+  },
+  "pennant_blue": {
+    "master": "tools/art/drawn/sources/terrain.png",
+    "operation": "painted material projection over native technical shape"
+  },
+  "pennant_blue_f1": {
+    "master": "tools/art/drawn/sources/terrain.png",
+    "operation": "painted material projection over native technical shape"
+  },
+  "pennant_gold": {
+    "master": "tools/art/drawn/sources/terrain.png",
+    "operation": "painted material projection over native technical shape"
+  },
+  "pennant_gold_f1": {
+    "master": "tools/art/drawn/sources/terrain.png",
+    "operation": "painted material projection over native technical shape"
+  },
+  "pennant_mint": {
+    "master": "tools/art/drawn/sources/terrain.png",
+    "operation": "painted material projection over native technical shape"
+  },
+  "pennant_mint_f1": {
+    "master": "tools/art/drawn/sources/terrain.png",
+    "operation": "painted material projection over native technical shape"
+  },
+  "pennant_pink": {
+    "master": "tools/art/drawn/sources/terrain.png",
+    "operation": "painted material projection over native technical shape"
+  },
+  "pennant_pink_f1": {
+    "master": "tools/art/drawn/sources/terrain.png",
+    "operation": "painted material projection over native technical shape"
+  }
+}

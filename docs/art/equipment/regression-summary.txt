@@ -1,0 +1,7 @@
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=characters,art_characters,cast_data,data
+  --    art_characters: 27 checks, 0 failed, 0 skipped, 14.4 s
+  --    cast_data: 15 checks, 0 failed, 3 skipped, 2.9 s
+  --    characters: 116 checks, 0 failed, 0 skipped, 4.3 s
+  --    data: 325 checks, 0 failed, 1 skipped, 5.6 s
+== summary: 4 section(s) run, 483 checks (0 failed, 4 skipped), 0 engine error(s), 0 engine warning(s), 3 allowed message(s), 0 problem(s), 0 known-issue message(s), 29.8 s
+PLAYTEST PASS (483 checks in 4 sections, 3 allowed engine messages, 0 known-issue messages)

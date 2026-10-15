@@ -1,0 +1,43 @@
+Reusable painted fitted-equipment repair prompt
+Use case: precise-object-edit / identity-preserve.
+
+Image 1 = exact existing hero/base turnaround (identity, pose, body proportions).
+Image 2 = matching selected clothing/weapon master (materials, seams, orientation).
+Image 3 = failed native fit capture, if useful; its grid/labels are review aids,
+never artwork to paint into the exported sprite.
+
+Edit target: [master path, row, column, direction and garment/body part].
+Problem: [ear painted into hat / wrong rear view / sleeve covering paw / tail
+clipped / ghost gained legs / grip floats / seam jumps / material mismatch].
+Change only: [precise correction]. Preserve all other cells and generous alpha
+spacing, character identity, matching dimensions and item identity. Keep the
+original master and save a new sibling version. Update the selected source in
+layout data only after reviewing all eight directions in the native studio.
+
+Use our matte storybook gouache/watercolor with subtle paper grain and thin,
+slightly uneven warm grey-brown pencil contour. Worn honey straw, sage ribbon,
+cream linen, brown woven cloth/leather, modest dull brass and restrained iron.
+No glossy/3D/pixel/vector treatment, thick black stroke, neon bloom, cast shadow,
+cell wash, labels, text or background. True transparent alpha for every cutout.
+
+Directions: S front, SW front-left, W left profile, NW rear-left, N exact back,
+NE rear-right, E right profile, SE front-right. Rear shirts hide front buttons.
+Draw the same physical garment turning, not eight unrelated inventory icons.
+Author opposite sides; do not silently mirror an asymmetric seam or handed grip.
+Empty clothing contains no mannequin, ears, paws, hands, legs or character skin.
+Fox ear openings must be holes; actual ears remain on the body/ear layer.
+Pedro's shirt is short/open-sided; trousers become a woven hem band and shoes
+become two small hem tabs. Preserve his floating scalloped wisp and mittens,
+never human legs under a sheet. Cloth stays opaque and separate from blue skin.
+
+Native fit contract: 256x256 untrimmed canvas, ground anchor (128,200), shared
+body/garment deformation, explicit per-pose grips/visibility/depth, matching hand
+occluders. An atlas trim must keep its canvas offset. Keep sword grip pivot and
+local orientation; no inventory-icon scaling to fake a held view. Never solve
+an occlusion problem by raising a weapon above the entire room's depth plane.
+
+Save the exact prompt/reference roles in prompts.json and preserve selected
+source hashes. Repack with pack.py --only=equipment-fit. Review every affected
+frame at world scale and close up on light and dark floors, with clothes on/off,
+and with common spin, altitude and tint. Run art_equipment_fit and the existing
+characters/equipment concept gates. A schema-valid rig alone is not visual QA.

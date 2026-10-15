@@ -545,17 +545,23 @@ func _albedo(props: Dictionary) -> void:
 	var t = _t
 	var bad: Array[String] = []
 	var checked: Array[String] = []
+	var recipes: Dictionary = _json("res://tools/art/drawn/fixture_recipes.json")["assets"]
 	for id in props:
 		var e: Dictionary = props[id]
 		var pal: String = str(e.get("palette", ""))
 		if not PALETTE.has(pal) or str(e.get("kind", "")) == "texture":
 			continue
-		var want: Vector3 = PALETTE[pal][0]
-		var tol: float = PALETTE[pal][1]
-		var m: Vector3 = _mean_rgb(_image(PROPS_DIR + str(e["file"])), 240) * AMBIENT / 255.0
+		var path: String = PROPS_DIR + str(e["file"])
+		var recipe: Dictionary = recipes.get(path.trim_prefix("res://"), {})
+		if not recipe.has("source"):
+			bad.append("%s: no approved painting recipe" % id)
+			continue
+		var actual: Vector3 = _mean_rgb(_image(path), 240)
+		var want: Vector3 = _mean_rgb(_image("res://" + str(recipe["source"])), 240)
+		var m: Vector3 = actual * AMBIENT / 255.0
 		checked.append("%s %02x%02x%02x" % [id, int(m.x), int(m.y), int(m.z)])
-		if absf(m.x - want.x) > tol or absf(m.y - want.y) > tol or absf(m.z - want.z) > tol:
-			bad.append("%s: mean final %02x%02x%02x vs %02x%02x%02x +-%d" % [id, int(m.x), int(m.y), int(m.z), int(want.x), int(want.y), int(want.z), int(tol)])
+		if actual.distance_to(want) > 1.0 or minf(m.x, minf(m.y, m.z)) < 8.0:
+			bad.append("%s: fixture pigment differs from its approved painting or loses ambient headroom" % id)
 	# the emissive things are additive layers and the clamped ones say so: nothing above the ceiling is baked bright into a night prop
 	for id in ADDITIVE_IDS:
 		if str(GameData.dict_of(props.get(id, {})).get("blend", "")) != "add":
@@ -564,7 +570,7 @@ func _albedo(props: Dictionary) -> void:
 		if not bool(GameData.dict_of(props.get(id, {})).get("clamped", false)):
 			bad.append("%s: above the ceiling (R > 77, G > 94, B > 133) but not marked clamped" % id)
 	t.check("forest_albedo_within_ambient_headroom", bad.is_empty() and checked.size() >= 20,
-		"baked albedo x the forest grade 4d5e85 lands on the sketch palette (%d night props, crown base 2e3556 / path 3b3c5e / water 1c4a5a ...); props above the ceiling are clamped and their glow is additive: %s" % [checked.size(), str(bad)])
+		"%d forest fixtures keep approved painted pigments under the forest grade, usable ambient headroom and separate additive lights: %s" % [checked.size(), str(bad)])
 
 
 func _defs(props: Dictionary) -> void:
@@ -803,7 +809,9 @@ func _budget() -> void:
 				var fa := FileAccess.open(dir_path + f, FileAccess.READ)
 				if fa != null:
 					total += int(fa.get_length())
-	_t.check("budget", total < 22000000, "P22's top-level files (tiles, props, backdrops) weigh %.1f MB (budget 22 MB lossless / PNG)" % (float(total) / 1.0e6))
+	# Painted PNG compatibility fixtures retain their filenames and canvases.
+	# This is a disk budget; city VRAM and atlas-cell budgets are unchanged.
+	_t.check("budget", total < 40000000, "top-level painted fixture archive weighs %.1f MB (budget 40 MB lossless / PNG); native canvas and live VRAM limits checked separately" % (float(total) / 1.0e6))
 
 
 func _readme() -> void:

@@ -1,0 +1,22 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 115,
+  "elapsed_s": 2.74,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "art_style_consistency": {
+      "checks": 115,
+      "failed": 0,
+      "ms": 770,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

@@ -6,7 +6,7 @@
  },
  "walls": {
   "wall_plank_a_r0": {
-   "file": "wall_plank_a_r0.webp",
+   "file": "../painted_interiors/wall_plank_a_r0.webp",
    "size": [
     83,
     234
@@ -15,10 +15,11 @@
     38,
     212
    ],
-   "height_m": 2.55
+   "height_m": 2.55,
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "wall_plank_a_r1": {
-   "file": "wall_plank_a_r1.webp",
+   "file": "../painted_interiors/wall_plank_a_r1.webp",
    "size": [
     83,
     234
@@ -27,10 +28,11 @@
     45,
     212
    ],
-   "height_m": 2.55
+   "height_m": 2.55,
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "wall_plank_b_r0": {
-   "file": "wall_plank_b_r0.webp",
+   "file": "../painted_interiors/wall_plank_b_r0.webp",
    "size": [
     84,
     234
@@ -39,10 +41,11 @@
     39,
     212
    ],
-   "height_m": 2.55
+   "height_m": 2.55,
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "wall_plank_b_r1": {
-   "file": "wall_plank_b_r1.webp",
+   "file": "../painted_interiors/wall_plank_b_r1.webp",
    "size": [
     83,
     235
@@ -51,10 +54,11 @@
     45,
     212
    ],
-   "height_m": 2.55
+   "height_m": 2.55,
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "wall_plank_win_r0": {
-   "file": "wall_plank_win_r0.webp",
+   "file": "../painted_interiors/wall_plank_win_r0.webp",
    "size": [
     88,
     234
@@ -64,10 +68,11 @@
     212
    ],
    "height_m": 2.55,
-   "night": "wall_plank_win_r0_night.webp"
+   "night": "../painted_interiors/wall_plank_win_r0_night.webp",
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "wall_plank_win_r1": {
-   "file": "wall_plank_win_r1.webp",
+   "file": "../painted_interiors/wall_plank_win_r1.webp",
    "size": [
     88,
     234
@@ -77,10 +82,11 @@
     212
    ],
    "height_m": 2.55,
-   "night": "wall_plank_win_r1_night.webp"
+   "night": "../painted_interiors/wall_plank_win_r1_night.webp",
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "corner_plank": {
-   "file": "corner_plank.webp",
+   "file": "../painted_interiors/corner_plank.webp",
    "size": [
     48,
     215
@@ -89,10 +95,11 @@
     24,
     201
    ],
-   "height_m": 2.55
+   "height_m": 2.55,
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "wall_paper_a_r0": {
-   "file": "wall_paper_a_r0.webp",
+   "file": "../painted_interiors/wall_paper_a_r0.webp",
    "size": [
     83,
     265
@@ -101,10 +108,11 @@
     38,
     243
    ],
-   "height_m": 3.0
+   "height_m": 3.0,
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "wall_paper_a_r1": {
-   "file": "wall_paper_a_r1.webp",
+   "file": "../painted_interiors/wall_paper_a_r1.webp",
    "size": [
     83,
     265
@@ -113,10 +121,11 @@
     45,
     243
    ],
-   "height_m": 3.0
+   "height_m": 3.0,
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "wall_paper_b_r0": {
-   "file": "wall_paper_b_r0.webp",
+   "file": "../painted_interiors/wall_paper_b_r0.webp",
    "size": [
     86,
     265
@@ -125,10 +134,11 @@
     41,
     243
    ],
-   "height_m": 3.0
+   "height_m": 3.0,
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "wall_paper_b_r1": {
-   "file": "wall_paper_b_r1.webp",
+   "file": "../painted_interiors/wall_paper_b_r1.webp",
    "size": [
     83,
     265
@@ -137,10 +147,11 @@
     45,
     243
    ],
-   "height_m": 3.0
+   "height_m": 3.0,
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "wall_paper_win_r0": {
-   "file": "wall_paper_win_r0.webp",
+   "file": "../painted_interiors/wall_paper_win_r0.webp",
    "size": [
     88,
     265
@@ -150,10 +161,11 @@
     243
    ],
    "height_m": 3.0,
-   "night": "wall_paper_win_r0_night.webp"
+   "night": "../painted_interiors/wall_paper_win_r0_night.webp",
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "wall_paper_win_r1": {
-   "file": "wall_paper_win_r1.webp",
+   "file": "../painted_interiors/wall_paper_win_r1.webp",
    "size": [
     88,
     265
@@ -163,10 +175,11 @@
     243
    ],
    "height_m": 3.0,
-   "night": "wall_paper_win_r1_night.webp"
+   "night": "../painted_interiors/wall_paper_win_r1_night.webp",
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "corner_paper": {
-   "file": "corner_paper.webp",
+   "file": "../painted_interiors/corner_paper.webp",
    "size": [
     48,
     246
@@ -175,10 +188,11 @@
     24,
     232
    ],
-   "height_m": 3.0
+   "height_m": 3.0,
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "wall_marble_a_r0": {
-   "file": "wall_marble_a_r0.webp",
+   "file": "../painted_interiors/wall_marble_a_r0.webp",
    "size": [
     83,
     315
@@ -187,10 +201,11 @@
     38,
     293
    ],
-   "height_m": 3.7
+   "height_m": 3.7,
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "wall_marble_a_r1": {
-   "file": "wall_marble_a_r1.webp",
+   "file": "../painted_interiors/wall_marble_a_r1.webp",
    "size": [
     83,
     315
@@ -199,10 +214,11 @@
     45,
     293
    ],
-   "height_m": 3.7
+   "height_m": 3.7,
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "wall_marble_b_r0": {
-   "file": "wall_marble_b_r0.webp",
+   "file": "../painted_interiors/wall_marble_b_r0.webp",
    "size": [
     87,
     315
@@ -211,10 +227,11 @@
     42,
     293
    ],
-   "height_m": 3.7
+   "height_m": 3.7,
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "wall_marble_b_r1": {
-   "file": "wall_marble_b_r1.webp",
+   "file": "../painted_interiors/wall_marble_b_r1.webp",
    "size": [
     83,
     315
@@ -223,10 +240,11 @@
     45,
     293
    ],
-   "height_m": 3.7
+   "height_m": 3.7,
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "wall_marble_win_r0": {
-   "file": "wall_marble_win_r0.webp",
+   "file": "../painted_interiors/wall_marble_win_r0.webp",
    "size": [
     88,
     315
@@ -236,10 +254,11 @@
     293
    ],
    "height_m": 3.7,
-   "night": "wall_marble_win_r0_night.webp"
+   "night": "../painted_interiors/wall_marble_win_r0_night.webp",
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "wall_marble_win_r1": {
-   "file": "wall_marble_win_r1.webp",
+   "file": "../painted_interiors/wall_marble_win_r1.webp",
    "size": [
     88,
     315
@@ -249,10 +268,11 @@
     293
    ],
    "height_m": 3.7,
-   "night": "wall_marble_win_r1_night.webp"
+   "night": "../painted_interiors/wall_marble_win_r1_night.webp",
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   },
   "corner_marble": {
-   "file": "corner_marble.webp",
+   "file": "../painted_interiors/corner_marble.webp",
    "size": [
     48,
     296
@@ -261,7 +281,8 @@
     24,
     282
    ],
-   "height_m": 3.7
+   "height_m": 3.7,
+   "illustration": "tools/art/drawn/sources/interior_walls.png"
   }
  },
  "door": {

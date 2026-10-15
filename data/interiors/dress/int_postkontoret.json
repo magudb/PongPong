@@ -1,0 +1,45 @@
+{
+  "items": [
+    {
+      "id": "mailbox_indoor_red",
+      "cell": [
+        0,
+        1
+      ],
+      "rot": 0
+    },
+    {
+      "id": "crate_stack",
+      "cell": [
+        7,
+        0
+      ],
+      "rot": 0
+    },
+    {
+      "id": "stamp_press",
+      "cell": [
+        0,
+        3
+      ],
+      "rot": 0
+    },
+    {
+      "id": "price_board",
+      "cell": [
+        0,
+        0
+      ],
+      "rot": 0,
+      "wall": true
+    },
+    {
+      "id": "lantern_hanging",
+      "cell": [
+        0,
+        0
+      ],
+      "rot": 0
+    }
+  ]
+}

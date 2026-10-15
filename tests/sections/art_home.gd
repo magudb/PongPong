@@ -239,7 +239,15 @@ func _furniture(spec: Array, contract: Dictionary, fj: Dictionary) -> void:
 	t.check("furniture_files", bad.is_empty() and mains > 0, "%d main sprites; %s" % [mains, str(bad.slice(0, 4))])
 	# 79 four-view pieces x 4 + 18 c2 x 2 + 14 c4 x 1 + 19 wall pieces x 2 = 404 (the first count of 373 trusted the templates' declared symmetry, 31 sprites of 15 pieces were missing
 	# once the classes were MEASURED); the 11 legendary pieces carry one float layer per baked rotation = 38
-	t.check("furniture_sprite_counts", mains == 404 and floats == 38, "%d main sprites + %d float layers (404 + 38 expected: TRUE views of every distinct rotation, symmetry measured)" % [mains, floats])
+	var painted := _painted_furniture()
+	var expected_main := 482 if painted else 404
+	var expected_float := 44 if painted else 38
+	t.check("furniture_sprite_counts", mains == expected_main and floats == expected_float,
+		"%d main sprites + %d float layers (%d + %d expected; painted free-standing pieces keep all four authored views)" % [mains, floats, expected_main, expected_float])
+
+
+func _painted_furniture() -> bool:
+	return _json(FURN_DIR + "/furniture.json").get("_contract", {}).get("illustration", "") == "painted-consistency-v1"
 
 
 # ---------------------------------------------------------------- anchors on PIXELS (fix round: the first version only proved JSON arithmetic and "pivot inside the image")
@@ -457,6 +465,37 @@ func _sil_mismatch(ea: Dictionary, eb: Dictionary) -> float:
 
 func _symmetry_and_floats(fj: Dictionary) -> void:
 	var t = _t
+	if _painted_furniture():
+		var painted_bad: Array[String] = []
+		for id in fj:
+			var entry: Dictionary = fj[id]
+			var wall := str(entry["layer"]) == "wall"
+			var expected := 2 if wall else 4
+			if str(entry["sym"]) != ("wall2" if wall else "none") or (entry["rot"] as Dictionary).size() != expected:
+				painted_bad.append("%s: painted object needs %d authored views" % [id, expected])
+			for k in expected:
+				if int(entry["rot_map"][k][0]) != k or bool(entry["rot_map"][k][1]):
+					painted_bad.append("%s r%d: must use its own painted view without flipping" % [id, k])
+			if not str(entry.get("illustration", "")).begins_with("tools/art/drawn/sources/"):
+				painted_bad.append("%s: missing painted master" % id)
+		t.check("symmetry_measured_consistent", fj.size() == 130 and painted_bad.is_empty(),
+			"130 painted pieces: no rotational symmetry reduction; all four free-standing/two wall views retained; %s" % str(painted_bad.slice(0, 4)))
+	else:
+		_legacy_symmetry(fj)
+	var fbad: Array[String] = []
+	var legendary := 0
+	for id in fj:
+		var is_leg := str(fj[id].get("rarity")) == "legendary"
+		if is_leg:
+			legendary += 1
+		for k in (fj[id]["rot"] as Dictionary):
+			if (fj[id]["rot"][k] as Dictionary).has("float") != is_leg:
+				fbad.append("%s r%s: float layer on a %s piece / missing on a legendary one" % [id, k, fj[id].get("rarity")])
+	t.check("float_layers_legendary_only", fbad.is_empty() and legendary == 11, "%d legendary pieces carry float layers on every rotation, no other piece has one (README + furniture.json _contract say so); %s" % [legendary, str(fbad.slice(0, 3))])
+
+
+func _legacy_symmetry(fj: Dictionary) -> void:
+	var t = _t
 	var doc: Dictionary = _json(SPEC_DIR + "/symmetry_measured.json")
 	var items: Dictionary = doc.get("items", {})
 	var bad: Array[String] = []
@@ -491,22 +530,23 @@ func _symmetry_and_floats(fj: Dictionary) -> void:
 			bad.append("%s: ships as %s without a measurement" % [id, sym2])
 	t.check("symmetry_measured_consistent", items.size() == 41 and extra_views == 15 and bad.is_empty(),
 		"%d pieces measured (declared c4 or c2), %d of them ship more views than declared (the weakest differs by %.1f %% of the silhouette); %s" % [items.size(), extra_views, worst, str(bad.slice(0, 4))])
-	var fbad: Array[String] = []
-	var legendary := 0
-	for id in fj:
-		var is_leg := str(fj[id].get("rarity")) == "legendary"
-		if is_leg:
-			legendary += 1
-		for k in (fj[id]["rot"] as Dictionary):
-			if (fj[id]["rot"][k] as Dictionary).has("float") != is_leg:
-				fbad.append("%s r%s: float layer on a %s piece / missing on a legendary one" % [id, k, fj[id].get("rarity")])
-	t.check("float_layers_legendary_only", fbad.is_empty() and legendary == 11, "%d legendary pieces carry float layers on every rotation, no other piece has one (README + furniture.json _contract say so); %s" % [legendary, str(fbad.slice(0, 3))])
 
 
 # ---------------------------------------------------------------- mirror fallback list (RV-A5)
 
 func _mirror(spec: Array, fj: Dictionary) -> void:
 	var t = _t
+	if _painted_furniture():
+		var painted_bad: Array[String] = []
+		for id in fj:
+			var entry: Dictionary = fj[id]
+			if bool(entry.get("mirror_ok", true)):
+				painted_bad.append("%s: painted grain/embroidery must not use mirror fallback" % id)
+			for mapping in entry["rot_map"]:
+				if bool(mapping[1]) or not (entry["rot"] as Dictionary).has(str(int(mapping[0]))):
+					painted_bad.append("%s: mirrored or missing true view" % id)
+		t.check("mirror_ok_measured", fj.size() == 130 and painted_bad.is_empty(), "130 painted objects retain their authored views, no mirror fallback; %s" % str(painted_bad.slice(0, 4)))
+		return
 	var doc: Dictionary = _json(SPEC_DIR + "/mirror_ok.json")
 	var ids: Array = doc.get("mirror_ok", [])
 	var by_id := {}

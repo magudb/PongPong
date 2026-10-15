@@ -1,0 +1,275 @@
+{
+  "scope": "I4 art/design only on codex-review; no unfinished m1b gameplay merged or edited",
+  "reviewed_utc": "2026-10-15T17:52:26.293582+00:00",
+  "tool": "built-in imagegen: nine reference-guided generation jobs and one explicit transparency edit",
+  "style": "accepted matte storybook gouache/watercolor and warm irregular pencil",
+  "pieces": 69,
+  "authored_views": 115,
+  "sets": 15,
+  "accent_masks": 2,
+  "source_masters": {
+    "civic.png": {
+      "size": [
+        887,
+        1774
+      ],
+      "sha256": "a1c9906d57ca8a42697f3376442f0be852a88154a6767d41f680a49349b046a4"
+    },
+    "display.png": {
+      "size": [
+        1448,
+        1086
+      ],
+      "sha256": "6ebabe802e89b5557e7460a9702c5717f4258c09e7ff10c3154488b0ada57006"
+    },
+    "mechanical.png": {
+      "size": [
+        1448,
+        1086
+      ],
+      "sha256": "b32d4fa99d25dc33ca4c78bbd7bc64db8e6a3e845e7ec517291cce28ee4a382b"
+    },
+    "small_a.png": {
+      "size": [
+        1448,
+        1086
+      ],
+      "sha256": "69e70e53b2efcb50e6bfb8b7c8b2e427354530640100a595e2da947c4a845f77"
+    },
+    "small_b.png": {
+      "size": [
+        1448,
+        1086
+      ],
+      "sha256": "96dc34e636e372808f0c882e15fc127ed45187ae9dff3aca36f14cd8c606df36"
+    },
+    "small_c.png": {
+      "size": [
+        1448,
+        1086
+      ],
+      "sha256": "0a1e7628cecae92232f00ff11343dd904af85b83b77bee2a223ca82ac73c188c"
+    },
+    "specialties.png": {
+      "size": [
+        887,
+        1774
+      ],
+      "sha256": "83a90727c1a7850349dd5bdf7e7f3b0e59bae3f1ac78deb6d22f36f06ef649eb"
+    },
+    "storage.png": {
+      "size": [
+        887,
+        1774
+      ],
+      "sha256": "90dbc43426eaa4529f004497ecb93103ac885e6e18e6888c683cad69893dbc11"
+    },
+    "workshop.png": {
+      "size": [
+        1024,
+        1536
+      ],
+      "sha256": "5a314dd496fcbbec80a8dbd534bbec341e6aebe462d7cc325a9aabf5aeaa3d02"
+    }
+  },
+  "packing": {
+    "pieces": 69,
+    "authored_views": 115,
+    "sets": {
+      "I4-generic": {
+        "pieces": 10,
+        "authored_views": 13,
+        "rgba8_mips_bytes": 1094756
+      },
+      "I4-seed": {
+        "pieces": 6,
+        "authored_views": 9,
+        "rgba8_mips_bytes": 877948
+      },
+      "I4-post": {
+        "pieces": 2,
+        "authored_views": 3,
+        "rgba8_mips_bytes": 242968
+      },
+      "I4-bath": {
+        "pieces": 4,
+        "authored_views": 5,
+        "rgba8_mips_bytes": 336396
+      },
+      "I4-hall": {
+        "pieces": 3,
+        "authored_views": 5,
+        "rgba8_mips_bytes": 739632
+      },
+      "I4-hut": {
+        "pieces": 4,
+        "authored_views": 6,
+        "rgba8_mips_bytes": 551016
+      },
+      "I4-bakery": {
+        "pieces": 4,
+        "authored_views": 8,
+        "rgba8_mips_bytes": 996244
+      },
+      "I4-smithy": {
+        "pieces": 5,
+        "authored_views": 13,
+        "rgba8_mips_bytes": 1194132
+      },
+      "I4-magic": {
+        "pieces": 6,
+        "authored_views": 13,
+        "rgba8_mips_bytes": 1191292
+      },
+      "I4-animal": {
+        "pieces": 4,
+        "authored_views": 6,
+        "rgba8_mips_bytes": 542680
+      },
+      "I4-builder": {
+        "pieces": 5,
+        "authored_views": 7,
+        "rgba8_mips_bytes": 633928
+      },
+      "I4-furniture": {
+        "pieces": 3,
+        "authored_views": 4,
+        "rgba8_mips_bytes": 337460
+      },
+      "I4-tailor": {
+        "pieces": 5,
+        "authored_views": 11,
+        "rgba8_mips_bytes": 1126320
+      },
+      "I4-timber": {
+        "pieces": 3,
+        "authored_views": 5,
+        "rgba8_mips_bytes": 432652
+      },
+      "I4-flea": {
+        "pieces": 5,
+        "authored_views": 7,
+        "rgba8_mips_bytes": 572400
+      }
+    },
+    "night_layers": 2,
+    "disk_mb": 0.873474,
+    "rgba8_mips_mb": 10.869824
+  },
+  "repack": "all 117 WebP textures and shops.json rebuilt byte-identically from saved selected masters",
+  "dressing": {
+    "rooms": 15,
+    "placements": 84,
+    "per_room_min": 2,
+    "per_room_max": 6,
+    "actual_towns_validator_failures": 0
+  },
+  "native_review": {
+    "inspected": true,
+    "set_contact_sheets": 15,
+    "room_captures": 33,
+    "capture_dimensions": [
+      1280,
+      720
+    ],
+    "all_15_rooms_day_and_evening": true,
+    "bare_comparisons": [
+      "bageriet",
+      "smedjen",
+      "skraedderiet"
+    ],
+    "checks": 149,
+    "max_nodes": 49,
+    "max_point_lights": 1,
+    "max_imported_room_texture_bytes": 2993136.0,
+    "room_texture_exclusions": [
+      "shared character atlases",
+      "procedural core light texture"
+    ],
+    "screenshots_sha256": {
+      "native/art_shops_b_shop_special_I4-animal_01.png": "01f490441b4b6bfeb53eaf386230ccd573f9489797e4d89376ad569c8ca0cfd3",
+      "native/art_shops_b_shop_special_I4-bakery_01.png": "baecda1b6b3524e2c412c158b6ab78a2f25301c702bba699d72b49bc7007dc87",
+      "native/art_shops_b_shop_special_I4-bath_01.png": "6c8c4dfc5668d36ae28326be179d430b5b268ecc490940895f2e46b1e2e07f83",
+      "native/art_shops_b_shop_special_I4-builder_01.png": "5edd78bf86561e54f285bc6ed55e9597c43125e67c00adb6bce6cdc1485b6eb8",
+      "native/art_shops_b_shop_special_I4-flea_01.png": "74281e01976c6004d8b45a2c8426c09fec484c2fc54e05223ba4bdeb0478135d",
+      "native/art_shops_b_shop_special_I4-furniture_01.png": "c06f121ffe7e67111b3687827bf77805736ba7cced16bc7a76dd1ee5ea8d8d00",
+      "native/art_shops_b_shop_special_I4-generic_01.png": "82c2c179adab2640838b2ac8120cdeadd3ae51928569105c5566b1197fc30af4",
+      "native/art_shops_b_shop_special_I4-hall_01.png": "445f38fc2c4d40cdd9501f9eec505000b92676cff5618128e44330d379f54cd1",
+      "native/art_shops_b_shop_special_I4-hut_01.png": "1b8876f896420a5036ec76320884dabfbe6262f119ddd73462297f88d253779b",
+      "native/art_shops_b_shop_special_I4-magic_01.png": "42d09e24777860003fd423fc7395b55d141eb8d841ecd431ed1b1e5763e9ebce",
+      "native/art_shops_b_shop_special_I4-post_01.png": "2ec3606b38b7a3729326deb62538e67f25248d759d27cdf191b9d38dd619bdfd",
+      "native/art_shops_b_shop_special_I4-seed_01.png": "f3ef391712d7b66a3ad1180f6f26d0bb5214128fa5a2b862ce7b45a89ff44ec1",
+      "native/art_shops_b_shop_special_I4-smithy_01.png": "05e6e00c28c235d7c695ea15eff7d65a5ec8b4ba6e34d754161080f765b22b07",
+      "native/art_shops_b_shop_special_I4-tailor_01.png": "29f1bf2100734745d51e806442b4248dee8cde1b497361d4bbfd7d20f04bb1ea",
+      "native/art_shops_b_shop_special_I4-timber_01.png": "0fcba4ce9625001169d02a71d8c9e4ace2c30d5e160f82ec3c7f08432236c9e1",
+      "native/art_shops_b_special_badehuset_day.png": "605a65d81a3db12c6c0e7530ab8f87fc7b051a24ddb4c75c8799cf6054cb65bf",
+      "native/art_shops_b_special_badehuset_night.png": "3e8ff2d30d99df1a654f73f9efe57a68fcf85d27e364c21d79652cf9518326db",
+      "native/art_shops_b_special_bageriet_bare.png": "f06a1135513a18d11815824d84620a191697fa383336abb08a8d8fa9e4bdf6a4",
+      "native/art_shops_b_special_bageriet_day.png": "1d6524e0dd11c105face0beff151ae65a4fcbc45141391d24d0baf43c390b8e1",
+      "native/art_shops_b_special_bageriet_night.png": "28a26dfd1eb24fa21ace56c8e675a0a950e2d0109796997dd0549f4b6e979a3d",
+      "native/art_shops_b_special_brummes_vaerksted_day.png": "076457366217761ed8037680ed44c03c097c97f227e50f656177e4f775cd81c8",
+      "native/art_shops_b_special_brummes_vaerksted_night.png": "d1659f561821111de172eb873da3373f4d069ec93adaf708320c6803e383f23b",
+      "native/art_shops_b_special_dyrehuset_day.png": "bee6cccf8f91724f10ab68d466eea2570fdb33c5c7a4234e068b52b125bd7963",
+      "native/art_shops_b_special_dyrehuset_night.png": "40ebdf63a10a5b43e9cb8cfa603a59b6561107a4ebf1230bcb79f55d751421ac",
+      "native/art_shops_b_special_froebutikken_day.png": "456cf3883513353322efa5fc0e12bcfcc1f55ac5b22c93d89cbb3a87f4b93c40",
+      "native/art_shops_b_special_froebutikken_night.png": "9839d736e8f2bab5eac2e009f418066a812f12b6ac9de9fcf8b2f74b438d5764",
+      "native/art_shops_b_special_hoppe_hut_day.png": "8664ce907c7277b032dd82ce60c10339f30bd8a1c1f1f1138b682c6a9be6a436",
+      "native/art_shops_b_special_hoppe_hut_night.png": "e29c08a57fb96a2120548860214bc03047b7657790fed8bd92dc6b0d9df6e9a0",
+      "native/art_shops_b_special_loppeloftet_day.png": "2c6b002a2e6b582b02b18d9cba899cba1971399724cb15f3868fe34cad9c9946",
+      "native/art_shops_b_special_loppeloftet_night.png": "edd341823019b850cc9cc3452557f24501a21364299a8c1b727f3fb5bccf22a1",
+      "native/art_shops_b_special_moebelbutikken_day.png": "636dad4a2d291a167cf91d519324e245842ccfdbea082b717b616ad573fc76c0",
+      "native/art_shops_b_special_moebelbutikken_night.png": "6fc6a912ed399f6437439edf0627b0603bf610b855d84efd786220f504680ef8",
+      "native/art_shops_b_special_postkontoret_day.png": "0cdd2e12caf633b9a06da9ae966b85758ba75cd9a303373af6d110d844571af0",
+      "native/art_shops_b_special_postkontoret_night.png": "fad8b606f03fdeda84290ed3edd98e3ee9a80fdc5f1d3846bbd2fdecafe9d0f9",
+      "native/art_shops_b_special_raadhuset_day.png": "4a31ae572f66b68d3d92e648d4384b2e7d20b6dbdf39d27ea8b451a5062de1ee",
+      "native/art_shops_b_special_raadhuset_night.png": "746eb6e68060b7cf5d71e10fa7e59110db48371d7298c29ca6ed8e0cdc4202a7",
+      "native/art_shops_b_special_skraedderiet_bare.png": "7373f742a6e1bb1469d341104a1e573e1c29423b36050d1dc7faf2f84736c0da",
+      "native/art_shops_b_special_skraedderiet_day.png": "1f7cbfc2fb71f1ba72dab8cedc1d42441d12331aa000772edfcbc0dc4639fc41",
+      "native/art_shops_b_special_skraedderiet_night.png": "a235ae1464db40b3f2af94e1b48cf7c9e718992b5221a0f9a545cbebfc270f01",
+      "native/art_shops_b_special_smedjen_bare.png": "0f9063ba2a106ea286d6e1fcde0b427cb9c37f2ebbfd40a84ce6027032ab0f72",
+      "native/art_shops_b_special_smedjen_day.png": "1304b437889fd767e0b382697134d4d3e9170e6986753c807d4e2a0e09fc7118",
+      "native/art_shops_b_special_smedjen_night.png": "8bd7700689c82b852380aae3401c5025af15e36ad1c5c8dfaf18494ebb5b91b1",
+      "native/art_shops_b_special_toemmerhandlen_day.png": "9b1611f0f71106a165604023d2741fb4426877ccf49180c4b1df431214887387",
+      "native/art_shops_b_special_toemmerhandlen_night.png": "db0b528f103da489261c4843d99db6a6c5a0100b6864325ac06d16d77dfd69e7",
+      "native/art_shops_b_special_troldmandstaarnet_day.png": "c517eec99e94c7731c6c9a34b4ef4bc2be560d8c257692c9a507d93fb8dc5962",
+      "native/art_shops_b_special_troldmandstaarnet_night.png": "b4476be134955df4f2bc9b68aac19cd1ae30408edc1bd091067d1935d74cdbc6",
+      "native/art_shops_b_special_uglehulen_day.png": "3e675102d70d149e55c73af5f518a683f0492142429209e0f19b016b8b4a1fcf",
+      "native/art_shops_b_special_uglehulen_night.png": "7cedfef4e82d5f8729eedd82908cfc4985d21dc68e8dc46c2b16da8ece4ab62c"
+    }
+  },
+  "tests": {
+    "headless": {
+      "result": "pass",
+      "checks": 1352,
+      "failed": 0,
+      "skipped": 3,
+      "elapsed_s": 12.43
+    },
+    "native": {
+      "result": "pass",
+      "checks": 149,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 9.09
+    },
+    "full": {
+      "result": "pass",
+      "checks": 4715,
+      "failed": 0,
+      "skipped": 57,
+      "elapsed_s": 224.66
+    }
+  },
+  "engine_errors": 0,
+  "engine_warnings": 0,
+  "notes": [
+    "57 full-suite skips name pending owners, including the live towns table and Hoppe room; 26 allowed messages are scoped existing negative/smoke cases.",
+    "Art gallery node/texture estimates are not live gameplay collider counts, full-game VRAM or frame-time benchmarks.",
+    "Legacy validate_features_home.py has an A1 home/CG catalog interface, not a specialist-shop validator. Current art_shops_b and art_home gates were run."
+  ],
+  "remaining": [
+    "runtime town catalog/ceiling/accent consumption on its owning branch",
+    "I5 festival art package",
+    "fitted wardrobe animation production after existing design studies"
+  ]
+}

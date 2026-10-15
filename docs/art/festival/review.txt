@@ -1,0 +1,113 @@
+Painted seasonal festivals — continuation of Claude's I5 art handoff
+
+Scope: art/design on codex-review. The unfinished m1b gameplay is not merged or
+edited. This is the I5 art and placement-design delivery, not completion of its
+TownDirector / SocialManager runtime package. Those integration gates remain
+explicitly pending in the handoff and tests.
+
+The kit contains the exact 24 published IDs and 53 authored views: two bunting
+strings, four seasonal banner poles, two lantern strings, a shared stage and
+bench, maypole, bonfire, pumpkin pile, wheat sheaves, flower arch, ice lantern,
+four seasonal market stalls and four door wreaths. Four-view stage and stalls
+have independently painted fronts and closed backs. No view is a mirror flag
+or a reused front presented as another authored quarter-turn. No lettering,
+faces or effigies are baked into the decoration.
+
+Style follows the accepted characters, city and tiles: matte storybook gouache
+and watercolor with warm irregular pencil edges, honey timber, cream cloth,
+sage, muted lavender, terracotta, small sky-blue and dull brass accents. Spring
+uses blossoms, summer honey/sun details, autumn wheat/leaves/pumpkins, and winter
+evergreen, a pale snowflake and ice candles. The old soft-CG template direction
+is superseded by the chosen painted style, as in the core/specialist shop kits.
+
+Built-in imagegen generated five full-size source sheets and the revised tall
+pole sheet. The initial short poles could not support overhead strings at the
+character scale; poles.png preserves the approved seasonal identities on longer
+shafts. The exact edit prompt and its retained seasonal.png input are recorded
+alongside all five generation jobs in prompts.json. Six selected master files
+are under tools/art/drawn/sources/festival/. sources.json retains their hashes
+and dimensions. Repacking the selected paintings needs no credentials or online
+generation. asset-repair-prompt.txt is the reusable future correction template.
+
+The first native-size export exceeded the 7 MB all-view upload estimate. The
+export now uses 82% texture resolution and an explicit reciprocal render_scale,
+preserving the same world size, ground anchors and string span. Full-resolution
+masters remain saved. Body and child light-mask transforms are applied once.
+The original footprints, layers and authored-view counts are unchanged. This
+is export-resolution control, not a smaller festival in the game world.
+
+Strings use a first-post ground anchor and span three cells: (+192,+114) or
+(-192,+114) world pixels. Rope attachments sit 225 px above their ground posts.
+Wreaths use the first wall/door-cell ground anchor and a 95 px mount height.
+Floor props sort at their ground centre; overhead strings use a foreground
+plane. All decoration is non-solid and adds zero PointLight2D nodes. Six cropped
+additive night masks cover the two orientations of both lantern strings, the
+bonfire and ice lantern. They follow the painted light sources, without a new
+radial light or an opaque glow rectangle.
+
+festival.json exposes seven named slots for each season: pole, string, stage,
+bench, centre, awning and door; spring flower arch and autumn sheaves are extra
+season accents. lua/config/festival_decor.lua is literal declarative art data:
+nine fixed festival IDs plus the date-dependent wedding, seasonal set, centre
+override, slots used, door-wreath choice and placement relative to standard post
+suffixes. contracts.json records the calendar generator and 24-post set sources
+read-only, without executing the content generators or installing social data.
+
+PaintedFestivalArt is a stateless presentation helper. It accepts resolved
+positions and a chosen event; it does not start festivals, read calendar state,
+subscribe to game events, create an autoload or change saves. Four awnings reuse
+one selected texture. Only the views actually used by an event are loaded;
+manifest caching retains JSON data rather than texture objects. The art gate
+checks resource release after its holder is freed, separately from GPU allocator
+pool behavior. No live town director is attached by this art delivery.
+
+Budgets: 0.7 MB disk, 7 MB all 53 views plus six masks as conservative RGBA8 with
+complete mip chains, and 1.8 MB for an event's selected views/masks. The last
+limit is NOT a promise that every authored rotation in a seasonal library is
+resident within 1.8 MB: unused rotations must remain unloaded. packing.json and
+event-budgets.json retain the separate totals. Shared town and character textures
+are outside the festival-only budget. These estimates are not whole-game VRAM
+or frame-time measurements. Saved rebuild timings are observations on this host.
+
+The developer gallery previews four seasons by day/evening on installed native
+Hyggebyen and Torvet geometry. The original standard Torvet post block spilled
+past the front rim and placed the host in the existing fire pit. Its final art
+study therefore uses hand-placed positions, two temporary stalls and four
+guests on that platform. This is a proposed art arrangement; it does not prove
+the unfinished director's post snapping, NPC routing or gameplay access. The
+standard 24-post schema remains unchanged in the data contract. Contact sheets
+include every authored view, even pieces not used by a particular town fixture.
+
+The old validate_features_home.py named in the historical work order validates
+the A1 furniture/home catalog and CG symmetry/counts, not festival.json. Current
+art_festival tests cover this painted kit; the existing art_home and world style
+gates run in regression checks. Lua data is linted with the project's real tool.
+
+Final measurements, checks and inspected screenshot hashes: validation.json.
+Review evidence: native/, headless-tests.json, native-tests.json, full-tests.json.
+Runtime integration and remaining wardrobe production: handoff.txt.
+
+Final export: 571,494 disk bytes, 6,636,896 conservative RGBA8/mip bytes for the
+complete library, and at most 1,109,160 such bytes for a selected event. All 59
+textures and the manifest rebuild byte-identically. The observed export used
+1.41 user CPU seconds (2.09 wall seconds with profiling); the separate warm
+byte-identical repack took 3.37 wall seconds. WebP quality is 90, method 4,
+with lossless accents; source masters remain full-resolution.
+
+Verification: 1,130 focused checks across festival, world style and specialist
+shop sections, zero failures and four explicit pending-integration skips. The
+festival section itself passes 299 checks with two live-integration skips.
+Windowed: 57 checks, zero failures/skips, all 24 captures inspected. The full
+strict animal regression passes 5,015 checks across 35 sections with 59 named
+pending-owner skips. All runs have zero engine errors and warnings. The full
+suite's 26 allowed messages belong to existing scoped negative/smoke cases.
+The actual Lua lint passes all 74 files with zero findings.
+
+Rebuild:
+  tools/art/.venv/bin/python tools/art/drawn/pack.py --only=festival
+Check:
+  tests/run_playtest.sh --strict --no-boot --only=art_festival
+  GODOT_EXTRA_ARGS=--minimized tools/dev/run_windowed.sh --strict --no-boot --only=art_festival --out=<directory>
+Browse:
+  tools/dev/play.sh --throwaway tools/art/drawn/festival_gallery.tscn
+  Left/right season; T town; N evening; D bare/decorated comparison.

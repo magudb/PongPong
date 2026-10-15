@@ -23,7 +23,7 @@ tests/run_playtest.sh --strict --character=fairy
 tests/run_playtest.sh --strict --character=hobbit
 ```
 
-`--only=characters|props|homes|terrain|items|world` rebuilds a slice. `--sheet heroes players2`
+`--only=characters|props|homes|terrain|items|world|interiors|consistency|shop-core|shop-special|festival|equipment-fit|fixtures` rebuilds a slice. `--sheet heroes players2`
 restricts the character sources; `--character <ids...>` restricts individual IDs.
 `--portraits-only --only=characters` updates
 portraits without rebuilding animation sheets. Run one Godot instance at a time.
@@ -102,13 +102,26 @@ the registered tools, resources, food, seeds, animals and wardrobe items.
 Birk and Bodil have their own canonical hero drawings. Bu and Hviske share the
 same alpha and animation; the pink cloth is a palette variant.
 
-`optimize_environment.py` exports the retained full-colour masters in
-`sources/environment_masters/`. Painted sky PNGs use 128 colours and the native
-1920 by 1080 crop and the farm's S3TC/mipmap background preset; the large crown
-uses 256 colours with its alpha unchanged.
-Legacy terrain masters are exported as lossless WebP with identical visible
-RGBA and no mipmaps. `environment-export.json` records dimensions, colour error,
-alpha comparisons and the combined 22 MB environment budget.
+`optimize_environment.py` exports the approved full-colour sky masters in
+`sources/environment_masters/`. Painted sky PNGs use 128 colours, the native
+1920 by 1080 crop and the farm's S3TC/mipmap background preset. It then restores
+the painted compatibility fixtures, including the crown and terrain atlases.
+`environment-export.json` records sky dimensions, colour error,
+alpha comparisons and the combined 40 MB painted compatibility-fixture disk budget.
+Live city VRAM, farm upload and home disk limits remain separate checks.
+
+Historical fixture paths now receive the approved paintings too. `fixtures.py`
+uses `fixture_recipes.json` to export 285 images at those paths while preserving
+canvases, tile cells and ground anchors; 13 neutral radial light kernels remain
+functional masks. Trimmed hut light layers adopt the painted window bounds and
+offsets. `sources/fixture_geometry.npz` stores only measured channel sums and alpha
+for material joints/silhouettes; other recipes need only body bounds. Exporters
+read those immutable measurements, preventing repeated painted re-shading.
+The production packer and optimizer restore painted fixtures last. Run
+`tools/art/.venv/bin/python tools/art/drawn/fixtures.py --check` to verify every
+fixture against its recipe. Prompts and visual evidence are in
+`docs/art/style-audit/current/`. Geometry-stage renders remain experiments; finish
+any manual installation with the painted packer before reviewing shipped art.
 
 The treetop city and Mørkeskoven use the same painted source family through
 `world.py` (`pack.py --only=world`). `city_painted.png`,
@@ -145,6 +158,26 @@ GODOT_EXTRA_ARGS=--minimized tools/dev/run_windowed.sh --strict --no-boot \
 The five captures show the city overview, close view and night, plus the forest
 overview and cave clearing. Inspect them together with the character/tile sheets.
 
+`interiors.py` exports the painted modular interior kit, including four wall
+materials, aligned window masks, domestic and later-tier furniture, profession
+emblems and the functional shop pieces. The 34 furnishing studies cover all ten
+home upgrades and the 24 town interiors. Their design, saved imagegen prompts,
+scope and rebuild/capture commands are in `docs/art/interiors/design.txt`.
+`interiors_gallery.tscn` previews them with native tiles and character sprites;
+left/right changes room and N switches daylight/evening. These are art studies:
+live door, home ownership and shop services remain their planned gameplay packages.
+
+`equipment.py` packs the equipment design studies: three outfit directions for
+the eight playable heroes, eight equipped-pose concepts, and twenty clothing,
+weapon, tool and action-item shapes. It writes only `assets/art_studies/equipment/`;
+the drawings are flattened concepts, not fitted animation layers or live item
+catalog replacements. Review them with
+`tools/dev/play.sh --throwaway tools/art/drawn/equipment_studio.tscn`.
+The design, animation/ownership
+contracts, exact imagegen prompts and future fit-repair prompts are saved under
+`docs/art/equipment/`. Rebuild with
+`tools/art/.venv/bin/python tools/art/drawn/equipment.py`.
+
 After importing the project, audit the effective catalogs and map references:
 
 ```sh
@@ -156,3 +189,63 @@ The report is `docs/art/drawn/coverage.json`. It checks every installed characte
 clip and portrait, hero and NPC resolution, animal/enemy references, every live
 item icon, all terrain IDs and every declared or mapped prop. Run it again when
 the content registry changes.
+
+The full asset consistency review is recorded in `docs/art/style-audit/` with
+before/after file inventories, labeled review sheets, native captures and exact
+built-in imagegen prompts. `consistency.py` packs the saved replacement paintings
+for 130 furniture designs, 32 crafting materials and the remaining world props.
+It also projects painted timber onto the construction frames. Run it after a
+legacy geometry bake; the complete `pack.py` command runs it as the final stage.
+Use `--only=consistency` to rebuild this stage without redoing the character pack.
+
+The furniture manifest now retains 482 authored views: four per free-standing
+piece and two per wall piece, plus 44 separate legendary effect overlays. All
+130 IDs retain their footprint, original placement anchors and gameplay fields.
+The old symmetry/mirror measurements describe the geometry generator; they do
+not authorize flipping the painted grain or embroidery. Native checks enforce
+the painted rotation policy and still test anchors, icon outlines, distinctness
+and the unchanged 12 MB home art budget.
+
+The painted core shop kit exports the towns `PieceCatalog` interface under
+`assets/iso_props/shops/core/`: 20 pieces with 51 authored views, 15 emblem plates
+and five trimmed ember masks. Run `pack.py --only=shop-core`; open
+`shop_core_gallery.tscn` through `tools/dev/play.sh --throwaway` to browse the 14
+core room snapshots or compare their former stand-ins. Exact prompts, masters,
+budgets, native evidence and implementation handoffs are recorded in
+`docs/art/shop-core/review.txt`. This is the core art delivery; the unfinished
+m1b town gameplay, live festival integration and fitted wardrobe animations remain their
+respective packages.
+
+The specialist shop kit adds 69 designs with 115 authored views across 15 sets,
+plus two trimmed additive accents, under `assets/iso_props/shops/special/`.
+Repack with `pack.py --only=shop-special`; it also builds the optional 2–6-piece
+room overlays in `data/interiors/dress/`. The generator reads saved room contract
+snapshots rather than changing gameplay room geometry. Open
+`shop_special_gallery.tscn` with `tools/dev/play.sh --throwaway` to browse the 15
+dressed rooms, press D for the bare core room and N for evening. All generation
+and repair prompts, source hashes, budgets, native evidence and pending consumer
+work are in `docs/art/shop-special/review.txt` and `handoff.txt`.
+
+`pack.py --only=festival` exports the I5 painted festival kit: 24 designs,
+53 authored views, six cropped additive accents and four seasonal slot sets.
+The literal `lua/config/festival_decor.lua` describes nine festivals and the
+wedding without starting or scheduling an event. `PaintedFestivalArt` is a
+stateless presentation example; the live director/lifecycle hookup remains
+the towns/social owner's work. Exported textures carry `render_scale` so their
+world dimensions stay fixed while the all-view texture budget remains bounded.
+Open `festival_gallery.tscn` through `tools/dev/play.sh --throwaway` for the
+day/evening art studies in both native towns (arrows season, T town, N evening,
+D bare/decorated). Exact prompts, pole correction, review captures, budget
+definitions and the Torvet post-layout limitation are in
+`docs/art/festival/review.txt` and `handoff.txt`.
+
+`pack.py --only=equipment-fit` exports the next equipment art step under
+`assets/art_studies/equipment_fit/`: Rasmus and Pedro, four removable starter
+garments, iron sword, body/hand/ear parts and explicit grips for 320 poses across
+eight directions of idle/walk/run/reach. These use a common offline deformation
+field, sampled from the existing actor clock in the native art consumer. Open
+`equipment_fit_gallery.tscn` through `tools/dev/play.sh --throwaway` (arrows turn,
+H hero, 1–4 motion, F flash, S spin, individual garment toggles). Selected and
+rejected masters, generation/repair prompts, native captures, measured budgets
+and the remaining complete-clip/other-body/runtime gates are documented under
+`docs/art/equipment-fit/`. No production wardrobe base is enabled by this proof.

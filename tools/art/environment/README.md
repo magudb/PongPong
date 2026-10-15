@@ -1,3 +1,8 @@
+The installed compatibility fixtures now use the approved paintings too.
+`build_all.sh` restores them after the geometry export. The current review and
+repair recipes are in `docs/art/style-audit/current/`; the original geometry
+work-order record follows for manufacturing context.
+
 # tools/art/environment - the environment art of Trætoppen (package P22-art-environment)
 
 Ground tiles, props, painted decals / fx, seamless ground textures and the backdrops of the three zone looks (Trætoppen farm, Hyggebyen, Mørkeskoven). Same pipeline

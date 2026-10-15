@@ -1,0 +1,13 @@
+{
+  "scope": "saved-master export, built-in generation time excluded",
+  "webp_quality": 90,
+  "webp_method": 4,
+  "export_scale": 0.82,
+  "final_observed_real_s": 2.09,
+  "final_observed_user_cpu_s": 1.41,
+  "final_observed_system_cpu_s": 0.09,
+  "previous_method6_real_s": 22.36,
+  "previous_method6_user_cpu_s": 21.64,
+  "caveat": "observations on this host; warm caches and profiler overhead differ, not a portable speed guarantee",
+  "byte_identical_repack_wall_s": 3.37
+}

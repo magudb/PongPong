@@ -1,0 +1,67 @@
+Trætoppen reusable asset repair prompt
+Use case: style-transfer / precise-object-edit
+
+Target: [asset ID and source file]
+Role: [world object / furniture turnaround / inventory icon / terrain / backdrop]
+Native contract: [canvas, pivot, footprint, projection, number of rows/columns,
+rotation order, growth stage or animation state, and separate light/float layers]
+
+Reference roles:
+1. tools/art/drawn/sources/heroes.png: character proportions and line character.
+2. tools/art/drawn/sources/terrain.png: ground pigments and painted grain.
+3. tools/art/drawn/sources/nature.png: vegetation and outdoor materials.
+4. tools/art/drawn/sources/interior_domestic.png (or interior_regal.png): furnishings.
+5. The target image: preserve its identity, functional parts and native contract.
+
+Repaint the target in our chosen matte storybook gouache/watercolor style with
+fine, slightly uneven warm grey-brown pencil contours. Preserve handmade grain,
+layered leaves, worn honey timber, cream, moss/sage, quiet lavender and small brass
+details. Shapes should be organic and readable next to the approved characters
+and terrain. Preserve the object and its rarity silhouette: a mushroom canopy,
+snail chest, root throne or moon bed must remain that specific design.
+
+Keep neutral daytime material colors. Farm: moss, honey, bark and sky. Town:
+lavender, rose, gold and chalk. Forest: night blue #1c2138, shadow moss #2f4a3f,
+quiet teal #6fd6c4 and owl gold #f2c14e. These are pigment families, not flat fills.
+UI inventory outlines are exported separately in ink #2b2340, with a pale
+#e4eff5 night rim for legendary icons. Parchment/ink/gold belong to the UI theme.
+
+For isometric objects use the fixed elevated orthographic 36-degree camera;
+verticals stay upright and native ground tiles are 128 by 76. For an orthographic
+asset preserve its orthographic projection instead. Do not change collision,
+footprint, interaction or sorting data to accommodate a different picture.
+
+For turnarounds, one object per row, four columns: r0 front bottom-left; r1 front
+bottom-right; r2 back bottom-left; r3 back bottom-right. Turn the same physical
+object. The rear must conceal handles, cushions or keys that are occluded. Check
+that column two actually turns, rather than repeating column one. Wall objects
+use the two front-facing wall orientations. Never silently mirror asymmetric
+handles, leaf arrangements, embroidery or grain.
+
+Use true alpha transparency for cutouts. Leave generous clear gutters on every
+side of each complete silhouette. Separate crops must not touch. Keep all legs,
+leaves, antennae, roof edges and accessories inside the assigned cell. No text,
+labels, grid, room floor, ground rectangle, cast shadows or baked glow. Transparent
+gutters must stay transparent; do not substitute a brown background wash.
+
+Avoid glossy 3D rendering, plastic, low-poly balls/cylinders, vector cubes,
+photorealism, thick black outlines and neon bloom. Do not add characters or
+unrequested decorations. Preserve material and object identity: a berry pickup
+is fruit, not a bush; metal buckets, stone hearths and cloth cushions retain their
+own materials. Backdrops keep atmospheric depth and lower contrast than actors.
+
+Export and review:
+- Save the complete prompt and reference roles alongside the selected master.
+- Extract the saved painting through tools/art/drawn/consistency.py.
+- Preserve source RGB/alpha; packing, material variants and projection are
+  deterministic exports. Technical shadows, light masks and telegraphs retain
+  their functional geometry and readability and are not treated as illustrations.
+- Project floor textiles to their actual footprint: equal isometric bounding-box
+  ratios do not mean that runners and rectangular rugs have the same shape.
+- Rebuild window masks from the current painted windows and align their offsets.
+- Review the actual Godot imports at native scale, on light and dark backgrounds.
+- Run art_home, art_style_consistency, art_world_style, art_farm and ui_foundation;
+  keep the existing pixel-anchor, distinctness, compression and memory checks.
+
+Actual generation/edit prompts and selected source paths from this pass are in
+the adjacent *prompts.json files. Generated with the built-in imagegen tool.

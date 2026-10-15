@@ -1,0 +1,710 @@
+{
+  "version": 1,
+  "scope": "Two-body fitted art proof, not live wardrobe bases.",
+  "canvas": [
+    256,
+    256
+  ],
+  "ground_anchor": [
+    128,
+    200
+  ],
+  "directions": [
+    "S",
+    "SW",
+    "W",
+    "NW",
+    "N",
+    "NE",
+    "E",
+    "SE"
+  ],
+  "parts": [
+    "body",
+    "pants",
+    "shoes",
+    "shirt",
+    "hat",
+    "ears",
+    "hand_l",
+    "hand_r",
+    "sword"
+  ],
+  "clips": {
+    "idle": {
+      "frames": 4,
+      "fps": 5,
+      "loop": true
+    },
+    "walk": {
+      "frames": 6,
+      "fps": 9,
+      "loop": true
+    },
+    "run": {
+      "frames": 6,
+      "fps": 12,
+      "loop": true
+    },
+    "interact": {
+      "frames": 4,
+      "fps": 9,
+      "loop": false
+    }
+  },
+  "items": {
+    "hat": "hat_straw_plain",
+    "shirt": "shirt_linen_cream",
+    "pants": "pants_trousers_brown",
+    "shoes": "shoes_boots_brown",
+    "sword": "iron_sword"
+  },
+  "bodies": {
+    "rasmus": {
+      "stock": "fox",
+      "skin": "animal_fox",
+      "height": 168,
+      "base": "rasmus_base.png",
+      "garments": "rasmus_garments_v2.png",
+      "shift_x": [
+        16,
+        20,
+        16,
+        20,
+        20,
+        -15,
+        -16,
+        -20
+      ],
+      "fit": [
+        {
+          "hat": [
+            76,
+            54,
+            105,
+            47
+          ],
+          "shirt": [
+            86,
+            143,
+            86,
+            39
+          ],
+          "pants": [
+            94,
+            177,
+            70,
+            21
+          ],
+          "shoes": [
+            94,
+            185,
+            70,
+            19
+          ],
+          "right": [
+            105,
+            165
+          ],
+          "left": [
+            149,
+            165
+          ],
+          "r_visible": true,
+          "l_visible": true,
+          "depth": "front",
+          "angle": -32
+        },
+        {
+          "hat": [
+            75,
+            54,
+            103,
+            47
+          ],
+          "shirt": [
+            83,
+            143,
+            78,
+            40
+          ],
+          "pants": [
+            92,
+            177,
+            65,
+            21
+          ],
+          "shoes": [
+            94,
+            185,
+            63,
+            19
+          ],
+          "right": [
+            93,
+            165
+          ],
+          "left": [
+            132,
+            165
+          ],
+          "r_visible": true,
+          "l_visible": true,
+          "depth": "rear",
+          "angle": -38
+        },
+        {
+          "hat": [
+            80,
+            53,
+            94,
+            47
+          ],
+          "shirt": [
+            94,
+            144,
+            65,
+            39
+          ],
+          "pants": [
+            104,
+            178,
+            54,
+            20
+          ],
+          "shoes": [
+            106,
+            185,
+            52,
+            19
+          ],
+          "right": [
+            140,
+            165
+          ],
+          "left": [
+            106,
+            165
+          ],
+          "r_visible": false,
+          "l_visible": true,
+          "depth": "rear",
+          "angle": 45
+        },
+        {
+          "hat": [
+            77,
+            54,
+            101,
+            47
+          ],
+          "shirt": [
+            92,
+            142,
+            70,
+            42
+          ],
+          "pants": [
+            98,
+            178,
+            61,
+            20
+          ],
+          "shoes": [
+            99,
+            185,
+            60,
+            19
+          ],
+          "right": [
+            148,
+            165
+          ],
+          "left": [
+            94,
+            167
+          ],
+          "r_visible": false,
+          "l_visible": true,
+          "depth": "rear",
+          "angle": 55
+        },
+        {
+          "hat": [
+            77,
+            54,
+            103,
+            47
+          ],
+          "shirt": [
+            87,
+            142,
+            84,
+            42
+          ],
+          "pants": [
+            94,
+            178,
+            71,
+            20
+          ],
+          "shoes": [
+            95,
+            185,
+            70,
+            19
+          ],
+          "right": [
+            154,
+            167
+          ],
+          "left": [
+            94,
+            167
+          ],
+          "r_visible": false,
+          "l_visible": true,
+          "depth": "rear",
+          "angle": 55
+        },
+        {
+          "hat": [
+            78,
+            54,
+            101,
+            47
+          ],
+          "shirt": [
+            94,
+            143,
+            69,
+            41
+          ],
+          "pants": [
+            96,
+            178,
+            61,
+            20
+          ],
+          "shoes": [
+            97,
+            185,
+            59,
+            19
+          ],
+          "right": [
+            152,
+            165
+          ],
+          "left": [
+            107,
+            165
+          ],
+          "r_visible": true,
+          "l_visible": false,
+          "depth": "front",
+          "angle": 30
+        },
+        {
+          "hat": [
+            80,
+            53,
+            94,
+            47
+          ],
+          "shirt": [
+            96,
+            144,
+            65,
+            39
+          ],
+          "pants": [
+            97,
+            178,
+            55,
+            20
+          ],
+          "shoes": [
+            98,
+            185,
+            54,
+            19
+          ],
+          "right": [
+            152,
+            165
+          ],
+          "left": [
+            110,
+            165
+          ],
+          "r_visible": true,
+          "l_visible": false,
+          "depth": "front",
+          "angle": 38
+        },
+        {
+          "hat": [
+            77,
+            54,
+            104,
+            47
+          ],
+          "shirt": [
+            96,
+            143,
+            79,
+            40
+          ],
+          "pants": [
+            98,
+            177,
+            67,
+            21
+          ],
+          "shoes": [
+            98,
+            185,
+            65,
+            19
+          ],
+          "right": [
+            129,
+            165
+          ],
+          "left": [
+            168,
+            165
+          ],
+          "r_visible": true,
+          "l_visible": true,
+          "depth": "front",
+          "angle": -32
+        }
+      ]
+    },
+    "pedro": {
+      "stock": "ghost_bu",
+      "skin": "ghost_bu",
+      "height": 160,
+      "base": "pedro_base.png",
+      "garments": "pedro_garments.png",
+      "shift_x": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "fit": [
+        {
+          "hat": [
+            91,
+            41,
+            77,
+            39
+          ],
+          "shirt": [
+            81,
+            137,
+            94,
+            39
+          ],
+          "pants": [
+            91,
+            171,
+            75,
+            15
+          ],
+          "shoes": [
+            90,
+            181,
+            79,
+            14
+          ],
+          "right": [
+            83,
+            158
+          ],
+          "left": [
+            172,
+            157
+          ],
+          "r_visible": true,
+          "l_visible": true,
+          "depth": "front",
+          "angle": -30
+        },
+        {
+          "hat": [
+            94,
+            41,
+            77,
+            39
+          ],
+          "shirt": [
+            86,
+            136,
+            88,
+            40
+          ],
+          "pants": [
+            94,
+            172,
+            75,
+            15
+          ],
+          "shoes": [
+            93,
+            182,
+            76,
+            14
+          ],
+          "right": [
+            85,
+            154
+          ],
+          "left": [
+            164,
+            154
+          ],
+          "r_visible": true,
+          "l_visible": true,
+          "depth": "rear",
+          "angle": -34
+        },
+        {
+          "hat": [
+            98,
+            41,
+            75,
+            39
+          ],
+          "shirt": [
+            105,
+            136,
+            65,
+            40
+          ],
+          "pants": [
+            105,
+            173,
+            67,
+            15
+          ],
+          "shoes": [
+            105,
+            183,
+            65,
+            14
+          ],
+          "right": [
+            155,
+            154
+          ],
+          "left": [
+            122,
+            154
+          ],
+          "r_visible": false,
+          "l_visible": true,
+          "depth": "rear",
+          "angle": 40
+        },
+        {
+          "hat": [
+            96,
+            41,
+            75,
+            39
+          ],
+          "shirt": [
+            99,
+            136,
+            73,
+            40
+          ],
+          "pants": [
+            105,
+            173,
+            65,
+            15
+          ],
+          "shoes": [
+            104,
+            183,
+            66,
+            14
+          ],
+          "right": [
+            160,
+            156
+          ],
+          "left": [
+            101,
+            155
+          ],
+          "r_visible": false,
+          "l_visible": true,
+          "depth": "rear",
+          "angle": 30
+        },
+        {
+          "hat": [
+            91,
+            41,
+            77,
+            39
+          ],
+          "shirt": [
+            81,
+            137,
+            94,
+            39
+          ],
+          "pants": [
+            90,
+            173,
+            76,
+            15
+          ],
+          "shoes": [
+            90,
+            183,
+            76,
+            14
+          ],
+          "right": [
+            173,
+            157
+          ],
+          "left": [
+            84,
+            157
+          ],
+          "r_visible": true,
+          "l_visible": true,
+          "depth": "front",
+          "angle": 30
+        },
+        {
+          "hat": [
+            94,
+            41,
+            77,
+            39
+          ],
+          "shirt": [
+            97,
+            136,
+            78,
+            40
+          ],
+          "pants": [
+            96,
+            173,
+            73,
+            15
+          ],
+          "shoes": [
+            96,
+            183,
+            73,
+            14
+          ],
+          "right": [
+            164,
+            155
+          ],
+          "left": [
+            101,
+            155
+          ],
+          "r_visible": true,
+          "l_visible": false,
+          "depth": "front",
+          "angle": 32
+        },
+        {
+          "hat": [
+            91,
+            41,
+            77,
+            39
+          ],
+          "shirt": [
+            88,
+            136,
+            75,
+            40
+          ],
+          "pants": [
+            88,
+            173,
+            75,
+            15
+          ],
+          "shoes": [
+            87,
+            183,
+            76,
+            14
+          ],
+          "right": [
+            122,
+            154
+          ],
+          "left": [
+            161,
+            155
+          ],
+          "r_visible": true,
+          "l_visible": false,
+          "depth": "front",
+          "angle": -32
+        },
+        {
+          "hat": [
+            89,
+            41,
+            77,
+            39
+          ],
+          "shirt": [
+            85,
+            136,
+            86,
+            40
+          ],
+          "pants": [
+            88,
+            173,
+            76,
+            15
+          ],
+          "shoes": [
+            88,
+            183,
+            76,
+            14
+          ],
+          "right": [
+            98,
+            155
+          ],
+          "left": [
+            164,
+            155
+          ],
+          "r_visible": true,
+          "l_visible": true,
+          "depth": "front",
+          "angle": -32
+        }
+      ]
+    }
+  }
+}

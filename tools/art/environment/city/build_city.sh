@@ -3,7 +3,8 @@
 #
 # bake every texture of the Traetoppen city set -> validate the stage -> install into assets/iso_props/city + assets/backdrops/treetop_* -> validate the install.
 # About 90 s on a quiet M3.  The stage is a folder OUTSIDE the project or tools/art/_stage/<name>; default tools/art/_stage/city.
-# It never runs tools/art/produce_all.sh, storybook/* or drawn/* and never writes a pre-existing asset (the installer guards its two owned paths).
+# Geometry stages stay available for experiments; installs finish by restoring
+# the approved painted compatibility fixtures through drawn/fixtures.py.
 #   --only=id,id   bake just these ids (the stage's props.json keeps the others), then install everything the stage holds
 #   --no-install   stop after the validation of the stage
 # Godot-written .import / .uid files are NOT written here: run `godot --headless --import` twice in a CLONE and copy them back with impl/tools/pull_meta.sh.
@@ -30,6 +31,7 @@ echo "== validate the stage"
 if [ "$INSTALL" = 1 ]; then
   echo "== install"
   "$PY" "$HERE/install_city.py" --stage "$STAGE"
+  "$PY" "$ART/drawn/fixtures.py"
   echo "== validate the installed set"
   "$PY" "$HERE/validate_city.py"
 fi

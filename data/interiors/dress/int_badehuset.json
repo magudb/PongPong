@@ -1,0 +1,53 @@
+{
+  "items": [
+    {
+      "id": "towel_rack",
+      "cell": [
+        0,
+        5
+      ],
+      "rot": 0
+    },
+    {
+      "id": "bath_stool",
+      "cell": [
+        8,
+        0
+      ],
+      "rot": 0
+    },
+    {
+      "id": "bucket",
+      "cell": [
+        1,
+        4
+      ],
+      "rot": 0
+    },
+    {
+      "id": "steam_vent",
+      "cell": [
+        0,
+        0
+      ],
+      "rot": 0
+    },
+    {
+      "id": "price_board",
+      "cell": [
+        0,
+        0
+      ],
+      "rot": 0,
+      "wall": true
+    },
+    {
+      "id": "lantern_hanging",
+      "cell": [
+        0,
+        0
+      ],
+      "rot": 0
+    }
+  ]
+}

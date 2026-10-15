@@ -1,0 +1,79 @@
+Painted core shop kit — continuation of Claude's art handoff
+
+This pass stays on codex-review. Claude's unfinished m1b implementation is a
+read-only source for the consumer contract. No gameplay branch is merged or edited.
+
+The previous interior paintings supplied one front view of the service pieces.
+The upcoming towns PieceCatalog instead reads assets/iso_props/shops/core/shops.json
+and emblems.json. The new kit fills that exact interface: 20 piece IDs with 51
+authored views, 15 separate 96 px profession badges, and five trimmed ember masks.
+The 16 service-piece stand-ins, the counter/end/hatch and sign bracket are covered.
+
+Style follows the accepted characters, tiles and interior paintings: matte gouache,
+warm irregular pencil, honey timber, muted sage, cream, terracotta and charcoal
+iron. The images were generated with built-in imagegen. Five full-size masters
+are under tools/art/drawn/sources/shop_core/. Exact prompts and ordered reference
+paths are in prompts.json. sources.json records their hashes. No live generation
+or credentials are needed to repack them.
+
+IDs, layers, footprints, fallback IDs and authored-view counts follow the I3
+contract in shop_core_layout.json. The old soft-CG template instructions are
+superseded by the accepted painted direction. Room layouts are unchanged.
+The art-only copies of all 14 core room layouts in room-contracts.json came from
+the existing towns generator. They do not install a competing room layout system.
+
+Floor pivots remain on the ground plane. Wall pieces are projected onto the
+isometric wall axes and mounted 45 px above the first wall cell's ground anchor,
+matching the towns builder's placement convention. New core pieces sort at their
+ground centre. The first native review
+found that using the long counter's left-corner y caused the keeper to sort in
+front and appear to stand on the worktop. Ground-centre sorting corrects it.
+The native gate checks that feet are hidden and the head remains visible.
+Sign-bracket origins align with the separate badge below the chain. No labels or
+localized glyphs are painted into the art.
+
+The prescribed authored-view counts are explicit: four for the counters, ovens,
+forge, anvil, mannequin and tub; two for rectangular work pieces and wall pieces;
+one for the small orientation-neutral piles/cauldron. Rear oven/forge views have
+solid backs and no fire mask. Unsupported extra views are not presented as
+authored art by the gallery's reader. No export uses a mirror flag.
+
+packing.json records disk and conservative RGBA8+mip sizes. The existing limits
+remain 0.8 MB on disk and 8.8 MB resident for this core kit, with a 150 KB mean
+base-sprite allowance. Per-room kit estimates have a 3 MB cap; they exclude the
+existing shared furniture, wall/floor and character atlases. These estimates are
+not a whole-game VRAM measurement or a frame-time benchmark.
+The installed art uses 719,856 bytes on disk and 8,777,480 conservative resident
+bytes. Bodies are quality-90 WebP; badges and light masks are lossless. Imports
+use S3TC with mipmaps. The packer itself refuses an export above either budget.
+
+The native evidence includes every imported view, every badge on its bracket,
+all 14 core rooms in daylight with their registered keeper visuals, and bakery,
+smithy and bathhouse comparisons against the former stand-ins and by evening.
+These are art review scenes built from the real layout snapshots,
+painted tiles/walls, furniture and character resources, without gameplay managers.
+Reports: full-tests.json, headless-tests.json and native-tests.json. Images: native/.
+The focused headless run passes 627 checks, with the one explicit pending live
+towns-table check; the native run passes 51 checks with no skips, and the equipment
+studio passes 129 checks. All three have zero engine errors and warnings. The
+native foot-occlusion check compares against a counter-hidden negative control;
+it allows faint painted-edge/readback differences instead of demanding exact
+zero pixel differences from a translucent painted surface.
+The full strict animal regression suite passes 3,990 checks across 33 sections,
+with zero failures, engine errors or engine warnings. Its 55 skips name their
+pending owners; the 26 allowed messages belong to explicit existing test cases.
+
+The equipment design and studio now display the blue ghost as Pedro, matching
+the existing HERO_BU_NAME / SKIN_GHOST_BU translations. Internal bu/ghost_bu IDs
+and the historical exact generation prompts retain their original names.
+
+Repack:
+  tools/art/.venv/bin/python tools/art/drawn/pack.py --only=shop-core
+Check:
+  tests/run_playtest.sh --strict --no-boot --only=art_shops,art_interiors,art_home,art_style_consistency
+  GODOT_EXTRA_ARGS=--minimized tools/dev/run_windowed.sh --strict --no-boot --only=art_shops --out=<directory>
+Browse:
+  tools/dev/play.sh --throwaway tools/art/drawn/shop_core_gallery.tscn
+  Left/right chooses a room; N toggles evening; S compares the previous stand-ins.
+
+Integration boundaries and the remaining art packages are in handoff.txt.

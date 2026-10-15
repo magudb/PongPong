@@ -516,8 +516,8 @@ def homes() -> None:
     manifest = json.loads(manifest_path.read_text())
     drawings = sum((extract(SOURCES / (name + ".png"), 2, 2)
                     for name in ["homes1", "homes2", "homes3"]), [])[:10]
-    # Sample the existing stone floor material, without its transparent diamond edges.
-    stone = Image.open(ROOT / "assets/iso_tiles/floor_stone.png").convert("RGB")
+    # Foundations use the approved painted stone, independent of fixture exports.
+    stone = Image.open(ROOT / "assets/iso_tiles/drawn_floor_stone.webp").convert("RGB")
     stone = stone.crop((stone.width // 2 - 8, stone.height // 2 - 8,
                         stone.width // 2 + 8, stone.height // 2 + 8))
     for tier, drawing in zip(manifest["tiers"], drawings):
@@ -589,7 +589,7 @@ def homes() -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--only", choices=["characters", "props", "homes", "terrain", "items", "world"])
+    parser.add_argument("--only", choices=["characters", "props", "homes", "terrain", "items", "world", "interiors", "consistency", "shop-core", "shop-special", "festival", "equipment-fit", "fixtures"])
     parser.add_argument("--sheet", choices=list(CAST), nargs="+")
     parser.add_argument("--character", nargs="+", help="Rebuild only these character IDs (shared hero/NPC sources stay paired)")
     parser.add_argument("--portraits-only", action="store_true")
@@ -626,19 +626,41 @@ def main() -> None:
                               ghost_pink(norths[north_sheets.index(sheet) * 4 + row]), north_source, args.portraits_only)
     if args.only in (None, "props"):
         props()
-    if args.only in (None, "homes"):
-        homes()
     if args.only in (None, "terrain"):
         from terrain import build
         build()
         from extra_props import build as extra_props
         extra_props()
+    if args.only in (None, "homes"):
+        homes()
     if args.only in (None, "items"):
         from items import build
         build()
     if args.only in (None, "world"):
         from world import main as world
         world()
+    if args.only in (None, "interiors"):
+        from interiors import main as interiors
+        interiors()
+    if args.only in (None, "consistency"):
+        from consistency import furniture, props as consistency_props
+        furniture()
+        consistency_props()
+    if args.only in (None, "shop-core"):
+        from shop_core import main as shop_core
+        shop_core()
+    if args.only in (None, "shop-special"):
+        from shop_special import main as shop_special
+        shop_special()
+    if args.only in (None, "festival"):
+        from festival import main as festival
+        festival()
+    if args.only in (None, "equipment-fit"):
+        from equipment_fit import build as equipment_fit
+        equipment_fit()
+    if args.only in (None, "props", "terrain", "world", "interiors", "consistency", "fixtures"):
+        from fixtures import build as fixtures
+        fixtures()
 
 
 if __name__ == "__main__":

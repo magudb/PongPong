@@ -1,0 +1,274 @@
+{
+  "_doc": "I5 art-only contract snapshot: exact published 24 IDs / 53 views. Approved painted art supersedes the historical CG template instructions.",
+  "pieces": {
+    "bunting_string_a": {
+      "id": "bunting_string_a",
+      "footprint": [
+        3,
+        1
+      ],
+      "layer": "ceiling",
+      "rot_baked": 2,
+      "template": "bunting",
+      "set": "I5-festival"
+    },
+    "bunting_string_b": {
+      "id": "bunting_string_b",
+      "footprint": [
+        3,
+        1
+      ],
+      "layer": "ceiling",
+      "rot_baked": 2,
+      "template": "bunting",
+      "set": "I5-festival"
+    },
+    "banner_pole_spring": {
+      "id": "banner_pole_spring",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "banner_pole",
+      "set": "I5-festival"
+    },
+    "banner_pole_summer": {
+      "id": "banner_pole_summer",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "banner_pole",
+      "set": "I5-festival"
+    },
+    "banner_pole_autumn": {
+      "id": "banner_pole_autumn",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "banner_pole",
+      "set": "I5-festival"
+    },
+    "banner_pole_winter": {
+      "id": "banner_pole_winter",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "banner_pole",
+      "set": "I5-festival"
+    },
+    "lantern_string_a": {
+      "id": "lantern_string_a",
+      "footprint": [
+        3,
+        1
+      ],
+      "layer": "ceiling",
+      "rot_baked": 2,
+      "template": "lantern_string",
+      "set": "I5-festival"
+    },
+    "lantern_string_b": {
+      "id": "lantern_string_b",
+      "footprint": [
+        3,
+        1
+      ],
+      "layer": "ceiling",
+      "rot_baked": 2,
+      "template": "lantern_string",
+      "set": "I5-festival"
+    },
+    "festival_stage": {
+      "id": "festival_stage",
+      "footprint": [
+        3,
+        2
+      ],
+      "layer": "floor",
+      "rot_baked": 4,
+      "template": "stage",
+      "set": "I5-festival"
+    },
+    "festival_bench": {
+      "id": "festival_bench",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "bench",
+      "set": "I5-festival"
+    },
+    "maypole": {
+      "id": "maypole",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "maypole",
+      "set": "I5-festival"
+    },
+    "bonfire_festival": {
+      "id": "bonfire_festival",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "bonfire",
+      "set": "I5-festival"
+    },
+    "pumpkin_pile": {
+      "id": "pumpkin_pile",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "pumpkins",
+      "set": "I5-festival"
+    },
+    "sheaf_stack": {
+      "id": "sheaf_stack",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "sheaf",
+      "set": "I5-festival"
+    },
+    "flower_arch": {
+      "id": "flower_arch",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "arch",
+      "set": "I5-festival"
+    },
+    "ice_lantern": {
+      "id": "ice_lantern",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "ice_lantern",
+      "set": "I5-festival"
+    },
+    "market_stall_spring": {
+      "id": "market_stall_spring",
+      "footprint": [
+        2,
+        2
+      ],
+      "layer": "floor",
+      "rot_baked": 4,
+      "template": "market_stall",
+      "set": "I5-festival"
+    },
+    "market_stall_summer": {
+      "id": "market_stall_summer",
+      "footprint": [
+        2,
+        2
+      ],
+      "layer": "floor",
+      "rot_baked": 4,
+      "template": "market_stall",
+      "set": "I5-festival"
+    },
+    "market_stall_autumn": {
+      "id": "market_stall_autumn",
+      "footprint": [
+        2,
+        2
+      ],
+      "layer": "floor",
+      "rot_baked": 4,
+      "template": "market_stall",
+      "set": "I5-festival"
+    },
+    "market_stall_winter": {
+      "id": "market_stall_winter",
+      "footprint": [
+        2,
+        2
+      ],
+      "layer": "floor",
+      "rot_baked": 4,
+      "template": "market_stall",
+      "set": "I5-festival"
+    },
+    "door_wreath_spring": {
+      "id": "door_wreath_spring",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "wall",
+      "rot_baked": 2,
+      "template": "wreath",
+      "set": "I5-festival"
+    },
+    "door_wreath_summer": {
+      "id": "door_wreath_summer",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "wall",
+      "rot_baked": 2,
+      "template": "wreath",
+      "set": "I5-festival"
+    },
+    "door_wreath_autumn": {
+      "id": "door_wreath_autumn",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "wall",
+      "rot_baked": 2,
+      "template": "wreath",
+      "set": "I5-festival"
+    },
+    "door_wreath_winter": {
+      "id": "door_wreath_winter",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "wall",
+      "rot_baked": 2,
+      "template": "wreath",
+      "set": "I5-festival"
+    }
+  },
+  "budgets": {
+    "disk_mb": 0.7,
+    "rgba8_mips_mb": 7,
+    "selected_season_mb": 1.8
+  }
+}

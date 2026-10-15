@@ -1,0 +1,61 @@
+To the character/wardrobe implementation owner
+
+The two-body fit proof is ready on codex-review. Review docs/art/equipment-fit/
+review.txt and the native captures, then assets/art_studies/equipment_fit/
+manifest.json. All authored directions and fitted coordinates are kept in
+tools/art/drawn/equipment_fit_layout.json; rebuild through pack.py --only=equipment-fit.
+The records are real poses, unlike the illustrative render-contract.example.json.
+
+Only Rasmus (fox) and Pedro (ghost_bu), four starter garments, iron sword, and
+idle/walk/run/interact are covered. Per body: 160 poses, two hand sockets per
+pose, one independently toggled layer per garment, body/ear/hand parts and
+explicit rear/front sword order. Pants/shoes use the same existing IDs on Pedro
+but become an under-hem band and leather tabs. No inventory mechanic changes.
+
+Every region stores rect in atlas pixels and canvas_offset in the original
+256x256 body canvas. Draw at canvas_offset - (128,200). Group transforms follow
+the actor's Sprite position/rotation/scale/modulate and offset-base_sprite_offset
+once; attachments must not apply altitude or spin offset a second time. Grip
+positions and their local bases are already deformed per frame in canvas space.
+The proof sword is baked at its recorded right grip; do not socket the baked
+rectangle again. A future separately packed attachment must retain its own
+explicit grip pivot and apply that pivot only once.
+
+Paintings were authored separately for all eight directions. Do not assume a
+mirrored direction has the same handedness or occluder order. Hand/ear occluders
+are extracted from the matching safe base painting. Far-side sword regions can
+be entirely hidden by the body/tail in this relaxed pose. Dedicated extended
+arm/hand poses are needed for the final attack and two-handed tools.
+
+The native Figure is an art-studio consumer, not the production EquipmentVisuals
+service. It deliberately uses an existing dressed IsoChibiSprite2D as the only
+clock, hides its sprite while supported proof poses are present, and restores
+the complete stock actor on other clips. It loads the four supported clip groups
+at setup and releases them with the view. Do not copy this eager review loading
+policy into a catalog-wide production presenter. In particular, do not leave
+ResourceLoader.load_threaded_request calls uncollected on view exit.
+
+Next art production:
+1. Complete Rasmus/Pedro jump, fall, land, celebrate, hit, sleep and talk, plus any
+   owning controller's additional required action clips. Produce extended attack
+   grips and independently painted two-hand support poses before claiming them.
+2. Refine actual directional gait/action silhouettes where offline puppet motion
+   is insufficient; preserve common field registration for cloth/occluders.
+3. Fit the other six heroes individually. Preserve fairy wings/hair, Bodil's
+   braids, monkey tail, and Hviske's separate pigment/material treatment. Sharing
+   Pedro geometry requires the existing documented alpha/pose equality gate.
+4. Extend garment/weapon families, skin-safe underlayers and rarities, keeping
+   existing item ownership/exclusion rules in their owning Lua modules.
+
+Production integration gate:
+A complete base + complete starter layers must be available atomically before
+CharacterCatalog selects a wardrobe base. Keep stock portraits/selection art.
+The existing F5/WardrobeManager ownership/presets and EconomyManager weapon/tool
+slots remain the owners; do not add another inventory or save format. A live
+presenter should consume one resolved outfit/action snapshot, reuse the actor
+clock, preload selected action groups, cancel stale loads and release old groups.
+Add lifecycle, rapid race/outfit change, action cancel, two-hand, dialogue/sleep,
+flight/landing, room sorting and target-hardware streaming QA when integrated.
+
+Festival state/lifecycle and TownDirector route/post clearance remain with their
+separate gameplay owner; see docs/art/festival/handoff.txt. No m1b work was merged.

@@ -1,0 +1,108 @@
+Painted specialist shops — continuation of Claude's I4 art handoff
+
+This work stays on codex-review and covers art/design only. Claude's unfinished
+m1b implementation is a read-only source for the piece and room contracts. No
+gameplay branch is merged, installed or edited.
+
+The I4 delivery adds 69 piece IDs with 115 independently authored views across
+15 specialist sets: general shop storage and small accessories, seed shop, post
+office, bathhouse, town hall, Hoppe's potting room, bakery, smithy, magic/owls,
+animal shop, timber shop, furniture shop, tailor, workshop and flea market.
+The exact footprint, layer and authored-view counts follow the published art
+contract in tools/art/drawn/shop_special_layout.json. The previously accepted
+matte gouache and warm pencil direction supersedes the old soft-CG instructions.
+
+The paintings use the existing core workroom/accessory masters and fox portrait
+as references: honey timber, sage, cream, lavender, terracotta and dull iron or
+brass; irregular warm outlines, visible brush texture and friendly readable
+shapes. Built-in imagegen generated the source sheets. Nine selected full-size
+masters live in tools/art/drawn/sources/shop_special/. Exact prompts, reference
+paths and any repair instructions are retained in prompts.json. sources.json
+records the selected master hashes. No API key or online generation is needed
+to rebuild the selected art.
+
+The exporter extracts whole alpha islands, scales their paintings and supplies
+native mounting metadata. It does not invent alternate views by flipping or
+stretching the same picture into four rotations. Four-view mechanical/display
+pieces include separately painted backs. Wall pieces follow the 64:38 wall
+axis, anchored at the first wall cell. Their mounting heights vary by function:
+small boards hang higher; the fitting curtain reaches down to the floor.
+Tabletop pivots raise the picture 60 px above its ground anchor; ceiling props
+use 112 px. A 19 px tabletop sort offset places accessories after their support.
+
+Hanging stars and steam have separate cropped, lossless additive accent masks
+derived from the new painting. The body remains readable in daylight. These
+accents request zero point lights. The gallery keeps at most the one existing
+core fire light, within the existing four-light room limit.
+
+Optional dressing lives in data/interiors/dress/int_<room>.json. All 14 core
+shop rooms and the generated Hoppe room have 2–6 removable pieces. Existing
+room geometry is kept in its owner package; the 24 generator snapshots under
+room-contracts.json are art inputs, not competing live room definitions.
+The generator prefers the functional pieces before clutter, reserves customer
+and keeper approaches, leaves doors and citizen posts reachable, avoids window
+spans when hanging wall art, and requires tabletop accessories to fit completely
+on a supporting surface. The 15 overlays contain 84 placements. dressing.json
+records the pieces omitted for space or the full-room texture budget.
+
+The actual towns validator has also been run read-only against every overlay.
+towns-validator.json records its source hash and all input hashes so stale
+evidence fails the art check. An independent flood-fill check in art_shops_b.gd
+also verifies access and includes blocked-door/post negative controls.
+
+Budgets are the existing I4 limits: 1.4 MB on disk and 15.4 MB conservative
+RGBA8 including all mip levels. Two room checks retain the 3 MB cap: a
+conservative RGBA8 core-plus-specialist kit estimate, and the actual imported
+room texture estimate including shell, floor, existing furniture and accents.
+Shared character atlases are separate. These are texture estimates, not a
+whole-game VRAM or frame-time measurement. packing.json records exact export
+totals and per-set allocations; the packer refuses an over-budget kit.
+The selected export is 873,474 disk bytes and 10,869,824 RGBA8+mip bytes.
+
+Verification and native review results are recorded in validation.json.
+Native evidence includes every imported view in 15 set contact sheets, all 15
+dressed rooms in daylight AND evening, and bare/dressed bakery, smithy and tailor
+comparisons, including the steam and star accents. The gallery uses the actual painted
+tiles, wall kit, furniture and registered character visuals without gameplay
+managers or save writes. See native/, headless-tests.json, native-tests.json and
+full-tests.json. Integration boundaries and remaining art work are in handoff.txt.
+The focused headless gate passes 1,352 checks with three explicit pending
+integration skips. The windowed gate passes 149 checks with no skips and
+produces 48 inspected captures (15 set sheets and 33 room views/comparisons).
+The full strict animal regression passes 4,715 checks across 34 sections with
+57 named pending-owner skips. All runs have zero failures, engine errors and
+engine warnings. The full suite's 26 allowed messages are scoped existing
+negative/smoke cases, not unexpected errors.
+
+The first full-room texture check found that the furniture showroom exceeded
+3 MB. Its existing evening shell/furniture already cost 2.984 MB. This room now
+keeps only a supported sample tag and price board, rather than adding another
+shelf, screen, plinth and lantern. All omitted designs remain in the export.
+The native review also found a fitting curtain hidden by a wardrobe; wall
+placement now prefers clear spans and the curtain is visible beside the mirror.
+The final whole-room imported texture estimates include shell, floor, existing
+furniture, both shop kits and accents. Native scene nodes and light counts are
+recorded per room/mode in native-room-budgets.json. Shared cast atlases and the
+procedural core light texture are separate. The art review scene's node count
+does not substitute for the live builder's future gameplay/collision-node gate.
+The final maximum is 49 art-scene nodes, one core fire light, and 2,993,136
+imported room-texture bytes. The 3 MB showroom margin is small: after changing
+its base furnishing or shell, rerun the day/evening budget gate before adding
+more dressing.
+
+The old work order names validate_features_home.py as a shop style validator.
+That script is an A1 home validator: it requires the whole home/furniture catalog
+and historical geometry symmetry/counts, and has no specialist-shop manifest
+interface. The current independent art_shops_b checks validate this painted kit;
+the existing current art_home section is also included in regression checks.
+
+Repack:
+  tools/art/.venv/bin/python tools/art/drawn/pack.py --only=shop-special
+Validate against the implementation owner's current validator, read-only:
+  tools/art/.venv/bin/python tools/art/drawn/shop_dressing.py --towns-checkout=<checkout>
+Check:
+  tests/run_playtest.sh --strict --no-boot --only=art_shops_b,art_shops,art_interiors,art_home,art_style_consistency
+  GODOT_EXTRA_ARGS=--minimized tools/dev/run_windowed.sh --strict --no-boot --only=art_shops_b --out=<directory>
+Browse:
+  tools/dev/play.sh --throwaway tools/art/drawn/shop_special_gallery.tscn
+  Left/right chooses a room; D toggles dressing; N toggles evening.

@@ -1,0 +1,28 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 68,
+  "elapsed_s": 10.79,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "art_style_consistency": {
+      "checks": 48,
+      "failed": 0,
+      "ms": 8382,
+      "skipped": 0
+    },
+    "ui_foundation": {
+      "checks": 20,
+      "failed": 0,
+      "ms": 310,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

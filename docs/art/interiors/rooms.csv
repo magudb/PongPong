@@ -1,0 +1,35 @@
+id,title,kind,floor,walls,floor_cells,furnishings,preview
+home_t01,The patched shelter,home_upgrade,floor_stone,plank,20,3,previews/interior_home_t01.png
+home_t02,A kitchen of your own,home_upgrade,floor_stone,plaster,30,7,previews/interior_home_t02.png
+home_t03,The weaving cottage,home_upgrade,floor_plank,plaster,35,8,previews/interior_home_t03.png
+home_t04,The timber home,home_upgrade,floor_plank,plaster,48,10,previews/interior_home_t04.png
+home_t05,The farmhouse,home_upgrade,floor_parquet,paper,55,12,previews/interior_home_t05.png
+home_t06,The tower study,home_upgrade,floor_parquet,paper,70,13,previews/interior_home_t06.png
+home_t07,The country retreat,home_upgrade,floor_parquet,paper,84,14,previews/interior_home_t07.png
+home_t08,The welcoming manor,home_upgrade,floor_marble,marble,105,15,previews/interior_home_t08.png
+home_t09,The leaf-crowned castle,home_upgrade,floor_marble,marble,119,16,previews/interior_home_t09.png
+home_t10,The lived-in palace,home_upgrade,floor_marble,marble,135,21,previews/interior_home_t10.png
+int_froebutikken,The seed shop,town_study,floor_plank,plaster,48,11,previews/interior_int_froebutikken.png
+int_bageriet,The bakery,town_study,floor_plank,plaster,48,10,previews/interior_int_bageriet.png
+int_smedjen,The smithy,town_study,floor_stone,plank,48,10,previews/interior_int_smedjen.png
+int_dyrehuset,The animal house,town_study,floor_plank,plaster,63,13,previews/interior_int_dyrehuset.png
+int_troldmandstaarnet,The wizard's tower,town_study,floor_plank,plaster,42,9,previews/interior_int_troldmandstaarnet.png
+int_moebelbutikken,The furniture shop,town_study,floor_plank,plaster,70,14,previews/interior_int_moebelbutikken.png
+int_skraedderiet,The tailor,town_study,floor_plank,plaster,48,11,previews/interior_int_skraedderiet.png
+int_toemmerhandlen,The timber yard,town_study,floor_plank,plank,54,11,previews/interior_int_toemmerhandlen.png
+int_loppeloftet,The flea loft,town_study,floor_plank,plank,40,11,previews/interior_int_loppeloftet.png
+int_brummes_vaerksted,Brumme's workshop,town_study,floor_plank,plank,63,12,previews/interior_int_brummes_vaerksted.png
+int_uglehulen,The owl's appraisal room,town_study,floor_plank,plaster,35,9,previews/interior_int_uglehulen.png
+int_postkontoret,The post office,town_study,floor_plank,plaster,40,10,previews/interior_int_postkontoret.png
+int_badehuset,The bathhouse,town_study,floor_stone,plaster,63,5,previews/interior_int_badehuset.png
+int_raadhuset,The town hall,town_study,floor_parquet,paper,80,14,previews/interior_int_raadhuset.png
+int_torvekroen,The treetop inn,town_study,floor_plank,plaster,70,15,previews/interior_int_torvekroen.png
+int_fekongens_hus,The fairy king's home,town_study,floor_parquet,marble,80,7,previews/interior_int_fekongens_hus.png
+int_hoppe_hut,Hoppe's cottage,town_study,floor_plank,plaster,30,7,previews/interior_int_hoppe_hut.png
+int_brummes_hus,Brumme's home,town_study,floor_plank,plaster,30,6,previews/interior_int_brummes_hus.png
+int_vagthytten,Oak's guard hut,town_study,floor_plank,plaster,30,6,previews/interior_int_vagthytten.png
+int_kikis_hytte,Kiki's cottage,town_study,floor_plank,plaster,30,6,previews/interior_int_kikis_hytte.png
+int_musikstuen,The music room,town_study,floor_plank,plaster,30,6,previews/interior_int_musikstuen.png
+int_hyldeblomsts_hus,The mayor's home,town_study,floor_plank,plaster,30,6,previews/interior_int_hyldeblomsts_hus.png
+int_pippins_hus,Pippin's home,town_study,floor_plank,plaster,30,6,previews/interior_int_pippins_hus.png
+int_birks_bistade,Birk's honey house,town_study,floor_plank,plaster,30,6,previews/interior_int_birks_bistade.png

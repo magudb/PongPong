@@ -1,0 +1,312 @@
+{
+  "tool": "built-in imagegen",
+  "mode": "generate with approved style references",
+  "transparent_background": true,
+  "references": [
+    "tools/art/drawn/sources/shop_special/civic.png",
+    "tools/art/drawn/sources/city_painted.png",
+    "assets/isometric_characters/fox/portrait.webp"
+  ],
+  "jobs": [
+    {
+      "name": "stalls",
+      "rows": 4,
+      "cols": 4,
+      "cells": [
+        {
+          "id": "market_stall_spring",
+          "rot": 0
+        },
+        {
+          "id": "market_stall_spring",
+          "rot": 1
+        },
+        {
+          "id": "market_stall_spring",
+          "rot": 2
+        },
+        {
+          "id": "market_stall_spring",
+          "rot": 3
+        },
+        {
+          "id": "market_stall_summer",
+          "rot": 0
+        },
+        {
+          "id": "market_stall_summer",
+          "rot": 1
+        },
+        {
+          "id": "market_stall_summer",
+          "rot": 2
+        },
+        {
+          "id": "market_stall_summer",
+          "rot": 3
+        },
+        {
+          "id": "market_stall_autumn",
+          "rot": 0
+        },
+        {
+          "id": "market_stall_autumn",
+          "rot": 1
+        },
+        {
+          "id": "market_stall_autumn",
+          "rot": 2
+        },
+        {
+          "id": "market_stall_autumn",
+          "rot": 3
+        },
+        {
+          "id": "market_stall_winter",
+          "rot": 0
+        },
+        {
+          "id": "market_stall_winter",
+          "rot": 1
+        },
+        {
+          "id": "market_stall_winter",
+          "rot": 2
+        },
+        {
+          "id": "market_stall_winter",
+          "rot": 3
+        }
+      ],
+      "prompt": "Use case: stylized-concept. Production sprite source sheet for Tr\u00e6toppen's seasonal festival decorations.\nImage 1 is the approved painted wood/cloth style. Image 2 is the approved painted city: use its honey timber, sage cloth, cream paper, muted lavender, terracotta, dull brass and small sky-blue accents. Image 3 establishes the friendly character world; do not draw characters.\nMatte storybook gouache and watercolor with fine irregular warm grey-brown pencil contours, visible paper/brush texture, tactile organic slightly worn materials, soft daylight. No plastic CG, photorealism, vector-flat shapes, pixel art or harsh black outlines. No effigies, faces, animals or people. Do not draw text, numbers, lettering, labels, logos or watermarks.\nOrthographic isometric camera elevated 36 degrees, upright verticals, floor axes at +30.7 and -30.7 degrees. Every object fully visible and separate with true transparent RGBA outside the paint. No background, floor, room, scenery, gradient, checkerboard or cast shadow. Strict equal grid cells: every object including rope, ribbon, feet and flowers fits entirely inside its own cell with at least 40 px transparent gutters on all sides.\nCreate FOUR ROWS by FOUR COLUMNS, 16 separate drawings, square 2048 x 2048. Each row has four true quarter-turns of the SAME 2 by 2 cell market stall: r0 front-right, r1 front-left, r2 rear-left, r3 rear-right. Preserve the same physical post structure and cloth; rear views show the closed timber back and rear canvas seam, never duplicate the front counter or mirror an image.\nShared structure: short friendly honey-timber booth, four posts, pitched canvas awning with small scalloped hem, low front counter with a few unlabelled jars or folded cloth, no tall signs. Compact enough to keep the stall's real 2 by 2 footprint.\nRow 1 SPRING: muted sage and cream striped awning, small white blossom garland, tiny terracotta flowerpot.\nRow 2 SUMMER: dusty sky-blue and warm cream striped canvas, little amber honey jars and restrained lavender ribbon.\nRow 3 AUTUMN: muted terracotta and cream awning, tied wheat and a small orange pumpkin.\nRow 4 WINTER: faded lavender and cream canvas, small evergreen sprig, warm amber lantern under the awning; no deep snow base or painted glow halo."
+    },
+    {
+      "name": "fixtures",
+      "rows": 6,
+      "cols": 2,
+      "cells": [
+        {
+          "id": "bunting_string_a",
+          "rot": 0
+        },
+        {
+          "id": "bunting_string_a",
+          "rot": 1
+        },
+        {
+          "id": "bunting_string_b",
+          "rot": 0
+        },
+        {
+          "id": "bunting_string_b",
+          "rot": 1
+        },
+        {
+          "id": "lantern_string_a",
+          "rot": 0
+        },
+        {
+          "id": "lantern_string_a",
+          "rot": 1
+        },
+        {
+          "id": "lantern_string_b",
+          "rot": 0
+        },
+        {
+          "id": "lantern_string_b",
+          "rot": 1
+        },
+        {
+          "id": "festival_bench",
+          "rot": 0
+        },
+        {
+          "id": "festival_bench",
+          "rot": 1
+        },
+        {
+          "id": "flower_arch",
+          "rot": 0
+        },
+        {
+          "id": "flower_arch",
+          "rot": 1
+        }
+      ],
+      "prompt": "Use case: stylized-concept. Production sprite source sheet for Tr\u00e6toppen's seasonal festival decorations.\nImage 1 is the approved painted wood/cloth style. Image 2 is the approved painted city: use its honey timber, sage cloth, cream paper, muted lavender, terracotta, dull brass and small sky-blue accents. Image 3 establishes the friendly character world; do not draw characters.\nMatte storybook gouache and watercolor with fine irregular warm grey-brown pencil contours, visible paper/brush texture, tactile organic slightly worn materials, soft daylight. No plastic CG, photorealism, vector-flat shapes, pixel art or harsh black outlines. No effigies, faces, animals or people. Do not draw text, numbers, lettering, labels, logos or watermarks.\nOrthographic isometric camera elevated 36 degrees, upright verticals, floor axes at +30.7 and -30.7 degrees. Every object fully visible and separate with true transparent RGBA outside the paint. No background, floor, room, scenery, gradient, checkerboard or cast shadow. Strict equal grid cells: every object including rope, ribbon, feet and flowers fits entirely inside its own cell with at least 40 px transparent gutters on all sides.\nCreate SIX ROWS by TWO COLUMNS, 12 separate drawings, portrait 1536 x 3072. Two authored orientations for each SAME object: left column faces front-right, right column front-left; do not simply mirror identical details. All rope strings have two actual visible attachment loops and no supporting posts.\nRow 1: 3-cell string of seven small alternating sage, cream and lavender cloth pennants on a gently sagging brown rope; a tiny stitched leaf on one pennant, no letters.\nRow 2: 3-cell string of seven terracotta, honey and cream pennants with small leaf-shaped cloth tips on brown rope.\nRow 3: 3-cell brown rope string bearing five small warm amber paper lanterns, mostly round with one elongated lantern, fine dull brass caps; no painted outer glow.\nRow 4: 3-cell rope with five small sky-blue, cream and lavender folded paper lanterns, warm amber centres and fine hanging loops; no outer glow.\nRow 5: low honey-timber festival bench, 2 by 1 cells, two plank seat and squat sturdy legs, slight sage cloth seat tie, no backrest.\nRow 6: one-cell-wide slender bent-branch flower arch taller than a chibi person, pale blossoms and sage leaves around the top, tiny lavender ribbon only on the left upright and terracotta pot at its right foot. Show the same physical ribbon and pot in both authored orientations."
+    },
+    {
+      "name": "seasonal",
+      "rows": 4,
+      "cols": 4,
+      "cells": [
+        {
+          "id": "banner_pole_spring",
+          "rot": 0
+        },
+        {
+          "id": "banner_pole_spring",
+          "rot": 1
+        },
+        {
+          "id": "door_wreath_spring",
+          "rot": 0
+        },
+        {
+          "id": "door_wreath_spring",
+          "rot": 1
+        },
+        {
+          "id": "banner_pole_summer",
+          "rot": 0
+        },
+        {
+          "id": "banner_pole_summer",
+          "rot": 1
+        },
+        {
+          "id": "door_wreath_summer",
+          "rot": 0
+        },
+        {
+          "id": "door_wreath_summer",
+          "rot": 1
+        },
+        {
+          "id": "banner_pole_autumn",
+          "rot": 0
+        },
+        {
+          "id": "banner_pole_autumn",
+          "rot": 1
+        },
+        {
+          "id": "door_wreath_autumn",
+          "rot": 0
+        },
+        {
+          "id": "door_wreath_autumn",
+          "rot": 1
+        },
+        {
+          "id": "banner_pole_winter",
+          "rot": 0
+        },
+        {
+          "id": "banner_pole_winter",
+          "rot": 1
+        },
+        {
+          "id": "door_wreath_winter",
+          "rot": 0
+        },
+        {
+          "id": "door_wreath_winter",
+          "rot": 1
+        }
+      ],
+      "prompt": "Use case: stylized-concept. Production sprite source sheet for Tr\u00e6toppen's seasonal festival decorations.\nImage 1 is the approved painted wood/cloth style. Image 2 is the approved painted city: use its honey timber, sage cloth, cream paper, muted lavender, terracotta, dull brass and small sky-blue accents. Image 3 establishes the friendly character world; do not draw characters.\nMatte storybook gouache and watercolor with fine irregular warm grey-brown pencil contours, visible paper/brush texture, tactile organic slightly worn materials, soft daylight. No plastic CG, photorealism, vector-flat shapes, pixel art or harsh black outlines. No effigies, faces, animals or people. Do not draw text, numbers, lettering, labels, logos or watermarks.\nOrthographic isometric camera elevated 36 degrees, upright verticals, floor axes at +30.7 and -30.7 degrees. Every object fully visible and separate with true transparent RGBA outside the paint. No background, floor, room, scenery, gradient, checkerboard or cast shadow. Strict equal grid cells: every object including rope, ribbon, feet and flowers fits entirely inside its own cell with at least 40 px transparent gutters on all sides.\nCreate FOUR ROWS by FOUR COLUMNS, 16 separate drawings, square 2048 x 2048.\nEach season's row: column 1 and 2 are two authored front-right/front-left orientations of ONE freestanding festival banner pole; column 3 and 4 are two authored wall-facing orientations of ONE matching small door wreath. No mirrored substitutes. Each pole has ONE soft cloth banner, straight honey-timber shaft and a low weighted timber cross base. Preserve leaf/ribbon asymmetry. Wreaths are small friendly oval rings made of real plant material and tied ribbon, without doors or wall slabs.\nRow 1 SPRING: sage/cream banner with a simple stitched white blossom (no face); white blossom and sage wreath with a lavender ribbon at its lower left.\nRow 2 SUMMER: dusty sky-blue/cream banner with one simple honey-gold sun disc (no face); summer herb and daisy wreath with blue ribbon at lower left.\nRow 3 AUTUMN: muted terracotta/cream cloth with one golden leaf; wheat and autumn-leaf wreath with one small orange gourd at lower left.\nRow 4 WINTER: faded lavender/cream banner with a small pale six-point snowflake; evergreen and cream berry wreath with a small dull brass bell at lower left. No text, snow base or glow."
+    },
+    {
+      "name": "stage",
+      "rows": 2,
+      "cols": 2,
+      "cells": [
+        {
+          "id": "festival_stage",
+          "rot": 0
+        },
+        {
+          "id": "festival_stage",
+          "rot": 1
+        },
+        {
+          "id": "festival_stage",
+          "rot": 2
+        },
+        {
+          "id": "festival_stage",
+          "rot": 3
+        }
+      ],
+      "prompt": "Use case: stylized-concept. Production sprite source sheet for Tr\u00e6toppen's seasonal festival decorations.\nImage 1 is the approved painted wood/cloth style. Image 2 is the approved painted city: use its honey timber, sage cloth, cream paper, muted lavender, terracotta, dull brass and small sky-blue accents. Image 3 establishes the friendly character world; do not draw characters.\nMatte storybook gouache and watercolor with fine irregular warm grey-brown pencil contours, visible paper/brush texture, tactile organic slightly worn materials, soft daylight. No plastic CG, photorealism, vector-flat shapes, pixel art or harsh black outlines. No effigies, faces, animals or people. Do not draw text, numbers, lettering, labels, logos or watermarks.\nOrthographic isometric camera elevated 36 degrees, upright verticals, floor axes at +30.7 and -30.7 degrees. Every object fully visible and separate with true transparent RGBA outside the paint. No background, floor, room, scenery, gradient, checkerboard or cast shadow. Strict equal grid cells: every object including rope, ribbon, feet and flowers fits entirely inside its own cell with at least 40 px transparent gutters on all sides.\nCreate TWO ROWS by TWO COLUMNS, exactly FOUR separate drawings of the SAME low 3 by 2 cell rectangular honey-timber festival platform, landscape 2048 x 1536. Top left r0 front-right, top right r1 front-left, bottom left r2 rear-left, bottom right r3 rear-right. This is a short bare raised wooden platform with a plank top, timber skirt and low block feet. One small cream-and-sage cloth swag is tied on its FRONT long edge only; the rear has plain honey wood construction. No backdrop, awning, tall posts, steps outside the footprint, instruments or props. Keep the 3 by 2 rectangular ground footprint physically consistent in every quarter-turn. All four views independently drawn, no mirrored substitute."
+    },
+    {
+      "name": "centres",
+      "rows": 2,
+      "cols": 3,
+      "cells": [
+        {
+          "id": "maypole",
+          "rot": 0
+        },
+        {
+          "id": "bonfire_festival",
+          "rot": 0
+        },
+        {
+          "id": "pumpkin_pile",
+          "rot": 0
+        },
+        {
+          "id": "sheaf_stack",
+          "rot": 0
+        },
+        {
+          "id": "ice_lantern",
+          "rot": 0
+        },
+        {
+          "id": "_unused_flower_basket",
+          "rot": 0
+        }
+      ],
+      "prompt": "Use case: stylized-concept. Production sprite source sheet for Tr\u00e6toppen's seasonal festival decorations.\nImage 1 is the approved painted wood/cloth style. Image 2 is the approved painted city: use its honey timber, sage cloth, cream paper, muted lavender, terracotta, dull brass and small sky-blue accents. Image 3 establishes the friendly character world; do not draw characters.\nMatte storybook gouache and watercolor with fine irregular warm grey-brown pencil contours, visible paper/brush texture, tactile organic slightly worn materials, soft daylight. No plastic CG, photorealism, vector-flat shapes, pixel art or harsh black outlines. No effigies, faces, animals or people. Do not draw text, numbers, lettering, labels, logos or watermarks.\nOrthographic isometric camera elevated 36 degrees, upright verticals, floor axes at +30.7 and -30.7 degrees. Every object fully visible and separate with true transparent RGBA outside the paint. No background, floor, room, scenery, gradient, checkerboard or cast shadow. Strict equal grid cells: every object including rope, ribbon, feet and flowers fits entirely inside its own cell with at least 40 px transparent gutters on all sides.\nCreate TWO ROWS by THREE COLUMNS, exactly SIX separate objects, landscape 1536 x 1024. Each occupies one cell. Read across each row.\nTop row: (1) tall slender honey-timber maypole on a small weighted cross base, sage/cream/lavender ribbons tied into a little floral ring at its top; ribbons hang close to the shaft, no broad canopy. (2) low friendly campfire: a small honey/charcoal log stack in a ring of rounded grey stones with a quiet orange-amber flame; no smoke, sparks, effigy or glow halo. (3) cozy small pile of three naturally irregular orange/cream pumpkins with sage leaves, no carved faces.\nBottom row: (4) two tied golden wheat sheaves, little cream cloth binding and a few leaning grain stalks. (5) small translucent pale sky-blue ice lantern, squat hand-carved frosted hexagonal ice block with an amber candle inside, tiny melted edge but no snow or glow halo. (6) small woven basket of white daisies and sage leaves, an auxiliary painting that is not exported as another festival piece.\nKeep a consistent painted size family and complete transparent gutters."
+    },
+    {
+      "name": "poles",
+      "rows": 4,
+      "cols": 2,
+      "cells": [
+        {
+          "id": "banner_pole_spring",
+          "rot": 0
+        },
+        {
+          "id": "banner_pole_spring",
+          "rot": 1
+        },
+        {
+          "id": "banner_pole_summer",
+          "rot": 0
+        },
+        {
+          "id": "banner_pole_summer",
+          "rot": 1
+        },
+        {
+          "id": "banner_pole_autumn",
+          "rot": 0
+        },
+        {
+          "id": "banner_pole_autumn",
+          "rot": 1
+        },
+        {
+          "id": "banner_pole_winter",
+          "rot": 0
+        },
+        {
+          "id": "banner_pole_winter",
+          "rot": 1
+        }
+      ],
+      "mode": "edit",
+      "references": [
+        "tools/art/drawn/sources/festival/seasonal.png"
+      ],
+      "prompt": "Use case: precise-object-edit. Derive ONLY the eight seasonal banner poles from the attached accepted painted sheet. Preserve their exact four seasonal identities, cloth colors, blossom/sun/leaf/snowflake emblems, honey timber, soft warm pencil and matte gouache/watercolor texture. Do not include any wreaths in the output.\nCreate FOUR ROWS and TWO COLUMNS, eight separate objects, portrait 1536 x 3072: spring, summer, autumn, winter from top to bottom; front-right and front-left authored orientations in the two columns, same physical object in each pair, no mirrored substitute.\nChange the proportions to TALL SLENDER freestanding festival masts suitable for supporting lantern ropes over chibi characters: overall height at least 3.5 TIMES its widest base/banner width. Most of the height is a long visible thin wooden shaft. The cloth banner hangs only in the TOP THIRD of the shaft on a SHORT crossbar. A small low weighted timber cross base supports it; a little brass loop immediately below the top finial allows a rope to attach. Keep the flag narrow, keep the same accepted seasonal emblem design, and use only tiny restrained seasonal sprigs near the top, not a wide plant column. The top is higher than a chibi person's head plus the depth of a dangling lantern. No characters drawn.\nOrthographic isometric camera 36 degrees with upright vertical poles. Every full pole, base and cloth inside its equal-sized cell, with at least 40 px transparent gutters all around. True transparent RGBA background, no floor, room, scenery, gradient, cast shadow, checkerboard, text, numbers, logos or watermark."
+    }
+  ]
+}

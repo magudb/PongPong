@@ -1,0 +1,54 @@
+{
+  "items": [
+    {
+      "id": "seed_display_table",
+      "cell": [
+        0,
+        1
+      ],
+      "rot": 0
+    },
+    {
+      "id": "seed_sack_open",
+      "cell": [
+        7,
+        0
+      ],
+      "rot": 0
+    },
+    {
+      "id": "seed_drawers_wall",
+      "cell": [
+        0,
+        3
+      ],
+      "rot": 1,
+      "wall": true
+    },
+    {
+      "id": "flowerpot_row",
+      "cell": [
+        0,
+        1
+      ],
+      "rot": 0
+    },
+    {
+      "id": "price_board",
+      "cell": [
+        4,
+        0
+      ],
+      "rot": 0,
+      "wall": true
+    },
+    {
+      "id": "lantern_hanging",
+      "cell": [
+        0,
+        0
+      ],
+      "rot": 0
+    }
+  ]
+}

@@ -1,0 +1,1946 @@
+{
+  "_doc": "Painted I5 art contract; 24 pieces / 53 independent authored views. Non-solid decoration, no calendar or live town integration.",
+  "_style": "approved matte gouache/watercolor and warm irregular pencil",
+  "items": {
+    "bunting_string_a": {
+      "id": "bunting_string_a",
+      "footprint": [
+        3,
+        1
+      ],
+      "layer": "ceiling",
+      "template": "bunting",
+      "set": "I5-festival",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "bunting_string_a_r0.webp",
+          "size": [
+            164,
+            153
+          ],
+          "pivot": [
+            2.46,
+            186.95999999999998
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            3,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/fixtures.png",
+          "view": 0,
+          "flip": false,
+          "anchor": "first_post",
+          "span_cells": 3,
+          "span_px": [
+            192,
+            114
+          ],
+          "elevation_px": 225
+        },
+        "1": {
+          "file": "bunting_string_a_r1.webp",
+          "size": [
+            163,
+            153
+          ],
+          "pivot": [
+            159.89999999999998,
+            187.78
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            3
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/fixtures.png",
+          "view": 1,
+          "flip": false,
+          "anchor": "first_post",
+          "span_cells": 3,
+          "span_px": [
+            -192,
+            114
+          ],
+          "elevation_px": 225
+        }
+      }
+    },
+    "bunting_string_b": {
+      "id": "bunting_string_b",
+      "footprint": [
+        3,
+        1
+      ],
+      "layer": "ceiling",
+      "template": "bunting",
+      "set": "I5-festival",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "bunting_string_b_r0.webp",
+          "size": [
+            164,
+            168
+          ],
+          "pivot": [
+            3.28,
+            187.78
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            3,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/fixtures.png",
+          "view": 0,
+          "flip": false,
+          "anchor": "first_post",
+          "span_cells": 3,
+          "span_px": [
+            192,
+            114
+          ],
+          "elevation_px": 225
+        },
+        "1": {
+          "file": "bunting_string_b_r1.webp",
+          "size": [
+            163,
+            171
+          ],
+          "pivot": [
+            159.89999999999998,
+            187.78
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            3
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/fixtures.png",
+          "view": 1,
+          "flip": false,
+          "anchor": "first_post",
+          "span_cells": 3,
+          "span_px": [
+            -192,
+            114
+          ],
+          "elevation_px": 225
+        }
+      }
+    },
+    "banner_pole_spring": {
+      "id": "banner_pole_spring",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "template": "banner_pole",
+      "set": "I5-festival",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "banner_pole_spring_r0.webp",
+          "size": [
+            93,
+            226
+          ],
+          "pivot": [
+            46.739999999999995,
+            196.79999999999998
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/poles.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "banner_pole_spring_r1.webp",
+          "size": [
+            93,
+            230
+          ],
+          "pivot": [
+            46.739999999999995,
+            201.72
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/poles.png",
+          "view": 1,
+          "flip": false
+        }
+      }
+    },
+    "banner_pole_summer": {
+      "id": "banner_pole_summer",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "template": "banner_pole",
+      "set": "I5-festival",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "banner_pole_summer_r0.webp",
+          "size": [
+            93,
+            228
+          ],
+          "pivot": [
+            46.739999999999995,
+            199.26
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/poles.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "banner_pole_summer_r1.webp",
+          "size": [
+            93,
+            233
+          ],
+          "pivot": [
+            46.739999999999995,
+            204.17999999999998
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/poles.png",
+          "view": 1,
+          "flip": false
+        }
+      }
+    },
+    "banner_pole_autumn": {
+      "id": "banner_pole_autumn",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "template": "banner_pole",
+      "set": "I5-festival",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "banner_pole_autumn_r0.webp",
+          "size": [
+            93,
+            226
+          ],
+          "pivot": [
+            46.739999999999995,
+            196.79999999999998
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/poles.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "banner_pole_autumn_r1.webp",
+          "size": [
+            93,
+            227
+          ],
+          "pivot": [
+            46.739999999999995,
+            198.44
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/poles.png",
+          "view": 1,
+          "flip": false
+        }
+      }
+    },
+    "banner_pole_winter": {
+      "id": "banner_pole_winter",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "template": "banner_pole",
+      "set": "I5-festival",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "banner_pole_winter_r0.webp",
+          "size": [
+            93,
+            215
+          ],
+          "pivot": [
+            46.739999999999995,
+            186.14
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/poles.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "banner_pole_winter_r1.webp",
+          "size": [
+            93,
+            224
+          ],
+          "pivot": [
+            46.739999999999995,
+            195.16
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/poles.png",
+          "view": 1,
+          "flip": false
+        }
+      }
+    },
+    "lantern_string_a": {
+      "id": "lantern_string_a",
+      "footprint": [
+        3,
+        1
+      ],
+      "layer": "ceiling",
+      "template": "lantern_string",
+      "set": "I5-festival",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "lantern_string_a_r0.webp",
+          "size": [
+            164,
+            180
+          ],
+          "pivot": [
+            2.46,
+            186.95999999999998
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            3,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/fixtures.png",
+          "view": 0,
+          "flip": false,
+          "anchor": "first_post",
+          "span_cells": 3,
+          "span_px": [
+            192,
+            114
+          ],
+          "elevation_px": 225,
+          "night": "lantern_string_a_r0_night.webp",
+          "night_size": [
+            154,
+            165
+          ],
+          "night_offset": [
+            4,
+            4
+          ],
+          "glow": {
+            "blend": "add",
+            "light_hint": "none",
+            "point_lights": 0
+          }
+        },
+        "1": {
+          "file": "lantern_string_a_r1.webp",
+          "size": [
+            165,
+            183
+          ],
+          "pivot": [
+            160.72,
+            187.78
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            3
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/fixtures.png",
+          "view": 1,
+          "flip": false,
+          "anchor": "first_post",
+          "span_cells": 3,
+          "span_px": [
+            -192,
+            114
+          ],
+          "elevation_px": 225,
+          "night": "lantern_string_a_r1_night.webp",
+          "night_size": [
+            154,
+            165
+          ],
+          "night_offset": [
+            5,
+            5
+          ],
+          "glow": {
+            "blend": "add",
+            "light_hint": "none",
+            "point_lights": 0
+          }
+        }
+      }
+    },
+    "lantern_string_b": {
+      "id": "lantern_string_b",
+      "footprint": [
+        3,
+        1
+      ],
+      "layer": "ceiling",
+      "template": "lantern_string",
+      "set": "I5-festival",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "lantern_string_b_r0.webp",
+          "size": [
+            165,
+            189
+          ],
+          "pivot": [
+            3.28,
+            187.78
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            3,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/fixtures.png",
+          "view": 0,
+          "flip": false,
+          "anchor": "first_post",
+          "span_cells": 3,
+          "span_px": [
+            192,
+            114
+          ],
+          "elevation_px": 225,
+          "night": "lantern_string_b_r0_night.webp",
+          "night_size": [
+            156,
+            158
+          ],
+          "night_offset": [
+            4,
+            5
+          ],
+          "glow": {
+            "blend": "add",
+            "light_hint": "none",
+            "point_lights": 0
+          }
+        },
+        "1": {
+          "file": "lantern_string_b_r1.webp",
+          "size": [
+            165,
+            193
+          ],
+          "pivot": [
+            160.72,
+            188.6
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            3
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/fixtures.png",
+          "view": 1,
+          "flip": false,
+          "anchor": "first_post",
+          "span_cells": 3,
+          "span_px": [
+            -192,
+            114
+          ],
+          "elevation_px": 225,
+          "night": "lantern_string_b_r1_night.webp",
+          "night_size": [
+            154,
+            162
+          ],
+          "night_offset": [
+            6,
+            6
+          ],
+          "glow": {
+            "blend": "add",
+            "light_hint": "none",
+            "point_lights": 0
+          }
+        }
+      }
+    },
+    "festival_stage": {
+      "id": "festival_stage",
+      "footprint": [
+        3,
+        2
+      ],
+      "layer": "floor",
+      "template": "stage",
+      "set": "I5-festival",
+      "baked": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "festival_stage_r0.webp",
+          "size": [
+            228,
+            146
+          ],
+          "pivot": [
+            113.97999999999999,
+            77.08
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            3,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stage.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "festival_stage_r1.webp",
+          "size": [
+            228,
+            147
+          ],
+          "pivot": [
+            113.97999999999999,
+            77.89999999999999
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            2,
+            3
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stage.png",
+          "view": 1,
+          "flip": false
+        },
+        "2": {
+          "file": "festival_stage_r2.webp",
+          "size": [
+            228,
+            149
+          ],
+          "pivot": [
+            113.97999999999999,
+            80.36
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            3,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stage.png",
+          "view": 2,
+          "flip": false
+        },
+        "3": {
+          "file": "festival_stage_r3.webp",
+          "size": [
+            228,
+            148
+          ],
+          "pivot": [
+            113.97999999999999,
+            79.53999999999999
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            2,
+            3
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stage.png",
+          "view": 3,
+          "flip": false
+        }
+      }
+    },
+    "festival_bench": {
+      "id": "festival_bench",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "template": "bench",
+      "set": "I5-festival",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "festival_bench_r0.webp",
+          "size": [
+            139,
+            96
+          ],
+          "pivot": [
+            68.88,
+            54.12
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            2,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/fixtures.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "festival_bench_r1.webp",
+          "size": [
+            139,
+            102
+          ],
+          "pivot": [
+            68.88,
+            60.68
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/fixtures.png",
+          "view": 1,
+          "flip": false
+        }
+      }
+    },
+    "maypole": {
+      "id": "maypole",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "template": "maypole",
+      "set": "I5-festival",
+      "baked": [
+        0
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "maypole_r0.webp",
+          "size": [
+            85,
+            177
+          ],
+          "pivot": [
+            42.64,
+            148.42
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/centres.png",
+          "view": 0,
+          "flip": false
+        }
+      }
+    },
+    "bonfire_festival": {
+      "id": "bonfire_festival",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "template": "bonfire",
+      "set": "I5-festival",
+      "baked": [
+        0
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "bonfire_festival_r0.webp",
+          "size": [
+            94,
+            82
+          ],
+          "pivot": [
+            46.739999999999995,
+            53.3
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/centres.png",
+          "view": 0,
+          "flip": false,
+          "night": "bonfire_festival_r0_night.webp",
+          "night_size": [
+            81,
+            72
+          ],
+          "night_offset": [
+            1,
+            2
+          ],
+          "glow": {
+            "blend": "add",
+            "light_hint": "none",
+            "point_lights": 0
+          }
+        }
+      }
+    },
+    "pumpkin_pile": {
+      "id": "pumpkin_pile",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "template": "pumpkins",
+      "set": "I5-festival",
+      "baked": [
+        0
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "pumpkin_pile_r0.webp",
+          "size": [
+            94,
+            73
+          ],
+          "pivot": [
+            46.739999999999995,
+            44.279999999999994
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/centres.png",
+          "view": 0,
+          "flip": false
+        }
+      }
+    },
+    "sheaf_stack": {
+      "id": "sheaf_stack",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "template": "sheaf",
+      "set": "I5-festival",
+      "baked": [
+        0
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "sheaf_stack_r0.webp",
+          "size": [
+            94,
+            89
+          ],
+          "pivot": [
+            46.739999999999995,
+            60.68
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/centres.png",
+          "view": 0,
+          "flip": false
+        }
+      }
+    },
+    "flower_arch": {
+      "id": "flower_arch",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "template": "arch",
+      "set": "I5-festival",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "flower_arch_r0.webp",
+          "size": [
+            128,
+            156
+          ],
+          "pivot": [
+            63.959999999999994,
+            127.1
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/fixtures.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "flower_arch_r1.webp",
+          "size": [
+            128,
+            163
+          ],
+          "pivot": [
+            63.959999999999994,
+            134.48
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/fixtures.png",
+          "view": 1,
+          "flip": false
+        }
+      }
+    },
+    "ice_lantern": {
+      "id": "ice_lantern",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "template": "ice_lantern",
+      "set": "I5-festival",
+      "baked": [
+        0
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "ice_lantern_r0.webp",
+          "size": [
+            94,
+            100
+          ],
+          "pivot": [
+            46.739999999999995,
+            71.33999999999999
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/centres.png",
+          "view": 0,
+          "flip": false,
+          "night": "ice_lantern_r0_night.webp",
+          "night_size": [
+            52,
+            72
+          ],
+          "night_offset": [
+            21,
+            10
+          ],
+          "glow": {
+            "blend": "add",
+            "light_hint": "none",
+            "point_lights": 0
+          }
+        }
+      }
+    },
+    "market_stall_spring": {
+      "id": "market_stall_spring",
+      "footprint": [
+        2,
+        2
+      ],
+      "layer": "floor",
+      "template": "market_stall",
+      "set": "I5-festival",
+      "baked": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "market_stall_spring_r0.webp",
+          "size": [
+            160,
+            177
+          ],
+          "pivot": [
+            79.53999999999999,
+            121.36
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stalls.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "market_stall_spring_r1.webp",
+          "size": [
+            160,
+            177
+          ],
+          "pivot": [
+            79.53999999999999,
+            121.36
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stalls.png",
+          "view": 1,
+          "flip": false
+        },
+        "2": {
+          "file": "market_stall_spring_r2.webp",
+          "size": [
+            161,
+            177
+          ],
+          "pivot": [
+            80.36,
+            121.36
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stalls.png",
+          "view": 2,
+          "flip": false
+        },
+        "3": {
+          "file": "market_stall_spring_r3.webp",
+          "size": [
+            157,
+            177
+          ],
+          "pivot": [
+            78.72,
+            121.36
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stalls.png",
+          "view": 3,
+          "flip": false
+        }
+      }
+    },
+    "market_stall_summer": {
+      "id": "market_stall_summer",
+      "footprint": [
+        2,
+        2
+      ],
+      "layer": "floor",
+      "template": "market_stall",
+      "set": "I5-festival",
+      "baked": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "market_stall_summer_r0.webp",
+          "size": [
+            162,
+            177
+          ],
+          "pivot": [
+            80.36,
+            121.36
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stalls.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "market_stall_summer_r1.webp",
+          "size": [
+            160,
+            177
+          ],
+          "pivot": [
+            79.53999999999999,
+            121.36
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stalls.png",
+          "view": 1,
+          "flip": false
+        },
+        "2": {
+          "file": "market_stall_summer_r2.webp",
+          "size": [
+            157,
+            177
+          ],
+          "pivot": [
+            78.72,
+            121.36
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stalls.png",
+          "view": 2,
+          "flip": false
+        },
+        "3": {
+          "file": "market_stall_summer_r3.webp",
+          "size": [
+            157,
+            177
+          ],
+          "pivot": [
+            78.72,
+            121.36
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stalls.png",
+          "view": 3,
+          "flip": false
+        }
+      }
+    },
+    "market_stall_autumn": {
+      "id": "market_stall_autumn",
+      "footprint": [
+        2,
+        2
+      ],
+      "layer": "floor",
+      "template": "market_stall",
+      "set": "I5-festival",
+      "baked": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "market_stall_autumn_r0.webp",
+          "size": [
+            167,
+            177
+          ],
+          "pivot": [
+            83.64,
+            121.36
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stalls.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "market_stall_autumn_r1.webp",
+          "size": [
+            164,
+            177
+          ],
+          "pivot": [
+            82.0,
+            121.36
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stalls.png",
+          "view": 1,
+          "flip": false
+        },
+        "2": {
+          "file": "market_stall_autumn_r2.webp",
+          "size": [
+            163,
+            177
+          ],
+          "pivot": [
+            81.17999999999999,
+            121.36
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stalls.png",
+          "view": 2,
+          "flip": false
+        },
+        "3": {
+          "file": "market_stall_autumn_r3.webp",
+          "size": [
+            161,
+            177
+          ],
+          "pivot": [
+            80.36,
+            121.36
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stalls.png",
+          "view": 3,
+          "flip": false
+        }
+      }
+    },
+    "market_stall_winter": {
+      "id": "market_stall_winter",
+      "footprint": [
+        2,
+        2
+      ],
+      "layer": "floor",
+      "template": "market_stall",
+      "set": "I5-festival",
+      "baked": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "sym": "none",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "market_stall_winter_r0.webp",
+          "size": [
+            167,
+            177
+          ],
+          "pivot": [
+            83.64,
+            121.36
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stalls.png",
+          "view": 0,
+          "flip": false
+        },
+        "1": {
+          "file": "market_stall_winter_r1.webp",
+          "size": [
+            166,
+            177
+          ],
+          "pivot": [
+            82.82,
+            121.36
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stalls.png",
+          "view": 1,
+          "flip": false
+        },
+        "2": {
+          "file": "market_stall_winter_r2.webp",
+          "size": [
+            166,
+            177
+          ],
+          "pivot": [
+            82.82,
+            121.36
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stalls.png",
+          "view": 2,
+          "flip": false
+        },
+        "3": {
+          "file": "market_stall_winter_r3.webp",
+          "size": [
+            166,
+            177
+          ],
+          "pivot": [
+            82.82,
+            121.36
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            2,
+            2
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/stalls.png",
+          "view": 3,
+          "flip": false
+        }
+      }
+    },
+    "door_wreath_spring": {
+      "id": "door_wreath_spring",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "wall",
+      "template": "wreath",
+      "set": "I5-festival",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "wall2",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "door_wreath_spring_r0.webp",
+          "size": [
+            56,
+            72
+          ],
+          "pivot": [
+            27.06,
+            132.01999999999998
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/seasonal.png",
+          "view": 0,
+          "flip": false,
+          "anchor": "first_wall_cell",
+          "wall_axis": [
+            64,
+            38
+          ],
+          "mounting_height_px": 95
+        },
+        "1": {
+          "file": "door_wreath_spring_r1.webp",
+          "size": [
+            56,
+            73
+          ],
+          "pivot": [
+            27.06,
+            132.84
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/seasonal.png",
+          "view": 1,
+          "flip": false,
+          "anchor": "first_wall_cell",
+          "wall_axis": [
+            -64,
+            38
+          ],
+          "mounting_height_px": 95
+        }
+      }
+    },
+    "door_wreath_summer": {
+      "id": "door_wreath_summer",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "wall",
+      "template": "wreath",
+      "set": "I5-festival",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "wall2",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "door_wreath_summer_r0.webp",
+          "size": [
+            56,
+            72
+          ],
+          "pivot": [
+            27.06,
+            132.01999999999998
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/seasonal.png",
+          "view": 0,
+          "flip": false,
+          "anchor": "first_wall_cell",
+          "wall_axis": [
+            64,
+            38
+          ],
+          "mounting_height_px": 95
+        },
+        "1": {
+          "file": "door_wreath_summer_r1.webp",
+          "size": [
+            56,
+            73
+          ],
+          "pivot": [
+            27.06,
+            132.84
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/seasonal.png",
+          "view": 1,
+          "flip": false,
+          "anchor": "first_wall_cell",
+          "wall_axis": [
+            -64,
+            38
+          ],
+          "mounting_height_px": 95
+        }
+      }
+    },
+    "door_wreath_autumn": {
+      "id": "door_wreath_autumn",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "wall",
+      "template": "wreath",
+      "set": "I5-festival",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "wall2",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "door_wreath_autumn_r0.webp",
+          "size": [
+            56,
+            72
+          ],
+          "pivot": [
+            27.06,
+            132.01999999999998
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/seasonal.png",
+          "view": 0,
+          "flip": false,
+          "anchor": "first_wall_cell",
+          "wall_axis": [
+            64,
+            38
+          ],
+          "mounting_height_px": 95
+        },
+        "1": {
+          "file": "door_wreath_autumn_r1.webp",
+          "size": [
+            56,
+            73
+          ],
+          "pivot": [
+            27.06,
+            132.84
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/seasonal.png",
+          "view": 1,
+          "flip": false,
+          "anchor": "first_wall_cell",
+          "wall_axis": [
+            -64,
+            38
+          ],
+          "mounting_height_px": 95
+        }
+      }
+    },
+    "door_wreath_winter": {
+      "id": "door_wreath_winter",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "wall",
+      "template": "wreath",
+      "set": "I5-festival",
+      "baked": [
+        0,
+        1
+      ],
+      "sym": "wall2",
+      "mirror_ok": false,
+      "solid": false,
+      "interact": "none",
+      "rot": {
+        "0": {
+          "file": "door_wreath_winter_r0.webp",
+          "size": [
+            56,
+            72
+          ],
+          "pivot": [
+            27.06,
+            132.01999999999998
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/seasonal.png",
+          "view": 0,
+          "flip": false,
+          "anchor": "first_wall_cell",
+          "wall_axis": [
+            64,
+            38
+          ],
+          "mounting_height_px": 95
+        },
+        "1": {
+          "file": "door_wreath_winter_r1.webp",
+          "size": [
+            56,
+            73
+          ],
+          "pivot": [
+            27.06,
+            132.84
+          ],
+          "render_scale": 1.2195121951219512,
+          "footprint": [
+            1,
+            1
+          ],
+          "ysort": [
+            0,
+            0
+          ],
+          "illustration": "tools/art/drawn/sources/festival/seasonal.png",
+          "view": 1,
+          "flip": false,
+          "anchor": "first_wall_cell",
+          "wall_axis": [
+            -64,
+            38
+          ],
+          "mounting_height_px": 95
+        }
+      }
+    }
+  },
+  "sets": {
+    "spring": {
+      "pole": "banner_pole_spring",
+      "string": "bunting_string_a",
+      "stage": "festival_stage",
+      "bench": "festival_bench",
+      "centre": "maypole",
+      "awning": "market_stall_spring",
+      "door": "door_wreath_spring"
+    },
+    "summer": {
+      "pole": "banner_pole_summer",
+      "string": "lantern_string_a",
+      "stage": "festival_stage",
+      "bench": "festival_bench",
+      "centre": "bonfire_festival",
+      "awning": "market_stall_summer",
+      "door": "door_wreath_summer"
+    },
+    "autumn": {
+      "pole": "banner_pole_autumn",
+      "string": "bunting_string_b",
+      "stage": "festival_stage",
+      "bench": "festival_bench",
+      "centre": "pumpkin_pile",
+      "awning": "market_stall_autumn",
+      "door": "door_wreath_autumn"
+    },
+    "winter": {
+      "pole": "banner_pole_winter",
+      "string": "lantern_string_b",
+      "stage": "festival_stage",
+      "bench": "festival_bench",
+      "centre": "ice_lantern",
+      "awning": "market_stall_winter",
+      "door": "door_wreath_winter"
+    }
+  },
+  "season_accents": {
+    "spring": [
+      "flower_arch"
+    ],
+    "summer": [],
+    "autumn": [
+      "sheaf_stack"
+    ],
+    "winter": []
+  }
+}

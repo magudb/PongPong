@@ -1,0 +1,769 @@
+{
+  "_doc": "Art contract snapshot for I4. Published IDs, layers, footprints and authored-view counts retained; accepted painted style supersedes historical soft-CG template instructions.",
+  "pieces": {
+    "shelf_wall_wide": {
+      "id": "shelf_wall_wide",
+      "footprint": [
+        3,
+        1
+      ],
+      "layer": "wall",
+      "rot_baked": 2,
+      "template": "shelf",
+      "set": "I4-generic"
+    },
+    "shelf_floor_tall": {
+      "id": "shelf_floor_tall",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "bookshelf",
+      "set": "I4-generic"
+    },
+    "crate_stack": {
+      "id": "crate_stack",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "crate",
+      "set": "I4-generic"
+    },
+    "barrel": {
+      "id": "barrel",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "barrel",
+      "set": "I4-generic"
+    },
+    "sack_pile": {
+      "id": "sack_pile",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "sack",
+      "set": "I4-generic"
+    },
+    "basket_woven": {
+      "id": "basket_woven",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "basket",
+      "set": "I4-generic"
+    },
+    "scale_brass": {
+      "id": "scale_brass",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "tabletop",
+      "rot_baked": 1,
+      "template": "scale",
+      "set": "I4-generic"
+    },
+    "bell_counter": {
+      "id": "bell_counter",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "tabletop",
+      "rot_baked": 1,
+      "template": "bell",
+      "set": "I4-generic"
+    },
+    "price_board": {
+      "id": "price_board",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "wall",
+      "rot_baked": 2,
+      "template": "painting",
+      "set": "I4-generic"
+    },
+    "lantern_hanging": {
+      "id": "lantern_hanging",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "ceiling",
+      "rot_baked": 1,
+      "template": "lantern",
+      "set": "I4-generic"
+    },
+    "seed_drawers_wall": {
+      "id": "seed_drawers_wall",
+      "footprint": [
+        3,
+        1
+      ],
+      "layer": "wall",
+      "rot_baked": 2,
+      "template": "drawers",
+      "set": "I4-seed"
+    },
+    "seed_sack_open": {
+      "id": "seed_sack_open",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "sack",
+      "set": "I4-seed"
+    },
+    "flowerpot_row": {
+      "id": "flowerpot_row",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "tabletop",
+      "rot_baked": 1,
+      "template": "plant",
+      "set": "I4-seed"
+    },
+    "watering_can_rack": {
+      "id": "watering_can_rack",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "rack",
+      "set": "I4-seed"
+    },
+    "seed_display_table": {
+      "id": "seed_display_table",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "table",
+      "set": "I4-seed"
+    },
+    "hanging_herbs": {
+      "id": "hanging_herbs",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "ceiling",
+      "rot_baked": 1,
+      "template": "herbs",
+      "set": "I4-seed"
+    },
+    "stamp_press": {
+      "id": "stamp_press",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "tabletop",
+      "rot_baked": 1,
+      "template": "press",
+      "set": "I4-post"
+    },
+    "mailbox_indoor_red": {
+      "id": "mailbox_indoor_red",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "mailbox",
+      "set": "I4-post"
+    },
+    "towel_rack": {
+      "id": "towel_rack",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "towel_rack",
+      "set": "I4-bath"
+    },
+    "bath_stool": {
+      "id": "bath_stool",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "chair",
+      "set": "I4-bath"
+    },
+    "bucket": {
+      "id": "bucket",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "barrel",
+      "set": "I4-bath"
+    },
+    "steam_vent": {
+      "id": "steam_vent",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "fx",
+      "rot_baked": 1,
+      "template": "steam",
+      "set": "I4-bath"
+    },
+    "mayor_desk": {
+      "id": "mayor_desk",
+      "footprint": [
+        3,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "table",
+      "set": "I4-hall"
+    },
+    "banner_wall": {
+      "id": "banner_wall",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "wall",
+      "rot_baked": 2,
+      "template": "banner",
+      "set": "I4-hall"
+    },
+    "flag_stand": {
+      "id": "flag_stand",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "flag",
+      "set": "I4-hall"
+    },
+    "seed_baskets_wall": {
+      "id": "seed_baskets_wall",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "wall",
+      "rot_baked": 2,
+      "template": "shelf",
+      "set": "I4-hut"
+    },
+    "drying_herbs": {
+      "id": "drying_herbs",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "ceiling",
+      "rot_baked": 1,
+      "template": "herbs",
+      "set": "I4-hut"
+    },
+    "potting_bench": {
+      "id": "potting_bench",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "table",
+      "set": "I4-hut"
+    },
+    "carrot_crate": {
+      "id": "carrot_crate",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "crate",
+      "set": "I4-hut"
+    },
+    "flour_sack": {
+      "id": "flour_sack",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "sack",
+      "set": "I4-bakery"
+    },
+    "dough_table": {
+      "id": "dough_table",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "table",
+      "set": "I4-bakery"
+    },
+    "glass_display_case": {
+      "id": "glass_display_case",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 4,
+      "template": "display_case",
+      "set": "I4-bakery"
+    },
+    "bread_basket": {
+      "id": "bread_basket",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "tabletop",
+      "rot_baked": 1,
+      "template": "basket",
+      "set": "I4-bakery"
+    },
+    "bellows": {
+      "id": "bellows",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 4,
+      "template": "bellows",
+      "set": "I4-smithy"
+    },
+    "weapon_rack": {
+      "id": "weapon_rack",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "wall",
+      "rot_baked": 2,
+      "template": "weapon_rack",
+      "set": "I4-smithy"
+    },
+    "quench_barrel": {
+      "id": "quench_barrel",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "barrel",
+      "set": "I4-smithy"
+    },
+    "grindstone": {
+      "id": "grindstone",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 4,
+      "template": "grindstone",
+      "set": "I4-smithy"
+    },
+    "tool_wall": {
+      "id": "tool_wall",
+      "footprint": [
+        3,
+        1
+      ],
+      "layer": "wall",
+      "rot_baked": 2,
+      "template": "tool_wall",
+      "set": "I4-smithy"
+    },
+    "crystal_ball_stand": {
+      "id": "crystal_ball_stand",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "crystal_ball",
+      "set": "I4-magic"
+    },
+    "star_globe": {
+      "id": "star_globe",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 4,
+      "template": "globe",
+      "set": "I4-magic"
+    },
+    "potion_shelf": {
+      "id": "potion_shelf",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "wall",
+      "rot_baked": 2,
+      "template": "shelf",
+      "set": "I4-magic"
+    },
+    "book_stack": {
+      "id": "book_stack",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "bookshelf",
+      "set": "I4-magic"
+    },
+    "hanging_stars": {
+      "id": "hanging_stars",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "ceiling",
+      "rot_baked": 1,
+      "template": "chandelier",
+      "set": "I4-magic"
+    },
+    "owl_perch": {
+      "id": "owl_perch",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 4,
+      "template": "perch",
+      "set": "I4-magic"
+    },
+    "feed_trough": {
+      "id": "feed_trough",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "trough",
+      "set": "I4-animal"
+    },
+    "pen_fence": {
+      "id": "pen_fence",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "pen_fence",
+      "set": "I4-animal"
+    },
+    "cage_hanging": {
+      "id": "cage_hanging",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "ceiling",
+      "rot_baked": 1,
+      "template": "cage",
+      "set": "I4-animal"
+    },
+    "bird_perch": {
+      "id": "bird_perch",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "perch",
+      "set": "I4-animal"
+    },
+    "saw_bench": {
+      "id": "saw_bench",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "saw_bench",
+      "set": "I4-builder"
+    },
+    "nail_kegs": {
+      "id": "nail_kegs",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "barrel",
+      "set": "I4-builder"
+    },
+    "blueprint_table": {
+      "id": "blueprint_table",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "table",
+      "set": "I4-builder"
+    },
+    "log_pile": {
+      "id": "log_pile",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "log_pile",
+      "set": "I4-builder"
+    },
+    "rope_coil": {
+      "id": "rope_coil",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "rope_coil",
+      "set": "I4-builder"
+    },
+    "display_plinth": {
+      "id": "display_plinth",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "table",
+      "set": "I4-furniture"
+    },
+    "sample_tag_stand": {
+      "id": "sample_tag_stand",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "tabletop",
+      "rot_baked": 1,
+      "template": "tag_stand",
+      "set": "I4-furniture"
+    },
+    "folding_screen": {
+      "id": "folding_screen",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "screen",
+      "set": "I4-furniture"
+    },
+    "cloth_rolls_rack": {
+      "id": "cloth_rolls_rack",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "cloth_rack",
+      "set": "I4-tailor"
+    },
+    "sewing_table": {
+      "id": "sewing_table",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "table",
+      "set": "I4-tailor"
+    },
+    "standing_mirror": {
+      "id": "standing_mirror",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 4,
+      "template": "mirror",
+      "set": "I4-tailor"
+    },
+    "hat_stand": {
+      "id": "hat_stand",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "hat_stand",
+      "set": "I4-tailor"
+    },
+    "fitting_curtain": {
+      "id": "fitting_curtain",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "wall",
+      "rot_baked": 2,
+      "template": "curtain",
+      "set": "I4-tailor"
+    },
+    "plank_rack": {
+      "id": "plank_rack",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "plank_stack",
+      "set": "I4-timber"
+    },
+    "tool_hooks": {
+      "id": "tool_hooks",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "wall",
+      "rot_baked": 2,
+      "template": "tool_wall",
+      "set": "I4-timber"
+    },
+    "log_stack_indoor": {
+      "id": "log_stack_indoor",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "log_pile",
+      "set": "I4-timber"
+    },
+    "junk_table": {
+      "id": "junk_table",
+      "footprint": [
+        2,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "junk",
+      "set": "I4-flea"
+    },
+    "umbrella_stand": {
+      "id": "umbrella_stand",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "umbrella",
+      "set": "I4-flea"
+    },
+    "crates_mixed": {
+      "id": "crates_mixed",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 1,
+      "template": "crate",
+      "set": "I4-flea"
+    },
+    "hanging_pots": {
+      "id": "hanging_pots",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "ceiling",
+      "rot_baked": 1,
+      "template": "pots",
+      "set": "I4-flea"
+    },
+    "old_trunk_flea": {
+      "id": "old_trunk_flea",
+      "footprint": [
+        1,
+        1
+      ],
+      "layer": "floor",
+      "rot_baked": 2,
+      "template": "chest",
+      "set": "I4-flea"
+    }
+  },
+  "budgets": {
+    "disk_mb": 1.4,
+    "rgba8_mips_mb": 15.4,
+    "room_kit_mb": 3
+  }
+}

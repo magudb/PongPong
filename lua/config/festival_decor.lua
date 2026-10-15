@@ -1,0 +1,48 @@
+-- I5 art placement design. Calendar/runtime attachment is owned by the towns/social integration.
+-- No new autoload or event handler is installed by this file.
+kind = "config"
+
+config = {
+  festival_decor = {
+    sets = {
+      spring = { pole = "banner_pole_spring", string = "bunting_string_a", stage = "festival_stage", bench = "festival_bench", centre = "maypole", awning = "market_stall_spring", door = "door_wreath_spring" },
+      summer = { pole = "banner_pole_summer", string = "lantern_string_a", stage = "festival_stage", bench = "festival_bench", centre = "bonfire_festival", awning = "market_stall_summer", door = "door_wreath_summer" },
+      autumn = { pole = "banner_pole_autumn", string = "bunting_string_b", stage = "festival_stage", bench = "festival_bench", centre = "pumpkin_pile", awning = "market_stall_autumn", door = "door_wreath_autumn" },
+      winter = { pole = "banner_pole_winter", string = "lantern_string_b", stage = "festival_stage", bench = "festival_bench", centre = "ice_lantern", awning = "market_stall_winter", door = "door_wreath_winter" },
+    },
+    season_accents = {
+      spring = { "flower_arch" },
+      summer = {  },
+      autumn = { "sheaf_stack" },
+      winter = {  },
+    },
+    festivals = {
+      blomsterfesten = { set = "spring", centre = "flower_arch", slots_used = { "pole", "string", "stage", "bench", "centre", "awning", "door" }, door_wreaths = true },
+      honningdagen = { set = "spring", centre = "maypole", slots_used = { "pole", "string", "stage", "bench", "centre", "awning", "door" }, door_wreaths = true },
+      midsommerlanterner = { set = "summer", centre = "bonfire_festival", slots_used = { "pole", "string", "stage", "bench", "centre", "awning", "door" }, door_wreaths = false },
+      badedagen = { set = "summer", centre = "flower_arch", slots_used = { "pole", "string", "stage", "bench", "centre", "awning", "door" }, door_wreaths = false },
+      hoestfesten = { set = "autumn", centre = "pumpkin_pile", slots_used = { "pole", "string", "stage", "bench", "centre", "awning", "door" }, door_wreaths = true },
+      maanemarkedet = { set = "autumn", centre = "bonfire_festival", slots_used = { "pole", "string", "stage", "bench", "centre", "awning", "door" }, door_wreaths = false },
+      vinterlysene = { set = "winter", centre = "ice_lantern", slots_used = { "pole", "string", "stage", "bench", "centre", "awning", "door" }, door_wreaths = true },
+      bagedagen = { set = "winter", centre = "bonfire_festival", slots_used = { "pole", "string", "stage", "bench", "centre", "awning", "door" }, door_wreaths = true },
+      aarsskiftet = { set = "winter", centre = "ice_lantern", slots_used = { "pole", "string", "stage", "bench", "centre", "awning", "door" }, door_wreaths = true },
+      bryllupsfesten = { set = "spring", centre = "flower_arch", slots_used = { "pole", "string", "stage", "bench", "centre", "awning", "door" }, door_wreaths = true },
+    },
+    layout = {
+      { slot = "stage", post = "host", offset = { 0, 0 }, rot = 0 },
+      { slot = "centre", post = "judge", offset = { 0, 0.5 }, rot = 0 },
+      { slot = "awning", post = "stall_1", offset = { 0.4, 0.4 }, rot = 0 },
+      { slot = "awning", post = "stall_2", offset = { 0.4, 0.4 }, rot = 0 },
+      { slot = "awning", post = "stall_3", offset = { 0.4, 0.4 }, rot = 0 },
+      { slot = "awning", post = "stall_4", offset = { 0.4, 0.4 }, rot = 0 },
+      { slot = "bench", post = "table_1", offset = { 0, 0 }, rot = 0 },
+      { slot = "bench", post = "table_2", offset = { 0, 0 }, rot = 1 },
+      { slot = "pole", post = "gather_1", offset = { -0.4, -0.4 }, rot = 0 },
+      { slot = "pole", post = "gather_4", offset = { -0.4, -0.4 }, rot = 1 },
+      { slot = "string", post = "gather_1", to_post = "gather_4", offset = { -0.4, -0.4 }, rot = 0 },
+      { slot = "pole", post = "gather_13", offset = { 0.6, 0.6 }, rot = 0 },
+      { slot = "pole", post = "gather_16", offset = { 0.6, 0.6 }, rot = 1 },
+      { slot = "string", post = "gather_13", to_post = "gather_16", offset = { 0.6, 0.6 }, rot = 0 },
+    },
+  },
+}

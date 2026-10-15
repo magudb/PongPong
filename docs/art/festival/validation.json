@@ -1,0 +1,189 @@
+{
+  "scope": "I5 art/design continuation on codex-review; unfinished m1b gameplay untouched",
+  "reviewed_utc": "2026-10-15T19:07:48.337958+00:00",
+  "tool": "built-in imagegen: five generation sheets plus the explicit tall-pole edit",
+  "pieces": 24,
+  "authored_views": 53,
+  "accent_masks": 6,
+  "seasonal_sets": 4,
+  "event_art_rows": 10,
+  "packing": {
+    "pieces": 24,
+    "authored_views": 53,
+    "night_layers": 6,
+    "disk_mb": 0.571494,
+    "rgba8_mips_mb": 6.636896
+  },
+  "all_view_import_estimate_s3tc_mips_bytes": 1713840,
+  "selected_event_max_rgba8_mips_bytes": 1109160,
+  "complete_season_libraries": {
+    "spring": {
+      "rgba8_mips_bytes": 2294560,
+      "scope": "complete available library for this season including alternative event centres; UNUSED rotations must not be preloaded against the separate 1.8 MB selected-event cap"
+    },
+    "summer": {
+      "rgba8_mips_bytes": 2608932,
+      "scope": "complete available library for this season including alternative event centres; UNUSED rotations must not be preloaded against the separate 1.8 MB selected-event cap"
+    },
+    "autumn": {
+      "rgba8_mips_bytes": 2192784,
+      "scope": "complete available library for this season including alternative event centres; UNUSED rotations must not be preloaded against the separate 1.8 MB selected-event cap"
+    },
+    "winter": {
+      "rgba8_mips_bytes": 2488760,
+      "scope": "complete available library for this season including alternative event centres; UNUSED rotations must not be preloaded against the separate 1.8 MB selected-event cap"
+    }
+  },
+  "source_integrity": "six saved selected master hashes verified against sources.json",
+  "repack": "all 59 textures and festival.json rebuilt byte-identically from saved masters",
+  "native_review": {
+    "inspected": true,
+    "captures": 24,
+    "season_contact_sheets": 8,
+    "town_captures": 16,
+    "all_seasons_both_towns_day_and_evening": true,
+    "dimensions": [
+      1280,
+      720
+    ],
+    "checks": 57,
+    "added_point_lights": 0,
+    "city_light_cap": 12,
+    "torvet_scope": "artist-authored native geometry study with two stalls and four guests; not the unresolved live 24-post layout",
+    "screenshots_sha256": {
+      "native/art_festival_festival_hyggebyen_autumn_day.png": "3368740d921441ce45e1cd85856680d61a9561671b1e7067845792a182dcaee0",
+      "native/art_festival_festival_hyggebyen_autumn_evening.png": "0ef4b5bc194cc6f69a26c4c06e0b91819905e07a1cf37b4b9cf86fcb48a60650",
+      "native/art_festival_festival_hyggebyen_spring_day.png": "69109d5a9c7c86665a46b441c1fb8fb1f058d76b2df6ab3872bd31bd5f20dbe1",
+      "native/art_festival_festival_hyggebyen_spring_evening.png": "c9cdc8737870e24f61c854e52f1ea5cbcbe87762d7c0b38bbf2a6b496f7cf9d7",
+      "native/art_festival_festival_hyggebyen_summer_day.png": "bd96a78d45684ab18823f7c6c20ecda92153b7e5289f42d8c612bcf31943b137",
+      "native/art_festival_festival_hyggebyen_summer_evening.png": "337e79a19917dcaed8edd934543fab0c5138619dc9c589a36fe4d7b7cf2daa49",
+      "native/art_festival_festival_hyggebyen_winter_day.png": "c42a539a8735c7b597d65b9dd11359b177779874fded26807661444444f73e31",
+      "native/art_festival_festival_hyggebyen_winter_evening.png": "78209c3e7e3f4cd05960d64df886d6bff8c8564b41400e5ca44ff4daee93ef18",
+      "native/art_festival_festival_traetoppen_autumn_day.png": "59060f0168d9ef88d8afce121643eefc883b65cc482de6579a833c11970de11b",
+      "native/art_festival_festival_traetoppen_autumn_evening.png": "3d4280de437927cc83524c276738124a7dfc793611a5af81f6d743bb653a609e",
+      "native/art_festival_festival_traetoppen_spring_day.png": "824fa3acc5fff4f36fab522664ce87ed2c7dc9a2e87d1da0f3cb8ddc8fbca23d",
+      "native/art_festival_festival_traetoppen_spring_evening.png": "402441ed46a3a9437c3d0f177220cc741f1e3848bcb69aed629cc95586992dcd",
+      "native/art_festival_festival_traetoppen_summer_day.png": "33061771dfc353c040c40e90c8ed7fc2e29c84970bd18591ffe0856ec8c01a0e",
+      "native/art_festival_festival_traetoppen_summer_evening.png": "edf07d63bf9c0238af40f84edbb87854e3df24ce3027e414daa2e6b1e2928ac8",
+      "native/art_festival_festival_traetoppen_winter_day.png": "f0fa51ade793e83e7c89d8fc7c3cadcb11c27408089b8645812c8e3bade9a2a8",
+      "native/art_festival_festival_traetoppen_winter_evening.png": "3b4d4f185483a00d6c1f0e2a19193d3e6549da9853e9e2ba1e5de2fa219ab574",
+      "native/art_festival_shop_festival_autumn_01.png": "53b27d232d08fcbe788424bc8e848234758e5f150e3862ffc2fba2e6f2642770",
+      "native/art_festival_shop_festival_autumn_02.png": "eb49a17937d27ca2401d6f80fe919238526d4f0ad26f158d5d359bcb2262c62b",
+      "native/art_festival_shop_festival_spring_01.png": "f7c8b2efcbd1b83ba9b657d4ebb1714d18ae75e9b7e8c4c9bfb6a693c1b137df",
+      "native/art_festival_shop_festival_spring_02.png": "e5c853c2494b244e8fff1861cb223269d3aa998360f7020ad9d50a0b12cf2fac",
+      "native/art_festival_shop_festival_summer_01.png": "e7b94240841861c60e4bfb141dec4040571770d3557dd3054cee77bfe5f01661",
+      "native/art_festival_shop_festival_summer_02.png": "86679fb50af3c0d3c61d027b5f9a640550138d303ceaaaea2438eeea8572e955",
+      "native/art_festival_shop_festival_winter_01.png": "e50cb55c68b528dcd5fff6227dbf7f2d39db636258556c2485fe777502e12674",
+      "native/art_festival_shop_festival_winter_02.png": "0ffe444b5ae70f9efddbe9b2759119af68cce7cac592aedfe5230525f415be89"
+    }
+  },
+  "tests": {
+    "headless": {
+      "result": "pass",
+      "checks": 1130,
+      "failed": 0,
+      "skipped": 4,
+      "elapsed_s": 2.78
+    },
+    "native": {
+      "result": "pass",
+      "checks": 57,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 8.31
+    },
+    "full": {
+      "result": "pass",
+      "checks": 5015,
+      "failed": 0,
+      "skipped": 59,
+      "elapsed_s": 224.12
+    }
+  },
+  "lua_lint": {
+    "files": 74,
+    "findings": 0,
+    "report": "lua-lint.txt"
+  },
+  "engine_errors": 0,
+  "engine_warnings": 0,
+  "exports_sha256": {
+    "banner_pole_autumn_r0.webp": "d6d96cf48c19912467b407d03bb695d2368221ec41dc1df8f9b568a34eba2702",
+    "banner_pole_autumn_r1.webp": "7d1da4d0c3d9f54444c3cf02ef9d15c4653e8fdc0ee01106e721662c2a5069b4",
+    "banner_pole_spring_r0.webp": "1cd5a2f2a32996f55c0c7e31cef5c9918cee412fe984235c881ded198c77c406",
+    "banner_pole_spring_r1.webp": "60266ddfd820ebbfb6a03281574f539bed637b7063c35ec43eedc82711096625",
+    "banner_pole_summer_r0.webp": "9b3dc238c62d7b527f395c2983b3e58867245cb56105bff17dacf9856ae79cda",
+    "banner_pole_summer_r1.webp": "d47c5789657b467d2eb98c27b667dcaeb0cf9844ebce87e11a4f34fb37cb41e2",
+    "banner_pole_winter_r0.webp": "f45996ff59cc030527ca7348360eccd3ba849def5df38e9156fb22cae16e7520",
+    "banner_pole_winter_r1.webp": "2c17f064915c9f1c6bbab702742abb5a6c9edbeafb462d3f0cc50d9a10663852",
+    "bonfire_festival_r0.webp": "200d2277400e1a6ec5818661f7328f12e3b6c9ee40b42a2313a71953f26cb77f",
+    "bonfire_festival_r0_night.webp": "fc722fe8d296af6966333a386754f6dd0704fef65a6c42c1b6f9592ab7101914",
+    "bunting_string_a_r0.webp": "c16a2135db9c07ba5cfd39a236c03162e6256973dd8d1780afa0f6cf4d17973d",
+    "bunting_string_a_r1.webp": "6ebf3bf586f75b307fc4cbd6b95613c1f2fffcca5f5a653b3d96322357016df7",
+    "bunting_string_b_r0.webp": "213a2dc2263b4ddf00dce686c0613c33052b53de4004d9c47de1e5d3859958c7",
+    "bunting_string_b_r1.webp": "8ecc34333f1a2a88190e1188b4f40e358669f3b60f0580c42ba614db721e6639",
+    "door_wreath_autumn_r0.webp": "c019de496a1ca22fecb8fecc3b78c005ac81725f0c9e037484f2b2c70d88acc2",
+    "door_wreath_autumn_r1.webp": "c10dd210b19907938ffac6103e1ba1854a6f7be58ed0f425ae41a9b5a3f595de",
+    "door_wreath_spring_r0.webp": "54e2f64893370e3e58b06fe21e9600d3d880f1d0657b58df6acaf1fa7b3a01e3",
+    "door_wreath_spring_r1.webp": "aa56b609f8a5f118a9c07f992fcddbfc614a6ed491595ff2204290a268d8571f",
+    "door_wreath_summer_r0.webp": "eeacfbb3721c16617ba467e991223d51fb6eded1d02b1f84cec6d9a775e459ff",
+    "door_wreath_summer_r1.webp": "40a1fbb08508dc2b65dee1f8399999f18d844f34e9f662a41784e1b71acbb9d6",
+    "door_wreath_winter_r0.webp": "2c2488f23fbc22e1490861d94460a6771baf5b0f87bc26ec04007bfb84fe8462",
+    "door_wreath_winter_r1.webp": "55e15fb953fcf5ae0e0418ccd7d06fde991838c139da6d2a07c01cb51691d7b0",
+    "festival_bench_r0.webp": "523fba481ecd7d4694d186b575b657c4093ef8a2f9965fd38910a0fb957a8882",
+    "festival_bench_r1.webp": "a27733ace3232d63784201bbf53175252ad98b164d1235d1476afc07988656c6",
+    "festival_stage_r0.webp": "2b85f041fe8e516a62a81566adb95408e7fe54adc8e2d2b4eee46603fb34042b",
+    "festival_stage_r1.webp": "4caca9fb0665e7dda39e18bd292fce3c0656710f9175854fe32583f8e555ba8c",
+    "festival_stage_r2.webp": "0d9c97fcfdeb431fd1322705131d8113560eed09a4a30ca0d36af67a89a992ae",
+    "festival_stage_r3.webp": "911e05d6db352e1814e2df4368769d710760480bad8c7e5f7794ad396f8aff37",
+    "flower_arch_r0.webp": "503d2351d02ba98969f78caf2e1755e9c64f3ba2f60dc320615f6079bb2a1044",
+    "flower_arch_r1.webp": "78dc87500682b042b0cf3c8b1d83854eae0cf4c834edc7d1d555be27d5b6f58f",
+    "ice_lantern_r0.webp": "26c546c20f5adf82049ab9055be0d8fcb0e720d9412b9707d9784c6ddbfd3e90",
+    "ice_lantern_r0_night.webp": "15a6a291df3652423e638c0d75b2f9000e3f8aa3286017d70799e72f3da1aa26",
+    "lantern_string_a_r0.webp": "d03cf750f925d3b148ce21ad94de0b63ff609f70f6e0ba24f511a61513a35709",
+    "lantern_string_a_r0_night.webp": "9c79f0a49844d100decfd321dd2af6147a589a3c2b635e669bbb78ffcb8086bc",
+    "lantern_string_a_r1.webp": "611b553c1ef24df8677593d86ed0d5185828b0ccd94c5022cb3b421446f9ea14",
+    "lantern_string_a_r1_night.webp": "58bb6be380bbadb08b99368e8caaf6e5085ae46e364781a6a51e35596fc73026",
+    "lantern_string_b_r0.webp": "af4939465223e1b2371e292a82d29ebe2a40a7b7f92e4719754abdff71e43234",
+    "lantern_string_b_r0_night.webp": "e0a77f0075fadb81954ac6c3e8495f364d00cd0de8be4297778609503bae344f",
+    "lantern_string_b_r1.webp": "578d3d76eabc325e626f08218e84357642f21a8de8fa134224a4d552a4300471",
+    "lantern_string_b_r1_night.webp": "ee70fe225aabc7e79e690e832b5676f43f06364b35f884a2c84cbb1ca9b831e4",
+    "market_stall_autumn_r0.webp": "971d2d3c0a112ecb9ae95200a44bf0027ef13829b7d29fba084de5f6263441e4",
+    "market_stall_autumn_r1.webp": "08cd8a4190ae42d5ac7d4b6bc55f51957fa93237f0e005a2dd54a8c49568cb1d",
+    "market_stall_autumn_r2.webp": "1cfe246b8177eb22299416f257cd9bc60acdef052ec6d024ce7b445dfe622b96",
+    "market_stall_autumn_r3.webp": "d6ce6b58052400e1caf768054ea59a84abc0ffdf980f150ac4a682b96af0c495",
+    "market_stall_spring_r0.webp": "31c69555dfccc61ef9ba24a021dcbd873e33e4404a4927045f02fe954dc15406",
+    "market_stall_spring_r1.webp": "90fb52f31ee5a44a97a0eaab427bb8debce9c44d3d0458c2db5e07b04cfe86d3",
+    "market_stall_spring_r2.webp": "ae7b09ea387954b1000218f1a75598a8c72bd6bf580367bea6c9ce216d02bbd4",
+    "market_stall_spring_r3.webp": "a47bb890958cb58e26a3a363d49a1ca7b56317eaab5b0e351dea5b3763e18e26",
+    "market_stall_summer_r0.webp": "bb68c59b0d73edc9d49c29a2101e3fd20e1554481294af704c2fb37b87a2eda1",
+    "market_stall_summer_r1.webp": "b8e86d8ae29083648e42f36080397f0ce4f04cfdb5ce8f53331b7752b218b29a",
+    "market_stall_summer_r2.webp": "9ea7db41f30d75a216fa429bec8e273f782b872188335c3dac32da5c367120b9",
+    "market_stall_summer_r3.webp": "232dbdf0ffc708e02018982052a027f2805cff553eb02d5eb52cb5c3f4a84536",
+    "market_stall_winter_r0.webp": "407c0e6d175d10ef5f1180cecd6bb772162a4345159a872426a99c2dffe9db73",
+    "market_stall_winter_r1.webp": "49454bc0eec0e5bf9b274484ef1656d0b1407a74c30188436ccdf361906f8877",
+    "market_stall_winter_r2.webp": "f59294d37306432fe4c8ebc79464a5c4614279b0a98a2a8396741ee189c160a5",
+    "market_stall_winter_r3.webp": "b430b85f3037c72f35bd89e27bf7e9655e9e65e732b1966ca99e342876bfd922",
+    "maypole_r0.webp": "7319a2a199f1b84ed13f6b1f42190f57246038043be75feaf6d2a46324550cbd",
+    "pumpkin_pile_r0.webp": "5784d08cc390b2342239078fcb5833c0cac4323bc98a027207cfecb323cb95ee",
+    "sheaf_stack_r0.webp": "3f54763b376c931b20d80cd18787d7d5edc3549e641c667d8cd10b0c933897b1"
+  },
+  "consumer_inputs_sha256": {
+    "assets/iso_props/festival/festival.json": "92260b69fd98220a8355d8a2fcb893356116b49fa4d845a5586ee061b2b39034",
+    "lua/config/festival_decor.lua": "3d7b125bfbe39613288c39ac3ed8f40a3ebbdfccefb1093f10fb503809d22e8a",
+    "scripts/art/painted_festival_art.gd": "e8868212809237c4b9b00e88f0f429b9eb096fbfce38051a97c739e4b123d221",
+    "tools/art/drawn/festival.py": "7d00605923fbe7cd8be2161cda114185ac2a2349ed5178cc9b18d421740a0ff7",
+    "tools/art/drawn/festival_view.gd": "5c476ff172fccb4a83fe1cc7d7c23dbaceba52061e60c64211e2b605acc8050b",
+    "tests/sections/art_festival.gd": "9f8c38468fefd7620a01b99748eac57d788548846de4437450f700f4e7edd261"
+  },
+  "remaining": [
+    "live FestivalDecor.attach state/enter/exit/late-binding integration",
+    "live Torvet post clearance, crowd capacity and routing QA",
+    "fitted wardrobe/held-item animation production"
+  ],
+  "notes": [
+    "59 full-suite skips name pending owners; 26 allowed messages belong to existing scoped negative/smoke cases.",
+    "Art texture/resource checks are separate from whole-game VRAM, renderer allocator pool retention and frame-time measurements.",
+    "The 1.8 MB event cap applies to selected orientations/masks; complete seasonal libraries listed above intentionally expose their larger available-view totals."
+  ]
+}
