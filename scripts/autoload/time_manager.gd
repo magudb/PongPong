@@ -27,7 +27,6 @@ const DEFAULT_WEATHER_CHANCES := {
 var time_scale: float = 1.0
 var is_paused: bool = false
 var weather: StringName = &"klart"  # klart, regn, taage, sne, torden
-var weather_duration_hours: int = 6
 ## Daily rolls made since the last reset (tests assert "once per day").
 var weather_rolls: int = 0
 
@@ -82,7 +81,6 @@ func reset() -> void:
 	time_scale = 1.0
 	is_paused = false
 	_acc_minutes = 0.0
-	weather_duration_hours = 6
 	weather_rolls = 0
 	_weather_day = GameManager.total_day()
 	_apply_weather(&"klart")
@@ -204,7 +202,6 @@ func roll_weather(p_roll: float = -1.0) -> void:
 		if r < accumulated:
 			picked = id
 			break
-	weather_duration_hours = randi_range(3, 10)
 	_apply_weather(picked)
 
 
@@ -237,7 +234,6 @@ func to_dict() -> Dictionary:
 	return {
 		"time_scale": time_scale,
 		"weather": String(weather),
-		"weather_duration_hours": weather_duration_hours,
 		"weather_day": _weather_day,
 	}
 
@@ -245,7 +241,6 @@ func to_dict() -> Dictionary:
 func from_dict(data: Dictionary) -> void:
 	time_scale = maxf(float(data.get("time_scale", 1.0)), 0.1)
 	var saved := StringName(str(data.get("weather", "klart")))
-	weather_duration_hours = int(data.get("weather_duration_hours", 6))
 	_weather_day = int(data.get("weather_day", GameManager.total_day()))
 	_acc_minutes = 0.0
 	_apply_weather(saved if saved in WEATHER_IDS else &"klart")

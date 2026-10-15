@@ -79,6 +79,8 @@ signal enemy_defeated(enemy_id: StringName, kind: StringName, loot: Array)
 signal combat_finished(victory: bool)
 signal boss_bar_changed(name_key: String, ratio: float, visible: bool)
 signal whisper_requested(text_key: String)
+## A world flag changed (GameManager.set_flag / clear_flag / load). `value` is the new flag value, `false` on clear.
+signal flag_changed(flag: StringName, value: Variant)
 
 # --- UI ---
 signal notification_posted(title: String, message: String, icon: String)

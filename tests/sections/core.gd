@@ -109,6 +109,11 @@ const FEATURE_SIGNALS := {
 	"item_discovered": "item_id:StringName,rarity:StringName,category:StringName",
 }
 
+## The devin-review fix round: flags are event-driven (IsoArea used to poll them at 4 Hz).
+const REVIEW_SIGNALS := {
+	"flag_changed": "flag:StringName,value:Nil",
+}
+
 var t
 var gm: Node
 var tm: Node
@@ -174,6 +179,7 @@ func _test_signal_contract() -> void:
 	t.check("legacy_signals_keep_arity", _subset_matches(declared, LEGACY_SIGNALS), "%d legacy signals" % LEGACY_SIGNALS.size())
 	t.check("plan_3_5_signals", _subset_matches(declared, PLAN_SIGNALS), "%d signals of PLAN 3.5 + R.13" % PLAN_SIGNALS.size())
 	t.check("feature_signals_14", FEATURE_SIGNALS.size() == 14 and _subset_matches(declared, FEATURE_SIGNALS), "addendum 3.1")
+	t.check("review_fix_signals", _subset_matches(declared, REVIEW_SIGNALS), "devin-review additions (flag_changed)")
 	t.check("farm_upgraded_removed", not declared.has("farm_upgraded"), "PLAN 3.5: removed, never used")
 	t.check("r13_escape_hatch_and_hotbar_assign", declared.get("game_event", "") == "name:StringName,payload:Dictionary" and declared.get("hotbar_assign_requested", "") == "slot:int,item_id:StringName", "R.13")
 	# player_spawned takes a Node2D in the 2D game
@@ -225,6 +231,7 @@ func _contract() -> Dictionary:
 	all_contract.merge(LEGACY_SIGNALS)
 	all_contract.merge(PLAN_SIGNALS)
 	all_contract.merge(FEATURE_SIGNALS)
+	all_contract.merge(REVIEW_SIGNALS)
 	return all_contract
 
 

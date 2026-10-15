@@ -200,8 +200,12 @@ func start_new_game(p_name: String, p_type: CharacterType, p_farm: String = "", 
 	year = 1
 	hour = day_start_hour()
 	minute = 0
+	var dropped: Array = world_flags.keys()
 	world_flags.clear()
-	world_flags[FLAG_INTRO_PENDING] = true
+	set_flag(FLAG_INTRO_PENDING, true)
+	for key in dropped:
+		if key != FLAG_INTRO_PENDING:
+			EventBus.flag_changed.emit(StringName(str(key)), false)   # the new run resets a flag
 	unlocked_zones.assign(_default_zones())
 	discovered_locations.clear()
 	play_time_seconds = 0.0
@@ -328,17 +332,25 @@ func _refresh_phase() -> void:
 
 # ------------------------------------------------------------------ world flags
 
+## Sentinel for set_flag's "did the value change" compare: stored values are never null, so an absent key compares different.
+const _UNSET: Variant = null
+
 ## JSON-safe flag store: bool, int, float and String (a StringName is stored as String); null clears the flag.
 ## Anything else (Array, Dictionary, Vector2, Object ...) is refused with an error: it would not survive a save.
 func set_flag(flag: StringName, value: Variant) -> void:
 	if value == null:
-		world_flags.erase(flag)
+		if world_flags.erase(flag):
+			EventBus.flag_changed.emit(flag, false)
 		return
 	var safe: Variant = _json_safe(value)
 	if safe == null:
 		push_error("GameManager.set_flag(%s): %s is not JSON-safe (use bool, int, float or String)" % [flag, type_string(typeof(value))])
 		return
+	var prev: Variant = world_flags.get(flag, _UNSET)
+	if prev != null and typeof(prev) == typeof(safe) and prev == safe:
+		return                                          # writing the same value changes nothing
 	world_flags[flag] = safe
+	EventBus.flag_changed.emit(flag, safe)
 
 
 func get_flag(flag: StringName, default_value: Variant = false) -> Variant:
@@ -346,7 +358,8 @@ func get_flag(flag: StringName, default_value: Variant = false) -> Variant:
 
 
 func clear_flag(flag: StringName) -> void:
-	world_flags.erase(flag)
+	if world_flags.erase(flag):
+		EventBus.flag_changed.emit(flag, false)
 
 
 ## Integer flag. Saves come back from JSON with every number as float (home_tier 3 loads as 3.0): this coerces it.
@@ -549,7 +562,15 @@ func from_dict(data: Dictionary) -> void:
 	# it is lifted to the restart hour (02:00) instead of being read as 24 h later; 24 and 25 are valid (a save at 01:40 of the same game day)
 	hour = clampi(int(data.get("hour", day_start_hour())), day_roll_restart_hour(), day_end_hour() - 1)
 	minute = clampi(int(data.get("minute", 0)), 0, 59)
-	world_flags = _sanitized_flags(data.get("world_flags", {}))
+	var new_flags := _sanitized_flags(data.get("world_flags", {}))
+	var old_flags := world_flags
+	world_flags = new_flags                          # assign first: a listener that reads get_flag sees the new state
+	for key in old_flags.keys():
+		if not new_flags.has(key):
+			EventBus.flag_changed.emit(StringName(str(key)), false)   # the load dropped a flag
+	for key in new_flags:
+		if not old_flags.has(key) or old_flags[key] != new_flags[key]:
+			EventBus.flag_changed.emit(StringName(str(key)), new_flags[key])
 	unlocked_zones.assign(_string_names(data.get("unlocked_zones", _default_zones())))
 	discovered_locations.assign(_string_names(data.get("discovered_locations", [])))
 	play_time_seconds = float(data.get("play_time_seconds", 0.0))

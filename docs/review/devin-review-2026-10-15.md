@@ -261,3 +261,37 @@ Verified: `run_playtest.sh --only=core,data,save,economy,review_regressions,loc,
 `area,content_features,characters,cast_data,ghost,ghost_data` (523), `city_levels,maps_iso,maps_farm` (178),
 `ui_foundation,ui_audit,ui_audit_blind,ui_audit_pins,rarity,art_home` (1015+) — all PASS, 0 engine
 errors/warnings.
+
+---
+
+## Fix round 2 (branch devin-review, on top of the m1b merge)
+
+The deferred items, revisited:
+
+- **`flag_changed` landed** as a contract signal (`flag: StringName, value: Variant`; `REVIEW_SIGNALS` in
+  `core.gd`). `GameManager.set_flag`/`clear_flag`/`from_dict` and the new-game reset emit it; same-value
+  writes don't fire. `IsoArea` re-evaluates its `flag:` whens on the signal — the 4 Hz `_process` poll
+  (`FLAG_POLL_PERIOD`) is gone. Lua `api.set_flag` routes through `GameManager.set_flag`, so Lua writes are
+  covered.
+- **`weather_duration_hours` removed** — vestigial intra-day-weather state (written, never read; weather is
+  rolled once per day). Old saves keep loading (the key is simply ignored).
+- **`collect_<item>` binds to `item_gained`** — harvest / purchase / gift all route through
+  `EconomyManager.add_item`, so `cookie_delivery`'s `collect_turnip` is completable now. The
+  `resource_node_depleted` binding stays (its test asserts it; nothing emits it yet) with a comment warning
+  the loot wave not to double-count.
+- **Modal contract exercised headless**: `review_regressions` builds each shipped screen script on a bare
+  Control carrying its `%`-named nodes and drives real Esc key events: open pushes the modal (names per
+  `ui_screens.json`), close pops, Esc closes only the top modal, pause opens only when nothing is modal,
+  the mouse is never captured. Surfaced and fixed a real bug: `build_menu_ui` wrote `ItemList.selected`
+  (no such property — `select(0)` now).
+- **Mouse-capture lint widened**: `area.gd`'s `no_mouse_capture` check now covers `scripts/ui/` too — the
+  `pause_menu` capture it would have caught lived outside `scripts/autoload`.
+- **Still not done (package work, not bugs):** the screens' real `.tscn` scenes are P16/P17 deliverables
+  with baseline-pinned pixel audits — hand-building them would break `compare_guide`, so they stay unshipped
+  and `SKIP`; the marker handlers and lazy scripts (npc P14, doors/posts T-director, runestone D2, whisper
+  P19, forest_dress V8, Player2D P06) are pending waves by design.
+- **Verification:** full headless suite green (~3100 checks over 25 sections, 0 engine errors/warnings) and
+  `run_windowed.sh` run end-to-end: all windowed sections pass (`area`, `maps_*`, `city_*`, `characters`,
+  `clock26`, `ui_*`, `art_*`) except five PRE-EXISTING art-content failures (`art_city.tileable_trunk_seam`,
+  `bridge_line2d_orientation`, `art_environment.forest_*` readability) that fail identically on the clean
+  `review-fixes-4` checkout of the same commit — V8-era art tuning, not from this change set.
