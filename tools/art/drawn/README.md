@@ -113,8 +113,9 @@ alpha comparisons and the combined 22 MB environment budget.
 The treetop city and Mørkeskoven use the same painted source family through
 `world.py` (`pack.py --only=world`). `city_painted.png`,
 `city_details_painted.png` and `forest_painted.png` are saved imagegen masters;
-`world-prompts.json` and `world-detail-prompt.txt` retain the exact prompts and
-reference roles. The packer extracts their alpha islands and exports the city
+`docs/art/world-consistency/prompts.json` and `detail-prompt.txt` in that folder
+retain the exact prompts and reference roles; `asset-repair-prompt.txt` provides
+a reusable correction template. The packer extracts their alpha islands and exports the city
 huts, furniture, lanterns, lift, woodland crowns, cave stones and runestones to
 `assets/iso_props/painted_world/`. Timber decks and bark use the same painted
 material sheet as the approved tiles. City canopy leaves come from the forest

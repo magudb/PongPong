@@ -1,8 +1,6 @@
 extends RefCounted
-## Review-only reproductions. These assert intended behavior and deliberately fail on 863a583.
-## Run separately from the shipping suite:
-## tests/run_playtest.sh --no-import --strict --no-boot --sections-dir=res://tests/review_codex --only=review_defects
-const SECTION := "review_defects"
+## Regressions promoted from the isolated review reproductions on 863a583.
+const SECTION := "codex_review"
 const TIMEOUT_S := 120.0
 
 class ProbeAudio extends "res://scripts/autoload/audio_manager.gd":
@@ -20,6 +18,10 @@ class ProbeAudio extends "res://scripts/autoload/audio_manager.gd":
 			wav.loop_end = bytes.size()
 			streams[id] = wav
 		return streams[id]
+
+class FailedReplacement extends "res://scripts/autoload/save_manager.gd":
+	func _replace_file(_source: String, _destination: String) -> Error:
+		return ERR_FILE_CANT_WRITE
 
 var t
 var gm: Node
@@ -47,6 +49,8 @@ func run(p_t) -> void:
 	_config(scratch)
 	_missing_primary()
 	_malformed_primary()
+	_quest_validation()
+	_replacement_failure(scratch)
 	_roof_charges_twice()
 	_housing_required()
 	_product_snapshot()
@@ -83,6 +87,9 @@ func _config(scratch: String) -> void:
 	lr.load_file(path)
 	t.check("config_sees_loaded_key", gm.config_value("codex_review.value", 0) == 99,
 		"Lua=%s, GameManager=%s" % [lr.get_config("codex_review.value"), gm.config_value("codex_review.value", 0)])
+	_write(path, "kind = \"config\"\nconfig = { codex_review = { value = 101 } }\n")
+	lr.load_file(path)
+	t.check("config_refreshes_cached_value", gm.config_value("codex_review.value", 0) == 101, "incremental load invalidates an existing cached value")
 	lr.reload_scripts()
 
 func _missing_primary() -> void:
@@ -100,11 +107,45 @@ func _malformed_primary() -> void:
 	payload["quests"]["active"] = {"bad": {"id": "bad", "objectives": []}}
 	_write(sm.slot_path(0), JSON.stringify(payload))
 	var inspected: Dictionary = sm.inspect_slot(0)
-	# This engine error is the failure being probed; SaveManager's own ApplyGuard also observes it.
-	t.allow("Invalid assignment")
 	var loaded: bool = sm.load_game(0)
 	t.check("invalid_quest_primary_uses_good_backup", loaded and bool(inspected["from_backup"]),
 		"inspect=%s, loaded=%s, last_error=%s" % [inspected["state"], loaded, sm.last_error])
+
+func _quest_validation() -> void:
+	_fresh()
+	qm.accept_quest(&"fix_roof")
+	var good: Dictionary = qm.to_dict()
+	var bad: Array = []
+	for objectives in [[], "broken", {"repair_roof": []}, {"repair_roof": {"current": "bad", "target": 1, "done": false}},
+		{"repair_roof": {"current": 0, "target": -1, "done": false}}, {"repair_roof": {"current": 0, "target": 1, "done": "false"}}]:
+		var data := good.duplicate(true)
+		data["active"]["fix_roof"]["objectives"] = objectives
+		bad.append(data)
+	for field in ["id", "state", "meta", "started_day"]:
+		var data := good.duplicate(true)
+		data["active"]["fix_roof"][field] = []
+		bad.append(data)
+	for i in bad.size():
+		t.check("invalid_quest_record_%d" % i, not qm.validate_dict(bad[i]) and not qm.from_dict(bad[i])
+			and qm.to_dict() == good, "rejected before replacing live state")
+
+func _replacement_failure(scratch: String) -> void:
+	_fresh()
+	var manager := FailedReplacement.new()
+	manager.save_dir = scratch
+	manager.autosave_enabled = false
+	t.root.add_child(manager)
+	var target := scratch.path_join("replacement.json")
+	_write(target, "old bytes")
+	t.check("failed_replacement_keeps_target", not manager._write_atomic(target, "new bytes")
+		and FileAccess.get_file_as_string(target) == "old bytes" and not FileAccess.file_exists(target + ".tmp"), "rename failure never unlinks the old file")
+	sm.save_game(0)
+	sm.save_game(0)
+	var backup: PackedByteArray = FileAccess.get_file_as_bytes(sm.backup_path(0))
+	manager._roll_backup(0)
+	t.check("failed_backup_replacement_keeps_backup", FileAccess.get_file_as_bytes(sm.backup_path(0)) == backup
+		and not FileAccess.file_exists(sm.backup_path(0) + ".tmp"), "last good backup survives rename failure")
+	manager.free()
 
 func _roof_charges_twice() -> void:
 	_fresh()
@@ -113,31 +154,67 @@ func _roof_charges_twice() -> void:
 	eco.add_item(&"moss", 8, true)
 	var area := IsoArea.new()
 	var marker := {"quest": "fix_roof", "objective": "repair_roof", "needs": "wood:8,moss:4", "consume": "1"}
+	var snapshots: Array = []
+	var on_change := func(_inventory: Dictionary) -> void:
+		snapshots.append(sm.gather_payload())
+		area.call("_on_quest_spot", null, marker)
+	bus.player_inventory_changed.connect(on_change)
 	area.call("_on_quest_spot", null, marker)
+	bus.player_inventory_changed.disconnect(on_change)
 	var after_first: int = eco.count_item(&"wood")
+	t.check("roof_cost_and_progress_commit_together", after_first == 8 and eco.count_item(&"moss") == 4 and snapshots.size() == 1
+		and snapshots[0]["quests"]["active"]["fix_roof"]["objectives"]["repair_roof"]["done"], "inventory callback sees the complete transaction and cannot reenter it")
 	area.call("_on_quest_spot", null, marker)
 	t.check("completed_roof_objective_does_not_charge_again", eco.count_item(&"wood") == after_first,
 		"wood after first=%s, after second=%s; quest remains active=%s" % [after_first, eco.count_item(&"wood"), qm.is_active(&"fix_roof")])
+	_fresh()
+	qm.accept_quest(&"fix_roof")
+	eco.add_item(&"wood", 8, true)
+	eco.add_item(&"moss", 3, true)
+	area.call("_on_quest_spot", null, marker)
+	t.check("short_roof_cost_changes_nothing", eco.count_item(&"wood") == 8 and eco.count_item(&"moss") == 3
+		and not qm.get_quest_progress(&"fix_roof")["objectives"]["repair_roof"]["done"], "missing the second resource does not take the first")
 	area.free()
 
 func _housing_required() -> void:
 	_fresh()
 	eco.add_item(&"baby_chick", 1, true)
 	var adopted: bool = ah.adopt_animal(&"baby_chick")
-	t.check("chicken_requires_a_coop", not adopted, "adopted=%s, buildings=%s, animals=%s" % [adopted, ah.buildings.size(), ah.animals.size()])
+	t.check("chicken_requires_a_coop", not adopted and eco.count_item(&"baby_chick") == 1, "missing housing keeps the item")
+	ah.from_dict({"v": 2, "counter": 0, "animals": {}, "buildings": {"coop_1": {"id": "coop_1", "building_type": "coop", "is_built": false}}})
+	t.check("unfinished_coop_refuses_adoption", not ah.adopt_animal(&"baby_chick") and eco.count_item(&"baby_chick") == 1, "")
+	ah.buildings[&"coop_1"].is_built = true
+	var snapshots: Array = []
+	var on_change := func(_inventory: Dictionary) -> void: snapshots.append(sm.gather_payload())
+	bus.player_inventory_changed.connect(on_change)
+	adopted = ah.adopt_animal(&"baby_chick")
+	bus.player_inventory_changed.disconnect(on_change)
+	t.check("adoption_uses_selected_housing", adopted and ah.animals.size() == 1 and ah.animals.values()[0].building_id == &"coop_1"
+		and ah.buildings[&"coop_1"].animals_inside.size() == 1, "")
+	t.check("adoption_snapshot_is_committed", snapshots.size() == 1 and snapshots[0]["husbandry"]["animals"].size() == 1
+		and eco.count_item(&"baby_chick") == 0, "inventory listener sees both the consumed item and its housed animal")
+	var capacity: int = ah.get_building_capacity(&"coop")
+	eco.add_item(&"baby_chick", capacity, true)
+	for i in range(1, capacity):
+		ah.adopt_animal(&"baby_chick")
+	t.check("full_coop_refuses_adoption", not ah.adopt_animal(&"baby_chick") and eco.count_item(&"baby_chick") == 1
+		and ah.buildings[&"coop_1"].animals_inside.size() == capacity, "housing occupancy matches adoption capacity")
 
 func _product_snapshot() -> void:
 	_fresh()
 	ah.from_dict({"v": 2, "counter": 1, "animals": {"animal_1": {"id": "animal_1", "species": "chicken", "is_baby": false,
 		"age_days": 10, "happiness": 60.0, "hunger": 100.0, "products_ready": 2}}, "buildings": {}})
 	var saved: Array = []
+	var reentrant: Array = []
 	var on_gain := func(id: StringName, _amount: int) -> void:
 		if id == &"egg":
 			saved.append(sm.gather_payload())
+			reentrant.append(ah.collect_product(&"animal_1"))
 	bus.item_gained.connect(on_gain)
 	ah.collect_product(&"animal_1")
 	bus.item_gained.disconnect(on_gain)
 	t.check("product_snapshot_captured", saved.size() == 1, "")
+	t.check("product_collection_blocks_reentry", reentrant == [0], "")
 	if saved.is_empty():
 		return
 	sm.call("_apply_payload", saved[0])
@@ -158,6 +235,16 @@ func _music_races() -> void:
 	audio.play_music("new_after_stop", 0.0)
 	await t.tree.create_timer(0.25).timeout
 	t.check("old_stop_cannot_stop_new_track", audio._music_player.playing, "old stop callback ran against new track")
+	audio.play_music("discarded", 0.2)
+	audio.stop_music(0.0)
+	await t.tree.create_timer(0.3).timeout
+	t.check("stop_cancels_pending_music", not audio._music_player.playing, "a queued stream cannot restart playback after stop")
+	audio.play_music("same", 0.0)
+	audio.play_music("discarded", 0.2)
+	audio.play_music("same", 0.0)
+	await t.tree.create_timer(0.3).timeout
+	t.check("same_track_cancels_replacement", audio._music_player.stream == audio.streams["same"]
+		and is_equal_approx(audio._music_player.volume_db, audio.music_volume_db), "requesting the playing track cancels pending replacement and restores volume")
 	audio.free()
 
 func _midnight_in_transit() -> void:

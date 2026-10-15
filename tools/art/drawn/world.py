@@ -18,7 +18,7 @@ from terrain import HERE, ROOT, periodic, sample
 
 OUT = ROOT / "assets/iso_props/painted_world"
 SOURCE = "tools/art/drawn/sources/"
-MANIFEST: dict = {"_source": "Painted city/forest masters; world-prompts.json; geometry and sorting from the original manifests."}
+MANIFEST: dict = {"_source": "Painted city/forest masters; docs/art/world-consistency/prompts.json; geometry and sorting from the original manifests."}
 
 
 def read(path: Path) -> dict:

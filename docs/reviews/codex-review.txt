@@ -2,8 +2,11 @@ Code, performance and architecture review — 15 October 2026
 
 Reviewed commit: 863a583 (main at the start of this review).
 Worktree and branch: ../PongPong-worktrees/codex-review, codex-review.
-Production code is unchanged. tests/review_codex contains isolated reproductions;
-it is deliberately outside tests/sections and the normal CI discovery path.
+Implementation status: all eight reproduced behavioral defects below and the
+failed-rename persistence risk have been repaired on this branch. The defect
+probe is now tests/sections/codex_review.gd in normal test discovery; the original
+failure logs remain in evidence/. The performance probe stays isolated under
+tests/review_codex. Findings and original line references below describe 863a583.
 
 The highest priority is persistence: two distinct paths make a usable manual-save
 backup inaccessible. Eight behavioral defects were reproduced, producing ten
@@ -26,10 +29,11 @@ re-reported as open issues.
 Runtime experiments used Godot 4.7.2, a throwaway user profile, and the existing
 harness. The probes ran in a disposable APFS copy of this worktree while the normal
 suite ran here, so two Godot instances never wrote the same project cache.
-No real window was opened. Audio experiments injected silent generated WAV streams
+The initial code review opened no real window. The later art correction includes
+native windowed comparisons in docs/art/world-consistency/. Audio experiments injected silent generated WAV streams
 because the current checkout has no shipped audio streams.
 
-Prioritized behavioral findings
+Prioritized behavioral findings at baseline (repaired)
 
 1. P1 — Malformed active quest records bypass inspection and block backup recovery.
    scripts/autoload/quest_manager.gd:349 and :384
@@ -157,7 +161,7 @@ Prioritized behavioral findings
    after every await and before delayed callbacks.
    Probes: latest_music_request_wins, old_stop_cannot_stop_new_track.
 
-Additional static persistence risk
+Additional static persistence risk at baseline (repaired)
 
 scripts/autoload/save_manager.gd:1006 removes the existing target after ANY failed
 rename, then retries. A crash between removal and replacement, or a second rename
@@ -294,7 +298,7 @@ and CSV files with FileAccess/DirAccess; the eventual export needs explicit data
 inclusion and a packaged smoke test. This is a delivery gap to close before a
 release, not evidence that an existing shipped export is broken.
 
-Reproduction commands (from this worktree, one Godot process at a time)
+Original reproduction commands (checkout 0fd6435 to reproduce the failures)
 
   tests/run_playtest.sh --no-import --strict --character=animal --report=/tmp/codex-baseline.json
 
@@ -302,5 +306,53 @@ Reproduction commands (from this worktree, one Godot process at a time)
 
   tests/run_playtest.sh --no-import --strict --no-boot --sections-dir=res://tests/review_codex --only=review_performance --report=/tmp/codex-performance.json
 
-The defects command intentionally exits 1 on this commit. Promote each reproduction
-into the normal regression suite together with its eventual production fix.
+The original defects command intentionally exits 1 on 0fd6435. Its reproductions
+were subsequently promoted into tests/sections/codex_review.gd with the fixes.
+
+Implemented fixes
+
+* Quest inspection validates active records, nested objectives, metadata, typed
+  ID lists and counts before backup selection/rotation. Restoration builds the
+  active runtime dictionary before publishing it. A damaged primary now selects
+  its valid backup without emitting a script error.
+* A missing manual primary checks its surviving backup. Intentional delete still
+  removes both files. Failed primary or backup replacement never unlinks the old
+  target; injected rename failures verify that old bytes survive and temporary
+  files are removed.
+* Manual quest interactions check incomplete-objective eligibility and aggregate
+  their costs. EconomyManager.consume_backpack_items deducts the complete cost
+  and commits progress before any quest/inventory observer runs. Reentrant calls
+  and immediate save snapshots see one complete transaction. This narrow API
+  supports backpack costs and deliberately refuses clothing/furniture stores.
+  The existing adapter contract for legacy quest providers is retained.
+* Animal collection clears owed products and sets its collection day before
+  item delivery callbacks; rejected grants restore both fields. Adoption selects
+  an actual completed building and commits the item deduction and occupancy
+  together. Missing, unfinished or full housing leaves the item untouched.
+* Midnight during travel queues pass-out and drains it after arrival, using the
+  already-rolled calendar. Config caching stores resolved values, applies missing
+  fallbacks per call, and invalidates after incremental Lua loads as well as reloads.
+* Music owns a single cancellable transition and checks request generations in
+  delayed callbacks. Later plays/stops, including a request for the current track,
+  cancel the previous transition without retaining an awaiting coroutine.
+
+The normal codex_review section adds 37 regression checks, including callback
+snapshots/reentry, malformed nested records, full housing and injected replacement
+failures. The area fixture now uses a real objective and restores its quest/world
+flags after the interaction, so its subsequent condition checks remain isolated.
+
+The painted world correction is committed as 661fd27. Its source masters, exact
+prompts, reusable asset-repair prompt and native before/after captures are described
+in docs/art/world-consistency/review.txt. Prompts live under that docs directory.
+
+Validation after fixes
+
+The focused area + codex_review run passed 269 checks, zero skips, errors or
+warnings. The full strict animal run passed 3,392 checks across 30 sections, with 54 existing
+skips, 26 intentionally allowed messages, zero unexpected errors/warnings and zero
+failed checks in 261.1 seconds. Evidence: evidence/fixed-full.json and
+fixed-full-summary.log. This includes all 106 effective painted-art checks and
+37 new code regressions. Host load differed from the initial baseline, so the
+shorter suite duration is not evidence of a game performance improvement. The architecture splits, exported-build
+smoke test and CI Python coverage above remain recommendations; this patch does
+not claim to have completed those larger delivery/refactoring projects.

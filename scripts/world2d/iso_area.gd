@@ -1283,34 +1283,39 @@ func _make_light(m: Dictionary, pos: Vector2) -> Node2D:
 	return holder
 
 
-## quest_spot interaction: `needs=item:n,...` (`consume=1` takes them) then QuestManager.complete_manual(quest, objective) (P13;
-## update_objective as long as that does not exist yet).
+## quest_spot interaction: the quest manager owns eligibility, resource costs and completion.
 func _on_quest_spot(_player: Node, m: Dictionary) -> void:
-	var needs: Array = []
-	for part in str(m.get("needs", "")).split(",", false):
-		var kv: PackedStringArray = part.split(":", false)
-		if kv.size() == 2:
-			needs.append([kv[0], int(kv[1])])
-	var eco: Node = GameData.eco()
-	if not needs.is_empty():
-		if eco == null:
-			return
-		for n in needs:
-			if not bool(eco.call("has_item", StringName(n[0]), int(n[1]))):
-				EventBus.whisper_requested.emit("WORLD_NEEDS_ITEMS")
-				return
-		if str(m.get("consume", "0")) == "1":
-			for n2 in needs:
-				eco.call("remove_item", StringName(n2[0]), int(n2[1]))
 	var qm: Node = GameData.autoload("QuestManager")
-	var quest: StringName = StringName(str(m.get("quest", "")))
-	var objective: StringName = StringName(str(m.get("objective", "")))
+	var quest := StringName(str(m.get("quest", "")))
+	var objective := StringName(str(m.get("objective", "")))
 	if qm == null or quest == &"":
 		return
-	if qm.has_method("complete_manual"):
-		qm.call("complete_manual", quest, objective)
-	elif qm.has_method("update_objective"):
-		qm.call("update_objective", quest, objective, 1)
+	var transactional: bool = qm.has_method("can_complete_manual")
+	if transactional and not bool(qm.call("can_complete_manual", quest, objective)):
+		return
+	var needs: Dictionary = {}
+	for part in str(m.get("needs", "")).split(",", false):
+		var kv: PackedStringArray = part.split(":", false)
+		if kv.size() != 2 or not kv[1].is_valid_int() or int(kv[1]) <= 0:
+			return
+		needs[kv[0]] = int(needs.get(kv[0], 0)) + int(kv[1])
+	var eco: Node = GameData.eco()
+	if eco == null:
+		return
+	if not bool(eco.call("has_items", needs)):
+		EventBus.whisper_requested.emit("WORLD_NEEDS_ITEMS")
+		return
+	var consume: bool = str(m.get("consume", "0")) == "1"
+	if transactional:
+		qm.call("complete_manual", quest, objective, needs, consume)
+	else:
+		# Retain the documented adapter for older quest providers and recorder stubs.
+		if consume and not bool(eco.call("remove_items", needs)):
+			return
+		if qm.has_method("complete_manual"):
+			qm.call("complete_manual", quest, objective)
+		elif qm.has_method("update_objective"):
+			qm.call("update_objective", quest, objective, 1)
 
 
 # ------------------------------------------------------------------ when= conditions

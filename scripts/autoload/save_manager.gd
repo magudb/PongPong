@@ -365,8 +365,6 @@ func inspect_slot(slot: int) -> Dictionary:
 		return out
 	var primary := _read_json_file(slot_path(slot))
 	var failure := {"code": "corrupt", "detail": str(primary.get("detail", ""))}
-	if primary["state"] == "missing":
-		return out
 	if primary["state"] == "ok":
 		var checked := validate_payload(primary["data"])
 		if checked["ok"]:
@@ -384,6 +382,8 @@ func inspect_slot(slot: int) -> Dictionary:
 			var bak_checked := validate_payload(backup["data"])
 			if bak_checked["ok"]:
 				return _inspect_result(out, &"backup", bak_checked["payload"], true)
+	if primary["state"] == "missing" and (bak_path == "" or not FileAccess.file_exists(bak_path)):
+		return out
 	out["state"] = &"corrupt"
 	out["code"] = failure["code"]
 	out["detail"] = failure["detail"]
@@ -1001,14 +1001,16 @@ func _write_atomic(path: String, text: String) -> bool:
 	if write_error != OK or FileAccess.get_file_as_bytes(temp) != text.to_utf8_buffer():
 		DirAccess.remove_absolute(temp)
 		return false
-	var rename_error := DirAccess.rename_absolute(temp, path)
-	if rename_error != OK and FileAccess.file_exists(path):
-		DirAccess.remove_absolute(path)            # a platform whose rename does not replace
-		rename_error = DirAccess.rename_absolute(temp, path)
+	var rename_error := _replace_file(temp, path)
 	if rename_error != OK:
 		DirAccess.remove_absolute(temp)
 		return false
 	return true
+
+
+## Replacement failure must preserve the existing file; also a seam for disk-failure probes.
+func _replace_file(source: String, destination: String) -> Error:
+	return DirAccess.rename_absolute(source, destination)
 
 
 ## A manual save keeps the file it replaces as save_N.bak.json, but only when that file is a valid payload, so a damaged
@@ -1025,10 +1027,8 @@ func _roll_backup(slot: int) -> void:
 	if DirAccess.copy_absolute(path, temp) != OK:
 		DirAccess.remove_absolute(temp)
 		return
-	if DirAccess.rename_absolute(temp, backup) != OK:
-		DirAccess.remove_absolute(backup)
-		if DirAccess.rename_absolute(temp, backup) != OK:
-			DirAccess.remove_absolute(temp)
+	if _replace_file(temp, backup) != OK:
+		DirAccess.remove_absolute(temp)
 
 
 # ------------------------------------------------------------------ feedback

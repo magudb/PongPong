@@ -711,7 +711,12 @@ func _find_node(under: Node, prefix: String) -> Node:
 
 
 func _quest_spot(t) -> void:
-	var map: AreaMap = AreaMap.parse_text("@id _t_quest\n@projection iso\n@theme farm\n@marker q quest_spot quest=lost_cat objective=follow_pawprints prompt=WORLD_PROMPT_USE needs=wood:2 consume=1\n@ground\n#####\n#...#\n#...#\n#####\n@objects\n.....\n..q..\n.....\n.....\n")
+	var quests: Node = t.autoload("QuestManager")
+	var saved_quests: Dictionary = quests.to_dict()
+	var game: Node = t.autoload("GameManager")
+	var saved_flags: Dictionary = game.world_flags.duplicate(true)
+	quests.accept_quest(&"lost_cat")
+	var map: AreaMap = AreaMap.parse_text("@id _t_quest\n@projection iso\n@theme farm\n@marker q quest_spot quest=lost_cat objective=search_forest prompt=WORLD_PROMPT_USE needs=wood:2 consume=1\n@ground\n#####\n#...#\n#...#\n#####\n@objects\n.....\n..q..\n.....\n.....\n")
 	var holder := Node2D.new()
 	_t.root.add_child(holder)
 	var a := IsoArea.new()
@@ -744,8 +749,10 @@ func _quest_spot(t) -> void:
 	var calls_legacy: Array = _with_quest_manager(LegacyQuestManager.new(), interact)
 	while eco.count_item(&"wood") > 0:
 		eco.remove_item(&"wood", 1)
-	_t.check("quest_spot_reports_the_objective", calls_short.is_empty() and calls_modern == [["complete_manual", &"lost_cat", &"follow_pawprints"]] and wood_left == 0 and calls_legacy == [["update_objective", &"lost_cat", &"follow_pawprints", 1]],
-		"short of wood: nothing reported %s; with wood: complete_manual(lost_cat, follow_pawprints) once %s, the 2 wood consumed (%d left); the legacy QuestManager gets update_objective(.., 1) %s" % [calls_short, calls_modern, wood_left, calls_legacy])
+	_t.check("quest_spot_reports_the_objective", calls_short.is_empty() and calls_modern == [["complete_manual", &"lost_cat", &"search_forest"]] and wood_left == 0 and calls_legacy == [["update_objective", &"lost_cat", &"search_forest", 1]],
+		"short of wood: nothing reported %s; with wood: complete_manual(lost_cat, search_forest) once %s, the 2 wood consumed (%d left); the legacy QuestManager gets update_objective(.., 1) %s" % [calls_short, calls_modern, wood_left, calls_legacy])
+	quests.from_dict(saved_quests)
+	game.world_flags = saved_flags
 	holder.queue_free()
 	await _t.frames(1)
 

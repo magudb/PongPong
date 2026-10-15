@@ -281,8 +281,9 @@ func adopt_animal(item_id: StringName) -> bool:
 	if species == &"":
 		return false
 
-	# Check for space
-	if not _has_space_for(species):
+	# Select an actual completed building before consuming the adoption item.
+	var building_id := _find_building_with_space(species)
+	if building_id == &"":
 		EventBus.notification_posted.emit(
 			tr("NOTIF_NO_SPACE_TITLE"),
 			tr("NOTIF_NO_SPACE_MSG"),
@@ -290,13 +291,8 @@ func adopt_animal(item_id: StringName) -> bool:
 		)
 		return false
 
-	# Remove item
-	if not EconomyManager.remove_item(item_id, 1):
-		return false
-
-	_animal_counter += 1
 	var animal := AnimalData.new()
-	animal.id = StringName("animal_%d" % _animal_counter)
+	animal.id = StringName("animal_%d" % (_animal_counter + 1))
 	animal.species = species
 	animal.name = _random_animal_name()
 	animal.age_days = 0
@@ -306,12 +302,13 @@ func adopt_animal(item_id: StringName) -> bool:
 	animal.last_product_day = GameManager.total_day()
 
 	# Place in building
-	var building_id := _find_building_with_space(species)
 	animal.building_id = building_id
-	if building_id != &"":
+	var commit := func() -> void:
+		_animal_counter += 1
 		(buildings[building_id] as BuildingData).animals_inside.append(animal.id)
-
-	animals[animal.id] = animal
+		animals[animal.id] = animal
+	if not EconomyManager.consume_backpack_items({item_id: 1}, commit):
+		return false
 	animal_added.emit(animal.id, species)
 
 	EventBus.notification_posted.emit(
@@ -424,10 +421,15 @@ func collect_product(animal_id: StringName) -> int:
 	if animal.happiness >= 80.0:
 		amount += 1
 
-	if not EconomyManager.add_item(product_id, amount):
-		return 0
+	# Inventory listeners can save or collect again synchronously during add_item.
+	var owed := animal.products_ready
+	var previous_day := animal.last_product_day
 	animal.products_ready = 0
 	animal.last_product_day = GameManager.total_day()
+	if not EconomyManager.add_item(product_id, amount):
+		animal.products_ready = owed
+		animal.last_product_day = previous_day
+		return 0
 
 	animal_product_collected.emit(animal_id, product_id, amount)
 
@@ -586,15 +588,7 @@ func _item_to_species(item_id: StringName) -> StringName:
 
 
 func _has_space_for(species: StringName) -> bool:
-	var spec: Dictionary = SPECIES_DATA[str(species)]
-	var needed_building: String = spec["building"]
-	var capacity := get_building_capacity(StringName(needed_building))
-	var current := 0
-	for aid in animals:
-		var a: AnimalData = animals[aid]
-		if SPECIES_DATA[str(a.species)]["building"] == needed_building:
-			current += 1
-	return current < capacity or capacity == 0
+	return _find_building_with_space(species) != &""
 
 
 func _find_building_with_space(species: StringName) -> StringName:

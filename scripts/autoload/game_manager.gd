@@ -101,10 +101,10 @@ func config_value(path: String, default_value: Variant = null) -> Variant:
 		return _config_cache[path]
 	var lua := get_node_or_null("/root/LuaRuntime")
 	if lua != null and lua.has_method("get_config"):
-		var v: Variant = lua.get_config(path, default_value)
+		var v: Variant = lua.get_config(path, null)
 		if v != null:
 			_config_cache[path] = v
-		return v
+			return v
 	return default_value
 
 

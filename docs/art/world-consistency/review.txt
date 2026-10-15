@@ -15,8 +15,9 @@ Generated with the built-in imagegen tool. Saved masters:
  tools/art/drawn/sources/city_details_painted.png
  tools/art/drawn/sources/forest_painted.png
 Exact prompts and reference roles:
- tools/art/drawn/world-prompts.json
- tools/art/drawn/world-detail-prompt.txt
+ docs/art/world-consistency/prompts.json
+ docs/art/world-consistency/detail-prompt.txt
+Reusable correction template: docs/art/world-consistency/asset-repair-prompt.txt.
 Deterministic native export: tools/art/drawn/pack.py --only=world.
 
 Runtime metadata follows the effective artwork, including derived hut window
@@ -38,4 +39,5 @@ Validation: 548 targeted assertions across area, art_city, art_environment,
 art_world_style, city_levels, city_map and maps_iso passed, with 19 existing
 skips. Two warnings from an initial test-only raw-image loader were corrected;
 all 106 effective-art checks then passed with zero errors or warnings
-(style-check.json). Final full-suite results are recorded with the code fixes.
+(style-check.json). The final strict suite passed 3,392 checks in 30 sections (54 existing skips,
+zero unexpected errors/warnings). Full results: docs/reviews/evidence/fixed-full.json.
