@@ -71,7 +71,7 @@ func _make(nodes: Dictionary, vis_path: PackedVector2Array, rail_path: PackedVec
 	outline.name = "%s_Outline" % label
 	outline.points = vis_path
 	outline.width = width + OUTLINE
-	outline.default_color = OUTLINE_COLOR
+	outline.default_color = art.get("outline_color", OUTLINE_COLOR)
 	outline.z_index = rank - 5
 	outline.begin_cap_mode = Line2D.LINE_CAP_NONE
 	outline.end_cap_mode = Line2D.LINE_CAP_NONE
@@ -126,7 +126,7 @@ func _make(nodes: Dictionary, vis_path: PackedVector2Array, rail_path: PackedVec
 		var rope := Line2D.new()
 		rope.points = pts
 		rope.width = ROPE_WIDTH
-		rope.default_color = ROPE_COLOR
+		rope.default_color = art.get("rope_color", ROPE_COLOR)
 		rope.joint_mode = Line2D.LINE_JOINT_ROUND
 		host.add_child(rope)
 		ropes.append(rope)

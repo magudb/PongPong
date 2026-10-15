@@ -40,6 +40,7 @@ var wing_count: int = 0
 var keepout_shapes: int = 0
 var body: StaticBody2D
 var walls_shape: ConcavePolygonShape2D
+var rope_color: Color = ROPE_COLOR
 
 
 ## nodes = {floors: Node2D, colliders: Node2D}; art = {"post": Texture2D}
@@ -51,6 +52,7 @@ static func build(nodes: Dictionary, lv: Level, registry: LevelRegistry, art: Di
 
 
 func _make(nodes: Dictionary, registry: LevelRegistry, art: Dictionary) -> void:
+	rope_color = art.get("rope_color", ROPE_COLOR)
 	var floors: Node2D = nodes["floors"]
 	var colliders: Node2D = nodes["colliders"]
 	var scale: float = registry.scale
@@ -205,7 +207,7 @@ func _add_rope(points: PackedVector2Array, in_front: bool) -> void:
 	var rope := Line2D.new()
 	rope.points = points
 	rope.width = ROPE_WIDTH
-	rope.default_color = ROPE_COLOR
+	rope.default_color = rope_color
 	rope.joint_mode = Line2D.LINE_JOINT_ROUND
 	(front if in_front else back).add_child(rope)
 	ropes.append(rope)

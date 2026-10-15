@@ -1,0 +1,2166 @@
+{
+  "_source": "Painted city/forest masters; world-prompts.json; geometry and sorting from the original manifests.",
+  "bush_eyes_a": {
+    "file": "bush_eyes_a.webp",
+    "size": [
+      297,
+      260
+    ],
+    "pivot": [
+      132,
+      155
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "palette": "bush",
+    "grade": "4d5e85",
+    "eyes": {
+      "prop": "eyes_glow",
+      "offset_from_pivot": [
+        0,
+        -17
+      ],
+      "separation_px": 47
+    },
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "bush_eyes_b": {
+    "file": "bush_eyes_b.webp",
+    "size": [
+      293,
+      249
+    ],
+    "pivot": [
+      130,
+      145
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "palette": "bush",
+    "grade": "4d5e85",
+    "eyes": {
+      "prop": "eyes_glow",
+      "offset_from_pivot": [
+        0,
+        -16
+      ],
+      "separation_px": 44
+    },
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "cave_ring": {
+    "file": "cave_ring.webp",
+    "size": [
+      543,
+      390
+    ],
+    "pivot": [
+      272,
+      201
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "palette": "cave_ring",
+    "grade": "4d5e85",
+    "decal": true,
+    "ring": {
+      "outer_px": [
+        528,
+        370
+      ],
+      "hole_px": [
+        300,
+        200
+      ]
+    },
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "cave_ring_up": {
+    "file": "cave_ring_up.webp",
+    "size": [
+      543,
+      390
+    ],
+    "pivot": [
+      272,
+      201
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "palette": "cave_ring",
+    "grade": "4d5e85",
+    "decal": true,
+    "ring": {
+      "outer_px": [
+        528,
+        370
+      ],
+      "hole_px": [
+        300,
+        200
+      ]
+    },
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "cave_stone_a": {
+    "file": "cave_stone_a.webp",
+    "size": [
+      113,
+      103
+    ],
+    "pivot": [
+      48,
+      57
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "palette": "cave_stone",
+    "grade": "4d5e85",
+    "clamped": true,
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "cave_stone_b": {
+    "file": "cave_stone_b.webp",
+    "size": [
+      127,
+      105
+    ],
+    "pivot": [
+      55,
+      59
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "palette": "cave_stone",
+    "grade": "4d5e85",
+    "clamped": true,
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "cave_stone_c": {
+    "file": "cave_stone_c.webp",
+    "size": [
+      127,
+      106
+    ],
+    "pivot": [
+      55,
+      60
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "palette": "cave_stone",
+    "grade": "4d5e85",
+    "clamped": true,
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "cave_stone_d": {
+    "file": "cave_stone_d.webp",
+    "size": [
+      115,
+      106
+    ],
+    "pivot": [
+      49,
+      60
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "palette": "cave_stone",
+    "grade": "4d5e85",
+    "clamped": true,
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "cave_stone_e": {
+    "file": "cave_stone_e.webp",
+    "size": [
+      125,
+      105
+    ],
+    "pivot": [
+      54,
+      59
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "palette": "cave_stone",
+    "grade": "4d5e85",
+    "clamped": true,
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "crown_l_a": {
+    "file": "crown_l_a.webp",
+    "size": [
+      671,
+      758
+    ],
+    "pivot": [
+      311,
+      535
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "disc": {
+      "radius": 300,
+      "center_above_pivot": 243,
+      "shadow_offset_ground": [
+        48,
+        60
+      ],
+      "shadow_offset_screen": [
+        48,
+        35
+      ],
+      "shadow_squash": 0.588
+    },
+    "palette": "crown",
+    "grade": "4d5e85",
+    "ground_collider_r": 225,
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "crown_l_b": {
+    "file": "crown_l_b.webp",
+    "size": [
+      674,
+      756
+    ],
+    "pivot": [
+      314,
+      533
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "disc": {
+      "radius": 300,
+      "center_above_pivot": 243,
+      "shadow_offset_ground": [
+        48,
+        60
+      ],
+      "shadow_offset_screen": [
+        48,
+        35
+      ],
+      "shadow_squash": 0.588
+    },
+    "palette": "crown",
+    "grade": "4d5e85",
+    "ground_collider_r": 225,
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "crown_m_a": {
+    "file": "crown_m_a.webp",
+    "size": [
+      513,
+      589
+    ],
+    "pivot": [
+      223,
+      407
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "disc": {
+      "radius": 230,
+      "center_above_pivot": 186,
+      "shadow_offset_ground": [
+        48,
+        60
+      ],
+      "shadow_offset_screen": [
+        48,
+        35
+      ],
+      "shadow_squash": 0.588
+    },
+    "palette": "crown",
+    "grade": "4d5e85",
+    "ground_collider_r": 172,
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "crown_m_a_solid": {
+    "file": "crown_m_a_solid.webp",
+    "size": [
+      513,
+      589
+    ],
+    "pivot": [
+      223,
+      407
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "disc": {
+      "radius": 230,
+      "center_above_pivot": 186,
+      "shadow_offset_ground": [
+        48,
+        60
+      ],
+      "shadow_offset_screen": [
+        48,
+        35
+      ],
+      "shadow_squash": 0.588
+    },
+    "palette": "crown",
+    "grade": "4d5e85",
+    "ground_collider_r": 172,
+    "illustration": "tools/art/drawn/sources/forest_painted.png",
+    "visual_alias_of": "crown_m_a"
+  },
+  "crown_m_b": {
+    "file": "crown_m_b.webp",
+    "size": [
+      525,
+      593
+    ],
+    "pivot": [
+      235,
+      411
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "disc": {
+      "radius": 230,
+      "center_above_pivot": 186,
+      "shadow_offset_ground": [
+        48,
+        60
+      ],
+      "shadow_offset_screen": [
+        48,
+        35
+      ],
+      "shadow_squash": 0.588
+    },
+    "palette": "crown",
+    "grade": "4d5e85",
+    "ground_collider_r": 172,
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "crown_m_b_solid": {
+    "file": "crown_m_b_solid.webp",
+    "size": [
+      525,
+      593
+    ],
+    "pivot": [
+      235,
+      411
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "disc": {
+      "radius": 230,
+      "center_above_pivot": 186,
+      "shadow_offset_ground": [
+        48,
+        60
+      ],
+      "shadow_offset_screen": [
+        48,
+        35
+      ],
+      "shadow_squash": 0.588
+    },
+    "palette": "crown",
+    "grade": "4d5e85",
+    "ground_collider_r": 172,
+    "illustration": "tools/art/drawn/sources/forest_painted.png",
+    "visual_alias_of": "crown_m_b"
+  },
+  "crown_s_a": {
+    "file": "crown_s_a.webp",
+    "size": [
+      399,
+      447
+    ],
+    "pivot": [
+      169,
+      300
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "disc": {
+      "radius": 170,
+      "center_above_pivot": 138,
+      "shadow_offset_ground": [
+        48,
+        60
+      ],
+      "shadow_offset_screen": [
+        48,
+        35
+      ],
+      "shadow_squash": 0.588
+    },
+    "palette": "crown",
+    "grade": "4d5e85",
+    "ground_collider_r": 128,
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "crown_s_a_solid": {
+    "file": "crown_s_a_solid.webp",
+    "size": [
+      399,
+      447
+    ],
+    "pivot": [
+      169,
+      300
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "disc": {
+      "radius": 170,
+      "center_above_pivot": 138,
+      "shadow_offset_ground": [
+        48,
+        60
+      ],
+      "shadow_offset_screen": [
+        48,
+        35
+      ],
+      "shadow_squash": 0.588
+    },
+    "palette": "crown",
+    "grade": "4d5e85",
+    "ground_collider_r": 128,
+    "illustration": "tools/art/drawn/sources/forest_painted.png",
+    "visual_alias_of": "crown_s_a"
+  },
+  "crown_s_b": {
+    "file": "crown_s_b.webp",
+    "size": [
+      411,
+      447
+    ],
+    "pivot": [
+      181,
+      300
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "disc": {
+      "radius": 170,
+      "center_above_pivot": 138,
+      "shadow_offset_ground": [
+        48,
+        60
+      ],
+      "shadow_offset_screen": [
+        48,
+        35
+      ],
+      "shadow_squash": 0.588
+    },
+    "palette": "crown",
+    "grade": "4d5e85",
+    "ground_collider_r": 128,
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "crown_s_b_solid": {
+    "file": "crown_s_b_solid.webp",
+    "size": [
+      411,
+      447
+    ],
+    "pivot": [
+      181,
+      300
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "disc": {
+      "radius": 170,
+      "center_above_pivot": 138,
+      "shadow_offset_ground": [
+        48,
+        60
+      ],
+      "shadow_offset_screen": [
+        48,
+        35
+      ],
+      "shadow_squash": 0.588
+    },
+    "palette": "crown",
+    "grade": "4d5e85",
+    "ground_collider_r": 128,
+    "illustration": "tools/art/drawn/sources/forest_painted.png",
+    "visual_alias_of": "crown_s_b"
+  },
+  "empty_bush": {
+    "file": "empty_bush.webp",
+    "size": [
+      270,
+      233
+    ],
+    "pivot": [
+      114,
+      133
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "palette": "bush",
+    "grade": "4d5e85",
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "pond_lily": {
+    "file": "pond_lily.webp",
+    "size": [
+      66,
+      41
+    ],
+    "pivot": [
+      33,
+      22
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "palette": "pond_lily",
+    "grade": "4d5e85",
+    "clamped": true,
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "rune_glow": {
+    "file": "rune_glow.webp",
+    "size": [
+      138,
+      198
+    ],
+    "pivot": [
+      59,
+      131
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "blend": "add",
+    "kind": "fx",
+    "colour": "6fd6c4",
+    "glyph": true,
+    "proj": "iso",
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "runestone_active": {
+    "file": "runestone_active.webp",
+    "size": [
+      138,
+      198
+    ],
+    "pivot": [
+      59,
+      131
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "palette": "runestone",
+    "grade": "4d5e85",
+    "clamped": true,
+    "glyph": "6fd6c4",
+    "state": "active",
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "runestone_dormant": {
+    "file": "runestone_dormant.webp",
+    "size": [
+      138,
+      198
+    ],
+    "pivot": [
+      59,
+      131
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "palette": "runestone",
+    "grade": "4d5e85",
+    "clamped": true,
+    "glyph": "6fd6c4",
+    "state": "dormant",
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "glow_mushroom_cluster": {
+    "pivot": [
+      75,
+      68
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "ortho",
+    "file": "glow_mushroom_cluster.webp",
+    "size": [
+      150,
+      98
+    ],
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "cave_stone": {
+    "file": "cave_stone_a.webp",
+    "size": [
+      113,
+      103
+    ],
+    "pivot": [
+      48,
+      57
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "proj": "iso",
+    "palette": "cave_stone",
+    "grade": "4d5e85",
+    "clamped": true,
+    "illustration": "tools/art/drawn/sources/forest_painted.png",
+    "visual_alias_of": "cave_stone_a"
+  },
+  "bat_house_hanging": {
+    "file": "bat_house_hanging.webp",
+    "size": [
+      348,
+      574
+    ],
+    "pivot": [
+      174.0,
+      531.0
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "kind": "bat_house",
+    "note": "drum with the door on top, cone below; pivot = the cone tip (the `tip_y` of the data); hang bat_hang under it",
+    "fit": [
+      1.814,
+      2.4
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "bath_tub_back": {
+    "file": "bath_tub_back.webp",
+    "size": [
+      276,
+      120
+    ],
+    "pivot": [
+      138.0,
+      109.9
+    ],
+    "footprint": [
+      2,
+      2
+    ],
+    "kind": "tub",
+    "half": "back",
+    "scale": 1.0299,
+    "content_h": 109,
+    "note": "both halves share the pivot = the water-surface centre of the tub; Sofus is drawn BETWEEN them (back, Sofus, front)",
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "bath_tub_front": {
+    "file": "bath_tub_front.webp",
+    "size": [
+      276,
+      120
+    ],
+    "pivot": [
+      138.0,
+      23.9
+    ],
+    "footprint": [
+      2,
+      2
+    ],
+    "kind": "tub",
+    "half": "front",
+    "scale": 1.0299,
+    "content_h": 120,
+    "note": "both halves share the pivot = the water-surface centre of the tub; Sofus is drawn BETWEEN them (back, Sofus, front)",
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "bridge_deck_tile_w28": {
+    "file": "bridge_deck_tile_w28.webp",
+    "size": [
+      85,
+      128
+    ],
+    "pivot": [
+      42.5,
+      64.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "bridge_deck",
+    "tile": "x",
+    "note": "Line2D tile: X runs along the bridge, Y across; planks are vertical bars; periodic in x",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "bridge_deck_tile_w43": {
+    "file": "bridge_deck_tile_w43.webp",
+    "size": [
+      129,
+      128
+    ],
+    "pivot": [
+      64.5,
+      64.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "bridge_deck",
+    "tile": "x",
+    "note": "Line2D tile: X runs along the bridge, Y across; planks are vertical bars; periodic in x",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "bridge_post": {
+    "file": "bridge_post.webp",
+    "size": [
+      30,
+      84
+    ],
+    "pivot": [
+      15.0,
+      82.0
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "kind": "post",
+    "note": "pivot = the foot; the rail rope ties at 72 px (24 sketch px) above it",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "canopy_top_strip": {
+    "file": "canopy_top_strip.webp",
+    "size": [
+      2048,
+      320
+    ],
+    "pivot": [
+      1024.0,
+      0.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "canopy",
+    "note": "screen-space frame for CanvasLayer 3: periodic in x, 2048 wide (draw at viewport_width / 2048)",
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "fire_pit": {
+    "file": "fire_pit.webp",
+    "size": [
+      216,
+      168
+    ],
+    "pivot": [
+      108.0,
+      108.0
+    ],
+    "footprint": [
+      2,
+      2
+    ],
+    "kind": "fire",
+    "note": "stone ring + logs; draw fire_flame (additive) with the same pivot",
+    "fit": [
+      0.953,
+      1.33
+    ],
+    "illustration": "tools/art/drawn/sources/city_details_painted.png"
+  },
+  "foliage_front_a": {
+    "file": "foliage_front_a.webp",
+    "size": [
+      1020,
+      720
+    ],
+    "pivot": [
+      510.0,
+      360.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "foliage",
+    "alpha_baked": 0.5,
+    "note": "five leaf circles at alpha .5 baked; draw at z 155 (trunk F) / 165 (trunk G)",
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "foliage_front_b": {
+    "file": "foliage_front_b.webp",
+    "size": [
+      1020,
+      720
+    ],
+    "pivot": [
+      510.0,
+      360.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "foliage",
+    "alpha_baked": 0.5,
+    "note": "five leaf circles at alpha .5 baked; draw at z 155 (trunk F) / 165 (trunk G)",
+    "illustration": "tools/art/drawn/sources/forest_painted.png"
+  },
+  "hut_l_dark": {
+    "file": "hut_l_dark.webp",
+    "size": [
+      459,
+      384
+    ],
+    "pivot": [
+      229.0,
+      251.0
+    ],
+    "footprint": [
+      4,
+      4
+    ],
+    "kind": "hut",
+    "fit": [
+      0.985,
+      0.865
+    ],
+    "wall_r": 58.8,
+    "wall_r_px": 180.8,
+    "roof_fill": "b88a3e",
+    "apex": [
+      229.5,
+      56
+    ],
+    "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+    "night": "hut_l_dark_night",
+    "night_offset": [
+      65,
+      216
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "hut_l_dark_night": {
+    "file": "hut_l_dark_night.webp",
+    "size": [
+      335,
+      163
+    ],
+    "pivot": [
+      164.0,
+      35.0
+    ],
+    "footprint": [
+      4,
+      4
+    ],
+    "blend": "add",
+    "kind": "hut_night",
+    "night_of": "hut_l_dark",
+    "night_offset": [
+      65,
+      216
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "hut_l_moss": {
+    "file": "hut_l_moss.webp",
+    "size": [
+      459,
+      384
+    ],
+    "pivot": [
+      229.0,
+      251.0
+    ],
+    "footprint": [
+      4,
+      4
+    ],
+    "kind": "hut",
+    "fit": [
+      0.985,
+      0.865
+    ],
+    "wall_r": 58.8,
+    "wall_r_px": 180.8,
+    "roof_fill": "8fb85a",
+    "apex": [
+      229.5,
+      29
+    ],
+    "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+    "night": "hut_l_moss_night",
+    "night_offset": [
+      59,
+      216
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "hut_l_moss_night": {
+    "file": "hut_l_moss_night.webp",
+    "size": [
+      343,
+      162
+    ],
+    "pivot": [
+      170.0,
+      35.0
+    ],
+    "footprint": [
+      4,
+      4
+    ],
+    "blend": "add",
+    "kind": "hut_night",
+    "night_of": "hut_l_moss",
+    "night_offset": [
+      59,
+      216
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "hut_l_straw": {
+    "file": "hut_l_straw.webp",
+    "size": [
+      459,
+      384
+    ],
+    "pivot": [
+      229.0,
+      251.0
+    ],
+    "footprint": [
+      4,
+      4
+    ],
+    "kind": "hut",
+    "fit": [
+      0.985,
+      0.865
+    ],
+    "wall_r": 58.8,
+    "wall_r_px": 180.8,
+    "roof_fill": "c9a052",
+    "apex": [
+      229.5,
+      20
+    ],
+    "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+    "night": "hut_l_straw_night",
+    "night_offset": [
+      59,
+      216
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "hut_l_straw_night": {
+    "file": "hut_l_straw_night.webp",
+    "size": [
+      342,
+      163
+    ],
+    "pivot": [
+      170.0,
+      35.0
+    ],
+    "footprint": [
+      4,
+      4
+    ],
+    "blend": "add",
+    "kind": "hut_night",
+    "night_of": "hut_l_straw",
+    "night_offset": [
+      59,
+      216
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "hut_m_dark": {
+    "file": "hut_m_dark.webp",
+    "size": [
+      384,
+      375
+    ],
+    "pivot": [
+      192.0,
+      260.0
+    ],
+    "footprint": [
+      4,
+      4
+    ],
+    "kind": "hut",
+    "fit": [
+      0.981,
+      0.875
+    ],
+    "wall_r": 49.0,
+    "wall_r_px": 150.4,
+    "roof_fill": "b88a3e",
+    "apex": [
+      192.0,
+      47
+    ],
+    "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+    "night": "hut_m_dark_night",
+    "night_offset": [
+      29,
+      212
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "hut_m_dark_night": {
+    "file": "hut_m_dark_night.webp",
+    "size": [
+      328,
+      158
+    ],
+    "pivot": [
+      163.0,
+      48.0
+    ],
+    "footprint": [
+      4,
+      4
+    ],
+    "blend": "add",
+    "kind": "hut_night",
+    "night_of": "hut_m_dark",
+    "night_offset": [
+      29,
+      212
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "hut_m_moss": {
+    "file": "hut_m_moss.webp",
+    "size": [
+      384,
+      375
+    ],
+    "pivot": [
+      192.0,
+      260.0
+    ],
+    "footprint": [
+      4,
+      4
+    ],
+    "kind": "hut",
+    "fit": [
+      0.981,
+      0.875
+    ],
+    "wall_r": 49.0,
+    "wall_r_px": 150.4,
+    "roof_fill": "8fb85a",
+    "apex": [
+      192.0,
+      20
+    ],
+    "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+    "night": "hut_m_moss_night",
+    "night_offset": [
+      21,
+      211
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "hut_m_moss_night": {
+    "file": "hut_m_moss_night.webp",
+    "size": [
+      343,
+      158
+    ],
+    "pivot": [
+      171.0,
+      49.0
+    ],
+    "footprint": [
+      4,
+      4
+    ],
+    "blend": "add",
+    "kind": "hut_night",
+    "night_of": "hut_m_moss",
+    "night_offset": [
+      21,
+      211
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "hut_m_straw": {
+    "file": "hut_m_straw.webp",
+    "size": [
+      384,
+      375
+    ],
+    "pivot": [
+      192.0,
+      260.0
+    ],
+    "footprint": [
+      4,
+      4
+    ],
+    "kind": "hut",
+    "fit": [
+      0.981,
+      0.875
+    ],
+    "wall_r": 49.0,
+    "wall_r_px": 150.4,
+    "roof_fill": "c9a052",
+    "apex": [
+      192.0,
+      11
+    ],
+    "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+    "night": "hut_m_straw_night",
+    "night_offset": [
+      26,
+      211
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "hut_m_straw_night": {
+    "file": "hut_m_straw_night.webp",
+    "size": [
+      337,
+      159
+    ],
+    "pivot": [
+      166.0,
+      49.0
+    ],
+    "footprint": [
+      4,
+      4
+    ],
+    "blend": "add",
+    "kind": "hut_night",
+    "night_of": "hut_m_straw",
+    "night_offset": [
+      26,
+      211
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "hut_raadhus": {
+    "file": "hut_raadhus.webp",
+    "size": [
+      498,
+      481
+    ],
+    "pivot": [
+      249.0,
+      338.0
+    ],
+    "footprint": [
+      5,
+      5
+    ],
+    "kind": "hut",
+    "fit": [
+      0.99,
+      0.898
+    ],
+    "wall_r": 63.7,
+    "wall_r_px": 196.0,
+    "roof_fill": "9b86d6",
+    "apex": [
+      249.0,
+      89
+    ],
+    "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+    "night": "hut_raadhus_night",
+    "night_offset": [
+      74,
+      272
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "hut_raadhus_night": {
+    "file": "hut_raadhus_night.webp",
+    "size": [
+      348,
+      205
+    ],
+    "pivot": [
+      175.0,
+      66.0
+    ],
+    "footprint": [
+      5,
+      5
+    ],
+    "blend": "add",
+    "kind": "hut_night",
+    "night_of": "hut_raadhus",
+    "night_offset": [
+      74,
+      272
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "hut_s_dark": {
+    "file": "hut_s_dark.webp",
+    "size": [
+      288,
+      285
+    ],
+    "pivot": [
+      144.0,
+      192.0
+    ],
+    "footprint": [
+      3,
+      3
+    ],
+    "kind": "hut",
+    "fit": [
+      0.976,
+      0.833
+    ],
+    "wall_r": 36.7,
+    "wall_r_px": 112.0,
+    "roof_fill": "b88a3e",
+    "apex": [
+      144.0,
+      19
+    ],
+    "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+    "night": "hut_s_dark_night",
+    "night_offset": [
+      17,
+      160
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "hut_s_dark_night": {
+    "file": "hut_s_dark_night.webp",
+    "size": [
+      260,
+      121
+    ],
+    "pivot": [
+      127.0,
+      32.0
+    ],
+    "footprint": [
+      3,
+      3
+    ],
+    "blend": "add",
+    "kind": "hut_night",
+    "night_of": "hut_s_dark",
+    "night_offset": [
+      17,
+      160
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "hut_s_moss": {
+    "file": "hut_s_moss.webp",
+    "size": [
+      288,
+      285
+    ],
+    "pivot": [
+      144.0,
+      192.0
+    ],
+    "footprint": [
+      3,
+      3
+    ],
+    "kind": "hut",
+    "fit": [
+      0.976,
+      0.833
+    ],
+    "wall_r": 36.7,
+    "wall_r_px": 112.0,
+    "roof_fill": "8fb85a",
+    "apex": [
+      144.0,
+      7
+    ],
+    "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+    "night": "hut_s_moss_night",
+    "night_offset": [
+      10,
+      159
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "hut_s_moss_night": {
+    "file": "hut_s_moss_night.webp",
+    "size": [
+      270,
+      121
+    ],
+    "pivot": [
+      134.0,
+      33.0
+    ],
+    "footprint": [
+      3,
+      3
+    ],
+    "blend": "add",
+    "kind": "hut_night",
+    "night_of": "hut_s_moss",
+    "night_offset": [
+      10,
+      159
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "hut_s_straw": {
+    "file": "hut_s_straw.webp",
+    "size": [
+      288,
+      285
+    ],
+    "pivot": [
+      144.0,
+      192.0
+    ],
+    "footprint": [
+      3,
+      3
+    ],
+    "kind": "hut",
+    "fit": [
+      0.976,
+      0.833
+    ],
+    "wall_r": 36.7,
+    "wall_r_px": 112.0,
+    "roof_fill": "c9a052",
+    "apex": [
+      144.0,
+      7
+    ],
+    "note": "wall + roof + door as one sprite; pivot = the wall-circle centre on the floor; draw the pennant at `apex`",
+    "night": "hut_s_straw_night",
+    "night_offset": [
+      17,
+      159
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "hut_s_straw_night": {
+    "file": "hut_s_straw_night.webp",
+    "size": [
+      256,
+      122
+    ],
+    "pivot": [
+      127.0,
+      33.0
+    ],
+    "footprint": [
+      3,
+      3
+    ],
+    "blend": "add",
+    "kind": "hut_night",
+    "night_of": "hut_s_straw",
+    "night_offset": [
+      17,
+      159
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "ladder_tile": {
+    "file": "ladder_tile.webp",
+    "size": [
+      60,
+      112
+    ],
+    "pivot": [
+      30.0,
+      56.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "ladder",
+    "tile": "y",
+    "rungs_per_tile": 2,
+    "note": "two rails and two rungs (56 px pitch); periodic in y",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "lamp_door": {
+    "file": "lamp_door.webp",
+    "size": [
+      54,
+      54
+    ],
+    "pivot": [
+      30.2,
+      31.3
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "kind": "lantern",
+    "note": "pivot = the lamp centre; halo = fx/glow_soft",
+    "illustration": "tools/art/drawn/sources/city_details_painted.png"
+  },
+  "lantern_hang": {
+    "file": "lantern_hang.webp",
+    "size": [
+      54,
+      96
+    ],
+    "pivot": [
+      27.0,
+      57.6
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "kind": "lantern",
+    "note": "pivot = the centre of the glass body (the sketch point of a hanging lantern); halo = fx/glow_soft",
+    "illustration": "tools/art/drawn/sources/city_details_painted.png"
+  },
+  "lift_basket": {
+    "file": "lift_basket.webp",
+    "size": [
+      145,
+      90
+    ],
+    "pivot": [
+      72.5,
+      88.0
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "kind": "lift",
+    "note": "pivot = the bottom centre (the basket point of the data); the rope Line2D runs down its centre line",
+    "illustration": "tools/art/drawn/sources/city_details_painted.png"
+  },
+  "lift_pulley": {
+    "file": "lift_pulley.webp",
+    "size": [
+      72,
+      72
+    ],
+    "pivot": [
+      36.0,
+      40.3
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "kind": "lift",
+    "note": "pivot = the wheel centre",
+    "illustration": "tools/art/drawn/sources/city_details_painted.png"
+  },
+  "log_stack": {
+    "file": "log_stack.webp",
+    "size": [
+      240,
+      150
+    ],
+    "pivot": [
+      120.0,
+      97.0
+    ],
+    "footprint": [
+      2,
+      1
+    ],
+    "kind": "timber",
+    "note": "Brumme's timber stack; the cut ends face screen right-down",
+    "fit": [
+      0.832,
+      0.797
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "market_stall_traetoppen": {
+    "file": "market_stall_traetoppen.webp",
+    "size": [
+      252,
+      239
+    ],
+    "pivot": [
+      128.0,
+      168.0
+    ],
+    "footprint": [
+      2,
+      1
+    ],
+    "kind": "stall",
+    "note": "P22 market_stall recoloured: striped awning e3c372 / cream; pivot = the ground centre",
+    "fit": [
+      1.295,
+      0.572
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "notice_board": {
+    "file": "notice_board.webp",
+    "size": [
+      168,
+      216
+    ],
+    "pivot": [
+      84.0,
+      209.0
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "kind": "board",
+    "note": "the Raadhus notice board facing the viewer",
+    "fit": [
+      1.037,
+      1.453
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "owl_shelf": {
+    "file": "owl_shelf.webp",
+    "size": [
+      204,
+      66
+    ],
+    "pivot": [
+      102.0,
+      26.4
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "decal",
+    "note": "the ledge under the hole; pivot = the top-surface centre",
+    "illustration": "tools/art/drawn/sources/city_details_painted.png"
+  },
+  "planter_box": {
+    "file": "planter_box.webp",
+    "size": [
+      168,
+      150
+    ],
+    "pivot": [
+      84.0,
+      100.0
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "kind": "planter",
+    "variant": "herb",
+    "note": "raised bed; the kind (herb / berry) is the node kind of the kitchen gardens",
+    "fit": [
+      0.919,
+      1.301
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "planter_box_berry": {
+    "file": "planter_box_berry.webp",
+    "size": [
+      168,
+      150
+    ],
+    "pivot": [
+      84.0,
+      100.0
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "kind": "planter",
+    "variant": "berry",
+    "note": "raised bed; the kind (herb / berry) is the node kind of the kitchen gardens",
+    "fit": [
+      0.919,
+      1.094
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "platform_disc_171": {
+    "file": "platform_disc_171.webp",
+    "size": [
+      1029,
+      642
+    ],
+    "pivot": [
+      514.5,
+      298.1
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "platform_disc",
+    "rx": 171.5,
+    "ry": 99.0,
+    "rim": 16.0,
+    "uses": 1,
+    "note": "pivot = the centre of the top ellipse; draw at z = rank - 4 in a non-sorted node; no trunk hole",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "platform_disc_184": {
+    "file": "platform_disc_184.webp",
+    "size": [
+      1102,
+      684
+    ],
+    "pivot": [
+      551.0,
+      319.3
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "platform_disc",
+    "rx": 183.7,
+    "ry": 106.1,
+    "rim": 16.0,
+    "uses": 4,
+    "note": "pivot = the centre of the top ellipse; draw at z = rank - 4 in a non-sorted node; no trunk hole",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "platform_disc_196": {
+    "file": "platform_disc_196.webp",
+    "size": [
+      1176,
+      726
+    ],
+    "pivot": [
+      588.0,
+      340.4
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "platform_disc",
+    "rx": 196.0,
+    "ry": 113.1,
+    "rim": 16.0,
+    "uses": 2,
+    "note": "pivot = the centre of the top ellipse; draw at z = rank - 4 in a non-sorted node; no trunk hole",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "platform_disc_306": {
+    "file": "platform_disc_306.webp",
+    "size": [
+      1837,
+      1108
+    ],
+    "pivot": [
+      918.5,
+      531.4
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "platform_disc",
+    "rx": 306.2,
+    "ry": 176.8,
+    "rim": 16.0,
+    "uses": 1,
+    "note": "pivot = the centre of the top ellipse; draw at z = rank - 4 in a non-sorted node; no trunk hole",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "rope_tile": {
+    "file": "rope_tile.webp",
+    "size": [
+      30,
+      186
+    ],
+    "pivot": [
+      15.0,
+      93.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "rope",
+    "tile": "y",
+    "note": "a vertical twisted rope, periodic in y: Sprite2D region + repeat (the lift rope)",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "seed_basket": {
+    "file": "seed_basket.webp",
+    "size": [
+      90,
+      72
+    ],
+    "pivot": [
+      45.0,
+      52.0
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "kind": "basket",
+    "note": "Hoppe's seed basket",
+    "fit": [
+      0.795,
+      0.636
+    ],
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "trunk_bark_w367": {
+    "file": "trunk_bark_w367.webp",
+    "size": [
+      367,
+      512
+    ],
+    "pivot": [
+      183.5,
+      256.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "trunk_bark",
+    "tile": "y",
+    "rx": 61.2,
+    "note": "vertically seamless; repeat with a Sprite2D region (texture_repeat); end an upper segment at tile row 512 so its foot continues the pattern",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "trunk_bark_w404": {
+    "file": "trunk_bark_w404.webp",
+    "size": [
+      404,
+      512
+    ],
+    "pivot": [
+      202.0,
+      256.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "trunk_bark",
+    "tile": "y",
+    "rx": 67.4,
+    "note": "vertically seamless; repeat with a Sprite2D region (texture_repeat); end an upper segment at tile row 512 so its foot continues the pattern",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "trunk_bark_w441": {
+    "file": "trunk_bark_w441.webp",
+    "size": [
+      441,
+      512
+    ],
+    "pivot": [
+      220.5,
+      256.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "trunk_bark",
+    "tile": "y",
+    "rx": 73.5,
+    "note": "vertically seamless; repeat with a Sprite2D region (texture_repeat); end an upper segment at tile row 512 so its foot continues the pattern",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "trunk_bark_w698": {
+    "file": "trunk_bark_w698.webp",
+    "size": [
+      698,
+      512
+    ],
+    "pivot": [
+      349.0,
+      256.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "trunk_bark",
+    "tile": "y",
+    "rx": 116.3,
+    "note": "vertically seamless; repeat with a Sprite2D region (texture_repeat); end an upper segment at tile row 512 so its foot continues the pattern",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "trunk_foot_w367": {
+    "file": "trunk_foot_w367.webp",
+    "size": [
+      367,
+      137
+    ],
+    "pivot": [
+      183.5,
+      30.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "trunk_foot",
+    "bark": "trunk_bark_w367",
+    "neck_px": 30,
+    "note": "pivot = the centre of the trunk base ellipse; the first rows are bark tile rows 0..neck",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "trunk_foot_w404": {
+    "file": "trunk_foot_w404.webp",
+    "size": [
+      404,
+      147
+    ],
+    "pivot": [
+      202.0,
+      30.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "trunk_foot",
+    "bark": "trunk_bark_w404",
+    "neck_px": 30,
+    "note": "pivot = the centre of the trunk base ellipse; the first rows are bark tile rows 0..neck",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "trunk_foot_w441": {
+    "file": "trunk_foot_w441.webp",
+    "size": [
+      441,
+      158
+    ],
+    "pivot": [
+      220.5,
+      30.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "trunk_foot",
+    "bark": "trunk_bark_w441",
+    "neck_px": 30,
+    "note": "pivot = the centre of the trunk base ellipse; the first rows are bark tile rows 0..neck",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "trunk_foot_w698": {
+    "file": "trunk_foot_w698.webp",
+    "size": [
+      698,
+      232
+    ],
+    "pivot": [
+      349.0,
+      30.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "trunk_foot",
+    "bark": "trunk_bark_w698",
+    "neck_px": 30,
+    "note": "pivot = the centre of the trunk base ellipse; the first rows are bark tile rows 0..neck",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "trunk_hole_owl": {
+    "file": "trunk_hole_owl.webp",
+    "size": [
+      180,
+      228
+    ],
+    "pivot": [
+      90.0,
+      116.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "decal",
+    "note": "a decal on the trunk face; pivot = the centre of the hole (the owl is drawn inside)",
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "trunk_hole_owl_b": {
+    "file": "trunk_hole_owl_b.webp",
+    "size": [
+      180,
+      228
+    ],
+    "pivot": [
+      90.0,
+      116.0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "decal",
+    "note": "a decal on the trunk face; pivot = the centre of the hole (the owl is drawn inside)",
+    "illustration": "tools/art/drawn/sources/city_painted.png"
+  },
+  "trunk_root_w367": {
+    "file": "trunk_root_w367.webp",
+    "size": [
+      496,
+      281
+    ],
+    "pivot": [
+      248.0,
+      137.3
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "trunk_root",
+    "bark": "trunk_bark_w367",
+    "note": "ground-contact flare of a lower trunk; pivot = the centre of the ground ellipse",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "trunk_root_w404": {
+    "file": "trunk_root_w404.webp",
+    "size": [
+      546,
+      301
+    ],
+    "pivot": [
+      273.0,
+      142.9
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "trunk_root",
+    "bark": "trunk_bark_w404",
+    "note": "ground-contact flare of a lower trunk; pivot = the centre of the ground ellipse",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "trunk_root_w441": {
+    "file": "trunk_root_w441.webp",
+    "size": [
+      596,
+      320
+    ],
+    "pivot": [
+      298.0,
+      147.5
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "trunk_root",
+    "bark": "trunk_bark_w441",
+    "note": "ground-contact flare of a lower trunk; pivot = the centre of the ground ellipse",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "trunk_root_w698": {
+    "file": "trunk_root_w698.webp",
+    "size": [
+      943,
+      453
+    ],
+    "pivot": [
+      471.5,
+      180.2
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "trunk_root",
+    "bark": "trunk_bark_w698",
+    "note": "ground-contact flare of a lower trunk; pivot = the centre of the ground ellipse",
+    "illustration": "tools/art/drawn/sources/terrain.png"
+  },
+  "bat_hang": {
+    "file": "bat_hang.webp",
+    "size": [
+      84,
+      102
+    ],
+    "pivot": [
+      42.0,
+      4.0
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "kind": "bat",
+    "note": "static sleeping bat (the pack has no hang clip: honest stub); pivot = the hook at the top centre",
+    "frames": [
+      "bat_hang",
+      "bat_hang_f1"
+    ],
+    "fps": 1.0,
+    "illustration": "tools/art/drawn/sources/animals3.png"
+  },
+  "bat_hang_f1": {
+    "file": "bat_hang_f1.webp",
+    "size": [
+      84,
+      102
+    ],
+    "pivot": [
+      42.0,
+      4.0
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "kind": "bat",
+    "note": "static sleeping bat (the pack has no hang clip: honest stub); pivot = the hook at the top centre",
+    "illustration": "tools/art/drawn/sources/animals3.png"
+  },
+  "backdrop_treetop_far": {
+    "pivot": [
+      0,
+      0
+    ],
+    "footprint": [
+      0,
+      0
+    ],
+    "kind": "backdrop",
+    "file": "backdrop_treetop_far.webp",
+    "size": [
+      2048,
+      1024
+    ],
+    "illustration": "tools/art/drawn/sources/nature.png"
+  }
+}

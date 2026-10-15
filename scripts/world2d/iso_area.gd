@@ -1271,6 +1271,15 @@ func _make_light(m: Dictionary, pos: Vector2) -> Node2D:
 	holder.add_child(halo)
 	_glows.append({"node": halo, "base": 0.55})
 	objects.add_child(holder)
+	var prop_id := StringName(str(m.get("prop", "")))
+	if prop_id != &"":
+		var art: Dictionary = ArtCatalog.prop(prop_id)
+		var sprite := Sprite2D.new()
+		sprite.name = "PaintedLight"
+		sprite.texture = art["texture"] as Texture2D
+		sprite.centered = false
+		sprite.offset = -(art["pivot"] as Vector2)
+		holder.add_child(sprite)
 	return holder
 
 

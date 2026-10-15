@@ -1,0 +1,41 @@
+World style consistency — 15 October 2026
+
+Implemented on codex-review, following the review of 863a583.
+
+Trætoppen and Mørkeskoven now resolve to 90 painted art records in
+assets/iso_props/painted_world. The huts, roof materials, furniture, lanterns,
+lift, leafy crowns, cave stones, runestones and mushrooms follow the approved
+drawn buildings, nature and terrain. City timber and bark reuse the tile
+material master. The distant trees reuse the approved nature painting. Rails
+use warm timber pigment. Forest glow tiles preserve the underlying painted
+leaf litter; mushroom sprites and radial lights supply the glow.
+
+Generated with the built-in imagegen tool. Saved masters:
+ tools/art/drawn/sources/city_painted.png
+ tools/art/drawn/sources/city_details_painted.png
+ tools/art/drawn/sources/forest_painted.png
+Exact prompts and reference roles:
+ tools/art/drawn/world-prompts.json
+ tools/art/drawn/world-detail-prompt.txt
+Deterministic native export: tools/art/drawn/pack.py --only=world.
+
+Runtime metadata follows the effective artwork, including derived hut window
+masks and anchors. World layout, level ranks, collision geometry and character
+art remain the existing authored data. The effective city upload estimate is
+69.4 MB RGBA8 including imported mipmaps, within the existing 70 MB budget.
+This is a texture allocation estimate, not measured whole-game VRAM or FPS.
+
+before/ and after/ contain native Godot 1280x720 captures at identical camera
+poses: city overview, city close, city night, forest overview and cave clearing.
+The old pack ran in a disposable copy of 0fd6435; the new pack ran here.
+Both capture runs passed six checks with zero engine errors or warnings.
+Visual inspection included the day/night hut windows, painted rail/deck joins,
+foliage silhouette, fox beside the scenery, cave mouth and mushroom lights.
+These captures document the existing preview world layout, including exposed
+map edges and the deliberately translucent front foliage.
+
+Validation: 548 targeted assertions across area, art_city, art_environment,
+art_world_style, city_levels, city_map and maps_iso passed, with 19 existing
+skips. Two warnings from an initial test-only raw-image loader were corrected;
+all 106 effective-art checks then passed with zero errors or warnings
+(style-check.json). Final full-suite results are recorded with the code fixes.

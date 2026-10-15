@@ -3132,5 +3132,22 @@
    1
   ],
   "elev": 36.0
+ },
+ "glow_mushroom_cluster": {
+  "pivot": [
+   75,
+   68
+  ],
+  "footprint": [
+   1,
+   1
+  ],
+  "proj": "ortho",
+  "file": "painted_world/glow_mushroom_cluster.webp",
+  "size": [
+   150,
+   98
+  ],
+  "illustration": "tools/art/drawn/sources/forest_painted.png"
  }
 }

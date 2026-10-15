@@ -168,8 +168,9 @@ def build() -> None:
     field_grass = grass * .72 + np.array([164, 166, 106]) * .28 + 6 * np.cos(2 * np.pi * field_x * 12)
     water = ndimage.gaussian_filter(water, (1.8, 1.8, 0), mode="wrap") * .70 + np.array([82, 143, 148]) * .30
     town_grass = grass * .88 + np.array([145, 169, 129]) * .12
-    # Keep the luminous path distinct from ordinary forest litter at night.
-    glow_forest = forest * .35 + np.array([64, 152, 146]) * .65
+    # Keep the painted litter continuous across a glow patch. The mushroom
+    # sprites and radial PointLights carry its light, rather than a teal square.
+    glow_forest = forest * .94 + np.array([64, 152, 146]) * .06
     terrains = {
         "grass": grass, "grass_flowers": flowers(grass), "field_grass": field_grass,
         "grass_hyggebyen": town_grass, "grass_hyggebyen_flowers": flowers(town_grass, True),

@@ -141,7 +141,8 @@ func _tex(id: StringName) -> Texture2D:
 
 
 func _stage_art() -> Dictionary:
-	return {"deck": _tex(&"bridge_deck_tile_w43"), "post": _tex(&"bridge_post"), "basket": _tex(&"lift_basket")}
+	return {"deck": _tex(&"bridge_deck_tile_w43"), "post": _tex(&"bridge_post"), "basket": _tex(&"lift_basket"),
+		"rope_color": Color("76614d"), "outline_color": Color("4b3c49")}
 
 
 ## A sprite of an ArtCatalog prop at `pos` under `parent` (ground-origin pivot: centered = false, offset = -pivot), additive when the art says so.

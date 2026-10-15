@@ -147,6 +147,7 @@ config = {
     runestone_dormant = { footprint = { 1, 1 }, solid = { shape = "circle", radius = 36 }, strips = 0, interact = "runestone" },
     runestone_active = { footprint = { 1, 1 }, solid = { shape = "circle", radius = 36 }, strips = 0, interact = "runestone" },
     rune_glow = { footprint = { 1, 1 }, solid = { shape = "none" }, strips = 0, blend = "add", interact = "none" },
+    glow_mushroom_cluster = { footprint = { 1, 1 }, solid = { shape = "none" }, strips = 0, interact = "none" },
 
     -- the Moon pond: water is the bog_o tile plus the SoftGround decal; lily pads, one ripple animation and an additive sheen on it
     pond_lily = { footprint = { 1, 1 }, solid = { shape = "none" }, strips = 0, interact = "none" },
