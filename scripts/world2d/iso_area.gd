@@ -46,7 +46,10 @@ signal growth_changed(rows: int)
 const Z_GROUND := Iso.Z_GROUND
 const Z_GROUND_FX := Iso.Z_GROUND_FX
 const Z_SKIRTS := Iso.Z_SKIRTS
-const STRIP_W := 32
+## Minimum y-sort strip width. Wider strips = fewer CanvasItems under the y-sorted Objects node
+## (Hyggebyen is budgeted at 1200 nodes); the sort y is still computed per strip, so the only cost
+## is coarser depth granularity across a single big prop. 32 was the R.10 prototype width.
+const STRIP_W := 64
 const WATER_PERIOD := 0.5
 const FLAG_POLL_PERIOD := 0.25
 
@@ -918,7 +921,18 @@ func place_prop(prop_id: String, cell: Vector2i, params: Dictionary = {}) -> Nod
 		n.set_meta("prop_id", prop_id)
 		n.set_meta("cell", cell)
 		objects.add_child(n)
-	# glow (additive halo) and light ride on the first node; both ramp in with the night factor
+	_attach_glow_and_light(first, art, def, pivot_pos, pivot)
+	# Ground contact belongs below every y-sorted actor, independent of which
+	# building strip is nearest. Its pivot is the same footprint centre.
+	var ground_contact: Sprite2D = _attach_ground_contact(art, pivot_pos, prop_id)
+	prop_nodes.append({"id": prop_id, "cell": cell, "nodes": nodes, "body": body, "ground": ground_contact})
+	if night_factor > 0.0:
+		_apply_night()
+	return first
+
+
+## Additive halo and PointLight2D on the first sprite node; both ramp in with the night factor.
+func _attach_glow_and_light(first: Node2D, art: Dictionary, def: Dictionary, pivot_pos: Vector2, pivot: Vector2) -> void:
 	var glow: Dictionary = art.get("glow", {}) as Dictionary
 	if not glow.is_empty():
 		var halo := Sprite2D.new()
@@ -947,23 +961,22 @@ func place_prop(prop_id: String, cell: Vector2i, params: Dictionary = {}) -> Nod
 		l.position = Vector2(float(off[0]) if off.size() > 0 else 0.0, float(off[1]) if off.size() > 1 else -60.0)
 		first.add_child(l)
 		_lights.append({"node": l, "base": float(light_def.get("energy", 0.85))})
-	# Ground contact belongs below every y-sorted actor, independent of which
-	# building strip is nearest. Its pivot is the same footprint centre.
+
+
+## The soft contact shadow under a prop (GroundFx, not y-sorted); null when the art has none.
+func _attach_ground_contact(art: Dictionary, pivot_pos: Vector2, prop_id: String) -> Sprite2D:
 	var contact: Dictionary = art.get("ground", {})
-	var ground_contact: Sprite2D = null
-	if not contact.is_empty():
-		ground_contact = Sprite2D.new()
-		ground_contact.name = "%s_GroundContact" % prop_id
-		ground_contact.texture = contact["texture"]
-		ground_contact.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-		ground_contact.centered = false
-		ground_contact.offset = -(contact["pivot"] as Vector2)
-		ground_contact.position = pivot_pos
-		ground_fx.add_child(ground_contact)
-	prop_nodes.append({"id": prop_id, "cell": cell, "nodes": nodes, "body": body, "ground": ground_contact})
-	if night_factor > 0.0:
-		_apply_night()
-	return first
+	if contact.is_empty():
+		return null
+	var ground_contact := Sprite2D.new()
+	ground_contact.name = "%s_GroundContact" % prop_id
+	ground_contact.texture = contact["texture"]
+	ground_contact.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	ground_contact.centered = false
+	ground_contact.offset = -(contact["pivot"] as Vector2)
+	ground_contact.position = pivot_pos
+	ground_fx.add_child(ground_contact)
+	return ground_contact
 
 
 ## y-sort strips of a big sprite (R.10): strip k covers sprite columns [u0, u1); its centre xc = P.x + (u0 + u1) / 2 - pivot.x gets

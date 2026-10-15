@@ -200,6 +200,7 @@ class Host extends Node:
 	var citizens: Array[Dictionary] = []     # {node, visual, plate, tag, phase}
 	var _t: float = 0.0
 	var _poll: float = 0.0
+	var _last_zoom: float = -1.0
 
 	func add_citizen(node: Node2D, visual: IsoChibiSprite2D, plate: Label, tag: Label) -> void:
 		var rec: Dictionary = {"node": node, "visual": visual, "plate": plate, "tag": tag, "phase": float(citizens.size()) * 1.7}
@@ -207,6 +208,7 @@ class Host extends Node:
 		for l in [plate, tag]:
 			(l as Label).minimum_size_changed.connect(_fit.bind(rec))
 		_fit(rec)
+		_relayout()
 
 	## Sizes a label to its text and pivots it on its middle (the scale below grows it around the middle).
 	func _fit(rec: Dictionary) -> void:
@@ -239,9 +241,14 @@ class Host extends Node:
 		if _poll >= TraetoppenPreviewCitizens.WHEN_POLL_S:
 			_poll = 0.0
 			refresh_visibility()
+			_relayout()
 		var cam: Camera2D = get_viewport().get_camera_2d() if is_inside_tree() else null
 		var zoom: float = cam.zoom.x if cam != null else 0.4
-		var label_scale: float = clampf(TraetoppenPreviewCitizens.LABEL_SCREEN_FACTOR / maxf(zoom, 0.01), TraetoppenPreviewCitizens.LABEL_SCALE_MIN, TraetoppenPreviewCitizens.LABEL_SCALE_MAX)
+		# Labels are scaled by zoom only; breathing is on the figure. Relayout on zoom change
+		# instead of rewriting every plate and running the O(n^2) stack every frame.
+		if not is_equal_approx(zoom, _last_zoom):
+			_last_zoom = zoom
+			_relayout()
 		for rec in citizens:
 			var node: Node2D = rec["node"]
 			if not is_instance_valid(node) or not node.visible:
@@ -249,6 +256,16 @@ class Host extends Node:
 			var visual: Node2D = rec["visual"]
 			var s: float = sin(_t * 1.7 + float(rec["phase"]))
 			visual.scale = Vector2(1.0 - TraetoppenPreviewCitizens.BREATH_AMPLITUDE * 0.5 * s, 1.0 + TraetoppenPreviewCitizens.BREATH_AMPLITUDE * s)
+
+	## Places every plate at the current zoom and stacks overlaps once (zoom change, visibility poll).
+	func _relayout() -> void:
+		var cam: Camera2D = get_viewport().get_camera_2d() if is_inside_tree() else null
+		var zoom: float = cam.zoom.x if cam != null else 0.4
+		var label_scale: float = clampf(TraetoppenPreviewCitizens.LABEL_SCREEN_FACTOR / maxf(zoom, 0.01), TraetoppenPreviewCitizens.LABEL_SCALE_MIN, TraetoppenPreviewCitizens.LABEL_SCALE_MAX)
+		for rec in citizens:
+			var node: Node2D = rec["node"]
+			if not is_instance_valid(node) or not node.visible:
+				continue
 			_place(rec, label_scale)
 		_separate()
 

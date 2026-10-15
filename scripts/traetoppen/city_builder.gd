@@ -631,12 +631,18 @@ class LandmarkTrigger extends Node2D:
 	var radius: float = 0.0
 	var number: int = 0
 	var entered: bool = false
+	var _player_ref: Node2D = null
 
 	func _physics_process(_delta: float) -> void:
 		if entered:
 			return
-		var tree: SceneTree = get_tree()
-		var p: Node2D = tree.get_first_node_in_group("player") as Node2D if tree != null else null
+		var p: Node2D = null
+		if is_instance_valid(_player_ref):
+			p = _player_ref
+		else:
+			var tree: SceneTree = get_tree()
+			p = tree.get_first_node_in_group("player") as Node2D if tree != null else null
+			_player_ref = p
 		if p == null or p.global_position.distance_to(global_position) > radius or ActorLevel.level_id(p) != level_id:
 			return
 		entered = true
