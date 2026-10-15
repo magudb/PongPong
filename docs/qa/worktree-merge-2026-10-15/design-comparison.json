@@ -1,0 +1,109 @@
+{
+  "channel_range": "RGBA8 0..255",
+  "comparison": "Native captures compared with the reviewed codex-review captures already merged into this tree. Numeric comparison supplements the asset snapshot and visual inspection.",
+  "exact_matches": 9,
+  "captures": {
+    "art_style_consistency_world_farm_day.png": {
+      "reference": "docs/art/style-audit/current/native/art_style_consistency_world_farm_day.png",
+      "pixel_identical": false,
+      "mean_channel_difference": 0.000174,
+      "capture_sha256": "c863b569090f49d8c5bdb6fc66f7c2fc0ba73dfcefaf319efa54a29df76180e7"
+    },
+    "art_style_consistency_world_farm_night.png": {
+      "reference": "docs/art/style-audit/current/native/art_style_consistency_world_farm_night.png",
+      "pixel_identical": false,
+      "mean_channel_difference": 0.000169,
+      "capture_sha256": "0515e70dd88af6261bb8742766b7c0e17c326d96a14ab5b03964ed0b23f27e0b"
+    },
+    "art_style_consistency_world_hyggebyen_day.png": {
+      "reference": "docs/art/style-audit/current/native/art_style_consistency_world_hyggebyen_day.png",
+      "pixel_identical": false,
+      "mean_channel_difference": 0.003095,
+      "capture_sha256": "818748d9604d1ca61c07c9b16e17e31373bd007cc26d05000c78918ec3498a84"
+    },
+    "art_style_consistency_world_hyggebyen_night.png": {
+      "reference": "docs/art/style-audit/current/native/art_style_consistency_world_hyggebyen_night.png",
+      "pixel_identical": false,
+      "mean_channel_difference": 0.002544,
+      "capture_sha256": "5816927f684709d04fcda97d6dc627b2c1a80649660c81a814d29fb79d31d46c"
+    },
+    "art_style_consistency_world_moerkeskoven_day.png": {
+      "reference": "docs/art/style-audit/current/native/art_style_consistency_world_moerkeskoven_day.png",
+      "pixel_identical": false,
+      "mean_channel_difference": 0.006676,
+      "capture_sha256": "f0360f890c072de84b67d8f7b18f0b9565ff0df8700c35aef4dc498d2c88e166"
+    },
+    "art_style_consistency_world_moerkeskoven_night.png": {
+      "reference": "docs/art/style-audit/current/native/art_style_consistency_world_moerkeskoven_night.png",
+      "pixel_identical": false,
+      "mean_channel_difference": 0.015069,
+      "capture_sha256": "f0360f890c072de84b67d8f7b18f0b9565ff0df8700c35aef4dc498d2c88e166"
+    },
+    "art_style_consistency_world_traetoppen_day.png": {
+      "reference": "docs/art/style-audit/current/native/art_style_consistency_world_traetoppen_day.png",
+      "pixel_identical": false,
+      "mean_channel_difference": 0.033503,
+      "capture_sha256": "6db9cad12e4ca66f6a840fa98b8bc89f70cf0e3e880a97da0904f211f8394e82"
+    },
+    "art_style_consistency_world_traetoppen_night.png": {
+      "reference": "docs/art/style-audit/current/native/art_style_consistency_world_traetoppen_night.png",
+      "pixel_identical": false,
+      "mean_channel_difference": 0.024856,
+      "capture_sha256": "19c4dfa8273f311dce70687fb70e9ce6bcb2c3a7465618ed6126ea524e9dff57"
+    },
+    "style_current_equipment_controls_pedro.png": {
+      "reference": "docs/art/style-audit/current/native/style_current_equipment_controls_pedro.png",
+      "pixel_identical": true,
+      "mean_channel_difference": 0.0,
+      "capture_sha256": "cb41665d07299139ddb24fc70d55377f36eef29df51caca28da5d929b58cb22d"
+    },
+    "style_current_equipment_controls_rasmus.png": {
+      "reference": "docs/art/style-audit/current/native/style_current_equipment_controls_rasmus.png",
+      "pixel_identical": true,
+      "mean_channel_difference": 0.0,
+      "capture_sha256": "3cf2065e7b84520556092c202efa05c531efcfb2d3ebe349fb286738d662e91e"
+    },
+    "style_current_painted_home_day.png": {
+      "reference": "docs/art/style-audit/current/native/style_current_painted_home_day.png",
+      "pixel_identical": true,
+      "mean_channel_difference": 0.0,
+      "capture_sha256": "7d39d227c4669fc1090c4e377270ebd7dde73a741051b481d8ab860bdf4c9992"
+    },
+    "style_current_painted_home_night.png": {
+      "reference": "docs/art/style-audit/current/native/style_current_painted_home_night.png",
+      "pixel_identical": true,
+      "mean_channel_difference": 0.0,
+      "capture_sha256": "ad7bee74d5588c73d3fe35403889f56cf81fdcb20108e0c6aae2307664423356"
+    },
+    "style_current_rebuilt_material_variants.png": {
+      "reference": "docs/art/style-audit/current/native/style_current_rebuilt_material_variants.png",
+      "pixel_identical": true,
+      "mean_channel_difference": 0.0,
+      "capture_sha256": "ddffb07d199e9af94a32c844f79e7fc8bac7cbe2df66df9122054f17f99c2de4"
+    },
+    "style_current_theme_assets_light_dark.png": {
+      "reference": "docs/art/style-audit/current/native/style_current_theme_assets_light_dark.png",
+      "pixel_identical": true,
+      "mean_channel_difference": 0.0,
+      "capture_sha256": "5e4f97c0afceb1052a7dad1c381811d470b6ea873253ed4f5fa3510bf2f6705b"
+    },
+    "ui_foundation_ability_slots.png": {
+      "reference": "docs/art/style-audit/current/native/ui_foundation_ability_slots.png",
+      "pixel_identical": true,
+      "mean_channel_difference": 0.0,
+      "capture_sha256": "a83314ae10fa5493b93cece503b8f023abbcff1726316257cc95fd349aa64994"
+    },
+    "ui_foundation_gallery_guide.png": {
+      "reference": "docs/art/style-audit/current/native/ui_foundation_gallery_guide.png",
+      "pixel_identical": true,
+      "mean_channel_difference": 0.0,
+      "capture_sha256": "b05088c646febd1f5b60dc2834222a33b9cbbfe7a4e51f2c3249d6f47f578a3c"
+    },
+    "ui_foundation_gallery_rarity.png": {
+      "reference": "docs/art/style-audit/current/native/ui_foundation_gallery_rarity.png",
+      "pixel_identical": true,
+      "mean_channel_difference": 0.0,
+      "capture_sha256": "a32c6b65bf17d317792e95adb2658a0b2909ec59a8e3fa67f2d3506b1b167cb8"
+    }
+  }
+}

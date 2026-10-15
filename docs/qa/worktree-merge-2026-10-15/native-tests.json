@@ -1,0 +1,46 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 96,
+  "elapsed_s": 26.02,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "area": {
+      "checks": 15,
+      "failed": 0,
+      "ms": 10481,
+      "skipped": 0
+    },
+    "art_style_consistency": {
+      "checks": 48,
+      "failed": 0,
+      "ms": 7913,
+      "skipped": 0
+    },
+    "city_levels": {
+      "checks": 9,
+      "failed": 0,
+      "ms": 3767,
+      "skipped": 0
+    },
+    "clock26": {
+      "checks": 4,
+      "failed": 0,
+      "ms": 1256,
+      "skipped": 0
+    },
+    "ui_foundation": {
+      "checks": 20,
+      "failed": 0,
+      "ms": 308,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

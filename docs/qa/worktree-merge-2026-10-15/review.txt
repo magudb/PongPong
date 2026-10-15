@@ -1,0 +1,53 @@
+Finished worktree integration — 15 October 2026
+
+The completed work from codex-review (be1d319) and devin-review (283d801)
+is combined with main's existing 71ee42d baseline. Both merges were clean.
+review-fixes-4 was already fully included; its two generated, untracked farm
+UID files exactly match files committed in devin-review. Source branches and
+worktrees are retained for traceability.
+
+The unfinished m1b working copy is excluded. Its committed baseline was already
+in main. All 855 recorded working-file hashes and its Git status remain unchanged.
+This merge does not claim the unfinished town/social/home/quest/UI packages or
+full production wardrobe are implemented.
+
+Preservation checks
+
+All 2,534 reviewed art/theme/font files match the approved painted snapshot.
+All 4,587 existing main files outside the incoming changes retain their Git
+blobs and modes. Devin's 13 finished code/documentation files match its source
+commit. The current day/night city and forest captures and guide UI were
+inspected; native render comparisons against the accepted captures are in
+design-comparison.json. The guide UI, home tiers, equipment controls and material
+variants retain their existing design. Small world-image differences are recorded
+rather than described as byte-identical renders.
+
+One integration fix was necessary: lua/config/festival_decor.lua.import now
+uses importer="keep". The festival art added that Lua file, while main's newer
+export validator requires every shipped Lua file to carry the keep stub. The
+fresh project import and export-stub check now pass (81 keep files).
+
+Validation
+
+Full strict headless suite: 5,914 checks, 41 sections, zero failures; 64 named
+pending/headless-only skips. Zero unexpected engine errors or warnings; 26
+allowed messages are the existing intentional negative cases.
+Native area/city-level/clock/style/UI sections: 96 checks, zero failures/skips.
+Native equipment/typography/home/material studies: six checks, zero failures/skips.
+Reviewed-snapshot unit tests: six passing checks.
+Native review sheets use documentation WebP copies; native-captures.json records
+the original PNG hashes. World/UI/home preview PNGs are retained.
+
+Reports are full-tests.json, native-tests.json, design-native-tests.json and
+merge-audit.json. Commands used from the project root:
+
+  python3 tools/art/drawn/style_audit_current.py --check
+  python3 tools/art/drawn/test_style_audit_current.py
+  tools/art/.venv/bin/python tools/import/write_import_stubs.py --check
+  tests/run_playtest.sh --strict --report=docs/qa/worktree-merge-2026-10-15/full-tests.json
+  GODOT_EXTRA_ARGS=--minimized tools/dev/run_windowed.sh --strict --no-boot --only=area,city_levels,clock26,art_style_consistency,ui_foundation --out=docs/qa/worktree-merge-2026-10-15/native
+  GODOT_EXTRA_ARGS=--minimized tools/dev/run_windowed.sh --strict --no-boot --sections-dir=res://tests/art_review --only=style_current --out=docs/qa/worktree-merge-2026-10-15/native
+
+Validation used an integration worktree and isolated game profiles before main
+was advanced. No unfinished m1b changes, source art regeneration, remote push or
+worktree deletion is part of this delivery.
