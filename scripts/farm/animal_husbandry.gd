@@ -313,6 +313,7 @@ func adopt_animal(item_id: StringName) -> bool:
 
 	animals[animal.id] = animal
 	animal_added.emit(animal.id, species)
+	EventBus.animal_adopted.emit(animal.id, species)
 
 	EventBus.notification_posted.emit(
 		tr("NOTIF_ANIMAL_ADOPTED_TITLE"),
@@ -362,6 +363,7 @@ func feed_animal(animal_id: StringName, food_id: StringName) -> bool:
 	_add_bond_xp(animal, 5.0)
 	animal_fed.emit(animal_id, food_id)
 	animal_happy.emit(animal_id, animal.happiness)
+	EventBus.animal_fed.emit(animal_id, food_id)
 	return true
 
 
@@ -430,6 +432,7 @@ func collect_product(animal_id: StringName) -> int:
 	animal.last_product_day = GameManager.total_day()
 
 	animal_product_collected.emit(animal_id, product_id, amount)
+	EventBus.animal_product_collected.emit(animal_id, product_id, amount)
 
 	EventBus.notification_posted.emit(
 		tr("NOTIF_PRODUCT_COLLECTED_TITLE"),
@@ -476,6 +479,7 @@ func build_building(building_type: StringName) -> bool:
 	building.built_day = GameManager.total_day()
 	building.is_built = true
 	buildings[building.id] = building
+	EventBus.building_built.emit(building.id, building_type)
 
 	EventBus.notification_posted.emit(
 		tr("NOTIF_BUILDING_BUILT_TITLE"),
@@ -594,7 +598,8 @@ func _has_space_for(species: StringName) -> bool:
 		var a: AnimalData = animals[aid]
 		if SPECIES_DATA[str(a.species)]["building"] == needed_building:
 			current += 1
-	return current < capacity or capacity == 0
+	# every species needs its building: no matching building (capacity 0) means no space, not "free range"
+	return capacity > 0 and current < capacity
 
 
 func _find_building_with_space(species: StringName) -> StringName:

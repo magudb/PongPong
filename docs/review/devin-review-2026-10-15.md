@@ -204,3 +204,60 @@ headless race workaround, lazy+cached placeholder art with a paint budget). What
 ## Method note
 Reviewed on `../PongPong-worktrees/devin-review` (branch `devin-review`, == main @ 863a583 + this file).
 Verified: `./tests/run_playtest.sh --no-import --only=core,data --character=animal` → PASS (446 checks).
+
+---
+
+## Fix round (same branch, follow-up commit)
+
+What was fixed and where the semantics landed:
+
+- **Modal contract, all screens** (`pause_menu`, `save_load_ui`, `shop_ui`, `inventory_ui`, `quest_journal`,
+  `animal_care_ui`, `build_menu_ui`): open pushes `GameManager.push_modal(<name>)`, close pops it and answers
+  `ui_panel_toggled(<toggle>, false)`; Esc closes the TOP modal only (`top_modal()` compare) and opens pause
+  only when nothing is modal. Modal names follow `tests/lib/ui_screens.json` (`save_load` for the slot
+  browser, not the `save_menu`/`load_menu` toggle names). `pause_menu._on_quit` pops all modals first — the
+  tree would stay paused on the title screen otherwise. The `MOUSE_MODE_CAPTURED` on resume is gone.
+- **`save_load_ui` load** now calls `SaveManager.load_and_enter` (scene existence check + pop_all_modals +
+  phase PLAYING); a failed load keeps the browser open.
+- **`hud.gd`** connects `weather_changed` and `player_health_changed`; `_on_stats_changed` reads the
+  half-hearts keys first (the stats dict the stub now emits carries both).
+- **`player_stub_2d`** forwards its `stats_changed` onto `player_health_changed` + `player_stats_changed`
+  (HUD live today, not just when Player2D lands).
+- **`animal_husbandry`** emits the contract signals (`animal_adopted`, `animal_fed`,
+  `animal_product_collected`, `building_built`) next to its local ones; `_has_space_for` is now
+  `capacity > 0 and current < capacity` (every species needs a building: a missing one is NO SPACE, not
+  free range).
+- **`warp_2d`/`world_2d`**: the warp keeps firing `area_change_requested` for an unknown target (the request
+  contract — `maps_iso.door_triggers_can_be_entered` probes exactly this); the refusal whisper moved into
+  `travel()`, which also emits `WORLD_WARP_LOCKED` when `has_area` fails. Fainting now waits for a running
+  travel/sleep sequence before the rescue teleport (600-frame guard).
+- **`game_manager.day_end_hour()`** clamps at 24 (the 0..23 hour contract).
+- **`character_select.gd`** reads the live skins from `characters.lua` (`CharacterCatalog.skin_ids` filtered
+  by race + `retired`), default first — the old table offered 7 retired ids and 2 that never existed
+  (`animal_bear`, `animal_owl`). `review_regressions` now picks `fairy_birk` (index 1 of the live list).
+- **`quest_manager`** has a real `quest_defs` dictionary (Lua defs, never saved, survive reset/load);
+  `quest_flags` is a clean flag store. `save_manager`'s `_legacy_quest_defs` carry-over is deleted (its own
+  comment anticipated this); `def_*` keys in old saves are still stripped on read.
+- **Perf** (`iso_area.gd`): `marker_registry()` is memoised (`clear_handler_cache` + a LuaRuntime reload
+  clear it — late-bound `load().callv` so the autoload needs no class cache); `place_prop` applies the night
+  factor to the entries it just made instead of re-walking every glow/light; `ground.y_sort_enabled` off
+  (flat diamonds never interleave); `_on_game_event` early-outs when no `when=` records exist.
+  `audio_manager.gd`: SFX steal is a real FIFO (round-robin cursor), `_find_stream` memoises resolved paths.
+- **Dead 3D code deleted**: `scripts/player/`, `scripts/npc/`, `scripts/farm/` (3D-era files),
+  `scripts/world/`, `scenes/player|npc|forest` — all preserved in `legacy/package_3d/`.
+- **Export**: `keep` `.import` stubs for all `lua/**/*.lua` + `data/maps/*.map` (79 files), and
+  `tools/import/write_import_stubs.py` audits them (`--check` fails on a missing stub; `--only keep`
+  rewrites). A default-include `.map.import` naming a missing `.translation` is replaced rather than
+  extended.
+- `PINNED` in `city_levels.gd` updated for the legitimately edited `iso_area.gd` / `world_2d.gd`.
+
+**Not fixed, on purpose:** `weather_duration_hours` (save-schema field held for the weather-duration wave —
+registered flag to add at a boundary), `flag_changed` signal (no new signals without a package —
+signal_contract), `evaluate_when` flag-vs-colon slice (flags with `:` are not a real input today), the
+`collect_turnip`-style quest-binding gap (P13's owner), `.ttf`/`.json` export stubs (resources and already
+default-filtered), and every missing marker handler / lazy script (pending waves, by design).
+
+Verified: `run_playtest.sh --only=core,data,save,economy,review_regressions,loc,cast_data` (1193 checks),
+`area,content_features,characters,cast_data,ghost,ghost_data` (523), `city_levels,maps_iso,maps_farm` (178),
+`ui_foundation,ui_audit,ui_audit_blind,ui_audit_pins,rarity,art_home` (1015+) — all PASS, 0 engine
+errors/warnings.

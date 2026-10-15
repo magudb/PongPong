@@ -45,12 +45,22 @@ func _ready() -> void:
 		_husbandry.animal_product_collected.connect(func(_id, _p, _a): _refresh_details())
 
 
+## Esc closes the care screen while it is the top modal.
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and GameManager.top_modal() == &"animal_care" and event.is_action_pressed(&"ui_cancel"):
+		_close()
+		get_viewport().set_input_as_handled()
+
+
 func _on_panel_toggled(panel: StringName, is_open: bool) -> void:
 	if panel == &"animal_care":
 		visible = is_open
 		if is_open:
+			GameManager.push_modal(&"animal_care")
 			_populate_list()
 			_populate_food_options()
+		else:
+			GameManager.pop_modal(&"animal_care")
 
 
 func _populate_list() -> void:
@@ -172,3 +182,5 @@ func _on_rename() -> void:
 
 func _close() -> void:
 	visible = false
+	GameManager.pop_modal(&"animal_care")
+	EventBus.ui_panel_toggled.emit(&"animal_care", false)

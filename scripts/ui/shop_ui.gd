@@ -26,6 +26,12 @@ func _ready() -> void:
 	EventBus.gold_changed.connect(_on_gold_changed)
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and GameManager.top_modal() == &"shop" and event.is_action_pressed(&"ui_cancel"):
+		_close()
+		get_viewport().set_input_as_handled()
+
+
 func _on_shop_opened(shop_id: StringName) -> void:
 	current_shop = shop_id
 	visible = true
@@ -33,12 +39,12 @@ func _on_shop_opened(shop_id: StringName) -> void:
 	_populate_buy()
 	_populate_sell()
 	_on_gold_changed(EconomyManager.gold, 0)
-	GameManager.change_phase(GameManager.GamePhase.PAUSED)
+	GameManager.push_modal(&"shop")
 
 
 func _on_shop_closed(_shop_id: StringName) -> void:
 	visible = false
-	GameManager.change_phase(GameManager.GamePhase.PLAYING)
+	GameManager.pop_modal(&"shop")
 
 
 func _populate_buy() -> void:

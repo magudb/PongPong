@@ -473,6 +473,8 @@ func travel(area_id: StringName, spawn: StringName) -> void:
 	if traveling or not has_area(area_id):
 		if not has_area(area_id):
 			last_travel_error = "no such area: %s" % area_id
+			# a walk-in door to a place that is not built yet would refuse in silence: the player hears the gate is closed
+			EventBus.whisper_requested.emit("WORLD_WARP_LOCKED")
 		return
 	traveling = true
 	var tw: Tween = create_tween()
@@ -692,6 +694,11 @@ func _on_player_defeated() -> void:
 		return
 	_faint_pending = true
 	await get_tree().create_timer(1.3).timeout
+	# travel() refuses while a fade / sleep sequence runs: wait it out so the rescue teleport is not silently skipped
+	var guard := 0
+	while (traveling or sleeping) and guard < 600:
+		await get_tree().process_frame
+		guard += 1
 	await travel(&"farm" if has_area(&"farm") else default_area_id(), &"from_skovkant")
 	if player.has_method("revive"):
 		player.call("revive", player.global_position)

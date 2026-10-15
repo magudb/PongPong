@@ -18,30 +18,36 @@ const CharacterType = preload("res://scripts/autoload/game_manager.gd").Characte
 @onready var back_btn: Button = %BackButton
 
 var selected_type: CharacterType = CharacterType.ANIMAL
-var selected_skin: StringName = &"animal_rabbit"
+var selected_skin: StringName = &""
 
-const SKINS := {
-	CharacterType.ANIMAL: [
-		{"id": &"animal_rabbit", "name_key": "SKIN_ANIMAL_RABBIT"},
-		{"id": &"animal_fox", "name_key": "SKIN_ANIMAL_FOX"},
-		{"id": &"animal_bear", "name_key": "SKIN_ANIMAL_BEAR"},
-		{"id": &"animal_owl", "name_key": "SKIN_ANIMAL_OWL"},
-	],
-	CharacterType.FAIRY: [
-		{"id": &"fairy_meadow", "name_key": "SKIN_FAIRY_MEADOW"},
-		{"id": &"fairy_stardust", "name_key": "SKIN_FAIRY_STARDUST"},
-		{"id": &"fairy_dusk", "name_key": "SKIN_FAIRY_DUSK"},
-	],
-	CharacterType.HOBBIT: [
-		{"id": &"hobbit_pip", "name_key": "SKIN_HOBBIT_PIP"},
-		{"id": &"hobbit_moss", "name_key": "SKIN_HOBBIT_MOSS"},
-		{"id": &"hobbit_bramble", "name_key": "SKIN_HOBBIT_BRAMBLE"},
-	],
-	CharacterType.GHOST: [
-		{"id": &"ghost_bu", "name_key": "SKIN_GHOST_BU"},
-		{"id": &"ghost_hviske", "name_key": "SKIN_GHOST_HVISKE"},
-	],
+## The skins of the current selection, filled by _populate_skins from characters.lua (retired rows never offered).
+var _skins: Array = []
+
+const _RACE_KEYS := {
+	CharacterType.ANIMAL: "animal",
+	CharacterType.FAIRY: "fairy",
+	CharacterType.HOBBIT: "hobbit",
+	CharacterType.GHOST: "ghost",
 }
+
+
+## [{id, name_key}] of the live skins of a race, in characters.lua order (default_skin first when present).
+static func _skins_of(type: CharacterType) -> Array:
+	var race: String = _RACE_KEYS.get(type, "animal")
+	var out: Array = []
+	var wanted := CharacterCatalog.default_skin(race)
+	var fallback_first: Array = []
+	for id in CharacterCatalog.skin_ids():
+		var row := CharacterCatalog.skin(id)
+		if str(row.get("race", "")) != race or bool(row.get("retired", false)):
+			continue
+		var entry := {"id": StringName(id), "name_key": str(row.get("name_key", ""))}
+		if id == wanted:
+			fallback_first.push_front(entry)
+		else:
+			fallback_first.append(entry)
+	out.append_array(fallback_first)
+	return out
 
 
 func _ready() -> void:
@@ -84,20 +90,21 @@ func _select_type(type: CharacterType) -> void:
 			preview_desc.text = tr("CHAR_GHOST_PERK")
 
 	_populate_skins()
-	selected_skin = SKINS[type][0]["id"]
 
 
 func _populate_skins() -> void:
+	_skins = _skins_of(selected_type)
 	skin_option.clear()
-	for skin in SKINS[selected_type]:
-		skin_option.add_item(tr(skin["name_key"]))
+	for skin in _skins:
+		var key: String = skin["name_key"]
+		skin_option.add_item(tr(key) if key != "" else str(skin["id"]))
 	skin_option.selected = 0
+	selected_skin = _skins[0]["id"] if not _skins.is_empty() else &""
 
 
 func _on_skin_selected(index: int) -> void:
-	var skins: Array = SKINS[selected_type]
-	if index >= 0 and index < skins.size():
-		selected_skin = skins[index]["id"]
+	if index >= 0 and index < _skins.size():
+		selected_skin = _skins[index]["id"]
 
 
 func _on_confirm() -> void:

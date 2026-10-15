@@ -20,6 +20,8 @@ func _ready() -> void:
 	EventBus.time_of_day_changed.connect(_on_time_changed)
 	EventBus.day_started.connect(_on_day_started)
 	EventBus.season_changed.connect(_on_season_changed)
+	EventBus.weather_changed.connect(_on_weather_changed)
+	EventBus.player_health_changed.connect(_on_health_changed)
 	EventBus.player_stats_changed.connect(_on_stats_changed)
 	EventBus.notification_posted.connect(_on_notification)
 	EventBus.quest_accepted.connect(_on_quest_changed)
@@ -56,14 +58,25 @@ func _on_day_started(day: int, season: StringName) -> void:
 func _on_season_changed(season: StringName) -> void:
 	if season_label:
 		season_label.text = tr("UI_SEASON_%s" % season.to_upper())
+	_on_weather_changed(TimeManager.weather)
+
+
+func _on_weather_changed(weather: StringName) -> void:
 	if weather_label:
-		weather_label.text = tr("UI_WEATHER_%s" % TimeManager.weather.to_upper())
+		weather_label.text = tr("UI_WEATHER_%s" % weather.to_upper())
+
+
+func _on_health_changed(half_hearts: int, max_half_hearts: int) -> void:
+	if health_bar:
+		health_bar.max_value = max_half_hearts
+		health_bar.value = half_hearts
 
 
 func _on_stats_changed(stats: Dictionary) -> void:
 	if health_bar:
-		health_bar.max_value = stats.get("max_health", 100)
-		health_bar.value = stats.get("health", 100)
+		# half-hearts keys win: they are the player contract (player_health_changed / player_stats_changed payloads)
+		health_bar.max_value = stats.get("max_half_hearts", stats.get("max_health", 100))
+		health_bar.value = stats.get("half_hearts", stats.get("health", 100))
 	if stamina_bar:
 		stamina_bar.max_value = stats.get("max_stamina", 100)
 		stamina_bar.value = stats.get("stamina", 100)

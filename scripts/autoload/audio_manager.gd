@@ -7,9 +7,11 @@ const SFX_DIR := "res://assets/audio/sfx"
 const MUSIC_DIR := "res://assets/audio/music"
 
 var _sfx_pool: Array[AudioStreamPlayer] = []
+var _sfx_rr: int = 0                    # round-robin cursor: the slot stolen next when the pool is full (the "oldest" in FIFO order)
 var _music_player: AudioStreamPlayer
 var _voice_player: AudioStreamPlayer
 var _ambient_players: Array[AudioStreamPlayer3D] = []
+var _stream_paths: Dictionary = {}      # "dir|id" -> resolved path ("" = does not exist): ResourceLoader.exists is hit once per id
 
 var master_volume_db: float = 0.0
 var sfx_volume_db: float = -4.0
@@ -56,11 +58,13 @@ func play_sfx(sfx_id: String, volume_db: float = NAN, pitch: float = 1.0) -> voi
 			p.pitch_scale = pitch
 			p.play()
 			return
-	# Steal oldest
-	_sfx_pool[0].stream = stream
-	_sfx_pool[0].volume_db = sfx_volume_db if is_nan(volume_db) else volume_db
-	_sfx_pool[0].pitch_scale = pitch
-	_sfx_pool[0].play()
+	# Steal the slot the pool used longest ago (FIFO over SFX_POOL_SIZE, not always slot 0)
+	var stolen := _sfx_pool[_sfx_rr]
+	_sfx_rr = (_sfx_rr + 1) % _sfx_pool.size()
+	stolen.stream = stream
+	stolen.volume_db = sfx_volume_db if is_nan(volume_db) else volume_db
+	stolen.pitch_scale = pitch
+	stolen.play()
 
 
 func play_music(track_id: String, fade_seconds: float = 1.0) -> void:
@@ -123,6 +127,9 @@ func set_master_volume(db: float) -> void:
 
 
 func _find_stream(base_dir: String, id: String) -> String:
+	var key := base_dir + "|" + id
+	if _stream_paths.has(key):
+		return _stream_paths[key]
 	var candidates: Array[String] = []
 	if base_dir != "":
 		candidates.append(base_dir.path_join(id + ".ogg"))
@@ -134,7 +141,9 @@ func _find_stream(base_dir: String, id: String) -> String:
 
 	for path in candidates:
 		if ResourceLoader.exists(path):
+			_stream_paths[key] = path
 			return path
+	_stream_paths[key] = ""
 	return ""
 
 
