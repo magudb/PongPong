@@ -1,0 +1,39 @@
+{
+ "id": "int_smedjen",
+ "building": "smedjen",
+ "size": "M",
+ "cols": 8,
+ "rows": 6,
+ "wall_style": "plank",
+ "floor": "floor_stone",
+ "door": {"cell": [4, 5], "dir": [0, 1]},
+ "spawn_cell": [4, 4],
+ "windows": {"z": [1, 5], "x": [2]},
+ "exit": {"area": "hyggebyen", "spawn": "from_int_smedjen"},
+ "zoom_fit": 0.754,
+ "items": [
+  {"id": "counter_pine", "cell": [3, 2], "rot": 0, "role": "counter"},
+  {"id": "forge", "cell": [0, 0], "rot": 0},
+  {"id": "shelf_oak", "cell": [0, 0], "rot": 0},
+  {"id": "shelf_oak", "cell": [0, 0], "rot": 0},
+  {"id": "forge", "cell": [6, 0], "rot": 0},
+  {"id": "anvil", "cell": [0, 3], "rot": 0},
+  {"id": "chest_oak", "cell": [7, 3], "rot": 0},
+  {"id": "bookshelf_oak_narrow", "cell": [0, 4], "rot": 0},
+  {"id": "floor_lamp_iron", "cell": [7, 4], "rot": 0}
+ ],
+ "posts": [
+  {"id": "counter", "cell": [4, 1], "act": "work", "facing": "S", "capacity": 1, "kind": "keeper"},
+  {"id": "cust1", "cell": [1, 3], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"},
+  {"id": "cust2", "cell": [6, 3], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"},
+  {"id": "cust3", "cell": [6, 4], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"}
+ ],
+ "markers": [
+  {"type": "hatch", "cells": [[0, 2], [1, 2], [2, 2], [6, 2], [7, 2]]},
+  {"type": "shop", "id": "smithy", "keeper": "smith_thorin", "cell": [4, 3]},
+  {"type": "talk", "keeper": "smith_thorin", "cell": [3, 3]},
+  {"type": "talk", "keeper": "smith_thorin", "cell": [5, 3]},
+  {"type": "door", "cell": [4, 5], "to": "hyggebyen", "spawn": "from_int_smedjen"}
+ ],
+ "notes": []
+}

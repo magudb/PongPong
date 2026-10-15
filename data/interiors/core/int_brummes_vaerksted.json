@@ -1,0 +1,42 @@
+{
+ "id": "int_brummes_vaerksted",
+ "building": "brummes_vaerksted",
+ "size": "L",
+ "cols": 9,
+ "rows": 7,
+ "wall_style": "plank",
+ "floor": "floor_stone",
+ "door": {"cell": [4, 6], "dir": [0, 1]},
+ "spawn_cell": [4, 5],
+ "windows": {"z": [1, 6], "x": [1, 4]},
+ "exit": {"area": "traetoppen", "spawn": "from_int_brummes_vaerksted"},
+ "zoom_fit": 0.689,
+ "items": [
+  {"id": "counter_pine", "cell": [3, 2], "rot": 0, "role": "counter"},
+  {"id": "plank_stack", "cell": [0, 0], "rot": 0},
+  {"id": "plank_stack", "cell": [2, 0], "rot": 0},
+  {"id": "shelf_oak", "cell": [0, 0], "rot": 0},
+  {"id": "chest_oak", "cell": [4, 0], "rot": 0},
+  {"id": "workbench", "cell": [5, 0], "rot": 0},
+  {"id": "table_dining_oak", "cell": [0, 3], "rot": 0},
+  {"id": "plank_stack", "cell": [0, 4], "rot": 0},
+  {"id": "chest_pine", "cell": [8, 3], "rot": 0},
+  {"id": "floor_lamp_iron", "cell": [8, 4], "rot": 0},
+  {"id": "chair_stump", "cell": [0, 5], "rot": 0}
+ ],
+ "posts": [
+  {"id": "counter", "cell": [4, 1], "act": "work", "facing": "S", "capacity": 1, "kind": "keeper"},
+  {"id": "work", "cell": [0, 1], "act": "work", "facing": "E", "capacity": 1, "kind": "staff"},
+  {"id": "cust1", "cell": [2, 3], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"},
+  {"id": "cust2", "cell": [7, 3], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"},
+  {"id": "cust3", "cell": [6, 4], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"}
+ ],
+ "markers": [
+  {"type": "hatch", "cells": [[0, 2], [1, 2], [2, 2], [6, 2], [7, 2], [8, 2]]},
+  {"type": "shop", "id": "timber_yard", "keeper": "carpenter_brumme", "cell": [4, 3]},
+  {"type": "talk", "keeper": "carpenter_brumme", "cell": [3, 3]},
+  {"type": "talk", "keeper": "carpenter_brumme", "cell": [5, 3]},
+  {"type": "door", "cell": [4, 6], "to": "traetoppen", "spawn": "from_int_brummes_vaerksted"}
+ ],
+ "notes": []
+}

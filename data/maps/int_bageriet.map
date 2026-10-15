@@ -1,0 +1,7 @@
+@id int_bageriet
+@title BLD_BAGERIET
+@projection iso
+@ambient home
+@zone city
+@builder res://scripts/towns/interior_room.gd
+@room int_bageriet

@@ -1,0 +1,41 @@
+{
+ "id": "int_toemmerhandlen",
+ "building": "toemmerhandlen",
+ "size": "M",
+ "cols": 9,
+ "rows": 6,
+ "wall_style": "plank",
+ "floor": "floor_stone",
+ "door": {"cell": [4, 5], "dir": [0, 1]},
+ "spawn_cell": [4, 4],
+ "windows": {"z": [1, 6], "x": [2]},
+ "exit": {"area": "hyggebyen", "spawn": "from_int_toemmerhandlen"},
+ "zoom_fit": 0.72,
+ "items": [
+  {"id": "counter_pine", "cell": [3, 2], "rot": 0, "role": "counter"},
+  {"id": "plank_stack", "cell": [0, 0], "rot": 0},
+  {"id": "plank_stack", "cell": [2, 0], "rot": 0},
+  {"id": "shelf_pine", "cell": [0, 0], "rot": 0},
+  {"id": "chest_pine", "cell": [4, 0], "rot": 0},
+  {"id": "chest_oak", "cell": [5, 0], "rot": 0},
+  {"id": "table_dining_oak", "cell": [0, 3], "rot": 0},
+  {"id": "chest_birch", "cell": [8, 3], "rot": 0},
+  {"id": "chest_pine", "cell": [0, 4], "rot": 0},
+  {"id": "floor_lamp_iron", "cell": [8, 4], "rot": 0}
+ ],
+ "posts": [
+  {"id": "counter", "cell": [4, 1], "act": "work", "facing": "S", "capacity": 1, "kind": "keeper"},
+  {"id": "cust1", "cell": [1, 4], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"},
+  {"id": "cust2", "cell": [7, 3], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"},
+  {"id": "cust3", "cell": [6, 4], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"}
+ ],
+ "markers": [
+  {"type": "hatch", "cells": [[0, 2], [1, 2], [2, 2], [6, 2], [7, 2], [8, 2]]},
+  {"type": "shop", "id": "builder_yard", "keeper": "fairy_builder", "cell": [4, 3]},
+  {"type": "talk", "keeper": "fairy_builder", "cell": [3, 3]},
+  {"type": "talk", "keeper": "fairy_builder", "cell": [5, 3]},
+  {"type": "desk", "keeper": "fairy_builder", "cell": [6, 3]},
+  {"type": "door", "cell": [4, 5], "to": "hyggebyen", "spawn": "from_int_toemmerhandlen"}
+ ],
+ "notes": []
+}

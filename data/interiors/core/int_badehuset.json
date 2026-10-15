@@ -1,0 +1,39 @@
+{
+ "id": "int_badehuset",
+ "building": "badehuset",
+ "size": "M",
+ "cols": 9,
+ "rows": 7,
+ "wall_style": "marble",
+ "floor": "floor_marble",
+ "door": {"cell": [4, 6], "dir": [0, 1]},
+ "spawn_cell": [4, 5],
+ "windows": {"z": [1, 6], "x": [1, 4]},
+ "exit": {"area": "traetoppen", "spawn": "from_int_badehuset"},
+ "zoom_fit": 0.689,
+ "items": [
+  {"id": "counter_pine", "cell": [3, 2], "rot": 0, "role": "counter"},
+  {"id": "wooden_tub", "cell": [0, 0], "rot": 0},
+  {"id": "wooden_tub", "cell": [6, 0], "rot": 0},
+  {"id": "wardrobe_birch_narrow", "cell": [2, 0], "rot": 0},
+  {"id": "plant_flowering", "cell": [3, 0], "rot": 0},
+  {"id": "chair_birch", "cell": [0, 3], "rot": 0},
+  {"id": "plant_fern", "cell": [8, 3], "rot": 0},
+  {"id": "floor_lamp_honey", "cell": [0, 4], "rot": 0}
+ ],
+ "posts": [
+  {"id": "tub", "cell": [4, 1], "act": "work", "facing": "S", "capacity": 1, "kind": "keeper"},
+  {"id": "cust1", "cell": [1, 3], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"},
+  {"id": "cust2", "cell": [7, 3], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"},
+  {"id": "cust3", "cell": [6, 4], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"},
+  {"id": "bed", "cell": [8, 1], "act": "sleep", "facing": "S", "capacity": 1, "kind": "bed"}
+ ],
+ "markers": [
+  {"type": "hatch", "cells": [[0, 2], [1, 2], [2, 2], [6, 2], [7, 2], [8, 2]]},
+  {"type": "bath", "keeper": "bathkeeper_sofus", "cell": [4, 3]},
+  {"type": "talk", "keeper": "bathkeeper_sofus", "cell": [3, 3]},
+  {"type": "talk", "keeper": "bathkeeper_sofus", "cell": [5, 3]},
+  {"type": "door", "cell": [4, 6], "to": "traetoppen", "spawn": "from_int_badehuset"}
+ ],
+ "notes": []
+}

@@ -1,0 +1,7 @@
+@id int_badehuset
+@title BLD_BADEHUSET
+@projection iso
+@ambient home
+@zone traetoppen
+@builder res://scripts/towns/interior_room.gd
+@room int_badehuset

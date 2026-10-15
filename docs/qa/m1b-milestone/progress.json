@@ -110,7 +110,8 @@
         },
         {
           "id": "T-interiors-core",
-          "status": "pending"
+          "status": "geometry_validated_live_director_native_gate_pending",
+          "evidence": "core-rooms.json: 128 checks, zero failures/errors/warnings/skips. All 14 installed rooms pass Python validation; keeper/panel captures wait for P14/P18/T-director."
         },
         {
           "id": "N02-farm-objects",
