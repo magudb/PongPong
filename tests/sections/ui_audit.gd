@@ -19,6 +19,9 @@ extends RefCounted
 ##  1. Open tests/lib/ui_screens.json and find your screen's row (title, select_1, select_2, pause, hud, shop, inventory, husbyggeri ...: one row per screen of
 ##     UI_NAVIGATION.md 5.1; it is the same file as ui_screens.proposed.json). The rows have NO status: it is derived (no scene = pending, the old scaffold
 ##     main_menu / character_select = legacy, a scene = live), so landing your scene is what turns the row live - you edit the row only to add a check or an option.
+##     A screen the spec table does not list (the town, social and farm packages: people, gift, calendar, social_hud, event_overlay, post ...) goes into YOUR OWN file
+##     tests/lib/ui_screens.d/<name>.json, {"screens": [rows]} with the same row schema: UiAudit.screens() merges the folder (registry file first, then the folder
+##     files in file-name order), so nobody edits a file it does not own. A screen id exists once: a duplicate id is a failure (ui_audit.screens_merge_dir_unique_ids).
 ##  2. Make the screen take focus itself when it opens (grab_focus() on the first ENABLED control, deferred if the layout is not ready); modals push_modal(name)
 ##     on open, pop_modal(name) on close, close on ui_cancel AND pause (set_input_as_handled), and give focus back to the control that opened them.
 ##  3. Build with theme variations only (PanelParchment, ButtonPrimary, Display28 ...), every number in Caprasimo, translation keys in the scene, no red,
@@ -57,6 +60,7 @@ extends RefCounted
 ## scans with values on both sides of the line).
 ## Named checks: ui_audit.api_surface*, defect_catalog, registry_valid, guards_*, conforming_* (zero false positives on 10 conforming layouts), neg_* (one per planted
 ## defect), walk_*, escape_* (incl. internal layers, pre-opened rows, world probe), dialog_*, rules_*, registry_* (statuses, derived status of spec-shaped rows, tripwires,
+## the merge of tests/lib/ui_screens.d: screens_merge_dir_unique_ids, registry_merge_*, neg_registry_duplicate_* / neg_registry_file_*,
 ## drivers through a spy), theme_*, mouse_walk_*, rule_report_* (spec groups, locale sweep), scene / script text scans, selftest_*, device_swap_*, reports_are_plain_json_data,
 ## foundation_gallery*, legacy_*, pending_entries_skip, every_defect_code_has_a_negative_test, fast_enough. Windowed (run_windowed): ring_*, panel_*, button_*, auto_pick*.
 const SECTION := "ui_audit"
@@ -147,6 +151,7 @@ func run(t) -> void:
 	TranslationServer.set_locale("da")
 	_api_surface(t)
 	_registry_valid(t)
+	await _registry_merge(t)
 	await _guards(t)
 	await _conforming(t)
 	await _focus_negatives(t)
@@ -325,6 +330,8 @@ func _registry_valid(t) -> void:
 	var problems: Array[String] = []
 	var ids := {}
 	var screens := UiAudit.screens()
+	for d in UiAudit.registry_report()["defects"]:
+		problems.append("registry files: %s" % str(d["msg"]))        # a duplicate or empty id, a file of tests/lib/ui_screens.d that does not parse
 	for s in screens:
 		var id := str(s.get("id", ""))
 		if id == "" or ids.has(id):
@@ -416,6 +423,103 @@ func _registry_valid(t) -> void:
 		if row["id"] == "settings" and not UiAudit.validate_options("registry", row["options"]).is_empty():
 			caught += 1
 	t.check("registry_valid_is_not_vacuous", caught == 2, "a drifted esc_depth and a mistyped option are both visible to the checks of registry_valid (%d of 2)" % caught)
+
+
+# ---------------------------------------------------------------------------------------------------- the registry folder tests/lib/ui_screens.d (RT8)
+
+const MERGE_DIR := "res://tests/fixtures/ui_audit/merge/"
+
+
+## The ids of every row of one registry file, read here with a JSON parser of its own (the check must not trust the merge it audits).
+func _raw_ids(path: String) -> Array[String]:
+	var out: Array[String] = []
+	var json := JSON.new()
+	if json.parse(FileAccess.get_file_as_string(path)) != OK or not (json.data is Dictionary):
+		out.append("<%s does not parse>" % path)
+		return out
+	for row in (json.data as Dictionary).get("screens", []):
+		out.append(str((row as Dictionary).get("id", "")))
+	return out
+
+
+func _registry_merge(t) -> void:
+	# 1. the REAL registry: tests/lib/ui_screens.json + every file of tests/lib/ui_screens.d. A screen id exists once across all of them, no file is broken, and the
+	#    merge kept every row (nothing a package registered is silently dropped).
+	var files := UiAudit.registry_files()
+	var raw: Array[String] = []
+	for f in files:
+		raw.append_array(_raw_ids(f))
+	var seen := {}
+	var dups: Array[String] = []
+	for id in raw:
+		if seen.has(id) or id == "" or id.begins_with("<"):
+			dups.append(id)
+		seen[id] = true
+	var merged_ids := UiAudit.screens().map(func(s: Dictionary) -> String: return str(s["id"]))
+	var rep_real := UiAudit.registry_report()
+	var folder_files := files.size() - 1
+	# 2. the same rules proved against planted registries: a duplicate id across the registry file and a folder file is reported
+	UiAudit.use_registry(MERGE_DIR + "dup_across/ui_screens.json")
+	var rep_dup := UiAudit.registry_report()
+	UiAudit.use_registry("")
+	t.check("screens_merge_dir_unique_ids", files.size() >= 1 and files[0] == "res://tests/lib/ui_screens.json" and dups.is_empty() and bool(rep_real["ok"]) and merged_ids.size() == raw.size() and _has(rep_dup, "registry_error"),
+		"%d registry file(s) (%d in tests/lib/ui_screens.d), %d rows: every screen id exists once (duplicate / empty / unreadable: %s), the merge kept all %d, and a planted duplicate is reported (%s)" % [files.size(), folder_files, raw.size(), str(dups), merged_ids.size(), UiAudit.summary(rep_dup)])
+	t.check("registry_merge_real_rows_know_their_file", files.size() >= 1 and UiAudit.registry_file_of("title") == "res://tests/lib/ui_screens.json" and UiAudit.registry_file_of("nope") == "" and UiAudit.screens().all(func(s: Dictionary) -> bool: return UiAudit.registry_file_of(str(s["id"])) in files),
+		"registry_file_of(id) names the file of every merged row of the real registry, '' for an unknown id")
+
+	# 3. the folder is merged after the registry file, in file-name order, rows in file order; non-json files are ignored
+	UiAudit.use_registry(MERGE_DIR + "ok/ui_screens.json")
+	var ok_ids := UiAudit.screens().map(func(s: Dictionary) -> String: return str(s["id"]))
+	t.check("registry_merge_order", ok_ids == ["mg_base", "mg_a1", "mg_b1", "mg_b2"], "registry file first, then a_first.json, then b_second.json (the folder is read by file name, not by creation order): %s" % str(ok_ids))
+	t.check("registry_merge_files", UiAudit.registry_files() == [MERGE_DIR + "ok/ui_screens.json", MERGE_DIR + "ok/ui_screens.d/a_first.json", MERGE_DIR + "ok/ui_screens.d/b_second.json"], "the files read, in merge order: %s" % str(UiAudit.registry_files()))
+	t.check("registry_merge_ignores_other_files", not ok_ids.has("mg_ignored"), "ui_screens.d/ignored.txt holds a screens object but is not a .json file: not merged")
+	t.check("registry_merge_rows_know_their_file", UiAudit.registry_file_of("mg_a1") == MERGE_DIR + "ok/ui_screens.d/a_first.json" and UiAudit.registry_file_of("mg_b2") == MERGE_DIR + "ok/ui_screens.d/b_second.json" and UiAudit.registry_file_of("mg_base") == MERGE_DIR + "ok/ui_screens.json", "registry_file_of names the file a row came from")
+	var folder_row := UiAudit.screen("mg_b1")
+	t.check("registry_merge_rows_are_normalized_like_the_others", folder_row.get("package", "") == "MG-b" and folder_row.get("status", "") == "pending" and bool(folder_row.get("status_derived", false)) and folder_row.has("options") and folder_row.has("open") and UiAudit.screens_by_status("pending").size() == 4,
+		"a row of a folder file is read like a row of the registry file (status derived, options, open): %s" % str(folder_row.get("status", "-")))
+	_clean(t, "registry_merge_ok_is_clean", UiAudit.registry_report(), "the planted folder with distinct ids reports no defect")
+	var sp_ok := Spy.new(t)
+	var r_ok := await UiAudit.audit_screen(sp_ok, "mg_a1")
+	t.check("registry_merge_audit_screen_reaches_a_folder_row", r_ok["skipped"] and sp_ok.failed_checks().is_empty() and sp_ok.log.size() == 1 and str(sp_ok.log[0].get("label", "")).contains("pending (MG-a)"), "audit_screen finds a row of a folder file: a pending row is one SKIP line with its package: %s" % str(sp_ok.log))
+
+	# 4. a duplicate id: the first row wins, the second is dropped, and it is a failure (registry_report, audit_screen of the id)
+	UiAudit.use_registry(MERGE_DIR + "dup_across/ui_screens.json")
+	var d_ids := UiAudit.screens().map(func(s: Dictionary) -> String: return str(s["id"]))
+	var d_defects: Array = rep_dup["defects"]
+	_neg(t, "neg_registry_duplicate_id_across_files", rep_dup, "registry_error")
+	t.check("registry_duplicate_is_named_with_its_files", d_defects.size() == 1 and str(d_defects[0]["path"]) == "mg_x" and str(d_defects[0]["msg"]).contains("ui_screens.d/dup.json") and str(d_defects[0]["msg"]).contains("duplicate screen id 'mg_x'") and str(d_defects[0]["msg"]).contains("tests/fixtures/ui_audit/merge/dup_across/ui_screens.json"),
+		"one defect, for mg_x, naming the file with the second row and the file that keeps the first: %s" % str(d_defects.map(func(d: Dictionary) -> String: return str(d["msg"]))))
+	t.check("registry_duplicate_keeps_the_first_row", d_ids == ["mg_x", "mg_y"] and UiAudit.screen("mg_x")["title"] == "the registry file's row" and UiAudit.registry_file_of("mg_x") == MERGE_DIR + "dup_across/ui_screens.json", "the registry file's row wins, the folder file's mg_y is merged: %s" % str(d_ids))
+	var sp_dup := Spy.new(t)
+	await UiAudit.audit_screen(sp_dup, "mg_x")
+	var sp_dup_y := Spy.new(t)
+	await UiAudit.audit_screen(sp_dup_y, "mg_y")
+	t.check("registry_duplicate_fails_audit_screen_of_the_id", sp_dup.failed_checks() == ["mg_x.registry_unique_id"] and sp_dup_y.failed_checks().is_empty(), "audit_screen(mg_x) fails with its own check (a package's section goes red even without the full run), mg_y is fine: %s / %s" % [str(sp_dup.failed_checks()), str(sp_dup_y.failed_checks())])
+	UiAudit.use_registry(MERGE_DIR + "dup_between/ui_screens.json")
+	var rep_between := UiAudit.registry_report()
+	_neg(t, "neg_registry_duplicate_id_between_folder_files", rep_between, "registry_error")
+	t.check("registry_duplicate_between_folder_files_names_both", (rep_between["defects"] as Array).size() == 1 and str(rep_between["defects"][0]["msg"]).contains("ui_screens.d/b.json") and str(rep_between["defects"][0]["msg"]).contains("ui_screens.d/a.json") and UiAudit.registry_file_of("mg_z") == MERGE_DIR + "dup_between/ui_screens.d/a.json", "the second folder file (b.json) is blamed, the first (a.json) keeps the row: %s" % UiAudit.summary(rep_between))
+	UiAudit.use_registry(MERGE_DIR + "dup_in_file/ui_screens.json")
+	var rep_in := UiAudit.registry_report()
+	_neg(t, "neg_registry_duplicate_id_in_one_file", rep_in, "registry_error")
+	t.check("registry_duplicate_in_one_file_is_one_defect", (rep_in["defects"] as Array).size() == 1 and UiAudit.screens().size() == 1, "two rows of mg_x in the registry file: one defect, one row kept: %s" % UiAudit.summary(rep_in))
+
+	# 5. files that are broken: every way is a registry_error naming the file; the good rows of the other files are still merged
+	UiAudit.use_registry(MERGE_DIR + "bad/ui_screens.json")
+	var rep_bad := UiAudit.registry_report()
+	var bad_msgs: Array = (rep_bad["defects"] as Array).map(func(d: Dictionary) -> String: return str(d["msg"]))
+	var bad_text := "\n".join(bad_msgs)
+	_neg(t, "neg_registry_file_does_not_parse", {"defects": (rep_bad["defects"] as Array).filter(func(d: Dictionary) -> bool: return str(d["msg"]).contains("broken.json: does not parse"))}, "registry_error")
+	t.check("registry_file_defects_name_each_problem", bad_msgs.size() == 5 and bad_text.contains("ui_screens.d/broken.json: does not parse (line") and bad_text.contains("ui_screens.d/noscreens.json: has no \"screens\" array") and bad_text.contains("ui_screens.d/notobject.json: is not a JSON object") and bad_text.contains("ui_screens.d/rows.json: a row that is not a JSON object: 7") and bad_text.contains("ui_screens.d/rows.json: a row without an id"),
+		"five defects, each naming its file and its problem: %s" % bad_text.replace("\n", " | "))
+	var bad_ids := UiAudit.screens().map(func(s: Dictionary) -> String: return str(s["id"]))
+	t.check("registry_broken_files_do_not_hide_good_rows", bad_ids == ["mg_base", "mg_ok"], "the broken files add no rows, the good row of rows.json is merged: %s" % str(bad_ids))
+	UiAudit.use_registry(MERGE_DIR + "nope/ui_screens.json")
+	var rep_none := UiAudit.registry_report()
+	_neg(t, "neg_registry_file_missing", rep_none, "registry_error")
+	t.check("registry_missing_file_is_a_defect_not_a_crash", UiAudit.screens().is_empty() and str(rep_none["defects"][0]["msg"]).contains("does not exist"), "a registry file that does not exist: no rows, one defect: %s" % UiAudit.summary(rep_none))
+	UiAudit.use_registry("")
+	t.check("registry_merge_default_restored", UiAudit.registry_file_of("title") == "res://tests/lib/ui_screens.json" and UiAudit.screen("mg_base").is_empty(), "use_registry('') is the real registry again")
 
 
 # ---------------------------------------------------------------------------------------------------- the conforming fixtures: zero false positives

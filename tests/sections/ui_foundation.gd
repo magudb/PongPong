@@ -14,6 +14,8 @@ extends RefCounted
 ## Fix round 2: ui_foundation.ability_slot_before_ready, ui_foundation.ability_slot_danish_label, ui_foundation.toast_second_setup,
 ## ui_foundation.empty_cell_no_count, ui_foundation.icon_dir_constant_gone, ui_foundation.quest_text_title (+ the --frame-px cases of
 ## compare_guide_modes).
+## M1b fix round 0 (RT7.1): ui_foundation.game_ui_loads_new_ids_in_order (GameUI.SCREEN_ORDER = the 21 ids of SCREEN_IDS; social_hud, event_overlay,
+## people, gift_ui, post are inert until their scene exists and join at their place in any landing order); the old pins of the list follow it.
 ## Windowed (tests/run_playtest.sh --windowed): run_windowed samples the pixels of the rarity row of the gallery and of two ability slots.
 const SECTION := "ui_foundation"
 const TIMEOUT_S := 240.0
@@ -24,6 +26,15 @@ const QuestText = preload("res://scripts/ui/theme/tt_quest_text.gd")
 const PARCHMENT := Color("#f4e6c4")
 const FAKE_DIRS: Array[String] = ["res://fake/icons/items/", "res://fake/icons/home/", "res://fake/icons/wardrobe/"]
 const GUIDE_SCREENS: Array[String] = ["title", "select", "hud", "shop", "quest", "inventory", "forest"]
+## GameUI.SCREEN_ORDER, back to front: the ONE pin of the list (this section and the foundation smoke follow it; there is no literal
+## count anywhere). Wave 3 had 16 ids; RT7 (towns / social) added the five of RT7_IDS.
+const SCREEN_IDS: Array[StringName] = [
+	&"hud", &"forest_hud", &"social_hud", &"event_overlay", &"dialogue_ui", &"inventory_ui", &"quest_journal",
+	&"people", &"gift_ui", &"post", &"shop_ui", &"animal_care_ui", &"build_menu_ui",
+	&"husbyggeri", &"indretning", &"home_chest", &"garderobe", &"samlerbog",
+	&"pause_menu", &"save_load_ui", &"settings_ui",
+]
+const RT7_IDS: Array[StringName] = [&"social_hud", &"event_overlay", &"people", &"gift_ui", &"post"]
 
 var _py := ""
 
@@ -41,6 +52,7 @@ func run(t) -> void:
 	_rarity_contrast(t)
 	_item_icon_dirs(t)
 	await _game_ui(t)
+	await _game_ui_new_ids(t)
 	_tt_helpers(t)
 	_quest_text(t)
 	_quest_text_title(t)
@@ -727,12 +739,12 @@ func _write_fake_scene(dir: String, id: String, root: Node) -> void:
 
 func _game_ui(t) -> void:
 	var order := GameUI.SCREEN_ORDER
-	t.expect(order.size() == 16 and order[0] == &"hud" and order[1] == &"forest_hud" and order[-1] == &"settings_ui", "GameUI list: hud, forest_hud ... settings_ui (16)")
-	var wanted := [&"hud", &"forest_hud", &"dialogue_ui", &"inventory_ui", &"quest_journal", &"shop_ui", &"animal_care_ui", &"build_menu_ui", &"pause_menu", &"save_load_ui", &"settings_ui", &"husbyggeri", &"indretning", &"home_chest", &"garderobe", &"samlerbog"]
+	var wanted := SCREEN_IDS
+	t.expect(order.size() == wanted.size() and order[0] == &"hud" and order[1] == &"forest_hud" and order[-3] == &"pause_menu" and order[-1] == &"settings_ui", "GameUI list: hud, forest_hud ... pause_menu, save_load_ui, settings_ui (%d ids)" % order.size())
 	var all_there := true
 	for id in wanted:
 		all_there = all_there and order.has(id)
-	t.expect(all_there, "the 11 base screens and the 5 addendum screens are all in the list")
+	t.expect(all_there, "the 11 base screens, the 5 addendum screens and the 5 towns / social screens (%d ids) are all in the list" % wanted.size())
 	var ui: GameUI = (load("res://scenes/ui/game_ui.tscn") as PackedScene).instantiate()
 	t.root.add_child(ui)
 	await t.frames(2)
@@ -777,6 +789,80 @@ func _game_ui(t) -> void:
 		for f in d.get_files():
 			d.remove(f)
 	DirAccess.remove_absolute(dir)
+
+
+## RT7 (towns / social): social_hud, event_overlay, people, gift_ui and post sit where the design puts them, are inert while their
+## scene file does not exist, and join at their place in whatever order their packages land.
+func _game_ui_new_ids(t) -> void:
+	var failed_before: int = t.failed
+	var order := GameUI.SCREEN_ORDER
+	# 1. the list itself: exact, no id twice, the relative rules of the design
+	t.expect(str(order) == str(SCREEN_IDS), "SCREEN_ORDER is exactly the %d ids of SCREEN_IDS, back to front: %s" % [SCREEN_IDS.size(), str(order)])
+	var distinct := {}
+	for id in order:
+		distinct[id] = true
+	t.expect(distinct.size() == order.size(), "no screen id twice (%d ids, %d distinct)" % [order.size(), distinct.size()])
+	var below_pause := true
+	for id in RT7_IDS:
+		below_pause = below_pause and order.has(id) and order.find(id) < order.find(&"pause_menu")
+	t.expect(below_pause, "every towns / social id is below the pause menu (its Esc and its draw order)")
+	t.expect(order.find(&"social_hud") == order.find(&"forest_hud") + 1, "social_hud sits right behind the two HUDs")
+	t.expect(order.find(&"event_overlay") > order.find(&"social_hud") and order.find(&"event_overlay") < order.find(&"dialogue_ui"), "event_overlay is between the HUDs and dialogue_ui: the letterbox is drawn BEHIND the dialogue")
+	t.expect(order.find(&"people") == order.find(&"quest_journal") + 1 and order.find(&"gift_ui") == order.find(&"people") + 1 and order.find(&"post") == order.find(&"gift_ui") + 1 and order.find(&"post") < order.find(&"shop_ui"),
+		"people, gift_ui, post follow quest_journal and sit above the shops")
+	# 2. inert without a scene, real scene folder: a new id is instanced exactly when its scene exists
+	var real: GameUI = (load("res://scenes/ui/game_ui.tscn") as PackedScene).instantiate()
+	t.root.add_child(real)
+	await t.frames(2)
+	var inert_ok := true
+	for id in RT7_IDS:
+		inert_ok = inert_ok and real.has_screen(id) == ResourceLoader.exists(GameUI.scene_path(id))
+	t.expect(inert_ok, "in the real scene folder a new id is instanced only if scenes/ui/<id>.tscn exists (loaded: %s)" % str(real.loaded_screens()))
+	real.queue_free()
+	await t.frames(1)
+	# 3. the real list on fake scenes: nothing -> the five new ids -> their neighbours later; always back to front
+	var dir := "user://p07_game_ui_rt7/"
+	DirAccess.make_dir_recursive_absolute(dir)
+	var gu: GameUI = (load("res://scenes/ui/game_ui.tscn") as PackedScene).instantiate()
+	gu.load_screens(dir)    # the default order = SCREEN_ORDER, a folder with no scene in it
+	t.root.add_child(gu)
+	await t.frames(2)
+	t.expect(gu.loaded_screens().is_empty() and gu.get_child_count() == 0, "an empty folder: no id is instanced (the new ids are inert until their scene lands)")
+	var written: Array[StringName] = []
+	for id in RT7_IDS:
+		_write_fake_scene(dir, str(id), Control.new())
+		written.append(id)
+	var first := gu.load_screens()
+	t.expect(str(first) == str(RT7_IDS) and str(gu.loaded_screens()) == str(RT7_IDS), "the five new scenes land first: all five load, back to front: %s" % str(gu.loaded_screens()))
+	for id in ["post", "hud", "dialogue_ui", "shop_ui", "quest_journal", "pause_menu", "garderobe", "settings_ui"]:
+		if not written.has(StringName(id)):
+			_write_fake_scene(dir, id, Control.new())
+			written.append(StringName(id))
+	var second := gu.load_screens()
+	var expected: Array[StringName] = []
+	for id in order:
+		if written.has(id):
+			expected.append(id)
+	var drawn: Array[StringName] = []
+	for c in gu.get_children():
+		drawn.append(c.get_meta(&"screen_id") as StringName)
+	t.expect(str(gu.loaded_screens()) == str(expected) and str(drawn) == str(expected), "their neighbours land later and slot in around them: tree order == list order %s" % str(drawn))
+	t.expect(str(second) == str([&"hud", &"dialogue_ui", &"quest_journal", &"shop_ui", &"garderobe", &"pause_menu", &"settings_ui"]) and drawn.find(&"event_overlay") < drawn.find(&"dialogue_ui") and drawn.find(&"social_hud") < drawn.find(&"event_overlay") and drawn.find(&"hud") < drawn.find(&"social_hud"),
+		"hud < social_hud < event_overlay < dialogue_ui in the tree (the letterbox is behind the dialogue): second load = %s" % str(second))
+	t.expect(drawn.find(&"quest_journal") < drawn.find(&"people") and drawn.find(&"post") < drawn.find(&"shop_ui") and drawn.find(&"garderobe") < drawn.find(&"pause_menu") and drawn[-1] == &"settings_ui",
+		"people, gift_ui, post sit between quest_journal and shop_ui; settings_ui is still last")
+	var all_always := true
+	for c in gu.get_children():
+		all_always = all_always and c.process_mode == Node.PROCESS_MODE_ALWAYS
+	t.expect(all_always, "every new screen is PROCESS_MODE_ALWAYS (set by the loader when the scene leaves it at INHERIT)")
+	gu.queue_free()
+	await t.frames(1)
+	var d := DirAccess.open(dir)
+	if d != null:
+		for f in d.get_files():
+			d.remove(f)
+	DirAccess.remove_absolute(dir)
+	t.check("game_ui_loads_new_ids_in_order", t.failed == failed_before, "GameUI.SCREEN_ORDER: social_hud, event_overlay, people, gift_ui, post are in place (%d ids), inert without a scene, and load back to front in any order" % order.size())
 
 
 # ---------------------------------------------------------------------------------------------------- tt_* helpers

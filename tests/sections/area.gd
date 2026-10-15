@@ -25,6 +25,11 @@ extends RefCounted
 ## _over_the_map_..., _absurd_range_does_not_freeze_the_build), area.skirts_under_rim_water_but_not_under_bridge_planks;
 ## windowed area.sort_pixels re-derived from the strip geometry (pixel oracle, see run_windowed).
 ##
+## Fix round RT6 (the `when=` grammar of the towns / social addendum): area.when_new_kinds_delegate, area.when_unknown_kind_is_a_map_error
+## (+ when_unknown_kind_is_reported_once), area.when_refresh_on_hour_edge (+ when_refresh_on_friend_events_and_flags,
+## when_signals_hooked_in_the_tree_and_released_out_of_it), area.when_old_kinds_unchanged, area.when_without_a_social_manager_is_local_and_quiet
+## (a visible SKIP once S-core's real SocialManager autoload exists: then it is the real one that answers).
+##
 ## The section is also the test BUILDER / MARKER HANDLER of the checks that need a script path: the static functions at the bottom
 ## (build, create_marker) are what a map header (`@builder res://tests/sections/area.gd`) or the Lua registry points at.
 const SECTION := "area"
@@ -127,6 +132,7 @@ func run(t) -> void:
 	await _marker_handlers(t)
 	_marker_registry_from_lua(t)
 	await _when_conditions(t)
+	await _when_grammar(t)
 	await _when_hides_whole_props(t)
 	_strips(t)
 	await _skirts_and_growth(t)
@@ -961,6 +967,241 @@ func _when_conditions(t) -> void:
 	await t.frames(1)
 	if qm.has_method("reset"):
 		qm.reset()
+
+
+# ================================================================== when= grammar: delegation, typos, refresh (RT6)
+
+## A stand-in for the social track's autoload (S-core is not built yet): what IsoArea reaches through Svc.node("SocialManager").
+class FakeSocial extends Node:
+	const WHEN_REFRESH_EVENTS: Array[StringName] = [&"town_festival_started", &"town_festival_ended", &"birthday_today", &"relationship_changed", &"routine_changed"]
+	var asked: Array[String] = []
+	var answers: Dictionary = {}           # spec -> bool or a Callable returning one (true when not set)
+	var errors_of: Dictionary = {}         # spec -> Array of texts
+
+	func eval_when(spec: String) -> bool:
+		asked.append(spec)
+		var a: Variant = answers.get(spec, true)
+		return bool((a as Callable).call()) if a is Callable else bool(a)
+
+	func when_spec_errors(spec: String) -> Array[String]:
+		var out: Array[String] = []
+		for e in (errors_of.get(spec, []) as Array):
+			out.append(str(e))
+		return out
+
+
+## A small iso room with the given markers (`<type> k=v ...` on the chars a, b, c ...) and the spawn: [holder, area]; the holder is in the tree.
+func _when_area(t, id: String, marker_lines: Array[String]) -> Array:
+	var rows: Array[String] = [".......", ".......", ".......", "...@...", "......."]
+	var head: String = "@id %s\n@projection iso\n@theme farm\n" % id
+	for i in marker_lines.size():
+		var ch: String = "abcdefg"[i]
+		head += "@marker %s %s\n" % [ch, marker_lines[i]]
+		var y: int = 1 + floori(float(i) / 3.0)
+		var x: int = 1 + 2 * (i % 3)
+		rows[y] = rows[y].substr(0, x) + ch + rows[y].substr(x + 1)
+	head += "@ground\n#######\n#.....#\n#.....#\n#.....#\n#######\n@objects\n" + "\n".join(rows) + "\n"
+	var holder := Node2D.new()
+	t.root.add_child(holder)
+	var area := IsoArea.new()
+	holder.add_child(area)
+	area.setup(AreaMap.parse_text(head))
+	return [holder, area]
+
+
+func _when_node(area: IsoArea, ch: String) -> Node2D:
+	for m in area.markers:
+		if str(m["char"]) == ch:
+			return m["node"] as Node2D
+	return null
+
+
+func _when_typos(area: IsoArea) -> Array[String]:
+	var out: Array[String] = []
+	for e in area.map.errors:
+		if e.begins_with("when_unknown_kind"):
+			out.append(e)
+	return out
+
+
+## RT6: IsoArea.evaluate_when delegates `&`, a leading `!` and the new kinds to SocialManager.eval_when (late bound), keeps the four old
+## kinds on their fast path, answers FALSE for an unknown kind and reports it as `when_unknown_kind` in map.errors; the delegated specs
+## are re-evaluated on the hour edge (raw game hours, CLOCK_26), on day_started, on friend_changed and on game events.
+func _when_grammar(t) -> void:
+	var gm: Node = t.autoload("GameManager")
+	var bus: Node = t.autoload("EventBus")
+	var qm: Node = t.autoload("QuestManager")
+	var saved_hour: int = gm.get("hour")
+	var fake := FakeSocial.new()
+	Svc.clear_overrides()
+	gm.set("hour", 12)
+	gm.set_flag(&"t_wg_flag", true)
+
+	# --- no SocialManager at all: the old kinds still work in `&` / `!` specs, a delegated kind has nobody to ask (false)
+	if Svc.node("SocialManager") == null:
+		var local_ok: bool = not IsoArea.evaluate_when("hearts:pip:4") and not IsoArea.evaluate_when("!hearts:pip:4") and not IsoArea.evaluate_when("fest:any&flag:t_wg_flag") \
+			and IsoArea.evaluate_when("flag:t_wg_flag&!done:t_wg_none") and not IsoArea.evaluate_when("flag:t_wg_flag&flag:t_wg_missing") \
+			and IsoArea.evaluate_when("!flag:t_wg_missing") and not IsoArea.evaluate_when("!flag:t_wg_flag")
+		t.check("when_without_a_social_manager_is_local_and_quiet", local_ok, "no autoload: hearts / fest are false (also behind `!` and `&`), flag:a&!done:b and !flag:missing are evaluated here, no error")
+	else:
+		t.skip("area.when_without_a_social_manager_is_local_and_quiet: a real SocialManager autoload exists (S-core has landed); the absent-service fallback is only exercised while it does not")
+	Svc.override("SocialManager", fake)
+
+	# --- the new kinds, `&` and a leading `!` are answered by SocialManager.eval_when, once per call, with the spec as written
+	var specs: Array[String] = ["hearts:gardener_hoppe:4", "fest:any", "hour:8-18", "weekday:1,2", "season:foraar", "birthday:baker_maja", "stage:baker_maja:friend",
+		"at:baker_maja", "away:appraiser_fru_ugle", "open:bakery", "!quest:lost_cat", "quest:lost_cat&flag:t_wg_flag", "night&hearts:a:1", "!fest:any&open:bakery"]
+	var bad: Array[String] = []
+	for spec in specs:
+		for want in [true, false]:
+			fake.asked.clear()
+			fake.answers[spec] = want
+			var got: bool = IsoArea.evaluate_when(spec)
+			if got != want or fake.asked.size() != 1 or fake.asked[0] != spec:
+				bad.append("%s want %s got %s asked %s" % [spec, want, got, fake.asked])
+	fake.answers.clear()
+	fake.asked.clear()
+	var padded: bool = IsoArea.evaluate_when("  hearts:pip:4  ") and fake.asked.size() == 1 and fake.asked[0] == "hearts:pip:4"
+	# in an area: the nodes follow the delegate's answers
+	fake.asked.clear()
+	for s in ["hearts:pip:4&!fest:any", "hour:8-18", "!fest:any"]:
+		fake.answers[s] = false
+	var lines: Array[String] = ["sign text=ZONE_FARM when=hearts:pip:4&!fest:any", "sign text=ZONE_FARM when=hour:8-18", "sign text=ZONE_FARM when=!fest:any", "sign text=ZONE_FARM"]
+	var made: Array = _when_area(t, "_t_when_delegate", lines)
+	var area: IsoArea = made[1]
+	area.on_enter()
+	var hidden_ok: bool = not _when_node(area, "a").visible and not _when_node(area, "b").visible and not _when_node(area, "c").visible and _when_node(area, "d").visible
+	for s in ["hearts:pip:4&!fest:any", "hour:8-18", "!fest:any"]:
+		fake.answers[s] = true
+	area.refresh_when()
+	var shown_ok: bool = _when_node(area, "a").visible and _when_node(area, "b").visible and _when_node(area, "c").visible and _when_node(area, "d").visible
+	t.check("when_new_kinds_delegate", bad.is_empty() and padded and hidden_ok and shown_ok and area.when_total_count() == 3 and area.map.errors.is_empty(),
+		"14 specs x true / false: every answer is the autoload's and every call asks it once (bad: %s); a padded spec is trimmed (%s); in a room the 3 markers are hidden %s then shown %s by its answers; the room has no map error (%s)" % [bad, padded, hidden_ok, shown_ok, area.map.errors])
+	(made[0] as Node).queue_free()
+
+	# --- the four old kinds: the fast path, never asked of the autoload, real managers answer
+	fake.asked.clear()
+	var flag_ok: bool = IsoArea.evaluate_when("flag:t_wg_flag") and not IsoArea.evaluate_when("flag:t_wg_missing")
+	gm.set("hour", 22)
+	var night_on: bool = IsoArea.evaluate_when("night")
+	gm.set("hour", 12)
+	var night_off: bool = not IsoArea.evaluate_when("night")
+	# a made-up quest id set straight in the manager's state (no reward, nothing left behind for the sections after this one)
+	var quest_off: bool = not IsoArea.evaluate_when("quest:t_wg_quest") and not IsoArea.evaluate_when("done:t_wg_quest")
+	qm.active_quests[&"t_wg_quest"] = null
+	var quest_on: bool = IsoArea.evaluate_when("quest:t_wg_quest") and not IsoArea.evaluate_when("done:t_wg_quest")
+	qm.active_quests.erase(&"t_wg_quest")
+	qm.completed_quests.append(&"t_wg_quest")
+	var quest_done: bool = not IsoArea.evaluate_when("quest:t_wg_quest") and IsoArea.evaluate_when("done:t_wg_quest")
+	qm.completed_quests.erase(&"t_wg_quest")
+	t.check("when_old_kinds_unchanged", fake.asked.is_empty() and flag_ok and night_on and night_off and quest_off and quest_on and quest_done and IsoArea.evaluate_when("") and IsoArea.evaluate_when("   "),
+		"quest / done / flag / night never reach the autoload (asked %s) and the real managers answer: flag %s, night %s / %s, quest %s -> %s -> done %s; an empty spec is true" % [fake.asked, flag_ok, night_on, night_off, quest_off, quest_on, quest_done])
+
+	# --- an unknown kind is false (never delegated, also behind `!` / `&`) and a `when_unknown_kind` entry of map.errors, once per spec
+	fake.asked.clear()
+	var unknown_false: bool = true
+	for spec in ["frobnicate:x", "frobnicate", "quest:lost_cat&frobnicate:x", "!frobnicate:x", "hearts:pip:1&frobnicat:y", ":x", "!"]:
+		fake.answers[spec] = true
+		if IsoArea.evaluate_when(spec):
+			unknown_false = false
+	fake.errors_of["stage:pip"] = ["stage needs <npc>:<stage>"]
+	var typo_lines: Array[String] = ["sign text=ZONE_FARM when=frobnicate:x", "sign text=ZONE_FARM when=quest:lost_cat&frobnicate:y", "sign text=ZONE_FARM when=stage:pip",
+		"nosuchtype when=bogus:z", "sign text=ZONE_FARM when=hearts:pip:2", "sign text=ZONE_FARM when=night"]
+	var made2: Array = _when_area(t, "_t_when_typos", typo_lines)
+	var area2: IsoArea = made2[1]
+	area2.on_enter()
+	var typos: Array[String] = _when_typos(area2)
+	var typo_text: String = " | ".join(typos)
+	var names_specs: bool = typo_text.contains("when=frobnicate:x") and typo_text.contains("when=quest:lost_cat&frobnicate:y") and typo_text.contains("when=stage:pip") and typo_text.contains("stage needs <npc>:<stage>") and typo_text.contains("when=bogus:z")
+	var good_clean: bool = not typo_text.contains("when=hearts:pip:2") and not typo_text.contains("when=night")
+	var never_asked: bool = true
+	for asked_spec in fake.asked:
+		if asked_spec.contains("frobnicat") or asked_spec.contains("bogus"):
+			never_asked = false
+	t.check("when_unknown_kind_is_a_map_error", unknown_false and typos.size() == 4 and names_specs and good_clean and not _when_node(area2, "a").visible and not _when_node(area2, "b").visible and never_asked,
+		"7 unknown specs are false and no typo is ever asked of the autoload (%s); the room reports exactly 4 entries (typo, typo in a `&`, a spec the autoload's when_spec_errors rejects, a typo on a skipped marker): %s; the two typo signs are hidden" % [fake.asked.size(), typo_text])
+	var again: int = _when_typos(area2).size()
+	area2.refresh_when()
+	t.check("when_unknown_kind_is_reported_once", again == 4 and _when_typos(area2).size() == again and not area2.skipped_markers.is_empty() and int(area2.skipped_markers.get("nosuchtype", 0)) == 1, "a refresh adds no second entry; the marker of a type nobody handles stays silently skipped (%s)" % [area2.skipped_markers])
+	(made2[0] as Node).queue_free()
+
+	# --- the hour edge: the delegated specs follow the clock, `night` follows every tick, a flag inside a `&` is polled
+	fake.answers.clear()
+	fake.answers["hour:8-18"] = true
+	fake.answers["hearts:pip:1&flag:t_wg_flag2"] = func() -> bool: return bool(gm.call("get_flag", &"t_wg_flag2", false))
+	var edge_lines: Array[String] = ["sign text=ZONE_FARM when=hour:8-18", "sign text=ZONE_FARM when=night", "sign text=ZONE_FARM when=hearts:pip:1&flag:t_wg_flag2", "sign text=ZONE_FARM when=open:bakery"]
+	var made3: Array = _when_area(t, "_t_when_edge", edge_lines)
+	var area3: IsoArea = made3[1]
+	gm.set("hour", 9)
+	area3.on_enter()
+	var h_node: Node2D = _when_node(area3, "a")
+	var o_node: Node2D = _when_node(area3, "d")
+	var f_node: Node2D = _when_node(area3, "c")
+	var start_ok: bool = h_node.visible and o_node.visible and not f_node.visible
+	fake.answers["hour:8-18"] = false
+	bus.time_of_day_changed.emit(9, 30)
+	var mid_hour: bool = h_node.visible                          # minute 30 of the same hour: NOT an edge
+	bus.time_of_day_changed.emit(10, 0)
+	var edge: bool = not h_node.visible                         # the hour edge re-asked
+	fake.answers["hour:8-18"] = true
+	bus.time_of_day_changed.emit(10, 15)
+	var same_hour: bool = not h_node.visible                    # still hour 10
+	bus.time_of_day_changed.emit(11, 15)
+	var skipped_into: bool = h_node.visible                     # a time skip lands on a new hour at any minute
+	fake.answers["hour:8-18"] = false
+	bus.time_of_day_changed.emit(24, 0)
+	var at_midnight: bool = not h_node.visible                  # raw game hours of CLOCK_26: 24 ...
+	fake.answers["hour:8-18"] = true
+	bus.time_of_day_changed.emit(25, 0)
+	var at_one: bool = h_node.visible                           # ... 25 ...
+	fake.answers["hour:8-18"] = false
+	bus.time_of_day_changed.emit(2, 0)
+	var after_roll: bool = not h_node.visible                   # ... and the clock restarting at 02:00 after the day roll
+	t.check("when_refresh_on_hour_edge", start_ok and mid_hour and edge and same_hour and skipped_into and at_midnight and at_one and after_roll,
+		"hour:8-18 re-asked at 10:00 (edge %s), not at 09:30 (%s) or 10:15 (%s), at 11:15 after a skip (%s), at raw 24:00 (%s), 25:00 (%s) and 02:00 (%s); start %s" % [edge, mid_hour, same_hour, skipped_into, at_midnight, at_one, after_roll, start_ok])
+	# a stale answer is fixed by the other triggers: friend_changed (hearts / stage), the game events of the autoload's list, day_started
+	fake.answers["open:bakery"] = false
+	bus.friend_changed.emit(&"pip", 4)
+	var on_friend: bool = not o_node.visible
+	var every_event: bool = true
+	for ev in FakeSocial.WHEN_REFRESH_EVENTS:
+		fake.answers["open:bakery"] = true
+		bus.game_event.emit(ev, {})
+		if not o_node.visible:
+			every_event = false
+		fake.answers["open:bakery"] = false
+		bus.game_event.emit(ev, {})
+		if o_node.visible:
+			every_event = false
+	fake.answers["open:bakery"] = true
+	area3._on_day_event(1, &"foraar")                           # the real signal would also run every other manager's day roll
+	var on_day: bool = o_node.visible and bus.day_started.is_connected(Callable(area3, &"_on_day_event"))
+	# a flag inside a `&` is polled like a plain `flag:` spec
+	gm.set_flag(&"t_wg_flag2", true)
+	area3._process(0.3)
+	var polled_in: bool = f_node.visible
+	gm.set_flag(&"t_wg_flag2", false)
+	area3._process(0.3)
+	var polled_out: bool = not f_node.visible
+	t.check("when_refresh_on_friend_events_and_flags", on_friend and every_event and on_day and polled_in and polled_out,
+		"friend_changed re-asks the delegate (%s), every game event of its WHEN_REFRESH_EVENTS (%s), day_started (%s); the flag of `hearts:..&flag:x` is polled in (%s) and out (%s)" % [on_friend, every_event, on_day, polled_in, polled_out])
+	# the area listens only while it is in the tree
+	var names: Array[StringName] = [&"_on_clock_event", &"_on_friend_event", &"_on_game_event", &"_on_day_event"]
+	var hooked: bool = bus.time_of_day_changed.is_connected(Callable(area3, names[0])) and bus.friend_changed.is_connected(Callable(area3, names[1])) \
+		and bus.game_event.is_connected(Callable(area3, names[2])) and bus.day_started.is_connected(Callable(area3, names[3]))
+	(made3[0] as Node).remove_child(area3)
+	var released: bool = not (bus.time_of_day_changed.is_connected(Callable(area3, names[0])) or bus.friend_changed.is_connected(Callable(area3, names[1])) \
+		or bus.game_event.is_connected(Callable(area3, names[2])) or bus.day_started.is_connected(Callable(area3, names[3])))
+	t.check("when_signals_hooked_in_the_tree_and_released_out_of_it", hooked and released, "clock, friend_changed, game_event and day_started are connected while the area is in the tree (%s) and none after it left (%s: a parked area never refreshes)" % [hooked, released])
+	area3.free()
+	(made3[0] as Node).queue_free()
+
+	# --- clean up: the autoload stand-in, the flags, the clock
+	Svc.clear_overrides()
+	fake.free()
+	gm.clear_flag(&"t_wg_flag")
+	gm.clear_flag(&"t_wg_flag2")
+	gm.set("hour", saved_hour)
+	await t.frames(1)
 
 
 ## `when=` on a PROP (or on a marker's `prop=`) hides the WHOLE prop: every y-sort strip of its sprite and the StaticBody2D collider
@@ -1807,7 +2048,7 @@ func _builder_rebuild_while_traveling(t) -> void:
 	# --- 2. the pass-out: the day rolled INSIDE advance_time before midnight_passed starts the sequence; the deferred rebuild of that
 	# frame finds `traveling` set and used to be dropped
 	var room2: IsoArea = _world.area
-	gm.set("hour", 23)
+	gm.set("hour", gm.day_end_hour() - 1)         # the last hour of the game day (01:50 at day_end_hour 26): +20 min crosses the day end
 	gm.set("minute", 50)
 	var built1: int = built_calls.size()
 	fade_at_rebuild.clear()
@@ -1819,7 +2060,7 @@ func _builder_rebuild_while_traveling(t) -> void:
 	var passed: bool = await t.until(func() -> bool: return not _world.sleeping, 12.0)
 	Engine.time_scale = 1.0
 	t.check("rebuild_queued_during_the_pass_out", passing_out and passed and _world.area != room2 and built_calls.size() == built1 + 1 and not _world._rebuild_queued and fade_at_rebuild.size() == 1 and fade_at_rebuild[0] >= 0.99 and p.get_parent() == _world.area.objects,
-		"the day roll of advance_time (before midnight_passed) queued the rebuild, the pass-out night ran it exactly once behind the black screen (builder calls %d -> %d)" % [built1, built_calls.size()])
+		"the day roll of advance_time at the day end (before midnight_passed) queued the rebuild, the pass-out night ran it exactly once behind the black screen (builder calls %d -> %d)" % [built1, built_calls.size()])
 	# --- 3. a travel keeps the request too (the primitive: rebuild_current_area() while traveling does not drop it)
 	var room3: IsoArea = _world.area
 	var built2: int = built_calls.size()
@@ -2063,8 +2304,8 @@ func _sleep_and_passout(t) -> void:
 	t.check("bed_sleeps_until_morning", was_sleeping and slept and day1 == day0 % 28 + 1 and gm.get("hour") == gm.day_start_hour() and gm.get("minute") < 10 and float(p.get("stamina")) >= float(p.get("max_stamina")) - 0.01 and _world._fade.color.a == 0.0 and int(p.get("state")) == 0,
 		"19:00 -> next morning %02d:00 on day %d (was %d), energy restored, fade clear, took %d ms at time scale 4 [sleeping %s slept %s stamina %s/%s fade %s state %s]" % [gm.get("hour"), day1, day0, Time.get_ticks_msec() - started, was_sleeping, slept, p.get("stamina"), p.get("max_stamina"), _world._fade.color.a, p.get("state")])
 	bus.notification_posted.disconnect(ncb)
-	# pass-out: the clock crosses midnight (GameManager emits game_event midnight_passed) -> sleep clip, fade, wake at day_start_hour, NOT a skipped day
-	gm.set("hour", 23)
+	# pass-out: the clock crosses the DAY END 26:00 = 02:00 (GameManager emits game_event midnight_passed) -> sleep clip, fade, wake at day_start_hour, NOT a skipped day
+	gm.set("hour", gm.day_end_hour() - 1)
 	gm.set("minute", 50)
 	var day2: int = gm.get("day")
 	var notes2: Array = []
@@ -2080,8 +2321,8 @@ func _sleep_and_passout(t) -> void:
 	for n in notes2:
 		if n[2] == "sleep":
 			passed_note = n
-	t.check("pass_out_at_midnight", sleeping_now and done and gm.get("day") == day2 % 28 + 1 and gm.get("hour") == gm.day_start_hour() and not passed_note.is_empty() and passed_note[1] == _world.tr("NOTIF_PASSED_OUT") and passed_note[0] == _world.tr("NOTIF_PASSED_OUT_TITLE"),
-		"23:50 + 20 min crosses midnight: one new day (%d -> %d), wake at 06:00, NOTIF_PASSED_OUT posted" % [day2, gm.get("day")])
+	t.check("pass_out_at_day_end", sleeping_now and done and gm.get("day") == day2 % 28 + 1 and gm.get("hour") == gm.day_start_hour() and not passed_note.is_empty() and passed_note[1] == _world.tr("NOTIF_PASSED_OUT") and passed_note[0] == _world.tr("NOTIF_PASSED_OUT_TITLE"),
+		"01:50 (raw 25:50) + 20 min crosses the day end 02:00: one new day (%d -> %d), wake at 06:00, NOTIF_PASSED_OUT posted" % [day2, gm.get("day")])
 	bus.notification_posted.disconnect(ncb2)
 	# no pass-out in the forest (time is paused there; nothing may trigger it)
 	_world._enter(&"_fixture_ortho", &"default")

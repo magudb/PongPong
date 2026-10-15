@@ -1105,7 +1105,7 @@ func _stock_and_days() -> void:
 	t.expect(int(_row("seed_shop", &"pumpkin_seeds")["stock"]) == 15, "a new game fills every shelf")
 	t.expect(shop.from_dict(parsed as Dictionary) and int(_row("seed_shop", &"pumpkin_seeds")["stock"]) == 10 and int(_row("seed_shop", &"moonflower_seeds")["stock"]) == 8, "the shelves come back from a save (pumpkin seeds 10)")
 	shop.from_dict({"stock": {"seed_shop": {"pumpkin_seeds": 999, "ghost": 3}, "no_shop": {"x": 1}}})
-	t.check("shop_save_validated", int(_row("seed_shop", &"pumpkin_seeds")["stock"]) == 15 and int(_row("seed_shop", &"carrot_seeds")["stock"]) == 20 and not shop.to_dict()["stock"].has("no_shop") and not shop.to_dict()["stock"]["seed_shop"].has("ghost"), "counts are clamped to the shelf, unknown shops and items are dropped, missing shelves are full")
+	t.check("shop_save_validated", int(_row("seed_shop", &"pumpkin_seeds")["stock"]) == 15 and int(_row("seed_shop", &"carrot_seeds")["stock"]) == 25 and not shop.to_dict()["stock"].has("no_shop") and not shop.to_dict()["stock"]["seed_shop"].has("ghost"), "counts are clamped to the shelf, unknown shops and items are dropped, missing shelves are full")
 
 	# the order's behaviour: shelves restock on day_started and on nothing else; the first plan's knob `economy.shop_refresh_hour`
 	# ("restock when this hour is reached") is read by no code, so it is a dead tuning knob that P10 deletes (handoff)

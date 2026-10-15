@@ -14,8 +14,9 @@ static func thousands(n: int) -> String:
 	return ("-" if n < 0 else "") + out
 
 
+## The ONE clock formatter of the UI. The raw game hour (GameManager.hour, 6..25: 24 and 25 are the same game day after midnight) is read mod 24: 25:30 -> "01:30".
 static func clock(hour: int, minute: int) -> String:
-	return "%02d:%02d" % [hour, minute]
+	return "%02d:%02d" % [posmod(hour, 24), minute]
 
 
 ## "Tirsdag 16. Blomstermåned": ONE calendar implementation, TimeManager.date_text() (P02: weekday = (day - 1 + first_weekday)

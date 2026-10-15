@@ -43,7 +43,7 @@ const GENERATOR_PATH := "res://scripts/world2d/levels/source/build_traetoppen_js
 ## sha256 of the BUILT framework files this package must not edit (git-free proof, taken when V3 landed): a legitimate later edit of one of
 ## them by its owner (P04 / P05) makes this check fail on purpose - update the hash in the same commit.
 const PINNED := {
-	"res://scripts/world2d/iso_area.gd": "76633d19cfa655b1fb306e784378e392b2d9ef1c3208d1b708dcb133eb32371e",
+	"res://scripts/world2d/iso_area.gd": "1b282864c4680925b76ec7477f631de137365232877a2dfda959a433d693f1bd",
 	"res://scripts/world2d/world_2d.gd": "b7650d15d442c05be266fb6835221d63b3e8970173c33582a4185379543ef961",
 	"res://scripts/world2d/game_data.gd": "03a66479819a83799b98fbd2db1e5cad4cbdb9b5e52d0113ba73f525160e5a0c",
 	"res://scripts/world2d/art_catalog.gd": "ef0719d05c87deb342fc95f1ef937f64d83bfcdc6c6f2c50a5ac8bab611f0439",

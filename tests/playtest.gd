@@ -23,6 +23,8 @@ extends SceneTree
 ##   --strict                          ignore tests/lib/known_issues.txt: every engine message fails the run
 ##   --known-issues=PATH               one more known-issues file besides res://tests/lib/known_issues.txt (repeatable)
 ##   --verbose                         print every ok line (default: at most 400 per section)
+## The wrapper (tests/run_playtest.sh) has options of its own that this script never sees: --fast (headless: `--fixed-fps 60`, frames run ahead of the
+## wall clock), --no-import, --timeout=SECS, --keep-home. The watchdogs of this script (--section-timeout, TIMEOUT_S, --max-seconds) count WALL-CLOCK seconds.
 ##
 ## Section file contract (res://tests/sections/<name>.gd, alphabetical order, files starting with "_" are ignored):
 ##   extends RefCounted
@@ -109,7 +111,7 @@ func _initialize() -> void:
 	var isolated := OS.get_environment("PLAYTEST_ISOLATED") == "1"
 	print("PLAYTEST start mode=%s character=%s sections=%s only=%s" % ["windowed" if _windowed else "headless", _character, _sections_dir, ",".join(_only) if not _only.is_empty() else "*"])
 	print("  info  user dir %s (%s)" % [_t.user_dir, "throwaway" if isolated else "REAL user dir: run tests/run_playtest.sh for an isolated one"])
-	create_timer(_max_seconds, true, false, true).timeout.connect(_on_global_timeout)
+	process_frame.connect(_check_run_watchdog)
 	_run.call_deferred()
 
 
@@ -134,6 +136,16 @@ func _load_known_issues() -> void:
 		f.close()
 	if not _catcher.known_rules.is_empty():
 		print("  info  %d known issue(s) of this tree are tolerated and listed as KNOWN (tests/lib/known_issues.txt; --strict ignores them)" % _catcher.known_rules.size())
+
+
+## The watchdogs count WALL-CLOCK time (Time.get_ticks_msec), not game time: with `run_playtest.sh --fast` (--fixed-fps 60) a frame costs a fraction of a
+## millisecond and a game second passes in a few, so a SceneTreeTimer of 240 "seconds" would trip on a section that waits on the wall clock
+## (UiAudit's settle loops) long before the section is stuck. Checked once per frame, like the timer it replaces.
+func _check_run_watchdog() -> void:
+	if _finished or float(Time.get_ticks_msec() - _t0) / 1000.0 <= _max_seconds:
+		return
+	process_frame.disconnect(_check_run_watchdog)
+	_on_global_timeout()
 
 
 func _on_global_timeout() -> void:
@@ -232,14 +244,13 @@ func _run_section(s: Dictionary) -> void:
 		(obj as Node).queue_free()
 
 
-## Runs `work` (a coroutine Callable) and waits for it, but at most `limit` seconds. Returns false on timeout.
+## Runs `work` (a coroutine Callable) and waits for it, but at most `limit` WALL-CLOCK seconds (see _check_run_watchdog). Returns false on timeout.
 ## A coroutine that is stuck forever cannot be cancelled in GDScript, so a timeout aborts the whole run.
 func _guarded(limit: float, work: Callable) -> bool:
 	_guard_done = false
-	var state := {"timed_out": false}
-	create_timer(limit, true, false, true).timeout.connect(func() -> void: state["timed_out"] = true)
+	var started := Time.get_ticks_msec()
 	_guard_run(work)
-	while not _guard_done and not state["timed_out"]:
+	while not _guard_done and float(Time.get_ticks_msec() - started) / 1000.0 < limit:
 		await process_frame
 	return _guard_done
 
@@ -515,3 +526,4 @@ func _absolute(path: String) -> String:
 func _print_usage() -> void:
 	print("usage: tests/run_playtest.sh [--character=animal|fairy|hobbit|ghost] [--only=a,b] [--list] [--windowed] [--out=DIR]")
 	print("       [--no-boot] [--play-seconds=N] [--section-timeout=N] [--max-seconds=N] [--report=FILE] [--seed=N] [--verbose] [--strict]")
+	print("       wrapper only (tests/run_playtest.sh): [--fast] [--no-import] [--timeout=SECS] [--keep-home]")

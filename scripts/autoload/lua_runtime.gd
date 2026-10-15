@@ -14,6 +14,8 @@ extends Node
 ##   dialogue -> get_dialogue(id, context)
 ##   recipes  -> get_recipes(category?), get_recipe(id)
 ##   shops    -> get_shop(id), get_shops()
+##   registry -> get_registry(name), get_registry_entry(name, id): `registry = "<name>"` header + a top-level table of that
+##               name = { <id> = {...} }; one file per citizen / building / festival ... (routines, buildings, events, festivals)
 ##   (config.npcs -> get_npc(id), get_npcs())
 ## `reload_scripts()` re-reads everything (bound to F9 in debug builds only).
 ##
@@ -23,6 +25,9 @@ extends Node
 ##   * Comparing values of different types is false, never an engine error (`false == 3`).
 ##   * api.emit(name, payload) carries the payload; api.notification(title, message) runs both through tr().
 ##   * Unknown api functions are logged once (print, not an engine warning) and answer nil.
+##   * The social functions (api.get_hearts / add_hearts / is_birthday / festival) are late-bound to the SocialManager autoload
+##     (S-core): without it they answer nil and change nothing. `api.festival()` answers "" (a TRUTHY string in Lua) when no
+##     festival is on: compare it (`api.festival() ~= ""`), never test it.
 
 ## A Lua number outside +-1e15 is clamped before int() (int(1e30) is INT64_MIN on x86 and would read as a full deduction).
 const ARG_INT_LIMIT := 1.0e15
@@ -33,6 +38,8 @@ const _Parser := preload("res://scripts/data/lua_parser.gd")
 const _Lint := preload("res://scripts/data/lua_lint.gd")
 
 const _RARITY_IDS := ["normal", "uncommon", "rare", "unique", "legendary", "common"]
+## names the parser keeps for its own result keys: a table of that name is never extracted, so a registry cannot use them
+const _RESERVED_KEYS := ["functions", "table_assigns", "source_path", "kind", "id"]
 
 var _scripts: Dictionary = {}          # script_id -> parsed script dict
 var _quest_modules: Dictionary = {}    # quest_id -> script_id
@@ -41,8 +48,9 @@ var _item_defs: Dictionary = {}        # item_id -> def
 var _config: Dictionary = {}
 var _recipes: Dictionary = {}          # recipe_id -> def (kind "recipes")
 var _shops: Dictionary = {}            # shop_id -> def (kind "shops")
+var _registries: Dictionary = {}       # registry name -> {id -> def} (kind "registry": routines, buildings, events, festivals ...)
 var _config_owner: Dictionary = {}     # top-level config key -> script id
-var _owner_of: Dictionary = {}         # "items:<id>" / "recipes:<id>" / "shops:<id>" / "quest:<id>" / "dialogue:<id>" -> script id
+var _owner_of: Dictionary = {}         # "items:<id>" / "recipes:<id>" / "shops:<id>" / "registry:<name>:<id>" / "quest:<id>" / "dialogue:<id>" -> script id
 var _logged_once: Dictionary = {}
 var _hot_reload_enabled: bool = true
 
@@ -84,6 +92,7 @@ func reload_scripts(announce: bool = false) -> void:
 	_config.clear()
 	_recipes.clear()
 	_shops.clear()
+	_registries.clear()
 	_config_owner.clear()
 	_owner_of.clear()
 	_logged_once.clear()
@@ -195,6 +204,18 @@ func get_shop(shop_id: String) -> Dictionary:
 
 func get_shops() -> Dictionary:
 	return _shops
+
+
+## id -> def of every `kind = "registry"` file whose header says `registry = "<name>"` (routines, buildings, events, festivals ...),
+## in load order. {} for an unknown name. The returned dictionary is the live registry: treat it as read-only (as get_recipes).
+func get_registry(registry_name: String) -> Dictionary:
+	return _registries.get(registry_name, {})
+
+
+## One registry entry (the def under `<id>` in the table named `registry_name`), {} when the registry or the id is unknown. Read-only.
+func get_registry_entry(registry_name: String, id: String) -> Dictionary:
+	var entry: Variant = (_registries.get(registry_name, {}) as Dictionary).get(id, {})
+	return entry if typeof(entry) == TYPE_DICTIONARY else {}
 
 
 ## NPC roster entry (lua/config/npcs.lua) with its `id` filled in; {} when unknown.
@@ -398,6 +419,8 @@ func _register_script(sid: String) -> void:
 				for rid in rdefs:
 					_claim("recipes", str(rid), sid, path)
 					_recipes[str(rid)] = rdefs[rid]
+		"registry":
+			_register_registry(script, sid, path)
 		"shops":
 			var sdefs: Variant = script.get("shops", {})
 			if typeof(sdefs) == TYPE_DICTIONARY:
@@ -405,6 +428,23 @@ func _register_script(sid: String) -> void:
 					_claim("shops", str(shop_id), sid, path)
 					_shops[str(shop_id)] = sdefs[shop_id]
 	_check_tables_header(script, path)
+
+
+## `kind = "registry"`: the header `registry = "<name>"` names a top-level table `<name> = { <id> = {...} }`; its entries join the
+## registry `<name>` (several files may feed one registry, each id once: a second file defining an id lands in data_report and
+## the later file wins). A file without a usable header is the finding `registry_header` and registers nothing.
+func _register_registry(script: Dictionary, sid: String, path: String) -> void:
+	var rname := str((script.get("table_assigns", {}) as Dictionary).get("registry", ""))
+	var usable := rname != "" and not (rname in _RESERVED_KEYS)
+	var rtab: Variant = script.get(rname) if usable else null
+	if typeof(rtab) != TYPE_DICTIONARY:
+		_add_finding(path, 0, "registry_header", rname, "a kind = \"registry\" file needs `registry = \"<name>\"` and a top-level table of that name (`<name> = { <id> = { ... } }`); the name cannot be one of %s" % ", ".join(_RESERVED_KEYS))
+		return
+	if not _registries.has(rname):
+		_registries[rname] = {}
+	for rkey in rtab:
+		_claim("registry:" + rname, str(rkey), sid, path)
+		(_registries[rname] as Dictionary)[str(rkey)] = rtab[rkey]
 
 
 ## Fills in the `id` of recipes, shops and NPCs so a def is self-describing (the key it was declared under).
@@ -499,7 +539,7 @@ func _merge_dict(target: Dictionary, source: Dictionary) -> void:
 ## Legacy helper: parses the top-level table `table_name` of `text` into out[table_name] when the file defines it.
 func _extract_named_table(text: String, table_name: String, out: Dictionary) -> void:
 	var parsed: Dictionary = _Parser.parse_source(text)
-	if parsed.has(table_name) and not (table_name in ["functions", "table_assigns", "source_path", "kind", "id"]):
+	if parsed.has(table_name) and not (table_name in _RESERVED_KEYS):
 		out[table_name] = parsed[table_name]
 
 
@@ -697,6 +737,16 @@ func _call_api(method: String, args: Array) -> Variant:
 		"get_gold":
 			var eco := _node("EconomyManager")
 			return eco.get("gold") if eco != null else 0
+		# the social functions (addendum 8.6): late-bound to the SocialManager autoload (S-core), nil and no effect without it
+		"get_hearts":
+			return _social_call("hearts", [_str_arg(args, 0)], TYPE_INT)
+		"add_hearts":
+			_social_call("add_hearts", [_str_arg(args, 0), _int_arg(args, 1, 0), &"lua"])
+			return null
+		"is_birthday":
+			return _social_call("is_birthday", [_str_arg(args, 0)], TYPE_BOOL)
+		"festival":
+			return _social_call("festival_active", [], TYPE_STRING)
 		"notification":
 			lua_notification(_str_arg(args, 0), _str_arg(args, 1))
 			return null
@@ -719,8 +769,25 @@ func _call_api(method: String, args: Array) -> Variant:
 			if qm2 != null:
 				qm2.complete_quest(StringName(_str_arg(args, 0)))
 			return null
-	_log_once("unknown Lua function `%s` evaluates to nil (api functions: add_gold add_item remove_item set_flag get_flag has_flag has_item get_gold notification unlock_zone emit log offer_quest complete_quest)" % method)
+	_log_once("unknown Lua function `%s` evaluates to nil (api functions: add_gold add_item remove_item set_flag get_flag has_flag has_item get_gold notification unlock_zone emit log offer_quest complete_quest get_hearts add_hearts is_birthday festival)" % method)
 	return null
+
+
+## Calls `method` of the SocialManager autoload (S-core) and converts the answer to `as_type` (TYPE_INT / TYPE_BOOL / TYPE_STRING;
+## TYPE_NIL keeps it as is). null when the autoload is not there or lacks the method: no manager, no answer, nothing is guessed.
+func _social_call(method: String, call_args: Array, as_type: int = TYPE_NIL) -> Variant:
+	var sm := _node("SocialManager")
+	if sm == null or not sm.has_method(method):
+		return null
+	var answer: Variant = sm.callv(method, call_args)
+	match as_type:
+		TYPE_INT:
+			return int(answer) if _is_number(answer) else null
+		TYPE_BOOL:
+			return bool(answer) if typeof(answer) == TYPE_BOOL else null
+		TYPE_STRING:
+			return str(answer) if _is_text(answer) else null
+	return answer
 
 
 # =============================================================================================== value semantics

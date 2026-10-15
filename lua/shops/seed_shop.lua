@@ -11,6 +11,10 @@
 --
 -- The first eight lines are the guide's, in the guide's order: Gulerodsfroe 20, Graeskarfroe 60, Jordbaerfroe 45, Solsikkefroe 30,
 -- Kattemyntefroe 35, Maanebonne 120 (moonflower_seeds), Goedning 15, Fe-stoev til marken 900 (fairy_dust_water).
+--
+-- Carrot seeds hold 25 (restock 25): a dedicated farm (110 plots after the 800 g field expansion) plants 110 / (4 / 0.85 + 1) = 19.2 carrots a day
+-- and the shop is closed on Sundays, so the 6 open days have to carry 7 days: 6 x 25 = 150 a week = 21.4 a day (6 x 20 = 17.1 left 2.1 a day short).
+-- economy_hours.seed_supply_covers_a_dedicated_field buys the shelf for a week through ShopSystem and checks it against that need.
 
 kind = "shops"
 
@@ -22,7 +26,7 @@ shops = {
     buy_multiplier = 1.0,
     sell_multiplier = 1.0,
     stock = {
-      carrot_seeds = { stock = 20, restock = 20 },
+      carrot_seeds = { stock = 25, restock = 25 },       -- RT5: 6 open days x 25 = 150 a week = 21.4 a day covers a dedicated 110 plot field (19.2 a day; the shop is closed on Sundays)
       pumpkin_seeds = { stock = 15, restock = 15 },
       strawberry_seeds = { stock = 15, restock = 15 },
       sunflower_seeds = { stock = 15, restock = 15 },

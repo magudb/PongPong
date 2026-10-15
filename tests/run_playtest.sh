@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Playtest runner (plan 8.1, 7.2, Appendix C).
 #
-#   tests/run_playtest.sh [--character=animal|fairy|hobbit|ghost] [--only=core,farm] [--list]
+#   tests/run_playtest.sh [--character=animal|fairy|hobbit|ghost] [--only=core,farm] [--list] [--fast]
 #   tests/run_playtest.sh --windowed [--only=area] [--out=DIR]      real 1280x720 window, run_windowed(t) sections only
 #                                                                    (use tools/dev/run_windowed.sh: it takes the one-window lock)
 #
@@ -9,10 +9,18 @@
 #   --windowed --out= --no-boot --boot --play-seconds=N --section-timeout=N --max-seconds=N --report=FILE --seed=N
 #   --verbose --strict (ignore tests/lib/known_issues.txt) --known-issues=FILE --sections-dir=PATH
 # Wrapper options:
+#   --fast             headless runs only: pass `--fixed-fps 60` to Godot (GODOT_EXTRA_ARGS), so physics and process frames run
+#                      back to back instead of waiting for the wall clock: a 5.3 game-second real-input walk costs 0.05 s instead
+#                      of 3-5 s (measured). Game time, not wall time, is what the sections see; wall-clock budgets only get easier.
+#                      `Engine.time_scale` does NOT do this (physics ticks stay real-time). A windowed run ignores --fast (a real
+#                      window is watched in real time); an own `--fixed-fps` in GODOT_EXTRA_ARGS is left as it is. For iterating on a
+#                      section, not the gate: a section that times an animation with the wall clock instead of t.game_seconds() fails
+#                      under it (see docs/DEVELOPMENT.md); the plain run is the one that has to be green.
 #   --no-import        skip the "is the .godot cache stale?" check (also PLAYTEST_NO_IMPORT=1)
 #   --timeout=SECS     kill the run after SECS (default 900)
 #   --keep-home        keep the throwaway HOME directory and print its path
 #   GODOT=/path/to/godot   engine binary (default /Applications/Godot.app/Contents/MacOS/Godot)
+#   GODOT_EXTRA_ARGS="..." more engine arguments, placed before `-s res://tests/playtest.gd` (--fast adds `--fixed-fps 60` to them)
 #
 # What it does besides starting Godot:
 #   * runs `godot --headless --path . --import` once when any .gd/.gdshader/.import/asset file is newer than the last
@@ -37,10 +45,12 @@ KEEP_HOME=0
 WINDOWED=0
 HAS_OUT=0
 LIST=0
+FAST=0
 ARGS=()
 for a in "$@"; do
 	case "$a" in
 		--list|--help|-h) LIST=1; ARGS+=("$a") ;;
+		--fast) FAST=1 ;;
 		--no-import) NO_IMPORT=1 ;;
 		--keep-home) KEEP_HOME=1 ;;
 		--timeout=*) TIMEOUT_S="${a#--timeout=}" ;;
@@ -153,6 +163,17 @@ if [ "$WINDOWED" = 1 ] && [ "$LIST" = 0 ]; then
 	fi
 else
 	GODOT_ARGS+=(--headless)
+fi
+if [ "$FAST" = 1 ]; then
+	# --fast: fixed 60 fps = every frame advances game time by 1/60 s and is not paced by the wall clock. Not for a real window.
+	if [ "$WINDOWED" = 1 ] && [ "$LIST" = 0 ]; then
+		echo "run_playtest: --fast is ignored in a windowed run (a window runs in real time)"
+	else
+		case " ${GODOT_EXTRA_ARGS:-} " in
+			*" --fixed-fps"*) ;;
+			*) GODOT_EXTRA_ARGS="--fixed-fps 60${GODOT_EXTRA_ARGS:+ $GODOT_EXTRA_ARGS}" ;;
+		esac
+	fi
 fi
 # shellcheck disable=SC2206
 GODOT_ARGS+=(${GODOT_EXTRA_ARGS:-} -s res://tests/playtest.gd -- "--max-seconds=$HARNESS_MAX" "${ARGS[@]}")

@@ -40,8 +40,9 @@ config = {
 
   -- crops: read by FarmGrid through get_config("crops").  READY when growth_days >= stages * days_per_stage; a plot
   -- gains one growth day per watered day (rain waters everything).  seasons = ids foraar sommer efteraar vinter.
-  -- water_window = { from, to } (hours, wraps midnight): the crop only grows when it was watered inside the window
-  -- (moon crops: 20:00-06:00).  The sprite stage (crop_<id>_0..3) follows the growth ratio, not `stages`.
+  -- water_window = { from, to } (game hours on the stored axis, see `time` below): the crop only grows when it was watered inside the window; from > to wraps:
+  -- hour >= from or hour < to, so { 20, 6 } (moon crops) = 20:00-06:00 = the raw hours 20..25 and 2..5 (00:xx and 01:xx count, a watering at 01:30 belongs to the day that
+  -- rolls at 02:00).  The sprite stage (crop_<id>_0..3) follows the growth ratio, not `stages`.
   -- Seed items (crop_id) live in lua/items: carrot/turnip/pumpkin/moonflower/glow_berry exist, strawberry, sunflower
   -- and catnip seeds are added by P12 (economy.csv names) - the entries are here so the farm needs no code change.
   crops = {
@@ -73,15 +74,17 @@ config = {
     oil_empty_hurt_interval = 12,  -- seconds between half-heart losses while the lantern oil is empty (0 = off)
   },
 
-  -- time: TimeManager / GameManager (P02).  06:00-24:00 at 2 game minutes per real second = 9 real minutes per day.
+  -- time: TimeManager / GameManager (P02).  06:00-02:00 (game hours 6..25, 20 hours) at 2 game minutes per real second = 10 real minutes per day.
+  -- THE CLOCK CONTRACT (docs/design/CLOCK_26_ADDENDUM.md): every hour of every Lua table is a float of GAME HOURS on the axis 6..26 (6.5 = 06:30, 25.0 = 01:00,
+  -- 25.5 = 01:30); 24.0 and 25.5 belong to the SAME game day as 23.0; the day rolls (calendar, weather, bin, restock, crop growth, autosave) at day_end_hour.
   time = {
     minutes_per_real_second = 2.0,
     day_start_hour = 6,
-    day_end_hour = 24,             -- 24:00 passes the player out
+    day_end_hour = 26,             -- game hour 26 = 02:00 passes the player out; the hours 24 and 25 are the SAME game day (shown 00:xx and 01:xx); valid 7..29
     days_per_season = 28,
     seasons = { "foraar", "sommer", "efteraar", "vinter" },
     first_weekday = 0,             -- weekday of day 1 of every season: 0 = Monday ... 6 = Sunday
-    night_start_hour = 20,         -- is_night(): hour >= night_start_hour or hour < night_end_hour
+    night_start_hour = 20,         -- is_night(): hour >= night_start_hour or hour < night_end_hour (the raw hours 24 and 25 count as night)
     night_end_hour = 5,
     auto_save_minutes = 30,
     -- weather rolled once per day: weights per season (normalised by the roller); ids klart regn taage sne torden

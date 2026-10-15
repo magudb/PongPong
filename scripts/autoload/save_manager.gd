@@ -8,7 +8,7 @@ extends Node
 ## full disk never leaves half a save behind and never replaces a good save with a bad one.
 ##
 ## AUTOSAVE writes ONLY the auto slot, never a manual one: every AUTOSAVE_INTERVAL_SECONDS real seconds while the phase
-## is PLAYING, and once after every day end (EventBus.day_ended fires at the bed and at every crossed midnight). The day-end
+## is PLAYING, and once after every day end (EventBus.day_ended fires at the bed and at every crossed day end, game hour 26 = 02:00). The day-end
 ## save is DEFERRED to the end of the frame: day_ended is emitted before the calendar steps and before the other
 ## day_started listeners (crops, shop stock, animals) have run, so the deferred save sees the finished new day.
 ##

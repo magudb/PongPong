@@ -7,6 +7,9 @@ extends RefCounted
 ## save.missing_section_resets, save.validate_before_apply, save.atomic_apply_rolls_back, save.world_dict_contract.
 ## Fix round 2 (review of wave 3): autosave_default_interval_five_minutes, autosave_disabled_day_end*, latest_sub_second_*,
 ## delete_save_*, load_auto_slot_keeps_*, summary_wrong_types_*, v1_time_stamp_is_local_time*, short_write_*.
+## M1b fix round 0 (RT1): the registry checks (registry_*, feature_orders_*, section_registry_order_and_reset, missing_section_resets) run with
+## the REAL feature sections (HomeManager ... SocialManager) detached and registered again afterwards, so they hold whatever feature manager
+## exists: registry_tests_keep_real_sections (two stand-ins named like real sections, home and social, must come back unchanged).
 ##
 ## The section is a sandbox. Every file it writes goes to a scratch directory below user:// (SaveManager.save_dir is
 ## redirected, the real user://saves is compared before and after), and tests/run_playtest.sh runs it in a throwaway
@@ -550,7 +553,69 @@ func _test_autosave_defaults() -> void:
 
 # ================================================================ section registry (addendum 4.4)
 
+## Real feature sections (HomeManager, FurnitureManager, WardrobeManager, LootService, CollectionLog, SocialManager, ...) register themselves on the
+## live SaveManager in their _ready. The registry checks assert the EXACT list of registered names and the apply order of it, which must be the
+## fakes of the test, so the real sections are detached for the duration of _test_registry_inner and registered again afterwards: same node, same
+## order, and (found in apply order, re-registered in that order) equal orders keep their registration order. [[name, node, order], ...].
+func _detach_real_sections() -> Array:
+	var out: Array = []
+	for section_name in sm.registered_section_names():
+		var order: int = 100
+		for entry in sm._sections:
+			if entry["name"] == section_name:
+				order = int(entry["order"])
+		out.append([section_name, sm.section_node(section_name), order])
+	for e in out:
+		sm.unregister_section(e[0])
+	return out
+
+
+func _reattach_real_sections(detached: Array) -> void:
+	for e in detached:
+		if is_instance_valid(e[1]):
+			sm.register_section(e[0], e[1], e[2])
+
+
+## "name@order#node" of every registered (feature) section in apply order: what a detach / re-attach must leave unchanged.
+func _registry_rows() -> Array[String]:
+	var out: Array[String] = []
+	for section_name in sm.registered_section_names():
+		var order: int = -1
+		for entry in sm._sections:
+			if entry["name"] == section_name:
+				order = int(entry["order"])
+		out.append("%s@%d#%d" % [section_name, order, sm.section_node(section_name).get_instance_id()])
+	return out
+
+
 func _test_registry() -> void:
+	# whatever the live tree registered is put aside first, then two stand-ins for real feature managers take its place so the
+	# round trip is proven whatever is (not) installed: "home" has the NAME of a fake of the checks below (the fake replaces it,
+	# and its cleanup unregisters the name: the real node would be lost), "social" sits behind every order of the addendum
+	var installed := _detach_real_sections()
+	var stand_home := FakeSection.new()
+	stand_home.tag = "home"
+	var stand_social := FakeSection.new()
+	stand_social.tag = "social"
+	sm.register_section("home", stand_home, 10)
+	sm.register_section("social", stand_social, 60)
+	var before := _registry_rows()
+	var detached := _detach_real_sections()
+	var seen_empty: bool = sm.registered_section_names().is_empty()
+	_test_registry_inner()
+	var emptied_after: bool = sm.registered_section_names().is_empty()
+	_reattach_real_sections(detached)
+	var after := _registry_rows()
+	t.check("registry_tests_keep_real_sections", detached.size() == 2 and seen_empty and emptied_after and before.size() == 2 and after == before,
+		"%d feature sections detached for the registry checks (registry empty before: %s, after: %s), then registered again unchanged: before %s, after %s" % [detached.size(), seen_empty, emptied_after, before, after])
+	sm.unregister_section("home")
+	sm.unregister_section("social")
+	stand_home.free()
+	stand_social.free()
+	_reattach_real_sections(installed)
+
+
+func _test_registry_inner() -> void:
 	_fresh()
 	_set_state(999, 9)
 	tm.set_weather(&"klart")
@@ -1360,6 +1425,23 @@ func _test_autosave() -> void:
 	gm.advance_time(50 * 60)
 	await t.frames(2)
 	t.check("autosave_coalesces_midnights", _saved_slots == [6], "50 hours crossed two midnights, save_completed %s" % [_saved_slots])
+	# the pass-out roll (02:00) is a day end too: ONE auto save, taken at the restart hour of the new date (the sleep sequence has not woken the player yet);
+	# real midnight (raw 24:00) is NOT a day end: nothing is saved there (the 5 minute timer covers 00:00-02:00)
+	DirAccess.remove_absolute(sm.slot_path(sm.AUTO_SLOT))
+	_saved_slots.clear()
+	gm.hour = 23
+	gm.minute = 55
+	gm.advance_time(10)
+	await t.frames(2)
+	var no_save_at_midnight: bool = _saved_slots.is_empty() and not sm.has_save(sm.AUTO_SLOT) and gm.hour == 24
+	gm.hour = gm.day_end_hour() - 1
+	gm.minute = 55
+	var roll_day: int = gm.day
+	gm.advance_time(10)
+	await t.frames(2)
+	var roll_doc: Variant = _read_json(sm.slot_path(sm.AUTO_SLOT))
+	t.check("autosave_on_the_day_end_roll", no_save_at_midnight and _saved_slots == [6] and roll_doc != null and roll_doc["game"]["day"] == roll_day + 1 and roll_doc["game"]["hour"] == gm.day_roll_restart_hour(),
+		"23:55 + 10 min = raw 24:05: no save; 01:55 + 10 min = the day-end roll: one auto save of day %s at raw hour %s (restart hour %d); save_completed %s" % [roll_doc["game"]["day"] if roll_doc != null else "-", roll_doc["game"]["hour"] if roll_doc != null else "-", gm.day_roll_restart_hour(), _saved_slots])
 	# the switch stops the DAY-END trigger as well as the timer: at the day end itself, and for a save that is already queued
 	DirAccess.remove_absolute(sm.slot_path(sm.AUTO_SLOT))
 	_saved_slots.clear()
@@ -1447,6 +1529,24 @@ func _test_summaries() -> void:
 		"%s" % [s])
 	t.check("summary_meta", s.get("slot") == 0 and s.get("is_auto") == false and str(s.get("timestamp")).length() >= 19 and float(s.get("saved_at")) > 1.0e9 and s.get("from_backup") == false, "slot, is_auto, timestamp, saved_at")
 	t.check("summary_types", typeof(s["day"]) == TYPE_INT and typeof(s["gold"]) == TYPE_INT and typeof(s["total_day"]) == TYPE_INT and typeof(s["play_time_seconds"]) == TYPE_FLOAT, "ints after the JSON round trip")
+	# the game day runs to 02:00: a save at raw 25:40 (01:40, the same game day) keeps hour 25 in the summary and loads back as 25:40 (the summary validator has no hour range);
+	# a file that a build of the 24:00 days wrote right after its midnight roll (hour 0) loads as 02:00, not 24 h later; hours 6..23 of old saves are untouched (core.from_dict_* of clock26)
+	gm.hour = 25
+	gm.minute = 40
+	sm.save_game(3)
+	var late: Dictionary = sm.get_save_summary(3)
+	gm.hour = 6
+	gm.minute = 0
+	var late_loaded: bool = sm.load_game(3)
+	var late_back: bool = gm.hour == 25 and gm.minute == 40 and gm.day == 16
+	var old_doc: Variant = _read_json(sm.slot_path(3))
+	old_doc["game"]["hour"] = 0
+	old_doc["meta"]["summary"]["hour"] = 0
+	_put(3, old_doc)
+	var old_loaded: bool = sm.load_game(3)
+	t.check("save_late_hour_roundtrip_and_old_midnight_save", late.get("hour") == 25 and late.get("minute") == 40 and late_loaded and late_back and old_loaded and gm.hour == 2 and gm.day == 16,
+		"raw 25:40 -> summary %s:%s, loads back %s; an old save at hour 0 loads at raw %02d:%02d (day %d)" % [late.get("hour"), late.get("minute"), late_back, gm.hour, gm.minute, gm.day])
+	sm.delete_save(3)
 	gm.play_time_seconds = 600.0                                     # a whole number of seconds is an int after the JSON load, the summary says float
 	sm.save_game(2)
 	t.check("summary_whole_play_time_is_float", typeof(sm.get_save_summary(2)["play_time_seconds"]) == TYPE_FLOAT and sm.get_save_summary(2)["play_time_seconds"] == 600.0, "600 s -> %s" % [type_string(typeof(sm.get_save_summary(2)["play_time_seconds"]))])

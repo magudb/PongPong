@@ -1,13 +1,14 @@
 extends SceneTree
 ## Lists every action of the live InputMap with its events and verifies the result against the
-## input contract (PLAN 3.2 + addendum 3.3, tests/tools/input_contract.gd). Exit code 0 only when
-## the map matches the contract exactly.
+## input contract (PLAN 3.2 + addendum 3.3 + the towns addendum's `people`, tests/tools/input_contract.gd).
+## Exit code 0 only when the map matches the contract exactly.
 ##
 ##   godot --headless --path . -s res://tests/tools/print_inputmap.gd [-- --all]
 ##
 ## The focus-navigation actions of PLAN 3.2's last row (ui_accept and ui_cancel with the project's
-## pad override, the four D-pad carrying actions) are always listed and verified. --all also lists
-## every other built-in ui_* action (Godot defaults, not part of the contract).
+## pad override, the four D-pad carrying actions) and the pad paging of UI_NAVIGATION.md F10
+## (ui_page_up = PageUp + LB, ui_page_down = PageDown + RB) are always listed and verified. --all
+## also lists every other built-in ui_* action (Godot defaults, not part of the contract).
 
 const Contract := preload("res://tests/tools/input_contract.gd")
 
@@ -37,20 +38,20 @@ func _initialize() -> void:
 		if not ordered.has(a):
 			ordered.append(a)
 	for a: String in ordered:
-		_print_action(a, Contract.ADDENDUM.has(a))
-	print("== focus navigation (PLAN 3.2 last row: Godot defaults + D-pad, joy A/B; project override on ui_accept, ui_cancel) ==")
+		_print_action(a, " [addendum]" if Contract.ADDENDUM.has(a) else (" [town]" if Contract.TOWN.has(a) else ""))
+	print("== focus navigation (PLAN 3.2 last row: Godot defaults + D-pad, joy A/B; project overrides on ui_accept, ui_cancel, ui_page_up = +LB, ui_page_down = +RB) ==")
 	var ui_listed: Array = []
 	for a: String in Contract.UI_OVERRIDES:
 		ui_listed.append(a)
 	for a: String in Contract.UI_DPAD:
 		ui_listed.append(a)
 	for a: String in ui_listed:
-		_print_action(a, false)
+		_print_action(a, "")
 	if show_all:
 		print("== other built-in ui_* actions (Godot defaults) ==")
 		for a: String in builtin:
 			if not ui_listed.has(a):
-				_print_action(a, false)
+				_print_action(a, "")
 
 	print("== shared bindings (one input, several actions; intended, the context decides) ==")
 	var shared: Dictionary = Contract.shared_bindings()
@@ -60,11 +61,12 @@ func _initialize() -> void:
 		print("  %-10s -> %s" % [sig, ", ".join(shared[sig])])
 
 	var errors: Array = Contract.verify()
-	var base_count: int = Contract.ACTIONS.size() - Contract.ADDENDUM.size()
+	var base_count: int = Contract.ACTIONS.size() - Contract.ADDENDUM.size() - Contract.TOWN.size()
 	if errors.is_empty():
 		print("P01 INPUTMAP OK: ui_accept takes joy A, ui_cancel takes joy B, the D-pad walks focus; no event is modifier-, location- or device-qualified")
-		print("P01 INPUTMAP OK: %d actions = %d (PLAN 3.2) + %d (addendum 3.3: %s); no unintended clash" % [
-			Contract.ACTIONS.size(), base_count, Contract.ADDENDUM.size(), ", ".join(Contract.ADDENDUM)])
+		print("P01 INPUTMAP OK: ui_page_up takes PageUp + LB (joy 9), ui_page_down takes PageDown + RB (joy 10); RB still triggers drink and rotate_item")
+		print("P01 INPUTMAP OK: %d actions = %d (PLAN 3.2) + %d (addendum 3.3: %s) + %d (towns addendum: %s); no unintended clash" % [
+			Contract.ACTIONS.size(), base_count, Contract.ADDENDUM.size(), ", ".join(Contract.ADDENDUM), Contract.TOWN.size(), ", ".join(Contract.TOWN)])
 		quit(0)
 		return
 	for e: String in errors:
@@ -73,8 +75,8 @@ func _initialize() -> void:
 	quit(1)
 
 
-func _print_action(action: String, addendum: bool) -> void:
+func _print_action(action: String, tag: String) -> void:
 	var events: Array[InputEvent] = InputMap.action_get_events(action)
-	print("%s%s  (deadzone %.2f, %d events)" % [action, " [addendum]" if addendum else "", InputMap.action_get_deadzone(action), events.size()])
+	print("%s%s  (deadzone %.2f, %d events)" % [action, tag, InputMap.action_get_deadzone(action), events.size()])
 	for ev: InputEvent in events:
 		print("    %s   <%s>" % [ev.as_text(), Contract.signature(ev)])

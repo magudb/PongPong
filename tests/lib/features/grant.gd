@@ -10,7 +10,8 @@ extends RefCounted
 ## Gate quests that are offered by dialogue (snurresvampen, moonstone_crown, bogtraeet, slotsdroemmen) are accepted through the dialogue of their giver by default: the helper reads the
 ## dialogue the player really sees (LuaRuntime.get_dialogue with the flag state of the offer) and accepts the `quest_accept` choice - what Npc2D.handle_choice does - so a quest that
 ## nobody offers fails the grant instead of being silently granted (RV-P1).  Every other quest is accepted and completed through QuestManager.
-## Hearts: flag friend_<npc> (cap 10) + EventBus.friend_changed(npc, hearts) when the signal exists.  Hygge: AutoFurnish.fill() up to the min_decor of the required level.
+## Hearts: through SocialManager.debug_set_hearts when that autoload exists (S-core: the ONLY writer of friendship, raises only, mirrors the flag and emits friend_changed itself); until then (and in a tree
+## without it) the flag friend_<npc> (cap 10) + EventBus.friend_changed(npc, hearts) when the signal exists.  Hygge: AutoFurnish.fill() up to the min_decor of the required level.
 
 const DIALOGUE_QUESTS := ["snurresvampen", "moonstone_crown", "bogtraeet", "slotsdroemmen"]
 ## flag state in which the giver's dialogue offers the quest (the reference modules of data/features/pending/lua/dialogue)
@@ -100,8 +101,13 @@ static func requirements(n: int, opts: Dictionary = {}) -> Dictionary:
 	return report
 
 
-## flag friend_<npc> to `hearts` (never lowers it) + friend_changed
+## `hearts` whole hearts for `npc`, never lowering what is there.  Through SocialManager.debug_set_hearts when the autoload exists (it is the only writer of friendship: points, the derived flag mirror and
+## friend_changed all stay consistent); the flag path below is the FALLBACK for a tree without the manager (wave 3: flag friend_<npc> + friend_changed).
 static func set_hearts(npc: String, hearts: int) -> void:
+	var sm := Svc.node("SocialManager")
+	if sm != null and sm.has_method("debug_set_hearts"):
+		sm.call("debug_set_hearts", npc, hearts)
+		return
 	var gm := Svc.node("GameManager")
 	if gm == null:
 		return

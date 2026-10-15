@@ -5,7 +5,8 @@
 -- A map header `@ambient farm|hyggebyen|forest|cave|home` picks a preset below (`@ambient farm_day` etc. work through `aliases`).
 -- Colours are hex WITHOUT '#'. A preset's `keys` are { hour, color } keyframes over a 24 hour day (the colour of the
 -- CanvasModulate; it MULTIPLIES the picture, so white = unchanged); DayNight interpolates smoothly between them and wraps at
--- midnight. `glow` is the 0..1 factor that fades the additive glow sprites and PointLights in at dusk (lantern posts,
+-- midnight (fposmod 24: the game day runs to 02:00, so the raw game hours 24..26 sample the keys 0.0..2.0 and every preset has the same colour at 0.0 and 24.0).
+-- `glow` is the 0..1 factor that fades the additive glow sprites and PointLights in at dusk (lantern posts,
 -- windows, mushrooms). The three zone palettes of the style guide are the sources of the colours:
 --   Traetoppen   warm honey and moss     (farm)        noon is nearly white, dusk honey-orange, night a cool blue (luminance ~0.4)
 --   Hyggebyen    lavender and rose       (hyggebyen)   rose dawn, lavender evening

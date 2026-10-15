@@ -1,0 +1,24 @@
+{
+	"screens": [
+		{
+			"id": "mg_x",
+			"title": "the folder file's row",
+			"kind": "surface",
+			"package": "MG-dup",
+			"checks": [
+				"rules"
+			],
+			"tripwire": "res://tests/fixtures/ui_audit/never_built.tscn"
+		},
+		{
+			"id": "mg_y",
+			"title": "mg_y",
+			"kind": "surface",
+			"package": "MG-dup",
+			"checks": [
+				"rules"
+			],
+			"tripwire": "res://tests/fixtures/ui_audit/never_built.tscn"
+		}
+	]
+}

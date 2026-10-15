@@ -14,16 +14,17 @@ extends RefCounted
 ##   method_call      `obj:method(...)`            vararg     `...`
 ##   arithmetic       binary `+ - * / % ^ //`      bitwise    `& | ~ << >>`
 ##   mixed_table      a table with `name = value` AND positional entries (the positional ones are silently dropped)
+##   reserved_key     a Lua reserved word as a table key (`{ until = 18 }`: real Lua rejects it; routines use leave / stay / from)
 ##   table_value      a table value that is not a literal (identifier, call, expression: it is NOT evaluated)
 ##   nil_value        `nil` as a table value (leave the key out)
-##   kind_missing / kind_unknown   the `kind = "..."` header
+##   kind_missing / kind_unknown   the `kind = "..."` header (config items quest dialogue recipes shops registry)
 ##   unbalanced       `if` / `function` / `do` not closed by `end`, or a stray `end`
 ##   unterminated_string, stray_character   tokenizer level
 
 # preload, not the class name: LuaRuntime (an autoload) depends on this script and must compile with a stale class cache
 const _Tokens := preload("res://scripts/data/lua_tokens.gd")
 
-const KINDS := ["config", "items", "quest", "quests", "dialogue", "recipes", "shops"]
+const KINDS := ["config", "items", "quest", "quests", "dialogue", "recipes", "shops", "registry"]
 const _STDLIB_TABLES := ["string", "math", "table", "os", "io", "utf8", "coroutine", "debug", "package"]
 const _STDLIB_FUNCS := [
 	"tostring", "tonumber", "ipairs", "pairs", "type", "select", "setmetatable", "getmetatable", "require", "dofile",
@@ -176,6 +177,8 @@ static func _table(tk: Dictionary, i: int, path: String, out: Array[Dictionary])
 				j += 1
 				continue
 		if types[j] == _Tokens.NAME and j + 1 < count and types[j + 1] == _Tokens.OP and texts[j + 1] == "=":
+			if texts[j] in _KEYWORDS:
+				out.append(_mk(path, lines[j], "reserved_key", texts[j], _reserved_key_message(texts[j])))
 			named += 1
 			j = _value(tk, j + 2, path, out)
 		elif types[j] == _Tokens.OP and texts[j] == "[":
@@ -192,6 +195,11 @@ static func _table(tk: Dictionary, i: int, path: String, out: Array[Dictionary])
 	if named > 0 and positional > 0:
 		out.append(_mk(path, lines[i], "mixed_table", "{", "table mixes `name = value` and positional entries: the positional entries are silently dropped"))
 	return j
+
+
+static func _reserved_key_message(word: String) -> String:
+	var hint := " (routine blocks use leave / stay / from)" if word == "until" else ""
+	return "`%s` is a reserved word of Lua and cannot name a table field (real Lua rejects `%s = ...`): pick another name%s or write `[\"%s\"] = ...`" % [word, word, hint, word]
 
 
 ## Checks the value that starts at token `j`; returns the index of the token that ends it ("," ";" or "}", not consumed).
@@ -305,6 +313,6 @@ static func _structure_rules(tk: Dictionary, path: String, out: Array[Dictionary
 	for open_line in stack:
 		out.append(_mk(path, open_line, "unbalanced", "if/function/do", "this block is not closed by `end`"))
 	if not kind_seen:
-		out.append(_mk(path, 1, "kind_missing", "kind", "no top-level `kind = \"...\"` header (config, items, quest, dialogue, recipes or shops)"))
+		out.append(_mk(path, 1, "kind_missing", "kind", "no top-level `kind = \"...\"` header (config, items, quest, dialogue, recipes, shops or registry)"))
 	elif not (kind_value in KINDS):
-		out.append(_mk(path, kind_line, "kind_unknown", kind_value, "unknown kind \"%s\" (expected one of: config, items, quest, dialogue, recipes, shops)" % kind_value))
+		out.append(_mk(path, kind_line, "kind_unknown", kind_value, "unknown kind \"%s\" (expected one of: config, items, quest, dialogue, recipes, shops, registry)" % kind_value))

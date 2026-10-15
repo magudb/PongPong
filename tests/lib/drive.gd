@@ -90,12 +90,20 @@ func seconds(s: float) -> void:
 	await tree.create_timer(s, true, false, false).timeout
 
 
-## Wall-clock seconds (Engine.time_scale does not apply).
+## Game time in seconds since the engine started: physics ticks / ticks per second, the clock the game animates by. Measure a duration with this, not with
+## Time.get_ticks_msec(): the result is the same in a normal run and under `run_playtest.sh --fast` (--fixed-fps 60), where the wall clock runs far behind.
+func game_seconds() -> float:
+	return float(Engine.get_physics_frames()) / float(Engine.physics_ticks_per_second)
+
+
+## Seconds of unscaled frame time (Engine.time_scale does not apply). That is the wall clock in a normal run; under `run_playtest.sh --fast` (--fixed-fps 60)
+## every frame counts 1/60 s whatever it costs, so the wait runs ahead of the wall clock like everything else the engine animates. A wait for something
+## outside the engine loop (a thread, a child process) is `until(cond, timeout)`, which counts the wall clock.
 func real_seconds(s: float) -> void:
 	await tree.create_timer(s, true, false, true).timeout
 
 
-## Polls `cond` once per process frame until it returns true or `timeout` real seconds pass. Returns whether it became true.
+## Polls `cond` once per process frame until it returns true or `timeout` WALL-CLOCK seconds pass (also under --fast). Returns whether it became true.
 func until(cond: Callable, timeout: float = 5.0) -> bool:
 	var t0 := Time.get_ticks_msec()
 	while not cond.call():

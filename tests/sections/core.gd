@@ -432,7 +432,7 @@ func _split_top(text: String) -> Array[String]:
 func _test_config_single_source() -> void:
 	gm.clear_config_overrides()
 	t.check("config_literal_defaults", gm.DEFAULT_DAYS_PER_SEASON == 28 and gm.DEFAULT_SEASONS == [&"foraar", &"sommer", &"efteraar", &"vinter"]
-		and gm.DEFAULT_DAY_START_HOUR == 6 and gm.DEFAULT_DAY_END_HOUR == 24 and gm.DEFAULT_MINUTES_PER_REAL_SECOND == 2.0, "28 days, 4 seasons, 06:00 to 24:00, 2 min/s")
+		and gm.DEFAULT_DAY_START_HOUR == 6 and gm.DEFAULT_DAY_END_HOUR == 26 and gm.DEFAULT_MINUTES_PER_REAL_SECOND == 2.0, "28 days, 4 seasons, 06:00 to 26:00 (= 02:00 at night), 2 min/s")
 	var lua: Node = bus.get_node_or_null("/root/LuaRuntime")
 	var want_mps := 2.0
 	if lua != null:
@@ -792,22 +792,32 @@ func _test_clock() -> void:
 	var fifty: bool = gm.day == 3 and gm.hour == 8 and _names(w["log"]).count("day_ended") == 2 and _names(w["log"]).count("day_started") == 2 and _names(w["log"]).count("time_of_day_changed") == 1 and _names(w["log"]).count("game_event") == 2
 	_set_clock(1, &"foraar", 1, 6, 0)
 	gm.advance_time(18 * 60)
-	var exactly_midnight: bool = gm.day == 2 and gm.hour == 0 and gm.minute == 0
+	var exactly_midnight: bool = gm.day == 1 and gm.hour == 24 and gm.minute == 0      # 06:00 + 18 h is 00:00 of the SAME game day (raw hour 24)
+	_set_clock(1, &"foraar", 1, 6, 0)
+	gm.advance_time(20 * 60)
+	var exactly_day_end: bool = gm.day == 2 and gm.hour == 2 and gm.minute == 0        # 06:00 + 20 h = 26:00: the day rolls, the clock restarts at 02:00
 	_set_clock(1, &"foraar", 1, 23, 59)
 	gm.advance_time(1)
-	var one_minute: bool = gm.day == 2 and gm.hour == 0 and gm.minute == 0
+	var one_minute: bool = gm.day == 1 and gm.hour == 24 and gm.minute == 0            # 23:59 + 1 min = 00:00 of the same day: no roll, no pass-out event
+	_set_clock(1, &"foraar", 1, 25, 59)
+	gm.advance_time(1)
+	var one_minute_end: bool = gm.day == 2 and gm.hour == 2 and gm.minute == 0         # 01:59 (raw 25:59) + 1 min = the day end
 	_set_clock(1, &"foraar", 1, 6, 0)
 	var start_total: int = gm.total_day()
 	gm.advance_time(29 * 24 * 60 + 90)
 	var month_skip: bool = gm.total_day() == start_total + 29 and gm.hour == 7 and gm.minute == 30 and gm.season == &"sommer" and gm.day == 2
-	t.check("advance_time_multiday", fifty and exactly_midnight and one_minute and month_skip,
-		"50 h -> day 3 08:00 %s; 18 h -> midnight %s; 23:59 + 1 min %s; 29 days 90 min -> sommer day 2 07:30 %s" % [fifty, exactly_midnight, one_minute, month_skip])
-	# the clock hours handed to listeners are always 0..23
+	t.check("advance_time_multiday", fifty and exactly_midnight and exactly_day_end and one_minute and one_minute_end and month_skip,
+		"50 h -> day 3 08:00 %s; 18 h -> raw 24:00 of the same day %s; 20 h -> day 2 02:00 %s; 23:59 + 1 min -> raw 24:00 same day %s; 25:59 + 1 min -> day 2 02:00 %s; 29 days 90 min -> sommer day 2 07:30 %s" % [fifty, exactly_midnight, exactly_day_end, one_minute, one_minute_end, month_skip])
+	# the clock hours handed to listeners are the raw game hours 2..25 (24 and 25 = 00:xx and 01:xx of the same day; never 26), minutes 0..59
 	var hours_ok := true
 	for entry in w["log"]:
-		if entry[0] == "time_of_day_changed" and (int(entry[1][0]) < 0 or int(entry[1][0]) > 23 or int(entry[1][1]) < 0 or int(entry[1][1]) > 59):
+		if entry[0] == "time_of_day_changed" and (int(entry[1][0]) < 2 or int(entry[1][0]) > 25 or int(entry[1][1]) < 0 or int(entry[1][1]) > 59):
 			hours_ok = false
-	t.check("time_of_day_changed_range", hours_ok, "hour 0..23, minute 0..59")
+	w["log"].clear()
+	_set_clock(1, &"foraar", 1, 23, 0)
+	gm.advance_time(90)
+	hours_ok = hours_ok and w["log"].size() == 1 and w["log"][0][0] == "time_of_day_changed" and w["log"][0][1] == [24, 30]
+	t.check("time_of_day_changed_range", hours_ok, "raw hour 2..25 (a signal at 24:30 carries 24: the HUD shows 00:30), minute 0..59")
 	# zero and negative skips
 	w["log"].clear()
 	_set_clock(1, &"foraar", 1, 10, 15)
@@ -820,10 +830,14 @@ func _test_clock() -> void:
 	w["log"].clear()
 	_set_clock(28, &"foraar", 1, 23, 0)
 	gm.advance_time(120)
-	t.check("season_rollover", gm.day == 1 and gm.season == &"sommer" and gm.year == 1 and gm.hour == 1 and _names(w["log"]) == ["day_ended", "season_changed", "day_started", "game_event", "time_of_day_changed"] and w["log"][1][1] == [&"sommer"],
-		"day 28 foraar + 2 h = day 1 sommer 01:00: %s" % [_names(w["log"])])
+	var still_28: bool = gm.day == 28 and gm.season == &"foraar" and gm.hour == 25 and w["log"].size() == 1      # 23:00 + 2 h = 01:00 of the SAME day 28: no season change yet
 	w["log"].clear()
-	_set_clock(28, &"vinter", 1, 23, 0)
+	_set_clock(28, &"foraar", 1, 25, 0)
+	gm.advance_time(120)
+	t.check("season_rollover", still_28 and gm.day == 1 and gm.season == &"sommer" and gm.year == 1 and gm.hour == 3 and _names(w["log"]) == ["day_ended", "season_changed", "day_started", "game_event", "time_of_day_changed"] and w["log"][1][1] == [&"sommer"],
+		"day 28 foraar 23:00 + 2 h = still day 28 (01:00); 01:00 (raw 25:00) + 2 h = day 1 sommer 03:00: %s" % [_names(w["log"])])
+	w["log"].clear()
+	_set_clock(28, &"vinter", 1, 25, 0)
 	gm.advance_time(120)
 	t.check("year_rollover", gm.day == 1 and gm.season == &"foraar" and gm.year == 2 and w["log"][1][1] == [&"foraar"], "vinter 28 -> foraar day 1 of year 2")
 	# end_day: day_ended then day_started, next morning 06:00
@@ -853,15 +867,15 @@ func _test_sleep_helper() -> void:
 	_set_clock(4, &"foraar", 1, 21, 30)
 	var days_passed: int = gm.sleep_until_morning()
 	t.check("sleep_from_bed", days_passed == 1 and gm.day == 5 and gm.hour == 6 and gm.minute == 0 and _names(w["log"]) == ["day_ended", "day_started", "time_of_day_changed"], "21:30 -> next day 06:00")
-	# pass-out: the natural midnight roll already started the new day, sleeping must not skip another one
+	# pass-out: the natural 02:00 day roll already started the new day, sleeping must not skip another one
 	w["log"].clear()
-	_set_clock(4, &"foraar", 1, 23, 58)
+	_set_clock(4, &"foraar", 1, 25, 58)
 	gm.advance_time(3)
-	var rolled: bool = gm.day == 5 and gm.hour == 0 and gm.minute == 1 and _names(w["log"]).has("day_ended") and _names(w["log"]).count("game_event") == 1
+	var rolled: bool = gm.day == 5 and gm.hour == 2 and gm.minute == 1 and _names(w["log"]).has("day_ended") and _names(w["log"]).count("game_event") == 1
 	w["log"].clear()
 	days_passed = gm.sleep_until_morning()
 	t.check("sleep_after_passout_no_double_day", rolled and days_passed == 0 and gm.day == 5 and gm.hour == 6 and gm.minute == 0 and _names(w["log"]) == ["time_of_day_changed"],
-		"after midnight: wake at 06:00 of the same calendar day (day %d)" % gm.day)
+		"after the 02:00 roll: wake at 06:00 of the same calendar day (day %d)" % gm.day)
 	_unwatch(w)
 
 
@@ -1094,10 +1108,13 @@ func _test_time_ticking() -> void:
 	tm.tick(0.5)
 	t.check("time_scale", gm.minute == 5, "time scale 2: +2 minutes for 0.5 s (%02d:%02d)" % [gm.hour, gm.minute])
 	tm.set_time_scale(1.0)
-	# ticking across midnight keeps the calendar exact
+	# ticking across midnight does NOT end the day (it runs to 02:00); ticking across 02:00 keeps the calendar exact
 	_set_clock(1, &"foraar", 1, 23, 59)
 	tm.tick(0.5)
-	t.check("tick_crosses_midnight", gm.day == 2 and gm.hour == 0 and gm.minute == 0, "23:59 + 1 tick = day 2 00:00")
+	var past_midnight: bool = gm.day == 1 and gm.hour == 24 and gm.minute == 0
+	_set_clock(1, &"foraar", 1, 25, 59)
+	tm.tick(0.5)
+	t.check("tick_crosses_midnight", past_midnight and gm.day == 2 and gm.hour == 2 and gm.minute == 0, "23:59 + 1 tick = day 1 raw 24:00 (00:00 of the same day); 01:59 + 1 tick = day 2 02:00")
 	var fraction_ok := true
 	_set_clock(1, &"foraar", 1, 12, 0)
 	fraction_ok = is_equal_approx(tm.get_day_fraction(), 0.5)

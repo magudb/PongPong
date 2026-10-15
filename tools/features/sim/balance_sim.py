@@ -22,8 +22,8 @@ from pathlib import Path
 # ====================================================================================================================================
 # ASSUMPTIONS (all of them; change here, re-run)
 # ====================================================================================================================================
-REAL_MIN_PER_DAY = 9.0                     # PLAN 3.9: 06:00-24:00 at 2 game minutes per real second
-DAYS_PER_HOUR = 60.0 / REAL_MIN_PER_DAY    # 6.667 game days per real hour
+REAL_MIN_PER_DAY = 10.0                    # CLOCK_26: 06:00-02:00 (20 game hours) at 2 game minutes per real second = 600 s
+DAYS_PER_HOUR = 60.0 / REAL_MIN_PER_DAY    # 6.000 game days per real hour
 SEASONS = ['foraar', 'sommer', 'efteraar', 'vinter']
 # crop tables: PLAN 3.10 (binding for the 2D rewrite) and the CURRENT repo (lua/items/crops.lua + game_balance.lua); seed, grow days, seasons, sell
 CROPS_PLAN = {
@@ -507,7 +507,7 @@ def main():
     P = out.append
     summary = {}
     P('=' * 118)
-    P('BALANCE SIMULATION  (expected values, deterministic).  1 game day = 9 real minutes -> 6.67 days per real hour.')
+    P('BALANCE SIMULATION  (expected values, deterministic).  1 game day = 10 real minutes -> 6.00 days per real hour.')
     P('=' * 118)
     P('ASSUMPTIONS')
     P('  start gold 500; crops: PLAN 3.10 table (primary) and the CURRENT repo crops.lua/game_balance.lua (sensitivity); winter has no crops (no crop lists vinter)')

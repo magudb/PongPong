@@ -4,9 +4,10 @@ extends Node2D
 ## "interactable" (value 8); the player's facing-cell shape query (r = 45 ground px, D20) finds the Area2D and talks to its PARENT:
 ## parent.get_interaction_prompt() and parent.interact(player). Subclasses (NPCs, chests, dig spots ...) override both.
 ##
-## `when=` (optional, a marker / prop parameter): a condition of the marker syntax (quest:<id> | done:<id> | flag:<name> | night). IsoArea
-## owns it: it evaluates the condition on enter and when quests / flags / the clock change and calls set_enabled(); a disabled
-## interactable is hidden and cannot be found. The node itself keeps no copy of the condition.
+## `when=` (optional, a marker / prop parameter): a condition of the marker grammar (IsoArea.evaluate_when: quest:<id> | done:<id> | flag:<name> |
+## night, `&`, a leading `!` and the social kinds at away open hearts fest hour weekday season birthday stage). IsoArea owns it: it evaluates the
+## condition on enter and when quests / flags / the clock / friendships change and calls set_enabled(); a disabled interactable is hidden and
+## cannot be found. The node itself keeps no copy of the condition.
 signal interacted(player: Node)
 
 ## Translation key of the prompt ("E: ..."); "" = no prompt text.
