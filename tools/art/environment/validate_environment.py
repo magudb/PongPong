@@ -173,14 +173,24 @@ def mean_final(root, e):
 
 def check_albedo(root, pj):
     bad = []
+    recipes = load(REPO / "tools/art/drawn/fixture_recipes.json")["assets"]
     for pid, e in pj.items():
         pal = e.get('palette') if not pid.startswith('_') else None
         if pal not in PALETTE or e.get('kind') == 'texture':
             continue
-        want, tol = PALETTE[pal]
         m = mean_final(root, e)
-        if np.abs(m - hexrgb(want)).max() > tol:
-            bad.append(f'{pid}: mean final {"%02x%02x%02x" % tuple(int(v) for v in m)} vs {want} +-{tol}')
+        recipe = recipes.get('assets/iso_props/' + e['file'], {})
+        source = root / recipe.get('source', '__missing_painting__')
+        if source.is_file():
+            a = np.asarray(img(source), np.float32)
+            want = a[..., :3][a[..., 3] > 240].mean(0) * AMBIENT / 255.0
+            if np.linalg.norm(m - want) > 1 or m.min() < 8:
+                bad.append(f'{pid}: differs from approved painted pigments or loses ambient headroom')
+        else:
+            # A pristine geometry stage still uses its original bake palette.
+            want, tol = PALETTE[pal]
+            if np.abs(m - hexrgb(want)).max() > tol:
+                bad.append(f'{pid}: original bake palette differs from {want}')
     for pid in ('eyes_glow', 'rune_glow', 'pond_sheen', 'hulen_eyes', 'firefly_dot', 'halo_amber', 'halo_violet', 'crown_spark', 'fx_hit_spark', 'fx_heal_sparkle',
                 'telegraph_ring_s', 'telegraph_ring_m', 'telegraph_ring_l', 'telegraph_line', 'boss_arena_ring', 'pond_ripple'):
         if pj.get(pid, {}).get('blend') != 'add':

@@ -14,6 +14,7 @@ from pathlib import Path
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageOps
+from fixtures import geometry_source
 
 from pack import ROOT, HERE, extract, window_light, project_building, building_footprint
 from world import material, swatch
@@ -301,7 +302,7 @@ def props(only: set[str] | None = None) -> None:
             return
         original, folder = originals[id_]
         rec = copy.deepcopy(original)
-        old = Image.open(folder / rec["file"]).convert("RGBA")
+        old = geometry_source(folder / rec["file"])
         if building:
             # Measured wall/foundation junctions; footsteps and plants may extend
             # outside the facade plane. Project both walls to native tile axes.
@@ -381,7 +382,7 @@ def props(only: set[str] | None = None) -> None:
         if only and name not in only:
             continue
         rec, folder = originals[name]
-        old = Image.open(folder / rec["file"]).convert("RGBA")
+        old = geometry_source(folder / rec["file"])
         index = 5 if name == "pond_water_o" else (1 if name == "path_tile_o" else (2 if "stone_path" in name else 3))
         if name.startswith("pennant"):
             surface = swatch(3).copy()

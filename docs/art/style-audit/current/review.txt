@@ -1,0 +1,151 @@
+Current full-library style audit — codex-review — 15 October 2026
+
+The selected game art and the shop/festival/equipment art studies follow the
+approved painted character-and-tile direction. This audit covers the present
+library after the newer art packages, rather than relying on the old 4,656-file
+report. The current rules are consolidated in docs/art/style-guide.txt, backed
+by the original local Style Guide HTML and the accepted paintings.
+
+Inventory and review scope
+
+All 5,171 assets/ files are inventoried with dimensions, bytes, SHA256 and role.
+All 2,518 raster images decode; all 95 JSON asset files and seven SVGs parse;
+all eight fonts load. The scan has zero unclassified rasters and zero format or
+selected-source errors. This is a technical scan plus documented visual review,
+not an automated aesthetic score.
+
+There are 255 added rasters since the previous full audit, 311 changed rasters
+and 1,952 byte-identical rasters. Earlier exports retain their recorded visual evidence only after exact
+hash comparison. Newly reviewed additions are 51 core-shop views, 15 profession
+emblems, 115 specialist-shop views, 53 festival views, 13 light accents and eight
+fitted-equipment atlases. The atlases contain 320 reviewed Rasmus/Pedro poses
+with explicit grips; their all-frame evidence remains in docs/art/equipment-fit/.
+The stock 58-character sets retain the earlier all-clip middle-frame/eight-idle-
+direction/portrait review. This pass does not claim every stock animation frame
+has been visually inspected again.
+
+The fresh engine catalog resolves 58 characters, 345 item IDs, 29 terrain IDs
+and 360 prop IDs without missing art. Coverage now also records all base/night
+icon lookups, secondary ground/glow textures and the eight selected outdoor
+sky/far layers. All 377 icon pictures are accounted for; the old inventory had
+misclassified 21 wardrobe variants as retained exports. Those variants are
+painted and belong to the current item art. The shared watercolor UI paper also
+has its own role. New kits have their own roles, rather than being lumped into
+unreviewed leftover images or flattened equipment concepts.
+
+Visual findings and corrections
+
+The new paintings preserve matte watercolor/gouache grain, warm irregular
+contours, honey wood, sage/cream cloth, restrained metal and readable object
+identity. Rear views conceal fronts appropriately; roofs, wall props and floor
+pieces retain their native placement contracts. The shop/festival source sheets,
+13 light masks, supplemental wardrobe icons and all backdrops were inspected.
+Historical fixture replacements reuse the accepted paintings rather than author
+new designs. Exact imagegen source/edit prompts remain linked from
+repair-prompts.txt and each package's saved handoff. Ten home foundations now
+sample the approved painted stone; all ten day/night pairs were rebuilt and
+reviewed. Six existing prop pigment variants were also normalized to their
+saved recipes and checked in the native renderer.
+
+The equipment studio used Caprasimo at 18 px on its buttons, below the guide's
+20 px floor. The controls now use 20 px, with shorter Left/Right labels to keep
+them inside the viewport. Native checks cover both heroes. The guide's small
+body/label examples and the studio's diagnostic asset annotations retain their
+separate text roles; this is not a claim that all developer annotations are
+player dialogue. The native theme sheet verifies the seven vector icons on
+parchment and ink, Danish glyphs, guide fonts and visible gold keyboard focus.
+
+The native world review covers farm, Hyggebyen, Trætoppen and Mørkeskoven at
+hours 11 and 21 beside the actual player. City timber, huts, canopy and forest
+materials remain in the same selected painting family. Mørkeskoven deliberately
+retains its dark ambient preset in both samples. Native galleries also render
+all 482 furniture views, 111 replacement prop entries and 162 furniture/material
+icons. UI rarity and ability pictures keep their existing pixel contrast checks.
+
+Historical fixtures and technical exceptions
+
+All 298 historical fixture paths are now accounted for in
+tools/art/drawn/fixture_recipes.json: 285 painted re-exports and 13 neutral radial
+light kernels preserved as technical layers. The former CG city, forest, farm,
+interior shells, backdrops and terrain fixtures now use the accepted paintings.
+The forest glow tiles use painted litter; the rune and window masks align with
+the painted objects. Every fixture was inspected on the new contact sheets.
+
+Native filenames, tile grids, day canvases and ground pivots remain intact.
+The ten trimmed city night masks adopt painted window dimensions and offsets;
+two home night trim heights also grow by one pixel. These additive-mask bounds
+are the deliberate canvas exceptions. Different-sized
+prop sources fit uniformly around their ground anchor. The city keeps its
+70 MB upload limit (69.4 MB measured); farm and home memory/disk checks pass.
+The top-level historical PNG/lossless archive grows to about 38 MB, so its disk
+limit is explicitly 40 MB rather than the former 22 MB prototype limit. This is
+storage for compatibility drawings, not a relaxed runtime VRAM limit.
+
+World and consistency exporters read immutable channel-sum/alpha measurements
+for joints and silhouettes, with body bounds for other geometry-only inputs.
+No old coloured CG pictures are stored in that archive. This avoids repeatedly
+re-shading a painted output on rebuild. All 89 world images reproduce unchanged;
+second home/material/fixture exports are checked for stability in rebuild-tests.json.
+The production packer, optimizer and legacy environment/city install wrappers
+restore painted fixtures last. Stage-only geometry experiments remain available.
+
+The old exact-orange/green-gradient/CG sketch-palette expectations now test the
+approved pigments and painted backdrop coverage. Geometry, ground contacts,
+seams, additive light registration, texture-cell counts and kit memory limits
+remain checked. Rope anchors allow the empty centre between their two posts.
+Shaders, contact shadows, radial light kernels, telegraphs, mist, small particles
+and legendary readability overlays keep their functional roles. UI vectors and
+fonts follow the parchment/ink/gold UI rules rather than the world-object medium.
+
+Art-only production status is also explicit. The core/special shop, festival
+placement and fitted equipment studies do not claim the unfinished live towns,
+festival lifecycle or full wardrobe/equipment implementation is complete.
+
+Evidence and ongoing checks
+
+inventory.csv: every current file; scan.json: counts, roles and decode problems.
+catalog.json: current Godot-resolved paths, including icon variants and parallax.
+approval.json: 2,534 individually reviewed visual/theme file hashes with explicit
+painted/design/theme/technical dispositions. Historical fixture illustrations
+are now painted, with no retained noncompliant illustration exception. Scanning cannot approve
+new images; a new/replaced/removed visual asset invalidates this snapshot until
+its visual evidence and disposition are updated. Ordinary regression tests run
+this check with the standard-library-only Python path.
+
+Additive window/rune layers have explicit technical dispositions even where
+the inventory groups them with their house or prop family.
+
+The snapshot guard has six isolated tests: unchanged acceptance, replacement,
+addition, removal, incomplete review, and unresolved disposition. All pass.
+Files cannot silently become approved art just because they decode
+or share a painted-looking filename. Runtime selection and source/placement
+checks remain independent from the image hashes.
+
+Final validation: the complete strict suite passes 5,762 checks in 36 sections
+(59 skipped), with zero failures, unexpected engine errors or warnings. The
+native style/UI gallery passes 68 checks and the current typography/equipment/
+home/material study passes six: 74 native checks, zero failures or skips. The
+fixture/home regressions pass 101 checks (three headless-only skips). Both
+independent Python environment/city validators pass; the final fixture recipe
+check passes all 285 exports and 13 preserved kernels. All 5,171 inventory hashes
+still agree after the regression run.
+
+Native reports and captures are under this current/ directory. Documentation
+contact sheets use quality-97 WebP copies; native-captures.json preserves the
+original PNG hashes used for render checks. World, typography and UI captures
+retain their native PNGs. Existing unchanged evidence remains in the earlier
+audit/package directories; it is not duplicated as a false new visual verdict.
+
+Reproduce from the worktree root:
+  tools/art/.venv/bin/python tools/art/drawn/style_audit_current.py
+  python3 tools/art/drawn/style_audit_current.py --check
+  python3 tools/art/drawn/test_style_audit_current.py
+  tools/art/.venv/bin/python tools/art/drawn/fixtures.py --check
+  tests/run_playtest.sh --strict
+  tools/dev/run_windowed.sh --strict --no-boot --only=art_style_consistency,ui_foundation --out=<directory>
+  tools/dev/run_windowed.sh --strict --no-boot --sections-dir=res://tests/art_review --only=style_current --out=<directory>
+
+Refresh catalog.json first with coverage.gd --strict --details and the matching
+--report= path when assets or runtime selection change. Retain the old review
+as evidence; use current/ for the latest sweep. The snapshot is a regression
+boundary for this reviewed library, not a substitute for native visual judgment.

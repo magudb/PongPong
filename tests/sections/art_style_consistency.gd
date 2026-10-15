@@ -34,6 +34,22 @@ func run(t) -> void:
 			prototype.append(id)
 	t.check("effective_physical_props_painted", missing.is_empty() and prototype.is_empty(),
 		"357 prior IDs preserved, %d current prop IDs checked; physical props use approved paintings/materials and intentional masks are explicit: %s %s" % [ids.size(), missing, prototype])
+	var ledger := _json("res://docs/art/style-audit/current/approval.json")["reviewed_assets"] as Dictionary
+	var unreviewed: Array[String] = []
+	for id in ids:
+		var path: String = (ArtCatalog.prop(StringName(id))["texture"] as Texture2D).resource_path.trim_prefix("res://")
+		if not ledger.has(path) or ledger[path].get("disposition") == "retained-unselected":
+			unreviewed.append(str(id))
+	for theme in [&"farm", &"hyggebyen", &"forest", &"treetop"]:
+		var art := ArtCatalog.backdrop(theme)
+		for key in ["sky", "far"]:
+			var path: String = (art[key] as Texture2D).resource_path.trim_prefix("res://")
+			if not ledger.has(path) or ledger[path].get("disposition") == "retained-unselected":
+				unreviewed.append("%s %s" % [theme, key])
+	t.check("selected_art_is_reviewed", unreviewed.is_empty(), "effective props and all outdoor sky/far layers have explicit visual review evidence: %s" % [unreviewed])
+	var result: Array = []
+	var exit_code := OS.execute("python3", PackedStringArray([ProjectSettings.globalize_path("res://tools/art/drawn/style_audit_current.py"), "--check"]), result, true)
+	t.check("reviewed_snapshot_current", exit_code == 0, str(result).left(1200))
 	var original := _json("res://assets/iso_props/props.json")
 	for folder in ["farm", "features", "city"]:
 		original.merge(_json("res://assets/iso_props/%s/props.json" % folder), true)

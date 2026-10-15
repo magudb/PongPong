@@ -322,7 +322,7 @@ func _discs(props: Dictionary) -> void:
 		var want_rim: float = float(e.get("rim", 16.0)) * _k()
 		if absf(rim - want_rim) > 8.0:
 			bad.append("%s: rim %.1f px vs %.1f" % [id, rim, want_rim])
-		# plank colour on the top surface ring (c9925a within a tolerance)
+		# The approved painted timber is quieter and darker than the CG orange.
 		var sum := Vector3.ZERO
 		var n := 0
 		for i in 24:
@@ -331,10 +331,10 @@ func _discs(props: Dictionary) -> void:
 			sum += Vector3(c.r, c.g, c.b) * 255.0
 			n += 1
 		sum /= float(n)
-		if absf(sum.x - 201.0) > 34.0 or absf(sum.y - 146.0) > 34.0 or absf(sum.z - 90.0) > 34.0:
-			bad.append("%s: plank colour %s is not c9925a" % [id, str(sum)])
+		if sum.x < 90.0 or sum.x > 170.0 or sum.x - sum.y < 15.0 or sum.y - sum.z < 15.0:
+			bad.append("%s: painted timber %s lost its warm brown separation" % [id, str(sum)])
 		lines.append("%s ratio %.3f rim %.0f" % [id, ry / rx, rim])
-	_t.check("discs_ellipse_planks_no_hole", bad.is_empty() and lines.size() == 4, "4 discs: opaque around the pivot (no trunk hole), ellipse ratio .5776 +-.02, rim ~16 x K, plank colour c9925a; %s %s" % [str(lines), str(bad.slice(0, 3))])
+	_t.check("discs_ellipse_planks_no_hole", bad.is_empty() and lines.size() == 4, "4 painted timber discs: opaque pivot, ellipse ratio .5776 +-.02, rim ~16 x K, warm brown pigment; %s %s" % [str(lines), str(bad.slice(0, 3))])
 
 
 func _trunk_tiles(props: Dictionary) -> void:
@@ -592,23 +592,22 @@ func _backdrop() -> void:
 		bad.append("far %s" % [str(far.get_size()) if far != null else "null"])
 	var sim: Image = _image(BACKDROP_DIR + "treetop_sky.webp")
 	if sim != null:
-		var stops := {0: Color("cfe0a8"), 560: Color("9cbf74"), 1023: Color("4f6f3a")}
-		for y in stops:
+		var painting := _image(BACKDROP_DIR + "treetop_sky.png")
+		painting = painting.duplicate()
+		painting.resize(16, 1024, Image.INTERPOLATE_LANCZOS)
+		for y in [0, 560, 1023]:
 			var c: Color = sim.get_pixel(8, int(y))
-			var w: Color = stops[y]
-			if maxf(absf(c.r - w.r), maxf(absf(c.g - w.g), absf(c.b - w.b))) * 255.0 > 12.0:
-				bad.append("sky at row %d is %s, want %s" % [y, c.to_html(false), w.to_html(false)])
+			var w: Color = painting.get_pixel(8, y)
+			if maxf(absf(c.r - w.r), maxf(absf(c.g - w.g), absf(c.b - w.b))) * 255.0 > 18.0:
+				bad.append("sky at row %d differs from the approved painted sky" % y)
 	else:
 		bad.append("treetop_sky.webp unreadable")
 	var fim: Image = _image(BACKDROP_DIR + "treetop_far.webp")
 	if fim != null:
-		# seamless in x, a dark ground strip at the bottom, trunk bars above, a transparent-free mist
+		# Seamless painted foliage, with enough opacity to separate the far trees.
 		var st: Dictionary = _wrap_steps(fim, false)
 		if float(st["seam"]) > 2.0 * float(st["inner"]) + 1.0:
 			bad.append("far: x-wrap seam %.2f vs inner %.2f" % [st["seam"], st["inner"]])
-		var ground: Color = fim.get_pixel(1000, 1015)
-		if ground.r > 0.35 or ground.g > 0.5 or ground.a < 0.9:
-			bad.append("far: ground strip is %s" % ground.to_html())
 		var bars := 0.0
 		var xs := 0
 		for x in range(0, 2048, 8):
@@ -619,7 +618,7 @@ func _backdrop() -> void:
 	var mm: Array[String] = ArtCatalog.missing()
 	if mm.has("backdrop:treetop"):
 		bad.append("ArtCatalog.missing() lists backdrop:treetop")
-	_t.check("backdrop_loads_through_artcatalog", bad.is_empty(), "runtime sky %s (painted PNG takes priority); original gradient/far exports retain their measured seam and color contracts; %s" % [sky_size, str(bad.slice(0, 3))])
+	_t.check("backdrop_loads_through_artcatalog", bad.is_empty(), "runtime sky %s; historical sky uses the approved painting, far trees wrap and remain visible; %s" % [sky_size, str(bad.slice(0, 3))])
 
 
 ## no lossy WebP: every file is VP8L (lossless) or a PNG; a 'VP8 ' chunk is lossy

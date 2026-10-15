@@ -27,8 +27,8 @@ func _ready() -> void:
 		_button(bar, id.capitalize(), _select_body.bind(id))
 	for name_ in ["idle", "walk", "run", "interact"]:
 		_button(bar, "Reach" if name_ == "interact" else name_.capitalize(), select_clip.bind(name_))
-	_button(bar, "Turn left", _turn.bind(-1))
-	_button(bar, "Turn right", _turn.bind(1))
+	_button(bar, "Left", _turn.bind(-1))
+	_button(bar, "Right", _turn.bind(1))
 	_button(bar, "Flash", flash_all)
 	_button(bar, "Spin", spin_all)
 	var layers := HBoxContainer.new()
@@ -56,7 +56,7 @@ func _label(host: Node, at: Vector2, value: String, font_size: int) -> Label:
 func _button(host: Node, value: String, action: Callable) -> void:
 	var button := Button.new()
 	button.text = value
-	button.add_theme_font_size_override("font_size", 18)
+	button.add_theme_font_size_override("font_size", 20)
 	button.custom_minimum_size.y = 32
 	button.pressed.connect(action)
 	host.add_child(button)

@@ -15,4 +15,5 @@ STAGE_ARGS=()
 if [ $# -gt 0 ]; then STAGE_ARGS=("$1"); fi
 "$ART/produce_all.sh" ${STAGE_ARGS[@]+"${STAGE_ARGS[@]}"} --only=tiles,props
 "$PY" "$HERE/backdrops.py"
+"$PY" "$ART/drawn/fixtures.py"
 "$PY" "$HERE/validate_environment.py"

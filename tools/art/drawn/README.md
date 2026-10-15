@@ -23,7 +23,7 @@ tests/run_playtest.sh --strict --character=fairy
 tests/run_playtest.sh --strict --character=hobbit
 ```
 
-`--only=characters|props|homes|terrain|items|world|interiors|consistency|shop-core` rebuilds a slice. `--sheet heroes players2`
+`--only=characters|props|homes|terrain|items|world|interiors|consistency|shop-core|shop-special|festival|equipment-fit|fixtures` rebuilds a slice. `--sheet heroes players2`
 restricts the character sources; `--character <ids...>` restricts individual IDs.
 `--portraits-only --only=characters` updates
 portraits without rebuilding animation sheets. Run one Godot instance at a time.
@@ -102,13 +102,26 @@ the registered tools, resources, food, seeds, animals and wardrobe items.
 Birk and Bodil have their own canonical hero drawings. Bu and Hviske share the
 same alpha and animation; the pink cloth is a palette variant.
 
-`optimize_environment.py` exports the retained full-colour masters in
-`sources/environment_masters/`. Painted sky PNGs use 128 colours and the native
-1920 by 1080 crop and the farm's S3TC/mipmap background preset; the large crown
-uses 256 colours with its alpha unchanged.
-Legacy terrain masters are exported as lossless WebP with identical visible
-RGBA and no mipmaps. `environment-export.json` records dimensions, colour error,
-alpha comparisons and the combined 22 MB environment budget.
+`optimize_environment.py` exports the approved full-colour sky masters in
+`sources/environment_masters/`. Painted sky PNGs use 128 colours, the native
+1920 by 1080 crop and the farm's S3TC/mipmap background preset. It then restores
+the painted compatibility fixtures, including the crown and terrain atlases.
+`environment-export.json` records sky dimensions, colour error,
+alpha comparisons and the combined 40 MB painted compatibility-fixture disk budget.
+Live city VRAM, farm upload and home disk limits remain separate checks.
+
+Historical fixture paths now receive the approved paintings too. `fixtures.py`
+uses `fixture_recipes.json` to export 285 images at those paths while preserving
+canvases, tile cells and ground anchors; 13 neutral radial light kernels remain
+functional masks. Trimmed hut light layers adopt the painted window bounds and
+offsets. `sources/fixture_geometry.npz` stores only measured channel sums and alpha
+for material joints/silhouettes; other recipes need only body bounds. Exporters
+read those immutable measurements, preventing repeated painted re-shading.
+The production packer and optimizer restore painted fixtures last. Run
+`tools/art/.venv/bin/python tools/art/drawn/fixtures.py --check` to verify every
+fixture against its recipe. Prompts and visual evidence are in
+`docs/art/style-audit/current/`. Geometry-stage renders remain experiments; finish
+any manual installation with the painted packer before reviewing shipped art.
 
 The treetop city and Mørkeskoven use the same painted source family through
 `world.py` (`pack.py --only=world`). `city_painted.png`,

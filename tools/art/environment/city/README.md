@@ -1,3 +1,8 @@
+Current installed artwork follows the painted guide, including historical fixture paths.
+`build_city.sh` retains the geometry stage for experiments and restores painted
+fixtures after installation. See `docs/art/style-audit/current/` for the current
+review; the original work-order record below describes the geometry prototype.
+
 # tools/art/environment/city - the art of Trætoppen, the levelled treetop city (package V5-art-city)
 
 Platform discs, tileable trunks, ten round huts with additive night layers, pennants, lanterns, the procedural-bridge tiles, the set dressing of the ten landmarks, the front

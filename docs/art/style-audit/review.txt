@@ -1,3 +1,6 @@
+Latest full-library audit: current/review.txt, current/inventory.csv and
+current/approval.json. The report below records the earlier baseline review.
+
 Trætoppen asset consistency review — 2026-10-15 — codex-review
 
 The current runtime illustrations and the furnishing/equipment design packs
