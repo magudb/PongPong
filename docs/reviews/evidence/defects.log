@@ -1,0 +1,48 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=headless character=animal sections=res://tests/review_codex only=review_defects
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.zykkRH/Library/Application Support/Traetoppen (throwaway)
+== section review_defects  (res://tests/review_codex/defects.gd)
+  FAIL  review_defects.config_fallback_is_per_call (first=11, second=11, expected second=22)
+  FAIL  review_defects.config_sees_loaded_key (Lua=99, GameManager=11)
+  ok    review_defects.backup_first_save
+  ok    review_defects.backup_second_save
+  FAIL  review_defects.missing_primary_recovers_backup (backup exists=true, inspect=empty)
+  ok    review_defects.malformed_backup_created
+SCRIPT ERROR: Invalid assignment of property or key 'objectives' with value of type 'Array' on a base object of type 'RefCounted (QuestRuntime)'.
+          at: from_dict (res://scripts/autoload/quest_manager.gd:42)
+          GDScript backtrace (most recent call first):
+              [0] from_dict (res://scripts/autoload/quest_manager.gd:42)
+              [1] from_dict (res://scripts/autoload/quest_manager.gd:384)
+              [2] _apply_payload (res://scripts/autoload/save_manager.gd:893)
+              [3] load_game (res://scripts/autoload/save_manager.gd:292)
+              [4] _malformed_primary (res://tests/review_codex/defects.gd:105)
+              [5] run (res://tests/review_codex/defects.gd:49)
+              [6] go_menu (res://tests/lib/flow.gd:67)
+              [7] change_scene (res://tests/lib/flow.gd:57)
+              [8] frames (res://tests/lib/drive.gd:79)
+  FAIL  review_defects.invalid_quest_primary_uses_good_backup (inspect=ok, loaded=false, last_error={ "slot": 0, "code": "apply", "detail": "section \'quests\' raised an error: quest_manager.gd:42 in from_dict(): Invalid assignment of property or key \'objectives\' with value of type \'Array\' on a base object of type \'RefCounted (QuestRuntime)\'. " })
+  ok    review_defects.roof_quest_accepts
+  FAIL  review_defects.completed_roof_objective_does_not_charge_again (wood after first=8, after second=0; quest remains active=true)
+  FAIL  review_defects.chicken_requires_a_coop (adopted=true, buildings=0, animals=1)
+  ok    review_defects.product_snapshot_captured
+  FAIL  review_defects.product_snapshot_cannot_be_claimed_twice (after loading the item_gained snapshot: recollected=2, total eggs=4)
+  FAIL  review_defects.latest_music_request_wins (older request resumed after its fade and replaced the latest stream)
+  FAIL  review_defects.old_stop_cannot_stop_new_track (old stop callback ran against new track)
+preview citizens: 7 placed, P14 absent
+preview hints: prompt / whisper / toast overlay placed, no HUD (P17) yet
+  FAIL  review_defects.midnight_during_travel_still_wakes_at_morning (day=2, hour=0, sleeping=false, traveling=false)
+  --    review_defects: 15 checks, 10 failed, 0 skipped, 6.7 s
+== summary: 1 section(s) run, 15 checks (10 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 1 allowed message(s), 0 problem(s), 0 known-issue message(s), 8.9 s
+  FAILED   review_defects.config_fallback_is_per_call
+  FAILED   review_defects.config_sees_loaded_key
+  FAILED   review_defects.missing_primary_recovers_backup
+  FAILED   review_defects.invalid_quest_primary_uses_good_backup
+  FAILED   review_defects.completed_roof_objective_does_not_charge_again
+  FAILED   review_defects.chicken_requires_a_coop
+  FAILED   review_defects.product_snapshot_cannot_be_claimed_twice
+  FAILED   review_defects.latest_music_request_wins
+  FAILED   review_defects.old_stop_cannot_stop_new_track
+  FAILED   review_defects.midnight_during_travel_still_wakes_at_morning
+PLAYTEST FAIL: 10 check failures, 0 engine errors, 0 engine warnings, 0 problems

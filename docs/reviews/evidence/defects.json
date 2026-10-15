@@ -1,0 +1,40 @@
+{
+  "allowed": [
+    {
+      "kind": "script error",
+      "rule": "Invalid assignment",
+      "section": "review_defects",
+      "text": "res://scripts/autoload/quest_manager.gd:42 in from_dict(): Invalid assignment of property or key 'objectives' with value of type 'Array' on a base object of type 'RefCounted (QuestRuntime)'. (at from_dict res://scripts/autoload/quest_manager.gd:42)"
+    }
+  ],
+  "character": "animal",
+  "checks": 15,
+  "elapsed_s": 8.86,
+  "engine": [],
+  "failed": 10,
+  "failures": [
+    "review_defects.config_fallback_is_per_call",
+    "review_defects.config_sees_loaded_key",
+    "review_defects.missing_primary_recovers_backup",
+    "review_defects.invalid_quest_primary_uses_good_backup",
+    "review_defects.completed_roof_objective_does_not_charge_again",
+    "review_defects.chicken_requires_a_coop",
+    "review_defects.product_snapshot_cannot_be_claimed_twice",
+    "review_defects.latest_music_request_wins",
+    "review_defects.old_stop_cannot_stop_new_track",
+    "review_defects.midnight_during_travel_still_wakes_at_morning"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "review_defects": {
+      "checks": 15,
+      "failed": 10,
+      "ms": 6682,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}
