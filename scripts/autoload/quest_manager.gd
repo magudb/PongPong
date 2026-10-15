@@ -53,6 +53,7 @@ func _ready() -> void:
 	EventBus.item_purchased.connect(_on_item_purchased)
 	EventBus.crop_harvested.connect(_on_crop_harvested)
 	EventBus.resource_node_depleted.connect(_on_resource_depleted)
+	EventBus.item_gained.connect(_on_item_gained)
 	EventBus.day_started.connect(_on_day_started)
 	EventBus.new_game_started.connect(reset)
 	EventBus.player_inventory_changed.connect(_on_inventory_changed)
@@ -343,6 +344,15 @@ func _on_resource_depleted(_node_id: StringName, loot: Array) -> void:
 			var item_id: StringName = entry.get("id", &"")
 			var amount: int = entry.get("amount", 1)
 			update_objective(quest_id, &"collect_%s" % item_id, amount)
+
+
+## `collect_<item>` is the "the player received it" objective: harvest, buy and gift all route through
+## EconomyManager.add_item -> item_gained (a silent add - starter kit, load - does not count).
+## NOTE for the node-loot wave: emit resource_node_depleted only for loot that did NOT go through add_item,
+## or collect_<item> advances twice.
+func _on_item_gained(item_id: StringName, amount: int) -> void:
+	for quest_id in active_quests.keys():
+		update_objective(quest_id, &"collect_%s" % item_id, amount)
 
 
 func _on_day_started(_day: int, _season: StringName) -> void:

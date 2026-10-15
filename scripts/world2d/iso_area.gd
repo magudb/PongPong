@@ -53,7 +53,7 @@ const Z_SKIRTS := Iso.Z_SKIRTS
 ## is coarser depth granularity across a single big prop. 32 was the R.10 prototype width.
 const STRIP_W := 64
 const WATER_PERIOD := 0.5
-const FLAG_POLL_PERIOD := 0.25
+
 
 ## The `when=` grammar (design_social section 8, ONE implementation in SocialManager.eval_when). The four OLD kinds keep their fast path
 ## in evaluate_when; a spec with `&`, a leading `!` or one of the DELEGATED kinds is answered by SocialManager.eval_when (late bound
@@ -129,8 +129,6 @@ var _growth_cells: Dictionary = {}          # stage -> Array[Vector2i]
 var _orig_ground: PackedStringArray = PackedStringArray()
 var _water_frame: int = 0
 var _water_t: float = 0.0
-var _poll_t: float = 0.0
-var _has_flag_when: bool = false
 var _when_hour: int = -1                    # the raw game hour (6..25) the `when=` nodes were last evaluated at: the hour edge test
 var _has_water: bool = false                # a `~` cell was painted: the four swap layers and the 0.5 s tick are needed
 var _hooked: bool = false
@@ -231,7 +229,7 @@ func setup(p_map: AreaMap) -> void:
 		_build_standard()
 	_ensure_default_spawn()
 	build_ms = Time.get_ticks_msec() - t0
-	set_process(_has_water or _has_flag_when)
+	set_process(_has_water)
 	built.emit()
 
 
@@ -1361,12 +1359,9 @@ func _track_when(params: Dictionary, nodes: Array) -> void:
 	_report_when_errors(params)
 	if nodes.is_empty():
 		return
-	var rec: Dictionary = {"nodes": nodes, "when": w, "active": true, "delegated": when_is_delegated(w.strip_edges()), "flag": _when_uses(w, "flag"), "is_flag": _when_uses(w, "flag")}
-	_has_flag_when = _has_flag_when or bool(rec["flag"])
+	var rec: Dictionary = {"nodes": nodes, "when": w, "active": true, "delegated": when_is_delegated(w.strip_edges()), "flag": _when_uses(w, "flag")}
 	_when_nodes.append(rec)
-	_apply_when(rec)
-	if _has_flag_when:
-		set_process(true)                     # only flag: whens need the _process poll; quest / night arrive by signal
+	_apply_when(rec)                        # flag whens re-evaluate on flag_changed; quest / night / clock arrive by signal
 
 
 ## A `when=` the grammar does not know goes to map.errors once as `when_unknown_kind: when=<spec> (<what>)`: a map test that asserts
@@ -1602,7 +1597,7 @@ func _enter_tree() -> void:
 	if _hooked:
 		return
 	_hooked = true
-	# quests, the clock and generic game events can change a `when=`; flags are polled in _process (they have no signal)
+	# quests, the clock, flags and generic game events can change a `when=` — every driver arrives by signal
 	EventBus.quest_accepted.connect(_on_quest_event)
 	EventBus.quest_completed.connect(_on_quest_event)
 	EventBus.quest_failed.connect(_on_quest_event)
@@ -1610,6 +1605,7 @@ func _enter_tree() -> void:
 	EventBus.time_of_day_changed.connect(_on_clock_event)
 	EventBus.game_event.connect(_on_game_event)
 	EventBus.friend_changed.connect(_on_friend_event)
+	EventBus.flag_changed.connect(_on_flag_event)
 	if map != null:
 		refresh_when()
 
@@ -1625,6 +1621,7 @@ func _exit_tree() -> void:
 	EventBus.time_of_day_changed.disconnect(_on_clock_event)
 	EventBus.game_event.disconnect(_on_game_event)
 	EventBus.friend_changed.disconnect(_on_friend_event)
+	EventBus.flag_changed.disconnect(_on_flag_event)
 
 
 func _on_quest_event(_quest_id: StringName) -> void:
@@ -1659,19 +1656,20 @@ func _on_friend_event(_npc_id: StringName, _hearts: int) -> void:
 	_refresh_delegated()
 
 
+## A flag's new value re-evaluates every `when=` that mentions a `flag:` term (also `&` / delegated combos that carry one).
+func _on_flag_event(_flag: StringName, _value: Variant) -> void:
+	for rec in _when_nodes:
+		if bool(rec["flag"]):
+			_apply_when(rec)
+
+
 func _process(delta: float) -> void:
 	if _has_water:
 		_water_t += delta
 		if _water_t >= WATER_PERIOD:
 			_water_t -= WATER_PERIOD
 			set_water_frame(_water_frame + 1)
-	if _has_flag_when:
-		_poll_t += delta
-		if _poll_t >= FLAG_POLL_PERIOD:
-			_poll_t = 0.0
-			for rec in _when_nodes:
-				if bool(rec["flag"]):
-					_apply_when(rec)
+
 
 
 ## Called by WorldRoot2D after the player is put into the area.
