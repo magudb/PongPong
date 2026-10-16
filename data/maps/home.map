@@ -1,0 +1,12 @@
+# Home interiors are rebuilt from the current tier and persisted furniture.
+@id home
+@projection iso
+@zone farm
+@ambient home
+@title HOME_WORLD_TITLE
+@flight false
+@music farm_theme
+@builder res://scripts/home/home_room.gd
+@zoom 0.7
+@zoom_min 0.35
+@zoom_max 1.2

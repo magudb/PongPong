@@ -1,0 +1,30 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 127,
+  "elapsed_s": 17.89,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "home_ui": {
+      "character": "animal",
+      "checks": 22,
+      "failed": 0,
+      "ms": 1956,
+      "skipped": 0
+    },
+    "home_world": {
+      "character": "animal",
+      "checks": 105,
+      "failed": 0,
+      "ms": 11862,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "branch": "codex-mechanics",
+  "base": "6cb358d",
+  "scope": "Complete the planned single-player game using the reviewed design addenda; preserve approved painted assets.",
+  "baseline": {
+    "report": "/tmp/mechanics-baseline.json",
+    "checks": 11591,
+    "failed": 16,
+    "engine_errors": 0,
+    "skipped": 163,
+    "failure_groups": [
+      "cast_data garden-area validation",
+      "home tests assume no wardrobe perks",
+      "HUD toast assertion",
+      "localization ownership fixture",
+      "social gift controller focus"
+    ]
+  },
+  "work": [
+    {
+      "system": "Core farming, shipping, travel, towns, shops, quests, social hearts and wardrobe",
+      "state": "existing; regression verification pending"
+    },
+    {
+      "system": "Furniture ownership, grid, hygge, sets and persistence (F3)",
+      "state": "implemented; 109 rule and ownership checks pass"
+    },
+    {
+      "system": "Ten painted home tiers, construction and room interactions (F6)",
+      "state": "implemented; 105 world checks pass in headless and native"
+    },
+    {
+      "system": "Builder, decorate and storage screens (F7)",
+      "state": "implemented; 22 UI checks pass in headless and native; all nine upgrades pass 73 real-owner integration checks"
+    },
+    {
+      "system": "Animal care and farm building placement (P20)",
+      "state": "pending"
+    },
+    {
+      "system": "Dungeon generation, twelve floors, runestones, saving and recovery (D1/D2)",
+      "state": "pending"
+    },
+    {
+      "system": "Dungeon exploration, enemies, combat, bosses and HUD (DR)",
+      "state": "pending"
+    },
+    {
+      "system": "Arsenal, weapons, gems, loot, appraisal and crafting (DL)",
+      "state": "pending"
+    },
+    {
+      "system": "Social event runner, festival activities and heart events",
+      "state": "pending"
+    },
+    {
+      "system": "Extended interiors, partner relationships and visits",
+      "state": "pending"
+    },
+    {
+      "system": "Seasonal farm decoration and ambient/audio integration",
+      "state": "pending"
+    },
+    {
+      "system": "Dark Forest evidence chapters and return-home resolution",
+      "state": "pending; finale preference requested"
+    },
+    {
+      "system": "End-to-end acceptance, source-bound proofs and merge",
+      "state": "pending"
+    }
+  ],
+  "explicit_design_limits": [
+    "Greenhouse remains opt-in (Q1 default no).",
+    "Children and multiplayer are later work.",
+    "Preserve frozen voice recordings; new dialogue uses localized text.",
+    "No paid appraisal, rare random loot, calendar or friendship gate may strand the mother story."
+  ],
+  "validation": {
+    "home_headless": "docs/qa/mechanics/home/headless.json",
+    "home_native": "docs/qa/mechanics/home/native.json"
+  }
+}

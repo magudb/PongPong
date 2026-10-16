@@ -35,6 +35,7 @@ LootService="*res://scripts/loot/loot_service.gd"
 SocialManager="*res://scripts/social/social_manager.gd"
 HomeManager="*res://scripts/home/home_manager.gd"
 WardrobeManager="*res://scripts/wardrobe/wardrobe_manager.gd"
+FurnitureManager="*res://scripts/furniture/furniture_manager.gd"
 
 [display]
 

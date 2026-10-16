@@ -1,0 +1,62 @@
+keys,da,en
+HUSBYG_TITLE,Et hjem i trækronen,A home in the treetops
+HUSBYG_BUILD,Byg,Build
+HUSBYG_PERKS_FMT,Energi +%d · Opbevaring %d · Møbler %d,Energy +%d · Storage %d · Furniture %d
+HUSBYG_GOLD_FMT,Guldagern %d / %d,Golden acorns %d / %d
+HUSBYG_DAYS_FMT,Byggetid: %d dage,Construction: %d days
+HUSBYG_PROGRESS_FMT,Der bygges. %d dage tilbage.,Construction underway. %d days remaining.
+HUSBYG_CONFIRM_TITLE,Byg dit hjem?,Build your home?
+HUSBYG_CONFIRM_FMT,Byg %s for %d guldagern og de viste materialer?,Build %s for %d golden acorns and the listed materials?
+HUSBYG_BLOCK_MAX,Dit hjem er færdigbygget.,Your home is fully upgraded.
+HUSBYG_BLOCK_NOT_NEXT,Byg det næste trin først.,Build the next tier first.
+HUSBYG_BLOCK_BUSY,Byggeriet er allerede i gang.,Construction is already underway.
+HUSBYG_BLOCK_GOLD,Du mangler guldagern.,You need more golden acorns.
+HUSBYG_BLOCK_MATERIALS,Saml de manglende materialer.,Gather the missing materials.
+HUSBYG_BLOCK_GATE,Opfyld de viste ønsker først.,Meet the listed requirements first.
+HUSBYG_FEAST_FMT,Hold Fe-fest · %d guldagern,Host fairy feast · %d golden acorns
+HUSBYG_FEAST_TITLE,Invitér til Fe-fest?,Host a fairy feast?
+HUSBYG_FEAST_CONFIRM_FMT,Invitér dine venner for %d guldagern?,Invite your friends for %d golden acorns?
+KISTE_TITLE,Hjemmets kiste,Home storage
+KISTE_BACKPACK_FMT,Rygsæk %d / %d,Backpack %d / %d
+KISTE_STORAGE_FMT,Kiste %d / %d,Storage %d / %d
+KISTE_HINT,Flyt én eller hele stakken. Møbler og tøj har deres egne magasiner.,Move one or a whole stack. Furniture and clothes have their own stores.
+KISTE_EMPTY,Her er tomt.,Nothing here yet.
+KISTE_ONE,Flyt 1,Move 1
+KISTE_ALL,Alle,All
+KISTE_MOVED_FMT,Flyttede %d.,Moved %d.
+KISTE_FULL,Der er ikke plads til at flytte det.,There is no room to move that.
+INDRET_TITLE,Indret dit hjem,Decorate your home
+INDRET_PLACE,Placér,Place
+INDRET_HINT,Vælg et møbel. Pile flytter · E placerer · R drejer · X samler op · H lukker. Musen kan også bruges.,Choose a piece. Arrows move · E places · R rotates · X picks up · H closes. You can also use the mouse.
+INDRET_HYGGE_FMT,%s · %d hygge · %d / %d møbler,%s · %d cosiness · %d / %d furniture
+INDRET_EMPTY,Ingen møbler i dette udvalg. Køb eller byg flere hos dine naboer.,No furniture in this selection. Buy or craft more with your neighbours.
+INDRET_CHOOSE,Vælg et møbel fra magasinet.,Choose furniture from storage.
+INDRET_READY,Her er plads. E eller klik placerer.,This fits. E or click to place.
+INDRET_MOVED_TO_STORAGE,"Nogle møbler er flyttet til magasinet, så der er fri passage.",Some furniture returned to storage to keep the paths clear.
+INDRET_LAYER_ALL,Alle,All
+INDRET_LAYER_FLOOR,Gulv,Floor
+INDRET_LAYER_WALL,Væg,Wall
+INDRET_LAYER_TABLETOP,Bord,Table
+INDRET_LAYER_CEILING,Loft,Ceiling
+INDRET_LAYER_RUG,Tæppe,Rug
+INDRET_RARITY_ALL,Alle,All
+INDRET_RARITY_NORMAL,Almindelig,Normal
+INDRET_RARITY_UNCOMMON,Usædvanlig,Uncommon
+INDRET_RARITY_RARE,Sjælden,Rare
+INDRET_RARITY_UNIQUE,Unik,Unique
+INDRET_RARITY_LEGENDARY,Legendarisk,Legendary
+FURNI_REJECT_OUT_OF_ROOM,Uden for rummet.,Outside the room.
+FURNI_REJECT_OVERLAP,Der står allerede noget.,Something is already there.
+FURNI_REJECT_DOOR_BLOCKED,Hold døren og indgangen fri.,Keep the doorway clear.
+FURNI_REJECT_BLOCKS_WINDOW,Hold vinduet frit.,Keep the window clear.
+FURNI_REJECT_TOO_TALL,Det høje møbel dækker vægpynten.,The tall furniture covers the wall decoration.
+FURNI_REJECT_NEEDS_WALL,Skal stå ved en bagvæg.,Place against a back wall.
+FURNI_REJECT_BLOCKS_PATH,Der skal være en vej til møblerne.,Keep a path to the furniture.
+FURNI_REJECT_FULL,Rummet har nået sin møbelgrænse.,The room has reached its furniture capacity.
+FURNI_REJECT_WALL_ORIENTATION,Drej mod en af bagvæggene.,Rotate toward a back wall.
+FURNI_REJECT_WALL_TAKEN,Vægpladsen er optaget.,This wall space is occupied.
+FURNI_REJECT_NEEDS_WINDOW,Gardiner skal hænge ved et vindue.,Curtains need a window.
+FURNI_REJECT_WINDOW_TAKEN,Her er et vindue.,There is a window here.
+FURNI_REJECT_NEEDS_SURFACE,Stil det på en fri bordplads.,Place on a free tabletop slot.
+FURNI_REJECT_SLOT_TAKEN,Bordpladsen er optaget.,This tabletop slot is occupied.
+FURNI_REJECT_UNKNOWN_ITEM,Møblet er ikke i magasinet.,This furniture is not in storage.
