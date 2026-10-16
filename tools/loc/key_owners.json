@@ -183,7 +183,8 @@
    "prefix": [
     "ENEMY_",
     "BOSS_",
-    "ABILITY_"
+    "ABILITY_",
+    "FOREST_"
    ],
    "exact": [
     "WHISPER_FERNS"

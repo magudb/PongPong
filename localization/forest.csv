@@ -14,3 +14,9 @@ ABILITY_DODGE,undvig,dodge
 ABILITY_LIGHT,fe-lys,fairy light
 ABILITY_DRINK,drik,drink
 WHISPER_FERNS,Der bevæger sig noget mellem bregnerne.,Something is moving among the ferns.
+FOREST_PROMPT_PICK,E: Pluk,E: Gather
+FOREST_PROMPT_MINE,Brug hakken,Use the pickaxe
+FOREST_PROMPT_CHOP,Brug øksen,Use the axe
+FOREST_TOOL_PICKAXE,"Vælg din hakke, og slå på stenen.",Select your pickaxe and strike the stone.
+FOREST_TOOL_AXE,"Vælg din økse, og hug træet.",Select your axe and chop the tree.
+FOREST_TOOL_WEAK,Redskabet er for svagt. Thorin kan hjælpe.,This tool is too weak. Thorin can help.
