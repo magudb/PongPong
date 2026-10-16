@@ -1,5 +1,5 @@
 {
-  "status": "implemented; all selected feature and integration gates passed",
+  "status": "implemented and merged into local main; selected feature, visual, resource and integration checks passed",
   "validated_at_utc": "2026-10-16T18:14:12.763706+00:00",
   "main_baseline": "f0829a9d6108d5aa3efd0550df2367b0bab24a98",
   "source_commit": "7b87bf0e569cbb663b12fb8d19eb8106d926559b",
@@ -199,5 +199,15 @@
     "Prior full native town timing misses remain documented in ../secret-garden/acceptance.json; focused native rendering/resource checks pass here.",
     "Source-project native checks only; no packaged-export claim."
   ],
-  "remaining_feature_work": []
+  "remaining_feature_work": [],
+  "merged_main": {
+    "tested_head": "681f4e99618ff881ebe91407b842ad79804446dd",
+    "report": "merged-main.json",
+    "checks": 364,
+    "failed": 0,
+    "skipped": 11,
+    "unexpected_engine_messages": 0,
+    "allowed_negative_control_messages": 1,
+    "verification": "merge-verification.json"
+  }
 }

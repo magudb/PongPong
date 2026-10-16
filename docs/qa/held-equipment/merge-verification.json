@@ -1,0 +1,49 @@
+{
+  "verified_at_utc": "2026-10-16T18:15:10.675999+00:00",
+  "tested_main_head": "681f4e99618ff881ebe91407b842ad79804446dd",
+  "source_binding": "8f39a66148229334a7d4e4356bf879c27da8a15bb8c73bbe8a69a4877aef44ea",
+  "static_checks": {
+    "style": {
+      "result": "pass",
+      "output": "STYLE REVIEW SNAPSHOT PASS: 2563 visual/theme assets match explicit reviewed dispositions; technical exceptions are named, not automatically approved illustrations."
+    },
+    "imports": {
+      "result": "pass",
+      "output": "write_import_stubs --check: ok (62 character folders, 498 sheets with the S3TC preset, 58 tile atlases, 0 wardrobe layer imports lossless, 164 keep files)"
+    },
+    "voice": {
+      "result": "pass",
+      "output": "PASS voiced_index_in_sync"
+    },
+    "copy": {
+      "result": "pass",
+      "output": "[]"
+    },
+    "extension": {
+      "result": "pass",
+      "output": "{\"result\": \"pass\", \"binding\": \"8f39a66148229334a7d4e4356bf879c27da8a15bb8c73bbe8a69a4877aef44ea\", \"checks\": {\"l18_data_only_citizen\": true, \"l18_data_only_building\": true, \"l18_data_only_routine_edit\": true, \"l18_data_only_shop_hours\": true, \"l18_data_only_festival\": true, \"l18_data_only_event\": true, \"l18_data_only_quest\": true, \"l18_no_gd_changed\": true}, \"code_files_unchanged\": 683, \"scenario_checks\": 8, \"owner_checks\": 588, \"note\": \"One clone, one whole extension. Production geometry/routes, door, NPC talk, shop hosts, social rules and real mailbox quest offer exercised. No .gd/.tscn/.py edit. Clone/import/bake excluded from playable-loop timing.\"}"
+    },
+    "mutants": {
+      "result": "pass",
+      "output": "{\"result\": \"pass\", \"binding\": \"8f39a66148229334a7d4e4356bf879c27da8a15bb8c73bbe8a69a4877aef44ea\", \"mutants\": {\"baseline\": {\"caught\": true, \"check\": \"all probes green\"}, \"hours\": {\"caught\": true, \"check\": \"l05_closed_before_open\"}, \"projection\": {\"caught\": true, \"check\": \"l04_zone_and_running_clock\"}, \"free\": {\"caught\": true, \"check\": \"l02_citizens_freed_on_exit\"}, \"escape\": {\"caught\": true, \"check\": \"l03_esc_first_line_no_heart\"}, \"digest\": {\"caught\": true, \"check\": \"digest_has_teeth_gold\"}, \"order\": {\"caught\": true, \"check\": \"l13_social_section_order\"}, \"closed-door\": {\"caught\": true, \"check\": \"l05_closed_door_does_not_travel\"}}, \"skipped\": {\"audio\": \"P24 cue_log capability is not installed\"}, \"note\": \"Each producer is changed on a fresh clone. The unmodified probes pass first; each mutant must fail its named behavioural check without engine errors.\"}"
+    },
+    "whitespace": {
+      "result": "pass",
+      "output": ""
+    }
+  },
+  "all_existing_worktree_heads_are_main_ancestors": [
+    "main",
+    "codex-forest-story",
+    "codex-held-equipment",
+    "codex-merge-finished",
+    "codex-review",
+    "codex-secret-garden",
+    "codex-walkway-transitions",
+    "devin-review",
+    "m1b",
+    "review-fixes-4"
+  ],
+  "remote_names": [],
+  "note": "The following commit records QA only; source binding is unchanged. No push was performed."
+}
