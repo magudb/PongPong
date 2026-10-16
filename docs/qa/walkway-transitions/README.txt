@@ -2,6 +2,10 @@ Boardwalk and climb transitions — 2026-10-16
 
 Implemented on codex-walkway-transitions from main 7ad11d6.
 Source commits: 9ccf4ee (movement/pose/lifecycle) and d5bd13f (landing stride).
+Merged main b8c78e4 passes 312 strict transition/loop/budget checks with zero
+failures and unexpected engine messages. All 1,163 bound inputs match the
+worktree; current extension/mutant proofs, style and imports pass on main.
+merge-verification.json records finished-branch ancestry and exact scope.
 
 The shipped vertical connector is the painted ladder between torvet and upper.
 The same ClimbLane controller also handles Kiki's perk-only trunk connector.

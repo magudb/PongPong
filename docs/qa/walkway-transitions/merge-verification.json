@@ -1,0 +1,27 @@
+{
+  "verified_at_utc": "2026-10-16T13:53:03.125221+00:00",
+  "tested_main_head": "b8c78e4d21b1429e3ac944f796e8f673e41095e6",
+  "source_binding": "cd7ed9e909565fdbf7b43b6dd61f126ab3f5f30d4628da6e98484a9cbe081842",
+  "bound_inputs_identical": 1163,
+  "all_finished_branches_included": {
+    "codex-review": "be1d3191a7ec233e852f7cd61f9ac0606a83dca9",
+    "devin-review": "283d8014760fb3d3d9a710c5aeabd8f76ab2957e",
+    "review-fixes-4": "71ee42da28c10e47392c3375997045b3dc880059",
+    "codex-merge-finished": "f478296ea262218698895ac88437d59876ca7eea",
+    "m1b": "7ad11d6f7256ef705cc97e736e4724fea3a9584e",
+    "codex-walkway-transitions": "b8c78e4d21b1429e3ac944f796e8f673e41095e6"
+  },
+  "report": "merged-main.json",
+  "log": "merged-main.log",
+  "checks": 312,
+  "failed": 0,
+  "skipped": 11,
+  "elapsed_s": 20.68,
+  "unexpected_engine_messages": 0,
+  "allowed_negative_control_messages": 1,
+  "live_extension_and_mutant_proofs_match": true,
+  "approved_style_assets_unchanged": 2562,
+  "static_style": "merged-style.txt",
+  "static_imports": "merged-imports.txt",
+  "note": "Subsequent commit records this evidence and completion status only; all source/data/test bytes remain identical. No push performed."
+}

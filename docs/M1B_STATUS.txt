@@ -71,3 +71,7 @@ The focused regression and native transition checks pass, and TownLoop proofs
 are renewed. See docs/qa/walkway-transitions/README.txt and acceptance.json.
 The full milestone results above remain the historical acceptance at 7ad11d6;
 its original source proofs are archived under source-proof-75a4d779/.
+Merged main b8c78e4 passes 312 strict transition/loop/budget checks with no
+failures or unexpected engine messages; source-bound town proofs, all 2,562
+approved art assets and imports also pass from main. Completion evidence is
+in docs/qa/walkway-transitions/merge-verification.json.
