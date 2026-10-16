@@ -1,5 +1,5 @@
 {
-  "status": "implemented and validated; local main merge pending",
+  "status": "implemented and merged into local main; focused validation passed, native town timing misses documented",
   "validated_at_utc": "2026-10-16T17:06:16.717435+00:00",
   "main_baseline": "147d9da4c1a91ebf13da31044c450463a7abd3cb",
   "source_commit": "1028b497ac991710feb4f517ba04da29c42ac630",
@@ -175,5 +175,15 @@
     "Deeper forest chapters S03–S08 and the mother’s final fate remain outside this implementation.",
     "Source-project native checks only; no packaged-export claim."
   ],
-  "remaining_feature_work": []
+  "remaining_feature_work": [],
+  "merged_main": {
+    "tested_head": "b1a977c709002cbdefeaecb2db054ff29969b580",
+    "report": "merged-main.json",
+    "checks": 397,
+    "failed": 0,
+    "skipped": 11,
+    "unexpected_engine_messages": 0,
+    "allowed_negative_control_messages": 7,
+    "verification": "merge-verification.json"
+  }
 }

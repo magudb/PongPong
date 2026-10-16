@@ -1,0 +1,97 @@
+{
+  "verified_at_utc": "2026-10-16T17:08:27.295377+00:00",
+  "tested_main_head": "b1a977c709002cbdefeaecb2db054ff29969b580",
+  "main_and_feature_source_binding": "c59041b02f45323859dd0f2c35eac63b39514fded639ba0e9ea834dcfd649a68",
+  "source_binding_matches": true,
+  "all_finished_worktree_commits_in_main": true,
+  "worktrees": [
+    {
+      "path": "/Users/magnusudbjorg/Documents/projects/PongPong",
+      "branch": "refs/heads/main",
+      "head": "b1a977c709002cbdefeaecb2db054ff29969b580",
+      "committed_work_merged": true,
+      "uncommitted": [
+        "?? docs/qa/secret-garden/merged-copy.json",
+        "?? docs/qa/secret-garden/merged-extension-check.json",
+        "?? docs/qa/secret-garden/merged-gates.json",
+        "?? docs/qa/secret-garden/merged-imports.txt",
+        "?? docs/qa/secret-garden/merged-main.json",
+        "?? docs/qa/secret-garden/merged-mutants-check.json"
+      ]
+    },
+    {
+      "path": "/Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-forest-story",
+      "branch": "refs/heads/codex-forest-story",
+      "head": "147d9da4c1a91ebf13da31044c450463a7abd3cb",
+      "committed_work_merged": true,
+      "uncommitted": []
+    },
+    {
+      "path": "/Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-merge-finished",
+      "branch": "refs/heads/codex-merge-finished",
+      "head": "f478296ea262218698895ac88437d59876ca7eea",
+      "committed_work_merged": true,
+      "uncommitted": []
+    },
+    {
+      "path": "/Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-review",
+      "branch": "refs/heads/codex-review",
+      "head": "be1d3191a7ec233e852f7cd61f9ac0606a83dca9",
+      "committed_work_merged": true,
+      "uncommitted": []
+    },
+    {
+      "path": "/Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-secret-garden",
+      "branch": "refs/heads/codex-secret-garden",
+      "head": "b1a977c709002cbdefeaecb2db054ff29969b580",
+      "committed_work_merged": true,
+      "uncommitted": []
+    },
+    {
+      "path": "/Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions",
+      "branch": "refs/heads/codex-walkway-transitions",
+      "head": "f008dafb653e8a8f96416d0fe763d902271b6df0",
+      "committed_work_merged": true,
+      "uncommitted": []
+    },
+    {
+      "path": "/Users/magnusudbjorg/Documents/projects/PongPong-worktrees/devin-review",
+      "branch": "refs/heads/devin-review",
+      "head": "283d8014760fb3d3d9a710c5aeabd8f76ab2957e",
+      "committed_work_merged": true,
+      "uncommitted": []
+    },
+    {
+      "path": "/Users/magnusudbjorg/Documents/projects/PongPong-worktrees/m1b",
+      "branch": "refs/heads/m1b",
+      "head": "7ad11d6f7256ef705cc97e736e4724fea3a9584e",
+      "committed_work_merged": true,
+      "uncommitted": []
+    },
+    {
+      "path": "/Users/magnusudbjorg/Documents/projects/PongPong-worktrees/review-fixes-4",
+      "branch": "refs/heads/review-fixes-4",
+      "head": "71ee42da28c10e47392c3375997045b3dc880059",
+      "committed_work_merged": true,
+      "uncommitted": [
+        "?? scripts/farm/farm_plot_interactable.gd.uid",
+        "?? scripts/farm/farm_system.gd.uid"
+      ]
+    }
+  ],
+  "tests": {
+    "report": "merged-main.json",
+    "checks": 397,
+    "failed": 0,
+    "skipped": 11,
+    "allowed_negative_control_messages": 7,
+    "unexpected_engine_messages": 0
+  },
+  "proofs": [
+    "merged-extension-check.json",
+    "merged-mutants-check.json",
+    "merged-gates.json"
+  ],
+  "art_assets_changed": [],
+  "note": "The subsequent verification commit changes only docs/qa. Both main and codex-secret-garden will point to it. The old review-fixes-4 untracked generated UID files are preserved."
+}

@@ -1,0 +1,1 @@
+write_import_stubs --check: ok (62 character folders, 498 sheets with the S3TC preset, 58 tile atlases, 0 wardrobe layer imports lossless, 164 keep files)
