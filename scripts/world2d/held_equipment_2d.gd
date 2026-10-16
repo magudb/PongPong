@@ -7,6 +7,9 @@ const PAINTING := preload("res://assets/held_equipment/tools.webp")
 const REST_ANGLES := [-20.0, -25.0, -20.0, -15.0, 20.0, 25.0, 20.0, 25.0]
 static var _data: Dictionary = {}
 var player: Player2D
+var clock: IsoChibiSprite2D
+## Read-only try-on choice when attached to a wardrobe preview's body clock.
+var preview_item: StringName = &""
 var rear: Node2D
 var front: Node2D
 var tool: Sprite2D
@@ -22,6 +25,7 @@ static func manifest() -> Dictionary:
 
 func _ready() -> void:
 	player = get_parent() as Player2D
+	clock = player.visual if player != null else get_parent() as IsoChibiSprite2D
 	process_priority = 100 # after the one IsoChibiSprite2D clock
 	rear = Node2D.new()
 	rear.name = "EquipmentRear"
@@ -29,9 +33,9 @@ func _ready() -> void:
 	front.name = "EquipmentFront"
 	# Parenting to the actual Sprite inherits altitude, spin, scale and late
 	# tween flashes exactly once, including changes after _process callbacks.
-	player.visual.sprite.add_child(rear)
+	clock.sprite.add_child(rear)
 	rear.show_behind_parent = true
-	player.visual.sprite.add_child(front)
+	clock.sprite.add_child(front)
 	tool = Sprite2D.new()
 	tool.name = "HeldPainting"
 	tool.centered = false
@@ -51,11 +55,14 @@ func _process(_delta: float) -> void:
 	sync_pose()
 
 func sync_pose() -> void:
-	var snapshot := player.equipment_display()
+	var snapshot := player.equipment_display() if player != null else {"id":preview_item,"drawn":preview_item != &"","context":&"selected"}
 	item_id = StringName(str(snapshot.id))
-	var visual := player.visual
+	var visual := clock
 	var data := manifest()
 	var body: Dictionary = data.bodies.get(visual.resolved_id, {})
+	var fitted_body := WardrobeCatalog.body(visual.resolved_id)
+	if not fitted_body.get("base", "").is_empty() and visual.sprite.material != null:
+		body = {"clips":fitted_body.held_clips}
 	var clip := str(visual.current_clip)
 	var frames: Array = body.get("clips", {}).get(clip, [])
 	var frame := int(visual.sprite.region_rect.position.x / IsoChibiSprite2D.FRAME_SIZE)
@@ -68,6 +75,7 @@ func sync_pose() -> void:
 		pose = {}
 		return
 	var source := visual.sprite
+	hand.material = source.material
 	var delta := source.offset - visual.base_sprite_offset
 	var key := "%s/%s/%d/%d/%s/%s/%s" % [visual.resolved_id, clip, direction, frame, item_id, snapshot.context, delta]
 	if key == _key:
@@ -88,17 +96,19 @@ func sync_pose() -> void:
 	tool.position = grip - anchor + delta
 	tool.scale = Vector2.ONE * float(art.height) / float(view.height)
 	var angle: float = REST_ANGLES[direction]
-	if player.state == PlayerBody2D.S.SWING and clip == "interact":
+	if player != null and player.state == PlayerBody2D.S.SWING and clip == "interact":
 		angle += [-45.0, -10.0, 35.0, 65.0][mini(frame, 3)]
-	elif player.state == PlayerBody2D.S.USING and clip == "interact":
+	elif player != null and player.state == PlayerBody2D.S.USING and clip == "interact":
 		angle += [-15.0, -35.0, 20.0, 5.0][mini(frame, 3)]
 	tool.rotation = deg_to_rad(angle)
 	# Re-use only the matching painted hand patch from the live body texture.
 	# This covers the handle; no new skin, detached hand or whole-body layer.
 	hand.visible = target == front
 	hand.texture = source.texture
-	hand.region_rect = Rect2(source.region_rect.position + grip - Vector2(7, 7), Vector2(14, 14))
-	hand.position = grip - anchor + delta - Vector2(7, 7)
+	var patch_size := float(fitted_body.get("hand_size",14)) if source.material != null else 14.0
+	var patch := Vector2.ONE * patch_size
+	hand.region_rect = Rect2(source.region_rect.position + grip - patch/2, patch)
+	hand.position = grip - anchor + delta - patch/2
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:

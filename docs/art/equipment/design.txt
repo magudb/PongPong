@@ -281,3 +281,12 @@ Capture all 32 hero/mode combinations in Godot using the project's window lock:
 
 Saved headless/native reports, inspection notes and limits are in validation.txt;
 the previews directory contains the 32 native hero/mode captures.
+
+Production follow-up (2026-10-16)
+
+The concept studio above remains an explicitly labelled design artifact. Live
+wardrobe clothing and the Clothes / Hands screen are implemented separately in
+docs/art/wardrobe/design.txt, with saved generation prompts, fitted production
+assets and native acceptance evidence. Work / Forest / Festival are now real
+clothing presets; tools, weapons and the existing hotbar use their established
+owners through the Hands page.

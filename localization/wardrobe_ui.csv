@@ -1,0 +1,44 @@
+keys,da,en
+GARDEROBE_TITLE,Garderobe og udstyr,Wardrobe and loadout
+GARDEROBE_CLOTHES,Tøj,Clothes
+GARDEROBE_HANDS,Udstyr,Hands
+GARDEROBE_ALL,Alle,All
+GARDEROBE_TOOLS,Redskaber,Tools
+GARDEROBE_BROWSE_ALL,Se alt tøj,Browse all clothes
+GARDEROBE_OWNED_ONLY,Vis mit tøj,Show owned clothes
+GARDEROBE_COUNT_FMT,%d ting,%d items
+GARDEROBE_EMPTY,Her er ikke noget endnu.,Nothing here yet.
+GARDEROBE_EMPTY_SLOT,Tom plads,Empty slot
+GARDEROBE_CHOOSE,Vælg en ting for at se nærmere på den.,Choose an item to take a closer look.
+GARDEROBE_EQUIP,Tag på,Equip
+GARDEROBE_REMOVE,Tag af,Remove
+GARDEROBE_ASSIGN,Til genvejslinjen,Assign to hotbar
+GARDEROBE_CLEAR_HOTBAR,Ryd valgt plads,Clear selected slot
+GARDEROBE_WORN,Taget på,Equipped
+GARDEROBE_TRYING_FMT,Prøver: %s,Trying on: %s
+GARDEROBE_NOT_OWNED,Find eller køb denne del for at tage den på.,Find or buy this piece to wear it.
+GARDEROBE_PICK_HOTBAR,"Vælg en plads på genvejslinjen, eller tryk 1–8.","Choose a hotbar slot, or press 1–8."
+GARDEROBE_PRESET_WORK,Arbejde,Work
+GARDEROBE_PRESET_FOREST,Skov,Forest
+GARDEROBE_PRESET_FESTIVAL,Fest,Festival
+GARDEROBE_SAVE_WORN,Gem sættet,Save outfit
+GARDEROBE_WEAR_PRESET,Tag på,Wear outfit
+GARDEROBE_MISSING_FMT,Disse dele mangler: %s,These pieces are missing: %s
+GARDEROBE_TURN_LEFT,Venstre,Left
+GARDEROBE_TURN_RIGHT,Højre,Right
+GARDEROBE_WALK,Gå / stå,Walk / idle
+GARDEROBE_CURRENT_PERKS_FMT,"Dine bonusser
+Fart +%d %% · Energi +%d
+Held +%d %% · Rabat %d %%","Current benefits
+Speed +%d %% · Energy +%d
+Luck +%d %% · Discount %d %%"
+SLOTCELL_HAT,Hoved,Head
+SLOTCELL_NECKLACE,Hals,Neck
+SLOTCELL_EARRINGS,Ører,Ears
+SLOTCELL_BODY,Krop,Body
+SLOTCELL_PANTS,Ben,Legs
+SLOTCELL_BRACELET,Håndled,Wrist
+SLOTCELL_SHOES,Fødder,Feet
+PERKLINE_SPEED_FMT,Fart +%d %%,Speed +%d %%
+GARDEROBE_SWITCH_TABS,Skift fane,Switch tab
+GARDEROBE_PREVIEW_FMT,Viser: %s,Preview: %s

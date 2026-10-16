@@ -23,5 +23,6 @@ config = {
       { "hat", "circlet" },
     },
     max_sets_counted = 2,
+    layer_z = { pants_dungarees = 22 }, -- bib and straps sit over the shirt
   },
 }

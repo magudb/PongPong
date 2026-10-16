@@ -15,6 +15,7 @@ BEFORE the first `godot --import`; there is no "import, rewrite, re-import" pass
   wardrobe layers         assets/wardrobe/layers/**  - NEVER a stub and NEVER VRAM compressed: tint-ready data must stay
         lossless RGBA8 (S3TC measured 14-19/255 mean error). The audit FAILS when a `.import` there carries a lossy or
         VRAM-compressed preset (compress/mode 1, 2 or 4).
+  painted wardrobe        files named by assets/wardrobe/manifest.json: RGB paintings use S3TC + mipmaps, like bodies
   content files           lua/**/*.lua, data/maps/*.map  - importer="keep" stubs (the localization .csv convention):
         non-resource extensions are dropped by an export unless they are keep-imported or named in the export preset's
         filters; a missing stub is an export bug that only shows in a shipped build
@@ -254,6 +255,22 @@ def check(root: Path, quiet: bool = False) -> int:
                                 % (imp.relative_to(root).as_posix(), mode))
 
     n_keep = 0
+    # New RGB paintings retain pigment in S3TC; these are not the historical
+    # lossless tint-index textures above. Audit exactly the manifest's files.
+    n_painted = 0
+    manifest = root / "assets/wardrobe/manifest.json"
+    if manifest.is_file():
+        for body in json.loads(manifest.read_text())["bodies"].values():
+            for filename in list(body["layers"].values()) + [body["base"], body["mask"]]:
+                if not filename:
+                    continue
+                n_painted += 1
+                asset = manifest.parent / filename
+                if not asset.is_file():
+                    failures.append("missing painted wardrobe texture: " + str(asset.relative_to(root)))
+                for why in problems_of_import(asset, "character"):
+                    failures.append("%s: %s" % (asset.relative_to(root), why))
+
     for f in keep_files(root):
         n_keep += 1
         for why in problems_of_keep(f):
@@ -271,8 +288,8 @@ def check(root: Path, quiet: bool = False) -> int:
               % (len(failures), n_dirs, n_sheets, n_tiles, n_layers, n_keep))
         return 1
     if not quiet:
-        print("write_import_stubs --check: ok (%d character folders, %d sheets with the S3TC preset, %d tile atlases, %d wardrobe layer imports lossless, %d keep files)"
-              % (n_dirs, n_sheets, n_tiles, n_layers, n_keep))
+        print("write_import_stubs --check: ok (%d character folders, %d sheets with the S3TC preset, %d tile atlases, %d wardrobe layer imports lossless, %d painted wardrobe textures with S3TC, %d keep files)"
+              % (n_dirs, n_sheets, n_tiles, n_layers, n_painted, n_keep))
     return 0
 
 

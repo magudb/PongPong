@@ -299,5 +299,12 @@
     "date": "",
     "voice_frozen": false,
     "rows": 64
+  },
+  "localization/wardrobe_ui.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 39
   }
 }

@@ -15,6 +15,11 @@ func run(t, suite) -> void:
 
 func _crowd(t, suite, keep_world := false) -> void:
 	await t.start_world()
+	# Include the maximum seven worn layers in the existing equipment budget.
+	for id in ["hat_straw_plain","necklace_acorn","earrings_copper","shirt_linen_cream","pants_dungarees_blue","bracelet_string","shoes_boots_brown"]:
+		if WardrobeManager.count_total(id) == 0:
+			EconomyManager.add_item(StringName(id),1,true)
+		WardrobeManager.equip(id)
 	var gm: Node = t.autoload("GameManager")
 	gm.set_config_override("time.minutes_per_real_second",0.0)
 	gm.set_config_override("towns.curfew.enabled",false)
@@ -68,13 +73,16 @@ func _crowd(t, suite, keep_world := false) -> void:
 	t.check("l15_city_frame",float(frames.ms)<=6,str(frames))
 	var with_equipment := Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)
 	var held: HeldEquipment2D = t.player().held_equipment
+	var clothes: WardrobeLayers = t.player().outfit_layers
 	# Preserve the original 250-draw city gate, and measure equipment's approved
-	# <=16 additional draws separately (docs/art/equipment/design.txt). Full
+	# <=16 additional draws separately (docs/art/equipment/design.txt), including
+	# the seven clothing layers and their body occluder. Full
 	# frame-time and total texture-memory gates above still include equipment.
 	var was_processing := held.is_processing()
 	held.set_process(false)
 	held.rear.hide()
 	held.front.hide()
+	clothes.root.hide()
 	hud.current_item_badge.hide()
 	hud.tool_name_label.show()
 	await t.frames(4)
@@ -83,6 +91,7 @@ func _crowd(t, suite, keep_world := false) -> void:
 	t.check("l15_equipment_draw_increment", with_equipment - without_equipment <= 16, "%d additional draws <=16" % (with_equipment - without_equipment))
 	hud.tool_name_label.hide()
 	hud.current_item_badge.show()
+	clothes.root.show()
 	held.set_process(was_processing)
 	held.sync_pose()
 	Perf.restore_cap(cap)

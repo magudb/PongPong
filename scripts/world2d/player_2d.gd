@@ -18,6 +18,7 @@ var lantern: PointLight2D
 var ghost_light: PointLight2D
 var combat: PlayerCombat2D
 var held_equipment: HeldEquipment2D
+var outfit_layers: WardrobeLayers
 var is_jumping: bool = false
 var invulnerable: bool = false
 var mouse_aim: bool = false
@@ -76,6 +77,9 @@ func _ready() -> void:
 	combat.weapon_drawn.connect(func(_item: StringName): _sync_equipment_display())
 	hotbar.changed.connect(_emit_hotbar)
 	hotbar.fill_defaults()
+	outfit_layers = WardrobeLayers.new()
+	outfit_layers.world_outfit = true
+	visual.add_child(outfit_layers)
 	held_equipment = HeldEquipment2D.new()
 	held_equipment.name = "HeldEquipment"
 	add_child(held_equipment)

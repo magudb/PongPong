@@ -70,6 +70,15 @@ def roles(catalog: dict) -> tuple[dict, dict]:
         path = (held / "tools.webp").resolve()
         selected[path] = "fitted-held-equipment"
         sources[path] = read(held / "manifest.json")["source"]
+    wardrobe = ROOT / "assets/wardrobe"
+    if (wardrobe / "manifest.json").is_file():
+        manifest = read(wardrobe / "manifest.json")
+        for body in manifest["bodies"].values():
+            for filename in body["layers"].values():
+                selected[(wardrobe / filename).resolve()] = "fitted-painted-clothing"
+            selected[(wardrobe / body["mask"]).resolve()] = "technical-clothing-occlusion-mask"
+            if body["base"]:
+                selected[(wardrobe / body["base"]).resolve()] = "painted-wardrobe-safe-body"
     technical_source = (ROOT / "tests/sections/art_style_consistency.gd").read_text()
     technical = re.findall(r'"([^"]+)"', re.search(r"const TECHNICAL := \[(.*?)\]", technical_source, re.S)[1])
     for row in catalog["props"]:

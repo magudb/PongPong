@@ -24,7 +24,7 @@ def hashes(root, code_only=False):
         for directory, dirs, names in os.walk(root/folder):
             dirs[:] = [name for name in dirs if name not in ('.venv','.git','.godot','__pycache__','node_modules')]
             files.extend(Path(directory)/name for name in names)
-    return {str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(set(files)) if p.is_file() and (p.suffix in ('.gd','.tscn','.py','.gdshader') if code_only else p.suffix in ('.gd','.tscn','.lua','.json','.map','.csv','.py','.godot','.gdshader','.tres'))}
+    return {str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(set(files)) if p.is_file() and (p.suffix in ('.gd','.tscn','.py','.gdshader','.gdshaderinc') if code_only else p.suffix in ('.gd','.tscn','.lua','.json','.map','.csv','.py','.godot','.gdshader','.gdshaderinc','.tres'))}
 
 def binding():
     return hashlib.sha256(json.dumps(hashes(ROOT),sort_keys=True).encode()).hexdigest()

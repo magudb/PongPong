@@ -36,6 +36,9 @@ func _run(t, capture: bool, skin := "") -> void:
 	t.check("whole_item_catalog_has_held_tool_and_weapon_art", missing.is_empty(), str(missing))
 	var body := p.visual.resolved_id
 	var poses: Dictionary = data.bodies[body].clips
+	var fitted_body := WardrobeCatalog.body(body)
+	if not fitted_body.get("base", "").is_empty():
+		poses = fitted_body.held_clips
 	var checked := 0
 	var valid := true
 	for clip in poses:

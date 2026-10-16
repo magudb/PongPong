@@ -1,0 +1,115 @@
+extends RefCounted
+const SECTION := "wardrobe_ui"
+const TIMEOUT_S := 180.0
+var native := false
+
+func run(t) -> void:
+	await _run(t)
+
+func run_windowed(t) -> void:
+	native = true
+	await _run(t)
+
+func _run(t, skin := "") -> void:
+	await t.start_world("","Tester","Testgaarden",skin)
+	var world: WorldRoot2D = t.world()
+	var p: Player2D = world.player
+	var ui: Node = world.game_ui.get_screen(&"garderobe")
+	var w: Node = t.autoload("WardrobeManager")
+	var eco: Node = t.autoload("EconomyManager")
+	t.check("screen_and_live_presenter_available", ui != null and p.outfit_layers != null and p.outfit_layers.layers.size() == 3)
+	if ui == null:
+		return
+	var supported := true
+	for body in WardrobeCatalog.data().get("bodies", {}):
+		for id in ItemKinds.all_ids("clothing"):
+			supported = supported and WardrobeCatalog.supports(str(body),id)
+	t.check("all_96_pieces_fit_all_eight_bodies", supported and WardrobeCatalog.data().bodies.size() == 8)
+	t.tap_key(KEY_G)
+	await t.frames(3)
+	t.check("opens_paused_with_live_preview", ui.is_open() and ui.is_top() and ui.preview != null and not p.world_input_allowed())
+	var worn: Dictionary = w.outfit()
+	ui._activate("dress_sun_cream")
+	await t.frames(3)
+	t.check("try_on_is_local_and_resolves_exclusions", w.outfit() == worn and ui.preview_layers.current_outfit.has("dress") and not ui.preview_layers.current_outfit.has("shirt") and not ui.preview_layers.current_outfit.has("pants"))
+	UiAudit.press(t,&"ui_cancel")
+	await t.frames(2)
+	t.check("closing_cancels_uncommitted_try_on", w.outfit() == worn and ui.preview == null and not GameManager.is_modal_open())
+	ui.open()
+	ui._activate("dress_sun_cream")
+	ui.equip_button.grab_focus()
+	UiAudit.press_pad(t,JOY_BUTTON_A)
+	await t.frames(3)
+	t.check("equip_button_commits_one_complete_dress", w.equipped.has("dress") and not w.equipped.has("shirt") and not w.equipped.has("pants") and p.outfit_layers.current_outfit == w.outfit())
+	if native:
+		world.game_ui.get_screen(&"hud").toasts.clear()
+		await t.capture("dress_"+p.visual.resolved_id)
+	ui._preview_control(1)
+	ui._preview_control(2)
+	await t.frames(8)
+	t.check("preview_rotates_and_walks", ui.preview.direction_index == 1 and ui.preview.current_clip == &"walk")
+	ui.show_all = true
+	ui._refresh_texts()
+	ui._activate("hat_wizard_lavender")
+	t.check("unowned_piece_can_be_tried_but_not_equipped", ui.equip_button.disabled and w.outfit().has("dress") and not w.equipped.has("hat"))
+	ui.close()
+	await t.frames(2)
+	ui.open()
+	ui._activate("dress_sun_cream")
+	ui.remove_button.pressed.emit()
+	await t.frames(3)
+	t.check("remove_button_reveals_base_and_keeps_ownership", not w.equipped.has("dress") and w.count_total("dress_sun_cream") == 1)
+	w.equip("shirt_linen_cream")
+	w.equip("pants_trousers_brown")
+	ui._save_preset()
+	t.check("screen_saves_worn_outfit", w.presets.has("work") and w.presets.work == w.outfit())
+	w.equip("dress_sun_cream")
+	ui._load_preset()
+	t.check("screen_restores_outfit", w.outfit() == w.presets.work and not w.equipped.has("dress"))
+	eco.add_item(&"iron_sword",1,true)
+	eco.equip(&"weapon",&"sword_rusty")
+	ui.set_tab(1)
+	t.check("hands_preview_uses_same_attachment_presenter", ui.preview_held.clock == ui.preview)
+	ui._activate("iron_sword")
+	t.check("weapon_try_on_does_not_change_equipment", eco.equipped_item(&"weapon") == &"sword_rusty" and ui.preview_held.item_id == &"iron_sword")
+	ui.equip_button.pressed.emit()
+	await t.frames(3)
+	t.check("hands_tab_changes_real_weapon_owner", eco.equipped_item(&"weapon") == &"iron_sword")
+	ui._activate("axe_wooden")
+	ui._begin_assignment()
+	ui._hotbar(3)
+	await t.frames(2)
+	t.check("hands_tab_assigns_existing_hotbar", p.hotbar.slots[3] == &"axe_wooden")
+	ui._hotbar(3)
+	t.check("hands_tab_selects_ready_tool", p.hotbar.selected == 3)
+	ui._clear_hotbar()
+	t.check("hands_tab_clears_selected_slot", p.hotbar.current() == &"")
+	ui._activate("hoe_wooden")
+	ui._begin_assignment()
+	ui._hotbar(3)
+	if native:
+		await t.frames(3)
+		await t.capture("hands_"+p.visual.resolved_id)
+	ui.close()
+	await t.frames(3)
+	t.check("closing_releases_pause_and_preview", not GameManager.is_modal_open() and ui.preview == null and p.world_input_allowed())
+	if native:
+		world.game_ui.get_screen(&"hud").toasts.clear()
+		await t.capture("world_"+p.visual.resolved_id)
+	var saved_clothes: Dictionary = w.to_dict()
+	var saved_hotbar: Dictionary = p.hotbar.to_dict()
+	var sm: Node = t.autoload("SaveManager")
+	t.check("real_save_with_clothes_and_loadout", sm.save_game(4))
+	w.equip("dress_sun_cream")
+	eco.equip(&"weapon",&"sword_rusty")
+	p.hotbar.assign(3,&"scythe")
+	var previous_world := world.get_instance_id()
+	t.check("real_load_rebuilds_world", sm.load_and_enter(4))
+	await t.until(func():return t.world()!=null and t.world().get_instance_id()!=previous_world and t.world().ready_for_play,10)
+	await t.physics(3)
+	p = t.player()
+	t.check("clothing_equipment_presets_and_hotbar_survive_load", w.to_dict() == saved_clothes and p.hotbar.to_dict() == saved_hotbar and eco.equipped_item(&"weapon") == &"iron_sword" and p.outfit_layers.current_outfit == w.outfit())
+	sm.delete_save(4)
+	if skin == "":
+		var alternate: String = {"animal":"animal_monkey","fairy":"fairy_birk","hobbit":"hobbit_bodil","ghost":"ghost_hviske"}[t.character]
+		await _run(t,alternate)

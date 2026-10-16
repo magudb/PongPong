@@ -1,0 +1,80 @@
+Wardrobe and loadout implementation
+
+Open Wardrobe with G or Pause > Wardrobe while the character is free. Clothes
+and Hands are separate pages of the existing book theme. The game pauses while
+the screen is open. Changing clothes is available anywhere; the user did not
+choose the optional home-only restriction.
+
+Select a piece to try it locally. Equip commits the complete outfit. Remove
+returns a worn item to owned stock. Closing discards uncommitted try-ons. Browse
+all previews the 96 authored clothing IDs without granting them. New games own
+the existing cream dress and wear the existing cream shirt, brown trousers and
+boots. Clothing still comes through the existing shops and loot systems.
+
+Seven clothing cells cover hat/circlet, necklace, earrings, body, trousers,
+bracelet and shoes. Dresses replace shirt and trousers. Hats and circlets exclude
+one another. Work, Forest and Festival save clothing snapshots; wearing a preset
+reports missing pieces together and never creates replacement items.
+
+Hands selects owned weapons and tools, changes real equipment and assigns or
+clears the existing eight-slot hotbar. Its character preview uses the same
+HeldEquipment2D renderer as the world. Selection is a preview until Equip or a
+hotbar assignment. The actual current-item HUD remains the gameplay readout.
+Keyboard, mouse and controller use existing navigation and focus conventions.
+
+Ownership and persistence
+
+WardrobeManager owns clothing stock, equipped slots and the three outfit presets.
+EconomyManager routes clothing to that store; it remains the sole owner of tools
+and weapons. The player retains the existing hotbar. Worn clothing cannot be
+sold. Lua retains item stats, set bonuses, slot exclusions and drawing order.
+Perks combines the worn points with existing caps. Completed collections grant
+capstones through LootService. SaveManager registers wardrobe at order 30;
+legacy saves adopt backpack clothing before filling missing starter pieces.
+No second inventory, equipment save section or animation clock is introduced.
+
+Art and rendering
+
+Built-in image generation produced saved painted masters from the shipped body
+references. Exact prompts and selected source paths are in prompts.json. All
+selected sources are copied into tools/art/drawn/sources/wardrobe/. Four new safe
+bases retain the humanoids' identities, wings, hair and braids; original stock
+animations and portraits remain byte-identical. Fur and wisp bodies use stock
+art. Ghost clothes use wraps, hem bands and charms. Hobbit toe occlusion keeps
+bare feet visible. Neck pendants are hidden in rear views.
+
+Run tools/art/.venv/bin/python tools/art/drawn/wardrobe.py to pack the sources.
+assets/wardrobe/manifest.json records source hashes and per-body, per-direction
+fit rectangles. It includes all 30 garment families on all eight bodies, four
+safe bases and eight functional occlusion masks (252 production rasters).
+The repaired ghost lower set has seven main rows plus an explicit eighth SE
+source; no missing view is silently mirrored.
+
+WardrobeLayers is shared by world and preview. Its static eight-direction RGB
+paintings use the existing body's exact inverse puppet motion field in a shared
+shader include. The real clip, frame and direction drive every layer. Selected
+textures alone remain referenced; no action loads a clothing atlas. S3TC with
+mips bounds each 256x2048 atlas to about 0.67 MiB. Palette mapping retains the
+source pigment, shadows, highlights and warm ink. These are RGB paintings, not
+legacy lossless palette-index textures.
+
+Every drawing root inherits the actual source Sprite's final scale, rotation,
+altitude and tint once. The matching body mask restores face, ears, hands, wings,
+braids and toes only where clothing overlaps. Complete selected resources are
+prepared before changing the visible outfit. Hero changes refit the same actor;
+world travel can reparent it without destroying its presentation. Held equipment
+uses the same body material for its foreground hand patch. The four new safe
+bases have reviewed hand centres, tracked offline through the same puppet field
+into explicit per-frame records; clothing masks and bracelets use those centres
+too. Hand masks retain painted skin and its edge, excluding vest/shorts pixels.
+This avoids restoring a square of base clothing or skin through a long dress.
+
+Validation and limits
+
+See docs/qa/loadout/ for reproducible reports and actual Godot captures. Review
+covers all 96 palettes on Rasmus, all 30 families on the seven other bodies,
+all directions in mixed outfits, real save/load, local cancellation, pad equip,
+hotbar assignment, legacy adoption and existing weapon/tool behavior. Frame-lock
+checks exercise all authored clip/frame/direction combinations. These are not a
+claim that every stock animation frame received a separate pixel review.
+Existing art retains its prior visual dispositions when byte-identical.

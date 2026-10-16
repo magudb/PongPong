@@ -1245,6 +1245,7 @@ const EXPECTED_ROWS := {
 	"home": "res://scripts/home/home_exterior_2d.gd", "tent": "res://scripts/home/tent_2d.gd",
 	"runestone": "res://scripts/dungeon/markers/runestone_2d.gd", "forest_dress": "res://scripts/forest_look/forest_dress.gd", "hulen_keeper": "res://scripts/forest_look/hulen_keeper.gd",
 	"mailbox": "res://scripts/traetoppen/life/post_box_2d.gd",
+	"secret_garden": "res://scripts/world2d/story/secret_garden_marker.gd",
 	"shipping_bin": "res://scripts/farm/steading/objects/shipping_bin_2d.gd", "tool_shed": "res://scripts/farm/steading/objects/tool_shed_2d.gd", "field_expansion": "res://scripts/farm/steading/objects/field_expansion_2d.gd",
 	"underdeck": "res://scripts/farm/steading/objects/underdeck_2d.gd", "ambient_fx": "res://scripts/farm/steading/objects/ambient_fx_2d.gd", "dress": "res://scripts/farm/steading/dress/dress_2d.gd",
 	"town": "res://scripts/towns/town_marker.gd", "door": "res://scripts/towns/town_marker.gd", "post": "res://scripts/towns/town_marker.gd",
