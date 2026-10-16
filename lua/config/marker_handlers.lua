@@ -24,6 +24,9 @@ config = {
     hulen_keeper = "res://scripts/forest_look/hulen_keeper.gd",
     -- V6 (city life)
     mailbox = "res://scripts/traetoppen/life/post_box_2d.gd",
+    seed_basket = "res://scripts/traetoppen/life/seed_basket_2d.gd",
+    kiki_cache = "res://scripts/traetoppen/life/crown_cache_2d.gd",
+    rejsestolpe = "res://scripts/traetoppen/life/rejsestolpe_2d.gd",
     bath = "res://scripts/traetoppen/life/bath_tub_2d.gd",
     board = "res://scripts/traetoppen/life/notice_board_2d.gd",
     -- N02 / N05 (the farm steading); field_expansion replaces the lazy farm_view.gd entry of IsoArea

@@ -37,9 +37,9 @@ static func is_present(npc_id: String) -> bool:
 
 
 ## The live citizen NODE in the area the player is in (what a counter's `talk` host forwards to), or null (SE1).
-static func node_of(npc_id: String) -> Node:
+static func node_of(npc_id: String, target_area: Node = null) -> Node:
 	for d in _active:
-		if is_instance_valid(d) and d.has_method("node_of"):
+		if is_instance_valid(d) and d.has_method("node_of") and (target_area == null or d.get("area") == target_area):
 			var v: Variant = d.call("node_of", npc_id)
 			if v is Node and is_instance_valid(v):
 				return v as Node
@@ -65,3 +65,24 @@ static func resync(npc_id: String = "") -> void:
 	for d in _active:
 		if is_instance_valid(d):
 			d.call("resync", true, npc_id)
+
+
+## Whether this area owns scheduled actors, even while its markers are still building.
+static func controls(npc_id: String, area: Node) -> bool:
+	if not Routines.registry().has(npc_id) or area == null or area.get("map") == null:
+		return false
+	if str(area.map.id) == "traetoppen" or area.has_meta("room_spec"):
+		return true
+	for marker in area.map.markers.values():
+		if str(marker.get("marker", "")) == "town":
+			return true
+	return false
+
+static func post_ground(area_id: String, name: StringName) -> Vector2:
+	for director in _active:
+		if is_instance_valid(director) and str(director.get("area_id")) == area_id and director.has_method("post_ground"):
+			return director.call("post_ground", name)
+	return Vector2.INF
+
+static func door_ground(area_id: String, building: StringName) -> Vector2:
+	return post_ground(area_id, StringName("door_" + str(building)))

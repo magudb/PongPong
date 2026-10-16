@@ -1,0 +1,71 @@
+V6 city services and T-director — 2026-10-16
+
+The loaded world now owns dialogue service requests. Hoppe can trade two carrots
+for a weighted rare seed while visiting the farm, as well as at the city basket.
+The reward must fit before consumption and the daily flag/inventory commit before
+observers. The bath restores energy/hearts, takes 30 minutes exactly once per day,
+refuses a day-end crossing, releases its modal on disposal and directs outdoor
+requests to the bathhouse. The post counter explains delivery; the farm mailbox
+keeps day one empty, prioritizes the courier's quest and publishes one post_read
+from day two even when empty. The merchant and courier have distinct NPC IDs.
+
+The notice board lists only configured everyday givers, with real quest offers.
+Market flags use the configured weekend. Five small Kiki-only caches bypass
+rarity/unique quest routing. Four discovered travel stops use ordinary world
+travel/fade and the saved ft_* flags. All new LIFE copy remains draft, da/en.
+There are seven service handlers plus one shared dialogue helper.
+
+Every loaded town/room has one director; static scheduled NPC markers step aside.
+Actors are real Npc2D instances, use the actual route bake and real NavGrid or
+LevelRegistry geometry, and collide with world/player/ground rather than NPCs.
+The world waits for population and warms visible idle/talk/walk sheets behind its
+fade. Clock skips resync safely; raw hours 24 and 25 remain in the same day.
+Conversations hold the actor and release it once. Leaving a parked area frees
+all citizen actors/sheets and unregisters the director; reentry reconstructs
+presence. Initialization uses a cancellable physics countdown, with no awaited
+member function left to resume after a disposable room probe is freed.
+
+Ordinary/festival visual caps are 16/20 distinct looks, with festival priority.
+Painted chibi faces overlapped at the prototype's one-cell festival spacing.
+Named festival posts now reflow onto navigable floor at >=200 ground px spacing.
+Their facade names remain stable. The actual 20-look native fixture is inspected,
+not presented as a shipped festival. Native director cost was 0.102 ms with twenty
+live citizens (<=0.3). The five-citizen ordinary sample measured 0.041 ms.
+
+Doors, safe return spawns and both stall service/talk bands are live. All 17 city
+anchors shifted by >64 ground px are captured for placement review. Fru Ugle's
+body stays at the safe deck approach; her visual, quest bubble and 420px
+reach preserve the authored window pose above the hole art. Real E reaches her.
+Curfew reads the 25.5/25.75 configuration, waits for modals/travel and retries.
+
+The P06 facing query exposed a counter regression: a player already occupying
+a 40x22 talk spot could miss it by looking at the cell behind the hatch. Counter
+hosts also participate in an underfoot query; the nearest host still selects
+shop vs talk. Other world targets keep the facing-only rule, and all interaction
+shapes remain unchanged. The independent Python replay now uses the actual
+ground-space ellipse/distance plus that counter-only rule. Its original A/B/C
+checks and misplaced-host negative control remain. Real V6 mailboxes keep their
+own facing-only selection. Geometry probes explicitly inject a keeper with live
+population disabled; production entries and live-keeper gates remain enabled.
+Counter lookup is scoped to its own room. Probe spec directories are restored
+between sections, and absent-service fallback tests explicitly remove handlers.
+
+Evidence so far:
+- towns-integration.json: 2136 checks across 12 sections, zero failures/errors/
+  warnings, six named native/later skips and 13 intentional save diagnostics.
+- town-placement-tests.json: 493 checks (services, city, NPC, player), zero
+  failures/skips/engine messages, including portable seed trading and real E at
+  Ugle's window after the placement corrections.
+- towns-native.json: 75 checks, zero failures/skips/engine messages. Fourteen
+  painted rooms at real staffed/open hours, the live shop overlay, five town/farm
+  captures, and a twenty-person fixture. town-city-native.json isolates every large
+  anchor shift and the authored window capture.
+- town-visual-integration.json: 1186 checks across city physics, services and
+  both art packs; zero failures or engine messages, one named native-only skip.
+- shop-art-native.json: 200 checks, zero failures/skips/engine messages;
+  all existing node/light/residency gates preserved.
+- All 2534 reviewed art/theme assets remain byte-identical. CSV lint, copy lint
+  and keep imports pass. No new audio was generated.
+
+This is a town integration checkpoint. S-ui, N04, I2/final budgets and the ghost
+family layer remain before the full milestone can be merged.

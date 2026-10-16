@@ -190,6 +190,7 @@ func _ready() -> void:
 	_build_vignette()
 	_build_fade()
 	Svc.static_call("res://scripts/farm/steading/objects/farm_stage.gd", &"attach", [self])
+	Svc.static_call("res://scripts/traetoppen/life/daily_flags.gd", &"attach_world", [self])
 	EventBus.area_change_requested.connect(_on_area_change_requested)
 	EventBus.game_event.connect(_on_game_event)
 	EventBus.player_defeated.connect(_on_player_defeated)
@@ -521,6 +522,12 @@ func warm_jobs() -> Array:
 ## raced in about 2 percent of the runs (engine message "texture_2d_initialize: Parameter t is null" + a leaked RID at exit, measured:
 ## 2 of 120 runs with the warm-up, 0 of 120 without), so headless runs skip it unless `warm_in_headless` is set.
 func warm_clips() -> void:
+	# Population waits for collider registration. Warm only after those real
+	# citizens have appeared, so their first frame is also behind the travel fade.
+	for director in get_tree().get_nodes_in_group("town_director"):
+		if area != null and area.is_ancestor_of(director):
+			while is_instance_valid(director) and director.is_inside_tree() and not director.ready_for_population:
+				await get_tree().physics_frame
 	if DisplayServer.get_name() == "headless" and not warm_in_headless:
 		warm_skipped += 1
 		return

@@ -50,6 +50,9 @@ func setup(p_kind: String, marker: Dictionary, building: String) -> void:
 
 func _ready() -> void:
 	super._ready()
+	# Counter choice follows the customer's cell, including when their feet
+	# already occupy the small talk host and they face the counter beyond it.
+	set_meta("counter_foot_host", true)
 	if kind == "talk":
 		set_enabled(false)                                  # inert and invisible to the E-query until a keeper node stands in the room
 		_timer = Timer.new()
@@ -82,7 +85,10 @@ func keeper_node() -> Node:
 	if keeper_resolver.is_valid():
 		v = keeper_resolver.call(keeper_id)
 	else:
-		v = _Svc.static_call(DIRECTOR, &"node_of", [keeper_id], null)
+		var room: Node = get_parent()
+		while room != null and not (room is IsoArea):
+			room = room.get_parent()
+		v = _Svc.static_call(DIRECTOR, &"node_of", [keeper_id, room], null)
 	return v as Node if v is Node and is_instance_valid(v) else null
 
 

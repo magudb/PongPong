@@ -219,6 +219,8 @@ static func build(area: IsoArea, header: Dictionary) -> void:
 		posts[str((p as Dictionary)["id"])] = cell_local(float((p["cell"] as Array)[0]), float((p["cell"] as Array)[1]))
 	area.set_meta("posts", posts)
 	area.set_meta("room_spec", spec)
+	if bool(area.get_meta("town_population_enabled", true)):
+		Svc.static_call("res://scripts/towns/town_director.gd", &"attach_room", [area, spec])
 	st["build_us"] = Time.get_ticks_usec() - t0
 	st["zoom_fit"] = zf
 	st["nodes"] = _count_nodes(area)

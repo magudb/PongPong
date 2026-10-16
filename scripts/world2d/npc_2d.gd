@@ -44,6 +44,7 @@ var _walk_generation := 0
 var _event_target := Vector2.ZERO
 var _event_speed := 0.0
 var _event_walking := false
+var _interaction_reach := 60.0
 
 static func create(params: Dictionary) -> Npc2D:
 	var npc := Npc2D.new()
@@ -92,6 +93,7 @@ func _ready() -> void:
 	_interact.collision_layer = Iso.LAYER_INTERACTABLE
 	_interact.collision_mask = 0
 	var reach := maxf(1, float(_params.get("reach", 60)))
+	_interaction_reach = reach
 	var interaction_shape := CollisionShape2D.new()
 	var interaction_ellipse := ConvexPolygonShape2D.new()
 	interaction_ellipse.points = _ellipse(Vector2(reach, reach * Iso.squash()))
@@ -271,6 +273,15 @@ func set_driven(enabled: bool) -> void:
 	driven = enabled and not guest
 	routine_id = npc_id if driven else &""
 	velocity = Vector2.ZERO
+
+func set_interaction_reach(reach: float) -> void:
+	reach = maxf(1, reach)
+	if is_equal_approx(reach, _interaction_reach):
+		return
+	_interaction_reach = reach
+	if _interact != null:
+		var shape := _interact.get_child(0) as CollisionShape2D
+		(shape.shape as ConvexPolygonShape2D).points = _ellipse(Vector2(reach, reach * Iso.squash()))
 
 func hold(held: bool) -> void:
 	_held = held

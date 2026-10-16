@@ -116,6 +116,7 @@ func _build(p_area: IsoArea, _header: Dictionary, p_data: Dictionary) -> void:
 	objects = area.objects
 	_paint_backdrop()
 	_paint_discs_and_trunks()
+	Svc.static_call("res://scripts/traetoppen/life/daily_flags.gd", &"attach", [area])
 	_place_markers()
 	_paint_huts()
 	_paint_props()

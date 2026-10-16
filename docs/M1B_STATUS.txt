@@ -190,3 +190,14 @@ N02 farm objects — 2026-10-16
 Shipping, storage requests, the 42-cell expansion, reserves, stage flags and
 painted scenery pass the four-race and native gates. See N02.txt. Town services,
 live schedules, social screens and the first morning remain in progress.
+
+V6 / T-director / I3 town checkpoint — 2026-10-16
+
+Live schedules, room keepers, city doors/stalls, mail/board/bath/seed services,
+small Kiki caches and discovered travel stops are integrated. The 2136-check
+regression, 1186-check city/art gate, 75 native town checks and 200 native shop-art
+checks pass. All 17 large city anchor shifts and all 14 staffed interiors were
+inspected. Approved art/theme bytes are unchanged. See V6-T-director.txt.
+
+S-ui, N04, I2/final budgets and the ghost-family follow-up remain; do not merge
+this checkpoint as if the full usable-towns milestone were finished.

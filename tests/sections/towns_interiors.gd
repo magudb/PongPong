@@ -103,6 +103,7 @@ class Tap extends RefCounted:
 
 func run(p_t) -> void:
 	t = p_t
+	var original_dirs: Array[String] = InteriorRoom.spec_dirs.duplicate()
 	gm = t.autoload("GameManager")
 	lm = t.autoload("LocalizationManager")
 	bus = t.autoload("EventBus")
@@ -124,6 +125,7 @@ func run(p_t) -> void:
 	await _closing_time()
 	_tool()
 	_reset()
+	InteriorRoom.use_spec_dirs(original_dirs)
 
 
 # ================================================================================================ helpers
@@ -1052,7 +1054,9 @@ func _handler_markers(tap: Tap) -> void:
 	DirAccess.make_dir_recursive_absolute(_abs(dir))
 	_write(dir + "int_probe_services.json", _json(spec))
 	InteriorRoom.use_spec_dirs([dir] as Array[String])
-	# (1) no handler registered: three fallback counters, each announcing its own kind
+	# (1) Explicitly remove the installed V6 handlers for this fallback probe.
+	gm.set_config_override("marker_handlers", {"bath": "res://__fixture_missing__.gd", "board": "res://__fixture_missing__.gd", "mailbox": "res://__fixture_missing__.gd"})
+	IsoArea.clear_handler_cache()
 	var bare = await _room("int_probe_services")
 	var fallbacks: Array[ShopCounter] = _counters(bare.area)
 	var kinds: Array = fallbacks.map(func(c: ShopCounter) -> String: return c.kind)
@@ -1192,6 +1196,9 @@ func _e_query() -> void:
 					roles[h] = "D"
 				_:
 					roles[h] = "S"
+		for service in area.objects.get_children():
+			if service is PostBox2D:
+				roles[service] = "X"
 		var kh := Interactable2D.new()
 		kh.name = "KeeperHost"
 		kh.radius = Vector2(60, 30)

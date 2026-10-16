@@ -1,0 +1,28 @@
+keys,da,en
+LIFE_POST_PROMPT,Læs post,Read mail
+LIFE_POST_TOAST,Pip har lagt post i postkassen.,Pip has left a letter in the mailbox.
+LIFE_POST_EMPTY,Der er ingen post lige nu.,There is no mail right now.
+LIFE_POST_OFFICE,Pip tager posten med til din gård hver morgen.,Pip carries the mail to your farm each morning.
+LIFE_ACCEPT,Tag imod opgaven,Accept the quest
+LIFE_LATER,Måske senere,Maybe later
+LIFE_BOARD_PROMPT,Se opslagstavlen,Read the notice board
+LIFE_BOARD_INTRO,Her er dagens opslag.,Here are today’s notices.
+LIFE_BOARD_EMPTY,Der er ingen nye opslag lige nu.,There are no new notices right now.
+LIFE_BATH_PROMPT,Tag et bad,Take a bath
+LIFE_BATH_USED,Du har allerede taget et bad i dag.,You have already had a bath today.
+LIFE_BATH_LATE,Badet er lukket for i aften.,The bath is closed for tonight.
+LIFE_BATH_DONE,Ahh… du er som ny.,Ahh… good as new.
+LIFE_SWAP_PROMPT,Byt frø,Swap for seeds
+LIFE_SWAP_USED,"Kom igen i morgen, så bytter vi igen.",Come back tomorrow for another swap.
+LIFE_SWAP_NEED,Hoppe vil gerne bytte to gulerødder for et sjældent frø.,Hoppe will swap two carrots for a rare seed.
+LIFE_SWAP_DONE,Du fik et frø: %s.,You received a seed: %s.
+LIFE_BAG_FULL,Der er ikke plads i rygsækken.,There is no room in your backpack.
+LIFE_CACHE_PROMPT,Se i trækronen,Search the tree crown
+LIFE_CACHE_DONE,Du fandt en lille gave i trækronen.,You found a small gift in the tree crown.
+LIFE_TRAVEL_PROMPT,Rejs,Travel
+LIFE_TRAVEL_INTRO,Hvor vil du hen?,Where would you like to go?
+LIFE_STOP_FARM,Gårdbroen,Farm bridge
+LIFE_STOP_TORV,Torvet,Town square
+LIFE_STOP_HYGGEBYEN,Hyggebyen,Hyggebyen
+LIFE_STOP_SKOVLIFT,Skovliften,Forest lift
+LIFE_BATH_VISIT,Kom ind i Badehuset til et varmt bad.,Come into the bathhouse for a warm bath.

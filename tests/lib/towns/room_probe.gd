@@ -19,6 +19,9 @@ var spec: Dictionary = {}
 var cols: int = 0
 var rows: int = 0
 var build_ms: float = 0.0
+# Geometry/counter-contract probes inject their own keeper. Production world
+# entries and T-director tests exercise the actual scheduled population.
+var populate_citizens := false
 var _shape: ConvexPolygonShape2D
 
 
@@ -36,6 +39,7 @@ func build(p_t, room_id: String, zone: String = "city") -> IsoArea:
 	area = IsoArea.new()
 	holder.add_child(area)
 	var t0: int = Time.get_ticks_usec()
+	area.set_meta("town_population_enabled", populate_citizens)
 	area.setup(AreaMap.parse_text(InteriorRoom.stub_map(room_id, str(spec["building"]), zone)))
 	build_ms = float(Time.get_ticks_usec() - t0) / 1000.0
 	await t.physics(2)

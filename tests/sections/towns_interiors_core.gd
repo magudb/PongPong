@@ -81,13 +81,15 @@ func run(t) -> void:
 		player.set("facing8", 5)
 		await t.physics(1)
 		var selected := 0
+		var chosen: Array = []
 		for column in [keeper_cell.x - 1, keeper_cell.x + 1]:
 			player.global_position = p.cell_global(column, 3)
 			var host: Node = player.call("nearest_interactable")
+			chosen.append([str(host), player.get("state"), player.global_position])
 			if host is ShopCounter and host.kind == "talk":
 				host.interact(player)
 				selected += 1
-		t.expect(selected == 2 and keeper.interactions.size() == 2, id + " real player reaches the keeper from both counter ends")
+		t.expect(selected == 2 and keeper.interactions.size() == 2, id + " real player reaches the keeper from both counter ends " + str(chosen))
 		player.global_position = p.cell_global(keeper_cell.x, 3)
 		var centre: Node = player.call("nearest_interactable")
 		t.expect(centre != null and not (centre is ShopCounter and centre.kind == "talk"), id + " centre selects the service rather than the talk hosts")
@@ -116,12 +118,34 @@ func run_windowed(t) -> void:
 	await t.start_world()
 	var world: Node = t.world()
 	var gm: Node = t.autoload("GameManager")
-	gm.set_config_override("towns.hours_enabled", false)
+	gm.set_config_override("time.minutes_per_real_second", 0.0)
 	gm.hour = 12
 	gm.minute = 0
 	for id in room_ids():
+		var spec := InteriorRoom.load_spec(id)
+		var keeper_id := ""
+		for marker in spec.markers:
+			if str(marker.get("type", "")) == "talk":
+				keeper_id = str(marker.get("keeper", ""))
+		var found := false
+		for day in range(8, 15):
+			for hour in range(8, 23):
+				gm.day = day
+				gm.hour = hour
+				gm.minute = 0
+				var ctx := Routines.now_ctx()
+				var where := Routines.where_is(keeper_id, ctx)
+				if str(where.area) == id and str(where.act) not in ["sleep", "inside"] and bool(Hours.state(str(spec.building), ctx).get("open", true)):
+					found = true
+					break
+			if found:
+				break
+		t.expect(found, "Open staffed hours exist in " + id)
 		world.travel(StringName(id), &"default")
 		await t.until(func() -> bool: return not world.traveling and str(world.area.map.id) == id, 10.0)
+		t.autoload("EventBus").day_started.emit(gm.day, gm.season)
+		t.autoload("EventBus").time_of_day_changed.emit(gm.hour, gm.minute)
+		t.autoload("TimeManager").set_weather(&"klart")
 		await t.frames(4)
 		var image: Image = await t.capture("core_" + id)
 		t.expect_not_blank(image, Rect2i(0, 0, 1280, 720), "Painted room: " + id)

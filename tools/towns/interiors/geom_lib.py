@@ -49,10 +49,17 @@ def select(player_xy: tuple[float, float], facing: int, cell: tuple[int, int], h
            r: float = QUERY_RADIUS) -> str | None:
     """hosts = {name: (centre_xy, half_axes)}; returns the selected host name or None (ties go to the host that comes first in `hosts`)."""
     tgt = ic(cell[0] + STEP[facing][0], cell[1] + STEP[facing][1])
+    squash = HALF_H / HALF_W
+    ground = lambda point: (point[0], point[1] / squash)
     best, bd = None, 1e18
     for name, (cxy, rad) in hosts.items():
-        if circle_hits_poly(tgt, r, ellipse_pts(cxy, rad)):
-            d = math.dist(cxy, player_xy)
+        polygon = [ground(point) for point in ellipse_pts(cxy, rad)]
+        facing_hit = circle_hits_poly(ground(tgt), r, polygon)
+        # DT53: a customer's own counter spot remains reachable when the
+        # facing cell lies beyond its small talk ellipse. K is the NPC itself.
+        foot_hit = name in {"S", "T0", "T1", "D"} and circle_hits_poly(ground(player_xy), r, polygon)
+        if facing_hit or foot_hit:
+            d = math.dist(ground(cxy), ground(player_xy))
             if d < bd:
                 best, bd = name, d
     return best

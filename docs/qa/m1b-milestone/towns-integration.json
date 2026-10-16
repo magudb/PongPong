@@ -1,0 +1,167 @@
+{
+  "allowed": [
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'Bad Name' is not a valid section name (a-z, 0-9, _) (at register_section res://scripts/autoload/save_manager.gd:469)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'world' is a built-in name (at register_section res://scripts/autoload/save_manager.gd:472)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'game' is a built-in name (at register_section res://scripts/autoload/save_manager.gd:472)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section('nomethods'): the node has no to_dict() (at register_section res://scripts/autoload/save_manager.gd:479)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section('nullnode'): the node is null or freed (at register_section res://scripts/autoload/save_manager.gd:475)"
+    },
+    {
+      "kind": "warning",
+      "rule": "which cannot be saved",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'jsonrules' holds a Object, which cannot be saved (written as null) (at _json_safe res://scripts/autoload/save_manager.gd:649)"
+    },
+    {
+      "kind": "error",
+      "rule": "did not return a Dictionary",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved (at gather_payload res://scripts/autoload/save_manager.gd:579)"
+    },
+    {
+      "kind": "error",
+      "rule": "did not return a Dictionary",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved (at gather_payload res://scripts/autoload/save_manager.gd:579)"
+    },
+    {
+      "kind": "warning",
+      "rule": "nested deeper than 64",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped (at _json_safe res://scripts/autoload/save_manager.gd:619)"
+    },
+    {
+      "kind": "warning",
+      "rule": "nested deeper than 64",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped (at _json_safe res://scripts/autoload/save_manager.gd:619)"
+    },
+    {
+      "kind": "error",
+      "rule": "fake section failure",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): fake section failure boom (at from_dict res://tests/sections/save.gd:64)"
+    },
+    {
+      "kind": "error",
+      "rule": "fake section failure",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): fake section failure late_boom (at from_dict res://tests/sections/save.gd:64)"
+    },
+    {
+      "kind": "error",
+      "rule": "save_4.bak.json.tmp",
+      "section": "save",
+      "text": "core/io/dir_access.cpp:429 in copy(): Condition \"err != OK\" is true. Returning: err Failed to open '/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.Uze5FF/Library/Application Support/Traetoppen/save_test_17499/save_4.bak.json.tmp'. (at _roll_backup res://scripts/autoload/save_manager.gd:1007)"
+    }
+  ],
+  "character": "animal",
+  "checks": 2136,
+  "elapsed_s": 119.93,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "city_life": {
+      "checks": 99,
+      "failed": 0,
+      "ms": 5521,
+      "skipped": 0
+    },
+    "economy": {
+      "checks": 296,
+      "failed": 0,
+      "ms": 2291,
+      "skipped": 2
+    },
+    "hud": {
+      "checks": 91,
+      "failed": 0,
+      "ms": 3638,
+      "skipped": 4
+    },
+    "npc": {
+      "checks": 317,
+      "failed": 0,
+      "ms": 1957,
+      "skipped": 0
+    },
+    "player": {
+      "checks": 37,
+      "failed": 0,
+      "ms": 383,
+      "skipped": 0
+    },
+    "save": {
+      "checks": 241,
+      "failed": 0,
+      "ms": 4627,
+      "skipped": 0
+    },
+    "towns_city": {
+      "checks": 34,
+      "failed": 0,
+      "ms": 9820,
+      "skipped": 0
+    },
+    "towns_director": {
+      "checks": 297,
+      "failed": 0,
+      "ms": 41783,
+      "skipped": 0
+    },
+    "towns_interiors": {
+      "checks": 290,
+      "failed": 0,
+      "ms": 36420,
+      "skipped": 0
+    },
+    "towns_interiors_core": {
+      "checks": 128,
+      "failed": 0,
+      "ms": 3122,
+      "skipped": 0
+    },
+    "towns_routes": {
+      "checks": 98,
+      "failed": 0,
+      "ms": 1985,
+      "skipped": 0
+    },
+    "towns_routines": {
+      "checks": 208,
+      "failed": 0,
+      "ms": 5175,
+      "skipped": 0
+    }
+  },
+  "skipped": 6
+}

@@ -240,7 +240,17 @@ func nearest_interactable() -> Node:
 	_interact_query.transform = Transform2D(Vector2.RIGHT, Vector2(0.0, Iso.squash()), target_global())
 	var best: Node = null
 	var best_d: float = 1e9
-	for r in get_world_2d().direct_space_state.intersect_shape(_interact_query, 8):
+	var hits := get_world_2d().direct_space_state.intersect_shape(_interact_query, 8)
+	# A counter band decides by where the customer stands (DT53). Its small
+	# end host may be underfoot while the facing cell is already behind the
+	# hatch. Other world targets still use only the normal facing-cell query.
+	_interact_query.transform = Transform2D(Vector2.RIGHT, Vector2(0.0, Iso.squash()), global_position)
+	for hit in get_world_2d().direct_space_state.intersect_shape(_interact_query, 8):
+		var collider: Object = hit["collider"]
+		var host: Node = collider.get_parent() if collider is Area2D else null
+		if host != null and bool(host.get_meta("counter_foot_host", false)):
+			hits.append(hit)
+	for r in hits:
 		var a: Object = r["collider"]
 		var host: Node = (a as Node).get_parent() if a is Area2D else null
 		if host != null and host != self and host.has_method("interact") and host is Node2D:

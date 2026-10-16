@@ -1,0 +1,22 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 23,
+  "elapsed_s": 10.54,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "towns_city": {
+      "checks": 23,
+      "failed": 0,
+      "ms": 7260,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}
