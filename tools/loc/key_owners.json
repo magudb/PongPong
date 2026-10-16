@@ -626,6 +626,14 @@
     "GIFT_GHOSTFAM_"
    ],
    "exact": []
+  },
+  "secret_garden.csv": {
+   "owner": "SecretGarden",
+   "prefix": [
+    "SG_",
+    "QUEST_SECRET_GARDEN_",
+    "OBJ_SECRET_GARDEN_"
+   ]
   }
  },
  "notes": [

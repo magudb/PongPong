@@ -1,6 +1,6 @@
 # TRÆTOPPEN - Ghost family addendum: Familien Natlys, four friendly ghosts as citizens (design6 update after the user's six answers)
 
-Narrative update, 2026-10-16: [DARK_FOREST_STORY_ADDENDUM.md](DARK_FOREST_STORY_ADDENDUM.md) makes the missing parent the hero's mother, who disappeared after the hero was born and before the farm arrival. She is Dyne's youngest and Silke's sibling for ghost heroes. This replaces the earlier parent-gender and pre-birth chronology only; the hero remains gender-neutral, Blund's cousin and Dyne's grandchild. Sections 2.1 and 2.5 below show the new design target. Runtime localization still needs the two unvoiced revisions and an existing-save catch-up topic described in [handoff H5](GHOST_FAMILY_HANDOFFS.md#h5-forest-story-and-the-missing-mother). The remaining historical design and evidence below retain their original scope.
+Narrative update, 2026-10-16: [DARK_FOREST_STORY_ADDENDUM.md](DARK_FOREST_STORY_ADDENDUM.md) makes the missing parent the hero's mother, who disappeared after the hero was born and before the farm arrival. She is Dyne's youngest and Silke's sibling for ghost heroes. This replaces the earlier parent-gender and pre-birth chronology only; the hero remains gender-neutral, Blund's cousin and Dyne's grandchild. Sections 2.1 and 2.5 below show the new design target. The Secret Garden implementation includes the two unvoiced revisions and an existing-save catch-up topic described in [handoff H5](GHOST_FAMILY_HANDOFFS.md#h5-forest-story-and-the-missing-mother). The remaining historical design and evidence below retain their original scope.
 
 Role: DESIGNER B (design6, family update), FINAL-EDITED after review B (role FINAL EDITOR B: `CHANGELOG.md` lists every change with its finding, section 0.1 summarises it). This file is the FULL replacement of `docs/design/GHOST_FAMILY_ADDENDUM.md` (design5). Request (user, 2026-10-14): the user answered the six questions of `GHOST_FAMILY_OPEN_QUESTIONS.md`: (1) the names stay, (2) the game day runs until 02:00 at night, (3) a ghost hero is a relative of the family, (4) hide and seek with Blund is a counted game with rewards, (5) the ghosts always attend the five Trætoppen festivals and visit the four Hyggebyen ones (an ordering list, a guests field, a raised cap), (6) "use the codex style" (painted imagegen sheets packed by `tools/art/drawn/pack.py`). Binding companion documents: `CLOCK_26_ADDENDUM.md` (the clock contract C1-C14, newest wins on the clock), `GHOST_ADDENDUM.md`, `TOWNS_FARM_SOCIAL_ADDENDUM.md`, `UI_NAVIGATION.md`. Status: complete design + a proven data layer (loaded through the REAL `LuaRuntime` of main in a clone) + a proven painted-route pipeline (end to end on STAND-IN source sheets: nothing painted exists) + work packages. Nothing in the repo, the base checkout, the lift, the m1a worktree or another agent's folder was edited; every test ran in an APFS clone of `design6-base` (m1a head `df5d641`) and the clones are deleted.
 
@@ -115,7 +115,7 @@ A fifth member (a baby, "Pjusk") would be 8.93-9.33 MB more per area and another
 1. "Der er du jo! Lad mig se på dig, mit barnebarn. Hele vejen fra skoven og lige ind i vores aften." (`DLG_GHOSTFAM_DYNE_KIN_1_1`)
 2. "Jeg lagde dit navn i Fekongens lotteri. Fire forår i træk, med en tråd af måneskin om sedlen, så han ikke kunne overse den." (`..._1_2`)
 3. "I år trak han netop din seddel. Han læste navnet, så på tråden og sagde: Det er en Natlys! Og så fik du gården oppe i trækronerne." (`..._1_3`)
-4. "Din mor er min yngste. Hun gik ind i Mørkeskoven. Jeg ved ikke, hvad der skete derinde. Men der er en plads til jer begge ved bålet." (`..._1_4`, new unvoiced design target; runtime replacement pending H5)
+4. "Din mor er min yngste. Hun gik ind i Mørkeskoven. Jeg ved ikke, hvad der skete derinde. Men der er en plads til jer begge ved bålet." (`..._1_4`, unvoiced runtime story revision; H5)
 5. "Her, den har jeg strikket til dig. Jeg gættede på størrelsen. Og kald mig bare Mormor, det gør alle de bedste." (`..._1_5`: the cream knit shirt)
 
 This does not contradict the first morning: the king's letter and his ghost line (`DLG_GHOST_KING_INTRO`: "Et spøgelse! Hvor dejligt ...") stay exactly as G-ghost-lines has them; the lottery is the king's, the ticket is Mormor's. The scene can be replayed as a one-page popup ("Hvordan kom jeg hertil?", `GHOSTFAM_KIN_STORY`). A staged version (the family at the fire, camera, emotes) is the M3 event `ev_ghostfam_kin_welcome` (6.4).
@@ -126,7 +126,7 @@ This does not contradict the first morning: the king's letter and his ghost line
 |---|---|---|---|---|
 | Dyne | 5 (above) | the arrival story | +2 -> **3** | `shirt_knit_cream` x1 (buy 60 g, a SHIRT: a ghost shows it) |
 | Gnist | 2 | "Nåh, så er du Blunds søskendebarn! ... lygtehuset er også dit." / "Her, to flasker olie til din første tur i mørket. Første gang er gratis i familien." | +1 -> **2** | `lantern_oil` x2 (50 g) |
-| Silke | 2 | "Hej, familie. Jeg er Silke. Din mor og jeg er søskende. Du er Blunds søskendebarn. Jeg har glædet mig til at møde dig." (new unvoiced design target; runtime replacement pending H5) / "Går du ud om natten, så sig til. Jeg følger dig gerne hjem ..." | +1 -> **2** | - |
+| Silke | 2 | "Hej, familie. Jeg er Silke. Din mor og jeg er søskende. Du er Blunds søskendebarn. Jeg har glædet mig til at møde dig." (unvoiced runtime story revision; H5) / "Går du ud om natten, så sig til. Jeg følger dig gerne hjem ..." | +1 -> **2** | - |
 | Blund | 3 | "Du er mit søskendebarn! ..." / the rules of the game ("Finder du mig, tæller jeg det på mit gemmekort") / "På kortet er der gaver ..." | +2 -> **3** | - |
 
 Hearts are WHOLE hearts through `api.add_hearts(npc, n)` (S-core's P10 fix-round: source `lua`), flags are `ghostfam_kin_<name>` (bool, JSON-safe, saved in the game section). Three hearts with Dyne and Blund are about two to three weeks of weekly chats ahead of a stranger; stage names: Dyne and Blund "nabo" (2) and one heart short of "ven" (4), Gnist and Silke "nabo". No gold: the whole gift is 110 g at shop prices (60 + 50), once (`F/notes/economy_check6.txt`).
@@ -506,7 +506,7 @@ The guide's register "Venlig og lun": short, concrete, warm, one joke at most, d
 
 ### 7.3 Sample lines
 
-The Silke first-meeting row below shows the new unvoiced mother-story target, pending runtime revision H5. The other rows retain the original CSV examples and their historical probe evidence.
+The Silke first-meeting row below shows the unvoiced mother-story revision installed by H5. The other rows retain the original CSV examples and their historical probe evidence.
 
 | key | da | en |
 |---|---|---|

@@ -58,15 +58,19 @@
 ## Progression
 
 1. **Arrival**: Win the farm, meet the Fairy King and the neighbours, plant the first crops.
-2. **First lead**: After the first-morning introduction, a letter in our mother's handwriting opens the investigation. Follow it when ready.
+2. **Restore the garden**: After the opening, help Hoppe and Brumme restore Hyggebyen's communal garden. Its blossoms reveal a letter in our mother's handwriting.
 3. **Forest journey**: Take the Skovlift when its configured gate is open. Follow mother's traces through the changing forest, returning home between expeditions.
 4. **Ongoing**: Farm upgrades, rare gems, festivals and friendships support the journey. Mining contracts remain side quests.
+
+## Main story
+
+The main farm-and-town story takes its foundation from *The Secret Garden* by Frances Hodgson Burnett: restore a neglected place, accept help and build a home. The playable communal garden in Hyggebyen connects this restoration to the missing-mother mystery. Its quest includes neighbour conversations, planting, overnight growth, the mother's letter, a forest-edge trace and a return to the restored garden. See [the Secret Garden addendum](design/SECRET_GARDEN_ADDENDUM.md).
 
 ## Dark Forest story
 
 Mørkeskoven's central story is a journey to discover what happened to our mother, inspired by *The Hazel Wood* by Melissa Albert. Family memories and unfinished fairy tales shape the investigation. We learn why she entered the wood, follow the work she left behind, and seek the truth about why she never returned.
 
-The confirmed premise applies to all eight playable characters. The proposed chapters, forest rules and ghost-family continuity are in [the Dark Forest story addendum](design/DARK_FOREST_STORY_ADDENDUM.md). The mother's final fate remains a creative decision. This is the narrative direction for the upcoming adventure, not a claim that the new quest chain is already playable.
+The confirmed premise applies to all eight playable characters. The proposed chapters, forest rules and ghost-family continuity are in [the Dark Forest story addendum](design/DARK_FOREST_STORY_ADDENDUM.md). The garden implements the first letter, post-route account, lift record and forest-edge trace. The deeper forest chapters and the mother's final fate remain upcoming adventure content.
 
 ---
 
@@ -88,6 +92,7 @@ The confirmed premise applies to all eight playable characters. The proposed cha
 | Min Trækronsgård | Start | Farm and home to return to |
 | Trætoppen | Arrival | Neighbours, Posthuset, Skovlift and family leads |
 | Hyggebyen | Bridge from Trætoppen | Shops, repairs, food and town quests |
+| Den hemmelige have | Gate north of Hyggebyen's square | Communal restoration and the first mother clues |
 | Skovkanten | Skovlift's configured unlock | Forest hub, departure and return |
 | Mørkeskoven | Depth progression | Main mother mystery, fairy-tale encounters, mining, rare loot and enemies |
 

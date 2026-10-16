@@ -304,6 +304,7 @@ config = {
       home_area = "traetoppen",
       role = "gardener",
       dialogue = "gardener_hoppe",
+      quests_offered = { "secret_garden" },
       wander = { radius = 2, speed = 0.5 },
       facing = "SE",
       schedule = "sleep",

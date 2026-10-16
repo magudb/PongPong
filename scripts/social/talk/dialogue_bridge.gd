@@ -43,6 +43,9 @@ static func decorate(npc: String, dialogue: Dictionary, context: Dictionary = {}
 	var events: Array = sm.call("events_ready", npc)
 	if not events.is_empty():
 		choices.append({"id": "event", "text_key": "REL_TALK_EVENT", "action": "start_event", "event_id": str(events[0])})
+	var garden := SecretGardenStory.choice(npc)
+	if not garden.is_empty():
+		choices.append(garden)
 	if choices.size() > 4:
 		var extra := choices.slice(3)
 		choices = choices.slice(0, 3)
@@ -85,6 +88,8 @@ static func topic_page(npc: String) -> Dictionary:
 		"topic": topic, "topic_index": all.find(topic)}
 
 static func finish_topic(npc: String, page: Dictionary, completed: bool, lines_shown: int) -> bool:
+	if SecretGardenStory.finish_topic(npc, page, completed, lines_shown):
+		return true
 	var sm := Svc.node("SocialManager")
 	if sm == null or not completed or lines_shown <= 0 or not page.has("topic"):
 		return false
@@ -108,6 +113,8 @@ static func finish_topic(npc: String, page: Dictionary, completed: bool, lines_s
 ## Unknown actions still reach EventBus; this layer supplies the shared action data.
 static func action(npc: String, action_id: String, data: Dictionary) -> Dictionary:
 	match action_id:
+		"garden_story":
+			return {"handled": true, "page": SecretGardenStory.topic_page(npc)}
 		"social_more":
 			var choices := LuaData.arr(data.get("choices", [])).duplicate(true)
 			if choices.size() > 4:

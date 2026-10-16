@@ -111,7 +111,7 @@ GHOSTFAM_KIN_STORY,"Mormor Dyne lagde dit navn i Fekongens lotteri i fire forår
 DLG_GHOSTFAM_DYNE_KIN_1_1,"Der er du jo! Lad mig se på dig, mit barnebarn. Hele vejen fra skoven og lige ind i vores aften.","There you are! Let me look at you, my grandchild. All the way from the forest and straight into our evening."
 DLG_GHOSTFAM_DYNE_KIN_1_2,"Jeg lagde dit navn i Fekongens lotteri. Fire forår i træk, med en tråd af måneskin om sedlen, så han ikke kunne overse den.","I put your name into the Fairy King's lottery. Four springs in a row, with a thread of moonlight around the ticket, so that he could not overlook it."
 DLG_GHOSTFAM_DYNE_KIN_1_3,"I år trak han netop din seddel. Han læste navnet, så på tråden og sagde: Det er en Natlys! Og så fik du gården oppe i trækronerne.","This year he drew your ticket. He read the name, looked at the thread and said: That is a Natlys! And so you got the farm up in the treetops."
-DLG_GHOSTFAM_DYNE_KIN_1_4,"Min yngste gik ud i skoven, længe før du kom til. Nu er du kommet hjem alligevel. Du er Blunds søskendebarn, og du er min.","My youngest went out into the forest long before you were born. Now you have come home after all. You are Blund's cousin, and you are mine."
+DLG_GHOSTFAM_DYNE_KIN_1_4,"Din mor er min yngste. Hun gik ind i Mørkeskoven. Jeg ved ikke, hvad der skete derinde. Men der er en plads til jer begge ved bålet.",Your mother is my youngest. She went into the Dark Forest. I do not know what happened there. But there is a place for both of you by the fire.
 DLG_GHOSTFAM_DYNE_KIN_1_5,"Her, den har jeg strikket til dig. Jeg gættede på størrelsen. Og kald mig bare Mormor, det gør alle de bedste.","Here, I knitted this for you. I guessed the size. And just call me Granny, all the best people do."
 DLG_GHOSTFAM_DYNE_KIN_CHOICE_THANKS,"Tak, Mormor","Thank you, Granny"
 DLG_GHOSTFAM_DYNE_KIN_CHOICE_STORY,"Hvordan kom jeg hertil?","How did I get here?"
@@ -131,7 +131,7 @@ DLG_GHOSTFAM_GNIST_KIN_1_2,"Her, to flasker olie til din første tur i mørket. 
 DLG_GHOSTFAM_GNIST_KIN_CHOICE_THANKS,"Tak, Gnist","Thank you, Gnist"
 DLG_GHOSTFAM_GNIST_KIN_GREET_1,"Familien er altid velkommen i lygtehuset. Hvad skal det være?","The family is always welcome in the lantern house. What will it be?"
 DLG_GHOSTFAM_GNIST_CLOSED_NIGHT_1,"Nu er lamperne ved at være slukket. Kom igen i morgen aften, så er der varmt på dem.","The lamps are about to go out. Come back tomorrow evening, they will be warm."
-DLG_GHOSTFAM_SILKE_KIN_1_1,"Hej, familie. Jeg er Silke. Din forælder og jeg er søskende, og du og Blund er søskendebarn. Det har jeg glædet mig til at sige.","Hello, family. I am Silke. Your parent and I are siblings, and you and Blund are cousins. I have been looking forward to saying that."
+DLG_GHOSTFAM_SILKE_KIN_1_1,"Hej, familie. Jeg er Silke. Din mor og jeg er søskende. Du er Blunds søskendebarn. Jeg har glædet mig til at møde dig.","Hello, family. I am Silke. Your mother and I are siblings. You are Blund’s cousin. I have been looking forward to meeting you."
 DLG_GHOSTFAM_SILKE_KIN_1_2,"Går du ud om natten, så sig til. Jeg følger dig gerne hjem, og jeg kender alle genveje og alle lygter.","If you go out at night, tell me. I will gladly walk you home, and I know all the shortcuts and all the lanterns."
 DLG_GHOSTFAM_SILKE_KIN_CHOICE_THANKS,"Tak, Silke","Thank you, Silke"
 DLG_GHOSTFAM_SILKE_KIN_GREET_1,"Hej, familie. Alt er roligt. Hold dig bare i lyset, så er alt godt.","Hello, family. All is calm. Just stay in the light and all is well."

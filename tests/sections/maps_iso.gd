@@ -54,6 +54,7 @@ const MARKER_OWNERS := {
 	"spawn": "builtin", "warp": "builtin", "sign": "builtin", "light": "builtin", "quest_spot": "builtin",
 	"npc": "P14-npc-dialogue (npc_2d.gd)", "unique_spot": "F4-loot-shops (marker handler)", "town": "T-director", "door": "T-director", "post": "T-director",
 	"runestone": "D2-dungeon-floors (runestone_2d.gd)", "whisper": "P19-forest-combat (whisper_zone.gd)", "forest_dress": "V8-forest-look",
+	"secret_garden": "SecretGardenMarker (secret_garden_marker.gd)",
 }
 
 ## The 14 doors of the towns addendum 4.1 (Hyggebyen half): building id -> the shop / role it houses.
@@ -426,6 +427,13 @@ func _warps(s: Dictionary, m: AreaMap = null) -> Array:
 	return out
 
 
+func _warp_to(s: Dictionary, target: String) -> Dictionary:
+	for warp in _warps(s):
+		if warp.to == target:
+			return warp
+	return {}
+
+
 ## Is `id` still a pending area (named, not built yet)?
 func _pending(id: String) -> bool:
 	return PENDING_AREAS.has(id) and not WorldRoot2D.has_area(StringName(id))
@@ -517,7 +525,8 @@ func _graph(t) -> void:
 		"PENDING_AREAS = %s; traetoppen.map %s -> the edge is %s; ids starting with `%s` are exempt (generated at run time); every other target must exist with its spawn: the resolver rejects an unknown area, an unknown spawn and the removed forest areas (self-test)" % [PENDING_AREAS, "exists" if traetoppen_exists else "does not exist yet", "strict" if traetoppen_exists else "pending", GENERATED_PREFIX])
 	# ---- Hyggebyen's own graph
 	var ws: Array = _warps(_hs)
-	var w0: Dictionary = ws[0] if ws.size() == 1 else {}
+	var w0 := _warp_to(_hs, "traetoppen")
+	var garden := _warp_to(_hs, "secret_garden")
 	var warp_cell: Vector2i = w0.get("cell", Vector2i(-1, -1))
 	var planks: int = 0
 	for x in range(_hyg.width):
@@ -529,10 +538,10 @@ func _graph(t) -> void:
 	var npcs_ids: Array = []
 	for rec in _of(_hs, "npc"):
 		npcs_ids.append(str((rec["params"] as Dictionary).get("id", "")))
-	t.check("hyggebyen_warp_graph", ws.size() == 1 and w0.get("to") == "traetoppen" and w0.get("spawn") == "from_hyggebyen" and w0.get("label") == "ZONE_TRAETOPPEN"
-		and warp_cell.x > _hyg.width / 2 and last_plank and planks >= 5 and spawn_names == ["default", "from_traetoppen"] and not npcs_ids.has("guard_oak")
+	t.check("hyggebyen_warp_graph", ws.size() == 2 and garden.get("spawn") == "from_town" and garden.get("label") == "SG_NAME" and w0.get("to") == "traetoppen" and w0.get("spawn") == "from_hyggebyen" and w0.get("label") == "ZONE_TRAETOPPEN"
+		and warp_cell.x > _hyg.width / 2 and last_plank and planks >= 5 and spawn_names == ["default", "from_garden", "from_traetoppen"] and not npcs_ids.has("guard_oak")
 		and _count_of(_hs, "door") == 14 and not _file_mentions(HYG_PATH, ["skovkant", "from_farm", "to=farm", "west gate", "mailbox"]),
-		"ONE warp (the hanging bridge on the EAST side, %d plank cells in its row, the warp on the last plank at %s) to traetoppen:from_hyggebyen label ZONE_TRAETOPPEN; spawns %s; no farm bridge, no west gate, no Oak, no mailbox" % [planks, warp_cell, spawn_names])
+		"Two warps: the communal garden and the hanging bridge on the EAST side ( %d plank cells in its row, the warp on the last plank at %s) to traetoppen:from_hyggebyen label ZONE_TRAETOPPEN; spawns %s; no farm bridge, no west gate, no Oak, no mailbox" % [planks, warp_cell, spawn_names])
 
 
 func _mentions_removed() -> bool:
@@ -589,8 +598,8 @@ func _town(t) -> void:
 	var no_festival_decor: bool = _count_of(s, "dress") == 0
 	var rathaus_here: bool = _file_mentions(HYG_PATH, ["raadhuset", "house_town_hall"])
 	var from_t: bool = _spawn_names(m, s).has("from_traetoppen")
-	t.check("town_markers_present", towns == 1 and sorted_doors == want_doors and sorted_posts == want_posts and post_problems.is_empty() and fest == 1 and from_t and _warps(s).size() == 1 and no_festival_decor and not rathaus_here,
-		"%d `town` marker, %d `door` markers (%s), %d named posts (24 names, act and cap as in the draft) + %d `post set=fest spot=hyggetorv`, spawn from_traetoppen %s, the bridge warp is the gate (no extra marker), no festival decor markers, no Raadhus here; problems %s, doors %s vs %s" % [towns, door_ids.size(), "exact ids", post_names.size(), fest, from_t, post_problems, sorted_doors, want_doors])
+	t.check("town_markers_present", towns == 1 and sorted_doors == want_doors and sorted_posts == want_posts and post_problems.is_empty() and fest == 1 and from_t and _warps(s).size() == 2 and no_festival_decor and not rathaus_here,
+		"%d `town` marker, %d `door` markers (%s), %d named posts (24 names, act and cap as in the draft) + %d `post set=fest spot=hyggetorv`, spawn from_traetoppen %s, bridge and communal-garden warps, no festival decor markers, no Raadhus here; problems %s, doors %s vs %s" % [towns, door_ids.size(), "exact ids", post_names.size(), fest, from_t, post_problems, sorted_doors, want_doors])
 	# ---- every door stands on the doorstep: the cell below the 2 x 2 (the king's 3 x 3) footprint of its house
 	var step_bad: Array = []
 	for rec3 in _of(s, "door"):
@@ -692,7 +701,7 @@ func _features(t) -> void:
 	for h2 in hives:
 		birk_near = birk_near or maxi(absi(birk_cell.x - (h2 as Vector2i).x), absi(birk_cell.y - (h2 as Vector2i).y)) <= 4
 	var builder_cell: Vector2i = (cells["fairy_builder"]["cell"] as Vector2i) if cells.has("fairy_builder") else Vector2i(-99, -99)
-	var bridge_cell: Vector2i = (_warps(s)[0]["cell"] as Vector2i)
+	var bridge_cell: Vector2i = (_warp_to(s, "traetoppen")["cell"] as Vector2i)
 	var yard_near_bridge: bool = absi(builder_cell.x - bridge_cell.x) <= 8 and absi(builder_cell.y - bridge_cell.y) <= 8
 	var stall_npc: bool = true
 	for id in ["fairy_furnisher", "fairy_tailor"]:
@@ -953,17 +962,17 @@ func _physics_connectivity(t) -> void:
 	var rim_h: Dictionary = _rim_blocked_by_physics(a)
 	t.check("rim_blocks_the_body", (rim_h["open"] as Array).is_empty() and int(rim_h["rim"]) > 100,
 		"Hyggebyen: %d void cells touch the platform and each stops a body in the physics space (the invisible rim blockers; the bridge planks have none by design); open %s" % [rim_h["rim"], (rim_h["open"] as Array).slice(0, 5)])
-	# every spawn reaches every warp (both directions of the one hanging bridge)
-	var warp_cell: Vector2i = (_warps(_hs)[0]["cell"] as Vector2i)
+	# Every arrival reaches both the hanging bridge and the communal garden.
 	var spawn_paths: Array = []
 	var bad_spawn: Array = []
 	for sn2 in a.spawns:
-		var l2: float = _path_len(a, a.global_to_cell(a.spawns[sn2]), warp_cell)
-		if l2 < 0.0:
-			bad_spawn.append(String(sn2))
-		else:
-			spawn_paths.append("%s %.1f s" % [sn2, l2 / _walk_speed()])
-	t.check("spawn_to_warp_paths", bad_spawn.is_empty() and spawn_paths.size() == a.spawns.size() and a.spawns.has("default") and a.spawns.has("from_traetoppen"), "a walkable path leads from every spawn to the bridge warp (flood fill on the cells a body 1.15 x the player's can stand on): %s" % [spawn_paths])
+		for warp in _warps(_hs):
+			var l2: float = _path_len(a, a.global_to_cell(a.spawns[sn2]), warp.cell)
+			if l2 < 0.0:
+				bad_spawn.append("%s -> %s" % [sn2, warp.to])
+			else:
+				spawn_paths.append("%s -> %s %.1f s" % [sn2, warp.to, l2 / _walk_speed()])
+	t.check("spawn_to_warp_paths", bad_spawn.is_empty() and spawn_paths.size() == a.spawns.size() * 2 and a.spawns.has("default") and a.spawns.has("from_traetoppen") and a.spawns.has("from_garden"), "every spawn reaches both warps with a body 1.15 x the player's: %s; unreachable %s" % [spawn_paths, bad_spawn])
 	# spawns lie outside every warp diamond (an arrival never re-triggers the warp)
 	var min_gap: float = INF
 	for sn3 in a.spawns:
@@ -1026,7 +1035,7 @@ func _door_triggers(t, a: IsoArea, approach: Dictionary) -> void:
 
 
 func _walk_the_bridge(t, a: IsoArea) -> void:
-	var warp_cell: Vector2i = (_warps(_hs)[0]["cell"] as Vector2i)
+	var warp_cell: Vector2i = (_warp_to(_hs, "traetoppen")["cell"] as Vector2i)
 	var start_c: Vector2i = a.global_to_cell(a.spawns["from_traetoppen"])
 	var ids: Array[Vector2i] = _astar.get_id_path(start_c, warp_cell)
 	var body := CharacterBody2D.new()

@@ -10,6 +10,7 @@ kind = "config"
 
 config = {
   marker_handlers = {
+    secret_garden = "res://scripts/world2d/story/secret_garden_marker.gd",
     -- F4 (this package): loot
     chest = "res://scripts/world2d/loot_chest_2d.gd",
     dig_spot = "res://scripts/world2d/dig_spot_2d.gd",

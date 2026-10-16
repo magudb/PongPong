@@ -259,7 +259,7 @@ func _roster_and_meta() -> void:
 	for q in _all_quest_ids():
 		# the book's fields are the contract of every quest; a quest that is not P13's / F1's own (the dungeon, tutorial and town quests of other packages)
 		# is held to the giver rule only, anything else about its meta is a visible SKIP naming it (its owner fixes its own file)
-		var own: bool = q in P13_QUESTS or q in FEATURE_EIGHT or q == "pips_runde"
+		var own: bool = q in P13_QUESTS or q in FEATURE_EIGHT or q == "pips_runde" or q == "secret_garden"
 		var found: Array[String] = problems if own else foreign
 		var meta := LuaData.dict(_def(q).get("meta", {}))
 		var giver := str(meta.get("giver", ""))
@@ -351,7 +351,7 @@ func _text_keys() -> void:
 	for q in _all_quest_ids():
 		var up := q.to_upper()
 		var keys: Array[String] = ["QUEST_%s_TITLE" % up]
-		var own: bool = q in P13_QUESTS or q in FEATURE_EIGHT or q == "pips_runde"
+		var own: bool = q in P13_QUESTS or q in FEATURE_EIGHT or q == "pips_runde" or q == "secret_garden"
 		if own:
 			keys.append("QUEST_%s_DESC" % up)
 			if str(LuaData.dict(_def(q).get("meta", {})).get("giver", "")) != "":

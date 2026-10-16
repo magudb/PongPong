@@ -2,7 +2,7 @@
 
 Status: the user confirmed the premise and reference on 2026-10-16. Mørkeskoven's central story is a journey to discover what happened to the playable character's mother, inspired by *The Hazel Wood* by Melissa Albert. The chapter treatment below is a proposed original story. The mother's final fate remains open.
 
-This addendum governs narrative motivation, story progression and family continuity. [DUNGEON_V2_ADDENDUM.md](DUNGEON_V2_ADDENDUM.md) still governs the twelve floors, runestones, bosses, resources and Skovlift. [The art style guide](../art/style-guide.txt) governs all paintings. The current M1b build has the forest hub and supporting quests; this new main story is designed here, not installed as playable quests.
+This addendum governs narrative motivation, story progression and family continuity. [DUNGEON_V2_ADDENDUM.md](DUNGEON_V2_ADDENDUM.md) still governs the twelve floors, runestones, bosses, resources and Skovlift. [The art style guide](../art/style-guide.txt) governs all paintings. The [Secret Garden implementation](SECRET_GARDEN_ADDENDUM.md) supplies the first mother letter, post-route account, lift record and forest-edge trace as a playable restoration quest. The deeper forest chapters below remain proposed content.
 
 ## The story we are telling
 
@@ -83,20 +83,20 @@ For the two ghost heroes, the mother is **Dyne's youngest child and Silke's sibl
 
 Mother disappeared after the hero was born and knew her, before the farm arrival. This replaces the old design chronology that put Dyne's youngest in the forest before the hero's birth. The hero's gender stays unspecified; identifying the missing parent as their mother does not gender the hero.
 
-Two current, unvoiced localization rows need revision when the first story content ships:
+Two unvoiced localization rows were revised with the Secret Garden integration:
 
 | Existing key | New meaning |
 |---|---|
 | `DLG_GHOSTFAM_DYNE_KIN_1_4` | Dyne identifies her youngest as the hero's mother, says she entered the forest, and leaves her fate unknown. |
 | `DLG_GHOSTFAM_SILKE_KIN_1_1` | Silke identifies the hero's mother as her sibling; the cousin relationship stays the same. |
 
-The target text is in [draft copy](dark-forest-story/copy.csv). The runtime rows are still the M1b versions. Change them together with the first narrative integration, review their Danish and English, and keep all frozen voiced rows intact. Existing saves must reach the new information through a repeatable family topic even if the first-meeting flags are already set.
+The target text is in [draft copy](dark-forest-story/copy.csv). The runtime rows now use these draft targets. Frozen voiced rows are unchanged. After finding the garden letter, existing saves can revisit the relationship through the repeatable family garden topic even if their first-meeting flags are already set.
 
 The Fairy King's farm lottery remains genuine. It gives us a home from which to search; it is not secretly a trap, a reward for finishing the mystery, or proof that the king knows the ending.
 
 ## Journey and return
 
-Offer S01 after the first-morning introduction, through readable mail that can be left for later. This is availability after an existing event, not a new mandatory wait until week two. S02 respects the configured Skovlift unlock. A player who has already visited the hub can still begin the story.
+The playable S01 introduction comes through the communal garden's seed basket after its flowers open. The garden quest is available after the first-morning introduction and can be left for later. It does not replace the farm mail or require waiting until week two. S02 respects the configured Skovlift unlock. A player who has already visited the hub can still begin the story.
 
 Every descent should offer a useful trace or a comprehensible route to the next one. Reaching deeper layers matters, but clues are authored evidence rather than ordinary loot. Give each clue a stable story ID separate from a generated floor's cell or daily seed. Put it on a reachable required route, not in a random chest or behind a paid optional service.
 
@@ -125,11 +125,11 @@ Use restrained wind, a distant latch, an interrupted tune and the return of fami
 ## Implementation handoff
 
 1. **Story state and journal.** Define a versioned, saved evidence record and the distinction between observation and interpretation. Extend the existing quest, dialogue and save services where appropriate; the data in this directory is an authoring contract, not a supported new Lua API.
-2. **First playable chapter.** Integrate S01–S02, the two family copy revisions and an existing-save catch-up topic. Keep normal mail, family greetings, shops and the lift gate working. Review the draft copy before moving it into runtime localization and registering its key ownership.
+2. **First playable chapter, implemented.** The `secret_garden` quest integrates the first letter, Pip's account, Oak's lift record and the forest-edge trace, plus the two family copy revisions and an existing-save catch-up topic. Normal mail, family greetings, shops and the lift gate remain in place. Its runtime copy is draft, with registered key ownership.
 3. **Forest chapters.** Add guaranteed reachable clue anchors to the dungeon generator and authored encounters. Bind existing depth checkpoints to narrative progress without replacing the original boss/rune rules. Deliver S03–S07 with the persistent journal.
 4. **Finale.** Settle the mother's fate, write S08 and its return scene, then connect the complete arc. No partial finale is advertised as a finished playable story.
 5. **Story art.** Generate only the approved asset requests, using the saved references, then inspect them beside all hero species and in dark native scenes. Preserve the existing placement, alpha, sorting and memory contracts.
 
 Acceptance for the implementation includes all eight heroes, new and existing saves, family first meetings already consumed, out-of-order clues, full packs, repeated reads, daytime/night-entry Natteblik, leaving and re-entering, new daily layouts, fainting and save/load between discovery and reward. Every chosen ending must resolve the mother's fate and leave post-story play usable.
 
-This design does not mark the pending dungeon, narrative scenes or new art as implemented. M1b's completed town milestone and its runtime proof binding remain intact.
+The pending deeper dungeon, final narrative scenes and proposed new art are not implemented by the garden quest. M1b's original acceptance remains historical; current town proofs are renewed for the changed runtime.
