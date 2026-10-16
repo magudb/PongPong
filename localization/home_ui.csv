@@ -60,3 +60,4 @@ FURNI_REJECT_WINDOW_TAKEN,Her er et vindue.,There is a window here.
 FURNI_REJECT_NEEDS_SURFACE,Stil det på en fri bordplads.,Place on a free tabletop slot.
 FURNI_REJECT_SLOT_TAKEN,Bordpladsen er optaget.,This tabletop slot is occupied.
 FURNI_REJECT_UNKNOWN_ITEM,Møblet er ikke i magasinet.,This furniture is not in storage.
+INDRET_PICKUP_MODE,Tag møbler op,Pick up furniture

@@ -85,6 +85,8 @@ const REQUIRED_FIELDS := {
 }
 ## state queries that exist, with the fields each one needs. `threshold` queries answer 1 when the value reaches the field `min_level` / `hearts`.
 const STATE_QUERIES := {
+	"buildings_owned": {"fields": ["type"], "threshold": false},
+	"animals_owned": {"fields": [], "threshold": false},
 	"placed_by_rarity": {"fields": ["rarity"], "threshold": false},
 	"hygge_level_at_least": {"fields": ["min_level"], "threshold": true},
 	"home_tier_at_least": {"fields": ["min_level"], "threshold": true},
@@ -753,6 +755,7 @@ func _on_dialogue_started(npc_id: StringName, dialogue_id: StringName) -> void:
 
 func _on_animal_adopted(animal_id: StringName, species: StringName) -> void:
 	_dispatch(&"animal_adopted", {"animal": str(animal_id), "species": str(species)})
+	_queue_refresh()
 
 
 func _on_animal_fed(animal_id: StringName, food_id: StringName) -> void:
@@ -765,6 +768,7 @@ func _on_animal_product_collected(animal_id: StringName, product_id: StringName,
 
 func _on_building_built(building_id: StringName, building_type: StringName) -> void:
 	_dispatch(&"building_built", {"building": str(building_id), "type": str(building_type)})
+	_queue_refresh()
 
 
 func _on_enemy_defeated(enemy_id: StringName, kind: StringName, _loot: Array) -> void:
@@ -1002,6 +1006,17 @@ func _state_value(od: Dictionary) -> int:
 
 func _builtin_state_value(query_name: String, od: Dictionary) -> int:
 	match query_name:
+		"buildings_owned":
+			var husbandry := _Svc.node("AnimalHusbandry")
+			if husbandry == null: return 0
+			var count := 0
+			for building in husbandry.buildings.values():
+				if building.is_built and str(building.building_type) == str(od.get("type","")): count += 1
+			return count
+		"animals_owned":
+			var husbandry := _Svc.node("AnimalHusbandry")
+			return husbandry.get_all_animals().size() if husbandry != null else 0
+
 		"placed_by_rarity":
 			var furniture := _Svc.node("FurnitureManager")
 			if furniture == null or not furniture.has_method("count_placed_by_rarity"):

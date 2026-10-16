@@ -36,7 +36,7 @@
     },
     {
       "system": "Animal care and farm building placement (P20)",
-      "state": "pending"
+      "state": "implemented; native animal care, housing, quest catch-up, ten species, saved decorations and inventory handoff pass"
     },
     {
       "system": "Dungeon generation, twelve floors, runestones, saving and recovery (D1/D2)",
@@ -79,6 +79,13 @@
   ],
   "validation": {
     "home_headless": "docs/qa/mechanics/home/headless.json",
-    "home_native": "docs/qa/mechanics/home/native.json"
-  }
+    "home_native": "docs/qa/mechanics/home/native.json",
+    "farm_native": "docs/qa/mechanics/animals/native.json",
+    "farm_integration": "docs/qa/mechanics/animals/integration.json"
+  },
+  "contract_additions": [
+    "QuestManager state queries buildings_owned(type) and animals_owned support accepting animal quests after building or adoption.",
+    "Animal building slots allow one coop, barn and animal house; build_building preserves the existing immediate construction contract.",
+    "Once-per-day brushing and play persist in husbandry v2; field additions are optional for old saves."
+  ]
 }

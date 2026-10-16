@@ -170,11 +170,13 @@ func hygge_level_index() -> int:
 			result = i
 	return result
 
-func count_placed_by_rarity(rarity: Variant) -> int:
+func count_placed_by_rarity(rarities: Variant) -> int:
+	var requested: Array = rarities if rarities is Array else Array(str(rarities).split(",",false))
+	var wanted: Array = requested.map(func(r): return Rarity.normalize(str(r).strip_edges()))
 	var count := 0
 	if grid != null:
 		for p in grid.placements.values():
-			if ItemKinds.rarity_of(p.item_id) == Rarity.normalize(rarity):
+			if ItemKinds.rarity_of(p.item_id) in wanted:
 				count += 1
 	return count
 

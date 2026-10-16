@@ -9,7 +9,7 @@ func run(t) -> void:
 
 func _rules(t) -> void:
 	var items := HomeData.furniture()
-	
+
 	var g := FurnitureGrid.new()
 	g.setup(HomeData.room(5), items)
 	# --- maths

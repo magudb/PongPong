@@ -368,4 +368,3 @@ func _process(dt: float) -> void:
 				g.scale = (g.get_meta("base_scale") as Vector2) * flick
 	if TimeManager.is_night() != night:
 		set_night(TimeManager.is_night())
-

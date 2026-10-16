@@ -16,6 +16,8 @@ func update_preview(id: String, at: Vector2i, rotation: int) -> Dictionary:
 	rot = rotation
 	var grid := FurnitureManager.ensure_grid()
 	var check := grid.can_place(item,cell,rot) if item != "" else {"ok":false,"text_key":"INDRET_CHOOSE"}
+	if item != "" and FurnitureManager.count_stock(item) == 0:
+		check = {"ok":false,"text_key":"FURNI_REJECT_UNKNOWN_ITEM"}
 	valid = bool(check.ok)
 	var key := "%s:%s:%d:%s" % [item,cell,rot,valid]
 	if key != _key:

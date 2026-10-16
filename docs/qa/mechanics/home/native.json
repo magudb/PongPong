@@ -1,8 +1,8 @@
 {
   "allowed": [],
   "character": "animal",
-  "checks": 127,
-  "elapsed_s": 17.89,
+  "checks": 171,
+  "elapsed_s": 20.73,
   "engine": [],
   "failed": 0,
   "failures": [],
@@ -11,18 +11,25 @@
   "problems": [],
   "result": "pass",
   "sections": {
+    "animals": {
+      "character": "animal",
+      "checks": 44,
+      "failed": 0,
+      "ms": 3085,
+      "skipped": 0
+    },
     "home_ui": {
       "character": "animal",
       "checks": 22,
       "failed": 0,
-      "ms": 1956,
+      "ms": 1444,
       "skipped": 0
     },
     "home_world": {
       "character": "animal",
       "checks": 105,
       "failed": 0,
-      "ms": 11862,
+      "ms": 12050,
       "skipped": 0
     }
   },

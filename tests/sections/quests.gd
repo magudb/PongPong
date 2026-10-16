@@ -1386,6 +1386,18 @@ func _open_gates(qid: String, def: Dictionary) -> void:
 
 func _satisfy_state(od: Dictionary, furniture: FakeFurniture, home: FakeHome, social: FakeSocial) -> void:
 	match str(od.get("state", "")):
+		"buildings_owned":
+			var husbandry := Svc.node("AnimalHusbandry")
+			if husbandry != null: husbandry.build_building(StringName(str(od.get("type","coop"))),true)
+			qm.refresh_objectives()
+		"animals_owned":
+			var husbandry := Svc.node("AnimalHusbandry")
+			if husbandry != null:
+				husbandry.build_building(&"coop",true)
+				eco.add_item(&"baby_chick",1,true)
+				husbandry.adopt_animal(&"baby_chick")
+			qm.refresh_objectives()
+
 		"placed_by_rarity":
 			furniture.placed = {_first(od.get("rarity", ""), "unique"): LuaData.int_of(od.get("target", 1), 1)}
 			bus.furniture_changed.emit(&"placed")

@@ -339,7 +339,7 @@ func use_selected() -> bool:
 			return combat.swing(item)
 		_:
 			if str(def.get("placeable", "")) == "farm":
-				ok = bool(Svc.static_call("res://scripts/world2d/placement_service.gd", &"place", [item, cell], false))
+				ok = bool(Svc.static_call("res://scripts/farm/placement_service.gd", &"place", [item, cell], false))
 				if not ok:
 					EventBus.whisper_requested.emit("WHISPER_NOT_YET")
 	if ok:

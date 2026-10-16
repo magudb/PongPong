@@ -53,6 +53,8 @@ func _ready() -> void:
 	reason = L.label(body,"","Small14",true)
 	choose_button = L.button(body,"INDRET_PLACE","ButtonPrimary")
 	choose_button.pressed.connect(_start_placing)
+	var pickup_button := L.button(body,"INDRET_PICKUP_MODE","ButtonSecondaryS")
+	pickup_button.pressed.connect(func(): placing = true; UiNav.release_world_focus())
 	L.label(body,"INDRET_HINT","Muted14",true)
 	EventBus.furniture_changed.connect(func(_why):
 		if is_open(): _refresh_texts.call_deferred())
@@ -149,8 +151,8 @@ func _input(event: InputEvent) -> void:
 		elif event.is_action_pressed("ui_up",true): cell.y -= 1
 		elif event.is_action_pressed("ui_down",true): cell.y += 1
 		elif event.is_action_pressed("interact") or event.is_action_pressed("ui_accept"): _place()
-		elif event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_R: _rotate(1)
-		elif event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_X: _pickup()
+		elif (event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_R) or (event is InputEventJoypadButton and event.pressed and event.button_index == JOY_BUTTON_Y): _rotate(1)
+		elif (event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_X) or (event is InputEventJoypadButton and event.pressed and event.button_index == JOY_BUTTON_X): _pickup()
 		else: handled = false
 		if handled:
 			cell.x = clampi(cell.x,-1,30)
@@ -177,3 +179,10 @@ func _pickup() -> void:
 				FurnitureManager.pickup(uid)
 				_refresh_texts()
 				return
+
+func _on_cancel() -> void:
+	if placing:
+		placing = false
+		_apply_initial_focus()
+	else:
+		close()

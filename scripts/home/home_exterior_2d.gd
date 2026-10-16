@@ -76,4 +76,3 @@ func _picture(file: String, meta: Dictionary) -> Node2D:
 func _process(_dt: float) -> void:
 	if is_instance_valid(_night):
 		_night.visible = TimeManager.is_night()
-

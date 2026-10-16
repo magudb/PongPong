@@ -1,101 +1,92 @@
-extends Control
-## Building construction UI: select building, see costs, build.
-
-@onready var building_list: ItemList = %BuildingList
-@onready var detail_panel: VBoxContainer = %DetailPanel
-@onready var name_label: Label = %NameLabel
-@onready var desc_label: Label = %DescLabel
-@onready var cost_label: Label = %CostLabel
-@onready var capacity_label: Label = %CapacityLabel
-@onready var build_btn: Button = %BuildButton
-@onready var close_btn: Button = %CloseButton
-
-var _selected_building: StringName = &""
-var _husbandry: Node = null
-
-const BUILDING_ORDER := ["coop", "house", "barn"]
-
-
+extends TTScreen
+const L := preload("res://scripts/ui/social/social_layout.gd")
+const BUILDING_ORDER := ["coop","house","barn"]
+var _selected_building := &"coop"
+var building_list: VBoxContainer
+var name_label: Label
+var cost_label: Label
+var capacity_label: Label
+var build_btn: Button
+var close_btn: Button
+var preview: TextureRect
+var _asking := false
+func _init() -> void:
+	super._init()
+	screen_id = &"build_menu_ui"
+	modal_name = &"build_menu"
+	hotkey_action = &"build_menu"
+func _named(node: Control, id: String) -> Control:
+	node.name = id
+	node.owner = self
+	node.unique_name_in_owner = true
+	return node
 func _ready() -> void:
-	visible = false
-	_husbandry = get_node_or_null("/root/AnimalHusbandry")
-
+	super._ready()
+	L.scrim(self)
+	var book := L.panel(self,"PanelBook",Rect2(110,90,1060,540))
+	var body := L.box(L.margin(book,20),true,16)
+	var header := L.box(body,false)
+	var title := L.label(header,"ANIMAL_BUILD_TITLE","Display34")
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	close_btn = _named(L.button(header,"HINT_CLOSE","ButtonTertiaryS"),"CloseButton") as Button
+	close_btn.pressed.connect(close)
+	var columns := L.box(body,false,24)
+	columns.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	building_list = _named(L.box(columns,true,8),"BuildingList") as VBoxContainer
+	building_list.custom_minimum_size.x = 210
+	preview = TextureRect.new()
+	preview.custom_minimum_size = Vector2(330,360)
+	preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	columns.add_child(preview)
+	var detail := L.box(columns,true,14)
+	detail.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name_label = L.label(detail,"","Heading22")
+	capacity_label = _named(L.label(detail,"","Body",true),"CapacityLabel") as Label
+	cost_label = _named(L.label(detail,"","Body",true),"CostLabel") as Label
+	L.label(detail,"ANIMAL_BUILD_HINT","Muted14",true)
+	build_btn = _named(L.button(detail,"ANIMAL_BUILD","ButtonPrimary"),"BuildButton") as Button
 	build_btn.pressed.connect(_on_build)
-	close_btn.pressed.connect(_close)
-	building_list.item_selected.connect(_on_building_selected)
-	EventBus.ui_panel_toggled.connect(_on_panel_toggled)
-
-
-## Esc closes the build menu while it is the top modal.
-func _unhandled_input(event: InputEvent) -> void:
-	if visible and GameManager.top_modal() == &"build_menu" and event.is_action_pressed(&"ui_cancel"):
-		_close()
-		get_viewport().set_input_as_handled()
-
-
-func _on_panel_toggled(panel: StringName, is_open: bool) -> void:
-	if panel == &"build_menu":
-		visible = is_open
-		if is_open:
-			GameManager.push_modal(&"build_menu")
-			_populate_list()
-		else:
-			GameManager.pop_modal(&"build_menu")
-
-
-func _populate_list() -> void:
-	building_list.clear()
-	if _husbandry == null:
-		return
-
-	for btype in BUILDING_ORDER:
-		var spec: Dictionary = _husbandry.BUILDINGS[btype]
-		var has_it: bool = _husbandry.has_building(StringName(btype))
-		var text := "%s %s" % ["✓" if has_it else "☐", tr(spec["name_key"])]
-		building_list.add_item(text)
-		building_list.set_item_metadata(building_list.item_count - 1, btype)
-
-	if building_list.item_count > 0:
-		building_list.select(0)
-		_on_building_selected(0)
-
-
-func _on_building_selected(index: int) -> void:
-	_selected_building = StringName(building_list.get_item_metadata(index))
-	_refresh_details()
-
-
-func _refresh_details() -> void:
-	if _husbandry == null or _selected_building == &"":
-		return
-
-	var spec: Dictionary = _husbandry.BUILDINGS[str(_selected_building)]
-	name_label.text = tr(spec["name_key"])
-	capacity_label.text = tr("UI_CAPACITY") % spec["capacity"]
-
-	# Cost
-	var costs: Array = []
-	for item_id in spec["build_cost"]:
-		if item_id == "gold":
-			costs.append("%d %s" % [spec["build_cost"][item_id], tr("UI_GOLD")])
-		else:
-			costs.append("%s x%d" % [tr("ITEM_%s" % item_id.to_upper()), spec["build_cost"][item_id]])
-	cost_label.text = tr("UI_COST") % ", ".join(costs)
-
-	var has_it: bool = _husbandry.has_building(_selected_building)
-	build_btn.disabled = has_it
-	build_btn.text = tr("UI_ALREADY_BUILT") if has_it else tr("UI_BUILD")
-
-
+	AnimalHusbandry.state_changed.connect(func():
+		if is_open(): _refresh_texts.call_deferred())
+func _hotkey_open_allowed() -> bool:
+	var world := get_tree().get_first_node_in_group("world_2d")
+	if world == null or world.area == null or world.area.map.id != &"farm":
+		EventBus.whisper_requested.emit("ANIMAL_BUILD_ONLY_FARM")
+		return false
+	return true
+func open(opener: Control = null) -> void:
+	if _hotkey_open_allowed(): super.open(opener)
+func _initial_focus() -> Control:
+	return close_btn if build_btn.disabled else build_btn
+func _refresh_texts() -> void:
+	if building_list == null: return
+	L.clear(building_list)
+	for kind in BUILDING_ORDER:
+		var button := L.button(building_list,tr(str(AnimalHusbandry.buildings_data[kind].name_key)))
+		button.toggle_mode = true
+		button.button_pressed = kind == str(_selected_building)
+		button.pressed.connect(func(): _selected_building = StringName(kind); _refresh_texts())
+	var row: Dictionary = AnimalHusbandry.buildings_data[str(_selected_building)]
+	name_label.text = tr(str(row.name_key))
+	capacity_label.text = tr("ANIMAL_CAPACITY_FMT") % int(row.capacity)
+	var costs: Array[String] = []
+	var enough := true
+	for id in row.build_cost:
+		var need := int(row.build_cost[id])
+		var have := EconomyManager.gold if id == "gold" else EconomyManager.count_item(StringName(id))
+		enough = enough and have >= need
+		costs.append("%s %d / %d" % [tr("ANIMAL_GOLD") if id == "gold" else L.item_name(str(id)),have,need])
+	cost_label.text = "\n".join(costs)
+	var owned := AnimalHusbandry.has_building(_selected_building)
+	build_btn.text = tr("ANIMAL_BUILT") if owned else tr("ANIMAL_BUILD")
+	build_btn.disabled = owned or not enough or _asking
+	preview.texture = ArtCatalog.prop(StringName(PlacementService.PROPS[str(_selected_building)])).get("texture")
 func _on_build() -> void:
-	if _husbandry == null:
-		return
-	if _husbandry.build_building(_selected_building):
-		_populate_list()
-		_refresh_details()
-
-
-func _close() -> void:
-	visible = false
-	GameManager.pop_modal(&"build_menu")
-	EventBus.ui_panel_toggled.emit(&"build_menu", false)
+	if build_btn.disabled or _asking: return
+	_asking = true
+	var kind := _selected_building
+	var accepted := await UiConfirm.ask(self,"ANIMAL_BUILD_TITLE","ANIMAL_BUILD_CONFIRM_FMT","ANIMAL_BUILD","NAV_CANCEL",&"cancel",[tr(str(AnimalHusbandry.buildings_data[str(kind)].name_key))])
+	_asking = false
+	if accepted: AnimalHusbandry.build_building(kind)
+	_refresh_texts()
