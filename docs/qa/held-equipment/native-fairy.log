@@ -4,15 +4,16 @@ OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
 
   info  --strict: known issues are not tolerated
 PLAYTEST start mode=windowed character=fairy sections=res://tests/sections only=held_equipment
-  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.RBTpCj/Library/Application Support/Traetoppen (throwaway)
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.9wHwtF/Library/Application Support/Traetoppen (throwaway)
   info  window 1280x720 (macOS)
   info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-held-equipment/docs/qa/held-equipment/native-fairy
 == section held_equipment [windowed]  (res://tests/sections/held_equipment.gd)
   ok    held_equipment.badge_cannot_take_focus_or_eat_world_input
   ok    held_equipment.selected_tool_has_matching_picture_and_name
+  ok    held_equipment.whole_item_catalog_has_held_tool_and_weapon_art ([])
   ok    held_equipment.every_body_frame_and_direction_has_fitted_grip (fairy: 496 real body poses)
   ok    held_equipment.altitude_spin_and_flash_follow_body_once
-  ok    held_equipment.all_twelve_items_use_dedicated_directional_paintings
+  ok    held_equipment.all_items_use_dedicated_directional_paintings
   info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-held-equipment/docs/qa/held-equipment/native-fairy/held_equipment_tool_fairy.png (1280x720)
   ok    held_equipment.real_hoe_action_starts
   ok    held_equipment.action_readout_keeps_hoe_after_hotbar_swap
@@ -33,9 +34,10 @@ PLAYTEST start mode=windowed character=fairy sections=res://tests/sections only=
   ok    held_equipment.save_rebuilds_correct_held_weapon_without_extra_state
   ok    held_equipment.badge_cannot_take_focus_or_eat_world_input
   ok    held_equipment.selected_tool_has_matching_picture_and_name
+  ok    held_equipment.whole_item_catalog_has_held_tool_and_weapon_art ([])
   ok    held_equipment.every_body_frame_and_direction_has_fitted_grip (fairy_birk: 496 real body poses)
   ok    held_equipment.altitude_spin_and_flash_follow_body_once
-  ok    held_equipment.all_twelve_items_use_dedicated_directional_paintings
+  ok    held_equipment.all_items_use_dedicated_directional_paintings
   info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-held-equipment/docs/qa/held-equipment/native-fairy/held_equipment_tool_fairy_birk.png (1280x720)
   ok    held_equipment.real_hoe_action_starts
   ok    held_equipment.action_readout_keeps_hoe_after_hotbar_swap
@@ -54,6 +56,6 @@ PLAYTEST start mode=windowed character=fairy sections=res://tests/sections only=
   ok    held_equipment.equipment_save_written
   ok    held_equipment.equipment_save_loaded
   ok    held_equipment.save_rebuilds_correct_held_weapon_without_extra_state
-  --    held_equipment: 42 checks, 0 failed, 0 skipped, 3.3 s
-== summary: 1 section(s) run, 42 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 8.4 s
-PLAYTEST PASS (42 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)
+  --    held_equipment: 44 checks, 0 failed, 0 skipped, 3.0 s
+== summary: 1 section(s) run, 44 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 6.8 s
+PLAYTEST PASS (44 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

@@ -9,7 +9,7 @@
   ],
   "character": "animal",
   "checks": 159,
-  "elapsed_s": 22.26,
+  "elapsed_s": 16.1,
   "engine": [],
   "failed": 0,
   "failures": [],
@@ -22,14 +22,14 @@
       "character": "animal",
       "checks": 26,
       "failed": 0,
-      "ms": 4600,
+      "ms": 2651,
       "skipped": 0
     },
     "town_loop": {
       "character": "animal",
       "checks": 133,
       "failed": 0,
-      "ms": 11650,
+      "ms": 9475,
       "skipped": 11
     }
   },

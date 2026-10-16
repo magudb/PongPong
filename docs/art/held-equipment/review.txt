@@ -16,7 +16,8 @@ The first sheet's two hoes read as axes; a targeted repair gave them rectangular
 cultivating blades. The production atlas has 14 items in eight directional views:
 two hoes, two watering cans, three pickaxes, an axe, scythe, rod, two swords,
 a grooming brush and a milking pail. The last two use a separate 4x4 companion
-painting, fitted into columns 13 and 14 of the production atlas.
+painting (1254 by 1254), fitted into columns 13 and 14 of the 1792 by 1024
+production atlas. Packing resamples each isolated care-tool cell to 128 pixels.
 The original tool master is 1536 by 1024, with 128-pixel cells. The original generation
 prompt requested a larger canvas; the selected source's actual size is recorded
 here and used by the packer.

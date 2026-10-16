@@ -7,14 +7,14 @@ playable heroes. See ../../art/held-equipment/review.txt for the art review and
 Reports
 
 regression.json: player, equipment, Secret Garden, UI foundation/navigation/style
-and walkway transitions. 741 checks, zero failures, 68 existing capability skips,
+and walkway transitions. 743 checks, zero failures, 68 existing capability skips,
 zero engine errors/warnings.
 
-animal/fairy/hobbit/ghost.json: 42 strict headless checks each, covering primary
+animal/fairy/hobbit/ghost.json: 44 strict headless checks each, covering primary
 and alternate skin. Native counterparts use the same assertions with actual
 1280x720 windowed rendering. All pass without skips or engine messages.
 
-The fixture traverses every fitted body frame/direction, all 12 dedicated object
+The fixture traverses every fitted body frame/direction, all 14 dedicated object
 views, actual hoe use, changing selection during use, sword damage matching the
 selected sword, changing equipment during a swing, dialogue put-away, real forest
 entry, empty gear, language change and save/load into a rebuilt world.
@@ -25,7 +25,7 @@ native-<race>/held_equipment_tool_<body>.png and weapon_<body>.png are the full
 native farm/forest captures, two per hero. all-heroes-contact.png contains exact
 pixel crops of each hero and HUD. all-weapons-contact.png shows each hero in
 the forest with the iron sword and its actual weapon readout. native-animal/catalog-contact.png contains
-the actual renderer's 12 tool/weapon appearances and corresponding readouts.
+the actual renderer's 14 tool/weapon appearances and corresponding readouts.
 stock-grips-contact.png and stock-grips-grid.png are authoring references for
 the body contact points, not alternative body assets.
 

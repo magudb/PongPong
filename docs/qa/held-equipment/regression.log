@@ -1,15 +1,18 @@
 run_playtest: importing project (pass 1 of 1) ...
+run_playtest: assets changed, running tools/import/write_import_stubs.py --check
+write_import_stubs --check: ok (62 character folders, 498 sheets with the S3TC preset, 58 tile atlases, 0 wardrobe layer imports lossless, 164 keep files)
 Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 
   info  --strict: known issues are not tolerated
 PLAYTEST start mode=headless character=animal sections=res://tests/sections only=player,held_equipment,secret_garden,ui_foundation,ui_nav,ui_conformance,walkway_transitions
-  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.6j2gx9/Library/Application Support/Traetoppen (throwaway)
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.nN0qQ3/Library/Application Support/Traetoppen (throwaway)
 == section held_equipment  (res://tests/sections/held_equipment.gd)
   ok    held_equipment.badge_cannot_take_focus_or_eat_world_input
   ok    held_equipment.selected_tool_has_matching_picture_and_name
+  ok    held_equipment.whole_item_catalog_has_held_tool_and_weapon_art ([])
   ok    held_equipment.every_body_frame_and_direction_has_fitted_grip (fox: 344 real body poses)
   ok    held_equipment.altitude_spin_and_flash_follow_body_once
-  ok    held_equipment.all_twelve_items_use_dedicated_directional_paintings
+  ok    held_equipment.all_items_use_dedicated_directional_paintings
   ok    held_equipment.real_hoe_action_starts
   ok    held_equipment.action_readout_keeps_hoe_after_hotbar_swap
   ok    held_equipment.next_selection_appears_after_action_finishes
@@ -28,9 +31,10 @@ PLAYTEST start mode=headless character=animal sections=res://tests/sections only
   ok    held_equipment.save_rebuilds_correct_held_weapon_without_extra_state
   ok    held_equipment.badge_cannot_take_focus_or_eat_world_input
   ok    held_equipment.selected_tool_has_matching_picture_and_name
+  ok    held_equipment.whole_item_catalog_has_held_tool_and_weapon_art ([])
   ok    held_equipment.every_body_frame_and_direction_has_fitted_grip (monkey: 344 real body poses)
   ok    held_equipment.altitude_spin_and_flash_follow_body_once
-  ok    held_equipment.all_twelve_items_use_dedicated_directional_paintings
+  ok    held_equipment.all_items_use_dedicated_directional_paintings
   ok    held_equipment.real_hoe_action_starts
   ok    held_equipment.action_readout_keeps_hoe_after_hotbar_swap
   ok    held_equipment.next_selection_appears_after_action_finishes
@@ -47,12 +51,12 @@ PLAYTEST start mode=headless character=animal sections=res://tests/sections only
   ok    held_equipment.equipment_save_written
   ok    held_equipment.equipment_save_loaded
   ok    held_equipment.save_rebuilds_correct_held_weapon_without_extra_state
-  --    held_equipment: 42 checks, 0 failed, 0 skipped, 1.3 s
+  --    held_equipment: 44 checks, 0 failed, 0 skipped, 1.5 s
 == section player  (res://tests/sections/player.gd)
   ok    player.production_scene
   ok    player.geometry
   ok    player.perks_speed_energy_applied
-  ok    player.idle_controller_budget (70.82 microseconds per tick)
+  ok    player.idle_controller_budget (68.27 microseconds per tick)
   ok    player.idle_stats_are_quiet (0)
   ok    player.four_key_stats_signal
   ok    player.heal_half_clamps_and_emits_once
@@ -212,7 +216,7 @@ PLAYTEST start mode=headless character=animal sections=res://tests/sections only
   ok    secret_garden.walk_through_gate_hyggebyen (actual hyggebyen; traveling=true)
   ok    secret_garden.walk_through_gate_secret_garden (actual secret_garden; traveling=true)
   ok    secret_garden.all_garden_art_is_real ([])
-  --    secret_garden: 124 checks, 0 failed, 0 skipped, 2.6 s
+  --    secret_garden: 124 checks, 0 failed, 0 skipped, 2.7 s
 == section ui_conformance  (res://tests/sections/ui_conformance.gd)
   ok    ui_conformance.theme_no_gold_hover (strict theme scan clean (clean); the hover of ["MenuRow", "ChoiceRow", "Chip", "StepperButton", "HintButton", "PopupMenu", "PillTab", "RowButton", "CardButton"] is not gold (offenders []); focus and pressed stay gold on rows, chips, tabs (true); sliders are moss with a chalk grabber and center_grabber 0 (true), scrollbar thumbs are divider / chalk / moss with a 2 px ink outline (true), the grabber SVGs have no gold (true))
   ok    ui_conformance.theme_no_red (no colour item or StyleBox of the theme has a red hue (167 types scanned))
@@ -436,7 +440,7 @@ PLAYTEST start mode=headless character=animal sections=res://tests/sections only
   ok    ui_conformance.live_screens_sweep (U1 - U6 and U9 on 22 live row(s) of UiAudit.screens() in da and en: ["foundation_gallery", "foundation_gallery_rarity", "title", "settings", "select_1", "select_2", "saveload", "pause", "confirm", "hud", "toasts", "prompt", "area_banner", "dialogue", "intro", "shop", "journal", "inventory", "people", "gift", "calendar", "social_hud"]; failures [], unopenable [])
   ok    ui_conformance.p28_rows_are_live (confirm, toasts and prompt are live rows with their own scenes and fixtures)
   ok    ui_conformance.no_legacy_screens_left (no row of UiAudit.screens() is still the legacy scaffold)
-  --    ui_conformance: 155 checks, 0 failed, 67 skipped, 8.3 s
+  --    ui_conformance: 155 checks, 0 failed, 67 skipped, 7.9 s
 == section ui_foundation  (res://tests/sections/ui_foundation.gd)
   ok    ui_foundation.theme_loaded (gui/theme/custom = assets/ui/theme.tres)
   ok    ui_foundation.theme_type_count (167 theme types (the spike had 145; the rarity tiers and words add more))
@@ -643,7 +647,7 @@ PLAYTEST start mode=headless character=animal sections=res://tests/sections only
   ok    guide_ref/SHA256SUMS exists
   ok    ui_foundation.guide_ref_pinned (the seven regenerated guide references still hash to SHA256SUMS [])
   ok    ui_foundation.smoke (ui_smoke.tscn child run: exit 0, 'UI SMOKE PASS: 201 checks, 0 failures, 0 engine errors')
-  --    ui_foundation: 204 checks, 0 failed, 1 skipped, 8.3 s
+  --    ui_foundation: 204 checks, 0 failed, 1 skipped, 7.6 s
 == section ui_nav  (res://tests/sections/ui_nav.gd)
   ok    ui_nav.disabled_not_focusable (set_enabled(false) -> disabled + FOCUS_NONE, (true) restores it; a LineEdit goes read-only; first_enabled skips both)
   ok    ui_nav.wire_helpers (L ring true, wrap marks true, no-wrap true, T row true, G grid (22 in 6, clamped short row) true, groups true, focus memory true, ring wrap marks true, Tab order true, re-wire true, a real Down press lands on C10)
@@ -826,6 +830,6 @@ PLAYTEST start mode=headless character=animal sections=res://tests/sections only
   ok    walkway_transitions.alternate_ladder_down_stride_survives_landing (walk)
   ok    walkway_transitions.alternate_ladder_down_facing_survives_landing
   ok    walkway_transitions.alternate_ladder_down_held_input_continues (43.08 ground px on held input after landing)
-  --    walkway_transitions: 153 checks, 0 failed, 0 skipped, 2.1 s
-== summary: 7 section(s) run, 741 checks (0 failed, 68 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 26.7 s
-PLAYTEST PASS (741 checks in 7 sections, 0 allowed engine messages, 0 known-issue messages)
+  --    walkway_transitions: 153 checks, 0 failed, 0 skipped, 1.9 s
+== summary: 7 section(s) run, 743 checks (0 failed, 68 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 25.7 s
+PLAYTEST PASS (743 checks in 7 sections, 0 allowed engine messages, 0 known-issue messages)

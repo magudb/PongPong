@@ -3,47 +3,47 @@
 		"draw_calls": 560.0,
 		"frame": {
 			"cpu_render_ms": 0.0,
-			"fps": 255.435487572465,
-			"frames": 128,
+			"fps": 251.322434716006,
+			"frames": 126,
 			"gpu_ms": 0.0,
-			"ms": 3.9148828125,
-			"worst_ms": 5.147
+			"ms": 3.97895238095238,
+			"worst_ms": 5.638
 		},
 		"frame_windows": [
 			{
 				"cpu_render_ms": 0.0,
-				"fps": 255.435487572465,
-				"frames": 128,
+				"fps": 250.398451504179,
+				"frames": 126,
 				"gpu_ms": 0.0,
-				"ms": 3.9148828125,
-				"worst_ms": 5.147
+				"ms": 3.99363492063492,
+				"worst_ms": 4.905
 			},
 			{
 				"cpu_render_ms": 0.0,
-				"fps": 244.86773160904,
-				"frames": 123,
+				"fps": 249.897042418524,
+				"frames": 125,
 				"gpu_ms": 0.0,
-				"ms": 4.08383739837398,
-				"worst_ms": 5.957
+				"ms": 4.001648,
+				"worst_ms": 5.49
 			},
 			{
 				"cpu_render_ms": 0.0,
-				"fps": 255.375351889279,
-				"frames": 128,
+				"fps": 251.322434716006,
+				"frames": 126,
 				"gpu_ms": 0.0,
-				"ms": 3.9158046875,
-				"worst_ms": 4.714
+				"ms": 3.97895238095238,
+				"worst_ms": 5.638
 			}
 		],
-		"texture_mb": 87.3256864547729,
-		"travel_ms": 506.926,
+		"texture_mb": 88.6590147018433,
+		"travel_ms": 468.22,
 		"travel_profile": {
-			"entered_ms": 217.233,
-			"prefetch_and_fade_ms": 213.459,
+			"entered_ms": 254.193,
+			"prefetch_and_fade_ms": 221.599,
 			"prepared_paths": [],
 			"request_ms": 0.002,
-			"total_ms": 506.918,
-			"warmed_ms": 267.711
+			"total_ms": 468.21,
+			"warmed_ms": 269.877
 		}
 	},
 	"farm_kit": {
@@ -75,7 +75,7 @@
 	},
 	"festival": {
 		"looks": 20,
-		"texture_mb": 324.901935577393
+		"texture_mb": 326.235263824463
 	},
 	"festival_four_added_looks": {
 		"arithmetic_bytes": 37749312.0,
@@ -100,43 +100,83 @@
 		"draw_calls": 613.0,
 		"frame": {
 			"cpu_render_ms": 0.0,
-			"fps": 252.108680677557,
-			"frames": 127,
+			"fps": 251.023018412339,
+			"frames": 126,
 			"gpu_ms": 0.0,
-			"ms": 3.96654330708661,
-			"worst_ms": 4.97
+			"ms": 3.98369841269841,
+			"worst_ms": 4.856
 		},
 		"frame_windows": [
 			{
 				"cpu_render_ms": 0.0,
-				"fps": 242.486399891875,
+				"fps": 243.954624439854,
 				"frames": 122,
 				"gpu_ms": 0.0,
-				"ms": 4.12394262295082,
-				"worst_ms": 6.103
+				"ms": 4.09912295081967,
+				"worst_ms": 8.331
 			},
 			{
 				"cpu_render_ms": 0.0,
-				"fps": 252.108680677557,
-				"frames": 127,
+				"fps": 243.951697563882,
+				"frames": 122,
 				"gpu_ms": 0.0,
-				"ms": 3.96654330708661,
-				"worst_ms": 4.97
+				"ms": 4.09917213114754,
+				"worst_ms": 7.27
 			},
 			{
 				"cpu_render_ms": 0.0,
-				"fps": 250.343725909384,
+				"fps": 243.719235440772,
+				"frames": 122,
+				"gpu_ms": 0.0,
+				"ms": 4.10308196721311,
+				"worst_ms": 6.024
+			},
+			{
+				"cpu_render_ms": 0.0,
+				"fps": 245.378701128742,
+				"frames": 123,
+				"gpu_ms": 0.0,
+				"ms": 4.07533333333333,
+				"worst_ms": 4.882
+			},
+			{
+				"cpu_render_ms": 0.0,
+				"fps": 247.600867401748,
+				"frames": 124,
+				"gpu_ms": 0.0,
+				"ms": 4.03875806451613,
+				"worst_ms": 4.882
+			},
+			{
+				"cpu_render_ms": 0.0,
+				"fps": 244.663160491077,
+				"frames": 123,
+				"gpu_ms": 0.0,
+				"ms": 4.08725203252032,
+				"worst_ms": 5.355
+			},
+			{
+				"cpu_render_ms": 0.0,
+				"fps": 249.436274020713,
+				"frames": 125,
+				"gpu_ms": 0.0,
+				"ms": 4.00904,
+				"worst_ms": 5.112
+			},
+			{
+				"cpu_render_ms": 0.0,
+				"fps": 251.023018412339,
 				"frames": 126,
 				"gpu_ms": 0.0,
-				"ms": 3.99450793650794,
-				"worst_ms": 5.206
+				"ms": 3.98369841269841,
+				"worst_ms": 4.856
 			}
 		],
-		"texture_mb": 131.743060112,
-		"travel_ms": 472.098,
+		"texture_mb": 133.07638835907,
+		"travel_ms": 462.618,
 		"travel_profile": {
-			"entered_ms": 274.276,
-			"prefetch_and_fade_ms": 212.728,
+			"entered_ms": 272.348,
+			"prefetch_and_fade_ms": 207.366,
 			"prepared_paths": [
 				"res://assets/iso_tiles/drawn_path_dirt.webp",
 				"res://assets/iso_tiles/drawn_water_0.webp",
@@ -155,10 +195,10 @@
 				"res://assets/iso_tiles/drawn_deck_hyggebyen.webp",
 				"res://assets/iso_tiles/drawn_cobble_hyggebyen.webp",
 				"res://assets/iso_props/drawn/house_mushroom_rose_glow.webp",
-				"res://assets/iso_props/drawn/house_mushroom_rose.webp",
 				"res://assets/iso_props/drawn/house_mushroom_rose_ground.webp",
-				"res://assets/iso_props/drawn/house_mushroom_mint.webp",
+				"res://assets/iso_props/drawn/house_mushroom_rose.webp",
 				"res://assets/iso_props/drawn/house_mushroom_mint_glow.webp",
+				"res://assets/iso_props/drawn/house_mushroom_mint.webp",
 				"res://assets/iso_props/drawn/house_mushroom_mint_ground.webp",
 				"res://assets/iso_props/drawn/house_mushroom_lavender_glow.webp",
 				"res://assets/iso_props/drawn/house_mushroom_lavender.webp",
@@ -171,8 +211,8 @@
 				"res://assets/iso_props/zz_painted_consistency/house_bakery_windows.webp",
 				"res://assets/iso_props/zz_painted_consistency/house_smithy.webp",
 				"res://assets/iso_props/zz_painted_consistency/house_smithy_windows.webp",
-				"res://assets/iso_props/zz_painted_consistency/tower_wizard.webp",
 				"res://assets/iso_props/zz_painted_consistency/tower_wizard_windows.webp",
+				"res://assets/iso_props/zz_painted_consistency/tower_wizard.webp",
 				"res://assets/iso_props/zz_painted_consistency/house_animalstore.webp",
 				"res://assets/iso_props/zz_painted_consistency/house_animalstore_windows.webp",
 				"res://assets/iso_props/zz_painted_consistency/lantern_post_rose.webp",
@@ -193,8 +233,8 @@
 				"res://assets/iso_props/zz_painted_consistency/../../iso_props/market_stall_tailor_glow.png",
 				"res://assets/iso_props/zz_painted_consistency/beehive_stand.webp",
 				"res://assets/iso_props/painted_interiors/plank_stack.webp",
-				"res://assets/iso_props/zz_painted_consistency/wheat_sack.webp",
 				"res://assets/iso_props/drawn/bush_berry.webp",
+				"res://assets/iso_props/zz_painted_consistency/wheat_sack.webp",
 				"res://assets/iso_props/drawn_terrain/bridge_x.webp",
 				"res://assets/iso_props/zz_painted_consistency/roof_patch.webp",
 				"res://assets/iso_props/zz_painted_consistency/backdrop_hyggebyen_far.webp",
@@ -212,48 +252,48 @@
 				"res://assets/isometric_characters/fairy_lily/talk.webp",
 				"res://assets/isometric_characters/fairy_lily/hover.webp",
 				"res://assets/isometric_characters/penguin_postman/idle.webp",
-				"res://assets/isometric_characters/penguin_postman/walk.webp",
-				"res://assets/isometric_characters/penguin_postman/talk.webp"
+				"res://assets/isometric_characters/penguin_postman/talk.webp",
+				"res://assets/isometric_characters/penguin_postman/walk.webp"
 			],
-			"request_ms": 6.925,
-			"total_ms": 472.089,
-			"warmed_ms": 296.941
+			"request_ms": 6.377,
+			"total_ms": 462.609,
+			"warmed_ms": 296.107
 		}
 	},
 	"hyggebyen_area": {
 		"budget_ms": 4,
 		"frame": {
 			"cpu_render_ms": 0.0,
-			"fps": 273.751980705481,
+			"fps": 273.09822964571,
 			"frames": 137,
 			"gpu_ms": 0.0,
-			"ms": 3.65294160583942,
-			"worst_ms": 5.175
+			"ms": 3.66168613138686,
+			"worst_ms": 4.817
 		},
 		"windows": [
 			{
 				"cpu_render_ms": 0.0,
-				"fps": 260.726611230749,
+				"fps": 261.897336244192,
 				"frames": 131,
 				"gpu_ms": 0.0,
-				"ms": 3.83543511450382,
-				"worst_ms": 6.547
+				"ms": 3.81829007633588,
+				"worst_ms": 6.199
 			},
 			{
 				"cpu_render_ms": 0.0,
-				"fps": 270.612838589391,
-				"frames": 136,
+				"fps": 266.152370245754,
+				"frames": 134,
 				"gpu_ms": 0.0,
-				"ms": 3.69531617647059,
-				"worst_ms": 6.114
+				"ms": 3.75724626865672,
+				"worst_ms": 5.992
 			},
 			{
 				"cpu_render_ms": 0.0,
-				"fps": 273.751980705481,
+				"fps": 273.09822964571,
 				"frames": 137,
 				"gpu_ms": 0.0,
-				"ms": 3.65294160583942,
-				"worst_ms": 5.175
+				"ms": 3.66168613138686,
+				"worst_ms": 4.817
 			}
 		]
 	},
@@ -261,43 +301,43 @@
 		"draw_calls": 127.0,
 		"frame": {
 			"cpu_render_ms": 0.0,
-			"fps": 475.983732907404,
-			"frames": 239,
+			"fps": 557.223230816242,
+			"frames": 279,
 			"gpu_ms": 0.0,
-			"ms": 2.10091213389121,
-			"worst_ms": 3.509
+			"ms": 1.79461290322581,
+			"worst_ms": 7.279
 		},
 		"frame_windows": [
 			{
 				"cpu_render_ms": 0.0,
-				"fps": 465.615401678214,
+				"fps": 437.901909972166,
+				"frames": 219,
+				"gpu_ms": 0.0,
+				"ms": 2.28361643835616,
+				"worst_ms": 5.774
+			},
+			{
+				"cpu_render_ms": 0.0,
+				"fps": 465.031803784521,
 				"frames": 233,
 				"gpu_ms": 0.0,
-				"ms": 2.14769527896996,
-				"worst_ms": 5.526
+				"ms": 2.15039055793991,
+				"worst_ms": 3.866
 			},
 			{
 				"cpu_render_ms": 0.0,
-				"fps": 449.954506812033,
-				"frames": 226,
+				"fps": 557.223230816242,
+				"frames": 279,
 				"gpu_ms": 0.0,
-				"ms": 2.22244690265487,
-				"worst_ms": 5.502
-			},
-			{
-				"cpu_render_ms": 0.0,
-				"fps": 475.983732907404,
-				"frames": 239,
-				"gpu_ms": 0.0,
-				"ms": 2.10091213389121,
-				"worst_ms": 3.509
+				"ms": 1.79461290322581,
+				"worst_ms": 7.279
 			}
 		],
-		"texture_mb": 73.9331216812134,
-		"travel_ms": 496.551,
+		"texture_mb": 75.2664499282837,
+		"travel_ms": 519.527,
 		"travel_profile": {
-			"entered_ms": 216.792,
-			"prefetch_and_fade_ms": 210.999,
+			"entered_ms": 220.075,
+			"prefetch_and_fade_ms": 214.353,
 			"prepared_paths": [
 				"res://assets/iso_props/shops/core/counter_pine_r0.webp",
 				"res://assets/iso_props/furniture/bookshelf_pine_r0.webp",
@@ -317,8 +357,8 @@
 				"res://assets/iso_props/shops/special/lantern_hanging_r0.webp",
 				"res://assets/iso_props/interior/../painted_interiors/wall_plank_a_r0.webp",
 				"res://assets/iso_props/interior/../painted_interiors/wall_plank_a_r1.webp",
-				"res://assets/iso_props/interior/../painted_interiors/wall_plank_b_r0.webp",
 				"res://assets/iso_tiles/drawn_floor_plank.webp",
+				"res://assets/iso_props/interior/../painted_interiors/wall_plank_b_r0.webp",
 				"res://assets/iso_props/interior/../painted_interiors/wall_plank_b_r1.webp",
 				"res://assets/iso_props/interior/../painted_interiors/wall_plank_win_r0.webp",
 				"res://assets/iso_props/interior/../painted_interiors/wall_plank_win_r0_night.webp",
@@ -349,52 +389,52 @@
 				"res://assets/isometric_characters/fairy_shopkeeper/idle.webp",
 				"res://assets/isometric_characters/fairy_shopkeeper/talk.webp"
 			],
-			"request_ms": 11.06,
-			"total_ms": 496.534,
-			"warmed_ms": 243.829
+			"request_ms": 11.807,
+			"total_ms": 519.511,
+			"warmed_ms": 262.004
 		}
 	},
 	"traetoppen": {
 		"draw_calls": 228.0,
 		"frame": {
 			"cpu_render_ms": 0.0,
-			"fps": 331.806888390956,
-			"frames": 166,
+			"fps": 326.387645033534,
+			"frames": 164,
 			"gpu_ms": 0.0,
-			"ms": 3.01380120481928,
-			"worst_ms": 4.46
+			"ms": 3.06384146341463,
+			"worst_ms": 4.863
 		},
 		"frame_windows": [
 			{
 				"cpu_render_ms": 0.0,
-				"fps": 331.806888390956,
-				"frames": 166,
+				"fps": 326.387645033534,
+				"frames": 164,
 				"gpu_ms": 0.0,
-				"ms": 3.01380120481928,
-				"worst_ms": 4.46
+				"ms": 3.06384146341463,
+				"worst_ms": 4.863
 			},
 			{
 				"cpu_render_ms": 0.0,
-				"fps": 324.524064554407,
-				"frames": 163,
+				"fps": 321.708532069945,
+				"frames": 161,
 				"gpu_ms": 0.0,
-				"ms": 3.08143558282209,
-				"worst_ms": 5.974
+				"ms": 3.10840372670807,
+				"worst_ms": 4.346
 			},
 			{
 				"cpu_render_ms": 0.0,
-				"fps": 312.587106279616,
-				"frames": 157,
+				"fps": 309.059839966821,
+				"frames": 155,
 				"gpu_ms": 0.0,
-				"ms": 3.19910828025478,
-				"worst_ms": 5.566
+				"ms": 3.23561935483871,
+				"worst_ms": 6.626
 			}
 		],
-		"texture_mb": 160.737163543701,
-		"travel_ms": 462.595,
+		"texture_mb": 162.070491790771,
+		"travel_ms": 514.198,
 		"travel_profile": {
-			"entered_ms": 257.202,
-			"prefetch_and_fade_ms": 217.434,
+			"entered_ms": 262.662,
+			"prefetch_and_fade_ms": 220.559,
 			"prepared_paths": [
 				"res://assets/iso_props/painted_world/bat_hang.webp",
 				"res://assets/iso_props/painted_world/bat_hang_f1.webp",
@@ -414,8 +454,8 @@
 				"res://assets/iso_props/painted_world/foliage_front_b.webp",
 				"res://assets/iso_props/painted_world/hut_l_dark.webp",
 				"res://assets/iso_props/painted_world/hut_l_dark_night.webp",
-				"res://assets/iso_props/painted_world/hut_l_straw_night.webp",
 				"res://assets/iso_props/painted_world/hut_l_straw.webp",
+				"res://assets/iso_props/painted_world/hut_l_straw_night.webp",
 				"res://assets/iso_props/painted_world/hut_m_dark.webp",
 				"res://assets/iso_props/painted_world/hut_m_dark_night.webp",
 				"res://assets/iso_props/painted_world/hut_m_moss_night.webp",
@@ -426,8 +466,8 @@
 				"res://assets/iso_props/painted_world/hut_raadhus.webp",
 				"res://assets/iso_props/painted_world/hut_s_moss.webp",
 				"res://assets/iso_props/painted_world/hut_s_moss_night.webp",
-				"res://assets/iso_props/painted_world/hut_s_straw_night.webp",
 				"res://assets/iso_props/painted_world/hut_s_straw.webp",
+				"res://assets/iso_props/painted_world/hut_s_straw_night.webp",
 				"res://assets/iso_props/painted_world/ladder_tile.webp",
 				"res://assets/iso_props/painted_world/lamp_door.webp",
 				"res://assets/iso_props/painted_world/lantern_hang.webp",
@@ -461,8 +501,8 @@
 				"res://assets/iso_props/painted_world/trunk_foot_w367.webp",
 				"res://assets/iso_props/painted_world/trunk_foot_w404.webp",
 				"res://assets/iso_props/painted_world/trunk_foot_w441.webp",
-				"res://assets/iso_props/painted_world/trunk_foot_w698.webp",
 				"res://assets/iso_props/painted_world/trunk_hole_owl.webp",
+				"res://assets/iso_props/painted_world/trunk_foot_w698.webp",
 				"res://assets/iso_props/painted_world/trunk_hole_owl_b.webp",
 				"res://assets/iso_props/painted_world/trunk_root_w367.webp",
 				"res://assets/iso_props/painted_world/trunk_root_w404.webp",
@@ -478,9 +518,9 @@
 				"res://assets/isometric_characters/bear_guard/walk.webp",
 				"res://assets/iso_props/painted_world/backdrop_treetop_far.webp"
 			],
-			"request_ms": 8.206,
-			"total_ms": 462.588,
-			"warmed_ms": 314.607
+			"request_ms": 7.192,
+			"total_ms": 514.183,
+			"warmed_ms": 324.699
 		}
 	}
 }

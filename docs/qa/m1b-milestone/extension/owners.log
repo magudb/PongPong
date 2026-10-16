@@ -2,7 +2,7 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 
   info  --strict: known issues are not tolerated
 PLAYTEST start mode=headless character=animal sections=res://tests/sections only=towns_data,towns_interiors,social_data
-  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.U24b1m/Library/Application Support/Traetoppen (throwaway)
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.6j6JVW/Library/Application Support/Traetoppen (throwaway)
 [Lua] 2 lint finding(s) in 2 file(s) (LuaRuntime.lint_report; run tools/lua/lint.gd for the list)
 [Lua]   res://lua/config/zz_loop_post.lua:0 [duplicate_key] config table `traetoppen` is already defined by config/traetoppen: two config files must not define the same top-level key
 [Lua]   res://lua/quests/loop_mail.lua:0 [quest_binding] quest `loop_mail`: objective `read`: on = "post_read" is not in the binding vocabulary
@@ -144,7 +144,7 @@ PLAYTEST start mode=headless character=animal sections=res://tests/sections only
 [Lua] 2 lint finding(s) in 2 file(s) (LuaRuntime.lint_report; run tools/lua/lint.gd for the list)
 [Lua]   res://lua/config/zz_loop_post.lua:0 [duplicate_key] config table `traetoppen` is already defined by config/traetoppen: two config files must not define the same top-level key
 [Lua]   res://lua/quests/loop_mail.lua:0 [quest_binding] quest `loop_mail`: objective `read`: on = "post_read" is not in the binding vocabulary
-  --    social_data: 133 checks, 0 failed, 0 skipped, 1.7 s
+  --    social_data: 133 checks, 0 failed, 0 skipped, 1.0 s
 == section towns_data  (res://tests/sections/towns_data.gd)
   ok    towns_data.config_complete (npc_speed 0.65 of the player's walk speed 285.0 = 185.25 px/s (185) true; portal_seconds 0.5, max_live_visuals 16 (hard cap), plan_visual_peak 14, live_min_dwell 0.05, closing_whisper_minutes 30, carrot_max_speed 1.6, hours_enabled true, curfew enabled true; rain_shelter acts sit tend play fish from 8 to 19 true)
   ok    towns_data.constants_keys (exactly the 11 constants ["carrot_max_speed", "closing_whisper_minutes", "curfew", "hours_enabled", "live_min_dwell", "max_live_visuals", "max_live_visuals_festival", "npc_speed", "plan_visual_peak", "portal_seconds", "rain_shelter"] (no unowned extra), the key `towns` does not collide with a registry name (get_registry("towns") is empty true))
@@ -321,7 +321,7 @@ PLAYTEST start mode=headless character=animal sections=res://tests/sections only
 [Lua] 2 lint finding(s) in 2 file(s) (LuaRuntime.lint_report; run tools/lua/lint.gd for the list)
 [Lua]   res://lua/config/zz_loop_post.lua:0 [duplicate_key] config table `traetoppen` is already defined by config/traetoppen: two config files must not define the same top-level key
 [Lua]   res://lua/quests/loop_mail.lua:0 [quest_binding] quest `loop_mail`: objective `read`: on = "post_read" is not in the binding vocabulary
-  --    towns_data: 166 checks, 0 failed, 0 skipped, 2.0 s
+  --    towns_data: 166 checks, 0 failed, 0 skipped, 1.9 s
 == section towns_interiors  (res://tests/sections/towns_interiors.gd)
   ok    int_froebutikken matches data/interiors/schema.json
   ok    int_postkontoret matches data/interiors/schema.json
@@ -335,55 +335,55 @@ PLAYTEST start mode=headless character=animal sections=res://tests/sections only
   ok    int_postkontoret: zoom 0.791 fits the room's 832 x 774 px visual box into 1280 x 720
   ok    int_hoppe_hut: zoom 0.877 fits the room's 704 x 698 px visual box into 1280 x 720
   ok    towns_interiors.zoom_fits_every_room (zoom_fit = 0.85 * min(1280 / (n * 64), 720 / (n * 38 + 280)), n = cols + rows: the room's visual box times the zoom fits the 1280 x 720 view, the JSON carries the same number: ["int_froebutikken 0.754", "int_postkontoret 0.791", "int_hoppe_hut 0.877"])
-  ok    int_badehuset warm build 1: 8.76 ms, 109 nodes, 38 sprites, 2 lights
-  ok    int_badehuset warm build 2: 8.63 ms, 109 nodes, 38 sprites, 2 lights
-  ok    int_bageriet warm build 1: 9.39 ms, 110 nodes, 37 sprites, 3 lights
-  ok    int_bageriet warm build 2: 9.45 ms, 110 nodes, 37 sprites, 3 lights
-  ok    int_birks_bistade warm build 1: 10.64 ms, 60 nodes, 23 sprites, 2 lights
-  ok    int_birks_bistade warm build 2: 10.36 ms, 60 nodes, 23 sprites, 2 lights
-  ok    int_brummes_hus warm build 1: 11.36 ms, 56 nodes, 21 sprites, 2 lights
-  ok    int_brummes_hus warm build 2: 10.88 ms, 56 nodes, 21 sprites, 2 lights
-  ok    int_brummes_vaerksted warm build 1: 8.61 ms, 112 nodes, 41 sprites, 2 lights
-  ok    int_brummes_vaerksted warm build 2: 8.70 ms, 112 nodes, 41 sprites, 2 lights
-  ok    int_dyrehuset warm build 1: 8.63 ms, 112 nodes, 41 sprites, 2 lights
-  ok    int_dyrehuset warm build 2: 8.98 ms, 112 nodes, 41 sprites, 2 lights
-  ok    int_fekongens_hus warm build 1: 10.19 ms, 70 nodes, 29 sprites, 2 lights
-  ok    int_fekongens_hus warm build 2: 9.92 ms, 70 nodes, 29 sprites, 2 lights
-  ok    int_froebutikken warm build 1: 11.40 ms, 103 nodes, 37 sprites, 2 lights
-  ok    int_froebutikken warm build 2: 10.91 ms, 103 nodes, 37 sprites, 2 lights
-  ok    int_hoppe_hut warm build 1: 12.55 ms, 69 nodes, 28 sprites, 2 lights
-  ok    int_hoppe_hut warm build 2: 11.58 ms, 69 nodes, 28 sprites, 2 lights
-  ok    int_hyldeblomsts_hus warm build 1: 12.51 ms, 56 nodes, 21 sprites, 2 lights
-  ok    int_hyldeblomsts_hus warm build 2: 11.88 ms, 56 nodes, 21 sprites, 2 lights
-  ok    int_kikis_hytte warm build 1: 10.14 ms, 59 nodes, 22 sprites, 2 lights
-  ok    int_kikis_hytte warm build 2: 10.49 ms, 59 nodes, 22 sprites, 2 lights
-  ok    int_loppeloftet warm build 1: 10.13 ms, 99 nodes, 33 sprites, 2 lights
-  ok    int_loppeloftet warm build 2: 10.61 ms, 99 nodes, 33 sprites, 2 lights
-  ok    int_moebelbutikken warm build 1: 14.84 ms, 113 nodes, 40 sprites, 2 lights
-  ok    int_moebelbutikken warm build 2: 14.45 ms, 113 nodes, 40 sprites, 2 lights
-  ok    int_musikstuen warm build 1: 9.90 ms, 56 nodes, 21 sprites, 2 lights
-  ok    int_musikstuen warm build 2: 9.94 ms, 56 nodes, 21 sprites, 2 lights
-  ok    int_pippins_hus warm build 1: 9.85 ms, 56 nodes, 21 sprites, 2 lights
-  ok    int_pippins_hus warm build 2: 10.01 ms, 56 nodes, 21 sprites, 2 lights
-  ok    int_postkontoret warm build 1: 7.07 ms, 101 nodes, 34 sprites, 2 lights
-  ok    int_postkontoret warm build 2: 7.04 ms, 101 nodes, 34 sprites, 2 lights
-  ok    int_raadhuset warm build 1: 13.08 ms, 114 nodes, 43 sprites, 2 lights
-  ok    int_raadhuset warm build 2: 12.42 ms, 114 nodes, 43 sprites, 2 lights
-  ok    int_skraedderiet warm build 1: 9.19 ms, 104 nodes, 36 sprites, 2 lights
-  ok    int_skraedderiet warm build 2: 10.70 ms, 104 nodes, 36 sprites, 2 lights
-  ok    int_smedjen warm build 1: 7.49 ms, 102 nodes, 36 sprites, 3 lights
-  ok    int_smedjen warm build 2: 7.45 ms, 102 nodes, 36 sprites, 3 lights
-  ok    int_toemmerhandlen warm build 1: 8.63 ms, 114 nodes, 39 sprites, 2 lights
-  ok    int_toemmerhandlen warm build 2: 9.07 ms, 114 nodes, 39 sprites, 2 lights
-  ok    int_torvekroen warm build 1: 9.50 ms, 107 nodes, 37 sprites, 2 lights
-  ok    int_torvekroen warm build 2: 9.33 ms, 107 nodes, 37 sprites, 2 lights
-  ok    int_troldmandstaarnet warm build 1: 9.24 ms, 98 nodes, 33 sprites, 3 lights
-  ok    int_troldmandstaarnet warm build 2: 9.19 ms, 98 nodes, 33 sprites, 3 lights
-  ok    int_uglehulen warm build 1: 8.32 ms, 93 nodes, 32 sprites, 2 lights
-  ok    int_uglehulen warm build 2: 8.26 ms, 93 nodes, 32 sprites, 2 lights
-  ok    int_vagthytten warm build 1: 9.67 ms, 59 nodes, 22 sprites, 2 lights
-  ok    int_vagthytten warm build 2: 9.67 ms, 59 nodes, 22 sprites, 2 lights
-  ok    towns_interiors.build_all_under_budget (72 builds (1 cold + 2 warm) of the 24 rooms the generator writes (14 CORE + 10 EXTENDED), each from its JSON: warm p50 9.90 ms (budget <= 12; design measured 6.2), worst cold 51.20 ms (the first build of a room decodes its wall and furniture textures from disk: a sanity bound of 5000 ms that only catches a runaway build, the design measured 27.5 ms with its lighter placeholder art, a quiet machine here measures 130 - 520 ms and a load average of 30 gave 1,510 ms; the user-facing number is the windowed first frame <= 250 ms), base sprites (walls, corner, doormat, room pieces; dressing and hatch art also count toward the 130-node whole-room limit) p50 25 max 31 (<= 31; design 25 / 31) plus at most 4 additive window night layers, nodes p50 101 max 114 (hard budget <= 130; design 76 / 96 was measured before the SE1 amendment added the two talk hosts of a shop band (ShopCounter + Area2D + shape + Timer = 4 nodes each)), lights max 3 (<= 4), no builder error [], no labelled box (every piece resolves to art or a stand-in) []; per room { "int_badehuset": "109 nodes 38 sprites + 4 night layers", "int_bageriet": "110 nodes 37 sprites + 3 night layers", "int_birks_bistade": "60 nodes 23 sprites + 2 night layers", "int_brummes_hus": "56 nodes 21 sprites + 2 night layers", "int_brummes_vaerksted": "112 nodes 41 sprites + 4 night layers", "int_dyrehuset": "112 nodes 41 sprites + 4 night layers", "int_fekongens_hus": "70 nodes 29 sprites + 4 night layers", "int_froebutikken": "103 nodes 37 sprites + 3 night layers", "int_hoppe_hut": "69 nodes 28 sprites + 2 night layers", "int_hyldeblomsts_hus": "56 nodes 21 sprites + 2 night layers", "int_kikis_hytte": "59 nodes 22 sprites + 2 night layers", "int_loppeloftet": "99 nodes 33 sprites + 3 night layers", "int_moebelbutikken": "113 nodes 40 sprites + 4 night layers", "int_musikstuen": "56 nodes 21 sprites + 2 night layers", "int_pippins_hus": "56 nodes 21 sprites + 2 night layers", "int_postkontoret": "101 nodes 34 sprites + 3 night layers", "int_raadhuset": "114 nodes 43 sprites + 4 night layers", "int_skraedderiet": "104 nodes 36 sprites + 3 night layers", "int_smedjen": "102 nodes 36 sprites + 3 night layers", "int_toemmerhandlen": "114 nodes 39 sprites + 3 night layers", "int_torvekroen": "107 nodes 37 sprites + 4 night layers", "int_troldmandstaarnet": "98 nodes 33 sprites + 2 night layers", "int_uglehulen": "93 nodes 32 sprites + 2 night layers", "int_vagthytten": "59 nodes 22 sprites + 2 night layers" })
+  ok    int_badehuset warm build 1: 8.66 ms, 109 nodes, 38 sprites, 2 lights
+  ok    int_badehuset warm build 2: 8.04 ms, 109 nodes, 38 sprites, 2 lights
+  ok    int_bageriet warm build 1: 9.34 ms, 110 nodes, 37 sprites, 3 lights
+  ok    int_bageriet warm build 2: 9.05 ms, 110 nodes, 37 sprites, 3 lights
+  ok    int_birks_bistade warm build 1: 10.81 ms, 60 nodes, 23 sprites, 2 lights
+  ok    int_birks_bistade warm build 2: 10.70 ms, 60 nodes, 23 sprites, 2 lights
+  ok    int_brummes_hus warm build 1: 12.03 ms, 56 nodes, 21 sprites, 2 lights
+  ok    int_brummes_hus warm build 2: 12.30 ms, 56 nodes, 21 sprites, 2 lights
+  ok    int_brummes_vaerksted warm build 1: 9.05 ms, 112 nodes, 41 sprites, 2 lights
+  ok    int_brummes_vaerksted warm build 2: 9.39 ms, 112 nodes, 41 sprites, 2 lights
+  ok    int_dyrehuset warm build 1: 9.03 ms, 112 nodes, 41 sprites, 2 lights
+  ok    int_dyrehuset warm build 2: 8.93 ms, 112 nodes, 41 sprites, 2 lights
+  ok    int_fekongens_hus warm build 1: 10.76 ms, 70 nodes, 29 sprites, 2 lights
+  ok    int_fekongens_hus warm build 2: 10.78 ms, 70 nodes, 29 sprites, 2 lights
+  ok    int_froebutikken warm build 1: 11.22 ms, 103 nodes, 37 sprites, 2 lights
+  ok    int_froebutikken warm build 2: 11.21 ms, 103 nodes, 37 sprites, 2 lights
+  ok    int_hoppe_hut warm build 1: 11.96 ms, 69 nodes, 28 sprites, 2 lights
+  ok    int_hoppe_hut warm build 2: 11.35 ms, 69 nodes, 28 sprites, 2 lights
+  ok    int_hyldeblomsts_hus warm build 1: 11.69 ms, 56 nodes, 21 sprites, 2 lights
+  ok    int_hyldeblomsts_hus warm build 2: 12.04 ms, 56 nodes, 21 sprites, 2 lights
+  ok    int_kikis_hytte warm build 1: 10.40 ms, 59 nodes, 22 sprites, 2 lights
+  ok    int_kikis_hytte warm build 2: 10.13 ms, 59 nodes, 22 sprites, 2 lights
+  ok    int_loppeloftet warm build 1: 9.21 ms, 99 nodes, 33 sprites, 2 lights
+  ok    int_loppeloftet warm build 2: 9.04 ms, 99 nodes, 33 sprites, 2 lights
+  ok    int_moebelbutikken warm build 1: 14.69 ms, 113 nodes, 40 sprites, 2 lights
+  ok    int_moebelbutikken warm build 2: 14.99 ms, 113 nodes, 40 sprites, 2 lights
+  ok    int_musikstuen warm build 1: 10.56 ms, 56 nodes, 21 sprites, 2 lights
+  ok    int_musikstuen warm build 2: 10.85 ms, 56 nodes, 21 sprites, 2 lights
+  ok    int_pippins_hus warm build 1: 11.41 ms, 56 nodes, 21 sprites, 2 lights
+  ok    int_pippins_hus warm build 2: 11.80 ms, 56 nodes, 21 sprites, 2 lights
+  ok    int_postkontoret warm build 1: 8.02 ms, 101 nodes, 34 sprites, 2 lights
+  ok    int_postkontoret warm build 2: 7.69 ms, 101 nodes, 34 sprites, 2 lights
+  ok    int_raadhuset warm build 1: 12.99 ms, 114 nodes, 43 sprites, 2 lights
+  ok    int_raadhuset warm build 2: 13.17 ms, 114 nodes, 43 sprites, 2 lights
+  ok    int_skraedderiet warm build 1: 11.53 ms, 104 nodes, 36 sprites, 2 lights
+  ok    int_skraedderiet warm build 2: 9.37 ms, 104 nodes, 36 sprites, 2 lights
+  ok    int_smedjen warm build 1: 8.10 ms, 102 nodes, 36 sprites, 3 lights
+  ok    int_smedjen warm build 2: 7.66 ms, 102 nodes, 36 sprites, 3 lights
+  ok    int_toemmerhandlen warm build 1: 8.23 ms, 114 nodes, 39 sprites, 2 lights
+  ok    int_toemmerhandlen warm build 2: 8.39 ms, 114 nodes, 39 sprites, 2 lights
+  ok    int_torvekroen warm build 1: 9.26 ms, 107 nodes, 37 sprites, 2 lights
+  ok    int_torvekroen warm build 2: 9.76 ms, 107 nodes, 37 sprites, 2 lights
+  ok    int_troldmandstaarnet warm build 1: 9.73 ms, 98 nodes, 33 sprites, 3 lights
+  ok    int_troldmandstaarnet warm build 2: 9.26 ms, 98 nodes, 33 sprites, 3 lights
+  ok    int_uglehulen warm build 1: 8.48 ms, 93 nodes, 32 sprites, 2 lights
+  ok    int_uglehulen warm build 2: 8.20 ms, 93 nodes, 32 sprites, 2 lights
+  ok    int_vagthytten warm build 1: 9.73 ms, 59 nodes, 22 sprites, 2 lights
+  ok    int_vagthytten warm build 2: 9.56 ms, 59 nodes, 22 sprites, 2 lights
+  ok    towns_interiors.build_all_under_budget (72 builds (1 cold + 2 warm) of the 24 rooms the generator writes (14 CORE + 10 EXTENDED), each from its JSON: warm p50 9.76 ms (budget <= 12; design measured 6.2), worst cold 43.00 ms (the first build of a room decodes its wall and furniture textures from disk: a sanity bound of 5000 ms that only catches a runaway build, the design measured 27.5 ms with its lighter placeholder art, a quiet machine here measures 130 - 520 ms and a load average of 30 gave 1,510 ms; the user-facing number is the windowed first frame <= 250 ms), base sprites (walls, corner, doormat, room pieces; dressing and hatch art also count toward the 130-node whole-room limit) p50 25 max 31 (<= 31; design 25 / 31) plus at most 4 additive window night layers, nodes p50 101 max 114 (hard budget <= 130; design 76 / 96 was measured before the SE1 amendment added the two talk hosts of a shop band (ShopCounter + Area2D + shape + Timer = 4 nodes each)), lights max 3 (<= 4), no builder error [], no labelled box (every piece resolves to art or a stand-in) []; per room { "int_badehuset": "109 nodes 38 sprites + 4 night layers", "int_bageriet": "110 nodes 37 sprites + 3 night layers", "int_birks_bistade": "60 nodes 23 sprites + 2 night layers", "int_brummes_hus": "56 nodes 21 sprites + 2 night layers", "int_brummes_vaerksted": "112 nodes 41 sprites + 4 night layers", "int_dyrehuset": "112 nodes 41 sprites + 4 night layers", "int_fekongens_hus": "70 nodes 29 sprites + 4 night layers", "int_froebutikken": "103 nodes 37 sprites + 3 night layers", "int_hoppe_hut": "69 nodes 28 sprites + 2 night layers", "int_hyldeblomsts_hus": "56 nodes 21 sprites + 2 night layers", "int_kikis_hytte": "59 nodes 22 sprites + 2 night layers", "int_loppeloftet": "99 nodes 33 sprites + 3 night layers", "int_moebelbutikken": "113 nodes 40 sprites + 4 night layers", "int_musikstuen": "56 nodes 21 sprites + 2 night layers", "int_pippins_hus": "56 nodes 21 sprites + 2 night layers", "int_postkontoret": "101 nodes 34 sprites + 3 night layers", "int_raadhuset": "114 nodes 43 sprites + 4 night layers", "int_skraedderiet": "104 nodes 36 sprites + 3 night layers", "int_smedjen": "102 nodes 36 sprites + 3 night layers", "int_toemmerhandlen": "114 nodes 39 sprites + 3 night layers", "int_torvekroen": "107 nodes 37 sprites + 4 night layers", "int_troldmandstaarnet": "98 nodes 33 sprites + 2 night layers", "int_uglehulen": "93 nodes 32 sprites + 2 night layers", "int_vagthytten": "59 nodes 22 sprites + 2 night layers" })
   ok    towns_interiors.rebuild_leaks_nothing (6 more builds and frees of one room change nothing: nodes +0, orphan nodes +0, time_of_day_changed connections +0 (ShopHours and the window clock disconnect when the room leaves), game_event connections +0 (the talk hosts), interactables 0 -> 0, cached textures 160, reported stand-ins 0)
   ok    int_badehuset: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
   ok    int_badehuset: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
@@ -612,6 +612,6 @@ PLAYTEST start mode=headless character=animal sections=res://tests/sections only
   ok    the generator's stub map of int_uglehulen is InteriorRoom.stub_map (zone traetoppen)
   ok    the generator's stub map of int_vagthytten is InteriorRoom.stub_map (zone traetoppen)
   ok    towns_interiors.tool_regenerates_identical_specs (tools/towns/interiors/generate.py is seed-free and deterministic: two runs write the same 24 specs byte for byte true, the three fixture rooms ARE its output true, `--check` over the fixtures and data/interiors passes true, a changed spec is noticed (exit 1) true and one marked hand_edited is skipped true; validate.py: all 24 generated rooms pass (24 PASS), `validate.py data/interiors tests/fixtures/towns/interiors` prints 0 problems true, its self-test catches 14 mutants and the clean room passes true; the 24 stub maps it writes equal InteriorRoom.stub_map true; the building table of the generator equals the Lua registry (drift []))
-  --    towns_interiors: 289 checks, 0 failed, 0 skipped, 10.6 s
-== summary: 3 section(s) run, 588 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 18.8 s
+  --    towns_interiors: 289 checks, 0 failed, 0 skipped, 10.0 s
+== summary: 3 section(s) run, 588 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 16.8 s
 PLAYTEST PASS (588 checks in 3 sections, 0 allowed engine messages, 0 known-issue messages)

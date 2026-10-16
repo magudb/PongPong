@@ -2,7 +2,7 @@
   "allowed": [],
   "character": "animal",
   "checks": 11,
-  "elapsed_s": 7.62,
+  "elapsed_s": 7.24,
   "engine": [],
   "failed": 0,
   "failures": [],
@@ -15,7 +15,7 @@
       "character": "animal",
       "checks": 11,
       "failed": 0,
-      "ms": 6288,
+      "ms": 6001,
       "skipped": 0
     }
   },

@@ -186,9 +186,9 @@ assets/fonts/OFL-NotoSansSymbols2.txt,4383,b118dd41337806a5d4797052c77caf3bd096a
 assets/fonts/OFL-TTSymbols.txt,379,eb599ec80f2320a2ed7ae7b417cf1c501878a5a2f8fffdaf9d564bca7f10b294,.txt,,,import-license-or-theme-metadata,unchanged,
 assets/fonts/TTSymbols-Regular.ttf,9116,c3240bcdb79b40dbe7f1a68b8c12df13d3e438aae8cd415c735d8c9179ccf353,.ttf,,,bundled-typeface,unchanged,
 assets/fonts/TTSymbols-Regular.ttf.import,789,c8624b076e50a55c535c291a0d02c42165596d0c309be6210e2b7beecefa85c3,.import,,,import-license-or-theme-metadata,unchanged,
-assets/held_equipment/manifest.json,113426,c0da770e899cb0b46ed0d416c80ec93a96ef1d69bed8873c4bbf7b6ac1f48009,.json,,,asset-contract-or-manifest,new,
-assets/held_equipment/tools.webp,941900,39ec5087405bc8a8133b9c4342349ff52bfeeb9ca5eb50832e0f55faf24d551e,.webp,1536,1024,fitted-held-equipment,new,tools/art/drawn/sources/held_equipment/tools.png
-assets/held_equipment/tools.webp.import,943,fc6b42f26e5066b50be5828e8d481a64f651d30270713bc327d58b8e0a65dc85,.import,,,import-license-or-theme-metadata,new,
+assets/held_equipment/manifest.json,114546,51f4c59f8f188fdd8acd619e38dd8d097ce814d4839dfa3c34f01038093d0440,.json,,,asset-contract-or-manifest,new,
+assets/held_equipment/tools.webp,1082452,955d783f2b1799ace5f1fc34d770dc1f889ee314b6930eb3af07eacdc0bff4d5,.webp,1792,1024,fitted-held-equipment,new,tools/art/drawn/sources/held_equipment/tools.png
+assets/held_equipment/tools.webp.import,944,0ff2cbb9a38c973d2340087e87de3ffaf47cf731726a7741ef1edf7a3dab0a4d,.import,,,import-license-or-theme-metadata,new,
 assets/icons/home/amber.webp,5292,b47872047568c756ad33ce48a05c8faa36a1127585385ca955eb2204219eec43,.webp,128,128,item-base-or-night-icon,unchanged,
 assets/icons/home/amber.webp.import,939,f059740fc612531c408c92cd320a333f34350fbfd30bc61470485107c2221130,.import,,,import-license-or-theme-metadata,unchanged,
 assets/icons/home/bed_birch_single.webp,4032,5a482060ea29f33e75ab148c2c2a36aea14cb97dc39290f8c451b8868bea0c51,.webp,128,128,item-base-or-night-icon,unchanged,

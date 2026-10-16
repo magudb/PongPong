@@ -1,8 +1,8 @@
 {
   "allowed": [],
   "character": "ghost",
-  "checks": 42,
-  "elapsed_s": 5.59,
+  "checks": 44,
+  "elapsed_s": 5.49,
   "engine": [],
   "failed": 0,
   "failures": [],
@@ -13,9 +13,9 @@
   "sections": {
     "held_equipment": {
       "character": "ghost",
-      "checks": 42,
+      "checks": 44,
       "failed": 0,
-      "ms": 1515,
+      "ms": 1576,
       "skipped": 0
     }
   },

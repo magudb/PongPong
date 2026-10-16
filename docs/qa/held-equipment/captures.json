@@ -4,80 +4,80 @@
     "bytes": 684832
   },
   "all-weapons-contact.png": {
-    "sha256": "3923e280a55d4ddcc619ba2f0c38ff48cd2d473ea371fd18e09cbbc2be807913",
-    "bytes": 474235
+    "sha256": "80075cd66d15959e2a68cbe082faba72176ebc8197129bd0b5df7770a9e27426",
+    "bytes": 474173
   },
   "native-animal/catalog-contact.png": {
-    "sha256": "1cfffdf2cc43baa89273bc4377631a4a27d9f833bbfb2a41a6686285c2423f25",
-    "bytes": 379262
+    "sha256": "4042c8fbe239bdb22dd357e11f39fd7ad83392e9002fbc17388aef1aae127823",
+    "bytes": 494191
   },
   "native-animal/held_equipment_tool_fox.png": {
-    "sha256": "4cc9f203c1e53aad6527fd7d907a69e900578ccf84dbde700e3285af2ef8f21d",
-    "bytes": 1943466
+    "sha256": "144b2041da318c55439c0912235b888b88ca2c2f8f15adb6b53cddbe490bc2e3",
+    "bytes": 1943542
   },
   "native-animal/held_equipment_tool_monkey.png": {
-    "sha256": "d33b4dc00820e8301e3de0c3296f647f51b64675bf64841a11d9550836368886",
-    "bytes": 1944246
+    "sha256": "2bf2fa412e487f4ec7f52bc83879c54e58d3807083632ab1d1d69138bea79f5a",
+    "bytes": 1943924
   },
   "native-animal/held_equipment_weapon_fox.png": {
-    "sha256": "e33b6f20bbd05e5deb60701c01fbf7b11e2e52e49cc7e84fdf801cf53925ce06",
-    "bytes": 1397079
+    "sha256": "9b21194ecd815e8463f2008aba8f30e14443008aa98390670df06b1e843fb14c",
+    "bytes": 1397073
   },
   "native-animal/held_equipment_weapon_monkey.png": {
-    "sha256": "e82847cefaa54f5bf94deb06019d6a739421d75817898ff728dcbb958f8f8cab",
-    "bytes": 1397032
+    "sha256": "b8d50c1396b721cf6ef4c80117d16f2a6ebfa44bb4f8bf344ae6ef65596f24b2",
+    "bytes": 1397035
   },
   "native-budgets/town_budgets_S04_city_crowd_readability.png": {
-    "sha256": "ec22a9833c9b7a0906efe3f78a38161d001e4fe5c5fb4b9a725d37de7fe05afa",
-    "bytes": 1687796
+    "sha256": "7dfb62376d04f11d2ee419c40b734b339fe0a17925c783397c09b0ced7cd4d9a",
+    "bytes": 1687830
   },
   "native-fairy/held_equipment_tool_fairy.png": {
-    "sha256": "dbb1a6bb6036a7ecf001980b96e18968be35bd5378082c60573da9b3a2a5a32f",
-    "bytes": 1944741
+    "sha256": "3e06751b760594a128d01515600c8475e31fa2ad857a54457a53f7027b2baea7",
+    "bytes": 1944788
   },
   "native-fairy/held_equipment_tool_fairy_birk.png": {
-    "sha256": "91ef082ffd9ba9819057a1c76ed74ceaaf0b5cde333e21f2ebcd4ceb8d758fb8",
-    "bytes": 1944793
+    "sha256": "7b4c39a40c9b81c8e81dc9494372b7295fe29da73881ea375bfcb37156d95734",
+    "bytes": 1944821
   },
   "native-fairy/held_equipment_weapon_fairy.png": {
-    "sha256": "270b5d92a61e860619ba9a5cf49828776f1110a02d996bcadd6410249da44c77",
-    "bytes": 1398095
+    "sha256": "43af38da1df869db9e1fafbf35b5e80305989cfc0d1c61580cc2005d9e47072b",
+    "bytes": 1398196
   },
   "native-fairy/held_equipment_weapon_fairy_birk.png": {
-    "sha256": "3e3e68ee38bb0c9e95abafd7beab0b0e692a1313890639e29399c9244ce07759",
-    "bytes": 1397464
+    "sha256": "53b6557016432fdb3b4d6962f7c2e35009e7d9dcff18cf24088eb63590792644",
+    "bytes": 1397515
   },
   "native-ghost/held_equipment_tool_ghost_bu.png": {
-    "sha256": "71302c9165c5000cf596b794c349b15a6e9499c7794e9cdb4c07298d467acfae",
-    "bytes": 1942537
+    "sha256": "25ce7fc7f4de8ef0ff51b3fec94a73d44bf53a6638af21b4edc53392416df667",
+    "bytes": 1942530
   },
   "native-ghost/held_equipment_tool_ghost_hviske.png": {
-    "sha256": "d773530273ffcd732849d53b3dc7b245a0decd0c32b98fc5d1d6456141c9d1ad",
-    "bytes": 1942728
+    "sha256": "45b65db181d2e2c8014aad68c500def7bb3b579584b4b1975ade57be26eb02f6",
+    "bytes": 1942694
   },
   "native-ghost/held_equipment_weapon_ghost_bu.png": {
-    "sha256": "1018979f7151b722ca6f66bed0f922d268c3d1220814fff093d0b14b753427b2",
-    "bytes": 1415687
+    "sha256": "e86d0f157a6b859a57d153901a25d6899c75ba4f8c805c0ed6dfcfbec5916e4a",
+    "bytes": 1415703
   },
   "native-ghost/held_equipment_weapon_ghost_hviske.png": {
-    "sha256": "16f1aca92f872a76d146ed5b68f1c78f89b3afb476e368c70f6aae08c92204fc",
-    "bytes": 1415673
+    "sha256": "853e6f77ae571ede5f9c917caeed904eb34c3bd98b456cd8f33baec60d6a7273",
+    "bytes": 1415622
   },
   "native-hobbit/held_equipment_tool_hobbit_bodil.png": {
-    "sha256": "98f6277063a6a94abd24d737a9f9f2e5347f5d448cc8bc2c90d2aba32ca29883",
-    "bytes": 1944442
+    "sha256": "4a96b62db6b828bf24e14c3859215fbc46243391caedcaf22b04bdb419cedc9a",
+    "bytes": 1944469
   },
   "native-hobbit/held_equipment_tool_hobbit_pip.png": {
-    "sha256": "acd8cbd8ae3ae1d5b93f9025b19b78721d963ad5743169b149ac56222bf2d10c",
-    "bytes": 1944393
+    "sha256": "7e81a1037bb2365e45acf50859b2f970a2e8a525afcbc16e4b3a240ad82a6b41",
+    "bytes": 1944382
   },
   "native-hobbit/held_equipment_weapon_hobbit_bodil.png": {
-    "sha256": "52002feb0144e6b651cca0d8c6dc9d1e019dc4a4689560ec5c4912eef5f2a6e0",
-    "bytes": 1397324
+    "sha256": "5d0263fd3d005792345b89c57d75f88d110d964e48edf94c18fdc0a9c4df381a",
+    "bytes": 1397345
   },
   "native-hobbit/held_equipment_weapon_hobbit_pip.png": {
-    "sha256": "2b66ac1afd4cfb3e7b2d131a2f15422393c3d256ed46fdd49a69e9e581bc6c97",
-    "bytes": 1397063
+    "sha256": "e0804a64ea1e5bb155f4d52f64403c09ff6bc710daabffdfa8d24aac0f8b0042",
+    "bytes": 1397049
   },
   "native-town/hud_v2_chip.png": {
     "sha256": "d967762e5646108381b5873f2195c32c7c14bf18ba2fe92503cd5aaf0e202381",
@@ -92,16 +92,16 @@
     "bytes": 22559
   },
   "native-town/native_fixtures_S04_city_crowd_readability.png": {
-    "sha256": "dfe7606d1000aebacdb981e3c2b7df95a7ee22b3398f5697ab8c33142e862c9d",
-    "bytes": 1686492
+    "sha256": "20a67d789d17b4dcce163807b7cbbd528c590caae98638f23c24c8b41e0ee645",
+    "bytes": 1687786
   },
   "native-town/native_fixtures_S08_shop_panel.png": {
     "sha256": "791d136380c2389b302c73d5aa6d5fd2c42ab2fc76ad88d808de269f89fcfb96",
     "bytes": 278379
   },
   "native-town/native_fixtures_city_hud.png": {
-    "sha256": "ab58dbfe8c2d9791c7faca94abd5596a91e651ba7a66372942afc4d3d0525665",
-    "bytes": 1686461
+    "sha256": "d6ba2837471ecadc8ecae82baf640677dddcf33ad798238119e5150d1b2fe46e",
+    "bytes": 1687721
   },
   "native-town/native_fixtures_forced_static_frame.png": {
     "sha256": "1aa24f0dbc86f7e03b887f04457c6c5b36fe2355e1935e6349d5cf9391619426",
@@ -116,7 +116,7 @@
     "bytes": 322462
   },
   "native-town/native_fixtures_shop_backdrop.png": {
-    "sha256": "61f3e4f2f77fd2493d813e80c0289ffed330090b73ad77375d6f47d064cedd44",
+    "sha256": "92ff5badeff562ed2b1260b0d7c1fe2f47da60c4626103ae44090d7579adb1c2",
     "bytes": 481242
   },
   "native-town/npc_dialogue_crop.png": {
@@ -132,7 +132,7 @@
     "bytes": 278379
   },
   "native-town/town_loop_shop_backdrop.png": {
-    "sha256": "61f3e4f2f77fd2493d813e80c0289ffed330090b73ad77375d6f47d064cedd44",
+    "sha256": "92ff5badeff562ed2b1260b0d7c1fe2f47da60c4626103ae44090d7579adb1c2",
     "bytes": 481242
   },
   "stock-grips-contact.png": {

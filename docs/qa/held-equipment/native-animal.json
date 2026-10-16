@@ -1,8 +1,8 @@
 {
   "allowed": [],
   "character": "animal",
-  "checks": 42,
-  "elapsed_s": 9.14,
+  "checks": 44,
+  "elapsed_s": 9.92,
   "engine": [],
   "failed": 0,
   "failures": [],
@@ -13,9 +13,9 @@
   "sections": {
     "held_equipment": {
       "character": "animal",
-      "checks": 42,
+      "checks": 44,
       "failed": 0,
-      "ms": 5125,
+      "ms": 5994,
       "skipped": 0
     }
   },

@@ -15378,7 +15378,7 @@
       "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
     },
     "assets/held_equipment/tools.webp": {
-      "sha256": "39ec5087405bc8a8133b9c4342349ff52bfeeb9ca5eb50832e0f55faf24d551e",
+      "sha256": "955d783f2b1799ace5f1fc34d770dc1f889ee314b6930eb3af07eacdc0bff4d5",
       "disposition": "accepted-painted",
       "role": "fitted-held-equipment",
       "evidence": "docs/art/held-equipment/review.txt; all eight native hero captures and twelve-item catalog contact in docs/qa/held-equipment"
@@ -15406,7 +15406,7 @@
     "worktree": "codex-held-equipment",
     "review": "docs/art/held-equipment/review.txt",
     "added_visual_assets": 1,
-    "painted_directional_objects": 96,
+    "painted_directional_objects": 112,
     "fitted_body_poses": 3056,
     "previously_reviewed_visual_theme_assets_unchanged": 2562,
     "prompts": "docs/art/held-equipment/prompts.json"

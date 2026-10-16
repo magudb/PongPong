@@ -2,13 +2,14 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 
   info  --strict: known issues are not tolerated
 PLAYTEST start mode=headless character=animal sections=res://tests/sections only=held_equipment
-  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.oWs4kq/Library/Application Support/Traetoppen (throwaway)
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.ybGqem/Library/Application Support/Traetoppen (throwaway)
 == section held_equipment  (res://tests/sections/held_equipment.gd)
   ok    held_equipment.badge_cannot_take_focus_or_eat_world_input
   ok    held_equipment.selected_tool_has_matching_picture_and_name
+  ok    held_equipment.whole_item_catalog_has_held_tool_and_weapon_art ([])
   ok    held_equipment.every_body_frame_and_direction_has_fitted_grip (fox: 344 real body poses)
   ok    held_equipment.altitude_spin_and_flash_follow_body_once
-  ok    held_equipment.all_twelve_items_use_dedicated_directional_paintings
+  ok    held_equipment.all_items_use_dedicated_directional_paintings
   ok    held_equipment.real_hoe_action_starts
   ok    held_equipment.action_readout_keeps_hoe_after_hotbar_swap
   ok    held_equipment.next_selection_appears_after_action_finishes
@@ -27,9 +28,10 @@ PLAYTEST start mode=headless character=animal sections=res://tests/sections only
   ok    held_equipment.save_rebuilds_correct_held_weapon_without_extra_state
   ok    held_equipment.badge_cannot_take_focus_or_eat_world_input
   ok    held_equipment.selected_tool_has_matching_picture_and_name
+  ok    held_equipment.whole_item_catalog_has_held_tool_and_weapon_art ([])
   ok    held_equipment.every_body_frame_and_direction_has_fitted_grip (monkey: 344 real body poses)
   ok    held_equipment.altitude_spin_and_flash_follow_body_once
-  ok    held_equipment.all_twelve_items_use_dedicated_directional_paintings
+  ok    held_equipment.all_items_use_dedicated_directional_paintings
   ok    held_equipment.real_hoe_action_starts
   ok    held_equipment.action_readout_keeps_hoe_after_hotbar_swap
   ok    held_equipment.next_selection_appears_after_action_finishes
@@ -46,6 +48,6 @@ PLAYTEST start mode=headless character=animal sections=res://tests/sections only
   ok    held_equipment.equipment_save_written
   ok    held_equipment.equipment_save_loaded
   ok    held_equipment.save_rebuilds_correct_held_weapon_without_extra_state
-  --    held_equipment: 42 checks, 0 failed, 0 skipped, 1.3 s
-== summary: 1 section(s) run, 42 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 5.5 s
-PLAYTEST PASS (42 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)
+  --    held_equipment: 44 checks, 0 failed, 0 skipped, 1.2 s
+== summary: 1 section(s) run, 44 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 5.1 s
+PLAYTEST PASS (44 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

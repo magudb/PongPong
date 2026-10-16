@@ -4,20 +4,20 @@ OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
 
   info  --strict: known issues are not tolerated
 PLAYTEST start mode=windowed character=animal sections=res://tests/lib/town_loop/native_sections only=native_fixtures
-  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.tUtHSM/Library/Application Support/Traetoppen (throwaway)
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.VR4MXN/Library/Application Support/Traetoppen (throwaway)
   info  window 1280x720 (macOS)
   info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-held-equipment/docs/qa/held-equipment/native-town
 == section native_fixtures [windowed]  (res://tests/lib/town_loop/native_sections/native_fixtures.gd)
   ok    native_fixtures.l15_crowd_player_on_safe_deck
   ok    native_fixtures.l15_city_citizen_count (16 visible / 16 distinct looks; controlled fixture, normal schedules checked by L02/L12)
   info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-held-equipment/docs/qa/held-equipment/native-town/native_fixtures_S04_city_crowd_readability.png (1280x720)
-  ok    l15_S04_city_crowd_readability_not_blank (2492 distinct colours, luma std 0.217)
-  ok    native_fixtures.l15_city_peak_under_320mb (278.58MB / 16 warmed looks)
-  ok    native_fixtures.l15_city_frame ({ "frames": 149, "fps": 296.873661328918, "ms": 3.36843624161074, "worst_ms": 6.327, "gpu_ms": 0.0, "cpu_render_ms": 0.0 })
+  ok    l15_S04_city_crowd_readability_not_blank (2506 distinct colours, luma std 0.217)
+  ok    native_fixtures.l15_city_peak_under_320mb (279.91MB / 16 warmed looks)
+  ok    native_fixtures.l15_city_frame ({ "frames": 155, "fps": 309.018557062769, "ms": 3.23605161290323, "worst_ms": 5.694, "gpu_ms": 0.0, "cpu_render_ms": 0.0 })
   ok    native_fixtures.l15_city_draw_calls (original city/HUD: 250 <=250; with equipment: 253)
   ok    native_fixtures.l15_equipment_draw_increment (3 additional draws <=16)
   info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-held-equipment/docs/qa/held-equipment/native-town/native_fixtures_city_hud.png (1280x720)
-  ok    native_fixtures.prefetched_room_build (5)
+  ok    native_fixtures.prefetched_room_build (4)
   info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-held-equipment/docs/qa/held-equipment/native-town/native_fixtures_shop_backdrop.png (1280x720)
   ok    l15_shop_backdrop_not_blank (1450 distinct colours, luma std 0.269)
   info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-held-equipment/docs/qa/held-equipment/native-town/native_fixtures_S08_shop_panel.png (1280x720)
@@ -26,6 +26,6 @@ PLAYTEST start mode=windowed character=animal sections=res://tests/lib/town_loop
   info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-held-equipment/docs/qa/held-equipment/native-town/native_fixtures_guide_dialogue_guide.png (1280x720)
   info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-held-equipment/docs/qa/held-equipment/native-town/native_fixtures_forced_static_frame.png (1280x720)
   ok    native_fixtures.capture_forces_a_frame_when_render_loop_is_idle
-  --    native_fixtures: 11 checks, 0 failed, 0 skipped, 6.3 s
-== summary: 1 section(s) run, 11 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 7.6 s
+  --    native_fixtures: 11 checks, 0 failed, 0 skipped, 6.0 s
+== summary: 1 section(s) run, 11 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 7.2 s
 PLAYTEST PASS (11 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)
