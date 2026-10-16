@@ -1,0 +1,171 @@
+{
+  "status": "validated_pending_merge",
+  "validated_at_utc": "2026-10-16T12:18:20.793323+00:00",
+  "scope": "Full 27-package M1b usable-towns milestone, plus ghost greetings and ghost-family art/data follow-ups.",
+  "main_baseline": "f478296",
+  "source_implementation": "f20e44d152e275b7733ccfe175d1245dceafd2e4",
+  "source_binding": "5b7f438eb3c45b53da423ee106131a10879d96699271184c0330de71d2bcb078",
+  "full_headless_suites": {
+    "animal": {
+      "file": "full-animal.json",
+      "checks": 11195,
+      "failed": 0,
+      "skipped": 160,
+      "elapsed_s": 281.8,
+      "sections": 78,
+      "unexpected_engine_messages": 0,
+      "allowed_negative_control_messages": 29
+    },
+    "fairy": {
+      "file": "full-fairy.json",
+      "checks": 11194,
+      "failed": 0,
+      "skipped": 160,
+      "elapsed_s": 286.15,
+      "sections": 78,
+      "unexpected_engine_messages": 0,
+      "allowed_negative_control_messages": 29
+    },
+    "hobbit": {
+      "file": "full-hobbit.json",
+      "checks": 11195,
+      "failed": 0,
+      "skipped": 160,
+      "elapsed_s": 269.25,
+      "sections": 78,
+      "unexpected_engine_messages": 0,
+      "allowed_negative_control_messages": 29
+    },
+    "ghost": {
+      "file": "full-ghost.json",
+      "checks": 11195,
+      "failed": 0,
+      "skipped": 160,
+      "elapsed_s": 266.96,
+      "sections": 78,
+      "unexpected_engine_messages": 0,
+      "allowed_negative_control_messages": 29
+    }
+  },
+  "full_headless_checks": 44779,
+  "final_fixture_confirmations": {
+    "animal": {
+      "file": "confirm-animal.json",
+      "checks": 210,
+      "failed": 0,
+      "skipped": 11,
+      "elapsed_s": 16.22,
+      "sections": 3,
+      "unexpected_engine_messages": 0,
+      "allowed_negative_control_messages": 1
+    },
+    "fairy": {
+      "file": "confirm-fairy.json",
+      "checks": 210,
+      "failed": 0,
+      "skipped": 11,
+      "elapsed_s": 15.82,
+      "sections": 3,
+      "unexpected_engine_messages": 0,
+      "allowed_negative_control_messages": 1
+    }
+  },
+  "fixture_repair_note": "Full Animal/Fairy suites passed before two final fixture-only edits: shop_rotation now explicitly uses Animal for base-price cases, and vram_budget.py lost trailing whitespace. Production game code is identical. Final Animal/Fairy confirmations rerun pricing plus the complete loop/budget gates; Hobbit/Ghost full suites and normal/native runs include the repair. Explicit race/gear/friend discount-cap checks remain active.",
+  "normal_speed": {
+    "file": "final-normal.json",
+    "checks": 565,
+    "failed": 0,
+    "skipped": 15,
+    "elapsed_s": 151.34,
+    "sections": 5,
+    "unexpected_engine_messages": 0,
+    "allowed_negative_control_messages": 14
+  },
+  "native": {
+    "file": "final-native.json",
+    "checks": 922,
+    "failed": 0,
+    "skipped": 12,
+    "elapsed_s": 389.83,
+    "sections": 40,
+    "unexpected_engine_messages": 0,
+    "allowed_negative_control_messages": 0
+  },
+  "wave_5b": {
+    "required_rows_per_race": 36,
+    "all_satisfied": true,
+    "tables": "gates-{animal,fairy,hobbit,ghost,normal,native}.json"
+  },
+  "external_proofs": {
+    "extension": "loop-extension.json",
+    "mutants": "loop-mutants.json",
+    "owner_checks": 588,
+    "real_extension_scenarios": 8,
+    "unchanged_code_files": 675,
+    "producer_mutants_caught": 7,
+    "clean_mutant_baseline": true,
+    "audio_mutant_deferred": "P24 cue_log capability is not installed"
+  },
+  "native_metrics": {
+    "file": "native-metrics.txt",
+    "hardware": "Apple M3 / macOS, Godot 4.7.2, Compatibility GL 4.1 / Metal 90.5",
+    "windowed_loop_s": 104.922,
+    "windowed_loop_limit_s": 110,
+    "normal_loop_s": 101.393,
+    "normal_loop_limit_s": 120,
+    "native_save_p95_ms": 19.445,
+    "normal_save_p95_ms": 20.802,
+    "save_limit_ms": 25,
+    "full_cast_save_bytes": 19595,
+    "save_limit_bytes": 61440,
+    "ordinary_crowd_texture_mb": 314.71,
+    "ordinary_limit_mb": 320,
+    "festival_20_looks_mb": 350.581,
+    "festival_limit_mb": 360,
+    "process_limit_mb": 400,
+    "city_crowd_visible": 16,
+    "city_crowd_draw_calls": 247,
+    "city_draw_call_limit": 250,
+    "city_crowd_frame_ms": 2.67737967914438,
+    "city_frame_limit_ms": 6,
+    "cold_city_12_citizens_ms": 516.724,
+    "textures_freed_city_to_farm_mb": 73.41,
+    "minimum_free_mb": 40,
+    "orphan_growth": 0
+  },
+  "visual_review": {
+    "manifest": "accepted-native/manifest.json",
+    "core_captures": 14,
+    "staffed_rooms": 15,
+    "retained_originals": 42,
+    "all_raw_capture_hashes": 627,
+    "numeric_comparisons": "accepted-native/native-comparisons.json",
+    "reviewed_contacts": [
+      "accepted-native/core-a.png",
+      "accepted-native/core-b.png",
+      "accepted-native/staffed-rooms.png",
+      "accepted-native/world-style.png"
+    ],
+    "style_snapshot_assets": 2562,
+    "style_ledger": "docs/art/style-audit/current/approval.json",
+    "ghost_family_prompts": "docs/art/prompts/ghost-family/"
+  },
+  "static_checks": [
+    "static-style.txt",
+    "static-imports.txt",
+    "static-copy.json",
+    "static-voice.txt",
+    "static-loop-report.txt",
+    "static-vram.json"
+  ],
+  "explicit_later_work": [
+    "Production wardrobe animation layers and full furniture/home-world feature screens (separate feature packages).",
+    "Dungeon floors/combat/appraisal and other later dungeon packages.",
+    "Marriage, heart-event, festival-scene/decor and M3 ghost-family scenes.",
+    "P24 audio cue logging and recordings; new copy remains draft, 11 frozen Danish texts stay unchanged.",
+    "Packaged-export performance: native/source runs are measured; exports without raw scripts use the original live navigation bake fallback."
+  ],
+  "remaining": [
+    "Fast-forward main and verify the merged checkout."
+  ]
+}

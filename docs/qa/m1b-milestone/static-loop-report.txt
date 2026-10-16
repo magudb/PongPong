@@ -1,0 +1,1 @@
+Every required wave/leg listed; missing and repeated failing checks retained.

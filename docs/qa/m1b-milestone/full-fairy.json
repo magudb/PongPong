@@ -1,0 +1,736 @@
+{
+  "allowed": [
+    {
+      "kind": "warning",
+      "rule": "Unknown chibi character",
+      "section": "characters",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): Unknown chibi character: no_such_character (at load_character res://scripts/isometric/iso_chibi_sprite_2d.gd:235)"
+    },
+    {
+      "kind": "warning",
+      "rule": "Unknown chibi character",
+      "section": "characters",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): Unknown chibi character: ../fox (at load_character res://scripts/isometric/iso_chibi_sprite_2d.gd:235)"
+    },
+    {
+      "kind": "warning",
+      "rule": "Unknown chibi character",
+      "section": "characters",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): Unknown chibi character: FOX (at load_character res://scripts/isometric/iso_chibi_sprite_2d.gd:235)"
+    },
+    {
+      "kind": "error",
+      "rule": "a modal needs a name",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): GameManager.push_modal: a modal needs a name (at push_modal res://scripts/autoload/game_manager.gd:250)"
+    },
+    {
+      "kind": "error",
+      "rule": "(use bool, int, float or String)",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): GameManager.set_flag(bad_array): Array is not JSON-safe (use bool, int, float or String) (at set_flag res://scripts/autoload/game_manager.gd:347)"
+    },
+    {
+      "kind": "error",
+      "rule": "(use bool, int, float or String)",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): GameManager.set_flag(bad_vector): Vector2 is not JSON-safe (use bool, int, float or String) (at set_flag res://scripts/autoload/game_manager.gd:347)"
+    },
+    {
+      "kind": "error",
+      "rule": "(use bool, int, float or String)",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): GameManager.set_flag(bad_nan): float is not JSON-safe (use bool, int, float or String) (at set_flag res://scripts/autoload/game_manager.gd:347)"
+    },
+    {
+      "kind": "warning",
+      "rule": "and was dropped",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): GameManager.from_dict: world flag 'bad' is not JSON-safe and was dropped (at _sanitized_flags res://scripts/autoload/game_manager.gd:589)"
+    },
+    {
+      "kind": "error",
+      "rule": "unknown weather id",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): TimeManager.set_weather: unknown weather id 'hagl' (at set_weather res://scripts/autoload/time_manager.gd:146)"
+    },
+    {
+      "kind": "warning",
+      "rule": "unsupported locale",
+      "section": "loc",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): LocalizationManager.set_locale: unsupported locale 'xx' (supported: da, en) (at set_locale res://scripts/autoload/localization_manager.gd:126)"
+    },
+    {
+      "kind": "error",
+      "rule": "ConfigFile parse error",
+      "section": "loc",
+      "text": "core/io/config_file.cpp:293 in _parse(): ConfigFile parse error at user://settings.cfg:0: Unexpected EOF while parsing simple tag. (at _config res://scripts/ui/settings_ui.gd:36)"
+    },
+    {
+      "kind": "error",
+      "rule": "ConfigFile parse error",
+      "section": "loc",
+      "text": "core/io/config_file.cpp:293 in _parse(): ConfigFile parse error at user://settings.cfg:0: Unexpected EOF while parsing simple tag. (at _persist_locale res://scripts/autoload/localization_manager.gd:105)"
+    },
+    {
+      "kind": "warning",
+      "rule": "is unreadable",
+      "section": "loc",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): LocalizationManager: user://settings.cfg is unreadable (error 43); the language choice was not saved so that no other setting is destroyed (at _persist_locale res://scripts/autoload/localization_manager.gd:107)"
+    },
+    {
+      "kind": "warning",
+      "rule": "takes 1 argument(s)",
+      "section": "loc",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): LocalizationManager.t: 'NOTIF_LANGUAGE_CHANGED_MSG' (Sproget er nu %s.) takes 1 argument(s), got 2 (at t res://scripts/autoload/localization_manager.gd:171)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'Bad Name' is not a valid section name (a-z, 0-9, _) (at register_section res://scripts/autoload/save_manager.gd:475)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'world' is a built-in name (at register_section res://scripts/autoload/save_manager.gd:478)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'game' is a built-in name (at register_section res://scripts/autoload/save_manager.gd:478)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section('nomethods'): the node has no to_dict() (at register_section res://scripts/autoload/save_manager.gd:485)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section('nullnode'): the node is null or freed (at register_section res://scripts/autoload/save_manager.gd:481)"
+    },
+    {
+      "kind": "warning",
+      "rule": "which cannot be saved",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'jsonrules' holds a Object, which cannot be saved (written as null) (at _json_safe res://scripts/autoload/save_manager.gd:656)"
+    },
+    {
+      "kind": "error",
+      "rule": "did not return a Dictionary",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved (at gather_payload res://scripts/autoload/save_manager.gd:586)"
+    },
+    {
+      "kind": "error",
+      "rule": "did not return a Dictionary",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved (at gather_payload res://scripts/autoload/save_manager.gd:586)"
+    },
+    {
+      "kind": "warning",
+      "rule": "nested deeper than 64",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped (at _json_safe res://scripts/autoload/save_manager.gd:626)"
+    },
+    {
+      "kind": "warning",
+      "rule": "nested deeper than 64",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped (at _json_safe res://scripts/autoload/save_manager.gd:626)"
+    },
+    {
+      "kind": "error",
+      "rule": "fake section failure",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): fake section failure boom (at from_dict res://tests/sections/save.gd:64)"
+    },
+    {
+      "kind": "error",
+      "rule": "fake section failure",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): fake section failure late_boom (at from_dict res://tests/sections/save.gd:64)"
+    },
+    {
+      "kind": "error",
+      "rule": "save_4.bak.json.tmp",
+      "section": "save",
+      "text": "core/io/dir_access.cpp:429 in copy(): Condition \"err != OK\" is true. Returning: err Failed to open '/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.xIB0Xu/Library/Application Support/Traetoppen/save_test_199163/save_4.bak.json.tmp'. (at _roll_backup res://scripts/autoload/save_manager.gd:1022)"
+    },
+    {
+      "kind": "warning",
+      "rule": "unknown NPC 'retired_npc'",
+      "section": "social",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SocialManager.from_dict: unknown NPC 'retired_npc' kept in the orphans bucket (at from_dict res://scripts/social/social_manager.gd:1274)"
+    },
+    {
+      "kind": "warning",
+      "rule": "SocialManager.from_dict: unknown NPC 'loop_removed_citizen' kept in the orphans bucket",
+      "section": "town_loop",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SocialManager.from_dict: unknown NPC 'loop_removed_citizen' kept in the orphans bucket (at from_dict res://scripts/social/social_manager.gd:1274)"
+    }
+  ],
+  "character": "fairy",
+  "checks": 11194,
+  "elapsed_s": 286.15,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "area": {
+      "character": "fairy",
+      "checks": 240,
+      "failed": 0,
+      "ms": 1616,
+      "skipped": 1
+    },
+    "art_cast_v2": {
+      "character": "fairy",
+      "checks": 21,
+      "failed": 0,
+      "ms": 9393,
+      "skipped": 4
+    },
+    "art_characters": {
+      "character": "fairy",
+      "checks": 27,
+      "failed": 0,
+      "ms": 8502,
+      "skipped": 0
+    },
+    "art_city": {
+      "character": "fairy",
+      "checks": 17,
+      "failed": 0,
+      "ms": 820,
+      "skipped": 0
+    },
+    "art_environment": {
+      "character": "fairy",
+      "checks": 32,
+      "failed": 0,
+      "ms": 1179,
+      "skipped": 3
+    },
+    "art_equipment_fit": {
+      "character": "fairy",
+      "checks": 745,
+      "failed": 0,
+      "ms": 803,
+      "skipped": 0
+    },
+    "art_farm": {
+      "character": "fairy",
+      "checks": 23,
+      "failed": 0,
+      "ms": 1123,
+      "skipped": 0
+    },
+    "art_festival": {
+      "character": "fairy",
+      "checks": 299,
+      "failed": 0,
+      "ms": 815,
+      "skipped": 2
+    },
+    "art_ghost": {
+      "character": "fairy",
+      "checks": 18,
+      "failed": 0,
+      "ms": 15406,
+      "skipped": 0
+    },
+    "art_ghostfam": {
+      "character": "fairy",
+      "checks": 43,
+      "failed": 0,
+      "ms": 2244,
+      "skipped": 0
+    },
+    "art_home": {
+      "character": "fairy",
+      "checks": 29,
+      "failed": 0,
+      "ms": 4009,
+      "skipped": 0
+    },
+    "art_interiors": {
+      "character": "fairy",
+      "checks": 266,
+      "failed": 0,
+      "ms": 979,
+      "skipped": 0
+    },
+    "art_shops": {
+      "character": "fairy",
+      "checks": 218,
+      "failed": 0,
+      "ms": 763,
+      "skipped": 0
+    },
+    "art_shops_b": {
+      "character": "fairy",
+      "checks": 794,
+      "failed": 0,
+      "ms": 932,
+      "skipped": 1
+    },
+    "art_style_consistency": {
+      "character": "fairy",
+      "checks": 117,
+      "failed": 0,
+      "ms": 3499,
+      "skipped": 0
+    },
+    "art_world_style": {
+      "character": "fairy",
+      "checks": 106,
+      "failed": 0,
+      "ms": 637,
+      "skipped": 0
+    },
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 709,
+      "skipped": 0
+    },
+    "cast_data": {
+      "character": "fairy",
+      "checks": 16,
+      "failed": 0,
+      "ms": 6269,
+      "skipped": 0
+    },
+    "characters": {
+      "character": "fairy",
+      "checks": 117,
+      "failed": 0,
+      "ms": 4122,
+      "skipped": 0
+    },
+    "city_levels": {
+      "character": "fairy",
+      "checks": 69,
+      "failed": 0,
+      "ms": 2584,
+      "skipped": 0
+    },
+    "city_life": {
+      "character": "fairy",
+      "checks": 105,
+      "failed": 0,
+      "ms": 2977,
+      "skipped": 0
+    },
+    "city_map": {
+      "character": "fairy",
+      "checks": 54,
+      "failed": 0,
+      "ms": 6137,
+      "skipped": 3
+    },
+    "clock26": {
+      "character": "fairy",
+      "checks": 19,
+      "failed": 0,
+      "ms": 50981,
+      "skipped": 0
+    },
+    "codex_review": {
+      "character": "fairy",
+      "checks": 37,
+      "failed": 0,
+      "ms": 1553,
+      "skipped": 0
+    },
+    "content_features": {
+      "character": "fairy",
+      "checks": 141,
+      "failed": 0,
+      "ms": 7987,
+      "skipped": 0
+    },
+    "contracts": {
+      "character": "fairy",
+      "checks": 10,
+      "failed": 0,
+      "ms": 0,
+      "skipped": 0
+    },
+    "copy_rules": {
+      "character": "fairy",
+      "checks": 112,
+      "failed": 0,
+      "ms": 575,
+      "skipped": 0
+    },
+    "core": {
+      "character": "fairy",
+      "checks": 114,
+      "failed": 0,
+      "ms": 644,
+      "skipped": 0
+    },
+    "data": {
+      "character": "fairy",
+      "checks": 408,
+      "failed": 0,
+      "ms": 5077,
+      "skipped": 0
+    },
+    "data_registry": {
+      "character": "fairy",
+      "checks": 39,
+      "failed": 0,
+      "ms": 4366,
+      "skipped": 0
+    },
+    "dungeon_defeat": {
+      "character": "fairy",
+      "checks": 37,
+      "failed": 0,
+      "ms": 409,
+      "skipped": 0
+    },
+    "dungeon_services": {
+      "character": "fairy",
+      "checks": 8,
+      "failed": 0,
+      "ms": 66,
+      "skipped": 0
+    },
+    "economy": {
+      "character": "fairy",
+      "checks": 296,
+      "failed": 0,
+      "ms": 2222,
+      "skipped": 2
+    },
+    "economy_hours": {
+      "character": "fairy",
+      "checks": 14,
+      "failed": 0,
+      "ms": 65,
+      "skipped": 3
+    },
+    "economy_transactions": {
+      "character": "fairy",
+      "checks": 7,
+      "failed": 0,
+      "ms": 21,
+      "skipped": 0
+    },
+    "farm": {
+      "character": "fairy",
+      "checks": 210,
+      "failed": 0,
+      "ms": 131,
+      "skipped": 0
+    },
+    "farm_first_morning": {
+      "character": "fairy",
+      "checks": 96,
+      "failed": 0,
+      "ms": 1745,
+      "skipped": 0
+    },
+    "farm_site": {
+      "character": "fairy",
+      "checks": 56,
+      "failed": 0,
+      "ms": 1029,
+      "skipped": 0
+    },
+    "ghost": {
+      "character": "fairy",
+      "checks": 7,
+      "failed": 0,
+      "ms": 2,
+      "skipped": 0
+    },
+    "ghost_data": {
+      "character": "fairy",
+      "checks": 4,
+      "failed": 0,
+      "ms": 1,
+      "skipped": 0
+    },
+    "ghost_lines": {
+      "character": "fairy",
+      "checks": 14,
+      "failed": 0,
+      "ms": 1274,
+      "skipped": 0
+    },
+    "ghostfam_data": {
+      "character": "fairy",
+      "checks": 293,
+      "failed": 0,
+      "ms": 1616,
+      "skipped": 0
+    },
+    "home": {
+      "character": "fairy",
+      "checks": 719,
+      "failed": 0,
+      "ms": 2837,
+      "skipped": 1
+    },
+    "hud": {
+      "character": "fairy",
+      "checks": 93,
+      "failed": 0,
+      "ms": 529,
+      "skipped": 4
+    },
+    "loc": {
+      "character": "fairy",
+      "checks": 115,
+      "failed": 0,
+      "ms": 16950,
+      "skipped": 0
+    },
+    "loot": {
+      "character": "fairy",
+      "checks": 170,
+      "failed": 0,
+      "ms": 5283,
+      "skipped": 4
+    },
+    "maps_farm": {
+      "character": "fairy",
+      "checks": 63,
+      "failed": 0,
+      "ms": 1100,
+      "skipped": 0
+    },
+    "maps_iso": {
+      "character": "fairy",
+      "checks": 39,
+      "failed": 0,
+      "ms": 2518,
+      "skipped": 4
+    },
+    "menus": {
+      "character": "fairy",
+      "checks": 103,
+      "failed": 0,
+      "ms": 4396,
+      "skipped": 0
+    },
+    "npc": {
+      "character": "fairy",
+      "checks": 343,
+      "failed": 0,
+      "ms": 1333,
+      "skipped": 0
+    },
+    "npc_cast": {
+      "character": "fairy",
+      "checks": 346,
+      "failed": 0,
+      "ms": 4,
+      "skipped": 0
+    },
+    "player": {
+      "character": "fairy",
+      "checks": 38,
+      "failed": 0,
+      "ms": 176,
+      "skipped": 0
+    },
+    "quests": {
+      "character": "fairy",
+      "checks": 56,
+      "failed": 0,
+      "ms": 3151,
+      "skipped": 3
+    },
+    "rarity": {
+      "character": "fairy",
+      "checks": 73,
+      "failed": 0,
+      "ms": 30,
+      "skipped": 0
+    },
+    "review_regressions": {
+      "character": "fairy",
+      "checks": 98,
+      "failed": 0,
+      "ms": 1340,
+      "skipped": 0
+    },
+    "save": {
+      "character": "fairy",
+      "checks": 244,
+      "failed": 0,
+      "ms": 2861,
+      "skipped": 0
+    },
+    "shop_rotation": {
+      "character": "fairy",
+      "checks": 51,
+      "failed": 0,
+      "ms": 1139,
+      "skipped": 0
+    },
+    "shop_ui": {
+      "character": "fairy",
+      "checks": 112,
+      "failed": 0,
+      "ms": 3869,
+      "skipped": 10
+    },
+    "social": {
+      "character": "fairy",
+      "checks": 134,
+      "failed": 0,
+      "ms": 19704,
+      "skipped": 3
+    },
+    "social_data": {
+      "character": "fairy",
+      "checks": 130,
+      "failed": 0,
+      "ms": 990,
+      "skipped": 0
+    },
+    "social_gifts": {
+      "character": "fairy",
+      "checks": 58,
+      "failed": 0,
+      "ms": 60,
+      "skipped": 0
+    },
+    "social_talk": {
+      "character": "fairy",
+      "checks": 42,
+      "failed": 0,
+      "ms": 84,
+      "skipped": 0
+    },
+    "social_ui": {
+      "character": "fairy",
+      "checks": 139,
+      "failed": 0,
+      "ms": 3758,
+      "skipped": 12
+    },
+    "town_budgets": {
+      "character": "fairy",
+      "checks": 26,
+      "failed": 0,
+      "ms": 2106,
+      "skipped": 0
+    },
+    "town_loop": {
+      "character": "fairy",
+      "checks": 133,
+      "failed": 0,
+      "ms": 9218,
+      "skipped": 11
+    },
+    "towns_city": {
+      "character": "fairy",
+      "checks": 40,
+      "failed": 0,
+      "ms": 2698,
+      "skipped": 0
+    },
+    "towns_data": {
+      "character": "fairy",
+      "checks": 166,
+      "failed": 0,
+      "ms": 1942,
+      "skipped": 0
+    },
+    "towns_director": {
+      "character": "fairy",
+      "checks": 297,
+      "failed": 0,
+      "ms": 2470,
+      "skipped": 0
+    },
+    "towns_interiors": {
+      "character": "fairy",
+      "checks": 289,
+      "failed": 0,
+      "ms": 9565,
+      "skipped": 0
+    },
+    "towns_interiors_core": {
+      "character": "fairy",
+      "checks": 137,
+      "failed": 0,
+      "ms": 1454,
+      "skipped": 0
+    },
+    "towns_routes": {
+      "character": "fairy",
+      "checks": 103,
+      "failed": 0,
+      "ms": 2272,
+      "skipped": 0
+    },
+    "towns_routines": {
+      "character": "fairy",
+      "checks": 236,
+      "failed": 0,
+      "ms": 6268,
+      "skipped": 0
+    },
+    "ui_audit": {
+      "character": "fairy",
+      "checks": 466,
+      "failed": 0,
+      "ms": 1656,
+      "skipped": 21
+    },
+    "ui_audit_blind": {
+      "character": "fairy",
+      "checks": 121,
+      "failed": 0,
+      "ms": 250,
+      "skipped": 0
+    },
+    "ui_audit_pins": {
+      "character": "fairy",
+      "checks": 344,
+      "failed": 0,
+      "ms": 235,
+      "skipped": 0
+    },
+    "ui_conformance": {
+      "character": "fairy",
+      "checks": 155,
+      "failed": 0,
+      "ms": 7238,
+      "skipped": 67
+    },
+    "ui_foundation": {
+      "character": "fairy",
+      "checks": 203,
+      "failed": 0,
+      "ms": 7586,
+      "skipped": 1
+    },
+    "ui_nav": {
+      "character": "fairy",
+      "checks": 26,
+      "failed": 0,
+      "ms": 70,
+      "skipped": 0
+    }
+  },
+  "skipped": 160
+}

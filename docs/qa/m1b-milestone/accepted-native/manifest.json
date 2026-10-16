@@ -1,0 +1,5719 @@
+{
+  "status": "reviewed",
+  "source_commit": "f20e44d",
+  "source_binding": "5b7f438eb3c45b53da423ee106131a10879d96699271184c0330de71d2bcb078",
+  "raw_capture_dir": ".godot/qa/m1b-final-native",
+  "core_captures": [
+    "S01_farm_intro",
+    "S02_farm_bridge_end",
+    "S03_city_arrival",
+    "S04_city_crowd_readability",
+    "S05_dialogue_hoppe_hearts",
+    "S06_shop_door_closed",
+    "S07_shop_interior_noon",
+    "S08_shop_panel",
+    "S09_gift_picker",
+    "S10_post_office",
+    "S11_farm_planted_morning",
+    "S12_city_next_morning",
+    "S13_people_book",
+    "S13b_calendar"
+  ],
+  "retained_originals": [
+    "town_loop_S01_farm_intro.png",
+    "town_loop_S02_farm_bridge_end.png",
+    "town_loop_S03_city_arrival.png",
+    "town_loop_S04_city_crowd_readability.png",
+    "town_loop_S05_dialogue_hoppe_hearts.png",
+    "town_loop_S06_shop_door_closed.png",
+    "town_loop_S07_shop_interior_noon.png",
+    "town_loop_S08_shop_panel.png",
+    "town_loop_S09_gift_picker.png",
+    "town_loop_S10_post_office.png",
+    "town_loop_S11_farm_planted_morning.png",
+    "town_loop_S12_city_next_morning.png",
+    "town_loop_S13_people_book.png",
+    "town_loop_S13b_calendar.png",
+    "towns_interiors_core_core_int_badehuset.png",
+    "towns_interiors_core_core_int_bageriet.png",
+    "towns_interiors_core_core_int_brummes_vaerksted.png",
+    "towns_interiors_core_core_int_dyrehuset.png",
+    "towns_interiors_core_core_int_froebutikken.png",
+    "towns_interiors_core_core_int_gaestehytten.png",
+    "towns_interiors_core_core_int_loppeloftet.png",
+    "towns_interiors_core_core_int_moebelbutikken.png",
+    "towns_interiors_core_core_int_postkontoret.png",
+    "towns_interiors_core_core_int_raadhuset.png",
+    "towns_interiors_core_core_int_skraedderiet.png",
+    "towns_interiors_core_core_int_smedjen.png",
+    "towns_interiors_core_core_int_toemmerhandlen.png",
+    "towns_interiors_core_core_int_troldmandstaarnet.png",
+    "towns_interiors_core_core_int_uglehulen.png",
+    "art_city_platform_day.png",
+    "art_city_platform_night.png",
+    "art_environment_forest_player.png",
+    "maps_farm_farm_zoom_40.png",
+    "shop_reference_full.png",
+    "shop_actual_full.png",
+    "npc_dialogue_crop.png",
+    "hud_v2.png",
+    "hud_v2_date.png",
+    "hud_v2_chip.png",
+    "hud_v2_hotbar.png",
+    "town_loop_shop_backdrop.png",
+    "city_map_city_04_bath_at_dusk.png"
+  ],
+  "all_raw_pngs": [
+    {
+      "file": "area_render_noon.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1333659,
+      "sha256": "78dbea5fae1fca2aa04d22d8acb6943f1af7ecd69d9670f8256b04af82a861d9"
+    },
+    {
+      "file": "area_seams_zoom_30.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1447096,
+      "sha256": "2c0e90a007b8639f1b5fdec6ba6751d9544df086e0f6142f1b022491e5889bf2"
+    },
+    {
+      "file": "area_seams_zoom_40.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1429585,
+      "sha256": "fc5bac2b0555fb5b1b95181d43576f9bd71764add6b90bf24fe980cdedc324da"
+    },
+    {
+      "file": "area_seams_zoom_70.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1600062,
+      "sha256": "8a2f71c3f8f61f4dc7273bb44fda2e8d67c816b2a6fc9d09f9d25edc6230b724"
+    },
+    {
+      "file": "area_sort_house_farm_corner_+6.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1312260,
+      "sha256": "489949d8c702bbc066fb17936c0e067e0aca4559da30db7b44ffe0082f52be39"
+    },
+    {
+      "file": "area_sort_house_farm_corner_-6.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1314007,
+      "sha256": "2458f45c4efe8b25214cc62a18b025623ba49dd1abe4e309dcd89032bcc0448c"
+    },
+    {
+      "file": "area_sort_house_farm_left_+6.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1320731,
+      "sha256": "17813d3dc6d4de9ea7cead6242f3cf158eba57f8e6d7f32db061d87263238594"
+    },
+    {
+      "file": "area_sort_house_farm_left_-6.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1316746,
+      "sha256": "e9d3cccca6ada5c549e1b490299fd599e96cd0c919e99ec997783321280d51f3"
+    },
+    {
+      "file": "area_sort_house_farm_right_+6.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1314187,
+      "sha256": "c3c8527fcd7e23893d2c369144e2f413a3a6ee92d809e425fa6e3ad240f70c90"
+    },
+    {
+      "file": "area_sort_house_farm_right_-6.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1314174,
+      "sha256": "da8cb5e82ce87f757f3ab7c486087a7c1233b1b1adca7463663a59e507106c2c"
+    },
+    {
+      "file": "art_cast_v2_cast_closeup_zoom09.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 419159,
+      "sha256": "097830ee14930f02cb5a19c82ee782ad34802881396ef433767af97b37be4359"
+    },
+    {
+      "file": "art_cast_v2_cast_flat_for_measuring.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 192960,
+      "sha256": "737efe70a00136112a3072661eced80347da99f651511ceab45483f77a6da196"
+    },
+    {
+      "file": "art_cast_v2_cast_zoom04.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 233543,
+      "sha256": "2fe756051724cbd485f03c3e48f145ed4e6aa5bb25675b8ea87c9a8010a501a0"
+    },
+    {
+      "file": "art_characters_cast_closeup_1_pack_and_mayor_to_lily.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 474856,
+      "sha256": "bd1a248505b3c32a846ccdd76c21c3f8e17e1300a909cf408c2f0882971bc59a"
+    },
+    {
+      "file": "art_characters_cast_closeup_2_players_and_builder_to_oak.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 466662,
+      "sha256": "7131f5304ccfd60cf4ca93910b6678597f180b402b8bbe6d4483831338115f50"
+    },
+    {
+      "file": "art_characters_cast_closeup_3_rosa_to_animals.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 602317,
+      "sha256": "2c58cd2ca2eeaca18028ed816bb18af0fd091bf0dd34741be1182eacfd540e7a"
+    },
+    {
+      "file": "art_characters_cast_closeup_4_farm_animals_and_pack.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 505542,
+      "sha256": "0937200d314e1133276b0f5916e9f443fd0351e55008b127c766bc567fc1879d"
+    },
+    {
+      "file": "art_characters_cast_flat_for_measuring.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 437961,
+      "sha256": "bcda1f990f309dcd04fb765a096138c0be4078c70f759318bf278ec4a5d5bf63"
+    },
+    {
+      "file": "art_characters_cast_pack_and_new_zoom04.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 480849,
+      "sha256": "9d34d308269018ce54a8e23fab4885f5fd8c67261fdaa166dba256ac3ab3b189"
+    },
+    {
+      "file": "art_city_bridge_line2d.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 330556,
+      "sha256": "1d86dc167337b6cb5636afff363c960e1cd9db3cd91e919de26b92392c06ed92"
+    },
+    {
+      "file": "art_city_pieces_zoom02.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 691992,
+      "sha256": "fc275f7ea7c19d47b2c49c8ad859db90be19c28b71ed4c853142a26be58b1006"
+    },
+    {
+      "file": "art_city_pieces_zoom04.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 524618,
+      "sha256": "4f2cdebde9b0a3af9d9861ee6a7058a0d3a77c400a5807de46804d0b7f12f76c"
+    },
+    {
+      "file": "art_city_platform_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1257029,
+      "sha256": "b5f4d5d094fcab6c4c48e419f3724f977c74978f5b6f24b5274f64b71041ab2f"
+    },
+    {
+      "file": "art_city_platform_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1006139,
+      "sha256": "c411741c36a78222423bed4021d27f0069c8dbfa6bd8fb3d8da697e60e40c15f"
+    },
+    {
+      "file": "art_city_trunk_seam_control.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 575705,
+      "sha256": "251eb2c19132d71a505bc5a21a8c97c92fa87a29d4d7adab8f193239ad5f3690"
+    },
+    {
+      "file": "art_city_trunk_seam_w367.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1577580,
+      "sha256": "06203e666a463e6d6326453bbad1b43be02eb5a254522bfb7473c0da45119cde"
+    },
+    {
+      "file": "art_city_trunk_seam_w698.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 872047,
+      "sha256": "2d39a3523f2aa25dbb9e586dfe5d55629026e1809c90e61b4d314d3df54f06f9"
+    },
+    {
+      "file": "art_environment_board_0.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1965804,
+      "sha256": "dda269eb99f74d0d5e40ca33dcc7fd770e575ddf66267083602282db2adbdedd"
+    },
+    {
+      "file": "art_environment_board_1.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1987941,
+      "sha256": "b2a3af12ccbb609a19ac2b2df941a83956c171f961116ad32019a558706fc03b"
+    },
+    {
+      "file": "art_environment_board_2.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1965040,
+      "sha256": "7c4e6abd108de19bc54d41a3901041f73b1af305256e94b3a2eea3d70540c953"
+    },
+    {
+      "file": "art_environment_farm_11.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2036475,
+      "sha256": "b1c2d619cdb82c9a571396331b88ca1d957c3d59627c8adc3dbfd82014b518cc"
+    },
+    {
+      "file": "art_environment_farm_19.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1959196,
+      "sha256": "17a963163d1d909a5811ea5e9f5654f89d7d172e004ca97afca21d503086b76d"
+    },
+    {
+      "file": "art_environment_farm_23.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1742197,
+      "sha256": "02456d62e8990459fbc19412edcbdf2597841bcf34e035e1b90fdfb1001294d7"
+    },
+    {
+      "file": "art_environment_farm_edge_zoom30.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1933085,
+      "sha256": "a27cb8728e2b0680bec22f4ec57b820d4ccebeaeb72a47ec6fe370c32d0f2dd5"
+    },
+    {
+      "file": "art_environment_forest_crown_underlay.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1450389,
+      "sha256": "5f1ca90f8fd956bfef63fadb147f149165a93a050626837d06108563fc16b7f9"
+    },
+    {
+      "file": "art_environment_forest_empty.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1451061,
+      "sha256": "8f1de03a9f5436d0bd102e99a6bfa0fd097f7d431499fdefb28bc673def4556f"
+    },
+    {
+      "file": "art_environment_forest_ground_probe.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 329289,
+      "sha256": "3127c417b15d21e6b2ad3b297ab9e86886bb67d80c8a0319a135b2dd5cadf390"
+    },
+    {
+      "file": "art_environment_forest_player.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1476471,
+      "sha256": "b9c8e9fa902684a9135c9628ac25766a9dedcd11e6cf3d963a7d3e5f5fccb857"
+    },
+    {
+      "file": "art_environment_forest_view.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1465064,
+      "sha256": "5339a431e4a823524997b6af3fb4ee7820bc11a827dc4c44266779cec7cb8129"
+    },
+    {
+      "file": "art_environment_forest_wide.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1135508,
+      "sha256": "82fbeed744d65acfaca8fc8ee11f912242e231ed1e202ab1bd774897b4b0d5ec"
+    },
+    {
+      "file": "art_environment_hyggebyen_11.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2089440,
+      "sha256": "3b6ec31e0fc91c914d440cb2d55cd4fd8488a9a38162f58ff9d60cb704de10e0"
+    },
+    {
+      "file": "art_environment_hyggebyen_19.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2071837,
+      "sha256": "333da5cf5a472d5fb4816abe25f80e998e963b95c0d622c2f5594c8a7b2e0e37"
+    },
+    {
+      "file": "art_environment_hyggebyen_23.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1811718,
+      "sha256": "fd9fee4d49cdb84016ed09631432f322504505b7e4ff603c91b3f05fe1f98d8d"
+    },
+    {
+      "file": "art_environment_hyggebyen_edge_zoom30.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1939343,
+      "sha256": "fcaa65631a0f11de9be90a9f3bb5d70b6a70b190f3e7262d3bdad04e7f8e64b5"
+    },
+    {
+      "file": "art_environment_seams_mix_farm_grass_zoom_30.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1414210,
+      "sha256": "ecd63b02eae2b38a6f1cb0ef50cf9b589f48df13c482ff168c0dec3141d3e9ac"
+    },
+    {
+      "file": "art_environment_seams_mix_farm_grass_zoom_40.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1363145,
+      "sha256": "74e1a45bb5b41fc3cb3116bc94a2f388ec24fe38fd7ec77f44471d4fdee4aa8f"
+    },
+    {
+      "file": "art_environment_seams_mix_farm_grass_zoom_70.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1468733,
+      "sha256": "d3457c3e7ea22edba6a9c36d887a91d9ba23f06121efb165fb490b600128f84a"
+    },
+    {
+      "file": "art_environment_seams_mix_forest_iso_zoom_30.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1124472,
+      "sha256": "19b31f871fb4f6be051e0e53492498cfa8fb9f32635d17ec408b675a99773fab"
+    },
+    {
+      "file": "art_environment_seams_mix_forest_iso_zoom_40.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1094152,
+      "sha256": "e3da54c69e7534bb4597a8b3ac3a4199e5bc79ea92d9d63583e304216dd5364b"
+    },
+    {
+      "file": "art_environment_seams_mix_forest_iso_zoom_70.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1162869,
+      "sha256": "d0830293a7a377864a7a99fda768f3565662850f97618a1f32c8c03fcf1f2726"
+    },
+    {
+      "file": "art_environment_seams_mix_forest_ortho_zoom_30.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 228555,
+      "sha256": "0bdf2c046260ce014cbfa5aa22abd388732aa2dc7c6d13743714b350fd373173"
+    },
+    {
+      "file": "art_environment_seams_mix_forest_ortho_zoom_40.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 339411,
+      "sha256": "5eff98636ec2bbc5314e86b594d4e735a2cac34dda054bab98ca8ad773da4c05"
+    },
+    {
+      "file": "art_environment_seams_mix_forest_ortho_zoom_70.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 761086,
+      "sha256": "0fb4001cc22a365679db8b52f25004c0a3a9d5290f35aac47819335279d53626"
+    },
+    {
+      "file": "art_environment_seams_mix_path_ortho_zoom_30.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 226692,
+      "sha256": "405d7c2c8e96e34cea2225e28f46561caa550cafdd60aa6a1a5b4e19209e31e3"
+    },
+    {
+      "file": "art_environment_seams_mix_path_ortho_zoom_40.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 336685,
+      "sha256": "c4c5480fd816cfded58a1ee40b424919a0fbd4307cc7f8b584b852509a141961"
+    },
+    {
+      "file": "art_environment_seams_mix_path_ortho_zoom_70.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 753393,
+      "sha256": "defdbb0c2a7bea79a9dc83a68929592b24ffed28c0fd6ec39d7626486a87a8c4"
+    },
+    {
+      "file": "art_environment_seams_mix_town_grass_zoom_30.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1383082,
+      "sha256": "e62848816e4da14ed04cb11eab164048ee7a7198a9e43fa693b32ffb10e83f6c"
+    },
+    {
+      "file": "art_environment_seams_mix_town_grass_zoom_40.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1321557,
+      "sha256": "8999fa0e7d44eaf64b73e66bc6e2e26f432f58efca75bcd2dd66e54225ce5df4"
+    },
+    {
+      "file": "art_environment_seams_mix_town_grass_zoom_70.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1427303,
+      "sha256": "9829f442a5c81ab130e50c6fe5a1d1d0693562ce4dda83dfe11627c817af8365"
+    },
+    {
+      "file": "art_equipment_fit_fit_pedro_floors.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 462824,
+      "sha256": "cb41665d07299139ddb24fc70d55377f36eef29df51caca28da5d929b58cb22d"
+    },
+    {
+      "file": "art_equipment_fit_fit_pedro_idle_all_frames.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 356712,
+      "sha256": "aa78f6f721789ff1b5239be0e29930cb5b92c53a4fb5b2a571cfd2b90849dcc8"
+    },
+    {
+      "file": "art_equipment_fit_fit_pedro_interact_all_frames.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 349746,
+      "sha256": "820d71edac3740055f191efa4571c1a979897dc8cc9752b85734e76c716ecc77"
+    },
+    {
+      "file": "art_equipment_fit_fit_pedro_removed_layers.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 436736,
+      "sha256": "ec36adfa0eef802ae1a58ebdcd0d6ba3b25c7aca4fd4205d300b9812e279e62d"
+    },
+    {
+      "file": "art_equipment_fit_fit_pedro_run_all_frames.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 517001,
+      "sha256": "c8f6560cb1db8aa308cf89657caa9a391e8e7325c936e6a1b9611eba8eb0b0b0"
+    },
+    {
+      "file": "art_equipment_fit_fit_pedro_spin_altitude_tint.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 468119,
+      "sha256": "b9b73efcd76c8dc1c780569354143710bb7afb09c29f9c558f430b7f2aba9f59"
+    },
+    {
+      "file": "art_equipment_fit_fit_pedro_walk_all_frames.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 518524,
+      "sha256": "874f66d5a7d86bb4b14eb6351afb070445bf6daafb8cb5915c6dec8d787cdc43"
+    },
+    {
+      "file": "art_equipment_fit_fit_rasmus_floors.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 525078,
+      "sha256": "3cf2065e7b84520556092c202efa05c531efcfb2d3ebe349fb286738d662e91e"
+    },
+    {
+      "file": "art_equipment_fit_fit_rasmus_idle_all_frames.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 494196,
+      "sha256": "a1e098cea0025e46c0c071372db35c4eb0878538fb5f96b8eecc8dc6cc06dfcf"
+    },
+    {
+      "file": "art_equipment_fit_fit_rasmus_interact_all_frames.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 487115,
+      "sha256": "1feed02f606e7b6443b359889af1dced0d8227daa4d6f0e9a28c866a3683415e"
+    },
+    {
+      "file": "art_equipment_fit_fit_rasmus_removed_layers.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 505733,
+      "sha256": "f09420c7eb1799d69ba27b9618bfafce9ce03a8c5944981ea4152f3a5cea749f"
+    },
+    {
+      "file": "art_equipment_fit_fit_rasmus_run_all_frames.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 723166,
+      "sha256": "51d0122415b702be307432f538acfca634c3b0fc9a15ae61ad94d60edd7a8526"
+    },
+    {
+      "file": "art_equipment_fit_fit_rasmus_spin_altitude_tint.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 536169,
+      "sha256": "b22357269c32036f6f7e6b32083e66f78b8854f213c3fdee0774501b0ec4d0c9"
+    },
+    {
+      "file": "art_equipment_fit_fit_rasmus_walk_all_frames.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 724411,
+      "sha256": "9aa78f18b3f65690d4a9013b1626bbe4b22f10a1f073754be76fcfbf77c51436"
+    },
+    {
+      "file": "art_farm_contact_big.png",
+      "size": [
+        1089,
+        560
+      ],
+      "bytes": 676517,
+      "sha256": "74b2af5a7f9cdeb5fd3fc9e7c974e0eddcfe9c65060b8dbcc7df47b03d911b83"
+    },
+    {
+      "file": "art_farm_contact_small.png",
+      "size": [
+        1874,
+        680
+      ],
+      "bytes": 984354,
+      "sha256": "166b2bda8f4a6a3591e55eec26e2c4f6585c2425f10927c6bfdd3de9e05f0d18"
+    },
+    {
+      "file": "art_farm_farm_dusk_zoom04.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1956632,
+      "sha256": "82413a427a3fc126b98dad917198a0b697ad4a629b6ebd92990718796159ef80"
+    },
+    {
+      "file": "art_farm_farm_night_zoom04.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1735548,
+      "sha256": "406a56929ec1dd0775ba4132a8b816d2ed24a80e4c32f47b9f8bf79e890b3ae9"
+    },
+    {
+      "file": "art_farm_farm_noon_zoom04.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2036087,
+      "sha256": "3b9f42f1633b948e8a51c3f5eae0f2bb8ff0a9be6a1c2ed25f7a80ed4b5d6e82"
+    },
+    {
+      "file": "art_farm_farm_trunk_giant_a_zoom03.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1913040,
+      "sha256": "a0285fd1c08b4a44687383d98fc773296717bd9eaf12aa65780178ef34c039ea"
+    },
+    {
+      "file": "art_farm_farm_trunk_giant_b_zoom03.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1895602,
+      "sha256": "46bbacd7fc4904a45c41633916c37c1f8a92a65a682baed79a7fcd8a3f8bb298"
+    },
+    {
+      "file": "art_farm_field_mix_zoom_30.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1410889,
+      "sha256": "cabb5377859163a8c04f7c5e6d6abd08e73183165ab803a4067622c61e73ebbf"
+    },
+    {
+      "file": "art_farm_field_mix_zoom_40.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1351405,
+      "sha256": "595cd784919b7752072666c83e14f249c1fe34888c8207e6fabb45413ee21450"
+    },
+    {
+      "file": "art_farm_field_mix_zoom_70.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1442847,
+      "sha256": "23b0b558486ed98176a6c347ca3edb6e95c2d1d2b8e23b4f985df1b5f29187a8"
+    },
+    {
+      "file": "art_farm_s3tc_side_by_side_farm_far.png",
+      "size": [
+        1048,
+        520
+      ],
+      "bytes": 546120,
+      "sha256": "ad00632d78dd1b1847b7589438de182c3bc7decc07711013d3c32f1198ca4d45"
+    },
+    {
+      "file": "art_farm_s3tc_side_by_side_rope_stake_x.png",
+      "size": [
+        182,
+        97
+      ],
+      "bytes": 16902,
+      "sha256": "91727e4dc259b2761465d19de261f08f134587b2bc70072cc37fba817d36d5be"
+    },
+    {
+      "file": "art_farm_s3tc_side_by_side_trunk_giant_a.png",
+      "size": [
+        1048,
+        520
+      ],
+      "bytes": 835655,
+      "sha256": "e547206d5d8e2d53e683a491cfc57b76bcf0a65eb47c1405b2b4c56841505410"
+    },
+    {
+      "file": "art_festival_festival_hyggebyen_autumn_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2300717,
+      "sha256": "e71051b987c5a9ad9e64e1b6a6efe891a302f49b12ae455950fbafc4dfbac46d"
+    },
+    {
+      "file": "art_festival_festival_hyggebyen_autumn_evening.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2063620,
+      "sha256": "6c5a99564da2a91f863b7726da7ce716dea393f6530f84677cf77e4864c2c17c"
+    },
+    {
+      "file": "art_festival_festival_hyggebyen_spring_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2303626,
+      "sha256": "688471fcd83b6a2fd355105eaab7d5dfa79a9781650e5dfd31d5be2584c2fac9"
+    },
+    {
+      "file": "art_festival_festival_hyggebyen_spring_evening.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2065809,
+      "sha256": "53ea7ed96741601b677ef6d2ae9a4374318861cf846639da7d7a4e1d0f314d63"
+    },
+    {
+      "file": "art_festival_festival_hyggebyen_summer_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2299915,
+      "sha256": "966a6c3fc053c838a42f3f54a1d5d3a68a0b2f1038756acabdbeeec2515f7da9"
+    },
+    {
+      "file": "art_festival_festival_hyggebyen_summer_evening.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2065051,
+      "sha256": "a2b0c8724330b17dade945569f5b65465ea6964c462d2e10ee02fd525361cba1"
+    },
+    {
+      "file": "art_festival_festival_hyggebyen_winter_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2303279,
+      "sha256": "89060df4953113354ea433a6e0c509cc74021291cef82317b959fb4a6b9d70be"
+    },
+    {
+      "file": "art_festival_festival_hyggebyen_winter_evening.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2065453,
+      "sha256": "4ef7902f1b3e25ca2904b7041965125b10355a33257c448f76790233523ec3b3"
+    },
+    {
+      "file": "art_festival_festival_traetoppen_autumn_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1810137,
+      "sha256": "137668ed075e2dce9a090597168050ae00aadec9e55adb2f0a78b679c451db61"
+    },
+    {
+      "file": "art_festival_festival_traetoppen_autumn_evening.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1619637,
+      "sha256": "6372860d8bb27a31d088097f6ebad82e511ba21db9f484b13e5539cbc507c2ed"
+    },
+    {
+      "file": "art_festival_festival_traetoppen_spring_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1812393,
+      "sha256": "824fa3acc5fff4f36fab522664ce87ed2c7dc9a2e87d1da0f3cb8ddc8fbca23d"
+    },
+    {
+      "file": "art_festival_festival_traetoppen_spring_evening.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1621353,
+      "sha256": "7cc183b532c9594f3f8d4b40c99a44e917687a5ab3763ed8ac29eddeb4d93bd0"
+    },
+    {
+      "file": "art_festival_festival_traetoppen_summer_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1808393,
+      "sha256": "5ba1582533dc4cf29b9da9eb0111bc6bb655d9635b67f1795eb28417b2dbbd5c"
+    },
+    {
+      "file": "art_festival_festival_traetoppen_summer_evening.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1620208,
+      "sha256": "3f964ce1ce32875e1908d524b9f48d7ababb9450c75c14bb63e394a6be9a2f45"
+    },
+    {
+      "file": "art_festival_festival_traetoppen_winter_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1812829,
+      "sha256": "01237ca33c4ada1d0cabbd94c851254a22988f2c71b23f4df65d5222100fe2e9"
+    },
+    {
+      "file": "art_festival_festival_traetoppen_winter_evening.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1622381,
+      "sha256": "45279b60891ca1af9a651156a67206a9726c9181507bd72a88340dae024ed6c4"
+    },
+    {
+      "file": "art_festival_shop_festival_autumn_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 644261,
+      "sha256": "53b27d232d08fcbe788424bc8e848234758e5f150e3862ffc2fba2e6f2642770"
+    },
+    {
+      "file": "art_festival_shop_festival_autumn_02.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 124128,
+      "sha256": "eb49a17937d27ca2401d6f80fe919238526d4f0ad26f158d5d359bcb2262c62b"
+    },
+    {
+      "file": "art_festival_shop_festival_spring_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 617863,
+      "sha256": "f7c8b2efcbd1b83ba9b657d4ebb1714d18ae75e9b7e8c4c9bfb6a693c1b137df"
+    },
+    {
+      "file": "art_festival_shop_festival_spring_02.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 141683,
+      "sha256": "e5c853c2494b244e8fff1861cb223269d3aa998360f7020ad9d50a0b12cf2fac"
+    },
+    {
+      "file": "art_festival_shop_festival_summer_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 630953,
+      "sha256": "e7b94240841861c60e4bfb141dec4040571770d3557dd3054cee77bfe5f01661"
+    },
+    {
+      "file": "art_festival_shop_festival_summer_02.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 69256,
+      "sha256": "86679fb50af3c0d3c61d027b5f9a640550138d303ceaaaea2438eeea8572e955"
+    },
+    {
+      "file": "art_festival_shop_festival_winter_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 648752,
+      "sha256": "e50cb55c68b528dcd5fff6227dbf7f2d39db636258556c2485fe777502e12674"
+    },
+    {
+      "file": "art_festival_shop_festival_winter_02.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 69997,
+      "sha256": "0ffe444b5ae70f9efddbe9b2759119af68cce7cac592aedfe5230525f415be89"
+    },
+    {
+      "file": "art_ghost_cast_flat_for_measuring.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 41956,
+      "sha256": "4931086f802055239a491fa2b8ed88f496a28c4b95bc7ca7e83823d619efd0de"
+    },
+    {
+      "file": "art_ghost_cast_night_zoom04.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1101152,
+      "sha256": "d9ba68e841eb0e57d75cf1f18b472c37e226d1853c7bf66d83ad7e7631aa6922"
+    },
+    {
+      "file": "art_ghost_cast_noon_zoom04.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1427428,
+      "sha256": "73809d903b94227302acf9c3c4d14ba225afbd4e1a18dbe761c527619b149900"
+    },
+    {
+      "file": "art_ghost_cast_noon_zoom09.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1498491,
+      "sha256": "3b266ac394a05024cdbdfcb47420273185d6646b676db91239fdbd34e8b2f3a2"
+    },
+    {
+      "file": "art_shops_b_shop_special_I4-animal_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 238382,
+      "sha256": "01f490441b4b6bfeb53eaf386230ccd573f9489797e4d89376ad569c8ca0cfd3"
+    },
+    {
+      "file": "art_shops_b_shop_special_I4-bakery_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 426662,
+      "sha256": "baecda1b6b3524e2c412c158b6ab78a2f25301c702bba699d72b49bc7007dc87"
+    },
+    {
+      "file": "art_shops_b_shop_special_I4-bath_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 197477,
+      "sha256": "6c8c4dfc5668d36ae28326be179d430b5b268ecc490940895f2e46b1e2e07f83"
+    },
+    {
+      "file": "art_shops_b_shop_special_I4-builder_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 379972,
+      "sha256": "5edd78bf86561e54f285bc6ed55e9597c43125e67c00adb6bce6cdc1485b6eb8"
+    },
+    {
+      "file": "art_shops_b_shop_special_I4-flea_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 332730,
+      "sha256": "74281e01976c6004d8b45a2c8426c09fec484c2fc54e05223ba4bdeb0478135d"
+    },
+    {
+      "file": "art_shops_b_shop_special_I4-furniture_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 185249,
+      "sha256": "c06f121ffe7e67111b3687827bf77805736ba7cced16bc7a76dd1ee5ea8d8d00"
+    },
+    {
+      "file": "art_shops_b_shop_special_I4-generic_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 513871,
+      "sha256": "82c2c179adab2640838b2ac8120cdeadd3ae51928569105c5566b1197fc30af4"
+    },
+    {
+      "file": "art_shops_b_shop_special_I4-hall_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 199383,
+      "sha256": "445f38fc2c4d40cdd9501f9eec505000b92676cff5618128e44330d379f54cd1"
+    },
+    {
+      "file": "art_shops_b_shop_special_I4-hut_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 281253,
+      "sha256": "1b8876f896420a5036ec76320884dabfbe6262f119ddd73462297f88d253779b"
+    },
+    {
+      "file": "art_shops_b_shop_special_I4-magic_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 483290,
+      "sha256": "42d09e24777860003fd423fc7395b55d141eb8d841ecd431ed1b1e5763e9ebce"
+    },
+    {
+      "file": "art_shops_b_shop_special_I4-post_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 99804,
+      "sha256": "2ec3606b38b7a3729326deb62538e67f25248d759d27cdf191b9d38dd619bdfd"
+    },
+    {
+      "file": "art_shops_b_shop_special_I4-seed_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 422820,
+      "sha256": "f3ef391712d7b66a3ad1180f6f26d0bb5214128fa5a2b862ce7b45a89ff44ec1"
+    },
+    {
+      "file": "art_shops_b_shop_special_I4-smithy_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 559758,
+      "sha256": "05e6e00c28c235d7c695ea15eff7d65a5ec8b4ba6e34d754161080f765b22b07"
+    },
+    {
+      "file": "art_shops_b_shop_special_I4-tailor_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 405530,
+      "sha256": "29f1bf2100734745d51e806442b4248dee8cde1b497361d4bbfd7d20f04bb1ea"
+    },
+    {
+      "file": "art_shops_b_shop_special_I4-timber_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 195370,
+      "sha256": "0fcba4ce9625001169d02a71d8c9e4ace2c30d5e160f82ec3c7f08432236c9e1"
+    },
+    {
+      "file": "art_shops_b_special_badehuset_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 524858,
+      "sha256": "48da084ca7db9cf6803d6b3deae6cabd51c0823f4f6ac0e67878199358b4e481"
+    },
+    {
+      "file": "art_shops_b_special_badehuset_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 484811,
+      "sha256": "3e8ff2d30d99df1a654f73f9efe57a68fcf85d27e364c21d79652cf9518326db"
+    },
+    {
+      "file": "art_shops_b_special_bageriet_bare.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 548418,
+      "sha256": "f06a1135513a18d11815824d84620a191697fa383336abb08a8d8fa9e4bdf6a4"
+    },
+    {
+      "file": "art_shops_b_special_bageriet_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 537773,
+      "sha256": "1d6524e0dd11c105face0beff151ae65a4fcbc45141391d24d0baf43c390b8e1"
+    },
+    {
+      "file": "art_shops_b_special_bageriet_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 501343,
+      "sha256": "28a26dfd1eb24fa21ace56c8e675a0a950e2d0109796997dd0549f4b6e979a3d"
+    },
+    {
+      "file": "art_shops_b_special_brummes_vaerksted_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 555220,
+      "sha256": "076457366217761ed8037680ed44c03c097c97f227e50f656177e4f775cd81c8"
+    },
+    {
+      "file": "art_shops_b_special_brummes_vaerksted_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 514526,
+      "sha256": "d1659f561821111de172eb873da3373f4d069ec93adaf708320c6803e383f23b"
+    },
+    {
+      "file": "art_shops_b_special_dyrehuset_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 561093,
+      "sha256": "bee6cccf8f91724f10ab68d466eea2570fdb33c5c7a4234e068b52b125bd7963"
+    },
+    {
+      "file": "art_shops_b_special_dyrehuset_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 520408,
+      "sha256": "40ebdf63a10a5b43e9cb8cfa603a59b6561107a4ebf1230bcb79f55d751421ac"
+    },
+    {
+      "file": "art_shops_b_special_froebutikken_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 548240,
+      "sha256": "456cf3883513353322efa5fc0e12bcfcc1f55ac5b22c93d89cbb3a87f4b93c40"
+    },
+    {
+      "file": "art_shops_b_special_froebutikken_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 508360,
+      "sha256": "9839d736e8f2bab5eac2e009f418066a812f12b6ac9de9fcf8b2f74b438d5764"
+    },
+    {
+      "file": "art_shops_b_special_hoppe_hut_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 504780,
+      "sha256": "8664ce907c7277b032dd82ce60c10339f30bd8a1c1f1f1138b682c6a9be6a436"
+    },
+    {
+      "file": "art_shops_b_special_hoppe_hut_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 469103,
+      "sha256": "e29c08a57fb96a2120548860214bc03047b7657790fed8bd92dc6b0d9df6e9a0"
+    },
+    {
+      "file": "art_shops_b_special_loppeloftet_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 515290,
+      "sha256": "2c6b002a2e6b582b02b18d9cba899cba1971399724cb15f3868fe34cad9c9946"
+    },
+    {
+      "file": "art_shops_b_special_loppeloftet_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 478725,
+      "sha256": "edd341823019b850cc9cc3452557f24501a21364299a8c1b727f3fb5bccf22a1"
+    },
+    {
+      "file": "art_shops_b_special_moebelbutikken_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 542802,
+      "sha256": "636dad4a2d291a167cf91d519324e245842ccfdbea082b717b616ad573fc76c0"
+    },
+    {
+      "file": "art_shops_b_special_moebelbutikken_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 503538,
+      "sha256": "6fc6a912ed399f6437439edf0627b0603bf610b855d84efd786220f504680ef8"
+    },
+    {
+      "file": "art_shops_b_special_postkontoret_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 516718,
+      "sha256": "0cdd2e12caf633b9a06da9ae966b85758ba75cd9a303373af6d110d844571af0"
+    },
+    {
+      "file": "art_shops_b_special_postkontoret_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 479395,
+      "sha256": "fad8b606f03fdeda84290ed3edd98e3ee9a80fdc5f1d3846bbd2fdecafe9d0f9"
+    },
+    {
+      "file": "art_shops_b_special_raadhuset_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 541220,
+      "sha256": "4a31ae572f66b68d3d92e648d4384b2e7d20b6dbdf39d27ea8b451a5062de1ee"
+    },
+    {
+      "file": "art_shops_b_special_raadhuset_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 500016,
+      "sha256": "746eb6e68060b7cf5d71e10fa7e59110db48371d7298c29ca6ed8e0cdc4202a7"
+    },
+    {
+      "file": "art_shops_b_special_skraedderiet_bare.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 536869,
+      "sha256": "7373f742a6e1bb1469d341104a1e573e1c29423b36050d1dc7faf2f84736c0da"
+    },
+    {
+      "file": "art_shops_b_special_skraedderiet_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 522414,
+      "sha256": "1f7cbfc2fb71f1ba72dab8cedc1d42441d12331aa000772edfcbc0dc4639fc41"
+    },
+    {
+      "file": "art_shops_b_special_skraedderiet_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 484957,
+      "sha256": "a235ae1464db40b3f2af94e1b48cf7c9e718992b5221a0f9a545cbebfc270f01"
+    },
+    {
+      "file": "art_shops_b_special_smedjen_bare.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 552588,
+      "sha256": "0f9063ba2a106ea286d6e1fcde0b427cb9c37f2ebbfd40a84ce6027032ab0f72"
+    },
+    {
+      "file": "art_shops_b_special_smedjen_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 541877,
+      "sha256": "1304b437889fd767e0b382697134d4d3e9170e6986753c807d4e2a0e09fc7118"
+    },
+    {
+      "file": "art_shops_b_special_smedjen_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 504353,
+      "sha256": "8bd7700689c82b852380aae3401c5025af15e36ad1c5c8dfaf18494ebb5b91b1"
+    },
+    {
+      "file": "art_shops_b_special_toemmerhandlen_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 539909,
+      "sha256": "9b1611f0f71106a165604023d2741fb4426877ccf49180c4b1df431214887387"
+    },
+    {
+      "file": "art_shops_b_special_toemmerhandlen_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 501209,
+      "sha256": "db0b528f103da489261c4843d99db6a6c5a0100b6864325ac06d16d77dfd69e7"
+    },
+    {
+      "file": "art_shops_b_special_troldmandstaarnet_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 525965,
+      "sha256": "c517eec99e94c7731c6c9a34b4ef4bc2be560d8c257692c9a507d93fb8dc5962"
+    },
+    {
+      "file": "art_shops_b_special_troldmandstaarnet_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 490052,
+      "sha256": "b4476be134955df4f2bc9b68aac19cd1ae30408edc1bd091067d1935d74cdbc6"
+    },
+    {
+      "file": "art_shops_b_special_uglehulen_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 511371,
+      "sha256": "3e675102d70d149e55c73af5f518a683f0492142429209e0f19b016b8b4a1fcf"
+    },
+    {
+      "file": "art_shops_b_special_uglehulen_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 474477,
+      "sha256": "7cedfef4e82d5f8729eedd82908cfc4985d21dc68e8dc46c2b16da8ece4ab62c"
+    },
+    {
+      "file": "art_shops_shop_badehuset_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 536151,
+      "sha256": "0e94ddb9b42b94515a1bfe3ae915b741175713a9cb65d52694227e39c04fbf20"
+    },
+    {
+      "file": "art_shops_shop_badehuset_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 494986,
+      "sha256": "c7b23518f2fa84ae7df2ee59deac016933e739949058d625296c44e1b629077b"
+    },
+    {
+      "file": "art_shops_shop_badehuset_stand_in.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 530973,
+      "sha256": "b709035648cdab0a0ac4cfc069578a70534e9c941a9bf1dbbfa058e13f2a2f10"
+    },
+    {
+      "file": "art_shops_shop_bageriet_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 548418,
+      "sha256": "f06a1135513a18d11815824d84620a191697fa383336abb08a8d8fa9e4bdf6a4"
+    },
+    {
+      "file": "art_shops_shop_bageriet_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 510698,
+      "sha256": "d46e979c7e873b2ef107d19486c7b98c6746fe2188b9fe18c9f19bcc28f25628"
+    },
+    {
+      "file": "art_shops_shop_bageriet_stand_in.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 547488,
+      "sha256": "45f92e66b785ed80f1fe6c51e78b80f6cfca1ad8e8759a0fe43e10868a750a66"
+    },
+    {
+      "file": "art_shops_shop_brummes_vaerksted_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 568628,
+      "sha256": "944c830e4110db3908c86ddb2d2d4941c0ced1dca1cb550727fb20942ab6e39f"
+    },
+    {
+      "file": "art_shops_shop_dyrehuset_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 574133,
+      "sha256": "9968caf6f252927b732d0c7884317aaa4926fa91f4df3f49353991d537a0fc7b"
+    },
+    {
+      "file": "art_shops_shop_emblems_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 241835,
+      "sha256": "b17d1bb0464630a130b2a049ebfdae18aa2541b9fd20ace0319b634a97934b01"
+    },
+    {
+      "file": "art_shops_shop_froebutikken_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 560928,
+      "sha256": "96ddb282e7473152f20249be644e0269c47c68f7312df01edfeb1323c57caeba"
+    },
+    {
+      "file": "art_shops_shop_loppeloftet_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 517139,
+      "sha256": "d42de27067226044a908aa40d65ffc2493dfaa65b94ab770a54e8421bfd0396b"
+    },
+    {
+      "file": "art_shops_shop_moebelbutikken_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 558374,
+      "sha256": "ac6ae385257486c6bde6efb3e9a5a33329a8f99c8f7e23a063ad68edc2fee08f"
+    },
+    {
+      "file": "art_shops_shop_postkontoret_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 522657,
+      "sha256": "94ee5e7145c4a30cce4d64703cd7afe3b15f64d5f78f3c8dbf7a3acec95b05a8"
+    },
+    {
+      "file": "art_shops_shop_raadhuset_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 551439,
+      "sha256": "b9eb4c0cd59e924f571501e0e8e63a91f766fb5dfd1af11e3a10d52e3fab06d8"
+    },
+    {
+      "file": "art_shops_shop_skraedderiet_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 536869,
+      "sha256": "7373f742a6e1bb1469d341104a1e573e1c29423b36050d1dc7faf2f84736c0da"
+    },
+    {
+      "file": "art_shops_shop_smedjen_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 552588,
+      "sha256": "0f9063ba2a106ea286d6e1fcde0b427cb9c37f2ebbfd40a84ce6027032ab0f72"
+    },
+    {
+      "file": "art_shops_shop_smedjen_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 513484,
+      "sha256": "b0827256cf038d5aebc0fb30cba7674a93e7e8e5293c34a23b8d823fc20d51b6"
+    },
+    {
+      "file": "art_shops_shop_smedjen_stand_in.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 554896,
+      "sha256": "0df3812b966dfe0d65f94376b06cd2d081b20d476b65e4ca9da0645d7f8a0ed0"
+    },
+    {
+      "file": "art_shops_shop_toemmerhandlen_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 553239,
+      "sha256": "6d10d2026d2bb3a1a28d9489eec474147f0b4c5ca226e99da105d2ce0c975c65"
+    },
+    {
+      "file": "art_shops_shop_troldmandstaarnet_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 535221,
+      "sha256": "ba06eacd1414d536e41b88f77e10cf22e1226551e86bc6c407ebb58992f53d6e"
+    },
+    {
+      "file": "art_shops_shop_uglehulen_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 521374,
+      "sha256": "68357477da34cff6db46c6e6e993f4c461bb962b61862efec11fea1a3e6d5275"
+    },
+    {
+      "file": "art_shops_shop_views_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 687914,
+      "sha256": "c03abf5f8d7a9f3a14a59401f35cf4c65455687704bfa1b27bb51cec97ef3795"
+    },
+    {
+      "file": "art_shops_shop_views_02.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 845668,
+      "sha256": "ea7b99043d6bf745368ee0be31854b09c84a5f350346d1c49d6618535681fa32"
+    },
+    {
+      "file": "art_shops_shop_views_03.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 778106,
+      "sha256": "6016d489a1a20b503d55d35f8a307f79ebe4490bde26b7fa5f33fda56e404e68"
+    },
+    {
+      "file": "art_shops_shop_views_04.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 213539,
+      "sha256": "49e483d76d8b402c230bc8b6ffe2af45a85197a9a197a1d0076aaceb1ae42d2a"
+    },
+    {
+      "file": "art_style_consistency_furniture_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 533791,
+      "sha256": "9e2495fb1a0677faa383947a04d169277bd703b9d036300ad6957cdb688f6487"
+    },
+    {
+      "file": "art_style_consistency_furniture_02.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 548476,
+      "sha256": "23ffe0eedceec860574f0afa10a936a53786bd49bb5924db9899795afe5d92db"
+    },
+    {
+      "file": "art_style_consistency_furniture_03.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 498057,
+      "sha256": "2a89a8cceff814333810854648373c9299804653823e03a6f4ffa08a11f1315d"
+    },
+    {
+      "file": "art_style_consistency_furniture_04.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 406917,
+      "sha256": "98ccf6d864784bda9126ca59b15380c15a6bb710621b2a5e4a54b5aa216c49c8"
+    },
+    {
+      "file": "art_style_consistency_furniture_05.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 337832,
+      "sha256": "76165d8b46b5f1cb8cffe4f287fb7f61c246f41e6e177bdb12a8e96d5507c13f"
+    },
+    {
+      "file": "art_style_consistency_furniture_06.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 556707,
+      "sha256": "24d813d197185a11486558f43f7195e43ec76146869c53e0d713d42301621acc"
+    },
+    {
+      "file": "art_style_consistency_furniture_07.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 526767,
+      "sha256": "87fcaba45b76bba6dd16858a9210ee1f91059a649dee005b00f1fc341fb0d7ec"
+    },
+    {
+      "file": "art_style_consistency_furniture_08.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 385569,
+      "sha256": "94a38c9cd50e77b67c4f899050e9846242f2a43a37f234c26418dfa979aa98df"
+    },
+    {
+      "file": "art_style_consistency_furniture_09.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 382912,
+      "sha256": "685808589ec7700c5599563e348800453a48547914e43156d10f00a1a8d5e71d"
+    },
+    {
+      "file": "art_style_consistency_furniture_10.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 418951,
+      "sha256": "155cab5d4b02c30ad6c46f5a10a9f8d22c37f6eb2cfa667cb20db52ab10ceb81"
+    },
+    {
+      "file": "art_style_consistency_furniture_11.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 601354,
+      "sha256": "1a21f727af36fbe2023e8f1c39df22c4502f4922511bc64c54efb17baf84233f"
+    },
+    {
+      "file": "art_style_consistency_furniture_12.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 579497,
+      "sha256": "9abb553713477229722993ee57210565284af6545f046812e443d8a784d28e37"
+    },
+    {
+      "file": "art_style_consistency_furniture_13.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 199365,
+      "sha256": "821b6168da9a0739dd10a2c48b47922dceafa01dc2300c466bfd31b2c60ed467"
+    },
+    {
+      "file": "art_style_consistency_furniture_14.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 488409,
+      "sha256": "20d3126ba220e13c99151cda6eb9c2f749ec2f0f7512db8f8b5d4c550dad3b4c"
+    },
+    {
+      "file": "art_style_consistency_furniture_15.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 481946,
+      "sha256": "37d5d2a839026bf66806739c6f0b989c8e3b74a9b2c5144d31aa8079bf287e1b"
+    },
+    {
+      "file": "art_style_consistency_furniture_16.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 409861,
+      "sha256": "2d415a83e883afa3b71689b92afcdde0900a28ba4f90e5e10e5a9fee4d67bedf"
+    },
+    {
+      "file": "art_style_consistency_furniture_17.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 286404,
+      "sha256": "4a8663be8b4e4d2175648e1695e50b7861fe9ed66bb9ae2372e90de3767e6136"
+    },
+    {
+      "file": "art_style_consistency_furniture_18.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 258802,
+      "sha256": "02789b7f57ae9cd9b896825a196b14e8516664fc7a745258df7c028d7412daf8"
+    },
+    {
+      "file": "art_style_consistency_furniture_19.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 402070,
+      "sha256": "a333f232614eb2568a75f5321b4c1d839c1ba36bab3d81ab161eb3a733583bd1"
+    },
+    {
+      "file": "art_style_consistency_furniture_20.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 466006,
+      "sha256": "bc708e2783bfbb5d9e40757c1aba7b400e32ff5b8f4146f70646d585bd6f43cf"
+    },
+    {
+      "file": "art_style_consistency_furniture_21.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 488840,
+      "sha256": "7fc9068b2f54af23d52284d6cf5aa403e4d83bfeef4fe07b57bd482800f2363e"
+    },
+    {
+      "file": "art_style_consistency_furniture_22.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 258952,
+      "sha256": "67185addeecb85c61781d42a841d0ac4ba6abdf622007d587b4dbeb9613e507c"
+    },
+    {
+      "file": "art_style_consistency_furniture_23.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 161994,
+      "sha256": "426b681953536a26240140015dd9580df174dcc300238ad9fb6b2b82a1151bc9"
+    },
+    {
+      "file": "art_style_consistency_furniture_24.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 323762,
+      "sha256": "3a1a7989bd52d96006fc8032a6787779277a91f022ab2d8fc06ab1aaee9c57ee"
+    },
+    {
+      "file": "art_style_consistency_furniture_25.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 45059,
+      "sha256": "e468ffe6dc2a92e5a9dd4481c81419f061627e2887ea97d2e1757c15596d93b5"
+    },
+    {
+      "file": "art_style_consistency_icons_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 438869,
+      "sha256": "1be9ffb02d8795b5ce2bab44dfc013fa62feeffe08e015bd696970903653e1e0"
+    },
+    {
+      "file": "art_style_consistency_icons_02.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 415538,
+      "sha256": "a01cc444067193f88a84b3975db1424a360ee5e7350255d04935420cc0354f26"
+    },
+    {
+      "file": "art_style_consistency_icons_03.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 342276,
+      "sha256": "e3644805a7c8d571f5b685cfa9d71aa192d386a438db92de2846ea55b440115b"
+    },
+    {
+      "file": "art_style_consistency_icons_04.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 430104,
+      "sha256": "d3d7f1e755c13b73cceb5137ad8b78dada058ddea1f91a5c262ca32124a4ecc2"
+    },
+    {
+      "file": "art_style_consistency_icons_05.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 377936,
+      "sha256": "9605bcf1a72eedbe5cfafc1bac907b25f1f17b948ec056415e79dc3e6e314f4b"
+    },
+    {
+      "file": "art_style_consistency_icons_06.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 404514,
+      "sha256": "1ce4ba4a703bef20eb31f78e966f11cc4c0b1278c9f6beeed92139ba1cb4368d"
+    },
+    {
+      "file": "art_style_consistency_icons_07.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 369549,
+      "sha256": "7b810f3fa193704ae4fe25630eaa655cbfd7841d02c22584e9d259cf2ecce403"
+    },
+    {
+      "file": "art_style_consistency_icons_08.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 429927,
+      "sha256": "e44fb35206b8b9f43083f65e80cb23b1f1e8dbd9ca16aa864e3fee273eb7eec3"
+    },
+    {
+      "file": "art_style_consistency_icons_09.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 55684,
+      "sha256": "fbcf928807457f1869864acf02022abbfde58841a6156d60cbcb19bed7d72cdc"
+    },
+    {
+      "file": "art_style_consistency_props_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 628099,
+      "sha256": "eebb69370b77bdca04ef1fc12d526919bb86d5e8249590c6001e13dae4acfdaa"
+    },
+    {
+      "file": "art_style_consistency_props_02.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 491351,
+      "sha256": "d26bd4d9d8bab8469fae898fc0353d36275911d95b2e2b6eb8b3b62cd28dc997"
+    },
+    {
+      "file": "art_style_consistency_props_03.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 330483,
+      "sha256": "6487d80b40ea69540268cded6b07d83a61ffabb68c92f833730c3423ef2a2ea1"
+    },
+    {
+      "file": "art_style_consistency_props_04.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 421239,
+      "sha256": "1ce47917273d2075a35e8111592dea48b6284e6b1958815ed0b622f3ef5e883a"
+    },
+    {
+      "file": "art_style_consistency_props_05.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 556626,
+      "sha256": "4858c3b27419d4f0643a5789112b524afd5b26b088372d9641793a7750631e1b"
+    },
+    {
+      "file": "art_style_consistency_props_06.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 182772,
+      "sha256": "d8104092ef9242d02d4ad6f4e2ff84f503df1ff837c00d3e5e1866da4a620ab4"
+    },
+    {
+      "file": "art_style_consistency_world_farm_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1911020,
+      "sha256": "54076b55871d2979695c08f965b00e27fe674b68565fe5afd7512951f0ac17ae"
+    },
+    {
+      "file": "art_style_consistency_world_farm_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1750150,
+      "sha256": "3113903af07dd9c1b323bfd665f69787fed4b9219d1bcefbde8e35ae07fd8ac1"
+    },
+    {
+      "file": "art_style_consistency_world_hyggebyen_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1974340,
+      "sha256": "1278aa65560b20c10e7f1a5b4b17ac712555aaade7abc11eb4c4c339f33d110f"
+    },
+    {
+      "file": "art_style_consistency_world_hyggebyen_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1860920,
+      "sha256": "00ccf046c66f005a6410b61702baa346ec45201100478fca7387ad5eb03857ac"
+    },
+    {
+      "file": "art_style_consistency_world_moerkeskoven_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1440020,
+      "sha256": "f69d39a2c6fcfaa47a50c60208c40c7ba75d776101d05d35347ab6ae5f5e8ae6"
+    },
+    {
+      "file": "art_style_consistency_world_moerkeskoven_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1440209,
+      "sha256": "5ee3c366418324c1c87bf09e15c22b55e74d539adb3dd905d03e85902904e0f0"
+    },
+    {
+      "file": "art_style_consistency_world_traetoppen_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1510203,
+      "sha256": "b2b23ad31d15a2ff05e2d6ef11f9ba79634e6566c35c8317647affe806937b82"
+    },
+    {
+      "file": "art_style_consistency_world_traetoppen_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1342612,
+      "sha256": "d52e6c816b04991e0ffe86a6d1b3731783d6149bb6cb7612d1101e9883ccd905"
+    },
+    {
+      "file": "characters_cast_game_zoom.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 137336,
+      "sha256": "ab7f3a179abf00bd3bd2c93701bc96a20a1fd25d1c327d9216484d6d207d6827"
+    },
+    {
+      "file": "city_chip_actual.png",
+      "size": [
+        280,
+        50
+      ],
+      "bytes": 4983,
+      "sha256": "0fba048ca461198dba689af06bde07655fda31b9dd985bd5e1dc2f304efb869c"
+    },
+    {
+      "file": "city_chip_reference.png",
+      "size": [
+        280,
+        50
+      ],
+      "bytes": 3072,
+      "sha256": "4821b5e996937ea4ad429d397e4bce5f57a1d9ff1078c89d7a2fca06e8e0fc67"
+    },
+    {
+      "file": "city_date_actual.png",
+      "size": [
+        253,
+        72
+      ],
+      "bytes": 9566,
+      "sha256": "f5b9326ac5bd57aaa4ea7a2b4193127ad155e3a15ad554eef3ac24178897fe39"
+    },
+    {
+      "file": "city_date_reference.png",
+      "size": [
+        253,
+        72
+      ],
+      "bytes": 7254,
+      "sha256": "97214ae392d6d01cb6ea0749d14ebfcb407224ff4013e6bfaedb4c6864e977a3"
+    },
+    {
+      "file": "city_hotbar_actual.png",
+      "size": [
+        544,
+        82
+      ],
+      "bytes": 5697,
+      "sha256": "76100b8ed22d139e36bd304fa58363385de15a2ee99b31b02bb46dc6bddb49e8"
+    },
+    {
+      "file": "city_hotbar_reference.png",
+      "size": [
+        544,
+        82
+      ],
+      "bytes": 4364,
+      "sha256": "b39c4a45fab49f565a32aabfaba667f99942985ef7423af8e2ee5b520b323ace"
+    },
+    {
+      "file": "city_levels_b8_control_single_plane.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 53034,
+      "sha256": "c369c7f50ccbc8db23d6cd9988a96070ef02f6791ea9b2e6f577137e3eb9743e"
+    },
+    {
+      "file": "city_levels_b8_in_front_of_trunk.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 74195,
+      "sha256": "c1829b2a5bb3837f105f5968dd8ad637b43ba3a4f78d5a06946a395f54983fe2"
+    },
+    {
+      "file": "city_levels_b8_reference_open_floor.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 98089,
+      "sha256": "390fb3b4df8cbf05c05f9df25ff06b4833d0cab99303d768a432788a7a0b46ac"
+    },
+    {
+      "file": "city_levels_dusk_lanterns.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 295384,
+      "sha256": "2d57b66e965194e0c26cf2e365ab01a07b80baaa6fab2ee19f18bc589361e6e5"
+    },
+    {
+      "file": "city_levels_farm_after_the_city.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1986829,
+      "sha256": "e521dc69ae975e3539f0b7bc699fabd078ea294e0f4195b081b8d56ae615a3a9"
+    },
+    {
+      "file": "city_levels_noon.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 103585,
+      "sha256": "ecc857ff7ed91ceb563bb909700970c84f0441faac01319a757dedc4a8809f7f"
+    },
+    {
+      "file": "city_levels_overview_zoom_0_2.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 103523,
+      "sha256": "bbc33afd411da4d94c1c42e5fe7828dbd6d56fe9eeecf0fa629f5bdc25a6d99d"
+    },
+    {
+      "file": "city_levels_torvet_and_upper_overlap.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 110458,
+      "sha256": "86dfb613a5ed27f6f4f7bcf1c21d1f8d6fe543b49151d5f88e8ed0a8d88fec04"
+    },
+    {
+      "file": "city_levels_torvet_zoom_0_4.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 100485,
+      "sha256": "c2ed35d457effafc366494312a708fcf3eeb6294d232df3b02d30bf00a737c00"
+    },
+    {
+      "file": "city_map_city_01_citizens_contact_sheet.png",
+      "size": [
+        1920,
+        720
+      ],
+      "bytes": 2654713,
+      "sha256": "6ceb014f661aaa5148cf3d16775db90abd49d5160790879071ff6fce6fa6c0b9"
+    },
+    {
+      "file": "city_map_city_01_slot_brumme_workshop.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1427999,
+      "sha256": "842213fc01b7dfbe6ab62dc4222dc056f13f78bcf94e08676047aa189bc8ee85"
+    },
+    {
+      "file": "city_map_city_01_slot_fru_ugle.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1656814,
+      "sha256": "7f4453c7e25caf7c8ac003d0b3d52764acb832d78c3057ef2740b91fcadbc3a4"
+    },
+    {
+      "file": "city_map_city_01_slot_hoppe.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1506599,
+      "sha256": "1c5054a4f57545900c403994e16b5eb8e87872688565f3a47ae79532b9ab4461"
+    },
+    {
+      "file": "city_map_city_01_slot_pip_and_oak.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1447021,
+      "sha256": "9062b5ba582d02f7a0f8a9d6723148e76d723441e8ec91c883005eee547e6b1e"
+    },
+    {
+      "file": "city_map_city_01_slot_sofus.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1538400,
+      "sha256": "3304b46ae603e540b7c93542c9bc844067864b48121c3244cbadc7122f6fcdb0"
+    },
+    {
+      "file": "city_map_city_01_torvet_zoom_0_4.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1702813,
+      "sha256": "34dd2a6c923228d0bdad1a11aa449e5ca143d06ab266deff7a310c9df7197f5e"
+    },
+    {
+      "file": "city_map_city_02_overview_vs_sketch.png",
+      "size": [
+        2560,
+        881
+      ],
+      "bytes": 2459149,
+      "sha256": "b74763099f01484907e46d42b3f75660ac86708a508b0eee56786590186c1b33"
+    },
+    {
+      "file": "city_map_city_02_overview_zoom_0_2.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1587254,
+      "sha256": "07e3f61d551dea263063dd5368707d206b472766658d7805597bcd6a785b7dce"
+    },
+    {
+      "file": "city_map_city_03_bridge_b8.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1530147,
+      "sha256": "52ff607e3689d972be995773b457e13a1de09b62babe9bbb7931b8a40887530c"
+    },
+    {
+      "file": "city_map_city_04_bath_at_dusk.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1336134,
+      "sha256": "d4917b7f1857ef47f949f706b964c0745d316ed5eacc6be8b7ca8364ce3ff26c"
+    },
+    {
+      "file": "city_map_city_04_dusk_lanterns.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1536278,
+      "sha256": "5616b3f27555ca3995e4c5b061abeb162de5c2a001ddfda661e59f433378dd7a"
+    },
+    {
+      "file": "city_map_city_05_top_deck_a_zoom_0_4.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1439874,
+      "sha256": "636b633ad251ab5887e9a117725fe99def72ca99c3b7635c8b43d0f11dbb7635"
+    },
+    {
+      "file": "city_map_city_06_hints_prompt_at_the_ladder.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1710760,
+      "sha256": "1863aa970af3ef7b693b49526f6e4b7ec30e93394b4b4c034a8877614d424ce8"
+    },
+    {
+      "file": "city_map_city_06_hints_whisper_and_toast.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1661725,
+      "sha256": "fd6456051502cc79f3286de490e5814ad14556896dd6d22c929b4a187ac46972"
+    },
+    {
+      "file": "city_map_city_walk_01_koekkenhaverne.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1374677,
+      "sha256": "f5ffea6b4522043f6ea2def6e2a481623d41f78fa019c7b225aa38df13219e79"
+    },
+    {
+      "file": "city_map_city_walk_02_haengebroer.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1553100,
+      "sha256": "1e8b72bda8f2160ba3cb142b50ba6d1d39515a86f3f9b0069218d18b0f91b137"
+    },
+    {
+      "file": "city_map_city_walk_03_torvet.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1738841,
+      "sha256": "6a0460a5ec5fa6643dbcf93c8c82ed770728b8c59364184896a6bcbda816e6b4"
+    },
+    {
+      "file": "city_map_city_walk_04_raadhuset.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1689491,
+      "sha256": "ce4f64c6dab7f1b881339e2034031a674895962a1ad66d65886551918efba3f4"
+    },
+    {
+      "file": "city_map_city_walk_05_postkontoret.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1551519,
+      "sha256": "01e38eab4912efcce737e60f2b7b270862a3a33ee72e17885fb3aedb9710ed67"
+    },
+    {
+      "file": "city_map_city_walk_06_badehuset.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1517197,
+      "sha256": "35a3aa7dfd8a919af4f2839d21f4dde87e889f03aac83a086e3bd14f1ea4c2b1"
+    },
+    {
+      "file": "city_map_city_walk_07_flagermusenes_huse.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1504428,
+      "sha256": "6b0c6ee9c93fe1b1a672a2082c020f54d5fbef7eb282d275179e444ae7da4763"
+    },
+    {
+      "file": "city_map_city_walk_08_brummes_vaerksted.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1483286,
+      "sha256": "1603608ea56cefac5cdc705eeceec87c1eb00b73051f875ea34bb709f885801d"
+    },
+    {
+      "file": "city_map_city_walk_09_uglehulerne.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1526781,
+      "sha256": "8ec6abfc6c08b672c88f0c0b74d2343030a86a7c8e1b7e9ce6ffd37a4e8a2768"
+    },
+    {
+      "file": "city_map_city_walk_10_hoppes_hytte.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1517625,
+      "sha256": "03c46df18d7edae94e7a6f79149b9a50a8bc1f0fb179b05934b068eeac6dd529"
+    },
+    {
+      "file": "city_map_city_walk_99_hyggebyen.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1987841,
+      "sha256": "3a0e549054873b60eb73ca9344ed5903591bf0dffef4eaa05dc937d662b093e5"
+    },
+    {
+      "file": "city_map_city_walk_contact_sheet.png",
+      "size": [
+        1920,
+        810
+      ],
+      "bytes": 3075793,
+      "sha256": "216e0a7713e2307d2b56c24912249530b1e4705901fc2caf598e6b36d6ef0f81"
+    },
+    {
+      "file": "clock26_farm_1200.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2024066,
+      "sha256": "3c20dbc444560e3f2beeed1f382857d849324bec69635ada473cb3664af015e4"
+    },
+    {
+      "file": "clock26_farm_2330.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1725085,
+      "sha256": "749f54480fa6090e07791b1a531f1c4d692a7a8a9cdeee7cc179baf99677e80a"
+    },
+    {
+      "file": "clock26_farm_2530.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1738287,
+      "sha256": "9ce0c162409a36d17f21d485f850d1347dc6c49b78a9408f62e29bc0049831a0"
+    },
+    {
+      "file": "comparison_banner.png",
+      "size": [
+        174,
+        34
+      ],
+      "bytes": 5298,
+      "sha256": "dc2ffd92a78c693d7d51f5b2f0c4d8eda14825fe6e9d8596c41634122c60e7b0"
+    },
+    {
+      "file": "comparison_chip.png",
+      "size": [
+        282,
+        51
+      ],
+      "bytes": 4309,
+      "sha256": "91b4ac7cf8117c75125c4e85018be304ec5b742a92b4fd273cade422f5a88e71"
+    },
+    {
+      "file": "comparison_date.png",
+      "size": [
+        253,
+        72
+      ],
+      "bytes": 7279,
+      "sha256": "3b76910186a21dac305a15700dc7bdad9fcfcc27a61765a76e4a9544677c6c33"
+    },
+    {
+      "file": "comparison_dialogue_ui.png",
+      "size": [
+        680,
+        300
+      ],
+      "bytes": 33590,
+      "sha256": "89abe214cd08034566b300ef07434ea0552b7439e4632290b10e3443a2e8b5aa"
+    },
+    {
+      "file": "comparison_hotbar.png",
+      "size": [
+        544,
+        82
+      ],
+      "bytes": 5418,
+      "sha256": "6550a1e1a352415e4e10a507c726780062721bbf9f1e233a22655bad1ac20567"
+    },
+    {
+      "file": "comparison_inventory_ui.png",
+      "size": [
+        1276,
+        716
+      ],
+      "bytes": 194261,
+      "sha256": "4826b5280f35cf8c1e8c7e84a364aa1695f9566eff43f96e8397aaf989be89b8"
+    },
+    {
+      "file": "comparison_shop_ui.png",
+      "size": [
+        1276,
+        716
+      ],
+      "bytes": 265331,
+      "sha256": "6d07a9c13d11b95671097542f3460fd1779d4df3e6fa1ff83d6b8b7977d81fe0"
+    },
+    {
+      "file": "dialogue_ui_actual.png",
+      "size": [
+        680,
+        300
+      ],
+      "bytes": 33590,
+      "sha256": "89abe214cd08034566b300ef07434ea0552b7439e4632290b10e3443a2e8b5aa"
+    },
+    {
+      "file": "dialogue_ui_reference.png",
+      "size": [
+        680,
+        300
+      ],
+      "bytes": 39999,
+      "sha256": "1734fbda51f2841e00798602c31bc97d05cf396c5fc8ff74faf615cc15c512bc"
+    },
+    {
+      "file": "farm_first_morning_dlg_farmintro_pip_1.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1580624,
+      "sha256": "95a0fa3029a29b69f8d4bbf3f3bc1caf3e6aa9fdb21d0e0c2f2a0d3a2d56312b"
+    },
+    {
+      "file": "farm_first_morning_dlg_farmintro_pip_bye_1.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1502268,
+      "sha256": "f12b0fbcd1743377377071eb602833e41cbcbe75b05cf83506bd116d1f033ede"
+    },
+    {
+      "file": "farm_first_morning_dlg_king_letter.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1594275,
+      "sha256": "e12e2e53864994080c9552bcc5b1b805ef297b12f4a42671fdd60369560d7181"
+    },
+    {
+      "file": "farm_first_morning_pip_choice_focus.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1496094,
+      "sha256": "d6b55a81e843d6e659e1099a9c29825249ae9427bdad13ceb09f9b9effeb7f9c"
+    },
+    {
+      "file": "farm_first_morning_player_free.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1889254,
+      "sha256": "e5a6910f2c8c9c00888eaa66fb539ddb96633116b49615aba4e6e736cd9afff7"
+    },
+    {
+      "file": "farm_site_east_locked.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1973020,
+      "sha256": "4dead2daf0a66a63ca2a6dc68ec7adc6b9f6a5ba6bcc104b8f6b11fbf3f1ba81"
+    },
+    {
+      "file": "farm_site_east_unlocked_tilled.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1951323,
+      "sha256": "1b194b5a41ddeaf19c1446cc1fc8f54b07f41b38806d0adc02a422285e93c6d5"
+    },
+    {
+      "file": "farm_site_expansion_cancel_focus.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1266437,
+      "sha256": "e4b99e1bea0ae85710f06fb95f1edf4f2e37c46757a1fd663e0ad2e0c4985bb6"
+    },
+    {
+      "file": "farm_site_expansion_confirm.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1266491,
+      "sha256": "41b518d6b2b2d763f7d3c457855681a35749db52789b57653e8449a2301941f0"
+    },
+    {
+      "file": "farm_site_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1634326,
+      "sha256": "2c25985b41f74ee7558cf55b76a8b54ab19850d98780088b0237d281a8674531"
+    },
+    {
+      "file": "farm_site_overview.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1930539,
+      "sha256": "d8c7a96ba5a972c45718e7244103e57df80a2fdb97803eefa0f9ba6d07c15e8f"
+    },
+    {
+      "file": "ghost_lines_ghost_guard_greeting.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1257482,
+      "sha256": "b7aa582176d57fa554f3051a86da437cd6af1548d2bf54fe97f4211a47218a0f"
+    },
+    {
+      "file": "ghost_lines_ghost_king_after_letter.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1261509,
+      "sha256": "32b4569dfc33b401f201c67224199a56942fafbcd12c8ddbe05bc5e42e8c54e4"
+    },
+    {
+      "file": "ghostfam_data_dawn.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1375548,
+      "sha256": "31934cdae91f5f4f7006f528b77d1cf86dedd33f8303cd5b409c539ee0593e66"
+    },
+    {
+      "file": "ghostfam_data_forest_lift_vigil.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1323842,
+      "sha256": "407600445a9e426d806bab445938f78ca4bc31fd4da2b844c328b05e60695ab9"
+    },
+    {
+      "file": "ghostfam_data_granny_kin_dialogue.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1177236,
+      "sha256": "b13b8d58bc242491b5b80589329aefba41b4572449bc98e63df0904a3fd1e608"
+    },
+    {
+      "file": "ghostfam_data_lantern_house.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 522235,
+      "sha256": "beb818ea1b19f5e2b4e210f2bc3d650ba59575581bf058fd7f574e0836c0bcb5"
+    },
+    {
+      "file": "ghostfam_data_midnight_bench.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1154879,
+      "sha256": "995c614ebc8959a4543a32fc645ab52de04b17598cc7f52445a5b7a0639a2d00"
+    },
+    {
+      "file": "ghostfam_data_wednesday_fire.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1645941,
+      "sha256": "4ecbe316dd44b88686be8c5cdb9511c9043dea8ce1406b1f750f4d78edf8780e"
+    },
+    {
+      "file": "hud_area_banner.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 12211,
+      "sha256": "0be7322334ee222d62aa5aac1284912db445f02c46f03094b9d0697d1c0a9b67"
+    },
+    {
+      "file": "hud_farm.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1975819,
+      "sha256": "47397a5d04741918e8b7f0a9c8db021a913da03647e598cec8df5e13c352bd53"
+    },
+    {
+      "file": "hud_farm_da.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1967455,
+      "sha256": "be77af5ae2cb73dd9591987c17691d844c7b89473e9b7640859127d4e21a170c"
+    },
+    {
+      "file": "hud_farm_en.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1946388,
+      "sha256": "1e948c549b652cd3cb962e917ee39a361dd7532cdcce5b383e049dfb3c4d7912"
+    },
+    {
+      "file": "hud_fixture.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 68495,
+      "sha256": "c156a2ffa31f0869fe9ab29dd8b4efb99d940659dfdef8ec2ed9e6209c691166"
+    },
+    {
+      "file": "hud_v2.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1967678,
+      "sha256": "b582bee71664d15536a6e22843a8458e6b994d84d313c6fefc37c8c9a398dbde"
+    },
+    {
+      "file": "hud_v2_banner.png",
+      "size": [
+        176,
+        43
+      ],
+      "bytes": 5951,
+      "sha256": "7b8b16829e3fdb6f2b1ad78e3f06d2d3451f2bc584016cfa243009ed6a21473e"
+    },
+    {
+      "file": "hud_v2_chip.png",
+      "size": [
+        282,
+        51
+      ],
+      "bytes": 4354,
+      "sha256": "4e42caf54700a0a5a2ce421bc4efc15153771a649bda656d0de88a98bd73749f"
+    },
+    {
+      "file": "hud_v2_date.png",
+      "size": [
+        252,
+        72
+      ],
+      "bytes": 7863,
+      "sha256": "cceb0468946f73cc4537290c0bf7341ce4b4b364900766965e4a0a9cacabf633"
+    },
+    {
+      "file": "hud_v2_hotbar.png",
+      "size": [
+        544,
+        82
+      ],
+      "bytes": 21580,
+      "sha256": "d77292280010496d11090183d5970d54689db112958bf141b36a0ff5e4e276d8"
+    },
+    {
+      "file": "loot_look_burst.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1474394,
+      "sha256": "23580c6ffcf06ec770cf3f354c0d6bacbe2f143b79e95a987cec5895acd2dca8"
+    },
+    {
+      "file": "loot_look_padlock.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1105493,
+      "sha256": "00c530b8775b4253b9d1a9ab6cdb2c6d7bf36e169279fceacb79ce3b79c17f57"
+    },
+    {
+      "file": "loot_look_sheet.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1481033,
+      "sha256": "d9465a592b77c2d97e6544bcec1117aa4b2c8d48a917924371a1f0c22ed71017"
+    },
+    {
+      "file": "maps_farm_farm_morning_start.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2030497,
+      "sha256": "5d672135a7101bf82460dbce26380a3fc17036eed3f7732d3d319dbac6402fc6"
+    },
+    {
+      "file": "maps_farm_farm_zoom_20.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1900116,
+      "sha256": "df174fcadd6f2dbea99058a6d802fc5943d5f51a1abc356f4a3a8b24eae2244e"
+    },
+    {
+      "file": "maps_farm_farm_zoom_30.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2075027,
+      "sha256": "5aac3bd75a477832171c81f0d12d57393390756003b7b24d42bf7399900bf77c"
+    },
+    {
+      "file": "maps_farm_farm_zoom_40.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2175037,
+      "sha256": "6143c296f01640af2aa4db09eb24c7b7ea7a5b15f27fd18df370d184e92160db"
+    },
+    {
+      "file": "maps_iso_hub_gate.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1423522,
+      "sha256": "8eca3ce31f693d5848a6142ff138355b14171a2ef6bc8fc2e2e7587e6c15848a"
+    },
+    {
+      "file": "maps_iso_hub_overview.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1285450,
+      "sha256": "2926c88554ac2495ffa956aaa48f593dad6bea67f0df097a97923e0f3451ec5c"
+    },
+    {
+      "file": "maps_iso_hyggebyen_bridge.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1973103,
+      "sha256": "865fad1dd0d9985f898f361c726435ccd069d8c63c32f40bd2b778476d2fcf64"
+    },
+    {
+      "file": "maps_iso_hyggebyen_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1792599,
+      "sha256": "54f3ccd9fdbe60fde391f35ddbdb799b430d14f18fb413ca61ca45266c173860"
+    },
+    {
+      "file": "maps_iso_hyggebyen_overview.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1763875,
+      "sha256": "f98d654d18d80bc962f91cdd910e73713c6fe1af627ecaf63c3b162ca9c51c6b"
+    },
+    {
+      "file": "maps_iso_hyggebyen_torv.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2069349,
+      "sha256": "c86998e56a81871a6aff8a84a821f8a735ccff5e8ee71691541e0e80c5f92c48"
+    },
+    {
+      "file": "menus_pause.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 64536,
+      "sha256": "68589206cb3f08c0d150dee7fa0affb1db8aa4f3e10a1d85ba362d3ec85acc1a"
+    },
+    {
+      "file": "menus_saveload.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 81774,
+      "sha256": "eecf0685a591097e0fababcd849444bd65ad37d082b0cc515f7bdf6da0bbd23b"
+    },
+    {
+      "file": "menus_select2.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 94873,
+      "sha256": "cdac0a41a36b07b18158cf3558f5c479dd873c3e606c4f17406cac3d80f8d0f0"
+    },
+    {
+      "file": "menus_select_guide4.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 284856,
+      "sha256": "2c26cee627851e00cd3a0d8a62d52ce44685903191f8a266d5cb2acea3f00f38"
+    },
+    {
+      "file": "menus_settings.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 79222,
+      "sha256": "deea8d3f11cc1166a70a11c48472934f2d897e8ca86a63612f029be6af28f671"
+    },
+    {
+      "file": "menus_title_guide.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1539310,
+      "sha256": "ec4119ca91a61dcef9093cf6a712a152afb604d92bfd146abd25c2422c6b2613"
+    },
+    {
+      "file": "npc_dialogue.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 78011,
+      "sha256": "d113f3a65e5015048c9a74babca6bbbdad56d784e30ee2231e4faac1f3b20f86"
+    },
+    {
+      "file": "npc_dialogue_crop.png",
+      "size": [
+        680,
+        300
+      ],
+      "bytes": 64684,
+      "sha256": "99405f699e45de8b3581b5637578d6abeac7e1c8b253a91e3a2987211c87427a"
+    },
+    {
+      "file": "npc_dialogue_focus.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 78011,
+      "sha256": "d113f3a65e5015048c9a74babca6bbbdad56d784e30ee2231e4faac1f3b20f86"
+    },
+    {
+      "file": "npc_dialogue_guide.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 72074,
+      "sha256": "9263d827a708ba6645a3afabc114e0ee0e30197cf013bd6e219f3c9b9d76e589"
+    },
+    {
+      "file": "npc_dialogue_guide_panel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 72074,
+      "sha256": "9263d827a708ba6645a3afabc114e0ee0e30197cf013bd6e219f3c9b9d76e589"
+    },
+    {
+      "file": "npc_dialogue_panel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 78011,
+      "sha256": "d113f3a65e5015048c9a74babca6bbbdad56d784e30ee2231e4faac1f3b20f86"
+    },
+    {
+      "file": "npc_intro.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 94089,
+      "sha256": "45075d6fba15d1f81bda1043c009c04f33ea670ca034e4b7b3936375b94f53a7"
+    },
+    {
+      "file": "npc_intro_panel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 94089,
+      "sha256": "45075d6fba15d1f81bda1043c009c04f33ea670ca034e4b7b3936375b94f53a7"
+    },
+    {
+      "file": "npc_journal.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 111344,
+      "sha256": "98e0adc10dae7cf42b5c9f0896e630b69566d750500899fd509ac4f266eff5fd"
+    },
+    {
+      "file": "npc_journal_focus.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 111344,
+      "sha256": "98e0adc10dae7cf42b5c9f0896e630b69566d750500899fd509ac4f266eff5fd"
+    },
+    {
+      "file": "npc_journal_guide.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 123430,
+      "sha256": "cf60b534c3ea4985f2a5a62ca682eef9bbbfde00008e403f238e3454bd43e3e4"
+    },
+    {
+      "file": "npc_journal_guide_panel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 123430,
+      "sha256": "cf60b534c3ea4985f2a5a62ca682eef9bbbfde00008e403f238e3454bd43e3e4"
+    },
+    {
+      "file": "npc_journal_panel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 111344,
+      "sha256": "98e0adc10dae7cf42b5c9f0896e630b69566d750500899fd509ac4f266eff5fd"
+    },
+    {
+      "file": "player_farm_01.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1821704,
+      "sha256": "a15bdaba37f59c718ed4d39cdb7510c91fe5a52d236efdfc0b12ec370f8eccff"
+    },
+    {
+      "file": "player_farm_02.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1821302,
+      "sha256": "26a5f01cf63d3a0bccdeb263d191a51937ad1c0a8e12bc6dff6b510de0107e43"
+    },
+    {
+      "file": "player_farm_03.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1824211,
+      "sha256": "65bbcc69d752a9a163e1f7fe55cd6688aa4e06b8f33d769a95f8ec9631fb8ef7"
+    },
+    {
+      "file": "player_farm_04.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1831432,
+      "sha256": "f7f6c1b94aea64d324f9ae00ad1cdd982fd72e5e02b9bdeaca43dc1cf5e6e6f2"
+    },
+    {
+      "file": "player_hero.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1817092,
+      "sha256": "43dc42a4641664dafa750b962b48460e5d7cdbb8b8fc26cfe1fa376b08e9a6f1"
+    },
+    {
+      "file": "player_lantern_14_lights_first.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 324737,
+      "sha256": "ee5ed4cb7b847ef6d17184ef5ba8f576dffa71625faa155f11efde36495e794f"
+    },
+    {
+      "file": "player_lantern_14_lights_last.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 324740,
+      "sha256": "dfd63284d10dd9287196bd759199954ba54ca9709d5a342b6e41c5ca6f803887"
+    },
+    {
+      "file": "reference_banner.png",
+      "size": [
+        174,
+        33
+      ],
+      "bytes": 6408,
+      "sha256": "bf3e14c67220d3b43cd2bf08cb7c69ac7aee5ec73dfa3fd0b126647371f6e672"
+    },
+    {
+      "file": "reference_chip.png",
+      "size": [
+        280,
+        50
+      ],
+      "bytes": 4037,
+      "sha256": "a40e239866050b9c86004bec8c844a9b8cdeb1c095686120e69a96c7a85bc71f"
+    },
+    {
+      "file": "reference_date.png",
+      "size": [
+        253,
+        72
+      ],
+      "bytes": 7254,
+      "sha256": "97214ae392d6d01cb6ea0749d14ebfcb407224ff4013e6bfaedb4c6864e977a3"
+    },
+    {
+      "file": "reference_dialogue_ui.png",
+      "size": [
+        680,
+        300
+      ],
+      "bytes": 39999,
+      "sha256": "1734fbda51f2841e00798602c31bc97d05cf396c5fc8ff74faf615cc15c512bc"
+    },
+    {
+      "file": "reference_hotbar.png",
+      "size": [
+        544,
+        82
+      ],
+      "bytes": 4435,
+      "sha256": "3826178254313c8ac6990c697b8fba23578d312e083a3057e2c975417a3e283f"
+    },
+    {
+      "file": "reference_inventory_ui.png",
+      "size": [
+        1276,
+        716
+      ],
+      "bytes": 74670,
+      "sha256": "1c6bc223ca4c15ee540bd94bd6689cd987c7df0b3034e5b054d407ea112b0ad8"
+    },
+    {
+      "file": "reference_shop_ui.png",
+      "size": [
+        1276,
+        716
+      ],
+      "bytes": 111584,
+      "sha256": "70f49987cdb8a5225b37f1b2aaa023f0f0bced7db7f67940998108eebdd300f0"
+    },
+    {
+      "file": "shop_actual_full.png",
+      "size": [
+        1276,
+        716
+      ],
+      "bytes": 376368,
+      "sha256": "4085f8cbd38f5257bf18e2fc98024ea2b2f8099e0e806b8b0321161f11b571e0"
+    },
+    {
+      "file": "shop_reference_full.png",
+      "size": [
+        1276,
+        716
+      ],
+      "bytes": 118778,
+      "sha256": "67e4e76fdaaaeeb35c91c0b2371e257695cd986310918d45caa55aa55b063d57"
+    },
+    {
+      "file": "shop_ui_actual.png",
+      "size": [
+        1276,
+        716
+      ],
+      "bytes": 265331,
+      "sha256": "6d07a9c13d11b95671097542f3460fd1779d4df3e6fa1ff83d6b8b7977d81fe0"
+    },
+    {
+      "file": "shop_ui_inventory.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 171733,
+      "sha256": "f1ec3b04cccb2a60ec850f2169d560726d1f5aa7667fc19ddf17a1f10e64440c"
+    },
+    {
+      "file": "shop_ui_inventory_button.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 118419,
+      "sha256": "9106ae45dbe119461943693faa46e590bfb3a79bf0d0f6cdf99e07362dfbc330"
+    },
+    {
+      "file": "shop_ui_inventory_fixture.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 118419,
+      "sha256": "9106ae45dbe119461943693faa46e590bfb3a79bf0d0f6cdf99e07362dfbc330"
+    },
+    {
+      "file": "shop_ui_inventory_panel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 118419,
+      "sha256": "9106ae45dbe119461943693faa46e590bfb3a79bf0d0f6cdf99e07362dfbc330"
+    },
+    {
+      "file": "shop_ui_inventory_ring.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 118419,
+      "sha256": "9106ae45dbe119461943693faa46e590bfb3a79bf0d0f6cdf99e07362dfbc330"
+    },
+    {
+      "file": "shop_ui_reference.png",
+      "size": [
+        1276,
+        716
+      ],
+      "bytes": 111584,
+      "sha256": "70f49987cdb8a5225b37f1b2aaa023f0f0bced7db7f67940998108eebdd300f0"
+    },
+    {
+      "file": "shop_ui_shop.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 466625,
+      "sha256": "a6578208faca33ca547046d94cfb79152b7bc4cb23b7641207ba660be1463ef2"
+    },
+    {
+      "file": "shop_ui_shop_button.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 322462,
+      "sha256": "a4b17dd7d2173d6d5139fbb455b374046a6fb88a4a2bfadebe65261e1172f9dd"
+    },
+    {
+      "file": "shop_ui_shop_fixture.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 322462,
+      "sha256": "a4b17dd7d2173d6d5139fbb455b374046a6fb88a4a2bfadebe65261e1172f9dd"
+    },
+    {
+      "file": "shop_ui_shop_panel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 322462,
+      "sha256": "a4b17dd7d2173d6d5139fbb455b374046a6fb88a4a2bfadebe65261e1172f9dd"
+    },
+    {
+      "file": "shop_ui_shop_ring.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 322462,
+      "sha256": "a4b17dd7d2173d6d5139fbb455b374046a6fb88a4a2bfadebe65261e1172f9dd"
+    },
+    {
+      "file": "social_ui_calendar.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 71054,
+      "sha256": "14f60432d7b239ac6aaf38527b2f15667857be7bd619f0962e062c0cbe6eef09"
+    },
+    {
+      "file": "social_ui_calendar_ring.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 70639,
+      "sha256": "40c4f35aab0f34cc172b427b16bc4d58295a549dd2551ea4b7565e2fcdc6db71"
+    },
+    {
+      "file": "social_ui_farm_social_hud.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1863272,
+      "sha256": "c1c081a1263c9f2f1fed7e602c9940ed7ba6b1e66fc6db8dee5027b082c285ef"
+    },
+    {
+      "file": "social_ui_gift.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 117571,
+      "sha256": "2dce40f769dc82f1b7e1f879a1a9570c5e6610e291d93107d8da2523654a2c0a"
+    },
+    {
+      "file": "social_ui_gift_ring.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 117571,
+      "sha256": "2dce40f769dc82f1b7e1f879a1a9570c5e6610e291d93107d8da2523654a2c0a"
+    },
+    {
+      "file": "social_ui_journal_calendar.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 139053,
+      "sha256": "96042029684d342de3771e2b0dd3b284c8c97020cefd101a07c315062d4daa2a"
+    },
+    {
+      "file": "social_ui_people.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 158588,
+      "sha256": "7db7a9183708b51b8465978748fa489ede70f851ee6a76a615960fa4b4951581"
+    },
+    {
+      "file": "social_ui_people_ring.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 158588,
+      "sha256": "7db7a9183708b51b8465978748fa489ede70f851ee6a76a615960fa4b4951581"
+    },
+    {
+      "file": "social_ui_social_hud.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 46534,
+      "sha256": "2122de42b8230037e8788bf76c3922d46f27e9885f60f665dbd8083ad7c743cb"
+    },
+    {
+      "file": "town_budgets_S04_city_crowd_readability.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1703610,
+      "sha256": "90e0638b134cf5b3773eb8f581c7a9b4e6165123ae606f81aff700078d1d87e7"
+    },
+    {
+      "file": "town_loop_S01_farm_intro.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1594395,
+      "sha256": "acbd812c0456acdc499280426b4dda58ccaa8034b1bb7b547fca39097a8a90b8"
+    },
+    {
+      "file": "town_loop_S02_farm_bridge_end.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1550077,
+      "sha256": "67c1162248323c2704f8e749a96e5ee41597edd6175f8b7d3eb8c8c80346863c"
+    },
+    {
+      "file": "town_loop_S03_city_arrival.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1189376,
+      "sha256": "9f0d540e39739861abddf98c0121ab6f53f499effa07024e6ae39e653dfb4daf"
+    },
+    {
+      "file": "town_loop_S04_city_crowd_readability.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1703584,
+      "sha256": "759d6a2eee36017fcde5db00259c4a92b1a014273316e99582019a172f8d6b1c"
+    },
+    {
+      "file": "town_loop_S05_dialogue_hoppe_hearts.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1107179,
+      "sha256": "d75d4bfd314aa2ba7c5c431ea3a32bfd41521f60c225ac08e13cede711b0cec5"
+    },
+    {
+      "file": "town_loop_S06_shop_door_closed.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1799381,
+      "sha256": "524d280de3715fe733120693226a7895b1dcd3fbc45d4145fa4a03fd0bc15d6f"
+    },
+    {
+      "file": "town_loop_S07_shop_interior_noon.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 542944,
+      "sha256": "b5605e9b3347863c611bfe0c592b2b6b1238642bfefbbe23da0900821b0fe897"
+    },
+    {
+      "file": "town_loop_S08_shop_panel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 280823,
+      "sha256": "dafdcc9476e902a2a945e286e540f116ed14ad1e5ef6326017555dc38dfa8df8"
+    },
+    {
+      "file": "town_loop_S09_gift_picker.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 147779,
+      "sha256": "0d644f0cec924f70db5a25ab84c8fc0f51c84895c7d8956213348bb4fb953f07"
+    },
+    {
+      "file": "town_loop_S10_post_office.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 451808,
+      "sha256": "882f1bff08e4ca42dd2054734e60316b5b78a066d443ba7ad97f3439caf12c30"
+    },
+    {
+      "file": "town_loop_S11_farm_planted_morning.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1904238,
+      "sha256": "b89b6fcf1f3de1a0e616847a2fb0d3e51bbb289f94d66d6ff3e59966362a4865"
+    },
+    {
+      "file": "town_loop_S12_city_next_morning.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1332010,
+      "sha256": "f105a013ec4d9707e0ca3fa1ef30d3a2123f27d846d83ecca7d52fd755b36037"
+    },
+    {
+      "file": "town_loop_S13_people_book.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 157518,
+      "sha256": "4ce4bdf268d99156fdcf9742763fc5b07f5d18ae925659375669f2507c4242b7"
+    },
+    {
+      "file": "town_loop_S13b_calendar.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 128087,
+      "sha256": "49ffe97cb50ea583ce8913b5f822ce5d51a1e5981abc7b3bd15a27101515a7e8"
+    },
+    {
+      "file": "town_loop_guide_dialogue_guide.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 72074,
+      "sha256": "9263d827a708ba6645a3afabc114e0ee0e30197cf013bd6e219f3c9b9d76e589"
+    },
+    {
+      "file": "town_loop_guide_shop.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 322462,
+      "sha256": "a4b17dd7d2173d6d5139fbb455b374046a6fb88a4a2bfadebe65261e1172f9dd"
+    },
+    {
+      "file": "town_loop_shop_backdrop.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 549628,
+      "sha256": "21c273a0ee362fb9902d1f00a834ca08ac763d5894bf290d72ca163839d82eee"
+    },
+    {
+      "file": "towns_city_a_beds1.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1538068,
+      "sha256": "3d31ed9a1ab271816f2b32efcf449c3cb067d0436a6e4fccf44f5dfd3edae231"
+    },
+    {
+      "file": "towns_city_a_beds2.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1538160,
+      "sha256": "1bfa509c4fe28a49e981ea85e2775e6a06ec14dc57cf78b096d3c0ae532693c5"
+    },
+    {
+      "file": "towns_city_a_ugle_perch.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1587802,
+      "sha256": "ff40e36f4919c7f268833b689917a364bd83d7950cb3a5251946657ccfc26dfe"
+    },
+    {
+      "file": "towns_city_door_badehuset.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1446595,
+      "sha256": "751d76787354515c87a0ad7e773f97688889deffc8ef411ed579d36db1df3559"
+    },
+    {
+      "file": "towns_city_door_hoppe_hut.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1404007,
+      "sha256": "d2a1f10f96280bef71f6befbe837fbd80e5a3d71980de9ab10054116c9081da0"
+    },
+    {
+      "file": "towns_city_door_musikstuen.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1383288,
+      "sha256": "070406488c635185378983ef498acad211c4d398d821219f20a5175f2c5af23b"
+    },
+    {
+      "file": "towns_city_door_postkontoret.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1483424,
+      "sha256": "f2c1483272190849512faf723d6002b2ebb6fb0c0d185104352083674057cfe0"
+    },
+    {
+      "file": "towns_city_door_raadhuset.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1703888,
+      "sha256": "e48134dbcf439e892865a24c8a178de1fe65c22de701eadc48f1e37d22495b44"
+    },
+    {
+      "file": "towns_city_door_uglehulen.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1589591,
+      "sha256": "f81d200ab3215cf8ade367ea3fde54af4e17c89cf35a118e26e7ce674763e138"
+    },
+    {
+      "file": "towns_city_e_bat_window.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1442960,
+      "sha256": "739d5b84c2e5bacffe18eb47013e543c5373e7a8806fdf2ed372cfe4744d8bc2"
+    },
+    {
+      "file": "towns_city_e_lamp.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1482000,
+      "sha256": "0239230e0afef4625bda680edb883de2d268e143f7208104a4ec0e45ea7d4b3e"
+    },
+    {
+      "file": "towns_city_e_tub.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1499301,
+      "sha256": "6e7aef334033571c55e683f676e527308ec3e55e366791f1f84b533533731454"
+    },
+    {
+      "file": "towns_city_f_lamp.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1385851,
+      "sha256": "bece1047aea25be8842bdebeaecf2540d6dd1000360706916c753ef544f18c2e"
+    },
+    {
+      "file": "towns_city_fest_raadhus_host.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1691050,
+      "sha256": "7084d7152bb079fa1b539ac2a0f29a3d669f3a815efbd50b41f30700a0370065"
+    },
+    {
+      "file": "towns_city_fest_torvet_host.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1713359,
+      "sha256": "ec64ad259386bde8702d8e9e15748f9e2e40f40ba19afd6032b83b4b8f29e924"
+    },
+    {
+      "file": "towns_city_g_planter3.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1430114,
+      "sha256": "92897fb8fc06bfffd14517f5c591fc94be216df59bc48b7556cdb851d5094acc"
+    },
+    {
+      "file": "towns_city_owl_window_2100.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1457609,
+      "sha256": "cfbda6705222039326558510b0aaa79b636ec7fa6befd6fe475284a196f25169"
+    },
+    {
+      "file": "towns_city_seed_shop_panel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 276294,
+      "sha256": "46be13049e9b24d3b7368252b007919337db4014bd82a9afe09169689eebe7fb"
+    },
+    {
+      "file": "towns_city_seed_shop_room.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 574976,
+      "sha256": "ae5f3f93ed8c8d5bc42a5020287e7dc78c20047004455ebce6932ae279806053"
+    },
+    {
+      "file": "towns_city_t_bench2.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1699574,
+      "sha256": "453ab5bc5baa4d8d151ab9ffe0f4178c298e7a0bccdbe4ad3100898e28427a35"
+    },
+    {
+      "file": "towns_city_t_lamp.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1695976,
+      "sha256": "a33d9394ad0e325ed969888637a58afc49783fbf7b55b0a3bf272f24446436b1"
+    },
+    {
+      "file": "towns_city_u_lamp.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1676008,
+      "sha256": "309cf79abc45aa0601bc44a5462d099d290bd024abb0b0e20de39d5afd708481"
+    },
+    {
+      "file": "towns_city_u_terrace.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1679611,
+      "sha256": "96da4d96f3588ba678bc3aae5ce4ddb574f1451f09462a0c4d4d0182045f2246"
+    },
+    {
+      "file": "towns_director_farm_7_11.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1943323,
+      "sha256": "2a3349a237ff3b6f744fa5ceef82ea98d27498e081fa59f881591182b293d666"
+    },
+    {
+      "file": "towns_director_festival_green.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1974652,
+      "sha256": "711669ec2361930550d1ae3ac9880cfd2d4ea3a9d0402915d988aa8c4c1ff367"
+    },
+    {
+      "file": "towns_director_hyggebyen_15_0.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2060852,
+      "sha256": "0e883e30d1906d5d9c4f0e4eda623e46a6a09cf71eff8cc9de78aef41a34b540"
+    },
+    {
+      "file": "towns_director_hyggebyen_9_30.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2069257,
+      "sha256": "dc2b4d5f3230102a183eeaf8e58510d59447aca15ea272fbc41b8283af5c8d19"
+    },
+    {
+      "file": "towns_director_traetoppen_12_0.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1641420,
+      "sha256": "7dc9306c14e36030fc9a7662d4288eb3e142748e780e8236fd7395f0fb56e7f4"
+    },
+    {
+      "file": "towns_director_traetoppen_19_0.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1565440,
+      "sha256": "c240abc3946a4cea453d4b692dd57a131cb0052b288fe09f2a28cbe61f238df3"
+    },
+    {
+      "file": "towns_interiors_core_core_int_badehuset.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 612616,
+      "sha256": "a5cb898d144ee930e0e52adbf0519de30ce8a9c023f006b9ced5688b33570cd2"
+    },
+    {
+      "file": "towns_interiors_core_core_int_bageriet.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 562079,
+      "sha256": "657781e2e0c702afc549eb2897344810027c232096c75994f296f6fe2110eb13"
+    },
+    {
+      "file": "towns_interiors_core_core_int_brummes_vaerksted.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 561362,
+      "sha256": "704b0ef4cbba4f83db5237c97b77efe68de0a2e37367f0bf9f85912b191b97c2"
+    },
+    {
+      "file": "towns_interiors_core_core_int_dyrehuset.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 567523,
+      "sha256": "b178231ba91d63d38af815039522484277efb2183eb4157b9ebcd133c77a1352"
+    },
+    {
+      "file": "towns_interiors_core_core_int_froebutikken.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 581241,
+      "sha256": "a393e3f195b85bc8baca47e43c138a0e9c3115b965354b8e8ee5415800f2a718"
+    },
+    {
+      "file": "towns_interiors_core_core_int_gaestehytten.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 523627,
+      "sha256": "fff211a2da61330e7cddf698c23b6c2a999fc9e32ccd89c9c62361d4ae4b1734"
+    },
+    {
+      "file": "towns_interiors_core_core_int_loppeloftet.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 547280,
+      "sha256": "eceb129d3a3ea875e6a250da9affa898af37cbfb8114590f069cad1ff52e93de"
+    },
+    {
+      "file": "towns_interiors_core_core_int_moebelbutikken.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 625735,
+      "sha256": "eef79be0fbaa5715c4f96245b6783a15b67a8aa7f6384b38b3321aaf8a2da014"
+    },
+    {
+      "file": "towns_interiors_core_core_int_postkontoret.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 545172,
+      "sha256": "fac3acec956e8481f08cf8ee7bea96955643682d1b55030fbe0fbf0faef37d5e"
+    },
+    {
+      "file": "towns_interiors_core_core_int_raadhuset.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 677041,
+      "sha256": "5ec9431696a65d633348ac4666ed0e2e22ebb68069bd0c0c686b1d01813e5007"
+    },
+    {
+      "file": "towns_interiors_core_core_int_skraedderiet.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 602838,
+      "sha256": "7a3d164cd4a2d704d5c1b8cc07676bc7a1c1354ca376e06b99530d12abc2c090"
+    },
+    {
+      "file": "towns_interiors_core_core_int_smedjen.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 574908,
+      "sha256": "19bb029819252559fe6339c0fbb5b7511bcb5ebaa3e44d48b762705553594d8d"
+    },
+    {
+      "file": "towns_interiors_core_core_int_toemmerhandlen.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 577205,
+      "sha256": "8759444fdd4f174cd142363b26f4fee45336c707f5bd4c45a4c59294d1b73d76"
+    },
+    {
+      "file": "towns_interiors_core_core_int_troldmandstaarnet.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 605442,
+      "sha256": "ed2fb88c312d863893b19feda8e82426611e8d6477a910513b405a8cad25fa42"
+    },
+    {
+      "file": "towns_interiors_core_core_int_uglehulen.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 543384,
+      "sha256": "596307cae1649586fecb6096a405ed0fd96ca5af3bc820ab36886d57d6163acc"
+    },
+    {
+      "file": "towns_interiors_door_bageriet.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2080103,
+      "sha256": "1836d199c3f4dbbc6aafb87dc455815a87a5fc8016fb25433fdb2e5b7faa9ea8"
+    },
+    {
+      "file": "towns_interiors_door_fekongens_hus.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2066157,
+      "sha256": "8a27f862bc59a1284510300c0e3d80422867f6ad352cc67e6f7924a2268150e8"
+    },
+    {
+      "file": "towns_interiors_door_froebutikken.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 2063065,
+      "sha256": "5aff9ce97ddf63ec671ab84c626dbebc630b87c415aa54783468692018e803f6"
+    },
+    {
+      "file": "towns_interiors_froebutikken.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 570909,
+      "sha256": "f9787124b75a41f228df863333814bb43b371ea9dbd7e08ec9f7eb10d3ea945c"
+    },
+    {
+      "file": "towns_interiors_froebutikken_shop_panel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 277763,
+      "sha256": "6a9ce44dc41f4a0a8f6630daae0536fbd36d352c787655e9271e47f8f7d19b96"
+    },
+    {
+      "file": "towns_interiors_hoppe_hut.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 528535,
+      "sha256": "47264281ba559233cea8857a36c8390af9650ba3818711e83e6f7e11b5183b9e"
+    },
+    {
+      "file": "towns_interiors_painted_int_bageriet_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 611720,
+      "sha256": "4b101d8eab8dccc5e1bb7b6fc42f1b00703c6edc726d76f0cba3bdad4f7b25ec"
+    },
+    {
+      "file": "towns_interiors_painted_int_bageriet_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 596228,
+      "sha256": "355590b02cf2a3701ae754a1adf09135e153397004c69b756fe81482a273302e"
+    },
+    {
+      "file": "towns_interiors_painted_int_hoppe_hut_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 533106,
+      "sha256": "8219da77db18346a3e4414370ddd186252a988be9f07619309707a6d37ae604a"
+    },
+    {
+      "file": "towns_interiors_painted_int_hoppe_hut_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 519709,
+      "sha256": "8de8691071b10b862ac66c0fad202c5a7e6852dfe591c321a192e701ea1fc7be"
+    },
+    {
+      "file": "towns_interiors_painted_int_smedjen_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 570119,
+      "sha256": "4a88efeec701910aaa1b105ce473d7b505c32d7c8acc9a7918b33f07f40983a5"
+    },
+    {
+      "file": "towns_interiors_painted_int_smedjen_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 555008,
+      "sha256": "fdb72a63def159a2516cbc18bc27ffeeb20a03ddbee475c44ef6d2a54f52a218"
+    },
+    {
+      "file": "towns_interiors_painted_int_troldmandstaarnet_day.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 600800,
+      "sha256": "0e84cfe3dd6f1473ed87e649943fd5e4eb21813f30d814594a540208259141ad"
+    },
+    {
+      "file": "towns_interiors_painted_int_troldmandstaarnet_night.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 583923,
+      "sha256": "5a552c89c6db209a1c645e326d0bf6efbcb8a9efd31cab41827819057bca9561"
+    },
+    {
+      "file": "towns_interiors_postkontoret.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 539878,
+      "sha256": "c48d0f1b7f0a4c38af2a079f4b182e164aa0445c1ce348f16387ced478d8cca6"
+    },
+    {
+      "file": "ui_audit_blind_blind_half_frame.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 8810,
+      "sha256": "0ef2eb8021a3ac30148f93029ab06c921d8a1bf6287a0d5d3d4eb181d8581188"
+    },
+    {
+      "file": "ui_audit_blind_blind_painting_slider.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 13680,
+      "sha256": "d1be6c3983ae9a7f27c062371a2aa9ad41327039429af8b3f9dae438344282dc"
+    },
+    {
+      "file": "ui_audit_blind_blind_painting_slider_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 9395,
+      "sha256": "bcc3b1fd80974f2aa4ec74adbb9adca73341e55fa8efca9d372e48044035795e"
+    },
+    {
+      "file": "ui_audit_blind_blind_plain_slider_with_theme_focus.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 10423,
+      "sha256": "0ee608a0cda3aee5822fab1ffa623507b03025903f3097cbc73ed6ddf3198829"
+    },
+    {
+      "file": "ui_audit_blind_blind_plain_slider_with_theme_focus_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 9395,
+      "sha256": "bcc3b1fd80974f2aa4ec74adbb9adca73341e55fa8efca9d372e48044035795e"
+    },
+    {
+      "file": "ui_audit_blind_blind_ring_clipped_first_row.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 18584,
+      "sha256": "813ad22e06595e2be566d4993ae53b03f2949e879b44a9abc1fc63085d029750"
+    },
+    {
+      "file": "ui_audit_blind_blind_ring_clipped_first_row_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 17971,
+      "sha256": "ae709b8ea277181978a154b7011454c6a97ac75acd6fbf5c038285b8f21fe49f"
+    },
+    {
+      "file": "ui_audit_blind_blind_ring_covered.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 8501,
+      "sha256": "bd315b0a63179ba054069b529365cace0d97378e31daf766aa21fd55d9658007"
+    },
+    {
+      "file": "ui_audit_blind_blind_ring_covered_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 8051,
+      "sha256": "cb898364b105a5047cdc086b7a9031752d277ad99554d7cef553ff2f73160e95"
+    },
+    {
+      "file": "ui_audit_blind_blind_ring_inner_row.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 18755,
+      "sha256": "225b3388d9406d47f01608dd8094aba3e469750e25f0c85c28614815b8ce7bf9"
+    },
+    {
+      "file": "ui_audit_blind_blind_ring_inner_row_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 17971,
+      "sha256": "ae709b8ea277181978a154b7011454c6a97ac75acd6fbf5c038285b8f21fe49f"
+    },
+    {
+      "file": "ui_audit_blind_blind_ring_inner_row_with_margin.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 16047,
+      "sha256": "496a67787f0b17662a0bd34a9d09dee9163aa9434ccea2abc360a88954744145"
+    },
+    {
+      "file": "ui_audit_blind_blind_ring_inner_row_with_margin_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 14813,
+      "sha256": "f1ab48ee3b9847093d83228f6cf4d9b3bc68704197dbe64aaec65ce35dd68933"
+    },
+    {
+      "file": "ui_audit_blind_blind_ring_top_allowed.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 15897,
+      "sha256": "aadd044a93ac735c7291e5ccb230a3d3d3480d33c169ee623cdbd8af7ae28df5"
+    },
+    {
+      "file": "ui_audit_blind_blind_ring_top_allowed_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 14813,
+      "sha256": "f1ab48ee3b9847093d83228f6cf4d9b3bc68704197dbe64aaec65ce35dd68933"
+    },
+    {
+      "file": "ui_audit_blind_blind_ring_top_clipped_only.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 15897,
+      "sha256": "aadd044a93ac735c7291e5ccb230a3d3d3480d33c169ee623cdbd8af7ae28df5"
+    },
+    {
+      "file": "ui_audit_blind_blind_ring_top_clipped_only_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 14813,
+      "sha256": "f1ab48ee3b9847093d83228f6cf4d9b3bc68704197dbe64aaec65ce35dd68933"
+    },
+    {
+      "file": "ui_audit_button_flat.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 32309,
+      "sha256": "5bd816c8d209eb3b7737bb1bcb88ef5fa6c616e878238e5f1c339eb88f8cee93"
+    },
+    {
+      "file": "ui_audit_button_gallery_auto.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 133322,
+      "sha256": "e505ebfdd8f1f1b4a6a7e02fbe9ab0316ff8e2889c66d776cc8f6810874c667b"
+    },
+    {
+      "file": "ui_audit_button_no_underside.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 32309,
+      "sha256": "5bd816c8d209eb3b7737bb1bcb88ef5fa6c616e878238e5f1c339eb88f8cee93"
+    },
+    {
+      "file": "ui_audit_button_pixels_sp_pixels.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 38732,
+      "sha256": "291fd9875c0757c55486a530a767eaead7d9984fc6dc31caacda0a81c9eb30b2"
+    },
+    {
+      "file": "ui_audit_button_primary.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 32309,
+      "sha256": "5bd816c8d209eb3b7737bb1bcb88ef5fa6c616e878238e5f1c339eb88f8cee93"
+    },
+    {
+      "file": "ui_audit_components_screen.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 90525,
+      "sha256": "dff882dd7981de653754b2bad0dbe2e3b34dc24723ed52c9ee6082b904ed5134"
+    },
+    {
+      "file": "ui_audit_panel_flat.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 24352,
+      "sha256": "d84b699371ef01861d5373bd603fca8851c25f400968163771b599f2aca62c66"
+    },
+    {
+      "file": "ui_audit_panel_inset.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 32309,
+      "sha256": "5bd816c8d209eb3b7737bb1bcb88ef5fa6c616e878238e5f1c339eb88f8cee93"
+    },
+    {
+      "file": "ui_audit_panel_parchment.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 24352,
+      "sha256": "d84b699371ef01861d5373bd603fca8851c25f400968163771b599f2aca62c66"
+    },
+    {
+      "file": "ui_audit_panel_pixels_sp_pixels.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 40058,
+      "sha256": "0b6115b3bd24f13a89b41d064b9b2bc4ee7bf6ac59ac937fe784c80b4e574753"
+    },
+    {
+      "file": "ui_audit_ring_always_on.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 40009,
+      "sha256": "29d5a5863d240fe2d0c70fc6173db486dca745deff2da072d3b7f8699c52e3fa"
+    },
+    {
+      "file": "ui_audit_ring_always_on_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 40040,
+      "sha256": "0e91dd5289dbf8dc2de0c83541414368e2e294b63dec492aa446289fb51dbfac"
+    },
+    {
+      "file": "ui_audit_ring_blue.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 38284,
+      "sha256": "1f3c4c648c4f9c4a811a29614a72faaac340f1c6bb8ca7066818118167a1dd42"
+    },
+    {
+      "file": "ui_audit_ring_blue_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 38732,
+      "sha256": "291fd9875c0757c55486a530a767eaead7d9984fc6dc31caacda0a81c9eb30b2"
+    },
+    {
+      "file": "ui_audit_ring_button.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 40058,
+      "sha256": "0b6115b3bd24f13a89b41d064b9b2bc4ee7bf6ac59ac937fe784c80b4e574753"
+    },
+    {
+      "file": "ui_audit_ring_button3.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 40019,
+      "sha256": "0ab8b5366835151abc706907b05be61b7bebb729dedb86f90263f09e4b0a2553"
+    },
+    {
+      "file": "ui_audit_ring_button3_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 38732,
+      "sha256": "291fd9875c0757c55486a530a767eaead7d9984fc6dc31caacda0a81c9eb30b2"
+    },
+    {
+      "file": "ui_audit_ring_button_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 38732,
+      "sha256": "291fd9875c0757c55486a530a767eaead7d9984fc6dc31caacda0a81c9eb30b2"
+    },
+    {
+      "file": "ui_audit_ring_custom.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 91820,
+      "sha256": "b9d2ffc38ad61677bdecaec1582220c1903ab222b0d51ee26ea9394d73392781"
+    },
+    {
+      "file": "ui_audit_ring_custom_missing.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 90301,
+      "sha256": "f5246727a413164c7fa1cca4117f3da89e6db9545779f138b9797d55dcbff014"
+    },
+    {
+      "file": "ui_audit_ring_custom_missing_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 90722,
+      "sha256": "da9833cb7f5c37176d3f2306623f3446cbb4e6eeab7c1213d90ecf0257e67f4b"
+    },
+    {
+      "file": "ui_audit_ring_custom_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 90460,
+      "sha256": "a31fdacb962438b38c3b2a47f6d26185c50e6e2a0c1eb6546ca15e72e817eea1"
+    },
+    {
+      "file": "ui_audit_ring_field.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 39822,
+      "sha256": "5d605b9d6137bcadaac9fd4fa26505efcfba43551083e85a9a8ec9302c3441fc"
+    },
+    {
+      "file": "ui_audit_ring_field_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 38732,
+      "sha256": "291fd9875c0757c55486a530a767eaead7d9984fc6dc31caacda0a81c9eb30b2"
+    },
+    {
+      "file": "ui_audit_ring_fixture_screen.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 38732,
+      "sha256": "291fd9875c0757c55486a530a767eaead7d9984fc6dc31caacda0a81c9eb30b2"
+    },
+    {
+      "file": "ui_audit_ring_fx_live.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 40058,
+      "sha256": "0b6115b3bd24f13a89b41d064b9b2bc4ee7bf6ac59ac937fe784c80b4e574753"
+    },
+    {
+      "file": "ui_audit_ring_fx_live_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 38732,
+      "sha256": "291fd9875c0757c55486a530a767eaead7d9984fc6dc31caacda0a81c9eb30b2"
+    },
+    {
+      "file": "ui_audit_ring_gallery_buy.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 133515,
+      "sha256": "1bb3cb1deab0caabf3f6b71fa8e77078b53f152dc520ce80e469a198755b50f7"
+    },
+    {
+      "file": "ui_audit_ring_gallery_buy_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 131947,
+      "sha256": "bfa034bbb4bcfdc5a0c72a2aad70cd7fa1b3a4227c770c0c3606ae02ecdaace9"
+    },
+    {
+      "file": "ui_audit_ring_gallery_chip.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 134296,
+      "sha256": "26029a214a666329b2ff030239d46cd69f2f508177a4a6b4c86ce21758042896"
+    },
+    {
+      "file": "ui_audit_ring_gallery_chip_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 131947,
+      "sha256": "bfa034bbb4bcfdc5a0c72a2aad70cd7fa1b3a4227c770c0c3606ae02ecdaace9"
+    },
+    {
+      "file": "ui_audit_ring_gold_only.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 25196,
+      "sha256": "52bbb28d66073c18e6335c9ca800e6f4179cc50e1b0204b50e89b9b5b7e681bc"
+    },
+    {
+      "file": "ui_audit_ring_gold_only_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 24352,
+      "sha256": "d84b699371ef01861d5373bd603fca8851c25f400968163771b599f2aca62c66"
+    },
+    {
+      "file": "ui_audit_ring_menu_row_fill.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 25091,
+      "sha256": "e30f50d93a93fcdea460960c7897bf18e5e0c95a4c166399dbd3e8896d61efc2"
+    },
+    {
+      "file": "ui_audit_ring_menu_row_fill_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 24352,
+      "sha256": "d84b699371ef01861d5373bd603fca8851c25f400968163771b599f2aca62c66"
+    },
+    {
+      "file": "ui_audit_ring_other_always_on.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 41365,
+      "sha256": "52b91e66fc6d55852d2720a5cec2ec6babca49a16cc729dd083e5add1f70fd7b"
+    },
+    {
+      "file": "ui_audit_ring_other_always_on_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 40040,
+      "sha256": "0e91dd5289dbf8dc2de0c83541414368e2e294b63dec492aa446289fb51dbfac"
+    },
+    {
+      "file": "ui_audit_ring_plain_slider.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 39848,
+      "sha256": "2adb4ed1e23329be61fef66871dbc714110ac73c64fc2bf123f4bca6a5064ba4"
+    },
+    {
+      "file": "ui_audit_ring_plain_slider_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 38732,
+      "sha256": "291fd9875c0757c55486a530a767eaead7d9984fc6dc31caacda0a81c9eb30b2"
+    },
+    {
+      "file": "ui_audit_ring_primary_kind.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 25610,
+      "sha256": "c25fa18af428bd23e33115c421b9b04587c141476616cf674236f96a3c388594"
+    },
+    {
+      "file": "ui_audit_ring_primary_kind_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 24352,
+      "sha256": "d84b699371ef01861d5373bd603fca8851c25f400968163771b599f2aca62c66"
+    },
+    {
+      "file": "ui_audit_ring_slider.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 43205,
+      "sha256": "b51f7cfa58b8d4164c2fe58f47d1597d7eb8e75eabb7e8a8d8b545e8bb1f75de"
+    },
+    {
+      "file": "ui_audit_ring_slider_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 38732,
+      "sha256": "291fd9875c0757c55486a530a767eaead7d9984fc6dc31caacda0a81c9eb30b2"
+    },
+    {
+      "file": "ui_audit_ring_sp_pixels.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 40058,
+      "sha256": "0b6115b3bd24f13a89b41d064b9b2bc4ee7bf6ac59ac937fe784c80b4e574753"
+    },
+    {
+      "file": "ui_audit_ring_sp_pixels_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 38732,
+      "sha256": "291fd9875c0757c55486a530a767eaead7d9984fc6dc31caacda0a81c9eb30b2"
+    },
+    {
+      "file": "ui_conformance_accept_gallery_confirm.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 116978,
+      "sha256": "4ec429f906c789a7d1fa3da115bcb66502efc909ced90722407611cbeb73500a"
+    },
+    {
+      "file": "ui_conformance_accept_gallery_guide_focus.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 133322,
+      "sha256": "e505ebfdd8f1f1b4a6a7e02fbe9ab0316ff8e2889c66d776cc8f6810874c667b"
+    },
+    {
+      "file": "ui_conformance_accept_gallery_guide_focus_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 131947,
+      "sha256": "bfa034bbb4bcfdc5a0c72a2aad70cd7fa1b3a4227c770c0c3606ae02ecdaace9"
+    },
+    {
+      "file": "ui_conformance_accept_gallery_guide_stepper.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 133225,
+      "sha256": "a1f3863df36f1cfe8b61de136db5eb362088a1f1220162a777c7233a0a239794"
+    },
+    {
+      "file": "ui_conformance_accept_gallery_guide_stepper_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 131947,
+      "sha256": "bfa034bbb4bcfdc5a0c72a2aad70cd7fa1b3a4227c770c0c3606ae02ecdaace9"
+    },
+    {
+      "file": "ui_conformance_accept_gallery_rarity_focus.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 188849,
+      "sha256": "826851d2a109d58c41c013d1e2b16056dd0417a67b11d4d2b341e828c75daf0c"
+    },
+    {
+      "file": "ui_conformance_accept_gallery_rarity_focus_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 188100,
+      "sha256": "a32c6b65bf17d317792e95adb2658a0b2909ec59a8e3fa67f2d3506b1b167cb8"
+    },
+    {
+      "file": "ui_conformance_button_confirm_OkButton.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 54630,
+      "sha256": "689580fe551273dd36cf972bcba98dfcb1aca2d676762fa7a4087040b1b95ba0"
+    },
+    {
+      "file": "ui_conformance_button_foundation_gallery_AcceptButton.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 131947,
+      "sha256": "bfa034bbb4bcfdc5a0c72a2aad70cd7fa1b3a4227c770c0c3606ae02ecdaace9"
+    },
+    {
+      "file": "ui_conformance_button_foundation_gallery_BackButton.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 131947,
+      "sha256": "bfa034bbb4bcfdc5a0c72a2aad70cd7fa1b3a4227c770c0c3606ae02ecdaace9"
+    },
+    {
+      "file": "ui_conformance_button_foundation_gallery_BuyButton.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 131947,
+      "sha256": "bfa034bbb4bcfdc5a0c72a2aad70cd7fa1b3a4227c770c0c3606ae02ecdaace9"
+    },
+    {
+      "file": "ui_conformance_button_gift_BackButton.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 117571,
+      "sha256": "2dce40f769dc82f1b7e1f879a1a9570c5e6610e291d93107d8da2523654a2c0a"
+    },
+    {
+      "file": "ui_conformance_button_gift_GiveButton.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 117571,
+      "sha256": "2dce40f769dc82f1b7e1f879a1a9570c5e6610e291d93107d8da2523654a2c0a"
+    },
+    {
+      "file": "ui_conformance_button_saveload_CloseButton.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 84494,
+      "sha256": "fdd57ed71af7d840a748b732963defe577d28c1a0df6111f8e855690d3ec9505"
+    },
+    {
+      "file": "ui_conformance_button_select_1_BackButton.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 289153,
+      "sha256": "7651f98d91426286fdc1d44d4f7ef305c4af464a2728fb10169e550d05382858"
+    },
+    {
+      "file": "ui_conformance_button_select_1_NextButton.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 289153,
+      "sha256": "7651f98d91426286fdc1d44d4f7ef305c4af464a2728fb10169e550d05382858"
+    },
+    {
+      "file": "ui_conformance_button_select_2_BackToRaceButton.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 93789,
+      "sha256": "a6b0e8c7e6ebef6efc5cb6b464e812abf63927e18b10f67367e22a580dfc4a33"
+    },
+    {
+      "file": "ui_conformance_button_select_2_ConfirmButton.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 93789,
+      "sha256": "a6b0e8c7e6ebef6efc5cb6b464e812abf63927e18b10f67367e22a580dfc4a33"
+    },
+    {
+      "file": "ui_conformance_button_settings_CloseButton.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 79623,
+      "sha256": "03557e34232d6b101047428c484d3123c8db7f6db612841465bde5c394f9ad4a"
+    },
+    {
+      "file": "ui_conformance_button_shop_BuyButton.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 322532,
+      "sha256": "4cef6e0f5c56bfdf62ca6528d8645437908eec9572b154873f494e03bc9dc91f"
+    },
+    {
+      "file": "ui_conformance_panel_confirm_Panel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 54630,
+      "sha256": "689580fe551273dd36cf972bcba98dfcb1aca2d676762fa7a4087040b1b95ba0"
+    },
+    {
+      "file": "ui_conformance_panel_foundation_gallery_HeartsPanel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 131947,
+      "sha256": "bfa034bbb4bcfdc5a0c72a2aad70cd7fa1b3a4227c770c0c3606ae02ecdaace9"
+    },
+    {
+      "file": "ui_conformance_panel_gift_@PanelContainer@39607.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 117571,
+      "sha256": "2dce40f769dc82f1b7e1f879a1a9570c5e6610e291d93107d8da2523654a2c0a"
+    },
+    {
+      "file": "ui_conformance_panel_inventory_Workshop.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 118328,
+      "sha256": "0f44ac362715cae7d818b3d575469aaf2adc4328dc34eae02906634d8a4f9302"
+    },
+    {
+      "file": "ui_conformance_panel_journal_Book.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 111605,
+      "sha256": "c6a191475be04bc0c772fcc648a3da160a4586226520f9f038f003d5d0c28f13"
+    },
+    {
+      "file": "ui_conformance_panel_pause_Panel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 64531,
+      "sha256": "24af3e8e8c8f72bfec73ef1143ad68a5ce474a1b258dd7a9783580d21a667b67"
+    },
+    {
+      "file": "ui_conformance_panel_people_@PanelContainer@39565.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 158588,
+      "sha256": "7db7a9183708b51b8465978748fa489ede70f851ee6a76a615960fa4b4951581"
+    },
+    {
+      "file": "ui_conformance_panel_saveload_Panel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 84494,
+      "sha256": "fdd57ed71af7d840a748b732963defe577d28c1a0df6111f8e855690d3ec9505"
+    },
+    {
+      "file": "ui_conformance_panel_select_2_FormPanel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 93789,
+      "sha256": "a6b0e8c7e6ebef6efc5cb6b464e812abf63927e18b10f67367e22a580dfc4a33"
+    },
+    {
+      "file": "ui_conformance_panel_select_2_Preview.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 93789,
+      "sha256": "a6b0e8c7e6ebef6efc5cb6b464e812abf63927e18b10f67367e22a580dfc4a33"
+    },
+    {
+      "file": "ui_conformance_panel_settings_Panel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 79623,
+      "sha256": "03557e34232d6b101047428c484d3123c8db7f6db612841465bde5c394f9ad4a"
+    },
+    {
+      "file": "ui_conformance_panel_shop_ShopPanel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 322532,
+      "sha256": "4cef6e0f5c56bfdf62ca6528d8645437908eec9572b154873f494e03bc9dc91f"
+    },
+    {
+      "file": "ui_conformance_panel_title_MenuPanel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1538814,
+      "sha256": "0c56bc0f202f93a9b8fedd942f6727c5e0cf8d18716cf2e134b0bb0dfc0ce45f"
+    },
+    {
+      "file": "ui_conformance_ring_calendar.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 71054,
+      "sha256": "14f60432d7b239ac6aaf38527b2f15667857be7bd619f0962e062c0cbe6eef09"
+    },
+    {
+      "file": "ui_conformance_ring_calendar_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 69675,
+      "sha256": "2f72d786d99e23debdd1368f356a3e059be6bc5b14c783bbf599eb07f5742cf8"
+    },
+    {
+      "file": "ui_conformance_ring_confirm.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 54630,
+      "sha256": "689580fe551273dd36cf972bcba98dfcb1aca2d676762fa7a4087040b1b95ba0"
+    },
+    {
+      "file": "ui_conformance_ring_confirm_sibling.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 54630,
+      "sha256": "689580fe551273dd36cf972bcba98dfcb1aca2d676762fa7a4087040b1b95ba0"
+    },
+    {
+      "file": "ui_conformance_ring_dialogue.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 78090,
+      "sha256": "a5ab45cddf35f49fcf306749e29dc63a8121071c7de9c28cb94eceb7238c539f"
+    },
+    {
+      "file": "ui_conformance_ring_foundation_gallery.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 133322,
+      "sha256": "e505ebfdd8f1f1b4a6a7e02fbe9ab0316ff8e2889c66d776cc8f6810874c667b"
+    },
+    {
+      "file": "ui_conformance_ring_foundation_gallery_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 131947,
+      "sha256": "bfa034bbb4bcfdc5a0c72a2aad70cd7fa1b3a4227c770c0c3606ae02ecdaace9"
+    },
+    {
+      "file": "ui_conformance_ring_gift.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 117571,
+      "sha256": "2dce40f769dc82f1b7e1f879a1a9570c5e6610e291d93107d8da2523654a2c0a"
+    },
+    {
+      "file": "ui_conformance_ring_gift_sibling.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 117571,
+      "sha256": "2dce40f769dc82f1b7e1f879a1a9570c5e6610e291d93107d8da2523654a2c0a"
+    },
+    {
+      "file": "ui_conformance_ring_inventory.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 118328,
+      "sha256": "0f44ac362715cae7d818b3d575469aaf2adc4328dc34eae02906634d8a4f9302"
+    },
+    {
+      "file": "ui_conformance_ring_inventory_sibling.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 118328,
+      "sha256": "0f44ac362715cae7d818b3d575469aaf2adc4328dc34eae02906634d8a4f9302"
+    },
+    {
+      "file": "ui_conformance_ring_journal.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 111605,
+      "sha256": "c6a191475be04bc0c772fcc648a3da160a4586226520f9f038f003d5d0c28f13"
+    },
+    {
+      "file": "ui_conformance_ring_journal_sibling.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 111605,
+      "sha256": "c6a191475be04bc0c772fcc648a3da160a4586226520f9f038f003d5d0c28f13"
+    },
+    {
+      "file": "ui_conformance_ring_pause.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 64531,
+      "sha256": "24af3e8e8c8f72bfec73ef1143ad68a5ce474a1b258dd7a9783580d21a667b67"
+    },
+    {
+      "file": "ui_conformance_ring_pause_sibling.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 64531,
+      "sha256": "24af3e8e8c8f72bfec73ef1143ad68a5ce474a1b258dd7a9783580d21a667b67"
+    },
+    {
+      "file": "ui_conformance_ring_people.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 158588,
+      "sha256": "7db7a9183708b51b8465978748fa489ede70f851ee6a76a615960fa4b4951581"
+    },
+    {
+      "file": "ui_conformance_ring_people_sibling.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 158588,
+      "sha256": "7db7a9183708b51b8465978748fa489ede70f851ee6a76a615960fa4b4951581"
+    },
+    {
+      "file": "ui_conformance_ring_saveload.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 84494,
+      "sha256": "fdd57ed71af7d840a748b732963defe577d28c1a0df6111f8e855690d3ec9505"
+    },
+    {
+      "file": "ui_conformance_ring_saveload_sibling.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 84494,
+      "sha256": "fdd57ed71af7d840a748b732963defe577d28c1a0df6111f8e855690d3ec9505"
+    },
+    {
+      "file": "ui_conformance_ring_select_1.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 289153,
+      "sha256": "7651f98d91426286fdc1d44d4f7ef305c4af464a2728fb10169e550d05382858"
+    },
+    {
+      "file": "ui_conformance_ring_select_1_sibling.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 289153,
+      "sha256": "7651f98d91426286fdc1d44d4f7ef305c4af464a2728fb10169e550d05382858"
+    },
+    {
+      "file": "ui_conformance_ring_select_2.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 94874,
+      "sha256": "165fc7e74f31968f23e6ecf30c1ed113b2bde07c3f5d78ccfd6e9d3e2f0391ae"
+    },
+    {
+      "file": "ui_conformance_ring_select_2_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 93789,
+      "sha256": "a6b0e8c7e6ebef6efc5cb6b464e812abf63927e18b10f67367e22a580dfc4a33"
+    },
+    {
+      "file": "ui_conformance_ring_settings.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 79623,
+      "sha256": "03557e34232d6b101047428c484d3123c8db7f6db612841465bde5c394f9ad4a"
+    },
+    {
+      "file": "ui_conformance_ring_settings_sibling.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 79623,
+      "sha256": "03557e34232d6b101047428c484d3123c8db7f6db612841465bde5c394f9ad4a"
+    },
+    {
+      "file": "ui_conformance_ring_shop.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 322532,
+      "sha256": "4cef6e0f5c56bfdf62ca6528d8645437908eec9572b154873f494e03bc9dc91f"
+    },
+    {
+      "file": "ui_conformance_ring_shop_sibling.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 322532,
+      "sha256": "4cef6e0f5c56bfdf62ca6528d8645437908eec9572b154873f494e03bc9dc91f"
+    },
+    {
+      "file": "ui_conformance_ring_title.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1539594,
+      "sha256": "5b5dfa2a4da48788822687aaa82ecfa64dfabc43634053d46c54835d360e8c87"
+    },
+    {
+      "file": "ui_conformance_ring_title_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 1538814,
+      "sha256": "0c56bc0f202f93a9b8fedd942f6727c5e0cf8d18716cf2e134b0bb0dfc0ce45f"
+    },
+    {
+      "file": "ui_conformance_sheet_button_Primary.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 43565,
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b"
+    },
+    {
+      "file": "ui_conformance_sheet_button_Secondary.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 43565,
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b"
+    },
+    {
+      "file": "ui_conformance_sheet_button_Tertiary.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 43565,
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b"
+    },
+    {
+      "file": "ui_conformance_sheet_disabled.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 43565,
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b"
+    },
+    {
+      "file": "ui_conformance_sheet_panel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 43565,
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_CardButton.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 45369,
+      "sha256": "dadb4b8ee77fade03659c367cc8d87d02d130ee569321bb7c89392b873bdb624"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_CardButton_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 43565,
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_Chip.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 45448,
+      "sha256": "b6f2e294f9e6621b2ce5d63aad3a92252c7ab061ec6eb247bde1ccd559e24ff2"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_Chip_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 43565,
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_ChoiceRow.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 44291,
+      "sha256": "ed1a88759cdaa9aa3d1ce2f5760a16c2e6895205169452248309f04135da2e13"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_ChoiceRow_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 43565,
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_MenuRow.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 44368,
+      "sha256": "6450f4a5312c9158dd8247dc21ea1153d7b791be23ebe0d43f544f8c78e134fe"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_MenuRow_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 43565,
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_PillTab.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 45262,
+      "sha256": "4ca36f1db97bbd30442a687d22cfdc2b1f736cdd0b163ec28793921136283365"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_PillTab_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 43565,
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_Primary.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 44863,
+      "sha256": "1559ec710810fab25772d8235bea87a07ccd3ed3c158fde5edb4267cb8deec0b"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_Primary_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 43565,
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_Secondary.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 44881,
+      "sha256": "b7f0cc8b5cb83da2ea3d2ff4eb97f4e1781316803969d916e21bc65f6c204aa5"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_Secondary_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 43565,
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_Tertiary.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 44853,
+      "sha256": "11c5da28b20ce865fd13a1b89312191575124b4cf2828ee878044f68d5cb3ea6"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_Tertiary_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 43565,
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_field.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 44667,
+      "sha256": "a5d6cb188e95abafd983cf44bbb9d9ca4d8a6142ddf33c6e1864070ed4937775"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_field_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 43565,
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_slider.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 46629,
+      "sha256": "b2945fce813a381c4db0af98c3670bb25727b1f4dd5c810e1e2f8bc376721998"
+    },
+    {
+      "file": "ui_conformance_sheet_ring_slider_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 43565,
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b"
+    },
+    {
+      "file": "ui_foundation_ability_slots.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 10925,
+      "sha256": "a83314ae10fa5493b93cece503b8f023abbcff1726316257cc95fd349aa64994"
+    },
+    {
+      "file": "ui_foundation_gallery_guide.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 133322,
+      "sha256": "e505ebfdd8f1f1b4a6a7e02fbe9ab0316ff8e2889c66d776cc8f6810874c667b"
+    },
+    {
+      "file": "ui_foundation_gallery_rarity.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 188100,
+      "sha256": "a32c6b65bf17d317792e95adb2658a0b2909ec59a8e3fa67f2d3506b1b167cb8"
+    },
+    {
+      "file": "ui_nav_slider_plain.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 12418,
+      "sha256": "23d6d27ed0e882fd37247d76ba7548633128408e466116eb09b12841c63ddd32"
+    },
+    {
+      "file": "ui_nav_slider_plain_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 11394,
+      "sha256": "ae708ccf577a441ddaf9cd587d55d4a356006b6d2a3e80fac1cc8cb7f84806ff"
+    },
+    {
+      "file": "ui_nav_slider_ring.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 15174,
+      "sha256": "54404ee2888853d4a1a40865cfe0421b8356631ed0b14fdd66f8caff0fea9bba"
+    },
+    {
+      "file": "ui_nav_slider_ring_max.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 14649,
+      "sha256": "13764dbcb6d0b46682f139398869e2eb0010f07ca52acb7797c309517ecc7e13"
+    },
+    {
+      "file": "ui_nav_slider_ring_max_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 11267,
+      "sha256": "7a9a50d48dc78739a986158541147262c0835b100ad1efa2c53390d8c0724420"
+    },
+    {
+      "file": "ui_nav_slider_ring_min.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 14608,
+      "sha256": "59f8f044b99fb03a54b37315fac1e8e7b7d6cd7b33acc294e4644a957f2d7e24"
+    },
+    {
+      "file": "ui_nav_slider_ring_min_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 11234,
+      "sha256": "846990ebdd838cd435fb6ff96cd3eaa4fe7d7453387cc2bacf208797e33504d1"
+    },
+    {
+      "file": "ui_nav_slider_ring_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 11394,
+      "sha256": "ae708ccf577a441ddaf9cd587d55d4a356006b6d2a3e80fac1cc8cb7f84806ff"
+    },
+    {
+      "file": "ui_nav_stepper_ring.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 14593,
+      "sha256": "e764bd8680a7c2865df0284d8977f6dede788d0182ae9aacd2aa19abf5a0e44a"
+    },
+    {
+      "file": "ui_nav_stepper_ring_unfocused.png",
+      "size": [
+        1280,
+        720
+      ],
+      "bytes": 12940,
+      "sha256": "7fc9c10938a5f41d5215c8ea5c2d4756b139f8731b976548505538d40e63361d"
+    }
+  ],
+  "reviewed_at_utc": "2026-10-16T12:17:05.267993+00:00",
+  "review_scope": {
+    "core": "All fourteen CORE captures viewed in core-a/core-b contacts; shop, dialogue and 16-look crowd also viewed full size.",
+    "rooms": "All fifteen live, staffed rooms viewed in staffed-rooms contact; guesthouse also viewed full size.",
+    "world": "Live city/crowd, city lighting, dark-forest art study and live farm viewed in world-style contact. Assembled art_city previews are isolated fixtures, not the shipped level.",
+    "remaining_raw_captures": "627 raw PNGs include UI negative controls, crop/compression diagnostics and previously reviewed art fixtures. Their hashes are retained; this is not a claim that every negative-control image is a production approval."
+  },
+  "findings": "No new clipping, missing keepers, indoor rain or style mismatch observed in the final gameplay captures. CORE dates reflect the actual multi-week test sequence; S12 is the morning after the tested bed sequence."
+}

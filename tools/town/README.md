@@ -53,7 +53,7 @@ speech/portrait/panel, and uses normalised Gaussian convolution so those UI
 colours cannot leak into background statistics. Budgets remain <=12/255 low
 frequency difference and <=0.6 high-frequency energy ratio. Fourteen CORE
 captures include the calendar; S14's actual festival scene is explicitly later.
-All final captures require visual inspection as well as numeric checks.
+All fourteen final CORE captures require visual inspection as well as numeric checks.
 
 Draw-call scope: the original room and farm numbers describe standalone area
 prototypes. Native reports retain both area-only calls and the presented screen

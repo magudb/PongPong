@@ -17,27 +17,33 @@
       "packages": [
         {
           "id": "P28-ui-nav-foundation",
-          "status": "core_validated"
+          "status": "validated",
+          "evidence": "All four final strict full suites pass (full-{animal,fairy,hobbit,ghost}.json); original package evidence remains in the core handoffs."
         },
         {
           "id": "P13-quests-lua-runtime",
-          "status": "core_validated"
+          "status": "validated",
+          "evidence": "All four final strict full suites pass (full-{animal,fairy,hobbit,ghost}.json); original package evidence remains in the core handoffs."
         },
         {
           "id": "S-core",
-          "status": "core_validated"
+          "status": "validated",
+          "evidence": "All four final strict full suites pass (full-{animal,fairy,hobbit,ghost}.json); original package evidence remains in the core handoffs."
         },
         {
           "id": "T-towns-core",
-          "status": "core_validated"
+          "status": "validated",
+          "evidence": "All four final strict full suites pass (full-{animal,fairy,hobbit,ghost}.json); original package evidence remains in the core handoffs."
         },
         {
           "id": "F2-home-core",
-          "status": "core_validated"
+          "status": "validated",
+          "evidence": "All four final strict full suites pass (full-{animal,fairy,hobbit,ghost}.json); original package evidence remains in the core handoffs."
         },
         {
           "id": "F4-loot-shops",
-          "status": "core_validated"
+          "status": "validated",
+          "evidence": "All four final strict full suites pass (full-{animal,fairy,hobbit,ghost}.json); original package evidence remains in the core handoffs."
         },
         {
           "id": "D0-dungeon-world-hooks",
@@ -131,8 +137,8 @@
         },
         {
           "id": "I2-loop-harness",
-          "status": "in_progress",
-          "evidence": "loop-shops-farm-gifts.json: 80 checks, zero failures/skips/messages, normal-speed loop 80.4 seconds. Real farm/city walks (including ladder E and return stub), conversations/People, talk/shop/desk hosts, exact listed purchase, closure eviction, all five gift tastes and limits, three input-driven till/plant/water plots and quest progress, hints, bed/growth/curfew/pass-out and state digest. Remaining acceptance is recorded in I2-working.txt; the full 5b wave gate is not yet approved."
+          "status": "validated",
+          "evidence": "acceptance.json: four full strict suites, 44,779 checks; final pricing/loop confirmations; 565 normal-speed checks; 922 native checks in 40 sections, no failures/errors/warnings. All 36 wave-5b rows satisfied for every race. Source-bound extension and seven producer mutants pass. Fourteen CORE captures and fifteen staffed rooms reviewed. Native loop 104.922s <=110, normal loop 101.393s <=120; save p95 19.445ms/20.802ms <=25; 73.41MB freed; zero orphan growth. Main merge verification remains."
         }
       ]
     },
@@ -163,12 +169,7 @@
     }
   ],
   "remaining_gates": [
-    "Real keyboard and gamepad new-game flows for all four races",
-    "Farm till/plant/water/grow/harvest/shipping/save loop",
-    "Both towns populated by live citizens with schedules and walk-in shop interactions",
-    "Dialogue quest acceptance and turn-in, gifts/hearts, people/calendar screens",
-    "First morning and farm-town-shop-farm loop acceptance",
-    "Final strict suites for all four heroes; required native art/UI/performance gates"
+    "Fast-forward main and verify the merged checkout."
   ],
   "notes": [
     "Production wardrobe animation remains the separate painted-equipment asset track recorded by Claude; preserve the fit proof coverage without presenting it as a complete wardrobe.",
@@ -204,5 +205,8 @@
       "status": "validated",
       "evidence": "Four-race family suites: 335 checks each; integration 1687; final refined art 70; latest placement/player 627; native 12; style snapshot 2562 assets. See GF-data.txt. M3 family gameplay remains separate."
     }
-  ]
+  ],
+  "status": "validated_pending_merge",
+  "source_implementation": "f20e44d152e275b7733ccfe175d1245dceafd2e4",
+  "acceptance": "docs/qa/m1b-milestone/acceptance.json"
 }

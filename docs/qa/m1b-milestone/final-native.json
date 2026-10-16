@@ -1,0 +1,296 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 922,
+  "elapsed_s": 389.83,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "area": {
+      "character": "animal",
+      "checks": 15,
+      "failed": 0,
+      "ms": 9974,
+      "skipped": 0
+    },
+    "art_cast_v2": {
+      "character": "animal",
+      "checks": 1,
+      "failed": 0,
+      "ms": 219,
+      "skipped": 0
+    },
+    "art_characters": {
+      "character": "animal",
+      "checks": 3,
+      "failed": 0,
+      "ms": 884,
+      "skipped": 0
+    },
+    "art_city": {
+      "character": "animal",
+      "checks": 6,
+      "failed": 0,
+      "ms": 3978,
+      "skipped": 0
+    },
+    "art_environment": {
+      "character": "animal",
+      "checks": 28,
+      "failed": 0,
+      "ms": 16252,
+      "skipped": 0
+    },
+    "art_equipment_fit": {
+      "character": "animal",
+      "checks": 8,
+      "failed": 0,
+      "ms": 2570,
+      "skipped": 0
+    },
+    "art_farm": {
+      "character": "animal",
+      "checks": 9,
+      "failed": 0,
+      "ms": 7555,
+      "skipped": 0
+    },
+    "art_festival": {
+      "character": "animal",
+      "checks": 57,
+      "failed": 0,
+      "ms": 7800,
+      "skipped": 0
+    },
+    "art_ghost": {
+      "character": "animal",
+      "checks": 1,
+      "failed": 0,
+      "ms": 3861,
+      "skipped": 0
+    },
+    "art_shops": {
+      "character": "animal",
+      "checks": 51,
+      "failed": 0,
+      "ms": 2448,
+      "skipped": 0
+    },
+    "art_shops_b": {
+      "character": "animal",
+      "checks": 149,
+      "failed": 0,
+      "ms": 4154,
+      "skipped": 0
+    },
+    "art_style_consistency": {
+      "character": "animal",
+      "checks": 48,
+      "failed": 0,
+      "ms": 10575,
+      "skipped": 0
+    },
+    "characters": {
+      "character": "animal",
+      "checks": 6,
+      "failed": 0,
+      "ms": 11768,
+      "skipped": 0
+    },
+    "city_levels": {
+      "character": "animal",
+      "checks": 9,
+      "failed": 0,
+      "ms": 3738,
+      "skipped": 0
+    },
+    "city_map": {
+      "character": "animal",
+      "checks": 9,
+      "failed": 0,
+      "ms": 78048,
+      "skipped": 0
+    },
+    "clock26": {
+      "character": "animal",
+      "checks": 4,
+      "failed": 0,
+      "ms": 1200,
+      "skipped": 0
+    },
+    "farm_first_morning": {
+      "character": "animal",
+      "checks": 5,
+      "failed": 0,
+      "ms": 10013,
+      "skipped": 0
+    },
+    "farm_site": {
+      "character": "animal",
+      "checks": 5,
+      "failed": 0,
+      "ms": 1621,
+      "skipped": 0
+    },
+    "ghost_lines": {
+      "character": "animal",
+      "checks": 3,
+      "failed": 0,
+      "ms": 1211,
+      "skipped": 0
+    },
+    "ghostfam_data": {
+      "character": "animal",
+      "checks": 9,
+      "failed": 0,
+      "ms": 7887,
+      "skipped": 0
+    },
+    "hud": {
+      "character": "animal",
+      "checks": 13,
+      "failed": 0,
+      "ms": 2025,
+      "skipped": 0
+    },
+    "loot": {
+      "character": "animal",
+      "checks": 10,
+      "failed": 0,
+      "ms": 1840,
+      "skipped": 0
+    },
+    "maps_farm": {
+      "character": "animal",
+      "checks": 8,
+      "failed": 0,
+      "ms": 7346,
+      "skipped": 0
+    },
+    "maps_iso": {
+      "character": "animal",
+      "checks": 12,
+      "failed": 0,
+      "ms": 1860,
+      "skipped": 0
+    },
+    "menus": {
+      "character": "animal",
+      "checks": 15,
+      "failed": 0,
+      "ms": 1270,
+      "skipped": 0
+    },
+    "npc": {
+      "character": "animal",
+      "checks": 28,
+      "failed": 0,
+      "ms": 1011,
+      "skipped": 0
+    },
+    "player": {
+      "character": "animal",
+      "checks": 8,
+      "failed": 0,
+      "ms": 1546,
+      "skipped": 0
+    },
+    "shop_ui": {
+      "character": "animal",
+      "checks": 14,
+      "failed": 0,
+      "ms": 1436,
+      "skipped": 0
+    },
+    "social_ui": {
+      "character": "animal",
+      "checks": 17,
+      "failed": 0,
+      "ms": 3053,
+      "skipped": 0
+    },
+    "town_budgets": {
+      "character": "animal",
+      "checks": 27,
+      "failed": 0,
+      "ms": 26022,
+      "skipped": 0
+    },
+    "town_loop": {
+      "character": "animal",
+      "checks": 150,
+      "failed": 0,
+      "ms": 104923,
+      "skipped": 12
+    },
+    "towns_city": {
+      "character": "animal",
+      "checks": 23,
+      "failed": 0,
+      "ms": 6576,
+      "skipped": 0
+    },
+    "towns_director": {
+      "character": "animal",
+      "checks": 10,
+      "failed": 0,
+      "ms": 4455,
+      "skipped": 0
+    },
+    "towns_interiors": {
+      "character": "animal",
+      "checks": 19,
+      "failed": 0,
+      "ms": 12829,
+      "skipped": 0
+    },
+    "towns_interiors_core": {
+      "character": "animal",
+      "checks": 60,
+      "failed": 0,
+      "ms": 15866,
+      "skipped": 0
+    },
+    "ui_audit": {
+      "character": "animal",
+      "checks": 41,
+      "failed": 0,
+      "ms": 2167,
+      "skipped": 0
+    },
+    "ui_audit_blind": {
+      "character": "animal",
+      "checks": 13,
+      "failed": 0,
+      "ms": 413,
+      "skipped": 0
+    },
+    "ui_conformance": {
+      "character": "animal",
+      "checks": 4,
+      "failed": 0,
+      "ms": 5041,
+      "skipped": 0
+    },
+    "ui_foundation": {
+      "character": "animal",
+      "checks": 20,
+      "failed": 0,
+      "ms": 157,
+      "skipped": 0
+    },
+    "ui_nav": {
+      "character": "animal",
+      "checks": 4,
+      "failed": 0,
+      "ms": 250,
+      "skipped": 0
+    }
+  },
+  "skipped": 12
+}

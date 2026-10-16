@@ -1,238 +1,53 @@
-M1b milestone in progress — 2026-10-16
+M1b full usable towns — validated, merge verification pending — 2026-10-16
 
-Active scope
+All 27 documented M1b packages are implemented and validated. The checklist is
+in docs/qa/m1b-milestone/progress.json; final evidence and scope boundaries are
+in docs/qa/m1b-milestone/acceptance.json. Source implementation: f20e44d.
 
-The user explicitly confirmed the FULL usable-towns milestone on 2026-10-16.
-Continue through all remaining packages and milestone gates before merging.
-The machine-readable checklist is docs/qa/m1b-milestone/progress.json.
+The playable loop includes the once-only first morning, real farm tools and
+crops, shipping and sleep, travel through both towns, scheduled painted citizens,
+walk-in staffed shops, dialogue/quests, gifts/hearts, People book and calendar,
+menus/HUD/inventory/workshop, home progression state, mail and save/Continue.
+The ghost family adds four painted citizens, their guesthouse and schedules.
 
-Completed core checkpoint
+Integration corrections include shared daily-mail delivery, keeper-first room
+populations, correct raw-hour/weekday scheduling, deferred-world teardown,
+indoor rain removal, stable HUD geometry, modal toast ownership and live shop
+blur. Scene-owned textures and bounded staging release city art on exit. Cached
+navigation and rail-post drawing preserve authored geometry and art. Save backup
+validation caches exact file/content hashes and invalidates with section changes.
+Inventory, home and loot transactions commit before notifying observers.
 
-This integration completes the unfinished systems that were already present in
-PongPong-worktrees/m1b: P13 quest bindings, F2 home state/progression/chest,
-F4 loot/shop rotation/pricing, S-core social state, T-towns-core building hours
-and interior construction, and P28 UI navigation/components/conformance.
-The existing work was preserved in commit 2491b21 before merging main f478296.
+Validation
 
-Implemented and exercised
+- Full strict suites: Animal 11,195; Fairy 11,194; Hobbit 11,195; Ghost 11,195.
+  All pass, with no unexpected engine messages. Animal/Fairy pricing and loop
+  confirmations also pass after the final fixture isolation repair.
+- All 36 required wave-5b gate rows run for every race. Missing future features
+  and window-only checks retain named capability skips.
+- Normal speed: 565 checks pass; loop 101.393s <=120s; save p95 20.802ms <=25ms.
+- Native window: 922 checks in 40 sections, zero failures/errors/warnings;
+  loop 104.922s <=110s; save p95 19.445ms; payload 19,595 bytes with 34 friends.
+- Visible 16-look city crowd: 247 calls <=250, 2.68ms <=6ms, 314.71MB <=320MB.
+  Festival 20-look residency: 350.581MB <=360MB and below the 400MB process cap.
+  Leaving town frees 73.41MB (required >=40MB); orphan growth is zero.
+- Extension proof: 588 owner checks plus eight real consumer scenarios with
+  675 code files unchanged. Seven producer mutants are caught after a clean
+  baseline. Both proofs bind the final first-party source/data/test inputs.
+- Fourteen CORE screenshots, fifteen staffed rooms and world-style contacts
+  reviewed. Originals, comparison scores, masks and hashes are retained under
+  docs/qa/m1b-milestone/accepted-native/. UI guide and real-room blur checks pass.
+- All 2,562 reviewed visual/theme assets match the style ledger. Import, CORE
+  da/en copy and voice-index checks pass. The 11 frozen Danish texts remain
+  unchanged; new copy stays draft and unrecorded. Ghost-family source prompts
+  and provenance are in docs/art/prompts/ghost-family/.
 
-- Twenty revised Lua quests, explicit objective bindings, offers, turn-ins,
-  state queries, reward persistence and legacy collection bindings.
-- All ten home tiers, gates, construction, housewarming gifts, home chest,
-  save registration, guest/festival hooks and their documented fallback behavior.
-- Seeded loot, container fitting, cooldowns, keepsakes, duplicate handling,
-  rotating shops, one price calculation and the loot marker handlers.
-- Friendship state, calendar/rng helpers, save migration and social validators.
-- Building data, opening/closing rules, interior geometry/collision/doors/counters,
-  deterministic room generation and validation of all 24 generated layouts.
-- Keyboard/gamepad focus, modal ownership, confirmations, hints, prompts,
-  toasts, quantity stepper and the corresponding native pixel checks.
-- Painted shop masks use their native trim offsets and final body sort offset.
-  Ceiling pieces use the foreground plane; service fires add at most one light.
+Reproduce the loop, proofs and native checks using tools/town/README.md.
+Measurements above are native/source-project results on Apple M3, macOS,
+Godot 4.7.2, Compatibility GL 4.1 / Metal 90.5. Area draw-call gates preserve
+prototype scope; city crowd retains the stricter whole-screen 250-call limit.
 
-Integration corrections
-
-- Legacy collect_<item> objectives count item_gained as well as direct resource
-  loot. Resource producers must keep the existing rule: resource_node_depleted
-  carries direct loot that did not already enter through item_gained.
-- Home transfers and construction commit both sides before notifying observers.
-  Pending gifts are acknowledged before item_gained, with reentry guarded.
-- Multi-roll loot finishes inventory, fees, keepsake records and its state commit
-  before acquisition observers run, preventing saves/reentry during partial delivery.
-- Disposing a modal releases its stack entry. Removing a confirmation's asker
-  cancels its outstanding answer rather than leaving the game paused.
-- Missing-art regressions explicitly remove the kit through test seams. Live kit
-  coverage stays enabled. Stand-in reporting now reflects the art actually selected.
-- Base-layout sprite accounting excludes optional hatch/dressing art. The unchanged
-  whole-room limits still cover every node/light: 130 nodes, four lights, median
-  warm build <=12 ms; the native first-frame gate remains <=250 ms.
-
-Economy API extension
-
-consume_backpack_items(needs, commit, gold_cost=0) now optionally debits gold in
-the same commit. receive_backpack_item(item, amount, commit) handles silent chest
-withdrawals. defer_notifications(action) runs an already-validated transaction
-before EconomyManager observers; after_transaction(action) lets related loot
-announcements join it. These helpers do not replace validation or add rollback.
-Storage owners joining a loot transaction should also defer their notifications
-through after_transaction so observers see the completed transaction.
-
-Art preservation
-
-All 2,531 reviewed visual assets outside the theme/two slider vectors remain
-byte-identical to main f478296. The three UI changes were inspected natively:
-cream handles, moss tracks, ink contours, parchment panels, raised buttons and
-gold focus match the chosen guide. Painted illustrations were retained.
-
-Active remaining usable-towns work
-
-The remaining milestone work includes live town/NPC population and dialogue,
-social interaction screens, the guide menu/HUD/shop/inventory screens, farm
-objects, town services, the first morning and the full loop acceptance gate. Furniture/home-world and production wardrobe screens
-remain separate optional feature packages in the original milestone plan.
-Current art studies and equipment fit proofs retain their documented coverage;
-full production clothing animation coverage is a separate asset task.
-The tests name these absent packages in SKIPs. P18 now ships its production shop,
-backpack and workshop screens; the live room/keeper gate remains with T-director.
-
-Evidence
-
-docs/qa/m1b-completion-2026-10-15/ contains targeted transaction/integration
-reports, a core-only animal run, native checks and inspected captures, and the
-asset preservation record. The expanded milestone final matrix is still pending.
-The interrupted fairy log is retained only as an explicitly incomplete diagnostic.
-
-D0 and fixture follow-up — 2026-10-16
-
-Defeat now wakes at the configured farm door after the fade, charges the rounded
-10 percent fee, restores stats and saves the final state. The day-end pass-out
-returns home without a fee. Native NPC warming respects flyers and stationary
-keepers. The boss quest now binds moerkeskoven_f4. The targeted gate passed
-400 checks with no engine errors/warnings. Replaced social fixture nodes are
-freed together; its 132-check leak probe exits cleanly.
-
-Copy and social data — 2026-10-16
-
-I1 copy rules, glossary, eight voice sheets, font measurements, C1–C10 lint,
-review states/queue and mutation tests are installed. S-data covers all 30
-citizens, birthdays, gift preferences, nine keeper samples, personal topics and
-765 da/en copy rows. All new copy is draft. The 100 indexed voice hooks do not
-generate audio. Shared weather/season pools keep the LEAN row budgets. The
-approved names need a 272px nameplate rather than the old 241px estimate.
-The strict copy/social/localization gate passed 461 checks, with no unexpected
-engine messages or leaked objects. Legacy dialogue copy remains P14’s next task.
-
-Social flow, core rooms and route engine — 2026-10-16
-
-Gift and talk mechanics pass the 617-check social/quest integration gate.
-The actual NPC/dialogue/picker chain remains with P14 and S-ui. All 14 installed
-painted rooms pass 128 checks: real collision floods, both keeper talk hosts,
-shop/service wiring, warm build/node/light budgets. Native live-keeper and
-shop-panel captures remain with T-director/P18.
-
-T-routes now bakes the real maps, room colliders and LevelRegistry polygons,
-including holes/keepouts and correct diagonal distances. The 424-check routing
-gate passes all nine rules, 386,400 citizen-minutes and eleven mutation probes.
-Lookup was measured below 20 microseconds. The bake records 44 source hashes.
-
-Seventeen prototype city anchors shift by more than 64 ground pixels to a
-walkable approach. routes.json retains authored and resolved coordinates and
-reports every shift. T-director must use those positions and visually validate
-doors, garden posts and Fru Ugle's window; this placement gate is still open.
-The old circular sketch approximation must not silently replace actual geometry.
-Pip's 1.6 courier pace preserves his 07:10 farm stop and 09:00 counter. Small
-Hoppe/Rosa timetable margins now fit the measured walks.
-
-P06 production player and farming — 2026-10-16
-
-The production scene now uses the tested common body/camera/query code, a separate
-combat controller, eight visible hotbar slots and the approved character sprites.
-Tools, safe flight landing, raw-hour moon watering, growth, fertilizer, automatic
-watering, inventory-safe harvest, consumables and event/camera hooks are wired.
-The remaining legacy 3D farm scripts were removed after porting their save tests.
-No approved art or theme asset was changed. All eight crops use stages 0..3.
-
-All four race suites pass: 247 / 248 / 247 / 247 checks, no skips, errors or
-warnings. Native player/crops/lantern checks: 8 passed. The wider twelve-section
-regression: 2322 checks, 13 named later-package skips, no unexpected engine
-messages or ObjectDB leaks. Idle controller: 57–59 microseconds per tick.
-Evidence and remaining gates: docs/qa/m1b-milestone/. Menus, HUD and live dialogue
-are next; the full milestone remains in progress and has not been merged.
-
-P16 menus — 2026-10-16
-
-The painted title, four-card/two-hero selection, name page, settings, pause and
-save browser now use the guide theme and navigation contracts. All eight looks
-start through real keys and pad events. Settings survive a second Godot process
-and preserve other config owners. Real save/overwrite/load/delete flows pass.
-The complete twelve-action pause layout fits 720p without changing the title's
-menu style. Popup ink edges align to pixels; all approved art/theme bytes match.
-
-Seven-section regression: 1038 checks, no failures or unexpected messages,
-66 named native/future-package skips. Native: 19 checks, no skips or engine
-messages, including six reviewed image baselines, 22 focus looks and 12 raised
-button profiles. The CSS title reference predates the approved painted key art;
-it remains archived and a separate painted title baseline is pinned.
-
-HUD and shop/inventory are next, followed by live dialogue/town population and
-the remaining farm/social/service loop. The full milestone is still in progress.
-
-P17 HUD checkpoint — 2026-10-16
-
-The farm HUD now uses the chosen Miljøer v2 layout and eight visible slots.
-Player values, tracked objectives, construction, prompts and refusals update
-from events. Four visible FIFO toasts preserve summaries with an eight-entry
-queue; combined social feedback suppresses a duplicate heart toast. Travel
-banners skip world/save loading and disappear behind modals.
-
-hud-integration.json: 1215 checks across ten sections, no failures or unexpected
-engine messages; 78 named window/later-package skips and one intentional
-orphan-save warning. hud-native.json: 17 checks, no failures or skips. Four v2
-region comparisons pass <=12. All 2534 reviewed illustrations/theme files are
-unchanged. The full usable-towns milestone remains in progress; P18 is next.
-
-P18 transaction preparation: purchases commit stock before wallet/item observers;
-sales and crafting commit every deduction and gain before publication. Reentrant
-requests are refused, including in failure callbacks. economy-transactions.json
-passes 422 checks across five sections, with nine named later-package skips.
-P18's shop, backpack and workshop screens remain in progress.
-
-P14 live-dialogue checkpoint — 2026-10-16
-
-Real NPC/dialogue/journal/letter flows pass 2978 integration checks and 47 native
-checks. See docs/qa/m1b-milestone/P14.txt. Continue never replays the opening.
-All 2534 approved assets/theme files remain unchanged. The world owns animation
-warming; no abandoned NPC preload tasks remain. Live director placements,
-services, social screens and the full first morning still need integration.
-
-N02 farm objects — 2026-10-16
-
-Shipping, storage requests, the 42-cell expansion, reserves, stage flags and
-painted scenery pass the four-race and native gates. See N02.txt. Town services,
-live schedules, social screens and the first morning remain in progress.
-
-V6 / T-director / I3 town checkpoint — 2026-10-16
-
-Live schedules, room keepers, city doors/stalls, mail/board/bath/seed services,
-small Kiki caches and discovered travel stops are integrated. The 2136-check
-regression, 1186-check city/art gate, 75 native town checks and 200 native shop-art
-checks pass. All 17 large city anchor shifts and all 14 staffed interiors were
-inspected. Approved art/theme bytes are unchanged. See V6-T-director.txt.
-
-S-ui, N04, I2/final budgets and the ghost-family follow-up remain; do not merge
-this checkpoint as if the full usable-towns milestone were finished.
-
-N04 first morning — 2026-10-16
-
-The real Pip/King/Pip opening, data-only steps and hints, both starter quests,
-Escape and Continue behavior pass all four races (96 checks each). Native
-captures were inspected; unchanged P14 dialogue/journal comparisons pass. The
-normal-boot integration passes 656 checks without failures or engine messages.
-See N04.txt. S-ui, I2/final gates and ghost-family work remain before merging.
-
-S-ui social screens — 2026-10-16
-
-People, gift handoff/reaction, the journal calendar and birthday/festival HUD
-are integrated. The four race runs pass 139 checks each, and the wider eight-
-section gate passes 1294 checks. The 45-check native gate includes inspected
-real farm/journal captures, guide comparisons and four pinned screen baselines.
-See S-ui.txt. I2/final budgets and ghost-family/reaction work remain; no merge yet.
-
-I2 live-loop checkpoint — 2026-10-16
-
-The 80-check normal-speed farm/town/shop/gift/day-loop checkpoint passes in
-80.4 seconds with no engine messages. It fixes a zero-point social load mutation
-and completes the named hotbar input contract. I2 budgets/extension/native
-gates and the ghost-family integration remain before milestone acceptance.
-See docs/qa/m1b-milestone/I2-working.txt. No merge yet.
-
-G5c painted ghost family — 2026-10-16
-
-Dyne, Gnist, Silke and Blund now use new painted sprites/portraits, real routines,
-guesthouse/lantern shop, social facts, gifts and kin dialogue. Four-race data
-suites pass 335 checks each; integration 1687; final art 70; updated safe-placement
-and player regression 627; native 12. All eight final captures were inspected.
-The 2534 prior approved visual/theme assets remain byte-identical; 28 new assets
-were explicitly reviewed. Exact built-in image prompts and sources are saved.
-Copy remains draft, no audio was generated, and M3 family scenes remain deferred.
-See GF-data.txt. I2 and final milestone gates still need completion before merge.
+Later milestones retain production wardrobe animation, full furniture/home-world
+screens, dungeon gameplay/appraisal, marriage/heart events, festival scenes,
+P24 audio and M3 family scenes. Packaged-export timing is not claimed: exports
+without raw scripts use the original live navigation bake fallback.

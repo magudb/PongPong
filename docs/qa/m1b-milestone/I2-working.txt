@@ -1,33 +1,182 @@
-I2 in progress — not milestone acceptance
+FINAL VALIDATION — 2026-10-16
+
+I2 implementation and milestone validation are complete. See acceptance.json,
+progress.json, native-metrics.txt and accepted-native/ for the authoritative
+final evidence. Four full character suites, final pricing/loop confirmations,
+normal speed, 40 native sections, source-bound extension/mutation proofs and
+visual review pass. Main merge verification is the remaining integration step.
+Older entries below describe intermediate work. Superseded untracked reports
+and captures are preserved locally in .godot/qa/m1b-working-history/; their
+results are not the final milestone acceptance.
+
+--- Historical working notes ---
+
+I2 integration — final gates in progress, not yet milestone acceptance
 2026-10-16
 
-loop-shops-farm-gifts.json: 80 checks, no failures/skips/messages, normal-speed
-80.4 seconds. Physical farm bridge, city ladder E, Hoppe conversation/People,
-seed-shop door/talk/buy, Maja conversation and Hasselnød upgrade choice/desk
-all work. The listed 3-seed purchase charges exactly 60 gold for the animal.
-Closure warning/close-request eviction and always-open exits pass. All five
-gift classes pay 40/20/8/0/0, one item per transfer, with day/week protection.
-Three plots are tilled/planted/watered using real use_tool inputs, with actual
-3/.5/1.5 race-adjusted energy costs and quest progress. Hint-once, bed at18,
-next-day growth, raw24:10, configured25:45 curfew and raw26 pass-out pass.
-The real bridge return frees citizens and preserves farm state.
+Live loop now exercises all installed L00–L14/L17 producers: actual ordered
+opening, both mailboxes/day-two objective, keyboard navigation over real level
+colliders/ladder/warp, conversations/People/calendar/gift picker, keeper talk
+and centre shop cells, upgrade desk, hours/reasons/close-request eviction,
+purchased seeds used for three input-driven till/plant/water plots, growth,
+three actual harvests, shipping-stack debit and one dawn payout, configurable
+raw-hour curfew/pass-out, live routine pairs plus rain/weekend/night probes,
+full-cast disk save/Continue/digest/migration/content drift/order/performance.
+Four volatile digest paths remain exact. Later scenes/audio are explicit
+capability skips, with required wave skips failing closed.
 
-An exact digest found a real load mutation: knowledge-only zero-point rows
-created friend_<npc>=0 on load. SocialManager now preserves the flag's absence,
-while existing mirrors still repair to the saved points. Two social regressions
-and the 277-check core/social/morning gate pass (loop-morning-social.json).
-The named D-pad cycle actions from N04 are now in P01's machine input contract:
-38 custom +4 UI overrides. Removal mutants fail both project/inputmap drivers.
+Latest normal integration checkpoint: loop-budget-save-integration.json,
+455 checks, zero failed, 11 named later-package skips and 14 intentional save
+messages. Loop 105.8 seconds. This precedes the newest native fixes below.
 
-The walker uses real LevelNav/ClimbLane E and the authored warp stub; it must
-reach the real destination, not only the nav grid's snapped boundary. No player
-position/velocity assignment, production geometry change or digest exclusion
-was used to obtain these passes. Four volatile paths remain exact.
+Production fixes found by integration:
+- Farm/post-office daily letters share one ledger. Day-one personal delivery
+  remains distinct; repeats never offer another letter.
+- Texture lookup caches retain weak references; owning scenes retain residency.
+  Prefetch requests belong to the world, are joined on disposal, and stage
+  scenery/character clips until sprites adopt them. Dummy renderer stays on
+  the main thread. Keepers warm idle+talk; walkers warm movement too.
+- Rail posts share CanvasItems while preserving every image/position/depth/
+  collider. Ordinary city nodes fall from 943 to 687.
+- Offline city nav cell/component projection validates geometry/algorithm
+  provenance, with the original runtime geometry fallback. Real-cell geometry
+  equivalence is independently checked; nav make drops to about 12 ms.
+- Save backups reuse validation only for identical SHA-256 bytes and current
+  section registrations; atomic write/readback/backup semantics stay intact.
+- Festival candidate positions are computed once per location, then sorted
+  separately per role, preserving positions while removing repeated nav snaps.
+- Active quests no longer stretch the HUD money chip. Shop background tint
+  preserves room colours. Notifications hide while a modal owns focus.
+- Flow waits for actual world warm-up completion before disposing a fixture.
+  Captures force a frame, including an idle/obscured native render loop.
 
-Still required: expanded L01 unlock/objective, L04 running clock/zoom, L05
-festival closure/refusals, L08 post/day2/mail, expanded L11 harvest/shipping/
-restock, L12 routines/rain, expanded L13 full-cast save/drift/order, L14 timings/
-orphans/messages, L17 copy/voice/UI, L18 ONE isolated data-only extension,
-extended capability skips, 8 clone mutants/report tool, town_budgets and VRAM
-arithmetic, native14 shots/blur/VRAM, four races and final strict/native gates.
-TOWN_LOOP_WAVE=5b is not yet approved. No merge or push.
+Isolated extension now reaches its real new door, keeper, conversation,
+shop host, changed Hoppe routine, social event and mail quest. A fixture
+counter accidentally claimed seed_shop; its data now claims loop_shop.
+Owning weekday tests now isolate festival dates using their existing fake,
+while festival closures remain separately exercised with the real service.
+The final complete proof must be rerun after implementation stabilises.
+
+Seven real producer mutation proofs passed, plus a clean unmodified baseline.
+Each changed clone fails its named behavioural check without engine errors:
+hours, projection, freed citizens, Esc heart, digest exclusions, save order,
+and closed-door travel. P24 cue_log is absent, so the audio mutant is explicit.
+Source-bound extension/mutant reports must be current for the 5b gate.
+loop_report.py lists every required leg for every wave and retains failures
+when a later repeated check passes. Its own negative self-check passes.
+
+Native diagnostic: 16 distinct visible bodies, 245 full-screen draw calls,
+~3.2 ms frame; first prefetched room ~11 ms build. Farm kit 17.871 MB,
+renderer agreement 0.01%; four added looks 36.001 MB, agreement 0.00%;
+twenty warmed looks 316.652 MB <=360, with total textures below400.
+Full presented frame times include HUD. Room/farm standalone area draw-call
+budgets exclude the shared HUD (72–80 calls); both counts remain recorded.
+The city retains its stricter full-screen 250-call check. S04 is a controlled
+crowd; actual ordinary-day schedules are independently exercised by L02/L12.
+S14 festival scene attachment and the I6 twenty-body perf scene are later.
+
+Still required before completion/merge:
+- Final native loop/14 captures, exact guide/HUD/paired-blur/VRAM checks and LOOK.
+- Final native area budgets including twelve cold citizens and stable windows.
+- Final source-bound extension + mutation proofs, 5b report table, four-race
+  strict full suites and required native art/UI/performance gates.
+- Current style/import/copy/voice checks, review/diff, status, commit and merge.
+No merge or push yet. Main remains f478296.
+
+Latest follow-up (supersedes the earlier cache description):
+Backup validation now fingerprints every state field and meta.version, excluding
+only meta.saved_at/meta.timestamp (which validate_payload never inspects).
+Exact-byte hashes still avoid rereading identical files; changing clocks no
+longer defeats reuse. New guards prove a changed version or invalid economy
+cannot overwrite a good backup. Latest headless full-cast p95:14.451ms.
+
+The director and prefetch service now share one selection function. It retains
+the keeper even at low priority, caps room visitors at four, and bounds staged
+looks to the same ordinary/festival cap. A nine-citizen real-room regression
+admits the keeper+four, dropping four lower-priority visitors. Outdoor caps
+still count distinct visuals and permit duplicate instances of one look.
+
+Native LOOK of all fourteen captures found lingering rain particles indoors.
+WeatherFx now immediately hides the existing particle curtain in dry interiors;
+area and live-loop assertions cover it. S02 snaps the real DayNight state for
+its temporarily selected night hour. S12 now captures the actual morning after
+the tested sleep, before later routine/calendar probes advance the date.
+
+loop-weather-regression.json:387 checks,0 failed,14 named later/native skips,
+1 intentional drift warning, no other messages. Loop9.266sec fixedfps,
+zero orphan growth, 3–25ms installed-area builds. Native pipeline prepares
+assets before timing body construction; headless budget records that preparation
+separately, and native gates bound the entire cold transition. A bare internal
+_enter() call includes sync disk decode and does not model that pipeline.
+
+Final native UI group currently running in /tmp/m1b-ui-final-native.log.
+The two latest proof reports (binding fc7f002...) now predate these final visual
+fixes and must be rerun. Four-race final full suites have not run. Do not claim
+M1b acceptance yet. Finish strict/native/proof gates, update statuses and merge.
+
+Final preflight follow-up — 2026-10-16
+
+All source fixes are now staged for final proof runs (not yet accepted/merged).
+The 78-section full preflight exposed stale M1a fixture assertions plus two
+lifecycle issues. Deferred world rebuilds now stop outside the scene tree or
+while queued for deletion. Farm toasts use their own GameUI ancestor's mode,
+so an unrelated group member cannot crash or suppress them. Regressions cover
+scene detachment/reattachment, parked-area cleanup and a foreign UI root.
+
+Fixtures now verify live director ownership, all door-return spawns, base city
+lights separately from player-owned lights and the full active-light cap.
+Structural landmark teleports select their authored floor; the temporary
+citizen probe restores its clock so open doors do not take the fixture indoors.
+The physical all-landmark/ladder tour remains unchanged and passes natively.
+The original social 30-citizen size scenario stays pinned with an isolated
+roster; I2 separately saves all 34 real friends with twelve known tastes each.
+Animation duration checks use game time in normal and fixed-fps runs. Cold
+animation sheets retain one-per-frame pacing; already uploaded staging sheets
+are adopted without artificial idle frames. Page audit pins check each actual
+graph and a contaminated negative control instead of an obsolete press count.
+The family manifest/packer now keep character rows sorted; display-name titles
+are included in the glossary.
+
+Painted native checks compare the actual effective WEBPs. Bark seams now
+accept perfect zero-error joins, with the deliberate phase-break control still
+failing. Bridge UV rotation error is .0001/255 versus wrong-rotation24.89.
+Forest edges:11/12 attributable rays, missing-crown control0; painted patch
+means show path+10.53/255 and pond blue contrast17.27/255. Compression's reviewed
+painted baseline is4/7 at max zoom.7, with raw1:1 errors/crops and damaged-texture
+control retained (old flat-CG reference3/6). No asset or import setting changed.
+
+Latest native targeted43checks are clean: city tour, farm art and budgets.
+Hyggebyen full screen3.901ms, area3.618; city3.042ms; room2.024ms;
+twelve cold citizens756.606ms;16-body full screen247calls/2.469ms;
+20warmed looks316.471MB; farm kit17.871MB, renderer agreement.01%.
+The final source now enforces4ms for Hyggebyen INCLUDING the shared HUD.
+Final fixture follow-up602checks clean,7 named native/later skips, no messages.
+Style/import/copy/voice snapshots pass:2562 assets,498 compressed sheets,
+58atlases,162keep files;11 frozen voice text hashes; all CORE copy clean.
+
+Final extension/mutation proofs, four-race full strict and native aggregate
+are still required. Main is f478296; no merge or push has happened.
+
+Aggregate native follow-up: 40 sections /904 checks exposed a shrinking date
+card and cross-section fixture leaks, not engine messages. DatePanel now keeps
+the252px guide minimum in short weather (one font-rounding pixel is allowed),
+and the scene baker retains that minimum, the coin chip alignment and42px
+amount space. The harness restores the requested --character before every
+section and records it in section metrics; I2 checks the actual race+skin.
+The interior fixture restores its production-map registry snapshot, and the
+real-room consumer now asserts arrival before inspecting its picture/keeper.
+All15 staffed rooms pass60 native checks after this correction.
+
+The next cold native loop found176/168ms city/grid builds. A temporary profiler
+identified unstaged Hyggebyen atlases/automatic bridges/quest props and ambient
+owl sheets. Diagnostic sources were restored and removed. Prefetch now stages
+these actual resources, using the same pure terrain resolver as IsoArea.
+Native scenery coverage checks independently inspect the installed tile sources
+and owl sprites, and reject a missing-resource control. Twelve cold citizens
+now travel in513.889ms. The current prepared-native run is pending completion.
+
+These latest source edits invalidate the7857859... extension/mutant proofs.
+Rerun both after the native cold/resource checks pass, then run the full four
+race suites (78 sections) with TOWN_LOOP_WAVE=5b, normal-speed critical checks,
+and the final40-section native aggregate. LOOK the actual final captures and
+refresh approval/evidence/status before committing and merging. No merge yet.

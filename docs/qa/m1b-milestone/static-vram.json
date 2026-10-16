@@ -1,0 +1,126 @@
+{
+  "textures": [
+    {
+      "path": "assets/backdrops/farm_canopy.webp",
+      "width": 2048,
+      "height": 360,
+      "compressed": true,
+      "mips": true,
+      "bytes": 985232
+    },
+    {
+      "path": "assets/backdrops/farm_far.webp",
+      "width": 2048,
+      "height": 1024,
+      "compressed": true,
+      "mips": true,
+      "bytes": 2796240
+    },
+    {
+      "path": "assets/backdrops/farm_sky.png",
+      "width": 1920,
+      "height": 1080,
+      "compressed": true,
+      "mips": true,
+      "bytes": 1383112
+    },
+    {
+      "path": "assets/iso_props/zz_painted_consistency/backdrop_farm_far.webp",
+      "width": 2048,
+      "height": 1024,
+      "compressed": true,
+      "mips": true,
+      "bytes": 2796240
+    },
+    {
+      "path": "assets/iso_props/zz_painted_consistency/build_stake.webp",
+      "width": 76,
+      "height": 118,
+      "compressed": true,
+      "mips": true,
+      "bytes": 12416
+    },
+    {
+      "path": "assets/iso_props/zz_painted_consistency/rope_stake_x.webp",
+      "width": 87,
+      "height": 97,
+      "compressed": true,
+      "mips": true,
+      "bytes": 11728
+    },
+    {
+      "path": "assets/iso_props/zz_painted_consistency/rope_stake_z.webp",
+      "width": 87,
+      "height": 97,
+      "compressed": true,
+      "mips": true,
+      "bytes": 11728
+    },
+    {
+      "path": "assets/iso_props/zz_painted_consistency/shipping_bin.webp",
+      "width": 226,
+      "height": 182,
+      "compressed": true,
+      "mips": true,
+      "bytes": 56272
+    },
+    {
+      "path": "assets/iso_props/zz_painted_consistency/stake_sign.webp",
+      "width": 84,
+      "height": 124,
+      "compressed": true,
+      "mips": true,
+      "bytes": 14288
+    },
+    {
+      "path": "assets/iso_props/zz_painted_consistency/tool_shed.webp",
+      "width": 293,
+      "height": 320,
+      "compressed": true,
+      "mips": true,
+      "bytes": 126528
+    },
+    {
+      "path": "assets/iso_props/zz_painted_consistency/trunk_giant_a.webp",
+      "width": 1227,
+      "height": 2405,
+      "compressed": true,
+      "mips": true,
+      "bytes": 3947248
+    },
+    {
+      "path": "assets/iso_props/zz_painted_consistency/trunk_giant_b.webp",
+      "width": 1274,
+      "height": 2142,
+      "compressed": true,
+      "mips": true,
+      "bytes": 3650816
+    },
+    {
+      "path": "assets/iso_props/zz_painted_consistency/trunk_under_a.webp",
+      "width": 907,
+      "height": 1352,
+      "compressed": true,
+      "mips": true,
+      "bytes": 1639824
+    },
+    {
+      "path": "assets/iso_props/zz_painted_consistency/trunk_under_b.webp",
+      "width": 746,
+      "height": 1306,
+      "compressed": true,
+      "mips": true,
+      "bytes": 1307840
+    }
+  ],
+  "bytes": 18739512,
+  "mb": 17.87139129638672,
+  "reference_rows": {
+    "ordinary": 307.9,
+    "festival_20": 352.0,
+    "nothing_freed_20": 381.7,
+    "process_cap": 400.0,
+    "ordinary_cap": 320.0,
+    "festival_cap": 360.0
+  }
+}

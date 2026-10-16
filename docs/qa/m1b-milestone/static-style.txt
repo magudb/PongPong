@@ -1,0 +1,1 @@
+STYLE REVIEW SNAPSHOT PASS: 2562 visual/theme assets match explicit reviewed dispositions; technical exceptions are named, not automatically approved illustrations.
