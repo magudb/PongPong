@@ -1,0 +1,831 @@
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=player,held_equipment,secret_garden,ui_foundation,ui_nav,ui_conformance,walkway_transitions
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.6j2gx9/Library/Application Support/Traetoppen (throwaway)
+== section held_equipment  (res://tests/sections/held_equipment.gd)
+  ok    held_equipment.badge_cannot_take_focus_or_eat_world_input
+  ok    held_equipment.selected_tool_has_matching_picture_and_name
+  ok    held_equipment.every_body_frame_and_direction_has_fitted_grip (fox: 344 real body poses)
+  ok    held_equipment.altitude_spin_and_flash_follow_body_once
+  ok    held_equipment.all_twelve_items_use_dedicated_directional_paintings
+  ok    held_equipment.real_hoe_action_starts
+  ok    held_equipment.action_readout_keeps_hoe_after_hotbar_swap
+  ok    held_equipment.next_selection_appears_after_action_finishes
+  ok    held_equipment.empty_slot_clears_attachment_and_names_empty_hands
+  ok    held_equipment.selected_sword_is_actual_weapon_in_farm_action
+  ok    held_equipment.swing_snapshot_survives_equipment_change
+  ok    held_equipment.dialogue_puts_held_item_away
+  ok    held_equipment.dialogue_release_restores_selected_tool
+  ok    held_equipment.enter_real_forest_hub
+  ok    held_equipment.forest_shows_equipped_weapon_even_with_hoe_selected
+  ok    held_equipment.forest_keeps_actual_readout_and_health_visible
+  ok    held_equipment.empty_weapon_slot_never_uses_phantom_sword
+  ok    held_equipment.readout_follows_language_change
+  ok    held_equipment.equipment_save_written
+  ok    held_equipment.equipment_save_loaded
+  ok    held_equipment.save_rebuilds_correct_held_weapon_without_extra_state
+  ok    held_equipment.badge_cannot_take_focus_or_eat_world_input
+  ok    held_equipment.selected_tool_has_matching_picture_and_name
+  ok    held_equipment.every_body_frame_and_direction_has_fitted_grip (monkey: 344 real body poses)
+  ok    held_equipment.altitude_spin_and_flash_follow_body_once
+  ok    held_equipment.all_twelve_items_use_dedicated_directional_paintings
+  ok    held_equipment.real_hoe_action_starts
+  ok    held_equipment.action_readout_keeps_hoe_after_hotbar_swap
+  ok    held_equipment.next_selection_appears_after_action_finishes
+  ok    held_equipment.empty_slot_clears_attachment_and_names_empty_hands
+  ok    held_equipment.selected_sword_is_actual_weapon_in_farm_action
+  ok    held_equipment.swing_snapshot_survives_equipment_change
+  ok    held_equipment.dialogue_puts_held_item_away
+  ok    held_equipment.dialogue_release_restores_selected_tool
+  ok    held_equipment.enter_real_forest_hub
+  ok    held_equipment.forest_shows_equipped_weapon_even_with_hoe_selected
+  ok    held_equipment.forest_keeps_actual_readout_and_health_visible
+  ok    held_equipment.empty_weapon_slot_never_uses_phantom_sword
+  ok    held_equipment.readout_follows_language_change
+  ok    held_equipment.equipment_save_written
+  ok    held_equipment.equipment_save_loaded
+  ok    held_equipment.save_rebuilds_correct_held_weapon_without_extra_state
+  --    held_equipment: 42 checks, 0 failed, 0 skipped, 1.3 s
+== section player  (res://tests/sections/player.gd)
+  ok    player.production_scene
+  ok    player.geometry
+  ok    player.perks_speed_energy_applied
+  ok    player.idle_controller_budget (70.82 microseconds per tick)
+  ok    player.idle_stats_are_quiet (0)
+  ok    player.four_key_stats_signal
+  ok    player.heal_half_clamps_and_emits_once
+  ok    player.run_exhausts_at_zero
+  ok    player.run_hysteresis_waits_below_20_percent
+  ok    player.run_recovers_at_20_percent
+  ok    player.configured_stamina_regen
+  ok    player.hotbar_signal_shape
+  ok    player.hotbar_assign_first_free
+  ok    player.hotbar_dpad_cycle
+  ok    player.world_input_guarded_by_modals
+  ok    player.hoe_on_farm
+  ok    player.failed_tool_is_free
+  ok    player.space_is_hop_on_farm
+  ok    player.flight_race_and_area_gate
+  ok    player.enter_preserves_stats
+  ok    player.attack_starts
+  ok    player.dodge_cannot_cancel_early_swing
+  ok    player.dodge_cancels_after_40_percent
+  ok    player.swing_hits_real_collider
+  ok    player.three_frame_hit_stop_and_no_duplicate_hit
+  ok    player.faint_emits_once
+  ok    player.dungeon_restore_api
+  ok    player.oil_clamps
+  ok    player.dark_bite_floor
+  ok    player.consume_tonic
+  ok    player.consumable_commits_before_stats_and_blocks_reentry
+  ok    player.event_input_frozen
+  ok    player.event_face
+  ok    player.event_walk_moves_through_physics
+  ok    player.camera_focus_clamped
+  ok    player.camera_focus_release_roundtrip
+  ok    player.event_releases_input
+  --    player: 37 checks, 0 failed, 0 skipped, 0.2 s
+== section secret_garden  (res://tests/sections/secret_garden.gd)
+  ok    secret_garden.new_hero_has_no_inherited_story
+  ok    secret_garden.opening_is_not_interrupted
+  ok    secret_garden.available_to_existing_save
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.garden_map_builds ([])
+  ok    secret_garden.all_work_markers_exist
+  ok    secret_garden.all_work_reachable_with_inflated_body ([])
+  ok    secret_garden.player_can_interact_gate
+  ok    secret_garden.quest_started_through_world_dialogue
+  ok    secret_garden.later_accounts_do_not_spoil_story
+  ok    secret_garden.cancel_does_not_clear_path
+  ok    secret_garden.enter_farm
+  ok    secret_garden.leaving_cancels_work_and_releases_player
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.return_rebuilds_parked_garden
+  ok    secret_garden.out_of_order_work_refused
+  ok    secret_garden.player_can_interact_path
+  ok    secret_garden.path_is_cleared
+  ok    secret_garden.enter_traetoppen
+  ok    secret_garden.seed_help_read_in_real_conversation
+  ok    secret_garden.enter_int_brummes_vaerksted
+  ok    secret_garden.bench_help_read_in_real_conversation
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.player_can_interact_bench
+  ok    secret_garden.painted_bench_restored
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.beds_planted_and_watered
+  ok    secret_garden.flowers_need_one_morning
+  ok    secret_garden.garden_save_written
+  ok    secret_garden.garden_save_loaded
+  ok    secret_garden.watering_and_chapter_restore_together
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.garden_grows_while_away_or_asleep
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.flowers_use_approved_painting
+  ok    secret_garden.player_can_interact_letter
+  ok    secret_garden.mother_letter_persisted_as_quest_evidence
+  ok    secret_garden.kin_branch_matches_hero
+  ok    secret_garden.enter_moerkeskoven
+  ok    secret_garden.trail_hidden_until_lift_record
+  ok    secret_garden.enter_int_postkontoret
+  ok    secret_garden.post_account_persisted
+  ok    secret_garden.enter_traetoppen
+  ok    secret_garden.lift_record_persisted
+  ok    secret_garden.enter_moerkeskoven
+  ok    secret_garden.trail_revealed_at_real_forest_hub
+  ok    secret_garden.player_can_interact_trail
+  ok    secret_garden.mother_trail_recorded
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.player_can_interact_bench
+  ok    secret_garden.restoration_story_completed
+  ok    secret_garden.one_time_reward
+  ok    secret_garden.replay_cannot_pay_again
+  ok    secret_garden.evidence_can_be_reread_after_completion
+  ok    secret_garden.complete_save_written
+  ok    secret_garden.complete_save_loaded
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.completed_place_and_evidence_survive_load
+  ok    secret_garden.walk_through_gate_hyggebyen (actual hyggebyen; traveling=true)
+  ok    secret_garden.walk_through_gate_secret_garden (actual secret_garden; traveling=true)
+  ok    secret_garden.all_garden_art_is_real ([])
+  ok    secret_garden.new_hero_has_no_inherited_story
+  ok    secret_garden.opening_is_not_interrupted
+  ok    secret_garden.available_to_existing_save
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.garden_map_builds ([])
+  ok    secret_garden.all_work_markers_exist
+  ok    secret_garden.all_work_reachable_with_inflated_body ([])
+  ok    secret_garden.player_can_interact_gate
+  ok    secret_garden.quest_started_through_world_dialogue
+  ok    secret_garden.later_accounts_do_not_spoil_story
+  ok    secret_garden.cancel_does_not_clear_path
+  ok    secret_garden.enter_farm
+  ok    secret_garden.leaving_cancels_work_and_releases_player
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.return_rebuilds_parked_garden
+  ok    secret_garden.out_of_order_work_refused
+  ok    secret_garden.player_can_interact_path
+  ok    secret_garden.path_is_cleared
+  ok    secret_garden.enter_traetoppen
+  ok    secret_garden.seed_help_read_in_real_conversation
+  ok    secret_garden.enter_int_brummes_vaerksted
+  ok    secret_garden.bench_help_read_in_real_conversation
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.player_can_interact_bench
+  ok    secret_garden.painted_bench_restored
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.beds_planted_and_watered
+  ok    secret_garden.flowers_need_one_morning
+  ok    secret_garden.garden_save_written
+  ok    secret_garden.garden_save_loaded
+  ok    secret_garden.watering_and_chapter_restore_together
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.garden_grows_while_away_or_asleep
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.flowers_use_approved_painting
+  ok    secret_garden.player_can_interact_letter
+  ok    secret_garden.mother_letter_persisted_as_quest_evidence
+  ok    secret_garden.kin_branch_matches_hero
+  ok    secret_garden.enter_moerkeskoven
+  ok    secret_garden.trail_hidden_until_lift_record
+  ok    secret_garden.enter_int_postkontoret
+  ok    secret_garden.post_account_persisted
+  ok    secret_garden.enter_traetoppen
+  ok    secret_garden.lift_record_persisted
+  ok    secret_garden.enter_moerkeskoven
+  ok    secret_garden.trail_revealed_at_real_forest_hub
+  ok    secret_garden.player_can_interact_trail
+  ok    secret_garden.mother_trail_recorded
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.player_can_interact_bench
+  ok    secret_garden.restoration_story_completed
+  ok    secret_garden.one_time_reward
+  ok    secret_garden.replay_cannot_pay_again
+  ok    secret_garden.evidence_can_be_reread_after_completion
+  ok    secret_garden.complete_save_written
+  ok    secret_garden.complete_save_loaded
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.completed_place_and_evidence_survive_load
+  ok    secret_garden.walk_through_gate_hyggebyen (actual hyggebyen; traveling=true)
+  ok    secret_garden.walk_through_gate_secret_garden (actual secret_garden; traveling=true)
+  ok    secret_garden.all_garden_art_is_real ([])
+  --    secret_garden: 124 checks, 0 failed, 0 skipped, 2.6 s
+== section ui_conformance  (res://tests/sections/ui_conformance.gd)
+  ok    ui_conformance.theme_no_gold_hover (strict theme scan clean (clean); the hover of ["MenuRow", "ChoiceRow", "Chip", "StepperButton", "HintButton", "PopupMenu", "PillTab", "RowButton", "CardButton"] is not gold (offenders []); focus and pressed stay gold on rows, chips, tabs (true); sliders are moss with a chalk grabber and center_grabber 0 (true), scrollbar thumbs are divider / chalk / moss with a 2 px ink outline (true), the grabber SVGs have no gold (true))
+  ok    ui_conformance.theme_no_red (no colour item or StyleBox of the theme has a red hue (167 types scanned))
+  ok    ui_conformance.theme_ink_outline (every opaque light body StyleBox outside R1_EXEMPT has a 2 px ink border: [])
+  ok    ui_conformance.theme_font_scale (every Label / Button variation is on the scale (Caprasimo >= 15, Alegreya >= 11, mono >= 9) []; Bold16 / Bold14 exist (true))
+  ok    ui_conformance.theme_focus_styles (every interactive theme type has a non-empty gold focus StyleBox []; HSlider/focus is the selection ring (3 px gold + 2 px ink, ring only: true) that TTSlider paints; PanelField/focus is the ring of the stepper (true))
+  ok    ui_conformance.theme_calcell_variations (CalCell (RowButton look, parchment-dark, radius 10, 2 px divider), CalCellFest (lavender-pale, ink border), CalCellToday (3 px ink border) exist as Button variations with every state, no gold but the focus ring [])
+  ok    ui_conformance.theme_label_variations_and_proxy (FocusProxy: six empty StyleBoxes and still focusable (true / true), PromptVerb is Heavy 18 chalk (true))
+  ok    ui_conformance.pill_heights (PillTab 33 px (>= 33), Chip 37 px (>= 37) high: the guide's heights with the 2 px border; the gallery row's temporary hit_min is gone (true))
+  ok    ui_conformance.sliders_are_ttslider (no scene of scenes/ui and no script of scripts/ui makes a plain HSlider / VSlider []; TTSlider declares tt_focus_style (true), its ring hugs the control (true) and grows by half a grabber when the grabber is centred on the ends (true))
+  ok    ui_conformance.guide_crops_pinned (1 crop(s) hash to SHA256SUMS [], no unlisted PNG [], 680 x 300 (true), .gdignore + README (true); fresh crop of the render: crop_guide_refs: 1 crop(s) identical to a fresh crop, SHA256SUMS matches)
+  ok    ui_conformance.fixtures_guide_focus_released (`<screen>_guide` fixtures release focus for RING controls (cards, buttons, chips, tabs, slots, rows: true) and keep it where the mock paints the focus look: Fortsæt (MenuRow) true, the first ChoiceRow true; the screen's focus guard is switched off so it does not put the focus back (true))
+  ok    ui_conformance.fixtures_guide_extras_hidden (the HintBar, any ToastStack and (select page) the %BackButton are hidden in the guide fixtures, which have none of them in the mock (they were all visible before: true); title_guide hides the bar and the toasts but has no %BackButton to hide (true), select_guide hides the %BackButton too (true); a hidden bar stays hidden when the device changes (true))
+  ok    ui_conformance.fixtures_all_registry_fixtures_resolve (all 41 fixture names of tests/lib/ui_screens.json (+ ui_screens.d) resolve through UiFixtures.SCREENS []; confirm / toasts / prompt are available, area_banner / animal_care / build_menu / intro / minimap are mapped (true))
+  ok    ui_conformance.mutants_baseline_gallery_is_clean (the unmutated gallery clone passes focusable_report and rule_report (clean))
+  ok    ui_conformance.mutant_gold_hover_caught (a gold hover on Chip is reported by the strict theme scan (1 defect(s): theme_gold_hover) while the real theme is clean)
+  ok    ui_conformance.mutant_focus_none_caught (an enabled Button with FOCUS_NONE: 1 defect(s): unfocusable_interactive)
+  ok    ui_conformance.mutant_override_caught (add_theme_font_size_override on a label: 1 defect(s): theme_override)
+  ok    ui_conformance.mutant_red_caught (a label coloured #ff2020: 2 defect(s): theme_override, r4_red)
+  ok    ui_conformance.mutant_plain_slider_caught (a plain HSlider: focusable_report says 1 defect(s): no_focus_style and the scene scan finds ["user://p28_mutant_slider/mutant.tscn: Volume"])
+  ok    ui_conformance.mutant_window_dialog_caught (an AcceptDialog in a screen: 2 defect(s): window_in_screen, no_focus_style)
+  ok    ui_conformance.mutant_hud_focus_caught (a focusable control in a HUD: 1 defect(s): hud_focusable (P17's hud.all_controls_focus_none will use the same report: its scene does not exist in this tree))
+  ok    ui_conformance.mutant_no_initial_focus_caught (a screen whose _initial_focus() returns null: 1 defect(s): no_initial_focus)
+  ok    ui_conformance.mutant_hotkey_in_field_caught (a screen without the text-field guard: the library's typing audit finds the leak (audit false, typed false, closed true), the guarded screen is clean (true))
+  ok    ui_conformance.mutant_tab_page_defect_caught (a red label behind the second PillTab: the single-page report misses it (clean), the page-aware report finds it (2 defect(s): theme_override, r4_red))
+  ok    ui_conformance.mutant_accept_eaten_caught (an _input that marks ui_accept handled leaves the focused Button unpressed (buttons false, rows { "enter": { "pressed": 0, "world": {  } }, "space": { "pressed": 0, "world": {  } }, "padA": { "pressed": 0, "world": {  } }, "e": { "pressed": 0, "world": {  } } }); the unmutated screen presses once per Enter / Space / pad A (true))
+  ok    ui_conformance.foundation_gallery.visible (clean)
+  ok    ui_conformance.foundation_gallery.initial_focus (clean)
+  ok    ui_conformance.foundation_gallery.focusable (19 interactive, 19 keyboard-focusable)
+  ok    ui_conformance.foundation_gallery.focus_walk (18 of 18 controls reached in 78 presses)
+  ok    ui_conformance.foundation_gallery.rules (111 nodes, 48 text, 24 boxes, 18 interactive scanned)
+  ok    ui_conformance.foundation_gallery.i18n_flip (clean)
+  ok    ui_conformance.foundation_gallery.theme (clean)
+  ok    ui_conformance.foundation_gallery_rarity.visible (clean)
+  ok    ui_conformance.foundation_gallery_rarity.focusable (10 interactive, 10 keyboard-focusable)
+  ok    ui_conformance.foundation_gallery_rarity.rules (108 nodes, 26 text, 10 boxes, 10 interactive scanned)
+  ok    ui_conformance.foundation_gallery_rarity.i18n_flip (clean)
+  ok    ui_conformance.title.visible (clean)
+  ok    ui_conformance.title.initial_focus (clean)
+  ok    ui_conformance.title.focus_walk (5 of 5 controls reached in 26 presses)
+  ok    ui_conformance.title.focusable (5 interactive, 5 keyboard-focusable)
+  ok    ui_conformance.title.rules (22 nodes, 13 text, 6 boxes, 5 interactive scanned)
+  ok    ui_conformance.title.i18n_flip (clean)
+  ok    ui_conformance.title.escape (0 modal(s) opened and closed with Esc in order)
+  SKIP  ui_audit title.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit title.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit title.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit title.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.settings.visible (clean)
+  ok    ui_conformance.settings.initial_focus (clean)
+  ok    ui_conformance.settings.focus_walk (11 of 11 controls reached in 54 presses)
+  ok    ui_conformance.settings.focusable (11 interactive, 11 keyboard-focusable)
+  ok    ui_conformance.settings.rules (34 nodes, 19 text, 12 boxes, 11 interactive scanned)
+  ok    ui_conformance.settings.i18n_flip (clean)
+  ok    ui_conformance.settings.escape (1 modal(s) opened and closed with Esc in order)
+  SKIP  ui_audit settings.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit settings.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit settings.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit settings.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.select_1.visible (clean)
+  ok    ui_conformance.select_1.initial_focus (clean)
+  ok    ui_conformance.select_1.focus_walk (8 of 8 controls reached in 166 presses)
+  ok    ui_conformance.select_1.focusable (8 interactive, 8 keyboard-focusable)
+  ok    ui_conformance.select_1.rules (57 nodes, 27 text, 8 boxes, 8 interactive scanned)
+  ok    ui_conformance.select_1.i18n_flip (clean)
+  SKIP  ui_audit select_1.escape: escape_chain of 'select_1' (esc_depth 1, no modal layer) needs the owner's opener: call UiAudit.escape_chain(t, opener, 1) from the owner's section (options.internal_layers for pages inside the screen)
+  SKIP  ui_audit select_1.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit select_1.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit select_1.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit select_1.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.select_2.visible (clean)
+  ok    ui_conformance.select_2.initial_focus (clean)
+  ok    ui_conformance.select_2.focus_walk (4 of 4 controls reached in 20 presses)
+  ok    ui_conformance.select_2.focusable (4 interactive, 4 keyboard-focusable)
+  ok    ui_conformance.select_2.text_fields (clean)
+  ok    ui_conformance.select_2.rules (30 nodes, 19 text, 6 boxes, 4 interactive scanned)
+  ok    ui_conformance.select_2.i18n_flip (clean)
+  SKIP  ui_audit select_2.escape: escape_chain of 'select_2' (esc_depth 2, no modal layer) needs the owner's opener: call UiAudit.escape_chain(t, opener, 2) from the owner's section (options.internal_layers for pages inside the screen)
+  SKIP  ui_audit select_2.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit select_2.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit select_2.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit select_2.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.saveload.visible (clean)
+  ok    ui_conformance.saveload.initial_focus (clean)
+  ok    ui_conformance.saveload.focus_walk (2 of 2 controls reached in 11 presses)
+  ok    ui_conformance.saveload.focusable (15 interactive, 2 keyboard-focusable)
+  ok    ui_conformance.saveload.rules (55 nodes, 28 text, 16 boxes, 2 interactive scanned)
+  ok    ui_conformance.saveload.i18n_flip (clean)
+  SKIP  ui_audit saveload.escape: escape_chain of 'saveload' (esc_depth 3) needs the owner's opener: call UiAudit.escape_chain(t, opener, 3) from the owner's section (options.internal_layers for pages inside the screen)
+  SKIP  ui_audit saveload.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit saveload.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit saveload.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit saveload.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.pause.visible (clean)
+  ok    ui_conformance.pause.initial_focus (clean)
+  ok    ui_conformance.pause.focus_walk (6 of 6 controls reached in 31 presses)
+  ok    ui_conformance.pause.focusable (6 interactive, 6 keyboard-focusable)
+  ok    ui_conformance.pause.rules (21 nodes, 15 text, 7 boxes, 6 interactive scanned)
+  ok    ui_conformance.pause.i18n_flip (clean)
+  ok    ui_conformance.pause.escape (1 modal(s) opened and closed with Esc in order)
+  SKIP  ui_audit pause.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit pause.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit pause.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit pause.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.confirm.visible (clean)
+  ok    ui_conformance.confirm.focusable (2 interactive, 2 keyboard-focusable)
+  ok    ui_conformance.confirm.rules (10 nodes, 4 text, 4 boxes, 2 interactive scanned)
+  ok    ui_conformance.confirm.i18n_flip (clean)
+  SKIP  ui_audit confirm.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit confirm.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.hud.visible (clean)
+  ok    ui_conformance.hud.focusable (8 interactive, 0 keyboard-focusable)
+  ok    ui_conformance.hud.rules (71 nodes, 22 text, 17 boxes, 8 interactive scanned)
+  ok    ui_conformance.hud.i18n_flip (clean)
+  SKIP  ui_audit hud.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit hud.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.toasts.visible (clean)
+  ok    ui_conformance.toasts.focusable (0 interactive, 0 keyboard-focusable)
+  ok    ui_conformance.toasts.rules (19 nodes, 6 text, 3 boxes, 0 interactive scanned)
+  ok    ui_conformance.toasts.i18n_flip (clean)
+  SKIP  ui_audit toasts.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit toasts.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.prompt.visible (clean)
+  ok    ui_conformance.prompt.focusable (0 interactive, 0 keyboard-focusable)
+  ok    ui_conformance.prompt.rules (5 nodes, 2 text, 1 boxes, 0 interactive scanned)
+  ok    ui_conformance.prompt.i18n_flip (clean)
+  SKIP  ui_audit prompt.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit prompt.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.area_banner.visible (clean)
+  ok    ui_conformance.area_banner.focusable (0 interactive, 0 keyboard-focusable)
+  ok    ui_conformance.area_banner.rules (3 nodes, 1 text, 0 boxes, 0 interactive scanned)
+  ok    ui_conformance.area_banner.i18n_flip (clean)
+  SKIP  ui_audit area_banner.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit area_banner.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.dialogue.visible (clean)
+  ok    ui_conformance.dialogue.initial_focus (clean)
+  ok    ui_conformance.dialogue.focus_walk (1 of 1 controls reached in 6 presses)
+  ok    ui_conformance.dialogue.focusable (1 interactive, 1 keyboard-focusable)
+  ok    ui_conformance.dialogue.rules (14 nodes, 3 text, 3 boxes, 1 interactive scanned)
+  ok    ui_conformance.dialogue.i18n_flip (clean)
+  ok    ui_conformance.dialogue.escape (1 modal(s) opened and closed with Esc in order)
+  SKIP  ui_audit dialogue.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit dialogue.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit dialogue.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit dialogue.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.intro.visible (clean)
+  ok    ui_conformance.intro.initial_focus (clean)
+  ok    ui_conformance.intro.focusable (0 interactive, 0 keyboard-focusable)
+  ok    ui_conformance.intro.rules (12 nodes, 2 text, 2 boxes, 0 interactive scanned)
+  ok    ui_conformance.intro.i18n_flip (clean)
+  ok    ui_conformance.intro.escape (1 modal(s) opened and closed with Esc in order)
+  SKIP  ui_audit intro.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit intro.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.shop.visible (clean)
+  ok    ui_conformance.shop.initial_focus (clean)
+  ok    ui_conformance.shop.focus_walk (30 of 30 controls reached in 168 presses)
+  ok    ui_conformance.shop.focusable (15 interactive, 30 keyboard-focusable)
+  ok    ui_conformance.shop.rules (129 nodes, 49 text, 20 boxes, 15 interactive scanned)
+  ok    ui_conformance.shop.i18n_flip (clean)
+  ok    ui_conformance.shop.escape (1 modal(s) opened and closed with Esc in order)
+  SKIP  ui_audit shop.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit shop.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit shop.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit shop.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.journal.visible (clean)
+  ok    ui_conformance.journal.initial_focus (clean)
+  ok    ui_conformance.journal.focus_walk (38 of 38 controls reached in 190 presses)
+  ok    ui_conformance.journal.focusable (36 interactive, 38 keyboard-focusable)
+  ok    ui_conformance.journal.rules (70 nodes, 25 text, 17 boxes, 5 interactive scanned)
+  ok    ui_conformance.journal.i18n_flip (clean)
+  ok    ui_conformance.journal.escape (1 modal(s) opened and closed with Esc in order)
+  SKIP  ui_audit journal.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit journal.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit journal.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit journal.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.inventory.visible (clean)
+  ok    ui_conformance.inventory.initial_focus (clean)
+  ok    ui_conformance.inventory.focus_walk (143 of 143 controls reached in 639 presses)
+  ok    ui_conformance.inventory.focusable (146 interactive, 143 keyboard-focusable)
+  ok    ui_conformance.inventory.rules (727 nodes, 279 text, 151 boxes, 143 interactive scanned)
+  ok    ui_conformance.inventory.i18n_flip (clean)
+  ok    ui_conformance.inventory.escape (1 modal(s) opened and closed with Esc in order)
+  SKIP  ui_audit inventory.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit inventory.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit inventory.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit inventory.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.people.visible (clean)
+  ok    ui_conformance.people.initial_focus (clean)
+  ok    ui_conformance.people.focus_walk (12 of 12 controls reached in 99 presses)
+  ok    ui_conformance.people.focusable (12 interactive, 12 keyboard-focusable)
+  ok    ui_conformance.people.rules (49 nodes, 18 text, 15 boxes, 12 interactive scanned)
+  ok    ui_conformance.people.i18n_flip (clean)
+  ok    ui_conformance.people.escape (1 modal(s) opened and closed with Esc in order)
+  SKIP  ui_audit people.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit people.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit people.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit people.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.gift.visible (clean)
+  ok    ui_conformance.gift.initial_focus (clean)
+  ok    ui_conformance.gift.focus_walk (26 of 26 controls reached in 115 presses)
+  ok    ui_conformance.gift.focusable (26 interactive, 26 keyboard-focusable)
+  ok    ui_conformance.gift.rules (124 nodes, 34 text, 29 boxes, 26 interactive scanned)
+  ok    ui_conformance.gift.i18n_flip (clean)
+  ok    ui_conformance.gift.escape (1 modal(s) opened and closed with Esc in order)
+  SKIP  ui_audit gift.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit gift.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit gift.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit gift.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.calendar.visible (clean)
+  ok    ui_conformance.calendar.focusable (32 interactive, 32 keyboard-focusable)
+  ok    ui_conformance.calendar.rules (139 nodes, 100 text, 33 boxes, 32 interactive scanned)
+  ok    ui_conformance.calendar.i18n_flip (clean)
+  SKIP  ui_audit calendar.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit calendar.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.social_hud.visible (clean)
+  ok    ui_conformance.social_hud.focusable (0 interactive, 0 keyboard-focusable)
+  ok    ui_conformance.social_hud.rules (5 nodes, 2 text, 0 boxes, 0 interactive scanned)
+  ok    ui_conformance.social_hud.i18n_flip (clean)
+  SKIP  ui_audit social_hud.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit social_hud.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.live_screens_sweep (U1 - U6 and U9 on 22 live row(s) of UiAudit.screens() in da and en: ["foundation_gallery", "foundation_gallery_rarity", "title", "settings", "select_1", "select_2", "saveload", "pause", "confirm", "hud", "toasts", "prompt", "area_banner", "dialogue", "intro", "shop", "journal", "inventory", "people", "gift", "calendar", "social_hud"]; failures [], unopenable [])
+  ok    ui_conformance.p28_rows_are_live (confirm, toasts and prompt are live rows with their own scenes and fixtures)
+  ok    ui_conformance.no_legacy_screens_left (no row of UiAudit.screens() is still the legacy scaffold)
+  --    ui_conformance: 155 checks, 0 failed, 67 skipped, 8.3 s
+== section ui_foundation  (res://tests/sections/ui_foundation.gd)
+  ok    ui_foundation.theme_loaded (gui/theme/custom = assets/ui/theme.tres)
+  ok    ui_foundation.theme_type_count (167 theme types (the spike had 145; the rarity tiers and words add more))
+  ok    ui_foundation.fonts_have_aeoeaa (Æ Ø Å æ ø å in Caprasimo and Alegreya Sans)
+  ok    ui_foundation.font_licences_present (OFL texts: missing [])
+  ok    ui_foundation.noto_binary_not_shipped (TTSymbols covers every glyph; the 1.2 MB Noto binary stays out)
+  ok    ui_foundation.symbol_fallback_keeps_line_height (display font with fallbacks is 1.00 x Caprasimo's own line height)
+  ok    tools/ui/build_theme.gd regenerates the theme in a child run (exit 0)
+  ok    ui_foundation.theme_matches_builder (assets/ui/theme.tres equals what tools/ui/build_theme.gd generates (167 types) [])
+  ok    guide page: slot states, button states, hearts
+  ok    quantity_stepper clamps to its range
+  ok    ui_foundation.components (gallery guide page + rarity page: 21 RaritySlots, 4 ladder rows, 5 themed slots)
+  ok    ui_foundation.gallery_rarity_row (the gallery carries the rarity row (5 states x filled/selected/unknown, word + pips, night icon and disc cases))
+  ok    toast with an item picture
+  ok    ability_slot setup + cooldown
+  ok    pips along the ladder [0, 1, 2, 3, 4]
+  ok    four distinct pip outlines { "leaf": 18, "diamond": 4, "sparkle": 8, "star": 10 }
+  ok    shapes ["none", "leaf", "diamond", "sparkle", "star"]
+  ok    ui_foundation.rarity_slot_plan_five_states_and_selected (fill + ring + pips per rarity; selected = gold ring replaces the rarity ring)
+  ok    empty tile: the guide's empty slot, no pips
+  ok    unknown tile: dashed silhouette state
+  ok    legendary with the _night.webp file: no disc
+  ok    legendary WITHOUT the _night.webp file: the pale disc is drawn behind the icon
+  ok    no picture -> no disc; a rare tile never gets a disc
+  ok    legendary count text pale (e4eff5), pips gold (f2c14e)
+  ok    RaritySlot node: bed_moon uses its _night file, chair_pine gets the disc, selecting keeps the disc and adds gold
+  ok    show_word makes room under the tile
+  ok    ladder: locked is dashed, next has the gold chip, current the moss chip
+  ok    ladder: the selected row (and only it) has the gold ring
+  ok    ui_foundation.rarity_components (item_slot rarity property -> theme variation + pip count ["SlotFilled:0", "SlotUncommon:1", "SlotRare:2", "SlotUnique:3", "SlotLegendary:4"]; RarityPips / RaritySlot / LadderRow plans)
+  ok    RaritySlot bed_moon legendary: the _night.webp file in either assignment order (res://assets/icons/home/bed_moon_night.webp / res://assets/icons/home/bed_moon_night.webp)
+  ok    item_id before rarity: no pale disc although the night file exists (the reported defect)
+  ok    legendary -> normal after the icon was loaded: the plain icon, no disc
+  ok    normal -> legendary after the icon was loaded: back to the _night file
+  ok    item_id before rarity, no _night file: the pale disc on the plain icon
+  ok    item_slot.rarity = X updates the icon too (legendary true, normal true, legendary again true, chair_pine disc true)
+  ok    ui_foundation.rarity_order_independent (RaritySlot and item_slot resolve the legendary _night icon whatever the order of item_id / rarity assignments)
+  ok    item_slot.setup before add_child keeps the data
+  ok    item_slot built before add_child: key, count, name, icon (night variant), tile and pips are applied when it is ready
+  ok    item_slot (the 24-cell backpack pattern): instantiate, setup, add_child gives a filled cell
+  ok    toast.setup before add_child: text, picture (night variant) applied when it is ready
+  ok    toast.setup before add_child, text only: picture and empty message stay hidden
+  ok    ui_foundation.setup_before_ready (item_slot.setup / notification_toast.setup are safe before add_child (no script error, arguments applied in _ready))
+  ok    plan(): an item without a picture -> badge; with a picture or without an item -> none
+  ok    an unknown (silhouette) or empty tile never shows the badge: it must not give the item away
+  ok    RaritySlot with an unresolvable item id: badge, no disc
+  ok    legendary without any icon file: the badge, not a disc
+  ok    ...and as an unknown silhouette no badge
+  ok    an explicit `icon` picture replaces the badge
+  ok    an item with art: no badge
+  ok    no item: no badge
+  ok    ui_foundation.rarity_slot_badge (RaritySlot draws TTItemIcon's initial badge for an item whose icon file is missing (plan()['badge']))
+  ok    ability_slot.setup before add_child keeps the data
+  ok    four ability slots built before add_child: size, icon id, key cap, cooldown veil and number are applied when each is ready
+  ok    the primary attack's key cap reads the InputMap: Venstre klik
+  ok    set_cooldown before the slot is ready (no setup yet) is applied in _ready too
+  ok    two setup() calls before ready: the last one wins
+  ok    ability_slot setup / set_cooldown before add_child raise no script error
+  ok    ui_foundation.ability_slot_before_ready (ability_slot.setup / set_cooldown are safe before add_child (the forest HUD builds its four slots that way))
+  ok    label_for: ABILITY_<ID> translated; a key without a translation (or no id) gives "", never the id
+  ok    ABILITY_TESTSTRIKE exists: the slot shows its Danish word 'slag'
+  ok    no ABILITY_ key yet: the icon only - the English id 'no_such_ability_zz' is not shown ('')
+  ok    a language switch re-translates the word and the key cap (strike / Left click)
+  ok    ...and back to Danish (slag / Venstre klik)
+  ok    TTItemIcon.fallback_label: the id by default, nothing with id_fallback = false
+  ok    ...and an explicit display_name is always shown
+  SKIP  ability_slot_danish_label: ABILITY_SLASH/DODGE/LIGHT/DRINK are defined by forest.csv (P19, a later wave); until then the four slots show the icon only
+  ok    the ability slot tests logged no engine message
+  ok    ui_foundation.ability_slot_danish_label (ability_slot labels itself with ABILITY_<ID> (Danish / English) and never with the English icon id)
+  ok    the second setup() shows the second text
+  ok    ...and carries on from the current opacity instead of dropping to 0 (0.67 -> 0.67)
+  ok    a second setup() on a toast in the tree: the first fade's queue_free no longer removes it early
+  ok    ...it holds full opacity for its own 3 s (1.00)
+  ok    two setup() calls before add_child: the last one is shown
+  ok    ...and the toast still frees itself when its own schedule ends
+  ok    the toast tests logged no engine message
+  ok    ui_foundation.toast_second_setup (notification_toast: a second setup() replaces the running fade (one tween, no early queue_free))
+  ok    item_slot.setup(&"", 5) before ready: no count '', amount 0, tile SlotEmpty, the hotbar key cap stays
+  ok    ...filled with an item the count shows
+  ok    ...and emptied again (setup(&"", 7) after ready): count gone
+  ok    a non-stackable tool (amount 0) shows no count either
+  ok    item_slot empty-cell setup raised no engine message
+  ok    ui_foundation.empty_cell_no_count (an empty item_slot never shows a count)
+  ok    TTItemIcon has no ICON_DIR constant, only DIRS ([&"DIRS"])
+  ok    the icon directories are spelled out once (TTItemIcon.DIRS: items, home, wardrobe), nowhere else in scripts/ui ["tt_item_icon.gd x3"]
+  ok    ui_foundation.icon_dir_constant_gone (no second copy of the icon directory in scripts/ui)
+  ok    fixtures: the components gallery is always available (both pages)
+  ok    fixtures: an unknown screen is SKIP (null), never an error
+  ok    fixtures: shop_ui.tscn exists -> loaded
+  ok    fixtures: title (res://scenes/main/main_menu.tscn) counts only once it is built on the guide theme (legacy 3D scene does not count)
+  ok    fixtures: select (res://scenes/ui/character_select.tscn) counts only once it is built on the guide theme (legacy 3D scene does not count)
+  ok    fixtures: variant names resolve to their screen
+  ok    fixtures: a registered setup runs after the screen is built
+  ok    fixtures: the guide's mock copy (4 quests, 1.250 guldagern) loads
+  ok    rarity WORD labels on parchment >= 4.5:1 (worst uncommon 5.08)
+  ok    gold pips on the night tile >= 7.0:1 (7.04)
+  ok    icon rim: rim vs night 10.1:1, ink vs rim 12.7:1 (both >= 7)
+  ok    ink on the night tile alone is 1.25:1: the reason legendary icons need the rim (RV-A2)
+  ok    slot count text (ink, or the pale rim on night) reads >= 7:1 on every tile fill
+  ok    theme RarityWord<Id> label variations carry the Rarity.ui() label colours
+  ok    ui_foundation.rarity_contrast (labels >= 4.5 (worst 5.08), gold pips on night 7.04 >= 7.0, rim pairs 10.1 / 12.7)
+  ok    default lookup order = ArtCatalog.icon: items, home, wardrobe
+  ok    an item icon lives in assets/icons/items
+  ok    a furniture / material icon is found in assets/icons/home
+  ok    a garment icon is found in assets/icons/wardrobe
+  ok    the same id in all three: the FIRST directory wins (ordered lookup)
+  ok    extension order inside a directory: webp, png, svg
+  ok    no directory has it: empty path (the caller draws the badge)
+  ok    empty, path-like and spaced ids are refused
+  ok    legendary: the <id>_night.webp rim variant is used when it exists
+  ok    legendary WITHOUT the night file: the plain icon, night=false (the pale disc is drawn)
+  ok    only the dark (legendary) tile uses the night variant
+  ok    the night variant must sit beside the file that was found (items/ has the hat, wardrobe/ has the night file: not used)
+  ok    `common` is normal: no night variant
+  ok    disc radius = 0.60 x the 50 px icon edge = 30 px, centred on the icon
+  ok    the disc stays inside the tile
+  ok    an icon that fills the tile: the disc (r 34.8) is clipped to the tile rect
+  ok    disc constants: 0.60, e4eff5, alpha .92
+  ok    real files: bed_moon (A1) resolves to its _night.webp in assets/icons/home
+  ok    ui_foundation.item_icon_three_dirs_and_night (ordered items > home > wardrobe lookup, extension order, legendary _night sibling, disc fallback (49 predicate calls))
+  ok    GameUI list: hud, forest_hud ... pause_menu, save_load_ui, settings_ui (21 ids)
+  ok    the 11 base screens, the 5 addendum screens and the 5 towns / social screens (21 ids) are all in the list
+  ok    ui_foundation.game_ui_instantiates_what_exists (layer 10, ALWAYS, group game_ui; loaded [&"hud", &"social_hud", &"dialogue_ui", &"inventory_ui", &"quest_journal", &"people", &"gift_ui", &"shop_ui", &"pause_menu", &"save_load_ui", &"settings_ui"] (none are required))
+  ok    only existing scenes load, in list order (garderobe below pause_menu): [&"hud", &"inventory_ui", &"garderobe", &"pause_menu"]
+  ok    get_screen by id or node name, null when missing
+  ok    HUD controls use focus_mode NONE
+  ok    set_mode(action) keeps fallback HUD when forest screen is missing
+  ok    a loaded forest HUD replaces the fallback
+  ok    set_mode(farm) shows it again
+  ok    ui_foundation.game_ui_no_key_handling (no key handler in game_ui.gd: [])
+  ok    SCREEN_ORDER is exactly the 21 ids of SCREEN_IDS, back to front: [&"hud", &"forest_hud", &"social_hud", &"event_overlay", &"dialogue_ui", &"inventory_ui", &"quest_journal", &"people", &"gift_ui", &"post", &"shop_ui", &"animal_care_ui", &"build_menu_ui", &"husbyggeri", &"indretning", &"home_chest", &"garderobe", &"samlerbog", &"pause_menu", &"save_load_ui", &"settings_ui"]
+  ok    no screen id twice (21 ids, 21 distinct)
+  ok    every towns / social id is below the pause menu (its Esc and its draw order)
+  ok    social_hud sits right behind the two HUDs
+  ok    event_overlay is between the HUDs and dialogue_ui: the letterbox is drawn BEHIND the dialogue
+  ok    people, gift_ui, post follow quest_journal and sit above the shops
+  ok    in the real scene folder a new id is instanced only if scenes/ui/<id>.tscn exists (loaded: [&"hud", &"social_hud", &"dialogue_ui", &"inventory_ui", &"quest_journal", &"people", &"gift_ui", &"shop_ui", &"pause_menu", &"save_load_ui", &"settings_ui"])
+  ok    an empty folder: no id is instanced (the new ids are inert until their scene lands)
+  ok    the five new scenes land first: all five load, back to front: [&"social_hud", &"event_overlay", &"people", &"gift_ui", &"post"]
+  ok    their neighbours land later and slot in around them: tree order == list order [&"hud", &"social_hud", &"event_overlay", &"dialogue_ui", &"quest_journal", &"people", &"gift_ui", &"post", &"shop_ui", &"garderobe", &"pause_menu", &"settings_ui"]
+  ok    hud < social_hud < event_overlay < dialogue_ui in the tree (the letterbox is behind the dialogue): second load = [&"hud", &"dialogue_ui", &"quest_journal", &"shop_ui", &"garderobe", &"pause_menu", &"settings_ui"]
+  ok    people, gift_ui, post sit between quest_journal and shop_ui; settings_ui is still last
+  ok    every new screen is PROCESS_MODE_ALWAYS (set by the loader when the scene leaves it at INHERIT)
+  ok    ui_foundation.game_ui_loads_new_ids_in_order (GameUI.SCREEN_ORDER: social_hud, event_overlay, people, gift_ui, post are in place (21 ids), inert without a scene, and load back to front in any order)
+  ok    date_text = TimeManager.date_text (one calendar): Tirsdag 16. Blomstermåned
+  ok    en: Tuesday 16. Month of Blooms / 1,250
+  ok    da: thousands and clock
+  ok    mayor_lyra portrait resolves through npcs.lua + characters.lua (res://assets/isometric_characters/fairy_mayor/portrait.webp)
+  ok    the bust of the NPC's own visual wins as soon as it exists
+  ok    assets/portraits/<id>.webp before isometric_characters/<id>/portrait.webp
+  ok    fallback chain fairy_mayor -> fairy, pack folder portrait
+  ok    quest tag ids are ASCII (HØST -> HOEST)
+  ok    ui_foundation.tt_helpers (tt_format / tt_portraits / tt_quest_text answer through TimeManager, npcs.lua and characters.lua)
+  ok    the zone keys of the real quests translate (ZONE_CITY = Hyggebyen)
+  ok    meta.location = "ZONE_CITY" is shown translated: 'Fra Pippin Bøgeknop · Hyggebyen'
+  ok    ZONE_FARM and ZONE_DYBE_BREGNER too: 'Fra Pippin Bøgeknop · Min Trækronsgård' / 'Fra Pippin Bøgeknop · Dybe Bregner'
+  ok    a key-shaped location WITHOUT a translation is dropped, never printed raw: 'Fra Pippin Bøgeknop'
+  ok    plain text (not a key) is kept as it is: 'Fra Pippin Bøgeknop · Skovbrynet'
+  ok    no location: no separator; no giver: no line
+  ok    en: the same lines in English ('From Pippin Bøgeknop · Deep Ferns')
+  ok    31 real quest definitions: no from-line carries a raw translation key []
+  ok    31 real quests carry a ZONE_ key as location: each from-line ends with the translated place
+  ok    ui_foundation.quest_text_location (meta.location is a zone KEY (plan 3.12): translated in the quest book's 'Fra <giver> · <place>' line, never printed raw)
+  ok    meta / rewards / objectives that are empty tables (Array or Dictionary) or the wrong type: every reader answers with 'nothing' instead of a script error
+  ok    rewards = { gold = 5, items = {}, friendship = {} }: the gold chip only ([{ "kind": "gold", "text": "5 guldagern" }])
+  ok    meta.location = {} is no place: 'Fra Pippin Bøgeknop'
+  ok    objectives = { {}, {id = a, target = {}}, ... }: three rows with default targets ([1, 1, 2])
+  ok    ui_foundation.quest_text_hostile_definitions (tt_quest_text reads every sub-table through LuaData: empty tables never raise script errors)
+  ok    title: the Lua title, a translated title_key, QUEST_<ID>_TITLE
+  ok    a title_key without a translation falls back to QUEST_<ID>_TITLE ('Titel efter fejlnøgle')
+  ok    no title, no key, no translation: the id made readable, never a raw key ["T Bad Key", "T Missing", "T Wrong Type"]
+  ok    none of the seven titles contains a raw translation key []
+  ok    en: the same fallbacks
+  ok    31 real quest definitions: every title is real text []
+  ok    ui_foundation.quest_text_title (tt_quest_text.title() guards title_key and QUEST_<ID>_TITLE with _has_key like description() and step_text())
+  ok    ui_foundation.ui_csv_readable (localization/ui.csv has the header keys,da,en)
+  ok    no key twice inside ui.csv []
+  ok    every ui.csv key has da AND en text []
+  ok    no RECIPE_*, ITEM_*, per-shop SHOP_<id>_GREETING or INV_RARITY_* (EPIC) rows []
+  ok    the keys other packages asked for exist in ui.csv: missing []
+  ok    device-aware dialogue continuation comes from nav.csv HINT_CONTINUE
+  ok    UI_WEATHER_KLART stays in core.csv (defined there already)
+  ok    canonical copy da/en of the shared keys
+  ok    no ui.csv key is defined in another non-legacy CSV []
+  ok    the localization lint reports no error for ui.csv []
+  ok    every ui.csv key is owned by ui.csv in tools/loc/key_owners.json []
+  ok    ui.csv.import is a keep stub (R.4)
+  ok    ui_foundation.no_duplicate_keys (139 keys, 0 duplicates, no RECIPE_/ITEM_/shop-greeting/INV_RARITY_ rows, no cross-file duplicate)
+  ok    tests/checkpoints/guide_ref holds the seven pw1x_<screen>.png renders at 1280x720
+  ok    guide_ref has a .gdignore: Godot never imports the reference PNGs (python reads them)
+  ok    a bundled reference compared with itself (--ref, --no-frame-crop) is 0.00 for all seven
+  ok    negative control: the TITLE render scored against the HUD guide screen is far off (44.5)
+  ok    frame crop is the default (2 px HTML frame ignored: 0.000); --no-frame-crop keeps it (0.658)
+  ok    --region x,y,w,h: inside the patch 20.0000 (=20), outside 0.0000, whole picture 0.4340 (=0.4340)
+  ok    --ref works with any shot name: anything_at_all mean abs diff (0-255):   0.00   pixels with diff>40:  0.00%   (1280x720)
+  ok    --max N on the whole picture: mean 0.43 > 0.3 exits 1, <= 5 exits 0 (codes 1 / 0)
+  ok    usage errors exit 2 (unknown screen 2, region outside 2, --ref with two shots 2, missing file 2)
+  ok    --target hud=0.1 on a flat shot against the HUD guide screen exits 1 (hud        mean abs diff (0-255):  44.42   pixels with diff>40: 57.37%   (1280x720)   EXCEEDS limit 0.10)
+  ok    --max N: mean 20 > 10 exits 1 ('EXCEEDS'), <= 25 exits 0
+  ok    malformed --target / --max, a text file, a truncated PNG (shot or reference) and an unwritable --out all exit 2 with a 'compare_guide:' message and no traceback (codes [2, 2, 2, 2, 2, 2, 2, 2, 2])
+  ok    --frame-px: a negative number (with or without --no-frame-crop), 360+ on a 720 px picture, 5000 and text all exit 2 with the limit named, no PIL error (codes [2, 2, 2, 2, 2])
+  ok    --frame-px 0 keeps the whole 1280x720 reference, 359 is accepted ([1280.0, 720.0] / [562.0, 2.0])
+  ok    ui_foundation.compare_guide_modes (--ref / --no-frame-crop / --region / --max / --frame-px exercised on synthetic images and the seven bundled references; bad inputs exit 2)
+  ok    guide_ref/SHA256SUMS exists
+  ok    ui_foundation.guide_ref_pinned (the seven regenerated guide references still hash to SHA256SUMS [])
+  ok    ui_foundation.smoke (ui_smoke.tscn child run: exit 0, 'UI SMOKE PASS: 201 checks, 0 failures, 0 engine errors')
+  --    ui_foundation: 204 checks, 0 failed, 1 skipped, 8.3 s
+== section ui_nav  (res://tests/sections/ui_nav.gd)
+  ok    ui_nav.disabled_not_focusable (set_enabled(false) -> disabled + FOCUS_NONE, (true) restores it; a LineEdit goes read-only; first_enabled skips both)
+  ok    ui_nav.wire_helpers (L ring true, wrap marks true, no-wrap true, T row true, G grid (22 in 6, clamped short row) true, groups true, focus memory true, ring wrap marks true, Tab order true, re-wire true, a real Down press lands on C10)
+  ok    ui_nav.hover_focus_lists (mouse_entered grabs focus on the rows (true / true), not on a chip (true) or a text field (true), not on a disabled row (true); one connection per row)
+  ok    ui_nav.text_field_yields_updown (without the helper Down stays in the field (true); with it Down -> Below (true), Up -> Above (true); Enter submits (true), Tab leaves (true), typing and the caret keys work (true))
+  ok    ui_nav.no_wrap_on_echo (a held Down (echo) stops at the last item (true), a fresh press wraps (true); same at the top (true / true); an echo inside the ring still moves (true))
+  ok    ui_nav.wasd_navigates (W / S move focus in an open screen (true / true / true), never inside a text field (true), the arrows still work once (true), an echo S stops at a wrapping end and a fresh one wraps (true / true), a closed screen and the free world are left alone (true), wasd_as_arrows serves a plain scene (true))
+  ok    ui_nav.screen_lifecycle (hidden + ALWAYS after _ready (true); open() twice pushes ONCE (true) and pauses (true); close() twice pops once (true); ui_panel_toggled is answered once per request (true / true / true); a non-pausing screen is CUTSCENE (true); a dropped stack closes it (true); siblings refuse (true), a nested screen opens (true))
+  ok    ui_nav.initial_focus_and_restore (focus is still on the opener in the frame of open() (true) and on _initial_focus() one frame later (true); close() hands it back (true); a world opener leaves no owner (true); open(opener) wins (true); a freed opener leaves no owner (true))
+  ok    ui_nav.focus_loss_guard (a hidden focus owner (true), a freed one (true) and focus outside the screen (true) are replaced within a frame; hiding the last good control (true); only the TOP screen guards (true); an empty-space click keeps focus (true))
+  ok    ui_nav.wants_focus_guard (_wants_focus() = false: no initial focus (true), the guard does not refocus (true), the audit asks for no initial focus (true) and skips the walk (true); true again -> focused (true))
+  ok    ui_nav.esc_uses_input_not_unhandled (typed letters never reach _unhandled_input (true), Enter in the field is consumed (true); Esc closes the screen although the field is being edited, through _input (true / true); Start (true) and B (true) close it; PgUp / RB call _on_page(-1 / +1) (true))
+  ok    ui_nav.accept_presses_focused_button (Enter, Space and pad A press the focused Button exactly once (true) and the world sees none of interact / jump / dodge / ui_accept (true); E presses nothing (true); Esc closes without a world reaction (true); a closed screen leaves E to the world (true))
+  ok    ui_nav.closing_press_does_not_reach_the_world (the Enter / pad A that presses a row CLOSING the last modal never reaches the world (true / true); without the swallow it does (true: set_input_as_handled() in a pressed handler is not enough); the flag lasts one frame (true / true) and every TTScreen honours it, open or not (true))
+  ok    ui_nav.text_field_typing_is_inert (text_field_audit (30 keys) finds no leak (true); typing i j e h g c b 1 0 w a s d opens nothing and moves no focus (true); a closed screen does not open its hotkey while a field has focus (true); without a field the hotkey opens (true) and closes (true) it)
+  ok    ui_nav.hint_glyphs_follow_device (keyboard E / Enter / Esc true -> pad A / A / B true -> keyboard true; stick < 0.5 and a mouse jitter do not flip (true), a real mouse move (true) and stick push (true) do, an action never does (true), a click does (true); device_changed fires once per change (true); format: E for at fortsætte / E to continue)
+  ok    ui_nav.hint_bar_localized (empty bar hidden (true); da glyph + word pairs (true), KeyCap + Eyebrow labels with a separator (true); a language switch re-renders it, no raw keys in either locale (true / true); a pad swap re-renders and leaves out the key that has no pad button (true / true); passive controls (true); force_hidden sticks (true); empty list hides (true); one device connection (1))
+  ok    ui_nav.prompt_prefix_glyph (split_prompt: 'E: Sov' / 'E · Tal med X' -> key token + verb, a plain 'Sov: i sengen', a lower-case or two-letter prefix and an empty text are not keys (true); UI_SLEEP, WORLD_PROMPT_USE and UI_READ split in da and en (true); is_key (true))
+  ok    ui_nav.confirm_default_focus_and_escape (last child of the asker (true), default answer focused (true / true), pushes `confirm` without changing the pause state (true / true / true), texts (true); Esc cancels and focus returns (true); Enter yes / no, swap, B, Start, A (true true true true true true true); scrim click inert, button click answers (true / true); language switch (true); stack clean (true))
+  ok    ui_nav.confirm_traps_focus (50 random Up / Down / Left / Right / Tab / Shift+Tab / WASD presses never leave the two buttons (50 inside, 0 outside); the audit walk finds no trap and no unreachable control (true), the focusable report no defect)
+  ok    ui_nav.confirm_ask_text (ask_text shows the field with the initial text selected, max length and the field focused (true); typing + Enter returns the text (true / true); Esc returns "" (true); the cap holds (true); OK by button strips (true); an empty text and the Cancel button return "" (true / true); Tab ring field -> Fortryd -> OK -> field (true true true))
+  ok    ui_nav.freeing_modal_releases_stack (freeing a nested modal preserves the parent; freeing the last modal resumes play; removing a confirmation's asker cancels exactly once and clears its pause)
+  ok    ui_nav.toast_stack_caps_and_rarity (IGNORE / FOCUS_NONE (true); five posts leave 3, newest on top (true / true), at the top centre y = 96 (true: y 96, centre 640); counts stack (true: ["Spil gemt ×2 | Slot 1", "Fået genstand | Gulerod x1", "Fået genstand | Månesten x6"]), a repeat moves back on top (true); keys run tr() and follow the language (true), no raw keys (true); a hat_wizard_night item shows its tile of Rarity.ui (true / true), kinds without an item have none (true); item_toasts = false leaves them to the loot feed (true))
+  ok    ui_nav.prompt_pill_follows_device (hidden at first (true); 'E: Sov' -> cap E + verb Sov at the bottom centre (true / true); a pad swap flips the cap to A and back (true / true); 'E · Tal med Pippin' (true), a verb-only prompt gets the cap (true); a key is translated (true) and follows the language (true); empty hides (true); inert (true); the theme look (true); one connection (1))
+  ok    ui_nav.whisper_line (hidden at first (true); whisper_requested(key) shows tr(key) in a PanelWhisper with the Whisper italic (true) at left 40 / bottom 40, at most 360 wide (true) and wraps a long text (true), a short one hugs its text (true); a second whisper replaces it (true) and it follows the language (true); inert (true), no raw keys (true); still there after 3 s (true) and gone after 3.5 s + fade (true); one connection (1))
+  ok    ui_nav.stepper_one_stop_keys (one focus stop (true), the audit sees one focusable and no defect (true / true); Right x2 / Left (true / true), a held key repeats (true); PgUp +5 / PgDn -5 clamped (true / true / true); Enter, Space and pad A commit (true); D-pad (true); the disabled '-' is no stop and the mouse buttons work (true / true); at the end of the range a held key stays (true) and a fresh press moves on (true / true); the ring is PanelField/focus (true))
+  ok    ui_nav.engine_facts (29 engine facts of UI_NAVIGATION.md 3.1 (F1 - F14) hold on this engine (4.7.2-stable (official)); failed: [])
+  --    ui_nav: 26 checks, 0 failed, 0 skipped, 0.1 s
+== section walkway_transitions  (res://tests/sections/walkway_transitions.gd)
+  ok    walkway_transitions.landing_b0_end0_out_lane-0.6 (a -> b0, 21 ticks, 0 stalled ticks, 3.24 ground px left; actual level b0; )
+  ok    walkway_transitions.landing_b0_end0_in_lane-0.6 (b0 -> a, 23 ticks, 0 stalled ticks, 6.26 ground px left; actual level a; )
+  ok    walkway_transitions.landing_b0_end0_out_lane0.0 (a -> b0, 21 ticks, 0 stalled ticks, 3.24 ground px left; actual level b0; )
+  ok    walkway_transitions.landing_b0_end0_in_lane0.0 (b0 -> a, 23 ticks, 0 stalled ticks, 6.26 ground px left; actual level a; )
+  ok    walkway_transitions.landing_b0_end0_out_lane0.6 (a -> b0, 21 ticks, 0 stalled ticks, 3.24 ground px left; actual level b0; )
+  ok    walkway_transitions.landing_b0_end0_in_lane0.6 (b0 -> a, 25 ticks, 0 stalled ticks, 15.76 ground px left; actual level a; )
+  ok    walkway_transitions.landing_b0_end1_out_lane-0.6 (upper -> b0, 21 ticks, 0 stalled ticks, 3.24 ground px left; actual level b0; )
+  ok    walkway_transitions.landing_b0_end1_in_lane-0.6 (b0 -> upper, 23 ticks, 0 stalled ticks, 6.26 ground px left; actual level upper; )
+  ok    walkway_transitions.landing_b0_end1_out_lane0.0 (upper -> b0, 21 ticks, 0 stalled ticks, 3.24 ground px left; actual level b0; )
+  ok    walkway_transitions.landing_b0_end1_in_lane0.0 (b0 -> upper, 23 ticks, 0 stalled ticks, 6.26 ground px left; actual level upper; )
+  ok    walkway_transitions.landing_b0_end1_out_lane0.6 (upper -> b0, 21 ticks, 0 stalled ticks, 3.24 ground px left; actual level b0; )
+  ok    walkway_transitions.landing_b0_end1_in_lane0.6 (b0 -> upper, 23 ticks, 0 stalled ticks, 6.26 ground px left; actual level upper; )
+  ok    walkway_transitions.landing_b1_end0_out_lane-0.6 (b -> b1, 19 ticks, 0 stalled ticks, 2.91 ground px left; actual level b1; )
+  ok    walkway_transitions.landing_b1_end0_in_lane-0.6 (b1 -> b, 25 ticks, 0 stalled ticks, 28.28 ground px left; actual level b; )
+  ok    walkway_transitions.landing_b1_end0_out_lane0.0 (b -> b1, 19 ticks, 0 stalled ticks, 2.91 ground px left; actual level b1; )
+  ok    walkway_transitions.landing_b1_end0_in_lane0.0 (b1 -> b, 21 ticks, 0 stalled ticks, 6.59 ground px left; actual level b; )
+  ok    walkway_transitions.landing_b1_end0_out_lane0.6 (b -> b1, 19 ticks, 0 stalled ticks, 2.91 ground px left; actual level b1; )
+  ok    walkway_transitions.landing_b1_end0_in_lane0.6 (b1 -> b, 21 ticks, 0 stalled ticks, 6.59 ground px left; actual level b; )
+  ok    walkway_transitions.landing_b1_end1_out_lane-0.6 (upper -> b1, 19 ticks, 0 stalled ticks, 2.91 ground px left; actual level b1; )
+  ok    walkway_transitions.landing_b1_end1_in_lane-0.6 (b1 -> upper, 21 ticks, 0 stalled ticks, 6.59 ground px left; actual level upper; )
+  ok    walkway_transitions.landing_b1_end1_out_lane0.0 (upper -> b1, 19 ticks, 0 stalled ticks, 2.91 ground px left; actual level b1; )
+  ok    walkway_transitions.landing_b1_end1_in_lane0.0 (b1 -> upper, 21 ticks, 0 stalled ticks, 6.59 ground px left; actual level upper; )
+  ok    walkway_transitions.landing_b1_end1_out_lane0.6 (upper -> b1, 19 ticks, 0 stalled ticks, 2.91 ground px left; actual level b1; )
+  ok    walkway_transitions.landing_b1_end1_in_lane0.6 (b1 -> upper, 21 ticks, 0 stalled ticks, 6.59 ground px left; actual level upper; )
+  ok    walkway_transitions.landing_b2_end0_out_lane-0.6 (a -> b2, 27 ticks, 0 stalled ticks, 4.87 ground px left; actual level b2; )
+  ok    walkway_transitions.landing_b2_end0_in_lane-0.6 (b2 -> a, 29 ticks, 0 stalled ticks, 4.63 ground px left; actual level a; )
+  ok    walkway_transitions.landing_b2_end0_out_lane0.0 (a -> b2, 27 ticks, 0 stalled ticks, 4.87 ground px left; actual level b2; )
+  ok    walkway_transitions.landing_b2_end0_in_lane0.0 (b2 -> a, 29 ticks, 0 stalled ticks, 4.63 ground px left; actual level a; )
+  ok    walkway_transitions.landing_b2_end0_out_lane0.6 (a -> b2, 27 ticks, 0 stalled ticks, 4.87 ground px left; actual level b2; )
+  ok    walkway_transitions.landing_b2_end0_in_lane0.6 (b2 -> a, 29 ticks, 0 stalled ticks, 4.63 ground px left; actual level a; )
+  ok    walkway_transitions.landing_b2_end1_out_lane-0.6 (c -> b2, 27 ticks, 0 stalled ticks, 4.87 ground px left; actual level b2; )
+  ok    walkway_transitions.landing_b2_end1_in_lane-0.6 (b2 -> c, 29 ticks, 0 stalled ticks, 4.63 ground px left; actual level c; )
+  ok    walkway_transitions.landing_b2_end1_out_lane0.0 (c -> b2, 27 ticks, 0 stalled ticks, 4.87 ground px left; actual level b2; )
+  ok    walkway_transitions.landing_b2_end1_in_lane0.0 (b2 -> c, 29 ticks, 0 stalled ticks, 4.63 ground px left; actual level c; )
+  ok    walkway_transitions.landing_b2_end1_out_lane0.6 (c -> b2, 27 ticks, 0 stalled ticks, 4.87 ground px left; actual level b2; )
+  ok    walkway_transitions.landing_b2_end1_in_lane0.6 (b2 -> c, 29 ticks, 0 stalled ticks, 4.63 ground px left; actual level c; )
+  ok    walkway_transitions.landing_b3_end0_out_lane-0.6 (b -> b3, 26 ticks, 0 stalled ticks, 4.79 ground px left; actual level b3; )
+  ok    walkway_transitions.landing_b3_end0_in_lane-0.6 (b3 -> b, 28 ticks, 0 stalled ticks, 4.71 ground px left; actual level b; )
+  ok    walkway_transitions.landing_b3_end0_out_lane0.0 (b -> b3, 26 ticks, 0 stalled ticks, 4.79 ground px left; actual level b3; )
+  ok    walkway_transitions.landing_b3_end0_in_lane0.0 (b3 -> b, 28 ticks, 0 stalled ticks, 4.71 ground px left; actual level b; )
+  ok    walkway_transitions.landing_b3_end0_out_lane0.6 (b -> b3, 26 ticks, 0 stalled ticks, 4.79 ground px left; actual level b3; )
+  ok    walkway_transitions.landing_b3_end0_in_lane0.6 (b3 -> b, 28 ticks, 0 stalled ticks, 4.71 ground px left; actual level b; )
+  ok    walkway_transitions.landing_b3_end1_out_lane-0.6 (e -> b3, 26 ticks, 0 stalled ticks, 4.79 ground px left; actual level b3; )
+  ok    walkway_transitions.landing_b3_end1_in_lane-0.6 (b3 -> e, 28 ticks, 0 stalled ticks, 4.71 ground px left; actual level e; )
+  ok    walkway_transitions.landing_b3_end1_out_lane0.0 (e -> b3, 26 ticks, 0 stalled ticks, 4.79 ground px left; actual level b3; )
+  ok    walkway_transitions.landing_b3_end1_in_lane0.0 (b3 -> e, 28 ticks, 0 stalled ticks, 4.71 ground px left; actual level e; )
+  ok    walkway_transitions.landing_b3_end1_out_lane0.6 (e -> b3, 26 ticks, 0 stalled ticks, 4.79 ground px left; actual level b3; )
+  ok    walkway_transitions.landing_b3_end1_in_lane0.6 (b3 -> e, 28 ticks, 0 stalled ticks, 4.71 ground px left; actual level e; )
+  ok    walkway_transitions.landing_b4_end0_out_lane-0.6 (c -> b4, 18 ticks, 0 stalled ticks, 3.24 ground px left; actual level b4; )
+  ok    walkway_transitions.landing_b4_end0_in_lane-0.6 (b4 -> c, 20 ticks, 0 stalled ticks, 5.10 ground px left; actual level c; )
+  ok    walkway_transitions.landing_b4_end0_out_lane0.0 (c -> b4, 18 ticks, 0 stalled ticks, 3.75 ground px left; actual level b4; )
+  ok    walkway_transitions.landing_b4_end0_in_lane0.0 (b4 -> c, 20 ticks, 0 stalled ticks, 5.75 ground px left; actual level c; )
+  ok    walkway_transitions.landing_b4_end0_out_lane0.6 (c -> b4, 18 ticks, 0 stalled ticks, 3.75 ground px left; actual level b4; )
+  ok    walkway_transitions.landing_b4_end0_in_lane0.6 (b4 -> c, 20 ticks, 0 stalled ticks, 5.75 ground px left; actual level c; )
+  ok    walkway_transitions.landing_b4_end1_out_lane-0.6 (torvet -> b4, 18 ticks, 0 stalled ticks, 2.52 ground px left; actual level b4; )
+  ok    walkway_transitions.landing_b4_end1_in_lane-0.6 (b4 -> torvet, 22 ticks, 0 stalled ticks, 12.62 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b4_end1_out_lane0.0 (torvet -> b4, 18 ticks, 0 stalled ticks, 3.75 ground px left; actual level b4; )
+  ok    walkway_transitions.landing_b4_end1_in_lane0.0 (b4 -> torvet, 21 ticks, 0 stalled ticks, 10.50 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b4_end1_out_lane0.6 (torvet -> b4, 18 ticks, 0 stalled ticks, 3.75 ground px left; actual level b4; )
+  ok    walkway_transitions.landing_b4_end1_in_lane0.6 (b4 -> torvet, 21 ticks, 0 stalled ticks, 10.50 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b5_end0_out_lane-0.6 (e -> b5, 19 ticks, 0 stalled ticks, 1.88 ground px left; actual level b5; )
+  ok    walkway_transitions.landing_b5_end0_in_lane-0.6 (b5 -> e, 20 ticks, 0 stalled ticks, 2.87 ground px left; actual level e; )
+  ok    walkway_transitions.landing_b5_end0_out_lane0.0 (e -> b5, 19 ticks, 0 stalled ticks, 1.88 ground px left; actual level b5; )
+  ok    walkway_transitions.landing_b5_end0_in_lane0.0 (b5 -> e, 20 ticks, 0 stalled ticks, 2.87 ground px left; actual level e; )
+  ok    walkway_transitions.landing_b5_end0_out_lane0.6 (e -> b5, 18 ticks, 0 stalled ticks, 4.12 ground px left; actual level b5; )
+  ok    walkway_transitions.landing_b5_end0_in_lane0.6 (b5 -> e, 22 ticks, 0 stalled ticks, 10.72 ground px left; actual level e; )
+  ok    walkway_transitions.landing_b5_end1_out_lane-0.6 (torvet -> b5, 19 ticks, 0 stalled ticks, 1.88 ground px left; actual level b5; )
+  ok    walkway_transitions.landing_b5_end1_in_lane-0.6 (b5 -> torvet, 22 ticks, 0 stalled ticks, 12.37 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b5_end1_out_lane0.0 (torvet -> b5, 19 ticks, 0 stalled ticks, 1.88 ground px left; actual level b5; )
+  ok    walkway_transitions.landing_b5_end1_in_lane0.0 (b5 -> torvet, 22 ticks, 0 stalled ticks, 11.70 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b5_end1_out_lane0.6 (torvet -> b5, 18 ticks, 0 stalled ticks, 2.96 ground px left; actual level b5; )
+  ok    walkway_transitions.landing_b5_end1_in_lane0.6 (b5 -> torvet, 24 ticks, 0 stalled ticks, 16.04 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b6_end0_out_lane-0.6 (f -> b6, 27 ticks, 0 stalled ticks, 2.65 ground px left; actual level b6; )
+  ok    walkway_transitions.landing_b6_end0_in_lane-0.6 (b6 -> f, 28 ticks, 0 stalled ticks, 2.10 ground px left; actual level f; )
+  ok    walkway_transitions.landing_b6_end0_out_lane0.0 (f -> b6, 27 ticks, 0 stalled ticks, 2.65 ground px left; actual level b6; )
+  ok    walkway_transitions.landing_b6_end0_in_lane0.0 (b6 -> f, 28 ticks, 0 stalled ticks, 2.10 ground px left; actual level f; )
+  ok    walkway_transitions.landing_b6_end0_out_lane0.6 (f -> b6, 27 ticks, 0 stalled ticks, 2.65 ground px left; actual level b6; )
+  ok    walkway_transitions.landing_b6_end0_in_lane0.6 (b6 -> f, 28 ticks, 0 stalled ticks, 2.10 ground px left; actual level f; )
+  ok    walkway_transitions.landing_b6_end1_out_lane-0.6 (torvet -> b6, 27 ticks, 0 stalled ticks, 2.65 ground px left; actual level b6; )
+  ok    walkway_transitions.landing_b6_end1_in_lane-0.6 (b6 -> torvet, 31 ticks, 0 stalled ticks, 16.35 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b6_end1_out_lane0.0 (torvet -> b6, 27 ticks, 0 stalled ticks, 2.65 ground px left; actual level b6; )
+  ok    walkway_transitions.landing_b6_end1_in_lane0.0 (b6 -> torvet, 30 ticks, 0 stalled ticks, 11.60 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b6_end1_out_lane0.6 (torvet -> b6, 27 ticks, 0 stalled ticks, 2.65 ground px left; actual level b6; )
+  ok    walkway_transitions.landing_b6_end1_in_lane0.6 (b6 -> torvet, 28 ticks, 0 stalled ticks, 2.10 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b7_end0_out_lane-0.6 (g -> b7, 26 ticks, 0 stalled ticks, 3.06 ground px left; actual level b7; )
+  ok    walkway_transitions.landing_b7_end0_in_lane-0.6 (b7 -> g, 28 ticks, 0 stalled ticks, 6.44 ground px left; actual level g; )
+  ok    walkway_transitions.landing_b7_end0_out_lane0.0 (g -> b7, 26 ticks, 0 stalled ticks, 3.06 ground px left; actual level b7; )
+  ok    walkway_transitions.landing_b7_end0_in_lane0.0 (b7 -> g, 28 ticks, 0 stalled ticks, 6.44 ground px left; actual level g; )
+  ok    walkway_transitions.landing_b7_end0_out_lane0.6 (g -> b7, 26 ticks, 0 stalled ticks, 3.06 ground px left; actual level b7; )
+  ok    walkway_transitions.landing_b7_end0_in_lane0.6 (b7 -> g, 28 ticks, 0 stalled ticks, 6.44 ground px left; actual level g; )
+  ok    walkway_transitions.landing_b7_end1_out_lane-0.6 (torvet -> b7, 26 ticks, 0 stalled ticks, 3.06 ground px left; actual level b7; )
+  ok    walkway_transitions.landing_b7_end1_in_lane-0.6 (b7 -> torvet, 28 ticks, 0 stalled ticks, 6.44 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b7_end1_out_lane0.0 (torvet -> b7, 26 ticks, 0 stalled ticks, 3.06 ground px left; actual level b7; )
+  ok    walkway_transitions.landing_b7_end1_in_lane0.0 (b7 -> torvet, 29 ticks, 0 stalled ticks, 11.19 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b7_end1_out_lane0.6 (torvet -> b7, 26 ticks, 0 stalled ticks, 3.06 ground px left; actual level b7; )
+  ok    walkway_transitions.landing_b7_end1_in_lane0.6 (b7 -> torvet, 31 ticks, 0 stalled ticks, 20.69 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b8_end0_out_lane-0.6 (f -> b8, 18 ticks, 0 stalled ticks, 3.93 ground px left; actual level b8; )
+  ok    walkway_transitions.landing_b8_end0_in_lane-0.6 (b8 -> f, 20 ticks, 0 stalled ticks, 5.57 ground px left; actual level f; )
+  ok    walkway_transitions.landing_b8_end0_out_lane0.0 (f -> b8, 18 ticks, 0 stalled ticks, 3.93 ground px left; actual level b8; )
+  ok    walkway_transitions.landing_b8_end0_in_lane0.0 (b8 -> f, 20 ticks, 0 stalled ticks, 5.57 ground px left; actual level f; )
+  ok    walkway_transitions.landing_b8_end0_out_lane0.6 (f -> b8, 18 ticks, 0 stalled ticks, 3.35 ground px left; actual level b8; )
+  ok    walkway_transitions.landing_b8_end0_in_lane0.6 (b8 -> f, 20 ticks, 0 stalled ticks, 5.05 ground px left; actual level f; )
+  ok    walkway_transitions.landing_b8_end1_out_lane-0.6 (g -> b8, 18 ticks, 0 stalled ticks, 3.93 ground px left; actual level b8; )
+  ok    walkway_transitions.landing_b8_end1_in_lane-0.6 (b8 -> g, 20 ticks, 0 stalled ticks, 5.57 ground px left; actual level g; )
+  ok    walkway_transitions.landing_b8_end1_out_lane0.0 (g -> b8, 18 ticks, 0 stalled ticks, 3.93 ground px left; actual level b8; )
+  ok    walkway_transitions.landing_b8_end1_in_lane0.0 (b8 -> g, 20 ticks, 0 stalled ticks, 5.57 ground px left; actual level g; )
+  ok    walkway_transitions.landing_b8_end1_out_lane0.6 (g -> b8, 18 ticks, 0 stalled ticks, 3.32 ground px left; actual level b8; )
+  ok    walkway_transitions.landing_b8_end1_in_lane0.6 (b8 -> g, 20 ticks, 0 stalled ticks, 5.28 ground px left; actual level g; )
+  ok    walkway_transitions.all_boardwalk_landings_covered (108 crossings: 9 bridges x 2 ends x both directions x 3 lateral approaches)
+  ok    walkway_transitions.ladder_up_approach_on_boardwalk
+  ok    walkway_transitions.ladder_up_no_entry_snap (interaction displacement 0.00 world px)
+  ok    walkway_transitions.ladder_up_approach_keeps_boardwalk_level
+  ok    walkway_transitions.ladder_up_animation_starts (walk)
+  ok    walkway_transitions.ladder_up_continuous_motion (peak 826.8 ground px/s <= 950.8)
+  ok    walkway_transitions.ladder_up_animation_advances (6 distinct animation frames)
+  ok    walkway_transitions.ladder_up_lands_on_boardwalk (level upper, 0.00 world px at landing event)
+  ok    walkway_transitions.ladder_up_stride_survives_landing (walk)
+  ok    walkway_transitions.ladder_up_facing_survives_landing
+  ok    walkway_transitions.ladder_up_held_input_continues (27.76 ground px on held input after landing)
+  ok    walkway_transitions.ladder_down_approach_on_boardwalk
+  ok    walkway_transitions.ladder_down_no_entry_snap (interaction displacement 0.00 world px)
+  ok    walkway_transitions.ladder_down_approach_keeps_boardwalk_level
+  ok    walkway_transitions.ladder_down_animation_starts (walk)
+  ok    walkway_transitions.ladder_down_continuous_motion (peak 826.8 ground px/s <= 950.8)
+  ok    walkway_transitions.ladder_down_animation_advances (6 distinct animation frames)
+  ok    walkway_transitions.ladder_down_lands_on_boardwalk (level torvet, 0.00 world px at landing event)
+  ok    walkway_transitions.ladder_down_stride_survives_landing (walk)
+  ok    walkway_transitions.ladder_down_facing_survives_landing
+  ok    walkway_transitions.ladder_down_held_input_continues (43.08 ground px on held input after landing)
+  ok    walkway_transitions.reparent_cancels_transition
+  ok    walkway_transitions.cancel_restores_forced_clip
+  ok    walkway_transitions.cancel_has_no_late_motion
+  ok    walkway_transitions.blocked_approach_does_not_jump_through_obstacle (0 climb events; stayed 70.39 world px before the lane)
+  ok    walkway_transitions.alternate_ladder_up_approach_on_boardwalk
+  ok    walkway_transitions.alternate_ladder_up_no_entry_snap (interaction displacement 0.00 world px)
+  ok    walkway_transitions.alternate_ladder_up_approach_keeps_boardwalk_level
+  ok    walkway_transitions.alternate_ladder_up_animation_starts (walk)
+  ok    walkway_transitions.alternate_ladder_up_continuous_motion (peak 1819.0 ground px/s <= 2091.8)
+  ok    walkway_transitions.alternate_ladder_up_animation_advances (6 distinct animation frames)
+  ok    walkway_transitions.alternate_ladder_up_lands_on_boardwalk (level upper, 0.00 world px at landing event)
+  ok    walkway_transitions.alternate_ladder_up_stride_survives_landing (walk)
+  ok    walkway_transitions.alternate_ladder_up_facing_survives_landing
+  ok    walkway_transitions.alternate_ladder_up_held_input_continues (27.76 ground px on held input after landing)
+  ok    walkway_transitions.alternate_ladder_down_approach_on_boardwalk
+  ok    walkway_transitions.alternate_ladder_down_no_entry_snap (interaction displacement 0.00 world px)
+  ok    walkway_transitions.alternate_ladder_down_approach_keeps_boardwalk_level
+  ok    walkway_transitions.alternate_ladder_down_animation_starts (walk)
+  ok    walkway_transitions.alternate_ladder_down_continuous_motion (peak 1819.0 ground px/s <= 2091.8)
+  ok    walkway_transitions.alternate_ladder_down_animation_advances (6 distinct animation frames)
+  ok    walkway_transitions.alternate_ladder_down_lands_on_boardwalk (level torvet, 0.00 world px at landing event)
+  ok    walkway_transitions.alternate_ladder_down_stride_survives_landing (walk)
+  ok    walkway_transitions.alternate_ladder_down_facing_survives_landing
+  ok    walkway_transitions.alternate_ladder_down_held_input_continues (43.08 ground px on held input after landing)
+  --    walkway_transitions: 153 checks, 0 failed, 0 skipped, 2.1 s
+== summary: 7 section(s) run, 741 checks (0 failed, 68 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 26.7 s
+PLAYTEST PASS (741 checks in 7 sections, 0 allowed engine messages, 0 known-issue messages)

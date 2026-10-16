@@ -1,0 +1,202 @@
+{
+  "status": "implemented; all selected feature and integration gates passed",
+  "validated_at_utc": "2026-10-16T18:03:29.947392+00:00",
+  "main_baseline": "f0829a9d6108d5aa3efd0550df2367b0bab24a98",
+  "source_commit": "0f169c774292cbc6ad354f6da2a6400d5baaac74",
+  "source_binding": "abd2aa1d720e17b96f01dc6bc203155c82bb1ea664577bd11f4fb3bab35ef5c6",
+  "bound_source_files": 1174,
+  "code_files": 683,
+  "scope": "Fitted visible carried tools/weapons and an actual current-item HUD for all eight playable heroes.",
+  "hero_skins": [
+    "animal",
+    "animal_monkey",
+    "fairy",
+    "fairy_birk",
+    "hobbit",
+    "hobbit_bodil",
+    "ghost",
+    "ghost_hviske"
+  ],
+  "headless": {
+    "animal": {
+      "report": "animal.json",
+      "result": "pass",
+      "checks": 42,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 5.5,
+      "engine_messages": 0,
+      "allowed_negative_control_messages": 0
+    },
+    "fairy": {
+      "report": "fairy.json",
+      "result": "pass",
+      "checks": 42,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 5.32,
+      "engine_messages": 0,
+      "allowed_negative_control_messages": 0
+    },
+    "hobbit": {
+      "report": "hobbit.json",
+      "result": "pass",
+      "checks": 42,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 6.33,
+      "engine_messages": 0,
+      "allowed_negative_control_messages": 0
+    },
+    "ghost": {
+      "report": "ghost.json",
+      "result": "pass",
+      "checks": 42,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 5.59,
+      "engine_messages": 0,
+      "allowed_negative_control_messages": 0
+    }
+  },
+  "native": {
+    "animal": {
+      "report": "native-animal.json",
+      "result": "pass",
+      "checks": 42,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 9.14,
+      "engine_messages": 0,
+      "allowed_negative_control_messages": 0
+    },
+    "fairy": {
+      "report": "native-fairy.json",
+      "result": "pass",
+      "checks": 42,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 8.43,
+      "engine_messages": 0,
+      "allowed_negative_control_messages": 0
+    },
+    "hobbit": {
+      "report": "native-hobbit.json",
+      "result": "pass",
+      "checks": 42,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 7.15,
+      "engine_messages": 0,
+      "allowed_negative_control_messages": 0
+    },
+    "ghost": {
+      "report": "native-ghost.json",
+      "result": "pass",
+      "checks": 42,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 6.9,
+      "engine_messages": 0,
+      "allowed_negative_control_messages": 0
+    }
+  },
+  "regression": {
+    "report": "regression.json",
+    "result": "pass",
+    "checks": 741,
+    "failed": 0,
+    "skipped": 68,
+    "elapsed_s": 26.7,
+    "engine_messages": 0,
+    "allowed_negative_control_messages": 0
+  },
+  "native_town": {
+    "report": "native-town.json",
+    "result": "pass",
+    "checks": 11,
+    "failed": 0,
+    "skipped": 0,
+    "elapsed_s": 7.62,
+    "engine_messages": 0,
+    "allowed_negative_control_messages": 0
+  },
+  "native_budgets": {
+    "report": "native-budgets.json",
+    "result": "pass",
+    "checks": 28,
+    "failed": 0,
+    "skipped": 0,
+    "elapsed_s": 31.23,
+    "engine_messages": 0,
+    "allowed_negative_control_messages": 0
+  },
+  "town_integration": {
+    "report": "town-integration.json",
+    "result": "pass",
+    "checks": 159,
+    "failed": 0,
+    "skipped": 11,
+    "elapsed_s": 22.26,
+    "engine_messages": 0,
+    "allowed_negative_control_messages": 1
+  },
+  "required_wave_5b_gates": {
+    "report": "gates.json",
+    "passed": 36,
+    "failed": 0
+  },
+  "source_bound_town_proofs": {
+    "extension": "../m1b-milestone/loop-extension.json",
+    "mutants": "../m1b-milestone/loop-mutants.json",
+    "data_only_owner_checks": 588,
+    "extension_scenarios": 8,
+    "producer_mutants_caught": 7,
+    "checks": [
+      "extension-check.json",
+      "mutants-check.json"
+    ],
+    "previous_secret_garden_proofs_archived": "../secret-garden/source-proof-c59041b0"
+  },
+  "art": {
+    "production_atlas": "assets/held_equipment/tools.webp",
+    "sha256": "39ec5087405bc8a8133b9c4342349ff52bfeeb9ca5eb50832e0f55faf24d551e",
+    "approved_visual_theme_assets_unchanged": 2562,
+    "new_reviewed_atlases": 1,
+    "directional_paintings": 96,
+    "body_frame_grips": 3056,
+    "raw_rgba_mib": 6,
+    "generation_mode": "built-in image_gen tool",
+    "prompts": "docs/art/held-equipment/prompts.json",
+    "review": "docs/art/held-equipment/review.txt",
+    "style_check": "static-style.txt",
+    "captures": "captures.json"
+  },
+  "performance": {
+    "native_city_mean_ms": 3.36843624161074,
+    "native_city_limit_ms": 6,
+    "original_city_hud_draws": 250,
+    "with_equipment_draws": 253,
+    "equipment_additional_draws": 3,
+    "equipment_draw_increment_limit": 16,
+    "total_texture_limits_unchanged": true,
+    "evidence": [
+      "native-town.log",
+      "native-budgets.log"
+    ]
+  },
+  "copy": {
+    "strict_changed_hud_file": "static-copy.json",
+    "legacy_localization_findings": 5,
+    "status": "New Danish/English HUD rows are draft and unvoiced; frozen voice rows unchanged.",
+    "localization": "static-localization.json",
+    "voice": "static-voice.txt"
+  },
+  "limitations": [
+    "Uses the existing body carry/work/attack poses; fitted clothing and extended support-hand poses remain separate art packages.",
+    "Existing named capability skips remain in older suites; the equipment section adds no skip.",
+    "Prior full native town timing misses remain documented in ../secret-garden/acceptance.json; focused native rendering/resource checks pass here.",
+    "Source-project native checks only; no packaged-export claim."
+  ],
+  "remaining_feature_work": []
+}

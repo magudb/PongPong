@@ -23,7 +23,8 @@ Native images
 
 native-<race>/held_equipment_tool_<body>.png and weapon_<body>.png are the full
 native farm/forest captures, two per hero. all-heroes-contact.png contains exact
-pixel crops of each hero and HUD. native-animal/catalog-contact.png contains
+pixel crops of each hero and HUD. all-weapons-contact.png shows each hero in
+the forest with the iron sword and its actual weapon readout. native-animal/catalog-contact.png contains
 the actual renderer's 12 tool/weapon appearances and corresponding readouts.
 stock-grips-contact.png and stock-grips-grid.png are authoring references for
 the body contact points, not alternative body assets.
