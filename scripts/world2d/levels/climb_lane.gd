@@ -215,8 +215,9 @@ func _release_actor(body: Node2D, forced_before: Variant) -> void:
 	if forced_before != null and "forced_clip" in body:
 		body.set("forced_clip", forced_before)
 	var vis: Variant = body.get("visual")
-	if vis is Object and (vis as Object).has_method("play_loop"):
-		(vis as Object).call("play_loop", StringName(str(forced_before)) if forced_before != null and str(forced_before) != "" else &"idle")
+	# Normal movement chooses its next clip; keep the stride through the landing.
+	if forced_before != null and str(forced_before) != "" and vis is Object and (vis as Object).has_method("play_loop"):
+		(vis as Object).call("play_loop", StringName(str(forced_before)))
 
 
 func _disconnect_actor(body: Node2D) -> void:

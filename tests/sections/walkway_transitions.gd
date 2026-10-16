@@ -154,6 +154,7 @@ func _climbs(t, capture: bool, prefix := "") -> void:
 			landing.applied = ActorLevel.is_applied(actor, registry.get_level(to))
 			landing.unlocked = not ActorLevel.is_locked(actor)
 			landing.distance = (actor as Node2D).global_position.distance_to(lane.finish_pos)
+			landing.clip = player.visual.current_clip
 		lane.climbed.connect(on_land, CONNECT_ONE_SHOT)
 		var direction := Vector2(0, -1 if from_id == &"torvet" else 1)
 		_steer(t, direction)
@@ -196,6 +197,7 @@ func _climbs(t, capture: bool, prefix := "") -> void:
 			"level %s, %.2f world px at landing event" % [ActorLevel.level_id(player), float(landing.get("distance", INF))])
 		if lane.climbed.is_connected(on_land):
 			lane.climbed.disconnect(on_land)
+		t.check(label + "_stride_survives_landing", landing.get("clip", &"") == &"walk", str(landing.get("clip", &"")))
 		t.check(label + "_facing_survives_landing", player.facing8 == Iso.dir8_of(direction) and player.visual.direction_index == player.facing8)
 		if capture:
 			await t.capture(label + "_landing")
