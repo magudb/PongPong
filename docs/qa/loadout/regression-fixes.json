@@ -1,0 +1,37 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 355,
+  "elapsed_s": 19.55,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "loot": {
+      "character": "animal",
+      "checks": 170,
+      "failed": 0,
+      "ms": 7608,
+      "skipped": 4
+    },
+    "ui_conformance": {
+      "character": "animal",
+      "checks": 162,
+      "failed": 0,
+      "ms": 7956,
+      "skipped": 71
+    },
+    "wardrobe": {
+      "character": "animal",
+      "checks": 23,
+      "failed": 0,
+      "ms": 158,
+      "skipped": 0
+    }
+  },
+  "skipped": 75
+}

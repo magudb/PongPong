@@ -1,0 +1,25 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 7,
+  "elapsed_s": 4.6,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "town_mutants.l04_zone_and_running_clock"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "town_mutants": {
+      "character": "animal",
+      "checks": 7,
+      "failed": 1,
+      "ms": 2919,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

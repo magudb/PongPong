@@ -1,0 +1,32 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 32,
+  "elapsed_s": 35.98,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "ui_conformance.windowed_rings"
+  ],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "town_budgets": {
+      "character": "animal",
+      "checks": 28,
+      "failed": 0,
+      "ms": 26732,
+      "skipped": 0
+    },
+    "ui_conformance": {
+      "character": "animal",
+      "checks": 4,
+      "failed": 1,
+      "ms": 5413,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

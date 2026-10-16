@@ -2,7 +2,7 @@
   "status": "reviewed",
   "worktree": "codex-review",
   "guideline": "docs/art/style-guide.txt",
-  "visual_reference": "docs/Trætoppen Style Guide Review/Trætoppen Style Guide.dc.html",
+  "visual_reference": "docs/Tr\u00e6toppen Style Guide Review/Tr\u00e6toppen Style Guide.dc.html",
   "scope": "All 5,171 assets inventoried; 2,518 rasters decoded. 255 new rasters and 311 changed rasters reviewed, including 285 painted historical re-exports, 20 rebuilt home day/night textures and six normalized prop pigment variants. 1,952 byte-identical rasters retain earlier review evidence. Thirteen radial light kernels remain functional masks. No historical illustration is exempted from the painted style. Stock animation sampling scope remains the prior all-clip middle-frame/eight-idle-direction/portrait review; this is not a new frame-by-frame review of 58 stock animation sets.",
   "reviewed_assets": {
     "assets/art/watercolor_paper.png": {
@@ -15382,6 +15382,1770 @@
       "disposition": "accepted-painted",
       "role": "fitted-held-equipment",
       "evidence": "docs/art/held-equipment/review.txt; all eight native hero captures and twelve-item catalog contact in docs/qa/held-equipment"
+    },
+    "assets/wardrobe/fairy/base.webp": {
+      "sha256": "e918d5bf6c0fd1a420b2e07dcea07a20c948b4c78e216769ebd0b3a580be93ee",
+      "disposition": "accepted-painted",
+      "role": "painted-wardrobe-safe-body",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/bracelet_braid.webp": {
+      "sha256": "0a04453f5fbcd416416b4747a2a99965a0dc00ef75d39a4eb426cb1ad00cb268",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/circlet_crown.webp": {
+      "sha256": "682753873fb3eb9805868313be2bdc0d4a9bb32efaf5810c7a549ef82a473bca",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/circlet_flowers.webp": {
+      "sha256": "9c1ee4d4dd2043aa05c0f5b6f4c42fddc8cfbdff0ba503bb2207baeec854f7db",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/dress_gown.webp": {
+      "sha256": "e04e9ad8bc9c217e0d2192e255988e8de618f9923e561c5bff7d2f97c6cc2687",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/dress_pinafore.webp": {
+      "sha256": "1e6bc24770b9826ebc12940651b5015299d5350e3843e68df637ef4c38ae4d97",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/dress_sun.webp": {
+      "sha256": "43b685c1a5391aaec86e3177a14b296c909e4490279d8e80574647ca4ffc1bc8",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/ears_hoops.webp": {
+      "sha256": "dbab0fbb88619b3aa1a917c102be2c59e981b8da31cc4315b089aab34b52ff27",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/hat_acorn.webp": {
+      "sha256": "e9e478e1691f89a7e85a763ccbf409348bf1f7f3468c3f3467001513f8e56eaf",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/hat_cap.webp": {
+      "sha256": "40cb62d92f9ac6de4cedfe2a097621c066574dd5f0cad18850d9535683341fae",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/hat_cat.webp": {
+      "sha256": "a2ec394e48ceb01c8a55c3e2a00a7f7293413bfc1633a50efb22663712d81b88",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/hat_chef.webp": {
+      "sha256": "bcc4e06d9ecdc915d2d9c6f931ee5854f7f4fb542751fcd199f8a3de714be9a4",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/hat_hood.webp": {
+      "sha256": "747a418917ef17d543a661e4167dc89602fdc81ee4b3d9dc218c021f86eb1987",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/hat_mushroom.webp": {
+      "sha256": "0f7362abcfafcdbb58549f77496ef4dbad16ed4f45af0c30a3ebf024007b79d8",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/hat_straw.webp": {
+      "sha256": "1187ce68cd35eb2b445dc8c8dcb4325996c4d18fce54e606523aea52e5323446",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/hat_wizard.webp": {
+      "sha256": "de071d0d271578be5c00468d2cc270fedb602423d1bb0a80fb5d4b0f633c6820",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/neck_pendant.webp": {
+      "sha256": "e1a838e9feafb67e058bf69615344dde11149d8ac7b750fad7c35d6715b5951d",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/necklace_beads.webp": {
+      "sha256": "459570b33bf270c84ea91e6a527fa5b0f89a22e5dab6d37372f496fd786efa8d",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/occluder.webp": {
+      "sha256": "6e772622557ee145747a01257f1f55084aa720ab9335c3c5fd3a1ef482f2923e",
+      "disposition": "technical-exception",
+      "role": "technical-clothing-occlusion-mask",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Functional alpha occlusion mask; restores matching body pigment only at garment overlaps."
+    },
+    "assets/wardrobe/fairy/pants_breeches.webp": {
+      "sha256": "933b2e4706939684dfb94730b71302dc6f2a2914d8daa50ba61b7c406eb51d10",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/pants_dungarees.webp": {
+      "sha256": "2e2ba4df93d7ad9f47c7d25643abe391258b60f7f8c2f508d54ee099513f2270",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/pants_shorts.webp": {
+      "sha256": "95a731597b8b9a3adb633a68cbce14209101dcdf2320cb3d5c52a1887c446aa6",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/pants_trousers.webp": {
+      "sha256": "67dc77d047abfe52db3d641d3a34138749ecd44a21576fad3c8e817ca387bbc9",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/shirt_knit.webp": {
+      "sha256": "b5ea8baad5325c5da47ea62d0ebd82788744b14fdfd2e3b8e570e5ca78d9cae7",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/shirt_linen.webp": {
+      "sha256": "a1d0779f5c0f3df1b06430ae88d62a85e509115d468f60ec632d7b46827ea1b7",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/shirt_smock.webp": {
+      "sha256": "1a2788e435c57000973509e616c9c0f79223d385493e1b718f080cc6bd188d16",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/shirt_vest.webp": {
+      "sha256": "ac3eb98f26d58e7174d12c756d0c3a9e049411a78479f4d36b8a80fd2e30b5af",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/shoes_boots.webp": {
+      "sha256": "e490dfed064e0750d2fb1600b20e4c84656d800ffb28a83b8fd7e21a3414c40f",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/shoes_clogs.webp": {
+      "sha256": "16baf0d012c005068635887631b0f2bb0dd5c6de68dbf8515aba4906ea4117f3",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/shoes_slippers.webp": {
+      "sha256": "4aab022f6255ff80bf6b9b91188974629f554a2f8ad040454932849b80f8414f",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/shoes_wellies.webp": {
+      "sha256": "454a7b7655f9f048fcb61a1b70bf727697167e7766cc86161630bd0620053fb8",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy/wrist_bangles.webp": {
+      "sha256": "a807969be3cd06a82cef64d046ffbbbe7521206c295432ae41de354248c70d49",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/base.webp": {
+      "sha256": "de20ae7d685346e8b684f85bcf943d3d09fbe28458a583a7d4b8ccd1a7a48328",
+      "disposition": "accepted-painted",
+      "role": "painted-wardrobe-safe-body",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/bracelet_braid.webp": {
+      "sha256": "1aae8773f661439ebb3d1a8f52721f2e593b4d91558d80d6074ef5f074d468f1",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/circlet_crown.webp": {
+      "sha256": "caf7e0518a5f34f119caee4ffa1de9490077624ea0121a1be7c97d9c2eed1106",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/circlet_flowers.webp": {
+      "sha256": "f7850b9a49ba61cd0622e0202906d1bc174464c6bb30b7e736d313cf27bdc267",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/dress_gown.webp": {
+      "sha256": "b9575026da475bed285d06097cf4f989bacc1603d3ee7cb2ea26dd85c6ea6317",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/dress_pinafore.webp": {
+      "sha256": "aef0a8ced05f87c3d96c2557824e26039b33942104dc82b47625b477c9b19c1b",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/dress_sun.webp": {
+      "sha256": "c3407c9bffc9363430e75575b7319602201d0414a420c1b8b0be2994a40d62c5",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/ears_hoops.webp": {
+      "sha256": "0055686795d145af2b5b3cece24a2984085230ffb8fbd4648fa036599957cf6d",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/hat_acorn.webp": {
+      "sha256": "97339f00fdb97e1fe2f84f9c6c47fa8408901037300d5ee278cd5c33c13ca520",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/hat_cap.webp": {
+      "sha256": "217c4daa888d5568bbb42d65f5e188b323b9b712d918442ee2b1bc30ce7c5006",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/hat_cat.webp": {
+      "sha256": "3ee56194d8557ef8afa1e5f31a8b0b04e780678ea493e70fa982ae88289672c9",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/hat_chef.webp": {
+      "sha256": "13be9c609d04a2e1c2df47cce6ef9fea9b3e96e83ce7c6ba0bb90f0bbb4023b6",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/hat_hood.webp": {
+      "sha256": "f515e2b05522d73c0a0e2f1dce56ff603b8fe92d75c61b717970f11061632e2f",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/hat_mushroom.webp": {
+      "sha256": "17ac822d5ae8e40b81b0b0433b6a3455115554659fb7999ef33e8ec0860c15d3",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/hat_straw.webp": {
+      "sha256": "01654e7ee6954c151119ff3cd1fbdcb0102b6cd0a4d68fb8a907df943ef18e8d",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/hat_wizard.webp": {
+      "sha256": "b067b2c95725da9bf4e7d0eb117bbea871612c379b27412fbf466ca81499bdfb",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/neck_pendant.webp": {
+      "sha256": "aa257d64353d81b5b03fb56548911706730003367be9a90bdc03346b1d9ec0f2",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/necklace_beads.webp": {
+      "sha256": "444c8c5e6e13900f6c478cc7b326983a6842a7012e8f7eff9d35e9065ff80dee",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/occluder.webp": {
+      "sha256": "f08d27727cf34b7b3403b9db1a949f2a53269ec2c9c0acf3562f6406c3cb51a9",
+      "disposition": "technical-exception",
+      "role": "technical-clothing-occlusion-mask",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Functional alpha occlusion mask; restores matching body pigment only at garment overlaps."
+    },
+    "assets/wardrobe/fairy_birk/pants_breeches.webp": {
+      "sha256": "3424c97bcdce69b3cd771e5e4b447f048b6b133a867e01836ddb0df1447779d3",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/pants_dungarees.webp": {
+      "sha256": "6b4a7cd5eeb7c8938e5e4f5bb25802b154b47ce323112bb5552a89f902ed6c87",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/pants_shorts.webp": {
+      "sha256": "b6c6c3fe94ce9b9382a877b08270a39ce87e5ec3db71897ec10237e6b7618ba4",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/pants_trousers.webp": {
+      "sha256": "729b3d42211dbdfc2c403cc352f8b0d70d3af6f0a2b176b73b9fea6640e9ba89",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/shirt_knit.webp": {
+      "sha256": "a5560dedb04b5a88832f74d80f6a8d2989dae7e0330438e6831f8f63b0b41633",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/shirt_linen.webp": {
+      "sha256": "1a69f187d91b896fc641053bbcc14df41a63aaae9473e4f73c788cb19c5c590f",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/shirt_smock.webp": {
+      "sha256": "ee92f608e3b4637b22a396ea27aae4e31924a6951f76b2234a97726825776cd8",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/shirt_vest.webp": {
+      "sha256": "8e633bea6b618cf8642ec16aa52679f343f045dcf82c0f7da6442b12ad15a259",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/shoes_boots.webp": {
+      "sha256": "ccd02cde74ba20b22795d679514e9bf773394862f4c3a3f90477dfab01ebed70",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/shoes_clogs.webp": {
+      "sha256": "0699b1911aef2717b637bb021acb62064553703d8979cbd445bf45c51a51c686",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/shoes_slippers.webp": {
+      "sha256": "3274e5941fce92dfbbfe89a295b939b0e9e1dd06000f61a52aa0b132c4122ebf",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/shoes_wellies.webp": {
+      "sha256": "7168478a92f9c9556bd8da6831e47dae9b6a6c444636f84004fb97c64ec7d349",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fairy_birk/wrist_bangles.webp": {
+      "sha256": "1ebd70173a315057618508f6b33a2fd438149624c588b3016cfdab09e73b8f50",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/bracelet_braid.webp": {
+      "sha256": "3e39c1303793a263a648d12d53939ea170a4e2d0119e32498115f2c620b06ef7",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/circlet_crown.webp": {
+      "sha256": "d548b1207da593ad554899d9e457e8de1094b16952f0f7abafb7ce376630e7d1",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/circlet_flowers.webp": {
+      "sha256": "ac6d666823584a5ef242d950004616290ca00e5eabd1aba986e0ca982e02b74b",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/dress_gown.webp": {
+      "sha256": "71f0335ee1af7fc618ef15cf14fafb5e5b2f8e003d5f09a256104aa5657590ee",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/dress_pinafore.webp": {
+      "sha256": "49fe34e47005ed90f6d94e6d3cb0166ac660dbde6965105100daddba45bae71a",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/dress_sun.webp": {
+      "sha256": "f49c0ee29542ddbb06a35e0d637336ebbef1a24da849269e326198d27ad26115",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/ears_hoops.webp": {
+      "sha256": "431f3bb4597357908dba0207d0f4dd284213688ba6923eaa85b07edaa124acb6",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/hat_acorn.webp": {
+      "sha256": "f52f2821431c6634520b253112b02fccdf26cf9b04a3b32478559c6246568e24",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/hat_cap.webp": {
+      "sha256": "19f466e772250c2ed355cddfcd417209b5364cc15615b911be9370bc01667ea7",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/hat_cat.webp": {
+      "sha256": "475532669618fc7ba1d73318e01caf54d757ee34dfcaba9090b99f1e59d4d36d",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/hat_chef.webp": {
+      "sha256": "7e5ddfa8f80417754253999916e32f2378c59c9670af0428d16a0ae771fafaf9",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/hat_hood.webp": {
+      "sha256": "b3e98f0fa41c0e18b7cd94562764940aeac9ece7497c1024e55a0094d6281894",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/hat_mushroom.webp": {
+      "sha256": "829cad3b5ab0a4b15ca60621e96f704afc8efce027be2cc8e7a10faffa278a14",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/hat_straw.webp": {
+      "sha256": "1642c249c600b5136d66bc359afa7ada917b0f855f94f1beff6af53612185062",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/hat_wizard.webp": {
+      "sha256": "bf12d4b7cbd134feb12b7556b079f2772cd25ed368b7ede9b57e52aec39b4cab",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/neck_pendant.webp": {
+      "sha256": "585692f703e0f9be4e58a15ea3f789cb21b6d840df3741a72b13be96c42d7d66",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/necklace_beads.webp": {
+      "sha256": "7c9ad1d1a96b250695f4446b426fcdf1620bbe8f2436fdedfb3c5e057520b260",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/occluder.webp": {
+      "sha256": "b11e0f4d6a39c69de812af5914d9019d606003a3da18f8e562a0bd68b80b122f",
+      "disposition": "technical-exception",
+      "role": "technical-clothing-occlusion-mask",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Functional alpha occlusion mask; restores matching body pigment only at garment overlaps."
+    },
+    "assets/wardrobe/fox/pants_breeches.webp": {
+      "sha256": "1028b2b0b8a429f5bbcc7fd0865cf78ef52ec8c4613f6504b98538b965f1c193",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/pants_dungarees.webp": {
+      "sha256": "234ed54ddcfab1791d7ec0e9ffc98ae2abccd03971435a5f05d9706de828bc0a",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/pants_shorts.webp": {
+      "sha256": "d8a5e2fd909a1202fe069ef8efd1784e047c452a9f4ba80d67e3a2fddbf64e79",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/pants_trousers.webp": {
+      "sha256": "cf5dc871221669a8b46e5b3ba68872579f8378fba9fa4133e6f6571b4989f659",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/shirt_knit.webp": {
+      "sha256": "8f3ecf4ea7ab71b982df901eb68ca62a531a38789e8f4a06aaf802882bff5d88",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/shirt_linen.webp": {
+      "sha256": "e413629885d2864f0eb9b6da906e3fa04f0defd286c51d711b8f3b827bc51277",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/shirt_smock.webp": {
+      "sha256": "73fa90d2d801f9ada7286ad006777843c725037205226e5d01452502d3398dd9",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/shirt_vest.webp": {
+      "sha256": "8a57e37a6b36159dfce64d067a68afa65b7cd924c417a8bd3f30027d9d4e80e8",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/shoes_boots.webp": {
+      "sha256": "883a3f7d05f5d10d2079636b26029ac652c096fc75453ffc337a7df79b728f46",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/shoes_clogs.webp": {
+      "sha256": "d3eb3bb3824ce6cb976c1f5d4d106fe2493cf1a8dc950511896967a49a63243d",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/shoes_slippers.webp": {
+      "sha256": "e6b2bc2ddd8eed4f4be9b0762885b393442758e0a461a1626ed7542f345cb7e0",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/shoes_wellies.webp": {
+      "sha256": "97ed811c929d2cea35f81bbf6005c60046514da2677e5af1d429df1cbe5f8345",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/fox/wrist_bangles.webp": {
+      "sha256": "c0837ba420cbad29331d501704e76c89b281dbf7357c65c565c05ea5da41aab4",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/bracelet_braid.webp": {
+      "sha256": "6354a4b6f9f0ce6d1036529c2eb1af8c0d27ad3182fd3c6ffc07d31882df3abb",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/circlet_crown.webp": {
+      "sha256": "b3c0048f4a36774681990df7dc1ee1c81cfab67c5b5c4b4de8914c3733fa3967",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/circlet_flowers.webp": {
+      "sha256": "e36bb02b3090bdead04977387e02e5518889a0d3e30a1b2a5e63c10aadb2ed07",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/dress_gown.webp": {
+      "sha256": "481a37043f8bc98c8fcdc1a18cfd5c684598d0642139ec2af1a7426e58da6d7a",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/dress_pinafore.webp": {
+      "sha256": "fc06c360275839af576952f8cadd0d8a571e9ed4cbc045ef17b0864717e03dbd",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/dress_sun.webp": {
+      "sha256": "31797195fad93c07119fd585bbcff4abf946a4f35c1abf1042ed75dbef3c614f",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/ears_hoops.webp": {
+      "sha256": "651f64908ca75c2b020afdc2581c931f0fbc9ee349e6ed29dff78aaa28bd6655",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/hat_acorn.webp": {
+      "sha256": "d2aedf84929ebad53170470fcf4ee1b93b1c26049340658adf823ffab104f30f",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/hat_cap.webp": {
+      "sha256": "aee2c7716bb527ebd63b1d931785a8b51e362a2d48325f8a3abd13bc302e0f73",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/hat_cat.webp": {
+      "sha256": "f205d1beef42e72176ed4e552fc98b8e2698baa8112f415cbcb44f624983acf1",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/hat_chef.webp": {
+      "sha256": "f7a54b394c4d212da0afdca84fe677034c2cecb71449cecf70174170670ed1b8",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/hat_hood.webp": {
+      "sha256": "5764f210d369ab468bf49744529da1670563a866c6c8d61f4fa386a26362a426",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/hat_mushroom.webp": {
+      "sha256": "d7f7f6391105ee59cef4fced759b7ca9b5acb7c8dbde708cfa90a4a3e9aa5f8d",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/hat_straw.webp": {
+      "sha256": "31ad036094766b0e860e657c61a094e60e9a3a3ae633ca1f72df5c7bdd08b351",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/hat_wizard.webp": {
+      "sha256": "66527c93f11bbee6baf026e6b419acc4bdd205519ce660e7306b4046d613619b",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/neck_pendant.webp": {
+      "sha256": "b271c92d660f84e73935691135c4a223cdeca71b9b5243ae64f892396348dbdc",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/necklace_beads.webp": {
+      "sha256": "ef192a8af016d6dcc37bee099417288192a6100a939e2fbf8244228570d7038b",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/occluder.webp": {
+      "sha256": "664557c017efcb376a3c12ab8e8a645eae5b7b5438c29775bf34880ee062dd6a",
+      "disposition": "technical-exception",
+      "role": "technical-clothing-occlusion-mask",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Functional alpha occlusion mask; restores matching body pigment only at garment overlaps."
+    },
+    "assets/wardrobe/ghost_bu/pants_breeches.webp": {
+      "sha256": "a3a4a10bbacbaa2ddb7093ada4bd4b5a159b630ce2e01d5680db97908066cab3",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/pants_dungarees.webp": {
+      "sha256": "5a3ec489995f321da7122a92a3576e93bc8e07269fac9114a8d17ef530a40c6d",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/pants_shorts.webp": {
+      "sha256": "1053174d74c0cb8104912bdfc5d70f47a5e579c5b74a5d8de640277c39dd0bad",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/pants_trousers.webp": {
+      "sha256": "1ee419c9b3df9978a5a5f9928a210d8b09db9e0eadc72b3a83a54691b045e6d4",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/shirt_knit.webp": {
+      "sha256": "57cc609df48e841967295ce685a4f7e69d9d5e69e5929aec854970ac30098214",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/shirt_linen.webp": {
+      "sha256": "2b49821b41c7edb223eb888ee2948332f0b5b7c27cb8218d0862a3a42b616d21",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/shirt_smock.webp": {
+      "sha256": "fd6aa8ba901999db1c0a2266d4e70e046ee0a2265937c72e034d962e32b12c24",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/shirt_vest.webp": {
+      "sha256": "fd154572203495d35c757b3bf1d2dc9b61ccc20413e4091f9fc7b3e87cc0be28",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/shoes_boots.webp": {
+      "sha256": "b60d2835f04d1375228f3adf6d4983b1dde0f142acd78ea21adfc0a1f66e0aaf",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/shoes_clogs.webp": {
+      "sha256": "6846828a49e8f9226b6c889b98ea2c42f2de8f7f81242cd8344245980bd45166",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/shoes_slippers.webp": {
+      "sha256": "b03359780004910a358f58642c742262dcecd12e62c7e088580c424df38357c9",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/shoes_wellies.webp": {
+      "sha256": "6d7327dbf398bec855baa4771fe304d04c1d874bbc1ae4aa37fd8b72c9fcbdb2",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_bu/wrist_bangles.webp": {
+      "sha256": "93e0d7cff923ed7cc5abdd5f5a3c1d3addc81580c8aa73c43d2d3dd35b16d692",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/bracelet_braid.webp": {
+      "sha256": "6354a4b6f9f0ce6d1036529c2eb1af8c0d27ad3182fd3c6ffc07d31882df3abb",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/circlet_crown.webp": {
+      "sha256": "b3c0048f4a36774681990df7dc1ee1c81cfab67c5b5c4b4de8914c3733fa3967",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/circlet_flowers.webp": {
+      "sha256": "e36bb02b3090bdead04977387e02e5518889a0d3e30a1b2a5e63c10aadb2ed07",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/dress_gown.webp": {
+      "sha256": "481a37043f8bc98c8fcdc1a18cfd5c684598d0642139ec2af1a7426e58da6d7a",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/dress_pinafore.webp": {
+      "sha256": "fc06c360275839af576952f8cadd0d8a571e9ed4cbc045ef17b0864717e03dbd",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/dress_sun.webp": {
+      "sha256": "31797195fad93c07119fd585bbcff4abf946a4f35c1abf1042ed75dbef3c614f",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/ears_hoops.webp": {
+      "sha256": "651f64908ca75c2b020afdc2581c931f0fbc9ee349e6ed29dff78aaa28bd6655",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/hat_acorn.webp": {
+      "sha256": "d2aedf84929ebad53170470fcf4ee1b93b1c26049340658adf823ffab104f30f",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/hat_cap.webp": {
+      "sha256": "aee2c7716bb527ebd63b1d931785a8b51e362a2d48325f8a3abd13bc302e0f73",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/hat_cat.webp": {
+      "sha256": "f205d1beef42e72176ed4e552fc98b8e2698baa8112f415cbcb44f624983acf1",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/hat_chef.webp": {
+      "sha256": "f7a54b394c4d212da0afdca84fe677034c2cecb71449cecf70174170670ed1b8",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/hat_hood.webp": {
+      "sha256": "5764f210d369ab468bf49744529da1670563a866c6c8d61f4fa386a26362a426",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/hat_mushroom.webp": {
+      "sha256": "d7f7f6391105ee59cef4fced759b7ca9b5acb7c8dbde708cfa90a4a3e9aa5f8d",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/hat_straw.webp": {
+      "sha256": "31ad036094766b0e860e657c61a094e60e9a3a3ae633ca1f72df5c7bdd08b351",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/hat_wizard.webp": {
+      "sha256": "66527c93f11bbee6baf026e6b419acc4bdd205519ce660e7306b4046d613619b",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/neck_pendant.webp": {
+      "sha256": "b271c92d660f84e73935691135c4a223cdeca71b9b5243ae64f892396348dbdc",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/necklace_beads.webp": {
+      "sha256": "ef192a8af016d6dcc37bee099417288192a6100a939e2fbf8244228570d7038b",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/occluder.webp": {
+      "sha256": "664557c017efcb376a3c12ab8e8a645eae5b7b5438c29775bf34880ee062dd6a",
+      "disposition": "technical-exception",
+      "role": "technical-clothing-occlusion-mask",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Functional alpha occlusion mask; restores matching body pigment only at garment overlaps."
+    },
+    "assets/wardrobe/ghost_hviske/pants_breeches.webp": {
+      "sha256": "a3a4a10bbacbaa2ddb7093ada4bd4b5a159b630ce2e01d5680db97908066cab3",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/pants_dungarees.webp": {
+      "sha256": "5a3ec489995f321da7122a92a3576e93bc8e07269fac9114a8d17ef530a40c6d",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/pants_shorts.webp": {
+      "sha256": "1053174d74c0cb8104912bdfc5d70f47a5e579c5b74a5d8de640277c39dd0bad",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/pants_trousers.webp": {
+      "sha256": "1ee419c9b3df9978a5a5f9928a210d8b09db9e0eadc72b3a83a54691b045e6d4",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/shirt_knit.webp": {
+      "sha256": "57cc609df48e841967295ce685a4f7e69d9d5e69e5929aec854970ac30098214",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/shirt_linen.webp": {
+      "sha256": "2b49821b41c7edb223eb888ee2948332f0b5b7c27cb8218d0862a3a42b616d21",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/shirt_smock.webp": {
+      "sha256": "fd6aa8ba901999db1c0a2266d4e70e046ee0a2265937c72e034d962e32b12c24",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/shirt_vest.webp": {
+      "sha256": "fd154572203495d35c757b3bf1d2dc9b61ccc20413e4091f9fc7b3e87cc0be28",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/shoes_boots.webp": {
+      "sha256": "b60d2835f04d1375228f3adf6d4983b1dde0f142acd78ea21adfc0a1f66e0aaf",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/shoes_clogs.webp": {
+      "sha256": "6846828a49e8f9226b6c889b98ea2c42f2de8f7f81242cd8344245980bd45166",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/shoes_slippers.webp": {
+      "sha256": "b03359780004910a358f58642c742262dcecd12e62c7e088580c424df38357c9",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/shoes_wellies.webp": {
+      "sha256": "6d7327dbf398bec855baa4771fe304d04c1d874bbc1ae4aa37fd8b72c9fcbdb2",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/ghost_hviske/wrist_bangles.webp": {
+      "sha256": "93e0d7cff923ed7cc5abdd5f5a3c1d3addc81580c8aa73c43d2d3dd35b16d692",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/base.webp": {
+      "sha256": "c4e36f1cf7e07acdd065619ed2def1cc3c42e9bc25037e4bcc115f92272eb0b0",
+      "disposition": "accepted-painted",
+      "role": "painted-wardrobe-safe-body",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/bracelet_braid.webp": {
+      "sha256": "ad797fdc004d224b4163b00f3950a359a118c42c5fa20043aef8a8e9751cb8e3",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/circlet_crown.webp": {
+      "sha256": "0e720dac25edb5719ea6146beaae3bb90714cc9b6efc525040560bf0061c3834",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/circlet_flowers.webp": {
+      "sha256": "08a79b94bac9b3d4aa45e2cc50da51979e4aa9576bb72b13e86efc17435806aa",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/dress_gown.webp": {
+      "sha256": "bd22aff0f7e56bc43e18275fe14cd7d45fe678a196b28d6a2e759d7ef7632b1e",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/dress_pinafore.webp": {
+      "sha256": "61966a8726a9b7ef46b8d1fa6bdb10285b0b864294ae2f4b8b07954aa39feb3d",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/dress_sun.webp": {
+      "sha256": "90e667add2112637422ba0b326548b909bf221c784bef6a9bcf5ee66c6b049c0",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/ears_hoops.webp": {
+      "sha256": "d39efba6c292a3d2f6e1d21237d41e43c439010ae69137de9984ef521129cc0c",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/hat_acorn.webp": {
+      "sha256": "6e33330ca198953940ab85f3e132d3dbc24375eb22f36ac4428d7f63baec7236",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/hat_cap.webp": {
+      "sha256": "caa448d707669a6c22cf9274e1f585f803202b4af625c1ac5b10fcf9ea302115",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/hat_cat.webp": {
+      "sha256": "58e778fead282a54148719b9ca1ae901a7b10ad24a6b73dba24c868496b799dc",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/hat_chef.webp": {
+      "sha256": "2f50e482e6afbe75360db045adb92f2cdaa97ff694b838e2bf9d8fb1988c8f66",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/hat_hood.webp": {
+      "sha256": "0c26c184438b442de5f7c965f2e0056958ac7acf6baebd7fa7a57fbbdc0be04a",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/hat_mushroom.webp": {
+      "sha256": "dc2b9d9b5554bc1256b20d8a8864fc1f534a52401e7d8d2d7fbbf6aa5838d755",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/hat_straw.webp": {
+      "sha256": "fe675f9f321fef09da5f6aab6889d1b85e60641541f8b8095b00e1cf1e5614ed",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/hat_wizard.webp": {
+      "sha256": "45c47f414c7a45a8d708ce2acf85b39eec15a53c247a2063625826bf15232ab2",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/neck_pendant.webp": {
+      "sha256": "8aab30db04b91c7382fc9d1b040da1a1bd67e4e4ade1519a35470a2bef73c616",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/necklace_beads.webp": {
+      "sha256": "fcc2ed003c7c6f35c567118196242cb012aaf7c1098f59755337f3512cd392ac",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/occluder.webp": {
+      "sha256": "3216dae303fde8bc96083184f14a7b2cd8ecb119d481f21fdf33e57d1aebc8af",
+      "disposition": "technical-exception",
+      "role": "technical-clothing-occlusion-mask",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Functional alpha occlusion mask; restores matching body pigment only at garment overlaps."
+    },
+    "assets/wardrobe/hobbit_bodil/pants_breeches.webp": {
+      "sha256": "2a184ac9b986051d94733614650505550be0b8959a1c612e76796753c9e32c37",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/pants_dungarees.webp": {
+      "sha256": "a6c7bb35eab91677b562c457eb8e3bc0fe8b9d72539ac4b43e0c5caaeab3b285",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/pants_shorts.webp": {
+      "sha256": "55df94ece77e92f71bd290dd31d510f223e7f3f050b102363f097ff1830862f6",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/pants_trousers.webp": {
+      "sha256": "8b08c6f90ee2bd09839488d76060d109f19de813a9bb553c1012ab88d1a89fae",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/shirt_knit.webp": {
+      "sha256": "e5340953e5f2e5478e4a60375807faaf1932f80cd539ce6dd94e55e6353f59ef",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/shirt_linen.webp": {
+      "sha256": "7e40b8b5a654d89833ee546db00b5c077a536306af832b99b337c327c17cd64b",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/shirt_smock.webp": {
+      "sha256": "c2451b08308fed724400b3c8134e7568722004d087d4b0decf1a1bb7b35e8717",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/shirt_vest.webp": {
+      "sha256": "7914d54bee1bbc41673fea8f79604a265f07324d302567179dc12b47d670bbf9",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/shoes_boots.webp": {
+      "sha256": "666d283d80a4861290bd79a8df8920d2ded63dd19ec097bc8892c8d6dcf4fa90",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/shoes_clogs.webp": {
+      "sha256": "ab3578a4b37b7790ecf95ca0454b43a30e2bdb2838932f189fbd0e6a7151034a",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/shoes_slippers.webp": {
+      "sha256": "028c5d21dabfc2d90937d7d13dbda0a2190827c7bb590655fbe8ef13aa31a2af",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/shoes_wellies.webp": {
+      "sha256": "a8fe5213b4ac1cb7f6c71e7fb41f6c0c2206f4a6e31d9fdd59c6486392c4a2be",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_bodil/wrist_bangles.webp": {
+      "sha256": "48f2a219e9f5a138943cb6c22d1150adb51b45059eedc08c6fff06929f18ddda",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/base.webp": {
+      "sha256": "ba54ce3ef683694ab59c36bb7a3860cc1ea830fc91a19d364d4b69800e5acf20",
+      "disposition": "accepted-painted",
+      "role": "painted-wardrobe-safe-body",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/bracelet_braid.webp": {
+      "sha256": "fd7ab35f462233d54f8e90ce83cd5898ff4e19fe73983001d11dc0d70ed67ed3",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/circlet_crown.webp": {
+      "sha256": "da25ac9874e78a6519ad9197ae6c167a414b87125920026ad75de7530986df67",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/circlet_flowers.webp": {
+      "sha256": "e3b4d187f95db1e00f6a1d9fea589e6c6873a59997fe13cafdbde7b1d05a4ddf",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/dress_gown.webp": {
+      "sha256": "788506b3be7f27456c02775ac2662e7a7807d6d5f9fc2c056ac37159464607e1",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/dress_pinafore.webp": {
+      "sha256": "014647de81215a354acdf0b1d54b54bd38376e629b182f18bdbc2d9979e5f128",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/dress_sun.webp": {
+      "sha256": "d0436f1cc62a53dbea3252540a00f149e896f34243da885fa96d30b2073d7035",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/ears_hoops.webp": {
+      "sha256": "52bd085d87f46b4e4ad1c28aff25c5396226ebe92c16d04ad8078a3a2d13a3bb",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/hat_acorn.webp": {
+      "sha256": "641a9f0fddfb7f05552d16b2bd61ab74eb383be14f212d40666aef5c83231ce0",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/hat_cap.webp": {
+      "sha256": "c727bbce0dfae7ec7e00c5fc00615e0b5d870b9c87dc01ac3dbba83c8c7b3745",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/hat_cat.webp": {
+      "sha256": "d9012acf35ace03474fb1f93cd8c57295b6c03d8126684d8a6a57e989929b186",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/hat_chef.webp": {
+      "sha256": "90b1ca47b0cedec0a6540133af52fc22aa2de883cec136c20f074664df91ee47",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/hat_hood.webp": {
+      "sha256": "f47dc055226dae7fb176cafacae230cff09c586d07097a00eef564340d989535",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/hat_mushroom.webp": {
+      "sha256": "c5c60c6d242b52b1fe3d42454017c60dfbee6310d84c9c7d2b18f1926a65021f",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/hat_straw.webp": {
+      "sha256": "e20b5bcf6079cc9d866c6839bc3e3dd2072d6c9b0dd437ba92044e9a773edef6",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/hat_wizard.webp": {
+      "sha256": "9e1d61854a43e3c625e6dae4a7152295ba86524cdbe16998942e64c9465fdfe4",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/neck_pendant.webp": {
+      "sha256": "d28d56b2c27da581e5c42384b36b040c43098460bdf1f12ee828510f1f38e8d3",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/necklace_beads.webp": {
+      "sha256": "0d7db19b210d894894c199b021a492c21ccb44c2ba2bde2a5ce3b25b2f36791b",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/occluder.webp": {
+      "sha256": "ef0464a60421ccf1f0e731953c183e57a3e78556a8075014503827600c919737",
+      "disposition": "technical-exception",
+      "role": "technical-clothing-occlusion-mask",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Functional alpha occlusion mask; restores matching body pigment only at garment overlaps."
+    },
+    "assets/wardrobe/hobbit_pip/pants_breeches.webp": {
+      "sha256": "c7b7fc62703f56e6ed9da891a21b8c90840e09d917895195741f445fe398f603",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/pants_dungarees.webp": {
+      "sha256": "afe4a27c12840630ece9ab1d11be48b568630ddc0ff7b5aab4c41dab4b76196d",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/pants_shorts.webp": {
+      "sha256": "cf31dd756641df4fa1ad3c4ad650e49e45b8ea03f6424638a240ae2953033980",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/pants_trousers.webp": {
+      "sha256": "049f8475493088a5d166cd22cb6fcf429a5598761803391a00f61de07c564138",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/shirt_knit.webp": {
+      "sha256": "e41e8c78d4e4562190f35d0281b4e7b1a3d5988328971a8ae14161da6ba2eca7",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/shirt_linen.webp": {
+      "sha256": "38df2dc97ecf9309d962074bc6b6ccc3d088af7fb3b5bb08bc6c4df0e27f226f",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/shirt_smock.webp": {
+      "sha256": "262a38b54225ff94a27f81710a76b31b5aa60ba3dd13c69ce1ef61818c99a185",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/shirt_vest.webp": {
+      "sha256": "44f8318f72e7649e53ac32399e542b70f4526c6875085d018743554c3134153e",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/shoes_boots.webp": {
+      "sha256": "8a8b8d7d9a6c7d98fea1b89135f8054ede09c81746756e92fc7e5491eeb6674b",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/shoes_clogs.webp": {
+      "sha256": "5d6a6dc59824b0ac6a5b75eb20e07fb2b334f78cdb0dd1eafc5bc5cc07ff19ac",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/shoes_slippers.webp": {
+      "sha256": "805b7a0912e47ab0f9b09296848ca177575dab6803ff37fc26fdb50b9e4f17e8",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/shoes_wellies.webp": {
+      "sha256": "babe7f9c32521c7db0d01d3a409a453f255ebb08094c35984447e655a633c581",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/hobbit_pip/wrist_bangles.webp": {
+      "sha256": "65faf60dbb009980437e318039e72e37498f40639aafa0de680f35031fe377d8",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/bracelet_braid.webp": {
+      "sha256": "436d8a30c7743e9c8a5a4e7939b662ae470b6cc191fc244edb2654a8ede6f2e0",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/circlet_crown.webp": {
+      "sha256": "3fd1bfcb50b5ec1ba71f310091775ace98624c22f2da905beb9d71573be2d64f",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/circlet_flowers.webp": {
+      "sha256": "929653ca4b2587b9d0bdd07ee2f415d4413c3cde71858fdbb3c1cd01e78abb51",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/dress_gown.webp": {
+      "sha256": "33e868feac6682e7c78e941c95717310c1ae0c15fd0f19e432c7ef80f262fa00",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/dress_pinafore.webp": {
+      "sha256": "4d86e43a05a9253aa9c909b4171d7437b77aff5291d88b2c820136aa8dc490c6",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/dress_sun.webp": {
+      "sha256": "bc4acbe115d379772136d8443b69fa82806d34aea8798b5c008edaab229899a3",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/ears_hoops.webp": {
+      "sha256": "d18818dbd1435c017deaec874686f4f729cd0d4261e6597c9e86149b0a5678c2",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/hat_acorn.webp": {
+      "sha256": "d6f9056171daf2083d794646aedfd8130b41ff4c718d1e933361c303c98b43fb",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/hat_cap.webp": {
+      "sha256": "8119590892cd788882e4c7befadc412d0febdec4aef6dcc70abbd12d14e24c23",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/hat_cat.webp": {
+      "sha256": "bd7bb16a9b8212d36db99da933500c912235c79e8426f293617855a03720b554",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/hat_chef.webp": {
+      "sha256": "d731d907e17ead89e257e69a1e3594bb1517193f393aa220d0f159be030c2d4f",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/hat_hood.webp": {
+      "sha256": "14e86a04e363058f20c3196acdb9ddeb5b95b1c48b61eeea3e878ec97dca5ca9",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/hat_mushroom.webp": {
+      "sha256": "7f2b4c93af95abd3c7ebf73af9457a919272b6ba1437d1b72c2cb270f2a33146",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/hat_straw.webp": {
+      "sha256": "0113e59d76033f97965aa1ed2e5d6a06b435757f01f0c15f517ca43a2b9b2d4a",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/hat_wizard.webp": {
+      "sha256": "fe8e35b3e548d427b1d62a60e85b8807f68d9966c0e49a9dc200e76299f761eb",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/neck_pendant.webp": {
+      "sha256": "6a76270f1f890405543daf22ef0597b8c1923c58a65eee47c9d7dfb3e4cf4665",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/necklace_beads.webp": {
+      "sha256": "a40b56dc61eaace5a0d4307124702aa39b351224d3d1b02d14ea2bcff7711c74",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/occluder.webp": {
+      "sha256": "cb9c5701092fc6a955abe8767ece6f190cc12fadb82574203fcdd39470b0f477",
+      "disposition": "technical-exception",
+      "role": "technical-clothing-occlusion-mask",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Functional alpha occlusion mask; restores matching body pigment only at garment overlaps."
+    },
+    "assets/wardrobe/monkey/pants_breeches.webp": {
+      "sha256": "2b00a664379999f9823f92f2314e85a91edf273ee685c9494339e663b6f2a645",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/pants_dungarees.webp": {
+      "sha256": "814bf3abd0bd8fe82fa12f620842ddd929f40b986515086b104342afbd9e695a",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/pants_shorts.webp": {
+      "sha256": "9ba6234cc415b8a4368491972f5604a024df28c5a5cef1b9a493821e5b59f5ac",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/pants_trousers.webp": {
+      "sha256": "ce4dd5d480e57cfa9b7581c00bef9e8539e63ed8817c8e4bcae81f12841caf20",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/shirt_knit.webp": {
+      "sha256": "dac4acc354ca79ad3ab5aa8dbe78cd5f2f68ed435e0a870b2bd9a4de02f366db",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/shirt_linen.webp": {
+      "sha256": "2192d81ee99290c0acdbaf314ed3843fd6af94c0c72c15864575f3c086ebdc32",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/shirt_smock.webp": {
+      "sha256": "2abb774ed0a680a789a939dff80f414c98e2d6ac9e6f437e1827a04b31ed701a",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/shirt_vest.webp": {
+      "sha256": "ba3ca492aab9fbf2c873b214ce662abaea742517fd40096a0e98e9b58cf74f19",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/shoes_boots.webp": {
+      "sha256": "388a52835286df237e92c4941a28139fdeed6610fbf486949d57eb1ac14917ad",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/shoes_clogs.webp": {
+      "sha256": "5711b72e2b7118a5db1ae1c79795c79b9325c59eab869cb0319a2ae8a600a0f9",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/shoes_slippers.webp": {
+      "sha256": "1f73127a027aeedd1be76c274c71695c307c51e24d3db4be54f5fedc94d22847",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/shoes_wellies.webp": {
+      "sha256": "4ea27b3fb743cc65de8495a331dadb08ea9968f6c0569310fe1454b027af4a07",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/wardrobe/monkey/wrist_bangles.webp": {
+      "sha256": "bf37cb7cfe21949653c6ec57e04fddd0a1416f36e6bb2f0f9856410487351630",
+      "disposition": "accepted-painted",
+      "role": "fitted-painted-clothing",
+      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
+      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
     }
   },
   "m1b_followup": {
@@ -15410,5 +17174,17 @@
     "fitted_body_poses": 3056,
     "previously_reviewed_visual_theme_assets_unchanged": 2562,
     "prompts": "docs/art/held-equipment/prompts.json"
+  },
+  "wardrobe_followup": {
+    "reviewed_at_utc": "2026-10-16T19:48:24.672431+00:00",
+    "added_rasters": 252,
+    "painted_garment_fits": 240,
+    "safe_bases": 4,
+    "functional_alpha_masks": 8,
+    "retained_prior_assets": 2563,
+    "evidence": "docs/qa/loadout/acceptance.json",
+    "scope": "All 96 clothing palettes on fox, all 30 garment families on every other body, three mixed outfits in all eight directions for each body, source turnarounds and native close-up/world captures. Authored animation frame/direction alignment is tested separately; not a new per-pixel review of every stock animation frame.",
+    "worktree": "codex-loadout",
+    "source_commit": "27b66d7"
   }
 }

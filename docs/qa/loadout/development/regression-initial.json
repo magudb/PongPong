@@ -1,0 +1,64 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 314,
+  "elapsed_s": 14.8,
+  "engine": [],
+  "failed": 5,
+  "failures": [
+    "ui_conformance.garderobe.visible",
+    "ui_conformance.garderobe.initial_focus",
+    "ui_conformance.garderobe.focus_walk",
+    "ui_conformance.garderobe.escape",
+    "ui_conformance.live_screens_sweep"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "held_equipment": {
+      "character": "animal",
+      "checks": 44,
+      "failed": 0,
+      "ms": 1787,
+      "skipped": 0
+    },
+    "player": {
+      "character": "animal",
+      "checks": 37,
+      "failed": 0,
+      "ms": 265,
+      "skipped": 0
+    },
+    "ui_conformance": {
+      "character": "animal",
+      "checks": 162,
+      "failed": 5,
+      "ms": 7584,
+      "skipped": 71
+    },
+    "wardrobe": {
+      "character": "animal",
+      "checks": 21,
+      "failed": 0,
+      "ms": 134,
+      "skipped": 0
+    },
+    "wardrobe_render": {
+      "character": "animal",
+      "checks": 8,
+      "failed": 0,
+      "ms": 294,
+      "skipped": 0
+    },
+    "wardrobe_ui": {
+      "character": "animal",
+      "checks": 42,
+      "failed": 0,
+      "ms": 1030,
+      "skipped": 0
+    }
+  },
+  "skipped": 71
+}

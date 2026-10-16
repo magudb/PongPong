@@ -1,0 +1,722 @@
+{
+  "source_binding": "fc6df2244d8570a9d28203b8daad0f3bc8dceeb442567abb238f9a86eab99818",
+  "art_manifest": "assets/wardrobe/manifest.json",
+  "images": {
+    "all-heroes-dress.png": {
+      "sha256": "ec4c786ab329272c6c9a8e01438de154f7f4199d7a16f858f4d0d5f32d391209",
+      "bytes": 508328
+    },
+    "all-heroes-hands.png": {
+      "sha256": "d602845cf00a1e9b6e95e9a80b334985fef4146869124aeb25521efda4aa5879",
+      "bytes": 544927
+    },
+    "all-heroes-world.png": {
+      "sha256": "6f61ad87ef715c52cd371bae28cfe70a4880f757b3bd41bce33b9102e260855b",
+      "bytes": 3333150
+    },
+    "native-animal/catalog-contact.png": {
+      "sha256": "234a53fb66452bc15eb89ca0f80c6cc74f04e9ae2cb9d6f7dc9dc233100b178e",
+      "bytes": 495438
+    },
+    "native-animal/catalog_fox_01.png": {
+      "sha256": "9a895320d75a9a4cc5438c7a52dbdb295b4923c060941f83ba5213f357141121",
+      "bytes": 273577
+    },
+    "native-animal/catalog_fox_02.png": {
+      "sha256": "19a610072d85f65d2e3943b063dec800d6d115febf03a65050ef2b5a5ede8ef7",
+      "bytes": 336472
+    },
+    "native-animal/catalog_fox_03.png": {
+      "sha256": "82d22462d3bac0dedfb1f0c76374629af3256ecad36f9ec83ccdf41390d0ebf6",
+      "bytes": 309784
+    },
+    "native-animal/catalog_fox_04.png": {
+      "sha256": "4a3e15d0894c171fb0ffe9e13aaa309e7eb83683a51c6d67bca3ce23a9c53277",
+      "bytes": 310323
+    },
+    "native-animal/catalog_fox_05.png": {
+      "sha256": "2ac8696cda2b0877debb6714506febb7fb6827ef079afba381d693dc59baed69",
+      "bytes": 264045
+    },
+    "native-animal/catalog_fox_06.png": {
+      "sha256": "7e98bf70c80364aa2bf6c5c0ad7a3e2d0f188ea0d53801f23681c38a1e349745",
+      "bytes": 278651
+    },
+    "native-animal/catalog_fox_07.png": {
+      "sha256": "4152f21a0bb71023e61fc3d7beb5097bdb8c52a241162e3a4599ae5ecab5b905",
+      "bytes": 275921
+    },
+    "native-animal/catalog_fox_08.png": {
+      "sha256": "7196872d92b33091fe5f87c15137cb098daaf4c6c6a95d8c1cca9440f801d2f9",
+      "bytes": 246818
+    },
+    "native-animal/catalog_monkey_01.png": {
+      "sha256": "b250deeda6f25a82be9a87d80c3ff0103ccf9d59880f768f136e50e18bdad3d2",
+      "bytes": 326759
+    },
+    "native-animal/catalog_monkey_02.png": {
+      "sha256": "40b9f2fc021f90f74e5c1ee8a4a5fe36322eaba6906bf49dab86bed202327a63",
+      "bytes": 314571
+    },
+    "native-animal/catalog_monkey_03.png": {
+      "sha256": "20d8eb7232f14909677cc96e29932b92516034f2c209878aa808718c7a609403",
+      "bytes": 177261
+    },
+    "native-animal/held_equipment_tool_fox.png": {
+      "sha256": "042cf65e8f466e00d218b60da7fd478cdec353bca77c1eda20aba9148197d102",
+      "bytes": 1944217
+    },
+    "native-animal/held_equipment_tool_monkey.png": {
+      "sha256": "a0da18c8f4397dfe47b6816850ee073a17584e30ebb2f1f4f7242bf03b865425",
+      "bytes": 1944102
+    },
+    "native-animal/held_equipment_weapon_fox.png": {
+      "sha256": "32a3617e6c0b556fbd16489665f527182266cb7e3603896cd7245f545eb3c660",
+      "bytes": 1397371
+    },
+    "native-animal/held_equipment_weapon_monkey.png": {
+      "sha256": "84978f827f84f30d86405a7b027206858a53c147697fa0bd133b90e0d69b2e66",
+      "bytes": 1397293
+    },
+    "native-animal/turnarounds_fox.png": {
+      "sha256": "352036aaf9a4207209286840f14474c4f7a8b8ae91f0cc609cabb2105200c2c3",
+      "bytes": 1353750
+    },
+    "native-animal/turnarounds_monkey.png": {
+      "sha256": "8bd8552c4910219bd904398a863179a2ebdab4c41dc61312b26c7b388d09cf48",
+      "bytes": 1418738
+    },
+    "native-animal/wardrobe_ui_dress_fox.png": {
+      "sha256": "5434d1592ff1e8bae3d150b389e5d6a9d32ce0106ca55cdfd6618d0a91b571da",
+      "bytes": 208386
+    },
+    "native-animal/wardrobe_ui_dress_monkey.png": {
+      "sha256": "8cf188a93ab21a7be68f839734c8d2bc392f2d2ffce6cdd7d66f949a2ed23b68",
+      "bytes": 212474
+    },
+    "native-animal/wardrobe_ui_hands_fox.png": {
+      "sha256": "9087176b44f505b7bceea18d6af21b6372e87450f57527729595e9934ca4de40",
+      "bytes": 233062
+    },
+    "native-animal/wardrobe_ui_hands_monkey.png": {
+      "sha256": "03fe94ef3731c0813312522b58aa8b10b95a670aab854d7be1d6f85fb93338c4",
+      "bytes": 236982
+    },
+    "native-animal/wardrobe_ui_world_fox.png": {
+      "sha256": "3e16b213d76daf1c29e3709f02c1634004f9d8166ac835481ba603e981bd8ef1",
+      "bytes": 1944953
+    },
+    "native-animal/wardrobe_ui_world_monkey.png": {
+      "sha256": "9aea9de5e224f2c8f5a69e77570be297c059e0d861192aa29cae2b7522d425e0",
+      "bytes": 1943925
+    },
+    "native-budgets/town_budgets_S04_city_crowd_readability.png": {
+      "sha256": "105dea590feac4766d60ae1ea538dae8f74df89a76d095363bcf5dd935b74a0e",
+      "bytes": 1686965
+    },
+    "native-fairy/catalog_fairy_01.png": {
+      "sha256": "2be84d4b646d02e3516cba367a565ec612d0c94fddbd6b8d714f2de549bc5c4f",
+      "bytes": 353403
+    },
+    "native-fairy/catalog_fairy_02.png": {
+      "sha256": "d0c660b26c553de8bb3f606fc03e11c22bd45a3d2fcdfc24fe96e16f432bb01c",
+      "bytes": 336002
+    },
+    "native-fairy/catalog_fairy_03.png": {
+      "sha256": "4f34a6660cbfc16e7ec9785aa8a024dabf8cf9de1462286f9c9582c1d6b68e8c",
+      "bytes": 186952
+    },
+    "native-fairy/catalog_fairy_birk_01.png": {
+      "sha256": "a057c8d7756f851cde875fc7ead41baafc016e861ec0f4345e427913f3ab46f2",
+      "bytes": 308894
+    },
+    "native-fairy/catalog_fairy_birk_02.png": {
+      "sha256": "0f9a8b5e36fb23b3480f1da062da51c85c3d9af3f8809bd4c2537631dd2de4be",
+      "bytes": 292778
+    },
+    "native-fairy/catalog_fairy_birk_03.png": {
+      "sha256": "4627db9c39c4fc559c6f5290f87269b96bb0470af01599cf6f754dbe3ebf611c",
+      "bytes": 163353
+    },
+    "native-fairy/held_equipment_tool_fairy.png": {
+      "sha256": "fdf569147e4bf579d82ce97f9be8e3f7f1b2c73f43dd51dc3df6caa48f884901",
+      "bytes": 1945113
+    },
+    "native-fairy/held_equipment_tool_fairy_birk.png": {
+      "sha256": "6a25d92aa9275ff2a87ac412063787d469b341de4281d35bac060c838954a4bd",
+      "bytes": 1945004
+    },
+    "native-fairy/held_equipment_weapon_fairy.png": {
+      "sha256": "c2bb82e1068576518397b09bcd38801545e24b4bbeda9fa076a66510b3d3ff0e",
+      "bytes": 1398175
+    },
+    "native-fairy/held_equipment_weapon_fairy_birk.png": {
+      "sha256": "335daece343701460f94ad64b46f41d4dbfb336b071dc90925dfd5d309355c21",
+      "bytes": 1397539
+    },
+    "native-fairy/turnarounds_fairy.png": {
+      "sha256": "1d51a61d5a4359748dfb6109330c32d41366b8325fb8ff7f727baff8ec11fd2a",
+      "bytes": 1521260
+    },
+    "native-fairy/turnarounds_fairy_birk.png": {
+      "sha256": "f23d86981195e01dbcdbf29e5d0877f2f2b031ec319d87a2944da114521990d0",
+      "bytes": 1292613
+    },
+    "native-fairy/wardrobe_ui_dress_fairy.png": {
+      "sha256": "de40076d51fccb01c242575e36b166aa999df0dc0cdd94ca57e4b57e69a44377",
+      "bytes": 219734
+    },
+    "native-fairy/wardrobe_ui_dress_fairy_birk.png": {
+      "sha256": "4b0b42dcf1229bd7e0b5bcae474fa91fca30d12e1dd50c0c2e7ba4b5c77b183a",
+      "bytes": 206214
+    },
+    "native-fairy/wardrobe_ui_hands_fairy.png": {
+      "sha256": "d496dd8794cf3b95776657f5d735597dc4fe539a549b96e8cc42f29a75084a49",
+      "bytes": 244187
+    },
+    "native-fairy/wardrobe_ui_hands_fairy_birk.png": {
+      "sha256": "b189131550dae4402fe947d265a4c40f66b9da3420af585f226caec5ed3d0347",
+      "bytes": 234265
+    },
+    "native-fairy/wardrobe_ui_world_fairy.png": {
+      "sha256": "90cdd534b429ddf84eae27c346521c560136af111870cc127bdb5ad6c167731a",
+      "bytes": 1948311
+    },
+    "native-fairy/wardrobe_ui_world_fairy_birk.png": {
+      "sha256": "ecb1dfa58d5d4effd1c9ec201ba4632bbbefa62af2fae776aa3a3ea3febd5eaf",
+      "bytes": 1944540
+    },
+    "native-ghost/catalog_ghost_bu_01.png": {
+      "sha256": "bdcaf9841486f41e46965e20049b0508d6134cb190a1f7dd4b5de40002b00b80",
+      "bytes": 230163
+    },
+    "native-ghost/catalog_ghost_bu_02.png": {
+      "sha256": "42d797f49911cc2f111d72a726bd1047a28ee6323005df8b6a9aaad56c373c5a",
+      "bytes": 226877
+    },
+    "native-ghost/catalog_ghost_bu_03.png": {
+      "sha256": "bb5b5aa65111254716bc00f87f7f90913c5f50f9b191917eab759ff35d4cf94c",
+      "bytes": 127657
+    },
+    "native-ghost/catalog_ghost_hviske_01.png": {
+      "sha256": "1dab913d561e061cc5bdb1e6a8be4103557c7630c99fa6811e8b12d7b146ca33",
+      "bytes": 228252
+    },
+    "native-ghost/catalog_ghost_hviske_02.png": {
+      "sha256": "2b44ef115f2658beab6ff8bbcae2f146b293bf7273b9ad33895c40f9a08b2b91",
+      "bytes": 225542
+    },
+    "native-ghost/catalog_ghost_hviske_03.png": {
+      "sha256": "67f6f15eb3cd91d7709688eabab7d5093af80ed59c7d2c05ceaf6d8eb3e8caed",
+      "bytes": 126270
+    },
+    "native-ghost/held_equipment_tool_ghost_bu.png": {
+      "sha256": "1a1248da4d211ec9741895dadac71efd527791b6c007c81bb72c6afe8db22875",
+      "bytes": 1943885
+    },
+    "native-ghost/held_equipment_tool_ghost_hviske.png": {
+      "sha256": "18181d747e7fbfb6bcfd0e767528b71437caef3e10d02489bb41477ac85df486",
+      "bytes": 1944237
+    },
+    "native-ghost/held_equipment_weapon_ghost_bu.png": {
+      "sha256": "70f8aaa7d0e7f908c4b1f1de4c61a83910d8097d23a348b703b38cb33923e585",
+      "bytes": 1416363
+    },
+    "native-ghost/held_equipment_weapon_ghost_hviske.png": {
+      "sha256": "a40045ad5ce1ae19df2e134d53dfaf01bfd73dfb36b5fbbc5e9e6b3e4a4cddd5",
+      "bytes": 1416250
+    },
+    "native-ghost/turnarounds_ghost_bu.png": {
+      "sha256": "fa5696f5730d07bd86941a5869e95750625f7f19e8c78ccae15d012ac7523e3a",
+      "bytes": 958673
+    },
+    "native-ghost/turnarounds_ghost_hviske.png": {
+      "sha256": "f4aedeaf5f4b39e4037957b3633de12bba1bbf04f3e3174d73a7ad96e937e900",
+      "bytes": 947566
+    },
+    "native-ghost/wardrobe_ui_dress_ghost_bu.png": {
+      "sha256": "71f5a8dff52aa494512cfb5e63c0b0345f7dc7ef57b4bb46fec15601604df90e",
+      "bytes": 185655
+    },
+    "native-ghost/wardrobe_ui_dress_ghost_hviske.png": {
+      "sha256": "2fb1aa7c71e9a14685c757069c8d09b21b51a98e0736fdd23add15c660169dc3",
+      "bytes": 185046
+    },
+    "native-ghost/wardrobe_ui_hands_ghost_bu.png": {
+      "sha256": "079b99f0c41c7ed8a64edde15639a199c10a416e770d8f4b2902b7e9b263a8df",
+      "bytes": 217317
+    },
+    "native-ghost/wardrobe_ui_hands_ghost_hviske.png": {
+      "sha256": "692026f12bb3fc0926d1d70d6a0a0613a5bce8e79579995c78e578425d45bbe1",
+      "bytes": 217202
+    },
+    "native-ghost/wardrobe_ui_world_ghost_bu.png": {
+      "sha256": "ddfc474569525a543a50ab01329ebde65ad776f15975e5cfa20384ee19afa35c",
+      "bytes": 1944935
+    },
+    "native-ghost/wardrobe_ui_world_ghost_hviske.png": {
+      "sha256": "d0928cbb0feb1fe762863874c38a38b7a6dec69b40fd4ba4ee3f81761aadd7b6",
+      "bytes": 1943830
+    },
+    "native-hobbit/catalog_hobbit_bodil_01.png": {
+      "sha256": "5396843e86046d5d10f75c0bff0d93dfc6742ea8a877ec49cdc0c750a29cc657",
+      "bytes": 340364
+    },
+    "native-hobbit/catalog_hobbit_bodil_02.png": {
+      "sha256": "3f8b3eb9a0cbb19855720aa4986a66285329e9243f5454091194910e4e438769",
+      "bytes": 322839
+    },
+    "native-hobbit/catalog_hobbit_bodil_03.png": {
+      "sha256": "8efd4a006b0a903213719ef9f3d614fad6f7128dbd8aa452f057fb23b6c94307",
+      "bytes": 176098
+    },
+    "native-hobbit/catalog_hobbit_pip_01.png": {
+      "sha256": "3e4a948fccf66861a8c2d789335d4fb4d87e58e99cee22289becf7eef868038c",
+      "bytes": 334282
+    },
+    "native-hobbit/catalog_hobbit_pip_02.png": {
+      "sha256": "7b7cea0e387fca2cf4e1ecc1cb9e221e1278f970c1bb25f82f1f0eae781b0f6e",
+      "bytes": 316675
+    },
+    "native-hobbit/catalog_hobbit_pip_03.png": {
+      "sha256": "dffcdb0f9e302a003163020a13c5b14ea452c9a2faf6c6181255f485c64dbb22",
+      "bytes": 164202
+    },
+    "native-hobbit/held_equipment_tool_hobbit_bodil.png": {
+      "sha256": "819fc951e6fccdd47208d26231f33a56fb2e59a0e5418fcd564622e9ffbdb66d",
+      "bytes": 1945088
+    },
+    "native-hobbit/held_equipment_tool_hobbit_pip.png": {
+      "sha256": "733da837d29857e9312b8f0026cbeec90ffbea77a4fc9b84d2b66b60968af021",
+      "bytes": 1944851
+    },
+    "native-hobbit/held_equipment_weapon_hobbit_bodil.png": {
+      "sha256": "c2be4799aeae91894a2dbd0400602f1cbc62f2ed1d8d6dfbc717c071c8289d92",
+      "bytes": 1397311
+    },
+    "native-hobbit/held_equipment_weapon_hobbit_pip.png": {
+      "sha256": "6fd6202647d04717320858b5c7ca4a7e7e2ae12dee09ae22c4ff059976923eb7",
+      "bytes": 1397580
+    },
+    "native-hobbit/turnarounds_hobbit_bodil.png": {
+      "sha256": "fbe660aef18a336c5fb3a0774988ae9b540e6f8d72607891f340d8c501d5518e",
+      "bytes": 1413240
+    },
+    "native-hobbit/turnarounds_hobbit_pip.png": {
+      "sha256": "3a68acfa7f44c0e8b7e2d5d997c4732a3eca4f72d08b19d97df0dbc8a67d0a2c",
+      "bytes": 1310192
+    },
+    "native-hobbit/wardrobe_ui_dress_hobbit_bodil.png": {
+      "sha256": "b5d328bc61d6f6086c34feb0648f9c87d26dd4fe87a55cde2646b72392d56776",
+      "bytes": 213327
+    },
+    "native-hobbit/wardrobe_ui_dress_hobbit_pip.png": {
+      "sha256": "b584bc857a096f30803da5498f6bff0662c9b7006befcc1e69157df7d850dfe6",
+      "bytes": 205766
+    },
+    "native-hobbit/wardrobe_ui_hands_hobbit_bodil.png": {
+      "sha256": "7f80ee029adc0b33666e34d28ca676cdb5a91b44846e6f330ec76aed18db4f09",
+      "bytes": 238576
+    },
+    "native-hobbit/wardrobe_ui_hands_hobbit_pip.png": {
+      "sha256": "c0431109b3a26cf913f6c1b23538c2bbb48d2fe759e38b4628db710ee0c9105d",
+      "bytes": 232601
+    },
+    "native-hobbit/wardrobe_ui_world_hobbit_bodil.png": {
+      "sha256": "063706e59799f23aee19d56ad90dc821778f905441cda3e9ced6c8cee1dcfb16",
+      "bytes": 1944510
+    },
+    "native-hobbit/wardrobe_ui_world_hobbit_pip.png": {
+      "sha256": "b4da71b00d5912baf298dcef9810714563bbc22208232913bf36b7787cf75023",
+      "bytes": 1945891
+    },
+    "native-ui-final/ui_conformance_accept_gallery_confirm.png": {
+      "sha256": "4ec429f906c789a7d1fa3da115bcb66502efc909ced90722407611cbeb73500a",
+      "bytes": 116978
+    },
+    "native-ui-final/ui_conformance_accept_gallery_guide_focus.png": {
+      "sha256": "e505ebfdd8f1f1b4a6a7e02fbe9ab0316ff8e2889c66d776cc8f6810874c667b",
+      "bytes": 133322
+    },
+    "native-ui-final/ui_conformance_accept_gallery_guide_focus_unfocused.png": {
+      "sha256": "bfa034bbb4bcfdc5a0c72a2aad70cd7fa1b3a4227c770c0c3606ae02ecdaace9",
+      "bytes": 131947
+    },
+    "native-ui-final/ui_conformance_accept_gallery_guide_stepper.png": {
+      "sha256": "a1f3863df36f1cfe8b61de136db5eb362088a1f1220162a777c7233a0a239794",
+      "bytes": 133225
+    },
+    "native-ui-final/ui_conformance_accept_gallery_guide_stepper_unfocused.png": {
+      "sha256": "bfa034bbb4bcfdc5a0c72a2aad70cd7fa1b3a4227c770c0c3606ae02ecdaace9",
+      "bytes": 131947
+    },
+    "native-ui-final/ui_conformance_accept_gallery_rarity_focus.png": {
+      "sha256": "826851d2a109d58c41c013d1e2b16056dd0417a67b11d4d2b341e828c75daf0c",
+      "bytes": 188849
+    },
+    "native-ui-final/ui_conformance_accept_gallery_rarity_focus_unfocused.png": {
+      "sha256": "a32c6b65bf17d317792e95adb2658a0b2909ec59a8e3fa67f2d3506b1b167cb8",
+      "bytes": 188100
+    },
+    "native-ui-final/ui_conformance_button_confirm_OkButton.png": {
+      "sha256": "689580fe551273dd36cf972bcba98dfcb1aca2d676762fa7a4087040b1b95ba0",
+      "bytes": 54630
+    },
+    "native-ui-final/ui_conformance_button_foundation_gallery_AcceptButton.png": {
+      "sha256": "bfa034bbb4bcfdc5a0c72a2aad70cd7fa1b3a4227c770c0c3606ae02ecdaace9",
+      "bytes": 131947
+    },
+    "native-ui-final/ui_conformance_button_foundation_gallery_BackButton.png": {
+      "sha256": "bfa034bbb4bcfdc5a0c72a2aad70cd7fa1b3a4227c770c0c3606ae02ecdaace9",
+      "bytes": 131947
+    },
+    "native-ui-final/ui_conformance_button_foundation_gallery_BuyButton.png": {
+      "sha256": "bfa034bbb4bcfdc5a0c72a2aad70cd7fa1b3a4227c770c0c3606ae02ecdaace9",
+      "bytes": 131947
+    },
+    "native-ui-final/ui_conformance_button_garderobe_@Button@664.png": {
+      "sha256": "ace5025079e4e559a4842b68303c5fbd48c91b2e8defffa3f204a2201e70bd45",
+      "bytes": 182866
+    },
+    "native-ui-final/ui_conformance_button_gift_BackButton.png": {
+      "sha256": "51bd5a83e900c991eeb4e0e93cd50529c99c295c3af5a845f7f912e918207834",
+      "bytes": 121320
+    },
+    "native-ui-final/ui_conformance_button_gift_GiveButton.png": {
+      "sha256": "51bd5a83e900c991eeb4e0e93cd50529c99c295c3af5a845f7f912e918207834",
+      "bytes": 121320
+    },
+    "native-ui-final/ui_conformance_button_select_1_BackButton.png": {
+      "sha256": "2f8adb04a7e06f4d6a17f89e3b4e519601b6567bfc9f0b92f4395dfa42d765de",
+      "bytes": 289168
+    },
+    "native-ui-final/ui_conformance_button_select_1_NextButton.png": {
+      "sha256": "86790736158ba2048edef1d97c344e1838859b6e870c4cb45dcca8d9d530c927",
+      "bytes": 285309
+    },
+    "native-ui-final/ui_conformance_button_select_2_BackToRaceButton.png": {
+      "sha256": "dff38c23be757616a39aeecae68194d47ca921b302ed48d130808305e485949e",
+      "bytes": 93788
+    },
+    "native-ui-final/ui_conformance_button_select_2_ConfirmButton.png": {
+      "sha256": "dff38c23be757616a39aeecae68194d47ca921b302ed48d130808305e485949e",
+      "bytes": 93788
+    },
+    "native-ui-final/ui_conformance_button_settings_CloseButton.png": {
+      "sha256": "deea8d3f11cc1166a70a11c48472934f2d897e8ca86a63612f029be6af28f671",
+      "bytes": 79222
+    },
+    "native-ui-final/ui_conformance_button_shop_BuyButton.png": {
+      "sha256": "a4b17dd7d2173d6d5139fbb455b374046a6fb88a4a2bfadebe65261e1172f9dd",
+      "bytes": 322462
+    },
+    "native-ui-final/ui_conformance_panel_confirm_Panel.png": {
+      "sha256": "689580fe551273dd36cf972bcba98dfcb1aca2d676762fa7a4087040b1b95ba0",
+      "bytes": 54630
+    },
+    "native-ui-final/ui_conformance_panel_foundation_gallery_HeartsPanel.png": {
+      "sha256": "bfa034bbb4bcfdc5a0c72a2aad70cd7fa1b3a4227c770c0c3606ae02ecdaace9",
+      "bytes": 131947
+    },
+    "native-ui-final/ui_conformance_panel_garderobe_@PanelContainer@640.png": {
+      "sha256": "299bee8f2bd881c6234c8d4cf49e12e44012f47579a8f927f475fd7eca32ad66",
+      "bytes": 182931
+    },
+    "native-ui-final/ui_conformance_panel_gift_@PanelContainer@759.png": {
+      "sha256": "2dce40f769dc82f1b7e1f879a1a9570c5e6610e291d93107d8da2523654a2c0a",
+      "bytes": 117571
+    },
+    "native-ui-final/ui_conformance_panel_gift_@PanelContainer@762.png": {
+      "sha256": "51bd5a83e900c991eeb4e0e93cd50529c99c295c3af5a845f7f912e918207834",
+      "bytes": 121320
+    },
+    "native-ui-final/ui_conformance_panel_inventory_Workshop.png": {
+      "sha256": "a19a4fc9bdd6ae50534eed8e1bad441db97c64d76f6b49470cc6984c79149e71",
+      "bytes": 77900
+    },
+    "native-ui-final/ui_conformance_panel_journal_Book.png": {
+      "sha256": "98e0adc10dae7cf42b5c9f0896e630b69566d750500899fd509ac4f266eff5fd",
+      "bytes": 111344
+    },
+    "native-ui-final/ui_conformance_panel_pause_Panel.png": {
+      "sha256": "68589206cb3f08c0d150dee7fa0affb1db8aa4f3e10a1d85ba362d3ec85acc1a",
+      "bytes": 64536
+    },
+    "native-ui-final/ui_conformance_panel_people_@PanelContainer@717.png": {
+      "sha256": "7db7a9183708b51b8465978748fa489ede70f851ee6a76a615960fa4b4951581",
+      "bytes": 158588
+    },
+    "native-ui-final/ui_conformance_panel_people_@PanelContainer@720.png": {
+      "sha256": "7db7a9183708b51b8465978748fa489ede70f851ee6a76a615960fa4b4951581",
+      "bytes": 158588
+    },
+    "native-ui-final/ui_conformance_panel_saveload_Panel.png": {
+      "sha256": "eecf0685a591097e0fababcd849444bd65ad37d082b0cc515f7bdf6da0bbd23b",
+      "bytes": 81774
+    },
+    "native-ui-final/ui_conformance_panel_select_2_FormPanel.png": {
+      "sha256": "dff38c23be757616a39aeecae68194d47ca921b302ed48d130808305e485949e",
+      "bytes": 93788
+    },
+    "native-ui-final/ui_conformance_panel_select_2_Preview.png": {
+      "sha256": "dff38c23be757616a39aeecae68194d47ca921b302ed48d130808305e485949e",
+      "bytes": 93788
+    },
+    "native-ui-final/ui_conformance_panel_settings_Panel.png": {
+      "sha256": "deea8d3f11cc1166a70a11c48472934f2d897e8ca86a63612f029be6af28f671",
+      "bytes": 79222
+    },
+    "native-ui-final/ui_conformance_panel_shop_ShopPanel.png": {
+      "sha256": "a4b17dd7d2173d6d5139fbb455b374046a6fb88a4a2bfadebe65261e1172f9dd",
+      "bytes": 322462
+    },
+    "native-ui-final/ui_conformance_panel_title_MenuPanel.png": {
+      "sha256": "4b1b6e56c89eb5e8a3882e3708d0ce4786ec094c7f8c17764630c07812af0612",
+      "bytes": 1536728
+    },
+    "native-ui-final/ui_conformance_ring_calendar.png": {
+      "sha256": "14f60432d7b239ac6aaf38527b2f15667857be7bd619f0962e062c0cbe6eef09",
+      "bytes": 71054
+    },
+    "native-ui-final/ui_conformance_ring_calendar_unfocused.png": {
+      "sha256": "2f72d786d99e23debdd1368f356a3e059be6bc5b14c783bbf599eb07f5742cf8",
+      "bytes": 69675
+    },
+    "native-ui-final/ui_conformance_ring_confirm.png": {
+      "sha256": "689580fe551273dd36cf972bcba98dfcb1aca2d676762fa7a4087040b1b95ba0",
+      "bytes": 54630
+    },
+    "native-ui-final/ui_conformance_ring_confirm_sibling.png": {
+      "sha256": "689580fe551273dd36cf972bcba98dfcb1aca2d676762fa7a4087040b1b95ba0",
+      "bytes": 54630
+    },
+    "native-ui-final/ui_conformance_ring_dialogue.png": {
+      "sha256": "d113f3a65e5015048c9a74babca6bbbdad56d784e30ee2231e4faac1f3b20f86",
+      "bytes": 78011
+    },
+    "native-ui-final/ui_conformance_ring_foundation_gallery.png": {
+      "sha256": "e505ebfdd8f1f1b4a6a7e02fbe9ab0316ff8e2889c66d776cc8f6810874c667b",
+      "bytes": 133322
+    },
+    "native-ui-final/ui_conformance_ring_foundation_gallery_unfocused.png": {
+      "sha256": "bfa034bbb4bcfdc5a0c72a2aad70cd7fa1b3a4227c770c0c3606ae02ecdaace9",
+      "bytes": 131947
+    },
+    "native-ui-final/ui_conformance_ring_garderobe.png": {
+      "sha256": "299bee8f2bd881c6234c8d4cf49e12e44012f47579a8f927f475fd7eca32ad66",
+      "bytes": 182931
+    },
+    "native-ui-final/ui_conformance_ring_garderobe_sibling.png": {
+      "sha256": "299bee8f2bd881c6234c8d4cf49e12e44012f47579a8f927f475fd7eca32ad66",
+      "bytes": 182931
+    },
+    "native-ui-final/ui_conformance_ring_gift.png": {
+      "sha256": "51bd5a83e900c991eeb4e0e93cd50529c99c295c3af5a845f7f912e918207834",
+      "bytes": 121320
+    },
+    "native-ui-final/ui_conformance_ring_gift_sibling.png": {
+      "sha256": "51bd5a83e900c991eeb4e0e93cd50529c99c295c3af5a845f7f912e918207834",
+      "bytes": 121320
+    },
+    "native-ui-final/ui_conformance_ring_inventory.png": {
+      "sha256": "a19a4fc9bdd6ae50534eed8e1bad441db97c64d76f6b49470cc6984c79149e71",
+      "bytes": 77900
+    },
+    "native-ui-final/ui_conformance_ring_inventory_sibling.png": {
+      "sha256": "a19a4fc9bdd6ae50534eed8e1bad441db97c64d76f6b49470cc6984c79149e71",
+      "bytes": 77900
+    },
+    "native-ui-final/ui_conformance_ring_journal.png": {
+      "sha256": "98e0adc10dae7cf42b5c9f0896e630b69566d750500899fd509ac4f266eff5fd",
+      "bytes": 111344
+    },
+    "native-ui-final/ui_conformance_ring_journal_sibling.png": {
+      "sha256": "98e0adc10dae7cf42b5c9f0896e630b69566d750500899fd509ac4f266eff5fd",
+      "bytes": 111344
+    },
+    "native-ui-final/ui_conformance_ring_pause.png": {
+      "sha256": "68589206cb3f08c0d150dee7fa0affb1db8aa4f3e10a1d85ba362d3ec85acc1a",
+      "bytes": 64536
+    },
+    "native-ui-final/ui_conformance_ring_pause_sibling.png": {
+      "sha256": "68589206cb3f08c0d150dee7fa0affb1db8aa4f3e10a1d85ba362d3ec85acc1a",
+      "bytes": 64536
+    },
+    "native-ui-final/ui_conformance_ring_people.png": {
+      "sha256": "7db7a9183708b51b8465978748fa489ede70f851ee6a76a615960fa4b4951581",
+      "bytes": 158588
+    },
+    "native-ui-final/ui_conformance_ring_people_sibling.png": {
+      "sha256": "7db7a9183708b51b8465978748fa489ede70f851ee6a76a615960fa4b4951581",
+      "bytes": 158588
+    },
+    "native-ui-final/ui_conformance_ring_saveload.png": {
+      "sha256": "eecf0685a591097e0fababcd849444bd65ad37d082b0cc515f7bdf6da0bbd23b",
+      "bytes": 81774
+    },
+    "native-ui-final/ui_conformance_ring_select_1.png": {
+      "sha256": "2f8adb04a7e06f4d6a17f89e3b4e519601b6567bfc9f0b92f4395dfa42d765de",
+      "bytes": 289168
+    },
+    "native-ui-final/ui_conformance_ring_select_1_sibling.png": {
+      "sha256": "2f8adb04a7e06f4d6a17f89e3b4e519601b6567bfc9f0b92f4395dfa42d765de",
+      "bytes": 289168
+    },
+    "native-ui-final/ui_conformance_ring_select_2.png": {
+      "sha256": "cdac0a41a36b07b18158cf3558f5c479dd873c3e606c4f17406cac3d80f8d0f0",
+      "bytes": 94873
+    },
+    "native-ui-final/ui_conformance_ring_select_2_unfocused.png": {
+      "sha256": "dff38c23be757616a39aeecae68194d47ca921b302ed48d130808305e485949e",
+      "bytes": 93788
+    },
+    "native-ui-final/ui_conformance_ring_settings.png": {
+      "sha256": "deea8d3f11cc1166a70a11c48472934f2d897e8ca86a63612f029be6af28f671",
+      "bytes": 79222
+    },
+    "native-ui-final/ui_conformance_ring_settings_sibling.png": {
+      "sha256": "deea8d3f11cc1166a70a11c48472934f2d897e8ca86a63612f029be6af28f671",
+      "bytes": 79222
+    },
+    "native-ui-final/ui_conformance_ring_shop.png": {
+      "sha256": "a4b17dd7d2173d6d5139fbb455b374046a6fb88a4a2bfadebe65261e1172f9dd",
+      "bytes": 322462
+    },
+    "native-ui-final/ui_conformance_ring_shop_sibling.png": {
+      "sha256": "a4b17dd7d2173d6d5139fbb455b374046a6fb88a4a2bfadebe65261e1172f9dd",
+      "bytes": 322462
+    },
+    "native-ui-final/ui_conformance_ring_title.png": {
+      "sha256": "5eb09a692bd2108ecacdabc35fab5dce3f54170445a76e4c7b03a4638107850c",
+      "bytes": 1537504
+    },
+    "native-ui-final/ui_conformance_ring_title_unfocused.png": {
+      "sha256": "4b1b6e56c89eb5e8a3882e3708d0ce4786ec094c7f8c17764630c07812af0612",
+      "bytes": 1536728
+    },
+    "native-ui-final/ui_conformance_sheet_button_Primary.png": {
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b",
+      "bytes": 43565
+    },
+    "native-ui-final/ui_conformance_sheet_button_Secondary.png": {
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b",
+      "bytes": 43565
+    },
+    "native-ui-final/ui_conformance_sheet_button_Tertiary.png": {
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b",
+      "bytes": 43565
+    },
+    "native-ui-final/ui_conformance_sheet_disabled.png": {
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b",
+      "bytes": 43565
+    },
+    "native-ui-final/ui_conformance_sheet_panel.png": {
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b",
+      "bytes": 43565
+    },
+    "native-ui-final/ui_conformance_sheet_ring_CardButton.png": {
+      "sha256": "dadb4b8ee77fade03659c367cc8d87d02d130ee569321bb7c89392b873bdb624",
+      "bytes": 45369
+    },
+    "native-ui-final/ui_conformance_sheet_ring_CardButton_unfocused.png": {
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b",
+      "bytes": 43565
+    },
+    "native-ui-final/ui_conformance_sheet_ring_Chip.png": {
+      "sha256": "b6f2e294f9e6621b2ce5d63aad3a92252c7ab061ec6eb247bde1ccd559e24ff2",
+      "bytes": 45448
+    },
+    "native-ui-final/ui_conformance_sheet_ring_Chip_unfocused.png": {
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b",
+      "bytes": 43565
+    },
+    "native-ui-final/ui_conformance_sheet_ring_ChoiceRow.png": {
+      "sha256": "ed1a88759cdaa9aa3d1ce2f5760a16c2e6895205169452248309f04135da2e13",
+      "bytes": 44291
+    },
+    "native-ui-final/ui_conformance_sheet_ring_ChoiceRow_unfocused.png": {
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b",
+      "bytes": 43565
+    },
+    "native-ui-final/ui_conformance_sheet_ring_MenuRow.png": {
+      "sha256": "6450f4a5312c9158dd8247dc21ea1153d7b791be23ebe0d43f544f8c78e134fe",
+      "bytes": 44368
+    },
+    "native-ui-final/ui_conformance_sheet_ring_MenuRow_unfocused.png": {
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b",
+      "bytes": 43565
+    },
+    "native-ui-final/ui_conformance_sheet_ring_PillTab.png": {
+      "sha256": "4ca36f1db97bbd30442a687d22cfdc2b1f736cdd0b163ec28793921136283365",
+      "bytes": 45262
+    },
+    "native-ui-final/ui_conformance_sheet_ring_PillTab_unfocused.png": {
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b",
+      "bytes": 43565
+    },
+    "native-ui-final/ui_conformance_sheet_ring_Primary.png": {
+      "sha256": "1559ec710810fab25772d8235bea87a07ccd3ed3c158fde5edb4267cb8deec0b",
+      "bytes": 44863
+    },
+    "native-ui-final/ui_conformance_sheet_ring_Primary_unfocused.png": {
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b",
+      "bytes": 43565
+    },
+    "native-ui-final/ui_conformance_sheet_ring_Secondary.png": {
+      "sha256": "b7f0cc8b5cb83da2ea3d2ff4eb97f4e1781316803969d916e21bc65f6c204aa5",
+      "bytes": 44881
+    },
+    "native-ui-final/ui_conformance_sheet_ring_Secondary_unfocused.png": {
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b",
+      "bytes": 43565
+    },
+    "native-ui-final/ui_conformance_sheet_ring_Tertiary.png": {
+      "sha256": "11c5da28b20ce865fd13a1b89312191575124b4cf2828ee878044f68d5cb3ea6",
+      "bytes": 44853
+    },
+    "native-ui-final/ui_conformance_sheet_ring_Tertiary_unfocused.png": {
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b",
+      "bytes": 43565
+    },
+    "native-ui-final/ui_conformance_sheet_ring_field.png": {
+      "sha256": "a5d6cb188e95abafd983cf44bbb9d9ca4d8a6142ddf33c6e1864070ed4937775",
+      "bytes": 44667
+    },
+    "native-ui-final/ui_conformance_sheet_ring_field_unfocused.png": {
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b",
+      "bytes": 43565
+    },
+    "native-ui-final/ui_conformance_sheet_ring_slider.png": {
+      "sha256": "b2945fce813a381c4db0af98c3670bb25727b1f4dd5c810e1e2f8bc376721998",
+      "bytes": 46629
+    },
+    "native-ui-final/ui_conformance_sheet_ring_slider_unfocused.png": {
+      "sha256": "e89612dc02bcd026c8571234a0dac4ef875821dd8aa512fb9a587ec483a1633b",
+      "bytes": 43565
+    },
+    "native-ui-final/wardrobe_ui_dress_fox.png": {
+      "sha256": "5434d1592ff1e8bae3d150b389e5d6a9d32ce0106ca55cdfd6618d0a91b571da",
+      "bytes": 208386
+    },
+    "native-ui-final/wardrobe_ui_dress_monkey.png": {
+      "sha256": "ca9d71c84fc5d8b50b703ab713cc1a30fe99e23f450c7a4b5fbd0d11360e9bab",
+      "bytes": 212467
+    },
+    "native-ui-final/wardrobe_ui_hands_fox.png": {
+      "sha256": "9087176b44f505b7bceea18d6af21b6372e87450f57527729595e9934ca4de40",
+      "bytes": 233062
+    },
+    "native-ui-final/wardrobe_ui_hands_monkey.png": {
+      "sha256": "03fe94ef3731c0813312522b58aa8b10b95a670aab854d7be1d6f85fb93338c4",
+      "bytes": 236982
+    },
+    "native-ui-final/wardrobe_ui_world_fox.png": {
+      "sha256": "db476d6d8bdb1d550feb84af72ecd003c0420e3189f73d0633d94be10830364d",
+      "bytes": 1944470
+    },
+    "native-ui-final/wardrobe_ui_world_monkey.png": {
+      "sha256": "4f18f5d962d0ac367354df184138b4ca07f4387a10c1996e29ab21cdff32393f",
+      "bytes": 1943929
+    }
+  }
+}

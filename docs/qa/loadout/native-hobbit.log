@@ -1,0 +1,235 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=windowed character=hobbit sections=res://tests/sections only=wardrobe_ui,wardrobe_render,held_equipment
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.w6Dv9b/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit
+== section held_equipment [windowed]  (res://tests/sections/held_equipment.gd)
+  ok    held_equipment.badge_cannot_take_focus_or_eat_world_input
+  ok    held_equipment.selected_tool_has_matching_picture_and_name
+  ok    held_equipment.whole_item_catalog_has_held_tool_and_weapon_art ([])
+  ok    held_equipment.every_body_frame_and_direction_has_fitted_grip (hobbit_pip: 344 real body poses)
+  ok    held_equipment.altitude_spin_and_flash_follow_body_once
+  ok    held_equipment.all_items_use_dedicated_directional_paintings
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/held_equipment_tool_hobbit_pip.png (1280x720)
+  ok    held_equipment.real_hoe_action_starts
+  ok    held_equipment.action_readout_keeps_hoe_after_hotbar_swap
+  ok    held_equipment.next_selection_appears_after_action_finishes
+  ok    held_equipment.empty_slot_clears_attachment_and_names_empty_hands
+  ok    held_equipment.selected_sword_is_actual_weapon_in_farm_action
+  ok    held_equipment.swing_snapshot_survives_equipment_change
+  ok    held_equipment.dialogue_puts_held_item_away
+  ok    held_equipment.dialogue_release_restores_selected_tool
+  ok    held_equipment.enter_real_forest_hub
+  ok    held_equipment.forest_shows_equipped_weapon_even_with_hoe_selected
+  ok    held_equipment.forest_keeps_actual_readout_and_health_visible
+  ok    held_equipment.empty_weapon_slot_never_uses_phantom_sword
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/held_equipment_weapon_hobbit_pip.png (1280x720)
+  ok    held_equipment.readout_follows_language_change
+  ok    held_equipment.equipment_save_written
+  ok    held_equipment.equipment_save_loaded
+  ok    held_equipment.save_rebuilds_correct_held_weapon_without_extra_state
+  ok    held_equipment.badge_cannot_take_focus_or_eat_world_input
+  ok    held_equipment.selected_tool_has_matching_picture_and_name
+  ok    held_equipment.whole_item_catalog_has_held_tool_and_weapon_art ([])
+  ok    held_equipment.every_body_frame_and_direction_has_fitted_grip (hobbit_bodil: 344 real body poses)
+  ok    held_equipment.altitude_spin_and_flash_follow_body_once
+  ok    held_equipment.all_items_use_dedicated_directional_paintings
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/held_equipment_tool_hobbit_bodil.png (1280x720)
+  ok    held_equipment.real_hoe_action_starts
+  ok    held_equipment.action_readout_keeps_hoe_after_hotbar_swap
+  ok    held_equipment.next_selection_appears_after_action_finishes
+  ok    held_equipment.empty_slot_clears_attachment_and_names_empty_hands
+  ok    held_equipment.selected_sword_is_actual_weapon_in_farm_action
+  ok    held_equipment.swing_snapshot_survives_equipment_change
+  ok    held_equipment.dialogue_puts_held_item_away
+  ok    held_equipment.dialogue_release_restores_selected_tool
+  ok    held_equipment.enter_real_forest_hub
+  ok    held_equipment.forest_shows_equipped_weapon_even_with_hoe_selected
+  ok    held_equipment.forest_keeps_actual_readout_and_health_visible
+  ok    held_equipment.empty_weapon_slot_never_uses_phantom_sword
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/held_equipment_weapon_hobbit_bodil.png (1280x720)
+  ok    held_equipment.readout_follows_language_change
+  ok    held_equipment.equipment_save_written
+  ok    held_equipment.equipment_save_loaded
+  ok    held_equipment.save_rebuilds_correct_held_weapon_without_extra_state
+  --    held_equipment: 44 checks, 0 failed, 0 skipped, 2.6 s
+== section wardrobe_render [windowed]  (res://tests/sections/wardrobe_render.gd)
+  ok    wardrobe_render.every_live_body_pose_drives_all_clothing_layers (hobbit_pip: 376 clip/frame/direction poses)
+  ok    wardrobe_render.clothes_inherit_late_transform_and_tint_once
+  ok    wardrobe_render.existing_actor_refits_on_hero_change (resolved hobbit_bodil)
+  ok    wardrobe_render.hero_change_keeps_owned_outfit
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_face_baseline_hobbit_pip.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_bracelet_copper.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_bracelet_string.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_circlet_daisy.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_circlet_moon_crown.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_dress_gown_aurora.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_dress_pinafore_baker.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_dress_sun_cream.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_earrings_copper.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_hat_acorn_gold.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_hat_cap_blue.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_hat_cat_ears.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_hat_chef_white.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_hat_hood_green.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_hat_mushroom_glow.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_hat_straw_green.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_hat_wizard_lavender.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_necklace_acorn.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_necklace_beads_wood.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_pants_breeches_tweed.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_pants_dungarees_blue.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_pants_shorts_blue.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_pants_trousers_brown.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_shirt_knit_blue.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_shirt_linen_blue.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_shirt_smock_brown.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_shirt_vest_embroidered.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_shoes_boots_brown.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_shoes_clogs_gilded.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_shoes_slippers_cream.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_pip_shoes_wellies_blue.png (1280x720)
+  ok    wardrobe_render.every_family_or_palette_rendered_without_covering_face ({ "body": "hobbit_pip", "cases": ["bracelet_copper", "bracelet_string", "circlet_daisy", "circlet_moon_crown", "dress_gown_aurora", "dress_pinafore_baker", "dress_sun_cream", "earrings_copper", "hat_acorn_gold", "hat_cap_blue", "hat_cat_ears", "hat_chef_white", "hat_hood_green", "hat_mushroom_glow", "hat_straw_green", "hat_wizard_lavender", "necklace_acorn", "necklace_beads_wood", "pants_breeches_tweed", "pants_dungarees_blue", "pants_shorts_blue", "pants_trousers_brown", "shirt_knit_blue", "shirt_linen_blue", "shirt_smock_brown", "shirt_vest_embroidered", "shoes_boots_brown", "shoes_clogs_gilded", "shoes_slippers_cream", "shoes_wellies_blue"], "max_face_mean_byte_difference": 0.71279003961517, "pages": 3, "view": "S, idle frame zero" })
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_0_0.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_0_1.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_0_2.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_0_3.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_0_4.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_0_5.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_0_6.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_0_7.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_1_0.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_1_1.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_1_2.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_1_3.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_1_4.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_1_5.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_1_6.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_1_7.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_2_0.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_2_1.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_2_2.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_2_3.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_2_4.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_2_5.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_2_6.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_pip_2_7.png (1280x720)
+  ok    wardrobe_render.mixed_seven_slot_and_dress_outfits_in_all_directions
+  ok    wardrobe_render.every_live_body_pose_drives_all_clothing_layers (hobbit_bodil: 376 clip/frame/direction poses)
+  ok    wardrobe_render.clothes_inherit_late_transform_and_tint_once
+  ok    wardrobe_render.existing_actor_refits_on_hero_change (resolved hobbit_pip)
+  ok    wardrobe_render.hero_change_keeps_owned_outfit
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_face_baseline_hobbit_bodil.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_bracelet_copper.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_bracelet_string.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_circlet_daisy.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_circlet_moon_crown.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_dress_gown_aurora.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_dress_pinafore_baker.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_dress_sun_cream.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_earrings_copper.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_hat_acorn_gold.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_hat_cap_blue.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_hat_cat_ears.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_hat_chef_white.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_hat_hood_green.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_hat_mushroom_glow.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_hat_straw_green.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_hat_wizard_lavender.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_necklace_acorn.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_necklace_beads_wood.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_pants_breeches_tweed.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_pants_dungarees_blue.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_pants_shorts_blue.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_pants_trousers_brown.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_shirt_knit_blue.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_shirt_linen_blue.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_shirt_smock_brown.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_shirt_vest_embroidered.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_shoes_boots_brown.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_shoes_clogs_gilded.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_shoes_slippers_cream.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_case_hobbit_bodil_shoes_wellies_blue.png (1280x720)
+  ok    wardrobe_render.every_family_or_palette_rendered_without_covering_face ({ "body": "hobbit_bodil", "cases": ["bracelet_copper", "bracelet_string", "circlet_daisy", "circlet_moon_crown", "dress_gown_aurora", "dress_pinafore_baker", "dress_sun_cream", "earrings_copper", "hat_acorn_gold", "hat_cap_blue", "hat_cat_ears", "hat_chef_white", "hat_hood_green", "hat_mushroom_glow", "hat_straw_green", "hat_wizard_lavender", "necklace_acorn", "necklace_beads_wood", "pants_breeches_tweed", "pants_dungarees_blue", "pants_shorts_blue", "pants_trousers_brown", "shirt_knit_blue", "shirt_linen_blue", "shirt_smock_brown", "shirt_vest_embroidered", "shoes_boots_brown", "shoes_clogs_gilded", "shoes_slippers_cream", "shoes_wellies_blue"], "max_face_mean_byte_difference": 0.68279569892473, "pages": 3, "view": "S, idle frame zero" })
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_0_0.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_0_1.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_0_2.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_0_3.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_0_4.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_0_5.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_0_6.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_0_7.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_1_0.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_1_1.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_1_2.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_1_3.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_1_4.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_1_5.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_1_6.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_1_7.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_2_0.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_2_1.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_2_2.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_2_3.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_2_4.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_2_5.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_2_6.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_render_turn_hobbit_bodil_2_7.png (1280x720)
+  ok    wardrobe_render.mixed_seven_slot_and_dress_outfits_in_all_directions
+  --    wardrobe_render: 12 checks, 0 failed, 0 skipped, 7.8 s
+== section wardrobe_ui [windowed]  (res://tests/sections/wardrobe_ui.gd)
+  ok    wardrobe_ui.screen_and_live_presenter_available
+  ok    wardrobe_ui.all_96_pieces_fit_all_eight_bodies
+  ok    wardrobe_ui.opens_paused_with_live_preview
+  ok    wardrobe_ui.try_on_is_local_and_resolves_exclusions
+  ok    wardrobe_ui.closing_cancels_uncommitted_try_on
+  ok    wardrobe_ui.equip_button_commits_one_complete_dress
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_ui_dress_hobbit_pip.png (1280x720)
+  ok    wardrobe_ui.preview_rotates_and_walks
+  ok    wardrobe_ui.unowned_piece_can_be_tried_but_not_equipped
+  ok    wardrobe_ui.remove_button_reveals_base_and_keeps_ownership
+  ok    wardrobe_ui.screen_saves_worn_outfit
+  ok    wardrobe_ui.screen_restores_outfit
+  ok    wardrobe_ui.hands_preview_uses_same_attachment_presenter
+  ok    wardrobe_ui.weapon_try_on_does_not_change_equipment
+  ok    wardrobe_ui.hands_tab_changes_real_weapon_owner
+  ok    wardrobe_ui.hands_tab_assigns_existing_hotbar
+  ok    wardrobe_ui.hands_tab_selects_ready_tool
+  ok    wardrobe_ui.hands_tab_clears_selected_slot
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_ui_hands_hobbit_pip.png (1280x720)
+  ok    wardrobe_ui.closing_releases_pause_and_preview
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_ui_world_hobbit_pip.png (1280x720)
+  ok    wardrobe_ui.real_save_with_clothes_and_loadout
+  ok    wardrobe_ui.real_load_rebuilds_world
+  ok    wardrobe_ui.clothing_equipment_presets_and_hotbar_survive_load
+  ok    wardrobe_ui.screen_and_live_presenter_available
+  ok    wardrobe_ui.all_96_pieces_fit_all_eight_bodies
+  ok    wardrobe_ui.opens_paused_with_live_preview
+  ok    wardrobe_ui.try_on_is_local_and_resolves_exclusions
+  ok    wardrobe_ui.closing_cancels_uncommitted_try_on
+  ok    wardrobe_ui.equip_button_commits_one_complete_dress
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_ui_dress_hobbit_bodil.png (1280x720)
+  ok    wardrobe_ui.preview_rotates_and_walks
+  ok    wardrobe_ui.unowned_piece_can_be_tried_but_not_equipped
+  ok    wardrobe_ui.remove_button_reveals_base_and_keeps_ownership
+  ok    wardrobe_ui.screen_saves_worn_outfit
+  ok    wardrobe_ui.screen_restores_outfit
+  ok    wardrobe_ui.hands_preview_uses_same_attachment_presenter
+  ok    wardrobe_ui.weapon_try_on_does_not_change_equipment
+  ok    wardrobe_ui.hands_tab_changes_real_weapon_owner
+  ok    wardrobe_ui.hands_tab_assigns_existing_hotbar
+  ok    wardrobe_ui.hands_tab_selects_ready_tool
+  ok    wardrobe_ui.hands_tab_clears_selected_slot
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_ui_hands_hobbit_bodil.png (1280x720)
+  ok    wardrobe_ui.closing_releases_pause_and_preview
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-loadout/docs/qa/loadout/native-hobbit/wardrobe_ui_world_hobbit_bodil.png (1280x720)
+  ok    wardrobe_ui.real_save_with_clothes_and_loadout
+  ok    wardrobe_ui.real_load_rebuilds_world
+  ok    wardrobe_ui.clothing_equipment_presets_and_hotbar_survive_load
+  --    wardrobe_ui: 42 checks, 0 failed, 0 skipped, 2.4 s
+== summary: 3 section(s) run, 98 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 16.7 s
+PLAYTEST PASS (98 checks in 3 sections, 0 allowed engine messages, 0 known-issue messages)

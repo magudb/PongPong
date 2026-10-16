@@ -147,8 +147,8 @@
     "failed": 0
   },
   "source_bound_town_proofs": {
-    "extension": "../m1b-milestone/loop-extension.json",
-    "mutants": "../m1b-milestone/loop-mutants.json",
+    "extension": "source-proof-8f39a661/loop-extension.json",
+    "mutants": "source-proof-8f39a661/loop-mutants.json",
     "data_only_owner_checks": 588,
     "extension_scenarios": 8,
     "producer_mutants_caught": 7,
@@ -156,7 +156,8 @@
       "extension-check.json",
       "mutants-check.json"
     ],
-    "previous_secret_garden_proofs_archived": "../secret-garden/source-proof-c59041b0"
+    "previous_secret_garden_proofs_archived": "../secret-garden/source-proof-c59041b0",
+    "archive_note": "Archived before wardrobe changes refreshed the live proofs. Raw positive and negative control reports/logs are retained alongside these manifests."
   },
   "art": {
     "production_atlas": "assets/held_equipment/tools.webp",

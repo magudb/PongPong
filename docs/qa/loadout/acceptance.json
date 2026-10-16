@@ -1,0 +1,272 @@
+{
+  "status": "validated on codex-loadout; merged-checkout verification pending",
+  "validated_at_utc": "2026-10-16T20:02:33.048699+00:00",
+  "baseline_main": "c395207",
+  "feature_source_commit": "2e6035e",
+  "final_ui_source_commit": "27b66d7",
+  "source_binding": "fc6df2244d8570a9d28203b8daad0f3bc8dceeb442567abb238f9a86eab99818",
+  "bound_source_files": 1188,
+  "code_files": 695,
+  "scope": "Usable clothing and loadout changes for all eight playable heroes, visible in the world and persisted by the existing save system.",
+  "controls": {
+    "open": "G or Pause > Wardrobe, while the actor is free",
+    "clothes": "Select to try locally; Equip/Remove commit; Work/Forest/Festival save worn clothing",
+    "hands": "Equip owned tools/weapons and assign or clear existing hotbar slots",
+    "other_hotbar_items": "The existing Inventory also assigns items to slots 1-8"
+  },
+  "heroes": [
+    "fox",
+    "monkey",
+    "fairy",
+    "fairy_birk",
+    "hobbit_pip",
+    "hobbit_bodil",
+    "ghost_bu",
+    "ghost_hviske"
+  ],
+  "regression": {
+    "report": "regression.json",
+    "source_commit": "2e6035e",
+    "result": "pass",
+    "checks": 1864,
+    "failed": 0,
+    "skipped": 78,
+    "elapsed_s": 56.41,
+    "unexpected_engine_messages": 0,
+    "intentional_negative_control_messages": 16
+  },
+  "final_ui": {
+    "report": "ui-final.json",
+    "source_commit": "27b66d7",
+    "result": "pass",
+    "checks": 204,
+    "failed": 0,
+    "skipped": 71,
+    "elapsed_s": 12.94,
+    "unexpected_engine_messages": 0,
+    "intentional_negative_control_messages": 0
+  },
+  "final_native_ui": {
+    "report": "native-ui-final.json",
+    "source_commit": "27b66d7",
+    "result": "pass",
+    "checks": 46,
+    "failed": 0,
+    "skipped": 0,
+    "elapsed_s": 13.21,
+    "unexpected_engine_messages": 0,
+    "intentional_negative_control_messages": 0
+  },
+  "native_budgets": {
+    "report": "native-budgets.json",
+    "source_commit": "4a66d91",
+    "result": "pass",
+    "checks": 28,
+    "failed": 0,
+    "skipped": 0,
+    "elapsed_s": 31.94,
+    "unexpected_engine_messages": 0,
+    "intentional_negative_control_messages": 0
+  },
+  "headless": {
+    "animal": {
+      "report": "animal.json",
+      "source_commit": "2e6035e",
+      "result": "pass",
+      "checks": 94,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 9.7,
+      "unexpected_engine_messages": 0,
+      "intentional_negative_control_messages": 0
+    },
+    "fairy": {
+      "report": "fairy.json",
+      "source_commit": "2e6035e",
+      "result": "pass",
+      "checks": 94,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 6.91,
+      "unexpected_engine_messages": 0,
+      "intentional_negative_control_messages": 0
+    },
+    "hobbit": {
+      "report": "hobbit.json",
+      "source_commit": "2e6035e",
+      "result": "pass",
+      "checks": 94,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 6.67,
+      "unexpected_engine_messages": 0,
+      "intentional_negative_control_messages": 0
+    },
+    "ghost": {
+      "report": "ghost.json",
+      "source_commit": "2e6035e",
+      "result": "pass",
+      "checks": 94,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 6.68,
+      "unexpected_engine_messages": 0,
+      "intentional_negative_control_messages": 0
+    }
+  },
+  "native": {
+    "animal": {
+      "report": "native-animal.json",
+      "source_commit": "2e6035e",
+      "result": "pass",
+      "checks": 98,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 24.78,
+      "unexpected_engine_messages": 0,
+      "intentional_negative_control_messages": 0
+    },
+    "fairy": {
+      "report": "native-fairy.json",
+      "source_commit": "2e6035e",
+      "result": "pass",
+      "checks": 98,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 16.83,
+      "unexpected_engine_messages": 0,
+      "intentional_negative_control_messages": 0
+    },
+    "hobbit": {
+      "report": "native-hobbit.json",
+      "source_commit": "2e6035e",
+      "result": "pass",
+      "checks": 98,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 16.68,
+      "unexpected_engine_messages": 0,
+      "intentional_negative_control_messages": 0
+    },
+    "ghost": {
+      "report": "native-ghost.json",
+      "source_commit": "2e6035e",
+      "result": "pass",
+      "checks": 98,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 16.45,
+      "unexpected_engine_messages": 0,
+      "intentional_negative_control_messages": 0
+    }
+  },
+  "latest_native_ui": {
+    "animal": {
+      "report": "native-ui-animal.json",
+      "source_commit": "27b66d7",
+      "result": "pass",
+      "checks": 42,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 6.89,
+      "unexpected_engine_messages": 0,
+      "intentional_negative_control_messages": 0
+    },
+    "fairy": {
+      "report": "native-ui-fairy.json",
+      "source_commit": "27b66d7",
+      "result": "pass",
+      "checks": 42,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 6.88,
+      "unexpected_engine_messages": 0,
+      "intentional_negative_control_messages": 0
+    },
+    "hobbit": {
+      "report": "native-ui-hobbit.json",
+      "source_commit": "27b66d7",
+      "result": "pass",
+      "checks": 42,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 6.8,
+      "unexpected_engine_messages": 0,
+      "intentional_negative_control_messages": 0
+    },
+    "ghost": {
+      "report": "native-ui-ghost.json",
+      "source_commit": "27b66d7",
+      "result": "pass",
+      "checks": 42,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 6.7,
+      "unexpected_engine_messages": 0,
+      "intentional_negative_control_messages": 0
+    }
+  },
+  "integration": {
+    "report": "integration.json",
+    "source_commit": "27b66d7",
+    "result": "pass",
+    "checks": 159,
+    "failed": 0,
+    "skipped": 11,
+    "elapsed_s": 16.17,
+    "unexpected_engine_messages": 0,
+    "intentional_negative_control_messages": 1
+  },
+  "source_bound_town_proofs": {
+    "extension": "../m1b-milestone/loop-extension.json",
+    "mutants": "../m1b-milestone/loop-mutants.json",
+    "scenarios": 8,
+    "owner_checks": 588,
+    "producer_mutants_caught": 7,
+    "prior_held_equipment_proofs": "../held-equipment/source-proof-8f39a661/"
+  },
+  "art": {
+    "style_ledger": "../../art/style-audit/current/approval.json",
+    "production_manifest": "../../../assets/wardrobe/manifest.json",
+    "prompts": "../../art/wardrobe/prompts.json",
+    "generation_mode": "built-in image generation",
+    "new_rasters": 252,
+    "garment_fits": 240,
+    "safe_bases": 4,
+    "functional_masks": 8,
+    "reviewed_visual_theme_assets": 2815,
+    "prior_2563_unchanged": "asset-preservation.json",
+    "native_image_hashes": "image-hashes.json",
+    "palette_gallery": "96 item palettes on fox; 30 garment families on every other hero",
+    "direction_gallery": "three mixed outfits in all eight directions on every hero",
+    "frame_alignment": "all authored clip/frame/direction combinations checked against actual live body clock"
+  },
+  "performance": {
+    "report": "native-budgets.json",
+    "source_commit": "4a66d91",
+    "maximum_simultaneous_clothing_slots": 7,
+    "original_city_hud_draw_calls": 250,
+    "with_all_equipment_draw_calls": 261,
+    "equipment_draw_increment": 11,
+    "equipment_draw_increment_limit": 16,
+    "crowd_16_looks_texture_mib": 295.36,
+    "festival_20_looks_texture_mib": 331.569,
+    "city_crowd_frame_ms": 2.02746153846154,
+    "limits_raised": false,
+    "native_details": "native-budgets/town-budgets-native-details.json"
+  },
+  "checks": {
+    "copy": "copy-check.json",
+    "csv": "csv-check.txt",
+    "imports": "import-check.txt",
+    "voice": "voice-check.txt",
+    "canonical_source": "canonical-source.json"
+  },
+  "limits": [
+    "The 78 broad-regression capability/window skips remain explicitly reported; native feature checks have no skips.",
+    "Sixteen deliberately provoked save-failure messages are retained by the broader regression as named controls.",
+    "Five pre-existing da.csv legacy findings are unchanged.",
+    "This is not a separate pixel review of every stock animation frame.",
+    "Native source-project measurements on Apple M3/macOS/Godot 4.7.2 Compatibility; packaged-export timing is not claimed."
+  ]
+}

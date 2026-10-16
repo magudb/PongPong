@@ -1,0 +1,6 @@
+LEGACY [duplicate] da.csv:63 QUEST_FIX_ROOF_TITLE - defined twice in this file (first at line 57)
+LEGACY [duplicate] da.csv:305 ITEM_FAIRY_DUST - defined twice in this file (first at line 116)
+LEGACY [duplicate] da.csv:306 ITEM_FAIRY_DUST_DESC - defined twice in this file (first at line 117)
+LEGACY [malformed] da.csv:338 ITEM_BABY_FAWN_DESC:"En yndig hjort med magiske  - key does not match ^[A-Z0-9_]+$ (row skipped)
+LEGACY [malformed] da.csv:354 ITEM_BARN_KIT_DESC:"Byg en lade til dine større  - key does not match ^[A-Z0-9_]+$ (row skipped)
+csv_lint PASS: 44 file(s), 3298 keys, 0 error(s), 5 legacy issue(s) (tolerated until P26), 0 warning(s)

@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "hobbit",
+  "checks": 12,
+  "elapsed_s": 11.98,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "wardrobe_render": {
+      "character": "hobbit",
+      "checks": 12,
+      "failed": 0,
+      "ms": 8120,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

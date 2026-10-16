@@ -1,0 +1,31 @@
+{
+  "result": "pass",
+  "source_commit": "27b66d79e160b930407b4399e242845924481a90",
+  "changed_bound_source_files": [
+    "assets/wardrobe/manifest.json",
+    "localization/wardrobe_ui.csv",
+    "lua/data/wardrobe_rules.lua",
+    "project.godot",
+    "scenes/ui/garderobe.tscn",
+    "scripts/ui/garderobe.gd",
+    "scripts/wardrobe/wardrobe_catalog.gd",
+    "scripts/wardrobe/wardrobe_layers.gd",
+    "scripts/wardrobe/wardrobe_manager.gd",
+    "scripts/world2d/held_equipment_2d.gd",
+    "scripts/world2d/player_2d.gd",
+    "shaders/wardrobe_body.gdshader",
+    "shaders/wardrobe_layer.gdshader",
+    "shaders/wardrobe_motion.gdshaderinc",
+    "tests/lib/town_loop/native.gd",
+    "tests/sections/held_equipment.gd",
+    "tests/sections/loot.gd",
+    "tests/sections/wardrobe.gd",
+    "tests/sections/wardrobe_render.gd",
+    "tests/sections/wardrobe_ui.gd",
+    "tools/art/drawn/style_audit_current.py",
+    "tools/art/drawn/wardrobe.py",
+    "tools/import/write_import_stubs.py",
+    "tools/town/prove_extension.py"
+  ],
+  "byte_differences": []
+}

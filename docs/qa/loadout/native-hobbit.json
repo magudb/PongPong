@@ -1,0 +1,37 @@
+{
+  "allowed": [],
+  "character": "hobbit",
+  "checks": 98,
+  "elapsed_s": 16.68,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "held_equipment": {
+      "character": "hobbit",
+      "checks": 44,
+      "failed": 0,
+      "ms": 2614,
+      "skipped": 0
+    },
+    "wardrobe_render": {
+      "character": "hobbit",
+      "checks": 12,
+      "failed": 0,
+      "ms": 7841,
+      "skipped": 0
+    },
+    "wardrobe_ui": {
+      "character": "hobbit",
+      "checks": 42,
+      "failed": 0,
+      "ms": 2368,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

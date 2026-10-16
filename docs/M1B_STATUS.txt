@@ -75,3 +75,21 @@ Merged main b8c78e4 passes 312 strict transition/loop/budget checks with no
 failures or unexpected engine messages; source-bound town proofs, all 2,562
 approved art assets and imports also pass from main. Completion evidence is
 in docs/qa/walkway-transitions/merge-verification.json.
+
+Post-milestone wardrobe and loadout follow-up — 2026-10-16
+
+G / Pause > Wardrobe now changes clothing and gear in the actual game. Clothes
+provides local try-on, Equip / Remove and three saved outfits. Hands changes
+weapons/tools and the existing eight-slot hotbar. All eight heroes have painted
+clothing fits, including ghost hems, fairy wings and hobbit toes. Existing
+inventory assignment also handles other hotbar items. Save / Continue persists
+the real owners; older saves adopt clothing safely.
+
+The feature adds 252 production rasters while preserving the exact bytes of
+all 2,563 previously approved assets. New prompts and fitting notes are in
+docs/art/wardrobe/. Final feature evidence is in docs/qa/loadout/acceptance.json:
+1,864 broad regression checks, four-race headless/native character checks,
+final native focus/panel/button checks, unchanged performance limits, refreshed
+source-bound extension/mutant proofs and all 36 wave-5b gate rows. Final source
+is 27b66d7; the merged-checkout result is recorded in merge-verification.json.
+The older wardrobe-animation deferral above is historical milestone scope.

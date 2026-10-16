@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "fairy",
+  "checks": 12,
+  "elapsed_s": 12.05,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "wardrobe_render": {
+      "character": "fairy",
+      "checks": 12,
+      "failed": 0,
+      "ms": 8155,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

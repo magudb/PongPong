@@ -1,0 +1,30 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 46,
+  "elapsed_s": 13.21,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "ui_conformance": {
+      "character": "animal",
+      "checks": 4,
+      "failed": 0,
+      "ms": 6076,
+      "skipped": 0
+    },
+    "wardrobe_ui": {
+      "character": "animal",
+      "checks": 42,
+      "failed": 0,
+      "ms": 2757,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

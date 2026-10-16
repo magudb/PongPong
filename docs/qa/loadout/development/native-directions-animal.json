@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 12,
+  "elapsed_s": 16.0,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "wardrobe_render": {
+      "character": "animal",
+      "checks": 12,
+      "failed": 0,
+      "ms": 12093,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

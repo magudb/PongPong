@@ -1,12 +1,12 @@
 {
   "status": "requires explicit visual review; scan is not an aesthetic approval",
-  "files": 5234,
-  "raster_files": 2547,
+  "files": 5739,
+  "raster_files": 2799,
   "vectors": 7,
   "fonts": 8,
   "raster_changes": {
     "unchanged": 1952,
-    "new": 284,
+    "new": 536,
     "changed": 311
   },
   "roles": {
@@ -40,7 +40,10 @@
     "character-sheet-or-portrait": 560,
     "runtime-shadow-mask": 1,
     "character-selection-thumbnail": 12,
-    "title-illustration": 1
+    "title-illustration": 1,
+    "painted-wardrobe-safe-body": 4,
+    "fitted-painted-clothing": 240,
+    "technical-clothing-occlusion-mask": 8
   },
   "problems": [],
   "review_pages": [
@@ -51,6 +54,14 @@
     "docs/art/style-audit/current/festival-view-01.webp",
     "docs/art/style-audit/current/festival-view-02.webp",
     "docs/art/style-audit/current/fitted-held-equipment-01.webp",
+    "docs/art/style-audit/current/fitted-painted-clothing-01.webp",
+    "docs/art/style-audit/current/fitted-painted-clothing-02.webp",
+    "docs/art/style-audit/current/fitted-painted-clothing-03.webp",
+    "docs/art/style-audit/current/fitted-painted-clothing-04.webp",
+    "docs/art/style-audit/current/fitted-painted-clothing-05.webp",
+    "docs/art/style-audit/current/fitted-painted-clothing-06.webp",
+    "docs/art/style-audit/current/fitted-painted-clothing-07.webp",
+    "docs/art/style-audit/current/fitted-painted-clothing-08.webp",
     "docs/art/style-audit/current/home-upgrade-or-construction-01.webp",
     "docs/art/style-audit/current/painted-fixture-backdrop-01.webp",
     "docs/art/style-audit/current/painted-fixture-city-01.webp",
@@ -64,10 +75,12 @@
     "docs/art/style-audit/current/painted-fixture-props-05.webp",
     "docs/art/style-audit/current/painted-fixture-terrain-01.webp",
     "docs/art/style-audit/current/painted-profession-emblem-01.webp",
+    "docs/art/style-audit/current/painted-wardrobe-safe-body-01.webp",
     "docs/art/style-audit/current/specialist-shop-view-01.webp",
     "docs/art/style-audit/current/specialist-shop-view-02.webp",
     "docs/art/style-audit/current/specialist-shop-view-03.webp",
     "docs/art/style-audit/current/specialist-shop-view-04.webp",
+    "docs/art/style-audit/current/technical-clothing-occlusion-mask-01.webp",
     "docs/art/style-audit/current/technical-painted-light-mask-01.webp",
     "docs/art/style-audit/current/technical-historical-light-kernel-01.webp"
   ],

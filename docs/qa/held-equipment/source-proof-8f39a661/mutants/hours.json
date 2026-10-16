@@ -1,0 +1,26 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 7,
+  "elapsed_s": 3.09,
+  "engine": [],
+  "failed": 2,
+  "failures": [
+    "town_mutants.l05_closed_before_open",
+    "town_mutants.l05_closed_door_does_not_travel"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "town_mutants": {
+      "character": "animal",
+      "checks": 7,
+      "failed": 2,
+      "ms": 1933,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

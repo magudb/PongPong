@@ -1,0 +1,11 @@
+Authoring evidence, superseded by the final reports in the parent folder.
+Initial captures expose the window overflow, palette drift and clothing fit issues
+corrected during review. The initial regression records the stale Secret Garden
+marker count and two actual wardrobe focus-wrap defects; regression-fixes.json
+contains their passing rerun. Native catalog pages in native-<race>/ are current.
+
+The first combined budget/UI report passed all 28 performance checks but caught
+a clipped wardrobe focus ring. Padded scroll cells fix the actual screen. The
+final native-ui-final report and new native-budgets report are the acceptance.
+Earlier direction reports precede the safe-body hand socket correction; the
+final all-race native reports include corrected hand masks and wrist positions.

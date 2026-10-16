@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "ghost",
+  "checks": 12,
+  "elapsed_s": 11.51,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "wardrobe_render": {
+      "character": "ghost",
+      "checks": 12,
+      "failed": 0,
+      "ms": 7683,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}
