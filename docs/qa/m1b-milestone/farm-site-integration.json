@@ -1,0 +1,46 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 435,
+  "elapsed_s": 53.99,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "city_levels": {
+      "checks": 69,
+      "failed": 0,
+      "ms": 34305,
+      "skipped": 0
+    },
+    "farm": {
+      "checks": 210,
+      "failed": 0,
+      "ms": 131,
+      "skipped": 0
+    },
+    "farm_site": {
+      "checks": 56,
+      "failed": 0,
+      "ms": 2300,
+      "skipped": 0
+    },
+    "maps_farm": {
+      "checks": 63,
+      "failed": 0,
+      "ms": 13788,
+      "skipped": 0
+    },
+    "player": {
+      "checks": 37,
+      "failed": 0,
+      "ms": 283,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

@@ -79,7 +79,9 @@ func can_till(cell: Vector2i) -> bool:
 	var world := _world()
 	var area: Variant = world.get("area") if world != null else null
 	if area is IsoArea and area.map.id == map.id:
-		return str(Svc.static_call("res://scripts/farm/steading/objects/farm_reserve.gd", &"blocked", [area, cell], "")) == ""
+		# Farm plots and purchased expansion cells are reserved against buildings,
+		# while this model's _cells already enforces which fields can be tilled.
+		return str(Svc.static_call("res://scripts/farm/steading/objects/farm_reserve.gd", &"blocked", [area, cell], "")) in ["", "field", "zone"]
 	return true
 
 func unlock_cells(zone_id: String) -> int:
@@ -88,6 +90,7 @@ func unlock_cells(zone_id: String) -> int:
 	_unlocked[zone_id] = true
 	for cell in _zones[zone_id]:
 		_cells[cell] = true
+	for cell in _zones[zone_id]:
 		plot_changed.emit(cell)
 	EventBus.plot_unlocked.emit(StringName("zone:" + zone_id))
 	return _zones[zone_id].size()

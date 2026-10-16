@@ -184,3 +184,9 @@ checks. See docs/qa/m1b-milestone/P14.txt. Continue never replays the opening.
 All 2534 approved assets/theme files remain unchanged. The world owns animation
 warming; no abandoned NPC preload tasks remain. Live director placements,
 services, social screens and the full first morning still need integration.
+
+N02 farm objects — 2026-10-16
+
+Shipping, storage requests, the 42-cell expansion, reserves, stage flags and
+painted scenery pass the four-race and native gates. See N02.txt. Town services,
+live schedules, social screens and the first morning remain in progress.

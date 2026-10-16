@@ -985,8 +985,17 @@ func _bands_and_budgets(t) -> void:
 	t.check("interactives_clear_of_hud_and_canopy_bands", bad.is_empty(), "every interactive marker keeps >= 140 / 70 / 90 / 90 screen px (zoom 0.4) from the top (canopy frame band) / bottom / left / right camera limit; the nearest to the top is %.0f px; violations %s" % [closest, bad])
 	var markers_lights: int = _n("light")
 	var posts: int = _count_props("lantern_post")
-	var lights: int = _count_nodes(a, "PointLight2D")
-	t.check("light_budget", posts + markers_lights == 11 and lights <= 12 and lights >= posts + markers_lights, "%d lantern_post props + %d `light` markers = %d PointLights from the map (cap 12): counted %d in the live area (a handler package that adds lights must stay under the cap)" % [posts, markers_lights, posts + markers_lights, lights])
+	var all_lights: Array[Node] = a.find_children("*", "PointLight2D", true, false)
+	var scenery: Array = all_lights.filter(func(light):
+		var parent: Node = light.get_parent()
+		while parent != null and parent != a:
+			if parent.is_in_group("player"):
+				return false
+			parent = parent.get_parent()
+		return true)
+	var lights := scenery.size()
+	t.check("light_budget", posts + markers_lights == 11 and lights <= 12 and lights >= posts + markers_lights, "%d lantern posts + %d light markers; %d scenery lights (cap 12). Player lantern/ghost/burst effects have the aggregate canvas gate." % [posts, markers_lights, lights])
+	t.check("canvas_light_budget_with_player", all_lights.size() <= 16, "%d total allocated lights including the player's three effects (canvas cap 16)" % all_lights.size())
 	# ---- the footprints of the building slots, the greenhouse slot and the expansion zone hold no object char
 	var slot_bad: Array = []
 	for rec2 in _of("building_slot"):

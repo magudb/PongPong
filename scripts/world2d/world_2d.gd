@@ -189,6 +189,7 @@ func _ready() -> void:
 			add_child(game_ui)
 	_build_vignette()
 	_build_fade()
+	Svc.static_call("res://scripts/farm/steading/objects/farm_stage.gd", &"attach", [self])
 	EventBus.area_change_requested.connect(_on_area_change_requested)
 	EventBus.game_event.connect(_on_game_event)
 	EventBus.player_defeated.connect(_on_player_defeated)

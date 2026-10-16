@@ -1,0 +1,21 @@
+keys,da,en
+FARMSITE_STAGE_1,Spiren,The Sprout
+FARMSITE_STAGE_2,Kvisten,The Twig
+FARMSITE_STAGE_3,Grenen,The Branch
+FARMSITE_STAGE_4,Kronen,The Crown
+FARMSITE_STAGE_5,Slottet,The Castle
+FARMSITE_ZONE_EAST,østmarken,the east field
+FARMSITE_EXPAND_PROMPT,Køb %s,Buy %s
+FARMSITE_EXPAND_CONFIRM,Køb %s for %d guldagern? Der bliver %d nye felter.,Buy %s for %d guldagern? You get %d new plots.
+FARMSITE_EXPAND_DONE,Du ejer nu %s! %d nye felter venter på hakken.,You now own %s! %d new plots are waiting for the hoe.
+FARMSITE_EXPAND_NEEDGOLD,Du mangler %d guldagern til %s.,You are %d guldagern short of %s.
+FARMSITE_BIN_PROMPT,Læg i salgskassen,Put in the shipping bin
+FARMSITE_BIN_PUT,Lagt i kassen: %d stk.,Put in the bin: %d pcs.
+FARMSITE_BIN_EMPTY,Du har ikke noget at lægge i kassen.,You have nothing to put in the bin.
+FARMSITE_BIN_REFUSE,Det kan ikke sælges i salgskassen.,That cannot go in the shipping bin.
+FARMSITE_BIN_MORNING_TITLE,Salgskassen,The shipping bin
+FARMSITE_BIN_MORNING,I går solgte du for %d guldagern.,Yesterday you sold %d guldagern worth.
+FARMSITE_SHED_PROMPT,Åbn redskabsskuret,Open the tool shed
+FARMSITE_SHED_WHISPER,"Her ligger det hele, du ikke orker at bære rundt på.",Everything you do not feel like carrying around is kept in here.
+FARMSITE_STAGE_UP_TITLE,Gården er vokset,The farm has grown
+FARMSITE_STAGE_UP,Trækronsgården er nu %s.,The Treetop Farm is now %s.

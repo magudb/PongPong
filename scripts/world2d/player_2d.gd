@@ -288,7 +288,7 @@ func use_selected() -> bool:
 			match str(def.get("tool_type", "")):
 				"hoe":
 					if _at_farm():
-						if str(Svc.static_call("res://scripts/farm/steading/objects/farm_reserve.gd", &"blocked", [area, cell], "")) != "":
+						if str(Svc.static_call("res://scripts/farm/steading/objects/farm_reserve.gd", &"blocked", [area, cell], "")) not in ["", "field", "zone"]:
 							EventBus.whisper_requested.emit("FARM_CELL_RESERVED")
 						else:
 							ok = farm.till(cell)

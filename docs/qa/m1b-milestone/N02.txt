@@ -1,0 +1,35 @@
+N02 farm objects — 2026-10-16
+
+Shipping stores the entire selected crop/product/forage stack in saved world area
+flags, commits inventory and bin state before observers, and pays once the next
+morning even while the farm is parked. Its price cannot exceed the seed shop.
+The shed publishes the existing home-chest request and explains itself once.
+
+The 800-gold east expansion owns 42 cells. Cancel and insufficient funds leave
+money, flags, ropes and terrain unchanged. Purchase commits all 42 cells, the
+wallet and the saved zone before any plot observer. Replay keeps tilled and
+rain-watered soil. The painted boundary uses two instanced draws, and the sign,
+collider and ropes disappear together. Native GPU transforms prove the actual
+22 stake positions; Dummy rendering does not expose these transforms.
+
+The tier-ten 9x6 home footprint, building slots, fields, zones, bridges, spawns
+and warps are reserved. Purchased fields remain tillable. Five stage flags cover
+all ten home tiers and only rising stages during play produce a toast.
+
+Three painted under-deck holders, the night-tinted canopy and at most sixteen
+painted leaf particles are owned by the farm. Zero-particle config and excessive
+caps are tested; disposal frees both canopy and particles. Existing approved
+Dust2D supplies the purchase puff. No new bitmap or approved asset was changed.
+
+Evidence: farm-site-integration.json — 435 checks in five sections, zero failures,
+skips, engine errors or warnings. farm-site-{tests,fairy,hobbit,ghost}.json —
+56 checks each, clean. farm-site-native.json — five native checks and six
+inspected 1280x720 captures. The farm map validator remains green.
+
+All handler-owned nodes, including prop strips, ground contacts and colliders,
+count 36 (<40); ambient updates measured 0.000233 ms (<0.3 ms). No scenery lights
+are added. The map gate keeps the 12-scenery-light limit and independently caps
+all allocated lights at 16, including the player's three light children. The
+previous aggregate check incorrectly charged those player lights to scenery.
+
+The full usable-towns milestone is still in progress; this is a package checkpoint.

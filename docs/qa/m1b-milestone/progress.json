@@ -121,7 +121,8 @@
         },
         {
           "id": "N02-farm-objects",
-          "status": "pending"
+          "status": "validated",
+          "evidence": "farm-site-integration.json: 435 checks, no failures/skips/engine messages; four race runs: 56 checks each; farm-site-native.json: 5 checks, inspected captures. 36 added nodes, zero added scenery lights. See N02.txt."
         },
         {
           "id": "V6-city-life",
