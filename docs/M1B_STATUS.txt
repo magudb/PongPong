@@ -225,3 +225,14 @@ The 80-check normal-speed farm/town/shop/gift/day-loop checkpoint passes in
 and completes the named hotbar input contract. I2 budgets/extension/native
 gates and the ghost-family integration remain before milestone acceptance.
 See docs/qa/m1b-milestone/I2-working.txt. No merge yet.
+
+G5c painted ghost family — 2026-10-16
+
+Dyne, Gnist, Silke and Blund now use new painted sprites/portraits, real routines,
+guesthouse/lantern shop, social facts, gifts and kin dialogue. Four-race data
+suites pass 335 checks each; integration 1687; final art 70; updated safe-placement
+and player regression 627; native 12. All eight final captures were inspected.
+The 2534 prior approved visual/theme assets remain byte-identical; 28 new assets
+were explicitly reviewed. Exact built-in image prompts and sources are saved.
+Copy remains draft, no audio was generated, and M3 family scenes remain deferred.
+See GF-data.txt. I2 and final milestone gates still need completion before merge.

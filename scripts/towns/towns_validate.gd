@@ -259,6 +259,10 @@ static func visits_inside_hours() -> Array[String]:
 						continue
 					var post: String = place.get_slice(".", 1)
 					var b2: Dictionary = reg[by_interior[area]]
+					# A household above a shop can eat and sleep at home while
+					# its public counter is closed. Visiting customers still obey hours.
+					if str(def.get("home", "")) == str(by_interior[area]):
+						continue
 					if post in ["counter", "work", "tub", "throne", "bed", "perch", "mayor_desk"] or str(b2.get("keeper", "")) == npc:
 						continue
 					# the plan applies on some weekdays: find them through the select rules

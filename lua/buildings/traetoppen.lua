@@ -50,10 +50,6 @@ buildings = {
     hours = { open = 10, close = 21, closed = {} },
     wave = "core",
   },
-  gaestehytten = {
-    area = "traetoppen", kind = "decor", name_key = "BLD_GAESTEHYTTEN",
-    wave = "core",
-  },
   koekkenhave_skuret = {
     area = "traetoppen", kind = "home", name_key = "BLD_KOEKKENHAVE_SKURET",
     owner = "bertil",

@@ -111,8 +111,8 @@
       "packages": [
         {
           "id": "P14-npc-dialogue",
-          "status": "runtime_validated_remaining_package_hooks_pending",
-          "evidence": "npc-integration.json: 2978 checks in 16 sections, 0 failures, 85 named window/later-package skips, 13 intentional diagnostics. npc-native.json: 47 checks, no failures/skips/engine messages. See P14.txt for historical-guide comparison and remaining T-director/V6/S-ui/N04/ghost hooks."
+          "status": "validated",
+          "evidence": "npc-integration.json: 2978 checks in 16 sections, 0 failures, 85 named window/later-package skips, 13 intentional diagnostics. npc-native.json: 47 checks, no failures/skips/engine messages. See P14.txt for historical-guide comparison and remaining T-director/V6/S-ui/N04/ghost hooks. Remaining hooks now exercised through V6/T-director/S-ui/N04 and G-ghost-lines/GF-data. Ghost reactions: 232 normal checks; family/native: 12 checks in 8 inspected captures. See GF-data.txt."
         },
         {
           "id": "T-interiors-core",
@@ -168,7 +168,6 @@
     "Both towns populated by live citizens with schedules and walk-in shop interactions",
     "Dialogue quest acceptance and turn-in, gifts/hearts, people/calendar screens",
     "First morning and farm-town-shop-farm loop acceptance",
-    "Ghost family data and painted NPC art integrated at G5c",
     "Final strict suites for all four heroes; required native art/UI/performance gates"
   ],
   "notes": [
@@ -180,9 +179,9 @@
     "The old 21-character / 241px name estimate contradicts approved names measured at up to 267.25px. The name budget is 26 characters / 272px; preserve canonical names and give the P14 runtime plate that width plus padding.",
     "Route bake uses the real level polygons/holes/keepouts and all 14 installed room colliders. routes.json records 44 input hashes, authored/resolved city coordinates and approach shifts. Seventeen city anchors shift more than 64 ground px; inspect live placement and door approach at T-director before accepting the milestone. Never silently restore the old circle approximation.",
     "The real routes require Pip courier speed_mult=1.6 to cover the 07:10 farm mailbox and 09:00 counter. Hoppe leaves 15 minutes earlier for the farm and keeps a 6 minute return margin; Rosa keeps a 6 minute errand margin. Normal/festival compiler travel shares the same pace.",
-    "P06 production player/farm installed with cached shared body/camera/query, isolated combat, eight-slot hotbar and all eight painted crops. Harvest/plant/consumables commit before observers; failed full-bag harvest preserves crop and rolled yield. Moon eligibility preserves the actual raw watering hour. Native lantern cap tested with exactly fourteen other lights; the fixture mushroom lamp is disabled only in that controlled probe. Idle controller measured 57\u201359 microseconds per tick.",
+    "P06 production player/farm installed with cached shared body/camera/query, isolated combat, eight-slot hotbar and all eight painted crops. Harvest/plant/consumables commit before observers; failed full-bag harvest preserves crop and rolled yield. Moon eligibility preserves the actual raw watering hour. Native lantern cap tested with exactly fourteen other lights; the fixture mushroom lamp is disabled only in that controlled probe. Idle controller measured 57–59 microseconds per tick.",
     "P16 ships four race cards and two heroes each, both real keyboard and pad flows, shared settings proven in a second process, six manual saves plus read-only auto, safe confirmations and a twelve-row pause layout. UI audit restores nested radio context per page, checks real pad edges per page and preserves caller modal state. Historical menu negatives use archived scenes; production menus are live. Native baselines were inspected with the unchanged approved painted title/character art. New copy remains draft; the Halvling override uses zz_final.csv without changing the frozen ui.csv.",
-    "P17 ships the chosen Milj\u00f8er v2 date, coin/horizontal-energy chip, five-heart row and eight slots. All player/quest values are event-driven; clicking a slot uses the production action guard. FIFO farm toasts keep four visible and eight queued; social heart feedback is coalesced with its conversation result. The area title appears on real travel, never initial load, and hides behind modals. The native outline is calibrated to the mock's visible stroke. Hotbar chrome comparisons mask the four superseded placeholder icon interiors in both inputs; full captures and every reviewed painted asset remain intact. The 61.222 difference to the superseded whole-farm CSS mock remains explicit in hud-legacy-comparison.json. The frozen shared theme is unchanged.",
+    "P17 ships the chosen Miljøer v2 date, coin/horizontal-energy chip, five-heart row and eight slots. All player/quest values are event-driven; clicking a slot uses the production action guard. FIFO farm toasts keep four visible and eight queued; social heart feedback is coalesced with its conversation result. The area title appears on real travel, never initial load, and hides behind modals. The native outline is calibrated to the mock's visible stroke. Hotbar chrome comparisons mask the four superseded placeholder icon interiors in both inputs; full captures and every reviewed painted asset remain intact. The 61.222 difference to the superseded whole-farm CSS mock remains explicit in hud-legacy-comparison.json. The frozen shared theme is unchanged.",
     "P18 ships real Lua shop catalogs and 24-slot backpack/workshop screens. All prices, ownership, hours, recipe locks and transactions use their owning services. Eight-slot keyboard/pad assignment follows the chosen HUD. A native pixel test found and fixed clipped bag focus rings. The unchanged 2534 reviewed assets pass. Arsenal/gem cards remain named later-dungeon skips, and the wear-now prompt activates only when production WardrobeManager exists. See P18.txt for comparison methodology and integration evidence.",
     "P14 installs actual painted NPCs, reentrant dialogue sessions and a data-driven journal, with exact-once disposal, four-race/raw-hour context and Continue skipping old opening flags. Threaded animation requests are owned by the world warming flow. The dialogue and journal native baselines were inspected; source comparison details and remaining package hooks are explicit in P14.txt. This is an integration checkpoint, not final usable-towns acceptance.",
     "V6/T-director installs real world-owned services, current routes and live room keepers, safe raw-hour curfew, capped populations and readable painted crowds. Counter underfoot selection restores DT53 with unchanged shapes; independent ground-space replay and original mutants pass. Native shop-art gates pass without modifying approved illustrations. See V6-T-director.txt.",
@@ -190,7 +189,20 @@
   ],
   "scope_basis": "The four-stage 27-package M1b plan in the original durable LEAD_NOTES.md (2026-10-15); package amendments remain binding. This is the usable-towns milestone, before the later dungeon and feature milestones.",
   "followup_layers": [
-    "Ghost perks integrated with the production player",
-    "Painted ghost family/data G5c layer after the base towns gate"
+    {
+      "id": "Ghost perks",
+      "status": "validated",
+      "evidence": "Production player and four-race gates."
+    },
+    {
+      "id": "G-ghost-lines",
+      "status": "validated",
+      "evidence": "ghost-lines-integration.json: 232 clean checks; 3 native checks in ghost-family-native.json."
+    },
+    {
+      "id": "GF-art/GF-data G5c",
+      "status": "validated",
+      "evidence": "Four-race family suites: 335 checks each; integration 1687; final refined art 70; latest placement/player 627; native 12; style snapshot 2562 assets. See GF-data.txt. M3 family gameplay remains separate."
+    }
   ]
 }

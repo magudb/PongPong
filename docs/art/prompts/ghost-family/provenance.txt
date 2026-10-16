@@ -1,0 +1,29 @@
+Natlys family art — built-in imagegen, 2026-10-16
+
+Style reference: tools/art/drawn/sources/heroes.png (approved painted roster).
+Proportions reference: design6/FINAL/family/art/shape_reference/shape_reference_turnarounds.png
+in the read-only Claude handoff. Existing painted heroes are preserved.
+
+Prompts: turnarounds.txt and rear-views.txt in this directory, exactly as sent.
+Selected source files: tools/art/ghost_family/sources/family_turnarounds.png
+and family_rears.png. Both retain generated transparency. No body/colour edits
+were made by Python; pack_family.py only extracts/fits/packs the painted figures
+and bakes continuous animation through the existing packer plus the ghost glide.
+
+Built-in output IDs:
+01a13e40-7172-7a51-af57-985dc2ac95fc/exec-dda2b3cc-b56b-4249-a0d2-7945ffe0de31.png
+01a13e40-7172-7a51-af57-985dc2ac95fc/exec-e5e0c575-9230-4357-837f-41a63b02d4c5.png
+
+Source artwork visually inspected. Packed measure_family --painted --check:
+0 problems; adults165/184/160px, child116px; all six ghosts (including retained
+heroes) share the outline/pivot gates and every family/hero pair passes shape
+distinctness in all eight directions. Final native inspection and approval pin
+are still pending. These assets are not yet added to the approved style manifest.
+
+Silke refinement — built-in imagegen
+Prompt: silke-refinement.txt. Source: silke_refined.png (five views in one row).
+Output: 01a13e40-7172-7a51-af57-985dc2ac95fc/exec-ef85527e-dd47-47e2-9679-2b7855fe7383.png
+The first Silke front was .765 width/height against the authored .62 ±12%.
+The refined front is .671 and passes; the other figures are .963/.664/.866
+against 1.04/.68/.90. check_sources.py rejects the former wide Silke as a
+negative control. Packing uses all five refined views for Silke's final sheets.

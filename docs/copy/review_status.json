@@ -285,5 +285,12 @@
     "date": "",
     "voice_frozen": false,
     "rows": 9
+  },
+  "localization/ghostfamily.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 168
   }
 }

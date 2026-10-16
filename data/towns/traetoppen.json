@@ -79,6 +79,12 @@
    "sx": 993.0,
    "sy": 480.0,
    "level": 4
+  },
+  {
+   "building": "gaestehytten",
+   "sx": 693.8,
+   "sy": 1043.7,
+   "level": 6
   }
  ],
  "posts": [
@@ -369,6 +375,14 @@
    "sy": 906,
    "act": "lamp",
    "cap": 1
+  },
+  {
+   "name": "f_porch",
+   "level": 6,
+   "sx": 690,
+   "sy": 1068,
+   "act": "stand",
+   "cap": 2
   }
  ],
  "gates": [

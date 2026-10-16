@@ -1,0 +1,76 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 1687,
+  "elapsed_s": 78.6,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "art_characters": {
+      "checks": 27,
+      "failed": 0,
+      "ms": 8726,
+      "skipped": 0
+    },
+    "art_ghostfam": {
+      "checks": 42,
+      "failed": 0,
+      "ms": 1415,
+      "skipped": 0
+    },
+    "cast_data": {
+      "checks": 16,
+      "failed": 0,
+      "ms": 1206,
+      "skipped": 0
+    },
+    "data": {
+      "checks": 408,
+      "failed": 0,
+      "ms": 5231,
+      "skipped": 0
+    },
+    "ghostfam_data": {
+      "checks": 293,
+      "failed": 0,
+      "ms": 3659,
+      "skipped": 0
+    },
+    "social_data": {
+      "checks": 130,
+      "failed": 0,
+      "ms": 992,
+      "skipped": 0
+    },
+    "towns_director": {
+      "checks": 297,
+      "failed": 0,
+      "ms": 41297,
+      "skipped": 0
+    },
+    "towns_interiors_core": {
+      "checks": 137,
+      "failed": 0,
+      "ms": 3395,
+      "skipped": 0
+    },
+    "towns_routes": {
+      "checks": 101,
+      "failed": 0,
+      "ms": 2304,
+      "skipped": 0
+    },
+    "towns_routines": {
+      "checks": 236,
+      "failed": 0,
+      "ms": 6755,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

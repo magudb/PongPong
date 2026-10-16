@@ -101,3 +101,40 @@ func _letter(t) -> void:
 	t.check("intro_line_after_the_letter", seen == ["DLG_KING_LETTER", "DLG_GHOST_KING_INTRO"] and endings.size() == 1 and bool(gm.get_flag(&"intro_letter_seen", false)), str(seen))
 	await preload("res://scripts/world2d/intro_sequence.gd").letter(t.world())
 	t.check("intro_reaction_once", not screen.is_open())
+
+func run_windowed(t) -> void:
+	await t.start_world("ghost")
+	var gm: Node = t.autoload("GameManager")
+	gm.set_config_override("time.minutes_per_real_second", 0.0)
+	gm.hour = 10
+	await t.world().travel(&"traetoppen", &"default")
+	var guard: Node = NpcDirector.node_of("guard_oak")
+	t.check("native_guard_present", guard != null)
+	if guard != null:
+		t.player().global_position = guard.global_position + Vector2(70, 65)
+		t.player().camera.reset_smoothing()
+		var screen := TownProbe.dialogue(t)
+		screen.chars_per_second = 100000
+		guard.interact(t.player())
+		await t.frames(12)
+		await t.capture("ghost_guard_greeting")
+		t.check("native_ghost_line_visible", screen.is_open() and screen._lines[0].text_key == "DLG_GHOST_GUARD")
+		t.tap_key(KEY_ESCAPE)
+		await t.frames(3)
+	gm.clear_flag(&"intro_letter_seen")
+	preload("res://scripts/world2d/intro_sequence.gd").letter(t.world())
+	var screen := TownProbe.dialogue(t)
+	for i in 30:
+		if screen.is_open() and screen._lines[0].text_key == "DLG_GHOST_KING_INTRO":
+			break
+		t.tap(&"interact")
+		await t.frames(2)
+	await t.frames(8)
+	await t.capture("ghost_king_after_letter")
+	t.check("native_king_reaction_after_letter", screen.is_open() and screen._lines[0].text_key == "DLG_GHOST_KING_INTRO")
+	for i in 10:
+		if not screen.is_open():
+			break
+		t.tap(&"interact")
+		await t.frames(2)
+	gm.clear_config_overrides()

@@ -946,6 +946,74 @@
       "missing_sheets": []
     },
     {
+      "id": "ghostfam_blund",
+      "clips": 6,
+      "illustration": {
+        "source": "tools/art/ghost_family/sources/family_turnarounds.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ],
+        "opposite_views": "mirrored",
+        "north_source": "tools/art/ghost_family/sources/family_rears.png"
+      },
+      "missing_sheets": []
+    },
+    {
+      "id": "ghostfam_dyne",
+      "clips": 6,
+      "illustration": {
+        "source": "tools/art/ghost_family/sources/family_turnarounds.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ],
+        "opposite_views": "mirrored",
+        "north_source": "tools/art/ghost_family/sources/family_rears.png"
+      },
+      "missing_sheets": []
+    },
+    {
+      "id": "ghostfam_gnist",
+      "clips": 6,
+      "illustration": {
+        "source": "tools/art/ghost_family/sources/family_turnarounds.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ],
+        "opposite_views": "mirrored",
+        "north_source": "tools/art/ghost_family/sources/family_rears.png"
+      },
+      "missing_sheets": []
+    },
+    {
+      "id": "ghostfam_silke",
+      "clips": 6,
+      "illustration": {
+        "source": "tools/art/ghost_family/sources/silke_refined.png",
+        "views": [
+          "front",
+          "front_left",
+          "left",
+          "rear_left",
+          "back"
+        ],
+        "opposite_views": "mirrored",
+        "north_source": "tools/art/ghost_family/sources/silke_refined.png"
+      },
+      "missing_sheets": []
+    },
+    {
       "clips": 11,
       "id": "hedgehog",
       "illustration": {

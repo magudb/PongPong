@@ -100,6 +100,10 @@ config = {
       clerk_fjerpen = { archetype = "watcher", love = { "milk", "ftype:shelf", "wisdom_feather" }, like = { "bookshelf_pine", "category:forage" }, dislike = { "category:crop" }, hate = { "egg" } },
       fiddler_strimmel = { archetype = "wanderer", love = { "apple", "ftype:instrument", "honey" }, like = { "category:forage", "slot:hat" }, dislike = { "category:weapon" }, hate = { "iron_ore" } },
       penguin_postman = { archetype = "wanderer", love = { "shoes_wellies_blue", "cookie", "milk" }, like = { "slot:shoes", "apple" }, dislike = { "ftype:hearth" }, hate = { "iron_sword" } },
-    },
+          ghostfam_dyne = { archetype = "elder", love = { "wool", "fabric_wool", "honey_cake", "shirt_knit_cream" }, like = { "honey", "milk", "ftype:rug", "curtain_natural", "lantern_oil", "slot:hat" }, dislike = { "category:crop" } },
+      ghostfam_gnist = { archetype = "shopkeeper", love = { "glow_mushroom", "night_bloom", "glow_berry", "floor_lamp_birch" }, like = { "lantern_oil", "ftype:lamp", "moss", "category:forage" }, dislike = { "sunflower" } },
+      ghostfam_silke = { archetype = "watcher", love = { "lantern_oil", "glow_mushroom", "honey", "moonflower" }, like = { "slot:shoes", "apple", "ftype:lamp", "rope" }, dislike = { "sunflower" } },
+      ghostfam_blund = { archetype = "child", love = { "cookie", "glow_mushroom", "honey_cake", "bracelet_string" }, like = { "wild_flower", "apple", "slot:hat", "night_bloom" }, dislike = { "health_tonic" } },
+},
   },
 }

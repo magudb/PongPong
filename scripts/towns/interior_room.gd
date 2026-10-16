@@ -165,7 +165,9 @@ static func build(area: IsoArea, header: Dictionary) -> void:
 		l.texture = Glow.light_texture()
 		l.texture_scale = 280.0 / 128.0
 		l.color = Color("ffd98a")
-		l.energy = 0.6
+		# Two additive key lights overlap the counter. The old 0.6 clipped
+		# pastel faces and paper grain to white even in daylight.
+		l.energy = 0.12
 		l.position = p
 		area.objects.add_child(l)
 		var halo := Sprite2D.new()
@@ -539,4 +541,4 @@ class PieceLightClock extends Node:
 		for accent in accents:
 			accent.modulate.a = factor
 		for light in lights:
-			light.energy = factor * 0.35
+			light.energy = factor * 0.08

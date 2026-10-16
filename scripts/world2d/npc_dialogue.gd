@@ -26,6 +26,21 @@ static func context(npc: String, player: Node = null) -> Dictionary:
 	# Service actions and V7 compare the monotonic clock, not the season day.
 	ctx["total_day"] = GameManager.total_day()
 	ctx["hour"] = GameManager.hour
+	# The current counter's opening rules also drive its keeper's dialogue.
+	# A data-only keeper/building addition automatically receives this context.
+	var counter_building := ""
+	for id in Hours.registry():
+		var building := Hours.building(str(id))
+		if str(building.get("keeper", "")) != npc or not building.has("hours"):
+			continue
+		if counter_building == "" or (world != null and world.area != null and str(building.get("interior", "")) == str(world.area.map.id)):
+			counter_building = str(id)
+	if counter_building != "":
+		var state := Hours.state(counter_building)
+		var window := Hours.hours_on(Hours.building(counter_building), int(ctx.weekday))
+		ctx["shop_opens_at"] = float(window[0])
+		ctx["shop_closes_at"] = float(window[1])
+		ctx["shop_closed_reason"] = str(state.reason)
 	return ctx
 
 static func build(npc: String, module: String, ctx: Dictionary, guest := false) -> Dictionary:

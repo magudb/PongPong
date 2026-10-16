@@ -1,0 +1,40 @@
+G5c GF-art / GF-data — validated 2026-10-16
+
+Four painted family looks, six clips / 28 frames in eight directions, all at
+256² / pivot128,200 / display1. Three generated sources and the exact built-in
+imagegen prompts are saved in docs/art/prompts/ghost-family/; packing uses the
+existing drawn atlas pipeline. Silke's refined source passes the authored ±12%
+width/height target. No existing hero or approved illustration was overwritten.
+
+All four family NPCs have authored social facts, birthdays, tastes, topics, Lua
+kin dialogue, raw26-hour schedules and optional null-safe M3 hooks. Gæstehytten
+has seven-by-five-cell painted geometry, two beds, a four-person table and a
+shop/talk counter; Gnist's hours come from the building registry (17..25, closed
+Wednesday). Real-nav timings cover Silke's late vigil with the 40% slowdown.
+Night, rain, seven weekdays, curfew, all eight hero contexts, repeated kin chats,
+weekly hearts, item gifts, flags and source-copy parity are exercised.
+
+Live captures exposed shared-post overlaps and room additive lighting bleaching
+mint colours. The director now assigns distinct, collision-safe footprint slots;
+interior key/service lighting is softer. A farm target marker is visible only
+on the farm. These changes add no textures or scenery lights. Final safe-player
+capture placement uses walkable body vertices, collision queries and ActorLevel.
+
+Evidence:
+- ghost-family-{animal,fairy,hobbit,ghost}.json: 335 checks each, clean.
+- ghost-family-integration.json: 1687 checks / ten sections, clean.
+- ghost-family-art-final.json: 70 checks after Silke refinement, clean.
+- ghost-family-placement-player.json: 627 checks after final footprint/marker
+  fixes, clean; real director and player regressions.
+- ghost-family-native.json: 12 checks, eight final captures, no skips/messages.
+  All eight images in docs/qa/ghostfam/native were inspected, including dawn,
+  Wednesday fire, lamp vigil, midnight, room, kin chat and both ghost reactions.
+- Four contact pages inspected: every idle direction and each clip's middle
+  frame in all directions. Numeric source/silhouette/palette gates supplement
+  this sampled visual review; this is not a frame-by-frame inspection.
+- Approval snapshot: 2534 prior entries/bytes preserved; 28 explicit new painted
+  dispositions. Total 2562 reviewed visual/theme assets.
+
+168 new da/en copy rows remain draft. Voice index now lists 110 hooks; no audio
+was generated. Detailed seek, glow and festival gameplay remain M3 packages,
+late-bound safely here. I2 and final milestone gates remain in progress.

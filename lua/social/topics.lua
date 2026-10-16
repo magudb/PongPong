@@ -201,5 +201,19 @@ config = {
         answer_key = "SOC_FARMER_ROSA_TOPIC_ANSWER_3",
       },
     },
+    ghostfam_dyne = {
+      { hearts = 2, choice_key = "SOC_GHOSTFAM_DYNE_TOPIC_1", answer_key = "SOC_GHOSTFAM_DYNE_TOPIC_ANSWER_1" },
+      { hearts = 5, choice_key = "SOC_GHOSTFAM_DYNE_TOPIC_2", answer_key = "SOC_GHOSTFAM_DYNE_TOPIC_ANSWER_2" },
+      { hearts = 8, choice_key = "SOC_GHOSTFAM_DYNE_TOPIC_3", answer_key = "SOC_GHOSTFAM_DYNE_TOPIC_ANSWER_3" },
+    },
+    ghostfam_gnist = {
+      { hearts = 2, choice_key = "SOC_GHOSTFAM_GNIST_TOPIC_1", answer_key = "SOC_GHOSTFAM_GNIST_TOPIC_ANSWER_1" },
+    },
+    ghostfam_silke = {
+      { hearts = 2, choice_key = "SOC_GHOSTFAM_SILKE_TOPIC_1", answer_key = "SOC_GHOSTFAM_SILKE_TOPIC_ANSWER_1" },
+    },
+    ghostfam_blund = {
+      { hearts = 2, choice_key = "SOC_GHOSTFAM_BLUND_TOPIC_1", answer_key = "SOC_GHOSTFAM_BLUND_TOPIC_ANSWER_1" },
+    },
   },
 }

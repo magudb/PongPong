@@ -1,0 +1,28 @@
+{
+  "allowed": [],
+  "character": "ghost",
+  "checks": 12,
+  "elapsed_s": 31.58,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "ghost_lines": {
+      "checks": 3,
+      "failed": 0,
+      "ms": 5475,
+      "skipped": 0
+    },
+    "ghostfam_data": {
+      "checks": 9,
+      "failed": 0,
+      "ms": 18333,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

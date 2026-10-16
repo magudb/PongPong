@@ -42,5 +42,9 @@ config = {
     cub_bamse = { tier = "C", archetype = "child", birthday = { season = "sommer", day = 4 }, partner = false },
     clerk_fjerpen = { tier = "C", archetype = "watcher", birthday = { season = "foraar", day = 16 }, partner = false },
     fiddler_strimmel = { tier = "C", archetype = "wanderer", birthday = { season = "vinter", day = 18 }, partner = false },
-  },
+      ghostfam_dyne = { tier = "A", archetype = "elder", birthday = { season = "vinter", day = 10 }, partner = false },
+    ghostfam_gnist = { tier = "B", archetype = "shopkeeper", birthday = { season = "efteraar", day = 4 }, partner = false },
+    ghostfam_silke = { tier = "B", archetype = "watcher", birthday = { season = "sommer", day = 19 }, partner = false },
+    ghostfam_blund = { tier = "B", archetype = "child", birthday = { season = "foraar", day = 23 }, partner = false },
+},
 }

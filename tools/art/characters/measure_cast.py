@@ -42,7 +42,7 @@ import artcontract as ac            # noqa: E402
 PACK_REFERENCE = ['bear', 'cat', 'rabbit', 'fox', 'fairy']
 PEOPLE = ['hobbit_pip', 'hobbit_moss', 'hobbit_bramble', 'squirrel', 'fairy_dusk', 'fairy_stardust', 'fairy_mayor', 'fairy_baker',
           'fairy_shopkeeper', 'fairy_king', 'fairy_wizard', 'fairy_lily', 'fairy_builder', 'fairy_furnisher', 'fairy_tailor',
-          'mouse_pippin', 'cat_morfar_mis', 'bear_guard', 'rabbit_farmer', 'raccoon_smith', 'penguin_postman']
+          'mouse_pippin', 'cat_morfar_mis', 'bear_guard', 'rabbit_farmer', 'raccoon_smith', 'penguin_postman', 'ghostfam_dyne', 'ghostfam_gnist', 'ghostfam_silke']
 # designed target heights in metres (m.height of the builders): animals and creatures are deliberately smaller / bigger than people
 DESIGN_HEIGHT_M = {'chick': 1.05, 'hen': 1.35, 'duck': 1.1, 'kitten': 1.3, 'bunny': 1.45, 'fox_cub': 1.55, 'lamb': 1.35, 'calf': 1.55,
                    'owl': 1.4, 'puppy': 1.25, 'fawn': 1.5, 'ugleoje': 1.75, 'tornebusk': 1.8, 'lysesvamp': 1.2, 'snurresvamp': 2.1}

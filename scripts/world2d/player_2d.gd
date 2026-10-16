@@ -240,7 +240,7 @@ func _update_target(delta: float = 0.0) -> void:
 	_flower_time = maxf(0.0, _flower_time - delta)
 	_marker.global_position = target_global()
 	_marker.valid = _at_farm() and farm.can_till(target_cell())
-	_marker.visible = state == S.FREE and not is_flying and not _is_action_area()
+	_marker.visible = _at_farm() and state == S.FREE and not is_flying
 	if bool(GameData.perk("talks_to_flowers", false)) and _at_farm():
 		var current := area.global_to_cell(global_position)
 		if current != _flower_cell and _flower_time == 0.0:

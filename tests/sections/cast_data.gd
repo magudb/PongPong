@@ -72,8 +72,9 @@ const AGE_FAMILY := {
 
 ## sha256 of the CSV files of OTHER packages, taken when V1 landed (the files V1 must not touch: ui.csv P07, finds.csv DL4 / F1, furniture.csv F1). A legitimate later
 ## edit by the file's owner makes no_foreign_csv_touched fail on purpose: update the hash in the same commit. Overrides of their keys go through P26's zz_final.csv.
+## P14 d4aac01 moved DIALOGUE_CONTINUE_HINT to npc_ui.csv (glyph-aware); adopt that owner edit.
 const FOREIGN_CSV_PINS := {
-	"res://localization/ui.csv": "fa6f57f0ac3d6e6e077a6479a2ac64d027d7ea923edb4ad51a20224031dae6b4",
+	"res://localization/ui.csv": "da7f54aa2f31ca5da31de96a71f090a7633ac924a07e32034318829762c274c3",
 	"res://localization/finds.csv": "5e836481a09a982b8be859f9efb9c556011a14bbfffbea5ac96008f440e725b7",
 	"res://localization/furniture.csv": "ae3acc062997339785012e4de6cc1c80d763e0f9e206ddd15a7ba79f9930c75f",
 }

@@ -611,6 +611,21 @@
     "DLG_GHOST_"
    ],
    "exact": []
+  },
+  "ghostfamily.csv": {
+   "wave": "5b",
+   "owner": "GF-data",
+   "prefix": [
+    "NPC_GHOSTFAM_",
+    "GHOSTFAM_",
+    "SHOP_LANTERN_",
+    "SHOPTAB_LANTERN_",
+    "DLG_GHOSTFAM_",
+    "SOC_GHOSTFAM_",
+    "BDAY_GHOSTFAM_",
+    "GIFT_GHOSTFAM_"
+   ],
+   "exact": []
   }
  },
  "notes": [

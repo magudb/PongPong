@@ -2,7 +2,7 @@
   "status": "reviewed",
   "worktree": "codex-review",
   "guideline": "docs/art/style-guide.txt",
-  "visual_reference": "docs/Tr\u00e6toppen Style Guide Review/Tr\u00e6toppen Style Guide.dc.html",
+  "visual_reference": "docs/Trætoppen Style Guide Review/Trætoppen Style Guide.dc.html",
   "scope": "All 5,171 assets inventoried; 2,518 rasters decoded. 255 new rasters and 311 changed rasters reviewed, including 285 painted historical re-exports, 20 rebuilt home day/night textures and six normalized prop pigment variants. 1,952 byte-identical rasters retain earlier review evidence. Thirteen radial light kernels remain functional masks. No historical illustration is exempted from the painted style. Stock animation sampling scope remains the prior all-clip middle-frame/eight-idle-direction/portrait review; this is not a new frame-by-frame review of 58 stock animation sets.",
   "reviewed_assets": {
     "assets/art/watercolor_paper.png": {
@@ -15208,6 +15208,174 @@
       "disposition": "accepted-theme-asset",
       "role": "import-license-or-theme-metadata",
       "evidence": "M1b native visual review: docs/qa/m1b-completion-2026-10-15/native/ and native-tests.json; cream slider handles, moss track, ink contours, gold focus, raised buttons and parchment panels retained; UI_NAVIGATION.md hover/focus corrections."
+    },
+    "assets/isometric_characters/ghostfam_dyne/celebrate.webp": {
+      "sha256": "519ffeb3b368441d44501ac458dadfd418f14a3863a0457d0f84c19319cb3f47",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_dyne/idle.webp": {
+      "sha256": "8f77fd294e592f61223d8d064627415b8dc6f273bda32bc88ef3b51ea3e12806",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_dyne/interact.webp": {
+      "sha256": "dc7ba302598207b5d3d96804359480b62a030cea9dc8210051850e7341cb9511",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_dyne/portrait.webp": {
+      "sha256": "f30bac86f51cf4ef0c02ea62c41771abf33b19722fccb84d54bad50b4efbfea2",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_dyne/sleep.webp": {
+      "sha256": "cabad472567791c4cde48bf92dd8f787ef8c21b403bf5287b4b723aafa1093c1",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_dyne/talk.webp": {
+      "sha256": "ceda08c332d015777695c69d8d5827feefe2d680bcd1314393be6faae10e5d0c",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_dyne/walk.webp": {
+      "sha256": "caae6068802afc3380bf508e1efadfde05756d9bcf503d016f0501d865d21c58",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_gnist/celebrate.webp": {
+      "sha256": "1bbfe07783f3b5e931cb89d848e901aa9ef024b7f5058a041e11779cc4e0fdf7",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_gnist/idle.webp": {
+      "sha256": "1ebb4baf0d82570c99e8ed473bd01c43adecc5682cb517f819230a41bce09d96",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_gnist/interact.webp": {
+      "sha256": "68d46f4a6222e5cc40711826e465c638e882f76b23e9a44e93849f6a212d5e79",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_gnist/portrait.webp": {
+      "sha256": "c03d758091b7595a07ca3cdee0535e88e83c776917576bfb817fcec0f426385d",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_gnist/sleep.webp": {
+      "sha256": "bac11cb92f339ae7ed25c773e8e0148817c79bca809688e679254c519091df5c",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_gnist/talk.webp": {
+      "sha256": "2f1c3c47ec128bfebc0f4dfbad1e3790a4485af8c4fec4c839ce90ca4df94683",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_gnist/walk.webp": {
+      "sha256": "3bf15fa60c5153e1b9fc8d574977f835f3dddd8290b45b24ca49bdf86612496b",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_silke/celebrate.webp": {
+      "sha256": "dfcd397ac678f8582b7a2390f23321f021eaa85976b2f38b23e42a6c3aae6df6",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_silke/idle.webp": {
+      "sha256": "3060c5418281bfe6e65582a9d3af3ea227553a948ee7d0db29e64a33d566c30f",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_silke/interact.webp": {
+      "sha256": "eefee408aa8af1f7da0003ff4b01dfbeecd11ccafd98379077ca45936479823e",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_silke/portrait.webp": {
+      "sha256": "71a8a83371e322a541fba584c74c4484ecd2d997ac987bea42f4b5eeafb1bcec",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_silke/sleep.webp": {
+      "sha256": "7055e67fd7e64ad6ddfa2b981963314270f3586b086d1f1385e9ade3d482fb8d",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_silke/talk.webp": {
+      "sha256": "495f361752a6d34e59b64726fdcf164eb95c9c67b88be589e6ac080dd1640033",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_silke/walk.webp": {
+      "sha256": "8f397dc600bd8b4f1da6b591bf832b2d7d33c8c2a9495f627e1f4ee931036862",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_blund/celebrate.webp": {
+      "sha256": "b52487f35fbe2041d4447bc5db3029a7bd49358e2df15322ecda0b95246841ef",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_blund/idle.webp": {
+      "sha256": "afb93957e91553ec8e779615b11725ead26e89af3dbcc6274046848bf9e515e1",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_blund/interact.webp": {
+      "sha256": "fd346ca4c34812f9012ccf8f95c5fa2394cedcff37fdd7a76cec41d883218687",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_blund/portrait.webp": {
+      "sha256": "44e32d18f1fc3e217f65a7b681a19e2030510ad32f946ea9f75ffd08e384216c",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_blund/sleep.webp": {
+      "sha256": "032c294478533ce20c20cd2dbd32bf43aefb85d2e32aab8e31ba246b22ba1634",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_blund/talk.webp": {
+      "sha256": "e95fcef7bbe70821367986b429e6ffc699b240dddce0843ad08977eaef09d31a",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
+    },
+    "assets/isometric_characters/ghostfam_blund/walk.webp": {
+      "sha256": "797f1d2d423f6595371ad2234caae68975ccf8153be9e54ccf53e03c75fa3465",
+      "disposition": "accepted-painted",
+      "role": "character-sheet-or-portrait",
+      "evidence": "docs/qa/ghostfam/contacts (all idle views and every clip middle frame); docs/qa/ghostfam/native (8 inspected real-window captures); ghost-family-art-final.json source proportions, cast silhouette and palette gates"
     }
   },
   "m1b_followup": {
@@ -15215,5 +15383,17 @@
     "scope": "P28 theme and two slider vectors only; all 2531 other reviewed visual assets remain byte-identical.",
     "evidence": "docs/qa/m1b-completion-2026-10-15/native-tests.json",
     "review": "Native gallery, confirmation, disabled controls, slider endpoints, focus rings, Danish labels and painted rooms inspected; no illustration replaced."
+  },
+  "m1b_family_followup": {
+    "date": "2026-10-16",
+    "worktree": "m1b",
+    "scope": "28 new painted family sheets/portraits, four NPC looks. All 2534 prior approved visual/theme assets retain identical bytes and dispositions. Generated sources and exact prompts saved in docs/art/prompts/ghost-family/.",
+    "evidence": [
+      "docs/qa/m1b-milestone/ghost-family-art-final.json",
+      "docs/qa/m1b-milestone/ghost-family-native.json",
+      "docs/qa/ghostfam/contacts",
+      "docs/qa/ghostfam/native"
+    ],
+    "review": "Inspected all four contact pages, all eight final native captures, separated silhouettes, pale paper/mint/lavender colours, charcoal eyes, warm irregular outlines, child/adult scale, pivot and indoor/night readability. Numeric measurement supplements visual inspection; copy remains draft."
   }
 }

@@ -1,0 +1,7 @@
+-- APPEND to config.citizens in lua/social/citizens.lua (S-data).  Tier A 1 / B 3 (the family is the 11th Hjertefolk: Dyne, the storyteller); archetypes elder / shopkeeper / watcher / child (the 8 of the plan);
+-- partner = false for all four (a family: the marriage track's exclusion list gains them, like Bertil / Bodil, Kloevermynte / Birk, Lily and Bamse).
+-- Birthdays by design5 scripts/birthdays_check.py: not on or next to a festival day, >= 2 days from every one of the 30 others, two of them on Thursday / Friday, Dyne's on a Wednesday (the family evening).
+    ghostfam_dyne = { tier = "A", archetype = "elder", birthday = { season = "vinter", day = 10 }, partner = false },
+    ghostfam_gnist = { tier = "B", archetype = "shopkeeper", birthday = { season = "efteraar", day = 4 }, partner = false },
+    ghostfam_silke = { tier = "B", archetype = "watcher", birthday = { season = "sommer", day = 19 }, partner = false },
+    ghostfam_blund = { tier = "B", archetype = "child", birthday = { season = "foraar", day = 23 }, partner = false },

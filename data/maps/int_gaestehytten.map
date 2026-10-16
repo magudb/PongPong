@@ -1,0 +1,7 @@
+@id int_gaestehytten
+@title BLD_GAESTEHYTTEN
+@projection iso
+@ambient home
+@zone traetoppen
+@builder res://scripts/towns/interior_room.gd
+@room int_gaestehytten

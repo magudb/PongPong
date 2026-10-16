@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://cje01ft7gmcrb"
+
+[deps]
+
+files=["res://tools/ghostfam/authoring/ghostfamily-source.da.translation", "res://tools/ghostfam/authoring/ghostfamily-source.en.translation"]
+
+source_file="res://tools/ghostfam/authoring/ghostfamily-source.csv"
+dest_files=["res://tools/ghostfam/authoring/ghostfamily-source.da.translation", "res://tools/ghostfam/authoring/ghostfamily-source.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

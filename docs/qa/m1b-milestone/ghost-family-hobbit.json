@@ -1,0 +1,28 @@
+{
+  "allowed": [],
+  "character": "hobbit",
+  "checks": 335,
+  "elapsed_s": 8.59,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "art_ghostfam": {
+      "checks": 42,
+      "failed": 0,
+      "ms": 1328,
+      "skipped": 0
+    },
+    "ghostfam_data": {
+      "checks": 293,
+      "failed": 0,
+      "ms": 3556,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

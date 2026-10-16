@@ -1,12 +1,12 @@
 {
   "status": "requires explicit visual review; scan is not an aesthetic approval",
-  "files": 5171,
-  "raster_files": 2518,
+  "files": 5231,
+  "raster_files": 2546,
   "vectors": 7,
   "fonts": 8,
   "raster_changes": {
     "unchanged": 1952,
-    "new": 255,
+    "new": 283,
     "changed": 311
   },
   "roles": {
@@ -36,13 +36,14 @@
     "specialist-shop-view": 115,
     "painted-fixture-terrain": 29,
     "effective-tiles": 29,
-    "character-sheet-or-portrait": 532,
+    "character-sheet-or-portrait": 560,
     "runtime-shadow-mask": 1,
     "character-selection-thumbnail": 12,
     "title-illustration": 1
   },
   "problems": [],
   "review_pages": [
+    "docs/art/style-audit/current/character-sheet-or-portrait-01.webp",
     "docs/art/style-audit/current/core-shop-view-01.webp",
     "docs/art/style-audit/current/core-shop-view-02.webp",
     "docs/art/style-audit/current/effective-props-01.webp",

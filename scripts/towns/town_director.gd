@@ -31,6 +31,8 @@ var _ctx_override: Dictionary = {}
 var _generation := 0
 var _prepare_ticks := 0
 var _window_perches: Dictionary = {}
+var _post_offsets: Dictionary = {}
+var _slot_query: PhysicsShapeQueryParameters2D
 
 static func create(target_area: IsoArea, params: Dictionary = {}, collected: Dictionary = {}) -> TownDirector:
 	var director := TownDirector.new()
@@ -210,6 +212,7 @@ func resync(hard := true, only := "") -> void:
 			continue
 		looks[look] = true
 		wanted[id] = row
+	_assign_post_slots(wanted)
 	for id in live.keys():
 		if not wanted.has(id) and (only == "" or only == str(id)):
 			# Dialogue owns the actor until its result has completed.
@@ -234,6 +237,63 @@ func resync(hard := true, only := "") -> void:
 func _position(anchor: String) -> Vector2:
 	var name := anchor.get_slice(".", 1) if anchor.contains(".") else anchor
 	return anchors.get(name, Iso.to_ground(area.to_local(area.get_spawn("default"))))
+
+func _assign_post_slots(wanted: Dictionary) -> void:
+	_post_offsets.clear()
+	var groups := {}
+	for id in wanted:
+		var row: Dictionary = wanted[id]
+		var cap := RouteTable.capacity(str(row.place))
+		if str(row.state) == "move" or cap <= 1 or cap >= 99:
+			continue
+		if not groups.has(str(row.place)):
+			groups[str(row.place)] = []
+		groups[str(row.place)].append(str(id))
+	for place in groups:
+		var ids: Array = groups[place]
+		if ids.size() < 2:
+			continue
+		ids.sort()
+		var used: Array[Vector2] = []
+		for index in ids.size():
+			var offset := _post_slot(_position(place), index, ids.size(), used)
+			_post_offsets[ids[index]] = offset
+			used.append(offset)
+
+func _post_slot(base: Vector2, index: int, count: int, used: Array[Vector2]) -> Vector2:
+	if _slot_query == null:
+		_slot_query = PhysicsShapeQueryParameters2D.new()
+		var body := ConvexPolygonShape2D.new()
+		body.points = Npc2D._ellipse(Vector2(25, 14.8))
+		_slot_query.shape = body
+		_slot_query.collision_mask = Iso.LAYER_WORLD | Iso.LAYER_GROUND_BLOCK
+	var space := area.get_world_2d().direct_space_state
+	for radius in [60.0, 42.0, 22.0]:
+		for turn in 8:
+			var angle := TAU * float(index) / count + float(turn) * PI / 4
+			var offset: Vector2 = Vector2(cos(angle), sin(angle)) * float(radius)
+			if used.any(func(previous): return previous.distance_to(offset) < 40):
+				continue
+			var point := area.to_global(Iso.to_screen(base + offset))
+			if area.walkable_test.is_valid() and not bool(area.walkable_test.call(point)):
+				continue
+			var fits := true
+			if area.walkable_test.is_valid():
+				for edge in (_slot_query.shape as ConvexPolygonShape2D).points:
+					fits = fits and bool(area.walkable_test.call(point + edge))
+			if not fits:
+				continue
+			_slot_query.collision_mask = Iso.LAYER_WORLD | Iso.LAYER_GROUND_BLOCK
+			var city := CityBuilder.of(area)
+			if city != null:
+				var level := city.registry.level_at(point)
+				if level == null:
+					continue
+				_slot_query.collision_mask |= level.mask_bit()
+			_slot_query.transform = Transform2D(0, point)
+			if space.intersect_shape(_slot_query, 1).is_empty():
+				return offset
+	return Vector2.ZERO
 
 func _path(from: String, to: String) -> Dictionary:
 	var key := from + "|" + to
@@ -275,12 +335,9 @@ func _path(from: String, to: String) -> Dictionary:
 func _carrot(row: Dictionary, hour: float) -> Vector2:
 	var leg := LuaData.dict(row.get("leg", {}))
 	if leg.is_empty():
-		var cap := RouteTable.capacity(str(row.place))
-		var offset := Vector2.ZERO
-		if cap > 1 and cap < 99:
-			var angle := TAU * float(posmod(str(row.npc).hash(), cap)) / float(cap)
-			offset = Vector2(cos(angle), sin(angle)) * 22
-		return _position(str(row.place)) + offset
+		# Hash % capacity gave two relatives the very same spot. Slots are
+		# assigned uniquely to the live group and checked against room/deck geometry.
+		return _position(str(row.place)) + (_post_offsets.get(str(row.npc), Vector2.ZERO) as Vector2)
 	if str(leg.get("kind", "")) == "portal":
 		return _position(str(leg.to))
 	var path := _path(str(leg.from), str(leg.to))

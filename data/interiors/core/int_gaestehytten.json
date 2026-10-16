@@ -1,0 +1,244 @@
+{
+ "id": "int_gaestehytten",
+ "building": "gaestehytten",
+ "size": "S",
+ "cols": 7,
+ "rows": 5,
+ "wall_style": "plank",
+ "floor": "floor_plank",
+ "door": {
+  "cell": [
+   3,
+   4
+  ],
+  "dir": [
+   0,
+   1
+  ]
+ },
+ "spawn_cell": [
+  3,
+  3
+ ],
+ "windows": {
+  "z": [
+   1
+  ],
+  "x": [
+   2
+  ]
+ },
+ "exit": {
+  "area": "traetoppen",
+  "spawn": "from_int_gaestehytten"
+ },
+ "zoom_fit": 0.832,
+ "items": [
+  {
+   "id": "table_long_pine",
+   "cell": [
+    2,
+    2
+   ],
+   "rot": 0,
+   "role": "counter"
+  },
+  {
+   "id": "bookshelf_oak_narrow",
+   "cell": [
+    0,
+    0
+   ],
+   "rot": 0
+  },
+  {
+   "id": "clock_owl",
+   "cell": [
+    1,
+    0
+   ],
+   "rot": 0
+  },
+  {
+   "id": "shelf_birdhouse",
+   "cell": [
+    2,
+    0
+   ],
+   "rot": 0,
+   "wall": true
+  },
+  {
+   "id": "table_round_pine",
+   "cell": [
+    6,
+    3
+   ],
+   "rot": 0
+  },
+  {
+   "id": "floor_lamp_glowshroom",
+   "cell": [
+    1,
+    3
+   ],
+   "rot": 0
+  },
+  {
+   "id": "candelabra_iron",
+   "cell": [
+    0,
+    3
+   ],
+   "rot": 0
+  },
+  {
+   "id": "bed_birch_single",
+   "cell": [
+    3,
+    0
+   ],
+   "rot": 1
+  },
+  {
+   "id": "bed_birch_single",
+   "cell": [
+    5,
+    0
+   ],
+   "rot": 1
+  }
+ ],
+ "posts": [
+  {
+   "id": "counter",
+   "cell": [
+    3,
+    1
+   ],
+   "act": "work",
+   "facing": "S",
+   "capacity": 1,
+   "kind": "keeper"
+  },
+  {
+   "id": "table",
+   "cell": [
+    1,
+    1
+   ],
+   "act": "eat",
+   "facing": "E",
+   "capacity": 4,
+   "kind": "staff"
+  },
+  {
+   "id": "bed",
+   "cell": [
+    5,
+    1
+   ],
+   "act": "sleep",
+   "facing": "S",
+   "capacity": 4,
+   "kind": "bed"
+  },
+  {
+   "id": "cust1",
+   "cell": [
+    1,
+    4
+   ],
+   "act": "stand",
+   "facing": "N",
+   "capacity": 1,
+   "kind": "customer"
+  },
+  {
+   "id": "cust2",
+   "cell": [
+    5,
+    3
+   ],
+   "act": "stand",
+   "facing": "N",
+   "capacity": 1,
+   "kind": "customer"
+  },
+  {
+   "id": "cust3",
+   "cell": [
+    5,
+    4
+   ],
+   "act": "stand",
+   "facing": "N",
+   "capacity": 1,
+   "kind": "customer"
+  }
+ ],
+ "markers": [
+  {
+   "type": "hatch",
+   "cells": [
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     6,
+     2
+    ]
+   ]
+  },
+  {
+   "type": "shop",
+   "id": "lantern_house",
+   "keeper": "ghostfam_gnist",
+   "cell": [
+    3,
+    3
+   ]
+  },
+  {
+   "type": "talk",
+   "cell": [
+    2,
+    3
+   ],
+   "keeper": "ghostfam_gnist"
+  },
+  {
+   "type": "talk",
+   "cell": [
+    4,
+    3
+   ],
+   "keeper": "ghostfam_gnist"
+  },
+  {
+   "type": "door",
+   "cell": [
+    3,
+    4
+   ],
+   "to": "traetoppen",
+   "spawn": "from_int_gaestehytten"
+  }
+ ],
+ "notes": [
+  "design5: a mirror of int_uglehulen (S 7x5, counter row 1, hatch gap): the `table` post (1,1) and the `bed` post (5,1) are the family corners behind the counter band; capacity 4 each = the whole family",
+  "pieces: every id exists in assets/iso_props/furniture/furniture.json; floor_lamp_glowshroom, clock_owl, shelf_birdhouse are the same pieces int_uglehulen draws",
+  "design6: + the family bed and the guest bed (two bed_birch_single laid along the back wall, row 0, behind the counter band: unreachable for the player like the table and the bed post, the citizens' corridor of row 1 stays free; scripts/room_check6.py: 0 problems)",
+  "the family bed along the back wall (cells 3,0 and 4,0); the `bed` post (5,1) is the cell in front of the guest bed",
+  "the guest bed, always made (cells 5,0 and 6,0): Dyne keeps it for family who travel (a ghost hero's place; for everybody else lore: DLG_GHOSTFAM_DYNE_KIN_1_*)"
+ ]
+}
