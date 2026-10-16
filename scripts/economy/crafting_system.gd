@@ -22,6 +22,7 @@ const STATION_UNLOCKS := {"snedkerbord": "workbench", "vaev": "loom", "smedje": 
 const STATION_DEFAULT_TIER := {"snedkerbord": 1, "vaev": 3, "smedje": 5}
 
 static var rng := RandomNumberGenerator.new()
+static var _crafting := false
 
 
 static func seed_rng(seed_value: int) -> void:
@@ -119,6 +120,8 @@ static func bake_bonus_chance() -> float:
 
 ## Crafts a recipe once. False (nothing changed) when it is unknown, missing something, locked, or the output does not fit.
 static func craft(recipe_id: Variant) -> bool:
+	if _crafting:
+		return false
 	var r := get_recipe(recipe_id)
 	var eco := Svc.node("EconomyManager")
 	if r.is_empty() or eco == null or not bool(can_craft(recipe_id)["ok"]):
@@ -134,13 +137,18 @@ static func craft(recipe_id: Variant) -> bool:
 		var chance := bake_bonus_chance()
 		if chance > 0.0 and rng.randf() < chance:
 			produced += 1
-	if not bool(eco.call("remove_items", ingredients)):
-		return false
-	if not bool(eco.call("add_item", StringName(out_id), produced)):
-		for item_id in ingredients:                      # the output did not fit: everything comes back
-			eco.call("add_item", StringName(item_id), int(ingredients[item_id]), true)
-		return false
-	var bus := Svc.node("EventBus")
-	if bus != null:
-		bus.emit_signal("recipe_crafted", StringName(str(recipe_id)), produced)
-	return true
+	var result := [false]
+	_crafting = true
+	eco.call("defer_notifications", func() -> void:
+		if not bool(eco.call("remove_items", ingredients)):
+			return
+		if not bool(eco.call("add_item", StringName(out_id), produced)):
+			for item_id in ingredients:
+				eco.call("add_item", StringName(item_id), int(ingredients[item_id]), true)
+			return
+		result[0] = true
+		var bus := Svc.node("EventBus")
+		if bus != null:
+			eco.call("after_transaction", func(): bus.emit_signal("recipe_crafted", StringName(str(recipe_id)), produced)))
+	_crafting = false
+	return result[0]

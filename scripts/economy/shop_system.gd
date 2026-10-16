@@ -60,6 +60,7 @@ const TAB_ORDER: Array[String] = ["seed", "tool", "goods"]
 
 ## Why the last buy_item / sell_item / open_shop was refused (&"" after a success).
 var last_refusal: StringName = &""
+var _transaction_active := false
 
 var _stock: Dictionary = {}           # shop id -> {item id (String) -> units left of the fixed stock}
 var _bought_rot: Dictionary = {}      # shop id -> {item id -> units bought of the current rotation offer}
@@ -294,6 +295,15 @@ func get_sell_list(shop_id: Variant) -> Array[Dictionary]:
 ## Buys `amount` units. All or nothing; false with last_refusal set when the shop is closed, does not sell the item, is out of
 ## stock, the player owns the garment, the gold or the room is missing. Charges exactly amount x get_buy_price.
 func buy_item(shop_id: Variant, item_id: Variant, amount: int = 1) -> bool:
+	if _transaction_active:
+		return _refuse(&"busy")
+	_transaction_active = true
+	var result := _buy(shop_id, item_id, amount)
+	_transaction_active = false
+	return result
+
+
+func _buy(shop_id: Variant, item_id: Variant, amount: int) -> bool:
 	last_refusal = &""
 	var key := resolve_shop_id(shop_id)
 	var id := StringName(str(item_id))
@@ -318,16 +328,32 @@ func buy_item(shop_id: Variant, item_id: Variant, amount: int = 1) -> bool:
 	if eco == null:
 		return _refuse(&"unknown_shop")
 	var affordable := bool(eco.call("can_afford", _Economy.total_of(unit, amount)))
-	if not bool(eco.call("buy_item", id, amount, unit)):        # posts the "not enough gold" / "inventory full" toast itself
-		return _refuse(&"no_room" if affordable else &"no_gold")
-	_take_from_stock(key, offer, amount)
-	shop_transaction.emit(key, id, amount, true)
-	return true
+	var result := [false]
+	eco.call("defer_notifications", func() -> void:
+		if not bool(eco.call("buy_item", id, amount, unit)):
+			_refuse(&"no_room" if affordable else &"no_gold")
+			return
+		_take_from_stock(key, offer, amount)
+		result[0] = true
+		eco.call("after_transaction", func(): shop_transaction.emit(key, id, amount, true)))
+	if result[0]:
+		last_refusal = &""
+		return true
+	return _refuse(&"no_room" if affordable else &"no_gold")
 
 
 ## Sells `amount` units for amount x get_sell_price. False (nothing changes) when the shop does not buy the item or the player
 ## has fewer free copies.
 func sell_item(shop_id: Variant, item_id: Variant, amount: int = 1) -> bool:
+	if _transaction_active:
+		return _refuse(&"busy")
+	_transaction_active = true
+	var result := _sell(shop_id, item_id, amount)
+	_transaction_active = false
+	return result
+
+
+func _sell(shop_id: Variant, item_id: Variant, amount: int) -> bool:
 	last_refusal = &""
 	var key := resolve_shop_id(shop_id)
 	var id := StringName(str(item_id))
@@ -343,10 +369,19 @@ func sell_item(shop_id: Variant, item_id: Variant, amount: int = 1) -> bool:
 	var eco := _Svc.node("EconomyManager")
 	if eco == null:
 		return _refuse(&"unknown_shop")
-	if not bool(eco.call("has_item", id, amount)) or not bool(eco.call("sell_item", id, amount, unit)):
+	if not bool(eco.call("has_item", id, amount)):
 		return _refuse(&"not_owned")
-	shop_transaction.emit(key, id, amount, false)
-	return true
+	var result := [false]
+	eco.call("defer_notifications", func() -> void:
+		if not bool(eco.call("sell_item", id, amount, unit)):
+			_refuse(&"not_owned")
+			return
+		result[0] = true
+		eco.call("after_transaction", func(): shop_transaction.emit(key, id, amount, false)))
+	if result[0]:
+		last_refusal = &""
+		return true
+	return _refuse(&"not_owned")
 
 
 ## Opens the shop screen: EventBus.shop_opened (the screen shows the closed state itself). False for an unknown shop.

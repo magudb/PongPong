@@ -170,3 +170,9 @@ engine messages; 78 named window/later-package skips and one intentional
 orphan-save warning. hud-native.json: 17 checks, no failures or skips. Four v2
 region comparisons pass <=12. All 2534 reviewed illustrations/theme files are
 unchanged. The full usable-towns milestone remains in progress; P18 is next.
+
+P18 transaction preparation: purchases commit stock before wallet/item observers;
+sales and crafting commit every deduction and gain before publication. Reentrant
+requests are refused, including in failure callbacks. economy-transactions.json
+passes 422 checks across five sections, with nine named later-package skips.
+P18's shop, backpack and workshop screens remain in progress.
