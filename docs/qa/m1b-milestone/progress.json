@@ -138,7 +138,7 @@
         {
           "id": "I2-loop-harness",
           "status": "validated",
-          "evidence": "acceptance.json: four full strict suites, 44,779 checks; final pricing/loop confirmations; 565 normal-speed checks; 922 native checks in 40 sections, no failures/errors/warnings. All 36 wave-5b rows satisfied for every race. Source-bound extension and seven producer mutants pass. Fourteen CORE captures and fifteen staffed rooms reviewed. Native loop 104.922s <=110, normal loop 101.393s <=120; save p95 19.445ms/20.802ms <=25; 73.41MB freed; zero orphan growth. Main merge verification remains."
+          "evidence": "acceptance.json: four full strict suites, 44,779 checks; final pricing/loop confirmations; 565 normal-speed checks; 922 native checks in 40 sections, no failures/errors/warnings. All 36 wave-5b rows satisfied for every race. Source-bound extension and seven producer mutants pass. Fourteen CORE captures and fifteen staffed rooms reviewed. Native loop 104.922s <=110, normal loop 101.393s <=120; save p95 19.445ms/20.802ms <=25; 73.41MB freed; zero orphan growth. Merged main verification passes: 159 strict loop/budget checks; canonical source binding and all finished branch ancestry verified. See merge-verification.json."
         }
       ]
     },
@@ -168,9 +168,7 @@
       ]
     }
   ],
-  "remaining_gates": [
-    "Verify main with the renewed canonical-byte proofs."
-  ],
+  "remaining_gates": [],
   "notes": [
     "Production wardrobe animation remains the separate painted-equipment asset track recorded by Claude; preserve the fit proof coverage without presenting it as a complete wardrobe.",
     "Obsolete core-only matrix stopped during fairy after the user expanded scope. Its interrupted result is not a milestone approval.",
@@ -206,8 +204,9 @@
       "evidence": "Four-race family suites: 335 checks each; integration 1687; final refined art 70; latest placement/player 627; native 12; style snapshot 2562 assets. See GF-data.txt. M3 family gameplay remains separate."
     }
   ],
-  "status": "validated_pending_merge",
+  "status": "complete",
   "source_implementation": "f20e44d152e275b7733ccfe175d1245dceafd2e4",
   "acceptance": "docs/qa/m1b-milestone/acceptance.json",
-  "canonical_source_binding": "75a4d7791d1936ea0c7c4b95e07ebb868ffedcd273636c66073ddac8f19fe5d4"
+  "canonical_source_binding": "75a4d7791d1936ea0c7c4b95e07ebb868ffedcd273636c66073ddac8f19fe5d4",
+  "merged_main_verification": "docs/qa/m1b-milestone/merge-verification.json"
 }

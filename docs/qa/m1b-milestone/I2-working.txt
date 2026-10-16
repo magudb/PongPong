@@ -4,7 +4,8 @@ I2 implementation and milestone validation are complete. See acceptance.json,
 progress.json, native-metrics.txt and accepted-native/ for the authoritative
 final evidence. Four full character suites, final pricing/loop confirmations,
 normal speed, 40 native sections, source-bound extension/mutation proofs and
-visual review pass. Main merge verification is the remaining integration step.
+visual review pass. Main merge verification passes: 159 strict checks. All 27 packages are validated
+and merged; merge-verification.json records the tested main head and source binding.
 Older entries below describe intermediate work. Superseded untracked reports
 and captures are preserved locally in .godot/qa/m1b-working-history/; their
 results are not the final milestone acceptance.

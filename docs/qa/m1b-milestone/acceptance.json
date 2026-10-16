@@ -1,5 +1,5 @@
 {
-  "status": "validated_pending_merge",
+  "status": "complete",
   "validated_at_utc": "2026-10-16T12:18:20.793323+00:00",
   "scope": "Full 27-package M1b usable-towns milestone, plus ghost greetings and ghost-family art/data follow-ups.",
   "main_baseline": "f478296",
@@ -166,9 +166,7 @@
     "P24 audio cue logging and recordings; new copy remains draft, 11 frozen Danish texts stay unchanged.",
     "Packaged-export performance: native/source runs are measured; exports without raw scripts use the original live navigation bake fallback."
   ],
-  "remaining": [
-    "Verify main with the renewed canonical-byte proofs."
-  ],
+  "remaining": [],
   "canonical_checkout_confirmation": {
     "binding": "75a4d7791d1936ea0c7c4b95e07ebb868ffedcd273636c66073ddac8f19fe5d4",
     "prior_working_binding": "5b7f438eb3c45b53da423ee106131a10879d96699271184c0330de71d2bcb078",
@@ -209,5 +207,14 @@
         "elapsed_s": 16.47
       }
     }
+  },
+  "merge_verification": "merge-verification.json",
+  "merged_main_test": {
+    "tested_head": "194ddb00b395c58a71b9bdd08f2f115fa2746e3d",
+    "report": "merged-main.json",
+    "checks": 159,
+    "failed": 0,
+    "elapsed_s": 15.39,
+    "source_binding": "75a4d7791d1936ea0c7c4b95e07ebb868ffedcd273636c66073ddac8f19fe5d4"
   }
 }

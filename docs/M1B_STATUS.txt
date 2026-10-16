@@ -1,8 +1,12 @@
-M1b full usable towns — validated, merge verification pending — 2026-10-16
+M1b full usable towns — complete and merged into main — 2026-10-16
 
-All 27 documented M1b packages are implemented and validated. The checklist is
+All 27 documented M1b packages are implemented, validated and merged into main. The checklist is
 in docs/qa/m1b-milestone/progress.json; final evidence and scope boundaries are
 in docs/qa/m1b-milestone/acceptance.json. Source implementation: f20e44d.
+
+Merged main 194ddb0 passes 159 strict loop/budget checks, with no failed
+checks or unexpected engine messages. All finished review branches are included.
+See docs/qa/m1b-milestone/merge-verification.json for source and ancestry checks.
 
 The playable loop includes the once-only first morning, real farm tools and
 crops, shipping and sleep, travel through both towns, scheduled painted citizens,

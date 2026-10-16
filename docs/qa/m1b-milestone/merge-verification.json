@@ -1,0 +1,35 @@
+{
+  "status": "pass",
+  "verified_at_utc": "2026-10-16T12:28:04.722453+00:00",
+  "tested_main_head": "194ddb00b395c58a71b9bdd08f2f115fa2746e3d",
+  "source_binding": "75a4d7791d1936ea0c7c4b95e07ebb868ffedcd273636c66073ddac8f19fe5d4",
+  "bound_inputs": 1162,
+  "main_and_m1b_bound_files_byte_identical": true,
+  "finished_branches": {
+    "codex-review": {
+      "tip": "be1d3191a7ec233e852f7cd61f9ac0606a83dca9",
+      "included_in_main": true
+    },
+    "devin-review": {
+      "tip": "283d8014760fb3d3d9a710c5aeabd8f76ab2957e",
+      "included_in_main": true
+    },
+    "review-fixes-4": {
+      "tip": "71ee42da28c10e47392c3375997045b3dc880059",
+      "included_in_main": true
+    },
+    "codex-merge-finished": {
+      "tip": "f478296ea262218698895ac88437d59876ca7eea",
+      "included_in_main": true
+    },
+    "m1b": {
+      "tip": "194ddb00b395c58a71b9bdd08f2f115fa2746e3d",
+      "included_in_main": true
+    }
+  },
+  "strict_smoke_report": "merged-main.json",
+  "checks": 159,
+  "failed": 0,
+  "unexpected_engine_messages": 0,
+  "remaining_changes": "Only this verification record and final status documentation will be committed after this test; source/data/art remain identical."
+}
