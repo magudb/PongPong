@@ -42,6 +42,7 @@ func set_social_row_height(height: float) -> void:
 
 func _ready() -> void:
 	toasts.z_index = 100
+	EventBus.modal_changed.connect(func(_stack): toasts.visible = not GameManager.is_modal_open())
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("hud", Callable(get_script(), &"fixture_setup"))
 	EventBus.gold_changed.connect(_gold)
 	EventBus.time_of_day_changed.connect(_time)

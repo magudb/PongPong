@@ -348,6 +348,7 @@ script = ExtResource("6_1e6lo")
 
 [node name="DatePanel" type="PanelContainer" parent="." unique_id=123973293]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(252, 0)
 layout_mode = 0
 offset_left = 40.0
 offset_top = 40.0
@@ -392,6 +393,7 @@ theme_override_constants/separation = 12
 [node name="MoneyChip" type="PanelContainer" parent="TopRight" unique_id=858665043]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 8
 theme_override_styles/panel = SubResource("StyleBox_kwu3u")
 
 [node name="Keyline" type="PanelContainer" parent="TopRight/MoneyChip" unique_id=1720720650]
@@ -419,6 +421,7 @@ theme_type_variation = &"CoinInk"
 
 [node name="GoldLabel" type="Label" parent="TopRight/MoneyChip/Keyline/MoneyRow/Gold" unique_id=1261447644]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(42, 0)
 layout_mode = 2
 theme_type_variation = &"Heavy19"
 metadata/tt_r3_ok = "Miljøer v2 money chip explicitly uses the 19px heavy face"

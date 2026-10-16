@@ -102,8 +102,12 @@ func post(title: String, message: String, icon: String = "") -> void:
 	if not is_inside_tree() or is_queued_for_deletion():
 		return
 	if farm_only:
-		var ui := get_tree().get_first_node_in_group("game_ui")
-		if ui != null and ui.mode == &"action":
+		# Mode belongs to this stack's screen owner. Another UI root may share
+		# the group during a transition without implementing GameUI's API.
+		var ui: Node = get_parent()
+		while ui != null and not ui is GameUI:
+			ui = ui.get_parent()
+		if ui is GameUI and (ui as GameUI).mode == &"action":
 			return
 	var item_id := ""
 	if icon == ITEM_KIND:

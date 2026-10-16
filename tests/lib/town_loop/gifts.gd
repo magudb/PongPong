@@ -12,6 +12,7 @@ func run(t, suite) -> void:
 	var choice: Dictionary = await suite._finish_dialogue(t, "give_gift")
 	var picker: Control = TownProbe.screens(t).get_screen(&"gift_ui")
 	suite._check(t, "L07", "l07_talk_menu_opens_picker", str(choice.get("action", "")) == "give_gift" and picker.is_open())
+	await suite.shot(t,"S09_gift_picker")
 	if picker.is_open():
 		var index: int = picker.options.find_custom(func(row): return str(row.id) == "carrot")
 		suite._check(t, "L07", "l07_carrot_available", index >= 0)
@@ -28,6 +29,8 @@ func run(t, suite) -> void:
 			suite._check(t, "L07", "l07_one_gift_per_day", not refusal.ok and refusal.reason == "today" and eco.count_item(&"carrot") == count - 1)
 		else:
 			picker.close()
+	if suite.native_mode:
+		return # All five tastes, birthdays and ledger limits run headlessly.
 	# Follow the real day/week ledger for the remaining taste classes.
 	var classes: Array = [{"item": "turnip", "class": "like", "points": 20}, {"item": "flour", "class": "neutral", "points": 8}, {"item": "stone", "class": "dislike", "points": 0}, {"item": "lantern_oil", "class": "hate", "points": 0}]
 	var tastes_ok := true

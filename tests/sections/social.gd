@@ -84,6 +84,7 @@ class Spy extends RefCounted:
 
 func run(p_t) -> void:
 	t = p_t
+	await t.clear_scene() # The synchronous social sandbox must not retain a live town director.
 	gm = t.autoload("GameManager")
 	sm = t.autoload("SocialManager")
 	sv = t.autoload("SaveManager")
@@ -1237,7 +1238,10 @@ func _shop() -> void:
 # ================================================================================================ task 14: the save section
 
 func _save() -> void:
-	SocialFixture.install_design_data()
+	var design_npcs: Dictionary = GameData.cfg("npcs",{}).duplicate(true)
+	for id in design_npcs.keys():
+		if str(id).begins_with("ghostfam_"):design_npcs.erase(id)
+	SocialFixture.install_design_data({"npcs":design_npcs})
 	var m := _fresh(40)
 	var friends_n := SocialData.friend_ids().size()
 	# the budget scenario of the order: 30 friends with 12 known tastes each, pretty JSON (the field set the prototype measured at 15.9 KB: p wk gd gwk gw bd bk ls kn)

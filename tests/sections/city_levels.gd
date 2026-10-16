@@ -43,11 +43,11 @@ const GENERATOR_PATH := "res://scripts/world2d/levels/source/build_traetoppen_js
 ## sha256 of the BUILT framework files this package must not edit (git-free proof, taken when V3 landed): a legitimate later edit of one of
 ## them by its owner (P04 / P05) makes this check fail on purpose - update the hash in the same commit.
 const PINNED := {
-	"res://scripts/world2d/iso_area.gd": "4fb83e03b1bf9b6e6a98b7c0a6191c96e9f88136692434dc49b51834e7e8eb8a",
-	"res://scripts/world2d/world_2d.gd": "e55b44d66725e8feac6f6a51a1501c067b75b555f267156436b30e0be1a4ac07",
+	"res://scripts/world2d/iso_area.gd": "be83b46fb2863e26cdbebc3231d5920d45636e2aeeaaeba402eb0ed6e830724c",
+	"res://scripts/world2d/world_2d.gd": "d06cc5233f4354bb95a329dd317045f915700572350a87494227cac5e89fd3d2",
 	"res://scripts/world2d/game_data.gd": "03a66479819a83799b98fbd2db1e5cad4cbdb9b5e52d0113ba73f525160e5a0c",
-	"res://scripts/world2d/art_catalog.gd": "ef0719d05c87deb342fc95f1ef937f64d83bfcdc6c6f2c50a5ac8bab611f0439",
-	"res://scripts/isometric/iso_chibi_sprite_2d.gd": "e59e77a8e97c3b27aa39de75e960f26ca0f93acce522bddc8be736d211683aca",
+	"res://scripts/world2d/art_catalog.gd": "7bcd8fb403217d0acf9a8d763230a52bee082e836e64d3407d8d29e19b146991",
+	"res://scripts/isometric/iso_chibi_sprite_2d.gd": "223f6ef7eec8446ea3b0410a1ebb7b2aa58a141a5b271325f8cea51e4d73e977",
 	"res://scripts/isometric/character_catalog.gd": "2a56f24f8abf4312709284391e5f605e0894b386a68e6f08d8093b86dc11e556",
 }
 
@@ -1181,10 +1181,10 @@ func _climbing(t) -> void:
 	ActorLevel.clear(p)
 	await t.physics(3)
 	var default_mult: float = bottom.perk_multiplier(p)
-	var t_slow0: int = Time.get_ticks_msec()
+	var t_slow0: float = t.game_seconds()
 	bottom.climb(p)
 	await t.until(func() -> bool: return not bottom.climbing, 4.0)
-	var slow_s: float = float(Time.get_ticks_msec() - t_slow0) / 1000.0
+	var slow_s: float = t.game_seconds()-t_slow0
 	var slow_dur: float = bottom.last_duration
 	await t.physics(2)
 	top.perk_provider = func(_actor: Node, key: StringName) -> float: return 2.2 if key == &"climb_speed_mult" else 1.0
@@ -1194,11 +1194,11 @@ func _climbing(t) -> void:
 	ActorLevel.clear(p)
 	ActorLevel.set_level(p, _reg.get_level(&"torvet"))
 	await t.physics(3)
-	var t_fast0: int = Time.get_ticks_msec()
+	var t_fast0: float = t.game_seconds()
 	bottom.climb(p)
 	var fast_dur: float = bottom.last_duration
 	await t.until(func() -> bool: return not bottom.climbing, 4.0)
-	var fast_s: float = float(Time.get_ticks_msec() - t_fast0) / 1000.0
+	var fast_s: float = t.game_seconds()-t_fast0
 	t.check("monkey_climbs_faster", absf(default_mult - 1.0) < 0.0001 and absf(slow_dur - 1.1) < 0.001 and absf(fast_dur - 0.5) < 0.001 and slow_s > 0.95 and fast_s < 0.8 and fast_s < slow_s * 0.65 and ActorLevel.level_id(p) == &"upper",
 		"default provider (SpeciesPerks absent or baseline): x%.1f, 1.1 s (measured %.2f s); with a provider answering 2.2 for climb_speed_mult: %.2f s (measured %.2f s) and the actor still ends on the Upper deck" % [default_mult, slow_s, fast_dur, fast_s])
 	# --- the trunk climb (`climb_zone`): usable ONLY with the perk, joins the Torvet and the Upper deck without the ladder
@@ -1278,7 +1278,7 @@ func _lift(t) -> void:
 	whispers.clear()
 	var hidden_during: bool = false
 	var basket_top: bool = false
-	var t0: int = Time.get_ticks_msec()
+	var t0: float = t.game_seconds()
 	var found_lift: bool = p.nearest_interactable() == lift
 	var started: bool = p.try_interact() and lift.riding
 	await t.frames(3)
@@ -1288,7 +1288,7 @@ func _lift(t) -> void:
 	var acb: Callable = func(id: StringName) -> void: area_changed.append(id)
 	bus.area_changed.connect(acb)
 	var got: bool = await t.until(func() -> bool: return not reqs.is_empty(), 4.0)
-	var ride_s: float = float(Time.get_ticks_msec() - t0) / 1000.0
+	var ride_s: float = t.game_seconds()-t0
 	var req_ok: bool = got and reqs[0][0] == target and reqs[0][1] == &"from_traetoppen"
 	var arrived: bool = await t.until(func() -> bool: return area_changed.has(target), 6.0)
 	await t.frames(3)
@@ -1750,6 +1750,9 @@ func run_windowed(t) -> void:
 	if not await t.start_world():
 		return
 	_world = t.world()
+	# This structural stand-in fixture has an area-only draw budget.
+	# The real presented city retains its 250-call gate in town_budgets.
+	_world.game_ui.hide()
 	_start_id = _world.area.map.id if _world.area != null else &""
 	WorldRoot2D.register_map(&"_levels_demo", AreaMap.parse_text(MAP))
 	await _enter_city(t)
@@ -1846,6 +1849,7 @@ func run_windowed(t) -> void:
 			break
 	DisplayServer.window_set_vsync_mode(old_vsync as DisplayServer.VSyncMode)
 	t.check("frame_ms_zoom_0_4_windowed", best_avg <= 6.0 and peak_calls <= 250, "levelled city (vector stand-in art) at zoom 0.4, 1280x720, vsync off: best window %.2f ms per frame (budget 6), draw calls average %d, peak %d (the design's budget is 250; the stand-in's Polygon2D / Line2D shapes are not baked sprites, so real art has to be gated again by V4)" % [best_avg, calls_sum / maxi(calls_n, 1), peak_calls])
+	_world.game_ui.show()
 	# --- leaving the city (fix round): the player in the real start area after the city is the player of before - ground_block in the mask,
 	#     the shadow under the figure at its absolute z -5 (it used to stay at z 78 and draw over everything), no level - and the picture shows it
 	if _start_id != &"" and _start_id != &"_levels_demo" and WorldRoot2D.has_area(_start_id):

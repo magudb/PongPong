@@ -56,7 +56,9 @@ func _fresh(seed_value: int = 424242) -> void:
 	shop.set_rotation_source(Callable())
 	shop.set_price_curve_source(Callable())
 	shop.set_late_scripts()
-	Fresh.new_game(t, "", "Tester", "Testgaarden", "", seed_value)
+	# Base-curve fixtures use a neutral race. _discount_contract explicitly
+	# exercises the Hobbit perk, gear, friendship and their combined cap.
+	Fresh.new_game(t, "animal", "Tester", "Testgaarden", "", seed_value)
 	ShopRotation.clear_cache()
 	shop.reset()
 

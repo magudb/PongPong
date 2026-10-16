@@ -45,9 +45,7 @@ static func dialogue(t) -> Control:
 	return t.tree.get_first_node_in_group("dialogue_ui")
 
 static func context_digest(t) -> String:
-	var people := {}
-	for id in SocialData.npcs():
-		people[id] = NpcDirector.where_is(id)
+	var people := NpcDirector.locations(SocialData.npcs().keys())
 	var shops := {}
 	for id in t.autoload("LuaRuntime").get_shops():
 		shops[id] = t.autoload("ShopSystem").is_open(id)

@@ -469,7 +469,12 @@ static func camera_limits_for(rect: Rect2, view: Vector2) -> Rect2:
 
 ## Terrain id of a ground char for this area's projection and theme (&"" = no tile: void, bridge planks, unknown).
 func terrain_for_char(ch: String, _c: Vector2i = Vector2i.ZERO) -> StringName:
-	if projection == &"ortho":
+	return terrain_id(ch,projection,map.theme)
+
+
+## Shared with asset staging: resolve the same atlas before the area is built.
+static func terrain_id(ch: String, p_projection: StringName, theme: StringName) -> StringName:
+	if p_projection == &"ortho":
 		match ch:
 			"m", "n", "o", ".":
 				return &"forest_floor_o"
@@ -486,7 +491,6 @@ func terrain_for_char(ch: String, _c: Vector2i = Vector2i.ZERO) -> StringName:
 			"W":
 				return &"wall_void_o"
 		return &""
-	var theme: StringName = map.theme
 	var town: bool = theme == &"hyggebyen"
 	var dark: bool = theme == &"forest" or theme == &"cave"
 	match ch:

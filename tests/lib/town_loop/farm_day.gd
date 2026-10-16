@@ -75,6 +75,7 @@ func run(t, owner) -> void:
 	bus.crop_planted.disconnect(on_plant)
 	check(t, "L10", "l10_till_plant_water", success and selected.size() == 3 and planted_events.size() == 3 and watered_events.size() == 3, "plant=" + str(planted_events) + " water=" + str(watered_events))
 	check(t, "L10", "l10_energy_costs", costs)
+	await suite.shot(t,"S11_farm_planted_morning")
 	var objectives := true
 	for id in [&"till", &"plant", &"water"]:
 		var progress: Dictionary = qm.get_objective_progress(&"forste_dage", id)
@@ -100,6 +101,12 @@ func run(t, owner) -> void:
 		var plot: FarmGrid.PlotData = world.farm.get_plot(cell)
 		grew = grew and plot != null and plot.growth_days > 0
 	check(t, "L11", "l11_crops_grow", grew)
+	if suite.native_mode:
+		# Capture the real morning after this sleep, before later calendar probes.
+		await LoopClock.to(t,10)
+		await world.travel(&"traetoppen",&"from_farm")
+		await suite.shot(t,"S12_city_next_morning")
+		await world.travel(&"farm",&"from_home")
 	await LoopClock.to(t, 24, 10)
 	check(t, "L11", "l11_no_pass_out_at_midnight", gm.total_day() == day + 1 and gm.hour == 24 and gm.minute == 10 and not world.sleeping)
 	# The production curfew reads the config's raw 26-hour day.
@@ -115,3 +122,39 @@ func run(t, owner) -> void:
 	gm.advance_time(20)
 	await LoopClock.settle(t)
 	check(t, "L11", "l11_pass_out_wakes_on_farm", world.area.map.id == &"farm" and gm.hour == 6 and gm.minute == 0 and gm.total_day() == day + 2 and Iso.to_ground(t.player().global_position - world.area.get_spawn("from_home")).length() < 6)
+	# Weather and real dawns grow the same purchased seeds; no growth counters
+	# or ready flags are assigned by this test.
+	for i in 6:
+		if selected.all(func(cell): return world.farm.state_of(cell) == FarmGrid.State.READY):
+			break
+		t.autoload("TimeManager").set_weather(&"regn")
+		await LoopClock.next_day(t)
+	var ready := selected.all(func(cell): return world.farm.state_of(cell) == FarmGrid.State.READY)
+	var carrot_before: int = eco.count_item(&"carrot")
+	var harvested := ready
+	for cell in selected:
+		if not ready:
+			break
+		harvested = await face_plot(t, cell) and harvested
+		t.tap(&"interact")
+		await t.physics(3)
+		harvested = world.farm.state_of(cell) == FarmGrid.State.EMPTY and harvested
+	check(t, "L11", "l11_harvest_purchased_seed_crops", harvested and eco.count_item(&"carrot") >= carrot_before + 3)
+	var bin: ShippingBin2D = world.area.find_markers("shipping_bin")[0].node
+	var route := await LoopWalker.walk_to(t, bin.global_position + Vector2(0, 60), 5, 15)
+	var amount: int = eco.count_item(&"carrot")
+	t.player().hotbar.assign(6, &"carrot")
+	t.tap(&"slot_7")
+	await t.frames(2)
+	var payout: int = roundi(eco.sell_value(&"carrot") * float(gm.config_value("farm_site.bin.pay_ratio", 1.0))) * amount
+	var gold: int = eco.gold
+	var bin_selected: bool = t.player().nearest_interactable() == bin
+	t.tap(&"interact")
+	await t.frames(3)
+	check(t, "L11", "l11_shipping_uses_live_bin", route.ok and bin_selected and amount >= 3 and eco.count_item(&"carrot") == 0 and eco.gold == gold, str(route) + " selected=" + str(bin_selected) + " amount=" + str(amount) + " left=" + str(eco.count_item(&"carrot")))
+	var events_before: int = suite.probe.named("bin_payout").size()
+	await LoopClock.next_day(t)
+	var paid_events: Array = suite.probe.named("bin_payout")
+	check(t, "L11", "l11_bin_pays_once_at_dawn", eco.gold == gold + payout and paid_events.size() == events_before + 1 and int(paid_events[-1].payload.gold) == payout)
+	var seed_rows: Array = t.autoload("ShopSystem").get_shop_inventory("seed_shop")
+	check(t, "L11", "l11_shop_restocks_at_dawn", seed_rows.any(func(row): return str(row.item_id) == "carrot_seeds" and int(row.stock) == int(row.max_stock)))

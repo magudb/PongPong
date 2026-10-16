@@ -185,6 +185,7 @@ func run(p_t) -> void:
 	_test_atomic_apply()
 	_test_sections_without_methods()
 	_test_slots_and_backup()
+	_test_backup_cache()
 	_test_delete_save()
 	_test_load_keeps_manual_slot()
 	_test_write_failure()
@@ -2307,3 +2308,25 @@ func _test_new_game_after_continue() -> void:
 	t.check("autosave_after_new_game_is_auto_only", sm.autosave() and _read_text(sm.slot_path(4)) == manual_bytes and sm.current_slot == -1, "slot 4 untouched, current_slot still -1")
 	await t.go_menu()
 	_clear_fakes()
+
+func _test_backup_cache() -> void:
+	_wipe()
+	_set_state(800, 2)
+	sm.save_game(1)
+	sm.save_game(1)
+	var payload: Dictionary = JSON.parse_string(_read_text(sm.slot_path(1)))
+	payload.meta.saved_at=float(payload.meta.saved_at)+1.25
+	payload.meta.timestamp="2026-10-16T12:34:56"
+	_write_json(sm.slot_path(1),payload)
+	var saved: bool = sm.save_game(1)
+	t.check("backup_cache_accepts_clock_only_change",saved and _gold_in(sm.backup_path(1))==800)
+	var good_backup := _read_text(sm.backup_path(1))
+	payload.meta.version=99
+	_write_json(sm.slot_path(1),payload)
+	sm.save_game(1)
+	t.check("backup_cache_rechecks_changed_version",_read_text(sm.backup_path(1))==good_backup)
+	payload.meta.version=2
+	payload.economy.gold="invalid gold"
+	_write_json(sm.slot_path(1),payload)
+	sm.save_game(1)
+	t.check("backup_cache_rechecks_changed_state",_read_text(sm.backup_path(1))==good_backup)

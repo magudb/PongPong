@@ -61,6 +61,9 @@ var warm_in_headless: bool = false
 var intro_script_path: String = INTRO_PATH
 var intro_script: Script = null
 var warm_skipped: int = 0
+var ready_for_play := false
+var last_travel_profile: Dictionary = {}
+var art_prefetch: AreaArtPrefetch
 
 var _cache: Dictionary = {}                 # area id -> parked IsoArea
 var _fade: ColorRect
@@ -189,6 +192,9 @@ func _ready() -> void:
 			add_child(game_ui)
 	_build_vignette()
 	_build_fade()
+	art_prefetch = AreaArtPrefetch.new()
+	art_prefetch.world = self
+	add_child(art_prefetch)
 	Svc.static_call("res://scripts/farm/steading/objects/farm_stage.gd", &"attach", [self])
 	Svc.static_call("res://scripts/traetoppen/life/daily_flags.gd", &"attach_world", [self])
 	Svc.static_call("res://scripts/farm/steading/tutorial/tutorial_hints.gd", &"attach", [self])
@@ -216,6 +222,7 @@ func _ready() -> void:
 	ContractManifest.report()
 	await warm_clips()
 	_maybe_intro()
+	ready_for_play = true
 
 
 ## The toast of a world start: the TITLE OF THE ZONE the player arrives in (ZONE_FARM -> "Trætoppen") and nothing else; it used to be
@@ -482,16 +489,29 @@ func travel(area_id: StringName, spawn: StringName) -> void:
 			EventBus.whisper_requested.emit("WORLD_WARP_LOCKED")
 		return
 	traveling = true
+	var began := Time.get_ticks_usec()
+	last_travel_profile = {}
+	art_prefetch.request(area_id)
+	last_travel_profile.request_ms = (Time.get_ticks_usec()-began)/1000.0
 	var tw: Tween = create_tween()
 	tw.tween_property(_fade, "color:a", 1.0, FADE_OUT)
 	await tw.finished
+	await art_prefetch.finish()
+	art_prefetch.request(area_id)
+	await art_prefetch.finish()
+	last_travel_profile.prefetch_and_fade_ms = (Time.get_ticks_usec()-began)/1000.0
+	last_travel_profile.prepared_paths = art_prefetch.staged.keys()
 	_enter(area_id, spawn)
+	last_travel_profile.entered_ms = (Time.get_ticks_usec()-began)/1000.0
 	await warm_clips()
+	art_prefetch.release()
+	last_travel_profile.warmed_ms = (Time.get_ticks_usec()-began)/1000.0
 	_flush_rebuild()                         # a tier / furniture change that arrived since _enter: rebuilt behind the black screen
 	var tw2: Tween = create_tween()
 	tw2.tween_property(_fade, "color:a", 0.0, FADE_IN)
 	await tw2.finished
 	traveling = false
+	last_travel_profile.total_ms = (Time.get_ticks_usec()-began)/1000.0
 	_flush_rebuild()                         # one that arrived during the fade-in
 	if _pass_out_pending:
 		_pass_out_pending = false
@@ -513,7 +533,12 @@ func warm_jobs() -> Array:
 		if nv is Object and (nv as Object).has_method("warm_clips") and _in_view(n as Node2D):
 			var flyer: bool = "flyer" in nv and bool(nv.get("flyer"))
 			var walks: bool = ("wander_radius" in n and float(n.get("wander_radius")) > 0.0) or ("routine_id" in n and str(n.get("routine_id")) != "")
-			jobs.append([nv, ["idle", "talk", "hover"] if flyer else (["idle", "talk", "walk"] if walks else ["idle", "talk"])])
+			var keeper := false
+			if area.has_meta("room_spec") and "npc_id" in n:
+				var building: String = str(area.get_meta("room_spec").get("building", ""))
+				var row: Dictionary = GameData.lua().get_registry("buildings").get(building, {})
+				keeper = str(row.get("keeper", "")) == str(n.get("npc_id"))
+			jobs.append([nv, ["idle", "talk"] if keeper else (["idle", "talk", "hover"] if flyer else (["idle", "talk", "walk"] if walks else ["idle", "talk"]))])
 	return jobs
 
 
@@ -597,7 +622,9 @@ func _flush_rebuild() -> void:
 
 
 func _rebuild_area() -> void:
-	if area == null:
+	# A tier notification may queue work in the same frame that quit/load
+	# removes this world. Never rebuild a detached or dying scene.
+	if area == null or not is_inside_tree() or is_queued_for_deletion():
 		return
 	var id: StringName = area.map.id
 	var at: Vector2 = player.global_position

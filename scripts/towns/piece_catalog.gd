@@ -69,15 +69,17 @@ static func json_of(path: String) -> Dictionary:
 
 
 static func texture(path: String) -> Texture2D:
-	if not _tex_cache.has(path):
-		var tex: Texture2D = load(path) as Texture2D if ResourceLoader.exists(path) else null
-		if tex == null and FileAccess.file_exists(path):
-			# an image that has not been imported (yet) is read straight from the file: art dropped next to a manifest works before the next `--import`
-			var img: Image = Image.load_from_file(path)
-			if img != null and not img.is_empty():
-				tex = ImageTexture.create_from_image(img)
-		_tex_cache[path] = tex
-	return _tex_cache[path]
+	if _tex_cache.has(path):
+		var cached: Variant = TextureRefs.fetch(_tex_cache[path])
+		if cached is Texture2D:
+			return cached
+	var tex: Texture2D = load(path) as Texture2D if ResourceLoader.exists(path) else null
+	if tex == null and FileAccess.file_exists(path):
+		var img: Image = Image.load_from_file(path)
+		if img != null and not img.is_empty():
+			tex = ImageTexture.create_from_image(img)
+	_tex_cache[path] = TextureRefs.store(tex)
+	return tex
 
 
 ## furniture.json items: id -> def.
@@ -261,7 +263,9 @@ static func _fill_box(out: Dictionary) -> void:
 static func box_art(fp: Vector2i) -> Dictionary:
 	var key: String = "%dx%d" % [fp.x, fp.y]
 	if _box_cache.has(key):
-		return _box_cache[key]
+		var cached: Variant = TextureRefs.fetch(_box_cache[key])
+		if cached is Dictionary:
+			return cached
 	var span: float = float(fp.x + fp.y)
 	var w: int = int(span * HALF_W) + 4
 	var h_top: float = span * HALF_H
@@ -284,7 +288,7 @@ static func box_art(fp: Vector2i) -> Dictionary:
 	_fill_poly(img, [bottom, right, right + lift, bottom + lift], Color(0.72, 0.58, 0.41, 0.95))
 	_fill_poly(img, [top + lift, right + lift, bottom + lift, left + lift], Color(0.93, 0.83, 0.63, 0.95))
 	var art: Dictionary = {"texture": ImageTexture.create_from_image(img), "size": Vector2i(w, h), "pivot": centre}
-	_box_cache[key] = art
+	_box_cache[key] = TextureRefs.store(art)
 	return art
 
 

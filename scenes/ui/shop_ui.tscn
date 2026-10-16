@@ -69,6 +69,7 @@ CatalogTooDear/fonts/font = SubResource("FontVariation_s0eex")
 shader = ExtResource("5_5ferc")
 shader_parameter/blur_lod = null
 shader_parameter/tint = Color(0.84, 0.8, 0.91, 0.3)
+shader_parameter/tint_limit = 0.047058824
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_idjpc"]
 shader = ExtResource("6_426is")

@@ -4,6 +4,8 @@ extends RefCounted
 ## Points use ground pixels. Authored sidecar points use the registry's sketch scale.
 const CELL := 32.0
 const BODY := 20.0
+const BAKED_CELLS := "res://data/towns/nav_city.json"
+static var use_baked_cells := true
 var data: Dictionary
 var levels: Array[Dictionary] = []
 var gates: Array[Dictionary] = []
@@ -158,6 +160,7 @@ func _bake() -> void:
 	var start := Time.get_ticks_usec()
 	var solid := 0
 	var total := 0
+	var prepared := _prepared_cells()
 	for authored in LuaData.arr(data.get("levels", [])):
 		var polygons: Array = []
 		var holes: Array = []
@@ -180,18 +183,26 @@ func _bake() -> void:
 		var level := {"id": str(authored.id), "c": centre, "org": org, "grid": grid, "polygons": polygons, "holes": holes, "n": size}
 		_ids[str(authored.id)] = levels.size()
 		levels.append(level)
+		var rows: Array = prepared.get(str(authored.id), [])
+		var cached := rows.size() == size.y and rows.all(func(row): return str(row).length() == size.x)
+		var main := {}
 		for y in size.y:
 			for x in size.x:
 				var p := _centre(level, Vector2i(x, y))
 				var free := true
-				for offset in [Vector2.ZERO, Vector2(BODY, 0), Vector2(-BODY, 0), Vector2(0, BODY), Vector2(0, -BODY)]:
-					if not _walkable(level, p + offset):
-						free = false
-						break
+				if cached:
+					free = str(rows[y])[x] != "1"
+					if str(rows[y])[x] == "m":
+						main[Vector2i(x, y)] = true
+				else:
+					for offset in [Vector2.ZERO, Vector2(BODY, 0), Vector2(-BODY, 0), Vector2(0, BODY), Vector2(0, -BODY)]:
+						if not _walkable(level, p + offset):
+							free = false
+							break
 				grid.set_point_solid(Vector2i(x, y), not free)
 				solid += int(not free)
 				total += 1
-		level["main"] = _main_component(grid)
+		level["main"] = main if cached else _main_component(grid)
 	for bridge in LuaData.arr(data.get("bridges", [])):
 		var la := int(_ids.get(str(bridge.from), -1))
 		var lb := int(_ids.get(str(bridge.to), -1))
@@ -212,7 +223,23 @@ func _bake() -> void:
 		for b in range(a + 1, gates.size()):
 			if gates[a].level == gates[b].level:
 				_connect(a, b, _local(gates[a].pos, gates[b].pos, int(gates[a].level)), "walk")
-	bake_info = {"bake_ms": float(Time.get_ticks_usec() - start) / 1000.0, "solid": solid, "cells": total, "gates": gates.size(), "edges": _links.size() / 2}
+	bake_info = {"bake_ms": float(Time.get_ticks_usec() - start) / 1000.0, "solid": solid, "cells": total, "gates": gates.size(), "edges": _links.size() / 2, "baked_cells": not prepared.is_empty()}
+
+func _prepared_cells() -> Dictionary:
+	if not use_baked_cells or not FileAccess.file_exists(BAKED_CELLS) or not FileAccess.file_exists("res://scripts/towns/level_nav.gd"):
+		return {}
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(BAKED_CELLS))
+	if not parsed is Dictionary or int(parsed.get("format", 0)) != 1:
+		return {}
+	if str(parsed.get("geometry", "")) != JSON.stringify(data, "", true).sha256_text() or str(parsed.get("algorithm", "")) != FileAccess.get_sha256("res://scripts/towns/level_nav.gd"):
+		return {}
+	var cells: Variant = parsed.get("levels", {})
+	if not cells is Dictionary:
+		return {}
+	for rows in cells.values():
+		if not rows is Array or not rows.all(func(row): return row is String and str(row).replace("0", "").replace("1", "").replace("m", "") == ""):
+			return {}
+	return cells
 
 func route(pa: Vector2, la: int, pb: Vector2, lb: int) -> Dictionary:
 	var empty := {"polyline": PackedVector2Array(), "length": 0.0, "hops": 0, "segments": []}

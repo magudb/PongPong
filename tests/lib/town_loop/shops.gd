@@ -15,6 +15,10 @@ func host(t, kind: String) -> bool:
 	if not route.ok or selected != hosts[0]:
 		t.info("Counter approach: " + str(route) + " selected=" + str(selected) + " wanted=" + str(hosts[0]))
 		return false
+	if kind == "shop" and suite != null and suite.native_mode and str(t.world().area.map.id) == "int_froebutikken":
+		t.player().camera.reset_smoothing()
+		await t.frames(20)
+		await suite.shot(t,"shop_backdrop")
 	t.tap(&"interact")
 	await t.frames(3)
 	return true
@@ -34,6 +38,7 @@ func run(t, owner) -> void:
 	var closed_walk := await LoopWalker.walk_to(t, door.global_position, 5, 15)
 	await t.physics(3)
 	check(t, "L05", "l05_closed_door_does_not_travel", closed_walk.ok and t.world().area.map.id == &"hyggebyen")
+	await suite.shot(t,"S06_shop_door_closed")
 	# Leave the approach so the real body_entered signal can fire at opening.
 	await LoopWalker.walk_to(t, t.world().area.get_spawn("from_int_froebutikken"), 5, 5)
 	await LoopClock.to(t, 10)
@@ -44,9 +49,19 @@ func run(t, owner) -> void:
 	if t.world().area.map.id != &"int_froebutikken":
 		return
 	check(t, "L04", "l04_iso_zone_zoom_and_budget", t.world().area.map.projection == &"iso" and t.world().area.map.zone == &"city" and int(InteriorRoom.stats.nodes) <= 130 and int(InteriorRoom.stats.lights) <= 4, str(InteriorRoom.stats))
+	check(t,"L04","l04_weather_curtain_hidden_indoors",not t.world().weather_fx.get_node("Rain").visible and not t.world().weather_fx.is_emitting())
+	var tm: Node = t.autoload("TimeManager")
+	var minutes: int = gm.hour * 60 + gm.minute
+	gm.set_config_override("time.minutes_per_real_second", 2.0)
+	tm.tick(1.0)
+	gm.set_config_override("time.minutes_per_real_second", 0.0)
+	check(t, "L04", "l04_zone_and_running_clock", gm.hour * 60 + gm.minute == minutes + 2 and not tm.is_paused)
+	var visible_size: Vector2 = t.world().area.bounds.size * t.player().camera.zoom
+	check(t, "L04", "l04_room_zoom_fits", visible_size.x <= 1280 and visible_size.y <= 720, str(visible_size))
 	var keeper := NpcDirector.node_of("merchant_pip")
 	var spec: Dictionary = t.world().area.get_meta("room_spec")
 	check(t, "L04", "l04_keeper_behind_counter", keeper != null and t.world().area.global_to_cell(keeper.global_position).y < 2)
+	await suite.shot(t,"S07_shop_interior_noon")
 	var before: int = sm.hearts("merchant_pip")
 	var talking := await host(t, "talk")
 	var dialogue := TownProbe.dialogue(t)
@@ -61,6 +76,7 @@ func run(t, owner) -> void:
 	check(t, "L06", "l06_counter_opens_panel", opened and panel.is_open() and panel.current_shop == &"seed_shop")
 	if panel.is_open():
 		check(t, "L06", "l06_keeper_greeting_and_bust", panel.keeper_speech.text != "" and str(panel._info.get("keeper", "")) == "merchant_pip")
+		await suite.shot(t,"S08_shop_panel")
 		var offer: Dictionary = {}
 		for entry in sys.get_shop_inventory("seed_shop"):
 			if str(entry.get("item_id", "")) == "carrot_seeds":
@@ -76,6 +92,11 @@ func run(t, owner) -> void:
 			t.tap(&"ui_accept")
 			await t.frames(4)
 			check(t, "L06", "l06_buy_exact", eco.gold == gold - total and eco.count_item(&"carrot_seeds") == owned + 3, "listed=" + str(total) + " charged=" + str(gold - eco.gold))
+			var wallet: int = eco.gold
+			eco.gold = 0
+			var refused: bool = not sys.buy_item("seed_shop", "carrot_seeds", 1)
+			check(t, "L06", "l06_refusals_have_reasons", refused and sys.last_refusal == &"no_gold" and eco.count_item(&"carrot_seeds") == owned + 3)
+			eco.gold = wallet
 		t.tap_key(KEY_ESCAPE)
 		await t.frames(3)
 		check(t, "L06", "l06_escape_restores_world", not panel.is_open() and not gm.is_modal_open() and t.player().state == PlayerBody2D.S.FREE)

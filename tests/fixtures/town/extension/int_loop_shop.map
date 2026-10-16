@@ -1,0 +1,7 @@
+@id int_loop_shop
+@title BLD_LOOP_SHOP
+@projection iso
+@ambient home
+@zone city
+@builder res://scripts/towns/interior_room.gd
+@room int_loop_shop

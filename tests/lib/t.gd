@@ -159,6 +159,9 @@ func capture(shot_name: String = "") -> Image:
 		fail("capture(%s) needs a real window: define run_windowed(t) and run tests/run_playtest.sh --windowed" % shot_name)
 		return null
 	await tree.process_frame
+	# A static or obscured window may not schedule a normal redraw. Request a
+	# fresh frame after deferred layout, then wait for its completion.
+	RenderingServer.force_draw.call_deferred()
 	await RenderingServer.frame_post_draw
 	var img := tree.root.get_texture().get_image()
 	if img == null or img.is_empty():

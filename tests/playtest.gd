@@ -221,7 +221,11 @@ func _run_section(s: Dictionary) -> void:
 		return
 	if _windowed:
 		await _t.clear_scene()   # sections must not see the world of the section before them (lead fix: windowed isolation)
+	# A section may deliberately visit all races. Its local choice must not
+	# change the default selected by --character for subsequent sections.
+	_t.character = _character
 	_begin_section(name_)
+	_t.stats[name_]["character"] = _t.character
 	print("== section %s%s  (%s)" % [name_, " [windowed]" if _windowed else "", s["path"]])
 	var obj: Object = (s["script"] as GDScript).new()
 	var mark: int = _catcher.mark()

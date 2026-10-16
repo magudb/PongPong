@@ -1,11 +1,58 @@
 {
   "v": 2,
   "waves": {
-    "4": ["L00.l00_new_game_on_farm", "L10.l10_till_plant_water", "L10.l10_energy_costs", "L11.l11_bed_opens_at_18", "L11.l11_sleep_rolls_day", "L13.l13_digest_roundtrip", "L13.l13_save_cost"],
-    "5": ["@4", "L03.l03_walk_and_talk", "L06.l06_buy_exact"],
-    "5b": ["@5", "L00.l00_first_morning_order", "L01", "L02", "L03.l03b_keeper_weekly_heart_at_counter", "L04", "L05", "L06.l06b_keeper_weekly_heart_at_noon", "L06.l06c_home_upgrade_desk_at_noon", "L07", "L08", "L09", "L10.l10_forste_dage_objectives", "L10.l10_hint_once_per_save", "L11.l11_no_pass_out_at_midnight", "L12", "L13", "L14", "L17", "L18"],
-    "6": ["@5b", "L16"],
-    "7": ["@6", "L15"]
+    "4": [
+      "L00.l00_new_game_on_farm",
+      "L10.l10_till_plant_water",
+      "L10.l10_energy_costs",
+      "L11.l11_bed_opens_at_18",
+      "L11.l11_sleep_rolls_day",
+      "L13.l13_digest_roundtrip",
+      "L13.l13_save_cost"
+    ],
+    "5": [
+      "@4",
+      "L03.l03_walk_and_talk",
+      "L06.l06_buy_exact"
+    ],
+    "5b": [
+      "@5",
+      "L00.l00_first_morning_order",
+      "L01",
+      "L02",
+      "L03.l03b_keeper_weekly_heart_at_counter",
+      "L04",
+      "L05",
+      "L06.l06b_keeper_weekly_heart_at_noon",
+      "L06.l06c_home_upgrade_desk_at_noon",
+      "L07",
+      "L08",
+      "L09",
+      "L10.l10_forste_dage_objectives",
+      "L10.l10_hint_once_per_save",
+      "L11.l11_no_pass_out_at_midnight",
+      "L12",
+      "L13",
+      "L14",
+      "L17",
+      "L18",
+      "L18.l18_data_only_citizen",
+      "L18.l18_data_only_building",
+      "L18.l18_data_only_routine_edit",
+      "L18.l18_data_only_shop_hours",
+      "L18.l18_data_only_festival",
+      "L18.l18_data_only_event",
+      "L18.l18_data_only_quest",
+      "L18.l18_no_gd_changed"
+    ],
+    "6": [
+      "@5b",
+      "L16"
+    ],
+    "7": [
+      "@6",
+      "L15"
+    ]
   },
   "note": "5b includes the M1b copy and data-only extension proofs. Later content legs remain capability guarded. A required capability skip fails the gate."
 }

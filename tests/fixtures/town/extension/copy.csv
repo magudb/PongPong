@@ -1,0 +1,15 @@
+keys,da,en
+NPC_LOOP_NEIGHBOUR,Nabo Nælde,Neighbour Nettle
+BLD_LOOP_SHOP,Nældes bod,Nettle's shop
+SHOP_LOOP_SHOP,Nældes bod,Nettle's shop
+SHOP_LOOP_SHOP_GREETING,Her er frø til en ny dag.,Seeds for a new day.
+DLG_LOOP_NEIGHBOUR_HELLO,Velkommen. Her dufter af nye frø.,Welcome. It smells of fresh seeds here.
+SOC_LOOP_NEIGHBOUR_FIRST_1,Jeg hedder Nælde. Vil du se mine frø?,I'm Nettle. Would you like to see my seeds?
+SOC_LOOP_NEIGHBOUR_GREET_1,Frøene venter på foråret.,The seeds are waiting for spring.
+SOC_LOOP_NEIGHBOUR_BIO_1,Nælde passer byens lille frøbod.,Nettle tends the town's little seed shop.
+FEST_LOOP_NAME,Frødagen,Seed day
+FEST_LOOP_DESC,Vi deler frø på torvet.,We share seeds in the square.
+EV_LOOP_TITLE,En lille spire,A little sprout
+QUEST_LOOP_MAIL_TITLE,Et brev til Nælde,A letter for Nettle
+QUEST_LOOP_MAIL_OFFER,Vil du læse det nye brev?,Would you read the new letter?
+OBJ_LOOP_MAIL_READ,Læs et brev,Read a letter

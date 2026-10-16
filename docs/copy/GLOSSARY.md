@@ -34,6 +34,10 @@ Use display names in player text. Internal IDs remain stable in code and save fi
 | cub_bamse | Bamse | Bamse |
 | clerk_fjerpen | Skriver Fjerpen | Clerk Fjerpen |
 | fiddler_strimmel | Spillemand Strimmel | Fiddler Strimmel |
+| ghostfam_dyne | Mormor Dyne | Granny Dyne |
+| ghostfam_gnist | Far Gnist | Dad Gnist |
+| ghostfam_silke | Mor Silke | Mum Silke |
+| ghostfam_blund | Lille Blund | Little Blund |
 
 ## Places and calendar
 

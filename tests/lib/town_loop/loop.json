@@ -52,11 +52,11 @@
       "npc": "gardener_hoppe",
       "a": {
         "weekday": 2,
-        "hour": 11
+        "hour": 11.5
       },
       "b": {
         "weekday": 2,
-        "hour": 12.5
+        "hour": 15.5
       }
     }
   ],

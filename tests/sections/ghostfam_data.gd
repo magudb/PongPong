@@ -242,7 +242,7 @@ func run_windowed(t) -> void:
 			await t.frames(3)
 	gm.clear_config_overrides()
 
-func _stand_near(t, actor: Node2D) -> bool:
+func _stand_near(t, actor: Node2D, clearance := 120.0, radii := [180.0, 140.0, 100.0]) -> bool:
 	var area: IsoArea = t.world().area
 	var registry := CityBuilder.of(area).registry
 	var query := PhysicsShapeQueryParameters2D.new()
@@ -250,14 +250,14 @@ func _stand_near(t, actor: Node2D) -> bool:
 	body.points = Npc2D._ellipse(Vector2(25, 14.8))
 	query.shape = body
 	var space := area.get_world_2d().direct_space_state
-	for radius in [180.0, 140.0, 100.0]:
+	for radius in radii:
 		for turn in 16:
 			var angle := TAU * turn / 16.0
 			var point: Vector2 = actor.global_position + Iso.to_screen(Vector2(cos(angle), sin(angle)) * float(radius))
 			var level := registry.level_at(point)
 			if level == null or Array(body.points).any(func(edge): return not area.walkable_test.call(point + edge)):
 				continue
-			if TownProbe.director(t).live.values().any(func(npc): return npc.global_position.distance_to(point) < 120):
+			if TownProbe.director(t).live.values().any(func(npc): return npc.global_position.distance_to(point) < clearance):
 				continue
 			query.transform = Transform2D(0, point)
 			query.collision_mask = Iso.LAYER_WORLD | Iso.LAYER_NPC | level.mask_bit()

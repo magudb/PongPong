@@ -17,7 +17,8 @@ static func to(t, hour: int, minute := 0) -> void:
 
 static func at(t, weekday: int, hour: int, minute := 0) -> void:
 	for i in 8:
-		if CalendarUtil.weekday_of(t.autoload("SocialManager").today()) == weekday:
+		var gm: Node = t.autoload("GameManager")
+		if CalendarUtil.weekday_of(t.autoload("SocialManager").today()) == weekday and gm.hour * 60 + gm.minute <= hour * 60 + minute:
 			break
 		await next_day(t)
 	await to(t, hour, minute)

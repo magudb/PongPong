@@ -10,7 +10,8 @@ var _pulse: float = 0.0
 
 func _process(delta: float) -> void:
 	_pulse += delta
-	queue_redraw()
+	if is_visible_in_tree():
+		queue_redraw()
 
 
 func _outline() -> PackedVector2Array:

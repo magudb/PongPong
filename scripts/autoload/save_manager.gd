@@ -113,6 +113,10 @@ var world_scene: String = WORLD_SCENE
 var _auto_save_timer: float = 0.0
 var _autosave_queued: bool = false
 var _sections: Array[Dictionary] = []     # registered sections: {name, node, order, seq}
+## Backup validation is pure over the payload. Cache the exact file hash and
+## a content fingerprint that excludes only the two unvalidated wall clocks.
+## Section registration/reset invalidates every cached validator result.
+var _backup_validation: Dictionary = {}
 var _section_seq: int = 0
 
 
@@ -158,6 +162,7 @@ func _process(delta: float) -> void:
 
 ## New game (EventBus.new_game_started): no current slot, timers zero, nothing waits for a world, no stale error.
 func reset() -> void:
+	_backup_validation.clear()
 	current_slot = NO_SLOT
 	_auto_save_timer = 0.0
 	_autosave_queued = false
@@ -463,6 +468,7 @@ func describe_slots() -> Array[Dictionary]:
 ## Sections apply in ascending `order`, equal orders in registration order. Registering a name again replaces the node and
 ## order. Returns false (with an error) for a bad name, a node without the three methods, or a built-in/reserved name.
 func register_section(section_name: String, node: Node, order: int = DEFAULT_SECTION_ORDER) -> bool:
+	_backup_validation.clear()
 	var rx := RegEx.new()
 	rx.compile("^[a-z][a-z0-9_]{0,31}$")
 	if rx.search(section_name) == null:
@@ -490,6 +496,7 @@ func register_section(section_name: String, node: Node, order: int = DEFAULT_SEC
 
 
 func unregister_section(section_name: String) -> void:
+	_backup_validation.clear()
 	for i in range(_sections.size() - 1, -1, -1):
 		if _sections[i]["name"] == section_name:
 			_sections.remove_at(i)
@@ -1000,8 +1007,16 @@ func _roll_backup(slot: int) -> void:
 	var backup := backup_path(slot)
 	if backup == "" or not FileAccess.file_exists(path):
 		return
-	var previous := _read_json_file(path)
-	if previous["state"] != "ok" or not validate_payload(previous["data"])["ok"]:
+	var digest := FileAccess.get_sha256(path)
+	var validated: Dictionary = _backup_validation.get(path, {})
+	if digest == "" or str(validated.get("hash", "")) != digest:
+		var previous := _read_json_file(path)
+		var signature := _backup_signature(previous["data"]) if previous["state"] == "ok" else ""
+		var same_content := signature!="" and signature==str(validated.get("content", ""))
+		var valid: bool = bool(validated.get("valid", false)) if same_content else (previous["state"] == "ok" and bool(validate_payload(previous["data"])["ok"]))
+		validated = {"hash": digest, "content": signature, "valid": valid}
+		_backup_validation[path] = validated
+	if not bool(validated.get("valid", false)):
 		return
 	var temp := backup + ".tmp"
 	if DirAccess.copy_absolute(path, temp) != OK:
@@ -1019,3 +1034,15 @@ func _toast(title: String, message: String, arg: int) -> void:
 	if message.contains("%d") or message.contains("%s"):
 		message = message % arg
 	EventBus.notification_posted.emit(title, message, "save")
+
+## validate_payload checks meta.version and every state section; these two
+## informational real clocks never affect its verdict. All other bytes,
+## including economy/flags/version/unknown metadata, remain in the signature.
+func _backup_signature(payload: Dictionary) -> String:
+	var content := payload.duplicate()
+	if content.get("meta") is Dictionary:
+		var meta: Dictionary = content.meta.duplicate()
+		meta.erase("saved_at")
+		meta.erase("timestamp")
+		content.meta=meta
+	return JSON.stringify(content,"",true,true).sha256_text()

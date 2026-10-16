@@ -1408,6 +1408,190 @@
     }
    }
   },
+  "ghostfam_blund": {
+   "role": "npc",
+   "clip_set": "villager",
+   "family": "ghost",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    }
+   }
+  },
+  "ghostfam_dyne": {
+   "role": "npc",
+   "clip_set": "villager",
+   "family": "ghost",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    }
+   }
+  },
+  "ghostfam_gnist": {
+   "role": "npc",
+   "clip_set": "villager",
+   "family": "ghost",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    }
+   }
+  },
+  "ghostfam_silke": {
+   "role": "npc",
+   "clip_set": "villager",
+   "family": "ghost",
+   "flyer": false,
+   "display_scale": 1.0,
+   "portrait": "portrait.webp",
+   "animations": {
+    "idle": {
+     "frames": 4,
+     "fps": 5,
+     "loop": true,
+     "sheet": "idle.webp"
+    },
+    "walk": {
+     "frames": 6,
+     "fps": 9,
+     "loop": true,
+     "sheet": "walk.webp"
+    },
+    "celebrate": {
+     "frames": 6,
+     "fps": 9,
+     "loop": false,
+     "sheet": "celebrate.webp"
+    },
+    "interact": {
+     "frames": 4,
+     "fps": 9,
+     "loop": false,
+     "sheet": "interact.webp"
+    },
+    "sleep": {
+     "frames": 4,
+     "fps": 3,
+     "loop": true,
+     "sheet": "sleep.webp"
+    },
+    "talk": {
+     "frames": 4,
+     "fps": 6,
+     "loop": true,
+     "sheet": "talk.webp"
+    }
+   }
+  },
   "hedgehog_pip": {
    "role": "npc",
    "clip_set": "villager",
@@ -2481,190 +2665,6 @@
      "fps": 12,
      "loop": false,
      "sheet": "attack.webp"
-    }
-   }
-  },
-  "ghostfam_dyne": {
-   "role": "npc",
-   "clip_set": "villager",
-   "family": "ghost",
-   "flyer": false,
-   "display_scale": 1.0,
-   "portrait": "portrait.webp",
-   "animations": {
-    "idle": {
-     "frames": 4,
-     "fps": 5,
-     "loop": true,
-     "sheet": "idle.webp"
-    },
-    "walk": {
-     "frames": 6,
-     "fps": 9,
-     "loop": true,
-     "sheet": "walk.webp"
-    },
-    "celebrate": {
-     "frames": 6,
-     "fps": 9,
-     "loop": false,
-     "sheet": "celebrate.webp"
-    },
-    "interact": {
-     "frames": 4,
-     "fps": 9,
-     "loop": false,
-     "sheet": "interact.webp"
-    },
-    "sleep": {
-     "frames": 4,
-     "fps": 3,
-     "loop": true,
-     "sheet": "sleep.webp"
-    },
-    "talk": {
-     "frames": 4,
-     "fps": 6,
-     "loop": true,
-     "sheet": "talk.webp"
-    }
-   }
-  },
-  "ghostfam_gnist": {
-   "role": "npc",
-   "clip_set": "villager",
-   "family": "ghost",
-   "flyer": false,
-   "display_scale": 1.0,
-   "portrait": "portrait.webp",
-   "animations": {
-    "idle": {
-     "frames": 4,
-     "fps": 5,
-     "loop": true,
-     "sheet": "idle.webp"
-    },
-    "walk": {
-     "frames": 6,
-     "fps": 9,
-     "loop": true,
-     "sheet": "walk.webp"
-    },
-    "celebrate": {
-     "frames": 6,
-     "fps": 9,
-     "loop": false,
-     "sheet": "celebrate.webp"
-    },
-    "interact": {
-     "frames": 4,
-     "fps": 9,
-     "loop": false,
-     "sheet": "interact.webp"
-    },
-    "sleep": {
-     "frames": 4,
-     "fps": 3,
-     "loop": true,
-     "sheet": "sleep.webp"
-    },
-    "talk": {
-     "frames": 4,
-     "fps": 6,
-     "loop": true,
-     "sheet": "talk.webp"
-    }
-   }
-  },
-  "ghostfam_silke": {
-   "role": "npc",
-   "clip_set": "villager",
-   "family": "ghost",
-   "flyer": false,
-   "display_scale": 1.0,
-   "portrait": "portrait.webp",
-   "animations": {
-    "idle": {
-     "frames": 4,
-     "fps": 5,
-     "loop": true,
-     "sheet": "idle.webp"
-    },
-    "walk": {
-     "frames": 6,
-     "fps": 9,
-     "loop": true,
-     "sheet": "walk.webp"
-    },
-    "celebrate": {
-     "frames": 6,
-     "fps": 9,
-     "loop": false,
-     "sheet": "celebrate.webp"
-    },
-    "interact": {
-     "frames": 4,
-     "fps": 9,
-     "loop": false,
-     "sheet": "interact.webp"
-    },
-    "sleep": {
-     "frames": 4,
-     "fps": 3,
-     "loop": true,
-     "sheet": "sleep.webp"
-    },
-    "talk": {
-     "frames": 4,
-     "fps": 6,
-     "loop": true,
-     "sheet": "talk.webp"
-    }
-   }
-  },
-  "ghostfam_blund": {
-   "role": "npc",
-   "clip_set": "villager",
-   "family": "ghost",
-   "flyer": false,
-   "display_scale": 1.0,
-   "portrait": "portrait.webp",
-   "animations": {
-    "idle": {
-     "frames": 4,
-     "fps": 5,
-     "loop": true,
-     "sheet": "idle.webp"
-    },
-    "walk": {
-     "frames": 6,
-     "fps": 9,
-     "loop": true,
-     "sheet": "walk.webp"
-    },
-    "celebrate": {
-     "frames": 6,
-     "fps": 9,
-     "loop": false,
-     "sheet": "celebrate.webp"
-    },
-    "interact": {
-     "frames": 4,
-     "fps": 9,
-     "loop": false,
-     "sheet": "interact.webp"
-    },
-    "sleep": {
-     "frames": 4,
-     "fps": 3,
-     "loop": true,
-     "sheet": "sleep.webp"
-    },
-    "talk": {
-     "frames": 4,
-     "fps": 6,
-     "loop": true,
-     "sheet": "talk.webp"
     }
    }
   }

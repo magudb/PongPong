@@ -1249,6 +1249,7 @@ const EXPECTED_ROWS := {
 	"underdeck": "res://scripts/farm/steading/objects/underdeck_2d.gd", "ambient_fx": "res://scripts/farm/steading/objects/ambient_fx_2d.gd", "dress": "res://scripts/farm/steading/dress/dress_2d.gd",
 	"town": "res://scripts/towns/town_marker.gd", "door": "res://scripts/towns/town_marker.gd", "post": "res://scripts/towns/town_marker.gd",
 	"bath": "res://scripts/traetoppen/life/bath_tub_2d.gd", "board": "res://scripts/traetoppen/life/notice_board_2d.gd",
+	"seed_basket": "res://scripts/traetoppen/life/seed_basket_2d.gd", "kiki_cache": "res://scripts/traetoppen/life/crown_cache_2d.gd", "rejsestolpe": "res://scripts/traetoppen/life/rejsestolpe_2d.gd",
 }
 
 
@@ -1262,7 +1263,7 @@ func _marker_registry() -> void:
 		if str(rows.get(type, "")) != EXPECTED_ROWS[type] or str((reg.get(type, {}) as Dictionary).get("script", "")) != EXPECTED_ROWS[type]:
 			all_there = false
 			wrong.append(str(type))
-	t.check("marker_handlers_registered", all_there and rows.size() == EXPECTED_ROWS.size(), "lua/config/marker_handlers.lua carries the %d rows of the orders (F4 3, F6 2, D2 1, V8 2, V6 mailbox + bath + board, farm 6, towns 3) and IsoArea.marker_registry() merges them; wrong or missing: %s" % [EXPECTED_ROWS.size(), str(wrong)])
+	t.check("marker_handlers_registered", all_there and rows.size() == EXPECTED_ROWS.size(), "lua/config/marker_handlers.lua carries the %d rows of the orders (F4 3, F6 2, D2 1, V8 2, V6 six service handlers, farm 6, towns 3) and IsoArea.marker_registry() merges them; wrong or missing: %s" % [EXPECTED_ROWS.size(), str(wrong)])
 	var farm_types := ["shipping_bin", "tool_shed", "field_expansion", "underdeck", "ambient_fx", "dress"]
 	var farm_ok := true
 	for ty in farm_types:

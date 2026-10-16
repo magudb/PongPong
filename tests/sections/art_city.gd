@@ -885,6 +885,7 @@ func _seam_in_engine() -> void:
 	var t = _t
 	var bad: Array[String] = []
 	var worst := 0.0
+	var samples := 0
 	for group in [[367, 404, 441], [698]]:
 		_begin_scene(1.0, Vector2(640, 360), Color("203040"))
 		var x := 0.0
@@ -900,6 +901,7 @@ func _seam_in_engine() -> void:
 			continue
 		var seam_y: int = 10 + 312 - 1
 		for sp in spans:
+			samples += 1
 			var x0: int = int(sp[0]) + 14
 			var x1: int = int(sp[1]) - 14
 			var steps: Array[float] = []
@@ -927,7 +929,7 @@ func _seam_in_engine() -> void:
 				steps_c.append(_row_step(ctl, y, 114, 490))
 		steps_c.sort()
 		ctl_ratio = _row_step(ctl, 10 + 311, 114, 490) / maxf(steps_c[steps_c.size() / 2], 0.05)
-	t.check("tileable_trunk_seam", bad.is_empty() and worst > 0.0 and ctl_ratio > 2.5,
+	t.check("tileable_trunk_seam", samples == 4 and bad.is_empty() and ctl_ratio > 2.5,
 		"all four bark tiles repeat through Sprite2D region + repeat in the engine without a visible seam (worst seam / median row step %.2f, limit 1.9 x + .5); the control with a wrong phase shows %.1f x (the probe can see a seam); %s" % [worst, ctl_ratio, str(bad.slice(0, 3))])
 
 
@@ -975,8 +977,27 @@ func _line2d_orientation() -> void:
 	hy /= float(n)
 	vx /= float(m)
 	vy /= float(m)
-	t.check("bridge_line2d_orientation", hx > 1.6 * hy and vy > 1.6 * vx,
-		"a Line2D with the deck tile (LINE_TEXTURE_TILE) draws planks across the bridge for a horizontal AND a vertical bridge (luma step along / across: horizontal %.2f / %.2f, vertical %.2f / %.2f)" % [hx, hy, vy, vx])
+	# Painted grain has strong detail in both axes. Compare the actual native
+	# UV mapping instead of assuming that one axis must have more high frequencies.
+	var horizontal := img.get_region(Rect2i(60, 136, 640, 128))
+	var vertical := img.get_region(Rect2i(836, 40, 128, 640))
+	var wrong: Image = vertical.duplicate()
+	vertical.rotate_90(COUNTERCLOCKWISE)
+	wrong.rotate_90(CLOCKWISE)
+	var error := 0.0
+	var control := 0.0
+	for y in horizontal.get_height():
+		for x in horizontal.get_width():
+			var a := horizontal.get_pixel(x, y)
+			var b := vertical.get_pixel(x, y)
+			var c := wrong.get_pixel(x, y)
+			error += (absf(a.r-b.r)+absf(a.g-b.g)+absf(a.b-b.b))*255.0/3.0
+			control += (absf(a.r-c.r)+absf(a.g-c.g)+absf(a.b-c.b))*255.0/3.0
+	var count := float(horizontal.get_width()*horizontal.get_height())
+	error /= count
+	control /= count
+	t.check("bridge_line2d_orientation", error < 0.25 and control > 8.0,
+		"native horizontal and vertical tiled decks agree after rotating the bridge (mean RGB error %.4f / 255; limit .25); wrong rotation control %.2f (must exceed 8). Painted grain luma steps along/across: %.2f/%.2f and %.2f/%.2f" % [error, control, hx, hy, vy, vx])
 
 
 func _label(parent: Node, text: String, pos: Vector2, zoom: float) -> void:

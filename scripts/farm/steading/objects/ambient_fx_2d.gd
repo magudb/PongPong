@@ -71,5 +71,5 @@ func _resize() -> void:
 	leaves.emission_rect_extents = Vector2(viewport.x * 0.7, 6)
 
 func _process(_delta: float) -> void:
-	if is_instance_valid(world) and world.day_night != null:
+	if is_instance_valid(world) and world.day_night != null and canopy.modulate != world.day_night.color:
 		canopy.modulate = world.day_night.color

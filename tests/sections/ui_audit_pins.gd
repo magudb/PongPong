@@ -1882,7 +1882,16 @@ func _g_more_late(t) -> void:
 	await t.frames(3)
 	var w := await UiAudit.focus_walk(t, rt, 0)
 	t.check("pin_pad_check_skips_targets_on_a_closed_page", bool(w["pad_matches_keyboard"]) and _count(w, "pad_mismatch") == 0, "the edges recorded on the other pages lead to rows that are hidden again: %s" % UiAudit.summary(w))
-	t.check("pin_walk_does_not_probe_the_other_tabs_of_a_page", int(w["steps"]) <= 60, "the three pages of the fixture take 51 presses; probing the other members of the group on every page takes 67: %d" % int(w["steps"]))
+	var isolated: Callable = func(page: Dictionary,index: int)->bool:
+		var paths: Array = page.nodes
+		return paths.size()==5 and paths.all(func(path):return str(path).contains("/TabRow/") or str(path).contains("/Page%d/" % index))
+	var pages_ok: bool = w.pages.size()==3
+	for index in w.pages.size():
+		pages_ok=pages_ok and isolated.call(w.pages[index],index)
+	var contaminated: Dictionary = w.pages[0].duplicate(true)
+	contaminated.nodes.append("Page1/Button0")
+	t.check("pin_walk_does_not_probe_the_other_tabs_of_a_page",pages_ok and not isolated.call(contaminated,0),
+		"each page graph contains three tabs and only its own two rows; contaminated-page control is rejected. %d presses include context restoration and per-page pad probes" % int(w.steps))
 	await _drop(t)
 	# a control that is visible on every page and was first reached from a page that is closed again: its edge leads into the closed page
 	var blind := BlindSection.new()

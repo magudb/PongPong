@@ -963,7 +963,7 @@ func _physics_connectivity(t) -> void:
 			bad_spawn.append(String(sn2))
 		else:
 			spawn_paths.append("%s %.1f s" % [sn2, l2 / _walk_speed()])
-	t.check("spawn_to_warp_paths", bad_spawn.is_empty() and spawn_paths.size() == 2, "a walkable path leads from every spawn to the bridge warp (flood fill on the cells a body 1.15 x the player's can stand on): %s" % [spawn_paths])
+	t.check("spawn_to_warp_paths", bad_spawn.is_empty() and spawn_paths.size() == a.spawns.size() and a.spawns.has("default") and a.spawns.has("from_traetoppen"), "a walkable path leads from every spawn to the bridge warp (flood fill on the cells a body 1.15 x the player's can stand on): %s" % [spawn_paths])
 	# spawns lie outside every warp diamond (an arrival never re-triggers the warp)
 	var min_gap: float = INF
 	for sn3 in a.spawns:

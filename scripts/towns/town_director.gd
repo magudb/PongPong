@@ -201,17 +201,17 @@ func resync(hard := true, only := "") -> void:
 	if social != null and social.has_method("festival_active"):
 		festival = str(social.call("festival_active")) != "" and str(LuaData.dict(_context().get("fest", {})).get("area", "")) == area_id
 	max_live = maxi(1, int(GameManager.config_value("towns.max_live_visuals_festival" if festival else "towns.max_live_visuals", 20 if festival else 16)))
+	var room := area.has_meta("room_spec")
+	var keeper := ""
+	if room:
+		var spec: Dictionary = area.get_meta("room_spec")
+		var building := Hours.building(str(spec.get("building","")))
+		keeper=str(building.get("keeper",building.get("owner","")))
+	var selected := NpcDirector.select_presences(Routines.present_in(area_id,ctx),max_live,keeper,4 if room else -1)
 	var wanted := {}
-	var looks := {}
-	last_dropped = 0
-	for row in Routines.present_in(area_id, ctx):
-		var id := str(row.npc)
-		var look := str(LuaRuntime.get_npc(id).get("visual", "fairy"))
-		if not looks.has(look) and looks.size() >= max_live:
-			last_dropped += 1
-			continue
-		looks[look] = true
-		wanted[id] = row
+	var looks: Dictionary = selected.looks
+	last_dropped=int(selected.dropped)
+	for row in selected.rows:wanted[str(row.npc)]=row
 	_assign_post_slots(wanted)
 	for id in live.keys():
 		if not wanted.has(id) and (only == "" or only == str(id)):
@@ -440,6 +440,22 @@ func _space_festival_posts() -> void:
 		var centre: Vector2 = anchors.get(prefix + "host", Vector2.INF)
 		if centre == Vector2.INF:
 			continue
+		var available: Array[Vector2] = []
+		if nav != null:
+			var base := area.global_to_cell(area.to_global(Iso.to_screen(centre)))
+			for y in range(-10, 11):
+				for x in range(-10, 11):
+					var cell := base + Vector2i(x, y)
+					if nav.astar.is_in_boundsv(cell) and not nav.blocked.has(cell):
+						available.append(Iso.to_ground(area.to_local(area.cell_to_global(cell))))
+		elif level_nav != null:
+			for radius in range(0, 9):
+				for direction in 24:
+					var angle := TAU * float(direction) / 24.0
+					var candidate := centre + Vector2(cos(angle), sin(angle)) * float(radius) * 100
+					var snapped := level_nav.snap(candidate, int(spot.level))
+					if bool(snapped.get("ok", false)):
+						available.append(snapped.pos)
 		var taken: Array[Vector2] = [centre]
 		for role in FestSet.roles():
 			var name := prefix + str(role[0])
@@ -447,22 +463,7 @@ func _space_festival_posts() -> void:
 				continue
 			var offset: Vector2i = role[1]
 			var desired := centre + Iso.to_ground(Iso.iso_center(offset) - Iso.iso_center(Vector2i.ZERO))
-			var candidates: Array[Vector2] = []
-			if nav != null:
-				var base := area.global_to_cell(area.to_global(Iso.to_screen(centre)))
-				for y in range(-10, 11):
-					for x in range(-10, 11):
-						var cell := base + Vector2i(x, y)
-						if nav.astar.is_in_boundsv(cell) and not nav.blocked.has(cell):
-							candidates.append(Iso.to_ground(area.to_local(area.cell_to_global(cell))))
-			elif level_nav != null:
-				for radius in range(0, 9):
-					for direction in 24:
-						var angle := TAU * float(direction) / 24.0
-						var candidate := centre + Vector2(cos(angle), sin(angle)) * float(radius) * 100
-						var snapped := level_nav.snap(candidate, int(spot.level))
-						if bool(snapped.get("ok", false)):
-							candidates.append(snapped.pos)
+			var candidates: Array[Vector2] = available.duplicate()
 			candidates.sort_custom(func(a: Vector2, b: Vector2): return a.distance_squared_to(desired) < b.distance_squared_to(desired))
 			for candidate in candidates:
 				if taken.all(func(point: Vector2): return candidate.distance_squared_to(point) >= 200.0 * 200.0):

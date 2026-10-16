@@ -529,10 +529,8 @@ func _max_step(samples: Array[int]) -> int:
 
 func _warm_clips(t) -> void:
 	var clips := ["walk", "run", "interact", "talk", "hit"]
-	# 1. DETERMINISTIC pacing guard: the five sheets are already in the resource cache (load()), so every threaded request
-	# is complete at once and only warm_clips' own finalise loop decides how many sheets the sprite takes per frame. Plan 8.6
-	# needs ONE per frame (the S3TC upload of a sheet is ~20 ms in the real renderer, five in one frame is a 100 ms hitch).
-	# Mutant check: dropping the trailing `await get_tree().process_frame` of the finalise loop gives steps [0, 5] and fails.
+	# Already loaded textures have completed their upload. Adopting staging refs
+	# must not add an idle frame per clip; genuinely cold sheets are paced below.
 	var held: Array = []
 	for c in clips:
 		held.append(load(DIR + "frog/" + str(c) + ".webp"))
@@ -553,7 +551,7 @@ func _warm_clips(t) -> void:
 		guard += 1
 	var det_step := _max_step(det_counts)
 	var det_frames := det_counts.size() - 1
-	t.check("warm_clips_one_sheet_per_frame", bool(det_state["done"]) and det_step == 1 and det_frames >= clips.size() and det_counts[det_counts.size() - 1] == det_counts[0] + clips.size(), "resident clips per sample %s: at most %d sheet(s) finalised per frame (must be 1), %d frames for %d sheets" % [str(det_counts), det_step, det_frames, clips.size()])
+	t.check("warm_clips_adopts_resident_sheets_without_idle_frames",bool(det_state["done"]) and det_step==clips.size() and det_frames==1 and det_counts.back()==det_counts[0]+clips.size(),"already uploaded clips adopted immediately: %s" % [det_counts])
 	held.clear()
 	det.queue_free()
 	await t.frames(1)
@@ -587,6 +585,7 @@ func _warm_clips(t) -> void:
 	var cached := true
 	for c in clips:
 		cached = cached and ResourceLoader.has_cached(DIR + "capybara/" + str(c) + ".webp")
+	t.check("warm_clips_one_sheet_per_frame", bool(state["done"]) and _max_step(counts)<=1 and frame_ms.size()>=clips.size() and counts.back()==counts[0]+clips.size(),"genuinely cold clips per frame: %s" % [counts])
 	t.check("warm_clips_finishes_cheap", bool(state["done"]) and mean < 8.0 and worst < 40.0 and _max_step(counts) <= 1 and counts[counts.size() - 1] == counts[0] + clips.size(), "5 cold clips finished over %d frames, mean frame %.2f ms, worst %.1f ms, at most %d sheet(s) per frame (SCRIPT cost only: headless = dummy renderer where a GPU upload is free; the real-renderer budget is checked windowed by characters.warm_clips_worst_frame_real_renderer and tests/perf_world.tscn)" % [frame_ms.size(), mean, worst, _max_step(counts)])
 	t.check("warm_clips_leaves_sheets_cached", cached)
 	probe.play_loop(&"walk")

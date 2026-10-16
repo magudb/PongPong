@@ -240,5 +240,6 @@
   "design6: + the family bed and the guest bed (two bed_birch_single laid along the back wall, row 0, behind the counter band: unreachable for the player like the table and the bed post, the citizens' corridor of row 1 stays free; scripts/room_check6.py: 0 problems)",
   "the family bed along the back wall (cells 3,0 and 4,0); the `bed` post (5,1) is the cell in front of the guest bed",
   "the guest bed, always made (cells 5,0 and 6,0): Dyne keeps it for family who travel (a ghost hero's place; for everybody else lore: DLG_GHOSTFAM_DYNE_KIN_1_*)"
- ]
+ ],
+ "hand_edited": true
 }

@@ -21,7 +21,6 @@ static func _skins_of(type: int) -> Array:
 
 func _ready() -> void:
 	GameManager.change_phase(GameManager.GamePhase.CHARACTER_SELECT)
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	UiNav.watcher()
 	var fixtures := preload("res://scripts/ui/dev/ui_fixtures.gd")
 	fixtures.register_setup("select2", Callable(get_script(), &"fixture_names"))

@@ -1066,7 +1066,7 @@ func _no_duplicate_keys(t) -> void:
 	t.expect(banned.is_empty(), "no RECIPE_*, ITEM_*, per-shop SHOP_<id>_GREETING or INV_RARITY_* (EPIC) rows %s" % str(banned))
 	# required content (handoffs of P02, P03, P05 + plan 3.4)
 	var need: Array[String] = ["UI_CURRENCY", "HUD_ACTIVE_QUESTS", "HUD_ENERGY", "UI_MONTH_FORAAR", "UI_MONTH_SOMMER", "UI_MONTH_EFTERAAR", "UI_MONTH_VINTER", "UI_WEATHER_REGN", "UI_WEATHER_TAAGE", "UI_WEATHER_SNE", "UI_WEATHER_TORDEN",
-		"SPECIES_FOX", "SPECIES_RABBIT", "SPECIES_HEDGEHOG", "SPECIES_SQUIRREL", "MENU_CONTINUE", "MENU_SETTINGS", "MENU_QUIT", "CHAR_FAIRY_NAME", "CHAR_HOBBIT_NAME", "SHOP_TAB_SEEDS", "SHOP_TOTAL", "SHOP_GREETING_DEFAULT", "DIALOGUE_VOICE_DA", "DIALOGUE_CONTINUE_HINT"]
+		"SPECIES_FOX", "SPECIES_RABBIT", "SPECIES_HEDGEHOG", "SPECIES_SQUIRREL", "MENU_CONTINUE", "MENU_SETTINGS", "MENU_QUIT", "CHAR_FAIRY_NAME", "CHAR_HOBBIT_NAME", "SHOP_TAB_SEEDS", "SHOP_TOTAL", "SHOP_GREETING_DEFAULT", "DIALOGUE_VOICE_DA"]
 	for i in range(1, 8):
 		need.append("UI_WEEKDAY_%d" % i)
 	var missing: Array[String] = []
@@ -1074,6 +1074,7 @@ func _no_duplicate_keys(t) -> void:
 		if not keys.has(k):
 			missing.append(k)
 	t.expect(missing.is_empty(), "the keys other packages asked for exist in ui.csv: missing %s" % str(missing))
+	t.expect(lm.text_in("HINT_CONTINUE","da").contains("%s") and lm.text_in("HINT_CONTINUE","en").contains("%s"),"device-aware dialogue continuation comes from nav.csv HINT_CONTINUE")
 	t.expect(not keys.has("UI_WEATHER_KLART"), "UI_WEATHER_KLART stays in core.csv (defined there already)")
 	# the values of the canonical copy (plan 3.4), both languages
 	var checks := {"UI_CURRENCY": ["guldagern", "gold acorns"], "UI_WEEKDAY_2": ["Tirsdag", "Tuesday"], "UI_MONTH_FORAAR": ["Blomstermåned", "Month of Blooms"], "UI_WEATHER_TORDEN": ["Torden", "Thunder"],

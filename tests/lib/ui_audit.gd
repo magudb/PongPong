@@ -1116,7 +1116,7 @@ static func _analyze_page(t, root: Node, start: Control, expected: Array[Control
 		if not (r["order"] as Array).has(p):
 			(r["order"] as Array).append(p)
 	(r["edges"] as Dictionary).merge(edges)
-	(r["pages"] as Array).append({"label": label, "start": start_path, "reached": (g["order"] as Array).size()})
+	(r["pages"] as Array).append({"label": label, "start": start_path, "reached": (g["order"] as Array).size(), "nodes": (g["order"] as Array).duplicate()})
 	# reachability
 	var exp_paths: Array[String] = []
 	for c in expected:

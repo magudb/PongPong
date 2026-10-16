@@ -106,7 +106,7 @@ func start_world(char_id: String = "", p_name: String = PLAYER_NAME, farm: Strin
 	if not await change_scene(WORLD_SCENE, 20.0):
 		fail("world scene did not load (got %s)" % scene_name())
 		return false
-	var ok := await until(func() -> bool: return player() != null, 10.0)
+	var ok := await until(func() -> bool: return player() != null and world() != null and world().get("ready_for_play") == true, 10.0)
 	await frames(10)
 	return ok
 

@@ -80,6 +80,8 @@ func _sync() -> void:
 	var tm: Node = GameData.tm()
 	raining = tm != null and tm.has_method("is_raining") and bool(tm.call("is_raining"))
 	if _rain != null:
+		# Existing particles outlive emission; never carry that curtain indoors.
+		_rain.visible = area_allows
 		_rain.emitting = raining and area_allows
 
 

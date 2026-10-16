@@ -401,6 +401,7 @@ func warm_clips(clips: Array) -> void:
 		return
 	var keys: Array[StringName] = []
 	var paths: Dictionary = {}
+	var resident: Dictionary = {}
 	for clip in clips:
 		var key := StringName(str(clip))
 		if _animations.has(key) and not _textures.has(key) and not paths.has(key):
@@ -408,6 +409,7 @@ func warm_clips(clips: Array) -> void:
 			if path != "":
 				keys.append(key)
 				paths[key] = path
+				resident[key] = ResourceLoader.has_cached(path)
 				ResourceLoader.load_threaded_request(path)
 	for key in keys:
 		while ResourceLoader.load_threaded_get_status(paths[key]) == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
@@ -419,7 +421,9 @@ func warm_clips(clips: Array) -> void:
 			_textures[key] = tex
 		if not is_inside_tree():
 			return
-		await get_tree().process_frame
+		# A prefetched/reused texture is already uploaded; no extra idle frame.
+		if not bool(resident[key]):
+			await get_tree().process_frame
 
 
 ## Applies display_scale and the altitude to the sprite and the shadow (call after changing `display_scale`; load_character

@@ -172,7 +172,9 @@ func _process(delta: float) -> void:
 	if _snap_next:
 		snap()
 		return
-	color = color.lerp(target, clampf(delta * 5.0, 0.0, 1.0))
+	var next_color := color.lerp(target, clampf(delta * 5.0, 0.0, 1.0))
+	if next_color != color:
+		color = next_color
 	_set_glow(glow_at(hour_now()))
 
 

@@ -416,9 +416,11 @@ func _build_checks(t) -> void:
 		props_ok = props_ok and (a.objects.get_node_or_null(id) != null or a.get_node_or_null(id) != null)
 	t.check("structure", wrong.is_empty() and props_ok and stage.fade.targets.size() == 22 and _city.art_problems.is_empty(),
 		"the built city: 9 bridges + 2 stubs, 8 rim rails, the ladder (2 ends) and the trunk climb (2 ends), 1 Skovlift, 14 huts, 8 discs, 15 trunk segments, 32 lanterns + 14 door lamps, 3 owl holes with shelves, 3 bat houses with a hanging bat each, 2 foliage clusters, 3 signs, 2 warps, 10 landmark circles, 46 halos + 12 lights, the stall / fire pit / mailbox / log stack / notice board / seed basket / tub halves / ladder, 22 occluders; wrong %s, art problems %s" % [wrong, _city.art_problems])
-	var point_lights: int = _count(a, "PointLight2D")
-	t.check("point_lights_max", point_lights <= 12 and stage.glow.halos.size() == 46 and stage.glow.lights.size() <= LevelGlow.MAX_LIGHTS and point_lights == stage.glow.lights.size(),
-		"%d PointLight2D in the built area (budget 12), %d additive halos: no other light is created by the builder, the art or the citizens" % [point_lights, stage.glow.halos.size()])
+	var player_lights := _count(_world.player,"PointLight2D")
+	var point_lights: int = _count(a,"PointLight2D")-player_lights
+	var active_lights := _all_nodes(a).filter(func(node):return node is PointLight2D and node.enabled and node.is_visible_in_tree()).size()
+	t.check("point_lights_max",point_lights<=12 and stage.glow.halos.size()==46 and stage.glow.lights.size()<=LevelGlow.MAX_LIGHTS and point_lights==stage.glow.lights.size() and active_lights<=16,
+		"city owns %d PointLight2D /12 and %d halos; player owns %d separately (lantern/ghost/burst); %d enabled visible lights /16 for the whole area" % [point_lights,stage.glow.halos.size(),player_lights,active_lights])
 	# --- walkable_test: any level polygon
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 20261015
@@ -436,8 +438,8 @@ func _build_checks(t) -> void:
 	for name in a.spawns:
 		spawns_walk = spawns_walk and bool(a.walkable_test.call(a.spawns[name]))
 	t.check("walkable_test_matches_levels", valid and mismatch == 0 and hits > 200 and spawns_walk and a.bounds == Rect2(-600, -450, 6750, 4350) and a.bounds == CityBuilder.camera_bounds(_reg.bounds) and a.zoom_range == Vector2(0.2, 0.7) and is_equal_approx(a.zoom_default, 0.4) \
-		and a.spawns.keys().size() == 4 and not bool(a.walkable_test.call(_sk(100, 900))) and not bool(a.walkable_test.call(_sk(900, 630))),
-		"area.walkable_test is any level polygon: 1500 random points agree with LevelRegistry.level_at (%d on a level, %d disagreements), all 4 spawns %s are walkable, the void and the main trunk are not; camera bounds %s (the sketch's bounds with %d px of headroom above), zoom %s default %.1f" % [hits, mismatch, a.spawns.keys(), a.bounds, int(CityBuilder.HEADROOM_PX), a.zoom_range, a.zoom_default])
+		and ["default","from_farm","from_hyggebyen","from_skovlift"].all(func(name):return a.spawns.has(name)) and not bool(a.walkable_test.call(_sk(100, 900))) and not bool(a.walkable_test.call(_sk(900, 630))),
+		"area.walkable_test is any level polygon: 1500 random points agree with LevelRegistry.level_at (%d on a level, %d disagreements), all authored and interior-return spawns %s are walkable, the void and the main trunk are not; camera bounds %s (the sketch's bounds with %d px of headroom above), zoom %s default %.1f" % [hits, mismatch, a.spawns.keys(), a.bounds, int(CityBuilder.HEADROOM_PX), a.zoom_range, a.zoom_default])
 	# --- the sky, the far trunks and the canopy
 	var backdrop_ok: bool = false
 	var sky: Sprite2D = a.backdrop.get_node_or_null("Sky") as Sprite2D
@@ -774,7 +776,29 @@ func _markers_and_citizens(t) -> void:
 		and (oak["at"] as Vector2).distance_to(lift_stand) <= 60.0 * _k and not CityData.record(_data, "props", "stall").is_empty() and bool(CityData.record(_data, "props", "stall").get("decor", false))
 	t.check("npc_markers_resolve_in_npcs_lua", ids == ["appraiser_fru_ugle", "bathkeeper_sofus", "carpenter_brumme", "carpenter_brumme", "gardener_hoppe", "guard_oak", "postman_pip"] and missing.is_empty() and wrong_home.is_empty() and no_art.is_empty() and slots_ok,
 		"the 7 npc markers %s are rows of lua/config/npcs.lua (V1; missing %s, home elsewhere %s, no art %s) and fill the slots of design 4.4: Hoppe on A (H1 pink pennant, the seed basket at his door), Pip on B (H3 blue pennant, the mailbox), Brumme twice (the workshop on C `when=flag:brumme_at_work`, the Torvet stall `when=flag:brumme_at_stall`), Sofus in the tub on E, Fru Ugle in the first owl hole of tree A (reach 420, schedule stay), Oak at the Skovlift, the stall is decor: %s" % [ids, missing, wrong_home, no_art, slots_ok])
-	if p14:
+	var director := _current_director()
+	if director!=null:
+		var gm: Node = t.autoload("GameManager")
+		var previous_hour: int = gm.hour
+		var previous_minute: int = gm.minute
+		gm.hour=11
+		gm.minute=0
+		EventBus.time_of_day_changed.emit(11,0)
+		NpcDirector.resync()
+		await t.physics(3)
+		var wanted := NpcDirector.select_presences(Routines.present_in("traetoppen",Routines.now_ctx()),16)
+		var expected: Array = wanted.rows.map(func(row):return str(row.npc))
+		var actual: Array = director.live.keys()
+		expected.sort()
+		actual.sort()
+		t.check("npc_markers_resolve_to_the_handler",not expected.is_empty() and actual==expected and director.live.values().all(func(actor):return actor is Npc2D and actor.is_inside_tree() and actor.area==a),
+			"the live director owns the scheduled citizens instead of duplicating seven static prototype markers: actual %s / scheduled %s" % [actual,expected])
+		gm.hour=previous_hour
+		gm.minute=previous_minute
+		EventBus.time_of_day_changed.emit(previous_hour,previous_minute)
+		NpcDirector.resync()
+		await t.physics(3)
+	elif p14:
 		var made: int = 0
 		for m in npcs:
 			for rec in a.find_markers("npc"):
@@ -1122,8 +1146,13 @@ func _fix_round_checks(t) -> void:
 						overlaps.append("%s x %s at zoom %.1f" % [names[i], names[j], z])
 					if raw[i].intersects(raw[j]):
 						would_overlap += 1
-	t.check("preview_labels_above_the_decks_and_apart", host != null and z_bad.is_empty() and overlaps.is_empty() and stacked > 0 and would_overlap > 0,
-		"every name plate and tag of the preview citizens is drawn at the absolute z %d (above the highest rank %d + 100, so no deck rim or hut cuts it off); at the zooms 0.2 / 0.4 / 0.7 no two visible blocks overlap (%d block pairs would overlap without the nudge, %d blocks were stacked by it; overlaps left %s, z problems %s)" % [TraetoppenPreviewCitizens.LABEL_Z, max_rank, would_overlap, stacked, overlaps, z_bad])
+	var director := _current_director()
+	if host==null and director!=null:
+		t.check("scheduled_citizens_replace_preview_labels",_citizens(_area).is_empty() and director.live.values().all(func(actor):return actor._bubble_label!=null and actor._bubble_label.position.y<0 and actor._bubble_label.get_parent()==actor),
+			"live citizens own their quest/heart/candle bubbles above their bodies; prototype name/tag stacks are absent; names use the real interaction prompt")
+	else:
+		t.check("preview_labels_above_the_decks_and_apart", host != null and z_bad.is_empty() and overlaps.is_empty() and stacked > 0 and would_overlap > 0,
+			"every name plate and tag of the preview citizens is drawn at the absolute z %d (above the highest rank %d + 100, so no deck rim or hut cuts it off); at the zooms 0.2 / 0.4 / 0.7 no two visible blocks overlap (%d block pairs would overlap without the nudge, %d blocks were stacked by it; overlaps left %s, z problems %s)" % [TraetoppenPreviewCitizens.LABEL_Z, max_rank, would_overlap, stacked, overlaps, z_bad])
 	# --- the M1a prompt / whisper / toast overlay (nothing else shows them before the HUD of M1b)
 	await _hint_checks(t)
 	# --- back to a clean city (the player was moved around; trigger circles and the tracker start fresh)
@@ -1139,8 +1168,30 @@ func _fix_round_checks(t) -> void:
 func _hint_checks(t) -> void:
 	var hints: TraetoppenPreviewCitizens.Hints = _city.preview_hints as TraetoppenPreviewCitizens.Hints
 	var canopy: CityBuilder.CanopyFrame = _canopy()
+	if hints==null and _world.game_ui!=null:
+		var hud: Node = _world.game_ui.get_screen(&"hud")
+		var prompt: PromptPill = hud.get_node("PromptPill")
+		var whisper: WhisperLine = hud.get_node("WhisperLine")
+		var climb := prompt.tr("LEVEL_PROMPT_CLIMB")
+		EventBus.interaction_prompt_changed.emit(climb)
+		var prompt_ok: bool = prompt.shown().visible and prompt.shown().cap!="" and prompt.shown().verb==climb
+		EventBus.interaction_prompt_changed.emit("")
+		prompt_ok=prompt_ok and not prompt.shown().visible
+		_city.signs[0].interact(_world.player)
+		var whisper_ok := whisper.is_showing() and whisper.shown_text()==whisper.tr("TRAE_SIGN_FARM")
+		hud.toasts.clear()
+		await t.frames(1)
+		EventBus.notification_posted.emit("toast title","toast message","zone")
+		await t.frames(2)
+		var toasts: Array = hud.toasts.toasts()
+		var toast_ok: bool = toasts.size()==1 and toasts[0].title_label.text=="toast title" and toasts[0].message_label.text=="toast message"
+		t.check("hud_owns_prompts_whispers_and_toasts",prompt_ok and whisper_ok and toast_ok and _area.get_node_or_null(TraetoppenPreviewCitizens.HINTS_NAME)==null,
+			"real HUD receives translated prompt/empty hide, the sign's whisper and notification title/message; no duplicate prototype overlay")
+		hud.toasts.clear()
+		whisper._hide()
+		return
 	if hints == null:
-		t.check("preview_hints_show_prompts_whispers_and_toasts", false, "the city has no prompt overlay although P14's handler is absent")
+		t.check("preview_hints_show_prompts_whispers_and_toasts",false,"neither the production HUD nor the legacy overlay exists")
 		return
 	var glyph: String = TraetoppenPreviewCitizens.Hints.key_glyph()
 	var problems: Array[String] = []
@@ -1480,6 +1531,7 @@ func _landmarks(t) -> void:
 			y += 24.0
 		x += 24.0
 	p.global_position = below
+	ActorLevel.set_level(p,_reg.get_level(&"torvet"))
 	await t.physics(4)
 	var on_torvet: Array = _events_named(&"landmark_entered")
 	var gated: bool = below != Vector2.INF and ActorLevel.level_id(p) == &"torvet" and on_torvet.size() == 1 and str((on_torvet[0] as Dictionary)["id"]) == "torvet"
@@ -1487,6 +1539,9 @@ func _landmarks(t) -> void:
 	for lm in _reg.landmarks:
 		var pt2: Vector2 = _landmark_point(lm)
 		p.global_position = pt2
+		# A teleport does not traverse the connecting bridge/ladder. Select its
+		# authored floor explicitly; the separate tour proves real traversal.
+		ActorLevel.set_level(p,_reg.get_level(StringName(lm["level"])))
 		await t.physics(4)
 		order.append("%s:%s" % [lm["id"], ActorLevel.level_id(p)])
 	var got: Array = _events_named(&"landmark_entered")
@@ -1503,6 +1558,7 @@ func _landmarks(t) -> void:
 	# again: no second event in the same visit
 	var first_count: int = got.size()
 	p.global_position = _landmark_point(_reg.landmarks[0])
+	ActorLevel.set_level(p,_reg.get_level(StringName(_reg.landmarks[0]["level"])))
 	await t.physics(4)
 	var again: int = _events_named(&"landmark_entered").size()
 	# a new visit (the area is built again) fires it once more
@@ -1511,6 +1567,7 @@ func _landmarks(t) -> void:
 	await _enter_city(t, &"from_farm")
 	p.set_physics_process(false)
 	p.global_position = _landmark_point(_reg.landmarks[3])
+	ActorLevel.set_level(p,_reg.get_level(StringName(_reg.landmarks[3]["level"])))
 	await t.physics(4)
 	var next_visit: Array = _events_named(&"landmark_entered")
 	EventBus.game_event.disconnect(cb2)
@@ -2276,6 +2333,29 @@ func _screen_of(world_pos: Vector2) -> Vector2:
 	return _world.get_viewport().get_canvas_transform() * world_pos
 
 
+func _current_director() -> TownDirector:
+	for node in _world.get_tree().get_nodes_in_group("town_director"):
+		if node.area==_area:return node
+	return null
+
+
+func _refresh_native_citizens() -> void:
+	var preview := _area.get_node_or_null(TraetoppenPreviewCitizens.HOST_NAME)
+	if preview != null:
+		preview.call("refresh_visibility")
+	else:
+		NpcDirector.resync()
+
+
+func _clear_native_hints() -> void:
+	if _city.preview_hints != null:
+		_city.preview_hints.call("tick",100.0)
+	else:
+		var hud: Node = _world.game_ui.get_screen(&"hud")
+		hud.toasts.clear()
+		hud.get_node("AreaBanner")._dismiss()
+
+
 func run_windowed(t) -> void:
 	_t = t
 	_data = CityData.load_data()
@@ -2304,8 +2384,8 @@ func run_windowed(t) -> void:
 	# --- city_01: the Torvet at zoom 0.4 with Brumme at his stall (the weekend flag V6's DailyFlags would set) and the other citizens at their slots
 	gm.set_flag(&"brumme_at_stall", 1)
 	gm.set_flag(&"brumme_at_work", 0)
-	_area.get_node(TraetoppenPreviewCitizens.HOST_NAME).call("refresh_visibility")
-	(_city.preview_hints as Node).call("tick", 100.0)      # the toast of the first arrival (Du har laast op ...) is not part of the picture
+	_refresh_native_citizens()
+	_clear_native_hints()      # the toast of the first arrival (Du har laast op ...) is not part of the picture
 	await _look(t, _sk(900, 690), 0.4)
 	var torvet: Image = await t.capture("city_01_torvet_zoom_0_4")
 	t.expect_not_blank(torvet, Rect2i(0, 200, 1280, 520), "the Torvet renders (planks, huts, trunk, bridges, the stall, the fire)", 60, 0.04)
@@ -2314,15 +2394,15 @@ func run_windowed(t) -> void:
 	for spot in [["hoppe", Vector2(509.2, 203.2), 0.5, -40.0], ["pip_and_oak", Vector2(1390, 300), 0.5, -40.0], ["brumme_workshop", Vector2(225, 640), 0.5, -40.0], ["sofus", Vector2(1454.5, 620), 0.5, -40.0], ["fru_ugle", Vector2(519, 380), 0.5, -40.0]]:
 		gm.set_flag(&"brumme_at_stall", 0)
 		gm.set_flag(&"brumme_at_work", 1)
-		_area.get_node(TraetoppenPreviewCitizens.HOST_NAME).call("refresh_visibility")
+		_refresh_native_citizens()
 		await _look(t, _sk((spot[1] as Vector2).x, (spot[1] as Vector2).y) + Vector2(0, float(spot[3]) * 3.0), float(spot[2]))
 		slots.append(await t.capture("city_01_slot_%s" % spot[0]))
 	_save("city_01_citizens_contact_sheet", _sheet(slots, 3, Vector2i(640, 360)))
 	gm.clear_flag(&"brumme_at_stall")
 	gm.clear_flag(&"brumme_at_work")
 	# --- city_02: the whole composition at zoom 0.2 beside the sketch crop
-	_area.get_node(TraetoppenPreviewCitizens.HOST_NAME).call("refresh_visibility")
-	(_city.preview_hints as Node).call("tick", 100.0)      # the arrival toast of the first visit is gone: it is not part of the composition
+	_refresh_native_citizens()
+	_clear_native_hints()      # the arrival toast of the first visit is gone: it is not part of the composition
 	await _look(t, _overview_centre(), 0.2, 0.5)
 	var overview: Image = await t.capture("city_02_overview_zoom_0_2")
 	t.expect_not_blank(overview, Rect2i(0, 0, 1280, 720), "the whole city at zoom 0.2", 80, 0.04)
@@ -2405,6 +2485,8 @@ func run_windowed(t) -> void:
 	_world.area.set_night_factor(0.0)
 	# --- the frame budget at the game zoom
 	await _look(t, _sk(900, 690), 0.4, 0.4)
+	var hud_visible: bool = _world.game_ui.visible
+	_world.game_ui.hide() # Standalone map budget; I2 separately measures the full city with HUD.
 	var old_vsync: int = DisplayServer.window_get_vsync_mode()
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 	await t.frames(20)
@@ -2428,7 +2510,8 @@ func run_windowed(t) -> void:
 		if window >= 2 and best_avg <= 6.0:
 			break
 	DisplayServer.window_set_vsync_mode(old_vsync as DisplayServer.VSyncMode)
-	t.check("frame_budget", best_avg <= 6.0 and peak_calls <= 250, "the city with V5's art and the preview citizens at zoom 0.4, 1280x720, vsync off: best window %.2f ms per frame (budget 6), draw calls average %d, peak %d (budget 250)" % [best_avg, int(float(calls_sum) / float(maxi(calls_n, 1))), peak_calls])
+	_world.game_ui.visible = hud_visible
+	t.check("frame_budget", best_avg <= 6.0 and peak_calls <= 250, "the city area with approved painted art and scheduled citizens at zoom 0.4, 1280x720, vsync off: best window %.2f ms per frame (budget 6), draw calls average %d, peak %d (budget 250)" % [best_avg, int(float(calls_sum) / float(maxi(calls_n, 1))), peak_calls])
 	# --- the prompt overlay in the picture: at the foot of the ladder the player reads "E: Klatre", a sign's whisper and a toast stand above it
 	_world.day_night.override_hour = 11.0
 	_world.day_night.snap()
@@ -2437,26 +2520,52 @@ func run_windowed(t) -> void:
 	p.visible = true
 	p.set_physics_process(true)
 	p.camera.position_smoothing_enabled = true
+	p.facing8 = Iso.dir8_of(Vector2.UP)
 	await _look(t, (ladder["bottom"] as Vector2) + Vector2(0, 40), 0.4, 0.6)
-	await t.until(func() -> bool: return (_city.preview_hints as Node).get("prompt").visible, 3.0)
-	var hint_node: TraetoppenPreviewCitizens.Hints = _city.preview_hints as TraetoppenPreviewCitizens.Hints
-	var prompt_text: String = hint_node.prompt.text
-	var shot_prompt: Image = await t.capture("city_06_hints_prompt_at_the_ladder")
-	var prompt_rect := Rect2i(hint_node.prompt.get_global_rect().grow(-2.0))
-	var prompt_stats: Dictionary = t.region_stats(shot_prompt, prompt_rect, 2)
-	_city.signs[0].interact(p)
-	EventBus.notification_posted.emit("toast title", "toast message", "zone")
-	await t.seconds(0.3)
-	var shot_all: Image = await t.capture("city_06_hints_whisper_and_toast")
-	var whisper_rect := Rect2i(hint_node.whisper.get_global_rect().grow(-2.0))
-	var toast_rect := Rect2i(hint_node.toast.get_global_rect().grow(-2.0))
-	var whisper_stats: Dictionary = t.region_stats(shot_all, whisper_rect, 2)
-	var toast_stats: Dictionary = t.region_stats(shot_all, toast_rect, 2)
-	var plate_pixels: Callable = func(st: Dictionary) -> bool: return float(st["luma_min"]) < 0.2 and float(st["luma_max"]) > 0.7 and float(st["luma_std"]) > 0.15
-	t.check("hints_visible_at_the_ladder_foot", prompt_text == "%s: %s" % [TraetoppenPreviewCitizens.Hints.key_glyph(), hint_node.tr("LEVEL_PROMPT_CLIMB")] and prompt_rect.size.x > 40 \
-		and plate_pixels.call(prompt_stats) and hint_node.whisper.visible and plate_pixels.call(whisper_stats) and hint_node.toast.visible and plate_pixels.call(toast_stats),
-		"windowed: at the foot of the ladder (the nearest interactable is its climb lane) the overlay shows `%s` as a dark ink plate with chalk text (region luma min %.2f, max %.2f, std %.2f); the sign's whisper (min %.2f, max %.2f) and a toast (min %.2f, max %.2f) stand above it; shots city_06_hints_*.png" % [prompt_text, float(prompt_stats["luma_min"]), float(prompt_stats["luma_max"]), float(prompt_stats["luma_std"]), float(whisper_stats["luma_min"]), float(whisper_stats["luma_max"]), float(toast_stats["luma_min"]), float(toast_stats["luma_max"])])
-	hint_node.tick(100.0)
+	if _city.preview_hints != null:
+		await t.until(func() -> bool: return (_city.preview_hints as Node).get("prompt").visible, 3.0)
+		var hint_node: TraetoppenPreviewCitizens.Hints = _city.preview_hints as TraetoppenPreviewCitizens.Hints
+		var prompt_text: String = hint_node.prompt.text
+		var shot_prompt: Image = await t.capture("city_06_hints_prompt_at_the_ladder")
+		var prompt_rect := Rect2i(hint_node.prompt.get_global_rect().grow(-2.0))
+		var prompt_stats: Dictionary = t.region_stats(shot_prompt, prompt_rect, 2)
+		_city.signs[0].interact(p)
+		EventBus.notification_posted.emit("toast title", "toast message", "zone")
+		await t.seconds(0.3)
+		var shot_all: Image = await t.capture("city_06_hints_whisper_and_toast")
+		var whisper_rect := Rect2i(hint_node.whisper.get_global_rect().grow(-2.0))
+		var toast_rect := Rect2i(hint_node.toast.get_global_rect().grow(-2.0))
+		var whisper_stats: Dictionary = t.region_stats(shot_all, whisper_rect, 2)
+		var toast_stats: Dictionary = t.region_stats(shot_all, toast_rect, 2)
+		var plate_pixels: Callable = func(st: Dictionary) -> bool: return float(st["luma_min"]) < 0.2 and float(st["luma_max"]) > 0.7 and float(st["luma_std"]) > 0.15
+		t.check("hints_visible_at_the_ladder_foot", prompt_text == "%s: %s" % [TraetoppenPreviewCitizens.Hints.key_glyph(), hint_node.tr("LEVEL_PROMPT_CLIMB")] and prompt_rect.size.x > 40 \
+			and plate_pixels.call(prompt_stats) and hint_node.whisper.visible and plate_pixels.call(whisper_stats) and hint_node.toast.visible and plate_pixels.call(toast_stats),
+			"windowed: at the foot of the ladder (the nearest interactable is its climb lane) the overlay shows `%s` as a dark ink plate with chalk text (region luma min %.2f, max %.2f, std %.2f); the sign's whisper (min %.2f, max %.2f) and a toast (min %.2f, max %.2f) stand above it; shots city_06_hints_*.png" % [prompt_text, float(prompt_stats["luma_min"]), float(prompt_stats["luma_max"]), float(prompt_stats["luma_std"]), float(whisper_stats["luma_min"]), float(whisper_stats["luma_max"]), float(toast_stats["luma_min"]), float(toast_stats["luma_max"])])
+		hint_node.tick(100.0)
+	else:
+		var hud: Node = _world.game_ui.get_screen(&"hud")
+		var prompt: PromptPill = hud.get_node("PromptPill")
+		var whisper: WhisperLine = hud.get_node("WhisperLine")
+		await t.until(func() -> bool:return bool(prompt.shown().visible),3.0)
+		var shown := prompt.shown()
+		var shot_prompt: Image = await t.capture("city_06_hints_prompt_at_the_ladder")
+		var prompt_rect := Rect2i((prompt.get_node("%Pill") as Control).get_global_rect().grow(-2))
+		var prompt_stats: Dictionary = t.region_stats(shot_prompt,prompt_rect,2)
+		_city.signs[0].interact(p)
+		EventBus.notification_posted.emit("toast title","toast message","zone")
+		await t.seconds(0.3)
+		var shot_all: Image = await t.capture("city_06_hints_whisper_and_toast")
+		var whisper_rect := Rect2i((whisper.get_node("%Panel") as Control).get_global_rect().grow(-2))
+		var whisper_stats: Dictionary = t.region_stats(shot_all,whisper_rect,2)
+		var toasts: Array = hud.toasts.toasts()
+		var toast_stats := {"luma_min":1.0,"luma_max":0.0,"luma_std":0.0}
+		if not toasts.is_empty():
+			toast_stats=t.region_stats(shot_all,Rect2i((toasts.back() as Control).get_global_rect().grow(-2)),2)
+		var has_ink: Callable = func(st: Dictionary)->bool:return float(st.luma_min)<0.25 and float(st.luma_max)>0.65 and float(st.luma_std)>0.1
+		t.check("hints_visible_at_the_ladder_foot",shown.visible and str(shown.cap)!="" and shown.verb==prompt.tr("LEVEL_PROMPT_CLIMB") and prompt_rect.size.x>40 and has_ink.call(prompt_stats) and whisper.is_showing() and has_ink.call(whisper_stats) and not toasts.is_empty() and has_ink.call(toast_stats),
+			"current HUD at the real ladder: %s; prompt, sign whisper and notification have visible ink/text contrast: %s / %s / %s; city_06_hints_*.png" % [shown,prompt_stats,whisper_stats,toast_stats])
+		_clear_native_hints()
+		whisper._hide()
 	# --- the walk: from the farm bridge over the whole city to Hyggebyen
 	await _enter_city(t, &"from_farm")
 	p = _world.player

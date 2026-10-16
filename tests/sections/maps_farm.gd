@@ -1257,6 +1257,10 @@ func run_windowed(t) -> void:
 	var house: Node2D = Standins.place_home(a, 1, _door, true, false)
 	# draw calls of the farm in a real window (the y-sorted Ground layer is ~390 of them; the field look costs +36), noon and night (lights + halos)
 	var budgets := {0.4: 560, 0.3: 640, 0.2: 780}
+	# These map-prototype draw budgets predate the shared HUD. The I2 budget
+	# section records both area and full-screen costs with the current HUD.
+	var hud_visible: bool = _world.game_ui.visible
+	_world.game_ui.hide()
 	for z in [0.4, 0.3, 0.2]:
 		var per_hour: Array = []
 		for hour in [11.0, 22.0]:
@@ -1275,6 +1279,7 @@ func run_windowed(t) -> void:
 			if hour == 11.0:
 				await t.capture("farm_zoom_%d" % int(float(z) * 100.0))
 		t.check("windowed_draw_calls_zoom_%d" % int(float(z) * 100.0), int(per_hour[0]) <= int(budgets[z]) and int(per_hour[1]) <= int(budgets[z]), "%d draw calls at noon and %d at night at zoom %.1f (budget %d; the prototype measured 502-524 / 597 / 723 with the real art; process time is measured by tools/farm/farm_shot.tscn --part=perf, not here)" % [int(per_hour[0]), int(per_hour[1]), z, int(budgets[z])])
+	_world.game_ui.visible = hud_visible
 	_world.day_night.override_hour = 11.0
 	_world.day_night.snap()
 	a.set_night_factor(_world.day_night.glow_factor)

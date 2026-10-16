@@ -1,0 +1,49 @@
+{
+  "note": "Existing non-social Danish voiced text is frozen. New draft hooks remain unrecorded; this does not assert audio exists.",
+  "lines": {
+    "DLG_LYRA_GREET_1": {
+      "da_sha256": "fbbaffba19cf7fca1a4ab5505d87ae747801376dac7b73528ac7d48483f8e903",
+      "source": "mayor_lyra.lua"
+    },
+    "DLG_LYRA_GREET_2": {
+      "da_sha256": "e817e79955e77876cd775d483a18e85994052dfc9971909b63dbd766d5d1cdab",
+      "source": "mayor_lyra.lua"
+    },
+    "DLG_LYRA_LOTTERY": {
+      "da_sha256": "24a7147f430390462b6b58334e90ed7c3efadfead1803d4b288ad1c379f21e29",
+      "source": "mayor_lyra.lua"
+    },
+    "DLG_LYRA_HELLO": {
+      "da_sha256": "f54573d8622f1a861091c1a4a2b12a1fd332596eff1a651f942f8fbbe9929f6b",
+      "source": "mayor_lyra.lua"
+    },
+    "DLG_LYRA_FARM_STATUS": {
+      "da_sha256": "e55ec8e7ce3a2a3a0aa0c1f1907d4eac8b549414c9096e4e46837018d5c6ba9b",
+      "source": "mayor_lyra.lua"
+    },
+    "DLG_MAJA_GREET": {
+      "da_sha256": "7cd765545eb346f57cfe31df0358f0bf6a6b748c0f432a40b93c5a15ee8bab79",
+      "source": "baker_maja.lua"
+    },
+    "DLG_MAJA_ROOF_TROUBLE": {
+      "da_sha256": "63ca2e6ac0248830e41c3fb7d6398c34b9182413c1e86fa5d8b8bb50816fe34b",
+      "source": "baker_maja.lua"
+    },
+    "DLG_MAJA_THANKS": {
+      "da_sha256": "b06bb212fd5d624de77cf99ef25d6dc1eb1e14b938e75f4b8b1edb91282fa725",
+      "source": "baker_maja.lua"
+    },
+    "DLG_MAJA_COOKIE_TALK": {
+      "da_sha256": "31359947443d203d142d921d0fd468ccbb1194a305b8256b839c28c0c883c2d7",
+      "source": "baker_maja.lua"
+    },
+    "DLG_THORIN_GREET": {
+      "da_sha256": "fa03ae2c072210b7815333612d93b0b70e983135aef8b54c359ed202dc7a7883",
+      "source": "smith_thorin.lua"
+    },
+    "DLG_THORIN_MINING_TALK": {
+      "da_sha256": "b99e8eb4ab35c6ba5c1be394ecef75075b0fbe9f3ccd4c15961a3e57b4f2c148",
+      "source": "smith_thorin.lua"
+    }
+  }
+}

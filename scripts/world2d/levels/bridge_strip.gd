@@ -26,7 +26,7 @@ var polygon: PackedVector2Array = PackedVector2Array()
 var deck: Line2D
 var outline: Line2D
 var ropes: Array[Line2D] = []
-var posts: Array[Sprite2D] = []
+var posts := PackedVector2Array()
 var body: StaticBody2D
 var post_count_per_side: int = 0
 var is_stub: bool = false
@@ -100,7 +100,8 @@ func _make(nodes: Dictionary, vis_path: PackedVector2Array, rail_path: PackedVec
 	var post_tex: Texture2D = art.get("post", null)
 	var overall: Vector2 = (vis_path[vis_path.size() - 1] - vis_path[0]).normalized()
 	for side in [-1.0, 1.0]:
-		var host := Node2D.new()
+		var host := PostBatch.new()
+		host.texture = post_tex
 		host.name = "%s_Rail%s" % [label, "Near" if Vector2(-overall.y, overall.x).y * side >= 0.0 else "Far"]
 		host.z_index = rank + 1 if Vector2(-overall.y, overall.x).y * side >= 0.0 else rank - 3
 		floors.add_child(host)
@@ -110,13 +111,8 @@ func _make(nodes: Dictionary, vis_path: PackedVector2Array, rail_path: PackedVec
 			bases.append(_point_at(vis_path, at) + _normal_at(vis_path, at) * (side * width * 0.5))
 		for b in bases:
 			if post_tex != null:
-				var post := Sprite2D.new()
-				post.texture = post_tex
-				post.centered = false
-				post.offset = Vector2(-post_tex.get_width() * 0.5, -post_tex.get_height())
-				post.position = b
-				host.add_child(post)
-				posts.append(post)
+				host.positions.append(b)
+				posts.append(b)
 		# the rope of this side: post top to post top with a sag in every span, ONE Line2D (the side is drawn as a whole over / behind the actors)
 		var pts := PackedVector2Array()
 		for j in range(spans + 1):

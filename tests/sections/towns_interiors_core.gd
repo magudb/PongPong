@@ -122,28 +122,35 @@ func run_windowed(t) -> void:
 	gm.hour = 12
 	gm.minute = 0
 	for id in room_ids():
+		# Select hours through real daily/time signals while safely on the farm.
+		# A previous room may otherwise evict mid-search, and old daily flags or
+		# rain shelters can disagree with the keeper's displayed clock.
+		await world.travel(&"farm",&"from_home")
 		var spec := InteriorRoom.load_spec(id)
 		var keeper_id := ""
 		for marker in spec.markers:
 			if str(marker.get("type", "")) == "talk":
 				keeper_id = str(marker.get("keeper", ""))
 		var found := false
-		for day in range(8, 15):
-			for hour in range(8, 23):
-				gm.day = day
-				gm.hour = hour
-				gm.minute = 0
+		for day in range(8,15):
+			gm.day=day
+			t.autoload("EventBus").day_started.emit(gm.day,gm.season)
+			t.autoload("TimeManager").set_weather(&"klart")
+			for hour in range(8,23):
+				gm.hour=hour
+				gm.minute=0
+				t.autoload("EventBus").time_of_day_changed.emit(hour,0)
 				var ctx := Routines.now_ctx()
-				var where := Routines.where_is(keeper_id, ctx)
-				if str(where.area) == id and str(where.act) not in ["sleep", "inside"] and bool(Hours.state(str(spec.building), ctx).get("open", true)):
-					found = true
+				var where := Routines.where_is(keeper_id,ctx)
+				if str(where.area)==id and str(where.state)=="stay" and str(where.act) not in ["sleep","inside"] and bool(Hours.state(str(spec.building),ctx).get("open",true)):
+					found=true
 					break
-			if found:
-				break
+			if found:break
 		t.expect(found, "Open staffed hours exist in " + id)
 		world.travel(StringName(id), &"default")
-		await t.until(func() -> bool: return not world.traveling and str(world.area.map.id) == id, 10.0)
-		t.autoload("EventBus").day_started.emit(gm.day, gm.season)
+		var arrived: bool = await t.until(func() -> bool: return not world.traveling and str(world.area.map.id) == id, 10.0)
+		t.expect(arrived,"Travel enters the painted room " + id)
+		if not arrived:continue
 		t.autoload("EventBus").time_of_day_changed.emit(gm.hour, gm.minute)
 		t.autoload("TimeManager").set_weather(&"klart")
 		await t.frames(4)

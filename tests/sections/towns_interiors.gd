@@ -1484,7 +1484,7 @@ func _nameplates() -> void:
 	# a building without an interior is a locked nameplate: the three homes of the CORE registry and the decor hut
 	var kinds: Array[String] = []
 	var all_locked: bool = true
-	for id in ["fjerpens_hytte", "koekkenhave_skuret", "pingvinens_hus", "gaestehytten"]:
+	for id in ["fjerpens_hytte", "koekkenhave_skuret", "pingvinens_hus"]:
 		var d: Door2D = _door_in(holder, id, Ctx.at(1, 12.0))
 		var open: bool = d.is_open()
 		all_locked = all_locked and d.locked and not open and d.last_reason == "locked" and d.name_key == "BLD_%s" % id.to_upper() and d.sign_text() == lm.t(d.name_key)
@@ -1494,7 +1494,7 @@ func _nameplates() -> void:
 		t.expect(d.locked and not open and tap.whispers == [lm.t("HOURS_HOME_LOCKED")] and tap.travels.is_empty(), "%s is a locked nameplate door (sign \"%s\", whisper HOURS_HOME_LOCKED, no travel)" % [id, d.sign_text()])
 		kinds.append("%s -> %s" % [id, d.sign_text()])
 	t.check("locked_nameplate_door", all_locked,
-		"a building without an interior (fjerpens_hytte, koekkenhave_skuret, pingvinens_hus) and the decor hut (gaestehytten) are LOCKED NAMEPLATE doors: never open, the whisper is HOURS_HOME_LOCKED \"%s\", the sign shows the name only (BLD_<ID>): %s" % [lm.t("HOURS_HOME_LOCKED"), str(kinds)])
+		"a building without an interior (fjerpens_hytte, koekkenhave_skuret, pingvinens_hus) are LOCKED NAMEPLATE doors: never open, the whisper is HOURS_HOME_LOCKED \"%s\", the sign shows the name only (BLD_<ID>): %s" % [lm.t("HOURS_HOME_LOCKED"), str(kinds)])
 	# hyggebyen.map carries door markers of the four EXTENDED buildings; without their registry row (T-ext-content may be dropped) the door is the same nameplate, labelled with BLD_<BUILDING_ID>
 	var ext_ok: bool = true
 	var shown: Array[String] = []
@@ -1946,6 +1946,9 @@ func _windowed_doors(world: Node, pl: Node2D) -> void:
 
 
 func run_windowed(p_t) -> void:
+	var original_maps: Dictionary = WorldRoot2D.scan_maps().duplicate(true)
+	var original_dirs: Array[String] = InteriorRoom.spec_dirs.duplicate()
+	var original_dress := InteriorRoom.dress_dir
 	t = p_t
 	gm = t.autoload("GameManager")
 	lm = t.autoload("LocalizationManager")
@@ -2013,6 +2016,10 @@ func run_windowed(p_t) -> void:
 	for r in ROOMS:
 		WorldRoot2D.unregister_map(StringName(r))
 	_reset()
+	InteriorRoom.use_spec_dirs(original_dirs,original_dress)
+	# These fixtures temporarily replace production ids. Unregistering them
+	# alone removes the real room from the already-scanned global registry.
+	WorldRoot2D._registry = original_maps
 
 
 func _windowed_painted_rooms(world: Node) -> void:

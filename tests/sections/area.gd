@@ -1965,10 +1965,11 @@ func _builder_areas(t) -> void:
 	var tm: Node = t.autoload("TimeManager")
 	tm.set_weather(&"regn")
 	var rain_indoors: bool = _world.weather_fx.is_emitting()
+	var hidden_indoors: bool = not _world.weather_fx.get_node("Rain").visible
 	_world._enter(&"_fixture_iso", &"default")
 	var rain_outdoors: bool = _world.weather_fx.is_emitting()
 	tm.set_weather(&"klart")
-	t.check("rain_overlay_only_outdoors", not rain_indoors and rain_outdoors, "raining: indoors %s, farm %s" % [rain_indoors, rain_outdoors])
+	t.check("rain_overlay_only_outdoors", hidden_indoors and not rain_indoors and rain_outdoors, "raining: indoors %s, farm %s" % [rain_indoors, rain_outdoors])
 	t.check("builder_area_is_never_parked", not _world._cache.has(&"_t_builder") and is_instance_valid(_world.area) and WorldRoot2D.is_parkable(_world.area) and not WorldRoot2D.is_parkable(home_area), "left the room: %s in cache" % [_world._cache.keys()])
 	_world._enter(&"_t_builder", &"default")
 	var second_id: int = _world.area.get_instance_id()
@@ -2116,6 +2117,18 @@ func _builder_rebuild_while_traveling(t) -> void:
 	await t.frames(2)
 	t.check("rebuild_request_during_the_fade_in_runs_when_the_travel_ends", in_fade_in and _world.area != entered and _world.area.map.id == &"_t_room" and built_calls.size() == built4 + 2 and not _world._rebuild_queued and p.get_parent() == _world.area.objects,
 		"entered the room by travel (builder call 1), tier change in the fade-in, rebuilt when the travel ended (call 2): calls %d -> %d" % [built4, built_calls.size()])
+	# A scene change can detach the world before a deferred tier rebuild runs.
+	var owner: Node = _world.get_parent()
+	var was_current: bool = t.tree.current_scene==_world
+	var before_detach := built_calls.size()
+	bus.home_upgraded.emit(4,5)
+	owner.remove_child(_world)
+	await t.frames(2)
+	t.check("deferred_rebuild_does_not_run_on_detached_world",built_calls.size()==before_detach and not _world._rebuild_queued and not _world.is_inside_tree(),
+		"a pending tier rebuild is discarded after scene removal; no player/camera work runs outside a viewport")
+	owner.add_child(_world)
+	if was_current:t.tree.current_scene=_world
+	await t.frames(2)
 	_world.area_ready.disconnect(seen_ready)
 	if bus.day_started.is_connected(roll):
 		bus.day_started.disconnect(roll)

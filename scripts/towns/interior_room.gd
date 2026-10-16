@@ -81,6 +81,33 @@ static func items_of(spec: Dictionary) -> Array:
 	all.append_array(load_dress(str(spec.get("id", ""))))
 	return all
 
+## Pure file planning for the world's fade/approach prefetch; no textures load.
+static func art_paths(id: String) -> Array[String]:
+	var spec := load_spec(id)
+	var paths: Dictionary = {}
+	if spec.is_empty():
+		return []
+	for item in items_of(spec):
+		var piece := PieceCatalog.resolve(str(item.id), int(item.get("rot", 0)))
+		for key in ["file", "night"]:
+			if str(piece.get(key, "")) != "":
+				paths[str(piece[key])] = true
+	var floor := ArtCatalog.terrain_metadata(StringName(str(spec.floor)))
+	if not floor.is_empty():
+		paths[str(floor._dir)+str(floor.file)] = true
+	var common := _json_of(INTERIOR_JSON)
+	for group in common.values():
+		if group is Dictionary:
+			for row in group.values():
+				if row is Dictionary:
+					for key in ["file", "night"]:
+						if str(row.get(key, "")) != "":
+							paths[PROPS+"interior/"+str(row[key])] = true
+	var result: Array[String] = []
+	for path in paths:
+		result.append(str(path))
+	return result
+
 
 ## The stub map text of a room (data/interiors stay data; the seven lines the area registry reads). zone: the outer area's zone id (city for Hyggebyen, traetoppen for the city).
 static func stub_map(room_id: String, building: String, zone: String) -> String:

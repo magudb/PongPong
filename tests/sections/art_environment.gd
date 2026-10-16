@@ -1007,6 +1007,40 @@ func _floor_luma(img: Image, p: Vector2) -> float:
 	return _luma(img.get_pixelv(Vector2i(p)))
 
 
+func _patch_colour(img: Image, centre: Vector2, half_size: Vector2) -> Color:
+	var rect := Rect2i(centre-half_size, half_size*2.0).intersection(Rect2i(Vector2i.ZERO,img.get_size()))
+	var sum := Color(0,0,0,0)
+	for y in range(rect.position.y,rect.end.y):
+		for x in range(rect.position.x,rect.end.x):
+			sum += img.get_pixel(x,y)
+	return sum / float(maxi(1,rect.size.x*rect.size.y))
+
+
+func _ground_contrast(path: Color, floor_colour: Color, pond: Color) -> bool:
+	return _luma(path)-_luma(floor_colour)>=10.0/255.0 and (pond.b-pond.r)-(floor_colour.b-floor_colour.r)>=12.0/255.0
+
+
+func _crown_edges(img: Image, underlay: Image, centre: Vector2, radius: float) -> int:
+	var good := 0
+	for k in 12:
+		var ang := deg_to_rad(200.0+14.0*float(k)+(0.0 if k<6 else 20.0))
+		var dir := Vector2(cos(ang),sin(ang))
+		# The painted silhouette is irregular. Search around the authored disc,
+		# requiring the dark edge to belong to the crown, not floor texture.
+		for distance in range(int(radius*0.6),int(radius*1.4)):
+			var at := centre+dir*float(distance)
+			var ink := img_px(img,at)
+			var behind := img_px(underlay,at)
+			var changed := absf(ink.r-behind.r)+absf(ink.g-behind.g)+absf(ink.b-behind.b)
+			var lo := _luma(ink)
+			var outside := _luma(img_px(img,at+dir*10.0))
+			var inside := _luma(img_px(img,at-dir*10.0))
+			if changed>=4.0/255.0 and outside-lo>=6.0/255.0 and inside-lo>=4.0/255.0:
+				good += 1
+				break
+	return good
+
+
 func _forest_readable(t, w: WorldRoot2D, p: Node2D, cam: Camera2D) -> void:
 	var id := &"_p22_forest"
 	WorldRoot2D.register_map(id, AreaMap.parse_text(_forest_text(String(id))))
@@ -1058,12 +1092,13 @@ func _forest_readable(t, w: WorldRoot2D, p: Node2D, cam: Camera2D) -> void:
 	var inner: float = inner_sum / float(maxi(inner_n, 1))
 	t.check("forest_player_edge_separates_from_the_floor", ring_n >= 40 and (absf(ring - floor_l) >= 4.0 / 255.0 or absf(ring - inner) >= 4.0 / 255.0),
 		"the pack outline (75,60,73) at zoom 0.4 on the night floor: the %d edge pixels of the figure read %.0f / 255 against the floor %.0f / 255 and the body %.0f / 255 (needs >= 4 / 255 against either: the thin outline of a SHADED figure on the night floor is marginal by design; V8's unshaded actors make it pop)" % [ring_n, ring * 255.0, floor_l * 255.0, inner * 255.0])
-	# (b) a crown's dark outline against the floor and its own leaves: 12 radial lines through the disc edge of crown_s_a (11, 21)
+	# (b) a crown's painted outline against the floor and its own leaves.
 	var rec: Dictionary = {}
 	for r in a.prop_nodes:
 		if str(r["id"]) == "crown_s_a":
 			rec = r
 	var good: int = 0
+	var crown_control := -1
 	var crown_info: String = "crown_s_a not placed"
 	if not rec.is_empty():
 		var node: Node2D = (rec["nodes"] as Array)[0]
@@ -1071,18 +1106,19 @@ func _forest_readable(t, w: WorldRoot2D, p: Node2D, cam: Camera2D) -> void:
 		var R: float = float(disc.get("radius", 170.0))
 		var centre: Vector2 = ct0 * (node.global_position - Vector2(0, 0.81 * R))
 		var rs: float = (R - 3.0) * ct0.get_scale().x
-		for k in 12:
-			var ang: float = deg_to_rad(200.0 + 14.0 * float(k) + (0.0 if k < 6 else 20.0))        # the upper half: the baked shadow lies to the lower right
-			var dir := Vector2(cos(ang), sin(ang))
-			var lo: float = 1.0
-			for s in range(-4, 5):
-				lo = minf(lo, _luma(img_px(with_img, centre + dir * (rs + float(s)))))
-			var out_l: float = _luma(img_px(with_img, centre + dir * (rs + 14.0)))
-			var in_l: float = _luma(img_px(with_img, centre + dir * (rs - 14.0)))
-			if out_l - lo >= 6.0 / 255.0 and in_l - lo >= 4.0 / 255.0:
-				good += 1
-		crown_info = "%d of 12 radial lines through the disc edge (r %.0f px) show the dark outline against the floor outside and the leaves inside" % [good, rs]
-	t.check("forest_crown_outline_readable", good >= 7, crown_info)
+		var visibility: Array[bool] = []
+		for part in rec["nodes"]:
+			visibility.append(part.visible)
+			part.visible=false
+		p.visible=false
+		var underlay: Image = await t.capture("forest_crown_underlay")
+		for i in visibility.size():
+			rec["nodes"][i].visible=visibility[i]
+		p.visible=true
+		good=_crown_edges(without,underlay,centre,rs)
+		crown_control=_crown_edges(underlay,underlay,centre,rs)
+		crown_info = "%d of 12 rays around the painted silhouette (nominal radius %.0f px) show >=6/255 outside and >=4/255 inside contrast, attributable to the crown; missing-crown control %d" % [good,rs,crown_control]
+	t.check("forest_crown_outline_readable", good >= 7 and crown_control==0, crown_info)
 	# (c) the lit path and the pond against the floor: readable at a glance (a bare probe map: floor | path | water, no props, no player)
 	var probe := &"_p22_ground_probe"
 	var rows: Array[String] = []
@@ -1112,15 +1148,20 @@ func _forest_readable(t, w: WorldRoot2D, p: Node2D, cam: Camera2D) -> void:
 	await t.seconds(0.4)
 	var pimg: Image = await t.capture("forest_ground_probe")
 	var ct1: Transform2D = w.get_viewport().get_canvas_transform()
-	var path_c: Color = pimg.get_pixelv(Vector2i(ct1 * a2.cell_to_global(Vector2i(7, 6))))
-	var floor_c: Color = pimg.get_pixelv(Vector2i(ct1 * a2.cell_to_global(Vector2i(3, 6))))
-	var pond_c: Color = pimg.get_pixelv(Vector2i(ct1 * a2.cell_to_global(Vector2i(12, 6))))
+	# Average several painted tile interiors: a single pixel can be a pencil
+	# stroke or path pebble. Keep the original contrast thresholds.
+	var half_size := Vector2(96.0*1.4,56.0*3.3)*ct1.get_scale()
+	var path_c := _patch_colour(pimg,ct1*a2.cell_to_global(Vector2i(7,6)),half_size)
+	var floor_c := _patch_colour(pimg,ct1*a2.cell_to_global(Vector2i(3,6)),half_size)
+	var pond_c := _patch_colour(pimg,ct1*a2.cell_to_global(Vector2i(12,6)),half_size)
 	var lp: float = _luma(path_c)
 	var lf: float = _luma(floor_c)
 	var path_ok: bool = lp - lf >= 10.0 / 255.0
-	var pond_ok: bool = (pond_c.g - floor_c.g) * 255.0 >= 12.0
-	var detail: String = "the moss path (%s) is %.0f / 255 lighter than the floor (%s; needs >= 10) and the pond water (%s) is %.0f / 255 greener (needs >= 12) at zoom 0.4: " % [path_c.to_html(false), (lp - lf) * 255.0, floor_c.to_html(false), pond_c.to_html(false), (pond_c.g - floor_c.g) * 255.0]
-	t.check("forest_ground_reads_path_and_pond", path_ok and pond_ok, detail + "the baked-colour rule lands on the sketch (path 3b3c5e, floor 232a45, water 1c4a5a)")
+	var pond_hue := (pond_c.b-pond_c.r)-(floor_c.b-floor_c.r)
+	var pond_ok: bool = pond_hue * 255.0 >= 12.0
+	var floor_control := _ground_contrast(floor_c,floor_c,floor_c)
+	t.check("forest_ground_reads_path_and_pond", _ground_contrast(path_c,floor_c,pond_c) and not floor_control,
+		"painted tile patch means at zoom .4: path %s is %.2f/255 lighter than floor %s (needs 10); pond %s is %.2f/255 bluer relative to red than the floor (needs 12); same-floor control fails both" % [path_c.to_html(false),(lp-lf)*255.0,floor_c.to_html(false),pond_c.to_html(false),pond_hue*255.0])
 	WorldRoot2D.unregister_map(probe)
 	p.visible = true
 	t.check("forest_ortho_readable", ring_n >= 40 and good >= 7 and path_ok and pond_ok,

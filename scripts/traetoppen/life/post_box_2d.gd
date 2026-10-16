@@ -31,7 +31,7 @@ func _morning(_day: int, _season: StringName) -> void:
 
 func refresh() -> void:
 	letter = {}
-	if area == null or str(area.map.id) != "farm" or GameManager.total_day() <= 1 or GameManager.flag_int(&"post_read_day") == GameManager.total_day():
+	if area == null or str(area.map.id) not in ["farm", "int_postkontoret"] or GameManager.total_day() <= 1 or GameManager.flag_int(&"post_read_day") == GameManager.total_day():
 		queue_redraw()
 		return
 	var rows := LifeFlow.offers("post")
@@ -45,7 +45,7 @@ func refresh() -> void:
 			if str(row.quest_id) == "pips_runde":
 				letter = row
 				break
-		if GameManager.flag_int(&"post_toast_day") != GameManager.total_day():
+		if str(area.map.id) == "farm" and GameManager.flag_int(&"post_toast_day") != GameManager.total_day():
 			GameManager.set_flag(&"post_toast_day", GameManager.total_day())
 			EventBus.whisper_requested.emit("LIFE_POST_TOAST")
 	queue_redraw()
@@ -58,9 +58,6 @@ func _draw() -> void:
 
 func interact(_player: Node) -> void:
 	if _busy or not is_enabled():
-		return
-	if str(area.map.id) != "farm":
-		EventBus.whisper_requested.emit("LIFE_POST_OFFICE")
 		return
 	refresh()
 	if GameManager.total_day() <= 1 or GameManager.flag_int(&"post_read_day") == GameManager.total_day():

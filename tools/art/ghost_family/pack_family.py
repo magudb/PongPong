@@ -103,6 +103,7 @@ def main():
     for cid in IDS:
         meta = json.loads((pack.CHARACTERS/cid/'animations.json').read_text())
         manifest['characters'][cid] = {k: meta[k] for k in ['role','clip_set','family','flyer','display_scale','portrait','animations']}
+    manifest['characters'] = dict(sorted(manifest['characters'].items()))
     path.write_text(json.dumps(manifest,indent=1)+'\n')
 
 if __name__ == '__main__':

@@ -50,6 +50,14 @@ static func node_of(npc_id: String, target_area: Node = null) -> Node:
 static func where_is(npc_id: String, ctx: Dictionary = {}) -> Dictionary:
 	return Routines.where_is(npc_id, ctx if not ctx.is_empty() else Routines.now_ctx())
 
+## A list/book/save probe shares one clock/social snapshot for the whole roster.
+static func locations(ids: Array, ctx: Dictionary = {}) -> Dictionary:
+	var snapshot := ctx if not ctx.is_empty() else Routines.now_ctx()
+	var result := {}
+	for id in ids:
+		result[id] = Routines.where_is(str(id), snapshot)
+	return result
+
 
 ## Ids of the citizens whose body is in `area_id` right now (stay or walking), highest priority first. Works for any baked area, not only the one the player is in.
 static func population(area_id: String, ctx: Dictionary = {}) -> Array:
@@ -86,3 +94,28 @@ static func post_ground(area_id: String, name: StringName) -> Vector2:
 
 static func door_ground(area_id: String, building: StringName) -> Vector2:
 	return post_ground(area_id, StringName("door_" + str(building)))
+
+## Shared residency selection for the live director and art staging. Preserve
+## schedule priority; a room keeper always owns the counter before visitors.
+static func select_presences(rows: Array, visual_cap: int, keeper := "", visitor_cap := -1) -> Dictionary:
+	var ordered := rows.duplicate()
+	if keeper!="":
+		for i in ordered.size():
+			if str(ordered[i].npc)==keeper:
+				var host: Variant = ordered.pop_at(i)
+				ordered.push_front(host)
+				break
+	var selected: Array = []
+	var looks := {}
+	var visitors := 0
+	var dropped := 0
+	for row in ordered:
+		var id := str(row.npc)
+		var look := str(GameData.lua().get_npc(id).get("visual","fairy"))
+		if (visitor_cap>=0 and id!=keeper and visitors>=visitor_cap) or (not looks.has(look) and looks.size()>=visual_cap):
+			dropped+=1
+			continue
+		selected.append(row)
+		looks[look]=true
+		if id!=keeper:visitors+=1
+	return {"rows":selected,"looks":looks,"dropped":dropped}

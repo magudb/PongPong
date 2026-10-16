@@ -150,19 +150,20 @@ func _one_whole_day() -> void:
 	_set_clock(3, &"foraar", 1, 6, 0)
 	var hours := {}
 	var early := false
+	var clock_log: Callable = func()->Array:return w["log"].filter(func(entry):return entry[0]!="game_event" or entry[1][0]==&"midnight_passed")
 	var same_day := true
 	for i in 39:                               # 06:00 .. 25:30 in 30 minute steps
 		gm.advance_time(30)
 		hours[gm.hour] = true
 		same_day = same_day and gm.day == 3
-		early = early or _names(w["log"]).has("day_ended") or _names(w["log"]).has("game_event")
+		early = early or _names(clock_log.call()).has("day_ended") or _names(clock_log.call()).has("game_event")
 	var at_0130: bool = gm.hour == 25 and gm.minute == 30 and gm.day == 3
 	var passed_midnight: bool = hours.has(24) and hours.has(25) and not hours.has(26)
 	gm.advance_time(30)                        # 26:00: the day end
-	var names: Array = _names(w["log"])
+	var names: Array = _names(clock_log.call())
 	var rolled: bool = gm.day == 4 and gm.hour == 2 and gm.minute == 0 and names.count("day_ended") == 1 and names.count("day_started") == 1 and names.count("game_event") == 1
 	var order_ok := false
-	for entry in w["log"]:
+	for entry in clock_log.call():
 		if entry[0] == "game_event":
 			order_ok = entry[1][0] == &"midnight_passed" and entry[1][1] == {"day": 4, "season": "foraar"}
 	_unwatch(w)

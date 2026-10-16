@@ -7,7 +7,6 @@ func _ready() -> void:
 	GameManager.pop_all_modals()
 	GameManager.change_phase(GameManager.GamePhase.MENU)
 	get_tree().paused = false
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	SettingsUI.apply_saved()
 	UiNav.watcher()
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("title_guide", Callable(get_script(), &"fixture_guide"))

@@ -9,6 +9,8 @@ var gates_of: Dictionary = {}
 func run() -> void:
 	await get_tree().process_frame
 	var begin := Time.get_ticks_usec()
+	var nav_baker: Script = load("res://tools/town/city_nav_bake.gd")
+	nav_baker.call("write")
 	for id in ["hyggebyen", "farm"]:
 		await _grid(id)
 	_city()
@@ -41,6 +43,8 @@ func run() -> void:
 
 static func input_paths() -> Array[String]:
 	var paths: Array[String] = ["res://data/maps/hyggebyen.map", "res://data/maps/farm.map", "res://data/towns/traetoppen.json", "res://data/traetoppen/traetoppen.json", "res://scripts/towns/nav_grid.gd", "res://scripts/towns/level_nav.gd", "res://scripts/towns/fest_set.gd", "res://scripts/towns/town_marks.gd", "res://tools/towns/bake_routes.gd", "res://tools/towns/route_baker.gd", "res://lua/config/props.lua", "res://data/interiors/kit_footprints.json"]
+	paths.append("res://tools/town/city_nav_bake.gd")
+	paths.append("res://data/towns/nav_city.json")
 	for dir in ["res://data/interiors/core", "res://data/interiors/ext", "res://data/interiors/dress"]:
 		if not DirAccess.dir_exists_absolute(dir):
 			continue

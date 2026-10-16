@@ -75,6 +75,7 @@ func _hud() -> void:
 	root.theme = _theme()
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var date = _frame(k, root, "DatePanel", Vector4(16, 7, 16, 7))
+	root.get_node("DatePanel").custom_minimum_size.x = 252
 	k.pin(root.get_node("DatePanel"), "tl", 40, 40)
 	var dv = k.vbox(date, "DateBody", 2, {"ignore": true})
 	k.lbl(dv, "DayLabel", "", "Display22", {"ignore": true}, true)
@@ -82,12 +83,14 @@ func _hud() -> void:
 	var right = k.vbox(root, "TopRight", 12, {"ignore": true})
 	k.pin(right, "tr", 40, 40)
 	var chip = _frame(k, right, "MoneyChip", Vector4(15, 9, 15, 9))
+	right.get_node("MoneyChip").size_flags_horizontal = Control.SIZE_SHRINK_END
 	var money = k.hbox(chip, "MoneyRow", 16, {"ignore": true})
 	var gold = k.hbox(money, "Gold", 8, {"ignore": true})
 	var coin = k.coin(gold, "Coin", true)
 	coin.custom_minimum_size = Vector2(18, 18)
 	coin.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	var amount = k.lbl(gold, "GoldLabel", "", "Heavy19", {"ignore": true, "shrink_center_v": true}, true)
+	amount.custom_minimum_size.x = 42
 	amount.set_meta("tt_r3_ok", "Miljøer v2 money chip explicitly uses the 19px heavy face")
 	var energy = k.hbox(money, "Energy", 8, {"ignore": true})
 	k.lbl(energy, "StaminaTag", "HUD_ENERGY", "HudEnergyTag", {"ignore": true, "shrink_center_v": true}, true)

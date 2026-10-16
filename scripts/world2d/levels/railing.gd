@@ -32,7 +32,7 @@ var gaps: Array[Dictionary] = []        # merged gaps {start, end, ids: Array[St
 var landing_gap_count: int = 0          # the landings the platform has (the gaps before merging)
 var hull_gap_count: int = 0             # gaps of keep-out walls (the ladder lane through the Upper deck's shadow)
 var arcs: Array[PackedVector2Array] = []
-var posts: Array[Sprite2D] = []
+var posts := PackedVector2Array()
 var ropes: Array[Line2D] = []
 var back: Node2D
 var front: Node2D
@@ -151,15 +151,19 @@ func _make(nodes: Dictionary, registry: LevelRegistry, art: Dictionary) -> void:
 		body.add_child(cs)
 	colliders.add_child(body)
 	# --- posts and ropes along the arcs, into the two non-sorted containers
-	back = Node2D.new()
+	var post_tex: Texture2D = art.get("post", null)
+	var back_posts := PostBatch.new()
+	back_posts.texture = post_tex
+	back = back_posts
 	back.name = "RailBack_%s" % level.id
 	back.z_index = level.rank - 3
 	floors.add_child(back)
-	front = Node2D.new()
+	var front_posts := PostBatch.new()
+	front_posts.texture = post_tex
+	front = front_posts
 	front.name = "RailFront_%s" % level.id
 	front.z_index = level.rank + 1
 	floors.add_child(front)
-	var post_tex: Texture2D = art.get("post", null)
 	var rail_h: float = RAIL_HEIGHT * scale
 	var perimeter: float = _ellipse_perimeter(ring_rx, ring_ry)
 	for rg in arc_ranges:
@@ -172,13 +176,8 @@ func _make(nodes: Dictionary, registry: LevelRegistry, art: Dictionary) -> void:
 			bases.remove_at(bases.size() - 1)                    # a closed ring: the last post is the first one
 		for k in bases.size():
 			if post_tex != null:
-				var post := Sprite2D.new()
-				post.texture = post_tex
-				post.centered = false
-				post.offset = Vector2(-post_tex.get_width() * 0.5, -post_tex.get_height())
-				post.position = bases[k]
-				(front if bases[k].y >= level.centre.y else back).add_child(post)
-				posts.append(post)
+				(front_posts if bases[k].y >= level.centre.y else back_posts).positions.append(bases[k])
+				posts.append(bases[k])
 		var pair_count: int = bases.size() - 1
 		if absf((rg.y - rg.x) - TAU) < 0.001:
 			pair_count = bases.size()

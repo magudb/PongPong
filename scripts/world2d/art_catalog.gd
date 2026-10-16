@@ -167,6 +167,10 @@ static func prop_metadata(id: StringName) -> Dictionary:
 	_scan()
 	return (_prop_manifest.get(String(id), {}) as Dictionary).duplicate(true)
 
+static func terrain_metadata(id: StringName) -> Dictionary:
+	_scan()
+	return (_terrain_manifest.get(String(id), {}) as Dictionary).duplicate(true)
+
 
 static func has_real_terrain(id: StringName) -> bool:
 	_scan()
@@ -239,7 +243,9 @@ static func _placeholder_terrain(id: StringName) -> Dictionary:
 ## Optional ground: {texture, pivot} draws below y-sorted objects and follows the prop's lifecycle.
 static func prop(id: StringName) -> Dictionary:
 	if _props.has(id):
-		return _props[id]
+		var cached: Variant = TextureRefs.fetch(_props[id])
+		if cached is Dictionary:
+			return cached
 	_scan()
 	var res: Dictionary = {}
 	var e: Variant = _prop_manifest.get(String(id), null)
@@ -268,7 +274,7 @@ static func prop(id: StringName) -> Dictionary:
 	if res.is_empty():
 		res = _placeholder_prop(id)
 		_note_missing("prop", String(id))
-	_props[id] = res
+	_props[id] = TextureRefs.store(res)
 	return res
 
 
@@ -295,7 +301,9 @@ static func _placeholder_prop(id: StringName) -> Dictionary:
 ## (a far canopy strip, seamless horizontally). Missing files fall back to a gradient sky and a soft painted canopy haze.
 static func backdrop(theme: StringName) -> Dictionary:
 	if _backdrops.has(theme):
-		return _backdrops[theme]
+		var cached: Variant = TextureRefs.fetch(_backdrops[theme])
+		if cached is Dictionary:
+			return cached
 	var key: StringName = theme if BACKDROP_THEMES.has(theme) else &"farm"
 	var sky: Texture2D = _load_tex("%s%s_sky.png" % [BACKDROP_DIR, theme])
 	if sky == null:
@@ -319,7 +327,7 @@ static func backdrop(theme: StringName) -> Dictionary:
 		_paint_usec += Time.get_ticks_usec() - t0
 		_note_missing("backdrop", String(theme))
 	var res: Dictionary = {"theme": theme, "sky": sky, "far": far, "real": real}
-	_backdrops[theme] = res
+	_backdrops[theme] = TextureRefs.store(res)
 	return res
 
 

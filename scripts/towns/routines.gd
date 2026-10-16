@@ -238,8 +238,8 @@ static func plan_blocks(npc: String, plan: String) -> Array:
 	return out
 
 
-static func plan_name(npc: String, ctx: Dictionary) -> String:
-	var def: Dictionary = registry().get(npc, {})
+static func plan_name(npc: String, ctx: Dictionary, definition: Dictionary = {}) -> String:
+	var def: Dictionary = definition if not definition.is_empty() else registry().get(npc, {})
 	for r in (def.get("select", []) as Array):
 		var rd: Dictionary = r
 		if matches(rd.get("when", {}) as Dictionary, ctx, npc):
@@ -439,7 +439,7 @@ static func where_is(npc: String, ctx: Dictionary) -> Dictionary:
 			return out
 	if def.has("hero_twin") and str(def["hero_twin"]) == str(ctx.get("hero", "")):
 		return out
-	var plan: String = plan_name(npc, ctx)
+	var plan: String = plan_name(npc, ctx, def)
 	out["plan"] = plan
 	var fb: Dictionary = {}
 	if ctx.has("fest"):
