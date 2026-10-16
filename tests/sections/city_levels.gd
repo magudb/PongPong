@@ -1146,7 +1146,9 @@ func _climbing(t) -> void:
 	var before: StringName = ActorLevel.level_id(p)
 	var refused_wrong_level: bool = not top.climb(p)                         # the top end is for actors on the Upper deck
 	var started: bool = bottom.climb(p)
-	await t.frames(2)
+	# The ground approach precedes the climb; observe transit after the actor
+	# has actually left the entry, rather than assuming an immediate snap.
+	await t.until(func() -> bool: return p.global_position.y < (lad["bottom"] as Vector2).y - 10.0, 1.0)
 	var mid_locked: bool = ActorLevel.is_locked(p) and p.z_index == 90 and (p as CharacterBody2D).collision_mask & (1 << 14) == 0 and (p as CharacterBody2D).collision_mask & (1 << 15) == 0 and int(p.get("state")) == 1
 	var t0: int = Time.get_ticks_msec()
 	var finished: bool = await t.until(func() -> bool: return not bottom.climbing, 4.0)
@@ -1166,6 +1168,7 @@ func _climbing(t) -> void:
 	t.check("ladder_climbs_down_too", down_ok and ActorLevel.level_id(p) == &"torvet" and p.z_index == 80 and p.global_position.distance_to(lad["bottom"]) < 3.0, "the top end takes the actor back to the Torvet (z %d) and the tracker leaves it there" % p.z_index)
 	# --- the real E path: the player's own E query (PlayerStub2D.nearest_interactable / try_interact) finds the end and starts the climb
 	p.global_position = lad["bottom"] + Vector2(0, 8)
+	p.event_face(Vector2.UP)
 	ActorLevel.clear(p)
 	await t.physics(3)
 	var found: Node = p.nearest_interactable()

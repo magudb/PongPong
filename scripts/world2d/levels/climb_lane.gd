@@ -4,7 +4,8 @@ extends Interactable2D
 ## takes the actor along the lane in `seconds` (the ladder 1.1 s, 180 sketch px = 540 world px), then puts it on the far level.
 ##
 ##   * the actor is LOCKED like begin_talk (input stops, `begin_talk()` when it has one) and ActorLevel.lock keeps the LevelTracker off it;
-##     while it climbs it is drawn at the higher rank of the two levels and collides with no level (ActorLevel.set_transit);
+##     it walks to the lane's entry on its current level first, without snapping.
+##     While climbing it is drawn at the higher rank and collides with no level (ActorLevel.set_transit);
 ##   * the duration is divided by a PERK PROVIDER: Callable(actor, key) -> float. The default asks SpeciesPerks.value(skin, "climb_speed_mult", 1.0)
 ##     through Svc.static_call (Kiki, the monkey, has 2.2: 1.1 s -> 0.5 s); it answers 1.0 while V1's class does not exist or for an NPC.
 ##     Tests inject a fake with `perk_provider = func(_actor, _key): return 2.2`;
@@ -139,36 +140,67 @@ func climb(actor: Node) -> bool:
 	last_duration = seconds / perk_multiplier(actor)
 	var body: Node2D = actor as Node2D
 	ActorLevel.lock(body, from_id)
-	ActorLevel.set_transit(body, from_level, to_level)
 	var forced_before: Variant = body.get("forced_clip") if "forced_clip" in body else null
 	_body = body
 	_forced_before = forced_before
+	body.tree_exiting.connect(_abandon, CONNECT_ONE_SHOT)
 	if actor.has_method("begin_talk"):
 		actor.call("begin_talk", global_position)
-	var going_up: bool = finish_pos.y < start_pos.y
-	_pose(body, going_up)
-	body.global_position = start_pos
-	EventBus.game_event.emit(&"ladder_climbed", {"actor": str(body.name), "lane": str(lane_id), "from": str(from_id), "to": str(to_id), "seconds": last_duration})
 	_tween = create_tween()
+	_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+	var approach: Vector2 = start_pos - body.global_position
+	if approach.length_squared() > 0.0001:
+		_pose(body, Iso.to_ground(approach))
+		var speed: float = float(body.get("_walk")) if "_walk" in body else 285.0
+		_tween.tween_method(_approach.bind(body), body.global_position, start_pos, Iso.to_ground(approach).length() / maxf(speed, 1.0))
+	_tween.tween_callback(_start_transit.bind(body, from_level, to_level))
 	_tween.tween_property(body, "global_position", finish_pos, last_duration)
 	_tween.finished.connect(_finish.bind(body, to_level, forced_before), CONNECT_ONE_SHOT)
 	return true
 
 
-## The climbing pose: the walk loop, back to the camera going up, face to the camera going down.
-func _pose(body: Node2D, going_up: bool) -> void:
+## Only the ground approach uses collision. A blocked entry cancels the action
+## rather than jumping through a railing to reach the climbing lane.
+func _approach(at: Vector2, body: Node2D) -> void:
+	if body is CharacterBody2D:
+		(body as CharacterBody2D).move_and_collide(at - body.global_position)
+	else:
+		body.global_position = at
+
+
+func _start_transit(body: Node2D, from_level: Level, to_level: Level) -> void:
+	if body.global_position.distance_to(start_pos) > 1.0:
+		_abandon()
+		return
+	ActorLevel.set_transit(body, from_level, to_level)
+	_pose(body, Vector2(0, -1 if finish_pos.y < start_pos.y else 1))
+	EventBus.game_event.emit(&"ladder_climbed", {"actor": str(body.name), "lane": str(lane_id), "from": str(from_id), "to": str(to_id), "seconds": last_duration})
+
+
+## The player stops its normal animation updater while input is locked. Start
+## the loop directly and keep its facing state in sync for the landing frame.
+func _pose(body: Node2D, direction: Vector2) -> void:
 	if "forced_clip" in body:
 		body.set("forced_clip", &"walk")
+	var facing := Iso.dir8_of(direction)
+	if "facing8" in body:
+		body.set("facing8", facing)
+	if "facing_vec" in body:
+		body.set("facing_vec", Iso.dir8_vector(facing))
 	var vis: Variant = body.get("visual")
 	if vis is Object and (vis as Object).has_method("set_direction_index"):
-		(vis as Object).call("set_direction_index", Iso.dir8_of(Vector2(0, -1) if going_up else Vector2(0, 1)))
+		(vis as Object).call("set_direction_index", facing)
+	if vis is Object and (vis as Object).has_method("play_loop"):
+		(vis as Object).call("play_loop", &"walk")
 
 
 func _finish(body: Node2D, to_level: Level, forced_before: Variant) -> void:
 	climbing = false
 	_body = null
+	_forced_before = null
 	if not is_instance_valid(body):
 		return
+	_disconnect_actor(body)
 	body.global_position = finish_pos
 	ActorLevel.unlock(body)
 	ActorLevel.set_level(body, to_level)
@@ -178,10 +210,18 @@ func _finish(body: Node2D, to_level: Level, forced_before: Variant) -> void:
 
 ## The actor is free again: its clip back, the talk state over (what begin_talk froze).
 func _release_actor(body: Node2D, forced_before: Variant) -> void:
-	if forced_before != null and "forced_clip" in body:
-		body.set("forced_clip", forced_before)
 	if body.has_method("end_talk"):
 		body.call("end_talk")
+	if forced_before != null and "forced_clip" in body:
+		body.set("forced_clip", forced_before)
+	var vis: Variant = body.get("visual")
+	if vis is Object and (vis as Object).has_method("play_loop"):
+		(vis as Object).call("play_loop", StringName(str(forced_before)) if forced_before != null and str(forced_before) != "" else &"idle")
+
+
+func _disconnect_actor(body: Node2D) -> void:
+	if body.tree_exiting.is_connected(_abandon):
+		body.tree_exiting.disconnect(_abandon)
 
 
 func _exit_tree() -> void:
@@ -193,6 +233,8 @@ func _exit_tree() -> void:
 
 ## The lane left the tree mid-climb: nobody will ever finish the tween, so the actor is released now (see the header).
 func _abandon() -> void:
+	if _tween != null and _tween.is_valid():
+		_tween.kill()
 	climbing = false
 	var body: Node2D = _body
 	var forced_before: Variant = _forced_before
@@ -200,5 +242,6 @@ func _abandon() -> void:
 	_forced_before = null
 	if body == null or not is_instance_valid(body):
 		return
+	_disconnect_actor(body)
 	ActorLevel.restore(body)
 	_release_actor(body, forced_before)
