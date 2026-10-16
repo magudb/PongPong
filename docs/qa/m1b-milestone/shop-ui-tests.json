@@ -1,0 +1,28 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 118,
+  "elapsed_s": 7.02,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "contracts": {
+      "checks": 10,
+      "failed": 0,
+      "ms": 1,
+      "skipped": 0
+    },
+    "shop_ui": {
+      "checks": 108,
+      "failed": 0,
+      "ms": 4050,
+      "skipped": 10
+    }
+  },
+  "skipped": 10
+}

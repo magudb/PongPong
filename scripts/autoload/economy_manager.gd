@@ -621,9 +621,11 @@ func use_item(item_id: StringName) -> bool:
 		if gm == null:
 			return false
 		var flag := str(d["unlock_flag"])
-		gm.call("set_flag", StringName(flag), true)
 		if bool(d.get("consumed", true)):
-			remove_item(item_id, 1)
+			if not consume_backpack_items({item_id: 1}, func(): gm.call("set_flag", StringName(flag), true)):
+				return false
+		else:
+			gm.call("set_flag", StringName(flag), true)
 		_publish(&"game_event", [&"blueprint_learned", {"item": str(item_id), "flag": flag}])
 		_publish(&"notification_posted", [tr("ITEM_BLUEPRINT_LEARNED_TITLE"), tr("ITEM_BLUEPRINT_LEARNED_MSG"), "item"])
 		return true

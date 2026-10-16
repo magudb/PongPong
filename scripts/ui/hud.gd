@@ -25,6 +25,7 @@ var _pending_friends: Dictionary = {}
 var _last_health := Vector2i(-1, -1)
 
 func _ready() -> void:
+	toasts.z_index = 100
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("hud", Callable(get_script(), &"fixture_setup"))
 	EventBus.gold_changed.connect(_gold)
 	EventBus.time_of_day_changed.connect(_time)

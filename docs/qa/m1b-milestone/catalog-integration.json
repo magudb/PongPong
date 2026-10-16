@@ -1,0 +1,233 @@
+{
+  "allowed": [
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'Bad Name' is not a valid section name (a-z, 0-9, _) (at register_section res://scripts/autoload/save_manager.gd:466)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'world' is a built-in name (at register_section res://scripts/autoload/save_manager.gd:469)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'game' is a built-in name (at register_section res://scripts/autoload/save_manager.gd:469)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section('nomethods'): the node has no to_dict() (at register_section res://scripts/autoload/save_manager.gd:476)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section('nullnode'): the node is null or freed (at register_section res://scripts/autoload/save_manager.gd:472)"
+    },
+    {
+      "kind": "warning",
+      "rule": "which cannot be saved",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'jsonrules' holds a Object, which cannot be saved (written as null) (at _json_safe res://scripts/autoload/save_manager.gd:646)"
+    },
+    {
+      "kind": "error",
+      "rule": "did not return a Dictionary",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved (at gather_payload res://scripts/autoload/save_manager.gd:576)"
+    },
+    {
+      "kind": "error",
+      "rule": "did not return a Dictionary",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved (at gather_payload res://scripts/autoload/save_manager.gd:576)"
+    },
+    {
+      "kind": "warning",
+      "rule": "nested deeper than 64",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped (at _json_safe res://scripts/autoload/save_manager.gd:616)"
+    },
+    {
+      "kind": "warning",
+      "rule": "nested deeper than 64",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped (at _json_safe res://scripts/autoload/save_manager.gd:616)"
+    },
+    {
+      "kind": "error",
+      "rule": "fake section failure",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): fake section failure boom (at from_dict res://tests/sections/save.gd:64)"
+    },
+    {
+      "kind": "error",
+      "rule": "fake section failure",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): fake section failure late_boom (at from_dict res://tests/sections/save.gd:64)"
+    },
+    {
+      "kind": "error",
+      "rule": "save_4.bak.json.tmp",
+      "section": "save",
+      "text": "core/io/dir_access.cpp:429 in copy(): Condition \"err != OK\" is true. Returning: err Failed to open '/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.utpVpB/Library/Application Support/Traetoppen/save_test_21875/save_4.bak.json.tmp'. (at _roll_backup res://scripts/autoload/save_manager.gd:1004)"
+    },
+    {
+      "kind": "warning",
+      "rule": "unknown NPC 'retired_npc'",
+      "section": "social",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SocialManager.from_dict: unknown NPC 'retired_npc' kept in the orphans bucket (at from_dict res://scripts/social/social_manager.gd:1274)"
+    }
+  ],
+  "character": "animal",
+  "checks": 2791,
+  "elapsed_s": 70.67,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "contracts": {
+      "checks": 10,
+      "failed": 0,
+      "ms": 0,
+      "skipped": 0
+    },
+    "economy": {
+      "checks": 296,
+      "failed": 0,
+      "ms": 1428,
+      "skipped": 2
+    },
+    "economy_hours": {
+      "checks": 14,
+      "failed": 0,
+      "ms": 53,
+      "skipped": 3
+    },
+    "economy_transactions": {
+      "checks": 7,
+      "failed": 0,
+      "ms": 20,
+      "skipped": 0
+    },
+    "farm": {
+      "checks": 210,
+      "failed": 0,
+      "ms": 76,
+      "skipped": 0
+    },
+    "hud": {
+      "checks": 91,
+      "failed": 0,
+      "ms": 3728,
+      "skipped": 4
+    },
+    "loot": {
+      "checks": 170,
+      "failed": 0,
+      "ms": 5271,
+      "skipped": 4
+    },
+    "menus": {
+      "checks": 103,
+      "failed": 0,
+      "ms": 3630,
+      "skipped": 0
+    },
+    "player": {
+      "checks": 37,
+      "failed": 0,
+      "ms": 279,
+      "skipped": 0
+    },
+    "quests": {
+      "checks": 55,
+      "failed": 0,
+      "ms": 2778,
+      "skipped": 4
+    },
+    "review_regressions": {
+      "checks": 98,
+      "failed": 0,
+      "ms": 1097,
+      "skipped": 0
+    },
+    "save": {
+      "checks": 240,
+      "failed": 0,
+      "ms": 4260,
+      "skipped": 0
+    },
+    "shop_rotation": {
+      "checks": 51,
+      "failed": 0,
+      "ms": 950,
+      "skipped": 0
+    },
+    "shop_ui": {
+      "checks": 108,
+      "failed": 0,
+      "ms": 3929,
+      "skipped": 10
+    },
+    "social": {
+      "checks": 132,
+      "failed": 0,
+      "ms": 19092,
+      "skipped": 3
+    },
+    "social_gifts": {
+      "checks": 58,
+      "failed": 0,
+      "ms": 68,
+      "skipped": 0
+    },
+    "social_talk": {
+      "checks": 42,
+      "failed": 0,
+      "ms": 84,
+      "skipped": 0
+    },
+    "ui_audit": {
+      "checks": 465,
+      "failed": 0,
+      "ms": 5816,
+      "skipped": 28
+    },
+    "ui_audit_blind": {
+      "checks": 121,
+      "failed": 0,
+      "ms": 4426,
+      "skipped": 0
+    },
+    "ui_audit_pins": {
+      "checks": 344,
+      "failed": 0,
+      "ms": 1333,
+      "skipped": 0
+    },
+    "ui_conformance": {
+      "checks": 113,
+      "failed": 0,
+      "ms": 4921,
+      "skipped": 45
+    },
+    "ui_nav": {
+      "checks": 26,
+      "failed": 0,
+      "ms": 4426,
+      "skipped": 0
+    }
+  },
+  "skipped": 103
+}

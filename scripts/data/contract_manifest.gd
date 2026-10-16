@@ -8,8 +8,8 @@ extends RefCounted
 ## fixed stock, farm_grid.gd missing means no crop model. Tests know; the running game does not.
 ##
 ## This list is the other half of those gates. CHECK IT AT WORLD BOOT (WorldRoot2D._ready) and post
-## ONE notification naming the fallbacks that are active. It is not an error: a mid-wave tree is
-## supposed to have holes. It only makes them say so once, in-game.
+## ONE diagnostic event naming the fallbacks that are active. Developer package names and paths
+## belong in diagnostics, never in the player's notification stack.
 ##
 ## CONTRACT of an entry:
 ##   path     res:// path of the resource the late-binding gate looks for
@@ -55,7 +55,7 @@ static func describe(gaps: Array[Dictionary] = []) -> String:
 	return "; ".join(parts)
 
 
-## Posts ONE notification when anything is missing (EventBus.notification_posted). Silent when complete
+## Publishes ONE diagnostic when anything is missing. Silent when complete
 ## or when it already reported. `force` re-posts (tests).
 static func report(force: bool = false) -> void:
 	if _reported and not force:
@@ -68,11 +68,7 @@ static func report(force: bool = false) -> void:
 	var bus: Node = _bus()
 	if bus == null:
 		return
-	var title := "Pending packages" if gaps.size() > 1 else "Pending package"
-	var body: PackedStringArray = []
-	for e in gaps:
-		body.append("%s (using %s)" % [str(e["path"]).get_file(), str(e["fallback"])])
-	bus.emit_signal("notification_posted", title, "; ".join(body), "info")
+	bus.emit_signal("game_event", &"contract_fallbacks", {"gaps": gaps.duplicate(true)})
 
 
 ## Clears the one-shot flag (tests that want a fresh report).

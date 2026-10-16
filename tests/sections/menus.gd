@@ -4,6 +4,10 @@ const TIMEOUT_S := 240.0
 const SELECT := "res://scenes/ui/character_select.tscn"
 
 func run(t) -> void:
+	var save_manager: Node = t.autoload("SaveManager")
+	var previous_save_dir: String = save_manager.save_dir
+	save_manager.save_dir = "user://menus-pristine"
+	UiNav.remember(&"title", "")
 	if OS.get_environment("TRAETOPPEN_BAKE_MENUS") == "1":
 		var built: Dictionary = t.run_godot_script("res://tools/ui/bake_menus.gd")
 		t.check("scenes_compile", built.code == 0 and not built.output.contains("SCRIPT ERROR:") and not built.output.contains("ERROR:"), built.output)
@@ -97,6 +101,7 @@ func run(t) -> void:
 	await _all_pause_rows(t, pause, game_ui)
 	await _save_flows(t, pause, game_ui)
 	await _title_states(t)
+	save_manager.save_dir = previous_save_dir
 
 func _event(t, device: String, action: String) -> void:
 	if device == "keyboard":

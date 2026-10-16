@@ -1,0 +1,26 @@
+{
+  "frame_crop": true,
+  "region": null,
+  "screens": {
+    "inventory": {
+      "mean": 17.347,
+      "over40_pct": 15.476,
+      "ref": "/Users/magnusudbjorg/Documents/projects/PongPong-worktrees/m1b/tests/checkpoints/guide_ref/pw1x_inventory.png",
+      "shot": "docs/qa/m1b-milestone/shop-ui-native/shop_ui_inventory_fixture.png",
+      "size": [
+        1276,
+        716
+      ]
+    },
+    "shop": {
+      "mean": 20.375,
+      "over40_pct": 17.399,
+      "ref": "/Users/magnusudbjorg/Documents/projects/PongPong-worktrees/m1b/tests/checkpoints/guide_ref/pw1x_shop.png",
+      "shot": "docs/qa/m1b-milestone/shop-ui-native/shop_ui_shop_fixture.png",
+      "size": [
+        1276,
+        716
+      ]
+    }
+  }
+}

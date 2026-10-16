@@ -1,0 +1,34 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 33,
+  "elapsed_s": 9.24,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "menus": {
+      "checks": 15,
+      "failed": 0,
+      "ms": 1334,
+      "skipped": 0
+    },
+    "shop_ui": {
+      "checks": 14,
+      "failed": 0,
+      "ms": 1610,
+      "skipped": 0
+    },
+    "ui_conformance": {
+      "checks": 4,
+      "failed": 0,
+      "ms": 3250,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

@@ -243,5 +243,12 @@
     "date": "",
     "voice_frozen": false,
     "rows": 3
+  },
+  "localization/shop_ui.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 19
   }
 }

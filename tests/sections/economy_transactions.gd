@@ -52,6 +52,7 @@ func run(t) -> void:
 	bus.notification_posted.disconnect(refused)
 	t.check("failed_purchase_guard_and_reason", cannot_buy and failures == [false] and shop.last_refusal == &"no_gold" and eco.gold == 0 and eco.count_item(id) == owned and int(_row(shop, id).stock) == stock - 1)
 	await _craft(t)
+	_blueprint(t)
 	gm.clear_config_overrides()
 	Fresh.new_game(t)
 
@@ -82,3 +83,19 @@ func _craft(t) -> void:
 	bus.recipe_crafted.disconnect(crafted)
 	t.check("craft_committed_before_every_observer_and_reentry_blocked", ok and observations.size() >= 5 and observations.all(func(row): return row == [3, 2, 1, false]), str(observations))
 	t.check("craft_guard_releases_for_next_action", CraftingSystem.craft("pickaxe_copper") and eco.count_item(&"copper_ore") == 0 and eco.count_item(&"wood") == 0 and eco.count_item(&"pickaxe_copper") == 2)
+
+func _blueprint(t) -> void:
+	var eco: Node = t.autoload("EconomyManager")
+	var gm: Node = t.autoload("GameManager")
+	var bus: Node = t.autoload("EventBus")
+	var item := &"blueprint_kongelig"
+	gm.set_flag(&"bp_kongelig", false)
+	eco.add_item(item, 1, true)
+	var observed: Array = []
+	var on_flag := func(flag, value):
+		if flag == &"bp_kongelig" and value:
+			observed.append([eco.count_item(item), eco.use_item(item)])
+	bus.flag_changed.connect(on_flag)
+	var learned: bool = eco.use_item(item)
+	bus.flag_changed.disconnect(on_flag)
+	t.check("blueprint_consumed_before_unlock_observers", learned and observed == [[0, false]] and eco.count_item(item) == 0 and bool(gm.get_flag(&"bp_kongelig", false)), str(observed))

@@ -702,6 +702,22 @@ static func _skip_dirs(c: Control, consumes: Array = []) -> Array[StringName]:
 	return out
 
 
+## Geometry describes the drawn viewport. Offscreen scroll rows remain part of
+## the reachability walk, but cannot be geometric neighbours of fixed chrome.
+static func _drawn_in_clip(control: Control) -> bool:
+	if not control.is_visible_in_tree():
+		return false
+	var rect := control.get_global_rect()
+	var parent := control.get_parent()
+	while parent != null:
+		if parent is ScrollContainer or (parent is Control and parent.clip_contents):
+			rect = rect.intersection(parent.get_global_rect())
+			if not rect.has_area():
+				return false
+		parent = parent.get_parent()
+	return rect.grow(0.5).encloses(control.get_global_rect())
+
+
 ## Explores the focus graph from `start` with real presses (a probe teleports with grab_focus() and presses one direction).
 static func _walk_page(t, root: Node, start: Control, budget: Dictionary, options: Dictionary, report: Dictionary) -> Dictionary:
 	var via: String = options.get("via", "action")
@@ -827,7 +843,7 @@ static func _focus_walk_modes(t, root: Node, max_steps: int, options: Dictionary
 	var r := await _walk_once(t, root, max_steps, o1)
 	r["via"] = first_via
 	r["pad_matches_keyboard"] = r.get("pad_matches_keyboard", true)
-	if focus_at_start != null and is_instance_valid(focus_at_start):
+	if UiNav.is_stop(focus_at_start) and focus_at_start.is_visible_in_tree():
 		focus_at_start.grab_focus()
 	await t.frames(1)
 	if mode == "both":
@@ -1018,7 +1034,7 @@ static func _walk_once(t, root: Node, max_steps: int, options: Dictionary) -> Di
 				if not await accept_works(t, c, str(options.get("via", "action"))):
 					_defect(r, "accept_dead", cp, "ui_accept on the focused %s does not activate it" % cp)
 	# restore the screen's own focus
-	if init != null and is_instance_valid(init):
+	if UiNav.is_stop(init) and init.is_visible_in_tree():
 		init.grab_focus()
 	elif init == null:
 		_viewport(t).gui_release_focus()
@@ -1056,6 +1072,7 @@ static func _analyze_page(t, root: Node, start: Control, expected: Array[Control
 	budget["page_state"] = state
 	var via: String = options.get("via", "action")
 	var g := await _walk_page(t, root, start, budget, options, r)
+	await _ensure_page(t, budget, options)
 	var nodes_by_path: Dictionary = g["nodes"]
 	var edges: Dictionary = g["edges"]
 	var parent: Dictionary = g["parent"]
@@ -1137,7 +1154,7 @@ static func _analyze_page(t, root: Node, start: Control, expected: Array[Control
 			rects[p] = c.get_global_rect().get_center()
 	var all_rects: Array[Rect2] = []
 	for c in expected:
-		if is_instance_valid(c):
+		if is_instance_valid(c) and _drawn_in_clip(c):
 			all_rects.append(c.get_global_rect())
 	var check_dirs: Array[StringName] = []
 	if options.has("dirs"):                                    # the primary directions of the screen's groups (spec 10.3): each must lead somewhere (wrap)
@@ -1152,7 +1169,7 @@ static func _analyze_page(t, root: Node, start: Control, expected: Array[Control
 	var wrap_edges: Array[Dictionary] = []
 	for p in edges:
 		var c2: Control = nodes_by_path.get(p)
-		if c2 == null or not is_instance_valid(c2) or not Rules.is_enabled(c2):
+		if c2 == null or not is_instance_valid(c2) or not Rules.is_enabled(c2) or not _drawn_in_clip(c2):
 			continue
 		var skip := _skip_dirs(c2, (options.get("consumes", {}) as Dictionary).get(p, []))
 		for dir in DIR_ACTIONS:
@@ -1165,6 +1182,9 @@ static func _analyze_page(t, root: Node, start: Control, expected: Array[Control
 					_defect(r, "dead_end", p, "%s%s has no neighbour for %s (wrap is required)" % [p, tag, dir], {"dir": str(dir)})
 				continue
 			var target: String = edges[p][str(dir)]
+			var target_control: Control = nodes_by_path.get(target)
+			if target_control != null and is_instance_valid(target_control) and not _drawn_in_clip(target_control):
+				continue
 			var dv: Vector2 = rects.get(target, rects[p]) - rects[p]
 			if dv.dot(DIR_VECTORS[dir]) < -1.0:
 				var beyond := false
@@ -1200,6 +1220,9 @@ static func _analyze_page(t, root: Node, start: Control, expected: Array[Control
 		for dir in [&"ui_down", &"ui_right"]:
 			if dir in _skip_dirs(start, (options.get("consumes", {}) as Dictionary).get(start_path, [])):
 				continue                                       # the start control consumes this direction (a slider changes its value, a tab bar switches tabs)
+			await _ensure_page(t, budget, options)
+			if not UiNav.is_stop(start) or not start.is_visible_in_tree():
+				continue
 			start.grab_focus()
 			await t.frames(1)
 			var chain: Array[String] = [start_path]
@@ -1330,6 +1353,10 @@ static func radio_groups(root: Node, options: Dictionary = {}) -> Array[Dictiona
 	for n in Rules.nodes(root, options.get("ignore", [])):
 		if n is BaseButton and (n as BaseButton).toggle_mode and (n as BaseButton).button_group != null and Rules.is_enabled(n as Control):
 			var g: ButtonGroup = (n as BaseButton).button_group
+			# Item/recipe selections update a value and detail card. Their rows are
+			# already walked as controls; they do not create another navigation page.
+			if bool(g.get_meta("tt_value_selection", false)):
+				continue
 			if not by_group.has(g):
 				by_group[g] = []
 				order.append(g)
@@ -1355,6 +1382,8 @@ static func radio_groups(root: Node, options: Dictionary = {}) -> Array[Dictiona
 
 ## Selects a radio member the way a player does: focus it and press accept (a screen that selects on focus is selected already). True when it is pressed afterwards.
 static func _select_member(t, m: BaseButton, budget: Dictionary, options: Dictionary) -> bool:
+	if not UiNav.is_stop(m) or not m.is_visible_in_tree():
+		return false
 	m.grab_focus()
 	await t.frames(1)
 	if not m.button_pressed:
@@ -2869,7 +2898,7 @@ static func audit_screen(t, id: String, overrides: Dictionary = {}) -> Dictionar
 	checks = ["visible"] + checks
 	var opening_focus := initial_focus(node)
 	for check in checks:
-		if opening_focus != null and is_instance_valid(opening_focus):
+		if UiNav.is_stop(opening_focus) and opening_focus.is_visible_in_tree():
 			opening_focus.grab_focus()
 		elif opening_focus == null:
 			t.root.gui_release_focus()

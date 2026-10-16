@@ -33,6 +33,7 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | nav.csv | draft | 32 | 42 | 0.1 |
 | quests.csv | draft | 147 | 1058 | 2.6 |
 | rel_ui.csv | draft | 7 | 22 | 0.1 |
+| shop_ui.csv | draft | 19 | 69 | 0.2 |
 | social_sys.csv | draft | 10 | 32 | 0.1 |
 | traetoppen.csv | draft | 21 | 58 | 0.1 |
 | ui.csv | ai_reviewed | 140 | 319 | 0.8 |

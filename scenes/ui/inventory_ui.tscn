@@ -1,0 +1,390 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/theme/tt_box_style.gd" id="1_erru2"]
+[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-ExtraBold.ttf" id="2_7csag"]
+[ext_resource type="FontFile" path="res://assets/fonts/TTSymbols-Regular.ttf" id="3_8r0c3"]
+[ext_resource type="FontFile" path="res://assets/fonts/Caprasimo-Regular.ttf" id="4_ui1cf"]
+[ext_resource type="Script" path="res://scripts/ui/inventory_ui.gd" id="5_t28gt"]
+[ext_resource type="Shader" path="res://shaders/blur_scrim.gdshader" id="6_grg3b"]
+[ext_resource type="Script" path="res://scripts/ui/components/tt_item_icon.gd" id="7_g4q4h"]
+[ext_resource type="Script" path="res://scripts/ui/components/workshop_panel.gd" id="8_cyqv3"]
+[ext_resource type="Script" path="res://scripts/ui/components/hint_bar.gd" id="9_jsywp"]
+
+[sub_resource type="StyleBox" id="StyleBox_jwuib"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+script = ExtResource("1_erru2")
+radius = 18.0
+ring_colors = PackedColorArray(0.8901961, 0.7647059, 0.44705883, 1, 0.16862746, 0.13725491, 0.2509804, 1)
+ring_widths = PackedFloat32Array(4, 2)
+
+[sub_resource type="FontVariation" id="FontVariation_xs5nn"]
+fallbacks = Array[Font]([ExtResource("3_8r0c3")])
+base_font = ExtResource("2_7csag")
+opentype_features = {
+"lnum": 1
+}
+
+[sub_resource type="FontVariation" id="FontVariation_s0eex"]
+fallbacks = Array[Font]([ExtResource("2_7csag"), ExtResource("3_8r0c3")])
+base_font = ExtResource("4_ui1cf")
+
+[sub_resource type="Theme" id="Theme_an4jt"]
+CatalogBackpack/base_type = &"PanelContainer"
+CatalogBackpack/styles/panel = SubResource("StyleBox_jwuib")
+CatalogHave/base_type = &"Label"
+CatalogHave/colors/font_color = Color(0.3019608, 0.47843137, 0.16470589, 1)
+CatalogHave/font_sizes/font_size = 17
+CatalogHave/fonts/font = SubResource("FontVariation_xs5nn")
+CatalogHaveCount/base_type = &"Label"
+CatalogHaveCount/colors/font_color = Color(0.3019608, 0.47843137, 0.16470589, 1)
+CatalogHaveCount/font_sizes/font_size = 16
+CatalogHaveCount/fonts/font = SubResource("FontVariation_s0eex")
+CatalogMissing/base_type = &"Label"
+CatalogMissing/colors/font_color = Color(0.7019608, 0.2627451, 0.41960785, 1)
+CatalogMissing/font_sizes/font_size = 17
+CatalogMissing/fonts/font = SubResource("FontVariation_xs5nn")
+CatalogMissingCount/base_type = &"Label"
+CatalogMissingCount/colors/font_color = Color(0.7019608, 0.2627451, 0.41960785, 1)
+CatalogMissingCount/font_sizes/font_size = 16
+CatalogMissingCount/fonts/font = SubResource("FontVariation_s0eex")
+CatalogRarity_legendary/base_type = &"Label"
+CatalogRarity_legendary/colors/font_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+CatalogRarity_legendary/font_sizes/font_size = 18
+CatalogRarity_legendary/fonts/font = SubResource("FontVariation_xs5nn")
+CatalogRarity_normal/base_type = &"Label"
+CatalogRarity_normal/colors/font_color = Color(0.29803923, 0.2509804, 0.34509805, 1)
+CatalogRarity_normal/font_sizes/font_size = 18
+CatalogRarity_normal/fonts/font = SubResource("FontVariation_xs5nn")
+CatalogRarity_rare/base_type = &"Label"
+CatalogRarity_rare/colors/font_color = Color(0.3647059, 0.30980393, 0.6392157, 1)
+CatalogRarity_rare/font_sizes/font_size = 18
+CatalogRarity_rare/fonts/font = SubResource("FontVariation_xs5nn")
+CatalogRarity_uncommon/base_type = &"Label"
+CatalogRarity_uncommon/colors/font_color = Color(0.24705882, 0.41960785, 0.13333334, 1)
+CatalogRarity_uncommon/font_sizes/font_size = 18
+CatalogRarity_uncommon/fonts/font = SubResource("FontVariation_xs5nn")
+CatalogRarity_unique/base_type = &"Label"
+CatalogRarity_unique/colors/font_color = Color(0.49019608, 0.18039216, 0.34901962, 1)
+CatalogRarity_unique/font_sizes/font_size = 18
+CatalogRarity_unique/fonts/font = SubResource("FontVariation_xs5nn")
+CatalogTooDear/base_type = &"Label"
+CatalogTooDear/colors/font_color = Color(0.7019608, 0.2627451, 0.41960785, 1)
+CatalogTooDear/font_sizes/font_size = 20
+CatalogTooDear/fonts/font = SubResource("FontVariation_s0eex")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g1qdc"]
+shader = ExtResource("6_grg3b")
+shader_parameter/blur_lod = null
+shader_parameter/tint = Color(0.227, 0.192, 0.314, 0.93)
+
+[node name="InventoryUI" type="Control" unique_id=679690603]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_an4jt")
+script = ExtResource("5_t28gt")
+screen_id = &"inventory_ui"
+modal_name = &"inventory"
+hotkey_action = &"inventory"
+
+[node name="Scrim" type="ColorRect" parent="." unique_id=95691945]
+material = SubResource("ShaderMaterial_g1qdc")
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="." unique_id=1391803390]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 50
+
+[node name="Columns" type="HBoxContainer" parent="Margin" unique_id=1975412563]
+layout_mode = 2
+theme_override_constants/separation = 28
+
+[node name="Backpack" type="PanelContainer" parent="Margin/Columns" unique_id=1956657798]
+custom_minimum_size = Vector2(540, 0)
+layout_mode = 2
+theme_type_variation = &"CatalogBackpack"
+metadata/tt_gold_ok = "Guide parchment panel rings; tighter padding accommodates the four backpack actions"
+
+[node name="BackpackBody" type="VBoxContainer" parent="Margin/Columns/Backpack" unique_id=1624858104]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BackpackHeader" type="HBoxContainer" parent="Margin/Columns/Backpack/BackpackBody" unique_id=1616285366]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="Margin/Columns/Backpack/BackpackBody/BackpackHeader" unique_id=2145738060]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"Display32"
+text = "INV_TITLE"
+
+[node name="CapacityLabel" type="Label" parent="Margin/Columns/Backpack/BackpackBody/BackpackHeader" unique_id=443554143]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Display20"
+
+[node name="BagScroll" type="ScrollContainer" parent="Margin/Columns/Backpack/BackpackBody" unique_id=1152815761]
+custom_minimum_size = Vector2(436, 292)
+layout_mode = 2
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="FocusMargin" type="MarginContainer" parent="Margin/Columns/Backpack/BackpackBody/BagScroll" unique_id=821581305]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="ItemGrid" type="GridContainer" parent="Margin/Columns/Backpack/BackpackBody/BagScroll/FocusMargin" unique_id=1382935706]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 6
+
+[node name="Detail" type="PanelContainer" parent="Margin/Columns/Backpack/BackpackBody" unique_id=1156122800]
+layout_mode = 2
+theme_type_variation = &"PanelDetail"
+
+[node name="DetailRow" type="HBoxContainer" parent="Margin/Columns/Backpack/BackpackBody/Detail" unique_id=825748716]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="DetailIconBox" type="PanelContainer" parent="Margin/Columns/Backpack/BackpackBody/Detail/DetailRow" unique_id=1975521165]
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_type_variation = &"FrameInk"
+
+[node name="DetailIcon" type="Control" parent="Margin/Columns/Backpack/BackpackBody/Detail/DetailRow/DetailIconBox" unique_id=123893200]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("7_g4q4h")
+
+[node name="DetailText" type="VBoxContainer" parent="Margin/Columns/Backpack/BackpackBody/Detail/DetailRow" unique_id=163208134]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="DetailName" type="Label" parent="Margin/Columns/Backpack/BackpackBody/Detail/DetailRow/DetailText" unique_id=2101979906]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Heavy19"
+autowrap_mode = 3
+max_lines_visible = 2
+
+[node name="DetailRarity" type="Label" parent="Margin/Columns/Backpack/BackpackBody/Detail/DetailRow/DetailText" unique_id=1173096748]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"RareTag"
+
+[node name="DetailDesc" type="Label" parent="Margin/Columns/Backpack/BackpackBody/Detail/DetailRow/DetailText" unique_id=1721531641]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+theme_type_variation = &"Muted17"
+autowrap_mode = 3
+max_lines_visible = 2
+
+[node name="Actions" type="HBoxContainer" parent="Margin/Columns/Backpack/BackpackBody" unique_id=96672560]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="UseButton" type="Button" parent="Margin/Columns/Backpack/BackpackBody/Actions" unique_id=1750339080]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ButtonTertiaryS"
+text = "STORE_USE"
+
+[node name="EquipButton" type="Button" parent="Margin/Columns/Backpack/BackpackBody/Actions" unique_id=1473443301]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ButtonTertiaryS"
+text = "STORE_EQUIP_ITEM"
+
+[node name="AssignButton" type="Button" parent="Margin/Columns/Backpack/BackpackBody/Actions" unique_id=389910770]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ButtonTertiaryS"
+text = "STORE_ASSIGN"
+
+[node name="DropButton" type="Button" parent="Margin/Columns/Backpack/BackpackBody/Actions" unique_id=1293683824]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ButtonTertiaryS"
+text = "STORE_DISCARD"
+
+[node name="Workshop" type="PanelContainer" parent="Margin/Columns" unique_id=266577854]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PanelParchmentL24"
+
+[node name="WorkshopBody" type="VBoxContainer" parent="Margin/Columns/Workshop" unique_id=161316247]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+script = ExtResource("8_cyqv3")
+
+[node name="WorkshopTitle" type="Label" parent="Margin/Columns/Workshop/WorkshopBody" unique_id=838470413]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Display32"
+text = "WORKSHOP_TITLE"
+
+[node name="RecipesScroll" type="ScrollContainer" parent="Margin/Columns/Workshop/WorkshopBody" unique_id=279067626]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="FocusMargin" type="MarginContainer" parent="Margin/Columns/Workshop/WorkshopBody/RecipesScroll" unique_id=1190540523]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="RecipeList" type="VBoxContainer" parent="Margin/Columns/Workshop/WorkshopBody/RecipesScroll/FocusMargin" unique_id=840408286]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="CraftCard" type="PanelContainer" parent="Margin/Columns/Workshop/WorkshopBody" unique_id=994767836]
+layout_mode = 2
+theme_type_variation = &"CraftCard"
+
+[node name="CraftBody" type="VBoxContainer" parent="Margin/Columns/Workshop/WorkshopBody/CraftCard" unique_id=1350188123]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="RecipeName" type="Label" parent="Margin/Columns/Workshop/WorkshopBody/CraftCard/CraftBody" unique_id=934132720]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Heavy19"
+autowrap_mode = 3
+max_lines_visible = 2
+
+[node name="IngredientRow" type="HBoxContainer" parent="Margin/Columns/Workshop/WorkshopBody/CraftCard/CraftBody" unique_id=691312763]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="RecipeStatus" type="Label" parent="Margin/Columns/Workshop/WorkshopBody/CraftCard/CraftBody" unique_id=2009969520]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Muted17"
+autowrap_mode = 3
+
+[node name="CraftButton" type="Button" parent="Margin/Columns/Workshop/WorkshopBody/CraftCard/CraftBody" unique_id=427990766]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"ButtonPrimaryS"
+text = "WORKSHOP_CRAFT"
+
+[node name="CloseButton" type="Button" parent="." unique_id=797720035]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -60.0
+offset_top = 4.0
+offset_right = -60.0
+offset_bottom = 4.0
+grow_horizontal = 0
+theme_type_variation = &"ButtonTertiaryS"
+text = "✕"
+
+[node name="HintBar" type="HBoxContainer" parent="." unique_id=2004979570]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -8.0
+offset_right = -60.0
+offset_bottom = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 2
+script = ExtResource("9_jsywp")
+
+[node name="HotbarPicker" type="Control" parent="." unique_id=1036901141]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Scrim" type="ColorRect" parent="HotbarPicker" unique_id=1472205350]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.11, 0.129, 0.22, 0.7)
+
+[node name="Panel" type="PanelContainer" parent="HotbarPicker" unique_id=839420950]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PanelParchmentL24"
+
+[node name="Body" type="VBoxContainer" parent="HotbarPicker/Panel" unique_id=188528920]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="PickerTitle" type="Label" parent="HotbarPicker/Panel/Body" unique_id=641845587]
+layout_mode = 2
+theme_type_variation = &"Display28"
+text = "STORE_ASSIGN_TITLE"
+
+[node name="PickerRow" type="HBoxContainer" parent="HotbarPicker/Panel/Body" unique_id=1157651751]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PickerCancel" type="Button" parent="HotbarPicker/Panel/Body" unique_id=34305400]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ButtonTertiaryS"
+text = "NAV_CANCEL"

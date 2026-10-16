@@ -591,7 +591,10 @@
 				"panel_pixels",
 				"button_pixels",
 				"compare_guide"
-			]
+			],
+			"options": {
+				"max_steps": 16000
+			}
 		},
 		{
 			"id": "animal_care",

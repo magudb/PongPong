@@ -62,6 +62,8 @@ func go_menu() -> bool:
 	release_all()
 	tree.paused = false
 	var gm := root.get_node_or_null("GameManager")
+	if gm != null:
+		gm.pop_all_modals()
 	if gm != null and gm.has_method("change_phase") and phase_value(gm, "MENU") != null:
 		gm.change_phase(phase_value(gm, "MENU"))
 	return await change_scene(MENU_SCENE)

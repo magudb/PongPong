@@ -239,9 +239,10 @@ static func wire_grid(cells: Array, cols: int, wrap_h := true) -> void:
 ## last, else its first stop); from the last group it wraps to the first when `ring` (a fresh press wraps, an echo press does not).
 ## Tab / Shift+Tab walk the groups in order. Left / Right crossings between groups are declared with link(). Calling it again with the
 ## same (or rebuilt) groups replaces the old wiring.
-static func wire_groups(groups: Array, ring := true) -> void:
+static func wire_groups(groups: Array, ring := true, remember_focus := true) -> void:
 	var nav := _GroupNav.new()
 	nav.ring = ring
+	nav.remember_focus = remember_focus
 	for g in groups:
 		var members: Array[Control] = []
 		for c in (g as Array):
@@ -398,6 +399,7 @@ static func world_is_free() -> bool:
 class _GroupNav extends RefCounted:
 	var groups: Array = []                 # Array[Array[Control]]
 	var ring := true
+	var remember_focus := true
 	var memory: Dictionary = {}            # group index -> Control
 	var _connections: Array = []           # [{control, callable}]
 
@@ -410,6 +412,8 @@ class _GroupNav extends RefCounted:
 					if old is _GroupNav and old != self:
 						(old as _GroupNav).detach(ctrl)
 				ctrl.set_meta(&"tt_nav_groups", self)
+				if remember_focus and ctrl.has_focus():
+					memory[gi] = ctrl
 				var cb := _on_focus.bind(gi, ctrl)
 				ctrl.focus_entered.connect(cb)
 				_connections.append({"control": ctrl, "callable": cb})
@@ -425,12 +429,13 @@ class _GroupNav extends RefCounted:
 		_connections = keep
 
 	func _on_focus(gi: int, ctrl: Control) -> void:
-		memory[gi] = ctrl
+		if remember_focus:
+			memory[gi] = ctrl
 		relink()
 
 	## the control a move INTO group `gi` lands on: its memory when that is still a stop, else its first stop
 	func entry(gi: int) -> Control:
-		var m: Variant = memory.get(gi)
+		var m: Variant = memory.get(gi) if remember_focus else null
 		if UiNav.is_stop(m) and (m as Control).is_inside_tree():
 			return m as Control
 		for c in (groups[gi] as Array):

@@ -1,108 +1,244 @@
-extends Control
-## Inventory panel: grid of item slots with tooltips.
+extends TTScreen
+## Backpack presentation is separate from the data-owned crafting panel.
+const Fmt := preload("res://scripts/ui/theme/tt_format.gd")
+const Slot := preload("res://scenes/ui/components/item_slot.tscn")
+var _slots: Array[Button] = []
+var _items: Array = []
+var _selected := 0
+var _selected_id: StringName = &""
+var _busy := false
+var _refresh_pending := false
+var _picking := false
+var _picker_buttons: Array[Button] = []
+var _picker_opener: Control
+var _picker_item: StringName = &""
+@onready var workshop: Control = %WorkshopBody
 
-signal item_used(item_id: StringName)
-signal item_dropped(item_id: StringName)
-
-@onready var grid: GridContainer = %ItemGrid
-@onready var gold_label: Label = %GoldLabel
-@onready var close_btn: Button = %CloseButton
-@onready var tooltip: PanelContainer = %Tooltip
-
-const SLOT_SIZE := 64
-const SLOTS := 40
-
-var _slots: Array[Dictionary] = []
-
+func _init() -> void:
+	super._init()
+	screen_id = &"inventory_ui"
+	modal_name = &"inventory"
+	hotkey_action = &"inventory"
 
 func _ready() -> void:
-	visible = false
-	close_btn.pressed.connect(func(): EventBus.ui_panel_toggled.emit(&"inventory", false))
-	EventBus.ui_panel_toggled.connect(_on_panel_toggled)
-	EventBus.player_inventory_changed.connect(_on_inventory_changed)
-	EventBus.gold_changed.connect(_on_gold_changed)
-	_build_grid()
+	super._ready()
+	var slot_group := ButtonGroup.new()
+	slot_group.set_meta("tt_value_selection", true)
+	for index in EconomyManager.INVENTORY_SLOTS:
+		var slot: Button = Slot.instantiate()
+		slot.name = "BagSlot%d" % (index + 1)
+		slot.button_group = slot_group
+		slot.custom_minimum_size = Vector2(64, 64)
+		%ItemGrid.add_child(slot)
+		slot.item_icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		slot.item_icon.offset_left = 8
+		slot.item_icon.offset_top = 8
+		slot.item_icon.offset_right = -8
+		slot.item_icon.offset_bottom = -8
+		slot.pressed.connect(_activate_slot.bind(index))
+		_slots.append(slot)
+	%UseButton.pressed.connect(_use)
+	%EquipButton.pressed.connect(_equip)
+	%DropButton.pressed.connect(_discard)
+	%AssignButton.pressed.connect(_open_picker)
+	%CloseButton.pressed.connect(close)
+	for index in 8:
+		var button := Button.new()
+		button.name = "HotbarSlot%d" % (index + 1)
+		button.text = str(index + 1)
+		button.theme_type_variation = &"ButtonTertiaryS"
+		button.custom_minimum_size = Vector2(58, 48)
+		%PickerRow.add_child(button)
+		button.pressed.connect(_assign.bind(index))
+		_picker_buttons.append(button)
+	%PickerCancel.pressed.connect(_close_picker)
+	workshop.navigation_changed.connect(_wire)
+	EventBus.player_inventory_changed.connect(func(_inventory): _schedule_refresh())
+	EventBus.home_upgraded.connect(func(_old, _new): _schedule_refresh())
+	EventBus.flag_changed.connect(func(_flag, _value): _schedule_refresh())
+	%HintBar.set_hints([{"pair": [&"ui_up", &"ui_down"], "key": "HINT_MOVE"}, {"action": &"ui_accept", "key": "HINT_OK"}, {"action": &"ui_cancel", "key": "HINT_BACK"}])
+	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("inventory", Callable(get_script(), &"fixture_setup"))
+
+func _initial_focus() -> Control:
+	return _picker_buttons[0] if _picking else _slots[clampi(_selected, 0, _slots.size() - 1)]
+
+func close() -> void:
+	_picking = false
+	if is_node_ready():
+		%HotbarPicker.visible = false
+	super.close()
+
+func _on_cancel() -> void:
+	if _picking:
+		_close_picker()
+	else:
+		close()
+
+func _input(event: InputEvent) -> void:
+	if is_open() and is_top() and event.is_pressed() and not event.is_echo():
+		var focus := get_viewport().gui_get_focus_owner()
+		if (focus is Button and focus in _slots) or _picking:
+			for index in 8:
+				if event.is_action_pressed(StringName("slot_%d" % (index + 1))):
+					if focus is Button and focus in _slots:
+						_select(_slots.find(focus))
+					_assign(index)
+					get_viewport().set_input_as_handled()
+					return
+	super._input(event)
+
+func _schedule_refresh() -> void:
+	if not is_open() or _busy or _refresh_pending:
+		return
+	_refresh_pending = true
+	_flush.call_deferred()
+
+func _flush() -> void:
+	_refresh_pending = false
+	if is_inside_tree() and is_open():
+		_refresh()
+
+func _refresh_texts() -> void:
+	if not is_node_ready():
+		return
 	_refresh()
-
-
-func _build_grid() -> void:
-	grid.columns = 8
-	for i in SLOTS:
-		var slot := TextureButton.new()
-		slot.custom_minimum_size = Vector2(SLOT_SIZE, SLOT_SIZE)
-		slot.ignore_texture_size = true
-		slot.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
-		slot.pressed.connect(func(): _on_slot_pressed(i))
-		slot.mouse_entered.connect(func(): _on_slot_hover(i))
-		slot.mouse_exited.connect(func(): tooltip.visible = false)
-		grid.add_child(slot)
-		_slots.append({"button": slot, "item_id": &"", "amount": 0})
-
 
 func _refresh() -> void:
-	var inv: Dictionary = EconomyManager.get_inventory_dict()
-	var idx := 0
-	for item_id in inv:
-		if idx >= SLOTS:
-			break
-		_slots[idx]["item_id"] = item_id
-		_slots[idx]["amount"] = inv[item_id]
-		var btn: TextureButton = _slots[idx]["button"]
-		btn.tooltip_text = "%s x%d" % [tr("ITEM_%s" % str(item_id).to_upper()), inv[item_id]]
-		idx += 1
+	_items = EconomyManager.inventory.duplicate(true)
+	_items = Rarity.sorted(_items, func(row): return ItemKinds.rarity_of(row.id), func(row): return str(row.id))
+	# Retain the item selection across a sort after crafting/use; empty cells remain stops.
+	if _selected_id != &"":
+		for i in _items.size():
+			if StringName(str(_items[i].id)) == _selected_id:
+				_selected = i
+				break
+	for i in _slots.size():
+		var entry: Dictionary = _items[i] if i < _items.size() else {}
+		_slots[i].setup_item(StringName(str(entry.get("id", ""))), int(entry.get("amount", 0)))
+		_slots[i].tooltip_text = tr(str(ItemKinds.def(entry.get("id", "")).get("name_key", "INV_EMPTY_SLOT")))
+	%CapacityLabel.text = "%d / %d" % [EconomyManager.used_slots(), EconomyManager.INVENTORY_SLOTS]
+	_select(_selected)
+	workshop.refresh()
+	_wire()
 
-	for i in range(idx, SLOTS):
-		_slots[i]["item_id"] = &""
-		_slots[i]["amount"] = 0
-		_slots[i]["button"].tooltip_text = ""
+func _select(index: int) -> void:
+	_selected = clampi(index, 0, _slots.size() - 1)
+	_selected_id = _slots[_selected].item_id
+	for i in _slots.size():
+		_slots[i].set_pressed_no_signal(i == _selected)
+	var def := ItemKinds.def(_selected_id)
+	%DetailIcon.item_id = _selected_id
+	%DetailIcon.rarity = ItemKinds.rarity_of(_selected_id)
+	%DetailName.text = tr(str(def.get("name_key", "INV_EMPTY_SLOT")))
+	%DetailRarity.theme_type_variation = StringName("CatalogRarity_" + str(ItemKinds.rarity_of(_selected_id)))
+	%DetailRarity.text = tr("RARITY_" + str(ItemKinds.rarity_of(_selected_id)).to_upper()) if _selected_id != &"" else ""
+	var description := tr(str(def.get("description_key", "")))
+	var value := EconomyManager.sell_value(_selected_id)
+	%DetailDesc.text = description + ("\n" + tr("INV_SELLS_FOR") % Fmt.thousands(value) if value > 0 else "")
+	var use := (def.has("unlock_flag") and not bool(GameManager.get_flag(StringName(str(def.unlock_flag)), false))) or float(def.get("heal_half_hearts", 0)) > 0 or float(def.get("stamina", 0)) > 0 or float(def.get("oil_seconds", 0)) > 0 or str(def.get("placeable", "")) == "farm"
+	UiNav.set_enabled(%UseButton, use)
+	UiNav.set_enabled(%EquipButton, EconomyManager.equip_slot_of(_selected_id) != "")
+	UiNav.set_enabled(%DropButton, _can_discard(_selected_id))
+	UiNav.set_enabled(%AssignButton, _selected_id != &"")
+	_wire()
 
-	_on_gold_changed(EconomyManager.gold, 0)
+func _activate_slot(index: int) -> void:
+	_select(index)
+	for button in [%UseButton, %EquipButton, %AssignButton, %DropButton]:
+		if UiNav.is_stop(button):
+			button.grab_focus()
+			return
 
+func _can_discard(id: StringName) -> bool:
+	if id == &"" or not EconomyManager.is_sellable(id) or QuestManager.item_in_use(id):
+		return false
+	var category := str(ItemKinds.def(id).get("category", ""))
+	return category not in ["tool", "weapon"] or EconomyManager.count_item(id) > 1
 
-func _on_inventory_changed(_inv: Dictionary) -> void:
+func _use() -> void:
+	if _busy or not is_open() or not is_top() or %UseButton.disabled:
+		return
+	_busy = true
+	var used := EconomyManager.use_item(_selected_id)
+	_busy = false
+	if not used:
+		EventBus.whisper_requested.emit("STORE_CANNOT_USE")
 	_refresh()
 
-
-func _on_gold_changed(amount: int, _delta: int) -> void:
-	if gold_label:
-		gold_label.text = "%s: %d" % [tr("UI_GOLD"), amount]
-
-
-func _on_slot_pressed(index: int) -> void:
-	var item_id: StringName = _slots[index]["item_id"]
-	if item_id == &"":
+func _equip() -> void:
+	if _busy or not is_open() or not is_top() or %EquipButton.disabled:
 		return
-	item_used.emit(item_id)
+	EconomyManager.equip(StringName(EconomyManager.equip_slot_of(_selected_id)), _selected_id)
+	_refresh()
 
-
-func _on_slot_hover(index: int) -> void:
-	var item_id: StringName = _slots[index]["item_id"]
-	if item_id == &"":
-		tooltip.visible = false
+func _discard() -> void:
+	var id := _selected_id
+	if _busy or not is_open() or not is_top() or not _can_discard(id):
 		return
-	var def: Dictionary = LuaRuntime.get_item_def(str(item_id))
-	tooltip.visible = true
-	# Populate tooltip labels (best-effort)
-	var title := tooltip.get_node_or_null("%TooltipTitle") as Label
-	var desc := tooltip.get_node_or_null("%TooltipDesc") as Label
-	if title:
-		title.text = tr("ITEM_%s" % str(item_id).to_upper())
-	if desc:
-		desc.text = tr(def.get("description_key", ""))
+	_busy = true
+	var name := tr(str(ItemKinds.def(id).get("name_key", "")))
+	var confirmed := await UiConfirm.ask(self, "STORE_DISCARD", tr("STORE_DISCARD_CONFIRM_FMT") % name, "STORE_DISCARD")
+	if confirmed and is_inside_tree() and _can_discard(id):
+		EconomyManager.remove_item(id, 1)
+	_busy = false
+	if is_inside_tree():
+		_refresh()
 
+func _open_picker() -> void:
+	if _selected_id == &"" or _picking:
+		return
+	_picker_item = _selected_id
+	_picker_opener = get_viewport().gui_get_focus_owner()
+	_picking = true
+	%HotbarPicker.visible = true
+	_wire()
+	_picker_buttons[0].grab_focus()
 
-## Esc closes the inventory while it is the top modal (a screen stacked on top owns Esc then).
-func _unhandled_input(event: InputEvent) -> void:
-	if visible and GameManager.top_modal() == &"inventory" and event.is_action_pressed(&"ui_cancel"):
-		EventBus.ui_panel_toggled.emit(&"inventory", false)
-		get_viewport().set_input_as_handled()
+func _close_picker() -> void:
+	_picking = false
+	%HotbarPicker.visible = false
+	_wire()
+	if is_instance_valid(_picker_opener) and UiNav.is_stop(_picker_opener):
+		_picker_opener.grab_focus()
+	else:
+		_slots[_selected].grab_focus()
 
+func _assign(index: int) -> void:
+	var item := _picker_item if _picking else _selected_id
+	if item != &"" and EconomyManager.has_item(item):
+		EventBus.hotbar_assign_requested.emit(index, item)
+		EventBus.notification_posted.emit(tr("STORE_ASSIGNED_TITLE"), tr("STORE_ASSIGNED_FMT") % (index + 1), "info")
+	if _picking:
+		_close_picker()
 
-func _on_panel_toggled(panel: StringName, is_open: bool) -> void:
-	if panel == &"inventory":
-		visible = is_open
-		if is_open:
-			GameManager.push_modal(&"inventory")
-			_refresh()
-		else:
-			GameManager.pop_modal(&"inventory")
+func _wire() -> void:
+	if not is_node_ready() or workshop == null:
+		return
+	if _picking:
+		var pickers: Array = _picker_buttons.duplicate()
+		pickers.append(%PickerCancel)
+		UiNav.wire_ring(pickers, &"h")
+		# Both axes stay within the picker, including Tab.
+		UiNav.wire_groups([pickers], true, false)
+		return
+	var actions: Array = []
+	for button in [%UseButton, %EquipButton, %AssignButton, %DropButton]:
+		if UiNav.is_stop(button):
+			actions.append(button)
+	var recipes: Array = workshop.recipe_buttons
+	var craft: Array = [workshop.craft_button] if UiNav.is_stop(workshop.craft_button) else []
+	UiNav.wire_grid(_slots, 6)
+	UiNav.wire_row([%CloseButton])
+	UiNav.wire_row(actions)
+	UiNav.wire_ring(recipes)
+	UiNav.wire_row(craft)
+	UiNav.wire_groups([[%CloseButton], _slots, actions, recipes, craft], true, false)
+	if not recipes.is_empty():
+		for index in _slots.size():
+			if index % 6 == 5:
+				UiNav.link(_slots[index], UiNav.RIGHT, recipes[0])
+		for recipe in recipes:
+			UiNav.link(recipe, UiNav.LEFT, _slots[5])
+
+static func fixture_setup(node: Node, _host: Node) -> void:
+	node.open()

@@ -50,37 +50,37 @@ func _manifest(t) -> void:
 	t.check("manifest_entries_are_well_formed", bad.is_empty(), "path/fallback/owner on every row: %s" % str(bad))
 
 	var gaps := ContractManifest.missing()
-	t.check("manifest_sees_the_wave_holes", not gaps.is_empty() and not ContractManifest.is_complete(),
-		"this tree is mid-wave (no player_2d.tscn yet): missing %s" % ContractManifest.describe(gaps))
+	var expected_gaps: Array = ContractManifest.EXPECTED.filter(func(row): return not ResourceLoader.exists(str(row.path)))
+	t.check("manifest_sees_the_wave_holes", gaps == expected_gaps and ContractManifest.is_complete() == gaps.is_empty(), ContractManifest.describe(gaps))
 
-	# report() posts one notification and then shuts up.
+	# Package diagnostics must never become player-facing copy.
 	var notes: Array = []
 	var bus = t.autoload("EventBus")
-	bus.notification_posted.connect(func(title: String, body: String, _icon: String) -> void: notes.append({"title": title, "body": body}))
+	var diagnostics: Array = []
+	var on_note := func(title, body, _icon): notes.append([title, body])
+	var on_event := func(id, payload):
+		if id == &"contract_fallbacks":
+			diagnostics.append(payload)
+	bus.notification_posted.connect(on_note)
+	bus.game_event.connect(on_event)
 	ContractManifest.reset()
 	ContractManifest.report()
 	ContractManifest.report()
-	var bodies: Array[String] = []
-	for n in notes:
-		bodies.append(str(n["body"]))
-	var named: bool = false
-	for e in gaps:
-		if not bodies.is_empty() and bodies[0].contains(str(e["path"]).get_file()):
-			named = true
 	t.check("manifest_reports_missing_once",
-		notes.size() == 1 and named and bodies[0].contains(str(gaps[0]["fallback"])),
-		"%d notification(s), body %s names the gap and its fallback" % [notes.size(), str(bodies)])
+		notes.is_empty() and ((diagnostics.size() == 1 and diagnostics[0].gaps == gaps) if not gaps.is_empty() else diagnostics.is_empty()),
+		"One diagnostic event, no package paths in player notifications")
 
 	# A complete manifest says nothing.
 	ContractManifest.reset()
 	var complete: Array[Dictionary] = ContractManifest.missing()
 	# Simulate completion by reporting with an empty gap set: describe([]) is "", report() on empty missing() is silent.
-	var before: int = notes.size()
+	var before: int = diagnostics.size()
 	# Force the "everything present" path: temporarily report while missing() is empty is not reachable
 	# without faking ResourceLoader, so assert the other half instead - reset() allows a fresh report.
 	ContractManifest.report()
-	t.check("manifest_reset_allows_a_fresh_report", notes.size() == before + 1,
-		"after reset() the same gap posts again (%d -> %d); a complete tree would post nothing (missing() empty)" % [before, notes.size()])
+	t.check("manifest_reset_allows_a_fresh_report", diagnostics.size() == before + (0 if gaps.is_empty() else 1))
+	bus.notification_posted.disconnect(on_note)
+	bus.game_event.disconnect(on_event)
 	ContractManifest.reset()
 
 

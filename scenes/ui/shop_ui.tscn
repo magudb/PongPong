@@ -1,0 +1,389 @@
+[gd_scene format=3]
+
+[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-ExtraBold.ttf" id="1_1pfkb"]
+[ext_resource type="FontFile" path="res://assets/fonts/TTSymbols-Regular.ttf" id="2_vip3o"]
+[ext_resource type="FontFile" path="res://assets/fonts/Caprasimo-Regular.ttf" id="3_amby3"]
+[ext_resource type="Script" path="res://scripts/ui/shop_ui.gd" id="4_j64c2"]
+[ext_resource type="Shader" path="res://shaders/blur_scrim.gdshader" id="5_5ferc"]
+[ext_resource type="Shader" path="res://shaders/stripes.gdshader" id="6_426is"]
+[ext_resource type="Script" path="res://scripts/ui/components/tt_stripes.gd" id="7_02u0b"]
+[ext_resource type="Script" path="res://scripts/ui/components/tt_item_icon.gd" id="8_c0s4l"]
+[ext_resource type="PackedScene" path="res://scenes/ui/components/quantity_stepper.tscn" id="9_dgrft"]
+[ext_resource type="Script" path="res://scripts/ui/components/quantity_stepper.gd" id="10_ls5xl"]
+[ext_resource type="Script" path="res://scripts/ui/components/hint_bar.gd" id="11_r7v6v"]
+
+[sub_resource type="FontVariation" id="FontVariation_xs5nn"]
+fallbacks = Array[Font]([ExtResource("2_vip3o")])
+base_font = ExtResource("1_1pfkb")
+opentype_features = {
+"lnum": 1
+}
+
+[sub_resource type="FontVariation" id="FontVariation_s0eex"]
+fallbacks = Array[Font]([ExtResource("1_1pfkb"), ExtResource("2_vip3o")])
+base_font = ExtResource("3_amby3")
+
+[sub_resource type="Theme" id="Theme_secc5"]
+CatalogHave/base_type = &"Label"
+CatalogHave/colors/font_color = Color(0.3019608, 0.47843137, 0.16470589, 1)
+CatalogHave/font_sizes/font_size = 17
+CatalogHave/fonts/font = SubResource("FontVariation_xs5nn")
+CatalogHaveCount/base_type = &"Label"
+CatalogHaveCount/colors/font_color = Color(0.3019608, 0.47843137, 0.16470589, 1)
+CatalogHaveCount/font_sizes/font_size = 16
+CatalogHaveCount/fonts/font = SubResource("FontVariation_s0eex")
+CatalogMissing/base_type = &"Label"
+CatalogMissing/colors/font_color = Color(0.7019608, 0.2627451, 0.41960785, 1)
+CatalogMissing/font_sizes/font_size = 17
+CatalogMissing/fonts/font = SubResource("FontVariation_xs5nn")
+CatalogMissingCount/base_type = &"Label"
+CatalogMissingCount/colors/font_color = Color(0.7019608, 0.2627451, 0.41960785, 1)
+CatalogMissingCount/font_sizes/font_size = 16
+CatalogMissingCount/fonts/font = SubResource("FontVariation_s0eex")
+CatalogRarity_legendary/base_type = &"Label"
+CatalogRarity_legendary/colors/font_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+CatalogRarity_legendary/font_sizes/font_size = 18
+CatalogRarity_legendary/fonts/font = SubResource("FontVariation_xs5nn")
+CatalogRarity_normal/base_type = &"Label"
+CatalogRarity_normal/colors/font_color = Color(0.29803923, 0.2509804, 0.34509805, 1)
+CatalogRarity_normal/font_sizes/font_size = 18
+CatalogRarity_normal/fonts/font = SubResource("FontVariation_xs5nn")
+CatalogRarity_rare/base_type = &"Label"
+CatalogRarity_rare/colors/font_color = Color(0.3647059, 0.30980393, 0.6392157, 1)
+CatalogRarity_rare/font_sizes/font_size = 18
+CatalogRarity_rare/fonts/font = SubResource("FontVariation_xs5nn")
+CatalogRarity_uncommon/base_type = &"Label"
+CatalogRarity_uncommon/colors/font_color = Color(0.24705882, 0.41960785, 0.13333334, 1)
+CatalogRarity_uncommon/font_sizes/font_size = 18
+CatalogRarity_uncommon/fonts/font = SubResource("FontVariation_xs5nn")
+CatalogRarity_unique/base_type = &"Label"
+CatalogRarity_unique/colors/font_color = Color(0.49019608, 0.18039216, 0.34901962, 1)
+CatalogRarity_unique/font_sizes/font_size = 18
+CatalogRarity_unique/fonts/font = SubResource("FontVariation_xs5nn")
+CatalogTooDear/base_type = &"Label"
+CatalogTooDear/colors/font_color = Color(0.7019608, 0.2627451, 0.41960785, 1)
+CatalogTooDear/font_sizes/font_size = 20
+CatalogTooDear/fonts/font = SubResource("FontVariation_s0eex")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dygap"]
+shader = ExtResource("5_5ferc")
+shader_parameter/blur_lod = null
+shader_parameter/tint = Color(0.84, 0.8, 0.91, 0.3)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_idjpc"]
+shader = ExtResource("6_426is")
+shader_parameter/color_a = Color(0.90588236, 0.7176471, 0.7764706, 1)
+shader_parameter/color_b = Color(0.87058824, 0.6627451, 0.7294118, 1)
+shader_parameter/band = 14.0
+shader_parameter/rect_size = Vector2(0, 0)
+shader_parameter/radii = Vector4(16, 16, 0, 0)
+shader_parameter/border = 2.0
+shader_parameter/border_color = null
+
+[node name="ShopUI" type="Control" unique_id=364460383]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_secc5")
+script = ExtResource("4_j64c2")
+screen_id = &"shop_ui"
+modal_name = &"shop"
+
+[node name="Scrim" type="ColorRect" parent="." unique_id=1043263591]
+material = SubResource("ShaderMaterial_dygap")
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Keeper" type="VBoxContainer" parent="." unique_id=79284917]
+layout_mode = 0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_top = -560.0
+offset_right = 400.0
+mouse_filter = 2
+theme_override_constants/separation = 16
+alignment = 2
+
+[node name="SpeechBubble" type="PanelContainer" parent="Keeper" unique_id=1617477376]
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"PanelBubble"
+
+[node name="KeeperSpeech" type="Label" parent="Keeper/SpeechBubble" unique_id=1598918116]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_type_variation = &"BodyM"
+autowrap_mode = 3
+
+[node name="KeeperFigure" type="Control" parent="Keeper" unique_id=1135903504]
+custom_minimum_size = Vector2(0, 380)
+clip_contents = true
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Stripes" type="ColorRect" parent="Keeper/KeeperFigure" unique_id=1187422908]
+material = SubResource("ShaderMaterial_idjpc")
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("7_02u0b")
+color_a = Color(0.90588236, 0.7176471, 0.7764706, 1)
+color_b = Color(0.87058824, 0.6627451, 0.7294118, 1)
+radii = Vector4(16, 16, 0, 0)
+border = 2.0
+
+[node name="KeeperFace" type="TextureRect" parent="Keeper/KeeperFigure" unique_id=875781605]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="KeeperName" type="Label" parent="Keeper/KeeperFigure" unique_id=620758263]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -18.0
+offset_right = 16.0
+offset_bottom = -18.0
+grow_vertical = 0
+theme_type_variation = &"NamePlate"
+
+[node name="ShopPanel" type="PanelContainer" parent="." unique_id=410402425]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -840.0
+offset_top = 60.0
+offset_right = -60.0
+offset_bottom = 660.0
+theme_type_variation = &"PanelParchmentL"
+
+[node name="PanelBody" type="VBoxContainer" parent="ShopPanel" unique_id=1805419914]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Header" type="PanelContainer" parent="ShopPanel/PanelBody" unique_id=157889412]
+layout_mode = 2
+theme_type_variation = &"PanelHeader"
+
+[node name="HeaderBody" type="VBoxContainer" parent="ShopPanel/PanelBody/Header" unique_id=1566022098]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TitleRow" type="HBoxContainer" parent="ShopPanel/PanelBody/Header/HeaderBody" unique_id=1062278580]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ShopNameLabel" type="Label" parent="ShopPanel/PanelBody/Header/HeaderBody/TitleRow" unique_id=1474028112]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"Display32"
+
+[node name="CloseButton" type="Button" parent="ShopPanel/PanelBody/Header/HeaderBody/TitleRow" unique_id=294632147]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ButtonTertiaryS"
+text = "✕"
+
+[node name="TabsScroll" type="ScrollContainer" parent="ShopPanel/PanelBody/Header/HeaderBody" unique_id=1078506889]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+follow_focus = true
+vertical_scroll_mode = 0
+
+[node name="TabRow" type="HBoxContainer" parent="ShopPanel/PanelBody/Header/HeaderBody/TabsScroll" unique_id=722870389]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="StatusMargin" type="MarginContainer" parent="ShopPanel/PanelBody" unique_id=846921846]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 0
+
+[node name="ClosedLabel" type="Label" parent="ShopPanel/PanelBody/StatusMargin" unique_id=701820981]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_type_variation = &"CatalogMissing"
+autowrap_mode = 3
+
+[node name="ItemScroll" type="ScrollContainer" parent="ShopPanel/PanelBody" unique_id=142609363]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="ItemMargin" type="MarginContainer" parent="ShopPanel/PanelBody/ItemScroll" unique_id=942802735]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 12
+
+[node name="ItemsBody" type="VBoxContainer" parent="ShopPanel/PanelBody/ItemScroll/ItemMargin" unique_id=1956051569]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="EmptyLabel" type="Label" parent="ShopPanel/PanelBody/ItemScroll/ItemMargin/ItemsBody" unique_id=1476355898]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Muted17"
+text = "STORE_EMPTY"
+
+[node name="ItemGrid" type="GridContainer" parent="ShopPanel/PanelBody/ItemScroll/ItemMargin/ItemsBody" unique_id=1942594823]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="DetailMargin" type="MarginContainer" parent="ShopPanel/PanelBody" unique_id=455919010]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 8
+
+[node name="Detail" type="HBoxContainer" parent="ShopPanel/PanelBody/DetailMargin" unique_id=1023423317]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="DetailImage" type="Control" parent="ShopPanel/PanelBody/DetailMargin/Detail" unique_id=1310717953]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="DetailIcon" type="Control" parent="ShopPanel/PanelBody/DetailMargin/Detail/DetailImage" unique_id=1051056443]
+unique_name_in_owner = true
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("8_c0s4l")
+
+[node name="DetailPreview" type="TextureRect" parent="ShopPanel/PanelBody/DetailMargin/Detail/DetailImage" unique_id=1575530225]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DetailText" type="VBoxContainer" parent="ShopPanel/PanelBody/DetailMargin/Detail" unique_id=382815340]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="DetailName" type="Label" parent="ShopPanel/PanelBody/DetailMargin/Detail/DetailText" unique_id=182082764]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Heavy18"
+
+[node name="DetailDesc" type="Label" parent="ShopPanel/PanelBody/DetailMargin/Detail/DetailText" unique_id=866482851]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Muted17"
+autowrap_mode = 3
+max_lines_visible = 2
+
+[node name="DetailState" type="Label" parent="ShopPanel/PanelBody/DetailMargin/Detail/DetailText" unique_id=1743427298]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Muted13"
+autowrap_mode = 3
+
+[node name="Footer" type="PanelContainer" parent="ShopPanel/PanelBody" unique_id=2135339794]
+layout_mode = 2
+theme_type_variation = &"PanelFooter"
+
+[node name="FooterRow" type="HBoxContainer" parent="ShopPanel/PanelBody/Footer" unique_id=1138385491]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Balance" type="HBoxContainer" parent="ShopPanel/PanelBody/Footer/FooterRow" unique_id=894936165]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="Coin" type="PanelContainer" parent="ShopPanel/PanelBody/Footer/FooterRow/Balance" unique_id=440489306]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"CoinInk"
+
+[node name="GoldLabel" type="Label" parent="ShopPanel/PanelBody/Footer/FooterRow/Balance" unique_id=968002282]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Display24"
+
+[node name="Stepper" type="PanelContainer" parent="ShopPanel/PanelBody/Footer/FooterRow" unique_id=772406302 instance=ExtResource("9_dgrft")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 2
+theme_type_variation = &"PanelField"
+script = ExtResource("10_ls5xl")
+
+[node name="TotalLabel" type="Label" parent="ShopPanel/PanelBody/Footer/FooterRow" unique_id=217192686]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Display20"
+
+[node name="BuyButton" type="Button" parent="ShopPanel/PanelBody/Footer/FooterRow" unique_id=1962885785]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"ButtonPrimary"
+text = "UI_BUY"
+
+[node name="HintBar" type="HBoxContainer" parent="." unique_id=849854452]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -12.0
+offset_right = -60.0
+offset_bottom = -12.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 2
+script = ExtResource("11_r7v6v")

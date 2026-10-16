@@ -72,8 +72,8 @@ objects, town services, the first morning and the full loop acceptance gate. Fur
 remain separate optional feature packages in the original milestone plan.
 Current art studies and equipment fit proofs retain their documented coverage;
 full production clothing animation coverage is a separate asset task.
-The tests name these absent packages in SKIPs. The native shop-panel-over-room
-gate requires P18's shop_ui scene, which is not yet present.
+The tests name these absent packages in SKIPs. P18 now ships its production shop,
+backpack and workshop screens; the live room/keeper gate remains with T-director.
 
 Evidence
 

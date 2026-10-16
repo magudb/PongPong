@@ -1,0 +1,41 @@
+P18 shop / backpack / workshop — 2026-10-16
+
+Production screens use TTScreen, real Lua shops, service prices/stock/hours,
+rarity-sorted offers, owned counts, furniture previews, SocialTalk greetings,
+closed reasons, safe changed-price confirmation and exact-once close requests.
+The 24-slot backpack supports use, equipment, protected discard confirmations
+and eight-slot digit/controller assignment. The workshop reads all recipes,
+blueprint/station/home locks and ingredient counts from CraftingSystem.
+Rows remain stable while a shop is open. Value-selection groups do not invent
+navigation pages; every row still receives reachability/replay/controller checks.
+Scroll geometry only uses fully drawn controls, while clipped rows remain in
+the real input walk. Native pixel probes found clipped slot focus rings and
+verified the added scroll padding. The shared approved theme is unchanged.
+
+Blueprints now commit consumption and the unlock flag before observers, with
+an actual synchronous reentry regression. Shop/crafting backend preparation
+is in 372e830. Developer package diagnostics use game_event, never player copy.
+The combined suite exposed title/save/modal test-state leaks: menu checks now
+own an isolated save directory, and the menu flow helper clears modal state.
+
+catalog-integration.json: 2791 checks / 22 sections / zero failures, 103 named
+window/later-package skips, 14 intentionally exercised diagnostics, no unexpected
+errors/warnings/leaks. shop-ui-native.json: 33 checks across shop UI, menus and
+conformance, zero failures/skips/engine messages. Covers real rendered rings,
+parchment edges and raised buttons, plus inspected stable screen baselines.
+Localization/copy/import/voice-index checks pass. All 2534 reviewed art/theme
+files retain their approved hashes. New copy remains draft.
+
+Original guide comparison: backpack 17.347 <=22. Shop full-image mean 20.375
+is retained in catalog-legacy-comparison.json. The old shop mock contains an
+empty keeper placeholder; the approved painted bust is now installed. The UI
+comparison masks ONLY its interior [62,342,398,669] in BOTH images, preserving
+the frame edge/nameplate and every shop control. UI mean 17.075 <=18. The helper
+retains full scores and writes both comparison images; no historical reference
+is changed. The independent approved-art hash gate covers the painted bust.
+
+Dungeon Arsenal/WeaponInfo/gem cards depend on the later dungeon milestone and
+remain two explicit capability skips. Regular backpack weapons can be equipped.
+The optional wear-now question is active only with production WardrobeManager;
+the separate painted wardrobe fit proof is not presented as full equipment art.
+The live room/keeper/three-shop placement gate remains with T-director/I3.
