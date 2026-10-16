@@ -31,7 +31,10 @@ func _ready() -> void:
 	%NextButton.pressed.connect(_advance)
 	%TextLabel.focus_mode = Control.FOCUS_NONE
 	%TextLabel.selection_enabled = false
-	UiNav.watcher().device_changed.connect(func(_device): _refresh_hint())
+	UiNav.watcher().device_changed.connect(func(_device):
+		_refresh_hint()
+		if _session:
+			_refresh_texts())
 	chars_per_second = float(LuaRuntime.get_config("ui.dialogue_chars_per_second", 40.0))
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("dialogue", Callable(get_script(), &"fixture_setup"))
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("intro", Callable(get_script(), &"fixture_intro"))
@@ -103,7 +106,7 @@ func _next_line() -> void:
 			_show_choices()
 		return
 	var row: Dictionary = LuaData.dict(_lines[_line])
-	var text := tr(str(row.text_key)) if row.has("text_key") else str(row.get("text", ""))
+	var text := _line_text(row)
 	%TextLabel.text = text
 	%TextLabel.visible_characters = 0
 	_elapsed = 0
@@ -206,7 +209,7 @@ func _refresh_texts() -> void:
 	_refresh_hint()
 	var shown_line := mini(_line, _lines.size() - 1)
 	if shown_line >= 0 and _lines[shown_line].has("text_key"):
-		%TextLabel.text = tr(str(_lines[shown_line].text_key))
+		%TextLabel.text = _line_text(_lines[shown_line])
 	for button in _buttons:
 		button.text = _choice_text(button.get_meta("choice"))
 
@@ -238,3 +241,7 @@ static func fixture_guide(node: Node, _host: Node) -> void:
 	node._typing = false
 	node.get_node("%TextLabel").visible_characters = -1
 	node._advance()
+
+
+func _line_text(row: Dictionary) -> String:
+	return UiHints.format_line(row)

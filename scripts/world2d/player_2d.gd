@@ -134,11 +134,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event is InputEventMouseMotion:
 		mouse_aim = true
-	if event is InputEventJoypadButton and event.pressed:
-		if event.button_index == JOY_BUTTON_DPAD_LEFT or event.button_index == JOY_BUTTON_DPAD_RIGHT:
-			hotbar.cycle(-1 if event.button_index == JOY_BUTTON_DPAD_LEFT else 1)
-			get_viewport().set_input_as_handled()
-			return
+	if event.is_action_pressed(&"hotbar_previous") or event.is_action_pressed(&"hotbar_next"):
+		hotbar.cycle(-1 if event.is_action_pressed(&"hotbar_previous") else 1)
+		get_viewport().set_input_as_handled()
+		return
 	for index in 10:
 		if event.is_action_pressed("slot_%d" % (index + 1)):
 			hotbar.select(index) # 9/0 remain defined inputs; this eight-slot layout ignores them.

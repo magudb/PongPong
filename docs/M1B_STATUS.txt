@@ -201,3 +201,11 @@ inspected. Approved art/theme bytes are unchanged. See V6-T-director.txt.
 
 S-ui, N04, I2/final budgets and the ghost-family follow-up remain; do not merge
 this checkpoint as if the full usable-towns milestone were finished.
+
+N04 first morning — 2026-10-16
+
+The real Pip/King/Pip opening, data-only steps and hints, both starter quests,
+Escape and Continue behavior pass all four races (96 checks each). Native
+captures were inspected; unchanged P14 dialogue/journal comparisons pass. The
+normal-boot integration passes 656 checks without failures or engine messages.
+See N04.txt. S-ui, I2/final gates and ghost-family work remain before merging.

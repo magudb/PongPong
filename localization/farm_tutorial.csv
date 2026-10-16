@@ -1,0 +1,25 @@
+keys,da,en
+DLG_FARMINTRO_PIP_1,Godmorgen! Du må være den nye på Trækronsgården.,Good morning! You must be the new one on the Treetop Farm.
+DLG_FARMINTRO_PIP_2,Jeg hedder Pip og kører posten på Trætoppen. Hver morgen kigger jeg forbi med dagens breve.,"I am Pip, and I carry the post on Trætoppen. Every morning I stop by with the day's letters."
+DLG_FARMINTRO_PIP_3,I dag har jeg noget helt særligt med: et brev fra Fekongen selv!,Today I have something very special: a letter from the Fairy King himself!
+DLG_FARMINTRO_CHOICE_THANKS,"Tak, Pip!","Thank you, Pip!"
+DLG_FARMINTRO_PIP_BYE_1,"Hakken ligger i din rygsæk. Vælg den med %s, og brug %s på jorden.",The hoe is in your backpack. Select it with %s and use %s on the soil.
+DLG_FARMINTRO_PIP_BYE_2,"Jeg må videre med posten. Kig i postkassen i morgen, så ses vi!","I must carry on with the post. Look in the mailbox tomorrow, and we will meet again!"
+DLG_FARMINTRO_CHOICE_BYE,Hav en god dag!,Have a good day!
+QUEST_FORSTE_DAGE_TITLE,Gårdens første dage,The farm's first days
+QUEST_FORSTE_DAGE_DESC,"Pip siger, at en gård lever af små skridt. Hak, så, vand og se, hvad der sker.","Pip says a farm lives on small steps. Dig, sow, water, and see what happens."
+OBJ_FORSTE_DAGE_TILL,Hak tre felter,Dig three plots
+OBJ_FORSTE_DAGE_PLANT,Sæt tre frø,Sow three seeds
+OBJ_FORSTE_DAGE_WATER,Vand tre afgrøder,Water three crops
+OBJ_FORSTE_DAGE_MAIL,Kig i postkassen,Check the mailbox
+OBJ_FORSTE_DAGE_HARVEST,Høst din første afgrøde,Harvest your first crop
+TUT_HINT_HOE,Vælg hakken med %s. Brug %s på marken.,Select the hoe with %s. Use %s on the field.
+TUT_HINT_SEEDS,Vælg frøene med %s. Brug %s på den hakkede jord.,Select the seeds with %s. Use %s on the dug soil.
+TUT_HINT_CAN,"Vælg vandkanden med %s. Vand hver dag, så gror dine afgrøder.",Select the watering can with %s. Water every day to help your crops grow.
+TUT_HINT_HARVEST,Din afgrøde er klar! Tryk %s ved planten.,Your crop is ready! Press %s next to the plant.
+TUT_HINT_BIN,Læg afgrøderne i salgskassen. Pengene kommer i morgen tidlig.,Put the crops in the shipping bin. The money comes tomorrow morning.
+TUT_HINT_ENERGY,"Du er træt. Hold en lille pause, så kommer kræfterne igen.",You are tired. Rest a little and your strength returns.
+TUT_HINT_BRIDGE,Over broen bor dine naboer. Hasselnød i Hyggebyen bygger dit hjem større.,Your neighbours live over the bridge. Hasselnød in Hyggebyen builds your home bigger.
+TUT_HINT_BED,Det er blevet aften. Du kan sove i sengen ved døren. Tryk %s.,Evening has come. You can sleep in the bed by the door. Press %s.
+TUT_HINT_MAIL,Der ligger post i postkassen! Tryk %s ved kassen.,There is post in the mailbox! Press %s at the box.
+TUT_HINT_EXPAND,Østmarken står til salg. Tryk %s ved skiltet.,The east field is for sale. Press %s at the sign.

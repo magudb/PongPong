@@ -136,3 +136,24 @@ static func _key_name(ev: InputEventKey) -> String:
 	if KEY_WORDS.has(code):
 		return TranslationServer.translate(str(KEY_WORDS[code]))
 	return OS.get_keycode_string(code as Key)
+
+
+## Localized dialogue/hint rows can name action groups for a device. The group
+## expresses cycling the hotbar on a pad instead of pretending it has digit keys.
+static func format_line(row: Dictionary) -> String:
+	var key := str(row.get("text_key", row.get("key", "")))
+	var text := str(TranslationServer.translate(key)) if key != "" else str(row.get("text", ""))
+	if not text.contains("%s"):
+		return text
+	var groups := LuaData.arr(row.get("format_action_groups_gamepad", [])) if UiNav.device() == GAMEPAD else []
+	var values: Array = []
+	if not groups.is_empty():
+		for group in groups:
+			values.append(glyph_set(LuaData.arr(group)))
+	else:
+		var actions := LuaData.arr(row.get("format_actions", []))
+		if actions.is_empty() and str(row.get("glyph", "")) != "":
+			actions.append(str(row.glyph))
+		for action in actions:
+			values.append(glyph(StringName(str(action))))
+	return text % values if not values.is_empty() else text

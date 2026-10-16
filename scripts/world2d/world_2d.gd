@@ -191,6 +191,7 @@ func _ready() -> void:
 	_build_fade()
 	Svc.static_call("res://scripts/farm/steading/objects/farm_stage.gd", &"attach", [self])
 	Svc.static_call("res://scripts/traetoppen/life/daily_flags.gd", &"attach_world", [self])
+	Svc.static_call("res://scripts/farm/steading/tutorial/tutorial_hints.gd", &"attach", [self])
 	EventBus.area_change_requested.connect(_on_area_change_requested)
 	EventBus.game_event.connect(_on_game_event)
 	EventBus.player_defeated.connect(_on_player_defeated)
@@ -325,13 +326,13 @@ func _maybe_intro() -> void:
 		return
 	GameManager.set_flag(GameManager.FLAG_INTRO_PENDING, false)
 	if bool(methods[entry]):
-		await s.call(entry, self)
+		s.call(entry, self)
 	elif s.can_instantiate():
 		var inst: Object = s.new()
 		if inst is Node:
 			add_child(inst as Node)
 		if inst != null:
-			await inst.call(entry, self)
+			inst.call(entry, self)
 
 
 # ------------------------------------------------------------------ areas

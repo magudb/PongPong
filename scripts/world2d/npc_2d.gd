@@ -3,6 +3,9 @@ extends CharacterBody2D
 ## A real painted citizen. Routines drive position; this actor owns interaction and animation.
 const Bridge := preload("res://scripts/social/talk/dialogue_bridge.gd")
 const C := preload("res://scripts/ui/theme/tt_colors.gd")
+class WalkTicket extends RefCounted:
+	signal finished(completed: bool)
+
 class BubbleLabel extends Label:
 	var candle := false
 	func _draw() -> void:
@@ -44,6 +47,8 @@ var _walk_generation := 0
 var _event_target := Vector2.ZERO
 var _event_speed := 0.0
 var _event_walking := false
+var _walk_ticket: WalkTicket
+var _walk_left := 0.0
 var _interaction_reach := 60.0
 
 static func create(params: Dictionary) -> Npc2D:
@@ -147,11 +152,15 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		return
 	if _event_walking:
+		_walk_left -= delta
 		var to := Iso.to_ground(_event_target - global_position)
-		if to.length() <= maxf(2, _event_speed * delta):
-			global_position = _event_target
-			_event_walking = false
-			velocity = Vector2.ZERO
+		if to.length() <= maxf(2, _event_speed * delta) or _walk_left <= 0:
+			var arrived := to.length() <= maxf(2, _event_speed * delta)
+			if arrived:
+				global_position = _event_target
+			visual.update_motion(Vector2.ZERO)
+			_finish_walk(arrived)
+			return
 		else:
 			velocity = Iso.to_screen(to.normalized() * _event_speed)
 			move_and_slide()
@@ -262,6 +271,7 @@ func handle_choice(action: String, data: Dictionary = {}) -> void:
 	NpcDialogue.action(str(npc_id), action, data, guest)
 
 func _exit_tree() -> void:
+	_finish_walk(false)
 	if is_talking:
 		# Clear ownership before resuming the awaiting page on screen disposal.
 		_end_talk(0, false)
@@ -308,25 +318,30 @@ func event_begin() -> void:
 func event_end() -> void:
 	_event = false
 	_bubble = ""
-	_event_walking = false
+	_finish_walk(false)
 	_walk_generation += 1
 	hold(false)
 	Svc.static_call("res://scripts/towns/npc_director.gd", &"resync", [str(npc_id)])
 
-func event_walk_to(point: Vector2, speed := 100.0) -> void:
+## Return a completion signal rather than awaiting on this disposable Node.
+## Callers can await it; despawn and cancellation also resolve the ticket.
+func event_walk_to(point: Vector2, speed := 100.0) -> Signal:
+	_finish_walk(false)
 	_walk_generation += 1
-	var generation := _walk_generation
+	_walk_ticket = WalkTicket.new()
 	_event_target = point
 	_event_speed = maxf(1, speed)
+	_walk_left = Iso.to_ground(point - global_position).length() / _event_speed + 3.0
 	_event_walking = true
-	var elapsed := 0.0
-	var timeout := Iso.to_ground(point - global_position).length() / _event_speed + 3.0
-	while is_inside_tree() and _event_walking and generation == _walk_generation and elapsed < timeout:
-		await get_tree().physics_frame
-		elapsed += get_physics_process_delta_time()
-	if generation == _walk_generation:
-		_event_walking = false
-		velocity = Vector2.ZERO
+	return _walk_ticket.finished
+
+func _finish_walk(completed: bool) -> void:
+	_event_walking = false
+	velocity = Vector2.ZERO
+	var ticket := _walk_ticket
+	_walk_ticket = null
+	if ticket != null:
+		ticket.finished.emit(completed)
 
 func event_face(direction: Variant) -> void:
 	face(direction)

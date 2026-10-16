@@ -1,0 +1,35 @@
+N04 — First morning and data-driven farm tutorial
+2026-10-16, m1b
+
+Production new game follows the real eight-step Lua sequence: temporary Pip at
+the mailbox, three greeting lines and Thanks, the original King letter, both
+quest acceptances, two farewell lines and Goodbye, walking to the bridge, then
+the Hoe hint. Social completion remains with the existing conversation owner:
+Pip is met and the weekly heart is paid once. Continue never replays the intro.
+
+Esc cancels the whole sequence and still accepts its configured quests/hints.
+RefCounted sessions own continuations; disposed NPC walking resolves a signal
+with false. The world never awaits an opening on its disposable Node. Native
+animation warming is awaited, not abandoned on Escape. All actors and modals
+are released on exit. The fallback letter remains available when disabled.
+
+Ten data hints are event-fed and checked at 3 Hz, separated by twelve seconds,
+once per save, paused behind modals, stopped when the first-days quest ends.
+The actual starter seed slot is seven. Keyboard and D-pad/X glyph groups
+follow live input-device changes, also inside dialogue. Bridge copy names
+Hasselnød in Hyggebyen. No approved art/theme or audio was changed.
+
+Evidence
+- first-morning-{animal,fairy,hobbit,ghost}.json: 96 checks each, zero failures,
+  skips, errors or warnings. Includes five offline reference mutants, a real
+  Lua+CSV eleventh-hint/extra-step extension, save/Continue, skip/disposal,
+  the empty day-one mailbox and day-two tutorial completion.
+- first-morning-native.json: 33 checks, zero failures/skips/messages. Readable
+  opening, choice focus and free-player captures inspected. The original
+  P14 guide comparisons remain 13.866 <=15 / 11.966 <=12.
+- first-morning-integration.json: 656 checks in six sections, no failures,
+  skips or engine messages, including the real normal-boot flow.
+- Tutorial copy remains draft in the copy review queue.
+
+This is a package checkpoint. S-ui, I2/final budgets and the ghost-family
+follow-up still block full milestone acceptance and merge.

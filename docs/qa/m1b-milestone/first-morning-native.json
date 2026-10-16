@@ -1,0 +1,28 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 33,
+  "elapsed_s": 15.33,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "farm_first_morning": {
+      "checks": 5,
+      "failed": 0,
+      "ms": 10219,
+      "skipped": 0
+    },
+    "npc": {
+      "checks": 28,
+      "failed": 0,
+      "ms": 1775,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

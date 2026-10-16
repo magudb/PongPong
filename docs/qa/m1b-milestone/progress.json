@@ -149,7 +149,8 @@
         },
         {
           "id": "N04-farm-first-morning",
-          "status": "pending"
+          "status": "validated",
+          "evidence": "first-morning-{animal,fairy,hobbit,ghost}.json: 96 checks each, no failures/skips/messages. first-morning-native.json: 33 clean checks including P14 guide comparisons. first-morning-integration.json: 656 checks including normal boot, no failures/skips/messages. See N04.txt."
         },
         {
           "id": "I3-art-shops",

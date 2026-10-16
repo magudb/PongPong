@@ -181,6 +181,7 @@ func boot(char_id: String = "") -> bool:
 	check("player_name_stored", gm.get("player_name") == PLAYER_NAME, "got '%s'" % str(gm.get("player_name")))
 	check("farm_name_stored", gm.get("farm_name") == FARM_NAME, "got '%s'" % str(gm.get("farm_name")))
 	check("character_matches", int(gm.get("character_type")) == character_type(), "type %s for %s" % [str(gm.get("character_type")), character])
+	await consume_opening()
 	var playing: Variant = phase_value(gm, "PLAYING")
 	if playing != null:
 		check("phase_playing", gm.get("current_phase") == playing, "phase %s" % str(gm.get("current_phase")))
@@ -223,3 +224,21 @@ func _arg_count(obj: Object, method: String) -> int:
 		if m["name"] == method:
 			return (m["args"] as Array).size()
 	return -1
+
+
+## Drive the production opening with ordinary accept/interact input. System
+## fixtures use start_world(play_intro=false); boot always exercises the story.
+func consume_opening() -> void:
+	var gm := autoload("GameManager")
+	var full := ResourceLoader.exists("res://scripts/farm/steading/tutorial/tutorial_runner.gd") and bool(gm.config_value("farm_tutorial.first_morning.enabled", true))
+	var flag := &"intro_done" if full else &"intro_letter_seen"
+	var deadline := Time.get_ticks_msec() + 60000
+	while Time.get_ticks_msec() < deadline:
+		if bool(gm.get_flag(flag, false)) and not gm.is_modal_open():
+			await frames(3)
+			return
+		var screen := tree.get_first_node_in_group("dialogue_ui")
+		if screen != null and screen.is_open():
+			tap(&"ui_accept" if screen._wants_focus() else &"interact")
+		await frames(3)
+	fail("Production opening did not finish through real input")

@@ -271,5 +271,12 @@
     "date": "",
     "voice_frozen": false,
     "rows": 27
+  },
+  "localization/farm_tutorial.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 24
   }
 }

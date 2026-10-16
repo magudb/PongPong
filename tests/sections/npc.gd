@@ -235,6 +235,7 @@ func _journal(t, journal: Control) -> void:
 func _intro(t, dialogue: Control) -> void:
 	var gm: Node = t.autoload("GameManager")
 	gm.set_flag(&"intro_letter_seen", false)
+	gm.set_config_override("farm_tutorial.first_morning.enabled", false)
 	var result: Array = []
 	var start := func():
 		await preload("res://scripts/world2d/intro_sequence.gd").run(t.world())
@@ -247,6 +248,7 @@ func _intro(t, dialogue: Control) -> void:
 	t.check("intro_skip_accepts_quest", result.size() == 1 and gm.get_flag(&"intro_letter_seen", false) and t.autoload("QuestManager").is_active(&"intro_lottery"))
 	await preload("res://scripts/world2d/intro_sequence.gd").run(t.world())
 	t.check("intro_once", not dialogue.is_open())
+	gm.clear_config_overrides()
 
 func _lifetime_and_schedule(t, dialogue: Control) -> void:
 	var outcomes: Array = []

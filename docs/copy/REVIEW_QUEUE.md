@@ -11,6 +11,7 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | dialogue_cast.csv | draft | 73 | 520 | 1.3 |
 | dialogue_builder.csv | draft | 43 | 603 | 1.5 |
 | towns.csv | draft | 69 | 158 | 0.4 |
+| farm_tutorial.csv | draft | 24 | 205 | 0.5 |
 | dungeon_services.csv | draft | 49 | 245 | 0.6 |
 | areas.csv | draft | 11 | 91 | 0.2 |
 | cast.csv | draft | 40 | 323 | 0.8 |

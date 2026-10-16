@@ -59,3 +59,17 @@ static func static_call(path: String, method: StringName, args: Array = [], fall
 static func lua_config(path: String, default_value: Variant = null) -> Variant:
 	var lr := node("LuaRuntime")
 	return lr.get_config(path, default_value) if lr != null else default_value
+
+
+## Async counterpart: the late-bound caller must await callv itself. Returning
+## an un-awaited coroutine through static_call loses its result in Godot 4.
+static func static_await(path: String, method: StringName, args: Array = [], fallback: Variant = null) -> Variant:
+	if not ResourceLoader.exists(path):
+		return fallback
+	var script: Variant = load(path)
+	if not (script is Script) or not script.has_method(method):
+		return fallback
+	for entry in script.get_script_method_list():
+		if str(entry.name) == str(method) and (int(entry.flags) & METHOD_FLAG_STATIC) == 0:
+			return fallback
+	return await script.callv(method, args)
