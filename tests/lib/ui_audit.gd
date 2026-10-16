@@ -337,7 +337,7 @@ const OPTION_KEYS := {
 	"focus_walk": ["wrap", "wrap_axes", "ignore", "skip", "via", "replay", "tabs", "accept", "consumes", "expect_edges", "echo", "pad_check", "dirs", "start", "real_keys", "pages", "max_pages", "tab_groups"],
 	"focusable_report": ["ignore", "forbid_focus", "forbid_disabled_focus", "forbid_windows", "pages", "max_pages", "tab_groups", "via"],
 	"rule_report": ["rules", "ignore", "strict_typography", "strict_gold", "gold_source", "hit_min", "literal_files", "locale_sweep", "pages", "max_pages", "tab_groups", "via"],
-	"escape_chain": ["key", "via", "vias", "settle", "settle_seconds", "world_probe", "expect_focus", "release_world_focus", "pre_opened", "base_stack", "base_phase", "base_paused", "internal_layers", "internal_depth", "depth"],
+	"escape_chain": ["require_focus", "key", "via", "vias", "settle", "settle_seconds", "world_probe", "expect_focus", "release_world_focus", "pre_opened", "base_stack", "base_phase", "base_paused", "internal_layers", "internal_depth", "depth"],
 	"text_field_audit": ["ignore", "press_enter"],
 	"locale_flip_report": ["ignore", "same_ok"],
 	"mouse_walk": ["ignore", "list_like", "click"],
@@ -349,7 +349,7 @@ const OPTION_KEYS := {
 		"strict_typography", "strict_gold", "gold_source", "hit_min", "same_ok", "forbid_disabled_focus", "forbid_windows", "list_like", "click", "panel", "button", "strict_gold_hover",
 		"strict_focus_styles", "strict_font_scale", "settle_seconds"],
 }
-const BOOL_OPTIONS: Array[String] = ["replay", "tabs", "echo", "pad_check", "pages", "real_keys", "forbid_focus", "forbid_disabled_focus", "forbid_windows", "strict_typography", "strict_gold",
+const BOOL_OPTIONS: Array[String] = ["require_focus", "replay", "tabs", "echo", "pad_check", "pages", "real_keys", "forbid_focus", "forbid_disabled_focus", "forbid_windows", "strict_typography", "strict_gold",
 	"gold_source", "release_world_focus", "pre_opened", "focus", "underside", "press_enter", "strict_gold_hover", "strict_focus_styles", "strict_font_scale"]
 const RULE_NAMES: Array[String] = ["r1", "r2", "r3", "r4", "typography", "overrides", "i18n", "hit_targets"]
 
@@ -1726,7 +1726,7 @@ static func _escape_chain(t, opener: Callable, expected_depth: int, options: Dic
 				continue
 			(r["opened"] as Array).append(str(stack[-1]))
 			var got_focus := _owner(t)
-			if got_focus == null or got_focus == focus_before[level]:
+			if bool(options.get("require_focus", true)) and (got_focus == null or got_focus == focus_before[level]):
 				_defect(r, "modal_no_focus", str(stack[-1]), "after opening '%s', focus is %s: the modal must take focus (first enabled control) so the keyboard acts on it" % [str(stack[-1]), "on nothing" if got_focus == null else "still on " + str(got_focus.name)])
 	else:
 		focus_before.append(null if pre_opened else _owner(t))
@@ -1741,7 +1741,7 @@ static func _escape_chain(t, opener: Callable, expected_depth: int, options: Dic
 		for i in stack_depth:
 			(r["opened"] as Array).append(str(stack1[base.size() + i]))
 		var got_focus1 := _owner(t)
-		if stack_depth > 0 and (got_focus1 == null or got_focus1 == focus_before[0]):          # an internal-only layer has no modal on the stack: its focus is the screen's own business
+		if bool(options.get("require_focus", true)) and stack_depth > 0 and (got_focus1 == null or got_focus1 == focus_before[0]):          # an internal-only layer has no modal on the stack: its focus is the screen's own business
 			_defect(r, "modal_no_focus", str(stack1[-1]), "after the opener ran, focus is %s: the top modal must take focus" % ("on nothing" if got_focus1 == null else "still on " + str(got_focus1.name)))
 	r["depth_open"] = (r["opened"] as Array).size() + internal
 	r["internal_layers"] = internal
@@ -2231,8 +2231,17 @@ static func panel_pixels(t, panel: Control, options: Dictionary = {}) -> Diction
 	var psb := panel.get_theme_stylebox("panel")
 	if psb != null and psb.get_script() == Rules.BoxStyleScript:
 		x0 += int((psb.get("body_inset") as Vector4).x)                    # the body starts inside the control rect when the style insets it
-	# roles from the inside out: [role, expected colour, pixel x offsets from the rect's left edge]
-	var spec := [["parchment", Rules.C.PARCHMENT, [6, 7]], ["ink", Rules.C.INK, [0, 1]], ["gold", Rules.C.GOLD, [-1, -2, -3, -4]], ["ink_outer", Rules.C.INK, [-5, -6]]]
+	# A book's fixed dark-parchment sidebar covers the fill at the left sample.
+	# It never changes the required ink/gold/ink widths or permits arbitrary fills.
+	var fill := Rules.C.PARCHMENT
+	if panel.theme_type_variation == &"PanelBook":
+		for child in Rules.nodes(panel, []):
+			if child is PanelContainer and child.theme_type_variation == &"PanelSidebar" and child.is_visible_in_tree():
+				var child_xf: Transform2D = child.get_viewport().get_final_transform() * child.get_global_transform_with_canvas()
+				var child_rect: Rect2 = child_xf * Rect2(Vector2.ZERO, child.size)
+				if child_rect.has_point(Vector2(x0 + 6, y)):
+					fill = Rules.C.PARCHMENT_DARK
+	var spec := [["parchment", fill, [6, 7]], ["ink", Rules.C.INK, [0, 1]], ["gold", Rules.C.GOLD, [-1, -2, -3, -4]], ["ink_outer", Rules.C.INK, [-5, -6]]]
 	var profile: Array[Dictionary] = []
 	var bad: Array[String] = []
 	for e in spec:
@@ -3034,7 +3043,7 @@ static func _run_check(t, check: String, entry: Dictionary, node: Node, host: No
 				var pre := {"via": str(vias[0]), "pre_opened": true, "base_stack": host.get_meta(&"ui_audit_base_stack", []), "base_paused": host.get_meta(&"ui_audit_base_paused", false)}
 				if host.get_meta(&"ui_audit_base_phase", null) != null:
 					pre["base_phase"] = host.get_meta(&"ui_audit_base_phase")
-				for k in ["expect_focus", "release_world_focus", "settle_seconds"]:
+				for k in ["require_focus", "expect_focus", "release_world_focus", "settle_seconds"]:
 					if esc.has(k):
 						pre[k] = esc[k]
 				if int(esc.get("depth", 1)) == 0 and vias.size() > 1:
@@ -3057,7 +3066,7 @@ static func _run_check(t, check: String, entry: Dictionary, node: Node, host: No
 				return bad
 			var opener := func(level: int) -> void: await drv.open_level(t, host, level)
 			var merged: Dictionary = {"via": str(esc.get("via", "key"))}
-			for k in ["expect_focus", "release_world_focus", "settle_seconds"]:
+			for k in ["require_focus", "expect_focus", "release_world_focus", "settle_seconds"]:
 				if esc.has(k):
 					merged[k] = esc[k]
 			return await escape_chain(t, opener, int(esc.get("depth", 1)), merged)

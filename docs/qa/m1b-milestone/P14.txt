@@ -1,0 +1,62 @@
+P14 live dialogue and quest-book checkpoint — 2026-10-16
+
+Npc2D now supplies the real marker actor, canonical painted cast, collision and
+reach, constrained wandering, night/home state, quest/event/birthday bubbles,
+temporary/guest modes, driven interface and event movement. The shared world
+warms visible animations behind its fade. Fire-and-forget NPC preload requests
+were found to retain 79 loader objects on a repeated-roster test; removing that
+second request owner gives a clean exit. NPCs request a sleep act at home; the
+approved NPC clip sets without sleep use their existing idle pose.
+
+NpcDialogue builds four-race/hero, raw-hour 6..25, monotonic-day, quest, shop,
+stamina, zone and social context. Offers use QuestManager's availability rules.
+The existing feature quest branches and seven V7 modules are retained. Four
+missing modules now cover the king, Pippin, Mis and the ambient postman. Active
+legacy dialogue keys moved to draft DLG copy; recorded Danish wording is kept,
+including Rosmarin's canonical cookie line. Lily no longer offers lost_cat.
+New voice hooks are text only. No audio was generated or approved.
+
+DialogueUI owns an awaitable, reentrant session. Text deliberately takes no
+focus; keyboard/pad/click skip typing then advance. Choices wrap and activate
+once. Modals close before actions open their next screen. NPCs release the
+player and publish dialogue_ended once, including actor disposal and Esc.
+SocialManager receives completion/line counts; Esc gives no weekly heart.
+Social overflow pages recursively retain at most five rows. Voice availability
+is cached per line, avoiding file lookups every frame.
+
+The journal uses actual Lua definitions/progress/rewards through TTQuestText,
+retains stable row nodes, follows focused quests, supports page/list tab keys
+and J/Esc/pad closing. Internal source paths are absent. The calendar hook is
+conditional until S-ui ships. The intro uses this same dialogue, accepts the
+intro quest on skip and runs once. Continue/load clears the transient opening
+flag, including old saves, before the world enters.
+
+Evidence: npc-integration.json passes 2978 checks in 16 sections, with 85 named
+window/later-package skips and 13 deliberately exercised save diagnostics.
+No unexpected engine errors/warnings or ObjectDB leaks. npc-native.json passes
+47 checks across NPC screens, menus and native UI conformance, with no skips or
+engine messages. All 2534 approved art/theme hashes remain unchanged. Copy,
+localization, import stubs and voice-index checks pass; copy remains draft.
+
+Native captures and reviewed baselines include the real 880px dialogue, king's
+letter and real four-step lost_cat book. The historical guide fixture uses its
+authored three-step/three-reward mock through temporary TTQuestText providers,
+cleared on close; it never changes the production definitions. Its book mean
+is 11.966 <=12, unmasked. The dialogue's guide component is 660px wide on the
+mock's neutral background; full production viewport captures stay 880px. Its
+unmasked mean is retained at 17.227. Only the old portrait-placeholder interior
+[34,34,179,179] is masked in BOTH comparison inputs: the painted portrait is
+covered by the approved-art gate. Frame/nameplate/text/choices/footer/shadow
+remain scored. UI mean 13.866 passes the ratcheted <=15 (original ceiling 16).
+No historical source reference changed. See conversation-guide-comparison.json.
+
+Audit corrections preserve existing negative controls: a declared text-only
+modal can omit focus while still proving Esc order/consumption/restoration;
+ordinary modals still fail the no-focus mutant. The book's left-edge pixel
+probe recognizes its fixed dark-parchment sidebar, retaining every ink/gold
+width check and scaling the sample into framebuffer coordinates.
+
+Remaining integration: real town placements/schedule following and room talk
+hosts (T-director), service consumers (V6), live gift/people/calendar screens
+(S-ui), the delegated first-morning runner (N04), and ghost reaction/family
+hooks. These do not make the whole usable-towns milestone complete or merged.

@@ -13,30 +13,30 @@ function get_dialogue(context)
       lines = {
         {
           id = "greet_1",
-          text_key = "DIALOGUE_LYRA_GREET_1",
-          voice_key = "voice/lyra/greet_1",
+          text_key = "DLG_LYRA_GREET_1",
+          voice_key = "voice/mayor_lyra/greet_1",
         },
         {
           id = "greet_2",
-          text_key = "DIALOGUE_LYRA_GREET_2",
-          voice_key = "voice/lyra/greet_2",
+          text_key = "DLG_LYRA_GREET_2",
+          voice_key = "voice/mayor_lyra/greet_2",
         },
         {
           id = "lottery",
-          text_key = "DIALOGUE_LYRA_LOTTERY",
-          voice_key = "voice/lyra/lottery",
+          text_key = "DLG_LYRA_LOTTERY",
+          voice_key = "voice/mayor_lyra/lottery",
         },
       },
       choices = {
         {
           id = "accept_farm",
-          text_key = "DIALOGUE_CHOICE_ACCEPT_FARM",
+          text_key = "DLG_CHOICE_ACCEPT_FARM",
           action = "quest_accept",
           quest_id = "intro_lottery",
         },
         {
           id = "ask_more",
-          text_key = "DIALOGUE_CHOICE_ASK_MORE",
+          text_key = "DLG_CHOICE_ASK_MORE",
           action = "show_info",
           info_key = "INFO_LOTTERY",
         },
@@ -50,24 +50,24 @@ function get_dialogue(context)
     lines = {
       {
         id = "hello",
-        text_key = "DIALOGUE_LYRA_HELLO",
-        voice_key = "voice/lyra/hello",
+        text_key = "DLG_LYRA_HELLO",
+        voice_key = "voice/mayor_lyra/hello",
       },
       {
         id = "farm_status",
-        text_key = "DIALOGUE_LYRA_FARM_STATUS",
-        voice_key = "voice/lyra/farm_status",
+        text_key = "DLG_LYRA_FARM_STATUS",
+        voice_key = "voice/mayor_lyra/farm_status",
       },
     },
     choices = {
       {
         id = "about_quests",
-        text_key = "DIALOGUE_CHOICE_ABOUT_QUESTS",
+        text_key = "DLG_CHOICE_ABOUT_QUESTS",
         action = "open_journal",
       },
       {
         id = "goodbye",
-        text_key = "DIALOGUE_CHOICE_GOODBYE",
+        text_key = "DLG_CHOICE_GOODBYE",
         action = "close",
       },
     },

@@ -935,6 +935,9 @@ func _escape(t) -> void:
 	_neg(t, "neg_escape_single_opener_modal_no_focus", await UiAudit.escape_chain(t, func() -> void:
 		m7.open_level(0)
 		m7.open_level(1), 2), "modal_no_focus")
+	_clean(t, "escape_declared_text_only_modal", await UiAudit.escape_chain(t, func() -> void:
+		m7.open_level(0)
+		m7.open_level(1), 2, {"require_focus": false}), "A declared text-only modal still consumes Esc, restores focus and pops one layer at a time")
 	gm.call("change_phase", phase0)
 	t.tree.paused = false
 	host7.queue_free()

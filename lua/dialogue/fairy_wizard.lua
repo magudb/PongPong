@@ -1,3 +1,4 @@
+-- dialogue/fairy_wizard.lua  (PENDING REFERENCE = the repo's current file + the bogtraeet branches; P14 merges the branches into its own rewrite)
 -- dialogue/fairy_wizard.lua
 -- Fairy wizard Zephyr — runs the magic store in fairy city.
 -- Also hosts the multiplication riddles for the math_wizard_quiz quest.
@@ -12,6 +13,59 @@ function get_dialogue(context)
   local q2 = context.math_wiz_q2 or false
   local q3 = context.math_wiz_q3 or false
 
+  -- FEATURES: the maths-chain reward quest bogtraeet (unique Book Tree).  Offered once the three math flags are set; reminder while it is active.
+  local m1 = context.math_bakery_done or math_bakery_done or false
+  local m2 = context.math_harvest_done or math_harvest_done or false
+  local m3 = context.math_quiz_done or math_quiz_done or false
+  local bt_active = context.bogtraeet_active or bogtraeet_active or false
+  local bt_done = context.bogtraeet_done or bogtraeet_done or false
+  if bt_active then
+    return {
+      speaker = "fairy_wizard",
+      speaker_name_key = "NPC_FAIRY_WIZARD",
+      lines = {
+        {
+          id = "bogtrae_remind",
+          text_key = "QUEST_BOGTRAEET_REMIND",
+          voice_key = "voice/fairy_wizard/bogtrae_remind",
+        },
+      },
+      choices = {
+        {
+          id = "goodbye",
+          text_key = "DLG_CHOICE_GOODBYE",
+          action = "close",
+        },
+      },
+    }
+  end
+  if m1 and m2 and m3 and not bt_done then
+    return {
+      speaker = "fairy_wizard",
+      speaker_name_key = "NPC_FAIRY_WIZARD",
+      lines = {
+        {
+          id = "bogtrae_offer",
+          text_key = "QUEST_BOGTRAEET_OFFER",
+          voice_key = "voice/fairy_wizard/bogtrae_offer",
+        },
+      },
+      choices = {
+        {
+          id = "bogtrae_quest",
+          text_key = "QUEST_BOGTRAEET_CHOICE",
+          action = "quest_accept",
+          quest_id = "bogtraeet",
+        },
+        {
+          id = "goodbye",
+          text_key = "DLG_CHOICE_GOODBYE",
+          action = "close",
+        },
+      },
+    }
+  end
+
   -- Quiz finished: thank the player, then back to normal shop talk.
   if quiz_done then
     return {
@@ -20,20 +74,20 @@ function get_dialogue(context)
       lines = {
         {
           id = "math_done",
-          text_key = "DIALOGUE_WIZARD_MATH_DONE",
-          voice_key = "voice/wizard/math_done",
+          text_key = "DLG_WIZARD_MATH_DONE",
+          voice_key = "voice/fairy_wizard/math_done",
         },
       },
       choices = {
         {
           id = "open_shop",
-          text_key = "DIALOGUE_CHOICE_OPEN_SHOP",
+          text_key = "DLG_CHOICE_OPEN_SHOP",
           action = "open_shop",
           shop_id = "magic_store",
         },
         {
           id = "goodbye",
-          text_key = "DIALOGUE_CHOICE_GOODBYE",
+          text_key = "DLG_CHOICE_GOODBYE",
           action = "close",
         },
       },
@@ -48,8 +102,8 @@ function get_dialogue(context)
       lines = {
         {
           id = "math_q1",
-          text_key = "DIALOGUE_WIZARD_MATH_Q1",
-          voice_key = "voice/wizard/math_q1",
+          text_key = "DLG_WIZARD_MATH_Q1",
+          voice_key = "voice/fairy_wizard/math_q1",
         },
       },
       choices = {
@@ -94,8 +148,8 @@ function get_dialogue(context)
       lines = {
         {
           id = "math_q2",
-          text_key = "DIALOGUE_WIZARD_MATH_Q2",
-          voice_key = "voice/wizard/math_q2",
+          text_key = "DLG_WIZARD_MATH_Q2",
+          voice_key = "voice/fairy_wizard/math_q2",
         },
       },
       choices = {
@@ -140,8 +194,8 @@ function get_dialogue(context)
       lines = {
         {
           id = "math_q3",
-          text_key = "DIALOGUE_WIZARD_MATH_Q3",
-          voice_key = "voice/wizard/math_q3",
+          text_key = "DLG_WIZARD_MATH_Q3",
+          voice_key = "voice/fairy_wizard/math_q3",
         },
       },
       choices = {
@@ -186,37 +240,37 @@ function get_dialogue(context)
     lines = {
       {
         id = "greet",
-        text_key = "DIALOGUE_WIZARD_GREET",
-        voice_key = "voice/wizard/greet",
+        text_key = "DLG_WIZARD_GREET",
+        voice_key = "voice/fairy_wizard/greet",
       },
       {
         id = "math_intro",
-        text_key = "DIALOGUE_WIZARD_MATH_INTRO",
-        voice_key = "voice/wizard/math_intro",
+        text_key = "DLG_WIZARD_MATH_INTRO",
+        voice_key = "voice/fairy_wizard/math_intro",
       },
     },
     choices = {
       {
         id = "take_quiz",
-        text_key = "DIALOGUE_CHOICE_MATH_QUIZ",
+        text_key = "DLG_CHOICE_MATH_QUIZ",
         action = "quest_accept",
         quest_id = "math_wizard_quiz",
       },
       {
         id = "open_shop",
-        text_key = "DIALOGUE_CHOICE_OPEN_SHOP",
+        text_key = "DLG_CHOICE_OPEN_SHOP",
         action = "open_shop",
         shop_id = "magic_store",
       },
       {
         id = "about_magic",
-        text_key = "DIALOGUE_CHOICE_ABOUT_MAGIC",
+        text_key = "DLG_CHOICE_ABOUT_MAGIC",
         action = "show_info",
         info_key = "INFO_MAGIC",
       },
       {
         id = "goodbye",
-        text_key = "DIALOGUE_CHOICE_GOODBYE",
+        text_key = "DLG_CHOICE_GOODBYE",
         action = "close",
       },
     },

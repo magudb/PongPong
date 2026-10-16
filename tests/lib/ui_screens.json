@@ -477,34 +477,34 @@
 		{
 			"id": "intro",
 			"title": "Fekongens brev",
-			"kind": "modal",
+			"kind": "surface",
 			"scene": "",
-			"fixture": "dialogue",
+			"fixture": "intro",
 			"package": "P14-npc-dialogue",
 			"guide": "03 Dialogboks",
-			"focus": "initial",
+			"focus": "none",
 			"modal": "dialogue",
 			"esc_depth": 1,
 			"compare": {
 				"baseline": "docs/qa/ui_baseline/intro.png",
-				"fixture": "dialogue",
+				"fixture": "intro",
 				"no_frame_crop": true,
 				"target": 1.5,
 				"pinned_after_lead_review": true
 			},
 			"checks": [
 				"initial_focus",
-				"focus_walk",
 				"focusable_report",
 				"rule_report",
 				"i18n_flip",
 				"escape_chain",
-				"ring_pixels",
 				"panel_pixels",
-				"button_pixels",
 				"compare_guide"
 			],
-			"tripwire": "res://scenes/ui/dialogue_ui.tscn"
+			"tripwire": "res://scenes/ui/dialogue_ui.tscn",
+			"escape": {
+				"require_focus": false
+			}
 		},
 		{
 			"id": "shop",

@@ -1,0 +1,142 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/theme/tt_box_style.gd" id="1_ysedr"]
+[ext_resource type="Script" path="res://scripts/ui/dialogue_ui.gd" id="2_awmck"]
+[ext_resource type="Texture2D" path="res://assets/ui/icons/speaker.svg" id="3_yi6h4"]
+
+[sub_resource type="StyleBox" id="StyleBox_pad14"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 22.0
+content_margin_top = 22.0
+content_margin_right = 22.0
+content_margin_bottom = 8.0
+script = ExtResource("1_ysedr")
+ring_colors = PackedColorArray(0.8901961, 0.7647059, 0.44705883, 1, 0.16862746, 0.13725491, 0.2509804, 1)
+ring_widths = PackedFloat32Array(4, 2)
+soft_shadow_color = Color(0.169, 0.137, 0.251, 0.3)
+
+[sub_resource type="Theme" id="Theme_86bo4"]
+ConversationPanel/base_type = &"PanelContainer"
+ConversationPanel/styles/panel = SubResource("StyleBox_pad14")
+
+[node name="DialogueUI" type="Control" unique_id=1672339969]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_86bo4")
+script = ExtResource("2_awmck")
+screen_id = &"dialogue_ui"
+modal_name = &"dialogue"
+pauses_tree = false
+
+[node name="Box" type="PanelContainer" parent="." unique_id=324787321]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(880, 0)
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -120.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_type_variation = &"ConversationPanel"
+metadata/tt_gold_ok = "Guide dialogue parchment frame; the footer uses an 8px bottom inset"
+
+[node name="Row" type="HBoxContainer" parent="Box" unique_id=1799231054]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="PortraitFrame" type="PanelContainer" parent="Box/Row" unique_id=1430843235]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_type_variation = &"FramePortrait"
+
+[node name="PortraitMargin" type="MarginContainer" parent="Box/Row/PortraitFrame" unique_id=1866778412]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="PortraitTexture" type="TextureRect" parent="Box/Row/PortraitFrame/PortraitMargin" unique_id=694049840]
+unique_name_in_owner = true
+texture_filter = 4
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Content" type="VBoxContainer" parent="Box/Row" unique_id=885038391]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="SpeakerLabel" type="Label" parent="Box/Row/Content" unique_id=632337342]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+theme_type_variation = &"NamePlate"
+
+[node name="TextLabel" type="RichTextLabel" parent="Box/Row/Content" unique_id=742778533]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"DialogueText"
+fit_content = true
+scroll_active = false
+
+[node name="Bottom" type="VBoxContainer" parent="Box/Row/Content" unique_id=228158773]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ChoicesBox" type="VBoxContainer" parent="Box/Row/Content/Bottom" unique_id=1426267351]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Footer" type="HBoxContainer" parent="Box/Row/Content/Bottom" unique_id=905832467]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 2
+
+[node name="VoiceGroup" type="HBoxContainer" parent="Box/Row/Content/Bottom/Footer" unique_id=1653204476]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 4
+
+[node name="SpeakerIcon" type="TextureRect" parent="Box/Row/Content/Bottom/Footer/VoiceGroup" unique_id=185557116]
+modulate = Color(0.41568628, 0.3529412, 0.28235295, 1)
+custom_minimum_size = Vector2(14, 14)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("3_yi6h4")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VoiceIndicator" type="Label" parent="Box/Row/Content/Bottom/Footer/VoiceGroup" unique_id=1015991508]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Eyebrow"
+text = "DIALOGUE_VOICE_DA"
+
+[node name="NextButton" type="Button" parent="Box/Row/Content/Bottom/Footer" unique_id=1554553304]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HintButton"
+text = "HINT_CONTINUE"

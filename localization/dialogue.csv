@@ -1,0 +1,57 @@
+keys,da,en
+DLG_CHOICE_ABOUT_ANIMALS,Fortæl om dyrene,Tell me about the animals
+DLG_CHOICE_ABOUT_MAGIC,Fortæl om magi,Tell me about magic
+DLG_CHOICE_ABOUT_QUESTS,Har du nogen opgaver?,Do you have any quests?
+DLG_CHOICE_ACCEPT_FARM,Jeg tager imod gården!,I'll take the farm!
+DLG_CHOICE_ASK_MORE,Fortæl mere om lotteriet,Tell me more about the lottery
+DLG_CHOICE_BUY_COOKIES,Jeg vil gerne købe småkager,I'd like to buy cookies
+DLG_CHOICE_COOKIE_QUEST,Mangler du gulerødder?,Do you need carrots?
+DLG_CHOICE_FLEA,Se loppemarkedet,Browse the flea market
+DLG_CHOICE_GOODBYE,Farvel!,Goodbye!
+DLG_CHOICE_HELP_FIND_CAT,Jeg leder efter katten!,I'll look for the cat!
+DLG_CHOICE_HELP_ROOF,Jeg hjælper med taget!,I'll help with the roof!
+DLG_CHOICE_KEEP_SEARCHING,Jeg fortsætter med at lede,I'll keep searching
+DLG_CHOICE_MATH_BAKERY,Hjælp med regnskabet,Help with the sums
+DLG_CHOICE_MATH_HARVEST,Tæl høsten,Count the harvest
+DLG_CHOICE_MATH_QUIZ,Løs Zephyrs regnegåder,Solve Zephyr's math riddles
+DLG_CHOICE_MINING_QUEST,Jeg går ind i skoven,I will explore the forest
+DLG_CHOICE_OPEN_SHOP,Vis mig dine varer,Show me your goods
+DLG_JOURNAL_CALENDAR,Kalender,Calendar
+DLG_KING_GREET,Hvordan går det oppe mellem bladene?,How is life up among the leaves?
+DLG_KING_LETTER,"Kære vinder. Du har vundet en gård i mit lotteri! Følg broen til dit nye hjem. Jeg håber, du vil trives blandt trækronerne. Kærlig hilsen Fekongen.","Dear winner. You have won a farm in my lottery! Follow the bridge to your new home. I hope you will be happy among the treetops. With love, the Fairy King."
+DLG_LILY_GREET,Hej... vil du lege?,Hi... want to play?
+DLG_LYRA_FARM_STATUS,Din gård trives! Fortsæt det gode arbejde.,Your farm is thriving! Keep up the good work.
+DLG_LYRA_GREET_1,Velkommen til Hyggebyen! Jeg er borgmester Hyldeblomst.,Welcome to Hyggebyen! I am Mayor Hyldeblomst.
+DLG_LYRA_GREET_2,Feernes Konge har udvalgt dig i det årlige lotteri!,The Fairy King has chosen you in the annual lottery!
+DLG_LYRA_HELLO,Godt at se dig igen!,Good to see you again!
+DLG_LYRA_LOTTERY,Du har vundet en fortryllet trækronsgård! Den venter på dig i skovens kroner.,You have won an enchanted treetop farm! It awaits you in the forest canopy.
+DLG_MAJA_COOKIE_TALK,Jeg bager de bedste småkager i hele den magiske by.,I bake the best cookies in the whole magical town.
+DLG_MAJA_GREET,Hej der! Velkommen til mit lille bageri.,Hello there! Welcome to my little bakery.
+DLG_MAJA_MATH_DONE,Fantastisk! Nu stemmer regnskabet igen. Tak for hjælpen!,Amazing! The books balance again. Thank you for the help!
+DLG_MAJA_MATH_Q1,Jeg bagte 35 boller og har solgt 17. Hvor mange er tilbage?,I baked 35 rolls and sold 17. How many are left?
+DLG_MAJA_MATH_Q2,"Der er 28 småkager på hylden, og jeg bager 15 til. Hvor mange er der i alt?","There are 28 cookies on the shelf, and I bake 15 more. How many in total?"
+DLG_MAJA_MATH_Q3,Skovens dyr spiste 29 af mine 64 æbler. Hvor mange er der tilbage?,The forest animals ate 29 of my 64 apples. How many are left?
+DLG_MAJA_ROOF_TROUBLE,"Åh nej, stormen i går beskadigede mit tag! Kan du hjælpe mig?","Oh no, yesterday's storm damaged my roof! Can you help me?"
+DLG_MAJA_THANKS,Tak for hjælpen! Taget er som nyt igen.,Thanks for the help! The roof is as good as new.
+DLG_MIS_FOREST,Mjav. Jeg fulgte bare duften af sardiner.,Meow. I was only following the smell of sardines.
+DLG_MIS_HOME,Mjav. Her er lunt.,Meow. It is cosy here.
+DLG_NEUTRAL,Dejligt at se dig.,Lovely to see you.
+DLG_OAK_GREET,Hold vagt! Den mørke skov er ikke sikker i aften.,On guard! The dark forest is not safe tonight.
+DLG_OAK_LIFT,Skovliften går ned til Mørkeskoven. Husk lygten!,The forest lift goes down to Mørkeskoven. Remember your lantern!
+DLG_PENGUIN_HELLO,"Posten skal frem, også når broen gynger!","The post must get through, even when the bridge sways!"
+DLG_PIPPIN_CAT,Morfar Mis er gået på tur igen. Vil du holde øje med ham?,Grandpa Mis has wandered off again. Will you keep an eye out for him?
+DLG_PIPPIN_HELLO,"Nå, hvordan går det på gården?",How are things on the farm?
+DLG_PIPPIN_REMIND,Prøv at spørge naboerne. Mis holder også af broen.,"Try asking the neighbours. Mis likes the bridge, too."
+DLG_MERCHANT_GREET,Velkommen til min butik! Hvad skal du bruge?,Welcome to my shop! What do you need?
+DLG_PROMPT_TALK_FMT,Tal med %s,Talk to %s
+DLG_QUEST_ACCEPT_FMT,Hjælp: %s,Help: %s
+DLG_ROSA_ANIMAL_TALK,Alle mine dyr er opdrættet med kærlighed!,All my animals are raised with love!
+DLG_ROSA_GREET,Hej søde! Vil du se mine dejlige dyr?,Hello sweetie! Want to see my lovely animals?
+DLG_THORIN_GREET,Hrmf. Velkommen til smedjen.,Hrmf. Welcome to the smithy.
+DLG_THORIN_MINING_TALK,Den mørke skov er fuld af sjældne malmsten... men også farer.,The dark forest is full of rare ores... but also dangers.
+DLG_WIZARD_GREET,Velkommen til Magibutikken! Jeg er Zephyr.,Welcome to the Magic Store! I am Zephyr.
+DLG_WIZARD_MATH_DONE,Udmærket! Du er en rigtig tal-troldmand!,Excellent! You are a true number wizard!
+DLG_WIZARD_MATH_INTRO,"Jeg arbejder på en ny besværgelse, men først skal du bevise dit tal-snid!","I am working on a new spell, but first you must prove your number skills!"
+DLG_WIZARD_MATH_Q1,Første gåde: Hvad er 6 gange 7?,First riddle: What is 6 times 7?
+DLG_WIZARD_MATH_Q2,Anden gåde: Hvad er 8 gange 9?,Second riddle: What is 8 times 9?
+DLG_WIZARD_MATH_Q3,Sidste gåde: Hvad er 7 gange 4?,Last riddle: What is 7 times 4?

@@ -1,0 +1,22 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 317,
+  "elapsed_s": 4.44,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "npc": {
+      "checks": 317,
+      "failed": 0,
+      "ms": 1178,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

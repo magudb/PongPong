@@ -165,7 +165,7 @@
     "reviewed_by": "canonical guide baseline",
     "date": "",
     "voice_frozen": false,
-    "rows": 140
+    "rows": 139
   },
   "localization/wardrobe.csv": {
     "status": "draft",
@@ -250,5 +250,12 @@
     "date": "",
     "voice_frozen": false,
     "rows": 19
+  },
+  "localization/dialogue.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 56
   }
 }

@@ -1,0 +1,191 @@
+{
+  "allowed": [
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'Bad Name' is not a valid section name (a-z, 0-9, _) (at register_section res://scripts/autoload/save_manager.gd:469)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'world' is a built-in name (at register_section res://scripts/autoload/save_manager.gd:472)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'game' is a built-in name (at register_section res://scripts/autoload/save_manager.gd:472)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section('nomethods'): the node has no to_dict() (at register_section res://scripts/autoload/save_manager.gd:479)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section('nullnode'): the node is null or freed (at register_section res://scripts/autoload/save_manager.gd:475)"
+    },
+    {
+      "kind": "warning",
+      "rule": "which cannot be saved",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'jsonrules' holds a Object, which cannot be saved (written as null) (at _json_safe res://scripts/autoload/save_manager.gd:649)"
+    },
+    {
+      "kind": "error",
+      "rule": "did not return a Dictionary",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved (at gather_payload res://scripts/autoload/save_manager.gd:579)"
+    },
+    {
+      "kind": "error",
+      "rule": "did not return a Dictionary",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved (at gather_payload res://scripts/autoload/save_manager.gd:579)"
+    },
+    {
+      "kind": "warning",
+      "rule": "nested deeper than 64",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped (at _json_safe res://scripts/autoload/save_manager.gd:619)"
+    },
+    {
+      "kind": "warning",
+      "rule": "nested deeper than 64",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped (at _json_safe res://scripts/autoload/save_manager.gd:619)"
+    },
+    {
+      "kind": "error",
+      "rule": "fake section failure",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): fake section failure boom (at from_dict res://tests/sections/save.gd:64)"
+    },
+    {
+      "kind": "error",
+      "rule": "fake section failure",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): fake section failure late_boom (at from_dict res://tests/sections/save.gd:64)"
+    },
+    {
+      "kind": "error",
+      "rule": "save_4.bak.json.tmp",
+      "section": "save",
+      "text": "core/io/dir_access.cpp:429 in copy(): Condition \"err != OK\" is true. Returning: err Failed to open '/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.LwoNSX/Library/Application Support/Traetoppen/save_test_23003/save_4.bak.json.tmp'. (at _roll_backup res://scripts/autoload/save_manager.gd:1007)"
+    }
+  ],
+  "character": "animal",
+  "checks": 2978,
+  "elapsed_s": 47.77,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "content_features": {
+      "checks": 141,
+      "failed": 0,
+      "ms": 6782,
+      "skipped": 0
+    },
+    "data": {
+      "checks": 388,
+      "failed": 0,
+      "ms": 4737,
+      "skipped": 1
+    },
+    "dungeon_services": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 75,
+      "skipped": 0
+    },
+    "farm": {
+      "checks": 210,
+      "failed": 0,
+      "ms": 75,
+      "skipped": 0
+    },
+    "menus": {
+      "checks": 103,
+      "failed": 0,
+      "ms": 3898,
+      "skipped": 0
+    },
+    "npc": {
+      "checks": 317,
+      "failed": 0,
+      "ms": 781,
+      "skipped": 0
+    },
+    "npc_cast": {
+      "checks": 346,
+      "failed": 0,
+      "ms": 2,
+      "skipped": 0
+    },
+    "player": {
+      "checks": 37,
+      "failed": 0,
+      "ms": 295,
+      "skipped": 0
+    },
+    "quests": {
+      "checks": 55,
+      "failed": 0,
+      "ms": 2799,
+      "skipped": 4
+    },
+    "save": {
+      "checks": 241,
+      "failed": 0,
+      "ms": 4255,
+      "skipped": 0
+    },
+    "social_talk": {
+      "checks": 42,
+      "failed": 0,
+      "ms": 83,
+      "skipped": 0
+    },
+    "ui_audit": {
+      "checks": 466,
+      "failed": 0,
+      "ms": 5699,
+      "skipped": 25
+    },
+    "ui_audit_blind": {
+      "checks": 121,
+      "failed": 0,
+      "ms": 4412,
+      "skipped": 0
+    },
+    "ui_audit_pins": {
+      "checks": 344,
+      "failed": 0,
+      "ms": 1320,
+      "skipped": 0
+    },
+    "ui_conformance": {
+      "checks": 133,
+      "failed": 0,
+      "ms": 5082,
+      "skipped": 55
+    },
+    "ui_nav": {
+      "checks": 26,
+      "failed": 0,
+      "ms": 4414,
+      "skipped": 0
+    }
+  },
+  "skipped": 85
+}

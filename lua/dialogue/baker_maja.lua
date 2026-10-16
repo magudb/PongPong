@@ -21,20 +21,20 @@ function get_dialogue(context)
       lines = {
         {
           id = "math_done",
-          text_key = "DIALOGUE_MAJA_MATH_DONE",
-          voice_key = "voice/maja/math_done",
+          text_key = "DLG_MAJA_MATH_DONE",
+          voice_key = "voice/baker_maja/math_done",
         },
       },
       choices = {
         {
           id = "buy_cookies",
-          text_key = "DIALOGUE_CHOICE_BUY_COOKIES",
+          text_key = "DLG_CHOICE_BUY_COOKIES",
           action = "open_shop",
           shop_id = "bakery",
         },
         {
           id = "goodbye",
-          text_key = "DIALOGUE_CHOICE_GOODBYE",
+          text_key = "DLG_CHOICE_GOODBYE",
           action = "close",
         },
       },
@@ -49,8 +49,8 @@ function get_dialogue(context)
       lines = {
         {
           id = "math_q1",
-          text_key = "DIALOGUE_MAJA_MATH_Q1",
-          voice_key = "voice/maja/math_q1",
+          text_key = "DLG_MAJA_MATH_Q1",
+          voice_key = "voice/baker_maja/math_q1",
         },
       },
       choices = {
@@ -95,8 +95,8 @@ function get_dialogue(context)
       lines = {
         {
           id = "math_q2",
-          text_key = "DIALOGUE_MAJA_MATH_Q2",
-          voice_key = "voice/maja/math_q2",
+          text_key = "DLG_MAJA_MATH_Q2",
+          voice_key = "voice/baker_maja/math_q2",
         },
       },
       choices = {
@@ -141,8 +141,8 @@ function get_dialogue(context)
       lines = {
         {
           id = "math_q3",
-          text_key = "DIALOGUE_MAJA_MATH_Q3",
-          voice_key = "voice/maja/math_q3",
+          text_key = "DLG_MAJA_MATH_Q3",
+          voice_key = "voice/baker_maja/math_q3",
         },
       },
       choices = {
@@ -187,37 +187,37 @@ function get_dialogue(context)
       lines = {
         {
           id = "greet",
-          text_key = "DIALOGUE_MAJA_GREET",
-          voice_key = "voice/maja/greet",
+          text_key = "DLG_MAJA_GREET",
+          voice_key = "voice/baker_maja/greet",
         },
         {
           id = "roof_trouble",
-          text_key = "DIALOGUE_MAJA_ROOF_TROUBLE",
-          voice_key = "voice/maja/roof_trouble",
+          text_key = "DLG_MAJA_ROOF_TROUBLE",
+          voice_key = "voice/baker_maja/roof_trouble",
         },
       },
       choices = {
         {
           id = "help_roof",
-          text_key = "DIALOGUE_CHOICE_HELP_ROOF",
+          text_key = "DLG_CHOICE_HELP_ROOF",
           action = "quest_accept",
           quest_id = "fix_roof",
         },
         {
           id = "math_quest",
-          text_key = "DIALOGUE_CHOICE_MATH_BAKERY",
+          text_key = "DLG_CHOICE_MATH_BAKERY",
           action = "quest_accept",
           quest_id = "math_bakery_counts",
         },
         {
           id = "buy_cookies",
-          text_key = "DIALOGUE_CHOICE_BUY_COOKIES",
+          text_key = "DLG_CHOICE_BUY_COOKIES",
           action = "open_shop",
           shop_id = "bakery",
         },
         {
           id = "goodbye",
-          text_key = "DIALOGUE_CHOICE_GOODBYE",
+          text_key = "DLG_CHOICE_GOODBYE",
           action = "close",
         },
       },
@@ -230,37 +230,37 @@ function get_dialogue(context)
     lines = {
       {
         id = "thanks",
-        text_key = "DIALOGUE_MAJA_THANKS",
-        voice_key = "voice/maja/thanks",
+        text_key = "DLG_MAJA_THANKS",
+        voice_key = "voice/baker_maja/thanks",
       },
       {
         id = "cookie_talk",
-        text_key = "DIALOGUE_MAJA_COOKIE_TALK",
-        voice_key = "voice/maja/cookie_talk",
+        text_key = "DLG_MAJA_COOKIE_TALK",
+        voice_key = "voice/baker_maja/cookie_talk",
       },
     },
     choices = {
       {
         id = "cookie_quest",
-        text_key = "DIALOGUE_CHOICE_COOKIE_QUEST",
+        text_key = "DLG_CHOICE_COOKIE_QUEST",
         action = "quest_offer",
         quest_id = "cookie_delivery",
       },
       {
         id = "math_quest",
-        text_key = "DIALOGUE_CHOICE_MATH_BAKERY",
+        text_key = "DLG_CHOICE_MATH_BAKERY",
         action = "quest_accept",
         quest_id = "math_bakery_counts",
       },
       {
         id = "buy_cookies",
-        text_key = "DIALOGUE_CHOICE_BUY_COOKIES",
+        text_key = "DLG_CHOICE_BUY_COOKIES",
         action = "open_shop",
         shop_id = "bakery",
       },
       {
         id = "goodbye",
-        text_key = "DIALOGUE_CHOICE_GOODBYE",
+        text_key = "DLG_CHOICE_GOODBYE",
         action = "close",
       },
     },

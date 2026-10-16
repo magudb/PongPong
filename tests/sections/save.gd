@@ -2204,6 +2204,7 @@ func _test_continue() -> void:
 	t.check("continue_from_menu", started and entered and eco.gold == 888 and gm.day == 6 and gm.player_name == "Mia" and _loaded_slots == [6] and sm.current_slot == sm.NO_SLOT,
 		"Continue loaded the newest save (the auto slot: gold %d day %d), load_completed %s, scene %s, current_slot %d (an autosave is no manual slot)" % [eco.gold, gm.day, _loaded_slots, t.scene_name(), sm.current_slot])
 	t.check("continue_enters_playing", gm.current_phase == PH.PLAYING and phase_at_once == PH.PLAYING and not t.tree.paused and not gm.is_modal_open(), "phase %d (%d right after the call), tree not paused, no modal left" % [gm.current_phase, phase_at_once])
+	t.check("continue_does_not_replay_new_game_opening", not bool(gm.get_flag(GameManager.FLAG_INTRO_PENDING, false)))
 	t.check("continue_world_hand_off", sm.pending_world.is_empty() or sm.pending_world == {}, "pending_world is empty: the world scene took it (or the save had none)")
 	# load_and_enter from a pause menu: the modal stack goes, the tree runs
 	await t.go_menu()

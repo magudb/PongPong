@@ -1,0 +1,273 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://assets/ui/theme.tres" id="1_jss6k"]
+[ext_resource type="Script" path="res://scripts/ui/quest_journal.gd" id="2_cp1pw"]
+[ext_resource type="Shader" path="res://shaders/blur_scrim.gdshader" id="3_me64c"]
+[ext_resource type="Script" path="res://scripts/ui/components/tt_dashed_line.gd" id="4_weney"]
+[ext_resource type="Script" path="res://scripts/ui/components/hint_bar.gd" id="5_fttgy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nudkx"]
+shader = ExtResource("3_me64c")
+shader_parameter/blur_lod = null
+shader_parameter/tint = Color(0.227, 0.192, 0.314, 0.93)
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_5c7ff"]
+
+[node name="QuestJournal" type="Control" unique_id=228996362]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_jss6k")
+script = ExtResource("2_cp1pw")
+screen_id = &"quest_journal"
+modal_name = &"journal"
+hotkey_action = &"journal"
+
+[node name="Scrim" type="ColorRect" parent="." unique_id=900641689]
+material = SubResource("ShaderMaterial_nudkx")
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Book" type="PanelContainer" parent="." unique_id=1260228146]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(1120, 620)
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PanelBook"
+
+[node name="Columns" type="HBoxContainer" parent="Book" unique_id=1172878513]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Sidebar" type="PanelContainer" parent="Book/Columns" unique_id=470611593]
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+theme_type_variation = &"PanelSidebar"
+
+[node name="SidebarBody" type="VBoxContainer" parent="Book/Columns/Sidebar" unique_id=744151406]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SidebarTitle" type="Label" parent="Book/Columns/Sidebar/SidebarBody" unique_id=60336711]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Display32"
+text = "QJ_TITLE"
+
+[node name="Tabs" type="HBoxContainer" parent="Book/Columns/Sidebar/SidebarBody" unique_id=791372725]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ActiveTab" type="Button" parent="Book/Columns/Sidebar/SidebarBody/Tabs" unique_id=1180693806]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"PillTab"
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_5c7ff")
+text = "QJ_TAB_ACTIVE"
+
+[node name="CompletedTab" type="Button" parent="Book/Columns/Sidebar/SidebarBody/Tabs" unique_id=1955286479]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"PillTab"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_5c7ff")
+text = "QJ_TAB_DONE"
+
+[node name="TabCalendar" type="Button" parent="Book/Columns/Sidebar/SidebarBody/Tabs" unique_id=469867448]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_type_variation = &"PillTab"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_5c7ff")
+text = "DLG_JOURNAL_CALENDAR"
+
+[node name="QuestScroll" type="ScrollContainer" parent="Book/Columns/Sidebar/SidebarBody" unique_id=100023544]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="FocusMargin" type="MarginContainer" parent="Book/Columns/Sidebar/SidebarBody/QuestScroll" unique_id=1689725305]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="QuestList" type="VBoxContainer" parent="Book/Columns/Sidebar/SidebarBody/QuestScroll/FocusMargin" unique_id=525587386]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="DetailMargin" type="MarginContainer" parent="Book/Columns" unique_id=1685230853]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 28
+
+[node name="DetailBody" type="VBoxContainer" parent="Book/Columns/DetailMargin" unique_id=663671629]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="DetailHeader" type="HBoxContainer" parent="Book/Columns/DetailMargin/DetailBody" unique_id=852837626]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="GiverFrame" type="PanelContainer" parent="Book/Columns/DetailMargin/DetailBody/DetailHeader" unique_id=1802283938]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_type_variation = &"FramePortraitRound"
+
+[node name="GiverMargin" type="MarginContainer" parent="Book/Columns/DetailMargin/DetailBody/DetailHeader/GiverFrame" unique_id=1219183166]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="GiverPortrait" type="TextureRect" parent="Book/Columns/DetailMargin/DetailBody/DetailHeader/GiverFrame/GiverMargin" unique_id=29629349]
+unique_name_in_owner = true
+texture_filter = 4
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DetailTitleBox" type="VBoxContainer" parent="Book/Columns/DetailMargin/DetailBody/DetailHeader" unique_id=1950138295]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 4
+
+[node name="DetailTitle" type="Label" parent="Book/Columns/DetailMargin/DetailBody/DetailHeader/DetailTitleBox" unique_id=498568913]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Display40"
+autowrap_mode = 3
+
+[node name="DetailFrom" type="Label" parent="Book/Columns/DetailMargin/DetailBody/DetailHeader/DetailTitleBox" unique_id=1838035892]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Subtitle"
+
+[node name="DetailText" type="Label" parent="Book/Columns/DetailMargin/DetailBody" unique_id=884667472]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Body"
+autowrap_mode = 3
+
+[node name="StepList" type="VBoxContainer" parent="Book/Columns/DetailMargin/DetailBody" unique_id=1657802958]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Spacer" type="Control" parent="Book/Columns/DetailMargin/DetailBody" unique_id=395530642]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="RewardDivider" type="Control" parent="Book/Columns/DetailMargin/DetailBody" unique_id=260102787]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("4_weney")
+
+[node name="RewardFooter" type="HBoxContainer" parent="Book/Columns/DetailMargin/DetailBody" unique_id=2095150921]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 12
+
+[node name="RewardBox" type="VBoxContainer" parent="Book/Columns/DetailMargin/DetailBody/RewardFooter" unique_id=1289245566]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="RewardHeader" type="Label" parent="Book/Columns/DetailMargin/DetailBody/RewardFooter/RewardBox" unique_id=986397854]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Eyebrow"
+text = "QJ_REWARD"
+
+[node name="RewardRow" type="HFlowContainer" parent="Book/Columns/DetailMargin/DetailBody/RewardFooter/RewardBox" unique_id=506999521]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 8
+
+[node name="EmptyLabel" type="Label" parent="Book/Columns/DetailMargin/DetailBody" unique_id=924530473]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_type_variation = &"BodyL"
+text = "QJ_EMPTY"
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="." unique_id=1749163380]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -48.0
+offset_top = 8.0
+offset_right = -48.0
+offset_bottom = 8.0
+grow_horizontal = 0
+size_flags_vertical = 0
+theme_type_variation = &"ButtonTertiaryS"
+text = "✕"
+
+[node name="CalendarHost" type="MarginContainer" parent="." unique_id=1479648246]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 530.0
+offset_top = 150.0
+offset_right = 1160.0
+offset_bottom = 620.0
+
+[node name="HintBar" type="HBoxContainer" parent="." unique_id=901117283]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -8.0
+offset_right = -60.0
+offset_bottom = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 2
+script = ExtResource("5_fttgy")

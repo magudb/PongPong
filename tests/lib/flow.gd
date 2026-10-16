@@ -96,9 +96,13 @@ func new_game(char_id: String = "", p_name: String = PLAYER_NAME, farm: String =
 
 
 ## Fresh world without the menus: new_game() then the world scene, then waits for the player node.
-func start_world(char_id: String = "", p_name: String = PLAYER_NAME, farm: String = FARM_NAME, skin: String = "") -> bool:
+func start_world(char_id: String = "", p_name: String = PLAYER_NAME, farm: String = FARM_NAME, skin: String = "", play_intro := false) -> bool:
 	go_to_neutral()
 	new_game(char_id, p_name, farm, skin)
+	# System fixtures start after the letter. Intro/acceptance tests opt in explicitly;
+	# the production title/select path always retains its real new-game opening.
+	if not play_intro:
+		autoload("GameManager").set_flag(GameManager.FLAG_INTRO_PENDING, false)
 	if not await change_scene(WORLD_SCENE, 20.0):
 		fail("world scene did not load (got %s)" % scene_name())
 		return false

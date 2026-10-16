@@ -16,6 +16,7 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | cast.csv | draft | 40 | 323 | 0.8 |
 | core.csv | ai_reviewed | 48 | 80 | 0.2 |
 | da.csv | draft | 414 | 1512 | 3.8 |
+| dialogue.csv | draft | 56 | 380 | 0.9 |
 | economy.csv | draft | 162 | 595 | 1.5 |
 | farm.csv | draft | 14 | 95 | 0.2 |
 | farm_signs.csv | draft | 3 | 30 | 0.1 |
@@ -36,7 +37,7 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | shop_ui.csv | draft | 19 | 69 | 0.2 |
 | social_sys.csv | draft | 10 | 32 | 0.1 |
 | traetoppen.csv | draft | 21 | 58 | 0.1 |
-| ui.csv | ai_reviewed | 140 | 319 | 0.8 |
+| ui.csv | ai_reviewed | 139 | 315 | 0.8 |
 | wardrobe.csv | draft | 238 | 1405 | 3.5 |
 | world.csv | ai_reviewed | 8 | 47 | 0.1 |
 | zz_final.csv | draft | 1 | 1 | 0.0 |

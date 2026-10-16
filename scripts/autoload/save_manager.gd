@@ -313,6 +313,9 @@ func load_and_enter(slot: int) -> bool:
 	var err := get_tree().change_scene_to_file(world_scene)
 	if err != OK:
 		return _fail_load(slot, "scene", "could not change to %s (error %d)" % [world_scene, err])
+	# An old save may contain the transient new-game opening flag. Continue/load
+	# must never replay the letter or first morning when the new world enters.
+	GameManager.set_flag(GameManager.FLAG_INTRO_PENDING, false)
 	GameManager.pop_all_modals()
 	GameManager.change_phase(GameManager.GamePhase.PLAYING)
 	return true

@@ -50,7 +50,6 @@ SHOP_TAB_GOODS,"Varer","Goods"
 SHOP_TOTAL,"I alt %s","Total %s"
 SHOP_GREETING_DEFAULT,"Kom indenfor! Se dig bare omkring.","Come on in! Have a look around."
 DIALOGUE_VOICE_DA,"dansk stemme ·","Danish voice ·"
-DIALOGUE_CONTINUE_HINT,"E for at fortsætte","E to continue"
 ; --- quest book (tag chips: meta.tag FIND HØST BYG SKOV VENSKAB LÆR of plan 3.12, and the older meta.category names) ---
 QJ_TITLE,"Opgaver","Quests"
 QJ_REWARD,"BELØNNING","REWARD"

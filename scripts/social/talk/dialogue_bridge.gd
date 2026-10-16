@@ -109,7 +109,13 @@ static func finish_topic(npc: String, page: Dictionary, completed: bool, lines_s
 static func action(npc: String, action_id: String, data: Dictionary) -> Dictionary:
 	match action_id:
 		"social_more":
-			return {"handled": true, "page": {"speaker": npc, "social": false, "lines": [], "choices": LuaData.arr(data.get("choices", [])).duplicate() + [{"id": "close", "text_key": "REL_TALK_GOODBYE", "action": "close"}]}}
+			var choices := LuaData.arr(data.get("choices", [])).duplicate(true)
+			if choices.size() > 4:
+				var remaining := choices.slice(3)
+				choices = choices.slice(0, 3)
+				choices.append({"id": "social_more", "text_key": "REL_TALK_MORE", "action": "social_more", "choices": remaining})
+			choices.append({"id": "close", "text_key": "REL_TALK_GOODBYE", "action": "close"})
+			return {"handled": true, "page": {"speaker": npc, "social": false, "lines": [], "choices": choices}}
 		"social_topic":
 			return {"handled": true, "page": topic_page(npc)}
 		"give_gift":

@@ -176,3 +176,11 @@ sales and crafting commit every deduction and gain before publication. Reentrant
 requests are refused, including in failure callbacks. economy-transactions.json
 passes 422 checks across five sections, with nine named later-package skips.
 P18's shop, backpack and workshop screens remain in progress.
+
+P14 live-dialogue checkpoint — 2026-10-16
+
+Real NPC/dialogue/journal/letter flows pass 2978 integration checks and 47 native
+checks. See docs/qa/m1b-milestone/P14.txt. Continue never replays the opening.
+All 2534 approved assets/theme files remain unchanged. The world owns animation
+warming; no abandoned NPC preload tasks remain. Live director placements,
+services, social screens and the full first morning still need integration.

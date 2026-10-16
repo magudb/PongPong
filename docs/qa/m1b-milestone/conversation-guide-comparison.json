@@ -1,0 +1,22 @@
+{
+  "dialogue": {
+    "full_mean": 17.227,
+    "ui_mean": 13.866,
+    "limit": 15,
+    "masks": [
+      [
+        34,
+        34,
+        179,
+        179
+      ]
+    ],
+    "ok": true
+  },
+  "journal": {
+    "full_mean": 11.966,
+    "limit": 12,
+    "masks": [],
+    "ok": true
+  }
+}

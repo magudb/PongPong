@@ -11,20 +11,20 @@ function get_dialogue(context)
     lines = {
       {
         id = "greet",
-        text_key = "DIALOGUE_PIP_GREET",
+        text_key = "DLG_MERCHANT_GREET",
         voice_key = "voice/pip/greet",
       },
     },
     choices = {
       {
         id = "open_shop",
-        text_key = "DIALOGUE_CHOICE_OPEN_SHOP",
+        text_key = "DLG_CHOICE_OPEN_SHOP",
         action = "open_shop",
-        shop_id = "general_store",
+        shop_id = "seed_shop",
       },
       {
         id = "goodbye",
-        text_key = "DIALOGUE_CHOICE_GOODBYE",
+        text_key = "DLG_CHOICE_GOODBYE",
         action = "close",
       },
     },
