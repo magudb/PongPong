@@ -1,0 +1,66 @@
+{
+  "v": 1,
+  "start": {
+    "area": "farm",
+    "spawn": "default",
+    "day": 1,
+    "hour": 6
+  },
+  "citizen": "gardener_hoppe",
+  "shop": {
+    "id": "seed_shop",
+    "building": "froebutikken",
+    "area": "hyggebyen",
+    "keeper": "merchant_pip",
+    "item": "carrot_seeds",
+    "amount": 3,
+    "open": 8,
+    "close": 18
+  },
+  "bakery": {
+    "building": "bageriet",
+    "keeper": "baker_maja"
+  },
+  "builder": {
+    "building": "toemmerhandlen",
+    "keeper": "fairy_builder"
+  },
+  "gifts": {
+    "npc": "gardener_hoppe",
+    "items": [
+      "carrot",
+      "turnip",
+      "flour",
+      "stone",
+      "lantern_oil"
+    ]
+  },
+  "post_office": "postkontoret",
+  "routine_probes": [
+    {
+      "npc": "postman_pip",
+      "a": {
+        "weekday": 1,
+        "hour": 7.2
+      },
+      "b": {
+        "weekday": 1,
+        "hour": 10
+      }
+    },
+    {
+      "npc": "gardener_hoppe",
+      "a": {
+        "weekday": 2,
+        "hour": 11
+      },
+      "b": {
+        "weekday": 2,
+        "hour": 12.5
+      }
+    }
+  ],
+  "waypoints": {},
+  "headless_max_seconds": 120,
+  "native_max_seconds": 110
+}

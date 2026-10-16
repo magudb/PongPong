@@ -131,7 +131,8 @@
         },
         {
           "id": "I2-loop-harness",
-          "status": "pending"
+          "status": "in_progress",
+          "evidence": "loop-foundation.json: 14 clean checks. Real input walks the farm bridge in 538 physics ticks; exact volatile-path digest, gold/flag sensitivity, 1.1-second wall-clock stability and save/Continue round trip pass. Full L00-L18, mutants, extension and native budgets remain unfinished."
         }
       ]
     },
