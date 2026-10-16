@@ -358,7 +358,7 @@ func _build_items() -> void:
 		# Scroll the padded cell, so first/last rows retain the whole ring too.
 		var cell := L.margin(grid,6)
 		cell.add_child(button)
-		button.focus_entered.connect(func(): item_scroll.ensure_control_visible.call_deferred(cell))
+		button.focus_entered.connect(func(): _scroll_to_cell.call_deferred(cell))
 		button.setup_item(StringName(id),0)
 		button.tooltip_text = _name(id)
 		button.modulate.a = 1.0 if _owned(id) else 0.45
@@ -369,6 +369,11 @@ func _build_items() -> void:
 		L.label(grid,tr("GARDEROBE_EMPTY"),"Body",true)
 	if restore:
 		_initial_focus().grab_focus()
+
+func _scroll_to_cell(cell: Variant) -> void:
+	# A queued focus notification may outlive the grid rebuild it came from.
+	if is_instance_valid(cell) and item_scroll.is_ancestor_of(cell):
+		item_scroll.ensure_control_visible(cell)
 
 func _matches(id: String) -> bool:
 	if tab == 1:
