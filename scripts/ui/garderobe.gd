@@ -18,6 +18,7 @@ var close_button: Button
 var filters: VBoxContainer
 var filter_buttons: Array[Button] = []
 var grid: GridContainer
+var item_scroll: ScrollContainer
 var item_buttons: Array[Button] = []
 var preview_well: Control
 var rotate_buttons: Array[Button] = []
@@ -107,16 +108,15 @@ func _ready() -> void:
 	owned_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	browse_button = L.button(catalog_header,"","ButtonTertiaryS")
 	browse_button.pressed.connect(func(): show_all = not show_all; _refresh_texts())
-	var scroll := ScrollContainer.new()
-	scroll.follow_focus = true
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	right.add_child(scroll)
+	item_scroll = ScrollContainer.new()
+	item_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	item_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	right.add_child(item_scroll)
 	grid = GridContainer.new()
 	grid.columns = 7
 	grid.add_theme_constant_override("h_separation",6)
 	grid.add_theme_constant_override("v_separation",6)
-	scroll.add_child(grid)
+	item_scroll.add_child(grid)
 	detail_name = L.label(right,"","Heavy17")
 	detail_name.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	detail_desc = L.label(right,"","Body",true)
@@ -354,7 +354,11 @@ func _build_items() -> void:
 		var button: Button = SLOT.instantiate()
 		button.button_group = selection
 		button.custom_minimum_size = Vector2(56,56)
-		grid.add_child(button)
+		# Reserve the theme's external focus ring inside the clipped viewport.
+		# Scroll the padded cell, so first/last rows retain the whole ring too.
+		var cell := L.margin(grid,6)
+		cell.add_child(button)
+		button.focus_entered.connect(func(): item_scroll.ensure_control_visible.call_deferred(cell))
 		button.setup_item(StringName(id),0)
 		button.tooltip_text = _name(id)
 		button.modulate.a = 1.0 if _owned(id) else 0.45
