@@ -120,10 +120,12 @@ func _dialogue(module: String, npc: String) -> void:
 	if not _good():
 		return
 	var actor: Npc2D = actors.get(npc)
-	var page := LuaRuntime.get_dialogue(module, NpcDialogue.context(npc, world.player))
+	var ctx := NpcDialogue.context(npc, world.player)
+	var page := LuaRuntime.get_dialogue(module, ctx)
 	if actor == null or page.is_empty():
 		return
 	page["social"] = false
+	page = Svc.static_call("res://scripts/reactions/race_reactions.gd", &"apply", [npc, ctx, page], page)
 	var screen: Node = world.get_tree().get_first_node_in_group("dialogue_ui")
 	if screen == null:
 		return

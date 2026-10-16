@@ -58,7 +58,9 @@ func run(t) -> void:
 			count += 1
 	t.check("one_temporary_pip_at_mailbox", count == 1 and courier != null and courier.guest)
 	var ref: WeakRef = weakref(courier)
-	t.check("first_page_is_pip", _screen(t)._speaker.id == "postman_pip" and _screen(t)._lines.size() == 3)
+	var first_lines: Array = _screen(t)._lines
+	var expected_count := 4 if int(gm.character_type) == gm.CharacterType.GHOST else 3
+	t.check("first_page_is_pip", _screen(t)._speaker.id == "postman_pip" and first_lines.size() == expected_count and str(first_lines[-1].text_key) == "DLG_FARMINTRO_PIP_3")
 	t.check("scripted_pages_opt_out_of_social_decoration", t.autoload("LuaRuntime").get_dialogue("farm_intro_pip", {}).get("social", true) == false)
 	await _opening(t, true)
 	t.check("sequence_order", starts == ["postman_pip", "fairy_king", "postman_pip"], str(starts))

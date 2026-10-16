@@ -1,0 +1,11 @@
+keys,da,en
+; --- Spøgelse: how the citizens greet a ghost (design4). Owner: G-ghost-lines (localization/ghost_dialogue.csv). Family DLG_GHOST_ (longest prefix wins over DLG_). Voice keys voice/<npc>/ghost_<line>. ---
+DLG_GHOST_KING_INTRO,"Et spøgelse! Hvor dejligt. Her er der ingen, der skal skræmmes. Svæv bare ind, kagen står på bordet.","A ghost! How lovely. Nobody here needs to be frightened. Just float in, the cake is on the table."
+DLG_GHOST_MAYOR,"Åh, et spøgelse! Du kom helt lydløst. Velkommen til Hyggebyen, du lyser jo hele gaden op.","Oh, a ghost! You arrived without a sound. Welcome to Hyggebyen, you light up the whole street."
+DLG_GHOST_BAKER,"Spøgelser spiser vel ikke kage? Nå, du nyder duften, og jeg nyder selskabet. Du må gerne smage alligevel.","Ghosts don't eat cake, do they? Well, you enjoy the smell and I enjoy the company. You may taste a bit anyway."
+DLG_GHOST_CAT,"Miav. Katte kan se spøgelser, ved du. Jeg så dig allerede i går. Gå ikke igennem mig, hvis du kan lade være.","Meow. Cats can see ghosts, you know. I saw you yesterday already. Don't float through me if you can help it."
+DLG_GHOST_GUARD,"Stå! ... Åh, det er dig. Spøgelser er velkomne her. Tag lygten med i skoven, mørket skal også have en ven.","Halt! ... Oh, it's you. Ghosts are welcome here. Take the lantern into the forest, the dark needs a friend too."
+DLG_GHOST_OWL,"Uhu. Vi er begge nattens folk, du og jeg. Kom forbi i skumringen, så tager jeg mig tid til dig.","Hoo. We are both people of the night, you and I. Come by at dusk and I will make time for you."
+DLG_GHOST_BATH,"Et spøgelse i badet? Du bliver aldrig våd, men varmen kan du da fornemme. Kom ind og slap af.","A ghost in the bath? You never get wet, but you can surely feel the warmth. Come in and relax."
+DLG_GHOST_POST,"Post til et spøgelse! Jeg har aldrig leveret til nogen uden dør. Jeg lægger brevene på dit gærde, ikke?","Mail for a ghost! I have never delivered to anybody without a door. I will leave the letters on your fence, all right?"
+DLG_GHOST_BAT,"Endelig en, der er vågen, når jeg er. Kortene er ekstra gode i nat, bare til dig.","Finally somebody who is awake when I am. The maps are extra good tonight, just for you."

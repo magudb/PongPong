@@ -45,8 +45,8 @@ static func build(npc: String, module: String, ctx: Dictionary, guest := false) 
 	else:
 		choices = choices.filter(func(choice): return not str(choice.get("action", "")).begins_with("quest_") and str(choice.get("action", "")) != "open_shop")
 	page["choices"] = choices
-	page = Svc.static_call(REACTIONS, &"apply", [npc, ctx, page], page)
 	page = Svc.static_call(BRIDGE, &"decorate", [npc, page, ctx], page)
+	page = Svc.static_call(REACTIONS, &"apply", [npc, ctx, page], page)
 	if LuaData.arr(page.get("lines", [])).is_empty() and LuaData.arr(page.get("choices", [])).is_empty():
 		page["lines"] = [{"text_key": "DLG_NEUTRAL"}]
 		page["choices"] = [{"text_key": "REL_TALK_GOODBYE", "action": "close"}]

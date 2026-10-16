@@ -27,6 +27,7 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | finds.csv | draft | 39 | 60 | 0.1 |
 | furniture.csv | draft | 322 | 2075 | 5.2 |
 | ghost.csv | draft | 15 | 97 | 0.2 |
+| ghost_dialogue.csv | draft | 9 | 170 | 0.4 |
 | home.csv | draft | 90 | 502 | 1.3 |
 | hud.csv | draft | 3 | 11 | 0.0 |
 | levels.csv | draft | 3 | 12 | 0.0 |

@@ -1,0 +1,19 @@
+G-ghost-lines — runtime validated, native dialogue capture pending final gate
+2026-10-16
+
+Nine da/en text reactions load through LuaRuntime. Eight citizens prepend their
+once-per-save greeting before social decoration; the Fairy King appends his
+reassurance after the unchanged letter. Scripted Pip pages use the same hook.
+The first morning still has exactly three ended events. The ghost opening has
+its one extra Pip reaction; the three authored tutorial lines remain intact.
+Flags are JSON-safe integers in the game section. No new autoload or save section.
+
+Normal-speed ghost-lines-integration.json: 232 checks in four sections, zero
+failures/skips/unexpected engine messages; five intentional localization/settings
+negative-fixture diagnostics. The real guard interaction proves ordering, once,
+Escape release and no weekly heart. The real King letter proves after-letter
+ordering and once. Tone allow-list contains only the King's reassurance and is
+checked against stale entries. csv_lint and copy_lint pass; all nine rows draft.
+Voice keys reserve future recordings. No audio generated or frozen text changed.
+
+The missing family runtime/data and final native/UI/performance gates remain.
