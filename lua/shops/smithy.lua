@@ -11,6 +11,12 @@ shops = {
     greeting_key = "SHOP_SMITHY_GREETING",
     buy_multiplier = 1.0,
     sell_multiplier = 1.0,
+    rotation = {
+      { id = "smedens_udvalg", period = 3, pick = 4, qty = 1, rarity = "mixed", price_mult = 1.0, season_boost = 1.0,
+        pool = { "wpn_dagger_thorn", "wpn_dagger_flint", "wpn_club_spruce", "wpn_club_oak", "wpn_spear_twig", "wpn_spear_iron", "wpn_staff_branch", "wpn_staff_hazel" } },
+      { id = "ugens_staal", period = 7, pick = 2, qty = 1, rarity = "rare", price_mult = 1.1, season_boost = 1.0,
+        pool = { "wpn_dagger_moonshard", "wpn_sword_forest_steel", "wpn_club_mushroom", "wpn_spear_thistle", "wpn_staff_light" } },
+    },
     stock = {
       hoe_iron = { stock = 2, restock = 1 },
       pickaxe_iron = { stock = 2, restock = 1 },

@@ -179,10 +179,10 @@
    "exact": []
   },
   "forest.csv": {
-   "owner": "P19",
+   "owner": "DR3",
    "prefix": [
-    "BOSS_",
     "ENEMY_",
+    "BOSS_",
     "ABILITY_"
    ],
    "exact": [
@@ -381,14 +381,19 @@
    ]
   },
   "dungeon_items.csv": {
-   "owner": "DL2",
+   "owner": "D-items",
    "prefix": [
     "WEFFECT_",
     "WSTAT_",
     "GEMFX_",
     "RECIPE_DNG_"
    ],
-   "exact": []
+   "exact": [],
+   "item_files": [
+    "lua/items/weapons.lua",
+    "lua/items/gems.lua",
+    "lua/items/dungeon_materials.lua"
+   ]
   },
   "loot_dungeon.csv": {
    "owner": "F4",
@@ -633,7 +638,8 @@
     "SG_",
     "QUEST_SECRET_GARDEN_",
     "OBJ_SECRET_GARDEN_"
-   ]
+   ],
+   "exact": []
   }
  },
  "notes": [

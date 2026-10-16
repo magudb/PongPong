@@ -353,6 +353,30 @@ func set_flag(flag: StringName, value: Variant) -> void:
 	EventBus.flag_changed.emit(flag, safe)
 
 
+## Commit related progression flags before notifying synchronous observers.
+## Invalid input is refused atomically; the single-flag API retains its errors.
+func set_flags(changes: Dictionary) -> bool:
+	var next := {}
+	for key in changes:
+		if not (key is String or key is StringName) or str(key) == "": return false
+		var value: Variant = changes[key]
+		var safe: Variant = _json_safe(value) if value != null else null
+		if value != null and safe == null: return false
+		next[StringName(str(key))] = safe
+	var published: Array = []
+	for key in next:
+		var value: Variant = next[key]
+		if value == null:
+			if world_flags.erase(key): published.append([key,false])
+		else:
+			var previous: Variant = world_flags.get(key,_UNSET)
+			if typeof(previous) != typeof(value) or previous != value:
+				world_flags[key] = value
+				published.append([key,value])
+	for pair in published: EventBus.flag_changed.emit(pair[0],pair[1])
+	return true
+
+
 func get_flag(flag: StringName, default_value: Variant = false) -> Variant:
 	return world_flags.get(flag, default_value)
 

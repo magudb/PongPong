@@ -4,7 +4,7 @@ signal weapon_drawn(item_id: StringName)
 ## Combat timing and hit detection are isolated from movement, farming and saved state.
 const S := PlayerBody2D.S
 const RULES := "res://scripts/dungeon_run/dungeon_run.gd"
-const FX := "res://scripts/loot/weapon_fx.gd"
+const FX := "res://scripts/combat/weapon_fx.gd"
 var player: PlayerBody2D
 var cooldowns := {"slash": 0.0, "dodge": 0.0, "light": 0.0, "drink": 0.0}
 var durations := {"slash": 0.4, "dodge": 0.9, "light": 7.0, "drink": 1.0}
@@ -18,6 +18,8 @@ var _swing_duration: float = 0.28
 var _dodge_direction: Vector2
 var _knockback := Vector2.ZERO
 var _swing_direction := Vector2.RIGHT
+var _swing_radius: float = 197
+var _swing_half: float = 1.0
 var _hit: Dictionary = {}
 var _buffer: StringName = &""
 var _buffer_time: float = 0.0
@@ -130,13 +132,15 @@ func _read_weapon(item: StringName = &"") -> Dictionary:
 	if item == &"" or not GameData.eco().has_item(item) or str(GameData.item_def(item).get("category", "")) != "weapon":
 		return {}
 	var info := GameData.item_def(item).duplicate(true)
-	var late: Variant = Svc.static_call("res://scripts/loot/weapon_info.gd", &"of", [item], {})
+	var late: Variant = Svc.static_call("res://scripts/combat/weapon_info.gd", &"of", [item], {})
 	if late is Dictionary:
 		info.merge(late, true)
 	var family := str(info.get("family", "sword"))
 	var params := GameData.dict_of(GameData.cfg("dungeon_run.weapon_families." + family, {}))
-	for key in ["swing_time", "swing_radius", "swing_half_angle_deg", "swing_cooldown", "knockback"]:
-		info[key] = params.get(key, GameData.combat(key, {"swing_time": 0.28, "swing_radius": 197, "swing_half_angle_deg": 62, "swing_cooldown": 0.12, "knockback": 433}[key]))
+	params.merge(GameData.dict_of(info.get("swing",{})),true)
+	var family_keys := {"swing_time":"time","swing_radius":"radius","swing_half_angle_deg":"half_angle","swing_cooldown":"cooldown","knockback":"knockback"}
+	for key in family_keys:
+		info[key] = params.get(family_keys[key], GameData.combat(key, {"swing_time": 0.28, "swing_radius": 197, "swing_half_angle_deg": 62, "swing_cooldown": 0.12, "knockback": 433}[key]))
 	info["id"] = item
 	return info
 
@@ -171,11 +175,13 @@ func swing(item: StringName = &"") -> bool:
 	cooldowns.slash = durations.slash
 	_hit.clear()
 	var radius := float(_weapon.swing_radius)
-	var half := deg_to_rad(clampf(float(_weapon.swing_half_angle_deg) + float(_assist("assist_arc", 0.0)), 1.0, 85.0))
-	var points := PackedVector2Array([Vector2.ZERO])
-	for i in 13:
-		var angle := _swing_direction.angle() - half + 2.0 * half * i / 12.0
-		points.append(Iso.to_screen(Vector2.from_angle(angle) * radius))
+	var half := deg_to_rad(clampf(float(_weapon.swing_half_angle_deg) * (1.0 + float(Svc.static_call(RULES,&"arc_pct",[],0))/100.0), 1.0, 175.0))
+	_swing_radius = radius
+	_swing_half = half
+	# Broad-phase ellipse followed by the exact arc. This also supports the club's
+	# 190-degree sector, which cannot be one convex physics polygon.
+	var points := PackedVector2Array()
+	for i in 32: points.append(Iso.to_screen(Vector2.from_angle(TAU*i/32.0)*radius))
 	_shape.points = points
 	var slash := Slash2D.new()
 	slash.setup(_swing_direction, radius, half, _swing_duration)
@@ -196,6 +202,10 @@ func _apply_hits() -> void:
 			target = target.get_parent()
 		if target == null or not target.has_method("take_hit") or _hit.has(target.get_instance_id()):
 			continue
+		if target is Node2D:
+			var offset := Iso.to_ground(target.global_position-player.global_position)
+			if offset.length() > _swing_radius or absf(angle_difference(_swing_direction.angle(),offset.angle())) > _swing_half:
+				continue
 		_hit[target.get_instance_id()] = true
 		target.call("take_hit", int(_weapon.get("damage", 5)), player.global_position, player)
 		hit_stop = int(_feel("hit_stop_frames", 3))
@@ -218,7 +228,7 @@ func dodge() -> bool:
 	_remaining = float(GameData.combat("dodge_time", 0.3))
 	durations.dodge = float(GameData.combat("dodge_cooldown", 0.9))
 	cooldowns.dodge = durations.dodge
-	_iframes = float(GameData.combat("dodge_iframes", 0.42)) + float(_assist("assist_dodge", 0.0))
+	_iframes = float(GameData.combat("dodge_iframes", 0.42)) + float(Svc.static_call(RULES,&"dodge_bonus",[],0.0))
 	player.set("invulnerable", true)
 	player.visual.cancel_action()
 	var dust := Dust2D.new()
@@ -232,9 +242,11 @@ func fairy_light(free: bool = false) -> bool:
 	if not free and (not player.world_input_allowed() or float(cooldowns.light) > 0 or player.state == S.DODGE):
 		return false
 	var gem: Dictionary = player._gem_effects()
-	durations.light = maxf(3.0, float(GameData.combat("light_cooldown", 7)) - float(gem.get("light_cd_minus_s", 0)))
+	var params := {"cooldown":float(GameData.combat("light_cooldown",7))-float(gem.get("light_cd_minus_s",0)),"radius":float(GameData.combat("light_radius",550)),"stun":float(GameData.combat("light_stun",1.6)),"weapon":_read_weapon()}
+	params = Svc.static_call(FX,&"on_light",[player,params],params)
+	durations.light = maxf(float(GameData.cfg("dungeon_loot.limits.light_cd_min_s",3)),float(params.cooldown))
 	cooldowns.light = durations.light
-	var radius := float(GameData.combat("light_radius", 550))
+	var radius := float(params.radius)
 	_burst.energy = 0.35 if bool(_assist("assist_reduce_flash", false)) else 1.5
 	_burst.texture_scale = 1.0 * Iso.S
 	var tween := create_tween().set_parallel(true)
@@ -246,8 +258,8 @@ func fairy_light(free: bool = false) -> bool:
 	ring.global_position = player.global_position
 	for enemy in get_tree().get_nodes_in_group("enemy"):
 		if enemy is Node2D and enemy.has_method("stun") and Iso.ground_dist(player.global_position, enemy.global_position) <= radius:
-			enemy.call("stun", float(GameData.combat("light_stun", 1.6)))
-	_effect(&"on_light", [player, _weapon])
+			if enemy.has_method("reveal"): enemy.call("reveal")
+			enemy.call("stun",float(params.stun))
 	player.emit_signal("light_burst", radius)
 	return true
 
@@ -270,8 +282,10 @@ func take_damage(amount: int, from: Vector2 = Vector2.ZERO) -> bool:
 	_iframes = float(GameData.combat("hurt_iframes", 0.9))
 	player.set("invulnerable", true)
 	cancel_action()
-	if player.half_hearts == 0 and not _last_spark and bool(_assist("assist_last_spark", false)):
+	if player.half_hearts == 0 and not _last_spark and not bool(DungeonRulesData.flag("dungeon_last_spark_used",false)) and bool(_assist("assist_last_spark", false)):
 		_last_spark = true
+		var gm := Svc.node("GameManager")
+		if gm != null: gm.set_flag(&"dungeon_last_spark_used",true)
 		player.half_hearts = 1
 		_iframes = 1.2
 		fairy_light(true)
@@ -322,4 +336,7 @@ func reset() -> void:
 	for key in cooldowns:
 		cooldowns[key] = 0.0
 	_iframes = 1.2
+	_last_spark = false
+
+func begin_run() -> void:
 	_last_spark = false

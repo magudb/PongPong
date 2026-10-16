@@ -5,6 +5,7 @@ const PATH := "user://settings.cfg"
 const SIZES := [Vector2i(1280, 720), Vector2i(1600, 900), Vector2i(1920, 1080)]
 const BUSES := ["Master", "Music", "Sfx", "Voice"]
 var _applying := false
+var forest_help_button: Button
 
 func _init() -> void:
 	super._init()
@@ -29,7 +30,18 @@ func _ready() -> void:
 		var chip: Button = get_node("%%Size%d" % index)
 		chip.pressed.connect(func(): _size_changed(index))
 	%HintBar.set_hints([{"action": &"ui_left", "key": "HINT_CHANGE"}, {"action": &"ui_cancel", "key": "HINT_BACK"}])
+	forest_help_button = preload("res://scripts/ui/social/social_layout.gd").button(%CloseButton.get_parent(),"ASSIST_TITLE","ButtonSecondaryS")
+	forest_help_button.get_parent().move_child(forest_help_button,%CloseButton.get_index())
+	forest_help_button.pressed.connect(_open_forest_help)
 	_refresh_texts()
+
+func _open_forest_help() -> void:
+	var screen := get_node_or_null("ForestHelp")
+	if screen == null:
+		screen = load("res://scenes/ui/forest_help.tscn").instantiate()
+		screen.name = "ForestHelp"
+		add_child(screen)
+	screen.open(forest_help_button)
 
 static func _config() -> ConfigFile:
 	var config := ConfigFile.new()
@@ -69,6 +81,8 @@ func _initial_focus() -> Control:
 func _refresh_texts() -> void:
 	if not is_node_ready():
 		return
+	if forest_help_button != null:
+		forest_help_button.visible = get_tree().get_first_node_in_group("world_2d") != null
 	_applying = true
 	%LangDa.button_pressed = LocalizationManager.is_da()
 	%LangEn.button_pressed = not LocalizationManager.is_da()
@@ -124,6 +138,7 @@ func _update_sizes() -> void:
 		rows.append([get_node("%" + bus + "Slider")])
 	rows.append([%FullscreenCheck])
 	rows.append(sizes)
+	if forest_help_button != null and forest_help_button.visible: rows.append([forest_help_button])
 	rows.append([%CloseButton])
 	for row in rows:
 		UiNav.wire_row(row)

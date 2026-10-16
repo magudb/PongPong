@@ -42,3 +42,4 @@ SLOTCELL_SHOES,Fødder,Feet
 PERKLINE_SPEED_FMT,Fart +%d %%,Speed +%d %%
 GARDEROBE_SWITCH_TABS,Skift fane,Switch tab
 GARDEROBE_PREVIEW_FMT,Viser: %s,Preview: %s
+GARDEROBE_LANTERN_GEM,"Lygtesten","Lantern gem"

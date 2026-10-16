@@ -26,23 +26,28 @@ const _FALLBACK := {
 	"order": ["normal", "uncommon", "rare", "unique", "legendary"],
 	"normal": {
 		"rank": 1, "name_key": "RARITY_NORMAL", "ui": {"fill": "fbf5e6", "ring": "2b2340", "label": "4c4058"},
+		"weapon_price": 100, "gem_price": 45, "material_price": 12, "weapon_sell_ratio": 0.15, "gem_sell_ratio": 0.44,
 		"furniture_price": 150, "clothing_price": 60, "sell_ratio": 0.4, "decor": 2, "find_weight": 100,
 	},
 	"uncommon": {
 		"rank": 2, "name_key": "RARITY_UNCOMMON", "ui": {"fill": "e3efd2", "ring": "6b9a3e", "label": "3f6b22"},
+		"weapon_price": 750, "gem_price": 150, "material_price": 55, "weapon_sell_ratio": 0.12, "gem_sell_ratio": 0.44,
 		"furniture_price": 450, "clothing_price": 220, "sell_ratio": 0.4, "decor": 5, "find_weight": 40,
 	},
 	"rare": {
 		"rank": 3, "name_key": "RARITY_RARE", "ui": {"fill": "e2d8f4", "ring": "9b86d6", "label": "5d4fa3"},
+		"weapon_price": 1800, "gem_price": 450, "material_price": 160, "weapon_sell_ratio": 0.1, "gem_sell_ratio": 0.44,
 		"furniture_price": 1600, "clothing_price": 800, "sell_ratio": 0.38, "decor": 11, "find_weight": 12,
 	},
 	"unique": {
 		"rank": 4, "name_key": "RARITY_UNIQUE", "ui": {"fill": "f9e0e7", "ring": "e58fa6", "label": "7d2e59"},
+		"weapon_price": 5000, "gem_price": 1500, "material_price": 600, "weapon_sell_ratio": 0.0, "gem_sell_ratio": 0.0,
 		"furniture_price": 5000, "clothing_price": 2600, "sell_ratio": 0.0, "decor": 24, "find_weight": 3,
 	},
 	"legendary": {
 		"rank": 5, "name_key": "RARITY_LEGENDARY",
 		"ui": {"fill": "2f3654", "ring": "a9d3e0", "label": "2b2340", "pip": "f2c14e", "icon_rim": "e4eff5"},
+		"weapon_price": 12000, "gem_price": 4500, "material_price": 2500, "weapon_sell_ratio": 0.0, "gem_sell_ratio": 0.0,
 		"furniture_price": 12000, "clothing_price": 7000, "sell_ratio": 0.0, "decor": 42, "find_weight": 1,
 	},
 }
@@ -101,8 +106,9 @@ static func shape(id: Variant) -> String:
 	return str(PIP_SHAPES[clampi(pips(id), 0, PIP_SHAPES.size() - 1)])
 
 
-static func sell_ratio(id: Variant) -> float:
-	return LuaData.num(_row(id).get("sell_ratio", 0.4))
+static func sell_ratio(id: Variant, kind: String = "") -> float:
+	var row := _row(id)
+	return LuaData.num(row.get(kind+"_sell_ratio",row.get("sell_ratio",0.4)))
 
 
 ## relative find weight in loot rolls (100 / 40 / 12 / 3 / 1)

@@ -1,0 +1,100 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PROGRESS floor 1 index 1000 verified 0
+PROGRESS floor 1 index 1500 verified 500
+PROGRESS floor 2 index 1166 verified 1000
+FALLBACK-USED f2 i1396 seed 1116886881598385135 (all 8 attempts failed, first_fail nooks): pinned seed 1035606496496653718
+PROGRESS floor 2 index 1666 verified 1500
+PROGRESS floor 3 index 1332 verified 2000
+PROGRESS floor 3 index 1832 verified 2500
+PROGRESS floor 4 index 1498 verified 3000
+PROGRESS floor 5 index 1164 verified 3500
+PROGRESS floor 5 index 1664 verified 4000
+PROGRESS floor 6 index 1330 verified 4500
+PROGRESS floor 6 index 1830 verified 5000
+PROGRESS floor 7 index 1496 verified 5500
+PROGRESS floor 8 index 1162 verified 6000
+PROGRESS floor 8 index 1662 verified 6500
+PROGRESS floor 9 index 1328 verified 7000
+PROGRESS floor 9 index 1828 verified 7500
+PROGRESS floor 10 index 1494 verified 8000
+PROGRESS floor 11 index 1160 verified 8500
+PROGRESS floor 11 index 1660 verified 9000
+PROGRESS floor 12 index 1326 verified 9500
+PROGRESS floor 12 index 1826 verified 10000
+STRESS floors_verified=10008 gen_failed=0 fallback_used=1 total_ms=409941
+STRESS attempts_hist={ 1: 8859, 2: 957, 3: 156, 4: 24, 5: 8, 6: 3, 9: 1 } first_fail={ "tutorial_ambush": 172, "sparse": 25, "sparse_features": 8, "hulen_far": 1, "nooks": 448, "feature_chest": 27, "feature_spot": 173, "lake_chest": 286, "feature_anchor": 2, "hard_node_moonstone": 7 }
+INV all_rows_have_equal_length                               checks  10008 violations 0
+INV ambush_and_critters_do_not_exceed_spec                   checks  10008 violations 0
+INV boss_arena_has_room                                      checks   2502 violations 0
+INV boss_count_matches_spec                                  checks  10008 violations 0
+INV boss_kind_and_adds_follow_the_floor_table                checks   2502 violations 0
+INV chest_roles_match_spec                                   checks  10008 violations 0
+INV chest_tier_lock_and_seal_follow_role                     checks  10008 violations 0
+INV enemies_at_least_80_percent_of_budget                    checks  10008 violations 0
+INV every_marker_reachable_from_spawn                        checks  10008 violations 0
+INV every_object_char_is_declared                            checks  10008 violations 0
+INV exactly_one_default_spawn                                checks  10008 violations 0
+INV first_attempt_rate_at_least_85_percent                   checks      1 violations 0
+INV forest_border_of_3_cells_is_not_walkable                 checks  10008 violations 0
+INV header_complete                                          checks  10008 violations 0
+INV home_rope_only_on_the_last_floor                         checks  10008 violations 0
+INV hulen_count_matches_spec                                 checks  10008 violations 0
+INV hulen_far_from_spawn                                     checks   9174 violations 0
+INV hulen_sealed_iff_boss_floor                              checks   9174 violations 0
+INV hulen_targets_next_floor                                 checks   9174 violations 0
+INV inner_crowns_match_spec_or_fewer                         checks  10008 violations 0
+INV lake_chest_stands_on_a_pond_shore                        checks   2502 violations 0
+INV light_overlap_at_most_6_within_5_cells                   checks  10008 violations 0
+INV lights_within_budget                                     checks  10008 violations 0
+INV map_size_is_play_area_plus_padding                       checks  10008 violations 0
+INV mean_attempts_at_most_1.3                                checks      1 violations 0
+INV no_chest_next_to_spawn                                   checks  10008 violations 0
+INV no_enemy_near_spawn_(14_ordinary_8_ambush_or_critter)    checks  10008 violations 0
+INV no_feature_or_spawn_under_a_crown_disc                   checks  10008 violations 0
+INV no_unreachable_floor_islands                             checks  10008 violations 0
+INV node_kinds_within_spec                                   checks  10008 violations 0
+INV nook_features_sit_in_hidden_dead_ends                    checks  10008 violations 0
+INV only_declared_ground_chars                               checks  10008 violations 0
+INV props_in_view_at_most_400                                checks  10008 violations 0
+INV props_total_within_budget                                checks  10008 violations 0
+INV required_node_kinds_are_exact_(moonstone_supply)         checks  10008 violations 0
+INV rim_crown_walk_overlap_at_most_4_cells                   checks  10008 violations 0
+INV rim_crowns_present                                       checks  10008 violations 0
+INV runestone_count_matches_spec                             checks  10008 violations 0
+INV solid_features_stay_off_the_lit_path                     checks   7506 violations 0
+INV spawn_from_down_iff_hulen                                checks  10008 violations 0
+INV spawn_rune_beside_the_runestone_iff_stone                checks  10008 violations 0
+INV text_parses_without_errors                               checks  10008 violations 0
+INV tutorial_ambush_6_to_11_cells_from_spawn                 checks   1668 violations 0
+INV unique_spots_equal_spec                                  checks  10008 violations 0
+INV up_warp_exactly_one_to_previous                          checks  10008 violations 0
+INV visible_wall_tiles_at_most_400_per_screen                checks  10008 violations 0
+INV walkable_share_within_limits                             checks  10008 violations 0
+INV zone_ambient_music_from_band                             checks  10008 violations 0
+INV TOTAL violations: 0 (determinism mismatches 0 of 1428)
+STAT enemy_budget_exact 10008 of 10008 floors; walkable share mean 23.1 %; route spawn->Hulen mean 77.2 cells; props max 490 (in view max 99); rim crowns mean 253.4 max 446; wall window max 0
+TIME floor  1 (56x42): gen mean 6.6 p50 6.0 p95 13.3 p99 16.6 max 23.2 | export mean 7.1 p50 7.1 p95 7.7 p99 7.9 max 8.4 | verify mean 4.4 p50 4.4 p95 4.6 p99 4.8 max 5.2   export stats { "w": 64, "h": 54, "floor_cells": 414, "wall_cells": 0, "props": 154, "markers": 22, "rim_crowns": 143, "inner_crowns": 0, "chars_used": 19 }
+TIME floor  2 (60x45): gen mean 11.1 p50 8.4 p95 23.0 p99 35.1 max 61.5 | export mean 8.0 p50 7.9 p95 8.5 p99 8.8 max 10.5 | verify mean 5.4 p50 5.4 p95 5.7 p99 6.1 max 6.8   export stats { "w": 68, "h": 57, "floor_cells": 617, "wall_cells": 0, "props": 192, "markers": 32, "rim_crowns": 181, "inner_crowns": 0, "chars_used": 24 }
+TIME floor  3 (64x48): gen mean 12.8 p50 11.3 p95 23.0 p99 29.9 max 44.0 | export mean 9.8 p50 9.6 p95 11.6 p99 13.3 max 16.8 | verify mean 6.9 p50 6.8 p95 8.0 p99 9.1 max 11.5   export stats { "w": 72, "h": 60, "floor_cells": 738, "wall_cells": 0, "props": 185, "markers": 35, "rim_crowns": 175, "inner_crowns": 0, "chars_used": 29 }
+TIME floor  4 (64x48): gen mean 10.7 p50 10.3 p95 14.8 p99 19.7 max 26.9 | export mean 9.8 p50 9.7 p95 10.6 p99 11.5 max 12.4 | verify mean 6.7 p50 6.7 p95 7.3 p99 7.8 max 10.8   export stats { "w": 72, "h": 60, "floor_cells": 798, "wall_cells": 0, "props": 210, "markers": 29, "rim_crowns": 193, "inner_crowns": 2, "chars_used": 27 }
+TIME floor  5 (72x54): gen mean 13.5 p50 12.4 p95 23.0 p99 30.8 max 38.2 | export mean 12.2 p50 12.0 p95 14.2 p99 15.4 max 18.9 | verify mean 8.7 p50 8.6 p95 10.2 p99 11.2 max 15.1   export stats { "w": 80, "h": 66, "floor_cells": 763, "wall_cells": 0, "props": 241, "markers": 39, "rim_crowns": 232, "inner_crowns": 0, "chars_used": 30 }
+TIME floor  6 (72x54): gen mean 16.4 p50 13.8 p95 31.2 p99 39.6 max 60.7 | export mean 12.0 p50 11.8 p95 13.3 p99 14.9 max 23.6 | verify mean 8.9 p50 8.8 p95 9.8 p99 10.6 max 17.5   export stats { "w": 80, "h": 66, "floor_cells": 799, "wall_cells": 0, "props": 248, "markers": 44, "rim_crowns": 236, "inner_crowns": 0, "chars_used": 32 }
+TIME floor  7 (80x60): gen mean 16.6 p50 16.3 p95 20.0 p99 31.9 max 47.7 | export mean 13.9 p50 13.9 p95 15.2 p99 16.0 max 20.5 | verify mean 11.2 p50 11.2 p95 12.1 p99 12.9 max 18.3   export stats { "w": 88, "h": 72, "floor_cells": 1137, "wall_cells": 0, "props": 289, "markers": 53, "rim_crowns": 266, "inner_crowns": 1, "chars_used": 33 }
+TIME floor  8 (72x54): gen mean 12.8 p50 12.5 p95 15.7 p99 24.8 max 34.3 | export mean 11.8 p50 11.8 p95 13.2 p99 15.2 max 16.5 | verify mean 8.7 p50 8.6 p95 9.7 p99 10.9 max 12.3   export stats { "w": 80, "h": 66, "floor_cells": 978, "wall_cells": 0, "props": 231, "markers": 41, "rim_crowns": 212, "inner_crowns": 2, "chars_used": 28 }
+TIME floor  9 (88x66): gen mean 23.3 p50 20.2 p95 41.4 p99 58.2 max 84.7 | export mean 16.8 p50 16.6 p95 18.6 p99 21.3 max 30.5 | verify mean 13.7 p50 13.6 p95 15.0 p99 17.5 max 20.8   export stats { "w": 96, "h": 78, "floor_cells": 1312, "wall_cells": 0, "props": 333, "markers": 56, "rim_crowns": 305, "inner_crowns": 0, "chars_used": 33 }
+TIME floor 10 (88x66): gen mean 18.3 p50 17.7 p95 24.1 p99 35.5 max 38.3 | export mean 16.6 p50 16.6 p95 17.9 p99 19.0 max 29.2 | verify mean 12.9 p50 12.9 p95 13.9 p99 14.6 max 20.8   export stats { "w": 96, "h": 78, "floor_cells": 1383, "wall_cells": 0, "props": 357, "markers": 49, "rim_crowns": 331, "inner_crowns": 1, "chars_used": 29 }
+TIME floor 11 (96x72): gen mean 22.2 p50 21.2 p95 37.7 p99 45.6 max 70.4 | export mean 19.4 p50 19.4 p95 20.9 p99 21.5 max 23.6 | verify mean 15.6 p50 15.6 p95 16.6 p99 17.4 max 19.1   export stats { "w": 104, "h": 84, "floor_cells": 1986, "wall_cells": 0, "props": 432, "markers": 52, "rim_crowns": 378, "inner_crowns": 3, "chars_used": 31 }
+TIME floor 12 (80x60): gen mean 14.6 p50 14.8 p95 17.0 p99 18.4 max 29.3 | export mean 14.4 p50 14.3 p95 15.9 p99 17.0 max 21.3 | verify mean 10.4 p50 10.4 p95 11.4 p99 12.5 max 15.7   export stats { "w": 88, "h": 72, "floor_cells": 1182, "wall_cells": 0, "props": 318, "markers": 36, "rim_crowns": 286, "inner_crowns": 0, "chars_used": 26 }
+PHASE floor  1 (last attempt, mean ms): sites+clearings 0.13 | graph 0.04 | trails+ponds 0.96 | repair 0.39 | nooks 0.00 | features 2.50 | inner crowns+decor+repair 1.36 | validate 0.43
+PHASE floor  2 (last attempt, mean ms): sites+clearings 0.14 | graph 0.04 | trails+ponds 1.04 | repair 0.45 | nooks 0.40 | features 3.57 | inner crowns+decor+repair 1.62 | validate 0.53
+PHASE floor  3 (last attempt, mean ms): sites+clearings 0.20 | graph 0.07 | trails+ponds 1.47 | repair 0.62 | nooks 0.24 | features 5.30 | inner crowns+decor+repair 2.43 | validate 0.70
+PHASE floor  4 (last attempt, mean ms): sites+clearings 0.22 | graph 0.05 | trails+ponds 1.26 | repair 0.65 | nooks 0.24 | features 4.61 | inner crowns+decor+repair 2.39 | validate 0.73
+PHASE floor  5 (last attempt, mean ms): sites+clearings 0.21 | graph 0.07 | trails+ponds 1.72 | repair 0.74 | nooks 0.67 | features 5.23 | inner crowns+decor+repair 2.72 | validate 0.85
+PHASE floor  6 (last attempt, mean ms): sites+clearings 0.20 | graph 0.07 | trails+ponds 1.68 | repair 0.73 | nooks 0.62 | features 6.25 | inner crowns+decor+repair 2.70 | validate 0.85
+PHASE floor  7 (last attempt, mean ms): sites+clearings 0.34 | graph 0.33 | trails+ponds 2.64 | repair 0.99 | nooks 0.47 | features 6.92 | inner crowns+decor+repair 3.31 | validate 1.12
+PHASE floor  8 (last attempt, mean ms): sites+clearings 0.23 | graph 0.06 | trails+ponds 1.48 | repair 0.76 | nooks 0.15 | features 6.33 | inner crowns+decor+repair 2.65 | validate 0.86
+PHASE floor  9 (last attempt, mean ms): sites+clearings 0.37 | graph 0.34 | trails+ponds 3.02 | repair 1.19 | nooks 0.50 | features 8.62 | inner crowns+decor+repair 4.18 | validate 1.34
+PHASE floor 10 (last attempt, mean ms): sites+clearings 0.36 | graph 0.33 | trails+ponds 2.95 | repair 1.18 | nooks 0.30 | features 6.98 | inner crowns+decor+repair 4.12 | validate 1.30
+PHASE floor 11 (last attempt, mean ms): sites+clearings 0.43 | graph 0.54 | trails+ponds 3.61 | repair 1.42 | nooks 0.44 | features 7.65 | inner crowns+decor+repair 5.06 | validate 1.58
+PHASE floor 12 (last attempt, mean ms): sites+clearings 0.35 | graph 0.24 | trails+ponds 2.38 | repair 1.03 | nooks 0.00 | features 5.71 | inner crowns+decor+repair 3.65 | validate 1.12

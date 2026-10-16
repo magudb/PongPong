@@ -1,0 +1,28 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 599,
+  "elapsed_s": 13.77,
+  "engine": [],
+  "failed": 4,
+  "failures": [
+    "dungeon_gen.gen.golden_digest_f1",
+    "dungeon_gen.gen.golden_digest_f3",
+    "dungeon_gen.gen.golden_digest_f6",
+    "dungeon_gen.gen.golden_digest_f9"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "dungeon_gen": {
+      "character": "animal",
+      "checks": 599,
+      "failed": 4,
+      "ms": 9452,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

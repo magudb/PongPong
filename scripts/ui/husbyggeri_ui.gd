@@ -35,6 +35,8 @@ func _ready() -> void:
 	var right := L.box(cols,true,10)
 	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var scroll := ScrollContainer.new()
+	scroll.follow_focus = true
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	right.add_child(scroll)

@@ -1,0 +1,111 @@
+-- recipes/dungeon.lua (DL2, wave 4; editor's version: moonshard recipe widened): forging of the generic weapons.  kind = "recipes".
+-- station snedkerbord (home tier 1) for normal weapons, smedje (tier 5) for uncommon and rare; unique and legendary weapons are never crafted (Rarity.craftable).
+
+kind = "recipes"
+
+recipes = {
+  dng_forge_dagger_thorn = {
+    name_key = "RECIPE_DNG_FORGE_DAGGER_THORN",
+    category = "craft",
+    station = "snedkerbord",
+    min_home_tier = 1,
+    ingredients = { wood = 5, dng_forest_thread = 2, stone = 2 },
+    output = { item = "wpn_dagger_thorn", amount = 1 },
+  },
+  dng_forge_dagger_flint = {
+    name_key = "RECIPE_DNG_FORGE_DAGGER_FLINT",
+    category = "forge",
+    station = "smedje",
+    min_home_tier = 5,
+    ingredients = { iron_ingot = 2, dng_forest_steel = 1, dng_resin = 3, wood = 4 },
+    output = { item = "wpn_dagger_flint", amount = 1 },
+  },
+  dng_forge_dagger_moonshard = {
+    name_key = "RECIPE_DNG_FORGE_DAGGER_MOONSHARD",
+    category = "forge",
+    station = "smedje",
+    min_home_tier = 5,
+    ingredients = { iron_ingot = 2, dng_forest_steel = 2, dng_moon_silver = 1, gem_moss_agate = 3, dng_resin = 5 },   -- EDITOR: +1 moss agate +2 resin: cost 0.49 of the buy price at x2.0, 0.50 at x2.2 (was 0.44 / 0.45, outside the band at x2.0)
+    output = { item = "wpn_dagger_moonshard", amount = 1 },
+  },
+  dng_forge_sword_forest_steel = {
+    name_key = "RECIPE_DNG_FORGE_SWORD_FOREST_STEEL",
+    category = "forge",
+    station = "smedje",
+    min_home_tier = 5,
+    ingredients = { iron_ingot = 3, dng_forest_steel = 3, dng_moon_silver = 1, amber = 1 },
+    output = { item = "wpn_sword_forest_steel", amount = 1 },
+  },
+  dng_forge_club_spruce = {
+    name_key = "RECIPE_DNG_FORGE_CLUB_SPRUCE",
+    category = "craft",
+    station = "snedkerbord",
+    min_home_tier = 1,
+    ingredients = { wood = 6, iron_ore = 1, dng_forest_thread = 2 },
+    output = { item = "wpn_club_spruce", amount = 1 },
+  },
+  dng_forge_club_oak = {
+    name_key = "RECIPE_DNG_FORGE_CLUB_OAK",
+    category = "forge",
+    station = "smedje",
+    min_home_tier = 5,
+    ingredients = { iron_ingot = 3, wood = 8, dng_forest_steel = 1, dng_resin = 3 },
+    output = { item = "wpn_club_oak", amount = 1 },
+  },
+  dng_forge_club_mushroom = {
+    name_key = "RECIPE_DNG_FORGE_CLUB_MUSHROOM",
+    category = "forge",
+    station = "smedje",
+    min_home_tier = 5,
+    ingredients = { iron_ingot = 3, dng_forest_steel = 3, dng_mushroom_felt = 6, dng_resin = 4, dng_moon_silver = 1, gem_moss_agate = 2, gem_smoky_quartz = 2 },
+    output = { item = "wpn_club_mushroom", amount = 1 },
+  },
+  dng_forge_spear_twig = {
+    name_key = "RECIPE_DNG_FORGE_SPEAR_TWIG",
+    category = "craft",
+    station = "snedkerbord",
+    min_home_tier = 1,
+    ingredients = { wood = 6, stone = 3, dng_forest_thread = 2 },
+    output = { item = "wpn_spear_twig", amount = 1 },
+  },
+  dng_forge_spear_iron = {
+    name_key = "RECIPE_DNG_FORGE_SPEAR_IRON",
+    category = "forge",
+    station = "smedje",
+    min_home_tier = 5,
+    ingredients = { iron_ingot = 3, wood = 4, dng_owl_feather = 2 },
+    output = { item = "wpn_spear_iron", amount = 1 },
+  },
+  dng_forge_spear_thistle = {
+    name_key = "RECIPE_DNG_FORGE_SPEAR_THISTLE",
+    category = "forge",
+    station = "smedje",
+    min_home_tier = 5,
+    ingredients = { iron_ingot = 3, dng_forest_steel = 3, dng_moon_silver = 1, crystal_shard = 1, gem_rock_crystal = 2 },
+    output = { item = "wpn_spear_thistle", amount = 1 },
+  },
+  dng_forge_staff_branch = {
+    name_key = "RECIPE_DNG_FORGE_STAFF_BRANCH",
+    category = "craft",
+    station = "snedkerbord",
+    min_home_tier = 1,
+    ingredients = { wood = 6, dng_forest_thread = 1, glow_mushroom = 2 },
+    output = { item = "wpn_staff_branch", amount = 1 },
+  },
+  dng_forge_staff_hazel = {
+    name_key = "RECIPE_DNG_FORGE_STAFF_HAZEL",
+    category = "forge",
+    station = "smedje",
+    min_home_tier = 5,
+    ingredients = { wood = 6, dng_resin = 3, dng_glimmer_dust = 4, gem_rock_crystal = 2, dng_forest_steel = 1 },
+    output = { item = "wpn_staff_hazel", amount = 1 },
+  },
+  dng_forge_staff_light = {
+    name_key = "RECIPE_DNG_FORGE_STAFF_LIGHT",
+    category = "forge",
+    station = "smedje",
+    min_home_tier = 5,
+    ingredients = { dng_crystal_root = 2, dng_forest_steel = 3, dng_glimmer_dust = 6, rose_quartz = 2, dng_moon_silver = 1 },
+    output = { item = "wpn_staff_light", amount = 1 },
+  },
+}

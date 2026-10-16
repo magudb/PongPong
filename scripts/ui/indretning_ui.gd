@@ -46,6 +46,8 @@ func _ready() -> void:
 		var button := L.button(rarity_row,"INDRET_RARITY_" + rarity.to_upper(),"ButtonTertiaryS")
 		button.pressed.connect(func(): rarity_filter = rarity; _refresh_texts())
 	var scroll := ScrollContainer.new()
+	scroll.follow_focus = true
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	body.add_child(scroll)
 	listing = L.box(scroll,true,4) as VBoxContainer

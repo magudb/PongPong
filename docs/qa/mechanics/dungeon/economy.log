@@ -1,0 +1,1796 @@
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=economy,rarity,arsenal,dungeon_items,weapons,save,data,dungeon_pickups
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.oAQFI4/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 0.9 s
+== section arsenal  (res://tests/sections/arsenal.gd)
+  ok    arsenal.weapon_category_routes_to_store
+  ok    arsenal.starter_equipped
+  ok    arsenal.store_contract_answers
+  ok    arsenal.same_family_higher_rating_equips
+  ok    arsenal.better_other_family_keeps_choice
+  ok    arsenal.equip_other_family_deliberately
+  ok    arsenal.equipped_copy_not_sellable
+  ok    arsenal.only_spare_copy_can_leave
+  ok    arsenal.sell_list_excludes_equipped_copy
+  ok    arsenal.save_roundtrip
+  ok    arsenal.roundtrip_ids_are_stringnames
+  ok    arsenal.v1_save_adopts_backpack_weapons
+  ok    arsenal.v1_player_choice_survives
+  ok    arsenal.invalid_rows_dropped_and_counts_capped
+  ok    arsenal.copy_cap_all_or_nothing
+  --    arsenal: 15 checks, 0 failed, 0 skipped, 0.0 s
+== section data  (res://tests/sections/data.gd)
+  ok    reload_scripts logs no engine error or warning (the untranslated-key format error of lua_runtime.gd:42 is gone)
+  ok    data.reload_idempotent (149 scripts, 401 items, 31 quests before and after)
+  ok    loading every Lua file takes 487 ms
+  ok    data.f9_only_in_debug_builds (F9 hot reload is bound only when OS.is_debug_build() (true))
+  ok    LuaRuntime exposes get_recipes, get_shop, get_npc, reload_scripts, lint_source
+  ok    reload_scripts(true) posts one toast that names the script count: [["Lua genindlæst", "149 scripts indlæst"]]
+  ok    the F9 key reloads and announces (debug build only): 1 toast(s)
+  ok    any other key does nothing
+  ok    explicit reloads log no engine error or warning
+  ok    an untranslated key is not %-formatted (got 'NOTIF_LUA_RELOADED_MSG (7)')
+  ok    a translated text with %d gets the count
+  ok    data.config_documented_keys (190 documented keys, missing: [])
+  ok    get_config answers the default for an unknown path
+  ok    get_config indexes arrays (time.seasons.1)
+  ok    data.config_plan_numbers (section 3.13 numbers: [])
+  ok    data.config_units_are_spike_over_0_6 (every distance and speed is the spike value x 1/0.6 within 2%: [])
+  ok    economy.home_cost_scale defaults to 1.0 (CD5)
+  ok    game_balance / race_perks / rarity / npcs / species_perks define disjoint top-level keys (["player", "farm", "crops", "economy", "adventure", "time", "ui", "race_perks", "combat", "rarity_tiers", "perk_caps", "npcs", "npc_vocab", "species_perks"])
+  ok    no config key is defined by two files
+  ok    data.numbers_positive (153 numbers inspected, none negative / NaN, the speeds, prices and durations > 0 [])
+  ok    data.roster_ids (the 22 required ids exist: the 8 stable ids, the 4 + 7 new ids and the 3 feature fairies (the roster has 34 rows, no size pin))
+  ok    data.roster_vocabulary_floor (npc_vocab of lua/config/npcs.lua (areas ["farm", "hyggebyen", "traetoppen", "moerkeskoven"], 27 roles, schedules ["sleep", "patrol", "stay"], ages ["adult", "child", "elder"]) holds every word of the contract floor)
+  ok    data.roster_fields (every npc row (34) has name_key NPC_<ID>, visual + fallback chain, voice, home_area, role, dialogue, wander, facing, schedule, friendship; areas, roles, schedules and ages come from npc_vocab)
+  ok    every visual resolves to real art or to a chain that ends at a pack character (the art check is P21's / V2's art_characters section)
+  ok    dialogue mayor_lyra of mayor_lyra exists
+  ok    dialogue baker_maja of baker_maja exists
+  ok    shop bakery exists and its keeper is baker_maja
+  ok    dialogue merchant_pip of merchant_pip exists
+  ok    shop seed_shop exists and its keeper is merchant_pip
+  ok    dialogue pippin_boegeknop of pippin_boegeknop exists
+  ok    shop flea_market exists and its keeper is pippin_boegeknop
+  ok    dialogue fairy_king of fairy_king exists
+  ok    dialogue fairy_lily of fairy_lily exists
+  ok    dialogue smith_thorin of smith_thorin exists
+  ok    shop smithy exists and its keeper is smith_thorin
+  ok    dialogue guard_oak of guard_oak exists
+  ok    dialogue farmer_rosa of farmer_rosa exists
+  ok    shop animal_store exists and its keeper is farmer_rosa
+  ok    dialogue fairy_wizard of fairy_wizard exists
+  ok    shop magic_store exists and its keeper is fairy_wizard
+  ok    dialogue cat_morfar_mis of cat_morfar_mis exists
+  ok    dialogue penguin_postman of penguin_postman exists
+  ok    dialogue fairy_builder of fairy_builder exists
+  ok    shop builder_yard exists and its keeper is fairy_builder
+  ok    dialogue fairy_furnisher of fairy_furnisher exists
+  ok    shop furniture_shop exists and its keeper is fairy_furnisher
+  ok    dialogue fairy_tailor of fairy_tailor exists
+  ok    shop tailor_shop exists and its keeper is fairy_tailor
+  ok    dialogue gardener_hoppe of gardener_hoppe exists
+  ok    dialogue carpenter_brumme of carpenter_brumme exists
+  ok    shop timber_yard exists and its keeper is carpenter_brumme
+  ok    dialogue postman_pip of postman_pip exists
+  ok    dialogue bathkeeper_sofus of bathkeeper_sofus exists
+  ok    dialogue appraiser_fru_ugle of appraiser_fru_ugle exists
+  ok    dialogue mapseller_natteblik of mapseller_natteblik exists
+  ok    dialogue beekeeper_birk of beekeeper_birk exists
+  ok    dialogue ghostfam_dyne of ghostfam_dyne exists
+  ok    dialogue ghostfam_gnist of ghostfam_gnist exists
+  ok    dialogue ghostfam_silke of ghostfam_silke exists
+  ok    dialogue ghostfam_blund of ghostfam_blund exists
+  ok    a quest is offered by exactly one npc
+  ok    Morfar Mis lives in Hyggebyen and is a quest NPC without hearts
+  ok    the penguin postman is ambient: no quest of his own (the postman with quests is Pip)
+  ok    get_npc(id) answers the roster entry, {} for an unknown id
+  ok    data.roster_has_feature_npcs (builder / furnisher / tailor with shops, voices and dialogue ids; guard_oak, fairy_wizard, fairy_king offer the four gating quests; friendship = true wherever hearts are reachable)
+  ok    the feature fairies live in Hyggebyen
+  ok    data.roster_30_rows_valid (30 citizens (15 + 7 + 8): every row valid as data, routine = true and an age on each, friendship = true on the eight new ones [])
+  ok    data.roster_accepts_data_only_citizen (a data-only row (new id, new role 'florist') is valid once npc_vocab names the role and invalid without it ["role florist"]; the required ids still hold with it in the table; 13 broken variants are all refused (not caught: []))
+  ok    animal: two hero chips (2 heroes in characters.lua), the skins list incl. retired rows (5), default skin among them
+  ok    fairy: two hero chips (2 heroes in characters.lua), the skins list incl. retired rows (4), default skin among them
+  ok    hobbit: two hero chips (2 heroes in characters.lua), the skins list incl. retired rows (4), default skin among them
+  ok    ghost: two hero chips (2 heroes in characters.lua), the skins list incl. retired rows (2), default skin among them
+  ok    data.race_perks_complete (animal, fairy, hobbit and ghost define every perk key (neutral values where the race has no perk), incl. the eight keys of the ghost's perk layer)
+  ok    animal: dig_speed 1.3, tool_cost_mult 0.75, harvest_bonus_chance 0.2
+  ok    fairy: can_fly, 8 s, 10 energy/s, talks_to_flowers
+  ok    hobbit: shop_discount 0.1, bake_bonus 0.25 (+25% output chance in the crafting category bake)
+  ok    ghost: run_cost_mult 0.6, oil_use_mult 0.75, dark_light_mult 1.25, float_bob_px 2.5, glow_energy 0.35, no discount, no bake bonus, no flight
+  ok    only the hobbit has discount and bake perks; the chips are Ræv/Abe, Kløvermynte/Birk, Bertil/Bodil and Bu/Hviske (two heroes per race)
+  ok    data.race_skins_match_characters (race_perks.lua skins / default_skin agree with lua/config/characters.lua (P05))
+  ok    data.crops_have_seed_items (every crop of game_balance has a seed item with crop_id; missing [])
+  ok    the seed item turnip_seeds names crop_id turnip which game_balance defines
+  ok    the seed item carrot_seeds names crop_id carrot which game_balance defines
+  ok    the seed item pumpkin_seeds names crop_id pumpkin which game_balance defines
+  ok    the seed item moonflower_seeds names crop_id moonflower which game_balance defines
+  ok    the seed item strawberry_seeds names crop_id strawberry which game_balance defines
+  ok    the seed item sunflower_seeds names crop_id sunflower which game_balance defines
+  ok    the seed item catnip_seeds names crop_id catnip which game_balance defines
+  ok    the seed item glow_berry_seeds names crop_id glow_berry which game_balance defines
+  ok    the 4 shipped crops and glow_berry, strawberry, sunflower, catnip are defined
+  ok    data.crops_complete (carrot 4 stages x 1 day, pumpkin 5 stages x 2 days = 10, turnip 4, moonflower 12 days)
+  ok    only the moonflower has a water_window (20:00-06:00)
+  ok    every crop season is one of foraar sommer efteraar vinter
+  ok    weather chances per season sum to 1 and snow only falls in vinter
+  ok    LuaParser's token constants mirror LuaTokens
+  ok    tokenizer: strings keep `--`, comments (line and block) vanish, numbers keep their exponent: ["x", "=", "a -- b", "..", "c", "y", "=", "0x1F", "+", "2.5e-3"]
+  ok    line numbers survive a block comment, and the block comment is a finding
+  ok    data.parser_literals (ints stay ints, floats floats, negative and hex numbers, `--` inside a string, an expression is not a literal)
+  ok    nested tables and arrays
+  ok    an empty table `{}` arrives as an empty Dictionary (R.2)
+  ok    arrays of tables stay intact
+  ok    negative numbers and ["key"] = value entries
+  ok    a table that mixes named and positional entries keeps the named ones (the lint reports it)
+  ok    `nil` is simply absent
+  ok    escaped quotes are decoded (the lint reports them): line "quoted"
+  ok    a non-literal value is kept as its source text (the lint reports it)
+  ok    a trailing comma is fine
+  ok    data.parser_no_hoist (rewards.items and the tables of a return are not hoisted to the top level (R.2))
+  ok    a real top-level items table is extracted
+  ok    data.parser_empty_function (an empty / comment-only function no longer swallows the next one (intro_lottery.lua))
+  ok    intro_lottery.lua: on_day_started (comment only) and is_available are separate functions: ["on_offer", "on_accept", "handle_event", "on_day_started", "is_available"]
+  ok    _find_comment skips `--` inside strings (also after an escaped quote)
+  ok    _extract_named_table keeps working for tools
+  ok    data.parser_tables_header (top-level tables named in a `tables` header are extracted)
+  ok    data.lint_rules (28 bad snippets flagged by their rule, 9 good snippets clean, 5 bad fixture files)
+  ok    a finding has path, line, rule, token and message ([{ "path": "res://some/file.lua", "line": 3, "rule": "arithmetic", "token": "+", "message": "arithmetic (`+`) is not supported in statements: compute the value into the data instead" }])
+  ok    data.lint_data_level (`epic` is a lint error (rarity ladder) and a `tables` header without its table is reported: ["rarity", "tables_header"])
+  ok    loading files with lint findings logs no engine warning
+  ok    reload_scripts clears the previous findings
+  ok    data.lint_clean (every Lua file under res://lua lints clean (149 scripts); findings: [])
+  ok    fixture lint_clean_sample.lua is inside the subset and lints clean []
+  ok    fixture flag_identifiers.lua is inside the subset and lints clean []
+  ok    fixture semantics.lua is inside the subset and lints clean []
+  ok    fixture shops_extra.lua is inside the subset and lints clean []
+  ok    fixture recipes_extra.lua is inside the subset and lints clean []
+  ok    fixture data/data_config.lua is inside the subset and lints clean []
+  ok    fixture data/data_items.lua is inside the subset and lints clean []
+  ok    fixture p01_empty_fn.lua is inside the subset and lints clean []
+  ok    fixture p04_nested_if.lua is inside the subset and lints clean []
+  ok    fixture p05_oneline_if.lua is inside the subset and lints clean []
+  ok    fixture p08_paren_in_string.lua is inside the subset and lints clean []
+  ok    fixture p09_emit_payload.lua is inside the subset and lints clean []
+  ok    fixture p14_two_ifs.lua is inside the subset and lints clean []
+  ok    fixture p18_compare_and_or.lua is inside the subset and lints clean []
+  ok    fixture p19_return_expr.lua is inside the subset and lints clean []
+  ok    fixture p20_local_in_untaken.lua is inside the subset and lints clean []
+  ok    fixture p21_multiline_api.lua is inside the subset and lints clean []
+  ok    fixture p23_stmt_around_if.lua is inside the subset and lints clean []
+  ok    data.res://lua/buildings/ghostfam.lua
+  ok    data.res://lua/buildings/hyggebyen.lua
+  ok    data.res://lua/buildings/traetoppen.lua
+  ok    data.res://lua/config/ambient.lua
+  ok    data.res://lua/config/characters.lua
+  ok    data.res://lua/config/dungeon.lua
+  ok    data.res://lua/config/dungeon_loot.lua
+  ok    data.res://lua/config/dungeon_run.lua
+  ok    data.res://lua/config/farm_site.lua
+  ok    data.res://lua/config/festival_decor.lua
+  ok    data.res://lua/config/game_balance.lua
+  ok    data.res://lua/config/husbandry.lua
+  ok    data.res://lua/config/marker_handlers.lua
+  ok    data.res://lua/config/npcs.lua
+  ok    data.res://lua/config/props.lua
+  ok    data.res://lua/config/props_extra.lua
+  ok    data.res://lua/config/props_features.lua
+  ok    data.res://lua/config/race_perks.lua
+  ok    data.res://lua/config/race_reactions.lua
+  ok    data.res://lua/config/rarity.lua
+  ok    data.res://lua/config/species_perks.lua
+  ok    data.res://lua/config/traetoppen.lua
+  ok    data.res://lua/data/home_tiers.lua
+  ok    data.res://lua/data/loot_tables.lua
+  ok    data.res://lua/data/sets.lua
+  ok    data.res://lua/data/starter_kit.lua
+  ok    data.res://lua/data/wardrobe_rules.lua
+  ok    data.res://lua/dialogue/_voiced_social.lua
+  ok    data.res://lua/dialogue/appraiser_fru_ugle.lua
+  ok    data.res://lua/dialogue/baker_maja.lua
+  ok    data.res://lua/dialogue/bathkeeper_sofus.lua
+  ok    data.res://lua/dialogue/beekeeper_birk.lua
+  ok    data.res://lua/dialogue/carpenter_brumme.lua
+  ok    data.res://lua/dialogue/cat_morfar_mis.lua
+  ok    data.res://lua/dialogue/fairy_builder.lua
+  ok    data.res://lua/dialogue/fairy_furnisher.lua
+  ok    data.res://lua/dialogue/fairy_king.lua
+  ok    data.res://lua/dialogue/fairy_lily.lua
+  ok    data.res://lua/dialogue/fairy_tailor.lua
+  ok    data.res://lua/dialogue/fairy_wizard.lua
+  ok    data.res://lua/dialogue/farmer_rosa.lua
+  ok    data.res://lua/dialogue/gardener_hoppe.lua
+  ok    data.res://lua/dialogue/ghostfam_blund.lua
+  ok    data.res://lua/dialogue/ghostfam_dyne.lua
+  ok    data.res://lua/dialogue/ghostfam_gnist.lua
+  ok    data.res://lua/dialogue/ghostfam_silke.lua
+  ok    data.res://lua/dialogue/guard_oak.lua
+  ok    data.res://lua/dialogue/mapseller_natteblik.lua
+  ok    data.res://lua/dialogue/mayor_lyra.lua
+  ok    data.res://lua/dialogue/merchant_pip.lua
+  ok    data.res://lua/dialogue/penguin_postman.lua
+  ok    data.res://lua/dialogue/pippin_boegeknop.lua
+  ok    data.res://lua/dialogue/postman_pip.lua
+  ok    data.res://lua/dialogue/smith_thorin.lua
+  ok    data.res://lua/dungeon_run/recipes.lua
+  ok    data.res://lua/dungeon_run/shops.lua
+  ok    data.res://lua/farm/farm_intro_pip.lua
+  ok    data.res://lua/farm/farm_intro_pip_bye.lua
+  ok    data.res://lua/farm/farm_tutorial.lua
+  ok    data.res://lua/items/animals.lua
+  ok    data.res://lua/items/building_materials.lua
+  ok    data.res://lua/items/clothing.lua
+  ok    data.res://lua/items/consumables.lua
+  ok    data.res://lua/items/crafted.lua
+  ok    data.res://lua/items/crops.lua
+  ok    data.res://lua/items/dungeon_materials.lua
+  ok    data.res://lua/items/dungeon_supplies.lua
+  ok    data.res://lua/items/furniture.lua
+  ok    data.res://lua/items/gems.lua
+  ok    data.res://lua/items/magic.lua
+  ok    data.res://lua/items/products.lua
+  ok    data.res://lua/items/resources.lua
+  ok    data.res://lua/items/tools.lua
+  ok    data.res://lua/items/weapons.lua
+  ok    data.res://lua/quests/animal_products.lua
+  ok    data.res://lua/quests/birthday_cake.lua
+  ok    data.res://lua/quests/bogtraeet.lua
+  ok    data.res://lua/quests/bossernes_vej.lua
+  ok    data.res://lua/quests/cookie_delivery.lua
+  ok    data.res://lua/quests/crystal_cave.lua
+  ok    data.res://lua/quests/dark_forest_mining.lua
+  ok    data.res://lua/quests/enchanted_garden.lua
+  ok    data.res://lua/quests/fairy_friendship.lua
+  ok    data.res://lua/quests/first_animal.lua
+  ok    data.res://lua/quests/fix_roof.lua
+  ok    data.res://lua/quests/flower_necklace.lua
+  ok    data.res://lua/quests/forest_patrol.lua
+  ok    data.res://lua/quests/forste_dage.lua
+  ok    data.res://lua/quests/intro_lottery.lua
+  ok    data.res://lua/quests/lost_cat.lua
+  ok    data.res://lua/quests/math_bakery_counts.lua
+  ok    data.res://lua/quests/math_harvest_puzzle.lua
+  ok    data.res://lua/quests/math_wizard_quiz.lua
+  ok    data.res://lua/quests/moonstone_crown.lua
+  ok    data.res://lua/quests/night_flower.lua
+  ok    data.res://lua/quests/pips_runde.lua
+  ok    data.res://lua/quests/rare_mushroom_hunt.lua
+  ok    data.res://lua/quests/rune_vandring.lua
+  ok    data.res://lua/quests/secret_garden.lua
+  ok    data.res://lua/quests/skovlift_intro.lua
+  ok    data.res://lua/quests/slotsdroemmen.lua
+  ok    data.res://lua/quests/snurresvampen.lua
+  ok    data.res://lua/quests/supply_run.lua
+  ok    data.res://lua/quests/sword_upgrade.lua
+  ok    data.res://lua/quests/ugles_noegle.lua
+  ok    data.res://lua/recipes/dungeon.lua
+  ok    data.res://lua/recipes/furniture.lua
+  ok    data.res://lua/recipes/guide_recipes.lua
+  ok    data.res://lua/recipes/materials.lua
+  ok    data.res://lua/routines/core/appraiser_fru_ugle.lua
+  ok    data.res://lua/routines/core/baker_maja.lua
+  ok    data.res://lua/routines/core/bathkeeper_sofus.lua
+  ok    data.res://lua/routines/core/beekeeper_birk.lua
+  ok    data.res://lua/routines/core/carpenter_brumme.lua
+  ok    data.res://lua/routines/core/cat_morfar_mis.lua
+  ok    data.res://lua/routines/core/clerk_fjerpen.lua
+  ok    data.res://lua/routines/core/fairy_builder.lua
+  ok    data.res://lua/routines/core/fairy_furnisher.lua
+  ok    data.res://lua/routines/core/fairy_king.lua
+  ok    data.res://lua/routines/core/fairy_lily.lua
+  ok    data.res://lua/routines/core/fairy_tailor.lua
+  ok    data.res://lua/routines/core/fairy_wizard.lua
+  ok    data.res://lua/routines/core/farmer_rosa.lua
+  ok    data.res://lua/routines/core/gardener_hoppe.lua
+  ok    data.res://lua/routines/core/guard_oak.lua
+  ok    data.res://lua/routines/core/mapseller_natteblik.lua
+  ok    data.res://lua/routines/core/mayor_lyra.lua
+  ok    data.res://lua/routines/core/merchant_pip.lua
+  ok    data.res://lua/routines/core/penguin_postman.lua
+  ok    data.res://lua/routines/core/pippin_boegeknop.lua
+  ok    data.res://lua/routines/core/postman_pip.lua
+  ok    data.res://lua/routines/core/smith_thorin.lua
+  ok    data.res://lua/routines/ghostfam/ghostfam_blund.lua
+  ok    data.res://lua/routines/ghostfam/ghostfam_dyne.lua
+  ok    data.res://lua/routines/ghostfam/ghostfam_gnist.lua
+  ok    data.res://lua/routines/ghostfam/ghostfam_silke.lua
+  ok    data.res://lua/shops/animal_store.lua
+  ok    data.res://lua/shops/bakery.lua
+  ok    data.res://lua/shops/home_shops.lua
+  ok    data.res://lua/shops/lantern_house.lua
+  ok    data.res://lua/shops/magic_store.lua
+  ok    data.res://lua/shops/seed_shop.lua
+  ok    data.res://lua/shops/smithy.lua
+  ok    data.res://lua/shops/timber_yard.lua
+  ok    data.res://lua/social/citizens.lua
+  ok    data.res://lua/social/gift_tastes.lua
+  ok    data.res://lua/social/social.lua
+  ok    data.res://lua/social/topics.lua
+  ok    data.res://lua/towns.lua
+  ok    data.tool_printed_ids (tools/lua/lint.gd printed 149 PASS/FAIL ids)
+  ok    data.tool_exit_code (tools/lua/lint.gd exit code 0)
+  ok    the tool ends with its summary line
+  ok    data.lint_tool_fails_on_bad_files (tools/lua/lint.gd exits 1 and names file:line:rule for the probes outside the subset)
+  ok    data.probe_fixture_loaded (probe_expected.json holds 70 cases generated with Lua 5.4)
+  ok    probe p01_empty_fn.a empty function returns nothing
+  ok    probe p01_empty_fn.b the function after the empty one is its own
+  ok    probe p02_else.get_dialogue x true -> then
+  ok    probe p02_else.get_dialogue x false -> else
+  ok    probe p03_elseif.get_dialogue x -> x
+  ok    probe p03_elseif.get_dialogue y -> y
+  ok    probe p03_elseif.get_dialogue none -> none
+  ok    probe p04_nested_if.get_dialogue a and b
+  ok    probe p04_nested_if.get_dialogue a only
+  ok    probe p04_nested_if.get_dialogue neither
+  ok    probe p05_oneline_if.get_dialogue x
+  ok    probe p05_oneline_if.get_dialogue no x
+[Lua] unsupported Lua construct (arithmetic) evaluates to nil: see LuaRuntime.lint_report
+  ok    probe p08_paren_in_string.on_accept paren in notification text
+  ok    probe p09_emit_payload.on_accept emit with payload table
+  ok    probe p12_block_comment.on_accept function inside a block comment is not defined
+  ok    probe p14_two_ifs.handle_event two ifs, both taken
+  ok    probe p14_two_ifs.handle_event two ifs, none taken
+  ok    probe p15_escape.get_dialogue escaped quotes in a text
+  ok    probe p17_ifelse_api.handle_event bonus branch
+  ok    probe p17_ifelse_api.handle_event else branch
+  ok    probe p18_compare_and_or.get_dialogue a and b
+  ok    probe p18_compare_and_or.get_dialogue only c
+  ok    probe p18_compare_and_or.get_dialogue only a (a and b is false, c is false)
+  ok    probe p18_compare_and_or.get_dialogue none
+  ok    probe p19_return_expr.is_available has_item and not has_flag
+  ok    probe p19_return_expr.is_available done flag set
+  ok    probe p20_local_in_untaken.get_dialogue branch not taken
+  ok    probe p20_local_in_untaken.get_dialogue branch taken
+  ok    probe p21_multiline_api.on_accept notification over three lines
+  ok    probe semantics.zero_is_true 0 is true in Lua
+  ok    probe semantics.empty_string_is_true the empty string is true in Lua
+  ok    probe semantics.nil_and_false_are_false nil and false are the only false values
+  ok    probe semantics.mixed_compare false == 3 is false, never an error
+  ok    probe semantics.precedence a or (b and c): a
+  ok    probe semantics.precedence a or (b and c): only b
+  ok    probe semantics.precedence a or (b and c): b and c
+  ok    probe semantics.precedence a or (b and c): none
+  ok    probe semantics.parentheses (a or b) and c: only a
+  ok    probe semantics.parentheses (a or b) and c: a and c
+  ok    probe semantics.parentheses (a or b) and c: b and c
+  ok    probe semantics.not_binds_tight (not a) and b: b only
+  ok    probe semantics.not_binds_tight (not a) and b: a and b
+  ok    probe semantics.compare_numbers 7 is mid
+  ok    probe semantics.compare_numbers 12 is high
+  ok    probe semantics.compare_numbers 10 is low (not > 10, not < 10)
+  ok    probe semantics.compare_numbers 2 is low
+  ok    probe semantics.compare_strings lily
+  ok    probe semantics.compare_strings oak
+  ok    probe semantics.compare_strings fox
+[Lua] hello world nil
+  ok    probe semantics.concat_in_log concat in a log call
+  ok    probe semantics.flag_value api.get_flag returns the value
+  ok    probe semantics.flag_value api.get_flag of an unset flag is nil
+  ok    probe semantics.flag_as_bare_identifier seen and not gone
+  ok    probe semantics.flag_as_bare_identifier seen and gone
+  ok    probe semantics.flag_as_bare_identifier no flags
+  ok    probe semantics.side_effects_in_order early return keeps the effects before it
+  ok    probe semantics.side_effects_in_order no early return
+[Lua] accepted nil
+  ok    probe lint_clean_sample.on_accept nested ifs, locals, comparisons
+[Lua] accepted nil
+  ok    probe lint_clean_sample.on_accept one-line if
+[Lua] accepted nil
+  ok    probe lint_clean_sample.on_accept fall through to the last return
+  ok    probe lint_clean_sample.is_available boolean expression with parentheses
+  ok    probe p23_stmt_around_if.on_accept x true
+  ok    probe p23_stmt_around_if.on_accept x false
+  ok    replaying every probe (also the ones outside the subset) raises no engine error or warning
+  ok    data.lua_probes (70 cases over 25 files: 54 exact, 9 best effort, 7 flagged-only; 0 failed)
+  ok    the inline fixture registers as dialogue flag_identifiers
+  ok    data.content_flag_identifiers (29 branch combinations x 4 sources (world flag, context, context with StringName keys, JSON float flag); 0 wrong)
+  ok    nothing set: the defaults (tier 1, no building, nothing done) give tier_1
+  ok    precedence: celebration (done) before construction before idle
+  ok    precedence: construction before idle
+  ok    the context wins over the world flag (`context.x or x`)
+  ok    a flag that is false counts as unset (`or` falls through to the default)
+  ok    0 is a number (true in Lua): tier 0 matches no branch and falls through
+  ok    an unset flag compared with a number raises no engine error
+  ok    nested arrays of tables inside the returned table are intact
+[Lua] unknown Lua function `nonexistent` evaluates to nil (api functions: add_gold add_item remove_item set_flag get_flag has_flag has_item get_gold notification unlock_zone emit log offer_quest complete_quest get_hearts add_hearts is_birthday festival)
+[Lua] unsupported Lua construct (arithmetic) evaluates to nil: see LuaRuntime.lint_report
+  ok    data.unknown_identifiers_log_once (an unknown api function is logged once (2 messages after two calls) and never as an engine warning)
+  ok    unknown api functions and unsupported constructs raise no engine error or warning
+  ok    the function still returns its table
+  ok    data.notification_through_tr (lua_notification runs title and message through tr(): [["Oversat titel", "plain text stays"]])
+  ok    lua_emit carries the payload through EventBus.lua_event
+  ok    an unknown script or function answers null / {}
+  ok    a bare identifier is the world flag of that name
+  ok    ...also a numeric (float) flag, and 1.0 is true
+  ok    quests, dialogue, items and config files of res://lua are registered by their kind header
+  ok    get_dialogue returns speaker, lines and choices
+  ok    a kind = "shops" / "recipes" file yields its `shops` / `recipes` key
+  ok    load_file(shops_extra.lua) registers the file
+  ok    load_file(recipes_extra.lua) registers the file
+  ok    load_file(data/data_config.lua) registers the file
+  ok    load_file(data/data_items.lua) registers the file
+  ok    loading the kind fixtures logs nothing
+  ok    get_shop(id) answers the def with its id, {} for an unknown shop; get_shops() lists them
+  ok    get_recipes() lists every recipe in declaration order, each with its id
+  ok    get_recipes(category) filters, get_recipe(id) answers one
+  ok    config and items files outside lua/config and lua/items are registered by their kind header
+  ok    the script id is the path below res:// (without .lua)
+  ok    data.kinds_shops_recipes (get_shop / get_recipes / generic kinds (config, items, shops, recipes) work and the fixtures lint clean)
+  ok    ItemKinds.storage_of: furniture -> furniture store, clothing -> wardrobe store, else backpack
+  ok    ItemKinds.is_one_of_a_kind: unique and legendary only (`common` is normal)
+  ok    ItemKinds.rarity_of
+  ok    Rarity.sorted_ids sorts real definitions: legendary, unique, rare, then normal by id
+  ok    ItemKinds.all_ids(category)
+  ok    data.kinds_shops_recipes_passthrough (tabs, rotation, price_curve, open_weekdays, buys, station, min_home_tier, unlock_flag, nested arrays of tables arrive untouched [])
+  ok    data.svc_static_call_fallbacks (1600 gold: 1360 / 1280 / 1440 (1360 / 1280 / 1440); missing script, missing method, instance method and missing res:// script give the fallback; a real static class answers)
+  ok    static_call of a missing script logs no engine error
+  ok    Svc.node / Svc.lua_config look the autoload up at call time
+  ok    data.svc_override (Svc.override injects a fake autoload, clear_overrides removes every one of them)
+  ok    a fake that was freed is dropped, not returned
+  ok    dict() and arr() accept `{}` as either type
+  ...   (16 more ok lines of data not printed; --verbose prints all)
+  --    data: 416 checks, 0 failed, 0 skipped, 6.0 s
+== section dungeon_items  (res://tests/sections/dungeon_items.gd)
+  ok    dungeon_items.ids_load_51 (51)
+  ok    dungeon_items.complete_dng_resin
+  ok    dungeon_items.sell_below_half_dng_resin
+  ok    dungeon_items.text_dng_resin_da_name_key
+  ok    dungeon_items.text_dng_resin_da_description_key
+  ok    dungeon_items.text_dng_resin_en_name_key
+  ok    dungeon_items.text_dng_resin_en_description_key
+  ok    dungeon_items.complete_dng_mushroom_felt
+  ok    dungeon_items.sell_below_half_dng_mushroom_felt
+  ok    dungeon_items.text_dng_mushroom_felt_da_name_key
+  ok    dungeon_items.text_dng_mushroom_felt_da_description_key
+  ok    dungeon_items.text_dng_mushroom_felt_en_name_key
+  ok    dungeon_items.text_dng_mushroom_felt_en_description_key
+  ok    dungeon_items.complete_dng_forest_thread
+  ok    dungeon_items.sell_below_half_dng_forest_thread
+  ok    dungeon_items.text_dng_forest_thread_da_name_key
+  ok    dungeon_items.text_dng_forest_thread_da_description_key
+  ok    dungeon_items.text_dng_forest_thread_en_name_key
+  ok    dungeon_items.text_dng_forest_thread_en_description_key
+  ok    dungeon_items.complete_dng_forest_steel
+  ok    dungeon_items.sell_below_half_dng_forest_steel
+  ok    dungeon_items.text_dng_forest_steel_da_name_key
+  ok    dungeon_items.text_dng_forest_steel_da_description_key
+  ok    dungeon_items.text_dng_forest_steel_en_name_key
+  ok    dungeon_items.text_dng_forest_steel_en_description_key
+  ok    dungeon_items.complete_dng_glimmer_dust
+  ok    dungeon_items.sell_below_half_dng_glimmer_dust
+  ok    dungeon_items.text_dng_glimmer_dust_da_name_key
+  ok    dungeon_items.text_dng_glimmer_dust_da_description_key
+  ok    dungeon_items.text_dng_glimmer_dust_en_name_key
+  ok    dungeon_items.text_dng_glimmer_dust_en_description_key
+  ok    dungeon_items.complete_dng_owl_feather
+  ok    dungeon_items.sell_below_half_dng_owl_feather
+  ok    dungeon_items.text_dng_owl_feather_da_name_key
+  ok    dungeon_items.text_dng_owl_feather_da_description_key
+  ok    dungeon_items.text_dng_owl_feather_en_name_key
+  ok    dungeon_items.text_dng_owl_feather_en_description_key
+  ok    dungeon_items.complete_dng_moon_silver
+  ok    dungeon_items.sell_below_half_dng_moon_silver
+  ok    dungeon_items.text_dng_moon_silver_da_name_key
+  ok    dungeon_items.text_dng_moon_silver_da_description_key
+  ok    dungeon_items.text_dng_moon_silver_en_name_key
+  ok    dungeon_items.text_dng_moon_silver_en_description_key
+  ok    dungeon_items.complete_dng_crystal_root
+  ok    dungeon_items.sell_below_half_dng_crystal_root
+  ok    dungeon_items.text_dng_crystal_root_da_name_key
+  ok    dungeon_items.text_dng_crystal_root_da_description_key
+  ok    dungeon_items.text_dng_crystal_root_en_name_key
+  ok    dungeon_items.text_dng_crystal_root_en_description_key
+  ok    dungeon_items.complete_dng_rune_snurre
+  ok    dungeon_items.protected_dng_rune_snurre
+  ok    dungeon_items.text_dng_rune_snurre_da_name_key
+  ok    dungeon_items.text_dng_rune_snurre_da_description_key
+  ok    dungeon_items.text_dng_rune_snurre_en_name_key
+  ok    dungeon_items.text_dng_rune_snurre_en_description_key
+  ok    dungeon_items.complete_dng_rune_gloed
+  ok    dungeon_items.protected_dng_rune_gloed
+  ok    dungeon_items.text_dng_rune_gloed_da_name_key
+  ok    dungeon_items.text_dng_rune_gloed_da_description_key
+  ok    dungeon_items.text_dng_rune_gloed_en_name_key
+  ok    dungeon_items.text_dng_rune_gloed_en_description_key
+  ok    dungeon_items.complete_dng_rune_konge
+  ok    dungeon_items.protected_dng_rune_konge
+  ok    dungeon_items.text_dng_rune_konge_da_name_key
+  ok    dungeon_items.text_dng_rune_konge_da_description_key
+  ok    dungeon_items.text_dng_rune_konge_en_name_key
+  ok    dungeon_items.text_dng_rune_konge_en_description_key
+  ok    dungeon_items.complete_rough_skovkant
+  ok    dungeon_items.text_rough_skovkant_da_name_key
+  ok    dungeon_items.text_rough_skovkant_da_description_key
+  ok    dungeon_items.text_rough_skovkant_en_name_key
+  ok    dungeon_items.text_rough_skovkant_en_description_key
+  ok    dungeon_items.complete_rough_dybe_bregner
+  ok    dungeon_items.text_rough_dybe_bregner_da_name_key
+  ok    dungeon_items.text_rough_dybe_bregner_da_description_key
+  ok    dungeon_items.text_rough_dybe_bregner_en_name_key
+  ok    dungeon_items.text_rough_dybe_bregner_en_description_key
+  ok    dungeon_items.complete_rough_svampelunden
+  ok    dungeon_items.text_rough_svampelunden_da_name_key
+  ok    dungeon_items.text_rough_svampelunden_da_description_key
+  ok    dungeon_items.text_rough_svampelunden_en_name_key
+  ok    dungeon_items.text_rough_svampelunden_en_description_key
+  ok    dungeon_items.complete_rough_krystalgrotten
+  ok    dungeon_items.text_rough_krystalgrotten_da_name_key
+  ok    dungeon_items.text_rough_krystalgrotten_da_description_key
+  ok    dungeon_items.text_rough_krystalgrotten_en_name_key
+  ok    dungeon_items.text_rough_krystalgrotten_en_description_key
+  ok    dungeon_items.complete_gem_rock_crystal
+  ok    dungeon_items.sell_below_half_gem_rock_crystal
+  ok    dungeon_items.text_gem_rock_crystal_da_name_key
+  ok    dungeon_items.text_gem_rock_crystal_da_description_key
+  ok    dungeon_items.text_gem_rock_crystal_en_name_key
+  ok    dungeon_items.text_gem_rock_crystal_en_description_key
+  ok    dungeon_items.complete_gem_smoky_quartz
+  ok    dungeon_items.sell_below_half_gem_smoky_quartz
+  ok    dungeon_items.text_gem_smoky_quartz_da_name_key
+  ok    dungeon_items.text_gem_smoky_quartz_da_description_key
+  ok    dungeon_items.text_gem_smoky_quartz_en_name_key
+  ok    dungeon_items.text_gem_smoky_quartz_en_description_key
+  ok    dungeon_items.complete_gem_moss_agate
+  ok    dungeon_items.sell_below_half_gem_moss_agate
+  ok    dungeon_items.text_gem_moss_agate_da_name_key
+  ok    dungeon_items.text_gem_moss_agate_da_description_key
+  ok    dungeon_items.text_gem_moss_agate_en_name_key
+  ok    dungeon_items.text_gem_moss_agate_en_description_key
+  ok    dungeon_items.complete_gem_forest_jade
+  ok    dungeon_items.sell_below_half_gem_forest_jade
+  ok    dungeon_items.text_gem_forest_jade_da_name_key
+  ok    dungeon_items.text_gem_forest_jade_da_description_key
+  ok    dungeon_items.text_gem_forest_jade_en_name_key
+  ok    dungeon_items.text_gem_forest_jade_en_description_key
+  ok    dungeon_items.complete_gem_thornberry_stone
+  ok    dungeon_items.sell_below_half_gem_thornberry_stone
+  ok    dungeon_items.text_gem_thornberry_stone_da_name_key
+  ok    dungeon_items.text_gem_thornberry_stone_da_description_key
+  ok    dungeon_items.text_gem_thornberry_stone_en_name_key
+  ok    dungeon_items.text_gem_thornberry_stone_en_description_key
+  ok    dungeon_items.complete_gem_mushroom_opal
+  ok    dungeon_items.sell_below_half_gem_mushroom_opal
+  ok    dungeon_items.text_gem_mushroom_opal_da_name_key
+  ok    dungeon_items.text_gem_mushroom_opal_da_description_key
+  ok    dungeon_items.text_gem_mushroom_opal_en_name_key
+  ok    dungeon_items.text_gem_mushroom_opal_en_description_key
+  ok    dungeon_items.complete_gem_night_sapphire
+  ok    dungeon_items.sell_below_half_gem_night_sapphire
+  ok    dungeon_items.text_gem_night_sapphire_da_name_key
+  ok    dungeon_items.text_gem_night_sapphire_da_description_key
+  ok    dungeon_items.text_gem_night_sapphire_en_name_key
+  ok    dungeon_items.text_gem_night_sapphire_en_description_key
+  ok    dungeon_items.complete_gem_fairy_tear
+  ok    dungeon_items.sell_below_half_gem_fairy_tear
+  ok    dungeon_items.text_gem_fairy_tear_da_name_key
+  ok    dungeon_items.text_gem_fairy_tear_da_description_key
+  ok    dungeon_items.text_gem_fairy_tear_en_name_key
+  ok    dungeon_items.text_gem_fairy_tear_en_description_key
+  ok    dungeon_items.complete_gem_owl_eye
+  ok    dungeon_items.protected_gem_owl_eye
+  ok    dungeon_items.text_gem_owl_eye_da_name_key
+  ok    dungeon_items.text_gem_owl_eye_da_description_key
+  ok    dungeon_items.text_gem_owl_eye_en_name_key
+  ok    dungeon_items.text_gem_owl_eye_en_description_key
+  ok    dungeon_items.complete_gem_dewdrop
+  ok    dungeon_items.protected_gem_dewdrop
+  ok    dungeon_items.text_gem_dewdrop_da_name_key
+  ok    dungeon_items.text_gem_dewdrop_da_description_key
+  ok    dungeon_items.text_gem_dewdrop_en_name_key
+  ok    dungeon_items.text_gem_dewdrop_en_description_key
+  ok    dungeon_items.complete_gem_sunset_stone
+  ok    dungeon_items.protected_gem_sunset_stone
+  ok    dungeon_items.text_gem_sunset_stone_da_name_key
+  ok    dungeon_items.text_gem_sunset_stone_da_description_key
+  ok    dungeon_items.text_gem_sunset_stone_en_name_key
+  ok    dungeon_items.text_gem_sunset_stone_en_description_key
+  ok    dungeon_items.complete_gem_star_tear
+  ok    dungeon_items.protected_gem_star_tear
+  ok    dungeon_items.text_gem_star_tear_da_name_key
+  ok    dungeon_items.text_gem_star_tear_da_description_key
+  ok    dungeon_items.text_gem_star_tear_en_name_key
+  ok    dungeon_items.text_gem_star_tear_en_description_key
+  ok    dungeon_items.complete_gem_moon_heart
+  ok    dungeon_items.protected_gem_moon_heart
+  ok    dungeon_items.text_gem_moon_heart_da_name_key
+  ok    dungeon_items.text_gem_moon_heart_da_description_key
+  ok    dungeon_items.text_gem_moon_heart_en_name_key
+  ok    dungeon_items.text_gem_moon_heart_en_description_key
+  ok    dungeon_items.complete_gem_rune_heart
+  ok    dungeon_items.protected_gem_rune_heart
+  ok    dungeon_items.text_gem_rune_heart_da_name_key
+  ok    dungeon_items.text_gem_rune_heart_da_description_key
+  ok    dungeon_items.text_gem_rune_heart_en_name_key
+  ok    dungeon_items.text_gem_rune_heart_en_description_key
+  ok    dungeon_items.complete_wpn_dagger_thorn
+  ok    dungeon_items.sell_below_half_wpn_dagger_thorn
+  ok    dungeon_items.damage_formula_wpn_dagger_thorn
+  ok    dungeon_items.text_wpn_dagger_thorn_da_name_key
+  ok    dungeon_items.text_wpn_dagger_thorn_da_description_key
+  ok    dungeon_items.text_wpn_dagger_thorn_en_name_key
+  ok    dungeon_items.text_wpn_dagger_thorn_en_description_key
+  ok    dungeon_items.complete_wpn_dagger_flint
+  ok    dungeon_items.sell_below_half_wpn_dagger_flint
+  ok    dungeon_items.damage_formula_wpn_dagger_flint
+  ok    dungeon_items.text_wpn_dagger_flint_da_name_key
+  ok    dungeon_items.text_wpn_dagger_flint_da_description_key
+  ok    dungeon_items.text_wpn_dagger_flint_en_name_key
+  ok    dungeon_items.text_wpn_dagger_flint_en_description_key
+  ok    dungeon_items.complete_wpn_dagger_moonshard
+  ok    dungeon_items.sell_below_half_wpn_dagger_moonshard
+  ok    dungeon_items.damage_formula_wpn_dagger_moonshard
+  ok    dungeon_items.text_wpn_dagger_moonshard_da_name_key
+  ok    dungeon_items.text_wpn_dagger_moonshard_da_description_key
+  ok    dungeon_items.text_wpn_dagger_moonshard_en_name_key
+  ok    dungeon_items.text_wpn_dagger_moonshard_en_description_key
+  ok    dungeon_items.complete_wpn_dagger_bee
+  ok    dungeon_items.protected_wpn_dagger_bee
+  ok    dungeon_items.damage_formula_wpn_dagger_bee
+  ok    dungeon_items.text_wpn_dagger_bee_da_name_key
+  ok    dungeon_items.text_wpn_dagger_bee_da_description_key
+  ok    dungeon_items.text_wpn_dagger_bee_en_name_key
+  ok    dungeon_items.text_wpn_dagger_bee_en_description_key
+  ok    dungeon_items.complete_wpn_sword_forest_steel
+  ok    dungeon_items.sell_below_half_wpn_sword_forest_steel
+  ok    dungeon_items.damage_formula_wpn_sword_forest_steel
+  ok    dungeon_items.text_wpn_sword_forest_steel_da_name_key
+  ok    dungeon_items.text_wpn_sword_forest_steel_da_description_key
+  ok    dungeon_items.text_wpn_sword_forest_steel_en_name_key
+  ok    dungeon_items.text_wpn_sword_forest_steel_en_description_key
+  ok    dungeon_items.complete_wpn_sword_candle
+  ok    dungeon_items.protected_wpn_sword_candle
+  ok    dungeon_items.damage_formula_wpn_sword_candle
+  ok    dungeon_items.text_wpn_sword_candle_da_name_key
+  ok    dungeon_items.text_wpn_sword_candle_da_description_key
+  ok    dungeon_items.text_wpn_sword_candle_en_name_key
+  ok    dungeon_items.text_wpn_sword_candle_en_description_key
+  ok    dungeon_items.complete_wpn_sword_moon
+  ok    dungeon_items.protected_wpn_sword_moon
+  ok    dungeon_items.damage_formula_wpn_sword_moon
+  ok    dungeon_items.text_wpn_sword_moon_da_name_key
+  ok    dungeon_items.text_wpn_sword_moon_da_description_key
+  ok    dungeon_items.text_wpn_sword_moon_en_name_key
+  ok    dungeon_items.text_wpn_sword_moon_en_description_key
+  ok    dungeon_items.complete_wpn_club_spruce
+  ok    dungeon_items.sell_below_half_wpn_club_spruce
+  ok    dungeon_items.damage_formula_wpn_club_spruce
+  ok    dungeon_items.text_wpn_club_spruce_da_name_key
+  ok    dungeon_items.text_wpn_club_spruce_da_description_key
+  ok    dungeon_items.text_wpn_club_spruce_en_name_key
+  ok    dungeon_items.text_wpn_club_spruce_en_description_key
+  ok    dungeon_items.complete_wpn_club_oak
+  ok    dungeon_items.sell_below_half_wpn_club_oak
+  ok    dungeon_items.damage_formula_wpn_club_oak
+  ok    dungeon_items.text_wpn_club_oak_da_name_key
+  ok    dungeon_items.text_wpn_club_oak_da_description_key
+  ok    dungeon_items.text_wpn_club_oak_en_name_key
+  ok    dungeon_items.text_wpn_club_oak_en_description_key
+  ok    dungeon_items.complete_wpn_club_mushroom
+  ok    dungeon_items.sell_below_half_wpn_club_mushroom
+  ok    dungeon_items.damage_formula_wpn_club_mushroom
+  ok    dungeon_items.text_wpn_club_mushroom_da_name_key
+  ok    dungeon_items.text_wpn_club_mushroom_da_description_key
+  ok    dungeon_items.text_wpn_club_mushroom_en_name_key
+  ok    dungeon_items.text_wpn_club_mushroom_en_description_key
+  ok    dungeon_items.complete_wpn_club_thornberry
+  ok    dungeon_items.protected_wpn_club_thornberry
+  ok    dungeon_items.damage_formula_wpn_club_thornberry
+  ok    dungeon_items.text_wpn_club_thornberry_da_name_key
+  ok    dungeon_items.text_wpn_club_thornberry_da_description_key
+  ok    dungeon_items.text_wpn_club_thornberry_en_name_key
+  ok    dungeon_items.text_wpn_club_thornberry_en_description_key
+  ok    dungeon_items.complete_wpn_club_trunk
+  ok    dungeon_items.protected_wpn_club_trunk
+  ok    dungeon_items.damage_formula_wpn_club_trunk
+  ok    dungeon_items.text_wpn_club_trunk_da_name_key
+  ok    dungeon_items.text_wpn_club_trunk_da_description_key
+  ok    dungeon_items.text_wpn_club_trunk_en_name_key
+  ok    dungeon_items.text_wpn_club_trunk_en_description_key
+  ok    dungeon_items.complete_wpn_spear_twig
+  ok    dungeon_items.sell_below_half_wpn_spear_twig
+  ok    dungeon_items.damage_formula_wpn_spear_twig
+  ok    dungeon_items.text_wpn_spear_twig_da_name_key
+  ok    dungeon_items.text_wpn_spear_twig_da_description_key
+  ok    dungeon_items.text_wpn_spear_twig_en_name_key
+  ok    dungeon_items.text_wpn_spear_twig_en_description_key
+  ok    dungeon_items.complete_wpn_spear_iron
+  ok    dungeon_items.sell_below_half_wpn_spear_iron
+  ok    dungeon_items.damage_formula_wpn_spear_iron
+  ok    dungeon_items.text_wpn_spear_iron_da_name_key
+  ok    dungeon_items.text_wpn_spear_iron_da_description_key
+  ok    dungeon_items.text_wpn_spear_iron_en_name_key
+  ok    dungeon_items.text_wpn_spear_iron_en_description_key
+  ok    dungeon_items.complete_wpn_spear_thistle
+  ok    dungeon_items.sell_below_half_wpn_spear_thistle
+  ok    dungeon_items.damage_formula_wpn_spear_thistle
+  ok    dungeon_items.text_wpn_spear_thistle_da_name_key
+  ok    dungeon_items.text_wpn_spear_thistle_da_description_key
+  ok    dungeon_items.text_wpn_spear_thistle_en_name_key
+  ok    dungeon_items.text_wpn_spear_thistle_en_description_key
+  ok    dungeon_items.complete_wpn_spear_owl
+  ok    dungeon_items.protected_wpn_spear_owl
+  ok    dungeon_items.damage_formula_wpn_spear_owl
+  ok    dungeon_items.text_wpn_spear_owl_da_name_key
+  ok    dungeon_items.text_wpn_spear_owl_da_description_key
+  ok    dungeon_items.text_wpn_spear_owl_en_name_key
+  ok    dungeon_items.text_wpn_spear_owl_en_description_key
+  ok    dungeon_items.complete_wpn_spear_root
+  ok    dungeon_items.protected_wpn_spear_root
+  ok    dungeon_items.damage_formula_wpn_spear_root
+  ok    dungeon_items.text_wpn_spear_root_da_name_key
+  ok    dungeon_items.text_wpn_spear_root_da_description_key
+  ok    dungeon_items.text_wpn_spear_root_en_name_key
+  ok    dungeon_items.text_wpn_spear_root_en_description_key
+  ok    dungeon_items.complete_wpn_staff_branch
+  ok    dungeon_items.sell_below_half_wpn_staff_branch
+  ok    dungeon_items.damage_formula_wpn_staff_branch
+  ok    dungeon_items.text_wpn_staff_branch_da_name_key
+  ok    dungeon_items.text_wpn_staff_branch_da_description_key
+  ok    dungeon_items.text_wpn_staff_branch_en_name_key
+  ok    dungeon_items.text_wpn_staff_branch_en_description_key
+  ok    dungeon_items.complete_wpn_staff_hazel
+  ok    dungeon_items.sell_below_half_wpn_staff_hazel
+  ok    dungeon_items.damage_formula_wpn_staff_hazel
+  ok    dungeon_items.text_wpn_staff_hazel_da_name_key
+  ok    dungeon_items.text_wpn_staff_hazel_da_description_key
+  ok    dungeon_items.text_wpn_staff_hazel_en_name_key
+  ok    dungeon_items.text_wpn_staff_hazel_en_description_key
+  ok    dungeon_items.complete_wpn_staff_light
+  ok    dungeon_items.sell_below_half_wpn_staff_light
+  ok    dungeon_items.damage_formula_wpn_staff_light
+  ok    dungeon_items.text_wpn_staff_light_da_name_key
+  ok    dungeon_items.text_wpn_staff_light_da_description_key
+  ok    dungeon_items.text_wpn_staff_light_en_name_key
+  ok    dungeon_items.text_wpn_staff_light_en_description_key
+  ok    dungeon_items.complete_wpn_staff_ember
+  ok    dungeon_items.protected_wpn_staff_ember
+  ok    dungeon_items.damage_formula_wpn_staff_ember
+  ok    dungeon_items.text_wpn_staff_ember_da_name_key
+  ok    dungeon_items.text_wpn_staff_ember_da_description_key
+  ok    dungeon_items.text_wpn_staff_ember_en_name_key
+  ok    dungeon_items.text_wpn_staff_ember_en_description_key
+  ok    dungeon_items.complete_wpn_staff_star
+  ok    dungeon_items.protected_wpn_staff_star
+  ok    dungeon_items.damage_formula_wpn_staff_star
+  ok    dungeon_items.text_wpn_staff_star_da_name_key
+  ok    dungeon_items.text_wpn_staff_star_da_description_key
+  ok    dungeon_items.text_wpn_staff_star_en_name_key
+  ok    dungeon_items.text_wpn_staff_star_en_description_key
+  ok    dungeon_items.dng_material_price_dng_resin
+  ok    dungeon_items.dng_material_price_dng_mushroom_felt
+  ok    dungeon_items.dng_material_price_dng_forest_thread
+  ok    dungeon_items.dng_material_price_dng_forest_steel
+  ok    dungeon_items.dng_material_price_dng_glimmer_dust
+  ok    dungeon_items.dng_material_price_dng_owl_feather
+  ok    dungeon_items.dng_material_price_dng_moon_silver
+  ok    dungeon_items.dng_material_price_dng_crystal_root
+  ok    dungeon_items.recipe_output_dng_forge_dagger_thorn
+  ok    dungeon_items.recipe_band_dng_forge_dagger_thorn_2.0 (53.0)
+  ok    dungeon_items.recipe_band_dng_forge_dagger_thorn_2.2 (53.0)
+  ok    dungeon_items.recipe_band_dng_forge_dagger_thorn_2.5 (53.0)
+  ok    dungeon_items.recipe_output_dng_forge_dagger_flint
+  ok    dungeon_items.recipe_band_dng_forge_dagger_flint_2.0 (306.0)
+  ok    dungeon_items.recipe_band_dng_forge_dagger_flint_2.2 (324.0)
+  ok    dungeon_items.recipe_band_dng_forge_dagger_flint_2.5 (351.0)
+  ok    dungeon_items.recipe_output_dng_forge_dagger_moonshard
+  ok    dungeon_items.recipe_band_dng_forge_dagger_moonshard_2.0 (715.0)
+  ok    dungeon_items.recipe_band_dng_forge_dagger_moonshard_2.2 (733.0)
+  ok    dungeon_items.recipe_band_dng_forge_dagger_moonshard_2.5 (760.0)
+  ok    dungeon_items.recipe_output_dng_forge_sword_forest_steel
+  ok    dungeon_items.recipe_band_dng_forge_sword_forest_steel_2.0 (820.0)
+  ok    dungeon_items.recipe_band_dng_forge_sword_forest_steel_2.2 (847.0)
+  ok    dungeon_items.recipe_band_dng_forge_sword_forest_steel_2.5 (887.5)
+  ok    dungeon_items.recipe_output_dng_forge_club_spruce
+  ok    dungeon_items.recipe_band_dng_forge_club_spruce_2.0 (90.0)
+  ok    dungeon_items.recipe_band_dng_forge_club_spruce_2.2 (90.0)
+  ok    dungeon_items.recipe_band_dng_forge_club_spruce_2.5 (90.0)
+  ok    dungeon_items.recipe_output_dng_forge_club_oak
+  ok    dungeon_items.recipe_band_dng_forge_club_oak_2.0 (416.0)
+  ok    dungeon_items.recipe_band_dng_forge_club_oak_2.2 (443.0)
+  ok    dungeon_items.recipe_band_dng_forge_club_oak_2.5 (483.5)
+  ok    dungeon_items.recipe_output_dng_forge_club_mushroom
+  ok    dungeon_items.recipe_band_dng_forge_club_mushroom_2.0 (992.0)
+  ok    dungeon_items.recipe_band_dng_forge_club_mushroom_2.2 (1019.0)
+  ok    dungeon_items.recipe_band_dng_forge_club_mushroom_2.5 (1059.5)
+  ok    dungeon_items.recipe_output_dng_forge_spear_twig
+  ok    dungeon_items.recipe_band_dng_forge_spear_twig_2.0 (62.0)
+  ok    dungeon_items.recipe_band_dng_forge_spear_twig_2.2 (62.0)
+  ok    dungeon_items.recipe_band_dng_forge_spear_twig_2.5 (62.0)
+  ok    dungeon_items.recipe_output_dng_forge_spear_iron
+  ok    dungeon_items.recipe_band_dng_forge_spear_iron_2.0 (380.0)
+  ok    dungeon_items.recipe_band_dng_forge_spear_iron_2.2 (407.0)
+  ok    dungeon_items.recipe_band_dng_forge_spear_iron_2.5 (447.5)
+  ok    dungeon_items.recipe_output_dng_forge_spear_thistle
+  ok    dungeon_items.recipe_band_dng_forge_spear_thistle_2.0 (860.0)
+  ok    dungeon_items.recipe_band_dng_forge_spear_thistle_2.2 (887.0)
+  ok    dungeon_items.recipe_band_dng_forge_spear_thistle_2.5 (927.5)
+  ok    dungeon_items.recipe_output_dng_forge_staff_branch
+  ok    dungeon_items.recipe_band_dng_forge_staff_branch_2.0 (80.0)
+  ok    dungeon_items.recipe_band_dng_forge_staff_branch_2.2 (80.0)
+  ok    dungeon_items.recipe_band_dng_forge_staff_branch_2.5 (80.0)
+  ok    dungeon_items.recipe_output_dng_forge_staff_hazel
+  ok    dungeon_items.recipe_band_dng_forge_staff_hazel_2.0 (446.0)
+  ok    dungeon_items.recipe_band_dng_forge_staff_hazel_2.2 (446.0)
+  ok    dungeon_items.recipe_band_dng_forge_staff_hazel_2.5 (446.0)
+  ok    dungeon_items.recipe_output_dng_forge_staff_light
+  ok    dungeon_items.recipe_band_dng_forge_staff_light_2.0 (1310.0)
+  ok    dungeon_items.recipe_band_dng_forge_staff_light_2.2 (1310.0)
+  ok    dungeon_items.recipe_band_dng_forge_staff_light_2.5 (1310.0)
+  ok    dungeon_items.thirteen_recipes
+  ok    dungeon_items.rune_shards_are_three
+  --    dungeon_items: 387 checks, 0 failed, 0 skipped, 6.5 s
+== section dungeon_pickups  (res://tests/sections/dungeon_pickups.gd)
+  ok    dungeon_pickups.pickup_layer_and_delay
+  ok    dungeon_pickups.orb_magnet_and_pickup
+  ok    dungeon_pickups.pickup_goes_through_loot_deliver_when_present
+  ok    dungeon_pickups.full_pack_retains_drop_and_warns_once
+  ok    dungeon_pickups.full_pack_can_retry
+  ok    dungeon_pickups.berry_heals_when_hurt
+  ok    dungeon_pickups.orb_cap_50_auto_collects
+  ok    dungeon_pickups.cap_full_pack_queues_without_loss
+  ok    dungeon_pickups.cap_pending_drop_retries
+  ok    dungeon_pickups.telegraph_ring_matches_hit_area
+  ok    dungeon_pickups.telegraph_line_matches_hit_area
+  ok    dungeon_pickups.telegraph_pool_cap_8
+  ok    dungeon_pickups.fx_pool_reuse
+  ok    dungeon_pickups.fx_idle_process_disabled
+  --    dungeon_pickups: 14 checks, 0 failed, 0 skipped, 0.3 s
+== section economy  (res://tests/sections/economy.gd)
+  ok    economy.starting_gold_from_config (new game: 500 guldagern (economy.starting_gold 500))
+  ok    gold is clamped to MAX_GOLD (got 999999, want 999999)
+  ok    gold never goes below 0 (add_gold with a negative amount) (got 0, want 0)
+  ok    add_gold(0) changes nothing and fires nothing (got 2, want 2)
+  ok    spend_gold refuses more than the player has and changes nothing
+  ok    spend_gold refuses a negative amount
+  ok    spend_gold(0) is a free no-op
+  ok    spend_gold pays
+  ok    economy.gold_clamp (gold_changed deltas [999499, -999999, 100, -40])
+  ok    economy.gold_saturates (add_gold(INT64_MAX) ends at MAX_GOLD instead of wrapping to 0, add_gold(INT64_MIN) ends at 0 (0, 999999, 0, 999999, 0); deltas [-60, 60, 999939, -999999, 250, 999749, -999999])
+  ok    economy.total_of_saturates (total_of is unit x amount, 0 for nothing, and MAX_GOLD + 1 (never affordable) instead of an int64 wrap-around (4 x 2^62+1 would be 4))
+  ok    economy.buy_total_never_wraps (4 gold x (2^62 + 1) chairs is refused, no gold moves; the shop's total saturates too (carrot seeds x 2^62+1 = 1000000))
+  ok    economy.gold_load_clamped (a saved 1e30 loads as MAX_GOLD, -1e30 as 0, "1e30" as MAX_GOLD, text as the default 500 (999999, 0, 999999, 500))
+  ok    71 items are defined by the 7 item files of the economy
+  ok    economy.item_defs_complete (name/description keys, category, rarity, max_stack, prices, stamina_cost of 71 items; problems [])
+  ok    no def sets `icon`: every id has an icon of its own name (P23 bakes one per id)
+  ok    no item id is defined twice (fairy_dust only in magic.lua): []
+  ok    fairy_dust lives in magic.lua only; teleport_stone and enchanted_soil (no 2D mechanic) are cut
+  ok    economy.guide_moonstone (Månesten sells for 220, rare, 'Lyser svagt i mørke...')
+  ok    copper_ore 35 / 14 and wool 30 / 12 are the prices the content assumes
+  ok    economy.crop_prices_match_balance (8 crops: a seed item with crop_id and a harvest item that sells at crops.<id>.sell_price; wrong [])
+  ok    economy.animal_products_defined (undefined products ["baby_kitten -> companionship", "baby_puppy -> companionship"])
+  SKIP  animals.lua (P20) still lets the kitten and the puppy produce `companionship`: friendship_token exists for it
+  ok    economy.sell_below_half_of_buy (every purchasable item of the economy sells for at most half its price; over: [])
+  ok    economy.slots_are_24 (INVENTORY_SLOTS 24, 8 used after the starter kit)
+  ok    an amount <= 0 is refused everywhere (add, remove, has)
+  ok    no id and amount 0 inside has_items are refused, an empty requirement is met
+  ok    150 wood fit
+  ok    economy.stacking_max_stack (150 wood = [99, 51] (max_stack 99))
+  ok    the half-empty stack is filled first (198 wood in 2 slots)
+  ok    max_stack: tools 1, default 99, the def's own number, unknown 99
+  ok    remove_item takes from several stacks
+  ok    removing more than the player has changes nothing
+  ok    the backpack can be filled to 24 slots
+  ok    wood does not fit into a full backpack of full stacks
+  ok    a new item has no slot
+  ok    economy.backpack_full_refused (a refused add gives nothing and shows the inventory-full toast (no item_gained))
+  ok    one wood out, one wood in: still fits
+  ok    all or nothing: two do not fit into the room of one
+  ok    refusing items logs no engine warning
+  ok    buy_item with a full backpack takes no gold
+  ok    economy.new_game_resets (after a new game: 500 guldagern and { "hoe_wooden": 1, "watering_can_copper": 1, "axe_wooden": 1, "pickaxe_wooden": 1, "scythe": 1, "turnip_seeds": 5, "lantern_oil": 2, "health_tonic": 1 })
+  ok    the starter kit is given silently (no item_gained)
+  ok    the new game tells the HUD about gold and backpack
+  ok    eight backpack slots; the starter sword lives in the arsenal
+  ok    economy.starter_equipment (the kit's tools and the rusty sword are equipped: { "tool_hoe": &"hoe_wooden", "tool_watering": &"watering_can_copper", "tool_pickaxe": &"pickaxe_wooden", "tool_axe": &"axe_wooden", "tool_scythe": &"scythe", "weapon": &"sword_rusty", "accessory": &"" })
+  ok    every new game restores gold, backpack and equipment
+  ok    reset() is connected to EventBus.new_game_started
+  ok    add 150 wood
+  ok    economy.item_gained_once_per_add (one item_gained(wood, 150) for a two-stack add: [[&"wood", 150]])
+  ok    one toast and one backpack update for it
+  ok    a silent add fires neither item_gained nor a toast but still updates the backpack
+  ok    a refused add fires nothing
+  ok    economy.tool_power (wooden tools power 1, the rusty sword 5)
+  ok    a stronger tool is equipped automatically
+  ok    copper pickaxe: power 2
+  ok    iron pickaxe: power 3
+  ok    a weaker tool never replaces the better one
+  ok    the iron sword (damage 12) replaces the rusty one
+  ok    selling the best tool equips the next best
+  ok    equip() lets the player choose a weaker tool
+  ok    equip() refuses a tool of the wrong type or one the player does not own
+  ok    equip with an empty id empties the slot
+  ok    no pickaxe left: power 0
+  ok    setup: a new game in between
+  ok    from_dict accepts the saved dictionary
+  ok    economy.save_round_trip (gold 777, 12 slots, equipment kept, ids are StringName again)
+  ok    amounts and gold are ints after the JSON round trip
+  ok    to_dict writes plain Strings and keeps the slot meta
+[Economy] from_dict dropped 5 invalid or surplus slot(s)
+  ok    from_dict never throws on bad data
+  ok    economy.save_drops_invalid_slots (gold 12, wood 3, carrot 250 in 3 slots, 3 hoes in 3 slots, the 5 invalid entries dropped: { "wood": 3, "carrot": 250, "hoe_wooden": 3 })
+  ok    an equipment entry that is not owned or does not fit is ignored
+[Economy] from_dict dropped 16 invalid or surplus slot(s)
+  ok    a save with more than 24 slots keeps the first 24
+[Economy] from_dict dropped 1 invalid or surplus slot(s)
+  ok    gold is clamped on load and {id: amount} dictionaries are accepted
+  ok    an empty dictionary loads as an empty backpack
+  ok    to_dict has gold, inventory (a list) and its own version
+  ok    setup: the strongest tools and the iron sword are equipped automatically
+  ok    setup: the player picks the wooden hoe (use_item), the rusty sword and the copper pickaxe (equip) and empties the watering can slot
+  ok    setup: a new game in between equips the kit's tools
+  ok    from_dict accepts the save
+  ok    economy.equip_choice_survives_save (the weaker hoe, sword and pickaxe the player chose are NOT replaced by the best tools on load: { "tool_hoe": &"hoe_wooden", "tool_watering": &"", "tool_pickaxe": &"pickaxe_copper", "tool_axe": &"axe_wooden", "tool_scythe": &"scythe", "weapon": &"sword_rusty", "accessory": &"" })
+  ok    economy.equip_empty_slot_survives_save (a slot the player emptied stays empty (its tool is still in the backpack), the others are as saved)
+  ok    the equipped ids are StringNames again and the better tools are still owned
+  ok    a save without `equipment` equips the best owned tool of every slot
+  ok    an equipment entry that is not owned or does not fit its slot is ignored: the slot gets the best tool (or stays empty)
+  ok    to_dict writes all 7 slots, empty ones as an empty string (so `deliberately empty` can be told from `not saved`)
+  ok    storage_of: furniture -> furniture store, clothing -> wardrobe store, materials and blueprints stay in the backpack
+  ok    without the stores both items are added (to the backpack)
+  ok    the fallback copies are counted and visible
+  ok    item_gained fires for every kind of item
+  ok    economy.routing_adopts_fallback (the backpack copies moved into the stores: { &"chair_pine": 2 } / { &"shirt_linen_cream": 1 })
+  ok    count_item reads the stores
+  ok    furniture goes to the furniture store, not the backpack
+  ok    building materials and blueprints go to the backpack
+  ok    placed copies still count as owned
+  ok    remove_item never touches placed copies (only 1 of 3 is free)
+  ok    the free copy can be removed
+  ok    a second copy of a garment the wardrobe refuses is refused (false)
+  ok    furniture beyond the store's 9 copies is refused (false)
+  ok    economy.list_sellable_aggregates (backpack plus unplaced furniture (chair 2 owned, 1 placed = 1), no special items, no garments: ["blueprint_kongelig", "axe_wooden", "chair_pine", "health_tonic", "hoe_wooden", "lantern_oil", "pickaxe_wooden", "plank_pine", "scythe", "table_round_pine", "turnip_seeds", "watering_can_copper", "wood"])
+  ok    list_sellable is sorted by rarity, highest first
+  ok    economy.routing_by_category (economy.inventory keeps ONLY backpack items: ["hoe_wooden", "watering_can_copper", "axe_wooden", "pickaxe_wooden", "scythe", "turnip_seeds", "lantern_oil", "health_tonic", "plank_pine", "blueprint_kongelig", "wood", "friendship_token"])
+  ok    setup: the furniture store is missing, 3 chairs wait in the backpack
+  ok    setup: the store (8 of 9) refuses the 3 leftovers, they stay in the backpack
+  ok    count_item and has_item count the store AND the leftovers: 11
+  ok    more than owned: refused, store and backpack unchanged (all or nothing)
+  ok    economy.remove_matches_count (remove 10 of 11 = 8 from the store, then 2 of the 3 backpack leftovers (store 0, backpack 1))
+  ok    the last copy goes too
+  ok    10 of 11 owned, but 2 are placed: refused, nothing changes
+  ok    9 = the 6 free store copies + the 3 leftovers; the 2 placed copies stay
+  ok    a leftover copy can be sold while every copy in the store is placed
+  ok    the content has unique and legendary furniture and clothing (bed_moon bed_toadstool hat_wizard_zephyr hat_wizard_night)
+  ok    a legendary piece: the first copy is added, the second refused (false)
+  ok    a unique garment: second copy refused; two legendary pieces at once are refused too
+  ok    the refused copies never reached the stores
+  ok    economy.one_of_a_kind_refused (item_gained only for the two accepted adds)
+  ok    a refused keepsake logs no warning and no error (no warning in the refusal)
+  ok    a keepsake in the backpack fallback is refused the second time too
+  ok    keepsakes have no sell value and no buy value
+  ok    common and uncommon finds do not fire rare_item_found
+  ok    economy.rare_item_found (rare_item_found(id, rarity) for rank >= rare, once per add, not for silent adds: [[&"moonstone", &"rare"], [&"hat_wizard_night", &"legendary"]])
+  ok    item_gained still fires for every successful non-silent add
+  ok    a health tonic gives 4 half hearts through the player and is used up
+  ok    at full health the tonic is not used up
+  ok    lantern oil adds 60 seconds
+  ok    the oil is capped at max_oil
+  ok    with a full lantern the oil stays in the backpack
+  ok    a cookie restores 15 energy
+  ok    a honey cake restores 40 energy
+  ok    energy is capped at max_stamina
+  ok    with full energy a cookie stays in the backpack
+  ok    economy.use_item_effects (heal, oil and energy are applied through the player (group player))
+  ok    no player in the scene: the tonic is not used
+  ok    use_item on a tool equips it
+  ok    a placeable asks the hotbar to take it (slot -1 = first free) and stays in the backpack
+  ok    a baby animal is adopted by AnimalHusbandry
+  ok    animal feed raises animal_care_item_used (the care screen feeds an animal)
+  ok    items without a use do nothing
+  ok    the fixture items, shops and recipes are loaded
+  ok    economy.shops_from_lua (the hard-coded SHOPS table is gone from shop_system.gd)
+  ok    shop seed_shop is defined in lua/shops and ShopSystem knows it
+  ok    shop bakery is defined in lua/shops and ShopSystem knows it
+  ok    shop smithy is defined in lua/shops and ShopSystem knows it
+  ok    shop magic_store is defined in lua/shops and ShopSystem knows it
+  ok    shop animal_store is defined in lua/shops and ShopSystem knows it
+  ok    every shop of npcs.lua names its NPC as keeper
+  ok    every stocked item of every shop exists and none is a unique / legendary keepsake: []
+  ok    economy.seed_shop_guide_lines (Kløvermyntes Frø lists the guide's 8 lines at the guide's prices: { "carrot_seeds": 20, "pumpkin_seeds": 60, "strawberry_seeds": 45, "sunflower_seeds": 30, "catnip_seeds": 35, "moonflower_seeds": 120, "fertilizer": 15, "fairy_dust_water": 900 })
+  ok    the guide's eight lines come first, in the guide's order: ["carrot_seeds", "pumpkin_seeds", "strawberry_seeds", "sunflower_seeds", "catnip_seeds", "moonflower_seeds", "fertilizer", "fairy_dust_water"]
+  ok    name and greeting of the seed shop are the guide's Danish text
+  ok    the seed shop's tabs: Frø, Redskaber and the sell tab (["seed", "tool", "sell"])
+  ok    seeds, fertilizer and fairy dust water are in the Frø tab, tools are not (9)
+  ok    the smithy sells exactly the iron tools and the iron sword (["hoe_iron", "pickaxe_iron", "watering_can_gold", "iron_sword"])
+  ok    economy.animal_store_ids (the animal store stocks 14 ids that exist in animals.lua (baby_*, feed, treats, brush, pail), no kits: ["baby_chick", "baby_bunny", "baby_duck", "baby_kitten", "baby_puppy", "baby_lamb", "baby_calf", "baby_fawn", "baby_fox", "baby_owl", "chicken_feed", "animal_treats", "brush", "milking_pail"])
+  ok    the magic store: fairy dust, gems, lantern oil, health tonic
+  ok    the bakery sells flour, honey and cookies (["flour", "honey", "cookie"])
+  ok    shop seed_shop: name and greeting resolve in da and en
+  ok    shop bakery: name and greeting resolve in da and en
+  ok    shop smithy: name and greeting resolve in da and en
+  ok    shop magic_store: name and greeting resolve in da and en
+  ok    shop animal_store: name and greeting resolve in da and en
+  ok    open_shop emits shop_opened (the legacy id general_store opens seed_shop)
+[Shop] open_shop(no_such_shop): no such shop in lua/shops
+  ok    close_shop emits shop_closed; an unknown shop opens nothing
+  ok    get_shop_info: id, keeper (npc_id), open state
+  ok    carrot seeds are listed at 20, three cost 60
+  ok    buying three takes 60 and gives three
+  ok    item_purchased(item, 3, 60) and one item_gained
+  ok    an amount <= 0 is refused
+  ok    an item the shop does not sell and an unknown shop are refused
+  ok    not enough gold: refused, gold and backpack unchanged
+  ok    sell prices: a turnip 45, a fern 1
+  ok    selling 4 turnips pays 180 and fires item_sold(turnip, 4, 180)
+  ok    selling what you do not have is refused (not_owned)
+  ok    selling more than you have is refused and takes nothing
+  ok    economy.sell_unsellable (special and quest items and items with sell price 0 cannot be sold)
+  ok    economy.sell_min_one (a sell multiplier of 0.1 still pays at least 1 (fern 1 x 0.1, a 1-gold item), the stone is never worth 0, no shop pays 0 for a sellable item ([]), the shop's `buys` (resource, forage) excludes gems (1 / 1 / 0))
+  ok    wood (sell 2 x 0.1) and an item that sells for 1 both pay 1
+  ok    an item without sell_price sells for buy_price x economy.sell_price_ratio (40 x 0.5 = 20)
+  ok    a shop with sell_multiplier 0 buys nothing
+  ok    builder_yard buys materials and gems only: wood no, amethyst yes
+  ok    get_sell_list filters EconomyManager.list_sellable by the shop: wood is in the backpack but not on the builder yard's list, amethyst is (["amethyst"])
+  ok    the seed shop buys more of the backpack than the builder yard; an unknown shop buys nothing
+  ok    a spare axe sells for 25
+  ok    economy.no_buy_sell_loop (with the largest discount (20 percent) every shop still sells dearer than it buys back: [])
+  ok    the shelf of moonflower seeds (8) can be emptied
+  ok    sold out: refused with no_stock
+  ok    the row says stock 0, not buyable
+  ok    the next morning 4 are back (restock 4)
+  ok    economy.stock_refreshes_on_day_started (after two more mornings the shelf is full again and never above its maximum (8, fertilizer 30))
+  ok    fertilizer sold out
+  ok    fertilizer is back at 30 (restock = full)
+  ok    a new game fills every shelf
+  ok    the shelves come back from a save (pumpkin seeds 10)
+  ok    economy.shop_save_validated (counts are clamped to the shelf, unknown shops and items are dropped, missing shelves are full)
+  ok    economy.restock_on_day_started_only (passing hour 8 (the knob's value) restocks nothing, the next day_started brings the restock back (4 moonflower seeds); ShopSystem is connected to day_started and no code reads economy.shop_refresh_hour [])
+  ok    without ShopRotation only the fixed stock is listed
+  ok    lantern oil (25) x buy_multiplier 2.0 = 50
+  ok    economy.rotation_rows_listed (fixed stock, then the rotation rows; an item in both is listed once (fixed), unknown ids are not listed: ["lantern_oil", "cookie", "wood"])
+  ok    rotation prices: cookie 25 x 2.0 = 50, wood with the row's price 8 x 2.0 = 16
+  ok    economy.listed_equals_charged_with_rotation (the fallback price: listed == charged for every fixed and rotation row, rotation rows are bought too (cookie 50/50, wood 16/16, lantern_oil 50/50))
+  ok    with a price curve the charge is the listed price (35)
+  ok    the next listing already shows the surcharge; the total of two is two listed prices
+  ok    the rotation row had 2 cookies: both gone, the third is refused
+  ok    a curve source that answers null falls back to base x multiplier x discount
+  ok    an item that is still on offer keeps its bought count over the day change
+  ok    an item that left the offer comes back with its full count
+  ok    the production path (late-bound ShopRotation / PriceCurve, or their absence) lists and prices the shop (3 rows)
+  ok    the late-bound call logs no engine message
+  ok    economy.late_binding_via_svc (shop_system.gd calls ShopRotation.stock and PriceCurve.final_price through Svc.static_call (2 call sites), with no load / ResourceLoader / callv / signature helper of its own)
+  ok    economy.late_binding_real_scripts (stock(shop_id) adds the rotation rows (cookie, wood at the row's price 8) to the fixed stock; final_price(shop_id, item_id, base_price) decides every price (cookie 25 -> 76))
+  ok    listed == charged through the real static functions (cookie 76/76, wood 25/25, lantern_oil 76/76); the rotation row's stock counts down
+  ok    a missing ShopRotation / PriceCurve script: only the fixed stock, base x buy_multiplier (25 x 2.0 = 50)
+  ok    an instance method instead of a static one is not called: fixed stock and fallback price
+  ok    scripts that lack the method answer the fallback
+  ok    no engine message from any of the late-bound lookups
+  ok    set_late_scripts() without arguments restores the contract's paths (shop_rotation.gd, price_curve.gd)
+  ok    F1's flea market is open on Saturday and Sunday only (open_weekdays 5, 6)
+  ok    economy.shop_closed_weekdays (day 6 (Saturday) and 7 (Sunday) open, every other weekday closed: [[1, true, false], [2, true, false], [3, true, false], [4, true, false], [5, true, false], [6, false, true], [7, false, true], [8, true, false]])
+  ok    a closed shop refuses to sell (last_refusal closed) and changes nothing
+  ok    a closed shop refuses to buy
+  ok    the closed shop still lists its stock, but nothing is buyable
+  ok    on Saturday the same shop sells (price override 7)
+  ok    and buys
+  ok    open_shop still emits shop_opened on a closed day: the screen shows SHOP_UI_CLOSED_TODAY itself
+  ok    F1's tailor stocks shirt_linen_cream
+  ok    an unowned garment is buyable
+  ok    buying a garment puts it into the wardrobe
+  ok    economy.garment_owned_not_buyable (a garment the player owns cannot be bought again (row.already_owned, last_refusal owned, no gold taken))
+  ok    economy.keepsakes_not_in_shops (a legendary item put into a shop's stock is never listed, priced, bought or sold (hat_wizard_night))
+  ok    no shop lists a unique or legendary item: []
+  ok    economy.tabs_pass_through (furniture_types and slots tabs of the home shops filter items; the sell tab comes last)
+  ok    economy.buy_refund_on_failure (the furniture store takes no more: gold 5500 unchanged, the shelf unchanged, no item_purchased, last_refusal no_room)
+  ok    EconomyManager.buy_item refunds when the add fails
+  ok    economy.lua_amounts_validated (the Lua api refuses amounts <= 0 (add, remove, has))
+  ok    and works with real amounts
+  ok    a fox without gear pays the full 1600
+  ok    fox with gear .10: 1440
+  ok    hobbit with the same gear: 1280 (race .10 + gear .10 = the .20 cap)
+  ok    hobbit alone: 1440 - the hobbit's 10 percent is counted ONCE (not 1296)
+  ok    hobbit + gear .15 stays at the .20 cap: 1280
+  ok    economy.discount_single_owner_numeric (1600-gold rare piece: fox gear .10 + 10 hearts .05 pays 1360 (1360), the same hobbit 1280 (1280), hobbit alone 1440 (1440))
+  ok    no code line of shop_system.gd / economy_manager.gd / crafting_system.gd names a hobbit or shop_discount factor: []
+  ok    economy.listed_equals_charged_race_0 (every item of every shop: listed price == charged price (fox; 105 rows bought, 0 not buyable today); [])
+  ok    economy.listed_equals_charged_race_2 (every item of every shop: listed price == charged price (hobbit; 105 rows bought, 0 not buyable today); [])
+  ok    economy.listed_equals_charged (shop buy works: every buyable row of every shop was bought for real as a fox and as a hobbit, and the gold taken was the listed price each time (210 purchases))
+  ok    recipe mushroom_lantern is loaded from lua/recipes
+  ok    recipe scarecrow is loaded from lua/recipes
+  ok    recipe honey_cake is loaded from lua/recipes
+  ok    recipe pickaxe_copper is loaded from lua/recipes
+  ok    recipe lantern_post is loaded from lua/recipes
+  ok    recipe fence is loaded from lua/recipes
+  ok    recipe iron_ingot is loaded from lua/recipes
+  ok    recipe flower_necklace is loaded from lua/recipes
+  ok    get_recipes(category) filters (craft, bake, forge)
+  ok    economy.recipes_use_defined_items (131 recipes: every ingredient and output is a defined item, categories valid; [] [])
+  ok    honey cake with nothing in the backpack: three ingredients missing
+  ok    economy.missing_flour ('Mangler mel': [{ "item": "flour", "have": 1, "need": 2 }])
+  ok    'Mangler 2 kobber': the copper pickaxe needs 3 copper ore, 1 is there
+  ok    crafting without everything changes nothing
+  ok    an unknown recipe cannot be crafted
+  ok    the copper pickaxe is crafted
+  ok    economy.craft_exact (3 ore and 2 wood gone, one pickaxe in, recipe_crafted(pickaxe_copper, 1) once, one item_gained)
+  ok    the crafted pickaxe is equipped by its power
+  ok    fence: 4 wood make 4 fences (output amount 4)
+  ok    recipe_crafted carries the amount produced
+  ok    setup: a full backpack whose ingredient stacks stay occupied
+  ok    economy.craft_full_rolls_back (no room for the pickaxe: ingredients restored (99 / 99), nothing crafted)
+  ok    the stations unlock with the home: workbench tier 1, loom tier 3, forge bench tier 5
+  ok    F1's forge recipes carry station smedje and tier 5; get_recipes(station) filters
+  ok    a recipe with a station and no min_home_tier needs the station's tier (loom: 3)
+  ok    economy.stations_locked_by_tier (home tier 1: the forge recipe is locked {reason: tier, need: 5})
+  ok    tier 4 is still too low
+  ok    tier 5: copper plate is forged (3 ore -> 1 plate)
+  ok    a recipe with tier and blueprint lock reports the tier first
+  ok    then the blueprint flag
+  ok    F1's walnut bed: tier 5, blueprint bp_kongelig
+  ok    everything in the backpack but no blueprint: locked by the flag
+  ok    a blueprint is an ordinary backpack item
+  ok    use_item on a blueprint sets its unlock_flag and consumes it
+  ok    a game_event and a toast tell the player
+  ok    economy.stations_and_blueprints (with the flag the rare bed is crafted; the output lands in the furniture store: { &"bed_walnut": 1 })
+  ok    the second one needs new ingredients
+  ok    locked recipes and blueprints log no engine message
+  ok    the hobbit's bake_bonus is 0.25
+  ok    economy.bake_bonus_statistical (hobbit: 478 of 2000 honey cakes came out doubled = 0.239 (want 0.25 +/- 0.034))
+  ok    seed_rng makes the bake bonus repeatable
+  ok    an animal or a fairy never gets the bonus
+  ok    the bonus is for the category bake only (a hobbit's fence recipe never doubles)
+  ok    economy.item_keys_resolve (every item of the economy files has ITEM_<ID> and ITEM_<ID>_DESC in da and en; missing [])
+  SKIP  items of other packages whose keys are not defined yet (animals.lua: P20's animals.csv, wave 5): ["ITEM_BABY_FAWN_DESC(da)", "ITEM_BABY_FAWN_DESC(en)", "ITEM_BARN_KIT_DESC(da)", "ITEM_BARN_KIT_DESC(en)"]
+  ok    every recipe name resolves in da and en: []
+  ok    the four guide recipes carry the guide's Danish names
+  ok    the shop lines carry the guide's names and one-line descriptions
+  ok    economy.no_key_collisions (economy.csv: 162 keys, 0 lint errors [], only ITEM_/RECIPE_/SHOP_, no RARITY_, none of its item keys redefined elsewhere [])
+  ok    economy.csv ships its keep-import
+  ok    the rows the UI spike put into ui.csv are owned by economy.csv now: []
+  ok    economy.content_external_items_exist (the 15 ids the content assumes exist; 350 ids named by recipes, shops, loot, home tiers and quest rewards all resolve; absent [] undefined [])
+  ok    the section leaves the real data and a fresh new game behind
+  --    economy: 296 checks, 0 failed, 2 skipped, 2.6 s
+== section rarity  (res://tests/sections/rarity.gd)
+  ok    rarity.ladder_ids_and_order (["normal", "uncommon", "rare", "unique", "legendary"])
+  ok    the config `order` is the same five ids in the same order
+  ok    rank(normal) == 1 (content numbering 1..5)
+  ok    pips(normal) == rank - 1 == 0
+  ok    rank(uncommon) == 2 (content numbering 1..5)
+  ok    pips(uncommon) == rank - 1 == 1
+  ok    rank(rare) == 3 (content numbering 1..5)
+  ok    pips(rare) == rank - 1 == 2
+  ok    rank(unique) == 4 (content numbering 1..5)
+  ok    pips(unique) == rank - 1 == 3
+  ok    rank(legendary) == 5 (content numbering 1..5)
+  ok    pips(legendary) == rank - 1 == 4
+  ok    `common` is an alias of normal, no rarity means normal
+  ok    `epic` (and `order`) are not rarities
+  ok    one pip SHAPE per rarity: colour is never the only cue
+  ok    label keys are RARITY_<ID> (finds.csv owns them)
+  ok    rarity.config_present (rarity_tiers from lua/config/rarity.lua)
+  ok    rarity.fallback_equals_lua (the built-in copy is byte-identical in content to config.rarity_tiers)
+  ok    only unique and legendary are one-of-a-kind
+  ok    keepsakes cannot be sold, bought or crafted
+  ok    rarity.ladder_numbers_monotone (price up, find weight down, decor up with every step)
+  ok    find weights 100 / 40 / 12 / 3 / 1 (drop_weight is the prototype's name)
+  ok    rare: 1600 furniture / 800 clothing (the 1360 / 1280 / 1440 contract is built on 1600)
+  ok    rarity.sell_ratio_unique_zero (unique and legendary 0.0, the three others 0 < ratio <= 0.5)
+  ok    rarity.sort_order (legendary, unique, rare, uncommon, normal: ["bed_maane", "bed_svamp", "bed_valnoed", "bed_himmel", "bed_fyr"])
+  ok    ascending is the reverse ladder
+  ok    equal rarity: by name ascending (["alpha_rare", "bed_valnoed", "zeta_rare"])
+  ok    the tie-break uses the name function (display names)
+  ok    compare: -1 means `a` comes first in a descending list
+  ok    Rarity.sorted_ids over 401 defined items never goes up in rank
+  ok    the legacy items already use more than one rarity ([1, 2, 3, 4, 5])
+  ok    normal: pip count follows the rank
+  ok    uncommon: pip count follows the rank
+  ok    rare: pip count follows the rank
+  ok    unique: pip count follows the rank
+  ok    legendary: pip count follows the rank
+  ok    rarity.no_ring_equals_focus_gold (no rarity ring is e3c372 (gold means focus only))
+  ok    four distinct ring colours (normal has the ink border only): ["6b9a3e", "9b86d6", "e58fa6", "a9d3e0"]
+  ok    normal has no ring
+  ok    rarity.ui_colours_no_gold_no_red (no gold, no red [], only legendary is dark ["legendary"])
+  ok    legendary tile = the night tile 2f3654
+  ok    legendary ring Himmel a9d3e0, gold pips f2c14e, icon rim e4eff5 (CD1)
+  ok    rare = the guide's own slot (fill e2d8f4, ring 9b86d6)
+  ok    uncommon label 3f6b22 and unique label 7d2e59 (review fixes)
+  ok    rarity.label_not_damage_colour (closest label to Tornebaer: unique dE2000 13.0 (>= 10))
+  ok    unique label vs Tornebaer = 12.97 (plan: 13.0)
+  ok    the old unique label a8456a vs Tornebaer = 2.24 (plan: 2.2, the defect)
+  ok    CIEDE2000 matches the published Sharma/Wu/Dalal reference pairs
+  ok    rarity.legendary_pairs_contrast (ink vs icon rim 12.7, icon rim vs night 10.1, gold pip vs night 7.0 (all >= 7; plan: 12.4 / 10.1))
+  ok    (control) ink on the night tile alone is 1.25: that is why the pale rim exists
+  ok    rarity.label_contrast (all five labels on parchment >= 4.5 (worst 5.08))
+  ok    labels on their own tile >= 4.5 (the rarity word inside the slot)
+  ok    1600-gold rare piece: fox with gear .10 + 10 hearts .05 pays 1360 (1360), the same hobbit 1280 (1280), hobbit alone 1440 (1440)
+  ok    hobbit race discount alone: Perks.total(discount) == 0.10
+  ok    breakdown names the race share ({ "kind": "discount", "gear": 0.0, "gear_cap": 0.15, "gear_capped": 0.0, "furniture": 0.0, "home": 0.0, "race": 0.1, "raw": 0.1, "total": 0.1, "total_cap": 0.2, "gear_at_cap": false, "at_cap": false })
+  ok    a fox has no race discount
+  ok    speed: gear .30 is capped at .15 and the UI says maks.
+  ok    energy: gear 35 is capped at 20
+  ok    luck: gear .40 is capped at .20
+  ok    discount: gear .25 is capped at .15 (fox)
+  ok    speed is the gear alone (furniture never adds speed)
+  ok    energy = gear 12 + furniture 9 + home 6 = 27
+  ok    luck = gear .05 + furniture .05
+  ok    discount = gear .05 + furniture .02 (+ race 0 for a fox)
+  ok    energy_total clamps 20 + 30 + 30 = 80 to 60 ({ "kind": "energy", "gear": 35.0, "gear_cap": 20.0, "gear_capped": 20.0, "furniture": 30.0, "home": 30.0, "race": 0.0, "raw": 80.0, "total": 60.0, "total_cap": 60.0, "gear_at_cap": true, "at_cap": true })
+  ok    luck clamps .20 + .10 to .20
+  ok    discount_total clamps .15 gear + .10 furniture + .10 hobbit = .35 to .20
+  ok    the final price never goes below the 20% cap even with a friend discount on top
+  ok    the four perk kinds and their finds.csv label keys
+  ok    the caps are the perk_caps of rarity.lua
+  ok    global clamps energy_total 60 and discount_total 0.2
+  ok    the built-in perk caps equal config.perk_caps of rarity.lua
+  ok    rarity.perks_formula (gear caps, furniture + home + race sources, global clamps, discount 1360 / 1280 / 1440)
+  --    rarity: 73 checks, 0 failed, 0 skipped, 0.0 s
+== section save  (res://tests/sections/save.gd)
+  ok    save.throwaway_home (user:// is /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.oAQFI4/Library/Application Support/Traetoppen (a throwaway HOME))
+  ok    save.saves_go_to_scratch_dir (user://save_test_21119/save_3.json)
+  ok    save.api_surface (missing [])
+  ok    save.slot_constants (six manual slots 0..5, auto slot 6, payload version 2)
+  ok    save.reset_wired_to_new_game (SaveManager.reset() is connected to new_game_started)
+  ok    save.no_parse_string (JSON.new().parse() only: [])
+  ok    save.registered_sections_follow_reset_contract (6 registered feature section(s) ["home", "furniture", "wardrobe", "loot", "dungeon", "social"]; not wired to new_game_started: [])
+  ok    save.reset_on_new_game (slot -1, pending {  }, timer 0.0)
+  ok    save.autosave_nothing_queued_at_start (a fresh SaveManager has no day-end save waiting (else the first day end of a session would never be saved))
+  ok    save.slot_helpers_bounds (manual 0..5, valid 0..6)
+  ok    save.autosave_default_interval_five_minutes (the plan: every 5 real minutes (constant 300.0 s, a fresh SaveManager starts with 300.0 s, autosave on: true))
+  ok    save.registry_valid_registration_returns_true (a good name and node: true, first time and again)
+  ok    save.registry_names_in_apply_order (["p_game", "p_time", "p_eco", "tie_a", "home", "furniture", "wardrobe", "late"])
+  ok    save.registry_core_order (game, time, economy, quests, husbandry, shops, then the features: ["game", "p_game", "time", "p_time", "economy", "p_eco", "quests", "husbandry", "shops", "tie_a", "home", "furniture", "wardrobe", "late"])
+  ok    save.registry_gather (gather = {name: node.to_dict()} for 8 registered sections)
+  ok    save.registry_save_ok (saved S1 (gold 321, day 7, regn))
+  ok    save.section_registry_order_and_reset (apply order ["apply:p_game:day=7", "apply:p_time:regn,gold=999", "apply:p_eco:gold=321", "apply:tie_a", "apply:home", "apply:furniture", "apply:wardrobe", "apply:late"] (want ["apply:p_game:day=7", "apply:p_time:regn,gold=999", "apply:p_eco:gold=321", "apply:tie_a", "apply:home", "apply:furniture", "apply:wardrobe", "apply:late"]))
+  ok    save.registry_core_applied_between_features (game before time before economy, each in front of the sections that sit between them)
+  ok    save.registry_data_arrives (from_dict got the saved dictionary, numbers as ints)
+  ok    save.missing_section_resets (late and furniture were reset (n=0), home applied, ghost ignored: ["apply:p_game:day=7", "apply:p_time:regn,gold=321", "apply:p_eco:gold=321", "apply:tie_a", "apply:home", "reset:furniture", "apply:wardrobe", "reset:late"])
+  ok    save.registry_reregister_replaces (home moved behind wardrobe: ["p_game", "p_time", "p_eco", "tie_a", "furniture", "wardrobe", "home", "late"])
+  ok    save.registry_unregister (tie_a gone)
+  ok    save.registry_freed_node_skipped (a freed node is pruned and the load still works)
+ERROR: SaveManager.register_section: 'Bad Name' is not a valid section name (a-z, 0-9, _)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] register_section (res://scripts/autoload/save_manager.gd:475)
+       [1] _test_registry_inner (res://tests/sections/save.gd:702)
+       [2] _test_registry (res://tests/sections/save.gd:606)
+       [3] run (res://tests/sections/save.gd:181)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+ERROR: SaveManager.register_section: 'world' is a built-in name
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] register_section (res://scripts/autoload/save_manager.gd:478)
+       [1] _test_registry_inner (res://tests/sections/save.gd:702)
+       [2] _test_registry (res://tests/sections/save.gd:606)
+       [3] run (res://tests/sections/save.gd:181)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+ERROR: SaveManager.register_section: 'game' is a built-in name
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] register_section (res://scripts/autoload/save_manager.gd:478)
+       [1] _test_registry_inner (res://tests/sections/save.gd:702)
+       [2] _test_registry (res://tests/sections/save.gd:606)
+       [3] run (res://tests/sections/save.gd:181)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+ERROR: SaveManager.register_section('nomethods'): the node has no to_dict()
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] register_section (res://scripts/autoload/save_manager.gd:485)
+       [1] _test_registry_inner (res://tests/sections/save.gd:702)
+       [2] _test_registry (res://tests/sections/save.gd:606)
+       [3] run (res://tests/sections/save.gd:181)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+ERROR: SaveManager.register_section('nullnode'): the node is null or freed
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] register_section (res://scripts/autoload/save_manager.gd:481)
+       [1] _test_registry_inner (res://tests/sections/save.gd:702)
+       [2] _test_registry (res://tests/sections/save.gd:606)
+       [3] run (res://tests/sections/save.gd:181)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+  ok    save.registry_refuses_bad_input (bad name, reserved name, built-in name, no methods, null: [false, false, false, false, false])
+  ok    the five refusals are reported (allowed 'SaveManager.register_section' seen 5 time(s), want >= 5)
+  ok    save.feature_orders_constants (home 10, furniture 20, wardrobe 30, loot 40, collection 50)
+  ok    save.feature_orders_apply_order (["home", "furniture", "wardrobe", "loot", "collection"])
+  ok    save.registry_equal_orders_keep_registration_order (40 sections at order 50, registered in the order tie_00, tie_17, tie_34, ...: ["tie_00", "tie_17", "tie_34", "tie_11", "tie_28"])
+  ok    save.registry_built_in_sections_win_ties (game, beside_game, time, ... quests, beside_quests: ["game", "beside_game", "time", "economy", "quests", "beside_quests", "husbandry", "shops"])
+  ok    save.registry_tests_keep_real_sections (2 feature sections detached for the registry checks (registry empty before: true, after: true), then registered again unchanged: before ["home@10#2578037389709", "social@60#2578054166982"], after ["home@10#2578037389709", "social@60#2578054166982"])
+  ok    save.json_vectors_become_arrays ([1.5, 2.0])
+  ok    save.json_names_keys_and_nonfinite (StringName -> String, int and StringName keys -> String keys, NaN/INF -> 0.0)
+  ok    save.json_save_ok
+  ok    save.json_no_stringified_vectors (no "(1.5, 2.0)" strings in the file, UTF-8 intact)
+  ok    save.json_load_ok
+  ok    save.json_ints_recoerced (whole numbers come back as int (JSON has one number type), fractions stay float: n int pos [1.5, 2])
+WARNING: SaveManager: 'jsonrules' holds a Object, which cannot be saved (written as null)
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _json_safe (res://scripts/autoload/save_manager.gd:656)
+         [1] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [2] gather_payload (res://scripts/autoload/save_manager.gd:588)
+         [3] _test_json_rules (res://tests/sections/save.gd:770)
+         [4] run (res://tests/sections/save.gd:182)
+         [5] go_menu (res://tests/lib/flow.gd:69)
+         [6] change_scene (res://tests/lib/flow.gd:57)
+         [7] frames (res://tests/lib/drive.gd:79)
+  ok    save.json_object_becomes_null (an Object is written as null)
+  ok    the Object is reported (allowed 'which cannot be saved' seen 1 time(s), want >= 1)
+  ok    save.json_floats_keep_full_precision (0.1 + 0.2 = 0.3, 1/3 = 0.33333333333333, stamp 1791901594.12346)
+  ok    save.json_keys_are_sorted_in_the_file (alpha, stamp, zeta in the text of the file)
+  ok    save.json_huge_numbers_stay_floats (1e20 and 2^53 stay float, 2.0 becomes int 2)
+ERROR: SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] gather_payload (res://scripts/autoload/save_manager.gd:586)
+       [1] _test_json_rules (res://tests/sections/save.gd:791)
+       [2] run (res://tests/sections/save.gd:182)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    save.section_with_bad_to_dict_is_left_out (gather skips it and keeps the other sections)
+  ok    the bad to_dict() is reported once (allowed 'did not return a Dictionary' seen 1 time(s), want >= 1)
+ERROR: SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] gather_payload (res://scripts/autoload/save_manager.gd:586)
+       [1] save_game (res://scripts/autoload/save_manager.gd:233)
+       [2] _test_json_rules (res://tests/sections/save.gd:794)
+       [3] run (res://tests/sections/save.gd:182)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+  ok    save.section_with_bad_to_dict_save_and_load_work (the save is still written and loads)
+WARNING: SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _json_safe (res://scripts/autoload/save_manager.gd:626)
+         [1] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [2] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [3] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [4] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [5] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [6] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [7] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [8] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [9] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [10] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [11] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [12] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [13] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [14] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [15] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [16] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [17] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [18] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [19] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [20] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [21] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [22] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [23] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [24] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [25] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [26] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [27] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [28] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [29] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [30] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [31] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [32] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [33] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [34] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [35] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [36] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [37] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [38] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [39] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [40] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [41] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [42] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [43] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [44] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [45] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [46] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [47] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [48] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [49] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [50] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [51] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [52] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [53] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [54] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [55] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [56] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [57] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [58] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [59] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [60] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [61] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [62] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [63] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [64] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [65] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [66] gather_payload (res://scripts/autoload/save_manager.gd:588)
+         [67] _test_json_rules (res://tests/sections/save.gd:807)
+         [68] run (res://tests/sections/save.gd:182)
+         [69] go_menu (res://tests/lib/flow.gd:69)
+         [70] change_scene (res://tests/lib/flow.gd:57)
+         [71] frames (res://tests/lib/drive.gd:79)
+WARNING: SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _json_safe (res://scripts/autoload/save_manager.gd:626)
+         [1] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [2] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [3] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [4] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [5] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [6] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [7] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [8] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [9] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [10] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [11] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [12] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [13] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [14] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [15] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [16] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [17] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [18] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [19] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [20] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [21] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [22] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [23] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [24] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [25] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [26] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [27] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [28] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [29] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [30] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [31] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [32] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [33] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [34] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [35] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [36] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [37] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [38] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [39] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [40] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [41] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [42] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [43] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [44] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [45] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [46] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [47] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [48] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [49] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [50] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [51] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [52] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [53] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [54] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [55] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [56] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [57] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [58] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [59] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [60] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [61] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [62] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [63] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [64] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [65] _json_safe (res://scripts/autoload/save_manager.gd:648)
+         [66] gather_payload (res://scripts/autoload/save_manager.gd:588)
+         [67] _test_json_rules (res://tests/sections/save.gd:807)
+         [68] run (res://tests/sections/save.gd:182)
+         [69] go_menu (res://tests/lib/flow.gd:69)
+         [70] change_scene (res://tests/lib/flow.gd:57)
+         [71] frames (res://tests/lib/drive.gd:79)
+  ok    save.json_depth_limit_cuts_with_a_warning (70 nested levels: 65 kept, then null (<null>))
+  ok    the cut is reported once (allowed 'nested deeper than 64' seen 2 time(s), want >= 1)
+  ok    save.validate_before_apply (30 invalid payloads: refused with the right code, nothing applied, state untouched, one notification each)
+  ok    save.validate_control_loads (gold 555, day 11, probe applied 1, load_completed once)
+  ok    save.validate_payload_is_pure (gold 42 day 3 untouched)
+  ok    save.validate_rejects_non_dictionary
+  ok    save.corrupt_and_foreign_saves (19 damaged / empty / foreign files: load returns false with feedback, state unchanged)
+  ok    save.corrupt_size_cap_is_exclusive (a file of exactly 8388608 bytes is read (and refused as no save): 'meta is missing')
+  ok    save.corrupt_details (empty: 'the file is empty' | binary: 'the file does not start with a JSON object' | oversize: 'the file is larger than 8388608 bytes' | truncated: 'JSON error at line 111: Expected key' | newer: 'the save has version 7, this build reads up to 2')
+  ok    save.unreadable_file_is_a_damaged_slot (state corrupt, detail 'cannot open (error 12)', load false with feedback, the game untouched)
+  ok    save.failed_load_does_not_soft_lock (phase 0 unchanged, tree not paused, the next valid load works)
+  ok    save.load_empty_slot_gives_feedback (slot 4 has no file)
+  ok    save.load_bad_slots (-1, 7, 99)
+  ok    save.slot_states (ok / corrupt / newer / empty)
+  ok    save.slot_from_backup_flags (ok, corrupt, newer and empty slots do not claim to come from a .bak)
+  ok    save.slot_state_codes (ok '', corrupt 'corrupt', newer 'version', empty 'missing': ["", "corrupt", "version", "missing"])
+  ok    save.atomic_setup_saved
+ERROR: fake section failure boom
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] from_dict (res://tests/sections/save.gd:64)
+       [1] _apply_payload (res://scripts/autoload/save_manager.gd:905)
+       [2] load_game (res://scripts/autoload/save_manager.gd:297)
+       [3] _test_atomic_apply (res://tests/sections/save.gd:1040)
+       [4] run (res://tests/sections/save.gd:185)
+       [5] go_menu (res://tests/lib/flow.gd:69)
+       [6] change_scene (res://tests/lib/flow.gd:57)
+       [7] frames (res://tests/lib/drive.gd:79)
+  ok    save.atomic_apply_rolls_back (a script error in section 'boom' put game, economy, quests, time and 'early_a' back (gold 999, day 9, who running): )
+  ok    save.atomic_apply_feedback (NOTIF_LOAD_FAILED_APPLY posted, current_slot not moved)
+  ok    the provoked script error is reported once (allowed 'fake section failure' seen 1 time(s), want >= 1)
+  ok    save.atomic_apply_rejection_rolls_back (from_dict returned false: section 'boom' rejected its data)
+  ok    save.atomic_apply_control_loads (gold 100 day 3, who saved)
+  ok    save.atomic_apply_keeps_pending_world (pending_world is only replaced by a successful load)
+  ok    save.apply_guard_is_removed_after_every_load (ApplyGuard instances alive after 6 loads: 0)
+ERROR: fake section failure late_boom
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] from_dict (res://tests/sections/save.gd:64)
+       [1] _apply_payload (res://scripts/autoload/save_manager.gd:905)
+       [2] load_game (res://scripts/autoload/save_manager.gd:297)
+       [3] _test_atomic_apply (res://tests/sections/save.gd:1076)
+       [4] run (res://tests/sections/save.gd:185)
+       [5] go_menu (res://tests/lib/flow.gd:69)
+       [6] change_scene (res://tests/lib/flow.gd:57)
+       [7] frames (res://tests/lib/drive.gd:79)
+  ok    save.atomic_apply_rollback_survives_live_references (the failed load put the running value back (n 2, not the saved 1))
+  ok    the provoked script error is reported once (allowed 'fake section failure' seen 2 time(s), want >= 1)
+  ok    save.section_without_to_dict_is_left_out (no 'shops' section for a stand-in without to_dict(); the others are saved)
+  ok    save.section_without_from_dict_is_skipped_on_load (the save has a 'shops' section, the stand-in cannot take it: skipped, the rest loads (gold 321))
+  ok    save.slots_six_manual_files (save_0..save_5.json, current_slot 5, save_completed [0, 1, 2, 3, 4, 5])
+  ok    save.slots_manual_save_toasts_slot_number ('Spil gemt' / 'Dit spil er gemt i slot 6')
+  ok    save.auto_slot_save (save_auto.json, silent, current_slot stays 2, save_completed [6])
+  ok    save.auto_slot_save_restarts_countdown (timer 0.0 after save_game(AUTO_SLOT))
+  ok    save.inspect_slot_invalid_slot (slot 9: slot 9 does not exist)
+  ok    save.is_auto_never_writes_a_manual_slot (save_game(2, true) wrote the auto slot only)
+  ok    save.save_invalid_slots (-1, 7, 99 create nothing)
+  ok    save.bak_not_created_by_first_save (no file to roll yet)
+  ok    save.bak_rolled_from_manual_save (save_1.bak.json holds the previous save (gold 100), save_1.json the new one (200))
+  ok    save.auto_slot_has_no_bak (two autosaves, no save_auto.bak.json)
+  ok    save.bak_survives_a_damaged_primary (the unreadable file was not copied over save_1.bak.json)
+  ok    save.no_temp_files_left (["save_1.bak.json", "save_1.json", "save_auto.json"])
+  ok    save.bak_state_and_summary (damaged primary: state backup, summary from the .bak (gold 100))
+  ok    save.bak_recovery_loads_backup (gold 100, one NOTIF_LOAD_BACKUP toast)
+  ok    save.bak_recovery_from_invalid_primary (primary without 'economy' -> .bak)
+  ok    save.bak_not_used_for_newer_version (a save of a newer build is refused, not silently replaced by an older .bak)
+  ok    save.bak_and_primary_both_damaged (state corrupt, load false with feedback, no summary, never the latest slot)
+  ok    save.delete_save_removes_all_files (primary and .bak)
+  ok    save.stale_temp_files_swept (a crash leftover (.tmp) is removed when SaveManager starts, real saves stay)
+  ok    save.backup_cache_accepts_clock_only_change
+  ok    save.backup_cache_rechecks_changed_version
+  ok    save.backup_cache_rechecks_changed_state
+  ok    save.delete_save_other_slot_keeps_current_slot (deleting slot 1 while slot 2 is current: current_slot 2, slot 2 and its .bak are still there)
+  ok    save.delete_save_removes_every_file_of_the_slot (save_2.json, save_2.bak.json and the leftover save_2.json.tmp are gone: ["save_0.bak.json", "save_0.json", "save_3.bak.json", "save_3.json", "save_auto.json"])
+  ok    save.delete_save_resets_current_slot (slot 2 was the current slot: current_slot -1)
+  ok    save.delete_save_touches_only_its_slot (slots 0 and 3 with their .bak files and the auto slot are byte for byte what they were)
+  ok    save.delete_save_auto_slot (the auto slot goes, the manual slots and current_slot stay)
+  ok    save.delete_save_invalid_slots_delete_nothing (-1, 7 and 77 leave every file (and current_slot) alone)
+  ok    save.delete_save_empty_slot_is_harmless
+  ok    save.delete_save_latest_follows (slot 0 @100 and slot 3 @400 are left: slot 3)
+  ok    save.delete_save_latest_follows_to_zero (slot 3 deleted: slot 0)
+  ok    save.delete_save_all_gone (nothing left: [])
+  ok    save.load_auto_slot_keeps_manual_slot (the auto slot loaded (gold 20, load_completed [6]), current_slot is still the manual slot 2)
+  ok    save.load_auto_slot_leaves_slot_unset (Continue from an autosave with no manual slot in this run: current_slot -1 (NO_SLOT), not 6)
+  ok    save.save_game_current_slot_after_auto_load_writes_nothing (save_game(current_slot) with current_slot -1: refused as a bad slot, the auto file and the directory are unchanged)
+  ok    save.load_manual_slot_sets_current_slot (slot 2)
+  ok    save.failed_auto_load_keeps_current_slot (slot 2, last_error corrupt)
+  ok    save.successful_load_clears_last_error (the failed load above left last_error behind, the good load after it clears it)
+  ok    save.load_restarts_autosave_countdown (a load starts the autosave countdown again (timer 0.0))
+  ok    save.write_failure_keeps_old_save (save returned false, save_3.json is byte for byte the old one, current_slot not moved, no second save_completed)
+  ok    save.write_failure_feedback (NOTIF_SAVE_FAILED posted for a manual save)
+  ok    save.write_failure_autosave_is_silent (no toast for a failed autosave)
+  ok    save.write_failure_autosave_restarts_countdown (a failed autosave does not retry every frame: the timer starts again (0.0))
+  ok    save.write_recovers_after_failure (after a failed write the next good save clears last_error)
+  ok    save.rename_failure_is_reported_and_cleaned_up (save_game(2) with a directory in the way: false, no save_2.json.tmp left, no save_completed, one NOTIF_SAVE_FAILED toast (1))
+ERROR: Failed to open '/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.oAQFI4/Library/Application Support/Traetoppen/save_test_21119/save_4.bak.json.tmp'.
+   at: copy (core/io/dir_access.cpp:429)
+   GDScript backtrace (most recent call first):
+       [0] _roll_backup (res://scripts/autoload/save_manager.gd:1022)
+       [1] save_game (res://scripts/autoload/save_manager.gd:236)
+       [2] _test_write_failure (res://tests/sections/save.gd:1329)
+       [3] run (res://tests/sections/save.gd:191)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+  ok    the engine's own report of the copy that cannot be made (allowed 'save_4.bak.json.tmp' seen 1 time(s), want >= 1)
+  ok    save.bak_roll_failure_does_not_stop_the_save (the save is written (gold 2), no .bak, and the stuck save_4.bak.json.tmp is removed)
+  ok    save.short_write_is_caught (half of the bytes were lost without an error: save returned false, save_3.json is the old save (gold 777), no .tmp left)
+  ok    save.short_write_feedback (the player is told (NOTIF_SAVE_FAILED))
+  ok    save.short_write_autosave_leaves_no_file (a lossy autosave writes no auto slot at all (a half file would later be 'damaged') and says nothing)
+  ok    save.short_write_control_saves (the same probe with intact bytes saves (gold 555), the previous save is the .bak (777))
+  ok    save.save_recreates_missing_directory (the scratch directory was removed, save_game(1) wrote save_1.json anyway)
+  ok    save.autosave_timer_idle_in_menu (phase MENU: nothing is written)
+  ok    save.autosave_timer_idle_when_paused (phase PAUSED: nothing is written)
+  ok    save.autosave_timer_writes_auto_slot (while PLAYING the timer wrote save_auto.json (gold 9999.0); save_completed [6, 6, 6, 6]; current_slot 2)
+  ok    save.autosave_timer_leaves_manual_slots_alone (six manual files and six .bak files are byte for byte what they were)
+  ok    save.autosave_disabled_switch (autosave_enabled = false stops the timer)
+  ok    save.autosave_day_end_is_deferred (nothing is written inside the day_ended / day_started emissions)
+  ok    save.autosave_on_day_end (one auto save of the NEW day (day 13.0, 06:00, a day_started follower already at 13.0); save_completed [6])
+  ok    save.autosave_coalesces_midnights (50 hours crossed two midnights, save_completed [6])
+  ok    save.autosave_on_the_day_end_roll (23:55 + 10 min = raw 24:05: no save; 01:55 + 10 min = the day-end roll: one auto save of day 16.0 at raw hour 2.0 (restart hour 2); save_completed [6])
+  ok    save.autosave_disabled_day_end (autosave_enabled = false: a day end while PLAYING writes nothing)
+  ok    save.autosave_disabled_day_end_is_not_queued (a day end that happened while autosave was off is not saved later)
+  ok    save.autosave_switched_off_cancels_queued_day_end_save (the queued day-end save checks the switch again when it runs)
+  ok    save.autosave_day_end_control_saves (the same day end with the switch on writes the auto slot once, so the three checks above are not vacuous)
+  ok    save.autosave_queued_save_dropped_by_new_game (day end, then New Game in the same frame (phase 2): the queued save does not run)
+  ok    save.autosave_after_dropped_save_works (the next day end saves again (the drop did not wedge the queue))
+  ok    save.autosave_day_end_by_phase (PAUSED true, CUTSCENE true, CHARACTER_SELECT false)
+  ok    save.autosave_day_end_in_menu_is_not_queued (MENU day end, PLAYING a moment later in the same frame: no save)
+  ok    save.autosave_day_end_not_in_menu (phase MENU: a day end saves nothing)
+  ok    save.autosave_never_overwrites_manual (after the timer, the day end and a multi-day skip the manual files, their .bak files and the directory listing are unchanged)
+  ok    save.summary_fields ({ "area": "hyggebyen", "character": "fairy", "character_skin": "fairy_stardust", "day": 16, "farm_name": "Rosenhaven", "gold": 1250, "hour": 14, "minute": 5, "play_time_seconds": 3725.5, "player_name": "Mia", "season": "sommer", "total_day": 156, "year": 2, "slot": 0, "is_auto": false, "from_backup": false, "timestamp": "2026-10-16T23:41:27", "saved_at": 1792186887.17148 })
+  ok    save.summary_meta (slot, is_auto, timestamp, saved_at)
+  ok    save.summary_types (ints after the JSON round trip)
+  ok    save.save_late_hour_roundtrip_and_old_midnight_save (raw 25:40 -> summary 25:40, loads back true; an old save at hour 0 loads at raw 02:40 (day 16))
+  ok    save.summary_whole_play_time_is_float (600 s -> float)
+  ok    save.inspect_slot_ok_has_no_error_code (ok slot: code '', empty slot: 'missing')
+  ok    save.summary_character_keys (["animal", "fairy", "hobbit", "ghost"])
+  ok    save.summary_auto_slot
+  ok    save.summary_empty_or_damaged_is_empty
+  ok    save.summary_damaged_and_newer_are_empty
+  ok    save.describe_slots (["ok", "ok", "empty", "newer", "corrupt", "empty", "ok"])
+  ok    save.legacy_default_arguments (has_save() / get_save_summary() read slot 0)
+  ok    save.summary_from_bare_payload_without_meta_summary
+  ok    save.summary_types_control (an unedited save keeps its own summary (13 keys))
+  ok    save.summary_wrong_types_rebuilt (98 wrong values (one key at a time): the slot stays ok and the summary is rebuilt from the data)
+  ok    save.summary_not_an_object_rebuilt (meta.summary a string, number, array, null, empty or cut down: rebuilt)
+  ok    save.summary_formats_with_percent_d (Dag 16, 1250 guld, 2. aar, Mia, 14:05)
+  ok    save.summary_valid_cache_is_used (right types: meta.summary wins over the sections)
+  ok    save.summary_wrong_types_slot_row_ok (describe_slots row 1: ok, gold 1250, and the slot loads (gold 1250))
+  ok    save.latest_none (an empty directory)
+  ok    save.latest_single_manual
+  ok    save.latest_auto_when_newest (slot 3 @1000, slot 0 @1500, auto @2000)
+  ok    save.latest_manual_newer_than_auto (a manual save at 3000 beats the auto save at 2000)
+  ok    save.latest_skips_damaged (slot 5 is damaged and has no .bak: Continue picks the auto slot)
+  ok    save.latest_uses_bak_stamp (damaged primary, .bak @2500 -> slot 5 (saved_at 2500.0))
+  ok    save.latest_skips_newer_version (a save of a newer build is never picked)
+  ok    save.latest_tie_goes_to_lowest_manual_slot (slot 4, slot 2 and auto at the same time: slot 2)
+  ok    save.latest_tie_manual_beats_auto
+  ok    save.clock_override_zero_is_used (saved_at 0.0)
+  ok    save.latest_sub_second_order (slot 1 @5000.25, slot 4 @5000.75: slot 4 is newer (file saved_at 5000.75))
+  ok    save.latest_sub_second_auto_beats_manual (manual @7000.25, auto @7000.75: the auto slot is newer, not a tie that the manual slot would win)
+  ok    save.latest_sub_second_manual_beats_older_auto (manual @7000.75, auto @7000.25: the manual slot)
+  ok    save.latest_real_clock_orders_saves_of_one_second (two real saves back to back: 1792186887.7210 then 1792186887.7237)
+  ok    save.latest_reads_v1_time_stamp (slot 2 is one second newer)
+  ok    save.world_gathered_from_group (the node in group world_2d supplies the 'world' section)
+  ok    save.world_save_ok
+  ok    save.world_load_ok
+  ok    save.world_dict_contract (the opaque dictionary came back unchanged through the file: )
+  ok    save.world_consume_once (consume_pending_world() hands it over once and clears it)
+  ok    save.world_not_applied_by_save_manager (WorldRoot2D applies it in _ready, SaveManager only hands it over)
+  ok    save.world_absent_gives_empty (a save without a world section -> pending_world == {})
+  ok    save.world_waiting_survives_a_save
+  ok    save.world_vectors_become_arrays
+  ok    save.world_file_is_readable_json (pretty-printed JSON)
+  ok    save.v1_validates_and_migrates (meta.version 1 -> 2, quest definitions dropped, runtime flags kept, saved_at from the time stamp)
+  ok    save.v1_migration_writes_the_summary (the migrated payload carries meta.summary like a v2 save: { "player_name": "Old", "farm_name": "Gamle Gaard", "character": "hobbit", "character_skin": "hobbit_pip", "day": 9, "season": "efteraar", "year": 3, "total_day": 289, "gold": 1234, "play_time_seconds": 600.0, "hour": 17, "minute": 30, "area": "" })
+  ok    save.v1_loads (gold 1234, day 9, efteraar, Old)
+  ok    save.v1_missing_sections_reset (husbandry and shops were not in a v1 save: reset(), not stale: ["reset:husbandry", "reset:shops"])
+  ok    save.v1_world_empty_and_ints (no world in a v1 save, flags back as ints)
+  ok    save.v1_summary ({ "player_name": "Old", "farm_name": "Gamle Gaard", "character": "hobbit", "character_skin": "hobbit_pip", "day": 9, "season": "efteraar", "year": 3, "total_day": 289, "gold": 1234, "play_time_seconds": 600.0, "hour": 17, "minute": 30, "area": "", "slot": 0, "is_auto": false, "from_backup": false, "timestamp": "2026-10-13T12:00:00", "saved_at": 1791885600.0 })
+  ok    save.quest_defs_survive_load (loading a save does not wipe the Lua definitions)
+  ok    save.quest_defs_survive_save_without_flags (audit T1)
+  ok    save.save_has_no_quest_defs (no def_ entries in quests.flags (0))
+  ok    save.v1_time_stamp_is_local_time (12:00 local at UTC+2 is 10:00 UTC: migrated 1791885600.0, inspected 1791885600.0, summary 1791885600.0, wanted 1791885600.0)
+  ok    save.v1_time_stamp_other_time_zones (UTC-5, UTC, UTC+5:30, UTC+12:45)
+  ok    save.v1_slot_is_older_than_a_later_autosave (v1 slot at 10:00 UTC, autosave at 10:30 UTC: the autosave is the latest, not the v1 slot (which was read as 12:00 UTC))
+  ok    save.v1_slot_is_newer_than_an_earlier_autosave (autosave at 09:30 UTC: the v1 slot at 10:00 UTC is the latest)
+  ok    save.v1_slot_west_of_greenwich_is_newer_than_an_earlier_autosave (12:00 local at UTC-5 is 17:00 UTC, the autosave is from 16:30 UTC: the v1 slot)
+  ok    save.v1_damaged_time_stamp_is_oldest_without_engine_error (16 stamps that are not a real date and time: saved_at 0.0, state ok)
+  ok    save.v1_real_time_stamps_are_read (a leap day, the last second of a year, a space as separator)
+  ok    save.v2_lost_saved_at_falls_back_to_local_time_stamp (saved_at missing: 1791885600.0, saved_at a string: 1791885600.0, wanted 1791885600.0)
+  ok    save.roundtrip_save_ok
+  ok    save.roundtrip_load_ok (load_completed(1))
+  ok    save.roundtrip_gold_items (gold 777, wood 80, carrot_seeds 5, economy dictionary )
+  ok    save.roundtrip_inventory_amounts_are_ints (no 3.0 in the backpack)
+  ok    save.roundtrip_quests (active, completed, failed, offered, objective progress: { "intro_active": true, "cat_active": true, "cookie_done": true, "completed_size": true, "failed": true, "offered": true, "progress_equal": true } )
+  ok    save.roundtrip_time_calendar (sommer day 16, Mia, weather regn, weekday 1, flags, zones, name, skin)
+  ok    save.roundtrip_calendar_types (int and StringName typed again)
+  ok    save.roundtrip_husbandry (animals 1, buildings 1, dictionary )
+  ok    save.roundtrip_husbandry_animal_fields (happiness 77.5, bond 2)
+  ok    save.roundtrip_shops (ShopSystem stock: )
+  ok    save.roundtrip_shop_stock_persists (carrot_seeds: 23 on the shelf before the save, 23 after the load)
+  ok    save.roundtrip_world_handed_over
+  ok    save.roundtrip_all_systems (gather -> JSON -> load -> gather: every section equal (identical))
+  ok    save.roundtrip_nothing_stale
+  ok    save.feedback_follows_locale (da: saved 'Dit spil er gemt i slot 1' / failed 'Gemningen er beskadiget og kan ikke læses.'; en: saved 'Your game is saved in slot 1' / failed 'The save is damaged and cannot be read.')
+  ok    save.feedback_keys_defined (all nine NOTIF_LOAD_* / NOTIF_SAVE_FAILED_* keys resolve in da and en)
+  ok    save.real_world_in_save (the live WorldRoot2D supplied the 'world' section: area farm, player_pos [1248.0, 2176.0])
+  ok    save.real_world_hand_off (load_and_enter left the world in pending_world, the new WorldRoot2D took it in _ready (pending now {  }))
+  ok    save.real_world_restored (same area, the player is 0.0 px from the saved spot)
+  ok    save.real_world_phase_playing (phase 2, slot 2)
+  ok    save.continue_without_save (false, feedback, still on the title (scene MainMenu, phase 0))
+  ok    save.continue_from_menu (Continue loaded the newest save (the auto slot: gold 888 day 6), load_completed [6], scene World, current_slot -1 (an autosave is no manual slot))
+  ok    save.continue_enters_playing (phase 2 (2 right after the call), tree not paused, no modal left)
+  ok    save.continue_does_not_replay_new_game_opening
+  ok    save.continue_world_hand_off (pending_world is empty: the world scene took it (or the save had none))
+  ok    save.load_and_enter_from_pause (slot 2 (gold 777, day 5), modals popped, phase 2, tree running)
+  ok    save.load_and_enter_failure_stays_put (scene MainMenu, phase 0)
+  ok    save.continue_skips_damaged_newest (the damaged slot 1 is skipped, slot 0 loads (gold 10))
+  ok    save.load_and_enter_missing_world_scene_changes_nothing (the scene is missing: false, code 'scene', the running game is unchanged (gold 1), still on the title, one notification)
+  ok    save.continue_uses_bak_with_feedback (gold 30 from the .bak, a NOTIF_LOAD_BACKUP toast)
+  ok    save.new_game_after_continue_start (slot 4, scene World)
+  ok    save.new_game_after_continue_keeps_slot_until_new_game (going to the menu does not reset the slot)
+  ok    save.new_game_after_continue_clean (current_slot -1, pending {  }, timer 0.0)
+  ok    save.new_game_resets_sections_once (a section that follows the reset contract is reset by new_game_started exactly once (SaveManager does not reset it a second time): 1)
+  ok    save.new_game_state_is_new (day 1, the new character, no save file touched)
+  ok    save.new_game_after_continue_gold_reset (gold 500)
+  ok    save.new_game_after_continue_quests_reset
+  ok    save.new_game_after_continue_husbandry_reset
+  ok    save.autosave_after_new_game_is_auto_only (slot 4 untouched, current_slot still -1)
+  ok    save.real_user_dir_untouched (user://saves has the same files as before the section (0))
+  --    save: 244 checks, 0 failed, 0 skipped, 2.9 s
+== section weapons  (res://tests/sections/weapons.gd)
+  ok    weapons.weapon_info_sword_rusty
+  ok    weapons.sword_equivalent_sword_rusty
+  ok    weapons.weapon_info_iron_sword
+  ok    weapons.sword_equivalent_iron_sword
+  ok    weapons.weapon_info_wpn_dagger_flint
+  ok    weapons.sword_equivalent_wpn_dagger_flint
+  ok    weapons.weapon_info_wpn_club_oak
+  ok    weapons.sword_equivalent_wpn_club_oak
+  ok    weapons.weapon_info_wpn_spear_iron
+  ok    weapons.sword_equivalent_wpn_spear_iron
+  ok    weapons.weapon_info_wpn_staff_hazel
+  ok    weapons.sword_equivalent_wpn_staff_hazel
+  ok    weapons.unknown_weapon_safe
+  ok    weapons.dps_parity_sword_rusty (1.0)
+  ok    weapons.dps_parity_wpn_dagger_thorn (0.92307692307692)
+  ok    weapons.dps_parity_wpn_club_spruce (1.03703703703704)
+  ok    weapons.dps_parity_wpn_spear_twig (0.93023255813953)
+  ok    weapons.dps_parity_wpn_staff_branch (0.96)
+  ok    weapons.dps_parity_iron_sword (1.0)
+  ok    weapons.dps_parity_wpn_dagger_flint (1.02564102564103)
+  ok    weapons.dps_parity_wpn_club_oak (0.98765432098765)
+  ok    weapons.dps_parity_wpn_spear_iron (1.0077519379845)
+  ok    weapons.dps_parity_wpn_staff_hazel (0.93333333333333)
+  ok    weapons.dps_parity_wpn_dagger_moonshard (0.97902097902098)
+  ok    weapons.dps_parity_wpn_sword_forest_steel (1.0)
+  ok    weapons.dps_parity_wpn_club_mushroom (1.01010101010101)
+  ok    weapons.dps_parity_wpn_spear_thistle (1.01479915433404)
+  ok    weapons.dps_parity_wpn_staff_light (0.90909090909091)
+  ok    weapons.dps_parity_wpn_dagger_bee (1.02564102564103)
+  ok    weapons.dps_parity_wpn_sword_candle (1.0)
+  ok    weapons.dps_parity_wpn_club_thornberry (0.98765432098765)
+  ok    weapons.dps_parity_wpn_spear_owl (0.9922480620155)
+  ok    weapons.dps_parity_wpn_staff_ember (0.90666666666667)
+  ok    weapons.dps_parity_wpn_sword_moon (1.0)
+  ok    weapons.dps_parity_wpn_club_trunk (1.00529100529101)
+  ok    weapons.dps_parity_wpn_spear_root (0.99667774086379)
+  ok    weapons.dps_parity_wpn_staff_star (0.8952380952381)
+  ok    weapons.stun_chance
+  ok    weapons.stun_respects_armor
+  ok    weapons.light_arc_reveals
+  ok    weapons.oil_on_kill
+  ok    weapons.heart_on_kill
+  ok    weapons.moon_wave_every_four_swings (6)
+  ok    weapons.quake_every_four_swings (6)
+  ok    weapons.light_boost_and_minimum
+  ok    weapons.gem_effects_gem_rock_crystal
+  ok    weapons.gem_effects_gem_thornberry_stone
+  ok    weapons.gem_effects_gem_night_sapphire
+  ok    weapons.gem_effects_gem_sunset_stone
+  ok    weapons.gem_effects_gem_rune_heart
+  ok    weapons.gem_effects_emerald
+  ok    weapons.legendary_gem_all_six_themes
+  ok    weapons.gem_equip_slot
+  ok    weapons.chest_sense_is_max_not_sum
+  ok    weapons.real_player_gem_wiring
+  ok    weapons.real_player_light_boost_and_gem_cooldown
+  ok    weapons.real_player_family_swing_parameters
+  ok    weapons.existing_gem_can_equip
+  --    weapons: 58 checks, 0 failed, 0 skipped, 0.1 s
+== summary: 8 section(s) run, 1511 checks (0 failed, 2 skipped), 0 engine error(s), 0 engine warning(s), 13 allowed message(s), 0 problem(s), 0 known-issue message(s), 23.6 s
+PLAYTEST PASS (1511 checks in 8 sections, 13 allowed engine messages, 0 known-issue messages)

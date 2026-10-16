@@ -539,6 +539,9 @@ func warm_jobs() -> Array:
 				var row: Dictionary = GameData.lua().get_registry("buildings").get(building, {})
 				keeper = str(row.get("keeper", "")) == str(n.get("npc_id"))
 			jobs.append([nv, ["idle", "talk"] if keeper else (["idle", "talk", "hover"] if flyer else (["idle", "talk", "walk"] if walks else ["idle", "talk"]))])
+	for enemy in get_tree().get_nodes_in_group("enemy"):
+		if area != null and area.objects.is_ancestor_of(enemy) and is_instance_valid(enemy.get("visual")):
+			jobs.append([enemy.get("visual"),["idle","walk","run","hit","interact","sleep","fly","hover","spin","attack","jump","land"]])
 	return jobs
 
 

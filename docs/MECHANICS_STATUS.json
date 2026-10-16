@@ -40,15 +40,15 @@
     },
     {
       "system": "Dungeon generation, twelve floors, runestones, saving and recovery (D1/D2)",
-      "state": "pending"
+      "state": "implemented; 20,016 stress floors valid, 13/14 logic mutants caught, alternative floor table valid and golden outputs match ARM64/x86_64; live runestones, consumed cells, recovery and worker registration pass"
     },
     {
       "system": "Dungeon exploration, enemies, combat, bosses and HUD (DR)",
-      "state": "pending"
+      "state": "combat rules, accessibility, seven enemies and three bosses implemented; 100 real-player bot fights and native encounter checks pass; forest HUD, presentation and final boss bot acceptance pending"
     },
     {
       "system": "Arsenal, weapons, gems, loot, appraisal and crafting (DL)",
-      "state": "pending"
+      "state": "arsenal, 51 item definitions, 13 forging recipes, smithy rotation, five weapon families, eight effects and lantern gem loadout implemented; loot delegate and appraisal pending"
     },
     {
       "system": "Social event runner, festival activities and heart events",
@@ -64,7 +64,7 @@
     },
     {
       "system": "Dark Forest evidence chapters and return-home resolution",
-      "state": "pending; finale preference requested"
+      "state": "pending; bittersweet finale confirmed by user"
     },
     {
       "system": "End-to-end acceptance, source-bound proofs and merge",
@@ -81,11 +81,20 @@
     "home_headless": "docs/qa/mechanics/home/headless.json",
     "home_native": "docs/qa/mechanics/home/native.json",
     "farm_native": "docs/qa/mechanics/animals/native.json",
-    "farm_integration": "docs/qa/mechanics/animals/integration.json"
+    "farm_integration": "docs/qa/mechanics/animals/integration.json",
+    "dungeon_checkpoint": "docs/qa/mechanics/dungeon/checkpoint.json",
+    "dungeon_economy": "docs/qa/mechanics/dungeon/economy.json",
+    "dungeon_native": "docs/qa/mechanics/dungeon/encounters-native.json",
+    "generator_architectures": [
+      "docs/qa/mechanics/dungeon/generator-arm64.json",
+      "docs/qa/mechanics/dungeon/generator-x86_64.json"
+    ]
   },
   "contract_additions": [
     "QuestManager state queries buildings_owned(type) and animals_owned support accepting animal quests after building or adoption.",
     "Animal building slots allow one coop, barn and animal house; build_building preserves the existing immediate construction contract.",
     "Once-per-day brushing and play persist in husbandry v2; field additions are optional for old saves."
-  ]
+  ],
+  "confirmed_scope": "All planned single-player mechanics",
+  "confirmed_finale": "A bittersweet discovery: learn her fate and bring her legacy home"
 }

@@ -1,0 +1,36 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 174,
+  "elapsed_s": 5.41,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 857,
+      "skipped": 0
+    },
+    "dungeon_pickups": {
+      "character": "animal",
+      "checks": 14,
+      "failed": 0,
+      "ms": 142,
+      "skipped": 0
+    },
+    "dungeon_run": {
+      "character": "animal",
+      "checks": 152,
+      "failed": 0,
+      "ms": 366,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

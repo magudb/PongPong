@@ -1,0 +1,29 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 599,
+  "elapsed_s": 16.04,
+  "engine": [],
+  "failed": 5,
+  "failures": [
+    "dungeon_gen.gen.golden_digest_f1",
+    "dungeon_gen.gen.golden_digest_f2",
+    "dungeon_gen.gen.golden_digest_f11",
+    "dungeon_gen.gen.inv.no_enemy_near_spawn_(14_ordinary_8_ambush_or_critter)",
+    "dungeon_gen.gen.invariants_on_240_floors"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "dungeon_gen": {
+      "character": "animal",
+      "checks": 599,
+      "failed": 5,
+      "ms": 10948,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

@@ -284,7 +284,7 @@ func _build_filters() -> void:
 		for cell in CELLS:
 			specs.append([cell[0],tr("SLOTCELL_"+cell[0])])
 	else:
-		specs.append_array([["weapon",tr("HUD_ITEM_WEAPON")],["tool",tr("GARDEROBE_TOOLS")]])
+		specs.append_array([["weapon",tr("HUD_ITEM_WEAPON")],["tool",tr("GARDEROBE_TOOLS")],["gem",tr("GARDEROBE_LANTERN_GEM")]])
 	var group := ButtonGroup.new()
 	group.set_meta("tt_value_selection",true)
 	for spec in specs:
@@ -319,8 +319,6 @@ func _build_filters() -> void:
 	if tab == 1:
 		L.label(filters,tr("GARDEROBE_WORN"),"Heavy17")
 		for slot in EconomyManager.equipment:
-			if str(slot) == "accessory":
-				continue
 			var id := str(EconomyManager.equipment[slot])
 			var label := L.label(filters,_name(id),"Muted14")
 			label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
@@ -340,14 +338,14 @@ func _build_items() -> void:
 	var restore := focus in item_buttons
 	L.clear(grid)
 	item_buttons.clear()
-	var ids: Array = ItemKinds.all_ids("clothing") if tab == 0 and show_all else WardrobeManager.owned_ids() if tab == 0 else EconomyManager.get_inventory_dict().keys()
+	var ids: Array = ItemKinds.all_ids("clothing") if tab == 0 and show_all else WardrobeManager.owned_ids() if tab == 0 else EconomyManager.loadout_ids()
 	ids = Rarity.sorted(ids,func(id): return ItemKinds.rarity_of(id),func(id): return str(id))
 	var selection := ButtonGroup.new()
 	selection.set_meta("tt_value_selection",true)
 	for value in ids:
 		var id := str(value)
 		var category := str(ItemKinds.def(id).get("category",""))
-		if tab == 1 and category not in ["tool","weapon"]:
+		if tab == 1 and EconomyManager.equip_slot_of(id) == "":
 			continue
 		if filter != "" and not _matches(id):
 			continue

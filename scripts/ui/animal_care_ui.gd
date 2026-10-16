@@ -46,6 +46,8 @@ func _ready() -> void:
 	var columns := L.box(body,false,24)
 	columns.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var scroll := ScrollContainer.new()
+	scroll.follow_focus = true
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.custom_minimum_size.x = 240
 	columns.add_child(scroll)
 	animal_list = _named(L.box(scroll,true,6),"AnimalList") as VBoxContainer

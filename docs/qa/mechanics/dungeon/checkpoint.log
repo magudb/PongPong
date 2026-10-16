@@ -1,0 +1,1182 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=dungeon_gen,dungeon_floors,dungeon_run,dungeon_pickups,arsenal,dungeon_items,weapons,enemies,bosses,dungeon_fights
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.nrAZVW/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 1.5 s
+== section arsenal  (res://tests/sections/arsenal.gd)
+  ok    arsenal.weapon_category_routes_to_store
+  ok    arsenal.starter_equipped
+  ok    arsenal.store_contract_answers
+  ok    arsenal.same_family_higher_rating_equips
+  ok    arsenal.better_other_family_keeps_choice
+  ok    arsenal.equip_other_family_deliberately
+  ok    arsenal.equipped_copy_not_sellable
+  ok    arsenal.only_spare_copy_can_leave
+  ok    arsenal.sell_list_excludes_equipped_copy
+  ok    arsenal.save_roundtrip
+  ok    arsenal.roundtrip_ids_are_stringnames
+  ok    arsenal.v1_save_adopts_backpack_weapons
+  ok    arsenal.v1_player_choice_survives
+  ok    arsenal.invalid_rows_dropped_and_counts_capped
+  ok    arsenal.copy_cap_all_or_nothing
+  --    arsenal: 15 checks, 0 failed, 0 skipped, 0.0 s
+== section bosses  (res://tests/sections/bosses.gd)
+  ok    bosses.spawn_snurresvamp
+  ok    bosses.hp_and_kind_snurresvamp
+  ok    bosses.sleep_until_520_snurresvamp
+  ok    bosses.bar_and_wake_snurresvamp
+  ok    bosses.dash_telegraph_snurresvamp
+  ok    bosses.dash_speed_snurresvamp
+  ok    bosses.dazed_window_snurresvamp
+  ok    bosses.first_wave_snurresvamp
+  ok    bosses.second_wave_snurresvamp
+  ok    bosses.phase_berries_once_snurresvamp
+  ok    bosses.reset_no_rewards_snurresvamp
+  ok    bosses.death_once_snurresvamp
+  ok    bosses.real_floor_chain_snurresvamp
+  ok    bosses.spawn_snurresvamp_gloed
+  ok    bosses.hp_and_kind_snurresvamp_gloed
+  ok    bosses.sleep_until_520_snurresvamp_gloed
+  ok    bosses.bar_and_wake_snurresvamp_gloed
+  ok    bosses.dash_telegraph_snurresvamp_gloed
+  ok    bosses.dash_speed_snurresvamp_gloed
+  ok    bosses.dazed_window_snurresvamp_gloed
+  ok    bosses.first_wave_snurresvamp_gloed
+  ok    bosses.second_wave_snurresvamp_gloed
+  ok    bosses.phase_berries_once_snurresvamp_gloed
+  ok    bosses.quake_radius_snurresvamp_gloed
+  ok    bosses.two_clouds_snurresvamp_gloed
+  ok    bosses.reset_no_rewards_snurresvamp_gloed
+  ok    bosses.death_once_snurresvamp_gloed
+  ok    bosses.real_floor_chain_snurresvamp_gloed
+  ok    bosses.spawn_snurresvamp_konge
+  ok    bosses.hp_and_kind_snurresvamp_konge
+  ok    bosses.sleep_until_520_snurresvamp_konge
+  ok    bosses.bar_and_wake_snurresvamp_konge
+  ok    bosses.dash_telegraph_snurresvamp_konge
+  ok    bosses.dash_speed_snurresvamp_konge
+  ok    bosses.dazed_window_snurresvamp_konge
+  ok    bosses.first_wave_snurresvamp_konge
+  ok    bosses.second_wave_snurresvamp_konge
+  ok    bosses.phase_berries_once_snurresvamp_konge
+  ok    bosses.quake_radius_snurresvamp_konge
+  ok    bosses.two_clouds_snurresvamp_konge
+  ok    bosses.nine_staggered_rain_marks
+  ok    bosses.reset_no_rewards_snurresvamp_konge
+  ok    bosses.death_once_snurresvamp_konge
+  ok    bosses.real_floor_chain_snurresvamp_konge
+  --    bosses: 44 checks, 0 failed, 0 skipped, 1.0 s
+== section dungeon_fights  (res://tests/sections/dungeon_fights.gd)
+  ok    dungeon_fights.bot_fight_matches_model_90_percent_of_100 (100/100 fights won within 6.5 s and at most 2 half hearts lost)
+  info  fight results: [{"lost":0,"seconds":2.8,"seed":0,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":1,"swings":2,"won":true},{"lost":0,"seconds":3.45,"seed":2,"swings":2,"won":true},{"lost":0,"seconds":3.5,"seed":3,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":4,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":5,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":6,"swings":2,"won":true},{"lost":0,"seconds":3.5,"seed":7,"swings":2,"won":true},{"lost":0,"seconds":3.4,"seed":8,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":9,"swings":2,"won":true},{"lost":0,"seconds":2.78333333333333,"seed":10,"swings":2,"won":true},{"lost":0,"seconds":3.46666666666667,"seed":11,"swings":2,"won":true},{"lost":0,"seconds":3.48333333333333,"seed":12,"swings":2,"won":true},{"lost":0,"seconds":3.21666666666667,"seed":13,"swings":2,"won":true},{"lost":0,"seconds":3.35,"seed":14,"swings":2,"won":true},{"lost":0,"seconds":4.71666666666667,"seed":15,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":16,"swings":2,"won":true},{"lost":0,"seconds":1.65000000000001,"seed":17,"swings":2,"won":true},{"lost":0,"seconds":3.44999999999999,"seed":18,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333334,"seed":19,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333334,"seed":20,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":21,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333334,"seed":22,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":23,"swings":2,"won":true},{"lost":0,"seconds":3.40000000000001,"seed":24,"swings":2,"won":true},{"lost":0,"seconds":3.46666666666667,"seed":25,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333334,"seed":26,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":27,"swings":2,"won":true},{"lost":0,"seconds":2.86666666666667,"seed":28,"swings":2,"won":true},{"lost":0,"seconds":1.64999999999999,"seed":29,"swings":2,"won":true},{"lost":0,"seconds":3.5,"seed":30,"swings":2,"won":true},{"lost":0,"seconds":2.83333333333333,"seed":31,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":32,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":33,"swings":2,"won":true},{"lost":0,"seconds":3.48333333333333,"seed":34,"swings":2,"won":true},{"lost":0,"seconds":2.8,"seed":35,"swings":2,"won":true},{"lost":0,"seconds":1.65000000000001,"seed":36,"swings":2,"won":true},{"lost":0,"seconds":3.55,"seed":37,"swings":2,"won":true},{"lost":0,"seconds":3.16666666666667,"seed":38,"swings":2,"won":true},{"lost":0,"seconds":3.48333333333333,"seed":39,"swings":2,"won":true},{"lost":0,"seconds":4.51666666666667,"seed":40,"swings":2,"won":true},{"lost":0,"seconds":3.46666666666668,"seed":41,"swings":2,"won":true},{"lost":0,"seconds":3.34999999999999,"seed":42,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":43,"swings":2,"won":true},{"lost":0,"seconds":4.48333333333332,"seed":44,"swings":2,"won":true},{"lost":0,"seconds":3.21666666666667,"seed":45,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":46,"swings":2,"won":true},{"lost":0,"seconds":3.5,"seed":47,"swings":2,"won":true},{"lost":0,"seconds":2.83333333333334,"seed":48,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":49,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333335,"seed":50,"swings":2,"won":true},{"lost":0,"seconds":3.34999999999999,"seed":51,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":52,"swings":2,"won":true},{"lost":0,"seconds":3.61666666666665,"seed":53,"swings":2,"won":true},{"lost":0,"seconds":2.81666666666666,"seed":54,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":55,"swings":2,"won":true},{"lost":0,"seconds":3.46666666666667,"seed":56,"swings":2,"won":true},{"lost":0,"seconds":3.48333333333332,"seed":57,"swings":2,"won":true},{"lost":0,"seconds":3.25,"seed":58,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333335,"seed":59,"swings":2,"won":true},{"lost":0,"seconds":3.21666666666667,"seed":60,"swings":2,"won":true},{"lost":0,"seconds":3.48333333333332,"seed":61,"swings":2,"won":true},{"lost":0,"seconds":4.83333333333331,"seed":62,"swings":2,"won":true},{"lost":0,"seconds":2.81666666666666,"seed":63,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":64,"swings":2,"won":true},{"lost":0,"seconds":3.61666666666667,"seed":65,"swings":2,"won":true},{"lost":0,"seconds":3.34999999999999,"seed":66,"swings":2,"won":true},{"lost":0,"seconds":3.55000000000001,"seed":67,"swings":2,"won":true},{"lost":0,"seconds":1.64999999999998,"seed":68,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":69,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":70,"swings":2,"won":true},{"lost":0,"seconds":5.03333333333336,"seed":71,"swings":2,"won":true},{"lost":0,"seconds":3.44999999999999,"seed":72,"swings":2,"won":true},{"lost":0,"seconds":1.65000000000001,"seed":73,"swings":2,"won":true},{"lost":0,"seconds":2.80000000000001,"seed":74,"swings":2,"won":true},{"lost":0,"seconds":3.48333333333335,"seed":75,"swings":2,"won":true},{"lost":0,"seconds":3.10000000000002,"seed":76,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":77,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":78,"swings":2,"won":true},{"lost":0,"seconds":3.31666666666666,"seed":79,"swings":2,"won":true},{"lost":0,"seconds":3.31666666666669,"seed":80,"swings":2,"won":true},{"lost":0,"seconds":4.66666666666666,"seed":81,"swings":2,"won":true},{"lost":0,"seconds":5.21666666666667,"seed":82,"swings":2,"won":true},{"lost":0,"seconds":3.46666666666667,"seed":83,"swings":2,"won":true},{"lost":0,"seconds":3.40000000000001,"seed":84,"swings":2,"won":true},{"lost":0,"seconds":2.78333333333336,"seed":85,"swings":2,"won":true},{"lost":0,"seconds":3.48333333333335,"seed":86,"swings":2,"won":true},{"lost":0,"seconds":3.35000000000002,"seed":87,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":88,"swings":2,"won":true},{"lost":0,"seconds":3.48333333333335,"seed":89,"swings":2,"won":true},{"lost":0,"seconds":3.40000000000003,"seed":90,"swings":2,"won":true},{"lost":0,"seconds":1.64999999999998,"seed":91,"swings":2,"won":true},{"lost":0,"seconds":4.76666666666665,"seed":92,"swings":2,"won":true},{"lost":0,"seconds":3.25,"seed":93,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":94,"swings":2,"won":true},{"lost":0,"seconds":3.18333333333334,"seed":95,"swings":2,"won":true},{"lost":0,"seconds":3.39999999999998,"seed":96,"swings":2,"won":true},{"lost":0,"seconds":5.21666666666664,"seed":97,"swings":2,"won":true},{"lost":0,"seconds":3.35000000000002,"seed":98,"swings":2,"won":true},{"lost":0,"seconds":1.63333333333333,"seed":99,"swings":2,"won":true}]
+  ok    dungeon_fights.curve_swings_bat ({"lost":0,"seconds":0.299999999999955,"seed":42,"swings":1,"won":true})
+  ok    dungeon_fights.curve_swings_tornebusk ({"lost":0,"seconds":1.96666666666664,"seed":42,"swings":3,"won":true})
+  --    dungeon_fights: 3 checks, 0 failed, 0 skipped, 11.1 s
+== section dungeon_floors  (res://tests/sections/dungeon_floors.gd)
+  ok    dungeon_floors.floors.section_registered_order_45_and_resets
+  ok    dungeon_floors.floors.world_seed_made_on_new_game
+  ok    dungeon_floors.floors.hub_registers_first_floor
+  ok    dungeon_floors.floors.unregistered_floor_refused
+  ok    dungeon_floors.floors.hub_rune_always_lit
+  ok    dungeon_floors.floors.rune_picker_lists_one_plus_stones
+  ok    dungeon_floors.floors.enter_from_stone_starts_at_that_floor
+  ok    dungeon_floors.floors.seed_pinned_while_active
+  ok    dungeon_floors.floors.uid_and_rng_deterministic
+  ok    dungeon_floors.floors.done_cells_skip_consumed_markers
+  ok    dungeon_floors.floors.save_roundtrip_registers_floor_before_world
+  ok    dungeon_floors.floors.oil_refill_first_visit_only (oil=149.733333333333 area=moerkeskoven_f2 floor=2)
+  ok    dungeon_floors.floors.reenter_does_not_farm_refill
+  ok    dungeon_floors.floors.register_ahead_neighbours_and_unregister_far (area=moerkeskoven_f2 floor=2 registered={ 1: true, 2: true, 3: true } tasks=[] texts=[1, 2, 3] error=)
+  ok    dungeon_floors.floors.prefetch_equals_sync
+  ok    dungeon_floors.floors.floor_three_has_runestone (area=moerkeskoven_f3 error=)
+  ok    dungeon_floors.floors.stone_activation_effects
+  ok    dungeon_floors.floors.stone_activation_event_once
+  ok    dungeon_floors.floors.boss_gate_starts_closed
+  ok    dungeon_floors.floors.boss_flag_opens_hulen_and_chest
+  ok    dungeon_floors.floors.leave_with_open_modals_travels
+  ok    dungeon_floors.floors.reveal_is_explicit
+  ok    dungeon_floors.floors.new_day_clears_done_and_seen
+  ok    dungeon_floors.floors.day_started_prunes_when_outside
+  ok    dungeon_floors.floors.runestone_reentry_uses_authored_spawn
+  ok    dungeon_floors.floors.spec_or_gen_mismatch_drops_run_keeps_stones
+  ok    dungeon_floors.floors.malformed_load_is_atomic
+  ok    dungeon_floors.floors.section_size_worst_case_under_4kb
+  --    dungeon_floors: 28 checks, 0 failed, 0 skipped, 1.2 s
+== section dungeon_gen  (res://tests/sections/dungeon_gen.gd)
+  ok    dungeon_gen.rng.sfc32_vectors_pinned_0 (["b9da4277", "6899a228", "1fa46bb1", "bed5282a", "e3694f30", "436f1913", "a3b67fc2", "aced053d"])
+  ok    dungeon_gen.rng.sfc32_vectors_pinned_42 (["da1f4b7d", "1cbd374b", "6a2464ee", "df4913af", "7b1433e8", "0d57a3f1", "07f7b45f", "77fbb08f"])
+  ok    dungeon_gen.rng.sfc32_vectors_pinned_4611686018427387903 (["0c8e69d1", "0e933cad", "18a26866", "9dfe7e95", "166dd8ef", "68b1e36b", "8c78ae3d", "986dad62"])
+  ok    dungeon_gen.rng.hash_key_pinned_save_a_3.0
+  ok    dungeon_gen.rng.hash_key_pinned_save_a_4.0
+  ok    dungeon_gen.rng.hash_key_pinned_save_b_3.0
+  ok    dungeon_gen.rng.hash_key_pinned_Frø_12.0
+  ok    dungeon_gen.rng.hash_key_pinned_0_6.0
+  ok    dungeon_gen.rng.hash_key_pinned__0.0
+  ok    dungeon_gen.rng.below_unbiased ([10041, 9979, 10014, 10072, 10023, 9875, 9996])
+  ok    dungeon_gen.rng.hash_key_avalanche (3141)
+  ok    dungeon_gen.spec.floor_table_valid
+  ok    dungeon_gen.spec.rim_wall_depth_zero_and_twelve_fallback_seeds_listed
+  ok    dungeon_gen.gen.generation_succeeded_f1_0
+  ok    dungeon_gen.gen.same_seed_same_text_f1
+  ok    dungeon_gen.gen.save_changes_layout_f1
+  ok    dungeon_gen.gen.export_budget_f1_0
+  ok    dungeon_gen.gen.generation_succeeded_f1_1
+  ok    dungeon_gen.gen.export_budget_f1_1
+  ok    dungeon_gen.gen.generation_succeeded_f1_2
+  ok    dungeon_gen.gen.export_budget_f1_2
+  ok    dungeon_gen.gen.generation_succeeded_f1_3
+  ok    dungeon_gen.gen.export_budget_f1_3
+  ok    dungeon_gen.gen.generation_succeeded_f1_4
+  ok    dungeon_gen.gen.export_budget_f1_4
+  ok    dungeon_gen.gen.generation_succeeded_f1_5
+  ok    dungeon_gen.gen.export_budget_f1_5
+  ok    dungeon_gen.gen.generation_succeeded_f1_6
+  ok    dungeon_gen.gen.export_budget_f1_6
+  ok    dungeon_gen.gen.generation_succeeded_f1_7
+  ok    dungeon_gen.gen.export_budget_f1_7
+  ok    dungeon_gen.gen.generation_succeeded_f1_8
+  ok    dungeon_gen.gen.export_budget_f1_8
+  ok    dungeon_gen.gen.generation_succeeded_f1_9
+  ok    dungeon_gen.gen.export_budget_f1_9
+  ok    dungeon_gen.gen.generation_succeeded_f1_10
+  ok    dungeon_gen.gen.export_budget_f1_10
+  ok    dungeon_gen.gen.generation_succeeded_f1_11
+  ok    dungeon_gen.gen.export_budget_f1_11
+  ok    dungeon_gen.gen.generation_succeeded_f1_12
+  ok    dungeon_gen.gen.export_budget_f1_12
+  ok    dungeon_gen.gen.generation_succeeded_f1_13
+  ok    dungeon_gen.gen.export_budget_f1_13
+  ok    dungeon_gen.gen.generation_succeeded_f1_14
+  ok    dungeon_gen.gen.export_budget_f1_14
+  ok    dungeon_gen.gen.generation_succeeded_f1_15
+  ok    dungeon_gen.gen.export_budget_f1_15
+  ok    dungeon_gen.gen.generation_succeeded_f1_16
+  ok    dungeon_gen.gen.export_budget_f1_16
+  ok    dungeon_gen.gen.generation_succeeded_f1_17
+  ok    dungeon_gen.gen.export_budget_f1_17
+  ok    dungeon_gen.gen.generation_succeeded_f1_18
+  ok    dungeon_gen.gen.export_budget_f1_18
+  ok    dungeon_gen.gen.generation_succeeded_f1_19
+  ok    dungeon_gen.gen.export_budget_f1_19
+  ok    dungeon_gen.gen.golden_digest_f1 (ea020e8c)
+  ok    dungeon_gen.gen.fallback_valid_f1
+  ok    dungeon_gen.gen.generation_succeeded_f2_0
+  ok    dungeon_gen.gen.same_seed_same_text_f2
+  ok    dungeon_gen.gen.save_changes_layout_f2
+  ok    dungeon_gen.gen.export_budget_f2_0
+  ok    dungeon_gen.gen.generation_succeeded_f2_1
+  ok    dungeon_gen.gen.export_budget_f2_1
+  ok    dungeon_gen.gen.generation_succeeded_f2_2
+  ok    dungeon_gen.gen.export_budget_f2_2
+  ok    dungeon_gen.gen.generation_succeeded_f2_3
+  ok    dungeon_gen.gen.export_budget_f2_3
+  ok    dungeon_gen.gen.generation_succeeded_f2_4
+  ok    dungeon_gen.gen.export_budget_f2_4
+  ok    dungeon_gen.gen.generation_succeeded_f2_5
+  ok    dungeon_gen.gen.export_budget_f2_5
+  ok    dungeon_gen.gen.generation_succeeded_f2_6
+  ok    dungeon_gen.gen.export_budget_f2_6
+  ok    dungeon_gen.gen.generation_succeeded_f2_7
+  ok    dungeon_gen.gen.export_budget_f2_7
+  ok    dungeon_gen.gen.generation_succeeded_f2_8
+  ok    dungeon_gen.gen.export_budget_f2_8
+  ok    dungeon_gen.gen.generation_succeeded_f2_9
+  ok    dungeon_gen.gen.export_budget_f2_9
+  ok    dungeon_gen.gen.generation_succeeded_f2_10
+  ok    dungeon_gen.gen.export_budget_f2_10
+  ok    dungeon_gen.gen.generation_succeeded_f2_11
+  ok    dungeon_gen.gen.export_budget_f2_11
+  ok    dungeon_gen.gen.generation_succeeded_f2_12
+  ok    dungeon_gen.gen.export_budget_f2_12
+  ok    dungeon_gen.gen.generation_succeeded_f2_13
+  ok    dungeon_gen.gen.export_budget_f2_13
+  ok    dungeon_gen.gen.generation_succeeded_f2_14
+  ok    dungeon_gen.gen.export_budget_f2_14
+  ok    dungeon_gen.gen.generation_succeeded_f2_15
+  ok    dungeon_gen.gen.export_budget_f2_15
+  ok    dungeon_gen.gen.generation_succeeded_f2_16
+  ok    dungeon_gen.gen.export_budget_f2_16
+  ok    dungeon_gen.gen.generation_succeeded_f2_17
+  ok    dungeon_gen.gen.export_budget_f2_17
+  ok    dungeon_gen.gen.generation_succeeded_f2_18
+  ok    dungeon_gen.gen.export_budget_f2_18
+  ok    dungeon_gen.gen.generation_succeeded_f2_19
+  ok    dungeon_gen.gen.export_budget_f2_19
+  ok    dungeon_gen.gen.golden_digest_f2 (245477a0)
+  ok    dungeon_gen.gen.fallback_valid_f2
+  ok    dungeon_gen.gen.generation_succeeded_f3_0
+  ok    dungeon_gen.gen.same_seed_same_text_f3
+  ok    dungeon_gen.gen.save_changes_layout_f3
+  ok    dungeon_gen.gen.export_budget_f3_0
+  ok    dungeon_gen.gen.generation_succeeded_f3_1
+  ok    dungeon_gen.gen.export_budget_f3_1
+  ok    dungeon_gen.gen.generation_succeeded_f3_2
+  ok    dungeon_gen.gen.export_budget_f3_2
+  ok    dungeon_gen.gen.generation_succeeded_f3_3
+  ok    dungeon_gen.gen.export_budget_f3_3
+  ok    dungeon_gen.gen.generation_succeeded_f3_4
+  ok    dungeon_gen.gen.export_budget_f3_4
+  ok    dungeon_gen.gen.generation_succeeded_f3_5
+  ok    dungeon_gen.gen.export_budget_f3_5
+  ok    dungeon_gen.gen.generation_succeeded_f3_6
+  ok    dungeon_gen.gen.export_budget_f3_6
+  ok    dungeon_gen.gen.generation_succeeded_f3_7
+  ok    dungeon_gen.gen.export_budget_f3_7
+  ok    dungeon_gen.gen.generation_succeeded_f3_8
+  ok    dungeon_gen.gen.export_budget_f3_8
+  ok    dungeon_gen.gen.generation_succeeded_f3_9
+  ok    dungeon_gen.gen.export_budget_f3_9
+  ok    dungeon_gen.gen.generation_succeeded_f3_10
+  ok    dungeon_gen.gen.export_budget_f3_10
+  ok    dungeon_gen.gen.generation_succeeded_f3_11
+  ok    dungeon_gen.gen.export_budget_f3_11
+  ok    dungeon_gen.gen.generation_succeeded_f3_12
+  ok    dungeon_gen.gen.export_budget_f3_12
+  ok    dungeon_gen.gen.generation_succeeded_f3_13
+  ok    dungeon_gen.gen.export_budget_f3_13
+  ok    dungeon_gen.gen.generation_succeeded_f3_14
+  ok    dungeon_gen.gen.export_budget_f3_14
+  ok    dungeon_gen.gen.generation_succeeded_f3_15
+  ok    dungeon_gen.gen.export_budget_f3_15
+  ok    dungeon_gen.gen.generation_succeeded_f3_16
+  ok    dungeon_gen.gen.export_budget_f3_16
+  ok    dungeon_gen.gen.generation_succeeded_f3_17
+  ok    dungeon_gen.gen.export_budget_f3_17
+  ok    dungeon_gen.gen.generation_succeeded_f3_18
+  ok    dungeon_gen.gen.export_budget_f3_18
+  ok    dungeon_gen.gen.generation_succeeded_f3_19
+  ok    dungeon_gen.gen.export_budget_f3_19
+  ok    dungeon_gen.gen.golden_digest_f3 (d7940510)
+  ok    dungeon_gen.gen.fallback_valid_f3
+  ok    dungeon_gen.gen.generation_succeeded_f4_0
+  ok    dungeon_gen.gen.same_seed_same_text_f4
+  ok    dungeon_gen.gen.save_changes_layout_f4
+  ok    dungeon_gen.gen.export_budget_f4_0
+  ok    dungeon_gen.gen.generation_succeeded_f4_1
+  ok    dungeon_gen.gen.export_budget_f4_1
+  ok    dungeon_gen.gen.generation_succeeded_f4_2
+  ok    dungeon_gen.gen.export_budget_f4_2
+  ok    dungeon_gen.gen.generation_succeeded_f4_3
+  ok    dungeon_gen.gen.export_budget_f4_3
+  ok    dungeon_gen.gen.generation_succeeded_f4_4
+  ok    dungeon_gen.gen.export_budget_f4_4
+  ok    dungeon_gen.gen.generation_succeeded_f4_5
+  ok    dungeon_gen.gen.export_budget_f4_5
+  ok    dungeon_gen.gen.generation_succeeded_f4_6
+  ok    dungeon_gen.gen.export_budget_f4_6
+  ok    dungeon_gen.gen.generation_succeeded_f4_7
+  ok    dungeon_gen.gen.export_budget_f4_7
+  ok    dungeon_gen.gen.generation_succeeded_f4_8
+  ok    dungeon_gen.gen.export_budget_f4_8
+  ok    dungeon_gen.gen.generation_succeeded_f4_9
+  ok    dungeon_gen.gen.export_budget_f4_9
+  ok    dungeon_gen.gen.generation_succeeded_f4_10
+  ok    dungeon_gen.gen.export_budget_f4_10
+  ok    dungeon_gen.gen.generation_succeeded_f4_11
+  ok    dungeon_gen.gen.export_budget_f4_11
+  ok    dungeon_gen.gen.generation_succeeded_f4_12
+  ok    dungeon_gen.gen.export_budget_f4_12
+  ok    dungeon_gen.gen.generation_succeeded_f4_13
+  ok    dungeon_gen.gen.export_budget_f4_13
+  ok    dungeon_gen.gen.generation_succeeded_f4_14
+  ok    dungeon_gen.gen.export_budget_f4_14
+  ok    dungeon_gen.gen.generation_succeeded_f4_15
+  ok    dungeon_gen.gen.export_budget_f4_15
+  ok    dungeon_gen.gen.generation_succeeded_f4_16
+  ok    dungeon_gen.gen.export_budget_f4_16
+  ok    dungeon_gen.gen.generation_succeeded_f4_17
+  ok    dungeon_gen.gen.export_budget_f4_17
+  ok    dungeon_gen.gen.generation_succeeded_f4_18
+  ok    dungeon_gen.gen.export_budget_f4_18
+  ok    dungeon_gen.gen.generation_succeeded_f4_19
+  ok    dungeon_gen.gen.export_budget_f4_19
+  ok    dungeon_gen.gen.golden_digest_f4 (0bb780e0)
+  ok    dungeon_gen.gen.fallback_valid_f4
+  ok    dungeon_gen.gen.generation_succeeded_f5_0
+  ok    dungeon_gen.gen.same_seed_same_text_f5
+  ok    dungeon_gen.gen.save_changes_layout_f5
+  ok    dungeon_gen.gen.export_budget_f5_0
+  ok    dungeon_gen.gen.generation_succeeded_f5_1
+  ok    dungeon_gen.gen.export_budget_f5_1
+  ok    dungeon_gen.gen.generation_succeeded_f5_2
+  ok    dungeon_gen.gen.export_budget_f5_2
+  ok    dungeon_gen.gen.generation_succeeded_f5_3
+  ok    dungeon_gen.gen.export_budget_f5_3
+  ok    dungeon_gen.gen.generation_succeeded_f5_4
+  ok    dungeon_gen.gen.export_budget_f5_4
+  ok    dungeon_gen.gen.generation_succeeded_f5_5
+  ok    dungeon_gen.gen.export_budget_f5_5
+  ok    dungeon_gen.gen.generation_succeeded_f5_6
+  ok    dungeon_gen.gen.export_budget_f5_6
+  ok    dungeon_gen.gen.generation_succeeded_f5_7
+  ok    dungeon_gen.gen.export_budget_f5_7
+  ok    dungeon_gen.gen.generation_succeeded_f5_8
+  ok    dungeon_gen.gen.export_budget_f5_8
+  ok    dungeon_gen.gen.generation_succeeded_f5_9
+  ok    dungeon_gen.gen.export_budget_f5_9
+  ok    dungeon_gen.gen.generation_succeeded_f5_10
+  ok    dungeon_gen.gen.export_budget_f5_10
+  ok    dungeon_gen.gen.generation_succeeded_f5_11
+  ok    dungeon_gen.gen.export_budget_f5_11
+  ok    dungeon_gen.gen.generation_succeeded_f5_12
+  ok    dungeon_gen.gen.export_budget_f5_12
+  ok    dungeon_gen.gen.generation_succeeded_f5_13
+  ok    dungeon_gen.gen.export_budget_f5_13
+  ok    dungeon_gen.gen.generation_succeeded_f5_14
+  ok    dungeon_gen.gen.export_budget_f5_14
+  ok    dungeon_gen.gen.generation_succeeded_f5_15
+  ok    dungeon_gen.gen.export_budget_f5_15
+  ok    dungeon_gen.gen.generation_succeeded_f5_16
+  ok    dungeon_gen.gen.export_budget_f5_16
+  ok    dungeon_gen.gen.generation_succeeded_f5_17
+  ok    dungeon_gen.gen.export_budget_f5_17
+  ok    dungeon_gen.gen.generation_succeeded_f5_18
+  ok    dungeon_gen.gen.export_budget_f5_18
+  ok    dungeon_gen.gen.generation_succeeded_f5_19
+  ok    dungeon_gen.gen.export_budget_f5_19
+  ok    dungeon_gen.gen.golden_digest_f5 (6e06f71d)
+  ok    dungeon_gen.gen.fallback_valid_f5
+  ok    dungeon_gen.gen.generation_succeeded_f6_0
+  ok    dungeon_gen.gen.same_seed_same_text_f6
+  ok    dungeon_gen.gen.save_changes_layout_f6
+  ok    dungeon_gen.gen.export_budget_f6_0
+  ok    dungeon_gen.gen.generation_succeeded_f6_1
+  ok    dungeon_gen.gen.export_budget_f6_1
+  ok    dungeon_gen.gen.generation_succeeded_f6_2
+  ok    dungeon_gen.gen.export_budget_f6_2
+  ok    dungeon_gen.gen.generation_succeeded_f6_3
+  ok    dungeon_gen.gen.export_budget_f6_3
+  ok    dungeon_gen.gen.generation_succeeded_f6_4
+  ok    dungeon_gen.gen.export_budget_f6_4
+  ok    dungeon_gen.gen.generation_succeeded_f6_5
+  ok    dungeon_gen.gen.export_budget_f6_5
+  ok    dungeon_gen.gen.generation_succeeded_f6_6
+  ok    dungeon_gen.gen.export_budget_f6_6
+  ok    dungeon_gen.gen.generation_succeeded_f6_7
+  ok    dungeon_gen.gen.export_budget_f6_7
+  ok    dungeon_gen.gen.generation_succeeded_f6_8
+  ok    dungeon_gen.gen.export_budget_f6_8
+  ok    dungeon_gen.gen.generation_succeeded_f6_9
+  ok    dungeon_gen.gen.export_budget_f6_9
+  ok    dungeon_gen.gen.generation_succeeded_f6_10
+  ok    dungeon_gen.gen.export_budget_f6_10
+  ok    dungeon_gen.gen.generation_succeeded_f6_11
+  ok    dungeon_gen.gen.export_budget_f6_11
+  ok    dungeon_gen.gen.generation_succeeded_f6_12
+  ok    dungeon_gen.gen.export_budget_f6_12
+  ok    dungeon_gen.gen.generation_succeeded_f6_13
+  ok    dungeon_gen.gen.export_budget_f6_13
+  ok    dungeon_gen.gen.generation_succeeded_f6_14
+  ok    dungeon_gen.gen.export_budget_f6_14
+  ok    dungeon_gen.gen.generation_succeeded_f6_15
+  ok    dungeon_gen.gen.export_budget_f6_15
+  ok    dungeon_gen.gen.generation_succeeded_f6_16
+  ok    dungeon_gen.gen.export_budget_f6_16
+  ok    dungeon_gen.gen.generation_succeeded_f6_17
+  ok    dungeon_gen.gen.export_budget_f6_17
+  ok    dungeon_gen.gen.generation_succeeded_f6_18
+  ok    dungeon_gen.gen.export_budget_f6_18
+  ok    dungeon_gen.gen.generation_succeeded_f6_19
+  ok    dungeon_gen.gen.export_budget_f6_19
+  ok    dungeon_gen.gen.golden_digest_f6 (2548c06e)
+  ok    dungeon_gen.gen.fallback_valid_f6
+  ok    dungeon_gen.gen.generation_succeeded_f7_0
+  ok    dungeon_gen.gen.same_seed_same_text_f7
+  ok    dungeon_gen.gen.save_changes_layout_f7
+  ok    dungeon_gen.gen.export_budget_f7_0
+  ok    dungeon_gen.gen.generation_succeeded_f7_1
+  ok    dungeon_gen.gen.export_budget_f7_1
+  ok    dungeon_gen.gen.generation_succeeded_f7_2
+  ok    dungeon_gen.gen.export_budget_f7_2
+  ok    dungeon_gen.gen.generation_succeeded_f7_3
+  ok    dungeon_gen.gen.export_budget_f7_3
+  ok    dungeon_gen.gen.generation_succeeded_f7_4
+  ok    dungeon_gen.gen.export_budget_f7_4
+  ok    dungeon_gen.gen.generation_succeeded_f7_5
+  ok    dungeon_gen.gen.export_budget_f7_5
+  ok    dungeon_gen.gen.generation_succeeded_f7_6
+  ok    dungeon_gen.gen.export_budget_f7_6
+  ok    dungeon_gen.gen.generation_succeeded_f7_7
+  ok    dungeon_gen.gen.export_budget_f7_7
+  ok    dungeon_gen.gen.generation_succeeded_f7_8
+  ok    dungeon_gen.gen.export_budget_f7_8
+  ok    dungeon_gen.gen.generation_succeeded_f7_9
+  ok    dungeon_gen.gen.export_budget_f7_9
+  ok    dungeon_gen.gen.generation_succeeded_f7_10
+  ok    dungeon_gen.gen.export_budget_f7_10
+  ok    dungeon_gen.gen.generation_succeeded_f7_11
+  ok    dungeon_gen.gen.export_budget_f7_11
+  ok    dungeon_gen.gen.generation_succeeded_f7_12
+  ok    dungeon_gen.gen.export_budget_f7_12
+  ok    dungeon_gen.gen.generation_succeeded_f7_13
+  ok    dungeon_gen.gen.export_budget_f7_13
+  ok    dungeon_gen.gen.generation_succeeded_f7_14
+  ok    dungeon_gen.gen.export_budget_f7_14
+  ok    dungeon_gen.gen.generation_succeeded_f7_15
+  ok    dungeon_gen.gen.export_budget_f7_15
+  ok    dungeon_gen.gen.generation_succeeded_f7_16
+  ok    dungeon_gen.gen.export_budget_f7_16
+  ok    dungeon_gen.gen.generation_succeeded_f7_17
+  ok    dungeon_gen.gen.export_budget_f7_17
+  ok    dungeon_gen.gen.generation_succeeded_f7_18
+  ok    dungeon_gen.gen.export_budget_f7_18
+  ok    dungeon_gen.gen.generation_succeeded_f7_19
+  ok    dungeon_gen.gen.export_budget_f7_19
+  ok    dungeon_gen.gen.golden_digest_f7 (b48ceefc)
+  ok    dungeon_gen.gen.fallback_valid_f7
+  ok    dungeon_gen.gen.generation_succeeded_f8_0
+  ok    dungeon_gen.gen.same_seed_same_text_f8
+  ok    dungeon_gen.gen.save_changes_layout_f8
+  ok    dungeon_gen.gen.export_budget_f8_0
+  ok    dungeon_gen.gen.generation_succeeded_f8_1
+  ok    dungeon_gen.gen.export_budget_f8_1
+  ok    dungeon_gen.gen.generation_succeeded_f8_2
+  ok    dungeon_gen.gen.export_budget_f8_2
+  ok    dungeon_gen.gen.generation_succeeded_f8_3
+  ok    dungeon_gen.gen.export_budget_f8_3
+  ok    dungeon_gen.gen.generation_succeeded_f8_4
+  ok    dungeon_gen.gen.export_budget_f8_4
+  ok    dungeon_gen.gen.generation_succeeded_f8_5
+  ok    dungeon_gen.gen.export_budget_f8_5
+  ok    dungeon_gen.gen.generation_succeeded_f8_6
+  ok    dungeon_gen.gen.export_budget_f8_6
+  ok    dungeon_gen.gen.generation_succeeded_f8_7
+  ok    dungeon_gen.gen.export_budget_f8_7
+  ok    dungeon_gen.gen.generation_succeeded_f8_8
+  ok    dungeon_gen.gen.export_budget_f8_8
+  ok    dungeon_gen.gen.generation_succeeded_f8_9
+  ok    dungeon_gen.gen.export_budget_f8_9
+  ok    dungeon_gen.gen.generation_succeeded_f8_10
+  ok    dungeon_gen.gen.export_budget_f8_10
+  ok    dungeon_gen.gen.generation_succeeded_f8_11
+  ok    dungeon_gen.gen.export_budget_f8_11
+  ok    dungeon_gen.gen.generation_succeeded_f8_12
+  ok    dungeon_gen.gen.export_budget_f8_12
+  ok    dungeon_gen.gen.generation_succeeded_f8_13
+  ok    dungeon_gen.gen.export_budget_f8_13
+  ok    dungeon_gen.gen.generation_succeeded_f8_14
+  ok    dungeon_gen.gen.export_budget_f8_14
+  ok    dungeon_gen.gen.generation_succeeded_f8_15
+  ok    dungeon_gen.gen.export_budget_f8_15
+  ok    dungeon_gen.gen.generation_succeeded_f8_16
+  ok    dungeon_gen.gen.export_budget_f8_16
+  ok    dungeon_gen.gen.generation_succeeded_f8_17
+  ok    dungeon_gen.gen.export_budget_f8_17
+  ok    dungeon_gen.gen.generation_succeeded_f8_18
+  ok    dungeon_gen.gen.export_budget_f8_18
+  ok    dungeon_gen.gen.generation_succeeded_f8_19
+  ok    dungeon_gen.gen.export_budget_f8_19
+  ok    dungeon_gen.gen.golden_digest_f8 (b7ab3ea1)
+  ok    dungeon_gen.gen.fallback_valid_f8
+  ok    dungeon_gen.gen.generation_succeeded_f9_0
+  ok    dungeon_gen.gen.same_seed_same_text_f9
+  ok    dungeon_gen.gen.save_changes_layout_f9
+  ok    dungeon_gen.gen.export_budget_f9_0
+  ok    dungeon_gen.gen.generation_succeeded_f9_1
+  ok    dungeon_gen.gen.export_budget_f9_1
+  ok    dungeon_gen.gen.generation_succeeded_f9_2
+  ok    dungeon_gen.gen.export_budget_f9_2
+  ok    dungeon_gen.gen.generation_succeeded_f9_3
+  ok    dungeon_gen.gen.export_budget_f9_3
+  ok    dungeon_gen.gen.generation_succeeded_f9_4
+  ok    dungeon_gen.gen.export_budget_f9_4
+  ok    dungeon_gen.gen.generation_succeeded_f9_5
+  ok    dungeon_gen.gen.export_budget_f9_5
+  ok    dungeon_gen.gen.generation_succeeded_f9_6
+  ok    dungeon_gen.gen.export_budget_f9_6
+  ok    dungeon_gen.gen.generation_succeeded_f9_7
+  ok    dungeon_gen.gen.export_budget_f9_7
+  ok    dungeon_gen.gen.generation_succeeded_f9_8
+  ok    dungeon_gen.gen.export_budget_f9_8
+  ok    dungeon_gen.gen.generation_succeeded_f9_9
+  ok    dungeon_gen.gen.export_budget_f9_9
+  ok    dungeon_gen.gen.generation_succeeded_f9_10
+  ok    dungeon_gen.gen.export_budget_f9_10
+  ok    dungeon_gen.gen.generation_succeeded_f9_11
+  ok    dungeon_gen.gen.export_budget_f9_11
+  ok    dungeon_gen.gen.generation_succeeded_f9_12
+  ok    dungeon_gen.gen.export_budget_f9_12
+  ok    dungeon_gen.gen.generation_succeeded_f9_13
+  ok    dungeon_gen.gen.export_budget_f9_13
+  ok    dungeon_gen.gen.generation_succeeded_f9_14
+  ok    dungeon_gen.gen.export_budget_f9_14
+  ok    dungeon_gen.gen.generation_succeeded_f9_15
+  ok    dungeon_gen.gen.export_budget_f9_15
+  ok    dungeon_gen.gen.generation_succeeded_f9_16
+  ...   (226 more ok lines of dungeon_gen not printed; --verbose prints all)
+  --    dungeon_gen: 626 checks, 0 failed, 0 skipped, 14.1 s
+== section dungeon_items  (res://tests/sections/dungeon_items.gd)
+  ok    dungeon_items.ids_load_51 (51)
+  ok    dungeon_items.complete_dng_resin
+  ok    dungeon_items.sell_below_half_dng_resin
+  ok    dungeon_items.text_dng_resin_da_name_key
+  ok    dungeon_items.text_dng_resin_da_description_key
+  ok    dungeon_items.text_dng_resin_en_name_key
+  ok    dungeon_items.text_dng_resin_en_description_key
+  ok    dungeon_items.complete_dng_mushroom_felt
+  ok    dungeon_items.sell_below_half_dng_mushroom_felt
+  ok    dungeon_items.text_dng_mushroom_felt_da_name_key
+  ok    dungeon_items.text_dng_mushroom_felt_da_description_key
+  ok    dungeon_items.text_dng_mushroom_felt_en_name_key
+  ok    dungeon_items.text_dng_mushroom_felt_en_description_key
+  ok    dungeon_items.complete_dng_forest_thread
+  ok    dungeon_items.sell_below_half_dng_forest_thread
+  ok    dungeon_items.text_dng_forest_thread_da_name_key
+  ok    dungeon_items.text_dng_forest_thread_da_description_key
+  ok    dungeon_items.text_dng_forest_thread_en_name_key
+  ok    dungeon_items.text_dng_forest_thread_en_description_key
+  ok    dungeon_items.complete_dng_forest_steel
+  ok    dungeon_items.sell_below_half_dng_forest_steel
+  ok    dungeon_items.text_dng_forest_steel_da_name_key
+  ok    dungeon_items.text_dng_forest_steel_da_description_key
+  ok    dungeon_items.text_dng_forest_steel_en_name_key
+  ok    dungeon_items.text_dng_forest_steel_en_description_key
+  ok    dungeon_items.complete_dng_glimmer_dust
+  ok    dungeon_items.sell_below_half_dng_glimmer_dust
+  ok    dungeon_items.text_dng_glimmer_dust_da_name_key
+  ok    dungeon_items.text_dng_glimmer_dust_da_description_key
+  ok    dungeon_items.text_dng_glimmer_dust_en_name_key
+  ok    dungeon_items.text_dng_glimmer_dust_en_description_key
+  ok    dungeon_items.complete_dng_owl_feather
+  ok    dungeon_items.sell_below_half_dng_owl_feather
+  ok    dungeon_items.text_dng_owl_feather_da_name_key
+  ok    dungeon_items.text_dng_owl_feather_da_description_key
+  ok    dungeon_items.text_dng_owl_feather_en_name_key
+  ok    dungeon_items.text_dng_owl_feather_en_description_key
+  ok    dungeon_items.complete_dng_moon_silver
+  ok    dungeon_items.sell_below_half_dng_moon_silver
+  ok    dungeon_items.text_dng_moon_silver_da_name_key
+  ok    dungeon_items.text_dng_moon_silver_da_description_key
+  ok    dungeon_items.text_dng_moon_silver_en_name_key
+  ok    dungeon_items.text_dng_moon_silver_en_description_key
+  ok    dungeon_items.complete_dng_crystal_root
+  ok    dungeon_items.sell_below_half_dng_crystal_root
+  ok    dungeon_items.text_dng_crystal_root_da_name_key
+  ok    dungeon_items.text_dng_crystal_root_da_description_key
+  ok    dungeon_items.text_dng_crystal_root_en_name_key
+  ok    dungeon_items.text_dng_crystal_root_en_description_key
+  ok    dungeon_items.complete_dng_rune_snurre
+  ok    dungeon_items.protected_dng_rune_snurre
+  ok    dungeon_items.text_dng_rune_snurre_da_name_key
+  ok    dungeon_items.text_dng_rune_snurre_da_description_key
+  ok    dungeon_items.text_dng_rune_snurre_en_name_key
+  ok    dungeon_items.text_dng_rune_snurre_en_description_key
+  ok    dungeon_items.complete_dng_rune_gloed
+  ok    dungeon_items.protected_dng_rune_gloed
+  ok    dungeon_items.text_dng_rune_gloed_da_name_key
+  ok    dungeon_items.text_dng_rune_gloed_da_description_key
+  ok    dungeon_items.text_dng_rune_gloed_en_name_key
+  ok    dungeon_items.text_dng_rune_gloed_en_description_key
+  ok    dungeon_items.complete_dng_rune_konge
+  ok    dungeon_items.protected_dng_rune_konge
+  ok    dungeon_items.text_dng_rune_konge_da_name_key
+  ok    dungeon_items.text_dng_rune_konge_da_description_key
+  ok    dungeon_items.text_dng_rune_konge_en_name_key
+  ok    dungeon_items.text_dng_rune_konge_en_description_key
+  ok    dungeon_items.complete_rough_skovkant
+  ok    dungeon_items.text_rough_skovkant_da_name_key
+  ok    dungeon_items.text_rough_skovkant_da_description_key
+  ok    dungeon_items.text_rough_skovkant_en_name_key
+  ok    dungeon_items.text_rough_skovkant_en_description_key
+  ok    dungeon_items.complete_rough_dybe_bregner
+  ok    dungeon_items.text_rough_dybe_bregner_da_name_key
+  ok    dungeon_items.text_rough_dybe_bregner_da_description_key
+  ok    dungeon_items.text_rough_dybe_bregner_en_name_key
+  ok    dungeon_items.text_rough_dybe_bregner_en_description_key
+  ok    dungeon_items.complete_rough_svampelunden
+  ok    dungeon_items.text_rough_svampelunden_da_name_key
+  ok    dungeon_items.text_rough_svampelunden_da_description_key
+  ok    dungeon_items.text_rough_svampelunden_en_name_key
+  ok    dungeon_items.text_rough_svampelunden_en_description_key
+  ok    dungeon_items.complete_rough_krystalgrotten
+  ok    dungeon_items.text_rough_krystalgrotten_da_name_key
+  ok    dungeon_items.text_rough_krystalgrotten_da_description_key
+  ok    dungeon_items.text_rough_krystalgrotten_en_name_key
+  ok    dungeon_items.text_rough_krystalgrotten_en_description_key
+  ok    dungeon_items.complete_gem_rock_crystal
+  ok    dungeon_items.sell_below_half_gem_rock_crystal
+  ok    dungeon_items.text_gem_rock_crystal_da_name_key
+  ok    dungeon_items.text_gem_rock_crystal_da_description_key
+  ok    dungeon_items.text_gem_rock_crystal_en_name_key
+  ok    dungeon_items.text_gem_rock_crystal_en_description_key
+  ok    dungeon_items.complete_gem_smoky_quartz
+  ok    dungeon_items.sell_below_half_gem_smoky_quartz
+  ok    dungeon_items.text_gem_smoky_quartz_da_name_key
+  ok    dungeon_items.text_gem_smoky_quartz_da_description_key
+  ok    dungeon_items.text_gem_smoky_quartz_en_name_key
+  ok    dungeon_items.text_gem_smoky_quartz_en_description_key
+  ok    dungeon_items.complete_gem_moss_agate
+  ok    dungeon_items.sell_below_half_gem_moss_agate
+  ok    dungeon_items.text_gem_moss_agate_da_name_key
+  ok    dungeon_items.text_gem_moss_agate_da_description_key
+  ok    dungeon_items.text_gem_moss_agate_en_name_key
+  ok    dungeon_items.text_gem_moss_agate_en_description_key
+  ok    dungeon_items.complete_gem_forest_jade
+  ok    dungeon_items.sell_below_half_gem_forest_jade
+  ok    dungeon_items.text_gem_forest_jade_da_name_key
+  ok    dungeon_items.text_gem_forest_jade_da_description_key
+  ok    dungeon_items.text_gem_forest_jade_en_name_key
+  ok    dungeon_items.text_gem_forest_jade_en_description_key
+  ok    dungeon_items.complete_gem_thornberry_stone
+  ok    dungeon_items.sell_below_half_gem_thornberry_stone
+  ok    dungeon_items.text_gem_thornberry_stone_da_name_key
+  ok    dungeon_items.text_gem_thornberry_stone_da_description_key
+  ok    dungeon_items.text_gem_thornberry_stone_en_name_key
+  ok    dungeon_items.text_gem_thornberry_stone_en_description_key
+  ok    dungeon_items.complete_gem_mushroom_opal
+  ok    dungeon_items.sell_below_half_gem_mushroom_opal
+  ok    dungeon_items.text_gem_mushroom_opal_da_name_key
+  ok    dungeon_items.text_gem_mushroom_opal_da_description_key
+  ok    dungeon_items.text_gem_mushroom_opal_en_name_key
+  ok    dungeon_items.text_gem_mushroom_opal_en_description_key
+  ok    dungeon_items.complete_gem_night_sapphire
+  ok    dungeon_items.sell_below_half_gem_night_sapphire
+  ok    dungeon_items.text_gem_night_sapphire_da_name_key
+  ok    dungeon_items.text_gem_night_sapphire_da_description_key
+  ok    dungeon_items.text_gem_night_sapphire_en_name_key
+  ok    dungeon_items.text_gem_night_sapphire_en_description_key
+  ok    dungeon_items.complete_gem_fairy_tear
+  ok    dungeon_items.sell_below_half_gem_fairy_tear
+  ok    dungeon_items.text_gem_fairy_tear_da_name_key
+  ok    dungeon_items.text_gem_fairy_tear_da_description_key
+  ok    dungeon_items.text_gem_fairy_tear_en_name_key
+  ok    dungeon_items.text_gem_fairy_tear_en_description_key
+  ok    dungeon_items.complete_gem_owl_eye
+  ok    dungeon_items.protected_gem_owl_eye
+  ok    dungeon_items.text_gem_owl_eye_da_name_key
+  ok    dungeon_items.text_gem_owl_eye_da_description_key
+  ok    dungeon_items.text_gem_owl_eye_en_name_key
+  ok    dungeon_items.text_gem_owl_eye_en_description_key
+  ok    dungeon_items.complete_gem_dewdrop
+  ok    dungeon_items.protected_gem_dewdrop
+  ok    dungeon_items.text_gem_dewdrop_da_name_key
+  ok    dungeon_items.text_gem_dewdrop_da_description_key
+  ok    dungeon_items.text_gem_dewdrop_en_name_key
+  ok    dungeon_items.text_gem_dewdrop_en_description_key
+  ok    dungeon_items.complete_gem_sunset_stone
+  ok    dungeon_items.protected_gem_sunset_stone
+  ok    dungeon_items.text_gem_sunset_stone_da_name_key
+  ok    dungeon_items.text_gem_sunset_stone_da_description_key
+  ok    dungeon_items.text_gem_sunset_stone_en_name_key
+  ok    dungeon_items.text_gem_sunset_stone_en_description_key
+  ok    dungeon_items.complete_gem_star_tear
+  ok    dungeon_items.protected_gem_star_tear
+  ok    dungeon_items.text_gem_star_tear_da_name_key
+  ok    dungeon_items.text_gem_star_tear_da_description_key
+  ok    dungeon_items.text_gem_star_tear_en_name_key
+  ok    dungeon_items.text_gem_star_tear_en_description_key
+  ok    dungeon_items.complete_gem_moon_heart
+  ok    dungeon_items.protected_gem_moon_heart
+  ok    dungeon_items.text_gem_moon_heart_da_name_key
+  ok    dungeon_items.text_gem_moon_heart_da_description_key
+  ok    dungeon_items.text_gem_moon_heart_en_name_key
+  ok    dungeon_items.text_gem_moon_heart_en_description_key
+  ok    dungeon_items.complete_gem_rune_heart
+  ok    dungeon_items.protected_gem_rune_heart
+  ok    dungeon_items.text_gem_rune_heart_da_name_key
+  ok    dungeon_items.text_gem_rune_heart_da_description_key
+  ok    dungeon_items.text_gem_rune_heart_en_name_key
+  ok    dungeon_items.text_gem_rune_heart_en_description_key
+  ok    dungeon_items.complete_wpn_dagger_thorn
+  ok    dungeon_items.sell_below_half_wpn_dagger_thorn
+  ok    dungeon_items.damage_formula_wpn_dagger_thorn
+  ok    dungeon_items.text_wpn_dagger_thorn_da_name_key
+  ok    dungeon_items.text_wpn_dagger_thorn_da_description_key
+  ok    dungeon_items.text_wpn_dagger_thorn_en_name_key
+  ok    dungeon_items.text_wpn_dagger_thorn_en_description_key
+  ok    dungeon_items.complete_wpn_dagger_flint
+  ok    dungeon_items.sell_below_half_wpn_dagger_flint
+  ok    dungeon_items.damage_formula_wpn_dagger_flint
+  ok    dungeon_items.text_wpn_dagger_flint_da_name_key
+  ok    dungeon_items.text_wpn_dagger_flint_da_description_key
+  ok    dungeon_items.text_wpn_dagger_flint_en_name_key
+  ok    dungeon_items.text_wpn_dagger_flint_en_description_key
+  ok    dungeon_items.complete_wpn_dagger_moonshard
+  ok    dungeon_items.sell_below_half_wpn_dagger_moonshard
+  ok    dungeon_items.damage_formula_wpn_dagger_moonshard
+  ok    dungeon_items.text_wpn_dagger_moonshard_da_name_key
+  ok    dungeon_items.text_wpn_dagger_moonshard_da_description_key
+  ok    dungeon_items.text_wpn_dagger_moonshard_en_name_key
+  ok    dungeon_items.text_wpn_dagger_moonshard_en_description_key
+  ok    dungeon_items.complete_wpn_dagger_bee
+  ok    dungeon_items.protected_wpn_dagger_bee
+  ok    dungeon_items.damage_formula_wpn_dagger_bee
+  ok    dungeon_items.text_wpn_dagger_bee_da_name_key
+  ok    dungeon_items.text_wpn_dagger_bee_da_description_key
+  ok    dungeon_items.text_wpn_dagger_bee_en_name_key
+  ok    dungeon_items.text_wpn_dagger_bee_en_description_key
+  ok    dungeon_items.complete_wpn_sword_forest_steel
+  ok    dungeon_items.sell_below_half_wpn_sword_forest_steel
+  ok    dungeon_items.damage_formula_wpn_sword_forest_steel
+  ok    dungeon_items.text_wpn_sword_forest_steel_da_name_key
+  ok    dungeon_items.text_wpn_sword_forest_steel_da_description_key
+  ok    dungeon_items.text_wpn_sword_forest_steel_en_name_key
+  ok    dungeon_items.text_wpn_sword_forest_steel_en_description_key
+  ok    dungeon_items.complete_wpn_sword_candle
+  ok    dungeon_items.protected_wpn_sword_candle
+  ok    dungeon_items.damage_formula_wpn_sword_candle
+  ok    dungeon_items.text_wpn_sword_candle_da_name_key
+  ok    dungeon_items.text_wpn_sword_candle_da_description_key
+  ok    dungeon_items.text_wpn_sword_candle_en_name_key
+  ok    dungeon_items.text_wpn_sword_candle_en_description_key
+  ok    dungeon_items.complete_wpn_sword_moon
+  ok    dungeon_items.protected_wpn_sword_moon
+  ok    dungeon_items.damage_formula_wpn_sword_moon
+  ok    dungeon_items.text_wpn_sword_moon_da_name_key
+  ok    dungeon_items.text_wpn_sword_moon_da_description_key
+  ok    dungeon_items.text_wpn_sword_moon_en_name_key
+  ok    dungeon_items.text_wpn_sword_moon_en_description_key
+  ok    dungeon_items.complete_wpn_club_spruce
+  ok    dungeon_items.sell_below_half_wpn_club_spruce
+  ok    dungeon_items.damage_formula_wpn_club_spruce
+  ok    dungeon_items.text_wpn_club_spruce_da_name_key
+  ok    dungeon_items.text_wpn_club_spruce_da_description_key
+  ok    dungeon_items.text_wpn_club_spruce_en_name_key
+  ok    dungeon_items.text_wpn_club_spruce_en_description_key
+  ok    dungeon_items.complete_wpn_club_oak
+  ok    dungeon_items.sell_below_half_wpn_club_oak
+  ok    dungeon_items.damage_formula_wpn_club_oak
+  ok    dungeon_items.text_wpn_club_oak_da_name_key
+  ok    dungeon_items.text_wpn_club_oak_da_description_key
+  ok    dungeon_items.text_wpn_club_oak_en_name_key
+  ok    dungeon_items.text_wpn_club_oak_en_description_key
+  ok    dungeon_items.complete_wpn_club_mushroom
+  ok    dungeon_items.sell_below_half_wpn_club_mushroom
+  ok    dungeon_items.damage_formula_wpn_club_mushroom
+  ok    dungeon_items.text_wpn_club_mushroom_da_name_key
+  ok    dungeon_items.text_wpn_club_mushroom_da_description_key
+  ok    dungeon_items.text_wpn_club_mushroom_en_name_key
+  ok    dungeon_items.text_wpn_club_mushroom_en_description_key
+  ok    dungeon_items.complete_wpn_club_thornberry
+  ok    dungeon_items.protected_wpn_club_thornberry
+  ok    dungeon_items.damage_formula_wpn_club_thornberry
+  ok    dungeon_items.text_wpn_club_thornberry_da_name_key
+  ok    dungeon_items.text_wpn_club_thornberry_da_description_key
+  ok    dungeon_items.text_wpn_club_thornberry_en_name_key
+  ok    dungeon_items.text_wpn_club_thornberry_en_description_key
+  ok    dungeon_items.complete_wpn_club_trunk
+  ok    dungeon_items.protected_wpn_club_trunk
+  ok    dungeon_items.damage_formula_wpn_club_trunk
+  ok    dungeon_items.text_wpn_club_trunk_da_name_key
+  ok    dungeon_items.text_wpn_club_trunk_da_description_key
+  ok    dungeon_items.text_wpn_club_trunk_en_name_key
+  ok    dungeon_items.text_wpn_club_trunk_en_description_key
+  ok    dungeon_items.complete_wpn_spear_twig
+  ok    dungeon_items.sell_below_half_wpn_spear_twig
+  ok    dungeon_items.damage_formula_wpn_spear_twig
+  ok    dungeon_items.text_wpn_spear_twig_da_name_key
+  ok    dungeon_items.text_wpn_spear_twig_da_description_key
+  ok    dungeon_items.text_wpn_spear_twig_en_name_key
+  ok    dungeon_items.text_wpn_spear_twig_en_description_key
+  ok    dungeon_items.complete_wpn_spear_iron
+  ok    dungeon_items.sell_below_half_wpn_spear_iron
+  ok    dungeon_items.damage_formula_wpn_spear_iron
+  ok    dungeon_items.text_wpn_spear_iron_da_name_key
+  ok    dungeon_items.text_wpn_spear_iron_da_description_key
+  ok    dungeon_items.text_wpn_spear_iron_en_name_key
+  ok    dungeon_items.text_wpn_spear_iron_en_description_key
+  ok    dungeon_items.complete_wpn_spear_thistle
+  ok    dungeon_items.sell_below_half_wpn_spear_thistle
+  ok    dungeon_items.damage_formula_wpn_spear_thistle
+  ok    dungeon_items.text_wpn_spear_thistle_da_name_key
+  ok    dungeon_items.text_wpn_spear_thistle_da_description_key
+  ok    dungeon_items.text_wpn_spear_thistle_en_name_key
+  ok    dungeon_items.text_wpn_spear_thistle_en_description_key
+  ok    dungeon_items.complete_wpn_spear_owl
+  ok    dungeon_items.protected_wpn_spear_owl
+  ok    dungeon_items.damage_formula_wpn_spear_owl
+  ok    dungeon_items.text_wpn_spear_owl_da_name_key
+  ok    dungeon_items.text_wpn_spear_owl_da_description_key
+  ok    dungeon_items.text_wpn_spear_owl_en_name_key
+  ok    dungeon_items.text_wpn_spear_owl_en_description_key
+  ok    dungeon_items.complete_wpn_spear_root
+  ok    dungeon_items.protected_wpn_spear_root
+  ok    dungeon_items.damage_formula_wpn_spear_root
+  ok    dungeon_items.text_wpn_spear_root_da_name_key
+  ok    dungeon_items.text_wpn_spear_root_da_description_key
+  ok    dungeon_items.text_wpn_spear_root_en_name_key
+  ok    dungeon_items.text_wpn_spear_root_en_description_key
+  ok    dungeon_items.complete_wpn_staff_branch
+  ok    dungeon_items.sell_below_half_wpn_staff_branch
+  ok    dungeon_items.damage_formula_wpn_staff_branch
+  ok    dungeon_items.text_wpn_staff_branch_da_name_key
+  ok    dungeon_items.text_wpn_staff_branch_da_description_key
+  ok    dungeon_items.text_wpn_staff_branch_en_name_key
+  ok    dungeon_items.text_wpn_staff_branch_en_description_key
+  ok    dungeon_items.complete_wpn_staff_hazel
+  ok    dungeon_items.sell_below_half_wpn_staff_hazel
+  ok    dungeon_items.damage_formula_wpn_staff_hazel
+  ok    dungeon_items.text_wpn_staff_hazel_da_name_key
+  ok    dungeon_items.text_wpn_staff_hazel_da_description_key
+  ok    dungeon_items.text_wpn_staff_hazel_en_name_key
+  ok    dungeon_items.text_wpn_staff_hazel_en_description_key
+  ok    dungeon_items.complete_wpn_staff_light
+  ok    dungeon_items.sell_below_half_wpn_staff_light
+  ok    dungeon_items.damage_formula_wpn_staff_light
+  ok    dungeon_items.text_wpn_staff_light_da_name_key
+  ok    dungeon_items.text_wpn_staff_light_da_description_key
+  ok    dungeon_items.text_wpn_staff_light_en_name_key
+  ok    dungeon_items.text_wpn_staff_light_en_description_key
+  ok    dungeon_items.complete_wpn_staff_ember
+  ok    dungeon_items.protected_wpn_staff_ember
+  ok    dungeon_items.damage_formula_wpn_staff_ember
+  ok    dungeon_items.text_wpn_staff_ember_da_name_key
+  ok    dungeon_items.text_wpn_staff_ember_da_description_key
+  ok    dungeon_items.text_wpn_staff_ember_en_name_key
+  ok    dungeon_items.text_wpn_staff_ember_en_description_key
+  ok    dungeon_items.complete_wpn_staff_star
+  ok    dungeon_items.protected_wpn_staff_star
+  ok    dungeon_items.damage_formula_wpn_staff_star
+  ok    dungeon_items.text_wpn_staff_star_da_name_key
+  ok    dungeon_items.text_wpn_staff_star_da_description_key
+  ok    dungeon_items.text_wpn_staff_star_en_name_key
+  ok    dungeon_items.text_wpn_staff_star_en_description_key
+  ok    dungeon_items.dng_material_price_dng_resin
+  ok    dungeon_items.dng_material_price_dng_mushroom_felt
+  ok    dungeon_items.dng_material_price_dng_forest_thread
+  ok    dungeon_items.dng_material_price_dng_forest_steel
+  ok    dungeon_items.dng_material_price_dng_glimmer_dust
+  ok    dungeon_items.dng_material_price_dng_owl_feather
+  ok    dungeon_items.dng_material_price_dng_moon_silver
+  ok    dungeon_items.dng_material_price_dng_crystal_root
+  ok    dungeon_items.recipe_output_dng_forge_dagger_thorn
+  ok    dungeon_items.recipe_band_dng_forge_dagger_thorn_2.0 (53.0)
+  ok    dungeon_items.recipe_band_dng_forge_dagger_thorn_2.2 (53.0)
+  ok    dungeon_items.recipe_band_dng_forge_dagger_thorn_2.5 (53.0)
+  ok    dungeon_items.recipe_output_dng_forge_dagger_flint
+  ok    dungeon_items.recipe_band_dng_forge_dagger_flint_2.0 (306.0)
+  ok    dungeon_items.recipe_band_dng_forge_dagger_flint_2.2 (324.0)
+  ok    dungeon_items.recipe_band_dng_forge_dagger_flint_2.5 (351.0)
+  ok    dungeon_items.recipe_output_dng_forge_dagger_moonshard
+  ok    dungeon_items.recipe_band_dng_forge_dagger_moonshard_2.0 (715.0)
+  ok    dungeon_items.recipe_band_dng_forge_dagger_moonshard_2.2 (733.0)
+  ok    dungeon_items.recipe_band_dng_forge_dagger_moonshard_2.5 (760.0)
+  ok    dungeon_items.recipe_output_dng_forge_sword_forest_steel
+  ok    dungeon_items.recipe_band_dng_forge_sword_forest_steel_2.0 (820.0)
+  ok    dungeon_items.recipe_band_dng_forge_sword_forest_steel_2.2 (847.0)
+  ok    dungeon_items.recipe_band_dng_forge_sword_forest_steel_2.5 (887.5)
+  ok    dungeon_items.recipe_output_dng_forge_club_spruce
+  ok    dungeon_items.recipe_band_dng_forge_club_spruce_2.0 (90.0)
+  ok    dungeon_items.recipe_band_dng_forge_club_spruce_2.2 (90.0)
+  ok    dungeon_items.recipe_band_dng_forge_club_spruce_2.5 (90.0)
+  ok    dungeon_items.recipe_output_dng_forge_club_oak
+  ok    dungeon_items.recipe_band_dng_forge_club_oak_2.0 (416.0)
+  ok    dungeon_items.recipe_band_dng_forge_club_oak_2.2 (443.0)
+  ok    dungeon_items.recipe_band_dng_forge_club_oak_2.5 (483.5)
+  ok    dungeon_items.recipe_output_dng_forge_club_mushroom
+  ok    dungeon_items.recipe_band_dng_forge_club_mushroom_2.0 (992.0)
+  ok    dungeon_items.recipe_band_dng_forge_club_mushroom_2.2 (1019.0)
+  ok    dungeon_items.recipe_band_dng_forge_club_mushroom_2.5 (1059.5)
+  ok    dungeon_items.recipe_output_dng_forge_spear_twig
+  ok    dungeon_items.recipe_band_dng_forge_spear_twig_2.0 (62.0)
+  ok    dungeon_items.recipe_band_dng_forge_spear_twig_2.2 (62.0)
+  ok    dungeon_items.recipe_band_dng_forge_spear_twig_2.5 (62.0)
+  ok    dungeon_items.recipe_output_dng_forge_spear_iron
+  ok    dungeon_items.recipe_band_dng_forge_spear_iron_2.0 (380.0)
+  ok    dungeon_items.recipe_band_dng_forge_spear_iron_2.2 (407.0)
+  ok    dungeon_items.recipe_band_dng_forge_spear_iron_2.5 (447.5)
+  ok    dungeon_items.recipe_output_dng_forge_spear_thistle
+  ok    dungeon_items.recipe_band_dng_forge_spear_thistle_2.0 (860.0)
+  ok    dungeon_items.recipe_band_dng_forge_spear_thistle_2.2 (887.0)
+  ok    dungeon_items.recipe_band_dng_forge_spear_thistle_2.5 (927.5)
+  ok    dungeon_items.recipe_output_dng_forge_staff_branch
+  ok    dungeon_items.recipe_band_dng_forge_staff_branch_2.0 (80.0)
+  ok    dungeon_items.recipe_band_dng_forge_staff_branch_2.2 (80.0)
+  ok    dungeon_items.recipe_band_dng_forge_staff_branch_2.5 (80.0)
+  ok    dungeon_items.recipe_output_dng_forge_staff_hazel
+  ok    dungeon_items.recipe_band_dng_forge_staff_hazel_2.0 (446.0)
+  ok    dungeon_items.recipe_band_dng_forge_staff_hazel_2.2 (446.0)
+  ok    dungeon_items.recipe_band_dng_forge_staff_hazel_2.5 (446.0)
+  ok    dungeon_items.recipe_output_dng_forge_staff_light
+  ok    dungeon_items.recipe_band_dng_forge_staff_light_2.0 (1310.0)
+  ok    dungeon_items.recipe_band_dng_forge_staff_light_2.2 (1310.0)
+  ok    dungeon_items.recipe_band_dng_forge_staff_light_2.5 (1310.0)
+  ok    dungeon_items.thirteen_recipes
+  ok    dungeon_items.rune_shards_are_three
+  --    dungeon_items: 387 checks, 0 failed, 0 skipped, 6.2 s
+== section dungeon_pickups  (res://tests/sections/dungeon_pickups.gd)
+  ok    dungeon_pickups.pickup_layer_and_delay
+  ok    dungeon_pickups.orb_magnet_and_pickup
+  ok    dungeon_pickups.pickup_goes_through_loot_deliver_when_present
+  ok    dungeon_pickups.full_pack_retains_drop_and_warns_once
+  ok    dungeon_pickups.full_pack_can_retry
+  ok    dungeon_pickups.berry_heals_when_hurt
+  ok    dungeon_pickups.orb_cap_50_auto_collects
+  ok    dungeon_pickups.cap_full_pack_queues_without_loss
+  ok    dungeon_pickups.cap_pending_drop_retries
+  ok    dungeon_pickups.telegraph_ring_matches_hit_area
+  ok    dungeon_pickups.telegraph_line_matches_hit_area
+  ok    dungeon_pickups.telegraph_pool_cap_8
+  ok    dungeon_pickups.fx_pool_reuse
+  ok    dungeon_pickups.fx_idle_process_disabled
+  --    dungeon_pickups: 14 checks, 0 failed, 0 skipped, 0.3 s
+== section dungeon_run  (res://tests/sections/dungeon_run.gd)
+  ok    dungeon_run.curve_1
+  ok    dungeon_run.hp_bat_floor_1
+  ok    dungeon_run.hp_ugleoje_floor_1
+  ok    dungeon_run.hp_tornebusk_floor_1
+  ok    dungeon_run.curve_2
+  ok    dungeon_run.hp_bat_floor_2
+  ok    dungeon_run.hp_ugleoje_floor_2
+  ok    dungeon_run.hp_tornebusk_floor_2
+  ok    dungeon_run.curve_3
+  ok    dungeon_run.hp_bat_floor_3
+  ok    dungeon_run.hp_ugleoje_floor_3
+  ok    dungeon_run.hp_tornebusk_floor_3
+  ok    dungeon_run.curve_4
+  ok    dungeon_run.hp_bat_floor_4
+  ok    dungeon_run.hp_ugleoje_floor_4
+  ok    dungeon_run.hp_tornebusk_floor_4
+  ok    dungeon_run.curve_5
+  ok    dungeon_run.hp_bat_floor_5
+  ok    dungeon_run.hp_ugleoje_floor_5
+  ok    dungeon_run.hp_tornebusk_floor_5
+  ok    dungeon_run.curve_6
+  ok    dungeon_run.hp_bat_floor_6
+  ok    dungeon_run.hp_ugleoje_floor_6
+  ok    dungeon_run.hp_tornebusk_floor_6
+  ok    dungeon_run.curve_7
+  ok    dungeon_run.hp_bat_floor_7
+  ok    dungeon_run.hp_ugleoje_floor_7
+  ok    dungeon_run.hp_tornebusk_floor_7
+  ok    dungeon_run.curve_8
+  ok    dungeon_run.hp_bat_floor_8
+  ok    dungeon_run.hp_ugleoje_floor_8
+  ok    dungeon_run.hp_tornebusk_floor_8
+  ok    dungeon_run.curve_9
+  ok    dungeon_run.hp_bat_floor_9
+  ok    dungeon_run.hp_ugleoje_floor_9
+  ok    dungeon_run.hp_tornebusk_floor_9
+  ok    dungeon_run.curve_10
+  ok    dungeon_run.hp_bat_floor_10
+  ok    dungeon_run.hp_ugleoje_floor_10
+  ok    dungeon_run.hp_tornebusk_floor_10
+  ok    dungeon_run.curve_11
+  ok    dungeon_run.hp_bat_floor_11
+  ok    dungeon_run.hp_ugleoje_floor_11
+  ok    dungeon_run.hp_tornebusk_floor_11
+  ok    dungeon_run.curve_12
+  ok    dungeon_run.hp_bat_floor_12
+  ok    dungeon_run.hp_ugleoje_floor_12
+  ok    dungeon_run.hp_tornebusk_floor_12
+  ok    dungeon_run.curve_clamps_and_deepens
+  ok    dungeon_run.starter_and_iron_ratings
+  ok    dungeon_run.weapon_ranges_match_ttk
+  ok    dungeon_run.family_sword_dps_parity
+  ok    dungeon_run.family_club_dps_parity
+  ok    dungeon_run.family_spear_dps_parity
+  ok    dungeon_run.family_dagger_dps_parity
+  ok    dungeon_run.family_staff_dps_parity
+  ok    dungeon_run.preset_none_hearts
+  ok    dungeon_run.preset_none_windup
+  ok    dungeon_run.preset_none_dodge_is_milliseconds
+  ok    dungeon_run.damage_none_bat_1
+  ok    dungeon_run.damage_none_bat_2
+  ok    dungeon_run.damage_none_bat_3
+  ok    dungeon_run.damage_none_bat_4
+  ok    dungeon_run.damage_none_ugleoje_1
+  ok    dungeon_run.damage_none_ugleoje_2
+  ok    dungeon_run.damage_none_ugleoje_3
+  ok    dungeon_run.damage_none_ugleoje_4
+  ok    dungeon_run.damage_none_tornebusk_1
+  ok    dungeon_run.damage_none_tornebusk_2
+  ok    dungeon_run.damage_none_tornebusk_3
+  ok    dungeon_run.damage_none_tornebusk_4
+  ok    dungeon_run.preset_none_does_not_change_loot_luck
+  ok    dungeon_run.preset_light_hearts
+  ok    dungeon_run.preset_light_windup
+  ok    dungeon_run.preset_light_dodge_is_milliseconds
+  ok    dungeon_run.damage_light_bat_1
+  ok    dungeon_run.damage_light_bat_2
+  ok    dungeon_run.damage_light_bat_3
+  ok    dungeon_run.damage_light_bat_4
+  ok    dungeon_run.damage_light_ugleoje_1
+  ok    dungeon_run.damage_light_ugleoje_2
+  ok    dungeon_run.damage_light_ugleoje_3
+  ok    dungeon_run.damage_light_ugleoje_4
+  ok    dungeon_run.damage_light_tornebusk_1
+  ok    dungeon_run.damage_light_tornebusk_2
+  ok    dungeon_run.damage_light_tornebusk_3
+  ok    dungeon_run.damage_light_tornebusk_4
+  ok    dungeon_run.preset_light_does_not_change_loot_luck
+  ok    dungeon_run.preset_cozy_hearts
+  ok    dungeon_run.preset_cozy_windup
+  ok    dungeon_run.preset_cozy_dodge_is_milliseconds
+  ok    dungeon_run.damage_cozy_bat_1
+  ok    dungeon_run.damage_cozy_bat_2
+  ok    dungeon_run.damage_cozy_bat_3
+  ok    dungeon_run.damage_cozy_bat_4
+  ok    dungeon_run.damage_cozy_ugleoje_1
+  ok    dungeon_run.damage_cozy_ugleoje_2
+  ok    dungeon_run.damage_cozy_ugleoje_3
+  ok    dungeon_run.damage_cozy_ugleoje_4
+  ok    dungeon_run.damage_cozy_tornebusk_1
+  ok    dungeon_run.damage_cozy_tornebusk_2
+  ok    dungeon_run.damage_cozy_tornebusk_3
+  ok    dungeon_run.damage_cozy_tornebusk_4
+  ok    dungeon_run.preset_cozy_does_not_change_loot_luck
+  ok    dungeon_run.oil_paused
+  ok    dungeon_run.oil_hub
+  ok    dungeon_run.oil_standard
+  ok    dungeon_run.oil_light
+  ok    dungeon_run.oil_cozy
+  ok    dungeon_run.oil_race_and_gem_multiply_once
+  ok    dungeon_run.light_never_below_35_percent
+  ok    dungeon_run.darkness_floor_1
+  ok    dungeon_run.darkness_floor_2
+  ok    dungeon_run.darkness_floor_3
+  ok    dungeon_run.darkness_floor_4
+  ok    dungeon_run.darkness_floor_5
+  ok    dungeon_run.darkness_floor_6
+  ok    dungeon_run.darkness_floor_7
+  ok    dungeon_run.darkness_floor_8
+  ok    dungeon_run.darkness_floor_9
+  ok    dungeon_run.darkness_floor_10
+  ok    dungeon_run.darkness_floor_11
+  ok    dungeon_run.darkness_floor_12
+  ok    dungeon_run.darkness_floor_13
+  ok    dungeon_run.darkness_floor_14
+  ok    dungeon_run.darkness_floor_15
+  ok    dungeon_run.darkness_floor_16
+  ok    dungeon_run.darkness_floor_17
+  ok    dungeon_run.darkness_floor_18
+  ok    dungeon_run.darkness_floor_19
+  ok    dungeon_run.darkness_floor_20
+  ok    dungeon_run.darkness_interval_and_oil
+  ok    dungeon_run.auto_refuel_prioritizes_oil
+  ok    dungeon_run.auto_refuel_fallback_and_threshold
+  ok    dungeon_run.boss_first_kill_adds_one_heart
+  ok    dungeon_run.boss_flags_are_atomic_for_save_observers
+  ok    dungeon_run.boss_repeat_never_duplicates_hearts
+  ok    dungeon_run.three_bosses_cap_at_six_half_hearts
+  ok    dungeon_run.flag_batch_refuses_invalid_input_atomically
+  ok    dungeon_run.hearts_composition_includes_assist
+  ok    dungeon_run.custom_setting_keeps_other_assists
+  ok    dungeon_run.forest_help_available_from_settings
+  ok    dungeon_run.all_eleven_assists_exposed_in_game
+  ok    dungeon_run.help_presets_change_real_owner
+  ok    dungeon_run.run_watch_attach_is_idempotent
+  ok    dungeon_run.run_watch_applies_surprises
+  ok    dungeon_run.picker_warns_for_highlighted_floor
+  ok    dungeon_run.map_reveals_first_visited_floor_and_consumes_one
+  ok    dungeon_run.tutorial_first_hint_emits
+  ok    dungeon_run.tutorial_spacing_and_flags
+  ok    dungeon_run.tutorial_disabled
+  ok    dungeon_run.hub_does_not_drain_player_oil
+  --    dungeon_run: 152 checks, 0 failed, 0 skipped, 0.4 s
+== section enemies  (res://tests/sections/enemies.gd)
+  ok    enemies.create_marker_is_picked_entry
+  ok    enemies.spawns_bat
+  ok    enemies.hp_ladder_bat
+  ok    enemies.damage_ladder_bat
+  ok    enemies.dies_and_emits_once_bat
+  ok    enemies.spawns_ugleoje
+  ok    enemies.hp_ladder_ugleoje
+  ok    enemies.damage_ladder_ugleoje
+  ok    enemies.dies_and_emits_once_ugleoje
+  ok    enemies.spawns_tornebusk
+  ok    enemies.hp_ladder_tornebusk
+  ok    enemies.damage_ladder_tornebusk
+  ok    enemies.dies_and_emits_once_tornebusk
+  ok    enemies.spawns_lysesvamp
+  ok    enemies.hp_ladder_lysesvamp
+  ok    enemies.damage_ladder_lysesvamp
+  ok    enemies.dies_and_emits_once_lysesvamp
+  ok    enemies.spawns_mosfroe
+  ok    enemies.hp_ladder_mosfroe
+  ok    enemies.damage_ladder_mosfroe
+  ok    enemies.dies_and_emits_once_mosfroe
+  ok    enemies.spawns_sporesvamp
+  ok    enemies.hp_ladder_sporesvamp
+  ok    enemies.damage_ladder_sporesvamp
+  ok    enemies.dies_and_emits_once_sporesvamp
+  ok    enemies.spawns_krystalugle
+  ok    enemies.hp_ladder_krystalugle
+  ok    enemies.damage_ladder_krystalugle
+  ok    enemies.dies_and_emits_once_krystalugle
+  ok    enemies.telegraph_ugleoje
+  ok    enemies.telegraph_tornebusk
+  ok    enemies.stagger_cancels_windup
+  ok    enemies.armor_keeps_windup
+  ok    enemies.assist_scales_windup_and_damage
+  ok    enemies.ambush_starts_hidden
+  ok    enemies.ambush_rustle_then_leap
+  ok    enemies.ambush_leaps_once
+  ok    enemies.ambush_kind_fallback
+  ok    enemies.fairy_light_reveals_stuns
+  ok    enemies.rng_seeded_replay
+  ok    enemies.sleeping_enemy_cost_zero
+  ok    enemies.runestone_leash_blocks_aggro
+  ok    enemies.no_damage_during_dodge_iframes
+  --    enemies: 43 checks, 0 failed, 0 skipped, 0.2 s
+== section weapons  (res://tests/sections/weapons.gd)
+  ok    weapons.weapon_info_sword_rusty
+  ok    weapons.sword_equivalent_sword_rusty
+  ok    weapons.weapon_info_iron_sword
+  ok    weapons.sword_equivalent_iron_sword
+  ok    weapons.weapon_info_wpn_dagger_flint
+  ok    weapons.sword_equivalent_wpn_dagger_flint
+  ok    weapons.weapon_info_wpn_club_oak
+  ok    weapons.sword_equivalent_wpn_club_oak
+  ok    weapons.weapon_info_wpn_spear_iron
+  ok    weapons.sword_equivalent_wpn_spear_iron
+  ok    weapons.weapon_info_wpn_staff_hazel
+  ok    weapons.sword_equivalent_wpn_staff_hazel
+  ok    weapons.unknown_weapon_safe
+  ok    weapons.dps_parity_sword_rusty (1.0)
+  ok    weapons.dps_parity_wpn_dagger_thorn (0.92307692307692)
+  ok    weapons.dps_parity_wpn_club_spruce (1.03703703703704)
+  ok    weapons.dps_parity_wpn_spear_twig (0.93023255813953)
+  ok    weapons.dps_parity_wpn_staff_branch (0.96)
+  ok    weapons.dps_parity_iron_sword (1.0)
+  ok    weapons.dps_parity_wpn_dagger_flint (1.02564102564103)
+  ok    weapons.dps_parity_wpn_club_oak (0.98765432098765)
+  ok    weapons.dps_parity_wpn_spear_iron (1.0077519379845)
+  ok    weapons.dps_parity_wpn_staff_hazel (0.93333333333333)
+  ok    weapons.dps_parity_wpn_dagger_moonshard (0.97902097902098)
+  ok    weapons.dps_parity_wpn_sword_forest_steel (1.0)
+  ok    weapons.dps_parity_wpn_club_mushroom (1.01010101010101)
+  ok    weapons.dps_parity_wpn_spear_thistle (1.01479915433404)
+  ok    weapons.dps_parity_wpn_staff_light (0.90909090909091)
+  ok    weapons.dps_parity_wpn_dagger_bee (1.02564102564103)
+  ok    weapons.dps_parity_wpn_sword_candle (1.0)
+  ok    weapons.dps_parity_wpn_club_thornberry (0.98765432098765)
+  ok    weapons.dps_parity_wpn_spear_owl (0.9922480620155)
+  ok    weapons.dps_parity_wpn_staff_ember (0.90666666666667)
+  ok    weapons.dps_parity_wpn_sword_moon (1.0)
+  ok    weapons.dps_parity_wpn_club_trunk (1.00529100529101)
+  ok    weapons.dps_parity_wpn_spear_root (0.99667774086379)
+  ok    weapons.dps_parity_wpn_staff_star (0.8952380952381)
+  ok    weapons.stun_chance
+  ok    weapons.stun_respects_armor
+  ok    weapons.light_arc_reveals
+  ok    weapons.oil_on_kill
+  ok    weapons.heart_on_kill
+  ok    weapons.moon_wave_every_four_swings (6)
+  ok    weapons.quake_every_four_swings (6)
+  ok    weapons.light_boost_and_minimum
+  ok    weapons.gem_effects_gem_rock_crystal
+  ok    weapons.gem_effects_gem_thornberry_stone
+  ok    weapons.gem_effects_gem_night_sapphire
+  ok    weapons.gem_effects_gem_sunset_stone
+  ok    weapons.gem_effects_gem_rune_heart
+  ok    weapons.gem_effects_emerald
+  ok    weapons.legendary_gem_all_six_themes
+  ok    weapons.gem_equip_slot
+  ok    weapons.chest_sense_is_max_not_sum
+  ok    weapons.real_player_gem_wiring
+  ok    weapons.real_player_light_boost_and_gem_cooldown
+  ok    weapons.real_player_family_swing_parameters
+  ok    weapons.existing_gem_can_equip
+  --    weapons: 58 checks, 0 failed, 0 skipped, 0.1 s
+== summary: 10 section(s) run, 1378 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 40.5 s
+PLAYTEST PASS (1378 checks in 10 sections, 0 allowed engine messages, 0 known-issue messages)

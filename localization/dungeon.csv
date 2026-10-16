@@ -1,0 +1,20 @@
+keys,da,en
+DUNGEON_WHISPER_SKOVKANT_1,Her dufter af vådt mos og gamle eventyr.,It smells of wet moss and old fairy tales.
+DUNGEON_WHISPER_DYBE_BREGNER_1,"Bregnerne hvisker, når du går forbi.",The ferns whisper as you pass.
+DUNGEON_WHISPER_DYBE_BREGNER_2,Noget stort rumler bag træerne…,Something big rumbles behind the trees…
+DUNGEON_WHISPER_SVAMPELUNDEN_1,Svampene lyser svagt som små måner.,The mushrooms glow like little moons.
+DUNGEON_WHISPER_SVAMPELUNDEN_2,Det summer i jorden. Pas på.,The ground hums. Careful.
+DUNGEON_WHISPER_KRYSTALGROTTEN_1,Krystallerne synger helt stille.,The crystals sing very quietly.
+DUNGEON_WHISPER_KRYSTALGROTTEN_2,Her er bunden. Og noget venter.,This is the bottom. And something waits.
+DUNGEON_PROMPT_GLOWING,Se nærmere på det lysende,Look closer at the glow
+DUNGEON_LEAVE,Forlad Mørkeskoven,Leave the Dark Wood
+DUNGEON_LEAVE_CONFIRM,"Vil du gå tilbage til Skovkanten? Alt, du har fundet, beholder du.",Go back to the forest edge? You keep everything you found.
+DUNGEON_RUN_RESET,"Skoven har ændret sig. De gamle spor er væk, men runerne husker dig.","The wood has changed. The old tracks are gone, but the runes remember you."
+DUNGEON_FLOOR_FMT,Etage %d,Floor %d
+RUNE_ACTIVATED,Runen vågner. Dit fremskridt er gemt.,The rune wakes. Your progress is saved.
+RUNE_REST,Du hviler ved runen.,You rest by the rune.
+RUNE_PROMPT,Rør runen,Touch the rune
+RUNE_PICKER_TITLE,Vælg en rune,Choose a rune
+RUNE_PICKER_START,Fra begyndelsen,From the start
+RUNE_PICKER_FLOOR_FMT,Etage %d · %s,Floor %d · %s
+HULEN_ROOTS_PART,Rødderne giver slip. Hulen er åben.,The roots let go. The cave is open.

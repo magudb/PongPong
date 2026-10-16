@@ -17,6 +17,8 @@ var oil_draining: bool = false
 var lantern: PointLight2D
 var ghost_light: PointLight2D
 var combat: PlayerCombat2D
+var _slow_remaining: float = 0
+var _slow_mult: float = 1
 var held_equipment: HeldEquipment2D
 var outfit_layers: WardrobeLayers
 var is_jumping: bool = false
@@ -50,7 +52,7 @@ var _bob_time: float = 0.0
 var _flower_time: float = 0.0
 var _flower_cell := Vector2i(-999, -999)
 const RULES := "res://scripts/dungeon_run/dungeon_run.gd"
-const GEM := "res://scripts/loot/lantern_gem.gd"
+const GEM := "res://scripts/combat/lantern_gem.gd"
 
 func _ready() -> void:
 	super._ready()
@@ -130,8 +132,8 @@ func enter_area(target: IsoArea, at: Vector2) -> void:
 		_marker.get_parent().remove_child(_marker)
 	area.ground_fx.add_child(_marker)
 	_marker.projection = area.projection
-	oil_draining = _is_action_area() and area.map.ambient in [&"forest", &"cave"]
-	lantern.enabled = oil_draining
+	oil_draining = _is_action_area() and area.map.ambient in [&"forest", &"cave"] and int(area.map.extra.get("floor",0)) > 0
+	lantern.enabled = _is_action_area() and area.map.ambient in [&"forest", &"cave"]
 	_update_lantern()
 
 func world_input_allowed() -> bool:
@@ -234,6 +236,9 @@ func _physics_process(delta: float) -> void:
 		speed = _run * 0.9
 	elif state in [S.SWING, S.USING]:
 		speed *= 0.35
+	_slow_remaining = maxf(0,_slow_remaining-delta)
+	if _slow_remaining == 0: _slow_mult = 1
+	speed *= _slow_mult
 	if _landing:
 		direction = Iso.to_ground(_landing_at - global_position).normalized()
 		speed = minf(_walk, Iso.ground_dist(global_position, _landing_at) / maxf(delta, 0.001))
@@ -410,6 +415,10 @@ func heal_half(amount: int) -> void:
 	half_hearts = clampi(half_hearts + maxi(0, amount), 0, max_half_hearts)
 	_emit_stats_on_bus()
 
+func apply_slow(multiplier: float, seconds: float) -> void:
+	_slow_mult = minf(_slow_mult,clampf(multiplier,.1,1))
+	_slow_remaining = maxf(_slow_remaining,seconds)
+
 func heal_full() -> void:
 	heal_half(max_half_hearts)
 
@@ -420,7 +429,7 @@ func restore_stamina(amount: float) -> void:
 func add_oil(seconds: float) -> void:
 	var before := oil
 	oil = clampf(oil + maxf(0.0, seconds), 0.0, max_oil)
-	_oil_low_said = false
+	if DungeonFloors.inst() == null or not DungeonFloors.inst().active: _oil_low_said = false
 	_oil_empty_time = 0.0
 	_update_lantern()
 	if oil != before:
@@ -428,6 +437,11 @@ func add_oil(seconds: float) -> void:
 
 func restore_oil() -> void:
 	add_oil(max_oil)
+
+func begin_dungeon_run() -> void:
+	_oil_low_said = false
+	_oil_empty_time = 0
+	combat.begin_run()
 
 func apply_consumable(health: int, oil_seconds: float, energy: float) -> void:
 	# The inventory owner already removed the item. Commit every stat before publishing any one of them.
