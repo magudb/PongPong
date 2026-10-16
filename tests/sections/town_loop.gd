@@ -29,15 +29,77 @@ func _gate(t) -> void:
 	t.check("gate_leg_not_skipped", missing.is_empty(), str(missing))
 
 func run(t) -> void:
-	await t.start_world()
+	await t.clear_scene()
 	var gm: Node = t.autoload("GameManager")
+	probe.attach(t)
+	_schema(t)
+	await _first_morning(t)
 	gm.set_config_override("time.minutes_per_real_second", 0.0)
 	gm.set_config_override("towns.curfew.enabled", false)
-	probe.attach(t)
 	await _foundation(t)
 	_gate(t)
 	probe.dispose()
 	gm.clear_config_overrides()
+
+func _first_morning(t) -> void:
+	var bus: Node = t.autoload("EventBus")
+	var gm: Node = t.autoload("GameManager")
+	var starts: Array[String] = []
+	var endings: Array = []
+	var started := func(npc, _module): starts.append(str(npc))
+	var ended := func(): endings.append(true)
+	bus.dialogue_started.connect(started)
+	bus.dialogue_ended.connect(ended)
+	await t.start_world("", "Tester", "Testgaarden", "", true)
+	gm.set_config_override("time.minutes_per_real_second", 0.0)
+	await t.until(func(): return TownProbe.dialogue(t).is_open(), 10)
+	var courier: WeakRef
+	for actor in t.tree.get_nodes_in_group("npc"):
+		if str(actor.npc_id) == "postman_pip" and actor.guest:
+			courier = weakref(actor)
+	var deadline := Time.get_ticks_msec() + 60000
+	var copy_ok := true
+	var checked := {}
+	while not bool(gm.get_flag(&"intro_done", false)) and Time.get_ticks_msec() < deadline:
+		var screen := TownProbe.dialogue(t)
+		if screen != null and screen.is_open():
+			screen.chars_per_second = 100000
+			for row in screen._lines:
+				var key := str(row.get("text_key", ""))
+				if checked.has(key):
+					continue
+				checked[key] = true
+				for locale in ["da", "en"]:
+					t.autoload("LocalizationManager").set_locale(locale)
+					copy_ok = copy_ok and key != "" and tr(key) != key
+				t.autoload("LocalizationManager").set_locale("da")
+			t.tap(&"ui_accept" if screen._wants_focus() else &"interact")
+			await t.frames(2)
+		else:
+			await t.physics(2)
+	await t.frames(3)
+	_check(t, "L00", "l00_new_game_on_farm", str(t.world().area.map.id) == "farm" and gm.current_phase == gm.GamePhase.PLAYING and not bool(gm.get_flag(&"intro_pending", false)))
+	_check(t, "L00", "l00_first_morning_order", starts == ["postman_pip", "fairy_king", "postman_pip"] and endings.size() == 3 and courier != null and courier.get_ref() == null, str(starts) + " / " + str(endings.size()))
+	_check(t, "L00", "l00_no_raw_keys", copy_ok and checked.size() >= 6)
+	var count := starts.size()
+	await preload("res://scripts/world2d/intro_sequence.gd").run(t.world())
+	_check(t, "L00", "l00_first_morning_runs_once", starts.size() == count)
+	_check(t, "L00", "l00_hud_and_banner", TownProbe.screens(t).get_screen(&"hud").visible and t.world().area.map.title == "ZONE_FARM" and not tr("ZONE_FARM").contains("Trætoppen"))
+	bus.dialogue_started.disconnect(started)
+	bus.dialogue_ended.disconnect(ended)
+	# A second actual new game proves the skip path without forging its flags.
+	await t.start_world("", "Tester", "Testgaarden", "", true)
+	gm.set_config_override("time.minutes_per_real_second", 0.0)
+	await t.until(func(): return TownProbe.dialogue(t).is_open(), 10)
+	t.tap_key(KEY_ESCAPE)
+	await t.frames(4)
+	_check(t, "L00", "l00_first_morning_esc_skips", bool(gm.get_flag(&"intro_done", false)) and t.autoload("QuestManager").is_active(&"intro_lottery") and t.autoload("QuestManager").is_active(&"forste_dage") and not gm.is_modal_open())
+	var pos: Vector2 = t.player().global_position
+	t.hold(&"move_right")
+	await t.physics(5)
+	t.release_all()
+	await t.physics(5)
+	_check(t, "L00", "l00_player_control_returns", t.player().state == PlayerBody2D.S.FREE and pos.distance_to(t.player().global_position) > 0)
 
 func _foundation(t) -> void:
 	var gm: Node = t.autoload("GameManager")
@@ -62,6 +124,7 @@ func _foundation(t) -> void:
 	t.check("digest_stable_over_wall_clock", LoopDigest.of_payload(saves.gather_payload()) == digest)
 	# A real walk, not a position/velocity assignment, must enter the bridge warp.
 	var warp: Warp2D
+	var farm_before := LoopDigest.of_payload(t.world().farm.to_dict())
 	for node in t.world().area.triggers.get_children():
 		if node is Warp2D and node.to_area == &"traetoppen":
 			warp = node
@@ -71,10 +134,27 @@ func _foundation(t) -> void:
 		await t.until(func(): return t.world().area.map.id == &"traetoppen" and not t.world().traveling, 8)
 		t.check("walker_reaches_fixture_warp", result.ok and t.world().area.map.id == &"traetoppen", str(result))
 		t.check("walker_uses_navigation_and_tick_budget", result.nav and result.ticks <= 2700, str(result))
-		await t.world().travel(&"farm", &"from_traetoppen")
+		_check(t, "L01", "l01_bridge_arrival_without_pingpong", t.world().area.map.id == &"traetoppen" and not t.world().traveling)
+		await _first_citizen(t)
+		await preload("res://tests/lib/town_loop/shops.gd").new().run(t, self)
+		await t.world().travel(&"traetoppen", &"from_farm")
+		var citizens: Array[WeakRef] = []
+		for actor in TownProbe.director(t).live.values():
+			citizens.append(weakref(actor))
+		for trigger in t.world().area.triggers.get_children():
+			if trigger is Warp2D and trigger.to_area == &"farm":
+				var back := await LoopWalker.walk_to(t, trigger.global_position, 5, 10)
+				await t.until(func(): return not t.world().traveling and t.world().area.map.id == &"farm", 8)
+				_check(t, "L09", "l09_walk_back_to_farm", back.ok and t.world().area.map.id == &"farm", str(back) + " area=" + str(t.world().area.map.id) + " travel=" + str(t.world().traveling))
+				break
+		await t.frames(3)
+		_check(t, "L09", "l09_farm_state_intact", LoopDigest.of_payload(t.world().farm.to_dict()) == farm_before)
+		_check(t, "L02", "l02_citizens_freed_on_exit", not citizens.is_empty() and citizens.all(func(w): return w.get_ref() == null))
+		await preload("res://tests/lib/town_loop/farm_day.gd").new().run(t, self)
 	var directory: String = saves.save_dir
 	saves.save_dir = "user://town-loop"
-	var before := LoopDigest.of_payload(saves.gather_payload())
+	var payload_before: Dictionary = saves.gather_payload()
+	var before := LoopDigest.of_payload(payload_before)
 	var start := Time.get_ticks_usec()
 	var saved: bool = saves.save_game(3)
 	var save_ms := (Time.get_ticks_usec() - start) / 1000.0
@@ -85,6 +165,101 @@ func _foundation(t) -> void:
 	await t.until(func(): return t.world() != null and t.world().get_instance_id() != world_id and t.player() != null, 10)
 	await t.physics(3)
 	gm.set_config_override("time.minutes_per_real_second", 0.0)
-	_check(t, "L13", "l13_digest_roundtrip", saved and loaded and LoopDigest.of_payload(saves.gather_payload()) == before)
+	var payload_after: Dictionary = saves.gather_payload()
+	var left: Dictionary = LoopDigest.canon(payload_before)
+	var right: Dictionary = LoopDigest.canon(payload_after)
+	LoopDigest.drop(left, LoopDigest.volatile())
+	LoopDigest.drop(right, LoopDigest.volatile())
+	_check(t, "L13", "l13_digest_roundtrip", saved and loaded and LoopDigest.of_payload(payload_after) == before, "; ".join(LoopDigest.differences(left, right).slice(0, 8)))
 	_check(t, "L13", "l13_save_cost", save_ms <= 25, str(save_ms))
 	saves.save_dir = directory
+
+func _schema(t) -> void:
+	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://tests/lib/town_loop/loop.json"))
+	var lr: Node = t.autoload("LuaRuntime")
+	var problems: Array[String] = []
+	for id in [data.citizen, data.shop.keeper, data.bakery.keeper, data.builder.keeper, data.gifts.npc]:
+		if lr.get_npc(id).is_empty():
+			problems.append("npc:" + str(id))
+	for item in [data.shop.item] + data.gifts.items:
+		if lr.get_item_def(item).is_empty():
+			problems.append("item:" + str(item))
+	for id in [data.shop.building, data.bakery.building, data.builder.building, data.post_office]:
+		if Hours.building(id).is_empty():
+			problems.append("building:" + str(id))
+	for row in data.routine_probes:
+		if lr.get_npc(row.npc).is_empty():
+			problems.append("routine:" + str(row.npc))
+	t.check("loop_json_ids_exist", problems.is_empty() and not lr.get_shop(data.shop.id).is_empty(), str(problems))
+
+func _population(t) -> void:
+	var director := TownProbe.director(t)
+	var expected: Array = NpcDirector.population(str(t.world().area.map.id))
+	var actual: Array = director.live.keys()
+	var consistent := true
+	for id in actual:
+		var where := NpcDirector.where_is(str(id))
+		consistent = consistent and str(where.area) == str(t.world().area.map.id) and id in expected
+	_check(t, "L02", "l02_population_equals_schedule", consistent and not actual.is_empty() and actual.size() == mini(expected.size(), director.max_live), str(actual) + " expected=" + str(expected))
+	_check(t, "L02", "l02_visual_cap_16", actual.size() <= 16)
+	_check(t, "L02", "l02_area_populated_event", not probe.named("area_populated").is_empty())
+
+func _finish_dialogue(t, action := "close") -> Dictionary:
+	var screen := TownProbe.dialogue(t)
+	var selected := {}
+	for step in 100:
+		if screen == null or not screen.is_open():
+			break
+		screen.chars_per_second = 100000
+		if screen._wants_focus():
+			var index := -1
+			for i in screen._choices.size():
+				if str(screen._choices[i].get("action", "")) == action:
+					index = i
+					break
+			if index < 0:
+				index = screen._choices.size() - 1
+			selected = screen._choices[index].duplicate()
+			screen._buttons[index].grab_focus()
+			t.tap(&"ui_accept")
+		else:
+			t.tap(&"interact")
+		await t.frames(2)
+	return selected
+
+func _first_citizen(t) -> void:
+	await LoopClock.to(t, 10)
+	_population(t)
+	var actor := NpcDirector.node_of("gardener_hoppe")
+	_check(t, "L02", "l02_live_citizen_at_routine_post", actor != null)
+	if actor == null:
+		return
+	var route := await LoopWalker.walk_to(t, actor.global_position, 65)
+	_check(t, "L03", "l03_walk_reaches_citizen", bool(route.ok), str(route))
+	var sm: Node = t.autoload("SocialManager")
+	var before: int = sm.hearts("gardener_hoppe")
+	t.tap(&"interact")
+	await t.frames(3)
+	var screen := TownProbe.dialogue(t)
+	_check(t, "L03", "l03_walk_and_talk", screen.is_open() and actor.is_talking and t.autoload("GameManager").top_modal() == &"dialogue")
+	if not screen.is_open():
+		return
+	_check(t, "L03", "l03_first_meeting_copy", screen._lines.any(func(row): return str(row.get("text_key", "")).begins_with("SOC_GARDENER_HOPPE_FIRST_")))
+	await _finish_dialogue(t)
+	_check(t, "L03", "l03_weekly_heart_once", sm.hearts("gardener_hoppe") == before + 1)
+	t.tap(&"interact")
+	await t.frames(3)
+	await _finish_dialogue(t)
+	_check(t, "L03", "l03_repeat_chat_no_extra_heart", sm.hearts("gardener_hoppe") == before + 1)
+	t.tap(&"interact")
+	await t.frames(3)
+	t.tap_key(KEY_ESCAPE)
+	await t.frames(3)
+	_check(t, "L03", "l03_esc_first_line_no_heart", sm.hearts("gardener_hoppe") == before + 1 and not actor.is_talking)
+	t.tap_key(KEY_P)
+	await t.frames(3)
+	var people: Control = TownProbe.screens(t).get_screen(&"people")
+	_check(t, "L03", "l03_people_book_shows_heart", people.is_open() and people.data.any(func(row): return row.id == "gardener_hoppe" and int(row.hearts) == before + 1))
+	t.tap_key(KEY_ESCAPE)
+	await t.frames(3)
+	await preload("res://tests/lib/town_loop/gifts.gd").new().run(t, self)

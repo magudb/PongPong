@@ -549,6 +549,12 @@ func _hearts() -> void:
 	m2.add_points("baker_maja", 10, &"x")
 	ok = ok and gm.flag_int(&"friend_baker_maja", -1) == 5
 	t.check("flag_mirror_after_every_write", ok, "friend_<npc> = whole hearts after add_points, add_hearts, debug_set_hearts, from_dict and a repair write (flag %d)" % gm.flag_int(&"friend_baker_maja", -1))
+	var knowledge_only := {"npcs": {"baker_maja": {"bk": 1}}}
+	m2.from_dict(knowledge_only)
+	t.check("zero_point_ledger_repairs_existing_mirror", gm.flag_int(&"friend_baker_maja", -1) == 0 and m2.met("baker_maja"))
+	gm.clear_flag(&"friend_baker_maja")
+	m2.from_dict(knowledge_only)
+	t.check("zero_point_ledger_load_preserves_absent_flag", not gm.world_flags.has(&"friend_baker_maja") and m2.met("baker_maja") and m2.points("baker_maja") == 0)
 	_done()
 
 

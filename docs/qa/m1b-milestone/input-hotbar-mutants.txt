@@ -1,0 +1,6 @@
+control (unmutated copy): exit 0, 73 passed, failing: none
+control print_inputmap.gd: exit 0, OK line present
+input_hotbar_removed               ok    caught by ['p01.input_has_38_actions_incl_hotbar', 'p01.input_map_matches_contract', 'project.input_has_38_actions_incl_hotbar', 'project.input_map_matches_contract']; print_inputmap exit 1
+input_addendum_removed             ok    caught by ['p01.input_has_38_actions_incl_hotbar', 'p01.input_map_matches_contract', 'project.input_has_38_actions_incl_hotbar', 'project.input_map_matches_contract']; print_inputmap exit 1
+input_people_removed               ok    caught by ['p01.control_people_extra_key_is_rejected', 'p01.control_people_removed_is_rejected', 'p01.input_has_38_actions_incl_hotbar', 'p01.input_map_matches_contract', 'project.input_has_38_actions_incl_hotbar', 'project.input_map_matches_contract']; print_inputmap exit 1
+mutants: 3 checked, 0 wrong

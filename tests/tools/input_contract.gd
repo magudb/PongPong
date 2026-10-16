@@ -1,6 +1,6 @@
 extends RefCounted
 ## P01 input contract: PLAN 3.2 plus addendum 3.3 (decorate, wardrobe, collection, rotate_item,
-## pickup_item) plus the towns addendum (people, fix round RT3). Shared by print_inputmap.gd and
+## pickup_item), the towns addendum (people, fix round RT3), and N04's named hotbar cycle. Shared by print_inputmap.gd and
 ## check_project.gd; load it with preload(), it has no class_name on purpose (drivers run with -s
 ## before the global class cache is current).
 ##
@@ -54,13 +54,18 @@ const ACTIONS: Dictionary = {
 	# towns addendum (RT3): the People book. P is free (the used keys are W A S D arrows E Enter Space
 	# Shift F Ctrl Q R 0-9 I Tab J Esc B H G C X); no pad button: the pause menu has a row "Folk"
 	"people": {"keys": [KEY_P]},
+	# N04: name the existing eight-slot D-pad cycle so dialogue/hints use
+	# the same binding contract as the production player.
+	"hotbar_previous": {"joy": [JOY_BUTTON_DPAD_LEFT]},
+	"hotbar_next": {"joy": [JOY_BUTTON_DPAD_RIGHT]},
 }
 
 ## The five actions the feature addendum adds on top of PLAN 3.2.
 const ADDENDUM: Array = ["decorate", "wardrobe", "collection", "rotate_item", "pickup_item"]
 
-## The one action the towns addendum adds (RT3): ACTIONS.size() is 30 + 5 + 1 = 36.
+## One town action and two named N04 hotbar actions: 30 + 5 + 1 + 2 = 38.
 const TOWN: Array = ["people"]
+const HOTBAR: Array = ["hotbar_previous", "hotbar_next"]
 
 ## The `ui_*` overrides that give a pad the paging keys (UI_NAVIGATION.md F10): the tab / page
 ## actions of every screen (`ui_page_up` = LB, `ui_page_down` = RB).
@@ -75,8 +80,8 @@ const ANY_DEVICE: int = -1
 ## ui_up/down/left/right but NOT joy A on ui_accept, joy B on ui_cancel nor LB / RB on
 ## ui_page_up / ui_page_down (probed), so a pad could not activate, cancel or page a focused
 ## screen. Every override is the engine default plus the pad button: "logical" = LOGICAL keycodes,
-## exactly like the engine's own defaults (PageUp / PageDown stay on the page actions). 36 contract
-## actions + these four = 40 actions (UI_NAVIGATION.md says 39 before `people`).
+## exactly like the engine's own defaults (PageUp / PageDown stay on the page actions). 38 contract
+## actions + these four overrides = 42 project actions.
 const UI_OVERRIDES: Dictionary = {
 	"ui_accept": {"logical": [KEY_ENTER, KEY_KP_ENTER, KEY_SPACE], "joy": [JOY_BUTTON_A]},
 	"ui_cancel": {"logical": [KEY_ESCAPE], "joy": [JOY_BUTTON_B]},

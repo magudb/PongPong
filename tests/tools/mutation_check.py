@@ -242,12 +242,13 @@ MUTANTS = [
     ("theme_removed", ["p01.gui_theme_custom"], lambda r: sub_once(r, "project.godot", 'theme/custom="res://assets/ui/theme.tres"', 'theme/custom=""')),
     ("input_inventory_f10", ["p01.input_map_matches_contract", "p01.inventory_i_and_tab_not_f10"], inventory_f10),
     ("input_action_removed", ["p01.input_map_matches_contract"], lambda r: regex_once(r, "project.godot", action_block("zoom_in"), "")),
-    ("input_addendum_removed", ["p01.input_map_matches_contract", "p01.input_has_36_actions_incl_5_addendum_1_town", "project.input_has_36_actions_incl_5_addendum_1_town"], lambda r: regex_once(r, "project.godot", action_block("pickup_item"), "")),
+    ("input_hotbar_removed", ["p01.input_map_matches_contract", "p01.input_has_38_actions_incl_hotbar", "project.input_has_38_actions_incl_hotbar"], lambda r: regex_once(r, "project.godot", action_block("hotbar_previous"), "")),
+    ("input_addendum_removed", ["p01.input_map_matches_contract", "p01.input_has_38_actions_incl_hotbar", "project.input_has_38_actions_incl_hotbar"], lambda r: regex_once(r, "project.godot", action_block("pickup_item"), "")),
     ("input_wheel_on_rotate", ["p01.input_map_matches_contract", "p01.wheel_only_on_zoom"], wheel_on_rotate),
     ("input_extra_action", ["p01.input_map_matches_contract"], extra_action),
     ("input_unintended_clash", ["p01.input_map_matches_contract"], lambda r: sub_once(r, "project.godot", '"physical_keycode":69,', '"physical_keycode":70,')),
     # fix round RT3 task 2: ONE new action `people` = P (36 actions)
-    ("input_people_removed", PEOPLE_BROKEN + ["p01.input_has_36_actions_incl_5_addendum_1_town", "project.input_has_36_actions_incl_5_addendum_1_town"], lambda r: regex_once(r, "project.godot", action_block("people"), "")),
+    ("input_people_removed", PEOPLE_BROKEN + ["p01.input_has_38_actions_incl_hotbar", "project.input_has_38_actions_incl_hotbar"], lambda r: regex_once(r, "project.godot", action_block("people"), "")),
     ("input_people_wrong_key", PEOPLE_BROKEN, lambda r: block_edit(r, "people", '"physical_keycode":80', '"physical_keycode":79')),
     ("input_people_on_inventory_key", PEOPLE_BROKEN, lambda r: block_edit(r, "people", '"physical_keycode":80', '"physical_keycode":73')),
     ("input_people_gets_a_pad_button", PEOPLE_BROKEN, people_pad_button),
@@ -318,7 +319,7 @@ MUTANTS = [
 
 # the mutants that must also be caught by print_inputmap.gd (they touch the input map)
 INPUTMAP_MUTANTS = {"input_inventory_f10", "input_action_removed", "input_addendum_removed", "input_wheel_on_rotate",
-                    "input_extra_action", "input_unintended_clash"} | {m[0] for m in MUTANTS if m[1] is QUALIFIED or m[1] is UI_BROKEN or m[1] is UI_PAGE_BROKEN or m[0].startswith("input_people_")}
+                    "input_extra_action", "input_unintended_clash", "input_hotbar_removed"} | {m[0] for m in MUTANTS if m[1] is QUALIFIED or m[1] is UI_BROKEN or m[1] is UI_PAGE_BROKEN or m[0].startswith("input_people_")}
 
 
 def isolated_env(project):

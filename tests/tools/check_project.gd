@@ -8,7 +8,7 @@ extends SceneTree
 ##                                                                              only the [autoload] rules on one file
 ##
 ## Exit code 0 only when every check passes. Check ids are printed as PASS/FAIL <id> so a harness
-## section can wrap them one to one. Two checks (input_map_matches_contract, input_has_36_actions_...)
+## section can wrap them one to one. Two checks (input_map_matches_contract, input_has_38_actions_...)
 ## answer to two ids, the `p01.` id of this tool and the `project.` id the design documents name in
 ## their verify lists: see _check_alias(). Only built-in classes and preload() are used: the driver
 ## compiles before the autoloads exist.
@@ -350,10 +350,10 @@ func _run_live() -> void:
 	# [input]
 	var ierr: Array = Contract.verify()
 	_check_alias("p01.input_map_matches_contract", "project.input_map_matches_contract", ierr.is_empty(), "; ".join(ierr))
-	_check_alias("p01.input_has_36_actions_incl_5_addendum_1_town", "project.input_has_36_actions_incl_5_addendum_1_town",
-		Contract.ACTIONS.size() == 36 and Contract.ADDENDUM.size() == 5 and Contract.TOWN.size() == 1 and Contract.ACTIONS.size() - Contract.ADDENDUM.size() - Contract.TOWN.size() == 30
-		and _all_present(Contract.ADDENDUM) and _all_present(Contract.TOWN) and InputMap.has_action("people"),
-		"the contract has %d actions (want 36 = 30 + 5 addendum + 1 town); addendum actions in the InputMap: %s, people in the InputMap: %s" % [Contract.ACTIONS.size(), _all_present(Contract.ADDENDUM), InputMap.has_action("people")])
+	_check_alias("p01.input_has_38_actions_incl_hotbar", "project.input_has_38_actions_incl_hotbar",
+		Contract.ACTIONS.size() == 38 and Contract.ADDENDUM.size() == 5 and Contract.TOWN.size() == 1 and Contract.HOTBAR.size() == 2 and Contract.ACTIONS.size() - Contract.ADDENDUM.size() - Contract.TOWN.size() - Contract.HOTBAR.size() == 30
+		and _all_present(Contract.ADDENDUM) and _all_present(Contract.TOWN) and _all_present(Contract.HOTBAR),
+		"the contract has %d actions (want 38 = 30 + 5 addendum + 1 town + 2 named hotbar bindings)" % Contract.ACTIONS.size())
 	var inv: Array = Contract.actual_signatures("inventory")
 	var inv_want: Array = ["key:%d" % KEY_I, "key:%d" % KEY_TAB]
 	inv_want.sort()
@@ -370,12 +370,12 @@ func _run_live() -> void:
 	var uerr: Array = Contract.ui_nav_errors()
 	_check("p01.ui_accept_cancel_take_joy_a_b_dpad_walks_focus", uerr.is_empty(), "; ".join(uerr))
 	var perr: Array = Contract.ui_page_errors()
-	# 36 contract actions + the four ui_* overrides (accept, cancel, page up, page down) = 40 (UI_NAVIGATION.md counts 39 before `people`)
+	# 38 contract actions (including People and two hotbar actions) + four ui_* overrides.
 	_check("project.ui_page_pad_bindings",
-		perr.is_empty() and Contract.UI_OVERRIDES.size() == 4 and Contract.ACTIONS.size() + Contract.UI_OVERRIDES.size() == 40 and Contract.UI_PAGE_ACTIONS.size() == 2
+		perr.is_empty() and Contract.UI_OVERRIDES.size() == 4 and Contract.ACTIONS.size() + Contract.UI_OVERRIDES.size() == 42 and Contract.UI_PAGE_ACTIONS.size() == 2
 		and Contract.actual_signatures("ui_page_up") == ["joy:%d" % JOY_BUTTON_LEFT_SHOULDER, "logicalkey:%d" % KEY_PAGEUP]
 		and Contract.actual_signatures("ui_page_down") == ["joy:%d" % JOY_BUTTON_RIGHT_SHOULDER, "logicalkey:%d" % KEY_PAGEDOWN],
-		"; ".join(perr) if not perr.is_empty() else "ui_page_up must be PageUp + LB (joy 9) and ui_page_down PageDown + RB (joy 10), nothing else; 36 + 4 overrides = 40 actions")
+		"; ".join(perr) if not perr.is_empty() else "ui_page_up must be PageUp + LB (joy 9) and ui_page_down PageDown + RB (joy 10), nothing else; 38 + 4 overrides = 42 actions")
 
 	# repo hygiene
 	_check_hygiene()

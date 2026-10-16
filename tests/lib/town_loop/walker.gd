@@ -80,6 +80,7 @@ static func walk_to(t, target: Vector2, tol: float = 30.0, timeout_game_s: float
 	var p: Node2D = t.player()
 	var area: Variant = p.get("area") if p != null else null
 	var pts: Array = waypoints.duplicate()
+	var transits: Array[Dictionary] = []
 	var used_nav := false
 	var director: TownDirector = TownProbe.director(t)
 	if pts.is_empty() and director != null and director.level_nav != null:
@@ -96,6 +97,22 @@ static func walk_to(t, target: Vector2, tol: float = 30.0, timeout_game_s: float
 		var planned := director.level_nav.route(Iso.to_ground(area.to_local(p.global_position)), ai, Iso.to_ground(area.to_local(target)), bi)
 		for point in planned.get("polyline", PackedVector2Array()):
 			pts.append(area.to_global(Iso.to_screen(point)))
+		# LevelNav snaps a point outside its deck grid to the rim. Walk the
+		# authored bridge stub as well; reaching that snapped rim is not arrival
+		# at its warp. Curved stubs retain every authored bend.
+		if not pts.is_empty():
+			for stub in registry.stubs:
+				var path: PackedVector2Array = stub.path
+				if area.to_global(path[-1]).distance_to(target) < 1:
+					for point in path:
+						pts.append(area.to_global(point))
+			if (pts[-1] as Vector2).distance_to(target) > 0.01:
+				pts.append(target)
+		for segment in planned.get("segments", []):
+			if str(segment.kind) == "ladder":
+				var start: Vector2 = area.to_global(Iso.to_screen(segment.polyline[0]))
+				var finish: Vector2 = area.to_global(Iso.to_screen(segment.polyline[-1]))
+				transits.append({"start": start, "finish": finish, "index": pts.find(finish), "to": str(director.level_nav.levels[int(segment.to_level)].id), "done": false})
 		used_nav = true
 	elif pts.is_empty() and area is IsoArea and area.has_meta("room_spec"):
 		await t.physics(2)
@@ -128,13 +145,41 @@ static func walk_to(t, target: Vector2, tol: float = 30.0, timeout_game_s: float
 	var stuck := 0
 	var last := p.global_position
 	var arrived := false
+	var interactions := 0
 	while ticks < max_ticks and i < pts.size():
 		if p == null or not is_instance_valid(p) or p.get("area") != area:
 			break                                             # an area change is the point of walking onto a warp: the caller checks it
 		var wp: Vector2 = pts[i]
+		var lane_failed := false
+		for transit in transits:
+			if transit.done or int(transit.index) != i:
+				continue
+			# A route's ladder edge is a real E interaction, not a walk through
+			# the deck wall. The production lane owns its tween, mask and lock.
+			t.release_all()
+			var host: Node = p.nearest_interactable()
+			if not host is ClimbLane:
+				lane_failed = true
+				break
+			t.tap(&"interact")
+			interactions += 1
+			await t.physics(2)
+			ticks += 2
+			var waited := 0
+			while ActorLevel.is_locked(p) and waited < 300 and ticks < max_ticks:
+				await t.physics(1)
+				waited += 1
+				ticks += 1
+			transit.done = str(ActorLevel.level_id(p)) == str(transit.to)
+			lane_failed = not transit.done
+		if lane_failed:
+			stuck = 3
+			break
 		var d: Vector2 = wp - p.global_position
 		var is_last: bool = i == pts.size() - 1
-		if d.length() <= (tol if is_last else 36.0):
+		# City paths use a 32-ground-pixel grid. The old prototype's 36-screen-
+		# pixel tolerance skipped several bends and cut into rails/keepouts.
+		if Iso.to_ground(d).length() <= (tol if is_last else 8.0):
 			if is_last:
 				arrived = true
 				break
@@ -150,4 +195,9 @@ static func walk_to(t, target: Vector2, tol: float = 30.0, timeout_game_s: float
 				break
 	t.release_all()
 	var changed: bool = is_instance_valid(p) and p.get("area") != area
-	return {"ok": arrived or changed, "area_changed": changed, "ticks": ticks, "seconds": float(ticks) / Engine.physics_ticks_per_second, "dist_left": Iso.to_ground(target - p.global_position).length() if p != null and is_instance_valid(p) else -1.0, "stuck": stuck >= 3, "nav": used_nav, "waypoints": pts.size()}
+	var collider := ""
+	if p is CharacterBody2D and p.get_slide_collision_count() > 0:
+		var body: Object = p.get_slide_collision(0).get_collider()
+		if body is Node and is_instance_valid(body):
+			collider = str(body.name)
+	return {"ok": arrived or changed, "area_changed": changed, "ticks": ticks, "seconds": float(ticks) / Engine.physics_ticks_per_second, "dist_left": Iso.to_ground(target - p.global_position).length() if p != null and is_instance_valid(p) else -1.0, "stuck": stuck >= 3, "nav": used_nav, "waypoints": pts.size(), "waypoint_index": i, "position": p.global_position if is_instance_valid(p) else Vector2.INF, "next": pts[i] if i < pts.size() else target, "collider": collider, "interactions": interactions}

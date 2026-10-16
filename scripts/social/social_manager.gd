@@ -1278,7 +1278,11 @@ func from_dict(d: Dictionary) -> bool:
 		else:
 			_orphans[str(id)] = LuaData.dict(old_orphans[id]).duplicate(true)
 	for id in _rows:
-		_mirror(str(id))
+		# A conversation or zero-point gift can record knowledge without ever
+		# earning points. Loading that ledger must not create a new default
+		# friend flag. Existing mirrors still repair to the saved point total.
+		if points(id) > 0 or GameManager.world_flags.has(StringName("friend_" + str(id))):
+			_mirror(str(id))
 	_restore_state()
 	return true
 

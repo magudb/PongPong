@@ -42,3 +42,26 @@ static func of_payload(payload: Dictionary, extra_drop: Array = []) -> String:
 	var c: Dictionary = canon(payload)
 	drop(c, volatile() + extra_drop)
 	return JSON.stringify(c, "", false).sha256_text()
+
+static func differences(a: Variant, b: Variant, path := "") -> Array[String]:
+	var out: Array[String] = []
+	if a is Dictionary and b is Dictionary:
+		var keys: Array = a.keys()
+		for key in b:
+			if key not in keys:
+				keys.append(key)
+		keys.sort()
+		for key in keys:
+			var child := path + "/" + str(key)
+			if not a.has(key) or not b.has(key):
+				out.append(child + ": " + str(a.get(key)) + " -> " + str(b.get(key)))
+			else:
+				out.append_array(differences(a[key], b[key], child))
+	elif a is Array and b is Array:
+		if a.size() != b.size():
+			out.append(path + "/length: " + str(a.size()) + " -> " + str(b.size()))
+		for index in mini(a.size(), b.size()):
+			out.append_array(differences(a[index], b[index], path + "/" + str(index)))
+	elif a != b:
+		out.append(path + ": " + str(a) + " -> " + str(b))
+	return out

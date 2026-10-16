@@ -1,25 +1,33 @@
 I2 in progress — not milestone acceptance
 2026-10-16
 
-Foundation report: loop-foundation.json, 14 checks, no failures/skips/messages.
-A real-input farm-to-city bridge walk used 538 physics ticks (8.97 seconds),
-30 waypoints, no stuck event. Save cost 5.819 ms; save/Continue digest matches.
-Canonical floats preserve e.g. 5000.01 rather than rounding by relative epsilon.
-Exactly four named volatile paths are excluded; gold and flags still change
-the digest, which remains stable across 1.1 seconds of real wall time.
+loop-shops-farm-gifts.json: 80 checks, no failures/skips/messages, normal-speed
+80.4 seconds. Physical farm bridge, city ladder E, Hoppe conversation/People,
+seed-shop door/talk/buy, Maja conversation and Hasselnød upgrade choice/desk
+all work. The listed 3-seed purchase charges exactly 60 gold for the animal.
+Closure warning/close-request eviction and always-open exits pass. All five
+gift classes pay 40/20/8/0/0, one item per transfer, with day/week protection.
+Three plots are tilled/planted/watered using real use_tool inputs, with actual
+3/.5/1.5 race-adjusted energy costs and quest progress. Hint-once, bed at18,
+next-day growth, raw24:10, configured25:45 curfew and raw26 pass-out pass.
+The real bridge return frees citizens and preserves farm state.
 
-LoopCaps probes real files/methods, rejects unknown capabilities/waves and
-gates.json requires every M1b leg when TOWN_LOOP_WAVE=5b. The full run is still
-being built. Do not claim that the unset-wave foundation run passes that gate.
+An exact digest found a real load mutation: knowledge-only zero-point rows
+created friend_<npc>=0 on load. SocialManager now preserves the flag's absence,
+while existing mirrors still repair to the saved points. Two social regressions
+and the 277-check core/social/morning gate pass (loop-morning-social.json).
+The named D-pad cycle actions from N04 are now in P01's machine input contract:
+38 custom +4 UI overrides. Removal mutants fail both project/inputmap drivers.
 
-Remaining: L00-L12 full flow, expanded L13/L14/L17/L18, clock/bed scenarios,
-real door/counter E paths, tools/quests/day loop, 8 mutants, one isolated data-
-only whole-extension proof, reports/manifest arithmetic, all town_budgets
-measurements, 14-shot native loop/blur/VRAM, four races and final strict suites.
-Source orders remain binding: .pongpong-build/work/impl/orders/I2-loop-harness.md
-and work/design3/design_integration.md (5.7 budgets). No --fast final acceptance.
+The walker uses real LevelNav/ClimbLane E and the authored warp stub; it must
+reach the real destination, not only the nav grid's snapped boundary. No player
+position/velocity assignment, production geometry change or digest exclusion
+was used to obtain these passes. Four volatile paths remain exact.
 
-Latest working helper names: LoopWalker, LoopDigest, LoopClock, LoopCaps and
-TownProbe under tests/lib/town_loop. Builder building id is toemmerhandlen,
-seed shop is in Hyggebyen. City walkers use the current LevelNav service; rooms
-use NavGrid with the player's mask, grids use the 1.4/1.2/1.0 body ladder.
+Still required: expanded L01 unlock/objective, L04 running clock/zoom, L05
+festival closure/refusals, L08 post/day2/mail, expanded L11 harvest/shipping/
+restock, L12 routines/rain, expanded L13 full-cast save/drift/order, L14 timings/
+orphans/messages, L17 copy/voice/UI, L18 ONE isolated data-only extension,
+extended capability skips, 8 clone mutants/report tool, town_budgets and VRAM
+arithmetic, native14 shots/blur/VRAM, four races and final strict/native gates.
+TOWN_LOOP_WAVE=5b is not yet approved. No merge or push.

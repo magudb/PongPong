@@ -1201,3 +1201,14 @@ The user's request says the two newer sketches (`Trætoppen Figurer v2.dc.html`,
 * **Q2. Who can the player be?** Three races with species / variant chips (what is built and tested), or the six named characters of Figurer v2 (Rasmus, Kiki, Bertil, Bodil, Kløvermynte, Birk) as the choices of Vælg figur page 1? Default: the built roster. The sketch has no Kanin, Pindsvin or Egern and no Eng / Stjernestøv / Skumring variants; it has a female and a male variant of two races.
 * **Q3. `PanelToast` and `PromptPill`** carry gold borders that the guide does not draw (D20). Keep them (default) or change them to ink borders?
 * **Q4. Samlerbog (F9)** is in the feature plan but not scheduled in `owners.json`. Schedule it (the screen, its pause row and its checks are specified, S27) or leave it out (default: out; every other check passes without it)?
+
+
+## N04 integration amendment — named hotbar actions (2026-10-16)
+
+The existing eight-slot D-pad Left/Right cycle is exposed as
+`hotbar_previous` / `hotbar_next`. The player and device-aware dialogue/hints
+read the same InputMap bindings. Keyboard number keys are unchanged. Modals
+consume the D-pad as their normal focus navigation. The P01 machine contract
+therefore contains 38 gameplay actions (30 base, five feature, one People and
+two hotbar), plus its four `ui_*` project overrides. The event comparison is
+still exact; this adds no new EventBus signals.

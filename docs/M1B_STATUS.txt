@@ -217,3 +217,11 @@ are integrated. The four race runs pass 139 checks each, and the wider eight-
 section gate passes 1294 checks. The 45-check native gate includes inspected
 real farm/journal captures, guide comparisons and four pinned screen baselines.
 See S-ui.txt. I2/final budgets and ghost-family/reaction work remain; no merge yet.
+
+I2 live-loop checkpoint — 2026-10-16
+
+The 80-check normal-speed farm/town/shop/gift/day-loop checkpoint passes in
+80.4 seconds with no engine messages. It fixes a zero-point social load mutation
+and completes the named hotbar input contract. I2 budgets/extension/native
+gates and the ghost-family integration remain before milestone acceptance.
+See docs/qa/m1b-milestone/I2-working.txt. No merge yet.
