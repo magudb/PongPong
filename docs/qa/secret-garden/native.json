@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 63,
+  "elapsed_s": 18.21,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "secret_garden": {
+      "character": "animal",
+      "checks": 63,
+      "failed": 0,
+      "ms": 14160,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

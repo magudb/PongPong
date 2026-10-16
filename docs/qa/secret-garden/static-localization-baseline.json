@@ -1,0 +1,89 @@
+{
+ "files": [
+  "da.csv",
+  "areas.csv",
+  "birthdays.csv",
+  "cast.csv",
+  "core.csv",
+  "dialogue.csv",
+  "dialogue_builder.csv",
+  "dialogue_cast.csv",
+  "dungeon_services.csv",
+  "economy.csv",
+  "farm.csv",
+  "farm_signs.csv",
+  "farm_site.csv",
+  "farm_tutorial.csv",
+  "features_quests.csv",
+  "features_ui.csv",
+  "finds.csv",
+  "furniture.csv",
+  "ghost.csv",
+  "ghost_dialogue.csv",
+  "ghostfamily.csv",
+  "gifts.csv",
+  "home.csv",
+  "hud.csv",
+  "levels.csv",
+  "life.csv",
+  "loot_dungeon.csv",
+  "materials.csv",
+  "menus.csv",
+  "nav.csv",
+  "quests.csv",
+  "rel_ui.csv",
+  "shop_ui.csv",
+  "social_arch.csv",
+  "social_sys.csv",
+  "social_talk.csv",
+  "towns.csv",
+  "traetoppen.csv",
+  "ui.csv",
+  "wardrobe.csv",
+  "world.csv",
+  "zz_final.csv"
+ ],
+ "key_count": 3189,
+ "issues": [
+  {
+   "cat": "duplicate",
+   "sev": "legacy",
+   "file": "da.csv",
+   "line": 63,
+   "key": "QUEST_FIX_ROOF_TITLE",
+   "msg": "defined twice in this file (first at line 57)"
+  },
+  {
+   "cat": "duplicate",
+   "sev": "legacy",
+   "file": "da.csv",
+   "line": 305,
+   "key": "ITEM_FAIRY_DUST",
+   "msg": "defined twice in this file (first at line 116)"
+  },
+  {
+   "cat": "duplicate",
+   "sev": "legacy",
+   "file": "da.csv",
+   "line": 306,
+   "key": "ITEM_FAIRY_DUST_DESC",
+   "msg": "defined twice in this file (first at line 117)"
+  },
+  {
+   "cat": "malformed",
+   "sev": "legacy",
+   "file": "da.csv",
+   "line": 338,
+   "key": "ITEM_BABY_FAWN_DESC:\"En yndig hjort med magiske ",
+   "msg": "key does not match ^[A-Z0-9_]+$ (row skipped)"
+  },
+  {
+   "cat": "malformed",
+   "sev": "legacy",
+   "file": "da.csv",
+   "line": 354,
+   "key": "ITEM_BARN_KIT_DESC:\"Byg en lade til dine større ",
+   "msg": "key does not match ^[A-Z0-9_]+$ (row skipped)"
+  }
+ ]
+}

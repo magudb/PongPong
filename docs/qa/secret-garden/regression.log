@@ -1,0 +1,840 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=secret_garden,quests,social_talk,ghostfam_data,maps_iso,towns_routes,walkway_transitions
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.gk1FvS/Library/Application Support/Traetoppen (throwaway)
+== section ghostfam_data  (res://tests/sections/ghostfam_data.gd)
+  ok    ghostfam_data.building_row_hours
+  ok    ghostfam_data.shop_loads_and_stock_exists
+  ok    ghostfam_data.room_has_family_bed_and_guest_bed
+  ok    ghostfam_data.sidecar_door_and_post_added
+  ok    ghostfam_data.ghostfam_dyne_registered
+  ok    ghostfam_data.ghostfam_dyne_visual_without_fallback
+  ok    ghostfam_data.ghostfam_dyne_plans_wrap
+  ok    ghostfam_data.ghostfam_dyne_present_for_rasmus ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_kiki ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_kloevermynte ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_birk ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_bertil ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_bodil ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_bu ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_hviske ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_registered
+  ok    ghostfam_data.ghostfam_gnist_visual_without_fallback
+  ok    ghostfam_data.ghostfam_gnist_plans_wrap
+  ok    ghostfam_data.ghostfam_gnist_present_for_rasmus ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_kiki ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_kloevermynte ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_birk ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_bertil ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_bodil ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_bu ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_hviske ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_registered
+  ok    ghostfam_data.ghostfam_silke_visual_without_fallback
+  ok    ghostfam_data.ghostfam_silke_plans_wrap
+  ok    ghostfam_data.ghostfam_silke_present_for_rasmus ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_kiki ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_kloevermynte ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_birk ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_bertil ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_bodil ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_bu ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_hviske ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_0_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_0_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_0_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_1_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_1_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_1_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_2_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_2_klart_25.0 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_2_klart_25.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_3_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_3_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_3_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_4_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_4_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_4_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_5_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_5_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_5_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_6_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_6_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_6_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_0_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_0_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_0_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_1_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_1_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_1_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_2_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_2_regn_25.0 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_2_regn_25.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_3_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_3_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_3_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_4_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_4_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_4_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_5_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_5_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_5_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_6_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_6_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_6_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.ghostfam_blund_registered
+  ok    ghostfam_data.ghostfam_blund_visual_without_fallback
+  ok    ghostfam_data.ghostfam_blund_plans_wrap
+  ok    ghostfam_data.ghostfam_blund_present_for_rasmus ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_kiki ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_kloevermynte ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_birk ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_bertil ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_bodil ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_bu ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_hviske ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_3_klart_24.5 ({ "npc": "ghostfam_blund", "state": "move", "plan": "hide_3", "place": "traetoppen.f_bench", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_mailbox", "to": "traetoppen.f_bench", "frac": 0.99757673667205, "t0": 23.5, "t1": 24.5024291497976 } })
+  ok    ghostfam_data.presence_ghostfam_blund_3_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_3", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_3_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_3", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_3_regn_24.5 ({ "npc": "ghostfam_blund", "state": "move", "plan": "hide_3", "place": "traetoppen.f_bench", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_mailbox", "to": "traetoppen.f_bench", "frac": 0.99757673667205, "t0": 23.5, "t1": 24.5024291497976 } })
+  ok    ghostfam_data.presence_ghostfam_blund_3_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_3", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_3_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_3", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.keeper_covers_hours_every_open_day ([])
+  ok    ghostfam_data.post_capacity_with_family ([])
+  ok    ghostfam_data.visual_budget_with_family ([])
+  ok    ghostfam_data.late_round_is_robust ([])
+  ok    ghostfam_data.dialogue_ghostfam_dyne_animal
+  ok    ghostfam_data.dialogue_ghostfam_dyne_fairy
+  ok    ghostfam_data.dialogue_ghostfam_dyne_hobbit
+  ok    ghostfam_data.dialogue_ghostfam_dyne_ghost
+  ok    ghostfam_data.dialogue_ghostfam_gnist_animal
+  ok    ghostfam_data.dialogue_ghostfam_gnist_fairy
+  ok    ghostfam_data.dialogue_ghostfam_gnist_hobbit
+  ok    ghostfam_data.dialogue_ghostfam_gnist_ghost
+  ok    ghostfam_data.dialogue_ghostfam_silke_animal
+  ok    ghostfam_data.dialogue_ghostfam_silke_fairy
+  ok    ghostfam_data.dialogue_ghostfam_silke_hobbit
+  ok    ghostfam_data.dialogue_ghostfam_silke_ghost
+  ok    ghostfam_data.dialogue_ghostfam_blund_animal
+  ok    ghostfam_data.dialogue_ghostfam_blund_fairy
+  ok    ghostfam_data.dialogue_ghostfam_blund_hobbit
+  ok    ghostfam_data.dialogue_ghostfam_blund_ghost
+  ok    ghostfam_data.midnight_story_0
+  ok    ghostfam_data.midnight_story_1
+  ok    ghostfam_data.midnight_story_2
+  ok    ghostfam_data.midnight_story_3
+  ok    ghostfam_data.midnight_story_4
+  ok    ghostfam_data.midnight_story_5
+  ok    ghostfam_data.midnight_story_6
+  ok    ghostfam_data.gnist_hours_equal_building_row
+  ok    ghostfam_data.no_double_reaction
+  ok    ghostfam_data.hiding_slots_0
+  ok    ghostfam_data.silke_hint_0_0
+  ok    ghostfam_data.silke_hint_0_1
+  ok    ghostfam_data.hiding_slots_1
+  ok    ghostfam_data.silke_hint_1_0
+  ok    ghostfam_data.silke_hint_1_1
+  ok    ghostfam_data.hiding_slots_3
+  ok    ghostfam_data.silke_hint_3_0
+  ok    ghostfam_data.silke_hint_3_1
+  ok    ghostfam_data.hiding_slots_4
+  ok    ghostfam_data.silke_hint_4_0
+  ok    ghostfam_data.silke_hint_4_1
+  ok    ghostfam_data.hiding_slots_5
+  ok    ghostfam_data.silke_hint_5_0
+  ok    ghostfam_data.silke_hint_5_1
+  ok    ghostfam_data.hiding_slots_6
+  ok    ghostfam_data.silke_hint_6_0
+  ok    ghostfam_data.silke_hint_6_1
+  ok    ghostfam_data.wednesday_family_evening_four_at_fire
+  ok    ghostfam_data.family_gathering_has_distinct_body_positions (minimum ground gap=84.8528137207031)
+  ok    ghostfam_data.ghostfam_dyne_live_at_dawn
+  ok    ghostfam_data.ghostfam_dyne_kin_scene_without_stranger
+  ok    ghostfam_data.ghostfam_dyne_kin_is_met_and_weekly_heart
+  ok    ghostfam_data.granny_knit_gift_once
+  ok    ghostfam_data.ghostfam_dyne_kin_once
+  ok    ghostfam_data.ghostfam_dyne_flags_json_safe
+  ok    ghostfam_data.ghostfam_gnist_live_at_dawn
+  ok    ghostfam_data.ghostfam_gnist_kin_scene_without_stranger
+  ok    ghostfam_data.ghostfam_gnist_kin_is_met_and_weekly_heart
+  ok    ghostfam_data.ghostfam_gnist_kin_once
+  ok    ghostfam_data.ghostfam_gnist_flags_json_safe
+  ok    ghostfam_data.ghostfam_silke_live_at_dawn
+  ok    ghostfam_data.ghostfam_silke_kin_scene_without_stranger
+  ok    ghostfam_data.ghostfam_silke_kin_is_met_and_weekly_heart
+  ok    ghostfam_data.ghostfam_silke_kin_once
+  ok    ghostfam_data.ghostfam_silke_flags_json_safe
+  ok    ghostfam_data.ghostfam_blund_live_at_dawn
+  ok    ghostfam_data.ghostfam_blund_kin_scene_without_stranger
+  ok    ghostfam_data.ghostfam_blund_kin_is_met_and_weekly_heart
+  ok    ghostfam_data.ghostfam_blund_kin_once
+  ok    ghostfam_data.ghostfam_blund_flags_json_safe
+  ok    ghostfam_data.hook_gardener_hoppe
+  ok    ghostfam_data.hook_ghostfam_dyne
+  ok    ghostfam_data.hook_ghostfam_gnist
+  ok    ghostfam_data.hook_ghostfam_silke
+  ok    ghostfam_data.hook_ghostfam_blund
+  ok    ghostfam_data.copy_regenerates_identically (PASS family copy regeneration (168 draft rows)
+)
+  ok    ghostfam_data.tone_gender_barks_and_literal_keys (Family copy: 168 rows, 0 problems; no tone allow-list
+)
+  --    ghostfam_data: 293 checks, 0 failed, 0 skipped, 2.2 s
+== section maps_iso  (res://tests/sections/maps_iso.gd)
+  ok    maps_iso.parse_no_errors (file errors [] / [], errors of the live areas after setup (default spawn, growth cells) [] / [])
+  ok    maps_iso.headers (hyggebyen: hyggebyen ZONE_CITY iso hyggebyen zone city flight true music city_theme | hub: moerkeskoven ZONE_FOREST_EDGE ortho forest zone dark_forest depth 0 flight false)
+  ok    maps_iso.rows_equal_width (hyggebyen 40 x 40, hub 48 x 42: every ground and object row of the raw files has the same length (the parser pads silently))
+  ok    maps_iso.no_unknown_chars (every object char of both files is declared by @prop or @marker (or is the `@` default spawn) and every ground char is known to the builder: undeclared [], area.unknown_chars {  } / {  })
+  ok    maps_iso.markers_resolve (every marker type is one of ["spawn", "warp", "sign", "light", "quest_spot", "npc", "unique_spot", "town", "door", "post", "runestone", "whisper", "forest_dress", "secret_garden"]; unknown types []; declared-but-unused chars []; counts { "hyggebyen:warp": 2, "hyggebyen:sign": 9, "hyggebyen:unique_spot": 1, "hyggebyen:spawn": 2, "hyggebyen:door": 14, "hyggebyen:npc": 15, "hyggebyen:post": 25, "hyggebyen:quest_spot": 1, "hyggebyen:town": 1, "hyggebyen:light": 1, "moerkeskoven:light": 3, "moerkeskoven:runestone": 1, "moerkeskoven:whisper": 1, "moerkeskoven:spawn": 2, "moerkeskoven:warp": 2, "moerkeskoven:forest_dress": 1, "moerkeskoven:secret_garden": 1, "moerkeskoven:sign": 1 })
+  SKIP  maps_iso.markers: type `runestone` has no handler script yet (D2-dungeon-floors (runestone_2d.gd)): skipped silently by IsoArea, stays readable through find_markers()
+  SKIP  maps_iso.markers: type `whisper` has no handler script yet (P19-forest-combat (whisper_zone.gd)): skipped silently by IsoArea, stays readable through find_markers()
+  SKIP  maps_iso.markers: type `forest_dress` has no handler script yet (V8-forest-look): skipped silently by IsoArea, stays readable through find_markers()
+  ok    maps_iso.npc_ids_exist (15 npc markers ["fairy_king", "merchant_pip", "baker_maja", "fairy_furnisher", "fairy_tailor", "smith_thorin", "fairy_wizard", "pippin_boegeknop", "fairy_lily", "penguin_postman", "fairy_builder", "mayor_lyra", "farmer_rosa", "cat_morfar_mis", "beekeeper_birk"]: every id exists in lua/config/npcs.lua (pending rows []), the roster is the expected one (no guard_oak: he stands at the Skovlift), the hub has no npc slot; missing [])
+  ok    maps_iso.props_are_defined_and_drawable (38 distinct prop ids: each is a row of lua/config/props.lua / props_extra.lua / props_features.lua (footprint, solid shape and strips are intentional, not the silent 1 x 1 default) and ArtCatalog answers a texture (real art or the placeholder); undefined [], undrawable [])
+  ok    maps_iso.prop_footprints_fit_the_ground (every footprint cell (2 x 2 houses, the 2 x 2 fountain, 2 x 1 stalls, 3 x 3 king's house ...) is on ground, no solid footprint overlaps another or a marker: [])
+  ok    maps_iso.warp_targets_and_spawns (9 warps of 20 real maps: every target exists (or is pending / generated) and has the named arrival spawn; problems [])
+  ok    maps_iso.warp_roundtrips (every warp whose target exists has a warp back to its area; [])
+  SKIP  maps_iso.warp_roundtrips: moerkeskoven -> moerkeskoven_f1:default (generated floor, D2 registers it at run time)
+  ok    maps_iso.no_warp_to_removed_forest_areas (no map names ["skovkant", "dybe_bregner", "svampelunden", "krystalgrotten"] any more (the forest is the dungeon behind the hub): [])
+  ok    maps_iso.warp_graph_pending_areas (PENDING_AREAS = ["traetoppen"]; traetoppen.map exists -> the edge is strict; ids starting with `moerkeskoven_f` are exempt (generated at run time); every other target must exist with its spawn: the resolver rejects an unknown area, an unknown spawn and the removed forest areas (self-test))
+  ok    maps_iso.hyggebyen_warp_graph (Two warps: the communal garden and the hanging bridge on the EAST side ( 6 plank cells in its row, the warp on the last plank at (39, 21)) to traetoppen:from_hyggebyen label ZONE_TRAETOPPEN; spawns ["default", "from_garden", "from_traetoppen"]; no farm bridge, no west gate, no Oak, no mailbox)
+  ok    maps_iso.town_markers_present (1 `town` marker, 14 `door` markers (exact ids), 24 named posts (24 names, act and cap as in the draft) + 1 `post set=fest spot=hyggetorv`, spawn from_traetoppen true, bridge and communal-garden warps, no festival decor markers, no Raadhus here; problems [], doors ["bageriet", "birks_bistade", "dyrehuset", "fekongens_hus", "froebutikken", "hyldeblomsts_hus", "loppeloftet", "moebelbutikken", "pingvinens_hus", "pippins_hus", "skraedderiet", "smedjen", "toemmerhandlen", "troldmandstaarnet"] vs ["bageriet", "birks_bistade", "dyrehuset", "fekongens_hus", "froebutikken", "hyldeblomsts_hus", "loppeloftet", "moebelbutikken", "pingvinens_hus", "pippins_hus", "skraedderiet", "smedjen", "toemmerhandlen", "troldmandstaarnet"])
+  ok    maps_iso.doors_on_the_doorstep (each of the 14 doors is on the walkable cell directly in front of (below) the front cell of a solid building of at least 2 x 2 cells; findings [])
+  ok    maps_iso.door_arrival_cells_free (the cell one step in front of every doorstep (the arrival spawn from_int_<building> of the door handler) is free walkable ground: [])
+  ok    maps_iso.posts_on_free_cells (the 24 named posts stand on walkable cells outside every solid footprint (a post on a blocked cell would be moved by the director): [])
+  ok    maps_iso.fest_set_cells_free (the 24 posts of the festival set (host, judge, 4 stalls, 2 tables, 16 gather cells) around the anchor (20, 21) all fall on free ground of the torv (cobble), none on a solid footprint: [])
+  ok    maps_iso.feature_markers_match_json (areas.hyggebyen of data/features/map_markers.json (the file also holds forest areas that DL4 trims in wave 5: only `farm` and `hyggebyen` are read, the farm entry is maps_farm's): unique spots ["kufferten"] == ["kufferten"], containers 0 == 0 (chests + dig spots), creatures 0 == 0, no mailbox)
+  ok    maps_iso.feature_npcs_and_stalls (market stalls ["market_stall", "market_stall_furniture", "market_stall_tailor"]; fairy_furnisher and fairy_tailor stand at stalls; fairy_builder at the builder yard (5 cells from the bridge end) with plank stacks; Pippin has his flea stall; 3 beehive_stand in the SE corner [(34, 34), (36, 34), (34, 36)] and Birk beside them; cat_morfar_mis `when=done:lost_cat` 2 cells from Pippin's door)
+  ok    maps_iso.hyggebyen_is_filled ({ "houses": 14, "lanterns": 8, "stalls": 4, "blossom_trees": 17, "signs": 9, "benches": 7, "fountains": 1, "wells": 1 }; 95 props on 1126 ground cells = 8.4 per 100 cells (>= 6.0); props per quarter of the land [22, 25, 17, 31] (each >= 12); short: [])
+  ok    maps_iso.light_budget (Hyggebyen: 9 map lights (8 lantern posts + 1 light markers) <= 12 (the Compatibility renderer drops lights above 16 per canvas item); the hub has 3 glow lights)
+  ok    maps_iso.areas_csv_rows (12 keys (every sign / whisper text of both maps + UI_READ) are rows of localization/areas.csv with Danish and English text, the three farm keys of farm_signs.csv are not redefined [], the two hub strings read as the addendum words; missing [], outside areas.csv [])
+  ok    maps_iso.loc_check_maps_clean (tests/loc_check.gd exit 0: no MISS line names hyggebyen.map or moerkeskoven.map except the pending keys ["ZONE_TRAETOPPEN"]; MISS lines [])
+  ok    maps_iso.connectivity (Hyggebyen: 87 targets (spawns, the bridge warp, 14 doors, 24 posts + fest anchor, npcs, signs, quest spot, unique spot, town) reachable from `default` with the player's body x1.4 baked from the physics space (727 solid cells; a doorstep touches the padded house, so the door is entered from the neighbour cell, see door_triggers_can_be_entered); sealed pockets of free ground for a body x1.15: 0 []; unreachable [])
+  ok    maps_iso.rim_blocks_the_body (Hyggebyen: 145 void cells touch the platform and each stops a body in the physics space (the invisible rim blockers; the bridge planks have none by design); open [])
+  ok    maps_iso.spawn_to_warp_paths (every spawn reaches both warps with a body 1.15 x the player's: ["from_garden -> secret_garden 1.0 s", "from_garden -> traetoppen 9.5 s", "from_int_fekongens_hus -> secret_garden 3.4 s", "from_int_fekongens_hus -> traetoppen 7.3 s", "from_int_froebutikken -> secret_garden 2.8 s", "from_int_froebutikken -> traetoppen 9.3 s", "from_int_bageriet -> secret_garden 5.4 s", "from_int_bageriet -> traetoppen 5.6 s", "from_int_pingvinens_hus -> secret_garden 7.8 s", "from_int_pingvinens_hus -> traetoppen 6.9 s", "from_int_smedjen -> secret_garden 7.5 s", "from_int_smedjen -> traetoppen 3.0 s", "from_int_troldmandstaarnet -> secret_garden 5.6 s", "from_int_troldmandstaarnet -> traetoppen 10.0 s", "from_traetoppen -> secret_garden 9.3 s", "from_traetoppen -> traetoppen 1.0 s", "default -> secret_garden 5.9 s", "default -> traetoppen 6.8 s", "from_int_loppeloftet -> secret_garden 8.1 s", "from_int_loppeloftet -> traetoppen 13.1 s", "from_int_hyldeblomsts_hus -> secret_garden 8.1 s", "from_int_hyldeblomsts_hus -> traetoppen 10.8 s", "from_int_toemmerhandlen -> secret_garden 9.6 s", "from_int_toemmerhandlen -> traetoppen 4.6 s", "from_int_pippins_hus -> secret_garden 9.7 s", "from_int_pippins_hus -> traetoppen 11.6 s", "from_int_moebelbutikken -> secret_garden 9.9 s", "from_int_moebelbutikken -> traetoppen 9.8 s", "from_int_skraedderiet -> secret_garden 10.1 s", "from_int_skraedderiet -> traetoppen 8.2 s", "from_int_dyrehuset -> secret_garden 11.0 s", "from_int_dyrehuset -> traetoppen 6.7 s", "from_int_birks_bistade -> secret_garden 13.3 s", "from_int_birks_bistade -> traetoppen 7.6 s"]; unreachable [])
+  ok    maps_iso.spawns_outside_warps (closest spawn-to-warp distance 272 ground px: no spawn lies inside a warp diamond (limit 180))
+  ok    maps_iso.walk_bridge_end_fires_the_warp (a real CharacterBody2D (25 x 14.8) walks 4 cells from from_traetoppen (nothing fired at the arrival) in 44 physics frames and the Warp2D emits area_change_requested(traetoppen, from_hyggebyen) exactly once ([["traetoppen", "from_hyggebyen"]]), ends 51 px from the warp cell)
+  ok    maps_iso.door_triggers_can_be_entered (14 door diamonds (Warp2D geometry on the doorstep cells): a body x1.4 walking from the nearest free neighbour cell enters each trigger exactly once (90 physics frames in all); failed [])
+  ok    maps_iso.hub_parses_and_connects (the hub (48 x 42, 543 floor cells): parse errors [], errors after setup [], spawns ["default", "from_floor", "from_traetoppen"] (["from_floor free", "default free", "from_traetoppen free"]), 11 markers (spawns, both warps, sign, whisper zone, runestone, 3 glow lights, forest_dress) reachable from `default` with the body x1.4 baked from the physics space, floor pockets 0, unreachable [])
+  ok    maps_iso.hub_spawns_reach_the_warps (every hub spawn walks to both warps (a body 1.15 x the player's): ["from_floor -> moerkeskoven_f1 1.0 s", "default -> moerkeskoven_f1 6.2 s", "from_traetoppen -> moerkeskoven_f1 5.9 s", "from_floor -> traetoppen 6.2 s", "default -> traetoppen 1.0 s", "from_traetoppen -> traetoppen 1.1 s"]; no spawn lies inside a warp rectangle (closest 168 px, limit 112); default and from_traetoppen lie 96 px apart (a cell holds ONE object char, so the Skovlift arrival is the neighbour cell of `default`))
+  ok    maps_iso.hub_has_one_gate_to_the_skovlift (2 warps: the ONE gate arch (warp_gate_stone) to traetoppen:from_skovlift label ZONE_TRAETOPPEN (24, 32) and the Hulen mouth (cave_ring) to moerkeskoven_f1:default label ZONE_DARK_FOREST (38, 18); the farm and Hyggebyen gates of the draft are gone; Port-runen rune_hub hub=1 true; sign SIGN_MOERKESKOVEN_HUB true; whisper SIGN_MOERKESKOVEN_WHISPER r=2 true; forest_dress 1; glow lights 3; npc slots 0; 37 rim crowns as @prop rows)
+  ok    maps_iso.hub_rim_is_void (no `W` wall cells (rim.wall_depth 0): the rim is void and the 122 void cells that touch the clearing each stop a body in the physics space (invisible blockers; open []); the crowns are scenery props)
+  ok    maps_iso.world_enters_the_areas (registry lists hyggebyen + moerkeskoven (default start area farm); the player arrives on the spawn from_traetoppen of Hyggebyen (0.0 px off, zone city) and of the hub (0.0 px, zone dark_forest), on `default` of Hyggebyen (0.0 px))
+  ok    maps_iso.build_budget (Hyggebyen builds in 18 ms (min of 5, 604 nodes), the hub in 8 ms (budgets 180 / 120 ms on a loaded headless machine; the farm of N01 budgets 60 ms for 496 nodes))
+  ok    maps_iso.art_complete (ArtCatalog.missing() is empty for Hyggebyen and the hub: every prop, terrain and backdrop is real art)
+  ok    maps_iso.farm_checks_moved_to_maps_farm (the farm halves are maps_farm.* (N01): found ["home_reserve_on_deck_after_growth", "spawn_from_home_walkable", "feature_markers_match_json", "farm_warp_graph", "farm_mailbox_marker", "wake_spawn_from_home_walkable"] in tests/sections/maps_farm.gd, not found []; this section produces none of them [])
+  ok    maps_iso.hyggebyen_checks_unchanged (the Hyggebyen halves of the original order (12 named checks + art_complete) and PENDING_AREAS for the hyggebyen warp are all still in this section; lost [])
+  --    maps_iso: 39 checks, 0 failed, 4 skipped, 2.7 s
+== section quests  (res://tests/sections/quests.gd)
+  ok    quests.lint_report_empty (LuaRuntime.lint_report after a full reload: [])
+  ok    quests.lint_tool_clean_on_every_quest_file (tools/lua/lint.gd on lua/quests: 31 PASS of 31 files, 0 FAIL, exit 0)
+  ok    quests.every_quest_file_is_registered (31 quest files, every file registers its id with QuestManager [])
+  ok    quests.the_twenty_quests_are_there (the 20 quests of the legacy set [])
+  ok    quests.giver_tag_location_for_every_quest (31 quests: giver is a roster npc that offers it, tag in the six, location a ZONE_ key [])
+  ok    quests.every_objective_has_a_binding_and_its_own_text_key (the 20 quests: the quest book derives QUEST_<ID>_TITLE / _DESC (the schema defaults), `on` and description_key OBJ_<QUEST>_<OBJ> on every objective [])
+  ok    quests.math_objectives_renamed_unique (math_harvest_puzzle: ["math_harvest_carrot", "math_collect_stone", "math_collect_mushroom"])
+  ok    quests.no_text_literals_in_the_quest_lua (no description = / title = literal in the 20 quests of this package or the four of F1 [])
+  ok    quests.objective_references_exist (31 quests: every npc, any_of npc, item, needs item, recipe, crop, zone, area and reward a quest names exists [])
+  ok    quests.every_quest_text_key_resolves_in_da_and_en (31 quests: title, description, offer, every objective, every toast key and every reward item name in da + en [])
+  ok    quests.quests_csv_owns_only_its_families (147 rows, all QUEST_ / OBJ_ / LUANOTIF_, none of the four feature quests (features_quests.csv); QUEST_FAIRY_FRIENDSHIP_TITLE replaces the legacy typo [])
+  ok    quests.binding_vocabulary_events (item_gained crop_planted crop_watered crop_harvested zone_entered area_changed dialogue_started(any_of) animal_* building_built enemy_defeated recipe_crafted quest_completed manual amount: [])
+  ok    quests.area_changed_binding (on = area_changed binds the MAP id of EventBus.area_changed, not the zone: [])
+  ok    quests.game_event_binding_filters (event name + rarity (comma list); an unknown event and a wrong filter never count: [])
+  ok    quests.game_event_match_filter (match = { npc, item, id } compares payload entries (numbers as numbers, a missing entry never matches): [])
+  ok    quests.game_event_min_level_generic (min_level reads payload.level for dungeon_floor_entered, dungeon_runestone_activated and hygge_level alike: [])
+  ok    quests.dungeon_event_payloads_bind (dungeon_floor_entered, dungeon_runestone_activated, dungeon_boss_defeated, dungeon_run_ended: [])
+  ok    quests.state_objective_counts_standing_pieces (placed_by_rarity = pieces standing now, evaluated at accept and on furniture_changed: [])
+  ok    quests.state_friend_hearts_at_least (friend_hearts_at_least / hygge_level_at_least / home_tier_at_least read their owner, re-evaluate on friend_changed / hygge_changed / home_upgraded and stay done: [])
+  ok    quests.state_objective_reevaluated_on_load ([])
+  ok    quests.state_query_registration (register_state_query(name, Callable(def) -> count): [])
+  ok    quests.after_others_turn_in (a turn-in is judged on the state before the event: [])
+  ok    quests.have_objective_tracks_inventory (have = true: counts what you own at accept, follows add / remove (coalesced to the next frame), done stays done: [])
+  ok    quests.delivery_consumes_the_goods (needs + consume = the goods leave the backpack with the progress, a missing good blocks it with a toast: [])
+  ok    quests.resource_drop_counts_once (the resource_node_depleted special case only feeds objectives without `on`: [])
+  ok    quests.social_objective_sugar (gift_given / festival_attended / heart_event_finished are game_event sugar with npc / item / id filters: [])
+  ok    quests.friendship_reward_goes_through_social_manager (rewards.friendship -> SocialManager.add_hearts(npc, n, &quest), no flag written by the quest package: [])
+  ok    quests.friendship_reward_cap (without SocialManager: flag friend_<npc> += n capped at 10, friend_changed(npc, hearts) when the hearts changed: [])
+  ok    quests.real_managers_social_contract (rewards.friendship -> the real SocialManager.add_hearts (mirrored into friend_<npc>), friend_hearts_at_least on the real hearts / friend_changed, lost_cat pays Pippin 2 hearts: [])
+  ok    quests.real_managers_home_contract (home_tier_at_least reads the real HomeManager.tier and re-evaluates on home_upgraded: [])
+  SKIP  real_managers_furniture_contract: FurnitureManager (F3-furniture-core) is not in this tree - count_placed_by_rarity / hygge_level_index are proven against a fake only
+  ok    quests.offerable_by_giver (offerable(npc) = available now, not active, not done, in npcs.lua order: [])
+  ok    quests.offerable_for_many (offerable_for(givers) = [{quest_id, giver}] in the order of the givers, one entry per offerable quest: [])
+  ok    quests.post_givers_have_offer_text (16 quests of the post.givers (mayor_lyra, baker_maja, merchant_pip, farmer_rosa, fairy_lily, smith_thorin) have QUEST_<ID>_OFFER in da + en [])
+  ok    quests.tracked_order_and_cap (get_tracked(max): oldest accepted first, capped, never completed or failed, stable across save / load: [])
+  ok    quests.journal_lists_api (get_active_ids (oldest first), get_completed_ids (most recent first), the two counts for 'Aktive · n' / 'Fuldført · m': [])
+  ok    quests.repeatable_reaccept_after_cooldown (meta.repeatable / cooldown_days: re-accept only after the cooldown, from zero, one history entry: [])
+  ok    quests.save_roundtrip_keeps_progress_and_definitions (to_dict / from_dict: only runtime state, any_of progress, JSON floats, definitions stay live: [])
+  ok    quests.reset_keeps_definitions (reset() forgets progress and keeps the Lua definitions)
+  ok    quests.new_game_resets_runtime_and_keeps_definitions (reset() on new_game_started: active, completed, offered, owed rewards and flags gone, definitions stay: [])
+  ok    quests.lua_probes_live_in_p10_fixtures (23 probe files + probe_expected.json in P10's tests/fixtures/lua (replayed by data.lua_probes), every quest file lints clean with the same lint_source [])
+  ok    quests.item_in_use (item_in_use(item): open have objectives, `needs` of open objectives, ingredients of an open recipe_crafted objective: [])
+  ok    quests.objective_text_cascade (get_objective_text: description_key -> OBJ_<QUEST>_<OBJ> -> OBJ_<OBJ> -> description -> id, da and en: [])
+  ok    quests.binding_lint_catches_uncompletable_objectives (unknown on / state, any_of larger than the target, have without item, missing fields, duplicates, bad rewards / tags: [])
+  ok    quests.lost_cat_keeps_guide_chips (lost_cat pays 150 guldagern + catnip_seeds x3 + hat_cat_ears + a heart with Pippin; the book shows the guide's chips, steps, title, 'Fra' line and description: [])
+  ok    quests.lost_cat_plays_through (ask three neighbours, follow the paw prints, find Morfar Mis, tell Pippin: [])
+  ok    quests.feature_quests_complete_with_rewards (lost_cat, fix_roof, birthday_cake, math_wizard_quiz, bogtraeet, moonstone_crown, snurresvampen, slotsdroemmen: accepted and completed through the real EventBus, exact gold and items [])
+  ok    quests.every_objective_completable_with_dungeon_events (31 quest files, 107 objectives driven through the signals the game sends (game_event names fed: dungeon_floor_entered, dungeon_run_ended, dungeon_runestone_activated, festival_held, plot_tilled, post_read; the dungeon payloads of ADDENDUM 8.4 reach every objective bound to them - fed to real quests: dungeon_floor_entered, dungeon_run_ended, dungeon_runestone_activated); accepted through the Lua gate: 30, started past an unknown gate: ["secret_garden"]; [])
+  ok    quests.manual_objectives_have_completers (21 on = manual objectives, each named by a quest_spot marker (2 markers), a dialogue math_answer action (6) or a script: unnamed [])
+  SKIP  manual_objectives_have_completers: the completer of rare_mushroom_hunt.find_glowing (D1-dungeon-gen) is built by a package that has not landed (its quest_spot is generated by the dungeon generator, DUNGEON_V2_ADDENDUM 2.7)
+  ok    quests.quest_spot_markers_match_the_lua_needs (2 quest_spot markers of the real maps: the objective is manual and its needs / consume equal the marker's [])
+  ok    quests.intro_lottery_binds_traetoppen (plant_first_crop (crop_planted), cross_bridge (zone_entered traetoppen), talk_to_mayor (dialogue mayor_lyra): [])
+  ok    quests.no_fixed_forest_area_ids (no quest binds skovkant / dybe_bregner as an area or zone id (the generated floors have moerkeskoven_f<N> ids) [])
+  ok    quests.lost_cat_binds_pawprints_and_mis ([])
+  ok    quests.zone_entered_repeat_is_harmless (dark_forest_mining, forest_patrol, crystal_cave: repeated zone_entered / area_changed never overshoot a target of 1 and never finish the quest alone: [])
+  ok    quests.bound_quests_have_their_floor_anchors (night_flower (night_bloom, floor 2), rare_mushroom_hunt (glow_mushroom + the find_glowing quest_spot, floor 7), moonstone_crown (moonstone), the zone quests (zone ids of the floors): [])
+  SKIP  bound_quests_have_their_floor_anchors: the generator-level proof (DungeonGen places the night_bloom node / the quest_spot) belongs to D1-dungeon-gen; this check reads the floor table of the design
+  ok    quests.forste_dage_vocabulary_plot_tilled_post_read (on = game_event with event plot_tilled / post_read completes objectives (the tutorial's bindings): [])
+  ok    quests.forste_dage_binds_only_known_events (every objective of lua/quests/forste_dage.lua uses a binding of the vocabulary and, for game_event, a name of the events list [])
+  --    quests: 56 checks, 0 failed, 3 skipped, 3.1 s
+== section secret_garden  (res://tests/sections/secret_garden.gd)
+  ok    secret_garden.new_hero_has_no_inherited_story
+  ok    secret_garden.opening_is_not_interrupted
+  ok    secret_garden.available_to_existing_save
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.garden_map_builds ([])
+  ok    secret_garden.all_work_markers_exist
+  ok    secret_garden.all_work_reachable_with_inflated_body ([])
+  ok    secret_garden.player_can_interact_gate
+  ok    secret_garden.quest_started_through_world_dialogue
+  ok    secret_garden.later_accounts_do_not_spoil_story
+  ok    secret_garden.cancel_does_not_clear_path
+  ok    secret_garden.enter_farm
+  ok    secret_garden.leaving_cancels_work_and_releases_player
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.return_rebuilds_parked_garden
+  ok    secret_garden.out_of_order_work_refused
+  ok    secret_garden.player_can_interact_path
+  ok    secret_garden.path_is_cleared
+  ok    secret_garden.enter_traetoppen
+  ok    secret_garden.seed_help_read_in_real_conversation
+  ok    secret_garden.enter_int_brummes_vaerksted
+  ok    secret_garden.bench_help_read_in_real_conversation
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.player_can_interact_bench
+  ok    secret_garden.painted_bench_restored
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.beds_planted_and_watered
+  ok    secret_garden.flowers_need_one_morning
+  ok    secret_garden.garden_save_written
+  ok    secret_garden.garden_save_loaded
+  ok    secret_garden.watering_and_chapter_restore_together
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.garden_grows_while_away_or_asleep
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.flowers_use_approved_painting
+  ok    secret_garden.player_can_interact_letter
+  ok    secret_garden.mother_letter_persisted_as_quest_evidence
+  ok    secret_garden.kin_branch_matches_hero
+  ok    secret_garden.enter_moerkeskoven
+  ok    secret_garden.trail_hidden_until_lift_record
+  ok    secret_garden.enter_int_postkontoret
+  ok    secret_garden.post_account_persisted
+  ok    secret_garden.enter_traetoppen
+  ok    secret_garden.lift_record_persisted
+  ok    secret_garden.enter_moerkeskoven
+  ok    secret_garden.trail_revealed_at_real_forest_hub
+  ok    secret_garden.player_can_interact_trail
+  ok    secret_garden.mother_trail_recorded
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.player_can_interact_bench
+  ok    secret_garden.restoration_story_completed
+  ok    secret_garden.one_time_reward
+  ok    secret_garden.replay_cannot_pay_again
+  ok    secret_garden.evidence_can_be_reread_after_completion
+  ok    secret_garden.complete_save_written
+  ok    secret_garden.complete_save_loaded
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.completed_place_and_evidence_survive_load
+  ok    secret_garden.walk_through_gate_hyggebyen (actual hyggebyen; traveling=true)
+  ok    secret_garden.walk_through_gate_secret_garden (actual secret_garden; traveling=true)
+  ok    secret_garden.all_garden_art_is_real ([])
+  ok    secret_garden.new_hero_has_no_inherited_story
+  ok    secret_garden.opening_is_not_interrupted
+  ok    secret_garden.available_to_existing_save
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.garden_map_builds ([])
+  ok    secret_garden.all_work_markers_exist
+  ok    secret_garden.all_work_reachable_with_inflated_body ([])
+  ok    secret_garden.player_can_interact_gate
+  ok    secret_garden.quest_started_through_world_dialogue
+  ok    secret_garden.later_accounts_do_not_spoil_story
+  ok    secret_garden.cancel_does_not_clear_path
+  ok    secret_garden.enter_farm
+  ok    secret_garden.leaving_cancels_work_and_releases_player
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.return_rebuilds_parked_garden
+  ok    secret_garden.out_of_order_work_refused
+  ok    secret_garden.player_can_interact_path
+  ok    secret_garden.path_is_cleared
+  ok    secret_garden.enter_traetoppen
+  ok    secret_garden.seed_help_read_in_real_conversation
+  ok    secret_garden.enter_int_brummes_vaerksted
+  ok    secret_garden.bench_help_read_in_real_conversation
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.player_can_interact_bench
+  ok    secret_garden.painted_bench_restored
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.beds_planted_and_watered
+  ok    secret_garden.flowers_need_one_morning
+  ok    secret_garden.garden_save_written
+  ok    secret_garden.garden_save_loaded
+  ok    secret_garden.watering_and_chapter_restore_together
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.garden_grows_while_away_or_asleep
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.flowers_use_approved_painting
+  ok    secret_garden.player_can_interact_letter
+  ok    secret_garden.mother_letter_persisted_as_quest_evidence
+  ok    secret_garden.kin_branch_matches_hero
+  ok    secret_garden.enter_moerkeskoven
+  ok    secret_garden.trail_hidden_until_lift_record
+  ok    secret_garden.enter_int_postkontoret
+  ok    secret_garden.post_account_persisted
+  ok    secret_garden.enter_traetoppen
+  ok    secret_garden.lift_record_persisted
+  ok    secret_garden.enter_moerkeskoven
+  ok    secret_garden.trail_revealed_at_real_forest_hub
+  ok    secret_garden.player_can_interact_trail
+  ok    secret_garden.mother_trail_recorded
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.player_can_interact_bench
+  ok    secret_garden.restoration_story_completed
+  ok    secret_garden.one_time_reward
+  ok    secret_garden.replay_cannot_pay_again
+  ok    secret_garden.evidence_can_be_reread_after_completion
+  ok    secret_garden.complete_save_written
+  ok    secret_garden.complete_save_loaded
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.completed_place_and_evidence_survive_load
+  ok    secret_garden.walk_through_gate_hyggebyen (actual hyggebyen; traveling=true)
+  ok    secret_garden.walk_through_gate_secret_garden (actual secret_garden; traveling=true)
+  ok    secret_garden.all_garden_art_is_real ([])
+  --    secret_garden: 124 checks, 0 failed, 0 skipped, 2.6 s
+== section social_talk  (res://tests/sections/social_talk.gd)
+  ok    social_talk.decorate_on_empty_module_has_greeting_and_close
+  ok    Voice suffix resolves to the indexed NPC path
+  ok    social=false preserves authored first-meeting scenes
+  ok    Once met today, authored pages do not get another greeting
+  ok    The next day adds one greeting before the authored page
+  ok    A data-only citizen exposes the gift picker
+  ok    social_talk.choices_limit_5
+  ok    Overflow retains its choices and a closing row
+  ok    Cancelling a topic never teaches its item
+  ok    Reading the topic commits its daily use
+  ok    social_talk.topic_reveals_taste_once
+  ok    social_talk.topics_one_per_day
+  ok    Topic day and reveal bits survive a save roundtrip
+  ok    The next day reveals the next hearts-gated preference
+  ok    Hearts band for 0
+  ok    Hearts band for 1
+  ok    Hearts band for 2
+  ok    Hearts band for 3
+  ok    Hearts band for 4
+  ok    Hearts band for 5
+  ok    Hearts band for 6
+  ok    Hearts band for 7
+  ok    Hearts band for 8
+  ok    Hearts band for 9
+  ok    Hearts band for 10
+  ok    social_talk.cascade_specificity
+  ok    Day-part authored line precedes broad band pool
+  ok    Broad band remains usable in every daypart
+  ok    Gapped numbered variants are indexed
+  ok    social_talk.no_immediate_repeat
+  ok    Corpus revision invalidates family caches
+  ok    social_talk.weather_and_season_probabilities (Deterministic weather/season sample: 383/116)
+  ok    social_talk.pick_under_20us (Cached social line pick: 15.18 us)
+  ok    Missing keeper variants fall back to the actual shop greeting
+  ok    Quest bubble has first priority
+  ok    Gift reaction uses the citizen's own line first
+  ok    A repeated gift can use the archetype pool to avoid repeating one personal line
+  ok    Birthday greeting wins over ordinary context
+  ok    A ready heart event precedes the birthday bubble
+  ok    Ready heart events get an explicit conversation choice
+  ok    Content actions fall through to Npc2D's EventBus dispatch
+  ok    social=false scenes still count their read conversation as a meeting
+  --    social_talk: 42 checks, 0 failed, 0 skipped, 0.2 s
+== section towns_routes  (res://tests/sections/towns_routes.gd)
+  ok    towns_routes.table_loads_and_plans
+  ok    Route source inventory also catches removed inputs
+  ok    Route source is current: res://assets/iso_props/furniture/furniture.json
+  ok    Route source is current: res://assets/iso_props/shops/core/shops.json
+  ok    Route source is current: res://assets/iso_props/shops/special/shops.json
+  ok    Route source is current: res://data/interiors/core/int_badehuset.json
+  ok    Route source is current: res://data/interiors/core/int_bageriet.json
+  ok    Route source is current: res://data/interiors/core/int_brummes_vaerksted.json
+  ok    Route source is current: res://data/interiors/core/int_dyrehuset.json
+  ok    Route source is current: res://data/interiors/core/int_froebutikken.json
+  ok    Route source is current: res://data/interiors/core/int_gaestehytten.json
+  ok    Route source is current: res://data/interiors/core/int_loppeloftet.json
+  ok    Route source is current: res://data/interiors/core/int_moebelbutikken.json
+  ok    Route source is current: res://data/interiors/core/int_postkontoret.json
+  ok    Route source is current: res://data/interiors/core/int_raadhuset.json
+  ok    Route source is current: res://data/interiors/core/int_skraedderiet.json
+  ok    Route source is current: res://data/interiors/core/int_smedjen.json
+  ok    Route source is current: res://data/interiors/core/int_toemmerhandlen.json
+  ok    Route source is current: res://data/interiors/core/int_troldmandstaarnet.json
+  ok    Route source is current: res://data/interiors/core/int_uglehulen.json
+  ok    Route source is current: res://data/interiors/dress/int_badehuset.json
+  ok    Route source is current: res://data/interiors/dress/int_bageriet.json
+  ok    Route source is current: res://data/interiors/dress/int_brummes_vaerksted.json
+  ok    Route source is current: res://data/interiors/dress/int_dyrehuset.json
+  ok    Route source is current: res://data/interiors/dress/int_froebutikken.json
+  ok    Route source is current: res://data/interiors/dress/int_hoppe_hut.json
+  ok    Route source is current: res://data/interiors/dress/int_loppeloftet.json
+  ok    Route source is current: res://data/interiors/dress/int_moebelbutikken.json
+  ok    Route source is current: res://data/interiors/dress/int_postkontoret.json
+  ok    Route source is current: res://data/interiors/dress/int_raadhuset.json
+  ok    Route source is current: res://data/interiors/dress/int_skraedderiet.json
+  ok    Route source is current: res://data/interiors/dress/int_smedjen.json
+  ok    Route source is current: res://data/interiors/dress/int_toemmerhandlen.json
+  ok    Route source is current: res://data/interiors/dress/int_troldmandstaarnet.json
+  ok    Route source is current: res://data/interiors/dress/int_uglehulen.json
+  ok    Route source is current: res://data/interiors/kit_footprints.json
+  ok    Route source is current: res://data/maps/farm.map
+  ok    Route source is current: res://data/maps/hyggebyen.map
+  ok    Route source is current: res://data/towns/nav_city.json
+  ok    Route source is current: res://data/towns/traetoppen.json
+  ok    Route source is current: res://data/traetoppen/traetoppen.json
+  ok    Route source is current: res://lua/config/props.lua
+  ok    Route source is current: res://scripts/towns/fest_set.gd
+  ok    Route source is current: res://scripts/towns/level_nav.gd
+  ok    Route source is current: res://scripts/towns/nav_grid.gd
+  ok    Route source is current: res://scripts/towns/town_marks.gd
+  ok    Route source is current: res://tools/town/city_nav_bake.gd
+  ok    Route source is current: res://tools/towns/bake_routes.gd
+  ok    Route source is current: res://tools/towns/route_baker.gd
+  ok    farm table dimensions
+  ok    farm anchors are reachable
+  ok    hyggebyen table dimensions
+  ok    hyggebyen anchors are reachable
+  ok    int_badehuset table dimensions
+  ok    int_badehuset anchors are reachable
+  ok    int_bageriet table dimensions
+  ok    int_bageriet anchors are reachable
+  ok    int_brummes_vaerksted table dimensions
+  ok    int_brummes_vaerksted anchors are reachable
+  ok    int_dyrehuset table dimensions
+  ok    int_dyrehuset anchors are reachable
+  ok    int_froebutikken table dimensions
+  ok    int_froebutikken anchors are reachable
+  ok    int_gaestehytten table dimensions
+  ok    int_gaestehytten anchors are reachable
+  ok    int_loppeloftet table dimensions
+  ok    int_loppeloftet anchors are reachable
+  ok    int_moebelbutikken table dimensions
+  ok    int_moebelbutikken anchors are reachable
+  ok    int_postkontoret table dimensions
+  ok    int_postkontoret anchors are reachable
+  ok    int_raadhuset table dimensions
+  ok    int_raadhuset anchors are reachable
+  ok    int_skraedderiet table dimensions
+  ok    int_skraedderiet anchors are reachable
+  ok    int_smedjen table dimensions
+  ok    int_smedjen anchors are reachable
+  ok    int_toemmerhandlen table dimensions
+  ok    int_toemmerhandlen anchors are reachable
+  ok    int_troldmandstaarnet table dimensions
+  ok    int_troldmandstaarnet anchors are reachable
+  ok    int_uglehulen table dimensions
+  ok    int_uglehulen anchors are reachable
+  ok    traetoppen table dimensions
+  ok    traetoppen anchors are reachable
+  ok    torvet festival has 28 distinct posts
+  ok    hyggetorv festival has 28 distinct posts
+  ok    badehus festival has 28 distinct posts
+  ok    raadhus festival has 28 distinct posts
+  ok    Farm to shop uses real paths and portals
+  ok    towns_routes.fallback_is_flagged
+  ok    towns_routes.no_forward_class_refs ([])
+  ok    towns_routes.routines.feasible
+  ok    towns_routes.routines.places_exist
+  ok    towns_routes.hours.keeper_covers_hours
+  ok    towns_routes.hours.consistency
+  ok    towns_routes.routines.post_capacity
+  ok    towns_routes.towns.visual_budget
+  ok    towns_routes.routines.no_short_visits
+  ok    towns_routes.routines.day_wrap
+  ok    towns_routes.hours.visits_inside_hours
+  ok    towns_routes.tool_printed_ids (Town CLI validator printed 9 PASS/FAIL ids)
+  ok    towns_routes.tool_exit_code (Town CLI validator exit code 0)
+  --    towns_routes: 103 checks, 0 failed, 0 skipped, 2.2 s
+== section walkway_transitions  (res://tests/sections/walkway_transitions.gd)
+  ok    walkway_transitions.landing_b0_end0_out_lane-0.6 (a -> b0, 21 ticks, 0 stalled ticks, 3.24 ground px left; actual level b0; )
+  ok    walkway_transitions.landing_b0_end0_in_lane-0.6 (b0 -> a, 23 ticks, 0 stalled ticks, 6.26 ground px left; actual level a; )
+  ok    walkway_transitions.landing_b0_end0_out_lane0.0 (a -> b0, 21 ticks, 0 stalled ticks, 3.24 ground px left; actual level b0; )
+  ok    walkway_transitions.landing_b0_end0_in_lane0.0 (b0 -> a, 23 ticks, 0 stalled ticks, 6.26 ground px left; actual level a; )
+  ok    walkway_transitions.landing_b0_end0_out_lane0.6 (a -> b0, 21 ticks, 0 stalled ticks, 3.24 ground px left; actual level b0; )
+  ok    walkway_transitions.landing_b0_end0_in_lane0.6 (b0 -> a, 25 ticks, 0 stalled ticks, 15.76 ground px left; actual level a; )
+  ok    walkway_transitions.landing_b0_end1_out_lane-0.6 (upper -> b0, 21 ticks, 0 stalled ticks, 3.24 ground px left; actual level b0; )
+  ok    walkway_transitions.landing_b0_end1_in_lane-0.6 (b0 -> upper, 23 ticks, 0 stalled ticks, 6.26 ground px left; actual level upper; )
+  ok    walkway_transitions.landing_b0_end1_out_lane0.0 (upper -> b0, 21 ticks, 0 stalled ticks, 3.24 ground px left; actual level b0; )
+  ok    walkway_transitions.landing_b0_end1_in_lane0.0 (b0 -> upper, 23 ticks, 0 stalled ticks, 6.26 ground px left; actual level upper; )
+  ok    walkway_transitions.landing_b0_end1_out_lane0.6 (upper -> b0, 21 ticks, 0 stalled ticks, 3.24 ground px left; actual level b0; )
+  ok    walkway_transitions.landing_b0_end1_in_lane0.6 (b0 -> upper, 23 ticks, 0 stalled ticks, 6.26 ground px left; actual level upper; )
+  ok    walkway_transitions.landing_b1_end0_out_lane-0.6 (b -> b1, 19 ticks, 0 stalled ticks, 2.91 ground px left; actual level b1; )
+  ok    walkway_transitions.landing_b1_end0_in_lane-0.6 (b1 -> b, 25 ticks, 0 stalled ticks, 28.28 ground px left; actual level b; )
+  ok    walkway_transitions.landing_b1_end0_out_lane0.0 (b -> b1, 19 ticks, 0 stalled ticks, 2.91 ground px left; actual level b1; )
+  ok    walkway_transitions.landing_b1_end0_in_lane0.0 (b1 -> b, 21 ticks, 0 stalled ticks, 6.59 ground px left; actual level b; )
+  ok    walkway_transitions.landing_b1_end0_out_lane0.6 (b -> b1, 19 ticks, 0 stalled ticks, 2.91 ground px left; actual level b1; )
+  ok    walkway_transitions.landing_b1_end0_in_lane0.6 (b1 -> b, 21 ticks, 0 stalled ticks, 6.59 ground px left; actual level b; )
+  ok    walkway_transitions.landing_b1_end1_out_lane-0.6 (upper -> b1, 19 ticks, 0 stalled ticks, 2.91 ground px left; actual level b1; )
+  ok    walkway_transitions.landing_b1_end1_in_lane-0.6 (b1 -> upper, 21 ticks, 0 stalled ticks, 6.59 ground px left; actual level upper; )
+  ok    walkway_transitions.landing_b1_end1_out_lane0.0 (upper -> b1, 19 ticks, 0 stalled ticks, 2.91 ground px left; actual level b1; )
+  ok    walkway_transitions.landing_b1_end1_in_lane0.0 (b1 -> upper, 21 ticks, 0 stalled ticks, 6.59 ground px left; actual level upper; )
+  ok    walkway_transitions.landing_b1_end1_out_lane0.6 (upper -> b1, 19 ticks, 0 stalled ticks, 2.91 ground px left; actual level b1; )
+  ok    walkway_transitions.landing_b1_end1_in_lane0.6 (b1 -> upper, 21 ticks, 0 stalled ticks, 6.59 ground px left; actual level upper; )
+  ok    walkway_transitions.landing_b2_end0_out_lane-0.6 (a -> b2, 27 ticks, 0 stalled ticks, 4.87 ground px left; actual level b2; )
+  ok    walkway_transitions.landing_b2_end0_in_lane-0.6 (b2 -> a, 29 ticks, 0 stalled ticks, 4.63 ground px left; actual level a; )
+  ok    walkway_transitions.landing_b2_end0_out_lane0.0 (a -> b2, 27 ticks, 0 stalled ticks, 4.87 ground px left; actual level b2; )
+  ok    walkway_transitions.landing_b2_end0_in_lane0.0 (b2 -> a, 29 ticks, 0 stalled ticks, 4.63 ground px left; actual level a; )
+  ok    walkway_transitions.landing_b2_end0_out_lane0.6 (a -> b2, 27 ticks, 0 stalled ticks, 4.87 ground px left; actual level b2; )
+  ok    walkway_transitions.landing_b2_end0_in_lane0.6 (b2 -> a, 29 ticks, 0 stalled ticks, 4.63 ground px left; actual level a; )
+  ok    walkway_transitions.landing_b2_end1_out_lane-0.6 (c -> b2, 27 ticks, 0 stalled ticks, 4.87 ground px left; actual level b2; )
+  ok    walkway_transitions.landing_b2_end1_in_lane-0.6 (b2 -> c, 29 ticks, 0 stalled ticks, 4.63 ground px left; actual level c; )
+  ok    walkway_transitions.landing_b2_end1_out_lane0.0 (c -> b2, 27 ticks, 0 stalled ticks, 4.87 ground px left; actual level b2; )
+  ok    walkway_transitions.landing_b2_end1_in_lane0.0 (b2 -> c, 29 ticks, 0 stalled ticks, 4.63 ground px left; actual level c; )
+  ok    walkway_transitions.landing_b2_end1_out_lane0.6 (c -> b2, 27 ticks, 0 stalled ticks, 4.87 ground px left; actual level b2; )
+  ok    walkway_transitions.landing_b2_end1_in_lane0.6 (b2 -> c, 29 ticks, 0 stalled ticks, 4.63 ground px left; actual level c; )
+  ok    walkway_transitions.landing_b3_end0_out_lane-0.6 (b -> b3, 26 ticks, 0 stalled ticks, 4.79 ground px left; actual level b3; )
+  ok    walkway_transitions.landing_b3_end0_in_lane-0.6 (b3 -> b, 28 ticks, 0 stalled ticks, 4.71 ground px left; actual level b; )
+  ok    walkway_transitions.landing_b3_end0_out_lane0.0 (b -> b3, 26 ticks, 0 stalled ticks, 4.79 ground px left; actual level b3; )
+  ok    walkway_transitions.landing_b3_end0_in_lane0.0 (b3 -> b, 28 ticks, 0 stalled ticks, 4.71 ground px left; actual level b; )
+  ok    walkway_transitions.landing_b3_end0_out_lane0.6 (b -> b3, 26 ticks, 0 stalled ticks, 4.79 ground px left; actual level b3; )
+  ok    walkway_transitions.landing_b3_end0_in_lane0.6 (b3 -> b, 28 ticks, 0 stalled ticks, 4.71 ground px left; actual level b; )
+  ok    walkway_transitions.landing_b3_end1_out_lane-0.6 (e -> b3, 26 ticks, 0 stalled ticks, 4.79 ground px left; actual level b3; )
+  ok    walkway_transitions.landing_b3_end1_in_lane-0.6 (b3 -> e, 28 ticks, 0 stalled ticks, 4.71 ground px left; actual level e; )
+  ok    walkway_transitions.landing_b3_end1_out_lane0.0 (e -> b3, 26 ticks, 0 stalled ticks, 4.79 ground px left; actual level b3; )
+  ok    walkway_transitions.landing_b3_end1_in_lane0.0 (b3 -> e, 28 ticks, 0 stalled ticks, 4.71 ground px left; actual level e; )
+  ok    walkway_transitions.landing_b3_end1_out_lane0.6 (e -> b3, 26 ticks, 0 stalled ticks, 4.79 ground px left; actual level b3; )
+  ok    walkway_transitions.landing_b3_end1_in_lane0.6 (b3 -> e, 28 ticks, 0 stalled ticks, 4.71 ground px left; actual level e; )
+  ok    walkway_transitions.landing_b4_end0_out_lane-0.6 (c -> b4, 18 ticks, 0 stalled ticks, 3.24 ground px left; actual level b4; )
+  ok    walkway_transitions.landing_b4_end0_in_lane-0.6 (b4 -> c, 20 ticks, 0 stalled ticks, 5.10 ground px left; actual level c; )
+  ok    walkway_transitions.landing_b4_end0_out_lane0.0 (c -> b4, 18 ticks, 0 stalled ticks, 3.75 ground px left; actual level b4; )
+  ok    walkway_transitions.landing_b4_end0_in_lane0.0 (b4 -> c, 20 ticks, 0 stalled ticks, 5.75 ground px left; actual level c; )
+  ok    walkway_transitions.landing_b4_end0_out_lane0.6 (c -> b4, 18 ticks, 0 stalled ticks, 3.75 ground px left; actual level b4; )
+  ok    walkway_transitions.landing_b4_end0_in_lane0.6 (b4 -> c, 20 ticks, 0 stalled ticks, 5.75 ground px left; actual level c; )
+  ok    walkway_transitions.landing_b4_end1_out_lane-0.6 (torvet -> b4, 18 ticks, 0 stalled ticks, 2.52 ground px left; actual level b4; )
+  ok    walkway_transitions.landing_b4_end1_in_lane-0.6 (b4 -> torvet, 22 ticks, 0 stalled ticks, 12.62 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b4_end1_out_lane0.0 (torvet -> b4, 18 ticks, 0 stalled ticks, 3.75 ground px left; actual level b4; )
+  ok    walkway_transitions.landing_b4_end1_in_lane0.0 (b4 -> torvet, 21 ticks, 0 stalled ticks, 10.50 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b4_end1_out_lane0.6 (torvet -> b4, 18 ticks, 0 stalled ticks, 3.75 ground px left; actual level b4; )
+  ok    walkway_transitions.landing_b4_end1_in_lane0.6 (b4 -> torvet, 21 ticks, 0 stalled ticks, 10.50 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b5_end0_out_lane-0.6 (e -> b5, 19 ticks, 0 stalled ticks, 1.88 ground px left; actual level b5; )
+  ok    walkway_transitions.landing_b5_end0_in_lane-0.6 (b5 -> e, 20 ticks, 0 stalled ticks, 2.87 ground px left; actual level e; )
+  ok    walkway_transitions.landing_b5_end0_out_lane0.0 (e -> b5, 19 ticks, 0 stalled ticks, 1.88 ground px left; actual level b5; )
+  ok    walkway_transitions.landing_b5_end0_in_lane0.0 (b5 -> e, 20 ticks, 0 stalled ticks, 2.87 ground px left; actual level e; )
+  ok    walkway_transitions.landing_b5_end0_out_lane0.6 (e -> b5, 18 ticks, 0 stalled ticks, 4.12 ground px left; actual level b5; )
+  ok    walkway_transitions.landing_b5_end0_in_lane0.6 (b5 -> e, 22 ticks, 0 stalled ticks, 10.72 ground px left; actual level e; )
+  ok    walkway_transitions.landing_b5_end1_out_lane-0.6 (torvet -> b5, 19 ticks, 0 stalled ticks, 1.88 ground px left; actual level b5; )
+  ok    walkway_transitions.landing_b5_end1_in_lane-0.6 (b5 -> torvet, 22 ticks, 0 stalled ticks, 12.37 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b5_end1_out_lane0.0 (torvet -> b5, 19 ticks, 0 stalled ticks, 1.88 ground px left; actual level b5; )
+  ok    walkway_transitions.landing_b5_end1_in_lane0.0 (b5 -> torvet, 22 ticks, 0 stalled ticks, 11.70 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b5_end1_out_lane0.6 (torvet -> b5, 18 ticks, 0 stalled ticks, 2.96 ground px left; actual level b5; )
+  ok    walkway_transitions.landing_b5_end1_in_lane0.6 (b5 -> torvet, 24 ticks, 0 stalled ticks, 16.04 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b6_end0_out_lane-0.6 (f -> b6, 27 ticks, 0 stalled ticks, 2.65 ground px left; actual level b6; )
+  ok    walkway_transitions.landing_b6_end0_in_lane-0.6 (b6 -> f, 28 ticks, 0 stalled ticks, 2.10 ground px left; actual level f; )
+  ok    walkway_transitions.landing_b6_end0_out_lane0.0 (f -> b6, 27 ticks, 0 stalled ticks, 2.65 ground px left; actual level b6; )
+  ok    walkway_transitions.landing_b6_end0_in_lane0.0 (b6 -> f, 28 ticks, 0 stalled ticks, 2.10 ground px left; actual level f; )
+  ok    walkway_transitions.landing_b6_end0_out_lane0.6 (f -> b6, 27 ticks, 0 stalled ticks, 2.65 ground px left; actual level b6; )
+  ok    walkway_transitions.landing_b6_end0_in_lane0.6 (b6 -> f, 28 ticks, 0 stalled ticks, 2.10 ground px left; actual level f; )
+  ok    walkway_transitions.landing_b6_end1_out_lane-0.6 (torvet -> b6, 27 ticks, 0 stalled ticks, 2.65 ground px left; actual level b6; )
+  ok    walkway_transitions.landing_b6_end1_in_lane-0.6 (b6 -> torvet, 31 ticks, 0 stalled ticks, 16.35 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b6_end1_out_lane0.0 (torvet -> b6, 27 ticks, 0 stalled ticks, 2.65 ground px left; actual level b6; )
+  ok    walkway_transitions.landing_b6_end1_in_lane0.0 (b6 -> torvet, 30 ticks, 0 stalled ticks, 11.60 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b6_end1_out_lane0.6 (torvet -> b6, 27 ticks, 0 stalled ticks, 2.65 ground px left; actual level b6; )
+  ok    walkway_transitions.landing_b6_end1_in_lane0.6 (b6 -> torvet, 28 ticks, 0 stalled ticks, 2.10 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b7_end0_out_lane-0.6 (g -> b7, 26 ticks, 0 stalled ticks, 3.06 ground px left; actual level b7; )
+  ok    walkway_transitions.landing_b7_end0_in_lane-0.6 (b7 -> g, 28 ticks, 0 stalled ticks, 6.44 ground px left; actual level g; )
+  ok    walkway_transitions.landing_b7_end0_out_lane0.0 (g -> b7, 26 ticks, 0 stalled ticks, 3.06 ground px left; actual level b7; )
+  ok    walkway_transitions.landing_b7_end0_in_lane0.0 (b7 -> g, 28 ticks, 0 stalled ticks, 6.44 ground px left; actual level g; )
+  ok    walkway_transitions.landing_b7_end0_out_lane0.6 (g -> b7, 26 ticks, 0 stalled ticks, 3.06 ground px left; actual level b7; )
+  ok    walkway_transitions.landing_b7_end0_in_lane0.6 (b7 -> g, 28 ticks, 0 stalled ticks, 6.44 ground px left; actual level g; )
+  ok    walkway_transitions.landing_b7_end1_out_lane-0.6 (torvet -> b7, 26 ticks, 0 stalled ticks, 3.06 ground px left; actual level b7; )
+  ok    walkway_transitions.landing_b7_end1_in_lane-0.6 (b7 -> torvet, 28 ticks, 0 stalled ticks, 6.44 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b7_end1_out_lane0.0 (torvet -> b7, 26 ticks, 0 stalled ticks, 3.06 ground px left; actual level b7; )
+  ok    walkway_transitions.landing_b7_end1_in_lane0.0 (b7 -> torvet, 29 ticks, 0 stalled ticks, 11.19 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b7_end1_out_lane0.6 (torvet -> b7, 26 ticks, 0 stalled ticks, 3.06 ground px left; actual level b7; )
+  ok    walkway_transitions.landing_b7_end1_in_lane0.6 (b7 -> torvet, 31 ticks, 0 stalled ticks, 20.69 ground px left; actual level torvet; )
+  ok    walkway_transitions.landing_b8_end0_out_lane-0.6 (f -> b8, 18 ticks, 0 stalled ticks, 3.93 ground px left; actual level b8; )
+  ok    walkway_transitions.landing_b8_end0_in_lane-0.6 (b8 -> f, 20 ticks, 0 stalled ticks, 5.57 ground px left; actual level f; )
+  ok    walkway_transitions.landing_b8_end0_out_lane0.0 (f -> b8, 18 ticks, 0 stalled ticks, 3.93 ground px left; actual level b8; )
+  ok    walkway_transitions.landing_b8_end0_in_lane0.0 (b8 -> f, 20 ticks, 0 stalled ticks, 5.57 ground px left; actual level f; )
+  ok    walkway_transitions.landing_b8_end0_out_lane0.6 (f -> b8, 18 ticks, 0 stalled ticks, 3.35 ground px left; actual level b8; )
+  ok    walkway_transitions.landing_b8_end0_in_lane0.6 (b8 -> f, 20 ticks, 0 stalled ticks, 5.05 ground px left; actual level f; )
+  ok    walkway_transitions.landing_b8_end1_out_lane-0.6 (g -> b8, 18 ticks, 0 stalled ticks, 3.93 ground px left; actual level b8; )
+  ok    walkway_transitions.landing_b8_end1_in_lane-0.6 (b8 -> g, 20 ticks, 0 stalled ticks, 5.57 ground px left; actual level g; )
+  ok    walkway_transitions.landing_b8_end1_out_lane0.0 (g -> b8, 18 ticks, 0 stalled ticks, 3.93 ground px left; actual level b8; )
+  ok    walkway_transitions.landing_b8_end1_in_lane0.0 (b8 -> g, 20 ticks, 0 stalled ticks, 5.57 ground px left; actual level g; )
+  ok    walkway_transitions.landing_b8_end1_out_lane0.6 (g -> b8, 18 ticks, 0 stalled ticks, 3.32 ground px left; actual level b8; )
+  ok    walkway_transitions.landing_b8_end1_in_lane0.6 (b8 -> g, 20 ticks, 0 stalled ticks, 5.28 ground px left; actual level g; )
+  ok    walkway_transitions.all_boardwalk_landings_covered (108 crossings: 9 bridges x 2 ends x both directions x 3 lateral approaches)
+  ok    walkway_transitions.ladder_up_approach_on_boardwalk
+  ok    walkway_transitions.ladder_up_no_entry_snap (interaction displacement 0.00 world px)
+  ok    walkway_transitions.ladder_up_approach_keeps_boardwalk_level
+  ok    walkway_transitions.ladder_up_animation_starts (walk)
+  ok    walkway_transitions.ladder_up_continuous_motion (peak 826.8 ground px/s <= 950.8)
+  ok    walkway_transitions.ladder_up_animation_advances (6 distinct animation frames)
+  ok    walkway_transitions.ladder_up_lands_on_boardwalk (level upper, 0.00 world px at landing event)
+  ok    walkway_transitions.ladder_up_stride_survives_landing (walk)
+  ok    walkway_transitions.ladder_up_facing_survives_landing
+  ok    walkway_transitions.ladder_up_held_input_continues (27.76 ground px on held input after landing)
+  ok    walkway_transitions.ladder_down_approach_on_boardwalk
+  ok    walkway_transitions.ladder_down_no_entry_snap (interaction displacement 0.00 world px)
+  ok    walkway_transitions.ladder_down_approach_keeps_boardwalk_level
+  ok    walkway_transitions.ladder_down_animation_starts (walk)
+  ok    walkway_transitions.ladder_down_continuous_motion (peak 826.8 ground px/s <= 950.8)
+  ok    walkway_transitions.ladder_down_animation_advances (6 distinct animation frames)
+  ok    walkway_transitions.ladder_down_lands_on_boardwalk (level torvet, 0.00 world px at landing event)
+  ok    walkway_transitions.ladder_down_stride_survives_landing (walk)
+  ok    walkway_transitions.ladder_down_facing_survives_landing
+  ok    walkway_transitions.ladder_down_held_input_continues (43.08 ground px on held input after landing)
+  ok    walkway_transitions.reparent_cancels_transition
+  ok    walkway_transitions.cancel_restores_forced_clip
+  ok    walkway_transitions.cancel_has_no_late_motion
+  ok    walkway_transitions.blocked_approach_does_not_jump_through_obstacle (0 climb events; stayed 70.39 world px before the lane)
+  ok    walkway_transitions.alternate_ladder_up_approach_on_boardwalk
+  ok    walkway_transitions.alternate_ladder_up_no_entry_snap (interaction displacement 0.00 world px)
+  ok    walkway_transitions.alternate_ladder_up_approach_keeps_boardwalk_level
+  ok    walkway_transitions.alternate_ladder_up_animation_starts (walk)
+  ok    walkway_transitions.alternate_ladder_up_continuous_motion (peak 1819.0 ground px/s <= 2091.8)
+  ok    walkway_transitions.alternate_ladder_up_animation_advances (6 distinct animation frames)
+  ok    walkway_transitions.alternate_ladder_up_lands_on_boardwalk (level upper, 0.00 world px at landing event)
+  ok    walkway_transitions.alternate_ladder_up_stride_survives_landing (walk)
+  ok    walkway_transitions.alternate_ladder_up_facing_survives_landing
+  ok    walkway_transitions.alternate_ladder_up_held_input_continues (27.76 ground px on held input after landing)
+  ok    walkway_transitions.alternate_ladder_down_approach_on_boardwalk
+  ok    walkway_transitions.alternate_ladder_down_no_entry_snap (interaction displacement 0.00 world px)
+  ok    walkway_transitions.alternate_ladder_down_approach_keeps_boardwalk_level
+  ok    walkway_transitions.alternate_ladder_down_animation_starts (walk)
+  ok    walkway_transitions.alternate_ladder_down_continuous_motion (peak 1819.0 ground px/s <= 2091.8)
+  ok    walkway_transitions.alternate_ladder_down_animation_advances (6 distinct animation frames)
+  ok    walkway_transitions.alternate_ladder_down_lands_on_boardwalk (level torvet, 0.00 world px at landing event)
+  ok    walkway_transitions.alternate_ladder_down_stride_survives_landing (walk)
+  ok    walkway_transitions.alternate_ladder_down_facing_survives_landing
+  ok    walkway_transitions.alternate_ladder_down_held_input_continues (43.08 ground px on held input after landing)
+  --    walkway_transitions: 153 checks, 0 failed, 0 skipped, 1.7 s
+== summary: 7 section(s) run, 810 checks (0 failed, 7 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 19.0 s
+PLAYTEST PASS (810 checks in 7 sections, 0 allowed engine messages, 0 known-issue messages)

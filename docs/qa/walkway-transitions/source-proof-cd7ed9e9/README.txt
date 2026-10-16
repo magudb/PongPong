@@ -1,0 +1,1 @@
+Historical source-bound proofs for the accepted boardwalk transition fix at binding cd7ed9e909565fdbf7b43b6dd61f126ab3f5f30d4628da6e98484a9cbe081842. Retained before Secret Garden runtime changes. Current live town proofs remain under docs/qa/m1b-milestone/.

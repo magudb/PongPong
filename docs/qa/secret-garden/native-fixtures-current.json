@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 10,
+  "elapsed_s": 7.15,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "native_fixtures": {
+      "character": "animal",
+      "checks": 10,
+      "failed": 0,
+      "ms": 5938,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

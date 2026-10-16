@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "ghost",
+  "checks": 124,
+  "elapsed_s": 6.73,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "secret_garden": {
+      "character": "ghost",
+      "checks": 124,
+      "failed": 0,
+      "ms": 2866,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

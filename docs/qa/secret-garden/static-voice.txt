@@ -1,0 +1,2 @@
+PASS voiced_index_in_sync
+PASS all 10 frozen family voice rows unchanged in both languages

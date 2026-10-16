@@ -1,0 +1,780 @@
+{
+  "4": [
+    {
+      "required": "L00.l00_new_game_on_farm",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L10.l10_till_plant_water",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L10.l10_energy_costs",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L11.l11_bed_opens_at_18",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L11.l11_sleep_rolls_day",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L13.l13_digest_roundtrip",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L13.l13_save_cost",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    }
+  ],
+  "5": [
+    {
+      "required": "L00.l00_new_game_on_farm",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L10.l10_till_plant_water",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L10.l10_energy_costs",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L11.l11_bed_opens_at_18",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L11.l11_sleep_rolls_day",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L13.l13_digest_roundtrip",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L13.l13_save_cost",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L03.l03_walk_and_talk",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L06.l06_buy_exact",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    }
+  ],
+  "5b": [
+    {
+      "required": "L00.l00_new_game_on_farm",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L10.l10_till_plant_water",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L10.l10_energy_costs",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L11.l11_bed_opens_at_18",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L11.l11_sleep_rolls_day",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L13.l13_digest_roundtrip",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L13.l13_save_cost",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L03.l03_walk_and_talk",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L06.l06_buy_exact",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L00.l00_first_morning_order",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L01",
+      "ran": 2,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L02",
+      "ran": 5,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L03.l03b_keeper_weekly_heart_at_counter",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L04",
+      "ran": 7,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L05",
+      "ran": 7,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L06.l06b_keeper_weekly_heart_at_noon",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L06.l06c_home_upgrade_desk_at_noon",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L07",
+      "ran": 8,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L08",
+      "ran": 6,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L09",
+      "ran": 2,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L10.l10_forste_dage_objectives",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L10.l10_hint_once_per_save",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L11.l11_no_pass_out_at_midnight",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L12",
+      "ran": 8,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L13",
+      "ran": 6,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L14",
+      "ran": 4,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L17",
+      "ran": 8,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18",
+      "ran": 8,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_citizen",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_building",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_routine_edit",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_shop_hours",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_festival",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_event",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_quest",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_no_gd_changed",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    }
+  ],
+  "6": [
+    {
+      "required": "L00.l00_new_game_on_farm",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L10.l10_till_plant_water",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L10.l10_energy_costs",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L11.l11_bed_opens_at_18",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L11.l11_sleep_rolls_day",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L13.l13_digest_roundtrip",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L13.l13_save_cost",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L03.l03_walk_and_talk",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L06.l06_buy_exact",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L00.l00_first_morning_order",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L01",
+      "ran": 2,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L02",
+      "ran": 5,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L03.l03b_keeper_weekly_heart_at_counter",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L04",
+      "ran": 7,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L05",
+      "ran": 7,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L06.l06b_keeper_weekly_heart_at_noon",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L06.l06c_home_upgrade_desk_at_noon",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L07",
+      "ran": 8,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L08",
+      "ran": 6,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L09",
+      "ran": 2,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L10.l10_forste_dage_objectives",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L10.l10_hint_once_per_save",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L11.l11_no_pass_out_at_midnight",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L12",
+      "ran": 8,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L13",
+      "ran": 6,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L14",
+      "ran": 4,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L17",
+      "ran": 8,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18",
+      "ran": 8,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_citizen",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_building",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_routine_edit",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_shop_hours",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_festival",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_event",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_quest",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_no_gd_changed",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L16",
+      "ran": 0,
+      "failed": [],
+      "skipped_with_reason": [
+        "L16: Missing capability: audio"
+      ]
+    }
+  ],
+  "7": [
+    {
+      "required": "L00.l00_new_game_on_farm",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L10.l10_till_plant_water",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L10.l10_energy_costs",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L11.l11_bed_opens_at_18",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L11.l11_sleep_rolls_day",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L13.l13_digest_roundtrip",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L13.l13_save_cost",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L03.l03_walk_and_talk",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L06.l06_buy_exact",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L00.l00_first_morning_order",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L01",
+      "ran": 2,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L02",
+      "ran": 5,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L03.l03b_keeper_weekly_heart_at_counter",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L04",
+      "ran": 7,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L05",
+      "ran": 7,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L06.l06b_keeper_weekly_heart_at_noon",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L06.l06c_home_upgrade_desk_at_noon",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L07",
+      "ran": 8,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L08",
+      "ran": 6,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L09",
+      "ran": 2,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L10.l10_forste_dage_objectives",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L10.l10_hint_once_per_save",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L11.l11_no_pass_out_at_midnight",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L12",
+      "ran": 8,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L13",
+      "ran": 6,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L14",
+      "ran": 4,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L17",
+      "ran": 8,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18",
+      "ran": 8,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_citizen",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_building",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_routine_edit",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_shop_hours",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_festival",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_event",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_data_only_quest",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L18.l18_no_gd_changed",
+      "ran": 1,
+      "failed": [],
+      "skipped_with_reason": []
+    },
+    {
+      "required": "L16",
+      "ran": 0,
+      "failed": [],
+      "skipped_with_reason": [
+        "L16: Missing capability: audio"
+      ]
+    },
+    {
+      "required": "L15",
+      "ran": 0,
+      "failed": [],
+      "skipped_with_reason": [
+        "Required leg did not run"
+      ]
+    }
+  ]
+}

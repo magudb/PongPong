@@ -1,0 +1,44 @@
+{
+  "source_commit": "1028b49",
+  "source_binding": "c59041b02f45323859dd0f2c35eac63b39514fded639ba0e9ea834dcfd649a68",
+  "capture": "Unedited Godot 4.7.2 native Compatibility/OpenGL window on Apple M3",
+  "review": "Inspected all six captures. Restored view checked after notifications naturally expire; Pip text fits the existing dialogue panel. Town entry now has a visible path, gate and sign beside the seed shop.",
+  "files": {
+    "secret_garden_blossoms.png": {
+      "sha256": "68e045307ba6a96694a6d619f10278edacc391a8fdb046938f37dd547b9359fc",
+      "bytes": 1557614,
+      "width": 1280,
+      "height": 720
+    },
+    "secret_garden_forest_trace.png": {
+      "sha256": "4552acb96851ccf26264f9de20977481c53e5dc666cea890bd31d32b4489b090",
+      "bytes": 1446110,
+      "width": 1280,
+      "height": 720
+    },
+    "secret_garden_overgrown.png": {
+      "sha256": "0a9dcc749f8136a5434053b3adf276766380f028dc52ab28c4d80c61e40cfea3",
+      "bytes": 1727815,
+      "width": 1280,
+      "height": 720
+    },
+    "secret_garden_post_account.png": {
+      "sha256": "c00903359e2c6af8be6b5bf2fe825a5c9f0ad1ca6b7755c6da7b15e5b4f277ba",
+      "bytes": 422896,
+      "width": 1280,
+      "height": 720
+    },
+    "secret_garden_restored.png": {
+      "sha256": "4d10c7b02568e434ebf694baa395e6c84ebd240530df86fd769c3568f4ebca27",
+      "bytes": 1762250,
+      "width": 1280,
+      "height": 720
+    },
+    "secret_garden_town_entrance.png": {
+      "sha256": "2dbe064cdfb21434113c0a3b31b5247edf4d2139f5ea870fe296e17b7c0d871d",
+      "bytes": 2017861,
+      "width": 1280,
+      "height": 720
+    }
+  }
+}

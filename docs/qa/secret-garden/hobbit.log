@@ -1,0 +1,133 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=headless character=hobbit sections=res://tests/sections only=secret_garden
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.mUYvwK/Library/Application Support/Traetoppen (throwaway)
+== section secret_garden  (res://tests/sections/secret_garden.gd)
+  ok    secret_garden.new_hero_has_no_inherited_story
+  ok    secret_garden.opening_is_not_interrupted
+  ok    secret_garden.available_to_existing_save
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.garden_map_builds ([])
+  ok    secret_garden.all_work_markers_exist
+  ok    secret_garden.all_work_reachable_with_inflated_body ([])
+  ok    secret_garden.player_can_interact_gate
+  ok    secret_garden.quest_started_through_world_dialogue
+  ok    secret_garden.later_accounts_do_not_spoil_story
+  ok    secret_garden.cancel_does_not_clear_path
+  ok    secret_garden.enter_farm
+  ok    secret_garden.leaving_cancels_work_and_releases_player
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.return_rebuilds_parked_garden
+  ok    secret_garden.out_of_order_work_refused
+  ok    secret_garden.player_can_interact_path
+  ok    secret_garden.path_is_cleared
+  ok    secret_garden.enter_traetoppen
+  ok    secret_garden.seed_help_read_in_real_conversation
+  ok    secret_garden.enter_int_brummes_vaerksted
+  ok    secret_garden.bench_help_read_in_real_conversation
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.player_can_interact_bench
+  ok    secret_garden.painted_bench_restored
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.beds_planted_and_watered
+  ok    secret_garden.flowers_need_one_morning
+  ok    secret_garden.garden_save_written
+  ok    secret_garden.garden_save_loaded
+  ok    secret_garden.watering_and_chapter_restore_together
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.garden_grows_while_away_or_asleep
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.flowers_use_approved_painting
+  ok    secret_garden.player_can_interact_letter
+  ok    secret_garden.mother_letter_persisted_as_quest_evidence
+  ok    secret_garden.kin_branch_matches_hero
+  ok    secret_garden.enter_moerkeskoven
+  ok    secret_garden.trail_hidden_until_lift_record
+  ok    secret_garden.enter_int_postkontoret
+  ok    secret_garden.post_account_persisted
+  ok    secret_garden.enter_traetoppen
+  ok    secret_garden.lift_record_persisted
+  ok    secret_garden.enter_moerkeskoven
+  ok    secret_garden.trail_revealed_at_real_forest_hub
+  ok    secret_garden.player_can_interact_trail
+  ok    secret_garden.mother_trail_recorded
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.player_can_interact_bench
+  ok    secret_garden.restoration_story_completed
+  ok    secret_garden.one_time_reward
+  ok    secret_garden.replay_cannot_pay_again
+  ok    secret_garden.evidence_can_be_reread_after_completion
+  ok    secret_garden.complete_save_written
+  ok    secret_garden.complete_save_loaded
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.completed_place_and_evidence_survive_load
+  ok    secret_garden.walk_through_gate_hyggebyen (actual hyggebyen; traveling=true)
+  ok    secret_garden.walk_through_gate_secret_garden (actual secret_garden; traveling=true)
+  ok    secret_garden.all_garden_art_is_real ([])
+  ok    secret_garden.new_hero_has_no_inherited_story
+  ok    secret_garden.opening_is_not_interrupted
+  ok    secret_garden.available_to_existing_save
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.garden_map_builds ([])
+  ok    secret_garden.all_work_markers_exist
+  ok    secret_garden.all_work_reachable_with_inflated_body ([])
+  ok    secret_garden.player_can_interact_gate
+  ok    secret_garden.quest_started_through_world_dialogue
+  ok    secret_garden.later_accounts_do_not_spoil_story
+  ok    secret_garden.cancel_does_not_clear_path
+  ok    secret_garden.enter_farm
+  ok    secret_garden.leaving_cancels_work_and_releases_player
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.return_rebuilds_parked_garden
+  ok    secret_garden.out_of_order_work_refused
+  ok    secret_garden.player_can_interact_path
+  ok    secret_garden.path_is_cleared
+  ok    secret_garden.enter_traetoppen
+  ok    secret_garden.seed_help_read_in_real_conversation
+  ok    secret_garden.enter_int_brummes_vaerksted
+  ok    secret_garden.bench_help_read_in_real_conversation
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.player_can_interact_bench
+  ok    secret_garden.painted_bench_restored
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.beds_planted_and_watered
+  ok    secret_garden.flowers_need_one_morning
+  ok    secret_garden.garden_save_written
+  ok    secret_garden.garden_save_loaded
+  ok    secret_garden.watering_and_chapter_restore_together
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.garden_grows_while_away_or_asleep
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.flowers_use_approved_painting
+  ok    secret_garden.player_can_interact_letter
+  ok    secret_garden.mother_letter_persisted_as_quest_evidence
+  ok    secret_garden.kin_branch_matches_hero
+  ok    secret_garden.enter_moerkeskoven
+  ok    secret_garden.trail_hidden_until_lift_record
+  ok    secret_garden.enter_int_postkontoret
+  ok    secret_garden.post_account_persisted
+  ok    secret_garden.enter_traetoppen
+  ok    secret_garden.lift_record_persisted
+  ok    secret_garden.enter_moerkeskoven
+  ok    secret_garden.trail_revealed_at_real_forest_hub
+  ok    secret_garden.player_can_interact_trail
+  ok    secret_garden.mother_trail_recorded
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.player_can_interact_bench
+  ok    secret_garden.restoration_story_completed
+  ok    secret_garden.one_time_reward
+  ok    secret_garden.replay_cannot_pay_again
+  ok    secret_garden.evidence_can_be_reread_after_completion
+  ok    secret_garden.complete_save_written
+  ok    secret_garden.complete_save_loaded
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.completed_place_and_evidence_survive_load
+  ok    secret_garden.walk_through_gate_hyggebyen (actual hyggebyen; traveling=true)
+  ok    secret_garden.walk_through_gate_secret_garden (actual secret_garden; traveling=true)
+  ok    secret_garden.all_garden_art_is_real ([])
+  --    secret_garden: 124 checks, 0 failed, 0 skipped, 2.8 s
+== summary: 1 section(s) run, 124 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 6.5 s
+PLAYTEST PASS (124 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

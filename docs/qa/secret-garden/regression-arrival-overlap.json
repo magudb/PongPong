@@ -1,0 +1,67 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 810,
+  "elapsed_s": 24.95,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "maps_iso.spawn_to_warp_paths"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "ghostfam_data": {
+      "character": "animal",
+      "checks": 293,
+      "failed": 0,
+      "ms": 3864,
+      "skipped": 0
+    },
+    "maps_iso": {
+      "character": "animal",
+      "checks": 39,
+      "failed": 1,
+      "ms": 4259,
+      "skipped": 4
+    },
+    "quests": {
+      "character": "animal",
+      "checks": 56,
+      "failed": 0,
+      "ms": 3332,
+      "skipped": 4
+    },
+    "secret_garden": {
+      "character": "animal",
+      "checks": 124,
+      "failed": 0,
+      "ms": 3056,
+      "skipped": 0
+    },
+    "social_talk": {
+      "character": "animal",
+      "checks": 42,
+      "failed": 0,
+      "ms": 187,
+      "skipped": 0
+    },
+    "towns_routes": {
+      "character": "animal",
+      "checks": 103,
+      "failed": 0,
+      "ms": 2250,
+      "skipped": 0
+    },
+    "walkway_transitions": {
+      "character": "animal",
+      "checks": 153,
+      "failed": 0,
+      "ms": 1768,
+      "skipped": 0
+    }
+  },
+  "skipped": 8
+}

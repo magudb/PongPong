@@ -1,0 +1,179 @@
+{
+  "status": "implemented and validated; local main merge pending",
+  "validated_at_utc": "2026-10-16T17:06:16.717435+00:00",
+  "main_baseline": "147d9da4c1a91ebf13da31044c450463a7abd3cb",
+  "source_commit": "1028b497ac991710feb4f517ba04da29c42ac630",
+  "source_binding": "c59041b02f45323859dd0f2c35eac63b39514fded639ba0e9ea834dcfd649a68",
+  "bound_source_files": 1169,
+  "code_files": 679,
+  "scope": "Playable twelve-objective communal garden, four painted planting beds, overnight growth, NPC story topics, saved mother evidence, forest trail, return and one-time rewards.",
+  "headless_heroes": {
+    "animal": {
+      "report": "animal.json",
+      "result": "pass",
+      "checks": 124,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 6.93,
+      "engine_messages": 0,
+      "allowed_negative_controls": 0
+    },
+    "fairy": {
+      "report": "fairy.json",
+      "result": "pass",
+      "checks": 124,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 6.66,
+      "engine_messages": 0,
+      "allowed_negative_controls": 0
+    },
+    "hobbit": {
+      "report": "hobbit.json",
+      "result": "pass",
+      "checks": 124,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 6.53,
+      "engine_messages": 0,
+      "allowed_negative_controls": 0
+    },
+    "ghost": {
+      "report": "ghost.json",
+      "result": "pass",
+      "checks": 124,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 6.73,
+      "engine_messages": 0,
+      "allowed_negative_controls": 0
+    }
+  },
+  "playable_skins": [
+    "animal",
+    "animal_monkey",
+    "fairy",
+    "fairy_birk",
+    "hobbit",
+    "hobbit_bodil",
+    "ghost",
+    "ghost_hviske"
+  ],
+  "regression": {
+    "report": "regression.json",
+    "result": "pass",
+    "checks": 810,
+    "failed": 0,
+    "skipped": 7,
+    "elapsed_s": 18.97,
+    "engine_messages": 0,
+    "allowed_negative_controls": 0
+  },
+  "native_garden": {
+    "report": "native.json",
+    "result": "pass",
+    "checks": 63,
+    "failed": 0,
+    "skipped": 0,
+    "elapsed_s": 18.21,
+    "engine_messages": 0,
+    "allowed_negative_controls": 0
+  },
+  "town_integration": {
+    "report": "town-integration.json",
+    "result": "pass",
+    "checks": 159,
+    "failed": 0,
+    "skipped": 11,
+    "elapsed_s": 16.61,
+    "engine_messages": 0,
+    "allowed_negative_controls": 1
+  },
+  "required_wave_5b_gates": {
+    "report": "gates.json",
+    "passed": 36,
+    "failed": 0
+  },
+  "source_bound_town_proofs": {
+    "extension": "../m1b-milestone/loop-extension.json",
+    "mutants": "../m1b-milestone/loop-mutants.json",
+    "data_only_owner_checks": 588,
+    "extension_scenarios": 8,
+    "producer_mutants_caught": 7,
+    "checks": [
+      "extension-check.json",
+      "mutants-check.json"
+    ]
+  },
+  "native_town_performance": {
+    "combined_attempt": {
+      "report": "native-towns.json",
+      "result": "fail",
+      "checks": 177,
+      "failed": 1,
+      "skipped": 12,
+      "elapsed_s": 140.46,
+      "engine_messages": 0,
+      "allowed_negative_controls": 0
+    },
+    "combined_attempt_detail": "All 27 town rendering/resource budget checks passed. Full town loop had one save p95 timing miss: 43.802 ms > 25 ms. All functional checks passed. City crowd mean 3.129 ms < 6 ms; loop 109.443 s < 110 s.",
+    "isolated_loop_retry": {
+      "report": "native-towns-retry.json",
+      "result": "fail",
+      "checks": 149,
+      "failed": 1,
+      "skipped": 12,
+      "elapsed_s": 113.62,
+      "engine_messages": 0,
+      "allowed_negative_controls": 0
+    },
+    "retry_detail": "Unchanged source. Save p95 21.988 ms < 25 ms; one city-frame sample missed at 8.088 ms > 6 ms. Functional checks and 109.530 s loop budget passed. Wave environment was unset on this retry; the strict headless run above enforces all 36 required gates.",
+    "matched_render_fixture": {
+      "baseline": {
+        "report": "native-fixtures-baseline.json",
+        "result": "pass",
+        "checks": 10,
+        "failed": 0,
+        "skipped": 0,
+        "elapsed_s": 9.34,
+        "engine_messages": 0,
+        "allowed_negative_controls": 0
+      },
+      "current": {
+        "report": "native-fixtures-current.json",
+        "result": "pass",
+        "checks": 10,
+        "failed": 0,
+        "skipped": 0,
+        "elapsed_s": 7.15,
+        "engine_messages": 0,
+        "allowed_negative_controls": 0
+      },
+      "baseline_mean_ms": 3.09181481481482,
+      "current_mean_ms": 3.16513924050633,
+      "limit_ms": 6,
+      "source_unchanged_between_attempts": true
+    },
+    "conclusion": "Focused performance comparisons pass. The combined native town attempts were not wholly green; both timing misses are retained. No threshold was changed and no unrelated save/render code was edited."
+  },
+  "art": {
+    "approved_visual_theme_assets_unchanged": 2562,
+    "style_check": "static-style.txt",
+    "imports": "static-imports.txt",
+    "garden_captures": "native/manifest.json",
+    "town_captures": "town-captures.json"
+  },
+  "copy": {
+    "strict_changed_files": "static-copy.json",
+    "unchanged_legacy_localization_findings": 5,
+    "voice": "static-voice.txt",
+    "status": "Draft Danish and English, unrecorded; ten frozen family voice rows unchanged."
+  },
+  "limitations": [
+    "Two combined native town timing misses remain documented; matched isolated rendering and save samples pass.",
+    "Named future-capability skips remain in older town/map/quest suites; the garden adds no skip.",
+    "Deeper forest chapters S03–S08 and the mother’s final fate remain outside this implementation.",
+    "Source-project native checks only; no packaged-export claim."
+  ],
+  "remaining_feature_work": []
+}

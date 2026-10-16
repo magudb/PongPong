@@ -1,0 +1,25 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 149,
+  "elapsed_s": 113.62,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "town_loop.l15_city_frame"
+  ],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "town_loop": {
+      "character": "animal",
+      "checks": 149,
+      "failed": 1,
+      "ms": 109537,
+      "skipped": 12
+    }
+  },
+  "skipped": 12
+}

@@ -1,0 +1,392 @@
+{
+  "files": {
+    "native-towns/city_chip_actual.png": {
+      "sha256": "0fba048ca461198dba689af06bde07655fda31b9dd985bd5e1dc2f304efb869c",
+      "bytes": 4983
+    },
+    "native-towns/city_chip_reference.png": {
+      "sha256": "4821b5e996937ea4ad429d397e4bce5f57a1d9ff1078c89d7a2fca06e8e0fc67",
+      "bytes": 3072
+    },
+    "native-towns/city_date_actual.png": {
+      "sha256": "67a4ad29c8f0e86f8a1aec86b61ab80de29624ab78f7e398b7b43787927d65f0",
+      "bytes": 9569
+    },
+    "native-towns/city_date_reference.png": {
+      "sha256": "97214ae392d6d01cb6ea0749d14ebfcb407224ff4013e6bfaedb4c6864e977a3",
+      "bytes": 7254
+    },
+    "native-towns/city_hotbar_actual.png": {
+      "sha256": "76100b8ed22d139e36bd304fa58363385de15a2ee99b31b02bb46dc6bddb49e8",
+      "bytes": 5697
+    },
+    "native-towns/city_hotbar_reference.png": {
+      "sha256": "b39c4a45fab49f565a32aabfaba667f99942985ef7423af8e2ee5b520b323ace",
+      "bytes": 4364
+    },
+    "native-towns/dialogue_ui_actual.png": {
+      "sha256": "89abe214cd08034566b300ef07434ea0552b7439e4632290b10e3443a2e8b5aa",
+      "bytes": 33590
+    },
+    "native-towns/dialogue_ui_reference.png": {
+      "sha256": "1734fbda51f2841e00798602c31bc97d05cf396c5fc8ff74faf615cc15c512bc",
+      "bytes": 39999
+    },
+    "native-towns/hud_v2_chip.png": {
+      "sha256": "4e42caf54700a0a5a2ce421bc4efc15153771a649bda656d0de88a98bd73749f",
+      "bytes": 4354
+    },
+    "native-towns/hud_v2_date.png": {
+      "sha256": "fc350c83e96b5b7338b406bffc4c1979b1312687f187b9010a6f321ee1a500cb",
+      "bytes": 7861
+    },
+    "native-towns/hud_v2_hotbar.png": {
+      "sha256": "d77292280010496d11090183d5970d54689db112958bf141b36a0ff5e4e276d8",
+      "bytes": 21580
+    },
+    "native-towns/npc_dialogue_crop.png": {
+      "sha256": "99405f699e45de8b3581b5637578d6abeac7e1c8b253a91e3a2987211c87427a",
+      "bytes": 64684
+    },
+    "native-towns/shop_actual_full.png": {
+      "sha256": "4085f8cbd38f5257bf18e2fc98024ea2b2f8099e0e806b8b0321161f11b571e0",
+      "bytes": 376368
+    },
+    "native-towns/shop_reference_full.png": {
+      "sha256": "67e4e76fdaaaeeb35c91c0b2371e257695cd986310918d45caa55aa55b063d57",
+      "bytes": 118778
+    },
+    "native-towns/shop_ui_actual.png": {
+      "sha256": "6d07a9c13d11b95671097542f3460fd1779d4df3e6fa1ff83d6b8b7977d81fe0",
+      "bytes": 265331
+    },
+    "native-towns/shop_ui_reference.png": {
+      "sha256": "70f49987cdb8a5225b37f1b2aaa023f0f0bced7db7f67940998108eebdd300f0",
+      "bytes": 111584
+    },
+    "native-towns/shop_ui_shop_fixture.png": {
+      "sha256": "a4b17dd7d2173d6d5139fbb455b374046a6fb88a4a2bfadebe65261e1172f9dd",
+      "bytes": 322462
+    },
+    "native-towns/town_budgets_S04_city_crowd_readability.png": {
+      "sha256": "7fd4aa73316f52d138c5da222e06acd64d8d41e9420eea1008b5813e3a0d947f",
+      "bytes": 1704607
+    },
+    "native-towns/town_loop_S01_farm_intro.png": {
+      "sha256": "8de557971904dbf941c90b2a7a3d1a2f51d33f17ed1d74445dfdaebac54c807d",
+      "bytes": 1594395
+    },
+    "native-towns/town_loop_S02_farm_bridge_end.png": {
+      "sha256": "275bc036f1abfbba5f39bd7496f0bd19644e5d35efb8db8cf059aba89c5d112e",
+      "bytes": 1552414
+    },
+    "native-towns/town_loop_S03_city_arrival.png": {
+      "sha256": "8029b77b5b3a9a9853786e2eb285c1819d267808d1ff964e444840c86b2ebadb",
+      "bytes": 1189116
+    },
+    "native-towns/town_loop_S04_city_crowd_readability.png": {
+      "sha256": "5cd8e0fcd001ba96fadba99defa58411028cba492f33bcb0c5866df3bc1c0682",
+      "bytes": 1704667
+    },
+    "native-towns/town_loop_S05_dialogue_hoppe_hearts.png": {
+      "sha256": "3b776c3b44eb8eb7ee25290020a6a9f944f9eaf96254317ed37ed32df50f2a70",
+      "bytes": 1107108
+    },
+    "native-towns/town_loop_S06_shop_door_closed.png": {
+      "sha256": "bc64f04bf520f1f7841d4983701288476b6176fda64dc4d2fc43653d003087d9",
+      "bytes": 1799089
+    },
+    "native-towns/town_loop_S07_shop_interior_noon.png": {
+      "sha256": "b920b7f083ccf2f2e0d4076030990af52e49cd80990877de605fa769e181133d",
+      "bytes": 588205
+    },
+    "native-towns/town_loop_S08_shop_panel.png": {
+      "sha256": "441473045f235ee8bedb5557e3df1d851c161b015cac5ac6d09a02ef7dc730f1",
+      "bytes": 280546
+    },
+    "native-towns/town_loop_S09_gift_picker.png": {
+      "sha256": "1abeb270e2097f4af56a43bbdf988c141d45903f997ee62290a8a0f66e4059e6",
+      "bytes": 147271
+    },
+    "native-towns/town_loop_S10_post_office.png": {
+      "sha256": "b7bb687f779c397139310dde817556b9d20235cc0ec0d85b7b0ba47b1d2baa1b",
+      "bytes": 451480
+    },
+    "native-towns/town_loop_S11_farm_planted_morning.png": {
+      "sha256": "0accba1e72aad2ca942bf8abe85b40b8af67ffbfcf7c9cbca61a3e66334994b2",
+      "bytes": 1904614
+    },
+    "native-towns/town_loop_S12_city_next_morning.png": {
+      "sha256": "d5a95bf9fc9f2a306e54f3cf61545fcadc56e1475c7b9c84868e974208ea17e2",
+      "bytes": 1284690
+    },
+    "native-towns/town_loop_S13_people_book.png": {
+      "sha256": "2bb06624ce9c660af0e8926a95e09d2871e94e003df5a8fc1aee158fc6dd24f8",
+      "bytes": 157025
+    },
+    "native-towns/town_loop_S13b_calendar.png": {
+      "sha256": "fea9a848bd5a4c80e3a65f5c6a008d9a7332c2f0ebf93f19bc53863502255b57",
+      "bytes": 128093
+    },
+    "native-towns/town_loop_guide_dialogue_guide.png": {
+      "sha256": "9263d827a708ba6645a3afabc114e0ee0e30197cf013bd6e219f3c9b9d76e589",
+      "bytes": 72074
+    },
+    "native-towns/town_loop_guide_shop.png": {
+      "sha256": "a4b17dd7d2173d6d5139fbb455b374046a6fb88a4a2bfadebe65261e1172f9dd",
+      "bytes": 322462
+    },
+    "native-towns/town_loop_shop_backdrop.png": {
+      "sha256": "2f720b8086c0f3c9103e3b4930483a04be77249752e95f2e955326bf576552c5",
+      "bytes": 548849
+    },
+    "native-towns-retry/city_chip_actual.png": {
+      "sha256": "955b8d584d4185ab612993ba590723343cd1334baf071aac6b11e08ff40e89d6",
+      "bytes": 4985
+    },
+    "native-towns-retry/city_chip_reference.png": {
+      "sha256": "4821b5e996937ea4ad429d397e4bce5f57a1d9ff1078c89d7a2fca06e8e0fc67",
+      "bytes": 3072
+    },
+    "native-towns-retry/city_date_actual.png": {
+      "sha256": "34755ec8e944bfac2557f82de2fc11b0a03a60b561856698d36372b6952d3315",
+      "bytes": 7301
+    },
+    "native-towns-retry/city_date_reference.png": {
+      "sha256": "97214ae392d6d01cb6ea0749d14ebfcb407224ff4013e6bfaedb4c6864e977a3",
+      "bytes": 7254
+    },
+    "native-towns-retry/city_hotbar_actual.png": {
+      "sha256": "412d57832c66052fd280bed56566d367baef15a613df9fb02b3a8e0341e0d574",
+      "bytes": 5721
+    },
+    "native-towns-retry/city_hotbar_reference.png": {
+      "sha256": "b39c4a45fab49f565a32aabfaba667f99942985ef7423af8e2ee5b520b323ace",
+      "bytes": 4364
+    },
+    "native-towns-retry/dialogue_ui_actual.png": {
+      "sha256": "89abe214cd08034566b300ef07434ea0552b7439e4632290b10e3443a2e8b5aa",
+      "bytes": 33590
+    },
+    "native-towns-retry/dialogue_ui_reference.png": {
+      "sha256": "1734fbda51f2841e00798602c31bc97d05cf396c5fc8ff74faf615cc15c512bc",
+      "bytes": 39999
+    },
+    "native-towns-retry/hud_v2_chip.png": {
+      "sha256": "32ed6c9073f7ae441713e3ade3f9d71573cb160ab9a145d046832f095c6add9d",
+      "bytes": 4346
+    },
+    "native-towns-retry/hud_v2_date.png": {
+      "sha256": "99c9c914d44a7f62a83598c37ec75de15951041eef677d5a9c5cae1fd6c0cfb0",
+      "bytes": 8130
+    },
+    "native-towns-retry/hud_v2_hotbar.png": {
+      "sha256": "abe535fd076ca079e52a9760bd66dff9b817d8158622381079874d2b1bc46864",
+      "bytes": 21596
+    },
+    "native-towns-retry/npc_dialogue_crop.png": {
+      "sha256": "99405f699e45de8b3581b5637578d6abeac7e1c8b253a91e3a2987211c87427a",
+      "bytes": 64684
+    },
+    "native-towns-retry/shop_actual_full.png": {
+      "sha256": "4085f8cbd38f5257bf18e2fc98024ea2b2f8099e0e806b8b0321161f11b571e0",
+      "bytes": 376368
+    },
+    "native-towns-retry/shop_reference_full.png": {
+      "sha256": "67e4e76fdaaaeeb35c91c0b2371e257695cd986310918d45caa55aa55b063d57",
+      "bytes": 118778
+    },
+    "native-towns-retry/shop_ui_actual.png": {
+      "sha256": "6d07a9c13d11b95671097542f3460fd1779d4df3e6fa1ff83d6b8b7977d81fe0",
+      "bytes": 265331
+    },
+    "native-towns-retry/shop_ui_reference.png": {
+      "sha256": "70f49987cdb8a5225b37f1b2aaa023f0f0bced7db7f67940998108eebdd300f0",
+      "bytes": 111584
+    },
+    "native-towns-retry/shop_ui_shop_fixture.png": {
+      "sha256": "a4b17dd7d2173d6d5139fbb455b374046a6fb88a4a2bfadebe65261e1172f9dd",
+      "bytes": 322462
+    },
+    "native-towns-retry/town_loop_S01_farm_intro.png": {
+      "sha256": "1ad51671e592a21a650d8425831cd53edea16c809f537f929090516309128f6b",
+      "bytes": 1594456
+    },
+    "native-towns-retry/town_loop_S02_farm_bridge_end.png": {
+      "sha256": "b100fd7dd94401ae68fe681cd30e09d026ad019a82a836082587001acc3085d4",
+      "bytes": 1596486
+    },
+    "native-towns-retry/town_loop_S03_city_arrival.png": {
+      "sha256": "e8f9ace8861451fe592239d71a7a4aa046b730e1bb005427cbe6eccbb44ff8c4",
+      "bytes": 1230076
+    },
+    "native-towns-retry/town_loop_S04_city_crowd_readability.png": {
+      "sha256": "ae304b9f7d89dd17b20cb15c6119f9917ee234e83c51a6e74ee7ba849384169c",
+      "bytes": 1704602
+    },
+    "native-towns-retry/town_loop_S05_dialogue_hoppe_hearts.png": {
+      "sha256": "5977fc6d7a3cf8da07a2b0af375777aff7df905fe7f0a8820500c6dbd80bd358",
+      "bytes": 1146538
+    },
+    "native-towns-retry/town_loop_S06_shop_door_closed.png": {
+      "sha256": "84c0f5fb725604433bb07d7a9af2bd30b2945d4243311b3e5dd08d866f4767b7",
+      "bytes": 1737507
+    },
+    "native-towns-retry/town_loop_S07_shop_interior_noon.png": {
+      "sha256": "3cde677d97ca83f25ec484fc76735bf42ca5dd7f54a7043dd0617acdfff73c13",
+      "bytes": 587852
+    },
+    "native-towns-retry/town_loop_S08_shop_panel.png": {
+      "sha256": "3c99ac091ad8958d8dab7d210ce81912488108589721a84fb549a889708a0f38",
+      "bytes": 280530
+    },
+    "native-towns-retry/town_loop_S09_gift_picker.png": {
+      "sha256": "f0e3bcc928c698861c4b9c9e3195a70f0b055eb24b661bfb6352328452a31f93",
+      "bytes": 151109
+    },
+    "native-towns-retry/town_loop_S10_post_office.png": {
+      "sha256": "882f1bff08e4ca42dd2054734e60316b5b78a066d443ba7ad97f3439caf12c30",
+      "bytes": 451808
+    },
+    "native-towns-retry/town_loop_S11_farm_planted_morning.png": {
+      "sha256": "f112a2199c248d43b997214029b8591cba5ff087623642311335fabe2537d32f",
+      "bytes": 1904569
+    },
+    "native-towns-retry/town_loop_S12_city_next_morning.png": {
+      "sha256": "9fbd2c43ffd04680fd8c4e57c52041f9bc62705b4da532b541d57aa5cb5bb428",
+      "bytes": 1332276
+    },
+    "native-towns-retry/town_loop_S13_people_book.png": {
+      "sha256": "0e96da6e3644fc7f74f0241957b4a593f67c556a7e0bd990c4f0f53948ae509a",
+      "bytes": 159447
+    },
+    "native-towns-retry/town_loop_S13b_calendar.png": {
+      "sha256": "d90df8959fe30ac06bd4e638cda6edbf832d1d2ce931eba21ba22a66c0118180",
+      "bytes": 130043
+    },
+    "native-towns-retry/town_loop_guide_dialogue_guide.png": {
+      "sha256": "9263d827a708ba6645a3afabc114e0ee0e30197cf013bd6e219f3c9b9d76e589",
+      "bytes": 72074
+    },
+    "native-towns-retry/town_loop_guide_shop.png": {
+      "sha256": "a4b17dd7d2173d6d5139fbb455b374046a6fb88a4a2bfadebe65261e1172f9dd",
+      "bytes": 322462
+    },
+    "native-towns-retry/town_loop_shop_backdrop.png": {
+      "sha256": "ba18f45aaaf891d0ef21a7838337344b92deef5af0881922ba7136fd494dc761",
+      "bytes": 548475
+    },
+    "native-fixtures-baseline/hud_v2_chip.png": {
+      "sha256": "d967762e5646108381b5873f2195c32c7c14bf18ba2fe92503cd5aaf0e202381",
+      "bytes": 4353
+    },
+    "native-fixtures-baseline/hud_v2_date.png": {
+      "sha256": "36fedc07213454c0e14f6f9210f9fcb74c1fd699057f148b4063d69a4cfa1648",
+      "bytes": 7989
+    },
+    "native-fixtures-baseline/hud_v2_hotbar.png": {
+      "sha256": "f74884cb27d47ff1cf64e181cfb7de4beaf76bb42f7d531a75138bb7ca6bf951",
+      "bytes": 21509
+    },
+    "native-fixtures-baseline/native_fixtures_S04_city_crowd_readability.png": {
+      "sha256": "f8e6438232041aeca022a03cd6f1765be65e44562d1323ddcdf964359a696159",
+      "bytes": 1703073
+    },
+    "native-fixtures-baseline/native_fixtures_S08_shop_panel.png": {
+      "sha256": "791d136380c2389b302c73d5aa6d5fd2c42ab2fc76ad88d808de269f89fcfb96",
+      "bytes": 278379
+    },
+    "native-fixtures-baseline/native_fixtures_city_hud.png": {
+      "sha256": "20d78f9e542d6e9e8b338b8db6b86822a716e76a04198fe3860e8da89801662c",
+      "bytes": 1703286
+    },
+    "native-fixtures-baseline/native_fixtures_forced_static_frame.png": {
+      "sha256": "1aa24f0dbc86f7e03b887f04457c6c5b36fe2355e1935e6349d5cf9391619426",
+      "bytes": 5326
+    },
+    "native-fixtures-baseline/native_fixtures_guide_dialogue_guide.png": {
+      "sha256": "9263d827a708ba6645a3afabc114e0ee0e30197cf013bd6e219f3c9b9d76e589",
+      "bytes": 72074
+    },
+    "native-fixtures-baseline/native_fixtures_guide_shop.png": {
+      "sha256": "a4b17dd7d2173d6d5139fbb455b374046a6fb88a4a2bfadebe65261e1172f9dd",
+      "bytes": 322462
+    },
+    "native-fixtures-baseline/native_fixtures_shop_backdrop.png": {
+      "sha256": "a3eeb112cc93b49ea2c0a11cc50153c4366aea052b46b18b7dfcd8fe820cd7b4",
+      "bytes": 493675
+    },
+    "native-fixtures-baseline/npc_dialogue_crop.png": {
+      "sha256": "99405f699e45de8b3581b5637578d6abeac7e1c8b253a91e3a2987211c87427a",
+      "bytes": 64684
+    },
+    "native-fixtures-baseline/shop_ui_shop_fixture.png": {
+      "sha256": "a4b17dd7d2173d6d5139fbb455b374046a6fb88a4a2bfadebe65261e1172f9dd",
+      "bytes": 322462
+    },
+    "native-fixtures-baseline/town_loop_S08_shop_panel.png": {
+      "sha256": "791d136380c2389b302c73d5aa6d5fd2c42ab2fc76ad88d808de269f89fcfb96",
+      "bytes": 278379
+    },
+    "native-fixtures-baseline/town_loop_shop_backdrop.png": {
+      "sha256": "a3eeb112cc93b49ea2c0a11cc50153c4366aea052b46b18b7dfcd8fe820cd7b4",
+      "bytes": 493675
+    },
+    "native-fixtures-current/hud_v2_chip.png": {
+      "sha256": "d967762e5646108381b5873f2195c32c7c14bf18ba2fe92503cd5aaf0e202381",
+      "bytes": 4353
+    },
+    "native-fixtures-current/hud_v2_date.png": {
+      "sha256": "36fedc07213454c0e14f6f9210f9fcb74c1fd699057f148b4063d69a4cfa1648",
+      "bytes": 7989
+    },
+    "native-fixtures-current/hud_v2_hotbar.png": {
+      "sha256": "f74884cb27d47ff1cf64e181cfb7de4beaf76bb42f7d531a75138bb7ca6bf951",
+      "bytes": 21509
+    },
+    "native-fixtures-current/native_fixtures_S04_city_crowd_readability.png": {
+      "sha256": "938f8d4fa61120aee3d91c684c096178a92d186fbd84ec8ddd1c6f986ed95093",
+      "bytes": 1704632
+    },
+    "native-fixtures-current/native_fixtures_S08_shop_panel.png": {
+      "sha256": "791d136380c2389b302c73d5aa6d5fd2c42ab2fc76ad88d808de269f89fcfb96",
+      "bytes": 278379
+    },
+    "native-fixtures-current/native_fixtures_city_hud.png": {
+      "sha256": "555bf3d2dc4c9df750cedf17314b1aaf72b36327bb67cab3437da0ceafa8fff8",
+      "bytes": 1704579
+    },
+    "native-fixtures-current/native_fixtures_forced_static_frame.png": {
+      "sha256": "1aa24f0dbc86f7e03b887f04457c6c5b36fe2355e1935e6349d5cf9391619426",
+      "bytes": 5326
+    },
+    "native-fixtures-current/native_fixtures_guide_dialogue_guide.png": {
+      "sha256": "9263d827a708ba6645a3afabc114e0ee0e30197cf013bd6e219f3c9b9d76e589",
+      "bytes": 72074
+    },
+    "native-fixtures-current/native_fixtures_guide_shop.png": {
+      "sha256": "a4b17dd7d2173d6d5139fbb455b374046a6fb88a4a2bfadebe65261e1172f9dd",
+      "bytes": 322462
+    },
+    "native-fixtures-current/native_fixtures_shop_backdrop.png": {
+      "sha256": "a3eeb112cc93b49ea2c0a11cc50153c4366aea052b46b18b7dfcd8fe820cd7b4",
+      "bytes": 493675
+    },
+    "native-fixtures-current/npc_dialogue_crop.png": {
+      "sha256": "99405f699e45de8b3581b5637578d6abeac7e1c8b253a91e3a2987211c87427a",
+      "bytes": 64684
+    },
+    "native-fixtures-current/shop_ui_shop_fixture.png": {
+      "sha256": "a4b17dd7d2173d6d5139fbb455b374046a6fb88a4a2bfadebe65261e1172f9dd",
+      "bytes": 322462
+    },
+    "native-fixtures-current/town_loop_S08_shop_panel.png": {
+      "sha256": "791d136380c2389b302c73d5aa6d5fd2c42ab2fc76ad88d808de269f89fcfb96",
+      "bytes": 278379
+    },
+    "native-fixtures-current/town_loop_shop_backdrop.png": {
+      "sha256": "a3eeb112cc93b49ea2c0a11cc50153c4366aea052b46b18b7dfcd8fe820cd7b4",
+      "bytes": 493675
+    }
+  }
+}

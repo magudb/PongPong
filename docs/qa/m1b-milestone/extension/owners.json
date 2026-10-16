@@ -2,7 +2,7 @@
   "allowed": [],
   "character": "animal",
   "checks": 588,
-  "elapsed_s": 18.22,
+  "elapsed_s": 16.82,
   "engine": [],
   "failed": 0,
   "failures": [],
@@ -15,21 +15,21 @@
       "character": "animal",
       "checks": 133,
       "failed": 0,
-      "ms": 1123,
+      "ms": 1072,
       "skipped": 0
     },
     "towns_data": {
       "character": "animal",
       "checks": 166,
       "failed": 0,
-      "ms": 2115,
+      "ms": 1931,
       "skipped": 0
     },
     "towns_interiors": {
       "character": "animal",
       "checks": 289,
       "failed": 0,
-      "ms": 11202,
+      "ms": 10002,
       "skipped": 0
     }
   },

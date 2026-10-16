@@ -1,0 +1,32 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 177,
+  "elapsed_s": 140.46,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "town_loop.l13_save_cost"
+  ],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "town_budgets": {
+      "character": "animal",
+      "checks": 27,
+      "failed": 0,
+      "ms": 27131,
+      "skipped": 0
+    },
+    "town_loop": {
+      "character": "animal",
+      "checks": 150,
+      "failed": 1,
+      "ms": 109447,
+      "skipped": 12
+    }
+  },
+  "skipped": 12
+}

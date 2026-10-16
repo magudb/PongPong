@@ -136,15 +136,16 @@
     "report": "gates.json"
   },
   "source_bound_town_proofs": {
-    "extension": "../m1b-milestone/loop-extension.json",
-    "mutants": "../m1b-milestone/loop-mutants.json",
+    "extension": "source-proof-cd7ed9e9/loop-extension.json",
+    "mutants": "source-proof-cd7ed9e9/loop-mutants.json",
     "binding": "cd7ed9e909565fdbf7b43b6dd61f126ab3f5f30d4628da6e98484a9cbe081842",
     "unchanged_code_files": 676,
     "owner_checks": 588,
     "scenarios": 8,
     "producer_mutants_caught": 7,
     "clean_baseline": true,
-    "original_m1b_proofs_preserved": "../m1b-milestone/source-proof-75a4d779/"
+    "original_m1b_proofs_preserved": "../m1b-milestone/source-proof-75a4d779/",
+    "evidence_archive": "source-proof-cd7ed9e9/"
   },
   "negative_control": {
     "report": "before-control.json",
@@ -193,5 +194,6 @@
     "skipped": 11,
     "elapsed_s": 20.68,
     "unexpected_engine_messages": 0
-  }
+  },
+  "post_followup": "../secret-garden/acceptance.json"
 }

@@ -1,0 +1,30 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=windowed character=animal sections=res://tests/lib/town_loop/native_sections only=native_fixtures
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.Uq0klX/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-secret-garden/docs/qa/secret-garden/native-fixtures-current
+== section native_fixtures [windowed]  (res://tests/lib/town_loop/native_sections/native_fixtures.gd)
+  ok    native_fixtures.l15_crowd_player_on_safe_deck
+  ok    native_fixtures.l15_city_citizen_count (16 visible / 16 distinct looks; controlled fixture, normal schedules checked by L02/L12)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-secret-garden/docs/qa/secret-garden/native-fixtures-current/native_fixtures_S04_city_crowd_readability.png (1280x720)
+  ok    l15_S04_city_crowd_readability_not_blank (2513 distinct colours, luma std 0.214)
+  ok    native_fixtures.l15_city_peak_under_320mb (270.54MB / 16 warmed looks)
+  ok    native_fixtures.l15_city_frame ({ "frames": 158, "fps": 315.941866696528, "ms": 3.16513924050633, "worst_ms": 4.818, "gpu_ms": 0.0, "cpu_render_ms": 0.0 })
+  ok    native_fixtures.l15_city_draw_calls (250.0)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-secret-garden/docs/qa/secret-garden/native-fixtures-current/native_fixtures_city_hud.png (1280x720)
+  ok    native_fixtures.prefetched_room_build (5)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-secret-garden/docs/qa/secret-garden/native-fixtures-current/native_fixtures_shop_backdrop.png (1280x720)
+  ok    l15_shop_backdrop_not_blank (1452 distinct colours, luma std 0.264)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-secret-garden/docs/qa/secret-garden/native-fixtures-current/native_fixtures_S08_shop_panel.png (1280x720)
+  ok    l15_S08_shop_panel_not_blank (1155 distinct colours, luma std 0.310)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-secret-garden/docs/qa/secret-garden/native-fixtures-current/native_fixtures_guide_shop.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-secret-garden/docs/qa/secret-garden/native-fixtures-current/native_fixtures_guide_dialogue_guide.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-secret-garden/docs/qa/secret-garden/native-fixtures-current/native_fixtures_forced_static_frame.png (1280x720)
+  ok    native_fixtures.capture_forces_a_frame_when_render_loop_is_idle
+  --    native_fixtures: 10 checks, 0 failed, 0 skipped, 5.9 s
+== summary: 1 section(s) run, 10 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 7.1 s
+PLAYTEST PASS (10 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)
