@@ -8,6 +8,7 @@ signal dodged
 signal light_burst(radius_ground: float)
 signal damaged(half_hearts: int)
 signal tool_used(item_id: StringName, cell: Vector2i, ok: bool)
+signal equipment_display_changed
 
 var hotbar := Hotbar.new()
 var max_oil: float = 150.0
@@ -16,6 +17,7 @@ var oil_draining: bool = false
 var lantern: PointLight2D
 var ghost_light: PointLight2D
 var combat: PlayerCombat2D
+var held_equipment: HeldEquipment2D
 var is_jumping: bool = false
 var invulnerable: bool = false
 var mouse_aim: bool = false
@@ -25,6 +27,11 @@ var _stats_timer: float = 0.0
 var _exhausted: bool = false
 var _regen_delay: float = 0.0
 var _tool_time: float = 0.0
+var _using_item: StringName = &""
+var _display_item: StringName = &""
+var _display_context: StringName = &"selected"
+var _display_available := false
+var _display_drawn := false
 var _altitude: float = 0.0
 var _vertical_speed: float = 0.0
 var _flight_time: float = 0.0
@@ -66,8 +73,12 @@ func _ready() -> void:
 	combat.name = "Combat"
 	add_child(combat)
 	combat.setup(self)
+	combat.weapon_drawn.connect(func(_item: StringName): _sync_equipment_display())
 	hotbar.changed.connect(_emit_hotbar)
 	hotbar.fill_defaults()
+	held_equipment = HeldEquipment2D.new()
+	held_equipment.name = "HeldEquipment"
+	add_child(held_equipment)
 	EventBus.hotbar_assign_requested.connect(hotbar.assign)
 	EventBus.player_inventory_changed.connect(_on_inventory_changed)
 	EventBus.outfit_changed.connect(func(_outfit: Dictionary): refresh_stats())
@@ -104,6 +115,11 @@ func enter_area(target: IsoArea, at: Vector2) -> void:
 	super.enter_area(target, at)
 	if combat != null:
 		combat.cancel_action()
+		if state in [S.USING, S.SWING]:
+			state = S.FREE
+	_using_item = &""
+	_tool_time = 0.0
+	_sync_equipment_display()
 	if _marker == null or not is_instance_valid(_marker):
 		_marker = TargetMarker2D.new()
 	if _marker.get_parent() != null:
@@ -179,6 +195,7 @@ func set_zoom(value: float) -> void:
 func _physics_process(delta: float) -> void:
 	if area == null or combat == null:
 		return
+	_sync_equipment_display()
 	var paused: bool = GameData.gm().is_modal_open() or state in [S.TALKING, S.FAINTED] or _event_active
 	if paused:
 		combat.attack_held = false
@@ -195,6 +212,8 @@ func _physics_process(delta: float) -> void:
 	_regen_delay = maxf(0.0, _regen_delay - delta)
 	if state == S.USING and _tool_time == 0.0:
 		state = S.FREE
+		_using_item = &""
+	_sync_equipment_display()
 	var direction := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var running := false
 	if _exhausted and stamina >= max_stamina * float(GameData.player_cfg("run_recover_ratio", 0.2)):
@@ -313,7 +332,7 @@ func use_selected() -> bool:
 		"consumable", "food":
 			ok = GameData.eco().use_item(item)
 		"weapon":
-			return swing()
+			return combat.swing(item)
 		_:
 			if str(def.get("placeable", "")) == "farm":
 				ok = bool(Svc.static_call("res://scripts/world2d/placement_service.gd", &"place", [item, cell], false))
@@ -322,6 +341,8 @@ func use_selected() -> bool:
 	if ok:
 		_spend_stamina(cost)
 		state = S.USING
+		_using_item = item
+		_sync_equipment_display()
 		var dig := maxf(0.1, float(SpeciesPerks.current("dig_speed", 1.0)))
 		_tool_time = 0.34 / dig
 		visual.play_action(&"interact", 1.4 * dig)
@@ -342,7 +363,40 @@ func _emit_stats_on_bus() -> void:
 	stats_changed.emit()
 	EventBus.player_stats_changed.emit(values)
 
+## One readout for the HUD and the fitted item presenter. An action keeps its
+## actual source item until completion even if the hotbar or equipment changes.
+func equipment_display() -> Dictionary:
+	_sync_equipment_display()
+	return {"id": _display_item, "context": _display_context, "available": _display_available, "drawn": _display_drawn}
+
+func _sync_equipment_display() -> void:
+	var item := hotbar.current()
+	var context: StringName = &"selected"
+	if combat != null and state == S.SWING:
+		item = combat.active_weapon_id()
+		context = &"using"
+	elif state == S.USING:
+		item = _using_item
+		context = &"using"
+	elif _is_action_area():
+		item = GameData.eco().equipped_item(&"weapon")
+		context = &"weapon"
+	var available: bool = item != &"" and GameData.eco().has_item(item)
+	# A consumed last seed/tonic still names the completed action; it is never
+	# mistaken for another item just because inventory changed in that action.
+	if context == &"using" and item != &"":
+		available = true
+	var drawn := available and str(GameData.item_def(item).get("category", "")) in ["tool", "weapon"] and state not in [S.TALKING, S.FAINTED] and forced_clip != &"sleep"
+	if item == _display_item and context == _display_context and available == _display_available and drawn == _display_drawn:
+		return
+	_display_item = item
+	_display_context = context
+	_display_available = available
+	_display_drawn = drawn
+	equipment_display_changed.emit()
+
 func _emit_hotbar() -> void:
+	_sync_equipment_display()
 	EventBus.hotbar_changed.emit(hotbar.entries(), hotbar.selected)
 
 func _on_inventory_changed(_items: Dictionary) -> void:

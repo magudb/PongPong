@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 42,
+  "elapsed_s": 9.14,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "held_equipment": {
+      "character": "animal",
+      "checks": 42,
+      "failed": 0,
+      "ms": 5125,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

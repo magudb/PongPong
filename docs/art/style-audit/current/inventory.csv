@@ -186,6 +186,9 @@ assets/fonts/OFL-NotoSansSymbols2.txt,4383,b118dd41337806a5d4797052c77caf3bd096a
 assets/fonts/OFL-TTSymbols.txt,379,eb599ec80f2320a2ed7ae7b417cf1c501878a5a2f8fffdaf9d564bca7f10b294,.txt,,,import-license-or-theme-metadata,unchanged,
 assets/fonts/TTSymbols-Regular.ttf,9116,c3240bcdb79b40dbe7f1a68b8c12df13d3e438aae8cd415c735d8c9179ccf353,.ttf,,,bundled-typeface,unchanged,
 assets/fonts/TTSymbols-Regular.ttf.import,789,c8624b076e50a55c535c291a0d02c42165596d0c309be6210e2b7beecefa85c3,.import,,,import-license-or-theme-metadata,unchanged,
+assets/held_equipment/manifest.json,113426,c0da770e899cb0b46ed0d416c80ec93a96ef1d69bed8873c4bbf7b6ac1f48009,.json,,,asset-contract-or-manifest,new,
+assets/held_equipment/tools.webp,941900,39ec5087405bc8a8133b9c4342349ff52bfeeb9ca5eb50832e0f55faf24d551e,.webp,1536,1024,fitted-held-equipment,new,tools/art/drawn/sources/held_equipment/tools.png
+assets/held_equipment/tools.webp.import,943,fc6b42f26e5066b50be5828e8d481a64f651d30270713bc327d58b8e0a65dc85,.import,,,import-license-or-theme-metadata,new,
 assets/icons/home/amber.webp,5292,b47872047568c756ad33ce48a05c8faa36a1127585385ca955eb2204219eec43,.webp,128,128,item-base-or-night-icon,unchanged,
 assets/icons/home/amber.webp.import,939,f059740fc612531c408c92cd320a333f34350fbfd30bc61470485107c2221130,.import,,,import-license-or-theme-metadata,unchanged,
 assets/icons/home/bed_birch_single.webp,4032,5a482060ea29f33e75ab148c2c2a36aea14cb97dc39290f8c451b8868bea0c51,.webp,128,128,item-base-or-night-icon,unchanged,
@@ -4913,7 +4916,7 @@ assets/isometric_characters/lysesvamp/sleep.webp.import,1008,70524e0ba0145d72301
 assets/isometric_characters/lysesvamp/walk.webp,342982,f063e30b784add4175081fc9e3e20e5d0959e5823e4b249d27ab334605ffc82d,.webp,1536,2048,character-sheet-or-portrait,unchanged,
 assets/isometric_characters/lysesvamp/walk.webp.import,1004,2543673d544fdaabbeff7da3e9ddd2c44cc3422a6dfa47f43255a687f79935f7,.import,,,import-license-or-theme-metadata,unchanged,
 assets/isometric_characters/manifest.json,17036,516a6047c1490c23c50f2ea0592a54d7bad7d4d5d38a53f5b61c578d0a2b1d5a,.json,,,asset-contract-or-manifest,unchanged,
-assets/isometric_characters/manifest_traetoppen.json,46408,34a3c619c43de775f2cb8ee79254566c2f53ce238df2e54c392cb29cd1493e9c,.json,,,asset-contract-or-manifest,changed,
+assets/isometric_characters/manifest_traetoppen.json,46408,96433baca3edaeb55d2f9174191181f6990bf5df77c3a9fab25cf676f838b4d5,.json,,,asset-contract-or-manifest,changed,
 assets/isometric_characters/monkey/animations.json,1800,d94ef47d1fb7ccbd812419c85325af34bca4a5eec5cb5e34cfe610117a306fee,.json,,,asset-contract-or-manifest,unchanged,
 assets/isometric_characters/monkey/celebrate.webp,574922,07a5e50ab862b9da17cf178079df71d4844a7e13d33f3e1a4b63dc1c200fd9c4,.webp,1536,2048,character-sheet-or-portrait,unchanged,
 assets/isometric_characters/monkey/celebrate.webp.import,1017,16a31283c8441ec734d89c4d00a2c964c17340ac2b94126317857e0044034f2c,.import,,,import-license-or-theme-metadata,unchanged,

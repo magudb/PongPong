@@ -1,5 +1,11 @@
 Equipping the playable cast
 
+Implementation follow-up: selected tools and equipped weapons now have a fitted
+held-object renderer on all eight shipped bodies and a persistent current-item
+HUD. See docs/art/held-equipment/review.txt for the production art, current carry
+pose scope, saved prompts and QA. The concept clothing and extended support-hand
+poses described below remain separate work; this follow-up adds no wardrobe.
+
 The player should recognize their hero first and their equipment second. Clothing
 changes the silhouette and fabric; a held tool or weapon makes the current action
 clear. The same item is fitted to each hero rather than stretching one overlay

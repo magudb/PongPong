@@ -65,6 +65,11 @@ def roles(catalog: dict) -> tuple[dict, dict]:
             path = (folder / clip["file"]).resolve()
             selected[path] = "fitted-pose-atlas"
             sources[path] = body["base_source"]
+    held = ROOT / "assets/held_equipment"
+    if (held / "manifest.json").is_file():
+        path = (held / "tools.webp").resolve()
+        selected[path] = "fitted-held-equipment"
+        sources[path] = read(held / "manifest.json")["source"]
     technical_source = (ROOT / "tests/sections/art_style_consistency.gd").read_text()
     technical = re.findall(r'"([^"]+)"', re.search(r"const TECHNICAL := \[(.*?)\]", technical_source, re.S)[1])
     for row in catalog["props"]:

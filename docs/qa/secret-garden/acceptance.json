@@ -95,8 +95,8 @@
     "failed": 0
   },
   "source_bound_town_proofs": {
-    "extension": "../m1b-milestone/loop-extension.json",
-    "mutants": "../m1b-milestone/loop-mutants.json",
+    "extension": "source-proof-c59041b0/loop-extension.json",
+    "mutants": "source-proof-c59041b0/loop-mutants.json",
     "data_only_owner_checks": 588,
     "extension_scenarios": 8,
     "producer_mutants_caught": 7,

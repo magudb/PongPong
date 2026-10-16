@@ -66,7 +66,25 @@ func _crowd(t, suite, keep_world := false) -> void:
 	await t.frames(12)
 	var frames: Dictionary = await Perf.measure_frames(t.tree,0.5,t.tree.root.get_viewport_rid())
 	t.check("l15_city_frame",float(frames.ms)<=6,str(frames))
-	t.check("l15_city_draw_calls",Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)<=250,str(Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)))
+	var with_equipment := Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)
+	var held: HeldEquipment2D = t.player().held_equipment
+	# Preserve the original 250-draw city gate, and measure equipment's approved
+	# <=16 additional draws separately (docs/art/equipment/design.txt). Full
+	# frame-time and total texture-memory gates above still include equipment.
+	var was_processing := held.is_processing()
+	held.set_process(false)
+	held.rear.hide()
+	held.front.hide()
+	hud.current_item_badge.hide()
+	hud.tool_name_label.show()
+	await t.frames(4)
+	var without_equipment := Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)
+	t.check("l15_city_draw_calls", without_equipment <= 250, "original city/HUD: %d <=250; with equipment: %d" % [without_equipment, with_equipment])
+	t.check("l15_equipment_draw_increment", with_equipment - without_equipment <= 16, "%d additional draws <=16" % (with_equipment - without_equipment))
+	hud.tool_name_label.hide()
+	hud.current_item_badge.show()
+	held.set_process(was_processing)
+	held.sync_pose()
 	Perf.restore_cap(cap)
 	if not keep_world:
 		Routines.override_registry={}

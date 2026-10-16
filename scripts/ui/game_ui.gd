@@ -137,7 +137,8 @@ func loaded_screens() -> Array[StringName]:
 
 
 ## &"farm" shows the farm HUD, &"action" the forest HUD; the other one is hidden. Works with no HUD loaded (the mode is kept and
-## applied when the screen appears).
+## applied when the screen appears). If the forest HUD is missing, the farm HUD
+## remains visible so health, prompts and the resolved weapon stay readable.
 func set_mode(new_mode: StringName) -> void:
 	if not HUD_FOR_MODE.has(new_mode):
 		push_error("GameUI.set_mode: unknown mode '%s' (farm | action)" % new_mode)
@@ -150,10 +151,15 @@ func set_mode(new_mode: StringName) -> void:
 
 
 func _apply_mode() -> void:
+	var active := get_screen(HUD_FOR_MODE[mode])
+	# Keep health, prompts and the actual weapon visible while the dedicated
+	# forest HUD is absent. A loaded forest HUD still takes precedence.
+	if active == null:
+		active = get_screen(&"hud")
 	for m in HUD_FOR_MODE:
 		var hud := get_screen(HUD_FOR_MODE[m])
 		if hud is CanvasItem:
-			(hud as CanvasItem).visible = (m == mode)
+			(hud as CanvasItem).visible = (hud == active)
 
 
 ## draw index of a screen: the number of already loaded screens that come before it in the order

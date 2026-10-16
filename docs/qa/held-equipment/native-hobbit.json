@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "hobbit",
+  "checks": 42,
+  "elapsed_s": 7.15,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "held_equipment": {
+      "character": "hobbit",
+      "checks": 42,
+      "failed": 0,
+      "ms": 2894,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

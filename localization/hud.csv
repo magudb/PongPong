@@ -2,3 +2,8 @@ keys,da,en
 HUD_SEASON_DAY_FMT,"%s · Dag %d","%s · Day %d"
 HUD_CONSTRUCTION_FMT,"Byggeriet: færdig om %d dage","Construction: ready in %d days"
 HUD_FRIEND_FMT,"♥ %s","♥ %s"
+HUD_ITEM_SELECTED,Valgt,Selected
+HUD_ITEM_USING,I brug,Using
+HUD_ITEM_WEAPON,Våben,Weapon
+HUD_ITEM_EMPTY,Tomme hænder,Empty hands
+HUD_ITEM_UNAVAILABLE,Ikke i tasken,Not in backpack

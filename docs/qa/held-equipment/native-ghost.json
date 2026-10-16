@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "ghost",
+  "checks": 42,
+  "elapsed_s": 6.9,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "held_equipment": {
+      "character": "ghost",
+      "checks": 42,
+      "failed": 0,
+      "ms": 2883,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

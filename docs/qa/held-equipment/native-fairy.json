@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "fairy",
+  "checks": 42,
+  "elapsed_s": 8.43,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "held_equipment": {
+      "character": "fairy",
+      "checks": 42,
+      "failed": 0,
+      "ms": 3298,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

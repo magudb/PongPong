@@ -1,0 +1,71 @@
+Held equipment: production art and fit review
+
+The selected tool or weapon is visible on all eight playable heroes. A persistent
+parchment readout shows its inventory icon, translated name and Selected, Using or
+Weapon context. Farm and town use the hotbar selection; action maps use the
+equipped weapon. An action retains its actual item until completion, even if the
+player changes selection or equipment. Empty and unavailable choices are named.
+Dialogue, fainting and sleep put the object away.
+
+Painting and provenance
+
+The built-in image generation tool produced the dedicated held-object paintings,
+using the approved equipment kit and sword turnaround as references. Exact prompts,
+reference paths, selected source and rejected first sheet are in prompts.json.
+The first sheet's two hoes read as axes; a targeted repair gave them rectangular
+cultivating blades. The selected master has 12 items in eight directional views:
+two hoes, two watering cans, three pickaxes, an axe, scythe, rod and two swords.
+The delivered master is 1536 by 1024, with 128-pixel cells. The original generation
+prompt requested a larger canvas; the selected source's actual size is recorded
+here and used by the packer.
+
+tools/art/drawn/held_equipment.py packs the selected source losslessly and records
+the explicit view pivots in assets/held_equipment/manifest.json. The production
+atlas is 6 MiB uncompressed RGBA with no mipmaps. There are no new body paintings
+or inventory icon replacements. All 2,562 previously reviewed visual/theme assets
+remain byte-identical. The newly reviewed atlas is the only added visual asset.
+
+Visual review
+
+The repaired master was inspected for silhouettes, materials, transparency and
+separate directional objects. Warm pencil edges, matte timber, restrained copper,
+brass and iron match docs/art/style-guide.txt and the equipment references.
+The all-heroes-contact.png in docs/qa/held-equipment shows the actual native game
+renderer on fox, monkey, both fairies, both hobbits and both ghosts. The native
+captures also include each hero with the iron sword in the forest. The catalog
+contact under native-animal shows all 12 items with their matching readout at
+normal game zoom. The watering cans hang below their carry handles; the rod,
+scythe and hoe keep distinct outer silhouettes. Existing character faces, wings,
+tails and proportions remain readable. These are current stock-body carry poses,
+not the unfinished clothing concepts from the equipment studio.
+
+Runtime fit and ownership
+
+The shipped body animation is the sole clock. The manifest has 3,056 explicit
+body/clip/direction/frame grips across the eight heroes, derived offline from
+individually authored stock-body contact points. The renderer performs no image
+matching. Tool paintings and a narrow patch from the matching live hand texture
+follow the current frame. Rear views draw behind the body; front views put the
+matching hand over the handle. Both roots are children of the real body Sprite,
+so altitude, scale, spin, tint and flashes inherit once. No global depth override
+or second body layer is used. Reparenting the actor during travel retains them.
+
+Player2D resolves the presentation from the existing hotbar, equipment and action
+snapshot. Combat uses the same weapon that the action names. There is no second
+inventory, save format, damage source, animation timer or collision shape. The
+HUD subscribes to changes and language updates rather than polling every frame.
+The existing HUD remains available in the forest while its separate HUD scene is
+absent, preserving health, prompts and the weapon readout.
+
+This delivery uses one near-hand carry contact and the existing work/attack poses.
+Extended swings, authored support-hand/two-handed poses and fitted clothing remain
+the separate packages described in docs/art/equipment/design.txt. The current
+renderer does not claim those later poses or replace the approved body animation.
+
+Validation and performance
+
+See docs/qa/held-equipment/acceptance.json and README.txt for the retained reports,
+native screenshots, source-bound town proofs and measured rendering costs.
+The existing 250-draw city/HUD baseline remains enforced independently of the
+equipment increment (budget: 16). Full frame time and total texture memory include
+the held equipment and readout. No frame-time or texture-memory limit was raised.

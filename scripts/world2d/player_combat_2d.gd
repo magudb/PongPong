@@ -1,5 +1,6 @@
 class_name PlayerCombat2D
 extends Node
+signal weapon_drawn(item_id: StringName)
 ## Combat timing and hit detection are isolated from movement, farming and saved state.
 const S := PlayerBody2D.S
 const RULES := "res://scripts/dungeon_run/dungeon_run.gd"
@@ -120,8 +121,14 @@ func movement(default_velocity: Vector2, delta: float) -> Vector2:
 		return _knockback
 	return default_velocity
 
-func _read_weapon() -> Dictionary:
-	var item := StringName(str(GameData.eco().equipment.get("weapon", "sword_rusty")))
+func active_weapon_id() -> StringName:
+	return StringName(str(_weapon.get("id", "")))
+
+func _read_weapon(item: StringName = &"") -> Dictionary:
+	if item == &"":
+		item = GameData.eco().equipped_item(&"weapon")
+	if item == &"" or not GameData.eco().has_item(item) or str(GameData.item_def(item).get("category", "")) != "weapon":
+		return {}
 	var info := GameData.item_def(item).duplicate(true)
 	var late: Variant = Svc.static_call("res://scripts/loot/weapon_info.gd", &"of", [item], {})
 	if late is Dictionary:
@@ -140,10 +147,12 @@ func aim_ground() -> Vector2:
 			return direction.normalized()
 	return Iso.to_ground(player.facing_vec).normalized()
 
-func swing() -> bool:
+func swing(item: StringName = &"") -> bool:
 	if not player.world_input_allowed() or player.state != S.FREE or float(cooldowns.slash) > 0.0 or player.is_flying:
 		return false
-	_weapon = _read_weapon()
+	_weapon = _read_weapon(item)
+	if _weapon.is_empty():
+		return false
 	_swing_direction = aim_ground()
 	var nudge := deg_to_rad(15.0)
 	var closest := INF
@@ -175,6 +184,7 @@ func swing() -> bool:
 	player.add_child(slash)
 	player.visual.play_action(&"interact", player.visual.clip_duration(&"interact", 1.0) / _swing_duration)
 	_effect(&"on_swing", [player, _weapon])
+	weapon_drawn.emit(active_weapon_id())
 	player.emit_signal("swung", Iso.to_screen(_swing_direction))
 	return true
 

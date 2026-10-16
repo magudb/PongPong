@@ -13,6 +13,7 @@ var _social_space: Control
 @onready var quest_tracker: VBoxContainer = %QuestTracker
 @onready var hotbar: HBoxContainer = %Hotbar
 @onready var tool_name_label: Label = %ToolNameLabel
+var current_item_badge: CurrentItemBadge
 @onready var construction: Control = %ConstructionChip
 @onready var toasts: ToastStack = %ToastStack
 var _entries: Array = []
@@ -41,6 +42,18 @@ func set_social_row_height(height: float) -> void:
 		_social_space.visible = height > 0
 
 func _ready() -> void:
+	current_item_badge = CurrentItemBadge.new()
+	current_item_badge.name = "CurrentItemBadge"
+	add_child(current_item_badge)
+	current_item_badge.anchor_left = 0.5
+	current_item_badge.anchor_right = 0.5
+	current_item_badge.anchor_top = 1.0
+	current_item_badge.anchor_bottom = 1.0
+	current_item_badge.offset_left = -140
+	current_item_badge.offset_right = 140
+	current_item_badge.offset_top = -156
+	current_item_badge.offset_bottom = -114
+	tool_name_label.visible = false
 	toasts.z_index = 100
 	EventBus.modal_changed.connect(func(_stack): toasts.visible = not GameManager.is_modal_open())
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("hud", Callable(get_script(), &"fixture_setup"))
