@@ -156,3 +156,17 @@ it remains archived and a separate painted title baseline is pinned.
 
 HUD and shop/inventory are next, followed by live dialogue/town population and
 the remaining farm/social/service loop. The full milestone is still in progress.
+
+P17 HUD checkpoint — 2026-10-16
+
+The farm HUD now uses the chosen Miljøer v2 layout and eight visible slots.
+Player values, tracked objectives, construction, prompts and refusals update
+from events. Four visible FIFO toasts preserve summaries with an eight-entry
+queue; combined social feedback suppresses a duplicate heart toast. Travel
+banners skip world/save loading and disappear behind modals.
+
+hud-integration.json: 1215 checks across ten sections, no failures or unexpected
+engine messages; 78 named window/later-package skips and one intentional
+orphan-save warning. hud-native.json: 17 checks, no failures or skips. Four v2
+region comparisons pass <=12. All 2534 reviewed illustrations/theme files are
+unchanged. The full usable-towns milestone remains in progress; P18 is next.

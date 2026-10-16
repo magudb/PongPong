@@ -297,9 +297,11 @@
 			"modal": "",
 			"esc_depth": 0,
 			"compare": {
-				"screen": "hud",
-				"fixture": "hud_guide",
-				"target": 9.0
+				"baseline": "docs/qa/ui_baseline/hud.png",
+				"fixture": "hud",
+				"no_frame_crop": true,
+				"target": 1.5,
+				"pinned_after_lead_review": true
 			},
 			"checks": [
 				"focusable_report",
@@ -308,7 +310,7 @@
 				"panel_pixels",
 				"compare_guide"
 			],
-			"note": "the farm shows NO HUD today (scripts/ui/hud.gd has no scene); every HUD control is FOCUS_NONE (plan R.14)"
+			"note": "Live Miljøer v2 HUD with eight painted-item slots. The owner gate compares the four chosen v2 regions; the older whole-farm mock remains a secondary historical comparison."
 		},
 		{
 			"id": "toasts",

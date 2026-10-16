@@ -1,0 +1,4 @@
+keys,da,en
+HUD_SEASON_DAY_FMT,"%s · Dag %d","%s · Day %d"
+HUD_CONSTRUCTION_FMT,"Byggeriet: færdig om %d dage","Construction: ready in %d days"
+HUD_FRIEND_FMT,"♥ %s","♥ %s"

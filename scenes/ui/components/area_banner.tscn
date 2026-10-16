@@ -1,0 +1,140 @@
+[gd_scene format=3]
+
+[ext_resource type="FontFile" path="res://assets/fonts/Caprasimo-Regular.ttf" id="1_1fohf"]
+[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-ExtraBold.ttf" id="2_vpmda"]
+[ext_resource type="FontFile" path="res://assets/fonts/TTSymbols-Regular.ttf" id="3_7sjj5"]
+[ext_resource type="FontFile" path="res://assets/fonts/IBMPlexMono-Regular.ttf" id="4_tjlie"]
+[ext_resource type="Script" path="res://scripts/ui/theme/tt_box_style.gd" id="5_24ahm"]
+[ext_resource type="Script" path="res://scripts/ui/components/area_banner.gd" id="6_e2xn1"]
+
+[sub_resource type="FontVariation" id="FontVariation_s0eex"]
+fallbacks = Array[Font]([ExtResource("2_vpmda"), ExtResource("3_7sjj5")])
+base_font = ExtResource("1_1fohf")
+
+[sub_resource type="FontVariation" id="FontVariation_xs5nn"]
+fallbacks = Array[Font]([ExtResource("3_7sjj5")])
+base_font = ExtResource("2_vpmda")
+opentype_features = {
+"lnum": 1
+}
+
+[sub_resource type="StyleBox" id="StyleBox_ldtoj"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+script = ExtResource("5_24ahm")
+fill = Color(0.9372549, 0.8784314, 0.73333335, 1)
+radius = 10.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+band_side = 2
+band_size = 3.0
+band_color = Color(0.169, 0.137, 0.251, 0.15)
+
+[sub_resource type="StyleBox" id="StyleBox_g3iwq"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+script = ExtResource("5_24ahm")
+fill = Color(0.9372549, 0.8784314, 0.73333335, 1)
+radius = 10.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+band_side = 2
+band_size = 3.0
+band_color = Color(0.169, 0.137, 0.251, 0.15)
+
+[sub_resource type="StyleBox" id="StyleBox_yguy0"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+script = ExtResource("5_24ahm")
+fill = Color(0.9372549, 0.8784314, 0.73333335, 1)
+radius = 10.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_3d68f"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+script = ExtResource("5_24ahm")
+fill = Color(0.9372549, 0.8784314, 0.73333335, 1)
+radius = 10.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="Theme" id="Theme_feodx"]
+AreaTitle/base_type = &"Label"
+AreaTitle/colors/font_color = Color(1, 0.99215686, 0.9647059, 1)
+AreaTitle/colors/font_outline_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+AreaTitle/constants/outline_size = 10
+AreaTitle/font_sizes/font_size = 30
+AreaTitle/fonts/font = SubResource("FontVariation_s0eex")
+HotkeyDigit/base_type = &"Label"
+HotkeyDigit/colors/font_color = Color(0.41568628, 0.3529412, 0.28235295, 1)
+HotkeyDigit/font_sizes/font_size = 10
+HotkeyDigit/fonts/font = ExtResource("4_tjlie")
+HudDateLine/base_type = &"Label"
+HudDateLine/colors/font_color = Color(0.29803923, 0.2509804, 0.34509805, 1)
+HudDateLine/font_sizes/font_size = 14
+HudDateLine/fonts/font = ExtResource("4_tjlie")
+HudEnergyTag/base_type = &"Label"
+HudEnergyTag/colors/font_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+HudEnergyTag/font_sizes/font_size = 15
+HudEnergyTag/fonts/font = SubResource("FontVariation_xs5nn")
+LandmarkTitle/base_type = &"Label"
+LandmarkTitle/colors/font_color = Color(1, 0.99215686, 0.9647059, 1)
+LandmarkTitle/colors/font_outline_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+LandmarkTitle/constants/outline_size = 10
+LandmarkTitle/font_sizes/font_size = 22
+LandmarkTitle/fonts/font = SubResource("FontVariation_s0eex")
+SlotEmpty/styles/disabled = SubResource("StyleBox_ldtoj")
+SlotEmpty/styles/normal = SubResource("StyleBox_g3iwq")
+SlotFilled/styles/disabled = SubResource("StyleBox_yguy0")
+SlotFilled/styles/normal = SubResource("StyleBox_3d68f")
+
+[node name="AreaBanner" type="Control" unique_id=618380185]
+layout_mode = 3
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_feodx")
+script = ExtResource("6_e2xn1")
+
+[node name="Body" type="VBoxContainer" parent="." unique_id=1034325255]
+layout_mode = 0
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="Title" type="Label" parent="Body" unique_id=2041948384]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"AreaTitle"
+horizontal_alignment = 1
+
+[node name="Landmark" type="Label" parent="Body" unique_id=1767292467]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"LandmarkTitle"
+horizontal_alignment = 1

@@ -1,0 +1,678 @@
+[gd_scene format=3]
+
+[ext_resource type="FontFile" path="res://assets/fonts/Caprasimo-Regular.ttf" id="1_o6xly"]
+[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-ExtraBold.ttf" id="2_we3sy"]
+[ext_resource type="FontFile" path="res://assets/fonts/TTSymbols-Regular.ttf" id="3_65nxt"]
+[ext_resource type="FontFile" path="res://assets/fonts/IBMPlexMono-Regular.ttf" id="4_el1dq"]
+[ext_resource type="Script" path="res://scripts/ui/theme/tt_box_style.gd" id="5_gmc6u"]
+[ext_resource type="Script" path="res://scripts/ui/hud.gd" id="6_1e6lo"]
+[ext_resource type="Script" path="res://scripts/ui/components/tt_hearts.gd" id="7_4mi7y"]
+[ext_resource type="PackedScene" path="res://scenes/ui/components/item_slot.tscn" id="8_pkwgd"]
+[ext_resource type="Script" path="res://scripts/ui/components/item_slot.gd" id="9_d5po8"]
+[ext_resource type="PackedScene" path="res://scenes/ui/components/prompt_pill.tscn" id="10_7yoph"]
+[ext_resource type="Script" path="res://scripts/ui/components/prompt_pill.gd" id="11_qmm8d"]
+[ext_resource type="PackedScene" path="res://scenes/ui/components/whisper_line.tscn" id="12_t0png"]
+[ext_resource type="Script" path="res://scripts/ui/components/whisper_line.gd" id="13_b6swc"]
+[ext_resource type="PackedScene" path="res://scenes/ui/components/area_banner.tscn" id="14_27rlx"]
+[ext_resource type="Script" path="res://scripts/ui/components/area_banner.gd" id="15_vuvg6"]
+[ext_resource type="PackedScene" path="res://scenes/ui/components/toast_stack.tscn" id="16_emer0"]
+[ext_resource type="Script" path="res://scripts/ui/components/toast_stack.gd" id="17_kfdjh"]
+
+[sub_resource type="FontVariation" id="FontVariation_s0eex"]
+fallbacks = Array[Font]([ExtResource("2_we3sy"), ExtResource("3_65nxt")])
+base_font = ExtResource("1_o6xly")
+
+[sub_resource type="FontVariation" id="FontVariation_xs5nn"]
+fallbacks = Array[Font]([ExtResource("3_65nxt")])
+base_font = ExtResource("2_we3sy")
+opentype_features = {
+"lnum": 1
+}
+
+[sub_resource type="StyleBox" id="StyleBox_xdlig"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+script = ExtResource("5_gmc6u")
+fill = Color(0.9372549, 0.8784314, 0.73333335, 1)
+radius = 10.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+band_side = 2
+band_size = 3.0
+band_color = Color(0.169, 0.137, 0.251, 0.15)
+
+[sub_resource type="StyleBox" id="StyleBox_lptj4"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+script = ExtResource("5_gmc6u")
+fill = Color(0.9372549, 0.8784314, 0.73333335, 1)
+radius = 10.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+band_side = 2
+band_size = 3.0
+band_color = Color(0.169, 0.137, 0.251, 0.15)
+
+[sub_resource type="StyleBox" id="StyleBox_74gae"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+script = ExtResource("5_gmc6u")
+fill = Color(0.9372549, 0.8784314, 0.73333335, 1)
+radius = 10.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_33vp1"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+script = ExtResource("5_gmc6u")
+fill = Color(0.9372549, 0.8784314, 0.73333335, 1)
+radius = 10.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="Theme" id="Theme_jpd3y"]
+AreaTitle/base_type = &"Label"
+AreaTitle/colors/font_color = Color(1, 0.99215686, 0.9647059, 1)
+AreaTitle/colors/font_outline_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+AreaTitle/constants/outline_size = 10
+AreaTitle/font_sizes/font_size = 30
+AreaTitle/fonts/font = SubResource("FontVariation_s0eex")
+HotkeyDigit/base_type = &"Label"
+HotkeyDigit/colors/font_color = Color(0.41568628, 0.3529412, 0.28235295, 1)
+HotkeyDigit/font_sizes/font_size = 10
+HotkeyDigit/fonts/font = ExtResource("4_el1dq")
+HudDateLine/base_type = &"Label"
+HudDateLine/colors/font_color = Color(0.29803923, 0.2509804, 0.34509805, 1)
+HudDateLine/font_sizes/font_size = 14
+HudDateLine/fonts/font = ExtResource("4_el1dq")
+HudEnergyTag/base_type = &"Label"
+HudEnergyTag/colors/font_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+HudEnergyTag/font_sizes/font_size = 15
+HudEnergyTag/fonts/font = SubResource("FontVariation_xs5nn")
+LandmarkTitle/base_type = &"Label"
+LandmarkTitle/colors/font_color = Color(1, 0.99215686, 0.9647059, 1)
+LandmarkTitle/colors/font_outline_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+LandmarkTitle/constants/outline_size = 10
+LandmarkTitle/font_sizes/font_size = 22
+LandmarkTitle/fonts/font = SubResource("FontVariation_s0eex")
+SlotEmpty/styles/disabled = SubResource("StyleBox_xdlig")
+SlotEmpty/styles/normal = SubResource("StyleBox_lptj4")
+SlotFilled/styles/disabled = SubResource("StyleBox_74gae")
+SlotFilled/styles/normal = SubResource("StyleBox_33vp1")
+
+[sub_resource type="StyleBox" id="StyleBox_4h7mh"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+script = ExtResource("5_gmc6u")
+radius = 12.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_4vegw"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 16.0
+content_margin_top = 7.0
+content_margin_right = 16.0
+content_margin_bottom = 7.0
+script = ExtResource("5_gmc6u")
+border_color = Color(0.8901961, 0.7647059, 0.44705883, 1)
+radius = 8.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_kwu3u"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+script = ExtResource("5_gmc6u")
+radius = 12.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_t4m8u"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 15.0
+content_margin_top = 9.0
+content_margin_right = 15.0
+content_margin_bottom = 9.0
+script = ExtResource("5_gmc6u")
+border_color = Color(0.8901961, 0.7647059, 0.44705883, 1)
+radius = 8.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_04enw"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+script = ExtResource("5_gmc6u")
+fill = Color(1, 0.99215686, 0.9647059, 1)
+radius = 7.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_rvhgw"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+script = ExtResource("5_gmc6u")
+fill = Color(0.41960785, 0.6039216, 0.24313726, 1)
+border_color = Color(1, 1, 1, 0)
+border_width = 0.0
+radius = 5.0
+body_inset = Vector4(2, 2, 2, 2)
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_sj4ew"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+script = ExtResource("5_gmc6u")
+radius = 12.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_83uk5"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 7.0
+content_margin_top = 7.0
+content_margin_right = 7.0
+content_margin_bottom = 7.0
+script = ExtResource("5_gmc6u")
+border_color = Color(0.8901961, 0.7647059, 0.44705883, 1)
+radius = 8.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_d778v"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+script = ExtResource("5_gmc6u")
+fill = Color(1, 0.99215686, 0.9647059, 1)
+border_color = Color(0.8901961, 0.7647059, 0.44705883, 1)
+border_width = 3.0
+radius = 10.0
+ring_colors = PackedColorArray(0.16862746, 0.13725491, 0.2509804, 1)
+ring_widths = PackedFloat32Array(2)
+
+[sub_resource type="FontVariation" id="FontVariation_vul6o"]
+fallbacks = Array[Font]([ExtResource("2_we3sy"), ExtResource("3_65nxt")])
+base_font = ExtResource("1_o6xly")
+
+[sub_resource type="FontVariation" id="FontVariation_n8oob"]
+fallbacks = Array[Font]([ExtResource("3_65nxt")])
+base_font = ExtResource("2_we3sy")
+opentype_features = {
+"lnum": 1
+}
+
+[sub_resource type="StyleBox" id="StyleBox_ldtoj"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+script = ExtResource("5_gmc6u")
+fill = Color(0.9372549, 0.8784314, 0.73333335, 1)
+radius = 10.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+band_side = 2
+band_size = 3.0
+band_color = Color(0.169, 0.137, 0.251, 0.15)
+
+[sub_resource type="StyleBox" id="StyleBox_g3iwq"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+script = ExtResource("5_gmc6u")
+fill = Color(0.9372549, 0.8784314, 0.73333335, 1)
+radius = 10.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+band_side = 2
+band_size = 3.0
+band_color = Color(0.169, 0.137, 0.251, 0.15)
+
+[sub_resource type="StyleBox" id="StyleBox_yguy0"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+script = ExtResource("5_gmc6u")
+fill = Color(0.9372549, 0.8784314, 0.73333335, 1)
+radius = 10.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="StyleBox" id="StyleBox_3d68f"]
+resource_local_to_scene = false
+resource_name = ""
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+script = ExtResource("5_gmc6u")
+fill = Color(0.9372549, 0.8784314, 0.73333335, 1)
+radius = 10.0
+ring_colors = PackedColorArray()
+ring_widths = PackedFloat32Array()
+
+[sub_resource type="Theme" id="Theme_feodx"]
+AreaTitle/base_type = &"Label"
+AreaTitle/colors/font_color = Color(1, 0.99215686, 0.9647059, 1)
+AreaTitle/colors/font_outline_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+AreaTitle/constants/outline_size = 10
+AreaTitle/font_sizes/font_size = 30
+AreaTitle/fonts/font = SubResource("FontVariation_vul6o")
+HotkeyDigit/base_type = &"Label"
+HotkeyDigit/colors/font_color = Color(0.41568628, 0.3529412, 0.28235295, 1)
+HotkeyDigit/font_sizes/font_size = 10
+HotkeyDigit/fonts/font = ExtResource("4_el1dq")
+HudDateLine/base_type = &"Label"
+HudDateLine/colors/font_color = Color(0.29803923, 0.2509804, 0.34509805, 1)
+HudDateLine/font_sizes/font_size = 14
+HudDateLine/fonts/font = ExtResource("4_el1dq")
+HudEnergyTag/base_type = &"Label"
+HudEnergyTag/colors/font_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+HudEnergyTag/font_sizes/font_size = 15
+HudEnergyTag/fonts/font = SubResource("FontVariation_n8oob")
+LandmarkTitle/base_type = &"Label"
+LandmarkTitle/colors/font_color = Color(1, 0.99215686, 0.9647059, 1)
+LandmarkTitle/colors/font_outline_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
+LandmarkTitle/constants/outline_size = 10
+LandmarkTitle/font_sizes/font_size = 22
+LandmarkTitle/fonts/font = SubResource("FontVariation_vul6o")
+SlotEmpty/styles/disabled = SubResource("StyleBox_ldtoj")
+SlotEmpty/styles/normal = SubResource("StyleBox_g3iwq")
+SlotFilled/styles/disabled = SubResource("StyleBox_yguy0")
+SlotFilled/styles/normal = SubResource("StyleBox_3d68f")
+
+[node name="HUD" type="Control" unique_id=1229365762]
+layout_mode = 3
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_jpd3y")
+script = ExtResource("6_1e6lo")
+
+[node name="DatePanel" type="PanelContainer" parent="." unique_id=123973293]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBox_4h7mh")
+
+[node name="Keyline" type="PanelContainer" parent="DatePanel" unique_id=1061561794]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_4vegw")
+metadata/tt_r1_ok = "Miljøer v2 inner gold keyline, enclosed by the parent's 2px ink outline"
+metadata/tt_gold_ok = "Miljøer v2 explicitly specifies a 2px inset gold keyline"
+
+[node name="DateBody" type="VBoxContainer" parent="DatePanel/Keyline" unique_id=956241586]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="DayLabel" type="Label" parent="DatePanel/Keyline/DateBody" unique_id=1402996815]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Display22"
+
+[node name="TimeLabel" type="Label" parent="DatePanel/Keyline/DateBody" unique_id=1276592712]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HudDateLine"
+
+[node name="TopRight" type="VBoxContainer" parent="." unique_id=1183051230]
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_top = 40.0
+offset_right = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="MoneyChip" type="PanelContainer" parent="TopRight" unique_id=858665043]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_kwu3u")
+
+[node name="Keyline" type="PanelContainer" parent="TopRight/MoneyChip" unique_id=1720720650]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_t4m8u")
+metadata/tt_r1_ok = "Miljøer v2 inner gold keyline, enclosed by the parent's 2px ink outline"
+metadata/tt_gold_ok = "Miljøer v2 explicitly specifies a 2px inset gold keyline"
+
+[node name="MoneyRow" type="HBoxContainer" parent="TopRight/MoneyChip/Keyline" unique_id=1722053857]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+
+[node name="Gold" type="HBoxContainer" parent="TopRight/MoneyChip/Keyline/MoneyRow" unique_id=1005512835]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="Coin" type="PanelContainer" parent="TopRight/MoneyChip/Keyline/MoneyRow/Gold" unique_id=1320978373]
+custom_minimum_size = Vector2(18, 18)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"CoinInk"
+
+[node name="GoldLabel" type="Label" parent="TopRight/MoneyChip/Keyline/MoneyRow/Gold" unique_id=1261447644]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Heavy19"
+metadata/tt_r3_ok = "Miljøer v2 money chip explicitly uses the 19px heavy face"
+
+[node name="Energy" type="HBoxContainer" parent="TopRight/MoneyChip/Keyline/MoneyRow" unique_id=324675777]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="StaminaTag" type="Label" parent="TopRight/MoneyChip/Keyline/MoneyRow/Energy" unique_id=899451893]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"HudEnergyTag"
+text = "HUD_ENERGY"
+
+[node name="StaminaBar" type="ProgressBar" parent="TopRight/MoneyChip/Keyline/MoneyRow/Energy" unique_id=339295622]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 14)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBox_04enw")
+theme_override_styles/fill = SubResource("StyleBox_rvhgw")
+value = 100.0
+show_percentage = false
+
+[node name="Hearts" type="Control" parent="TopRight" unique_id=692584241]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(126, 20)
+layout_mode = 2
+size_flags_horizontal = 8
+mouse_filter = 2
+script = ExtResource("7_4mi7y")
+half_hearts = 10
+heart_size = Vector2(22, 20)
+
+[node name="QuestCard" type="PanelContainer" parent="TopRight" unique_id=1823906735]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_type_variation = &"PanelCard"
+
+[node name="QuestBody" type="VBoxContainer" parent="TopRight/QuestCard" unique_id=1978287554]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="QuestHeader" type="Label" parent="TopRight/QuestCard/QuestBody" unique_id=1960631747]
+layout_mode = 2
+theme_type_variation = &"Eyebrow"
+text = "HUD_ACTIVE_QUESTS"
+
+[node name="QuestTracker" type="VBoxContainer" parent="TopRight/QuestCard/QuestBody" unique_id=2051657000]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="ConstructionChip" type="PanelContainer" parent="." unique_id=10366104]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 40.0
+offset_top = 140.0
+offset_right = 40.0
+offset_bottom = 140.0
+theme_type_variation = &"PillGold"
+
+[node name="ConstructionText" type="Label" parent="ConstructionChip" unique_id=1329079514]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Bold15Gold"
+
+[node name="HotbarTray" type="PanelContainer" parent="." unique_id=1154670459]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -30.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBox_sj4ew")
+
+[node name="Keyline" type="PanelContainer" parent="HotbarTray" unique_id=230570498]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_83uk5")
+metadata/tt_r1_ok = "Miljøer v2 inner gold keyline, enclosed by the parent's 2px ink outline"
+metadata/tt_gold_ok = "Miljøer v2 explicitly specifies a 2px inset gold keyline"
+
+[node name="Hotbar" type="HBoxContainer" parent="HotbarTray/Keyline" unique_id=1427058634]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Slot1" type="Button" parent="HotbarTray/Keyline/Hotbar" unique_id=1689704626 instance=ExtResource("8_pkwgd")]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"SlotEmpty"
+theme_override_styles/pressed = SubResource("StyleBox_d778v")
+theme_override_styles/hover_pressed = SubResource("StyleBox_d778v")
+toggle_mode = true
+action_mode = 0
+script = ExtResource("9_d5po8")
+metadata/tt_r1_ok = "Miljøer v2 selected slot: 3px gold border enclosed by 2px ink ring"
+
+[node name="Slot2" type="Button" parent="HotbarTray/Keyline/Hotbar" unique_id=800037270 instance=ExtResource("8_pkwgd")]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"SlotEmpty"
+theme_override_styles/pressed = SubResource("StyleBox_d778v")
+theme_override_styles/hover_pressed = SubResource("StyleBox_d778v")
+toggle_mode = true
+action_mode = 0
+script = ExtResource("9_d5po8")
+metadata/tt_r1_ok = "Miljøer v2 selected slot: 3px gold border enclosed by 2px ink ring"
+
+[node name="Slot3" type="Button" parent="HotbarTray/Keyline/Hotbar" unique_id=462288315 instance=ExtResource("8_pkwgd")]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"SlotEmpty"
+theme_override_styles/pressed = SubResource("StyleBox_d778v")
+theme_override_styles/hover_pressed = SubResource("StyleBox_d778v")
+toggle_mode = true
+action_mode = 0
+script = ExtResource("9_d5po8")
+metadata/tt_r1_ok = "Miljøer v2 selected slot: 3px gold border enclosed by 2px ink ring"
+
+[node name="Slot4" type="Button" parent="HotbarTray/Keyline/Hotbar" unique_id=701814073 instance=ExtResource("8_pkwgd")]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"SlotEmpty"
+theme_override_styles/pressed = SubResource("StyleBox_d778v")
+theme_override_styles/hover_pressed = SubResource("StyleBox_d778v")
+toggle_mode = true
+action_mode = 0
+script = ExtResource("9_d5po8")
+metadata/tt_r1_ok = "Miljøer v2 selected slot: 3px gold border enclosed by 2px ink ring"
+
+[node name="Slot5" type="Button" parent="HotbarTray/Keyline/Hotbar" unique_id=251609715 instance=ExtResource("8_pkwgd")]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"SlotEmpty"
+theme_override_styles/pressed = SubResource("StyleBox_d778v")
+theme_override_styles/hover_pressed = SubResource("StyleBox_d778v")
+toggle_mode = true
+action_mode = 0
+script = ExtResource("9_d5po8")
+metadata/tt_r1_ok = "Miljøer v2 selected slot: 3px gold border enclosed by 2px ink ring"
+
+[node name="Slot6" type="Button" parent="HotbarTray/Keyline/Hotbar" unique_id=695697235 instance=ExtResource("8_pkwgd")]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"SlotEmpty"
+theme_override_styles/pressed = SubResource("StyleBox_d778v")
+theme_override_styles/hover_pressed = SubResource("StyleBox_d778v")
+toggle_mode = true
+action_mode = 0
+script = ExtResource("9_d5po8")
+metadata/tt_r1_ok = "Miljøer v2 selected slot: 3px gold border enclosed by 2px ink ring"
+
+[node name="Slot7" type="Button" parent="HotbarTray/Keyline/Hotbar" unique_id=770498999 instance=ExtResource("8_pkwgd")]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"SlotEmpty"
+theme_override_styles/pressed = SubResource("StyleBox_d778v")
+theme_override_styles/hover_pressed = SubResource("StyleBox_d778v")
+toggle_mode = true
+action_mode = 0
+script = ExtResource("9_d5po8")
+metadata/tt_r1_ok = "Miljøer v2 selected slot: 3px gold border enclosed by 2px ink ring"
+
+[node name="Slot8" type="Button" parent="HotbarTray/Keyline/Hotbar" unique_id=1346590489 instance=ExtResource("8_pkwgd")]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"SlotEmpty"
+theme_override_styles/pressed = SubResource("StyleBox_d778v")
+theme_override_styles/hover_pressed = SubResource("StyleBox_d778v")
+toggle_mode = true
+action_mode = 0
+script = ExtResource("9_d5po8")
+metadata/tt_r1_ok = "Miljøer v2 selected slot: 3px gold border enclosed by 2px ink ring"
+
+[node name="ToolNameLabel" type="Label" parent="." unique_id=593446781]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -126.0
+offset_bottom = -126.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_type_variation = &"ToolName"
+horizontal_alignment = 1
+
+[node name="PromptPill" type="Control" parent="." unique_id=829714754 instance=ExtResource("10_7yoph")]
+unique_name_in_owner = true
+process_mode = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("11_qmm8d")
+
+[node name="WhisperLine" type="Control" parent="." unique_id=45738212 instance=ExtResource("12_t0png")]
+unique_name_in_owner = true
+process_mode = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("13_b6swc")
+
+[node name="AreaBanner" type="Control" parent="." unique_id=618380185 instance=ExtResource("14_27rlx")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_feodx")
+script = ExtResource("15_vuvg6")
+
+[node name="ToastStack" type="Control" parent="." unique_id=368454104 instance=ExtResource("16_emer0")]
+unique_name_in_owner = true
+process_mode = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("17_kfdjh")
+fifo = true
+max_visible = 4
+farm_only = true

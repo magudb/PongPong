@@ -1,0 +1,45 @@
+P17 HUD gate — 2026-10-16
+
+Evidence
+hud-integration.json: 1215 checks over HUD, player, farm, quests, social,
+gifts/talk and UI audit/navigation/conformance. No failures or unexpected
+engine messages; 78 explicit window/later-package skips. The social orphan
+save warning is intentional. No ObjectDB leaks. hud-native.json: 17 checks,
+no failures/skips/errors/warnings. The approved 2534 art/theme files match.
+
+Design
+Miljøer v2 owns the layout: Caprasimo season/day above mono weekday/time/weather,
+top-right coin/number and horizontal 110x14 energy, persistent five-heart row,
+eight tool slots, cream selected tile with a 3px gold border and ink ring.
+The mock explicitly sets the chip numeral in Heavy19; that narrow exception
+is annotated. Shared theme.tres, font imports and painted icons are unchanged.
+The area's 30px Caprasimo title uses an outline_size of 10: native probes of
+3/6/9/10/12/14/16 showed that 10 matches the mock's visible stroke with this
+font/renderer. The full banner capture and <=12 comparison guard that result.
+
+The four v2 means are date 10.070, chip 9.929, banner 11.824, hotbar 9.409.
+tools/ui/crop_v2_references.py preserves unmodified crops from the chosen
+render. Banner typography is compared on the mock's green background, avoiding
+unrelated terrain differences. For hotbar chrome, BOTH inputs mask only the
+inner 40px squares of the first four mock-placeholder icons. Slot borders,
+key digits and counts remain scored; full painted-world captures are retained.
+The approved real icons supersede those old flat placeholders. The superseded
+whole-farm CSS comparison is retained at 61.222 in hud-legacy-comparison.json;
+it describes another layout and unpainted scenery. No old reference is edited.
+
+Behavior
+All bindings use actual EventBus payloads, real eight-slot player actions and
+QuestManager's tracked/current-objective APIs. Raw hours 24/25 show 00/01 on
+the same date. Slot clicks send slot_n through normal input guards. Energy
+updates do not rebuild unchanged hearts. No HUD frame polling. Root and corner
+anchors, no focus, selected style, zero-count dimming, paused/cutscene visibility,
+all seasons/locales, construction, whispers, prompts and travel titles pass.
+Four visible notifications plus eight queued are drained in FIFO order. The
+forest owns notifications in action mode. Conversation/gift social results
+coalesce pending heart feedback. Detached/deleting UI ignores deferred toasts.
+
+The wider gate exercised minimal Home test doubles and exposed an outdated
+social quest double. HUD home calls now guard the actual optional methods;
+FakeQuests supplies the same completed-id reader used by the real director.
+New copy is draft, not native-reviewed. P18 and the remaining town packages
+still need completion before the milestone merge.

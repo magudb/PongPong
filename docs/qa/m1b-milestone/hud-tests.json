@@ -1,0 +1,22 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 90,
+  "elapsed_s": 7.62,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "hud": {
+      "checks": 90,
+      "failed": 0,
+      "ms": 4647,
+      "skipped": 4
+    }
+  },
+  "skipped": 4
+}

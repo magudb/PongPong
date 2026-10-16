@@ -236,5 +236,12 @@
     "date": "",
     "voice_frozen": false,
     "rows": 1
+  },
+  "localization/hud.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 3
   }
 }

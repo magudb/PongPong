@@ -26,11 +26,17 @@ const KINDS: Array[String] = ["item", "farm", "save", "shop", "gold", "inventory
 
 ## false: item notifications are left to the loot feed (forest HUD)
 @export var item_toasts := true
+## Farm v2 keeps summaries in arrival order. Other screens retain the P28 newest-first contract.
+@export var fifo := false
+@export_range(1, 8) var max_visible := MAX_TOASTS
+@export var farm_only := false
 
 var _entries: Array[Dictionary] = []          # newest first: {toast, title, message, base, count, amount, icon, rarity}
 var _stack: VBoxContainer
 var _pending_item := {}                       # {id, frame} of the last item_gained, consumed by the next "item" notification of the same frame
 var _connected := false
+var _queue: Array[Dictionary] = []
+var _clearing := false
 
 
 func _init() -> void:
@@ -93,6 +99,12 @@ func toasts() -> Array[Node]:
 
 ## Shows one notification (what the EventBus signal does; public so a screen can post without the bus).
 func post(title: String, message: String, icon: String = "") -> void:
+	if not is_inside_tree() or is_queued_for_deletion():
+		return
+	if farm_only:
+		var ui := get_tree().get_first_node_in_group("game_ui")
+		if ui != null and ui.mode == &"action":
+			return
 	var item_id := ""
 	if icon == ITEM_KIND:
 		if not item_toasts:
@@ -111,18 +123,48 @@ func post(title: String, message: String, icon: String = "") -> void:
 		if e["key"] == key and e["icon"] == item_id:
 			_stack_into(e, int(parts["amount"]), parts["has_amount"])
 			return
-	var toast := (load(TOAST_SCENE) as PackedScene).instantiate()
-	var entry := {"toast": toast, "key": key, "title": title, "message": message, "base": parts["base"], "count": 1, "amount": int(parts["amount"]),
+	var entry := {"key": key, "title": title, "message": message, "base": parts["base"], "count": 1, "amount": int(parts["amount"]),
 		"has_amount": parts["has_amount"], "icon": item_id, "rarity": rarity}
-	_entries.push_front(entry)
+	if fifo and (_entries.size() >= max_visible or not _queue.is_empty()):
+		# A queue of eight is supported without dropping a ninth arrival during a burst.
+		_queue.append(entry)
+		return
+	_show_entry(entry)
+
+
+func _show_entry(entry: Dictionary) -> void:
+	var toast := (load(TOAST_SCENE) as PackedScene).instantiate()
+	entry["toast"] = toast
+	if fifo:
+		_entries.append(entry)
+	else:
+		_entries.push_front(entry)
 	toast.tree_exited.connect(_on_toast_gone.bind(toast))
 	(toast as Control).size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	_stack.add_child(toast)
-	_stack.move_child(toast, 0)                                   # newest on top
+	if not fifo:
+		_stack.move_child(toast, 0)
 	_present(entry, true)
-	while _entries.size() > MAX_TOASTS:
+	while not fifo and _entries.size() > max_visible:
 		var oldest: Dictionary = _entries.pop_back()
 		(oldest["toast"] as Node).queue_free()
+
+
+func clear() -> void:
+	_clearing = true
+	_queue.clear()
+	var old := _entries.duplicate()
+	_entries.clear()
+	for entry in old:
+		var toast: Node = entry.toast
+		if is_instance_valid(toast):
+			toast.queue_free()
+	_pending_item = {}
+	_clearing = false
+
+
+func queued_count() -> int:
+	return _queue.size()
 
 
 func _stack_into(entry: Dictionary, amount: int, has_amount: bool) -> void:
@@ -131,7 +173,7 @@ func _stack_into(entry: Dictionary, amount: int, has_amount: bool) -> void:
 	else:
 		entry["count"] = int(entry["count"]) + 1
 	var idx := _entries.find(entry)
-	if idx > 0:                                                    # the stacked toast is the newest again
+	if idx > 0 and not fifo:
 		_entries.remove_at(idx)
 		_entries.push_front(entry)
 		_stack.move_child(entry["toast"], 0)
@@ -195,6 +237,13 @@ func _on_toast_gone(toast: Node) -> void:
 	for i in range(_entries.size() - 1, -1, -1):
 		if _entries[i]["toast"] == toast:
 			_entries.remove_at(i)
+	if fifo and not _clearing and is_inside_tree() and not is_queued_for_deletion():
+		_drain.call_deferred()
+
+
+func _drain() -> void:
+	while not _queue.is_empty() and _entries.size() < max_visible:
+		_show_entry(_queue.pop_front())
 
 
 func _notification(what: int) -> void:

@@ -483,6 +483,15 @@ func _post_toast(title: String, message: String, now: int) -> void:
 	EventBus.notification_posted.emit(title, message, "social")
 
 
+## Lets the HUD avoid adding another heart toast beside the combined conversation result.
+func has_pending_feedback(npc: StringName) -> bool:
+	var name := _name_of(str(npc))
+	for entry in _toast_queue:
+		if str(entry[1]).contains(name):
+			return true
+	return false
+
+
 func _process(_delta: float) -> void:
 	if _toast_queue.is_empty():
 		set_process(false)

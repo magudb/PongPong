@@ -195,6 +195,9 @@ class FakeQuests extends Node:
 	func is_completed(quest_id: Variant) -> bool:
 		return str(quest_id) in completed
 
+	func get_completed_ids() -> Array:
+		return completed.duplicate()
+
 	func is_active(quest_id: Variant) -> bool:
 		return str(quest_id) in active
 

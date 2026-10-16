@@ -19,6 +19,15 @@ static func clock(hour: int, minute: int) -> String:
 	return "%02d:%02d" % [posmod(hour, 24), minute]
 
 
+static func season_day_text(day: int = -1, season: StringName = &"") -> String:
+	var gm := Svc.node("GameManager")
+	if gm == null:
+		return ""
+	var d := int(gm.day) if day < 0 else day
+	var s := String(gm.season) if season == &"" else String(season)
+	return str(TranslationServer.translate("HUD_SEASON_DAY_FMT")) % [TranslationServer.translate("UI_SEASON_" + s.to_upper()), d]
+
+
 ## "Tirsdag 16. Blomstermåned": ONE calendar implementation, TimeManager.date_text() (P02: weekday = (day - 1 + first_weekday)
 ## % 7, month names from UI_WEEKDAY_n / UI_MONTH_<SEASON>). No arguments = today. Returns "" while there is no TimeManager
 ## (a -s tool driver): the date is never re-implemented here.

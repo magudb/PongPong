@@ -59,7 +59,7 @@ const BACKDROPS := {
 	"pause": ["#a9c97a", "#9cbf6c", 22.0], "saveload": ["#a9c97a", "#9cbf6c", 22.0], "settings": ["#a9c97a", "#9cbf6c", 22.0],
 	"husbyggeri": ["#3a3150", "#3a3150", 22.0], "indretning": ["#a9c97a", "#9cbf6c", 22.0], "home_chest": ["#3a3150", "#3a3150", 22.0],
 	"garderobe": ["#3a3150", "#3a3150", 22.0], "samlerbog": ["#3a3150", "#3a3150", 22.0],
-	"confirm": ["#a9c97a", "#9cbf6c", 22.0], "toasts": ["#a9c97a", "#9cbf6c", 22.0], "prompt": ["#a9c97a", "#9cbf6c", 22.0], "area_banner": ["#a9c97a", "#9cbf6c", 22.0],
+	"confirm": ["#a9c97a", "#9cbf6c", 22.0], "toasts": ["#a9c97a", "#9cbf6c", 22.0], "prompt": ["#a9c97a", "#9cbf6c", 22.0], "area_banner": ["#96ac6b", "#96ac6b", 22.0],
 	"animal_care": ["#a9c97a", "#9cbf6c", 22.0], "build_menu": ["#a9c97a", "#9cbf6c", 22.0], "intro": ["#cde0a6", "#bfd694", 22.0], "minimap": ["#232a44", "#1c2138", 22.0],
 }
 ## the variations whose focus look IS a gold fill: the guide mocks paint that fill, so a guide fixture keeps focus on them
@@ -188,6 +188,11 @@ static func _default_setup(name: String, node: Node, host: Node) -> void:
 				bus.item_gained.emit(&"moonstone", 2)                       # EconomyManager emits item_gained right before the "item" toast: the toast carries the item and its rarity tile
 				bus.notification_posted.emit("NOTIF_ITEM_GAINED_TITLE", "ITEM_MOONSTONE x2", "item")
 				await tree.process_frame
+		"area_banner":
+			node._area_changed(&"traetoppen")
+			if node._arrival != null and node._arrival.is_valid():
+				node._arrival.kill()
+			node.get_node("%Title").modulate.a = 1.0
 		"prompt":
 			var bus2 := Svc.node("EventBus")
 			if bus2 != null:

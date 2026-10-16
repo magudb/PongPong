@@ -1,144 +1,253 @@
 extends Control
-## HUD: gold, time, season, weather, quest tracker, notifications.
-
-@onready var gold_label: Label = %GoldLabel
-@onready var time_label: Label = %TimeLabel
+## Miljøer v2 HUD. All updates come from state changes; no frame polling.
+const Fmt := preload("res://scripts/ui/theme/tt_format.gd")
+const SLOT_COUNT := 8
 @onready var day_label: Label = %DayLabel
-@onready var season_label: Label = %SeasonLabel
-@onready var weather_label: Label = %WeatherLabel
-@onready var health_bar: ProgressBar = %HealthBar
+@onready var time_label: Label = %TimeLabel
+@onready var gold_label: Label = %GoldLabel
 @onready var stamina_bar: ProgressBar = %StaminaBar
+@onready var hearts: Control = %Hearts
+@onready var quest_card: Control = %QuestCard
 @onready var quest_tracker: VBoxContainer = %QuestTracker
-@onready var notification_box: VBoxContainer = %NotificationBox
-@onready var interaction_prompt: Label = %InteractionPrompt
-
-const NOTIFICATION_DURATION := 4.0
-
+@onready var hotbar: HBoxContainer = %Hotbar
+@onready var tool_name_label: Label = %ToolNameLabel
+@onready var construction: Control = %ConstructionChip
+@onready var toasts: ToastStack = %ToastStack
+var _entries: Array = []
+var _selected := 0
+var _hour := 6
+var _minute := 0
+var _day := 1
+var _season: StringName = &"foraar"
+var _weather: StringName = &"solskin"
+var _days_left := 0
+var _pending_friends: Dictionary = {}
+var _last_health := Vector2i(-1, -1)
 
 func _ready() -> void:
-	EventBus.gold_changed.connect(_on_gold_changed)
-	EventBus.time_of_day_changed.connect(_on_time_changed)
-	EventBus.day_started.connect(_on_day_started)
-	EventBus.season_changed.connect(_on_season_changed)
-	EventBus.weather_changed.connect(_on_weather_changed)
-	EventBus.player_health_changed.connect(_on_health_changed)
-	EventBus.player_stats_changed.connect(_on_stats_changed)
-	EventBus.notification_posted.connect(_on_notification)
-	EventBus.quest_accepted.connect(_on_quest_changed)
-	EventBus.quest_completed.connect(_on_quest_changed)
-	EventBus.quest_objective_updated.connect(_on_quest_objective)
-	EventBus.interaction_prompt_changed.connect(_on_interaction_prompt)
+	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("hud", Callable(get_script(), &"fixture_setup"))
+	EventBus.gold_changed.connect(_gold)
+	EventBus.time_of_day_changed.connect(_time)
+	EventBus.day_started.connect(_date)
+	EventBus.season_changed.connect(_season_changed)
+	EventBus.weather_changed.connect(_weather_changed)
+	EventBus.player_stats_changed.connect(_stats)
+	EventBus.player_health_changed.connect(_health)
+	EventBus.hotbar_changed.connect(set_hotbar)
+	EventBus.player_spawned.connect(_player_spawned)
+	EventBus.new_game_started.connect(_refresh_all)
+	EventBus.load_completed.connect(func(_slot: int): _refresh_all())
+	EventBus.quest_accepted.connect(_quests_changed)
+	EventBus.quest_completed.connect(_quests_changed)
+	EventBus.quest_failed.connect(_quests_changed)
+	EventBus.quest_objective_updated.connect(func(_q, _o, _p, _t): _refresh_quests())
+	EventBus.home_upgrade_progress.connect(_construction_progress)
+	EventBus.home_upgrade_started.connect(func(_from, _to, _ready_day): _refresh_construction())
+	EventBus.home_upgraded.connect(func(_from, _to): _refresh_construction())
+	EventBus.friend_changed.connect(_friend)
+	EventBus.notification_posted.connect(_social_feedback)
+	for index in hotbar.get_child_count():
+		var slot: Button = hotbar.get_child(index)
+		slot.focus_mode = Control.FOCUS_NONE
+		slot.item_icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		slot.item_icon.offset_left = 9
+		slot.item_icon.offset_top = 9
+		slot.item_icon.offset_right = -9
+		slot.item_icon.offset_bottom = -9
+		slot.pressed.connect(_slot_clicked.bind(index))
+	if get_parent() is GameUI:
+		get_parent().mode_changed.connect(func(mode):
+			if mode == &"action":
+				toasts.clear())
 	_refresh_all()
 
-
 func _refresh_all() -> void:
-	_on_gold_changed(EconomyManager.gold, 0)
-	_on_time_changed(GameManager.hour, GameManager.minute)
-	_on_day_started(GameManager.day, GameManager.season)
-	_on_season_changed(GameManager.season)
-	_refresh_quest_tracker()
-
-
-func _on_gold_changed(amount: int, _delta: int) -> void:
-	if gold_label:
-		gold_label.text = "%s: %d" % [tr("UI_GOLD"), amount]
-
-
-func _on_time_changed(hour: int, minute: int) -> void:
-	if time_label:
-		time_label.text = "%02d:%02d" % [hour, minute]
-
-
-func _on_day_started(day: int, season: StringName) -> void:
-	if day_label:
-		day_label.text = "%s %d" % [tr("UI_DAY"), day]
-	_on_season_changed(season)
-
-
-func _on_season_changed(season: StringName) -> void:
-	if season_label:
-		season_label.text = tr("UI_SEASON_%s" % season.to_upper())
-	_on_weather_changed(TimeManager.weather)
-
-
-func _on_weather_changed(weather: StringName) -> void:
-	if weather_label:
-		weather_label.text = tr("UI_WEATHER_%s" % weather.to_upper())
-
-
-func _on_health_changed(half_hearts: int, max_half_hearts: int) -> void:
-	if health_bar:
-		health_bar.max_value = max_half_hearts
-		health_bar.value = half_hearts
-
-
-func _on_stats_changed(stats: Dictionary) -> void:
-	if health_bar:
-		# half-hearts keys win: they are the player contract (player_health_changed / player_stats_changed payloads)
-		health_bar.max_value = stats.get("max_half_hearts", stats.get("max_health", 100))
-		health_bar.value = stats.get("half_hearts", stats.get("health", 100))
-	if stamina_bar:
-		stamina_bar.max_value = stats.get("max_stamina", 100)
-		stamina_bar.value = stats.get("stamina", 100)
-
-
-func _on_notification(title: String, message: String, _icon: String) -> void:
-	if notification_box == null:
+	if not is_inside_tree() or is_queued_for_deletion():
 		return
-	var panel := PanelContainer.new()
-	var vbox := VBoxContainer.new()
-	var title_label := Label.new()
-	title_label.text = title
-	title_label.add_theme_font_size_override("font_size", 18)
-	var msg_label := Label.new()
-	msg_label.text = message
-	msg_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	vbox.add_child(title_label)
-	vbox.add_child(msg_label)
-	panel.add_child(vbox)
-	notification_box.add_child(panel)
+	_gold(EconomyManager.gold, 0)
+	_hour = GameManager.hour
+	_minute = GameManager.minute
+	_day = GameManager.day
+	_season = GameManager.season
+	_weather = TimeManager.weather
+	_refresh_date()
+	_refresh_quests()
+	_refresh_construction()
+	var player := get_tree().get_first_node_in_group("player")
+	if player != null:
+		_player_spawned(player)
+	else:
+		set_hotbar(_entries, _selected)
 
-	var tween := create_tween()
-	tween.tween_interval(NOTIFICATION_DURATION)
-	tween.tween_property(panel, "modulate:a", 0.0, 0.5)
-	tween.tween_callback(panel.queue_free)
+func _player_spawned(player: Node2D) -> void:
+	if player.get("hotbar") != null:
+		set_hotbar(player.hotbar.entries(), player.hotbar.selected)
+	_stats({"half_hearts": player.get("half_hearts"), "max_half_hearts": player.get("max_half_hearts"), "stamina": player.get("stamina"), "max_stamina": player.get("max_stamina")})
 
+func _gold(amount: int, _delta: int) -> void:
+	gold_label.text = Fmt.thousands(amount)
 
-func _on_quest_changed(_id: StringName = &"") -> void:
-	_refresh_quest_tracker()
+func _time(hour: int, minute: int) -> void:
+	_hour = hour
+	_minute = minute
+	_refresh_date()
 
+func _date(day: int, season: StringName) -> void:
+	_day = day
+	_season = season
+	_refresh_date()
 
-func _on_quest_objective(_q: StringName, _o: StringName, _p: int, _t: int) -> void:
-	_refresh_quest_tracker()
+func _season_changed(season: StringName) -> void:
+	_season = season
+	_refresh_date()
 
+func _weather_changed(weather: StringName) -> void:
+	_weather = weather
+	_refresh_date()
 
-func _refresh_quest_tracker() -> void:
-	if quest_tracker == null:
+func _refresh_date() -> void:
+	day_label.text = Fmt.season_day_text(_day, _season)
+	time_label.text = "%s · %s · %s" % [TimeManager.weekday_name(_day), Fmt.clock(_hour, _minute), TimeManager.weather_name(_weather)]
+
+func _health(current: int, maximum: int) -> void:
+	if _last_health == Vector2i(current, maximum):
 		return
+	_last_health = Vector2i(current, maximum)
+	hearts.set_health(current, maximum)
+
+func _stats(stats: Dictionary) -> void:
+	if stats.get("stamina") != null and stats.get("max_stamina") != null:
+		stamina_bar.max_value = maxf(1.0, float(stats.max_stamina))
+		stamina_bar.value = float(stats.stamina)
+	if stats.get("half_hearts") != null and stats.get("max_half_hearts") != null:
+		_health(int(stats.half_hearts), int(stats.max_half_hearts))
+
+func set_hotbar(entries: Array, selected: int = 0) -> void:
+	_entries = entries.duplicate(true)
+	_selected = clampi(selected, 0, SLOT_COUNT - 1)
+	for index in hotbar.get_child_count():
+		var slot: Button = hotbar.get_child(index)
+		var entry: Dictionary = _entries[index] if index < _entries.size() else {}
+		var id := StringName(str(entry.get("id", "")))
+		var rarity: Variant = entry.get("rarity", entry.get("rare", "normal"))
+		if rarity is bool:
+			rarity = "rare" if rarity else "normal"
+		var amount := int(entry.get("amount", 0))
+		slot.setup(id, amount, str(index + 1), false, _item_name(entry), StringName(str(rarity)))
+		slot.set_pressed_no_signal(index == _selected)
+		slot.modulate.a = 0.45 if id != &"" and amount == 0 else 1.0
+	var current: Dictionary = _entries[_selected] if _selected < _entries.size() else {}
+	tool_name_label.text = _item_name(current)
+
+func _item_name(entry: Dictionary) -> String:
+	var id := str(entry.get("id", ""))
+	if id == "":
+		return ""
+	var key := str(GameData.item_def(StringName(id)).get("name_key", entry.get("name", "")))
+	return tr(key) if key != "" else id.capitalize()
+
+func _slot_clicked(index: int) -> void:
+	# Deliver the same action as a number key after this GUI event finishes.
+	# The normal player guard owns modal / travel / tool restrictions.
+	set_hotbar(_entries, _selected)
+	_send_slot.call_deferred(index)
+
+func _send_slot(index: int) -> void:
+	var press := InputEventAction.new()
+	press.action = StringName("slot_%d" % (index + 1))
+	press.pressed = true
+	Input.parse_input_event(press)
+	var release := InputEventAction.new()
+	release.action = press.action
+	release.pressed = false
+	Input.parse_input_event(release)
+
+func _quests_changed(_id: StringName) -> void:
+	_refresh_quests()
+
+func _refresh_quests() -> void:
 	for child in quest_tracker.get_children():
+		quest_tracker.remove_child(child)
 		child.queue_free()
-
-	for quest in QuestManager.get_active_quests():
+	var tracked := QuestManager.get_tracked(3)
+	quest_card.visible = not tracked.is_empty()
+	for id in tracked:
+		var row := VBoxContainer.new()
+		row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		row.add_theme_constant_override("separation", 2)
+		quest_tracker.add_child(row)
 		var title := Label.new()
-		title.text = tr("QUEST_%s_TITLE" % str(quest.id).to_upper())
-		title.add_theme_font_size_override("font_size", 16)
-		quest_tracker.add_child(title)
+		title.theme_type_variation = &"Display19"
+		title.text = QuestManager.get_title(id)
+		title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		title.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		row.add_child(title)
+		var objective := QuestManager.get_current_objective(id)
+		if objective != &"":
+			var progress := QuestManager.get_objective_progress(id, objective)
+			var label := Label.new()
+			label.theme_type_variation = &"Muted17"
+			label.text = "%s: %d / %d" % [QuestManager.get_objective_text(id, objective), progress.current, progress.target]
+			label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			row.add_child(label)
 
-		for obj_id in quest.objectives:
-			var obj: Dictionary = quest.objectives[obj_id]
-			var obj_label := Label.new()
-			var desc := tr("OBJ_%s" % str(obj_id).to_upper())
-			obj_label.text = "  %s (%d/%d)" % [desc, obj["current"], obj["target"]]
-			obj_label.add_theme_font_size_override("font_size", 13)
-			if obj["done"]:
-				obj_label.modulate = Color(0.6, 1.0, 0.6)
-			quest_tracker.add_child(obj_label)
+func _refresh_construction() -> void:
+	var home := Svc.node("HomeManager")
+	var building := home != null and home.has_method("is_under_construction") and home.has_method("days_left") and bool(home.call("is_under_construction"))
+	_construction_progress(int(home.call("days_left")) if building else 0, 0)
 
+func _construction_progress(days_left: int, _total_days: int) -> void:
+	_days_left = days_left
+	construction.visible = days_left > 0
+	%ConstructionText.text = tr("HUD_CONSTRUCTION_FMT") % days_left
 
-## The player's facing-cell query emits the prompt text (EventBus.interaction_prompt_changed): the 2D player has no
-## get_interaction_prompt() method, so polling one would never show anything.
-func _on_interaction_prompt(text: String) -> void:
-	if interaction_prompt == null:
+func _friend(npc: StringName, _heart_count: int) -> void:
+	if not is_inside_tree() or is_queued_for_deletion():
 		return
-	interaction_prompt.text = text
-	interaction_prompt.visible = text != ""
+	var row := SocialData.npc_row(str(npc))
+	var key := str(row.get("name_key", ""))
+	if key != "":
+		_pending_friends[npc] = key
+		_post_friend.call_deferred(npc)
+
+func _social_feedback(_title: String, message: String, icon: String) -> void:
+	if icon == "social":
+		for npc in _pending_friends.keys():
+			if message.contains(tr(_pending_friends[npc])):
+				_pending_friends.erase(npc)
+
+func _post_friend(npc: StringName) -> void:
+	if not is_inside_tree() or is_queued_for_deletion():
+		_pending_friends.clear()
+		return
+	if not _pending_friends.has(npc):
+		return
+	var key := str(_pending_friends[npc])
+	_pending_friends.erase(npc)
+	var social := Svc.node("SocialManager")
+	if social != null and social.has_method("has_pending_feedback") and social.has_pending_feedback(npc):
+		return
+	toasts.post(tr("HUD_FRIEND_FMT") % tr(key), "", "info")
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready():
+		_gold(EconomyManager.gold, 0)
+		_refresh_date()
+		_refresh_quests()
+		set_hotbar(_entries, _selected)
+		_construction_progress(_days_left, 0)
+
+static func fixture_setup(node: Node, _host: Node) -> void:
+	node._date(16, &"foraar")
+	node._time(10, 20)
+	node._weather_changed(&"klart")
+	node._gold(1240, 0)
+	node._stats({"stamina": 72, "max_stamina": 100, "half_hearts": 7, "max_half_hearts": 10})
+	node.set_hotbar([{"id": "axe_wooden", "amount": 1}, {"id": "watering_can_copper", "amount": 1}, {"id": "turnip_seeds", "amount": 5}, {"id": "carrot", "amount": 12}], 0)
+	node._construction_progress(0, 0)
+	node.quest_card.visible = false
+	node.toasts.clear()
+	node.get_node("%AreaBanner")._dismiss()
+	node.get_node("%WhisperLine")._hide()
+	node.get_node("%PromptPill").set_prompt("")

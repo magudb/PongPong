@@ -1,0 +1,18 @@
+{
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "hud": {
+      "exceeded": true,
+      "limit": 9.0,
+      "mean": 61.222,
+      "over40_pct": 92.731,
+      "ref": "tests/checkpoints/guide_ref/pw1x_hud.png",
+      "shot": "docs/qa/m1b-milestone/hud-native/hud_farm.png",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  }
+}
