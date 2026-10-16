@@ -1,0 +1,226 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=windowed character=animal sections=res://tests/sections only=town_loop,town_budgets
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.LsZP6z/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions/.godot/qa/walkway-town-native
+== section town_budgets [windowed]  (res://tests/sections/town_budgets.gd)
+  ok    town_budgets.int_froebutikken_travel_budget (517.350ms / 1 citizens)
+  ok    town_budgets.int_froebutikken_frame_windowed ({ "frames": 243, "fps": 485.27306095469, "ms": 2.06069547325103, "worst_ms": 2.696, "gpu_ms": 0.0, "cpu_render_ms": 0.0 })
+  ok    town_budgets.int_froebutikken_draw_calls (48 area / 124 including HUD)
+  ok    town_budgets.hyggebyen_scenery_resources_prepared (["res://assets/iso_tiles/drawn_grass_hyggebyen.webp", "res://assets/iso_tiles/drawn_grass_hyggebyen_flowers.webp", "res://assets/iso_tiles/drawn_deck_hyggebyen.webp", "res://assets/iso_tiles/drawn_path_dirt.webp", "res://assets/iso_tiles/drawn_cobble_hyggebyen.webp"])
+  ok    town_budgets.hyggebyen_presented_frame_windowed ({ "frames": 127, "fps": 253.773126824619, "ms": 3.94052755905512, "worst_ms": 4.966, "gpu_ms": 0.0, "cpu_render_ms": 0.0 })
+  ok    town_budgets.hyggebyen_area_frame_windowed ({ "frames": 138, "fps": 274.897660381869, "ms": 3.63771739130435, "worst_ms": 4.659, "gpu_ms": 0.0, "cpu_render_ms": 0.0 })
+  ok    town_budgets.traetoppen_scenery_resources_prepared (["res://assets/isometric_characters/owl/idle.webp"])
+  ok    town_budgets.traetoppen_travel_budget (510.012ms / 2 citizens)
+  ok    town_budgets.traetoppen_frame_windowed ({ "frames": 165, "fps": 329.118620334744, "ms": 3.03841818181818, "worst_ms": 4.056, "gpu_ms": 0.0, "cpu_render_ms": 0.0 })
+  ok    town_budgets.traetoppen_draw_calls (225 area / 225 including HUD)
+  ok    town_budgets.farm_frame_windowed ({ "frames": 130, "fps": 259.22595130939, "ms": 3.85763846153846, "worst_ms": 4.674, "gpu_ms": 0.0, "cpu_render_ms": 0.0 })
+  ok    town_budgets.farm_draw_calls (485 area / 557 including HUD)
+  ok    town_budgets.farm_draw_calls_zoom_0.3 (612 area / 684 including HUD)
+  ok    town_budgets.farm_draw_calls_zoom_0.2 (644 area / 716 including HUD)
+  ok    town_budgets.city_travel_twelve_cold_citizens (566.964ms / 12 bodies; { &"request_ms": 11.032, &"prefetch_and_fade_ms": 279.961, &"prepared_paths": ["res://assets/iso_props/painted_world/bat_hang.webp", "res://assets/iso_props/painted_world/bat_hang_f1.webp", "res://assets/iso_props/painted_world/bat_house_hanging.webp", "res://assets/iso_props/painted_world/bath_tub_back.webp", "res://assets/iso_props/painted_world/bath_tub_front.webp", "res://assets/iso_props/painted_world/bridge_deck_tile_w43.webp", "res://assets/iso_props/painted_world/bridge_post.webp", "res://assets/iso_props/zz_painted_consistency/mailbox_red.webp", "res://assets/iso_props/drawn/signpost.webp", "res://assets/iso_props/city/fire_flame.webp", "res://assets/iso_props/city/fire_flame_f1.webp", "res://assets/iso_props/city/fire_flame_f2.webp", "res://assets/iso_props/painted_world/fire_pit.webp", "res://assets/iso_props/painted_world/canopy_top_strip.webp", "res://assets/iso_props/painted_world/foliage_front_a.webp", "res://assets/iso_props/painted_world/hut_l_dark.webp", "res://assets/iso_props/painted_world/hut_l_dark_night.webp", "res://assets/iso_props/painted_world/foliage_front_b.webp", "res://assets/iso_props/painted_world/hut_l_straw.webp", "res://assets/iso_props/painted_world/hut_l_straw_night.webp", "res://assets/iso_props/painted_world/hut_m_dark.webp", "res://assets/iso_props/painted_world/hut_m_dark_night.webp", "res://assets/iso_props/painted_world/hut_m_moss.webp", "res://assets/iso_props/painted_world/hut_m_moss_night.webp", "res://assets/iso_props/painted_world/hut_m_straw.webp", "res://assets/iso_props/painted_world/hut_m_straw_night.webp", "res://assets/iso_props/painted_world/hut_raadhus.webp", "res://assets/iso_props/painted_world/hut_raadhus_night.webp", "res://assets/iso_props/painted_world/hut_s_moss.webp", "res://assets/iso_props/painted_world/hut_s_moss_night.webp", "res://assets/iso_props/painted_world/hut_s_straw_night.webp", "res://assets/iso_props/painted_world/ladder_tile.webp", "res://assets/iso_props/painted_world/lamp_door.webp", "res://assets/iso_props/painted_world/hut_s_straw.webp", "res://assets/iso_props/painted_world/lantern_hang.webp", "res://assets/iso_props/painted_world/lift_basket.webp", "res://assets/iso_props/painted_world/lift_pulley.webp", "res://assets/iso_props/painted_world/log_stack.webp", "res://assets/iso_props/painted_world/market_stall_traetoppen.webp", "res://assets/iso_props/painted_world/notice_board.webp", "res://assets/iso_props/painted_world/owl_shelf.webp", "res://assets/iso_props/zz_painted_consistency/pennant_blue.webp", "res://assets/iso_props/zz_painted_consistency/pennant_blue_f1.webp", "res://assets/iso_props/zz_painted_consistency/pennant_gold.webp", "res://assets/iso_props/zz_painted_consistency/pennant_gold_f1.webp", "res://assets/iso_props/zz_painted_consistency/pennant_mint.webp", "res://assets/iso_props/zz_painted_consistency/pennant_mint_f1.webp", "res://assets/iso_props/zz_painted_consistency/pennant_pink.webp", "res://assets/iso_props/zz_painted_consistency/pennant_pink_f1.webp", "res://assets/iso_props/painted_world/planter_box.webp", "res://assets/iso_props/painted_world/planter_box_berry.webp", "res://assets/iso_props/painted_world/platform_disc_171.webp", "res://assets/iso_props/painted_world/platform_disc_184.webp", "res://assets/iso_props/painted_world/platform_disc_196.webp", "res://assets/iso_props/painted_world/rope_tile.webp", "res://assets/iso_props/painted_world/seed_basket.webp", "res://assets/iso_props/city/shadow_soft.webp", "res://assets/iso_props/painted_world/trunk_bark_w367.webp", "res://assets/iso_props/painted_world/trunk_bark_w404.webp", "res://assets/iso_props/painted_world/trunk_bark_w441.webp", "res://assets/iso_props/painted_world/trunk_bark_w698.webp", "res://assets/iso_props/painted_world/trunk_foot_w367.webp", "res://assets/iso_props/painted_world/trunk_foot_w404.webp", "res://assets/iso_props/painted_world/platform_disc_306.webp", "res://assets/iso_props/painted_world/trunk_foot_w441.webp", "res://assets/iso_props/painted_world/trunk_foot_w698.webp", "res://assets/iso_props/painted_world/trunk_hole_owl.webp", "res://assets/iso_props/painted_world/trunk_hole_owl_b.webp", "res://assets/iso_props/painted_world/trunk_root_w367.webp", "res://assets/iso_props/painted_world/trunk_root_w404.webp", "res://assets/iso_props/painted_world/trunk_root_w441.webp", "res://assets/iso_props/painted_world/trunk_root_w698.webp", "res://assets/backdrops/treetop_sky.png", "res://assets/isometric_characters/owl/idle.webp", "res://assets/isometric_characters/owl_fru_ugle/idle.webp", "res://assets/isometric_characters/owl_fru_ugle/talk.webp", "res://assets/iso_props/painted_world/backdrop_treetop_far.webp", "res://assets/isometric_characters/owl_fru_ugle/walk.webp", "res://assets/isometric_characters/fairy_baker/idle.webp", "res://assets/isometric_characters/fairy_baker/talk.webp", "res://assets/isometric_characters/fairy_baker/hover.webp", "res://assets/isometric_characters/capybara_sofus/idle.webp", "res://assets/isometric_characters/capybara_sofus/talk.webp", "res://assets/isometric_characters/capybara_sofus/walk.webp", "res://assets/isometric_characters/fairy_birk_npc/idle.webp", "res://assets/isometric_characters/fairy_birk_npc/talk.webp", "res://assets/isometric_characters/fairy_birk_npc/hover.webp", "res://assets/isometric_characters/bear_brumme/idle.webp", "res://assets/isometric_characters/bear_brumme/walk.webp", "res://assets/isometric_characters/cat_morfar_mis/idle.webp", "res://assets/isometric_characters/bear_brumme/talk.webp", "res://assets/isometric_characters/cat_morfar_mis/talk.webp", "res://assets/isometric_characters/cat/idle.webp", "res://assets/isometric_characters/cat_morfar_mis/walk.webp", "res://assets/isometric_characters/cat/talk.webp", "res://assets/isometric_characters/cat/walk.webp", "res://assets/isometric_characters/fairy_builder/idle.webp", "res://assets/isometric_characters/fairy_builder/talk.webp", "res://assets/isometric_characters/fairy_builder/hover.webp", "res://assets/isometric_characters/fairy_furnisher/idle.webp", "res://assets/isometric_characters/fairy_furnisher/talk.webp", "res://assets/isometric_characters/fairy_furnisher/hover.webp", "res://assets/isometric_characters/fairy_king/idle.webp", "res://assets/isometric_characters/fairy_king/talk.webp", "res://assets/isometric_characters/fairy_king/hover.webp", "res://assets/isometric_characters/fairy_lily/idle.webp", "res://assets/isometric_characters/fairy_lily/talk.webp", "res://assets/isometric_characters/fairy_lily/hover.webp", "res://assets/isometric_characters/fairy_tailor/idle.webp", "res://assets/isometric_characters/fairy_tailor/talk.webp", "res://assets/isometric_characters/fairy_tailor/hover.webp"], &"entered_ms": 306.35, &"warmed_ms": 370.083, &"total_ms": 566.949 })
+  ok    town_budgets.l15_crowd_player_on_safe_deck
+  ok    town_budgets.l15_city_citizen_count (16 visible / 16 distinct looks; controlled fixture, normal schedules checked by L02/L12)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions/.godot/qa/walkway-town-native/town_budgets_S04_city_crowd_readability.png (1280x720)
+  ok    l15_S04_city_crowd_readability_not_blank (2512 distinct colours, luma std 0.214)
+  ok    town_budgets.l15_city_peak_under_320mb (280.65MB / 16 warmed looks)
+  ok    town_budgets.l15_city_frame ({ "frames": 211, "fps": 419.991600167997, "ms": 2.381, "worst_ms": 3.513, "gpu_ms": 0.0, "cpu_render_ms": 0.0 })
+  ok    town_budgets.l15_city_draw_calls (247.0)
+  ok    town_budgets.vram_arithmetic_matches_renderer_festival_four_added_looks (36.001MB measured / 36.001MB arithmetic (0.00%))
+  ok    town_budgets.city_peak_under_320mb
+  ok    town_budgets.vram_festival_day_row (316.652MB / 20 warmed looks)
+  ok    town_budgets.vram_process_cap_holds_with_20_looks (316.652MB total renderer textures)
+  ok    town_budgets.vram_arithmetic_matches_renderer_farm_kit (17.873MB measured / 17.871MB arithmetic (0.01%))
+  ok    town_budgets.farm_kit_vram_with_s3tc (17.8713912963867)
+  --    town_budgets: 27 checks, 0 failed, 0 skipped, 26.6 s
+== section town_loop [windowed]  (res://tests/sections/town_loop.gd)
+  ok    town_loop.loop_json_ids_exist ([])
+  ok    town_loop.l00_selected_race_and_skin (requested animal / actual type 0, skin animal_fox)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions/.godot/qa/walkway-town-native/town_loop_S01_farm_intro.png (1280x720)
+  ok    l15_S01_farm_intro_not_blank (1997 distinct colours, luma std 0.246)
+  ok    town_loop.l00_new_game_on_farm
+  ok    town_loop.l00_first_morning_order (["postman_pip", "fairy_king", "postman_pip"] / 3)
+  ok    town_loop.l00_no_raw_keys
+  ok    town_loop.l00_first_morning_runs_once
+  ok    town_loop.l00_hud_and_banner
+  ok    town_loop.l08_day_one_personal_delivery_no_duplicate
+  ok    town_loop.l11_mailbox_day2_completes_mail_objective ({ "current": 1, "target": 1, "done": true })
+  ok    town_loop.l08_one_letter_per_day
+  ok    town_loop.capability_probes_match_live_packages
+  ok    town_loop.capability_unknown_is_missing
+  ok    town_loop.unknown_wave_fails_closed
+  ok    town_loop.gate_includes_full_usable_towns
+  ok    town_loop.digest_volatile_paths_are_exactly_the_named_ones
+  ok    town_loop.digest_rounds_only_to_four_decimals
+  ok    town_loop.digest_has_teeth_gold
+  ok    town_loop.digest_has_teeth_flags
+  ok    town_loop.digest_stable_over_wall_clock
+  ok    town_loop.farm_bridge_warp_exists
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions/.godot/qa/walkway-town-native/town_loop_S02_farm_bridge_end.png (1280x720)
+  ok    l15_S02_farm_bridge_end_not_blank (1778 distinct colours, luma std 0.249)
+  ok    town_loop.walker_reaches_fixture_warp ({ "ok": true, "area_changed": false, "ticks": 52, "seconds": 0.86666666666667, "dist_left": 6.27819347381592, "stuck": false, "nav": true, "waypoints": 4, "waypoint_index": 3, "position": (-699.6091, 3151.336), "next": (-704.0, 3154.0), "collider": "", "interactions": 0 })
+  ok    town_loop.walker_uses_navigation_and_tick_budget ({ "ok": true, "area_changed": false, "ticks": 52, "seconds": 0.86666666666667, "dist_left": 6.27819347381592, "stuck": false, "nav": true, "waypoints": 4, "waypoint_index": 3, "position": (-699.6091, 3151.336), "next": (-704.0, 3154.0), "collider": "", "interactions": 0 })
+  ok    town_loop.l01_bridge_arrival_without_pingpong
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions/.godot/qa/walkway-town-native/town_loop_S03_city_arrival.png (1280x720)
+  ok    l15_S03_city_arrival_not_blank (1639 distinct colours, luma std 0.231)
+  ok    town_loop.l01_unlock_toast_and_objective ({ "current": 1, "target": 1, "done": true })
+  ok    town_loop.l02_population_equals_schedule (["gardener_hoppe", "guard_oak"] expected=["gardener_hoppe", "guard_oak"])
+  ok    town_loop.l02_visual_cap_16
+  ok    town_loop.l02_area_populated_event
+  ok    town_loop.l02_live_citizen_at_routine_post
+  ok    town_loop.l03_walk_reaches_citizen ({ "ok": true, "area_changed": false, "ticks": 1271, "seconds": 21.1833333333333, "dist_left": 38.0777282714844, "stuck": false, "nav": true, "waypoints": 117, "waypoint_index": 116, "position": (1731.664, 657.3045), "next": (1693.9, 660.2), "collider": "@CharacterBody2D@4558", "interactions": 1 })
+  ok    town_loop.l03_walk_and_talk
+  ok    town_loop.l03_first_meeting_copy
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions/.godot/qa/walkway-town-native/town_loop_S05_dialogue_hoppe_hearts.png (1280x720)
+  ok    l15_S05_dialogue_hoppe_hearts_not_blank (1714 distinct colours, luma std 0.267)
+  ok    town_loop.l03_weekly_heart_once
+  ok    town_loop.l03_repeat_chat_no_extra_heart
+  ok    town_loop.l03_esc_first_line_no_heart
+  ok    town_loop.l03_people_book_shows_heart
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions/.godot/qa/walkway-town-native/town_loop_S13_people_book.png (1280x720)
+  ok    l15_S13_people_book_not_blank (328 distinct colours, luma std 0.303)
+  ok    town_loop.l15_calendar_opens_from_journal
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions/.godot/qa/walkway-town-native/town_loop_S13b_calendar.png (1280x720)
+  ok    l15_S13b_calendar_not_blank (181 distinct colours, luma std 0.303)
+  ok    town_loop.l07_talk_menu_opens_picker
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions/.godot/qa/walkway-town-native/town_loop_S09_gift_picker.png (1280x720)
+  ok    l15_S09_gift_picker_not_blank (408 distinct colours, luma std 0.343)
+  ok    town_loop.l07_carrot_available
+  ok    town_loop.l07_item_removed_once
+  ok    town_loop.l07_one_gift_per_day
+  ok    town_loop.l05_closed_before_open
+  ok    town_loop.l05_closed_door_does_not_travel
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions/.godot/qa/walkway-town-native/town_loop_S06_shop_door_closed.png (1280x720)
+  ok    l15_S06_shop_door_closed_not_blank (2644 distinct colours, luma std 0.217)
+  ok    town_loop.l05_opens_from_registry
+  ok    town_loop.l04_door_enters ({ "ok": true, "area_changed": false, "ticks": 72, "seconds": 1.2, "dist_left": 2.85893845558167, "stuck": false, "nav": true, "waypoints": 4, "waypoint_index": 3, "position": (130.0123, 989.2058), "next": (128.0, 988.0), "collider": "", "interactions": 0 })
+  ok    town_loop.l04_iso_zone_zoom_and_budget ({ "sprites": 37, "night": 3, "bodies": 11, "lights": 2, "furniture": 13, "walls": 14, "hatch": 5, "stand_ins": 0, "placeholders": 0, "counters": 3, "handlers": 0, "pieces": 16, "accent_masks": 0, "service_lights": 0, "base_sprites": 26, "build_us": 3914, "zoom_fit": 0.75369458128079, "nodes": 104 })
+  ok    town_loop.l04_weather_curtain_hidden_indoors
+  ok    town_loop.l04_zone_and_running_clock
+  ok    town_loop.l04_room_zoom_fits ((735.6059, 621.0444))
+  ok    town_loop.l04_keeper_behind_counter
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions/.godot/qa/walkway-town-native/town_loop_S07_shop_interior_noon.png (1280x720)
+  ok    l15_S07_shop_interior_noon_not_blank (1517 distinct colours, luma std 0.289)
+  ok    town_loop.l03b_keeper_talk_host_opens_dialogue
+  ok    town_loop.l03b_keeper_weekly_heart_at_counter
+  ok    town_loop.l03b_keeper_repeat_no_extra_heart
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions/.godot/qa/walkway-town-native/town_loop_shop_backdrop.png (1280x720)
+  ok    l15_shop_backdrop_not_blank (1598 distinct colours, luma std 0.293)
+  ok    town_loop.l06_counter_opens_panel
+  ok    town_loop.l06_keeper_greeting_and_bust
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions/.godot/qa/walkway-town-native/town_loop_S08_shop_panel.png (1280x720)
+  ok    l15_S08_shop_panel_not_blank (1158 distinct colours, luma std 0.309)
+  ok    town_loop.l10_seeds_from_shop
+  ok    town_loop.l06_buy_exact (listed=60 charged=60)
+  ok    town_loop.l06_refusals_have_reasons
+  ok    town_loop.l06_escape_restores_world
+  ok    town_loop.l05_warning_thirty_minutes
+  ok    town_loop.l05_panel_closes_before_eviction
+  ok    town_loop.l05_closed_weekday_reason
+  ok    town_loop.l04_counter_is_barrier
+  ok    town_loop.l05_exit_always_open
+  ok    town_loop.l06b_keeper_weekly_heart_at_noon
+  ok    town_loop.l06c_home_upgrade_desk_at_noon ({ "id": "upgrade", "text_key": "DLG_CHOICE_HOME_UPGRADE", "action": "home_upgrade", "tier": 2 } / [{ "id": "open_home_builder", "payload": { "tier": 2 } }, { "id": "open_home_builder", "payload": { "tier": 1 } }])
+  ok    town_loop.l08_post_office_interior
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions/.godot/qa/walkway-town-native/town_loop_S10_post_office.png (1280x720)
+  ok    l15_S10_post_office_not_blank (1200 distinct colours, luma std 0.306)
+  ok    town_loop.l08_letter_of_the_day (rare_mushroom_hunt)
+  ok    town_loop.l08_office_repeat_does_not_duplicate
+  ok    town_loop.l08_parcels_honest_stub
+  SKIP  l08_post_screen_where_is: post-screen package is not installed; daily letters are usable at both boxes
+  ok    town_loop.l09_walk_back_to_farm ({ "ok": true, "area_changed": true, "ticks": 282, "seconds": 4.7, "dist_left": 5582.15869140625, "stuck": false, "nav": true, "waypoints": 8, "waypoint_index": 7, "position": (-512.0, 3040.0), "next": (5070.0, 3015.0), "collider": "", "interactions": 0 } area=farm travel=false)
+  ok    town_loop.l09_farm_state_intact
+  ok    town_loop.l02_citizens_freed_on_exit
+  ok    town_loop.l10_walk_to_plot_27_29
+  ok    town_loop.l10_walk_to_plot_26_29
+  ok    town_loop.l10_walk_to_plot_25_29
+  ok    town_loop.l10_till_plant_water (plant=[[&"plot_27_29", &"carrot"], [&"plot_26_29", &"carrot"], [&"plot_25_29", &"carrot"]] water=[&"plot_27_29", &"plot_26_29", &"plot_25_29"])
+  ok    town_loop.l10_energy_costs
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions/.godot/qa/walkway-town-native/town_loop_S11_farm_planted_morning.png (1280x720)
+  ok    l15_S11_farm_planted_morning_not_blank (1946 distinct colours, luma std 0.216)
+  ok    town_loop.l10_forste_dage_objectives ({ "current": 3, "target": 3, "done": true })
+  ok    town_loop.l10_hint_once_per_save
+  ok    town_loop.l11_bed_closed_before_18
+  ok    town_loop.l11_bed_opens_at_18
+  ok    town_loop.l11_sleep_rolls_day
+  ok    town_loop.l11_crops_grow
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions/.godot/qa/walkway-town-native/town_loop_S12_city_next_morning.png (1280x720)
+  ok    l15_S12_city_next_morning_not_blank (1538 distinct colours, luma std 0.230)
+  ok    town_loop.l11_no_pass_out_at_midnight
+  ok    town_loop.l11_curfew_at_the_configured_time
+  ok    town_loop.l11_pass_out_wakes_on_farm
+  ok    town_loop.l11_harvest_purchased_seed_crops
+  ok    town_loop.l11_shipping_uses_live_bin ({ "ok": true, "area_changed": false, "ticks": 273, "seconds": 4.55, "dist_left": 2.00783228874207, "stuck": false, "nav": true, "waypoints": 14, "waypoint_index": 13, "position": (769.6013, 1960.719), "next": (768.0, 1960.0), "collider": "", "interactions": 0 } selected=true amount=5 left=0)
+  ok    town_loop.l11_bin_pays_once_at_dawn
+  ok    town_loop.l11_shop_restocks_at_dawn
+  ok    town_loop.l12_citizens_moved_by_routine_postman_pip (["farm.pip_mailbox", "int_postkontoret.counter"])
+  ok    town_loop.l12_citizens_moved_by_routine_gardener_hoppe (["traetoppen.a_bench", "farm.hoppe_fence"])
+  ok    town_loop.l12_route_takes_time
+  ok    town_loop.l12_weather_override ({ "npc": "gardener_hoppe", "state": "inside", "plan": "work", "place": "traetoppen.door_hoppe_hut", "act": "inside", "area": "traetoppen" })
+  ok    town_loop.l12_weekend_variant ({ "npc": "carpenter_brumme", "state": "stay", "plan": "stall", "place": "traetoppen.t_stall", "act": "work", "area": "traetoppen" })
+  ok    town_loop.l12_pip_visits_farm_from_day_2 ({ "npc": "postman_pip", "state": "stay", "plan": "town_only", "place": "int_postkontoret.bed", "act": "sleep", "area": "int_postkontoret" } / { "npc": "postman_pip", "state": "stay", "plan": "work", "place": "farm.pip_mailbox", "act": "stand", "area": "farm" })
+  ok    town_loop.l12_hoppe_wednesday_visit ({ "npc": "gardener_hoppe", "state": "stay", "plan": "work", "place": "traetoppen.a_beds1", "act": "tend", "area": "traetoppen" } / { "npc": "gardener_hoppe", "state": "stay", "plan": "farm_visit", "place": "farm.hoppe_fence", "act": "stand", "area": "farm" })
+  ok    town_loop.l12_night_presence ([])
+  ok    town_loop.l13_save_cost (p95=14.840ms / 19602 bytes full cast 34)
+  ok    town_loop.l13_digest_roundtrip
+  ok    town_loop.l13_citizens_same_places
+  ok    town_loop.l13_social_section_order (["game", "time", "economy", "quests", "husbandry", "shops", "home", "loot", "social"] social=60)
+  ok    town_loop.l17_lint_clean_core (New copy remains draft; no new recording or native-language approval is asserted.)
+  ok    town_loop.l17_no_raw_keys_both_locales (New copy remains draft; no new recording or native-language approval is asserted.)
+  ok    town_loop.l17_boxes_fit (New copy remains draft; no new recording or native-language approval is asserted.)
+  ok    town_loop.l17_frozen_voice_text_hashes (New copy remains draft; no new recording or native-language approval is asserted.)
+  ok    town_loop.l17_citizen_slots_complete (New copy remains draft; no new recording or native-language approval is asserted.)
+  ok    town_loop.l17_draft_voice_hooks_are_unrecorded (New copy remains draft; no new recording or native-language approval is asserted.)
+  ok    town_loop.l17_observed_screens_have_no_raw_keys (3459 live labels / [])
+  ok    town_loop.l17_voice_index_and_missing_recordings (PASS voiced_index_in_sync
+)
+  SKIP  x01_birthday_content: Missing capability: birthdays
+  SKIP  x02_festival_scene: Missing capability: festivals
+  SKIP  x03_heart_event: Missing capability: events
+  SKIP  x04_relationship: Missing capability: relationships
+  SKIP  x05_mail_screen: Missing capability: post_ui
+  SKIP  x06_farm_visit_scene: Missing capability: visits
+  SKIP  x07_seasonal_decor: Missing capability: seasonal
+  SKIP  x08_rain_fallback_scene: Missing capability: events
+  SKIP  x09_commitment: Missing capability: relationships
+  SKIP  L16: Missing capability: audio
+  ok    town_loop.extended_legs_listed_with_reasons
+  ok    town_loop.l18_data_only_citizen
+  ok    town_loop.l18_data_only_building
+  ok    town_loop.l18_data_only_routine_edit
+  ok    town_loop.l18_data_only_shop_hours
+  ok    town_loop.l18_data_only_festival
+  ok    town_loop.l18_data_only_event
+  ok    town_loop.l18_data_only_quest
+  ok    town_loop.l18_no_gd_changed
+  ok    town_loop.selftest_mutants_caught (Seven real producer mutants plus a clean baseline; audio explicitly waits for P24)
+  ok    town_loop.l14_wall_time (101.828s <= 120s)
+  ok    town_loop.l14_area_switch_times ([{ "area": "farm", "ms": 38 }, { "area": "traetoppen", "ms": 14 }, { "area": "hyggebyen", "ms": 26 }, { "area": "int_froebutikken", "ms": 5 }, { "area": "int_bageriet", "ms": 3 }, { "area": "int_toemmerhandlen", "ms": 4 }, { "area": "int_postkontoret", "ms": 3 }, { "area": "int_postkontoret", "ms": 4 }, { "area": "traetoppen", "ms": 12 }])
+  ok    town_loop.l14_no_orphans (growth=0)
+  ok    town_loop.l14_zero_engine_messages ([])
+  ok    town_loop.gate_leg_not_skipped ([])
+  ok    town_loop.report_lists_every_required_leg (Every required wave/leg listed; missing and repeated failing checks retained.
+)
+  ok    town_loop.l15_crowd_player_on_safe_deck
+  ok    town_loop.l15_city_citizen_count (16 visible / 16 distinct looks; controlled fixture, normal schedules checked by L02/L12)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions/.godot/qa/walkway-town-native/town_loop_S04_city_crowd_readability.png (1280x720)
+  ok    l15_S04_city_crowd_readability_not_blank (2513 distinct colours, luma std 0.214)
+  ok    town_loop.l15_city_peak_under_320mb (298.11MB / 16 warmed looks)
+  ok    town_loop.l15_city_frame ({ "frames": 164, "fps": 326.167590476702, "ms": 3.06590853658537, "worst_ms": 4.734, "gpu_ms": 0.0, "cpu_render_ms": 0.0 })
+  ok    town_loop.l15_city_draw_calls (247.0)
+  ok    town_loop.l15_shots_not_blank ([])
+  SKIP  S14_festival_day_city: festival scene/decor attachment is a later capability; S04 is explicitly a controlled crowd readability fixture
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions/.godot/qa/walkway-town-native/town_loop_guide_shop.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-walkway-transitions/.godot/qa/walkway-town-native/town_loop_guide_dialogue_guide.png (1280x720)
+  ok    town_loop.l15_guide_and_live_blur ({"shop_guide": {"full_mean": 20.375, "mean": 17.075, "masks": [[62, 342, 398, 669]], "limit": 18, "ok": true}, "dialogue_guide": {"full_mean": 17.227, "mean": 13.866, "masks": [[34, 34, 179, 179]], "limit": 15, "ok": true}, "city_hud_date": {"full_mean": 11.833, "mean": 11.833, "masks": [], "limit": 12, "ok": true}, "city_hud_chip": {"full_mean": 13.727, "mean": 8.301, "masks": [[44, 12, 87, 36], [153, 21, 258, 28]], "limit": 12, "ok": true}, "city_hud_hotbar": {"full_mean": 18.253, "mean": 9.486, "masks": [[22, 22, 61, 61], [88, 22, 127, 61], [154, 22, 193, 61], [220, 22, 259, 61], [286, 22, 325, 61], [352, 22, 391, 61], [418, 22, 457, 61], [484, 22, 523, 61]], "limit": 12, "ok": true}, "live_interior_blur": {"box": [0, 0, 440, 720], "foreground_exclusions": [[52, 230, 408, 332], [52, 333, 408, 720], [431, 0, 440, 720]], "low_frequency_difference": 11.036, "low_limit": 12, "high_frequency_ratio": 0.1016, "high_limit": 0.6, "ok": true}}
+)
+  ok    town_loop.l15_window_budget (106.452s <=110s)
+  ok    town_loop.l15_free_on_exit_vram (169.64MB city -> 96.23MB farm (73.41MB freed))
+  --    town_loop: 150 checks, 0 failed, 12 skipped, 106.5 s
+  note  section town_loop took 106.5 s (> 30 s): consider splitting it
+== summary: 2 section(s) run, 177 checks (0 failed, 12 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 136.8 s
+PLAYTEST PASS (177 checks in 2 sections, 0 allowed engine messages, 0 known-issue messages)

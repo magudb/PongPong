@@ -61,3 +61,13 @@ Later milestones retain production wardrobe animation, full furniture/home-world
 screens, dungeon gameplay/appraisal, marriage/heart events, festival scenes,
 P24 audio and M3 family scenes. Packaged-export timing is not claimed: exports
 without raw scripts use the original live navigation bake fallback.
+
+Post-milestone boardwalk follow-up — 2026-10-16
+
+ClimbLane now walks to the entrance without snapping, animates during the climb,
+and retains facing and stride on the landing. Eighteen boardwalk joins are
+covered at three lateral approaches in both directions; all eight heroes pass.
+The focused regression and native transition checks pass, and TownLoop proofs
+are renewed. See docs/qa/walkway-transitions/README.txt and acceptance.json.
+The full milestone results above remain the historical acceptance at 7ad11d6;
+its original source proofs are archived under source-proof-75a4d779/.

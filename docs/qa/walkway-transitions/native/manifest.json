@@ -1,0 +1,246 @@
+{
+  "capture_source": "Godot 4.7.2 native Compatibility window, 1280x720",
+  "source_commit": "d5bd13f",
+  "raw_sha256": {
+    "walkway_transitions_join_b0_end0_in_lane0.0.png": "44c00ff55002b7f631bd16a402bdee9d59dd6334202e9ed07c292a7734c5d179",
+    "walkway_transitions_join_b0_end0_out_lane0.0.png": "cc224d442759c5c568a90eeda7f235c534dafacac82b8ac86b7526171353fa35",
+    "walkway_transitions_join_b0_end1_in_lane0.0.png": "d95d1a2b04e2a2d476ea0f6abdc3d16c9ac1d6a1e265700ee688e20adb2a4a52",
+    "walkway_transitions_join_b0_end1_out_lane0.0.png": "a297abf0d01c66365e3bb17f37a22e09c2388cfcb8c4dce75deafeae78a9ee7c",
+    "walkway_transitions_join_b1_end0_in_lane0.0.png": "44aaeb392d6359fc5d2d04567916506ec3094e72cf9bc6e04089ca648c889415",
+    "walkway_transitions_join_b1_end0_out_lane0.0.png": "425a217de225fdd000ed10d09f106b96daac016439c344960078234c986e336f",
+    "walkway_transitions_join_b1_end1_in_lane0.0.png": "90dc074c1050d419d5a9ebdba89b555ee1e81059ce73cfa79afdf993e3a8fe2f",
+    "walkway_transitions_join_b1_end1_out_lane0.0.png": "cb8ed7fd14716a42f14b47d6100ff685147e3d89afd54c4a63dae195234c17c0",
+    "walkway_transitions_join_b2_end0_in_lane0.0.png": "e41605a9a396f3dd80fb78296083ac9037998f63151f9851f054415324cb79a0",
+    "walkway_transitions_join_b2_end0_out_lane0.0.png": "1508ef160551fc79a4b74d55871508044c7f93886e98fec4ecd8e13a6febaaea",
+    "walkway_transitions_join_b2_end1_in_lane0.0.png": "ab955f8582c8807d7262729c87c52570af5193505bc008623a5eaedb9d2d4f14",
+    "walkway_transitions_join_b2_end1_out_lane0.0.png": "9af6d854e3bfe956779c5e39b3058af2d6bfe1be0ec7c2226fbb1cc6013d1265",
+    "walkway_transitions_join_b3_end0_in_lane0.0.png": "361a46c2217e53a00f01b93ab44e8eb0b9e84bfdf7be007f504a4e1a4d10697b",
+    "walkway_transitions_join_b3_end0_out_lane0.0.png": "67becb80d84d9204d487ef2ee3ac3de54408ad327eea57d9fd3c4130709eadb2",
+    "walkway_transitions_join_b3_end1_in_lane0.0.png": "24b8152b65f57b26a48881fb12ce4d54b314203f1405060299c7754969d1bac4",
+    "walkway_transitions_join_b3_end1_out_lane0.0.png": "9282f6da81611d297a1af3f4be9f7b34508c7dab4ecaec312595304b4bca72f9",
+    "walkway_transitions_join_b4_end0_in_lane0.0.png": "e7062a8908f83146c12a24fdf8cd3d89271a0e51f55f724a0544776521f7215e",
+    "walkway_transitions_join_b4_end0_out_lane0.0.png": "d649d957e19a7adc2077f1508bbeec6eef0c23782848083968e96d403bc85932",
+    "walkway_transitions_join_b4_end1_in_lane0.0.png": "e287f33c070ae9a9d241a9ef0cecf1a396620e409562a2a56e434f6361107df3",
+    "walkway_transitions_join_b4_end1_out_lane0.0.png": "8d14cb68b0c3d593a4d434893a1ae5accc7f169cf106b712ed64edc8e7511f27",
+    "walkway_transitions_join_b5_end0_in_lane0.0.png": "8f6ce6bf68c700b3538b0ecd9a1f5010ab5893142a1b33c03b05e68ba49793a0",
+    "walkway_transitions_join_b5_end0_out_lane0.0.png": "49e1078fac05f7c4c789f53609759441722c919461f3bf16f27afd5b6ceefed4",
+    "walkway_transitions_join_b5_end1_in_lane0.0.png": "d1092d36f14200a877652bbaf00ae99299c9b310698f6ef09f754741e84f735b",
+    "walkway_transitions_join_b5_end1_out_lane0.0.png": "aeadded54131f56895ff8c55b7a90b842fe0ab369c7de7778abe2556dc33a83f",
+    "walkway_transitions_join_b6_end0_in_lane0.0.png": "e4ade4373814b6664d46420aabe55edea6ce5a3ab9ff4a59f97337e0128f0741",
+    "walkway_transitions_join_b6_end0_out_lane0.0.png": "8d47f0b64dc6ae2c8254eb2feb5ac0db8a467a418fe4ad51bd752e10d3ed9fbb",
+    "walkway_transitions_join_b6_end1_in_lane0.0.png": "ec4a70ca52a26fd151afb771fa682648da534c3a75c55970628a1f14338b8da2",
+    "walkway_transitions_join_b6_end1_out_lane0.0.png": "6e09e55703fc6afb057457956009cf5845bf627d5124fb7ca32afce65fb81411",
+    "walkway_transitions_join_b7_end0_in_lane0.0.png": "33e8b1c2f25da1613c8c96e2102dee19b6f8c969617d2cee9e7e0d6498d39928",
+    "walkway_transitions_join_b7_end0_out_lane0.0.png": "16eded92470ff9cedd6c35a8904a4f8e222bd9f4cf0484627acdcc07e9af5d0b",
+    "walkway_transitions_join_b7_end1_in_lane0.0.png": "16da5b7a16240299d75f44e49e819dcf47f78429902ad772cc51c7c8ec72ac26",
+    "walkway_transitions_join_b7_end1_out_lane0.0.png": "e8a913c8ac8c04e8877934f0c68039d57b8452c79e122649d4c60a0df7d8033c",
+    "walkway_transitions_join_b8_end0_in_lane0.0.png": "d86643ade55cccc4185bd607f50a9ff73fe820df3f3a6e66cc2076df3738df9b",
+    "walkway_transitions_join_b8_end0_out_lane0.0.png": "962a267cb6d6fe8dcfd127fdd71a5c048c47a650363120b3f5294b0590b120af",
+    "walkway_transitions_join_b8_end1_in_lane0.0.png": "e46441d569da1c9fd9851dff8ca0ee9a11d8930038fffce61251e20c3bffec60",
+    "walkway_transitions_join_b8_end1_out_lane0.0.png": "247a2325c0d4813abc1953f458e75967c8b11206ea649de43a475dd3569bc791",
+    "walkway_transitions_ladder_down_exit.png": "5f1a0cd1364de0e44b91f590d041e58309331fa7fbda21fc43bc3aa5b16fb95b",
+    "walkway_transitions_ladder_down_frame_00.png": "eede274a9b12d0d97f0216cb48db0395a03ba79410f20254fe458b3112b5397c",
+    "walkway_transitions_ladder_down_frame_01.png": "e4b87da42332006bf50b40c20a594e1f6e0954247d2e9abd6ba2b3b64f27efaf",
+    "walkway_transitions_ladder_down_frame_02.png": "03cc1dca2b6622b34590a92f1e82814bfed21874fd60a63f73e5af64abd27390",
+    "walkway_transitions_ladder_down_frame_03.png": "a26702608b24409ba4b488fdbbca3bbceae0bb248de9093f30e00f7c477c9ab7",
+    "walkway_transitions_ladder_down_frame_04.png": "1fa8f0b0a5fdd62465a20f3913d02989dd3e57b671f335e1337ead6483c5791e",
+    "walkway_transitions_ladder_down_frame_05.png": "443c2aa35842afc2dd599a1dc4c4671069f1dad62baf3fbf3f006eb3bc64d264",
+    "walkway_transitions_ladder_down_frame_06.png": "1219b5854ddca8c10414c27785c6916cce11e39b26c1f834eeda34c1feff52cb",
+    "walkway_transitions_ladder_down_frame_07.png": "3db4b0dafed1852bfb8e5547851cf7cca9591e733f816c382b73942fc78363b9",
+    "walkway_transitions_ladder_down_frame_08.png": "7671c5e3c181ae97825c34142cb116d7cc4eeaee180be5a0883b8ba7ac35a891",
+    "walkway_transitions_ladder_down_landing.png": "b88d7ec043a603db787a46685f2362ee79af6ecb47c1a9f7fe0d518fcaa85367",
+    "walkway_transitions_ladder_down_mid.png": "b324e7e10cee94232750ee3a7bb72f01cfb44015c4e0c0cab2d166eb97d96fa3",
+    "walkway_transitions_ladder_down_timeline.json": "d60d3fdcef1c65b861de590be6446b36b8867ba5aa14a9bea9878f2854a87de9",
+    "walkway_transitions_ladder_up_exit.png": "e9285135a840146c8cc74506fab09d936ae8090b94b8d98996d4d25dcb53b5d1",
+    "walkway_transitions_ladder_up_frame_00.png": "5bf1c927ed82eee1ee030460dc1e800c7be89728c5b6be3f3aafbf93d5cb08ef",
+    "walkway_transitions_ladder_up_frame_01.png": "fc78961cd603cef3d9aaf9e51f6a61ecc1263ffcfee3624527894d0ec2763e64",
+    "walkway_transitions_ladder_up_frame_02.png": "e7f9aeb468969061e30d20cbee47d6e8b53f6c2adba8277dc8ccb7caacec9b60",
+    "walkway_transitions_ladder_up_frame_03.png": "7be62ce4cb6268cfae02db5ae684ad278bffe9e478ebd8f53e9ec6ae85d1b686",
+    "walkway_transitions_ladder_up_frame_04.png": "5b1d23ee1a275c33386137cc020166b12aab95ad08282bf81b0445a518b01914",
+    "walkway_transitions_ladder_up_frame_05.png": "af65128baf608a7e04c1c48af1596047bf8da8abcb3a710153b03e59cb3107fa",
+    "walkway_transitions_ladder_up_frame_06.png": "5dc106d619f4dd61cace79bedd31464b377ebdb5952d05d1513456f4a9ca3de4",
+    "walkway_transitions_ladder_up_frame_07.png": "47093767770f830f80a5700220a60021afca6398372af0833295e4124dfbdfe8",
+    "walkway_transitions_ladder_up_frame_08.png": "fd4aa54774a2fc7b0988528a197f18565f8a59ccc4e2784a8466798028e52185",
+    "walkway_transitions_ladder_up_frame_09.png": "1a5817d9fa30fc2b937d7ee347247b4d5f04ebb39c9542521dae43887cec2347",
+    "walkway_transitions_ladder_up_landing.png": "568bb1c030b68b5f452d81b1722a1d899f6d2bae3ae1c921146d53adb67394d1",
+    "walkway_transitions_ladder_up_mid.png": "2e1ea2d0853163e6a4a83f92aa795abb8602761d58ca08fd8d8320d98176c821",
+    "walkway_transitions_ladder_up_timeline.json": "a74cceac82026729be56362a28e7eed1277bbf469078fb9c672d3a613846d9e5"
+  },
+  "retained_originals": [
+    "walkway_transitions_ladder_up_mid.png",
+    "walkway_transitions_ladder_up_landing.png",
+    "walkway_transitions_ladder_up_exit.png",
+    "walkway_transitions_ladder_down_mid.png",
+    "walkway_transitions_ladder_down_landing.png",
+    "walkway_transitions_ladder_down_exit.png"
+  ],
+  "derived_previews": {
+    "joins-in.png": {
+      "source_files": [
+        "walkway_transitions_join_b0_end0_in_lane0.0.png",
+        "walkway_transitions_join_b0_end1_in_lane0.0.png",
+        "walkway_transitions_join_b1_end0_in_lane0.0.png",
+        "walkway_transitions_join_b1_end1_in_lane0.0.png",
+        "walkway_transitions_join_b2_end0_in_lane0.0.png",
+        "walkway_transitions_join_b2_end1_in_lane0.0.png",
+        "walkway_transitions_join_b3_end0_in_lane0.0.png",
+        "walkway_transitions_join_b3_end1_in_lane0.0.png",
+        "walkway_transitions_join_b4_end0_in_lane0.0.png",
+        "walkway_transitions_join_b4_end1_in_lane0.0.png",
+        "walkway_transitions_join_b5_end0_in_lane0.0.png",
+        "walkway_transitions_join_b5_end1_in_lane0.0.png",
+        "walkway_transitions_join_b6_end0_in_lane0.0.png",
+        "walkway_transitions_join_b6_end1_in_lane0.0.png",
+        "walkway_transitions_join_b7_end0_in_lane0.0.png",
+        "walkway_transitions_join_b7_end1_in_lane0.0.png",
+        "walkway_transitions_join_b8_end0_in_lane0.0.png",
+        "walkway_transitions_join_b8_end1_in_lane0.0.png"
+      ],
+      "crop": [
+        400,
+        170,
+        880,
+        450
+      ],
+      "thumbnail_size": [
+        400,
+        233
+      ]
+    },
+    "joins-out.png": {
+      "source_files": [
+        "walkway_transitions_join_b0_end0_out_lane0.0.png",
+        "walkway_transitions_join_b0_end1_out_lane0.0.png",
+        "walkway_transitions_join_b1_end0_out_lane0.0.png",
+        "walkway_transitions_join_b1_end1_out_lane0.0.png",
+        "walkway_transitions_join_b2_end0_out_lane0.0.png",
+        "walkway_transitions_join_b2_end1_out_lane0.0.png",
+        "walkway_transitions_join_b3_end0_out_lane0.0.png",
+        "walkway_transitions_join_b3_end1_out_lane0.0.png",
+        "walkway_transitions_join_b4_end0_out_lane0.0.png",
+        "walkway_transitions_join_b4_end1_out_lane0.0.png",
+        "walkway_transitions_join_b5_end0_out_lane0.0.png",
+        "walkway_transitions_join_b5_end1_out_lane0.0.png",
+        "walkway_transitions_join_b6_end0_out_lane0.0.png",
+        "walkway_transitions_join_b6_end1_out_lane0.0.png",
+        "walkway_transitions_join_b7_end0_out_lane0.0.png",
+        "walkway_transitions_join_b7_end1_out_lane0.0.png",
+        "walkway_transitions_join_b8_end0_out_lane0.0.png",
+        "walkway_transitions_join_b8_end1_out_lane0.0.png"
+      ],
+      "crop": [
+        400,
+        170,
+        880,
+        450
+      ],
+      "thumbnail_size": [
+        400,
+        233
+      ]
+    },
+    "ladder-up.gif": {
+      "source_timeline": "walkway_transitions_ladder_up_timeline.json",
+      "frame_count": 12,
+      "size": [
+        640,
+        360
+      ],
+      "duration_ms": [
+        130,
+        130,
+        130,
+        130,
+        130,
+        270,
+        130,
+        130,
+        130,
+        130,
+        200,
+        250
+      ],
+      "note": "Sampled game screenshots; GIF palette and resize are preview-only."
+    },
+    "ladder-up-frames.png": {
+      "source_files": [
+        "walkway_transitions_ladder_up_frame_00.png",
+        "walkway_transitions_ladder_up_frame_02.png",
+        "walkway_transitions_ladder_up_frame_03.png",
+        "walkway_transitions_ladder_up_frame_05.png",
+        "walkway_transitions_ladder_up_frame_06.png",
+        "walkway_transitions_ladder_up_frame_08.png",
+        "walkway_transitions_ladder_up_frame_09.png",
+        "walkway_transitions_ladder_up_exit.png"
+      ],
+      "size": [
+        640,
+        360
+      ]
+    },
+    "ladder-down.gif": {
+      "source_timeline": "walkway_transitions_ladder_down_timeline.json",
+      "frame_count": 11,
+      "size": [
+        640,
+        360
+      ],
+      "duration_ms": [
+        130,
+        130,
+        130,
+        130,
+        270,
+        130,
+        130,
+        130,
+        130,
+        200,
+        250
+      ],
+      "note": "Sampled game screenshots; GIF palette and resize are preview-only."
+    },
+    "ladder-down-frames.png": {
+      "source_files": [
+        "walkway_transitions_ladder_down_frame_00.png",
+        "walkway_transitions_ladder_down_frame_01.png",
+        "walkway_transitions_ladder_down_frame_03.png",
+        "walkway_transitions_ladder_down_frame_04.png",
+        "walkway_transitions_ladder_down_frame_06.png",
+        "walkway_transitions_ladder_down_frame_07.png",
+        "walkway_transitions_ladder_down_landing.png",
+        "walkway_transitions_ladder_down_exit.png"
+      ],
+      "size": [
+        640,
+        360
+      ]
+    }
+  },
+  "reviewed": [
+    "joins-in.png",
+    "joins-out.png",
+    "ladder-up-frames.png",
+    "ladder-down-frames.png",
+    "walkway_transitions_ladder_up_landing.png",
+    "walkway_transitions_ladder_down_mid.png"
+  ],
+  "raw_files": 63,
+  "review_result": "Reviewed all 18 joins in both directions as close-up contact sheets, plus eight sampled frames per climb direction and two full-resolution originals. Painted deck overlaps, actor scale, occlusion and landing continuity are consistent. Original art is unchanged. This records sampled visual inspection, not every rendered frame.",
+  "artifact_sha256": {
+    "joins-in.png": "301874480529e994fb86a44de18109e50e9dba89eb0c651a0d5a6f82677712c0",
+    "joins-out.png": "a48d53d90f1fa0ce6e6ced5a3d31aae6c498363105388b6b4a06341b45f42baa",
+    "ladder-down-frames.png": "f1c11a549362bd6aaac69a6d1eec2778f3f27a9a914912f646c96bb880d57d7b",
+    "ladder-down.gif": "1ffd5688479691b03488db6b3badb5cfb600896c66e1097090f0ab3aaaa330a0",
+    "ladder-up-frames.png": "4714cde20d10cc0dcffe21d1fb7999341a81f70029a4dbdeee2e35e4317ad482",
+    "ladder-up.gif": "2ba99fd4db8b5cc581a0c0a2feef3a8a99d958f600b5d185973ea8bc81f229f9",
+    "walkway_transitions_ladder_down_exit.png": "5f1a0cd1364de0e44b91f590d041e58309331fa7fbda21fc43bc3aa5b16fb95b",
+    "walkway_transitions_ladder_down_landing.png": "b88d7ec043a603db787a46685f2362ee79af6ecb47c1a9f7fe0d518fcaa85367",
+    "walkway_transitions_ladder_down_mid.png": "b324e7e10cee94232750ee3a7bb72f01cfb44015c4e0c0cab2d166eb97d96fa3",
+    "walkway_transitions_ladder_down_timeline.json": "d60d3fdcef1c65b861de590be6446b36b8867ba5aa14a9bea9878f2854a87de9",
+    "walkway_transitions_ladder_up_exit.png": "e9285135a840146c8cc74506fab09d936ae8090b94b8d98996d4d25dcb53b5d1",
+    "walkway_transitions_ladder_up_landing.png": "568bb1c030b68b5f452d81b1722a1d899f6d2bae3ae1c921146d53adb67394d1",
+    "walkway_transitions_ladder_up_mid.png": "2e1ea2d0853163e6a4a83f92aa795abb8602761d58ca08fd8d8320d98176c821",
+    "walkway_transitions_ladder_up_timeline.json": "a74cceac82026729be56362a28e7eed1277bbf469078fb9c672d3a613846d9e5"
+  }
+}

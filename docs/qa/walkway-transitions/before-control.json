@@ -1,0 +1,44 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 149,
+  "elapsed_s": 7.39,
+  "engine": [],
+  "failed": 20,
+  "failures": [
+    "walkway_transitions.ladder_up_no_entry_snap",
+    "walkway_transitions.ladder_up_approach_keeps_boardwalk_level",
+    "walkway_transitions.ladder_up_animation_starts",
+    "walkway_transitions.ladder_up_facing_survives_landing",
+    "walkway_transitions.ladder_down_no_entry_snap",
+    "walkway_transitions.ladder_down_approach_keeps_boardwalk_level",
+    "walkway_transitions.ladder_down_animation_starts",
+    "walkway_transitions.ladder_down_facing_survives_landing",
+    "walkway_transitions.reparent_cancels_transition",
+    "walkway_transitions.cancel_restores_forced_clip",
+    "walkway_transitions.cancel_has_no_late_motion",
+    "walkway_transitions.blocked_approach_does_not_jump_through_obstacle",
+    "walkway_transitions.alternate_ladder_up_no_entry_snap",
+    "walkway_transitions.alternate_ladder_up_approach_keeps_boardwalk_level",
+    "walkway_transitions.alternate_ladder_up_animation_starts",
+    "walkway_transitions.alternate_ladder_up_facing_survives_landing",
+    "walkway_transitions.alternate_ladder_down_no_entry_snap",
+    "walkway_transitions.alternate_ladder_down_approach_keeps_boardwalk_level",
+    "walkway_transitions.alternate_ladder_down_animation_starts",
+    "walkway_transitions.alternate_ladder_down_facing_survives_landing"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "walkway_transitions": {
+      "character": "animal",
+      "checks": 149,
+      "failed": 20,
+      "ms": 2648,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

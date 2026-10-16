@@ -1,0 +1,186 @@
+{
+  "status": "validated; merge verification recorded separately",
+  "validated_at_utc": "2026-10-16T13:51:12.070368+00:00",
+  "scope": "Seamless boardwalk/climb entry, animation, collision level handover and landing; retain approved painted assets and authored geometry.",
+  "main_baseline": "7ad11d6f7256ef705cc97e736e4724fea3a9584e",
+  "source_commits": [
+    "9ccf4ee",
+    "d5bd13f"
+  ],
+  "source_binding": "cd7ed9e909565fdbf7b43b6dd61f126ab3f5f30d4628da6e98484a9cbe081842",
+  "bound_source_data_test_files": 1163,
+  "changed_source_files": [
+    "scripts/world2d/levels/climb_lane.gd",
+    "tests/sections/city_levels.gd",
+    "tests/sections/walkway_transitions.gd",
+    "tests/sections/walkway_transitions.gd.uid"
+  ],
+  "headless_heroes": {
+    "animal": {
+      "report": "animal.json",
+      "checks": 153,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 6.06,
+      "unexpected_engine_messages": 0,
+      "allowed_negative_control_messages": 0
+    },
+    "fairy": {
+      "report": "fairy.json",
+      "checks": 153,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 5.96,
+      "unexpected_engine_messages": 0,
+      "allowed_negative_control_messages": 0
+    },
+    "hobbit": {
+      "report": "hobbit.json",
+      "checks": 153,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 5.67,
+      "unexpected_engine_messages": 0,
+      "allowed_negative_control_messages": 0
+    },
+    "ghost": {
+      "report": "ghost.json",
+      "checks": 153,
+      "failed": 0,
+      "skipped": 0,
+      "elapsed_s": 5.76,
+      "unexpected_engine_messages": 0,
+      "allowed_negative_control_messages": 0
+    }
+  },
+  "playable_skins": [
+    "animal",
+    "animal_monkey",
+    "fairy",
+    "fairy_birk",
+    "hobbit",
+    "hobbit_bodil",
+    "ghost",
+    "ghost_hviske"
+  ],
+  "join_coverage": {
+    "bridges": 9,
+    "joins": 18,
+    "directions": 2,
+    "lateral_approaches": 3,
+    "physical_crossings_per_race": 108,
+    "npc_collision_note": "Only the dedicated transition fixture disables citizen collisions. Production city tour and town loop retain them."
+  },
+  "regression": {
+    "report": "regression.json",
+    "checks": 313,
+    "failed": 0,
+    "skipped": 3,
+    "elapsed_s": 14.49,
+    "unexpected_engine_messages": 0,
+    "allowed_negative_control_messages": 0
+  },
+  "native_transitions": {
+    "report": "native-transitions.json",
+    "checks": 59,
+    "failed": 0,
+    "skipped": 0,
+    "elapsed_s": 29.89,
+    "unexpected_engine_messages": 0,
+    "allowed_negative_control_messages": 0
+  },
+  "native_city_tour": {
+    "report": "native-city-tour.json",
+    "checks": 64,
+    "failed": 0,
+    "skipped": 0,
+    "elapsed_s": 107.14,
+    "unexpected_engine_messages": 0,
+    "allowed_negative_control_messages": 0,
+    "source_scope": "Same production movement as 9ccf4ee; earlier capture fixture, before the final stride-only correction. Final native transition run covers the correction."
+  },
+  "town_integration": {
+    "report": "town-integration.json",
+    "checks": 159,
+    "failed": 0,
+    "skipped": 11,
+    "elapsed_s": 15.19,
+    "unexpected_engine_messages": 0,
+    "allowed_negative_control_messages": 1
+  },
+  "native_town_performance": {
+    "report": "town-native.json",
+    "checks": 177,
+    "failed": 0,
+    "skipped": 12,
+    "elapsed_s": 136.82,
+    "unexpected_engine_messages": 0,
+    "allowed_negative_control_messages": 0,
+    "source_scope": "9ccf4ee, before the clip-only landing correction at d5bd13f.",
+    "hardware": "Apple M3 / macOS / Godot4.7.2 Compatibility GL4.1 Metal90.5",
+    "loop_s": 106.452,
+    "loop_limit_s": 110,
+    "save_p95_ms": 14.84,
+    "save_limit_ms": 25,
+    "city_crowd_draw_calls": 247,
+    "city_draw_call_limit": 250,
+    "city_crowd_mean_frame_ms": 2.381,
+    "city_frame_limit_ms": 6,
+    "city_16_looks_mb": 280.65,
+    "festival_20_looks_mb": 316.652,
+    "cold_12_citizen_travel_ms": 566.964
+  },
+  "wave_5b": {
+    "required_rows": 36,
+    "all_satisfied": true,
+    "report": "gates.json"
+  },
+  "source_bound_town_proofs": {
+    "extension": "../m1b-milestone/loop-extension.json",
+    "mutants": "../m1b-milestone/loop-mutants.json",
+    "binding": "cd7ed9e909565fdbf7b43b6dd61f126ab3f5f30d4628da6e98484a9cbe081842",
+    "unchanged_code_files": 676,
+    "owner_checks": 588,
+    "scenarios": 8,
+    "producer_mutants_caught": 7,
+    "clean_baseline": true,
+    "original_m1b_proofs_preserved": "../m1b-milestone/source-proof-75a4d779/"
+  },
+  "negative_control": {
+    "report": "before-control.json",
+    "log": "before-control.log",
+    "expected_result": "fail",
+    "checks": 149,
+    "expected_behavioral_failures": 20,
+    "unexpected_engine_messages": 0,
+    "production_source": "ClimbLane from 7ad11d6; pre-stride fixture",
+    "note": "Intentional old-code comparison. Four final stride assertions were added afterwards."
+  },
+  "timing_recheck": {
+    "report": "town-integration-timing-miss.json",
+    "log": "town-integration-timing-miss.log",
+    "failure": "town_budgets.where_is_sweep",
+    "first_run_us": 305,
+    "limit_us": 300,
+    "isolated_repeat_us": 267,
+    "disposition": "Unchanged resolver benchmark narrowly missed once after proof runs; exact same source and threshold pass on isolated rerun. Original failed report retained. No waiver or threshold change."
+  },
+  "visual_evidence": {
+    "manifest": "native/manifest.json",
+    "reviewed_join_captures": 36,
+    "sampled_climb_frames_reviewed": 16,
+    "retained_original_pngs": 6,
+    "raw_capture_hashes": 63,
+    "approved_style_assets_unchanged": 2562,
+    "static_style": "static-style.txt",
+    "static_imports": "static-imports.txt",
+    "prompts": "No art regeneration needed; all fixes are movement/pose/lifecycle."
+  },
+  "limitations": [
+    "Native town performance snapshot precedes the final clip-only landing change. Final native transitions and headless integration include it.",
+    "Original full M1b suites remain historical; focused regression and renewed consumer/mutant proofs validate this change.",
+    "Named future-feature and window-only capability skips remain.",
+    "Native/source-project performance only; no packaged-export claim."
+  ],
+  "remaining": []
+}

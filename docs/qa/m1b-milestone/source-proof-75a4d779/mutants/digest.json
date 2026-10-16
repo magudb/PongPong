@@ -1,0 +1,25 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 7,
+  "elapsed_s": 2.74,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "town_mutants.digest_has_teeth_gold"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "town_mutants": {
+      "character": "animal",
+      "checks": 7,
+      "failed": 1,
+      "ms": 1673,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

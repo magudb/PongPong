@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 59,
+  "elapsed_s": 29.89,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "walkway_transitions": {
+      "character": "animal",
+      "checks": 59,
+      "failed": 0,
+      "ms": 26113,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

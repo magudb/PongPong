@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "ghost",
+  "checks": 153,
+  "elapsed_s": 5.76,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "walkway_transitions": {
+      "character": "ghost",
+      "checks": 153,
+      "failed": 0,
+      "ms": 2041,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

@@ -1,0 +1,146 @@
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=towns_routes
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.7YdgmL/Library/Application Support/Traetoppen (throwaway)
+[Lua] 2 lint finding(s) in 2 file(s) (LuaRuntime.lint_report; run tools/lua/lint.gd for the list)
+[Lua]   res://lua/config/zz_loop_post.lua:0 [duplicate_key] config table `traetoppen` is already defined by config/traetoppen: two config files must not define the same top-level key
+[Lua]   res://lua/quests/loop_mail.lua:0 [quest_binding] quest `loop_mail`: objective `read`: on = "post_read" is not in the binding vocabulary
+== section towns_routes  (res://tests/sections/towns_routes.gd)
+  ok    towns_routes.bake_from_real_geometry (Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[Lua] 2 lint finding(s) in 2 file(s) (LuaRuntime.lint_report; run tools/lua/lint.gd for the list)
+[Lua]   res://lua/config/zz_loop_post.lua:0 [duplicate_key] config table `traetoppen` is already defined by config/traetoppen: two config files must not define the same top-level key
+[Lua]   res://lua/quests/loop_mail.lua:0 [quest_binding] quest `loop_mail`: objective `read`: on = "post_read" is not in the binding vocabulary
+BAKE hyggebyen: 41 anchors; 2596 us navigation
+BAKE farm: 6 anchors; 3116 us navigation
+SNAP door_hoppe_hut: { "ok": true, "pos": (1053.9, 1015.916), "distance": 196.085891723633 }
+SNAP door_uglehulen: { "ok": true, "pos": (1853.9, 1335.916), "distance": 133.311584472656 }
+SNAP door_musikstuen: { "ok": true, "pos": (1549.5, 4935.073), "distance": 79.1590805053711 }
+SNAP door_raadhuset: { "ok": true, "pos": (3001.5, 2493.474), "distance": 71.8255920410156 }
+SNAP a_beds1: { "ok": true, "pos": (1693.9, 1111.916), "distance": 234.263488769531 }
+SNAP a_beds2: { "ok": true, "pos": (1693.9, 1111.916), "distance": 409.048248291016 }
+SNAP a_ugle_perch: { "ok": true, "pos": (1853.9, 1335.916), "distance": 250.191421508789 }
+SNAP t_bench2: { "ok": true, "pos": (2405.4, 3969.853), "distance": 72.4539489746094 }
+SNAP t_lamp: { "ok": true, "pos": (2949.4, 2817.853), "distance": 266.908905029297 }
+SNAP u_terrace: { "ok": true, "pos": (2905.5, 1981.474), "distance": 151.18684387207 }
+SNAP u_lamp: { "ok": true, "pos": (2873.5, 1949.474), "distance": 85.9056625366211 }
+SNAP e_tub: { "ok": true, "pos": (4323.4, 3068.969), "distance": 101.597122192383 }
+SNAP e_lamp: { "ok": true, "pos": (4419.4, 3452.969), "distance": 232.016403198242 }
+SNAP f_lamp: { "ok": true, "pos": (1549.5, 4935.073), "distance": 369.49951171875 }
+SNAP g_planter3: { "ok": true, "pos": (3511.4, 5401.6), "distance": 114.769462585449 }
+SNAP fest_torvet_host: { "ok": true, "pos": (2725.4, 3617.853), "distance": 128.362091064453 }
+SNAP fest_raadhus_host: { "ok": true, "pos": (2489.5, 2557.474), "distance": 236.734008789062 }
+BAKE traetoppen: 57 anchors; { "bake_ms": 10.281, "solid": 11012, "cells": 15622, "gates": 20, "edges": 29, "baked_cells": true }
+PASS route_bake: 19 areas, 2785.7 ms, 48 source hashes
+)
+  ok    towns_routes.table_loads_and_plans
+  ok    Route source inventory also catches removed inputs
+  ok    Route source is current: res://assets/iso_props/furniture/furniture.json
+  ok    Route source is current: res://assets/iso_props/shops/core/shops.json
+  ok    Route source is current: res://assets/iso_props/shops/special/shops.json
+  ok    Route source is current: res://data/interiors/core/int_badehuset.json
+  ok    Route source is current: res://data/interiors/core/int_bageriet.json
+  ok    Route source is current: res://data/interiors/core/int_brummes_vaerksted.json
+  ok    Route source is current: res://data/interiors/core/int_dyrehuset.json
+  ok    Route source is current: res://data/interiors/core/int_froebutikken.json
+  ok    Route source is current: res://data/interiors/core/int_gaestehytten.json
+  ok    Route source is current: res://data/interiors/core/int_loop_shop.json
+  ok    Route source is current: res://data/interiors/core/int_loppeloftet.json
+  ok    Route source is current: res://data/interiors/core/int_moebelbutikken.json
+  ok    Route source is current: res://data/interiors/core/int_postkontoret.json
+  ok    Route source is current: res://data/interiors/core/int_raadhuset.json
+  ok    Route source is current: res://data/interiors/core/int_skraedderiet.json
+  ok    Route source is current: res://data/interiors/core/int_smedjen.json
+  ok    Route source is current: res://data/interiors/core/int_toemmerhandlen.json
+  ok    Route source is current: res://data/interiors/core/int_troldmandstaarnet.json
+  ok    Route source is current: res://data/interiors/core/int_uglehulen.json
+  ok    Route source is current: res://data/interiors/dress/int_badehuset.json
+  ok    Route source is current: res://data/interiors/dress/int_bageriet.json
+  ok    Route source is current: res://data/interiors/dress/int_brummes_vaerksted.json
+  ok    Route source is current: res://data/interiors/dress/int_dyrehuset.json
+  ok    Route source is current: res://data/interiors/dress/int_froebutikken.json
+  ok    Route source is current: res://data/interiors/dress/int_hoppe_hut.json
+  ok    Route source is current: res://data/interiors/dress/int_loppeloftet.json
+  ok    Route source is current: res://data/interiors/dress/int_moebelbutikken.json
+  ok    Route source is current: res://data/interiors/dress/int_postkontoret.json
+  ok    Route source is current: res://data/interiors/dress/int_raadhuset.json
+  ok    Route source is current: res://data/interiors/dress/int_skraedderiet.json
+  ok    Route source is current: res://data/interiors/dress/int_smedjen.json
+  ok    Route source is current: res://data/interiors/dress/int_toemmerhandlen.json
+  ok    Route source is current: res://data/interiors/dress/int_troldmandstaarnet.json
+  ok    Route source is current: res://data/interiors/dress/int_uglehulen.json
+  ok    Route source is current: res://data/interiors/kit_footprints.json
+  ok    Route source is current: res://data/maps/farm.map
+  ok    Route source is current: res://data/maps/hyggebyen.map
+  ok    Route source is current: res://data/towns/nav_city.json
+  ok    Route source is current: res://data/towns/traetoppen.json
+  ok    Route source is current: res://data/traetoppen/traetoppen.json
+  ok    Route source is current: res://lua/config/props.lua
+  ok    Route source is current: res://scripts/towns/fest_set.gd
+  ok    Route source is current: res://scripts/towns/level_nav.gd
+  ok    Route source is current: res://scripts/towns/nav_grid.gd
+  ok    Route source is current: res://scripts/towns/town_marks.gd
+  ok    Route source is current: res://tools/town/city_nav_bake.gd
+  ok    Route source is current: res://tools/towns/bake_routes.gd
+  ok    Route source is current: res://tools/towns/route_baker.gd
+  ok    farm table dimensions
+  ok    farm anchors are reachable
+  ok    hyggebyen table dimensions
+  ok    hyggebyen anchors are reachable
+  ok    int_badehuset table dimensions
+  ok    int_badehuset anchors are reachable
+  ok    int_bageriet table dimensions
+  ok    int_bageriet anchors are reachable
+  ok    int_brummes_vaerksted table dimensions
+  ok    int_brummes_vaerksted anchors are reachable
+  ok    int_dyrehuset table dimensions
+  ok    int_dyrehuset anchors are reachable
+  ok    int_froebutikken table dimensions
+  ok    int_froebutikken anchors are reachable
+  ok    int_gaestehytten table dimensions
+  ok    int_gaestehytten anchors are reachable
+  ok    int_loop_shop table dimensions
+  ok    int_loop_shop anchors are reachable
+  ok    int_loppeloftet table dimensions
+  ok    int_loppeloftet anchors are reachable
+  ok    int_moebelbutikken table dimensions
+  ok    int_moebelbutikken anchors are reachable
+  ok    int_postkontoret table dimensions
+  ok    int_postkontoret anchors are reachable
+  ok    int_raadhuset table dimensions
+  ok    int_raadhuset anchors are reachable
+  ok    int_skraedderiet table dimensions
+  ok    int_skraedderiet anchors are reachable
+  ok    int_smedjen table dimensions
+  ok    int_smedjen anchors are reachable
+  ok    int_toemmerhandlen table dimensions
+  ok    int_toemmerhandlen anchors are reachable
+  ok    int_troldmandstaarnet table dimensions
+  ok    int_troldmandstaarnet anchors are reachable
+  ok    int_uglehulen table dimensions
+  ok    int_uglehulen anchors are reachable
+  ok    traetoppen table dimensions
+  ok    traetoppen anchors are reachable
+  ok    torvet festival has 28 distinct posts
+  ok    hyggetorv festival has 28 distinct posts
+  ok    badehus festival has 28 distinct posts
+  ok    raadhus festival has 28 distinct posts
+  ok    Farm to shop uses real paths and portals
+  ok    towns_routes.fallback_is_flagged
+  ok    towns_routes.no_forward_class_refs ([])
+  ok    towns_routes.routines.feasible
+  ok    towns_routes.routines.places_exist
+  ok    towns_routes.hours.keeper_covers_hours
+  ok    towns_routes.hours.consistency
+  ok    towns_routes.routines.post_capacity
+  ok    towns_routes.towns.visual_budget
+  ok    towns_routes.routines.no_short_visits
+  ok    towns_routes.routines.day_wrap
+  ok    towns_routes.hours.visits_inside_hours
+  ok    towns_routes.tool_printed_ids (Town CLI validator printed 9 PASS/FAIL ids)
+  ok    towns_routes.tool_exit_code (Town CLI validator exit code 0)
+  --    towns_routes: 107 checks, 0 failed, 0 skipped, 6.4 s
+== summary: 1 section(s) run, 107 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 10.2 s
+PLAYTEST PASS (107 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

@@ -1,0 +1,44 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 313,
+  "elapsed_s": 14.49,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "city_levels": {
+      "character": "animal",
+      "checks": 69,
+      "failed": 0,
+      "ms": 2864,
+      "skipped": 0
+    },
+    "city_map": {
+      "character": "animal",
+      "checks": 54,
+      "failed": 0,
+      "ms": 6029,
+      "skipped": 3
+    },
+    "player": {
+      "character": "animal",
+      "checks": 37,
+      "failed": 0,
+      "ms": 192,
+      "skipped": 0
+    },
+    "walkway_transitions": {
+      "character": "animal",
+      "checks": 153,
+      "failed": 0,
+      "ms": 1656,
+      "skipped": 0
+    }
+  },
+  "skipped": 3
+}
