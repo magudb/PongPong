@@ -103,6 +103,11 @@ func interact(player: Node) -> void:
 	set_process(true)
 func _process(dt: float) -> void:
 	if not picking: return
+	if not is_instance_valid(_picker) or _picker.state != Player2D.S.TALKING or _picker.area != area:
+		picking = false
+		_release_picker()
+		set_process(false)
+		return
 	remaining -= dt
 	if remaining > 0: return
 	picking = false
@@ -110,7 +115,7 @@ func _process(dt: float) -> void:
 	deplete()
 	set_process(false)
 func _release_picker() -> void:
-	if is_instance_valid(_picker):
+	if is_instance_valid(_picker) and _picker.state == Player2D.S.TALKING:
 		_picker.end_talk()
 		_picker.visual.cancel_action()
 	_picker = null

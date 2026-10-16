@@ -93,6 +93,17 @@ func _run(t, native: bool) -> void:
 	gm.end_day()
 	await t.frames(2)
 	t.check("hidden_node_cancels_pick_and_stays_disabled",not disabled.picking and not disabled.depleted and disabled._area.collision_layer == 0 and not disabled.deplete())
+	var interrupted := _node(area,"fern",Vector2i(9,9),at)
+	interrupted.interact(player)
+	player.state = Player2D.S.HURT
+	interrupted._process(.6)
+	t.check("damage_interrupts_forage_without_clearing_hurt",not interrupted.picking and not interrupted.depleted and player.state == Player2D.S.HURT)
+	player.state = Player2D.S.FREE
+	interrupted.interact(player)
+	player.state = Player2D.S.FAINTED
+	interrupted._process(.6)
+	t.check("faint_interrupts_forage_without_reviving_player",not interrupted.picking and not interrupted.depleted and player.state == Player2D.S.FAINTED)
+	player.state = Player2D.S.FREE
 	var whispers := []
 	var record := func(key): whispers.append(key)
 	EventBus.whisper_requested.connect(record)
