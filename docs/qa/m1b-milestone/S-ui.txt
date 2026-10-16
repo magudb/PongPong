@@ -1,0 +1,66 @@
+S-ui — People, gifts, calendar and social HUD
+2026-10-16, m1b
+
+The People book opens through P, the pause transfer row and open_people. Only
+SocialManager.people_rows supplies its met/nonabsent roster and friendship
+state. All/Near/Today, row hover and keyboard/pad navigation, weekly chat,
+known tastes and birthdays are read-only. One drawn node per citizen keeps
+the full roster below the 60-node list cap. Small portraits are retained when
+met and warmed on Continue, behind world loading. Native opening: 4.4 ms
+against <=25 ms. No source paths are exposed in the product.
+
+The gift picker uses live GiftFlow options/protection and 6x4 item slots; more
+stacks scroll in whole rows. Selecting focuses Give, daily/weekly limits show
+a disabled reason, and valuable gifts ask with Cancel selected. The dialogue
+ends before the picker opens; the picker closes before giving/reacting. The
+NPC stays held through both screens. A RefCounted reaction releases weak actor/
+player references even on Escape/disposal and never grants a weekly chat heart.
+GiftFlow remains the atomic writer. Sprout hearts distinguish friendship from
+health in the book, picker, calendar and birthday chips. Half hearts have a
+pale rose background and filled left half; every heart has the green sprout.
+
+The real journal has a third calendar tab: 28 days, four seasons, year >=1,
+known birthdays, festival metadata, market weekdays and an ink Today marker.
+Month edges work through real input. Scene-local CalCell theme additions leave
+the approved shared theme unchanged. Calendar date copy fits the narrow card.
+The historical P14 guide fixture retains its two original tabs; production
+exposes all three. Its original comparison remains within the unchanged gates.
+
+The social HUD updates from events, formats raw 25:00 as 01:00, stays unfocusable
+and ignores mouse input. Birthday chips cap at two plus an overflow count.
+The HUD reserves their row below health, then returns that space when unused;
+tracked quests do not overlap. Action mode and an event anywhere in the modal
+stack hide social chips, including an event's confirmation.
+
+Two navigation defects were resolved with the live screens. Rebuilding a page
+during focus could leave an already-emitting old GroupNav callback overwriting
+new links: callbacks and writes now verify ownership. Audit graphs now preserve
+radio context before every direction, keep tab traversal separate from another
+page's contents and avoid concatenating a filtered row's edges across pages.
+All 466 audit checks, including the original negative controls, still pass.
+Shop/journal traversal budgets now cover their larger dynamic page sets.
+
+Evidence
+- social-ui-integration.json: 1294 checks, eight sections, zero failures or
+  engine messages. 104 named native/later-package skips.
+- social-ui-{animal,fairy,hobbit,ghost}.json: 139 checks each, zero failures/
+  engine messages; twelve native-only skips each. Includes the live Hoppe
+  dialogue-to-picker chain, physical pad A/B, 36-stack scrolling, valuable
+  confirmation, exact-once debit, month edges and stale focus-callback regression.
+- social-ui-native.json: 45 checks, zero failures/skips/messages. Standalone
+  four screens plus actual farm HUD and journal calendar captures inspected.
+  Ring and panel pixel checks pass, both locales resolve, and all four screen
+  baseline scores are <=1.5. People opening measured 4.425 ms in the final run.
+- guide_ref_social retains all four original prototype captures, unmodified.
+  Unmasked historical mean differences: People 17.030, gift 17.950, calendar
+  16.331, social HUD 5.087. They include different real data/painted portraits,
+  full-width calendar integration and chosen-v2 HUD positions. These are
+  historical comparisons, not claimed as <=1.5 matches. Reviewed native pins
+  are scored separately; no portrait/content mask hides the original scores.
+- Forty rel_ui rows, draft da/en. Copy and localization lint pass. All 2534
+  reviewed illustrations/theme files remain unchanged. No audio was generated.
+
+Festival/event screens/content are later packages. The UI already consumes
+their existing SocialManager contracts; native festival fixtures load real Lua
+registry data and clean it up afterwards. I2/final acceptance and the painted
+ghost-family/reaction follow-up still block the milestone merge.

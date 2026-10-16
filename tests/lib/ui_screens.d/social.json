@@ -1,5 +1,5 @@
 {
-  "_doc": "S-ui registry rows (TOWNS_FARM_SOCIAL_ADDENDUM 8.10, DT21). Pending until the scenes land; status is derived from the scene path.",
+  "_doc": "S-ui production registry. The four native captures were inspected against the guide and pinned on 2026-10-16; historical prototypes remain in guide_ref_social.",
   "screens": [
     {
       "id": "people",
@@ -16,7 +16,8 @@
         "baseline": "docs/qa/ui_baseline/people.png",
         "fixture": "people",
         "no_frame_crop": true,
-        "target": 1.5
+        "target": 1.5,
+        "pinned_after_lead_review": true
       },
       "checks": [
         "initial_focus",
@@ -47,7 +48,8 @@
         "baseline": "docs/qa/ui_baseline/gift.png",
         "fixture": "gift",
         "no_frame_crop": true,
-        "target": 1.5
+        "target": 1.5,
+        "pinned_after_lead_review": true
       },
       "checks": [
         "initial_focus",
@@ -78,7 +80,8 @@
         "baseline": "docs/qa/ui_baseline/calendar.png",
         "fixture": "calendar",
         "no_frame_crop": true,
-        "target": 1.5
+        "target": 1.5,
+        "pinned_after_lead_review": true
       },
       "checks": [
         "focusable_report",
@@ -105,7 +108,8 @@
         "baseline": "docs/qa/ui_baseline/social_hud.png",
         "fixture": "social_hud",
         "no_frame_crop": true,
-        "target": 1.5
+        "target": 1.5,
+        "pinned_after_lead_review": true
       },
       "checks": [
         "focusable_report",

@@ -91,13 +91,13 @@
         },
         {
           "id": "S-gifts",
-          "status": "mechanics_validated_live_NPC_UI_gate_pending",
-          "evidence": "social-dialogue.json: 617 checks, zero failures, 7 later-package skips. Picker/Npc2D chain remains at S-ui/P14/I2."
+          "status": "validated",
+          "evidence": "social-dialogue.json mechanics plus social-ui-integration.json live NPC -> picker -> reaction transfer, NPC hold/release, exact-once gift debit, weekly-heart isolation, physical pad selection and valuable confirmation. social-ui native/four-race gates pass. See S-ui.txt."
         },
         {
           "id": "S-talk",
-          "status": "mechanics_validated_live_NPC_UI_gate_pending",
-          "evidence": "social-dialogue.json: 617 checks, zero failures, 7 later-package skips. Picker/Npc2D chain remains at S-ui/P14/I2."
+          "status": "validated",
+          "evidence": "social-dialogue.json mechanics plus social-ui-integration.json live NPC -> picker -> reaction transfer, NPC hold/release, exact-once gift debit, weekly-heart isolation, physical pad selection and valuable confirmation. social-ui native/four-race gates pass. See S-ui.txt."
         },
         {
           "id": "T-routes",
@@ -140,7 +140,8 @@
       "packages": [
         {
           "id": "S-ui",
-          "status": "pending"
+          "status": "validated",
+          "evidence": "social-ui-integration.json: 1294 checks in 8 sections, 0 failed, 104 named native/later skips; social-ui-{animal,fairy,hobbit,ghost}.json: 139 checks each, 0 failed, 12 native-only skips. social-ui-native.json: 45 clean checks, inspected standalone and real farm/journal captures. All four reviewed baselines <=1.5. See S-ui.txt."
         },
         {
           "id": "T-director",
@@ -183,7 +184,8 @@
     "P17 ships the chosen Miljøer v2 date, coin/horizontal-energy chip, five-heart row and eight slots. All player/quest values are event-driven; clicking a slot uses the production action guard. FIFO farm toasts keep four visible and eight queued; social heart feedback is coalesced with its conversation result. The area title appears on real travel, never initial load, and hides behind modals. The native outline is calibrated to the mock's visible stroke. Hotbar chrome comparisons mask the four superseded placeholder icon interiors in both inputs; full captures and every reviewed painted asset remain intact. The 61.222 difference to the superseded whole-farm CSS mock remains explicit in hud-legacy-comparison.json. The frozen shared theme is unchanged.",
     "P18 ships real Lua shop catalogs and 24-slot backpack/workshop screens. All prices, ownership, hours, recipe locks and transactions use their owning services. Eight-slot keyboard/pad assignment follows the chosen HUD. A native pixel test found and fixed clipped bag focus rings. The unchanged 2534 reviewed assets pass. Arsenal/gem cards remain named later-dungeon skips, and the wear-now prompt activates only when production WardrobeManager exists. See P18.txt for comparison methodology and integration evidence.",
     "P14 installs actual painted NPCs, reentrant dialogue sessions and a data-driven journal, with exact-once disposal, four-race/raw-hour context and Continue skipping old opening flags. Threaded animation requests are owned by the world warming flow. The dialogue and journal native baselines were inspected; source comparison details and remaining package hooks are explicit in P14.txt. This is an integration checkpoint, not final usable-towns acceptance.",
-    "V6/T-director installs real world-owned services, current routes and live room keepers, safe raw-hour curfew, capped populations and readable painted crowds. Counter underfoot selection restores DT53 with unchanged shapes; independent ground-space replay and original mutants pass. Native shop-art gates pass without modifying approved illustrations. See V6-T-director.txt."
+    "V6/T-director installs real world-owned services, current routes and live room keepers, safe raw-hour curfew, capped populations and readable painted crowds. Counter underfoot selection restores DT53 with unchanged shapes; independent ground-space replay and original mutants pass. Native shop-art gates pass without modifying approved illustrations. See V6-T-director.txt.",
+    "S-ui ships the People book, live gift transfer, journal calendar and event-fed social HUD. Read-only chips are labels using theme styles; sprout hearts distinguish friendship. Portraits warm when met and on Continue, not when opening the book (native open 4.4 ms). Birthday space is reserved in the HUD only when used. The native four-screen baselines and real farm/journal integration were inspected; 2534 reviewed art/theme files remain unchanged."
   ],
   "scope_basis": "The four-stage 27-package M1b plan in the original durable LEAD_NOTES.md (2026-10-15); package amendments remain binding. This is the usable-towns milestone, before the later dungeon and feature milestones.",
   "followup_layers": [

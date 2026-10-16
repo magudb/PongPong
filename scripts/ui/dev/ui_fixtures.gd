@@ -56,6 +56,8 @@ const BACKDROPS := {
 	"hud": ["#a9c97a", "#9cbf6c", 22.0], "forest": ["#232a44", "#1c2138", 22.0],
 	"shop": ["#d7cbe9", "#cbbde3", 18.0], "dialogue": ["#cde0a6", "#bfd694", 22.0],
 	"journal": ["#3a3150", "#3a3150", 22.0], "inventory": ["#3a3150", "#3a3150", 22.0],
+	"people": ["#3a3150", "#3a3150", 22.0], "gift": ["#3a3150", "#3a3150", 22.0],
+	"calendar": ["#3a3150", "#3a3150", 22.0], "social_hud": ["#b9d7c4", "#aacbb6", 18.0],
 	"pause": ["#a9c97a", "#9cbf6c", 22.0], "saveload": ["#a9c97a", "#9cbf6c", 22.0], "settings": ["#a9c97a", "#9cbf6c", 22.0],
 	"husbyggeri": ["#3a3150", "#3a3150", 22.0], "indretning": ["#a9c97a", "#9cbf6c", 22.0], "home_chest": ["#3a3150", "#3a3150", 22.0],
 	"garderobe": ["#3a3150", "#3a3150", 22.0], "samlerbog": ["#3a3150", "#3a3150", 22.0],

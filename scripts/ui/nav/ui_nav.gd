@@ -429,6 +429,10 @@ class _GroupNav extends RefCounted:
 		_connections = keep
 
 	func _on_focus(gi: int, ctrl: Control) -> void:
+		# A focus callback can rebuild the page before this callback resumes.
+		# Disconnection does not revoke a signal emission already in progress.
+		if ctrl.get_meta(&"tt_nav_groups", null) != self:
+			return
 		if remember_focus:
 			memory[gi] = ctrl
 		relink()
@@ -469,6 +473,8 @@ class _GroupNav extends RefCounted:
 				var ctrl := c as Control
 				if not is_instance_valid(ctrl) or not ctrl.is_inside_tree():
 					continue
+				if ctrl.get_meta(&"tt_nav_groups", null) != self:
+					continue
 				if n > 1 or not ring:
 					if bool(ctrl.get_meta(&"tt_edge_down", false)):
 						_leave(ctrl, UiNav.DOWN, down_gi, wrap_down)
@@ -479,9 +485,9 @@ class _GroupNav extends RefCounted:
 			var last_here := _last_stop(gi)
 			var nxt := UiNav.first_enabled(groups[(gi + 1) % n]) if (gi + 1 < n or ring) else null
 			var prv := _last_stop((gi - 1 + n) % n) if (gi > 0 or ring) else null
-			if last_here != null and nxt != null and last_here.is_inside_tree() and nxt.is_inside_tree():
+			if last_here != null and nxt != null and last_here.is_inside_tree() and nxt.is_inside_tree() and last_here.get_meta(&"tt_nav_groups", null) == self:
 				last_here.focus_next = last_here.get_path_to(nxt)
-			if first_here != null and prv != null and first_here.is_inside_tree() and prv.is_inside_tree():
+			if first_here != null and prv != null and first_here.is_inside_tree() and prv.is_inside_tree() and first_here.get_meta(&"tt_nav_groups", null) == self:
 				first_here.focus_previous = first_here.get_path_to(prv)
 
 	func _leave(ctrl: Control, dir: StringName, target_group: int, wraps: bool) -> void:

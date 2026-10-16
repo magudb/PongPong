@@ -737,8 +737,7 @@ static func _walk_page(t, root: Node, start: Control, budget: Dictionary, option
 		if not is_instance_valid(c) or not c.is_visible_in_tree():
 			continue
 		var cp := _rel(root, c)
-		if _is_other_radio_member(budget, c):
-			continue                                           # reached (it is an edge of the page's tab) but not probed: moving onto it would swap the page under the walk
+		var other_page_tab := _is_other_radio_member(budget, c)
 		c.grab_focus()
 		if _owner(t) != c:
 			_note(report, "%s cannot take focus (focus_mode %d)" % [cp, c.focus_mode], cp)
@@ -751,8 +750,10 @@ static func _walk_page(t, root: Node, start: Control, budget: Dictionary, option
 			if int(budget["steps"]) >= int(budget["max"]):
 				budget["truncated"] = true
 				break
+			# A cached row can retain focus while Left/Right changes its filter.
+			# Restore the page even when the focus owner is still the same node.
+			await _ensure_page(t, budget, options)
 			if _owner(t) != c:
-				await _ensure_page(t, budget, options)
 				c.grab_focus()
 			budget["steps"] = int(budget["steps"]) + 1
 			_press_dir(t, dir, via)
@@ -763,6 +764,17 @@ static func _walk_page(t, root: Node, start: Control, budget: Dictionary, option
 				(report["focus_loss"] as Array).append({"from": cp, "dir": SHORT_DIRS[dir], "to": ""})
 				continue
 			if nxt == c:
+				continue
+			# A list's Left/Right shortcut may change filters and focus a row
+			# reused on that other page. Such an edge cannot be concatenated
+			# with this page's row edges during replay. Retain the tab-to-tab
+			# graph; each_page probes the destination page's contents.
+			if _page_changed(budget) and not _context_tab(budget, nxt):
+				continue
+			# Traverse sibling tabs so a third tab remains reachable, but do not
+			# mix the contents of that sibling's page into the current graph.
+			# each_page separately checks all of its content and cross-axis edges.
+			if other_page_tab and not (nxt is BaseButton and (nxt as BaseButton).button_group == (c as BaseButton).button_group):
 				continue
 			if not _inside(root, nxt):
 				_defect(report, "focus_escaped", cp, "%s from %s moves focus out of the screen to %s" % [dir, cp, nxt.get_path()], {"dir": str(dir)})
@@ -794,8 +806,29 @@ static func _ensure_page(t, budget: Dictionary, options: Dictionary) -> void:
 
 
 static func _is_other_radio_member(budget: Dictionary, c: Control) -> bool:
-	var pm: Variant = budget.get("page_member", null)
-	return pm != null and is_instance_valid(pm) and c != pm and c is BaseButton and (c as BaseButton).button_group != null and (c as BaseButton).button_group == (pm as BaseButton).button_group
+	if not c is BaseButton or (c as BaseButton).button_group == null:
+		return false
+	# The initial page also has a selected radio context. Exploring a sibling
+	# tab here swaps a filtered list beneath the graph; each_page probes that
+	# sibling separately. Keep every recorded edge in its own page context.
+	var members: Array = budget.get("page_state", []).duplicate()
+	members.append(budget.get("page_member", null))
+	for member in members:
+		if member != null and is_instance_valid(member) and c != member and (member as BaseButton).button_group == (c as BaseButton).button_group:
+			return true
+	return false
+
+static func _context_tab(budget: Dictionary, control: Control) -> bool:
+	if not control is BaseButton or (control as BaseButton).button_group == null:
+		return false
+	var members: Array = budget.get("page_state", []).duplicate()
+	members.append(budget.get("page_member", null))
+	return members.any(func(member): return member != null and is_instance_valid(member) and (member as BaseButton).button_group == (control as BaseButton).button_group)
+
+static func _page_changed(budget: Dictionary) -> bool:
+	var members: Array = budget.get("page_state", []).duplicate()
+	members.append(budget.get("page_member", null))
+	return members.any(func(member): return member != null and is_instance_valid(member) and not (member as BaseButton).button_pressed)
 
 
 static func _first_focusable(list: Array[Control]) -> Control:

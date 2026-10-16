@@ -41,6 +41,8 @@ func _ready() -> void:
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("journal_guide", Callable(get_script(), &"fixture_guide"))
 
 func _initial_focus() -> Control:
+	if _tab == 2 and _calendar != null:
+		return _calendar.initial_focus()
 	return _rows[0] if not _rows.is_empty() and _tab < 2 else _tabs[_tab]
 
 func _on_page(step: int) -> void:
@@ -61,6 +63,8 @@ func _set_tab(index: int) -> void:
 		return
 	_tab = index
 	_selected = &""
+	if _tab == 2 and _calendar != null:
+		_calendar.season_index = -1
 	_refresh_texts()
 
 func _schedule_refresh() -> void:
@@ -191,6 +195,9 @@ func _show_details(id: StringName) -> void:
 
 func _wire() -> void:
 	UiNav.wire_row(_tabs + [%CloseButton])
+	if _tab == 2 and _calendar != null:
+		_calendar.wire_navigation(_tabs + [%CloseButton])
+		return
 	UiNav.wire_ring(_rows)
 	UiNav.wire_groups([_tabs + [%CloseButton], _rows], true, false)
 
@@ -233,3 +240,6 @@ static func fixture_guide(node: Node, _host: Node) -> void:
 	QuestManager.complete_manual(&"lost_cat", &"follow_pawprints")
 	node.open()
 	node._select(&"lost_cat")
+	# The immutable original mock predates the calendar. Its fixture keeps the
+	# two historical tabs; the production book exposes all three.
+	node.get_node("%TabCalendar").hide()

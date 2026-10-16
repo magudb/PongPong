@@ -248,10 +248,10 @@ text = "✕"
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
-offset_left = 530.0
-offset_top = 150.0
-offset_right = 1160.0
-offset_bottom = 620.0
+offset_left = 108.0
+offset_top = 190.0
+offset_right = 1172.0
+offset_bottom = 630.0
 
 [node name="HintBar" type="HBoxContainer" parent="." unique_id=901117283]
 unique_name_in_owner = true

@@ -42,7 +42,7 @@ const MODE_ACTION := &"action"
 ## mode -> the HUD screen shown in it
 const HUD_FOR_MODE := {&"farm": &"hud", &"action": &"forest_hud"}
 ## screens whose controls must never take keyboard focus
-const NO_FOCUS_SCREENS: Array[StringName] = [&"hud", &"forest_hud"]
+const NO_FOCUS_SCREENS: Array[StringName] = [&"hud", &"forest_hud", &"social_hud"]
 
 var mode: StringName = MODE_FARM
 

@@ -209,3 +209,11 @@ Escape and Continue behavior pass all four races (96 checks each). Native
 captures were inspected; unchanged P14 dialogue/journal comparisons pass. The
 normal-boot integration passes 656 checks without failures or engine messages.
 See N04.txt. S-ui, I2/final gates and ghost-family work remain before merging.
+
+S-ui social screens — 2026-10-16
+
+People, gift handoff/reaction, the journal calendar and birthday/festival HUD
+are integrated. The four race runs pass 139 checks each, and the wider eight-
+section gate passes 1294 checks. The 45-check native gate includes inspected
+real farm/journal captures, guide comparisons and four pinned screen baselines.
+See S-ui.txt. I2/final budgets and ghost-family/reaction work remain; no merge yet.

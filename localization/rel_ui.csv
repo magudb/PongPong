@@ -1,8 +1,41 @@
 keys,da,en
-REL_GIFT_TOAST_FMT,"Du gav %s","You gave %s"
-REL_GIFT_HEARTS_FMT,"+%d hjerter","+%d hearts"
+REL_GIFT_TOAST_FMT,Du gav %s,You gave %s
+REL_GIFT_HEARTS_FMT,+%d hjerter,+%d hearts
 REL_TALK_GOODBYE,Vi ses!,See you!
 REL_TALK_GIFT,Giv en gave,Give a gift
 REL_TALK_TOPIC,Fortæl mig om dig,Tell me about yourself
 REL_TALK_EVENT,Hvad har du på hjerte?,What is on your mind?
 REL_TALK_MORE,Snak lidt ▸,Chat a little ▸
+REL_PEOPLE_ALL,Alle · %d,All · %d
+REL_PEOPLE_NEAR,Nære · %d,Close · %d
+REL_PEOPLE_TODAY,I dag · %d,Today · %d
+REL_PEOPLE_MET,Du har mødt %d af %d,You have met %d of %d
+REL_PEOPLE_EMPTY,Lær dine naboer at kende.,Get to know your neighbours.
+REL_PEOPLE_HEARTS,%s hjerter,%s hearts
+REL_PEOPLE_CHAT,✓ Snakket denne uge,✓ Talked this week
+REL_PEOPLE_GIFTS,Gaver tilbage: %d / 2,Gifts left: %d / 2
+REL_PEOPLE_BIRTHDAY,Fødselsdag: %s (om %d dage),Birthday: %s (in %d days)
+REL_PEOPLE_FAVORITES,KENDTE FAVORITTER,KNOWN FAVOURITES
+REL_PEOPLE_EVENTS,HJERTEBEGIVENHEDER,HEART EVENTS
+REL_PEOPLE_EVENT_COUNT,Oplevet: %d · Klar til en snak: %d,Seen: %d · Ready for a chat: %d
+REL_GIFT_TITLE,Giv en gave til %s,Give a gift to %s
+REL_GIFT_LIMITS,Gaver denne uge: %d / 2 · I dag: %d / 1,Gifts this week: %d / 2 · Today: %d / 1
+REL_GIFT_GIVE,Giv,Give
+REL_GIFT_STOCK,Du ejer %d · Sælges for %d,You own %d · Sells for %d
+REL_GIFT_BIRTHDAY,Fødselsdag om %d dage. En gave på dagen tæller fire gange.,Birthday in %d days. A gift on the day counts four times.
+REL_GIFT_BELATED,Du kan stadig give en forsinket fødselsdagsgave.,There is still time for a belated birthday gift.
+REL_GIFT_HIDDEN,%d ting er gemt til en opgave.,%d items are reserved for a quest.
+REL_GIFT_LIMIT_DAY,Du har allerede givet en gave i dag.,You have already given a gift today.
+REL_GIFT_LIMIT_WEEK,Du har givet ugens to gaver.,You have given this week’s two gifts.
+REL_GIFT_CONFIRM_TITLE,Giv gaven væk?,Give this gift away?
+REL_GIFT_CONFIRM_BODY,Vil du give %s væk?,Would you like to give %s away?
+REL_GIFT_CONFIRM_YES,Giv gaven,Give gift
+REL_TASTE_LOVE,Elsker,Loves
+REL_TASTE_LIKE,Kan lide,Likes
+REL_TASTE_NEUTRAL,Helt fin,Quite nice
+REL_TASTE_DISLIKE,Kan ikke lide,Dislikes
+REL_TASTE_HATE,Ikke noget for mig,Not for me
+REL_CAL_TODAY,I dag,Today
+REL_CAL_YEAR,År %d,Year %d
+REL_HUD_OPEN,%s · åben til %s,%s · open until %s
+REL_HUD_FROM,%s i dag · fra %s,%s today · from %s

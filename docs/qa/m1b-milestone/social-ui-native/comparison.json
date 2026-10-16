@@ -1,0 +1,26 @@
+{
+  "people": {
+    "historical_full_mean": 17.03,
+    "reviewed_full_mean": 0.0,
+    "reviewed_limit": 1.5,
+    "ok": true
+  },
+  "gift": {
+    "historical_full_mean": 17.95,
+    "reviewed_full_mean": 0.0,
+    "reviewed_limit": 1.5,
+    "ok": true
+  },
+  "calendar": {
+    "historical_full_mean": 16.331,
+    "reviewed_full_mean": 0.873,
+    "reviewed_limit": 1.5,
+    "ok": true
+  },
+  "social_hud": {
+    "historical_full_mean": 5.087,
+    "reviewed_full_mean": 0.0,
+    "reviewed_limit": 1.5,
+    "ok": true
+  }
+}

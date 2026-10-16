@@ -8,6 +8,8 @@ const SLOT_COUNT := 8
 @onready var stamina_bar: ProgressBar = %StaminaBar
 @onready var hearts: Control = %Hearts
 @onready var quest_card: Control = %QuestCard
+var _social_space: Control
+
 @onready var quest_tracker: VBoxContainer = %QuestTracker
 @onready var hotbar: HBoxContainer = %Hotbar
 @onready var tool_name_label: Label = %ToolNameLabel
@@ -23,6 +25,20 @@ var _weather: StringName = &"solskin"
 var _days_left := 0
 var _pending_friends: Dictionary = {}
 var _last_health := Vector2i(-1, -1)
+
+## The social overlay reserves a row below health without moving the chosen
+## HUD when there are no birthdays. The HUD owns the spacer's lifetime.
+func set_social_row_height(height: float) -> void:
+	if _social_space == null and height > 0:
+		_social_space = Control.new()
+		_social_space.name = "SocialSpace"
+		_social_space.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var column := get_node("TopRight")
+		column.add_child(_social_space)
+		column.move_child(_social_space, hearts.get_index() + 1)
+	if _social_space != null:
+		_social_space.custom_minimum_size.y = maxf(0, height)
+		_social_space.visible = height > 0
 
 func _ready() -> void:
 	toasts.z_index = 100

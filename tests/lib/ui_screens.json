@@ -533,7 +533,10 @@
 				"panel_pixels",
 				"button_pixels",
 				"compare_guide"
-			]
+			],
+			"options": {
+				"max_steps": 16000
+			}
 		},
 		{
 			"id": "journal",
@@ -562,7 +565,10 @@
 				"panel_pixels",
 				"button_pixels",
 				"compare_guide"
-			]
+			],
+			"options": {
+				"max_steps": 16000
+			}
 		},
 		{
 			"id": "inventory",

@@ -163,7 +163,7 @@ static func give_gift(npc: String, item: String) -> Dictionary:
 	return result
 
 ## Called only after the gift picker has closed and released its modal.
-static func react(npc: String, result: Dictionary) -> Dictionary:
+static func react(npc: String, result: Dictionary, present := true) -> Dictionary:
 	if not bool(result.get("ok", false)):
 		return {}
 	var key := str(Svc.static_call(TALK, &"pick", [npc, "GIFT_" + str(result.get("class", "neutral")).to_upper(), {}], ""))
@@ -185,6 +185,6 @@ static func react(npc: String, result: Dictionary) -> Dictionary:
 	var line := {"id": key.to_lower(), "text_key": key}
 	if key.ends_with("_V"):
 		line["voice_key"] = "voice/%s/%s" % [npc, key.to_lower()]
-	if key != "" and ui != null and ui.has_method("start_dialogue"):
+	if present and key != "" and ui != null and ui.has_method("start_dialogue"):
 		ui.call("start_dialogue", {"name_key": SocialData.npc_row(npc).get("name_key", ""), "npc_id": npc}, [line], [])
 	return line
