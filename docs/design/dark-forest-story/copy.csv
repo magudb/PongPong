@@ -1,0 +1,35 @@
+keys,da,en
+QUEST_FOREST_MOTHER_S01_TITLE,Brevet uden afsender,The letter without a sender
+QUEST_FOREST_MOTHER_S01_DESC,Et brev bærer mors håndskrift. Tag det med til Postbud Pip. Hvor har det været?,A letter bears Mum’s handwriting. Take it to Postbud Pip. Where has it been?
+OBJ_FOREST_MOTHER_S01_LEAD,"Læs brevet, og tal med Postbud Pip.",Read the letter and speak to Postbud Pip.
+QUEST_FOREST_MOTHER_S02_TITLE,Den sidste tur ned,The last descent
+QUEST_FOREST_MOTHER_S02_DESC,Vagten Oak har et spor efter mor. Følg det ned med Skovliften.,Guard Oak has a trace of Mum. Follow it down in the forest lift.
+OBJ_FOREST_MOTHER_S02_LEAD,"Se liftbogen, og undersøg stien ved Skovkanten.",Read the lift record and inspect the trail at the forest edge.
+QUEST_FOREST_MOTHER_S03_TITLE,Stien uden kort,The unmapped path
+QUEST_FOREST_MOTHER_S03_DESC,Mors mærke sidder på en gammel lygte. Natteblik kan måske læse kortet ved siden af.,Mum’s mark is on an old lamp. Natteblik may be able to read the map beside it.
+OBJ_FOREST_MOTHER_S03_LEAD,"Find lygten, og få hjælp til at læse kortet.",Find the lamp and get help reading the map.
+QUEST_FOREST_MOTHER_S04_TITLE,Huset der husker,The house that remembers
+QUEST_FOREST_MOTHER_S04_DESC,"Et tomt hus gemmer et minde om mor. Tænd lygten, og se efter hendes spor.",An empty house holds a memory of Mum. Light the lamp and look for her traces.
+OBJ_FOREST_MOTHER_S04_LEAD,"Undersøg bordet, kurven og lygten.","Inspect the table, basket and lamp."
+QUEST_FOREST_MOTHER_S05_TITLE,Navne mellem rødderne,Names among the roots
+QUEST_FOREST_MOTHER_S05_DESC,Nogen har glemt sit navn. Måske prøvede mor at hjælpe dem hjem.,Someone has forgotten their name. Perhaps Mum was trying to help them get home.
+OBJ_FOREST_MOTHER_S05_LEAD,Hjælp den rejsende med at huske sin egen historie.,Help the traveller remember their own story.
+QUEST_FOREST_MOTHER_S06_TITLE,Det hun lovede,What she promised
+QUEST_FOREST_MOTHER_S06_DESC,"Mors ord er blevet tilbage i skoven. Find ud af, hvad hun lovede, og hvem hun ville hjælpe.",Mum’s words remain in the wood. Find out what she promised and whom she wanted to help.
+OBJ_FOREST_MOTHER_S06_LEAD,Sammenlign mors ord med sporet på runestenen.,Compare Mum’s words with the trace on the runestone.
+QUEST_FOREST_MOTHER_S07_TITLE,Bag det sidste lys,Beyond the last light
+QUEST_FOREST_MOTHER_S07_DESC,"Mors spor mødes dybt i skoven. Tag det, du har lært, med til den sidste lysning.",Mum’s traces meet deep in the wood. Take what you have learned to the final clearing.
+OBJ_FOREST_MOTHER_S07_LEAD,Følg den sidste sikre sti gennem skoven.,Follow the last confirmed path through the wood.
+QUEST_FOREST_MOTHER_S08_TITLE,Hvad der skete med mor,What happened to Mum
+QUEST_FOREST_MOTHER_S08_DESC,"Følg mors sidste spor. Find ud af, hvad der skete, og hvad der nu skal ske.",Follow Mum’s last trace. Find out what happened and what comes next.
+OBJ_FOREST_MOTHER_S08_LEAD,"Find ud af, hvad der skete med mor.",Find out what happened to Mum.
+STORY_MOTHER_PIP_LETTER,"Der er kommet et brev til dig. Det er fugtigt, men posen var tør.","A letter has arrived for you. It is damp, but the bag was dry."
+STORY_MOTHER_LETTER_TRACE,"Jeg fulgte lyset, til stien holdt op. Jeg satte en lampe, så andre kunne finde hjem.",I followed the light until the path ended. I left a lamp so others could find their way home.
+STORY_MOTHER_OAK_RECORD,Her står hendes navn. Hun gik ned med kort og lygte.,Her name is here. She went down with a map and a lantern.
+STORY_MOTHER_NATTEBLIK_MAP,"Det kort tegnede vi sammen. Men hun tegnede en sti, jeg ikke kunne se.",We drew that map together. But she drew a path I could not see.
+STORY_MOTHER_UGLE_ECHO,"Det er ikke et svar fra hende. Det er et minde om noget, hun sagde.",This is not a reply from her. It is a memory of something she said.
+STORY_MOTHER_ROOTS_LOOK,På skiltet står der gæst. Men nedenunder kan du ane et navn.,"The sign says guest. Beneath it, you can just make out a name."
+STORY_MOTHER_RECORDED_WORDS,"Hvis nogen siger, hvem du skal være, så vent. Du må selv vælge.","If someone tells you who to be, wait. You get to choose."
+DLG_GHOSTFAM_DYNE_KIN_1_4,"Din mor er min yngste. Hun gik ind i Mørkeskoven. Jeg ved ikke, hvad der skete derinde. Men der er en plads til jer begge ved bålet.",Your mother is my youngest. She went into the Dark Forest. I do not know what happened there. But there is a place for both of you by the fire.
+DLG_GHOSTFAM_SILKE_KIN_1_1,"Hej, familie. Jeg er Silke. Din mor og jeg er søskende. Du er Blunds søskendebarn. Jeg har glædet mig til at møde dig.","Hello, family. I am Silke. Your mother and I are siblings. You are Blund’s cousin. I have been looking forward to meeting you."
+STORY_MOTHER_FAMILY_CATCHUP,Kan vi tale om mor?,Can we talk about Mum?

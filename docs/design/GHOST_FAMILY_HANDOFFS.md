@@ -48,3 +48,14 @@ Without `ghost_puppet` and the 4 px hover the stock walk waddles: acceptable onl
 ## H4 - to the user (the only person who can run the imagegen tool)
 
 `art/prompts_ghosts.json` holds the three prompts (`ghosts1`, `ghosts2`, `ghostbacks1`), the three attachments (your cartoon style reference, `art/shape_reference/shape_reference_turnarounds.png`, `art/shape_reference/shape_reference_silhouettes.png`) and the checklist (seven lines). Nothing painted exists; the stand-in ships until you decide. Read the new `scope_of_the_painted_ghosts` field first: it says what the painted Pedro and Hviske do and do not change.
+
+
+## H5 Forest story and the missing mother
+
+Current narrative direction, 2026-10-16: [DARK_FOREST_STORY_ADDENDUM.md](DARK_FOREST_STORY_ADDENDUM.md) and [draft copy](dark-forest-story/copy.csv). The forest journey investigates the hero's mother. For a ghost hero she is Dyne's youngest and Silke's sibling, not Silke herself. She disappeared after the hero was born and before the farm arrival. The hero's gender, cousin relationship, lottery, family gifts and daily schedules are unchanged.
+
+During S01–S02 integration, revise `DLG_GHOSTFAM_DYNE_KIN_1_4` and `DLG_GHOSTFAM_SILKE_KIN_1_1` in `localization/ghostfamily.csv` to the draft targets, then review both languages. These two rows are unvoiced. Do not change or regenerate frozen `_V` copy. Add a repeatable story topic for players who already consumed the first-meeting flags; updating the first scene alone would strand existing saves with the old information. Ordinary family services and greetings must remain reachable alongside the story topic.
+
+Check both ghost skins and all six other hero skins. Ghost heroes keep the family relation; other heroes receive neighbourly help and never inherit it through the story branch. Parent wording may identify the mother while all player wording remains gender-neutral. An echo or old letter must not reveal a mother's current life/death status before the chosen ending.
+
+This is a design handoff. The live CSV, Lua modules, save state and first-meeting behavior have not changed in this pass.

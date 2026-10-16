@@ -1,0 +1,91 @@
+Dark Forest story art prompts
+
+Status: proposed source paintings for the mother mystery, 2026-10-16.
+These prompts have not been sent to image generation. No selected master,
+runtime export, replacement or visual approval is claimed.
+Story: docs/design/DARK_FOREST_STORY_ADDENDUM.md.
+Style: docs/art/style-guide.txt.
+
+Reference roles for every prompt
+
+Attach tools/art/drawn/sources/heroes.png for the approved character drawing,
+warm contours and material treatment. Attach
+docs/qa/m1b-milestone/accepted-native/art_environment_forest_player.png for the
+painted forest palette, native viewing angle, path readability and object scale.
+These references set the art style. The novel is a narrative reference, not an
+image or typography reference. Keep the existing hero and terrain paintings.
+
+The props below share one proposed trace: a cream-thread repair with three
+short diagonal stitches. Introduce it in the first letter/lamp inspection so
+players can recognise it later. It is distinct from the Natlys family's coral
+wool and must work for every hero's mother. Approve the trace before generation.
+
+Prompt 1 Watermarked letter and a repaired lamp
+
+Create a hand-painted storybook source sheet with two separate object studies:
+a folded cream paper letter and a small, well-used forest lantern. Match the
+attached approved paintings: matte gouache and watercolor, visible pigment and
+paper grain, slightly irregular warm pencil contours, rounded functional parts,
+quiet detail and clear silhouettes. Use a 1024x1024 source canvas with generous
+clear gutters and a transparent background. Keep the letter and lantern fully
+separate so each can be extracted without cutting through another object.
+
+The letter is creased and damp along one edge, with a subtle open-circle
+watermark. Leave the paper free of readable writing; localized handwriting and
+journal text are added by the game. The lantern has dull brass, a worn honey
+timber handle, clear glass and a narrow cloth grip repair with three diagonal
+cream stitches. Its small warm light should feel cared for rather than ornate.
+Keep the functional handle, glass and base readable. The outer glow and contact
+shadow are separate runtime layers, not painted rectangles behind the cutout.
+
+This is a source study, not a drop-in sprite. Choose the final canvas, pivot,
+interaction footprint and icon crop against the existing catalog contracts
+before exporting. Do not introduce a mother portrait or species-specific hand.
+
+Prompt 2 The clearing that remembers a room
+
+Create one 1536x1024 environment concept in the attached game's painted forest
+style. A small clearing holds the arrangement of a kitchen whose walls have
+quietly disappeared: a worn wooden table, two simple mismatched chairs, a sewing
+basket, an unfinished folded map and the repaired lantern from the approved
+letter/lamp source study. Do not generate this before that study is selected;
+attach its selected master as an additional identity reference.
+
+Keep a broad readable approach and exit. The lantern gives a small patch of
+owl-gold light on the table. Beyond it are shadow-moss trunks, night-blue gaps
+and restrained quiet-teal mushrooms. A chair is pulled out as though somebody
+has just stood up. The scene feels familiar and unsettling through absence and
+arrangement. Keep the tactile timber, matte pigment and gentle contours of the
+approved game. The clearing is not a realistic horror set. Avoid broad neon,
+glossy surfaces and a black wash that hides paths. No people or readable text.
+
+This is a composition concept, not a replacement floor texture or proof that a
+story interior is implemented. After selection, separate new props and lighting
+layers under the project's existing alpha, projection and sorting contracts.
+
+Prompt 3 Roots that frame an unfinished tale
+
+Create a 1024x1024 painted source study of an old wooden waymarker with roots
+curling around its edges like an unfinished page frame. Match the attached
+approved forest's viewing angle and materials. Keep the upright post, peg and
+wood grain believable and the sign's silhouette readable beside the existing
+chibi heroes. One strip of pale, fibrous bark is caught on a root like paper.
+Leave the sign face blank for localized labels. Use warm pencil contours,
+shadow moss and night blue, with a tiny dull-gold catchlight. Transparent
+background, generous clear margins, no ground rectangle or baked light bloom.
+
+The Root Scribe's presence is suggested by the repeated frame shape and an
+empty place for a name. Do not add a character or resolve its final form in
+this prop. Export only after its placement, collision, pivot and sorting have
+been checked against the actual forest scene. Keep the existing navigation
+widths and never conceal a clue interaction point beneath these roots.
+
+Review before production use
+
+Save the exact submitted prompts, reference roles and selected lossless masters
+here when generation happens. Compare props beside every hero species in the
+dark forest, at native scale and with the normal lantern. Inspect alpha edges,
+the cream stitch identity, ground contact, path clearance, occlusion and text
+contrast. New paintings need an explicit style review and the usual asset,
+import and memory checks. The current approval ledger covers existing assets,
+not these ungenerated requests.

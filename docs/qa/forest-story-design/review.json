@@ -1,0 +1,46 @@
+{
+  "result": "pass",
+  "scope": "Design documentation and draft authoring data only; no runtime quest implementation or narrative playtest is claimed.",
+  "reviewed_at_utc": "2026-10-16T14:16:20.417771+00:00",
+  "main_baseline": "f008dafb653e8a8f96416d0fe763d902271b6df0",
+  "confirmed_premise": {
+    "date": "2026-10-16",
+    "premise": "Journey into the Dark Forest to discover what happened to our mother.",
+    "creative_reference": "The Hazel Wood by Melissa Albert"
+  },
+  "ending_status": "open; no answer assumed",
+  "proposed_chapters": 8,
+  "unique_evidence_ids": 8,
+  "draft_copy_rows": 34,
+  "copy_format": "Repository keys,da,en CSV reader; unique keys, complete columns, matching printf signatures, NFC, existing forbidden-word rules and <=240-character page limits. Family topic <=32.",
+  "max_copy_chars": {
+    "da": 132,
+    "en": 143
+  },
+  "new_draft_keys": 32,
+  "existing_unvoiced_copy_targets": [
+    "DLG_GHOSTFAM_DYNE_KIN_1_4",
+    "DLG_GHOSTFAM_SILKE_KIN_1_1"
+  ],
+  "chapter_dependencies": "Acyclic; every prerequisite precedes its chapter; all 24 chapter text references resolve.",
+  "relative_story_links_checked": [
+    "DUNGEON_V2_ADDENDUM.md",
+    "../art/style-guide.txt",
+    "dark-forest-story/chapters.json",
+    "dark-forest-story/copy.csv",
+    "../art/style-guide.txt",
+    "../art/dark-forest-story/prompts.txt"
+  ],
+  "playable_skins_in_design": 8,
+  "runtime_source_data_test_files_identical_to_main": 1163,
+  "runtime_binding_unchanged": "cd7ed9e909565fdbf7b43b6dd61f126ab3f5f30d4628da6e98484a9cbe081842",
+  "runtime_files_edited": [],
+  "assets_edited": [],
+  "new_art_generated": false,
+  "saved_art_prompts": "docs/art/dark-forest-story/prompts.txt",
+  "notes": [
+    "Proposed story beats and mother chronology are design targets, not an assertion that the user approved an ending.",
+    "Runtime family lines remain unchanged until story integration; existing saves require a catch-up topic.",
+    "No Godot test rerun needed for documentation-only changes. Existing source-bound town proofs remain valid."
+  ]
+}

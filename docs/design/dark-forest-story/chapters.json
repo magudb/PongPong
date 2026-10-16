@@ -1,0 +1,222 @@
+{
+  "status": "proposed narrative authoring data; not loaded by the game",
+  "confirmed_by_user": {
+    "date": "2026-10-16",
+    "premise": "Journey into the Dark Forest to discover what happened to our mother.",
+    "creative_reference": "The Hazel Wood by Melissa Albert"
+  },
+  "fate_decision": "open; no answer assumed",
+  "runtime_quest_ids": [],
+  "story_namespace": "forest_mother",
+  "supported_skins": [
+    "animal",
+    "animal_monkey",
+    "fairy",
+    "fairy_birk",
+    "hobbit",
+    "hobbit_bodil",
+    "ghost",
+    "ghost_hviske"
+  ],
+  "draft_copy": "copy.csv",
+  "draft_copy_rows": 34,
+  "existing_keys_requiring_later_runtime_revision": [
+    "DLG_GHOSTFAM_DYNE_KIN_1_4",
+    "DLG_GHOSTFAM_SILKE_KIN_1_1"
+  ],
+  "chapters": [
+    {
+      "id": "S01",
+      "status": "proposed; not installed",
+      "requires": [],
+      "areas": [
+        "farm",
+        "int_postkontoret"
+      ],
+      "target_floors": [],
+      "evidence_id": "letter_watermark",
+      "question": "Whose letter is this?",
+      "discovery": "Mother’s handwriting and a forest-lift route mark; the date is unreadable.",
+      "completion_contract": "Read the letter and inspect its route with Postbud Pip.",
+      "copy_keys": {
+        "title": "QUEST_FOREST_MOTHER_S01_TITLE",
+        "desc": "QUEST_FOREST_MOTHER_S01_DESC",
+        "lead": "OBJ_FOREST_MOTHER_S01_LEAD"
+      },
+      "fate_dependent": false
+    },
+    {
+      "id": "S02",
+      "status": "proposed; not installed",
+      "requires": [
+        "S01"
+      ],
+      "areas": [
+        "traetoppen",
+        "moerkeskoven"
+      ],
+      "target_floors": [],
+      "evidence_id": "lift_record",
+      "question": "Did she come this way?",
+      "discovery": "She entered with a lantern and surveying tools; the trailhead matches her mark.",
+      "completion_contract": "Compare Oak’s lift record, ride the lift when unlocked and inspect the marked trailhead.",
+      "copy_keys": {
+        "title": "QUEST_FOREST_MOTHER_S02_TITLE",
+        "desc": "QUEST_FOREST_MOTHER_S02_DESC",
+        "lead": "OBJ_FOREST_MOTHER_S02_LEAD"
+      },
+      "fate_dependent": false
+    },
+    {
+      "id": "S03",
+      "status": "proposed; not installed",
+      "requires": [
+        "S02"
+      ],
+      "areas": [
+        "moerkeskoven"
+      ],
+      "target_floors": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "evidence_id": "missing_path_map",
+      "question": "Where was she going?",
+      "discovery": "She charted routes with Natteblik, but drew a path missing from his map.",
+      "completion_contract": "Read the marked-lamp trace, obtain Natteblik’s account and satisfy the existing floor-four checkpoint.",
+      "copy_keys": {
+        "title": "QUEST_FOREST_MOTHER_S03_TITLE",
+        "desc": "QUEST_FOREST_MOTHER_S03_DESC",
+        "lead": "OBJ_FOREST_MOTHER_S03_LEAD"
+      },
+      "fate_dependent": false
+    },
+    {
+      "id": "S04",
+      "status": "proposed; not installed",
+      "requires": [
+        "S03"
+      ],
+      "areas": [
+        "moerkeskoven"
+      ],
+      "target_floors": [
+        5,
+        6
+      ],
+      "evidence_id": "shelter_memory",
+      "question": "What was she doing here?",
+      "discovery": "A recorded scene shows that she gave lost travellers shelter; it does not establish her present whereabouts.",
+      "completion_contract": "Restore the lamp and inspect the objects in the authored memory clearing.",
+      "copy_keys": {
+        "title": "QUEST_FOREST_MOTHER_S04_TITLE",
+        "desc": "QUEST_FOREST_MOTHER_S04_DESC",
+        "lead": "OBJ_FOREST_MOTHER_S04_LEAD"
+      },
+      "fate_dependent": false
+    },
+    {
+      "id": "S05",
+      "status": "proposed; not installed",
+      "requires": [
+        "S04"
+      ],
+      "areas": [
+        "moerkeskoven"
+      ],
+      "target_floors": [
+        7,
+        8
+      ],
+      "evidence_id": "traveller_account",
+      "question": "Who was she helping?",
+      "discovery": "The unfinished tales replace people’s names with roles; she was trying to get those people home.",
+      "completion_contract": "Recover a traveller’s account and satisfy the existing floor-eight checkpoint.",
+      "copy_keys": {
+        "title": "QUEST_FOREST_MOTHER_S05_TITLE",
+        "desc": "QUEST_FOREST_MOTHER_S05_DESC",
+        "lead": "OBJ_FOREST_MOTHER_S05_LEAD"
+      },
+      "fate_dependent": false
+    },
+    {
+      "id": "S06",
+      "status": "proposed; not installed",
+      "requires": [
+        "S05"
+      ],
+      "areas": [
+        "moerkeskoven"
+      ],
+      "target_floors": [
+        9,
+        10
+      ],
+      "evidence_id": "return_path_promise",
+      "question": "Why did she stay?",
+      "discovery": "She chose to keep a route home open; a condition bound her story to the wood. The surviving account stops before the outcome.",
+      "completion_contract": "Compare the recorded words, route stone and witnessed account.",
+      "copy_keys": {
+        "title": "QUEST_FOREST_MOTHER_S06_TITLE",
+        "desc": "QUEST_FOREST_MOTHER_S06_DESC",
+        "lead": "OBJ_FOREST_MOTHER_S06_LEAD"
+      },
+      "fate_dependent": false
+    },
+    {
+      "id": "S07",
+      "status": "proposed; not installed",
+      "requires": [
+        "S06"
+      ],
+      "areas": [
+        "moerkeskoven"
+      ],
+      "target_floors": [
+        11,
+        12
+      ],
+      "evidence_id": "last_journey",
+      "question": "What happened on her last journey?",
+      "discovery": "The accounts establish the final route and the force that bound it; the mother’s fate is revealed in S08.",
+      "completion_contract": "Assemble the accounts, satisfy the existing floor-twelve checkpoint and reach the final story clearing.",
+      "copy_keys": {
+        "title": "QUEST_FOREST_MOTHER_S07_TITLE",
+        "desc": "QUEST_FOREST_MOTHER_S07_DESC",
+        "lead": "OBJ_FOREST_MOTHER_S07_LEAD"
+      },
+      "fate_dependent": false
+    },
+    {
+      "id": "S08",
+      "status": "proposed; not installed",
+      "requires": [
+        "S07"
+      ],
+      "areas": [
+        "final_story_clearing",
+        "farm"
+      ],
+      "target_floors": [],
+      "evidence_id": "mother_fate",
+      "question": "What happened to our mother?",
+      "discovery": "Pending creative decision: explain what happened, why she could not return and what happens now.",
+      "completion_contract": "Author the chosen revelation and return scene; do not ship an unresolved finale.",
+      "copy_keys": {
+        "title": "QUEST_FOREST_MOTHER_S08_TITLE",
+        "desc": "QUEST_FOREST_MOTHER_S08_DESC",
+        "lead": "OBJ_FOREST_MOTHER_S08_LEAD"
+      },
+      "fate_dependent": true
+    }
+  ],
+  "integration_notes": [
+    "area names identify the existing hub and towns; generated floor IDs remain transient.",
+    "final_story_clearing is an authoring label, not a registered runtime map.",
+    "Floor ranges are proposed narrative targets, not changes to the generator.",
+    "Persistent evidence and authored clue anchors require implementation before these contracts become playable.",
+    "S08 must be fully authored and integrated before the complete arc ships."
+  ]
+}
