@@ -1,0 +1,31 @@
+== lifetime Monte Carlo: 20 saves per profile, 520 days, valuation 'keep'.  Keepsakes with a dungeon source: 41 (28 unique, 13 legendary)
+
+-- casual (runs/day 0.15): median runs 79, floors 237; mean gold per run 437; faints 4.6
+   keepsakes found by day (mean of the 41): d100: 8.3  d200: 16.4  d337: 22.4  d500: 25.8
+   day of the k-th UNIQUE (median / p10 / p90): 1: 15/3/45  2: 32/27/45  3: 38/30/66  5: 60/51/90  8: 97/76/138  12: 175/129/239
+   day of the k-th LEGENDARY (median / p10 / p90): 1: 116/69/151  2: 148/121/194  3: 169/147/228  5: 245/191/289  8: 446/285/9999
+   day when ALL 41 are found: median 9999.0, p10 9999, p90 9999
+   runs per unique found 4.3, per legendary found 9.8 (whole 520 days)
+   rare items per floor 0.89 -> one rare about every 1.1 floors
+   day with 8 moonstone in the bag: median 141 (p10 112, p90 207); with 8 amethyst: median 172 (p10 125, p90 205)   [the plan needs them for tiers 6 / 9 / 10: typical day 53 / 235 / 337]
+   first 100 days: 14 runs, 8.0 uniques (one per 1.7 runs), 0.3 legendaries (one per 39.0 runs)
+
+-- typical (runs/day 0.35): median runs 180, floors 541; mean gold per run 710; faints 5.1
+   keepsakes found by day (mean of the 41): d100: 16.4  d200: 24.1  d337: 30.4  d500: 35.5
+   day of the k-th UNIQUE (median / p10 / p90): 1: 3/1/13  2: 13/9/21  3: 16/13/26  5: 30/25/36  8: 48/40/60  12: 91/80/108
+   day of the k-th LEGENDARY (median / p10 / p90): 1: 48/21/66  2: 66/48/87  3: 78/62/102  5: 114/85/177  8: 263/185/310
+   day when ALL 41 are found: median 9999.0, p10 9999, p90 9999
+   runs per unique found 7.3, per legendary found 16.5 (whole 520 days)
+   rare items per floor 1.20 -> one rare about every 0.8 floors
+   day with 8 moonstone in the bag: median 65 (p10 52, p90 86); with 8 amethyst: median 60 (p10 47, p90 89)   [the plan needs them for tiers 6 / 9 / 10: typical day 53 / 235 / 337]
+   first 100 days: 35 runs, 12.3 uniques (one per 2.9 runs), 4.0 legendaries (one per 8.7 runs)
+
+-- dedicated (runs/day 0.60): median runs 306, floors 919; mean gold per run 977; faints 4.5
+   keepsakes found by day (mean of the 41): d100: 18.6  d200: 28.6  d337: 36.3  d500: 39.9
+   day of the k-th UNIQUE (median / p10 / p90): 1: 2/1/6  2: 7/6/11  3: 10/8/13  5: 18/15/20  8: 33/31/45  12: 68/66/78
+   day of the k-th LEGENDARY (median / p10 / p90): 1: 23/21/41  2: 45/28/52  3: 51/43/74  5: 102/63/153  8: 176/144/256
+   day when ALL 41 are found: median 5259.0, p10 451, p90 9999
+   runs per unique found 11.1, per legendary found 24.7 (whole 520 days)
+   rare items per floor 1.46 -> one rare about every 0.7 floors
+   day with 8 moonstone in the bag: median 27 (p10 21, p90 39); with 8 amethyst: median 29 (p10 22, p90 41)   [the plan needs them for tiers 6 / 9 / 10: typical day 53 / 235 / 337]
+   first 100 days: 58 runs, 14.2 uniques (one per 4.1 runs), 4.5 legendaries (one per 12.8 runs)

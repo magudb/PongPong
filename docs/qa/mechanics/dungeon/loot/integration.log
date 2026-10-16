@@ -1,0 +1,318 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=loot,loot_dungeon,appraisal,dungeon_floors
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.41wiug/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 0.9 s
+== section appraisal  (res://tests/sections/appraisal.gd)
+  ok    appraisal.dialogue_choice_present
+  ok    appraisal.opens_through_real_service_and_game_ui
+  ok    appraisal.lists_owned_rough_stacks
+  ok    appraisal.fee_charged_per_stone
+  ok    appraisal.saved_before_gain_observers
+  ok    appraisal.batch_max_twelve (stones=2 gold=2110 counter={ "skovkant": 13 } labels=12 selected=rough_skovkant)
+  ok    appraisal.no_gold_no_change
+  ok    appraisal.full_backpack_refuses_before_payment
+  ok    appraisal.escape_closes_and_frees_modal
+  ok    appraisal.reopens_once_after_free
+  --    appraisal: 10 checks, 0 failed, 0 skipped, 0.2 s
+== section dungeon_floors  (res://tests/sections/dungeon_floors.gd)
+  ok    dungeon_floors.floors.section_registered_order_45_and_resets
+  ok    dungeon_floors.floors.world_seed_made_on_new_game
+  ok    dungeon_floors.floors.hub_registers_first_floor
+  ok    dungeon_floors.floors.unregistered_floor_refused
+  ok    dungeon_floors.floors.hub_rune_always_lit
+  ok    dungeon_floors.floors.rune_picker_lists_one_plus_stones
+  ok    dungeon_floors.floors.enter_from_stone_starts_at_that_floor
+  ok    dungeon_floors.floors.seed_pinned_while_active
+  ok    dungeon_floors.floors.uid_and_rng_deterministic
+  ok    dungeon_floors.floors.done_cells_skip_consumed_markers
+  ok    dungeon_floors.floors.save_roundtrip_registers_floor_before_world
+  ok    dungeon_floors.floors.oil_refill_first_visit_only (oil=149.733333333333 area=moerkeskoven_f2 floor=2)
+  ok    dungeon_floors.floors.reenter_does_not_farm_refill
+  ok    dungeon_floors.floors.register_ahead_neighbours_and_unregister_far (area=moerkeskoven_f2 floor=2 registered={ 1: true, 2: true, 3: true } tasks=[] texts=[1, 2, 3] error=)
+  ok    dungeon_floors.floors.prefetch_equals_sync
+  ok    dungeon_floors.floors.floor_three_has_runestone (area=moerkeskoven_f3 error=)
+  ok    dungeon_floors.floors.stone_activation_effects
+  ok    dungeon_floors.floors.stone_activation_event_once
+  ok    dungeon_floors.floors.boss_gate_starts_closed
+  ok    dungeon_floors.floors.boss_flag_opens_hulen_and_chest
+  ok    dungeon_floors.floors.leave_with_open_modals_travels
+  ok    dungeon_floors.floors.reveal_is_explicit
+  ok    dungeon_floors.floors.new_day_clears_done_and_seen
+  ok    dungeon_floors.floors.day_started_prunes_when_outside
+  ok    dungeon_floors.floors.runestone_reentry_uses_authored_spawn
+  ok    dungeon_floors.floors.spec_or_gen_mismatch_drops_run_keeps_stones
+  ok    dungeon_floors.floors.malformed_load_is_atomic
+  ok    dungeon_floors.floors.section_size_worst_case_under_4kb
+  --    dungeon_floors: 28 checks, 0 failed, 0 skipped, 1.6 s
+== section loot  (res://tests/sections/loot.gd)
+  ok    loot.zones_are_the_five_area_ids (config loot has the five zones ["dybe_bregner", "farm", "krystalgrotten", "skovkant", "svampelunden"]; Hyggebyen has none (its only find is the spot kufferten))
+  ok    loot.hyggebyen_has_only_the_spot_kufferten (kufferten is the only Hyggebyen spot; the forest adds its own spots)
+  ok    every container's odds sum to 10 000 basis points and have NO unique / legendary column
+  ok    the API of the order exists on the autoload
+  ok    the farm's dig overrides find_chance (0.06), the forest digs keep the base 0.12; `count` is map data and not part of the container
+  ok    skovkant/trae: 40 000 openings gave 40000 rolls and not one unique / legendary item
+  ok    skovkant/jern: 40 000 openings gave 60036 rolls and not one unique / legendary item
+  ok    dybe_bregner/fe: 40 000 openings gave 80000 rolls and not one unique / legendary item
+  ok    dybe_bregner/konge: 40 000 openings gave 80000 rolls and not one unique / legendary item
+  ok    farm/dig: 40 000 openings gave 2308 rolls and not one unique / legendary item
+  ok    loot.rates_match_odds (40 000 seeded openings per container (trae, jern, fe, konge, dig): 40 z-tests (find_chance, rarity odds, kind shares after the empty-pool re-draw, roll counts), worst |z| = 2.26 (skovkant/trae rarity_rare), 1216 ms)
+  ok    the statistics finish in 1216 ms (budget 20 s for the section)
+  ok    loot.empty_pool_redraws_the_kind (rare odds 100 %, only the furniture pool has a rare item: every roll is it (["bed_walnut"]))
+  ok    loot.compiled_draw_equals_the_reference (LootRules.compile + roll_plan gives the same 40000 rows and the same stream state as the straightforward dictionary algorithm (5 containers x 3 lucks + the empty-pool config))
+  ok    loot.legendary_never_from_chests (30 zone x container combinations at luck 0.2 (1 500 openings each) and every pool entry of the data: 0 legendary or unique items, every entry sits under its own rarity)
+  ok    loot.keepsake_in_a_pool_is_skipped (throne_root (rank 4) sits in a pool at weight 1000: the draw never returns it (["bed_pine"]))
+  ok    loot.legendary_never_from_ordinary_chests (12 000 dungeon-band openings with ctx.odds = 100 % legendary (ignored): 0 legendary; the only unique is the one wanderer of the band (1))
+  ok    L = clamp(Perks.total(luck), 0, 0.20)
+  ok    luck() reads Perks.total('luck'): 0.15 -> 0.15, a gear of 0.5 is capped at 0.20
+  ok    trae at luck 0.2: uncommon 2100 -> 4200, rare 100 -> 200, normal absorbs 7800 -> 5600
+  ok    the king's chest has no normal roll to give: uncommon and rare are scaled down together, the sum stays 10 000
+  ok    loot.luck_bias (trae, 40 000 rolls at luck 0 / 0.1 / 0.2: worst |z| 1.64; uncommon share 0.211 / 0.314 / 0.419 (x1 / x1.5 / x2))
+  ok    the wanderer chance is wander_bp x (1 + 5 L), at most 100 %: jern 300 -> 600 at luck 0.2
+  ok    the wanderer decision at luck 0.2 fires 0.241 of the openings (want 0.24, z 0.30)
+  ok    open_container(ctx.luck) shifts the odds through the service as well (1372 vs 658 non-normal finds in 3 000 openings; 0.9 is clamped to 0.2)
+  ok    loot.creature_drop_rate (40 000 bat kills (find_chance 0.02): 842 drops, worst |z| 1.50 over the find chance and the three rarity shares, no keepsake)
+  ok    on_enemy_defeated returns its drops without adding them (ctx.deliver = orbs is the default): 16 rows, backpack and gold unchanged, no loot_rolled
+  ok    deliver = add hands the find over at once (29 finds, one loot_rolled each); an unknown creature is refused
+  ok    a kill without ctx.zone / ctx.band still rolls (the zone is looked up: the first zone that lists the creature)
+  ok    loot.loot_rolled_and_rare_item_found (opening a trae crate emits loot_rolled(&"chest:trae", [{id, amount, rarity, kind}]) once and, for the rare find, EconomyManager's rare_item_found ([[&"bed_walnut", &"rare"]]))
+  ok    a dig's source is dig:dig
+  ok    loot.wanderer_once_with_pity (jern in skovkant (wander_bp 250, pity_opens 24): 400 fresh saves, the wanderer came after at most 24 openings (pity), mean 18.19 vs analytic 18.21 (z -0.06), never two uniques in one opening, always the FIRST roll)
+  ok    loot.wanderer_found_only_once (40 openings of one save give the wanderer exactly once (1) and record it as found)
+  ok    the trae wanderer never shows up in a jern chest of the same zone, and no other zone has it
+  ok    an owned keepsake is never offered as a wanderer (60 openings)
+  ok    loot.respawn_days (a container stays closed for its respawn_days and opens again on the day it is due; other cells are independent: trae 7d ok, jern 14d ok, fe 21d ok, konge 7d ok, dig 1d ok)
+  ok    days_left / respawn_days_of: a crate opened today is closed for 7 days; an unknown container counts 1
+  ok    seven days later it is ready
+  ok    an unknown container is refused and writes nothing
+  ok    the FIRST kill is the quest reward (snurresvampen pays): LootService delivers the first rune shard and records the kill
+  ok    the same uid asked twice (the kill and the opening of the sealed chest) changes nothing: idempotent per ctx.uid
+  ok    a repeat kill before respawn_days (7) is a pure fight: nothing is paid (day 10 and day 16)
+  ok    ctx.ready = false vetoes a payment
+  ok    on day 17 (seven days later) a repeat kill pays the konge chest (2 rolls) + at most one legendary: 2 rolls, 0 legendary
+  ok    loot.boss_pity (legendary_bp 0, pity_kills 3, a pool of two: the legendary comes on the 3rd and the 6th paying kill, then the pool is empty and every kill pays fairy_dust: ["", "", "sofa_cloud", "", "", "rug_magic_circle", "fairy_dust", "fairy_dust"])
+  ok    the exhausted pool pays fairy_dust x3 ([3, 3])
+  ok    bp 10 000: the four pool items arrive once each (["shoes_boots_wind", "floor_lamp_fairy", "rug_magic_circle", "sofa_cloud", "dng_glimmer_dust"]) and the fifth kill pays the configured exhausted reward
+  ok    8 % per kill with pity 10 (200 000 kills): never more than 10 kills without a legendary, mean 7.048 vs closed form 7.070 (z -1.12)
+  ok    fuglehuset needs day 14: locked on day 13
+  ok    ...open on day 14
+  ok    claimed once: the birdhouse shelf is delivered, the spot is claimed and the keepsake is in the registry
+  ok    a spot is ONE time: the second claim gives nothing
+  ok    trae_hulning needs home tier 3: locked at tier 2, open at tier 3
+  ok    mis_hjoerne wants the quest lost_cat, runealteret the quest moonstone_crown
+  ok    ...lost_cat done opens mis_hjoerne only
+  ok    ...moonstone_crown done opens the altar
+  ok    kufferten (the only find of Hyggebyen) needs day 15
+  ok    ...and gives the pompom slippers on day 15
+  ok    a spot without `requires` is open from the start
+  ok    an unknown spot is refused
+  ok    loot.spots_one_time_and_conditions (claimed table: ["fuglehuset", "kufferten", "svampering"])
+  ok    requires.items + consume: locked while one item is missing, then the claim takes exactly the required items and delivers the keepsake
+  ok    missing_items lists what the vault still lacks once the items are gone (moss, stone)
+  ok    loot.check_friend_gifts_idempotent (guard_oak: 3 hearts give nothing, 4 hearts give the stump table once (row keyed guard_oak:4 in claimed), a second call grants nothing)
+  ok    fairy_lily at 6 hearts: both gifts (3 and 6 hearts) arrive once; an unknown friend has none
+  ok    the claimed gift keys survive a save and a load (no second table stump)
+  ok    set_capstone_granted is false before the capstone was granted
+  ok    loot.set_capstone_granted_reads_the_record (marken capstone: shirt_knit_dawn once (idempotent), set_capstone_granted reads the record written by grant_set_capstone, other sets stay open)
+  ok    the garment store refuses a second copy (max_stack 1): the premise of the duplicate policy
+  ok    loot.duplicate_garment_sold (a garment already owned is SOLD at once at its sell value (+20 gold) and the whisper says so: Du havde den allerede: Hørskjorte. Den blev solgt for 20 guldagern.)
+  ok    the duplicate from a chest: result row and loot_rolled still list it, `sold` carries the gold, the chest counts as opened
+  ok    furniture at its 9th copy is sold at once too (nothing is lost, nothing is added)
+  ok    loot.duplicates.kinds is read from the data: furniture is not listed, so it is refused, not sold
+  ok    a material that does not fit a full backpack is neither added nor sold ({ "ok": false, "sold": false, "reason": &"full", "gold": 0 })
+  ok    deliver validates its arguments
+  ok    loot.loot_commits_before_gain_observers (each gain observer sees all three rolls and the opened record; re-entering the same chest is refused)
+  ok    premise: the backpack has exactly two free slots
+  ok    loot.multi_roll_full_backpack_changes_nothing (3 rolls of an item that takes a slot each, 2 free slots: {ok = false, reason = full, results = []}, NOTHING delivered (the first two rolls are not kept), no opened entry, the stream is where it was, the inventory-full notice came)
+  ok    1 000 retries on the full pack deliver nothing and change no state (no retry faucet, no re-roll)
+  ok    with three free slots the same chest opens and delivers all three rolls TOGETHER
+  ok    a material roll that cannot enter a full backpack leaves the chest closed with the existing inventory-full notice
+  ok    clothing and furniture have their own stores: a full backpack does not stop them
+  ok    loot.dungeon_ctx_signatures_and_full_backpack (every call answers {ok: bool, results: Array, reason: StringName}, the 14 API signatures match the contract, ctx with every key (and ctx.odds) is accepted, a dungeon chest on a full pack answers {false, [], full})
+  ok    without the dungeon rules (DL5): no day value, node_loot / appraise answer no_rules, honestly
+  ok    loot.save_roundtrip_rng_strings (seed and state are saved as DECIMAL STRINGS (seed 9223372036854763462 is above 2^53), the section carries v 1)
+  ok    after the JSON round trip the stream is at the same seed and state (no 2^53 loss)
+  ok    save -> load -> roll gives the SAME next numbers (no save-scumming a chest by reloading)
+  ok    opened{uid: total_day}, claimed spots and the boss counters survive the JSON round trip as ints
+  ok    from_dict / validate_dict reject a newer version and a section of the wrong shape, accept a good one
+  ok    the section `loot` is registered with SaveManager
+  ok    ...at order 40 (FEATURE_ORDERS)
+  ok    gather_payload carries the loot section and the payload validates
+  ok    save_game(4) -> reset -> load_game(4) restores the section
+  ok    a new game resets everything and reseeds
+  ok    loot.save_roundtrip_dungeon_subdict_optional (a section without `dungeon` is valid and leaves it empty; a section with it round-trips (found registry, claimed, day record, unknown keys kept); loading one without it afterwards clears it)
+  ok    found() and day_value() read the sub-dict (empty after the load without it)
+  ok    day_value() / daily_cap_reached() read dungeon.day for TODAY only
+  ok    ...and are 0 / false the next day
+  ok    first_kill_items is read per boss id: boss_a delivers its moss at the first kill, boss_b has none
+  ok    loot.boss_table_keyed_by_id (boss_b (respawn 3 days) pays on day 13, boss_a (7 days) does not: every row of loot.boss is read by its id (boss_b paid, boss_a not_ready))
+  ok    legendary_bp 10 000 pays the pool item, then boss_a's own exhausted_item (stone x2) - not another boss's
+  ok    the fixture map: chest, dig_spot and both unique_spot markers are built by the F4 handlers (nothing skipped)
+  ok    the chest knows its uid (area id : cell), zone and tier, offers a prompt and is an Interactable2D
+  ok    E opens it: LootService.open_container(area id, tier, uid) delivers, the sprite is DARKENED (0.55), the prompt goes, the find is whispered
+  ok    E on the spent chest gives nothing and says it fills again in a few days
+  ok    six days later it is still dark (respawn_days 7)
+  ok    on day 10 (7 days later) the chest has respawned: bright again, E works
+  ok    ...and opens a second time
+  ok    an area that was parked for seven days shows its chest respawned the moment it re-enters the tree (state re-read in _enter_tree, signals connected again)
+  ok    a player with 3 stamina cannot dig: whisper LOOT_TOO_TIRED, nothing opened, nothing paid
+  ok    E digs: 4 stamina (50 -> 46), LootService.dig(area id, uid), the shimmer is gone for today
+  ok    a second dig the same day only says it is spent (no stamina paid)
+  ok    respawn daily: the next morning the soil shimmers again
+  ok    fuglehuset is locked on day 12: standing at the glimmer whispers its hint_key ONCE (["ITEM_SHELF_BIRDHOUSE_HINT"])
+  ok    a new visit (area_changed) allows the hint again
+  ok    E on a locked spot repeats the hint and claims nothing
+  ok    day 14: E claims it ONCE: the keepsake arrives and the glimmer is gone
+  ok    a claimed spot does nothing a second time
+  ok    a unique_spot behind when=flag:... is hidden and disabled until the flag is set
+  ok    ...and shows once the flag is set
+  ok    loot.markers_open_claim_respawn (handlers on the fixture map: chest opens / darkens / respawns, dig costs stamina and rests, unique spot hints once per visit and claims once, `when=` is obeyed)
+  ok    loot.marker_handlers_registered (lua/config/marker_handlers.lua carries the 24 rows of the orders (F4 3, F6 2, D2 1, V8 2, V6 six service handlers, farm 6, towns 3) and IsoArea.marker_registry() merges them; wrong or missing: [])
+  ok    loot.marker_handlers_registered_farm_types (the six farm types point at scripts/farm/steading/** (field_expansion replaces the lazy farm_view.gd entry); `greenhouse_slot` stays an unregistered data marker)
+  ok    loot.marker_handlers_town_door_post_rows (town, door and post are three rows of ONE script (scripts/towns/town_marker.gd, create_marker(params, pos, cell, area) -> Node))
+  ok    loot.marker_handlers_registered_room_services (the rooms place the V6 services through IsoArea.resolve_handler: bath, board and the mailbox have rows)
+  ok    loot.marker_handlers_table_valid (24 rows, no duplicate type, every path a res:// .gd script, every script that exists has a 4-argument create_marker / setup_marker entry point (missing entry: []), no row for a built-in type; absent scripts of later packages are skipped silently: ["forest_dress", "hulen_keeper", "dress"])
+  ok    the three F4 handlers are picked up through the framework's create_marker entry point
+  SKIP  handler scripts of other packages not in this tree yet (silent skips by the framework): forest_dress, hulen_keeper, dress
+  ok    loot.real_maps_get_their_nodes (farm.map: 2 dig spots (zone farm, uid farm:x,y) and the hidden spots ["fuglehuset", "trae_hulning"] are real nodes; hyggebyen.map: the hidden spot ["kufferten"] (its only find))
+  ok    loot.dungeon_floors_node_hosted_and_section_registered (LootService adds the child node 'DungeonFloors' when its script exists and registers it as the section `dungeon` with the explicit order 45 (FEATURE_ORDERS stays 5 entries, reset() wired to new_game_started))
+  ok    hosting twice adds no second node
+  ok    the dungeon section is gathered after loot (order 45 > 40)
+  ok    the real DungeonFloors (D2) is hosted
+  ok    on a generated floor (map.extra floor = 5) the handlers take uid = DungeonFloors.uid_of(area, cell) (dg:0:5:10) and the band of the floor as the zone
+  ok    loot.dungeon_markers_use_done_cells_and_uid (opening a floor chest marks the cell done through DungeonFloors (mark_done_cell), writes NO opened{} entry and delivers)
+  ok    a consumed cell is read BEFORE the node is built: the chest of a done cell is built open (darkened, no prompt), the dig spot of a done cell is not built at all (built: [(3, 3)], skipped { "dig_spot": 1 })
+  ok    loot.chest_lock_needs_key (the lake chest (lock=wood) without the key: whisper LOOT_LAKE_LOCKED, still closed, not done, nothing delivered)
+  ok    loot.locked_chest_consumes_key (with the key the chest opens, ONE key is consumed (2 -> 1) and the two rolls arrive)
+  ok    loot.full_backpack_leaves_chest_closed (a plan that does not fit the backpack AS A WHOLE leaves the chest closed AND not done and changes nothing: the key stays, the claim is not recorded, the stream is where it was (open false, done false, wood 5/5, free 0, claimed []))
+  ok    with room the first locked chest opens the band's spot: the unique gem arrives, one key is consumed
+  ok    loot.locked_spot_chest_takes_one_key (a lake chest whose spot lists no required item: the band's gem arrives and the chest's lock consumed ONE key (2 -> 1); with the key in the spot's own requires (above) it is still ONE)
+  ok    the boss chest is sealed (hidden, not interactable) until the flag dg_boss_clear is set
+  ok    opening the unsealed boss chest calls LootService.on_boss_defeated(snurresvamp, {uid dg:..., floor 5, band dybe_bregner, dungeon})
+  ok    loot.lake_chest_has_art_or_padlock_fallback (chest_noegle art exists: the lake chest draws chest_noegle; with the art forced away it draws chest_konge + a brass Padlock node)
+  ok    hidden=1: the chest is invisible, not interactable and not solid at first
+  ok    600 px away without chest sense: still nothing
+  ok    the base reveal radius is 240 px
+  ok    loot.hidden_chest_reveal_radius (hidden chest: shown for good within 240 px (239 yes, 241 no); with a chest sense of 700 px (DungeonRun.chest_sense_px through the seam; the hero's own perk alone is 0 px) the glint unique_glimmer shows out to the sense radius (650 yes, 800 no), capped at 12 cells (1152 px))
+  ok    a dig on a floor marks its cell done and writes no opened{} entry
+  ok    claiming a spot on a floor marks its cell done
+  ok    loot.two_phase_plan_fit_deliver_commit_with_fake (with a fake delegate the order is PLAN (roll_container) -> FIT (fits) -> deliver -> COMMIT (commit): ["plan:container", "fits", "commit"], the state came back through commit (commits 1))
+  ok    loot.dungeon_delegate_seam_with_fake (the delegate got state + req {kind, zone, band, container, uid, ctx (without odds), luck, day, cfg}; a ctx.odds that tried to force a legendary never reaches it)
+  ok    a static-area container always runs the built-in algorithm (the delegate was not asked)
+  ok    loot.no_opened_entries_for_dungeon_uids (a `dg:` uid never writes opened{} (consumption lives in DungeonFloors.done), through the delegate or the built-in algorithm)
+  ok    on_enemy_defeated returns the drop (deliver = orbs is the default): nothing added yet
+  ok    node_loot, on_enemy_defeated, on_boss_defeated and claim_spot of a dg: uid each go through the delegate: ["node:plan:node", "drop:plan:drop", "boss:plan:boss", "spot:plan:spot"]
+  ok    appraise through the seam: fee 30 charged, the stone (moss as stand-in) consumed, the gem delivered, SaveManager.autosave ran before the answer ({ "ok": true, "gem": "gem_bag", "rarity": "normal", "fee": 30, "reason": &"" })
+  ok    without the gold nothing is consumed or paid
+  ok    spot_state asks the delegate (the unique pace): open -> cooldown; the handler whispers LOOT_SPOT_PACED and claims nothing
+  ok    two items, one free slot: the delegate planned and fits() refused -> {false, full, []}, commit was NEVER called, the inventory is untouched (["plan:container", "fits"])
+  ok    the pack_view the delegate receives: free_slots, stack_room{item}, max_stack{item}, own_store{item}
+  ok    a plan the rules refuse is answered as {false, [], their reason}
+  ok    the capped day is announced ONCE: game_event loot_day_capped + the whisper LOOT_DAY_TIRED
+  ok    a keepsake enters through deliver(): the registry `found` records it (never pruned), game_event loot_keepsake_found {item, rarity, source} fires once, LOOT_KEEPSAKE_FOUND_FMT is whispered (found true, events 1, whisper true, second delivery gold 0, whispers ["Et sjældent fund: Rodtronen", "Du havde den allerede: Rodtronen. Den blev solgt for 0 guldagern."], events [[&"loot_keepsake_found", { "item": "throne_root", "rarity": "unique", "source": "pickup" }]])
+  ok    the registry survives losing the item: a keepsake can never be found twice
+  ok    loot.open_appraisal_event_instantiates_scene_when_present (game_event open_appraisal {npc} with the scene present: it is instantiated ONCE as a child of the FIRST node of group game_ui and its open(npc) is called every time (["appraiser_fru_ugle", "appraiser_fru_ugle"]))
+  ok    loot.appraisal_available_needs_rules_and_screen (appraisal_available(): scene only false, rules + scene true, rules only false, neither false; the stubs appraise() / open_appraisal() exist regardless, so the towns' counter must ask this and not has_method)
+  ok    loot.open_appraisal_event_ignored_without_scene (without scenes/ui/appraisal_ui.tscn (honest stub S21) the event is ignored: nothing instantiated, no engine message)
+  SKIP  scenes/ui/appraisal_ui.tscn exists in this tree (DL7): the real screen's behaviour is DL7's own section
+  ok    loot.dungeon_keys_defined_da_en (loot_dungeon.csv (+ keep-import) defines the four service messages (LOOT_DAY_TIRED, LOOT_KEEPSAKE_FOUND_FMT, LOOT_RUNE_VAULT_NEEDS with 'Tre', LOOT_LAKE_LOCKED) and the handler prompts, da + en)
+  ok    no Danish literal in the package's scripts: []
+  ok    loot.price_curve_reads_keeper_hearts (the friend discount reads the hearts of THE KEEPER of the shop (flag friend_<keeper> of the shop def): 1600 -> 1520 with 10 hearts of fairy_furnisher in her furniture shop (-5 %), 1576 with 3 hearts (-1.5 %), the same hearts do nothing in Pippin's flea market (1600) and Pippin's hearts do nothing at Stokrose (1600); the header says so)
+  info  laps (ms): rates 1789, legendary 2912, luck 650, creatures 7155, wanderers 1468, respawn+boss 226, spots..save 361, handlers..price 903
+  --    loot: 170 checks, 0 failed, 2 skipped, 15.5 s
+== section loot_dungeon  (res://tests/sections/loot_dungeon.gd)
+  ok    loot_dungeon.pure_plan_does_not_mutate_state
+  ok    loot_dungeon.same_seed_same_plan
+  ok    loot_dungeon.depth_odds_first_floor
+  ok    loot_dungeon.depth_ladder_pinned_floor_twelve ({ "normal": 0.0, "uncommon": 7596.25390218522, "rare": 2403.74609781478 })
+  ok    loot_dungeon.aggregate_fit_rejects_two_new_stacks
+  ok    loot_dungeon.aggregate_fit_uses_one_slot_and_own_store
+  ok    loot_dungeon.full_retry_0
+  ok    loot_dungeon.full_retry_1
+  ok    loot_dungeon.full_retry_2
+  ok    loot_dungeon.full_retry_3
+  ok    loot_dungeon.full_retry_4
+  ok    loot_dungeon.full_retry_5
+  ok    loot_dungeon.full_retry_6
+  ok    loot_dungeon.full_retry_7
+  ok    loot_dungeon.full_retry_8
+  ok    loot_dungeon.full_retry_9
+  ok    loot_dungeon.full_retry_10
+  ok    loot_dungeon.full_retry_11
+  ok    loot_dungeon.full_retry_12
+  ok    loot_dungeon.full_retry_13
+  ok    loot_dungeon.full_retry_14
+  ok    loot_dungeon.full_retry_15
+  ok    loot_dungeon.full_retry_16
+  ok    loot_dungeon.full_retry_17
+  ok    loot_dungeon.full_retry_18
+  ok    loot_dungeon.full_retry_19
+  ok    loot_dungeon.full_retry_20
+  ok    loot_dungeon.full_retry_21
+  ok    loot_dungeon.full_retry_22
+  ok    loot_dungeon.full_retry_23
+  ok    loot_dungeon.full_retry_24
+  ok    loot_dungeon.full_retry_25
+  ok    loot_dungeon.full_retry_26
+  ok    loot_dungeon.full_retry_27
+  ok    loot_dungeon.full_retry_28
+  ok    loot_dungeon.full_retry_29
+  ok    loot_dungeon.full_retry_30
+  ok    loot_dungeon.full_retry_31
+  ok    loot_dungeon.full_retry_32
+  ok    loot_dungeon.full_retry_33
+  ok    loot_dungeon.full_retry_34
+  ok    loot_dungeon.full_retry_35
+  ok    loot_dungeon.full_retry_36
+  ok    loot_dungeon.full_retry_37
+  ok    loot_dungeon.full_retry_38
+  ok    loot_dungeon.full_retry_39
+  ok    loot_dungeon.full_retry_40
+  ok    loot_dungeon.full_retry_41
+  ok    loot_dungeon.full_retry_42
+  ok    loot_dungeon.full_retry_43
+  ok    loot_dungeon.full_retry_44
+  ok    loot_dungeon.full_retry_45
+  ok    loot_dungeon.full_retry_46
+  ok    loot_dungeon.full_retry_47
+  ok    loot_dungeon.full_retry_48
+  ok    loot_dungeon.full_retry_49
+  ok    loot_dungeon.retry_after_full_changes_no_state
+  ok    loot_dungeon.free_slot_delivers_both_once
+  ok    loot_dungeon.appraisal_counter_stone_fee_one_commit
+  ok    loot_dungeon.appraisal_unknown_rejected
+  ok    loot_dungeon.boss_first_kill_shard_and_two_moonstone
+  ok    loot_dungeon.boss_idempotent_per_uid
+  ok    loot_dungeon.rune_chain_consumes_three_shards_once
+  ok    loot_dungeon.vault_claimed_permanently
+  ok    loot_dungeon.save_roundtrip_found_and_claims
+  info  LOOT_MC {"counts":{"normal":7289,"rare":3178,"uncommon":9533},"floor":12,"luck":0,"n":20000,"tier":"fe"}
+  ok    loot_dungeon.rates_20000_normal ({ "normal": 7289, "uncommon": 9533, "rare": 3178 })
+  ok    loot_dungeon.rates_20000_uncommon ({ "normal": 7289, "uncommon": 9533, "rare": 3178 })
+  ok    loot_dungeon.rates_20000_rare ({ "normal": 7289, "uncommon": 9533, "rare": 3178 })
+  ok    loot_dungeon.legendary_never_from_ordinary_chests
+  ok    loot_dungeon.state_normalizes_json_numbers
+  ok    loot_dungeon.appraisal_streams_independent_per_band
+  ok    loot_dungeon.appraisal_saves_before_return
+  ok    loot_dungeon.daily_cap_binds_ordinary_rolls
+  ok    loot_dungeon.daily_cap_resets_next_day
+  ok    loot_dungeon.lake_key_consumed_first_gem_once
+  ok    loot_dungeon.hunted_unique_cooldown_does_not_consume
+  ok    loot_dungeon.crystal_alias_always_yields_rough_or_dust
+  ok    loot_dungeon.duplicate_weapon_sold_at_store_cap
+  ok    loot_dungeon.boss_weekly_cooldown_keeps_state
+  ok    loot_dungeon.boss_pool_pity_read_from_data ([0, 0, 1])
+  ok    loot_dungeon.wanderer_pity_and_cooldown
+  ok    loot_dungeon.cooldown_does_not_advance_pity
+  --    loot_dungeon: 82 checks, 0 failed, 0 skipped, 0.7 s
+== summary: 4 section(s) run, 298 checks (0 failed, 2 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 22.8 s
+PLAYTEST PASS (298 checks in 4 sections, 0 allowed engine messages, 0 known-issue messages)

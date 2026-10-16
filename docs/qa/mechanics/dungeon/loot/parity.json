@@ -1,0 +1,30 @@
+{
+  "samples": 20000,
+  "results": [
+    {
+      "godot": {
+        "counts": {
+          "normal": 7289,
+          "rare": 3178,
+          "uncommon": 9533
+        },
+        "floor": 12,
+        "luck": 0,
+        "n": 20000,
+        "tier": "fe"
+      },
+      "python": {
+        "uncommon": 9720,
+        "rare": 3019,
+        "normal": 7261
+      },
+      "share_errors": {
+        "uncommon": 0.00935,
+        "rare": 0.00795,
+        "normal": 0.0014
+      },
+      "passed": true
+    }
+  ],
+  "passed": true
+}

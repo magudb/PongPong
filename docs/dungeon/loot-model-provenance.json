@@ -1,0 +1,11 @@
+{
+  "source": "/Users/magnusudbjorg/Documents/projects/.pongpong-build/work/design2/final_candidate/final_sim/sim/loot_mc.py",
+  "sha256": "01580d82da205132178a92e621f0ae7bf5ec785fc83602c0819b09571799e95d",
+  "integration": [
+    "Read live Lua from this checkout.",
+    "Remove draft patch application.",
+    "Read actual weapon-family cycle lengths.",
+    "Retain explicit model assumptions and original independent Python draws.",
+    "Apply the reviewed unique cooldown before advancing wanderer pity; ordinary daily rarity caps do not suppress keepsake checks."
+  ]
+}

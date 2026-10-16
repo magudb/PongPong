@@ -217,6 +217,7 @@ func _physics_process(dt: float) -> void:
 				if remaining <= 0: state = S.CHASE
 	velocity = Iso.to_screen(ground_velocity)
 	move_and_slide()
+	if state == S.LUNGE: _attack.global_position = attack_origin
 	ground_velocity = Iso.to_ground(velocity)
 	var altitude := float(cfg.get("altitude",0))
 	visual.set_altitude(altitude+(sin(clock*5)*6 if altitude > 0 else hop_altitude))

@@ -1,0 +1,24 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PLAYTEST start mode=windowed character=animal sections=res://tests/sections only=appraisal
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.DCfC4W/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /tmp/mechanics-appraisal-native-shots
+== section appraisal [windowed]  (res://tests/sections/appraisal.gd)
+  ok    appraisal.dialogue_choice_present
+  ok    appraisal.opens_through_real_service_and_game_ui
+  ok    appraisal.lists_owned_rough_stacks
+  ok    appraisal.fee_charged_per_stone
+  ok    appraisal.saved_before_gain_observers
+  ok    appraisal.batch_max_twelve (stones=2 gold=2110 counter={ "skovkant": 13 } labels=12 selected=rough_skovkant)
+  ok    appraisal.no_gold_no_change
+  ok    appraisal.full_backpack_refuses_before_payment
+  info  saved /tmp/mechanics-appraisal-native-shots/appraisal_stones_and_results.png (1280x720)
+  ok    appraisal.escape_closes_and_frees_modal
+  ok    appraisal.reopens_once_after_free
+  --    appraisal: 10 checks, 0 failed, 0 skipped, 1.1 s
+== summary: 1 section(s) run, 10 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 4.9 s
+PLAYTEST PASS (10 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

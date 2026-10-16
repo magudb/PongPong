@@ -1,0 +1,20 @@
+== value of ONE run through a band (3 floors, boss floor included, reward ready, completeness 0.80, appraisal fee paid), gold-equivalent, valuation 'sell'; keepsakes count 0
+band             luck  |     mean      p10      p50      p90 | rare items per floor
+skovkant         0.00  |      179      -17       80      534 | 0.15 (one rare per 6.8 floors)
+dybe_bregner     0.00  |      500       63      377     1110 | 0.36 (one rare per 2.8 floors)
+svampelunden     0.00  |      463       53      388      977 | 0.63 (one rare per 1.6 floors)
+krystalgrotten   0.00  |      610       72      502     1307 | 1.36 (one rare per 0.7 floors)
+skovkant         0.20  |      249        2      143      626 | 0.20 (one rare per 5.0 floors)
+dybe_bregner     0.20  |      739      196      620     1452 | 0.54 (one rare per 1.9 floors)
+svampelunden     0.20  |      689      216      602     1288 | 0.85 (one rare per 1.2 floors)
+krystalgrotten   0.20  |      880      233      773     1675 | 1.66 (one rare per 0.6 floors)
+== value of ONE run through a band (3 floors, boss floor included, reward ready, completeness 0.80, appraisal fee paid), gold-equivalent, valuation 'keep'; keepsakes count 0
+band             luck  |     mean      p10      p50      p90 | rare items per floor
+skovkant         0.00  |       -5      -42      -18       37 | 0.15 (one rare per 6.8 floors)
+dybe_bregner     0.00  |      109      -63       31      444 | 0.36 (one rare per 2.8 floors)
+svampelunden     0.00  |       69     -124       57      277 | 0.63 (one rare per 1.6 floors)
+krystalgrotten   0.00  |      153     -182      133      496 | 1.36 (one rare per 0.7 floors)
+skovkant         0.20  |       19      -34        7       87 | 0.20 (one rare per 5.0 floors)
+dybe_bregner     0.20  |      234        1      141      649 | 0.54 (one rare per 1.9 floors)
+svampelunden     0.20  |      186      -19      166      419 | 0.85 (one rare per 1.2 floors)
+krystalgrotten   0.20  |      304      -51      287      672 | 1.66 (one rare per 0.6 floors)

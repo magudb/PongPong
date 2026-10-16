@@ -1,0 +1,13 @@
+keys,da,en
+APPRAISE_TITLE,Fru Ugle ser på stenene,Mrs Owl looks at the stones
+APPRAISE_STONES_FMT,%s ×%d,%s x%d
+APPRAISE_FEE_FMT,Vurdering: %d guldagern pr. sten,Appraisal: %d gold acorns per stone
+APPRAISE_ALL_FMT,"Vurdér alle (%d sten, %d guldagern)","Appraise all (%d stones, %d gold acorns)"
+APPRAISE_ONE,Vurdér én,Appraise one
+APPRAISE_REVEAL_FMT,Det er %s! (%s),It is %s! (%s)
+APPRAISE_NO_STONES,Du har ingen ukendte sten.,You have no unknown stones.
+APPRAISE_NO_GOLD,Du har ikke guldagern nok til vurderingen.,You do not have enough gold acorns for the appraisal.
+APPRAISE_BACKPACK_FULL,Rygsækken er fuld. Gør plads først.,The backpack is full. Make room first.
+APPRAISE_DONE_FMT,%d sten vurderet.,%d stones appraised.
+APPRAISE_SKIP,Spring over,Skip
+APPRAISE_CLOSE,"Tak, Fru Ugle","Thank you, Mrs Owl"
