@@ -13,6 +13,7 @@ from scipy.signal import correlate2d
 
 ROOT = Path(__file__).resolve().parents[3]
 SOURCE = ROOT / 'tools/art/drawn/sources/held_equipment/tools.png'
+CARE = ROOT / 'tools/art/drawn/sources/held_equipment/care-tools.png'
 OUT = ROOT / 'assets/held_equipment'
 # Reviewed points in each body's own 256px idle canvas, in S..SE order.
 # No runtime mirroring or universal body offset is involved.
@@ -30,7 +31,7 @@ ITEMS = [('hoe_wooden',100),('hoe_iron',100),
          ('watering_can_copper',56),('watering_can_gold',60),
          ('pickaxe_wooden',100),('pickaxe_copper',100),('pickaxe_iron',100),
          ('axe_wooden',82),('scythe',120),('fishing_rod',132),
-         ('sword_rusty',86),('iron_sword',86)]
+         ('sword_rusty',86),('iron_sword',86),('brush',58),('milking_pail',60)]
 PRESET = '[remap]\nimporter="texture"\ntype="CompressedTexture2D"\n\n[params]\ncompress/mode=0\nmipmaps/generate=false\nprocess/fix_alpha_border=true\n'
 
 def track(reference, frame, authored):
@@ -68,6 +69,18 @@ def main():
     OUT.mkdir(parents=True,exist_ok=True)
     atlas=Image.open(SOURCE).convert('RGBA')
     assert atlas.size==(1536,1024)
+    # Companion paintings use four columns/four rows: eight brush views, then
+    # eight pail views. Packing changes only their resolution and atlas address.
+    care=Image.open(CARE).convert('RGBA')
+    assert care.width == care.height
+    cell=care.width/4
+    combined=Image.new('RGBA',(1792,1024))
+    combined.paste(atlas,(0,0))
+    for item in range(2):
+        for direction in range(8):
+            index=item*8+direction; x=index%4*cell; y=index//4*cell
+            combined.paste(care.crop((x,y,x+cell,y+cell)).resize((128,128),Image.Resampling.LANCZOS),((12+item)*128,direction*128))
+    atlas=combined
     pixels=np.array(atlas);pixels[pixels[:,:,3]<24]=0
     pixels[:,:,3]=np.where(pixels[:,:,3]>=248,255,pixels[:,:,3])
     Image.fromarray(pixels).save(OUT/'tools.webp',lossless=True,exact=True)
@@ -76,13 +89,15 @@ def main():
               'directions':['S','SW','W','NW','N','NE','E','SE'],
               'source':str(SOURCE.relative_to(ROOT)),
               'source_sha256':hashlib.sha256(SOURCE.read_bytes()).hexdigest(),
+              'care_source':str(CARE.relative_to(ROOT)),
+              'care_source_sha256':hashlib.sha256(CARE.read_bytes()).hexdigest(),
               'items':{},'bodies':{}}
     for col,(item,height) in enumerate(ITEMS):
         views=[]
         for direction in range(8):
             a=pixels[direction*128:(direction+1)*128,col*128:(col+1)*128,3]
             y,x=np.where(a>80);assert len(x)>150
-            water=item.startswith('watering')
+            water=item.startswith('watering') or item == 'milking_pail'
             grip_y=int(y.min()+(y.max()-y.min())*(.12 if water else .80))
             xs=np.where(a[max(0,grip_y-2):grip_y+3].max(axis=0)>80)[0]
             grip=[int(np.median(xs)),grip_y]
@@ -112,6 +127,6 @@ def main():
             clips[clip]=poses
         manifest['bodies'][body]={'clips':clips}
     (OUT/'manifest.json').write_text(json.dumps(manifest,separators=(',',':'))+'\n')
-    print(f'Packed 96 dedicated held paintings and {count} body-specific frame poses; stock art untouched')
+    print(f'Packed {len(ITEMS)*8} dedicated held paintings and {count} body-specific frame poses; stock art untouched')
 
 if __name__=='__main__':main()

@@ -29,6 +29,11 @@ func _run(t, capture: bool, skin := "") -> void:
 	p.held_equipment.sync_pose()
 	t.check("selected_tool_has_matching_picture_and_name", badge.shown().id == &"hoe_wooden" and badge.shown().name == tr("ITEM_HOE_WOODEN") and p.held_equipment.item_id == &"hoe_wooden")
 	var data := HeldEquipment2D.manifest()
+	var missing: Array[String] = []
+	for id in GameData.lua().get_all_item_ids():
+		if str(GameData.item_def(StringName(id)).get("category", "")) in ["tool", "weapon"] and not data.items.has(str(id)):
+			missing.append(str(id))
+	t.check("whole_item_catalog_has_held_tool_and_weapon_art", missing.is_empty(), str(missing))
 	var body := p.visual.resolved_id
 	var poses: Dictionary = data.bodies[body].clips
 	var checked := 0
@@ -69,7 +74,7 @@ func _run(t, capture: bool, skin := "") -> void:
 			p.held_equipment.sync_pose()
 			var art: Dictionary = data.items[id].views[direction]
 			all_items = all_items and p.held_equipment.item_id == StringName(id) and p.held_equipment.tool.region_rect == Rect2(art.rect[0],art.rect[1],128,128)
-	t.check("all_twelve_items_use_dedicated_directional_paintings", all_items)
+	t.check("all_items_use_dedicated_directional_paintings", all_items)
 	if shots and t.character == "animal" and skin == "":
 		await _catalog_gallery(t, world, p, badge, data)
 	p.hotbar.assign(0, &"hoe_wooden")
@@ -164,7 +169,7 @@ func _run(t, capture: bool, skin := "") -> void:
 func _catalog_gallery(t, world: WorldRoot2D, p: Player2D, badge: CurrentItemBadge, data: Dictionary) -> void:
 	# Review the actual renderer at game zoom, including every tool upgrade.
 	# Retain exact pixel crops in one contact sheet rather than 12 full frames.
-	var gallery := Image.create(1200, 720, false, Image.FORMAT_RGBA8)
+	var gallery := Image.create(1200, ceili(data.items.size()/4.0)*240, false, Image.FORMAT_RGBA8)
 	gallery.fill(Color("f3e8ce"))
 	world.game_ui.get_screen(&"hud").toasts.clear()
 	p.visual.cancel_action()

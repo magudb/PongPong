@@ -13,15 +13,17 @@ The built-in image generation tool produced the dedicated held-object paintings,
 using the approved equipment kit and sword turnaround as references. Exact prompts,
 reference paths, selected source and rejected first sheet are in prompts.json.
 The first sheet's two hoes read as axes; a targeted repair gave them rectangular
-cultivating blades. The selected master has 12 items in eight directional views:
-two hoes, two watering cans, three pickaxes, an axe, scythe, rod and two swords.
-The delivered master is 1536 by 1024, with 128-pixel cells. The original generation
+cultivating blades. The production atlas has 14 items in eight directional views:
+two hoes, two watering cans, three pickaxes, an axe, scythe, rod, two swords,
+a grooming brush and a milking pail. The last two use a separate 4x4 companion
+painting, fitted into columns 13 and 14 of the production atlas.
+The original tool master is 1536 by 1024, with 128-pixel cells. The original generation
 prompt requested a larger canvas; the selected source's actual size is recorded
 here and used by the packer.
 
 tools/art/drawn/held_equipment.py packs the selected source losslessly and records
 the explicit view pivots in assets/held_equipment/manifest.json. The production
-atlas is 6 MiB uncompressed RGBA with no mipmaps. There are no new body paintings
+atlas is 7 MiB uncompressed RGBA with no mipmaps. There are no new body paintings
 or inventory icon replacements. All 2,562 previously reviewed visual/theme assets
 remain byte-identical. The newly reviewed atlas is the only added visual asset.
 
@@ -33,7 +35,7 @@ brass and iron match docs/art/style-guide.txt and the equipment references.
 The all-heroes-contact.png in docs/qa/held-equipment shows the actual native game
 renderer on fox, monkey, both fairies, both hobbits and both ghosts. The native
 captures also include each hero with the iron sword in the forest. The catalog
-contact under native-animal shows all 12 items with their matching readout at
+contact under native-animal shows all 14 items with their matching readout at
 normal game zoom. The watering cans hang below their carry handles; the rod,
 scythe and hoe keep distinct outer silhouettes. Existing character faces, wings,
 tails and proportions remain readable. These are current stock-body carry poses,
