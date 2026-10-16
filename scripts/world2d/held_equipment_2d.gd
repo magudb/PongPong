@@ -6,6 +6,7 @@ const MANIFEST := "res://assets/held_equipment/manifest.json"
 const PAINTING := preload("res://assets/held_equipment/tools.webp")
 const REST_ANGLES := [-20.0, -25.0, -20.0, -15.0, 20.0, 25.0, 20.0, 25.0]
 static var _data: Dictionary = {}
+static var _paintings: Dictionary = {}
 var player: Player2D
 var clock: IsoChibiSprite2D
 ## Read-only try-on choice when attached to a wardrobe preview's body clock.
@@ -21,6 +22,10 @@ var _key := ""
 static func manifest() -> Dictionary:
 	if _data.is_empty():
 		_data = JSON.parse_string(FileAccess.get_file_as_string(MANIFEST))
+		var extra_path := "res://assets/held_equipment/dungeon/manifest.json"
+		if FileAccess.file_exists(extra_path):
+			var extra: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(extra_path))
+			_data.items.merge(extra.get("items",{}),false)
 	return _data
 
 func _ready() -> void:
@@ -83,6 +88,11 @@ func sync_pose() -> void:
 	_key = key
 	pose = frames[direction][frame]
 	var art: Dictionary = data.items[str(item_id)]
+	var painting := str(art.get("atlas",""))
+	if painting != "":
+		if not _paintings.has(painting): _paintings[painting] = load(painting)
+		tool.texture = _paintings[painting]
+	else: tool.texture = PAINTING
 	var view: Dictionary = art.views[direction]
 	var target := rear if str(pose.depth) == "rear" else front
 	if tool.get_parent() != target:

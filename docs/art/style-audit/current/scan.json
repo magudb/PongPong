@@ -1,12 +1,12 @@
 {
   "status": "requires explicit visual review; scan is not an aesthetic approval",
-  "files": 5739,
-  "raster_files": 2799,
+  "files": 5836,
+  "raster_files": 2847,
   "vectors": 7,
   "fonts": 8,
   "raster_changes": {
     "unchanged": 1952,
-    "new": 536,
+    "new": 584,
     "changed": 311
   },
   "roles": {
@@ -16,8 +16,10 @@
     "painted-sky": 2,
     "painted-fixture-backdrop": 8,
     "selected-backdrop-sky": 4,
+    "painted-dungeon-held-equipment": 22,
     "fitted-held-equipment": 1,
     "item-base-or-night-icon": 377,
+    "painted-dungeon-weapon-icon": 26,
     "painted-fixture-props": 147,
     "technical-effect-or-readability-mask": 25,
     "technical-glow": 36,
@@ -63,6 +65,8 @@
     "docs/art/style-audit/current/fitted-painted-clothing-07.webp",
     "docs/art/style-audit/current/fitted-painted-clothing-08.webp",
     "docs/art/style-audit/current/home-upgrade-or-construction-01.webp",
+    "docs/art/style-audit/current/painted-dungeon-held-equipment-01.webp",
+    "docs/art/style-audit/current/painted-dungeon-weapon-icon-01.webp",
     "docs/art/style-audit/current/painted-fixture-backdrop-01.webp",
     "docs/art/style-audit/current/painted-fixture-city-01.webp",
     "docs/art/style-audit/current/painted-fixture-city-02.webp",

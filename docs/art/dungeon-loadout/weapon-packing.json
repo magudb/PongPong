@@ -1,0 +1,123 @@
+{
+  "sources": {
+    "tools/art/drawn/sources/dungeon_weapons/wpn_dagger_thorn.png": "b3b876d1f5d46adbb423d5bda6f7921c71c827da9520ccc1905e35181070c401",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_dagger_flint.png": "fb985cfb737f8ef72510175fa67bc701c987e62d2ce31922d7897d6c9342a8df",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_dagger_moonshard.png": "7e91c4ad7ff6c3efc2db762f02390df45a55f3878af9665912c5cd07ee5b2b39",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_dagger_bee.png": "f5d92e4a6355553b567aa0277ad9533cb5b0a9ea0739b6a2d81f9d7278bae9fe",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_sword_forest_steel.png": "3b7dc8be5d6371417fd5fed3e24b704b7a8348fd240b08bdd0ca09e72731c53f",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_sword_candle.png": "594e4a3cec56288d88b1998332a11d2333c3de35493b7ab69e4cc8978cf5bd33",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_sword_moon.png": "6062c590ccbe5a489ba91b3f8345cdc2460e20870992ce541c2541423238fa02",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_club_spruce.png": "56dad61114cd3407bbb0b68fc9a7e6057b3c04e9846c412419347b1ce2f1fff8",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_club_oak.png": "962dc9cefa433156069831d3aa230568319d9db2038c341b01b979cf593c8f7b",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_club_mushroom.png": "832e0fdf1003edf9ea7e1fb4a92c0fdcd4a2b1aa6cc08e8f4b7af8360fb19938",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_club_thornberry.png": "042de1da05d76a7e04f6641f78f35ca8247443b08b1fc60a9b462a8fab490034",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_club_trunk.png": "261f85bac84f7b6e1fbf7a488544285f49769d565d385f65e87436d5bf198505",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_spear_twig.png": "f7ffa086d270e680c2bf3aac5ccfe1d11c6ef35d3344de614c7b7e5196d4e585",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_spear_iron.png": "df33719a72354d076d4295329a31a51a25f5e4cc8b653fcd4aff58760de7fd60",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_spear_thistle.png": "fd0d38029d7ca9284656f0c999abcbeae83ab81b469440d4239fa5da6d825287",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_spear_owl.png": "4ea7efc3d4ceaad66f230513652ba18747180ea7af4a1fdd4089aefa10cf4813",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_spear_root.png": "acd36e3a5b6490de5752a401edf38497c75afc88c8401a40648cfd8fb2a45344",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_staff_branch.png": "48ed85f28c107834b88d7809338238d81e2b2b07e19e5cfa4c04fc55dc137d1e",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_staff_hazel.png": "c5d48d8e1f24a5da6a34d9a2cf1c6166f627ee5c6796bd030e80fc25c7ae1028",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_staff_light.png": "5bc692e06cdd23f86d9ae03cbbc5ef840a43ef0529520266d187d276d6a91402",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_staff_ember.png": "e8a6989e80d8a9ce4048f208750968ef70bd6c309d5fc752954f80d663011b27",
+    "tools/art/drawn/sources/dungeon_weapons/wpn_staff_star.png": "2f0133272cf4dbd589055760fe5a42be5701b6a5a0b81c0a1c3a8b953c4df781"
+  },
+  "native_cell": [
+    128,
+    128
+  ],
+  "manufacturing": "alpha crop, uniform contain, atlas placement; no painting/recolouring",
+  "layout": {
+    "wpn_dagger_thorn": [
+      65,
+      0.82
+    ],
+    "wpn_dagger_flint": [
+      65,
+      0.82
+    ],
+    "wpn_dagger_moonshard": [
+      65,
+      0.82
+    ],
+    "wpn_dagger_bee": [
+      65,
+      0.8
+    ],
+    "wpn_sword_forest_steel": [
+      86,
+      0.81
+    ],
+    "wpn_sword_candle": [
+      86,
+      0.81
+    ],
+    "wpn_sword_moon": [
+      86,
+      0.81
+    ],
+    "wpn_club_spruce": [
+      100,
+      0.84
+    ],
+    "wpn_club_oak": [
+      100,
+      0.84
+    ],
+    "wpn_club_mushroom": [
+      100,
+      0.78
+    ],
+    "wpn_club_thornberry": [
+      100,
+      0.84
+    ],
+    "wpn_club_trunk": [
+      108,
+      0.84
+    ],
+    "wpn_spear_twig": [
+      132,
+      0.6
+    ],
+    "wpn_spear_iron": [
+      132,
+      0.6
+    ],
+    "wpn_spear_thistle": [
+      132,
+      0.65
+    ],
+    "wpn_spear_owl": [
+      132,
+      0.65
+    ],
+    "wpn_spear_root": [
+      132,
+      0.62
+    ],
+    "wpn_staff_branch": [
+      125,
+      0.6
+    ],
+    "wpn_staff_hazel": [
+      125,
+      0.64
+    ],
+    "wpn_staff_light": [
+      125,
+      0.64
+    ],
+    "wpn_staff_ember": [
+      125,
+      0.6
+    ],
+    "wpn_staff_star": [
+      125,
+      0.65
+    ]
+  },
+  "items": 22,
+  "views": 176
+}

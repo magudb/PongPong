@@ -1,0 +1,36 @@
+{
+  "allowed": [],
+  "character": "ghost",
+  "checks": 169,
+  "elapsed_s": 6.49,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "art_dungeon_weapons": {
+      "character": "ghost",
+      "checks": 117,
+      "failed": 0,
+      "ms": 128,
+      "skipped": 0
+    },
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 946,
+      "skipped": 0
+    },
+    "held_equipment": {
+      "character": "ghost",
+      "checks": 44,
+      "failed": 0,
+      "ms": 1481,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

@@ -48,7 +48,7 @@
     },
     {
       "system": "Arsenal, weapons, gems, loot, appraisal and crafting (DL)",
-      "state": "arsenal, 51 items, forging, smithy rotation, weapon effects, lantern loadout, deterministic two-phase dungeon loot, pity/caps/weekly bosses/rune vault and Fru Ugle appraisal implemented; 20,000 draws match independent live-data Python model within 1.5 points, 298 integration checks pass; native appraisal reviewed; final weapon/gem artwork and validator extensions pending"
+      "state": "arsenal, 51 items, forging, smithy rotation, weapon effects, lantern loadout, deterministic two-phase dungeon loot and saved appraisal implemented; 22 new weapons have 176 painted held views and matching icons, native catalog and legendary cards reviewed, all eight heroes pass held-equipment regressions; remaining gem/material art, validator extensions and final loot acceptance pending"
     },
     {
       "system": "Social event runner, festival activities and heart events",
@@ -93,7 +93,8 @@
     "appraisal_native": "docs/qa/mechanics/dungeon/loot/appraisal-native.json",
     "forest_ui_integration": "docs/qa/mechanics/dungeon/hud/integration.json",
     "forest_ui_native": "docs/qa/mechanics/dungeon/hud/interactions-native.json",
-    "forest_hud_native": "docs/qa/mechanics/dungeon/hud/hud-native.json"
+    "forest_hud_native": "docs/qa/mechanics/dungeon/hud/hud-native.json",
+    "dungeon_weapon_art": "docs/qa/mechanics/dungeon/weapons/icons-native.json"
   },
   "contract_additions": [
     "QuestManager state queries buildings_owned(type) and animals_owned support accepting animal quests after building or adoption.",

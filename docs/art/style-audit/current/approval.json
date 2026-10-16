@@ -17146,6 +17146,294 @@
       "role": "fitted-painted-clothing",
       "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
       "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+    },
+    "assets/held_equipment/dungeon/wpn_spear_twig.webp": {
+      "sha256": "34bc50108ed7adb3fc363faf23d0370cb89bda806276bff0feca057f6a2a45e6",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_dagger_thorn.webp": {
+      "sha256": "0d3d0f2191b0133b6b3bc059b446a55c6f219b6842556fd602496735fafc23f1",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_staff_ember.webp": {
+      "sha256": "0690e1a3bb4e50d12e79ca38696ca0dfd51c10795cb07b50a1ece848c8eca45b",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_club_oak.webp": {
+      "sha256": "6576747b2a71b175ecff209d9fdac5afe9a5dd64a1dcd2b4a5501e462f877d93",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_spear_iron.webp": {
+      "sha256": "f333e02652252688c5e720bed151c635d3f278c5d660c06c4b1ead6d11458668",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_sword_candle.webp": {
+      "sha256": "74314b60161f613a3dd8c1fd46edfbc5f95609b77544f1c494d882500410c9be",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_staff_light.webp": {
+      "sha256": "244f88d12c66ff822016ef2e8e88369c7cbcbcc23ebff578f0b786cd4844fa3d",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_dagger_flint.webp": {
+      "sha256": "a8a42911534bb0fae976c8739929379ecef351c5a4cb96c4f1b3752e88c17d11",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_spear_thistle.webp": {
+      "sha256": "280a52a0b6b67bf0a715afd318f3184e3a7e296505fb59862e60afc1843c9e06",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_club_mushroom.webp": {
+      "sha256": "cda37bdb29e69c15b752a7973f390c853594b239bf891f7462b5791c9371d297",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_spear_owl.webp": {
+      "sha256": "c0e41619bfcaca94a865aaa987451c67b41665fef5af3781da5554c65b1d67f8",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_staff_star.webp": {
+      "sha256": "672fd7db621f1ec6c7cb6a5d57fca8fe10498b613da13ec28ae4f6f764a11a46",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_staff_branch.webp": {
+      "sha256": "68fadc047604f3a0dc1050490eaf21d181a93b60699efe5bb94de3f4b467de59",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_sword_forest_steel.webp": {
+      "sha256": "2c9335f7bb1578a49ed68cc413eb60485726a6bbd0ff7d287a7b921834a7408d",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_club_spruce.webp": {
+      "sha256": "edbf7b626369e60d883680c653eb120a13944d85ddf851eb67c828acae4279ab",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_sword_moon.webp": {
+      "sha256": "d346b1cfd395bf55ed7ec07063dbc1beed9216d041f6ecf814a84e87b0524eb0",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_staff_hazel.webp": {
+      "sha256": "b1455a99af94687ec0b0fdcc68ff87469fe5b9152406e51d5d0b7a2c14546ad1",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_spear_root.webp": {
+      "sha256": "50d562deb4d101b4564a70ce986d171969fa2aae8d764fc275b7f238cc405975",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_club_thornberry.webp": {
+      "sha256": "00a7bdc798e0a61039201fbc66b2356a7b4acd4213b8b641aa1a6ab8cda1c8ed",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_dagger_bee.webp": {
+      "sha256": "0c33c6477647ca22d9cb49d7935cd8d992cb986dc96cd9718b71d080cd1d0ae9",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_dagger_moonshard.webp": {
+      "sha256": "88ed14f2f6b6ac118f9a12403f7fd9b1a74ba9df955852f48b3031a88715194c",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/held_equipment/dungeon/wpn_club_trunk.webp": {
+      "sha256": "7a7fef56a634af24afcb0ba21350ba62e17f53aa464478585f89a124973259c0",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-held-equipment",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_spear_twig.webp": {
+      "sha256": "6c245f4f02761d56f6f6097974b9f4ff0acbb62998f54cd992852f82a8e55bea",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_sword_moon_night.webp": {
+      "sha256": "592eba7f88c1d245877e35101669babb6a539cd7b50def9a8628bc7a02d82acd",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_dagger_thorn.webp": {
+      "sha256": "ae83806f5f691596b281369e1ae75db2273d7919db0aeba05ba14f8eb4a92834",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_staff_ember.webp": {
+      "sha256": "5d8ebd43bb769418501c72a25b286aecb1d27d4a082c0a0ffe441fa3df9239c5",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_club_oak.webp": {
+      "sha256": "28e0555e62c038d0057efba0f7259abbf5aae6e8364479d33525c9d09226ffac",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_spear_iron.webp": {
+      "sha256": "15c8e9614777635dfa764e4ac4b08efd2594eb94036b74839c312b1c96b7e53d",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_sword_candle.webp": {
+      "sha256": "87cc2aa4e440e426171aa7eea35be10c67359b13db266c3ea28b8f22f46f2fc4",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_staff_light.webp": {
+      "sha256": "9225242bcca2d5b2fb3c0e505a94fddc5c05172b7395d15c5676f84b6e5a7c4c",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_dagger_flint.webp": {
+      "sha256": "a2025473f74c3c06f2db7f92c6378a56ee9dddf41abd843e79598f4e6d6be58d",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_spear_thistle.webp": {
+      "sha256": "f3a3f00a04a84af72233d62482d30d139f3d8bc1f519b22443ef368a9c3a950f",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_club_mushroom.webp": {
+      "sha256": "5cf745e590e6f2140ffc65a6504be8515addd3242961acf3b8dbe0d6f590de72",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_spear_owl.webp": {
+      "sha256": "03eb3651ed5d4d6d730b855a23b8cff0e99ffae78e9c35312cbe147ded3c4556",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_staff_star.webp": {
+      "sha256": "766e2cc14d35a02e982e950d446b68ec30696d0212978f7a421443832554ec22",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_staff_branch.webp": {
+      "sha256": "ce3579db80e53db3e1ced3752f070ca91f90c4555108389676367d231eace576",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_sword_forest_steel.webp": {
+      "sha256": "7de215b2cc464924d639b2349e6e0691e88850314e28da9f7a7d4b56ca63bd90",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_club_spruce.webp": {
+      "sha256": "113a2157f05132c0e650dcff30e4e016ecec99ee75a850b052927ea0f5528607",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_staff_star_night.webp": {
+      "sha256": "61ba7606bc3590850c3c5c6c0102a279067969059c50523e6d1428572c28b4b6",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_spear_root_night.webp": {
+      "sha256": "dd9648779dae79eea256f923174597d52f758e4a1f08eba2c9cb2de1a2329606",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_sword_moon.webp": {
+      "sha256": "d3075c3b564299b176caf98a4226d2c1e638328f0d7491f1dc4fcdcc6ffa566c",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_staff_hazel.webp": {
+      "sha256": "7d3ba102f5f4ebfc87c3f8c137f34ac271f2ed0c31701d04cc35dc6fc83e32fe",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_club_trunk_night.webp": {
+      "sha256": "f63891cd9d282c5b4c348851a102fb2e71f68c3064caa57d00f5a7143be0d515",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_spear_root.webp": {
+      "sha256": "18a80742a211c3e7573024193ef795ed1130754d2b5375bc392dfdcc1279ae85",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_club_thornberry.webp": {
+      "sha256": "b1eccb4630f68bd4578394d50f5308351f9e736044910ce6913db991555bbbc9",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_dagger_bee.webp": {
+      "sha256": "3db4be554ac59a72a88e6480f368a286fcb4e37661e5a77b3f3fe1df93dab8f2",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_dagger_moonshard.webp": {
+      "sha256": "a0ea788b13d7e0b6d336a398cef4b7d86004cb2730c68e0589bad1fc1d3cd176",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
+    },
+    "assets/icons/items/wpn_club_trunk.webp": {
+      "sha256": "9a31208d967528fbaa2f1c01894540761e8141401e340546fac21e2280fde777",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-weapon-icon",
+      "evidence": "docs/art/dungeon-loadout/review.md; 176 source/packed views inspected, native catalog and legendary day/night cards reviewed"
     }
   },
   "m1b_followup": {
@@ -17186,5 +17474,12 @@
     "scope": "All 96 clothing palettes on fox, all 30 garment families on every other body, three mixed outfits in all eight directions for each body, source turnarounds and native close-up/world captures. Authored animation frame/direction alignment is tested separately; not a new per-pixel review of every stock animation frame.",
     "worktree": "codex-loadout",
     "source_commit": "27b66d7"
+  },
+  "dungeon_weapon_review": {
+    "worktree": "codex-mechanics",
+    "new_visual_assets": 48,
+    "retained_visual_assets": 2815,
+    "scope": "22 painted eight-view weapons, matching inventory icons and four technical pale-rim night variants. Original tool atlas and body sockets unchanged. New native evidence samples every weapon from the front on the fox; all 176 directional source and packed views were inspected. Existing full-pose grip contracts are reused and regression-checked across all eight heroes.",
+    "evidence": "docs/art/dungeon-loadout/review.md"
   }
 }

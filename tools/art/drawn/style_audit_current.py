@@ -70,6 +70,17 @@ def roles(catalog: dict) -> tuple[dict, dict]:
         path = (held / "tools.webp").resolve()
         selected[path] = "fitted-held-equipment"
         sources[path] = read(held / "manifest.json")["source"]
+    dungeon_weapons = held / "dungeon/manifest.json"
+    if dungeon_weapons.is_file():
+        for item, spec in read(dungeon_weapons)["items"].items():
+            path = (ROOT / spec["atlas"].removeprefix("res://")).resolve()
+            selected[path] = "painted-dungeon-held-equipment"
+            sources[path] = spec["source"]
+            for suffix in [".webp", "_night.webp"]:
+                icon = ROOT / "assets/icons/items" / (item + suffix)
+                if icon.is_file():
+                    selected[icon.resolve()] = "painted-dungeon-weapon-icon"
+                    sources[icon.resolve()] = spec["source"]
     wardrobe = ROOT / "assets/wardrobe"
     if (wardrobe / "manifest.json").is_file():
         manifest = read(wardrobe / "manifest.json")
