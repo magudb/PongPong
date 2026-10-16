@@ -71,7 +71,8 @@
         },
         {
           "id": "P16-ui-menus",
-          "status": "pending"
+          "status": "validated",
+          "evidence": "menus-integration.json: 1038 checks, 0 failures, 66 named window/later-package skips; menus-native.json: 19 checks, 0 failures/skips/errors/warnings"
         },
         {
           "id": "P17-ui-hud",
@@ -169,7 +170,8 @@
     "The old 21-character / 241px name estimate contradicts approved names measured at up to 267.25px. The name budget is 26 characters / 272px; preserve canonical names and give the P14 runtime plate that width plus padding.",
     "Route bake uses the real level polygons/holes/keepouts and all 14 installed room colliders. routes.json records 44 input hashes, authored/resolved city coordinates and approach shifts. Seventeen city anchors shift more than 64 ground px; inspect live placement and door approach at T-director before accepting the milestone. Never silently restore the old circle approximation.",
     "The real routes require Pip courier speed_mult=1.6 to cover the 07:10 farm mailbox and 09:00 counter. Hoppe leaves 15 minutes earlier for the farm and keeps a 6 minute return margin; Rosa keeps a 6 minute errand margin. Normal/festival compiler travel shares the same pace.",
-    "P06 production player/farm installed with cached shared body/camera/query, isolated combat, eight-slot hotbar and all eight painted crops. Harvest/plant/consumables commit before observers; failed full-bag harvest preserves crop and rolled yield. Moon eligibility preserves the actual raw watering hour. Native lantern cap tested with exactly fourteen other lights; the fixture mushroom lamp is disabled only in that controlled probe. Idle controller measured 57–59 microseconds per tick."
+    "P06 production player/farm installed with cached shared body/camera/query, isolated combat, eight-slot hotbar and all eight painted crops. Harvest/plant/consumables commit before observers; failed full-bag harvest preserves crop and rolled yield. Moon eligibility preserves the actual raw watering hour. Native lantern cap tested with exactly fourteen other lights; the fixture mushroom lamp is disabled only in that controlled probe. Idle controller measured 57–59 microseconds per tick.",
+    "P16 ships four race cards and two heroes each, both real keyboard and pad flows, shared settings proven in a second process, six manual saves plus read-only auto, safe confirmations and a twelve-row pause layout. UI audit restores nested radio context per page, checks real pad edges per page and preserves caller modal state. Historical menu negatives use archived scenes; production menus are live. Native baselines were inspected with the unchanged approved painted title/character art. New copy remains draft; the Halvling override uses zz_final.csv without changing the frozen ui.csv."
   ],
   "scope_basis": "The four-stage 27-package M1b plan in the original durable LEAD_NOTES.md (2026-10-15); package amendments remain binding. This is the usable-towns milestone, before the later dungeon and feature milestones.",
   "followup_layers": [

@@ -1,0 +1,71 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://assets/ui/theme.tres" id="1_rsuwt"]
+[ext_resource type="Script" path="res://scripts/ui/save_load_ui.gd" id="2_wqm0y"]
+[ext_resource type="Script" path="res://scripts/ui/components/hint_bar.gd" id="3_f51l7"]
+
+[node name="SaveLoadUI" type="Control" unique_id=809247047]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_rsuwt")
+script = ExtResource("2_wqm0y")
+screen_id = &"save_load_ui"
+modal_name = &"save_load"
+nested_under = &"pause"
+
+[node name="Scrim" type="ColorRect" parent="." unique_id=1139349970]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.11, 0.129, 0.22, 0.62)
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=1639806555]
+custom_minimum_size = Vector2(940, 0)
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PanelParchment"
+
+[node name="Body" type="VBoxContainer" parent="Panel" unique_id=1502519707]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="Panel/Body" unique_id=1555388650]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Display34"
+text = "UI_LOAD_GAME"
+horizontal_alignment = 1
+
+[node name="SlotList" type="VBoxContainer" parent="Panel/Body" unique_id=979027230]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="CloseButton" type="Button" parent="Panel/Body" unique_id=1998774583]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ButtonTertiary"
+text = "HINT_BACK"
+
+[node name="HintBar" type="HBoxContainer" parent="Panel/Body" unique_id=2022251395]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 2
+script = ExtResource("3_f51l7")

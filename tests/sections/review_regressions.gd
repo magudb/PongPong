@@ -136,8 +136,8 @@ func _menus() -> void:
 	var select: Node = t.tree.current_scene
 	select.get_node("%FairyButton").pressed.emit()
 	# a retired skin (fairy_dusk) is never offered: index 1 is the second LIVE fairy skin (fairy_birk)
-	select.get_node("%SkinOption").select(1)
-	select.get_node("%SkinOption").item_selected.emit(1)
+	select.get_node("%HeroChip2").pressed.emit()
+	await select._set_page(2)
 	var announced: Array = []
 	var reset_skins: Array = []
 	var on_character := func(skin: StringName) -> void: announced.append(skin)
@@ -182,6 +182,15 @@ static var MODAL_SCREEN_NODES := {
 
 
 func _make_screen(script_path: String, named: Dictionary) -> Control:
+	var id := StringName(script_path.get_file().get_basename())
+	var game_ui: Node = t.tree.get_first_node_in_group("game_ui")
+	if game_ui != null:
+		var existing: Node = game_ui.call("get_screen", id)
+		if existing is Control:
+			return existing
+	var scene := "res://scenes/ui/%s.tscn" % id
+	if ResourceLoader.exists(scene):
+		return load(scene).instantiate() as Control
 	var root := Control.new()
 	root.process_mode = Node.PROCESS_MODE_ALWAYS      # like GameUI: a modal works while the tree is paused
 	for node_name in named:
@@ -195,6 +204,9 @@ func _make_screen(script_path: String, named: Dictionary) -> Control:
 
 
 func _ui_modal_contract() -> void:
+	# The pause contract now requires a free world, and shipped scenes supersede skeleton controls.
+	bus.new_game_started.connect(func(): gm.set_flag(GameManager.FLAG_INTRO_PENDING, false), CONNECT_ONE_SHOT)
+	await t.start_world()
 	var host := Control.new()
 	t.tree.current_scene.add_child(host)
 	var stack_before: Array = gm.modal_stack()
@@ -205,7 +217,8 @@ func _ui_modal_contract() -> void:
 		var spec: Dictionary = MODAL_SCREEN_NODES[script_path]
 		var scr := _make_screen(script_path, spec["nodes"])
 		made[spec["modal"]] = scr
-		host.add_child(scr)
+		if scr.get_parent() == null:
+			host.add_child(scr)
 		await t.frames(1)
 		bus.ui_panel_toggled.emit(spec["toggle"], true)
 		await t.frames(1)
@@ -221,7 +234,8 @@ func _ui_modal_contract() -> void:
 	var shop := _make_screen("res://scripts/ui/shop_ui.gd", {
 		"ShopNameLabel": Label, "TabContainer": TabContainer, "BuyList": ItemList, "SellList": ItemList,
 		"QuantitySpin": SpinBox, "BuyButton": Button, "SellButton": Button, "GoldLabel": Label, "CloseButton": Button})
-	host.add_child(shop)
+	if shop.get_parent() == null:
+		host.add_child(shop)
 	await t.frames(1)
 	bus.shop_opened.emit(&"seed_shop")
 	await t.frames(1)
@@ -234,7 +248,8 @@ func _ui_modal_contract() -> void:
 	var pause := _make_screen("res://scripts/ui/pause_menu.gd", {
 		"ResumeButton": Button, "SaveButton": Button, "LoadButton": Button, "SettingsButton": Button,
 		"QuitButton": Button, "PanelContainer": PanelContainer})
-	host.add_child(pause)
+	if pause.get_parent() == null:
+		host.add_child(pause)
 	await t.frames(1)
 	var released_before := Input.get_mouse_mode()
 	t.tap_key(KEY_ESCAPE)

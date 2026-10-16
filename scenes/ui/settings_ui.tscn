@@ -1,0 +1,215 @@
+[gd_scene format=3]
+
+[ext_resource type="Theme" path="res://assets/ui/theme.tres" id="1_jmt4x"]
+[ext_resource type="Script" path="res://scripts/ui/settings_ui.gd" id="2_2oxlm"]
+[ext_resource type="Script" path="res://scripts/ui/components/tt_slider.gd" id="3_yxpos"]
+[ext_resource type="Script" path="res://scripts/ui/components/hint_bar.gd" id="4_5sdj3"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_81vt0"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_6kh3n"]
+
+[node name="SettingsUI" type="Control" unique_id=233686599]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_jmt4x")
+script = ExtResource("2_2oxlm")
+screen_id = &"settings_ui"
+modal_name = &"settings"
+nested_under = &"pause"
+
+[node name="Scrim" type="ColorRect" parent="." unique_id=1662837907]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.11, 0.129, 0.22, 0.62)
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=138732776]
+custom_minimum_size = Vector2(640, 0)
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PanelParchment"
+
+[node name="Body" type="VBoxContainer" parent="Panel" unique_id=1243548611]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="Panel/Body" unique_id=826081663]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Display34"
+text = "MENU_SETTINGS"
+horizontal_alignment = 1
+
+[node name="LanguageRow" type="HBoxContainer" parent="Panel/Body" unique_id=1968604924]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="LanguageCaption" type="Label" parent="Panel/Body/LanguageRow" unique_id=1310660038]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+theme_type_variation = &"Heavy18"
+text = "SETTINGS_LANGUAGE"
+
+[node name="LangDa" type="Button" parent="Panel/Body/LanguageRow" unique_id=921654281]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"PillTab"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_81vt0")
+text = "SETTINGS_DA"
+
+[node name="LangEn" type="Button" parent="Panel/Body/LanguageRow" unique_id=1769505065]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"PillTab"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_81vt0")
+text = "SETTINGS_EN"
+
+[node name="MasterRow" type="HBoxContainer" parent="Panel/Body" unique_id=317653979]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="MasterCaption" type="Label" parent="Panel/Body/MasterRow" unique_id=547900756]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+theme_type_variation = &"Heavy18"
+text = "SET_MASTER"
+
+[node name="MasterSlider" type="HSlider" parent="Panel/Body/MasterRow" unique_id=1903260033]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.05
+value = 0.8
+script = ExtResource("3_yxpos")
+
+[node name="MusicRow" type="HBoxContainer" parent="Panel/Body" unique_id=903943398]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="MusicCaption" type="Label" parent="Panel/Body/MusicRow" unique_id=1861843499]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+theme_type_variation = &"Heavy18"
+text = "SET_MUSIC"
+
+[node name="MusicSlider" type="HSlider" parent="Panel/Body/MusicRow" unique_id=1423678315]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.05
+value = 0.8
+script = ExtResource("3_yxpos")
+
+[node name="SfxRow" type="HBoxContainer" parent="Panel/Body" unique_id=721506595]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="SfxCaption" type="Label" parent="Panel/Body/SfxRow" unique_id=1619474797]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+theme_type_variation = &"Heavy18"
+text = "SET_SFX"
+
+[node name="SfxSlider" type="HSlider" parent="Panel/Body/SfxRow" unique_id=1054566914]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.05
+value = 0.8
+script = ExtResource("3_yxpos")
+
+[node name="VoiceRow" type="HBoxContainer" parent="Panel/Body" unique_id=854928927]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="VoiceCaption" type="Label" parent="Panel/Body/VoiceRow" unique_id=661535056]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+theme_type_variation = &"Heavy18"
+text = "SET_VOICE"
+
+[node name="VoiceSlider" type="HSlider" parent="Panel/Body/VoiceRow" unique_id=1097452484]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.05
+value = 0.8
+script = ExtResource("3_yxpos")
+
+[node name="FullscreenCheck" type="CheckBox" parent="Panel/Body" unique_id=108019529]
+unique_name_in_owner = true
+layout_mode = 2
+text = "SET_FULLSCREEN"
+
+[node name="Sizes" type="HBoxContainer" parent="Panel/Body" unique_id=316664225]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SizeCaption" type="Label" parent="Panel/Body/Sizes" unique_id=149366257]
+layout_mode = 2
+theme_type_variation = &"Heavy18"
+text = "SETTINGS_SIZE"
+
+[node name="Size0" type="Button" parent="Panel/Body/Sizes" unique_id=2094797565]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Chip"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_6kh3n")
+text = "1280 × 720"
+
+[node name="Size1" type="Button" parent="Panel/Body/Sizes" unique_id=1560475706]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Chip"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_6kh3n")
+text = "1600 × 900"
+
+[node name="Size2" type="Button" parent="Panel/Body/Sizes" unique_id=1534987166]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"Chip"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_6kh3n")
+text = "1920 × 1080"
+
+[node name="CloseButton" type="Button" parent="Panel/Body" unique_id=368075888]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"ButtonPrimary"
+text = "SET_DONE"
+
+[node name="HintBar" type="HBoxContainer" parent="Panel/Body" unique_id=1932240933]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 2
+script = ExtResource("4_5sdj3")

@@ -1,0 +1,1 @@
+Four-card reference from the M1b native menu gate, visually reviewed on 2026-10-16. It uses the approved painted character art, the canonical name Pedro and the selected UI palette. The reference is a game-window capture, not a user drawing. The historical style-guide images remain separate.

@@ -1254,11 +1254,11 @@ func _rules(t) -> void:
 		await _drop(t, ex)
 	var keyed := await _make(t, "menu")
 	var same_key := Label.new()
-	same_key.text = "CHAR_HOBBIT_NAME"
+	same_key.text = "SETTINGS_EN"
 	same_key.theme_type_variation = &"Body"
 	keyed.vbox.add_child(same_key)
 	await t.frames(2)
-	t.check("rules_flip_equal_translations_of_a_key_are_fine", TranslationServer.translate("CHAR_HOBBIT_NAME") == "Hobbit", "CHAR_HOBBIT_NAME is 'Hobbit' in Danish and English")
+	t.check("rules_flip_equal_translations_of_a_key_are_fine", TranslationServer.translate("SETTINGS_EN") == "English", "SETTINGS_EN is 'English' in Danish and English")
 	_clean(t, "rules_flip_key_with_equal_translations", await UiAudit.locale_flip_report(t, keyed), "a translation KEY whose da and en text happen to be equal is localized by definition (not a defect)")
 	await _drop(t, keyed)
 	var same := await _make(t, "menu", "literal_flip")
@@ -1730,17 +1730,20 @@ func _real_screens(t) -> void:
 	t.check("foundation_gallery_rarity_live", rar["status"] == "live" and rar["ok"], "the rarity page passes too: %s" % [rar["checks"].keys()])
 	var gw: Dictionary = (gal["checks"] as Dictionary).get("focus_walk", {})
 	t.check("foundation_gallery_walk_depth", int(gw.get("expected", 0)) >= 15 and int(gw.get("reached", 0)) == int(gw.get("expected", 0)), "the real gallery walk: %s of %s controls reached in %s presses" % [gw.get("reached"), gw.get("expected"), gw.get("steps")])
-	# legacy screens: the audit must detect today's problems
+	# Production menus are live; preserved legacy scenes still exercise every old defect.
 	for id in ["title", "select_1"]:
 		var out := await UiAudit.audit_screen(t, id)
+		t.check("production_%s_live" % id, out["status"] == "live" and out["ok"], UiAudit.summary(out))
+	UiAudit.use_registry("res://tests/fixtures/ui_audit/ui_screens_fixture.json")
+	for id in ["archive_title", "archive_select"]:
+		var spy := Spy.new(t)
+		var out := await UiAudit.audit_screen(spy, id)
 		var codes := {}
-		for d in out["defects"]:
-			codes[str(d["code"])] = true
-			_legacy.append({"screen": id, "check": d["check"], "code": d["code"], "path": d["path"], "msg": d["msg"]})
-		t.check("legacy_%s_detected" % id, out["status"] == "legacy" and codes.has("no_initial_focus") and codes.has("hardcoded_literal") and codes.has("not_localized"), "the legacy %s screen is reported with %s" % [id, str(codes.keys())])
-		t.check("legacy_%s_is_not_silent_green" % id, not out["defects"].is_empty(), "%d findings printed as KNOWN-GAP lines (never an empty pass)" % out["defects"].size())
-		if codes.has("no_initial_focus"):
-			await _legacy_keyboard_probe(t, id)
+		for defect in out["defects"]:
+			codes[str(defect["code"])] = true
+		t.check("legacy_%s_detected" % id, out["status"] == "legacy" and codes.has("no_initial_focus") and codes.has("hardcoded_literal") and codes.has("not_localized"), str(codes.keys()))
+		t.check("legacy_%s_is_not_silent_green" % id, not out["defects"].is_empty() and not spy.infos("KNOWN-GAP").is_empty())
+	UiAudit.use_registry("")
 	# every other entry: pending, one SKIP line each with the package id
 	var pending := UiAudit.screens_by_status("pending")
 	var skipped := 0
@@ -1748,7 +1751,7 @@ func _real_screens(t) -> void:
 		var o := await UiAudit.audit_screen(t, str(s["id"]))
 		if o["skipped"]:
 			skipped += 1
-	t.check("pending_entries_skip", skipped == pending.size() and pending.size() >= 20, "%d pending screens are SKIP lines naming their package (a package that lands a scene must flip its entry)" % pending.size())
+	t.check("pending_entries_skip", skipped == pending.size() and pending.size() + UiAudit.screens_by_status("live").size() + UiAudit.screens_by_status("legacy").size() == UiAudit.screens().size(), "%d pending screens are SKIP lines naming their package (a package that lands a scene must flip its entry)" % pending.size())
 	var path := OS.get_environment("UI_AUDIT_REPORT")
 	if path != "":
 		_write_report(t, path)

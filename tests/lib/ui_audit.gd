@@ -696,7 +696,7 @@ static func _skip_dirs(c: Control, consumes: Array = []) -> Array[StringName]:
 		# (UI_NAVIGATION.md 4.6 item 3d). The walk must not expect an edge from them, exactly like HSlider.
 		out.append_array([&"ui_left", &"ui_right"])
 	for d in consumes:                                         # directions a control declares as consumed (options.consumes: {path: ["left", "right"]})
-		var long_name := StringName("ui_" + str(d))
+		var long_name := StringName("ui_" + str(d).trim_prefix("ui_"))
 		if long_name in SHORT_DIRS and not out.has(long_name):
 			out.append(long_name)
 	return out
@@ -767,6 +767,11 @@ static func _walk_page(t, root: Node, start: Control, budget: Dictionary, option
 ## While the walk visits the page behind a radio member, a probe that moves focus onto ANOTHER member of the group selects that one (select-on-focus screens) and swaps the page: put
 ## the member back before the next probe.
 static func _ensure_page(t, budget: Dictionary, options: Dictionary) -> void:
+	# Nested radio groups reuse nodes with different content. Restore the complete
+	# selected context before probing an edge, rather than mixing different pages.
+	for member in budget.get("page_state", []):
+		if is_instance_valid(member) and member.is_visible_in_tree() and not member.button_pressed:
+			await _select_member(t, member, budget, options)
 	var pm: Variant = budget.get("page_member", null)
 	if pm != null and is_instance_valid(pm) and not (pm as BaseButton).button_pressed:
 		await _select_member(t, pm as BaseButton, budget, options)
@@ -821,14 +826,10 @@ static func _focus_walk_modes(t, root: Node, max_steps: int, options: Dictionary
 	var focus_at_start := initial_focus(root)
 	var r := await _walk_once(t, root, max_steps, o1)
 	r["via"] = first_via
-	r["pad_matches_keyboard"] = true
-	if mode != "key" and bool(options.get("pad_check", true)) and not (r["edges"] as Dictionary).is_empty() and not bool(r["truncated"]):
-		await _pad_check(t, root, r)
-		if focus_at_start != null and is_instance_valid(focus_at_start):
-			focus_at_start.grab_focus()                        # the second walk must start from the screen's own initial focus, not where the pad check stopped
-		else:
-			_viewport(t).gui_release_focus()
-		await t.frames(1)
+	r["pad_matches_keyboard"] = r.get("pad_matches_keyboard", true)
+	if focus_at_start != null and is_instance_valid(focus_at_start):
+		focus_at_start.grab_focus()
+	await t.frames(1)
 	if mode == "both":
 		var eater := false
 		for c in _expected(root, options.get("ignore", [])):
@@ -855,7 +856,7 @@ static func _focus_walk_modes(t, root: Node, max_steps: int, options: Dictionary
 
 
 ## The D-pad leads where the action / keyboard walk led: for every recorded edge, press the D-pad button (InputEventJoypadButton) and compare.
-static func _pad_check(t, root: Node, r: Dictionary) -> void:
+static func _pad_check(t, root: Node, r: Dictionary, budget: Dictionary = {}, options: Dictionary = {}) -> void:
 	var edges: Dictionary = r["edges"]
 	var bad := 0
 	for pth in edges:
@@ -863,12 +864,13 @@ static func _pad_check(t, root: Node, r: Dictionary) -> void:
 		if not (c is Control) or not is_instance_valid(c) or (c as Control).focus_mode != Control.FOCUS_ALL or not (c as Control).is_visible_in_tree():
 			continue                                           # (a control of another tab page is hidden again by now)
 		for d in edges[pth]:
-			var long_name := StringName("ui_" + str(d))
+			var long_name := StringName("ui_" + str(d).trim_prefix("ui_"))
 			if not DIR_PAD.has(long_name):
 				continue
 			var target_node: Node = root if str(edges[pth][d]) == "." else root.get_node_or_null(NodePath(str(edges[pth][d])))
 			if target_node == null or not (target_node as CanvasItem).is_visible_in_tree():
 				continue
+			await _ensure_page(t, budget, options)
 			(c as Control).grab_focus()
 			await t.frames(1)
 			press_pad(t, DIR_PAD[long_name])
@@ -1046,6 +1048,12 @@ static func _walk_once(t, root: Node, max_steps: int, options: Dictionary) -> Di
 
 ## Probes the graph of one page (the start state or one tab) and appends what it finds to the report.
 static func _analyze_page(t, root: Node, start: Control, expected: Array[Control], budget: Dictionary, options: Dictionary, r: Dictionary, label: String, covered: Dictionary) -> void:
+	var state: Array = []
+	if bool(options.get("pages", true)):
+		for group in radio_groups(root, options):
+			if group.get("selected") != null:
+				state.append(group.selected)
+	budget["page_state"] = state
 	var via: String = options.get("via", "action")
 	var g := await _walk_page(t, root, start, budget, options, r)
 	var nodes_by_path: Dictionary = g["nodes"]
@@ -1235,6 +1243,7 @@ static func _analyze_page(t, root: Node, start: Control, expected: Array[Control
 			if used + path_dirs.size() > replay_budget:
 				_note(r, "replay stopped at %d presses (budget); %s and later were not replayed" % [used, p])
 				break
+			await _ensure_page(t, budget, options)
 			start.grab_focus()
 			await t.frames(1)
 			for d in path_dirs:
@@ -1244,6 +1253,18 @@ static func _analyze_page(t, root: Node, start: Control, expected: Array[Control
 			var landed := _owner(t)
 			if landed != nodes_by_path[p]:
 				_defect(r, "walk_replay_mismatch", p, "pressing %s from %s lands on %s, the probe landed on %s" % [", ".join(path_dirs), start_path, _rel(root, landed) if landed != null and _inside(root, landed) else "something else", p])
+
+	# Compare the pad against this page's edges while its radio context still exists.
+	if via != "key" and bool(options.get("pad_check", true)) and not bool(budget["truncated"]):
+		var pad := _report()
+		pad["edges"] = edges
+		await _pad_check(t, root, pad, budget, options)
+		for defect in pad["defects"]:
+			(r["defects"] as Array).append(defect)
+			r["ok"] = false
+		r["pad_matches_keyboard"] = bool(r.get("pad_matches_keyboard", true)) and bool(pad["pad_matches_keyboard"])
+		r["steps_pad"] = int(r.get("steps_pad", 0)) + int(pad["steps_pad"])
+	budget.erase("page_state")
 
 
 static func _switch_tab_by_keys(t, tb: TabBar, target: int, budget: Dictionary, options: Dictionary) -> bool:
@@ -2656,7 +2677,7 @@ static func _derive_status(e: Dictionary) -> String:
 
 
 ## The two scaffold scenes the legacy 3D flow shares with the new screens (scripts/ui/dev/ui_fixtures.gd LEGACY_SHARED).
-const LEGACY_SCENES: Array[String] = ["res://scenes/main/main_menu.tscn", "res://scenes/ui/character_select.tscn"]
+const LEGACY_SCENES: Array[String] = ["res://scenes/main/main_menu.tscn", "res://scenes/ui/character_select.tscn", "res://tests/fixtures/ui_audit/legacy_main_menu.tscn", "res://tests/fixtures/ui_audit/legacy_character_select.tscn"]
 
 
 static func _load_registry() -> Dictionary:
@@ -3115,9 +3136,19 @@ static func _open_screen(t, entry: Dictionary) -> Dictionary:
 	else:
 		host.queue_free()
 		return {}
-	host.set_meta(&"ui_audit_base_stack", base_stack)
-	host.set_meta(&"ui_audit_base_paused", paused0)
-	host.set_meta(&"ui_audit_base_phase", phase0)
+	var escape_stack: Array = base_stack
+	var escape_phase: Variant = phase0
+	var escape_paused: bool = paused0
+	if str(entry.get("kind", "")) == "scene":
+		# Entering the title/select changes the phase by contract. Esc is compared
+		# with the opened scene's state, rather than the world we left to inspect it.
+		var manager: Node = t.root.get_node_or_null("GameManager")
+		escape_phase = manager.get("current_phase") if manager != null else phase0
+		escape_paused = t.tree.paused
+		escape_stack = manager.call("modal_stack") if manager != null else base_stack
+	host.set_meta(&"ui_audit_base_stack", escape_stack)
+	host.set_meta(&"ui_audit_base_paused", escape_paused)
+	host.set_meta(&"ui_audit_base_phase", escape_phase)
 	return {"node": node, "host": host, "driver": driver, "base_stack": base_stack, "paused0": paused0, "locale0": locale0}
 
 

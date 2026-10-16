@@ -67,9 +67,11 @@
 			"modal": "",
 			"esc_depth": 0,
 			"compare": {
-				"screen": "title",
+				"baseline": "docs/qa/ui_baseline/title.png",
 				"fixture": "title_guide",
-				"target": 8.0
+				"no_frame_crop": true,
+				"target": 1.5,
+				"pinned_after_lead_review": true
 			},
 			"checks": [
 				"initial_focus",
@@ -90,12 +92,7 @@
 					"start"
 				]
 			},
-			"known_gaps": [
-				"no_initial_focus",
-				"hardcoded_literal",
-				"not_localized"
-			],
-			"note": "scenes/main/main_menu.tscn is the old scaffold (flat dark background, plain pills, no panel, no key art, no 'Dag N'); Esc must do nothing on the title (D2): pressed as Esc, Start and B"
+			"note": "Painted title art from the approved f478296 baseline. The archived CSS mock has older art; current layout, focus and pixel baselines are checked separately."
 		},
 		{
 			"id": "settings",
@@ -162,16 +159,7 @@
 				"button_pixels",
 				"compare_guide"
 			],
-			"known_gaps": [
-				"no_initial_focus",
-				"window_in_screen",
-				"disabled_focusable",
-				"only_via_tab",
-				"trap",
-				"hardcoded_literal",
-				"not_localized"
-			],
-			"note": "scenes/ui/character_select.tscn is the old scaffold (no race cards, no ring, no chips, no preview)"
+			"note": "Four painted race cards, two authored hero chips per race, page 2 names and keyboard/gamepad navigation. M1b P16."
 		},
 		{
 			"id": "select_2",
@@ -204,7 +192,7 @@
 				"button_pixels",
 				"compare_guide"
 			],
-			"note": "page 2 is the same scene as page 1 today; Esc goes page 2 > page 1 > title (two presses, the owner's own escape_chain call)"
+			"note": "Names and the chosen hero preview; Esc returns to race selection before the title."
 		},
 		{
 			"id": "saveload",

@@ -1,71 +1,120 @@
-extends Control
-## Pause menu: resume, save, load, settings, quit to main.
+extends TTScreen
+## Pause transfers close their modal before opening a peer; save/load/settings nest above it.
+var _rows: Array[Button] = []
+var _row_specs: Array = []
+var _leaving := false
 
-@onready var resume_btn: Button = %ResumeButton
-@onready var save_btn: Button = %SaveButton
-@onready var load_btn: Button = %LoadButton
-@onready var settings_btn: Button = %SettingsButton
-@onready var quit_btn: Button = %QuitButton
-@onready var panel: PanelContainer = %PanelContainer
-
+func _init() -> void:
+	super._init()
+	screen_id = &"pause_menu"
+	modal_name = &"pause"
+	hotkey_action = &"pause"
 
 func _ready() -> void:
-	visible = false
-	resume_btn.pressed.connect(_on_resume)
-	save_btn.pressed.connect(_on_save)
-	load_btn.pressed.connect(_on_load)
-	settings_btn.pressed.connect(_on_settings)
-	quit_btn.pressed.connect(_on_quit)
-	EventBus.ui_panel_toggled.connect(_on_panel_toggled)
+	super._ready()
+	# Keep the title's menu face, font and gold focus while fitting all twelve pause actions.
+	var compact := theme.duplicate() as Theme
+	for state in ["normal", "hover", "pressed", "hover_pressed", "disabled", "focus"]:
+		var box := theme.get_stylebox(state, "MenuRow").duplicate() as StyleBox
+		box.content_margin_top = 4.0
+		box.content_margin_bottom = 4.0
+		compact.set_stylebox(state, "MenuRow", box)
+	theme = compact
+	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("pause", Callable(get_script(), &"fixture_setup"))
+	%HintBar.set_hints([{"pair": [&"ui_up", &"ui_down"], "key": "HINT_MOVE"}, {"action": &"ui_accept", "key": "HINT_OK"}, {"action": &"ui_cancel", "key": "HINT_RESUME"}])
 
+func _initial_focus() -> Control:
+	return get_node("%ResumeButton")
 
-## Esc is this panel's key: it opens the pause menu when nothing is modal and closes it when pause is the top modal
-## (a modal stacked on top - the save/load screen - owns Esc then).
-func _unhandled_input(event: InputEvent) -> void:
-	if not event.is_action_pressed(&"ui_cancel"):
+func _hotkey_open_allowed() -> bool:
+	var world := get_tree().get_first_node_in_group("world_2d")
+	return world != null and world.get("area") != null and world.get("player") != null and not bool(world.get("sleeping")) and not bool(world.get("traveling")) and int(world.get("player").get("state")) == 0
+
+func _screen(id: StringName) -> Node:
+	var game_ui := get_tree().get_first_node_in_group("game_ui")
+	return game_ui.call("get_screen", id) if game_ui != null else null
+
+func _specs() -> Array:
+	var rows: Array = [["ResumeButton", "UI_RESUME", close]]
+	var world := get_tree().get_first_node_in_group("world_2d")
+	for spec in [["inventory_ui", "InventoryButton", "INV_TITLE"], ["quest_journal", "JournalButton", "QJ_TITLE"], ["people", "PeopleButton", "PAUSE_PEOPLE"], ["build_menu_ui", "BuildButton", "PAUSE_BUILD"], ["garderobe", "WardrobeButton", "PAUSE_WARDROBE"], ["samlerbog", "CollectionButton", "PAUSE_COLLECTION"]]:
+		if _screen(StringName(spec[0])) == null:
+			continue
+		if spec[0] == "build_menu_ui" and (world == null or world.get("area").map.id != &"farm"):
+			continue
+		rows.append([spec[1], spec[2], _transfer.bind(StringName(spec[0]))])
+	rows.append_array([["SaveButton", "MENU_SAVE", _nested.bind(&"save_menu")], ["LoadButton", "MENU_LOAD_GAME", _nested.bind(&"load_menu")], ["SettingsButton", "MENU_SETTINGS", _nested.bind(&"settings")]])
+	var floors: Variant = _floors()
+	if floors is Object and floors.has_method("current_floor") and int(floors.call("current_floor")) > 0:
+		rows.append(["LeaveDungeonButton", "DUNGEON_LEAVE", _leave_dungeon])
+	rows.append_array([["QuitButton", "UI_TO_TITLE", _leave.bind(false)], ["QuitGameButton", "PAUSE_QUIT_GAME", _leave.bind(true)]])
+	return rows
+
+func _refresh_texts() -> void:
+	if not is_node_ready():
 		return
-	var top := GameManager.top_modal()
-	if visible and (top == &"" or top == &"pause"):
-		_on_resume()
-	elif not GameManager.is_modal_open():
-		EventBus.ui_panel_toggled.emit(&"pause", true)
+	var specs := _specs()
+	var names: Array = specs.map(func(row): return row[0])
+	if names != _row_specs:
+		for child in %MenuList.get_children():
+			%MenuList.remove_child(child)
+			child.queue_free()
+		_rows.clear()
+		_row_specs = names
+		for spec in specs:
+			var button := Button.new()
+			button.name = spec[0]
+			button.theme_type_variation = &"MenuRow"
+			button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+			button.set_meta(&"copy_key", spec[1])
+			%MenuList.add_child(button)
+			button.owner = self
+			button.unique_name_in_owner = true
+			button.pressed.connect(spec[2])
+			_rows.append(button)
+	for row in _rows:
+		row.text = tr(str(row.get_meta(&"copy_key")))
+	UiNav.wire_ring(_rows)
+	UiNav.hover_focus(_rows)
+
+func _nested(panel: StringName) -> void:
+	EventBus.ui_panel_toggled.emit(panel, true)
+
+func _transfer(id: StringName) -> void:
+	var target := _screen(id)
+	if target == null:
+		return
+	close()
+	if target.has_method("open"):
+		target.call("open")
 	else:
+		EventBus.ui_panel_toggled.emit({&"inventory_ui": &"inventory", &"quest_journal": &"journal", &"build_menu_ui": &"build"}.get(id, id), true)
+
+func _leave(quit_game: bool) -> void:
+	if _leaving:
 		return
-	get_viewport().set_input_as_handled()
+	_leaving = true
+	if not SaveManager.autosave():
+		var accepted := await UiConfirm.ask(self, "NOTIF_SAVE_FAILED_TITLE", tr("PAUSE_SAVE_FAILED_CONFIRM"), "NAV_OK")
+		if not accepted:
+			_leaving = false
+			return
+	GameManager.pop_all_modals()
+	GameManager.change_phase(GameManager.GamePhase.MENU)
+	if quit_game:
+		get_tree().quit()
+	else:
+		get_tree().change_scene_to_file("res://scenes/main/main_menu.tscn")
 
+func _floors() -> Variant:
+	return Svc.static_call("res://scripts/dungeon/floors/dungeon_floors.gd", &"inst", [], null)
 
-func _on_resume() -> void:
-	visible = false
-	GameManager.pop_modal(&"pause")
-	EventBus.ui_panel_toggled.emit(&"pause", false)
+func _leave_dungeon() -> void:
+	if await UiConfirm.ask(self, "DUNGEON_LEAVE", tr("DUNGEON_LEAVE_CONFIRM"), "NAV_OK"):
+		var floors: Variant = _floors()
+		GameManager.pop_all_modals()
+		if floors is Object and is_instance_valid(floors):
+			floors.call("leave")
 
-
-func _on_save() -> void:
-	EventBus.ui_panel_toggled.emit(&"save_menu", true)
-
-
-func _on_load() -> void:
-	EventBus.ui_panel_toggled.emit(&"load_menu", true)
-
-
-func _on_settings() -> void:
-	EventBus.ui_panel_toggled.emit(&"settings", true)
-
-
-func _on_quit() -> void:
-	GameManager.pop_all_modals()   # the menu would stay frozen otherwise (the tree is paused)
-	get_tree().change_scene_to_file("res://scenes/main/main_menu.tscn")
-
-
-func _on_panel_toggled(panel_name: StringName, is_open: bool) -> void:
-	if panel_name == &"pause":
-		visible = is_open
-		if is_open:
-			GameManager.push_modal(&"pause")
-			resume_btn.text = tr("UI_RESUME")
-			save_btn.text = tr("MENU_SAVE")
-			load_btn.text = tr("MENU_LOAD_GAME")
-			settings_btn.text = tr("MENU_SETTINGS")
-			quit_btn.text = tr("MENU_QUIT")
-		else:
-			GameManager.pop_modal(&"pause")
+static func fixture_setup(node: Node, _host: Node) -> void:
+	(node as TTScreen).open()

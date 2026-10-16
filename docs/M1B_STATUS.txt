@@ -138,3 +138,21 @@ regression: 2322 checks, 13 named later-package skips, no unexpected engine
 messages or ObjectDB leaks. Idle controller: 57–59 microseconds per tick.
 Evidence and remaining gates: docs/qa/m1b-milestone/. Menus, HUD and live dialogue
 are next; the full milestone remains in progress and has not been merged.
+
+P16 menus — 2026-10-16
+
+The painted title, four-card/two-hero selection, name page, settings, pause and
+save browser now use the guide theme and navigation contracts. All eight looks
+start through real keys and pad events. Settings survive a second Godot process
+and preserve other config owners. Real save/overwrite/load/delete flows pass.
+The complete twelve-action pause layout fits 720p without changing the title's
+menu style. Popup ink edges align to pixels; all approved art/theme bytes match.
+
+Seven-section regression: 1038 checks, no failures or unexpected messages,
+66 named native/future-package skips. Native: 19 checks, no skips or engine
+messages, including six reviewed image baselines, 22 focus looks and 12 raised
+button profiles. The CSS title reference predates the approved painted key art;
+it remains archived and a separate painted title baseline is pinned.
+
+HUD and shop/inventory are next, followed by live dialogue/town population and
+the remaining farm/social/service loop. The full milestone is still in progress.

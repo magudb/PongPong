@@ -1,166 +1,166 @@
-extends Control
-## Save/Load UI: slot browser with summaries, overwrite/delete confirmation.
-
+extends TTScreen
+## Six manual slots and a read-only autosave. SaveManager owns validation, summaries and feedback.
 signal slot_selected(slot: int, is_save: bool)
-
 enum Mode { SAVE, LOAD }
+var mode: int = Mode.LOAD
+var _rows: Array[Button] = []
+var _deletes: Array[Button] = []
+var _busy := false
+var _focused_slot := -1
 
-@export var mode: int = Mode.LOAD
-
-@onready var title_label: Label = %TitleLabel
-@onready var slot_list: VBoxContainer = %SlotList
-@onready var confirm_dialog: ConfirmationDialog = %ConfirmDialog
-@onready var delete_dialog: ConfirmationDialog = %DeleteDialog
-@onready var info_label: Label = %InfoLabel
-@onready var close_btn: Button = %CloseButton
-
-const MAX_SLOTS := 6
-
-var _selected_slot: int = -1
-var _pending_action: String = ""
-## The request name that opened the panel ("save_menu" | "load_menu"): the modal it pushes and the toggle it answers.
-var _open_panel: StringName = &""
-
+func _init() -> void:
+	super._init()
+	screen_id = &"save_load_ui"
+	modal_name = &"save_load"
+	nested_under = &"pause"
 
 func _ready() -> void:
-	visible = false
-	close_btn.pressed.connect(_close)
-	confirm_dialog.confirmed.connect(_on_confirm)
-	delete_dialog.confirmed.connect(_on_delete_confirm)
-	EventBus.ui_panel_toggled.connect(_on_panel_toggled)
-	_populate_slots()
+	super._ready()
+	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("saveload", Callable(get_script(), &"fixture_setup"))
+	%CloseButton.pressed.connect(close)
+	%HintBar.set_hints([{"action": &"ui_accept", "key": "HINT_OK"}, {"action": &"ui_cancel", "key": "HINT_BACK"}])
 
+func open_mode(value: int, opener: Control = null) -> void:
+	mode = value
+	pauses_tree = get_tree().get_first_node_in_group("world_2d") != null
+	super.open(opener)
 
-func open(save_mode: int, panel: StringName = &"save_menu") -> void:
-	mode = save_mode
-	_open_panel = panel
-	title_label.text = tr("UI_SAVE_GAME") if mode == Mode.SAVE else tr("UI_LOAD_GAME")
-	visible = true
-	_populate_slots()
-	GameManager.push_modal(&"save_load")
-
-
-## Esc is this panel's key (while it is the top modal): closes the browser, not the pause menu under it.
-func _unhandled_input(event: InputEvent) -> void:
-	if visible and GameManager.top_modal() == &"save_load" and event.is_action_pressed(&"ui_cancel"):
-		_close()
-		get_viewport().set_input_as_handled()
-
-
-func _populate_slots() -> void:
-	for child in slot_list.get_children():
-		child.queue_free()
-
-	for i in MAX_SLOTS:
-		var slot_container := HBoxContainer.new()
-		slot_container.custom_minimum_size = Vector2(0, 80)
-
-		var btn := Button.new()
-		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		btn.custom_minimum_size = Vector2(0, 70)
-
-		var summary := SaveManager.get_save_summary(i)
-		if summary.is_empty():
-			btn.text = tr("UI_EMPTY_SLOT") % (i + 1)
-			btn.disabled = mode == Mode.LOAD
+func _on_panel_toggled(panel: StringName, value: bool) -> void:
+	if panel in [&"save_menu", &"load_menu"]:
+		if value:
+			open_mode(Mode.SAVE if panel == &"save_menu" else Mode.LOAD)
 		else:
-			var season_key := "UI_SEASON_%s" % str(summary.get("season", "foraar")).to_upper()
-			btn.text = "%s\n%s %d • %s • %d %s\n%s" % [
-				summary.get("player_name", ""),
-				tr("UI_DAY"), summary.get("day", 1),
-				tr(season_key),
-				summary.get("gold", 0), tr("UI_GOLD"),
-				_format_playtime(float(summary.get("play_time_seconds", 0))),
-			]
+			close()
+	else:
+		super._on_panel_toggled(panel, value)
 
-		var slot_idx := i
-		btn.pressed.connect(func(): _on_slot_pressed(slot_idx))
+func _initial_focus() -> Control:
+	if _focused_slot >= 0 and _focused_slot < _rows.size() and UiNav.is_stop(_rows[_focused_slot]):
+		return _rows[_focused_slot]
+	var first := UiNav.first_enabled(_rows)
+	return first if first != null else %CloseButton
 
-		var delete_btn := Button.new()
-		delete_btn.text = "✕"
-		delete_btn.custom_minimum_size = Vector2(50, 70)
-		delete_btn.disabled = summary.is_empty()
-		delete_btn.pressed.connect(func(): _on_delete_pressed(slot_idx))
+func _refresh_texts() -> void:
+	if not is_node_ready():
+		return
+	%TitleLabel.text = tr("UI_SAVE_GAME" if mode == Mode.SAVE else "UI_LOAD_GAME")
+	for child in %SlotList.get_children():
+		%SlotList.remove_child(child)
+		child.queue_free()
+	_rows.clear()
+	_deletes.clear()
+	for descriptor in SaveManager.describe_slots():
+		var slot := int(descriptor.slot)
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 12)
+		%SlotList.add_child(row)
+		var button := Button.new()
+		button.name = "Slot%d" % slot
+		button.theme_type_variation = &"RowButton"
+		button.custom_minimum_size = Vector2(0, 56)
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(button)
+		button.owner = self
+		button.unique_name_in_owner = true
+		var labels := VBoxContainer.new()
+		labels.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		button.add_child(labels)
+		labels.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		labels.offset_left = 16
+		labels.offset_right = -16
+		labels.offset_top = 5
+		labels.add_theme_constant_override("separation", 0)
+		var title := Label.new()
+		title.theme_type_variation = &"Display20"
+		title.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		title.text = tr("SAVELOAD_AUTO") if descriptor.is_auto else tr("SAVELOAD_SLOT") % (slot + 1)
+		labels.add_child(title)
+		var detail := Label.new()
+		detail.theme_type_variation = &"Muted13"
+		detail.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		detail.text = _summary(descriptor)
+		if descriptor.state in ["newer", "corrupt", "backup"]:
+			detail.add_theme_color_override("font_color", preload("res://scripts/ui/theme/tt_colors.gd").THORNBERRY)
+		labels.add_child(detail)
+		UiNav.set_enabled(button, (not descriptor.is_auto) if mode == Mode.SAVE else descriptor.state in ["ok", "backup"])
+		button.pressed.connect(func(): _on_slot_pressed(slot))
+		button.focus_entered.connect(func(): _focused_slot = slot)
+		_rows.append(button)
+		var remove := Button.new()
+		remove.name = "Delete%d" % slot
+		remove.text = tr("SAVELOAD_DELETE")
+		remove.theme_type_variation = &"ButtonTertiary"
+		remove.custom_minimum_size = Vector2(80, 56)
+		row.add_child(remove)
+		remove.owner = self
+		remove.unique_name_in_owner = true
+		UiNav.set_enabled(remove, not descriptor.is_auto and descriptor.state != "empty")
+		remove.modulate.a = 0.0 if descriptor.is_auto else 1.0
+		remove.pressed.connect(func(): _on_delete_pressed(slot))
+		remove.focus_entered.connect(func(): _focused_slot = slot)
+		_deletes.append(remove)
+	_wire()
 
-		slot_container.add_child(btn)
-		slot_container.add_child(delete_btn)
-		slot_list.add_child(slot_container)
+func _summary(descriptor: Dictionary) -> String:
+	var state := str(descriptor.state)
+	if state == "empty":
+		return tr("SAVELOAD_EMPTY")
+	if state in ["newer", "corrupt"]:
+		return tr("SAVELOAD_STATE_" + state.to_upper())
+	var summary: Dictionary = descriptor.summary
+	var info := "%s · %s · %s %d · %d %s · %s" % [summary.player_name, summary.farm_name, tr("UI_DAY"), summary.total_day, summary.gold, tr("UI_GOLD"), preload("res://scripts/ui/theme/tt_format.gd").clock(summary.hour, summary.minute)]
+	return info + (" · " + tr("SAVELOAD_STATE_BACKUP") if state == "backup" else "")
 
-	info_label.text = tr("UI_SAVE_INFO") if mode == Mode.SAVE else tr("UI_LOAD_INFO")
+func _wire() -> void:
+	UiNav.wire_ring(_rows + [%CloseButton])
+	UiNav.wire_ring(_deletes + [%CloseButton])
+	for index in _rows.size():
+		UiNav.link(_rows[index], &"right", _deletes[index] if UiNav.is_stop(_deletes[index]) else _rows[index])
+		UiNav.link(_rows[index], &"left", _deletes[index] if UiNav.is_stop(_deletes[index]) else _rows[index])
+		UiNav.link(_deletes[index], &"left", _rows[index] if UiNav.is_stop(_rows[index]) else %CloseButton)
+		UiNav.link(_deletes[index], &"right", _rows[index] if UiNav.is_stop(_rows[index]) else %CloseButton)
+	var enabled_rows: Array = _rows.filter(func(row): return UiNav.is_stop(row))
+	UiNav.link(%CloseButton, &"up", enabled_rows[-1] if not enabled_rows.is_empty() else %CloseButton)
+	UiNav.link(%CloseButton, &"down", enabled_rows[0] if not enabled_rows.is_empty() else %CloseButton)
+	UiNav.hover_focus(_rows + _deletes + [%CloseButton])
 
+func _input(event: InputEvent) -> void:
+	if is_open() and is_top() and event is InputEventKey and event.pressed and (event.keycode == KEY_DELETE or event.physical_keycode == KEY_DELETE):
+		if _focused_slot >= 0 and UiNav.is_stop(_deletes[_focused_slot]):
+			_on_delete_pressed(_focused_slot)
+		get_viewport().set_input_as_handled()
+		return
+	super._input(event)
 
 func _on_slot_pressed(slot: int) -> void:
-	_selected_slot = slot
-	var summary := SaveManager.get_save_summary(slot)
-
-	if summary.is_empty():
-		# Direct save to empty slot
-		if mode == Mode.SAVE:
-			_pending_action = "save"
-			confirm_dialog.dialog_text = tr("UI_CONFIRM_SAVE") % (slot + 1)
-			confirm_dialog.popup_centered()
+	if _busy or slot < 0 or slot >= _rows.size() or not UiNav.is_stop(_rows[slot]):
 		return
-
-	if mode == Mode.SAVE:
-		_pending_action = "overwrite"
-		confirm_dialog.dialog_text = tr("UI_CONFIRM_OVERWRITE") % (slot + 1)
-		confirm_dialog.popup_centered()
-	else:
-		_pending_action = "load"
-		confirm_dialog.dialog_text = tr("UI_CONFIRM_LOAD") % (slot + 1)
-		confirm_dialog.popup_centered()
-
+	_busy = true
+	var needs_confirm: bool = mode == Mode.LOAD and get_tree().get_first_node_in_group("world_2d") != null or mode == Mode.SAVE and SaveManager.describe_slots()[slot].state != "empty"
+	var accepted := true
+	if needs_confirm:
+		accepted = await UiConfirm.ask(self, "SAVELOAD_CONFIRM", tr("SAVELOAD_OVERWRITE" if mode == Mode.SAVE else "SAVELOAD_LOAD_CONFIRM"), "NAV_OK")
+	if accepted and is_open():
+		if mode == Mode.SAVE:
+			if SaveManager.save_game(slot):
+				slot_selected.emit(slot, true)
+				_refresh_texts()
+				_initial_focus().grab_focus()
+		else:
+			if SaveManager.load_and_enter(slot):
+				slot_selected.emit(slot, false)
+	_busy = false
 
 func _on_delete_pressed(slot: int) -> void:
-	_selected_slot = slot
-	_pending_action = "delete"
-	delete_dialog.dialog_text = tr("UI_CONFIRM_DELETE") % (slot + 1)
-	delete_dialog.popup_centered()
+	if _busy or slot < 0 or slot >= SaveManager.MANUAL_SLOTS or not UiNav.is_stop(_deletes[slot]):
+		return
+	_busy = true
+	var accepted := await UiConfirm.ask(self, "SAVELOAD_CONFIRM", tr("SAVELOAD_DELETE_CONFIRM") % (slot + 1), "SAVELOAD_DELETE")
+	if accepted and is_open():
+		SaveManager.delete_save(slot)
+		_refresh_texts()
+		_initial_focus().grab_focus()
+	_busy = false
 
-
-func _on_confirm() -> void:
-	match _pending_action:
-		"save", "overwrite":
-			if SaveManager.save_game(_selected_slot):
-				_populate_slots()
-				slot_selected.emit(_selected_slot, true)
-				EventBus.notification_posted.emit(tr("NOTIF_SAVED_TITLE"), tr("NOTIF_SAVED_MSG") % (_selected_slot + 1), "save")
-		"load":
-			# a failed load keeps the browser open (load_and_enter already posted the failure notification);
-			# on success it pops every modal itself and enters the world
-			if SaveManager.load_and_enter(_selected_slot):
-				visible = false
-				_open_panel = &""
-				slot_selected.emit(_selected_slot, false)
-	_pending_action = ""
-
-
-func _on_delete_confirm() -> void:
-	if _pending_action == "delete":
-		SaveManager.delete_save(_selected_slot)
-		_populate_slots()
-		EventBus.notification_posted.emit(tr("UI_DELETED_TITLE"), tr("UI_DELETED_MSG") % (_selected_slot + 1), "save")
-	_pending_action = ""
-
-
-func _format_playtime(seconds: float) -> String:
-	var hours := int(seconds) / 3600
-	var minutes := (int(seconds) % 3600) / 60
-	return "%dt %dm" % [hours, minutes]
-
-
-func _close() -> void:
-	visible = false
-	var panel := _open_panel
-	_open_panel = &""
-	GameManager.pop_modal(&"save_load")
-	if panel != &"":
-		EventBus.ui_panel_toggled.emit(panel, false)
-
-
-func _on_panel_toggled(panel: StringName, is_open: bool) -> void:
-	if panel == &"save_menu" or panel == &"load_menu":
-		if is_open:
-			open(Mode.SAVE if panel == &"save_menu" else Mode.LOAD, panel)
-		elif _open_panel == panel:
-			_close()
+static func fixture_setup(node: Node, _host: Node) -> void:
+	node.call("open_mode", Mode.LOAD)

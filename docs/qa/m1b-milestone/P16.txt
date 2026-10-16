@@ -1,0 +1,31 @@
+P16 menu gate — 2026-10-16
+
+Evidence
+- menus-integration.json: 1038 checks across menus, cast data, saves, review
+  regressions, UI audit, navigation and conformance. No failures or unexpected
+  engine messages. All mutation tests remain active, including swallowed pad
+  input, history-dependent navigation, missing rings and invalid localization.
+- menus-native.json: 19 checks. All six menu baselines are within 1.5 mean pixel
+  difference; 22 ring/fill looks, 12 raised-button looks and panel edges pass.
+- menus-native/: the current captures, generated through the native renderer.
+
+Behavior
+All four races and eight heroes start with real keyboard and pad events. The
+name fields retain edits and use the 20/24-character limits. The six manual
+slots and read-only auto slot use SaveManager; overwrite/load/delete default
+to cancel. Settings share the locale file and pass a second-process probe.
+Pause refuses sleep/travel, closes on the second Esc and fits twelve actions.
+Missing optional screens have no row. Dungeon-only controls remain absent
+until their later services exist, as required by the original M1b package.
+
+Design
+The original 2534 reviewed illustration/theme files are unchanged. References
+use those painted assets and canonical names (Pedro and Halvling). Hero chips
+use first names where a full surname would steal the blurb's width; the chosen
+hero preview retains the full canonical name. Existing recorded copy is intact.
+
+The original CSS title comparison differs by 49.184 after the previously
+approved painted illustration; that historical mock remains untouched. The
+current painted title has its own reviewed 1280x720 reference and a stricter
+1.5 comparison. Layout, typography and pixel checks remain independent.
+New text stays draft in docs/copy/review_status.json. No audio was generated.

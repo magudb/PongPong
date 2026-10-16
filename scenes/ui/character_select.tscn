@@ -1,117 +1,639 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/ui/character_select.gd" id="1"]
+[ext_resource type="Theme" path="res://assets/ui/theme.tres" id="1_iqh33"]
+[ext_resource type="Script" path="res://scripts/ui/character_select.gd" id="2_hj5gt"]
+[ext_resource type="Shader" path="res://shaders/stripes.gdshader" id="3_wn2qq"]
+[ext_resource type="Script" path="res://scripts/ui/components/tt_stripes.gd" id="4_xkmag"]
+[ext_resource type="Script" path="res://scripts/ui/components/tt_sprite_face.gd" id="5_bg8tf"]
+[ext_resource type="Script" path="res://scripts/ui/components/hint_bar.gd" id="6_oejoe"]
+[ext_resource type="Script" path="res://scripts/ui/components/toast_stack.gd" id="7_pcpmp"]
 
-[node name="CharacterSelect" type="Control"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_csu3i"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p028l"]
+shader = ExtResource("3_wn2qq")
+shader_parameter/color_a = Color(0.9098039, 0.8117647, 0.6509804, 1)
+shader_parameter/color_b = Color(0.8745098, 0.7607843, 0.5764706, 1)
+shader_parameter/band = 14.0
+shader_parameter/rect_size = Vector2(0, 0)
+shader_parameter/radii = Vector4(12, 12, 12, 12)
+shader_parameter/border = 2.0
+shader_parameter/border_color = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2e2ii"]
+shader = ExtResource("3_wn2qq")
+shader_parameter/color_a = Color(0.8862745, 0.84705883, 0.95686275, 1)
+shader_parameter/color_b = Color(0.827451, 0.7764706, 0.93333334, 1)
+shader_parameter/band = 14.0
+shader_parameter/rect_size = Vector2(0, 0)
+shader_parameter/radii = Vector4(12, 12, 12, 12)
+shader_parameter/border = 2.0
+shader_parameter/border_color = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4xkl0"]
+shader = ExtResource("3_wn2qq")
+shader_parameter/color_a = Color(0.83137256, 0.89411765, 0.7058824, 1)
+shader_parameter/color_b = Color(0.78039217, 0.85882354, 0.63529414, 1)
+shader_parameter/band = 14.0
+shader_parameter/rect_size = Vector2(0, 0)
+shader_parameter/radii = Vector4(12, 12, 12, 12)
+shader_parameter/border = 2.0
+shader_parameter/border_color = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iaksw"]
+shader = ExtResource("3_wn2qq")
+shader_parameter/color_a = Color(0.8117647, 0.9019608, 0.9490196, 1)
+shader_parameter/color_b = Color(0.7529412, 0.8627451, 0.92156863, 1)
+shader_parameter/band = 14.0
+shader_parameter/rect_size = Vector2(0, 0)
+shader_parameter/radii = Vector4(12, 12, 12, 12)
+shader_parameter/border = 2.0
+shader_parameter/border_color = null
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_22mfa"]
+
+[node name="CharacterSelect" type="Control" unique_id=2075420297]
 layout_mode = 3
-anchors_preset = 15
+anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource("1")
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_iqh33")
+script = ExtResource("2_hj5gt")
 
-[node name="Background" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
+[node name="Background" type="ColorRect" parent="." unique_id=1189458164]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.15, 0.12, 0.2, 1)
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.90588236, 0.84705883, 0.7137255, 1)
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
+[node name="TitleLabel" type="Label" parent="." unique_id=311427110]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 64.0
+offset_top = 42.0
+offset_right = 1064.0
+offset_bottom = 102.0
+theme_type_variation = &"Display48"
+text = "SELECT_TITLE"
+
+[node name="SubtitleLabel" type="Label" parent="." unique_id=1403369098]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 64.0
+offset_top = 108.0
+offset_right = 1104.0
+offset_bottom = 140.0
+theme_type_variation = &"Subtitle"
+text = "CHAR_SELECT_SUBTITLE"
+
+[node name="PageLabel" type="Label" parent="." unique_id=896586687]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1110.0
+offset_top = 86.0
+offset_right = 1216.0
+offset_bottom = 114.0
+theme_type_variation = &"EyebrowL"
+text = "1 / 2"
+horizontal_alignment = 2
+
+[node name="PageRace" type="Control" parent="." unique_id=548269411]
+unique_name_in_owner = true
+anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 80.0
-offset_top = 60.0
-offset_right = -80.0
-offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="LeftPanel" type="VBoxContainer" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
+[node name="AnimalSlot" type="Control" parent="PageRace" unique_id=27692936]
+anchors_preset = 0
+offset_left = 64.0
+offset_top = 153.0
+offset_right = 334.0
+offset_bottom = 587.0
 
-[node name="Title" type="Label" parent="HBoxContainer/LeftPanel"]
-layout_mode = 2
-text = "Vælg din helt"
-
-[node name="TypeButtons" type="HBoxContainer" parent="HBoxContainer/LeftPanel"]
-layout_mode = 2
-
-[node name="AnimalButton" type="Button" parent="HBoxContainer/LeftPanel/TypeButtons"]
+[node name="AnimalButton" type="Button" parent="PageRace/AnimalSlot" unique_id=1682411540]
 unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Sødt skovdyr"
+layout_mode = 0
+offset_right = 270.0
+offset_bottom = 434.0
+theme_type_variation = &"CardButton"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_csu3i")
 
-[node name="FairyButton" type="Button" parent="HBoxContainer/LeftPanel/TypeButtons"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Fe"
+[node name="Art" type="Control" parent="PageRace/AnimalSlot/AnimalButton" unique_id=1892168941]
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 254.0
+offset_bottom = 320.4
+mouse_filter = 2
 
-[node name="HobbitButton" type="Button" parent="HBoxContainer/LeftPanel/TypeButtons"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Hobbit"
+[node name="Stripes" type="ColorRect" parent="PageRace/AnimalSlot/AnimalButton/Art" unique_id=1958016288]
+material = SubResource("ShaderMaterial_p028l")
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("4_xkmag")
+color_a = Color(0.9098039, 0.8117647, 0.6509804, 1)
+color_b = Color(0.8745098, 0.7607843, 0.5764706, 1)
+radii = Vector4(12, 12, 12, 12)
+border = 2.0
 
-[node name="GhostButton" type="Button" parent="HBoxContainer/LeftPanel/TypeButtons"]
+[node name="AnimalFace" type="Control" parent="PageRace/AnimalSlot/AnimalButton/Art" unique_id=1875727586]
 unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = ""
+clip_contents = true
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_bg8tf")
+sprite_scale = 1.25
+feet_y = 0.93
 
-[node name="PreviewLabel" type="Label" parent="HBoxContainer/LeftPanel"]
+[node name="AnimalName" type="Label" parent="PageRace/AnimalSlot/AnimalButton" unique_id=271699283]
 unique_name_in_owner = true
-layout_mode = 2
-text = ""
+layout_mode = 0
+offset_left = 16.0
+offset_top = 328.0
+offset_right = 254.0
+offset_bottom = 370.0
+theme_type_variation = &"Display32"
 
-[node name="PreviewDescription" type="Label" parent="HBoxContainer/LeftPanel"]
+[node name="AnimalPerk" type="Label" parent="PageRace/AnimalSlot/AnimalButton" unique_id=1397848820]
 unique_name_in_owner = true
-layout_mode = 2
-text = ""
+layout_mode = 0
+offset_left = 16.0
+offset_top = 374.0
+offset_right = 254.0
+offset_bottom = 424.0
+theme_type_variation = &"Muted17"
 autowrap_mode = 3
+max_lines_visible = 2
 
-[node name="SkinOption" type="OptionButton" parent="HBoxContainer/LeftPanel"]
+[node name="FairySlot" type="Control" parent="PageRace" unique_id=557934935]
+anchors_preset = 0
+offset_left = 358.0
+offset_top = 153.0
+offset_right = 628.0
+offset_bottom = 587.0
+
+[node name="FairyButton" type="Button" parent="PageRace/FairySlot" unique_id=439664044]
 unique_name_in_owner = true
-layout_mode = 2
+layout_mode = 0
+offset_right = 270.0
+offset_bottom = 434.0
+theme_type_variation = &"CardButton"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_csu3i")
 
-[node name="NameLabel" type="Label" parent="HBoxContainer/LeftPanel"]
-layout_mode = 2
-text = "Dit navn:"
+[node name="Art" type="Control" parent="PageRace/FairySlot/FairyButton" unique_id=2100900877]
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 254.0
+offset_bottom = 320.4
+mouse_filter = 2
 
-[node name="NameInput" type="LineEdit" parent="HBoxContainer/LeftPanel"]
+[node name="Stripes" type="ColorRect" parent="PageRace/FairySlot/FairyButton/Art" unique_id=41677975]
+material = SubResource("ShaderMaterial_2e2ii")
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("4_xkmag")
+color_a = Color(0.8862745, 0.84705883, 0.95686275, 1)
+color_b = Color(0.827451, 0.7764706, 0.93333334, 1)
+radii = Vector4(12, 12, 12, 12)
+border = 2.0
+
+[node name="FairyFace" type="Control" parent="PageRace/FairySlot/FairyButton/Art" unique_id=1101364168]
 unique_name_in_owner = true
-layout_mode = 2
+clip_contents = true
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_bg8tf")
+character_id = "fairy"
+sprite_scale = 1.25
+feet_y = 0.93
 
-[node name="FarmLabel" type="Label" parent="HBoxContainer/LeftPanel"]
-layout_mode = 2
-text = "Gårdens navn:"
-
-[node name="FarmNameInput" type="LineEdit" parent="HBoxContainer/LeftPanel"]
+[node name="FairyName" type="Label" parent="PageRace/FairySlot/FairyButton" unique_id=1425014243]
 unique_name_in_owner = true
-layout_mode = 2
+layout_mode = 0
+offset_left = 16.0
+offset_top = 328.0
+offset_right = 254.0
+offset_bottom = 370.0
+theme_type_variation = &"Display32"
 
-[node name="Spacer" type="Control" parent="HBoxContainer/LeftPanel"]
+[node name="FairyPerk" type="Label" parent="PageRace/FairySlot/FairyButton" unique_id=1102905260]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = 374.0
+offset_right = 254.0
+offset_bottom = 424.0
+theme_type_variation = &"Muted17"
+autowrap_mode = 3
+max_lines_visible = 2
+
+[node name="HobbitSlot" type="Control" parent="PageRace" unique_id=2092320503]
+anchors_preset = 0
+offset_left = 652.0
+offset_top = 153.0
+offset_right = 922.0
+offset_bottom = 587.0
+
+[node name="HobbitButton" type="Button" parent="PageRace/HobbitSlot" unique_id=68539636]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 270.0
+offset_bottom = 434.0
+theme_type_variation = &"CardButton"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_csu3i")
+
+[node name="Art" type="Control" parent="PageRace/HobbitSlot/HobbitButton" unique_id=1513784251]
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 254.0
+offset_bottom = 320.4
+mouse_filter = 2
+
+[node name="Stripes" type="ColorRect" parent="PageRace/HobbitSlot/HobbitButton/Art" unique_id=1593323363]
+material = SubResource("ShaderMaterial_4xkl0")
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("4_xkmag")
+color_a = Color(0.83137256, 0.89411765, 0.7058824, 1)
+color_b = Color(0.78039217, 0.85882354, 0.63529414, 1)
+radii = Vector4(12, 12, 12, 12)
+border = 2.0
+
+[node name="HobbitFace" type="Control" parent="PageRace/HobbitSlot/HobbitButton/Art" unique_id=1690900659]
+unique_name_in_owner = true
+clip_contents = true
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_bg8tf")
+character_id = "hobbit_pip"
+sprite_scale = 1.25
+feet_y = 0.93
+
+[node name="HobbitName" type="Label" parent="PageRace/HobbitSlot/HobbitButton" unique_id=231079751]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = 328.0
+offset_right = 254.0
+offset_bottom = 370.0
+theme_type_variation = &"Display32"
+
+[node name="HobbitPerk" type="Label" parent="PageRace/HobbitSlot/HobbitButton" unique_id=545330942]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = 374.0
+offset_right = 254.0
+offset_bottom = 424.0
+theme_type_variation = &"Muted17"
+autowrap_mode = 3
+max_lines_visible = 2
+
+[node name="GhostSlot" type="Control" parent="PageRace" unique_id=1596305509]
+anchors_preset = 0
+offset_left = 946.0
+offset_top = 153.0
+offset_right = 1216.0
+offset_bottom = 587.0
+
+[node name="GhostButton" type="Button" parent="PageRace/GhostSlot" unique_id=949157423]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 270.0
+offset_bottom = 434.0
+theme_type_variation = &"CardButton"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_csu3i")
+
+[node name="Art" type="Control" parent="PageRace/GhostSlot/GhostButton" unique_id=1232138794]
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 254.0
+offset_bottom = 320.4
+mouse_filter = 2
+
+[node name="Stripes" type="ColorRect" parent="PageRace/GhostSlot/GhostButton/Art" unique_id=1917142784]
+material = SubResource("ShaderMaterial_iaksw")
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("4_xkmag")
+color_a = Color(0.8117647, 0.9019608, 0.9490196, 1)
+color_b = Color(0.7529412, 0.8627451, 0.92156863, 1)
+radii = Vector4(12, 12, 12, 12)
+border = 2.0
+
+[node name="GhostFace" type="Control" parent="PageRace/GhostSlot/GhostButton/Art" unique_id=1212368721]
+unique_name_in_owner = true
+clip_contents = true
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_bg8tf")
+character_id = "ghost_bu"
+sprite_scale = 1.25
+feet_y = 0.93
+
+[node name="GhostName" type="Label" parent="PageRace/GhostSlot/GhostButton" unique_id=1699484793]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = 328.0
+offset_right = 254.0
+offset_bottom = 370.0
+theme_type_variation = &"Display32"
+
+[node name="GhostPerk" type="Label" parent="PageRace/GhostSlot/GhostButton" unique_id=1036942603]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = 374.0
+offset_right = 254.0
+offset_bottom = 424.0
+theme_type_variation = &"Muted17"
+autowrap_mode = 3
+max_lines_visible = 2
+
+[node name="Footer" type="Control" parent="PageRace" unique_id=1204369891]
+anchors_preset = 0
+offset_left = 64.0
+offset_top = 615.0
+offset_right = 1216.0
+offset_bottom = 668.0
+mouse_filter = 2
+
+[node name="HeroPrefix" type="Label" parent="PageRace/Footer" unique_id=827174926]
+layout_mode = 0
+offset_right = 80.0
+offset_bottom = 53.0
+theme_type_variation = &"Heavy18"
+text = "SELECT_HERO_PREFIX"
+vertical_alignment = 1
+
+[node name="Heroes" type="HBoxContainer" parent="PageRace/Footer" unique_id=125649916]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 87.0
+offset_right = 277.0
+offset_bottom = 53.0
+theme_override_constants/separation = 10
+
+[node name="HeroChip1" type="Button" parent="PageRace/Footer/Heroes" unique_id=920008837]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(78, 53)
+layout_mode = 2
+theme_type_variation = &"Chip"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_22mfa")
+
+[node name="Name" type="Label" parent="PageRace/Footer/Heroes/HeroChip1" unique_id=463588459]
+layout_mode = 0
+anchor_right = 1.0
+offset_left = 12.0
+offset_top = 3.0
+offset_right = -12.0
+offset_bottom = 28.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"Display20"
+horizontal_alignment = 1
+
+[node name="Kind" type="Label" parent="PageRace/Footer/Heroes/HeroChip1" unique_id=48002127]
+layout_mode = 0
+anchor_right = 1.0
+offset_left = 12.0
+offset_top = 28.0
+offset_right = -12.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"Muted13"
+horizontal_alignment = 1
+
+[node name="HeroChip2" type="Button" parent="PageRace/Footer/Heroes" unique_id=1192432224]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(102, 53)
+layout_mode = 2
+theme_type_variation = &"Chip"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_22mfa")
+
+[node name="Name" type="Label" parent="PageRace/Footer/Heroes/HeroChip2" unique_id=23374991]
+layout_mode = 0
+anchor_right = 1.0
+offset_left = 12.0
+offset_top = 3.0
+offset_right = -12.0
+offset_bottom = 28.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"Display20"
+horizontal_alignment = 1
+
+[node name="Kind" type="Label" parent="PageRace/Footer/Heroes/HeroChip2" unique_id=1324734495]
+layout_mode = 0
+anchor_right = 1.0
+offset_left = 12.0
+offset_top = 28.0
+offset_right = -12.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"Muted13"
+horizontal_alignment = 1
+
+[node name="HeroBlurb" type="Label" parent="PageRace/Footer" unique_id=236677208]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 301.0
+offset_right = 842.0
+offset_bottom = 53.0
+theme_type_variation = &"Muted17"
+autowrap_mode = 3
+max_lines_visible = 2
+
+[node name="BackButton" type="Button" parent="PageRace/Footer" unique_id=1808320296]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 856.0
+offset_right = 976.0
+offset_bottom = 53.0
+theme_type_variation = &"ButtonTertiary"
+text = "HINT_BACK"
+
+[node name="NextButton" type="Button" parent="PageRace/Footer" unique_id=214962103]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 988.0
+offset_right = 1152.0
+offset_bottom = 53.0
+theme_type_variation = &"ButtonPrimaryL"
+text = "CHAR_NEXT"
+
+[node name="PageNames" type="Control" parent="." unique_id=352779128]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FormPanel" type="PanelContainer" parent="PageNames" unique_id=556234931]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 180.0
+offset_right = 808.0
+offset_bottom = 520.0
+theme_type_variation = &"PanelParchment"
+
+[node name="FormBody" type="VBoxContainer" parent="PageNames/FormPanel" unique_id=1885184863]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="NameCaption" type="Label" parent="PageNames/FormPanel/FormBody" unique_id=897400147]
+layout_mode = 2
+theme_type_variation = &"Heavy18"
+text = "CHAR_NAME_CAPTION"
+
+[node name="NameInput" type="LineEdit" parent="PageNames/FormPanel/FormBody" unique_id=453831567]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+max_length = 20
+
+[node name="FarmCaption" type="Label" parent="PageNames/FormPanel/FormBody" unique_id=970394491]
+layout_mode = 2
+theme_type_variation = &"Heavy18"
+text = "CHAR_FARM_CAPTION"
+
+[node name="FarmNameInput" type="LineEdit" parent="PageNames/FormPanel/FormBody" unique_id=995527518]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+max_length = 24
+
+[node name="Preview" type="PanelContainer" parent="PageNames" unique_id=1401511207]
+layout_mode = 0
+offset_left = 896.0
+offset_top = 153.0
+offset_right = 1216.0
+offset_bottom = 587.0
+mouse_filter = 2
+theme_type_variation = &"PanelParchment"
+
+[node name="Body" type="VBoxContainer" parent="PageNames/Preview" unique_id=2136151851]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PreviewFace" type="Control" parent="PageNames/Preview/Body" unique_id=1175621145]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 240)
+clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("5_bg8tf")
 
-[node name="Buttons" type="HBoxContainer" parent="HBoxContainer/LeftPanel"]
-layout_mode = 2
-
-[node name="ConfirmButton" type="Button" parent="HBoxContainer/LeftPanel/Buttons"]
+[node name="PreviewName" type="Label" parent="PageNames/Preview/Body" unique_id=1744718394]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Bekræft"
+theme_type_variation = &"Display28"
 
-[node name="BackButton" type="Button" parent="HBoxContainer/LeftPanel/Buttons"]
+[node name="PreviewPerk" type="Label" parent="PageNames/Preview/Body" unique_id=1657641276]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-text = "Tilbage"
+theme_type_variation = &"Muted17"
+autowrap_mode = 3
 
-[node name="RightPanel" type="ColorRect" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-color = Color(0.2, 0.15, 0.25, 0.5)
+[node name="BackToRaceButton" type="Button" parent="PageNames" unique_id=37880941]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 64.0
+offset_top = 615.0
+offset_right = 184.0
+offset_bottom = 668.0
+theme_type_variation = &"ButtonTertiary"
+text = "HINT_BACK"
+
+[node name="ConfirmButton" type="Button" parent="PageNames" unique_id=1712317199]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1052.0
+offset_top = 615.0
+offset_right = 1216.0
+offset_bottom = 668.0
+theme_type_variation = &"ButtonPrimaryL"
+text = "CHAR_START"
+
+[node name="HintBar" type="HBoxContainer" parent="." unique_id=1336915567]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 2
+script = ExtResource("6_oejoe")
+
+[node name="ToastStack" type="Control" parent="." unique_id=277663015]
+unique_name_in_owner = true
+process_mode = 3
+z_index = 100
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("7_pcpmp")

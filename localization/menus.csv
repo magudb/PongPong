@@ -1,0 +1,35 @@
+keys,da,en
+NOTIF_LOAD_FAILED_TITLE,Kunne ikke indlæse,Could not load
+NOTIF_LOAD_FAILED_MISSING,Der er ingen gemning her.,There is no save here.
+NOTIF_LOAD_FAILED_CORRUPT,Gemningen er beskadiget og kan ikke læses.,The save is damaged and cannot be read.
+NOTIF_LOAD_FAILED_VERSION,Gemningen er lavet med en nyere version af spillet.,This save was made with a newer version of the game.
+NOTIF_LOAD_FAILED_APPLY,Gemningen kunne ikke indlæses. Dit nuværende spil er uændret.,The save could not be loaded. Your current game is unchanged.
+NOTIF_LOAD_BACKUP_TITLE,Gemning gendannet,Save recovered
+NOTIF_LOAD_BACKUP_MSG,Gemningen i slot %d var beskadiget. Den forrige version blev indlæst.,The save in slot %d was damaged. The previous version was loaded.
+NOTIF_SAVE_FAILED_TITLE,Kunne ikke gemme,Could not save
+NOTIF_SAVE_FAILED_MSG,Spillet blev ikke gemt i slot %d. Tjek diskpladsen.,The game was not saved in slot %d. Check your disk space.
+SETTINGS_LANGUAGE,Sprog,Language
+SETTINGS_SIZE,Vindue,Window
+SAVELOAD_AUTO,Automatisk gemning,Autosave
+SAVELOAD_SLOT,Plads %d,Slot %d
+SAVELOAD_EMPTY,Tom plads,Empty slot
+SAVELOAD_DELETE,Slet,Delete
+SAVELOAD_STATE_NEWER,Kræver en nyere udgave,Needs a newer version
+SAVELOAD_STATE_CORRUPT,Kan ikke læses,Cannot be read
+SAVELOAD_STATE_BACKUP,Fra sikkerhedskopi,From backup
+SAVELOAD_CONFIRM,Er du sikker?,Are you sure?
+SAVELOAD_OVERWRITE,Vil du erstatte denne gemning?,Replace this save?
+SAVELOAD_LOAD_CONFIRM,Vil du indlæse gemningen? Dit nuværende spil bliver erstattet.,Load this save? It will replace your current game.
+SAVELOAD_DELETE_CONFIRM,Vil du slette gemningen i plads %d?,Delete the save in slot %d?
+SELECT_HERO_PREFIX,Udseende:,Appearance:
+SELECT_TITLE,Hvem er du?,Who are you?
+PAUSE_PEOPLE,Folk,People
+PAUSE_BUILD,Byg,Build
+PAUSE_WARDROBE,Garderobe,Wardrobe
+PAUSE_COLLECTION,Samlerbog,Collection
+PAUSE_QUIT_GAME,Afslut spil,Quit game
+PAUSE_SAVE_FAILED_CONFIRM,"Spillet blev ikke gemt. Vil du afslutte alligevel?","The game was not saved. Quit anyway?"
+SETTINGS_DA,"Dansk","Dansk"
+SETTINGS_EN,"English","English"
+SELECT_HERO_BERTIL,"Bertil","Bertil"
+SELECT_HERO_BODIL,"Bodil","Bodil"

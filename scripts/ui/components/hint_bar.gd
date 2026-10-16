@@ -111,7 +111,7 @@ func _resolved() -> Array[Dictionary]:
 			g = UiHints.glyph(StringName(d["action"]))
 		if g == "":
 			continue
-		out.append({"glyph": g, "text": str(TranslationServer.translate(str(d.get("key", ""))))})
+		out.append({"glyph": g, "key": str(d.get("key", "")), "text": str(TranslationServer.translate(str(d.get("key", ""))))})
 	return out
 
 
@@ -125,8 +125,13 @@ func _render() -> void:
 			_add_label(SEPARATOR, &"Eyebrow")
 		var cap := _add_label(str(list[i]["glyph"]), &"KeyCap")
 		cap.name = "Key%d" % i
+		cap.set_meta(&"tt_text_same_ok", true) # Physical key names are language invariant.
 		var word := _add_label(str(list[i]["text"]), &"Eyebrow")
 		word.name = "Word%d" % i
+		var loc := Svc.node("LocalizationManager")
+		var key := str(list[i].get("key", ""))
+		if loc != null and loc.has_key(key) and loc.text_in(key, "da") != "" and loc.text_in(key, "en") != "" and loc.text_in(key, "da") == loc.text_in(key, "en"):
+			word.set_meta(&"tt_text_same_ok", true) # e.g. the explicitly paired Danish/English “Start”.
 	_update_visibility()
 
 

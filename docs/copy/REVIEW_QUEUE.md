@@ -28,6 +28,7 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | levels.csv | draft | 3 | 12 | 0.0 |
 | loot_dungeon.csv | draft | 11 | 81 | 0.2 |
 | materials.csv | draft | 75 | 378 | 0.9 |
+| menus.csv | draft | 34 | 122 | 0.3 |
 | nav.csv | draft | 32 | 42 | 0.1 |
 | quests.csv | draft | 147 | 1058 | 2.6 |
 | rel_ui.csv | draft | 7 | 22 | 0.1 |
@@ -36,3 +37,4 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | ui.csv | ai_reviewed | 140 | 319 | 0.8 |
 | wardrobe.csv | draft | 238 | 1405 | 3.5 |
 | world.csv | ai_reviewed | 8 | 47 | 0.1 |
+| zz_final.csv | draft | 1 | 1 | 0.0 |

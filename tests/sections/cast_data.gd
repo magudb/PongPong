@@ -268,7 +268,9 @@ func _npc_homes() -> void:
 		var info := _map_info("res://data/maps/%s" % f)
 		map_areas[info["id"]] = true
 		markers_by_area[info["id"]] = info["npcs"]
-		if not (str(info["id"]) in GRAPH_AREAS):
+		var room_building := Hours.building(str(info["id"]).trim_prefix("int_"))
+		var is_room: bool = not room_building.is_empty() and str(room_building.get("interior", "")) == str(info["id"])
+		if not (str(info["id"]) in GRAPH_AREAS) and not is_room:
 			problems.append("data/maps/%s has the id %s which is no area of the zone graph" % [f, info["id"]])
 	if not FileAccess.file_exists("res://data/traetoppen/traetoppen.json"):
 		problems.append("data/traetoppen/traetoppen.json (the levelled city, V3) is missing")
@@ -677,8 +679,10 @@ func _foreign_csv() -> void:
 	for k in mine:
 		if foreign_keys.has(k):
 			problems.append("%s (%s) redefines a key of %s" % [k, mine[k], foreign_keys[k]])
-	if not (_lm.text_in("CHAR_HOBBIT_NAME", "da") == "Hobbit" and _lm.file_of("CHAR_HOBBIT_NAME") == "ui.csv" and _lm.text_in("FIND_AREA_FARM", "da") == "Trætoppen" and _lm.file_of("FIND_AREA_FARM") == "finds.csv" and _lm.text_in("SPECIES_FOX", "da") == "Ræv"):
-		problems.append("CHAR_HOBBIT_NAME / FIND_AREA_FARM / SPECIES_FOX were changed (they are overridden through zz_final.csv by P26)")
+	var copy_override := FileAccess.file_exists("res://localization/zz_final.csv")
+	var name_ok: bool = _lm.text_in("CHAR_HOBBIT_NAME", "da") == ("Halvling" if copy_override else "Hobbit") and _lm.file_of("CHAR_HOBBIT_NAME") == ("zz_final.csv" if copy_override else "ui.csv")
+	if not (name_ok and _lm.text_in("FIND_AREA_FARM", "da") == "Trætoppen" and _lm.file_of("FIND_AREA_FARM") == "finds.csv" and _lm.text_in("SPECIES_FOX", "da") == "Ræv"):
+		problems.append("Canonical copy override or frozen base text differs")
 	t.check("no_foreign_csv_touched", problems.is_empty(), "ui.csv, finds.csv and furniture.csv are byte-identical to the baseline (%d keys), cast.csv / core.csv redefine none of them; CHAR_HOBBIT_NAME 'Halvling' and FIND_AREA_FARM are P26's overrides, not V1's %s" % [foreign_keys.size(), str(problems.slice(0, 3))])
 
 

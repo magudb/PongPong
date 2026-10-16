@@ -1,221 +1,33 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/ui/main_menu.gd" id="1_nm0l4"]
-[ext_resource type="Texture2D" path="res://assets/ui/keyart/title.png" id="2_bxtry"]
-[ext_resource type="FontFile" path="res://assets/fonts/Caprasimo-Regular.ttf" id="3_75pso"]
-[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-ExtraBold.ttf" id="4_cnht7"]
-[ext_resource type="FontFile" path="res://assets/fonts/TTSymbols-Regular.ttf" id="5_s2sug"]
-[ext_resource type="Script" path="res://scripts/ui/theme/tt_box_style.gd" id="6_ygj4d"]
-[ext_resource type="FontFile" path="res://assets/fonts/AlegreyaSans-Bold.ttf" id="7_001j1"]
+[ext_resource type="Theme" path="res://assets/ui/theme.tres" id="1_hiibk"]
+[ext_resource type="Script" path="res://scripts/ui/main_menu.gd" id="2_swlpu"]
+[ext_resource type="Texture2D" path="res://assets/ui/keyart/title.png" id="3_nm0l4"]
+[ext_resource type="Script" path="res://scripts/ui/components/hint_bar.gd" id="4_bxtry"]
+[ext_resource type="Script" path="res://scripts/ui/components/toast_stack.gd" id="5_75pso"]
 
-[sub_resource type="FontVariation" id="FontVariation_y7wg7"]
-fallbacks = Array[Font]([ExtResource("4_cnht7"), ExtResource("5_s2sug")])
-base_font = ExtResource("3_75pso")
-
-[sub_resource type="StyleBox" id="StyleBox_rufe6"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = 18.0
-content_margin_top = 2.0
-content_margin_right = 18.0
-content_margin_bottom = 2.0
-script = ExtResource("6_ygj4d")
-fill = Color(0.8901961, 0.7647059, 0.44705883, 1)
-radius = 10.0
-ring_colors = PackedColorArray()
-ring_widths = PackedFloat32Array()
-
-[sub_resource type="StyleBox" id="StyleBox_8jdwu"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = 16.0
-content_margin_top = 16.0
-content_margin_right = 16.0
-content_margin_bottom = 16.0
-script = ExtResource("6_ygj4d")
-ring_colors = PackedColorArray(0.8901961, 0.7647059, 0.44705883, 1, 0.16862746, 0.13725491, 0.2509804, 1)
-ring_widths = PackedFloat32Array(4, 2)
-soft_shadow_color = Color(0.169, 0.137, 0.251, 0.35)
-soft_shadow_blur = 30.0
-soft_shadow_offset = Vector2(0, 14)
-
-[sub_resource type="StyleBox" id="StyleBox_a3pev"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = 18.0
-content_margin_top = 12.0
-content_margin_right = 18.0
-content_margin_bottom = 12.0
-script = ExtResource("6_ygj4d")
-fill = Color(0, 0, 0, 0)
-border_color = Color(0, 0, 0, 0)
-radius = 10.0
-ring_colors = PackedColorArray()
-ring_widths = PackedFloat32Array()
-
-[sub_resource type="StyleBox" id="StyleBox_7n1ok"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = 18.0
-content_margin_top = 12.0
-content_margin_right = 18.0
-content_margin_bottom = 12.0
-script = ExtResource("6_ygj4d")
-fill = Color(0.9254902, 0.81960785, 0.5372549, 1)
-radius = 10.0
-ring_colors = PackedColorArray()
-ring_widths = PackedFloat32Array()
-
-[sub_resource type="StyleBox" id="StyleBox_fvvuv"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = 18.0
-content_margin_top = 12.0
-content_margin_right = 18.0
-content_margin_bottom = 12.0
-script = ExtResource("6_ygj4d")
-fill = Color(0.8901961, 0.7647059, 0.44705883, 1)
-radius = 10.0
-ring_colors = PackedColorArray()
-ring_widths = PackedFloat32Array()
-
-[sub_resource type="StyleBox" id="StyleBox_8m2ig"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = 18.0
-content_margin_top = 12.0
-content_margin_right = 18.0
-content_margin_bottom = 12.0
-script = ExtResource("6_ygj4d")
-fill = Color(0.9254902, 0.81960785, 0.5372549, 1)
-radius = 10.0
-ring_colors = PackedColorArray()
-ring_widths = PackedFloat32Array()
-
-[sub_resource type="StyleBox" id="StyleBox_t04ia"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = 18.0
-content_margin_top = 12.0
-content_margin_right = 18.0
-content_margin_bottom = 12.0
-script = ExtResource("6_ygj4d")
-fill = Color(0, 0, 0, 0)
-border_color = Color(0, 0, 0, 0)
-radius = 10.0
-ring_colors = PackedColorArray()
-ring_widths = PackedFloat32Array()
-
-[sub_resource type="StyleBox" id="StyleBox_y7jag"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = 18.0
-content_margin_top = 12.0
-content_margin_right = 18.0
-content_margin_bottom = 12.0
-script = ExtResource("6_ygj4d")
-fill = Color(0.8901961, 0.7647059, 0.44705883, 1)
-radius = 10.0
-ring_colors = PackedColorArray()
-ring_widths = PackedFloat32Array()
-
-[sub_resource type="FontVariation" id="FontVariation_il2qg"]
-fallbacks = Array[Font]([ExtResource("5_s2sug")])
-base_font = ExtResource("7_001j1")
-opentype_features = {
-"lnum": 1
-}
-
-[sub_resource type="StyleBox" id="StyleBox_rybao"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = 10.0
-content_margin_top = 3.0
-content_margin_right = 10.0
-content_margin_bottom = 3.0
-script = ExtResource("6_ygj4d")
-fill = Color(0.984, 0.961, 0.902, 0.85)
-border_width = 0.0
-radius = 6.0
-ring_colors = PackedColorArray()
-ring_widths = PackedFloat32Array()
-
-[sub_resource type="StyleBox" id="StyleBox_ffypd"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = 10.0
-content_margin_top = 3.0
-content_margin_right = 10.0
-content_margin_bottom = 3.0
-script = ExtResource("6_ygj4d")
-fill = Color(0.8901961, 0.7647059, 0.44705883, 1)
-border_width = 0.0
-radius = 6.0
-ring_colors = PackedColorArray()
-ring_widths = PackedFloat32Array()
-
-[sub_resource type="StyleBox" id="StyleBox_kxv1w"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = 10.0
-content_margin_top = 3.0
-content_margin_right = 10.0
-content_margin_bottom = 3.0
-script = ExtResource("6_ygj4d")
-fill = Color(0.9843137, 0.9607843, 0.9019608, 1)
-border_width = 0.0
-radius = 6.0
-ring_colors = PackedColorArray()
-ring_widths = PackedFloat32Array()
-
-[sub_resource type="StyleBox" id="StyleBox_hxq2c"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = 10.0
-content_margin_top = 3.0
-content_margin_right = 10.0
-content_margin_bottom = 3.0
-script = ExtResource("6_ygj4d")
-fill = Color(0.8901961, 0.7647059, 0.44705883, 1)
-border_width = 0.0
-radius = 6.0
-ring_colors = PackedColorArray()
-ring_widths = PackedFloat32Array()
-
-[sub_resource type="StyleBox" id="StyleBox_jaryi"]
-resource_local_to_scene = false
-resource_name = ""
-content_margin_left = 10.0
-content_margin_top = 3.0
-content_margin_right = 10.0
-content_margin_bottom = 3.0
-script = ExtResource("6_ygj4d")
-radius = 6.0
-draw_body = false
-ring_colors = PackedColorArray(0.8901961, 0.7647059, 0.44705883, 1, 0.16862746, 0.13725491, 0.2509804, 1)
-ring_widths = PackedFloat32Array(3, 2)
-
-[node name="MainMenu" type="Control" unique_id=87335121]
+[node name="MainMenu" type="Control" unique_id=956441326]
 layout_mode = 3
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_nm0l4")
+theme = ExtResource("1_hiibk")
+script = ExtResource("2_swlpu")
 
-[node name="KeyArt" type="TextureRect" parent="." unique_id=1624640196]
+[node name="KeyArt" type="TextureRect" parent="." unique_id=1937372471]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("2_bxtry")
+texture = ExtResource("3_nm0l4")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="TitleBlock" type="VBoxContainer" parent="." unique_id=1142283126]
+[node name="TitleBlock" type="VBoxContainer" parent="." unique_id=595696238]
 layout_mode = 0
 offset_left = 110.0
 offset_top = 94.0
@@ -224,21 +36,13 @@ offset_bottom = 94.0
 mouse_filter = 2
 theme_override_constants/separation = -27
 
-[node name="TitleLabel" type="Label" parent="TitleBlock" unique_id=1525003874]
+[node name="TitleLabel" type="Label" parent="TitleBlock" unique_id=1710759836]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/line_spacing = 0
-theme_override_fonts/font = SubResource("FontVariation_y7wg7")
-theme_override_font_sizes/font_size = 132
-theme_override_colors/font_color = Color(0.9843137, 0.9607843, 0.9019608, 1)
-theme_override_colors/font_shadow_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 7
-theme_override_constants/outline_size = 9
-theme_override_constants/shadow_outline_size = 9
-text = "Trætoppen"
+theme_type_variation = &"HeroTitle"
+text = "GAME_TITLE"
 
-[node name="TaglineMargin" type="MarginContainer" parent="TitleBlock" unique_id=99046556]
+[node name="TaglineMargin" type="MarginContainer" parent="TitleBlock" unique_id=1501082862]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/margin_left = 8
@@ -246,17 +50,13 @@ theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
 
-[node name="SubtitleLabel" type="Label" parent="TitleBlock/TaglineMargin" unique_id=502195250]
+[node name="SubtitleLabel" type="Label" parent="TitleBlock/TaglineMargin" unique_id=132198221]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBox_rufe6")
-theme_override_constants/line_spacing = 0
-theme_override_fonts/font = SubResource("FontVariation_y7wg7")
-theme_override_font_sizes/font_size = 26
-theme_override_colors/font_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-text = "En gård i Fekongens skov"
+theme_type_variation = &"Tagline"
+text = "GAME_SUBTITLE"
 
-[node name="MenuPanel" type="PanelContainer" parent="." unique_id=1859637803]
+[node name="MenuPanel" type="PanelContainer" parent="." unique_id=1622673600]
 custom_minimum_size = Vector2(320, 0)
 layout_mode = 0
 anchor_top = 1.0
@@ -266,34 +66,20 @@ offset_top = -96.0
 offset_right = 116.0
 offset_bottom = -96.0
 grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBox_8jdwu")
+theme_type_variation = &"PanelMenu"
 
-[node name="MenuList" type="VBoxContainer" parent="MenuPanel" unique_id=1970583305]
+[node name="MenuList" type="VBoxContainer" parent="MenuPanel" unique_id=2010107529]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="ContinueButton" type="Button" parent="MenuPanel/MenuList" unique_id=937456787]
+[node name="ContinueButton" type="Button" parent="MenuPanel/MenuList" unique_id=1814290608]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBox_a3pev")
-theme_override_styles/pressed = SubResource("StyleBox_7n1ok")
-theme_override_styles/hover = SubResource("StyleBox_fvvuv")
-theme_override_styles/hover_pressed = SubResource("StyleBox_8m2ig")
-theme_override_styles/disabled = SubResource("StyleBox_t04ia")
-theme_override_styles/focus = SubResource("StyleBox_y7jag")
-theme_override_colors/font_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_focus_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_hover_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_disabled_color = Color(0.6392157, 0.58431375, 0.49803922, 1)
-theme_override_fonts/font = SubResource("FontVariation_y7wg7")
-theme_override_font_sizes/font_size = 24
-theme_override_constants/h_separation = 8
-text = "Fortsæt"
+theme_type_variation = &"MenuRow"
+text = "MENU_CONTINUE"
 alignment = 0
 
-[node name="ContinueInfo" type="Label" parent="MenuPanel/MenuList/ContinueButton" unique_id=2004383536]
+[node name="ContinueInfo" type="Label" parent="MenuPanel/MenuList/ContinueButton" unique_id=230302236]
 unique_name_in_owner = true
 layout_mode = 0
 anchor_left = 1.0
@@ -304,75 +90,38 @@ offset_left = -18.0
 offset_right = -18.0
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_constants/line_spacing = 0
-theme_override_fonts/font = SubResource("FontVariation_il2qg")
-theme_override_font_sizes/font_size = 15
-theme_override_colors/font_color = Color(0.41568628, 0.3529412, 0.28235295, 1)
+theme_type_variation = &"Bold15Mono"
 
-[node name="NewGameButton" type="Button" parent="MenuPanel/MenuList" unique_id=1381843044]
+[node name="LoadButton" type="Button" parent="MenuPanel/MenuList" unique_id=1736114838]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBox_a3pev")
-theme_override_styles/pressed = SubResource("StyleBox_7n1ok")
-theme_override_styles/hover = SubResource("StyleBox_fvvuv")
-theme_override_styles/hover_pressed = SubResource("StyleBox_8m2ig")
-theme_override_styles/disabled = SubResource("StyleBox_t04ia")
-theme_override_styles/focus = SubResource("StyleBox_y7jag")
-theme_override_colors/font_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_focus_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_hover_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_disabled_color = Color(0.6392157, 0.58431375, 0.49803922, 1)
-theme_override_fonts/font = SubResource("FontVariation_y7wg7")
-theme_override_font_sizes/font_size = 24
-theme_override_constants/h_separation = 8
-text = "Nyt spil"
+theme_type_variation = &"MenuRow"
+text = "MENU_LOAD_GAME"
 alignment = 0
 
-[node name="SettingsButton" type="Button" parent="MenuPanel/MenuList" unique_id=81558558]
+[node name="NewGameButton" type="Button" parent="MenuPanel/MenuList" unique_id=554572254]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBox_a3pev")
-theme_override_styles/pressed = SubResource("StyleBox_7n1ok")
-theme_override_styles/hover = SubResource("StyleBox_fvvuv")
-theme_override_styles/hover_pressed = SubResource("StyleBox_8m2ig")
-theme_override_styles/disabled = SubResource("StyleBox_t04ia")
-theme_override_styles/focus = SubResource("StyleBox_y7jag")
-theme_override_colors/font_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_focus_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_hover_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_disabled_color = Color(0.6392157, 0.58431375, 0.49803922, 1)
-theme_override_fonts/font = SubResource("FontVariation_y7wg7")
-theme_override_font_sizes/font_size = 24
-theme_override_constants/h_separation = 8
-text = "Indstillinger"
+theme_type_variation = &"MenuRow"
+text = "MENU_NEW_GAME"
 alignment = 0
 
-[node name="QuitButton" type="Button" parent="MenuPanel/MenuList" unique_id=226227140]
+[node name="SettingsButton" type="Button" parent="MenuPanel/MenuList" unique_id=245570868]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBox_a3pev")
-theme_override_styles/pressed = SubResource("StyleBox_7n1ok")
-theme_override_styles/hover = SubResource("StyleBox_fvvuv")
-theme_override_styles/hover_pressed = SubResource("StyleBox_8m2ig")
-theme_override_styles/disabled = SubResource("StyleBox_t04ia")
-theme_override_styles/focus = SubResource("StyleBox_y7jag")
-theme_override_colors/font_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_focus_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_hover_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_disabled_color = Color(0.6392157, 0.58431375, 0.49803922, 1)
-theme_override_fonts/font = SubResource("FontVariation_y7wg7")
-theme_override_font_sizes/font_size = 24
-theme_override_constants/h_separation = 8
-text = "Afslut"
+theme_type_variation = &"MenuRow"
+text = "MENU_SETTINGS"
 alignment = 0
 
-[node name="LanguageButton" type="Button" parent="." unique_id=1643139056]
+[node name="QuitButton" type="Button" parent="MenuPanel/MenuList" unique_id=1857643763]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"MenuRow"
+text = "MENU_QUIT"
+alignment = 0
+
+[node name="LanguageButton" type="Button" parent="." unique_id=1012677649]
 unique_name_in_owner = true
 layout_mode = 0
 anchor_left = 1.0
@@ -385,16 +134,33 @@ offset_right = -40.0
 offset_bottom = -30.0
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_styles/normal = SubResource("StyleBox_rybao")
-theme_override_styles/pressed = SubResource("StyleBox_ffypd")
-theme_override_styles/hover = SubResource("StyleBox_kxv1w")
-theme_override_styles/hover_pressed = SubResource("StyleBox_hxq2c")
-theme_override_styles/focus = SubResource("StyleBox_jaryi")
-theme_override_colors/font_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_focus_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_hover_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.16862746, 0.13725491, 0.2509804, 1)
-theme_override_fonts/font = SubResource("FontVariation_il2qg")
-theme_override_font_sizes/font_size = 15
-text = "v0.1 · Dansk"
+theme_type_variation = &"VersionButton"
+text = "MENU_VERSION_TAG"
+
+[node name="HintBar" type="HBoxContainer" parent="." unique_id=495000166]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 116.0
+offset_top = -60.0
+offset_right = 116.0
+offset_bottom = -60.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 2
+script = ExtResource("4_bxtry")
+
+[node name="ToastStack" type="Control" parent="." unique_id=202911287]
+unique_name_in_owner = true
+process_mode = 3
+z_index = 100
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_75pso")

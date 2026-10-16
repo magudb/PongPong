@@ -229,9 +229,20 @@ func slider_offenders(scene_dir: String, script_dir: String) -> Array[String]:
 	var out: Array[String] = []
 	for path in _files(scene_dir, ".tscn"):
 		var text := FileAccess.get_file_as_string(path)
+		var slider_scripts: Array[String] = []
 		for line in text.split("\n"):
-			if line.begins_with("[node ") and (line.contains('type="HSlider"') or line.contains('type="VSlider"')):
-				out.append("%s: %s" % [path, line.get_slice('name="', 1).get_slice('"', 0)])
+			if line.begins_with("[ext_resource ") and line.contains('path="res://scripts/ui/components/tt_slider.gd"'):
+				slider_scripts.append(line.get_slice('id="', 1).get_slice('"', 0))
+		# Godot serializes a scripted TTSlider as HSlider + its Script resource.
+		for block in text.split("[node "):
+			var header := block.get_slice("\n", 0)
+			if not (header.contains('type="HSlider"') or header.contains('type="VSlider"')):
+				continue
+			var real_slider := false
+			for id in slider_scripts:
+				real_slider = real_slider or block.contains('script = ExtResource("%s")' % id)
+			if not real_slider:
+				out.append("%s: %s" % [path, header.get_slice('name="', 1).get_slice('"', 0)])
 	for path in _files(script_dir, ".gd"):
 		var text2 := FileAccess.get_file_as_string(path)
 		for needle in ["HSlider.new()", "VSlider.new()"]:
@@ -684,9 +695,9 @@ func run_windowed(t) -> void:
 		var target := UiAudit.initial_focus(node)
 		if str(row.get("focus", "initial")) != "none" and target != null:
 			var sibling := _sibling(node, target)
-			# the screen's own focus guard (UiConfirm: focus never leaves the dialog) puts the focus straight back, so the control is sampled AS opened (focus: false) and the
+			# A screen focus guard restores focus, and a selected radio card retains its ring. Sample these AS opened (focus: false), with the
 			# unfocused sibling is sampled separately (expect none); screens without a guard get the full probe with the negative control on the target itself
-			var guarded: bool = node is UiConfirm
+			var guarded: bool = node is UiConfirm or (node is TTScreen and node.focus_guard) or (target is BaseButton and target.toggle_mode and target.button_pressed)
 			var rep: Dictionary = await UiAudit.ring_pixels(t, target, {"shot": "ring_%s" % id, "focus": false} if guarded else ({"shot": "ring_%s" % id, "other": sibling} if sibling != null else {"shot": "ring_%s" % id}))
 			ring_reports.append(rep)
 			ring_notes.append("%s %s: %s" % [id, target.name, UiAudit.summary(rep)])

@@ -282,7 +282,7 @@
 			"id": "sp_legacy",
 			"title": "a spec-shaped row whose scene is the old scaffold title -> derived legacy",
 			"kind": "scene",
-			"scene": "res://scenes/main/main_menu.tscn",
+			"scene": "res://tests/fixtures/ui_audit/legacy_main_menu.tscn",
 			"fixture": "",
 			"package": "FX-spec",
 			"guide": "-",
@@ -603,6 +603,36 @@
 			},
 			"checks": [
 				"escape_chain"
+			]
+		},
+		{
+			"id": "archive_title",
+			"kind": "scene",
+			"scene": "res://tests/fixtures/ui_audit/legacy_main_menu.tscn",
+			"checks": [
+				"initial_focus",
+				"rule_report",
+				"i18n_flip"
+			],
+			"known_gaps": [
+				"no_initial_focus",
+				"hardcoded_literal",
+				"not_localized"
+			]
+		},
+		{
+			"id": "archive_select",
+			"kind": "scene",
+			"scene": "res://tests/fixtures/ui_audit/legacy_character_select.tscn",
+			"checks": [
+				"initial_focus",
+				"rule_report",
+				"i18n_flip"
+			],
+			"known_gaps": [
+				"no_initial_focus",
+				"hardcoded_literal",
+				"not_localized"
 			]
 		}
 	]
