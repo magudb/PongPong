@@ -173,6 +173,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		try_interact()
 	elif event.is_action_pressed("fly_toggle"):
 		toggle_flight()
+	elif event.is_action_pressed("use_tool"):
+		use_selected()
 	elif _is_action_area():
 		if event.is_action_pressed("attack"):
 			combat.request(&"slash")
@@ -184,8 +186,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			drink()
 	elif event.is_action_pressed("jump"):
 		hop()
-	elif event.is_action_pressed("use_tool"):
-		use_selected()
 	for action in ["zoom_in", "zoom_out", "interact", "fly_toggle", "attack", "dodge", "light", "drink", "jump", "use_tool"]:
 		if event.is_action_pressed(action):
 			get_viewport().set_input_as_handled()

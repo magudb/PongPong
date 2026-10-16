@@ -40,6 +40,7 @@ var cooldown: float = 0
 var clock: float = 0
 var behavior_clock: float = 0
 var remaining: float = 0
+var stun_generation := 0
 var attack_mode := "dash"
 var aim := Vector2.RIGHT
 var warning: TelegraphRing2D
@@ -150,14 +151,17 @@ static func _ellipse(rx: float, ry: float) -> PackedVector2Array:
 	for i in 16: points.append(Vector2(cos(TAU*i/16)*rx,sin(TAU*i/16)*ry))
 	return points
 
-func set_awake(awake: bool) -> void:
+func is_awake() -> bool:
+	return process_mode != PROCESS_MODE_DISABLED
+
+func set_awake(on: bool) -> void:
 	if state == S.DEAD: return
-	if not awake and process_mode != PROCESS_MODE_DISABLED:
+	if not on and process_mode != PROCESS_MODE_DISABLED:
 		_cancel_attack()
 		state = S.IDLE
 		ground_velocity = Vector2.ZERO
-	if not awake and is_instance_valid(_eyes): _eyes.visible = false
-	process_mode = PROCESS_MODE_INHERIT if awake else PROCESS_MODE_DISABLED
+	if not on and is_instance_valid(_eyes): _eyes.visible = false
+	process_mode = PROCESS_MODE_INHERIT if on else PROCESS_MODE_DISABLED
 
 func protected_by_stone() -> bool:
 	if player == null: return false
@@ -191,6 +195,7 @@ func _physics_process(dt: float) -> void:
 		_eyes.modulate.a = .6+.4*sin(clock*3)
 		if distance <= 330:
 			ambush_state = "rustle"
+			EventBus.game_event.emit(&"audio_cue",{"cue":"sfx/bush_rustle"})
 			begin_windup({"shape":"line","width":80,"length":speed*3.1*.3+40,"direction":direction},.6,"ambush")
 		return
 	else:
@@ -288,6 +293,7 @@ func reveal() -> void:
 		area.place_prop("empty_bush",cell)
 func stun(seconds: float) -> void:
 	if state == S.DEAD: return
+	stun_generation += 1
 	reveal()
 	_cancel_attack()
 	state = S.STUN
@@ -306,6 +312,7 @@ func take_hit(damage: int, from: Vector2, attacker: Node = null) -> void:
 		stun(.38)
 	if not DungeonRun.assist("assist_reduce_flash"): visual.flash(Color("fbf5e6"),.18)
 	HitSpark2D.play(area.objects,global_position+Vector2(0,-50),ItemKinds.rarity_of(attacker.combat.active_weapon_id()) if attacker is Player2D else "normal")
+	EventBus.game_event.emit(&"audio_cue",{"cue":"sfx/hit_soft"})
 	_on_health_changed()
 	if hp <= 0:
 		if attacker != null: WeaponFx.on_kill(attacker,self)

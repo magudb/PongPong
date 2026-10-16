@@ -74,6 +74,8 @@ func _surprise(payload: Dictionary) -> void:
 			EventBus.whisper_requested.emit("DEXP_SURPRISE_COCOA")
 		"pip_note": EventBus.whisper_requested.emit(tr("DEXP_SURPRISE_NOTE_FMT") % tr(str(payload.get("hint_key","DTUT_RUNE"))))
 func _process(dt: float) -> void:
+	var gm := Svc.node("GameManager")
+	if gm != null and gm.is_modal_open(): return
 	if active: _tutorials(dt)
 	if _summary.is_empty(): return
 	_summary_wait -= dt

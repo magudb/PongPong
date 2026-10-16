@@ -1,0 +1,30 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 99,
+  "elapsed_s": 17.34,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "dungeon_reveal": {
+      "character": "animal",
+      "checks": 17,
+      "failed": 0,
+      "ms": 5570,
+      "skipped": 0
+    },
+    "forest": {
+      "character": "animal",
+      "checks": 82,
+      "failed": 0,
+      "ms": 7877,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

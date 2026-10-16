@@ -124,8 +124,10 @@ func _run(t, capture: bool, skin := "") -> void:
 	p.visual.set_process(false)
 	p.held_equipment.set_process(false)
 	p.held_equipment.sync_pose()
+	var forest_hud: Control = world.game_ui.get_screen(&"forest_hud")
+	badge = forest_hud.current_item_badge
 	t.check("forest_shows_equipped_weapon_even_with_hoe_selected", p.hotbar.current() == &"hoe_wooden" and p.equipment_display().id == &"sword_rusty" and badge.shown().id == &"sword_rusty")
-	t.check("forest_keeps_actual_readout_and_health_visible", world.game_ui.get_screen(&"hud").is_visible_in_tree() and badge.is_visible_in_tree())
+	t.check("forest_keeps_actual_readout_and_health_visible", forest_hud.is_visible_in_tree() and forest_hud.hearts.is_visible_in_tree() and badge.is_visible_in_tree() and not world.game_ui.get_screen(&"hud").visible)
 	eco.equip(&"weapon", &"")
 	p.combat.cooldowns.slash = 0
 	t.check("empty_weapon_slot_never_uses_phantom_sword", not p.swing() and p.equipment_display().id == &"")

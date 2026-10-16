@@ -89,6 +89,9 @@ func get_interaction_prompt() -> String:
 func interact(player: Node) -> void:
 	if not _enabled or depleted or picking: return
 	if not bool(cfg.get("forage",false)):
+		if player is Player2D and str(GameData.item_def(player.hotbar.current()).get("tool_type","")) == str(cfg.get("tool","")):
+			player.use_selected()
+			return
 		EventBus.whisper_requested.emit("FOREST_TOOL_AXE" if str(cfg.get("tool","")) == "axe" else "FOREST_TOOL_PICKAXE")
 		return
 	if not player is Player2D: return
