@@ -366,7 +366,8 @@ func _build_items() -> void:
 		item_buttons.append(button)
 	owned_label.text = tr("GARDEROBE_COUNT_FMT") % item_buttons.size()
 	if item_buttons.is_empty():
-		L.label(grid,tr("GARDEROBE_EMPTY"),"Body",true)
+		var empty_label := L.label(grid,tr("GARDEROBE_EMPTY"),"Body",true)
+		empty_label.custom_minimum_size.x = 380
 	if restore:
 		_initial_focus().grab_focus()
 
@@ -512,4 +513,6 @@ func _wire() -> void:
 static func fixture_setup(node: Node, _host: Node) -> void:
 	# Standalone style fixtures have no world/player. Gameplay open() retains
 	# its free-actor guard; the fixture uses the same preview and controls.
+	if WardrobeManager.owned_ids().is_empty():
+		WardrobeManager.reset()
 	node._open_for_body("fox")
