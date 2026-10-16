@@ -4,7 +4,7 @@
   "scope": "Full 27-package M1b usable-towns milestone, plus ghost greetings and ghost-family art/data follow-ups.",
   "main_baseline": "f478296",
   "source_implementation": "f20e44d152e275b7733ccfe175d1245dceafd2e4",
-  "source_binding": "5b7f438eb3c45b53da423ee106131a10879d96699271184c0330de71d2bcb078",
+  "source_binding": "75a4d7791d1936ea0c7c4b95e07ebb868ffedcd273636c66073ddac8f19fe5d4",
   "full_headless_suites": {
     "animal": {
       "file": "full-animal.json",
@@ -148,7 +148,8 @@
     ],
     "style_snapshot_assets": 2562,
     "style_ledger": "docs/art/style-audit/current/approval.json",
-    "ghost_family_prompts": "docs/art/prompts/ghost-family/"
+    "ghost_family_prompts": "docs/art/prompts/ghost-family/",
+    "capture_binding": "5b7f438eb3c45b53da423ee106131a10879d96699271184c0330de71d2bcb078"
   },
   "static_checks": [
     "static-style.txt",
@@ -166,6 +167,47 @@
     "Packaged-export performance: native/source runs are measured; exports without raw scripts use the original live navigation bake fallback."
   ],
   "remaining": [
-    "Fast-forward main and verify the merged checkout."
-  ]
+    "Verify main with the renewed canonical-byte proofs."
+  ],
+  "canonical_checkout_confirmation": {
+    "binding": "75a4d7791d1936ea0c7c4b95e07ebb868ffedcd273636c66073ddac8f19fe5d4",
+    "prior_working_binding": "5b7f438eb3c45b53da423ee106131a10879d96699271184c0330de71d2bcb078",
+    "bound_inputs_identical_between_main_and_worktree": 1162,
+    "normalization": "CRLF to committed LF only in three generated CSV files, as required by .gitattributes. No parsed copy, game code or art changed. Main verification correctly rejected the old raw-byte proofs; both were rerun and all four pricing/loop/budget confirmations pass.",
+    "normalized_working_files": [
+      "localization/dungeon_services.csv",
+      "localization/dialogue_cast.csv",
+      "localization/farm_tutorial.csv"
+    ],
+    "reports": {
+      "animal": {
+        "file": "canonical-animal.json",
+        "checks": 210,
+        "failed": 0,
+        "skipped": 11,
+        "elapsed_s": 16.43
+      },
+      "fairy": {
+        "file": "canonical-fairy.json",
+        "checks": 210,
+        "failed": 0,
+        "skipped": 11,
+        "elapsed_s": 17.03
+      },
+      "hobbit": {
+        "file": "canonical-hobbit.json",
+        "checks": 210,
+        "failed": 0,
+        "skipped": 11,
+        "elapsed_s": 16.32
+      },
+      "ghost": {
+        "file": "canonical-ghost.json",
+        "checks": 210,
+        "failed": 0,
+        "skipped": 11,
+        "elapsed_s": 16.47
+      }
+    }
+  }
 }

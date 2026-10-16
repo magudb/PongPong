@@ -22,6 +22,9 @@ on separate clones. Each must fail its specific behavioural check without an
 engine error. Audio's eighth mutant waits explicitly for P24's cue_log hook.
 Their saved reports bind all first-party source/data/tests/tools inputs.
 A source change makes a proof stale; rerun both once implementation is stable.
+Bindings use the working files' bytes. Generated CSVs must follow the repository's
+LF policy before the final proof; Git can normalise CRLF during commit/checkout.
+Verify the merged checkout as well so its proofs match the committed bytes.
 Clone/import/bake setup is authoring validation outside the playable timer.
 
 `loop_report.py LOG --wave 5b --out REPORT` turns named check output into a

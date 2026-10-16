@@ -42,6 +42,12 @@ Validation
   unchanged; new copy stays draft and unrecorded. Ghost-family source prompts
   and provenance are in docs/art/prompts/ghost-family/.
 
+The merged-checkout check detected CRLF/LF differences in three generated CSVs.
+Their committed LF bytes are now used for both renewed proofs and four final
+210-check pricing/loop/budget confirmations. No parsed text, game code or art
+changed. acceptance.json retains the original capture binding and the canonical
+checkout binding.
+
 Reproduce the loop, proofs and native checks using tools/town/README.md.
 Measurements above are native/source-project results on Apple M3, macOS,
 Godot 4.7.2, Compatibility GL 4.1 / Metal 90.5. Area draw-call gates preserve
