@@ -93,3 +93,8 @@ final native focus/panel/button checks, unchanged performance limits, refreshed
 source-bound extension/mutant proofs and all 36 wave-5b gate rows. Final source
 is 27b66d7; the merged-checkout result is recorded in merge-verification.json.
 The older wardrobe-animation deferral above is historical milestone scope.
+
+Merged main 605466d passes 599 focused wardrobe/player/garden/UI/town checks,
+with no failures or unexpected engine messages. Both source-bound town proofs
+and all 2,815 style-ledger assets match that checkout. See
+docs/qa/loadout/merge-verification.json.

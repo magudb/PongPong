@@ -1,5 +1,5 @@
 {
-  "status": "validated on codex-loadout; merged-checkout verification pending",
+  "status": "implemented and merged into local main; feature, visual, resource and integration checks passed",
   "validated_at_utc": "2026-10-16T20:02:33.048699+00:00",
   "baseline_main": "c395207",
   "feature_source_commit": "2e6035e",
@@ -268,5 +268,15 @@
     "Five pre-existing da.csv legacy findings are unchanged.",
     "This is not a separate pixel review of every stock animation frame.",
     "Native source-project measurements on Apple M3/macOS/Godot 4.7.2 Compatibility; packaged-export timing is not claimed."
-  ]
+  ],
+  "merged_main_verification": {
+    "verified_main_commit": "605466ddf542e373045e095b2e26a8f7dc2cde1e",
+    "report": "merged-main.json",
+    "checks": 599,
+    "failed": 0,
+    "skipped": 82,
+    "unexpected_engine_messages": 0,
+    "intentional_negative_control_messages": 1,
+    "verification": "merge-verification.json"
+  }
 }

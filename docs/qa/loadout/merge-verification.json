@@ -1,0 +1,61 @@
+{
+  "result": "pass",
+  "verified_at_utc": "2026-10-16T20:04:26.894430+00:00",
+  "verified_main_commit": "605466ddf542e373045e095b2e26a8f7dc2cde1e",
+  "final_source_commit": "27b66d7",
+  "source_binding": "fc6df2244d8570a9d28203b8daad0f3bc8dceeb442567abb238f9a86eab99818",
+  "report": "merged-main.json",
+  "checks": 599,
+  "failed": 0,
+  "skipped": 82,
+  "unexpected_engine_messages": 0,
+  "intentional_negative_control_messages": 1,
+  "worktree_heads": {
+    "main": {
+      "head": "605466ddf542e373045e095b2e26a8f7dc2cde1e",
+      "is_ancestor_of_main": true
+    },
+    "codex-forest-story": {
+      "head": "147d9da4c1a91ebf13da31044c450463a7abd3cb",
+      "is_ancestor_of_main": true
+    },
+    "codex-held-equipment": {
+      "head": "c3952075407e480a012c6788c65eaa6b7a927409",
+      "is_ancestor_of_main": true
+    },
+    "codex-loadout": {
+      "head": "605466ddf542e373045e095b2e26a8f7dc2cde1e",
+      "is_ancestor_of_main": true
+    },
+    "codex-merge-finished": {
+      "head": "f478296ea262218698895ac88437d59876ca7eea",
+      "is_ancestor_of_main": true
+    },
+    "codex-review": {
+      "head": "be1d3191a7ec233e852f7cd61f9ac0606a83dca9",
+      "is_ancestor_of_main": true
+    },
+    "codex-secret-garden": {
+      "head": "f0829a9d6108d5aa3efd0550df2367b0bab24a98",
+      "is_ancestor_of_main": true
+    },
+    "codex-walkway-transitions": {
+      "head": "f008dafb653e8a8f96416d0fe763d902271b6df0",
+      "is_ancestor_of_main": true
+    },
+    "devin-review": {
+      "head": "283d8014760fb3d3d9a710c5aeabd8f76ab2957e",
+      "is_ancestor_of_main": true
+    },
+    "m1b": {
+      "head": "7ad11d6f7256ef705cc97e736e4724fea3a9584e",
+      "is_ancestor_of_main": true
+    },
+    "review-fixes-4": {
+      "head": "71ee42da28c10e47392c3375997045b3dc880059",
+      "is_ancestor_of_main": true
+    }
+  },
+  "native_artifact_hashes_verified": 179,
+  "note": "All committed worktree heads are included in main. Existing untracked files in other worktrees were preserved. This record is committed after validation; that commit changes documentation only."
+}
