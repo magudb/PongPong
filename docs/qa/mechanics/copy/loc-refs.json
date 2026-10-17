@@ -266,11 +266,11 @@
   },
   {
    "prefix": "GARDEROBE_PRESET_",
-   "src": "scripts/ui/garderobe.gd:266"
+   "src": "scripts/ui/garderobe.gd:268"
   },
   {
    "prefix": "SLOTCELL_",
-   "src": "scripts/ui/garderobe.gd:289"
+   "src": "scripts/ui/garderobe.gd:291"
   },
   {
    "prefix": "HOME_AMENITIES_ROYAL_",
@@ -429,6 +429,14 @@
    "src": "scripts/ui/story/mother_journal.gd:71"
   },
   {
+   "prefix": "UI_WEATHER_",
+   "src": "scripts/ui/testing/cheat_menu.gd:120"
+  },
+  {
+   "prefix": "ITEM_",
+   "src": "scripts/ui/testing/cheat_menu.gd:174"
+  },
+  {
    "prefix": "UI_SEASON_",
    "src": "scripts/ui/theme/tt_format.gd:28"
   },
@@ -506,7 +514,7 @@
   },
   {
    "prefix": "FM_E_",
-   "src": "scripts/world2d/story/mother_evidence_marker.gd:54"
+   "src": "scripts/world2d/story/mother_evidence_marker.gd:67"
   },
   {
    "prefix": "FM_LEAD_",
@@ -859,6 +867,30 @@
   "CHAR_START": [
    "scenes/ui/character_select.tscn:610"
   ],
+  "CHEAT_CLOSE": [
+   "scripts/ui/testing/cheat_menu.gd:85"
+  ],
+  "CHEAT_DONE": [
+   "scripts/ui/testing/cheat_menu.gd:139"
+  ],
+  "CHEAT_FREEZE": [
+   "scripts/ui/testing/cheat_menu.gd:113"
+  ],
+  "CHEAT_NOTICE": [
+   "scripts/ui/testing/cheat_menu.gd:84"
+  ],
+  "CHEAT_PLATFORM": [
+   "scripts/ui/testing/cheat_menu.gd:107"
+  ],
+  "CHEAT_SEARCH": [
+   "scripts/ui/testing/cheat_menu.gd:145"
+  ],
+  "CHEAT_TITLE": [
+   "scripts/ui/testing/cheat_menu.gd:83"
+  ],
+  "CHEAT_WEATHER": [
+   "scripts/ui/testing/cheat_menu.gd:120"
+  ],
   "DEFAULT_FARM_NAME": [
    "scripts/autoload/game_manager.gd:207",
    "scripts/autoload/game_manager.gd:592",
@@ -926,7 +958,7 @@
    "lua/dialogue/fairy_builder.lua:158"
   ],
   "DIALOGUE_VOICE_DA": [
-   "scripts/ui/dialogue_ui.gd:214",
+   "scripts/ui/dialogue_ui.gd:217",
    "scenes/ui/dialogue_ui.tscn:136"
   ],
   "DLG_BIRK_BEES": [
@@ -1585,7 +1617,7 @@
    "lua/dialogue/fairy_king.lua:118"
   ],
   "DLG_KING_LETTER": [
-   "scripts/ui/dialogue_ui.gd:235",
+   "scripts/ui/dialogue_ui.gd:238",
    "lua/dialogue/fairy_king.lua:12"
   ],
   "DLG_LILY_GREET": [
@@ -1601,7 +1633,7 @@
    "lua/dialogue/mayor_lyra.lua:21"
   ],
   "DLG_LYRA_HELLO": [
-   "scripts/ui/dialogue_ui.gd:229",
+   "scripts/ui/dialogue_ui.gd:232",
    "lua/dialogue/mayor_lyra.lua:53"
   ],
   "DLG_LYRA_LOTTERY": [
@@ -1898,7 +1930,7 @@
    "scripts/ui/dungeon/floor_banner.gd:21"
   ],
   "DUNGEON_LEAVE_CONFIRM": [
-   "scripts/ui/pause_menu.gd:113"
+   "scripts/ui/pause_menu.gd:114"
   ],
   "DUNGEON_WHISPER_DYBE_BREGNER_1": [
    "lua/config/dungeon.lua:48"
@@ -2479,7 +2511,7 @@
    "scripts/ui/story/mother_journal.gd:50"
   ],
   "FM_E_ECHO_ACCOUNT_TEXT": [
-   "scripts/world2d/story/mother_evidence_marker.gd:51"
+   "scripts/world2d/story/mother_evidence_marker.gd:62"
   ],
   "FM_E_ECHO_ACCOUNT_TITLE": [
    "lua/quests/forest_mother_s04.lua:11"
@@ -2520,30 +2552,33 @@
   "FM_E_ROUTE_WITNESS_TITLE": [
    "lua/quests/forest_mother_s06.lua:9"
   ],
+  "FM_E_TRAVELLER_ACCOUNT_TEXT": [
+   "scripts/world2d/story/mother_evidence_marker.gd:64"
+  ],
   "FM_E_TRAVELLER_ACCOUNT_TITLE": [
    "lua/quests/forest_mother_s05.lua:7"
   ],
   "FM_FIELD_NOTE": [
-   "scripts/world2d/story/mother_evidence_marker.gd:51"
+   "scripts/world2d/story/mother_evidence_marker.gd:62"
   ],
   "FM_FINAL_ACCOUNT": [
-   "scripts/world2d/story/mother_evidence_marker.gd:53"
+   "scripts/world2d/story/mother_evidence_marker.gd:66"
   ],
   "FM_FINAL_BARGAIN": [
-   "scripts/world2d/story/mother_evidence_marker.gd:53"
+   "scripts/world2d/story/mother_evidence_marker.gd:66"
   ],
   "FM_FINAL_TRUTH": [
-   "scripts/world2d/story/mother_evidence_marker.gd:53"
+   "scripts/world2d/story/mother_evidence_marker.gd:66"
   ],
   "FM_INSPECT": [
-   "scripts/world2d/story/mother_evidence_marker.gd:17"
+   "scripts/world2d/story/mother_evidence_marker.gd:19"
   ],
   "FM_JOURNAL_TITLE": [
    "scripts/ui/story/mother_journal.gd:23",
    "scripts/ui/story/mother_journal.gd:44"
   ],
   "FM_NAME": [
-   "scripts/world2d/story/mother_evidence_marker.gd:73"
+   "scripts/world2d/story/mother_evidence_marker.gd:86"
   ],
   "FM_OBJ_CHECKPOINT_S03": [
    "lua/quests/forest_mother_s03.lua:9"
@@ -2556,6 +2591,19 @@
   ],
   "FM_RECORD_ACCOUNT": [
    "scripts/world2d/story/mother_story.gd:116"
+  ],
+  "FM_SCRIBE_FINAL_OFFER": [
+   "scripts/world2d/story/mother_evidence_marker.gd:66"
+  ],
+  "FM_SCRIBE_NAME": [
+   "scripts/world2d/story/mother_evidence_marker.gd:64",
+   "scripts/world2d/story/mother_evidence_marker.gd:66"
+  ],
+  "FM_SCRIBE_TRAVELLER_1": [
+   "scripts/world2d/story/mother_evidence_marker.gd:64"
+  ],
+  "FM_SCRIBE_TRAVELLER_2": [
+   "scripts/world2d/story/mother_evidence_marker.gd:64"
   ],
   "FM_TAB": [
    "scripts/ui/quest_journal.gd:98",
@@ -2862,82 +2910,92 @@
    "scenes/main/main_menu.tscn:43"
   ],
   "GARDEROBE_ALL": [
-   "scripts/ui/garderobe.gd:286"
+   "scripts/ui/garderobe.gd:288"
   ],
   "GARDEROBE_ASSIGN": [
-   "scripts/ui/garderobe.gd:412"
+   "scripts/ui/garderobe.gd:414"
   ],
   "GARDEROBE_CHOOSE": [
-   "scripts/ui/garderobe.gd:420"
+   "scripts/ui/garderobe.gd:433"
   ],
   "GARDEROBE_CLEAR_HOTBAR": [
-   "scripts/ui/garderobe.gd:271"
+   "scripts/ui/garderobe.gd:273"
   ],
   "GARDEROBE_CLOTHES": [
-   "scripts/ui/garderobe.gd:255"
+   "scripts/ui/garderobe.gd:257"
   ],
   "GARDEROBE_COUNT_FMT": [
-   "scripts/ui/garderobe.gd:369"
-  ],
-  "GARDEROBE_CURRENT_PERKS_FMT": [
-   "scripts/ui/garderobe.gd:280"
-  ],
-  "GARDEROBE_EMPTY": [
    "scripts/ui/garderobe.gd:371"
   ],
+  "GARDEROBE_CURRENT_PERKS_FMT": [
+   "scripts/ui/garderobe.gd:282"
+  ],
+  "GARDEROBE_EMPTY": [
+   "scripts/ui/garderobe.gd:373"
+  ],
   "GARDEROBE_EQUIP": [
-   "scripts/ui/garderobe.gd:410"
+   "scripts/ui/garderobe.gd:412"
   ],
   "GARDEROBE_LANTERN_GEM": [
-   "scripts/ui/garderobe.gd:291"
+   "scripts/ui/garderobe.gd:293"
   ],
   "GARDEROBE_MISSING_FMT": [
-   "scripts/ui/garderobe.gd:491"
+   "scripts/ui/garderobe.gd:516"
   ],
   "GARDEROBE_NOT_OWNED": [
-   "scripts/ui/garderobe.gd:420"
+   "scripts/ui/garderobe.gd:433"
   ],
   "GARDEROBE_OWNED_ONLY": [
-   "scripts/ui/garderobe.gd:258"
+   "scripts/ui/garderobe.gd:260"
   ],
   "GARDEROBE_PICK_HOTBAR": [
-   "scripts/ui/garderobe.gd:422",
-   "scripts/ui/garderobe.gd:457"
+   "scripts/ui/garderobe.gd:444",
+   "scripts/ui/garderobe.gd:481"
   ],
   "GARDEROBE_PREVIEW_FMT": [
-   "scripts/ui/garderobe.gd:419"
+   "scripts/ui/garderobe.gd:430"
   ],
   "GARDEROBE_REMOVE": [
-   "scripts/ui/garderobe.gd:411"
+   "scripts/ui/garderobe.gd:413"
+  ],
+  "GARDEROBE_REPLACES_FMT": [
+   "scripts/ui/garderobe.gd:441"
   ],
   "GARDEROBE_SAVE_WORN": [
-   "scripts/ui/garderobe.gd:268"
+   "scripts/ui/garderobe.gd:270"
+  ],
+  "GARDEROBE_SINGLE_PIECE": [
+   "scripts/ui/garderobe.gd:433"
   ],
   "GARDEROBE_TITLE": [
-   "scripts/ui/garderobe.gd:253"
+   "scripts/ui/garderobe.gd:255"
   ],
   "GARDEROBE_TOOLS": [
-   "scripts/ui/garderobe.gd:291"
+   "scripts/ui/garderobe.gd:293"
+  ],
+  "GARDEROBE_TRYING_COUNT_FMT": [
+   "scripts/ui/garderobe.gd:432"
   ],
   "GARDEROBE_TRYING_FMT": [
-   "scripts/ui/garderobe.gd:419"
+   "scripts/ui/garderobe.gd:430"
   ],
   "GARDEROBE_TURN_LEFT": [
-   "scripts/ui/garderobe.gd:262"
-  ],
-  "GARDEROBE_TURN_RIGHT": [
-   "scripts/ui/garderobe.gd:263"
-  ],
-  "GARDEROBE_WALK": [
    "scripts/ui/garderobe.gd:264"
   ],
+  "GARDEROBE_TURN_RIGHT": [
+   "scripts/ui/garderobe.gd:265"
+  ],
+  "GARDEROBE_WALK": [
+   "scripts/ui/garderobe.gd:266"
+  ],
   "GARDEROBE_WEAR_PRESET": [
-   "scripts/ui/garderobe.gd:269"
+   "scripts/ui/garderobe.gd:271"
   ],
   "GARDEROBE_WORN": [
-   "scripts/ui/garderobe.gd:324",
-   "scripts/ui/garderobe.gd:419",
-   "scripts/ui/garderobe.gd:420"
+   "scripts/ui/garderobe.gd:326",
+   "scripts/ui/garderobe.gd:430",
+   "scripts/ui/garderobe.gd:432",
+   "scripts/ui/garderobe.gd:433"
   ],
   "GEMFX_AMBUSH": [
    "scripts/ui/components/equipment_details.gd:25"
@@ -3285,13 +3343,13 @@
    "lua/dialogue/_voiced_social.lua:65"
   ],
   "GUIDE_CH_1": [
-   "scripts/ui/dialogue_ui.gd:246"
+   "scripts/ui/dialogue_ui.gd:249"
   ],
   "GUIDE_CH_2": [
-   "scripts/ui/dialogue_ui.gd:246"
+   "scripts/ui/dialogue_ui.gd:249"
   ],
   "GUIDE_DLG_1": [
-   "scripts/ui/dialogue_ui.gd:246"
+   "scripts/ui/dialogue_ui.gd:249"
   ],
   "HEART_BAKER_MAJA_10_01": [
    "lua/events/hearts/baker_maja.lua:351"
@@ -4397,7 +4455,7 @@
    "scripts/ui/hud.gd:262"
   ],
   "HUD_ITEM_WEAPON": [
-   "scripts/ui/garderobe.gd:291"
+   "scripts/ui/garderobe.gd:293"
   ],
   "HUD_SEASON_DAY_FMT": [
    "scripts/ui/theme/tt_format.gd:28"
@@ -5700,12 +5758,12 @@
    "lua/items/magic.lua item fairy_dust"
   ],
   "ITEM_FAIRY_DUST_WATER": [
-   "lua/items/crops.lua:169",
+   "lua/items/crops.lua:189",
    "lua/items/crops.lua item fairy_dust_water",
    "lua/shops/seed_shop.lua shop seed_shop stock"
   ],
   "ITEM_FAIRY_DUST_WATER_DESC": [
-   "lua/items/crops.lua:170",
+   "lua/items/crops.lua:190",
    "lua/items/crops.lua item fairy_dust_water"
   ],
   "ITEM_FENCE": [
@@ -5725,14 +5783,14 @@
    "lua/items/resources.lua item fern"
   ],
   "ITEM_FERTILIZER": [
-   "lua/items/crops.lua:158",
+   "lua/items/crops.lua:178",
    "lua/items/crops.lua item fertilizer",
    "lua/quests/forste_dage.lua quest forste_dage reward",
    "lua/shops/festival_markets.lua shop fest_harvest_market stock",
    "lua/shops/seed_shop.lua shop seed_shop stock"
   ],
   "ITEM_FERTILIZER_DESC": [
-   "lua/items/crops.lua:159",
+   "lua/items/crops.lua:179",
    "lua/items/crops.lua item fertilizer"
   ],
   "ITEM_FIREPLACE_CAULDRON": [
@@ -5892,6 +5950,23 @@
   "ITEM_FRIENDSHIP_TOKEN_DESC": [
    "lua/items/resources.lua:172",
    "lua/items/resources.lua item friendship_token"
+  ],
+  "ITEM_FROST_KALE": [
+   "lua/items/crops.lua:168",
+   "lua/items/crops.lua item frost_kale"
+  ],
+  "ITEM_FROST_KALE_DESC": [
+   "lua/items/crops.lua:169",
+   "lua/items/crops.lua item frost_kale"
+  ],
+  "ITEM_FROST_KALE_SEEDS": [
+   "lua/items/crops.lua:157",
+   "lua/items/crops.lua item frost_kale_seeds",
+   "lua/shops/seed_shop.lua shop seed_shop stock"
+  ],
+  "ITEM_FROST_KALE_SEEDS_DESC": [
+   "lua/items/crops.lua:158",
+   "lua/items/crops.lua item frost_kale_seeds"
   ],
   "ITEM_GEM_BAG": [
    "lua/items/resources.lua:97",
@@ -8622,7 +8697,7 @@
    "lua/dialogue/fairy_furnisher.lua:10"
   ],
   "NPC_FAIRY_KING": [
-   "scripts/ui/dialogue_ui.gd:235",
+   "scripts/ui/dialogue_ui.gd:238",
    "scripts/world2d/intro_sequence.gd:20",
    "scripts/world2d/intro_sequence.gd:23",
    "lua/config/npcs.lua:113",
@@ -8723,8 +8798,8 @@
    "lua/dialogue/mapseller_natteblik.lua:90"
   ],
   "NPC_MAYOR_LYRA": [
-   "scripts/ui/dialogue_ui.gd:229",
-   "scripts/ui/dialogue_ui.gd:246",
+   "scripts/ui/dialogue_ui.gd:232",
+   "scripts/ui/dialogue_ui.gd:249",
    "lua/config/npcs.lua:41",
    "lua/config/npcs.lua npc mayor_lyra",
    "lua/dialogue/mayor_lyra.lua:12",
@@ -9206,7 +9281,7 @@
    "scripts/ui/social/people.gd:128"
   ],
   "PAUSE_SAVE_FAILED_CONFIRM": [
-   "scripts/ui/pause_menu.gd:98"
+   "scripts/ui/pause_menu.gd:99"
   ],
   "POST_AT_FESTIVAL": [
    "scripts/ui/towns/post_locations.gd:37"
@@ -9581,7 +9656,7 @@
    "lua/quests/rare_mushroom_hunt.lua quest rare_mushroom_hunt"
   ],
   "QUEST_RARE_MUSHROOM_HUNT_OFFER": [
-   "lua/quests/rare_mushroom_hunt.lua:58",
+   "lua/quests/rare_mushroom_hunt.lua:59",
    "lua/quests/rare_mushroom_hunt.lua quest rare_mushroom_hunt"
   ],
   "QUEST_RARE_MUSHROOM_HUNT_TITLE": [
@@ -9964,7 +10039,7 @@
    "scripts/social/talk/dialogue_bridge.gd:32",
    "scripts/social/talk/dialogue_bridge.gd:94",
    "scripts/social/talk/dialogue_bridge.gd:138",
-   "scripts/ui/dialogue_ui.gd:229"
+   "scripts/ui/dialogue_ui.gd:232"
   ],
   "REL_TALK_MORE": [
    "scripts/social/talk/dialogue_bridge.gd:59",
@@ -10841,7 +10916,7 @@
    "scenes/ui/dev/components_gallery.tscn:350"
   ],
   "UI_CLOSE": [
-   "scripts/ui/garderobe.gd:257",
+   "scripts/ui/garderobe.gd:259",
    "scripts/ui/shop_ui.gd:139"
   ],
   "UI_CURRENCY": [
@@ -10873,7 +10948,7 @@
    "calendar (plan 3.9)"
   ],
   "UI_PAUSED": [
-   "scenes/ui/pause_menu.tscn:50"
+   "scenes/ui/pause_menu.tscn:52"
   ],
   "UI_READ": [
    "scripts/traetoppen/city_builder.gd:511",
@@ -11149,6 +11224,28 @@
   "CHAR_SELECT_SUBTITLE",
   "CHAR_SPECIES_PREFIX",
   "CHAR_START",
+  "CHEAT_CLOCK",
+  "CHEAT_CLOSE",
+  "CHEAT_DONE",
+  "CHEAT_DRESS",
+  "CHEAT_FAILED",
+  "CHEAT_FREEZE",
+  "CHEAT_GOLD",
+  "CHEAT_GRANT",
+  "CHEAT_HOME",
+  "CHEAT_HOUR",
+  "CHEAT_ITEMS",
+  "CHEAT_NEXT_DAY",
+  "CHEAT_NOTICE",
+  "CHEAT_PLATFORM",
+  "CHEAT_PLAYER",
+  "CHEAT_RECOVER",
+  "CHEAT_SEARCH",
+  "CHEAT_TITLE",
+  "CHEAT_TOWN_SQUARE",
+  "CHEAT_TRAVEL",
+  "CHEAT_WARDROBE",
+  "CHEAT_WEATHER",
   "COUNTER_APPRAISE",
   "COUNTER_APPRAISE_SOON",
   "COUNTER_DESK",
@@ -11632,6 +11729,7 @@
   "FM_E_RETURN_PROMISE_TITLE",
   "FM_E_ROUTE_STONE_TITLE",
   "FM_E_ROUTE_WITNESS_TITLE",
+  "FM_E_TRAVELLER_ACCOUNT_TEXT",
   "FM_E_TRAVELLER_ACCOUNT_TITLE",
   "FM_FAMILY_FRIEND",
   "FM_FAMILY_KIN",
@@ -11652,6 +11750,10 @@
   "FM_RECORD_ACCOUNT",
   "FM_REFUSE_ROLE",
   "FM_RETURN_NAME",
+  "FM_SCRIBE_FINAL_OFFER",
+  "FM_SCRIBE_NAME",
+  "FM_SCRIBE_TRAVELLER_1",
+  "FM_SCRIBE_TRAVELLER_2",
   "FM_TAB",
   "FM_TOPIC",
   "FOREST_OIL",
@@ -11758,10 +11860,13 @@
   "GARDEROBE_PICK_HOTBAR",
   "GARDEROBE_PREVIEW_FMT",
   "GARDEROBE_REMOVE",
+  "GARDEROBE_REPLACES_FMT",
   "GARDEROBE_SAVE_WORN",
+  "GARDEROBE_SINGLE_PIECE",
   "GARDEROBE_SWITCH_TABS",
   "GARDEROBE_TITLE",
   "GARDEROBE_TOOLS",
+  "GARDEROBE_TRYING_COUNT_FMT",
   "GARDEROBE_TRYING_FMT",
   "GARDEROBE_TURN_LEFT",
   "GARDEROBE_TURN_RIGHT",
@@ -12638,6 +12743,10 @@
   "ITEM_FLOWER_NECKLACE_DESC",
   "ITEM_FRIENDSHIP_TOKEN",
   "ITEM_FRIENDSHIP_TOKEN_DESC",
+  "ITEM_FROST_KALE",
+  "ITEM_FROST_KALE_DESC",
+  "ITEM_FROST_KALE_SEEDS",
+  "ITEM_FROST_KALE_SEEDS_DESC",
   "ITEM_GEM_BAG",
   "ITEM_GEM_BAG_DESC",
   "ITEM_GEM_DEWDROP",

@@ -15,6 +15,7 @@ var _generation := 0
 var _session := false
 var _voice_key := ""
 var _has_voice := false
+var _line_name_key := ""
 var chars_per_second := 40.0
 
 func _init() -> void:
@@ -55,6 +56,7 @@ func show_lines(speaker: Dictionary, lines: Array, choices: Array = []) -> Dicti
 	_lines = lines.duplicate(true)
 	_choices = choices.duplicate(true)
 	_line = -1
+	_line_name_key = ""
 	_shown = 0
 	_session = true
 	%TextLabel.text = ""
@@ -106,6 +108,7 @@ func _next_line() -> void:
 			_show_choices()
 		return
 	var row: Dictionary = LuaData.dict(_lines[_line])
+	_line_name_key = str(row.get("name_key", row.get("speaker_name_key", "")))
 	var text := _line_text(row)
 	%TextLabel.text = text
 	%TextLabel.visible_characters = 0
@@ -209,7 +212,7 @@ func _refresh_hint() -> void:
 func _refresh_texts() -> void:
 	if not is_node_ready():
 		return
-	%SpeakerLabel.text = tr(str(_speaker.get("name_key", _speaker.get("speaker_name_key", ""))))
+	%SpeakerLabel.text = tr(_line_name_key if _line_name_key != "" else str(_speaker.get("name_key", _speaker.get("speaker_name_key", ""))))
 	%PortraitTexture.texture = _speaker.get("portrait", Portraits.portrait(StringName(str(_speaker.get("id", "")))))
 	%VoiceIndicator.text = tr("DIALOGUE_VOICE_DA")
 	_refresh_hint()

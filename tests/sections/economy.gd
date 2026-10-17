@@ -363,7 +363,7 @@ func _item_defs() -> void:
 		var harvest: Dictionary = lr.get_item_def(str(crop))
 		if not seed_ok or harvest.is_empty() or int(harvest.get("sell_price", -1)) != int(crops[crop].get("sell_price", -2)):
 			bad.append(str(crop))
-	t.check("crop_prices_match_balance", bad.is_empty() and crops.size() == 8, "%d crops: a seed item with crop_id and a harvest item that sells at crops.<id>.sell_price; wrong %s" % [crops.size(), str(bad)])
+	t.check("crop_prices_match_balance", bad.is_empty() and crops.size() == 9, "%d crops: a seed item with crop_id and a harvest item that sells at crops.<id>.sell_price; wrong %s" % [crops.size(), str(bad)])
 	# Every advertised animal product must resolve, including the pet bond token.
 	var missing: Array[String] = []
 	for id in _item_ids():
@@ -954,7 +954,7 @@ func _shops_from_lua() -> void:
 	for row in shop.get_shop_inventory("seed_shop"):
 		if shop.item_in_tab(seed_tab, row["item_id"]):
 			in_seed_tab += 1
-	t.expect(in_seed_tab == 9 and shop.item_in_tab(seed_tab, &"fertilizer") and not shop.item_in_tab(seed_tab, &"scythe"), "seeds, fertilizer and fairy dust water are in the Frø tab, tools are not (%d)" % in_seed_tab)
+	t.expect(in_seed_tab == 10 and shop.item_in_tab(seed_tab, &"fertilizer") and not shop.item_in_tab(seed_tab, &"scythe"), "seeds, fertilizer and fairy dust water are in the Frø tab, tools are not (%d)" % in_seed_tab)
 	# the other four
 	var smithy: Array = []
 	for row in shop.get_shop_inventory("smithy"):

@@ -230,17 +230,31 @@ Re-classified on verification:
   later gates). Kept as a design note, not changed.
 - **Fishing rod** kept in `seed_shop` — authored teaser with self-aware copy.
 
+Fix round 2 (features; verified `data,economy,copy_completion,forest_mother,npc,voice,ghost_lines,
+social_ui,economy_hours,content_features` ≈ 2 600 checks, 0 failures):
+
+4. **Winter farming** — new crop `frost_kale` (`frostkål`): `game_balance.lua` (4 days, `vinter` only,
+   sell 60), item + seeds in `crops.lua` (seed 30 g), seed-shop stock 20/day, da+en copy in
+   `economy.csv`, a frosty palette entry in `prop_art.gd`'s crop fallback (no painted art yet — the
+   ArtCatalog placeholder path covers it until the V-crop wave paints it), and the `CROPS` const +
+   Frø-tab count in `data.gd`/`economy.gd` updated. Winter now has a farmable leg; the greenhouse
+   (N07) can still land later as the premium version.
+5. **Root Scribe echo** — the two `root_scribe_waymarker` evidences (`traveller_account` floor 7,
+   `mother_fate` floor 12) are now *spoken* scenes: `dialogue_ui` gained a per-line `name_key` speaker
+   override, the Scribe's echo gets its own voice (`FM_SCRIBE_NAME`) with authored da+en lines
+   (`FM_SCRIBE_TRAVELLER_1/2`, `FM_SCRIBE_FINAL_OFFER` — the bargain is now *heard* before the account
+   resolves it), and both markers carry a cold additive halo that appears when the trail begins. The
+   `forest_mother` full-arc test drives all of it unchanged.
+
 Still open (deliberate or pending-wave work):
 
-- **Winter farming dead-zone** — no `vinter` crop; `greenhouse_slot` awaits package N07. Interim option:
-  one frost crop. Not fixed here (new content, needs its own loc/validator pass).
 - **Buyable adventure-gate collects** (`moonstone_crown`, `crystal_cave` shards via `have=true`) —
   requires_zone still forces the forest visit; the buy-out is a money sink. Flagged as a design
   *question*, not changed.
 - **Stamina is decorative** outside the dungeon — a design choice, not a defect.
 - **Dominated crop rows** (strawberry/moonflower as gold crops) — seed prices are pinned by
   `economy.gd:GUIDE_SHOP`; rebalancing belongs to a balance pass, not a review fix.
-- **Root Scribe as encounter** — remains a story-text entity; an authored scene is a feature, not a fix.
+- **Greenhouse** — remains N07's package; `frost_kale` fills the interim.
 
 *Not reviewed:* save/robustness internals (code review's scope), art pipeline, voice production, and the
 balance sim's assumed-income caveat (it's a model, not a playtest — but it's a *good* model and its numbers

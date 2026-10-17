@@ -51,7 +51,7 @@ const PERK_KEYS := ["dig_speed", "tool_cost_mult", "harvest_bonus_chance", "can_
 	"run_cost_mult", "oil_use_mult", "dark_light_mult", "float_bob_px", "glow_energy", "glow_energy_dark", "glow_scale", "glow_color", "species", "skins", "default_skin"]
 const COMBAT_KEYS := ["max_half_hearts", "swing_time", "swing_active_start", "swing_active_end", "swing_radius", "swing_half_angle_deg", "swing_cooldown", "dodge_time", "dodge_distance", "dodge_iframes", "dodge_cooldown", "light_cooldown", "light_radius", "light_stun", "drink_heal_half_hearts", "hurt_iframes", "knockback", "oil_seconds", "oil_min_light", "oil_whisper_ratio"]
 const PLAYER_KEYS := ["walk_speed", "run_speed", "accel", "decel", "hop_impulse", "gravity", "flight_altitude", "flight_climb", "body_rx", "body_ry", "interaction_range", "max_health", "max_stamina", "stamina_regen_per_second", "run_cost_per_second", "run_recover_ratio"]
-const CROPS := ["turnip", "carrot", "pumpkin", "moonflower", "glow_berry", "strawberry", "sunflower", "catnip"]
+const CROPS := ["turnip", "carrot", "pumpkin", "moonflower", "glow_berry", "strawberry", "sunflower", "catnip", "frost_kale"]
 ## crops whose seed item arrives with P12 (wave 3); the entries are in game_balance.lua already
 const CROPS_WAITING_FOR_ITEMS := ["strawberry", "sunflower", "catnip"]
 

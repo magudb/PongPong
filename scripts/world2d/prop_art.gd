@@ -442,6 +442,7 @@ static func crop(crop_id: String, stage: int) -> Dictionary:
 		"strawberry": fruit = Color("d9506b")
 		"sunflower": fruit = Color("f2c14e")
 		"catnip": fruit = Color("b7a3ec")
+		"frost_kale": fruit = Color("cfe3d8")
 	stage = clampi(stage, 0, 3)
 	if stage == 0:
 		PlaceholderArt.blob(img, Vector2(ax, ay - 4), Vector2(11, 6), Color("5a3a22"), 1.5, 0.4)
