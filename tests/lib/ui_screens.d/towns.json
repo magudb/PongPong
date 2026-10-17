@@ -1,5 +1,5 @@
 {
-  "_doc": "T-post-office registry row (TOWNS_FARM_SOCIAL_ADDENDUM 8.10, DT21). Pending until the scene lands.",
+  "_doc": "Post office production screen. Native guide fixture inspected and pinned on 2026-10-17; approved parchment, row, portrait and typography styles.",
   "screens": [
     {
       "id": "post",
@@ -16,7 +16,8 @@
         "baseline": "docs/qa/ui_baseline/post.png",
         "fixture": "post",
         "no_frame_crop": true,
-        "target": 1.5
+        "target": 1.5,
+        "pinned_after_lead_review": true
       },
       "checks": [
         "initial_focus",

@@ -383,5 +383,26 @@
     "date": "",
     "voice_frozen": false,
     "rows": 4
+  },
+  "localization/festivals.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 91
+  },
+  "localization/post.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 77
+  },
+  "localization/keepers.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 66
   }
 }

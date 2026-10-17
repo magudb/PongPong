@@ -111,4 +111,13 @@ func _sync_festival(world: Node) -> void:
 	var data := SocialData.event(event_id)
 	if data.is_empty():
 		data = {"meta":{"trigger":"automatic","repeat":"year","festival":id},"steps":[{"act":"say","who":str(meta.get("host","")),"text_key":"FEST_"+id.to_upper()+"_"+suffix.to_upper()}]}
+	if ending:
+		data = data.duplicate(true)
+		var rewards := LuaData.dict(SocialData.festival(id).get("rewards",{}))
+		data["rewards"] = LuaData.dict(rewards.get("finale",{})).duplicate(true)
+		if is_instance_valid(_stage) and _stage.potluck_count() >= 12:
+			var bonus := LuaData.dict(LuaData.dict(rewards.get("potluck",{})).get("items",{}))
+			var items := LuaData.dict(data.rewards.get("items",{}))
+			for item in bonus: items[item] = int(items.get(item,0))+int(bonus[item])
+			data.rewards["items"] = items
 	request(event_id,true,data)

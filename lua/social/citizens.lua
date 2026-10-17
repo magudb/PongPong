@@ -23,7 +23,8 @@ config = {
     smith_thorin = { tier = "A", archetype = "craftsman", birthday = { season = "sommer", day = 21 }, partner = false , sample = { item = "stone", from_hearts = 3 } },
     farmer_rosa = { tier = "A", archetype = "gardener", birthday = { season = "foraar", day = 13 }, partner = false , sample = { item = "chicken_feed", from_hearts = 2 } },
     pippin_boegeknop = { tier = "B", archetype = "wanderer", birthday = { season = "efteraar", day = 1 }, partner = false , sample = { item = "cookie", from_hearts = 2 } },
-    fairy_lily = { tier = "B", archetype = "child", birthday = { season = "foraar", day = 1 }, partner = false },
+    -- Day one follows the year-end festival. Day nine preserves the two-day gap.
+    fairy_lily = { tier = "B", archetype = "child", birthday = { season = "foraar", day = 9 }, partner = false },
     guard_oak = { tier = "B", archetype = "watcher", birthday = { season = "sommer", day = 24 }, partner = false },
     fairy_wizard = { tier = "B", archetype = "elder", birthday = { season = "efteraar", day = 7 }, partner = false , sample = { item = "glow_mushroom", from_hearts = 3 } },
     fairy_builder = { tier = "B", archetype = "craftsman", birthday = { season = "efteraar", day = 24 }, partner = false , sample = { item = "nails", from_hearts = 3 } },

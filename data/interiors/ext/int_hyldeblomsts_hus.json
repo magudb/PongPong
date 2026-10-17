@@ -1,0 +1,32 @@
+{
+ "id": "int_hyldeblomsts_hus",
+ "building": "hyldeblomsts_hus",
+ "size": "S",
+ "cols": 6,
+ "rows": 5,
+ "wall_style": "paper",
+ "floor": "floor_parquet",
+ "door": {"cell": [3, 4], "dir": [0, 1]},
+ "spawn_cell": [3, 3],
+ "windows": {"z": [1], "x": [2]},
+ "exit": {"area": "hyggebyen", "spawn": "from_int_hyldeblomsts_hus"},
+ "zoom_fit": 0.877,
+ "items": [
+  {"id": "bed_pine", "cell": [4, 0], "rot": 0, "role": "bed"},
+  {"id": "wardrobe_pine", "cell": [0, 0], "rot": 0},
+  {"id": "fireplace_granite", "cell": [2, 0], "rot": 0},
+  {"id": "bookshelf_mint", "cell": [0, 3], "rot": 0},
+  {"id": "bed_rose_single", "cell": [5, 3], "rot": 0},
+  {"id": "table_round_pine", "cell": [4, 3], "rot": 0},
+  {"id": "plant_fern", "cell": [2, 3], "rot": 0},
+  {"id": "rug_round_red", "cell": [2, 3], "rot": 0}
+ ],
+ "posts": [
+  {"id": "bed", "cell": [4, 4], "act": "sleep", "facing": "N", "capacity": 2, "kind": "bed"},
+  {"id": "table", "cell": [3, 3], "act": "sit", "facing": "N", "capacity": 3, "kind": "seat"},
+  {"id": "hearth", "cell": [3, 2], "act": "stand", "facing": "N", "capacity": 2},
+  {"id": "visit", "cell": [2, 2], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"}
+ ],
+ "markers": [{"type": "door", "cell": [3, 4], "to": "hyggebyen", "spawn": "from_int_hyldeblomsts_hus"}],
+ "notes": ["no room for floor_lamp_iron", "no room for chair_pine", "no room for chair_birch"]
+}

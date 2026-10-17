@@ -29,6 +29,7 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | farm_site.csv | draft | 20 | 84 | 0.2 |
 | features_quests.csv | draft | 44 | 327 | 0.8 |
 | features_ui.csv | draft | 55 | 214 | 0.5 |
+| festivals.csv | draft | 91 | 537 | 1.3 |
 | finds.csv | draft | 47 | 81 | 0.2 |
 | forest.csv | draft | 21 | 46 | 0.1 |
 | forest_mother.csv | draft | 102 | 1360 | 3.4 |
@@ -40,6 +41,7 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | home_ui.csv | draft | 62 | 269 | 0.7 |
 | home_world.csv | draft | 7 | 30 | 0.1 |
 | hud.csv | draft | 8 | 20 | 0.1 |
+| keepers.csv | draft | 66 | 568 | 1.4 |
 | levels.csv | draft | 3 | 12 | 0.0 |
 | life.csv | draft | 27 | 121 | 0.3 |
 | look.csv | draft | 4 | 20 | 0.1 |
@@ -47,6 +49,7 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | materials.csv | draft | 75 | 378 | 0.9 |
 | menus.csv | draft | 34 | 122 | 0.3 |
 | nav.csv | draft | 32 | 42 | 0.1 |
+| post.csv | draft | 77 | 222 | 0.6 |
 | quests.csv | draft | 147 | 1058 | 2.6 |
 | rel_ui.csv | draft | 40 | 171 | 0.4 |
 | secret_garden.csv | draft | 64 | 740 | 1.9 |

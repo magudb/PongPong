@@ -557,6 +557,7 @@ config = {
       voice = { pitch = 1.08, rate = 1.02 },
       home_area = "traetoppen",
       role = "shopkeeper",
+      shop_id = "lantern_house",
       dialogue = "ghostfam_gnist",
       wander = { radius = 0, speed = 0 },
       facing = "S",

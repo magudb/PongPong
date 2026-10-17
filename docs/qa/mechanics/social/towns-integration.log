@@ -1,0 +1,1983 @@
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=towns_ext,towns_routines,towns_interiors,towns_routes,towns_post,towns_greetings,social,social_data,social_talk,social_gifts,social_ui,social_events,social_fest_content,festival_activities,economy_hours
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.PpHoFY/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 0.9 s
+== section economy_hours  (res://tests/sections/economy_hours.gd)
+  ok    precondition: the seed shop pays for wood (2 each)
+  ok    Monday 12:00 (open 08-18): the shop is open, buying and selling work
+  ok    economy_hours.shop_closed_refuses (the hours rule closes the seed shop (Monday 07:00 true, Sunday 12:00 true, Monday 18:00 true): buy and sell refused with `closed`, nothing changes (gold, backpack), no row buyable, get_shop_info closed; open_shop still emits shop_opened (the screen shows the closed state) true (1); open again at 12:00: buying and selling work true; the rule decides alone: the flea market (open_weekdays 5, 6) is open on a Wednesday when its building says so true and closed when the building is closed true)
+  ok    economy_hours.shop_info_closed_reason (open shop has no closed_* keys true; 07:00 -> hours, opens 8.0, next day 0 true (hours); Saturday 18:30 -> hours, next open weekday 0 (Sunday skipped) true; Sunday -> day, back Monday true; a festival -> festival, buying refused true and open again afterwards true; the legacy id general_store asks the rule with seed_shop true; closed by the def's weekday list only: closed and no closed_reason true; unknown shop: {} true)
+  ok    an absent hours script logs no engine message
+  ok    economy_hours.unclaimed_shop_keeps_weekday_rule (the rule answers null for the flea market (asked: true) and open_weekdays 5, 6 decide: [[1, false], [2, false], [3, false], [4, false], [5, false], [6, true], [7, true], [8, false]]; a shop without weekdays stays open true; without any hours script (scripts/towns absent) the same answers, nothing logged true)
+  ok    economy_hours.switch_off_ignores_the_buildings (switch on: the Sunday seed shop is closed true; towns.hours_enabled = false: the gate answers null / {} true, the shop is open true and sells true, the rule was never asked true ([]), the flea market follows open_weekdays alone true; true again: asked again true; the default (no override) is on true)
+  ok    economy_hours.after_midnight_hours_pass_through (night shop 18 -> 01: [raw hour, minute, open] [[17, 59, false], [18, 0, true], [23, 59, true], [24, 30, true], [25, 30, false]] true; at 01:30 closed, opens_at 18.0 true; a shop opening at authored 1: opens_at 25.0 (unwrapped) at 00:30 true, open at 01:30 true; Saturday 01:30 still Saturday true, Sunday after the 02:00 roll true)
+  ok    economy_hours.the_gate_answers_in_the_shape_the_shop_screen_reads (closed_info -> exactly closed_reason (String), opens_at (float), next_open_weekday (int) for both the state shape and the final shape of the rule: ["state true", "final true"]; {} when open or unclaimed)
+  ok    economy_hours.shop_system_keeps_two_static_call_lines (shop_system.gd has 2 `static_call(` code lines (ShopRotation.stock, PriceCurve.final_price: the economy.late_binding_via_svc pin) true; the hours rule is asked in ONE helper, shop_hours_gate.gd (2 call sites: shop_open, closed_info) true, which shop_system.gd reaches through true; shop_system.gd names no Hours / Routines / SocialManager / scripts/towns / festival and the helper names no class of the towns or social track true; no load / ResourceLoader / callv true; scripts/towns present and both files compile)
+  ok    lua/shops/festival_markets.lua (S-fest-content) exists and LuaRuntime registered it (data.kinds_shops_recipes validates its content)
+  SKIP  economy_hours.carved_out_social: lua/recipes/social.lua is S-marriage's file and does not exist yet; its content is proven by that package's own gate (data.kinds_shops_recipes covers the file once it exists)
+  SKIP  economy_hours.carved_out_greenhouse_seeds: lua/shops/greenhouse_seeds.lua is N07-farm-greenhouse (only if the greenhouse is activated)'s file and does not exist yet; its content is proven by that package's own gate (data.kinds_shops_recipes covers the file once it exists)
+  ok    economy_hours.carved_out_files_have_other_owners (P12 ships its five shops and no festival market (festival_markets.lua is S-fest-content's, recipes/social.lua S-marriage's, greenhouse_seeds.lua N07's; present now: ["lua/shops/festival_markets.lua"]) true; ShopSystem and the gate know no festival, no SocialManager, no towns class true; a market the festival closes is closed through ShopSystem (is_open false, buy refused `closed`, closed_reason festival) true and opens again true: the festival is the hours rule's business)
+  ok    economy_hours.real_hours_rule_matches_the_gate (ShopHoursGate.open_override equals Hours.shop_open and ShopSystem.is_open follows it for every shop at the new-game clock; differences []; with towns.hours_enabled = false every answer is null true)
+  ok    economy_hours.seed_supply_covers_a_dedicated_field (carrot seeds: stock 25 restock 25 (was 20 / 20); bought out day by day for a week [25, 25, 25, 25, 25, 25, 0] = 150 (6 open days, 1 closed, 25 per open day) against the model (grow 4 days): casual 30 plots needs 3.6 a day = 25.4 a week = 4.2 per open day; dedicated 110 plots needs 19.3 a day = 134.9 a week = 22.5 per open day; typical 70 plots needs 10.4 a day = 73.0 a week = 12.2 per open day; the old 6 x 20 = 120 would have been short of the dedicated 134.9 a week true)
+  ok    the section leaves the gate on its contract path, the switch on, no probe script and a fresh new game behind
+  --    economy_hours: 15 checks, 0 failed, 2 skipped, 0.1 s
+== section festival_activities  (res://tests/sections/festival_activities.gd)
+  ok    festival_activities.normal_score_has_no_rarity_bonus
+  ok    festival_activities.uncommon_score_bonus
+  ok    festival_activities.rare_score_bonus
+  ok    festival_activities.cheapest_winning_entry_caps_prize
+  ok    festival_activities.unknown_selector_has_zero_cap
+  ok    festival_activities.legal_prizes
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "gold": 201 } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "gold": 100 }, "second": { "gold": 71 } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "gold": 100 }, "third": { "gold": 41 } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "items": { "keepsake": 1 } } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "items": { "unknown": 1 } } }
+  ok    festival_activities.deterministic_entry_seed_1
+  ok    festival_activities.deterministic_entry_seed_2
+  ok    festival_activities.deterministic_entry_seed_3
+  ok    festival_activities.deterministic_entry_seed_4
+  ok    festival_activities.deterministic_entry_seed_5
+  ok    festival_activities.deterministic_entry_seed_6
+  ok    festival_activities.deterministic_entry_seed_7
+  ok    festival_activities.deterministic_entry_seed_8
+  ok    festival_activities.deterministic_entry_seed_9
+  ok    festival_activities.deterministic_entry_seed_10
+  ok    festival_activities.deterministic_entry_seed_11
+  ok    festival_activities.deterministic_entry_seed_12
+  ok    festival_activities.deterministic_entry_seed_13
+  ok    festival_activities.deterministic_entry_seed_14
+  ok    festival_activities.deterministic_entry_seed_15
+  ok    festival_activities.deterministic_entry_seed_16
+  ok    festival_activities.deterministic_entry_seed_17
+  ok    festival_activities.deterministic_entry_seed_18
+  ok    festival_activities.deterministic_entry_seed_19
+  ok    festival_activities.deterministic_entry_seed_20
+  ok    festival_activities.wrong_entry_refused
+  ok    festival_activities.stage_attached_to_active_area (stage=FestivalStage:<Node2D#1033140970393> area=hyggebyen active=activity_test)
+  ok    festival_activities.named_posts_have_no_map_errors ([])
+  ok    festival_activities.all_six_activities_enabled_in_window
+  ok    festival_activities.opening_once_per_year
+  ok    festival_activities.attendance_points_once
+  ok    festival_activities.talked_citizen_attendance_once
+  ok    festival_activities.picker_opens_contest
+  ok    festival_activities.matching_item_available_contest
+  ok    festival_activities.contest_consumes_exactly_one_entry
+  ok    festival_activities.contest_pays_bounded_prize
+  ok    festival_activities.contest_cannot_be_repeated
+  ok    festival_activities.picker_opens_potluck
+  ok    festival_activities.matching_item_available_potluck
+  ok    festival_activities.potluck_donation_is_one_item
+  ok    festival_activities.town_contributions_reach_goal
+  ok    festival_activities.feast_restores_once
+  ok    festival_activities.feast_repeat_has_no_effect
+  ok    festival_activities.wish_is_flavour_flag
+  ok    festival_activities.wish_host_points_once
+  ok    festival_activities.wish_repeat_refused
+  ok    festival_activities.dance_chooses_highest_hearts_present
+  ok    festival_activities.market_opens_existing_shop_panel
+  ok    festival_activities.stage_is_stable_across_flushes
+  ok    festival_activities.finale_once_per_year
+  ok    festival_activities.activities_disable_at_window_end
+  ok    festival_activities.outside_window_has_no_effect
+  ok    festival_activities.stage_removed_at_end
+  --    festival_activities: 59 checks, 0 failed, 0 skipped, 0.6 s
+== section social  (res://tests/sections/social.gd)
+  ok    social.calendar_weeks_valid (28 % 7 == 0, year of 112 days, 4 seasons)
+  ok    social.calendar_weeks_invalid_when_days_per_season_is_not_a_multiple_of_7 (days_per_season 30 -> weeks_valid() false (the section would fail), restored)
+  ok    social.calendar_roundtrip_and_weekday_agree_with_core (date_of / total_day / weekday_of vs GameManager.total_day_for and TimeManager.weekday_index over 399 days: 0 mismatches)
+  ok    week index: Monday..Sunday blocks, 16 weeks a year
+  ok    weekday and weekend
+  ok    week_start is the Monday of the week
+  ok    days_until wraps the year
+  ok    next_total_day, date_key
+  ok    social.calendar_hour_in_raw_hours (22-2 = [22,26) true; 0-2 = [24,26) true; 22-6 wraps (22..25 and 2..5) true; 8-18 unchanged true; from == to always true true; 6-26 is the whole play day true)
+  ok    normalise_hour = GameManager.game_hour: 1.5 -> 25.5, 0 -> 24, 6 and 25 stay
+  ok    social.rng_matches_python_mirror (6 vectors (FNV-1a 32 + fmix32 over seed|part|part) equal the pinned values true; python equals the GDScript numbers)
+  ok    social.rng_uniform_25pct (25% roll over 10080 (npc, day) pairs: 2432 hits (python: 2432))
+  ok    same inputs, same roll; another seed, another roll
+  ok    social.rng_no_walk_across_days (consecutive days do not walk 1,2,3 (String.hash would: true): longest equal run of 4 buckets = 5)
+  ok    pick / pick_weighted edge cases
+  ok    social.data_friend_ids_sorted (34 friend ids, sorted, = friendship rows plus authored unlocks)
+  ok    a citizens row with an unlock includes the NPC exactly once (34 -> 34)
+  ok    social.data_derived_defaults_are_stable (derived row: tier C, archetype from role_archetype, birthday from the id; adding an NPC moved 0 other birthdays; the new one is a real date with archetype child)
+  ok    social.data_registry_absent_is_empty (a runtime without get_registry and an unknown id read {} (nothing is required to boot); with the design registries the readers answer (design festivals 9, events of Hoppe 1))
+  ok    social.data_role_archetype_covers_every_role (27 roles of npc_vocab.roles, missing in social.role_archetype: [])
+  SKIP  social.data_real_citizens_and_tastes: lua/social/citizens.lua and gift_tastes.lua are S-data's (wave 5): every friend here still uses the derived defaults (tier C, role archetype, derived birthday); the design rows are used where a check needs them
+  ok    social.config_defaults_equal_lua (lua/social/social.lua has 11 top-level keys, SocialData.DEFAULTS has 11; differences: [])
+  ok    an empty social table still answers every number from the code defaults
+  ok    the Lua lint is clean with lua/social/social.lua loaded (0 findings)
+  ok    AGF17: social.festival.max_attendees = 15, chat 100, belated x2
+  ok    social.autoload_registered_once (project.godot has the line 1 time(s); section `social` registered 1 time(s) for the autoload node; process mode ALWAYS)
+  ok    social.save_registry_order (order 60 (after loot 40 and collection 50: FEATURE_ORDERS { "home": 10, "furniture": 20, "wardrobe": 30, "loot": 40, "collection": 50 }), position 11 of ["game", "time", "economy", "quests", "husbandry", "shops", "home", "furniture", "wardrobe", "loot", "dungeon", "social"])
+  ok    social.daily_work_is_deferred (advance_time(50 h) emitted exactly ["midnight_passed", "midnight_passed"] synchronously (the pin of core.advance_time_multiday) and queued ONE coalesced flush (pending true))
+  ok    flush() catches up: last processed day = today (4)
+  ok    social.birthday_event_after_flush (nothing synchronous inside advance_time; after the flush birthday_today {npc: merchant_pip} once and the flag birthday_today = merchant_pip)
+  ok    a second flush the same day posts nothing more
+  ok    the next day the flag names nobody (cleared)
+  ok    social.daily_skip_no_stale_birthday_event (a skip that ends after the birthday posts no birthday_today for the skipped day (0); only today's 1 birthday(s) are announced)
+  ok    time_of_day_changed queues the (single, coalesced) flush
+  ok    social.new_game_flags_follow_the_first_flush (a new game on day 1 = Lily's birthday: no birthday_today flag at new_game_started (the flags are exactly the new game's: [&"intro_pending", &"home_tier", &"home_building", &"home_upgrade_done"]), a flush queued by reset(); the first flush writes birthday_today = fairy_lily and posts no event for the day nothing was skipped)
+  ok    a fresh game: no points, an unknown NPC has none
+  ok    40 points: no whole heart, no friend_changed
+  ok    the mirror flag holds WHOLE hearts (0 after 40 points)
+  ok    social.hearts_signal_only_on_whole_heart (110 points = 1 heart: friend_changed(mayor_lyra, 1) fired exactly once ([["mayor_lyra", 1]]), social_points twice)
+  ok    game_event social_points {npc, delta, points, hearts, source}: { "npc": "mayor_lyra", "delta": 70, "points": 110, "hearts": 1, "source": "test" }
+  ok    half hearts: 110 points = 2 half hearts (50 each)
+  ok    social.hearts_call_loot_service_after_a_heart (LootService.check_friend_gifts(npc) late bound once per whole heart gained, none for 20 points: [["mayor_lyra"]])
+  ok    social.hearts_cap_10 (20 hearts of quest reward stop at the cap: 10 hearts = 1000 points, stage bedste_ven, gained 770)
+  ok    at the cap: ok, gained 0, nothing is emitted
+  ok    social.points_never_decrease (0 and negative deltas are refused (bad_delta), debug_set_hearts never lowers: 1000 points stay)
+  ok    unknown NPC and Morfar Mis without a citizens unlock take no points (unknown_npc / locked)
+  ok    social.add_points_rejects_unknown_and_locked (locked until lost_cat is done OR day 60 (day 59 false, day 60 true, quest true); a hero twin (NpcDirector.is_absent) is refused (absent) and back when present)
+  ok    social.flag_mirror_after_every_write (friend_<npc> = whole hearts after add_points, add_hearts, debug_set_hearts, from_dict and a repair write (flag 5))
+  ok    social.zero_point_ledger_repairs_existing_mirror
+  ok    social.zero_point_ledger_load_preserves_absent_flag
+  ok    the first finished chat of the week: +1 heart, friend_last = total_day, talked today
+  ok    a second chat in the same week plays and pays nothing
+  ok    social.chat_weekly_calendar_week (Sunday of the same week: nothing; Monday: available again and the second heart comes (two hearts in two calendar weeks, never two in one))
+  ok    game_event chat_done {npc, weekly_heart} for every finished conversation: [["chat_done", { "npc": "gardener_hoppe", "weekly_heart": false }]]
+  ok    social.chat_df3_floor_day_50 (8 hearts by the weekly chat alone: earliest total_day 50 (the DF3 floor: day 50), 10 hearts after week 10)
+  ok    social.chat_esc_first_line_no_heart (an Esc after the first line (completed false) gives no heart, no chat_done, no toast and keeps the week's chat available)
+  ok    the finished conversation of the same day then pays the week's heart
+  ok    social.chat_empty_conversation_gives_nothing (a conversation with 0 lines shown gives nothing: no heart, not talked today, birthday still unknown, no event, no toast)
+  ok    a chat with an unknown NPC counts for nothing
+  ok    a conversation (even an unfinished one) marks the birthday as known
+  ok    social.chat_one_combined_toast (the first heart (fremmed -> bekendt) is ONE toast with the heart line and the stage line (1 toast(s), relationship_changed 1): Fe-barnet Lily holder lidt mere af dig nu: 1 af 10 hjerter | Dit venskab med Fe-barnet Lily: Bekendt)
+  ok    social.chat_toasts_are_rate_limited (two conversations inside the gap: 1 toast at once, 1 waiting, both posted in turn (2))
+  ok    social.stage_names_by_hearts (stages by hearts 0..10: ["fremmed", "bekendt", "nabo", "nabo", "ven", "ven", "god_ven", "god_ven", "bedste_ven", "bedste_ven", "bedste_ven"])
+  ok    a REL_STAGE_<ID> label in da and en for each of the six stages (missing [])
+  ok    social.stage_up_toast_once (one toast and one relationship_changed per stage change, none inside a stage; the toast option false keeps the toast back but not the event (toasts 2, events 3): last { "npc": "baker_maja", "stage": "nabo", "partner": false })
+  ok    S-marriage's seam: row field rs = 2 reads social.rs_stages[1] = forlovet (forlovet), 0 is the hearts stage (ven)
+  ok    social.boots_without_gift_rules (with S-gifts absent (here: pointed at a missing script) the autoload still answers: give_gift { "ok": false, "reason": "gifts_not_installed" }, gift_options 0, taste neutral, is_giftable { "ok": false, "reason": "gifts_not_installed" })
+  ok    social.gift_api_surface_late_bound (give_gift / gift_options reach the flow script, taste_of / is_giftable the rules script by path (probe scripts): flow gardener { "ok": true, "reason": "" })
+  ok    gift_limits of a fresh row: { "per_day": 1, "per_week": 2, "left_today": 1, "left_week": 2 }
+  ok    limits: 1 per day and 2 per calendar week, both reset by the calendar ({ "per_day": 1, "per_week": 2, "left_today": 0, "left_week": 0 } -> { "per_day": 1, "per_week": 2, "left_today": 1, "left_week": 2 })
+  ok    social.no_forward_class_refs (4 scripts scanned for 19 later-wave class names (GiftRules at lines 237 / 250 / 283 of the prototype made the autoload fail to boot): [])
+  ok    a bare instance answers {ok: false, reason: gifts_not_installed}
+  ok    social.birthday_state_machine (day -> celebrated -> belated (+1) -> none (+2), the year wrap and a birthday that has not come yet ([true, true, true, true, true, true, true, true, true]))
+  ok    social.birthday_derived_default_is_stable (33 derived birthdays (31 distinct days), every birthdays_on(td) agrees with the data and the derived dates repeat call after call)
+  ok    social.calendar_entries_shape ([{day, kind: birthday | festival, id, known}] sorted by day: 11 entries of foraar (["birthday", "festival"]), an unknown birthday is known = false until the first conversation, 2 festivals (Blomsterfesten, Honningdagen))
+  ok    social.festival_active_and_events (Høstfesten 12:00-20:00: today at 10:00 but not active; 11:59 no; 12:00 active + town_festival_started {id} once + flag festival_now; 19:59 still; 20:00 town_festival_ended and the flag is gone ([true, true, true, true, true, true, true]))
+  ok    social.festival_bed_hold_seam (while the festival runs sleep_from_hour = 20 (the bed is closed at 18:00: true), at 20:00 the override is removed (true); a pre-existing override of 17 is restored afterwards (true))
+  ok    social.festival_bed_hold_survives_load_and_clear (the override is a never-saved seam: after clear_config_overrides the next flush (true), an area_changed (true), a town_festival_started event (true) and a load (true) put it back)
+  ok    social.festival_shop_closure (closes = all: a shop that is not in stays_open (seed_shop, bakery) is closed from window start - 1 h (11:00) to the window end (20:00): { "10:59": [false, false, false], "11:00": [true, false, false], "12:00": [true, false, false], "19:59": [true, false, false], "20:00": [false, false, false] }; closes = none (Sofus' badedag) closes nothing true; an ordinary day closes nothing)
+  ok    when=fest:<id|any> follows the active festival
+  ok    social.festival_first_not_counted_in_cap (Trætoppen: 14 ordinary home citizens + 4 first members + the host: all 14 attend AND the 4 firsts (the ordered pool is never cut by them: if first counted inside the 15 three citizens would stay home), crowd 19 = 1 + 4 + 14, gather posts 18)
+  ok    social.festival_first_list_and_guests (Hyggebyen: 16 home citizens + the host + 4 guests of ANOTHER area: the ordered pool is cut to 15 (social.festival.max_attendees), the guests stand outside the cap: 15 + 1 + 4 = 20)
+  ok    the ordered pool = home citizens (host excluded) sorted by SocialRng.roll(seed, [festival, npc]), the first 15
+  ok    social.festival_gather_posts_deterministic (host on fest_torvet_host, first members on gather 1..4, the ordered pool after them, one post each (19 distinct posts), the same answer every call, a Hyggebyen citizen on a Trætoppen festival gets none)
+  ok    another world seed orders the pool differently; the first seed gives the same list again
+  ok    an attendee is on his post from 17:00 (window start - 1 h) to 23:00 (the end); the day before there is nothing
+  ok    social.festival_leave_early_any_attendee (meta.leave_early = {npc = hours}: a first member (21:45 on a 23:00 window), a guest (18:45 on a 20:00 window) and an ordered attendee leave that many hours before the window end, the others stay to the end)
+  ok    an absent hero twin is excluded (pool 13 of 14 minus one), the keeper of a stays_open shop stays at his shop, the host does not
+  ok    social.when_grammar_all_kinds (hearts fest hour weekday season birthday stage open + quest done flag night, `&` and `!`: [true, true, true, true, true, true, true, true, true, true, true])
+  ok    social.when_unknown_kind_is_false (an unknown kind is FALSE (the old evaluate_when answered TRUE: a typo showed the prop forever); `!unknown` is true; an empty spec holds)
+  ok    social.when_away_kind_asks_npc_director (away:<npc> asks NpcDirector.is_away, at:<npc> asks is_present (a node injected with Svc.override first, then the static facade by path); with NO director at: is true and away: is false (the D2 hub marker of Fru Ugle needs exactly that))
+  ok    social.when_director_facade_by_path (a static facade script by path answers is_absent / is_away / is_present (true), an instance method is refused with the safe default (true), a missing script and a changed path re-resolve (true true))
+  ok    social.when_isoarea_delegates_to_the_real_manager (IsoArea.evaluate_when answers the new kinds through SocialManager.eval_when, an unknown kind is false, when_errors merges the unknown kinds with when_spec_errors: ["unknown kind in \'moonphase:full\'", "hearts: unknown npc \'nobody\' in \'hearts:nobody:4\'"])
+  ok    social.when_refresh_includes_routine_changed (WHEN_REFRESH_EVENTS: ["friend_changed", "day_started", "time_of_day_changed", "town_festival_started", "town_festival_ended", "birthday_today", "relationship_changed", "routine_changed"])
+  ok    social.when_spec_errors_lists_typos (typos are listed (unknown kind, bad hearts number, unknown NPC, hour:8, weekday:9, season, stage, festival, shop, empty id, empty term), a full valid spec and "" are clean: [["unknown kind in \'moonphase:full\'"], ["hearts: \'abc\' needs hearts:<npc>:<0..10> in \'hearts:gardener_hoppe:abc\'"], ["weekday: \'9\' is not 0..6 in \'weekday:9\'"], ["open: unknown shop \'no_such_shop\' in \'open:no_such_shop\'"], ["empty term in \'hour:8-18&&night\'"], []])
+  ok    social.context_fields (context of Hoppe on his birthday at 09:00: { "hearts": 0, "stage": "fremmed", "weekday": 4, "weather": "klart", "daypart": "morgen", "birthday": true, "festival": "", "chat_open": true, "talked_today": false, "gifts_left": 2, "partner": false })
+  ok    after a chat and a gift today: hearts 1, no chat open, talked today, no gift left today ({ "hearts": 1, "stage": "bekendt", "weekday": 4, "weather": "klart", "daypart": "morgen", "birthday": true, "festival": "", "chat_open": false, "talked_today": true, "gifts_left": 0, "partner": false })
+  ok    partner is true for the engaged citizen only
+  ok    social.daypart_bands (morgen < 11 <= dag < 17 <= aften < 21 <= nat; the transient raw hours 2..5 after an autosave at 02:00 read nat, not morgen (CK-A-SC): ["nat", "nat", "nat", "nat", "morgen", "morgen", "morgen", "morgen", "morgen", "dag", "dag", "dag", "dag", "dag", "dag", "aften", "aften", "aften", "aften", "nat", "nat", "nat", "nat", "nat"])
+  ok    social.people_rows_shape (a fresh game lists nobody; after two conversations 2 rows (met citizens only) with name_key, stage, half hearts, birthday (once known), chat done this week, gifts left, known tastes, events seen / ready; a hero twin is hidden: { "id": "baker_maja", "name_key": "NPC_BAKER_MAJA", "stage": "bekendt", "hearts": 1, "half_hearts": 2, "birthday": { "season": "efteraar", "day": 10 }, "next_birthday": { "days": 56, "total_day": 66, "season": "efteraar", "day": 10 }, "chat_done": true, "gifts_left": 2, "tastes": { "carrot": "love", "stone": "dislike" }, "events_seen": 0, "events_ready": 0 })
+  ok    events_ready: none at 0 hearts, ev_hoppe_h4 (meta.hearts 4, when hearts:..:4&hour:8-18&!fest:any) at 4 hearts and 12:00, none once it is seen; seen is saved
+  ok    remember_line / last_line keep the last line id per (npc, slot)
+  ok    250 gold in the bakery = 2 points and 50 gold carried (the keeper is Maja)
+  ok    the carried gold counts: 50 + 60 = 1 more point
+  ok    social.purchase_points_capped (1 point per 100 gold, at most 10 per keeper and calendar week: 5000 gold twice = 10 / 10 points, the next week +10 = 20; the seed shop keeper has his own cap (7); no open shop and a stall without a keeper pay nothing)
+  ok    social.keeper_sample_weekly (with the weekly chat heart and hearts >= citizens.<npc>.sample.from_hearts one cheap item is handed over ([true, true, true, true, true, true, true]), once a week, in the SAME toast as the heart; below from_hearts and for citizens without a sample row nothing)
+  ok    social.save_size_budget (fresh game 92 bytes (budget 100); the order's scenario, 30 friends with 12 known tastes each: 15918 bytes pretty (budget 16000); with the talked-today stamp gt on every row 16308 bytes, with rv on every row, pc on the 10 keepers, seen / fest / partner on top 16936 bytes (the budget scenario leaves those fields out))
+  ok    social.save_roundtrip (to_dict -> JSON text -> from_dict -> to_dict is identical for every field of 30 rows (p wk gt gd gwk gw bd bk rv ls kn pc, the seed, seen, fest, partner); the numbers are ints again and the mirror flags are rewritten)
+  ok    social.save_seed_is_lazy_and_below_2_53 (the first roll creates the world seed (14192464287983 < 2^53), it is saved and the same roll answers the same again; set_seed clamps into [1, 2^53))
+WARNING: SocialManager.from_dict: unknown NPC 'retired_npc' kept in the orphans bucket
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] from_dict (res://scripts/social/social_manager.gd:1329)
+         [1] _save (res://tests/sections/social.gd:1329)
+         [2] run (res://tests/sections/social.gd:111)
+         [3] clear_scene (res://tests/lib/flow.gd:219)
+         [4] frames (res://tests/lib/drive.gd:79)
+  ok    social.save_orphan_is_warning_not_error (from_dict returns true (a push_error would reject the whole load), emits nothing, the row of the unknown NPC sits in `orphans` and survives the next save and load (allowed warnings: 1))
+  ok    the drift load logged no engine error
+  ok    an orphan is taken back when its NPC exists again: 250 points, flag friend_retired_npc 2
+  ok    social.save_old_save_reseeds_from_flags (a payload without the section calls reset(): friend_mayor_lyra 3 -> 300 points and the week of friend_last (day 29, this week) counts as chatted, a flag above the cap is clamped to 10 hearts, a flag of an unknown NPC is ignored)
+  ok    section `social` is registered
+  ok    social.save_manager_roundtrip (SaveManager.save_game / load_game with the section registered: 400 and 100 points, the seed 4242, the weekly chat of Maja still taken, the mirror flags rewritten (true true))
+  ok    social.no_new_signals_or_inputs (no `signal` line, no InputMap / Input call in the 4 social scripts; the project has 38 actions = P01's contract (38): `people` is P01's, nothing here)
+  ok    social.validator_design_data_is_clean (SV1..SV12 + SV14 on the pinned design data (30 friends, 9 festivals, 278 giftable items): 0 errors [], 29 warnings, skipped [])
+  ok    social.validator_selftest_mutants_caught (31 mutants of the pristine data, each caught by the rule it breaks; missed []; pristine errors [])
+  ok    social.validator_python_agrees_on_mutants (tools/social/core/validate_social.py: the pristine data exits 0 and each of 31 mutants exits 1 with the rule code (pristine exit 0, missed by python: []))
+  ok    social.sv14_contest_rewards_capped (first prize <= min(2 x the cheapest winning entry of the category (150 g for category:crop -> cap 300 g), 400 g: 400 g passes and 500 g fails on a 950 / 1000 g category); second <= 0.7 x first, third <= 0.4 x first, never a keepsake, rarity <= rare, the item exists; a contest with no rewards is a warning: [true, true, true, true, true, true, true, true, true])
+  ok    social.validator_festival_attendance_rules ([] first / guests / leave_early ids exist; a first member IS a home citizen of the area and a guest is NOT; no citizen twice in the roster; 15 + 1 + len(first) + len(guests) <= towns.max_live_visuals_festival (20 passes, 21 and a limit of 19 fail); without a route table the walk rule is reported as NOT evaluated: [true, true, true, true, true, true, true, true, true, true, true, true])
+  ok    social.validator_first_members_removed_from_the_ordered_pool (the validator's own ordered pool (first members removed, host excluded, by SocialRng.roll) equals SocialManager.festival_roster().pool for 4 seeds x 2 festivals, and the naive pool that keeps the first members (15 citizens instead of 14) differs, so a regression is caught)
+  ok    social.validator_leave_early_covers_1_5x_the_walk (leave_early >= 1.5 x the route time + 15 min: a 40 min walk needs 1.25 h (1.25 passes, 1.2 fails); measured from the deadline = the window end when the festival closes his shop, else the shop's opening hour (17:00 on a window to 20:00: 4.25 h pass, 4.2 and 1.25 fail))
+  ok    social.validator_festival_window_margin (a festival window may end by day_end_hour - 1 = 25.0 (CK-A-SC): 23.0 / 24.0 / 25.0 pass, 25.5 and 26.0 fail; on a 24 hour day (day_end_hour 24) the limit is 23.0 again; the shipped data still ends by 23:00)
+  ok    social.validator_real_data_clean (SV1..SV12 + SV14 on the dump of the real data (34 npcs, 34 citizens rows, 9 festivals): GDScript 0 errors [], python exit 0; 1 warnings (the derived defaults of every friend until S-data); skipped ["SV11: leave_early walk rule not evaluated (no route_minutes: the route table of the towns track, T-routes, is not available to this run)"])
+  ok    social.balance_live_input_regressions (....
+----------------------------------------------------------------------
+Ran 4 tests in 0.047s
+
+OK
+)
+  ok    social.balance_live_routines_cover_current_roster (Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+AVAILABILITY exported 34 live citizens; compile problems []
+)
+  ok    social.balance_claims_hold (variant free on the dump of the real data (100 runs x 336 days): weekly chat alone reaches 8 hearts on day 50, the fastest possible 10 hearts is day 32; a typical player (the original 2.6-talk budget scaled by the live day duration) reaches 8 hearts with a tier A citizen at median 73.0 / p90 96.0 with the lean events (<= 80 / 115) and 68.0 / 91.0 with four events (<= 75 / 110); gifts are 21 % of a dedicated player's points (<= 25), the typical player spends 20 % of a game week (<= 25))
+  ok    social.balance_claims_hold_with_availability (variant mixed (town visits half by day, half until half an hour before bedtime; public room hours and one-heart owner gates apply; table: Live Routines.timeline, exact spans; all citizens, hearts 5,): median 72.0 / p90 100.0 with the lean events (<= 80 / 115), 67.0 / 93.0 with four events (<= 75 / 110); never reaching 8 hearts: tier A / B at most 0.2 % (<= 2), the worst single tier A / B citizen never reaches 4 hearts in 0.0 % (<= 2; at 8 hearts the worst citizen 4 %, a guard of this package at <= 5))
+  ok    social.balance_bounds_ratchet (tests/lib/social/balance_bounds.json: every bound is at or under the design limit (true), the runs sit under their bounds (true) and within the margin (true: a bound cannot silently drift away from what the data does), `--check` exits 0; `--ratchet` on a copy never raises a bound (1 stays 1: true) and lowers a loose one (true))
+  ok    social.fresh_resets_social_manager (Fresh.FEATURE_NODES names SocialManager; Fresh.new_game resets it (250 points gone, flags gone) and seeds it (424242 = DEFAULT_SEED), seed_features(2024) -> 0, reset_features() listed it: ["HomeManager", "FurnitureManager", "WardrobeManager", "LootService", "SocialManager"])
+  ok    social.grant_set_hearts_uses_manager (Grant.set_hearts goes through SocialManager.debug_set_hearts: points, the mirror flag and friend_changed(mayor_lyra, 4) once (source debug), never lowers, and fairy_king 6 hearts for home_tiers.lua ([["mayor_lyra", 4], ["fairy_king", 6]]))
+  ok    social.lua_api_functions (api.get_hearts -> int (0, 2), api.add_hearts(npc, 2) -> SocialManager.add_hearts(.., &lua): 200 points, api.is_birthday -> bool (true / false), api.festival() -> the active festival id as a String (hoestfesten) or "" ())
+  ok    social.project_line_once_and_check_project_exit_0 (project.godot holds the SocialManager line 1 time(s); tests/tools/check_project.gd exits 0 with 73 PASS and 0 FAIL ids)
+  ok    social.perf_boot_ms_added (what the autoload adds to the boot: creating the node and its _ready (nine signal connections, the section registration) takes 0.12 ms (budget 5 ms); compiling the 1,250 line script costs 36.5 ms once at start-up (measured with CACHE_MODE_IGNORE on a loaded machine, reported, not asserted); the real node holds the section again)
+  ok    social.perf_lookup_p95_under_100us (lookups, median / p95 in microseconds (budget: p95 < 100 asserted; the order's 6 us for a one-term eval_when and 20 us for festival_active are quiet-machine targets, reported here, not asserted on a shared machine): hearts 2.0/2.1, stage 5.1/5.2, points 0.6/0.7, eval_when_hearts 3.0/3.0, eval_when_hour 1.9/2.0, eval_when_fest 4.5/4.6, eval_when3 8.9/9.3, festival_active 3.6/3.8, birthdays_today 4.5/4.5, daypart 0.6/0.6, shop_closed 5.7/5.8; reset() 0.04 ms)
+  ok    social.fixture_replacements_freed (uninstall frees both the current fixture and an override it replaced)
+  --    social: 136 checks, 0 failed, 1 skipped, 28.3 s
+== section social_data  (res://tests/sections/social_data.gd)
+  ok    social_data.live_data_valid ([])
+  ok    appraiser_fru_ugle has authored social facts
+  ok    appraiser_fru_ugle taste distribution: 11 loved, 30 disliked of 310
+  ok    appraiser_fru_ugle has first meeting, hearts-band greetings and biography
+  ok    baker_maja has authored social facts
+  ok    baker_maja taste distribution: 6 loved, 21 disliked of 310
+  ok    baker_maja has first meeting, hearts-band greetings and biography
+  ok    baker_maja is an adult partner candidate
+  ok    baker_maja offers a cheap normal sample
+  ok    bathkeeper_sofus has authored social facts
+  ok    bathkeeper_sofus taste distribution: 10 loved, 32 disliked of 310
+  ok    bathkeeper_sofus has first meeting, hearts-band greetings and biography
+  ok    bathkeeper_sofus is an adult partner candidate
+  ok    beekeeper_birk has authored social facts
+  ok    beekeeper_birk taste distribution: 11 loved, 26 disliked of 310
+  ok    beekeeper_birk has first meeting, hearts-band greetings and biography
+  ok    beekeeper_birk is an adult partner candidate
+  ok    bertil has authored social facts
+  ok    bertil taste distribution: 10 loved, 25 disliked of 310
+  ok    bertil has first meeting, hearts-band greetings and biography
+  ok    bertil is an adult partner candidate
+  ok    bodil has authored social facts
+  ok    bodil taste distribution: 11 loved, 24 disliked of 310
+  ok    bodil has first meeting, hearts-band greetings and biography
+  ok    bodil is an adult partner candidate
+  ok    carpenter_brumme has authored social facts
+  ok    carpenter_brumme taste distribution: 4 loved, 31 disliked of 310
+  ok    carpenter_brumme has first meeting, hearts-band greetings and biography
+  ok    carpenter_brumme is an adult partner candidate
+  ok    cat_morfar_mis has authored social facts
+  ok    cat_morfar_mis taste distribution: 8 loved, 29 disliked of 310
+  ok    cat_morfar_mis has first meeting, hearts-band greetings and biography
+  ok    clerk_fjerpen has authored social facts
+  ok    clerk_fjerpen taste distribution: 13 loved, 30 disliked of 310
+  ok    clerk_fjerpen has first meeting, hearts-band greetings and biography
+  ok    cub_bamse has authored social facts
+  ok    cub_bamse taste distribution: 4 loved, 36 disliked of 310
+  ok    cub_bamse has first meeting, hearts-band greetings and biography
+  ok    fairy_builder has authored social facts
+  ok    fairy_builder taste distribution: 4 loved, 30 disliked of 310
+  ok    fairy_builder has first meeting, hearts-band greetings and biography
+  ok    fairy_builder offers a cheap normal sample
+  ok    fairy_furnisher has authored social facts
+  ok    fairy_furnisher taste distribution: 22 loved, 25 disliked of 310
+  ok    fairy_furnisher has first meeting, hearts-band greetings and biography
+  ok    fairy_furnisher offers a cheap normal sample
+  ok    fairy_king has authored social facts
+  ok    fairy_king taste distribution: 5 loved, 30 disliked of 310
+  ok    fairy_king has first meeting, hearts-band greetings and biography
+  ok    fairy_lily has authored social facts
+  ok    fairy_lily taste distribution: 4 loved, 36 disliked of 310
+  ok    fairy_lily has first meeting, hearts-band greetings and biography
+  ok    fairy_tailor has authored social facts
+  ok    fairy_tailor taste distribution: 16 loved, 25 disliked of 310
+  ok    fairy_tailor has first meeting, hearts-band greetings and biography
+  ok    fairy_tailor offers a cheap normal sample
+  ok    fairy_wizard has authored social facts
+  ok    fairy_wizard taste distribution: 11 loved, 30 disliked of 310
+  ok    fairy_wizard has first meeting, hearts-band greetings and biography
+  ok    fairy_wizard offers a cheap normal sample
+  ok    farmer_rosa has authored social facts
+  ok    farmer_rosa taste distribution: 11 loved, 22 disliked of 310
+  ok    farmer_rosa has first meeting, hearts-band greetings and biography
+  ok    farmer_rosa offers a cheap normal sample
+  ok    fiddler_strimmel has authored social facts
+  ok    fiddler_strimmel taste distribution: 18 loved, 26 disliked of 310
+  ok    fiddler_strimmel has first meeting, hearts-band greetings and biography
+  ok    gardener_hoppe has authored social facts
+  ok    gardener_hoppe taste distribution: 4 loved, 24 disliked of 310
+  ok    gardener_hoppe has first meeting, hearts-band greetings and biography
+  ok    gardener_hoppe is an adult partner candidate
+  ok    ghostfam_blund has authored social facts
+  ok    ghostfam_blund taste distribution: 5 loved, 36 disliked of 310
+  ok    ghostfam_blund has first meeting, hearts-band greetings and biography
+  ok    ghostfam_dyne has authored social facts
+  ok    ghostfam_dyne taste distribution: 9 loved, 28 disliked of 310
+  ok    ghostfam_dyne has first meeting, hearts-band greetings and biography
+  ok    ghostfam_gnist has authored social facts
+  ok    ghostfam_gnist taste distribution: 7 loved, 22 disliked of 310
+  ok    ghostfam_gnist has first meeting, hearts-band greetings and biography
+  ok    ghostfam_silke has authored social facts
+  ok    ghostfam_silke taste distribution: 5 loved, 28 disliked of 310
+  ok    ghostfam_silke has first meeting, hearts-band greetings and biography
+  ok    guard_oak has authored social facts
+  ok    guard_oak taste distribution: 6 loved, 31 disliked of 310
+  ok    guard_oak has first meeting, hearts-band greetings and biography
+  ok    innkeeper_kvak has authored social facts
+  ok    innkeeper_kvak taste distribution: 6 loved, 24 disliked of 310
+  ok    innkeeper_kvak has first meeting, hearts-band greetings and biography
+  ok    lamplighter_kiki has authored social facts
+  ok    lamplighter_kiki taste distribution: 17 loved, 26 disliked of 310
+  ok    lamplighter_kiki has first meeting, hearts-band greetings and biography
+  ok    lamplighter_kiki is an adult partner candidate
+  ok    mapseller_natteblik has authored social facts
+  ok    mapseller_natteblik taste distribution: 4 loved, 36 disliked of 310
+  ok    mapseller_natteblik has first meeting, hearts-band greetings and biography
+  ok    mayor_lyra has authored social facts
+  ok    mayor_lyra taste distribution: 6 loved, 26 disliked of 310
+  ok    mayor_lyra has first meeting, hearts-band greetings and biography
+  ok    merchant_pip has authored social facts
+  ok    merchant_pip taste distribution: 5 loved, 21 disliked of 310
+  ok    merchant_pip has first meeting, hearts-band greetings and biography
+  ok    merchant_pip is an adult partner candidate
+  ok    merchant_pip offers a cheap normal sample
+  ok    penguin_postman has authored social facts
+  ok    penguin_postman taste distribution: 3 loved, 30 disliked of 310
+  ok    penguin_postman has first meeting, hearts-band greetings and biography
+  ok    pippin_boegeknop has authored social facts
+  ok    pippin_boegeknop taste distribution: 15 loved, 27 disliked of 310
+  ok    pippin_boegeknop has first meeting, hearts-band greetings and biography
+  ok    pippin_boegeknop offers a cheap normal sample
+  ok    postman_pip has authored social facts
+  ok    postman_pip taste distribution: 4 loved, 26 disliked of 310
+  ok    postman_pip has first meeting, hearts-band greetings and biography
+  ok    postman_pip is an adult partner candidate
+  ok    rasmus has authored social facts
+  ok    rasmus taste distribution: 17 loved, 26 disliked of 310
+  ok    rasmus has first meeting, hearts-band greetings and biography
+  ok    rasmus is an adult partner candidate
+  ok    smith_thorin has authored social facts
+  ok    smith_thorin taste distribution: 6 loved, 31 disliked of 310
+  ok    smith_thorin has first meeting, hearts-band greetings and biography
+  ok    smith_thorin offers a cheap normal sample
+  ok    social_data.citizens_cover_friends
+  ok    social_data.copy_lint_clean_on_the_social_csvs ([{"rule": "C1", "file": "localization/da.csv", "line": 69, "key": "OBJ_TALK_TO_MAYOR", "message": "da: stale name Lyra", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 69, "key": "OBJ_TALK_TO_MAYOR", "message": "da: use display name Borgmester Hyldeblomst", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 69, "key": "OBJ_TALK_TO_MAYOR", "message": "en: stale name Lyra", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 69, "key": "OBJ_TALK_TO_MAYOR", "message": "en: use display name Borgmester Hyldeblomst", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 73, "key": "OBJ_DELIVER_TO_BAKER", "message": "da: use display name Bagerfe Rosmarin", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 73, "key": "OBJ_DELIVER_TO_BAKER", "message": "en: use display name Bagerfe Rosmarin", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 146, "key": "DIALOGUE_LYRA_GREET_1", "message": "da: stale name PongPong", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 146, "key": "DIALOGUE_LYRA_GREET_1", "message": "da: stale name Lyra", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 146, "key": "DIALOGUE_LYRA_GREET_1", "message": "da: use display name Borgmester Hyldeblomst", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 146, "key": "DIALOGUE_LYRA_GREET_1", "message": "en: stale name PongPong", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 146, "key": "DIALOGUE_LYRA_GREET_1", "message": "en: stale name Lyra", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 146, "key": "DIALOGUE_LYRA_GREET_1", "message": "en: use display name Borgmester Hyldeblomst", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 154, "key": "DIALOGUE_MAJA_COOKIE_TALK", "message": "da: stale name PongPong", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 154, "key": "DIALOGUE_MAJA_COOKIE_TALK", "message": "en: stale name PongPong", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 156, "key": "DIALOGUE_LILY_CAT_MISSING", "message": "da: stale name Mjau", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 156, "key": "DIALOGUE_LILY_CAT_MISSING", "message": "da: use display name Morfar Mis", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 156, "key": "DIALOGUE_LILY_CAT_MISSING", "message": "en: stale name Mjau", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 156, "key": "DIALOGUE_LILY_CAT_MISSING", "message": "en: use display name Morfar Mis", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 157, "key": "DIALOGUE_LILY_WORRIED", "message": "da: stale name Mjau", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 157, "key": "DIALOGUE_LILY_WORRIED", "message": "da: use display name Morfar Mis", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 157, "key": "DIALOGUE_LILY_WORRIED", "message": "en: stale name Mjau", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 157, "key": "DIALOGUE_LILY_WORRIED", "message": "en: use display name Morfar Mis", "legacy": true}, {"rule": "C2", "file": "localization/da.csv", "line": 169, "key": "DIALOGUE_CHOICE_MINING_QUEST", "message": "en: choice has 33 characters, limit 32", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 358, "key": "DIALOGUE_WIZARD_MAGIC_TALK", "message": "da: stale name Eventyrskoven", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 358, "key": "DIALOGUE_WIZARD_MAGIC_TALK", "message": "en: stale name PongPong", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 466, "key": "DIALOGUE_CHOICE_MATH_BAKERY", "message": "da: use display name Bagerfe Rosmarin", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 466, "key": "DIALOGUE_CHOICE_MATH_BAKERY", "message": "en: use display name Bagerfe Rosmarin", "legacy": true}, {"rule": "C2", "file": "localization/da.csv", "line": 467, "key": "DIALOGUE_CHOICE_MATH_HARVEST", "message": "en: choice has 33 characters, limit 32", "legacy": true}]
+)
+  ok    social_data.voiced_index_in_sync
+  ok    social_data.tool_printed_ids (Social voice index printed 1 PASS/FAIL ids)
+  ok    social_data.tool_exit_code (Social voice index exit code 0)
+  ok    social_data.new_npc_by_data_only (One roster row gets hearts, a stable birthday and the child archetype)
+  ok    Derived child uses archetype taste without another row
+  --    social_data: 130 checks, 0 failed, 0 skipped, 1.3 s
+== section social_events  (res://tests/sections/social_events.gd)
+  ok    social_events.heart_event_only_on_talk
+  ok    social_events.automatic_events_never_appear_in_talk_choices
+  ok    social_events.queue_accepts_while_busy
+  ok    social_events.deduplicates_queued_events
+  ok    social_events.waits_for_playing_and_no_modal
+  ok    social_events.queued_talk_starts_after_modal_closes
+  ok    social_events.event_modal_is_nonpausing_cutscene
+  ok    social_events.clock_frozen
+  ok    social_events.no_save_during_event
+  ok    social_events.no_travel_or_sleep_during_event
+  ok    social_events.rewards_deferred_until_scene_end
+  ok    social_events.overlay_follows_modal
+  ok    social_events.overlay_focus_none (0 interactive, 0 keyboard-focusable)
+  ok    social_events.overlay_rules (6 nodes, 1 text, 0 boxes, 0 interactive scanned)
+  ok    social_events.overlay_i18n (clean)
+  ok    social_events.escape_opens_one_confirm
+  ok    social_events.continue_is_default
+  ok    social_events.declining_skip_keeps_scene
+  ok    social_events.skip_fast_forwards_effects
+  ok    social_events.choice_takes_option_one_on_skip
+  ok    social_events.all_point_steps_commit_once
+  ok    social_events.time_step_capped_at_two_hours
+  ok    social_events.seen_once_and_skip_recorded
+  ok    social_events.say_runs_merge_per_speaker
+  ok    social_events.actors_released_on_end
+  ok    social_events.camera_released_on_end
+  ok    social_events.seen_event_refused
+  ok    social_events.save_after_commit
+  ok    social_events.load_after_commit
+  ok    social_events.rewards_paid_once_after_load
+  ok    social_events.missing_actor_scene_can_start
+  ok    social_events.missing_actor_api_is_skipped_not_fatal
+  ok    social_events.ordinary_scene_points_paid
+  ok    social_events.yearly_scene_starts
+  ok    social_events.full_pack_reward_is_saved
+  ok    social_events.full_pack_save_valid
+  ok    social_events.full_pack_reward_loads
+  ok    social_events.owed_survives_load
+  ok    social_events.reward_claimed_when_space_opens
+  ok    social_events.reward_claim_is_idempotent
+  ok    social_events.yearly_refused_same_year
+  ok    social_events.yearly_scene_repeats_next_year
+  ok    social_events.yearly_reward_second_year
+  ok    social_events.cancel_scene_starts
+  ok    social_events.cancel_does_not_commit
+  ok    social_events.cancel_releases_modal_and_actors
+  ok    social_events.cancelled_scene_can_retry
+  ok    social_events.time_never_advances_past_2359
+  ok    social_events.queue_bound_0
+  ok    social_events.queue_bound_1
+  ok    social_events.queue_bound_2
+  ok    social_events.queue_bound_3
+  ok    social_events.queue_bound_4
+  ok    social_events.queue_bound_5
+  ok    social_events.queue_drops_after_two_days
+  --    social_events: 55 checks, 0 failed, 0 skipped, 0.5 s
+== section social_fest_content  (res://tests/sections/social_fest_content.gd)
+  ok    social_fest_content.live_social_validator_including_keeper_return_routes ([][])
+  ok    social_fest_content.blomsterfesten_unique_date_and_valid_window
+  ok    social_fest_content.blomsterfesten_existing_host
+  ok    social_fest_content.blomsterfesten_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.blomsterfesten_birthday_clear_baker_maja
+  ok    social_fest_content.blomsterfesten_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.blomsterfesten_birthday_clear_beekeeper_birk
+  ok    social_fest_content.blomsterfesten_birthday_clear_bertil
+  ok    social_fest_content.blomsterfesten_birthday_clear_bodil
+  ok    social_fest_content.blomsterfesten_birthday_clear_carpenter_brumme
+  ok    social_fest_content.blomsterfesten_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.blomsterfesten_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.blomsterfesten_birthday_clear_cub_bamse
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_builder
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_furnisher
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_king
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_lily
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_tailor
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_wizard
+  ok    social_fest_content.blomsterfesten_birthday_clear_farmer_rosa
+  ok    social_fest_content.blomsterfesten_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.blomsterfesten_birthday_clear_gardener_hoppe
+  ok    social_fest_content.blomsterfesten_birthday_clear_ghostfam_blund
+  ok    social_fest_content.blomsterfesten_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.blomsterfesten_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.blomsterfesten_birthday_clear_ghostfam_silke
+  ok    social_fest_content.blomsterfesten_birthday_clear_guard_oak
+  ok    social_fest_content.blomsterfesten_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.blomsterfesten_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.blomsterfesten_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.blomsterfesten_birthday_clear_mayor_lyra
+  ok    social_fest_content.blomsterfesten_birthday_clear_merchant_pip
+  ok    social_fest_content.blomsterfesten_birthday_clear_penguin_postman
+  ok    social_fest_content.blomsterfesten_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.blomsterfesten_birthday_clear_postman_pip
+  ok    social_fest_content.blomsterfesten_birthday_clear_rasmus
+  ok    social_fest_content.blomsterfesten_birthday_clear_smith_thorin
+  ok    social_fest_content.blomsterfesten_activity_copy_flower_contest
+  ok    social_fest_content.blomsterfesten_contest_prizes
+  ok    social_fest_content.blomsterfesten_activity_copy_seed_stall
+  ok    social_fest_content.blomsterfesten_market_definition
+  ok    social_fest_content.blomsterfesten_market_stock_carrot_seeds
+  ok    social_fest_content.blomsterfesten_market_stock_sunflower_seeds
+  ok    social_fest_content.blomsterfesten_market_stock_strawberry_seeds
+  ok    social_fest_content.blomsterfesten_activity_copy_dance
+  ok    social_fest_content.blomsterfesten_whole_family_invited
+  ok    social_fest_content.blomsterfesten_all_activity_posts_resolve ([])
+  ok    social_fest_content.blomsterfesten_opening_seen
+  ok    social_fest_content.blomsterfesten_family_present
+  ok    social_fest_content.blomsterfesten_bed_held
+  ok    social_fest_content.blomsterfesten_own_market_open
+  ok    social_fest_content.blomsterfesten_painted_decor_present (decor=FestivalDecor:<Node#1485874143879> art=FestivalArt:<Node2D#1485890921096> children=[festival_stage_stage:<Sprite2D#1485941252745>, flower_arch_centre:<Sprite2D#1486159356554>, market_stall_spring_awning:<Sprite2D#1486377460366>, @Sprite2D@4672:<Sprite2D#1486595560677>, @Sprite2D@4673:<Sprite2D#1486629117208>, @Sprite2D@4674:<Sprite2D#1486662669540>, festival_bench_bench:<Sprite2D#1486696223971>, @Sprite2D@4675:<Sprite2D#1486914327859>, banner_pole_spring_pole:<Sprite2D#1487132431673>, @Sprite2D@4676:<Sprite2D#1487350535463>, bunting_string_a_string:<Sprite2D#1487568639275>, @Sprite2D@4677:<Sprite2D#1487786743084>, @Sprite2D@4678:<Sprite2D#1487820297522>, @Sprite2D@4679:<Sprite2D#1487853851951>, door_wreath_spring_door:<Sprite2D#1487887408643>, @Sprite2D@4680:<Sprite2D#1488105510180>, @Sprite2D@4681:<Sprite2D#1488139064608>, @Sprite2D@4682:<Sprite2D#1488172619042>, @Sprite2D@4683:<Sprite2D#1488206173471>, @Sprite2D@4684:<Sprite2D#1488239727902>, @Sprite2D@4685:<Sprite2D#1488273282333>, @Sprite2D@4686:<Sprite2D#1488306836318>, @Sprite2D@4687:<Sprite2D#1488340393553>, @Sprite2D@4688:<Sprite2D#1488373947987>, @Sprite2D@4689:<Sprite2D#1488407499611>, @Sprite2D@4690:<Sprite2D#1488441054492>, @Sprite2D@4691:<Sprite2D#1488474608556>, @Sprite2D@4692:<Sprite2D#1488508162987>])
+  ok    social_fest_content.blomsterfesten_finale_pays_once
+  ok    social_fest_content.blomsterfesten_reentry_has_no_repeat_reward
+  ok    social_fest_content.blomsterfesten_own_market_closes
+  ok    social_fest_content.blomsterfesten_decor_clears_afterwards
+  ok    social_fest_content.honningdagen_unique_date_and_valid_window
+  ok    social_fest_content.honningdagen_existing_host
+  ok    social_fest_content.honningdagen_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.honningdagen_birthday_clear_baker_maja
+  ok    social_fest_content.honningdagen_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.honningdagen_birthday_clear_beekeeper_birk
+  ok    social_fest_content.honningdagen_birthday_clear_bertil
+  ok    social_fest_content.honningdagen_birthday_clear_bodil
+  ok    social_fest_content.honningdagen_birthday_clear_carpenter_brumme
+  ok    social_fest_content.honningdagen_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.honningdagen_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.honningdagen_birthday_clear_cub_bamse
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_builder
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_furnisher
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_king
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_lily
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_tailor
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_wizard
+  ok    social_fest_content.honningdagen_birthday_clear_farmer_rosa
+  ok    social_fest_content.honningdagen_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.honningdagen_birthday_clear_gardener_hoppe
+  ok    social_fest_content.honningdagen_birthday_clear_ghostfam_blund
+  ok    social_fest_content.honningdagen_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.honningdagen_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.honningdagen_birthday_clear_ghostfam_silke
+  ok    social_fest_content.honningdagen_birthday_clear_guard_oak
+  ok    social_fest_content.honningdagen_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.honningdagen_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.honningdagen_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.honningdagen_birthday_clear_mayor_lyra
+  ok    social_fest_content.honningdagen_birthday_clear_merchant_pip
+  ok    social_fest_content.honningdagen_birthday_clear_penguin_postman
+  ok    social_fest_content.honningdagen_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.honningdagen_birthday_clear_postman_pip
+  ok    social_fest_content.honningdagen_birthday_clear_rasmus
+  ok    social_fest_content.honningdagen_birthday_clear_smith_thorin
+  ok    social_fest_content.honningdagen_activity_copy_honey_contest
+  ok    social_fest_content.honningdagen_contest_prizes
+  ok    social_fest_content.honningdagen_activity_copy_picnic
+  ok    social_fest_content.honningdagen_activity_copy_honey_stall
+  ok    social_fest_content.honningdagen_market_definition
+  ok    social_fest_content.honningdagen_market_stock_honey
+  ok    social_fest_content.honningdagen_market_stock_cookie
+  ok    social_fest_content.honningdagen_market_stock_milk
+  ok    social_fest_content.honningdagen_whole_family_invited
+  ok    social_fest_content.honningdagen_all_activity_posts_resolve ([])
+  ok    social_fest_content.honningdagen_opening_seen
+  ok    social_fest_content.honningdagen_family_present
+  ok    social_fest_content.honningdagen_bed_held
+  ok    social_fest_content.honningdagen_retained_shop_covers_weekday_bakery
+  ok    social_fest_content.honningdagen_own_market_open
+  ok    social_fest_content.honningdagen_painted_decor_present (decor=FestivalDecor:<Node#1485874143879> art=FestivalArt:<Node2D#1524797281862> children=[festival_stage_stage:<Sprite2D#1524814058942>, maypole_centre:<Sprite2D#1525032162745>, market_stall_spring_awning:<Sprite2D#1525250267354>, @Sprite2D@4827:<Sprite2D#1525468371134>, @Sprite2D@4828:<Sprite2D#1525501926722>, @Sprite2D@4829:<Sprite2D#1525535479999>, festival_bench_bench:<Sprite2D#1525569034416>, @Sprite2D@4830:<Sprite2D#1525787139351>, banner_pole_spring_pole:<Sprite2D#1526005242056>, @Sprite2D@4831:<Sprite2D#1526223344839>, bunting_string_a_string:<Sprite2D#1526441448672>, @Sprite2D@4832:<Sprite2D#1526659552491>, @Sprite2D@4833:<Sprite2D#1526693106897>, @Sprite2D@4834:<Sprite2D#1526726661352>, flower_arch_accent:<Sprite2D#1526760215759>, door_wreath_spring_door:<Sprite2D#1526978319568>, @Sprite2D@4835:<Sprite2D#1527196423373>, @Sprite2D@4836:<Sprite2D#1527229977798>, @Sprite2D@4837:<Sprite2D#1527263532234>, @Sprite2D@4838:<Sprite2D#1527297086667>, @Sprite2D@4839:<Sprite2D#1527330641093>, @Sprite2D@4840:<Sprite2D#1527364195523>, @Sprite2D@4841:<Sprite2D#1527397749923>, @Sprite2D@4842:<Sprite2D#1527431304385>, @Sprite2D@4843:<Sprite2D#1527464858818>, @Sprite2D@4844:<Sprite2D#1527498413247>, @Sprite2D@4845:<Sprite2D#1527531967650>, @Sprite2D@4846:<Sprite2D#1527565522106>, @Sprite2D@4847:<Sprite2D#1527599076539>])
+  ok    social_fest_content.honningdagen_finale_pays_once
+  ok    social_fest_content.honningdagen_reentry_has_no_repeat_reward
+  ok    social_fest_content.honningdagen_own_market_closes
+  ok    social_fest_content.honningdagen_decor_clears_afterwards
+  ok    social_fest_content.midsommerlanterner_unique_date_and_valid_window
+  ok    social_fest_content.midsommerlanterner_existing_host
+  ok    social_fest_content.midsommerlanterner_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.midsommerlanterner_birthday_clear_baker_maja
+  ok    social_fest_content.midsommerlanterner_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.midsommerlanterner_birthday_clear_beekeeper_birk
+  ok    social_fest_content.midsommerlanterner_birthday_clear_bertil
+  ok    social_fest_content.midsommerlanterner_birthday_clear_bodil
+  ok    social_fest_content.midsommerlanterner_birthday_clear_carpenter_brumme
+  ok    social_fest_content.midsommerlanterner_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.midsommerlanterner_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.midsommerlanterner_birthday_clear_cub_bamse
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_builder
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_furnisher
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_king
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_lily
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_tailor
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_wizard
+  ok    social_fest_content.midsommerlanterner_birthday_clear_farmer_rosa
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.midsommerlanterner_birthday_clear_gardener_hoppe
+  ok    social_fest_content.midsommerlanterner_birthday_clear_ghostfam_blund
+  ok    social_fest_content.midsommerlanterner_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.midsommerlanterner_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.midsommerlanterner_birthday_clear_ghostfam_silke
+  ok    social_fest_content.midsommerlanterner_birthday_clear_guard_oak
+  ok    social_fest_content.midsommerlanterner_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.midsommerlanterner_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.midsommerlanterner_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.midsommerlanterner_birthday_clear_mayor_lyra
+  ok    social_fest_content.midsommerlanterner_birthday_clear_merchant_pip
+  ok    social_fest_content.midsommerlanterner_birthday_clear_penguin_postman
+  ok    social_fest_content.midsommerlanterner_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.midsommerlanterner_birthday_clear_postman_pip
+  ok    social_fest_content.midsommerlanterner_birthday_clear_rasmus
+  ok    social_fest_content.midsommerlanterner_birthday_clear_smith_thorin
+  ok    social_fest_content.midsommerlanterner_activity_copy_lantern_wish
+  ok    social_fest_content.midsommerlanterner_activity_copy_bonfire_supper
+  ok    social_fest_content.midsommerlanterner_activity_copy_dance
+  ok    social_fest_content.midsommerlanterner_whole_family_invited
+  ok    social_fest_content.midsommerlanterner_all_activity_posts_resolve ([])
+  ok    social_fest_content.midsommerlanterner_opening_seen
+  ok    social_fest_content.midsommerlanterner_family_present
+  ok    social_fest_content.midsommerlanterner_bed_held
+  ok    social_fest_content.midsommerlanterner_painted_decor_present (decor=FestivalDecor:<Node#1605109819499> art=FestivalArt:<Node2D#1605126596716> children=[festival_stage_stage:<Sprite2D#1605143373933>, bonfire_festival_centre:<Sprite2D#1605361477742>, market_stall_summer_awning:<Sprite2D#1605797685365>, @Sprite2D@5184:<Sprite2D#1606015789176>, @Sprite2D@5185:<Sprite2D#1606049343611>, @Sprite2D@5186:<Sprite2D#1606082898041>, festival_bench_bench:<Sprite2D#1606116452476>, @Sprite2D@5187:<Sprite2D#1606334556285>, banner_pole_summer_pole:<Sprite2D#1606552660097>, @Sprite2D@5188:<Sprite2D#1606770763908>, lantern_string_a_string:<Sprite2D#1606988867719>, @Sprite2D@5189:<Sprite2D#1607425075341>, @Sprite2D@5190:<Sprite2D#1607458629776>, @Sprite2D@5191:<Sprite2D#1607492184206>])
+  ok    social_fest_content.midsommerlanterner_decor_above_deck
+  ok    social_fest_content.midsommerlanterner_finale_pays_once
+  ok    social_fest_content.midsommerlanterner_reentry_has_no_repeat_reward
+  ok    social_fest_content.midsommerlanterner_decor_clears_afterwards
+  ok    social_fest_content.badedagen_unique_date_and_valid_window
+  ok    social_fest_content.badedagen_existing_host
+  ok    social_fest_content.badedagen_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.badedagen_birthday_clear_baker_maja
+  ok    social_fest_content.badedagen_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.badedagen_birthday_clear_beekeeper_birk
+  ok    social_fest_content.badedagen_birthday_clear_bertil
+  ok    social_fest_content.badedagen_birthday_clear_bodil
+  ok    social_fest_content.badedagen_birthday_clear_carpenter_brumme
+  ok    social_fest_content.badedagen_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.badedagen_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.badedagen_birthday_clear_cub_bamse
+  ok    social_fest_content.badedagen_birthday_clear_fairy_builder
+  ok    social_fest_content.badedagen_birthday_clear_fairy_furnisher
+  ok    social_fest_content.badedagen_birthday_clear_fairy_king
+  ok    social_fest_content.badedagen_birthday_clear_fairy_lily
+  ok    social_fest_content.badedagen_birthday_clear_fairy_tailor
+  ok    social_fest_content.badedagen_birthday_clear_fairy_wizard
+  ok    social_fest_content.badedagen_birthday_clear_farmer_rosa
+  ok    social_fest_content.badedagen_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.badedagen_birthday_clear_gardener_hoppe
+  ok    social_fest_content.badedagen_birthday_clear_ghostfam_blund
+  ok    social_fest_content.badedagen_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.badedagen_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.badedagen_birthday_clear_ghostfam_silke
+  ok    social_fest_content.badedagen_birthday_clear_guard_oak
+  ok    social_fest_content.badedagen_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.badedagen_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.badedagen_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.badedagen_birthday_clear_mayor_lyra
+  ok    social_fest_content.badedagen_birthday_clear_merchant_pip
+  ok    social_fest_content.badedagen_birthday_clear_penguin_postman
+  ok    social_fest_content.badedagen_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.badedagen_birthday_clear_postman_pip
+  ok    social_fest_content.badedagen_birthday_clear_rasmus
+  ok    social_fest_content.badedagen_birthday_clear_smith_thorin
+  ok    social_fest_content.badedagen_activity_copy_free_bath
+  ok    social_fest_content.badedagen_activity_copy_picnic
+  ok    social_fest_content.badedagen_activity_copy_potluck
+  ok    social_fest_content.badedagen_whole_family_invited
+  ok    social_fest_content.badedagen_all_activity_posts_resolve ([])
+  ok    social_fest_content.badedagen_opening_seen
+  ok    social_fest_content.badedagen_family_present
+  ok    social_fest_content.badedagen_bed_held
+  ok    social_fest_content.badedagen_painted_decor_present (decor=FestivalDecor:<Node#1656934639538> art=FestivalArt:<Node2D#1656951416755> children=[festival_stage_stage:<Sprite2D#1656968193972>, flower_arch_centre:<Sprite2D#1657186297781>, market_stall_summer_awning:<Sprite2D#1657404401593>, @Sprite2D@5548:<Sprite2D#1657622505404>, @Sprite2D@5549:<Sprite2D#1657656059839>, @Sprite2D@5550:<Sprite2D#1657689614269>, festival_bench_bench:<Sprite2D#1657723168704>, @Sprite2D@5551:<Sprite2D#1657941272513>, banner_pole_summer_pole:<Sprite2D#1658159376325>, @Sprite2D@5552:<Sprite2D#1658377480136>, lantern_string_a_string:<Sprite2D#1658595583947>, @Sprite2D@5553:<Sprite2D#1659031791569>, @Sprite2D@5554:<Sprite2D#1659065343333>, @Sprite2D@5555:<Sprite2D#1659098900434>])
+  ok    social_fest_content.badedagen_decor_above_deck
+  ok    social_fest_content.badedagen_finale_pays_once
+  ok    social_fest_content.badedagen_reentry_has_no_repeat_reward
+  ok    social_fest_content.badedagen_decor_clears_afterwards
+  ok    social_fest_content.hoestfesten_unique_date_and_valid_window
+  ok    social_fest_content.hoestfesten_existing_host
+  ok    social_fest_content.hoestfesten_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.hoestfesten_birthday_clear_baker_maja
+  ok    social_fest_content.hoestfesten_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.hoestfesten_birthday_clear_beekeeper_birk
+  ok    social_fest_content.hoestfesten_birthday_clear_bertil
+  ok    social_fest_content.hoestfesten_birthday_clear_bodil
+  ok    social_fest_content.hoestfesten_birthday_clear_carpenter_brumme
+  ok    social_fest_content.hoestfesten_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.hoestfesten_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.hoestfesten_birthday_clear_cub_bamse
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_builder
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_furnisher
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_king
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_lily
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_tailor
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_wizard
+  ok    social_fest_content.hoestfesten_birthday_clear_farmer_rosa
+  ok    social_fest_content.hoestfesten_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.hoestfesten_birthday_clear_gardener_hoppe
+  ok    social_fest_content.hoestfesten_birthday_clear_ghostfam_blund
+  ok    social_fest_content.hoestfesten_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.hoestfesten_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.hoestfesten_birthday_clear_ghostfam_silke
+  ok    social_fest_content.hoestfesten_birthday_clear_guard_oak
+  ok    social_fest_content.hoestfesten_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.hoestfesten_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.hoestfesten_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.hoestfesten_birthday_clear_mayor_lyra
+  ok    social_fest_content.hoestfesten_birthday_clear_merchant_pip
+  ok    social_fest_content.hoestfesten_birthday_clear_penguin_postman
+  ok    social_fest_content.hoestfesten_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.hoestfesten_birthday_clear_postman_pip
+  ok    social_fest_content.hoestfesten_birthday_clear_rasmus
+  ok    social_fest_content.hoestfesten_birthday_clear_smith_thorin
+  ok    social_fest_content.hoestfesten_activity_copy_pumpkin_contest
+  ok    social_fest_content.hoestfesten_contest_prizes
+  ok    social_fest_content.hoestfesten_activity_copy_harvest_feast
+  ok    social_fest_content.hoestfesten_activity_copy_harvest_market
+  ok    social_fest_content.hoestfesten_market_definition
+  ok    social_fest_content.hoestfesten_market_stock_pumpkin_seeds
+  ok    social_fest_content.hoestfesten_market_stock_carrot_seeds
+  ok    social_fest_content.hoestfesten_market_stock_fertilizer
+  ok    social_fest_content.hoestfesten_whole_family_invited
+  ok    social_fest_content.hoestfesten_all_activity_posts_resolve ([])
+  ok    social_fest_content.hoestfesten_opening_seen
+  ok    social_fest_content.hoestfesten_family_present
+  ok    social_fest_content.hoestfesten_bed_held
+  ok    social_fest_content.hoestfesten_retained_shop_covers_weekday_bakery
+  ok    social_fest_content.hoestfesten_own_market_open
+  ok    social_fest_content.hoestfesten_painted_decor_present (decor=FestivalDecor:<Node#1709698984925> art=FestivalArt:<Node2D#1709715762142> children=[festival_stage_stage:<Sprite2D#1709732539359>, pumpkin_pile_centre:<Sprite2D#1709950643168>, market_stall_autumn_awning:<Sprite2D#1710168746980>, @Sprite2D@5921:<Sprite2D#1710386850791>, @Sprite2D@5922:<Sprite2D#1710420405226>, @Sprite2D@5923:<Sprite2D#1710453959656>, festival_bench_bench:<Sprite2D#1710487514091>, @Sprite2D@5924:<Sprite2D#1710705617900>, banner_pole_autumn_pole:<Sprite2D#1710923716784>, @Sprite2D@5925:<Sprite2D#1711141820591>, bunting_string_b_string:<Sprite2D#1711359924442>, @Sprite2D@5926:<Sprite2D#1711578029335>, @Sprite2D@5927:<Sprite2D#1711611585692>, @Sprite2D@5928:<Sprite2D#1711645140125>, sheaf_stack_accent:<Sprite2D#1711678694560>, door_wreath_autumn_door:<Sprite2D#1711896798369>, @Sprite2D@5929:<Sprite2D#1712114902171>, @Sprite2D@5930:<Sprite2D#1712148457726>, @Sprite2D@5931:<Sprite2D#1712182011042>, @Sprite2D@5932:<Sprite2D#1712215566589>, @Sprite2D@5933:<Sprite2D#1712249120919>, @Sprite2D@5934:<Sprite2D#1712282675452>, @Sprite2D@5935:<Sprite2D#1712316229826>, @Sprite2D@5936:<Sprite2D#1712349784315>, @Sprite2D@5937:<Sprite2D#1712383338701>, @Sprite2D@5938:<Sprite2D#1712416893178>, @Sprite2D@5939:<Sprite2D#1712450447581>, @Sprite2D@5940:<Sprite2D#1712484002062>, @Sprite2D@5941:<Sprite2D#1712517556496>])
+  ok    social_fest_content.hoestfesten_decor_above_deck
+  ok    social_fest_content.hoestfesten_finale_pays_once
+  ok    social_fest_content.hoestfesten_reentry_has_no_repeat_reward
+  ok    social_fest_content.hoestfesten_own_market_closes
+  ok    social_fest_content.hoestfesten_decor_clears_afterwards
+  ok    social_fest_content.maanemarkedet_unique_date_and_valid_window
+  ok    social_fest_content.maanemarkedet_existing_host
+  ok    social_fest_content.maanemarkedet_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.maanemarkedet_birthday_clear_baker_maja
+  ok    social_fest_content.maanemarkedet_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.maanemarkedet_birthday_clear_beekeeper_birk
+  ok    social_fest_content.maanemarkedet_birthday_clear_bertil
+  ok    social_fest_content.maanemarkedet_birthday_clear_bodil
+  ok    social_fest_content.maanemarkedet_birthday_clear_carpenter_brumme
+  ok    social_fest_content.maanemarkedet_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.maanemarkedet_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.maanemarkedet_birthday_clear_cub_bamse
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_builder
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_furnisher
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_king
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_lily
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_tailor
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_wizard
+  ok    social_fest_content.maanemarkedet_birthday_clear_farmer_rosa
+  ok    social_fest_content.maanemarkedet_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.maanemarkedet_birthday_clear_gardener_hoppe
+  ok    social_fest_content.maanemarkedet_birthday_clear_ghostfam_blund
+  ok    social_fest_content.maanemarkedet_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.maanemarkedet_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.maanemarkedet_birthday_clear_ghostfam_silke
+  ok    social_fest_content.maanemarkedet_birthday_clear_guard_oak
+  ok    social_fest_content.maanemarkedet_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.maanemarkedet_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.maanemarkedet_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.maanemarkedet_birthday_clear_mayor_lyra
+  ok    social_fest_content.maanemarkedet_birthday_clear_merchant_pip
+  ok    social_fest_content.maanemarkedet_birthday_clear_penguin_postman
+  ok    social_fest_content.maanemarkedet_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.maanemarkedet_birthday_clear_postman_pip
+  ok    social_fest_content.maanemarkedet_birthday_clear_rasmus
+  ok    social_fest_content.maanemarkedet_birthday_clear_smith_thorin
+  ok    social_fest_content.maanemarkedet_activity_copy_moon_market
+  ok    social_fest_content.maanemarkedet_market_definition
+  ok    social_fest_content.maanemarkedet_market_stock_amethyst
+  ok    social_fest_content.maanemarkedet_market_stock_glow_mushroom
+  ok    social_fest_content.maanemarkedet_market_stock_lantern_oil
+  ok    social_fest_content.maanemarkedet_activity_copy_gem_show
+  ok    social_fest_content.maanemarkedet_contest_prizes
+  ok    social_fest_content.maanemarkedet_activity_copy_lantern_wish
+  ok    social_fest_content.maanemarkedet_whole_family_invited
+  ok    social_fest_content.maanemarkedet_all_activity_posts_resolve ([])
+  ok    social_fest_content.maanemarkedet_opening_seen
+  ok    social_fest_content.maanemarkedet_family_present
+  ok    social_fest_content.maanemarkedet_bed_held
+  ok    social_fest_content.maanemarkedet_retained_shop_covers_weekday_magic_store
+  ok    social_fest_content.maanemarkedet_own_market_open
+  ok    social_fest_content.maanemarkedet_painted_decor_present (decor=FestivalDecor:<Node#1485874143879> art=FestivalArt:<Node2D#1746793408573> children=[festival_stage_stage:<Sprite2D#1746810185791>, bonfire_festival_centre:<Sprite2D#1747028289587>, market_stall_autumn_awning:<Sprite2D#1747464497182>, @Sprite2D@6054:<Sprite2D#1747682600991>, @Sprite2D@6055:<Sprite2D#1747716150631>, @Sprite2D@6056:<Sprite2D#1747749705069>, festival_bench_bench:<Sprite2D#1747783258744>, @Sprite2D@6057:<Sprite2D#1748001363183>, banner_pole_autumn_pole:<Sprite2D#1748219466344>, @Sprite2D@6058:<Sprite2D#1748437572927>, bunting_string_b_string:<Sprite2D#1748655676730>, @Sprite2D@6059:<Sprite2D#1748873778553>, @Sprite2D@6060:<Sprite2D#1748907332906>, @Sprite2D@6061:<Sprite2D#1748940887426>, sheaf_stack_accent:<Sprite2D#1748974442624>])
+  ok    social_fest_content.maanemarkedet_finale_pays_once
+  ok    social_fest_content.maanemarkedet_reentry_has_no_repeat_reward
+  ok    social_fest_content.maanemarkedet_own_market_closes
+  ok    social_fest_content.maanemarkedet_decor_clears_afterwards
+  ok    social_fest_content.vinterlysene_unique_date_and_valid_window
+  ok    social_fest_content.vinterlysene_existing_host
+  ok    social_fest_content.vinterlysene_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.vinterlysene_birthday_clear_baker_maja
+  ok    social_fest_content.vinterlysene_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.vinterlysene_birthday_clear_beekeeper_birk
+  ok    social_fest_content.vinterlysene_birthday_clear_bertil
+  ok    social_fest_content.vinterlysene_birthday_clear_bodil
+  ok    social_fest_content.vinterlysene_birthday_clear_carpenter_brumme
+  ok    social_fest_content.vinterlysene_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.vinterlysene_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.vinterlysene_birthday_clear_cub_bamse
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_builder
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_furnisher
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_king
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_lily
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_tailor
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_wizard
+  ok    social_fest_content.vinterlysene_birthday_clear_farmer_rosa
+  ok    social_fest_content.vinterlysene_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.vinterlysene_birthday_clear_gardener_hoppe
+  ok    social_fest_content.vinterlysene_birthday_clear_ghostfam_blund
+  ok    social_fest_content.vinterlysene_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.vinterlysene_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.vinterlysene_birthday_clear_ghostfam_silke
+  ok    social_fest_content.vinterlysene_birthday_clear_guard_oak
+  ok    social_fest_content.vinterlysene_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.vinterlysene_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.vinterlysene_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.vinterlysene_birthday_clear_mayor_lyra
+  ok    social_fest_content.vinterlysene_birthday_clear_merchant_pip
+  ok    social_fest_content.vinterlysene_birthday_clear_penguin_postman
+  ok    social_fest_content.vinterlysene_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.vinterlysene_birthday_clear_postman_pip
+  ok    social_fest_content.vinterlysene_birthday_clear_rasmus
+  ok    social_fest_content.vinterlysene_birthday_clear_smith_thorin
+  ok    social_fest_content.vinterlysene_activity_copy_light_procession
+  ok    social_fest_content.vinterlysene_activity_copy_lantern_wish
+  ok    social_fest_content.vinterlysene_activity_copy_warm_drinks
+  ok    social_fest_content.vinterlysene_whole_family_invited
+  ok    social_fest_content.vinterlysene_all_activity_posts_resolve ([])
+  ok    social_fest_content.vinterlysene_opening_seen
+  ok    social_fest_content.vinterlysene_family_present
+  ok    social_fest_content.vinterlysene_bed_held
+  ok    social_fest_content.vinterlysene_painted_decor_present (decor=FestivalDecor:<Node#1824136374460> art=FestivalArt:<Node2D#1824153146649> children=[festival_stage_stage:<Sprite2D#1824169929014>, ice_lantern_centre:<Sprite2D#1824388033530>, market_stall_winter_awning:<Sprite2D#1824824240079>, @Sprite2D@6406:<Sprite2D#1825042343886>, @Sprite2D@6407:<Sprite2D#1825075898313>, @Sprite2D@6408:<Sprite2D#1825109452747>, festival_bench_bench:<Sprite2D#1825143007181>, @Sprite2D@6409:<Sprite2D#1825361110986>, banner_pole_winter_pole:<Sprite2D#1825579214787>, @Sprite2D@6410:<Sprite2D#1825797318593>, lantern_string_b_string:<Sprite2D#1826015422396>, @Sprite2D@6411:<Sprite2D#1826451630005>, @Sprite2D@6412:<Sprite2D#1826485184436>, @Sprite2D@6413:<Sprite2D#1826518738871>, door_wreath_winter_door:<Sprite2D#1826585847736>, @Sprite2D@6414:<Sprite2D#1826803947651>, @Sprite2D@6415:<Sprite2D#1826837503283>, @Sprite2D@6416:<Sprite2D#1826871060403>, @Sprite2D@6417:<Sprite2D#1826904610023>, @Sprite2D@6418:<Sprite2D#1826938165369>, @Sprite2D@6419:<Sprite2D#1826971719780>, @Sprite2D@6420:<Sprite2D#1827005273324>, @Sprite2D@6421:<Sprite2D#1827038828656>, @Sprite2D@6422:<Sprite2D#1827072383092>, @Sprite2D@6423:<Sprite2D#1827105937510>, @Sprite2D@6424:<Sprite2D#1827139491947>, @Sprite2D@6425:<Sprite2D#1827173046392>, @Sprite2D@6426:<Sprite2D#1827206599892>])
+  ok    social_fest_content.vinterlysene_decor_above_deck
+  ok    social_fest_content.vinterlysene_finale_pays_once
+  ok    social_fest_content.vinterlysene_reentry_has_no_repeat_reward
+  ok    social_fest_content.vinterlysene_decor_clears_afterwards
+  ok    social_fest_content.bagedagen_unique_date_and_valid_window
+  ok    social_fest_content.bagedagen_existing_host
+  ok    social_fest_content.bagedagen_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.bagedagen_birthday_clear_baker_maja
+  ok    social_fest_content.bagedagen_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.bagedagen_birthday_clear_beekeeper_birk
+  ok    social_fest_content.bagedagen_birthday_clear_bertil
+  ok    social_fest_content.bagedagen_birthday_clear_bodil
+  ok    social_fest_content.bagedagen_birthday_clear_carpenter_brumme
+  ok    social_fest_content.bagedagen_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.bagedagen_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.bagedagen_birthday_clear_cub_bamse
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_builder
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_furnisher
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_king
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_lily
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_tailor
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_wizard
+  ok    social_fest_content.bagedagen_birthday_clear_farmer_rosa
+  ok    social_fest_content.bagedagen_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.bagedagen_birthday_clear_gardener_hoppe
+  ok    social_fest_content.bagedagen_birthday_clear_ghostfam_blund
+  ok    social_fest_content.bagedagen_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.bagedagen_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.bagedagen_birthday_clear_ghostfam_silke
+  ok    social_fest_content.bagedagen_birthday_clear_guard_oak
+  ok    social_fest_content.bagedagen_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.bagedagen_birthday_clear_lamplighter_kiki
+  ...   (81 more ok lines of social_fest_content not printed; --verbose prints all)
+  --    social_fest_content: 481 checks, 0 failed, 0 skipped, 3.0 s
+== section social_gifts  (res://tests/sections/social_gifts.gd)
+  ok    love / normal points
+  ok    love / uncommon points
+  ok    love / rare points
+  ok    like / normal points
+  ok    like / uncommon points
+  ok    like / rare points
+  ok    neutral / normal points
+  ok    neutral / uncommon points
+  ok    neutral / rare points
+  ok    dislike / normal points
+  ok    dislike / uncommon points
+  ok    dislike / rare points
+  ok    hate / normal points
+  ok    hate / uncommon points
+  ok    hate / rare points
+  ok    social_gifts.birthday_x4_capped
+  ok    social_gifts.belated_x2
+  ok    social_gifts.repeat_halves
+  ok    Progress/keepsake guard: { "category": "quest", "giftable": true }
+  ok    Progress/keepsake guard: { "category": "special" }
+  ok    Progress/keepsake guard: { "category": "animal" }
+  ok    Progress/keepsake guard: { "category": "building" }
+  ok    Progress/keepsake guard: { "category": "blueprint" }
+  ok    Progress/keepsake guard: { "rarity": "unique" }
+  ok    Progress/keepsake guard: { "rarity": "legendary" }
+  ok    Progress/keepsake guard: { "protected": true }
+  ok    Zero-value gifts require an explicit data opt-in
+  ok    Valuable/rare/tool confirmation
+  ok    Valuable/rare/tool confirmation
+  ok    Valuable/rare/tool confirmation
+  ok    social_gifts.confirm_never_for_cheap_forage
+  ok    social_gifts.taste_resolution_levels
+  ok    social_gifts.item_id_beats_ftype_beats_category
+  ok    social_gifts.gift_love_points_and_items
+  ok    social_gifts.observer_sees_complete_transaction
+  ok    social_gifts.quest_event_payload_shape
+  ok    social_gifts.limit_one_per_day
+  ok    A recent repeat pays half
+  ok    social_gifts.limit_two_per_week
+  ok    Monday reopens the calendar-week slot
+  ok    Birthday gift bypasses weekly slots and is capped
+  ok    The same birthday cannot be celebrated again as belated
+  ok    A first gift the day after a birthday pays twice
+  ok    social_gifts.quest_item_not_offered
+  ok    social_gifts.next_tier_materials_not_offered
+  ok    One surplus material can be gifted without losing the next-tier requirements
+  ok    Last tool is protected
+  ok    Hotbar tool remains protected even with a spare
+  ok    social_gifts.incomplete_set_pieces_not_offered
+  ok    Completed set pieces may be offered
+  ok    social_gifts.placed_not_offered
+  ok    Unplaced furniture uses free stock
+  ok    A worn garment is excluded
+  ok    A spare unworn garment uses its store's free count
+  ok    Gift for knowledge cap probe
+  ok    social_gifts.known_tastes_cap
+  ok    social_gifts.reaction_line_cascade
+  ok    social_gifts.toast_names_item_not_sentence (One combined toast names the item; the reaction remains a complete sentence)
+  --    social_gifts: 58 checks, 0 failed, 0 skipped, 0.1 s
+== section social_talk  (res://tests/sections/social_talk.gd)
+  ok    social_talk.decorate_on_empty_module_has_greeting_and_close
+  ok    Voice suffix resolves to the indexed NPC path
+  ok    social=false preserves authored first-meeting scenes
+  ok    Once met today, authored pages do not get another greeting
+  ok    The next day adds one greeting before the authored page
+  ok    A data-only citizen exposes the gift picker
+  ok    social_talk.choices_limit_5
+  ok    Overflow retains its choices and a closing row
+  ok    Cancelling a topic never teaches its item
+  ok    Reading the topic commits its daily use
+  ok    social_talk.topic_reveals_taste_once
+  ok    social_talk.topics_one_per_day
+  ok    Topic day and reveal bits survive a save roundtrip
+  ok    The next day reveals the next hearts-gated preference
+  ok    Hearts band for 0
+  ok    Hearts band for 1
+  ok    Hearts band for 2
+  ok    Hearts band for 3
+  ok    Hearts band for 4
+  ok    Hearts band for 5
+  ok    Hearts band for 6
+  ok    Hearts band for 7
+  ok    Hearts band for 8
+  ok    Hearts band for 9
+  ok    Hearts band for 10
+  ok    social_talk.cascade_specificity
+  ok    Day-part authored line precedes broad band pool
+  ok    Broad band remains usable in every daypart
+  ok    Gapped numbered variants are indexed
+  ok    social_talk.no_immediate_repeat
+  ok    Corpus revision invalidates family caches
+  ok    social_talk.weather_and_season_probabilities (Deterministic weather/season sample: 383/116)
+  ok    social_talk.pick_under_20us (Cached social line pick: 14.72 us)
+  ok    Missing keeper variants fall back to the actual shop greeting
+  ok    Quest bubble has first priority
+  ok    Gift reaction uses the citizen's own line first
+  ok    A repeated gift can use the archetype pool to avoid repeating one personal line
+  ok    Birthday greeting wins over ordinary context
+  ok    A ready heart event precedes the birthday bubble
+  ok    Ready heart events get an explicit conversation choice
+  ok    Content actions fall through to Npc2D's EventBus dispatch
+  ok    social=false scenes still count their read conversation as a meeting
+  --    social_talk: 42 checks, 0 failed, 0 skipped, 0.1 s
+== section social_ui  (res://tests/sections/social_ui.gd)
+  ok    social_ui.all_four_screens_installed
+  ok    social_ui.glyph_is_not_health_hearts
+  ok    social_ui.glyph_half_heart_plan
+  ok    social_ui.people_initial_focus
+  ok    social_ui.people_only_met_npcs
+  ok    social_ui.people_rows_nodes_max
+  ok    social_ui.people_open_ms (3.407)
+  ok    social_ui.glyph_in_people
+  ok    social_ui.people_select_0
+  ok    social_ui.people_up_link_0
+  ok    social_ui.people_select_1
+  ok    social_ui.people_up_link_1
+  ok    social_ui.people_select_2
+  ok    social_ui.people_up_link_2
+  ok    social_ui.people_select_3
+  ok    social_ui.people_up_link_3
+  ok    social_ui.people_select_4
+  ok    social_ui.people_up_link_4
+  ok    social_ui.people_select_5
+  ok    social_ui.people_up_link_5
+  ok    social_ui.people_select_6
+  ok    social_ui.people_up_link_6
+  ok    social_ui.people_select_7
+  ok    social_ui.people_up_link_7
+  ok    social_ui.people_select_8
+  ok    social_ui.people_up_link_8
+  ok    social_ui.people_tabs_page_actions
+  ok    social_ui.people_right_changes_tab
+  ok    social_ui.people_p_closes
+  ok    social_ui.people_p_opens
+  ok    social_ui.people_pad_closes
+  ok    social_ui.gift_initial_focus
+  ok    social_ui.gift_options_from_api
+  ok    social_ui.gift_grid_24_cells
+  ok    social_ui.glyph_in_gift
+  ok    social_ui.cheap_live_gift_available
+  ok    social_ui.gift_chip_text_not_colour_only
+  ok    social_ui.gift_accept_selects_then_gives
+  ok    social_ui.gift_picker_closes_before_reaction
+  ok    social_ui.gift_removes_once_and_pays_love ({ "p": 890, "wk": -1, "gt": 0, "gd": 65, "gwk": 9, "gw": 1, "bd": 0, "bk": 1, "ls": [["carrot", 65]], "kn": { "moonflower": "love", "strawberry": "like", "stone": "dislike", "carrot": "love" }, "rv": 0, "rs": 0, "pc": 0, "tp": 0 })
+  ok    social_ui.reaction_escape_no_weekly_heart
+  ok    social_ui.gift_limits_disable_give_with_reason
+  ok    social_ui.gift_esc_restores_world
+  ok    social_ui.valuable_fixture_exists
+  ok    social_ui.gift_confirm_for_valuable_default_fortryd
+  ok    social_ui.gift_confirm_cancel_retains_item
+  ok    social_ui.gift_grid_scrolls_over_24_stacks
+  ok    social_ui.gift_scroll_follows_last_row
+  ok    social_ui.gift_pad_accept_selects_then_give
+  ok    social_ui.live_gift_citizen_present
+  ok    social_ui.live_dialogue_transfers_to_picker
+  ok    social_ui.live_actor_held_by_picker
+  ok    social_ui.live_carrot_available
+  ok    social_ui.live_actor_held_during_reaction
+  ok    social_ui.live_reaction_releases_actor_and_player
+  ok    social_ui.calendar_28_cells
+  ok    social_ui.calendar_only_known_birthdays
+  ok    social_ui.calendar_festivals_always_shown
+  ok    social_ui.calendar_today_marked
+  ok    social_ui.calendar_uses_theme_variations_only
+  ok    social_ui.calendar_focus_switch_keeps_new_navigation_0
+  ok    social_ui.calendar_focus_switch_keeps_new_navigation_1
+  ok    social_ui.calendar_focus_switch_keeps_new_navigation_2
+  ok    social_ui.calendar_header_reaches_season_0 (@Button@7563:<Button#2175501606620>)
+  ok    social_ui.calendar_season_ring_0 (@Button@7566:<Button#2175652601573>)
+  ok    social_ui.calendar_header_reaches_season_1 (@Button@7563:<Button#2175501606620>)
+  ok    social_ui.calendar_season_ring_1 (@Button@7566:<Button#2175652601573>)
+  ok    social_ui.calendar_header_reaches_season_2 (@Button@7563:<Button#2175501606620>)
+  ok    social_ui.calendar_season_ring_2 (@Button@7566:<Button#2175652601573>)
+  ok    social_ui.calendar_header_reaches_season_3 (@Button@7563:<Button#2175501606620>)
+  ok    social_ui.calendar_season_ring_3 (@Button@7566:<Button#2175652601573>)
+  ok    social_ui.calendar_grid_right_0
+  ok    social_ui.calendar_grid_right_1
+  ok    social_ui.calendar_grid_right_2
+  ok    social_ui.calendar_grid_right_3
+  ok    social_ui.calendar_grid_right_4
+  ok    social_ui.calendar_grid_right_5
+  ok    social_ui.calendar_grid_right_6
+  ok    social_ui.calendar_grid_right_7
+  ok    social_ui.calendar_grid_right_8
+  ok    social_ui.calendar_grid_right_9
+  ok    social_ui.calendar_grid_right_10
+  ok    social_ui.calendar_grid_right_11
+  ok    social_ui.calendar_grid_right_12
+  ok    social_ui.calendar_grid_right_13
+  ok    social_ui.calendar_grid_right_14
+  ok    social_ui.calendar_grid_right_15
+  ok    social_ui.calendar_grid_right_16
+  ok    social_ui.calendar_grid_right_17
+  ok    social_ui.calendar_grid_right_18
+  ok    social_ui.calendar_grid_right_19
+  ok    social_ui.calendar_grid_right_20
+  ok    social_ui.calendar_grid_right_21
+  ok    social_ui.calendar_grid_right_22
+  ok    social_ui.calendar_grid_right_23
+  ok    social_ui.calendar_grid_right_24
+  ok    social_ui.calendar_grid_right_25
+  ok    social_ui.calendar_grid_right_26
+  ok    social_ui.calendar_grid_right_27
+  ok    social_ui.calendar_season_walks_over_month_edge
+  ok    social_ui.calendar_walks_back_over_edge
+  ok    social_ui.calendar_year_one_floor
+  ok    social_ui.calendar_journal_escape
+  ok    social_ui.hud_focus_none
+  ok    social_ui.hud_no_polling
+  ok    social_ui.hud_festival_ribbon_raw_25 (Test · åben til 01:00)
+  ok    social_ui.hud_festival_before_open
+  ok    social_ui.hud_birthday_chips
+  ok    social_ui.glyph_in_social_hud
+  ok    social_ui.hud_hidden_in_action_mode
+  ok    social_ui.hud_hidden_in_event
+  ok    social_ui.hud_hidden_behind_event_confirmation
+  ok    social_ui.hud_returns_to_farm
+  ok    social_ui.people.visible (clean)
+  ok    social_ui.people.initial_focus (clean)
+  ok    social_ui.people.focus_walk (12 of 12 controls reached in 99 presses)
+  ok    social_ui.people.focusable (12 interactive, 12 keyboard-focusable)
+  ok    social_ui.people.rules (49 nodes, 18 text, 15 boxes, 12 interactive scanned)
+  ok    social_ui.people.i18n_flip (clean)
+  ok    social_ui.people.escape (1 modal(s) opened and closed with Esc in order)
+  SKIP  ui_audit people.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit people.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit people.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit people.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    social_ui.registry_people ([])
+  ok    social_ui.gift.visible (clean)
+  ok    social_ui.gift.initial_focus (clean)
+  ok    social_ui.gift.focus_walk (26 of 26 controls reached in 115 presses)
+  ok    social_ui.gift.focusable (26 interactive, 26 keyboard-focusable)
+  ok    social_ui.gift.rules (124 nodes, 34 text, 29 boxes, 26 interactive scanned)
+  ok    social_ui.gift.i18n_flip (clean)
+  ok    social_ui.gift.escape (1 modal(s) opened and closed with Esc in order)
+  SKIP  ui_audit gift.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit gift.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit gift.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit gift.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    social_ui.registry_gift ([])
+  ok    social_ui.calendar.visible (clean)
+  ok    social_ui.calendar.focusable (32 interactive, 32 keyboard-focusable)
+  ok    social_ui.calendar.rules (138 nodes, 99 text, 33 boxes, 32 interactive scanned)
+  ok    social_ui.calendar.i18n_flip (clean)
+  SKIP  ui_audit calendar.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit calendar.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    social_ui.registry_calendar ([])
+  ok    social_ui.social_hud.visible (clean)
+  ok    social_ui.social_hud.focusable (0 interactive, 0 keyboard-focusable)
+  ok    social_ui.social_hud.rules (4 nodes, 1 text, 0 boxes, 0 interactive scanned)
+  ok    social_ui.social_hud.i18n_flip (clean)
+  SKIP  ui_audit social_hud.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit social_hud.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    social_ui.registry_social_hud ([])
+  --    social_ui: 139 checks, 0 failed, 12 skipped, 4.1 s
+== section towns_ext  (res://tests/sections/towns_ext.gd)
+  ok    towns_ext.torvekroen_installed
+  ok    towns_ext.torvekroen_builds_with_painted_art ({ "sprites": 40, "night": 4, "bodies": 9, "lights": 2, "furniture": 9, "walls": 20, "hatch": 9, "stand_ins": 0, "placeholders": 0, "counters": 3, "handlers": 0, "pieces": 9, "accent_masks": 0, "service_lights": 0, "base_sprites": 31, "build_us": 2912, "zoom_fit": 0.58846153846154, "nodes": 112 })
+  ok    towns_ext.fekongens_hus_installed
+  ok    towns_ext.fekongens_hus_builds_with_painted_art ({ "sprites": 29, "night": 4, "bodies": 9, "lights": 2, "furniture": 9, "walls": 18, "hatch": 0, "stand_ins": 0, "placeholders": 0, "counters": 0, "handlers": 0, "pieces": 9, "accent_masks": 0, "service_lights": 0, "base_sprites": 29, "build_us": 1764, "zoom_fit": 0.63485477178423, "nodes": 72 })
+  ok    towns_ext.hoppe_hut_installed
+  ok    towns_ext.hoppe_hut_builds_with_painted_art ({ "sprites": 28, "night": 2, "bodies": 10, "lights": 2, "furniture": 12, "walls": 11, "hatch": 0, "stand_ins": 0, "placeholders": 0, "counters": 0, "handlers": 0, "pieces": 15, "accent_masks": 0, "service_lights": 0, "base_sprites": 22, "build_us": 2384, "zoom_fit": 0.87679083094556, "nodes": 71 })
+  ok    towns_ext.hoppe_hut_friend_gate
+  ok    towns_ext.hoppe_hut_awake_owner_opens (open)
+  ok    towns_ext.brummes_hus_installed
+  ok    towns_ext.brummes_hus_builds_with_painted_art ({ "sprites": 21, "night": 2, "bodies": 7, "lights": 2, "furniture": 7, "walls": 11, "hatch": 0, "stand_ins": 0, "placeholders": 0, "counters": 0, "handlers": 0, "pieces": 8, "accent_masks": 0, "service_lights": 0, "base_sprites": 21, "build_us": 1431, "zoom_fit": 0.87679083094556, "nodes": 58 })
+  ok    towns_ext.brummes_hus_friend_gate
+  ok    towns_ext.brummes_hus_awake_owner_opens (open)
+  ok    towns_ext.vagthytten_installed
+  ok    towns_ext.vagthytten_builds_with_painted_art ({ "sprites": 22, "night": 2, "bodies": 8, "lights": 2, "furniture": 8, "walls": 11, "hatch": 0, "stand_ins": 0, "placeholders": 0, "counters": 0, "handlers": 0, "pieces": 9, "accent_masks": 0, "service_lights": 0, "base_sprites": 22, "build_us": 1504, "zoom_fit": 0.87679083094556, "nodes": 61 })
+  ok    towns_ext.vagthytten_friend_gate
+  ok    towns_ext.vagthytten_awake_owner_opens (open)
+  ok    towns_ext.kikis_hytte_installed
+  ok    towns_ext.kikis_hytte_builds_with_painted_art ({ "sprites": 22, "night": 2, "bodies": 8, "lights": 2, "furniture": 8, "walls": 11, "hatch": 0, "stand_ins": 0, "placeholders": 0, "counters": 0, "handlers": 0, "pieces": 9, "accent_masks": 0, "service_lights": 0, "base_sprites": 22, "build_us": 1623, "zoom_fit": 0.87679083094556, "nodes": 61 })
+  ok    towns_ext.kikis_hytte_friend_gate
+  ok    towns_ext.kikis_hytte_awake_owner_opens (open)
+  ok    towns_ext.musikstuen_installed
+  ok    towns_ext.musikstuen_builds_with_painted_art ({ "sprites": 21, "night": 2, "bodies": 7, "lights": 2, "furniture": 7, "walls": 11, "hatch": 0, "stand_ins": 0, "placeholders": 0, "counters": 0, "handlers": 0, "pieces": 8, "accent_masks": 0, "service_lights": 0, "base_sprites": 21, "build_us": 1498, "zoom_fit": 0.87679083094556, "nodes": 58 })
+  ok    towns_ext.musikstuen_friend_gate
+  ok    towns_ext.musikstuen_awake_owner_opens (open)
+  ok    towns_ext.hyldeblomsts_hus_installed
+  ok    towns_ext.hyldeblomsts_hus_builds_with_painted_art ({ "sprites": 21, "night": 2, "bodies": 7, "lights": 2, "furniture": 7, "walls": 11, "hatch": 0, "stand_ins": 0, "placeholders": 0, "counters": 0, "handlers": 0, "pieces": 8, "accent_masks": 0, "service_lights": 0, "base_sprites": 21, "build_us": 1434, "zoom_fit": 0.87679083094556, "nodes": 58 })
+  ok    towns_ext.hyldeblomsts_hus_friend_gate
+  ok    towns_ext.hyldeblomsts_hus_awake_owner_opens (open)
+  ok    towns_ext.pippins_hus_installed
+  ok    towns_ext.pippins_hus_builds_with_painted_art ({ "sprites": 21, "night": 2, "bodies": 7, "lights": 2, "furniture": 7, "walls": 11, "hatch": 0, "stand_ins": 0, "placeholders": 0, "counters": 0, "handlers": 0, "pieces": 8, "accent_masks": 0, "service_lights": 0, "base_sprites": 21, "build_us": 1539, "zoom_fit": 0.87679083094556, "nodes": 58 })
+  ok    towns_ext.pippins_hus_friend_gate
+  ok    towns_ext.pippins_hus_awake_owner_opens (open)
+  ok    towns_ext.birks_bistade_installed
+  ok    towns_ext.birks_bistade_builds_with_painted_art ({ "sprites": 23, "night": 2, "bodies": 8, "lights": 2, "furniture": 8, "walls": 11, "hatch": 0, "stand_ins": 0, "placeholders": 0, "counters": 0, "handlers": 0, "pieces": 10, "accent_masks": 0, "service_lights": 0, "base_sprites": 23, "build_us": 1738, "zoom_fit": 0.87679083094556, "nodes": 62 })
+  ok    towns_ext.birks_bistade_friend_gate
+  ok    towns_ext.birks_bistade_awake_owner_opens (open)
+  ok    towns_ext.hero_twin_rasmus
+  ok    towns_ext.meet_rasmus
+  ok    towns_ext.hero_twin_lamplighter_kiki
+  ok    towns_ext.meet_lamplighter_kiki
+  ok    towns_ext.hero_twin_bertil
+  ok    towns_ext.meet_bertil
+  ok    towns_ext.hero_twin_bodil
+  ok    towns_ext.meet_bodil
+  ok    towns_ext.full_roster_feasible ([])
+  ok    towns_ext.full_roster_places ([])
+  ok    towns_ext.full_roster_hours ([])
+  ok    towns_ext.full_roster_keepers ([])
+  ok    towns_ext.full_roster_capacity ([])
+  ok    towns_ext.full_roster_looks ([])
+  ok    towns_ext.full_roster_visits ([])
+  ok    towns_ext.full_roster_short_visits ([])
+  ok    towns_ext.full_roster_wrap ([])
+  ok    towns_ext.content_reproducible
+  ok    towns_ext.inn_entry_kept_clear
+  ok    towns_ext.inn_live_keeper ({ "npc": "innkeeper_kvak", "state": "stay", "plan": "work", "place": "int_torvekroen.counter", "act": "work", "area": "int_torvekroen" } area=int_torvekroen modal= traveling=false active=[TownDirector:<Node#3089725655533>])
+  ok    towns_ext.inn_counter_talks
+  --    towns_ext: 57 checks, 0 failed, 0 skipped, 2.1 s
+== section towns_greetings  (res://tests/sections/towns_greetings.gd)
+  ok    towns_greetings.seed_shop_exists
+  ok    towns_greetings.seed_shop_band_0
+  ok    towns_greetings.seed_shop_band_1
+  ok    towns_greetings.seed_shop_band_2
+  ok    towns_greetings.seed_shop_band_3
+  ok    towns_greetings.seed_shop_sample
+  ok    towns_greetings.bakery_exists
+  ok    towns_greetings.bakery_band_0
+  ok    towns_greetings.bakery_band_1
+  ok    towns_greetings.bakery_band_2
+  ok    towns_greetings.bakery_band_3
+  ok    towns_greetings.bakery_sample
+  ok    towns_greetings.smithy_exists
+  ok    towns_greetings.smithy_band_0
+  ok    towns_greetings.smithy_band_1
+  ok    towns_greetings.smithy_band_2
+  ok    towns_greetings.smithy_band_3
+  ok    towns_greetings.smithy_sample
+  ok    towns_greetings.animal_store_exists
+  ok    towns_greetings.animal_store_band_0
+  ok    towns_greetings.animal_store_band_1
+  ok    towns_greetings.animal_store_band_2
+  ok    towns_greetings.animal_store_band_3
+  ok    towns_greetings.animal_store_sample
+  ok    towns_greetings.magic_store_exists
+  ok    towns_greetings.magic_store_band_0
+  ok    towns_greetings.magic_store_band_1
+  ok    towns_greetings.magic_store_band_2
+  ok    towns_greetings.magic_store_band_3
+  ok    towns_greetings.magic_store_sample
+  ok    towns_greetings.furniture_shop_exists
+  ok    towns_greetings.furniture_shop_band_0
+  ok    towns_greetings.furniture_shop_band_1
+  ok    towns_greetings.furniture_shop_band_2
+  ok    towns_greetings.furniture_shop_band_3
+  ok    towns_greetings.furniture_shop_sample
+  ok    towns_greetings.tailor_shop_exists
+  ok    towns_greetings.tailor_shop_band_0
+  ok    towns_greetings.tailor_shop_band_1
+  ok    towns_greetings.tailor_shop_band_2
+  ok    towns_greetings.tailor_shop_band_3
+  ok    towns_greetings.tailor_shop_sample
+  ok    towns_greetings.builder_yard_exists
+  ok    towns_greetings.builder_yard_band_0
+  ok    towns_greetings.builder_yard_band_1
+  ok    towns_greetings.builder_yard_band_2
+  ok    towns_greetings.builder_yard_band_3
+  ok    towns_greetings.builder_yard_sample
+  ok    towns_greetings.flea_market_exists
+  ok    towns_greetings.flea_market_band_0
+  ok    towns_greetings.flea_market_band_1
+  ok    towns_greetings.flea_market_band_2
+  ok    towns_greetings.flea_market_band_3
+  ok    towns_greetings.flea_market_sample
+  ok    towns_greetings.timber_yard_exists
+  ok    towns_greetings.timber_yard_band_0
+  ok    towns_greetings.timber_yard_band_1
+  ok    towns_greetings.timber_yard_band_2
+  ok    towns_greetings.timber_yard_band_3
+  ok    towns_greetings.timber_yard_sample
+  ok    towns_greetings.natteblik_maps_exists
+  ok    towns_greetings.natteblik_maps_band_0
+  ok    towns_greetings.natteblik_maps_band_1
+  ok    towns_greetings.natteblik_maps_band_2
+  ok    towns_greetings.natteblik_maps_band_3
+  ok    towns_greetings.natteblik_maps_sample
+  ok    towns_greetings.lantern_house_exists
+  ok    towns_greetings.lantern_house_band_0
+  ok    towns_greetings.lantern_house_band_1
+  ok    towns_greetings.lantern_house_band_2
+  ok    towns_greetings.lantern_house_band_3
+  ok    towns_greetings.lantern_house_sample
+  ok    towns_greetings.keep_any_thanks
+  ok    towns_greetings.keep_any_cannot_pay
+  ok    towns_greetings.keep_any_sold_out
+  ok    towns_greetings.keep_any_farewell_1
+  ok    towns_greetings.keep_any_farewell_2
+  ok    towns_greetings.keep_any_farewell_3
+  ok    towns_greetings.english_complete
+  --    towns_greetings: 79 checks, 0 failed, 0 skipped, 0.0 s
+== section towns_interiors  (res://tests/sections/towns_interiors.gd)
+  ok    int_froebutikken matches data/interiors/schema.json
+  ok    int_postkontoret matches data/interiors/schema.json
+  ok    int_hoppe_hut matches data/interiors/schema.json
+  ok    towns_interiors.json_schema (the 3 fixture rooms match data/interiors/schema.json (cols, rows, wall_style, floor, door, spawn_cell, windows, exit, items [{id, cell, rot, role?, wall?}], posts, markers incl. one hatch; no stand_in field) []; its enums are the art that exists (wall styles ["plank", "paper", "marble"] of interior.json true, floors ["floor_plank", "floor_parquet", "floor_stone", "floor_marble"] of tiles_floors.json true); the interpreter reports a bad style, a stand_in field, a rotation of 4, a three-number cell and a missing key true; the Python validator says the same on the same file (clean 0 problems, broken copy refused) true)
+  ok    int_froebutikken: the stub map header is complete (zone city, title BLD_FROEBUTIKKEN, builder, room id, 7 lines)
+  ok    int_postkontoret: the stub map header is complete (zone traetoppen, title BLD_POSTKONTORET, builder, room id, 7 lines)
+  ok    int_hoppe_hut: the stub map header is complete (zone traetoppen, title BLD_HOPPE_HUT, builder, room id, 7 lines)
+  ok    towns_interiors.zone_header (the seven line stub map of a room (@id, @title BLD_<ID>, @projection iso (an ortho room would freeze the calendar), @ambient home, @zone <zone of the outer area>, @builder res://scripts/towns/interior_room.gd, @room <id>) parses without errors, the builder exists, the title key has a text, a builder room is never parked: ["int_froebutikken zone city title BLD_FROEBUTIKKEN", "int_postkontoret zone traetoppen title BLD_POSTKONTORET", "int_hoppe_hut zone traetoppen title BLD_HOPPE_HUT"])
+  ok    int_froebutikken: zoom 0.754 fits the room's 896 x 812 px visual box into 1280 x 720
+  ok    int_postkontoret: zoom 0.791 fits the room's 832 x 774 px visual box into 1280 x 720
+  ok    int_hoppe_hut: zoom 0.877 fits the room's 704 x 698 px visual box into 1280 x 720
+  ok    towns_interiors.zoom_fits_every_room (zoom_fit = 0.85 * min(1280 / (n * 64), 720 / (n * 38 + 280)), n = cols + rows: the room's visual box times the zoom fits the 1280 x 720 view, the JSON carries the same number: ["int_froebutikken 0.754", "int_postkontoret 0.791", "int_hoppe_hut 0.877"])
+  ok    int_badehuset warm build 1: 7.96 ms, 109 nodes, 38 sprites, 2 lights
+  ok    int_badehuset warm build 2: 8.14 ms, 109 nodes, 38 sprites, 2 lights
+  ok    int_bageriet warm build 1: 9.17 ms, 110 nodes, 37 sprites, 3 lights
+  ok    int_bageriet warm build 2: 9.36 ms, 110 nodes, 37 sprites, 3 lights
+  ok    int_birks_bistade warm build 1: 9.85 ms, 61 nodes, 23 sprites, 2 lights
+  ok    int_birks_bistade warm build 2: 9.63 ms, 61 nodes, 23 sprites, 2 lights
+  ok    int_brummes_hus warm build 1: 10.28 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_brummes_hus warm build 2: 10.43 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_brummes_vaerksted warm build 1: 11.20 ms, 112 nodes, 41 sprites, 2 lights
+  ok    int_brummes_vaerksted warm build 2: 8.32 ms, 112 nodes, 41 sprites, 2 lights
+  ok    int_dyrehuset warm build 1: 8.22 ms, 112 nodes, 41 sprites, 2 lights
+  ok    int_dyrehuset warm build 2: 8.10 ms, 112 nodes, 41 sprites, 2 lights
+  ok    int_fekongens_hus warm build 1: 10.37 ms, 71 nodes, 29 sprites, 2 lights
+  ok    int_fekongens_hus warm build 2: 10.20 ms, 71 nodes, 29 sprites, 2 lights
+  ok    int_froebutikken warm build 1: 11.16 ms, 103 nodes, 37 sprites, 2 lights
+  ok    int_froebutikken warm build 2: 10.34 ms, 103 nodes, 37 sprites, 2 lights
+  ok    int_hoppe_hut warm build 1: 11.50 ms, 70 nodes, 28 sprites, 2 lights
+  ok    int_hoppe_hut warm build 2: 11.40 ms, 70 nodes, 28 sprites, 2 lights
+  ok    int_hyldeblomsts_hus warm build 1: 10.90 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_hyldeblomsts_hus warm build 2: 10.61 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_kikis_hytte warm build 1: 9.80 ms, 60 nodes, 22 sprites, 2 lights
+  ok    int_kikis_hytte warm build 2: 9.51 ms, 60 nodes, 22 sprites, 2 lights
+  ok    int_loppeloftet warm build 1: 8.52 ms, 99 nodes, 33 sprites, 2 lights
+  ok    int_loppeloftet warm build 2: 8.25 ms, 99 nodes, 33 sprites, 2 lights
+  ok    int_moebelbutikken warm build 1: 13.73 ms, 113 nodes, 40 sprites, 2 lights
+  ok    int_moebelbutikken warm build 2: 13.39 ms, 113 nodes, 40 sprites, 2 lights
+  ok    int_musikstuen warm build 1: 9.45 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_musikstuen warm build 2: 9.34 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_pippins_hus warm build 1: 9.71 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_pippins_hus warm build 2: 9.61 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_postkontoret warm build 1: 6.60 ms, 101 nodes, 34 sprites, 2 lights
+  ok    int_postkontoret warm build 2: 6.40 ms, 101 nodes, 34 sprites, 2 lights
+  ok    int_raadhuset warm build 1: 12.15 ms, 114 nodes, 43 sprites, 2 lights
+  ok    int_raadhuset warm build 2: 12.41 ms, 114 nodes, 43 sprites, 2 lights
+  ok    int_skraedderiet warm build 1: 8.84 ms, 104 nodes, 36 sprites, 2 lights
+  ok    int_skraedderiet warm build 2: 8.65 ms, 104 nodes, 36 sprites, 2 lights
+  ok    int_smedjen warm build 1: 6.89 ms, 102 nodes, 36 sprites, 3 lights
+  ok    int_smedjen warm build 2: 7.01 ms, 102 nodes, 36 sprites, 3 lights
+  ok    int_toemmerhandlen warm build 1: 8.05 ms, 114 nodes, 39 sprites, 2 lights
+  ok    int_toemmerhandlen warm build 2: 8.11 ms, 114 nodes, 39 sprites, 2 lights
+  ok    int_torvekroen warm build 1: 6.91 ms, 111 nodes, 40 sprites, 2 lights
+  ok    int_torvekroen warm build 2: 6.84 ms, 111 nodes, 40 sprites, 2 lights
+  ok    int_troldmandstaarnet warm build 1: 9.31 ms, 98 nodes, 33 sprites, 3 lights
+  ok    int_troldmandstaarnet warm build 2: 8.95 ms, 98 nodes, 33 sprites, 3 lights
+  ok    int_uglehulen warm build 1: 8.04 ms, 93 nodes, 32 sprites, 2 lights
+  ok    int_uglehulen warm build 2: 8.13 ms, 93 nodes, 32 sprites, 2 lights
+  ok    int_vagthytten warm build 1: 9.62 ms, 60 nodes, 22 sprites, 2 lights
+  ok    int_vagthytten warm build 2: 9.88 ms, 60 nodes, 22 sprites, 2 lights
+  ok    towns_interiors.build_all_under_budget (72 builds (1 cold + 2 warm) of the 24 rooms the generator writes (14 CORE + 10 EXTENDED), each from its JSON: warm p50 9.45 ms (budget <= 12; design measured 6.2), worst cold 21.50 ms (the first build of a room decodes its wall and furniture textures from disk: a sanity bound of 5000 ms that only catches a runaway build, the design measured 27.5 ms with its lighter placeholder art, a quiet machine here measures 130 - 520 ms and a load average of 30 gave 1,510 ms; the user-facing number is the windowed first frame <= 250 ms), base sprites (walls, corner, doormat, room pieces; dressing and hatch art also count toward the 130-node whole-room limit) p50 25 max 31 (<= 31; design 25 / 31) plus at most 4 additive window night layers, nodes p50 101 max 114 (hard budget <= 130; design 76 / 96 was measured before the SE1 amendment added the two talk hosts of a shop band (ShopCounter + Area2D + shape + Timer = 4 nodes each)), lights max 3 (<= 4), no builder error [], no labelled box (every piece resolves to art or a stand-in) []; per room { "int_badehuset": "109 nodes 38 sprites + 4 night layers", "int_bageriet": "110 nodes 37 sprites + 3 night layers", "int_birks_bistade": "61 nodes 23 sprites + 2 night layers", "int_brummes_hus": "57 nodes 21 sprites + 2 night layers", "int_brummes_vaerksted": "112 nodes 41 sprites + 4 night layers", "int_dyrehuset": "112 nodes 41 sprites + 4 night layers", "int_fekongens_hus": "71 nodes 29 sprites + 4 night layers", "int_froebutikken": "103 nodes 37 sprites + 3 night layers", "int_hoppe_hut": "70 nodes 28 sprites + 2 night layers", "int_hyldeblomsts_hus": "57 nodes 21 sprites + 2 night layers", "int_kikis_hytte": "60 nodes 22 sprites + 2 night layers", "int_loppeloftet": "99 nodes 33 sprites + 3 night layers", "int_moebelbutikken": "113 nodes 40 sprites + 4 night layers", "int_musikstuen": "57 nodes 21 sprites + 2 night layers", "int_pippins_hus": "57 nodes 21 sprites + 2 night layers", "int_postkontoret": "101 nodes 34 sprites + 3 night layers", "int_raadhuset": "114 nodes 43 sprites + 4 night layers", "int_skraedderiet": "104 nodes 36 sprites + 3 night layers", "int_smedjen": "102 nodes 36 sprites + 3 night layers", "int_toemmerhandlen": "114 nodes 39 sprites + 3 night layers", "int_torvekroen": "111 nodes 40 sprites + 4 night layers", "int_troldmandstaarnet": "98 nodes 33 sprites + 2 night layers", "int_uglehulen": "93 nodes 32 sprites + 2 night layers", "int_vagthytten": "60 nodes 22 sprites + 2 night layers" })
+  ok    towns_interiors.rebuild_leaks_nothing (6 more builds and frees of one room change nothing: nodes +0, orphan nodes +0, time_of_day_changed connections +0 (ShopHours and the window clock disconnect when the room leaves), game_event connections +0 (the talk hosts), interactables 0 -> 0, cached textures 160, reported stand-ins 0)
+  ok    int_badehuset: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_badehuset: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_badehuset: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_badehuset: all 5 posts and the door are reachable for a citizen body
+  ok    int_badehuset: the real-collider flood fill equals the Python flood fill (player 31 cells, citizen 44 cells)
+  ok    int_bageriet: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_bageriet: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_bageriet: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_bageriet: all 5 posts and the door are reachable for a citizen body
+  ok    int_bageriet: the real-collider flood fill equals the Python flood fill (player 16 cells, citizen 23 cells)
+  ok    int_birks_bistade: all 4 posts and the door are reachable for a citizen body
+  ok    int_birks_bistade: the real-collider flood fill equals the Python flood fill (player 19 cells, citizen 19 cells)
+  ok    int_brummes_hus: all 4 posts and the door are reachable for a citizen body
+  ok    int_brummes_hus: the real-collider flood fill equals the Python flood fill (player 15 cells, citizen 15 cells)
+  ok    int_brummes_vaerksted: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_brummes_vaerksted: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_brummes_vaerksted: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_brummes_vaerksted: all 5 posts and the door are reachable for a citizen body
+  ok    int_brummes_vaerksted: the real-collider flood fill equals the Python flood fill (player 29 cells, citizen 43 cells)
+  ok    int_dyrehuset: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_dyrehuset: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_dyrehuset: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_dyrehuset: all 4 posts and the door are reachable for a citizen body
+  ok    int_dyrehuset: the real-collider flood fill equals the Python flood fill (player 28 cells, citizen 46 cells)
+  ok    int_fekongens_hus: all 4 posts and the door are reachable for a citizen body
+  ok    int_fekongens_hus: the real-collider flood fill equals the Python flood fill (player 63 cells, citizen 63 cells)
+  ok    int_froebutikken: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_froebutikken: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_froebutikken: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_froebutikken: all 4 posts and the door are reachable for a citizen body
+  ok    int_froebutikken: the real-collider flood fill equals the Python flood fill (player 20 cells, citizen 32 cells)
+  ok    int_hoppe_hut: all 4 posts and the door are reachable for a citizen body
+  ok    int_hoppe_hut: the real-collider flood fill equals the Python flood fill (player 16 cells, citizen 16 cells)
+  ok    int_hyldeblomsts_hus: all 4 posts and the door are reachable for a citizen body
+  ok    int_hyldeblomsts_hus: the real-collider flood fill equals the Python flood fill (player 14 cells, citizen 14 cells)
+  ok    int_kikis_hytte: all 4 posts and the door are reachable for a citizen body
+  ok    int_kikis_hytte: the real-collider flood fill equals the Python flood fill (player 19 cells, citizen 19 cells)
+  ok    int_loppeloftet: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_loppeloftet: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_loppeloftet: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_loppeloftet: all 4 posts and the door are reachable for a citizen body
+  ok    int_loppeloftet: the real-collider flood fill equals the Python flood fill (player 12 cells, citizen 25 cells)
+  ok    int_moebelbutikken: the two talk hosts stand on the cells 4 and 6 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_moebelbutikken: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_moebelbutikken: the keeper post (5, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_moebelbutikken: all 4 posts and the door are reachable for a citizen body
+  ok    int_moebelbutikken: the real-collider flood fill equals the Python flood fill (player 28 cells, citizen 48 cells)
+  ok    int_musikstuen: all 4 posts and the door are reachable for a citizen body
+  ok    int_musikstuen: the real-collider flood fill equals the Python flood fill (player 19 cells, citizen 19 cells)
+  ok    int_pippins_hus: all 4 posts and the door are reachable for a citizen body
+  ok    int_pippins_hus: the real-collider flood fill equals the Python flood fill (player 19 cells, citizen 19 cells)
+  ok    int_postkontoret: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_postkontoret: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_postkontoret: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_postkontoret: all 5 posts and the door are reachable for a citizen body
+  ok    int_postkontoret: the real-collider flood fill equals the Python flood fill (player 12 cells, citizen 27 cells)
+  ok    int_raadhuset: the two talk hosts stand on the cells 4 and 6 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_raadhuset: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_raadhuset: the keeper post (5, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_raadhuset: all 5 posts and the door are reachable for a citizen body
+  ok    int_raadhuset: the real-collider flood fill equals the Python flood fill (player 40 cells, citizen 59 cells)
+  ok    int_skraedderiet: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_skraedderiet: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_skraedderiet: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_skraedderiet: all 4 posts and the door are reachable for a citizen body
+  ok    int_skraedderiet: the real-collider flood fill equals the Python flood fill (player 18 cells, citizen 30 cells)
+  ok    int_smedjen: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_smedjen: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_smedjen: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_smedjen: all 4 posts and the door are reachable for a citizen body
+  ok    int_smedjen: the real-collider flood fill equals the Python flood fill (player 19 cells, citizen 31 cells)
+  ok    int_toemmerhandlen: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_toemmerhandlen: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_toemmerhandlen: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_toemmerhandlen: all 4 posts and the door are reachable for a citizen body
+  ok    int_toemmerhandlen: the real-collider flood fill equals the Python flood fill (player 22 cells, citizen 34 cells)
+  ok    int_torvekroen: the two talk hosts stand on the cells 5 and 7 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_torvekroen: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_torvekroen: the keeper post (6, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_torvekroen: all 12 posts and the door are reachable for a citizen body
+  ok    int_torvekroen: the real-collider flood fill equals the Python flood fill (player 52 cells, citizen 83 cells)
+  ok    int_troldmandstaarnet: the two talk hosts stand on the cells 2 and 4 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_troldmandstaarnet: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_troldmandstaarnet: the keeper post (3, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_troldmandstaarnet: all 4 posts and the door are reachable for a citizen body
+  ok    int_troldmandstaarnet: the real-collider flood fill equals the Python flood fill (player 18 cells, citizen 29 cells)
+  ok    int_uglehulen: the two talk hosts stand on the cells 2 and 4 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_uglehulen: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_uglehulen: the keeper post (3, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_uglehulen: all 5 posts and the door are reachable for a citizen body
+  ok    int_uglehulen: the real-collider flood fill equals the Python flood fill (player 11 cells, citizen 21 cells)
+  ok    int_vagthytten: all 4 posts and the door are reachable for a citizen body
+  ok    int_vagthytten: the real-collider flood fill equals the Python flood fill (player 19 cells, citizen 19 cells)
+  ok    towns_interiors.talk_cells_free_and_beside_the_counter_ends (in the 24 generated rooms (15 with a counter band) the `talk` hosts stand on the cells m - 1 and m + 1 of row 3 (m = the keeper's column = the counter middle: the customer cells in front of the counter ENDS), free of items, posts and hatch bars, walkable for the real player body, and the room builds exactly two ShopCounter hosts of kind talk (ellipse 40 x 22) on them)
+  ok    towns_interiors.door_to_counter_flood_fill (flood fill with the real colliders (the player's mask: world, NPC bars, ground) in the 24 generated rooms (15 with a counter band): from the spawn the PLAYER walks to the door, the whole door lane, the counter front, both talk cells and every customer post; it agrees cell by cell with the Python flood fill in every room: ["int_badehuset player 31 / 31 cells, citizen 44 / 44 (python / godot)", "int_bageriet player 16 / 16 cells, citizen 23 / 23 (python / godot)", "int_birks_bistade player 19 / 19 cells, citizen 19 / 19 (python / godot)", "int_brummes_hus player 15 / 15 cells, citizen 15 / 15 (python / godot)"] ... 24 rooms)
+  ok    towns_interiors.keeper_behind_counter (in the 24 generated rooms (15 with a counter band) the keeper post stands one row behind the 3 x 1 counter (row 1 behind row 2): a CITIZEN reaches it through the hatch gap, the PLAYER body does not reach it nor the cell behind it)
+  ok    towns_interiors.every_post_reachable_by_citizen (in the 24 generated rooms (15 with a counter band) every post (keeper, customers, beds, seats ...) and the door are reachable for a citizen body (mask world | player | ground, not the NPC layer), customer posts also for the player)
+  ok    int_froebutikken: a citizen body walks the 8 cell path through the hatch gap to the keeper post (7 px away)
+  ok    int_froebutikken lane 0.5: the player body is stopped 398 px from the keeper post
+  ok    int_froebutikken lane 3.0: the player body is stopped 179 px from the keeper post
+  ok    int_froebutikken lane 6.5: the player body is stopped 193 px from the keeper post
+  ok    int_froebutikken lane 4.0: the player body is stopped 131 px from the keeper post
+  ok    int_postkontoret: a citizen body walks the 7 cell path through the hatch gap to the keeper post (8 px away)
+  ok    int_postkontoret lane 0.5: the player body is stopped 352 px from the keeper post
+  ok    int_postkontoret lane 3.0: the player body is stopped 179 px from the keeper post
+  ok    int_postkontoret lane 6.5: the player body is stopped 182 px from the keeper post
+  ok    int_postkontoret lane 4.0: the player body is stopped 131 px from the keeper post
+  ok    towns_interiors.hatch_stops_player_not_citizen (2 rooms x 4 lanes (8 runs) with real moving bodies: the PLAYER body (285 px/s) never reached the keeper post in 8 of 8 runs (it is stopped in front of the counter band), a CITIZEN body (185 px/s, one walk per room along its path from the spawn through the hatch gap) reached the post in 8 of 8)
+  ok    towns_interiors.piece_resolution_order (a room item id resolves: baked kit manifest > furniture.json > data/interiors/stand_ins.json > a labelled box. Without a manifest: chair_pine is furniture true, anvil is the stand-in table_stump true (placed at the KIT footprint 1 x 1 and layer floor, not the borrowed art's 2 x 1 true), a kit id without a stand-in (seed_drawers_wall) and an unknown id are boxes true; counter_pine at rotation 1 is 1 x 3 true. With a baked manifest the kit piece wins over furniture (chair_oak) and over the stand-in (anvil) true, furniture.json still beats the stand-in table (chair_pine) true)
+  ok    towns_interiors.stand_ins_listed (data/interiors/stand_ins.json holds 17 stand-ins (the 16 pieces the 14 core rooms draw as something else + counter_pine), each a kit id of the I3 package drawn by an EXISTING furniture piece true; the post office and the seed shop REPORT exactly ["counter_pine", "letter_desk", "mail_sack", "parcel_stack", "pigeonhole_wall"] when built (PieceCatalog.used_stand_ins) and the validator lists the same pieces true)
+  ok    towns_interiors.kit_table_matches_manifest (data/interiors/kit_footprints.json equals the baked manifest: id, footprint, layer and number of baked rotations of every piece (0 problems []))
+  ok    towns_interiors.dress_overlay_merged_when_present (data/interiors/dress/int_<id>.json is merged after the items of the room when the file exists: the seed shop builds 12 pieces (was 10) and 10 colliders (was 9: the plant, not the flat rug) true, the order is room items then overlay true, a room without a file is unchanged true; tools/towns/interiors/validate.py merges it too: free cells pass, a rug on the counter band and a piece on the counter are refused true)
+  ok    towns_interiors.hatch_cells_draw_counter_hatch_when_art_exists (the 5 hatch cells of the seed shop are invisible bars on the NPC layer (5) and nothing is drawn while the art is missing (sprites 32; a manifest without counter_hatch still 32); once the manifest has the piece every hatch cell gets its sprite (37 = 32 + 5) and the bars stay the collision (5 on layer NPC))
+  ok    the window night layer at 06:00 has alpha 0.67 (outdoor glow 0.74 x 0.9)
+  ok    the window night layer at 12:00 has alpha 0.00 (outdoor glow 0.00 x 0.9)
+  ok    the window night layer at 17:30 has alpha 0.00 (outdoor glow 0.00 x 0.9)
+  ok    the window night layer at 19:30 has alpha 0.90 (outdoor glow 1.00 x 0.9)
+  ok    the window night layer at 22:00 has alpha 0.90 (outdoor glow 1.00 x 0.9)
+  ok    the window night layer at 00:30 has alpha 0.90 (outdoor glow 1.00 x 0.9)
+  ok    the window night layer at 01:30 has alpha 0.90 (outdoor glow 1.00 x 0.9)
+  ok    towns_interiors.windows_fade_with_the_outdoor_hour (the additive night layers of the 3 windows fade with the OUTDOOR hour (the farm glow curve of lua/config/ambient.lua, not the room's own always-warm `home` preset): dark at 12:00 and 17:30 (alpha 0.00 / 0.00), 0.67 at dawn 06:00, lit at 19:30 (0.90), 22:00 (0.90) and through midnight 24:30 / 25:30 (0.90 / 0.90), listening to time_of_day_changed)
+  ok    towns_interiors.painted_light_masks_follow_body_and_clock (6 painted accents align with the final body offset plus the trimmed source offset, use additive blending, fade at noon/night/after midnight, and add at most one service light per room)
+  ok    towns_interiors.ceiling_dressing_stays_in_foreground (17 hanging pieces use the foreground plane above the y-sorted actors)
+  ok    towns_interiors.counter_opens_shop (E on the middle host (150 x 40, on the cell in front of the counter middle) calls ShopSystem.open_shop(seed_shop): EventBus.shop_opened(seed_shop) true, the prompt is COUNTER_SHOP "Se varer" true)
+  ok    towns_interiors.talk_inert_without_keeper (with no keeper node in the room (before the room director of T-director) both talk hosts keep their Area2D disabled, are hidden and invisible to the E-query (a physics query on their cells finds nothing) true)
+  ok    towns_interiors.talk_forwards_to_keeper_npc (once a keeper node exists (NpcDirector.node_of late bound; a test resolver here) both talk hosts wake (area_populated or the 0.5 s poll) true, read COUNTER_TALK "Tal med Butiksfe Kløvermynte" with the keeper's NPC_<ID> name true and call the keeper's own interact(player): 2 calls true, so the greeting, weekly heart, gifts, topics and quests of the Lua dialogue run unchanged; without a keeper they go inert again true)
+  ok    towns_interiors.desk_emits_open_home_builder (the builder yard's desk (40 x 22, COUNTER_DESK "Husbyggeri") emits game_event open_home_builder {tier} with the world flag home_tier (4 -> tier 4, no flag -> tier 1): the ten-step home ladder never depends on a conversation; only the builder yard's generated room carries the desk marker true)
+  ok    towns_interiors.appraisal_counter_events_and_refusals (post_counter and bar emit open_post_office / open_inn_menu {npc, building} true; Uglehulen's centre host (kind appraisal, COUNTER_APPRAISE "Vurdér fund", same geometry as the shop): Monday (field day) refused with the whisper of Hours.closed_info "Lukket i dag. Åbner igen tirsdag." true, Wednesday 11:00 refused with the opening time true, open with no LootService.appraise yet: the whisper COUNTER_APPRAISE_SOON true, with it: game_event open_appraisal {npc, building} true, closed again: refused true, switch off: not refused true)
+  ok    towns_interiors.marker_handlers_inside_room (bath / board / mailbox are built by the handler of THEIR package through IsoArea.resolve_handler inside the room (create_marker(params, pos, cell, area)): with handlers registered the room holds ["Probe_bath", "Probe_board", "Probe_mailbox"] and no counter of those kinds ([] left), the handler node sits on its cell true; without a handler each falls back to a ShopCounter that announces game_event counter_used with its kind ["bath", "board", "mailbox"])
+  ok    towns_interiors.no_forward_to_keeper_seam (ShopCounter has the SIX kinds ["shop", "post_counter", "bar", "appraisal", "desk", "talk"] and no forward_to_keeper seam and no gift shortcut: no such method or property, no such identifier in code (0 hits []): a giftable hotbar item never takes E first (it would have sent 12 of 12 tools and 8 of 8 seeds into a gift talk instead of the panel))
+  ok    towns_interiors.e_query_replay_rules_ABC (the Python replay of the BUILT E-query (circle r = 45 at the facing cell, 12-gon ellipses, the host NEAREST TO THE PLAYER wins) on the two shop bands: A standing on an end cell facing the counter selects that cell's talk host 36 of 36, B the middle cell selects the centre host 18 of 18, C a talk host is never selected from the middle cell at any of the 8 facings (0 violations): "over 2 rooms: A 36 / 36, B 18 / 18, C violations 0, keeper-direct selections 0"; on the 14 CORE layouts of the generator it reproduces the design's measurement "over 14 rooms: A 252 / 252, B 126 / 126, C violations 0, keeper-direct selections 0" true; a talk host one cell off its counter end is caught (exit 1) true)
+  ok    int_froebutikken on the real player: A 18 / 18 (end cells select their talk hosts), B 9 / 9 (the middle cell selects the centre host), C 0 (a talk host from the middle cell at any facing)
+  ok    int_postkontoret on the real player: A 18 / 18 (end cells select their talk hosts), B 9 / 9 (the middle cell selects the centre host), C 0 (a talk host from the middle cell at any facing)
+  ok    towns_interiors.talk_cells_select_keeper_real_player (the REAL player (res://scripts/world2d/player_2d.gd, nearest_interactable on the real hosts of the built rooms): E on an end cell facing the counter selects that cell's talk host 36 of 36 and calls the keeper's interact (36 calls); E on the middle cell selects the centre host 18 of 18 (it opens the panel: 9 shop_opened = the seed shop's 9 samples; the post counter only announces) and never a talk host at any facing (0 of 144 samples))
+  ok    towns_interiors.replay_matches_real_player (the Python replay and the real player agree sample by sample over every standable cell x 9 sub-positions x 8 facings of the two shop rooms: 2376 samples, 0 mismatches , host histogram { "none": 1224, "S": 514, "T0": 282, "T1": 252, "X": 104 })
+  ok    bakery door on mandag at 10:00: closed, reason day
+  ok    bakery door on tirsdag at 06:00: closed, reason hours
+  ok    bakery door on tirsdag at 17:30: closed, reason hours
+  ok    bakery door on tirsdag at 10:00: open, reason open
+  ok    bakery door on tirsdag at 07:00: open, reason open
+  ok    bakery door on tirsdag at 16:59: open, reason open
+  ok    towns_interiors.door_reasons (Door2D.is_open reasons day / hours / festival / open over 6 moments ALL AGREE; the whisper is tr(KEY) % args: "Lukket i dag. Åbner igen tirsdag." (day) and "Lukket lige nu. Åbner kl. 07:00." (hours) true, a festival refuses with HOURS_CLOSED_FESTIVAL true; a closed door whispers ONCE per approach (two entries, one whisper; leaving rearms it) true and never travels; an open door requests area_change_requested(int_bageriet, default) true; the exit door of a room is always open at 03:00 and travels out true; with the switch off the shop door is always open true)
+  ok    towns_interiors.door_runs_without_routines (scripts/towns/routines.gd (T-routes, wave 5) is reached only through Hours.where_is (a path string with the default null): without it a home door is a locked nameplate (reason locked, HOURS_HOME_LOCKED) true while a shop door needs no Routines and opens at Tuesday 10:00 true; hearts come from SocialManager and then the flag friend_<npc>, never through Routines)
+  ok    home door: 2 hearts, owner stay int_fx_home.table (eat): open, reason open
+  ok    home door: 0 hearts, owner stay int_fx_home.table (eat): closed, reason stranger
+  ok    home door: 1 hearts, owner stay int_fx_home.table (eat): open, reason open
+  ok    home door: 2 hearts, owner stay fx_town.bench (sit): closed, reason away
+  ok    home door: 2 hearts, owner stay int_fx_home.bed (sleep): closed, reason away
+  ok    home door: 2 hearts, owner inside int_fx_home.table (eat): open, reason open
+  ok    home door: 2 hearts, owner stay int_other.table (eat): closed, reason away
+  ok    towns_interiors.home_door_rules (a home door opens only while the owner is IN the house (state stay | inside, place int_<building>), AWAKE (act not sleep) and the friendship allows it (friend_<npc> >= 1): ["true open", "false stranger", "true open", "false away", "false away", "true open", "false away"]; hearts through the flag friend_<npc> without a SocialManager (0 -> stranger true, 1 -> open true), the hearts table of the routines context wins true, min_hearts is honoured true)
+  ok    fjerpens_hytte is a locked nameplate door (sign "Fjerpens hytte", whisper HOURS_HOME_LOCKED, no travel)
+  ok    koekkenhave_skuret is a locked nameplate door (sign "Køkkenhave-skuret", whisper HOURS_HOME_LOCKED, no travel)
+  ok    pingvinens_hus is a locked nameplate door (sign "Postpingvinens hus", whisper HOURS_HOME_LOCKED, no travel)
+  ok    towns_interiors.locked_nameplate_door (a building without an interior (fjerpens_hytte, koekkenhave_skuret, pingvinens_hus) are LOCKED NAMEPLATE doors: never open, the whisper is HOURS_HOME_LOCKED "Døren er låst.", the sign shows the name only (BLD_<ID>): ["fjerpens_hytte -> Fjerpens hytte", "koekkenhave_skuret -> Køkkenhave-skuret", "pingvinens_hus -> Postpingvinens hus"])
+  ok    no_such_building_xyz (no registry row) is a locked nameplate labelled BLD_NO_SUCH_BUILDING_XYZ: "BLD_NO_SUCH_BUILDING_XYZ"
+  ok    towns_interiors.door_without_registry_row_is_locked_nameplate (a door marker whose building has NO registry row at all (the four EXTENDED houses of hyggebyen.map while lua/buildings/ext.lua is absent, and an invented id) is the same locked nameplate, labelled with the convention key BLD_<BUILDING_ID> that towns.csv defines for all 30 buildings (DT49): ["no_such_building_xyz -> BLD_NO_SUCH_BUILDING_XYZ"])
+  ok    towns_interiors.door_sign_shows_emblem_when_art_exists (the door sign is a world Label that shows within 3 cells of the door (far: hidden true, two cells away: shown true, away again: hidden true), reading the name over HOURS_SIGN with today's hours and the closed days: "Kløvermyntes Frø - åbent 8-18 / Lukket: søndag" true; a night shop reads 20-23:30 true; the arrival spawn from_int_froebutikken is created one cell in front true; with no I3 manifest no bracket and no plate are drawn true, with a baked sign_bracket and an emblem plate both appear above the door true and a row whose plate is not in the manifest draws nothing true - the text stays the BLD_<ID> label either way (no glyph is ever baked into art))
+  ok    towns_interiors.every_door_round_trips (in the REAL WorldRoot2D every door round-trips: the player walks onto the door of the seed shop, the post office and a home that opens (owner at home, 1 heart, Routines stand-in) and arrives on the room's `default` spawn, walks onto the exit door (always open) and arrives on the outer area's from_int_<building> spawn, both 0.0 px from the spawn (["int_froebutikken in 0.00 px, out 0.00 px, quiet true / true", "int_postkontoret in 0.00 px, out 0.00 px, quiet true / true", "int_hoppe_hut in 0.00 px, out 0.00 px, quiet true / true"]); a closed door (Sunday) whispers once and moves nobody true)
+  ok    towns_interiors.arrival_spawn_does_not_retrigger (standing on an arrival spawn for 90 physics frames triggers nothing, inside (the room's default spawn is one cell in front of the exit door) and outside (from_int_<building> is one cell in front of the door): no area_change_requested after the arrival (["int_froebutikken in 0.00 px, out 0.00 px, quiet true / true", "int_postkontoret in 0.00 px, out 0.00 px, quiet true / true", "int_hoppe_hut in 0.00 px, out 0.00 px, quiet true / true"]))
+  ok    seed shop, Tuesday 16:00: 0 whisper(s) and 0 travel request(s) so far ([])
+  ok    seed shop, Tuesday 17:00: 0 whisper(s) and 0 travel request(s) so far ([])
+  ok    seed shop, Tuesday 17:29: 0 whisper(s) and 0 travel request(s) so far ([])
+  ok    seed shop, Tuesday 17:30: 1 whisper(s) and 0 travel request(s) so far (["HOURS_CLOSING_SOON"])
+  ok    seed shop, Tuesday 17:45: 1 whisper(s) and 0 travel request(s) so far (["HOURS_CLOSING_SOON"])
+  ok    seed shop, Tuesday 17:59: 1 whisper(s) and 0 travel request(s) so far (["HOURS_CLOSING_SOON"])
+  ok    seed shop, Tuesday 18:00: 2 whisper(s) and 1 travel request(s) so far (["HOURS_CLOSING_SOON", "HOURS_CLOSED_BELL"])
+  ok    seed shop, Tuesday 18:12: 2 whisper(s) and 1 travel request(s) so far (["HOURS_CLOSING_SOON", "HOURS_CLOSED_BELL"])
+  ok    towns_interiors.closing_sequence (the seed shop (closes 18:00): nothing at 17:00 and 17:29, at 17:30 the whisper HOURS_CLOSING_SOON and game_event closing_warning once (not again at 17:45 or 17:59), at 18:00 the whisper HOURS_CLOSED_BELL, shop_open_changed and area_change_requested(hyggebyen, from_int_froebutikken): ["HOURS_CLOSING_SOON", "HOURS_CLOSED_BELL"], then nothing more true)
+  ok    towns_interiors.events_closing_warning_and_shop_open_changed (closing_warning {shop: seed_shop, minutes_left: 30 (an int)} once per shop and day true (a new day rearms it true); shop_open_changed {shop, open: false, reason, opens_at, closes_at} (reason hours, next opening 8.0, closes 18.0) true, in the order warning then change true; closed by the weekday it says reason day true)
+  ok    towns_interiors.closing_held_during_modal (a shop panel open at closing time is asked to close first (ui_panel_toggled(shop, false)) and the player is shown out true; with a DIALOGUE open at 18:06 nothing happens (no whisper, no travel) and the bell and the travel come when it ends true true; the pause menu holds it back as well true true)
+  ok    towns_interiors.closing_waits_for_travel (a closing tick that lands in the 0.25 - 0.5 s fade of entering the room (WorldRoot2D.traveling) or in a sleep sequence is RETRIED on the next tick and never lost: held while traveling true, held while sleeping true, evicted on the first tick after true; `evicted` is set only when the area change is really requested, so the player is never left inside a closed shop)
+  ok    towns_interiors.shop_hours_runs_without_routines (ShopHours needs no Routines: the closing sequence above ran without them (its clock context is Hours.now_ctx()), and the owner check of a home goes through Hours.where_is (a path string): with no Routines there is no eviction by owner (a home at 20:00 and at 22:12 evicts nobody true))
+  ok    towns_interiors.home_eviction (a home evicts its guest when the owner goes to bed or walks out (Routines stand-in: 20:00 at the table -> stays 20.0 -> false, 20:42 out on the bench and 22:12 in bed -> shown out): ["20.0 -> false", "20.7 -> true", "22.2 -> true"]; a home sends no shop_open_changed (it is no shop) true)
+  ok    the validator passes the generated room int_badehuset (+6 dressing pieces)
+  ok    the validator passes the generated room int_bageriet (+5 dressing pieces)
+  ok    the validator passes the generated room int_birks_bistade
+  ok    the validator passes the generated room int_brummes_hus
+  ok    the validator passes the generated room int_brummes_vaerksted (+6 dressing pieces)
+  ok    the validator passes the generated room int_dyrehuset (+6 dressing pieces)
+  ok    the validator passes the generated room int_fekongens_hus
+  ok    the validator passes the generated room int_froebutikken (+2 dressing pieces)
+  ok    the validator passes the generated room int_hoppe_hut (+6 dressing pieces)
+  ok    the validator passes the generated room int_hyldeblomsts_hus
+  ok    the validator passes the generated room int_kikis_hytte
+  ok    the validator passes the generated room int_loppeloftet (+6 dressing pieces)
+  ok    the validator passes the generated room int_moebelbutikken (+2 dressing pieces)
+  ok    the validator passes the generated room int_musikstuen
+  ok    the validator passes the generated room int_pippins_hus
+  ok    the validator passes the generated room int_postkontoret (+5 dressing pieces)
+  ok    the validator passes the generated room int_raadhuset (+6 dressing pieces)
+  ok    the validator passes the generated room int_skraedderiet (+6 dressing pieces)
+  ok    the validator passes the generated room int_smedjen (+6 dressing pieces)
+  ok    the validator passes the generated room int_toemmerhandlen (+6 dressing pieces)
+  ok    the validator passes the generated room int_torvekroen
+  ok    the validator passes the generated room int_troldmandstaarnet (+6 dressing pieces)
+  ok    the validator passes the generated room int_uglehulen (+6 dressing pieces)
+  ok    the validator passes the generated room int_vagthytten
+  ok    the generator's stub map of int_badehuset is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_bageriet is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_birks_bistade is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_brummes_hus is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_brummes_vaerksted is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_dyrehuset is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_fekongens_hus is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_froebutikken is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_hoppe_hut is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_hyldeblomsts_hus is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_kikis_hytte is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_loppeloftet is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_moebelbutikken is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_musikstuen is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_pippins_hus is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_postkontoret is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_raadhuset is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_skraedderiet is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_smedjen is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_toemmerhandlen is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_torvekroen is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_troldmandstaarnet is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_uglehulen is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_vagthytten is InteriorRoom.stub_map (zone traetoppen)
+  ok    towns_interiors.tool_regenerates_identical_specs (tools/towns/interiors/generate.py is seed-free and deterministic: two runs write the same 24 specs byte for byte true, the three fixture rooms ARE its output true, `--check` over the fixtures and data/interiors passes true, a changed spec is noticed (exit 1) true and one marked hand_edited is skipped true; validate.py: all 24 generated rooms pass (24 PASS), `validate.py data/interiors tests/fixtures/towns/interiors` prints 0 problems true, its self-test catches 14 mutants and the clean room passes true; the 24 stub maps it writes equal InteriorRoom.stub_map true; the building table of the generator equals the Lua registry (drift []))
+  --    towns_interiors: 285 checks, 0 failed, 0 skipped, 9.4 s
+== section towns_post  (res://tests/sections/towns_post.gd)
+  ok    towns_post.screen_installed
+  ok    towns_post.only_known_citizens
+  ok    towns_post.one_heart_adds_friend
+  ok    towns_post.hero_twin_is_omitted
+  ok    towns_post.rows_follow_clock
+  ok    towns_post.no_raw_keys
+  ok    towns_post.hiding_withholds_spot
+  ok    towns_post.sleep_wording
+  ok    towns_post.forest_wording
+  ok    towns_post.counter_opens
+  ok    towns_post.initial_focus
+  ok    towns_post.ring_up
+  ok    towns_post.ring_down
+  ok    towns_post.read_only_accept
+  ok    towns_post.page_changes_town
+  ok    towns_post.english_title
+  ok    towns_post.cancel_unpauses
+  ok    towns_post.rule_report_clean ([])
+  ok    towns_post.post.visible (clean)
+  ok    towns_post.post.initial_focus (clean)
+  ok    towns_post.post.focus_walk (35 of 35 controls reached in 188 presses)
+  ok    towns_post.post.focusable (20 interactive, 35 keyboard-focusable)
+  ok    towns_post.post.rules (31 nodes, 5 text, 21 boxes, 20 interactive scanned)
+  ok    towns_post.post.i18n_flip (clean)
+  ok    towns_post.post.escape (1 modal(s) opened and closed with Esc in order)
+  SKIP  ui_audit post.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit post.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit post.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit post.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    towns_post.all_registry_checks ([])
+  --    towns_post: 26 checks, 0 failed, 4 skipped, 0.6 s
+== section towns_routes  (res://tests/sections/towns_routes.gd)
+  ok    towns_routes.table_loads_and_plans
+  ok    Route source inventory also catches removed inputs
+  ok    Route source is current: res://assets/iso_props/furniture/furniture.json
+  ok    Route source is current: res://assets/iso_props/shops/core/shops.json
+  ok    Route source is current: res://assets/iso_props/shops/special/shops.json
+  ok    Route source is current: res://data/interiors/core/int_badehuset.json
+  ok    Route source is current: res://data/interiors/core/int_bageriet.json
+  ok    Route source is current: res://data/interiors/core/int_brummes_vaerksted.json
+  ok    Route source is current: res://data/interiors/core/int_dyrehuset.json
+  ok    Route source is current: res://data/interiors/core/int_froebutikken.json
+  ok    Route source is current: res://data/interiors/core/int_gaestehytten.json
+  ok    Route source is current: res://data/interiors/core/int_loppeloftet.json
+  ok    Route source is current: res://data/interiors/core/int_moebelbutikken.json
+  ok    Route source is current: res://data/interiors/core/int_postkontoret.json
+  ok    Route source is current: res://data/interiors/core/int_raadhuset.json
+  ok    Route source is current: res://data/interiors/core/int_skraedderiet.json
+  ok    Route source is current: res://data/interiors/core/int_smedjen.json
+  ok    Route source is current: res://data/interiors/core/int_toemmerhandlen.json
+  ok    Route source is current: res://data/interiors/core/int_troldmandstaarnet.json
+  ok    Route source is current: res://data/interiors/core/int_uglehulen.json
+  ok    Route source is current: res://data/interiors/dress/int_badehuset.json
+  ok    Route source is current: res://data/interiors/dress/int_bageriet.json
+  ok    Route source is current: res://data/interiors/dress/int_brummes_vaerksted.json
+  ok    Route source is current: res://data/interiors/dress/int_dyrehuset.json
+  ok    Route source is current: res://data/interiors/dress/int_froebutikken.json
+  ok    Route source is current: res://data/interiors/dress/int_hoppe_hut.json
+  ok    Route source is current: res://data/interiors/dress/int_loppeloftet.json
+  ok    Route source is current: res://data/interiors/dress/int_moebelbutikken.json
+  ok    Route source is current: res://data/interiors/dress/int_postkontoret.json
+  ok    Route source is current: res://data/interiors/dress/int_raadhuset.json
+  ok    Route source is current: res://data/interiors/dress/int_skraedderiet.json
+  ok    Route source is current: res://data/interiors/dress/int_smedjen.json
+  ok    Route source is current: res://data/interiors/dress/int_toemmerhandlen.json
+  ok    Route source is current: res://data/interiors/dress/int_troldmandstaarnet.json
+  ok    Route source is current: res://data/interiors/dress/int_uglehulen.json
+  ok    Route source is current: res://data/interiors/ext/int_birks_bistade.json
+  ok    Route source is current: res://data/interiors/ext/int_brummes_hus.json
+  ok    Route source is current: res://data/interiors/ext/int_fekongens_hus.json
+  ok    Route source is current: res://data/interiors/ext/int_hoppe_hut.json
+  ok    Route source is current: res://data/interiors/ext/int_hyldeblomsts_hus.json
+  ok    Route source is current: res://data/interiors/ext/int_kikis_hytte.json
+  ok    Route source is current: res://data/interiors/ext/int_musikstuen.json
+  ok    Route source is current: res://data/interiors/ext/int_pippins_hus.json
+  ok    Route source is current: res://data/interiors/ext/int_torvekroen.json
+  ok    Route source is current: res://data/interiors/ext/int_vagthytten.json
+  ok    Route source is current: res://data/interiors/kit_footprints.json
+  ok    Route source is current: res://data/maps/farm.map
+  ok    Route source is current: res://data/maps/hyggebyen.map
+  ok    Route source is current: res://data/towns/nav_city.json
+  ok    Route source is current: res://data/towns/traetoppen.json
+  ok    Route source is current: res://data/traetoppen/traetoppen.json
+  ok    Route source is current: res://lua/config/props.lua
+  ok    Route source is current: res://scripts/towns/fest_set.gd
+  ok    Route source is current: res://scripts/towns/level_nav.gd
+  ok    Route source is current: res://scripts/towns/nav_grid.gd
+  ok    Route source is current: res://scripts/towns/town_marks.gd
+  ok    Route source is current: res://tools/town/city_nav_bake.gd
+  ok    Route source is current: res://tools/towns/bake_routes.gd
+  ok    Route source is current: res://tools/towns/route_baker.gd
+  ok    farm table dimensions
+  ok    farm anchors are reachable
+  ok    hyggebyen table dimensions
+  ok    hyggebyen anchors are reachable
+  ok    int_badehuset table dimensions
+  ok    int_badehuset anchors are reachable
+  ok    int_bageriet table dimensions
+  ok    int_bageriet anchors are reachable
+  ok    int_birks_bistade table dimensions
+  ok    int_birks_bistade anchors are reachable
+  ok    int_brummes_hus table dimensions
+  ok    int_brummes_hus anchors are reachable
+  ok    int_brummes_vaerksted table dimensions
+  ok    int_brummes_vaerksted anchors are reachable
+  ok    int_dyrehuset table dimensions
+  ok    int_dyrehuset anchors are reachable
+  ok    int_fekongens_hus table dimensions
+  ok    int_fekongens_hus anchors are reachable
+  ok    int_froebutikken table dimensions
+  ok    int_froebutikken anchors are reachable
+  ok    int_gaestehytten table dimensions
+  ok    int_gaestehytten anchors are reachable
+  ok    int_hoppe_hut table dimensions
+  ok    int_hoppe_hut anchors are reachable
+  ok    int_hyldeblomsts_hus table dimensions
+  ok    int_hyldeblomsts_hus anchors are reachable
+  ok    int_kikis_hytte table dimensions
+  ok    int_kikis_hytte anchors are reachable
+  ok    int_loppeloftet table dimensions
+  ok    int_loppeloftet anchors are reachable
+  ok    int_moebelbutikken table dimensions
+  ok    int_moebelbutikken anchors are reachable
+  ok    int_musikstuen table dimensions
+  ok    int_musikstuen anchors are reachable
+  ok    int_pippins_hus table dimensions
+  ok    int_pippins_hus anchors are reachable
+  ok    int_postkontoret table dimensions
+  ok    int_postkontoret anchors are reachable
+  ok    int_raadhuset table dimensions
+  ok    int_raadhuset anchors are reachable
+  ok    int_skraedderiet table dimensions
+  ok    int_skraedderiet anchors are reachable
+  ok    int_smedjen table dimensions
+  ok    int_smedjen anchors are reachable
+  ok    int_toemmerhandlen table dimensions
+  ok    int_toemmerhandlen anchors are reachable
+  ok    int_torvekroen table dimensions
+  ok    int_torvekroen anchors are reachable
+  ok    int_troldmandstaarnet table dimensions
+  ok    int_troldmandstaarnet anchors are reachable
+  ok    int_uglehulen table dimensions
+  ok    int_uglehulen anchors are reachable
+  ok    int_vagthytten table dimensions
+  ok    int_vagthytten anchors are reachable
+  ok    traetoppen table dimensions
+  ok    traetoppen anchors are reachable
+  ok    torvet festival has 28 distinct posts
+  ok    hyggetorv festival has 28 distinct posts
+  ok    badehus festival has 28 distinct posts
+  ok    raadhus festival has 28 distinct posts
+  ok    Farm to shop uses real paths and portals
+  ok    towns_routes.fallback_is_flagged
+  ok    towns_routes.no_forward_class_refs ([])
+  ok    towns_routes.routines.feasible
+  ok    towns_routes.routines.places_exist
+  ok    towns_routes.hours.keeper_covers_hours
+  ok    towns_routes.hours.consistency
+  ok    towns_routes.routines.post_capacity
+  ok    towns_routes.towns.visual_budget
+  ok    towns_routes.routines.no_short_visits
+  ok    towns_routes.routines.day_wrap
+  ok    towns_routes.hours.visits_inside_hours
+  ok    towns_routes.tool_printed_ids (Town CLI validator printed 9 PASS/FAIL ids)
+  ok    towns_routes.tool_exit_code (Town CLI validator exit code 0)
+  --    towns_routes: 133 checks, 0 failed, 0 skipped, 2.9 s
+== section towns_routines  (res://tests/sections/towns_routines.gd)
+  ok    towns_routines.route_table_ready
+  ok    towns_routines.core_files_load
+  ok    towns_routines.rule_routines_feasible ([])
+  ok    towns_routines.rule_places_exist ([])
+  ok    towns_routines.rule_keeper_covers_hours ([])
+  ok    towns_routines.rule_hours_consistency ([])
+  ok    towns_routines.rule_post_capacity ([])
+  ok    towns_routines.rule_visual_budget ([])
+  ok    towns_routines.rule_no_short_visits ([])
+  ok    towns_routines.rule_day_wrap ([])
+  ok    towns_routines.rule_visits_inside_hours ([])
+  ok    appraiser_fru_ugle routine schema
+  ok    appraiser_fru_ugle resolves at raw hour 2.00
+  ok    appraiser_fru_ugle resolves at raw hour 3.50
+  ok    appraiser_fru_ugle resolves at raw hour 5.99
+  ok    appraiser_fru_ugle resolves at raw hour 6.00
+  ok    appraiser_fru_ugle resolves at raw hour 24.50
+  ok    appraiser_fru_ugle resolves at raw hour 25.50
+  ok    baker_maja routine schema
+  ok    baker_maja resolves at raw hour 2.00
+  ok    baker_maja resolves at raw hour 3.50
+  ok    baker_maja resolves at raw hour 5.99
+  ok    baker_maja resolves at raw hour 6.00
+  ok    baker_maja resolves at raw hour 24.50
+  ok    baker_maja resolves at raw hour 25.50
+  ok    bathkeeper_sofus routine schema
+  ok    bathkeeper_sofus resolves at raw hour 2.00
+  ok    bathkeeper_sofus resolves at raw hour 3.50
+  ok    bathkeeper_sofus resolves at raw hour 5.99
+  ok    bathkeeper_sofus resolves at raw hour 6.00
+  ok    bathkeeper_sofus resolves at raw hour 24.50
+  ok    bathkeeper_sofus resolves at raw hour 25.50
+  ok    beekeeper_birk routine schema
+  ok    beekeeper_birk resolves at raw hour 2.00
+  ok    beekeeper_birk resolves at raw hour 3.50
+  ok    beekeeper_birk resolves at raw hour 5.99
+  ok    beekeeper_birk resolves at raw hour 6.00
+  ok    beekeeper_birk resolves at raw hour 24.50
+  ok    beekeeper_birk resolves at raw hour 25.50
+  ok    bertil routine schema
+  ok    bertil resolves at raw hour 2.00
+  ok    bertil resolves at raw hour 3.50
+  ok    bertil resolves at raw hour 5.99
+  ok    bertil resolves at raw hour 6.00
+  ok    bertil resolves at raw hour 24.50
+  ok    bertil resolves at raw hour 25.50
+  ok    bodil routine schema
+  ok    bodil resolves at raw hour 2.00
+  ok    bodil resolves at raw hour 3.50
+  ok    bodil resolves at raw hour 5.99
+  ok    bodil resolves at raw hour 6.00
+  ok    bodil resolves at raw hour 24.50
+  ok    bodil resolves at raw hour 25.50
+  ok    carpenter_brumme routine schema
+  ok    carpenter_brumme resolves at raw hour 2.00
+  ok    carpenter_brumme resolves at raw hour 3.50
+  ok    carpenter_brumme resolves at raw hour 5.99
+  ok    carpenter_brumme resolves at raw hour 6.00
+  ok    carpenter_brumme resolves at raw hour 24.50
+  ok    carpenter_brumme resolves at raw hour 25.50
+  ok    cat_morfar_mis routine schema
+  ok    cat_morfar_mis resolves at raw hour 2.00
+  ok    cat_morfar_mis resolves at raw hour 3.50
+  ok    cat_morfar_mis resolves at raw hour 5.99
+  ok    cat_morfar_mis resolves at raw hour 6.00
+  ok    cat_morfar_mis resolves at raw hour 24.50
+  ok    cat_morfar_mis resolves at raw hour 25.50
+  ok    clerk_fjerpen routine schema
+  ok    clerk_fjerpen resolves at raw hour 2.00
+  ok    clerk_fjerpen resolves at raw hour 3.50
+  ok    clerk_fjerpen resolves at raw hour 5.99
+  ok    clerk_fjerpen resolves at raw hour 6.00
+  ok    clerk_fjerpen resolves at raw hour 24.50
+  ok    clerk_fjerpen resolves at raw hour 25.50
+  ok    cub_bamse routine schema
+  ok    cub_bamse resolves at raw hour 2.00
+  ok    cub_bamse resolves at raw hour 3.50
+  ok    cub_bamse resolves at raw hour 5.99
+  ok    cub_bamse resolves at raw hour 6.00
+  ok    cub_bamse resolves at raw hour 24.50
+  ok    cub_bamse resolves at raw hour 25.50
+  ok    fairy_builder routine schema
+  ok    fairy_builder resolves at raw hour 2.00
+  ok    fairy_builder resolves at raw hour 3.50
+  ok    fairy_builder resolves at raw hour 5.99
+  ok    fairy_builder resolves at raw hour 6.00
+  ok    fairy_builder resolves at raw hour 24.50
+  ok    fairy_builder resolves at raw hour 25.50
+  ok    fairy_furnisher routine schema
+  ok    fairy_furnisher resolves at raw hour 2.00
+  ok    fairy_furnisher resolves at raw hour 3.50
+  ok    fairy_furnisher resolves at raw hour 5.99
+  ok    fairy_furnisher resolves at raw hour 6.00
+  ok    fairy_furnisher resolves at raw hour 24.50
+  ok    fairy_furnisher resolves at raw hour 25.50
+  ok    fairy_king routine schema
+  ok    fairy_king resolves at raw hour 2.00
+  ok    fairy_king resolves at raw hour 3.50
+  ok    fairy_king resolves at raw hour 5.99
+  ok    fairy_king resolves at raw hour 6.00
+  ok    fairy_king resolves at raw hour 24.50
+  ok    fairy_king resolves at raw hour 25.50
+  ok    fairy_lily routine schema
+  ok    fairy_lily resolves at raw hour 2.00
+  ok    fairy_lily resolves at raw hour 3.50
+  ok    fairy_lily resolves at raw hour 5.99
+  ok    fairy_lily resolves at raw hour 6.00
+  ok    fairy_lily resolves at raw hour 24.50
+  ok    fairy_lily resolves at raw hour 25.50
+  ok    fairy_tailor routine schema
+  ok    fairy_tailor resolves at raw hour 2.00
+  ok    fairy_tailor resolves at raw hour 3.50
+  ok    fairy_tailor resolves at raw hour 5.99
+  ok    fairy_tailor resolves at raw hour 6.00
+  ok    fairy_tailor resolves at raw hour 24.50
+  ok    fairy_tailor resolves at raw hour 25.50
+  ok    fairy_wizard routine schema
+  ok    fairy_wizard resolves at raw hour 2.00
+  ok    fairy_wizard resolves at raw hour 3.50
+  ok    fairy_wizard resolves at raw hour 5.99
+  ok    fairy_wizard resolves at raw hour 6.00
+  ok    fairy_wizard resolves at raw hour 24.50
+  ok    fairy_wizard resolves at raw hour 25.50
+  ok    farmer_rosa routine schema
+  ok    farmer_rosa resolves at raw hour 2.00
+  ok    farmer_rosa resolves at raw hour 3.50
+  ok    farmer_rosa resolves at raw hour 5.99
+  ok    farmer_rosa resolves at raw hour 6.00
+  ok    farmer_rosa resolves at raw hour 24.50
+  ok    farmer_rosa resolves at raw hour 25.50
+  ok    fiddler_strimmel routine schema
+  ok    fiddler_strimmel resolves at raw hour 2.00
+  ok    fiddler_strimmel resolves at raw hour 3.50
+  ok    fiddler_strimmel resolves at raw hour 5.99
+  ok    fiddler_strimmel resolves at raw hour 6.00
+  ok    fiddler_strimmel resolves at raw hour 24.50
+  ok    fiddler_strimmel resolves at raw hour 25.50
+  ok    gardener_hoppe routine schema
+  ok    gardener_hoppe resolves at raw hour 2.00
+  ok    gardener_hoppe resolves at raw hour 3.50
+  ok    gardener_hoppe resolves at raw hour 5.99
+  ok    gardener_hoppe resolves at raw hour 6.00
+  ok    gardener_hoppe resolves at raw hour 24.50
+  ok    gardener_hoppe resolves at raw hour 25.50
+  ok    ghostfam_blund routine schema
+  ok    ghostfam_blund resolves at raw hour 2.00
+  ok    ghostfam_blund resolves at raw hour 3.50
+  ok    ghostfam_blund resolves at raw hour 5.99
+  ok    ghostfam_blund resolves at raw hour 6.00
+  ok    ghostfam_blund resolves at raw hour 24.50
+  ok    ghostfam_blund resolves at raw hour 25.50
+  ok    ghostfam_dyne routine schema
+  ok    ghostfam_dyne resolves at raw hour 2.00
+  ok    ghostfam_dyne resolves at raw hour 3.50
+  ok    ghostfam_dyne resolves at raw hour 5.99
+  ok    ghostfam_dyne resolves at raw hour 6.00
+  ok    ghostfam_dyne resolves at raw hour 24.50
+  ok    ghostfam_dyne resolves at raw hour 25.50
+  ok    ghostfam_gnist routine schema
+  ok    ghostfam_gnist resolves at raw hour 2.00
+  ok    ghostfam_gnist resolves at raw hour 3.50
+  ok    ghostfam_gnist resolves at raw hour 5.99
+  ok    ghostfam_gnist resolves at raw hour 6.00
+  ok    ghostfam_gnist resolves at raw hour 24.50
+  ok    ghostfam_gnist resolves at raw hour 25.50
+  ok    ghostfam_silke routine schema
+  ok    ghostfam_silke resolves at raw hour 2.00
+  ok    ghostfam_silke resolves at raw hour 3.50
+  ok    ghostfam_silke resolves at raw hour 5.99
+  ok    ghostfam_silke resolves at raw hour 6.00
+  ok    ghostfam_silke resolves at raw hour 24.50
+  ok    ghostfam_silke resolves at raw hour 25.50
+  ok    guard_oak routine schema
+  ok    guard_oak resolves at raw hour 2.00
+  ok    guard_oak resolves at raw hour 3.50
+  ok    guard_oak resolves at raw hour 5.99
+  ok    guard_oak resolves at raw hour 6.00
+  ok    guard_oak resolves at raw hour 24.50
+  ok    guard_oak resolves at raw hour 25.50
+  ok    innkeeper_kvak routine schema
+  ok    innkeeper_kvak resolves at raw hour 2.00
+  ok    innkeeper_kvak resolves at raw hour 3.50
+  ok    innkeeper_kvak resolves at raw hour 5.99
+  ok    innkeeper_kvak resolves at raw hour 6.00
+  ok    innkeeper_kvak resolves at raw hour 24.50
+  ok    innkeeper_kvak resolves at raw hour 25.50
+  ok    lamplighter_kiki routine schema
+  ok    lamplighter_kiki resolves at raw hour 2.00
+  ok    lamplighter_kiki resolves at raw hour 3.50
+  ok    lamplighter_kiki resolves at raw hour 5.99
+  ok    lamplighter_kiki resolves at raw hour 6.00
+  ok    lamplighter_kiki resolves at raw hour 24.50
+  ok    lamplighter_kiki resolves at raw hour 25.50
+  ok    mapseller_natteblik routine schema
+  ok    mapseller_natteblik resolves at raw hour 2.00
+  ok    mapseller_natteblik resolves at raw hour 3.50
+  ok    mapseller_natteblik resolves at raw hour 5.99
+  ok    mapseller_natteblik resolves at raw hour 6.00
+  ok    mapseller_natteblik resolves at raw hour 24.50
+  ok    mapseller_natteblik resolves at raw hour 25.50
+  ok    mayor_lyra routine schema
+  ok    mayor_lyra resolves at raw hour 2.00
+  ok    mayor_lyra resolves at raw hour 3.50
+  ok    mayor_lyra resolves at raw hour 5.99
+  ok    mayor_lyra resolves at raw hour 6.00
+  ok    mayor_lyra resolves at raw hour 24.50
+  ok    mayor_lyra resolves at raw hour 25.50
+  ok    merchant_pip routine schema
+  ok    merchant_pip resolves at raw hour 2.00
+  ok    merchant_pip resolves at raw hour 3.50
+  ok    merchant_pip resolves at raw hour 5.99
+  ok    merchant_pip resolves at raw hour 6.00
+  ok    merchant_pip resolves at raw hour 24.50
+  ok    merchant_pip resolves at raw hour 25.50
+  ok    penguin_postman routine schema
+  ok    penguin_postman resolves at raw hour 2.00
+  ok    penguin_postman resolves at raw hour 3.50
+  ok    penguin_postman resolves at raw hour 5.99
+  ok    penguin_postman resolves at raw hour 6.00
+  ok    penguin_postman resolves at raw hour 24.50
+  ok    penguin_postman resolves at raw hour 25.50
+  ok    pippin_boegeknop routine schema
+  ok    pippin_boegeknop resolves at raw hour 2.00
+  ok    pippin_boegeknop resolves at raw hour 3.50
+  ok    pippin_boegeknop resolves at raw hour 5.99
+  ok    pippin_boegeknop resolves at raw hour 6.00
+  ok    pippin_boegeknop resolves at raw hour 24.50
+  ok    pippin_boegeknop resolves at raw hour 25.50
+  ok    postman_pip routine schema
+  ok    postman_pip resolves at raw hour 2.00
+  ok    postman_pip resolves at raw hour 3.50
+  ok    postman_pip resolves at raw hour 5.99
+  ok    postman_pip resolves at raw hour 6.00
+  ok    postman_pip resolves at raw hour 24.50
+  ok    postman_pip resolves at raw hour 25.50
+  ok    rasmus routine schema
+  ok    rasmus resolves at raw hour 2.00
+  ok    rasmus resolves at raw hour 3.50
+  ok    rasmus resolves at raw hour 5.99
+  ok    rasmus resolves at raw hour 6.00
+  ok    rasmus resolves at raw hour 24.50
+  ok    rasmus resolves at raw hour 25.50
+  ok    smith_thorin routine schema
+  ok    smith_thorin resolves at raw hour 2.00
+  ok    smith_thorin resolves at raw hour 3.50
+  ok    smith_thorin resolves at raw hour 5.99
+  ok    smith_thorin resolves at raw hour 6.00
+  ok    smith_thorin resolves at raw hour 24.50
+  ok    smith_thorin resolves at raw hour 25.50
+  ok    towns_routines.sweep_every_citizen_once (571200 citizen-minutes over the complete 20-hour day, clear and rainy)
+  ok    Hoppe visits the farm on Wednesday from two hearts
+  ok    The farm visit respects its friendship gate
+  ok    Pip's measured morning courier round on weekday 0
+  ok    Pip covers his counter at opening on weekday 0
+  ok    Pip's measured morning courier round on weekday 1
+  ok    Pip covers his counter at opening on weekday 1
+  ok    Pip's measured morning courier round on weekday 2
+  ok    Pip covers his counter at opening on weekday 2
+  ok    Pip's measured morning courier round on weekday 3
+  ok    Pip covers his counter at opening on weekday 3
+  ok    Pip's measured morning courier round on weekday 4
+  ok    Pip covers his counter at opening on weekday 4
+  ok    Pip's measured morning courier round on weekday 5
+  ok    Pip covers his counter at opening on weekday 5
+  ok    Morfar Mis is gated before the rescue/day sixty
+  ok    Morfar Mis unlocks by day sixty
+  ok    The rescue unlocks Morfar Mis earlier
+  ok    A chosen hero twin is absent
+  ok    towns_routines.where_is_under_20us (11.86 us per cached routine lookup)
+  ok    towns_routines.festival_overlay_attendee_on_post
+  ok    Festival override is resolved once per citizen and date
+  ok    towns_routines.festival_home_afterwards
+  ok    An off-stage citizen has a defined festival tail
+  ok    towns_routines.mutant_keeper_leaves_counter (["bageriet: keeper baker_maja is not at int_bageriet.counter for 07:00-17:00 on weekday 1 (klart, plan work)", "bageriet: keeper baker_maja is not at int_bageriet.counter for 07:00-17:00 on weekday 1 (regn, plan work)"])
+  ok    towns_routines.mutant_impossible_arrival (["postman_pip/work: arrives at int_postkontoret.counter 8.22 but `from` says 7.21 (late by 61 game min)"])
+  ok    towns_routines.mutant_capacity_one_post (["int_bageriet.counter: baker_maja,gardener_hoppe at once, capacity 1 (weekday 1 klart 06:40)"])
+  ok    towns_routines.mutant_unknown_post (["gardener_hoppe: place traetoppen.unknown_bed is not a baked anchor"])
+  ok    towns_routines.mutant_short_visit (["gardener_hoppe/work: only 3 game min in int_postkontoret", "gardener_hoppe/work: only 5 game min in int_hoppe_hut"])
+  ok    towns_routines.mutant_visual_cap (["hyggebyen: 15 distinct visuals live on weekday 0 at 09:45 (max 14)", "hyggebyen: 15 distinct visuals live on weekday 0 at 09:50 (max 14)"])
+  ok    towns_routines.mutant_short_shop_hours (["bageriet: open 7.0-11.0 is under 6 game hours (3 real minutes): too short to play"])
+  ok    towns_routines.mutant_day_does_not_wrap (["smith_thorin: the plans start / end in different rooms [\"hyggebyen.door_smedjen\", \"hyggebyen.door_bageriet\"]"])
+  ok    towns_routines.mutant_keeper_without_routine (["dyrehuset: keeper farmer_rosa has no routine"])
+  ok    towns_routines.mutant_customer_before_opening (["gardener_hoppe/work: customer in int_bageriet 06:00-06:12 but bageriet is open 07:00-17:00 (weekday 0)", "gardener_hoppe/work: customer in int_bageriet 06:00-06:12 but bageriet is open 07:00-17:00 (weekday 0)"])
+  ok    towns_routines.mutant_unknown_act (["gardener_hoppe/work: unknown act teleport_through_wall"])
+  ok    towns_routines.act_vocabulary_accepts_hide
+  --    towns_routines: 285 checks, 0 failed, 0 skipped, 7.8 s
+== summary: 15 section(s) run, 1988 checks (0 failed, 19 skipped), 0 engine error(s), 0 engine warning(s), 1 allowed message(s), 0 problem(s), 0 known-issue message(s), 66.1 s
+PLAYTEST PASS (1988 checks in 15 sections, 1 allowed engine messages, 0 known-issue messages)

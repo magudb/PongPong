@@ -1,0 +1,16 @@
+{
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "towns_post_post_guide": {
+      "mean": 0.0,
+      "over40_pct": 0.0,
+      "ref": "docs/qa/ui_baseline/post.png",
+      "shot": "docs/qa/mechanics/social/towns-native/towns_post_post_guide.png",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  }
+}

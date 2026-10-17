@@ -2145,6 +2145,12 @@ static func _ring_pixels(t, control: Control, options: Dictionary) -> Dictionary
 		_defect(r, "ring_ink_missing", str(control.get_path()), "the gold ring of %s has no ink band 4-5 px outside it (%d of %d ink pixels)" % [control.name, ink_hits, ink_n])
 	# negative control: the same pixels once focus is gone
 	if do_focus:
+		# A TTScreen repairs lost focus every frame. Suspend only that guard
+		# while sampling the negative control, then restore its prior state.
+		var screen: Node = control
+		while screen != null and not screen is TTScreen: screen = screen.get_parent()
+		var guarded := bool(screen.get("focus_guard")) if screen != null else false
+		if screen != null: screen.set("focus_guard",false)
 		control.release_focus()
 		await t.frames(3)
 		var img2: Image = await t.capture((str(options.get("shot", "")) + "_unfocused") if str(options.get("shot", "")) != "" else "")
@@ -2171,6 +2177,7 @@ static func _ring_pixels(t, control: Control, options: Dictionary) -> Dictionary
 			r["other_hits"] = oh
 			if on > 0 and oh >= maxi(on - 1, 1):
 				_defect(r, "ring_always_on", str(other.get_path()), "the unfocused control %s shows a gold ring" % other.name)
+		if is_instance_valid(screen): screen.set("focus_guard",guarded)
 	return r
 
 
@@ -2926,6 +2933,10 @@ static func audit_screen(t, id: String, overrides: Dictionary = {}) -> Dictionar
 	var host: Node = opened["host"]
 	var opts: Dictionary = entry.get("options", {})
 	var checks: Array = entry_checks(entry)
+	# Escape closes the fixture. Sample focus, language and pixels while it is
+	# still open, regardless of the order in an owner’s registry card.
+	if "escape" in checks:
+		checks = checks.filter(func(check):return str(check) != "escape")+["escape"]
 	var all_defects: Array[Dictionary] = []
 	# precondition: the screen is on screen (a hidden modal root would make every scan pass on nothing)
 	var shown: bool = not (node is CanvasItem) or (node as CanvasItem).is_visible_in_tree()

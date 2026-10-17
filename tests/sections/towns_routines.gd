@@ -11,13 +11,7 @@ func run(t) -> void:
 		if file.ends_with(".lua"):
 			core_files += 1
 	t.check("core_files_load", reg.size() >= core_files and core_files >= 23)
-	# The milestone validates its CORE buildings; extended houses/inn are later data.
-	var buildings := {}
-	for id in Hours.registry():
-		var row: Dictionary = Hours.registry()[id]
-		if row.get("wave", "core") == "core":
-			buildings[id] = row
-	Hours.override_registry = buildings
+	var buildings := Hours.registry().duplicate(true)
 	var lr: Node = t.autoload("LuaRuntime")
 	var visuals := {}
 	for npc in lr.get_npcs():
@@ -101,7 +95,7 @@ func _festivals(t) -> void:
 	t.expect(calls[0] == 1, "Festival override is resolved once per citizen and date")
 	ctx.hour = 25.5
 	var home := Routines.where_is("gardener_hoppe", ctx)
-	t.check("festival_home_afterwards", home.place == "traetoppen.door_hoppe_hut")
+	t.check("festival_home_afterwards", home.place == ("int_hoppe_hut.bed" if RouteTable.has_anchor("int_hoppe_hut.bed") else "traetoppen.door_hoppe_hut"))
 	var late := Routines.where_is("mapseller_natteblik", ctx)
 	t.expect(late.state in ["stay", "move", "inside", "absent"], "An off-stage citizen has a defined festival tail")
 	Routines.clear_cache()

@@ -207,7 +207,7 @@ func resync(hard := true, only := "") -> void:
 		var spec: Dictionary = area.get_meta("room_spec")
 		var building := Hours.building(str(spec.get("building","")))
 		keeper=str(building.get("keeper",building.get("owner","")))
-	var selected := NpcDirector.select_presences(Routines.present_in(area_id,ctx),max_live,keeper,4 if room else -1)
+	var selected := NpcDirector.select_presences(Routines.present_in(area_id,ctx),max_live,keeper,(11 if area_id == "int_torvekroen" else 4) if room else -1)
 	var wanted := {}
 	var looks: Dictionary = selected.looks
 	last_dropped=int(selected.dropped)
@@ -259,6 +259,38 @@ func _assign_post_slots(wanted: Dictionary) -> void:
 			var offset := _post_slot(_position(place), index, ids.size(), used)
 			_post_offsets[ids[index]] = offset
 			used.append(offset)
+
+	if area_id == "int_torvekroen": _inn_guest_slots(wanted)
+
+func _inn_guest_slots(wanted: Dictionary) -> void:
+	# The inn is a meeting room; spread its guests across reachable customer
+	# floor instead of stacking three large painted bodies on a chair anchor.
+	if nav == null: return
+	var used: Array[Vector2] = []
+	var cells: Array[Vector2] = []
+	var entry := Iso.to_ground(area.to_local(area.get_spawn("default")))
+	for y in range(3,nav.size.y-1):
+		for x in range(1,nav.size.x-1):
+			var cell := Vector2i(x,y)
+			if not nav.blocked.has(cell):
+				var point := Iso.to_ground(area.to_local(nav.cell_pos(cell)))
+				if point.distance_to(entry) >= 120.0: cells.append(point)
+	for id in wanted:
+		var row: Dictionary = wanted[id]
+		if str(row.state) != "stay" or str(row.npc) == "innkeeper_kvak": continue
+		var base := _position(str(row.place))
+		if str(row.place).ends_with(".bed"): continue
+		var options := cells.duplicate()
+		options.sort_custom(func(a: Vector2,b: Vector2):return a.distance_squared_to(base) < b.distance_squared_to(base))
+		var found := false
+		for spacing in [200.0,170.0,140.0]:
+			for point in options:
+				if used.all(func(p: Vector2):return p.distance_to(point) >= spacing):
+					_post_offsets[str(id)] = point-base
+					used.append(point)
+					found = true
+					break
+			if found: break
 
 func _post_slot(base: Vector2, index: int, count: int, used: Array[Vector2]) -> Vector2:
 	if _slot_query == null:
@@ -465,8 +497,17 @@ func _space_festival_posts() -> void:
 			var desired := centre + Iso.to_ground(Iso.iso_center(offset) - Iso.iso_center(Vector2i.ZERO))
 			var candidates: Array[Vector2] = available.duplicate()
 			candidates.sort_custom(func(a: Vector2, b: Vector2): return a.distance_squared_to(desired) < b.distance_squared_to(desired))
-			for candidate in candidates:
-				if taken.all(func(point: Vector2): return candidate.distance_squared_to(point) >= 200.0 * 200.0):
-					anchors[name] = candidate
-					taken.append(candidate)
-					break
+			# A small deck (the bathhouse) cannot fit 28 posts at the preferred
+			# spacing. Keep every named post on safe floor, reducing spacing only
+			# when needed; never fall back to the player's arrival position.
+			var placed := false
+			for spacing in [200.0,160.0,120.0,80.0]:
+				for candidate in candidates:
+					if taken.all(func(point: Vector2): return candidate.distance_squared_to(point) >= spacing * spacing):
+						anchors[name] = candidate
+						taken.append(candidate)
+						placed = true
+						break
+				if placed: break
+			if not placed:
+				push_error("TownDirector: no safe festival post for "+area_id+"."+name)

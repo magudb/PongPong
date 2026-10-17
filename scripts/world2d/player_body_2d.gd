@@ -132,7 +132,7 @@ func enter_area(p_area: IsoArea, spawn_global: Vector2) -> void:
 
 ## Camera limits follow the area (its builder's `bounds`, else the playable rect); a rect smaller than the view is centred.
 func _apply_camera_limits() -> void:
-	if area == null or camera == null:
+	if not is_inside_tree() or area == null or camera == null:
 		return
 	var view: Vector2 = get_viewport().get_visible_rect().size / maxf(camera.zoom.x, 0.01)
 	var r: Rect2 = IsoArea.camera_limits_for(area.camera_rect(), view)

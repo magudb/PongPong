@@ -1,0 +1,7 @@
+@id int_hoppe_hut
+@title BLD_HOPPE_HUT
+@projection iso
+@ambient home
+@zone traetoppen
+@builder res://scripts/towns/interior_room.gd
+@room int_hoppe_hut

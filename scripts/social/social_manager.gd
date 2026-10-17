@@ -743,6 +743,19 @@ func shop_closed_by_festival(shop_id: Variant) -> bool:
 		return false
 	return not (str(shop_id) in LuaData.strings(meta.get("stays_open", [])))
 
+## A festival stall opens only during its own festival window. Ordinary shops
+## still use their building's hours and the closure rule above.
+func festival_shop_state(shop_id: String, ctx: Dictionary = {}) -> Variant:
+	var lr := Svc.node("LuaRuntime")
+	if lr == null or not bool(LuaData.dict(lr.get_shop(shop_id)).get("festival_stall",false)): return null
+	var td := int(ctx.get("total_day",today()))
+	var id := str(festival_on(td))
+	var window := festival_window(id) if id != "" else {"from":0.0,"to":0.0}
+	var now := float(ctx.get("hour",_now_hours()))
+	var participates := LuaData.arr(SocialData.festival(id).get("activities",[])).any(func(row):return str(row.get("kind","")) == "market" and str(row.get("shop","")) == shop_id)
+	var open := participates and now >= float(window.from) and now < float(window.to)
+	return {"open":open,"reason":"open" if open else "festival","opens_at":window.from,"closes_at":window.to,"next_weekday":0}
+
 
 ## The earliest hour the bed accepts while a festival with bed_hold runs (0 = no hold): the window end, rounded up.
 func bed_hold_hour() -> int:

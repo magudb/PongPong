@@ -1,0 +1,51 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 547,
+  "elapsed_s": 36.07,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "social_fest_content": {
+      "character": "animal",
+      "checks": 481,
+      "failed": 0,
+      "ms": 20920,
+      "skipped": 0
+    },
+    "towns_ext": {
+      "character": "animal",
+      "checks": 11,
+      "failed": 0,
+      "ms": 5781,
+      "skipped": 0
+    },
+    "towns_greetings": {
+      "character": "animal",
+      "checks": 1,
+      "failed": 0,
+      "ms": 915,
+      "skipped": 0
+    },
+    "towns_post": {
+      "character": "animal",
+      "checks": 13,
+      "failed": 0,
+      "ms": 1867,
+      "skipped": 1
+    },
+    "ui_audit": {
+      "character": "animal",
+      "checks": 41,
+      "failed": 0,
+      "ms": 2267,
+      "skipped": 0
+    }
+  },
+  "skipped": 1
+}

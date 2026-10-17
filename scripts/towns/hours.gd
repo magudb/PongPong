@@ -150,6 +150,10 @@ static func is_open(building_id: String, ctx: Dictionary = {}) -> bool:
 static func shop_open(shop_id: String, ctx: Dictionary = {}) -> Variant:
 	if not enabled():
 		return null
+	var social := _Svc.node("SocialManager")
+	if social != null and social.has_method("festival_shop_state"):
+		var stall: Variant = social.call("festival_shop_state",shop_id,ctx)
+		if stall is Dictionary: return bool(stall.open)
 	var claimed: Array[String] = buildings_of_shop(shop_id)
 	if claimed.is_empty():
 		return null
@@ -163,6 +167,10 @@ static func shop_open(shop_id: String, ctx: Dictionary = {}) -> Variant:
 ## What ShopSystem.get_shop_info shows for a shop: the state of the building that matters ({} when no building claims the shop): an open one if any is, else the one that opens first.
 ## {open, reason, opens_at, closes_at, next_weekday} like state().
 static func closed_info(shop_id: String, ctx: Dictionary = {}) -> Dictionary:
+	var social := _Svc.node("SocialManager")
+	if social != null and social.has_method("festival_shop_state"):
+		var stall: Variant = social.call("festival_shop_state",shop_id,ctx)
+		if stall is Dictionary: return stall
 	var claimed: Array[String] = buildings_of_shop(shop_id)
 	if claimed.is_empty():
 		return {}

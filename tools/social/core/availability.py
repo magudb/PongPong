@@ -13,7 +13,9 @@ THE TABLE (JSON, schema version 1) is built from the routines of the towns track
 kind is one of outdoor walk counter room inside away; t0 / t1 are game hours on the 6..26 axis (t1 exclusive). Producers:
   * tools/social/core/build_availability_snapshot.py - the DESIGN snapshot (the python mirror of the 30 routines of the design phase), pinned in
     tests/lib/social/fixtures/availability_design.json: what the section uses until the real routines (T-routes, wave 5) can be sampled;
-  * a driver that samples Routines.where_is over a day (the same schema) replaces it when the real routines exist (handoff to T-routes / S-qa).
+  * tools/social/core/export_availability.gd exports exact live spans, clipped to public opening hours or awake owner presence.
+    `public` means a reachable customer/seat/stage post; `home:<owner>` additionally requires one heart with that owner.
+    Staff-only room posts remain inaccessible. The simulation passes its current hearts on every visit.
 
 usage as a library:  table = load(path);  talkable(table, "baker_maja", 2, 14.5, False)
 """
@@ -56,19 +58,24 @@ def _merged(table, npc, weekday, rain):
     return memo[key]
 
 
-def talkable(table, npc, weekday, hour, rain):
+def talkable(table, npc, weekday, hour, rain, hearts=None):
     for t0, t1 in _merged(table, npc, weekday, rain):
         if t0 <= hour < t1:
             return True
+    # Friend homes have no counter barrier. Their owner must already know the player.
+    if hearts:
+        for kind, t0, t1 in spans(table, npc, weekday, rain):
+            if kind.startswith("home:") and hearts.get(kind[5:], 0) >= 1 and t0 <= hour < t1:
+                return True
     return False
 
 
 def talkable_hours_per_week(table, npc, rain=False):
-    """Hours per week the citizen is talkable between 06:00 and 23:30 (a sanity number for reports)."""
+    """Hours per week the citizen is talkable between 06:00 and 02:00 (a sanity number for reports)."""
     kinds = talkable_kinds(table)
     total = 0.0
     for wd in range(7):
         for kind, t0, t1 in spans(table, npc, wd, rain):
             if kind in kinds:
-                total += max(0.0, min(t1, 23.5) - max(t0, 6.0))
+                total += max(0.0, min(t1, 26.0) - max(t0, 6.0))
     return total

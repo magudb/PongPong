@@ -1,0 +1,7 @@
+@id int_torvekroen
+@title BLD_TORVEKROEN
+@projection iso
+@ambient home
+@zone traetoppen
+@builder res://scripts/towns/interior_room.gd
+@room int_torvekroen

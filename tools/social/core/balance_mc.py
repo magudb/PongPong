@@ -8,7 +8,7 @@ mixer as the game (social_rng_mirror.py), so a run is reproducible: the same dat
 
 TWO AVAILABILITY VARIANTS (the section asserts the claims in both):
   free   the designers' model: the player may talk to ANYBODY every day;
-  mixed  town visits at random hours, half in the daytime (09-17) and half in the evening (17-21); a citizen is reachable when he stands outdoors, walks, or - a
+  mixed  town visits at random hours, half in the daytime (09-17) and half in the evening (17 to half an hour before the live day ends); a citizen is reachable when he stands outdoors, walks, or - a
          keeper - stands at his counter (the `talk` cells), table = availability.py (the routines of the towns track; until T-routes lands the pinned design snapshot).
 EVENTS: lean = heart events of tier A at 4 and 8 hearts (the LEAN content scope); four = tier A at 4, 6, 8, 10 (S-heart-content); target = the ROADMAP rows.
 
@@ -18,7 +18,7 @@ EVENTS: lean = heart events of tier A at 4 and 8 hearts (the LEAN content scope)
     python3 -I balance_mc.py ... --bounds=FILE --ratchet        a later run: every bound may only get TIGHTER (measured + margin when that is lower), never looser
 
 THE CLAIMS (CLAIM_LIMITS below are the design's numbers; the ratcheted bounds file sits at or under them): weekly chat alone reaches 8 hearts on day 50; the fastest
-possible 10 hearts is day 32; a typical player (2.6 talks per game day) with the lean events reaches 8 hearts with a tier A citizen with median <= 80 / p90 <= 115 in
+possible 10 hearts is day 32; a typical player (2.6 talks per original nine-minute day, scaled with the live clock) with the lean events reaches 8 hearts with a tier A citizen with median <= 80 / p90 <= 115 in
 BOTH variants, with four events <= 75 / <= 110; gifts are <= 25 % of all points for a dedicated player; the typical profile spends <= 25 % of a game week on it; and no
 tier A or B citizen is `never` reached by the typical profile in more than 2 % of the runs in the mixed variant.
 """
@@ -39,7 +39,7 @@ SEASONS = ['foraar', 'sommer', 'efteraar', 'vinter']
 DPS = 28
 YEAR = DPS * len(SEASONS)
 PROFILES = {
-    # talks = mean conversations per game day (A: calibrated to a share of the 9 real minutes of a day at 32 s per visit: casual ~5 %, typical ~15 %, dedicated ~35 %);
+    # talks = mean conversations per game day (A: calibrated to a share of the 10 real minutes of a day at 32 s per visit: casual ~5 %, typical ~15 %, dedicated ~35 %);
     # seek = how strongly the player prefers an NPC whose weekly chat is still open; gift_p = chance to give a gift when allowed; cls = quality of the chosen gift
     'casual': dict(talks=0.9, seek=1.5, gift_p=0.08, cls={'love': .05, 'like': .15, 'neutral': .60, 'dislike': .15, 'hate': .05}, p_bday=0.20, p_fest=0.5, ev=0.5, rare={'uncommon': .05, 'rare': .01}),
     'typical': dict(talks=2.6, seek=3.0, gift_p=0.30, cls={'love': .20, 'like': .30, 'neutral': .40, 'dislike': .07, 'hate': .03}, p_bday=0.60, p_fest=0.8, ev=0.9, rare={'uncommon': .10, 'rare': .03}),
@@ -54,7 +54,7 @@ EVENT_SETS = {
 EVENT_POINTS = 40
 QUEST_HEARTS = [('pippin_boegeknop', 2, 40), ('fairy_king', 2, 150), ('fairy_wizard', 2, 120), ('guard_oak', 2, 100), ('fairy_king', 3, 300)]   # (npc, hearts, typical day) S: lua/quests/*.lua rewards.friendship
 T_CHAT, T_GIFT, T_WALK = 20.0, 25.0, 12.0     # seconds (A)
-GAME_WEEK_REAL_MIN = 63.0
+DESIGN_DAY_REAL_SECONDS = 540.0  # Original profile calibration: 06:00–24:00 at 2 game min/s
 HEARTS = (2, 4, 8, 10)
 
 # the claims the section asserts, as upper limits (a median / p90 in days, a share in 0..1) - the DESIGN's numbers; the bounds file may only be at or under them
@@ -84,6 +84,11 @@ def _play_task(task):
 class Model:
     def __init__(self, dump, variant, availability, events):
         self.D = dump
+        time = dump['time']
+        self.day_end = float(time.get('day_end_hour', 24))
+        self.day_seconds = (self.day_end - float(time.get('day_start_hour', 6))) * 3600 / (float(time.get('minutes_per_real_second', 2)) * 60)
+        self.visit_scale = self.day_seconds / DESIGN_DAY_REAL_SECONDS
+        self.week_minutes = self.day_seconds * 7 / 60
         self.soc = dump['social']
         self.G = self.soc['gifts']
         self.PPH = self.soc['points_per_heart']
@@ -94,6 +99,13 @@ class Model:
         self.bday = {n: SEASONS.index(self.cz[n]['birthday']['season']) * DPS + self.cz[n]['birthday']['day'] for n in self.friends if n in self.cz}
         self.fest_days = sorted((SEASONS.index(f['meta']['season']) * DPS + f['meta']['day'], f['meta']['host']) for f in dump['festivals'].values())
         self.variant, self.av, self.events = variant, availability, EVENT_SETS[events]
+        if variant == 'mixed':
+            missing = sorted(set(self.friends) - set(availability['npcs']))
+            if missing:
+                raise ValueError('Availability is missing current citizens: '+', '.join(missing)+'. Re-export the live routines.')
+            empty = [n for n in self.friends if not any(spans for day in availability['npcs'][n].values() for spans in day.values())]
+            if empty:
+                raise ValueError('Availability has no routine spans for: '+', '.join(empty))
         self.rain_p = {s: dump['time']['weather_chances'][s].get('regn', 0) + dump['time']['weather_chances'][s].get('torden', 0) for s in SEASONS}
         self.gi = sorted(i for i in self.items if self._giftable(i))
         self.cost_by_class = {}
@@ -150,10 +162,10 @@ class Model:
         if self.variant != 'mixed':
             return None
         u = roll(seed, [day, 'vh', j])
-        return (9.0 + 8.0 * roll(seed, [day, 'vh2', j])) if u < 0.5 else (17.0 + 4.0 * roll(seed, [day, 'vh3', j]))
+        return (9.0 + 8.0 * roll(seed, [day, 'vh2', j])) if u < 0.5 else (17.0 + (self.day_end - 0.5 - 17.0) * roll(seed, [day, 'vh3', j]))
 
-    def talkable(self, n, wd, hour, rain):
-        return AV.talkable(self.av, n, wd, hour, rain)
+    def talkable(self, n, wd, hour, rain, hearts=None):
+        return AV.talkable(self.av, n, wd, hour, rain, hearts)
 
     def play(self, profile, seed):
         P, G, PPH, CAP = PROFILES[profile], self.G, self.PPH, self.CAP
@@ -184,14 +196,16 @@ class Model:
 
         for day in range(1, self.days + 1):
             week = (day - 1) // 7
-            k = int(P['talks']) + (1 if r(day, 'k') < P['talks'] - int(P['talks']) else 0)
+            talks = P['talks'] * self.visit_scale
+            k = int(talks) + (1 if r(day, 'k') < talks - int(talks) else 0)
             pool = [n for n in friends if not ('unlock' in cz.get(n, {}) and day < 60)]
             chosen = []
             wd = (day - 1) % 7
             rain = r(day, 'wx') < self.rain_p[SEASONS[((day - 1) % YEAR) // DPS]]
+            current_hearts = {n: pts[n] // PPH for n in friends}
             for j in range(k):
                 hr = self.visit_hour(seed, day, j)
-                cand = [n for n in pool if n not in chosen and (hr is None or self.talkable(n, wd, hr, rain))]
+                cand = [n for n in pool if n not in chosen and (hr is None or self.talkable(n, wd, hr, rain, current_hearts))]
                 ws = [(TIER_W[tier[n]] * (P['seek'] if wk_chat[n] != week else 1.0), n) for n in cand]
                 tot = sum(w for w, _ in ws)
                 if not ws:
@@ -290,8 +304,8 @@ class Model:
                 total_h.append(sum(p // self.PPH for p in res['pts'].values()))
                 for s, v in res['src'].items():
                     shares[s] += v
-                week_peak.append(max(res['secs'].values()) / 60.0 / GAME_WEEK_REAL_MIN)
-                week_mean.append(sum(res['secs'].values()) / len(res['secs']) / 60.0 / GAME_WEEK_REAL_MIN)
+                week_peak.append(max(res['secs'].values()) / 60.0 / self.week_minutes)
+                week_mean.append(sum(res['secs'].values()) / len(res['secs']) / 60.0 / self.week_minutes)
             tot = sum(shares.values())
             out[prof] = dict(
                 reach={t: {h: dict(median=pct(reach_days[t][h], .5), p10=pct(reach_days[t][h], .1), p90=pct(reach_days[t][h], .9),
@@ -353,7 +367,8 @@ def main():
     claims = claims_of(model, out, never_npc, a.events, a.variant)
     result = {'variant': a.variant, 'events': a.events, 'runs': a.runs, 'days': a.days, 'friends': len(model.friends), 'tiers': dict(collections.Counter(model.tier.values())),
               'giftable': len(model.gi), 'profiles': out, 'never_8h_by_npc': never_npc['typical'], 'ceilings': ceil, 'claims': claims,
-              'availability_source': (table or {}).get('source', '')}
+              'availability_source': (table or {}).get('source', ''),
+              'assumptions': {'day_real_seconds': model.day_seconds, 'week_real_minutes': model.week_minutes, 'mean_talks_per_day': {p: round(v['talks'] * model.visit_scale, 4) for p, v in PROFILES.items()}, 'day_visits': [9, 17], 'evening_visits': [17, model.day_end - .5], 'visit_mix': [.5, .5], 'seconds_per_chat': T_CHAT, 'seconds_per_walk': T_WALK, 'seconds_per_gift': T_GIFT}}
     if not a.quiet:
         print('friends=%d tiers=%s giftable=%d runs=%d days=%d variant=%s events=%s' % (result['friends'], result['tiers'], result['giftable'], a.runs, a.days, a.variant, a.events))
         for prof, o in out.items():

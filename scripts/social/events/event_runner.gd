@@ -105,6 +105,7 @@ func _choice(option: Dictionary, who: String) -> void:
 	if flag != "": _effects.append({"act":"flag","key":flag,"value":true})
 
 func _say(who: String, lines: Array, choices: Array) -> Dictionary:
+	_take_actor(_actor(who))
 	_dialogue = get_tree().get_first_node_in_group("dialogue_ui")
 	if _dialogue == null: return {"choice":choices[0] if not choices.is_empty() else {}}
 	dialogue_runs += 1
@@ -163,6 +164,7 @@ func _directive(step: Dictionary, generation: int) -> void:
 				var focus := str(step.get("focus",step.get("target",_meta.get("npc","player"))))
 				var target: Variant = _point({"mark":focus},actor) if focus.begins_with("mark:") else _actor(focus)
 				if target != null and not (target is Vector2 and target == Vector2.INF):
+					if target is Node: _take_actor(target)
 					_camera_used = true
 					await actor.camera_focus(target,float(step.get("zoom",0.7)),float(step.get("time",step.get("seconds",0.25))))
 	elif act == "sfx": AudioManager.play_sfx(str(step.get("id","")))

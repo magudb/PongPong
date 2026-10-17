@@ -1,0 +1,33 @@
+{
+ "id": "int_kikis_hytte",
+ "building": "kikis_hytte",
+ "size": "S",
+ "cols": 6,
+ "rows": 5,
+ "wall_style": "plank",
+ "floor": "floor_plank",
+ "door": {"cell": [3, 4], "dir": [0, 1]},
+ "spawn_cell": [3, 3],
+ "windows": {"z": [1], "x": [2]},
+ "exit": {"area": "traetoppen", "spawn": "from_int_kikis_hytte"},
+ "zoom_fit": 0.877,
+ "items": [
+  {"id": "bed_rose_single", "cell": [5, 0], "rot": 0, "role": "bed"},
+  {"id": "wardrobe_pine", "cell": [0, 0], "rot": 0},
+  {"id": "fireplace_granite", "cell": [2, 0], "rot": 0},
+  {"id": "plant_flowering", "cell": [0, 3], "rot": 0},
+  {"id": "table_round_pine", "cell": [5, 3], "rot": 0},
+  {"id": "plant_fern", "cell": [1, 3], "rot": 0},
+  {"id": "floor_lamp_iron", "cell": [4, 3], "rot": 0},
+  {"id": "chair_pine", "cell": [2, 3], "rot": 0},
+  {"id": "rug_round_red", "cell": [2, 3], "rot": 0}
+ ],
+ "posts": [
+  {"id": "bed", "cell": [5, 2], "act": "sleep", "facing": "N", "capacity": 2, "kind": "bed"},
+  {"id": "table", "cell": [5, 4], "act": "sit", "facing": "N", "capacity": 3, "kind": "seat"},
+  {"id": "hearth", "cell": [3, 2], "act": "stand", "facing": "N", "capacity": 2},
+  {"id": "visit", "cell": [3, 3], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"}
+ ],
+ "markers": [{"type": "door", "cell": [3, 4], "to": "traetoppen", "spawn": "from_int_kikis_hytte"}],
+ "notes": ["no room for chair_birch"]
+}

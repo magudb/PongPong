@@ -46,6 +46,7 @@ var _oil_empty_time: float = 0.0
 var _oil_low_said: bool = false
 var _event_active: bool = false
 var _event_generation: int = 0
+var _camera_generation := 0
 var _camera_tween: Tween
 var _camera_zoom_before: float = Iso.DEFAULT_ZOOM
 var _bob_time: float = 0.0
@@ -699,23 +700,31 @@ func event_walk_to(at: Vector2, speed: float = 185.0) -> bool:
 	return generation == _event_generation and Iso.ground_dist(global_position, at) <= 4.0
 
 func camera_focus(target: Variant, zoom: float, seconds: float = 0.25) -> void:
-	if _camera_tween != null and _camera_tween.is_running():
-		_camera_tween.kill()
+	if not is_inside_tree() or area == null: return
+	_camera_generation += 1
+	var generation := _camera_generation
+	if _camera_tween != null and _camera_tween.is_running(): _camera_tween.kill()
 	_camera_zoom_before = _target_zoom
 	var at: Vector2 = target.global_position if target is Node2D else target
 	_camera_tween = create_tween().set_parallel(true)
 	_camera_tween.tween_property(camera, "offset", at - global_position, seconds)
 	_camera_tween.tween_property(camera, "zoom", Vector2.ONE * clampf(zoom, area.zoom_range.x, area.zoom_range.y), seconds)
-	while _camera_tween != null and _camera_tween.is_running():
+	while is_inside_tree() and generation == _camera_generation and _camera_tween != null and _camera_tween.is_running():
 		await get_tree().process_frame
-	_apply_camera_limits()
+	if is_inside_tree() and generation == _camera_generation: _apply_camera_limits()
 
 func camera_release(seconds: float = 0.25) -> void:
-	if _camera_tween != null and _camera_tween.is_running():
-		_camera_tween.kill()
+	_camera_generation += 1
+	var generation := _camera_generation
+	if _camera_tween != null and _camera_tween.is_running(): _camera_tween.kill()
+	if not is_inside_tree() or area == null: return
+	if seconds <= 0.0:
+		camera.offset = Vector2.ZERO
+		_set_zoom(_camera_zoom_before)
+		return
 	_camera_tween = create_tween().set_parallel(true)
 	_camera_tween.tween_property(camera, "offset", Vector2.ZERO, seconds)
 	_camera_tween.tween_property(camera, "zoom", Vector2.ONE * _camera_zoom_before, seconds)
-	while _camera_tween != null and _camera_tween.is_running():
+	while is_inside_tree() and generation == _camera_generation and _camera_tween != null and _camera_tween.is_running():
 		await get_tree().process_frame
-	_set_zoom(_camera_zoom_before)
+	if is_inside_tree() and generation == _camera_generation: _set_zoom(_camera_zoom_before)

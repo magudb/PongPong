@@ -1,0 +1,7 @@
+@id int_vagthytten
+@title BLD_VAGTHYTTEN
+@projection iso
+@ambient home
+@zone traetoppen
+@builder res://scripts/towns/interior_room.gd
+@room int_vagthytten

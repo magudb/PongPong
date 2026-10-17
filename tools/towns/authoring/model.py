@@ -76,7 +76,7 @@ INTERIORS_NONE = [b for b in BUILDINGS.values() if b["interior"] is None]
 
 # interior size classes (cols x rows) and the zoom_fit of the F6 formula
 SIZES = {"S": (6, 5), "M": (8, 6), "L": (10, 7)}
-SIZE_OVERRIDE = {"postkontoret": (8, 5), "uglehulen": (7, 5), "loppeloftet": (8, 5), "badehuset": (9, 7), "dyrehuset": (9, 7), "troldmandstaarnet": (7, 6),
+SIZE_OVERRIDE = {"torvekroen": (12, 8), "postkontoret": (8, 5), "uglehulen": (7, 5), "loppeloftet": (8, 5), "badehuset": (9, 7), "dyrehuset": (9, 7), "troldmandstaarnet": (7, 6),
                  "toemmerhandlen": (9, 6), "brummes_vaerksted": (9, 7), "raadhuset": (10, 8), "fekongens_hus": (10, 8)}
 
 

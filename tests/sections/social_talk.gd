@@ -95,7 +95,14 @@ func run(t) -> void:
 		Talk.pick(npc, "GREET", ctx)
 	var micros := float(Time.get_ticks_usec() - start) / 3000.0
 	t.check("pick_under_20us", micros < 20.0, "Cached social line pick: %.2f us" % micros)
+	# Keep the fallback test independent of how much keeper copy is installed.
+	var no_keeper_keys := Keys.new()
+	Svc.override("LocalizationManager",no_keeper_keys)
+	Talk.invalidate()
 	t.expect(Talk.greeting_for_shop("bakery").text_key == lr.get_shop("bakery").greeting_key, "Missing keeper variants fall back to the actual shop greeting")
+	Svc.clear_overrides()
+	no_keeper_keys.free()
+	Talk.invalidate()
 	t.expect(Talk.bubble_for("guard_oak") == "quest", "Quest bubble has first priority")
 	sm.remember_line(npc, "GIFT_LOVE", "")
 	var first_gift := Talk.pick(npc, "GIFT_LOVE", ctx)

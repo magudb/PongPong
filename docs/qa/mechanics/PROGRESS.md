@@ -1,0 +1,24 @@
+# Single-player mechanics completion
+
+Worktree: `codex-mechanics`. Main has not yet received this task’s commits. Finish and verify the full authorized scope before merging locally; no remote push is requested.
+
+Completed packages include usable homes and furniture, buildings and animal care, deterministic twelve-floor forest generation, dungeon rules and combat, equipment/arsenal and forging, loot/appraisal, forest resources, the action HUD, painted weapon and loot assets, forest lighting/dressing, and the complete mother investigation with the chosen bittersweet ending and garden legacy. The original approved art remains protected by the explicit review ledger.
+
+The latest completed package is the social scene and festival-activity runtime (`9f23f2a`): 811 passing integration checks, 114 native checks and inspected screenshots. The mother-story package is `8dbd96b`: all eight heroes checked, four native body families, 21 generated story-floor placements and the strict art catalog with no gaps. The current ledger contains 2,904 reviewed visual/theme assets.
+
+The fixed-festival and extended-town package is complete: nine festivals, eighteen scenes, five markets, live painted decoration, ten extended rooms, seven additional citizen schedules, the post-office location screen and 66 keeper greeting rows. Acceptance: 1,988 checks across 15 sections, 500 focused audit checks and 547 native checks; no failures or engine errors/warnings. Native product captures were visually inspected and the post guide fixture was pinned. The live 34-citizen social simulation meets the original limits using the full 06:00–02:00 clock; existing ratchet bounds were only tightened.
+
+Next work: the forty citizen heart scenes, eleven Natlys family scenes and remaining relationship/family mechanics.
+
+Still required before the full task is complete:
+
+- Author and exercise the forty citizen heart scenes and eleven Natlys family scenes, plus family festival greetings.
+- Finish planned Natlys gameplay/quests and counted hide-and-seek with its saved reward ladder.
+- Complete relationships, wedding, partner routines/chores, house parties and friend visits using the documented defaults.
+- Finish seasonal farm dressing and the planned audio integration, preserving frozen human recordings.
+- Finish dungeon item/recipe/boss validators and their mutants, larger pacing simulations and combat/performance acceptance.
+- Resolve the UI sweep findings (forest HUD theme/localization, fourth journal tab navigation and real fixture setup for house/animal/building screens), the stale social derived-data fixture note, the remaining baseline failures, run full headless/native regression, refresh source-bound town proofs, update completion documentation and merge finished work to local main.
+
+The greenhouse remains opt-in. Children, multiplayer, a fifth heart scene and yearly birthday cards are outside this planned single-player scope. Copy remains draft until native-speaker review; visual captures are inspected by the implementing agent.
+
+For the final town proof refresh, first archive the live `fc6df2244d8570a9d28203b8daad0f3bc8dceeb442567abb238f9a86eab99818` manifests and raw directories into `docs/qa/loadout/source-proof-fc6df224/`, and repoint the loadout acceptance references. Then regenerate extension and mutation proofs from the final committed source. Preserve older archived evidence.

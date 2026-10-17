@@ -25,7 +25,7 @@ routines = {
           { from = 7.5, at = "traetoppen.b_lift", act = "guard", leave = 12 },
           { at = "traetoppen.b_bench", act = "sit", leave = 12.75 },
           { at = "traetoppen.b_lift", act = "guard", leave = 17 },
-          { from = 17.75, at = "int_torvekroen.seat_a?", act = "sit" },
+          { from = 17.95, at = "int_torvekroen.seat_a?", act = "sit" },
           { from = 22.5, at = "home.bed", act = "sleep" },
         } },
       },

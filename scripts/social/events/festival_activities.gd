@@ -21,11 +21,11 @@ static func cap(selector: String, items: Dictionary) -> int:
 	var best := 0.0
 	for id in items:
 		var definition := LuaData.dict(items[id])
-		if matches(str(id),definition,selector): best = maxf(best,score(definition))
+		if GiftRules.giftable(str(id),definition,int(definition.get("sell_price",0))).ok and matches(str(id),definition,selector): best = maxf(best,score(definition))
 	var cheapest := 2147483647
 	for id in items:
 		var definition := LuaData.dict(items[id])
-		if matches(str(id),definition,selector) and score(definition)*1.15 >= best*0.85:
+		if GiftRules.giftable(str(id),definition,int(definition.get("sell_price",0))).ok and matches(str(id),definition,selector) and score(definition)*1.15 >= best*0.85:
 			cheapest = mini(cheapest,maxi(0,int(definition.get("sell_price",0))))
 	return mini(400,2*cheapest) if cheapest < 2147483647 else 0
 
@@ -37,11 +37,11 @@ static func valid_prizes(selector: String, rewards: Dictionary, items: Dictionar
 
 static func contest(item: String, selector: String, rewards: Dictionary, items: Dictionary, seed: int, festival: String, year: int) -> Dictionary:
 	var definition := LuaData.dict(items.get(item,{}))
-	if definition.is_empty() or not matches(item,definition,selector): return {"ok":false,"reason":"item"}
+	if definition.is_empty() or not GiftRules.giftable(item,definition,int(definition.get("sell_price",0))).ok or not matches(item,definition,selector): return {"ok":false,"reason":"item"}
 	if not valid_prizes(selector,rewards,items): return {"ok":false,"reason":"prize_cap"}
 	var best := 0.0
 	for id in items:
-		if matches(str(id),LuaData.dict(items[id]),selector): best = maxf(best,score(items[id]))
+		if GiftRules.giftable(str(id),LuaData.dict(items[id]),int(items[id].get("sell_price",0))).ok and matches(str(id),LuaData.dict(items[id]),selector): best = maxf(best,score(items[id]))
 	var mine := score(definition)*(0.85+0.3*SocialRng.roll(seed,[festival,year,"contest","player"]))
 	var rank := 4
 	var bars: Array[float] = []

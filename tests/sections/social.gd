@@ -1601,16 +1601,25 @@ func _real_data_validation() -> void:
 # ================================================================================================ task 16: the balance claims as a test
 
 func _balance() -> void:
+	var input_checks := _run_py("res://tools/social/core/test_balance_inputs.py",PackedStringArray())
+	t.check("balance_live_input_regressions",int(input_checks.code) == 0,str(input_checks.output))
 	var live_citizens := not LuaData.dict(Svc.lua_config("citizens", {})).is_empty() and not LuaData.dict(Svc.lua_config("gift_tastes", {})).is_empty() and not SocialData.festivals().is_empty()
 	var dump_path := ProjectSettings.globalize_path("res://tests/lib/social/fixtures/design_dump.json")
 	var source := "the pinned DESIGN snapshot (citizens.lua / gift_tastes.lua are S-data's)"
+	var av := ProjectSettings.globalize_path(AVAILABILITY)
 	if live_citizens:
-		var live := _user_path("balance_dump.json")
+		var live := "res://docs/qa/mechanics/social/live-data.json"
 		t.run_godot_script(DUMP_DRIVER, PackedStringArray(["--out=" + ProjectSettings.globalize_path(live)]))
 		if FileAccess.file_exists(live):
 			dump_path = ProjectSettings.globalize_path(live)
 			source = "the dump of the real data"
-	var av := ProjectSettings.globalize_path(AVAILABILITY)
+		var availability_path := "res://docs/qa/mechanics/social/availability-live.json"
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(availability_path))
+		var exported: Dictionary = t.run_godot_script("res://tools/social/core/export_availability.gd",PackedStringArray(["--out="+ProjectSettings.globalize_path(availability_path)]))
+		var sampled: Variant = _json_of(availability_path)
+		t.check("balance_live_routines_cover_current_roster",int(exported.code) == 0 and sampled is Dictionary and sampled.get("npcs",{}).size() == SocialData.friend_ids().size(),str(exported.output).left(1500))
+		if not (sampled is Dictionary): return
+		av = ProjectSettings.globalize_path(availability_path)
 	var bounds_path := ProjectSettings.globalize_path(BOUNDS)
 	var runs := {}
 	for spec in [["free", "lean"], ["free", "four"], ["mixed", "lean"], ["mixed", "four"]]:
@@ -1619,6 +1628,7 @@ func _balance() -> void:
 		var r := _run_py(PY_MC, args)
 		var parsed: Variant = _json_of(out) if FileAccess.file_exists(out) else null
 		runs["%s.%s" % [spec[0], spec[1]]] = parsed if parsed is Dictionary else {}
+		if live_citizens and parsed is Dictionary: _write("res://docs/qa/mechanics/social/mc_%s_%s.json" % [spec[0],spec[1]],JSON.stringify(parsed,"",true))
 		if int(r["code"]) != 0 or not (parsed is Dictionary):
 			t.check("balance_run_%s_%s" % [spec[0], spec[1]], false, "balance_mc.py exited %d: %s" % [int(r["code"]), str(r["output"]).substr(0, 200)])
 	var free_lean: Dictionary = runs["free.lean"]
@@ -1634,13 +1644,13 @@ func _balance() -> void:
 	# claim set 1: the designers' model
 	t.check("balance_claims_hold", int(ceil["chat_only_8_day"]) == 50 and int(ceil["fastest_10_hearts_day"]) == 32 and float(cl["lean.free.A8.median"]) <= 80.0 and float(cl["lean.free.A8.p90"]) <= 115.0 and float(cf["four.free.A8.median"]) <= 75.0 and float(cf["four.free.A8.p90"]) <= 110.0 \
 		and float(cl["dedicated.gift_share"]) <= 0.25 and float(cl["typical.social_time"]) <= 0.25,
-		"variant free on %s (100 runs x 336 days): weekly chat alone reaches 8 hearts on day %d, the fastest possible 10 hearts is day %d; a typical player (2.6 talks a day) reaches 8 hearts with a tier A citizen at median %s / p90 %s with the lean events (<= 80 / 115) and %s / %s with four events (<= 75 / 110); gifts are %.0f %% of a dedicated player's points (<= 25), the typical player spends %.0f %% of a game week (<= 25)" % [
+		"variant free on %s (100 runs x 336 days): weekly chat alone reaches 8 hearts on day %d, the fastest possible 10 hearts is day %d; a typical player (the original 2.6-talk budget scaled by the live day duration) reaches 8 hearts with a tier A citizen at median %s / p90 %s with the lean events (<= 80 / 115) and %s / %s with four events (<= 75 / 110); gifts are %.0f %% of a dedicated player's points (<= 25), the typical player spends %.0f %% of a game week (<= 25)" % [
 		source, int(ceil["chat_only_8_day"]), int(ceil["fastest_10_hearts_day"]), str(typical_free["median"]), str(typical_free["p90"]), str(cf["four.free.A8.median"]), str(cf["four.free.A8.p90"]), float(cl["dedicated.gift_share"]) * 100.0, float(cl["typical.social_time"]) * 100.0])
 	var ml: Dictionary = mixed_lean["claims"]
 	var mf: Dictionary = mixed_four["claims"]
 	t.check("balance_claims_hold_with_availability", float(ml["lean.mixed.A8.median"]) <= 80.0 and float(ml["lean.mixed.A8.p90"]) <= 115.0 and float(mf["four.mixed.A8.median"]) <= 75.0 and float(mf["four.mixed.A8.p90"]) <= 110.0 and float(ml["mixed.never_AB_8h"]) <= 0.02 and float(ml["mixed.never_AB_4h_citizen"]) <= 0.02 \
 		and float(ml["typical.social_time"]) <= 0.25,
-		"variant mixed (town visits half by day, half in the evening; a citizen is reachable outdoors, in transit or at his counter through the talk cells; table: %s): median %s / p90 %s with the lean events (<= 80 / 115), %s / %s with four events (<= 75 / 110); never reaching 8 hearts: tier A / B at most %.1f %% (<= 2), the worst single tier A / B citizen never reaches 4 hearts in %.1f %% (<= 2; at 8 hearts Rasmus %.0f %%, a guard of this package at <= 5)" % [
+		"variant mixed (town visits half by day, half until half an hour before bedtime; public room hours and one-heart owner gates apply; table: %s): median %s / p90 %s with the lean events (<= 80 / 115), %s / %s with four events (<= 75 / 110); never reaching 8 hearts: tier A / B at most %.1f %% (<= 2), the worst single tier A / B citizen never reaches 4 hearts in %.1f %% (<= 2; at 8 hearts the worst citizen %.0f %%, a guard of this package at <= 5)" % [
 		str((mixed_lean as Dictionary).get("availability_source", "")).substr(0, 60), str(ml["lean.mixed.A8.median"]), str(ml["lean.mixed.A8.p90"]), str(mf["four.mixed.A8.median"]), str(mf["four.mixed.A8.p90"]), float(ml["mixed.never_AB_8h"]) * 100.0, float(ml["mixed.never_AB_4h_citizen"]) * 100.0, float(ml["mixed.never_AB_8h_citizen"]) * 100.0])
 	# the ratchet: the file holds the bounds, the tool checks the runs against them and may only tighten them
 	var bounds: Variant = _json_of(BOUNDS) if FileAccess.file_exists(BOUNDS) else null
@@ -1676,7 +1686,7 @@ func _balance() -> void:
 		"tests/lib/social/balance_bounds.json: every bound is at or under the design limit (%s), the runs sit under their bounds (%s) and within the margin (%s: a bound cannot silently drift away from what the data does), `--check` exits %d; `--ratchet` on a copy never raises a bound (1 stays 1: %s) and lowers a loose one (%s)" % [under_limits, measured_under, tight, int(check["code"]), never_looser, tightened])
 	if not live_citizens:
 		t.skip("social.balance_real_data: the claims ran on the pinned design snapshot; with S-data's citizens.lua / gift_tastes.lua and S-fest-content's festivals in the tree the section switches to the dump of the real data and the same bounds apply")
-	t.skip("social.balance_real_routines: the `mixed` availability table is the design snapshot (tests/lib/social/fixtures/availability_design.json); T-routes' real routines (wave 5) replace it through tools/social/core/availability.py's schema")
+	if not live_citizens: t.skip("social.balance_real_routines: live data is absent; the pinned design table is used")
 
 
 # ================================================================================================ task 18: the wrappers of the fix round, task 17: the project line

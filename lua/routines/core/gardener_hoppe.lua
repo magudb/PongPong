@@ -31,7 +31,7 @@ routines = {
         farm_visit = { blocks = {
           { from = 6.5, at = "home.table", act = "eat" },
           { from = 7.25, at = "traetoppen.a_beds1", act = "tend" },
-          { from = 11.5, at = "traetoppen.a_bench", act = "sit", leave = 13.0 },
+          { from = 11.5, at = "traetoppen.a_bench", act = "sit", leave = 12.85 },
           { from = 15, at = "farm.hoppe_fence", act = "stand", leave = 16 },
           { at = "traetoppen.t_fire_n", act = "sit", leave = 18.1 },
           { at = "home.table", act = "eat" },
