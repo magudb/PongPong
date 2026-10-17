@@ -6,7 +6,7 @@ Legacy findings remain visible and become fatal under --strict. --files limits
 row checks; roster, review status and voice index checks always cover the root.
 """
 from pathlib import Path
-import argparse, importlib.util, json, re, sys
+import argparse, hashlib, importlib.util, json, re, sys
 ROOT=Path(__file__).resolve().parents[2]
 spec=importlib.util.spec_from_file_location('loc_csv_lint',ROOT/'tools/loc/csv_lint.py')
 loc=importlib.util.module_from_spec(spec);spec.loader.exec_module(loc)
@@ -49,6 +49,17 @@ def read_rows(root):
             row=dict(zip(header,cells));row.update(file='localization/'+file,line=line)
             all_rows.append(row);effective[cells[0]]=row
     return effective,all_rows
+
+def voice_reviewed(record,row):
+    """A whole-file review or an exact bilingual row review can unlock TTS.
+
+    Row hashes deliberately cover both languages. Editing either translation
+    invalidates the approval while the rest of its CSV can remain a draft.
+    """
+    if isinstance(record,str):return record in ('ai_reviewed','native_reviewed')
+    if record.get('status') in ('ai_reviewed','native_reviewed'):return True
+    approval=record.get('voice_reviews',{}).get(row.get('keys',''),{})
+    return approval.get('status') in ('ai_reviewed','native_reviewed') and bool(approval.get('reviewed_by')) and all(approval.get(language+'_sha256')==hashlib.sha256(row.get(language,'').encode()).hexdigest() for language in ('da','en'))
 
 def slot_of(key):
     if 'CHOICE' in key or re.search(r'_TOPIC_\d+$',key):return 'choice'
@@ -118,6 +129,10 @@ def findings(root=ROOT,files=None):
             add('C8',row,'Missing/invalid review state or stale row count')
         if record.get('status')=='native_reviewed' and not record.get('reviewed_by'):add('C8',row,'Native review needs the user reviewer')
         if record.get('voice_frozen') and record.get('status')=='draft':add('C8',row,'Draft copy cannot be voice-frozen')
+        for key,approval in record.get('voice_reviews',{}).items():
+            reviewed=effective.get(key,{})
+            valid=key.endswith('_V') and reviewed.get('file')==file and approval.get('status') in ('ai_reviewed','native_reviewed') and bool(approval.get('reviewed_by')) and all(approval.get(language+'_sha256')==hashlib.sha256(reviewed.get(language,'').encode()).hexdigest() for language in ('da','en'))
+            if not valid:add('C8',{'file':file,'keys':key},'Stale, misplaced or incomplete voice-row review')
     seen={}
     for key,row in effective.items():
         if key.endswith('_V') or key.startswith('SOC_'):

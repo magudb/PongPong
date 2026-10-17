@@ -1,0 +1,29 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 15,
+  "elapsed_s": 15.49,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1007,
+      "skipped": 0
+    },
+    "copy_completion": {
+      "character": "animal",
+      "checks": 7,
+      "failed": 0,
+      "ms": 9710,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

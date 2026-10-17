@@ -4,7 +4,8 @@
   "forest_mother.csv": {
    "owner": "forest-mother-story",
    "prefix": [
-    "FM_"
+    "FM_",
+    "QUEST_FOREST_MOTHER_"
    ],
    "exact": []
   },

@@ -9,4 +9,4 @@ func run(t, suite) -> void:
 		suite._check(t, "L17", "l17_" + str(id), bool(data.checks[id]), str(data.get("note", "")))
 	suite._check(t, "L17", "l17_observed_screens_have_no_raw_keys", suite.text_samples >= 100 and suite.raw_copy.is_empty(), "%d live labels / %s" % [suite.text_samples, str(suite.raw_copy)])
 	var indexed: Dictionary = t.run_tool("python3", [ProjectSettings.globalize_path("res://tools/voice/build_index.py"), "--check"])
-	suite._check(t, "L17", "l17_voice_index_and_missing_recordings", indexed.code == 0 and data.unrecorded_hooks.size() >= 110, indexed.output)
+	suite._check(t, "L17", "l17_voice_index_and_recordings_complete", indexed.code == 0 and data.unrecorded_hooks.is_empty(), indexed.output)

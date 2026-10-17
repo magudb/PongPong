@@ -1,0 +1,324 @@
+overridden: 151 row(s)
+   da.csv:2 GAME_TITLE  -> (core.csv)
+   da.csv:3 GAME_SUBTITLE  -> (core.csv)
+   da.csv:9 MENU_CONTINUE  -> (ui.csv)
+   da.csv:10 MENU_SETTINGS  -> (ui.csv)
+   da.csv:11 MENU_QUIT  -> (ui.csv)
+   da.csv:19 CHAR_SELECT_TITLE  -> (core.csv)
+   da.csv:20 CHAR_ANIMAL_NAME  -> (core.csv)
+   da.csv:22 CHAR_FAIRY_NAME  -> (ui.csv)
+   da.csv:24 CHAR_HOBBIT_NAME  -> (ui.csv)
+   da.csv:43 ZONE_FARM  -> (core.csv)
+   da.csv:44 ZONE_CITY  -> (core.csv)
+   da.csv:45 ZONE_DARK_FOREST  -> (core.csv)
+   da.csv:46 ZONE_FOREST_EDGE  -> (core.csv)
+   da.csv:49 NPC_MAYOR_LYRA  -> (core.csv)
+   da.csv:50 NPC_BAKER_MAJA  -> (core.csv)
+   da.csv:51 NPC_FAIRY_LILY  -> (core.csv)
+   da.csv:52 NPC_SMITH_THORIN  -> (core.csv)
+   da.csv:55 QUEST_INTRO_LOTTERY_TITLE  -> (quests.csv)
+   da.csv:56 QUEST_COOKIE_DELIVERY_TITLE  -> (quests.csv)
+   da.csv:58 QUEST_LOST_CAT_TITLE  -> (quests.csv)
+   da.csv:59 QUEST_DARK_FOREST_MINING_TITLE  -> (quests.csv)
+   da.csv:62 QUEST_COOKIE_DELIVERY_OFFER  -> (quests.csv)
+   da.csv:63 QUEST_FIX_ROOF_TITLE  -> (quests.csv)
+   da.csv:64 QUEST_FIX_ROOF_OFFER  -> (quests.csv)
+   da.csv:65 QUEST_LOST_CAT_OFFER  -> (quests.csv)
+   da.csv:66 QUEST_DARK_FOREST_MINING_OFFER  -> (quests.csv)
+   da.csv:86 ITEM_TURNIP_SEEDS  -> (economy.csv)
+   da.csv:87 ITEM_TURNIP_SEEDS_DESC  -> (economy.csv)
+   da.csv:88 ITEM_TURNIP  -> (economy.csv)
+   da.csv:89 ITEM_TURNIP_DESC  -> (economy.csv)
+   da.csv:90 ITEM_CARROT_SEEDS  -> (economy.csv)
+   da.csv:91 ITEM_CARROT_SEEDS_DESC  -> (economy.csv)
+   da.csv:92 ITEM_CARROT  -> (economy.csv)
+   da.csv:93 ITEM_CARROT_DESC  -> (economy.csv)
+   da.csv:94 ITEM_MOONFLOWER_SEEDS  -> (economy.csv)
+   da.csv:95 ITEM_MOONFLOWER_SEEDS_DESC  -> (economy.csv)
+   da.csv:96 ITEM_MOONFLOWER  -> (economy.csv)
+   da.csv:97 ITEM_MOONFLOWER_DESC  -> (economy.csv)
+   da.csv:98 ITEM_PUMPKIN_SEEDS  -> (economy.csv)
+   da.csv:99 ITEM_PUMPKIN_SEEDS_DESC  -> (economy.csv)
+   da.csv:100 ITEM_PUMPKIN  -> (economy.csv)
+   da.csv:101 ITEM_PUMPKIN_DESC  -> (economy.csv)
+   da.csv:102 ITEM_WOOD  -> (economy.csv)
+   da.csv:103 ITEM_WOOD_DESC  -> (economy.csv)
+   da.csv:104 ITEM_STONE  -> (economy.csv)
+   da.csv:105 ITEM_STONE_DESC  -> (economy.csv)
+   da.csv:106 ITEM_MOSS  -> (economy.csv)
+   da.csv:107 ITEM_MOSS_DESC  -> (economy.csv)
+   da.csv:108 ITEM_IRON_ORE  -> (economy.csv)
+   da.csv:109 ITEM_IRON_ORE_DESC  -> (economy.csv)
+   da.csv:110 ITEM_GOLD_ORE  -> (economy.csv)
+   da.csv:111 ITEM_GOLD_ORE_DESC  -> (economy.csv)
+   da.csv:112 ITEM_AMETHYST  -> (economy.csv)
+   da.csv:113 ITEM_AMETHYST_DESC  -> (economy.csv)
+   da.csv:114 ITEM_EMERALD  -> (economy.csv)
+   da.csv:115 ITEM_EMERALD_DESC  -> (economy.csv)
+   da.csv:118 ITEM_RARE_MUSHROOM  -> (economy.csv)
+   da.csv:119 ITEM_RARE_MUSHROOM_DESC  -> (economy.csv)
+   da.csv:120 ITEM_LUCKY_CLOVER  -> (economy.csv)
+   da.csv:121 ITEM_LUCKY_CLOVER_DESC  -> (economy.csv)
+   da.csv:122 ITEM_COOKIE  -> (economy.csv)
+   da.csv:123 ITEM_COOKIE_DESC  -> (economy.csv)
+   da.csv:124 ITEM_FRIENDSHIP_TOKEN  -> (economy.csv)
+   da.csv:125 ITEM_FRIENDSHIP_TOKEN_DESC  -> (economy.csv)
+   da.csv:126 ITEM_HOE_WOODEN  -> (economy.csv)
+   da.csv:127 ITEM_HOE_WOODEN_DESC  -> (economy.csv)
+   da.csv:128 ITEM_HOE_IRON  -> (economy.csv)
+   da.csv:129 ITEM_HOE_IRON_DESC  -> (economy.csv)
+   da.csv:130 ITEM_WATERING_CAN_COPPER  -> (economy.csv)
+   da.csv:132 ITEM_WATERING_CAN_GOLD  -> (economy.csv)
+   da.csv:133 ITEM_WATERING_CAN_GOLD_DESC  -> (economy.csv)
+   da.csv:134 ITEM_PICKAXE_WOODEN  -> (economy.csv)
+   da.csv:135 ITEM_PICKAXE_WOODEN_DESC  -> (economy.csv)
+   da.csv:136 ITEM_PICKAXE_IRON  -> (economy.csv)
+   da.csv:137 ITEM_PICKAXE_IRON_DESC  -> (economy.csv)
+   da.csv:138 ITEM_AXE_WOODEN  -> (economy.csv)
+   da.csv:139 ITEM_AXE_WOODEN_DESC  -> (economy.csv)
+   da.csv:140 ITEM_SWORD_RUSTY  -> (economy.csv)
+   da.csv:141 ITEM_SWORD_RUSTY_DESC  -> (economy.csv)
+   da.csv:142 ITEM_IRON_SWORD  -> (economy.csv)
+   da.csv:143 ITEM_IRON_SWORD_DESC  -> (economy.csv)
+   da.csv:182 NOTIF_QUEST_ACCEPTED_TITLE  -> (core.csv)
+   da.csv:183 NOTIF_QUEST_COMPLETED_TITLE  -> (core.csv)
+   da.csv:185 NOTIF_LANGUAGE_CHANGED_MSG  -> (core.csv)
+   da.csv:192 UI_INVENTORY  -> (core.csv)
+   da.csv:193 UI_JOURNAL  -> (core.csv)
+   da.csv:196 UI_GOLD  -> (core.csv)
+   da.csv:202 UI_WEATHER_KLART  -> (core.csv)
+   da.csv:203 UI_WEATHER_REGN  -> (ui.csv)
+   da.csv:204 UI_WEATHER_TAAGE  -> (ui.csv)
+   da.csv:205 UI_WEATHER_SNE  -> (ui.csv)
+   da.csv:206 UI_WEATHER_TORDEN  -> (ui.csv)
+   da.csv:251 NPC_MERCHANT_PIP  -> (core.csv)
+   da.csv:252 NPC_GUARD_OAK  -> (core.csv)
+   da.csv:255 QUEST_BIRTHDAY_CAKE_TITLE  -> (quests.csv)
+   da.csv:256 QUEST_FLOWER_NECKLACE_TITLE  -> (quests.csv)
+   da.csv:257 QUEST_SWORD_UPGRADE_TITLE  -> (quests.csv)
+   da.csv:258 QUEST_SUPPLY_RUN_TITLE  -> (quests.csv)
+   da.csv:259 QUEST_FOREST_PATROL_TITLE  -> (quests.csv)
+   da.csv:260 QUEST_CRYSTAL_CAVE_TITLE  -> (quests.csv)
+   da.csv:261 QUEST_ENCHANTED_GARDEN_TITLE  -> (quests.csv)
+   da.csv:262 QUEST_NIGHT_FLOWER_TITLE  -> (quests.csv)
+   da.csv:263 QUEST_RARE_MUSHROOM_HUNT_TITLE  -> (quests.csv)
+   da.csv:291 SHOP_MAGIC_STORE  -> (economy.csv)
+   da.csv:293 SHOP_ANIMAL_STORE  -> (economy.csv)
+   da.csv:295 SHOP_BAKERY  -> (economy.csv)
+   da.csv:297 SHOP_SMITHY  -> (economy.csv)
+   da.csv:299 NPC_FAIRY_WIZARD  -> (core.csv)
+   da.csv:300 NPC_FARMER_ROSA  -> (core.csv)
+   da.csv:305 ITEM_FAIRY_DUST  -> (economy.csv)
+   da.csv:306 ITEM_FAIRY_DUST_DESC  -> (economy.csv)
+   da.csv:307 ITEM_CRYSTAL_SHARD  -> (economy.csv)
+   da.csv:308 ITEM_CRYSTAL_SHARD_DESC  -> (economy.csv)
+   da.csv:309 ITEM_MAGIC_SCROLL  -> (economy.csv)
+   da.csv:310 ITEM_MAGIC_SCROLL_DESC  -> (economy.csv)
+   da.csv:311 ITEM_MANA_POTION  -> (economy.csv)
+   da.csv:312 ITEM_MANA_POTION_DESC  -> (economy.csv)
+   da.csv:317 ITEM_GLOW_BERRY_SEEDS  -> (economy.csv)
+   da.csv:318 ITEM_GLOW_BERRY_SEEDS_DESC  -> (economy.csv)
+   da.csv:319 ITEM_GLOW_BERRY  -> (economy.csv)
+   da.csv:320 ITEM_GLOW_BERRY_DESC  -> (economy.csv)
+   da.csv:367 ZONE_CRYSTAL_CAVE  -> (core.csv)
+   da.csv:368 QUEST_BIRTHDAY_CAKE_OFFER  -> (quests.csv)
+   da.csv:369 QUEST_FLOWER_NECKLACE_OFFER  -> (quests.csv)
+   da.csv:370 QUEST_SWORD_UPGRADE_OFFER  -> (quests.csv)
+   da.csv:371 QUEST_SUPPLY_RUN_OFFER  -> (quests.csv)
+   da.csv:372 QUEST_FOREST_PATROL_OFFER  -> (quests.csv)
+   da.csv:373 QUEST_CRYSTAL_CAVE_OFFER  -> (quests.csv)
+   da.csv:374 QUEST_NIGHT_FLOWER_OFFER  -> (quests.csv)
+   da.csv:375 QUEST_RARE_MUSHROOM_HUNT_OFFER  -> (quests.csv)
+   da.csv:377 QUEST_ENCHANTED_GARDEN_OFFER  -> (quests.csv)
+   da.csv:401 BUILDING_COOP  -> (animals.csv)
+   da.csv:402 BUILDING_BARN  -> (animals.csv)
+   da.csv:403 BUILDING_HOUSE  -> (animals.csv)
+   da.csv:425 ITEM_EGG  -> (economy.csv)
+   da.csv:426 ITEM_DUCK_EGG  -> (economy.csv)
+   da.csv:427 ITEM_WOOL  -> (economy.csv)
+   da.csv:428 ITEM_MILK  -> (economy.csv)
+   da.csv:429 ITEM_MAGIC_HERB  -> (economy.csv)
+   da.csv:430 ITEM_LUCKY_FUR  -> (economy.csv)
+   da.csv:431 ITEM_WISDOM_FEATHER  -> (economy.csv)
+   da.csv:440 QUEST_FIRST_ANIMAL_TITLE  -> (quests.csv)
+   da.csv:441 QUEST_FIRST_ANIMAL_OFFER  -> (quests.csv)
+   da.csv:442 QUEST_ANIMAL_PRODUCTS_TITLE  -> (quests.csv)
+   da.csv:443 QUEST_ANIMAL_PRODUCTS_OFFER  -> (quests.csv)
+   da.csv:450 QUEST_MATH_WIZARD_QUIZ_TITLE  -> (quests.csv)
+   da.csv:451 QUEST_MATH_WIZARD_QUIZ_OFFER  -> (quests.csv)
+   da.csv:452 QUEST_MATH_BAKERY_COUNTS_TITLE  -> (quests.csv)
+   da.csv:453 QUEST_MATH_BAKERY_COUNTS_OFFER  -> (quests.csv)
+   da.csv:454 QUEST_MATH_HARVEST_PUZZLE_TITLE  -> (quests.csv)
+   da.csv:455 QUEST_MATH_HARVEST_PUZZLE_OFFER  -> (quests.csv)
+malformed: 0 row(s)
+duplicate: 3 row(s)
+   da.csv:57 QUEST_FIX_ROOF_TITLE
+   da.csv:116 ITEM_FAIRY_DUST
+   da.csv:117 ITEM_FAIRY_DUST_DESC
+unreferenced: 164 row(s)
+   da.csv:14 MENU_LANGUAGE
+   da.csv:15 MENU_AUDIO
+   da.csv:16 MENU_GRAPHICS
+   da.csv:21 CHAR_ANIMAL_DESC
+   da.csv:23 CHAR_FAIRY_DESC
+   da.csv:25 CHAR_HOBBIT_DESC
+   da.csv:26 NAME_INPUT_LABEL
+   da.csv:27 FARM_NAME_LABEL
+   da.csv:28 CONFIRM
+   da.csv:31 SKIN_ANIMAL_RABBIT
+   da.csv:32 SKIN_ANIMAL_FOX
+   da.csv:33 SKIN_ANIMAL_BEAR
+   da.csv:34 SKIN_ANIMAL_OWL
+   da.csv:69 OBJ_TALK_TO_MAYOR
+   da.csv:70 OBJ_VISIT_FARM
+   da.csv:71 OBJ_PLANT_FIRST_CROP
+   da.csv:72 OBJ_COLLECT_TURNIP
+   da.csv:73 OBJ_DELIVER_TO_BAKER
+   da.csv:74 OBJ_COLLECT_WOOD
+   da.csv:75 OBJ_COLLECT_MOSS
+   da.csv:76 OBJ_REPAIR_ROOF
+   da.csv:77 OBJ_SEARCH_FOREST
+   da.csv:78 OBJ_FIND_CAT
+   da.csv:79 OBJ_RETURN_CAT
+   da.csv:80 OBJ_ENTER_DARK_FOREST
+   da.csv:81 OBJ_COLLECT_IRON
+   da.csv:82 OBJ_COLLECT_AMETHYST
+   da.csv:83 OBJ_RETURN_TO_SMITH
+   da.csv:131 ITEM_WATERING_CAN_DESC
+   da.csv:146 DIALOGUE_LYRA_GREET_1
+   da.csv:147 DIALOGUE_LYRA_GREET_2
+   da.csv:148 DIALOGUE_LYRA_LOTTERY
+   da.csv:149 DIALOGUE_LYRA_HELLO
+   da.csv:150 DIALOGUE_LYRA_FARM_STATUS
+   da.csv:151 DIALOGUE_MAJA_GREET
+   da.csv:152 DIALOGUE_MAJA_ROOF_TROUBLE
+   da.csv:153 DIALOGUE_MAJA_THANKS
+   da.csv:154 DIALOGUE_MAJA_COOKIE_TALK
+   da.csv:155 DIALOGUE_LILY_GREET
+   da.csv:156 DIALOGUE_LILY_CAT_MISSING
+   da.csv:157 DIALOGUE_LILY_WORRIED
+   da.csv:158 DIALOGUE_THORIN_GREET
+   da.csv:159 DIALOGUE_THORIN_MINING_TALK
+   da.csv:160 DIALOGUE_CHOICE_ACCEPT_FARM
+   da.csv:161 DIALOGUE_CHOICE_ASK_MORE
+   da.csv:162 DIALOGUE_CHOICE_ABOUT_QUESTS
+   da.csv:164 DIALOGUE_CHOICE_HELP_ROOF
+   da.csv:165 DIALOGUE_CHOICE_BUY_COOKIES
+   da.csv:166 DIALOGUE_CHOICE_COOKIE_QUEST
+   da.csv:167 DIALOGUE_CHOICE_HELP_FIND_CAT
+   da.csv:168 DIALOGUE_CHOICE_KEEP_SEARCHING
+   da.csv:169 DIALOGUE_CHOICE_MINING_QUEST
+   da.csv:188 NOTIF_DEFEATED_TITLE
+   da.csv:189 NOTIF_DEFEATED_MSG
+   da.csv:194 UI_MAP
+   da.csv:195 UI_SETTINGS
+   da.csv:207 UI_HEALTH
+   da.csv:208 UI_STAMINA
+   da.csv:209 UI_FARM
+   da.csv:210 UI_CITY
+   da.csv:211 UI_FOREST
+   da.csv:212 UI_SHOP
+   da.csv:216 UI_DECLINE
+   da.csv:217 UI_CONTINUE
+   da.csv:222 FARM_PLOT_EMPTY
+   da.csv:223 FARM_PLOT_TILLED
+   da.csv:224 FARM_PLOT_PLANTED
+   da.csv:225 FARM_PLOT_WATERED
+   da.csv:226 FARM_PLOT_READY
+   da.csv:227 FARM_UPGRADE_TITLE
+   da.csv:228 FARM_WATER
+   da.csv:229 FARM_PLANT
+   da.csv:230 FARM_HARVEST
+   da.csv:231 FARM_TILL
+   da.csv:236 UI_EMPTY_SLOT
+   da.csv:237 UI_SAVE_INFO
+   da.csv:238 UI_LOAD_INFO
+   da.csv:239 UI_CONFIRM_SAVE
+   da.csv:241 UI_CONFIRM_LOAD
+   da.csv:242 UI_CONFIRM_DELETE
+   da.csv:243 UI_DELETED_TITLE
+   da.csv:244 UI_DELETED_MSG
+   da.csv:247 UI_INTERACT_MINE
+   da.csv:248 UI_INTERACT_FORAGE
+   da.csv:249 UI_TALK
+   da.csv:264 QUEST_FAIRES_FRIENDSHIP_TITLE
+   da.csv:267 OBJ_COLLECT_FLOWERS
+   da.csv:268 OBJ_COLLECT_MUSHROOMS
+   da.csv:269 OBJ_CRAFT_NECKLACE
+   da.csv:270 OBJ_DELIVER_NECKLACE
+   da.csv:271 OBJ_COLLECT_IRON_INGOTS
+   da.csv:272 OBJ_DELIVER_TO_SMITH
+   da.csv:273 OBJ_COLLECT_CRYSTALS
+   da.csv:274 OBJ_EXPLORE_CAVE
+   da.csv:275 OBJ_WATER_GARDEN
+   da.csv:276 OBJ_COLLECT_RARE_SEEDS
+   da.csv:277 OBJ_PLANT_ENCHANTED
+   da.csv:278 OBJ_COLLECT_NIGHT_BLOOM
+   da.csv:279 OBJ_RETURN_BEFORE_DAWN
+   da.csv:280 OBJ_COLLECT_RARE_MUSHROOMS
+   da.csv:281 OBJ_FIND_GLOWING
+   da.csv:282 OBJ_HELP_CITIZENS
+   da.csv:283 OBJ_EARN_FRIENDSHIP
+   da.csv:284 OBJ_COLLECT_FAIRY_DUST
+   da.csv:287 DIALOGUE_PIP_GREET
+   da.csv:288 DIALOGUE_OAK_GREET
+   da.csv:289 SHOP_GENERAL_STORE
+   da.csv:290 SHOP_GENERAL_STORE_DESC
+   da.csv:292 SHOP_MAGIC_STORE_DESC
+   da.csv:294 SHOP_ANIMAL_STORE_DESC
+   da.csv:296 SHOP_BAKERY_DESC
+   da.csv:298 SHOP_SMITHY_DESC
+   da.csv:313 ITEM_TELEPORT_STONE
+   da.csv:314 ITEM_TELEPORT_STONE_DESC
+   da.csv:315 ITEM_ENCHANTED_SOIL
+   da.csv:316 ITEM_ENCHANTED_SOIL_DESC
+   da.csv:357 DIALOGUE_WIZARD_GREET
+   da.csv:358 DIALOGUE_WIZARD_MAGIC_TALK
+   da.csv:359 DIALOGUE_ROSA_GREET
+   da.csv:360 DIALOGUE_ROSA_ANIMAL_TALK
+   da.csv:361 DIALOGUE_CHOICE_ABOUT_MAGIC
+   da.csv:362 DIALOGUE_CHOICE_ABOUT_ANIMALS
+   da.csv:376 QUEST_FAIRES_FRIENDSHIP_OFFER
+   da.csv:397 NOTIF_MISSING_MATERIALS_TITLE
+   da.csv:398 NOTIF_MISSING_MATERIALS_MSG
+   da.csv:404 UI_BUILD
+   da.csv:405 UI_ANIMALS
+   da.csv:406 UI_BOND_LEVEL
+   da.csv:407 UI_AGE_DAYS
+   da.csv:408 UI_PRODUCT_READY
+   da.csv:409 UI_COLLECT_PRODUCT
+   da.csv:410 UI_RENAME_ANIMAL
+   da.csv:411 UI_ENTER_NAME
+   da.csv:412 UI_INTERACT_ANIMAL
+   da.csv:413 UI_FEED
+   da.csv:414 UI_BRUSH
+   da.csv:415 UI_PLAY
+   da.csv:418 HAPPY_VERY_HAPPY
+   da.csv:419 HAPPY_HAPPY
+   da.csv:420 HAPPY_CONTENT
+   da.csv:421 HAPPY_UNHAPPY
+   da.csv:422 HAPPY_MISERABLE
+   da.csv:432 ITEM_FISH
+   da.csv:435 UI_CAPACITY
+   da.csv:436 UI_COST
+   da.csv:437 UI_ALREADY_BUILT
+   da.csv:444 OBJ_BUILD_COOP
+   da.csv:445 OBJ_ADOPT_ANIMAL
+   da.csv:446 OBJ_FEED_ANIMAL
+   da.csv:447 OBJ_COLLECT_EGG
+   da.csv:448 OBJ_COLLECT_MILK
+   da.csv:449 OBJ_DELIVER_TO_ROSA
+   da.csv:456 DIALOGUE_WIZARD_MATH_INTRO
+   da.csv:457 DIALOGUE_WIZARD_MATH_Q1
+   da.csv:458 DIALOGUE_WIZARD_MATH_Q2
+   da.csv:459 DIALOGUE_WIZARD_MATH_Q3
+   da.csv:460 DIALOGUE_WIZARD_MATH_DONE
+   da.csv:461 DIALOGUE_CHOICE_MATH_QUIZ
+   da.csv:462 DIALOGUE_MAJA_MATH_Q1
+   da.csv:463 DIALOGUE_MAJA_MATH_Q2
+   da.csv:464 DIALOGUE_MAJA_MATH_Q3
+   da.csv:465 DIALOGUE_MAJA_MATH_DONE
+   da.csv:466 DIALOGUE_CHOICE_MATH_BAKERY
+   da.csv:467 DIALOGUE_CHOICE_MATH_HARVEST
+prune_legacy: 318 of 416 da.csv rows would be removed, 98 would stay
+prune_legacy: wrote localization/da.csv (318 rows removed)

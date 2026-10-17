@@ -11,14 +11,14 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | dialogue_cast.csv | draft | 73 | 520 | 1.3 |
 | dialogue_builder.csv | draft | 43 | 603 | 1.5 |
 | towns.csv | draft | 69 | 158 | 0.4 |
-| farm_tutorial.csv | draft | 24 | 205 | 0.5 |
+| farm_tutorial.csv | draft | 25 | 219 | 0.5 |
 | dungeon_services.csv | draft | 49 | 245 | 0.6 |
 | animals.csv | draft | 41 | 120 | 0.3 |
 | appraisal.csv | draft | 12 | 50 | 0.1 |
 | areas.csv | draft | 12 | 98 | 0.2 |
 | cast.csv | draft | 40 | 323 | 0.8 |
 | core.csv | ai_reviewed | 48 | 80 | 0.2 |
-| da.csv | draft | 414 | 1512 | 3.8 |
+| da.csv | draft | 98 | 328 | 0.8 |
 | dialogue.csv | draft | 56 | 380 | 0.9 |
 | dungeon.csv | draft | 19 | 102 | 0.3 |
 | dungeon_items.csv | draft | 157 | 1208 | 3.0 |
@@ -32,7 +32,7 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | festivals.csv | draft | 91 | 537 | 1.3 |
 | finds.csv | draft | 47 | 81 | 0.2 |
 | forest.csv | draft | 21 | 46 | 0.1 |
-| forest_mother.csv | draft | 102 | 1360 | 3.4 |
+| forest_mother.csv | draft | 108 | 1451 | 3.6 |
 | furniture.csv | draft | 322 | 2075 | 5.2 |
 | ghost.csv | draft | 15 | 97 | 0.2 |
 | ghost_dialogue.csv | draft | 9 | 170 | 0.4 |
@@ -42,7 +42,8 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | ghostfamily_quests.csv | draft | 26 | 163 | 0.4 |
 | ghostfamily_seek.csv | draft | 25 | 291 | 0.7 |
 | heart_events.csv | draft | 280 | 1987 | 5.0 |
-| home.csv | draft | 90 | 502 | 1.3 |
+| home.csv | draft | 90 | 497 | 1.2 |
+| home_amenities.csv | draft | 20 | 164 | 0.4 |
 | home_ui.csv | draft | 62 | 269 | 0.7 |
 | home_world.csv | draft | 7 | 30 | 0.1 |
 | hud.csv | draft | 8 | 20 | 0.1 |

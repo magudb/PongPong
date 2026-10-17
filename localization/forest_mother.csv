@@ -101,3 +101,9 @@ FM_LEAD_CHECKPOINT_S05,Gå gennem dybdepunktet på etage 8. En tidligere sejr g�
 FM_LEAD_CHECKPOINT_S07,Gå gennem dybdepunktet på etage 12. En tidligere sejr gælder stadig.,Clear the depth checkpoint on floor 12. An earlier victory still counts.
 FM_FIELD_NOTE,"Fru Ugles feltnote ligger ved bænken. Hun har givet haven en kopi, så den kan læses, også mens hun er væk.",Fru Ugle’s field note lies beside the bench. She gave the garden a copy to read while she is away.
 FM_RECORD_ACCOUNT,Beretningen får sin egen plads i din sporbog.,The account will have its own place in your trail book.
+QUEST_FOREST_MOTHER_S03_OFFER,Mors lygte har efterladt et spor ved skovkanten. Vil du følge det?,Mum’s lamp has left a trail at the edge of the wood. Will you follow it?
+QUEST_FOREST_MOTHER_S04_OFFER,Der ligger et minde om et køkken dybere i skoven. Måske husker det noget om mor.,There is a memory of a kitchen deeper in the wood. Perhaps it remembers something about Mum.
+QUEST_FOREST_MOTHER_S05_OFFER,En rejsende har mistet sit navn mellem rødderne. Vil du hjælpe med at finde den rejsendes egne ord?,A traveller has lost their name among the roots. Will you help find their own words?
+QUEST_FOREST_MOTHER_S06_OFFER,Mors løfte og de gamle ruter hører sammen. Skal vi se på sporene igen?,Mum’s promise and the old routes belong together. Shall we look at the clues again?
+QUEST_FOREST_MOTHER_S07_OFFER,Den sidste rute fører hinsides det sidste lys. Tag dig god tid til at gøre dig klar.,The last route leads beyond the final light. Take your time getting ready.
+QUEST_FOREST_MOTHER_S08_OFFER,Du har fundet mors sidste beretning. Lad hendes navn og frø finde vej hjem.,You have found Mum’s final account. Let her name and seeds find their way home.

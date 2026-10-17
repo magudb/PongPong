@@ -1,14 +1,2 @@
-Effective legacy copy findings — 2026-10-16
-
-These findings are read from the current effective CSV layer, not assumed from the old plan. P13 has already replaced the stale quest-offer rows named in that plan. Remaining dialogue belongs to P14; shared objective labels belong to P26. --strict keeps them fatal until corrected.
-
-OBJ_TALK_TO_MAYOR — P26 — da: stale name Lyra; da: use display name Borgmester Hyldeblomst; en: stale name Lyra; en: use display name Borgmester Hyldeblomst
-OBJ_DELIVER_TO_BAKER — P26 — da: use display name Bagerfe Rosmarin; en: use display name Bagerfe Rosmarin
-DIALOGUE_LYRA_GREET_1 — P14 — da: stale name PongPong; da: stale name Lyra; da: use display name Borgmester Hyldeblomst; en: stale name PongPong; en: stale name Lyra; en: use display name Borgmester Hyldeblomst
-DIALOGUE_MAJA_COOKIE_TALK — P14 — da: stale name PongPong; en: stale name PongPong
-DIALOGUE_LILY_CAT_MISSING — P14 — da: stale name Mjau; da: use display name Morfar Mis; en: stale name Mjau; en: use display name Morfar Mis
-DIALOGUE_LILY_WORRIED — P14 — da: stale name Mjau; da: use display name Morfar Mis; en: stale name Mjau; en: use display name Morfar Mis
-DIALOGUE_CHOICE_MINING_QUEST — P14 — en: choice has 33 characters, limit 32
-DIALOGUE_WIZARD_MAGIC_TALK — P14 — da: stale name Eventyrskoven; en: stale name PongPong
-DIALOGUE_CHOICE_MATH_BAKERY — P14 — da: use display name Bagerfe Rosmarin; en: use display name Bagerfe Rosmarin
-DIALOGUE_CHOICE_MATH_HARVEST — P14 — en: choice has 33 characters, limit 32
+No remaining legacy copy findings after the 2026-10-17 P26 cleanup.
+All 296 effective voiced texts were preserved in Danish and English.

@@ -103,8 +103,7 @@ def main():
         # CSV-selected social copy must complete the copy pass before the bulk bake.
         csv=effective_rows[row['text_key']]['file'].removeprefix('localization/')
         status=review.get('localization/'+csv,{})
-        status=status.get('status','draft') if isinstance(status,dict) else status
-        if row['text_key'].endswith('_V') and status not in ['ai_reviewed','native_reviewed']:
+        if row['text_key'].endswith('_V') and not copy_lint.voice_reviewed(status,effective_rows[row['text_key']]):
             if a.check:assert entry.get('kind')=='missing' and entry.get('text_sha256')==row['text_sha256'],('Stale deferred copy',v)
             return v,dict(row,kind='missing',reason='draft social copy; bake after copy review')
         if a.check:

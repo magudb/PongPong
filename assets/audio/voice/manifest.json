@@ -39,8 +39,17 @@
       "text": "Fru Ugle, om jeg må bede. Lad os se på dine små skatte.",
       "text_sha256": "bc476f9975faf2c91c0ecf4a919411487da7ab00c269144d560cb8f04bfe62ad",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.83183,
+        "rate": 0.805958,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "a2c1fd512d369ca3a98d528df58c964cbba2b7276d8a6941b6d15e4c884e4d83",
+      "audio_sha256": "b2569792d3d050c4b5e3c3ba539bc0a12828d5c13796f26461e6eb7adf32dab7"
     },
     "voice/appraiser_fru_ugle/glass": {
       "text_key": "DLG_UGLE_GLASS",
@@ -149,8 +158,17 @@
       "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
       "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.12618,
+        "rate": 1.038659,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "7d9670376db282723d654b10f44f13fa5c1285444be78e51a634539f5c459d09",
+      "audio_sha256": "52ce93d268c2a29c74ad2d11dd4a3ba6e92b25d65c4df03edf70818904490748"
     },
     "voice/baker_maja/cookie_talk": {
       "text_key": "DLG_MAJA_COOKIE_TALK",
@@ -165,48 +183,102 @@
       "text": "Jeg er Rosmarin. Kom ind til duften af lune boller.",
       "text_sha256": "d26c1ab938d4a91efdf4eed2c1bcf437e48279e0ba801bac3a92a257941f3142",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.12618,
+        "rate": 1.038659,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "2c4ed51d76180be56d4bae31dca53ae525e26791d5947675a9661e4d546a34c2",
+      "audio_sha256": "82c988c64ef171c313ce98d559a218b77c9492cd4f543564d37e4c7ebca2ea60"
     },
     "voice/baker_maja/gift_baker_maja_dislike_1_v": {
       "text_key": "GIFT_BAKER_MAJA_DISLIKE_1_V",
       "text": "Tak for tanken. En anden kan måske bruge den bedre.",
       "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.12618,
+        "rate": 1.038659,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "0423a982b8e8178367d8b1657a0ac13a8e5e04ce43460b1861e51d54f8700dca",
+      "audio_sha256": "fa9776aa90774fd62bf6c86b1f9431a4ac894c64265f0babbbefbcd26cca78d4"
     },
     "voice/baker_maja/gift_baker_maja_hate_1_v": {
       "text_key": "GIFT_BAKER_MAJA_HATE_1_V",
       "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
       "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.12618,
+        "rate": 1.038659,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "ae413330eddc00da09f23d9babcc15d47aa9ea21ee16876e9c37548983e73762",
+      "audio_sha256": "9f42f7e6c0b06fc5396146da89171ff8f314c3e21782151b8eaab62469c5c6be"
     },
     "voice/baker_maja/gift_baker_maja_like_1_v": {
       "text_key": "GIFT_BAKER_MAJA_LIKE_1_V",
       "text": "Hvor betænksomt. Den her bliver jeg glad for.",
       "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.12618,
+        "rate": 1.038659,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "4a49584ce75c0988a6d5356e9ca541945c97d74ec3960ecc13674e90861fabbf",
+      "audio_sha256": "035cd6924e18f3191410bd87590d1e7ee2561c68146f6a9849b3c3f6e5768d39"
     },
     "voice/baker_maja/gift_baker_maja_love_1_v": {
       "text_key": "GIFT_BAKER_MAJA_LOVE_1_V",
       "text": "Du har fundet noget, jeg holder særligt af. Tak!",
       "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.12618,
+        "rate": 1.038659,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "d28032fcca4a6fab407d9e58fbe06a87440cda2a8af24dad39908a02c98f4b10",
+      "audio_sha256": "866a725d1d9fc1af3e1313e49065312728a5ee30fd214864212a02f6d1311e07"
     },
     "voice/baker_maja/gift_baker_maja_neutral_1_v": {
       "text_key": "GIFT_BAKER_MAJA_NEUTRAL_1_V",
       "text": "Tak, fordi du tænkte på mig.",
       "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.12618,
+        "rate": 1.038659,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "7f6c06df599682ffabc54ad17339a0cd9da242c1f326c5511c4bfb22caba5811",
+      "audio_sha256": "cc2653f60c713c6178f780e7d8c5ab1608db73e530d235ab2b94e903e676a328"
     },
     "voice/baker_maja/greet": {
       "text_key": "DLG_MAJA_GREET",
@@ -221,8 +293,17 @@
       "text": "Godt at se dig. Jeg tænkte netop på min surdej.",
       "text_sha256": "5de2e3f056848786c55f25005b60caeb9e0b97167fa24eeb30aa03f3a229d323",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.12618,
+        "rate": 1.038659,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "415ed64ec71fc4c01f94862f8114a7b5dff7f6a3fce926b38de8bc01c7e3f5ac",
+      "audio_sha256": "cb16e099ea61ce1ef191cc4904b0a5c878a8648ff04d59e4db32d2d559681e71"
     },
     "voice/baker_maja/math_done": {
       "text_key": "DLG_MAJA_MATH_DONE",
@@ -313,8 +394,17 @@
       "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
       "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840453,
+        "rate": 0.807608,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "e009e31edd98813223d92b964a907a5b06b81b3745c3f4680c082307afae7614",
+      "audio_sha256": "083351d2565a62bbbe2fcc8fdeaf8be8311647f75cc8f4454408397096321ab1"
     },
     "voice/bathkeeper_sofus/evening": {
       "text_key": "DLG_SOFUS_EVENING",
@@ -338,48 +428,102 @@
       "text": "Sofus er mit navn. Her har vi god tid til at hvile.",
       "text_sha256": "5b3eaec461ba78d0f3212efc0eab5e0557df38ca1b8de7c88c4663b2a368fbdc",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840453,
+        "rate": 0.807608,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "ba02ad413d188bc4f1a40bdf2352c368835764ed7f54734c51aed51eebc8a0d7",
+      "audio_sha256": "0af782f176df2fe1f142b81a10bb3f46b20a0a8c4baf5412b7b1d076179dd4af"
     },
     "voice/bathkeeper_sofus/gift_bathkeeper_sofus_dislike_1_v": {
       "text_key": "GIFT_BATHKEEPER_SOFUS_DISLIKE_1_V",
       "text": "Tak for tanken. En anden kan måske bruge den bedre.",
       "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840453,
+        "rate": 0.807608,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "74667eddffe79160507b406ca5b14e4d6e0bef4ff78db7c22fc0e3e56937a470",
+      "audio_sha256": "6f8ffa31f397cb9101ac1e4aa59c96be2e321e8cd86b63cbbb9d7714e7739be8"
     },
     "voice/bathkeeper_sofus/gift_bathkeeper_sofus_hate_1_v": {
       "text_key": "GIFT_BATHKEEPER_SOFUS_HATE_1_V",
       "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
       "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840453,
+        "rate": 0.807608,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "cbabc94a2f2b1089b2908441e7470bf41f9f4b56d8744f908ccd6fc8e6dc4db5",
+      "audio_sha256": "924c321d5f44b69ac09254e31c70d67963d7a04ba8697e776fdd598aee90504b"
     },
     "voice/bathkeeper_sofus/gift_bathkeeper_sofus_like_1_v": {
       "text_key": "GIFT_BATHKEEPER_SOFUS_LIKE_1_V",
       "text": "Hvor betænksomt. Den her bliver jeg glad for.",
       "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840453,
+        "rate": 0.807608,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "e452e84b405a739f5479f3d422e08a6dc8e279ae397d6f547ec46ce5a4de9a64",
+      "audio_sha256": "3476848179730eeef218e867708cbd373316cfa2b65baafbb70d1d3edaada754"
     },
     "voice/bathkeeper_sofus/gift_bathkeeper_sofus_love_1_v": {
       "text_key": "GIFT_BATHKEEPER_SOFUS_LOVE_1_V",
       "text": "Du har fundet noget, jeg holder særligt af. Tak!",
       "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840453,
+        "rate": 0.807608,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "ac3ac13a2ee204da9393eb98516c89cf82ccfcb8bbe1c2648935f2ea2daf163e",
+      "audio_sha256": "1a566fc37d51b8e2bef57cc7469975f9e0d700a1cc5009eabaef7b6a2cfcaf0f"
     },
     "voice/bathkeeper_sofus/gift_bathkeeper_sofus_neutral_1_v": {
       "text_key": "GIFT_BATHKEEPER_SOFUS_NEUTRAL_1_V",
       "text": "Tak, fordi du tænkte på mig.",
       "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840453,
+        "rate": 0.807608,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "bc1d341c898f03fda31a9286ca0b10ec606a144737ffc9619c6baa1dd78046fe",
+      "audio_sha256": "ad0df8d4b2dd8a172baad57225cbb4e8606c4fa8bbcf81d128f67bd35fade50d"
     },
     "voice/bathkeeper_sofus/greet": {
       "text_key": "DLG_SOFUS_GREET",
@@ -403,8 +547,17 @@
       "text": "Godt at se dig. Jeg tænkte netop på appelsinerne ved badet.",
       "text_sha256": "12541e3174484566dc0bf20fee2ec1c637c387c118c6fb472da4e8a3dc5c55a8",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840453,
+        "rate": 0.807608,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "8b9f56fcfdfc02fe79f74c399ddb4b3b96e11044cfac6c595ba013731319c752",
+      "audio_sha256": "2bed52b5a9add97344577eea0e4048552100728dcb2baa8a19b3aa9e5650eb3b"
     },
     "voice/bathkeeper_sofus/offer": {
       "text_key": "DLG_SOFUS_OFFER",
@@ -513,8 +666,17 @@
       "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
       "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.060502,
+        "rate": 0.973091,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "4f6c8593627f3aa39567645d4a042160d01997486e54f97df1a7e0f5d8acd8d6",
+      "audio_sha256": "74270f7ef9cc85f6d9415917973c69e52c958699e0ad50ef1b8c53d6570893a7"
     },
     "voice/beekeeper_birk/bees": {
       "text_key": "DLG_BIRK_BEES",
@@ -572,8 +734,17 @@
       "text": "Jeg hedder Birk. Bierne er mine flittigste naboer.",
       "text_sha256": "f8a1c7c21758d9ebda2ace6454e9771b82cc60d980c84edd55a9ac020b28d61f",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.060502,
+        "rate": 0.973091,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "4cde100eda866450d2aec107726b9bb36852430b12236a366aa0c3322e17bfb8",
+      "audio_sha256": "9686722ec32bb747258a3290aadf4a700772ff10d962d62c483b997e3c19427e"
     },
     "voice/beekeeper_birk/flowers": {
       "text_key": "DLG_BIRK_FLOWERS",
@@ -597,40 +768,85 @@
       "text": "Tak for tanken. En anden kan måske bruge den bedre.",
       "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.060502,
+        "rate": 0.973091,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "5147dfb5043935ae92a50bd257a7988c232acd97313796a138c86fea34b7a1ec",
+      "audio_sha256": "115f898e80bb5a6cc52972499f4320c86540aea1e96116eb901d0adc01965744"
     },
     "voice/beekeeper_birk/gift_beekeeper_birk_hate_1_v": {
       "text_key": "GIFT_BEEKEEPER_BIRK_HATE_1_V",
       "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
       "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.060502,
+        "rate": 0.973091,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "da29843f5b96b1d87bae4d61bb165ea2b98426d700db91bc91dcae9e8af58c98",
+      "audio_sha256": "df18621f06404f1cf31277e5b3354394174ea3f6138198176d49b39a219d7c55"
     },
     "voice/beekeeper_birk/gift_beekeeper_birk_like_1_v": {
       "text_key": "GIFT_BEEKEEPER_BIRK_LIKE_1_V",
       "text": "Hvor betænksomt. Den her bliver jeg glad for.",
       "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.060502,
+        "rate": 0.973091,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "1aba6193d7d8e44895fa9eb5b085fa21375dd6d24843c51172ff3e096c090977",
+      "audio_sha256": "ef45709805ac038659e1467daa02f5a5929f133d10e17aa8f51e312ef75563fa"
     },
     "voice/beekeeper_birk/gift_beekeeper_birk_love_1_v": {
       "text_key": "GIFT_BEEKEEPER_BIRK_LOVE_1_V",
       "text": "Du har fundet noget, jeg holder særligt af. Tak!",
       "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.060502,
+        "rate": 0.973091,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "cd666dad0503811efae1dd23b49c26ec9370ca7224aca457cabc828633329387",
+      "audio_sha256": "ea0abb5fb3f56baac1b3def705afce0431537b67159e0cda50b6cd23aa85de4c"
     },
     "voice/beekeeper_birk/gift_beekeeper_birk_neutral_1_v": {
       "text_key": "GIFT_BEEKEEPER_BIRK_NEUTRAL_1_V",
       "text": "Tak, fordi du tænkte på mig.",
       "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.060502,
+        "rate": 0.973091,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "7fe214a8d27e2903d6037bd4f31b3341c29f535bfe7b3616478203db17368cda",
+      "audio_sha256": "dd1cf9c66ad1deb005e846ffeb6355b66520c4288de872a41eb1335c556bc765"
     },
     "voice/beekeeper_birk/greet": {
       "text_key": "DLG_BIRK_GREET",
@@ -654,8 +870,17 @@
       "text": "Godt at se dig. Jeg tænkte netop på biernes blomster.",
       "text_sha256": "2ae90d93174c2b25b173697e9f8fed348b5d01b1e7f5dcf4af235b1c6308d731",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.060502,
+        "rate": 0.973091,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "23de5f20bccd195feccd7565798ab2582fcea48a4b37a52bda7e3989d7db2126",
+      "audio_sha256": "e1aa47f3f0969261dc4f74f0400c0cf026ddbe40298c958909b45459fb63c6b2"
     },
     "voice/beekeeper_birk/honey": {
       "text_key": "DLG_BIRK_HONEY",
@@ -713,72 +938,153 @@
       "text": "Bertil er mit navn. Kom og se, hvad der spirer i dag.",
       "text_sha256": "23afcea2813aec31a9f985cebaa0028945dc8fca4746c4d6ba54e63f2c0186b0",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.006497,
+        "rate": 0.960467,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "a729d04c8ae6aec61d56bd9e21cf5541a0f4b96ab58cb8e624fbe88f37b68fb6",
+      "audio_sha256": "db1d3498b373344799855aad3dd9438dfe1fca63bdc2afda8fc36ffddbce68c2"
     },
     "voice/bodil/first_1_v": {
       "text_key": "SOC_BODIL_FIRST_1_V",
       "text": "Jeg er Bodil. Der er plads til en blomst mere ved min dør.",
       "text_sha256": "b6895e54225683d7d49a22b7071af3aae8081ea37300f1ee92c799ad168e8bb2",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.009974,
+        "rate": 0.996126,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "bf4dbe862b4878e0863ae33719d432185e60faa48856ca0de9cd7ccbef125da2",
+      "audio_sha256": "ab92639edbf955b3c7e640c9cb22c379b2a6356a6681376c81179ac415eae537"
     },
     "voice/carpenter_brumme/bday_carpenter_brumme_greet_1_v": {
       "text_key": "BDAY_CARPENTER_BRUMME_GREET_1_V",
       "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
       "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.720098,
+        "rate": 0.8709,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "c2450a4673990fbad4a77f610bba40b25370bc9baa06ce92457d090a42ef6b4d",
+      "audio_sha256": "2dfd9c389627aff6c67d025dd45bcf06694d242adb5e410580d1762647e522db"
     },
     "voice/carpenter_brumme/first_1_v": {
       "text_key": "SOC_CARPENTER_BRUMME_FIRST_1_V",
       "text": "Brumme, det er mig. Jeg giver gerne en hjælpende pote.",
       "text_sha256": "00d16b6675d85599ab5d2621b8ff9fad2b0c3ed38f430bba8d79f1e1ca5c6c70",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.720098,
+        "rate": 0.8709,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "228c37efd2f0fda573b380b95163c7ee09a53cad6e523bf8c2d075c4a01ab9ae",
+      "audio_sha256": "f2dbb5603ccac102a660256b7f2655f305219fe88c193beaaaee18b10aa2b1c1"
     },
     "voice/carpenter_brumme/gift_carpenter_brumme_dislike_1_v": {
       "text_key": "GIFT_CARPENTER_BRUMME_DISLIKE_1_V",
       "text": "Tak for tanken. En anden kan måske bruge den bedre.",
       "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.720098,
+        "rate": 0.8709,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "093a1c3603f82858310d40f57f1fd4dc7fdcc5ff23bd37ad58b5bfd8902b92cb",
+      "audio_sha256": "b75ebd7f373cd25ad187b9afa4e9a4df3fc15edea27d6e995479954026560592"
     },
     "voice/carpenter_brumme/gift_carpenter_brumme_hate_1_v": {
       "text_key": "GIFT_CARPENTER_BRUMME_HATE_1_V",
       "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
       "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.720098,
+        "rate": 0.8709,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "3ca36bee44c8ff4ad9c6368381c980061076a9a34b22e40cf8e940f5d63cb170",
+      "audio_sha256": "b4bfcafd513829d48be86c061db79e744d183a451253625288f8302a47a2b6e7"
     },
     "voice/carpenter_brumme/gift_carpenter_brumme_like_1_v": {
       "text_key": "GIFT_CARPENTER_BRUMME_LIKE_1_V",
       "text": "Hvor betænksomt. Den her bliver jeg glad for.",
       "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.720098,
+        "rate": 0.8709,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "e576a963236e5580095db8f52f3fb76fe6ce668bf65902ce7ea40fcca05c9708",
+      "audio_sha256": "4315eae0cfccc25cfa88e19999c53615275178f42efefd4392d0ebbda116274b"
     },
     "voice/carpenter_brumme/gift_carpenter_brumme_love_1_v": {
       "text_key": "GIFT_CARPENTER_BRUMME_LOVE_1_V",
       "text": "Du har fundet noget, jeg holder særligt af. Tak!",
       "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.720098,
+        "rate": 0.8709,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "ce0ed05deacd5548feb63e84c4b604d3ee66da9f1a9bce3ce7636aad66a62563",
+      "audio_sha256": "fd7ab96c105338fac369725128ade501dac2e6961a31dd6d7e08928c9ff348be"
     },
     "voice/carpenter_brumme/gift_carpenter_brumme_neutral_1_v": {
       "text_key": "GIFT_CARPENTER_BRUMME_NEUTRAL_1_V",
       "text": "Tak, fordi du tænkte på mig.",
       "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.720098,
+        "rate": 0.8709,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "588a506434909b52dc3b57f201e8f11abba3cfd87da3e6f990ada113549eae15",
+      "audio_sha256": "98193b9343d004e42650d371b6311fea9d3241af2053f238631a9a836a163a27"
     },
     "voice/carpenter_brumme/greet": {
       "text_key": "DLG_BRUMME_GREET",
@@ -802,8 +1108,17 @@
       "text": "Godt at se dig. Jeg tænkte netop på træets årer.",
       "text_sha256": "b3408c9707a8a94f9256cb38bbdc92d33cb3cfcf22192e00a125a0a74f0e0f16",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.720098,
+        "rate": 0.8709,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "d7bff5412cf009c73d37b721da2040fc634e8f28c27c3c702f63d90960fa3dc7",
+      "audio_sha256": "008eb033252d20a21625168b1b680bc97c0ac92f4d4612b4bcedb170920cbf2a"
     },
     "voice/carpenter_brumme/help": {
       "text_key": "DLG_BRUMME_HELP",
@@ -929,8 +1244,17 @@
       "text": "Morfar Mis, det er mig. Her er en god plads i solen.",
       "text_sha256": "d962e0730fd7fe760947eefbeaef4aba4eef38a25313f090749fe277ef0aca65",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.865741,
+        "rate": 0.836033,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "81f1fa204afaf7c718cefe7d91c2e4935a86ce414fdf51a43b3189e4c778345b",
+      "audio_sha256": "9e42e00c34cde4ccecc5f73d3576e933415b927bd3b0f2177edc0cf5db5b9ce3"
     },
     "voice/cat_morfar_mis/forest": {
       "text_key": "DLG_MIS_FOREST",
@@ -971,24 +1295,51 @@
       "text": "Jeg er Fjerpen. Jeg finder nok den seddel, du leder efter.",
       "text_sha256": "67a361e9e649da739c5afacd78ff0b4723036835827e1fc604cdba519b2dfba0",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.88704,
+        "rate": 0.931333,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "73d7b3fd15ba8a091e9daef0585cc37e2c60fd1c39ca900ddb570b9390f0103f",
+      "audio_sha256": "81c99fba72cc955a218ed4fab3ab107e28f9aad09c787fd39a61e1a374ef91fe"
     },
     "voice/cub_bamse/first_1_v": {
       "text_key": "SOC_CUB_BAMSE_FIRST_1_V",
       "text": "Jeg er Bamse. Du må gerne være med til at lege.",
       "text_sha256": "7a0ea084ec4f3247d0da70f7ee0af06289d73a75a67c0041b587a4aa1a227cc3",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.348177,
+        "rate": 1.11468,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "78ecb9d4d34d4f071484dfe2fa127b816ae30f80991fab7df0692b538fe547a5",
+      "audio_sha256": "23ff4548b92db9fe22f7434c968a470e96ac911f9d94ae8483b68f45c17245ee"
     },
     "voice/fairy_builder/first_1_v": {
       "text_key": "SOC_FAIRY_BUILDER_FIRST_1_V",
       "text": "Hasselnød, til tjeneste. Et godt hjem begynder med en lille planke.",
       "text_sha256": "8fa26572be7b192fe588a17fe4cf45fdae769fdb97de662fefd3766fb93b6e29",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "5a4ac144f4ddcc54e723262367f381a831ef52c130db528701b4dcf9058f4c22",
+      "audio_sha256": "45eca98107570c197bff8d5c092e0009d5dc2be6aaff1c4e62719c74166e6895"
     },
     "voice/fairy_builder/t01_idle": {
       "text_key": "DLG_BUILDER_T01_IDLE",
@@ -1624,8 +1975,17 @@
       "text": "Jeg er Stokrose. Vi kan gøre en lille stue rigtig rar.",
       "text_sha256": "22250a49874b05985c6859b10161fa08608bdf934dd4629677fba7a05af6c0a2",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.135533,
+        "rate": 1.093391,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "dd492342513d41ea0797c602b531cdea2bf0f1f554ac014516fa1e231f4b5634",
+      "audio_sha256": "cb612921a209ddf7ac40bb5d307923b10221fee5952322a24db2735be9c8d757"
     },
     "voice/fairy_furnisher/greet": {
       "text_key": "DLG_FURNISHER_GREET",
@@ -1649,8 +2009,17 @@
       "text": "Velkommen. Dit nye hjem er begyndelsen på en god historie.",
       "text_sha256": "0a3d9e317a8ca61c59b2800276bee84e8d2c17033361bf6c99911f109216d766",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840197,
+        "rate": 0.818529,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "8c9d5df4826b1cf18cec942ac46cec49a7fbcf6fd4f878d091cc37c934118fb3",
+      "audio_sha256": "d9a98860135dde2c99b3b0571f6358cca1eed2f7396c3eea6605e393bd0f1db9"
     },
     "voice/fairy_king/greet": {
       "text_key": "DLG_KING_GREET",
@@ -1759,8 +2128,17 @@
       "text": "Jeg er Lilje. Skal vi finde et blad, der ligner et hjerte?",
       "text_sha256": "d2e4208d5e34899f8ee9e7253925c353b7d22037545cb50880e2d915da3a3b57",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.300502,
+        "rate": 1.118764,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "f43e55a64ea877ca6d043212378ed708a59619b003cc8ed485fd36b0e0ac8772",
+      "audio_sha256": "926f697f4e3c12745e6693d2804ac9111f120949b16dc659d449e89d99828f87"
     },
     "voice/fairy_lily/greet": {
       "text_key": "DLG_LILY_GREET",
@@ -1775,8 +2153,17 @@
       "text": "Fingerbøl er mit navn. Jeg gemmer altid en tråd i en fin farve.",
       "text_sha256": "9909fa468ca340bfdfc148ba101f46dc6742d6db1ecfce0b9dcf2a637d0a24a2",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.212774,
+        "rate": 1.086467,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "1620d15b99655c93f2eb76de19c23555cc7740f34a6dca602ef06e64872db8b4",
+      "audio_sha256": "62795cb9d7d6a1a2fada661bcd2cf5d511f16ee4cd8c9e236d48fb4018b706f9"
     },
     "voice/fairy_tailor/greet": {
       "text_key": "DLG_TAILOR_GREET",
@@ -1834,8 +2221,17 @@
       "text": "Jeg hedder Zephyr. Selv de mindste glimt kan gemme på magi.",
       "text_sha256": "6e22385ba16cda2fa39ac19ae8f4305b1a44e083081ad1f5f852e20118e77528",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.816527,
+        "rate": 0.822871,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "8c6e4b1dded039a6c8c122dee6cffcb1853bbcfe38db6a7b19b89978956d3594",
+      "audio_sha256": "82537143505eb98049941f4f1ef52dcf196c6e67c014d8f0de80f83fcd30071c"
     },
     "voice/fairy_wizard/greet": {
       "text_key": "DLG_WIZARD_GREET",
@@ -1961,56 +2357,119 @@
       "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
       "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.995347,
+        "rate": 0.97402,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "7113502129a1da76a728fe66facd44f906648e9520f4c73a503d5797b9573c5f",
+      "audio_sha256": "dee7250e567523aed68834d4295e9b8688b9acf495394d6523be302542974d12"
     },
     "voice/farmer_rosa/first_1_v": {
       "text_key": "SOC_FARMER_ROSA_FIRST_1_V",
       "text": "Jeg er Rosa. Dyrene kommer nok hen for at hilse.",
       "text_sha256": "b13c14a6d0d87417840ea8c31ad0948f0d543342922b1d5b08b24568c2c4d779",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.995347,
+        "rate": 0.97402,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "6704cae6b22c59acbc5ee9edc4238c4ac8fe627dcbca8056e84dc6a0e4fbd8ba",
+      "audio_sha256": "760339eb59b7ae979a43a9a9d4cf628a66a7ec56dd3c38d8d015b5528b36141d"
     },
     "voice/farmer_rosa/gift_farmer_rosa_dislike_1_v": {
       "text_key": "GIFT_FARMER_ROSA_DISLIKE_1_V",
       "text": "Tak for tanken. En anden kan måske bruge den bedre.",
       "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.995347,
+        "rate": 0.97402,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "070d7e42b863f9e64284223803f93fe561a181c8747960a1ae06736fac80795c",
+      "audio_sha256": "ea3d0d401cf815c37330b69d95bc5f07b4bdbd2bd0320545f57aec4806185c9f"
     },
     "voice/farmer_rosa/gift_farmer_rosa_hate_1_v": {
       "text_key": "GIFT_FARMER_ROSA_HATE_1_V",
       "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
       "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.995347,
+        "rate": 0.97402,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "ae23725f289ca61af4b39011f1a27876ce4522adf2ab768b3fe26a7fdfbf5978",
+      "audio_sha256": "310dc3343126476ea75de7cc6a1e86dd78a5221e28f53e38e73a324a7c22acd0"
     },
     "voice/farmer_rosa/gift_farmer_rosa_like_1_v": {
       "text_key": "GIFT_FARMER_ROSA_LIKE_1_V",
       "text": "Hvor betænksomt. Den her bliver jeg glad for.",
       "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.995347,
+        "rate": 0.97402,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "7dcb65d1106b45cf52677a62532848d52132c4560a7d125af630575c8c013210",
+      "audio_sha256": "37af3e2ef387439de3e823b572af24f9916242384ebb994dcb555b907358b3cb"
     },
     "voice/farmer_rosa/gift_farmer_rosa_love_1_v": {
       "text_key": "GIFT_FARMER_ROSA_LOVE_1_V",
       "text": "Du har fundet noget, jeg holder særligt af. Tak!",
       "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.995347,
+        "rate": 0.97402,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "45ad641639825babfa3ff62eac1bbdbf9b2cd1757cf2d0f690fe6af9467659af",
+      "audio_sha256": "152833c686dcd02583c733c502c9e698a7e13075d451ff024ebe6f4f2ba9698c"
     },
     "voice/farmer_rosa/gift_farmer_rosa_neutral_1_v": {
       "text_key": "GIFT_FARMER_ROSA_NEUTRAL_1_V",
       "text": "Tak, fordi du tænkte på mig.",
       "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.995347,
+        "rate": 0.97402,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "8f257d906fbf0298b61c768956749ce245fdb3922d517dc4846cada7769ab383",
+      "audio_sha256": "9dc5a61b427c1c58551b072473ce4288c50384b014b1e3036a141dd67969eb21"
     },
     "voice/farmer_rosa/greet": {
       "text_key": "DLG_ROSA_GREET",
@@ -2034,72 +2493,153 @@
       "text": "Godt at se dig. Jeg tænkte netop på de bløde muler.",
       "text_sha256": "edaaeab16eed70d122362ec256b2cae93f96273a2f8637d17aacbe0b471464dd",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.995347,
+        "rate": 0.97402,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "7dfc4312b44261c0a794b5ca378c723085799a011a622ab9ee62f4df8f65a765",
+      "audio_sha256": "86cde0983eaadd6b2825f0d7781d683019884d06d3f1e1a7f9bf7764982f8db4"
     },
     "voice/fiddler_strimmel/first_1_v": {
       "text_key": "SOC_FIDDLER_STRIMMEL_FIRST_1_V",
       "text": "Jeg hedder Strimmel. Lyt, der er en melodi mellem bladene.",
       "text_sha256": "979e743b3009e78659245707a81e2fe970229766244e18b70b9546bf699fdb9a",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.185779,
+        "rate": 1.144266,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "7df4440a48dcca4282890f3503e1be96c8b2ed73719613f50573f03030038f51",
+      "audio_sha256": "a0dd02d87714ef00968394634adc7fe4cf66e80c948de103e4800f1309352836"
     },
     "voice/gardener_hoppe/bday_gardener_hoppe_greet_1_v": {
       "text_key": "BDAY_GARDENER_HOPPE_GREET_1_V",
       "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
       "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.047976,
+        "rate": 0.997626,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "85c886fff171740650570c2302883940f6c6ebcc75fdb37fe974053611ee9d6e",
+      "audio_sha256": "3eab98ddf79022e5b22049346cd35f1f6c5f83ab3d7837985ab4d5701496a3d3"
     },
     "voice/gardener_hoppe/first_1_v": {
       "text_key": "SOC_GARDENER_HOPPE_FIRST_1_V",
       "text": "Jeg er Hoppe. Pas på de små spirer ved dine fødder.",
       "text_sha256": "77228d50fbb9a6309f071cc9a5a494fd6728298e60ffac73267e0b89ecea2ab8",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.047976,
+        "rate": 0.997626,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "ba53e6112ddb55be4d65c26f09296f6ed74eecf45a6aa6b32f094b4a626cf630",
+      "audio_sha256": "b6b35364e960e67e7e3d08e22924a4ef007323251320a245fb851c918efc33e0"
     },
     "voice/gardener_hoppe/gift_gardener_hoppe_dislike_1_v": {
       "text_key": "GIFT_GARDENER_HOPPE_DISLIKE_1_V",
       "text": "Tak for tanken. En anden kan måske bruge den bedre.",
       "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.047976,
+        "rate": 0.997626,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "e213f8556cefe4e98ca54497452f3e338b84fe0fded834bf295d05791afd19fe",
+      "audio_sha256": "dff3a568e7ca172d65b3ddae1ac45acf898fa2fbba06d13a57588f5aaeb8a1b5"
     },
     "voice/gardener_hoppe/gift_gardener_hoppe_hate_1_v": {
       "text_key": "GIFT_GARDENER_HOPPE_HATE_1_V",
       "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
       "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.047976,
+        "rate": 0.997626,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "da03cef0f23dcdbb34b3d5fdcdfcc2282ee51a399e408d1c7fedb42fda43b0ad",
+      "audio_sha256": "58e8f93dddae72bbc558a91f925bf87bef42ea1906d11c650bc4fd40bee6446b"
     },
     "voice/gardener_hoppe/gift_gardener_hoppe_like_1_v": {
       "text_key": "GIFT_GARDENER_HOPPE_LIKE_1_V",
       "text": "Hvor betænksomt. Den her bliver jeg glad for.",
       "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.047976,
+        "rate": 0.997626,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "ac33b81786f7bae320c3b66e0767553e3ba46e3c507e24a80e580e0f192b91f4",
+      "audio_sha256": "6867d8464c152e0b30c825789ef6f9200de06f9cdaf5a1163998b8411eaac6a5"
     },
     "voice/gardener_hoppe/gift_gardener_hoppe_love_1_v": {
       "text_key": "GIFT_GARDENER_HOPPE_LOVE_1_V",
       "text": "Du har fundet noget, jeg holder særligt af. Tak!",
       "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.047976,
+        "rate": 0.997626,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "d31f53dbc8569f29452e62e555cda20ec5e776db7101cf6eef442014ba033f6c",
+      "audio_sha256": "0c80be1da82656c5fd00732959eb54f513131b2d8d22c15fad6c5d2c44947c1d"
     },
     "voice/gardener_hoppe/gift_gardener_hoppe_neutral_1_v": {
       "text_key": "GIFT_GARDENER_HOPPE_NEUTRAL_1_V",
       "text": "Tak, fordi du tænkte på mig.",
       "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.047976,
+        "rate": 0.997626,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "6adca750fd5ec886b8e6523e5dfd3fb3d62565196efdf7fb930756cd641c559b",
+      "audio_sha256": "e1ff7f0ee71cc6b2de9f6a08991fb017b007d0e18ba08dcc4a85ecdf93c72662"
     },
     "voice/gardener_hoppe/greet": {
       "text_key": "DLG_HOPPE_GREET",
@@ -2123,8 +2663,17 @@
       "text": "Godt at se dig. Jeg tænkte netop på de skæve gulerødder.",
       "text_sha256": "51782395cd083a32a240f880c0585e974a2c5d5c88f349331f5cdaf804e08195",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.047976,
+        "rate": 0.997626,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "07f1cabf6c3d58759b2a7e982fbba9bc1da867a5bbe155be7399fa49a7adef79",
+      "audio_sha256": "bee1e5881eee1bdd4831ffaf939e34c2eeeaba02c5dadbf300460a00590e33c7"
     },
     "voice/gardener_hoppe/klart": {
       "text_key": "DLG_HOPPE_KLART",
@@ -2335,8 +2884,17 @@
       "text": "Hov! Du fandt mig! Sig det ikke til de andre. Jeg hedder Blund.",
       "text_sha256": "b2e12c814ca80d81d58d1ed10cfbdf402de1c38c1428b62e321d9d83e7506d35",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.371287,
+        "rate": 1.102668,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "3028567fffddf54f6dc91a22aa41f90a126e06e3ca1ec1520ac62e3f91f400c1",
+      "audio_sha256": "e1b6c5f305eaec54512edb46d16fe5203393f871454da1b07fbe807c80529123"
     },
     "voice/ghostfam_blund/greet": {
       "text_key": "DLG_GHOSTFAM_BLUND_GREET_1",
@@ -2479,16 +3037,34 @@
       "text": "Jeg er over to hundrede år, men jeg tæller ikke. Kun maskerne tæller.",
       "text_sha256": "ef91470d2e34b2b910ff7e6967ab6eb02a561ba47df2d4c0bdbaba48a9180db0",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "abf8ce138b16261d0c316411244332658d76cbb65806bd918a493734aa3877b4",
+      "audio_sha256": "bd4fb797dafe635e209e493e6d292b3a5c337bff59db15bc1fe932912f094269"
     },
     "voice/ghostfam_dyne/chat_8_1_v": {
       "text_key": "SOC_GHOSTFAM_DYNE_CHAT_8_1_V",
       "text": "Du lyser, når du kommer, indeni. Det kan jeg se, selv uden briller.",
       "text_sha256": "b599fdb83b0be0fb4b2535815f0652a1130f0530adb1206c3ebddd9d71977f23",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "17d4451b905b776e56b5cd74b6552b7f5dd991bfde67a0b3aefad9635c1787ac",
+      "audio_sha256": "756746ecae4a6086da27ebb9d60e20e4c2cb216f5842aad2a5e8bc93ece6e8d3"
     },
     "voice/ghostfam_dyne/dawn": {
       "text_key": "DLG_GHOSTFAM_DYNE_DAWN_1",
@@ -2512,8 +3088,17 @@
       "text": "Goddag! Jeg er Dyne og strikker til alle, der fryser. Sæt dig ved bålet.",
       "text_sha256": "822d670a32f7b04f96dd024277b4094ea0757610d7e9b0c35ef69e8542db23cb",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "2b01cc26633c394008b4c9b844f72ca810a444daee249b201919c3efee4095cc",
+      "audio_sha256": "789fd2021c927c83eaa63100a01553c034182ca8c2ac86088dc8353f19c58a13"
     },
     "voice/ghostfam_dyne/greet": {
       "text_key": "DLG_GHOSTFAM_DYNE_GREET_1",
@@ -2537,32 +3122,68 @@
       "text": "Aftenen er lige begyndt. Der er plads ved bålet til en historie.",
       "text_sha256": "8a412f71bc0adcd62ed0e5a0e5ed1b43791e60f8a358c9b279f75ea99df5d9c7",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "81c5ca0135f34eaedb0e8a30f73f4adbca8a439229a288f921dc17b5e1e18e1f",
+      "audio_sha256": "a77f98321f1c051226726190589b5f1693e5c0935d39b6291210a9a0260ef91b"
     },
     "voice/ghostfam_dyne/greet_h1_1_v": {
       "text_key": "SOC_GHOSTFAM_DYNE_GREET_H1_1_V",
       "text": "Dér er du jo! Jeg har holdt en plads varm til dig.",
       "text_sha256": "1b95882629d6fe071827a9d7f466b5c3483fa9bb92c914b91e2fde18712a475f",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "73bcf58c4e706b35a635be5b4aa86c79c84b1d7d116e1d2be65b0730d8618b18",
+      "audio_sha256": "8112753164020c63fefcb930db58a15fadd67475e000b18b4e4e4d71aaad7147"
     },
     "voice/ghostfam_dyne/greet_h2_1_v": {
       "text_key": "SOC_GHOSTFAM_DYNE_GREET_H2_1_V",
       "text": "Kære dig, du kommer tit nu. Jeg strikker allerede på noget i din farve.",
       "text_sha256": "ab11e72c2d4994b3f45d4767d93f5c17fc51e53c3a744bd7d4f0286e2ab99a14",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "1ab4bd615199220080945deb73cdad078a35474d8a19424e44931f72b54a3919",
+      "audio_sha256": "c47e0ea870fb567a234ed9c4185a30c1edb2b21f0772f6f829e06083db088a2b"
     },
     "voice/ghostfam_dyne/greet_h3_1_v": {
       "text_key": "SOC_GHOSTFAM_DYNE_GREET_H3_1_V",
       "text": "Du hører til ved bålet nu, helt som om du altid havde gjort det.",
       "text_sha256": "c8ac4e13b76cea68e66f61eda94cfd62602e7da1ca1f48f960ca98db641e2ad4",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "c215ea8126d886517e40419705926c87718a1d938d9b546a549dcaf17d817169",
+      "audio_sha256": "d6a1346b34cdbdfb1935408d55c88d69e3ff458ed317cbdb6127b829d4a0268a"
     },
     "voice/ghostfam_dyne/kin1": {
       "text_key": "DLG_GHOSTFAM_DYNE_KIN_1_1",
@@ -2909,8 +3530,17 @@
       "text": "Goddag! Jeg er Gnist, lygtemageren. Skal du ud i mørket, så kig forbi.",
       "text_sha256": "4ae352a4ee906859b911fd25a17dde3ed6da39c5a5a5ac3dd228aab4f19ed0b2",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.119337,
+        "rate": 1.047059,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "e8c992a733cd678b00642b72d3aaf30ea50c3d0e8dde99de467199c415d34b6d",
+      "audio_sha256": "5f23ae381c0790d4e55f1285d1c2312485a8949470b5bf759a4d4fa5872f1ab7"
     },
     "voice/ghostfam_gnist/greet": {
       "text_key": "DLG_GHOSTFAM_GNIST_GREET_1",
@@ -3002,8 +3632,17 @@
       "text": "Hej. Jeg er Silke, nattevagten. Går du hjem sent, følger jeg dig gerne.",
       "text_sha256": "839db4b360f97f260c32d5779648a923b0a340057237befc24415e12fa39fc07",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.920125,
+        "rate": 0.942638,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "7a1b4c902b3f63f61982b1a08b9b12ac17629f004fbb4e1e7c9142b00342f55f",
+      "audio_sha256": "20ad41268f5b96e88777cb2878b703584cc167a1a66ddd49ec80815cf58181bd"
     },
     "voice/ghostfam_silke/greet": {
       "text_key": "DLG_GHOSTFAM_SILKE_GREET_1",
@@ -3129,8 +3768,17 @@
       "text": "Jeg er Eg. Jeg passer på broen, mens du finder vej.",
       "text_sha256": "3d58fe61380ae5329f1d7537495cf2e2515e34c8c2f33fc893ed23269c5bfda3",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.922188,
+        "rate": 0.954654,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "9df7ca68716f5af9f206e9d8fcd4dd16d2598e8af9ec03e658fb95aef290c4ab",
+      "audio_sha256": "3e057c54aa2682729fc21a38c51ac2660034eddb801f03214fcc138874ec7774"
     },
     "voice/guard_oak/greet": {
       "text_key": "DLG_OAK_GREET",
@@ -3222,16 +3870,34 @@
       "text": "Jeg er Kvak. Der er en lun kop og en ledig stol.",
       "text_sha256": "fa06e7ac53527e7b806dcf0e5d3b2f22aa44079436ca0268cc2ff3bf0f2f277a",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.07145,
+        "rate": 1.036383,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "e9dcd8c4ae242bf94de0630b9b103576eba9cab01e390c51bb022cb06a3c59d8",
+      "audio_sha256": "9cfc487f91a388ef5e74f23e889a62c3c05e46da373f21c4f2f14d604bb4a2d7"
     },
     "voice/lamplighter_kiki/first_1_v": {
       "text_key": "SOC_LAMPLIGHTER_KIKI_FIRST_1_V",
       "text": "Jeg er Kiki. Jeg tænder lys, når bladene bliver mørke.",
       "text_sha256": "068a352ee043ac57f486bc59358cdb7bf2e199b7347b8e3c93abbf3f8334a4ee",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.239985,
+        "rate": 1.129484,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "8a2597968a79e6aa68405c2c65236b9cfb3fe4f481bd72bafb58f5a73c4eeeb8",
+      "audio_sha256": "d0ade5b98c1a67181abece88d309dafbee5f92cb40122561fc3f0e63de07cdc6"
     },
     "voice/mapseller_natteblik/ears": {
       "text_key": "DLG_NATTEBLIK_EARS",
@@ -3272,8 +3938,17 @@
       "text": "Jeg er Natteblik. Mine kort følger røddernes hemmelige veje.",
       "text_sha256": "6e41e1849ffe386452ead18bd731bfc9153b53e4fadbb618514793ac5c38b142",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.891011,
+        "rate": 0.951032,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "d549327343e7f3439ae66e0558d80844cc9cd8b533d39a78db56c78fba1f1fff",
+      "audio_sha256": "71646bb471e9f502158699a4e517d8ba91d1459a50df60cc40d8d47c42e06a36"
     },
     "voice/mapseller_natteblik/greet": {
       "text_key": "DLG_NATTEBLIK_GREET",
@@ -3382,8 +4057,17 @@
       "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
       "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.142938,
+        "rate": 1.111963,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "b866b986f650013df95599da454231ceaa35860e8b2b2e17319d308da460bf85",
+      "audio_sha256": "423e207aed8514464867fc0b4ad5ad37ebd6c9fd2a3864a810f5cf5cbda74e7a"
     },
     "voice/mayor_lyra/farm_status": {
       "text_key": "DLG_LYRA_FARM_STATUS",
@@ -3398,48 +4082,102 @@
       "text": "Jeg er Hyldeblomst. Vi finder en plads til dig i Trætoppen.",
       "text_sha256": "734f8733b938852f1ab3a1f2ba060708fe444959a9c65255eb9d113b00cf1c04",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.142938,
+        "rate": 1.111963,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "ed32bc35953809314ecce87dce6d207f7bc3c548d134538e79dabed6b2aeb8d0",
+      "audio_sha256": "6bbddb1633c5f1c515c905ba4018dcf0851b3e27a414a24867dafe2f12109547"
     },
     "voice/mayor_lyra/gift_mayor_lyra_dislike_1_v": {
       "text_key": "GIFT_MAYOR_LYRA_DISLIKE_1_V",
       "text": "Tak for tanken. En anden kan måske bruge den bedre.",
       "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.142938,
+        "rate": 1.111963,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "24028ba6ab9f1d05d1fea19a921aaf833ae0c2214a40472a38f3c2c8d359c8ad",
+      "audio_sha256": "cce31a16b97198689c64d01d7293f95dd185e5f2e4e0a99d05306e67da122e1e"
     },
     "voice/mayor_lyra/gift_mayor_lyra_hate_1_v": {
       "text_key": "GIFT_MAYOR_LYRA_HATE_1_V",
       "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
       "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.142938,
+        "rate": 1.111963,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "c3a4e9f8506a7d96b1b8dda6f566e52025695ce096a601066295a4b142b076f3",
+      "audio_sha256": "7bc8109b4e3d8845e56dbf8bde2a90b29612aa7d781172dfb627ea4cda91627d"
     },
     "voice/mayor_lyra/gift_mayor_lyra_like_1_v": {
       "text_key": "GIFT_MAYOR_LYRA_LIKE_1_V",
       "text": "Hvor betænksomt. Den her bliver jeg glad for.",
       "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.142938,
+        "rate": 1.111963,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "6b7002f8a85ea38a87c5e4efe1cae340cd31d38232c4592ebe4fdc2424c00883",
+      "audio_sha256": "8a6515f92fa86b7e953830ace76d7f0cb7c7336e542d8b211e14644563144a1d"
     },
     "voice/mayor_lyra/gift_mayor_lyra_love_1_v": {
       "text_key": "GIFT_MAYOR_LYRA_LOVE_1_V",
       "text": "Du har fundet noget, jeg holder særligt af. Tak!",
       "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.142938,
+        "rate": 1.111963,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "89cdf028803ff9d5bf8eed9d71932ebc8317c54a68a9d3c0c007cdbf954fff89",
+      "audio_sha256": "505feb3d1d9adf722a19cab4081e9b66cec33e79c2e6d01fc4caade002ac3aef"
     },
     "voice/mayor_lyra/gift_mayor_lyra_neutral_1_v": {
       "text_key": "GIFT_MAYOR_LYRA_NEUTRAL_1_V",
       "text": "Tak, fordi du tænkte på mig.",
       "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.142938,
+        "rate": 1.111963,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "85a95ebd6543961906bf74df700e2eaec39587420955f5c775859e0f91f10d91",
+      "audio_sha256": "6a1616a641f948dc47c8df928362cc4689f5e18f36b460d07602eab308ea3e60"
     },
     "voice/mayor_lyra/greet_1": {
       "text_key": "DLG_LYRA_GREET_1",
@@ -3471,8 +4209,17 @@
       "text": "Godt at se dig. Jeg tænkte netop på de små broer.",
       "text_sha256": "4a0fc37baf77d566c8f713b95c92fdafba3020ecba719bfe5093a0c1b0347b4d",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.142938,
+        "rate": 1.111963,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "9d0eccd768943cf1008f2d917e2c7c43acb078df749aa8d280290f2ca71fafd9",
+      "audio_sha256": "2ce33ddd1abbe1b26b61880dd3cfeec6c81a058c911ce3b544550c2be41e4bd1"
     },
     "voice/mayor_lyra/hello": {
       "text_key": "DLG_LYRA_HELLO",
@@ -3495,72 +4242,153 @@
       "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
       "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.141868,
+        "rate": 1.044703,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "4b94828fdc7bd788b331c3e702829d4110f4244db3f477fd72dcfdddcb2ec3b7",
+      "audio_sha256": "6699edaf5fc43805c3a8e7e861eccf6d13efeb256ca0ca944859620ad9e2b3fe"
     },
     "voice/merchant_pip/first_1_v": {
       "text_key": "SOC_MERCHANT_PIP_FIRST_1_V",
       "text": "Jeg hedder Kløvermynte. Her begynder de små frø deres rejse.",
       "text_sha256": "174e0458adb1b517e5c231e5756588d733bd3cf6ea773d7f8f233ba6de241ada",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.141868,
+        "rate": 1.044703,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "76159d30a5c3f259ca9cd6121fc88686b2ec1084e3432bd66ebfd0510025db5b",
+      "audio_sha256": "fbc4a08eae58895dc7c472628b3fa3c46175c09793b29e7a3c6e504c3222c094"
     },
     "voice/merchant_pip/gift_merchant_pip_dislike_1_v": {
       "text_key": "GIFT_MERCHANT_PIP_DISLIKE_1_V",
       "text": "Tak for tanken. En anden kan måske bruge den bedre.",
       "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.141868,
+        "rate": 1.044703,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "72a698087b539da948de22c6b80449ae3c8f47c46d80ccce86f3ae76b55fccff",
+      "audio_sha256": "57ff7ec604115d8299919b91f936de05651cec31734a720fc8c56fce07a7ef0f"
     },
     "voice/merchant_pip/gift_merchant_pip_hate_1_v": {
       "text_key": "GIFT_MERCHANT_PIP_HATE_1_V",
       "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
       "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.141868,
+        "rate": 1.044703,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "143021937a926b5fb32d39471cf590f53d6ecda2f8ac314a2e12feb0be211943",
+      "audio_sha256": "3b61f6f55e110df08515d690b16f3d5cabc70cb62bdb55f0cf248c3d110735e4"
     },
     "voice/merchant_pip/gift_merchant_pip_like_1_v": {
       "text_key": "GIFT_MERCHANT_PIP_LIKE_1_V",
       "text": "Hvor betænksomt. Den her bliver jeg glad for.",
       "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.141868,
+        "rate": 1.044703,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "057c76e9541982b7fc3fd2208a49395753b304f972278db33bddb5b7928c645c",
+      "audio_sha256": "bdebef5c5999ce667d501066ac1531e1fd2f4057d703621f568bfab63856f709"
     },
     "voice/merchant_pip/gift_merchant_pip_love_1_v": {
       "text_key": "GIFT_MERCHANT_PIP_LOVE_1_V",
       "text": "Du har fundet noget, jeg holder særligt af. Tak!",
       "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.141868,
+        "rate": 1.044703,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "ce58ea7f54e370bfcfb9056ab36a35b3df65765ec27aa557eeebe7606384f24a",
+      "audio_sha256": "29902c7b9f98665513b0f647a30ebdc6a2772c32bcbe3e92b8eb03db974adb1f"
     },
     "voice/merchant_pip/gift_merchant_pip_neutral_1_v": {
       "text_key": "GIFT_MERCHANT_PIP_NEUTRAL_1_V",
       "text": "Tak, fordi du tænkte på mig.",
       "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.141868,
+        "rate": 1.044703,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "5e1232701656d7ae7cf8d1c08c3b4db4e2c2565a170f91c92961a346d96a6a79",
+      "audio_sha256": "188cdb38a2a22c00e351fd9ac2714ff044f54de22f1d4e13a8e50e6670b81e6f"
     },
     "voice/merchant_pip/greet_h0_1_v": {
       "text_key": "SOC_MERCHANT_PIP_GREET_H0_1_V",
       "text": "Godt at se dig. Jeg tænkte netop på mine frøposer.",
       "text_sha256": "24060306b4ab3f74aebb6ff418df4e7c684a37a625ef97d86e132d5c5c879653",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.141868,
+        "rate": 1.044703,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "420e9821a608ff860970e2db1810373e3c7e7bcc72c39791d7140ede27395de0",
+      "audio_sha256": "a0e308821af01624ea369fa3c5909314542c537a0808ad72faacea533a6c7700"
     },
     "voice/penguin_postman/first_1_v": {
       "text_key": "SOC_PENGUIN_POSTMAN_FIRST_1_V",
       "text": "Goddag! Jeg bringer post over de små broer.",
       "text_sha256": "482ee6d3df10eb0fb3ec8cc92699972635d680e9026eaf9a7f652f4e749f82cb",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.254561,
+        "rate": 1.145456,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "72b36fc79c368d9dcf753f66e59a6e520b9176d167ab50ec8b3d1ffdc392d6b3",
+      "audio_sha256": "faf411d0820e0873196847e18e1f2c20d6a776d22ca56f974abc666e6214b336"
     },
     "voice/penguin_postman/hello": {
       "text_key": "DLG_PENGUIN_HELLO",
@@ -3635,8 +4463,17 @@
       "text": "Jeg hedder Pippin Bøgeknop. Vil du se, hvad jeg har fundet?",
       "text_sha256": "74785b398625b6f7e02f214d7181f0b3519aab97b6be7565e5f156c794c49f51",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.189914,
+        "rate": 1.18115,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "41315bbf8fd09a73ebd54e175b769471c69034de289247b5755ef74767eba081",
+      "audio_sha256": "0f83f781217e0db806aeaa7ae4275864a90d8fac60f29fa2ec5f95a1d0d0ece0"
     },
     "voice/pippin_boegeknop/hello": {
       "text_key": "DLG_PIPPIN_HELLO",
@@ -3677,56 +4514,119 @@
       "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
       "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.175571,
+        "rate": 1.154903,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "c0e71d09c5a8a91546395d22299c138c4a0deba466b36c997dcc7250f9e06cf2",
+      "audio_sha256": "2df554adc8ee86258380cf296f7a36dc04b1771f02264e32aaf602e47e39dc91"
     },
     "voice/postman_pip/first_1_v": {
       "text_key": "SOC_POSTMAN_PIP_FIRST_1_V",
       "text": "Jeg er Postbud Pip. Min taske er fuld af hilsner.",
       "text_sha256": "a643ab32811e009fff930591a173cc91211aa84cb0c893962b61432d4886736c",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.175571,
+        "rate": 1.154903,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "20288c82c2faebf022c90505fef93010332b9db6bd994ae3d77ec4dad162ccf2",
+      "audio_sha256": "ffe513ee7c2772cdd2edd7d7b6680f018fcfb0c7fc0b5092957fbc3ef0720454"
     },
     "voice/postman_pip/gift_postman_pip_dislike_1_v": {
       "text_key": "GIFT_POSTMAN_PIP_DISLIKE_1_V",
       "text": "Tak for tanken. En anden kan måske bruge den bedre.",
       "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.175571,
+        "rate": 1.154903,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "6f5579c176ece9e1cff97a678ad8212e444eadd4c31a9db09b739cf7e548fa62",
+      "audio_sha256": "fa30ba1dc93eb156dadffcce3306f73c5a40a281a5b335c1dce82ed180704fa3"
     },
     "voice/postman_pip/gift_postman_pip_hate_1_v": {
       "text_key": "GIFT_POSTMAN_PIP_HATE_1_V",
       "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
       "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.175571,
+        "rate": 1.154903,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "82e5291f9b3b11cbb40cb62e6fc25bb0b071f75d40264c12bb6c480b80599744",
+      "audio_sha256": "afef69b480cc79f72e6163b7c1eb9db303817d99a9c003b129db6e227d82957f"
     },
     "voice/postman_pip/gift_postman_pip_like_1_v": {
       "text_key": "GIFT_POSTMAN_PIP_LIKE_1_V",
       "text": "Hvor betænksomt. Den her bliver jeg glad for.",
       "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.175571,
+        "rate": 1.154903,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "a6f7185871c3df4e7ca3309580011fdf07de9e5cbe575295fe899b576e1ac2df",
+      "audio_sha256": "a75720e3e54f8243c15753fb96e650b8eb6942536200ff01230536ca35ff4d1e"
     },
     "voice/postman_pip/gift_postman_pip_love_1_v": {
       "text_key": "GIFT_POSTMAN_PIP_LOVE_1_V",
       "text": "Du har fundet noget, jeg holder særligt af. Tak!",
       "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.175571,
+        "rate": 1.154903,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "85b6b3ddf0068ab211214524a896161872f23f11e0f031c64e89894980129d59",
+      "audio_sha256": "23e8d5b9d3da2af95137c4595fafbfb34c05f786c7600a146c91ffbd713bde8d"
     },
     "voice/postman_pip/gift_postman_pip_neutral_1_v": {
       "text_key": "GIFT_POSTMAN_PIP_NEUTRAL_1_V",
       "text": "Tak, fordi du tænkte på mig.",
       "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.175571,
+        "rate": 1.154903,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "fe1f0db015b652cbd248b71b08809c5c42ef2842200e634bbc6d442c13891b34",
+      "audio_sha256": "990dbe481624cdd9550e25f346ee16af4824132da1206b8ab64c0666f7b3e861"
     },
     "voice/postman_pip/greet": {
       "text_key": "DLG_PIP_GREET",
@@ -3750,8 +4650,17 @@
       "text": "Godt at se dig. Jeg tænkte netop på de små breve.",
       "text_sha256": "d3c59aa7b90c0254042d15dc06bdd9b308575aa5c26d574e6d4b1569e0711c10",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.175571,
+        "rate": 1.154903,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "7f00a4440da67ba58eda88e839e16dedc3ba61c76e025495cf5c258c9dbe07aa",
+      "audio_sha256": "48790170e179e75bd35d83bd681edf8061aa044a03431e0eb58facd9b06767c1"
     },
     "voice/postman_pip/mail": {
       "text_key": "DLG_PIP_MAIL",
@@ -3860,64 +4769,136 @@
       "text": "Jeg er Rasmus. Jeg finder altid en lille sti mere.",
       "text_sha256": "1c33bea2768268a9dead0e02388b0a0593819f6f9bcc38841d35e01ee029b265",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.256703,
+        "rate": 1.15953,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "a48cc11e18e61d58b7ddf4ad31c9872db07f6b0c3eb187483d780d96f599b69b",
+      "audio_sha256": "cf99a027773b28d9c36555f76eb3b371655f27d79ea4aabcca06da015297ab51"
     },
     "voice/smith_thorin/bday_smith_thorin_greet_1_v": {
       "text_key": "BDAY_SMITH_THORIN_GREET_1_V",
       "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
       "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.755913,
+        "rate": 0.869407,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "40c97e893b35bb6962723ace5f921524f0fac15565adeb540991531dfecefbcf",
+      "audio_sha256": "b5442af67bdbff7f3e2117fe8be7e7780a8a1b775d463b455c466a102b8d6971"
     },
     "voice/smith_thorin/first_1_v": {
       "text_key": "SOC_SMITH_THORIN_FIRST_1_V",
       "text": "Jeg er Thorin. Der er altid en lun krog ved essen.",
       "text_sha256": "4710169d1d52d1fe3d4aee16953ff43535731364d9939976b71a22a123a2927a",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.755913,
+        "rate": 0.869407,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "f7fce9df7b805526b96347c4e1e1f189d6ddd026fafd9f365c17538429bac61d",
+      "audio_sha256": "54bdd89b998c0e43c1834d8863865f41648daa618474156f4160b06e7b2cdb0e"
     },
     "voice/smith_thorin/gift_smith_thorin_dislike_1_v": {
       "text_key": "GIFT_SMITH_THORIN_DISLIKE_1_V",
       "text": "Tak for tanken. En anden kan måske bruge den bedre.",
       "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.755913,
+        "rate": 0.869407,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "c1cb1643115726226f3a4b785e13e038e6758c0e996c78b5ecc26b1de713a605",
+      "audio_sha256": "7a4db28410937252f7404e4c5d916b7897745f039beead844bd215610fc547a4"
     },
     "voice/smith_thorin/gift_smith_thorin_hate_1_v": {
       "text_key": "GIFT_SMITH_THORIN_HATE_1_V",
       "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
       "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.755913,
+        "rate": 0.869407,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "c4c68af3e5920941c94ff17ebcee4fcde4a4ad80cf960da1cd41cdd8981d2bf1",
+      "audio_sha256": "e72c1c9c4a219aeef2aa494c78f5eedad199bde51bb4cf232874dfccf5748ee4"
     },
     "voice/smith_thorin/gift_smith_thorin_like_1_v": {
       "text_key": "GIFT_SMITH_THORIN_LIKE_1_V",
       "text": "Hvor betænksomt. Den her bliver jeg glad for.",
       "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.755913,
+        "rate": 0.869407,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "1b337e53b6bbe5f265f21008daaad5b723954c7ef1d28815fb10072da89cc493",
+      "audio_sha256": "04c4b5f85490be5811e29d01177598d74b3ec9ad74c352ee02ed41a7c42e5556"
     },
     "voice/smith_thorin/gift_smith_thorin_love_1_v": {
       "text_key": "GIFT_SMITH_THORIN_LOVE_1_V",
       "text": "Du har fundet noget, jeg holder særligt af. Tak!",
       "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.755913,
+        "rate": 0.869407,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "f856c40f1ff6f916a34684190320fcf8e24aa3651644df73b5dc8493043eade2",
+      "audio_sha256": "a327bc8a5b9a7dbc57a2609e0d0ef4df6c8da0f5721d01dc2c9eed46e36743dd"
     },
     "voice/smith_thorin/gift_smith_thorin_neutral_1_v": {
       "text_key": "GIFT_SMITH_THORIN_NEUTRAL_1_V",
       "text": "Tak, fordi du tænkte på mig.",
       "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.755913,
+        "rate": 0.869407,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "8b71d51af9719f4c9be673a4f24b99d4adbb4b995023a1af370d40233918c9e9",
+      "audio_sha256": "4a2d7cf6adf66573d54b30dd70e2f9a0986c61c70d0c033700d1867c1a600c01"
     },
     "voice/smith_thorin/greet": {
       "text_key": "DLG_THORIN_GREET",
@@ -3932,8 +4913,17 @@
       "text": "Godt at se dig. Jeg tænkte netop på jernets glød.",
       "text_sha256": "3b071c72e9fa196cad2fa24c7b9c6b79500372c19bde599d8b1cf5ffb3bcb116",
       "source": "lua/dialogue/_voiced_social.lua",
-      "kind": "missing",
-      "reason": "draft social copy; bake after copy review"
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.755913,
+        "rate": 0.869407,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "cff38b2b88d1a5dc8ac8439dafa9ed6ecc68d609457d107c82294f85a28ea453",
+      "audio_sha256": "f2f6eeb9c62015b751ea24c43067b90a071a9ee22548ca529356a91fe5ffd16d"
     },
     "voice/smith_thorin/mining_talk": {
       "text_key": "DLG_THORIN_MINING_TALK",
@@ -3946,116 +4936,5 @@
   },
   "format": 1,
   "status": "Human originals preserved; local Sara/synth placeholders; no native listening approval",
-  "missing": {
-    "voice/appraiser_fru_ugle/first_1_v": "draft social copy; bake after copy review",
-    "voice/baker_maja/bday_baker_maja_greet_1_v": "draft social copy; bake after copy review",
-    "voice/baker_maja/first_1_v": "draft social copy; bake after copy review",
-    "voice/baker_maja/gift_baker_maja_dislike_1_v": "draft social copy; bake after copy review",
-    "voice/baker_maja/gift_baker_maja_hate_1_v": "draft social copy; bake after copy review",
-    "voice/baker_maja/gift_baker_maja_like_1_v": "draft social copy; bake after copy review",
-    "voice/baker_maja/gift_baker_maja_love_1_v": "draft social copy; bake after copy review",
-    "voice/baker_maja/gift_baker_maja_neutral_1_v": "draft social copy; bake after copy review",
-    "voice/baker_maja/greet_h0_1_v": "draft social copy; bake after copy review",
-    "voice/bathkeeper_sofus/bday_bathkeeper_sofus_greet_1_v": "draft social copy; bake after copy review",
-    "voice/bathkeeper_sofus/first_1_v": "draft social copy; bake after copy review",
-    "voice/bathkeeper_sofus/gift_bathkeeper_sofus_dislike_1_v": "draft social copy; bake after copy review",
-    "voice/bathkeeper_sofus/gift_bathkeeper_sofus_hate_1_v": "draft social copy; bake after copy review",
-    "voice/bathkeeper_sofus/gift_bathkeeper_sofus_like_1_v": "draft social copy; bake after copy review",
-    "voice/bathkeeper_sofus/gift_bathkeeper_sofus_love_1_v": "draft social copy; bake after copy review",
-    "voice/bathkeeper_sofus/gift_bathkeeper_sofus_neutral_1_v": "draft social copy; bake after copy review",
-    "voice/bathkeeper_sofus/greet_h0_1_v": "draft social copy; bake after copy review",
-    "voice/beekeeper_birk/bday_beekeeper_birk_greet_1_v": "draft social copy; bake after copy review",
-    "voice/beekeeper_birk/first_1_v": "draft social copy; bake after copy review",
-    "voice/beekeeper_birk/gift_beekeeper_birk_dislike_1_v": "draft social copy; bake after copy review",
-    "voice/beekeeper_birk/gift_beekeeper_birk_hate_1_v": "draft social copy; bake after copy review",
-    "voice/beekeeper_birk/gift_beekeeper_birk_like_1_v": "draft social copy; bake after copy review",
-    "voice/beekeeper_birk/gift_beekeeper_birk_love_1_v": "draft social copy; bake after copy review",
-    "voice/beekeeper_birk/gift_beekeeper_birk_neutral_1_v": "draft social copy; bake after copy review",
-    "voice/beekeeper_birk/greet_h0_1_v": "draft social copy; bake after copy review",
-    "voice/bertil/first_1_v": "draft social copy; bake after copy review",
-    "voice/bodil/first_1_v": "draft social copy; bake after copy review",
-    "voice/carpenter_brumme/bday_carpenter_brumme_greet_1_v": "draft social copy; bake after copy review",
-    "voice/carpenter_brumme/first_1_v": "draft social copy; bake after copy review",
-    "voice/carpenter_brumme/gift_carpenter_brumme_dislike_1_v": "draft social copy; bake after copy review",
-    "voice/carpenter_brumme/gift_carpenter_brumme_hate_1_v": "draft social copy; bake after copy review",
-    "voice/carpenter_brumme/gift_carpenter_brumme_like_1_v": "draft social copy; bake after copy review",
-    "voice/carpenter_brumme/gift_carpenter_brumme_love_1_v": "draft social copy; bake after copy review",
-    "voice/carpenter_brumme/gift_carpenter_brumme_neutral_1_v": "draft social copy; bake after copy review",
-    "voice/carpenter_brumme/greet_h0_1_v": "draft social copy; bake after copy review",
-    "voice/cat_morfar_mis/first_1_v": "draft social copy; bake after copy review",
-    "voice/clerk_fjerpen/first_1_v": "draft social copy; bake after copy review",
-    "voice/cub_bamse/first_1_v": "draft social copy; bake after copy review",
-    "voice/fairy_builder/first_1_v": "draft social copy; bake after copy review",
-    "voice/fairy_furnisher/first_1_v": "draft social copy; bake after copy review",
-    "voice/fairy_king/first_1_v": "draft social copy; bake after copy review",
-    "voice/fairy_lily/first_1_v": "draft social copy; bake after copy review",
-    "voice/fairy_tailor/first_1_v": "draft social copy; bake after copy review",
-    "voice/fairy_wizard/first_1_v": "draft social copy; bake after copy review",
-    "voice/farmer_rosa/bday_farmer_rosa_greet_1_v": "draft social copy; bake after copy review",
-    "voice/farmer_rosa/first_1_v": "draft social copy; bake after copy review",
-    "voice/farmer_rosa/gift_farmer_rosa_dislike_1_v": "draft social copy; bake after copy review",
-    "voice/farmer_rosa/gift_farmer_rosa_hate_1_v": "draft social copy; bake after copy review",
-    "voice/farmer_rosa/gift_farmer_rosa_like_1_v": "draft social copy; bake after copy review",
-    "voice/farmer_rosa/gift_farmer_rosa_love_1_v": "draft social copy; bake after copy review",
-    "voice/farmer_rosa/gift_farmer_rosa_neutral_1_v": "draft social copy; bake after copy review",
-    "voice/farmer_rosa/greet_h0_1_v": "draft social copy; bake after copy review",
-    "voice/fiddler_strimmel/first_1_v": "draft social copy; bake after copy review",
-    "voice/gardener_hoppe/bday_gardener_hoppe_greet_1_v": "draft social copy; bake after copy review",
-    "voice/gardener_hoppe/first_1_v": "draft social copy; bake after copy review",
-    "voice/gardener_hoppe/gift_gardener_hoppe_dislike_1_v": "draft social copy; bake after copy review",
-    "voice/gardener_hoppe/gift_gardener_hoppe_hate_1_v": "draft social copy; bake after copy review",
-    "voice/gardener_hoppe/gift_gardener_hoppe_like_1_v": "draft social copy; bake after copy review",
-    "voice/gardener_hoppe/gift_gardener_hoppe_love_1_v": "draft social copy; bake after copy review",
-    "voice/gardener_hoppe/gift_gardener_hoppe_neutral_1_v": "draft social copy; bake after copy review",
-    "voice/gardener_hoppe/greet_h0_1_v": "draft social copy; bake after copy review",
-    "voice/ghostfam_blund/first_1_v": "draft social copy; bake after copy review",
-    "voice/ghostfam_dyne/chat_2_1_v": "draft social copy; bake after copy review",
-    "voice/ghostfam_dyne/chat_8_1_v": "draft social copy; bake after copy review",
-    "voice/ghostfam_dyne/first_1_v": "draft social copy; bake after copy review",
-    "voice/ghostfam_dyne/greet_h0_1_v": "draft social copy; bake after copy review",
-    "voice/ghostfam_dyne/greet_h1_1_v": "draft social copy; bake after copy review",
-    "voice/ghostfam_dyne/greet_h2_1_v": "draft social copy; bake after copy review",
-    "voice/ghostfam_dyne/greet_h3_1_v": "draft social copy; bake after copy review",
-    "voice/ghostfam_gnist/first_1_v": "draft social copy; bake after copy review",
-    "voice/ghostfam_silke/first_1_v": "draft social copy; bake after copy review",
-    "voice/guard_oak/first_1_v": "draft social copy; bake after copy review",
-    "voice/innkeeper_kvak/first_1_v": "draft social copy; bake after copy review",
-    "voice/lamplighter_kiki/first_1_v": "draft social copy; bake after copy review",
-    "voice/mapseller_natteblik/first_1_v": "draft social copy; bake after copy review",
-    "voice/mayor_lyra/bday_mayor_lyra_greet_1_v": "draft social copy; bake after copy review",
-    "voice/mayor_lyra/first_1_v": "draft social copy; bake after copy review",
-    "voice/mayor_lyra/gift_mayor_lyra_dislike_1_v": "draft social copy; bake after copy review",
-    "voice/mayor_lyra/gift_mayor_lyra_hate_1_v": "draft social copy; bake after copy review",
-    "voice/mayor_lyra/gift_mayor_lyra_like_1_v": "draft social copy; bake after copy review",
-    "voice/mayor_lyra/gift_mayor_lyra_love_1_v": "draft social copy; bake after copy review",
-    "voice/mayor_lyra/gift_mayor_lyra_neutral_1_v": "draft social copy; bake after copy review",
-    "voice/mayor_lyra/greet_h0_1_v": "draft social copy; bake after copy review",
-    "voice/merchant_pip/bday_merchant_pip_greet_1_v": "draft social copy; bake after copy review",
-    "voice/merchant_pip/first_1_v": "draft social copy; bake after copy review",
-    "voice/merchant_pip/gift_merchant_pip_dislike_1_v": "draft social copy; bake after copy review",
-    "voice/merchant_pip/gift_merchant_pip_hate_1_v": "draft social copy; bake after copy review",
-    "voice/merchant_pip/gift_merchant_pip_like_1_v": "draft social copy; bake after copy review",
-    "voice/merchant_pip/gift_merchant_pip_love_1_v": "draft social copy; bake after copy review",
-    "voice/merchant_pip/gift_merchant_pip_neutral_1_v": "draft social copy; bake after copy review",
-    "voice/merchant_pip/greet_h0_1_v": "draft social copy; bake after copy review",
-    "voice/penguin_postman/first_1_v": "draft social copy; bake after copy review",
-    "voice/pippin_boegeknop/first_1_v": "draft social copy; bake after copy review",
-    "voice/postman_pip/bday_postman_pip_greet_1_v": "draft social copy; bake after copy review",
-    "voice/postman_pip/first_1_v": "draft social copy; bake after copy review",
-    "voice/postman_pip/gift_postman_pip_dislike_1_v": "draft social copy; bake after copy review",
-    "voice/postman_pip/gift_postman_pip_hate_1_v": "draft social copy; bake after copy review",
-    "voice/postman_pip/gift_postman_pip_like_1_v": "draft social copy; bake after copy review",
-    "voice/postman_pip/gift_postman_pip_love_1_v": "draft social copy; bake after copy review",
-    "voice/postman_pip/gift_postman_pip_neutral_1_v": "draft social copy; bake after copy review",
-    "voice/postman_pip/greet_h0_1_v": "draft social copy; bake after copy review",
-    "voice/rasmus/first_1_v": "draft social copy; bake after copy review",
-    "voice/smith_thorin/bday_smith_thorin_greet_1_v": "draft social copy; bake after copy review",
-    "voice/smith_thorin/first_1_v": "draft social copy; bake after copy review",
-    "voice/smith_thorin/gift_smith_thorin_dislike_1_v": "draft social copy; bake after copy review",
-    "voice/smith_thorin/gift_smith_thorin_hate_1_v": "draft social copy; bake after copy review",
-    "voice/smith_thorin/gift_smith_thorin_like_1_v": "draft social copy; bake after copy review",
-    "voice/smith_thorin/gift_smith_thorin_love_1_v": "draft social copy; bake after copy review",
-    "voice/smith_thorin/gift_smith_thorin_neutral_1_v": "draft social copy; bake after copy review",
-    "voice/smith_thorin/greet_h0_1_v": "draft social copy; bake after copy review"
-  }
+  "missing": {}
 }

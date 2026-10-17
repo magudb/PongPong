@@ -555,6 +555,14 @@
     },
     {
       "kind": "voice",
+      "id": "voice/appraiser_fru_ugle/first_1_v",
+      "source": "placeholder",
+      "seconds": 4.911927437641723,
+      "peak": 0.5857840776443481,
+      "rms": 0.15017542574255144
+    },
+    {
+      "kind": "voice",
       "id": "voice/appraiser_fru_ugle/glass",
       "source": "placeholder",
       "seconds": 3.0994104308390025,
@@ -603,6 +611,14 @@
     },
     {
       "kind": "voice",
+      "id": "voice/baker_maja/bday_baker_maja_greet_1_v",
+      "source": "placeholder",
+      "seconds": 3.5251700680272107,
+      "peak": 0.6263757348060608,
+      "rms": 0.15678537908674237
+    },
+    {
+      "kind": "voice",
       "id": "voice/baker_maja/cookie_talk",
       "source": "recorded",
       "seconds": 4.793469387755102,
@@ -611,11 +627,67 @@
     },
     {
       "kind": "voice",
+      "id": "voice/baker_maja/first_1_v",
+      "source": "placeholder",
+      "seconds": 3.432154195011338,
+      "peak": 0.626482367515564,
+      "rms": 0.15344976925854106
+    },
+    {
+      "kind": "voice",
+      "id": "voice/baker_maja/gift_baker_maja_dislike_1_v",
+      "source": "placeholder",
+      "seconds": 3.4626303854875284,
+      "peak": 0.5707244873046875,
+      "rms": 0.15820037373160517
+    },
+    {
+      "kind": "voice",
+      "id": "voice/baker_maja/gift_baker_maja_hate_1_v",
+      "source": "placeholder",
+      "seconds": 3.8156916099773244,
+      "peak": 0.6107292771339417,
+      "rms": 0.15504316946177474
+    },
+    {
+      "kind": "voice",
+      "id": "voice/baker_maja/gift_baker_maja_like_1_v",
+      "source": "placeholder",
+      "seconds": 2.999863945578231,
+      "peak": 0.5955936312675476,
+      "rms": 0.14498305940775516
+    },
+    {
+      "kind": "voice",
+      "id": "voice/baker_maja/gift_baker_maja_love_1_v",
+      "source": "placeholder",
+      "seconds": 3.29437641723356,
+      "peak": 0.612453043460846,
+      "rms": 0.1501168416844287
+    },
+    {
+      "kind": "voice",
+      "id": "voice/baker_maja/gift_baker_maja_neutral_1_v",
+      "source": "placeholder",
+      "seconds": 1.9782766439909296,
+      "peak": 0.560927152633667,
+      "rms": 0.14677166178983703
+    },
+    {
+      "kind": "voice",
       "id": "voice/baker_maja/greet",
       "source": "recorded",
       "seconds": 3.4481632653061225,
       "peak": 0.5168150067329407,
       "rms": 0.07087139594891137
+    },
+    {
+      "kind": "voice",
+      "id": "voice/baker_maja/greet_h0_1_v",
+      "source": "placeholder",
+      "seconds": 3.3900226757369616,
+      "peak": 0.6261310577392578,
+      "rms": 0.15313419957621194
     },
     {
       "kind": "voice",
@@ -667,6 +739,14 @@
     },
     {
       "kind": "voice",
+      "id": "voice/bathkeeper_sofus/bday_bathkeeper_sofus_greet_1_v",
+      "source": "placeholder",
+      "seconds": 4.022675736961451,
+      "peak": 0.6223936676979065,
+      "rms": 0.14979535596248555
+    },
+    {
+      "kind": "voice",
       "id": "voice/bathkeeper_sofus/evening",
       "source": "placeholder",
       "seconds": 2.061269841269841,
@@ -675,11 +755,67 @@
     },
     {
       "kind": "voice",
+      "id": "voice/bathkeeper_sofus/first_1_v",
+      "source": "placeholder",
+      "seconds": 4.122358276643991,
+      "peak": 0.5607424378395081,
+      "rms": 0.15170066936739068
+    },
+    {
+      "kind": "voice",
+      "id": "voice/bathkeeper_sofus/gift_bathkeeper_sofus_dislike_1_v",
+      "source": "placeholder",
+      "seconds": 3.9617233560090703,
+      "peak": 0.5715457797050476,
+      "rms": 0.15270331755074268
+    },
+    {
+      "kind": "voice",
+      "id": "voice/bathkeeper_sofus/gift_bathkeeper_sofus_hate_1_v",
+      "source": "placeholder",
+      "seconds": 4.3652154195011335,
+      "peak": 0.5965317487716675,
+      "rms": 0.15098353967111744
+    },
+    {
+      "kind": "voice",
+      "id": "voice/bathkeeper_sofus/gift_bathkeeper_sofus_like_1_v",
+      "source": "placeholder",
+      "seconds": 3.4384580498866213,
+      "peak": 0.5984382629394531,
+      "rms": 0.1392440139311288
+    },
+    {
+      "kind": "voice",
+      "id": "voice/bathkeeper_sofus/gift_bathkeeper_sofus_love_1_v",
+      "source": "placeholder",
+      "seconds": 3.7956009070294785,
+      "peak": 0.6098871827125549,
+      "rms": 0.14443683330599216
+    },
+    {
+      "kind": "voice",
+      "id": "voice/bathkeeper_sofus/gift_bathkeeper_sofus_neutral_1_v",
+      "source": "placeholder",
+      "seconds": 2.2517913832199548,
+      "peak": 0.5816013813018799,
+      "rms": 0.13829869459580524
+    },
+    {
+      "kind": "voice",
       "id": "voice/bathkeeper_sofus/greet",
       "source": "placeholder",
       "seconds": 4.272743764172335,
       "peak": 0.6286687850952148,
       "rms": 0.16041863963180708
+    },
+    {
+      "kind": "voice",
+      "id": "voice/bathkeeper_sofus/greet_h0_1_v",
+      "source": "placeholder",
+      "seconds": 4.442675736961451,
+      "peak": 0.6092914938926697,
+      "rms": 0.14784237385700041
     },
     {
       "kind": "voice",
@@ -731,6 +867,14 @@
     },
     {
       "kind": "voice",
+      "id": "voice/beekeeper_birk/bday_beekeeper_birk_greet_1_v",
+      "source": "placeholder",
+      "seconds": 3.665170068027211,
+      "peak": 0.6107265949249268,
+      "rms": 0.15561212305788932
+    },
+    {
+      "kind": "voice",
       "id": "voice/beekeeper_birk/bees",
       "source": "placeholder",
       "seconds": 2.4012244897959185,
@@ -755,6 +899,14 @@
     },
     {
       "kind": "voice",
+      "id": "voice/beekeeper_birk/first_1_v",
+      "source": "placeholder",
+      "seconds": 3.4095238095238094,
+      "peak": 0.5792282223701477,
+      "rms": 0.17233464035933269
+    },
+    {
+      "kind": "voice",
       "id": "voice/beekeeper_birk/flowers",
       "source": "placeholder",
       "seconds": 3.149206349206349,
@@ -763,11 +915,59 @@
     },
     {
       "kind": "voice",
+      "id": "voice/beekeeper_birk/gift_beekeeper_birk_dislike_1_v",
+      "source": "placeholder",
+      "seconds": 3.5952380952380953,
+      "peak": 0.5731707215309143,
+      "rms": 0.15825223591103102
+    },
+    {
+      "kind": "voice",
+      "id": "voice/beekeeper_birk/gift_beekeeper_birk_hate_1_v",
+      "source": "placeholder",
+      "seconds": 3.956598639455782,
+      "peak": 0.6187488436698914,
+      "rms": 0.15537808709709633
+    },
+    {
+      "kind": "voice",
+      "id": "voice/beekeeper_birk/gift_beekeeper_birk_like_1_v",
+      "source": "placeholder",
+      "seconds": 3.1198185941043084,
+      "peak": 0.5905500650405884,
+      "rms": 0.14442966839316707
+    },
+    {
+      "kind": "voice",
+      "id": "voice/beekeeper_birk/gift_beekeeper_birk_love_1_v",
+      "source": "placeholder",
+      "seconds": 3.4315646258503403,
+      "peak": 0.6212967038154602,
+      "rms": 0.15005432100400226
+    },
+    {
+      "kind": "voice",
+      "id": "voice/beekeeper_birk/gift_beekeeper_birk_neutral_1_v",
+      "source": "placeholder",
+      "seconds": 2.0430385487528344,
+      "peak": 0.5543996691703796,
+      "rms": 0.1453211958548135
+    },
+    {
+      "kind": "voice",
       "id": "voice/beekeeper_birk/greet",
       "source": "placeholder",
       "seconds": 3.074739229024943,
       "peak": 0.6278917193412781,
       "rms": 0.14734409396734974
+    },
+    {
+      "kind": "voice",
+      "id": "voice/beekeeper_birk/greet_h0_1_v",
+      "source": "placeholder",
+      "seconds": 3.763673469387755,
+      "peak": 0.6067252159118652,
+      "rms": 0.14751693796413318
     },
     {
       "kind": "voice",
@@ -795,11 +995,91 @@
     },
     {
       "kind": "voice",
+      "id": "voice/bertil/first_1_v",
+      "source": "placeholder",
+      "seconds": 3.6974149659863946,
+      "peak": 0.565446138381958,
+      "rms": 0.14569339616881175
+    },
+    {
+      "kind": "voice",
+      "id": "voice/bodil/first_1_v",
+      "source": "placeholder",
+      "seconds": 3.906621315192744,
+      "peak": 0.6018139719963074,
+      "rms": 0.15961626791541142
+    },
+    {
+      "kind": "voice",
+      "id": "voice/carpenter_brumme/bday_carpenter_brumme_greet_1_v",
+      "source": "placeholder",
+      "seconds": 4.028934240362812,
+      "peak": 0.6171407103538513,
+      "rms": 0.150904732453414
+    },
+    {
+      "kind": "voice",
+      "id": "voice/carpenter_brumme/first_1_v",
+      "source": "placeholder",
+      "seconds": 3.8834467120181406,
+      "peak": 0.5938211679458618,
+      "rms": 0.15811371722687229
+    },
+    {
+      "kind": "voice",
+      "id": "voice/carpenter_brumme/gift_carpenter_brumme_dislike_1_v",
+      "source": "placeholder",
+      "seconds": 3.9583673469387755,
+      "peak": 0.547926664352417,
+      "rms": 0.15304010616251634
+    },
+    {
+      "kind": "voice",
+      "id": "voice/carpenter_brumme/gift_carpenter_brumme_hate_1_v",
+      "source": "placeholder",
+      "seconds": 4.364399092970522,
+      "peak": 0.6071203351020813,
+      "rms": 0.15131672719199024
+    },
+    {
+      "kind": "voice",
+      "id": "voice/carpenter_brumme/gift_carpenter_brumme_like_1_v",
+      "source": "placeholder",
+      "seconds": 3.4327437641723355,
+      "peak": 0.6084936857223511,
+      "rms": 0.13929348621591311
+    },
+    {
+      "kind": "voice",
+      "id": "voice/carpenter_brumme/gift_carpenter_brumme_love_1_v",
+      "source": "placeholder",
+      "seconds": 3.7947845804988662,
+      "peak": 0.6303833723068237,
+      "rms": 0.14492572373614174
+    },
+    {
+      "kind": "voice",
+      "id": "voice/carpenter_brumme/gift_carpenter_brumme_neutral_1_v",
+      "source": "placeholder",
+      "seconds": 2.269569160997732,
+      "peak": 0.5628042817115784,
+      "rms": 0.13770145897006275
+    },
+    {
+      "kind": "voice",
       "id": "voice/carpenter_brumme/greet",
       "source": "placeholder",
       "seconds": 2.963718820861678,
       "peak": 0.5768343806266785,
       "rms": 0.12341569448879705
+    },
+    {
+      "kind": "voice",
+      "id": "voice/carpenter_brumme/greet_h0_1_v",
+      "source": "placeholder",
+      "seconds": 3.9091156462585035,
+      "peak": 0.6067873239517212,
+      "rms": 0.1364909909726733
     },
     {
       "kind": "voice",
@@ -859,6 +1139,14 @@
     },
     {
       "kind": "voice",
+      "id": "voice/cat_morfar_mis/first_1_v",
+      "source": "placeholder",
+      "seconds": 4.485215419501134,
+      "peak": 0.5714027285575867,
+      "rms": 0.13901617077103132
+    },
+    {
+      "kind": "voice",
       "id": "voice/cat_morfar_mis/forest",
       "source": "placeholder",
       "seconds": 3.2790022675736963,
@@ -872,6 +1160,30 @@
       "seconds": 1.858049886621315,
       "peak": 0.6049963235855103,
       "rms": 0.1360598892374455
+    },
+    {
+      "kind": "voice",
+      "id": "voice/clerk_fjerpen/first_1_v",
+      "source": "placeholder",
+      "seconds": 4.135102040816326,
+      "peak": 0.6108421683311462,
+      "rms": 0.1497195343032006
+    },
+    {
+      "kind": "voice",
+      "id": "voice/cub_bamse/first_1_v",
+      "source": "placeholder",
+      "seconds": 2.8777777777777778,
+      "peak": 0.5896220803260803,
+      "rms": 0.16037062943524924
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/first_1_v",
+      "source": "placeholder",
+      "seconds": 4.77297052154195,
+      "peak": 0.6233481168746948,
+      "rms": 0.15472511855152232
     },
     {
       "kind": "voice",
@@ -1171,11 +1483,27 @@
     },
     {
       "kind": "voice",
+      "id": "voice/fairy_furnisher/first_1_v",
+      "source": "placeholder",
+      "seconds": 3.3983219954648525,
+      "peak": 0.6197876930236816,
+      "rms": 0.15534649271659076
+    },
+    {
+      "kind": "voice",
       "id": "voice/fairy_furnisher/greet",
       "source": "placeholder",
       "seconds": 6.36,
       "peak": 0.5802428126335144,
       "rms": 0.14897446875194062
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_king/first_1_v",
+      "source": "placeholder",
+      "seconds": 4.167482993197279,
+      "peak": 0.5815500020980835,
+      "rms": 0.1570711903704682
     },
     {
       "kind": "voice",
@@ -1227,11 +1555,27 @@
     },
     {
       "kind": "voice",
+      "id": "voice/fairy_lily/first_1_v",
+      "source": "placeholder",
+      "seconds": 3.3862585034013604,
+      "peak": 0.6017169952392578,
+      "rms": 0.15761078902978967
+    },
+    {
+      "kind": "voice",
       "id": "voice/fairy_lily/greet",
       "source": "recorded",
       "seconds": 2.3248979591836734,
       "peak": 0.7596244812011719,
       "rms": 0.06207229763054499
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_tailor/first_1_v",
+      "source": "placeholder",
+      "seconds": 4.321678004535148,
+      "peak": 0.6150839924812317,
+      "rms": 0.15956683290078877
     },
     {
       "kind": "voice",
@@ -1256,6 +1600,14 @@
       "seconds": 4.210113378684807,
       "peak": 0.5976486802101135,
       "rms": 0.12690376951854887
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_wizard/first_1_v",
+      "source": "placeholder",
+      "seconds": 4.159637188208617,
+      "peak": 0.5821181535720825,
+      "rms": 0.15067160023562767
     },
     {
       "kind": "voice",
@@ -1315,6 +1667,62 @@
     },
     {
       "kind": "voice",
+      "id": "voice/farmer_rosa/bday_farmer_rosa_greet_1_v",
+      "source": "placeholder",
+      "seconds": 3.6588662131519274,
+      "peak": 0.6193740963935852,
+      "rms": 0.15443951962811533
+    },
+    {
+      "kind": "voice",
+      "id": "voice/farmer_rosa/first_1_v",
+      "source": "placeholder",
+      "seconds": 3.4736054421768707,
+      "peak": 0.6182668209075928,
+      "rms": 0.1509705134336331
+    },
+    {
+      "kind": "voice",
+      "id": "voice/farmer_rosa/gift_farmer_rosa_dislike_1_v",
+      "source": "placeholder",
+      "seconds": 3.5922902494331064,
+      "peak": 0.5769547820091248,
+      "rms": 0.15734129605583047
+    },
+    {
+      "kind": "voice",
+      "id": "voice/farmer_rosa/gift_farmer_rosa_hate_1_v",
+      "source": "placeholder",
+      "seconds": 3.9653061224489794,
+      "peak": 0.6052990555763245,
+      "rms": 0.15402879944797077
+    },
+    {
+      "kind": "voice",
+      "id": "voice/farmer_rosa/gift_farmer_rosa_like_1_v",
+      "source": "placeholder",
+      "seconds": 3.1281179138321997,
+      "peak": 0.606346845626831,
+      "rms": 0.14251385746332024
+    },
+    {
+      "kind": "voice",
+      "id": "voice/farmer_rosa/gift_farmer_rosa_love_1_v",
+      "source": "placeholder",
+      "seconds": 3.4268027210884355,
+      "peak": 0.6477656364440918,
+      "rms": 0.1481042550261625
+    },
+    {
+      "kind": "voice",
+      "id": "voice/farmer_rosa/gift_farmer_rosa_neutral_1_v",
+      "source": "placeholder",
+      "seconds": 2.045487528344671,
+      "peak": 0.5558353066444397,
+      "rms": 0.14383793832739344
+    },
+    {
+      "kind": "voice",
       "id": "voice/farmer_rosa/greet",
       "source": "placeholder",
       "seconds": 2.5816780045351475,
@@ -1323,11 +1731,91 @@
     },
     {
       "kind": "voice",
+      "id": "voice/farmer_rosa/greet_h0_1_v",
+      "source": "placeholder",
+      "seconds": 3.5866666666666664,
+      "peak": 0.611778974533081,
+      "rms": 0.16284209758381626
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fiddler_strimmel/first_1_v",
+      "source": "placeholder",
+      "seconds": 3.256371882086168,
+      "peak": 0.5773224830627441,
+      "rms": 0.1655050377767619
+    },
+    {
+      "kind": "voice",
+      "id": "voice/gardener_hoppe/bday_gardener_hoppe_greet_1_v",
+      "source": "placeholder",
+      "seconds": 3.6608163265306124,
+      "peak": 0.6063708662986755,
+      "rms": 0.15434355522525456
+    },
+    {
+      "kind": "voice",
+      "id": "voice/gardener_hoppe/first_1_v",
+      "source": "placeholder",
+      "seconds": 3.4835827664399095,
+      "peak": 0.5892170071601868,
+      "rms": 0.15089887844786734
+    },
+    {
+      "kind": "voice",
+      "id": "voice/gardener_hoppe/gift_gardener_hoppe_dislike_1_v",
+      "source": "placeholder",
+      "seconds": 3.5950113378684807,
+      "peak": 0.5866749882698059,
+      "rms": 0.15743843786554995
+    },
+    {
+      "kind": "voice",
+      "id": "voice/gardener_hoppe/gift_gardener_hoppe_hate_1_v",
+      "source": "placeholder",
+      "seconds": 3.959092970521542,
+      "peak": 0.6031706929206848,
+      "rms": 0.155073978538613
+    },
+    {
+      "kind": "voice",
+      "id": "voice/gardener_hoppe/gift_gardener_hoppe_like_1_v",
+      "source": "placeholder",
+      "seconds": 3.1221768707482993,
+      "peak": 0.6152116656303406,
+      "rms": 0.14466159838974085
+    },
+    {
+      "kind": "voice",
+      "id": "voice/gardener_hoppe/gift_gardener_hoppe_love_1_v",
+      "source": "placeholder",
+      "seconds": 3.428390022675737,
+      "peak": 0.6373763680458069,
+      "rms": 0.14922400591163712
+    },
+    {
+      "kind": "voice",
+      "id": "voice/gardener_hoppe/gift_gardener_hoppe_neutral_1_v",
+      "source": "placeholder",
+      "seconds": 2.045986394557823,
+      "peak": 0.5505251288414001,
+      "rms": 0.14440316604967027
+    },
+    {
+      "kind": "voice",
       "id": "voice/gardener_hoppe/greet",
       "source": "placeholder",
       "seconds": 3.154920634920635,
       "peak": 0.6040340065956116,
       "rms": 0.16599123265308127
+    },
+    {
+      "kind": "voice",
+      "id": "voice/gardener_hoppe/greet_h0_1_v",
+      "source": "placeholder",
+      "seconds": 3.9047619047619047,
+      "peak": 0.617220401763916,
+      "rms": 0.1518891758106062
     },
     {
       "kind": "voice",
@@ -1427,6 +1915,14 @@
     },
     {
       "kind": "voice",
+      "id": "voice/ghostfam_blund/first_1_v",
+      "source": "placeholder",
+      "seconds": 4.174784580498867,
+      "peak": 0.6545685529708862,
+      "rms": 0.14088947405136104
+    },
+    {
+      "kind": "voice",
       "id": "voice/ghostfam_blund/greet",
       "source": "placeholder",
       "seconds": 5.1204081632653065,
@@ -1491,6 +1987,22 @@
     },
     {
       "kind": "voice",
+      "id": "voice/ghostfam_dyne/chat_2_1_v",
+      "source": "placeholder",
+      "seconds": 5.380680272108844,
+      "peak": 0.5913728475570679,
+      "rms": 0.1522435739643008
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/chat_8_1_v",
+      "source": "placeholder",
+      "seconds": 5.519773242630386,
+      "peak": 0.63292396068573,
+      "rms": 0.14960601345087265
+    },
+    {
+      "kind": "voice",
       "id": "voice/ghostfam_dyne/dawn",
       "source": "placeholder",
       "seconds": 7.753424036281179,
@@ -1499,11 +2011,51 @@
     },
     {
       "kind": "voice",
+      "id": "voice/ghostfam_dyne/first_1_v",
+      "source": "placeholder",
+      "seconds": 5.501678004535147,
+      "peak": 0.6319800615310669,
+      "rms": 0.13910540809688998
+    },
+    {
+      "kind": "voice",
       "id": "voice/ghostfam_dyne/greet",
       "source": "placeholder",
       "seconds": 8.760680272108843,
       "peak": 0.6290252804756165,
       "rms": 0.1344361337446468
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/greet_h0_1_v",
+      "source": "placeholder",
+      "seconds": 4.5810430839002265,
+      "peak": 0.6152610182762146,
+      "rms": 0.15164959774817716
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/greet_h1_1_v",
+      "source": "placeholder",
+      "seconds": 3.470294784580499,
+      "peak": 0.6392841935157776,
+      "rms": 0.14371486149530407
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/greet_h2_1_v",
+      "source": "placeholder",
+      "seconds": 5.395736961451247,
+      "peak": 0.6179593205451965,
+      "rms": 0.15186482079758395
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/greet_h3_1_v",
+      "source": "placeholder",
+      "seconds": 4.575691609977325,
+      "peak": 0.5797142386436462,
+      "rms": 0.15747728002859773
     },
     {
       "kind": "voice",
@@ -1667,6 +2219,14 @@
     },
     {
       "kind": "voice",
+      "id": "voice/ghostfam_gnist/first_1_v",
+      "source": "placeholder",
+      "seconds": 5.408526077097505,
+      "peak": 0.641345202922821,
+      "rms": 0.14103538994662662
+    },
+    {
+      "kind": "voice",
       "id": "voice/ghostfam_gnist/greet",
       "source": "placeholder",
       "seconds": 5.3185487528344675,
@@ -1704,6 +2264,14 @@
       "seconds": 5.4491156462585035,
       "peak": 0.6020708680152893,
       "rms": 0.14521906063612736
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_silke/first_1_v",
+      "source": "placeholder",
+      "seconds": 5.380816326530613,
+      "peak": 0.5957512855529785,
+      "rms": 0.13970911958110763
     },
     {
       "kind": "voice",
@@ -1763,6 +2331,14 @@
     },
     {
       "kind": "voice",
+      "id": "voice/guard_oak/first_1_v",
+      "source": "placeholder",
+      "seconds": 3.563718820861678,
+      "peak": 0.6222987174987793,
+      "rms": 0.1351953956884731
+    },
+    {
+      "kind": "voice",
       "id": "voice/guard_oak/greet",
       "source": "placeholder",
       "seconds": 3.559092970521542,
@@ -1803,6 +2379,22 @@
     },
     {
       "kind": "voice",
+      "id": "voice/innkeeper_kvak/first_1_v",
+      "source": "placeholder",
+      "seconds": 3.386031746031746,
+      "peak": 0.6467148661613464,
+      "rms": 0.1464085053471214
+    },
+    {
+      "kind": "voice",
+      "id": "voice/lamplighter_kiki/first_1_v",
+      "source": "placeholder",
+      "seconds": 3.516371882086168,
+      "peak": 0.6158092617988586,
+      "rms": 0.16245408833283706
+    },
+    {
+      "kind": "voice",
       "id": "voice/mapseller_natteblik/ears",
       "source": "placeholder",
       "seconds": 2.6698412698412697,
@@ -1816,6 +2408,14 @@
       "seconds": 2.2397278911564626,
       "peak": 0.6150120496749878,
       "rms": 0.17347089699425022
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mapseller_natteblik/first_1_v",
+      "source": "placeholder",
+      "seconds": 4.052517006802721,
+      "peak": 0.6745882034301758,
+      "rms": 0.1703135750362149
     },
     {
       "kind": "voice",
@@ -1867,11 +2467,67 @@
     },
     {
       "kind": "voice",
+      "id": "voice/mayor_lyra/bday_mayor_lyra_greet_1_v",
+      "source": "placeholder",
+      "seconds": 3.4012244897959185,
+      "peak": 0.6059845089912415,
+      "rms": 0.1567765028200292
+    },
+    {
+      "kind": "voice",
       "id": "voice/mayor_lyra/farm_status",
       "source": "recorded",
       "seconds": 4.25795918367347,
       "peak": 0.42281806468963623,
       "rms": 0.03743908981998868
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mayor_lyra/first_1_v",
+      "source": "placeholder",
+      "seconds": 3.889659863945578,
+      "peak": 0.660752534866333,
+      "rms": 0.14251031354295676
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mayor_lyra/gift_mayor_lyra_dislike_1_v",
+      "source": "placeholder",
+      "seconds": 3.3338321995464852,
+      "peak": 0.5701528787612915,
+      "rms": 0.16027082318313907
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mayor_lyra/gift_mayor_lyra_hate_1_v",
+      "source": "placeholder",
+      "seconds": 3.667891156462585,
+      "peak": 0.6237099170684814,
+      "rms": 0.15646525417981696
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mayor_lyra/gift_mayor_lyra_like_1_v",
+      "source": "placeholder",
+      "seconds": 2.88562358276644,
+      "peak": 0.5972664952278137,
+      "rms": 0.1451626120950059
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mayor_lyra/gift_mayor_lyra_love_1_v",
+      "source": "placeholder",
+      "seconds": 3.174829931972789,
+      "peak": 0.6248798966407776,
+      "rms": 0.15029085494873182
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mayor_lyra/gift_mayor_lyra_neutral_1_v",
+      "source": "placeholder",
+      "seconds": 1.894875283446712,
+      "peak": 0.5511448979377747,
+      "rms": 0.14634661211056407
     },
     {
       "kind": "voice",
@@ -1891,6 +2547,14 @@
     },
     {
       "kind": "voice",
+      "id": "voice/mayor_lyra/greet_h0_1_v",
+      "source": "placeholder",
+      "seconds": 3.2400907029478456,
+      "peak": 0.5820096731185913,
+      "rms": 0.14535060615018736
+    },
+    {
+      "kind": "voice",
       "id": "voice/mayor_lyra/hello",
       "source": "recorded",
       "seconds": 2.0375510204081633,
@@ -1904,6 +2568,78 @@
       "seconds": 5.800634920634921,
       "peak": 0.20048297941684723,
       "rms": 0.026454663449510182
+    },
+    {
+      "kind": "voice",
+      "id": "voice/merchant_pip/bday_merchant_pip_greet_1_v",
+      "source": "placeholder",
+      "seconds": 3.5224943310657597,
+      "peak": 0.6190041303634644,
+      "rms": 0.1572411157336993
+    },
+    {
+      "kind": "voice",
+      "id": "voice/merchant_pip/first_1_v",
+      "source": "placeholder",
+      "seconds": 4.11546485260771,
+      "peak": 0.6045975089073181,
+      "rms": 0.15090040181605943
+    },
+    {
+      "kind": "voice",
+      "id": "voice/merchant_pip/gift_merchant_pip_dislike_1_v",
+      "source": "placeholder",
+      "seconds": 3.4627210884353743,
+      "peak": 0.5750563740730286,
+      "rms": 0.1591806461049807
+    },
+    {
+      "kind": "voice",
+      "id": "voice/merchant_pip/gift_merchant_pip_hate_1_v",
+      "source": "placeholder",
+      "seconds": 3.816371882086168,
+      "peak": 0.5980226397514343,
+      "rms": 0.1565587902279117
+    },
+    {
+      "kind": "voice",
+      "id": "voice/merchant_pip/gift_merchant_pip_like_1_v",
+      "source": "placeholder",
+      "seconds": 3.0083900226757367,
+      "peak": 0.6177272200584412,
+      "rms": 0.14486776655536038
+    },
+    {
+      "kind": "voice",
+      "id": "voice/merchant_pip/gift_merchant_pip_love_1_v",
+      "source": "placeholder",
+      "seconds": 3.292562358276644,
+      "peak": 0.6098467111587524,
+      "rms": 0.15025892766337032
+    },
+    {
+      "kind": "voice",
+      "id": "voice/merchant_pip/gift_merchant_pip_neutral_1_v",
+      "source": "placeholder",
+      "seconds": 1.9813605442176871,
+      "peak": 0.5530632734298706,
+      "rms": 0.14446059563983754
+    },
+    {
+      "kind": "voice",
+      "id": "voice/merchant_pip/greet_h0_1_v",
+      "source": "placeholder",
+      "seconds": 3.630294784580499,
+      "peak": 0.6049165725708008,
+      "rms": 0.15961520469963975
+    },
+    {
+      "kind": "voice",
+      "id": "voice/penguin_postman/first_1_v",
+      "source": "placeholder",
+      "seconds": 2.6159637188208618,
+      "peak": 0.5868364572525024,
+      "rms": 0.13606145914415615
     },
     {
       "kind": "voice",
@@ -1939,6 +2675,14 @@
     },
     {
       "kind": "voice",
+      "id": "voice/pippin_boegeknop/first_1_v",
+      "source": "placeholder",
+      "seconds": 3.377732426303855,
+      "peak": 0.6312156915664673,
+      "rms": 0.15844583568660547
+    },
+    {
+      "kind": "voice",
       "id": "voice/pippin_boegeknop/hello",
       "source": "placeholder",
       "seconds": 1.6990476190476191,
@@ -1955,11 +2699,75 @@
     },
     {
       "kind": "voice",
+      "id": "voice/postman_pip/bday_postman_pip_greet_1_v",
+      "source": "placeholder",
+      "seconds": 3.2573696145124718,
+      "peak": 0.6177968978881836,
+      "rms": 0.15581202547383352
+    },
+    {
+      "kind": "voice",
+      "id": "voice/postman_pip/first_1_v",
+      "source": "placeholder",
+      "seconds": 3.226893424036281,
+      "peak": 0.6001704335212708,
+      "rms": 0.14357539700741548
+    },
+    {
+      "kind": "voice",
+      "id": "voice/postman_pip/gift_postman_pip_dislike_1_v",
+      "source": "placeholder",
+      "seconds": 3.2021315192743764,
+      "peak": 0.5671281814575195,
+      "rms": 0.1593150617671405
+    },
+    {
+      "kind": "voice",
+      "id": "voice/postman_pip/gift_postman_pip_hate_1_v",
+      "source": "placeholder",
+      "seconds": 3.526984126984127,
+      "peak": 0.5977754592895508,
+      "rms": 0.15753562723657116
+    },
+    {
+      "kind": "voice",
+      "id": "voice/postman_pip/gift_postman_pip_like_1_v",
+      "source": "placeholder",
+      "seconds": 2.773015873015873,
+      "peak": 0.6147986054420471,
+      "rms": 0.14593620890904432
+    },
+    {
+      "kind": "voice",
+      "id": "voice/postman_pip/gift_postman_pip_love_1_v",
+      "source": "placeholder",
+      "seconds": 3.0351020408163265,
+      "peak": 0.6301980018615723,
+      "rms": 0.15115135318533504
+    },
+    {
+      "kind": "voice",
+      "id": "voice/postman_pip/gift_postman_pip_neutral_1_v",
+      "source": "placeholder",
+      "seconds": 1.8219954648526078,
+      "peak": 0.5355598330497742,
+      "rms": 0.14443221184125646
+    },
+    {
+      "kind": "voice",
       "id": "voice/postman_pip/greet",
       "source": "placeholder",
       "seconds": 4.032562358276644,
       "peak": 0.6324278116226196,
       "rms": 0.15232278775506003
+    },
+    {
+      "kind": "voice",
+      "id": "voice/postman_pip/greet_h0_1_v",
+      "source": "placeholder",
+      "seconds": 3.1542403628117914,
+      "peak": 0.6272280812263489,
+      "rms": 0.14919691619569414
     },
     {
       "kind": "voice",
@@ -2011,11 +2819,83 @@
     },
     {
       "kind": "voice",
+      "id": "voice/rasmus/first_1_v",
+      "source": "placeholder",
+      "seconds": 3.4035374149659865,
+      "peak": 0.5757994055747986,
+      "rms": 0.15707086575779336
+    },
+    {
+      "kind": "voice",
+      "id": "voice/smith_thorin/bday_smith_thorin_greet_1_v",
+      "source": "placeholder",
+      "seconds": 4.015736961451247,
+      "peak": 0.6125209331512451,
+      "rms": 0.15101833023010003
+    },
+    {
+      "kind": "voice",
+      "id": "voice/smith_thorin/first_1_v",
+      "source": "placeholder",
+      "seconds": 3.8984126984126983,
+      "peak": 0.6496841311454773,
+      "rms": 0.13990526481048748
+    },
+    {
+      "kind": "voice",
+      "id": "voice/smith_thorin/gift_smith_thorin_dislike_1_v",
+      "source": "placeholder",
+      "seconds": 3.972199546485261,
+      "peak": 0.5582844018936157,
+      "rms": 0.15306748947194973
+    },
+    {
+      "kind": "voice",
+      "id": "voice/smith_thorin/gift_smith_thorin_hate_1_v",
+      "source": "placeholder",
+      "seconds": 4.3710657596371885,
+      "peak": 0.5991926789283752,
+      "rms": 0.1504828444888721
+    },
+    {
+      "kind": "voice",
+      "id": "voice/smith_thorin/gift_smith_thorin_like_1_v",
+      "source": "placeholder",
+      "seconds": 3.441904761904762,
+      "peak": 0.59770268201828,
+      "rms": 0.1400478289799485
+    },
+    {
+      "kind": "voice",
+      "id": "voice/smith_thorin/gift_smith_thorin_love_1_v",
+      "source": "placeholder",
+      "seconds": 3.7914739229024943,
+      "peak": 0.6190080642700195,
+      "rms": 0.14501325239345178
+    },
+    {
+      "kind": "voice",
+      "id": "voice/smith_thorin/gift_smith_thorin_neutral_1_v",
+      "source": "placeholder",
+      "seconds": 2.2634013605442176,
+      "peak": 0.5684787034988403,
+      "rms": 0.13770932773097538
+    },
+    {
+      "kind": "voice",
       "id": "voice/smith_thorin/greet",
       "source": "recorded",
       "seconds": 2.813968253968254,
       "peak": 0.4071387052536011,
       "rms": 0.0387746255083906
+    },
+    {
+      "kind": "voice",
+      "id": "voice/smith_thorin/greet_h0_1_v",
+      "source": "placeholder",
+      "seconds": 3.8347392290249434,
+      "peak": 0.5920349955558777,
+      "rms": 0.14745034533871498
     },
     {
       "kind": "voice",

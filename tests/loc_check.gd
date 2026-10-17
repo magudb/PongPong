@@ -119,7 +119,7 @@ func _run() -> int:
 	ref_keys.sort()
 	for key in ref_keys:
 		var lacks := _lacking_locales(rows, str(key))
-		if not lacks.is_empty():
+		if not lacks.is_empty() and not _fixture_reference(str(key), _refs[key]):
 			missing.append({"key": key, "locales": lacks, "srcs": _refs[key]})
 	for g in _groups:
 		var lacks_g: Array[String] = []
@@ -234,6 +234,44 @@ func _line_offsets(text: String) -> PackedInt32Array:
 
 func _src(rel: String, offs: PackedInt32Array, pos: int) -> String:
 	return "%s:%d" % [rel, offs.bsearch(pos) + 1]
+
+
+## Transient review copy belongs to its fixture setup. Product uses of the same
+## key still require both CSV translations; unknown fixture keys still fail.
+func _fixture_reference(key: String, sources: Array) -> bool:
+	var owner := ""
+	var method := ""
+	if key.begins_with("GUIDE_"):
+		var path := _root.path_join("scripts/ui/dev/guide_fixture.json")
+		if not FileAccess.file_exists(path): return false
+		var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+		if not data is Dictionary or str((data as Dictionary).get("texts", {}).get(key, "")) == "": return false
+		owner = "scripts/ui/dialogue_ui.gd"
+		method = "fixture_guide"
+	elif key == "REL_CAL_FIXTURE_FESTIVAL":
+		owner = "scripts/ui/social/social_fixtures.gd"
+		method = "festival"
+	else: return false
+	var path := _root.path_join(owner)
+	if not FileAccess.file_exists(path): return false
+	var text := FileAccess.get_file_as_string(path)
+	var start := text.find("static func " + method + "(")
+	if start < 0: return false
+	var end := text.length()
+	for marker in ["\nfunc ", "\nstatic func "]:
+		var next := text.find(marker,start+1)
+		if next >= 0: end = mini(end,next)
+	if key == "REL_CAL_FIXTURE_FESTIVAL":
+		var body := text.substr(start,end-start)
+		if not body.contains('for locale in ["da", "en"]:') or not body.contains('translation.add_message(&"'+key+'"') or not body.contains("TranslationServer.add_translation(translation)"): return false
+	var first_line := text.substr(0,start).count("\n")+1
+	var last_line := text.substr(0,end).count("\n")+1
+	for source in sources:
+		var value := str(source)
+		if not value.begins_with(owner+":"): return false
+		var line := value.trim_prefix(owner+":").to_int()
+		if line < first_line or line >= last_line: return false
+	return not sources.is_empty()
 
 
 func _ref(key: String, src: String) -> void:
