@@ -1,0 +1,28 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 0,
+  "elapsed_s": 5.24,
+  "engine": [
+    {
+      "kind": "script error",
+      "section": "farm_upgrades",
+      "text": "res://tests/sections/farm_upgrades.gd:67 in GDScript::reload(): Parse Error: Cannot infer the type of \"saved\" variable because the value doesn't have a set type. (at _discover res://tests/playtest.gd:327)"
+    },
+    {
+      "kind": "error",
+      "section": "farm_upgrades",
+      "text": "modules/gdscript/gdscript_resource_format.cpp:46 in load(): Failed to load script \"res://tests/sections/farm_upgrades.gd\" with error \"Parse error\". (at _discover res://tests/playtest.gd:327)"
+    }
+  ],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [
+    "section res://tests/sections/farm_upgrades.gd does not compile: res://tests/sections/farm_upgrades.gd:67 in GDScript::reload(): Parse Error: Cannot infer the type of \"saved\" variable because the value doesn't have a set type. (at _discover res://tests/playtest.gd:327)"
+  ],
+  "result": "fail",
+  "sections": {},
+  "skipped": 0
+}

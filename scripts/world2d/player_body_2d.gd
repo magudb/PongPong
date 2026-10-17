@@ -280,7 +280,10 @@ func _update_prompt(delta: float = 0.0) -> void:
 	_prompt_last_pos = global_position
 	_prompt_last_facing = facing8
 	var it: Node = nearest_interactable()
-	var text: String = str(it.call("get_interaction_prompt")) if it != null and it.has_method("get_interaction_prompt") else ""
+	var text := interaction_text(it)
 	if text != _prompt:
 		_prompt = text
 		EventBus.interaction_prompt_changed.emit(text)
+
+func interaction_text(it: Node) -> String:
+	return str(it.call("get_interaction_prompt")) if it != null and it.has_method("get_interaction_prompt") else ""

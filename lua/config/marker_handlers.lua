@@ -3,7 +3,8 @@
 --   static func create_marker(params, pos, cell, area) -> Node      or an instance  func setup_marker(params, pos, cell, area)  on a Node script
 -- the node is adopted into area.objects at the cell and obeys `when=`. A script that does not exist yet, or has no entry point, is skipped silently (counted in area.skipped_markers),
 -- so a row can be here before its package has landed. Rows are grouped by the package that owns the script.
--- Not here on purpose: `greenhouse_slot` (a data marker read with find_markers until N07), the city's own interactables seed_basket kiki_cache rejsestolpe lift climb (V4's builder
+-- Greenhouse markers are active following the user's 2026-10-17 decision.
+-- The city owns its own interactables seed_basket kiki_cache rejsestolpe lift climb (V4's builder
 -- instantiates them from the city's own data; the town ROOMS place bath and board from their room JSON, which is why those two have rows below), and the built-in types
 -- spawn warp sign bed quest_spot light growth.
 kind = "config"
@@ -31,6 +32,10 @@ config = {
     bath = "res://scripts/traetoppen/life/bath_tub_2d.gd",
     board = "res://scripts/traetoppen/life/notice_board_2d.gd",
     -- N02 / N05 (the farm steading); field_expansion replaces the lazy farm_view.gd entry of IsoArea
+    greenhouse_walls = "res://scripts/farm/greenhouse/greenhouse_walls.gd",
+    greenhouse_slot = "res://scripts/farm/greenhouse/greenhouse_2d.gd",
+    greenhouse = "res://scripts/farm/greenhouse/greenhouse_2d.gd",
+    farm_equipment = "res://scripts/farm/placement_service.gd",
     shipping_bin = "res://scripts/farm/steading/objects/shipping_bin_2d.gd",
     tool_shed = "res://scripts/farm/steading/objects/tool_shed_2d.gd",
     field_expansion = "res://scripts/farm/steading/objects/field_expansion_2d.gd",

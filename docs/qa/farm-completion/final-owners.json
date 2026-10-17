@@ -1,0 +1,272 @@
+{
+  "allowed": [
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'Bad Name' is not a valid section name (a-z, 0-9, _) (at register_section res://scripts/autoload/save_manager.gd:478)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'world' is a built-in name (at register_section res://scripts/autoload/save_manager.gd:481)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'game' is a built-in name (at register_section res://scripts/autoload/save_manager.gd:481)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section('nomethods'): the node has no to_dict() (at register_section res://scripts/autoload/save_manager.gd:488)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section('nullnode'): the node is null or freed (at register_section res://scripts/autoload/save_manager.gd:484)"
+    },
+    {
+      "kind": "warning",
+      "rule": "which cannot be saved",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'jsonrules' holds a Object, which cannot be saved (written as null) (at _json_safe res://scripts/autoload/save_manager.gd:659)"
+    },
+    {
+      "kind": "error",
+      "rule": "did not return a Dictionary",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved (at gather_payload res://scripts/autoload/save_manager.gd:589)"
+    },
+    {
+      "kind": "error",
+      "rule": "did not return a Dictionary",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved (at gather_payload res://scripts/autoload/save_manager.gd:589)"
+    },
+    {
+      "kind": "warning",
+      "rule": "nested deeper than 64",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped (at _json_safe res://scripts/autoload/save_manager.gd:629)"
+    },
+    {
+      "kind": "warning",
+      "rule": "nested deeper than 64",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped (at _json_safe res://scripts/autoload/save_manager.gd:629)"
+    },
+    {
+      "kind": "error",
+      "rule": "fake section failure",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): fake section failure boom (at from_dict res://tests/sections/save.gd:64)"
+    },
+    {
+      "kind": "error",
+      "rule": "fake section failure",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): fake section failure late_boom (at from_dict res://tests/sections/save.gd:64)"
+    },
+    {
+      "kind": "error",
+      "rule": "save_4.bak.json.tmp",
+      "section": "save",
+      "text": "core/io/dir_access.cpp:429 in copy(): Condition \"err != OK\" is true. Returning: err Failed to open '/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.ACw8PH/Library/Application Support/Traetoppen/save_test_35716/save_4.bak.json.tmp'. (at _roll_backup res://scripts/autoload/save_manager.gd:1029)"
+    }
+  ],
+  "character": "animal",
+  "checks": 2681,
+  "elapsed_s": 45.95,
+  "engine": [],
+  "failed": 9,
+  "failures": [
+    "economy.the guide's eight lines come first, in the guide's order: [\"sprinkler\", \"quality_sprinkler\", \"preserves_jar\", \"keg\", \"carrot_seeds\", \"pumpkin_seeds\", \"strawberry_seeds\", \"sunflower_seeds\"]",
+    "economy.the seed shop's tabs: Frø, Redskaber and the sell tab ([\"seed\", \"tool\", \"goods\", \"sell\"])",
+    "economy.sold out: refused with no_stock",
+    "economy.the row says stock 0, not buyable",
+    "economy.the next morning 4 are back (restock 4)",
+    "economy.stock_refreshes_on_day_started",
+    "economy.the shelves come back from a save (pumpkin seeds 10)",
+    "economy.shop_save_validated",
+    "economy.restock_on_day_started_only"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "animals": {
+      "character": "animal",
+      "checks": 44,
+      "failed": 0,
+      "ms": 815,
+      "skipped": 0
+    },
+    "area": {
+      "character": "animal",
+      "checks": 240,
+      "failed": 0,
+      "ms": 2822,
+      "skipped": 1
+    },
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1136,
+      "skipped": 0
+    },
+    "cheat_menu": {
+      "character": "animal",
+      "checks": 18,
+      "failed": 0,
+      "ms": 1010,
+      "skipped": 0
+    },
+    "city_levels": {
+      "character": "animal",
+      "checks": 69,
+      "failed": 0,
+      "ms": 3095,
+      "skipped": 0
+    },
+    "economy": {
+      "character": "animal",
+      "checks": 296,
+      "failed": 9,
+      "ms": 2537,
+      "skipped": 0
+    },
+    "economy_hours": {
+      "character": "animal",
+      "checks": 17,
+      "failed": 0,
+      "ms": 107,
+      "skipped": 0
+    },
+    "economy_transactions": {
+      "character": "animal",
+      "checks": 7,
+      "failed": 0,
+      "ms": 61,
+      "skipped": 0
+    },
+    "farm": {
+      "character": "animal",
+      "checks": 250,
+      "failed": 0,
+      "ms": 187,
+      "skipped": 0
+    },
+    "farm_automation": {
+      "character": "animal",
+      "checks": 56,
+      "failed": 0,
+      "ms": 1032,
+      "skipped": 0
+    },
+    "farm_controls": {
+      "character": "animal",
+      "checks": 5,
+      "failed": 0,
+      "ms": 352,
+      "skipped": 0
+    },
+    "farm_dress": {
+      "character": "animal",
+      "checks": 44,
+      "failed": 0,
+      "ms": 542,
+      "skipped": 0
+    },
+    "farm_first_morning": {
+      "character": "animal",
+      "checks": 98,
+      "failed": 0,
+      "ms": 2935,
+      "skipped": 0
+    },
+    "farm_lifecycle": {
+      "character": "animal",
+      "checks": 22,
+      "failed": 0,
+      "ms": 764,
+      "skipped": 0
+    },
+    "farm_playthrough": {
+      "character": "animal",
+      "checks": 31,
+      "failed": 0,
+      "ms": 837,
+      "skipped": 0
+    },
+    "farm_site": {
+      "character": "animal",
+      "checks": 56,
+      "failed": 0,
+      "ms": 1353,
+      "skipped": 0
+    },
+    "farm_upgrades": {
+      "character": "animal",
+      "checks": 73,
+      "failed": 0,
+      "ms": 552,
+      "skipped": 0
+    },
+    "home": {
+      "character": "animal",
+      "checks": 719,
+      "failed": 0,
+      "ms": 5527,
+      "skipped": 0
+    },
+    "home_progression": {
+      "character": "animal",
+      "checks": 73,
+      "failed": 0,
+      "ms": 1080,
+      "skipped": 0
+    },
+    "home_services": {
+      "character": "animal",
+      "checks": 30,
+      "failed": 0,
+      "ms": 777,
+      "skipped": 0
+    },
+    "home_ui": {
+      "character": "animal",
+      "checks": 22,
+      "failed": 0,
+      "ms": 549,
+      "skipped": 0
+    },
+    "home_world": {
+      "character": "animal",
+      "checks": 105,
+      "failed": 0,
+      "ms": 1484,
+      "skipped": 0
+    },
+    "save": {
+      "character": "animal",
+      "checks": 244,
+      "failed": 0,
+      "ms": 3375,
+      "skipped": 0
+    },
+    "shop_ui": {
+      "character": "animal",
+      "checks": 154,
+      "failed": 0,
+      "ms": 7682,
+      "skipped": 8
+    }
+  },
+  "skipped": 9
+}

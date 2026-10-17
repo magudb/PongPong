@@ -1,0 +1,45 @@
+{
+  "generated_with": "built-in imagegen",
+  "masters": {
+    "greenhouse": {
+      "path": "tools/art/drawn/sources/farm_completion/greenhouse.png",
+      "sha256": "02b14c1b804371e91dc2bca7564899394ab3c1181062d26c336ef75ff472062d"
+    },
+    "greenhouse_walls": {
+      "path": "tools/art/drawn/sources/farm_completion/greenhouse_walls.png",
+      "sha256": "39b5ccd412a0218bc668811a2d5dc10b6fccc6f2d1dd5ba6d0a80b5f6251bd82"
+    },
+    "juice_bottle": {
+      "path": "tools/art/drawn/sources/farm_completion/juice_bottle.png",
+      "sha256": "a746a2c45135b70333e454ba7f73ef946a09cc19b7511fb48b9b763d8079f0bd"
+    },
+    "keg": {
+      "path": "tools/art/drawn/sources/farm_completion/keg.png",
+      "sha256": "4d8d624e8110c54c8e92b255d7563be2ec41f10a5f8e5fde34a7ffb1bcb005de"
+    },
+    "preserves_jar": {
+      "path": "tools/art/drawn/sources/farm_completion/preserves_jar.png",
+      "sha256": "1512b9a7d1b2fff427f549827f608370ff6d4039b8c7c3e3f2a5a53305d93b7a"
+    },
+    "snow_turnip_seeds_icon": {
+      "path": "tools/art/drawn/sources/farm_completion/snow_turnip_seeds_icon.png",
+      "sha256": "c5bc6bc66fce1069d024d2e82048da6bde471e20d6a104b9372724f1494a0418"
+    },
+    "snow_turnip_stages": {
+      "path": "tools/art/drawn/sources/farm_completion/snow_turnip_stages.png",
+      "sha256": "73a8ef8bac3f4851cd379b4a87f83a4cfb05f2c87447b8fc9969db6a9eb58e61"
+    },
+    "snowdrop_seeds_icon": {
+      "path": "tools/art/drawn/sources/farm_completion/snowdrop_seeds_icon.png",
+      "sha256": "36f78fadbf9642935ac29e7c732fbece9bbea46da41f41845b4b11a9bc01c2d4"
+    },
+    "snowdrop_stages": {
+      "path": "tools/art/drawn/sources/farm_completion/snowdrop_stages.png",
+      "sha256": "fc384a1f0672c18df4fdc2371a0bbbf037acbe9b57b4c734eeb859b31c897cf1"
+    },
+    "sprinkler": {
+      "path": "tools/art/drawn/sources/farm_completion/sprinkler.png",
+      "sha256": "82ff225cbeeb6217b6cda667eb3868761ebcee18f09185061d0c6120409eab2c"
+    }
+  }
+}

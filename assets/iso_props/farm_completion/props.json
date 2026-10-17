@@ -1,0 +1,237 @@
+{
+  "sprinkler": {
+    "file": "sprinkler.webp",
+    "size": [
+      96,
+      108
+    ],
+    "pivot": [
+      48,
+      92
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "illustration": "tools/art/drawn/sources/farm_completion/sprinkler.png"
+  },
+  "preserves_jar": {
+    "file": "preserves_jar.webp",
+    "size": [
+      88,
+      112
+    ],
+    "pivot": [
+      44,
+      96
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "illustration": "tools/art/drawn/sources/farm_completion/preserves_jar.png"
+  },
+  "keg": {
+    "file": "keg.webp",
+    "size": [
+      96,
+      128
+    ],
+    "pivot": [
+      48,
+      112
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "illustration": "tools/art/drawn/sources/farm_completion/keg.png"
+  },
+  "greenhouse": {
+    "file": "greenhouse.webp",
+    "size": [
+      462,
+      470
+    ],
+    "pivot": [
+      234,
+      327
+    ],
+    "footprint": [
+      4,
+      3
+    ],
+    "elev": 36.0,
+    "source_ground_planes": [
+      [
+        0.064,
+        0.74
+      ],
+      [
+        0.447,
+        0.953
+      ],
+      [
+        0.978,
+        0.739
+      ]
+    ],
+    "illustration": "tools/art/drawn/sources/farm_completion/greenhouse.png"
+  },
+  "greenhouse_walls": {
+    "file": "greenhouse_walls.webp",
+    "size": [
+      1246,
+      865
+    ],
+    "pivot": [
+      623,
+      692
+    ],
+    "footprint": [
+      9,
+      9
+    ],
+    "elev": 36.0,
+    "illustration": "tools/art/drawn/sources/farm_completion/greenhouse_walls.png"
+  },
+  "crop_snow_turnip_0": {
+    "file": "crop_snow_turnip_0.webp",
+    "size": [
+      84,
+      36
+    ],
+    "pivot": [
+      42,
+      26
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "illustration": "tools/art/drawn/sources/farm_completion/snow_turnip_stages.png"
+  },
+  "crop_snow_turnip_1": {
+    "file": "crop_snow_turnip_1.webp",
+    "size": [
+      84,
+      56
+    ],
+    "pivot": [
+      42,
+      46
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "illustration": "tools/art/drawn/sources/farm_completion/snow_turnip_stages.png"
+  },
+  "crop_snow_turnip_2": {
+    "file": "crop_snow_turnip_2.webp",
+    "size": [
+      84,
+      76
+    ],
+    "pivot": [
+      42,
+      66
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "illustration": "tools/art/drawn/sources/farm_completion/snow_turnip_stages.png"
+  },
+  "crop_snow_turnip_3": {
+    "file": "crop_snow_turnip_3.webp",
+    "size": [
+      84,
+      88
+    ],
+    "pivot": [
+      42,
+      78
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "illustration": "tools/art/drawn/sources/farm_completion/snow_turnip_stages.png"
+  },
+  "crop_snowdrop_0": {
+    "file": "crop_snowdrop_0.webp",
+    "size": [
+      84,
+      40
+    ],
+    "pivot": [
+      42,
+      30
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "illustration": "tools/art/drawn/sources/farm_completion/snowdrop_stages.png"
+  },
+  "crop_snowdrop_1": {
+    "file": "crop_snowdrop_1.webp",
+    "size": [
+      84,
+      64
+    ],
+    "pivot": [
+      42,
+      54
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "illustration": "tools/art/drawn/sources/farm_completion/snowdrop_stages.png"
+  },
+  "crop_snowdrop_2": {
+    "file": "crop_snowdrop_2.webp",
+    "size": [
+      84,
+      98
+    ],
+    "pivot": [
+      42,
+      88
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "illustration": "tools/art/drawn/sources/farm_completion/snowdrop_stages.png"
+  },
+  "crop_snowdrop_3": {
+    "file": "crop_snowdrop_3.webp",
+    "size": [
+      84,
+      120
+    ],
+    "pivot": [
+      42,
+      110
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "illustration": "tools/art/drawn/sources/farm_completion/snowdrop_stages.png"
+  }
+}

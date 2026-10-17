@@ -1,0 +1,38 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 239,
+  "elapsed_s": 7.21,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "farm_lifecycle.dry_day_pauses_growth_without_killing_crop"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1072,
+      "skipped": 0
+    },
+    "farm": {
+      "character": "animal",
+      "checks": 210,
+      "failed": 0,
+      "ms": 107,
+      "skipped": 0
+    },
+    "farm_lifecycle": {
+      "character": "animal",
+      "checks": 21,
+      "failed": 1,
+      "ms": 905,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

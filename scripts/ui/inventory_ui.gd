@@ -133,6 +133,8 @@ func _select(index: int) -> void:
 	%DetailRarity.theme_type_variation = StringName("CatalogRarity_" + str(ItemKinds.rarity_of(_selected_id)))
 	%DetailRarity.text = tr("RARITY_" + str(ItemKinds.rarity_of(_selected_id)).to_upper()) if _selected_id != &"" else ""
 	var description := tr(str(def.get("description_key", "")))
+	var growing := preload("res://scripts/ui/components/farming_details.gd").text(_selected_id)
+	if growing != "": description += "\n" + growing
 	var value := EconomyManager.sell_value(_selected_id)
 	%DetailDesc.text = description + ("\n" + tr("INV_SELLS_FOR") % Fmt.thousands(value) if value > 0 else "")
 	var use := str(def.get("category", "")) in ["animal","animal_care"] or (def.has("unlock_flag") and not bool(GameManager.get_flag(StringName(str(def.unlock_flag)), false))) or float(def.get("heal_half_hearts", 0)) > 0 or float(def.get("stamina", 0)) > 0 or float(def.get("oil_seconds", 0)) > 0 or str(def.get("placeable", "")) == "farm"

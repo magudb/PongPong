@@ -17,6 +17,7 @@ Open `project.godot` with Godot 4.7 and run the main scene. Start a new game or 
 | Drink a healing supply | R |
 | Inventory | I or Tab |
 | Clothing and loadout | G |
+| Farm buildings, field expansion and house upgrades | B, while on the farm |
 | Journal | J |
 | Collection | C |
 | Hotbar slots | 1–8 |
@@ -30,9 +31,21 @@ Use arrows, Enter and Escape to navigate panels. The on-screen hints also show c
 
 Follow the first-days quests to learn planting, watering, harvesting and shipping. Shops keep their posted hours and close for relevant festivals. Talk at the separate counter host to speak with a keeper; the shop host opens stock. The post office shows mail, people and current locations. The journal contains quests, relationships, calendar and the mother's investigation.
 
+On the farm, the highlighted tile in front of your character is the working tile. Select the hoe to till it, seeds to plant, and the watering can to water. Hold the left mouse button while walking to work successive tiles. A plot is worked once per pass; release and press again to repeat an action on it. Water can go on before or after planting. Repeated watering has no effect, except when a moonflower still needs its special night watering. Dry crops pause their growth for the day. Rain and fairy watering supplies can do the watering for you.
+
+Ripe crops show a harvest prompt: press E, or use the scythe for a wider sweep. Harvested soil stays tilled and keeps that day's water, so you can plant straight away. Strawberries regrow every four watered nights in spring; glow berries regrow every four watered nights in summer and autumn. A full backpack leaves the harvest intact. Crops wither when their growing season ends; multi-season crops survive while the next season is still suitable. Clear dead plants with the scythe. An axe or pickaxe can deliberately remove a living crop. The shipping bin takes the selected harvest stack with E and pays the next morning.
+
 Visit the builder to upgrade the house through ten tiers and place farm buildings for animals. Feed, brush and play with animals; collect products when ready. At home, use storage and the decorating screen to place owned furniture, build sets and increase hygge. Furniture interactions include sitting, warming up, music and sleeping.
 
+Press B on the farm to open **Farm upgrades**. Its house button opens the builder's ten-tier ladder; its field button offers the east field's 42 plots for 800 golden acorns. Animal buildings have three capacity tiers: coop 4 → 8 → 12, barn 6 → 12 → 18, and animal house 3 → 6 → 9. Select an existing building to see the next capacity, materials, price and construction days. Confirming pays once; the extra space becomes available on the completion morning. Animals keep their existing housing during construction. Building tiers and construction dates survive saving and loading. Starter animal buildings retain their immediate construction rule. The greenhouse is also available here after house tier 2: it costs 1,500 golden acorns, 60 wood, 30 stone and 8 glass panes, and takes three days to build. Walk to its painted door and press E to enter; walk through the front exit to return.
+
 The home storage panel opens home services. Tier 2 unlocks oven baking, tier 6 an accurate next-day forecast, and tier 10 the royal invitation. The invitation requires confirmation, a free evening and an available guest. It can be completed once per save.
+
+Buy sprinklers, preserves jars and kegs at the seed shop, or craft them at the workbench when their home-tier requirement is met. Assign one to the hotbar and use it on an empty field tile or clear floor. A basic sprinkler waters four adjacent beds each morning; a quality sprinkler waters all eight surrounding beds. It waters after the previous night's growth, so a newly installed sprinkler starts helping with the next day's watering. Moonflowers still need watering during their night window. Move an empty machine with an axe or pickaxe.
+
+With a crop selected on the hotbar, press E at a preserves jar or keg to load one crop. Collect the finished product with E after two nights for preserves or three for juice. A full backpack leaves the output in the machine; a machine containing a batch cannot be picked up. Both accept all ten crops. Preserves sell for twice the crop's price plus 50, and juice for three times its price. The shipping bin accepts both.
+
+The greenhouse has twelve independent beds, no rain watering and no seasonal crop death. Its seed shelf sells all ten crops every day, including after midnight. Snow turnips take five watered nights and snowdrops seven; they also grow outdoors in winter. The shelf's seeds and the shop/inventory details show seasons, first harvest time and regrowth. Indoor crops, sprinkler positions and processing jobs persist when you travel or save.
 
 Friendship grows through conversations, gifts, birthdays, errands and events. Special relationship gifts ask for consent. After dating and meeting the engagement requirements, the calendar chooses a safe wedding Sunday. A missed wedding moves to another safe date. Partners keep their jobs and can help with a daily farm chore. Friend visits, household parties and Natlys hide-and-seek use real visitors and saved progress.
 
@@ -46,8 +59,8 @@ The investigation's finale resolves the mother's fate and brings her legacy back
 
 ## Saving and scope
 
-Save and load through the pause menu or title screen. Important completed actions also autosave. Existing saves migrate through their owners; old optional state is initialized when absent.
+Save and load through the pause menu or title screen. The game also autosaves periodically and at day end. Existing saves migrate through their owners; old optional state is initialized when absent.
 
-This milestone covers the planned single-player systems. Children, multiplayer, yearly birthday cards and a fifth friendship event are later work. The greenhouse remains opt-in. Additional Danish voices are synthetic placeholders with retained provenance; native-speaker copy and aesthetic listening review remain open editorial work.
+This milestone covers the planned single-player systems. Children, multiplayer, yearly birthday cards and a fifth friendship event are later work. The greenhouse, sprinklers and crop-processing machines are included following the 17 October 2026 scope decision. Additional Danish voices are synthetic placeholders with retained provenance; native-speaker copy and aesthetic listening review remain open editorial work.
 
 Press **F8**, or open **Pause → Cheat menu**, to test the game. The menu can refill health, energy and lantern oil; give gold and searchable items; unlock the wardrobe; travel between areas or to clear Treetop City platforms; advance time or the day; freeze the clock; and change the weather. Use Left/Right between tabs, Down into actions, and Esc or F8 to return. In the item list, Up/Down selects an item and Right moves to quantity. Item grants, money, unlocked clothing and calendar changes are part of the normal save. Clock freeze lasts for the current session and resets when a save is loaded or a new game starts.

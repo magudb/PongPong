@@ -3,7 +3,7 @@ extends TTScreen
 const L := preload("res://scripts/ui/social/social_layout.gd")
 const Actions := preload("res://scripts/ui/testing/cheat_actions.gd")
 const TABS := ["CHEAT_PLAYER", "CHEAT_TRAVEL", "CHEAT_ITEMS", "CHEAT_CLOCK"]
-const DESTINATIONS := [["ZONE_FARM", "farm", "default"], ["ZONE_TRAETOPPEN", "traetoppen", "default"], ["CHEAT_TOWN_SQUARE", "traetoppen", "from_skovlift"], ["ZONE_CITY", "hyggebyen", "default"], ["ZONE_DARK_FOREST", "moerkeskoven", "from_traetoppen"], ["CHEAT_HOME", "home", "default"]]
+const DESTINATIONS := [["ZONE_FARM", "farm", "default"], ["ZONE_TRAETOPPEN", "traetoppen", "default"], ["CHEAT_TOWN_SQUARE", "traetoppen", "from_skovlift"], ["ZONE_CITY", "hyggebyen", "default"], ["ZONE_DARK_FOREST", "moerkeskoven", "from_traetoppen"], ["CHEAT_HOME", "home", "default"], ["FARMSITE_GREENHOUSE", "greenhouse", "default"]]
 var tabs: Array[Button] = []
 var content: VBoxContainer
 var status: Label

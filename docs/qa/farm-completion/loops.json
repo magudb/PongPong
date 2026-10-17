@@ -1,0 +1,46 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 116,
+  "elapsed_s": 7.98,
+  "engine": [],
+  "failed": 2,
+  "failures": [
+    "farm_controls.holding_on_same_plot_uses_tool_once",
+    "farm_controls.held_hoe_tills_each_new_plot_once"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1162,
+      "skipped": 0
+    },
+    "farm_controls": {
+      "character": "animal",
+      "checks": 5,
+      "failed": 2,
+      "ms": 360,
+      "skipped": 0
+    },
+    "farm_playthrough": {
+      "character": "animal",
+      "checks": 31,
+      "failed": 0,
+      "ms": 806,
+      "skipped": 0
+    },
+    "farm_upgrades": {
+      "character": "animal",
+      "checks": 72,
+      "failed": 0,
+      "ms": 602,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

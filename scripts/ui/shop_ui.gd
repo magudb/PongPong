@@ -248,6 +248,8 @@ func _detail() -> void:
 	var def := ItemKinds.def(_selected_id)
 	%DetailName.text = tr(str(def.get("name_key", "")))
 	%DetailDesc.text = tr(str(def.get("description_key", "")))
+	var growing := preload("res://scripts/ui/components/farming_details.gd").text(_selected_id)
+	if growing != "": %DetailDesc.text += "\n" + growing
 	equipment_stats.text = preload("res://scripts/ui/components/equipment_details.gd").text(str(_selected_id))
 	equipment_stats.visible = equipment_stats.text!=""
 	%DetailIcon.item_id = _selected_id

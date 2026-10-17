@@ -13,7 +13,7 @@ func interact(_player: Node) -> void:
 	var index := -1
 	for i in world.placed_items.size():
 		var entry: Dictionary = world.placed_items[i]
-		if str(entry.get("item","")) == str(item) and entry.get("cell") == [cell.x,cell.y]: index = i
+		if str(entry.get("area", "farm")) == str(area.map.id) and str(entry.get("item","")) == str(item) and entry.get("cell") == [cell.x,cell.y]: index = i
 	if index < 0: return
 	_taking = true
 	var received := EconomyManager.receive_backpack_item(item,1,func(): world.placed_items.remove_at(index))

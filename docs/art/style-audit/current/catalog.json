@@ -3424,6 +3424,116 @@
       "path": "res://assets/icons/items/iron_sword.webp"
     },
     {
+      "id": "juice_carrot",
+      "night": false,
+      "path": "res://assets/icons/items/juice_carrot.webp"
+    },
+    {
+      "id": "juice_carrot",
+      "night": true,
+      "path": "res://assets/icons/items/juice_carrot.webp"
+    },
+    {
+      "id": "juice_catnip",
+      "night": false,
+      "path": "res://assets/icons/items/juice_catnip.webp"
+    },
+    {
+      "id": "juice_catnip",
+      "night": true,
+      "path": "res://assets/icons/items/juice_catnip.webp"
+    },
+    {
+      "id": "juice_glow_berry",
+      "night": false,
+      "path": "res://assets/icons/items/juice_glow_berry.webp"
+    },
+    {
+      "id": "juice_glow_berry",
+      "night": true,
+      "path": "res://assets/icons/items/juice_glow_berry.webp"
+    },
+    {
+      "id": "juice_moonflower",
+      "night": false,
+      "path": "res://assets/icons/items/juice_moonflower.webp"
+    },
+    {
+      "id": "juice_moonflower",
+      "night": true,
+      "path": "res://assets/icons/items/juice_moonflower.webp"
+    },
+    {
+      "id": "juice_pumpkin",
+      "night": false,
+      "path": "res://assets/icons/items/juice_pumpkin.webp"
+    },
+    {
+      "id": "juice_pumpkin",
+      "night": true,
+      "path": "res://assets/icons/items/juice_pumpkin.webp"
+    },
+    {
+      "id": "juice_snow_turnip",
+      "night": false,
+      "path": "res://assets/icons/items/juice_snow_turnip.webp"
+    },
+    {
+      "id": "juice_snow_turnip",
+      "night": true,
+      "path": "res://assets/icons/items/juice_snow_turnip.webp"
+    },
+    {
+      "id": "juice_snowdrop",
+      "night": false,
+      "path": "res://assets/icons/items/juice_snowdrop.webp"
+    },
+    {
+      "id": "juice_snowdrop",
+      "night": true,
+      "path": "res://assets/icons/items/juice_snowdrop.webp"
+    },
+    {
+      "id": "juice_strawberry",
+      "night": false,
+      "path": "res://assets/icons/items/juice_strawberry.webp"
+    },
+    {
+      "id": "juice_strawberry",
+      "night": true,
+      "path": "res://assets/icons/items/juice_strawberry.webp"
+    },
+    {
+      "id": "juice_sunflower",
+      "night": false,
+      "path": "res://assets/icons/items/juice_sunflower.webp"
+    },
+    {
+      "id": "juice_sunflower",
+      "night": true,
+      "path": "res://assets/icons/items/juice_sunflower.webp"
+    },
+    {
+      "id": "juice_turnip",
+      "night": false,
+      "path": "res://assets/icons/items/juice_turnip.webp"
+    },
+    {
+      "id": "juice_turnip",
+      "night": true,
+      "path": "res://assets/icons/items/juice_turnip.webp"
+    },
+    {
+      "id": "keg",
+      "night": false,
+      "path": "res://assets/icons/items/keg.webp"
+    },
+    {
+      "id": "keg",
+      "night": true,
+      "path": "res://assets/icons/items/keg.webp"
+    },
+    {
       "id": "lantern_oil",
       "night": false,
       "path": "res://assets/icons/items/lantern_oil.webp"
@@ -4094,6 +4204,116 @@
       "path": "res://assets/icons/home/plant_teapot_bonsai.webp"
     },
     {
+      "id": "preserve_carrot",
+      "night": false,
+      "path": "res://assets/icons/items/preserve_carrot.webp"
+    },
+    {
+      "id": "preserve_carrot",
+      "night": true,
+      "path": "res://assets/icons/items/preserve_carrot.webp"
+    },
+    {
+      "id": "preserve_catnip",
+      "night": false,
+      "path": "res://assets/icons/items/preserve_catnip.webp"
+    },
+    {
+      "id": "preserve_catnip",
+      "night": true,
+      "path": "res://assets/icons/items/preserve_catnip.webp"
+    },
+    {
+      "id": "preserve_glow_berry",
+      "night": false,
+      "path": "res://assets/icons/items/preserve_glow_berry.webp"
+    },
+    {
+      "id": "preserve_glow_berry",
+      "night": true,
+      "path": "res://assets/icons/items/preserve_glow_berry.webp"
+    },
+    {
+      "id": "preserve_moonflower",
+      "night": false,
+      "path": "res://assets/icons/items/preserve_moonflower.webp"
+    },
+    {
+      "id": "preserve_moonflower",
+      "night": true,
+      "path": "res://assets/icons/items/preserve_moonflower.webp"
+    },
+    {
+      "id": "preserve_pumpkin",
+      "night": false,
+      "path": "res://assets/icons/items/preserve_pumpkin.webp"
+    },
+    {
+      "id": "preserve_pumpkin",
+      "night": true,
+      "path": "res://assets/icons/items/preserve_pumpkin.webp"
+    },
+    {
+      "id": "preserve_snow_turnip",
+      "night": false,
+      "path": "res://assets/icons/items/preserve_snow_turnip.webp"
+    },
+    {
+      "id": "preserve_snow_turnip",
+      "night": true,
+      "path": "res://assets/icons/items/preserve_snow_turnip.webp"
+    },
+    {
+      "id": "preserve_snowdrop",
+      "night": false,
+      "path": "res://assets/icons/items/preserve_snowdrop.webp"
+    },
+    {
+      "id": "preserve_snowdrop",
+      "night": true,
+      "path": "res://assets/icons/items/preserve_snowdrop.webp"
+    },
+    {
+      "id": "preserve_strawberry",
+      "night": false,
+      "path": "res://assets/icons/items/preserve_strawberry.webp"
+    },
+    {
+      "id": "preserve_strawberry",
+      "night": true,
+      "path": "res://assets/icons/items/preserve_strawberry.webp"
+    },
+    {
+      "id": "preserve_sunflower",
+      "night": false,
+      "path": "res://assets/icons/items/preserve_sunflower.webp"
+    },
+    {
+      "id": "preserve_sunflower",
+      "night": true,
+      "path": "res://assets/icons/items/preserve_sunflower.webp"
+    },
+    {
+      "id": "preserve_turnip",
+      "night": false,
+      "path": "res://assets/icons/items/preserve_turnip.webp"
+    },
+    {
+      "id": "preserve_turnip",
+      "night": true,
+      "path": "res://assets/icons/items/preserve_turnip.webp"
+    },
+    {
+      "id": "preserves_jar",
+      "night": false,
+      "path": "res://assets/icons/items/preserves_jar.webp"
+    },
+    {
+      "id": "preserves_jar",
+      "night": true,
+      "path": "res://assets/icons/items/preserves_jar.webp"
+    },
+    {
       "id": "pumpkin",
       "night": false,
       "path": "res://assets/icons/items/pumpkin.webp"
@@ -4112,6 +4332,16 @@
       "id": "pumpkin_seeds",
       "night": true,
       "path": "res://assets/icons/items/pumpkin_seeds.webp"
+    },
+    {
+      "id": "quality_sprinkler",
+      "night": false,
+      "path": "res://assets/icons/items/quality_sprinkler.webp"
+    },
+    {
+      "id": "quality_sprinkler",
+      "night": true,
+      "path": "res://assets/icons/items/quality_sprinkler.webp"
     },
     {
       "id": "rare_mushroom",
@@ -4704,6 +4934,46 @@
       "path": "res://assets/icons/home/slate.webp"
     },
     {
+      "id": "snow_turnip",
+      "night": false,
+      "path": "res://assets/icons/items/snow_turnip.webp"
+    },
+    {
+      "id": "snow_turnip",
+      "night": true,
+      "path": "res://assets/icons/items/snow_turnip.webp"
+    },
+    {
+      "id": "snow_turnip_seeds",
+      "night": false,
+      "path": "res://assets/icons/items/snow_turnip_seeds.webp"
+    },
+    {
+      "id": "snow_turnip_seeds",
+      "night": true,
+      "path": "res://assets/icons/items/snow_turnip_seeds.webp"
+    },
+    {
+      "id": "snowdrop",
+      "night": false,
+      "path": "res://assets/icons/items/snowdrop.webp"
+    },
+    {
+      "id": "snowdrop",
+      "night": true,
+      "path": "res://assets/icons/items/snowdrop.webp"
+    },
+    {
+      "id": "snowdrop_seeds",
+      "night": false,
+      "path": "res://assets/icons/items/snowdrop_seeds.webp"
+    },
+    {
+      "id": "snowdrop_seeds",
+      "night": true,
+      "path": "res://assets/icons/items/snowdrop_seeds.webp"
+    },
+    {
       "id": "sofa_birch_two",
       "night": false,
       "path": "res://assets/icons/home/sofa_birch_two.webp"
@@ -4792,6 +5062,16 @@
       "id": "sofa_walnut_two",
       "night": true,
       "path": "res://assets/icons/home/sofa_walnut_two.webp"
+    },
+    {
+      "id": "sprinkler",
+      "night": false,
+      "path": "res://assets/icons/items/sprinkler.webp"
+    },
+    {
+      "id": "sprinkler",
+      "night": true,
+      "path": "res://assets/icons/items/sprinkler.webp"
     },
     {
       "id": "stone",
@@ -14825,6 +15105,197 @@
       "rarity": "uncommon"
     },
     {
+      "catalog_path": "res://assets/icons/items/juice_carrot.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_JUICE_CARROT_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_JUICE_CARROT",
+        "rarity": "normal",
+        "sell_price": 195
+      },
+      "id": "juice_carrot",
+      "name_key": "ITEM_JUICE_CARROT",
+      "path": "res://assets/icons/items/juice_carrot.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/juice_catnip.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_JUICE_CATNIP_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_JUICE_CATNIP",
+        "rarity": "normal",
+        "sell_price": 165
+      },
+      "id": "juice_catnip",
+      "name_key": "ITEM_JUICE_CATNIP",
+      "path": "res://assets/icons/items/juice_catnip.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/juice_glow_berry.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_JUICE_GLOW_BERRY_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_JUICE_GLOW_BERRY",
+        "rarity": "normal",
+        "sell_price": 450
+      },
+      "id": "juice_glow_berry",
+      "name_key": "ITEM_JUICE_GLOW_BERRY",
+      "path": "res://assets/icons/items/juice_glow_berry.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/juice_moonflower.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_JUICE_MOONFLOWER_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_JUICE_MOONFLOWER",
+        "rarity": "normal",
+        "sell_price": 540
+      },
+      "id": "juice_moonflower",
+      "name_key": "ITEM_JUICE_MOONFLOWER",
+      "path": "res://assets/icons/items/juice_moonflower.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/juice_pumpkin.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_JUICE_PUMPKIN_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_JUICE_PUMPKIN",
+        "rarity": "normal",
+        "sell_price": 480
+      },
+      "id": "juice_pumpkin",
+      "name_key": "ITEM_JUICE_PUMPKIN",
+      "path": "res://assets/icons/items/juice_pumpkin.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/juice_snow_turnip.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_JUICE_SNOW_TURNIP_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_JUICE_SNOW_TURNIP",
+        "rarity": "normal",
+        "sell_price": 240
+      },
+      "id": "juice_snow_turnip",
+      "name_key": "ITEM_JUICE_SNOW_TURNIP",
+      "path": "res://assets/icons/items/juice_snow_turnip.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/juice_snowdrop.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_JUICE_SNOWDROP_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_JUICE_SNOWDROP",
+        "rarity": "normal",
+        "sell_price": 330
+      },
+      "id": "juice_snowdrop",
+      "name_key": "ITEM_JUICE_SNOWDROP",
+      "path": "res://assets/icons/items/juice_snowdrop.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/juice_strawberry.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_JUICE_STRAWBERRY_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_JUICE_STRAWBERRY",
+        "rarity": "normal",
+        "sell_price": 165
+      },
+      "id": "juice_strawberry",
+      "name_key": "ITEM_JUICE_STRAWBERRY",
+      "path": "res://assets/icons/items/juice_strawberry.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/juice_sunflower.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_JUICE_SUNFLOWER_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_JUICE_SUNFLOWER",
+        "rarity": "normal",
+        "sell_price": 210
+      },
+      "id": "juice_sunflower",
+      "name_key": "ITEM_JUICE_SUNFLOWER",
+      "path": "res://assets/icons/items/juice_sunflower.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/juice_turnip.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_JUICE_TURNIP_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_JUICE_TURNIP",
+        "rarity": "normal",
+        "sell_price": 135
+      },
+      "id": "juice_turnip",
+      "name_key": "ITEM_JUICE_TURNIP",
+      "path": "res://assets/icons/items/juice_turnip.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/keg.webp",
+      "category": "placeable",
+      "definition": {
+        "buy_price": 500,
+        "category": "placeable",
+        "description_key": "ITEM_KEG_DESC",
+        "farm_machine": "keg",
+        "max_stack": 20,
+        "name_key": "ITEM_KEG",
+        "placeable": "farm",
+        "prop": "keg",
+        "rarity": "normal",
+        "sell_price": 125,
+        "stamina_cost": 1
+      },
+      "id": "keg",
+      "name_key": "ITEM_KEG",
+      "path": "res://assets/icons/items/keg.webp",
+      "rarity": "normal"
+    },
+    {
       "catalog_path": "res://assets/icons/items/lantern_oil.webp",
       "category": "consumable",
       "definition": {
@@ -17855,6 +18326,197 @@
       "rarity": "unique"
     },
     {
+      "catalog_path": "res://assets/icons/items/preserve_carrot.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_PRESERVE_CARROT_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_PRESERVE_CARROT",
+        "rarity": "normal",
+        "sell_price": 180
+      },
+      "id": "preserve_carrot",
+      "name_key": "ITEM_PRESERVE_CARROT",
+      "path": "res://assets/icons/items/preserve_carrot.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/preserve_catnip.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_PRESERVE_CATNIP_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_PRESERVE_CATNIP",
+        "rarity": "normal",
+        "sell_price": 160
+      },
+      "id": "preserve_catnip",
+      "name_key": "ITEM_PRESERVE_CATNIP",
+      "path": "res://assets/icons/items/preserve_catnip.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/preserve_glow_berry.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_PRESERVE_GLOW_BERRY_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_PRESERVE_GLOW_BERRY",
+        "rarity": "normal",
+        "sell_price": 350
+      },
+      "id": "preserve_glow_berry",
+      "name_key": "ITEM_PRESERVE_GLOW_BERRY",
+      "path": "res://assets/icons/items/preserve_glow_berry.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/preserve_moonflower.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_PRESERVE_MOONFLOWER_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_PRESERVE_MOONFLOWER",
+        "rarity": "normal",
+        "sell_price": 410
+      },
+      "id": "preserve_moonflower",
+      "name_key": "ITEM_PRESERVE_MOONFLOWER",
+      "path": "res://assets/icons/items/preserve_moonflower.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/preserve_pumpkin.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_PRESERVE_PUMPKIN_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_PRESERVE_PUMPKIN",
+        "rarity": "normal",
+        "sell_price": 370
+      },
+      "id": "preserve_pumpkin",
+      "name_key": "ITEM_PRESERVE_PUMPKIN",
+      "path": "res://assets/icons/items/preserve_pumpkin.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/preserve_snow_turnip.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_PRESERVE_SNOW_TURNIP_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_PRESERVE_SNOW_TURNIP",
+        "rarity": "normal",
+        "sell_price": 210
+      },
+      "id": "preserve_snow_turnip",
+      "name_key": "ITEM_PRESERVE_SNOW_TURNIP",
+      "path": "res://assets/icons/items/preserve_snow_turnip.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/preserve_snowdrop.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_PRESERVE_SNOWDROP_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_PRESERVE_SNOWDROP",
+        "rarity": "normal",
+        "sell_price": 270
+      },
+      "id": "preserve_snowdrop",
+      "name_key": "ITEM_PRESERVE_SNOWDROP",
+      "path": "res://assets/icons/items/preserve_snowdrop.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/preserve_strawberry.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_PRESERVE_STRAWBERRY_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_PRESERVE_STRAWBERRY",
+        "rarity": "normal",
+        "sell_price": 160
+      },
+      "id": "preserve_strawberry",
+      "name_key": "ITEM_PRESERVE_STRAWBERRY",
+      "path": "res://assets/icons/items/preserve_strawberry.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/preserve_sunflower.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_PRESERVE_SUNFLOWER_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_PRESERVE_SUNFLOWER",
+        "rarity": "normal",
+        "sell_price": 190
+      },
+      "id": "preserve_sunflower",
+      "name_key": "ITEM_PRESERVE_SUNFLOWER",
+      "path": "res://assets/icons/items/preserve_sunflower.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/preserve_turnip.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_PRESERVE_TURNIP_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_PRESERVE_TURNIP",
+        "rarity": "normal",
+        "sell_price": 140
+      },
+      "id": "preserve_turnip",
+      "name_key": "ITEM_PRESERVE_TURNIP",
+      "path": "res://assets/icons/items/preserve_turnip.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/preserves_jar.webp",
+      "category": "placeable",
+      "definition": {
+        "buy_price": 350,
+        "category": "placeable",
+        "description_key": "ITEM_PRESERVES_JAR_DESC",
+        "farm_machine": "preserves_jar",
+        "max_stack": 20,
+        "name_key": "ITEM_PRESERVES_JAR",
+        "placeable": "farm",
+        "prop": "preserves_jar",
+        "rarity": "normal",
+        "sell_price": 87,
+        "stamina_cost": 1
+      },
+      "id": "preserves_jar",
+      "name_key": "ITEM_PRESERVES_JAR",
+      "path": "res://assets/icons/items/preserves_jar.webp",
+      "rarity": "normal"
+    },
+    {
       "catalog_path": "res://assets/icons/items/pumpkin.webp",
       "category": "crop",
       "definition": {
@@ -17889,6 +18551,27 @@
       "name_key": "ITEM_PUMPKIN_SEEDS",
       "path": "res://assets/icons/items/pumpkin_seeds.webp",
       "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/quality_sprinkler.webp",
+      "category": "placeable",
+      "definition": {
+        "buy_price": 800,
+        "category": "placeable",
+        "description_key": "ITEM_QUALITY_SPRINKLER_DESC",
+        "farm_machine": "quality_sprinkler",
+        "max_stack": 20,
+        "name_key": "ITEM_QUALITY_SPRINKLER",
+        "placeable": "farm",
+        "prop": "sprinkler",
+        "rarity": "uncommon",
+        "sell_price": 200,
+        "stamina_cost": 1
+      },
+      "id": "quality_sprinkler",
+      "name_key": "ITEM_QUALITY_SPRINKLER",
+      "path": "res://assets/icons/items/quality_sprinkler.webp",
+      "rarity": "uncommon"
     },
     {
       "catalog_path": "res://assets/icons/items/rare_mushroom.webp",
@@ -21257,6 +21940,78 @@
       "rarity": "uncommon"
     },
     {
+      "catalog_path": "res://assets/icons/items/snow_turnip.webp",
+      "category": "crop",
+      "definition": {
+        "buy_price": 0,
+        "category": "crop",
+        "description_key": "ITEM_SNOW_TURNIP_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_SNOW_TURNIP",
+        "rarity": "normal",
+        "sell_price": 80
+      },
+      "id": "snow_turnip",
+      "name_key": "ITEM_SNOW_TURNIP",
+      "path": "res://assets/icons/items/snow_turnip.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/snow_turnip_seeds.webp",
+      "category": "seed",
+      "definition": {
+        "buy_price": 25,
+        "category": "seed",
+        "crop_id": "snow_turnip",
+        "description_key": "ITEM_SNOW_TURNIP_SEEDS_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_SNOW_TURNIP_SEEDS",
+        "rarity": "normal",
+        "sell_price": 6,
+        "stamina_cost": 0.5
+      },
+      "id": "snow_turnip_seeds",
+      "name_key": "ITEM_SNOW_TURNIP_SEEDS",
+      "path": "res://assets/icons/items/snow_turnip_seeds.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/snowdrop.webp",
+      "category": "crop",
+      "definition": {
+        "buy_price": 0,
+        "category": "crop",
+        "description_key": "ITEM_SNOWDROP_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_SNOWDROP",
+        "rarity": "normal",
+        "sell_price": 110
+      },
+      "id": "snowdrop",
+      "name_key": "ITEM_SNOWDROP",
+      "path": "res://assets/icons/items/snowdrop.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/snowdrop_seeds.webp",
+      "category": "seed",
+      "definition": {
+        "buy_price": 40,
+        "category": "seed",
+        "crop_id": "snowdrop",
+        "description_key": "ITEM_SNOWDROP_SEEDS_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_SNOWDROP_SEEDS",
+        "rarity": "normal",
+        "sell_price": 10,
+        "stamina_cost": 0.5
+      },
+      "id": "snowdrop_seeds",
+      "name_key": "ITEM_SNOWDROP_SEEDS",
+      "path": "res://assets/icons/items/snowdrop_seeds.webp",
+      "rarity": "normal"
+    },
+    {
       "catalog_path": "res://assets/icons/home/sofa_birch_two.webp",
       "category": "furniture",
       "definition": {
@@ -21895,6 +22650,27 @@
       "name_key": "ITEM_SOFA_WALNUT_TWO",
       "path": "res://assets/icons/home/sofa_walnut_two.webp",
       "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/sprinkler.webp",
+      "category": "placeable",
+      "definition": {
+        "buy_price": 300,
+        "category": "placeable",
+        "description_key": "ITEM_SPRINKLER_DESC",
+        "farm_machine": "sprinkler",
+        "max_stack": 20,
+        "name_key": "ITEM_SPRINKLER",
+        "placeable": "farm",
+        "prop": "sprinkler",
+        "rarity": "normal",
+        "sell_price": 75,
+        "stamina_cost": 1
+      },
+      "id": "sprinkler",
+      "name_key": "ITEM_SPRINKLER",
+      "path": "res://assets/icons/items/sprinkler.webp",
+      "rarity": "normal"
     },
     {
       "catalog_path": "res://assets/icons/items/stone.webp",
@@ -25846,6 +26622,54 @@
     },
     {
       "auxiliary": [],
+      "id": "crop_snow_turnip_0",
+      "path": "res://assets/iso_props/farm_completion/crop_snow_turnip_0.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "crop_snow_turnip_1",
+      "path": "res://assets/iso_props/farm_completion/crop_snow_turnip_1.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "crop_snow_turnip_2",
+      "path": "res://assets/iso_props/farm_completion/crop_snow_turnip_2.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "crop_snow_turnip_3",
+      "path": "res://assets/iso_props/farm_completion/crop_snow_turnip_3.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "crop_snowdrop_0",
+      "path": "res://assets/iso_props/farm_completion/crop_snowdrop_0.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "crop_snowdrop_1",
+      "path": "res://assets/iso_props/farm_completion/crop_snowdrop_1.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "crop_snowdrop_2",
+      "path": "res://assets/iso_props/farm_completion/crop_snowdrop_2.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "crop_snowdrop_3",
+      "path": "res://assets/iso_props/farm_completion/crop_snowdrop_3.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
       "id": "crop_strawberry_0",
       "path": "res://assets/iso_props/zz_painted_consistency/crop_strawberry_0.webp",
       "real": true
@@ -26325,6 +27149,18 @@
     },
     {
       "auxiliary": [],
+      "id": "greenhouse",
+      "path": "res://assets/iso_props/farm_completion/greenhouse.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "greenhouse_walls",
+      "path": "res://assets/iso_props/farm_completion/greenhouse_walls.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
       "id": "halo_amber",
       "path": "res://assets/iso_props/halo_amber.png",
       "real": true
@@ -26620,6 +27456,12 @@
       "auxiliary": [],
       "id": "hut_s_straw_night",
       "path": "res://assets/iso_props/painted_world/hut_s_straw_night.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "keg",
+      "path": "res://assets/iso_props/farm_completion/keg.webp",
       "real": true
     },
     {
@@ -27065,6 +27907,12 @@
     },
     {
       "auxiliary": [],
+      "id": "preserves_jar",
+      "path": "res://assets/iso_props/farm_completion/preserves_jar.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
       "id": "pumpkin_stack",
       "path": "res://assets/iso_props/farm_dress/pumpkin_stack.webp",
       "real": true
@@ -27217,6 +28065,12 @@
       "auxiliary": [],
       "id": "sofa_sage",
       "path": "res://assets/iso_props/painted_interiors/sofa_sage.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "sprinkler",
+      "path": "res://assets/iso_props/farm_completion/sprinkler.webp",
       "real": true
     },
     {

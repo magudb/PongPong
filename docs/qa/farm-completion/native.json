@@ -1,0 +1,58 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 240,
+  "elapsed_s": 59.19,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "farm_controls": {
+      "character": "animal",
+      "checks": 5,
+      "failed": 0,
+      "ms": 10650,
+      "skipped": 0
+    },
+    "farm_playthrough": {
+      "character": "animal",
+      "checks": 31,
+      "failed": 0,
+      "ms": 26460,
+      "skipped": 0
+    },
+    "farm_site": {
+      "character": "animal",
+      "checks": 5,
+      "failed": 0,
+      "ms": 1692,
+      "skipped": 0
+    },
+    "farm_upgrades": {
+      "character": "animal",
+      "checks": 72,
+      "failed": 0,
+      "ms": 1434,
+      "skipped": 0
+    },
+    "home_ui": {
+      "character": "animal",
+      "checks": 22,
+      "failed": 0,
+      "ms": 1531,
+      "skipped": 0
+    },
+    "home_world": {
+      "character": "animal",
+      "checks": 105,
+      "failed": 0,
+      "ms": 12139,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

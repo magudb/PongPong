@@ -138,7 +138,7 @@ func run(t, owner) -> void:
 		harvested = await face_plot(t, cell) and harvested
 		t.tap(&"interact")
 		await t.physics(3)
-		harvested = world.farm.state_of(cell) == FarmGrid.State.EMPTY and harvested
+		harvested = world.farm.state_of(cell) == FarmGrid.State.TILLED and harvested
 	check(t, "L11", "l11_harvest_purchased_seed_crops", harvested and eco.count_item(&"carrot") >= carrot_before + 3)
 	var bin: ShippingBin2D = world.area.find_markers("shipping_bin")[0].node
 	var route := await LoopWalker.walk_to(t, bin.global_position + Vector2(0, 60), 5, 15)

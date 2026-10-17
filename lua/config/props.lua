@@ -23,6 +23,10 @@ kind = "config"
 
 config = {
   props = {
+    greenhouse = { footprint = { 4, 3 }, solid = { shape = "footprint", pad = 6 }, strips = 16 },
+    sprinkler = { footprint = { 1, 1 }, solid = { shape = "circle", radius = 18 }, strips = 0 },
+    preserves_jar = { footprint = { 1, 1 }, solid = { shape = "circle", radius = 20 }, strips = 0 },
+    keg = { footprint = { 1, 1 }, solid = { shape = "circle", radius = 22 }, strips = 0 },
     -- trees (trunk = circle 26)
     tree_oak_farm = { footprint = { 1, 1 }, solid = { shape = "circle", radius = 26 }, strips = 0, group = "prop_tree" },
     tree_oak_farm_b = { footprint = { 1, 1 }, solid = { shape = "circle", radius = 26 }, strips = 0, group = "prop_tree" },

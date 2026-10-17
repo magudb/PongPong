@@ -1,0 +1,2072 @@
+{
+	"ambush": {
+		"count": 100,
+		"dodged": 100,
+		"results": [
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.563971400260925,
+				"seed": 0
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.367783814668655,
+				"seed": 1
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.291643530130386,
+				"seed": 2
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.36651548743248,
+				"seed": 3
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.387601256370544,
+				"seed": 4
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.471216112375259,
+				"seed": 5
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.456428706645966,
+				"seed": 6
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.355086028575897,
+				"seed": 7
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.272315680980682,
+				"seed": 8
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.452256709337234,
+				"seed": 9
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.520452678203583,
+				"seed": 10
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.332358777523041,
+				"seed": 11
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.349234133958817,
+				"seed": 12
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.207339107990265,
+				"seed": 13
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.390594869852066,
+				"seed": 14
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.545593202114105,
+				"seed": 15
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.403612732887268,
+				"seed": 16
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.486221939325333,
+				"seed": 17
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.283539474010468,
+				"seed": 18
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.394646555185318,
+				"seed": 19
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.467626601457596,
+				"seed": 20
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.367450267076492,
+				"seed": 21
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.384991198778152,
+				"seed": 22
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.462009519338608,
+				"seed": 23
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.38630011677742,
+				"seed": 24
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.330233365297318,
+				"seed": 25
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.389155030250549,
+				"seed": 26
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.480917096138,
+				"seed": 27
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.65,
+				"seed": 28
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.490326106548309,
+				"seed": 29
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.353998750448227,
+				"seed": 30
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.605768144130707,
+				"seed": 31
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.389460295438766,
+				"seed": 32
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.368030577898026,
+				"seed": 33
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.342806130647659,
+				"seed": 34
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.552644014358521,
+				"seed": 35
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.496698468923569,
+				"seed": 36
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.461839705705643,
+				"seed": 37
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.172378420829773,
+				"seed": 38
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.345473796129227,
+				"seed": 39
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.524570524692535,
+				"seed": 40
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.332529515028,
+				"seed": 41
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.254719853401184,
+				"seed": 42
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.414715737104416,
+				"seed": 43
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.58975088596344,
+				"seed": 44
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.203113704919815,
+				"seed": 45
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.390099048614502,
+				"seed": 46
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.354748368263245,
+				"seed": 47
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.604218065738678,
+				"seed": 48
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.4032062292099,
+				"seed": 49
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.434315294027328,
+				"seed": 50
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.471707552671432,
+				"seed": 51
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.464590013027191,
+				"seed": 52
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.499951392412186,
+				"seed": 53
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.590243935585022,
+				"seed": 54
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.383976250886917,
+				"seed": 55
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.3046914935112,
+				"seed": 56
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.346802115440369,
+				"seed": 57
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.231922015547752,
+				"seed": 58
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.413364171981812,
+				"seed": 59
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.208265662193298,
+				"seed": 60
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.349942713975906,
+				"seed": 61
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.126273185014725,
+				"seed": 62
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.57296234369278,
+				"seed": 63
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.367950230836868,
+				"seed": 64
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.510947644710541,
+				"seed": 65
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.26014643907547,
+				"seed": 66
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.438291251659393,
+				"seed": 67
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.489159613847733,
+				"seed": 68
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.481713682413101,
+				"seed": 69
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.452928990125656,
+				"seed": 70
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.212798058986664,
+				"seed": 71
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.290772318840027,
+				"seed": 72
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.486975938081741,
+				"seed": 73
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.55463433265686,
+				"seed": 74
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.335368394851685,
+				"seed": 75
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.12,
+				"seed": 76
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.39088362455368,
+				"seed": 77
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.405507236719131,
+				"seed": 78
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.403838187456131,
+				"seed": 79
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.444983869791031,
+				"seed": 80
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.568041324615479,
+				"seed": 81
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.308468610048294,
+				"seed": 82
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.328608155250549,
+				"seed": 83
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.279011130332947,
+				"seed": 84
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.528719842433929,
+				"seed": 85
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.333929926156998,
+				"seed": 86
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.256005018949509,
+				"seed": 87
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.477004051208496,
+				"seed": 88
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.499067753553391,
+				"seed": 89
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.276183873414993,
+				"seed": 90
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.501219511032104,
+				"seed": 91
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.591302096843719,
+				"seed": 92
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.22454959154129,
+				"seed": 93
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.417340457439423,
+				"seed": 94
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.195775300264359,
+				"seed": 95
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.268333792686462,
+				"seed": 96
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.296688139438629,
+				"seed": 97
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.263514071702957,
+				"seed": 98
+			},
+			{
+				"dodged": true,
+				"gross_lost": 0,
+				"reaction": 0.389381915330887,
+				"seed": 99
+			}
+		]
+	},
+	"bosses": {
+		"snurresvamp": {
+			"count": 60,
+			"mean_seconds": 24.9391666666667,
+			"results": [
+				{
+					"gross_lost": 1,
+					"lost": 0,
+					"seconds": 24.5833333333333,
+					"seed": 0,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 1,
+					"lost": 0,
+					"seconds": 24.65,
+					"seed": 1,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 3,
+					"seconds": 25.95,
+					"seed": 2,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 0,
+					"seconds": 25.2,
+					"seed": 3,
+					"swings": 9,
+					"won": true
+				},
+				{
+					"gross_lost": 1,
+					"lost": 0,
+					"seconds": 24.15,
+					"seed": 4,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 2,
+					"seconds": 24.9,
+					"seed": 5,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 3,
+					"seconds": 25.2333333333333,
+					"seed": 6,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 2,
+					"seconds": 24.4,
+					"seed": 7,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 1,
+					"lost": 0,
+					"seconds": 24.6,
+					"seed": 8,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 2,
+					"seconds": 24.3166666666667,
+					"seed": 9,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 1,
+					"lost": 0,
+					"seconds": 24.55,
+					"seed": 10,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 24.0333333333334,
+					"seed": 11,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 1,
+					"lost": 0,
+					"seconds": 24.5333333333333,
+					"seed": 12,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 3,
+					"seconds": 24.0,
+					"seed": 13,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 0,
+					"seconds": 25.0500000000001,
+					"seed": 14,
+					"swings": 9,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 24.9666666666666,
+					"seed": 15,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 2,
+					"seconds": 25.05,
+					"seed": 16,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 28.3333333333334,
+					"seed": 17,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 23.8333333333334,
+					"seed": 18,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 5,
+					"seconds": 24.3833333333333,
+					"seed": 19,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 2,
+					"seconds": 24.8333333333334,
+					"seed": 20,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 25.2166666666666,
+					"seed": 21,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 2,
+					"seconds": 25.05,
+					"seed": 22,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 2,
+					"seconds": 24.4166666666666,
+					"seed": 23,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 24.9166666666666,
+					"seed": 24,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 24.8666666666667,
+					"seed": 25,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 3,
+					"seconds": 25.1,
+					"seed": 26,
+					"swings": 9,
+					"won": true
+				},
+				{
+					"gross_lost": 1,
+					"lost": 0,
+					"seconds": 24.8,
+					"seed": 27,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 2,
+					"seconds": 25.4166666666666,
+					"seed": 28,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 1,
+					"lost": 1,
+					"seconds": 24.95,
+					"seed": 29,
+					"swings": 9,
+					"won": true
+				},
+				{
+					"gross_lost": 1,
+					"lost": 0,
+					"seconds": 24.6833333333333,
+					"seed": 30,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 1,
+					"seconds": 24.8166666666666,
+					"seed": 31,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 24.3666666666666,
+					"seed": 32,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 24.6333333333334,
+					"seed": 33,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 1,
+					"lost": 0,
+					"seconds": 23.9166666666665,
+					"seed": 34,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 1,
+					"lost": 1,
+					"seconds": 24.8166666666668,
+					"seed": 35,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 3,
+					"seconds": 24.6333333333332,
+					"seed": 36,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 28.25,
+					"seed": 37,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 1,
+					"seconds": 24.7833333333335,
+					"seed": 38,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 24.8499999999999,
+					"seed": 39,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 24.0,
+					"seed": 40,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 1,
+					"lost": 0,
+					"seconds": 24.6333333333334,
+					"seed": 41,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 1,
+					"seconds": 28.0833333333333,
+					"seed": 42,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 1,
+					"seconds": 27.4833333333333,
+					"seed": 43,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 24.1500000000001,
+					"seed": 44,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 0,
+					"seconds": 24.6833333333334,
+					"seed": 45,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 2,
+					"seconds": 25.8666666666666,
+					"seed": 46,
+					"swings": 9,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 24.2333333333333,
+					"seed": 47,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 1,
+					"lost": 1,
+					"seconds": 25.0333333333333,
+					"seed": 48,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 2,
+					"seconds": 25.2333333333333,
+					"seed": 49,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 1,
+					"lost": 1,
+					"seconds": 24.7833333333333,
+					"seed": 50,
+					"swings": 9,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 2,
+					"seconds": 25.2166666666665,
+					"seed": 51,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 1,
+					"seconds": 25.5666666666668,
+					"seed": 52,
+					"swings": 9,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 2,
+					"seconds": 24.3333333333333,
+					"seed": 53,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 24.45,
+					"seed": 54,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 0,
+					"lost": 0,
+					"seconds": 24.4833333333333,
+					"seed": 55,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 24.5666666666666,
+					"seed": 56,
+					"swings": 9,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 24.0666666666668,
+					"seed": 57,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 0,
+					"lost": 0,
+					"seconds": 25.0,
+					"seed": 58,
+					"swings": 8,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 0,
+					"seconds": 24.45,
+					"seed": 59,
+					"swings": 8,
+					"won": true
+				}
+			],
+			"wins_within_12_gross_half_hearts": 60
+		},
+		"snurresvamp_gloed": {
+			"count": 60,
+			"mean_seconds": 34.0252777777778,
+			"results": [
+				{
+					"gross_lost": 4,
+					"lost": 2,
+					"seconds": 33.5333333333333,
+					"seed": 0,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 1,
+					"seconds": 33.2,
+					"seed": 1,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 8,
+					"lost": 6,
+					"seconds": 49.55,
+					"seed": 2,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 37.1500000000001,
+					"seed": 3,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 1,
+					"seconds": 33.5999999999999,
+					"seed": 4,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 1,
+					"seconds": 32.5333333333333,
+					"seed": 5,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 32.2166666666667,
+					"seed": 6,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 1,
+					"lost": 0,
+					"seconds": 32.0,
+					"seed": 7,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 1,
+					"lost": 0,
+					"seconds": 33.1000000000001,
+					"seed": 8,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 33.6000000000001,
+					"seed": 9,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 33.1333333333332,
+					"seed": 10,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 6,
+					"lost": 4,
+					"seconds": 38.2166666666667,
+					"seed": 11,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 8,
+					"lost": 6,
+					"seconds": 36.1833333333334,
+					"seed": 12,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 3,
+					"seconds": 38.0166666666664,
+					"seed": 13,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 32.9499999999998,
+					"seed": 14,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 32.9166666666665,
+					"seed": 15,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 33.9666666666667,
+					"seed": 16,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 2,
+					"seconds": 33.3666666666668,
+					"seed": 17,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 1,
+					"seconds": 32.166666666667,
+					"seed": 18,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 8,
+					"lost": 6,
+					"seconds": 36.2833333333333,
+					"seed": 19,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 6,
+					"lost": 4,
+					"seconds": 32.2166666666667,
+					"seed": 20,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 33.7333333333336,
+					"seed": 21,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 33.1333333333337,
+					"seed": 22,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 32.2166666666667,
+					"seed": 23,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 2,
+					"seconds": 31.9333333333329,
+					"seed": 24,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 33.5999999999999,
+					"seed": 25,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 6,
+					"lost": 4,
+					"seconds": 32.9333333333334,
+					"seed": 26,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 1,
+					"seconds": 33.0999999999999,
+					"seed": 27,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 2,
+					"seconds": 33.1999999999998,
+					"seed": 28,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 1,
+					"seconds": 32.7833333333333,
+					"seed": 29,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 1,
+					"lost": 0,
+					"seconds": 33.3500000000004,
+					"seed": 30,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 33.2166666666667,
+					"seed": 31,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 1,
+					"seconds": 32.1666666666665,
+					"seed": 32,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 2,
+					"seconds": 32.1333333333337,
+					"seed": 33,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 1,
+					"seconds": 32.0500000000002,
+					"seed": 34,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 32.5333333333333,
+					"seed": 35,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 2,
+					"seconds": 33.3499999999999,
+					"seed": 36,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 7,
+					"lost": 6,
+					"seconds": 36.6666666666665,
+					"seed": 37,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 33.2833333333333,
+					"seed": 38,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 3,
+					"seconds": 33.7333333333336,
+					"seed": 39,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 1,
+					"seconds": 32.4833333333336,
+					"seed": 40,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 6,
+					"lost": 4,
+					"seconds": 38.9833333333336,
+					"seed": 41,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 2,
+					"seconds": 32.9666666666667,
+					"seed": 42,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 2,
+					"seconds": 32.1166666666663,
+					"seed": 43,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 6,
+					"lost": 4,
+					"seconds": 32.4333333333334,
+					"seed": 44,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 8,
+					"lost": 6,
+					"seconds": 33.8500000000004,
+					"seed": 45,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 2,
+					"seconds": 34.2166666666667,
+					"seed": 46,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 1,
+					"lost": 0,
+					"seconds": 33.2333333333331,
+					"seed": 47,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 0,
+					"seconds": 33.1666666666665,
+					"seed": 48,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 2,
+					"seconds": 32.8166666666671,
+					"seed": 49,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 8,
+					"lost": 6,
+					"seconds": 33.8000000000002,
+					"seed": 50,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 6,
+					"lost": 4,
+					"seconds": 38.5333333333333,
+					"seed": 51,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 4,
+					"seconds": 37.5,
+					"seed": 52,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 33.4666666666667,
+					"seed": 53,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 2,
+					"seconds": 33.2833333333333,
+					"seed": 54,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 2,
+					"seconds": 37.6333333333337,
+					"seed": 55,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 1,
+					"seconds": 33.0833333333335,
+					"seed": 56,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 0,
+					"seconds": 32.7833333333333,
+					"seed": 57,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 1,
+					"lost": 0,
+					"seconds": 32.6833333333334,
+					"seed": 58,
+					"swings": 11,
+					"won": true
+				},
+				{
+					"gross_lost": 7,
+					"lost": 5,
+					"seconds": 33.4666666666667,
+					"seed": 59,
+					"swings": 11,
+					"won": true
+				}
+			],
+			"wins_within_12_gross_half_hearts": 60
+		},
+		"snurresvamp_konge": {
+			"count": 60,
+			"mean_seconds": 41.1630555555555,
+			"results": [
+				{
+					"gross_lost": 6,
+					"lost": 3,
+					"seconds": 47.2333333333331,
+					"seed": 0,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 7,
+					"lost": 5,
+					"seconds": 41.5,
+					"seed": 1,
+					"swings": 13,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 47.2166666666667,
+					"seed": 2,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 2,
+					"seconds": 39.3166666666666,
+					"seed": 3,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 2,
+					"seconds": 39.4833333333331,
+					"seed": 4,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 8,
+					"lost": 5,
+					"seconds": 48.9333333333329,
+					"seed": 5,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 3,
+					"seconds": 35.3166666666666,
+					"seed": 6,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 2,
+					"seconds": 35.2166666666662,
+					"seed": 7,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 6,
+					"lost": 4,
+					"seconds": 39.4666666666662,
+					"seed": 8,
+					"swings": 13,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 39.9666666666672,
+					"seed": 9,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 40.2333333333336,
+					"seed": 10,
+					"swings": 13,
+					"won": true
+				},
+				{
+					"gross_lost": 6,
+					"lost": 4,
+					"seconds": 53.1999999999998,
+					"seed": 11,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 0,
+					"seconds": 44.7833333333338,
+					"seed": 12,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 4,
+					"seconds": 38.5500000000002,
+					"seed": 13,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 6,
+					"lost": 5,
+					"seconds": 37.666666666667,
+					"seed": 14,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 40.0500000000002,
+					"seed": 15,
+					"swings": 13,
+					"won": true
+				},
+				{
+					"gross_lost": 6,
+					"lost": 4,
+					"seconds": 38.8166666666666,
+					"seed": 16,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 1,
+					"seconds": 42.4333333333334,
+					"seed": 17,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 6,
+					"lost": 4,
+					"seconds": 40.833333333333,
+					"seed": 18,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 7,
+					"lost": 5,
+					"seconds": 39.666666666667,
+					"seed": 19,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 2,
+					"seconds": 35.8000000000002,
+					"seed": 20,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 8,
+					"lost": 6,
+					"seconds": 45.7666666666673,
+					"seed": 21,
+					"swings": 13,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 3,
+					"seconds": 41.666666666667,
+					"seed": 22,
+					"swings": 13,
+					"won": true
+				},
+				{
+					"gross_lost": 7,
+					"lost": 5,
+					"seconds": 39.8666666666668,
+					"seed": 23,
+					"swings": 13,
+					"won": true
+				},
+				{
+					"gross_lost": 6,
+					"lost": 4,
+					"seconds": 40.2333333333336,
+					"seed": 24,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 6,
+					"lost": 4,
+					"seconds": 44.6166666666668,
+					"seed": 25,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 3,
+					"seconds": 35.6500000000005,
+					"seed": 26,
+					"swings": 13,
+					"won": true
+				},
+				{
+					"gross_lost": 7,
+					"lost": 5,
+					"seconds": 36.0666666666666,
+					"seed": 27,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 37.6500000000005,
+					"seed": 28,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 7,
+					"lost": 5,
+					"seconds": 45.7166666666662,
+					"seed": 29,
+					"swings": 13,
+					"won": true
+				},
+				{
+					"gross_lost": 9,
+					"lost": 7,
+					"seconds": 42.5499999999993,
+					"seed": 30,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 7,
+					"lost": 3,
+					"seconds": 36.3499999999995,
+					"seed": 31,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 35.4833333333327,
+					"seed": 32,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 2,
+					"seconds": 34.9333333333325,
+					"seed": 33,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 2,
+					"seconds": 34.9166666666661,
+					"seed": 34,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 6,
+					"lost": 3,
+					"seconds": 38.9666666666662,
+					"seed": 35,
+					"swings": 13,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 41.5666666666666,
+					"seed": 36,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 8,
+					"lost": 6,
+					"seconds": 38.5166666666664,
+					"seed": 37,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 6,
+					"lost": 4,
+					"seconds": 41.1333333333332,
+					"seed": 38,
+					"swings": 13,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 2,
+					"seconds": 38.7333333333327,
+					"seed": 39,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 2,
+					"seconds": 39.0499999999993,
+					"seed": 40,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 2,
+					"seconds": 36.3666666666668,
+					"seed": 41,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 9,
+					"lost": 5,
+					"seconds": 50.0333333333328,
+					"seed": 42,
+					"swings": 13,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 3,
+					"seconds": 42.0333333333328,
+					"seed": 43,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 9,
+					"lost": 7,
+					"seconds": 47.8666666666668,
+					"seed": 44,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 1,
+					"seconds": 39.2333333333327,
+					"seed": 45,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 1,
+					"seconds": 43.0,
+					"seed": 46,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 6,
+					"lost": 4,
+					"seconds": 41.4333333333334,
+					"seed": 47,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 3,
+					"lost": 0,
+					"seconds": 41.0500000000002,
+					"seed": 48,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 1,
+					"seconds": 39.5,
+					"seed": 49,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 7,
+					"lost": 5,
+					"seconds": 44.3000000000002,
+					"seed": 50,
+					"swings": 13,
+					"won": true
+				},
+				{
+					"gross_lost": 8,
+					"lost": 4,
+					"seconds": 41.4833333333336,
+					"seed": 51,
+					"swings": 13,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 40.7833333333338,
+					"seed": 52,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 6,
+					"lost": 4,
+					"seconds": 42.1999999999998,
+					"seed": 53,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 9,
+					"lost": 7,
+					"seconds": 38.8833333333332,
+					"seed": 54,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 9,
+					"lost": 5,
+					"seconds": 46.916666666667,
+					"seed": 55,
+					"swings": 13,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 39.2333333333336,
+					"seed": 56,
+					"swings": 13,
+					"won": true
+				},
+				{
+					"gross_lost": 4,
+					"lost": 2,
+					"seconds": 48.6499999999996,
+					"seed": 57,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 4,
+					"seconds": 53.5166666666664,
+					"seed": 58,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 38.1833333333334,
+					"seed": 59,
+					"swings": 12,
+					"won": true
+				}
+			],
+			"wins_within_12_gross_half_hearts": 60
+		}
+	},
+	"profile": "normal movement, swing after 0.22 s in range, windup reaction N(0.40,0.13) clamped 0.12–0.65 s; boss profile clears windup/lunge telegraphs and attacks recovery; no assist; live adds and berry orbs; gross damage before healing"
+}

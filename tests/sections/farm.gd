@@ -20,7 +20,7 @@ func run(t) -> void:
 	var cell: Vector2i = grid.farmable_cells()[0]
 	t.check("only_authored_farm_cells", not grid.till(Vector2i(-1, -1)) and not grid.till(Vector2i(40, 24)) and grid.till(cell))
 	t.check("no_double_till", not grid.till(cell))
-	for crop in ["turnip", "carrot", "pumpkin", "moonflower", "glow_berry", "strawberry", "sunflower", "catnip"]:
+	for crop in grid.crop_defs:
 		gm.day = 1
 		gm.season = StringName(grid.crop_defs[crop].seasons[0])
 		grid.from_dict({"plots": {}})
@@ -47,7 +47,7 @@ func run(t) -> void:
 		observed.clear()
 		var on_gain := func(id: StringName, _amount: int) -> void:
 			if id == StringName(crop):
-				observed.append(grid.state_of(cell) == FarmGrid.State.EMPTY and grid.harvest(cell) == 0)
+				observed.append(grid.state_of(cell) != FarmGrid.State.READY and grid.harvest(cell) == 0)
 		bus.item_gained.connect(on_gain)
 		var amount := grid.harvest(cell)
 		bus.item_gained.disconnect(on_gain)

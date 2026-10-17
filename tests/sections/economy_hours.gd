@@ -550,7 +550,7 @@ func _model_profiles() -> Dictionary:
 
 
 func _seed_supply() -> void:
-	# a dedicated player (110 plots after the 800 g field expansion) plants about 19.2 carrot seeds a day, and the seed shop is closed on Sundays: the six open days
+	# a dedicated player (110 plots after the 800 g field expansion) plants 27.5 carrot seeds a day when every bed is watered, and the seed shop is closed on Sundays: the six open days
 	# have to carry seven. The shelf is bought out every open day through the real ShopSystem for a whole week (Monday to Sunday), the restock comes with every morning.
 	var carrot: Dictionary = lr.get_config("crops.carrot", {})
 	var grow: float = float(int(carrot.get("stages", 0)) * int(carrot.get("days_per_stage", 1)))
@@ -578,18 +578,17 @@ func _seed_supply() -> void:
 	order.sort()
 	for profile in order:
 		var plots: float = float(profiles[profile][0])
-		var eff: float = float(profiles[profile][1])
-		var need_day: float = plots / (grow / eff + 1.0)
+		var need_day: float = plots / grow
 		var need_week: float = need_day * 7.0
 		var need_open_day: float = need_week / maxf(float(open_days), 1.0)
 		covered = covered and float(weekly) >= need_week and float(per_open_day) >= need_open_day
 		shown.append("%s %d plots needs %.1f a day = %.1f a week = %.1f per open day" % [profile, int(plots), need_day, need_week, need_open_day])
 	var dedicated: Array = profiles.get("dedicated", MODEL_FALLBACK["dedicated"])
-	var dedicated_week: float = 7.0 * float(dedicated[0]) / (grow / float(dedicated[1]) + 1.0)
-	# the old shelf (20 / 20) was short: 6 x 20 = 120 a week against 134.9 needed. The check keeps its teeth only while the model says so.
-	var old_short: bool = 6.0 * 20.0 < dedicated_week
-	t.check("seed_supply_covers_a_dedicated_field", covered and old_short and int(def.get("stock", 0)) == 25 and int(def.get("restock", 0)) == 25,
-		"carrot seeds: stock %s restock %s (was 20 / 20); bought out day by day for a week %s = %d (%d open days, %d closed, %d per open day) against the model (grow %d days): %s; the old 6 x 20 = 120 would have been short of the dedicated %.1f a week %s" % [
+	var dedicated_week: float = 7.0 * float(dedicated[0]) / grow
+	# The old shelf (25/day) cannot support a fully watered 110-plot field.
+	var old_short: bool = 6.0 * 25.0 < dedicated_week
+	t.check("seed_supply_covers_a_dedicated_field", covered and old_short and float(def.get("stock", 0)) * 6.0 >= dedicated_week and float(def.get("restock", 0)) * 6.0 >= dedicated_week,
+		"carrot seeds: stock %s restock %s (was 25 / 25); bought out day by day for a week %s = %d (%d open days, %d closed, %d per open day) against the model (grow %d days): %s; the old 6 x 25 = 150 would have been short of the dedicated %.1f a week %s" % [
 			def.get("stock"), def.get("restock"), bought_each_day, weekly, open_days, closed_days, per_open_day, int(grow), "; ".join(shown), dedicated_week, old_short])
 
 

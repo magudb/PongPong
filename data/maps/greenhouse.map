@@ -1,0 +1,46 @@
+# Twelve indoor beds, a walkable aisle, a seed shelf and an exit.
+@id greenhouse
+@title FARMSITE_GREENHOUSE
+@projection iso
+@ambient home
+@theme farm
+@zone farm
+@flight false
+@music farm_theme
+@zoom 0.68
+@zoom_min 0.45
+@zoom_max 1.0
+@prop P planter_box
+@prop L lantern_post
+@prop X fence_x
+@prop Z fence_z
+@marker a spawn name=default
+@marker b spawn name=from_farm
+@marker E warp to=farm spawn=from_greenhouse label=FARMSITE_GREENHOUSE_EXIT
+@marker S greenhouse action=seeds
+@marker M farm_equipment type=equipment
+@marker W greenhouse_walls
+@ground
+###########
+#ddddddddd#
+#ddddddddd#
+#ddffffddd#
+#ddffffddd#
+#ddffffddd#
+#ddddddddd#
+#ddddddddd#
+#ddddddddd#
+#ddddddddd#
+###########
+@objects
+...........
+...........
+..P.....P..
+........S..
+...........
+...........
+...........
+........L..
+..L..ab.MW.
+.....E.....
+...........

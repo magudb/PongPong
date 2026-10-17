@@ -1,0 +1,37 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 152,
+  "elapsed_s": 22.72,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "farm_automation": {
+      "character": "animal",
+      "checks": 47,
+      "failed": 0,
+      "ms": 12633,
+      "skipped": 0
+    },
+    "farm_upgrades": {
+      "character": "animal",
+      "checks": 73,
+      "failed": 0,
+      "ms": 1734,
+      "skipped": 0
+    },
+    "shop_ui": {
+      "character": "animal",
+      "checks": 32,
+      "failed": 0,
+      "ms": 3062,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

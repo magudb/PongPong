@@ -2,7 +2,7 @@
   "status": "reviewed",
   "worktree": "codex-review",
   "guideline": "docs/art/style-guide.txt",
-  "visual_reference": "docs/Tr\u00e6toppen Style Guide Review/Tr\u00e6toppen Style Guide.dc.html",
+  "visual_reference": "docs/Trætoppen Style Guide Review/Trætoppen Style Guide.dc.html",
   "scope": "All 5,171 assets inventoried; 2,518 rasters decoded. 255 new rasters and 311 changed rasters reviewed, including 285 painted historical re-exports, 20 rebuilt home day/night textures and six normalized prop pigment variants. 1,952 byte-identical rasters retain earlier review evidence. Thirteen radial light kernels remain functional masks. No historical illustration is exempted from the painted style. Stock animation sampling scope remains the prior all-clip middle-frame/eight-idle-direction/portrait review; this is not a new frame-by-frame review of 58 stock animation sets.",
   "reviewed_assets": {
     "assets/art/watercolor_paper.png": {
@@ -17806,6 +17806,252 @@
       "disposition": "accepted-painted",
       "role": "painted-farm-season-tree",
       "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
+    },
+    "assets/iso_props/farm_completion/crop_snow_turnip_0.webp": {
+      "sha256": "7d353b155f42efe373d587f936830ba15b2ff736b864bd644f6408e3d52398ce",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-prop-or-crop",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/iso_props/farm_completion/crop_snow_turnip_1.webp": {
+      "sha256": "afd9b162785900c8ba6f37e6aa80e500d44f8668300d90b5468fff74dfbd9d6f",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-prop-or-crop",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/iso_props/farm_completion/crop_snow_turnip_2.webp": {
+      "sha256": "50915deb09b9245c2bfb7745b89849bf61cdf2062627c744b164e21f13a257cb",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-prop-or-crop",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/iso_props/farm_completion/crop_snow_turnip_3.webp": {
+      "sha256": "cb3cdf3aeb1de8063a6a75b01b5fdd05ce720d8a23e4e56c8e9dc569745ef559",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-prop-or-crop",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/iso_props/farm_completion/crop_snowdrop_0.webp": {
+      "sha256": "5f6c6f480cc3fadfff72e7a4cb4419451f097e2fe594def704b29cb39a031bf0",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-prop-or-crop",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/iso_props/farm_completion/crop_snowdrop_1.webp": {
+      "sha256": "cd30d86073d2b894e3ac34c3629bd990400758cee04691c1fd3c76aa0457972c",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-prop-or-crop",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/iso_props/farm_completion/crop_snowdrop_2.webp": {
+      "sha256": "8ff8d3bf916a8aa1d65deed268df5bd5c9ced010b7d80af2b5d718c32a6a7c0b",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-prop-or-crop",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/iso_props/farm_completion/crop_snowdrop_3.webp": {
+      "sha256": "c1456d9a9b6786dd130271f8dfdae749fa8f33fbcbd25e640555b6aca0a8531d",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-prop-or-crop",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/iso_props/farm_completion/greenhouse.webp": {
+      "sha256": "4802f980bc804d4c93f087ff29db482bdef99605a510f2e353a560c7f4366b04",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-prop-or-crop",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/iso_props/farm_completion/greenhouse_walls.webp": {
+      "sha256": "8caf272a9fa8b86de03a6897c9db6ebcac65600f80376eb5aaa9a4f3960e7e38",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-prop-or-crop",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/iso_props/farm_completion/keg.webp": {
+      "sha256": "fff3ff0dc9b4cf30f3363c2aa0e28bf53d140600f37a2908c86eec01776e2601",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-prop-or-crop",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/iso_props/farm_completion/preserves_jar.webp": {
+      "sha256": "fc13e2fca0821c2055a089a29a2eaf35f8616f8b3bea12ca68aae1ba9c9d75b1",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-prop-or-crop",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/iso_props/farm_completion/sprinkler.webp": {
+      "sha256": "4f33c69a98c7eb044a738d69ea64f4faa0c931fe7bf9bd314d8d65745a3764d4",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-prop-or-crop",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/juice_carrot.webp": {
+      "sha256": "09e2f2a7a3cb074a0ad2a6024eec50a7dff9b866bf4a200dd3c07b1addb310a4",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/juice_catnip.webp": {
+      "sha256": "09e2f2a7a3cb074a0ad2a6024eec50a7dff9b866bf4a200dd3c07b1addb310a4",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/juice_glow_berry.webp": {
+      "sha256": "09e2f2a7a3cb074a0ad2a6024eec50a7dff9b866bf4a200dd3c07b1addb310a4",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/juice_moonflower.webp": {
+      "sha256": "09e2f2a7a3cb074a0ad2a6024eec50a7dff9b866bf4a200dd3c07b1addb310a4",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/juice_pumpkin.webp": {
+      "sha256": "09e2f2a7a3cb074a0ad2a6024eec50a7dff9b866bf4a200dd3c07b1addb310a4",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/juice_snow_turnip.webp": {
+      "sha256": "09e2f2a7a3cb074a0ad2a6024eec50a7dff9b866bf4a200dd3c07b1addb310a4",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/juice_snowdrop.webp": {
+      "sha256": "09e2f2a7a3cb074a0ad2a6024eec50a7dff9b866bf4a200dd3c07b1addb310a4",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/juice_strawberry.webp": {
+      "sha256": "09e2f2a7a3cb074a0ad2a6024eec50a7dff9b866bf4a200dd3c07b1addb310a4",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/juice_sunflower.webp": {
+      "sha256": "09e2f2a7a3cb074a0ad2a6024eec50a7dff9b866bf4a200dd3c07b1addb310a4",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/juice_turnip.webp": {
+      "sha256": "09e2f2a7a3cb074a0ad2a6024eec50a7dff9b866bf4a200dd3c07b1addb310a4",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/keg.webp": {
+      "sha256": "7e260c7308f85dfb81d4374e9b55ea31212a2dd8c65d8f0b6d332497d0f6780d",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/preserve_carrot.webp": {
+      "sha256": "a9b180b8cf796641c8679d689993ed3d9cd303bbf0cdd5f0a00662c474ae5e10",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/preserve_catnip.webp": {
+      "sha256": "a9b180b8cf796641c8679d689993ed3d9cd303bbf0cdd5f0a00662c474ae5e10",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/preserve_glow_berry.webp": {
+      "sha256": "a9b180b8cf796641c8679d689993ed3d9cd303bbf0cdd5f0a00662c474ae5e10",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/preserve_moonflower.webp": {
+      "sha256": "a9b180b8cf796641c8679d689993ed3d9cd303bbf0cdd5f0a00662c474ae5e10",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/preserve_pumpkin.webp": {
+      "sha256": "a9b180b8cf796641c8679d689993ed3d9cd303bbf0cdd5f0a00662c474ae5e10",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/preserve_snow_turnip.webp": {
+      "sha256": "a9b180b8cf796641c8679d689993ed3d9cd303bbf0cdd5f0a00662c474ae5e10",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/preserve_snowdrop.webp": {
+      "sha256": "a9b180b8cf796641c8679d689993ed3d9cd303bbf0cdd5f0a00662c474ae5e10",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/preserve_strawberry.webp": {
+      "sha256": "a9b180b8cf796641c8679d689993ed3d9cd303bbf0cdd5f0a00662c474ae5e10",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/preserve_sunflower.webp": {
+      "sha256": "a9b180b8cf796641c8679d689993ed3d9cd303bbf0cdd5f0a00662c474ae5e10",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/preserve_turnip.webp": {
+      "sha256": "a9b180b8cf796641c8679d689993ed3d9cd303bbf0cdd5f0a00662c474ae5e10",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/preserves_jar.webp": {
+      "sha256": "d462b36990de270de6d1912eaff4e31224e8e403003f839ba7e5c26f5900e222",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/quality_sprinkler.webp": {
+      "sha256": "ca64dc4c55c7997a984d7c2c9729b416cbadfdf9476ea4b5a7eabdcd1ab2ee5d",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/snow_turnip.webp": {
+      "sha256": "ee1d613fee5051e2b41935e834449a793ba7bcaa4efdcd7df3aa5721babb69b9",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/snow_turnip_seeds.webp": {
+      "sha256": "df80865f025ff35bc8618b7ed99e83a7dfffd2c9e8cd7df35ae33b18e1dcf25a",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/snowdrop.webp": {
+      "sha256": "a24ad3fb0678a7b6cea5a691b97081132c0f2d76bcbeca5227d3a56bcf69819b",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/snowdrop_seeds.webp": {
+      "sha256": "2928ffc081568cb2d8a80bc73a73585420193888d157264ca3ad70c2c511de30",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
+    },
+    "assets/icons/items/sprinkler.webp": {
+      "sha256": "16141a8e4dfa078fa4e944ec20aa34c58842aeb82b761878867eb3b30bfd742c",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-item-icon",
+      "evidence": "Ten retained imagegen masters, packed sprites/icons and native greenhouse/machine context inspected: docs/qa/farm-completion/painted-assets.png; docs/qa/farm-completion/accepted-native/; prompts and sources: docs/art/farm-completion/"
     }
   },
   "m1b_followup": {
@@ -17896,5 +18142,13 @@
     "evidence": "docs/qa/ghost-city-review/REVIEW.md",
     "prompts": "docs/art/ghost-city-review/prompts.json",
     "sources": "tools/art/drawn/sources/wardrobe/ghost-drape/"
+  },
+  "farm_completion_review": {
+    "date": "2026-10-17",
+    "new_assets": 41,
+    "evidence": "docs/qa/farm-completion/REVIEW.md",
+    "prompts": "docs/art/farm-completion/prompts.json",
+    "generation": "built-in imagegen; technical atlas extraction, scaling and anchor registration only",
+    "existing_game_art": "byte-identical"
   }
 }
