@@ -98,3 +98,6 @@ Merged main 605466d passes 599 focused wardrobe/player/garden/UI/town checks,
 with no failures or unexpected engine messages. Both source-bound town proofs
 and all 2,815 style-ledger assets match that checkout. See
 docs/qa/loadout/merge-verification.json.
+
+2026-10-17 — City movement and test tools follow-up (codex-ghost-city-tools)
+The bridge-mouth renderer now anticipates the adjoining deck before the feet change collision levels. The actor tracker resolves after movement; shadows follow the corrected rank, while logical level-change signals retain their meaning. Native checks cover all nine bridges in both directions, all 18 mouths and both stair directions. Clear test landings avoid trunks, huts, railings and kitchen planters. F8 / Pause → Cheat menu provides real-owner item, wardrobe, gold, recovery, travel, time and weather controls. Ghost clothing uses new draped paintings and separate hanging hem charms. Prompts and raw masters are retained. Evidence: docs/qa/ghost-city-review/REVIEW.md.

@@ -94,5 +94,6 @@
   "future_fit_repair_template": {
     "status": "saved authoring template, not an executed generation",
     "prompt": "Edit the attached selected garment painting using the attached shipped hero and terrain references. Match the chosen hand-painted watercolor/gouache storybook style: warm plum-brown ink, visible pigment and paper grain inside painted areas, soft matte highlights, simple readable chibi forms and restrained authored palette. Preserve the garment identity, trims and all eight unique views in exact order S, SW, W, NW, N, NE, E, SE. Correct only the specified fit or silhouette issue: [ISSUE]. Leave face openings clear, preserve hands, wings, ears, braids and tails; avoid adding body parts or changing the hero identity. Hobbit footwear leaves bare toes visible. Ghost clothing is a wrap, hem band or suspended charm and never introduces human legs. Keep paired shoes/earrings together. Transparent background, generous transparent gutters, no labels, text, lighting scene, cast ground shadow, mirrors or missing views. Do not replace the whole character to repair one garment."
-  }
+  },
+  "ghost_drape": "docs/art/ghost-city-review/prompts.json"
 }

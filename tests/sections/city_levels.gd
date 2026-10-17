@@ -43,10 +43,10 @@ const GENERATOR_PATH := "res://scripts/world2d/levels/source/build_traetoppen_js
 ## sha256 of the BUILT framework files this package must not edit (git-free proof, taken when V3 landed): a legitimate later edit of one of
 ## them by its owner (P04 / P05) makes this check fail on purpose - update the hash in the same commit.
 const PINNED := {
-	"res://scripts/world2d/iso_area.gd": "be83b46fb2863e26cdbebc3231d5920d45636e2aeeaaeba402eb0ed6e830724c",
+	"res://scripts/world2d/iso_area.gd": "9a77e13b0b41b902839c7d25dbe75bc88cc4ca0147a1b672b25c4a8303201d46",
 	"res://scripts/world2d/world_2d.gd": "b17c62ce873a22fc3a935c4dc6828afb471e2e14716cc137f84e61bbb2264066",
 	"res://scripts/world2d/game_data.gd": "03a66479819a83799b98fbd2db1e5cad4cbdb9b5e52d0113ba73f525160e5a0c",
-	"res://scripts/world2d/art_catalog.gd": "7bcd8fb403217d0acf9a8d763230a52bee082e836e64d3407d8d29e19b146991",
+	"res://scripts/world2d/art_catalog.gd": "d63c4e78103a600ac646269f9f50113a1d1b5b81858b8a5aff02b44d69dc9261",
 	"res://scripts/isometric/iso_chibi_sprite_2d.gd": "223f6ef7eec8446ea3b0410a1ebb7b2aa58a141a5b271325f8cea51e4d73e977",
 	"res://scripts/isometric/character_catalog.gd": "2a56f24f8abf4312709284391e5f605e0894b386a68e6f08d8093b86dc11e556",
 }
@@ -1111,7 +1111,7 @@ func _physics(t) -> void:
 	t.release(&"move_right")
 	await t.physics(3)
 	var b4_z_seen: bool = seq.has(&"b4")
-	t.check("player_crosses_a_bridge_with_real_input", seq.size() >= 3 and seq[0] == &"c" and seq[1] == &"b4" and seq[seq.size() - 1] == &"torvet" and p.z_index == 80 and p.global_position.x > _sk(600, 0).x and b4_z_seen and b4.rank == 110,
+	t.check("player_crosses_a_bridge_with_real_input", seq.size() >= 3 and seq[0] == &"c" and seq[1] == &"b4" and seq[seq.size() - 1] == &"torvet" and p.z_index == _reg.draw_rank(p.global_position, _reg.get_level(&"torvet")) and p.global_position.x > _sk(600, 0).x and b4_z_seen and b4.rank == 110,
 		"holding `right` on platform C walks the real player body through B4's ring gap and onto the Torvet: levels %s, now z %d at x %.0f (sketch %.0f)" % [seq, p.z_index, p.global_position.x, p.global_position.x / _reg.scale])
 	_world.player.collision_mask = 0
 	_world.player.set_physics_process(false)

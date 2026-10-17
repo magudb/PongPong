@@ -31,6 +31,11 @@ var _levels: Array = []
 
 ## Binds the tracker to an area (anything with an `objects` node) and the registry that answers level_at. Calling it again with the same
 ## area and registry is a no-op (a builder that wires the stage twice); another area releases the first one (its actors are restored).
+func _init() -> void:
+	# Resolve the position AFTER Player/NPC movement, before this frame renders.
+	process_physics_priority = 100
+
+
 func attach(p_area: Node2D, p_registry: LevelRegistry) -> void:
 	if _objects != null and is_instance_valid(_objects):
 		if p_area == area and p_registry == registry:
@@ -144,15 +149,18 @@ func _apply(actor: Node2D, i: int = -2) -> void:
 	var lv: Level = registry.level_at(actor.global_position)
 	if lv == null:
 		return
-	if i >= 0 and _levels[i] == lv and actor.z_index == lv.rank and ((actor as CollisionObject2D).collision_mask & lv.mask_bit()) != 0 and actor.has_meta(ActorLevel.META_LEVEL):
+	var draw_rank := registry.draw_rank(actor.global_position, lv)
+	if i >= 0 and _levels[i] == lv and actor.z_index == draw_rank and ((actor as CollisionObject2D).collision_mask & lv.mask_bit()) != 0 and actor.has_meta(ActorLevel.META_LEVEL):
 		return
 	var old: StringName = ActorLevel.level_id(actor)
 	ActorLevel.set_level(actor, lv)
+	ActorLevel.set_draw_rank(actor, draw_rank)
 	if i >= 0:
 		_levels[i] = lv
-		_zs[i] = lv.rank
+		_zs[i] = draw_rank
 	changes += 1
-	level_changed.emit(actor, old, lv.id)
+	if old != lv.id:
+		level_changed.emit(actor, old, lv.id)
 
 
 ## Re-derives one actor now (tests, teleports, the end of a climb): the same code as the physics tick.

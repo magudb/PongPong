@@ -252,6 +252,7 @@ func to_dict() -> Dictionary:
 
 
 func from_dict(data: Dictionary) -> void:
+	is_paused = false # Session-only test clock freeze never carries into a loaded save.
 	var seed_value: Variant = data.get("weather_seed",null)
 	_weather_seed = int(seed_value) if (seed_value is int or seed_value is float) and is_finite(float(seed_value)) and float(seed_value)==floorf(float(seed_value)) and seed_value>0 and seed_value<=0x7fffffff else maxi(1,int(("weather-v1|"+GameManager.player_name+"|"+GameManager.farm_name).sha256_text().substr(0,7).hex_to_int()))
 	time_scale = maxf(float(data.get("time_scale", 1.0)), 0.1)

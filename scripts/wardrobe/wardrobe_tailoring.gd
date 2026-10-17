@@ -18,6 +18,9 @@ static func pose(body_id: String, family: String, direction: int) -> Dictionary:
 	var shape := Vector4(1, 1, 1, 0)
 	var volume := 0.0
 	var ghost := body_id.begins_with("ghost")
+	# Ghost drapes are registered to the wisp itself, not a human torso box.
+	if ghost and body.get("source_palettes", {}).has(family):
+		return {"source": source, "target": source, "shape": shape, "volume": 0.04}
 	if family.begins_with("shirt_") or family.begins_with("dress_"):
 		var top := float(fit.neck) - 7.0
 		var bottom := float(fit.waist) + 5.0

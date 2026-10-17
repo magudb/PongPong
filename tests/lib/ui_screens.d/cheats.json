@@ -1,0 +1,33 @@
+{
+  "screens": [
+    {
+      "id": "cheats",
+      "title": "Testmenu",
+      "kind": "modal",
+      "scene": "res://scenes/ui/cheat_menu.tscn",
+      "fixture": "cheats",
+      "package": "Testing conveniences",
+      "guide": "docs/art/style-guide.txt",
+      "focus": "initial",
+      "modal": "cheats",
+      "esc_depth": 1,
+      "checks": [
+        "initial_focus",
+        "focus_walk",
+        "focusable_report",
+        "rule_report",
+        "i18n_flip",
+        "escape_chain",
+        "ring_pixels",
+        "panel_pixels",
+        "button_pixels"
+      ],
+      "open": {
+        "driver": "res://tests/lib/ui_cheat_driver.gd"
+      },
+      "options": {
+        "button": "%RECOVER0Button"
+      }
+    }
+  ]
+}

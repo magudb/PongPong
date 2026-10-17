@@ -1322,13 +1322,13 @@ func _fake_handlers(t) -> void:
 			if ActorLevel.is_locked(rec["node"] as Node):
 				locked.append(str((rec["params"] as Dictionary)["id"]))
 	locked.sort()
-	var want_z: Dictionary = {"gardener_hoppe@": 10, "postman_pip@": 20, "carpenter_brumme@flag:brumme_at_work": 70, "carpenter_brumme@flag:brumme_at_stall": 80, "bathkeeper_sofus@": 100, "appraiser_fru_ugle@": 176, "guard_oak@": 20}
+	var want_z: Dictionary = {"gardener_hoppe@": 10, "postman_pip@": 20, "carpenter_brumme@flag:brumme_at_work": 70, "carpenter_brumme@flag:brumme_at_stall": 80, "bathkeeper_sofus@": 100, "appraiser_fru_ugle@": 176, "guard_oak@": 60}
 	var node_z_ok: bool = true
 	for rec in a.markers:
 		if str(rec["type"]) == "node":
 			node_z_ok = node_z_ok and (rec["node"] as Node2D).z_index == 160
 	t.check("handler_made_nodes_are_levelled", z_by == want_z and locked == ["appraiser_fru_ugle"] and node_z_ok,
-		"the nodes a real handler makes get their place in the draw order: bodies by the LevelTracker or, where the sketch draws the figure inside a keep-out (Hoppe at the trunk, Brumme at the logs, Sofus in the tub) and no level holds the position, by the data once (Hoppe 10, Pip 20, Oak 20, Brumme 70 / 80, Sofus 100), Fru Ugle in the trunk hole at 176 and locked, the three kitchen-garden nodes at G's rank 160: %s locked %s" % [z_by, locked])
+		"the nodes a real handler makes get their place in the draw order: bodies by the LevelTracker or, where the sketch draws the figure inside a keep-out (Hoppe at the trunk, Brumme at the logs, Sofus in the tub) and no level holds the position, by the data once (Hoppe 10, Pip 20, Oak 20, Brumme 70 / 80, Sofus 100; Oak draws at the adjacent B3 join rank 60 while keeping B collision), Fru Ugle in the trunk hole at 176 and locked, the three kitchen-garden nodes at G's rank 160: %s locked %s" % [z_by, locked])
 	# --- `when=`: Brumme twice, the flags decide (the one private call, IsoArea._track_when)
 	var work: Node2D = null
 	var stall: Node2D = null

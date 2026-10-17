@@ -126,5 +126,16 @@
   "implementation_revision": "cea0196896d2f362cb55cd18d677d4b98601c31a",
   "completed_in": "codex-mechanics",
   "status": "complete",
-  "merge_commit": "e32e2987fc10207b8f035fc524d90cc542d8ee42"
+  "merge_commit": "e32e2987fc10207b8f035fc524d90cc542d8ee42",
+  "ghost_city_testing_followup": {
+    "date": "2026-10-17",
+    "worktree": "codex-ghost-city-tools",
+    "scope": [
+      "Ghost-specific draped clothing and independent hem accessories",
+      "Treetop City bridge/stair movement and draw-order handoffs",
+      "F8 and pause-menu testing tools through existing gameplay owners"
+    ],
+    "evidence": "docs/qa/ghost-city-review/ACCEPTANCE.json",
+    "prompts": "docs/art/ghost-city-review/prompts.json"
+  }
 }

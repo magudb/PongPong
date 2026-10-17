@@ -29,7 +29,9 @@ mouse_filter = 2
 color = Color(0.11, 0.129, 0.22, 0.62)
 
 [node name="Panel" type="PanelContainer" parent="." unique_id=1409519153]
-custom_minimum_size = Vector2(440, 0)
+custom_minimum_size = Vector2(500, 0)
+offset_top = -315.0
+offset_bottom = 315.0
 layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
@@ -50,9 +52,16 @@ theme_type_variation = &"Display34"
 text = "UI_PAUSED"
 horizontal_alignment = 1
 
-[node name="MenuList" type="VBoxContainer" parent="Panel/Body" unique_id=2139522530]
+[node name="MenuScroll" type="ScrollContainer" parent="Panel/Body"]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="MenuList" type="VBoxContainer" parent="Panel/Body/MenuScroll" unique_id=2139522530]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 2
 
 [node name="HintBar" type="HBoxContainer" parent="Panel/Body" unique_id=703273964]

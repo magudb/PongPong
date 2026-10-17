@@ -1,0 +1,23 @@
+keys,da,en
+CHEAT_TITLE,Testmenu · F8,Cheat menu · F8
+CHEAT_PLAYER,Spiller,Player
+CHEAT_TRAVEL,Rejse,Travel
+CHEAT_ITEMS,Genstande,Items
+CHEAT_CLOCK,Tid og vejr,Time and weather
+CHEAT_NOTICE,"Til afprøvning. Genstande, penge og fremskridt bliver gemt med spillet.","For testing. Items, money and progress are saved with your game."
+CHEAT_CLOSE,Tilbage til spillet · Esc / F8,Back to game · Esc / F8
+CHEAT_RECOVER,"Fyld liv, energi og lanterneolie","Refill health, energy and lantern oil"
+CHEAT_GOLD,Giv 10.000 guld,"Give 10,000 gold"
+CHEAT_WARDROBE,Lås alt tøj op,Unlock all clothing
+CHEAT_DRESS,Åbn garderobe og udstyr,Open wardrobe and loadout
+CHEAT_TOWN_SQUARE,Trætoppen: skovlift,Treetop City: forest lift
+CHEAT_HOME,Hjem,Home
+CHEAT_PLATFORM,Trætoppen: platform %s,Treetop City: platform %s
+CHEAT_HOUR,Gå en time frem,Advance one hour
+CHEAT_NEXT_DAY,Start næste morgen,Start next morning
+CHEAT_FREEZE,Sæt uret på pause (denne session),Freeze clock (this session)
+CHEAT_WEATHER,Vejr: %s,Weather: %s
+CHEAT_DONE,Udført.,Done.
+CHEAT_FAILED,Kunne ikke udføres. Tjek plads i tasken eller spillerens tilstand.,Could not apply. Check backpack space or player state.
+CHEAT_SEARCH,Søg efter navn eller id…,Search by name or id…
+CHEAT_GRANT,Giv den valgte genstand,Give selected item

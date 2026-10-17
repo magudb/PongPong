@@ -259,6 +259,9 @@ def build():
     OUT.mkdir(parents=True,exist_ok=True)
     (OUT/'manifest.json').write_text(json.dumps(manifest,separators=(',',':'))+'\n')
     print('Packed all 30 garment families on all eight heroes; stock assets untouched.')
+    if spec.get('ghost_drape'):
+        from ghost_drape import build as build_ghost_drape
+        build_ghost_drape()
 
 if __name__=='__main__':
     import sys

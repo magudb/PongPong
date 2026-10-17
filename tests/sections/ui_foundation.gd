@@ -32,7 +32,7 @@ const SCREEN_IDS: Array[StringName] = [
 	&"hud", &"forest_hud", &"social_hud", &"event_overlay", &"dialogue_ui", &"inventory_ui", &"quest_journal",
 	&"people", &"gift_ui", &"post", &"shop_ui", &"animal_care_ui", &"build_menu_ui",
 	&"husbyggeri", &"indretning", &"home_chest", &"home_amenities", &"garderobe", &"samlerbog",
-	&"pause_menu", &"save_load_ui", &"settings_ui",
+	&"cheat_menu", &"pause_menu", &"save_load_ui", &"settings_ui",
 ]
 const RT7_IDS: Array[StringName] = [&"social_hud", &"event_overlay", &"people", &"gift_ui", &"post"]
 

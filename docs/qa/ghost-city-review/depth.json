@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 37,
+  "elapsed_s": 21.28,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "city_depth_pixels": {
+      "character": "animal",
+      "checks": 37,
+      "failed": 0,
+      "ms": 15916,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}
