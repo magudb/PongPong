@@ -18,6 +18,7 @@ extends RefCounted
 const GUIDE_JSON := "res://scripts/ui/dev/guide_fixture.json"
 ## screen name -> scene. The GameUI screens use GameUI.SCREEN_ORDER ids; the older spike names title/select/... are aliases.
 const SCREENS := {
+	"cheats": "res://scenes/ui/cheat_menu.tscn",
 	"components": "res://scenes/ui/dev/components_gallery.tscn",
 	# P28 components (not screens of GameUI: each is instanced by the screens that need it) and the registry names of screens that live inside another scene
 	"confirm": "res://scenes/ui/components/ui_confirm.tscn",

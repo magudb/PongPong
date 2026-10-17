@@ -62,7 +62,7 @@
   },
   {
    "prefix": "ITEM_",
-   "src": "scripts/farm/animal_husbandry.gd:539"
+   "src": "scripts/farm/animal_husbandry.gd:544"
   },
   {
    "prefix": "FURNI_REJECT_",
@@ -290,7 +290,7 @@
   },
   {
    "prefix": "RARITY_",
-   "src": "scripts/ui/inventory_ui.gd:134"
+   "src": "scripts/ui/inventory_ui.gd:136"
   },
   {
    "prefix": "SAVELOAD_STATE_",
@@ -298,7 +298,7 @@
   },
   {
    "prefix": "KEEP_ANY_",
-   "src": "scripts/ui/shop_ui.gd:341"
+   "src": "scripts/ui/shop_ui.gd:345"
   },
   {
    "prefix": "ABILITY_",
@@ -315,6 +315,10 @@
   {
    "prefix": "WEFFECT_",
    "src": "scripts/ui/components/equipment_details.gd:11"
+  },
+  {
+   "prefix": "UI_SEASON_",
+   "src": "scripts/ui/components/farming_details.gd:9"
   },
   {
    "prefix": "HOME_TIER_",
@@ -510,7 +514,7 @@
   },
   {
    "prefix": "WHISPER_FLOWER_",
-   "src": "scripts/world2d/player_2d.gd:283"
+   "src": "scripts/world2d/player_2d.gd:305"
   },
   {
    "prefix": "FM_E_",
@@ -591,13 +595,17 @@
    "scripts/ui/animal_care_ui.gd:123"
   ],
   "ANIMAL_BUILD": [
-   "scripts/ui/build_menu_ui.gd:82"
+   "scripts/ui/build_menu_ui.gd:117",
+   "scripts/ui/build_menu_ui.gd:138"
+  ],
+  "ANIMAL_BUILD_TITLE": [
+   "scripts/farm/animal_husbandry.gd:656"
   ],
   "ANIMAL_BUILT": [
-   "scripts/ui/build_menu_ui.gd:82"
+   "scripts/ui/build_menu_ui.gd:117"
   ],
   "ANIMAL_CAPACITY_FMT": [
-   "scripts/ui/build_menu_ui.gd:72"
+   "scripts/ui/build_menu_ui.gd:102"
   ],
   "ANIMAL_CARE_DAILY_HINT": [
    "scripts/ui/animal_care_ui.gd:139"
@@ -619,7 +627,8 @@
    "scripts/ui/animal_care_ui.gd:130"
   ],
   "ANIMAL_GOLD": [
-   "scripts/ui/build_menu_ui.gd:79"
+   "scripts/ui/build_menu_ui.gd:112",
+   "scripts/ui/build_menu_ui.gd:133"
   ],
   "ANIMAL_NO_FOOD": [
    "scripts/ui/animal_care_ui.gd:130"
@@ -811,7 +820,7 @@
   ],
   "BUILDING_BARN": [
    "scripts/farm/animal_husbandry.gd:193",
-   "lua/config/husbandry.lua:179",
+   "lua/config/husbandry.lua:183",
    "building type barn (plan 3.7)"
   ],
   "BUILDING_COOP": [
@@ -821,7 +830,7 @@
   ],
   "BUILDING_HOUSE": [
    "scripts/farm/animal_husbandry.gd:199",
-   "lua/config/husbandry.lua:185",
+   "lua/config/husbandry.lua:193",
    "building type house (plan 3.7)"
   ],
   "CHAR_ANIMAL_NAME": [
@@ -1989,6 +1998,15 @@
   "FARMSITE_BIN_PUT": [
    "scripts/farm/steading/objects/shipping_bin_2d.gd:31"
   ],
+  "FARMSITE_BUILD_DAYS_FMT": [
+   "scripts/ui/build_menu_ui.gd:114"
+  ],
+  "FARMSITE_CAPACITY_UPGRADE_FMT": [
+   "scripts/ui/build_menu_ui.gd:104"
+  ],
+  "FARMSITE_CONSTRUCTION_DAYS_FMT": [
+   "scripts/ui/build_menu_ui.gd:136"
+  ],
   "FARMSITE_EXPAND_CONFIRM": [
    "scripts/farm/steading/objects/field_expansion_2d.gd:103"
   ],
@@ -2000,6 +2018,62 @@
   ],
   "FARMSITE_EXPAND_PROMPT": [
    "scripts/farm/steading/objects/field_expansion_2d.gd:35"
+  ],
+  "FARMSITE_GREENHOUSE": [
+   "scripts/farm/farm_equipment.gd:72",
+   "scripts/farm/greenhouse/greenhouse_2d.gd:42",
+   "lua/config/farm_equipment.lua:10",
+   "data/maps/greenhouse.map:3"
+  ],
+  "FARMSITE_GREENHOUSE_ENTER": [
+   "scripts/farm/greenhouse/greenhouse_2d.gd:41",
+   "scripts/ui/build_menu_ui.gd:138"
+  ],
+  "FARMSITE_GREENHOUSE_EXIT": [
+   "data/maps/greenhouse.map:20"
+  ],
+  "FARMSITE_GREENHOUSE_HINT": [
+   "scripts/ui/build_menu_ui.gd:125"
+  ],
+  "FARMSITE_GREENHOUSE_READY": [
+   "scripts/farm/farm_equipment.gd:72"
+  ],
+  "FARMSITE_GREENHOUSE_TIER_FMT": [
+   "scripts/ui/build_menu_ui.gd:128"
+  ],
+  "FARMSITE_GROWTH_FMT": [
+   "scripts/ui/components/farming_details.gd:13"
+  ],
+  "FARMSITE_HARVEST_FMT": [
+   "scripts/world2d/player_2d.gd:318"
+  ],
+  "FARMSITE_MACHINE_BUSY_FMT": [
+   "scripts/farm/farm_machine_2d.gd:20"
+  ],
+  "FARMSITE_MACHINE_LOAD": [
+   "scripts/farm/farm_machine_2d.gd:21"
+  ],
+  "FARMSITE_MACHINE_PICKUP": [
+   "scripts/farm/farm_machine_2d.gd:21"
+  ],
+  "FARMSITE_MACHINE_READY_FMT": [
+   "scripts/farm/farm_machine_2d.gd:19"
+  ],
+  "FARMSITE_REGROW_FMT": [
+   "scripts/ui/components/farming_details.gd:15"
+  ],
+  "FARMSITE_SEASONS_FMT": [
+   "scripts/ui/components/farming_details.gd:11"
+  ],
+  "FARMSITE_SEEDS_INDOORS": [
+   "scripts/ui/components/farming_details.gd:17"
+  ],
+  "FARMSITE_SEED_GREETING": [
+   "lua/shops/greenhouse_seeds.lua:4"
+  ],
+  "FARMSITE_SEED_SHELF": [
+   "scripts/farm/greenhouse/greenhouse_2d.gd:40",
+   "lua/shops/greenhouse_seeds.lua:4"
   ],
   "FARMSITE_SHED_PROMPT": [
    "scripts/farm/steading/objects/tool_shed_2d.gd:7"
@@ -2025,6 +2099,17 @@
   ],
   "FARMSITE_STAGE_UP_TITLE": [
    "scripts/farm/steading/objects/farm_stage.gd:48"
+  ],
+  "FARMSITE_UPGRADE_DONE_FMT": [
+   "scripts/farm/animal_husbandry.gd:656"
+  ],
+  "FARMSITE_UPGRADE_FMT": [
+   "scripts/ui/build_menu_ui.gd:117"
+  ],
+  "FARMSITE_UPGRADING_FMT": [
+   "scripts/farm/greenhouse/greenhouse_2d.gd:42",
+   "scripts/ui/build_menu_ui.gd:119",
+   "scripts/ui/build_menu_ui.gd:138"
   ],
   "FARMSITE_ZONE_EAST": [
    "lua/config/farm_site.lua:23"
@@ -4525,7 +4610,7 @@
    "scripts/ui/social/gift_picker.gd:197"
   ],
   "INV_SELLS_FOR": [
-   "scripts/ui/inventory_ui.gd:137"
+   "scripts/ui/inventory_ui.gd:140"
   ],
   "INV_TITLE": [
    "scenes/ui/inventory_ui.tscn:142"
@@ -5030,6 +5115,7 @@
    "lua/items/crops.lua:137",
    "lua/items/crops.lua item catnip_seeds",
    "lua/quests/lost_cat.lua quest lost_cat reward",
+   "lua/shops/greenhouse_seeds.lua shop greenhouse_seeds stock",
    "lua/shops/seed_shop.lua shop seed_shop stock"
   ],
   "ITEM_CATNIP_SEEDS_DESC": [
@@ -5962,6 +6048,7 @@
   "ITEM_FROST_KALE_SEEDS": [
    "lua/items/crops.lua:157",
    "lua/items/crops.lua item frost_kale_seeds",
+   "lua/shops/greenhouse_seeds.lua shop greenhouse_seeds stock",
    "lua/shops/seed_shop.lua shop seed_shop stock"
   ],
   "ITEM_FROST_KALE_SEEDS_DESC": [
@@ -6133,6 +6220,7 @@
   "ITEM_GLOW_BERRY_SEEDS": [
    "lua/items/magic.lua:51",
    "lua/items/magic.lua item glow_berry_seeds",
+   "lua/shops/greenhouse_seeds.lua shop greenhouse_seeds stock",
    "lua/shops/magic_store.lua shop magic_store stock"
   ],
   "ITEM_GLOW_BERRY_SEEDS_DESC": [
@@ -6414,6 +6502,104 @@
    "lua/items/tools.lua:153",
    "lua/items/tools.lua item iron_sword"
   ],
+  "ITEM_JUICE_CARROT": [
+   "lua/items/farm_equipment.lua:12",
+   "lua/items/farm_equipment.lua item juice_carrot"
+  ],
+  "ITEM_JUICE_CARROT_DESC": [
+   "lua/items/farm_equipment.lua:12",
+   "lua/items/farm_equipment.lua item juice_carrot"
+  ],
+  "ITEM_JUICE_CATNIP": [
+   "lua/items/farm_equipment.lua:24",
+   "lua/items/farm_equipment.lua item juice_catnip"
+  ],
+  "ITEM_JUICE_CATNIP_DESC": [
+   "lua/items/farm_equipment.lua:24",
+   "lua/items/farm_equipment.lua item juice_catnip"
+  ],
+  "ITEM_JUICE_FROST_KALE": [
+   "lua/items/farm_equipment.lua:30",
+   "lua/items/farm_equipment.lua item juice_frost_kale"
+  ],
+  "ITEM_JUICE_FROST_KALE_DESC": [
+   "lua/items/farm_equipment.lua:30",
+   "lua/items/farm_equipment.lua item juice_frost_kale"
+  ],
+  "ITEM_JUICE_GLOW_BERRY": [
+   "lua/items/farm_equipment.lua:18",
+   "lua/items/farm_equipment.lua item juice_glow_berry"
+  ],
+  "ITEM_JUICE_GLOW_BERRY_DESC": [
+   "lua/items/farm_equipment.lua:18",
+   "lua/items/farm_equipment.lua item juice_glow_berry"
+  ],
+  "ITEM_JUICE_MOONFLOWER": [
+   "lua/items/farm_equipment.lua:16",
+   "lua/items/farm_equipment.lua item juice_moonflower"
+  ],
+  "ITEM_JUICE_MOONFLOWER_DESC": [
+   "lua/items/farm_equipment.lua:16",
+   "lua/items/farm_equipment.lua item juice_moonflower"
+  ],
+  "ITEM_JUICE_PUMPKIN": [
+   "lua/items/farm_equipment.lua:14",
+   "lua/items/farm_equipment.lua item juice_pumpkin"
+  ],
+  "ITEM_JUICE_PUMPKIN_DESC": [
+   "lua/items/farm_equipment.lua:14",
+   "lua/items/farm_equipment.lua item juice_pumpkin"
+  ],
+  "ITEM_JUICE_SNOWDROP": [
+   "lua/items/farm_equipment.lua:28",
+   "lua/items/farm_equipment.lua item juice_snowdrop"
+  ],
+  "ITEM_JUICE_SNOWDROP_DESC": [
+   "lua/items/farm_equipment.lua:28",
+   "lua/items/farm_equipment.lua item juice_snowdrop"
+  ],
+  "ITEM_JUICE_SNOW_TURNIP": [
+   "lua/items/farm_equipment.lua:26",
+   "lua/items/farm_equipment.lua item juice_snow_turnip"
+  ],
+  "ITEM_JUICE_SNOW_TURNIP_DESC": [
+   "lua/items/farm_equipment.lua:26",
+   "lua/items/farm_equipment.lua item juice_snow_turnip"
+  ],
+  "ITEM_JUICE_STRAWBERRY": [
+   "lua/items/farm_equipment.lua:20",
+   "lua/items/farm_equipment.lua item juice_strawberry"
+  ],
+  "ITEM_JUICE_STRAWBERRY_DESC": [
+   "lua/items/farm_equipment.lua:20",
+   "lua/items/farm_equipment.lua item juice_strawberry"
+  ],
+  "ITEM_JUICE_SUNFLOWER": [
+   "lua/items/farm_equipment.lua:22",
+   "lua/items/farm_equipment.lua item juice_sunflower"
+  ],
+  "ITEM_JUICE_SUNFLOWER_DESC": [
+   "lua/items/farm_equipment.lua:22",
+   "lua/items/farm_equipment.lua item juice_sunflower"
+  ],
+  "ITEM_JUICE_TURNIP": [
+   "lua/items/farm_equipment.lua:10",
+   "lua/items/farm_equipment.lua item juice_turnip"
+  ],
+  "ITEM_JUICE_TURNIP_DESC": [
+   "lua/items/farm_equipment.lua:10",
+   "lua/items/farm_equipment.lua item juice_turnip"
+  ],
+  "ITEM_KEG": [
+   "lua/items/farm_equipment.lua:8",
+   "lua/items/farm_equipment.lua item keg",
+   "lua/recipes/farm_equipment.lua:6",
+   "lua/shops/seed_shop.lua shop seed_shop stock"
+  ],
+  "ITEM_KEG_DESC": [
+   "lua/items/farm_equipment.lua:8",
+   "lua/items/farm_equipment.lua item keg"
+  ],
   "ITEM_LANTERN_OIL": [
    "lua/items/consumables.lua:23",
    "lua/items/consumables.lua item lantern_oil",
@@ -6554,6 +6740,7 @@
    "lua/items/crops.lua item moonflower_seeds",
    "lua/quests/enchanted_garden.lua quest enchanted_garden reward",
    "lua/quests/night_flower.lua quest night_flower reward",
+   "lua/shops/greenhouse_seeds.lua shop greenhouse_seeds stock",
    "lua/shops/seed_shop.lua shop seed_shop stock"
   ],
   "ITEM_MOONFLOWER_SEEDS_DESC": [
@@ -7022,6 +7209,104 @@
   "ITEM_PLANT_TEAPOT_BONSAI_HINT": [
    "lua/items/furniture.lua:2543"
   ],
+  "ITEM_PRESERVES_JAR": [
+   "lua/items/farm_equipment.lua:7",
+   "lua/items/farm_equipment.lua item preserves_jar",
+   "lua/recipes/farm_equipment.lua:5",
+   "lua/shops/seed_shop.lua shop seed_shop stock"
+  ],
+  "ITEM_PRESERVES_JAR_DESC": [
+   "lua/items/farm_equipment.lua:7",
+   "lua/items/farm_equipment.lua item preserves_jar"
+  ],
+  "ITEM_PRESERVE_CARROT": [
+   "lua/items/farm_equipment.lua:11",
+   "lua/items/farm_equipment.lua item preserve_carrot"
+  ],
+  "ITEM_PRESERVE_CARROT_DESC": [
+   "lua/items/farm_equipment.lua:11",
+   "lua/items/farm_equipment.lua item preserve_carrot"
+  ],
+  "ITEM_PRESERVE_CATNIP": [
+   "lua/items/farm_equipment.lua:23",
+   "lua/items/farm_equipment.lua item preserve_catnip"
+  ],
+  "ITEM_PRESERVE_CATNIP_DESC": [
+   "lua/items/farm_equipment.lua:23",
+   "lua/items/farm_equipment.lua item preserve_catnip"
+  ],
+  "ITEM_PRESERVE_FROST_KALE": [
+   "lua/items/farm_equipment.lua:29",
+   "lua/items/farm_equipment.lua item preserve_frost_kale"
+  ],
+  "ITEM_PRESERVE_FROST_KALE_DESC": [
+   "lua/items/farm_equipment.lua:29",
+   "lua/items/farm_equipment.lua item preserve_frost_kale"
+  ],
+  "ITEM_PRESERVE_GLOW_BERRY": [
+   "lua/items/farm_equipment.lua:17",
+   "lua/items/farm_equipment.lua item preserve_glow_berry"
+  ],
+  "ITEM_PRESERVE_GLOW_BERRY_DESC": [
+   "lua/items/farm_equipment.lua:17",
+   "lua/items/farm_equipment.lua item preserve_glow_berry"
+  ],
+  "ITEM_PRESERVE_MOONFLOWER": [
+   "lua/items/farm_equipment.lua:15",
+   "lua/items/farm_equipment.lua item preserve_moonflower"
+  ],
+  "ITEM_PRESERVE_MOONFLOWER_DESC": [
+   "lua/items/farm_equipment.lua:15",
+   "lua/items/farm_equipment.lua item preserve_moonflower"
+  ],
+  "ITEM_PRESERVE_PUMPKIN": [
+   "lua/items/farm_equipment.lua:13",
+   "lua/items/farm_equipment.lua item preserve_pumpkin"
+  ],
+  "ITEM_PRESERVE_PUMPKIN_DESC": [
+   "lua/items/farm_equipment.lua:13",
+   "lua/items/farm_equipment.lua item preserve_pumpkin"
+  ],
+  "ITEM_PRESERVE_SNOWDROP": [
+   "lua/items/farm_equipment.lua:27",
+   "lua/items/farm_equipment.lua item preserve_snowdrop"
+  ],
+  "ITEM_PRESERVE_SNOWDROP_DESC": [
+   "lua/items/farm_equipment.lua:27",
+   "lua/items/farm_equipment.lua item preserve_snowdrop"
+  ],
+  "ITEM_PRESERVE_SNOW_TURNIP": [
+   "lua/items/farm_equipment.lua:25",
+   "lua/items/farm_equipment.lua item preserve_snow_turnip"
+  ],
+  "ITEM_PRESERVE_SNOW_TURNIP_DESC": [
+   "lua/items/farm_equipment.lua:25",
+   "lua/items/farm_equipment.lua item preserve_snow_turnip"
+  ],
+  "ITEM_PRESERVE_STRAWBERRY": [
+   "lua/items/farm_equipment.lua:19",
+   "lua/items/farm_equipment.lua item preserve_strawberry"
+  ],
+  "ITEM_PRESERVE_STRAWBERRY_DESC": [
+   "lua/items/farm_equipment.lua:19",
+   "lua/items/farm_equipment.lua item preserve_strawberry"
+  ],
+  "ITEM_PRESERVE_SUNFLOWER": [
+   "lua/items/farm_equipment.lua:21",
+   "lua/items/farm_equipment.lua item preserve_sunflower"
+  ],
+  "ITEM_PRESERVE_SUNFLOWER_DESC": [
+   "lua/items/farm_equipment.lua:21",
+   "lua/items/farm_equipment.lua item preserve_sunflower"
+  ],
+  "ITEM_PRESERVE_TURNIP": [
+   "lua/items/farm_equipment.lua:9",
+   "lua/items/farm_equipment.lua item preserve_turnip"
+  ],
+  "ITEM_PRESERVE_TURNIP_DESC": [
+   "lua/items/farm_equipment.lua:9",
+   "lua/items/farm_equipment.lua item preserve_turnip"
+  ],
   "ITEM_PUMPKIN": [
    "lua/items/crops.lua:68",
    "lua/items/crops.lua item pumpkin"
@@ -7034,11 +7319,22 @@
    "lua/items/crops.lua:57",
    "lua/items/crops.lua item pumpkin_seeds",
    "lua/shops/festival_markets.lua shop fest_harvest_market stock",
+   "lua/shops/greenhouse_seeds.lua shop greenhouse_seeds stock",
    "lua/shops/seed_shop.lua shop seed_shop stock"
   ],
   "ITEM_PUMPKIN_SEEDS_DESC": [
    "lua/items/crops.lua:58",
    "lua/items/crops.lua item pumpkin_seeds"
+  ],
+  "ITEM_QUALITY_SPRINKLER": [
+   "lua/items/farm_equipment.lua:6",
+   "lua/items/farm_equipment.lua item quality_sprinkler",
+   "lua/recipes/farm_equipment.lua:4",
+   "lua/shops/seed_shop.lua shop seed_shop stock"
+  ],
+  "ITEM_QUALITY_SPRINKLER_DESC": [
+   "lua/items/farm_equipment.lua:6",
+   "lua/items/farm_equipment.lua item quality_sprinkler"
   ],
   "ITEM_RARE_MUSHROOM": [
    "lua/items/resources.lua:106",
@@ -7574,6 +7870,40 @@
    "lua/items/building_materials.lua:403",
    "lua/items/building_materials.lua item slate"
   ],
+  "ITEM_SNOWDROP": [
+   "lua/items/winter_crops.lua:6",
+   "lua/items/winter_crops.lua item snowdrop"
+  ],
+  "ITEM_SNOWDROP_DESC": [
+   "lua/items/winter_crops.lua:6",
+   "lua/items/winter_crops.lua item snowdrop"
+  ],
+  "ITEM_SNOWDROP_SEEDS": [
+   "lua/items/winter_crops.lua:5",
+   "lua/items/winter_crops.lua item snowdrop_seeds",
+   "lua/shops/greenhouse_seeds.lua shop greenhouse_seeds stock"
+  ],
+  "ITEM_SNOWDROP_SEEDS_DESC": [
+   "lua/items/winter_crops.lua:5",
+   "lua/items/winter_crops.lua item snowdrop_seeds"
+  ],
+  "ITEM_SNOW_TURNIP": [
+   "lua/items/winter_crops.lua:4",
+   "lua/items/winter_crops.lua item snow_turnip"
+  ],
+  "ITEM_SNOW_TURNIP_DESC": [
+   "lua/items/winter_crops.lua:4",
+   "lua/items/winter_crops.lua item snow_turnip"
+  ],
+  "ITEM_SNOW_TURNIP_SEEDS": [
+   "lua/items/winter_crops.lua:3",
+   "lua/items/winter_crops.lua item snow_turnip_seeds",
+   "lua/shops/greenhouse_seeds.lua shop greenhouse_seeds stock"
+  ],
+  "ITEM_SNOW_TURNIP_SEEDS_DESC": [
+   "lua/items/winter_crops.lua:3",
+   "lua/items/winter_crops.lua item snow_turnip_seeds"
+  ],
   "ITEM_SOFA_BIRCH_TWO": [
    "lua/items/furniture.lua:859",
    "lua/items/furniture.lua item sofa_birch_two",
@@ -7660,6 +7990,16 @@
    "lua/items/furniture.lua:955",
    "lua/items/furniture.lua item sofa_walnut_two"
   ],
+  "ITEM_SPRINKLER": [
+   "lua/items/farm_equipment.lua:5",
+   "lua/items/farm_equipment.lua item sprinkler",
+   "lua/recipes/farm_equipment.lua:3",
+   "lua/shops/seed_shop.lua shop seed_shop stock"
+  ],
+  "ITEM_SPRINKLER_DESC": [
+   "lua/items/farm_equipment.lua:5",
+   "lua/items/farm_equipment.lua item sprinkler"
+  ],
   "ITEM_STONE": [
    "lua/items/resources.lua:25",
    "lua/items/resources.lua item stone",
@@ -7690,6 +8030,7 @@
    "lua/items/crops.lua:97",
    "lua/items/crops.lua item strawberry_seeds",
    "lua/shops/festival_markets.lua shop fest_flower_market stock",
+   "lua/shops/greenhouse_seeds.lua shop greenhouse_seeds stock",
    "lua/shops/seed_shop.lua shop seed_shop stock"
   ],
   "ITEM_STRAWBERRY_SEEDS_DESC": [
@@ -7718,6 +8059,7 @@
    "lua/items/crops.lua:117",
    "lua/items/crops.lua item sunflower_seeds",
    "lua/shops/festival_markets.lua shop fest_flower_market stock",
+   "lua/shops/greenhouse_seeds.lua shop greenhouse_seeds stock",
    "lua/shops/seed_shop.lua shop seed_shop stock"
   ],
   "ITEM_SUNFLOWER_SEEDS_DESC": [
@@ -7921,6 +8263,7 @@
    "lua/items/crops.lua item turnip_seeds",
    "lua/quests/intro_lottery.lua quest intro_lottery reward",
    "lua/quests/supply_run.lua quest supply_run reward",
+   "lua/shops/greenhouse_seeds.lua shop greenhouse_seeds stock",
    "lua/shops/seed_shop.lua shop seed_shop stock"
   ],
   "ITEM_TURNIP_SEEDS_DESC": [
@@ -8485,49 +8828,49 @@
    "scripts/ui/nav/ui_hints.gd:123"
   ],
   "NOTIF_ANIMAL_ADOPTED_TITLE": [
-   "scripts/farm/animal_husbandry.gd:375"
+   "scripts/farm/animal_husbandry.gd:380"
   ],
   "NOTIF_ANIMAL_BRUSHED_MSG": [
-   "scripts/farm/animal_husbandry.gd:479"
+   "scripts/farm/animal_husbandry.gd:484"
   ],
   "NOTIF_ANIMAL_BRUSHED_TITLE": [
-   "scripts/farm/animal_husbandry.gd:478"
+   "scripts/farm/animal_husbandry.gd:483"
   ],
   "NOTIF_ANIMAL_PLAYED_MSG": [
-   "scripts/farm/animal_husbandry.gd:501"
+   "scripts/farm/animal_husbandry.gd:506"
   ],
   "NOTIF_ANIMAL_PLAYED_TITLE": [
-   "scripts/farm/animal_husbandry.gd:500"
+   "scripts/farm/animal_husbandry.gd:505"
   ],
   "NOTIF_BOND_LEVEL_MSG": [
-   "scripts/farm/animal_husbandry.gd:659"
+   "scripts/farm/animal_husbandry.gd:704"
   ],
   "NOTIF_BOND_LEVEL_TITLE": [
-   "scripts/farm/animal_husbandry.gd:658"
+   "scripts/farm/animal_husbandry.gd:703"
   ],
   "NOTIF_BUILDING_BUILT_TITLE": [
-   "scripts/farm/animal_husbandry.gd:577"
+   "scripts/farm/animal_husbandry.gd:582"
   ],
   "NOTIF_FAVORITE_FOOD_MSG": [
-   "scripts/farm/animal_husbandry.gd:410"
+   "scripts/farm/animal_husbandry.gd:415"
   ],
   "NOTIF_FAVORITE_FOOD_TITLE": [
-   "scripts/farm/animal_husbandry.gd:410"
+   "scripts/farm/animal_husbandry.gd:415"
   ],
   "NOTIF_INVENTORY_FULL_MSG": [
    "scripts/autoload/economy_manager.gd:299",
    "scripts/autoload/economy_manager.gd:511",
    "scripts/loot/loot_service.gd:821",
-   "scripts/world2d/farm_grid.gd:234"
+   "scripts/world2d/farm_grid.gd:258"
   ],
   "NOTIF_INVENTORY_FULL_TITLE": [
    "scripts/autoload/economy_manager.gd:299",
    "scripts/autoload/economy_manager.gd:511",
    "scripts/loot/loot_service.gd:821",
-   "scripts/world2d/farm_grid.gd:234"
+   "scripts/world2d/farm_grid.gd:258"
   ],
   "NOTIF_ITEM_GAINED_TITLE": [
-   "scripts/autoload/economy_manager.gd:848"
+   "scripts/autoload/economy_manager.gd:849"
   ],
   "NOTIF_LANGUAGE_CHANGED_TITLE": [
    "scripts/autoload/localization_manager.gd:142"
@@ -8560,24 +8903,24 @@
    "scripts/autoload/lua_runtime.gd:117"
   ],
   "NOTIF_NO_BRUSH_MSG": [
-   "scripts/farm/animal_husbandry.gd:466"
+   "scripts/farm/animal_husbandry.gd:471"
   ],
   "NOTIF_NO_BRUSH_TITLE": [
-   "scripts/farm/animal_husbandry.gd:465"
+   "scripts/farm/animal_husbandry.gd:470"
   ],
   "NOTIF_NO_GOLD_MSG": [
    "scripts/autoload/economy_manager.gd:507",
-   "scripts/farm/animal_husbandry.gd:711"
+   "scripts/farm/animal_husbandry.gd:755"
   ],
   "NOTIF_NO_GOLD_TITLE": [
    "scripts/autoload/economy_manager.gd:507",
-   "scripts/farm/animal_husbandry.gd:710"
+   "scripts/farm/animal_husbandry.gd:754"
   ],
   "NOTIF_NO_SPACE_MSG": [
-   "scripts/farm/animal_husbandry.gd:347"
+   "scripts/farm/animal_husbandry.gd:352"
   ],
   "NOTIF_NO_SPACE_TITLE": [
-   "scripts/farm/animal_husbandry.gd:346"
+   "scripts/farm/animal_husbandry.gd:351"
   ],
   "NOTIF_NO_STOCK_MSG": [
    "scripts/economy/shop_system.gd:325"
@@ -8586,13 +8929,13 @@
    "scripts/economy/shop_system.gd:325"
   ],
   "NOTIF_PASSED_OUT": [
-   "scripts/world2d/world_2d.gd:701"
+   "scripts/world2d/world_2d.gd:711"
   ],
   "NOTIF_PASSED_OUT_TITLE": [
-   "scripts/world2d/world_2d.gd:701"
+   "scripts/world2d/world_2d.gd:711"
   ],
   "NOTIF_PRODUCT_COLLECTED_TITLE": [
-   "scripts/farm/animal_husbandry.gd:538"
+   "scripts/farm/animal_husbandry.gd:543"
   ],
   "NOTIF_QUEST_ACCEPTED_TITLE": [
    "scripts/autoload/quest_manager.gd:473"
@@ -8613,10 +8956,10 @@
    "scripts/autoload/save_manager.gd:243"
   ],
   "NOTIF_WRONG_FOOD_MSG": [
-   "scripts/farm/animal_husbandry.gd:396"
+   "scripts/farm/animal_husbandry.gd:401"
   ],
   "NOTIF_WRONG_FOOD_TITLE": [
-   "scripts/farm/animal_husbandry.gd:395"
+   "scripts/farm/animal_husbandry.gd:400"
   ],
   "NOTIF_ZONE_UNLOCKED_MSG": [
    "scripts/autoload/game_manager.gd:448"
@@ -10323,11 +10666,11 @@
    "lua/dungeon_run/shops.lua:5"
   ],
   "SHOP_SEED_SHOP": [
-   "lua/shops/seed_shop.lua:23",
+   "lua/shops/seed_shop.lua:21",
    "lua/shops/seed_shop.lua shop seed_shop"
   ],
   "SHOP_SEED_SHOP_GREETING": [
-   "lua/shops/seed_shop.lua:25"
+   "lua/shops/seed_shop.lua:23"
   ],
   "SHOP_SMITHY": [
    "lua/shops/smithy.lua:9",
@@ -10357,27 +10700,27 @@
    "lua/shops/timber_yard.lua:19"
   ],
   "SHOP_TOTAL": [
-   "scripts/ui/shop_ui.gd:293",
+   "scripts/ui/shop_ui.gd:297",
    "scripts/ui/dev/components_gallery.gd:53",
    "scenes/ui/dev/components_gallery.tscn:344"
   ],
   "SHOP_UI_ALREADY_OWNED": [
-   "scripts/ui/shop_ui.gd:271"
+   "scripts/ui/shop_ui.gd:275"
   ],
   "SHOP_UI_CLOSED_TODAY": [
-   "scripts/ui/shop_ui.gd:245"
+   "scripts/ui/shop_ui.gd:247"
   ],
   "SHOP_UI_SALE_FMT": [
-   "scripts/ui/shop_ui.gd:267"
+   "scripts/ui/shop_ui.gd:271"
   ],
   "SHOP_UI_SOLD_OUT": [
-   "scripts/ui/shop_ui.gd:295"
+   "scripts/ui/shop_ui.gd:299"
   ],
   "SIGN_FARM_BRIDGE": [
-   "data/maps/farm.map:67"
+   "data/maps/farm.map:68"
   ],
   "SIGN_FARM_FOREST": [
-   "data/maps/farm.map:66"
+   "data/maps/farm.map:67"
   ],
   "SIGN_HYGGEBYEN_BIER": [
    "data/maps/hyggebyen.map:119"
@@ -10413,7 +10756,7 @@
    "data/maps/moerkeskoven.map:37"
   ],
   "SIGN_ORCHARD": [
-   "data/maps/farm.map:68"
+   "data/maps/farm.map:69"
   ],
   "SKIN_FAIRY_DUSK": [
    "lua/config/characters.lua:54"
@@ -10863,10 +11206,10 @@
    "scenes/ui/inventory_ui.tscn:235"
   ],
   "STORE_ASSIGNED_FMT": [
-   "scripts/ui/inventory_ui.gd:215"
+   "scripts/ui/inventory_ui.gd:223"
   ],
   "STORE_ASSIGNED_TITLE": [
-   "scripts/ui/inventory_ui.gd:215"
+   "scripts/ui/inventory_ui.gd:223"
   ],
   "STORE_ASSIGN_TITLE": [
    "scenes/ui/inventory_ui.tscn:379"
@@ -10878,17 +11221,17 @@
    "scenes/ui/inventory_ui.tscn:241"
   ],
   "STORE_DISCARD_CONFIRM_FMT": [
-   "scripts/ui/inventory_ui.gd:185"
+   "scripts/ui/inventory_ui.gd:193"
   ],
   "STORE_EMPTY": [
-   "scripts/ui/shop_ui.gd:138",
+   "scripts/ui/shop_ui.gd:140",
    "scenes/ui/shop_ui.tscn:259"
   ],
   "STORE_EQUIP_ITEM": [
    "scenes/ui/inventory_ui.tscn:229"
   ],
   "STORE_EQUIP_NOW": [
-   "scripts/ui/shop_ui.gd:336"
+   "scripts/ui/shop_ui.gd:340"
   ],
   "STORE_NEEDS_BLUEPRINT": [
    "scripts/ui/components/workshop_panel.gd:72"
@@ -10897,12 +11240,12 @@
    "scripts/ui/components/workshop_panel.gd:77"
   ],
   "STORE_OWNED_FMT": [
-   "scripts/ui/shop_ui.gd:263",
+   "scripts/ui/shop_ui.gd:267",
    "scripts/ui/components/shop_item_row.gd:65",
    "scripts/ui/social/gift_picker.gd:203"
   ],
   "STORE_REPEAT_FMT": [
-   "scripts/ui/shop_ui.gd:269"
+   "scripts/ui/shop_ui.gd:273"
   ],
   "STORE_USE": [
    "scenes/ui/inventory_ui.tscn:223"
@@ -10917,7 +11260,7 @@
   ],
   "UI_CLOSE": [
    "scripts/ui/garderobe.gd:259",
-   "scripts/ui/shop_ui.gd:139"
+   "scripts/ui/shop_ui.gd:141"
   ],
   "UI_CURRENCY": [
    "scripts/ui/theme/tt_quest_text.gd:227"
@@ -10958,7 +11301,7 @@
    "scripts/ui/save_load_ui.gd:46"
   ],
   "UI_SELL": [
-   "scripts/ui/shop_ui.gd:291",
+   "scripts/ui/shop_ui.gd:295",
    "scenes/ui/dev/components_gallery.tscn:283"
   ],
   "UI_SLEEP": [
@@ -11060,7 +11403,7 @@
   ],
   "WORLD_PROMPT_USE": [
    "scripts/world2d/interactable_2d.gd:14",
-   "data/maps/farm.map:64",
+   "data/maps/farm.map:65",
    "data/maps/hyggebyen.map:123"
   ],
   "WSTAT_BETTER": [
@@ -11110,7 +11453,7 @@
    "zone mushroom_grove (plan 3.7)"
   ],
   "ZONE_TRAETOPPEN": [
-   "data/maps/farm.map:78",
+   "data/maps/farm.map:79",
    "data/maps/hyggebyen.map:56",
    "data/maps/moerkeskoven.map:32",
    "data/maps/traetoppen.map:17",
@@ -11557,10 +11900,35 @@
   "FARMSITE_BIN_PROMPT",
   "FARMSITE_BIN_PUT",
   "FARMSITE_BIN_REFUSE",
+  "FARMSITE_BUILD_DAYS_FMT",
+  "FARMSITE_CAPACITY_UPGRADE_FMT",
+  "FARMSITE_CONSTRUCTION_DAYS_FMT",
   "FARMSITE_EXPAND_CONFIRM",
   "FARMSITE_EXPAND_DONE",
   "FARMSITE_EXPAND_NEEDGOLD",
   "FARMSITE_EXPAND_PROMPT",
+  "FARMSITE_FIELD_OWNED",
+  "FARMSITE_FIELD_UPGRADE",
+  "FARMSITE_GREENHOUSE",
+  "FARMSITE_GREENHOUSE_BUILD_FMT",
+  "FARMSITE_GREENHOUSE_ENTER",
+  "FARMSITE_GREENHOUSE_HINT",
+  "FARMSITE_GREENHOUSE_READY",
+  "FARMSITE_GREENHOUSE_TIER_FMT",
+  "FARMSITE_GROWTH_FMT",
+  "FARMSITE_HARVEST_FMT",
+  "FARMSITE_HOUSE_UPGRADES",
+  "FARMSITE_MACHINE_BUSY_FMT",
+  "FARMSITE_MACHINE_CROP_ONLY",
+  "FARMSITE_MACHINE_LOAD",
+  "FARMSITE_MACHINE_PICKUP",
+  "FARMSITE_MACHINE_PICKUP_BUSY",
+  "FARMSITE_MACHINE_READY_FMT",
+  "FARMSITE_REGROW_FMT",
+  "FARMSITE_SEASONS_FMT",
+  "FARMSITE_SEEDS_INDOORS",
+  "FARMSITE_SEED_GREETING",
+  "FARMSITE_SEED_SHELF",
   "FARMSITE_SHED_PROMPT",
   "FARMSITE_SHED_WHISPER",
   "FARMSITE_STAGE_1",
@@ -11570,6 +11938,11 @@
   "FARMSITE_STAGE_5",
   "FARMSITE_STAGE_UP",
   "FARMSITE_STAGE_UP_TITLE",
+  "FARMSITE_UPGRADES_TITLE",
+  "FARMSITE_UPGRADE_CONFIRM_FMT",
+  "FARMSITE_UPGRADE_DONE_FMT",
+  "FARMSITE_UPGRADE_FMT",
+  "FARMSITE_UPGRADING_FMT",
   "FARMSITE_ZONE_EAST",
   "FARM_CELL_RESERVED",
   "FEST_AARSSKIFTET_DESC",
@@ -12854,6 +13227,30 @@
   "ITEM_IRON_ORE_DESC",
   "ITEM_IRON_SWORD",
   "ITEM_IRON_SWORD_DESC",
+  "ITEM_JUICE_CARROT",
+  "ITEM_JUICE_CARROT_DESC",
+  "ITEM_JUICE_CATNIP",
+  "ITEM_JUICE_CATNIP_DESC",
+  "ITEM_JUICE_FROST_KALE",
+  "ITEM_JUICE_FROST_KALE_DESC",
+  "ITEM_JUICE_GLOW_BERRY",
+  "ITEM_JUICE_GLOW_BERRY_DESC",
+  "ITEM_JUICE_MOONFLOWER",
+  "ITEM_JUICE_MOONFLOWER_DESC",
+  "ITEM_JUICE_PUMPKIN",
+  "ITEM_JUICE_PUMPKIN_DESC",
+  "ITEM_JUICE_SNOWDROP",
+  "ITEM_JUICE_SNOWDROP_DESC",
+  "ITEM_JUICE_SNOW_TURNIP",
+  "ITEM_JUICE_SNOW_TURNIP_DESC",
+  "ITEM_JUICE_STRAWBERRY",
+  "ITEM_JUICE_STRAWBERRY_DESC",
+  "ITEM_JUICE_SUNFLOWER",
+  "ITEM_JUICE_SUNFLOWER_DESC",
+  "ITEM_JUICE_TURNIP",
+  "ITEM_JUICE_TURNIP_DESC",
+  "ITEM_KEG",
+  "ITEM_KEG_DESC",
   "ITEM_LANTERN_OIL",
   "ITEM_LANTERN_OIL_DESC",
   "ITEM_LANTERN_POST",
@@ -12997,10 +13394,36 @@
   "ITEM_PLANT_TEAPOT_BONSAI",
   "ITEM_PLANT_TEAPOT_BONSAI_DESC",
   "ITEM_PLANT_TEAPOT_BONSAI_HINT",
+  "ITEM_PRESERVES_JAR",
+  "ITEM_PRESERVES_JAR_DESC",
+  "ITEM_PRESERVE_CARROT",
+  "ITEM_PRESERVE_CARROT_DESC",
+  "ITEM_PRESERVE_CATNIP",
+  "ITEM_PRESERVE_CATNIP_DESC",
+  "ITEM_PRESERVE_FROST_KALE",
+  "ITEM_PRESERVE_FROST_KALE_DESC",
+  "ITEM_PRESERVE_GLOW_BERRY",
+  "ITEM_PRESERVE_GLOW_BERRY_DESC",
+  "ITEM_PRESERVE_MOONFLOWER",
+  "ITEM_PRESERVE_MOONFLOWER_DESC",
+  "ITEM_PRESERVE_PUMPKIN",
+  "ITEM_PRESERVE_PUMPKIN_DESC",
+  "ITEM_PRESERVE_SNOWDROP",
+  "ITEM_PRESERVE_SNOWDROP_DESC",
+  "ITEM_PRESERVE_SNOW_TURNIP",
+  "ITEM_PRESERVE_SNOW_TURNIP_DESC",
+  "ITEM_PRESERVE_STRAWBERRY",
+  "ITEM_PRESERVE_STRAWBERRY_DESC",
+  "ITEM_PRESERVE_SUNFLOWER",
+  "ITEM_PRESERVE_SUNFLOWER_DESC",
+  "ITEM_PRESERVE_TURNIP",
+  "ITEM_PRESERVE_TURNIP_DESC",
   "ITEM_PUMPKIN",
   "ITEM_PUMPKIN_DESC",
   "ITEM_PUMPKIN_SEEDS",
   "ITEM_PUMPKIN_SEEDS_DESC",
+  "ITEM_QUALITY_SPRINKLER",
+  "ITEM_QUALITY_SPRINKLER_DESC",
   "ITEM_RARE_MUSHROOM",
   "ITEM_RARE_MUSHROOM_DESC",
   "ITEM_ROOF_TILE",
@@ -13128,6 +13551,14 @@
   "ITEM_SHOES_WELLIES_YELLOW_DESC",
   "ITEM_SLATE",
   "ITEM_SLATE_DESC",
+  "ITEM_SNOWDROP",
+  "ITEM_SNOWDROP_DESC",
+  "ITEM_SNOWDROP_SEEDS",
+  "ITEM_SNOWDROP_SEEDS_DESC",
+  "ITEM_SNOW_TURNIP",
+  "ITEM_SNOW_TURNIP_DESC",
+  "ITEM_SNOW_TURNIP_SEEDS",
+  "ITEM_SNOW_TURNIP_SEEDS_DESC",
   "ITEM_SOFA_BIRCH_TWO",
   "ITEM_SOFA_BIRCH_TWO_DESC",
   "ITEM_SOFA_CHERRY_THREE",
@@ -13148,6 +13579,8 @@
   "ITEM_SOFA_SKY_TWO_DESC",
   "ITEM_SOFA_WALNUT_TWO",
   "ITEM_SOFA_WALNUT_TWO_DESC",
+  "ITEM_SPRINKLER",
+  "ITEM_SPRINKLER_DESC",
   "ITEM_STONE",
   "ITEM_STONE_BLOCK",
   "ITEM_STONE_BLOCK_DESC",

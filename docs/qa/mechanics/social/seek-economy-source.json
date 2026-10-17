@@ -6107,6 +6107,26 @@
       "rarity": "normal",
       "sell_price": 0
     },
+    "frost_kale": {
+      "buy_price": 0,
+      "category": "crop",
+      "description_key": "ITEM_FROST_KALE_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_FROST_KALE",
+      "rarity": "normal",
+      "sell_price": 60
+    },
+    "frost_kale_seeds": {
+      "buy_price": 30,
+      "category": "seed",
+      "crop_id": "frost_kale",
+      "description_key": "ITEM_FROST_KALE_SEEDS_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_FROST_KALE_SEEDS",
+      "rarity": "normal",
+      "sell_price": 8,
+      "stamina_cost": 0.5
+    },
     "gem_bag": {
       "buy_price": 0,
       "category": "gem",
@@ -7764,6 +7784,118 @@
       "sell_price": 300,
       "stamina_cost": 0,
       "weapon_family": "sword"
+    },
+    "juice_carrot": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_JUICE_CARROT_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_JUICE_CARROT",
+      "rarity": "normal",
+      "sell_price": 195
+    },
+    "juice_catnip": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_JUICE_CATNIP_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_JUICE_CATNIP",
+      "rarity": "normal",
+      "sell_price": 165
+    },
+    "juice_frost_kale": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_JUICE_FROST_KALE_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_JUICE_FROST_KALE",
+      "rarity": "normal",
+      "sell_price": 180
+    },
+    "juice_glow_berry": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_JUICE_GLOW_BERRY_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_JUICE_GLOW_BERRY",
+      "rarity": "normal",
+      "sell_price": 450
+    },
+    "juice_moonflower": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_JUICE_MOONFLOWER_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_JUICE_MOONFLOWER",
+      "rarity": "normal",
+      "sell_price": 540
+    },
+    "juice_pumpkin": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_JUICE_PUMPKIN_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_JUICE_PUMPKIN",
+      "rarity": "normal",
+      "sell_price": 480
+    },
+    "juice_snow_turnip": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_JUICE_SNOW_TURNIP_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_JUICE_SNOW_TURNIP",
+      "rarity": "normal",
+      "sell_price": 240
+    },
+    "juice_snowdrop": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_JUICE_SNOWDROP_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_JUICE_SNOWDROP",
+      "rarity": "normal",
+      "sell_price": 330
+    },
+    "juice_strawberry": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_JUICE_STRAWBERRY_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_JUICE_STRAWBERRY",
+      "rarity": "normal",
+      "sell_price": 165
+    },
+    "juice_sunflower": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_JUICE_SUNFLOWER_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_JUICE_SUNFLOWER",
+      "rarity": "normal",
+      "sell_price": 210
+    },
+    "juice_turnip": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_JUICE_TURNIP_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_JUICE_TURNIP",
+      "rarity": "normal",
+      "sell_price": 135
+    },
+    "keg": {
+      "buy_price": 500,
+      "category": "placeable",
+      "description_key": "ITEM_KEG_DESC",
+      "farm_machine": "keg",
+      "max_stack": 20,
+      "name_key": "ITEM_KEG",
+      "placeable": "farm",
+      "prop": "keg",
+      "rarity": "normal",
+      "sell_price": 125,
+      "stamina_cost": 1
     },
     "lantern_oil": {
       "buy_price": 25,
@@ -10259,6 +10391,118 @@
       ],
       "worth": 2500
     },
+    "preserve_carrot": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_PRESERVE_CARROT_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_PRESERVE_CARROT",
+      "rarity": "normal",
+      "sell_price": 180
+    },
+    "preserve_catnip": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_PRESERVE_CATNIP_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_PRESERVE_CATNIP",
+      "rarity": "normal",
+      "sell_price": 160
+    },
+    "preserve_frost_kale": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_PRESERVE_FROST_KALE_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_PRESERVE_FROST_KALE",
+      "rarity": "normal",
+      "sell_price": 170
+    },
+    "preserve_glow_berry": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_PRESERVE_GLOW_BERRY_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_PRESERVE_GLOW_BERRY",
+      "rarity": "normal",
+      "sell_price": 350
+    },
+    "preserve_moonflower": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_PRESERVE_MOONFLOWER_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_PRESERVE_MOONFLOWER",
+      "rarity": "normal",
+      "sell_price": 410
+    },
+    "preserve_pumpkin": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_PRESERVE_PUMPKIN_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_PRESERVE_PUMPKIN",
+      "rarity": "normal",
+      "sell_price": 370
+    },
+    "preserve_snow_turnip": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_PRESERVE_SNOW_TURNIP_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_PRESERVE_SNOW_TURNIP",
+      "rarity": "normal",
+      "sell_price": 210
+    },
+    "preserve_snowdrop": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_PRESERVE_SNOWDROP_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_PRESERVE_SNOWDROP",
+      "rarity": "normal",
+      "sell_price": 270
+    },
+    "preserve_strawberry": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_PRESERVE_STRAWBERRY_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_PRESERVE_STRAWBERRY",
+      "rarity": "normal",
+      "sell_price": 160
+    },
+    "preserve_sunflower": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_PRESERVE_SUNFLOWER_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_PRESERVE_SUNFLOWER",
+      "rarity": "normal",
+      "sell_price": 190
+    },
+    "preserve_turnip": {
+      "buy_price": 0,
+      "category": "product",
+      "description_key": "ITEM_PRESERVE_TURNIP_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_PRESERVE_TURNIP",
+      "rarity": "normal",
+      "sell_price": 140
+    },
+    "preserves_jar": {
+      "buy_price": 350,
+      "category": "placeable",
+      "description_key": "ITEM_PRESERVES_JAR_DESC",
+      "farm_machine": "preserves_jar",
+      "max_stack": 20,
+      "name_key": "ITEM_PRESERVES_JAR",
+      "placeable": "farm",
+      "prop": "preserves_jar",
+      "rarity": "normal",
+      "sell_price": 87,
+      "stamina_cost": 1
+    },
     "pumpkin": {
       "buy_price": 0,
       "category": "crop",
@@ -10278,6 +10522,19 @@
       "rarity": "normal",
       "sell_price": 15,
       "stamina_cost": 0.5
+    },
+    "quality_sprinkler": {
+      "buy_price": 800,
+      "category": "placeable",
+      "description_key": "ITEM_QUALITY_SPRINKLER_DESC",
+      "farm_machine": "quality_sprinkler",
+      "max_stack": 20,
+      "name_key": "ITEM_QUALITY_SPRINKLER",
+      "placeable": "farm",
+      "prop": "sprinkler",
+      "rarity": "uncommon",
+      "sell_price": 200,
+      "stamina_cost": 1
     },
     "rare_mushroom": {
       "buy_price": 80,
@@ -13173,6 +13430,46 @@
         }
       ]
     },
+    "snow_turnip": {
+      "buy_price": 0,
+      "category": "crop",
+      "description_key": "ITEM_SNOW_TURNIP_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_SNOW_TURNIP",
+      "rarity": "normal",
+      "sell_price": 80
+    },
+    "snow_turnip_seeds": {
+      "buy_price": 25,
+      "category": "seed",
+      "crop_id": "snow_turnip",
+      "description_key": "ITEM_SNOW_TURNIP_SEEDS_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_SNOW_TURNIP_SEEDS",
+      "rarity": "normal",
+      "sell_price": 6,
+      "stamina_cost": 0.5
+    },
+    "snowdrop": {
+      "buy_price": 0,
+      "category": "crop",
+      "description_key": "ITEM_SNOWDROP_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_SNOWDROP",
+      "rarity": "normal",
+      "sell_price": 110
+    },
+    "snowdrop_seeds": {
+      "buy_price": 40,
+      "category": "seed",
+      "crop_id": "snowdrop",
+      "description_key": "ITEM_SNOWDROP_SEEDS_DESC",
+      "max_stack": 99,
+      "name_key": "ITEM_SNOWDROP_SEEDS",
+      "rarity": "normal",
+      "sell_price": 10,
+      "stamina_cost": 0.5
+    },
     "sofa_birch_two": {
       "acquire": [
         "buy",
@@ -13740,6 +14037,19 @@
         }
       ],
       "worth": 2420
+    },
+    "sprinkler": {
+      "buy_price": 300,
+      "category": "placeable",
+      "description_key": "ITEM_SPRINKLER_DESC",
+      "farm_machine": "sprinkler",
+      "max_stack": 20,
+      "name_key": "ITEM_SPRINKLER",
+      "placeable": "farm",
+      "prop": "sprinkler",
+      "rarity": "normal",
+      "sell_price": 75,
+      "stamina_cost": 1
     },
     "stone": {
       "buy_price": 4,
@@ -18197,6 +18507,69 @@
         "item": "wpn_sword_forest_steel"
       },
       "station": "smedje"
+    },
+    "farm_keg": {
+      "category": "craft",
+      "id": "farm_keg",
+      "ingredients": {
+        "iron_ingot": 2,
+        "wood": 30
+      },
+      "min_home_tier": 3,
+      "name_key": "ITEM_KEG",
+      "output": {
+        "amount": 1,
+        "item": "keg"
+      },
+      "station": "snedkerbord"
+    },
+    "farm_preserves_jar": {
+      "category": "craft",
+      "id": "farm_preserves_jar",
+      "ingredients": {
+        "copper_ore": 1,
+        "stone": 8,
+        "wood": 20
+      },
+      "min_home_tier": 2,
+      "name_key": "ITEM_PRESERVES_JAR",
+      "output": {
+        "amount": 1,
+        "item": "preserves_jar"
+      },
+      "station": "snedkerbord"
+    },
+    "farm_quality_sprinkler": {
+      "category": "craft",
+      "id": "farm_quality_sprinkler",
+      "ingredients": {
+        "gold_ore": 1,
+        "iron_ingot": 2,
+        "wood": 10
+      },
+      "min_home_tier": 3,
+      "name_key": "ITEM_QUALITY_SPRINKLER",
+      "output": {
+        "amount": 1,
+        "item": "quality_sprinkler"
+      },
+      "station": "snedkerbord"
+    },
+    "farm_sprinkler": {
+      "category": "craft",
+      "id": "farm_sprinkler",
+      "ingredients": {
+        "copper_ore": 2,
+        "iron_ore": 2,
+        "wood": 5
+      },
+      "min_home_tier": 1,
+      "name_key": "ITEM_SPRINKLER",
+      "output": {
+        "amount": 1,
+        "item": "sprinkler"
+      },
+      "station": "snedkerbord"
     },
     "fence": {
       "category": "craft",

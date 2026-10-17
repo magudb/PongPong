@@ -1241,6 +1241,10 @@ func _node_of(area: IsoArea, type: String, spot_id: String = "") -> Node:
 # ============================================================================================ marker_handlers.lua
 
 const EXPECTED_ROWS := {
+	"greenhouse_walls": "res://scripts/farm/greenhouse/greenhouse_walls.gd",
+	"greenhouse_slot": "res://scripts/farm/greenhouse/greenhouse_2d.gd",
+	"greenhouse": "res://scripts/farm/greenhouse/greenhouse_2d.gd",
+	"farm_equipment": "res://scripts/farm/placement_service.gd",
 	"chest": "res://scripts/world2d/loot_chest_2d.gd", "dig_spot": "res://scripts/world2d/dig_spot_2d.gd", "unique_spot": "res://scripts/world2d/unique_spot_2d.gd",
 	"home": "res://scripts/home/home_exterior_2d.gd", "tent": "res://scripts/home/tent_2d.gd",
 	"runestone": "res://scripts/dungeon/markers/runestone_2d.gd", "forest_dress": "res://scripts/forest_look/forest_dress.gd", "hulen_keeper": "res://scripts/forest_look/hulen_keeper.gd",
@@ -1269,8 +1273,8 @@ func _marker_registry() -> void:
 	var farm_ok := true
 	for ty in farm_types:
 		farm_ok = farm_ok and str(rows.get(ty, "")) == EXPECTED_ROWS[ty]
-	t.check("marker_handlers_registered_farm_types", farm_ok and str(rows["field_expansion"]).contains("steading/objects/field_expansion_2d.gd") and not str(rows["field_expansion"]).contains("farm_view") and not rows.has("greenhouse_slot"),
-		"the six farm types point at scripts/farm/steading/** (field_expansion replaces the lazy farm_view.gd entry); `greenhouse_slot` stays an unregistered data marker")
+	t.check("marker_handlers_registered_farm_types", farm_ok and str(rows["field_expansion"]).contains("steading/objects/field_expansion_2d.gd") and not str(rows["field_expansion"]).contains("farm_view") and str(rows.get("greenhouse_slot", "")) == EXPECTED_ROWS.greenhouse_slot and str(rows.get("greenhouse", "")) == EXPECTED_ROWS.greenhouse,
+		"the six farm types point at scripts/farm/steading/** (field_expansion replaces the lazy farm_view.gd entry); greenhouse_slot and greenhouse resolve the active greenhouse door handler")
 	var tdp := true
 	for ty in ["town", "door", "post"]:
 		tdp = tdp and str(rows.get(ty, "")) == "res://scripts/towns/town_marker.gd"

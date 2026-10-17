@@ -1386,7 +1386,7 @@ func _save() -> void:
 	for a in InputMap.get_actions():
 		if not str(a).begins_with("ui_"):
 			custom += 1
-	t.check("no_new_signals_or_inputs", not new_signal and not new_input and custom == (contract.ACTIONS as Dictionary).size(), "no `signal` line, no InputMap / Input call in the %d social scripts; the project has %d actions = P01's contract (%d): `people` is P01's, nothing here" % [SOCIAL_SCRIPTS.size(), custom, (contract.ACTIONS as Dictionary).size()])
+	t.check("no_new_signals_or_inputs", not new_signal and not new_input and custom == (contract.custom_actions() as Dictionary).size(), "no `signal` line, no InputMap / Input call in the %d social scripts; the project has %d actions = P01 plus the explicit F8 debug contract (%d): `people` is P01's, nothing here" % [SOCIAL_SCRIPTS.size(), custom, (contract.custom_actions() as Dictionary).size()])
 	_done()
 
 
@@ -1749,7 +1749,7 @@ func _wrappers() -> void:
 			line_count += 1
 	var chk = t.run_godot_script("res://tests/tools/check_project.gd")
 	var ids: Dictionary = t.parse_tool_ids(chk)
-	t.check("project_line_once_and_check_project_exit_0", line_count == 1 and int(chk["code"]) == 0 and (ids["fail"] as Array).is_empty() and "p01.autoloads_base_in_order_features_after" in ids["pass"], "project.godot holds the SocialManager line %d time(s); tests/tools/check_project.gd exits %d with %d PASS and %d FAIL ids" % [line_count, int(chk["code"]), (ids["pass"] as Array).size(), (ids["fail"] as Array).size()])
+	t.check("project_line_once_and_check_project_exit_0", line_count == 1 and int(chk["code"]) == 0 and (ids["fail"] as Array).is_empty() and "p01.autoloads_base_in_order_features_after" in ids["pass"], "project.godot holds the SocialManager line %d time(s); tests/tools/check_project.gd exits %d with %d PASS and %d FAIL ids" % [line_count, int(chk["code"]), (ids["pass"] as Array).size(), (ids["fail"] as Array).size()] + "; failing IDs: " + str(ids["fail"]))
 
 
 # ================================================================================================ budgets

@@ -608,7 +608,7 @@
 	"bosses": {
 		"snurresvamp": {
 			"count": 60,
-			"mean_seconds": 24.9391666666667,
+			"mean_seconds": 24.9355555555556,
 			"results": [
 				{
 					"gross_lost": 1,
@@ -709,7 +709,7 @@
 				{
 					"gross_lost": 1,
 					"lost": 0,
-					"seconds": 24.5333333333333,
+					"seconds": 24.5333333333334,
 					"seed": 12,
 					"swings": 8,
 					"won": true
@@ -741,7 +741,7 @@
 				{
 					"gross_lost": 3,
 					"lost": 2,
-					"seconds": 25.05,
+					"seconds": 25.0500000000001,
 					"seed": 16,
 					"swings": 8,
 					"won": true
@@ -757,7 +757,7 @@
 				{
 					"gross_lost": 2,
 					"lost": 1,
-					"seconds": 23.8333333333334,
+					"seconds": 23.8333333333333,
 					"seed": 18,
 					"swings": 8,
 					"won": true
@@ -765,7 +765,7 @@
 				{
 					"gross_lost": 5,
 					"lost": 5,
-					"seconds": 24.3833333333333,
+					"seconds": 24.3833333333334,
 					"seed": 19,
 					"swings": 8,
 					"won": true
@@ -773,7 +773,7 @@
 				{
 					"gross_lost": 3,
 					"lost": 2,
-					"seconds": 24.8333333333334,
+					"seconds": 24.8333333333333,
 					"seed": 20,
 					"swings": 8,
 					"won": true
@@ -789,7 +789,7 @@
 				{
 					"gross_lost": 3,
 					"lost": 2,
-					"seconds": 25.05,
+					"seconds": 25.0500000000001,
 					"seed": 22,
 					"swings": 8,
 					"won": true
@@ -797,7 +797,7 @@
 				{
 					"gross_lost": 2,
 					"lost": 2,
-					"seconds": 24.4166666666667,
+					"seconds": 24.4166666666666,
 					"seed": 23,
 					"swings": 8,
 					"won": true
@@ -805,7 +805,7 @@
 				{
 					"gross_lost": 5,
 					"lost": 3,
-					"seconds": 24.9166666666666,
+					"seconds": 24.9166666666667,
 					"seed": 24,
 					"swings": 8,
 					"won": true
@@ -829,7 +829,7 @@
 				{
 					"gross_lost": 1,
 					"lost": 0,
-					"seconds": 24.8000000000001,
+					"seconds": 24.8,
 					"seed": 27,
 					"swings": 8,
 					"won": true
@@ -837,7 +837,7 @@
 				{
 					"gross_lost": 4,
 					"lost": 2,
-					"seconds": 25.4166666666666,
+					"seconds": 25.4166666666667,
 					"seed": 28,
 					"swings": 8,
 					"won": true
@@ -845,7 +845,7 @@
 				{
 					"gross_lost": 1,
 					"lost": 1,
-					"seconds": 24.95,
+					"seconds": 24.9499999999999,
 					"seed": 29,
 					"swings": 9,
 					"won": true
@@ -869,7 +869,7 @@
 				{
 					"gross_lost": 2,
 					"lost": 1,
-					"seconds": 24.3666666666667,
+					"seconds": 24.3666666666668,
 					"seed": 32,
 					"swings": 8,
 					"won": true
@@ -877,7 +877,7 @@
 				{
 					"gross_lost": 2,
 					"lost": 1,
-					"seconds": 24.6333333333333,
+					"seconds": 24.6333333333332,
 					"seed": 33,
 					"swings": 8,
 					"won": true
@@ -885,7 +885,7 @@
 				{
 					"gross_lost": 1,
 					"lost": 0,
-					"seconds": 23.9166666666666,
+					"seconds": 23.9166666666665,
 					"seed": 34,
 					"swings": 8,
 					"won": true
@@ -917,7 +917,7 @@
 				{
 					"gross_lost": 3,
 					"lost": 1,
-					"seconds": 24.7833333333335,
+					"seconds": 24.7833333333333,
 					"seed": 38,
 					"swings": 8,
 					"won": true
@@ -925,7 +925,7 @@
 				{
 					"gross_lost": 2,
 					"lost": 1,
-					"seconds": 24.8499999999999,
+					"seconds": 24.8500000000001,
 					"seed": 39,
 					"swings": 8,
 					"won": true
@@ -973,7 +973,7 @@
 				{
 					"gross_lost": 2,
 					"lost": 0,
-					"seconds": 24.6833333333334,
+					"seconds": 24.6833333333332,
 					"seed": 45,
 					"swings": 8,
 					"won": true
@@ -981,7 +981,7 @@
 				{
 					"gross_lost": 2,
 					"lost": 2,
-					"seconds": 25.8666666666666,
+					"seconds": 25.8666666666668,
 					"seed": 46,
 					"swings": 9,
 					"won": true
@@ -1011,17 +1011,17 @@
 					"won": true
 				},
 				{
-					"gross_lost": 1,
-					"lost": 1,
-					"seconds": 24.7833333333335,
+					"gross_lost": 0,
+					"lost": 0,
+					"seconds": 24.5833333333335,
 					"seed": 50,
-					"swings": 9,
+					"swings": 8,
 					"won": true
 				},
 				{
 					"gross_lost": 3,
-					"lost": 2,
-					"seconds": 25.2166666666665,
+					"lost": 3,
+					"seconds": 25.1999999999998,
 					"seed": 51,
 					"swings": 8,
 					"won": true
@@ -1029,7 +1029,7 @@
 				{
 					"gross_lost": 5,
 					"lost": 1,
-					"seconds": 25.5666666666666,
+					"seconds": 25.5666666666668,
 					"seed": 52,
 					"swings": 9,
 					"won": true
@@ -1095,7 +1095,7 @@
 		},
 		"snurresvamp_gloed": {
 			"count": 60,
-			"mean_seconds": 33.9891666666667,
+			"mean_seconds": 34.0252777777778,
 			"results": [
 				{
 					"gross_lost": 4,
@@ -1172,15 +1172,15 @@
 				{
 					"gross_lost": 2,
 					"lost": 1,
-					"seconds": 33.6499999999999,
+					"seconds": 33.6000000000001,
 					"seed": 9,
 					"swings": 11,
 					"won": true
 				},
 				{
-					"gross_lost": 3,
-					"lost": 2,
-					"seconds": 33.3333333333333,
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 33.1333333333332,
 					"seed": 10,
 					"swings": 11,
 					"won": true
@@ -1188,23 +1188,23 @@
 				{
 					"gross_lost": 6,
 					"lost": 4,
-					"seconds": 38.2,
+					"seconds": 38.2166666666667,
 					"seed": 11,
 					"swings": 11,
 					"won": true
 				},
 				{
-					"gross_lost": 4,
-					"lost": 2,
-					"seconds": 33.6000000000004,
+					"gross_lost": 8,
+					"lost": 6,
+					"seconds": 36.1833333333334,
 					"seed": 12,
 					"swings": 11,
 					"won": true
 				},
 				{
-					"gross_lost": 6,
-					"lost": 4,
-					"seconds": 37.4500000000003,
+					"gross_lost": 3,
+					"lost": 3,
+					"seconds": 38.0166666666664,
 					"seed": 13,
 					"swings": 11,
 					"won": true
@@ -1212,7 +1212,7 @@
 				{
 					"gross_lost": 5,
 					"lost": 3,
-					"seconds": 32.6666666666665,
+					"seconds": 32.9499999999998,
 					"seed": 14,
 					"swings": 11,
 					"won": true
@@ -1220,7 +1220,7 @@
 				{
 					"gross_lost": 5,
 					"lost": 3,
-					"seconds": 32.6500000000001,
+					"seconds": 32.9166666666665,
 					"seed": 15,
 					"swings": 11,
 					"won": true
@@ -1236,7 +1236,7 @@
 				{
 					"gross_lost": 3,
 					"lost": 2,
-					"seconds": 33.3666666666663,
+					"seconds": 33.3666666666668,
 					"seed": 17,
 					"swings": 11,
 					"won": true
@@ -1244,7 +1244,7 @@
 				{
 					"gross_lost": 3,
 					"lost": 1,
-					"seconds": 32.1666666666665,
+					"seconds": 32.166666666667,
 					"seed": 18,
 					"swings": 11,
 					"won": true
@@ -1268,7 +1268,7 @@
 				{
 					"gross_lost": 5,
 					"lost": 3,
-					"seconds": 33.7333333333331,
+					"seconds": 33.7333333333336,
 					"seed": 21,
 					"swings": 12,
 					"won": true
@@ -1276,7 +1276,7 @@
 				{
 					"gross_lost": 2,
 					"lost": 1,
-					"seconds": 33.1333333333332,
+					"seconds": 33.1333333333337,
 					"seed": 22,
 					"swings": 12,
 					"won": true
@@ -1292,7 +1292,7 @@
 				{
 					"gross_lost": 4,
 					"lost": 2,
-					"seconds": 31.9333333333334,
+					"seconds": 31.9333333333329,
 					"seed": 24,
 					"swings": 11,
 					"won": true
@@ -1324,7 +1324,7 @@
 				{
 					"gross_lost": 4,
 					"lost": 2,
-					"seconds": 32.4333333333334,
+					"seconds": 33.1999999999998,
 					"seed": 28,
 					"swings": 11,
 					"won": true
@@ -1332,7 +1332,7 @@
 				{
 					"gross_lost": 3,
 					"lost": 1,
-					"seconds": 32.7666666666664,
+					"seconds": 32.7833333333333,
 					"seed": 29,
 					"swings": 11,
 					"won": true
@@ -1340,7 +1340,7 @@
 				{
 					"gross_lost": 1,
 					"lost": 0,
-					"seconds": 33.3166666666666,
+					"seconds": 33.3500000000004,
 					"seed": 30,
 					"swings": 11,
 					"won": true
@@ -1348,15 +1348,15 @@
 				{
 					"gross_lost": 2,
 					"lost": 1,
-					"seconds": 33.1999999999998,
+					"seconds": 33.2166666666667,
 					"seed": 31,
 					"swings": 11,
 					"won": true
 				},
 				{
-					"gross_lost": 9,
-					"lost": 7,
-					"seconds": 33.5333333333333,
+					"gross_lost": 3,
+					"lost": 1,
+					"seconds": 32.1666666666665,
 					"seed": 32,
 					"swings": 11,
 					"won": true
@@ -1364,7 +1364,7 @@
 				{
 					"gross_lost": 3,
 					"lost": 2,
-					"seconds": 32.0833333333335,
+					"seconds": 32.1333333333337,
 					"seed": 33,
 					"swings": 11,
 					"won": true
@@ -1378,41 +1378,41 @@
 					"won": true
 				},
 				{
-					"gross_lost": 3,
-					"lost": 2,
-					"seconds": 32.5,
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 32.5333333333333,
 					"seed": 35,
 					"swings": 11,
 					"won": true
 				},
 				{
-					"gross_lost": 2,
-					"lost": 0,
-					"seconds": 33.9666666666667,
+					"gross_lost": 3,
+					"lost": 2,
+					"seconds": 33.3499999999999,
 					"seed": 36,
 					"swings": 11,
 					"won": true
 				},
 				{
-					"gross_lost": 6,
-					"lost": 4,
-					"seconds": 35.1166666666668,
+					"gross_lost": 7,
+					"lost": 6,
+					"seconds": 36.6666666666665,
 					"seed": 37,
-					"swings": 12,
+					"swings": 11,
 					"won": true
 				},
 				{
 					"gross_lost": 5,
 					"lost": 3,
-					"seconds": 32.8666666666663,
+					"seconds": 33.2833333333333,
 					"seed": 38,
-					"swings": 11,
+					"swings": 12,
 					"won": true
 				},
 				{
 					"gross_lost": 4,
-					"lost": 2,
-					"seconds": 33.5500000000002,
+					"lost": 3,
+					"seconds": 33.7333333333336,
 					"seed": 39,
 					"swings": 11,
 					"won": true
@@ -1460,7 +1460,7 @@
 				{
 					"gross_lost": 8,
 					"lost": 6,
-					"seconds": 33.8499999999999,
+					"seconds": 33.8500000000004,
 					"seed": 45,
 					"swings": 12,
 					"won": true
@@ -1468,7 +1468,7 @@
 				{
 					"gross_lost": 4,
 					"lost": 2,
-					"seconds": 34.2333333333331,
+					"seconds": 34.2166666666667,
 					"seed": 46,
 					"swings": 11,
 					"won": true
@@ -1484,33 +1484,33 @@
 				{
 					"gross_lost": 2,
 					"lost": 0,
-					"seconds": 33.5333333333333,
+					"seconds": 33.1666666666665,
 					"seed": 48,
 					"swings": 11,
 					"won": true
 				},
 				{
-					"gross_lost": 7,
-					"lost": 5,
-					"seconds": 33.8666666666663,
+					"gross_lost": 4,
+					"lost": 2,
+					"seconds": 32.8166666666671,
 					"seed": 49,
 					"swings": 11,
 					"won": true
 				},
 				{
-					"gross_lost": 7,
-					"lost": 5,
-					"seconds": 33.7166666666667,
+					"gross_lost": 8,
+					"lost": 6,
+					"seconds": 33.8000000000002,
 					"seed": 50,
 					"swings": 12,
 					"won": true
 				},
 				{
-					"gross_lost": 7,
-					"lost": 5,
-					"seconds": 32.9666666666667,
+					"gross_lost": 6,
+					"lost": 4,
+					"seconds": 38.5333333333333,
 					"seed": 51,
-					"swings": 12,
+					"swings": 11,
 					"won": true
 				},
 				{
@@ -1522,17 +1522,17 @@
 					"won": true
 				},
 				{
-					"gross_lost": 3,
-					"lost": 1,
-					"seconds": 33.8166666666666,
+					"gross_lost": 5,
+					"lost": 3,
+					"seconds": 33.4666666666667,
 					"seed": 53,
-					"swings": 11,
+					"swings": 12,
 					"won": true
 				},
 				{
 					"gross_lost": 4,
 					"lost": 2,
-					"seconds": 33.3499999999999,
+					"seconds": 33.2833333333333,
 					"seed": 54,
 					"swings": 11,
 					"won": true
@@ -1540,7 +1540,7 @@
 				{
 					"gross_lost": 4,
 					"lost": 2,
-					"seconds": 37.6500000000001,
+					"seconds": 37.6333333333337,
 					"seed": 55,
 					"swings": 12,
 					"won": true
@@ -1548,15 +1548,15 @@
 				{
 					"gross_lost": 3,
 					"lost": 1,
-					"seconds": 33.3000000000002,
+					"seconds": 33.0833333333335,
 					"seed": 56,
 					"swings": 11,
 					"won": true
 				},
 				{
-					"gross_lost": 5,
-					"lost": 4,
-					"seconds": 38.7333333333336,
+					"gross_lost": 2,
+					"lost": 0,
+					"seconds": 32.7833333333333,
 					"seed": 57,
 					"swings": 11,
 					"won": true
@@ -1582,28 +1582,28 @@
 		},
 		"snurresvamp_konge": {
 			"count": 60,
-			"mean_seconds": 41.3147222222222,
+			"mean_seconds": 41.1630555555555,
 			"results": [
 				{
-					"gross_lost": 5,
-					"lost": 4,
-					"seconds": 47.0166666666669,
+					"gross_lost": 6,
+					"lost": 3,
+					"seconds": 47.2333333333331,
 					"seed": 0,
 					"swings": 12,
 					"won": true
 				},
 				{
-					"gross_lost": 3,
-					"lost": 1,
-					"seconds": 40.9833333333336,
+					"gross_lost": 7,
+					"lost": 5,
+					"seconds": 41.5,
 					"seed": 1,
-					"swings": 12,
+					"swings": 13,
 					"won": true
 				},
 				{
-					"gross_lost": 4,
-					"lost": 3,
-					"seconds": 47.4166666666665,
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 47.2166666666667,
 					"seed": 2,
 					"swings": 12,
 					"won": true
@@ -1611,23 +1611,23 @@
 				{
 					"gross_lost": 4,
 					"lost": 2,
-					"seconds": 39.3499999999999,
+					"seconds": 39.3166666666666,
 					"seed": 3,
-					"swings": 12,
-					"won": true
-				},
-				{
-					"gross_lost": 10,
-					"lost": 7,
-					"seconds": 38.8666666666663,
-					"seed": 4,
 					"swings": 12,
 					"won": true
 				},
 				{
 					"gross_lost": 5,
 					"lost": 2,
-					"seconds": 48.1666666666665,
+					"seconds": 39.4833333333331,
+					"seed": 4,
+					"swings": 12,
+					"won": true
+				},
+				{
+					"gross_lost": 8,
+					"lost": 5,
+					"seconds": 48.9333333333329,
 					"seed": 5,
 					"swings": 12,
 					"won": true
@@ -1641,25 +1641,25 @@
 					"won": true
 				},
 				{
-					"gross_lost": 7,
-					"lost": 5,
-					"seconds": 38.5166666666664,
+					"gross_lost": 4,
+					"lost": 2,
+					"seconds": 35.2166666666662,
 					"seed": 7,
-					"swings": 13,
-					"won": true
-				},
-				{
-					"gross_lost": 8,
-					"lost": 6,
-					"seconds": 47.4499999999998,
-					"seed": 8,
 					"swings": 12,
 					"won": true
 				},
 				{
-					"gross_lost": 4,
+					"gross_lost": 6,
 					"lost": 4,
-					"seconds": 38.6166666666663,
+					"seconds": 39.4666666666662,
+					"seed": 8,
+					"swings": 13,
+					"won": true
+				},
+				{
+					"gross_lost": 2,
+					"lost": 1,
+					"seconds": 39.9666666666672,
 					"seed": 9,
 					"swings": 12,
 					"won": true
@@ -1667,15 +1667,15 @@
 				{
 					"gross_lost": 5,
 					"lost": 3,
-					"seconds": 40.2666666666673,
+					"seconds": 40.2333333333336,
 					"seed": 10,
-					"swings": 12,
+					"swings": 13,
 					"won": true
 				},
 				{
-					"gross_lost": 8,
-					"lost": 6,
-					"seconds": 54.2166666666662,
+					"gross_lost": 6,
+					"lost": 4,
+					"seconds": 53.1999999999998,
 					"seed": 11,
 					"swings": 12,
 					"won": true
@@ -1683,7 +1683,7 @@
 				{
 					"gross_lost": 2,
 					"lost": 0,
-					"seconds": 44.7833333333328,
+					"seconds": 44.7833333333338,
 					"seed": 12,
 					"swings": 12,
 					"won": true
@@ -1699,7 +1699,7 @@
 				{
 					"gross_lost": 6,
 					"lost": 5,
-					"seconds": 37.6666666666661,
+					"seconds": 37.666666666667,
 					"seed": 14,
 					"swings": 12,
 					"won": true
@@ -1739,7 +1739,7 @@
 				{
 					"gross_lost": 7,
 					"lost": 5,
-					"seconds": 39.6666666666661,
+					"seconds": 39.666666666667,
 					"seed": 19,
 					"swings": 12,
 					"won": true
@@ -1747,7 +1747,7 @@
 				{
 					"gross_lost": 4,
 					"lost": 2,
-					"seconds": 35.7999999999993,
+					"seconds": 35.8000000000002,
 					"seed": 20,
 					"swings": 12,
 					"won": true
@@ -1755,7 +1755,7 @@
 				{
 					"gross_lost": 8,
 					"lost": 6,
-					"seconds": 45.7666666666664,
+					"seconds": 45.7666666666673,
 					"seed": 21,
 					"swings": 13,
 					"won": true
@@ -1819,7 +1819,7 @@
 				{
 					"gross_lost": 7,
 					"lost": 5,
-					"seconds": 45.7166666666672,
+					"seconds": 45.7166666666662,
 					"seed": 29,
 					"swings": 13,
 					"won": true
@@ -1827,7 +1827,7 @@
 				{
 					"gross_lost": 9,
 					"lost": 7,
-					"seconds": 42.5500000000002,
+					"seconds": 42.5499999999993,
 					"seed": 30,
 					"swings": 12,
 					"won": true
@@ -1851,7 +1851,7 @@
 				{
 					"gross_lost": 3,
 					"lost": 2,
-					"seconds": 34.9333333333334,
+					"seconds": 34.9333333333325,
 					"seed": 33,
 					"swings": 12,
 					"won": true
@@ -1859,7 +1859,7 @@
 				{
 					"gross_lost": 2,
 					"lost": 2,
-					"seconds": 34.916666666667,
+					"seconds": 34.9166666666661,
 					"seed": 34,
 					"swings": 12,
 					"won": true
@@ -1891,7 +1891,7 @@
 				{
 					"gross_lost": 6,
 					"lost": 4,
-					"seconds": 41.1333333333341,
+					"seconds": 41.1333333333332,
 					"seed": 38,
 					"swings": 13,
 					"won": true
@@ -1899,7 +1899,7 @@
 				{
 					"gross_lost": 5,
 					"lost": 2,
-					"seconds": 38.7333333333336,
+					"seconds": 38.7333333333327,
 					"seed": 39,
 					"swings": 12,
 					"won": true
@@ -1907,7 +1907,7 @@
 				{
 					"gross_lost": 3,
 					"lost": 2,
-					"seconds": 39.0500000000002,
+					"seconds": 39.0499999999993,
 					"seed": 40,
 					"swings": 12,
 					"won": true
@@ -1923,7 +1923,7 @@
 				{
 					"gross_lost": 9,
 					"lost": 5,
-					"seconds": 50.0333333333338,
+					"seconds": 50.0333333333328,
 					"seed": 42,
 					"swings": 13,
 					"won": true
@@ -1947,7 +1947,7 @@
 				{
 					"gross_lost": 4,
 					"lost": 1,
-					"seconds": 39.2333333333336,
+					"seconds": 39.2333333333327,
 					"seed": 45,
 					"swings": 12,
 					"won": true
@@ -1987,7 +1987,7 @@
 				{
 					"gross_lost": 7,
 					"lost": 5,
-					"seconds": 44.2999999999993,
+					"seconds": 44.3000000000002,
 					"seed": 50,
 					"swings": 13,
 					"won": true
@@ -1995,7 +1995,7 @@
 				{
 					"gross_lost": 8,
 					"lost": 4,
-					"seconds": 41.4833333333327,
+					"seconds": 41.4833333333336,
 					"seed": 51,
 					"swings": 13,
 					"won": true
@@ -2003,7 +2003,7 @@
 				{
 					"gross_lost": 5,
 					"lost": 3,
-					"seconds": 40.7833333333328,
+					"seconds": 40.7833333333338,
 					"seed": 52,
 					"swings": 12,
 					"won": true
@@ -2011,7 +2011,7 @@
 				{
 					"gross_lost": 6,
 					"lost": 4,
-					"seconds": 42.2000000000007,
+					"seconds": 42.1999999999998,
 					"seed": 53,
 					"swings": 12,
 					"won": true
@@ -2043,7 +2043,7 @@
 				{
 					"gross_lost": 4,
 					"lost": 2,
-					"seconds": 48.6500000000005,
+					"seconds": 48.6499999999996,
 					"seed": 57,
 					"swings": 12,
 					"won": true

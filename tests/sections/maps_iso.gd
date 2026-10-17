@@ -507,6 +507,10 @@ func _graph(t) -> void:
 			for w2 in _warps(_scan(tm), tm):
 				if str(w2["to"]) == String(id):
 					back = true
+			# Conditional interaction doors are graph edges too; a built greenhouse
+			# enters through its painted door rather than an always-active warp.
+			if id == &"greenhouse" and to == "farm":
+				back = tm.extra.get("indoor", "false") == "false" and tm.markers.values().any(func(marker): return marker.get("marker", "") == "greenhouse_slot")
 			if not back:
 				trips.append("%s -> %s has no warp back" % [id, to])
 	t.check("warp_targets_and_spawns", bad.is_empty() and checked >= 3, "%d warps of %d real maps: every target exists (or is pending / generated) and has the named arrival spawn; problems %s" % [checked, real.size(), bad])

@@ -12,7 +12,7 @@ func _init() -> void:
 
 func _ready() -> void:
 	super._ready()
-	# Keep the title's menu face, font and gold focus while fitting all twelve pause actions.
+	# Keep the title's menu face, font and gold focus while fitting all thirteen pause actions.
 	var compact := theme.duplicate() as Theme
 	for state in ["normal", "hover", "pressed", "hover_pressed", "disabled", "focus"]:
 		var box := theme.get_stylebox(state, "MenuRow").duplicate() as StyleBox
@@ -20,6 +20,7 @@ func _ready() -> void:
 		box.content_margin_bottom = 4.0
 		compact.set_stylebox(state, "MenuRow", box)
 	theme = compact
+	resized.connect(_fit_panel)
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("pause", Callable(get_script(), &"fixture_setup"))
 	%HintBar.set_hints([{"pair": [&"ui_up", &"ui_down"], "key": "HINT_MOVE"}, {"action": &"ui_accept", "key": "HINT_OK"}, {"action": &"ui_cancel", "key": "HINT_RESUME"}])
 
@@ -77,6 +78,17 @@ func _refresh_texts() -> void:
 		row.text = tr(str(row.get_meta(&"copy_key")))
 	UiNav.wire_ring(_rows)
 	UiNav.hover_focus(_rows)
+	_fit_panel.call_deferred()
+
+func _fit_panel() -> void:
+	if not is_node_ready(): return
+	var panel: PanelContainer = get_node("Panel")
+	var body: VBoxContainer = get_node("Panel/Body")
+	var hint_height: float = %HintBar.get_combined_minimum_size().y if %HintBar.visible else 0.0
+	var gaps := 2 if %HintBar.visible else 1
+	var desired: float = %TitleLabel.get_combined_minimum_size().y + %MenuList.get_combined_minimum_size().y + hint_height + gaps * body.get_theme_constant("separation") + panel.get_theme_stylebox("panel").get_minimum_size().y
+	panel.size = Vector2(500, minf(desired, minf(630, maxf(1, size.y-48))))
+	panel.position = (size-panel.size)*0.5
 
 func _nested(panel: StringName) -> void:
 	EventBus.ui_panel_toggled.emit(panel, true)

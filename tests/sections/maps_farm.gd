@@ -29,7 +29,7 @@ const CHECKER := "tools/farm/check_farm_map.py"
 ## Warp targets of areas other tracks build: V4 closes `traetoppen` (the treetop city), then the section checks its arrival spawn.
 const PENDING_AREAS: Array[String] = ["traetoppen"]
 const REMOVED_FOREST_AREAS: Array[String] = ["skovkant", "dybe_bregner", "svampelunden", "krystalgrotten", "moerkeskoven", "hyggebyen"]
-const SPAWN_NAMES: Array[String] = ["default", "from_home", "from_traetoppen"]
+const SPAWN_NAMES: Array[String] = ["default", "from_home", "from_traetoppen", "from_greenhouse"]
 const POSTS: Array[String] = ["bench_a", "field_edge", "hoppe_fence", "pip_mailbox", "porch"]
 const GROUND_COUNTS := {".": 645, ",": 44, ";": 26, "p": 117, "d": 227, "=": 16, "f": 84, "~": 47, "#": 1905}
 const MARKER_COUNTS := {"home": 1, "tent": 1, "bed": 1, "mailbox": 1, "shipping_bin": 1, "tool_shed": 1, "field_expansion": 1, "node": 8, "sign": 3,
@@ -337,8 +337,8 @@ func _markers(t) -> void:
 	for r in _of("spawn"):
 		spawn_named.append(str((r["params"] as Dictionary).get("name", "")))
 	var lanterns: int = _count_props("lantern_post")
-	t.check("marker_counts", file_counts == MARKER_COUNTS.merged({"spawn": 2}, true) and live_ok and growth == [1, 2, 3] and _default_cell != Vector2i(-1, -1) and _a.spawns.size() == 3 and _n("lift") == 0 and lanterns == 8,
-		"1 home, 1 tent, 1 bed, 1 mailbox, 1 bin, 1 shed, 1 expansion, 3 spawns (default `@` + 2 named), 8 node, 3 sign, 2 dig, 2 unique, 1 warp, 1 quest_spot, 3 light, 3 underdeck, 1 ambient_fx, 16 dress, 5 post, 1 town, 1 yard, 3 slots, 1 greenhouse slot, 3 growth, 8 lantern_post props; file %s live-area ok %s" % [file_counts, live_ok])
+	t.check("marker_counts", file_counts == MARKER_COUNTS.merged({"spawn": 3}, true) and live_ok and growth == [1, 2, 3] and _default_cell != Vector2i(-1, -1) and _a.spawns.size() == 4 and _n("lift") == 0 and lanterns == 8,
+		"1 home, 1 tent, 1 bed, 1 mailbox, 1 bin, 1 shed, 1 expansion, 4 spawns (default `@` + 3 named), 8 node, 3 sign, 2 dig, 2 unique, 1 warp, 1 quest_spot, 3 light, 3 underdeck, 1 ambient_fx, 16 dress, 5 post, 1 town, 1 yard, 3 slots, 1 greenhouse slot, 3 growth, 8 lantern_post props; file %s live-area ok %s" % [file_counts, live_ok])
 	var kinds: Dictionary = {}
 	for r2 in _of("node"):
 		var k: String = str((r2["params"] as Dictionary).get("kind", ""))
@@ -759,8 +759,8 @@ func _spawns_and_warps(t) -> void:
 	var target_ok: bool = WorldRoot2D.has_area(StringName(to)) or to in PENDING_AREAS
 	var last_plank: bool = _ground(wcell) == "=" and _ground(wcell + Vector2i(0, 1)) == "#" and _ground(wcell - Vector2i(0, 1)) == "="
 	var on_bridge: bool = _ground(_cell_of_spawn("from_traetoppen")) == "=" and _cell_of_spawn("from_traetoppen") == wcell - Vector2i(0, 3)
-	t.check("warp_graph", spawns_have and a.spawns.size() == 3 and _n("warp") == 1 and to == "traetoppen" and str(wp.get("spawn", "")) == "from_farm" and str(wp.get("label", "")) == "ZONE_TRAETOPPEN" and target_ok and last_plank and on_bridge,
-		"exactly three spawns %s; the ONLY warp -> %s:%s (label %s) sits on the LAST plank (local %s); `traetoppen` %s; from_traetoppen is on the bridge 3 planks before the warp" % [a.spawns.keys(), to, wp.get("spawn"), wp.get("label"), wcell - _door, "exists" if WorldRoot2D.has_area(&"traetoppen") else "is PENDING (V4 builds it; the arrival `from_farm` is V4's)"])
+	t.check("warp_graph", spawns_have and a.spawns.size() == 4 and _n("warp") == 1 and to == "traetoppen" and str(wp.get("spawn", "")) == "from_farm" and str(wp.get("label", "")) == "ZONE_TRAETOPPEN" and target_ok and last_plank and on_bridge,
+		"exactly four spawns %s; the ONLY warp -> %s:%s (label %s) sits on the LAST plank (local %s); `traetoppen` %s; from_traetoppen is on the bridge 3 planks before the warp" % [a.spawns.keys(), to, wp.get("spawn"), wp.get("label"), wcell - _door, "exists" if WorldRoot2D.has_area(&"traetoppen") else "is PENDING (V4 builds it; the arrival `from_farm` is V4's)"])
 	if WorldRoot2D.has_area(&"traetoppen"):
 		var city: AreaMap = WorldRoot2D.load_map(&"traetoppen")
 		var arrival: bool = false

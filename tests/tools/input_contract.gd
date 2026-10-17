@@ -14,6 +14,11 @@ extends RefCounted
 ## last row, "Godot defaults + D-pad, joy A/B", and UI_NAVIGATION.md F10, pad paging on LB / RB):
 ## see UI_OVERRIDES, ui_errors() and ui_page_errors().
 
+# Explicitly authorized development control, separate from the frozen P01 gameplay bindings.
+const DEBUG_ACTIONS := {"cheat_menu": {"keys": [KEY_F8], "deadzone": 0.2}}
+static func custom_actions() -> Dictionary:
+	return ACTIONS.merged(DEBUG_ACTIONS)
+
 const ACTIONS: Dictionary = {
 	"move_forward": {"keys": [KEY_W, KEY_UP], "axes": [[JOY_AXIS_LEFT_Y, -1.0]]},
 	"move_back": {"keys": [KEY_S, KEY_DOWN], "axes": [[JOY_AXIS_LEFT_Y, 1.0]]},
@@ -165,7 +170,7 @@ static func signature(ev: InputEvent) -> String:
 
 ## Signatures the contract expects for one action (a contract action or one of UI_OVERRIDES).
 static func expected_signatures(action: String) -> Array:
-	var spec: Dictionary = ACTIONS.get(action, UI_OVERRIDES.get(action, {}))
+	var spec: Dictionary = ACTIONS.get(action, DEBUG_ACTIONS.get(action, UI_OVERRIDES.get(action, {})))
 	var out: Array = []
 	for code: int in spec.get("keys", []):
 		out.append("key:%d" % code)
@@ -194,7 +199,7 @@ static func actual_signatures(action: String) -> Array:
 ## One readable message per offending event; empty = every binding is the plain form.
 static func qualifier_errors() -> Array:
 	var errors: Array = []
-	var names: Array = ACTIONS.keys() + UI_OVERRIDES.keys()
+	var names: Array = custom_actions().keys() + UI_OVERRIDES.keys()
 	for action: String in names:
 		if not InputMap.has_action(action):
 			continue
@@ -332,7 +337,7 @@ static func _key_event(code: int) -> InputEventKey:
 static func verify() -> Array:
 	var errors: Array = []
 	# 1. every contract action exists with exactly the contract events and the contract deadzone
-	for action: String in ACTIONS:
+	for action: String in custom_actions():
 		if not InputMap.has_action(action):
 			errors.append("missing action %s" % action)
 			continue
@@ -340,12 +345,13 @@ static func verify() -> Array:
 		var got: Array = actual_signatures(action)
 		if want != got:
 			errors.append("%s: expected events %s but found %s" % [action, want, got])
-		if not is_equal_approx(InputMap.action_get_deadzone(action), DEADZONE):
-			errors.append("%s: deadzone %.2f, expected %.2f" % [action, InputMap.action_get_deadzone(action), DEADZONE])
+		var deadzone: float = float(custom_actions()[action].get("deadzone", DEADZONE))
+		if not is_equal_approx(InputMap.action_get_deadzone(action), deadzone):
+			errors.append("%s: deadzone %.2f, expected %.2f" % [action, InputMap.action_get_deadzone(action), deadzone])
 	# 2. no custom (non ui_) action outside the contract
 	for action: StringName in InputMap.get_actions():
 		var s: String = String(action)
-		if s.begins_with("ui_") or ACTIONS.has(s):
+		if s.begins_with("ui_") or custom_actions().has(s):
 			continue
 		errors.append("unexpected custom action %s (new actions go through P01's owner)" % s)
 	# 3. no clash: the events shared between actions are exactly the intended ones
@@ -368,7 +374,7 @@ static func verify() -> Array:
 ## Shared bindings found in the live map (contract actions only), for printing and the clash check.
 static func shared_bindings() -> Dictionary:
 	var by_sig: Dictionary = {}
-	for action: String in ACTIONS:
+	for action: String in custom_actions():
 		if not InputMap.has_action(action):
 			continue
 		for sig: String in actual_signatures(action):
