@@ -14,7 +14,7 @@ func _ready() -> void:
 	%ContinueButton.pressed.connect(_on_continue)
 	%LoadButton.pressed.connect(func(): _remember(%LoadButton); EventBus.ui_panel_toggled.emit(&"load_menu", true))
 	%SettingsButton.pressed.connect(func(): _remember(%SettingsButton); EventBus.ui_panel_toggled.emit(&"settings", true))
-	%QuitButton.pressed.connect(func(): get_tree().quit())
+	%QuitButton.pressed.connect(func(): GameManager.quit_game())
 	%LanguageButton.pressed.connect(_on_language)
 	for id in ["save_load_ui", "settings_ui"]:
 		var screen: Node = load("res://scenes/ui/" + id + ".tscn").instantiate()

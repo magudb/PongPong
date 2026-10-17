@@ -409,6 +409,9 @@ func _finish() -> void:
 	if _finished or _t == null:
 		return
 	_finished = true
+	paused = true
+	var audio := root.get_node_or_null("AudioManager")
+	if audio!=null and audio.has_method("prepare_shutdown"):await audio.prepare_shutdown()
 	var engine_n: int = _catcher.mark()
 	var errors: int = engine_n - _catcher.count_kind("warning")
 	var warnings: int = _catcher.count_kind("warning")

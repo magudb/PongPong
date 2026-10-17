@@ -252,7 +252,8 @@
       ],
       "prompt": "Style transfer into a new sibling asset for the existing Trætoppen isometric storybook farm. The input images are style/material/camera references only; keep their approved images unchanged. Match their matte gouache/watercolor pigment, warm irregular pencil contours, natural honey timber, cream linen, sage foliage and restrained stone/iron. Match the reference’s isometric camera: equal left/right ground axes, a ground diamond about 128 wide by 76 high, see top and two sides; no perspective convergence. Subject: One low flat sage water-lily leaf with a clear notch and a small cream/pale-rose water-lily blossom on top. A few small painted water droplets. A quiet pond decoration. No water patch, disc pedestal or surrounding scenery. Native output will be fitted without stretching to 96 × 56 pixels. One complete isolated object, centered with 12 percent transparent gutter. Genuine transparent alpha. No UI, labels, letters, numbers, watermark, rarity frame, scene, rectangular ground tile, enclosing grass square, heavy cast shadow, plastic gloss, vector geometry, faceted low-poly surfaces, photorealism or neon glow. Keep readable materials and silhouette at its small native game size. Retain the handmade painted finish of the supplied references.",
       "transparent_background": true,
-      "source": "tools/art/drawn/sources/farm_seasons/pond_lily.png"
+      "source": "tools/art/drawn/sources/farm_seasons/pond_lily.png",
+      "catalog_id": "pond_lily_farm"
     },
     {
       "id": "leaf_a",

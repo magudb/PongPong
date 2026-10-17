@@ -28,8 +28,9 @@ def build():
         files[target.with_suffix('.webp.import')]=PRESET.encode()
         sources[spec['id']]={'source':spec['source'],'sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'size':spec['size'],'type':spec['type']}
         if spec['type']!='particle':
-            props[spec['id']]={'file':target.name,'size':spec['size'],'pivot':spec.get('pivot',PIVOTS.get(spec['id'])),'footprint':spec['footprint'],'illustration':spec['source']}
-            assert props[spec['id']]['pivot'] is not None
+            catalog_id=spec.get('catalog_id',spec['id'])
+            props[catalog_id]={'file':target.name,'size':spec['size'],'pivot':spec.get('pivot',PIVOTS.get(spec['id'])),'footprint':spec['footprint'],'illustration':spec['source']}
+            assert props[catalog_id]['pivot'] is not None
     files[OUT/'props.json']=(json.dumps(props,indent=2)+'\n').encode()
     files[OUT/'props.json.import']=b'[remap]\nimporter="keep"\n'
     vram=sum(s['size'][0]*s['size'][1]*4 for s in sources.values())

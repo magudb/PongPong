@@ -102,7 +102,7 @@ func _leave(quit_game: bool) -> void:
 	GameManager.pop_all_modals()
 	GameManager.change_phase(GameManager.GamePhase.MENU)
 	if quit_game:
-		get_tree().quit()
+		GameManager.quit_game()
 	else:
 		get_tree().change_scene_to_file("res://scenes/main/main_menu.tscn")
 

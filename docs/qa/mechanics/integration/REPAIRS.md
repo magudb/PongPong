@@ -1,0 +1,5 @@
+# Integration repairs
+
+The post-office fixture now opens and closes the real people guide before further travel. Cast checks include the registered Secret Garden and Pip's mother-investigation quests; the changed finds copy and world audio handoff receive explicit new source pins. The strict painted-prop check includes the seasonal source family and still requires every selected texture in the hash-bound art ledger. The optional new lily has a unique catalog id, and all fifteen new catalog entries must select their own exported textures.
+
+Quitting through the window, title or pause menu drains the audio mixer after stopping playback; the test harness uses the same cleanup. Fixed-fps frame waits alone could exit before the independent mixer processed stop requests. No messages are waived. Final acceptance: 953 checks in nine sections, zero failed/skipped checks, zero unallowed engine messages, six explicitly provoked core-fixture messages, and no shutdown leaks. The two regenerated native art galleries pass and were opened and inspected.

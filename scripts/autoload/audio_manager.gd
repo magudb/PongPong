@@ -22,6 +22,7 @@ var _ambient_duck := 0.0
 var _rain_player: AudioStreamPlayer
 var _rain_id := ""
 var _cues: Array[Dictionary] = []
+var _shutting_down := false
 var _stream_paths: Dictionary = {}      # "dir|id" -> resolved path ("" = does not exist): ResourceLoader.exists is hit once per id
 
 var master_volume_db: float = 0.0
@@ -76,6 +77,9 @@ func _setup_buses() -> void:
 
 func play_sfx(sfx_id: String, volume_db: float = NAN, pitch: float = 1.0) -> void:
 	sfx_id = sfx_id.trim_prefix("sfx/")
+	if _shutting_down:
+		_record("sfx",sfx_id,false)
+		return
 	var stream := _load_stream(SFX_DIR, sfx_id)
 	_record("sfx",sfx_id,stream!=null)
 	if stream == null:
@@ -98,6 +102,9 @@ func play_sfx(sfx_id: String, volume_db: float = NAN, pitch: float = 1.0) -> voi
 
 func play_music(track_id: String, fade_seconds: float = 1.0) -> void:
 	track_id = track_id.trim_prefix("music/")
+	if _shutting_down:
+		_record("music",track_id,false)
+		return
 	var stream := _load_stream(MUSIC_DIR, track_id)
 	_record("music",track_id,stream!=null)
 	if stream == null:
@@ -151,7 +158,7 @@ func _cancel_music_transition() -> void:
 
 func play_voice(voice_key: String, volume_db: float = NAN) -> void:
 	stop_voice()
-	if not LocalizationManager.is_da():
+	if _shutting_down or not LocalizationManager.is_da():
 		_record("voice",voice_key,false)
 		return
 	var stream := _load_stream("", voice_key)
@@ -229,6 +236,9 @@ func _fade_ambient(index: int,target: float,seconds: float,stop := false) -> voi
 
 func play_ambience(id: String,fade_seconds := 1.5) -> void:
 	id = id.trim_prefix("amb/")
+	if _shutting_down:
+		_record("amb",id,false)
+		return
 	var stream := _load_stream(AMBIENT_DIR,id) if id!="" else null
 	_record("amb",id,stream!=null)
 	if id==_ambient_id:return
@@ -251,6 +261,9 @@ func duck_ambience(db: float) -> void:
 	if _ambient_id!="":_fade_ambient(_ambient_slot,-16+_ambient_duck,0.5)
 
 func play_rain(on: bool) -> void:
+	if _shutting_down:
+		_record("amb","rain" if on else "",false)
+		return
 	var id := "rain" if on else ""
 	if id==_rain_id:return
 	_rain_id = id
@@ -270,7 +283,7 @@ func stop_world_audio() -> void:
 	stop_voice()
 	for player in _sfx_pool:player.stop()
 
-func _exit_tree() -> void:
+func _silence_all() -> void:
 	_cancel_music_transition()
 	for tween in _ambient_tweens:
 		if tween!=null and tween.is_valid():tween.kill()
@@ -278,6 +291,18 @@ func _exit_tree() -> void:
 		if is_instance_valid(player):
 			player.stop()
 			player.stream = null
+
+func prepare_shutdown() -> void:
+	_shutting_down = true
+	_silence_all()
+	# Audio playback runs on its own mixer thread. Fixed-fps test frames can
+	# finish before that thread has processed stop requests; allow wall time.
+	var deadline := Time.get_ticks_msec()+80
+	while Time.get_ticks_msec()<deadline:await get_tree().process_frame
+
+func _exit_tree() -> void:
+	_shutting_down = true
+	_silence_all()
 
 
 func _find_stream(base_dir: String, id: String) -> String:

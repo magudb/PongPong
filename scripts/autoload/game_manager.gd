@@ -79,11 +79,22 @@ var is_single_player: bool = true
 var _base_phase: GamePhase = GamePhase.MENU
 var _modals: Array[Dictionary] = []          # [{name: StringName, pauses: bool}] in push order
 var _config_overrides: Dictionary = {}       # path -> value; tests and the debug console only, never saved
+var _quitting := false
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	EventBus.zone_entered.connect(_on_zone_entered)
+	get_tree().auto_accept_quit = false
+	get_tree().root.close_requested.connect(quit_game)
+
+func quit_game(code := 0) -> void:
+	if _quitting:return
+	_quitting = true
+	get_tree().paused = true
+	var audio := get_node_or_null("/root/AudioManager")
+	if audio!=null and audio.has_method("prepare_shutdown"):await audio.prepare_shutdown()
+	get_tree().quit(code)
 
 
 func _process(delta: float) -> void:

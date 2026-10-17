@@ -13,7 +13,7 @@ func run(t) -> void:
 		bytes += image.get_width()*image.get_height()*4
 		t.check(str(spec.id)+"_transparent_gutter",image.get_pixel(0,0).a<0.01 and image.get_pixel(image.get_width()-1,image.get_height()-1).a<0.01)
 		t.check(str(spec.id)+"_source_retained",FileAccess.file_exists("res://"+str(spec.source)))
-		if str(spec.type)!="particle":t.check(str(spec.id)+"_catalogued",ArtCatalog.has_real_prop(StringName(str(spec.id))))
+		if str(spec.type)!="particle":t.check(str(spec.id)+"_catalogued",ArtCatalog.has_real_prop(StringName(str(spec.get("catalog_id",spec.id)))) and ArtCatalog.prop(StringName(str(spec.get("catalog_id",spec.id)))).texture==texture)
 	t.check("nineteen_painted_assets",plan.items.size()==19)
 	t.check("vram_under_four_mib",bytes<=4*1024*1024,str(float(bytes)/1024/1024)+" MiB RGBA")
 	var tool: Dictionary = t.run_tool(ProjectSettings.globalize_path("res://tools/art/.venv/bin/python"),["-B",ProjectSettings.globalize_path("res://tools/art/environment/farm_dress/pack_paintings.py"),"--check"])
@@ -33,7 +33,7 @@ func run_windowed(t) -> void:
 	background.size = Vector2(1280,720)
 	root.add_child(background)
 	var title := _label(root,"Painted farm dressing · native game scale",Vector2(25,12),24)
-	var ids := ["flower_box","garden_arch","fountain_small","royal_banner","blossom_cluster","sunflower_row","leaf_pile","pumpkin_stack","snow_patch","bunting_x","vine_hang","pond_lily"]
+	var ids := ["flower_box","garden_arch","fountain_small","royal_banner","blossom_cluster","sunflower_row","leaf_pile","pumpkin_stack","snow_patch","bunting_x","vine_hang","pond_lily_farm"]
 	var cards: Array[Node] = []
 	for i in ids.size():
 		var x := 20.0+(i%6)*208.0
