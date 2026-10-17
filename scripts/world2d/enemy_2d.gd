@@ -165,7 +165,10 @@ func set_awake(on: bool) -> void:
 
 func protected_by_stone() -> bool:
 	if player == null: return false
-	for stone in get_tree().get_nodes_in_group("runestone"):
+	var tree := get_tree()
+	# Avoid constructing an empty group array for every enemy update.
+	if not tree.has_group(&"runestone"):return false
+	for stone in tree.get_nodes_in_group("runestone"):
 		if stone is Node2D and bool(stone.get("lit")) and Iso.ground_dist(stone.global_position,player.global_position) < 520: return true
 	return false
 
