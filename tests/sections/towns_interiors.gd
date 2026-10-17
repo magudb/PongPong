@@ -384,6 +384,9 @@ func _parkable(m: AreaMap) -> bool:
 # ================================================================================================ budget and leaks
 
 func _budget_and_leaks() -> void:
+	# The parked farm owns the shared iso set during production room visits.
+	# Keep that warm context here without pinning biome textures globally.
+	var _resident_tileset: TileSet = AreaTileSet.tile_set(&"iso")
 	var cold: Array[float] = []
 	var warm: Array[float] = []
 	var nodes: Array[int] = []
