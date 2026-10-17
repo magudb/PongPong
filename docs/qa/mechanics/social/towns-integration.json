@@ -1,0 +1,134 @@
+{
+  "allowed": [
+    {
+      "kind": "warning",
+      "rule": "unknown NPC 'retired_npc'",
+      "section": "social",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SocialManager.from_dict: unknown NPC 'retired_npc' kept in the orphans bucket (at from_dict res://scripts/social/social_manager.gd:1329)"
+    }
+  ],
+  "character": "animal",
+  "checks": 1988,
+  "elapsed_s": 66.06,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 947,
+      "skipped": 0
+    },
+    "economy_hours": {
+      "character": "animal",
+      "checks": 15,
+      "failed": 0,
+      "ms": 111,
+      "skipped": 2
+    },
+    "festival_activities": {
+      "character": "animal",
+      "checks": 59,
+      "failed": 0,
+      "ms": 567,
+      "skipped": 0
+    },
+    "social": {
+      "character": "animal",
+      "checks": 136,
+      "failed": 0,
+      "ms": 28251,
+      "skipped": 1
+    },
+    "social_data": {
+      "character": "animal",
+      "checks": 130,
+      "failed": 0,
+      "ms": 1289,
+      "skipped": 0
+    },
+    "social_events": {
+      "character": "animal",
+      "checks": 55,
+      "failed": 0,
+      "ms": 475,
+      "skipped": 0
+    },
+    "social_fest_content": {
+      "character": "animal",
+      "checks": 481,
+      "failed": 0,
+      "ms": 3035,
+      "skipped": 0
+    },
+    "social_gifts": {
+      "character": "animal",
+      "checks": 58,
+      "failed": 0,
+      "ms": 110,
+      "skipped": 0
+    },
+    "social_talk": {
+      "character": "animal",
+      "checks": 42,
+      "failed": 0,
+      "ms": 93,
+      "skipped": 0
+    },
+    "social_ui": {
+      "character": "animal",
+      "checks": 139,
+      "failed": 0,
+      "ms": 4130,
+      "skipped": 12
+    },
+    "towns_ext": {
+      "character": "animal",
+      "checks": 57,
+      "failed": 0,
+      "ms": 2098,
+      "skipped": 0
+    },
+    "towns_greetings": {
+      "character": "animal",
+      "checks": 79,
+      "failed": 0,
+      "ms": 35,
+      "skipped": 0
+    },
+    "towns_interiors": {
+      "character": "animal",
+      "checks": 285,
+      "failed": 0,
+      "ms": 9382,
+      "skipped": 0
+    },
+    "towns_post": {
+      "character": "animal",
+      "checks": 26,
+      "failed": 0,
+      "ms": 570,
+      "skipped": 4
+    },
+    "towns_routes": {
+      "character": "animal",
+      "checks": 133,
+      "failed": 0,
+      "ms": 2867,
+      "skipped": 0
+    },
+    "towns_routines": {
+      "character": "animal",
+      "checks": 285,
+      "failed": 0,
+      "ms": 7832,
+      "skipped": 0
+    }
+  },
+  "skipped": 19
+}

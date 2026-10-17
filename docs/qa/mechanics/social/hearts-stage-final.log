@@ -1,0 +1,387 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=social_heart_content
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.oZfJ6X/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 13.4 s
+== section social_heart_content  (res://tests/sections/social_heart_content.gd)
+  ok    social_heart_content.half_hour_window_before_boundary
+  ok    social_heart_content.half_hour_window_at_boundary
+  ok    social_heart_content.overnight_time_directive
+  ok    social_heart_content.ev_gardener_hoppe_h4_authored
+  ok    social_heart_content.ev_gardener_hoppe_h4_bounded_rewards
+  ok    social_heart_content.ev_gardener_hoppe_h4_real_stage ({ "npc": "gardener_hoppe", "state": "stay", "plan": "work", "place": "traetoppen.a_beds1", "act": "tend", "area": "traetoppen" })
+  ok    social_heart_content.ev_gardener_hoppe_h4_only_next_scene (["ev_gardener_hoppe_h4"])
+  ok    social_heart_content.ev_gardener_hoppe_h4_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_gardener_hoppe_h4_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_gardener_hoppe_h4_gift_once
+  ok    social_heart_content.ev_gardener_hoppe_h4_one_scene_per_day
+  ok    social_heart_content.ev_gardener_hoppe_h6_authored
+  ok    social_heart_content.ev_gardener_hoppe_h6_bounded_rewards
+  ok    social_heart_content.ev_gardener_hoppe_h6_real_stage ({ "npc": "gardener_hoppe", "state": "stay", "plan": "work", "place": "traetoppen.a_beds1", "act": "tend", "area": "traetoppen" })
+  ok    social_heart_content.ev_gardener_hoppe_h6_only_next_scene (["ev_gardener_hoppe_h6"])
+  ok    social_heart_content.ev_gardener_hoppe_h6_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_gardener_hoppe_h6_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_gardener_hoppe_h6_gift_once
+  ok    social_heart_content.ev_gardener_hoppe_h6_one_scene_per_day
+  ok    social_heart_content.ev_gardener_hoppe_h8_authored
+  ok    social_heart_content.ev_gardener_hoppe_h8_bounded_rewards
+  ok    social_heart_content.ev_gardener_hoppe_h8_real_stage ({ "npc": "gardener_hoppe", "state": "stay", "plan": "farm_visit", "place": "traetoppen.a_beds1", "act": "tend", "area": "traetoppen" })
+  ok    social_heart_content.ev_gardener_hoppe_h8_only_next_scene (["ev_gardener_hoppe_h8"])
+  ok    social_heart_content.ev_gardener_hoppe_h8_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_gardener_hoppe_h8_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_gardener_hoppe_h8_gift_once
+  ok    social_heart_content.ev_gardener_hoppe_h8_one_scene_per_day
+  ok    social_heart_content.ev_gardener_hoppe_h10_authored
+  ok    social_heart_content.ev_gardener_hoppe_h10_bounded_rewards
+  ok    social_heart_content.ev_gardener_hoppe_h10_real_stage ({ "npc": "gardener_hoppe", "state": "stay", "plan": "work", "place": "traetoppen.a_beds1", "act": "tend", "area": "traetoppen" })
+  ok    social_heart_content.ev_gardener_hoppe_h10_only_next_scene (["ev_gardener_hoppe_h10"])
+  ok    social_heart_content.ev_gardener_hoppe_h10_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_gardener_hoppe_h10_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_gardener_hoppe_h10_gift_once
+  ok    social_heart_content.ev_gardener_hoppe_h10_one_scene_per_day
+  ok    social_heart_content.ev_carpenter_brumme_h4_authored
+  ok    social_heart_content.ev_carpenter_brumme_h4_bounded_rewards
+  ok    social_heart_content.ev_carpenter_brumme_h4_real_stage ({ "npc": "carpenter_brumme", "state": "stay", "plan": "inn", "place": "traetoppen.c_bench", "act": "sit", "area": "traetoppen" })
+  ok    social_heart_content.ev_carpenter_brumme_h4_only_next_scene (["ev_carpenter_brumme_h4"])
+  ok    social_heart_content.ev_carpenter_brumme_h4_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_carpenter_brumme_h4_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_carpenter_brumme_h4_gift_once
+  ok    social_heart_content.ev_carpenter_brumme_h4_one_scene_per_day
+  ok    social_heart_content.ev_carpenter_brumme_h6_authored
+  ok    social_heart_content.ev_carpenter_brumme_h6_bounded_rewards
+  ok    social_heart_content.ev_carpenter_brumme_h6_real_stage ({ "npc": "carpenter_brumme", "state": "stay", "plan": "stall", "place": "traetoppen.t_stall", "act": "work", "area": "traetoppen" })
+  ok    social_heart_content.ev_carpenter_brumme_h6_only_next_scene (["ev_carpenter_brumme_h6"])
+  ok    social_heart_content.ev_carpenter_brumme_h6_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_carpenter_brumme_h6_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_carpenter_brumme_h6_gift_once
+  ok    social_heart_content.ev_carpenter_brumme_h6_one_scene_per_day
+  ok    social_heart_content.ev_carpenter_brumme_h8_authored
+  ok    social_heart_content.ev_carpenter_brumme_h8_bounded_rewards
+  ok    social_heart_content.ev_carpenter_brumme_h8_real_stage ({ "npc": "carpenter_brumme", "state": "stay", "plan": "stall", "place": "traetoppen.t_stall", "act": "work", "area": "traetoppen" })
+  ok    social_heart_content.ev_carpenter_brumme_h8_only_next_scene (["ev_carpenter_brumme_h8"])
+  ok    social_heart_content.ev_carpenter_brumme_h8_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_carpenter_brumme_h8_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_carpenter_brumme_h8_gift_once
+  ok    social_heart_content.ev_carpenter_brumme_h8_one_scene_per_day
+  ok    social_heart_content.ev_carpenter_brumme_h10_authored
+  ok    social_heart_content.ev_carpenter_brumme_h10_bounded_rewards
+  ok    social_heart_content.ev_carpenter_brumme_h10_real_stage ({ "npc": "carpenter_brumme", "state": "stay", "plan": "work", "place": "traetoppen.c_bench", "act": "sit", "area": "traetoppen" })
+  ok    social_heart_content.ev_carpenter_brumme_h10_only_next_scene (["ev_carpenter_brumme_h10"])
+  ok    social_heart_content.ev_carpenter_brumme_h10_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_carpenter_brumme_h10_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_carpenter_brumme_h10_gift_once
+  ok    social_heart_content.ev_carpenter_brumme_h10_one_scene_per_day
+  ok    social_heart_content.ev_baker_maja_h4_authored
+  ok    social_heart_content.ev_baker_maja_h4_bounded_rewards
+  ok    social_heart_content.ev_baker_maja_h4_real_stage ({ "npc": "baker_maja", "state": "stay", "plan": "work", "place": "int_bageriet.counter", "act": "work", "area": "int_bageriet" })
+  ok    social_heart_content.ev_baker_maja_h4_only_next_scene (["ev_baker_maja_h4"])
+  ok    social_heart_content.ev_baker_maja_h4_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_baker_maja_h4_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_baker_maja_h4_gift_once
+  ok    social_heart_content.ev_baker_maja_h4_one_scene_per_day
+  ok    social_heart_content.ev_baker_maja_h6_authored
+  ok    social_heart_content.ev_baker_maja_h6_bounded_rewards
+  ok    social_heart_content.ev_baker_maja_h6_real_stage ({ "npc": "baker_maja", "state": "stay", "plan": "work", "place": "int_bageriet.counter", "act": "work", "area": "int_bageriet" })
+  ok    social_heart_content.ev_baker_maja_h6_only_next_scene (["ev_baker_maja_h6"])
+  ok    social_heart_content.ev_baker_maja_h6_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_baker_maja_h6_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_baker_maja_h6_gift_once
+  ok    social_heart_content.ev_baker_maja_h6_one_scene_per_day
+  ok    social_heart_content.ev_baker_maja_h8_authored
+  ok    social_heart_content.ev_baker_maja_h8_bounded_rewards
+  ok    social_heart_content.ev_baker_maja_h8_real_stage ({ "npc": "baker_maja", "state": "stay", "plan": "work", "place": "int_bageriet.counter", "act": "work", "area": "int_bageriet" })
+  ok    social_heart_content.ev_baker_maja_h8_only_next_scene (["ev_baker_maja_h8"])
+  ok    social_heart_content.ev_baker_maja_h8_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_baker_maja_h8_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_baker_maja_h8_gift_once
+  ok    social_heart_content.ev_baker_maja_h8_one_scene_per_day
+  ok    social_heart_content.ev_baker_maja_h10_authored
+  ok    social_heart_content.ev_baker_maja_h10_bounded_rewards
+  ok    social_heart_content.ev_baker_maja_h10_real_stage ({ "npc": "baker_maja", "state": "stay", "plan": "work", "place": "int_bageriet.counter", "act": "work", "area": "int_bageriet" })
+  ok    social_heart_content.ev_baker_maja_h10_only_next_scene (["ev_baker_maja_h10"])
+  ok    social_heart_content.ev_baker_maja_h10_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_baker_maja_h10_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_baker_maja_h10_gift_once
+  ok    social_heart_content.ev_baker_maja_h10_one_scene_per_day
+  ok    social_heart_content.ev_merchant_pip_h4_authored
+  ok    social_heart_content.ev_merchant_pip_h4_bounded_rewards
+  ok    social_heart_content.ev_merchant_pip_h4_real_stage ({ "npc": "merchant_pip", "state": "stay", "plan": "work", "place": "int_froebutikken.counter", "act": "work", "area": "int_froebutikken" })
+  ok    social_heart_content.ev_merchant_pip_h4_only_next_scene (["ev_merchant_pip_h4"])
+  ok    social_heart_content.ev_merchant_pip_h4_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_merchant_pip_h4_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_merchant_pip_h4_gift_once
+  ok    social_heart_content.ev_merchant_pip_h4_one_scene_per_day
+  ok    social_heart_content.ev_merchant_pip_h6_authored
+  ok    social_heart_content.ev_merchant_pip_h6_bounded_rewards
+  ok    social_heart_content.ev_merchant_pip_h6_real_stage ({ "npc": "merchant_pip", "state": "stay", "plan": "work", "place": "int_froebutikken.counter", "act": "work", "area": "int_froebutikken" })
+  ok    social_heart_content.ev_merchant_pip_h6_only_next_scene (["ev_merchant_pip_h6"])
+  ok    social_heart_content.ev_merchant_pip_h6_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_merchant_pip_h6_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_merchant_pip_h6_gift_once
+  ok    social_heart_content.ev_merchant_pip_h6_one_scene_per_day
+  ok    social_heart_content.ev_merchant_pip_h8_authored
+  ok    social_heart_content.ev_merchant_pip_h8_bounded_rewards
+  ok    social_heart_content.ev_merchant_pip_h8_real_stage ({ "npc": "merchant_pip", "state": "stay", "plan": "work", "place": "int_froebutikken.counter", "act": "work", "area": "int_froebutikken" })
+  ok    social_heart_content.ev_merchant_pip_h8_only_next_scene (["ev_merchant_pip_h8"])
+  ok    social_heart_content.ev_merchant_pip_h8_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_merchant_pip_h8_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_merchant_pip_h8_gift_once
+  ok    social_heart_content.ev_merchant_pip_h8_one_scene_per_day
+  ok    social_heart_content.ev_merchant_pip_h10_authored
+  ok    social_heart_content.ev_merchant_pip_h10_bounded_rewards
+  ok    social_heart_content.ev_merchant_pip_h10_real_stage ({ "npc": "merchant_pip", "state": "stay", "plan": "work", "place": "int_froebutikken.counter", "act": "work", "area": "int_froebutikken" })
+  ok    social_heart_content.ev_merchant_pip_h10_only_next_scene (["ev_merchant_pip_h10"])
+  ok    social_heart_content.ev_merchant_pip_h10_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_merchant_pip_h10_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_merchant_pip_h10_gift_once
+  ok    social_heart_content.ev_merchant_pip_h10_one_scene_per_day
+  ok    social_heart_content.ev_mayor_lyra_h4_authored
+  ok    social_heart_content.ev_mayor_lyra_h4_bounded_rewards
+  ok    social_heart_content.ev_mayor_lyra_h4_real_stage ({ "npc": "mayor_lyra", "state": "stay", "plan": "work", "place": "hyggebyen.torv_fountain_n", "act": "sit", "area": "hyggebyen" })
+  ok    social_heart_content.ev_mayor_lyra_h4_only_next_scene (["ev_mayor_lyra_h4"])
+  ok    social_heart_content.ev_mayor_lyra_h4_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_mayor_lyra_h4_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_mayor_lyra_h4_gift_once
+  ok    social_heart_content.ev_mayor_lyra_h4_one_scene_per_day
+  ok    social_heart_content.ev_mayor_lyra_h6_authored
+  ok    social_heart_content.ev_mayor_lyra_h6_bounded_rewards
+  ok    social_heart_content.ev_mayor_lyra_h6_real_stage ({ "npc": "mayor_lyra", "state": "stay", "plan": "rest", "place": "hyggebyen.blossom_bench1", "act": "sit", "area": "hyggebyen" })
+  ok    social_heart_content.ev_mayor_lyra_h6_only_next_scene (["ev_mayor_lyra_h6"])
+  ok    social_heart_content.ev_mayor_lyra_h6_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_mayor_lyra_h6_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_mayor_lyra_h6_gift_once
+  ok    social_heart_content.ev_mayor_lyra_h6_one_scene_per_day
+  ok    social_heart_content.ev_mayor_lyra_h8_authored
+  ok    social_heart_content.ev_mayor_lyra_h8_bounded_rewards
+  ok    social_heart_content.ev_mayor_lyra_h8_real_stage ({ "npc": "mayor_lyra", "state": "stay", "plan": "rest", "place": "hyggebyen.blossom_bench1", "act": "sit", "area": "hyggebyen" })
+  ok    social_heart_content.ev_mayor_lyra_h8_only_next_scene (["ev_mayor_lyra_h8"])
+  ok    social_heart_content.ev_mayor_lyra_h8_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_mayor_lyra_h8_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_mayor_lyra_h8_gift_once
+  ok    social_heart_content.ev_mayor_lyra_h8_one_scene_per_day
+  ok    social_heart_content.ev_mayor_lyra_h10_authored
+  ok    social_heart_content.ev_mayor_lyra_h10_bounded_rewards
+  ok    social_heart_content.ev_mayor_lyra_h10_real_stage ({ "npc": "mayor_lyra", "state": "stay", "plan": "rest", "place": "hyggebyen.blossom_bench1", "act": "sit", "area": "hyggebyen" })
+  ok    social_heart_content.ev_mayor_lyra_h10_only_next_scene (["ev_mayor_lyra_h10"])
+  ok    social_heart_content.ev_mayor_lyra_h10_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_mayor_lyra_h10_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_mayor_lyra_h10_gift_once
+  ok    social_heart_content.ev_mayor_lyra_h10_one_scene_per_day
+  ok    social_heart_content.ev_postman_pip_h4_authored
+  ok    social_heart_content.ev_postman_pip_h4_bounded_rewards
+  ok    social_heart_content.ev_postman_pip_h4_real_stage ({ "npc": "postman_pip", "state": "stay", "plan": "work", "place": "int_postkontoret.counter", "act": "work", "area": "int_postkontoret" })
+  ok    social_heart_content.ev_postman_pip_h4_only_next_scene (["ev_postman_pip_h4"])
+  ok    social_heart_content.ev_postman_pip_h4_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_postman_pip_h4_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_postman_pip_h4_gift_once
+  ok    social_heart_content.ev_postman_pip_h4_one_scene_per_day
+  ok    social_heart_content.ev_postman_pip_h6_authored
+  ok    social_heart_content.ev_postman_pip_h6_bounded_rewards
+  ok    social_heart_content.ev_postman_pip_h6_real_stage ({ "npc": "postman_pip", "state": "stay", "plan": "work", "place": "int_postkontoret.counter", "act": "work", "area": "int_postkontoret" })
+  ok    social_heart_content.ev_postman_pip_h6_only_next_scene (["ev_postman_pip_h6"])
+  ok    social_heart_content.ev_postman_pip_h6_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_postman_pip_h6_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_postman_pip_h6_gift_once
+  ok    social_heart_content.ev_postman_pip_h6_one_scene_per_day
+  ok    social_heart_content.ev_postman_pip_h8_authored
+  ok    social_heart_content.ev_postman_pip_h8_bounded_rewards
+  ok    social_heart_content.ev_postman_pip_h8_real_stage ({ "npc": "postman_pip", "state": "stay", "plan": "work", "place": "int_postkontoret.counter", "act": "work", "area": "int_postkontoret" })
+  ok    social_heart_content.ev_postman_pip_h8_only_next_scene (["ev_postman_pip_h8"])
+  ok    social_heart_content.ev_postman_pip_h8_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_postman_pip_h8_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_postman_pip_h8_gift_once
+  ok    social_heart_content.ev_postman_pip_h8_one_scene_per_day
+  ok    social_heart_content.ev_postman_pip_h10_authored
+  ok    social_heart_content.ev_postman_pip_h10_bounded_rewards
+  ok    social_heart_content.ev_postman_pip_h10_real_stage ({ "npc": "postman_pip", "state": "stay", "plan": "work", "place": "int_postkontoret.counter", "act": "work", "area": "int_postkontoret" })
+  ok    social_heart_content.ev_postman_pip_h10_only_next_scene (["ev_postman_pip_h10"])
+  ok    social_heart_content.ev_postman_pip_h10_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_postman_pip_h10_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_postman_pip_h10_gift_once
+  ok    social_heart_content.ev_postman_pip_h10_one_scene_per_day
+  ok    social_heart_content.ev_bathkeeper_sofus_h4_authored
+  ok    social_heart_content.ev_bathkeeper_sofus_h4_bounded_rewards
+  ok    social_heart_content.ev_bathkeeper_sofus_h4_real_stage ({ "npc": "bathkeeper_sofus", "state": "stay", "plan": "work", "place": "int_badehuset.bed", "act": "eat", "area": "int_badehuset" })
+  ok    social_heart_content.ev_bathkeeper_sofus_h4_only_next_scene (["ev_bathkeeper_sofus_h4"])
+  ok    social_heart_content.ev_bathkeeper_sofus_h4_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_bathkeeper_sofus_h4_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_bathkeeper_sofus_h4_gift_once
+  ok    social_heart_content.ev_bathkeeper_sofus_h4_one_scene_per_day
+  ok    social_heart_content.ev_bathkeeper_sofus_h6_authored
+  ok    social_heart_content.ev_bathkeeper_sofus_h6_bounded_rewards
+  ok    social_heart_content.ev_bathkeeper_sofus_h6_real_stage ({ "npc": "bathkeeper_sofus", "state": "stay", "plan": "sat", "place": "int_badehuset.bed", "act": "eat", "area": "int_badehuset" })
+  ok    social_heart_content.ev_bathkeeper_sofus_h6_only_next_scene (["ev_bathkeeper_sofus_h6"])
+  ok    social_heart_content.ev_bathkeeper_sofus_h6_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_bathkeeper_sofus_h6_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_bathkeeper_sofus_h6_gift_once
+  ok    social_heart_content.ev_bathkeeper_sofus_h6_one_scene_per_day
+  ok    social_heart_content.ev_bathkeeper_sofus_h8_authored
+  ok    social_heart_content.ev_bathkeeper_sofus_h8_bounded_rewards
+  ok    social_heart_content.ev_bathkeeper_sofus_h8_real_stage ({ "npc": "bathkeeper_sofus", "state": "stay", "plan": "work", "place": "int_badehuset.bed", "act": "eat", "area": "int_badehuset" })
+  ok    social_heart_content.ev_bathkeeper_sofus_h8_only_next_scene (["ev_bathkeeper_sofus_h8"])
+  ok    social_heart_content.ev_bathkeeper_sofus_h8_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_bathkeeper_sofus_h8_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_bathkeeper_sofus_h8_gift_once
+  ok    social_heart_content.ev_bathkeeper_sofus_h8_one_scene_per_day
+  ok    social_heart_content.ev_bathkeeper_sofus_h10_authored
+  ok    social_heart_content.ev_bathkeeper_sofus_h10_bounded_rewards
+  ok    social_heart_content.ev_bathkeeper_sofus_h10_real_stage ({ "npc": "bathkeeper_sofus", "state": "stay", "plan": "work", "place": "int_badehuset.bed", "act": "eat", "area": "int_badehuset" })
+  ok    social_heart_content.ev_bathkeeper_sofus_h10_only_next_scene (["ev_bathkeeper_sofus_h10"])
+  ok    social_heart_content.ev_bathkeeper_sofus_h10_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_bathkeeper_sofus_h10_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_bathkeeper_sofus_h10_gift_once
+  ok    social_heart_content.ev_bathkeeper_sofus_h10_one_scene_per_day
+  ok    social_heart_content.ev_beekeeper_birk_h4_authored
+  ok    social_heart_content.ev_beekeeper_birk_h4_bounded_rewards
+  ok    social_heart_content.ev_beekeeper_birk_h4_real_stage ({ "npc": "beekeeper_birk", "state": "stay", "plan": "honey", "place": "hyggebyen.bees1", "act": "tend", "area": "hyggebyen" })
+  ok    social_heart_content.ev_beekeeper_birk_h4_only_next_scene (["ev_beekeeper_birk_h4"])
+  ok    social_heart_content.ev_beekeeper_birk_h4_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_beekeeper_birk_h4_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_beekeeper_birk_h4_gift_once
+  ok    social_heart_content.ev_beekeeper_birk_h4_one_scene_per_day
+  ok    social_heart_content.ev_beekeeper_birk_h6_authored
+  ok    social_heart_content.ev_beekeeper_birk_h6_bounded_rewards
+  ok    social_heart_content.ev_beekeeper_birk_h6_real_stage ({ "npc": "beekeeper_birk", "state": "stay", "plan": "honey", "place": "hyggebyen.bees1", "act": "tend", "area": "hyggebyen" })
+  ok    social_heart_content.ev_beekeeper_birk_h6_only_next_scene (["ev_beekeeper_birk_h6"])
+  ok    social_heart_content.ev_beekeeper_birk_h6_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_beekeeper_birk_h6_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_beekeeper_birk_h6_gift_once
+  ok    social_heart_content.ev_beekeeper_birk_h6_one_scene_per_day
+  ok    social_heart_content.ev_beekeeper_birk_h8_authored
+  ok    social_heart_content.ev_beekeeper_birk_h8_bounded_rewards
+  ok    social_heart_content.ev_beekeeper_birk_h8_real_stage ({ "npc": "beekeeper_birk", "state": "stay", "plan": "honey", "place": "hyggebyen.bees1", "act": "tend", "area": "hyggebyen" })
+  ok    social_heart_content.ev_beekeeper_birk_h8_only_next_scene (["ev_beekeeper_birk_h8"])
+  ok    social_heart_content.ev_beekeeper_birk_h8_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_beekeeper_birk_h8_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_beekeeper_birk_h8_gift_once
+  ok    social_heart_content.ev_beekeeper_birk_h8_one_scene_per_day
+  ok    social_heart_content.ev_beekeeper_birk_h10_authored
+  ok    social_heart_content.ev_beekeeper_birk_h10_bounded_rewards
+  ok    social_heart_content.ev_beekeeper_birk_h10_real_stage ({ "npc": "beekeeper_birk", "state": "stay", "plan": "inn", "place": "hyggebyen.bees1", "act": "tend", "area": "hyggebyen" })
+  ok    social_heart_content.ev_beekeeper_birk_h10_only_next_scene (["ev_beekeeper_birk_h10"])
+  ok    social_heart_content.ev_beekeeper_birk_h10_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_beekeeper_birk_h10_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_beekeeper_birk_h10_gift_once
+  ok    social_heart_content.ev_beekeeper_birk_h10_one_scene_per_day
+  ok    social_heart_content.ev_smith_thorin_h4_authored
+  ok    social_heart_content.ev_smith_thorin_h4_bounded_rewards
+  ok    social_heart_content.ev_smith_thorin_h4_real_stage ({ "npc": "smith_thorin", "state": "stay", "plan": "work", "place": "int_smedjen.counter", "act": "work", "area": "int_smedjen" })
+  ok    social_heart_content.ev_smith_thorin_h4_only_next_scene (["ev_smith_thorin_h4"])
+  ok    social_heart_content.ev_smith_thorin_h4_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_smith_thorin_h4_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_smith_thorin_h4_gift_once
+  ok    social_heart_content.ev_smith_thorin_h4_one_scene_per_day
+  ok    social_heart_content.ev_smith_thorin_h6_authored
+  ok    social_heart_content.ev_smith_thorin_h6_bounded_rewards
+  ok    social_heart_content.ev_smith_thorin_h6_real_stage ({ "npc": "smith_thorin", "state": "stay", "plan": "work_mon", "place": "int_smedjen.counter", "act": "work", "area": "int_smedjen" })
+  ok    social_heart_content.ev_smith_thorin_h6_only_next_scene (["ev_smith_thorin_h6"])
+  ok    social_heart_content.ev_smith_thorin_h6_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_smith_thorin_h6_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_smith_thorin_h6_gift_once
+  ok    social_heart_content.ev_smith_thorin_h6_one_scene_per_day
+  ok    social_heart_content.ev_smith_thorin_h8_authored
+  ok    social_heart_content.ev_smith_thorin_h8_bounded_rewards
+  ok    social_heart_content.ev_smith_thorin_h8_real_stage ({ "npc": "smith_thorin", "state": "stay", "plan": "work", "place": "int_smedjen.counter", "act": "work", "area": "int_smedjen" })
+  ok    social_heart_content.ev_smith_thorin_h8_only_next_scene (["ev_smith_thorin_h8"])
+  ok    social_heart_content.ev_smith_thorin_h8_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_smith_thorin_h8_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_smith_thorin_h8_gift_once
+  ok    social_heart_content.ev_smith_thorin_h8_one_scene_per_day
+  ok    social_heart_content.ev_smith_thorin_h10_authored
+  ok    social_heart_content.ev_smith_thorin_h10_bounded_rewards
+  ok    social_heart_content.ev_smith_thorin_h10_real_stage ({ "npc": "smith_thorin", "state": "stay", "plan": "work", "place": "int_smedjen.counter", "act": "work", "area": "int_smedjen" })
+  ok    social_heart_content.ev_smith_thorin_h10_only_next_scene (["ev_smith_thorin_h10"])
+  ok    social_heart_content.ev_smith_thorin_h10_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_smith_thorin_h10_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_smith_thorin_h10_gift_once
+  ok    social_heart_content.ev_smith_thorin_h10_one_scene_per_day
+  ok    social_heart_content.ev_farmer_rosa_h4_authored
+  ok    social_heart_content.ev_farmer_rosa_h4_bounded_rewards
+  ok    social_heart_content.ev_farmer_rosa_h4_real_stage ({ "npc": "farmer_rosa", "state": "stay", "plan": "work", "place": "int_dyrehuset.counter", "act": "work", "area": "int_dyrehuset" })
+  ok    social_heart_content.ev_farmer_rosa_h4_only_next_scene (["ev_farmer_rosa_h4"])
+  ok    social_heart_content.ev_farmer_rosa_h4_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_farmer_rosa_h4_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_farmer_rosa_h4_gift_once
+  ok    social_heart_content.ev_farmer_rosa_h4_one_scene_per_day
+  ok    social_heart_content.ev_farmer_rosa_h6_authored
+  ok    social_heart_content.ev_farmer_rosa_h6_bounded_rewards
+  ok    social_heart_content.ev_farmer_rosa_h6_real_stage ({ "npc": "farmer_rosa", "state": "stay", "plan": "work", "place": "int_dyrehuset.counter", "act": "work", "area": "int_dyrehuset" })
+  ok    social_heart_content.ev_farmer_rosa_h6_only_next_scene (["ev_farmer_rosa_h6"])
+  ok    social_heart_content.ev_farmer_rosa_h6_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_farmer_rosa_h6_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_farmer_rosa_h6_gift_once
+  ok    social_heart_content.ev_farmer_rosa_h6_one_scene_per_day
+  ok    social_heart_content.ev_farmer_rosa_h8_authored
+  ok    social_heart_content.ev_farmer_rosa_h8_bounded_rewards
+  ok    social_heart_content.ev_farmer_rosa_h8_real_stage ({ "npc": "farmer_rosa", "state": "stay", "plan": "work_sun", "place": "int_dyrehuset.counter", "act": "work", "area": "int_dyrehuset" })
+  ok    social_heart_content.ev_farmer_rosa_h8_only_next_scene (["ev_farmer_rosa_h8"])
+  ok    social_heart_content.ev_farmer_rosa_h8_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_farmer_rosa_h8_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_farmer_rosa_h8_gift_once
+  ok    social_heart_content.ev_farmer_rosa_h8_one_scene_per_day
+  ok    social_heart_content.ev_farmer_rosa_h10_authored
+  ok    social_heart_content.ev_farmer_rosa_h10_bounded_rewards
+  ok    social_heart_content.ev_farmer_rosa_h10_real_stage ({ "npc": "farmer_rosa", "state": "stay", "plan": "work", "place": "int_dyrehuset.counter", "act": "work", "area": "int_dyrehuset" })
+  ok    social_heart_content.ev_farmer_rosa_h10_only_next_scene (["ev_farmer_rosa_h10"])
+  ok    social_heart_content.ev_farmer_rosa_h10_request
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.ev_farmer_rosa_h10_ends_with_real_actors (["", [], false, 2, &"", false])
+  ok    social_heart_content.ev_farmer_rosa_h10_gift_once
+  ok    social_heart_content.ev_farmer_rosa_h10_one_scene_per_day
+  ok    social_heart_content.forty_scenes_registered
+  ok    social_heart_content.save_and_reload_all_scenes
+  ok    social_heart_content.all_seen_survive_save
+  ok    social_heart_content.area_guard_even_if_presence_reports_true
+  ok    social_heart_content.source_reproducible
+  --    social_heart_content: 368 checks, 0 failed, 0 skipped, 86.0 s
+  note  section social_heart_content took 86.0 s (> 30 s): consider splitting it
+== summary: 1 section(s) run, 376 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 107.7 s
+PLAYTEST PASS (376 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

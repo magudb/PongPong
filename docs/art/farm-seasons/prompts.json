@@ -1,0 +1,402 @@
+{
+  "tool": "built-in imagegen",
+  "reference_policy": "new style-transfer siblings; original approved images remain unchanged",
+  "items": [
+    {
+      "id": "flower_box",
+      "type": "prop",
+      "size": [
+        94,
+        77
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "references": [
+        {
+          "path": "assets/iso_props/painted_world/planter_box.webp",
+          "role": "style/material/camera reference"
+        }
+      ],
+      "prompt": "Style transfer into a new sibling asset for the existing Trætoppen isometric storybook farm. The input images are style/material/camera references only; keep their approved images unchanged. Match their matte gouache/watercolor pigment, warm irregular pencil contours, natural honey timber, cream linen, sage foliage and restrained stone/iron. Match the reference’s isometric camera: equal left/right ground axes, a ground diamond about 128 wide by 76 high, see top and two sides; no perspective convergence. Subject: A low small rectangular weathered honey-wood flower box, three cream daisies, a few pale lavender bellflowers and sage leaves. Board grain, little dull iron corner nails. A compact planted box, not a pot. Native output will be fitted without stretching to 94 × 77 pixels. One complete isolated object, centered with 12 percent transparent gutter. Genuine transparent alpha. No UI, labels, letters, numbers, watermark, rarity frame, scene, rectangular ground tile, enclosing grass square, heavy cast shadow, plastic gloss, vector geometry, faceted low-poly surfaces, photorealism or neon glow. Keep readable materials and silhouette at its small native game size. Retain the handmade painted finish of the supplied references.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/farm_seasons/flower_box.png"
+    },
+    {
+      "id": "garden_arch",
+      "type": "prop",
+      "size": [
+        174,
+        232
+      ],
+      "footprint": [
+        2,
+        1
+      ],
+      "references": [
+        {
+          "path": "assets/iso_props/festival/door_wreath_spring_r0.webp",
+          "role": "style/material/camera reference"
+        }
+      ],
+      "prompt": "Style transfer into a new sibling asset for the existing Trætoppen isometric storybook farm. The input images are style/material/camera references only; keep their approved images unchanged. Match their matte gouache/watercolor pigment, warm irregular pencil contours, natural honey timber, cream linen, sage foliage and restrained stone/iron. Match the reference’s isometric camera: equal left/right ground axes, a ground diamond about 128 wide by 76 high, see top and two sides; no perspective convergence. Subject: A freestanding narrow arched garden gateway made from two honey-timber posts and a curved woven willow top. Thin climbing sage vines and sparse cream/pale-rose blossoms. Keep the opening clear and wide enough to walk through. No gate or solid wall. Native output will be fitted without stretching to 174 × 232 pixels. One complete isolated object, centered with 12 percent transparent gutter. Genuine transparent alpha. No UI, labels, letters, numbers, watermark, rarity frame, scene, rectangular ground tile, enclosing grass square, heavy cast shadow, plastic gloss, vector geometry, faceted low-poly surfaces, photorealism or neon glow. Keep readable materials and silhouette at its small native game size. Retain the handmade painted finish of the supplied references.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/farm_seasons/garden_arch.png"
+    },
+    {
+      "id": "fountain_small",
+      "type": "prop",
+      "size": [
+        208,
+        175
+      ],
+      "footprint": [
+        2,
+        2
+      ],
+      "references": [
+        {
+          "path": "assets/iso_props/zz_painted_consistency/fountain.webp",
+          "role": "style/material/camera reference"
+        }
+      ],
+      "prompt": "Style transfer into a new sibling asset for the existing Trætoppen isometric storybook farm. The input images are style/material/camera references only; keep their approved images unchanged. Match their matte gouache/watercolor pigment, warm irregular pencil contours, natural honey timber, cream linen, sage foliage and restrained stone/iron. Match the reference’s isometric camera: equal left/right ground axes, a ground diamond about 128 wide by 76 high, see top and two sides; no perspective convergence. Subject: A smaller sibling of the reference fountain: a low rounded weathered cream stone bowl and one short central stone spout, a few gentle clear water streams, quiet pale teal water and sparse moss at its foot. Modest cozy garden scale. Native output will be fitted without stretching to 208 × 175 pixels. One complete isolated object, centered with 12 percent transparent gutter. Genuine transparent alpha. No UI, labels, letters, numbers, watermark, rarity frame, scene, rectangular ground tile, enclosing grass square, heavy cast shadow, plastic gloss, vector geometry, faceted low-poly surfaces, photorealism or neon glow. Keep readable materials and silhouette at its small native game size. Retain the handmade painted finish of the supplied references.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/farm_seasons/fountain_small.png"
+    },
+    {
+      "id": "royal_banner",
+      "type": "prop",
+      "size": [
+        84,
+        228
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "references": [
+        {
+          "path": "assets/iso_props/painted_world/planter_box.webp",
+          "role": "style/material/camera reference"
+        }
+      ],
+      "prompt": "Style transfer into a new sibling asset for the existing Trætoppen isometric storybook farm. The input images are style/material/camera references only; keep their approved images unchanged. Match their matte gouache/watercolor pigment, warm irregular pencil contours, natural honey timber, cream linen, sage foliage and restrained stone/iron. Match the reference’s isometric camera: equal left/right ground axes, a ground diamond about 128 wide by 76 high, see top and two sides; no perspective convergence. Subject: A single slender honey-wood freestanding banner pole on a little wooden foot. A soft muted lavender linen pennant hanging vertically, dull brass edging, one small simple painted cream crown emblem. No lettering. The crown is a pictorial emblem, not a jewel-encrusted crown object. Native output will be fitted without stretching to 84 × 228 pixels. One complete isolated object, centered with 12 percent transparent gutter. Genuine transparent alpha. No UI, labels, letters, numbers, watermark, rarity frame, scene, rectangular ground tile, enclosing grass square, heavy cast shadow, plastic gloss, vector geometry, faceted low-poly surfaces, photorealism or neon glow. Keep readable materials and silhouette at its small native game size. Retain the handmade painted finish of the supplied references.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/farm_seasons/royal_banner.png"
+    },
+    {
+      "id": "blossom_cluster",
+      "type": "prop",
+      "size": [
+        122,
+        75
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "references": [
+        {
+          "path": "assets/iso_props/festival/door_wreath_spring_r0.webp",
+          "role": "style/material/camera reference"
+        }
+      ],
+      "prompt": "Style transfer into a new sibling asset for the existing Trætoppen isometric storybook farm. The input images are style/material/camera references only; keep their approved images unchanged. Match their matte gouache/watercolor pigment, warm irregular pencil contours, natural honey timber, cream linen, sage foliage and restrained stone/iron. Match the reference’s isometric camera: equal left/right ground axes, a ground diamond about 128 wide by 76 high, see top and two sides; no perspective convergence. Subject: A compact low cluster of pale rose and cream spring wildflowers with sage leaves growing directly from a small irregular moss tuft. Three main readable blossoms and a few tiny buds. No container and no rectangular ground base. Native output will be fitted without stretching to 122 × 75 pixels. One complete isolated object, centered with 12 percent transparent gutter. Genuine transparent alpha. No UI, labels, letters, numbers, watermark, rarity frame, scene, rectangular ground tile, enclosing grass square, heavy cast shadow, plastic gloss, vector geometry, faceted low-poly surfaces, photorealism or neon glow. Keep readable materials and silhouette at its small native game size. Retain the handmade painted finish of the supplied references.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/farm_seasons/blossom_cluster.png"
+    },
+    {
+      "id": "sunflower_row",
+      "type": "prop",
+      "size": [
+        136,
+        160
+      ],
+      "footprint": [
+        2,
+        1
+      ],
+      "references": [
+        {
+          "path": "assets/iso_props/painted_world/planter_box.webp",
+          "role": "style/material/camera reference"
+        }
+      ],
+      "prompt": "Style transfer into a new sibling asset for the existing Trætoppen isometric storybook farm. The input images are style/material/camera references only; keep their approved images unchanged. Match their matte gouache/watercolor pigment, warm irregular pencil contours, natural honey timber, cream linen, sage foliage and restrained stone/iron. Match the reference’s isometric camera: equal left/right ground axes, a ground diamond about 128 wide by 76 high, see top and two sides; no perspective convergence. Subject: A short row of three friendly small sunflowers, different heights, ochre gold petals, warm brown seed centres, muted sage leaves on thin stems. They grow from a small irregular moss/root tuft. No planter, no field square. Native output will be fitted without stretching to 136 × 160 pixels. One complete isolated object, centered with 12 percent transparent gutter. Genuine transparent alpha. No UI, labels, letters, numbers, watermark, rarity frame, scene, rectangular ground tile, enclosing grass square, heavy cast shadow, plastic gloss, vector geometry, faceted low-poly surfaces, photorealism or neon glow. Keep readable materials and silhouette at its small native game size. Retain the handmade painted finish of the supplied references.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/farm_seasons/sunflower_row.png"
+    },
+    {
+      "id": "leaf_pile",
+      "type": "prop",
+      "size": [
+        120,
+        64
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "references": [
+        {
+          "path": "assets/iso_props/zz_painted_consistency/apple_tree.webp",
+          "role": "style/material/camera reference"
+        }
+      ],
+      "prompt": "Style transfer into a new sibling asset for the existing Trætoppen isometric storybook farm. The input images are style/material/camera references only; keep their approved images unchanged. Match their matte gouache/watercolor pigment, warm irregular pencil contours, natural honey timber, cream linen, sage foliage and restrained stone/iron. Match the reference’s isometric camera: equal left/right ground axes, a ground diamond about 128 wide by 76 high, see top and two sides; no perspective convergence. Subject: One low irregular autumn leaf pile. Several individually readable ochre, muted russet and warm brown broad leaves with painted veins and curled edges. A little moss underneath only. No trunk or branch, no enclosing ground tile. Native output will be fitted without stretching to 120 × 64 pixels. One complete isolated object, centered with 12 percent transparent gutter. Genuine transparent alpha. No UI, labels, letters, numbers, watermark, rarity frame, scene, rectangular ground tile, enclosing grass square, heavy cast shadow, plastic gloss, vector geometry, faceted low-poly surfaces, photorealism or neon glow. Keep readable materials and silhouette at its small native game size. Retain the handmade painted finish of the supplied references.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/farm_seasons/leaf_pile.png"
+    },
+    {
+      "id": "pumpkin_stack",
+      "type": "prop",
+      "size": [
+        122,
+        79
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "references": [
+        {
+          "path": "assets/iso_props/painted_world/planter_box.webp",
+          "role": "style/material/camera reference"
+        }
+      ],
+      "prompt": "Style transfer into a new sibling asset for the existing Trætoppen isometric storybook farm. The input images are style/material/camera references only; keep their approved images unchanged. Match their matte gouache/watercolor pigment, warm irregular pencil contours, natural honey timber, cream linen, sage foliage and restrained stone/iron. Match the reference’s isometric camera: equal left/right ground axes, a ground diamond about 128 wide by 76 high, see top and two sides; no perspective convergence. Subject: A compact harvest stack of three small squat pumpkins, one deep terracotta orange, one warm muted ochre and one pale cream, curled earthy stems and one sage leaf. Friendly rounded ribbing, tactile matte skins. No basket, stand or ground tile. Native output will be fitted without stretching to 122 × 79 pixels. One complete isolated object, centered with 12 percent transparent gutter. Genuine transparent alpha. No UI, labels, letters, numbers, watermark, rarity frame, scene, rectangular ground tile, enclosing grass square, heavy cast shadow, plastic gloss, vector geometry, faceted low-poly surfaces, photorealism or neon glow. Keep readable materials and silhouette at its small native game size. Retain the handmade painted finish of the supplied references.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/farm_seasons/pumpkin_stack.png"
+    },
+    {
+      "id": "snow_patch",
+      "type": "prop",
+      "size": [
+        122,
+        76
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "references": [
+        {
+          "path": "assets/iso_props/zz_painted_consistency/fountain.webp",
+          "role": "style/material/camera reference"
+        }
+      ],
+      "prompt": "Style transfer into a new sibling asset for the existing Trætoppen isometric storybook farm. The input images are style/material/camera references only; keep their approved images unchanged. Match their matte gouache/watercolor pigment, warm irregular pencil contours, natural honey timber, cream linen, sage foliage and restrained stone/iron. Match the reference’s isometric camera: equal left/right ground axes, a ground diamond about 128 wide by 76 high, see top and two sides; no perspective convergence. Subject: A low irregular patch of soft fresh snow resting flat on the ground, broad gentle scallops, warm cream-white pigment and very subtle lavender-blue inner shading, a tiny moss edge visible at one side. An unoutlined soft edge suitable over an existing grass tile. No ice crystal, no raised platform, no background or ground square. Native output will be fitted without stretching to 122 × 76 pixels. One complete isolated object, centered with 12 percent transparent gutter. Genuine transparent alpha. No UI, labels, letters, numbers, watermark, rarity frame, scene, rectangular ground tile, enclosing grass square, heavy cast shadow, plastic gloss, vector geometry, faceted low-poly surfaces, photorealism or neon glow. Keep readable materials and silhouette at its small native game size. Retain the handmade painted finish of the supplied references.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/farm_seasons/snow_patch.png"
+    },
+    {
+      "id": "bunting_x",
+      "type": "prop",
+      "size": [
+        86,
+        204
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "references": [
+        {
+          "path": "assets/iso_props/festival/door_wreath_spring_r0.webp",
+          "role": "style/material/camera reference"
+        }
+      ],
+      "prompt": "Style transfer into a new sibling asset for the existing Trætoppen isometric storybook farm. The input images are style/material/camera references only; keep their approved images unchanged. Match their matte gouache/watercolor pigment, warm irregular pencil contours, natural honey timber, cream linen, sage foliage and restrained stone/iron. Match the reference’s isometric camera: equal left/right ground axes, a ground diamond about 128 wide by 76 high, see top and two sides; no perspective convergence. Subject: A single slender honey-wood festival pole with a short hanging diagonal rope of three small fabric pennants in muted rose, cream and sage. Plain pennants, a tiny dull brass finial, little wooden foot. A compact pole, not a wide two-pole arch. No words or pictorial symbol. Native output will be fitted without stretching to 86 × 204 pixels. One complete isolated object, centered with 12 percent transparent gutter. Genuine transparent alpha. No UI, labels, letters, numbers, watermark, rarity frame, scene, rectangular ground tile, enclosing grass square, heavy cast shadow, plastic gloss, vector geometry, faceted low-poly surfaces, photorealism or neon glow. Keep readable materials and silhouette at its small native game size. Retain the handmade painted finish of the supplied references.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/farm_seasons/bunting_x.png"
+    },
+    {
+      "id": "vine_hang",
+      "type": "prop",
+      "size": [
+        30,
+        158
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "references": [
+        {
+          "path": "assets/iso_props/zz_painted_consistency/apple_tree.webp",
+          "role": "style/material/camera reference"
+        }
+      ],
+      "prompt": "Style transfer into a new sibling asset for the existing Trætoppen isometric storybook farm. The input images are style/material/camera references only; keep their approved images unchanged. Match their matte gouache/watercolor pigment, warm irregular pencil contours, natural honey timber, cream linen, sage foliage and restrained stone/iron. Match the reference’s isometric camera: equal left/right ground axes, a ground diamond about 128 wide by 76 high, see top and two sides; no perspective convergence. Subject: One thin dangling strand of ivy, honey-brown curling stem with five small paired sage/olive leaves and one cream bud. A vertical hanging sprite with its attachment at the top. No support pole, pot, ground or floating platform. Sparse airy silhouette. Native output will be fitted without stretching to 30 × 158 pixels. One complete isolated object, centered with 12 percent transparent gutter. Genuine transparent alpha. No UI, labels, letters, numbers, watermark, rarity frame, scene, rectangular ground tile, enclosing grass square, heavy cast shadow, plastic gloss, vector geometry, faceted low-poly surfaces, photorealism or neon glow. Keep readable materials and silhouette at its small native game size. Retain the handmade painted finish of the supplied references.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/farm_seasons/vine_hang.png"
+    },
+    {
+      "id": "pond_lily",
+      "type": "prop",
+      "size": [
+        96,
+        56
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "references": [
+        {
+          "path": "assets/iso_props/festival/door_wreath_spring_r0.webp",
+          "role": "style/material/camera reference"
+        }
+      ],
+      "prompt": "Style transfer into a new sibling asset for the existing Trætoppen isometric storybook farm. The input images are style/material/camera references only; keep their approved images unchanged. Match their matte gouache/watercolor pigment, warm irregular pencil contours, natural honey timber, cream linen, sage foliage and restrained stone/iron. Match the reference’s isometric camera: equal left/right ground axes, a ground diamond about 128 wide by 76 high, see top and two sides; no perspective convergence. Subject: One low flat sage water-lily leaf with a clear notch and a small cream/pale-rose water-lily blossom on top. A few small painted water droplets. A quiet pond decoration. No water patch, disc pedestal or surrounding scenery. Native output will be fitted without stretching to 96 × 56 pixels. One complete isolated object, centered with 12 percent transparent gutter. Genuine transparent alpha. No UI, labels, letters, numbers, watermark, rarity frame, scene, rectangular ground tile, enclosing grass square, heavy cast shadow, plastic gloss, vector geometry, faceted low-poly surfaces, photorealism or neon glow. Keep readable materials and silhouette at its small native game size. Retain the handmade painted finish of the supplied references.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/farm_seasons/pond_lily.png",
+      "catalog_id": "pond_lily_farm"
+    },
+    {
+      "id": "leaf_a",
+      "type": "particle",
+      "size": [
+        24,
+        14
+      ],
+      "references": [
+        {
+          "path": "assets/iso_props/zz_painted_consistency/apple_tree.webp",
+          "role": "painted pigment reference"
+        }
+      ],
+      "prompt": "New transparent particle sprite for the approved painted Trætoppen farm. Match the reference’s tactile matte gouache and softly irregular painted edge. Subject: one ochre-yellow curled broad autumn leaf with a short stem and simple soft vein. One object only, shown face-on with a compact simple silhouette. It will be reduced to 24 × 14 pixels, so avoid tiny decoration. Center with 18 percent clear gutter and genuine transparent alpha. No scene, text, border, cast shadow, glow, plastic gloss, vector or photorealism. Keep the existing reference unchanged.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/farm_seasons/leaf_a.png"
+    },
+    {
+      "id": "leaf_b",
+      "type": "particle",
+      "size": [
+        24,
+        14
+      ],
+      "references": [
+        {
+          "path": "assets/iso_props/zz_painted_consistency/apple_tree.webp",
+          "role": "painted pigment reference"
+        }
+      ],
+      "prompt": "New transparent particle sprite for the approved painted Trætoppen farm. Match the reference’s tactile matte gouache and softly irregular painted edge. Subject: one muted russet oval autumn leaf, one slight curl and a short stem. One object only, shown face-on with a compact simple silhouette. It will be reduced to 24 × 14 pixels, so avoid tiny decoration. Center with 18 percent clear gutter and genuine transparent alpha. No scene, text, border, cast shadow, glow, plastic gloss, vector or photorealism. Keep the existing reference unchanged.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/farm_seasons/leaf_b.png"
+    },
+    {
+      "id": "petal",
+      "type": "particle",
+      "size": [
+        16,
+        16
+      ],
+      "references": [
+        {
+          "path": "assets/iso_props/festival/door_wreath_spring_r0.webp",
+          "role": "painted pigment reference"
+        }
+      ],
+      "prompt": "New transparent particle sprite for the approved painted Trætoppen farm. Match the reference’s tactile matte gouache and softly irregular painted edge. Subject: one single pale rose blossom petal, gently cupped with a warm cream edge. One object only, shown face-on with a compact simple silhouette. It will be reduced to 16 × 16 pixels, so avoid tiny decoration. Center with 18 percent clear gutter and genuine transparent alpha. No scene, text, border, cast shadow, glow, plastic gloss, vector or photorealism. Keep the existing reference unchanged.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/farm_seasons/petal.png"
+    },
+    {
+      "id": "snowflake",
+      "type": "particle",
+      "size": [
+        14,
+        14
+      ],
+      "references": [
+        {
+          "path": "assets/iso_props/zz_painted_consistency/apple_tree.webp",
+          "role": "painted pigment reference"
+        }
+      ],
+      "prompt": "New transparent particle sprite for the approved painted Trætoppen farm. Match the reference’s tactile matte gouache and softly irregular painted edge. Subject: one small soft cream-white six-armed snowflake, very simple rounded arms, faint lavender edge; readable as one drifting snowflake, no dark ink outline. One object only, shown face-on with a compact simple silhouette. It will be reduced to 14 × 14 pixels, so avoid tiny decoration. Center with 18 percent clear gutter and genuine transparent alpha. No scene, text, border, cast shadow, glow, plastic gloss, vector or photorealism. Keep the existing reference unchanged.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/farm_seasons/snowflake.png"
+    },
+    {
+      "id": "apple_tree_foraar",
+      "type": "tree",
+      "size": [
+        359,
+        398
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "pivot": [
+        172,
+        355
+      ],
+      "references": [
+        {
+          "path": "assets/iso_props/zz_painted_consistency/apple_tree.webp",
+          "role": "edit target: preserve physical tree, trunk/roots, camera and ground anchor"
+        }
+      ],
+      "prompt": "Edit the supplied approved painted apple-tree sprite into a foraar seasonal sibling. Preserve the same knotted honey-brown trunk shape and bark finish, root footprint, stones, camera, warm handmade contour, lighting direction and foot anchor. Replace red fruit and some foliage with small pale rose and cream apple blossoms and tender muted sage leaves; keep a readable airy spring crown. Preserve the matte gouache/ink style and original object scale; do not make a new species or a new trunk. Complete isolated tree, transparent alpha, centered with clear gutter, all branch tips and roots visible. No rectangular ground tile, landscape, text, border, heavy cast shadow, vector geometry, plastic gloss, neon or photorealism. A seasonal replacement for the same 359 × 398 px game sprite. Save as a new sibling; leave the original unchanged.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/farm_seasons/apple_tree_foraar.png"
+    },
+    {
+      "id": "apple_tree_efteraar",
+      "type": "tree",
+      "size": [
+        359,
+        398
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "pivot": [
+        172,
+        355
+      ],
+      "references": [
+        {
+          "path": "assets/iso_props/zz_painted_consistency/apple_tree.webp",
+          "role": "edit target: preserve physical tree, trunk/roots, camera and ground anchor"
+        }
+      ],
+      "prompt": "Edit the supplied approved painted apple-tree sprite into a efteraar seasonal sibling. Preserve the same knotted honey-brown trunk shape and bark finish, root footprint, stones, camera, warm handmade contour, lighting direction and foot anchor. Replace the green leaf pigment with a natural mixture of muted ochre, russet and a little remaining olive foliage. Retain several clear deep red apples; a harvest tree, with no pumpkins or unrelated objects. Preserve the matte gouache/ink style and original object scale; do not make a new species or a new trunk. Complete isolated tree, transparent alpha, centered with clear gutter, all branch tips and roots visible. No rectangular ground tile, landscape, text, border, heavy cast shadow, vector geometry, plastic gloss, neon or photorealism. A seasonal replacement for the same 359 × 398 px game sprite. Save as a new sibling; leave the original unchanged.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/farm_seasons/apple_tree_efteraar.png"
+    },
+    {
+      "id": "apple_tree_vinter",
+      "type": "tree",
+      "size": [
+        359,
+        398
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "pivot": [
+        172,
+        355
+      ],
+      "references": [
+        {
+          "path": "assets/iso_props/zz_painted_consistency/apple_tree.webp",
+          "role": "edit target: preserve physical tree, trunk/roots, camera and ground anchor"
+        }
+      ],
+      "prompt": "Edit the supplied approved painted apple-tree sprite into a vinter seasonal sibling. Preserve the same knotted honey-brown trunk shape and bark finish, root footprint, stones, camera, warm handmade contour, lighting direction and foot anchor. Remove all apples and leafy canopy. Expose the same branching silhouette as a bare winter apple tree. Keep the knotted trunk, branch structure, roots, rocks and moss in place. Add only a little soft cream snow resting on the upper branch forks and roots, with restrained lavender shading; no ice crystals or sky. Preserve the matte gouache/ink style and original object scale; do not make a new species or a new trunk. Complete isolated tree, transparent alpha, centered with clear gutter, all branch tips and roots visible. No rectangular ground tile, landscape, text, border, heavy cast shadow, vector geometry, plastic gloss, neon or photorealism. A seasonal replacement for the same 359 × 398 px game sprite. Save as a new sibling; leave the original unchanged.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/farm_seasons/apple_tree_vinter.png"
+    }
+  ]
+}

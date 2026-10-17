@@ -1,0 +1,33 @@
+{
+ "id": "int_fekongens_hus",
+ "building": "fekongens_hus",
+ "size": "L",
+ "cols": 10,
+ "rows": 8,
+ "wall_style": "marble",
+ "floor": "floor_marble",
+ "door": {"cell": [5, 7], "dir": [0, 1]},
+ "spawn_cell": [5, 6],
+ "windows": {"z": [1, 7], "x": [1, 5]},
+ "exit": {"area": "hyggebyen", "spawn": "from_int_fekongens_hus"},
+ "zoom_fit": 0.635,
+ "items": [
+  {"id": "table_long_walnut", "cell": [4, 2], "rot": 0, "role": "counter"},
+  {"id": "bookshelf_pine", "cell": [0, 0], "rot": 0},
+  {"id": "throne_king", "cell": [2, 0], "rot": 0},
+  {"id": "bookshelf_birch", "cell": [3, 0], "rot": 0},
+  {"id": "sofa_oak_three", "cell": [0, 3], "rot": 0},
+  {"id": "sofa_oak_three", "cell": [0, 4], "rot": 0},
+  {"id": "clock_walnut", "cell": [9, 3], "rot": 0},
+  {"id": "floor_lamp_brass", "cell": [9, 4], "rot": 0},
+  {"id": "plant_flowering", "cell": [0, 5], "rot": 0}
+ ],
+ "posts": [
+  {"id": "throne", "cell": [5, 1], "act": "work", "facing": "S", "capacity": 1, "kind": "keeper"},
+  {"id": "cust1", "cell": [1, 5], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"},
+  {"id": "cust2", "cell": [8, 3], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"},
+  {"id": "cust3", "cell": [7, 5], "act": "stand", "facing": "N", "capacity": 1, "kind": "customer"}
+ ],
+ "markers": [{"type": "door", "cell": [5, 7], "to": "hyggebyen", "spawn": "from_int_fekongens_hus"}],
+ "notes": []
+}

@@ -1,0 +1,94 @@
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=ghostfam_seek
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.Tabq28/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 11.5 s
+== section ghostfam_seek  (res://tests/sections/ghostfam_seek.gd)
+  ok    ghostfam_seek.six_json_safe_flags
+  ok    ghostfam_seek.old_save_without_flags_is_zero
+  ok    ghostfam_seek.routine_0a
+  ok    ghostfam_seek.routine_0b
+  ok    ghostfam_seek.routine_1a
+  ok    ghostfam_seek.routine_1b
+  ok    ghostfam_seek.routine_3a
+  ok    ghostfam_seek.routine_3b
+  ok    ghostfam_seek.routine_4a
+  ok    ghostfam_seek.routine_4b
+  ok    ghostfam_seek.routine_5a
+  ok    ghostfam_seek.routine_5b
+  ok    ghostfam_seek.routine_6a
+  ok    ghostfam_seek.routine_6b
+  ok    ghostfam_seek.family_evening_has_no_seek
+  ok    ghostfam_seek.real_hidden_actor
+  ok    ghostfam_seek.three_existing_effect_dots
+  ok    ghostfam_seek.no_added_seek_lights
+  ok    ghostfam_seek.shimmer_hidden_from_far
+  ok    ghostfam_seek.cousin_range_only
+  ok    ghostfam_seek.ordinary_shimmer_range
+  ok    ghostfam_seek.warm_whisper_once
+  ok    ghostfam_seek.hot_whisper_once
+  ok    ghostfam_seek.outside_find_radius_not_counted
+  ok    ghostfam_seek.real_interaction_counts_find
+  ok    ghostfam_seek.find_pays_five_points
+  ok    ghostfam_seek.lua_found_branch_and_cleared_transients
+  ok    ghostfam_seek.dialogue_finished
+  ok    ghostfam_seek.found_actor_reappears
+  ok    ghostfam_seek.second_talk_same_slot
+  ok    ghostfam_seek.dialogue_finished
+  ok    ghostfam_seek.second_slot_counts
+  ok    ghostfam_seek.same_slot_cannot_repeat
+  ok    ghostfam_seek.midnight_keeps_same_date_mask
+  ok    ghostfam_seek.midnight_save_load
+  ok    ghostfam_seek.counter_and_mask_survive
+  ok    ghostfam_seek.new_day_has_fresh_slots
+  ok    ghostfam_seek.missing_a_slot_has_no_penalty
+  ok    ghostfam_seek.ladder_1_one_payload
+  ok    ghostfam_seek.ladder_1_no_replay
+  ok    ghostfam_seek.pace_1
+  ok    ghostfam_seek.ladder_2_one_payload
+  ok    ghostfam_seek.ladder_2_no_replay
+  ok    ghostfam_seek.pace_2
+  ok    ghostfam_seek.ladder_3_one_payload
+  ok    ghostfam_seek.ladder_3_no_replay
+  ok    ghostfam_seek.pace_3
+  ok    ghostfam_seek.ladder_4_one_payload
+  ok    ghostfam_seek.ladder_4_no_replay
+  ok    ghostfam_seek.ladder_4_registry
+  ok    ghostfam_seek.pace_4
+  ok    ghostfam_seek.ladder_5_one_payload
+  ok    ghostfam_seek.ladder_5_no_replay
+  ok    ghostfam_seek.ladder_5_registry
+  ok    ghostfam_seek.pace_5
+  ok    ghostfam_seek.owned_keepsake_fallback_3
+  ok    ghostfam_seek.registry_only_keepsake_fallback_3
+  ok    ghostfam_seek.owned_keepsake_fallback_4
+  ok    ghostfam_seek.registry_only_keepsake_fallback_4
+  ok    ghostfam_seek.placed_fixture_item
+  ok    ghostfam_seek.actual_home_placement
+  ok    ghostfam_seek.placed_keepsake_pays_fallback
+  ok    ghostfam_seek.full_store_defers_gift
+  ok    ghostfam_seek.retry_accepts_once
+  ok    ghostfam_seek.store_observers_see_committed_reward
+  ok    ghostfam_seek.all_keys_da_en
+  ok    ghostfam_seek.card_has_real_count_and_next_step
+  ok    ghostfam_seek.card_count_danish
+  ok    ghostfam_seek.card_count_english
+  ok    ghostfam_seek.progress_card_in_real_dialogue
+  ok    ghostfam_seek.pace_reads_base_clock_while_fixture_is_frozen
+  ok    ghostfam_seek.independent_live_economy ({"errors": [], "items": 401, "ok": true, "pace": [{"dedicated_game_weeks": 0.25, "dedicated_real_hours": 0.2916666666666667, "finds": 3, "typical_game_weeks": 0.75, "typical_real_hours": 0.875}, {"dedicated_game_weeks": 0.8333333333333334, "dedicated_real_hours": 0.9722222222222222, "finds": 10, "typical_game_weeks": 2.5, "typical_real_hours": 2.9166666666666665}, {"dedicated_game_weeks": 2.0, "dedicated_real_hours": 2.3333333333333335, "finds": 24, "typical_game_weeks": 6.0, "typical_real_hours": 7.0}, {"dedicated_game_weeks": 4.0, "dedicated_real_hours": 4.666666666666667, "finds": 48, "typical_game_weeks": 12.0, "typical_real_hours": 14.0}, {"dedicated_game_weeks": 6.666666666666667, "dedicated_real_hours": 7.777777777777778, "finds": 80, "typical_game_weeks": 20.0, "typical_real_hours": 23.333333333333332}], "recipes": 129, "sellable_gold": 370, "worst_fallback_gold": 900}
+)
+  ok    ghostfam_seek.independent_checker_catches_rarity_mutant
+  ok    ghostfam_seek.independent_checker_catches_recipe_mutant
+  --    ghostfam_seek: 74 checks, 0 failed, 0 skipped, 4.3 s
+== summary: 1 section(s) run, 82 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 20.5 s
+PLAYTEST PASS (82 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

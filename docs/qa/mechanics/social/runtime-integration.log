@@ -1,0 +1,920 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=core,social,social_data,social_talk,social_gifts,social_ui,social_events,festival_activities,forest_mother
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.RsRXQ3/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 0.9 s
+== section core  (res://tests/sections/core.gd)
+  ok    core.signal_contract_exact (76 signals; missing [], wrong [], not in the contract [])
+  ok    core.legacy_signals_keep_arity (38 legacy signals)
+  ok    core.plan_3_5_signals (23 signals of PLAN 3.5 + R.13)
+  ok    core.feature_signals_14 (addendum 3.1)
+  ok    core.review_fix_signals (devin-review additions (flag_changed))
+  ok    core.farm_upgraded_removed (PLAN 3.5: removed, never used)
+  ok    core.r13_escape_hatch_and_hotbar_assign (R.13)
+  ok    core.player_spawned_node2d (emitted with a Node2D)
+  ok    core.signal_arity_lint (710 EventBus uses in 399 files, 0 violation(s) []; covers 14 feature signals)
+  ok    core.signal_arity_lint_covers_14_feature_signals (arity of every addendum 3.1 signal)
+  ok    core.signal_arity_lint_detects_mismatch (bad sample ["sample:1 EventBus.gold_changed.emit() has 1 argument(s), the signal has 2", "sample:2 EventBus.nope is neither a declared signal nor a member", "sample:3 EventBus.day_started.connect(func(a): pass) accepts 1..1 argument(s), the signal passes 2", "sample:4 EventBus.home_upgraded.connect(_h) accepts 3..3 argument(s), the signal passes 2", "sample:7 EventBus.save_completed.connect(_t2) accepts 0..0 argument(s), the signal passes 1", "sample:10 EventBus.item_sold.emit() has 2 argument(s), the signal has 3"], good sample [])
+  ok    core.config_literal_defaults (28 days, 4 seasons, 06:00 to 26:00 (= 02:00 at night), 2 min/s)
+  ok    core.config_read_from_lua (minutes_per_real_second 2.0 from LuaRuntime time.*)
+  ok    core.time_manager_has_no_second_copy (TimeManager delegates to GameManager)
+  ok    core.config_override_seasons (override seam)
+  ok    core.config_drives_end_day (day 7 of aa -> day 1 of bb (1 bb))
+  ok    core.config_drives_year (year 2 starts at total day 15 (15))
+  ok    core.modal_stack (push x2 / pop x2: paused true true, after first pop true, after last pop resumed true)
+  ok    core.modal_changed_signal (modal_changed payloads [[&"pause"], [&"pause", &"settings"], [&"pause"], []])
+  ok    core.modal_stack_pop_out_of_order (pop the older modal first)
+  ok    core.modal_phase_cutscene_and_restore (CUTSCENE true, shop over dialogue true, true, true, back to CUTSCENE true, PLAYING true)
+  ok    core.modal_push_is_idempotent (double push = one entry, unknown pop ignored)
+  info  expected engine error below (declared with allow): push_modal with an empty name
+ERROR: GameManager.push_modal: a modal needs a name
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] push_modal (res://scripts/autoload/game_manager.gd:250)
+       [1] _test_modal_stack (res://tests/sections/core.gd:527)
+       [2] run (res://tests/sections/core.gd:140)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    empty modal name is refused with an error (allowed 'a modal needs a name' seen 1 time(s), want >= 1)
+  ok    core.modal_empty_name_refused
+  ok    core.modal_stack_cleared_at_menu (quit to menu leaves a live, unpaused menu)
+  ok    core.modal_over_menu_restores_menu (settings over the title)
+  ok    core.phase_character_select
+  ok    core.phase_legacy_change_phase (change_phase(PAUSED/PLAYING))
+  ok    core.phase_playing_does_not_unpause_open_modal (an open modal wins over change_phase(PLAYING))
+  ok    core.phase_after_pop_all
+  ok    core.modal_changed_only_when_the_stack_changes (scene boundaries and no-op pops are silent: [])
+  ok    core.modal_never_touches_the_mouse (mouse mode stays 0)
+  ok    core.flags_json_safe_types (bool, int, float, String; StringName is stored as String)
+  info  expected engine errors below (declared with allow): set_flag with an Array, a Vector2 and NAN
+ERROR: GameManager.set_flag(bad_array): Array is not JSON-safe (use bool, int, float or String)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_flag (res://scripts/autoload/game_manager.gd:347)
+       [1] _test_flags (res://tests/sections/core.gd:574)
+       [2] run (res://tests/sections/core.gd:141)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+ERROR: GameManager.set_flag(bad_vector): Vector2 is not JSON-safe (use bool, int, float or String)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_flag (res://scripts/autoload/game_manager.gd:347)
+       [1] _test_flags (res://tests/sections/core.gd:575)
+       [2] run (res://tests/sections/core.gd:141)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+ERROR: GameManager.set_flag(bad_nan): float is not JSON-safe (use bool, int, float or String)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_flag (res://scripts/autoload/game_manager.gd:347)
+       [1] _test_flags (res://tests/sections/core.gd:576)
+       [2] run (res://tests/sections/core.gd:141)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    non JSON-safe values are refused with an error (allowed '(use bool, int, float or String)' seen 3 time(s), want >= 3)
+  ok    core.flags_unsafe_values_not_stored
+  ok    core.flags_null_clears
+  ok    core.flags_clear
+  ok    core.flag_int_defaults (absent flags: home_tier 1, home_building 0, home_upgrade_done 0)
+  ok    core.flag_int_coerces (3.0 -> 3, true -> 1, '12' -> 12, 'tre' -> default)
+  ok    core.flag_int_after_json_roundtrip (new game defaults ok true; raw value after JSON is a float true; flag_int gives ints true)
+  ok    core.new_game_signal_once_and_last (signals in order: ["modal_changed", "player_character_changed", "weather_changed", "new_game_started"])
+  ok    core.new_game_started_is_last_gm_signal (after it only the reset wave of other systems: [])
+  ok    core.new_game_skin_announced_final (player_character_changed [&"fairy_meadow"])
+  ok    core.new_game_state_reset_before_signal (day/season/year/clock, flags { &"intro_pending": true, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0 }, zones, modals gone, phase PLAYING)
+  ok    core.new_game_intro_pending (intro_pending=true, the dirty flag is gone)
+  ok    core.new_game_resets_own_state
+  ok    core.new_game_resets_time_manager (weather klart, clock running)
+  ok    core.new_game_default_and_explicit_skin (animal animal_fox hobbit hobbit_pip ghost ghost_bu explicit fairy_dusk)
+  ok    core.new_game_default_names (empty names fall back to the translated defaults (Eventyrrejsende / Min Trækronsgård))
+  ok    core.new_game_wires_EconomyManager (EconomyManager.reset() is connected to new_game_started)
+  ok    core.new_game_wires_QuestManager (QuestManager.reset() is connected to new_game_started)
+  ok    core.new_game_wires_TimeManager (TimeManager.reset() is connected to new_game_started)
+  ok    core.new_game_wires_ShopSystem (ShopSystem.reset() is connected to new_game_started)
+  ok    core.new_game_wires_AnimalHusbandry (AnimalHusbandry.reset() is connected to new_game_started)
+  ok    core.new_game_wires_SaveManager (SaveManager.reset() is connected to new_game_started)
+  ok    core.new_game_resets_gold (gold after a new game: 500)
+  ok    core.new_game_resets_all (one new_game_started per start_new_game; 6 system(s) reset through it so far)
+  ok    core.from_dict_restores_state
+  ok    core.from_dict_types_after_json (ints and StringNames come back typed)
+  ok    core.from_dict_does_not_start_playing (phase stays 0)
+  ok    core.from_dict_emits_character_changed (["player_character_changed"])
+  ok    core.to_dict_total_day (total_day 156 in the dictionary for the title screen)
+  ok    core.from_dict_empty_is_safe
+  info  expected engine warning below (declared with allow): from_dict drops an unsafe flag
+WARNING: GameManager.from_dict: world flag 'bad' is not JSON-safe and was dropped
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _sanitized_flags (res://scripts/autoload/game_manager.gd:613)
+         [1] from_dict (res://scripts/autoload/game_manager.gd:589)
+         [2] _test_from_dict (res://tests/sections/core.gd:744)
+         [3] run (res://tests/sections/core.gd:143)
+         [4] go_menu (res://tests/lib/flow.gd:69)
+         [5] change_scene (res://tests/lib/flow.gd:57)
+         [6] frames (res://tests/lib/drive.gd:79)
+  ok    an unsafe flag in a save is reported (allowed 'and was dropped' seen 1 time(s), want >= 1)
+  ok    core.from_dict_drops_unsafe_flags
+  ok    core.unlock_zone_payload (zone_unlocked(crystal_cave))
+  ok    core.unlock_zone_signals (zone_unlocked x1, zone_entered x0)
+  ok    core.unlock_zone_toast (one toast, icon zone: [["Nyt område!", "Du har låst op for: Krystalgrotten", "zone"]])
+  ok    core.unlock_toast_never_formats_a_raw_key (an untranslated key (no placeholder) is returned as it is: no String formatting error)
+  ok    core.unlock_zone_state (unlocked, not discovered)
+  ok    core.unlock_zone_twice_is_silent (no second signal, no second toast)
+  ok    core.zone_entered_discovers
+  ok    core.advance_time_25h (06:00 + 25 h = day 2 07:00)
+  ok    core.advance_time_25h_signals (["day_ended", "day_started", "game_event", "time_of_day_changed"])
+  ok    core.midnight_passed_event (game_event(midnight_passed) after day_started: [&"midnight_passed", { "day": 2, "season": "foraar" }])
+  ok    core.advance_time_multiday (50 h -> day 3 08:00 true; 18 h -> raw 24:00 of the same day true; 20 h -> day 2 02:00 true; 23:59 + 1 min -> raw 24:00 same day true; 25:59 + 1 min -> day 2 02:00 true; 29 days 90 min -> sommer day 2 07:30 true)
+  ok    core.time_of_day_changed_range (raw hour 2..25 (a signal at 24:30 carries 24: the HUD shows 00:30), minute 0..59)
+  ok    core.advance_time_zero_and_negative (0 min emits the clock once, negative minutes are ignored)
+  ok    core.season_rollover (day 28 foraar 23:00 + 2 h = still day 28 (01:00); 01:00 (raw 25:00) + 2 h = day 1 sommer 03:00: ["day_ended", "season_changed", "day_started", "game_event", "time_of_day_changed"])
+  ok    core.year_rollover (vinter 28 -> foraar day 1 of year 2)
+  ok    core.end_day_signal_order (["day_ended", "day_started", "time_of_day_changed"] (the bed emits no midnight_passed))
+  ok    core.end_day_full_year (114 end_day() calls: day 3 foraar year 2 (total 115))
+  ok    core.total_day_values (Dag 1 .. Dag 112, year 2 starts at Dag 113)
+  ok    core.total_day_current (day 9 efteraar year 1 is Dag 65)
+  ok    core.sleep_from_bed (21:30 -> next day 06:00)
+  ok    core.sleep_after_passout_no_double_day (after the 02:00 roll: wake at 06:00 of the same calendar day (day 5))
+  ok    date_text(16, foraar) in da (got Tirsdag 16. Blomstermåned, want Tirsdag 16. Blomstermåned)
+  ok    date_text(16, foraar) in en (got Tuesday 16. Month of Blooms, want Tuesday 16. Month of Blooms)
+  ok    core.calendar_names (date_text da/en, 28 weekdays true, 4 months true, 5 weather names true, en names true, defaults to today true)
+  ok    core.weekday_is_monday_on_day_one_of_every_season (Mandag = day 1 of every season)
+  ok    core.first_weekday_config (time.first_weekday=2: day 1 is Onsdag; the default is Mandag)
+  info  expected engine error below (declared with allow): set_weather with an unknown id
+ERROR: TimeManager.set_weather: unknown weather id 'hagl'
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_weather (res://scripts/autoload/time_manager.gd:146)
+       [1] _test_weather (res://tests/sections/core.gd:960)
+       [2] run (res://tests/sections/core.gd:149)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    an unknown weather id is refused (allowed 'unknown weather id' seen 1 time(s), want >= 1)
+  ok    core.weather_set_and_announced (weather_changed(regn), is_raining only for regn, unknown id refused)
+  ok    core.weather_roll_uses_config_chances (roll 0.0 -> regn, 0.30 -> taage, 0.90 -> klart)
+  ok    core.weather_snow_only_in_vinter (snow chance outside vinter is ignored)
+  ok    core.weather_weights_are_normalised (klart 6 / regn 3 / torden 1 -> { &"regn": 0.3, &"torden": 0.1, &"klart": 0.6 }; rolls 0.10 regn, 0.35 torden, 0.50 klart)
+  ok    core.weather_table_is_valid (foraar [&"regn", &"taage", &"klart"]; sommer [&"regn", &"torden", &"klart"]; efteraar [&"regn", &"taage", &"klart"]; vinter [&"taage", &"sne", &"klart"]; )
+  ok    core.is_night_from_config (20:00-05:00 by default, configurable)
+  ok    core.weather_default_rolls_are_valid (ids seen: [&"klart", &"regn", &"taage", &"torden", &"sne"])
+  ok    core.weather_rolled_before_day_started (a day_started listener already saw the roll (1), total 1)
+  ok    core.weather_rolled_once_per_day (a stray day_started of the same day does not roll again)
+  ok    core.weather_rolled_by_game_manager_before_listeners (without TimeManager's own handler a listener still saw the new roll (2, was 1))
+  ok    core.weather_one_roll_per_crossed_midnight (25 h = 1 roll, 50 h = 2 rolls)
+  ok    core.time_manager_reset
+  ok    core.time_manager_save_roundtrip (weather and the day it belongs to survive JSON)
+  ok    core.time_manager_from_dict_bad_weather (unknown saved weather falls back to klart)
+  ok    core.time_tick_rate (2 game minutes per real second: 1 s = 06:02 (06:02))
+  ok    core.pause_time_is_idempotent (pause twice, resume once: the clock runs again)
+  ok    core.resume_time_is_idempotent
+  ok    core.clock_stops_in_modals_and_menus (paused modal true, dialogue true, menu true)
+  ok    core.time_scale (time scale 2: +2 minutes for 0.5 s (06:05))
+  ok    core.tick_crosses_midnight (23:59 + 1 tick = day 1 raw 24:00 (00:00 of the same day); 01:59 + 1 tick = day 2 02:00)
+  ok    core.day_fraction (noon is half of the day)
+  ok    core.no_mouse_capture (16 autoload scripts scanned, none touches Input.mouse_mode [] (the cursor itself is menus.cursor_always_visible, P16))
+  --    core: 114 checks, 0 failed, 0 skipped, 0.8 s
+== section festival_activities  (res://tests/sections/festival_activities.gd)
+  ok    festival_activities.normal_score_has_no_rarity_bonus
+  ok    festival_activities.uncommon_score_bonus
+  ok    festival_activities.rare_score_bonus
+  ok    festival_activities.cheapest_winning_entry_caps_prize
+  ok    festival_activities.unknown_selector_has_zero_cap
+  ok    festival_activities.legal_prizes
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "gold": 201 } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "gold": 100 }, "second": { "gold": 71 } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "gold": 100 }, "third": { "gold": 41 } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "items": { "keepsake": 1 } } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "items": { "unknown": 1 } } }
+  ok    festival_activities.deterministic_entry_seed_1
+  ok    festival_activities.deterministic_entry_seed_2
+  ok    festival_activities.deterministic_entry_seed_3
+  ok    festival_activities.deterministic_entry_seed_4
+  ok    festival_activities.deterministic_entry_seed_5
+  ok    festival_activities.deterministic_entry_seed_6
+  ok    festival_activities.deterministic_entry_seed_7
+  ok    festival_activities.deterministic_entry_seed_8
+  ok    festival_activities.deterministic_entry_seed_9
+  ok    festival_activities.deterministic_entry_seed_10
+  ok    festival_activities.deterministic_entry_seed_11
+  ok    festival_activities.deterministic_entry_seed_12
+  ok    festival_activities.deterministic_entry_seed_13
+  ok    festival_activities.deterministic_entry_seed_14
+  ok    festival_activities.deterministic_entry_seed_15
+  ok    festival_activities.deterministic_entry_seed_16
+  ok    festival_activities.deterministic_entry_seed_17
+  ok    festival_activities.deterministic_entry_seed_18
+  ok    festival_activities.deterministic_entry_seed_19
+  ok    festival_activities.deterministic_entry_seed_20
+  ok    festival_activities.wrong_entry_refused
+  ok    festival_activities.stage_attached_to_active_area (stage=FestivalStage:<Node2D#1072315769680> area=hyggebyen active=activity_test)
+  ok    festival_activities.named_posts_have_no_map_errors ([])
+  ok    festival_activities.all_six_activities_enabled_in_window
+  ok    festival_activities.opening_once_per_year
+  ok    festival_activities.attendance_points_once
+  ok    festival_activities.talked_citizen_attendance_once
+  ok    festival_activities.picker_opens_contest
+  ok    festival_activities.matching_item_available_contest
+  ok    festival_activities.contest_consumes_exactly_one_entry
+  ok    festival_activities.contest_pays_bounded_prize
+  ok    festival_activities.contest_cannot_be_repeated
+  ok    festival_activities.picker_opens_potluck
+  ok    festival_activities.matching_item_available_potluck
+  ok    festival_activities.potluck_donation_is_one_item
+  ok    festival_activities.town_contributions_reach_goal
+  ok    festival_activities.feast_restores_once
+  ok    festival_activities.feast_repeat_has_no_effect
+  ok    festival_activities.wish_is_flavour_flag
+  ok    festival_activities.wish_host_points_once
+  ok    festival_activities.wish_repeat_refused
+  ok    festival_activities.dance_chooses_highest_hearts_present
+  ok    festival_activities.market_opens_existing_shop_panel
+  ok    festival_activities.stage_is_stable_across_flushes
+  ok    festival_activities.finale_once_per_year
+  ok    festival_activities.activities_disable_at_window_end
+  ok    festival_activities.outside_window_has_no_effect
+  ok    festival_activities.stage_removed_at_end
+  --    festival_activities: 59 checks, 0 failed, 0 skipped, 0.5 s
+== section forest_mother  (res://tests/sections/forest_mother.gd)
+  ok    forest_mother.no_inherited_evidence
+  ok    forest_mother.garden_trail_starts_investigation
+  ok    forest_mother.authored_quest_caption_is_localized
+  ok    forest_mother.future_chapters_cannot_be_offered_early
+  ok    forest_mother.all_essential_quests_have_no_paid_or_random_rewards
+  ok    forest_mother.out_of_order_evidence_is_kept
+  ok    forest_mother.finale_waits_for_real_checkpoints
+  ok    forest_mother.cancel_records_nothing_and_releases_player
+  ok    forest_mother.travel_cancels_evidence_dialogue
+  ok    forest_mother.full_pack_cannot_block_evidence
+  ok    forest_mother.evidence_save_written
+  ok    forest_mother.evidence_save_loaded
+  ok    forest_mother.evidence_restored_with_quest_progress
+  ok    forest_mother.daytime_visit_does_not_consume_account
+  ok    forest_mother.night_retry_uses_real_topic
+  ok    forest_mother.first_checkpoint_completes_s03
+  ok    forest_mother.memory_clue_reachable_memory_map
+  ok    forest_mother.memory_clue_reachable_memory_basket
+  ok    forest_mother.memory_clue_reachable_memory_lamp
+  ok    forest_mother.memory_clue_reachable_memory_table
+  ok    forest_mother.free_owl_topic_available_beside_services
+  ok    forest_mother.cancelled_witness_page_does_not_record
+  ok    forest_mother.free_written_owl_account_has_no_calendar_gate
+  ok    forest_mother.own_name_and_second_checkpoint_complete_s05
+  ok    forest_mother.witness_account_completes_s06
+  ok    forest_mother.earlier_last_journey_catches_up
+  ok    forest_mother.story_sync_never_regrants_boss_hearts
+  ok    forest_mother.bittersweet_truth_and_keepsake_commit_together
+  ok    forest_mother.finale_answers_fate_explicitly
+  ok    forest_mother.reread_never_duplicates_progress
+  ok    forest_mother.legacy_planted_and_story_finished
+  ok    forest_mother.journal_has_all_confirmed_accounts
+  ok    forest_mother.ending_save_written
+  ok    forest_mother.ending_save_reentered
+  ok    forest_mother.legacy_survives_world_rebuild
+  ok    forest_mother.ordinary_forest_play_remains_available
+  ok    forest_mother.no_inherited_evidence
+  ok    forest_mother.garden_trail_starts_investigation
+  ok    forest_mother.authored_quest_caption_is_localized
+  ok    forest_mother.future_chapters_cannot_be_offered_early
+  ok    forest_mother.all_essential_quests_have_no_paid_or_random_rewards
+  ok    forest_mother.out_of_order_evidence_is_kept
+  ok    forest_mother.finale_waits_for_real_checkpoints
+  ok    forest_mother.cancel_records_nothing_and_releases_player
+  ok    forest_mother.travel_cancels_evidence_dialogue
+  ok    forest_mother.full_pack_cannot_block_evidence
+  ok    forest_mother.evidence_save_written
+  ok    forest_mother.evidence_save_loaded
+  ok    forest_mother.evidence_restored_with_quest_progress
+  ok    forest_mother.daytime_visit_does_not_consume_account
+  ok    forest_mother.night_retry_uses_real_topic
+  ok    forest_mother.first_checkpoint_completes_s03
+  ok    forest_mother.memory_clue_reachable_memory_map
+  ok    forest_mother.memory_clue_reachable_memory_basket
+  ok    forest_mother.memory_clue_reachable_memory_lamp
+  ok    forest_mother.memory_clue_reachable_memory_table
+  ok    forest_mother.free_owl_topic_available_beside_services
+  ok    forest_mother.cancelled_witness_page_does_not_record
+  ok    forest_mother.free_written_owl_account_has_no_calendar_gate
+  ok    forest_mother.own_name_and_second_checkpoint_complete_s05
+  ok    forest_mother.witness_account_completes_s06
+  ok    forest_mother.earlier_last_journey_catches_up
+  ok    forest_mother.story_sync_never_regrants_boss_hearts
+  ok    forest_mother.bittersweet_truth_and_keepsake_commit_together
+  ok    forest_mother.finale_answers_fate_explicitly
+  ok    forest_mother.reread_never_duplicates_progress
+  ok    forest_mother.legacy_planted_and_story_finished
+  ok    forest_mother.journal_has_all_confirmed_accounts
+  ok    forest_mother.ending_save_written
+  ok    forest_mother.ending_save_reentered
+  ok    forest_mother.legacy_survives_world_rebuild
+  ok    forest_mother.ordinary_forest_play_remains_available
+  --    forest_mother: 72 checks, 0 failed, 0 skipped, 5.4 s
+== section social  (res://tests/sections/social.gd)
+  ok    social.calendar_weeks_valid (28 % 7 == 0, year of 112 days, 4 seasons)
+  ok    social.calendar_weeks_invalid_when_days_per_season_is_not_a_multiple_of_7 (days_per_season 30 -> weeks_valid() false (the section would fail), restored)
+  ok    social.calendar_roundtrip_and_weekday_agree_with_core (date_of / total_day / weekday_of vs GameManager.total_day_for and TimeManager.weekday_index over 399 days: 0 mismatches)
+  ok    week index: Monday..Sunday blocks, 16 weeks a year
+  ok    weekday and weekend
+  ok    week_start is the Monday of the week
+  ok    days_until wraps the year
+  ok    next_total_day, date_key
+  ok    social.calendar_hour_in_raw_hours (22-2 = [22,26) true; 0-2 = [24,26) true; 22-6 wraps (22..25 and 2..5) true; 8-18 unchanged true; from == to always true true; 6-26 is the whole play day true)
+  ok    normalise_hour = GameManager.game_hour: 1.5 -> 25.5, 0 -> 24, 6 and 25 stay
+  ok    social.rng_matches_python_mirror (6 vectors (FNV-1a 32 + fmix32 over seed|part|part) equal the pinned values true; python equals the GDScript numbers)
+  ok    social.rng_uniform_25pct (25% roll over 10080 (npc, day) pairs: 2432 hits (python: 2432))
+  ok    same inputs, same roll; another seed, another roll
+  ok    social.rng_no_walk_across_days (consecutive days do not walk 1,2,3 (String.hash would: true): longest equal run of 4 buckets = 5)
+  ok    pick / pick_weighted edge cases
+  ok    social.data_friend_ids_sorted (34 friend ids, sorted, = friendship rows plus authored unlocks)
+  ok    a citizens row with an unlock includes the NPC exactly once (34 -> 34)
+  ok    social.data_derived_defaults_are_stable (derived row: tier C, archetype from role_archetype, birthday from the id; adding an NPC moved 0 other birthdays; the new one is a real date with archetype child)
+  ok    social.data_registry_absent_is_empty (a runtime without get_registry and an unknown id read {} (nothing is required to boot); with the design registries the readers answer (design festivals 9, events of Hoppe 1))
+  ok    social.data_role_archetype_covers_every_role (27 roles of npc_vocab.roles, missing in social.role_archetype: [])
+  SKIP  social.data_real_citizens_and_tastes: lua/social/citizens.lua and gift_tastes.lua are S-data's (wave 5): every friend here still uses the derived defaults (tier C, role archetype, derived birthday); the design rows are used where a check needs them
+  ok    social.config_defaults_equal_lua (lua/social/social.lua has 11 top-level keys, SocialData.DEFAULTS has 11; differences: [])
+  ok    an empty social table still answers every number from the code defaults
+  ok    the Lua lint is clean with lua/social/social.lua loaded (0 findings)
+  ok    AGF17: social.festival.max_attendees = 15, chat 100, belated x2
+  ok    social.autoload_registered_once (project.godot has the line 1 time(s); section `social` registered 1 time(s) for the autoload node; process mode ALWAYS)
+  ok    social.save_registry_order (order 60 (after loot 40 and collection 50: FEATURE_ORDERS { "home": 10, "furniture": 20, "wardrobe": 30, "loot": 40, "collection": 50 }), position 11 of ["game", "time", "economy", "quests", "husbandry", "shops", "home", "furniture", "wardrobe", "loot", "dungeon", "social"])
+  ok    social.daily_work_is_deferred (advance_time(50 h) emitted exactly ["midnight_passed", "midnight_passed"] synchronously (the pin of core.advance_time_multiday) and queued ONE coalesced flush (pending true))
+  ok    flush() catches up: last processed day = today (4)
+  ok    social.birthday_event_after_flush (nothing synchronous inside advance_time; after the flush birthday_today {npc: merchant_pip} once and the flag birthday_today = merchant_pip)
+  ok    a second flush the same day posts nothing more
+  ok    the next day the flag names nobody (cleared)
+  ok    social.daily_skip_no_stale_birthday_event (a skip that ends after the birthday posts no birthday_today for the skipped day (0); only today's 1 birthday(s) are announced)
+  ok    time_of_day_changed queues the (single, coalesced) flush
+  ok    social.new_game_flags_follow_the_first_flush (a new game on day 1 = Lily's birthday: no birthday_today flag at new_game_started (the flags are exactly the new game's: [&"intro_pending", &"home_tier", &"home_building", &"home_upgrade_done"]), a flush queued by reset(); the first flush writes birthday_today = fairy_lily and posts no event for the day nothing was skipped)
+  ok    a fresh game: no points, an unknown NPC has none
+  ok    40 points: no whole heart, no friend_changed
+  ok    the mirror flag holds WHOLE hearts (0 after 40 points)
+  ok    social.hearts_signal_only_on_whole_heart (110 points = 1 heart: friend_changed(mayor_lyra, 1) fired exactly once ([["mayor_lyra", 1]]), social_points twice)
+  ok    game_event social_points {npc, delta, points, hearts, source}: { "npc": "mayor_lyra", "delta": 70, "points": 110, "hearts": 1, "source": "test" }
+  ok    half hearts: 110 points = 2 half hearts (50 each)
+  ok    social.hearts_call_loot_service_after_a_heart (LootService.check_friend_gifts(npc) late bound once per whole heart gained, none for 20 points: [["mayor_lyra"]])
+  ok    social.hearts_cap_10 (20 hearts of quest reward stop at the cap: 10 hearts = 1000 points, stage bedste_ven, gained 770)
+  ok    at the cap: ok, gained 0, nothing is emitted
+  ok    social.points_never_decrease (0 and negative deltas are refused (bad_delta), debug_set_hearts never lowers: 1000 points stay)
+  ok    unknown NPC and Morfar Mis without a citizens unlock take no points (unknown_npc / locked)
+  ok    social.add_points_rejects_unknown_and_locked (locked until lost_cat is done OR day 60 (day 59 false, day 60 true, quest true); a hero twin (NpcDirector.is_absent) is refused (absent) and back when present)
+  ok    social.flag_mirror_after_every_write (friend_<npc> = whole hearts after add_points, add_hearts, debug_set_hearts, from_dict and a repair write (flag 5))
+  ok    social.zero_point_ledger_repairs_existing_mirror
+  ok    social.zero_point_ledger_load_preserves_absent_flag
+  ok    the first finished chat of the week: +1 heart, friend_last = total_day, talked today
+  ok    a second chat in the same week plays and pays nothing
+  ok    social.chat_weekly_calendar_week (Sunday of the same week: nothing; Monday: available again and the second heart comes (two hearts in two calendar weeks, never two in one))
+  ok    game_event chat_done {npc, weekly_heart} for every finished conversation: [["chat_done", { "npc": "gardener_hoppe", "weekly_heart": false }]]
+  ok    social.chat_df3_floor_day_50 (8 hearts by the weekly chat alone: earliest total_day 50 (the DF3 floor: day 50), 10 hearts after week 10)
+  ok    social.chat_esc_first_line_no_heart (an Esc after the first line (completed false) gives no heart, no chat_done, no toast and keeps the week's chat available)
+  ok    the finished conversation of the same day then pays the week's heart
+  ok    social.chat_empty_conversation_gives_nothing (a conversation with 0 lines shown gives nothing: no heart, not talked today, birthday still unknown, no event, no toast)
+  ok    a chat with an unknown NPC counts for nothing
+  ok    a conversation (even an unfinished one) marks the birthday as known
+  ok    social.chat_one_combined_toast (the first heart (fremmed -> bekendt) is ONE toast with the heart line and the stage line (1 toast(s), relationship_changed 1): Fe-barnet Lily holder lidt mere af dig nu: 1 af 10 hjerter | Dit venskab med Fe-barnet Lily: Bekendt)
+  ok    social.chat_toasts_are_rate_limited (two conversations inside the gap: 1 toast at once, 1 waiting, both posted in turn (2))
+  ok    social.stage_names_by_hearts (stages by hearts 0..10: ["fremmed", "bekendt", "nabo", "nabo", "ven", "ven", "god_ven", "god_ven", "bedste_ven", "bedste_ven", "bedste_ven"])
+  ok    a REL_STAGE_<ID> label in da and en for each of the six stages (missing [])
+  ok    social.stage_up_toast_once (one toast and one relationship_changed per stage change, none inside a stage; the toast option false keeps the toast back but not the event (toasts 2, events 3): last { "npc": "baker_maja", "stage": "nabo", "partner": false })
+  ok    S-marriage's seam: row field rs = 2 reads social.rs_stages[1] = forlovet (forlovet), 0 is the hearts stage (ven)
+  ok    social.boots_without_gift_rules (with S-gifts absent (here: pointed at a missing script) the autoload still answers: give_gift { "ok": false, "reason": "gifts_not_installed" }, gift_options 0, taste neutral, is_giftable { "ok": false, "reason": "gifts_not_installed" })
+  ok    social.gift_api_surface_late_bound (give_gift / gift_options reach the flow script, taste_of / is_giftable the rules script by path (probe scripts): flow gardener { "ok": true, "reason": "" })
+  ok    gift_limits of a fresh row: { "per_day": 1, "per_week": 2, "left_today": 1, "left_week": 2 }
+  ok    limits: 1 per day and 2 per calendar week, both reset by the calendar ({ "per_day": 1, "per_week": 2, "left_today": 0, "left_week": 0 } -> { "per_day": 1, "per_week": 2, "left_today": 1, "left_week": 2 })
+  ok    social.no_forward_class_refs (4 scripts scanned for 19 later-wave class names (GiftRules at lines 237 / 250 / 283 of the prototype made the autoload fail to boot): [])
+  ok    a bare instance answers {ok: false, reason: gifts_not_installed}
+  ok    social.birthday_state_machine (day -> celebrated -> belated (+1) -> none (+2), the year wrap and a birthday that has not come yet ([true, true, true, true, true, true, true, true, true]))
+  ok    social.birthday_derived_default_is_stable (33 derived birthdays (31 distinct days), every birthdays_on(td) agrees with the data and the derived dates repeat call after call)
+  ok    social.calendar_entries_shape ([{day, kind: birthday | festival, id, known}] sorted by day: 11 entries of foraar (["birthday", "festival"]), an unknown birthday is known = false until the first conversation, 2 festivals (Blomsterfesten, Honningdagen))
+  ok    social.festival_active_and_events (Høstfesten 12:00-20:00: today at 10:00 but not active; 11:59 no; 12:00 active + town_festival_started {id} once + flag festival_now; 19:59 still; 20:00 town_festival_ended and the flag is gone ([true, true, true, true, true, true, true]))
+  ok    social.festival_bed_hold_seam (while the festival runs sleep_from_hour = 20 (the bed is closed at 18:00: true), at 20:00 the override is removed (true); a pre-existing override of 17 is restored afterwards (true))
+  ok    social.festival_bed_hold_survives_load_and_clear (the override is a never-saved seam: after clear_config_overrides the next flush (true), an area_changed (true), a town_festival_started event (true) and a load (true) put it back)
+  ok    social.festival_shop_closure (closes = all: a shop that is not in stays_open (seed_shop, bakery) is closed from window start - 1 h (11:00) to the window end (20:00): { "10:59": [false, false, false], "11:00": [true, false, false], "12:00": [true, false, false], "19:59": [true, false, false], "20:00": [false, false, false] }; closes = none (Sofus' badedag) closes nothing true; an ordinary day closes nothing)
+  ok    when=fest:<id|any> follows the active festival
+  ok    social.festival_first_not_counted_in_cap (Trætoppen: 14 ordinary home citizens + 4 first members + the host: all 14 attend AND the 4 firsts (the ordered pool is never cut by them: if first counted inside the 15 three citizens would stay home), crowd 19 = 1 + 4 + 14, gather posts 18)
+  ok    social.festival_first_list_and_guests (Hyggebyen: 16 home citizens + the host + 4 guests of ANOTHER area: the ordered pool is cut to 15 (social.festival.max_attendees), the guests stand outside the cap: 15 + 1 + 4 = 20)
+  ok    the ordered pool = home citizens (host excluded) sorted by SocialRng.roll(seed, [festival, npc]), the first 15
+  ok    social.festival_gather_posts_deterministic (host on fest_torvet_host, first members on gather 1..4, the ordered pool after them, one post each (19 distinct posts), the same answer every call, a Hyggebyen citizen on a Trætoppen festival gets none)
+  ok    another world seed orders the pool differently; the first seed gives the same list again
+  ok    an attendee is on his post from 17:00 (window start - 1 h) to 23:00 (the end); the day before there is nothing
+  ok    social.festival_leave_early_any_attendee (meta.leave_early = {npc = hours}: a first member (21:45 on a 23:00 window), a guest (18:45 on a 20:00 window) and an ordered attendee leave that many hours before the window end, the others stay to the end)
+  ok    an absent hero twin is excluded (pool 13 of 14 minus one), the keeper of a stays_open shop stays at his shop, the host does not
+  ok    social.when_grammar_all_kinds (hearts fest hour weekday season birthday stage open + quest done flag night, `&` and `!`: [true, true, true, true, true, true, true, true, true, true, true])
+  ok    social.when_unknown_kind_is_false (an unknown kind is FALSE (the old evaluate_when answered TRUE: a typo showed the prop forever); `!unknown` is true; an empty spec holds)
+  ok    social.when_away_kind_asks_npc_director (away:<npc> asks NpcDirector.is_away, at:<npc> asks is_present (a node injected with Svc.override first, then the static facade by path); with NO director at: is true and away: is false (the D2 hub marker of Fru Ugle needs exactly that))
+  ok    social.when_director_facade_by_path (a static facade script by path answers is_absent / is_away / is_present (true), an instance method is refused with the safe default (true), a missing script and a changed path re-resolve (true true))
+  ok    social.when_isoarea_delegates_to_the_real_manager (IsoArea.evaluate_when answers the new kinds through SocialManager.eval_when, an unknown kind is false, when_errors merges the unknown kinds with when_spec_errors: ["unknown kind in \'moonphase:full\'", "hearts: unknown npc \'nobody\' in \'hearts:nobody:4\'"])
+  ok    social.when_refresh_includes_routine_changed (WHEN_REFRESH_EVENTS: ["friend_changed", "day_started", "time_of_day_changed", "town_festival_started", "town_festival_ended", "birthday_today", "relationship_changed", "routine_changed"])
+  ok    social.when_spec_errors_lists_typos (typos are listed (unknown kind, bad hearts number, unknown NPC, hour:8, weekday:9, season, stage, festival, shop, empty id, empty term), a full valid spec and "" are clean: [["unknown kind in \'moonphase:full\'"], ["hearts: \'abc\' needs hearts:<npc>:<0..10> in \'hearts:gardener_hoppe:abc\'"], ["weekday: \'9\' is not 0..6 in \'weekday:9\'"], ["open: unknown shop \'no_such_shop\' in \'open:no_such_shop\'"], ["empty term in \'hour:8-18&&night\'"], []])
+  ok    social.context_fields (context of Hoppe on his birthday at 09:00: { "hearts": 0, "stage": "fremmed", "weekday": 4, "weather": "klart", "daypart": "morgen", "birthday": true, "festival": "", "chat_open": true, "talked_today": false, "gifts_left": 2, "partner": false })
+  ok    after a chat and a gift today: hearts 1, no chat open, talked today, no gift left today ({ "hearts": 1, "stage": "bekendt", "weekday": 4, "weather": "klart", "daypart": "morgen", "birthday": true, "festival": "", "chat_open": false, "talked_today": true, "gifts_left": 0, "partner": false })
+  ok    partner is true for the engaged citizen only
+  ok    social.daypart_bands (morgen < 11 <= dag < 17 <= aften < 21 <= nat; the transient raw hours 2..5 after an autosave at 02:00 read nat, not morgen (CK-A-SC): ["nat", "nat", "nat", "nat", "morgen", "morgen", "morgen", "morgen", "morgen", "dag", "dag", "dag", "dag", "dag", "dag", "aften", "aften", "aften", "aften", "nat", "nat", "nat", "nat", "nat"])
+  ok    social.people_rows_shape (a fresh game lists nobody; after two conversations 2 rows (met citizens only) with name_key, stage, half hearts, birthday (once known), chat done this week, gifts left, known tastes, events seen / ready; a hero twin is hidden: { "id": "baker_maja", "name_key": "NPC_BAKER_MAJA", "stage": "bekendt", "hearts": 1, "half_hearts": 2, "birthday": { "season": "efteraar", "day": 10 }, "next_birthday": { "days": 56, "total_day": 66, "season": "efteraar", "day": 10 }, "chat_done": true, "gifts_left": 2, "tastes": { "carrot": "love", "stone": "dislike" }, "events_seen": 0, "events_ready": 0 })
+  ok    events_ready: none at 0 hearts, ev_hoppe_h4 (meta.hearts 4, when hearts:..:4&hour:8-18&!fest:any) at 4 hearts and 12:00, none once it is seen; seen is saved
+  ok    remember_line / last_line keep the last line id per (npc, slot)
+  ok    250 gold in the bakery = 2 points and 50 gold carried (the keeper is Maja)
+  ok    the carried gold counts: 50 + 60 = 1 more point
+  ok    social.purchase_points_capped (1 point per 100 gold, at most 10 per keeper and calendar week: 5000 gold twice = 10 / 10 points, the next week +10 = 20; the seed shop keeper has his own cap (7); no open shop and a stall without a keeper pay nothing)
+  ok    social.keeper_sample_weekly (with the weekly chat heart and hearts >= citizens.<npc>.sample.from_hearts one cheap item is handed over ([true, true, true, true, true, true, true]), once a week, in the SAME toast as the heart; below from_hearts and for citizens without a sample row nothing)
+  ok    social.save_size_budget (fresh game 92 bytes (budget 100); the order's scenario, 30 friends with 12 known tastes each: 15918 bytes pretty (budget 16000); with the talked-today stamp gt on every row 16308 bytes, with rv on every row, pc on the 10 keepers, seen / fest / partner on top 16936 bytes (the budget scenario leaves those fields out))
+  ok    social.save_roundtrip (to_dict -> JSON text -> from_dict -> to_dict is identical for every field of 30 rows (p wk gt gd gwk gw bd bk rv ls kn pc, the seed, seen, fest, partner); the numbers are ints again and the mirror flags are rewritten)
+  ok    social.save_seed_is_lazy_and_below_2_53 (the first roll creates the world seed (14192447063417 < 2^53), it is saved and the same roll answers the same again; set_seed clamps into [1, 2^53))
+WARNING: SocialManager.from_dict: unknown NPC 'retired_npc' kept in the orphans bucket
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] from_dict (res://scripts/social/social_manager.gd:1316)
+         [1] _save (res://tests/sections/social.gd:1329)
+         [2] run (res://tests/sections/social.gd:111)
+         [3] clear_scene (res://tests/lib/flow.gd:219)
+         [4] frames (res://tests/lib/drive.gd:79)
+  ok    social.save_orphan_is_warning_not_error (from_dict returns true (a push_error would reject the whole load), emits nothing, the row of the unknown NPC sits in `orphans` and survives the next save and load (allowed warnings: 1))
+  ok    the drift load logged no engine error
+  ok    an orphan is taken back when its NPC exists again: 250 points, flag friend_retired_npc 2
+  ok    social.save_old_save_reseeds_from_flags (a payload without the section calls reset(): friend_mayor_lyra 3 -> 300 points and the week of friend_last (day 29, this week) counts as chatted, a flag above the cap is clamped to 10 hearts, a flag of an unknown NPC is ignored)
+  ok    section `social` is registered
+  ok    social.save_manager_roundtrip (SaveManager.save_game / load_game with the section registered: 400 and 100 points, the seed 4242, the weekly chat of Maja still taken, the mirror flags rewritten (true true))
+  ok    social.no_new_signals_or_inputs (no `signal` line, no InputMap / Input call in the 4 social scripts; the project has 38 actions = P01's contract (38): `people` is P01's, nothing here)
+  ok    social.validator_design_data_is_clean (SV1..SV12 + SV14 on the pinned design data (30 friends, 9 festivals, 278 giftable items): 0 errors [], 29 warnings, skipped [])
+  ok    social.validator_selftest_mutants_caught (31 mutants of the pristine data, each caught by the rule it breaks; missed []; pristine errors [])
+  ok    social.validator_python_agrees_on_mutants (tools/social/core/validate_social.py: the pristine data exits 0 and each of 31 mutants exits 1 with the rule code (pristine exit 0, missed by python: []))
+  ok    social.sv14_contest_rewards_capped (first prize <= min(2 x the cheapest winning entry of the category (150 g for category:crop -> cap 300 g), 400 g: 400 g passes and 500 g fails on a 950 / 1000 g category); second <= 0.7 x first, third <= 0.4 x first, never a keepsake, rarity <= rare, the item exists; a contest with no rewards is a warning: [true, true, true, true, true, true, true, true, true])
+  ok    social.validator_festival_attendance_rules ([] first / guests / leave_early ids exist; a first member IS a home citizen of the area and a guest is NOT; no citizen twice in the roster; 15 + 1 + len(first) + len(guests) <= towns.max_live_visuals_festival (20 passes, 21 and a limit of 19 fail); without a route table the walk rule is reported as NOT evaluated: [true, true, true, true, true, true, true, true, true, true, true, true])
+  ok    social.validator_first_members_removed_from_the_ordered_pool (the validator's own ordered pool (first members removed, host excluded, by SocialRng.roll) equals SocialManager.festival_roster().pool for 4 seeds x 2 festivals, and the naive pool that keeps the first members (15 citizens instead of 14) differs, so a regression is caught)
+  ok    social.validator_leave_early_covers_1_5x_the_walk (leave_early >= 1.5 x the route time + 15 min: a 40 min walk needs 1.25 h (1.25 passes, 1.2 fails); measured from the deadline = the window end when the festival closes his shop, else the shop's opening hour (17:00 on a window to 20:00: 4.25 h pass, 4.2 and 1.25 fail))
+  ok    social.validator_festival_window_margin (a festival window may end by day_end_hour - 1 = 25.0 (CK-A-SC): 23.0 / 24.0 / 25.0 pass, 25.5 and 26.0 fail; on a 24 hour day (day_end_hour 24) the limit is 23.0 again; the shipped data still ends by 23:00)
+  ok    social.validator_real_data_clean (SV1..SV12 + SV14 on the dump of the real data (34 npcs, 34 citizens rows, 0 festivals): GDScript 0 errors [], python exit 0; 0 warnings (the derived defaults of every friend until S-data); skipped [])
+  ok    social.balance_claims_hold (variant free on the pinned DESIGN snapshot (citizens.lua / gift_tastes.lua are S-data's) (100 runs x 336 days): weekly chat alone reaches 8 hearts on day 50, the fastest possible 10 hearts is day 32; a typical player (2.6 talks a day) reaches 8 hearts with a tier A citizen at median 71.0 / p90 97.0 with the lean events (<= 80 / 115) and 66.0 / 90.0 with four events (<= 75 / 110); gifts are 21 % of a dedicated player's points (<= 25), the typical player spends 20 % of a game week (<= 25))
+  ok    social.balance_claims_hold_with_availability (variant mixed (town visits half by day, half in the evening; a citizen is reachable outdoors, in transit or at his counter through the talk cells; table: design3 towns model (python mirror of the 30 routines, heart): median 70.0 / p90 108.0 with the lean events (<= 80 / 115), 65.0 / 101.0 with four events (<= 75 / 110); never reaching 8 hearts: tier A / B at most 0.4 % (<= 2), the worst single tier A / B citizen never reaches 4 hearts in 0.0 % (<= 2; at 8 hearts Rasmus 3 %, a guard of this package at <= 5))
+  ok    social.balance_bounds_ratchet (tests/lib/social/balance_bounds.json: every bound is at or under the design limit (true), the runs sit under their bounds (true) and within the margin (true: a bound cannot silently drift away from what the data does), `--check` exits 0; `--ratchet` on a copy never raises a bound (1 stays 1: true) and lowers a loose one (true))
+  SKIP  social.balance_real_data: the claims ran on the pinned design snapshot; with S-data's citizens.lua / gift_tastes.lua and S-fest-content's festivals in the tree the section switches to the dump of the real data and the same bounds apply
+  SKIP  social.balance_real_routines: the `mixed` availability table is the design snapshot (tests/lib/social/fixtures/availability_design.json); T-routes' real routines (wave 5) replace it through tools/social/core/availability.py's schema
+  ok    social.fresh_resets_social_manager (Fresh.FEATURE_NODES names SocialManager; Fresh.new_game resets it (250 points gone, flags gone) and seeds it (424242 = DEFAULT_SEED), seed_features(2024) -> 0, reset_features() listed it: ["HomeManager", "FurnitureManager", "WardrobeManager", "LootService", "SocialManager"])
+  ok    social.grant_set_hearts_uses_manager (Grant.set_hearts goes through SocialManager.debug_set_hearts: points, the mirror flag and friend_changed(mayor_lyra, 4) once (source debug), never lowers, and fairy_king 6 hearts for home_tiers.lua ([["mayor_lyra", 4], ["fairy_king", 6]]))
+  ok    social.lua_api_functions (api.get_hearts -> int (0, 2), api.add_hearts(npc, 2) -> SocialManager.add_hearts(.., &lua): 200 points, api.is_birthday -> bool (true / false), api.festival() -> the active festival id as a String (hoestfesten) or "" ())
+  ok    social.project_line_once_and_check_project_exit_0 (project.godot holds the SocialManager line 1 time(s); tests/tools/check_project.gd exits 0 with 73 PASS and 0 FAIL ids)
+  ok    social.perf_boot_ms_added (what the autoload adds to the boot: creating the node and its _ready (nine signal connections, the section registration) takes 0.10 ms (budget 5 ms); compiling the 1,250 line script costs 34.4 ms once at start-up (measured with CACHE_MODE_IGNORE on a loaded machine, reported, not asserted); the real node holds the section again)
+  ok    social.perf_lookup_p95_under_100us (lookups, median / p95 in microseconds (budget: p95 < 100 asserted; the order's 6 us for a one-term eval_when and 20 us for festival_active are quiet-machine targets, reported here, not asserted on a shared machine): hearts 2.0/2.1, stage 5.1/5.3, points 0.6/0.6, eval_when_hearts 3.0/3.0, eval_when_hour 1.9/2.0, eval_when_fest 4.5/4.5, eval_when3 9.3/9.4, festival_active 3.7/3.8, birthdays_today 4.6/4.6, daypart 0.6/0.6, shop_closed 5.7/6.0; reset() 0.05 ms)
+  ok    social.fixture_replacements_freed (uninstall frees both the current fixture and an override it replaced)
+  --    social: 134 checks, 0 failed, 3 skipped, 20.3 s
+== section social_data  (res://tests/sections/social_data.gd)
+  ok    social_data.live_data_valid ([])
+  ok    appraiser_fru_ugle has authored social facts
+  ok    appraiser_fru_ugle taste distribution: 11 loved, 30 disliked of 310
+  ok    appraiser_fru_ugle has first meeting, hearts-band greetings and biography
+  ok    baker_maja has authored social facts
+  ok    baker_maja taste distribution: 6 loved, 21 disliked of 310
+  ok    baker_maja has first meeting, hearts-band greetings and biography
+  ok    baker_maja is an adult partner candidate
+  ok    baker_maja offers a cheap normal sample
+  ok    bathkeeper_sofus has authored social facts
+  ok    bathkeeper_sofus taste distribution: 10 loved, 32 disliked of 310
+  ok    bathkeeper_sofus has first meeting, hearts-band greetings and biography
+  ok    bathkeeper_sofus is an adult partner candidate
+  ok    beekeeper_birk has authored social facts
+  ok    beekeeper_birk taste distribution: 11 loved, 26 disliked of 310
+  ok    beekeeper_birk has first meeting, hearts-band greetings and biography
+  ok    beekeeper_birk is an adult partner candidate
+  ok    bertil has authored social facts
+  ok    bertil taste distribution: 10 loved, 25 disliked of 310
+  ok    bertil has first meeting, hearts-band greetings and biography
+  ok    bertil is an adult partner candidate
+  ok    bodil has authored social facts
+  ok    bodil taste distribution: 11 loved, 24 disliked of 310
+  ok    bodil has first meeting, hearts-band greetings and biography
+  ok    bodil is an adult partner candidate
+  ok    carpenter_brumme has authored social facts
+  ok    carpenter_brumme taste distribution: 4 loved, 31 disliked of 310
+  ok    carpenter_brumme has first meeting, hearts-band greetings and biography
+  ok    carpenter_brumme is an adult partner candidate
+  ok    cat_morfar_mis has authored social facts
+  ok    cat_morfar_mis taste distribution: 8 loved, 29 disliked of 310
+  ok    cat_morfar_mis has first meeting, hearts-band greetings and biography
+  ok    clerk_fjerpen has authored social facts
+  ok    clerk_fjerpen taste distribution: 13 loved, 30 disliked of 310
+  ok    clerk_fjerpen has first meeting, hearts-band greetings and biography
+  ok    cub_bamse has authored social facts
+  ok    cub_bamse taste distribution: 4 loved, 36 disliked of 310
+  ok    cub_bamse has first meeting, hearts-band greetings and biography
+  ok    fairy_builder has authored social facts
+  ok    fairy_builder taste distribution: 4 loved, 30 disliked of 310
+  ok    fairy_builder has first meeting, hearts-band greetings and biography
+  ok    fairy_builder offers a cheap normal sample
+  ok    fairy_furnisher has authored social facts
+  ok    fairy_furnisher taste distribution: 22 loved, 25 disliked of 310
+  ok    fairy_furnisher has first meeting, hearts-band greetings and biography
+  ok    fairy_furnisher offers a cheap normal sample
+  ok    fairy_king has authored social facts
+  ok    fairy_king taste distribution: 5 loved, 30 disliked of 310
+  ok    fairy_king has first meeting, hearts-band greetings and biography
+  ok    fairy_lily has authored social facts
+  ok    fairy_lily taste distribution: 4 loved, 36 disliked of 310
+  ok    fairy_lily has first meeting, hearts-band greetings and biography
+  ok    fairy_tailor has authored social facts
+  ok    fairy_tailor taste distribution: 16 loved, 25 disliked of 310
+  ok    fairy_tailor has first meeting, hearts-band greetings and biography
+  ok    fairy_tailor offers a cheap normal sample
+  ok    fairy_wizard has authored social facts
+  ok    fairy_wizard taste distribution: 11 loved, 30 disliked of 310
+  ok    fairy_wizard has first meeting, hearts-band greetings and biography
+  ok    fairy_wizard offers a cheap normal sample
+  ok    farmer_rosa has authored social facts
+  ok    farmer_rosa taste distribution: 11 loved, 22 disliked of 310
+  ok    farmer_rosa has first meeting, hearts-band greetings and biography
+  ok    farmer_rosa offers a cheap normal sample
+  ok    fiddler_strimmel has authored social facts
+  ok    fiddler_strimmel taste distribution: 18 loved, 26 disliked of 310
+  ok    fiddler_strimmel has first meeting, hearts-band greetings and biography
+  ok    gardener_hoppe has authored social facts
+  ok    gardener_hoppe taste distribution: 4 loved, 24 disliked of 310
+  ok    gardener_hoppe has first meeting, hearts-band greetings and biography
+  ok    gardener_hoppe is an adult partner candidate
+  ok    ghostfam_blund has authored social facts
+  ok    ghostfam_blund taste distribution: 5 loved, 36 disliked of 310
+  ok    ghostfam_blund has first meeting, hearts-band greetings and biography
+  ok    ghostfam_dyne has authored social facts
+  ok    ghostfam_dyne taste distribution: 9 loved, 28 disliked of 310
+  ok    ghostfam_dyne has first meeting, hearts-band greetings and biography
+  ok    ghostfam_gnist has authored social facts
+  ok    ghostfam_gnist taste distribution: 7 loved, 22 disliked of 310
+  ok    ghostfam_gnist has first meeting, hearts-band greetings and biography
+  ok    ghostfam_silke has authored social facts
+  ok    ghostfam_silke taste distribution: 5 loved, 28 disliked of 310
+  ok    ghostfam_silke has first meeting, hearts-band greetings and biography
+  ok    guard_oak has authored social facts
+  ok    guard_oak taste distribution: 6 loved, 31 disliked of 310
+  ok    guard_oak has first meeting, hearts-band greetings and biography
+  ok    innkeeper_kvak has authored social facts
+  ok    innkeeper_kvak taste distribution: 6 loved, 24 disliked of 310
+  ok    innkeeper_kvak has first meeting, hearts-band greetings and biography
+  ok    lamplighter_kiki has authored social facts
+  ok    lamplighter_kiki taste distribution: 17 loved, 26 disliked of 310
+  ok    lamplighter_kiki has first meeting, hearts-band greetings and biography
+  ok    lamplighter_kiki is an adult partner candidate
+  ok    mapseller_natteblik has authored social facts
+  ok    mapseller_natteblik taste distribution: 4 loved, 36 disliked of 310
+  ok    mapseller_natteblik has first meeting, hearts-band greetings and biography
+  ok    mayor_lyra has authored social facts
+  ok    mayor_lyra taste distribution: 6 loved, 26 disliked of 310
+  ok    mayor_lyra has first meeting, hearts-band greetings and biography
+  ok    merchant_pip has authored social facts
+  ok    merchant_pip taste distribution: 5 loved, 21 disliked of 310
+  ok    merchant_pip has first meeting, hearts-band greetings and biography
+  ok    merchant_pip is an adult partner candidate
+  ok    merchant_pip offers a cheap normal sample
+  ok    penguin_postman has authored social facts
+  ok    penguin_postman taste distribution: 3 loved, 30 disliked of 310
+  ok    penguin_postman has first meeting, hearts-band greetings and biography
+  ok    pippin_boegeknop has authored social facts
+  ok    pippin_boegeknop taste distribution: 15 loved, 27 disliked of 310
+  ok    pippin_boegeknop has first meeting, hearts-band greetings and biography
+  ok    pippin_boegeknop offers a cheap normal sample
+  ok    postman_pip has authored social facts
+  ok    postman_pip taste distribution: 4 loved, 26 disliked of 310
+  ok    postman_pip has first meeting, hearts-band greetings and biography
+  ok    postman_pip is an adult partner candidate
+  ok    rasmus has authored social facts
+  ok    rasmus taste distribution: 17 loved, 26 disliked of 310
+  ok    rasmus has first meeting, hearts-band greetings and biography
+  ok    rasmus is an adult partner candidate
+  ok    smith_thorin has authored social facts
+  ok    smith_thorin taste distribution: 6 loved, 31 disliked of 310
+  ok    smith_thorin has first meeting, hearts-band greetings and biography
+  ok    smith_thorin offers a cheap normal sample
+  ok    social_data.citizens_cover_friends
+  ok    social_data.copy_lint_clean_on_the_social_csvs ([{"rule": "C1", "file": "localization/da.csv", "line": 69, "key": "OBJ_TALK_TO_MAYOR", "message": "da: stale name Lyra", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 69, "key": "OBJ_TALK_TO_MAYOR", "message": "da: use display name Borgmester Hyldeblomst", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 69, "key": "OBJ_TALK_TO_MAYOR", "message": "en: stale name Lyra", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 69, "key": "OBJ_TALK_TO_MAYOR", "message": "en: use display name Borgmester Hyldeblomst", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 73, "key": "OBJ_DELIVER_TO_BAKER", "message": "da: use display name Bagerfe Rosmarin", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 73, "key": "OBJ_DELIVER_TO_BAKER", "message": "en: use display name Bagerfe Rosmarin", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 146, "key": "DIALOGUE_LYRA_GREET_1", "message": "da: stale name PongPong", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 146, "key": "DIALOGUE_LYRA_GREET_1", "message": "da: stale name Lyra", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 146, "key": "DIALOGUE_LYRA_GREET_1", "message": "da: use display name Borgmester Hyldeblomst", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 146, "key": "DIALOGUE_LYRA_GREET_1", "message": "en: stale name PongPong", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 146, "key": "DIALOGUE_LYRA_GREET_1", "message": "en: stale name Lyra", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 146, "key": "DIALOGUE_LYRA_GREET_1", "message": "en: use display name Borgmester Hyldeblomst", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 154, "key": "DIALOGUE_MAJA_COOKIE_TALK", "message": "da: stale name PongPong", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 154, "key": "DIALOGUE_MAJA_COOKIE_TALK", "message": "en: stale name PongPong", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 156, "key": "DIALOGUE_LILY_CAT_MISSING", "message": "da: stale name Mjau", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 156, "key": "DIALOGUE_LILY_CAT_MISSING", "message": "da: use display name Morfar Mis", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 156, "key": "DIALOGUE_LILY_CAT_MISSING", "message": "en: stale name Mjau", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 156, "key": "DIALOGUE_LILY_CAT_MISSING", "message": "en: use display name Morfar Mis", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 157, "key": "DIALOGUE_LILY_WORRIED", "message": "da: stale name Mjau", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 157, "key": "DIALOGUE_LILY_WORRIED", "message": "da: use display name Morfar Mis", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 157, "key": "DIALOGUE_LILY_WORRIED", "message": "en: stale name Mjau", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 157, "key": "DIALOGUE_LILY_WORRIED", "message": "en: use display name Morfar Mis", "legacy": true}, {"rule": "C2", "file": "localization/da.csv", "line": 169, "key": "DIALOGUE_CHOICE_MINING_QUEST", "message": "en: choice has 33 characters, limit 32", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 358, "key": "DIALOGUE_WIZARD_MAGIC_TALK", "message": "da: stale name Eventyrskoven", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 358, "key": "DIALOGUE_WIZARD_MAGIC_TALK", "message": "en: stale name PongPong", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 466, "key": "DIALOGUE_CHOICE_MATH_BAKERY", "message": "da: use display name Bagerfe Rosmarin", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 466, "key": "DIALOGUE_CHOICE_MATH_BAKERY", "message": "en: use display name Bagerfe Rosmarin", "legacy": true}, {"rule": "C2", "file": "localization/da.csv", "line": 467, "key": "DIALOGUE_CHOICE_MATH_HARVEST", "message": "en: choice has 33 characters, limit 32", "legacy": true}]
+)
+  ok    social_data.voiced_index_in_sync
+  ok    social_data.tool_printed_ids (Social voice index printed 1 PASS/FAIL ids)
+  ok    social_data.tool_exit_code (Social voice index exit code 0)
+  ok    social_data.new_npc_by_data_only (One roster row gets hearts, a stable birthday and the child archetype)
+  ok    Derived child uses archetype taste without another row
+  --    social_data: 130 checks, 0 failed, 0 skipped, 1.1 s
+== section social_events  (res://tests/sections/social_events.gd)
+  ok    social_events.heart_event_only_on_talk
+  ok    social_events.automatic_events_never_appear_in_talk_choices
+  ok    social_events.queue_accepts_while_busy
+  ok    social_events.deduplicates_queued_events
+  ok    social_events.waits_for_playing_and_no_modal
+  ok    social_events.queued_talk_starts_after_modal_closes
+  ok    social_events.event_modal_is_nonpausing_cutscene
+  ok    social_events.clock_frozen
+  ok    social_events.no_save_during_event
+  ok    social_events.no_travel_or_sleep_during_event
+  ok    social_events.rewards_deferred_until_scene_end
+  ok    social_events.overlay_follows_modal
+  ok    social_events.overlay_focus_none (0 interactive, 0 keyboard-focusable)
+  ok    social_events.overlay_rules (6 nodes, 1 text, 0 boxes, 0 interactive scanned)
+  ok    social_events.overlay_i18n (clean)
+  ok    social_events.escape_opens_one_confirm
+  ok    social_events.continue_is_default
+  ok    social_events.declining_skip_keeps_scene
+  ok    social_events.skip_fast_forwards_effects
+  ok    social_events.choice_takes_option_one_on_skip
+  ok    social_events.all_point_steps_commit_once
+  ok    social_events.time_step_capped_at_two_hours
+  ok    social_events.seen_once_and_skip_recorded
+  ok    social_events.say_runs_merge_per_speaker
+  ok    social_events.actors_released_on_end
+  ok    social_events.camera_released_on_end
+  ok    social_events.seen_event_refused
+  ok    social_events.save_after_commit
+  ok    social_events.load_after_commit
+  ok    social_events.rewards_paid_once_after_load
+  ok    social_events.missing_actor_scene_can_start
+  ok    social_events.missing_actor_api_is_skipped_not_fatal
+  ok    social_events.ordinary_scene_points_paid
+  ok    social_events.yearly_scene_starts
+  ok    social_events.full_pack_reward_is_saved
+  ok    social_events.full_pack_save_valid
+  ok    social_events.full_pack_reward_loads
+  ok    social_events.owed_survives_load
+  ok    social_events.reward_claimed_when_space_opens
+  ok    social_events.reward_claim_is_idempotent
+  ok    social_events.yearly_refused_same_year
+  ok    social_events.yearly_scene_repeats_next_year
+  ok    social_events.yearly_reward_second_year
+  ok    social_events.cancel_scene_starts
+  ok    social_events.cancel_does_not_commit
+  ok    social_events.cancel_releases_modal_and_actors
+  ok    social_events.cancelled_scene_can_retry
+  ok    social_events.time_never_advances_past_2359
+  ok    social_events.queue_bound_0
+  ok    social_events.queue_bound_1
+  ok    social_events.queue_bound_2
+  ok    social_events.queue_bound_3
+  ok    social_events.queue_bound_4
+  ok    social_events.queue_bound_5
+  ok    social_events.queue_drops_after_two_days
+  --    social_events: 55 checks, 0 failed, 0 skipped, 0.4 s
+== section social_gifts  (res://tests/sections/social_gifts.gd)
+  ok    love / normal points
+  ok    love / uncommon points
+  ok    love / rare points
+  ok    like / normal points
+  ok    like / uncommon points
+  ok    like / rare points
+  ok    neutral / normal points
+  ok    neutral / uncommon points
+  ok    neutral / rare points
+  ok    dislike / normal points
+  ok    dislike / uncommon points
+  ok    dislike / rare points
+  ok    hate / normal points
+  ok    hate / uncommon points
+  ok    hate / rare points
+  ok    social_gifts.birthday_x4_capped
+  ok    social_gifts.belated_x2
+  ok    social_gifts.repeat_halves
+  ok    Progress/keepsake guard: { "category": "quest", "giftable": true }
+  ok    Progress/keepsake guard: { "category": "special" }
+  ok    Progress/keepsake guard: { "category": "animal" }
+  ok    Progress/keepsake guard: { "category": "building" }
+  ok    Progress/keepsake guard: { "category": "blueprint" }
+  ok    Progress/keepsake guard: { "rarity": "unique" }
+  ok    Progress/keepsake guard: { "rarity": "legendary" }
+  ok    Progress/keepsake guard: { "protected": true }
+  ok    Zero-value gifts require an explicit data opt-in
+  ok    Valuable/rare/tool confirmation
+  ok    Valuable/rare/tool confirmation
+  ok    Valuable/rare/tool confirmation
+  ok    social_gifts.confirm_never_for_cheap_forage
+  ok    social_gifts.taste_resolution_levels
+  ok    social_gifts.item_id_beats_ftype_beats_category
+  ok    social_gifts.gift_love_points_and_items
+  ok    social_gifts.observer_sees_complete_transaction
+  ok    social_gifts.quest_event_payload_shape
+  ok    social_gifts.limit_one_per_day
+  ok    A recent repeat pays half
+  ok    social_gifts.limit_two_per_week
+  ok    Monday reopens the calendar-week slot
+  ok    Birthday gift bypasses weekly slots and is capped
+  ok    The same birthday cannot be celebrated again as belated
+  ok    A first gift the day after a birthday pays twice
+  ok    social_gifts.quest_item_not_offered
+  ok    social_gifts.next_tier_materials_not_offered
+  ok    One surplus material can be gifted without losing the next-tier requirements
+  ok    Last tool is protected
+  ok    Hotbar tool remains protected even with a spare
+  ok    social_gifts.incomplete_set_pieces_not_offered
+  ok    Completed set pieces may be offered
+  ok    social_gifts.placed_not_offered
+  ok    Unplaced furniture uses free stock
+  ok    A worn garment is excluded
+  ok    A spare unworn garment uses its store's free count
+  ok    Gift for knowledge cap probe
+  ok    social_gifts.known_tastes_cap
+  ok    social_gifts.reaction_line_cascade
+  ok    social_gifts.toast_names_item_not_sentence (One combined toast names the item; the reaction remains a complete sentence)
+  --    social_gifts: 58 checks, 0 failed, 0 skipped, 0.1 s
+== section social_talk  (res://tests/sections/social_talk.gd)
+  ok    social_talk.decorate_on_empty_module_has_greeting_and_close
+  ok    Voice suffix resolves to the indexed NPC path
+  ok    social=false preserves authored first-meeting scenes
+  ok    Once met today, authored pages do not get another greeting
+  ok    The next day adds one greeting before the authored page
+  ok    A data-only citizen exposes the gift picker
+  ok    social_talk.choices_limit_5
+  ok    Overflow retains its choices and a closing row
+  ok    Cancelling a topic never teaches its item
+  ok    Reading the topic commits its daily use
+  ok    social_talk.topic_reveals_taste_once
+  ok    social_talk.topics_one_per_day
+  ok    Topic day and reveal bits survive a save roundtrip
+  ok    The next day reveals the next hearts-gated preference
+  ok    Hearts band for 0
+  ok    Hearts band for 1
+  ok    Hearts band for 2
+  ok    Hearts band for 3
+  ok    Hearts band for 4
+  ok    Hearts band for 5
+  ok    Hearts band for 6
+  ok    Hearts band for 7
+  ok    Hearts band for 8
+  ok    Hearts band for 9
+  ok    Hearts band for 10
+  ok    social_talk.cascade_specificity
+  ok    Day-part authored line precedes broad band pool
+  ok    Broad band remains usable in every daypart
+  ok    Gapped numbered variants are indexed
+  ok    social_talk.no_immediate_repeat
+  ok    Corpus revision invalidates family caches
+  ok    social_talk.weather_and_season_probabilities (Deterministic weather/season sample: 383/116)
+  ok    social_talk.pick_under_20us (Cached social line pick: 14.69 us)
+  ok    Missing keeper variants fall back to the actual shop greeting
+  ok    Quest bubble has first priority
+  ok    Gift reaction uses the citizen's own line first
+  ok    A repeated gift can use the archetype pool to avoid repeating one personal line
+  ok    Birthday greeting wins over ordinary context
+  ok    A ready heart event precedes the birthday bubble
+  ok    Ready heart events get an explicit conversation choice
+  ok    Content actions fall through to Npc2D's EventBus dispatch
+  ok    social=false scenes still count their read conversation as a meeting
+  --    social_talk: 42 checks, 0 failed, 0 skipped, 0.1 s
+== section social_ui  (res://tests/sections/social_ui.gd)
+  ok    social_ui.all_four_screens_installed
+  ok    social_ui.glyph_is_not_health_hearts
+  ok    social_ui.glyph_half_heart_plan
+  ok    social_ui.people_initial_focus
+  ok    social_ui.people_only_met_npcs
+  ok    social_ui.people_rows_nodes_max
+  ok    social_ui.people_open_ms (3.183)
+  ok    social_ui.glyph_in_people
+  ok    social_ui.people_select_0
+  ok    social_ui.people_up_link_0
+  ok    social_ui.people_select_1
+  ok    social_ui.people_up_link_1
+  ok    social_ui.people_select_2
+  ok    social_ui.people_up_link_2
+  ok    social_ui.people_select_3
+  ok    social_ui.people_up_link_3
+  ok    social_ui.people_select_4
+  ok    social_ui.people_up_link_4
+  ok    social_ui.people_select_5
+  ok    social_ui.people_up_link_5
+  ok    social_ui.people_select_6
+  ok    social_ui.people_up_link_6
+  ok    social_ui.people_select_7
+  ok    social_ui.people_up_link_7
+  ok    social_ui.people_select_8
+  ok    social_ui.people_up_link_8
+  ok    social_ui.people_tabs_page_actions
+  ok    social_ui.people_right_changes_tab
+  ok    social_ui.people_p_closes
+  ok    social_ui.people_p_opens
+  ok    social_ui.people_pad_closes
+  ok    social_ui.gift_initial_focus
+  ok    social_ui.gift_options_from_api
+  ok    social_ui.gift_grid_24_cells
+  ok    social_ui.glyph_in_gift
+  ok    social_ui.cheap_live_gift_available
+  ok    social_ui.gift_chip_text_not_colour_only
+  ok    social_ui.gift_accept_selects_then_gives
+  ok    social_ui.gift_picker_closes_before_reaction
+  ok    social_ui.gift_removes_once_and_pays_love ({ "p": 890, "wk": -1, "gt": 0, "gd": 65, "gwk": 9, "gw": 1, "bd": 0, "bk": 1, "ls": [["carrot", 65]], "kn": { "moonflower": "love", "strawberry": "like", "stone": "dislike", "carrot": "love" }, "rv": 0, "rs": 0, "pc": 0, "tp": 0 })
+  ok    social_ui.reaction_escape_no_weekly_heart
+  ok    social_ui.gift_limits_disable_give_with_reason
+  ok    social_ui.gift_esc_restores_world
+  ok    social_ui.valuable_fixture_exists
+  ok    social_ui.gift_confirm_for_valuable_default_fortryd
+  ok    social_ui.gift_confirm_cancel_retains_item
+  ok    social_ui.gift_grid_scrolls_over_24_stacks
+  ok    social_ui.gift_scroll_follows_last_row
+  ok    social_ui.gift_pad_accept_selects_then_give
+  ok    social_ui.live_gift_citizen_present
+  ok    social_ui.live_dialogue_transfers_to_picker
+  ok    social_ui.live_actor_held_by_picker
+  ok    social_ui.live_carrot_available
+  ok    social_ui.live_actor_held_during_reaction
+  ok    social_ui.live_reaction_releases_actor_and_player
+  ok    social_ui.calendar_28_cells
+  ok    social_ui.calendar_only_known_birthdays
+  ok    social_ui.calendar_festivals_always_shown
+  ok    social_ui.calendar_today_marked
+  ok    social_ui.calendar_uses_theme_variations_only
+  ok    social_ui.calendar_focus_switch_keeps_new_navigation_0
+  ok    social_ui.calendar_focus_switch_keeps_new_navigation_1
+  ok    social_ui.calendar_focus_switch_keeps_new_navigation_2
+  ok    social_ui.calendar_header_reaches_season_0 (@Button@11391:<Button#3011157958029>)
+  ok    social_ui.calendar_season_ring_0 (@Button@11394:<Button#3011308950543>)
+  ok    social_ui.calendar_header_reaches_season_1 (@Button@11391:<Button#3011157958029>)
+  ok    social_ui.calendar_season_ring_1 (@Button@11394:<Button#3011308950543>)
+  ok    social_ui.calendar_header_reaches_season_2 (@Button@11391:<Button#3011157958029>)
+  ok    social_ui.calendar_season_ring_2 (@Button@11394:<Button#3011308950543>)
+  ok    social_ui.calendar_header_reaches_season_3 (@Button@11391:<Button#3011157958029>)
+  ok    social_ui.calendar_season_ring_3 (@Button@11394:<Button#3011308950543>)
+  ok    social_ui.calendar_grid_right_0
+  ok    social_ui.calendar_grid_right_1
+  ok    social_ui.calendar_grid_right_2
+  ok    social_ui.calendar_grid_right_3
+  ok    social_ui.calendar_grid_right_4
+  ok    social_ui.calendar_grid_right_5
+  ok    social_ui.calendar_grid_right_6
+  ok    social_ui.calendar_grid_right_7
+  ok    social_ui.calendar_grid_right_8
+  ok    social_ui.calendar_grid_right_9
+  ok    social_ui.calendar_grid_right_10
+  ok    social_ui.calendar_grid_right_11
+  ok    social_ui.calendar_grid_right_12
+  ok    social_ui.calendar_grid_right_13
+  ok    social_ui.calendar_grid_right_14
+  ok    social_ui.calendar_grid_right_15
+  ok    social_ui.calendar_grid_right_16
+  ok    social_ui.calendar_grid_right_17
+  ok    social_ui.calendar_grid_right_18
+  ok    social_ui.calendar_grid_right_19
+  ok    social_ui.calendar_grid_right_20
+  ok    social_ui.calendar_grid_right_21
+  ok    social_ui.calendar_grid_right_22
+  ok    social_ui.calendar_grid_right_23
+  ok    social_ui.calendar_grid_right_24
+  ok    social_ui.calendar_grid_right_25
+  ok    social_ui.calendar_grid_right_26
+  ok    social_ui.calendar_grid_right_27
+  ok    social_ui.calendar_season_walks_over_month_edge
+  ok    social_ui.calendar_walks_back_over_edge
+  ok    social_ui.calendar_year_one_floor
+  ok    social_ui.calendar_journal_escape
+  ok    social_ui.hud_focus_none
+  ok    social_ui.hud_no_polling
+  ok    social_ui.hud_festival_ribbon_raw_25 (Test · åben til 01:00)
+  ok    social_ui.hud_festival_before_open
+  ok    social_ui.hud_birthday_chips
+  ok    social_ui.glyph_in_social_hud
+  ok    social_ui.hud_hidden_in_action_mode
+  ok    social_ui.hud_hidden_in_event
+  ok    social_ui.hud_hidden_behind_event_confirmation
+  ok    social_ui.hud_returns_to_farm
+  ok    social_ui.people.visible (clean)
+  ok    social_ui.people.initial_focus (clean)
+  ok    social_ui.people.focus_walk (12 of 12 controls reached in 99 presses)
+  ok    social_ui.people.focusable (12 interactive, 12 keyboard-focusable)
+  ok    social_ui.people.rules (49 nodes, 18 text, 15 boxes, 12 interactive scanned)
+  ok    social_ui.people.i18n_flip (clean)
+  ok    social_ui.people.escape (1 modal(s) opened and closed with Esc in order)
+  SKIP  ui_audit people.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit people.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit people.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit people.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    social_ui.registry_people ([])
+  ok    social_ui.gift.visible (clean)
+  ok    social_ui.gift.initial_focus (clean)
+  ok    social_ui.gift.focus_walk (26 of 26 controls reached in 115 presses)
+  ok    social_ui.gift.focusable (26 interactive, 26 keyboard-focusable)
+  ok    social_ui.gift.rules (124 nodes, 34 text, 29 boxes, 26 interactive scanned)
+  ok    social_ui.gift.i18n_flip (clean)
+  ok    social_ui.gift.escape (1 modal(s) opened and closed with Esc in order)
+  SKIP  ui_audit gift.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit gift.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit gift.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit gift.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    social_ui.registry_gift ([])
+  ok    social_ui.calendar.visible (clean)
+  ok    social_ui.calendar.focusable (32 interactive, 32 keyboard-focusable)
+  ok    social_ui.calendar.rules (139 nodes, 100 text, 33 boxes, 32 interactive scanned)
+  ok    social_ui.calendar.i18n_flip (clean)
+  SKIP  ui_audit calendar.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit calendar.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    social_ui.registry_calendar ([])
+  ok    social_ui.social_hud.visible (clean)
+  ok    social_ui.social_hud.focusable (0 interactive, 0 keyboard-focusable)
+  ok    social_ui.social_hud.rules (5 nodes, 2 text, 0 boxes, 0 interactive scanned)
+  ok    social_ui.social_hud.i18n_flip (clean)
+  SKIP  ui_audit social_hud.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit social_hud.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    social_ui.registry_social_hud ([])
+  --    social_ui: 139 checks, 0 failed, 12 skipped, 3.9 s
+== summary: 9 section(s) run, 811 checks (0 failed, 15 skipped), 0 engine error(s), 0 engine warning(s), 7 allowed message(s), 0 problem(s), 0 known-issue message(s), 37.8 s
+PLAYTEST PASS (811 checks in 9 sections, 7 allowed engine messages, 0 known-issue messages)

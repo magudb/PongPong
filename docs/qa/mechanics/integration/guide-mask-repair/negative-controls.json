@@ -1,0 +1,7 @@
+{
+  "control_mean": 11.37,
+  "chrome_mutant_mean": 21.696,
+  "limit": 12,
+  "caught": true,
+  "note": "Only icon and stack-count interiors are masked. Altering the eight slot outlines is still rejected; original full captures and scores are retained."
+}

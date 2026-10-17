@@ -190,6 +190,7 @@ func _ready() -> void:
 			game_ui = ui_scene.instantiate()
 			game_ui.name = "GameUI"
 			add_child(game_ui)
+	DungeonRun.attach(self)
 	_build_vignette()
 	_build_fade()
 	art_prefetch = AreaArtPrefetch.new()
@@ -198,6 +199,7 @@ func _ready() -> void:
 	Svc.static_call("res://scripts/farm/steading/objects/farm_stage.gd", &"attach", [self])
 	Svc.static_call("res://scripts/traetoppen/life/daily_flags.gd", &"attach_world", [self])
 	Svc.static_call("res://scripts/farm/steading/tutorial/tutorial_hints.gd", &"attach", [self])
+	Svc.static_call("res://scripts/world2d/story/mother_director.gd", &"attach", [self])
 	EventBus.area_change_requested.connect(_on_area_change_requested)
 	EventBus.game_event.connect(_on_game_event)
 	EventBus.player_defeated.connect(_on_player_defeated)
@@ -215,9 +217,6 @@ func _ready() -> void:
 		_enter(FALLBACK_AREA, spawn)             # a registered default whose map file is bad must not leave the world without an area
 	if not saved.is_empty():
 		_apply_saved(saved)                      # puts the player back only when the area entered IS the saved one
-	var music: Node = GameData.autoload("AudioManager")
-	if music != null and music.has_method("play_music") and area.map.music != "":
-		music.call("play_music", area.map.music)
 	_welcome_toast(saved)
 	ContractManifest.report()
 	await warm_clips()
@@ -482,6 +481,7 @@ func _on_area_change_requested(area_id: StringName, spawn_name: StringName) -> v
 
 ## Fade out, swap, warm the sprite clips behind the fade, fade in. Safe to await.
 func travel(area_id: StringName, spawn: StringName) -> void:
+	if GameManager.is_modal_open(&"event"): return
 	if traveling or not has_area(area_id):
 		if not has_area(area_id):
 			last_travel_error = "no such area: %s" % area_id
@@ -539,6 +539,9 @@ func warm_jobs() -> Array:
 				var row: Dictionary = GameData.lua().get_registry("buildings").get(building, {})
 				keeper = str(row.get("keeper", "")) == str(n.get("npc_id"))
 			jobs.append([nv, ["idle", "talk"] if keeper else (["idle", "talk", "hover"] if flyer else (["idle", "talk", "walk"] if walks else ["idle", "talk"]))])
+	for enemy in get_tree().get_nodes_in_group("enemy"):
+		if area != null and area.objects.is_ancestor_of(enemy) and is_instance_valid(enemy.get("visual")):
+			jobs.append([enemy.get("visual"),["idle","walk","run","hit","interact","sleep","fly","hover","spin","attack","jump","land"]])
 	return jobs
 
 
@@ -661,6 +664,7 @@ func can_sleep_now() -> bool:
 ## E on the bed: sleep clip, fade out, next day (the farm grows), fade in. Energy and hearts are restored. Before 18:00 the bed
 ## only whispers WHISPER_TOO_EARLY.
 func sleep() -> void:
+	if GameManager.is_modal_open(&"event"): return
 	if sleeping or traveling:
 		return
 	if not can_sleep_now():

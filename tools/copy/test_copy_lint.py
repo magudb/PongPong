@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Copy rule mutants with an isolated literal roster and tiny valid corpus."""
 from pathlib import Path
-import csv, json, tempfile
+import csv, hashlib, json, tempfile
 import copy_lint
 
 def check(name,ok):
@@ -27,6 +27,10 @@ def main():
         base += [['SOC_ARCH_ELDER_BDAY_1','Du kom på min fødselsdag.','You came on my birthday.']]
         write_csv(root,base)
         failures+=check('valid_fixture_clean',not copy_lint.findings(root))
+        write_csv(root,base+[['SOC_EV_SKIP','Spring over','Skip scene']])
+        failures+=check('event_system_key_is_not_a_citizen',not copy_lint.findings(root))
+        write_csv(root,base+[['SOC_UNKNOWN_GREET_1','Hej der.','Hello there.']])
+        failures+=check('unknown_citizen_still_refused',any(r['rule']=='C6' for r in copy_lint.findings(root)))
         mutants=[('stale_name','C1',['DLG_PROBE_BAD','Lyra er her.','Lyra is here.']),('long_dialogue','C2',['DLG_PROBE_LONG','a'*300,'b'*300]),('voiced_digit','C3',['SOC_PROBE_GREET_1_V','Her er 3 frø.','Here are three seeds.']),('missing_voice_index','C10',['SOC_PROBE_GREET_1_V','Godt at se dig.','Good to see you.']),('placeholder_parity','C7',['DLG_PROBE_FMT','Du fandt %s.','You found %d.']),('child_safe','C4',['DLG_PROBE_RUDE','Du er en idiot.','You are an idiot.'])]
         for name,rule,extra in mutants:
             write_csv(root,base+[extra]);out=copy_lint.findings(root)
@@ -36,6 +40,19 @@ def main():
         write_csv(root,base)
         path=root/'docs/copy/review_status.json';data=json.loads(path.read_text());data['localization/missing.csv']=dict(status='draft',rows=0);path.write_text(json.dumps(data))
         failures+=check('missing_status_csv',any(r['rule']=='C8' for r in copy_lint.findings(root)))
+        voiced=['SOC_PROBE_GREET_1_V','Du fandt en fin blomst.','You found a lovely flower.']
+        write_csv(root,base+[voiced])
+        (root/'lua/dialogue/_voiced_social.lua').write_text('lines = { { text_key = "SOC_PROBE_GREET_1_V", voice_key = "voice/probe/greet_1" } }')
+        data=json.loads(path.read_text());row=dict(zip(['keys','da','en'],voiced))
+        approval=dict(status='ai_reviewed',reviewed_by='AI fixture',date='2026-10-17',**{language+'_sha256':hashlib.sha256(row[language].encode()).hexdigest() for language in ('da','en')})
+        record=data['localization/probe.csv'];record['voice_reviews']={voiced[0]:approval};path.write_text(json.dumps(data))
+        failures+=check('row_review_keeps_file_draft',record['status']=='draft' and copy_lint.voice_reviewed(record,row) and not copy_lint.findings(root))
+        for language in ('da','en'):
+            edited=dict(row);edited[language]+=' Changed.'
+            failures+=check('row_review_rejects_changed_'+language,not copy_lint.voice_reviewed(record,edited))
+        approval['da_sha256']='stale';path.write_text(json.dumps(data))
+        failures+=check('stale_row_review_lint',any(r['rule']=='C8' and r['key']==voiced[0] for r in copy_lint.findings(root)))
+        failures+=check('stale_row_review_blocks_bake',not copy_lint.voice_reviewed(record,row))
         # Braces/comment markers inside strings must not corrupt roster parsing.
         file=root/'lua/config/npcs.lua';file.write_text('config = { npcs = { probe = { label = "{ -- }", friendship = true } } } -- }')
         failures+=check('literal_roster_scanner',set(copy_lint.entries(file,'npcs'))=={'probe'})

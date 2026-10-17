@@ -1,0 +1,58 @@
+{
+	"awake_enemies": 24,
+	"cpu_render_cap_ms": 12,
+	"device": "Apple M3",
+	"emitting_lights": 13,
+	"engine": {
+		"build": "official",
+		"hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+		"hex": 263938,
+		"major": 4,
+		"minor": 7,
+		"patch": 2,
+		"status": "stable",
+		"string": "4.7.2-stable (official)",
+		"timestamp": 0
+	},
+	"hud_logic_cap_ms": 0.4,
+	"hud_logic_mean_ms": 0.00373888888888889,
+	"map_lights": 12,
+	"median_cpu_render_ms": 1.88544736410442,
+	"method": "native real forest fixture; 200 added painted rock props, 24 live enemy FSMs, eight held attack warnings, fifteen ordinary orbs and twelve overlapping map lights; three half-second uncapped renderer samples; 180 real HUD/reveal callbacks; GPU zero means unavailable, no low-end-device claim",
+	"orbs": 15,
+	"props": 225,
+	"render_samples": [
+		{
+			"cpu_render_ms": 1.87861288362934,
+			"fps": 61.1012013284584,
+			"frames": 31,
+			"gpu_ms": 0.0,
+			"ms": 16.3662903225806,
+			"worst_ms": 29.955
+		},
+		{
+			"cpu_render_ms": 1.88544736410442,
+			"fps": 75.6274591362946,
+			"frames": 38,
+			"gpu_ms": 0.0,
+			"ms": 13.2227105263158,
+			"worst_ms": 17.599
+		},
+		{
+			"cpu_render_ms": 1.90967999458313,
+			"fps": 49.1805536156559,
+			"frames": 25,
+			"gpu_ms": 0.0,
+			"ms": 20.33324,
+			"worst_ms": 31.005
+		}
+	],
+	"reveal_logic_cap_ms": 0.3,
+	"reveal_logic_mean_ms": 0.0000944444444444444,
+	"rings": 8,
+	"viewport": [
+		1280,
+		720
+	],
+	"zoom": 0.4
+}

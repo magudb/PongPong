@@ -216,6 +216,11 @@ func _args(box: Dictionary, sig_name: String) -> Array:
 	return out
 
 
+func _starter_backpack() -> Dictionary:
+	var pack := STARTER.duplicate()
+	pack.erase("sword_rusty")
+	return pack
+
 func _inv() -> Dictionary:
 	var out := {}
 	var raw: Dictionary = eco.get_inventory_dict()
@@ -359,21 +364,13 @@ func _item_defs() -> void:
 		if not seed_ok or harvest.is_empty() or int(harvest.get("sell_price", -1)) != int(crops[crop].get("sell_price", -2)):
 			bad.append(str(crop))
 	t.check("crop_prices_match_balance", bad.is_empty() and crops.size() == 8, "%d crops: a seed item with crop_id and a harvest item that sells at crops.<id>.sell_price; wrong %s" % [crops.size(), str(bad)])
-	# the products the animals make exist (P20 replaces `companionship` by friendship_token in animals.lua)
+	# Every advertised animal product must resolve, including the pet bond token.
 	var missing: Array[String] = []
 	for id in _item_ids():
 		var produces := str(lr.get_item_def(id).get("produces", ""))
 		if produces != "" and lr.get_item_def(produces).is_empty():
 			missing.append("%s -> %s" % [id, produces])
-	if missing.is_empty():
-		t.check("animal_products_defined", true, "every `produces` of animals.lua is a defined item")
-	else:
-		var only_companionship := true
-		for m in missing:
-			only_companionship = only_companionship and str(m).ends_with("-> companionship")
-		t.check("animal_products_defined", only_companionship, "undefined products %s" % str(missing))
-		if only_companionship:
-			t.skip("animals.lua (P20) still lets the kitten and the puppy produce `companionship`: friendship_token exists for it")
+	t.check("animal_products_defined", missing.is_empty(), "every animal product resolves to an item: "+str(missing))
 	# a price never makes a loop: bought items sell for at most half; even the biggest discount leaves a loss
 	var loop: Array[String] = []
 	for id in mine:
@@ -387,7 +384,7 @@ func _item_defs() -> void:
 
 func _backpack() -> void:
 	_fresh()
-	t.check("slots_are_24", eco.INVENTORY_SLOTS == 24 and eco.used_slots() == STARTER.size(), "INVENTORY_SLOTS %d, %d used after the starter kit" % [eco.INVENTORY_SLOTS, eco.used_slots()])
+	t.check("slots_are_24", eco.INVENTORY_SLOTS == 24 and eco.used_slots() == STARTER.size() - 1, "INVENTORY_SLOTS %d, %d used after the starter kit" % [eco.INVENTORY_SLOTS, eco.used_slots()])
 	t.expect(not eco.add_item(&"wood", 0) and not eco.add_item(&"wood", -3) and not eco.remove_item(&"wood", 0) and not eco.remove_item(&"wood", -1) and not eco.has_item(&"wood", 0), "an amount <= 0 is refused everywhere (add, remove, has)")
 	t.expect(not eco.add_item(&"", 1) and not eco.has_items({"wood": 0}) and eco.has_items({}), "no id and amount 0 inside has_items are refused, an empty requirement is met")
 	# stacking: 150 wood = 99 + 51
@@ -399,7 +396,7 @@ func _backpack() -> void:
 			slots_of_wood += 1
 			wood_amounts.append(int(s["amount"]))
 	t.check("stacking_max_stack", slots_of_wood == 2 and wood_amounts == [99, 51] and eco.count_item(&"wood") == 150, "150 wood = %s (max_stack 99)" % str(wood_amounts))
-	t.expect(eco.add_item(&"wood", 48) and eco.count_item(&"wood") == 198 and eco.used_slots() == STARTER.size() + 2, "the half-empty stack is filled first (198 wood in 2 slots)")
+	t.expect(eco.add_item(&"wood", 48) and eco.count_item(&"wood") == 198 and eco.used_slots() == STARTER.size() - 1 + 2, "the half-empty stack is filled first (198 wood in 2 slots)")
 	t.expect(eco.max_stack_of(&"hoe_wooden") == 1 and eco.max_stack_of(&"wood") == 99 and eco.max_stack_of(&"scarecrow") == 20 and eco.max_stack_of(&"no_such_item_id") == 99, "max_stack: tools 1, default 99, the def's own number, unknown 99")
 	# remove across stacks, last stack first
 	t.expect(eco.remove_item(&"wood", 60) and eco.count_item(&"wood") == 138, "remove_item takes from several stacks")
@@ -436,18 +433,18 @@ func _new_game_and_starter_kit() -> void:
 	var w := _watch(["item_gained", "rare_item_found", "gold_changed", "player_inventory_changed"])
 	t.new_game()
 	var inv := _inv()
-	t.check("new_game_resets", eco.gold == 500 and inv == STARTER, "after a new game: %d guldagern and %s" % [eco.gold, str(inv)])
+	t.check("new_game_resets", eco.gold == 500 and inv == _starter_backpack() and eco.arsenal.count_total("sword_rusty") == 1, "after a new game: %d guldagern and %s" % [eco.gold, str(inv)])
 	t.expect(_count(w, "item_gained") == 0 and _count(w, "rare_item_found") == 0, "the starter kit is given silently (no item_gained)")
 	t.expect(_count(w, "gold_changed") >= 1 and _count(w, "player_inventory_changed") >= 1, "the new game tells the HUD about gold and backpack")
 	_unwatch(w)
-	t.expect(eco.used_slots() == 9 and eco.inventory[0]["id"] == &"hoe_wooden", "nine slots in the kit's order")
+	t.expect(eco.used_slots() == 8 and eco.inventory[0]["id"] == &"hoe_wooden", "eight backpack slots; the starter sword lives in the arsenal")
 	var eq: Dictionary = eco.equipment
 	t.check("starter_equipment", eq.get("tool_hoe") == &"hoe_wooden" and eq.get("tool_watering") == &"watering_can_copper" and eq.get("tool_pickaxe") == &"pickaxe_wooden" and eq.get("tool_axe") == &"axe_wooden" and eq.get("tool_scythe") == &"scythe" and eq.get("weapon") == &"sword_rusty", "the kit's tools and the rusty sword are equipped: %s" % str(eq))
 	# a second new game gives the same
 	eco.remove_item(&"scythe", 1)
 	eco.add_gold(-499)
 	t.new_game()
-	t.expect(_inv() == STARTER and eco.gold == 500 and eco.equipment.get("tool_scythe") == &"scythe", "every new game restores gold, backpack and equipment")
+	t.expect(_inv() == _starter_backpack() and eco.gold == 500 and eco.equipment.get("tool_scythe") == &"scythe", "every new game restores gold, backpack and equipment")
 	t.expect(bus.new_game_started.get_connections().any(func(c: Dictionary) -> bool: return c["callable"].get_object() == eco), "reset() is connected to EventBus.new_game_started")
 
 
@@ -502,7 +499,7 @@ func _save() -> void:
 	var d: Dictionary = eco.to_dict()
 	var parsed: Variant = SaveCodec.through_json(d)
 	t.new_game()
-	t.expect(_inv() == STARTER, "setup: a new game in between")
+	t.expect(_inv() == _starter_backpack(), "setup: a new game in between")
 	t.expect(eco.from_dict(parsed as Dictionary), "from_dict accepts the saved dictionary")
 	var after_slots: Array = []
 	for s in eco.inventory:
@@ -961,7 +958,7 @@ func _shops_from_lua() -> void:
 	# the other four
 	var smithy: Array = []
 	for row in shop.get_shop_inventory("smithy"):
-		smithy.append(str(row["item_id"]))
+		if str(row.get("source","fixed")) == "fixed": smithy.append(str(row["item_id"]))
 	t.expect(smithy == ["hoe_iron", "pickaxe_iron", "watering_can_gold", "iron_sword"], "the smithy sells exactly the iron tools and the iron sword (%s)" % str(smithy))
 	var animal: Array = []
 	for row in shop.get_shop_inventory("animal_store"):
@@ -1775,4 +1772,4 @@ func _cleanup() -> void:
 		for p in [FIXTURE_ITEMS, FIXTURE_SHOPS, FIXTURE_RECIPES]:
 			DirAccess.remove_absolute(ProjectSettings.globalize_path(p))
 	t.new_game()
-	t.expect(not lr.get_all_script_ids().any(func(s: String) -> bool: return s.contains("p12_fixture")) and _inv() == STARTER, "the section leaves the real data and a fresh new game behind")
+	t.expect(not lr.get_all_script_ids().any(func(s: String) -> bool: return s.contains("p12_fixture")) and _inv() == _starter_backpack(), "the section leaves the real data and a fresh new game behind")

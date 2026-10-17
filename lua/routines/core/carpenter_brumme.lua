@@ -28,7 +28,7 @@ routines = {
           { from = 6.5, at = "home.table", act = "eat" },
           { from = 7.75, at = "work.counter", act = "work", leave = 16 },
           { at = "traetoppen.c_bench", act = "sit", leave = 17.5 },
-          { from = 18.25, at = "int_torvekroen.seat_a?", act = "sit" },
+          { from = 18.35, at = "int_torvekroen.seat_a?", act = "sit" },
           { from = 22, at = "home.bed", act = "sleep" },
         } },
       },

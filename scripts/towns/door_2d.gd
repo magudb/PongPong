@@ -43,6 +43,7 @@ var emblem_sprite: Sprite2D
 var bracket_sprite: Sprite2D
 
 var _sign_zone: Area2D
+var _sign_near := false
 
 
 ## The marker handler of `door` (contract of IsoArea.resolve_handler: static create_marker(params, pos, cell, area) -> Node): builds the door on the doorstep cell, adds it to the area's
@@ -80,6 +81,8 @@ func _ready() -> void:
 	if always_open or building_id == "":
 		return
 	_build_sign()
+	var bus := _Svc.node("EventBus")
+	if bus != null: bus.modal_changed.connect(func(_stack): _sign_visibility())
 
 
 # ------------------------------------------------------------------------------------------------ the rule
@@ -261,9 +264,16 @@ func _refresh_sign() -> void:
 func _on_sign_zone_entered(body: Node) -> void:
 	if body.is_in_group("player") and sign_label != null:
 		_refresh_sign()
-		sign_label.visible = true
+		_sign_near = true
+		_sign_visibility()
 
 
 func _on_sign_zone_exited(body: Node) -> void:
 	if body.is_in_group("player") and sign_label != null:
-		sign_label.visible = false
+		_sign_near = false
+		_sign_visibility()
+
+func _sign_visibility() -> void:
+	if sign_label == null:return
+	var gm := _Svc.node("GameManager")
+	sign_label.visible = _sign_near and (gm == null or not gm.is_modal_open())

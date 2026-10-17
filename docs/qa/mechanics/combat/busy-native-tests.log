@@ -1,0 +1,21 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PLAYTEST start mode=windowed character=animal sections=res://tests/sections only=dungeon_performance
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.PAqODE/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/equipment-native
+== section dungeon_performance [windowed]  (res://tests/sections/dungeon_performance.gd)
+  ok    dungeon_performance.twelve_overlapping_map_lights
+  ok    dungeon_performance.busy_floor_population (props=225 orbs=15)
+  ok    dungeon_performance.global_light_limit_16 (13 emitting lights)
+  ok    dungeon_performance.busy_floor_cpu_render_budget ([{ "frames": 31, "fps": 61.1012013284584, "ms": 16.3662903225806, "worst_ms": 29.955, "gpu_ms": 0.0, "cpu_render_ms": 1.87861288362934 }, { "frames": 38, "fps": 75.6274591362946, "ms": 13.2227105263158, "worst_ms": 17.599, "gpu_ms": 0.0, "cpu_render_ms": 1.88544736410442 }, { "frames": 25, "fps": 49.1805536156559, "ms": 20.33324, "worst_ms": 31.005, "gpu_ms": 0.0, "cpu_render_ms": 1.90967999458313 }])
+  ok    dungeon_performance.forest_hud_logic_budget (0.00374 ms <=0.4)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/equipment-native/dungeon_performance_busy_floor_24_enemies_12_lights.png (1280x720)
+  ok    dungeon_performance.reveal_logic_budget (0.00009 ms <=0.3)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/equipment-native/dungeon_performance_busy_floor_legendary_reveal.png (1280x720)
+  --    dungeon_performance: 6 checks, 0 failed, 0 skipped, 4.2 s
+== summary: 1 section(s) run, 6 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 9.3 s
+PLAYTEST PASS (6 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

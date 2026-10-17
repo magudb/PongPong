@@ -1,0 +1,34 @@
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=copy_completion
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.QY6YWV/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 1.0 s
+== section copy_completion  (res://tests/sections/copy_completion.gd)
+  ok    copy_completion.strict_runtime_localization (Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+loc_check: root=res:// | scanned gd=304 tscn=45 lua=219 map=31 | CSV files: da.csv animals.csv appraisal.csv areas.csv birthdays.csv cast.csv core.csv dialogue.csv dialogue_builder.csv dialogue_cast.csv dungeon.csv dungeon_items.csv dungeon_run.csv dungeon_services.csv economy.csv farm.csv farm_signs.csv farm_site.csv farm_tutorial.csv features_quests.csv features_ui.csv festivals.csv finds.csv forest.csv forest_mother.csv furniture.csv ghost.csv ghost_dialogue.csv ghostfamily.csv ghostfamily_events.csv ghostfamily_fest.csv ghostfamily_quests.csv ghostfamily_seek.csv gifts.csv heart_events.csv home.csv home_amenities.csv home_ui.csv home_world.csv hud.csv keepers.csv levels.csv life.csv look.csv loot_dungeon.csv materials.csv menus.csv nav.csv partner.csv post.csv quests.csv rel_ui.csv secret_garden.csv shop_ui.csv social_arch.csv social_events.csv social_sys.csv social_talk.csv towns.csv traetoppen.csv ui.csv wardrobe.csv wardrobe_ui.csv world.csv zz_final.csv | keys loaded: 4414
+loc_check: referenced keys: 2874 (+0 any-of groups) | dynamic prefixes in code: 135
+loc_check PASS (strict): missing=0 (da=0 en=0) lint_errors=0 legacy_issues=0 warnings=0
+)
+  ok    copy_completion.csv_lint.py_strict (csv_lint PASS: 65 file(s), 4414 keys, 0 error(s), 0 legacy issue(s), 0 warning(s)
+)
+  ok    copy_completion.copy_lint.py_strict (copy_lint: 0 findings
+)
+  ok    copy_completion.fixture_copy_requires_its_data
+  ok    copy_completion.fixture_key_in_product_still_requires_csv
+  ok    copy_completion.unknown_fixture_key_still_fails
+  ok    copy_completion.all_reviewed_voice_assets_match (PASS manifest_in_sync 296 lines
+)
+  --    copy_completion: 7 checks, 0 failed, 0 skipped, 9.7 s
+== summary: 1 section(s) run, 15 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 15.5 s
+PLAYTEST PASS (15 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

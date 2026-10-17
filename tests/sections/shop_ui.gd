@@ -49,9 +49,51 @@ func run(t) -> void:
 	await _all_shops(t, shop)
 	await _prices_and_tabs(t, shop)
 	await _inventory_checks(t, game_ui)
-	t.skip("weapon_tab_and_gem_card: Arsenal/WeaponInfo belong to the later dungeon milestone")
-	t.skip("weapon_card_range_line: DungeonRun belongs to the later dungeon milestone")
+	await _equipment_cards(t,game_ui,false)
 	gm.clear_config_overrides()
+
+func _equipment_cards(t,game_ui: GameUI,native: bool) -> void:
+	var shop: Control = game_ui.get_screen(&"shop_ui")
+	if shop.is_open():shop.close()
+	var loadout: Control = game_ui.get_screen(&"garderobe")
+	for item in ["iron_sword","wpn_staff_star","gem_rune_heart"]:EconomyManager.add_item(StringName(item),1,true)
+	for locale in ["da","en"]:
+		LocalizationManager.set_locale(locale)
+		var broken: Array[String] = []
+		var checked := 0
+		var raw := RegEx.create_from_string("WEFFECT_|GEMFX_|WSTAT_|DEXP_|WEAPON_FAMILY_|%[dfs]")
+		for id in LuaRuntime.get_all_item_ids():
+			if str(ItemKinds.def(id).get("category",""))!="weapon" and not LanternGem.can_equip(id):continue
+			checked += 1
+			var text: String = preload("res://scripts/ui/components/equipment_details.gd").text(str(id))
+			if text=="" or raw.search(text)!=null:broken.append(str(id))
+		t.check("all_weapon_and_gem_details_localize_"+locale,checked>=40 and broken.is_empty(),"%d cards, broken %s" % [checked,str(broken)])
+		loadout.open()
+		loadout.set_tab(1)
+		for item in ["iron_sword","wpn_staff_star","gem_rune_heart"]:
+			loadout._filter("gem" if item.begins_with("gem_") else "weapon")
+			loadout._select(item)
+			await t.frames(3)
+			var copy: String = loadout.equipment_stats.text
+			var floors := DungeonRun.weapon_range(item)
+			var range_copy := TranslationServer.translate("DEXP_WEAPON_RANGE_FMT") % [floors.x,floors.y]
+			t.check("loadout_card_"+item+"_"+locale,copy!="" and loadout.equipment_stats.visible and (item.begins_with("gem_") or copy.contains(range_copy)))
+			t.check("loadout_card_bounds_"+item+"_"+locale,loadout.get_global_rect().encloses(loadout.equipment_stats.get_global_rect()) and loadout.item_scroll.size.y>=56,str(loadout.equipment_stats.get_global_rect()))
+			if native:await t.capture("equipment_"+item+"_"+locale)
+		loadout.close()
+		ShopSystem.open_shop(&"smithy")
+		await t.frames(3)
+		var offer: Dictionary = {}
+		for row in ShopSystem.get_shop_inventory(&"smithy"):
+			if str(row.item_id)=="iron_sword":offer = row
+		t.check("smith_has_comparable_weapon_"+locale,not offer.is_empty())
+		if not offer.is_empty():
+			shop._select(offer)
+			await t.frames(3)
+			t.check("shop_weapon_card_"+locale,shop.equipment_stats.visible and shop.equipment_stats.text.contains(TranslationServer.translate("WSTAT_DAMAGE")) and shop.get_global_rect().encloses(shop.equipment_stats.get_global_rect()))
+			if native:await t.capture("smith_weapon_card_"+locale)
+		shop.close()
+	LocalizationManager.set_locale("da")
 
 func _prices_and_tabs(t, screen: Control) -> void:
 	var eco: Node = t.autoload("EconomyManager")
@@ -113,6 +155,7 @@ func run_windowed(t) -> void:
 	var bag: Control = inventory.get_node("Margin/Columns/Backpack")
 	t.check("inventory_panel_fits", bag.get_global_rect().position.y >= 40 and bag.get_global_rect().end.y <= 680, str(bag.get_global_rect()))
 	inventory.close()
+	await _equipment_cards(t,ui,true)
 	gm.clear_config_overrides()
 	# Stable production-screen fixtures keep scenery/weather out of UI regression scoring.
 	await t.clear_scene()

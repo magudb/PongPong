@@ -34,7 +34,7 @@ const SCENE_DIR := "res://scenes/ui/"
 const SCREEN_ORDER: Array[StringName] = [
 	&"hud", &"forest_hud", &"social_hud", &"event_overlay", &"dialogue_ui", &"inventory_ui", &"quest_journal",
 	&"people", &"gift_ui", &"post", &"shop_ui", &"animal_care_ui", &"build_menu_ui",
-	&"husbyggeri", &"indretning", &"home_chest", &"garderobe", &"samlerbog",
+	&"husbyggeri", &"indretning", &"home_chest", &"home_amenities", &"garderobe", &"samlerbog",
 	&"pause_menu", &"save_load_ui", &"settings_ui",
 ]
 const MODE_FARM := &"farm"
@@ -65,6 +65,8 @@ func _ready() -> void:
 		tree.node_added.connect(_on_node_added)
 	load_screens()
 	set_mode(mode)
+	var bus := Svc.node("EventBus")
+	if bus != null: bus.modal_changed.connect(func(_stack): _apply_mode())
 
 
 func _exit_tree() -> void:
@@ -151,6 +153,8 @@ func set_mode(new_mode: StringName) -> void:
 
 
 func _apply_mode() -> void:
+	var gm := Svc.node("GameManager")
+	var cinematic: bool = gm != null and gm.is_modal_open(&"event")
 	var active := get_screen(HUD_FOR_MODE[mode])
 	# Keep health, prompts and the actual weapon visible while the dedicated
 	# forest HUD is absent. A loaded forest HUD still takes precedence.
@@ -159,7 +163,7 @@ func _apply_mode() -> void:
 	for m in HUD_FOR_MODE:
 		var hud := get_screen(HUD_FOR_MODE[m])
 		if hud is CanvasItem:
-			(hud as CanvasItem).visible = (hud == active)
+			(hud as CanvasItem).visible = (hud == active) and not cinematic
 
 
 ## draw index of a screen: the number of already loaded screens that come before it in the order

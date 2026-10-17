@@ -1,0 +1,70 @@
+{
+  "blomsterfesten": {
+    "name": ["Blomsterfesten", "Flower Fair"],
+    "desc": ["Del frø og blomster på Hyggetorvet.", "Share seeds and flowers in the town square."],
+    "open": [["Velkommen. En lille spire kan blive begyndelsen på en hel have.", "Welcome. One small sprout can be the beginning of a whole garden."], ["Vis os dine blomster, og find noget nyt til jorden derhjemme.", "Show us your flowers, and find something new for your garden at home."]],
+    "end": [["Tak for alle farverne og alle de frø, I delte.", "Thank you for all the colours and all the seeds you shared."], ["Nu tager vi lidt af haven med os hjem.", "Now we each take a little of the garden home."]],
+    "activities": [["Blomsterkonkurrence", "Flower contest"], ["Frøboden", "Seed stall"], ["En dans mellem blomsterne", "A dance among the flowers"]],
+    "prizes": [{"sunflower_seeds": 4}, {"sunflower_seeds": 2}, {"sunflower_seeds": 1}]
+  },
+  "honningdagen": {
+    "name": ["Honningdagen", "Honey Day"],
+    "desc": ["Smag sommerens løfte ved det fælles bord.", "Taste the promise of summer at the shared table."],
+    "open": [["Bierne har haft travlt. I dag deler vi det søde arbejde.", "The bees have been busy. Today we share their sweet work."], ["Der er både honning og en ledig plads ved bordet.", "There is honey, and a place for you at the table."]],
+    "end": [["Det bedste ved honningen var alle dem, vi delte den med.", "The best part of the honey was everyone we shared it with."], ["Bierne får ro nu. Vi ses ved bistaderne en anden dag.", "The bees can rest now. We will meet by the hives another day."]],
+    "activities": [["Honningkonkurrence", "Honey contest"], ["Picnic ved torvet", "Square picnic"], ["Honningboden", "Honey stall"]],
+    "prizes": [{"honey": 2}, {"cookie": 1}, {"carrot_seeds": 1}]
+  },
+  "midsommerlanterner": {
+    "name": ["Midsommerlanterne", "Midsummer Lanterns"],
+    "desc": ["Lys og ønsker på Trætoppens torv.", "Lights and wishes in the treetop square."],
+    "open": [["Hvert lille lys bærer et ønske. Du må også sende et af sted.", "Each little light carries a wish. You can send one too."], ["Bålet er varmt, og der er plads til os alle.", "The fire is warm, and there is room for all of us."]],
+    "end": [["Vi lader det sidste lys vise vejen hjem.", "We let the last light show the way home."], ["Tag varmen fra denne aften med dig.", "Take the warmth of this evening with you."]],
+    "activities": [["Send et lygteønske", "Send a lantern wish"], ["Middag ved bålet", "Bonfire supper"], ["Midsommerdans", "Midsummer dance"]]
+  },
+  "badedagen": {
+    "name": ["Sofus' badedag", "Bath Day"],
+    "desc": ["Et varmt bad og mad til fællesbordet.", "A warm bath and food for the shared table."],
+    "open": [["Læg dagens travlhed fra dig. Håndklæderne er varme.", "Set the busy day aside. The towels are warm."], ["Tag gerne en lille ret med til vores fællesbord.", "You are welcome to bring a small dish for our shared table."]],
+    "end": [["Tak for maden og den rolige stund sammen.", "Thank you for the food and the peaceful time together."], ["Du behøver ikke skynde dig hjem. Gå i dit eget tempo.", "There is no need to hurry home. Go at your own pace."]],
+    "activities": [["Et gratis varmt bad", "A free warm bath"], ["Picnic", "Picnic"], ["Bidrag til fællesbordet", "Add to the shared table"]]
+  },
+  "hoestfesten": {
+    "name": ["Høstfesten", "Harvest Festival"],
+    "desc": ["Del det, der voksede, og fejr årets arbejde.", "Share what grew and celebrate the year's work."],
+    "open": [["Dette bord er fyldt af mange hænders arbejde.", "This table is full of the work of many hands."], ["Store græskar og skæve gulerødder er lige velkomne her.", "Great pumpkins and crooked carrots are equally welcome here."]],
+    "end": [["Vi har delt høsten. Ingen behøver bære alting alene.", "We have shared the harvest. Nobody needs to carry everything alone."], ["Gem et frø til næste år og en god tanke til naboen.", "Keep a seed for next year and a kind thought for your neighbour."]],
+    "activities": [["Græskarkonkurrence", "Pumpkin contest"], ["Høstmiddag", "Harvest feast"], ["Høstmarked", "Harvest market"]],
+    "prizes": [{"pumpkin_seeds": 3}, {"carrot_seeds": 5}, {"sunflower_seeds": 2}]
+  },
+  "maanemarkedet": {
+    "name": ["Månemarkedet", "Moon Fair"],
+    "desc": ["Sten og små historier under aftenhimlen.", "Stones and little stories under the evening sky."],
+    "open": [["En sten kan gemme en lang historie i sine årer.", "A stone can hold a long story in its veins."], ["I aften ser vi nærmere og lytter lidt længere.", "Tonight we look a little closer and listen a little longer."]],
+    "end": [["Månen går videre, men historierne kan blive hos os.", "The moon moves on, but the stories can stay with us."], ["Tak for det, du viste os. Pas godt på vejen hjem.", "Thank you for what you showed us. Take care on the way home."]],
+    "activities": [["Måneboden", "Moon stall"], ["Stenudstilling", "Gem show"], ["Et ønske i måneskin", "A moonlit wish"]],
+    "prizes": [{"amethyst": 1}, {"honey": 3}, {"cookie": 3}]
+  },
+  "vinterlysene": {
+    "name": ["Vinterlysene", "Winter Lights"],
+    "desc": ["Små lys gør den lange vinteraften varm.", "Little lights warm the long winter evening."],
+    "open": [["Mit lys er lille. Sammen kan vores lys vise hele stien.", "My light is small. Together our lights can show the whole path."], ["Vil du gå med os? Der er varme drikke bagefter.", "Will you walk with us? There are warm drinks afterwards."]],
+    "end": [["Nu ved jeg, hvor mange lys der bor i byen.", "Now I know how many lights live in our town."], ["Jeg gemmer dette øjeblik til en kold dag.", "I am keeping this moment for a cold day."]],
+    "activities": [["Gå med lyset", "Follow the lights"], ["Et vinterønske", "A winter wish"], ["Varme drikke", "Warm drinks"]]
+  },
+  "bagedagen": {
+    "name": ["Bagedagen", "Bake-off Day"],
+    "desc": ["Duften af småkager samler byen.", "The smell of cookies brings the town together."],
+    "open": [["Kager behøver ikke være ens for at smage godt sammen.", "Cakes do not need to match to taste good together."], ["Find en plads. Vi begynder med en lille smagsprøve.", "Find a place. We will start with a little taste."]],
+    "end": [["Der er krummer på bordet og nye opskrifter i hovedet.", "There are crumbs on the table and new recipes in our heads."], ["Tak for hjælpen. Den sidste småkage kan komme med hjem.", "Thank you for helping. The last cookie can come home with you."]],
+    "activities": [["Småkagekonkurrence", "Cookie contest"], ["Smagebordet", "Tasting table"], ["Bageboden", "Bake stall"]],
+    "prizes": [{"honey": 3}, {"cookie": 2}, {"carrot_seeds": 2}]
+  },
+  "aarsskiftet": {
+    "name": ["Årsskiftet", "New Year's Eve"],
+    "desc": ["Se tilbage på året og send det næste et ønske.", "Remember the year and send a wish to the next."],
+    "open": [["Et år rummer både det, vi nåede, og det, vi stadig øver os på.", "A year holds what we have done and what we are still learning."], ["Skriv et lille minde. Der er en tom side til det næste år.", "Write a little memory. There is a blank page for the next year."]],
+    "end": [["Tak for dette år og for den plads, I gav hinanden.", "Thank you for this year and for the room you made for one another."], ["Må det næste begynde med et venligt møde.", "May the next begin with a kind meeting."]],
+    "activities": [["Årbogen", "The year book"], ["Send årets sidste lys", "Send the year's last light"], ["En skål for det nye år", "A toast to the new year"]]
+  }
+}

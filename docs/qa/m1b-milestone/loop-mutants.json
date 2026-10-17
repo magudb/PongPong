@@ -1,6 +1,6 @@
 {
   "result": "pass",
-  "binding": "fc6df2244d8570a9d28203b8daad0f3bc8dceeb442567abb238f9a86eab99818",
+  "binding": "b512ac867eda2b2e4e36407b5584c405b4b067c2415908b2cd7f3561665006e7",
   "mutants": {
     "baseline": {
       "caught": true,
@@ -30,13 +30,15 @@
       "caught": true,
       "check": "l13_social_section_order"
     },
+    "cue-without-log": {
+      "caught": true,
+      "check": "l16_shop_bell_is_logged"
+    },
     "closed-door": {
       "caught": true,
       "check": "l05_closed_door_does_not_travel"
     }
   },
-  "skipped": {
-    "audio": "P24 cue_log capability is not installed"
-  },
-  "note": "Each producer is changed on a fresh clone. The unmodified probes pass first; each mutant must fail its named behavioural check without engine errors."
+  "skipped": {},
+  "note": "Each producer is changed on a fresh clone. The unmodified probes pass first; each mutant must fail its named behavioural check without engine errors. Audio playback without a cue log is covered."
 }

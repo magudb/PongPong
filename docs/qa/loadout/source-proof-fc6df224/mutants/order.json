@@ -1,0 +1,25 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 7,
+  "elapsed_s": 2.91,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "town_mutants.l13_social_section_order"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "town_mutants": {
+      "character": "animal",
+      "checks": 7,
+      "failed": 1,
+      "ms": 1782,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

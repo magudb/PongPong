@@ -1,0 +1,43 @@
+{
+  "allowed": [
+    {
+      "kind": "warning",
+      "rule": "unknown NPC 'retired_npc'",
+      "section": "social",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SocialManager.from_dict: unknown NPC 'retired_npc' kept in the orphans bucket (at from_dict res://scripts/social/social_manager.gd:1339)"
+    }
+  ],
+  "character": "animal",
+  "checks": 265,
+  "elapsed_s": 67.33,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 11467,
+      "skipped": 0
+    },
+    "ghostfam_events": {
+      "character": "animal",
+      "checks": 121,
+      "failed": 0,
+      "ms": 21842,
+      "skipped": 0
+    },
+    "social": {
+      "character": "animal",
+      "checks": 136,
+      "failed": 0,
+      "ms": 29696,
+      "skipped": 1
+    }
+  },
+  "skipped": 1
+}

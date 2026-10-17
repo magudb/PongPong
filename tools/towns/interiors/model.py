@@ -48,7 +48,7 @@ assert len(ROOMS) == 24, len(ROOMS)
 
 # size classes (cols x rows) and the per-building exceptions of the design (design_towns.md 4.3)
 SIZES = {"S": (6, 5), "M": (8, 6), "L": (10, 7)}
-SIZE_OVERRIDE = {"postkontoret": (8, 5), "uglehulen": (7, 5), "loppeloftet": (8, 5), "badehuset": (9, 7), "dyrehuset": (9, 7), "troldmandstaarnet": (7, 6),
+SIZE_OVERRIDE = {"torvekroen": (12, 8), "postkontoret": (8, 5), "uglehulen": (7, 5), "loppeloftet": (8, 5), "badehuset": (9, 7), "dyrehuset": (9, 7), "troldmandstaarnet": (7, 6),
                  "toemmerhandlen": (9, 6), "brummes_vaerksted": (9, 7), "raadhuset": (10, 8), "fekongens_hus": (10, 8)}
 
 # building -> (wall style, floor terrain); styles and floors are those of assets/iso_props/interior/interior.json and assets/iso_tiles/tiles_floors.json

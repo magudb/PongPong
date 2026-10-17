@@ -1,0 +1,114 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 878,
+  "elapsed_s": 254.05,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "audio_town": {
+      "character": "animal",
+      "checks": 37,
+      "failed": 0,
+      "ms": 5776,
+      "skipped": 0
+    },
+    "bosses": {
+      "character": "animal",
+      "checks": 49,
+      "failed": 0,
+      "ms": 9367,
+      "skipped": 0
+    },
+    "enemies": {
+      "character": "animal",
+      "checks": 47,
+      "failed": 0,
+      "ms": 4854,
+      "skipped": 0
+    },
+    "enemy_performance": {
+      "character": "animal",
+      "checks": 8,
+      "failed": 0,
+      "ms": 15917,
+      "skipped": 0
+    },
+    "forest_mother": {
+      "character": "animal",
+      "checks": 37,
+      "failed": 0,
+      "ms": 15143,
+      "skipped": 0
+    },
+    "held_equipment": {
+      "character": "animal",
+      "checks": 44,
+      "failed": 0,
+      "ms": 11090,
+      "skipped": 0
+    },
+    "home_services": {
+      "character": "animal",
+      "checks": 3,
+      "failed": 0,
+      "ms": 2767,
+      "skipped": 0
+    },
+    "shop_ui": {
+      "character": "animal",
+      "checks": 32,
+      "failed": 0,
+      "ms": 3100,
+      "skipped": 0
+    },
+    "town_budgets": {
+      "character": "animal",
+      "checks": 29,
+      "failed": 0,
+      "ms": 27354,
+      "skipped": 0
+    },
+    "town_loop": {
+      "character": "animal",
+      "checks": 177,
+      "failed": 0,
+      "ms": 118685,
+      "skipped": 0
+    },
+    "ui_mechanics": {
+      "character": "animal",
+      "checks": 4,
+      "failed": 0,
+      "ms": 1467,
+      "skipped": 0
+    },
+    "voice": {
+      "character": "animal",
+      "checks": 310,
+      "failed": 0,
+      "ms": 3395,
+      "skipped": 0
+    },
+    "walkway_transitions": {
+      "character": "animal",
+      "checks": 59,
+      "failed": 0,
+      "ms": 26107,
+      "skipped": 0
+    },
+    "wardrobe_ui": {
+      "character": "animal",
+      "checks": 42,
+      "failed": 0,
+      "ms": 3658,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

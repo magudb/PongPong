@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 38,
+  "elapsed_s": 13.71,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "forest_look": {
+      "character": "animal",
+      "checks": 38,
+      "failed": 0,
+      "ms": 9765,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

@@ -1,0 +1,16 @@
+{
+  "frame_crop": true,
+  "region": null,
+  "screens": {
+    "forest": {
+      "mean": 10.174,
+      "over40_pct": 6.941,
+      "ref": "/Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/tests/checkpoints/guide_ref/pw1x_forest.png",
+      "shot": "docs/qa/mechanics/dungeon/hud/dungeon_hud_forest_guide.png",
+      "size": [
+        1276,
+        716
+      ]
+    }
+  }
+}

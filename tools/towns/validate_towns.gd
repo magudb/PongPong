@@ -13,12 +13,6 @@ func _run() -> void:
 	var lr: Node = root.get_node("LuaRuntime")
 	var hours: GDScript = load("res://scripts/towns/hours.gd")
 	var validator: GDScript = load("res://scripts/towns/towns_validate.gd")
-	var buildings := {}
-	for id in hours.call("registry"):
-		var row: Dictionary = hours.call("building", id)
-		if row.get("wave", "core") == "core":
-			buildings[id] = row
-	hours.set("override_registry", buildings)
 	var visuals := {}
 	for id in lr.call("get_npcs"):
 		visuals[id] = str(lr.call("get_npc", str(id)).get("visual", id))

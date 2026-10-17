@@ -1,0 +1,82 @@
+{
+  "tool": "built-in imagegen",
+  "operation": "alpha trim, uniform contain, bottom anchor, lossless export",
+  "items": {
+    "mother_repaired_lantern": {
+      "source": "tools/art/drawn/sources/forest_mother/mother_repaired_lantern.png",
+      "source_sha256": "7502e7c0cc55d9ddc25e67aaaa17460d228f4b049706f65af687693c8e05cc86",
+      "source_bounds": [
+        342,
+        111,
+        993,
+        1147
+      ],
+      "scale": 0.15444015444015444,
+      "canvas": [
+        192,
+        192
+      ],
+      "pivot": [
+        96.0,
+        180
+      ]
+    },
+    "mother_route_map": {
+      "source": "tools/art/drawn/sources/forest_mother/mother_route_map.png",
+      "source_sha256": "cb4b31d796932789e3bf6f80dfb3368e659471eeafa5671d6d2a0ed71b4b81c7",
+      "source_bounds": [
+        146,
+        212,
+        1280,
+        968
+      ],
+      "scale": 0.13227513227513227,
+      "canvas": [
+        192,
+        192
+      ],
+      "pivot": [
+        96.0,
+        180
+      ]
+    },
+    "mother_seed_tin": {
+      "source": "tools/art/drawn/sources/forest_mother/mother_seed_tin.png",
+      "source_sha256": "0ec37e2190fe9f57dd3bf0c907361adf6adc163ef890991c0eb5583abb9b575e",
+      "source_bounds": [
+        162,
+        98,
+        1255,
+        1053
+      ],
+      "scale": 0.13266239707227814,
+      "canvas": [
+        192,
+        192
+      ],
+      "pivot": [
+        96.0,
+        180
+      ]
+    },
+    "root_scribe_waymarker": {
+      "source": "tools/art/drawn/sources/forest_mother/root_scribe_waymarker.png",
+      "source_sha256": "438db196e4bc2637c6066705ce827c26b3662cc740b65ababd0f9e826749c067",
+      "source_bounds": [
+        90,
+        61,
+        1289,
+        1150
+      ],
+      "scale": 0.25020850708924103,
+      "canvas": [
+        384,
+        384
+      ],
+      "pivot": [
+        192.0,
+        372
+      ]
+    }
+  }
+}

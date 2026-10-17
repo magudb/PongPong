@@ -19,31 +19,31 @@ static func _build(area: IsoArea) -> Dictionary:
 	var tiers := LuaData.arr(home.get("tiers", []))
 	var largest := LuaData.dict(tiers[-1]) if not tiers.is_empty() else {}
 	var footprint := LuaData.arr(largest.get("footprint_tiles", [9, 6]))
-	for marker in area.markers:
-		var type := str(marker.type)
-		var cell: Vector2i = marker.cell
-		var reason := ""
-		var size := Vector2i.ONE
-		match type:
-			"home":
-				reason = "home"
-				size = Vector2i(int(footprint[0]), int(footprint[1]))
-			"field_expansion":
-				for c in IsoArea.parse_cells(str(marker.params.get("cells", "")), Vector2i(area.map.width, area.map.height)):
-					out[c] = "zone"
-			"building_slot", "greenhouse_slot":
-				reason = "slot"
-				var kind := str(marker.params.get("type", "greenhouse"))
-				var dimensions := LuaData.arr(Svc.lua_config("farm_site.slot_footprints." + kind, [4, 3]))
-				size = Vector2i(int(dimensions[0]), int(dimensions[1]))
-			"spawn":
-				reason = "spawn"
-			"warp":
-				reason = "warp"
-		if reason != "":
-			var left := cell.x - int(size.x / 2) if reason == "home" else cell.x - size.x + 1
-			for y in range(cell.y - size.y + 1, cell.y + 1):
-				for x in range(left, left + size.x):
-					if not out.has(Vector2i(x, y)):
-						out[Vector2i(x, y)] = reason
+	# Marker handlers may query the reserve during IsoArea construction. The
+	# parsed map is already complete; the live node/marker list is still partial.
+	for char in area.map.markers:
+		var params := LuaData.dict(area.map.markers[char])
+		for cell in area.map.find_objects(str(char)):
+			var type := str(params.get("marker",""))
+			var reason := ""
+			var size := Vector2i.ONE
+			match type:
+				"home":
+					reason = "home"
+					size = Vector2i(int(footprint[0]),int(footprint[1]))
+				"field_expansion":
+					for c in IsoArea.parse_cells(str(params.get("cells","")),Vector2i(area.map.width,area.map.height)):
+						out[c] = "zone"
+				"building_slot", "greenhouse_slot":
+					reason = "slot"
+					var kind := str(params.get("type","greenhouse"))
+					var dimensions := LuaData.arr(Svc.lua_config("farm_site.slot_footprints."+kind,[4,3]))
+					size = Vector2i(int(dimensions[0]),int(dimensions[1]))
+				"spawn":reason = "spawn"
+				"warp":reason = "warp"
+			if reason!="":
+				var left: int = cell.x-int(size.x/2) if reason=="home" else cell.x-size.x+1
+				for y in range(cell.y-size.y+1,cell.y+1):
+					for x in range(left,left+size.x):
+						if not out.has(Vector2i(x,y)):out[Vector2i(x,y)] = reason
 	return out

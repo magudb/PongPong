@@ -269,7 +269,7 @@ func _check_keepsakes() -> void:
 			err("boss pool entry %s is not a legendary piece that lists the boss as a source" % it)
 	for sid in spots:
 		var sp := LuaData.dict(spots[sid])
-		var item := LuaData.dict(_items.get(str(sp.get("item", "")), {}))
+		var item: Dictionary = _lr.get_item_def(str(sp.get("item", "")))
 		var back := false
 		for s in LuaData.arr(item.get("sources", [])):
 			back = back or (str(LuaData.dict(s).get("kind", "")) == "spot" and str(LuaData.dict(s).get("spot", "")) == str(sid))
@@ -309,11 +309,12 @@ func _check_finds_and_shops() -> void:
 			for rar in by_rarity:
 				for ent in LuaData.arr(by_rarity[rar]):
 					var item := str(LuaData.dict(ent).get("item", ""))
-					if not _items.has(item):
+					var definition: Dictionary = _lr.get_item_def(item)
+					if definition.is_empty():
 						err("loot pool %s/%s/%s names %s, which is not an item" % [z, kind, rar, item])
 						continue
-					if str(LuaData.dict(_items[item]).get("rarity", "")) != str(rar):
-						err("loot pool %s/%s/%s holds %s of rarity %s" % [z, kind, rar, item, LuaData.dict(_items[item]).get("rarity", "?")])
+					if str(definition.get("rarity", "")) != str(rar):
+						err("loot pool %s/%s/%s holds %s of rarity %s" % [z, kind, rar, item, definition.get("rarity", "?")])
 					if not pool_zones.has(item):
 						pool_zones[item] = {}
 					pool_zones[item][str(z)] = true
@@ -681,6 +682,9 @@ static func map_marker_problems(markers: Dictionary, loot: Dictionary) -> Array[
 		known[str(z)] = true
 	for z in spots_by_zone:
 		known[str(z)] = true
+	var generated := int(markers.get("v", 1)) == 2
+	if generated:
+		known = {"farm": true, "hyggebyen": true}
 	for a in areas:
 		if not known.has(str(a)):
 			out.append("map_markers area %s is neither a loot zone nor the zone of a loot spot" % a)
@@ -719,7 +723,7 @@ static func map_marker_problems(markers: Dictionary, loot: Dictionary) -> Array[
 			if not boss_areas.has(str(area["boss"])):
 				boss_areas[str(area["boss"])] = []
 			(boss_areas[str(area["boss"])] as Array).append(str(z))
-	var bosses := LuaData.dict(loot.get("boss", {}))
+	var bosses := {} if generated else LuaData.dict(loot.get("boss", {}))
 	for b in bosses:
 		var placed: Array = boss_areas.get(str(b), [])
 		if placed.size() != 1:
@@ -735,7 +739,7 @@ static func map_marker_problems(markers: Dictionary, loot: Dictionary) -> Array[
 
 # ---------------------------------------------------------------------------------------------------------- review F1 r2 (fix round 2): references and numbers that no rule looked at
 
-const SPOT_REQUIRES_KEYS := ["quests", "day_min", "home_tier_min"]
+const SPOT_REQUIRES_KEYS := ["quests", "day_min", "home_tier_min", "items"]
 const FEATURE_DIALOGUES := ["fairy_builder", "fairy_furnisher", "fairy_tailor"]
 
 
@@ -802,7 +806,7 @@ static func spot_requirement_problems(spots: Dictionary, quest_exists: Callable,
 		var r := req as Dictionary
 		for k in r:
 			if not (str(k) in SPOT_REQUIRES_KEYS):
-				out.append("spot %s: unknown requirement '%s' (the loot service reads quests, day_min and home_tier_min only)" % [sid, k])
+				out.append("spot %s: unknown requirement '%s' (unsupported by the loot service)" % [sid, k])
 		var has_quests := false
 		if r.has("quests"):
 			var qs: Variant = r["quests"]

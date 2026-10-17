@@ -4,6 +4,7 @@
 The full captures/unmasked scores are retained. Portrait placeholders were
 superseded by approved painted art. Dynamic hotbar icon interiors are masked
 in both chrome inputs; slot geometry, outlines, shortcut digits remain scored.
+Live stack counts are masked inside slot borders; shortcut digits and chrome stay scored.
 Live money digits and energy fill are state-dependent and masked in the chip;
 the owning HUD fixture also scores the full chip against matching mock values.
 The full left background strip excludes the foreground keeper speech, portrait
@@ -36,7 +37,7 @@ def run(folder):
     result=masked_score(rp,sp,[[62,342,398,669]],folder,'shop_ui');result.update(limit=18);result['ok']=result['mean']<=18;report['shop_guide']=result
     result=masked_score(ROOT/'tests/checkpoints/guide_ref_ui/dialogue_box.png',folder/'npc_dialogue_crop.png',[[34,34,179,179]],folder,'dialogue_ui');result.update(limit=15);result['ok']=result['mean']<=15;report['dialogue_guide']=result
     for part in ['date','chip','hotbar']:
-        masks=[[22+i*66,22,61+i*66,61] for i in range(8)] if part=='hotbar' else ([[44,12,87,36],[153,21,258,28]] if part=='chip' else [])
+        masks=([[22+i*66,22,61+i*66,61] for i in range(8)]+[[52+i*66,49,65+i*66,67] for i in range(8)]) if part=='hotbar' else ([[44,12,87,36],[153,21,258,28]] if part=='chip' else [])
         result=masked_score(ROOT/f'tests/checkpoints/guide_ref_v2/city_hud_{part}.png',folder/f'hud_v2_{part}.png',masks,folder,'city_'+part)
         result.update(limit=12);result['ok']=result['mean']<=12;report['city_hud_'+part]=result
     before=Image.open(folder/'town_loop_shop_backdrop.png').convert('RGB')

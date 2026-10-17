@@ -91,16 +91,14 @@ func run(t) -> void:
 			handled = handled or (child is PostBox2D if type == "mailbox" else child is NoticeBoard2D if type == "board" else child is BathTub2D)
 		t.check("room_handler_" + id, handled and str(t.world().area.map.id) == id, str(t.world().area.map.id))
 		if id == "int_postkontoret":
-			var responses: Array = []
-			var response := func(key):
-				if key == "LIFE_POST_OFFICE":
-					responses.append(key)
-			bus.whisper_requested.connect(response)
 			for host in t.world().area.objects.get_children():
 				if host is ShopCounter and host.kind == "post_counter":
 					host.interact(t.player())
-			bus.whisper_requested.disconnect(response)
-			t.check("post_office_counter_responds", responses.size() == 1)
+			await t.frames(3)
+			var post: Control = t.world().game_ui.get_screen(&"post")
+			t.check("post_office_counter_responds",post.is_open() and not post.data.is_empty() and post.tabs.size()==3)
+			post.close()
+			await t.frames(3)
 		elif id == "int_badehuset":
 			bus.game_event.emit(&"bath_request", {"npc": "bathkeeper_sofus"})
 			t.check("sofus_request_uses_live_bath", gm.top_modal() == &"bath")

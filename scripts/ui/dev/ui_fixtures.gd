@@ -42,6 +42,7 @@ const SCREENS := {
 	"husbyggeri": "res://scenes/ui/husbyggeri.tscn",
 	"indretning": "res://scenes/ui/indretning.tscn",
 	"home_chest": "res://scenes/ui/home_chest.tscn",
+	"home_amenities": "res://scenes/ui/home_amenities.tscn",
 	"garderobe": "res://scenes/ui/garderobe.tscn",
 	"samlerbog": "res://scenes/ui/samlerbog.tscn",
 	"people": "res://scenes/ui/people.tscn",
@@ -179,7 +180,7 @@ static func _default_setup(name: String, node: Node, host: Node) -> void:
 	match base_name(name):
 		"confirm":
 			if node is UiConfirm:
-				(node as UiConfirm).setup("CONFIRM", "UI_CONFIRM_OVERWRITE", "NAV_OK", "NAV_CANCEL", &"cancel", [3])
+				(node as UiConfirm).setup("UI_CONFIRM_TITLE", "UI_CONFIRM_OVERWRITE", "NAV_OK", "NAV_CANCEL", &"cancel", [3])
 				(node as UiConfirm).begin()
 				await tree.process_frame
 		"toasts":

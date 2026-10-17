@@ -45,7 +45,7 @@ const BLURBS := {
 }
 
 ## the home areas of the zone graph (DUNGEON_V2_ADDENDUM 2.1): `home` (the builder) is an area but nobody's home; moerkeskoven_f1..f12 are generated and never a home
-const GRAPH_AREAS := ["farm", "home", "traetoppen", "hyggebyen", "moerkeskoven"]
+const GRAPH_AREAS := ["farm", "home", "traetoppen", "hyggebyen", "moerkeskoven", "secret_garden"]
 const NPC_HOME_AREAS := ["farm", "hyggebyen", "moerkeskoven", "traetoppen"]
 
 ## the quest binding vocabulary of PLAN 3.12 (`on =` of an objective)
@@ -75,7 +75,7 @@ const AGE_FAMILY := {
 ## P14 d4aac01 moved DIALOGUE_CONTINUE_HINT to npc_ui.csv (glyph-aware); adopt that owner edit.
 const FOREIGN_CSV_PINS := {
 	"res://localization/ui.csv": "da7f54aa2f31ca5da31de96a71f090a7633ac924a07e32034318829762c274c3",
-	"res://localization/finds.csv": "5e836481a09a982b8be859f9efb9c556011a14bbfffbea5ac96008f440e725b7",
+	"res://localization/finds.csv": "6835f34203801e28d1c4a116f3fe15debae6b72d8d893c116b00a563c83e6118",
 	"res://localization/furniture.csv": "ae3acc062997339785012e4de6cc1c80d763e0f9e206ddd15a7ba79f9930c75f",
 }
 
@@ -402,7 +402,7 @@ func _postman_pip() -> void:
 	var npcs: Dictionary = _lr.get_npcs()
 	var pip: Dictionary = npcs.get("postman_pip", {})
 	var offers: Array = pip.get("quests_offered", [])
-	var ok: bool = offers == ["pips_runde", "forste_dage"] and not (npcs.get("penguin_postman", {}) as Dictionary).has("quests_offered") and str(pip.get("role", "")) == "postman"
+	var ok: bool = offers == ["pips_runde", "forste_dage", "forest_mother_s03", "forest_mother_s04", "forest_mother_s05", "forest_mother_s06", "forest_mother_s07", "forest_mother_s08"] and not (npcs.get("penguin_postman", {}) as Dictionary).has("quests_offered") and str(pip.get("role", "")) == "postman"
 	t.check("postman_pip_offers_forste_dage", ok, "postman_pip offers %s; penguin_postman (ambient) offers none" % str(offers))
 	if _lr._quest_modules.has("forste_dage"):
 		var sid: String = _lr._quest_modules["forste_dage"]

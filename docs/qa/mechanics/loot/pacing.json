@@ -1,0 +1,140 @@
+{
+  "source_binding": "8439489567856dec520175b467611310a95265db45a3c5905215eff52d42a309",
+  "model": "Named plan assumptions; independent Python RNG; no combat, navigation or player telemetry. Eight-minute dungeon runs and ten-minute home days are modelling units. All dng_ surplus sells at its actual full sell price. Free furniture is banked once and only replaces planned furniture purchases; both hooks are off by default in the plan model.",
+  "seed": "pacing 100..100+n-1, full dive 77, band sample 1",
+  "pace": "plan",
+  "keep": {
+    "casual": {
+      "median": 689.5,
+      "mean": 683.96875,
+      "min": 603,
+      "max": 729,
+      "samples": 64,
+      "mean_replaced": 0.0
+    },
+    "typical": {
+      "median": 251.0,
+      "mean": 251.3125,
+      "min": 234,
+      "max": 268,
+      "samples": 64,
+      "mean_replaced": 0.0
+    },
+    "dedicated": {
+      "median": 139.0,
+      "mean": 138.984375,
+      "min": 130,
+      "max": 151,
+      "samples": 64,
+      "mean_replaced": 0.0
+    }
+  },
+  "free_furniture": {
+    "casual": {
+      "median": 576.5,
+      "mean": 575.65625,
+      "min": 506,
+      "max": 622,
+      "samples": 64,
+      "mean_replaced": 19709.667364959794
+    },
+    "typical": {
+      "median": 215.5,
+      "mean": 216.921875,
+      "min": 194,
+      "max": 242,
+      "samples": 64,
+      "mean_replaced": 16682.21438739742
+    },
+    "dedicated": {
+      "median": 139.0,
+      "mean": 138.984375,
+      "min": 130,
+      "max": 151,
+      "samples": 64,
+      "mean_replaced": 17179.26886599647
+    }
+  },
+  "uncapped": {
+    "mean": 2397.00545,
+    "p10": 1392.6,
+    "p90": 3524.5999999999995,
+    "rare": 8.973,
+    "cap_before_floor10": 0.0,
+    "dust_share": 0.06802344148302326
+  },
+  "capped": {
+    "mean": 2168.87085,
+    "p10": 1392.5000000000005,
+    "p90": 2916.6499999999996,
+    "rare": 7.637,
+    "cap_before_floor10": 0.042,
+    "dust_share": 0.07205504935097583
+  },
+  "checks": [
+    {
+      "id": "P1_typical_castle_keep",
+      "ok": true,
+      "actual": 251.0,
+      "min": 220,
+      "max": 280
+    },
+    {
+      "id": "P1_typical_castle_furniture_substitution",
+      "ok": true,
+      "actual": 215.5,
+      "min": 180,
+      "max": 230
+    },
+    {
+      "id": "P1_casual_castle_keep",
+      "ok": true,
+      "actual": 689.5,
+      "min": 650,
+      "max": 780
+    },
+    {
+      "id": "P1_dedicated_castle_keep",
+      "ok": true,
+      "actual": 139.0,
+      "min": 115,
+      "max": 160
+    },
+    {
+      "id": "P1_uncapped_full_dive",
+      "ok": true,
+      "actual": 2397.00545,
+      "min": 1927.2,
+      "max": 2890.7999999999997
+    },
+    {
+      "id": "P1_capped_retains_value",
+      "ok": true,
+      "actual": 0.9048251642481663,
+      "min": 0.85,
+      "max": 1
+    },
+    {
+      "id": "P1_cap_before_floor10",
+      "ok": true,
+      "actual": 0.042,
+      "min": 0,
+      "max": 0.1
+    },
+    {
+      "id": "P1_glimmer_dust_sold_share",
+      "ok": true,
+      "actual": 0.07205504935097583,
+      "min": 0,
+      "max": 0.12
+    },
+    {
+      "id": "P1_band4_rare_per_floor",
+      "ok": true,
+      "actual": 1.342,
+      "min": 1,
+      "max": 100
+    }
+  ],
+  "passed": true
+}

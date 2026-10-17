@@ -1,0 +1,95 @@
+{
+  "allowed": [
+    {
+      "kind": "warning",
+      "rule": "unsupported locale",
+      "section": "loc",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): LocalizationManager.set_locale: unsupported locale 'xx' (supported: da, en) (at set_locale res://scripts/autoload/localization_manager.gd:126)"
+    },
+    {
+      "kind": "error",
+      "rule": "ConfigFile parse error",
+      "section": "loc",
+      "text": "core/io/config_file.cpp:293 in _parse(): ConfigFile parse error at user://settings.cfg:0: Unexpected EOF while parsing simple tag. (at _config res://scripts/ui/settings_ui.gd:48)"
+    },
+    {
+      "kind": "error",
+      "rule": "ConfigFile parse error",
+      "section": "loc",
+      "text": "core/io/config_file.cpp:293 in _parse(): ConfigFile parse error at user://settings.cfg:0: Unexpected EOF while parsing simple tag. (at _persist_locale res://scripts/autoload/localization_manager.gd:105)"
+    },
+    {
+      "kind": "warning",
+      "rule": "is unreadable",
+      "section": "loc",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): LocalizationManager: user://settings.cfg is unreadable (error 43); the language choice was not saved so that no other setting is destroyed (at _persist_locale res://scripts/autoload/localization_manager.gd:107)"
+    },
+    {
+      "kind": "warning",
+      "rule": "takes 1 argument(s)",
+      "section": "loc",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): LocalizationManager.t: 'NOTIF_LANGUAGE_CHANGED_MSG' (Sproget er nu %s.) takes 1 argument(s), got 2 (at t res://scripts/autoload/localization_manager.gd:171)"
+    }
+  ],
+  "character": "animal",
+  "checks": 335,
+  "elapsed_s": 32.49,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 932,
+      "skipped": 0
+    },
+    "dungeon_hud": {
+      "character": "animal",
+      "checks": 28,
+      "failed": 0,
+      "ms": 365,
+      "skipped": 0
+    },
+    "forest": {
+      "character": "animal",
+      "checks": 84,
+      "failed": 0,
+      "ms": 4587,
+      "skipped": 0
+    },
+    "forest_look": {
+      "character": "animal",
+      "checks": 31,
+      "failed": 0,
+      "ms": 325,
+      "skipped": 0
+    },
+    "held_equipment": {
+      "character": "animal",
+      "checks": 44,
+      "failed": 0,
+      "ms": 1357,
+      "skipped": 0
+    },
+    "loc": {
+      "character": "animal",
+      "checks": 115,
+      "failed": 0,
+      "ms": 20752,
+      "skipped": 0
+    },
+    "wardrobe": {
+      "character": "animal",
+      "checks": 25,
+      "failed": 0,
+      "ms": 225,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

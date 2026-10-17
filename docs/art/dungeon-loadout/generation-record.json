@@ -1,0 +1,118 @@
+{
+  "tool": "built-in imagegen",
+  "sources": [
+    {
+      "id": "wpn_dagger_thorn",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_dagger_thorn.png",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-cfc67d01-ebb7-47ef-ae9f-9dbb7ea31c75.png"
+    },
+    {
+      "id": "wpn_dagger_flint",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-740d097b-85bc-4735-ae1a-75c8e2fe8014.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_dagger_flint.png"
+    },
+    {
+      "id": "wpn_dagger_moonshard",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-dd292e88-9f4b-4c40-84b8-5255f6ce47ec.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_dagger_moonshard.png"
+    },
+    {
+      "id": "wpn_dagger_bee",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-2f2f3cf0-e03a-48a1-b1b7-2b8233a48332.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_dagger_bee.png"
+    },
+    {
+      "id": "wpn_sword_forest_steel",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-2b6a51bb-6201-4f12-835b-284581d4138b.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_sword_forest_steel.png"
+    },
+    {
+      "id": "wpn_sword_candle",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-bc3ddfe6-ba2a-4e50-9d8d-f99233f9ee32.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_sword_candle.png"
+    },
+    {
+      "id": "wpn_sword_moon",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-880e2e30-daee-4d2d-ab29-736a01dcceda.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_sword_moon.png"
+    },
+    {
+      "id": "wpn_club_spruce",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-b31a1add-a8bf-4bcf-9d75-a73623d0a79d.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_club_spruce.png"
+    },
+    {
+      "id": "wpn_club_oak",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-e0b9d081-4c23-4e57-b44f-2014f7ed6154.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_club_oak.png"
+    },
+    {
+      "id": "wpn_club_mushroom",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-095d9008-d5ee-408d-8fd4-11f40fffcc0f.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_club_mushroom.png"
+    },
+    {
+      "id": "wpn_club_thornberry",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-9dd00665-5979-4bc9-a1cb-cac9ec6499f0.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_club_thornberry.png"
+    },
+    {
+      "id": "wpn_club_trunk",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-9e3e7590-1c00-4dca-9578-eb255a03050d.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_club_trunk.png"
+    },
+    {
+      "id": "wpn_spear_twig",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-65583760-13e0-41e8-b858-6b52affd688e.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_spear_twig.png"
+    },
+    {
+      "id": "wpn_spear_iron",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-d3792bc7-ae32-4068-9a4d-432413336bd8.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_spear_iron.png"
+    },
+    {
+      "id": "wpn_spear_thistle",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-b44895f8-07d7-4f3f-b884-f60c71908972.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_spear_thistle.png"
+    },
+    {
+      "id": "wpn_spear_owl",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-6a3d2673-ea59-4a75-b91c-02ca674accfa.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_spear_owl.png"
+    },
+    {
+      "id": "wpn_spear_root",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-9aaf0ad8-bc2b-44af-bd5a-7912b74bbd0c.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_spear_root.png"
+    },
+    {
+      "id": "wpn_staff_branch",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-494c86f4-43f3-4898-abc0-09a8cac45d9b.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_staff_branch.png"
+    },
+    {
+      "id": "wpn_staff_hazel",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-560a3b7d-a291-4520-b3c8-6609927fa2c3.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_staff_hazel.png"
+    },
+    {
+      "id": "wpn_staff_light",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-aa781d68-68b0-4322-b4da-2e97e36259f9.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_staff_light.png"
+    },
+    {
+      "id": "wpn_staff_ember",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-f2005d4b-d0f7-4ade-96bf-9996526d683d.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_staff_ember.png"
+    },
+    {
+      "id": "wpn_staff_star",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-bd4ca095-1154-48cf-834d-06c40a17bf1d.png",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_staff_star.png"
+    }
+  ],
+  "selected_bee_source": "wpn_dagger_bee.png",
+  "bee_repair_selected": false,
+  "bee_repair_note": "Inspection of the alpha channel established the original already has zero-alpha gutters. The extraction attempt is retained as an unselected source; the original, more matte painting is packed."
+}

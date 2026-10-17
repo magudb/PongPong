@@ -1,0 +1,7 @@
+@id int_pippins_hus
+@title BLD_PIPPINS_HUS
+@projection iso
+@ambient home
+@zone city
+@builder res://scripts/towns/interior_room.gd
+@room int_pippins_hus

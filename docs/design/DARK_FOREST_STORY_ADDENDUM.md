@@ -1,6 +1,6 @@
 # Dark Forest story and the search for our mother
 
-Status: the user confirmed the premise and reference on 2026-10-16. Mørkeskoven's central story is a journey to discover what happened to the playable character's mother, inspired by *The Hazel Wood* by Melissa Albert. The chapter treatment below is a proposed original story. The mother's final fate remains open.
+Status: the user confirmed the premise and reference on 2026-10-16, then chose a bittersweet discovery: learn her fate and bring her legacy home. Mørkeskoven's central story is a journey to discover what happened to the playable character's mother, inspired by *The Hazel Wood* by Melissa Albert. The original chapter treatment below follows that confirmed ending.
 
 This addendum governs narrative motivation, story progression and family continuity. [DUNGEON_V2_ADDENDUM.md](DUNGEON_V2_ADDENDUM.md) still governs the twelve floors, runestones, bosses, resources and Skovlift. [The art style guide](../art/style-guide.txt) governs all paintings. The [Secret Garden implementation](SECRET_GARDEN_ADDENDUM.md) supplies the first mother letter, post-route account, lift record and forest-edge trace as a playable restoration quest. The deeper forest chapters below remain proposed content.
 
@@ -54,7 +54,7 @@ Depths are narrative targets within the existing four bands. They do not change 
 | S05 The names in the roots | Floors 7–8 | Follow traces of people whose names have been replaced by roles. Help one recover their own account. Resolve the second checkpoint. | The forest's unfinished tales are holding people in place. Mother's work was about getting them home. |
 | S06 What she promised | Floors 9–10 | Match her recorded words with a damaged route stone and a witnessed account. | She chose to keep a return path open. The forest attached a condition to that choice; her last note stops before the outcome. |
 | S07 Beyond the last light | Floors 11–12 | Assemble the accounts and reach the source of the broken routes. Resolve the final depth checkpoint. | We can reconstruct her last journey and confront the force that bound her story to the wood. |
-| S08 What happened to our mother | Final story clearing and return home | Follow the last confirmed trace and resolve the mother's story. | The ending must answer what happened, why she could not return, and what happens now. Her fate is a pending creative decision. |
+| S08 What happened to our mother | Final story clearing and return home | Read her final account, release the forest's borrowed names and bring her seed tin home. | Mother died after opening the way for people held inside unfinished tales. The forest kept her last account as if it were an unfinished role; it is an echo, not a living prisoner. Restore her own name and carry her work into the garden. |
 
 The proposed force at the heart of the forest is **Rodskriveren / the Root Scribe**: something that keeps trying to complete people's lives as fixed tales. Its presence appears first in repaired signs that change wording, then in roots that frame a room like a page. The name, form and exact encounter remain proposals. Existing bosses guard depth progression; they do not each become a new version of this character.
 
@@ -108,9 +108,9 @@ The player may find a later trace early. Record it, keep its text available, and
 
 ## The final revelation
 
-The user's confirmed goal is to discover what happened to our mother. Her fate has not been chosen. Keep the setup compatible with a hopeful reunion or a bittersweet discovery; echoes and old notes must not assert that she is currently alive or dead.
+The user chose a bittersweet discovery. Mother entered the forest to return names to people trapped in its unfinished tales. She opened a path that let them leave, but the effort cost her life. Her last account states this plainly; her echo must never be presented as a living mother waiting for rescue. This fate applies to every hero species, including ghosts: the Natlys relatives cannot retrieve her through an ordinary ghost visit.
 
-A hopeful treatment would let us free her from the role the forest has given her and choose a way home together. A bittersweet treatment would reveal her fate clearly and give the player a meaningful return scene with what she left behind. These are alternatives for the authoring decision, not a player menu that decides retrospectively whether their mother lived.
+Her final message remembers the player and asks them to keep a place where people can arrive under their own names. The Root Scribe's bargain would preserve her echo by assigning the player her unfinished role. The player refuses that bargain, records the truth and takes her seed tin home. A return scene in the restored garden plants those seeds and makes the legacy visible during free play. There is no retrospective alive/dead choice, timer, friendship gate or sequel door.
 
 Whichever ending is chosen, answer the mystery in this game. Do not replace the answer with another unsigned note or a sequel tease. Let the mother have a voice and intentions in the revelation. Return to the farm and the people who helped; leave free play, friendship and ordinary forest expeditions available afterwards.
 

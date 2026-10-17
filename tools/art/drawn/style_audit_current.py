@@ -70,6 +70,38 @@ def roles(catalog: dict) -> tuple[dict, dict]:
         path = (held / "tools.webp").resolve()
         selected[path] = "fitted-held-equipment"
         sources[path] = read(held / "manifest.json")["source"]
+    dungeon_weapons = held / "dungeon/manifest.json"
+    if dungeon_weapons.is_file():
+        for item, spec in read(dungeon_weapons)["items"].items():
+            path = (ROOT / spec["atlas"].removeprefix("res://")).resolve()
+            selected[path] = "painted-dungeon-held-equipment"
+            sources[path] = spec["source"]
+            for suffix in [".webp", "_night.webp"]:
+                icon = ROOT / "assets/icons/items" / (item + suffix)
+                if icon.is_file():
+                    selected[icon.resolve()] = "painted-dungeon-weapon-icon"
+                    sources[icon.resolve()] = spec["source"]
+    dungeon_icons = ROOT / "tools/art/features/dungeon/manifest.json"
+    if dungeon_icons.is_file():
+        for item, spec in read(dungeon_icons)["items"].items():
+            for part in ["file", "night"]:
+                if part not in spec:
+                    continue
+                path = (ROOT / "assets/icons/items" / spec[part]).resolve()
+                selected[path] = "painted-dungeon-weapon-icon" if item.startswith("wpn_") else "painted-dungeon-loot-icon"
+                sources[path] = spec["source"]
+    story = ROOT / "assets/iso_props/forest_mother"
+    if (story / "props.json").is_file():
+        for item, spec in read(story / "props.json").items():
+            path = (story / spec["file"]).resolve()
+            selected[path] = "painted-forest-story-prop"
+            sources[path] = spec["source"]
+    supplies = ROOT / "tools/art/features/dungeon/supplies.json"
+    if supplies.is_file():
+        for spec in read(supplies)["items"].values():
+            path = (ROOT / "assets/icons/items" / spec["file"]).resolve()
+            selected[path] = "painted-dungeon-supply-icon"
+            sources[path] = spec["source"]
     wardrobe = ROOT / "assets/wardrobe"
     if (wardrobe / "manifest.json").is_file():
         manifest = read(wardrobe / "manifest.json")

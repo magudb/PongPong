@@ -248,6 +248,8 @@ static func build(area: IsoArea, header: Dictionary) -> void:
 		posts[str((p as Dictionary)["id"])] = cell_local(float((p["cell"] as Array)[0]), float((p["cell"] as Array)[1]))
 	area.set_meta("posts", posts)
 	area.set_meta("room_spec", spec)
+	var floor_surface := "stone" if str(spec.get("floor","")).contains("stone") or str(spec.get("floor","")).contains("tile") else "wood"
+	area.set_meta("surface_fn",func(_position: Vector2) -> String:return floor_surface)
 	if bool(area.get_meta("town_population_enabled", true)):
 		Svc.static_call("res://scripts/towns/town_director.gd", &"attach_room", [area, spec])
 	st["build_us"] = Time.get_ticks_usec() - t0

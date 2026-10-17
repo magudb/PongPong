@@ -224,6 +224,9 @@ func delete_save(slot: int = 0) -> void:
 ## NOTIF_SAVED_* and becomes current_slot. Returns false (and toasts NOTIF_SAVE_FAILED_* for a manual save) when the
 ## file could not be written; the old file of the slot is then untouched.
 func save_game(slot: int = 0, is_auto: bool = false) -> bool:
+	if GameManager.is_modal_open(&"event"):
+		last_error = {"slot":slot,"code":"event","detail":"scene effects have not committed"}
+		return false
 	if is_auto:
 		slot = AUTO_SLOT
 	if not is_valid_slot(slot):

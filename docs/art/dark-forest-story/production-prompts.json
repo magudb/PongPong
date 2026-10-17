@@ -1,0 +1,43 @@
+{
+  "tool": "built-in imagegen",
+  "references": [
+    {
+      "path": "tools/art/drawn/sources/heroes.png",
+      "role": "approved character drawing and scale, style reference"
+    },
+    {
+      "path": "tools/art/drawn/sources/icons_resources.png",
+      "role": "approved material and pigment, style reference"
+    },
+    {
+      "path": "docs/qa/mechanics/dungeon/look/native/forest_look_generated_floor_2.png",
+      "role": "approved forest world palette and angle, style reference"
+    }
+  ],
+  "requests": [
+    {
+      "id": "mother_repaired_lantern",
+      "edge": 160,
+      "prompt": "Use case: production game asset, stylized-concept. Create ONE isolated hand-painted storybook world prop matching the supplied approved Trætoppen paintings: tactile matte gouache and watercolor pigment, softly irregular warm pencil contours, rounded functional construction, readable beside the chibi fox. Reference 1 (heroes.png) establishes the approved drawing language and scale; reference 2 (icons_resources.png) establishes matte physical materials and pigment; reference 3 (generated_floor_2 screenshot) establishes the forest palette and slightly top-down world viewing angle. These are STYLE references, not edit targets. Keep all reference art unchanged. Camera: shallow three-quarter view slightly from above, upright verticals, consistent approximately 36 degree elevation. Single centered cutout, real transparent alpha background, generous 15 percent gutters. No floor rectangle, cast shadow, baked aura, broad glow, labels, readable writing, text or watermark. Preserve the warm cream, honey wood, moss/sage, muted iron/brass palette with tiny quiet teal/gold accents. Avoid glossy plastic, photorealism, vector icons, neon, faceted low-poly surfaces and horror gore. Paint a small well-used forest lantern with dull brass, worn honey timber handle, clear glass and a narrow cream cloth grip repair with exactly three short diagonal stitches, large enough to remain recognizable at 100-150 pixels in game. The three stitches are its personal repair mark. Show a tiny warm wick inside the glass; light spill will be a separate game layer. One physical object, no extra versions or detached parts.",
+      "source": "tools/art/drawn/sources/forest_mother/mother_repaired_lantern.png"
+    },
+    {
+      "id": "mother_route_map",
+      "edge": 150,
+      "prompt": "Use case: production game asset, stylized-concept. Create ONE isolated hand-painted storybook world prop matching the supplied approved Trætoppen paintings: tactile matte gouache and watercolor pigment, softly irregular warm pencil contours, rounded functional construction, readable beside the chibi fox. Reference 1 (heroes.png) establishes the approved drawing language and scale; reference 2 (icons_resources.png) establishes matte physical materials and pigment; reference 3 (generated_floor_2 screenshot) establishes the forest palette and slightly top-down world viewing angle. These are STYLE references, not edit targets. Keep all reference art unchanged. Camera: shallow three-quarter view slightly from above, upright verticals, consistent approximately 36 degree elevation. Single centered cutout, real transparent alpha background, generous 15 percent gutters. No floor rectangle, cast shadow, baked aura, broad glow, labels, readable writing, text or watermark. Preserve the warm cream, honey wood, moss/sage, muted iron/brass palette with tiny quiet teal/gold accents. Avoid glossy plastic, photorealism, vector icons, neon, faceted low-poly surfaces and horror gore. Paint a single partly unfolded cream paper survey map lying at a slight angle, two soft folds and a small blank open-circle seal in one corner. A narrow cream-thread repair has exactly three short diagonal stitches near the folded corner. Suggest a forest route with a few quiet moss-green and charcoal curved lines and one small empty circle, without letters, numbers or readable writing. A tiny dull-brass map weight holds one corner. Keep the paper shape and folds clear at about 110 pixels in game. One object arrangement only.",
+      "source": "tools/art/drawn/sources/forest_mother/mother_route_map.png"
+    },
+    {
+      "id": "mother_seed_tin",
+      "edge": 145,
+      "prompt": "Use case: production game asset, stylized-concept. Create ONE isolated hand-painted storybook world prop matching the supplied approved Trætoppen paintings: tactile matte gouache and watercolor pigment, softly irregular warm pencil contours, rounded functional construction, readable beside the chibi fox. Reference 1 (heroes.png) establishes the approved drawing language and scale; reference 2 (icons_resources.png) establishes matte physical materials and pigment; reference 3 (generated_floor_2 screenshot) establishes the forest palette and slightly top-down world viewing angle. These are STYLE references, not edit targets. Keep all reference art unchanged. Camera: shallow three-quarter view slightly from above, upright verticals, consistent approximately 36 degree elevation. Single centered cutout, real transparent alpha background, generous 15 percent gutters. No floor rectangle, cast shadow, baked aura, broad glow, labels, readable writing, text or watermark. Preserve the warm cream, honey wood, moss/sage, muted iron/brass palette with tiny quiet teal/gold accents. Avoid glossy plastic, photorealism, vector icons, neon, faceted low-poly surfaces and horror gore. Paint a small oval keepsake seed tin in muted sage-green enamel with worn dull-brass edges and its lid leaning open against the back. Inside are three folded cream paper seed packets with tiny abstract moonflower sprig symbols, no letters. A narrow cloth pull-tab on the tin has exactly three short diagonal cream stitches. The tin feels cared for and familiar, not treasure or magic loot. Clear gentle silhouette at about 100 pixels in game. One object arrangement only.",
+      "source": "tools/art/drawn/sources/forest_mother/mother_seed_tin.png"
+    },
+    {
+      "id": "root_scribe_waymarker",
+      "edge": 300,
+      "prompt": "Use case: production game asset, stylized-concept. Create ONE isolated hand-painted storybook world prop matching the supplied approved Trætoppen paintings: tactile matte gouache and watercolor pigment, softly irregular warm pencil contours, rounded functional construction, readable beside the chibi fox. Reference 1 (heroes.png) establishes the approved drawing language and scale; reference 2 (icons_resources.png) establishes matte physical materials and pigment; reference 3 (generated_floor_2 screenshot) establishes the forest palette and slightly top-down world viewing angle. These are STYLE references, not edit targets. Keep all reference art unchanged. Camera: shallow three-quarter view slightly from above, upright verticals, consistent approximately 36 degree elevation. Single centered cutout, real transparent alpha background, generous 15 percent gutters. No floor rectangle, cast shadow, baked aura, broad glow, labels, readable writing, text or watermark. Preserve the warm cream, honey wood, moss/sage, muted iron/brass palette with tiny quiet teal/gold accents. Avoid glossy plastic, photorealism, vector icons, neon, faceted low-poly surfaces and horror gore. Paint an old upright honey-brown wooden waymarker, a short post and one broad BLANK sign board. Slender moss-dark roots curl around the board's outer edges like an unfinished page frame, leaving a large empty center. One pale fibrous bark strip is caught on a root like a blank paper ribbon. A small unoccupied notch in the frame suggests a missing name. Tiny dull-gold catchlights on wood, no emitted light. It suggests the Root Scribe's presence through the repeating frame, never a humanoid face or body. Keep the post, peg, roots, empty sign and ground-contact tip readable at about 250 pixels in game. One isolated prop.",
+      "source": "tools/art/drawn/sources/forest_mother/root_scribe_waymarker.png"
+    }
+  ]
+}

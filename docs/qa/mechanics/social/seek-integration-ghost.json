@@ -1,0 +1,78 @@
+{
+  "allowed": [],
+  "character": "ghost",
+  "checks": 747,
+  "elapsed_s": 50.68,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 11489,
+      "skipped": 0
+    },
+    "furniture": {
+      "character": "ghost",
+      "checks": 109,
+      "failed": 0,
+      "ms": 318,
+      "skipped": 0
+    },
+    "ghostfam_data": {
+      "character": "ghost",
+      "checks": 293,
+      "failed": 0,
+      "ms": 2579,
+      "skipped": 0
+    },
+    "ghostfam_events": {
+      "character": "ghost",
+      "checks": 121,
+      "failed": 0,
+      "ms": 21700,
+      "skipped": 0
+    },
+    "ghostfam_play": {
+      "character": "ghost",
+      "checks": 26,
+      "failed": 0,
+      "ms": 877,
+      "skipped": 0
+    },
+    "ghostfam_seek": {
+      "character": "ghost",
+      "checks": 67,
+      "failed": 0,
+      "ms": 4181,
+      "skipped": 0
+    },
+    "social_events": {
+      "character": "ghost",
+      "checks": 55,
+      "failed": 0,
+      "ms": 468,
+      "skipped": 0
+    },
+    "social_talk": {
+      "character": "ghost",
+      "checks": 42,
+      "failed": 0,
+      "ms": 147,
+      "skipped": 0
+    },
+    "ui_nav": {
+      "character": "ghost",
+      "checks": 26,
+      "failed": 0,
+      "ms": 4431,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

@@ -1,6 +1,14 @@
 {
  "_doc": "Key-level ownership of localization keys (PLAN R.4 for the base files, addendum 3.7 / RV-P8 for the feature files). Resolution (LocalizationManager.owner_of, tools/loc/csv_lint.py, F1 validator K8): an `exact` entry wins; else ITEM_<id>[_DESC|_HINT] of the item ids of the Lua files named in `item_files`; else the LONGEST matching `prefix`. A key that no file claims is unconstrained (it only has to be unique). A non-legacy file may define only keys it owns; da.csv (legacy base) and zz_final.csv (copy-pass overrides of NON-voiced keys) are exempt. `owner` is the package that edits the file. A new CSV gets its key families here by a change request to P03 (new_csv.py creates the file and its keep-import but never edits this table).",
  "files": {
+  "forest_mother.csv": {
+   "owner": "forest-mother-story",
+   "prefix": [
+    "FM_",
+    "QUEST_FOREST_MOTHER_"
+   ],
+   "exact": []
+  },
   "core.csv": {
    "owner": "V1",
    "prefix": [
@@ -31,7 +39,6 @@
     "QJ_",
     "SET_",
     "KEY_",
-    "FOREST_",
     "UI_WEEKDAY_",
     "UI_MONTH_",
     "UI_WEATHER_",
@@ -48,7 +55,9 @@
     "SHOP_TAB_TOOLS",
     "SHOP_TAB_GOODS",
     "SHOP_TOTAL",
-    "SHOP_GREETING_DEFAULT"
+    "SHOP_GREETING_DEFAULT",
+    "FOREST_OIL",
+    "FOREST_WHISPER_FERNS"
    ]
   },
   "world.csv": {
@@ -179,11 +188,12 @@
    "exact": []
   },
   "forest.csv": {
-   "owner": "P19",
+   "owner": "DR3",
    "prefix": [
-    "BOSS_",
     "ENEMY_",
-    "ABILITY_"
+    "BOSS_",
+    "ABILITY_",
+    "FOREST_"
    ],
    "exact": [
     "WHISPER_FERNS"
@@ -381,14 +391,19 @@
    ]
   },
   "dungeon_items.csv": {
-   "owner": "DL2",
+   "owner": "D-items",
    "prefix": [
     "WEFFECT_",
     "WSTAT_",
     "GEMFX_",
     "RECIPE_DNG_"
    ],
-   "exact": []
+   "exact": [],
+   "item_files": [
+    "lua/items/weapons.lua",
+    "lua/items/gems.lua",
+    "lua/items/dungeon_materials.lua"
+   ]
   },
   "loot_dungeon.csv": {
    "owner": "F4",
@@ -582,9 +597,23 @@
   "partner.csv": {
    "owner": "S-marriage",
    "prefix": [
-    "PARTNER_"
+    "PARTNER_",
+    "FEST_BRYLLUPSFESTEN_"
    ],
-   "exact": []
+   "exact": [
+    "ITEM_HJERTEBUKET",
+    "ITEM_HJERTEBUKET_DESC",
+    "ITEM_LOEFTEAGERN",
+    "ITEM_LOEFTEAGERN_DESC",
+    "RECIPE_HJERTEBUKET",
+    "RECIPE_LOEFTEAGERN",
+    "REL_STAGE_HJERTVEN",
+    "REL_STAGE_FORLOVET",
+    "REL_STAGE_GIFT"
+   ],
+   "item_files": [
+    "lua/items/relationships.lua"
+   ]
   },
   "nav.csv": {
    "owner": "P28",
@@ -633,7 +662,80 @@
     "SG_",
     "QUEST_SECRET_GARDEN_",
     "OBJ_SECRET_GARDEN_"
+   ],
+   "exact": []
+  },
+  "ghostfamily_events.csv": {
+   "owner": "GF-events",
+   "prefix": [
+    "GF_EVENT_"
+   ],
+   "exact": []
+  },
+  "ghostfamily_fest.csv": {
+   "owner": "GF-events",
+   "prefix": [],
+   "exact": [
+    "FEST_BLOMSTERFESTEN_GHOSTFAM_DYNE_1",
+    "FEST_BLOMSTERFESTEN_GHOSTFAM_GNIST_1",
+    "FEST_BLOMSTERFESTEN_GHOSTFAM_SILKE_1",
+    "FEST_BLOMSTERFESTEN_GHOSTFAM_BLUND_1",
+    "FEST_HONNINGDAGEN_GHOSTFAM_DYNE_1",
+    "FEST_HONNINGDAGEN_GHOSTFAM_GNIST_1",
+    "FEST_HONNINGDAGEN_GHOSTFAM_SILKE_1",
+    "FEST_HONNINGDAGEN_GHOSTFAM_BLUND_1",
+    "FEST_MIDSOMMERLANTERNER_GHOSTFAM_DYNE_1",
+    "FEST_MIDSOMMERLANTERNER_GHOSTFAM_GNIST_1",
+    "FEST_MIDSOMMERLANTERNER_GHOSTFAM_SILKE_1",
+    "FEST_MIDSOMMERLANTERNER_GHOSTFAM_BLUND_1",
+    "FEST_BADEDAGEN_GHOSTFAM_DYNE_1",
+    "FEST_BADEDAGEN_GHOSTFAM_GNIST_1",
+    "FEST_BADEDAGEN_GHOSTFAM_SILKE_1",
+    "FEST_BADEDAGEN_GHOSTFAM_BLUND_1",
+    "FEST_HOESTFESTEN_GHOSTFAM_DYNE_1",
+    "FEST_HOESTFESTEN_GHOSTFAM_GNIST_1",
+    "FEST_HOESTFESTEN_GHOSTFAM_SILKE_1",
+    "FEST_HOESTFESTEN_GHOSTFAM_BLUND_1",
+    "FEST_MAANEMARKEDET_GHOSTFAM_DYNE_1",
+    "FEST_MAANEMARKEDET_GHOSTFAM_GNIST_1",
+    "FEST_MAANEMARKEDET_GHOSTFAM_SILKE_1",
+    "FEST_MAANEMARKEDET_GHOSTFAM_BLUND_1",
+    "FEST_VINTERLYSENE_GHOSTFAM_DYNE_1",
+    "FEST_VINTERLYSENE_GHOSTFAM_GNIST_1",
+    "FEST_VINTERLYSENE_GHOSTFAM_SILKE_1",
+    "FEST_VINTERLYSENE_GHOSTFAM_BLUND_1",
+    "FEST_BAGEDAGEN_GHOSTFAM_DYNE_1",
+    "FEST_BAGEDAGEN_GHOSTFAM_GNIST_1",
+    "FEST_BAGEDAGEN_GHOSTFAM_SILKE_1",
+    "FEST_BAGEDAGEN_GHOSTFAM_BLUND_1",
+    "FEST_AARSSKIFTET_GHOSTFAM_DYNE_1",
+    "FEST_AARSSKIFTET_GHOSTFAM_GNIST_1",
+    "FEST_AARSSKIFTET_GHOSTFAM_SILKE_1",
+    "FEST_AARSSKIFTET_GHOSTFAM_BLUND_1"
    ]
+  },
+  "ghostfamily_seek.csv": {
+   "owner": "GF-seek",
+   "prefix": [
+    "SEEK_GHOSTFAM_"
+   ],
+   "exact": []
+  },
+  "ghostfamily_quests.csv": {
+   "owner": "GF-quests",
+   "prefix": [
+    "QUEST_GHOSTFAM_",
+    "OBJ_GHOSTFAM_",
+    "GF_QUEST_"
+   ],
+   "exact": []
+  },
+  "home_amenities.csv": {
+   "owner": "Home mechanics completion",
+   "prefix": [
+    "HOME_AMENITIES_"
+   ],
+   "exact": []
   }
  },
  "notes": [

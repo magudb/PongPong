@@ -21,8 +21,8 @@ const P13_QUESTS := ["animal_products", "birthday_cake", "cookie_delivery", "cry
 	"rare_mushroom_hunt", "supply_run", "sword_upgrade"]
 ## the eight quests of acceptance row 'feature_quests_complete_with_rewards' (RV-P4 / F1)
 const FEATURE_EIGHT := ["lost_cat", "fix_roof", "birthday_cake", "math_wizard_quiz", "bogtraeet", "moonstone_crown", "snurresvampen", "slotsdroemmen"]
-## manual objectives whose completer is built by a package that has not landed: "quest.objective" -> the package (a SKIP naming it, never a failure)
-const PENDING_COMPLETERS := {"rare_mushroom_hunt.find_glowing": "D1-dungeon-gen"}
+## Every shipped manual objective now has a runtime completer.
+const PENDING_COMPLETERS := {}
 ## the game_event names the plan lets a quest bind (3.1 of the feature addendum, 8.4 of the dungeon addendum, 8.2 of the towns addendum)
 const KNOWN_EVENTS := ["furniture_placed", "hygge_level", "festival_held", "home_upgraded", "garment_equipped", "open_home_builder", "open_home_chest", "plot_tilled", "post_read",
 	"crop_ready", "field_expanded", "bin_shipped", "dungeon_floor_entered", "dungeon_runestone_activated", "dungeon_boss_defeated", "dungeon_run_ended", "floor_map_used",
@@ -276,7 +276,8 @@ func _roster_and_meta() -> void:
 	var unique: Array[String] = []
 	for q in P13_QUESTS:
 		# the quest-level title_key / description_key are the schema DEFAULTS (PLAN 3.12: QUEST_<ID>_TITLE / _DESC, the readers derive them): a top-level
-		# `title_key = ".."` in a quest file would only land in the parser's table_assigns and be read by nobody, so no file carries one
+		# Explicit scalar captions are also exposed by LuaRuntime; these older
+		# twenty quests deliberately keep the derived-key contract.
 		_need(unique, lm.text_in("QUEST_%s_TITLE" % q.to_upper(), "da") != "" and lm.text_in("QUEST_%s_DESC" % q.to_upper(), "da") != "", "%s: QUEST_<ID>_TITLE / _DESC has no text" % q)
 		_need(unique, QuestText.title(StringName(q)) == lm.text_in("QUEST_%s_TITLE" % q.to_upper(), "da") and qm.get_title(StringName(q)) == lm.text_in("QUEST_%s_TITLE" % q.to_upper(), "da"),
 			"%s: the quest book / QuestManager.get_title do not derive QUEST_<ID>_TITLE" % q)
@@ -350,7 +351,7 @@ func _text_keys() -> void:
 	raw.compile("^[A-Z0-9_]+$")
 	for q in _all_quest_ids():
 		var up := q.to_upper()
-		var keys: Array[String] = ["QUEST_%s_TITLE" % up]
+		var keys: Array[String] = [str(_def(q).get("title_key","QUEST_%s_TITLE" % up))]
 		var own: bool = q in P13_QUESTS or q in FEATURE_EIGHT or q == "pips_runde" or q == "secret_garden"
 		if own:
 			keys.append("QUEST_%s_DESC" % up)
@@ -358,8 +359,11 @@ func _text_keys() -> void:
 				keys.append("QUEST_%s_OFFER" % up)
 		else:
 			# another package's quest: the book falls back from QUEST_<ID>_DESC to QUEST_<ID>_OFFER (TTQuestText.description), so one of the two is enough
-			_need(problems, lm.text_in("QUEST_%s_DESC" % up, "da") != "" or lm.text_in("QUEST_%s_OFFER" % up, "da") != "", "%s: neither QUEST_%s_DESC nor _OFFER has a da text" % [q, up])
-			_need(problems, lm.text_in("QUEST_%s_DESC" % up, "en") != "" or lm.text_in("QUEST_%s_OFFER" % up, "en") != "", "%s: neither QUEST_%s_DESC nor _OFFER has an en text" % [q, up])
+			var description := str(_def(q).get("description_key",""))
+			if description != "": keys.append(description)
+			else:
+				_need(problems, lm.text_in("QUEST_%s_DESC" % up, "da") != "" or lm.text_in("QUEST_%s_OFFER" % up, "da") != "", "%s: neither QUEST_%s_DESC nor _OFFER has a da text" % [q, up])
+				_need(problems, lm.text_in("QUEST_%s_DESC" % up, "en") != "" or lm.text_in("QUEST_%s_OFFER" % up, "en") != "", "%s: neither QUEST_%s_DESC nor _OFFER has an en text" % [q, up])
 		for o in _objectives(q):
 			var od := LuaData.dict(o)
 			var ok := str(od.get("description_key", ""))
@@ -1223,6 +1227,8 @@ func _drive(qid: String, events_fed: Dictionary) -> Dictionary:
 	if not accepted:
 		qm.call("_activate", qn, def)
 		forced = true
+	# A procedural errand chooses its named friendship recipient at acceptance.
+	var dynamic_hearts := LuaData.int_map(LuaData.dict(qm.get_quest_progress(qn).get("meta",{})).get("friendship_rewards",{}))
 	var completed_signals: Array = []
 	var updates := [0]
 	var on_completed := func(id: StringName) -> void: completed_signals.append(id)
@@ -1350,6 +1356,8 @@ func _drive(qid: String, events_fed: Dictionary) -> Dictionary:
 		var have: int = eco.count_item(StringName(k)) - int(base.get(k, 0))
 		_need(problems, have == expected, "%s: %s changed by %d, want %d (reward %d + given %d - delivered %d)" % [qid, k, have, expected, int(reward_items.get(k, 0)), int(added.get(k, 0)), int(consumed.get(k, 0))])
 	var hearts := LuaData.int_map(rewards.get("friendship", {}))
+	for npc in dynamic_hearts:
+		hearts[npc] = mini(10,int(hearts.get(npc,0))+clampi(int(dynamic_hearts[npc]),0,10))
 	var calls: Array = []
 	for c in social.calls:
 		calls.append([str(c[0]), int(c[1]), c[2]])
@@ -1386,6 +1394,18 @@ func _open_gates(qid: String, def: Dictionary) -> void:
 
 func _satisfy_state(od: Dictionary, furniture: FakeFurniture, home: FakeHome, social: FakeSocial) -> void:
 	match str(od.get("state", "")):
+		"buildings_owned":
+			var husbandry := Svc.node("AnimalHusbandry")
+			if husbandry != null: husbandry.build_building(StringName(str(od.get("type","coop"))),true)
+			qm.refresh_objectives()
+		"animals_owned":
+			var husbandry := Svc.node("AnimalHusbandry")
+			if husbandry != null:
+				husbandry.build_building(&"coop",true)
+				eco.add_item(&"baby_chick",1,true)
+				husbandry.adopt_animal(&"baby_chick")
+			qm.refresh_objectives()
+
 		"placed_by_rarity":
 			furniture.placed = {_first(od.get("rarity", ""), "unique"): LuaData.int_of(od.get("target", 1), 1)}
 			bus.furniture_changed.emit(&"placed")
@@ -1434,6 +1454,9 @@ func _manual_completers() -> void:
 			if line.begins_with("@marker") and line.contains(" quest_spot "):
 				var kv := _marker_fields(line)
 				markers["%s.%s" % [kv.get("quest", ""), kv.get("objective", "")]] = true
+	var generated := _generated_floor(7,4242)
+	for marker in generated.markers.values():
+		if str(marker.get("marker",""))=="quest_spot":markers["%s.%s"%[marker.get("quest",""),marker.get("objective","")]] = true
 	var dialogue := {}
 	var rx_q := RegEx.new()
 	rx_q.compile("quest_id\\s*=\\s*\"([a-z0-9_]+)\"")
@@ -1451,7 +1474,7 @@ func _manual_completers() -> void:
 			if mo != null:
 				dialogue["%s.%s" % [last_quest, mo.get_string(1)]] = true
 	var scripts_text := ""
-	for dir in ["res://scripts/dungeon", "res://scripts/world2d", "res://scripts/towns", "res://scripts/loot", "res://scripts/traetoppen"]:
+	for dir in ["res://scripts/dungeon", "res://scripts/world2d", "res://scripts/towns", "res://scripts/loot", "res://scripts/traetoppen", "res://scripts/ghostfam"]:
 		scripts_text += _read_dir_text(dir)
 	var unnamed: Array[String] = []
 	var pending: Array[String] = []
@@ -1463,6 +1486,14 @@ func _manual_completers() -> void:
 				continue
 			manual_n += 1
 			var key := "%s.%s" % [q, od.get("id", "")]
+			# MotherStory dispatches from its production chapter registry rather
+			# than literal quest names. The story section exercises these real
+			# completions, including checkpoints and out-of-order catch-up.
+			var mother_bound := false
+			for chapter in MotherStory.CHAPTERS:
+				if q == str(MotherStory.quest_id(chapter.id)):
+					mother_bound = str(od.get("id","")) in chapter.needs or (str(od.get("id","")) == "checkpoint" and chapter.has("boss_floor"))
+			if mother_bound: continue
 			if markers.has(key) or dialogue.has(key) or (scripts_text.contains(str(od.get("id", ""))) and scripts_text.contains(q)):
 				continue
 			if PENDING_COMPLETERS.has(key):
@@ -1613,7 +1644,16 @@ func _dungeon_and_forest_bindings() -> void:
 				if str(od3.get("on", "")) == "zone_entered":
 					_need(problems, zones_row.contains(str(od3.get("zone", ""))), "%s.%s binds zone `%s` which no floor carries" % [q, od3["id"], od3.get("zone", "")])
 		t.check("bound_quests_have_their_floor_anchors", problems.is_empty(), "night_flower (night_bloom, floor 2), rare_mushroom_hunt (glow_mushroom + the find_glowing quest_spot, floor 7), moonstone_crown (moonstone), the zone quests (zone ids of the floors): %s" % str(problems.slice(0, 3)))
-		t.skip("bound_quests_have_their_floor_anchors: the generator-level proof (DungeonGen places the night_bloom node / the quest_spot) belongs to D1-dungeon-gen; this check reads the floor table of the design")
+		for seed_value in [4242,8181]:
+			for number in [2,7]:
+				var generated := _generated_floor(number,seed_value)
+				var markers := generated.markers.values()
+				var valid := generated.errors.is_empty()
+				if number==2:valid = valid and markers.any(func(row):return str(row.get("marker",""))=="node" and str(row.get("kind",""))=="night_bloom")
+				else:
+					valid = valid and markers.any(func(row):return str(row.get("marker",""))=="quest_spot" and str(row.get("quest",""))=="rare_mushroom_hunt" and str(row.get("objective",""))=="find_glowing")
+					for item in ["glow_mushroom","moonstone"]:valid = valid and markers.any(func(row):return str(row.get("marker",""))=="node" and str(row.get("kind",""))==item)
+				t.check("live_generated_quest_anchors_f%d_s%d"%[number,seed_value],valid,str(generated.errors))
 
 
 func _objective_by_id(q: String, oid: String) -> Dictionary:
@@ -1648,3 +1688,9 @@ func _forste_dage() -> void:
 		elif not (qm.FILTERS.has(on) or on == "manual" or on == "state" or qm.GAME_EVENT_SUGAR.has(on)):
 			bad.append("%s binds %s" % [od.get("id", ""), on])
 	t.check("forste_dage_binds_only_known_events", bad.is_empty(), "every objective of lua/quests/forste_dage.lua uses a binding of the vocabulary and, for game_event, a name of the events list %s" % str(bad))
+
+func _generated_floor(number: int,seed_value: int) -> AreaMap:
+	var cfg := LuaData.dict(Svc.lua_config("dungeon",{}))
+	var ctx := {"next_id":"moerkeskoven_f%d"%(number+1),"prev_id":"moerkeskoven_f%d"%(number-1),"day":1,"seed_text":str(seed_value),"gen_version":1,"spec_hash":"0"}
+	var result := DungeonGen.build_text(cfg,number,seed_value,ctx)
+	return AreaMap.parse_text(str(result.get("text","")))

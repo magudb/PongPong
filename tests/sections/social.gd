@@ -293,7 +293,9 @@ func _data() -> void:
 	var stable = bool(none["derived"]) and str(none["tier"]) == "C" and none["birthday"] == again["birthday"] and SocialData.derived_birthday("no_row_npc") == SocialData.derived_birthday("no_row_npc")
 	var real_npc := str(friends[0])
 	var role_arch: Variant = SocialData.cfg_dict("role_archetype").get(str(SocialData.npc_row(real_npc).get("role", "")), "wanderer")
-	stable = stable and str(SocialData.citizen(real_npc)["archetype"]) == str(role_arch)
+	SocialFixture.install({"citizens":{}},{})
+	stable = stable and bool(SocialData.citizen(real_npc)["derived"]) and str(SocialData.citizen(real_npc)["archetype"]) == str(role_arch)
+	SocialFixture.uninstall()
 	# adding an NPC never moves another NPC's birthday (it is derived from the id alone)
 	var before := {}
 	for id in friends:
@@ -332,7 +334,8 @@ func _data() -> void:
 		if not SocialData.cfg_dict("role_archetype").has(r):
 			missing.append(r)
 	t.check("data_role_archetype_covers_every_role", missing.is_empty() and roles.size() > 20, "%d roles of npc_vocab.roles, missing in social.role_archetype: %s" % [roles.size(), str(missing)])
-	t.skip("social.data_real_citizens_and_tastes: lua/social/citizens.lua and gift_tastes.lua are S-data's (wave 5): every friend here still uses the derived defaults (tier C, role archetype, derived birthday); the design rows are used where a check needs them")
+	var authored := SocialData.friend_ids().all(func(id):return not bool(SocialData.citizen(str(id)).get("derived",true)))
+	t.check("data_real_citizens_and_tastes",authored and not LuaData.dict(Svc.lua_config("gift_tastes",{})).is_empty(),"The live citizens and tastes now exist; fallback coverage above explicitly installs a missing-citizens fixture.")
 
 
 # ================================================================================================ task 3: the config
@@ -1157,7 +1160,12 @@ func _context() -> void:
 	t.check("people_rows_shape", none_yet.is_empty() and rows.size() == 2 and shape and hoppe_row.size() == 1 and (hoppe_row[0]["birthday"] as Dictionary).size() == 2 and hidden, "a fresh game lists nobody; after two conversations 2 rows (met citizens only) with name_key, stage, half hearts, birthday (once known), chat done this week, gifts left, known tastes, events seen / ready; a hero twin is hidden: %s" % str(maja))
 	# the events: ready when the hearts are reached, not seen, and the when= holds; seen is saved
 	var ev_npc := "gardener_hoppe"
+	# This unit isolates hearts/when/stamping. Actual area and actor gates are
+	# exercised against every live authored scene by social_heart_content.
+	var isolated_events: Dictionary = SocialFixture.design_dump()["events"].duplicate(true)
+	isolated_events.ev_hoppe_h4.meta.erase("area")
 	var m3 := _fresh(1, 12)
+	SocialFixture.install_design_data({}, {"events":isolated_events})
 	var before: Array = m3.events_ready(ev_npc)
 	m3.debug_set_hearts(ev_npc, 4)
 	gm.hour = 12
@@ -1165,6 +1173,7 @@ func _context() -> void:
 	m3.mark_event_seen("ev_hoppe_h4")
 	var seen_state: bool = m3.event_seen("ev_hoppe_h4") and m3.events_ready(ev_npc).is_empty() and int(m3.to_dict()["seen"]["ev_hoppe_h4"]) == 1
 	t.expect(before.is_empty() and ready_now == ["ev_hoppe_h4"] and seen_state, "events_ready: none at 0 hearts, ev_hoppe_h4 (meta.hearts 4, when hearts:..:4&hour:8-18&!fest:any) at 4 hearts and 12:00, none once it is seen; seen is saved")
+	SocialFixture.install_design_data()
 	# the no-repeat memory of S-talk
 	m3.remember_line("gardener_hoppe", "greeting", "SOC_HOPPE_GREET_3")
 	t.expect(m3.last_line("gardener_hoppe", "greeting") == "SOC_HOPPE_GREET_3" and m3.last_line("gardener_hoppe", "other") == "" and m3.last_line("baker_maja", "greeting") == "", "remember_line / last_line keep the last line id per (npc, slot)")
@@ -1601,16 +1610,25 @@ func _real_data_validation() -> void:
 # ================================================================================================ task 16: the balance claims as a test
 
 func _balance() -> void:
+	var input_checks := _run_py("res://tools/social/core/test_balance_inputs.py",PackedStringArray())
+	t.check("balance_live_input_regressions",int(input_checks.code) == 0,str(input_checks.output))
 	var live_citizens := not LuaData.dict(Svc.lua_config("citizens", {})).is_empty() and not LuaData.dict(Svc.lua_config("gift_tastes", {})).is_empty() and not SocialData.festivals().is_empty()
 	var dump_path := ProjectSettings.globalize_path("res://tests/lib/social/fixtures/design_dump.json")
 	var source := "the pinned DESIGN snapshot (citizens.lua / gift_tastes.lua are S-data's)"
+	var av := ProjectSettings.globalize_path(AVAILABILITY)
 	if live_citizens:
-		var live := _user_path("balance_dump.json")
+		var live := "res://docs/qa/mechanics/social/live-data.json"
 		t.run_godot_script(DUMP_DRIVER, PackedStringArray(["--out=" + ProjectSettings.globalize_path(live)]))
 		if FileAccess.file_exists(live):
 			dump_path = ProjectSettings.globalize_path(live)
 			source = "the dump of the real data"
-	var av := ProjectSettings.globalize_path(AVAILABILITY)
+		var availability_path := "res://docs/qa/mechanics/social/availability-live.json"
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(availability_path))
+		var exported: Dictionary = t.run_godot_script("res://tools/social/core/export_availability.gd",PackedStringArray(["--out="+ProjectSettings.globalize_path(availability_path)]))
+		var sampled: Variant = _json_of(availability_path)
+		t.check("balance_live_routines_cover_current_roster",int(exported.code) == 0 and sampled is Dictionary and sampled.get("npcs",{}).size() == SocialData.friend_ids().size(),str(exported.output).left(1500))
+		if not (sampled is Dictionary): return
+		av = ProjectSettings.globalize_path(availability_path)
 	var bounds_path := ProjectSettings.globalize_path(BOUNDS)
 	var runs := {}
 	for spec in [["free", "lean"], ["free", "four"], ["mixed", "lean"], ["mixed", "four"]]:
@@ -1619,6 +1637,7 @@ func _balance() -> void:
 		var r := _run_py(PY_MC, args)
 		var parsed: Variant = _json_of(out) if FileAccess.file_exists(out) else null
 		runs["%s.%s" % [spec[0], spec[1]]] = parsed if parsed is Dictionary else {}
+		if live_citizens and parsed is Dictionary: _write("res://docs/qa/mechanics/social/mc_%s_%s.json" % [spec[0],spec[1]],JSON.stringify(parsed,"",true))
 		if int(r["code"]) != 0 or not (parsed is Dictionary):
 			t.check("balance_run_%s_%s" % [spec[0], spec[1]], false, "balance_mc.py exited %d: %s" % [int(r["code"]), str(r["output"]).substr(0, 200)])
 	var free_lean: Dictionary = runs["free.lean"]
@@ -1634,13 +1653,13 @@ func _balance() -> void:
 	# claim set 1: the designers' model
 	t.check("balance_claims_hold", int(ceil["chat_only_8_day"]) == 50 and int(ceil["fastest_10_hearts_day"]) == 32 and float(cl["lean.free.A8.median"]) <= 80.0 and float(cl["lean.free.A8.p90"]) <= 115.0 and float(cf["four.free.A8.median"]) <= 75.0 and float(cf["four.free.A8.p90"]) <= 110.0 \
 		and float(cl["dedicated.gift_share"]) <= 0.25 and float(cl["typical.social_time"]) <= 0.25,
-		"variant free on %s (100 runs x 336 days): weekly chat alone reaches 8 hearts on day %d, the fastest possible 10 hearts is day %d; a typical player (2.6 talks a day) reaches 8 hearts with a tier A citizen at median %s / p90 %s with the lean events (<= 80 / 115) and %s / %s with four events (<= 75 / 110); gifts are %.0f %% of a dedicated player's points (<= 25), the typical player spends %.0f %% of a game week (<= 25)" % [
+		"variant free on %s (100 runs x 336 days): weekly chat alone reaches 8 hearts on day %d, the fastest possible 10 hearts is day %d; a typical player (the original 2.6-talk budget scaled by the live day duration) reaches 8 hearts with a tier A citizen at median %s / p90 %s with the lean events (<= 80 / 115) and %s / %s with four events (<= 75 / 110); gifts are %.0f %% of a dedicated player's points (<= 25), the typical player spends %.0f %% of a game week (<= 25)" % [
 		source, int(ceil["chat_only_8_day"]), int(ceil["fastest_10_hearts_day"]), str(typical_free["median"]), str(typical_free["p90"]), str(cf["four.free.A8.median"]), str(cf["four.free.A8.p90"]), float(cl["dedicated.gift_share"]) * 100.0, float(cl["typical.social_time"]) * 100.0])
 	var ml: Dictionary = mixed_lean["claims"]
 	var mf: Dictionary = mixed_four["claims"]
 	t.check("balance_claims_hold_with_availability", float(ml["lean.mixed.A8.median"]) <= 80.0 and float(ml["lean.mixed.A8.p90"]) <= 115.0 and float(mf["four.mixed.A8.median"]) <= 75.0 and float(mf["four.mixed.A8.p90"]) <= 110.0 and float(ml["mixed.never_AB_8h"]) <= 0.02 and float(ml["mixed.never_AB_4h_citizen"]) <= 0.02 \
 		and float(ml["typical.social_time"]) <= 0.25,
-		"variant mixed (town visits half by day, half in the evening; a citizen is reachable outdoors, in transit or at his counter through the talk cells; table: %s): median %s / p90 %s with the lean events (<= 80 / 115), %s / %s with four events (<= 75 / 110); never reaching 8 hearts: tier A / B at most %.1f %% (<= 2), the worst single tier A / B citizen never reaches 4 hearts in %.1f %% (<= 2; at 8 hearts Rasmus %.0f %%, a guard of this package at <= 5)" % [
+		"variant mixed (town visits half by day, half until half an hour before bedtime; public room hours and one-heart owner gates apply; table: %s): median %s / p90 %s with the lean events (<= 80 / 115), %s / %s with four events (<= 75 / 110); never reaching 8 hearts: tier A / B at most %.1f %% (<= 2), the worst single tier A / B citizen never reaches 4 hearts in %.1f %% (<= 2; at 8 hearts the worst citizen %.0f %%, a guard of this package at <= 5)" % [
 		str((mixed_lean as Dictionary).get("availability_source", "")).substr(0, 60), str(ml["lean.mixed.A8.median"]), str(ml["lean.mixed.A8.p90"]), str(mf["four.mixed.A8.median"]), str(mf["four.mixed.A8.p90"]), float(ml["mixed.never_AB_8h"]) * 100.0, float(ml["mixed.never_AB_4h_citizen"]) * 100.0, float(ml["mixed.never_AB_8h_citizen"]) * 100.0])
 	# the ratchet: the file holds the bounds, the tool checks the runs against them and may only tighten them
 	var bounds: Variant = _json_of(BOUNDS) if FileAccess.file_exists(BOUNDS) else null
@@ -1676,7 +1695,7 @@ func _balance() -> void:
 		"tests/lib/social/balance_bounds.json: every bound is at or under the design limit (%s), the runs sit under their bounds (%s) and within the margin (%s: a bound cannot silently drift away from what the data does), `--check` exits %d; `--ratchet` on a copy never raises a bound (1 stays 1: %s) and lowers a loose one (%s)" % [under_limits, measured_under, tight, int(check["code"]), never_looser, tightened])
 	if not live_citizens:
 		t.skip("social.balance_real_data: the claims ran on the pinned design snapshot; with S-data's citizens.lua / gift_tastes.lua and S-fest-content's festivals in the tree the section switches to the dump of the real data and the same bounds apply")
-	t.skip("social.balance_real_routines: the `mixed` availability table is the design snapshot (tests/lib/social/fixtures/availability_design.json); T-routes' real routines (wave 5) replace it through tools/social/core/availability.py's schema")
+	if not live_citizens: t.skip("social.balance_real_routines: live data is absent; the pinned design table is used")
 
 
 # ================================================================================================ task 18: the wrappers of the fix round, task 17: the project line

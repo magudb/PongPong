@@ -1,0 +1,74 @@
+{
+  "mother_repaired_lantern": {
+    "file": "mother_repaired_lantern.webp",
+    "size": [
+      192,
+      192
+    ],
+    "pivot": [
+      96.0,
+      180
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "ortho",
+    "source": "tools/art/drawn/sources/forest_mother/mother_repaired_lantern.png",
+    "source_sha256": "7502e7c0cc55d9ddc25e67aaaa17460d228f4b049706f65af687693c8e05cc86"
+  },
+  "mother_route_map": {
+    "file": "mother_route_map.webp",
+    "size": [
+      192,
+      192
+    ],
+    "pivot": [
+      96.0,
+      180
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "ortho",
+    "source": "tools/art/drawn/sources/forest_mother/mother_route_map.png",
+    "source_sha256": "cb4b31d796932789e3bf6f80dfb3368e659471eeafa5671d6d2a0ed71b4b81c7"
+  },
+  "mother_seed_tin": {
+    "file": "mother_seed_tin.webp",
+    "size": [
+      192,
+      192
+    ],
+    "pivot": [
+      96.0,
+      180
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "ortho",
+    "source": "tools/art/drawn/sources/forest_mother/mother_seed_tin.png",
+    "source_sha256": "0ec37e2190fe9f57dd3bf0c907361adf6adc163ef890991c0eb5583abb9b575e"
+  },
+  "root_scribe_waymarker": {
+    "file": "root_scribe_waymarker.webp",
+    "size": [
+      384,
+      384
+    ],
+    "pivot": [
+      192.0,
+      372
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "proj": "ortho",
+    "source": "tools/art/drawn/sources/forest_mother/root_scribe_waymarker.png",
+    "source_sha256": "438db196e4bc2637c6066705ce827c26b3662cc740b65ababd0f9e826749c067"
+  }
+}

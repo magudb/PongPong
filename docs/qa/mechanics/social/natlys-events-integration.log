@@ -1,0 +1,295 @@
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=social,ghostfam_events
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.Ijny46/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 11.5 s
+== section ghostfam_events  (res://tests/sections/ghostfam_events.gd)
+  ok    ghostfam_events.eleven_registered
+  ok    ghostfam_events.ev_ghostfam_blund_h4_real_stage ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.g_planter2", "act": "hide", "area": "traetoppen" })
+  ok    ghostfam_events.ev_ghostfam_blund_h4_ready
+  ok    ghostfam_events.ev_ghostfam_blund_h4_mark
+  ok    ghostfam_events.ev_ghostfam_blund_h4_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_blund_h4_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_blund_h4_once
+  ok    ghostfam_events.ev_ghostfam_dyne_h4_real_stage ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.t_fire_e", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_events.ev_ghostfam_dyne_h4_ready
+  ok    ghostfam_events.ev_ghostfam_dyne_h4_mark
+  ok    ghostfam_events.ev_ghostfam_dyne_h4_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_dyne_h4_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_dyne_h4_once
+  ok    ghostfam_events.ev_ghostfam_gnist_h4_real_stage ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "int_gaestehytten.table", "act": "eat", "area": "int_gaestehytten" })
+  ok    ghostfam_events.ev_ghostfam_gnist_h4_ready
+  ok    ghostfam_events.ev_ghostfam_gnist_h4_mark
+  ok    ghostfam_events.ev_ghostfam_gnist_h4_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_gnist_h4_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_gnist_h4_once
+  ok    ghostfam_events.door_lantern_oil
+  ok    ghostfam_events.ev_ghostfam_silke_h4_real_stage ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "hyggebyen.round_s", "act": "patrol", "area": "hyggebyen" })
+  ok    ghostfam_events.ev_ghostfam_silke_h4_ready
+  ok    ghostfam_events.ev_ghostfam_silke_h4_mark
+  ok    ghostfam_events.ev_ghostfam_silke_h4_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_silke_h4_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_silke_h4_once
+  ok    ghostfam_events.ev_ghostfam_dyne_h6_real_stage ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.t_fire_e", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_events.ev_ghostfam_dyne_h6_ready
+  ok    ghostfam_events.ev_ghostfam_dyne_h6_mark
+  ok    ghostfam_events.ev_ghostfam_dyne_h6_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_dyne_h6_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_dyne_h6_once
+  ok    ghostfam_events.ev_ghostfam_blund_h8_real_stage ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.t_fire_e", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_events.ev_ghostfam_blund_h8_ready
+  ok    ghostfam_events.ev_ghostfam_blund_h8_mark
+  ok    ghostfam_events.ev_ghostfam_blund_h8_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_blund_h8_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_blund_h8_once
+  ok    ghostfam_events.ev_ghostfam_dyne_h8_real_stage ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_events.ev_ghostfam_dyne_h8_ready
+  ok    ghostfam_events.ev_ghostfam_dyne_h8_mark
+  ok    ghostfam_events.ev_ghostfam_dyne_h8_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_dyne_h8_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_dyne_h8_once
+  ok    ghostfam_events.ev_ghostfam_gnist_h8_real_stage ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_events.ev_ghostfam_gnist_h8_ready
+  ok    ghostfam_events.ev_ghostfam_gnist_h8_mark
+  ok    ghostfam_events.ev_ghostfam_gnist_h8_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_gnist_h8_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_gnist_h8_once
+  ok    ghostfam_events.ev_ghostfam_silke_h8_real_stage ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_events.ev_ghostfam_silke_h8_ready
+  ok    ghostfam_events.ev_ghostfam_silke_h8_mark
+  ok    ghostfam_events.ev_ghostfam_silke_h8_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_silke_h8_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_silke_h8_once
+  ok    ghostfam_events.ev_ghostfam_dyne_h10_real_stage ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.t_fire_e", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_events.ev_ghostfam_dyne_h10_ready
+  ok    ghostfam_events.ev_ghostfam_dyne_h10_mark
+  ok    ghostfam_events.ev_ghostfam_dyne_h10_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_dyne_h10_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_dyne_h10_once
+  ok    ghostfam_events.seat_for_friend
+  ok    ghostfam_events.save_all_ordinary_scenes
+  ok    ghostfam_events.ten_saved
+  ok    ghostfam_events.cousins_branch_only
+  ok    ghostfam_events.friends_branch_only
+  ok    ghostfam_events.welcome_real_family
+  ok    ghostfam_events.welcome_ready_for_kin
+  ok    ghostfam_events.welcome_request
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.cousin_kept_seat
+  ok    ghostfam_events.friend_seat_scene_not_repeated_for_kin
+  ok    ghostfam_events.FEST_AARSSKIFTET_GHOSTFAM_DYNE_1
+  ok    ghostfam_events.FEST_AARSSKIFTET_GHOSTFAM_GNIST_1
+  ok    ghostfam_events.FEST_AARSSKIFTET_GHOSTFAM_SILKE_1
+  ok    ghostfam_events.FEST_AARSSKIFTET_GHOSTFAM_BLUND_1
+  ok    ghostfam_events.FEST_BADEDAGEN_GHOSTFAM_DYNE_1
+  ok    ghostfam_events.FEST_BADEDAGEN_GHOSTFAM_GNIST_1
+  ok    ghostfam_events.FEST_BADEDAGEN_GHOSTFAM_SILKE_1
+  ok    ghostfam_events.FEST_BADEDAGEN_GHOSTFAM_BLUND_1
+  ok    ghostfam_events.FEST_BAGEDAGEN_GHOSTFAM_DYNE_1
+  ok    ghostfam_events.FEST_BAGEDAGEN_GHOSTFAM_GNIST_1
+  ok    ghostfam_events.FEST_BAGEDAGEN_GHOSTFAM_SILKE_1
+  ok    ghostfam_events.FEST_BAGEDAGEN_GHOSTFAM_BLUND_1
+  ok    ghostfam_events.FEST_BLOMSTERFESTEN_GHOSTFAM_DYNE_1
+  ok    ghostfam_events.FEST_BLOMSTERFESTEN_GHOSTFAM_GNIST_1
+  ok    ghostfam_events.FEST_BLOMSTERFESTEN_GHOSTFAM_SILKE_1
+  ok    ghostfam_events.FEST_BLOMSTERFESTEN_GHOSTFAM_BLUND_1
+  ok    ghostfam_events.FEST_HOESTFESTEN_GHOSTFAM_DYNE_1
+  ok    ghostfam_events.FEST_HOESTFESTEN_GHOSTFAM_GNIST_1
+  ok    ghostfam_events.FEST_HOESTFESTEN_GHOSTFAM_SILKE_1
+  ok    ghostfam_events.FEST_HOESTFESTEN_GHOSTFAM_BLUND_1
+  ok    ghostfam_events.FEST_HONNINGDAGEN_GHOSTFAM_DYNE_1
+  ok    ghostfam_events.FEST_HONNINGDAGEN_GHOSTFAM_GNIST_1
+  ok    ghostfam_events.FEST_HONNINGDAGEN_GHOSTFAM_SILKE_1
+  ok    ghostfam_events.FEST_HONNINGDAGEN_GHOSTFAM_BLUND_1
+  ok    ghostfam_events.FEST_MAANEMARKEDET_GHOSTFAM_DYNE_1
+  ok    ghostfam_events.FEST_MAANEMARKEDET_GHOSTFAM_GNIST_1
+  ok    ghostfam_events.FEST_MAANEMARKEDET_GHOSTFAM_SILKE_1
+  ok    ghostfam_events.FEST_MAANEMARKEDET_GHOSTFAM_BLUND_1
+  ok    ghostfam_events.FEST_MIDSOMMERLANTERNER_GHOSTFAM_DYNE_1
+  ok    ghostfam_events.FEST_MIDSOMMERLANTERNER_GHOSTFAM_GNIST_1
+  ok    ghostfam_events.FEST_MIDSOMMERLANTERNER_GHOSTFAM_SILKE_1
+  ok    ghostfam_events.FEST_MIDSOMMERLANTERNER_GHOSTFAM_BLUND_1
+  ok    ghostfam_events.FEST_VINTERLYSENE_GHOSTFAM_DYNE_1
+  ok    ghostfam_events.FEST_VINTERLYSENE_GHOSTFAM_GNIST_1
+  ok    ghostfam_events.FEST_VINTERLYSENE_GHOSTFAM_SILKE_1
+  ok    ghostfam_events.FEST_VINTERLYSENE_GHOSTFAM_BLUND_1
+  ok    ghostfam_events.thirty_six_festival_greetings
+  ok    ghostfam_events.authored_source_reproducible
+  --    ghostfam_events: 121 checks, 0 failed, 0 skipped, 21.8 s
+== section social  (res://tests/sections/social.gd)
+  ok    social.calendar_weeks_valid (28 % 7 == 0, year of 112 days, 4 seasons)
+  ok    social.calendar_weeks_invalid_when_days_per_season_is_not_a_multiple_of_7 (days_per_season 30 -> weeks_valid() false (the section would fail), restored)
+  ok    social.calendar_roundtrip_and_weekday_agree_with_core (date_of / total_day / weekday_of vs GameManager.total_day_for and TimeManager.weekday_index over 399 days: 0 mismatches)
+  ok    week index: Monday..Sunday blocks, 16 weeks a year
+  ok    weekday and weekend
+  ok    week_start is the Monday of the week
+  ok    days_until wraps the year
+  ok    next_total_day, date_key
+  ok    social.calendar_hour_in_raw_hours (22-2 = [22,26) true; 0-2 = [24,26) true; 22-6 wraps (22..25 and 2..5) true; 8-18 unchanged true; from == to always true true; 6-26 is the whole play day true)
+  ok    normalise_hour = GameManager.game_hour: 1.5 -> 25.5, 0 -> 24, 6 and 25 stay
+  ok    social.rng_matches_python_mirror (6 vectors (FNV-1a 32 + fmix32 over seed|part|part) equal the pinned values true; python equals the GDScript numbers)
+  ok    social.rng_uniform_25pct (25% roll over 10080 (npc, day) pairs: 2432 hits (python: 2432))
+  ok    same inputs, same roll; another seed, another roll
+  ok    social.rng_no_walk_across_days (consecutive days do not walk 1,2,3 (String.hash would: true): longest equal run of 4 buckets = 5)
+  ok    pick / pick_weighted edge cases
+  ok    social.data_friend_ids_sorted (34 friend ids, sorted, = friendship rows plus authored unlocks)
+  ok    a citizens row with an unlock includes the NPC exactly once (34 -> 34)
+  ok    social.data_derived_defaults_are_stable (derived row: tier C, archetype from role_archetype, birthday from the id; adding an NPC moved 0 other birthdays; the new one is a real date with archetype child)
+  ok    social.data_registry_absent_is_empty (a runtime without get_registry and an unknown id read {} (nothing is required to boot); with the design registries the readers answer (design festivals 9, events of Hoppe 1))
+  ok    social.data_role_archetype_covers_every_role (27 roles of npc_vocab.roles, missing in social.role_archetype: [])
+  SKIP  social.data_real_citizens_and_tastes: lua/social/citizens.lua and gift_tastes.lua are S-data's (wave 5): every friend here still uses the derived defaults (tier C, role archetype, derived birthday); the design rows are used where a check needs them
+  ok    social.config_defaults_equal_lua (lua/social/social.lua has 11 top-level keys, SocialData.DEFAULTS has 11; differences: [])
+  ok    an empty social table still answers every number from the code defaults
+  ok    the Lua lint is clean with lua/social/social.lua loaded (0 findings)
+  ok    AGF17: social.festival.max_attendees = 15, chat 100, belated x2
+  ok    social.autoload_registered_once (project.godot has the line 1 time(s); section `social` registered 1 time(s) for the autoload node; process mode ALWAYS)
+  ok    social.save_registry_order (order 60 (after loot 40 and collection 50: FEATURE_ORDERS { "home": 10, "furniture": 20, "wardrobe": 30, "loot": 40, "collection": 50 }), position 11 of ["game", "time", "economy", "quests", "husbandry", "shops", "home", "furniture", "wardrobe", "loot", "dungeon", "social"])
+  ok    social.daily_work_is_deferred (advance_time(50 h) emitted exactly ["midnight_passed", "midnight_passed"] synchronously (the pin of core.advance_time_multiday) and queued ONE coalesced flush (pending true))
+  ok    flush() catches up: last processed day = today (4)
+  ok    social.birthday_event_after_flush (nothing synchronous inside advance_time; after the flush birthday_today {npc: merchant_pip} once and the flag birthday_today = merchant_pip)
+  ok    a second flush the same day posts nothing more
+  ok    the next day the flag names nobody (cleared)
+  ok    social.daily_skip_no_stale_birthday_event (a skip that ends after the birthday posts no birthday_today for the skipped day (0); only today's 1 birthday(s) are announced)
+  ok    time_of_day_changed queues the (single, coalesced) flush
+  ok    social.new_game_flags_follow_the_first_flush (a new game on day 1 = Lily's birthday: no birthday_today flag at new_game_started (the flags are exactly the new game's: [&"intro_pending", &"home_tier", &"home_building", &"home_upgrade_done"]), a flush queued by reset(); the first flush writes birthday_today = fairy_lily and posts no event for the day nothing was skipped)
+  ok    a fresh game: no points, an unknown NPC has none
+  ok    40 points: no whole heart, no friend_changed
+  ok    the mirror flag holds WHOLE hearts (0 after 40 points)
+  ok    social.hearts_signal_only_on_whole_heart (110 points = 1 heart: friend_changed(mayor_lyra, 1) fired exactly once ([["mayor_lyra", 1]]), social_points twice)
+  ok    game_event social_points {npc, delta, points, hearts, source}: { "npc": "mayor_lyra", "delta": 70, "points": 110, "hearts": 1, "source": "test" }
+  ok    half hearts: 110 points = 2 half hearts (50 each)
+  ok    social.hearts_call_loot_service_after_a_heart (LootService.check_friend_gifts(npc) late bound once per whole heart gained, none for 20 points: [["mayor_lyra"]])
+  ok    social.hearts_cap_10 (20 hearts of quest reward stop at the cap: 10 hearts = 1000 points, stage bedste_ven, gained 770)
+  ok    at the cap: ok, gained 0, nothing is emitted
+  ok    social.points_never_decrease (0 and negative deltas are refused (bad_delta), debug_set_hearts never lowers: 1000 points stay)
+  ok    unknown NPC and Morfar Mis without a citizens unlock take no points (unknown_npc / locked)
+  ok    social.add_points_rejects_unknown_and_locked (locked until lost_cat is done OR day 60 (day 59 false, day 60 true, quest true); a hero twin (NpcDirector.is_absent) is refused (absent) and back when present)
+  ok    social.flag_mirror_after_every_write (friend_<npc> = whole hearts after add_points, add_hearts, debug_set_hearts, from_dict and a repair write (flag 5))
+  ok    social.zero_point_ledger_repairs_existing_mirror
+  ok    social.zero_point_ledger_load_preserves_absent_flag
+  ok    the first finished chat of the week: +1 heart, friend_last = total_day, talked today
+  ok    a second chat in the same week plays and pays nothing
+  ok    social.chat_weekly_calendar_week (Sunday of the same week: nothing; Monday: available again and the second heart comes (two hearts in two calendar weeks, never two in one))
+  ok    game_event chat_done {npc, weekly_heart} for every finished conversation: [["chat_done", { "npc": "gardener_hoppe", "weekly_heart": false }]]
+  ok    social.chat_df3_floor_day_50 (8 hearts by the weekly chat alone: earliest total_day 50 (the DF3 floor: day 50), 10 hearts after week 10)
+  ok    social.chat_esc_first_line_no_heart (an Esc after the first line (completed false) gives no heart, no chat_done, no toast and keeps the week's chat available)
+  ok    the finished conversation of the same day then pays the week's heart
+  ok    social.chat_empty_conversation_gives_nothing (a conversation with 0 lines shown gives nothing: no heart, not talked today, birthday still unknown, no event, no toast)
+  ok    a chat with an unknown NPC counts for nothing
+  ok    a conversation (even an unfinished one) marks the birthday as known
+  ok    social.chat_one_combined_toast (the first heart (fremmed -> bekendt) is ONE toast with the heart line and the stage line (1 toast(s), relationship_changed 1): Fe-barnet Lily holder lidt mere af dig nu: 1 af 10 hjerter | Dit venskab med Fe-barnet Lily: Bekendt)
+  ok    social.chat_toasts_are_rate_limited (two conversations inside the gap: 1 toast at once, 1 waiting, both posted in turn (2))
+  ok    social.stage_names_by_hearts (stages by hearts 0..10: ["fremmed", "bekendt", "nabo", "nabo", "ven", "ven", "god_ven", "god_ven", "bedste_ven", "bedste_ven", "bedste_ven"])
+  ok    a REL_STAGE_<ID> label in da and en for each of the six stages (missing [])
+  ok    social.stage_up_toast_once (one toast and one relationship_changed per stage change, none inside a stage; the toast option false keeps the toast back but not the event (toasts 2, events 3): last { "npc": "baker_maja", "stage": "nabo", "partner": false })
+  ok    S-marriage's seam: row field rs = 2 reads social.rs_stages[1] = forlovet (forlovet), 0 is the hearts stage (ven)
+  ok    social.boots_without_gift_rules (with S-gifts absent (here: pointed at a missing script) the autoload still answers: give_gift { "ok": false, "reason": "gifts_not_installed" }, gift_options 0, taste neutral, is_giftable { "ok": false, "reason": "gifts_not_installed" })
+  ok    social.gift_api_surface_late_bound (give_gift / gift_options reach the flow script, taste_of / is_giftable the rules script by path (probe scripts): flow gardener { "ok": true, "reason": "" })
+  ok    gift_limits of a fresh row: { "per_day": 1, "per_week": 2, "left_today": 1, "left_week": 2 }
+  ok    limits: 1 per day and 2 per calendar week, both reset by the calendar ({ "per_day": 1, "per_week": 2, "left_today": 0, "left_week": 0 } -> { "per_day": 1, "per_week": 2, "left_today": 1, "left_week": 2 })
+  ok    social.no_forward_class_refs (4 scripts scanned for 19 later-wave class names (GiftRules at lines 237 / 250 / 283 of the prototype made the autoload fail to boot): [])
+  ok    a bare instance answers {ok: false, reason: gifts_not_installed}
+  ok    social.birthday_state_machine (day -> celebrated -> belated (+1) -> none (+2), the year wrap and a birthday that has not come yet ([true, true, true, true, true, true, true, true, true]))
+  ok    social.birthday_derived_default_is_stable (33 derived birthdays (31 distinct days), every birthdays_on(td) agrees with the data and the derived dates repeat call after call)
+  ok    social.calendar_entries_shape ([{day, kind: birthday | festival, id, known}] sorted by day: 11 entries of foraar (["birthday", "festival"]), an unknown birthday is known = false until the first conversation, 2 festivals (Blomsterfesten, Honningdagen))
+  ok    social.festival_active_and_events (Høstfesten 12:00-20:00: today at 10:00 but not active; 11:59 no; 12:00 active + town_festival_started {id} once + flag festival_now; 19:59 still; 20:00 town_festival_ended and the flag is gone ([true, true, true, true, true, true, true]))
+  ok    social.festival_bed_hold_seam (while the festival runs sleep_from_hour = 20 (the bed is closed at 18:00: true), at 20:00 the override is removed (true); a pre-existing override of 17 is restored afterwards (true))
+  ok    social.festival_bed_hold_survives_load_and_clear (the override is a never-saved seam: after clear_config_overrides the next flush (true), an area_changed (true), a town_festival_started event (true) and a load (true) put it back)
+  ok    social.festival_shop_closure (closes = all: a shop that is not in stays_open (seed_shop, bakery) is closed from window start - 1 h (11:00) to the window end (20:00): { "10:59": [false, false, false], "11:00": [true, false, false], "12:00": [true, false, false], "19:59": [true, false, false], "20:00": [false, false, false] }; closes = none (Sofus' badedag) closes nothing true; an ordinary day closes nothing)
+  ok    when=fest:<id|any> follows the active festival
+  ok    social.festival_first_not_counted_in_cap (Trætoppen: 14 ordinary home citizens + 4 first members + the host: all 14 attend AND the 4 firsts (the ordered pool is never cut by them: if first counted inside the 15 three citizens would stay home), crowd 19 = 1 + 4 + 14, gather posts 18)
+  ok    social.festival_first_list_and_guests (Hyggebyen: 16 home citizens + the host + 4 guests of ANOTHER area: the ordered pool is cut to 15 (social.festival.max_attendees), the guests stand outside the cap: 15 + 1 + 4 = 20)
+  ok    the ordered pool = home citizens (host excluded) sorted by SocialRng.roll(seed, [festival, npc]), the first 15
+  ok    social.festival_gather_posts_deterministic (host on fest_torvet_host, first members on gather 1..4, the ordered pool after them, one post each (19 distinct posts), the same answer every call, a Hyggebyen citizen on a Trætoppen festival gets none)
+  ok    another world seed orders the pool differently; the first seed gives the same list again
+  ok    an attendee is on his post from 17:00 (window start - 1 h) to 23:00 (the end); the day before there is nothing
+  ok    social.festival_leave_early_any_attendee (meta.leave_early = {npc = hours}: a first member (21:45 on a 23:00 window), a guest (18:45 on a 20:00 window) and an ordered attendee leave that many hours before the window end, the others stay to the end)
+  ok    an absent hero twin is excluded (pool 13 of 14 minus one), the keeper of a stays_open shop stays at his shop, the host does not
+  ok    social.when_grammar_all_kinds (hearts fest hour weekday season birthday stage open + quest done flag night, `&` and `!`: [true, true, true, true, true, true, true, true, true, true, true])
+  ok    social.when_unknown_kind_is_false (an unknown kind is FALSE (the old evaluate_when answered TRUE: a typo showed the prop forever); `!unknown` is true; an empty spec holds)
+  ok    social.when_away_kind_asks_npc_director (away:<npc> asks NpcDirector.is_away, at:<npc> asks is_present (a node injected with Svc.override first, then the static facade by path); with NO director at: is true and away: is false (the D2 hub marker of Fru Ugle needs exactly that))
+  ok    social.when_director_facade_by_path (a static facade script by path answers is_absent / is_away / is_present (true), an instance method is refused with the safe default (true), a missing script and a changed path re-resolve (true true))
+  ok    social.when_isoarea_delegates_to_the_real_manager (IsoArea.evaluate_when answers the new kinds through SocialManager.eval_when, an unknown kind is false, when_errors merges the unknown kinds with when_spec_errors: ["unknown kind in \'moonphase:full\'", "hearts: unknown npc \'nobody\' in \'hearts:nobody:4\'"])
+  ok    social.when_refresh_includes_routine_changed (WHEN_REFRESH_EVENTS: ["friend_changed", "day_started", "time_of_day_changed", "town_festival_started", "town_festival_ended", "birthday_today", "relationship_changed", "routine_changed"])
+  ok    social.when_spec_errors_lists_typos (typos are listed (unknown kind, bad hearts number, unknown NPC, hour:8, weekday:9, season, stage, festival, shop, empty id, empty term), a full valid spec and "" are clean: [["unknown kind in \'moonphase:full\'"], ["hearts: \'abc\' needs hearts:<npc>:<0..10> in \'hearts:gardener_hoppe:abc\'"], ["weekday: \'9\' is not 0..6 in \'weekday:9\'"], ["open: unknown shop \'no_such_shop\' in \'open:no_such_shop\'"], ["empty term in \'hour:8-18&&night\'"], []])
+  ok    social.context_fields (context of Hoppe on his birthday at 09:00: { "hearts": 0, "stage": "fremmed", "weekday": 4, "weather": "klart", "daypart": "morgen", "birthday": true, "festival": "", "chat_open": true, "talked_today": false, "gifts_left": 2, "partner": false })
+  ok    after a chat and a gift today: hearts 1, no chat open, talked today, no gift left today ({ "hearts": 1, "stage": "bekendt", "weekday": 4, "weather": "klart", "daypart": "morgen", "birthday": true, "festival": "", "chat_open": false, "talked_today": true, "gifts_left": 0, "partner": false })
+  ok    partner is true for the engaged citizen only
+  ok    social.daypart_bands (morgen < 11 <= dag < 17 <= aften < 21 <= nat; the transient raw hours 2..5 after an autosave at 02:00 read nat, not morgen (CK-A-SC): ["nat", "nat", "nat", "nat", "morgen", "morgen", "morgen", "morgen", "morgen", "dag", "dag", "dag", "dag", "dag", "dag", "aften", "aften", "aften", "aften", "nat", "nat", "nat", "nat", "nat"])
+  ok    social.people_rows_shape (a fresh game lists nobody; after two conversations 2 rows (met citizens only) with name_key, stage, half hearts, birthday (once known), chat done this week, gifts left, known tastes, events seen / ready; a hero twin is hidden: { "id": "baker_maja", "name_key": "NPC_BAKER_MAJA", "stage": "bekendt", "hearts": 1, "half_hearts": 2, "birthday": { "season": "efteraar", "day": 10 }, "next_birthday": { "days": 56, "total_day": 66, "season": "efteraar", "day": 10 }, "chat_done": true, "gifts_left": 2, "tastes": { "carrot": "love", "stone": "dislike" }, "events_seen": 0, "events_ready": 0 })
+  ok    events_ready: none at 0 hearts, ev_hoppe_h4 (meta.hearts 4, when hearts:..:4&hour:8-18&!fest:any) at 4 hearts and 12:00, none once it is seen; seen is saved
+  ok    remember_line / last_line keep the last line id per (npc, slot)
+  ok    250 gold in the bakery = 2 points and 50 gold carried (the keeper is Maja)
+  ok    the carried gold counts: 50 + 60 = 1 more point
+  ok    social.purchase_points_capped (1 point per 100 gold, at most 10 per keeper and calendar week: 5000 gold twice = 10 / 10 points, the next week +10 = 20; the seed shop keeper has his own cap (7); no open shop and a stall without a keeper pay nothing)
+  ok    social.keeper_sample_weekly (with the weekly chat heart and hearts >= citizens.<npc>.sample.from_hearts one cheap item is handed over ([true, true, true, true, true, true, true]), once a week, in the SAME toast as the heart; below from_hearts and for citizens without a sample row nothing)
+  ok    social.save_size_budget (fresh game 92 bytes (budget 100); the order's scenario, 30 friends with 12 known tastes each: 15918 bytes pretty (budget 16000); with the talked-today stamp gt on every row 16308 bytes, with rv on every row, pc on the 10 keepers, seen / fest / partner on top 16936 bytes (the budget scenario leaves those fields out))
+  ok    social.save_roundtrip (to_dict -> JSON text -> from_dict -> to_dict is identical for every field of 30 rows (p wk gt gd gwk gw bd bk rv ls kn pc, the seed, seen, fest, partner); the numbers are ints again and the mirror flags are rewritten)
+  ok    social.save_seed_is_lazy_and_below_2_53 (the first roll creates the world seed (14192512501365 < 2^53), it is saved and the same roll answers the same again; set_seed clamps into [1, 2^53))
+WARNING: SocialManager.from_dict: unknown NPC 'retired_npc' kept in the orphans bucket
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] from_dict (res://scripts/social/social_manager.gd:1339)
+         [1] _save (res://tests/sections/social.gd:1335)
+         [2] run (res://tests/sections/social.gd:111)
+         [3] clear_scene (res://tests/lib/flow.gd:219)
+         [4] frames (res://tests/lib/drive.gd:79)
+  ok    social.save_orphan_is_warning_not_error (from_dict returns true (a push_error would reject the whole load), emits nothing, the row of the unknown NPC sits in `orphans` and survives the next save and load (allowed warnings: 1))
+  ok    the drift load logged no engine error
+  ok    an orphan is taken back when its NPC exists again: 250 points, flag friend_retired_npc 2
+  ok    social.save_old_save_reseeds_from_flags (a payload without the section calls reset(): friend_mayor_lyra 3 -> 300 points and the week of friend_last (day 29, this week) counts as chatted, a flag above the cap is clamped to 10 hearts, a flag of an unknown NPC is ignored)
+  ok    section `social` is registered
+  ok    social.save_manager_roundtrip (SaveManager.save_game / load_game with the section registered: 400 and 100 points, the seed 4242, the weekly chat of Maja still taken, the mirror flags rewritten (true true))
+  ok    social.no_new_signals_or_inputs (no `signal` line, no InputMap / Input call in the 4 social scripts; the project has 38 actions = P01's contract (38): `people` is P01's, nothing here)
+  ok    social.validator_design_data_is_clean (SV1..SV12 + SV14 on the pinned design data (30 friends, 9 festivals, 278 giftable items): 0 errors [], 29 warnings, skipped [])
+  ok    social.validator_selftest_mutants_caught (34 mutants of the pristine data, each caught by the rule it breaks; missed []; pristine errors [])
+  ok    social.validator_python_agrees_on_mutants (tools/social/core/validate_social.py: the pristine data exits 0 and each of 34 mutants exits 1 with the rule code (pristine exit 0, missed by python: []))
+  ok    social.sv14_contest_rewards_capped (first prize <= min(2 x the cheapest winning entry of the category (150 g for category:crop -> cap 300 g), 400 g: 400 g passes and 500 g fails on a 950 / 1000 g category); second <= 0.7 x first, third <= 0.4 x first, never a keepsake, rarity <= rare, the item exists; a contest with no rewards is a warning: [true, true, true, true, true, true, true, true, true])
+  ok    social.validator_festival_attendance_rules ([] first / guests / leave_early ids exist; a first member IS a home citizen of the area and a guest is NOT; no citizen twice in the roster; 15 + 1 + len(first) + len(guests) <= towns.max_live_visuals_festival (20 passes, 21 and a limit of 19 fail); without a route table the walk rule is reported as NOT evaluated: [true, true, true, true, true, true, true, true, true, true, true, true])
+  ok    social.validator_first_members_removed_from_the_ordered_pool (the validator's own ordered pool (first members removed, host excluded, by SocialRng.roll) equals SocialManager.festival_roster().pool for 4 seeds x 2 festivals, and the naive pool that keeps the first members (15 citizens instead of 14) differs, so a regression is caught)
+  ok    social.validator_leave_early_covers_1_5x_the_walk (leave_early >= 1.5 x the route time + 15 min: a 40 min walk needs 1.25 h (1.25 passes, 1.2 fails); measured from the deadline = the window end when the festival closes his shop, else the shop's opening hour (17:00 on a window to 20:00: 4.25 h pass, 4.2 and 1.25 fail))
+  ok    social.validator_festival_window_margin (a festival window may end by day_end_hour - 1 = 25.0 (CK-A-SC): 23.0 / 24.0 / 25.0 pass, 25.5 and 26.0 fail; on a 24 hour day (day_end_hour 24) the limit is 23.0 again; the shipped data still ends by 23:00)
+  ok    social.validator_real_data_clean (SV1..SV12 + SV14 on the dump of the real data (34 npcs, 34 citizens rows, 9 festivals): GDScript 0 errors [], python exit 0; 1 warnings (the derived defaults of every friend until S-data); skipped ["SV11: leave_early walk rule not evaluated (no route_minutes: the route table of the towns track, T-routes, is not available to this run)"])
+  ok    social.balance_live_input_regressions (....
+----------------------------------------------------------------------
+Ran 4 tests in 0.079s
+
+OK
+)
+  ok    social.balance_live_routines_cover_current_roster (Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+AVAILABILITY exported 34 live citizens; compile problems []
+)
+  ok    social.balance_claims_hold (variant free on the dump of the real data (100 runs x 336 days): weekly chat alone reaches 8 hearts on day 50, the fastest possible 10 hearts is day 32; a typical player (the original 2.6-talk budget scaled by the live day duration) reaches 8 hearts with a tier A citizen at median 73.0 / p90 96.0 with the lean events (<= 80 / 115) and 68.0 / 91.0 with four events (<= 75 / 110); gifts are 21 % of a dedicated player's points (<= 25), the typical player spends 20 % of a game week (<= 25))
+  ok    social.balance_claims_hold_with_availability (variant mixed (town visits half by day, half until half an hour before bedtime; public room hours and one-heart owner gates apply; table: Live Routines.timeline, exact spans; all citizens, hearts 5,): median 72.0 / p90 100.0 with the lean events (<= 80 / 115), 67.0 / 93.0 with four events (<= 75 / 110); never reaching 8 hearts: tier A / B at most 0.2 % (<= 2), the worst single tier A / B citizen never reaches 4 hearts in 0.0 % (<= 2; at 8 hearts the worst citizen 4 %, a guard of this package at <= 5))
+  ok    social.balance_bounds_ratchet (tests/lib/social/balance_bounds.json: every bound is at or under the design limit (true), the runs sit under their bounds (true) and within the margin (true: a bound cannot silently drift away from what the data does), `--check` exits 0; `--ratchet` on a copy never raises a bound (1 stays 1: true) and lowers a loose one (true))
+  ok    social.fresh_resets_social_manager (Fresh.FEATURE_NODES names SocialManager; Fresh.new_game resets it (250 points gone, flags gone) and seeds it (424242 = DEFAULT_SEED), seed_features(2024) -> 0, reset_features() listed it: ["HomeManager", "FurnitureManager", "WardrobeManager", "LootService", "SocialManager"])
+  ok    social.grant_set_hearts_uses_manager (Grant.set_hearts goes through SocialManager.debug_set_hearts: points, the mirror flag and friend_changed(mayor_lyra, 4) once (source debug), never lowers, and fairy_king 6 hearts for home_tiers.lua ([["mayor_lyra", 4], ["fairy_king", 6]]))
+  ok    social.lua_api_functions (api.get_hearts -> int (0, 2), api.add_hearts(npc, 2) -> SocialManager.add_hearts(.., &lua): 200 points, api.is_birthday -> bool (true / false), api.festival() -> the active festival id as a String (hoestfesten) or "" ())
+  ok    social.project_line_once_and_check_project_exit_0 (project.godot holds the SocialManager line 1 time(s); tests/tools/check_project.gd exits 0 with 73 PASS and 0 FAIL ids)
+  ok    social.perf_boot_ms_added (what the autoload adds to the boot: creating the node and its _ready (nine signal connections, the section registration) takes 0.10 ms (budget 5 ms); compiling the 1,250 line script costs 36.5 ms once at start-up (measured with CACHE_MODE_IGNORE on a loaded machine, reported, not asserted); the real node holds the section again)
+  ok    social.perf_lookup_p95_under_100us (lookups, median / p95 in microseconds (budget: p95 < 100 asserted; the order's 6 us for a one-term eval_when and 20 us for festival_active are quiet-machine targets, reported here, not asserted on a shared machine): hearts 2.0/2.2, stage 5.0/5.4, points 0.6/0.6, eval_when_hearts 3.0/3.1, eval_when_hour 2.1/2.1, eval_when_fest 4.5/4.7, eval_when3 9.0/9.6, festival_active 3.5/3.5, birthdays_today 4.4/4.4, daypart 0.6/0.6, shop_closed 5.6/5.8; reset() 0.06 ms)
+  ok    social.fixture_replacements_freed (uninstall frees both the current fixture and an override it replaced)
+  --    social: 136 checks, 0 failed, 1 skipped, 29.7 s
+== summary: 2 section(s) run, 265 checks (0 failed, 1 skipped), 0 engine error(s), 0 engine warning(s), 1 allowed message(s), 0 problem(s), 0 known-issue message(s), 67.3 s
+PLAYTEST PASS (265 checks in 2 sections, 1 allowed engine messages, 0 known-issue messages)

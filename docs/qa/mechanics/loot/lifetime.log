@@ -1,0 +1,32 @@
+== lifetime Monte Carlo: 200 saves per profile, 520 days, valuation 'keep'.  Keepsakes with a dungeon source: 41 (28 unique, 13 legendary)
+   >520 means the milestone was not reached within the simulated horizon; it does not mean unobtainable.
+
+-- casual (runs/day 0.15): median runs 77, floors 231; mean gold per run 427; faints 5.2
+   keepsakes found by day (mean of the 41): d100: 8.6  d200: 16.1  d337: 22.0  d500: 25.9
+   day of the k-th UNIQUE (median / p10 / p90): 1: 16/3/37  2: 32/25/45  3: 40/29/60  5: 57/50/84  8: 94/77/129  12: 169/128/233
+   day of the k-th LEGENDARY (median / p10 / p90): 1: 104/46/150  2: 143/98/197  3: 176/128/240  5: 252/169/358  8: 476/308/>520
+   day when ALL 41 are found: median >520, p10 >520, p90 >520
+   runs per unique found 4.3, per legendary found 10.1 (whole 520 days)
+   rare items per floor 0.88 -> one rare about every 1.1 floors
+   day with 8 moonstone in the bag: median 138 (p10 101, p90 206); with 8 amethyst: median 162 (p10 117, p90 217)   [materials kept for home construction; castle timing is measured separately in pacing.py]
+   first 100 days: 15 runs, 8.0 uniques (one per 1.9 runs), 0.6 legendaries (one per 24.6 runs)
+
+-- typical (runs/day 0.35): median runs 182, floors 547; mean gold per run 717; faints 5.7
+   keepsakes found by day (mean of the 41): d100: 15.9  d200: 23.5  d337: 30.3  d500: 35.2
+   day of the k-th UNIQUE (median / p10 / p90): 1: 4/1/12  2: 13/10/18  3: 17/12/23  5: 28/25/35  8: 46/41/56  12: 90/76/105
+   day of the k-th LEGENDARY (median / p10 / p90): 1: 48/24/66  2: 68/48/88  3: 83/62/118  5: 136/85/198  8: 258/190/372
+   day when ALL 41 are found: median >520, p10 >520, p90 >520
+   runs per unique found 7.3, per legendary found 17.5 (whole 520 days)
+   rare items per floor 1.22 -> one rare about every 0.8 floors
+   day with 8 moonstone in the bag: median 56 (p10 44, p90 77); with 8 amethyst: median 61 (p10 48, p90 81)   [materials kept for home construction; castle timing is measured separately in pacing.py]
+   first 100 days: 35 runs, 12.4 uniques (one per 2.8 runs), 3.5 legendaries (one per 10.0 runs)
+
+-- dedicated (runs/day 0.60): median runs 312, floors 936; mean gold per run 978; faints 4.6
+   keepsakes found by day (mean of the 41): d100: 18.8  d200: 28.3  d337: 36.0  d500: 39.8
+   day of the k-th UNIQUE (median / p10 / p90): 1: 2/1/4  2: 7/6/10  3: 10/8/12  5: 18/15/20  8: 34/31/39  12: 69/63/79
+   day of the k-th LEGENDARY (median / p10 / p90): 1: 24/21/32  2: 43/28/50  3: 49/40/74  5: 99/57/137  8: 187/134/251
+   day when ALL 41 are found: median >520, p10 434, p90 >520
+   runs per unique found 11.2, per legendary found 25.6 (whole 520 days)
+   rare items per floor 1.49 -> one rare about every 0.7 floors
+   day with 8 moonstone in the bag: median 27 (p10 21, p90 36); with 8 amethyst: median 29 (p10 22, p90 38)   [materials kept for home construction; castle timing is measured separately in pacing.py]
+   first 100 days: 60 runs, 14.2 uniques (one per 4.2 runs), 4.6 legendaries (one per 13.0 runs)

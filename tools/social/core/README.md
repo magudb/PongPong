@@ -27,3 +27,11 @@ S-data (citizens.lua, gift_tastes.lua) and S-fest-content (the festival files) p
 `tests/lib/social/balance_bounds.json` holds the bounds the claims are asserted against: each bound is at most the design limit (8 hearts with a tier A citizen by day 80 / p90 115,
 75 / 110 with four heart events per citizen, gifts <= 25 % of a dedicated player's points, social time <= 25 % of a game week, never reaching 8 hearts <= 2 %) and at most a small
 margin above what the run measured. A data edit that moves the pacing makes `balance_mc.py --check` fail; the file is lowered with `--ratchet` and never raised.
+
+## Live clock and schedule inputs (mechanics completion)
+
+The social section now exports all 34 citizens from `Routines.timeline` with `export_availability.gd`. Its report records input hashes. Public seats/customer posts are clipped to building hours; staff posts stay private. Home spans require the owner to be present and awake, plus one heart with that owner at the simulated visit. Missing citizens or empty schedules fail immediately.
+
+Profiles retain their original visits per real minute: 2.6 typical talks per 540 seconds becomes 2.8889 per 600-second day. Both the day duration and game week come from the dumped clock rate and day endpoints. Half the visits are 09:00–17:00; half are 17:00 until half an hour before the live day ends (01:30 currently). This explicitly models the overnight play added by CLOCK_26. A player who always leaves town by 21:00 will take longer to befriend nocturnal citizens; that earlier-hours restriction is not a claim of this model. Reports include the exact visit windows, counts and time costs. These are player-behaviour assumptions, not measured player telemetry.
+
+The live 34-citizen, 100-seed runs satisfy the original design limits. The historical bounds were only tightened, never raised. `test_balance_inputs.py` checks missing/empty routine rejection, private staff areas, owner-based home access, exclusive closing boundaries, weather and the real-minute visit budget. Historical design fixtures remain unchanged.

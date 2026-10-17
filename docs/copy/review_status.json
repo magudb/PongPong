@@ -4,7 +4,7 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 414
+    "rows": 98
   },
   "localization/areas.csv": {
     "status": "draft",
@@ -81,7 +81,7 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 39
+    "rows": 47
   },
   "localization/furniture.csv": {
     "status": "draft",
@@ -186,14 +186,438 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 20
+    "rows": 20,
+    "voice_reviews": {
+      "BDAY_MAYOR_LYRA_GREET_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+        "en_sha256": "18ba780dba2d58dd917b7db657b2b57b452f21dcc5cf7e33e312e4a914187963"
+      },
+      "BDAY_BAKER_MAJA_GREET_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+        "en_sha256": "18ba780dba2d58dd917b7db657b2b57b452f21dcc5cf7e33e312e4a914187963"
+      },
+      "BDAY_MERCHANT_PIP_GREET_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+        "en_sha256": "18ba780dba2d58dd917b7db657b2b57b452f21dcc5cf7e33e312e4a914187963"
+      },
+      "BDAY_GARDENER_HOPPE_GREET_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+        "en_sha256": "18ba780dba2d58dd917b7db657b2b57b452f21dcc5cf7e33e312e4a914187963"
+      },
+      "BDAY_CARPENTER_BRUMME_GREET_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+        "en_sha256": "18ba780dba2d58dd917b7db657b2b57b452f21dcc5cf7e33e312e4a914187963"
+      },
+      "BDAY_POSTMAN_PIP_GREET_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+        "en_sha256": "18ba780dba2d58dd917b7db657b2b57b452f21dcc5cf7e33e312e4a914187963"
+      },
+      "BDAY_BATHKEEPER_SOFUS_GREET_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+        "en_sha256": "18ba780dba2d58dd917b7db657b2b57b452f21dcc5cf7e33e312e4a914187963"
+      },
+      "BDAY_BEEKEEPER_BIRK_GREET_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+        "en_sha256": "18ba780dba2d58dd917b7db657b2b57b452f21dcc5cf7e33e312e4a914187963"
+      },
+      "BDAY_SMITH_THORIN_GREET_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+        "en_sha256": "18ba780dba2d58dd917b7db657b2b57b452f21dcc5cf7e33e312e4a914187963"
+      },
+      "BDAY_FARMER_ROSA_GREET_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+        "en_sha256": "18ba780dba2d58dd917b7db657b2b57b452f21dcc5cf7e33e312e4a914187963"
+      }
+    }
   },
   "localization/gifts.csv": {
     "status": "draft",
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 125
+    "rows": 125,
+    "voice_reviews": {
+      "GIFT_MAYOR_LYRA_LOVE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+        "en_sha256": "2dd13b15aff3475aa6347dedbfb24025c1791294d5a6fd2a4fcb1ec87973cc5f"
+      },
+      "GIFT_MAYOR_LYRA_LIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+        "en_sha256": "1878f65c271f35edc08ad2d43b65964a08f70a90f00a1866ddfa9ebfb5ffafb6"
+      },
+      "GIFT_MAYOR_LYRA_NEUTRAL_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+        "en_sha256": "22437d6b579f47ed2c17ea9e13afaeb039c408d637d1dbbb550f35fff2c28c64"
+      },
+      "GIFT_MAYOR_LYRA_DISLIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+        "en_sha256": "7c96879c3dc468f5fef0646485adb90c14c95d38563e38b23ea3b59c61403e45"
+      },
+      "GIFT_MAYOR_LYRA_HATE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+        "en_sha256": "a9ce9f30c4bbbcf79f0e754728f283eea14a7ba5ca615789052392f73ff3e667"
+      },
+      "GIFT_BAKER_MAJA_LOVE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+        "en_sha256": "2dd13b15aff3475aa6347dedbfb24025c1791294d5a6fd2a4fcb1ec87973cc5f"
+      },
+      "GIFT_BAKER_MAJA_LIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+        "en_sha256": "1878f65c271f35edc08ad2d43b65964a08f70a90f00a1866ddfa9ebfb5ffafb6"
+      },
+      "GIFT_BAKER_MAJA_NEUTRAL_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+        "en_sha256": "22437d6b579f47ed2c17ea9e13afaeb039c408d637d1dbbb550f35fff2c28c64"
+      },
+      "GIFT_BAKER_MAJA_DISLIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+        "en_sha256": "7c96879c3dc468f5fef0646485adb90c14c95d38563e38b23ea3b59c61403e45"
+      },
+      "GIFT_BAKER_MAJA_HATE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+        "en_sha256": "a9ce9f30c4bbbcf79f0e754728f283eea14a7ba5ca615789052392f73ff3e667"
+      },
+      "GIFT_MERCHANT_PIP_LOVE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+        "en_sha256": "2dd13b15aff3475aa6347dedbfb24025c1791294d5a6fd2a4fcb1ec87973cc5f"
+      },
+      "GIFT_MERCHANT_PIP_LIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+        "en_sha256": "1878f65c271f35edc08ad2d43b65964a08f70a90f00a1866ddfa9ebfb5ffafb6"
+      },
+      "GIFT_MERCHANT_PIP_NEUTRAL_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+        "en_sha256": "22437d6b579f47ed2c17ea9e13afaeb039c408d637d1dbbb550f35fff2c28c64"
+      },
+      "GIFT_MERCHANT_PIP_DISLIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+        "en_sha256": "7c96879c3dc468f5fef0646485adb90c14c95d38563e38b23ea3b59c61403e45"
+      },
+      "GIFT_MERCHANT_PIP_HATE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+        "en_sha256": "a9ce9f30c4bbbcf79f0e754728f283eea14a7ba5ca615789052392f73ff3e667"
+      },
+      "GIFT_GARDENER_HOPPE_LOVE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+        "en_sha256": "2dd13b15aff3475aa6347dedbfb24025c1791294d5a6fd2a4fcb1ec87973cc5f"
+      },
+      "GIFT_GARDENER_HOPPE_LIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+        "en_sha256": "1878f65c271f35edc08ad2d43b65964a08f70a90f00a1866ddfa9ebfb5ffafb6"
+      },
+      "GIFT_GARDENER_HOPPE_NEUTRAL_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+        "en_sha256": "22437d6b579f47ed2c17ea9e13afaeb039c408d637d1dbbb550f35fff2c28c64"
+      },
+      "GIFT_GARDENER_HOPPE_DISLIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+        "en_sha256": "7c96879c3dc468f5fef0646485adb90c14c95d38563e38b23ea3b59c61403e45"
+      },
+      "GIFT_GARDENER_HOPPE_HATE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+        "en_sha256": "a9ce9f30c4bbbcf79f0e754728f283eea14a7ba5ca615789052392f73ff3e667"
+      },
+      "GIFT_CARPENTER_BRUMME_LOVE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+        "en_sha256": "2dd13b15aff3475aa6347dedbfb24025c1791294d5a6fd2a4fcb1ec87973cc5f"
+      },
+      "GIFT_CARPENTER_BRUMME_LIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+        "en_sha256": "1878f65c271f35edc08ad2d43b65964a08f70a90f00a1866ddfa9ebfb5ffafb6"
+      },
+      "GIFT_CARPENTER_BRUMME_NEUTRAL_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+        "en_sha256": "22437d6b579f47ed2c17ea9e13afaeb039c408d637d1dbbb550f35fff2c28c64"
+      },
+      "GIFT_CARPENTER_BRUMME_DISLIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+        "en_sha256": "7c96879c3dc468f5fef0646485adb90c14c95d38563e38b23ea3b59c61403e45"
+      },
+      "GIFT_CARPENTER_BRUMME_HATE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+        "en_sha256": "a9ce9f30c4bbbcf79f0e754728f283eea14a7ba5ca615789052392f73ff3e667"
+      },
+      "GIFT_POSTMAN_PIP_LOVE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+        "en_sha256": "2dd13b15aff3475aa6347dedbfb24025c1791294d5a6fd2a4fcb1ec87973cc5f"
+      },
+      "GIFT_POSTMAN_PIP_LIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+        "en_sha256": "1878f65c271f35edc08ad2d43b65964a08f70a90f00a1866ddfa9ebfb5ffafb6"
+      },
+      "GIFT_POSTMAN_PIP_NEUTRAL_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+        "en_sha256": "22437d6b579f47ed2c17ea9e13afaeb039c408d637d1dbbb550f35fff2c28c64"
+      },
+      "GIFT_POSTMAN_PIP_DISLIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+        "en_sha256": "7c96879c3dc468f5fef0646485adb90c14c95d38563e38b23ea3b59c61403e45"
+      },
+      "GIFT_POSTMAN_PIP_HATE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+        "en_sha256": "a9ce9f30c4bbbcf79f0e754728f283eea14a7ba5ca615789052392f73ff3e667"
+      },
+      "GIFT_BATHKEEPER_SOFUS_LOVE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+        "en_sha256": "2dd13b15aff3475aa6347dedbfb24025c1791294d5a6fd2a4fcb1ec87973cc5f"
+      },
+      "GIFT_BATHKEEPER_SOFUS_LIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+        "en_sha256": "1878f65c271f35edc08ad2d43b65964a08f70a90f00a1866ddfa9ebfb5ffafb6"
+      },
+      "GIFT_BATHKEEPER_SOFUS_NEUTRAL_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+        "en_sha256": "22437d6b579f47ed2c17ea9e13afaeb039c408d637d1dbbb550f35fff2c28c64"
+      },
+      "GIFT_BATHKEEPER_SOFUS_DISLIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+        "en_sha256": "7c96879c3dc468f5fef0646485adb90c14c95d38563e38b23ea3b59c61403e45"
+      },
+      "GIFT_BATHKEEPER_SOFUS_HATE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+        "en_sha256": "a9ce9f30c4bbbcf79f0e754728f283eea14a7ba5ca615789052392f73ff3e667"
+      },
+      "GIFT_BEEKEEPER_BIRK_LOVE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+        "en_sha256": "2dd13b15aff3475aa6347dedbfb24025c1791294d5a6fd2a4fcb1ec87973cc5f"
+      },
+      "GIFT_BEEKEEPER_BIRK_LIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+        "en_sha256": "1878f65c271f35edc08ad2d43b65964a08f70a90f00a1866ddfa9ebfb5ffafb6"
+      },
+      "GIFT_BEEKEEPER_BIRK_NEUTRAL_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+        "en_sha256": "22437d6b579f47ed2c17ea9e13afaeb039c408d637d1dbbb550f35fff2c28c64"
+      },
+      "GIFT_BEEKEEPER_BIRK_DISLIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+        "en_sha256": "7c96879c3dc468f5fef0646485adb90c14c95d38563e38b23ea3b59c61403e45"
+      },
+      "GIFT_BEEKEEPER_BIRK_HATE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+        "en_sha256": "a9ce9f30c4bbbcf79f0e754728f283eea14a7ba5ca615789052392f73ff3e667"
+      },
+      "GIFT_SMITH_THORIN_LOVE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+        "en_sha256": "2dd13b15aff3475aa6347dedbfb24025c1791294d5a6fd2a4fcb1ec87973cc5f"
+      },
+      "GIFT_SMITH_THORIN_LIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+        "en_sha256": "1878f65c271f35edc08ad2d43b65964a08f70a90f00a1866ddfa9ebfb5ffafb6"
+      },
+      "GIFT_SMITH_THORIN_NEUTRAL_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+        "en_sha256": "22437d6b579f47ed2c17ea9e13afaeb039c408d637d1dbbb550f35fff2c28c64"
+      },
+      "GIFT_SMITH_THORIN_DISLIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+        "en_sha256": "7c96879c3dc468f5fef0646485adb90c14c95d38563e38b23ea3b59c61403e45"
+      },
+      "GIFT_SMITH_THORIN_HATE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+        "en_sha256": "a9ce9f30c4bbbcf79f0e754728f283eea14a7ba5ca615789052392f73ff3e667"
+      },
+      "GIFT_FARMER_ROSA_LOVE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+        "en_sha256": "2dd13b15aff3475aa6347dedbfb24025c1791294d5a6fd2a4fcb1ec87973cc5f"
+      },
+      "GIFT_FARMER_ROSA_LIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+        "en_sha256": "1878f65c271f35edc08ad2d43b65964a08f70a90f00a1866ddfa9ebfb5ffafb6"
+      },
+      "GIFT_FARMER_ROSA_NEUTRAL_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+        "en_sha256": "22437d6b579f47ed2c17ea9e13afaeb039c408d637d1dbbb550f35fff2c28c64"
+      },
+      "GIFT_FARMER_ROSA_DISLIKE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+        "en_sha256": "7c96879c3dc468f5fef0646485adb90c14c95d38563e38b23ea3b59c61403e45"
+      },
+      "GIFT_FARMER_ROSA_HATE_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+        "en_sha256": "a9ce9f30c4bbbcf79f0e754728f283eea14a7ba5ca615789052392f73ff3e667"
+      }
+    }
   },
   "localization/social_arch.csv": {
     "status": "draft",
@@ -207,7 +631,289 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 335
+    "rows": 335,
+    "voice_reviews": {
+      "SOC_MAYOR_LYRA_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "734f8733b938852f1ab3a1f2ba060708fe444959a9c65255eb9d113b00cf1c04",
+        "en_sha256": "263c8260d02607757d358487c3cc3cbfe8042c5832843b000b0c2d2d390dccb2"
+      },
+      "SOC_MAYOR_LYRA_GREET_H0_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "4a0fc37baf77d566c8f713b95c92fdafba3020ecba719bfe5093a0c1b0347b4d",
+        "en_sha256": "75c6b62cbb7beacfa21a09db6dae866e90a3ffd352477f68ead0c5e613ee9294"
+      },
+      "SOC_BAKER_MAJA_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "d26c1ab938d4a91efdf4eed2c1bcf437e48279e0ba801bac3a92a257941f3142",
+        "en_sha256": "b84bd3d9be96936da9f310b9cfbe7eaa198adf433256e1bc11e1ac0535d67bd5"
+      },
+      "SOC_BAKER_MAJA_GREET_H0_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "5de2e3f056848786c55f25005b60caeb9e0b97167fa24eeb30aa03f3a229d323",
+        "en_sha256": "71a86be991bde5266e18b5177399c3ea07d0724d7c93438638f54d7543d1a356"
+      },
+      "SOC_MERCHANT_PIP_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "174e0458adb1b517e5c231e5756588d733bd3cf6ea773d7f8f233ba6de241ada",
+        "en_sha256": "6ae94cbf59c310f5a35b8af3fed1fea2fe6ce21100008972a92fa961126f5d2c"
+      },
+      "SOC_MERCHANT_PIP_GREET_H0_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "24060306b4ab3f74aebb6ff418df4e7c684a37a625ef97d86e132d5c5c879653",
+        "en_sha256": "95933ac63dfa9b4e94d8d495af708e6699b81534a8c33edc8fe31a28196df21a"
+      },
+      "SOC_GARDENER_HOPPE_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "77228d50fbb9a6309f071cc9a5a494fd6728298e60ffac73267e0b89ecea2ab8",
+        "en_sha256": "2e0691410048809d352b7a24bfea3c47bb1e1bc6620d84469bff137c9ca261c6"
+      },
+      "SOC_GARDENER_HOPPE_GREET_H0_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "51782395cd083a32a240f880c0585e974a2c5d5c88f349331f5cdaf804e08195",
+        "en_sha256": "d4a96d45ddda8d8ec349f27f0c87f2fdc4398f20acbfaa523eb6c28777220b13"
+      },
+      "SOC_CARPENTER_BRUMME_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "00d16b6675d85599ab5d2621b8ff9fad2b0c3ed38f430bba8d79f1e1ca5c6c70",
+        "en_sha256": "8c4b6dde96fbdb4ed6f74bb5da5b615ea4c9f3cdee16f73fd16b53cf5b467c7e"
+      },
+      "SOC_CARPENTER_BRUMME_GREET_H0_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "b3408c9707a8a94f9256cb38bbdc92d33cb3cfcf22192e00a125a0a74f0e0f16",
+        "en_sha256": "92ece9e66f864096df58420114fee3b10db4a720fdd5e45f81ecfb96d46a72bb"
+      },
+      "SOC_POSTMAN_PIP_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "a643ab32811e009fff930591a173cc91211aa84cb0c893962b61432d4886736c",
+        "en_sha256": "d695f6459fe4d486fc796870937f112a40978b731838f6df3f53570e14da678f"
+      },
+      "SOC_POSTMAN_PIP_GREET_H0_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "d3c59aa7b90c0254042d15dc06bdd9b308575aa5c26d574e6d4b1569e0711c10",
+        "en_sha256": "faa3802b286d47a941ff6177b46de8f998d10280ca18221e7616067f13275dfb"
+      },
+      "SOC_BATHKEEPER_SOFUS_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "5b3eaec461ba78d0f3212efc0eab5e0557df38ca1b8de7c88c4663b2a368fbdc",
+        "en_sha256": "f931ed694cf556658d26c7942932f3314b999adb53d6cad61bb491611be299ae"
+      },
+      "SOC_BATHKEEPER_SOFUS_GREET_H0_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "12541e3174484566dc0bf20fee2ec1c637c387c118c6fb472da4e8a3dc5c55a8",
+        "en_sha256": "0750c75b12054f240f80ac61b9d26b800cfb38fdae2ff3f7434f403670863768"
+      },
+      "SOC_BEEKEEPER_BIRK_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "f8a1c7c21758d9ebda2ace6454e9771b82cc60d980c84edd55a9ac020b28d61f",
+        "en_sha256": "0ede6ea8cc20e17c594dbbec8be62794ac0172e7e4ff43fc9f92b20bff512b20"
+      },
+      "SOC_BEEKEEPER_BIRK_GREET_H0_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "2ae90d93174c2b25b173697e9f8fed348b5d01b1e7f5dcf4af235b1c6308d731",
+        "en_sha256": "a8b1cc4053299151a886008086e3b933fe357fcf92ca84c63f4f39786d390982"
+      },
+      "SOC_SMITH_THORIN_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "4710169d1d52d1fe3d4aee16953ff43535731364d9939976b71a22a123a2927a",
+        "en_sha256": "22ee78b64bd7cd60395ae6996a0a942c96c71846f447aa43639a38ec9bb10198"
+      },
+      "SOC_SMITH_THORIN_GREET_H0_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "3b071c72e9fa196cad2fa24c7b9c6b79500372c19bde599d8b1cf5ffb3bcb116",
+        "en_sha256": "3b794819a7405f3d7947849c377879c3e3798841b7bbf0b752f288b78d158093"
+      },
+      "SOC_FARMER_ROSA_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "b13c14a6d0d87417840ea8c31ad0948f0d543342922b1d5b08b24568c2c4d779",
+        "en_sha256": "4defe356a02e63a2813a59e5dfa48d550636906c54cb550e1cc6a41b4261fa4b"
+      },
+      "SOC_FARMER_ROSA_GREET_H0_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "edaaeab16eed70d122362ec256b2cae93f96273a2f8637d17aacbe0b471464dd",
+        "en_sha256": "d39fc6ee65311bcc79dd330e7dade23ac4b9b9538ca51d29577de3163be99869"
+      },
+      "SOC_PIPPIN_BOEGEKNOP_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "74785b398625b6f7e02f214d7181f0b3519aab97b6be7565e5f156c794c49f51",
+        "en_sha256": "498d786201fc869a0afffd58b272df6865d0809f0c643c20c7a6a6c28caa6dba"
+      },
+      "SOC_FAIRY_LILY_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "d2e4208d5e34899f8ee9e7253925c353b7d22037545cb50880e2d915da3a3b57",
+        "en_sha256": "c088f18e7da91f552e7d7ab8787547961c4f16f38e44dc5ff80b1328c5b0b763"
+      },
+      "SOC_GUARD_OAK_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "3d58fe61380ae5329f1d7537495cf2e2515e34c8c2f33fc893ed23269c5bfda3",
+        "en_sha256": "901a55414118098cfe65e6084d065a7ad7385851bf5b16b4a4ba0087f13b2c66"
+      },
+      "SOC_FAIRY_WIZARD_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "6e22385ba16cda2fa39ac19ae8f4305b1a44e083081ad1f5f852e20118e77528",
+        "en_sha256": "ede7318fd1fc30f25cd6be68966e55cb9dfc3e0536857f2ab8699afeb11e0338"
+      },
+      "SOC_FAIRY_BUILDER_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "8fa26572be7b192fe588a17fe4cf45fdae769fdb97de662fefd3766fb93b6e29",
+        "en_sha256": "6568eff3820b4d36440ba9157672f8942627b2ba313e008c6eb9ae8d18eab2fe"
+      },
+      "SOC_FAIRY_FURNISHER_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "22250a49874b05985c6859b10161fa08608bdf934dd4629677fba7a05af6c0a2",
+        "en_sha256": "0a579bc14878cee34ced2f6ae25619248b5d096c957c0b93c6ffb0217eed56f0"
+      },
+      "SOC_FAIRY_TAILOR_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "9909fa468ca340bfdfc148ba101f46dc6742d6db1ecfce0b9dcf2a637d0a24a2",
+        "en_sha256": "d916368f95646fec4cb00074e873d3e1ea0dc7868dd5140f61e47f776f6889dd"
+      },
+      "SOC_APPRAISER_FRU_UGLE_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "bc476f9975faf2c91c0ecf4a919411487da7ab00c269144d560cb8f04bfe62ad",
+        "en_sha256": "c586bf5066061ac4ff645939fd6a6fbf39ba01ee2b6ecd095c4c4688e515ae9a"
+      },
+      "SOC_MAPSELLER_NATTEBLIK_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "6e41e1849ffe386452ead18bd731bfc9153b53e4fadbb618514793ac5c38b142",
+        "en_sha256": "7cf6086fb5620d1bb1ee5f238ee5eebf3eea8b673fc0ef46924791fa65d40a48"
+      },
+      "SOC_FAIRY_KING_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "0a3d9e317a8ca61c59b2800276bee84e8d2c17033361bf6c99911f109216d766",
+        "en_sha256": "f6a8834df2971ba0400fe68f8a0c3055ca58d621f2ade9b1dc83a705c8d26533"
+      },
+      "SOC_RASMUS_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "1c33bea2768268a9dead0e02388b0a0593819f6f9bcc38841d35e01ee029b265",
+        "en_sha256": "1bdfb707d278e9611095e8b2c25f93f7414161f01888c9f89bffb066b4c77cfc"
+      },
+      "SOC_LAMPLIGHTER_KIKI_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "068a352ee043ac57f486bc59358cdb7bf2e199b7347b8e3c93abbf3f8334a4ee",
+        "en_sha256": "8e5b3ed0bcc88ad2ee7a72ae1e87504de3b3f878838dba37f2f6db81a2f48c3e"
+      },
+      "SOC_BERTIL_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "23afcea2813aec31a9f985cebaa0028945dc8fca4746c4d6ba54e63f2c0186b0",
+        "en_sha256": "9a860780e5e8e196c82a4790450989aeeff8db4d31665052d033b78a48479e9a"
+      },
+      "SOC_BODIL_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "b6895e54225683d7d49a22b7071af3aae8081ea37300f1ee92c799ad168e8bb2",
+        "en_sha256": "666e044373f3b00e78d29a23683dc339adfe52ff0046c1f02551dce7ba9a5bda"
+      },
+      "SOC_CAT_MORFAR_MIS_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "d962e0730fd7fe760947eefbeaef4aba4eef38a25313f090749fe277ef0aca65",
+        "en_sha256": "285090cbe4a0a8fc03cc21357f04542b01b016468eab32f5e808bdef9eb7f387"
+      },
+      "SOC_PENGUIN_POSTMAN_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "482ee6d3df10eb0fb3ec8cc92699972635d680e9026eaf9a7f652f4e749f82cb",
+        "en_sha256": "122ddd51a6981714456d18a9c6c4bb5f590a49f9f48c3e9aa48973c544950616"
+      },
+      "SOC_INNKEEPER_KVAK_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "fa06e7ac53527e7b806dcf0e5d3b2f22aa44079436ca0268cc2ff3bf0f2f277a",
+        "en_sha256": "594da1fd124354d20938ce05c6472a821cf48fd2808b4d92118c37726569e813"
+      },
+      "SOC_CUB_BAMSE_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "7a0ea084ec4f3247d0da70f7ee0af06289d73a75a67c0041b587a4aa1a227cc3",
+        "en_sha256": "de43c39545f911bc8fa588aa2d0191f8f20d2b72b9f8eb8d5fb89fdfaef15c2d"
+      },
+      "SOC_CLERK_FJERPEN_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "67a361e9e649da739c5afacd78ff0b4723036835827e1fc604cdba519b2dfba0",
+        "en_sha256": "a639e00453ece0f09196817a27e3e260ceaaec6e498d1244057a57710921133c"
+      },
+      "SOC_FIDDLER_STRIMMEL_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "979e743b3009e78659245707a81e2fe970229766244e18b70b9546bf699fdb9a",
+        "en_sha256": "7134bfb49d1efdd3ded670b4fe9abba11404f12bf57911623f20e09aaee4a30e"
+      }
+    }
   },
   "localization/rel_ui.csv": {
     "status": "draft",
@@ -235,7 +941,7 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 1
+    "rows": 2
   },
   "localization/hud.csv": {
     "status": "draft",
@@ -277,7 +983,7 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 24
+    "rows": 25
   },
   "localization/ghost_dialogue.csv": {
     "status": "draft",
@@ -291,7 +997,79 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 168
+    "rows": 168,
+    "voice_reviews": {
+      "SOC_GHOSTFAM_DYNE_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "822d670a32f7b04f96dd024277b4094ea0757610d7e9b0c35ef69e8542db23cb",
+        "en_sha256": "06bf6bcf2cf641127927c9d9adc80a5b677e7bc0071f82776371ab280e095be0"
+      },
+      "SOC_GHOSTFAM_DYNE_GREET_H0_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "8a412f71bc0adcd62ed0e5a0e5ed1b43791e60f8a358c9b279f75ea99df5d9c7",
+        "en_sha256": "9470743bcc18bdaaccc570fa4ff4ae3f2be0acced3598666c95a9f434bc53224"
+      },
+      "SOC_GHOSTFAM_DYNE_GREET_H1_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "1b95882629d6fe071827a9d7f466b5c3483fa9bb92c914b91e2fde18712a475f",
+        "en_sha256": "c8da67bbaf669a1f334a0ae340dbeb235609bd2bb5c3fd9e7f5238c90691bc5c"
+      },
+      "SOC_GHOSTFAM_DYNE_GREET_H2_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "ab11e72c2d4994b3f45d4767d93f5c17fc51e53c3a744bd7d4f0286e2ab99a14",
+        "en_sha256": "d345dbf2e3d29a429c3155de67fca38b9cc1d8a71f1b422c928444954f0575c9"
+      },
+      "SOC_GHOSTFAM_DYNE_GREET_H3_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "c8ac4e13b76cea68e66f61eda94cfd62602e7da1ca1f48f960ca98db641e2ad4",
+        "en_sha256": "a405ad7562ec6d1db422f8c1ed03d94f78df917986fc57182b6f74304e6d2867"
+      },
+      "SOC_GHOSTFAM_DYNE_CHAT_2_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "ef91470d2e34b2b910ff7e6967ab6eb02a561ba47df2d4c0bdbaba48a9180db0",
+        "en_sha256": "6e96453c3ce1abe4258d52ddb1c7d75eacba3363d73a1921c03a9f7ce7ba0282"
+      },
+      "SOC_GHOSTFAM_DYNE_CHAT_8_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "b599fdb83b0be0fb4b2535815f0652a1130f0530adb1206c3ebddd9d71977f23",
+        "en_sha256": "a0af51b8deae27083788c041f907c9fc6bc10769be1bb97a7d191112393d05e7"
+      },
+      "SOC_GHOSTFAM_GNIST_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "4ae352a4ee906859b911fd25a17dde3ed6da39c5a5a5ac3dd228aab4f19ed0b2",
+        "en_sha256": "94c48c0b10004f8ae856bd000d0a29fad30e80d75f0d4e3c4e6082ae45e7896f"
+      },
+      "SOC_GHOSTFAM_SILKE_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "839db4b360f97f260c32d5779648a923b0a340057237befc24415e12fa39fc07",
+        "en_sha256": "696cd23889dfdf9945c19c7fb167d2085f5a994816b0cf649ce97c74017078ce"
+      },
+      "SOC_GHOSTFAM_BLUND_FIRST_1_V": {
+        "status": "ai_reviewed",
+        "reviewed_by": "Codex (AI bilingual copy review)",
+        "date": "2026-10-17",
+        "da_sha256": "b2e12c814ca80d81d58d1ed10cfbdf402de1c38c1428b62e321d9d83e7506d35",
+        "en_sha256": "8693e5f52ce664a3f739659838bcc20bd0fe7444c013ed813d1304d36321ea82"
+      }
+    }
   },
   "localization/secret_garden.csv": {
     "status": "draft",
@@ -305,6 +1083,153 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 39
+    "rows": 40
+  },
+  "localization/social_events.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 27
+  },
+  "localization/dungeon.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 19
+  },
+  "localization/forest_mother.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 108
+  },
+  "localization/dungeon_items.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 157
+  },
+  "localization/home_world.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 7
+  },
+  "localization/dungeon_run.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 83
+  },
+  "localization/home_ui.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 62
+  },
+  "localization/appraisal.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 12
+  },
+  "localization/forest.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 21
+  },
+  "localization/animals.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 41
+  },
+  "localization/look.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 4
+  },
+  "localization/festivals.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 91
+  },
+  "localization/post.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 77
+  },
+  "localization/keepers.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 66
+  },
+  "localization/heart_events.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 280
+  },
+  "localization/ghostfamily_events.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 55
+  },
+  "localization/ghostfamily_fest.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 36
+  },
+  "localization/ghostfamily_seek.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 25
+  },
+  "localization/ghostfamily_quests.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 26
+  },
+  "localization/partner.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 54
+  },
+  "localization/home_amenities.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 20
   }
 }

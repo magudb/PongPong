@@ -79,11 +79,22 @@ var is_single_player: bool = true
 var _base_phase: GamePhase = GamePhase.MENU
 var _modals: Array[Dictionary] = []          # [{name: StringName, pauses: bool}] in push order
 var _config_overrides: Dictionary = {}       # path -> value; tests and the debug console only, never saved
+var _quitting := false
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	EventBus.zone_entered.connect(_on_zone_entered)
+	get_tree().auto_accept_quit = false
+	get_tree().root.close_requested.connect(quit_game)
+
+func quit_game(code := 0) -> void:
+	if _quitting:return
+	_quitting = true
+	get_tree().paused = true
+	var audio := get_node_or_null("/root/AudioManager")
+	if audio!=null and audio.has_method("prepare_shutdown"):await audio.prepare_shutdown()
+	get_tree().quit(code)
 
 
 func _process(delta: float) -> void:
@@ -351,6 +362,30 @@ func set_flag(flag: StringName, value: Variant) -> void:
 		return                                          # writing the same value changes nothing
 	world_flags[flag] = safe
 	EventBus.flag_changed.emit(flag, safe)
+
+
+## Commit related progression flags before notifying synchronous observers.
+## Invalid input is refused atomically; the single-flag API retains its errors.
+func set_flags(changes: Dictionary) -> bool:
+	var next := {}
+	for key in changes:
+		if not (key is String or key is StringName) or str(key) == "": return false
+		var value: Variant = changes[key]
+		var safe: Variant = _json_safe(value) if value != null else null
+		if value != null and safe == null: return false
+		next[StringName(str(key))] = safe
+	var published: Array = []
+	for key in next:
+		var value: Variant = next[key]
+		if value == null:
+			if world_flags.erase(key): published.append([key,false])
+		else:
+			var previous: Variant = world_flags.get(key,_UNSET)
+			if typeof(previous) != typeof(value) or previous != value:
+				world_flags[key] = value
+				published.append([key,value])
+	for pair in published: EventBus.flag_changed.emit(pair[0],pair[1])
+	return true
 
 
 func get_flag(flag: StringName, default_value: Variant = false) -> Variant:

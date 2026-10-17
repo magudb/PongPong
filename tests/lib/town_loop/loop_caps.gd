@@ -19,12 +19,12 @@ const PROBES := {
 	"audio": ["method", "AudioManager", "cue_log"],
 	"copy": ["file", "res://tools/copy/copy_lint.py"],
 	"festivals": ["file", "res://scripts/social/events/festival_director.gd"],
-	"birthdays": ["file", "res://scripts/social/events/birthday_content.gd"],
+	"birthdays": ["method", "SocialManager", "birthday_state"],
 	"events": ["file", "res://scenes/ui/event_overlay.tscn"],
 	"relationships": ["file", "res://scripts/social/relationships/relationship_flow.gd"],
 	"post_ui": ["file", "res://scenes/ui/post.tscn"],
-	"visits": ["file", "res://scripts/social/visits/farm_visits.gd"],
-	"seasonal": ["file", "res://scripts/towns/decor/seasonal_decor.gd"],
+	"visits": ["file", "res://scripts/social/relationships/farm_visits.gd"],
+	"seasonal": ["file", "res://scripts/farm/steading/dress/seasonal_fx.gd"],
 	"window": ["window"],
 }
 

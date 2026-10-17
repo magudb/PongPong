@@ -1,0 +1,187 @@
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=dungeon_pickups,dungeon_run
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.S1cjxx/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 0.9 s
+== section dungeon_pickups  (res://tests/sections/dungeon_pickups.gd)
+  ok    dungeon_pickups.pickup_layer_and_delay
+  ok    dungeon_pickups.orb_magnet_and_pickup
+  ok    dungeon_pickups.pickup_goes_through_loot_deliver_when_present
+  ok    dungeon_pickups.full_pack_retains_drop_and_warns_once
+  ok    dungeon_pickups.full_pack_can_retry
+  ok    dungeon_pickups.berry_heals_when_hurt
+  ok    dungeon_pickups.orb_cap_50_auto_collects
+  ok    dungeon_pickups.cap_full_pack_queues_without_loss
+  ok    dungeon_pickups.cap_pending_drop_retries
+  ok    dungeon_pickups.telegraph_ring_matches_hit_area
+  ok    dungeon_pickups.telegraph_line_matches_hit_area
+  ok    dungeon_pickups.telegraph_pool_cap_8
+  ok    dungeon_pickups.fx_pool_reuse
+  ok    dungeon_pickups.fx_idle_process_disabled
+  --    dungeon_pickups: 14 checks, 0 failed, 0 skipped, 0.1 s
+== section dungeon_run  (res://tests/sections/dungeon_run.gd)
+  ok    dungeon_run.curve_1
+  ok    dungeon_run.hp_bat_floor_1
+  ok    dungeon_run.hp_ugleoje_floor_1
+  ok    dungeon_run.hp_tornebusk_floor_1
+  ok    dungeon_run.curve_2
+  ok    dungeon_run.hp_bat_floor_2
+  ok    dungeon_run.hp_ugleoje_floor_2
+  ok    dungeon_run.hp_tornebusk_floor_2
+  ok    dungeon_run.curve_3
+  ok    dungeon_run.hp_bat_floor_3
+  ok    dungeon_run.hp_ugleoje_floor_3
+  ok    dungeon_run.hp_tornebusk_floor_3
+  ok    dungeon_run.curve_4
+  ok    dungeon_run.hp_bat_floor_4
+  ok    dungeon_run.hp_ugleoje_floor_4
+  ok    dungeon_run.hp_tornebusk_floor_4
+  ok    dungeon_run.curve_5
+  ok    dungeon_run.hp_bat_floor_5
+  ok    dungeon_run.hp_ugleoje_floor_5
+  ok    dungeon_run.hp_tornebusk_floor_5
+  ok    dungeon_run.curve_6
+  ok    dungeon_run.hp_bat_floor_6
+  ok    dungeon_run.hp_ugleoje_floor_6
+  ok    dungeon_run.hp_tornebusk_floor_6
+  ok    dungeon_run.curve_7
+  ok    dungeon_run.hp_bat_floor_7
+  ok    dungeon_run.hp_ugleoje_floor_7
+  ok    dungeon_run.hp_tornebusk_floor_7
+  ok    dungeon_run.curve_8
+  ok    dungeon_run.hp_bat_floor_8
+  ok    dungeon_run.hp_ugleoje_floor_8
+  ok    dungeon_run.hp_tornebusk_floor_8
+  ok    dungeon_run.curve_9
+  ok    dungeon_run.hp_bat_floor_9
+  ok    dungeon_run.hp_ugleoje_floor_9
+  ok    dungeon_run.hp_tornebusk_floor_9
+  ok    dungeon_run.curve_10
+  ok    dungeon_run.hp_bat_floor_10
+  ok    dungeon_run.hp_ugleoje_floor_10
+  ok    dungeon_run.hp_tornebusk_floor_10
+  ok    dungeon_run.curve_11
+  ok    dungeon_run.hp_bat_floor_11
+  ok    dungeon_run.hp_ugleoje_floor_11
+  ok    dungeon_run.hp_tornebusk_floor_11
+  ok    dungeon_run.curve_12
+  ok    dungeon_run.hp_bat_floor_12
+  ok    dungeon_run.hp_ugleoje_floor_12
+  ok    dungeon_run.hp_tornebusk_floor_12
+  ok    dungeon_run.curve_clamps_and_deepens
+  ok    dungeon_run.starter_and_iron_ratings
+  ok    dungeon_run.weapon_ranges_match_ttk
+  ok    dungeon_run.family_sword_dps_parity
+  ok    dungeon_run.family_club_dps_parity
+  ok    dungeon_run.family_spear_dps_parity
+  ok    dungeon_run.family_dagger_dps_parity
+  ok    dungeon_run.family_staff_dps_parity
+  ok    dungeon_run.preset_none_hearts
+  ok    dungeon_run.preset_none_windup
+  ok    dungeon_run.preset_none_dodge_is_milliseconds
+  ok    dungeon_run.damage_none_bat_1
+  ok    dungeon_run.damage_none_bat_2
+  ok    dungeon_run.damage_none_bat_3
+  ok    dungeon_run.damage_none_bat_4
+  ok    dungeon_run.damage_none_ugleoje_1
+  ok    dungeon_run.damage_none_ugleoje_2
+  ok    dungeon_run.damage_none_ugleoje_3
+  ok    dungeon_run.damage_none_ugleoje_4
+  ok    dungeon_run.damage_none_tornebusk_1
+  ok    dungeon_run.damage_none_tornebusk_2
+  ok    dungeon_run.damage_none_tornebusk_3
+  ok    dungeon_run.damage_none_tornebusk_4
+  ok    dungeon_run.preset_none_does_not_change_loot_luck
+  ok    dungeon_run.preset_light_hearts
+  ok    dungeon_run.preset_light_windup
+  ok    dungeon_run.preset_light_dodge_is_milliseconds
+  ok    dungeon_run.damage_light_bat_1
+  ok    dungeon_run.damage_light_bat_2
+  ok    dungeon_run.damage_light_bat_3
+  ok    dungeon_run.damage_light_bat_4
+  ok    dungeon_run.damage_light_ugleoje_1
+  ok    dungeon_run.damage_light_ugleoje_2
+  ok    dungeon_run.damage_light_ugleoje_3
+  ok    dungeon_run.damage_light_ugleoje_4
+  ok    dungeon_run.damage_light_tornebusk_1
+  ok    dungeon_run.damage_light_tornebusk_2
+  ok    dungeon_run.damage_light_tornebusk_3
+  ok    dungeon_run.damage_light_tornebusk_4
+  ok    dungeon_run.preset_light_does_not_change_loot_luck
+  ok    dungeon_run.preset_cozy_hearts
+  ok    dungeon_run.preset_cozy_windup
+  ok    dungeon_run.preset_cozy_dodge_is_milliseconds
+  ok    dungeon_run.damage_cozy_bat_1
+  ok    dungeon_run.damage_cozy_bat_2
+  ok    dungeon_run.damage_cozy_bat_3
+  ok    dungeon_run.damage_cozy_bat_4
+  ok    dungeon_run.damage_cozy_ugleoje_1
+  ok    dungeon_run.damage_cozy_ugleoje_2
+  ok    dungeon_run.damage_cozy_ugleoje_3
+  ok    dungeon_run.damage_cozy_ugleoje_4
+  ok    dungeon_run.damage_cozy_tornebusk_1
+  ok    dungeon_run.damage_cozy_tornebusk_2
+  ok    dungeon_run.damage_cozy_tornebusk_3
+  ok    dungeon_run.damage_cozy_tornebusk_4
+  ok    dungeon_run.preset_cozy_does_not_change_loot_luck
+  ok    dungeon_run.oil_paused
+  ok    dungeon_run.oil_hub
+  ok    dungeon_run.oil_standard
+  ok    dungeon_run.oil_light
+  ok    dungeon_run.oil_cozy
+  ok    dungeon_run.oil_race_and_gem_multiply_once
+  ok    dungeon_run.light_never_below_35_percent
+  ok    dungeon_run.darkness_floor_1
+  ok    dungeon_run.darkness_floor_2
+  ok    dungeon_run.darkness_floor_3
+  ok    dungeon_run.darkness_floor_4
+  ok    dungeon_run.darkness_floor_5
+  ok    dungeon_run.darkness_floor_6
+  ok    dungeon_run.darkness_floor_7
+  ok    dungeon_run.darkness_floor_8
+  ok    dungeon_run.darkness_floor_9
+  ok    dungeon_run.darkness_floor_10
+  ok    dungeon_run.darkness_floor_11
+  ok    dungeon_run.darkness_floor_12
+  ok    dungeon_run.darkness_floor_13
+  ok    dungeon_run.darkness_floor_14
+  ok    dungeon_run.darkness_floor_15
+  ok    dungeon_run.darkness_floor_16
+  ok    dungeon_run.darkness_floor_17
+  ok    dungeon_run.darkness_floor_18
+  ok    dungeon_run.darkness_floor_19
+  ok    dungeon_run.darkness_floor_20
+  ok    dungeon_run.darkness_interval_and_oil
+  ok    dungeon_run.auto_refuel_prioritizes_oil
+  ok    dungeon_run.auto_refuel_fallback_and_threshold
+  ok    dungeon_run.boss_first_kill_adds_one_heart
+  ok    dungeon_run.boss_flags_are_atomic_for_save_observers
+  ok    dungeon_run.boss_repeat_never_duplicates_hearts
+  ok    dungeon_run.three_bosses_cap_at_six_half_hearts
+  ok    dungeon_run.flag_batch_refuses_invalid_input_atomically
+  ok    dungeon_run.hearts_composition_includes_assist
+  ok    dungeon_run.custom_setting_keeps_other_assists
+  ok    dungeon_run.forest_help_available_from_settings
+  ok    dungeon_run.all_eleven_assists_exposed_in_game
+  ok    dungeon_run.help_presets_change_real_owner
+  ok    dungeon_run.run_watch_attach_is_idempotent
+  ok    dungeon_run.run_watch_applies_surprises
+  ok    dungeon_run.picker_warns_for_highlighted_floor
+  ok    dungeon_run.map_reveals_first_visited_floor_and_consumes_one
+  ok    dungeon_run.tutorial_first_hint_emits
+  ok    dungeon_run.tutorial_spacing_and_flags
+  ok    dungeon_run.tutorial_disabled
+  ok    dungeon_run.hub_does_not_drain_player_oil
+  --    dungeon_run: 152 checks, 0 failed, 0 skipped, 0.4 s
+== summary: 2 section(s) run, 174 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 5.4 s
+PLAYTEST PASS (174 checks in 2 sections, 0 allowed engine messages, 0 known-issue messages)

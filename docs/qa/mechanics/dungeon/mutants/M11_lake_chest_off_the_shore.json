@@ -1,0 +1,29 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 599,
+  "elapsed_s": 14.2,
+  "engine": [],
+  "failed": 5,
+  "failures": [
+    "dungeon_gen.gen.golden_digest_f3",
+    "dungeon_gen.gen.golden_digest_f6",
+    "dungeon_gen.gen.golden_digest_f9",
+    "dungeon_gen.gen.inv.lake_chest_stands_on_a_pond_shore",
+    "dungeon_gen.gen.invariants_on_240_floors"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "dungeon_gen": {
+      "character": "animal",
+      "checks": 599,
+      "failed": 5,
+      "ms": 9701,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

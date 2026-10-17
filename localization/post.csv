@@ -1,0 +1,78 @@
+keys,da,en
+POST_TITLE,Hvor er …?,Where is …?
+POST_EMPTY,"Ingen, du kender, er her lige nu.",Nobody you know is here right now.
+POST_GROUP_TRAETOPPEN,Trætoppen,Treetop Town
+POST_GROUP_HYGGEBYEN,Hyggebyen,Hygge Town
+POST_GROUP_FARM,Gården,The farm
+POST_NOT_AWAKE,Ikke vågen endnu,Not awake yet
+POST_FOREST,Ude i skoven,Out in the forest
+POST_AWAY,Er ikke i byen,Away from town
+POST_ON_WAY,På vej,On the way
+POST_AT_FESTIVAL,Til dagens fest,At today’s festival
+POST_HINT,Find en ven · Skift by med sidetasterne · %s Luk,Find a friend · Page keys change town · %s Close
+WHERE_POST_A_BEDS1,Hoppes forreste bed,Hoppe’s front garden bed
+WHERE_POST_A_BEDS2,Hoppes bagerste bed,Hoppe’s back garden bed
+WHERE_POST_A_BENCH,Bænken ved Hoppes have,Bench by Hoppe’s garden
+WHERE_POST_A_UGLE_PERCH,Uglens siddegren,Owl’s perch
+WHERE_POST_A_LAMP,Lanternen ved haven,Garden lantern
+WHERE_POST_B_MAILBOX,Ved postkassen,By the postbox
+WHERE_POST_B_LIFT,Ved skovliften,By the forest lift
+WHERE_POST_B_BENCH,Bænken ved liften,Bench by the lift
+WHERE_POST_B_LAMP,Lanternen ved liften,Lift lantern
+WHERE_POST_C_LOGS,Brummes træstabler,Brumme’s timber stacks
+WHERE_POST_C_BENCH,Bænken ved værkstedet,Workshop bench
+WHERE_POST_C_LAMP,Lanternen ved værkstedet,Workshop lantern
+WHERE_POST_T_FIRE_N,På bålets nordside,North of the fire
+WHERE_POST_T_FIRE_E,På bålets østside,East of the fire
+WHERE_POST_T_FIRE_S,På bålets sydside,South of the fire
+WHERE_POST_T_FIRE_W,På bålets vestside,West of the fire
+WHERE_POST_T_STALL,Torvestanden,Square stall
+WHERE_POST_T_BENCH1,Torvets første bænk,First square bench
+WHERE_POST_T_BENCH2,Torvets anden bænk,Second square bench
+WHERE_POST_T_LADDER,Ved torvets stige,By the square ladder
+WHERE_POST_T_LAMP,Torvets lanterne,Square lantern
+WHERE_POST_U_LADDER,Øverst ved stigen,Top of the ladder
+WHERE_POST_U_BOARD,Ved opslagstavlen,By the noticeboard
+WHERE_POST_U_TERRACE,Den øvre terrasse,Upper terrace
+WHERE_POST_U_LAMP,Den øvre lanterne,Upper lantern
+WHERE_POST_E_TUB,Det udendørs bad,Outdoor bath
+WHERE_POST_E_BENCH,Bænken ved badehuset,Bathhouse bench
+WHERE_POST_E_BAT_WINDOW,Nattebliks vindue,Natteblik’s window
+WHERE_POST_E_LAMP,Lanternen ved badehuset,Bathhouse lantern
+WHERE_POST_F_BENCH,Bænken ved Musikstuen,Music room bench
+WHERE_POST_F_LAMP,Lanternen ved Musikstuen,Music room lantern
+WHERE_POST_G_PLANTER1,Det første køkkenbed,First vegetable planter
+WHERE_POST_G_PLANTER2,Det andet køkkenbed,Second vegetable planter
+WHERE_POST_G_PLANTER3,Det tredje køkkenbed,Third vegetable planter
+WHERE_POST_G_BENCH,Bænken ved køkkenhaven,Vegetable garden bench
+WHERE_POST_G_LAMP,Køkkenhavens lanterne,Vegetable garden lantern
+WHERE_POST_TORV_FOUNTAIN_N,Nord for springvandet,North of the fountain
+WHERE_POST_TORV_FOUNTAIN_E,Øst for springvandet,East of the fountain
+WHERE_POST_TORV_FOUNTAIN_S,Syd for springvandet,South of the fountain
+WHERE_POST_TORV_FOUNTAIN_W,Vest for springvandet,West of the fountain
+WHERE_POST_TORV_BENCH1,Bænken ved torvets indgang,Square entrance bench
+WHERE_POST_TORV_BENCH2,Bænken under træerne,Bench under the trees
+WHERE_POST_TORV_PLAYGROUND,Legepladsen,Playground
+WHERE_POST_WELL,Ved brønden,By the well
+WHERE_POST_BLOSSOM_BENCH1,Den første blomsterbænk,First blossom bench
+WHERE_POST_BLOSSOM_BENCH2,Den anden blomsterbænk,Second blossom bench
+WHERE_POST_BAKERY_TERRACE,Bageriets terrasse,Bakery terrace
+WHERE_POST_FORGE_FRONT,Foran smedjen,Outside the forge
+WHERE_POST_POND_DOCK,Broen ved dammen,Pond dock
+WHERE_POST_BEES1,Birks første bistade,Birk’s first beehive
+WHERE_POST_BEES2,Birks andet bistade,Birk’s second beehive
+WHERE_POST_ROSA_PEN,Rosas dyrefold,Rosa’s animal pen
+WHERE_POST_MARKET_ROW1,Markedets første række,First market row
+WHERE_POST_MARKET_ROW2,Markedets anden række,Second market row
+WHERE_POST_MARKET_ROW3,Markedets tredje række,Third market row
+WHERE_POST_KING_BALCONY,Kongens balkon,King’s balcony
+WHERE_POST_ROUND_N,Den nordlige postrute,Northern mail route
+WHERE_POST_ROUND_E,Den østlige postrute,Eastern mail route
+WHERE_POST_ROUND_S,Den sydlige postrute,Southern mail route
+WHERE_POST_ROUND_W,Den vestlige postrute,Western mail route
+WHERE_POST_PIP_MAILBOX,Ved gårdens postkasse,By the farm postbox
+WHERE_POST_PORCH,Gårdens veranda,Farm porch
+WHERE_POST_FIELD_EDGE,Ved markens kant,Field edge
+WHERE_POST_HOPPE_FENCE,Hegnet ved Hoppes besøg,Hoppe’s visiting spot by the fence
+WHERE_POST_BENCH_A,Gårdens bænk,Farm bench
+POST_HIDING,Gemmer sig i byen,Hiding in town

@@ -1,0 +1,105 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PLAYTEST start mode=windowed character=animal sections=res://tests/sections only=enemies,bosses
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.5Z278T/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /tmp/mechanics-enemies-native-shots
+== section bosses [windowed]  (res://tests/sections/bosses.gd)
+  ok    bosses.spawn_snurresvamp
+  ok    bosses.hp_and_kind_snurresvamp
+  ok    bosses.sleep_until_520_snurresvamp
+  ok    bosses.bar_and_wake_snurresvamp
+  ok    bosses.dash_telegraph_snurresvamp
+  ok    bosses.dash_speed_snurresvamp
+  ok    bosses.dazed_window_snurresvamp
+  ok    bosses.first_wave_snurresvamp
+  ok    bosses.second_wave_snurresvamp
+  ok    bosses.phase_berries_once_snurresvamp
+  ok    bosses.reset_no_rewards_snurresvamp
+  ok    bosses.death_once_snurresvamp
+  ok    bosses.real_floor_chain_snurresvamp
+  ok    bosses.spawn_snurresvamp_gloed
+  ok    bosses.hp_and_kind_snurresvamp_gloed
+  ok    bosses.sleep_until_520_snurresvamp_gloed
+  ok    bosses.bar_and_wake_snurresvamp_gloed
+  ok    bosses.dash_telegraph_snurresvamp_gloed
+  ok    bosses.dash_speed_snurresvamp_gloed
+  ok    bosses.dazed_window_snurresvamp_gloed
+  ok    bosses.first_wave_snurresvamp_gloed
+  ok    bosses.second_wave_snurresvamp_gloed
+  ok    bosses.phase_berries_once_snurresvamp_gloed
+  ok    bosses.quake_radius_snurresvamp_gloed
+  ok    bosses.two_clouds_snurresvamp_gloed
+  ok    bosses.reset_no_rewards_snurresvamp_gloed
+  ok    bosses.death_once_snurresvamp_gloed
+  ok    bosses.real_floor_chain_snurresvamp_gloed
+  ok    bosses.spawn_snurresvamp_konge
+  ok    bosses.hp_and_kind_snurresvamp_konge
+  ok    bosses.sleep_until_520_snurresvamp_konge
+  ok    bosses.bar_and_wake_snurresvamp_konge
+  ok    bosses.dash_telegraph_snurresvamp_konge
+  ok    bosses.dash_speed_snurresvamp_konge
+  ok    bosses.dazed_window_snurresvamp_konge
+  ok    bosses.first_wave_snurresvamp_konge
+  ok    bosses.second_wave_snurresvamp_konge
+  ok    bosses.phase_berries_once_snurresvamp_konge
+  ok    bosses.quake_radius_snurresvamp_konge
+  ok    bosses.two_clouds_snurresvamp_konge
+  ok    bosses.nine_staggered_rain_marks
+  ok    bosses.reset_no_rewards_snurresvamp_konge
+  ok    bosses.death_once_snurresvamp_konge
+  ok    bosses.real_floor_chain_snurresvamp_konge
+  info  saved /tmp/mechanics-enemies-native-shots/bosses_boss_telegraph_shot.png (1280x720)
+  --    bosses: 44 checks, 0 failed, 0 skipped, 4.6 s
+== section enemies [windowed]  (res://tests/sections/enemies.gd)
+  ok    enemies.create_marker_is_picked_entry
+  ok    enemies.spawns_bat
+  ok    enemies.hp_ladder_bat
+  ok    enemies.damage_ladder_bat
+  ok    enemies.dies_and_emits_once_bat
+  ok    enemies.spawns_ugleoje
+  ok    enemies.hp_ladder_ugleoje
+  ok    enemies.damage_ladder_ugleoje
+  ok    enemies.dies_and_emits_once_ugleoje
+  ok    enemies.spawns_tornebusk
+  ok    enemies.hp_ladder_tornebusk
+  ok    enemies.damage_ladder_tornebusk
+  ok    enemies.dies_and_emits_once_tornebusk
+  ok    enemies.spawns_lysesvamp
+  ok    enemies.hp_ladder_lysesvamp
+  ok    enemies.damage_ladder_lysesvamp
+  ok    enemies.dies_and_emits_once_lysesvamp
+  ok    enemies.spawns_mosfroe
+  ok    enemies.hp_ladder_mosfroe
+  ok    enemies.damage_ladder_mosfroe
+  ok    enemies.dies_and_emits_once_mosfroe
+  ok    enemies.spawns_sporesvamp
+  ok    enemies.hp_ladder_sporesvamp
+  ok    enemies.damage_ladder_sporesvamp
+  ok    enemies.dies_and_emits_once_sporesvamp
+  ok    enemies.spawns_krystalugle
+  ok    enemies.hp_ladder_krystalugle
+  ok    enemies.damage_ladder_krystalugle
+  ok    enemies.dies_and_emits_once_krystalugle
+  ok    enemies.telegraph_ugleoje
+  ok    enemies.telegraph_tornebusk
+  ok    enemies.stagger_cancels_windup
+  ok    enemies.armor_keeps_windup
+  ok    enemies.assist_scales_windup_and_damage
+  ok    enemies.ambush_starts_hidden
+  ok    enemies.ambush_rustle_then_leap
+  ok    enemies.ambush_leaps_once
+  ok    enemies.ambush_kind_fallback
+  ok    enemies.fairy_light_reveals_stuns
+  ok    enemies.rng_seeded_replay
+  ok    enemies.sleeping_enemy_cost_zero
+  ok    enemies.runestone_leash_blocks_aggro
+  ok    enemies.no_damage_during_dodge_iframes
+  info  saved /tmp/mechanics-enemies-native-shots/enemies_telegraph_ring_readable.png (1280x720)
+  info  saved /tmp/mechanics-enemies-native-shots/enemies_ambush_eyes_visible_outside_lantern.png (1280x720)
+  --    enemies: 43 checks, 0 failed, 0 skipped, 2.6 s
+== summary: 2 section(s) run, 87 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 11.3 s
+PLAYTEST PASS (87 checks in 2 sections, 0 allowed engine messages, 0 known-issue messages)

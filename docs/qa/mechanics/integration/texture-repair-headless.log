@@ -1,0 +1,585 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=town_budgets,ui_foundation,shop_ui,held_equipment,bosses,ui_mechanics,wardrobe_ui
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.sZMRKH/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 11.6 s
+== section bosses  (res://tests/sections/bosses.gd)
+  ok    bosses.spawn_snurresvamp
+  ok    bosses.hp_and_kind_snurresvamp
+  ok    bosses.sleep_until_520_snurresvamp
+  ok    bosses.bar_and_wake_snurresvamp
+  ok    bosses.dash_telegraph_snurresvamp
+  ok    bosses.dash_speed_snurresvamp
+  ok    bosses.dazed_window_snurresvamp
+  ok    bosses.first_wave_snurresvamp
+  ok    bosses.second_wave_snurresvamp
+  ok    bosses.phase_berries_once_snurresvamp
+  ok    bosses.reset_no_rewards_snurresvamp
+  ok    bosses.death_once_snurresvamp
+  ok    bosses.real_floor_chain_snurresvamp
+  ok    bosses.spawn_snurresvamp_gloed
+  ok    bosses.hp_and_kind_snurresvamp_gloed
+  ok    bosses.sleep_until_520_snurresvamp_gloed
+  ok    bosses.bar_and_wake_snurresvamp_gloed
+  ok    bosses.dash_telegraph_snurresvamp_gloed
+  ok    bosses.dash_speed_snurresvamp_gloed
+  ok    bosses.dazed_window_snurresvamp_gloed
+  ok    bosses.first_wave_snurresvamp_gloed
+  ok    bosses.second_wave_snurresvamp_gloed
+  ok    bosses.phase_berries_once_snurresvamp_gloed
+  ok    bosses.quake_radius_snurresvamp_gloed
+  ok    bosses.two_clouds_snurresvamp_gloed
+  ok    bosses.reset_no_rewards_snurresvamp_gloed
+  ok    bosses.death_once_snurresvamp_gloed
+  ok    bosses.real_floor_chain_snurresvamp_gloed
+  ok    bosses.spawn_snurresvamp_konge
+  ok    bosses.hp_and_kind_snurresvamp_konge
+  ok    bosses.sleep_until_520_snurresvamp_konge
+  ok    bosses.bar_and_wake_snurresvamp_konge
+  ok    bosses.dash_telegraph_snurresvamp_konge
+  ok    bosses.dash_speed_snurresvamp_konge
+  ok    bosses.dazed_window_snurresvamp_konge
+  ok    bosses.first_wave_snurresvamp_konge
+  ok    bosses.second_wave_snurresvamp_konge
+  ok    bosses.phase_berries_once_snurresvamp_konge
+  ok    bosses.quake_radius_snurresvamp_konge
+  ok    bosses.two_clouds_snurresvamp_konge
+  ok    bosses.nine_staggered_rain_marks
+  ok    bosses.saturated_sequence_waits_without_damage
+  ok    bosses.deferred_sequence_gets_full_warning
+  ok    bosses.nonpausing_dialogue_freezes_sequence_and_hazard
+  ok    bosses.deferred_sequence_cannot_hit_early
+  ok    bosses.sleep_resets_boss_and_cancels_pending_sequences
+  ok    bosses.reset_no_rewards_snurresvamp_konge
+  ok    bosses.death_once_snurresvamp_konge
+  ok    bosses.real_floor_chain_snurresvamp_konge
+  --    bosses: 49 checks, 0 failed, 0 skipped, 5.3 s
+== section held_equipment  (res://tests/sections/held_equipment.gd)
+  ok    held_equipment.badge_cannot_take_focus_or_eat_world_input
+  ok    held_equipment.selected_tool_has_matching_picture_and_name
+  ok    held_equipment.whole_item_catalog_has_held_tool_and_weapon_art ([])
+  ok    held_equipment.every_body_frame_and_direction_has_fitted_grip (fox: 344 real body poses)
+  ok    held_equipment.altitude_spin_and_flash_follow_body_once
+  ok    held_equipment.all_items_use_dedicated_directional_paintings
+  ok    held_equipment.real_hoe_action_starts
+  ok    held_equipment.action_readout_keeps_hoe_after_hotbar_swap
+  ok    held_equipment.next_selection_appears_after_action_finishes
+  ok    held_equipment.empty_slot_clears_attachment_and_names_empty_hands
+  ok    held_equipment.selected_sword_is_actual_weapon_in_farm_action
+  ok    held_equipment.swing_snapshot_survives_equipment_change
+  ok    held_equipment.dialogue_puts_held_item_away
+  ok    held_equipment.dialogue_release_restores_selected_tool
+  ok    held_equipment.enter_real_forest_hub
+  ok    held_equipment.forest_shows_equipped_weapon_even_with_hoe_selected
+  ok    held_equipment.forest_keeps_actual_readout_and_health_visible
+  ok    held_equipment.empty_weapon_slot_never_uses_phantom_sword
+  ok    held_equipment.readout_follows_language_change
+  ok    held_equipment.equipment_save_written
+  ok    held_equipment.equipment_save_loaded
+  ok    held_equipment.save_rebuilds_correct_held_weapon_without_extra_state
+  ok    held_equipment.badge_cannot_take_focus_or_eat_world_input
+  ok    held_equipment.selected_tool_has_matching_picture_and_name
+  ok    held_equipment.whole_item_catalog_has_held_tool_and_weapon_art ([])
+  ok    held_equipment.every_body_frame_and_direction_has_fitted_grip (monkey: 344 real body poses)
+  ok    held_equipment.altitude_spin_and_flash_follow_body_once
+  ok    held_equipment.all_items_use_dedicated_directional_paintings
+  ok    held_equipment.real_hoe_action_starts
+  ok    held_equipment.action_readout_keeps_hoe_after_hotbar_swap
+  ok    held_equipment.next_selection_appears_after_action_finishes
+  ok    held_equipment.empty_slot_clears_attachment_and_names_empty_hands
+  ok    held_equipment.selected_sword_is_actual_weapon_in_farm_action
+  ok    held_equipment.swing_snapshot_survives_equipment_change
+  ok    held_equipment.dialogue_puts_held_item_away
+  ok    held_equipment.dialogue_release_restores_selected_tool
+  ok    held_equipment.enter_real_forest_hub
+  ok    held_equipment.forest_shows_equipped_weapon_even_with_hoe_selected
+  ok    held_equipment.forest_keeps_actual_readout_and_health_visible
+  ok    held_equipment.empty_weapon_slot_never_uses_phantom_sword
+  ok    held_equipment.readout_follows_language_change
+  ok    held_equipment.equipment_save_written
+  ok    held_equipment.equipment_save_loaded
+  ok    held_equipment.save_rebuilds_correct_held_weapon_without_extra_state
+  --    held_equipment: 44 checks, 0 failed, 0 skipped, 1.9 s
+== section shop_ui  (res://tests/sections/shop_ui.gd)
+  ok    shop_ui.shop_scene_live
+  ok    shop_ui.shop_opens_from_real_service
+  ok    shop_ui.rules_da ([])
+  ok    shop_ui.rules_en ([])
+  ok    shop_ui.initial_focus
+  ok    shop_ui.row_accept_focuses_stepper
+  ok    shop_ui.buy_via_control
+  ok    shop_ui.esc_closes_and_restores
+  ok    shop_ui.pad_row_opens_stepper
+  ok    shop_ui.stepper_right_adds_one
+  ok    shop_ui.stepper_page_up_not_tab
+  ok    shop_ui.stepper_page_down
+  ok    shop_ui.gamepad_only_buy
+  ok    shop_ui.gamepad_close
+  ok    Every Lua shop has a usable offer: natteblik_maps
+  ok    Displayed total natteblik_maps
+  ok    shop_ui.buy_control_natteblik_maps
+  ok    shop_ui.no_sellable_natteblik_maps
+  ok    Every Lua shop has a usable offer: animal_store
+  ok    Displayed total animal_store
+  ok    shop_ui.buy_control_animal_store
+  ok    shop_ui.sell_control_animal_store
+  ok    Every Lua shop has a usable offer: bakery
+  ok    Displayed total bakery
+  ok    shop_ui.buy_control_bakery
+  ok    shop_ui.sell_control_bakery
+  ok    Every Lua shop has a usable offer: fest_flower_market
+  ok    Displayed total fest_flower_market
+  ok    shop_ui.buy_control_fest_flower_market
+  ok    shop_ui.sell_control_fest_flower_market
+  ok    Every Lua shop has a usable offer: fest_honey_market
+  ok    Displayed total fest_honey_market
+  ok    shop_ui.buy_control_fest_honey_market
+  ok    shop_ui.sell_control_fest_honey_market
+  ok    Every Lua shop has a usable offer: fest_harvest_market
+  ok    Displayed total fest_harvest_market
+  ok    shop_ui.buy_control_fest_harvest_market
+  ok    shop_ui.sell_control_fest_harvest_market
+  ok    Every Lua shop has a usable offer: fest_moon_market
+  ok    Displayed total fest_moon_market
+  ok    shop_ui.buy_control_fest_moon_market
+  ok    shop_ui.sell_control_fest_moon_market
+  ok    Every Lua shop has a usable offer: fest_bake_market
+  ok    Displayed total fest_bake_market
+  ok    shop_ui.buy_control_fest_bake_market
+  ok    shop_ui.sell_control_fest_bake_market
+  ok    Every Lua shop has a usable offer: furniture_shop
+  ok    Displayed total furniture_shop
+  ok    shop_ui.buy_control_furniture_shop
+  ok    shop_ui.sell_control_furniture_shop
+  ok    Every Lua shop has a usable offer: tailor_shop
+  ok    Displayed total tailor_shop
+  ok    shop_ui.buy_control_tailor_shop
+  ok    shop_ui.no_sellable_tailor_shop
+  ok    Every Lua shop has a usable offer: builder_yard
+  ok    Displayed total builder_yard
+  ok    shop_ui.buy_control_builder_yard
+  ok    shop_ui.sell_control_builder_yard
+  ok    Every Lua shop has a usable offer: flea_market
+  ok    Displayed total flea_market
+  ok    shop_ui.buy_control_flea_market
+  ok    shop_ui.sell_control_flea_market
+  ok    Every Lua shop has a usable offer: lantern_house
+  ok    Displayed total lantern_house
+  ok    shop_ui.buy_control_lantern_house
+  ok    shop_ui.no_sellable_lantern_house
+  ok    Every Lua shop has a usable offer: magic_store
+  ok    Displayed total magic_store
+  ok    shop_ui.buy_control_magic_store
+  ok    shop_ui.sell_control_magic_store
+  ok    Every Lua shop has a usable offer: seed_shop
+  ok    Displayed total seed_shop
+  ok    shop_ui.buy_control_seed_shop
+  ok    shop_ui.sell_control_seed_shop
+  ok    Every Lua shop has a usable offer: smithy
+  ok    Displayed total smithy
+  ok    shop_ui.buy_control_smithy
+  ok    shop_ui.sell_control_smithy
+  ok    Every Lua shop has a usable offer: timber_yard
+  ok    Displayed total timber_yard
+  ok    shop_ui.buy_control_timber_yard
+  ok    shop_ui.sell_control_timber_yard
+  ok    shop_ui.too_dear_disabled_and_styled
+  ok    shop_ui.tab_switch_page_actions
+  ok    shop_ui.hobbit_displayed_equals_charged
+  ok    shop_ui.inventory_toggle_i
+  ok    shop_ui.backpack_24_focusable_slots
+  ok    shop_ui.inventory_rules_da ([])
+  ok    shop_ui.inventory_rules_en ([])
+  ok    shop_ui.last_tool_discard_protected
+  ok    shop_ui.hotbar_assign_by_digit
+  ok    shop_ui.picker_eight_slots
+  ok    shop_ui.hotbar_assign_by_picker_pad
+  ok    shop_ui.grid_crosses_to_workshop
+  ok    shop_ui.workshop_crosses_to_grid
+  ok    Guide recipe enabled: mushroom_lantern
+  ok    shop_ui.craft_guide_mushroom_lantern
+  ok    Guide recipe enabled: scarecrow
+  ok    shop_ui.craft_guide_scarecrow
+  ok    Guide recipe enabled: honey_cake
+  ok    shop_ui.craft_guide_honey_cake
+  ok    Guide recipe enabled: pickaxe_copper
+  ok    shop_ui.craft_guide_pickaxe_copper
+  ok    shop_ui.workshop_station_locks (Kræver Gården)
+  ok    shop_ui.use_blueprint_through_control
+  ok    shop_ui.inventory_tab_closes_while_slot_focused
+  ok    shop_ui.discard_opens_confirmation
+  ok    shop_ui.discard_cancel_preserves_item
+  ok    shop_ui.discard_confirmation_present
+  ok    shop_ui.discard_confirm_removes_exactly_one
+  ok    shop_ui.equip_via_control
+  ok    shop_ui.consume_via_control
+  ok    shop_ui.closed_state_reasons (Lukket lige nu. Åbner kl. 08:00.)
+  ok    shop_ui.price_change_requires_new_confirmation
+  ok    shop_ui.price_change_charges_new_displayed_total
+  ok    shop_ui.close_request_honoured_once
+  ok    shop_ui.shop.visible (clean)
+  ok    shop_ui.shop.initial_focus (clean)
+  ok    shop_ui.shop.focus_walk (38 of 38 controls reached in 200 presses)
+  ok    shop_ui.shop.focusable (23 interactive, 38 keyboard-focusable)
+  ok    shop_ui.shop.rules (129 nodes, 49 text, 20 boxes, 15 interactive scanned)
+  ok    shop_ui.shop.i18n_flip (clean)
+  SKIP  ui_audit shop.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit shop.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit shop.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit shop.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    shop_ui.shop.escape (1 modal(s) opened and closed with Esc in order)
+  ok    shop_ui.shop_audit_live (clean)
+  ok    shop_ui.inventory.visible (clean)
+  ok    shop_ui.inventory.initial_focus (clean)
+  ok    shop_ui.inventory.focus_walk (160 of 160 controls reached in 707 presses)
+  ok    shop_ui.inventory.focusable (162 interactive, 160 keyboard-focusable)
+  ok    shop_ui.inventory.rules (807 nodes, 311 text, 167 boxes, 160 interactive scanned)
+  ok    shop_ui.inventory.i18n_flip (clean)
+  SKIP  ui_audit inventory.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit inventory.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit inventory.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit inventory.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    shop_ui.inventory.escape (1 modal(s) opened and closed with Esc in order)
+  ok    shop_ui.inventory_audit_live (clean)
+  ok    shop_ui.all_weapon_and_gem_details_localize_da (44 cards, broken [])
+  ok    shop_ui.loadout_card_iron_sword_da
+  ok    shop_ui.loadout_card_bounds_iron_sword_da ([P: (590.0, 429.0), S: (618.0, 46.0)])
+  ok    shop_ui.loadout_card_wpn_staff_star_da
+  ok    shop_ui.loadout_card_bounds_wpn_staff_star_da ([P: (590.0, 406.0), S: (618.0, 69.0)])
+  ok    shop_ui.loadout_card_gem_rune_heart_da
+  ok    shop_ui.loadout_card_bounds_gem_rune_heart_da ([P: (590.0, 337.0), S: (618.0, 138.0)])
+  ok    shop_ui.smith_has_comparable_weapon_da
+  ok    shop_ui.shop_weapon_card_da
+  ok    shop_ui.all_weapon_and_gem_details_localize_en (44 cards, broken [])
+  ok    shop_ui.loadout_card_iron_sword_en
+  ok    shop_ui.loadout_card_bounds_iron_sword_en ([P: (587.0, 429.0), S: (621.0, 46.0)])
+  ok    shop_ui.loadout_card_wpn_staff_star_en
+  ok    shop_ui.loadout_card_bounds_wpn_staff_star_en ([P: (587.0, 406.0), S: (621.0, 69.0)])
+  ok    shop_ui.loadout_card_gem_rune_heart_en
+  ok    shop_ui.loadout_card_bounds_gem_rune_heart_en ([P: (587.0, 337.0), S: (621.0, 138.0)])
+  ok    shop_ui.smith_has_comparable_weapon_en
+  ok    shop_ui.shop_weapon_card_en
+  --    shop_ui: 150 checks, 0 failed, 8 skipped, 6.9 s
+== section town_budgets  (res://tests/sections/town_budgets.gd)
+  ok    town_budgets.visible_icon_shares_live_texture
+  ok    town_budgets.closed_icon_releases_texture
+  ok    town_budgets.visible_weapon_owns_texture
+  ok    town_budgets.closed_weapon_preview_releases_texture
+  ok    town_budgets.builders_use_instance_caches (Both real lookup caches release a texture when its last scene owner goes away)
+  ok    town_budgets.interior_cold_build ({ "asset_preparation_ms": 53.325, "cold_entry_ms": 13.566, "warm_entry_ms": 3.871, "nodes": 143, "scenery_nodes": 111, "scenery_lights": 2 })
+  ok    town_budgets.interior_warm_rebuild ({ "asset_preparation_ms": 53.325, "cold_entry_ms": 13.566, "warm_entry_ms": 3.871, "nodes": 143, "scenery_nodes": 111, "scenery_lights": 2 })
+  ok    town_budgets.interior_nodes_and_lights ({ "sprites": 37, "night": 3, "bodies": 11, "lights": 2, "furniture": 13, "walls": 14, "hatch": 5, "stand_ins": 0, "placeholders": 0, "counters": 3, "handlers": 0, "pieces": 16, "accent_masks": 0, "service_lights": 0, "base_sprites": 26, "build_us": 2612, "zoom_fit": 0.75369458128079, "nodes": 104 } live_nodes=143)
+  ok    town_budgets.nav_bake_interior (70)
+  ok    town_budgets.keepers_warm_idle_talk_only (["idle", "talk"])
+  ok    town_budgets.room_population_cap
+  info  CITY NODES {"AnimatedSprite2D":8,"Area2D":65,"Camera2D":1,"CanvasLayer":1,"CharacterBody2D":7,"CollisionPolygon2D":16,"CollisionShape2D":111,"ColorRect":2,"Label":20,"Line2D":74,"Node":10,"Node2D":151,"PointLight2D":15,"Sprite2D":228,"StaticBody2D":20,"TileMapLayer":5,"Timer":4}
+  info  CITY BRANCH Backdrop 12
+  info  CITY BRANCH Ground 1
+  info  CITY BRANCH Water0 1
+  info  CITY BRANCH Water1 1
+  info  CITY BRANCH Water2 1
+  info  CITY BRANCH Water3 1
+  info  CITY BRANCH GroundFx 2
+  info  CITY BRANCH Skirts 1
+  info  CITY BRANCH Objects 252
+  info  CITY BRANCH Colliders 71
+  info  CITY BRANCH Triggers 111
+  info  CITY BRANCH Floors 209
+  info  CITY BRANCH OccluderFade 1
+  info  CITY BRANCH LevelGlow 59
+  info  CITY BRANCH LevelTracker 1
+  info  CITY BRANCH DailyFlags 1
+  info  CITY BRANCH LadderCap_main_ladder 2
+  info  CITY BRANCH Canopy 2
+  info  CITY BRANCH NightFx 1
+  info  CITY BRANCH TownDirector 2
+  info  CITY BRANCH Bounds 5
+  ok    town_budgets.city_warm_build ({ "asset_preparation_ms": 312.75, "cold_entry_ms": 45.865, "warm_entry_ms": 12.621, "nodes": 738, "scenery_nodes": 666, "scenery_lights": 12 })
+  ok    town_budgets.city_nodes_and_lights ({ "asset_preparation_ms": 312.75, "cold_entry_ms": 45.865, "warm_entry_ms": 12.621, "nodes": 738, "scenery_nodes": 666, "scenery_lights": 12 })
+  ok    town_budgets.nav_bake_city (11.509ms)
+  ok    town_budgets.city_baked_footprint_matches_geometry
+  ok    town_budgets.grid_warm_build ({ "asset_preparation_ms": 79.797, "cold_entry_ms": 30.0, "warm_entry_ms": 4.915, "nodes": 670, "scenery_nodes": 606, "scenery_lights": 9 })
+  ok    town_budgets.grid_parked_return ({ "asset_preparation_ms": 79.797, "cold_entry_ms": 30.0, "warm_entry_ms": 4.915, "nodes": 670, "scenery_nodes": 606, "scenery_lights": 9 })
+  ok    town_budgets.grid_npc_cap
+  ok    town_budgets.farm_warm_build ({ "asset_preparation_ms": 0.003, "cold_entry_ms": 5.114, "warm_entry_ms": 2.918, "nodes": 586, "scenery_nodes": 562, "scenery_lights": 11 })
+  ok    town_budgets.farm_dimensions
+  ok    town_budgets.nav_bake_grid_60 (4.599ms)
+  ok    town_budgets.route_plan_p95 (1us)
+  ok    town_budgets.batch_locations_match_individual_queries
+  ok    town_budgets.where_is_sweep (291us for 34)
+  ok    town_budgets.director_30_agents (0.1631ms / 30 agents)
+  ok    town_budgets.ordinary_visual_cap
+  ok    town_budgets.room_keeps_host_and_caps_visitors (Low-priority keeper retained; four of eight visitors admitted)
+  ok    town_budgets.csv_reload (97.676ms)
+  ok    town_budgets.farm_kit_vram_with_s3tc (17.8713912963867)
+  ok    town_budgets.vram_festival_day_row
+  ok    town_budgets.vram_process_cap_holds_with_20_looks (Authored arithmetic envelope; native scene measurements are separate)
+  info  TOWN BUDGETS {"farm":{"asset_preparation_ms":0.003,"cold_entry_ms":5.114,"nodes":586,"scenery_lights":11,"scenery_nodes":562,"warm_entry_ms":2.918},"hyggebyen":{"asset_preparation_ms":79.797,"cold_entry_ms":30.0,"nodes":670,"scenery_lights":9,"scenery_nodes":606,"warm_entry_ms":4.915},"int_froebutikken":{"asset_preparation_ms":53.325,"cold_entry_ms":13.566,"nodes":143,"scenery_lights":2,"scenery_nodes":111,"warm_entry_ms":3.871},"traetoppen":{"asset_preparation_ms":312.75,"cold_entry_ms":45.865,"nodes":738,"scenery_lights":12,"scenery_nodes":666,"warm_entry_ms":12.621}}
+  --    town_budgets: 31 checks, 0 failed, 0 skipped, 3.6 s
+== section ui_foundation  (res://tests/sections/ui_foundation.gd)
+  ok    ui_foundation.theme_loaded (gui/theme/custom = assets/ui/theme.tres)
+  ok    ui_foundation.theme_type_count (170 theme types (the spike had 145; the rarity tiers and words add more))
+  ok    ui_foundation.fonts_have_aeoeaa (Æ Ø Å æ ø å in Caprasimo and Alegreya Sans)
+  ok    ui_foundation.font_licences_present (OFL texts: missing [])
+  ok    ui_foundation.noto_binary_not_shipped (TTSymbols covers every glyph; the 1.2 MB Noto binary stays out)
+  ok    ui_foundation.symbol_fallback_keeps_line_height (display font with fallbacks is 1.00 x Caprasimo's own line height)
+  ok    tools/ui/build_theme.gd regenerates the theme in a child run (exit 0)
+  ok    ui_foundation.theme_matches_builder (assets/ui/theme.tres equals what tools/ui/build_theme.gd generates (170 types) [])
+  ok    guide page: slot states, button states, hearts
+  ok    quantity_stepper clamps to its range
+  ok    ui_foundation.components (gallery guide page + rarity page: 21 RaritySlots, 4 ladder rows, 5 themed slots)
+  ok    ui_foundation.gallery_rarity_row (the gallery carries the rarity row (5 states x filled/selected/unknown, word + pips, night icon and disc cases))
+  ok    toast with an item picture
+  ok    ability_slot setup + cooldown
+  ok    pips along the ladder [0, 1, 2, 3, 4]
+  ok    four distinct pip outlines { "leaf": 18, "diamond": 4, "sparkle": 8, "star": 10 }
+  ok    shapes ["none", "leaf", "diamond", "sparkle", "star"]
+  ok    ui_foundation.rarity_slot_plan_five_states_and_selected (fill + ring + pips per rarity; selected = gold ring replaces the rarity ring)
+  ok    empty tile: the guide's empty slot, no pips
+  ok    unknown tile: dashed silhouette state
+  ok    legendary with the _night.webp file: no disc
+  ok    legendary WITHOUT the _night.webp file: the pale disc is drawn behind the icon
+  ok    no picture -> no disc; a rare tile never gets a disc
+  ok    legendary count text pale (e4eff5), pips gold (f2c14e)
+  ok    RaritySlot node: bed_moon uses its _night file, chair_pine gets the disc, selecting keeps the disc and adds gold
+  ok    show_word makes room under the tile
+  ok    ladder: locked is dashed, next has the gold chip, current the moss chip
+  ok    ladder: the selected row (and only it) has the gold ring
+  ok    ui_foundation.rarity_components (item_slot rarity property -> theme variation + pip count ["SlotFilled:0", "SlotUncommon:1", "SlotRare:2", "SlotUnique:3", "SlotLegendary:4"]; RarityPips / RaritySlot / LadderRow plans)
+  ok    RaritySlot bed_moon legendary: the _night.webp file in either assignment order (res://assets/icons/home/bed_moon_night.webp / res://assets/icons/home/bed_moon_night.webp)
+  ok    item_id before rarity: no pale disc although the night file exists (the reported defect)
+  ok    legendary -> normal after the icon was loaded: the plain icon, no disc
+  ok    normal -> legendary after the icon was loaded: back to the _night file
+  ok    item_id before rarity, no _night file: the pale disc on the plain icon
+  ok    item_slot.rarity = X updates the icon too (legendary true, normal true, legendary again true, chair_pine disc true)
+  ok    ui_foundation.rarity_order_independent (RaritySlot and item_slot resolve the legendary _night icon whatever the order of item_id / rarity assignments)
+  ok    item_slot.setup before add_child keeps the data
+  ok    item_slot built before add_child: key, count, name, icon (night variant), tile and pips are applied when it is ready
+  ok    item_slot (the 24-cell backpack pattern): instantiate, setup, add_child gives a filled cell
+  ok    toast.setup before add_child: text, picture (night variant) applied when it is ready
+  ok    toast.setup before add_child, text only: picture and empty message stay hidden
+  ok    ui_foundation.setup_before_ready (item_slot.setup / notification_toast.setup are safe before add_child (no script error, arguments applied in _ready))
+  ok    plan(): an item without a picture -> badge; with a picture or without an item -> none
+  ok    an unknown (silhouette) or empty tile never shows the badge: it must not give the item away
+  ok    RaritySlot with an unresolvable item id: badge, no disc
+  ok    legendary without any icon file: the badge, not a disc
+  ok    ...and as an unknown silhouette no badge
+  ok    an explicit `icon` picture replaces the badge
+  ok    an item with art: no badge
+  ok    no item: no badge
+  ok    ui_foundation.rarity_slot_badge (RaritySlot draws TTItemIcon's initial badge for an item whose icon file is missing (plan()['badge']))
+  ok    ability_slot.setup before add_child keeps the data
+  ok    four ability slots built before add_child: size, icon id, key cap, cooldown veil and number are applied when each is ready
+  ok    the primary attack's key cap reads the InputMap: Venstre klik
+  ok    set_cooldown before the slot is ready (no setup yet) is applied in _ready too
+  ok    two setup() calls before ready: the last one wins
+  ok    ability_slot setup / set_cooldown before add_child raise no script error
+  ok    ui_foundation.ability_slot_before_ready (ability_slot.setup / set_cooldown are safe before add_child (the forest HUD builds its four slots that way))
+  ok    label_for: ABILITY_<ID> translated; a key without a translation (or no id) gives "", never the id
+  ok    ABILITY_TESTSTRIKE exists: the slot shows its Danish word 'slag'
+  ok    no ABILITY_ key yet: the icon only - the English id 'no_such_ability_zz' is not shown ('')
+  ok    a language switch re-translates the word and the key cap (strike / Left click)
+  ok    ...and back to Danish (slag / Venstre klik)
+  ok    TTItemIcon.fallback_label: the id by default, nothing with id_fallback = false
+  ok    ...and an explicit display_name is always shown
+  ok    the real ABILITY_SLASH/DODGE/LIGHT/DRINK words (forest.csv): ["slag", "undvig", "fe-lys", "drik"]
+  ok    the ability slot tests logged no engine message
+  ok    ui_foundation.ability_slot_danish_label (ability_slot labels itself with ABILITY_<ID> (Danish / English) and never with the English icon id)
+  ok    the second setup() shows the second text
+  ok    ...and carries on from the current opacity instead of dropping to 0 (0.67 -> 0.67)
+  ok    a second setup() on a toast in the tree: the first fade's queue_free no longer removes it early
+  ok    ...it holds full opacity for its own 3 s (1.00)
+  ok    two setup() calls before add_child: the last one is shown
+  ok    ...and the toast still frees itself when its own schedule ends
+  ok    the toast tests logged no engine message
+  ok    ui_foundation.toast_second_setup (notification_toast: a second setup() replaces the running fade (one tween, no early queue_free))
+  ok    item_slot.setup(&"", 5) before ready: no count '', amount 0, tile SlotEmpty, the hotbar key cap stays
+  ok    ...filled with an item the count shows
+  ok    ...and emptied again (setup(&"", 7) after ready): count gone
+  ok    a non-stackable tool (amount 0) shows no count either
+  ok    item_slot empty-cell setup raised no engine message
+  ok    ui_foundation.empty_cell_no_count (an empty item_slot never shows a count)
+  ok    TTItemIcon has no ICON_DIR constant, only DIRS ([&"DIRS"])
+  ok    the icon directories are spelled out once (TTItemIcon.DIRS: items, home, wardrobe), nowhere else in scripts/ui ["tt_item_icon.gd x3"]
+  ok    ui_foundation.icon_dir_constant_gone (no second copy of the icon directory in scripts/ui)
+  ok    fixtures: the components gallery is always available (both pages)
+  ok    fixtures: an unknown screen is SKIP (null), never an error
+  ok    fixtures: shop_ui.tscn exists -> loaded
+  ok    fixtures: title (res://scenes/main/main_menu.tscn) counts only once it is built on the guide theme (legacy 3D scene does not count)
+  ok    fixtures: select (res://scenes/ui/character_select.tscn) counts only once it is built on the guide theme (legacy 3D scene does not count)
+  ok    fixtures: variant names resolve to their screen
+  ok    fixtures: a registered setup runs after the screen is built
+  ok    fixtures: the guide's mock copy (4 quests, 1.250 guldagern) loads
+  ok    rarity WORD labels on parchment >= 4.5:1 (worst uncommon 5.08)
+  ok    gold pips on the night tile >= 7.0:1 (7.04)
+  ok    icon rim: rim vs night 10.1:1, ink vs rim 12.7:1 (both >= 7)
+  ok    ink on the night tile alone is 1.25:1: the reason legendary icons need the rim (RV-A2)
+  ok    slot count text (ink, or the pale rim on night) reads >= 7:1 on every tile fill
+  ok    theme RarityWord<Id> label variations carry the Rarity.ui() label colours
+  ok    ui_foundation.rarity_contrast (labels >= 4.5 (worst 5.08), gold pips on night 7.04 >= 7.0, rim pairs 10.1 / 12.7)
+  ok    default lookup order = ArtCatalog.icon: items, home, wardrobe
+  ok    an item icon lives in assets/icons/items
+  ok    a furniture / material icon is found in assets/icons/home
+  ok    a garment icon is found in assets/icons/wardrobe
+  ok    the same id in all three: the FIRST directory wins (ordered lookup)
+  ok    extension order inside a directory: webp, png, svg
+  ok    no directory has it: empty path (the caller draws the badge)
+  ok    empty, path-like and spaced ids are refused
+  ok    legendary: the <id>_night.webp rim variant is used when it exists
+  ok    legendary WITHOUT the night file: the plain icon, night=false (the pale disc is drawn)
+  ok    only the dark (legendary) tile uses the night variant
+  ok    the night variant must sit beside the file that was found (items/ has the hat, wardrobe/ has the night file: not used)
+  ok    `common` is normal: no night variant
+  ok    disc radius = 0.60 x the 50 px icon edge = 30 px, centred on the icon
+  ok    the disc stays inside the tile
+  ok    an icon that fills the tile: the disc (r 34.8) is clipped to the tile rect
+  ok    disc constants: 0.60, e4eff5, alpha .92
+  ok    real files: bed_moon (A1) resolves to its _night.webp in assets/icons/home
+  ok    ui_foundation.item_icon_three_dirs_and_night (ordered items > home > wardrobe lookup, extension order, legendary _night sibling, disc fallback (49 predicate calls))
+  ok    GameUI list: hud, forest_hud ... pause_menu, save_load_ui, settings_ui (22 ids)
+  ok    the 11 base screens, the 5 addendum screens and the 5 towns / social screens (22 ids) are all in the list
+  ok    ui_foundation.game_ui_instantiates_what_exists (layer 10, ALWAYS, group game_ui; loaded [&"hud", &"forest_hud", &"social_hud", &"event_overlay", &"dialogue_ui", &"inventory_ui", &"quest_journal", &"people", &"gift_ui", &"post", &"shop_ui", &"animal_care_ui", &"build_menu_ui", &"husbyggeri", &"indretning", &"home_chest", &"home_amenities", &"garderobe", &"pause_menu", &"save_load_ui", &"settings_ui"] (none are required))
+  ok    only existing scenes load, in list order (garderobe below pause_menu): [&"hud", &"inventory_ui", &"garderobe", &"pause_menu"]
+  ok    get_screen by id or node name, null when missing
+  ok    HUD controls use focus_mode NONE
+  ok    set_mode(action) keeps fallback HUD when forest screen is missing
+  ok    a loaded forest HUD replaces the fallback
+  ok    set_mode(farm) shows it again
+  ok    ui_foundation.game_ui_no_key_handling (no key handler in game_ui.gd: [])
+  ok    SCREEN_ORDER is exactly the 22 ids of SCREEN_IDS, back to front: [&"hud", &"forest_hud", &"social_hud", &"event_overlay", &"dialogue_ui", &"inventory_ui", &"quest_journal", &"people", &"gift_ui", &"post", &"shop_ui", &"animal_care_ui", &"build_menu_ui", &"husbyggeri", &"indretning", &"home_chest", &"home_amenities", &"garderobe", &"samlerbog", &"pause_menu", &"save_load_ui", &"settings_ui"]
+  ok    no screen id twice (22 ids, 22 distinct)
+  ok    every towns / social id is below the pause menu (its Esc and its draw order)
+  ok    social_hud sits right behind the two HUDs
+  ok    event_overlay is between the HUDs and dialogue_ui: the letterbox is drawn BEHIND the dialogue
+  ok    people, gift_ui, post follow quest_journal and sit above the shops
+  ok    in the real scene folder a new id is instanced only if scenes/ui/<id>.tscn exists (loaded: [&"hud", &"forest_hud", &"social_hud", &"event_overlay", &"dialogue_ui", &"inventory_ui", &"quest_journal", &"people", &"gift_ui", &"post", &"shop_ui", &"animal_care_ui", &"build_menu_ui", &"husbyggeri", &"indretning", &"home_chest", &"home_amenities", &"garderobe", &"pause_menu", &"save_load_ui", &"settings_ui"])
+  ok    an empty folder: no id is instanced (the new ids are inert until their scene lands)
+  ok    the five new scenes land first: all five load, back to front: [&"social_hud", &"event_overlay", &"people", &"gift_ui", &"post"]
+  ok    their neighbours land later and slot in around them: tree order == list order [&"hud", &"social_hud", &"event_overlay", &"dialogue_ui", &"quest_journal", &"people", &"gift_ui", &"post", &"shop_ui", &"garderobe", &"pause_menu", &"settings_ui"]
+  ok    hud < social_hud < event_overlay < dialogue_ui in the tree (the letterbox is behind the dialogue): second load = [&"hud", &"dialogue_ui", &"quest_journal", &"shop_ui", &"garderobe", &"pause_menu", &"settings_ui"]
+  ok    people, gift_ui, post sit between quest_journal and shop_ui; settings_ui is still last
+  ok    every new screen is PROCESS_MODE_ALWAYS (set by the loader when the scene leaves it at INHERIT)
+  ok    ui_foundation.game_ui_loads_new_ids_in_order (GameUI.SCREEN_ORDER: social_hud, event_overlay, people, gift_ui, post are in place (22 ids), inert without a scene, and load back to front in any order)
+  ok    date_text = TimeManager.date_text (one calendar): Tirsdag 16. Blomstermåned
+  ok    en: Tuesday 16. Month of Blooms / 1,250
+  ok    da: thousands and clock
+  ok    mayor_lyra portrait resolves through npcs.lua + characters.lua (res://assets/isometric_characters/fairy_mayor/portrait.webp)
+  ok    the bust of the NPC's own visual wins as soon as it exists
+  ok    assets/portraits/<id>.webp before isometric_characters/<id>/portrait.webp
+  ok    fallback chain fairy_mayor -> fairy, pack folder portrait
+  ok    quest tag ids are ASCII (HØST -> HOEST)
+  ok    ui_foundation.tt_helpers (tt_format / tt_portraits / tt_quest_text answer through TimeManager, npcs.lua and characters.lua)
+  ok    the zone keys of the real quests translate (ZONE_CITY = Hyggebyen)
+  ok    meta.location = "ZONE_CITY" is shown translated: 'Fra Pippin Bøgeknop · Hyggebyen'
+  ok    ZONE_FARM and ZONE_DYBE_BREGNER too: 'Fra Pippin Bøgeknop · Min Trækronsgård' / 'Fra Pippin Bøgeknop · Dybe Bregner'
+  ok    a key-shaped location WITHOUT a translation is dropped, never printed raw: 'Fra Pippin Bøgeknop'
+  ok    plain text (not a key) is kept as it is: 'Fra Pippin Bøgeknop · Skovbrynet'
+  ok    no location: no separator; no giver: no line
+  ok    en: the same lines in English ('From Pippin Bøgeknop · Deep Ferns')
+  ok    40 real quest definitions: no from-line carries a raw translation key []
+  ok    40 real quests carry a ZONE_ key as location: each from-line ends with the translated place
+  ok    ui_foundation.quest_text_location (meta.location is a zone KEY (plan 3.12): translated in the quest book's 'Fra <giver> · <place>' line, never printed raw)
+  ok    meta / rewards / objectives that are empty tables (Array or Dictionary) or the wrong type: every reader answers with 'nothing' instead of a script error
+  ok    rewards = { gold = 5, items = {}, friendship = {} }: the gold chip only ([{ "kind": "gold", "text": "5 guldagern" }])
+  ok    meta.location = {} is no place: 'Fra Pippin Bøgeknop'
+  ok    objectives = { {}, {id = a, target = {}}, ... }: three rows with default targets ([1, 1, 2])
+  ok    ui_foundation.quest_text_hostile_definitions (tt_quest_text reads every sub-table through LuaData: empty tables never raise script errors)
+  ok    title: the Lua title, a translated title_key, QUEST_<ID>_TITLE
+  ok    a title_key without a translation falls back to QUEST_<ID>_TITLE ('Titel efter fejlnøgle')
+  ok    no title, no key, no translation: the id made readable, never a raw key ["T Bad Key", "T Missing", "T Wrong Type"]
+  ok    none of the seven titles contains a raw translation key []
+  ok    en: the same fallbacks
+  ok    40 real quest definitions: every title is real text []
+  ok    ui_foundation.quest_text_title (tt_quest_text.title() guards title_key and QUEST_<ID>_TITLE with _has_key like description() and step_text())
+  ok    ui_foundation.ui_csv_readable (localization/ui.csv has the header keys,da,en)
+  ok    no key twice inside ui.csv []
+  ok    every ui.csv key has da AND en text []
+  ok    no RECIPE_*, ITEM_*, per-shop SHOP_<id>_GREETING or INV_RARITY_* (EPIC) rows []
+  ok    the keys other packages asked for exist in ui.csv: missing []
+  ok    device-aware dialogue continuation comes from nav.csv HINT_CONTINUE
+  ok    UI_WEATHER_KLART stays in core.csv (defined there already)
+  ok    canonical copy da/en of the shared keys
+  ok    no ui.csv key is defined in another non-legacy CSV []
+  ok    the localization lint reports no error for ui.csv []
+  ok    every ui.csv key is owned by ui.csv in tools/loc/key_owners.json []
+  ok    ui.csv.import is a keep stub (R.4)
+  ok    ui_foundation.no_duplicate_keys (139 keys, 0 duplicates, no RECIPE_/ITEM_/shop-greeting/INV_RARITY_ rows, no cross-file duplicate)
+  ok    tests/checkpoints/guide_ref holds the seven pw1x_<screen>.png renders at 1280x720
+  ok    guide_ref has a .gdignore: Godot never imports the reference PNGs (python reads them)
+  ok    a bundled reference compared with itself (--ref, --no-frame-crop) is 0.00 for all seven
+  ok    negative control: the TITLE render scored against the HUD guide screen is far off (44.5)
+  ok    frame crop is the default (2 px HTML frame ignored: 0.000); --no-frame-crop keeps it (0.658)
+  ok    --region x,y,w,h: inside the patch 20.0000 (=20), outside 0.0000, whole picture 0.4340 (=0.4340)
+  ok    --ref works with any shot name: anything_at_all mean abs diff (0-255):   0.00   pixels with diff>40:  0.00%   (1280x720)
+  ok    --max N on the whole picture: mean 0.43 > 0.3 exits 1, <= 5 exits 0 (codes 1 / 0)
+  ok    usage errors exit 2 (unknown screen 2, region outside 2, --ref with two shots 2, missing file 2)
+  ok    --target hud=0.1 on a flat shot against the HUD guide screen exits 1 (hud        mean abs diff (0-255):  44.42   pixels with diff>40: 57.37%   (1280x720)   EXCEEDS limit 0.10)
+  ok    --max N: mean 20 > 10 exits 1 ('EXCEEDS'), <= 25 exits 0
+  ok    malformed --target / --max, a text file, a truncated PNG (shot or reference) and an unwritable --out all exit 2 with a 'compare_guide:' message and no traceback (codes [2, 2, 2, 2, 2, 2, 2, 2, 2])
+  ok    --frame-px: a negative number (with or without --no-frame-crop), 360+ on a 720 px picture, 5000 and text all exit 2 with the limit named, no PIL error (codes [2, 2, 2, 2, 2])
+  ok    --frame-px 0 keeps the whole 1280x720 reference, 359 is accepted ([1280.0, 720.0] / [562.0, 2.0])
+  ok    ui_foundation.compare_guide_modes (--ref / --no-frame-crop / --region / --max / --frame-px exercised on synthetic images and the seven bundled references; bad inputs exit 2)
+  ok    guide_ref/SHA256SUMS exists
+  ok    ui_foundation.guide_ref_pinned (the seven regenerated guide references still hash to SHA256SUMS [])
+  ok    ui_foundation.smoke (ui_smoke.tscn child run: exit 0, 'UI SMOKE PASS: 201 checks, 0 failures, 0 engine errors')
+  --    ui_foundation: 205 checks, 0 failed, 0 skipped, 12.3 s
+== section ui_mechanics  (res://tests/sections/ui_mechanics.gd)
+  ok    ui_mechanics.string_selection_does_not_exempt_gold
+  ok    ui_mechanics.calendar_card_stays_in_content ([P: (108.0, 190.0), S: (1064.0, 440.0)] contains [P: (108.0, 190.0), S: (240.0, 440.0)])
+  --    ui_mechanics: 2 checks, 0 failed, 0 skipped, 0.7 s
+== section wardrobe_ui  (res://tests/sections/wardrobe_ui.gd)
+  ok    wardrobe_ui.screen_and_live_presenter_available
+  ok    wardrobe_ui.all_96_pieces_fit_all_eight_bodies
+  ok    wardrobe_ui.opens_paused_with_live_preview
+  ok    wardrobe_ui.try_on_is_local_and_resolves_exclusions
+  ok    wardrobe_ui.closing_cancels_uncommitted_try_on
+  ok    wardrobe_ui.equip_button_commits_one_complete_dress
+  ok    wardrobe_ui.preview_rotates_and_walks
+  ok    wardrobe_ui.unowned_piece_can_be_tried_but_not_equipped
+  ok    wardrobe_ui.remove_button_reveals_base_and_keeps_ownership
+  ok    wardrobe_ui.screen_saves_worn_outfit
+  ok    wardrobe_ui.screen_restores_outfit
+  ok    wardrobe_ui.hands_preview_uses_same_attachment_presenter
+  ok    wardrobe_ui.weapon_try_on_does_not_change_equipment
+  ok    wardrobe_ui.hands_tab_changes_real_weapon_owner
+  ok    wardrobe_ui.hands_tab_assigns_existing_hotbar
+  ok    wardrobe_ui.hands_tab_selects_ready_tool
+  ok    wardrobe_ui.hands_tab_clears_selected_slot
+  ok    wardrobe_ui.closing_releases_pause_and_preview
+  ok    wardrobe_ui.real_save_with_clothes_and_loadout
+  ok    wardrobe_ui.real_load_rebuilds_world
+  ok    wardrobe_ui.clothing_equipment_presets_and_hotbar_survive_load
+  ok    wardrobe_ui.screen_and_live_presenter_available
+  ok    wardrobe_ui.all_96_pieces_fit_all_eight_bodies
+  ok    wardrobe_ui.opens_paused_with_live_preview
+  ok    wardrobe_ui.try_on_is_local_and_resolves_exclusions
+  ok    wardrobe_ui.closing_cancels_uncommitted_try_on
+  ok    wardrobe_ui.equip_button_commits_one_complete_dress
+  ok    wardrobe_ui.preview_rotates_and_walks
+  ok    wardrobe_ui.unowned_piece_can_be_tried_but_not_equipped
+  ok    wardrobe_ui.remove_button_reveals_base_and_keeps_ownership
+  ok    wardrobe_ui.screen_saves_worn_outfit
+  ok    wardrobe_ui.screen_restores_outfit
+  ok    wardrobe_ui.hands_preview_uses_same_attachment_presenter
+  ok    wardrobe_ui.weapon_try_on_does_not_change_equipment
+  ok    wardrobe_ui.hands_tab_changes_real_weapon_owner
+  ok    wardrobe_ui.hands_tab_assigns_existing_hotbar
+  ok    wardrobe_ui.hands_tab_selects_ready_tool
+  ok    wardrobe_ui.hands_tab_clears_selected_slot
+  ok    wardrobe_ui.closing_releases_pause_and_preview
+  ok    wardrobe_ui.real_save_with_clothes_and_loadout
+  ok    wardrobe_ui.real_load_rebuilds_world
+  ok    wardrobe_ui.clothing_equipment_presets_and_hotbar_survive_load
+  --    wardrobe_ui: 42 checks, 0 failed, 0 skipped, 1.5 s
+== summary: 7 section(s) run, 531 checks (0 failed, 8 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 48.9 s
+PLAYTEST PASS (531 checks in 7 sections, 0 allowed engine messages, 0 known-issue messages)

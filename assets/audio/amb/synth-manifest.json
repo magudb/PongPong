@@ -1,0 +1,124 @@
+{
+  "status": "synthesized placeholder",
+  "recipes": {
+    "farm_day": {
+      "version": 3,
+      "seed": 2806655353525488324,
+      "kind": "amb"
+    },
+    "farm_night": {
+      "version": 3,
+      "seed": 17964642463859851497,
+      "kind": "amb"
+    },
+    "town_day": {
+      "version": 3,
+      "seed": 13649025077384774671,
+      "kind": "amb"
+    },
+    "town_night": {
+      "version": 3,
+      "seed": 6374870245774599623,
+      "kind": "amb"
+    },
+    "shop_interior": {
+      "version": 3,
+      "seed": 7314035001630785698,
+      "kind": "amb"
+    },
+    "forest": {
+      "version": 3,
+      "seed": 4028588694723926625,
+      "kind": "amb"
+    },
+    "forest_night": {
+      "version": 3,
+      "seed": 10379338591356971268,
+      "kind": "amb"
+    },
+    "cave_drip": {
+      "version": 3,
+      "seed": 13626496195974665498,
+      "kind": "amb"
+    },
+    "rain": {
+      "version": 3,
+      "seed": 18381341208388868913,
+      "kind": "amb"
+    }
+  },
+  "files": {
+    "cave_drip": {
+      "sha256": "89b16bf47c9b3cd0fed341d149224ee49daaf76c21995b77337c1d1e07167f41",
+      "seconds": 24.0,
+      "bytes": 90415,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "75b0a30aef68f3c1de0d20f5db157a99c442114d40ea16d128192eb66f6e928d"
+    },
+    "farm_day": {
+      "sha256": "224771df8a77ac1a86d3a81fc96bfc3d0e8c517fa310f91af923f55b9f5e63c2",
+      "seconds": 24.0,
+      "bytes": 101660,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "2dd667435212f00fab2276283461bd4935758fea44064a20c9e77d0af8368bca"
+    },
+    "farm_night": {
+      "sha256": "e1e818c8b4507f742b9d2a59c24a223910a4b58f7a2b832b0145736bcec09a22",
+      "seconds": 24.0,
+      "bytes": 101502,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "be0614d3af794bca1ce34c27ac2ba0ebfe5f8eb86722bdbd5c4959483ac80635"
+    },
+    "forest": {
+      "sha256": "e7b13a2dac6122c08a808fb99d6f96a38fe26cafccc4cfa2265116559bb587d1",
+      "seconds": 24.0,
+      "bytes": 101639,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "5ec0bf070ba2f8e5c36978daf226b1d856b242cd4547642c37dfb204a533fc69"
+    },
+    "forest_night": {
+      "sha256": "1200ee595fbe2c58e512266ed5de4a74e7ccb9cffb73276a0d70416396969fa5",
+      "seconds": 24.0,
+      "bytes": 101399,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "371d024c40bc13a4634d18bffdd5257b25871588c241f19c66c4c18a0ae4544a"
+    },
+    "rain": {
+      "sha256": "3697c1485efdbdd033aa4dde1409aa0a2a1f02b17341bb27ba3483e8bff057b2",
+      "seconds": 24.0,
+      "bytes": 109930,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "2188e4405c4a0751810b4ee259d1a0318c816de4c5b7d4c7068e04f60d55410b"
+    },
+    "shop_interior": {
+      "sha256": "c94b51485046b24175d8caedd11bbb3152fc9d518b1128ee1dcae936b1ebcb14",
+      "seconds": 24.0,
+      "bytes": 93701,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "3d3c5cf3b0dcc601860c985c62256ca908cc972ed2960e7c217e09d104c9f24d"
+    },
+    "town_day": {
+      "sha256": "d67f7d0477f29927032e24d083bf86291702a5215c24950fcf693f45b431a252",
+      "seconds": 24.0,
+      "bytes": 101549,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "3fff7bec8f62bbea7f01175db1d62f57542b1aa68c5ade480fa452de5afc8dc8"
+    },
+    "town_night": {
+      "sha256": "2bb2f27a703b02a0ef98b9e6333250d5428753443638ce20e4f7c6e23b699bae",
+      "seconds": 24.0,
+      "bytes": 101208,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "997b8a089e684fee1b249e0ce6d4a6ec379e2a03502d28d57046cf718e9c79e5"
+    }
+  }
+}

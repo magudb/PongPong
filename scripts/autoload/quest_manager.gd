@@ -85,6 +85,8 @@ const REQUIRED_FIELDS := {
 }
 ## state queries that exist, with the fields each one needs. `threshold` queries answer 1 when the value reaches the field `min_level` / `hearts`.
 const STATE_QUERIES := {
+	"buildings_owned": {"fields": ["type"], "threshold": false},
+	"animals_owned": {"fields": [], "threshold": false},
 	"placed_by_rarity": {"fields": ["rarity"], "threshold": false},
 	"hygge_level_at_least": {"fields": ["min_level"], "threshold": true},
 	"home_tier_at_least": {"fields": ["min_level"], "threshold": true},
@@ -108,6 +110,7 @@ var _reward_claim_queued: bool = false
 var _refresh_queued: bool = false
 var _accept_counter: int = 0
 var _state_queries: Dictionary = {}      # query name -> Callable(objective def) -> int, registered by the owner of the data
+var _offer_gates: Dictionary = {} # quest id -> a static eligibility query; retained across runs
 var _objective_cache: Dictionary = {}    # quest id -> {"def": the definition it was built from, "map": {objective id: def}}
 
 
@@ -415,15 +418,24 @@ func _is_offerable_now(quest_id: StringName) -> bool:
 
 
 ## meta.requires_zone: the zone has been unlocked (entered once, or unlocked by a quest hook). Only offers read it.
+func register_offer_gate(quest_id: StringName,query: Callable) -> void:
+	if query.is_valid():_offer_gates[str(quest_id)] = query
+	else:_offer_gates.erase(str(quest_id))
+
 func _requirements_met(quest_id: StringName) -> bool:
 	var zone := str(_Data.dict(get_quest_def(quest_id).get("meta", {})).get("requires_zone", ""))
-	return zone == "" or GameManager.is_zone_unlocked(StringName(zone))
+	if zone != "" and not GameManager.is_zone_unlocked(StringName(zone)):return false
+	return _offer_allowed(quest_id)
+
+func _offer_allowed(quest_id: StringName) -> bool:
+	var query: Callable = _offer_gates.get(str(quest_id),Callable())
+	return not query.is_valid() or bool(query.call())
 
 
 # =============================================================================================== accept / progress / complete
 
 func accept_quest(quest_id: StringName) -> bool:
-	if not _can_start(quest_id):
+	if not _can_start(quest_id) or not _offer_allowed(quest_id):
 		return false
 
 	var def := get_quest_def(quest_id)
@@ -562,7 +574,8 @@ func complete_quest(quest_id: StringName) -> void:
 	if quest_id not in active_quests:
 		return
 	var def := get_quest_def(quest_id)
-	var rewards: Dictionary = _Data.dict(def.get("rewards", {}))
+	var runtime: QuestRuntime = active_quests[quest_id]
+	var rewards: Dictionary = preload("res://scripts/data/quest_rewards.gd").resolve(def,runtime.meta)
 
 	# Commit completion before grants: inventory and gold listeners may synchronously call back into the quest manager.
 	active_quests.erase(quest_id)
@@ -753,6 +766,7 @@ func _on_dialogue_started(npc_id: StringName, dialogue_id: StringName) -> void:
 
 func _on_animal_adopted(animal_id: StringName, species: StringName) -> void:
 	_dispatch(&"animal_adopted", {"animal": str(animal_id), "species": str(species)})
+	_queue_refresh()
 
 
 func _on_animal_fed(animal_id: StringName, food_id: StringName) -> void:
@@ -765,6 +779,7 @@ func _on_animal_product_collected(animal_id: StringName, product_id: StringName,
 
 func _on_building_built(building_id: StringName, building_type: StringName) -> void:
 	_dispatch(&"building_built", {"building": str(building_id), "type": str(building_type)})
+	_queue_refresh()
 
 
 func _on_enemy_defeated(enemy_id: StringName, kind: StringName, _loot: Array) -> void:
@@ -1002,6 +1017,17 @@ func _state_value(od: Dictionary) -> int:
 
 func _builtin_state_value(query_name: String, od: Dictionary) -> int:
 	match query_name:
+		"buildings_owned":
+			var husbandry := _Svc.node("AnimalHusbandry")
+			if husbandry == null: return 0
+			var count := 0
+			for building in husbandry.buildings.values():
+				if building.is_built and str(building.building_type) == str(od.get("type","")): count += 1
+			return count
+		"animals_owned":
+			var husbandry := _Svc.node("AnimalHusbandry")
+			return husbandry.get_all_animals().size() if husbandry != null else 0
+
 		"placed_by_rarity":
 			var furniture := _Svc.node("FurnitureManager")
 			if furniture == null or not furniture.has_method("count_placed_by_rarity"):
@@ -1103,6 +1129,10 @@ func get_current_objective(quest_id: StringName) -> StringName:
 
 ## Text of one objective: its description_key -> OBJ_<QUEST>_<OBJ> -> OBJ_<OBJ> -> the Lua `description` -> the readable id. Never a raw key.
 func get_objective_text(quest_id: StringName, objective_id: StringName) -> String:
+	if active_quests.has(quest_id):
+		var runtime: QuestRuntime = active_quests[quest_id]
+		var override_key := str(_Data.dict(runtime.meta.get("objective_keys",{})).get(str(objective_id),""))
+		if override_key!="" and _has_key(override_key):return tr(override_key)
 	var od: Dictionary = _objective_defs(quest_id).get(str(objective_id), {})
 	var described := str(od.get("description_key", ""))
 	if described != "" and _has_key(described):

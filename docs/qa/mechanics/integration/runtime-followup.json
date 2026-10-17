@@ -1,0 +1,123 @@
+{
+  "allowed": [
+    {
+      "kind": "warning",
+      "rule": "unsupported locale",
+      "section": "loc",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): LocalizationManager.set_locale: unsupported locale 'xx' (supported: da, en) (at set_locale res://scripts/autoload/localization_manager.gd:126)"
+    },
+    {
+      "kind": "error",
+      "rule": "ConfigFile parse error",
+      "section": "loc",
+      "text": "core/io/config_file.cpp:293 in _parse(): ConfigFile parse error at user://settings.cfg:0: Unexpected EOF while parsing simple tag. (at _config res://scripts/ui/settings_ui.gd:48)"
+    },
+    {
+      "kind": "error",
+      "rule": "ConfigFile parse error",
+      "section": "loc",
+      "text": "core/io/config_file.cpp:293 in _parse(): ConfigFile parse error at user://settings.cfg:0: Unexpected EOF while parsing simple tag. (at _persist_locale res://scripts/autoload/localization_manager.gd:105)"
+    },
+    {
+      "kind": "warning",
+      "rule": "is unreadable",
+      "section": "loc",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): LocalizationManager: user://settings.cfg is unreadable (error 43); the language choice was not saved so that no other setting is destroyed (at _persist_locale res://scripts/autoload/localization_manager.gd:107)"
+    },
+    {
+      "kind": "warning",
+      "rule": "takes 1 argument(s)",
+      "section": "loc",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): LocalizationManager.t: 'NOTIF_LANGUAGE_CHANGED_MSG' (Sproget er nu %s.) takes 1 argument(s), got 2 (at t res://scripts/autoload/localization_manager.gd:171)"
+    }
+  ],
+  "character": "animal",
+  "checks": 1234,
+  "elapsed_s": 68.14,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1010,
+      "skipped": 0
+    },
+    "city_levels": {
+      "character": "animal",
+      "checks": 69,
+      "failed": 0,
+      "ms": 2808,
+      "skipped": 0
+    },
+    "city_map": {
+      "character": "animal",
+      "checks": 55,
+      "failed": 0,
+      "ms": 8288,
+      "skipped": 0
+    },
+    "content_features": {
+      "character": "animal",
+      "checks": 140,
+      "failed": 0,
+      "ms": 10318,
+      "skipped": 0
+    },
+    "contracts": {
+      "character": "animal",
+      "checks": 10,
+      "failed": 0,
+      "ms": 4,
+      "skipped": 0
+    },
+    "dungeon_hud": {
+      "character": "animal",
+      "checks": 28,
+      "failed": 0,
+      "ms": 446,
+      "skipped": 0
+    },
+    "dungeon_run": {
+      "character": "animal",
+      "checks": 152,
+      "failed": 0,
+      "ms": 438,
+      "skipped": 0
+    },
+    "loc": {
+      "character": "animal",
+      "checks": 115,
+      "failed": 0,
+      "ms": 28159,
+      "skipped": 0
+    },
+    "npc": {
+      "character": "animal",
+      "checks": 345,
+      "failed": 0,
+      "ms": 1434,
+      "skipped": 0
+    },
+    "town_budgets": {
+      "character": "animal",
+      "checks": 27,
+      "failed": 0,
+      "ms": 2442,
+      "skipped": 0
+    },
+    "towns_routines": {
+      "character": "animal",
+      "checks": 285,
+      "failed": 0,
+      "ms": 8044,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

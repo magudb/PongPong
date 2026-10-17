@@ -1,0 +1,29 @@
+{
+  "allowed": [],
+  "character": "ghost",
+  "checks": 63,
+  "elapsed_s": 13.68,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 960,
+      "skipped": 0
+    },
+    "relationships": {
+      "character": "ghost",
+      "checks": 55,
+      "failed": 0,
+      "ms": 8149,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

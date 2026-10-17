@@ -62,6 +62,8 @@ var _festival_active: StringName = &""
 var _pending: bool = false
 var _lines: Dictionary = {}              # remember_line memory (S-talk): npc -> {slot -> line id}; a session memory, never saved
 var _shop_now: String = ""               # the shop whose panel is open (shop friendliness)
+var _event_owed: Dictionary = {}         # item rewards waiting for backpack space
+var _retry_owed_pending := false
 
 # festival index: "season:day" -> festival id, rebuilt when the registry object changes; the festival of the last asked day and the windows of the festivals are memoised
 var _fest_src: Variant = null
@@ -110,9 +112,14 @@ func _ready() -> void:
 	EventBus.shop_opened.connect(_on_shop_opened)
 	EventBus.shop_closed.connect(_on_shop_closed)
 	EventBus.item_purchased.connect(_on_item_purchased)
+	EventBus.visitor_gift.connect(func(npc,_item):
+		if str(npc)!="":mark_event_seen("home_visit:"+str(npc),week()+1))
+	EventBus.player_inventory_changed.connect(_retry_event_items)
 	var sm := Svc.node("SaveManager")
 	if sm != null and sm.has_method("register_section"):
 		sm.call("register_section", SECTION, self, SECTION_ORDER)
+	Svc.static_call("res://scripts/social/events/festival_director.gd", &"attach", [self])
+	Svc.static_call("res://scripts/ghostfam/quests/family_quests.gd",&"attach",[self])
 
 
 # ======================================================================================= seed / rng
@@ -641,6 +648,11 @@ func calendar_entries(season: Variant, year: int = 1) -> Array[Dictionary]:
 		var meta := _meta(fid)
 		if str(meta.get("season", "")) == season_id:
 			out.append({"day": LuaData.int_of(meta.get("day", 0)), "kind": "festival", "id": fid, "known": true, "attended": LuaData.int_of(_fest_year.get(fid, 0)) == year})
+	var wedding := LuaData.int_of(_partner.get("wedding",0))
+	if wedding > 0:
+		var date := CalendarUtil.date_of(wedding)
+		if str(date.season)==season_id and int(date.year)==year:
+			out.append({"day":int(date.day),"kind":"festival","id":"bryllupsfesten","known":true,"attended":int(_partner.get("stage",0))==3})
 	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		if int(a["day"]) != int(b["day"]):
 			return int(a["day"]) < int(b["day"])
@@ -651,6 +663,47 @@ func calendar_entries(season: Variant, year: int = 1) -> Array[Dictionary]:
 
 
 # ======================================================================================= festivals (state; the content is S-fest-content's)
+
+func partner() -> Dictionary:
+	return _partner.duplicate()
+
+
+## RelationshipFlow validates and commits under EconomyManager’s notification barrier.
+func commit_relationship(npc: String, rs: int, day: int, wedding: int) -> void:
+	_row(npc)["rs"] = rs
+	if rs == 1: mark_event_seen("heartfriend:" + npc, day)
+	elif rs == 2: _partner = {"id":npc,"since":day,"stage":rs,"wedding":wedding}
+	elif rs == 3:
+		_partner["stage"] = 3
+		_partner["married"] = day
+
+
+func partner_in_home() -> String:
+	return str(Svc.static_call("res://scripts/social/relationships/farm_visits.gd",&"partner_at_home",[],""))
+
+
+func home_routine_context() -> Dictionary:
+	return Svc.static_call("res://scripts/social/relationships/farm_visits.gd",&"context",[],{})
+
+
+func pick_visitor(week_id: int,index: int) -> String:
+	return str(Svc.static_call("res://scripts/social/relationships/farm_visits.gd",&"visitor",[week_id,index],""))
+
+
+func start_house_party() -> Array:
+	var ids: Array = Svc.static_call("res://scripts/social/relationships/farm_visits.gd",&"friends",[week(),"party"],[])
+	return ids.slice(0,6)
+
+
+func commit_chore(day: int,kind: String,count: int) -> void:
+	_partner["chore_day"] = day
+	_partner["chore_kind"] = kind
+	_partner["chore_count"] = count
+
+
+func reschedule_wedding(day: int) -> void:
+	_partner["wedding"] = day
+
 
 func _festival_ids() -> Array[String]:
 	var ids: Array[String] = []
@@ -681,6 +734,7 @@ func _fest_ensure() -> void:
 
 ## The festival of a total day ("" for an ordinary day).
 func festival_on(td: int) -> StringName:
+	if bool(Svc.static_call("res://scripts/social/relationships/relationship_flow.gd",&"festival_on",[td],false)): return &"bryllupsfesten"
 	_fest_ensure()
 	if _fest_index.is_empty():
 		return &""
@@ -738,6 +792,19 @@ func shop_closed_by_festival(shop_id: Variant) -> bool:
 	if now < float(w["from"]) - TRAVEL_LEAD_HOURS or now >= float(w["to"]):
 		return false
 	return not (str(shop_id) in LuaData.strings(meta.get("stays_open", [])))
+
+## A festival stall opens only during its own festival window. Ordinary shops
+## still use their building's hours and the closure rule above.
+func festival_shop_state(shop_id: String, ctx: Dictionary = {}) -> Variant:
+	var lr := Svc.node("LuaRuntime")
+	if lr == null or not bool(LuaData.dict(lr.get_shop(shop_id)).get("festival_stall",false)): return null
+	var td := int(ctx.get("total_day",today()))
+	var id := str(festival_on(td))
+	var window := festival_window(id) if id != "" else {"from":0.0,"to":0.0}
+	var now := float(ctx.get("hour",_now_hours()))
+	var participates := LuaData.arr(SocialData.festival(id).get("activities",[])).any(func(row):return str(row.get("kind","")) == "market" and str(row.get("shop","")) == shop_id)
+	var open := participates and now >= float(window.from) and now < float(window.to)
+	return {"open":open,"reason":"open" if open else "festival","opens_at":window.from,"closes_at":window.to,"next_weekday":0}
 
 
 ## The earliest hour the bed accepts while a festival with bed_hold runs (0 = no hold): the window end, rounded up.
@@ -824,7 +891,7 @@ func festival_roster(fid: Variant) -> Dictionary:
 	for npc in SocialData.npcs():
 		if _absent(str(npc)):
 			absent.append(str(npc))
-	return SocialData.festival_roster(id, _meta(id), _ensure_seed(), SocialData.npcs(), absent, SocialData.cfg_int("festival.max_attendees", 15))
+	return SocialData.festival_roster(id, _meta(id), _ensure_seed(), SocialData.npcs(), absent, 14 if id == "bryllupsfesten" else SocialData.cfg_int("festival.max_attendees", 15))
 
 
 ## override_for(npc, total_day, hour) -> {area, post, state: "stay", festival, from, to, until} | {}: the routine layer's question. {} when the citizen is not part of
@@ -848,6 +915,7 @@ func override_for(npc: Variant, td: int, hour: float = -1.0) -> Dictionary:
 		post = "fest_%s_gather_%d" % [str(meta.get("spot", "")), i + 1]
 	var w := festival_window(fid)
 	var leave := LuaData.num(LuaData.dict(meta.get("leave_early", {})).get(id, 0.0))
+	leave = float(Svc.static_call("res://scripts/social/relationships/relationship_flow.gd",&"keeper_departure",[id,td,float(w["to"]),str(meta.get("area",""))+"."+post,leave],leave))
 	var until := maxf(float(w["to"]) - leave, float(w["from"]) - TRAVEL_LEAD_HOURS)
 	if hour >= 0.0 and (hour < float(w["from"]) - TRAVEL_LEAD_HOURS or hour >= until):
 		return {}
@@ -891,7 +959,7 @@ func _when_one(kind: String, arg: String, rest: String) -> bool:
 			return f != &"" if arg == "any" else String(f) == arg
 		"hour":
 			var ab := arg.split("-")
-			return ab.size() == 2 and CalendarUtil.in_window(float(GameManager.hour), GameManager.game_hour(ab[0].to_float()), GameManager.game_hour(ab[1].to_float()))
+			return ab.size() == 2 and CalendarUtil.in_window(_now_hours(), GameManager.game_hour(ab[0].to_float()), GameManager.game_hour(ab[1].to_float()))
 		"weekday":
 			var wd := CalendarUtil.weekday_of(today())
 			for w in arg.split(",", false):
@@ -1077,16 +1145,60 @@ func events_ready(npc: Variant) -> Array[String]:
 	ids.sort()
 	for eid in ids:
 		var meta := LuaData.dict(LuaData.dict(events[eid]).get("meta", {}))
+		if str(meta.get("trigger","talk")) != "talk": continue
+		var area_id := str(meta.get("area",""))
+		if area_id != "":
+			var world := get_tree().get_first_node_in_group("world_2d")
+			if world == null or world.get("area") == null or str(world.area.map.id) != area_id: continue
+		var previous := str(meta.get("after",""))
+		if previous != "" and not event_seen(previous): continue
 		if event_seen(str(eid)) or LuaData.int_of(meta.get("hearts", 0)) > h:
 			continue
+		var cooldown := maxi(0,LuaData.int_of(meta.get("cooldown_days",0)))
+		if cooldown > 0 and ids.any(func(other): return event_stamp("day:"+str(other)) > 0 and today()-event_stamp("day:"+str(other)) < cooldown): continue
 		var cond := str(meta.get("when", ""))
 		if cond == "" or eval_when(cond):
 			out.append(str(eid))
+	out.sort_custom(func(a,b):
+		var ah := LuaData.int_of(LuaData.dict(events[a].get("meta",{})).get("hearts",0))
+		var bh := LuaData.int_of(LuaData.dict(events[b].get("meta",{})).get("hearts",0))
+		return ah < bh if ah != bh else str(a) < str(b))
 	return out
 
 
 func event_seen(event_id: String) -> bool:
 	return LuaData.int_of(_seen.get(event_id, 0)) > 0
+
+func event_stamp(event_id: String) -> int:
+	return LuaData.int_of(_seen.get(event_id,0))
+
+## Unclaimed scene rewards remain in the social save until space is available.
+## Claim before the gain signal, so an observer cannot save a duplicable reward.
+func owe_event_items(items: Dictionary) -> void:
+	for item in items:
+		if not _item_def(str(item)).is_empty() and not ItemKinds.is_one_of_a_kind(item):
+			_event_owed[str(item)] = mini(9999,int(_event_owed.get(str(item),0))+maxi(0,int(items[item])))
+	claim_event_items()
+
+func claim_event_items() -> void:
+	for item in _event_owed.keys():
+		var amount := int(_event_owed[item])
+		if amount <= 0:
+			_event_owed.erase(item)
+		elif EconomyManager.can_add_item(StringName(item),amount):
+			EconomyManager.defer_notifications(func() -> void:
+				_event_owed.erase(item)
+				EconomyManager.add_item(StringName(item),amount)
+			)
+
+func _retry_event_items(_items: Dictionary = {}) -> void:
+	if _event_owed.is_empty() or _retry_owed_pending: return
+	_retry_owed_pending = true
+	call_deferred("_claim_owed_deferred")
+
+func _claim_owed_deferred() -> void:
+	_retry_owed_pending = false
+	claim_event_items()
 
 
 ## S-events / S-heart-content: a scene was played (1 = once for good, a year number = once per year).
@@ -1139,6 +1251,7 @@ func _on_game_event(event_name: StringName, _payload: Dictionary) -> void:
 
 func _on_load_completed(_slot: int) -> void:
 	_defer()
+	_retry_event_items()
 
 
 func _defer() -> void:
@@ -1153,6 +1266,8 @@ func _defer() -> void:
 func flush() -> void:
 	_pending = false
 	_process_days()
+	Svc.static_call("res://scripts/social/relationships/relationship_flow.gd",&"flush",[])
+	Svc.static_call("res://scripts/social/relationships/farm_visits.gd",&"daily_chore",[])
 	_write_birthday_flag(birthdays_today())
 	_update_festival_state()
 
@@ -1208,6 +1323,7 @@ func reset() -> void:
 	_toast_queue.clear()
 	_toast_next_ms = 0
 	_shop_now = ""
+	_event_owed.clear()
 	_release_bed_hold()
 	world_seed = 0
 	for id in SocialData.friend_ids():
@@ -1241,6 +1357,7 @@ func to_dict() -> Dictionary:
 		if not o.is_empty():
 			npcs[id] = o
 	var out := {"v": SAVE_V, "seed": world_seed, "last": _last_day, "npcs": npcs, "seen": _seen.duplicate(), "fest": _fest_year.duplicate(), "partner": _partner.duplicate()}
+	if not _event_owed.is_empty(): out["owed"] = _event_owed.duplicate()
 	if not _orphans.is_empty():
 		out["orphans"] = _orphans.duplicate(true)
 	return out
@@ -1255,6 +1372,7 @@ func from_dict(d: Dictionary) -> bool:
 	_toast_queue.clear()
 	_toast_next_ms = 0
 	_shop_now = ""
+	_event_owed = LuaData.int_map(d.get("owed",{}))
 	world_seed = LuaData.int_of(d.get("seed", 0)) & 0x1FFFFFFFFFFFFF
 	_last_day = LuaData.int_of(d.get("last", 0))
 	_seen = LuaData.int_map(d.get("seen", {}))

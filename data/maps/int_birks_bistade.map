@@ -1,0 +1,7 @@
+@id int_birks_bistade
+@title BLD_BIRKS_BISTADE
+@projection iso
+@ambient home
+@zone city
+@builder res://scripts/towns/interior_room.gd
+@room int_birks_bistade

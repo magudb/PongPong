@@ -1,0 +1,421 @@
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=social_data,social_events,festival_activities,social_ui
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.g2ZDnl/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 0.9 s
+== section festival_activities  (res://tests/sections/festival_activities.gd)
+  ok    festival_activities.normal_score_has_no_rarity_bonus
+  ok    festival_activities.uncommon_score_bonus
+  ok    festival_activities.rare_score_bonus
+  ok    festival_activities.cheapest_winning_entry_caps_prize
+  ok    festival_activities.unknown_selector_has_zero_cap
+  ok    festival_activities.legal_prizes
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "gold": 201 } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "gold": 100 }, "second": { "gold": 71 } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "gold": 100 }, "third": { "gold": 41 } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "items": { "keepsake": 1 } } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "items": { "unknown": 1 } } }
+  ok    festival_activities.deterministic_entry_seed_1
+  ok    festival_activities.deterministic_entry_seed_2
+  ok    festival_activities.deterministic_entry_seed_3
+  ok    festival_activities.deterministic_entry_seed_4
+  ok    festival_activities.deterministic_entry_seed_5
+  ok    festival_activities.deterministic_entry_seed_6
+  ok    festival_activities.deterministic_entry_seed_7
+  ok    festival_activities.deterministic_entry_seed_8
+  ok    festival_activities.deterministic_entry_seed_9
+  ok    festival_activities.deterministic_entry_seed_10
+  ok    festival_activities.deterministic_entry_seed_11
+  ok    festival_activities.deterministic_entry_seed_12
+  ok    festival_activities.deterministic_entry_seed_13
+  ok    festival_activities.deterministic_entry_seed_14
+  ok    festival_activities.deterministic_entry_seed_15
+  ok    festival_activities.deterministic_entry_seed_16
+  ok    festival_activities.deterministic_entry_seed_17
+  ok    festival_activities.deterministic_entry_seed_18
+  ok    festival_activities.deterministic_entry_seed_19
+  ok    festival_activities.deterministic_entry_seed_20
+  ok    festival_activities.wrong_entry_refused
+  ok    festival_activities.stage_attached_to_active_area (stage=FestivalStage:<Node2D#996549862224> area=hyggebyen active=activity_test)
+  ok    festival_activities.named_posts_have_no_map_errors ([])
+  ok    festival_activities.all_six_activities_enabled_in_window
+  ok    festival_activities.opening_once_per_year
+  ok    festival_activities.attendance_points_once
+  ok    festival_activities.talked_citizen_attendance_once
+  ok    festival_activities.picker_opens_contest
+  ok    festival_activities.matching_item_available_contest
+  ok    festival_activities.contest_consumes_exactly_one_entry
+  ok    festival_activities.contest_pays_bounded_prize
+  ok    festival_activities.contest_cannot_be_repeated
+  ok    festival_activities.picker_opens_potluck
+  ok    festival_activities.matching_item_available_potluck
+  ok    festival_activities.potluck_donation_is_one_item
+  ok    festival_activities.town_contributions_reach_goal
+  ok    festival_activities.feast_restores_once
+  ok    festival_activities.feast_repeat_has_no_effect
+  ok    festival_activities.wish_is_flavour_flag
+  ok    festival_activities.wish_host_points_once
+  ok    festival_activities.wish_repeat_refused
+  ok    festival_activities.dance_chooses_highest_hearts_present
+  ok    festival_activities.market_opens_existing_shop_panel
+  ok    festival_activities.stage_is_stable_across_flushes
+  ok    festival_activities.finale_once_per_year
+  ok    festival_activities.activities_disable_at_window_end
+  ok    festival_activities.outside_window_has_no_effect
+  ok    festival_activities.stage_removed_at_end
+  --    festival_activities: 59 checks, 0 failed, 0 skipped, 0.5 s
+== section social_data  (res://tests/sections/social_data.gd)
+  ok    social_data.live_data_valid ([])
+  ok    appraiser_fru_ugle has authored social facts
+  ok    appraiser_fru_ugle taste distribution: 11 loved, 30 disliked of 310
+  ok    appraiser_fru_ugle has first meeting, hearts-band greetings and biography
+  ok    baker_maja has authored social facts
+  ok    baker_maja taste distribution: 6 loved, 21 disliked of 310
+  ok    baker_maja has first meeting, hearts-band greetings and biography
+  ok    baker_maja is an adult partner candidate
+  ok    baker_maja offers a cheap normal sample
+  ok    bathkeeper_sofus has authored social facts
+  ok    bathkeeper_sofus taste distribution: 10 loved, 32 disliked of 310
+  ok    bathkeeper_sofus has first meeting, hearts-band greetings and biography
+  ok    bathkeeper_sofus is an adult partner candidate
+  ok    beekeeper_birk has authored social facts
+  ok    beekeeper_birk taste distribution: 11 loved, 26 disliked of 310
+  ok    beekeeper_birk has first meeting, hearts-band greetings and biography
+  ok    beekeeper_birk is an adult partner candidate
+  ok    bertil has authored social facts
+  ok    bertil taste distribution: 10 loved, 25 disliked of 310
+  ok    bertil has first meeting, hearts-band greetings and biography
+  ok    bertil is an adult partner candidate
+  ok    bodil has authored social facts
+  ok    bodil taste distribution: 11 loved, 24 disliked of 310
+  ok    bodil has first meeting, hearts-band greetings and biography
+  ok    bodil is an adult partner candidate
+  ok    carpenter_brumme has authored social facts
+  ok    carpenter_brumme taste distribution: 4 loved, 31 disliked of 310
+  ok    carpenter_brumme has first meeting, hearts-band greetings and biography
+  ok    carpenter_brumme is an adult partner candidate
+  ok    cat_morfar_mis has authored social facts
+  ok    cat_morfar_mis taste distribution: 8 loved, 29 disliked of 310
+  ok    cat_morfar_mis has first meeting, hearts-band greetings and biography
+  ok    clerk_fjerpen has authored social facts
+  ok    clerk_fjerpen taste distribution: 13 loved, 30 disliked of 310
+  ok    clerk_fjerpen has first meeting, hearts-band greetings and biography
+  ok    cub_bamse has authored social facts
+  ok    cub_bamse taste distribution: 4 loved, 36 disliked of 310
+  ok    cub_bamse has first meeting, hearts-band greetings and biography
+  ok    fairy_builder has authored social facts
+  ok    fairy_builder taste distribution: 4 loved, 30 disliked of 310
+  ok    fairy_builder has first meeting, hearts-band greetings and biography
+  ok    fairy_builder offers a cheap normal sample
+  ok    fairy_furnisher has authored social facts
+  ok    fairy_furnisher taste distribution: 22 loved, 25 disliked of 310
+  ok    fairy_furnisher has first meeting, hearts-band greetings and biography
+  ok    fairy_furnisher offers a cheap normal sample
+  ok    fairy_king has authored social facts
+  ok    fairy_king taste distribution: 5 loved, 30 disliked of 310
+  ok    fairy_king has first meeting, hearts-band greetings and biography
+  ok    fairy_lily has authored social facts
+  ok    fairy_lily taste distribution: 4 loved, 36 disliked of 310
+  ok    fairy_lily has first meeting, hearts-band greetings and biography
+  ok    fairy_tailor has authored social facts
+  ok    fairy_tailor taste distribution: 16 loved, 25 disliked of 310
+  ok    fairy_tailor has first meeting, hearts-band greetings and biography
+  ok    fairy_tailor offers a cheap normal sample
+  ok    fairy_wizard has authored social facts
+  ok    fairy_wizard taste distribution: 11 loved, 30 disliked of 310
+  ok    fairy_wizard has first meeting, hearts-band greetings and biography
+  ok    fairy_wizard offers a cheap normal sample
+  ok    farmer_rosa has authored social facts
+  ok    farmer_rosa taste distribution: 11 loved, 22 disliked of 310
+  ok    farmer_rosa has first meeting, hearts-band greetings and biography
+  ok    farmer_rosa offers a cheap normal sample
+  ok    fiddler_strimmel has authored social facts
+  ok    fiddler_strimmel taste distribution: 18 loved, 26 disliked of 310
+  ok    fiddler_strimmel has first meeting, hearts-band greetings and biography
+  ok    gardener_hoppe has authored social facts
+  ok    gardener_hoppe taste distribution: 4 loved, 24 disliked of 310
+  ok    gardener_hoppe has first meeting, hearts-band greetings and biography
+  ok    gardener_hoppe is an adult partner candidate
+  ok    ghostfam_blund has authored social facts
+  ok    ghostfam_blund taste distribution: 5 loved, 36 disliked of 310
+  ok    ghostfam_blund has first meeting, hearts-band greetings and biography
+  ok    ghostfam_dyne has authored social facts
+  ok    ghostfam_dyne taste distribution: 9 loved, 28 disliked of 310
+  ok    ghostfam_dyne has first meeting, hearts-band greetings and biography
+  ok    ghostfam_gnist has authored social facts
+  ok    ghostfam_gnist taste distribution: 7 loved, 22 disliked of 310
+  ok    ghostfam_gnist has first meeting, hearts-band greetings and biography
+  ok    ghostfam_silke has authored social facts
+  ok    ghostfam_silke taste distribution: 5 loved, 28 disliked of 310
+  ok    ghostfam_silke has first meeting, hearts-band greetings and biography
+  ok    guard_oak has authored social facts
+  ok    guard_oak taste distribution: 6 loved, 31 disliked of 310
+  ok    guard_oak has first meeting, hearts-band greetings and biography
+  ok    innkeeper_kvak has authored social facts
+  ok    innkeeper_kvak taste distribution: 6 loved, 24 disliked of 310
+  ok    innkeeper_kvak has first meeting, hearts-band greetings and biography
+  ok    lamplighter_kiki has authored social facts
+  ok    lamplighter_kiki taste distribution: 17 loved, 26 disliked of 310
+  ok    lamplighter_kiki has first meeting, hearts-band greetings and biography
+  ok    lamplighter_kiki is an adult partner candidate
+  ok    mapseller_natteblik has authored social facts
+  ok    mapseller_natteblik taste distribution: 4 loved, 36 disliked of 310
+  ok    mapseller_natteblik has first meeting, hearts-band greetings and biography
+  ok    mayor_lyra has authored social facts
+  ok    mayor_lyra taste distribution: 6 loved, 26 disliked of 310
+  ok    mayor_lyra has first meeting, hearts-band greetings and biography
+  ok    merchant_pip has authored social facts
+  ok    merchant_pip taste distribution: 5 loved, 21 disliked of 310
+  ok    merchant_pip has first meeting, hearts-band greetings and biography
+  ok    merchant_pip is an adult partner candidate
+  ok    merchant_pip offers a cheap normal sample
+  ok    penguin_postman has authored social facts
+  ok    penguin_postman taste distribution: 3 loved, 30 disliked of 310
+  ok    penguin_postman has first meeting, hearts-band greetings and biography
+  ok    pippin_boegeknop has authored social facts
+  ok    pippin_boegeknop taste distribution: 15 loved, 27 disliked of 310
+  ok    pippin_boegeknop has first meeting, hearts-band greetings and biography
+  ok    pippin_boegeknop offers a cheap normal sample
+  ok    postman_pip has authored social facts
+  ok    postman_pip taste distribution: 4 loved, 26 disliked of 310
+  ok    postman_pip has first meeting, hearts-band greetings and biography
+  ok    postman_pip is an adult partner candidate
+  ok    rasmus has authored social facts
+  ok    rasmus taste distribution: 17 loved, 26 disliked of 310
+  ok    rasmus has first meeting, hearts-band greetings and biography
+  ok    rasmus is an adult partner candidate
+  ok    smith_thorin has authored social facts
+  ok    smith_thorin taste distribution: 6 loved, 31 disliked of 310
+  ok    smith_thorin has first meeting, hearts-band greetings and biography
+  ok    smith_thorin offers a cheap normal sample
+  ok    social_data.citizens_cover_friends
+  ok    social_data.copy_lint_clean_on_the_social_csvs ([{"rule": "C1", "file": "localization/da.csv", "line": 69, "key": "OBJ_TALK_TO_MAYOR", "message": "da: stale name Lyra", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 69, "key": "OBJ_TALK_TO_MAYOR", "message": "da: use display name Borgmester Hyldeblomst", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 69, "key": "OBJ_TALK_TO_MAYOR", "message": "en: stale name Lyra", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 69, "key": "OBJ_TALK_TO_MAYOR", "message": "en: use display name Borgmester Hyldeblomst", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 73, "key": "OBJ_DELIVER_TO_BAKER", "message": "da: use display name Bagerfe Rosmarin", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 73, "key": "OBJ_DELIVER_TO_BAKER", "message": "en: use display name Bagerfe Rosmarin", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 146, "key": "DIALOGUE_LYRA_GREET_1", "message": "da: stale name PongPong", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 146, "key": "DIALOGUE_LYRA_GREET_1", "message": "da: stale name Lyra", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 146, "key": "DIALOGUE_LYRA_GREET_1", "message": "da: use display name Borgmester Hyldeblomst", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 146, "key": "DIALOGUE_LYRA_GREET_1", "message": "en: stale name PongPong", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 146, "key": "DIALOGUE_LYRA_GREET_1", "message": "en: stale name Lyra", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 146, "key": "DIALOGUE_LYRA_GREET_1", "message": "en: use display name Borgmester Hyldeblomst", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 154, "key": "DIALOGUE_MAJA_COOKIE_TALK", "message": "da: stale name PongPong", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 154, "key": "DIALOGUE_MAJA_COOKIE_TALK", "message": "en: stale name PongPong", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 156, "key": "DIALOGUE_LILY_CAT_MISSING", "message": "da: stale name Mjau", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 156, "key": "DIALOGUE_LILY_CAT_MISSING", "message": "da: use display name Morfar Mis", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 156, "key": "DIALOGUE_LILY_CAT_MISSING", "message": "en: stale name Mjau", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 156, "key": "DIALOGUE_LILY_CAT_MISSING", "message": "en: use display name Morfar Mis", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 157, "key": "DIALOGUE_LILY_WORRIED", "message": "da: stale name Mjau", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 157, "key": "DIALOGUE_LILY_WORRIED", "message": "da: use display name Morfar Mis", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 157, "key": "DIALOGUE_LILY_WORRIED", "message": "en: stale name Mjau", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 157, "key": "DIALOGUE_LILY_WORRIED", "message": "en: use display name Morfar Mis", "legacy": true}, {"rule": "C2", "file": "localization/da.csv", "line": 169, "key": "DIALOGUE_CHOICE_MINING_QUEST", "message": "en: choice has 33 characters, limit 32", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 358, "key": "DIALOGUE_WIZARD_MAGIC_TALK", "message": "da: stale name Eventyrskoven", "legacy": true}, {"rule": "C1", "file": "localization/da.csv", "line": 358, "key": "DIALOGUE_WIZARD_MAGIC_TALK", "message": "en: stale name PongPong", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 466, "key": "DIALOGUE_CHOICE_MATH_BAKERY", "message": "da: use display name Bagerfe Rosmarin", "legacy": true}, {"rule": "C5", "file": "localization/da.csv", "line": 466, "key": "DIALOGUE_CHOICE_MATH_BAKERY", "message": "en: use display name Bagerfe Rosmarin", "legacy": true}, {"rule": "C2", "file": "localization/da.csv", "line": 467, "key": "DIALOGUE_CHOICE_MATH_HARVEST", "message": "en: choice has 33 characters, limit 32", "legacy": true}]
+)
+  ok    social_data.voiced_index_in_sync
+  ok    social_data.tool_printed_ids (Social voice index printed 1 PASS/FAIL ids)
+  ok    social_data.tool_exit_code (Social voice index exit code 0)
+  ok    social_data.new_npc_by_data_only (One roster row gets hearts, a stable birthday and the child archetype)
+  ok    Derived child uses archetype taste without another row
+  --    social_data: 130 checks, 0 failed, 0 skipped, 1.2 s
+== section social_events  (res://tests/sections/social_events.gd)
+  ok    social_events.heart_event_only_on_talk
+  ok    social_events.automatic_events_never_appear_in_talk_choices
+  ok    social_events.queue_accepts_while_busy
+  ok    social_events.deduplicates_queued_events
+  ok    social_events.waits_for_playing_and_no_modal
+  ok    social_events.queued_talk_starts_after_modal_closes
+  ok    social_events.event_modal_is_nonpausing_cutscene
+  ok    social_events.clock_frozen
+  ok    social_events.no_save_during_event
+  ok    social_events.no_travel_or_sleep_during_event
+  ok    social_events.rewards_deferred_until_scene_end
+  ok    social_events.overlay_follows_modal
+  ok    social_events.overlay_focus_none (0 interactive, 0 keyboard-focusable)
+  ok    social_events.overlay_rules (6 nodes, 1 text, 0 boxes, 0 interactive scanned)
+  ok    social_events.overlay_i18n (clean)
+  ok    social_events.escape_opens_one_confirm
+  ok    social_events.continue_is_default
+  ok    social_events.declining_skip_keeps_scene
+  ok    social_events.skip_fast_forwards_effects
+  ok    social_events.choice_takes_option_one_on_skip
+  ok    social_events.all_point_steps_commit_once
+  ok    social_events.time_step_capped_at_two_hours
+  ok    social_events.seen_once_and_skip_recorded
+  ok    social_events.say_runs_merge_per_speaker
+  ok    social_events.actors_released_on_end
+  ok    social_events.camera_released_on_end
+  ok    social_events.seen_event_refused
+  ok    social_events.save_after_commit
+  ok    social_events.load_after_commit
+  ok    social_events.rewards_paid_once_after_load
+  ok    social_events.missing_actor_scene_can_start
+  ok    social_events.missing_actor_api_is_skipped_not_fatal
+  ok    social_events.ordinary_scene_points_paid
+  ok    social_events.yearly_scene_starts
+  ok    social_events.full_pack_reward_is_saved
+  ok    social_events.full_pack_save_valid
+  ok    social_events.full_pack_reward_loads
+  ok    social_events.owed_survives_load
+  ok    social_events.reward_claimed_when_space_opens
+  ok    social_events.reward_claim_is_idempotent
+  ok    social_events.yearly_refused_same_year
+  ok    social_events.yearly_scene_repeats_next_year
+  ok    social_events.yearly_reward_second_year
+  ok    social_events.cancel_scene_starts
+  ok    social_events.cancel_does_not_commit
+  ok    social_events.cancel_releases_modal_and_actors
+  ok    social_events.cancelled_scene_can_retry
+  ok    social_events.time_never_advances_past_2359
+  ok    social_events.queue_bound_0
+  ok    social_events.queue_bound_1
+  ok    social_events.queue_bound_2
+  ok    social_events.queue_bound_3
+  ok    social_events.queue_bound_4
+  ok    social_events.queue_bound_5
+  ok    social_events.queue_drops_after_two_days
+  --    social_events: 55 checks, 0 failed, 0 skipped, 0.4 s
+== section social_ui  (res://tests/sections/social_ui.gd)
+  ok    social_ui.all_four_screens_installed
+  ok    social_ui.glyph_is_not_health_hearts
+  ok    social_ui.glyph_half_heart_plan
+  ok    social_ui.people_initial_focus
+  ok    social_ui.people_only_met_npcs
+  ok    social_ui.people_rows_nodes_max
+  ok    social_ui.people_open_ms (3.319)
+  ok    social_ui.glyph_in_people
+  ok    social_ui.people_select_0
+  ok    social_ui.people_up_link_0
+  ok    social_ui.people_select_1
+  ok    social_ui.people_up_link_1
+  ok    social_ui.people_select_2
+  ok    social_ui.people_up_link_2
+  ok    social_ui.people_select_3
+  ok    social_ui.people_up_link_3
+  ok    social_ui.people_select_4
+  ok    social_ui.people_up_link_4
+  ok    social_ui.people_select_5
+  ok    social_ui.people_up_link_5
+  ok    social_ui.people_select_6
+  ok    social_ui.people_up_link_6
+  ok    social_ui.people_select_7
+  ok    social_ui.people_up_link_7
+  ok    social_ui.people_select_8
+  ok    social_ui.people_up_link_8
+  ok    social_ui.people_tabs_page_actions
+  ok    social_ui.people_right_changes_tab
+  ok    social_ui.people_p_closes
+  ok    social_ui.people_p_opens
+  ok    social_ui.people_pad_closes
+  ok    social_ui.gift_initial_focus
+  ok    social_ui.gift_options_from_api
+  ok    social_ui.gift_grid_24_cells
+  ok    social_ui.glyph_in_gift
+  ok    social_ui.cheap_live_gift_available
+  ok    social_ui.gift_chip_text_not_colour_only
+  ok    social_ui.gift_accept_selects_then_gives
+  ok    social_ui.gift_picker_closes_before_reaction
+  ok    social_ui.gift_removes_once_and_pays_love ({ "p": 890, "wk": -1, "gt": 0, "gd": 65, "gwk": 9, "gw": 1, "bd": 0, "bk": 1, "ls": [["carrot", 65]], "kn": { "moonflower": "love", "strawberry": "like", "stone": "dislike", "carrot": "love" }, "rv": 0, "rs": 0, "pc": 0, "tp": 0 })
+  ok    social_ui.reaction_escape_no_weekly_heart
+  ok    social_ui.gift_limits_disable_give_with_reason
+  ok    social_ui.gift_esc_restores_world
+  ok    social_ui.valuable_fixture_exists
+  ok    social_ui.gift_confirm_for_valuable_default_fortryd
+  ok    social_ui.gift_confirm_cancel_retains_item
+  ok    social_ui.gift_grid_scrolls_over_24_stacks
+  ok    social_ui.gift_scroll_follows_last_row
+  ok    social_ui.gift_pad_accept_selects_then_give
+  ok    social_ui.live_gift_citizen_present
+  ok    social_ui.live_dialogue_transfers_to_picker
+  ok    social_ui.live_actor_held_by_picker
+  ok    social_ui.live_carrot_available
+  ok    social_ui.live_actor_held_during_reaction
+  ok    social_ui.live_reaction_releases_actor_and_player
+  ok    social_ui.calendar_28_cells
+  ok    social_ui.calendar_only_known_birthdays
+  ok    social_ui.calendar_festivals_always_shown
+  ok    social_ui.calendar_today_marked
+  ok    social_ui.calendar_uses_theme_variations_only
+  ok    social_ui.calendar_focus_switch_keeps_new_navigation_0
+  ok    social_ui.calendar_focus_switch_keeps_new_navigation_1
+  ok    social_ui.calendar_focus_switch_keeps_new_navigation_2
+  ok    social_ui.calendar_header_reaches_season_0 (@Button@3799:<Button#1298875293604>)
+  ok    social_ui.calendar_season_ring_0 (@Button@3802:<Button#1299026288555>)
+  ok    social_ui.calendar_header_reaches_season_1 (@Button@3799:<Button#1298875293604>)
+  ok    social_ui.calendar_season_ring_1 (@Button@3802:<Button#1299026288555>)
+  ok    social_ui.calendar_header_reaches_season_2 (@Button@3799:<Button#1298875293604>)
+  ok    social_ui.calendar_season_ring_2 (@Button@3802:<Button#1299026288555>)
+  ok    social_ui.calendar_header_reaches_season_3 (@Button@3799:<Button#1298875293604>)
+  ok    social_ui.calendar_season_ring_3 (@Button@3802:<Button#1299026288555>)
+  ok    social_ui.calendar_grid_right_0
+  ok    social_ui.calendar_grid_right_1
+  ok    social_ui.calendar_grid_right_2
+  ok    social_ui.calendar_grid_right_3
+  ok    social_ui.calendar_grid_right_4
+  ok    social_ui.calendar_grid_right_5
+  ok    social_ui.calendar_grid_right_6
+  ok    social_ui.calendar_grid_right_7
+  ok    social_ui.calendar_grid_right_8
+  ok    social_ui.calendar_grid_right_9
+  ok    social_ui.calendar_grid_right_10
+  ok    social_ui.calendar_grid_right_11
+  ok    social_ui.calendar_grid_right_12
+  ok    social_ui.calendar_grid_right_13
+  ok    social_ui.calendar_grid_right_14
+  ok    social_ui.calendar_grid_right_15
+  ok    social_ui.calendar_grid_right_16
+  ok    social_ui.calendar_grid_right_17
+  ok    social_ui.calendar_grid_right_18
+  ok    social_ui.calendar_grid_right_19
+  ok    social_ui.calendar_grid_right_20
+  ok    social_ui.calendar_grid_right_21
+  ok    social_ui.calendar_grid_right_22
+  ok    social_ui.calendar_grid_right_23
+  ok    social_ui.calendar_grid_right_24
+  ok    social_ui.calendar_grid_right_25
+  ok    social_ui.calendar_grid_right_26
+  ok    social_ui.calendar_grid_right_27
+  ok    social_ui.calendar_season_walks_over_month_edge
+  ok    social_ui.calendar_walks_back_over_edge
+  ok    social_ui.calendar_year_one_floor
+  ok    social_ui.calendar_journal_escape
+  ok    social_ui.hud_focus_none
+  ok    social_ui.hud_no_polling
+  ok    social_ui.hud_festival_ribbon_raw_25 (Test · åben til 01:00)
+  ok    social_ui.hud_festival_before_open
+  ok    social_ui.hud_birthday_chips
+  ok    social_ui.glyph_in_social_hud
+  ok    social_ui.hud_hidden_in_action_mode
+  ok    social_ui.hud_hidden_in_event
+  ok    social_ui.hud_hidden_behind_event_confirmation
+  ok    social_ui.hud_returns_to_farm
+  ok    social_ui.people.visible (clean)
+  ok    social_ui.people.initial_focus (clean)
+  ok    social_ui.people.focus_walk (12 of 12 controls reached in 99 presses)
+  ok    social_ui.people.focusable (12 interactive, 12 keyboard-focusable)
+  ok    social_ui.people.rules (49 nodes, 18 text, 15 boxes, 12 interactive scanned)
+  ok    social_ui.people.i18n_flip (clean)
+  ok    social_ui.people.escape (1 modal(s) opened and closed with Esc in order)
+  SKIP  ui_audit people.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit people.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit people.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit people.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    social_ui.registry_people ([])
+  ok    social_ui.gift.visible (clean)
+  ok    social_ui.gift.initial_focus (clean)
+  ok    social_ui.gift.focus_walk (26 of 26 controls reached in 115 presses)
+  ok    social_ui.gift.focusable (26 interactive, 26 keyboard-focusable)
+  ok    social_ui.gift.rules (124 nodes, 34 text, 29 boxes, 26 interactive scanned)
+  ok    social_ui.gift.i18n_flip (clean)
+  ok    social_ui.gift.escape (1 modal(s) opened and closed with Esc in order)
+  SKIP  ui_audit gift.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit gift.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit gift.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit gift.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    social_ui.registry_gift ([])
+  ok    social_ui.calendar.visible (clean)
+  ok    social_ui.calendar.focusable (32 interactive, 32 keyboard-focusable)
+  ok    social_ui.calendar.rules (139 nodes, 100 text, 33 boxes, 32 interactive scanned)
+  ok    social_ui.calendar.i18n_flip (clean)
+  SKIP  ui_audit calendar.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit calendar.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    social_ui.registry_calendar ([])
+  ok    social_ui.social_hud.visible (clean)
+  ok    social_ui.social_hud.focusable (0 interactive, 0 keyboard-focusable)
+  ok    social_ui.social_hud.rules (5 nodes, 2 text, 0 boxes, 0 interactive scanned)
+  ok    social_ui.social_hud.i18n_flip (clean)
+  SKIP  ui_audit social_hud.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit social_hud.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    social_ui.registry_social_hud ([])
+  --    social_ui: 139 checks, 0 failed, 12 skipped, 4.0 s
+== summary: 4 section(s) run, 391 checks (0 failed, 12 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 11.1 s
+PLAYTEST PASS (391 checks in 4 sections, 0 allowed engine messages, 0 known-issue messages)

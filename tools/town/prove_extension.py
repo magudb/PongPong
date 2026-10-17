@@ -16,22 +16,23 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 REPORT = ROOT/'docs/qa/m1b-milestone/loop-extension.json'
 BIND = ['scripts','scenes','shaders','lua','data','localization','tests','tools','assets']
-EXTRA = ['project.godot']
+EXTRA = ['project.godot','docs/copy/review_status.json','docs/art/style-audit/current/approval.json']
+GENERATED = {'tools/features/_stage','tools/features/reports','tools/art/_stage','tools/dungeon/_stage','tools/dungeon_run/_stage','tools/dungeon_loot/_stage'}
 
 def hashes(root, code_only=False):
     files = [root/p for p in EXTRA]
     for folder in BIND:
         for directory, dirs, names in os.walk(root/folder):
-            dirs[:] = [name for name in dirs if name not in ('.venv','.git','.godot','__pycache__','node_modules')]
+            dirs[:] = [name for name in dirs if name not in ('.venv','.git','.godot','__pycache__','node_modules') and (Path(directory)/name).relative_to(root).as_posix() not in GENERATED]
             files.extend(Path(directory)/name for name in names)
-    return {str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(set(files)) if p.is_file() and (p.suffix in ('.gd','.tscn','.py','.gdshader','.gdshaderinc') if code_only else p.suffix in ('.gd','.tscn','.lua','.json','.map','.csv','.py','.godot','.gdshader','.gdshaderinc','.tres'))}
+    return {str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(set(files)) if p.is_file() and (p.suffix in ('.gd','.tscn','.py','.sh','.gdshader','.gdshaderinc') if code_only else p.suffix in ('.gd','.tscn','.lua','.json','.map','.csv','.py','.godot','.gdshader','.gdshaderinc','.tres','.sh','.import','.uid'))}
 
 def binding():
     return hashlib.sha256(json.dumps(hashes(ROOT),sort_keys=True).encode()).hexdigest()
 
 def apply(project):
     source = project/'tests/fixtures/town/extension'
-    destinations = {'routine.lua':'lua/routines/zz_loop.lua','building.lua':'lua/buildings/zz_loop.lua','shop.lua':'lua/shops/zz_loop.lua','dialogue.lua':'lua/dialogue/loop_neighbour.lua','festival.lua':'lua/festivals/loop.lua','event.lua':'lua/events/loop.lua','quest.lua':'lua/quests/loop_mail.lua','config.lua':'lua/config/zz_loop_post.lua','copy.csv':'localization/loop_extension.csv','int_loop_shop.json':'data/interiors/core/int_loop_shop.json','int_loop_shop.map':'data/maps/int_loop_shop.map'}
+    destinations = {'routine.lua':'lua/routines/zz_loop.lua','building.lua':'lua/buildings/zz_loop.lua','shop.lua':'lua/shops/zz_loop.lua','dialogue.lua':'lua/dialogue/loop_neighbour.lua','festival.lua':'lua/festivals/loop.lua','event.lua':'lua/events/loop.lua','quest.lua':'lua/quests/loop_mail.lua','copy.csv':'localization/loop_extension.csv','int_loop_shop.json':'data/interiors/core/int_loop_shop.json','int_loop_shop.map':'data/maps/int_loop_shop.map'}
     for name,target in destinations.items():
         out = project/target
         out.parent.mkdir(parents=True, exist_ok=True)
@@ -46,6 +47,14 @@ def apply(project):
         text=out.read_text()
         text=re.sub(r'\b'+table+r'\s*=\s*\{',lambda match:match[0]+'\n    '+body,text,count=1)
         out.write_text(text)
+    # Edit the real mailbox configuration instead of shadowing its top-level
+    # table in a second config file (which production lint correctly rejects).
+    p=project/'lua/config/traetoppen.lua'
+    givers=re.search(r'givers\s*=\s*(\{[^}]*\})', (source/'config.lua').read_text())
+    assert givers is not None
+    text,count=re.subn(r'(\bpost\s*=\s*\{\s*givers\s*=\s*)\{[^}]*\}',lambda match:match[1]+givers[1],p.read_text(),count=1)
+    assert count==1
+    p.write_text(text)
     # This is an existing citizen's actual authored plan, not a synthetic resolver.
     p=project/'lua/routines/core/gardener_hoppe.lua'
     text=p.read_text(); old='{ from = 10.5, at = "traetoppen.a_beds2", act = "tend" }'
@@ -83,21 +92,36 @@ def prove():
             if report.exists():
                 reports[name]=json.loads(report.read_text())
                 shutil.copyfile(report,evidence/(name+'.json'))
-            if result.returncode:
-                raise RuntimeError(name+' stage failed; inspect '+str(evidence/(name+'.log')))
+            if result.returncode or ' lint finding(s)' in (evidence/(name+'.log')).read_text():
+                raise RuntimeError(name+' stage failed or has Lua lint findings; inspect '+str(evidence/(name+'.log')))
         code_same=hashes(clone,True)==before
         assert code_same
         checks={k:True for k in ['l18_data_only_citizen','l18_data_only_building','l18_data_only_routine_edit','l18_data_only_shop_hours','l18_data_only_festival','l18_data_only_event','l18_data_only_quest','l18_no_gd_changed']}
         # Every item above is an executed named check, not a file-presence proof.
         log=(evidence/'loop.log').read_text()
         assert all(('town_extension.'+k) in log and ('FAIL  town_extension.'+k) not in log for k in checks if k!='l18_no_gd_changed')
-        report={'result':'pass','binding':baseline_binding,'checks':checks,'code_files_unchanged':len(before),'scenario_checks':reports['loop']['checks'],'owner_checks':reports['owners']['checks'],'note':'One clone, one whole extension. Production geometry/routes, door, NPC talk, shop hosts, social rules and real mailbox quest offer exercised. No .gd/.tscn/.py edit. Clone/import/bake excluded from playable-loop timing.'}
+        report={'result':'pass','binding':baseline_binding,'checks':checks,'code_files_unchanged':len(before),'scenario_checks':reports['loop']['checks'],'owner_checks':reports['owners']['checks'],'note':'One clone, one whole extension. Production geometry/routes, door, NPC talk, shop hosts, social rules and real mailbox quest offer exercised. No .gd/.tscn/.py/.sh edit. Clone/import/bake excluded from playable-loop timing.'}
         REPORT.write_text(json.dumps(report,indent=2)+'\n')
         return report
 
+def check_proofs():
+    """Check both saved reports against one identical, freshly computed source digest."""
+    current=binding()
+    results={}
+    for name,filename in [('L18','loop-extension.json'),('mutants','loop-mutants.json')]:
+        try:
+            report=json.loads((ROOT/'docs/qa/m1b-milestone'/filename).read_text())
+            assert report['result']=='pass' and report['binding']==current, 'Source-bound proof is stale: '+filename
+            results[name]=report
+        except (OSError,ValueError,AssertionError,KeyError,TypeError) as error:
+            results[name]={'result':'fail','error':str(error)}
+    return results
+
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--check',action='store_true');args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--check',action='store_true');parser.add_argument('--check-all',action='store_true');args=parser.parse_args()
     try:
+        if args.check_all:
+            result=check_proofs();print(json.dumps(result));return int(any(row['result']!='pass' for row in result.values()))
         if args.check:
             result=json.loads(REPORT.read_text());assert result['result']=='pass' and result['binding']==binding(),'Extension proof is stale; rerun prove_extension.py'
         else:result=prove()

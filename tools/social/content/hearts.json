@@ -1,0 +1,1182 @@
+{
+  "gardener_hoppe": {
+    "area": "traetoppen",
+    "mark": "a_bench",
+    "scenes": {
+      "4": {
+        "title": [
+          "Det bagerste bed",
+          "The back garden bed"
+        ],
+        "lines": [
+          [
+            "Bedet derovre får solen lidt senere end de andre.",
+            "The bed over there gets the sunshine a little later than the others."
+          ],
+          [
+            "Jeg troede først, at frøene var blevet væk.",
+            "At first I thought the seeds had disappeared."
+          ],
+          [
+            "Så kom den mindste spire. Den havde bare brug for ro.",
+            "Then the smallest sprout appeared. It just needed some quiet."
+          ],
+          [
+            "Du har også givet dig tid til at slå rødder her.",
+            "You have taken your time to put down roots here too."
+          ],
+          [
+            "Tag de her frø. Der er ingen grund til at skynde sig.",
+            "Take these seeds. There is no need to hurry."
+          ]
+        ],
+        "gift": {
+          "item": "carrot_seeds",
+          "amount": 2
+        }
+      },
+      "6": {
+        "title": [
+          "En lille støtte",
+          "A little support"
+        ],
+        "lines": [
+          [
+            "Denne stilk hælder. Vi kan støtte den uden at trække.",
+            "This stem is leaning. We can support it without pulling."
+          ],
+          [
+            "Sådan. Lidt hjælp gør mere end en masse travlhed.",
+            "There. A little help does more than a great deal of rushing."
+          ],
+          [
+            "Gem lidt gødning til din egen have.",
+            "Save some fertiliser for your own garden."
+          ]
+        ],
+        "gift": {
+          "item": "fertilizer",
+          "amount": 1
+        }
+      },
+      "8": {
+        "title": [
+          "Den søde gulerod",
+          "The sweet carrot"
+        ],
+        "lines": [
+          [
+            "Nogle gulerødder bliver skæve under jorden.",
+            "Some carrots grow crooked underground."
+          ],
+          [
+            "De er stadig søde. Det vigtigste kan man ikke altid se.",
+            "They are still sweet. You cannot always see what matters most."
+          ],
+          [
+            "Når vi taler sammen, glemmer jeg at tælle dagens arbejde.",
+            "When we talk, I forget to count the day’s work."
+          ],
+          [
+            "Det er en rar slags pause.",
+            "It is a lovely sort of break."
+          ],
+          [
+            "Her er to til aftensmaden. Den skæve er min yndling.",
+            "Here are two for supper. The crooked one is my favourite."
+          ]
+        ],
+        "gift": {
+          "item": "carrot",
+          "amount": 2
+        }
+      },
+      "10": {
+        "title": [
+          "Et bed med plads",
+          "A garden bed with room"
+        ],
+        "lines": [
+          [
+            "Jeg plejede at passe hvert bed helt alene.",
+            "I used to tend every garden bed on my own."
+          ],
+          [
+            "Nu kigger jeg op, når jeg hører dine skridt.",
+            "Now I look up when I hear your footsteps."
+          ],
+          [
+            "Der vil altid være plads til dig ved min have.",
+            "There will always be room for you beside my garden."
+          ]
+        ],
+        "gift": {
+          "item": "moonflower",
+          "amount": 1
+        }
+      }
+    }
+  },
+  "carpenter_brumme": {
+    "area": "traetoppen",
+    "mark": "c_logs",
+    "scenes": {
+      "4": {
+        "title": [
+          "Årene i træet",
+          "The grain of the wood"
+        ],
+        "lines": [
+          [
+            "Se på årene i den her planke.",
+            "Look at the grain in this plank."
+          ],
+          [
+            "Træet viser os, hvilken vej vi skal arbejde.",
+            "The wood shows us which way to work."
+          ],
+          [
+            "Jeg lyttede ikke altid. Så blev mine borde meget skæve.",
+            "I did not always listen. My tables turned out very crooked."
+          ],
+          [
+            "Du lytter, før du går i gang. Det lægger jeg mærke til.",
+            "You listen before you begin. I notice that."
+          ],
+          [
+            "De her stykker kan blive til noget godt hos dig.",
+            "These pieces can become something good at your place."
+          ]
+        ],
+        "gift": {
+          "item": "wood",
+          "amount": 3
+        }
+      },
+      "6": {
+        "title": [
+          "To hænder mere",
+          "Two more hands"
+        ],
+        "lines": [
+          [
+            "Vil du holde enden, mens jeg måler?",
+            "Would you hold the end while I measure?"
+          ],
+          [
+            "Lige dér. Sammen kan vi få begge ender til at passe.",
+            "Right there. Together we can make both ends fit."
+          ],
+          [
+            "Tag et par søm til dit næste lille byggeri.",
+            "Take a couple of nails for your next small project."
+          ]
+        ],
+        "gift": {
+          "item": "nails",
+          "amount": 2
+        }
+      },
+      "8": {
+        "title": [
+          "Honningpausen",
+          "The honey break"
+        ],
+        "lines": [
+          [
+            "Jeg gemmer altid honningen til pausen.",
+            "I always save the honey for my break."
+          ],
+          [
+            "Ellers får jeg klistrede poter på hele værkstedet.",
+            "Otherwise I leave sticky pawprints all over the workshop."
+          ],
+          [
+            "Der blev stille ved bordet, før du begyndte at komme.",
+            "The table used to be quiet before you started visiting."
+          ],
+          [
+            "Nu er stilheden rar på en anden måde.",
+            "Now the quiet feels nice in a different way."
+          ],
+          [
+            "Vi kan dele. Der er nok til mere end én pause.",
+            "We can share. There is enough for more than one break."
+          ]
+        ],
+        "gift": {
+          "item": "honey",
+          "amount": 1
+        }
+      },
+      "10": {
+        "title": [
+          "Det, der holder",
+          "What holds together"
+        ],
+        "lines": [
+          [
+            "En god samling skal kunne give sig lidt.",
+            "A good joint needs a little room to move."
+          ],
+          [
+            "Så holder den, selv når vejret skifter.",
+            "Then it holds even when the weather changes."
+          ],
+          [
+            "Sådan et venskab har vi fået bygget. Det er jeg glad for.",
+            "That is the friendship we have built. I am glad of it."
+          ]
+        ],
+        "gift": {
+          "item": "rope",
+          "amount": 2
+        }
+      }
+    }
+  },
+  "baker_maja": {
+    "area": "int_bageriet",
+    "mark": "counter",
+    "scenes": {
+      "4": {
+        "title": [
+          "Ovnen vågner",
+          "The oven wakes"
+        ],
+        "lines": [
+          [
+            "Hør efter. Ovnen knitrer, før den bliver rigtig varm.",
+            "Listen. The oven crackles before it gets properly warm."
+          ],
+          [
+            "Jeg plejer at hilse på den. Så føles morgenen mindre tidlig.",
+            "I usually say hello to it. The morning feels less early that way."
+          ],
+          [
+            "I dag er det rarere at hilse på dig.",
+            "Today it is nicer to say hello to you."
+          ],
+          [
+            "Melet skal falde let. Ingen store skyer i køkkenet.",
+            "Let the flour fall gently. No great clouds in the kitchen."
+          ],
+          [
+            "Her er lidt, hvis din egen ovn også skal vågne.",
+            "Here is some for when your own oven wakes."
+          ]
+        ],
+        "gift": {
+          "item": "flour",
+          "amount": 1
+        }
+      },
+      "6": {
+        "title": [
+          "Den sidste skål",
+          "The last bowl"
+        ],
+        "lines": [
+          [
+            "Kan vi gøre plads til den sidste skål sammen?",
+            "Can we make room for the last bowl together?"
+          ],
+          [
+            "Tak. Dejen har godt af en pause, og det har vi også.",
+            "Thank you. The dough needs a rest, and so do we."
+          ],
+          [
+            "Du kan tage lidt mælk med hjem imens.",
+            "You can take a little milk home while we wait."
+          ]
+        ],
+        "gift": {
+          "item": "milk",
+          "amount": 1
+        }
+      },
+      "8": {
+        "title": [
+          "En dråbe honning",
+          "A drop of honey"
+        ],
+        "lines": [
+          [
+            "Honning løber langsommere, når man holder øje med den.",
+            "Honey seems to run more slowly when you watch it."
+          ],
+          [
+            "Det er nok bare mig, der bliver utålmodig.",
+            "Perhaps I am simply getting impatient."
+          ],
+          [
+            "Du har lært mig, at en pause også kan være en del af arbejdet.",
+            "You have taught me that a break can be part of the work too."
+          ],
+          [
+            "Denne småkage fik den sidste dråbe.",
+            "This cookie got the very last drop."
+          ],
+          [
+            "Den vil jeg gerne dele med dig.",
+            "I would like to share it with you."
+          ]
+        ],
+        "gift": {
+          "item": "cookie",
+          "amount": 1
+        }
+      },
+      "10": {
+        "title": [
+          "En plads ved ovnen",
+          "A place by the oven"
+        ],
+        "lines": [
+          [
+            "Du behøver ikke købe noget for at komme ind.",
+            "You do not need to buy anything to come inside."
+          ],
+          [
+            "Jeg kan godt lide at høre om din dag, mens brødet hæver.",
+            "I like hearing about your day while the bread rises."
+          ],
+          [
+            "Her er lidt til hjemvejen. Vi ses, når du har lyst.",
+            "Here is something for the way home. Come back whenever you like."
+          ]
+        ],
+        "gift": {
+          "item": "cookie",
+          "amount": 2
+        }
+      }
+    }
+  },
+  "merchant_pip": {
+    "area": "int_froebutikken",
+    "mark": "counter",
+    "scenes": {
+      "4": {
+        "title": [
+          "Posen med prikker",
+          "The spotted packet"
+        ],
+        "lines": [
+          [
+            "De små prikker på posen er mine egne noter.",
+            "The little spots on the packet are my own notes."
+          ],
+          [
+            "Denne sort kan lide sol. Den her tåler en kølig morgen.",
+            "This variety likes sunshine. This one can stand a cool morning."
+          ],
+          [
+            "Jeg var bange for at glemme, hvad hvert frø havde brug for.",
+            "I used to worry about forgetting what each seed needed."
+          ],
+          [
+            "Nu spørger jeg bare haven. Den svarer langsomt, men tydeligt.",
+            "Now I ask the garden. It answers slowly, but clearly."
+          ],
+          [
+            "Begynd med de her. Du må altid komme tilbage og spørge.",
+            "Begin with these. You can always come back and ask."
+          ]
+        ],
+        "gift": {
+          "item": "carrot_seeds",
+          "amount": 2
+        }
+      },
+      "6": {
+        "title": [
+          "Etiket for etiket",
+          "Label by label"
+        ],
+        "lines": [
+          [
+            "Hjælp mig med at få poserne i den rigtige kurv.",
+            "Help me put these packets in the right basket."
+          ],
+          [
+            "Sådan. Det er lettere at finde noget, når vi laver plads.",
+            "There. Things are easier to find when we make room."
+          ],
+          [
+            "De her majroefrø må gerne finde vej til din gård.",
+            "These turnip seeds are welcome to find their way to your farm."
+          ]
+        ],
+        "gift": {
+          "item": "turnip_seeds",
+          "amount": 2
+        }
+      },
+      "8": {
+        "title": [
+          "Solsikkens ansigt",
+          "The sunflower’s face"
+        ],
+        "lines": [
+          [
+            "Solsikker får hele butikken til at se vågen ud.",
+            "Sunflowers make the whole shop look awake."
+          ],
+          [
+            "Jeg drejer dem efter vinduet hver morgen.",
+            "I turn them towards the window every morning."
+          ],
+          [
+            "Så kommer nogen ind og drejer min dag i en god retning.",
+            "Then someone comes in and turns my day in a good direction."
+          ],
+          [
+            "I dag var det dig.",
+            "Today that was you."
+          ],
+          [
+            "Tag denne med. Den kan lyse uden en flamme.",
+            "Take this one. It can shine without a flame."
+          ]
+        ],
+        "gift": {
+          "item": "sunflower",
+          "amount": 1
+        }
+      },
+      "10": {
+        "title": [
+          "Noget at vende tilbage til",
+          "Something to return to"
+        ],
+        "lines": [
+          [
+            "Et frø er et lille løfte om noget, der kan vokse.",
+            "A seed is a small promise of something that can grow."
+          ],
+          [
+            "Vores venskab har fået mange stille dage til at blomstre.",
+            "Our friendship has helped many quiet days bloom."
+          ],
+          [
+            "Denne måneblomst er til dit næste rolige hjørne.",
+            "This moonflower is for your next peaceful corner."
+          ]
+        ],
+        "gift": {
+          "item": "moonflower",
+          "amount": 1
+        }
+      }
+    }
+  },
+  "mayor_lyra": {
+    "area": "hyggebyen",
+    "mark": "torv_fountain_n",
+    "scenes": {
+      "4": {
+        "title": [
+          "En bænk til flere",
+          "A bench with room"
+        ],
+        "lines": [
+          [
+            "Jeg tæller ikke kun husene, når jeg går gennem byen.",
+            "I do not only count the houses when I walk through town."
+          ],
+          [
+            "Jeg ser efter steder, hvor nogen kan sætte sig.",
+            "I look for places where someone can sit down."
+          ],
+          [
+            "En by bliver hyggelig, når der er plads til en til.",
+            "A town becomes cosy when there is room for one more."
+          ],
+          [
+            "Det var også det, jeg håbede, du ville finde her.",
+            "That is what I hoped you would find here too."
+          ],
+          [
+            "En lille blomst til din egen plads i byen.",
+            "A little flower for your own place in town."
+          ]
+        ],
+        "gift": {
+          "item": "wild_flower",
+          "amount": 1
+        }
+      },
+      "6": {
+        "title": [
+          "Den løse liste",
+          "The loose notice"
+        ],
+        "lines": [
+          [
+            "Denne liste blafrer. Skal vi få den til at sidde ordentligt?",
+            "This notice is flapping. Shall we fasten it properly?"
+          ],
+          [
+            "Tak. Selv en borgmester har brug for en hånd til hjørnerne.",
+            "Thank you. Even a mayor needs a hand with the corners."
+          ],
+          [
+            "Gem træet til en god idé hjemme på gården.",
+            "Save this wood for a good idea back at the farm."
+          ]
+        ],
+        "gift": {
+          "item": "wood",
+          "amount": 2
+        }
+      },
+      "8": {
+        "title": [
+          "Kagen ved springvandet",
+          "Cake by the fountain"
+        ],
+        "lines": [
+          [
+            "Jeg havde tænkt mig at spise honningkagen ved skrivebordet.",
+            "I meant to eat this honey cake at my desk."
+          ],
+          [
+            "Så hørte jeg springvandet og kom i tanke om vores snakke.",
+            "Then I heard the fountain and remembered our conversations."
+          ],
+          [
+            "Der er dage, hvor en lille pause hjælper mere end en lang liste.",
+            "Some days a little break helps more than a long list."
+          ],
+          [
+            "Du har hjulpet mig med at huske det.",
+            "You have helped me remember that."
+          ],
+          [
+            "Skal vi dele den her? Arbejdet kan vente lidt.",
+            "Shall we share this? The work can wait a little."
+          ]
+        ],
+        "gift": {
+          "item": "honey_cake",
+          "amount": 1
+        }
+      },
+      "10": {
+        "title": [
+          "Et navn mellem venner",
+          "A name among friends"
+        ],
+        "lines": [
+          [
+            "Når vi står her, behøver jeg ikke være borgmester hele tiden.",
+            "When we stand here, I need not be the mayor all the time."
+          ],
+          [
+            "Jeg kan bare være Hyldeblomst, der er glad for dit besøg.",
+            "I can simply be Hyldeblomst, happy that you came to visit."
+          ],
+          [
+            "Du hører til her. Det håber jeg, du kan mærke nu.",
+            "You belong here. I hope you can feel that now."
+          ]
+        ],
+        "gift": {
+          "item": "wild_flower",
+          "amount": 2
+        }
+      }
+    }
+  },
+  "postman_pip": {
+    "area": "int_postkontoret",
+    "mark": "counter",
+    "scenes": {
+      "4": {
+        "title": [
+          "Ruten på bordet",
+          "The route on the table"
+        ],
+        "lines": [
+          [
+            "Jeg lægger ruten sådan her, før jeg går.",
+            "I lay out the route like this before I leave."
+          ],
+          [
+            "Et brev kan være lille og stadig fylde en hel dag med glæde.",
+            "A letter can be small and still fill a whole day with joy."
+          ],
+          [
+            "Derfor skynder jeg mig aldrig forbi en postkasse.",
+            "That is why I never hurry past a postbox."
+          ],
+          [
+            "Din har også fået sin egen plads i min runde.",
+            "Yours has a place of its own on my round too."
+          ],
+          [
+            "Tag et æble til din næste tur. Så mødes vi på vejen.",
+            "Take an apple for your next walk. We may meet along the way."
+          ]
+        ],
+        "gift": {
+          "item": "apple",
+          "amount": 1
+        }
+      },
+      "6": {
+        "title": [
+          "En knude, der holder",
+          "A knot that holds"
+        ],
+        "lines": [
+          [
+            "Posens snor er løs. Kan du holde den, mens jeg binder?",
+            "The bag’s cord is loose. Can you hold it while I tie it?"
+          ],
+          [
+            "Nu bliver brevene sammen, også på den lange bro.",
+            "Now the letters will stay together, even on the long bridge."
+          ],
+          [
+            "Denne snor er til dit næste lille ærinde.",
+            "This cord is for your next little errand."
+          ]
+        ],
+        "gift": {
+          "item": "rope",
+          "amount": 1
+        }
+      },
+      "8": {
+        "title": [
+          "Småkagen på vejen",
+          "The cookie along the way"
+        ],
+        "lines": [
+          [
+            "Jeg gemte engang en småkage i brevtasken.",
+            "I once saved a cookie in my mailbag."
+          ],
+          [
+            "Den blev til krummer, før jeg nåede hjem.",
+            "It had turned to crumbs before I reached home."
+          ],
+          [
+            "Så nu deler jeg de gode ting, mens der er nogen at dele med.",
+            "Now I share the good things while someone is here to share them."
+          ],
+          [
+            "Det gør også ruten mindre ensom.",
+            "It makes the route less lonely too."
+          ],
+          [
+            "Denne nåede hel frem til dig.",
+            "This one reached you in one piece."
+          ]
+        ],
+        "gift": {
+          "item": "cookie",
+          "amount": 1
+        }
+      },
+      "10": {
+        "title": [
+          "Helt frem",
+          "All the way home"
+        ],
+        "lines": [
+          [
+            "Jeg kender efterhånden dine skridt lige så godt som din postkasse.",
+            "I know your footsteps almost as well as your postbox now."
+          ],
+          [
+            "Det bedste ved en rute er dem, man glæder sig til at møde.",
+            "The best part of a route is the people you look forward to meeting."
+          ],
+          [
+            "Du er blevet en af mine. Her er lidt til turen.",
+            "You have become one of mine. Here is something for your walk."
+          ]
+        ],
+        "gift": {
+          "item": "apple",
+          "amount": 2
+        }
+      }
+    }
+  },
+  "bathkeeper_sofus": {
+    "area": "int_badehuset",
+    "mark": "tub",
+    "scenes": {
+      "4": {
+        "title": [
+          "Vandets rolige lyd",
+          "The quiet sound of water"
+        ],
+        "lines": [
+          [
+            "Lyt til vandet et øjeblik.",
+            "Listen to the water for a moment."
+          ],
+          [
+            "Det prøver ikke at nå noget. Det finder bare plads.",
+            "It is not trying to get anywhere. It simply finds room."
+          ],
+          [
+            "Jeg byggede mit arbejde rundt om den lyd.",
+            "I built my work around that sound."
+          ],
+          [
+            "Du må også gerne komme her med en travl dag i hovedet.",
+            "You are welcome here with a busy day on your mind too."
+          ],
+          [
+            "Et æble til bagefter. Så kan pausen vare lidt længere.",
+            "An apple for afterwards. The break can last a little longer."
+          ]
+        ],
+        "gift": {
+          "item": "apple",
+          "amount": 1
+        }
+      },
+      "6": {
+        "title": [
+          "Håndklædet på hylden",
+          "The towel on the shelf"
+        ],
+        "lines": [
+          [
+            "Skal vi gøre en plads klar til den næste gæst?",
+            "Shall we prepare a place for the next guest?"
+          ],
+          [
+            "Tak. Omsorg kan være så lille som et foldet håndklæde.",
+            "Thank you. Care can be as small as a folded towel."
+          ],
+          [
+            "Her er en småkage til din egen pause.",
+            "Here is a cookie for your own break."
+          ]
+        ],
+        "gift": {
+          "item": "cookie",
+          "amount": 1
+        }
+      },
+      "8": {
+        "title": [
+          "En skefuld ro",
+          "A spoonful of peace"
+        ],
+        "lines": [
+          [
+            "Honning gør mig glad, men den skal have sin tid.",
+            "Honey makes me happy, but it needs time."
+          ],
+          [
+            "En lille skefuld er nok.",
+            "A small spoonful is enough."
+          ],
+          [
+            "Det samme gælder en venlig snak.",
+            "The same is true of a friendly conversation."
+          ],
+          [
+            "Du kommer ikke altid med et spørgsmål, der skal løses.",
+            "You do not always arrive with a question that needs solving."
+          ],
+          [
+            "Det er rart bare at være sammen. Tag lidt med hjem.",
+            "It is lovely simply to be together. Take some home."
+          ]
+        ],
+        "gift": {
+          "item": "honey",
+          "amount": 1
+        }
+      },
+      "10": {
+        "title": [
+          "En pause uden ærinde",
+          "A break without an errand"
+        ],
+        "lines": [
+          [
+            "Du behøver ikke være træt for at fortjene en pause.",
+            "You do not need to be tired to deserve a break."
+          ],
+          [
+            "Og du behøver ikke have et ærinde for at være min ven.",
+            "And you do not need an errand to be my friend."
+          ],
+          [
+            "Her er honningkage. Vi kan godt lade verden vente lidt.",
+            "Here is honey cake. We can let the world wait a little."
+          ]
+        ],
+        "gift": {
+          "item": "honey_cake",
+          "amount": 1
+        }
+      }
+    }
+  },
+  "beekeeper_birk": {
+    "area": "hyggebyen",
+    "mark": "bees1",
+    "scenes": {
+      "4": {
+        "title": [
+          "Ved bistadet",
+          "By the beehive"
+        ],
+        "lines": [
+          [
+            "Stå helt stille. Så kan du høre forskel på summene.",
+            "Stand very still. Then you can hear the different hums."
+          ],
+          [
+            "Nogle bier er på vej ud. Andre har allerede fundet blomster.",
+            "Some bees are heading out. Others have already found flowers."
+          ],
+          [
+            "Jeg behøver ikke styre dem alle sammen.",
+            "I do not need to direct every one of them."
+          ],
+          [
+            "Jeg sørger bare for et godt sted at vende hjem til.",
+            "I simply make sure they have a good place to return to."
+          ],
+          [
+            "Disse frø kan gøre din have til et lille hvilested.",
+            "These seeds can make your garden a little resting place."
+          ]
+        ],
+        "gift": {
+          "item": "sunflower_seeds",
+          "amount": 1
+        }
+      },
+      "6": {
+        "title": [
+          "Blomster ved kanten",
+          "Flowers at the edge"
+        ],
+        "lines": [
+          [
+            "Vil du hjælpe med at gøre plads til blomster ved kanten?",
+            "Will you help make room for flowers along the edge?"
+          ],
+          [
+            "Så har selv den mindste bi et sted at lande.",
+            "Now even the smallest bee has somewhere to land."
+          ],
+          [
+            "Tag et par blomster. Vi behøver ikke beholde alt det gode.",
+            "Take a couple of flowers. We need not keep every good thing."
+          ]
+        ],
+        "gift": {
+          "item": "wild_flower",
+          "amount": 2
+        }
+      },
+      "8": {
+        "title": [
+          "Det første glas",
+          "The first jar"
+        ],
+        "lines": [
+          [
+            "Jeg husker stadig mit første glas honning.",
+            "I still remember my first jar of honey."
+          ],
+          [
+            "Jeg holdt det så forsigtigt, at jeg næsten glemte at smage.",
+            "I held it so carefully that I almost forgot to taste it."
+          ],
+          [
+            "Nu ved jeg, at det gode bliver større, når nogen deler det.",
+            "Now I know good things grow when someone shares them."
+          ],
+          [
+            "Vores snakke har gjort mange arbejdsdage lettere.",
+            "Our conversations have made many working days easier."
+          ],
+          [
+            "Det her glas er til dig.",
+            "This jar is for you."
+          ]
+        ],
+        "gift": {
+          "item": "honey",
+          "amount": 1
+        }
+      },
+      "10": {
+        "title": [
+          "Et hjem at finde",
+          "A home to find"
+        ],
+        "lines": [
+          [
+            "Bierne finder hjem ad mange forskellige veje.",
+            "The bees find their way home by many different paths."
+          ],
+          [
+            "Jeg bliver glad, hver gang din vej går forbi mig.",
+            "I am happy whenever your path brings you past me."
+          ],
+          [
+            "En solsikke til at minde dig om de lyse steder.",
+            "A sunflower to remind you of the bright places."
+          ]
+        ],
+        "gift": {
+          "item": "sunflower",
+          "amount": 1
+        }
+      }
+    }
+  },
+  "smith_thorin": {
+    "area": "int_smedjen",
+    "mark": "counter",
+    "scenes": {
+      "4": {
+        "title": [
+          "Den første gnist",
+          "The first spark"
+        ],
+        "lines": [
+          [
+            "Den første gnist fortæller mig, at essen er vågen.",
+            "The first spark tells me the forge is awake."
+          ],
+          [
+            "Så venter jeg, til metallet er klar.",
+            "Then I wait until the metal is ready."
+          ],
+          [
+            "En hammer kan larme meget uden at gøre noget godt.",
+            "A hammer can make a great deal of noise without doing much good."
+          ],
+          [
+            "Jeg prøver at huske forskellen. Du hjælper mig med det.",
+            "I try to remember the difference. You help me do that."
+          ],
+          [
+            "Her er lidt kobber. Det behøver ikke blive til noget i dag.",
+            "Here is some copper. It need not become anything today."
+          ]
+        ],
+        "gift": {
+          "item": "copper_ore",
+          "amount": 2
+        }
+      },
+      "6": {
+        "title": [
+          "Plads ved arbejdsbordet",
+          "Room at the workbench"
+        ],
+        "lines": [
+          [
+            "Vil du hjælpe mig med at rydde de kolde stykker til side?",
+            "Will you help me move the cold pieces aside?"
+          ],
+          [
+            "Sådan. Nu kan vi se, hvad vi egentlig arbejder med.",
+            "There. Now we can see what we are really working on."
+          ],
+          [
+            "Stenene kan stadig bruges hjemme hos dig.",
+            "These stones can still be useful at your place."
+          ]
+        ],
+        "gift": {
+          "item": "stone",
+          "amount": 3
+        }
+      },
+      "8": {
+        "title": [
+          "Det stille jern",
+          "The quiet iron"
+        ],
+        "lines": [
+          [
+            "Jeg kan godt lide et stykke jern, før det bliver formet.",
+            "I like a piece of iron before it is shaped."
+          ],
+          [
+            "Det kan endnu blive til mange ting.",
+            "It can still become many things."
+          ],
+          [
+            "Du har aldrig bedt mig være andet, end den jeg er.",
+            "You have never asked me to be someone other than myself."
+          ],
+          [
+            "Det er en rar ting at kunne sige til en ven.",
+            "That is a lovely thing to be able to say to a friend."
+          ],
+          [
+            "Tag det her. Lad din næste idé bestemme formen.",
+            "Take this. Let your next idea decide the shape."
+          ]
+        ],
+        "gift": {
+          "item": "iron_ore",
+          "amount": 1
+        }
+      },
+      "10": {
+        "title": [
+          "Når hammeren hviler",
+          "When the hammer rests"
+        ],
+        "lines": [
+          [
+            "Når hammeren hviler, kan her blive meget stille.",
+            "When the hammer rests, it can get very quiet here."
+          ],
+          [
+            "Nu ved jeg, at stilhed også kan deles.",
+            "Now I know that quiet can be shared too."
+          ],
+          [
+            "Du har altid en plads ved mit arbejdsbord.",
+            "You will always have a place at my workbench."
+          ]
+        ],
+        "gift": {
+          "item": "stone",
+          "amount": 3
+        }
+      }
+    }
+  },
+  "farmer_rosa": {
+    "area": "int_dyrehuset",
+    "mark": "counter",
+    "scenes": {
+      "4": {
+        "title": [
+          "De bløde næser",
+          "The soft noses"
+        ],
+        "lines": [
+          [
+            "Jeg hilser altid, før jeg rækker hånden frem.",
+            "I always say hello before I reach out my hand."
+          ],
+          [
+            "De små skal vide, hvem der kommer.",
+            "The little ones need to know who is coming."
+          ],
+          [
+            "Så må de selv vælge at komme nærmere.",
+            "Then they can choose to come closer."
+          ],
+          [
+            "Du har en rolig måde at være her på. Det mærker de.",
+            "You have a calm way of being here. They can feel that."
+          ],
+          [
+            "Her er lidt foder til dem, du passer derhjemme.",
+            "Here is some feed for the ones you care for at home."
+          ]
+        ],
+        "gift": {
+          "item": "chicken_feed",
+          "amount": 2
+        }
+      },
+      "6": {
+        "title": [
+          "En ren skål",
+          "A clean bowl"
+        ],
+        "lines": [
+          [
+            "Skal vi gøre skålene klar sammen?",
+            "Shall we prepare the bowls together?"
+          ],
+          [
+            "Tak. Det er små ting, der gør en dag tryg.",
+            "Thank you. Small things make a day feel safe."
+          ],
+          [
+            "En godbid kan du gemme til et roligt øjeblik.",
+            "You can save a treat for a quiet moment."
+          ]
+        ],
+        "gift": {
+          "item": "animal_treats",
+          "amount": 1
+        }
+      },
+      "8": {
+        "title": [
+          "Mælken på bordet",
+          "The milk on the table"
+        ],
+        "lines": [
+          [
+            "En skål mælk fortæller mig, at nogen har haft en rolig morgen.",
+            "A bowl of milk tells me someone has had a peaceful morning."
+          ],
+          [
+            "Jeg tænker på alt det arbejde, der ligger i sådan en lille ting.",
+            "I think of all the care that goes into such a small thing."
+          ],
+          [
+            "Du lægger mærke til de små tegn.",
+            "You notice the little signs."
+          ],
+          [
+            "Det gør mig glad at dele dem med dig.",
+            "It makes me happy to share them with you."
+          ],
+          [
+            "Tag lidt mælk med hjem. Den passer godt til en pause.",
+            "Take some milk home. It goes well with a break."
+          ]
+        ],
+        "gift": {
+          "item": "milk",
+          "amount": 1
+        }
+      },
+      "10": {
+        "title": [
+          "Omsorg, der bliver",
+          "Care that stays"
+        ],
+        "lines": [
+          [
+            "De små husker ikke altid, hvem der gjorde hvad.",
+            "The little ones do not always remember who did what."
+          ],
+          [
+            "Men de husker, hvordan det føltes at blive passet på.",
+            "But they remember how it felt to be cared for."
+          ],
+          [
+            "Sådan føles vores venskab for mig. Lunt og trygt.",
+            "That is how our friendship feels to me. Warm and safe."
+          ]
+        ],
+        "gift": {
+          "item": "wool",
+          "amount": 1
+        }
+      }
+    }
+  }
+}

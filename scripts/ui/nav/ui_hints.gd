@@ -143,10 +143,12 @@ static func _key_name(ev: InputEventKey) -> String:
 static func format_line(row: Dictionary) -> String:
 	var key := str(row.get("text_key", row.get("key", "")))
 	var text := str(TranslationServer.translate(key)) if key != "" else str(row.get("text", ""))
+	var values := LuaData.arr(row.get("format_values",[]))
+	if not values.is_empty():return text % values
 	if not text.contains("%s"):
 		return text
 	var groups := LuaData.arr(row.get("format_action_groups_gamepad", [])) if UiNav.device() == GAMEPAD else []
-	var values: Array = []
+	values = []
 	if not groups.is_empty():
 		for group in groups:
 			values.append(glyph_set(LuaData.arr(group)))

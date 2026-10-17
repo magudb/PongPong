@@ -1,0 +1,548 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PLAYTEST start mode=windowed character=animal sections=res://tests/sections only=ui_audit,towns_ext,towns_post,towns_greetings,social_fest_content
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.OKoDtI/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native
+== section social_fest_content [windowed]  (res://tests/sections/social_fest_content.gd)
+  ok    social_fest_content.live_social_validator_including_keeper_return_routes ([][])
+  ok    social_fest_content.blomsterfesten_unique_date_and_valid_window
+  ok    social_fest_content.blomsterfesten_existing_host
+  ok    social_fest_content.blomsterfesten_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.blomsterfesten_birthday_clear_baker_maja
+  ok    social_fest_content.blomsterfesten_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.blomsterfesten_birthday_clear_beekeeper_birk
+  ok    social_fest_content.blomsterfesten_birthday_clear_bertil
+  ok    social_fest_content.blomsterfesten_birthday_clear_bodil
+  ok    social_fest_content.blomsterfesten_birthday_clear_carpenter_brumme
+  ok    social_fest_content.blomsterfesten_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.blomsterfesten_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.blomsterfesten_birthday_clear_cub_bamse
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_builder
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_furnisher
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_king
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_lily
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_tailor
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_wizard
+  ok    social_fest_content.blomsterfesten_birthday_clear_farmer_rosa
+  ok    social_fest_content.blomsterfesten_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.blomsterfesten_birthday_clear_gardener_hoppe
+  ok    social_fest_content.blomsterfesten_birthday_clear_ghostfam_blund
+  ok    social_fest_content.blomsterfesten_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.blomsterfesten_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.blomsterfesten_birthday_clear_ghostfam_silke
+  ok    social_fest_content.blomsterfesten_birthday_clear_guard_oak
+  ok    social_fest_content.blomsterfesten_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.blomsterfesten_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.blomsterfesten_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.blomsterfesten_birthday_clear_mayor_lyra
+  ok    social_fest_content.blomsterfesten_birthday_clear_merchant_pip
+  ok    social_fest_content.blomsterfesten_birthday_clear_penguin_postman
+  ok    social_fest_content.blomsterfesten_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.blomsterfesten_birthday_clear_postman_pip
+  ok    social_fest_content.blomsterfesten_birthday_clear_rasmus
+  ok    social_fest_content.blomsterfesten_birthday_clear_smith_thorin
+  ok    social_fest_content.blomsterfesten_activity_copy_flower_contest
+  ok    social_fest_content.blomsterfesten_contest_prizes
+  ok    social_fest_content.blomsterfesten_activity_copy_seed_stall
+  ok    social_fest_content.blomsterfesten_market_definition
+  ok    social_fest_content.blomsterfesten_market_stock_carrot_seeds
+  ok    social_fest_content.blomsterfesten_market_stock_sunflower_seeds
+  ok    social_fest_content.blomsterfesten_market_stock_strawberry_seeds
+  ok    social_fest_content.blomsterfesten_activity_copy_dance
+  ok    social_fest_content.blomsterfesten_whole_family_invited
+  ok    social_fest_content.blomsterfesten_all_activity_posts_resolve ([])
+  ok    social_fest_content.blomsterfesten_opening_seen
+  ok    social_fest_content.blomsterfesten_family_present
+  ok    social_fest_content.blomsterfesten_bed_held
+  ok    social_fest_content.blomsterfesten_own_market_open
+  ok    social_fest_content.blomsterfesten_painted_decor_present (decor=FestivalDecor:<Node#845605249846> art=FestivalArt:<Node2D#845622027063> children=[festival_stage_stage:<Sprite2D#845672358712>, flower_arch_centre:<Sprite2D#845873685305>, market_stall_spring_awning:<Sprite2D#846075011901>, @Sprite2D@1147:<Sprite2D#846276338495>, @Sprite2D@1148:<Sprite2D#846309892929>, @Sprite2D@1149:<Sprite2D#846343447360>, festival_bench_bench:<Sprite2D#846377001787>, @Sprite2D@1150:<Sprite2D#846578328386>, banner_pole_spring_pole:<Sprite2D#846779654982>, @Sprite2D@1151:<Sprite2D#846980981576>, bunting_string_a_string:<Sprite2D#847182308170>, @Sprite2D@1152:<Sprite2D#847383634764>, @Sprite2D@1153:<Sprite2D#847417189198>, @Sprite2D@1154:<Sprite2D#847450743629>, door_wreath_spring_door:<Sprite2D#847484298052>, @Sprite2D@1155:<Sprite2D#847685624655>, @Sprite2D@1156:<Sprite2D#847719179091>, @Sprite2D@1157:<Sprite2D#847752733522>, @Sprite2D@1158:<Sprite2D#847786287953>, @Sprite2D@1159:<Sprite2D#847819842388>, @Sprite2D@1160:<Sprite2D#847853396821>, @Sprite2D@1161:<Sprite2D#847886951254>, @Sprite2D@1162:<Sprite2D#847920505687>, @Sprite2D@1163:<Sprite2D#847954060120>, @Sprite2D@1164:<Sprite2D#847987614553>, @Sprite2D@1165:<Sprite2D#848021168986>, @Sprite2D@1166:<Sprite2D#848054723419>, @Sprite2D@1167:<Sprite2D#848088277852>])
+  ok    social_fest_content.blomsterfesten_finale_pays_once
+  ok    social_fest_content.blomsterfesten_reentry_has_no_repeat_reward
+  ok    social_fest_content.blomsterfesten_own_market_closes
+  ok    social_fest_content.blomsterfesten_decor_clears_afterwards
+  ok    social_fest_content.honningdagen_unique_date_and_valid_window
+  ok    social_fest_content.honningdagen_existing_host
+  ok    social_fest_content.honningdagen_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.honningdagen_birthday_clear_baker_maja
+  ok    social_fest_content.honningdagen_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.honningdagen_birthday_clear_beekeeper_birk
+  ok    social_fest_content.honningdagen_birthday_clear_bertil
+  ok    social_fest_content.honningdagen_birthday_clear_bodil
+  ok    social_fest_content.honningdagen_birthday_clear_carpenter_brumme
+  ok    social_fest_content.honningdagen_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.honningdagen_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.honningdagen_birthday_clear_cub_bamse
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_builder
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_furnisher
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_king
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_lily
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_tailor
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_wizard
+  ok    social_fest_content.honningdagen_birthday_clear_farmer_rosa
+  ok    social_fest_content.honningdagen_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.honningdagen_birthday_clear_gardener_hoppe
+  ok    social_fest_content.honningdagen_birthday_clear_ghostfam_blund
+  ok    social_fest_content.honningdagen_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.honningdagen_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.honningdagen_birthday_clear_ghostfam_silke
+  ok    social_fest_content.honningdagen_birthday_clear_guard_oak
+  ok    social_fest_content.honningdagen_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.honningdagen_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.honningdagen_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.honningdagen_birthday_clear_mayor_lyra
+  ok    social_fest_content.honningdagen_birthday_clear_merchant_pip
+  ok    social_fest_content.honningdagen_birthday_clear_penguin_postman
+  ok    social_fest_content.honningdagen_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.honningdagen_birthday_clear_postman_pip
+  ok    social_fest_content.honningdagen_birthday_clear_rasmus
+  ok    social_fest_content.honningdagen_birthday_clear_smith_thorin
+  ok    social_fest_content.honningdagen_activity_copy_honey_contest
+  ok    social_fest_content.honningdagen_contest_prizes
+  ok    social_fest_content.honningdagen_activity_copy_picnic
+  ok    social_fest_content.honningdagen_activity_copy_honey_stall
+  ok    social_fest_content.honningdagen_market_definition
+  ok    social_fest_content.honningdagen_market_stock_honey
+  ok    social_fest_content.honningdagen_market_stock_cookie
+  ok    social_fest_content.honningdagen_market_stock_milk
+  ok    social_fest_content.honningdagen_whole_family_invited
+  ok    social_fest_content.honningdagen_all_activity_posts_resolve ([])
+  ok    social_fest_content.honningdagen_opening_seen
+  ok    social_fest_content.honningdagen_family_present
+  ok    social_fest_content.honningdagen_bed_held
+  ok    social_fest_content.honningdagen_retained_shop_covers_weekday_bakery
+  ok    social_fest_content.honningdagen_own_market_open
+  ok    social_fest_content.honningdagen_painted_decor_present (decor=FestivalDecor:<Node#845605249846> art=FestivalArt:<Node2D#894259176331> children=[festival_stage_stage:<Sprite2D#894275953546>, maypole_centre:<Sprite2D#894477280140>, market_stall_spring_awning:<Sprite2D#894678606636>, @Sprite2D@1310:<Sprite2D#894879933336>, @Sprite2D@1311:<Sprite2D#894913487770>, @Sprite2D@1312:<Sprite2D#894947042201>, festival_bench_bench:<Sprite2D#894980595216>, @Sprite2D@1313:<Sprite2D#895181923227>, banner_pole_spring_pole:<Sprite2D#895383249822>, @Sprite2D@1314:<Sprite2D#895584576417>, bunting_string_a_string:<Sprite2D#895785903011>, @Sprite2D@1315:<Sprite2D#895987229606>, @Sprite2D@1316:<Sprite2D#896020784034>, @Sprite2D@1317:<Sprite2D#896054338469>, flower_arch_accent:<Sprite2D#896087892893>, door_wreath_spring_door:<Sprite2D#896289219495>, @Sprite2D@1318:<Sprite2D#896490546091>, @Sprite2D@1319:<Sprite2D#896524100525>, @Sprite2D@1320:<Sprite2D#896557654956>, @Sprite2D@1321:<Sprite2D#896591209385>, @Sprite2D@1322:<Sprite2D#896624763822>, @Sprite2D@1323:<Sprite2D#896658318255>, @Sprite2D@1324:<Sprite2D#896691872271>, @Sprite2D@1325:<Sprite2D#896725426704>, @Sprite2D@1326:<Sprite2D#896758981137>, @Sprite2D@1327:<Sprite2D#896792535604>, @Sprite2D@1328:<Sprite2D#896826090019>, @Sprite2D@1329:<Sprite2D#896859644416>, @Sprite2D@1330:<Sprite2D#896893198899>])
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/social_fest_content_honningdagen_gathering.png (1280x720)
+  ok    social_fest_content.honningdagen_finale_pays_once
+  ok    social_fest_content.honningdagen_reentry_has_no_repeat_reward
+  ok    social_fest_content.honningdagen_own_market_closes
+  ok    social_fest_content.honningdagen_decor_clears_afterwards
+  ok    social_fest_content.midsommerlanterner_unique_date_and_valid_window
+  ok    social_fest_content.midsommerlanterner_existing_host
+  ok    social_fest_content.midsommerlanterner_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.midsommerlanterner_birthday_clear_baker_maja
+  ok    social_fest_content.midsommerlanterner_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.midsommerlanterner_birthday_clear_beekeeper_birk
+  ok    social_fest_content.midsommerlanterner_birthday_clear_bertil
+  ok    social_fest_content.midsommerlanterner_birthday_clear_bodil
+  ok    social_fest_content.midsommerlanterner_birthday_clear_carpenter_brumme
+  ok    social_fest_content.midsommerlanterner_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.midsommerlanterner_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.midsommerlanterner_birthday_clear_cub_bamse
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_builder
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_furnisher
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_king
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_lily
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_tailor
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_wizard
+  ok    social_fest_content.midsommerlanterner_birthday_clear_farmer_rosa
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.midsommerlanterner_birthday_clear_gardener_hoppe
+  ok    social_fest_content.midsommerlanterner_birthday_clear_ghostfam_blund
+  ok    social_fest_content.midsommerlanterner_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.midsommerlanterner_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.midsommerlanterner_birthday_clear_ghostfam_silke
+  ok    social_fest_content.midsommerlanterner_birthday_clear_guard_oak
+  ok    social_fest_content.midsommerlanterner_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.midsommerlanterner_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.midsommerlanterner_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.midsommerlanterner_birthday_clear_mayor_lyra
+  ok    social_fest_content.midsommerlanterner_birthday_clear_merchant_pip
+  ok    social_fest_content.midsommerlanterner_birthday_clear_penguin_postman
+  ok    social_fest_content.midsommerlanterner_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.midsommerlanterner_birthday_clear_postman_pip
+  ok    social_fest_content.midsommerlanterner_birthday_clear_rasmus
+  ok    social_fest_content.midsommerlanterner_birthday_clear_smith_thorin
+  ok    social_fest_content.midsommerlanterner_activity_copy_lantern_wish
+  ok    social_fest_content.midsommerlanterner_activity_copy_bonfire_supper
+  ok    social_fest_content.midsommerlanterner_activity_copy_dance
+  ok    social_fest_content.midsommerlanterner_whole_family_invited
+  ok    social_fest_content.midsommerlanterner_all_activity_posts_resolve ([])
+  ok    social_fest_content.midsommerlanterner_opening_seen
+  ok    social_fest_content.midsommerlanterner_family_present
+  ok    social_fest_content.midsommerlanterner_bed_held
+  ok    social_fest_content.midsommerlanterner_painted_decor_present (decor=FestivalDecor:<Node#989084002033> art=FestivalArt:<Node2D#989100779250> children=[festival_stage_stage:<Sprite2D#989117556467>, bonfire_festival_centre:<Sprite2D#989318883060>, market_stall_summer_awning:<Sprite2D#989721536250>, @Sprite2D@1668:<Sprite2D#989922862844>, @Sprite2D@1669:<Sprite2D#989956417278>, @Sprite2D@1670:<Sprite2D#989989971709>, festival_bench_bench:<Sprite2D#990023526134>, @Sprite2D@1671:<Sprite2D#990224852735>, banner_pole_summer_pole:<Sprite2D#990426179331>, @Sprite2D@1672:<Sprite2D#990627505925>, lantern_string_a_string:<Sprite2D#990828832519>, @Sprite2D@1673:<Sprite2D#991231485707>, @Sprite2D@1674:<Sprite2D#991265040141>, @Sprite2D@1675:<Sprite2D#991298594572>])
+  ok    social_fest_content.midsommerlanterner_decor_above_deck
+  ok    social_fest_content.midsommerlanterner_finale_pays_once
+  ok    social_fest_content.midsommerlanterner_reentry_has_no_repeat_reward
+  ok    social_fest_content.midsommerlanterner_decor_clears_afterwards
+  ok    social_fest_content.badedagen_unique_date_and_valid_window
+  ok    social_fest_content.badedagen_existing_host
+  ok    social_fest_content.badedagen_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.badedagen_birthday_clear_baker_maja
+  ok    social_fest_content.badedagen_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.badedagen_birthday_clear_beekeeper_birk
+  ok    social_fest_content.badedagen_birthday_clear_bertil
+  ok    social_fest_content.badedagen_birthday_clear_bodil
+  ok    social_fest_content.badedagen_birthday_clear_carpenter_brumme
+  ok    social_fest_content.badedagen_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.badedagen_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.badedagen_birthday_clear_cub_bamse
+  ok    social_fest_content.badedagen_birthday_clear_fairy_builder
+  ok    social_fest_content.badedagen_birthday_clear_fairy_furnisher
+  ok    social_fest_content.badedagen_birthday_clear_fairy_king
+  ok    social_fest_content.badedagen_birthday_clear_fairy_lily
+  ok    social_fest_content.badedagen_birthday_clear_fairy_tailor
+  ok    social_fest_content.badedagen_birthday_clear_fairy_wizard
+  ok    social_fest_content.badedagen_birthday_clear_farmer_rosa
+  ok    social_fest_content.badedagen_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.badedagen_birthday_clear_gardener_hoppe
+  ok    social_fest_content.badedagen_birthday_clear_ghostfam_blund
+  ok    social_fest_content.badedagen_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.badedagen_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.badedagen_birthday_clear_ghostfam_silke
+  ok    social_fest_content.badedagen_birthday_clear_guard_oak
+  ok    social_fest_content.badedagen_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.badedagen_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.badedagen_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.badedagen_birthday_clear_mayor_lyra
+  ok    social_fest_content.badedagen_birthday_clear_merchant_pip
+  ok    social_fest_content.badedagen_birthday_clear_penguin_postman
+  ok    social_fest_content.badedagen_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.badedagen_birthday_clear_postman_pip
+  ok    social_fest_content.badedagen_birthday_clear_rasmus
+  ok    social_fest_content.badedagen_birthday_clear_smith_thorin
+  ok    social_fest_content.badedagen_activity_copy_free_bath
+  ok    social_fest_content.badedagen_activity_copy_picnic
+  ok    social_fest_content.badedagen_activity_copy_potluck
+  ok    social_fest_content.badedagen_whole_family_invited
+  ok    social_fest_content.badedagen_all_activity_posts_resolve ([])
+  ok    social_fest_content.badedagen_opening_seen
+  ok    social_fest_content.badedagen_family_present
+  ok    social_fest_content.badedagen_bed_held
+  ok    social_fest_content.badedagen_painted_decor_present (decor=FestivalDecor:<Node#1050840933806> art=FestivalArt:<Node2D#1050857711167> children=[festival_stage_stage:<Sprite2D#1050874488384>, flower_arch_centre:<Sprite2D#1051075814977>, market_stall_summer_awning:<Sprite2D#1051277141573>, @Sprite2D@2032:<Sprite2D#1051478468167>, @Sprite2D@2033:<Sprite2D#1051512022601>, @Sprite2D@2034:<Sprite2D#1051545577032>, festival_bench_bench:<Sprite2D#1051579131459>, @Sprite2D@2035:<Sprite2D#1051780458058>, banner_pole_summer_pole:<Sprite2D#1051981784654>, @Sprite2D@2036:<Sprite2D#1052183111248>, lantern_string_a_string:<Sprite2D#1052384437842>, @Sprite2D@2037:<Sprite2D#1052787091030>, @Sprite2D@2038:<Sprite2D#1052820645464>, @Sprite2D@2039:<Sprite2D#1052854199895>])
+  ok    social_fest_content.badedagen_decor_above_deck
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/social_fest_content_badedagen_gathering.png (1280x720)
+  ok    social_fest_content.badedagen_finale_pays_once
+  ok    social_fest_content.badedagen_reentry_has_no_repeat_reward
+  ok    social_fest_content.badedagen_decor_clears_afterwards
+  ok    social_fest_content.hoestfesten_unique_date_and_valid_window
+  ok    social_fest_content.hoestfesten_existing_host
+  ok    social_fest_content.hoestfesten_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.hoestfesten_birthday_clear_baker_maja
+  ok    social_fest_content.hoestfesten_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.hoestfesten_birthday_clear_beekeeper_birk
+  ok    social_fest_content.hoestfesten_birthday_clear_bertil
+  ok    social_fest_content.hoestfesten_birthday_clear_bodil
+  ok    social_fest_content.hoestfesten_birthday_clear_carpenter_brumme
+  ok    social_fest_content.hoestfesten_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.hoestfesten_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.hoestfesten_birthday_clear_cub_bamse
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_builder
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_furnisher
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_king
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_lily
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_tailor
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_wizard
+  ok    social_fest_content.hoestfesten_birthday_clear_farmer_rosa
+  ok    social_fest_content.hoestfesten_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.hoestfesten_birthday_clear_gardener_hoppe
+  ok    social_fest_content.hoestfesten_birthday_clear_ghostfam_blund
+  ok    social_fest_content.hoestfesten_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.hoestfesten_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.hoestfesten_birthday_clear_ghostfam_silke
+  ok    social_fest_content.hoestfesten_birthday_clear_guard_oak
+  ok    social_fest_content.hoestfesten_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.hoestfesten_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.hoestfesten_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.hoestfesten_birthday_clear_mayor_lyra
+  ok    social_fest_content.hoestfesten_birthday_clear_merchant_pip
+  ok    social_fest_content.hoestfesten_birthday_clear_penguin_postman
+  ok    social_fest_content.hoestfesten_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.hoestfesten_birthday_clear_postman_pip
+  ok    social_fest_content.hoestfesten_birthday_clear_rasmus
+  ok    social_fest_content.hoestfesten_birthday_clear_smith_thorin
+  ok    social_fest_content.hoestfesten_activity_copy_pumpkin_contest
+  ok    social_fest_content.hoestfesten_contest_prizes
+  ok    social_fest_content.hoestfesten_activity_copy_harvest_feast
+  ok    social_fest_content.hoestfesten_activity_copy_harvest_market
+  ok    social_fest_content.hoestfesten_market_definition
+  ok    social_fest_content.hoestfesten_market_stock_pumpkin_seeds
+  ok    social_fest_content.hoestfesten_market_stock_carrot_seeds
+  ok    social_fest_content.hoestfesten_market_stock_fertilizer
+  ok    social_fest_content.hoestfesten_whole_family_invited
+  ok    social_fest_content.hoestfesten_all_activity_posts_resolve ([])
+  ok    social_fest_content.hoestfesten_opening_seen
+  ok    social_fest_content.hoestfesten_family_present
+  ok    social_fest_content.hoestfesten_bed_held
+  ok    social_fest_content.hoestfesten_retained_shop_covers_weekday_bakery
+  ok    social_fest_content.hoestfesten_own_market_open
+  ok    social_fest_content.hoestfesten_painted_decor_present (decor=FestivalDecor:<Node#1126791391773> art=FestivalArt:<Node2D#1126808168990> children=[festival_stage_stage:<Sprite2D#1126824946207>, pumpkin_pile_centre:<Sprite2D#1127026272800>, market_stall_autumn_awning:<Sprite2D#1127227599396>, @Sprite2D@2405:<Sprite2D#1127428925990>, @Sprite2D@2406:<Sprite2D#1127462480424>, @Sprite2D@2407:<Sprite2D#1127496034855>, festival_bench_bench:<Sprite2D#1127529589282>, @Sprite2D@2408:<Sprite2D#1127730915881>, banner_pole_autumn_pole:<Sprite2D#1127932242478>, @Sprite2D@2409:<Sprite2D#1128133569072>, bunting_string_b_string:<Sprite2D#1128334895666>, @Sprite2D@2410:<Sprite2D#1128536222260>, @Sprite2D@2411:<Sprite2D#1128569776694>, @Sprite2D@2412:<Sprite2D#1128603331125>, sheaf_stack_accent:<Sprite2D#1128636885547>, door_wreath_autumn_door:<Sprite2D#1128838212151>, @Sprite2D@2413:<Sprite2D#1129039538747>, @Sprite2D@2414:<Sprite2D#1129073093181>, @Sprite2D@2415:<Sprite2D#1129106647612>, @Sprite2D@2416:<Sprite2D#1129140202041>, @Sprite2D@2417:<Sprite2D#1129173756478>, @Sprite2D@2418:<Sprite2D#1129207310911>, @Sprite2D@2419:<Sprite2D#1129240865344>, @Sprite2D@2420:<Sprite2D#1129274419777>, @Sprite2D@2421:<Sprite2D#1129307974210>, @Sprite2D@2422:<Sprite2D#1129341528643>, @Sprite2D@2423:<Sprite2D#1129375083076>, @Sprite2D@2424:<Sprite2D#1129408637509>, @Sprite2D@2425:<Sprite2D#1129442191942>])
+  ok    social_fest_content.hoestfesten_decor_above_deck
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/social_fest_content_hoestfesten_gathering.png (1280x720)
+  ok    social_fest_content.hoestfesten_finale_pays_once
+  ok    social_fest_content.hoestfesten_reentry_has_no_repeat_reward
+  ok    social_fest_content.hoestfesten_own_market_closes
+  ok    social_fest_content.hoestfesten_decor_clears_afterwards
+  ok    social_fest_content.maanemarkedet_unique_date_and_valid_window
+  ok    social_fest_content.maanemarkedet_existing_host
+  ok    social_fest_content.maanemarkedet_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.maanemarkedet_birthday_clear_baker_maja
+  ok    social_fest_content.maanemarkedet_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.maanemarkedet_birthday_clear_beekeeper_birk
+  ok    social_fest_content.maanemarkedet_birthday_clear_bertil
+  ok    social_fest_content.maanemarkedet_birthday_clear_bodil
+  ok    social_fest_content.maanemarkedet_birthday_clear_carpenter_brumme
+  ok    social_fest_content.maanemarkedet_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.maanemarkedet_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.maanemarkedet_birthday_clear_cub_bamse
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_builder
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_furnisher
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_king
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_lily
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_tailor
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_wizard
+  ok    social_fest_content.maanemarkedet_birthday_clear_farmer_rosa
+  ok    social_fest_content.maanemarkedet_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.maanemarkedet_birthday_clear_gardener_hoppe
+  ok    social_fest_content.maanemarkedet_birthday_clear_ghostfam_blund
+  ok    social_fest_content.maanemarkedet_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.maanemarkedet_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.maanemarkedet_birthday_clear_ghostfam_silke
+  ok    social_fest_content.maanemarkedet_birthday_clear_guard_oak
+  ok    social_fest_content.maanemarkedet_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.maanemarkedet_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.maanemarkedet_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.maanemarkedet_birthday_clear_mayor_lyra
+  ok    social_fest_content.maanemarkedet_birthday_clear_merchant_pip
+  ok    social_fest_content.maanemarkedet_birthday_clear_penguin_postman
+  ok    social_fest_content.maanemarkedet_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.maanemarkedet_birthday_clear_postman_pip
+  ok    social_fest_content.maanemarkedet_birthday_clear_rasmus
+  ok    social_fest_content.maanemarkedet_birthday_clear_smith_thorin
+  ok    social_fest_content.maanemarkedet_activity_copy_moon_market
+  ok    social_fest_content.maanemarkedet_market_definition
+  ok    social_fest_content.maanemarkedet_market_stock_amethyst
+  ok    social_fest_content.maanemarkedet_market_stock_glow_mushroom
+  ok    social_fest_content.maanemarkedet_market_stock_lantern_oil
+  ok    social_fest_content.maanemarkedet_activity_copy_gem_show
+  ok    social_fest_content.maanemarkedet_contest_prizes
+  ok    social_fest_content.maanemarkedet_activity_copy_lantern_wish
+  ok    social_fest_content.maanemarkedet_whole_family_invited
+  ok    social_fest_content.maanemarkedet_all_activity_posts_resolve ([])
+  ok    social_fest_content.maanemarkedet_opening_seen
+  ok    social_fest_content.maanemarkedet_family_present
+  ok    social_fest_content.maanemarkedet_bed_held
+  ok    social_fest_content.maanemarkedet_retained_shop_covers_weekday_magic_store
+  ok    social_fest_content.maanemarkedet_own_market_open
+  ok    social_fest_content.maanemarkedet_painted_decor_present (decor=FestivalDecor:<Node#845605249846> art=FestivalArt:<Node2D#1186182734580> children=[festival_stage_stage:<Sprite2D#1186199511793>, bonfire_festival_centre:<Sprite2D#1186400838386>, market_stall_autumn_awning:<Sprite2D#1186803491461>, @Sprite2D@2538:<Sprite2D#1187004818097>, @Sprite2D@2539:<Sprite2D#1187038372527>, @Sprite2D@2540:<Sprite2D#1187071926962>, festival_bench_bench:<Sprite2D#1187105481345>, @Sprite2D@2541:<Sprite2D#1187306807987>, banner_pole_autumn_pole:<Sprite2D#1187508134520>, @Sprite2D@2542:<Sprite2D#1187709461144>, bunting_string_b_string:<Sprite2D#1187910787735>, @Sprite2D@2543:<Sprite2D#1188112114325>, @Sprite2D@2544:<Sprite2D#1188145667582>, @Sprite2D@2545:<Sprite2D#1188179223193>, sheaf_stack_accent:<Sprite2D#1188212776424>])
+  ok    social_fest_content.maanemarkedet_finale_pays_once
+  ok    social_fest_content.maanemarkedet_reentry_has_no_repeat_reward
+  ok    social_fest_content.maanemarkedet_own_market_closes
+  ok    social_fest_content.maanemarkedet_decor_clears_afterwards
+  ok    social_fest_content.vinterlysene_unique_date_and_valid_window
+  ok    social_fest_content.vinterlysene_existing_host
+  ok    social_fest_content.vinterlysene_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.vinterlysene_birthday_clear_baker_maja
+  ok    social_fest_content.vinterlysene_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.vinterlysene_birthday_clear_beekeeper_birk
+  ok    social_fest_content.vinterlysene_birthday_clear_bertil
+  ok    social_fest_content.vinterlysene_birthday_clear_bodil
+  ok    social_fest_content.vinterlysene_birthday_clear_carpenter_brumme
+  ok    social_fest_content.vinterlysene_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.vinterlysene_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.vinterlysene_birthday_clear_cub_bamse
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_builder
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_furnisher
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_king
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_lily
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_tailor
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_wizard
+  ok    social_fest_content.vinterlysene_birthday_clear_farmer_rosa
+  ok    social_fest_content.vinterlysene_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.vinterlysene_birthday_clear_gardener_hoppe
+  ok    social_fest_content.vinterlysene_birthday_clear_ghostfam_blund
+  ok    social_fest_content.vinterlysene_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.vinterlysene_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.vinterlysene_birthday_clear_ghostfam_silke
+  ok    social_fest_content.vinterlysene_birthday_clear_guard_oak
+  ok    social_fest_content.vinterlysene_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.vinterlysene_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.vinterlysene_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.vinterlysene_birthday_clear_mayor_lyra
+  ok    social_fest_content.vinterlysene_birthday_clear_merchant_pip
+  ok    social_fest_content.vinterlysene_birthday_clear_penguin_postman
+  ok    social_fest_content.vinterlysene_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.vinterlysene_birthday_clear_postman_pip
+  ok    social_fest_content.vinterlysene_birthday_clear_rasmus
+  ok    social_fest_content.vinterlysene_birthday_clear_smith_thorin
+  ok    social_fest_content.vinterlysene_activity_copy_light_procession
+  ok    social_fest_content.vinterlysene_activity_copy_lantern_wish
+  ok    social_fest_content.vinterlysene_activity_copy_warm_drinks
+  ok    social_fest_content.vinterlysene_whole_family_invited
+  ok    social_fest_content.vinterlysene_all_activity_posts_resolve ([])
+  ok    social_fest_content.vinterlysene_opening_seen
+  ok    social_fest_content.vinterlysene_family_present
+  ok    social_fest_content.vinterlysene_bed_held
+  ok    social_fest_content.vinterlysene_painted_decor_present (decor=FestivalDecor:<Node#1272031747469> art=FestivalArt:<Node2D#1272048527157> children=[festival_stage_stage:<Sprite2D#1272065304375>, ice_lantern_centre:<Sprite2D#1272266628487>, market_stall_winter_awning:<Sprite2D#1272669284390>, @Sprite2D@2890:<Sprite2D#1272870610952>, @Sprite2D@2891:<Sprite2D#1272904165984>, @Sprite2D@2892:<Sprite2D#1272937719698>, festival_bench_bench:<Sprite2D#1272971271696>, @Sprite2D@2893:<Sprite2D#1273172600630>, banner_pole_winter_pole:<Sprite2D#1273373927332>, @Sprite2D@2894:<Sprite2D#1273575252982>, lantern_string_b_string:<Sprite2D#1273776581213>, @Sprite2D@2895:<Sprite2D#1274179233176>, @Sprite2D@2896:<Sprite2D#1274212788179>, @Sprite2D@2897:<Sprite2D#1274246342458>, door_wreath_winter_door:<Sprite2D#1274313451147>, @Sprite2D@2898:<Sprite2D#1274514776932>, @Sprite2D@2899:<Sprite2D#1274548332120>, @Sprite2D@2900:<Sprite2D#1274581883972>, @Sprite2D@2901:<Sprite2D#1274615440972>, @Sprite2D@2902:<Sprite2D#1274648995415>, @Sprite2D@2903:<Sprite2D#1274682549845>, @Sprite2D@2904:<Sprite2D#1274716104278>, @Sprite2D@2905:<Sprite2D#1274749658707>, @Sprite2D@2906:<Sprite2D#1274783213140>, @Sprite2D@2907:<Sprite2D#1274816767569>, @Sprite2D@2908:<Sprite2D#1274850322002>, @Sprite2D@2909:<Sprite2D#1274883876431>, @Sprite2D@2910:<Sprite2D#1274917430864>])
+  ok    social_fest_content.vinterlysene_decor_above_deck
+  ok    social_fest_content.vinterlysene_finale_pays_once
+  ok    social_fest_content.vinterlysene_reentry_has_no_repeat_reward
+  ok    social_fest_content.vinterlysene_decor_clears_afterwards
+  ok    social_fest_content.bagedagen_unique_date_and_valid_window
+  ok    social_fest_content.bagedagen_existing_host
+  ok    social_fest_content.bagedagen_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.bagedagen_birthday_clear_baker_maja
+  ok    social_fest_content.bagedagen_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.bagedagen_birthday_clear_beekeeper_birk
+  ok    social_fest_content.bagedagen_birthday_clear_bertil
+  ok    social_fest_content.bagedagen_birthday_clear_bodil
+  ok    social_fest_content.bagedagen_birthday_clear_carpenter_brumme
+  ok    social_fest_content.bagedagen_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.bagedagen_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.bagedagen_birthday_clear_cub_bamse
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_builder
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_furnisher
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_king
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_lily
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_tailor
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_wizard
+  ok    social_fest_content.bagedagen_birthday_clear_farmer_rosa
+  ok    social_fest_content.bagedagen_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.bagedagen_birthday_clear_gardener_hoppe
+  ok    social_fest_content.bagedagen_birthday_clear_ghostfam_blund
+  ok    social_fest_content.bagedagen_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.bagedagen_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.bagedagen_birthday_clear_ghostfam_silke
+  ok    social_fest_content.bagedagen_birthday_clear_guard_oak
+  ok    social_fest_content.bagedagen_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.bagedagen_birthday_clear_lamplighter_kiki
+  ...   (81 more ok lines of social_fest_content not printed; --verbose prints all)
+  --    social_fest_content: 481 checks, 0 failed, 0 skipped, 20.9 s
+== section towns_ext [windowed]  (res://tests/sections/towns_ext.gd)
+  ok    towns_ext.torvekroen_native_arrived (int_torvekroen)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/towns_ext_torvekroen.png (1280x720)
+  ok    towns_ext.torvekroen_native_owner
+  ok    towns_ext.inn_friday_crowd (["innkeeper_kvak", "postman_pip", "carpenter_brumme", "gardener_hoppe", "smith_thorin", "beekeeper_birk", "bertil", "clerk_fjerpen", "guard_oak", "fiddler_strimmel"])
+  ok    towns_ext.fekongens_hus_native_arrived (int_fekongens_hus)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/towns_ext_fekongens_hus.png (1280x720)
+  ok    towns_ext.fekongens_hus_native_owner
+  ok    towns_ext.hoppe_hut_native_arrived (int_hoppe_hut)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/towns_ext_hoppe_hut.png (1280x720)
+  ok    towns_ext.hoppe_hut_native_owner
+  ok    towns_ext.kikis_hytte_native_arrived (int_kikis_hytte)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/towns_ext_kikis_hytte.png (1280x720)
+  ok    towns_ext.kikis_hytte_native_owner
+  ok    towns_ext.pippins_hus_native_arrived (int_pippins_hus)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/towns_ext_pippins_hus.png (1280x720)
+  ok    towns_ext.pippins_hus_native_owner
+  --    towns_ext: 11 checks, 0 failed, 0 skipped, 5.8 s
+== section towns_greetings [windowed]  (res://tests/sections/towns_greetings.gd)
+  ok    towns_greetings.native_keeper_greeting
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/towns_greetings_bakery_greeting.png (1280x720)
+  --    towns_greetings: 1 checks, 0 failed, 0 skipped, 0.9 s
+== section towns_post [windowed]  (res://tests/sections/towns_post.gd)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/towns_post_post_office_locations.png (1280x720)
+  ok    towns_post.native_list
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/towns_post_post_guide.png (1280x720)
+  ok    towns_post.native_post_rules (31 nodes, 5 text, 21 boxes, 20 interactive scanned)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/towns_post_ring_post.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/towns_post_ring_post_unfocused.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/towns_post_panel_pixels_post.png (1280x720)
+  ok    towns_post.post.visible (clean)
+  ok    towns_post.post.initial_focus (clean)
+  ok    towns_post.post.focus_walk (35 of 35 controls reached in 188 presses)
+  ok    towns_post.post.focusable (20 interactive, 35 keyboard-focusable)
+  ok    towns_post.post.rules (31 nodes, 5 text, 21 boxes, 20 interactive scanned)
+  ok    towns_post.post.i18n_flip (clean)
+  ok    towns_post.post.ring (clean)
+  ok    towns_post.post.panel_pixels (clean)
+  ok    towns_post.post.button_pixels (clean)
+  SKIP  ui_audit post.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    towns_post.post.escape (1 modal(s) opened and closed with Esc in order)
+  ok    towns_post.native_registry ([])
+  --    towns_post: 13 checks, 0 failed, 1 skipped, 1.9 s
+== section ui_audit [windowed]  (res://tests/sections/ui_audit.gd)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_button.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_button_unfocused.png (1280x720)
+  ok    ui_audit.ring_focused_button (gold ring around the focused button: 4 of 8 sample pixels gold, 0 when it is not focused)
+  ok    ui_audit.ring_negative_control_not_gold (the same pixels are not gold once focus is gone (0), and an unfocused sibling shows none (0))
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_field.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_field_unfocused.png (1280x720)
+  ok    ui_audit.ring_focused_field (the LineEdit's focus style draws the gold ring too)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_button3.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_button3_unfocused.png (1280x720)
+  ok    ui_audit.ring_focused_button3 (clean)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_slider.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_slider_unfocused.png (1280x720)
+  ok    ui_audit.ring_focused_slider (the ring slider paints the focus style itself: 4 of 8 sample pixels gold, 0 when not focused)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_fixture_screen.png (1280x720)
+  ok    the fixture screen renders (156 distinct colours, luma std 0.141)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_blue.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_blue_unfocused.png (1280x720)
+  ok    ui_audit.ring_neg_blue_style_is_ring_missing (reported ring_missing: 1 defect(s): ring_missing)
+  ok    ui_audit.ring_neg_empty_style_is_ring_missing (reported ring_missing: 1 defect(s): ring_missing)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_custom.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_custom_unfocused.png (1280x720)
+  ok    ui_audit.ring_custom_control_declared_style (a custom focusable control declares its ring with the meta tt_focus_style: 4 of 8 sample pixels gold)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_components_screen.png (1280x720)
+  ok    the components fixture screen (real components, no rule fires) renders (488 distinct colours, luma std 0.161)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_custom_missing.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_custom_missing_unfocused.png (1280x720)
+  ok    ui_audit.ring_neg_custom_control_never_draws_its_ring (reported ring_missing: 1 defect(s): ring_missing)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_plain_slider.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_plain_slider_unfocused.png (1280x720)
+  ok    ui_audit.ring_neg_plain_slider_is_ring_missing (reported ring_missing: 1 defect(s): ring_missing)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_always_on.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_always_on_unfocused.png (1280x720)
+  ok    ui_audit.ring_neg_always_drawn_is_ring_always_on (reported ring_always_on: 1 defect(s): ring_always_on)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_other_always_on.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_other_always_on_unfocused.png (1280x720)
+  ok    ui_audit.ring_neg_other_control_always_on (options.other: the unfocused sibling that shows a ring is reported by name: 1 defect(s): ring_always_on)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_menu_row_fill.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_menu_row_fill_unfocused.png (1280x720)
+  ok    ui_audit.ring_fill_kind_is_sampled_inside (a gold-fill focus look (menu row) is sampled inside the body: kind fill, clean)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_primary_kind.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_primary_kind_unfocused.png (1280x720)
+  ok    ui_audit.ring_kind_is_ring_for_buttons (a button's focus look is a ring with an ink band: gold_ok true ink_ok true of 8 sampled)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_gold_only.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_gold_only_unfocused.png (1280x720)
+  ok    ui_audit.ring_neg_gold_only_ring_has_no_ink_band (reported ring_ink_missing: 1 defect(s): ring_ink_missing)
+  ok    ui_audit.ring_expect_none_on_an_unfocused_row (an unfocused row shows neither ring nor fill)
+  ok    ui_audit.ring_neg_expect_none_on_a_focused_row (reported ring_always_on: 1 defect(s): ring_always_on)
+  ok    ui_audit.ring_focus_false_samples_a_persistent_ring (focus:false samples the control as it is (a selected row's persistent look))
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_panel_parchment.png (1280x720)
+  ok    ui_audit.panel_pixels_guide_panel (the guide panel edge reads parchment / ink / gold / ink: [{ "role": "parchment", "width": 2, "color": "#f4e6c4", "ok": true }, { "role": "ink", "width": 2, "color": "#2b2340", "ok": true }, { "role": "gold", "width": 4, "color": "#e3c372", "ok": true }, { "role": "ink_outer", "width": 2, "color": "#2b2340", "ok": true }])
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_panel_flat.png (1280x720)
+  ok    ui_audit.panel_neg_flat_panel (reported panel_edge_wrong: 1 defect(s): panel_edge_wrong)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_panel_inset.png (1280x720)
+  ok    ui_audit.panel_pixels_follows_the_style_body_inset (a panel whose style insets its body is measured from the body edge, not the control rect)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_button_primary.png (1280x720)
+  ok    ui_audit.button_pixels_guide_button (the primary button reads ink border / face / band / ink border / underside: [{ "role": "ink_top", "y": 191, "got": "#2b2340", "want": "#2b2340", "ok": true }, { "role": "face", "y": 196, "got": "#6b9a3e", "want": "#6b9a3e", "ok": true }, { "role": "band", "y": 241, "got": "#58763e", "want": "#58763f", "ok": true }, { "role": "ink_bottom", "y": 244, "got": "#2b2340", "want": "#2b2340", "ok": true }, { "role": "underside", "y": 247, "got": "#2b2340", "want": "#2b2340", "ok": true }])
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_button_flat.png (1280x720)
+  ok    ui_audit.button_neg_flat_button (reported button_profile_wrong: 1 defect(s): button_profile_wrong)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_button_no_underside.png (1280x720)
+  ok    ui_audit.button_neg_missing_underside (reported button_profile_wrong: 1 defect(s): button_profile_wrong)
+  ok    ui_audit.button_underside_false_option (options.underside = false: a button that has none is measured without it)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_gallery_buy.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_gallery_buy_unfocused.png (1280x720)
+  ok    ui_audit.ring_gallery_primary_button (the gallery's primary button: 4 of 8 gold when focused)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_gallery_chip.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_gallery_chip_unfocused.png (1280x720)
+  ok    ui_audit.ring_gallery_chip (clean)
+  ok    ui_audit.foundation_gallery.visible (clean)
+  ok    ui_audit.foundation_gallery.initial_focus (clean)
+  ok    ui_audit.foundation_gallery.focusable (19 interactive, 19 keyboard-focusable)
+  ok    ui_audit.foundation_gallery.focus_walk (18 of 18 controls reached in 78 presses)
+  ok    ui_audit.foundation_gallery.rules (111 nodes, 48 text, 24 boxes, 18 interactive scanned)
+  ok    ui_audit.foundation_gallery.i18n_flip (clean)
+  ok    ui_audit.foundation_gallery.theme (clean)
+  ok    ui_audit.ring_gallery_audit_screen_windowed (audit_screen of the gallery also passes in a window)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_fx_live.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_fx_live_unfocused.png (1280x720)
+  ok    ui_audit.ring_registry_check (the 'ring' registry check passes on the conforming fixture: [{ "kind": "check", "name": "fx_live.visible", "ok": true, "detail": "clean" }, { "kind": "check", "name": "fx_live.initial_focus", "ok": true, "detail": "clean" }, { "kind": "check", "name": "fx_live.ring", "ok": true, "detail": "clean" }])
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_sp_pixels.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_ring_sp_pixels_unfocused.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_panel_pixels_sp_pixels.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_button_pixels_sp_pixels.png (1280x720)
+  ok    ui_audit.registry_spec_row_pixel_checks_windowed (visible + ring + panel_pixels + button_pixels on a spec row (compare_guide is the python tool: noted, no check): ["sp_pixels.visible=true", "sp_pixels.ring=true", "sp_pixels.panel_pixels=true", "sp_pixels.button_pixels=true"])
+  ok    ui_audit.auto_pick_finds_gallery_controls (the auto-pick finds a raised button on the gallery (BuyButton) and no double-edge panel)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/towns-native/ui_audit_button_gallery_auto.png (1280x720)
+  ok    ui_audit.auto_picked_button_matches_the_guide (the gallery's first raised button has the guide profile)
+  --    ui_audit: 41 checks, 0 failed, 0 skipped, 2.3 s
+== summary: 5 section(s) run, 547 checks (0 failed, 1 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 36.1 s
+PLAYTEST PASS (547 checks in 5 sections, 0 allowed engine messages, 0 known-issue messages)

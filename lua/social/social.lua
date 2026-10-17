@@ -18,6 +18,7 @@ kind = "config"
 
 config = {
   social = {
+    rs_stages = { "hjertven", "forlovet", "gift" },
     points_per_heart = 100,
     heart_cap = 10,
     chat_points = 100,

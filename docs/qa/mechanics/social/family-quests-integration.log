@@ -1,0 +1,1206 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=ghostfam_quests,quests,social,npc,data_registry,save,ui_nav
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.NVhUEJ/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 11.6 s
+== section data_registry  (res://tests/sections/data_registry.gd)
+  ok    data_registry.lint_kinds_include_registry (LuaLint.KINDS has all of config items quest(s) dialogue recipes shops registry; a registry file lints clean; kind_unknown / kind_missing name `registry`: unknown kind "bogus" (expected one of: config, items, quest, dialogue, recipes, shops, registry) | no top-level `kind = "..."` header (config, items, quest, dialogue, recipes, shops or registry))
+  ok    every Lua file under res://lua still lints clean (0 findings)
+  ok    data_registry.until_key_is_flagged (`{ until = 18 }` is the finding reserved_key on its line with the routine hint, `["until"] = 18`, leave, stay and from are clean, any other reserved word as a key is flagged too: [{ "path": "inline_until.lua", "line": 3, "rule": "reserved_key", "token": "until", "message": "`until` is a reserved word of Lua and cannot name a table field (real Lua rejects `until = ...`): pick another name (routine blocks use leave / stay / from) or write `[\"until\"] = ...`" }])
+  ok    load_file(registry_routines_a.lua) registers the file as kind registry (script id tests/fixtures/lua/registry_routines_a)
+  ok    load_file(registry_routines_b.lua) registers the file as kind registry (script id tests/fixtures/lua/registry_routines_b)
+  ok    load_file(registry_buildings.lua) registers the file as kind registry (script id tests/fixtures/lua/registry_buildings)
+  ok    loading registry files logs no engine error or warning
+  ok    get_registry("fixture_routines") holds the ids of both files in load order: ["fixture_gardener", "fixture_baker", "fixture_mayor"]
+  ok    a second registry does not leak into the first: ["fixture_bakery", "fixture_night_inn"]
+  ok    an entry arrives with its nested tables intact (floats stay floats, integers integers, arrays of tables arrays, {} Dictionary): { "home": "hoppe_hut", "home_area": "traetoppen", "priority": 4, "shelter": "home.table", "plans": { "work": { "blocks": [{ "from": 6.5, "at": "home.table", "ac
+  ok    a field named `kind` inside an entry does not disturb the file's own `kind` header: { "area": "hyggebyen", "kind": "shop", "shop": "bakery", "hours": [6, 18], "closed_weekday": 1 }
+  ok    unknown registry or id: {} (a Dictionary, never null)
+  ok    writing into the answer for an unknown registry creates nothing in the runtime
+  ok    fixture registry_routines_a.lua is inside the subset and lints clean []
+  ok    fixture registry_routines_b.lua is inside the subset and lints clean []
+  ok    fixture registry_buildings.lua is inside the subset and lints clean []
+  ok    data_registry.registry_kind_loads_lints_and_claims (3 routine ids from 2 files + 2 building ids load; the fixtures lint clean (lint_report 0 findings); fixture_baker claimed twice = one duplicate_id note (1), later file wins (source b): [{ "path": "res://tests/fixtures/lua/registry_routines_b.lua", "line": 0, "rule": "duplicate_id", "token": "fixture_baker", "message": "registry:fixture_routines `fixture_baker` is already defined by tests/fixtures/lua/registry_routines_a (the later file wins)" }])
+  ok    the same id in another registry (fixture_stalls.fixture_baker) and a file loaded twice add no duplicate note: 0 new
+  ok    loading files with a bad registry header logs no engine error or warning
+  ok    data_registry.registry_header_findings (a registry file without `registry = "<name>"`, without its table, or named like a parser result key (functions) is exactly one registry_header finding each; [])
+  ok    a file with a bad header registers nothing (no registry named "", fixture_ghosts, functions or fixture_orphans)
+  ok    tools/lua/lint.gd --list-rules names registry_header and reserved_key
+  ok    precondition: registries and a finding are loaded
+  ok    data_registry.registry_reload_clears (reload_scripts() forgets every fixture registry, finding and fixture script (F9 hot reload leaves no stale ids))
+  ok    precondition: no SocialManager autoload in the tree for this leg
+  ok    the social api fixture registers and lints clean: []
+  ok    calling the social functions without a manager logs no engine error or warning
+  ok    data_registry.api_functions_nil_without_manager (without SocialManager api.get_hearts / add_hearts / is_birthday / festival answer nil (direct and from Lua), are NOT the unknown-function path, change no flag (friend_fixture_npc unset); `api.get_hearts(npc) or 0` reads 0 (stage stranger), `context.hearts or friend_x or 0` reads 6 / 0 / 5; results { "direct": [<null>, <null>, <null>, <null>], "lua": [<null>, <null>, <null>, <null>] })
+  ok    get_hearts -> int and is_birthday -> bool come from the manager: 3 0 true false
+  ok    festival() answers the String id of today's active festival (the manager's StringName becomes a String): fixture_fest (String)
+  ok    with no festival on, festival() is the empty String and `api.festival() ~= ""` is false (the empty string is TRUTHY in Lua: compare, never test)
+  ok    add_hearts(npc, n) -> SocialManager.add_hearts(npc, n, &"lua") and answers nil: ["add_hearts", "fixture_npc", 2, &"lua"]
+  ok    a missing count is 0 (the manager ignores it), "3" is 3: [["add_hearts", "fixture_npc", 0, &"lua"], ["add_hearts", "fixture_npc", 3, &"lua"]]
+  ok    from Lua: bump(npc, 2) reads 5 hearts, stage_of reads close / stranger, is_bday and festival_now answer: 5 close stranger
+  ok    the forwarded calls log no engine error or warning
+  ok    data_registry.api_functions_late_bound (with a fake SocialManager the four functions forward their arguments and type their answers (get_hearts 3, is_birthday true, festival fixture_fest, add_hearts(.., &"lua")); a manager without a method answers nil for it)
+[Lua] unknown Lua function `get_friendship` evaluates to nil (api functions: add_gold add_item remove_item set_flag get_flag has_flag has_item get_gold notification unlock_zone emit log offer_quest complete_quest get_hearts add_hearts is_birthday festival)
+  ok    data_registry.api_unknown_names_log_once (an unknown function still answers nil and is logged once; the message lists the 14 old and the 4 new names: unknown Lua function `get_friendship` evaluates to nil (api functions: add_gold add_item remove_item set_flag get_flag has_flag has_item get_gold notification unlock_zone emit log offer_quest complete_quest get_hearts add_hearts is_birthday festival))
+  ok    an unknown api function logs no engine error or warning
+  ok    the real SocialManager is back in the tree at its old place (index 12)
+  --    data_registry: 39 checks, 0 failed, 0 skipped, 6.5 s
+== section ghostfam_quests  (res://tests/sections/ghostfam_quests.gd)
+  ok    ghostfam_quests.ghostfam_garn_registered
+  ok    ghostfam_quests.ghostfam_garn_heart_gate
+  ok    ghostfam_quests.ghostfam_garn_offered_at_threshold
+  ok    ghostfam_quests.ghostfam_garn_real_dialogue_offer
+  ok    ghostfam_quests.ghostfam_lygtemager_registered
+  ok    ghostfam_quests.ghostfam_lygtemager_heart_gate
+  ok    ghostfam_quests.ghostfam_lygtemager_offered_at_threshold
+  ok    ghostfam_quests.ghostfam_lygtemager_real_dialogue_offer
+  ok    ghostfam_quests.ghostfam_hittegods_registered
+  ok    ghostfam_quests.ghostfam_hittegods_heart_gate
+  ok    ghostfam_quests.ghostfam_hittegods_offered_at_threshold
+  ok    ghostfam_quests.ghostfam_hittegods_real_dialogue_offer
+  ok    ghostfam_quests.garn_accept
+  ok    ghostfam_quests.garn_waits_for_wool
+  ok    ghostfam_quests.garn_consumes_exact_wool
+  ok    ghostfam_quests.garn_blue_shirt_and_heart
+  ok    ghostfam_quests.garn_never_repeats
+  ok    ghostfam_quests.lantern_accept
+  ok    ghostfam_quests.lantern_requires_both_ingredients
+  ok    ghostfam_quests.lantern_consumes_and_rewards
+  ok    ghostfam_quests.lantern_never_repeats
+  ok    ghostfam_quests.lost_owner_filters_absence
+  ok    ghostfam_quests.no_eligible_owner_no_offer
+  ok    ghostfam_quests.eligibility_survives_helper_disposal
+  ok    ghostfam_quests.six_non_twin_owners
+  ok    ghostfam_quests.lost_accept
+  ok    ghostfam_quests.named_parcel_accepted_once
+  ok    ghostfam_quests.journal_names_owner_and_item
+  ok    ghostfam_quests.journal_shows_named_heart
+  ok    ghostfam_quests.lost_save_reload
+  ok    ghostfam_quests.lost_assignment_saved
+  ok    ghostfam_quests.wrong_owner_or_item_cannot_finish
+  ok    ghostfam_quests.real_gift_finishes_lost_property ({ "ok": true, "item": "honey", "class": "love", "points": 40, "birthday": "", "repeated": false, "hearts": 0, "hearts_before": 0, "stage_before": "fremmed", "stage_after": &"fremmed" })
+  ok    ghostfam_quests.lost_reward_cannot_replay
+  ok    ghostfam_quests.lost_seven_day_cooldown
+  ok    ghostfam_quests.lost_returns_after_week
+  ok    ghostfam_quests.full_pack_accepts_deferred_parcel
+  ok    ghostfam_quests.full_pack_has_no_phantom_parcel
+  ok    ghostfam_quests.deferred_parcel_saves
+  ok    ghostfam_quests.deferred_state_survives
+  ok    ghostfam_quests.silke_talk_hook_collects_parcel
+  ok    ghostfam_quests.deferred_parcel_no_duplicate
+  ok    ghostfam_quests.content_reproducible
+  ok    ghostfam_quests.family_lua_has_no_new_findings
+  --    ghostfam_quests: 44 checks, 0 failed, 0 skipped, 0.5 s
+== section npc  (res://tests/sections/npc.gd)
+  ok    npc.real_conversation_screens
+  ok    npc.talk_roster_mayor_lyra
+  ok    npc.portrait_mayor_lyra
+  ok    At most five choices: mayor_lyra
+  ok    Esc releases mayor_lyra
+  ok    Resolved line DLG_LYRA_GREET_1 in da
+  ok    Resolved line DLG_LYRA_GREET_2 in da
+  ok    Resolved line DLG_LYRA_LOTTERY in da
+  ok    Resolved line DLG_LYRA_GREET_1 in en
+  ok    Resolved line DLG_LYRA_GREET_2 in en
+  ok    Resolved line DLG_LYRA_LOTTERY in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_baker_maja
+  ok    npc.portrait_baker_maja
+  ok    At most five choices: baker_maja
+  ok    Esc releases baker_maja
+  ok    Resolved line DLG_MAJA_GREET in da
+  ok    Resolved line DLG_MAJA_ROOF_TROUBLE in da
+  ok    Resolved line DLG_MAJA_GREET in en
+  ok    Resolved line DLG_MAJA_ROOF_TROUBLE in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_merchant_pip
+  ok    npc.portrait_merchant_pip
+  ok    At most five choices: merchant_pip
+  ok    Esc releases merchant_pip
+  ok    Resolved line DLG_MERCHANT_GREET in da
+  ok    Resolved line DLG_MERCHANT_GREET in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_pippin_boegeknop
+  ok    npc.portrait_pippin_boegeknop
+  ok    At most five choices: pippin_boegeknop
+  ok    Esc releases pippin_boegeknop
+  ok    Resolved line DLG_PIPPIN_CAT in da
+  ok    Resolved line DLG_PIPPIN_CAT in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_king
+  ok    npc.portrait_fairy_king
+  ok    At most five choices: fairy_king
+  ok    Esc releases fairy_king
+  ok    Resolved line QUEST_MOONSTONE_CROWN_OFFER in da
+  ok    Resolved line QUEST_MOONSTONE_CROWN_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_lily
+  ok    npc.portrait_fairy_lily
+  ok    At most five choices: fairy_lily
+  ok    Esc releases fairy_lily
+  ok    Resolved line DLG_LILY_GREET in da
+  ok    Resolved line DLG_LILY_GREET in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_smith_thorin
+  ok    npc.portrait_smith_thorin
+  ok    At most five choices: smith_thorin
+  ok    Esc releases smith_thorin
+  ok    Resolved line DLG_THORIN_GREET in da
+  ok    Resolved line DLG_THORIN_MINING_TALK in da
+  ok    Resolved line DLG_THORIN_GREET in en
+  ok    Resolved line DLG_THORIN_MINING_TALK in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_guard_oak
+  ok    npc.portrait_guard_oak
+  ok    At most five choices: guard_oak
+  ok    Esc releases guard_oak
+  ok    Resolved line DLG_OAK_LIFT in da
+  ok    Resolved line QUEST_SKOVLIFT_INTRO_OFFER in da
+  ok    Resolved line DLG_OAK_LIFT in en
+  ok    Resolved line QUEST_SKOVLIFT_INTRO_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_farmer_rosa
+  ok    npc.portrait_farmer_rosa
+  ok    At most five choices: farmer_rosa
+  ok    Esc releases farmer_rosa
+  ok    Resolved line DLG_ROSA_GREET in da
+  ok    Resolved line DLG_ROSA_ANIMAL_TALK in da
+  ok    Resolved line DLG_ROSA_GREET in en
+  ok    Resolved line DLG_ROSA_ANIMAL_TALK in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_wizard
+  ok    npc.portrait_fairy_wizard
+  ok    At most five choices: fairy_wizard
+  ok    Esc releases fairy_wizard
+  ok    Resolved line DLG_WIZARD_GREET in da
+  ok    Resolved line DLG_WIZARD_MATH_INTRO in da
+  ok    Resolved line DLG_WIZARD_GREET in en
+  ok    Resolved line DLG_WIZARD_MATH_INTRO in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_cat_morfar_mis
+  ok    npc.portrait_cat_morfar_mis
+  ok    At most five choices: cat_morfar_mis
+  ok    Esc releases cat_morfar_mis
+  ok    Resolved line DLG_MIS_HOME in da
+  ok    Resolved line DLG_MIS_HOME in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_penguin_postman
+  ok    npc.portrait_penguin_postman
+  ok    At most five choices: penguin_postman
+  ok    Esc releases penguin_postman
+  ok    Resolved line DLG_PENGUIN_HELLO in da
+  ok    Resolved line DLG_PENGUIN_HELLO in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_builder
+  ok    npc.portrait_fairy_builder
+  ok    At most five choices: fairy_builder
+  ok    Esc releases fairy_builder
+  ok    Resolved line DLG_BUILDER_T01_IDLE in da
+  ok    Resolved line DLG_BUILDER_T01_OFFER in da
+  ok    Resolved line DLG_BUILDER_T01_IDLE in en
+  ok    Resolved line DLG_BUILDER_T01_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_furnisher
+  ok    npc.portrait_fairy_furnisher
+  ok    At most five choices: fairy_furnisher
+  ok    Esc releases fairy_furnisher
+  ok    Resolved line DLG_FURNISHER_GREET in da
+  ok    Resolved line DLG_FURNISHER_GREET in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_tailor
+  ok    npc.portrait_fairy_tailor
+  ok    At most five choices: fairy_tailor
+  ok    Esc releases fairy_tailor
+  ok    Resolved line DLG_TAILOR_GREET in da
+  ok    Resolved line DLG_TAILOR_GREET in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_gardener_hoppe
+  ok    npc.portrait_gardener_hoppe
+  ok    At most five choices: gardener_hoppe
+  ok    Esc releases gardener_hoppe
+  ok    Resolved line DLG_HOPPE_GREET in da
+  ok    Resolved line DLG_HOPPE_KLART in da
+  ok    Resolved line DLG_HOPPE_SWAP_OFFER in da
+  ok    Resolved line DLG_HOPPE_GREET in en
+  ok    Resolved line DLG_HOPPE_KLART in en
+  ok    Resolved line DLG_HOPPE_SWAP_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_carpenter_brumme
+  ok    npc.portrait_carpenter_brumme
+  ok    At most five choices: carpenter_brumme
+  ok    Esc releases carpenter_brumme
+  ok    Resolved line DLG_BRUMME_GREET in da
+  ok    Resolved line DLG_BRUMME_SLOW in da
+  ok    Resolved line DLG_BRUMME_REST in da
+  ok    Resolved line DLG_BRUMME_GREET in en
+  ok    Resolved line DLG_BRUMME_SLOW in en
+  ok    Resolved line DLG_BRUMME_REST in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_postman_pip
+  ok    npc.portrait_postman_pip
+  ok    At most five choices: postman_pip
+  ok    Esc releases postman_pip
+  ok    Resolved line DLG_PIP_GREET in da
+  ok    Resolved line DLG_PIP_BAG in da
+  ok    Resolved line DLG_PIP_OFFER in da
+  ok    Resolved line DLG_PIP_GREET in en
+  ok    Resolved line DLG_PIP_BAG in en
+  ok    Resolved line DLG_PIP_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_bathkeeper_sofus
+  ok    npc.portrait_bathkeeper_sofus
+  ok    At most five choices: bathkeeper_sofus
+  ok    Esc releases bathkeeper_sofus
+  ok    Resolved line DLG_SOFUS_GREET in da
+  ok    Resolved line DLG_SOFUS_ORANGE in da
+  ok    Resolved line DLG_SOFUS_OFFER in da
+  ok    Resolved line DLG_SOFUS_GREET in en
+  ok    Resolved line DLG_SOFUS_ORANGE in en
+  ok    Resolved line DLG_SOFUS_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_appraiser_fru_ugle
+  ok    npc.portrait_appraiser_fru_ugle
+  ok    At most five choices: appraiser_fru_ugle
+  ok    Esc releases appraiser_fru_ugle
+  ok    Resolved line DLG_UGLE_GREET in da
+  ok    Resolved line DLG_UGLE_LAKE in da
+  ok    Resolved line DLG_UGLE_RUNES in da
+  ok    Resolved line DLG_UGLE_GREET in en
+  ok    Resolved line DLG_UGLE_LAKE in en
+  ok    Resolved line DLG_UGLE_RUNES in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_mapseller_natteblik
+  ok    npc.portrait_mapseller_natteblik
+  ok    At most five choices: mapseller_natteblik
+  ok    Esc releases mapseller_natteblik
+  ok    Resolved line DLG_NATTEBLIK_GREET in da
+  ok    Resolved line DLG_NATTEBLIK_EARS in da
+  ok    Resolved line DLG_NATTEBLIK_MAPS in da
+  ok    Resolved line DLG_NATTEBLIK_LANTERN in da
+  ok    Resolved line DLG_NATTEBLIK_GREET in en
+  ok    Resolved line DLG_NATTEBLIK_EARS in en
+  ok    Resolved line DLG_NATTEBLIK_MAPS in en
+  ok    Resolved line DLG_NATTEBLIK_LANTERN in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_beekeeper_birk
+  ok    npc.portrait_beekeeper_birk
+  ok    At most five choices: beekeeper_birk
+  ok    Esc releases beekeeper_birk
+  ok    Resolved line DLG_BIRK_GREET in da
+  ok    Resolved line DLG_BIRK_BEES in da
+  ok    Resolved line DLG_BIRK_HONEY in da
+  ok    Resolved line DLG_BIRK_QUIET in da
+  ok    Resolved line DLG_BIRK_FAREWELL in da
+  ok    Resolved line DLG_BIRK_GREET in en
+  ok    Resolved line DLG_BIRK_BEES in en
+  ok    Resolved line DLG_BIRK_HONEY in en
+  ok    Resolved line DLG_BIRK_QUIET in en
+  ok    Resolved line DLG_BIRK_FAREWELL in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_rasmus
+  ok    npc.portrait_rasmus
+  ok    At most five choices: rasmus
+  ok    Esc releases rasmus
+  ok    Resolved line DLG_NEUTRAL in da
+  ok    Resolved line DLG_NEUTRAL in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_lamplighter_kiki
+  ok    npc.portrait_lamplighter_kiki
+  ok    At most five choices: lamplighter_kiki
+  ok    Esc releases lamplighter_kiki
+  ok    Resolved line SOC_ANY_SEASON_FORAAR_5 in da
+  ok    Resolved line SOC_ANY_SEASON_FORAAR_5 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_bertil
+  ok    npc.portrait_bertil
+  ok    At most five choices: bertil
+  ok    Esc releases bertil
+  ok    Resolved line SOC_BERTIL_GREET_H0_1 in da
+  ok    Resolved line SOC_BERTIL_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_bodil
+  ok    npc.portrait_bodil
+  ok    At most five choices: bodil
+  ok    Esc releases bodil
+  ok    Resolved line SOC_BODIL_GREET_H0_1 in da
+  ok    Resolved line SOC_BODIL_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_innkeeper_kvak
+  ok    npc.portrait_innkeeper_kvak
+  ok    At most five choices: innkeeper_kvak
+  ok    Esc releases innkeeper_kvak
+  ok    Resolved line SOC_ANY_SEASON_FORAAR_5 in da
+  ok    Resolved line SOC_ANY_SEASON_FORAAR_5 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_cub_bamse
+  ok    npc.portrait_cub_bamse
+  ok    At most five choices: cub_bamse
+  ok    Esc releases cub_bamse
+  ok    Resolved line SOC_CUB_BAMSE_GREET_H0_1 in da
+  ok    Resolved line SOC_CUB_BAMSE_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_clerk_fjerpen
+  ok    npc.portrait_clerk_fjerpen
+  ok    At most five choices: clerk_fjerpen
+  ok    Esc releases clerk_fjerpen
+  ok    Resolved line SOC_CLERK_FJERPEN_GREET_H0_1 in da
+  ok    Resolved line SOC_CLERK_FJERPEN_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fiddler_strimmel
+  ok    npc.portrait_fiddler_strimmel
+  ok    At most five choices: fiddler_strimmel
+  ok    Esc releases fiddler_strimmel
+  ok    Resolved line SOC_FIDDLER_STRIMMEL_GREET_H0_1 in da
+  ok    Resolved line SOC_FIDDLER_STRIMMEL_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_ghostfam_dyne
+  ok    npc.portrait_ghostfam_dyne
+  ok    At most five choices: ghostfam_dyne
+  ok    Esc releases ghostfam_dyne
+  ok    Resolved line DLG_GHOSTFAM_DYNE_DAWN_1 in da
+  ok    Resolved line DLG_GHOSTFAM_DYNE_DAWN_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_ghostfam_gnist
+  ok    npc.portrait_ghostfam_gnist
+  ok    At most five choices: ghostfam_gnist
+  ok    Esc releases ghostfam_gnist
+  ok    Resolved line DLG_GHOSTFAM_GNIST_EARLY_1 in da
+  ok    Resolved line DLG_GHOSTFAM_GNIST_EARLY_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_ghostfam_silke
+  ok    npc.portrait_ghostfam_silke
+  ok    At most five choices: ghostfam_silke
+  ok    Esc releases ghostfam_silke
+  ok    Resolved line DLG_GHOSTFAM_SILKE_DAWN_1 in da
+  ok    Resolved line DLG_GHOSTFAM_SILKE_DAWN_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_ghostfam_blund
+  ok    npc.portrait_ghostfam_blund
+  ok    At most five choices: ghostfam_blund
+  ok    Esc releases ghostfam_blund
+  ok    Resolved line DLG_GHOSTFAM_BLUND_DAWN_1 in da
+  ok    Resolved line DLG_GHOSTFAM_BLUND_DAWN_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.context_race_0_hour_24 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 24, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "animal", "hero": "rasmus", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_0_hour_25 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 25, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "animal", "hero": "rasmus", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_1_hour_24 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 24, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "fairy", "hero": "kloevermynte", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_1_hour_25 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 25, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "fairy", "hero": "kloevermynte", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_2_hour_24 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 24, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "hobbit", "hero": "bertil", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_2_hour_25 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 25, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "hobbit", "hero": "bertil", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_3_hour_24 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 24, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "ghost", "hero": "bu", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_3_hour_25 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 25, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "ghost", "hero": "bu", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    Night citizen after midnight
+  ok    Night citizen after midnight
+  ok    npc.when_night_hides_collider
+  ok    npc.text_has_no_focus
+  ok    npc.esc_first_line_no_heart
+  ok    npc.choice_focus
+  ok    npc.choice_wrap
+  ok    npc.action_transfers_to_shop
+  ok    npc.weekly_heart
+  ok    npc.pad_close_no_duplicate_heart
+  ok    npc.talk_holds_driven
+  ok    npc.temporary_actor_disposal_ends_once
+  ok    npc.dialogue_reentrant_cancels_previous_await
+  ok    npc.dialogue_reentrant_second_result
+  ok    npc.reach_override
+  ok    npc.wander_sixty_seconds_walkable
+  ok    npc.night_schedule_home_and_sleep (home distance 3.81592440605164, requested sleep, rendered idle)
+  ok    npc.unused_npc_clips_have_no_abandoned_thread_requests
+  ok    npc.emit_event_after_modal_closed ([{ "event": &"npc_extension_probe", "payload": { "answer": 42 }, "modal": &"" }])
+  ok    npc.unknown_action_forwarded
+  ok    npc.guest_has_social_but_no_shop_quest_or_routine
+  ok    Every overflow page fits five rows
+  ok    Every overflow page fits five rows
+  ok    Every overflow page fits five rows
+  ok    Every overflow page fits five rows
+  ok    Every overflow page fits five rows
+  ok    npc.overflow_keeps_all_choices_once
+  ok    npc.accept_dialogue_snurresvampen
+  ok    npc.accept_dialogue_bogtraeet
+  ok    npc.accept_dialogue_moonstone_crown
+  ok    npc.accept_dialogue_slotsdroemmen
+  ok    npc.accept_dialogue_lost_cat
+  ok    npc.accept_dialogue_cookie_delivery
+  ok    npc.accept_dialogue_fix_roof
+  ok    npc.accept_dialogue_skovlift_intro
+  ok    npc.journal_toggle_j
+  ok    npc.journal_reads_lua
+  ok    npc.journal_rules_da ([])
+  ok    npc.journal_rules_en ([])
+  ok    npc.journal_list_right_changes_tab
+  ok    npc.journal_j_closes_in_gui
+  ok    npc.cookie_delivery_dialogue_turn_in
+  ok    npc.lost_cat_real_pawprint_marker
+  ok    npc.lost_cat_dialogue_turn_in
+  ok    npc.fix_roof_transactional_action
+  ok    npc.intro_uses_real_dialogue
+  ok    npc.intro_skip_accepts_quest
+  ok    npc.intro_once
+  --    npc: 345 checks, 0 failed, 0 skipped, 2.5 s
+== section quests  (res://tests/sections/quests.gd)
+  ok    quests.lint_report_empty (LuaRuntime.lint_report after a full reload: [])
+  ok    quests.lint_tool_clean_on_every_quest_file (tools/lua/lint.gd on lua/quests: 40 PASS of 40 files, 0 FAIL, exit 0)
+  ok    quests.every_quest_file_is_registered (40 quest files, every file registers its id with QuestManager [])
+  ok    quests.the_twenty_quests_are_there (the 20 quests of the legacy set [])
+  ok    quests.giver_tag_location_for_every_quest (40 quests: giver is a roster npc that offers it, tag in the six, location a ZONE_ key [])
+  ok    quests.every_objective_has_a_binding_and_its_own_text_key (the 20 quests: the quest book derives QUEST_<ID>_TITLE / _DESC (the schema defaults), `on` and description_key OBJ_<QUEST>_<OBJ> on every objective [])
+  ok    quests.math_objectives_renamed_unique (math_harvest_puzzle: ["math_harvest_carrot", "math_collect_stone", "math_collect_mushroom"])
+  ok    quests.no_text_literals_in_the_quest_lua (no description = / title = literal in the 20 quests of this package or the four of F1 [])
+  ok    quests.objective_references_exist (40 quests: every npc, any_of npc, item, needs item, recipe, crop, zone, area and reward a quest names exists [])
+  ok    quests.every_quest_text_key_resolves_in_da_and_en (40 quests: title, description, offer, every objective, every toast key and every reward item name in da + en [])
+  ok    quests.quests_csv_owns_only_its_families (147 rows, all QUEST_ / OBJ_ / LUANOTIF_, none of the four feature quests (features_quests.csv); QUEST_FAIRY_FRIENDSHIP_TITLE replaces the legacy typo [])
+  ok    quests.binding_vocabulary_events (item_gained crop_planted crop_watered crop_harvested zone_entered area_changed dialogue_started(any_of) animal_* building_built enemy_defeated recipe_crafted quest_completed manual amount: [])
+  ok    quests.area_changed_binding (on = area_changed binds the MAP id of EventBus.area_changed, not the zone: [])
+  ok    quests.game_event_binding_filters (event name + rarity (comma list); an unknown event and a wrong filter never count: [])
+  ok    quests.game_event_match_filter (match = { npc, item, id } compares payload entries (numbers as numbers, a missing entry never matches): [])
+  ok    quests.game_event_min_level_generic (min_level reads payload.level for dungeon_floor_entered, dungeon_runestone_activated and hygge_level alike: [])
+  ok    quests.dungeon_event_payloads_bind (dungeon_floor_entered, dungeon_runestone_activated, dungeon_boss_defeated, dungeon_run_ended: [])
+  ok    quests.state_objective_counts_standing_pieces (placed_by_rarity = pieces standing now, evaluated at accept and on furniture_changed: [])
+  ok    quests.state_friend_hearts_at_least (friend_hearts_at_least / hygge_level_at_least / home_tier_at_least read their owner, re-evaluate on friend_changed / hygge_changed / home_upgraded and stay done: [])
+  ok    quests.state_objective_reevaluated_on_load ([])
+  ok    quests.state_query_registration (register_state_query(name, Callable(def) -> count): [])
+  ok    quests.after_others_turn_in (a turn-in is judged on the state before the event: [])
+  ok    quests.have_objective_tracks_inventory (have = true: counts what you own at accept, follows add / remove (coalesced to the next frame), done stays done: [])
+  ok    quests.delivery_consumes_the_goods (needs + consume = the goods leave the backpack with the progress, a missing good blocks it with a toast: [])
+  ok    quests.resource_drop_counts_once (the resource_node_depleted special case only feeds objectives without `on`: [])
+  ok    quests.social_objective_sugar (gift_given / festival_attended / heart_event_finished are game_event sugar with npc / item / id filters: [])
+  ok    quests.friendship_reward_goes_through_social_manager (rewards.friendship -> SocialManager.add_hearts(npc, n, &quest), no flag written by the quest package: [])
+  ok    quests.friendship_reward_cap (without SocialManager: flag friend_<npc> += n capped at 10, friend_changed(npc, hearts) when the hearts changed: [])
+  ok    quests.real_managers_social_contract (rewards.friendship -> the real SocialManager.add_hearts (mirrored into friend_<npc>), friend_hearts_at_least on the real hearts / friend_changed, lost_cat pays Pippin 2 hearts: [])
+  ok    quests.real_managers_home_contract (home_tier_at_least reads the real HomeManager.tier and re-evaluates on home_upgraded: [])
+  ok    quests.real_managers_furniture_contract (FurnitureManager offers count_placed_by_rarity(rarities) and hygge_level_index() (the names on_state objectives ask))
+  ok    quests.offerable_by_giver (offerable(npc) = available now, not active, not done, in npcs.lua order: [])
+  ok    quests.offerable_for_many (offerable_for(givers) = [{quest_id, giver}] in the order of the givers, one entry per offerable quest: [])
+  ok    quests.post_givers_have_offer_text (16 quests of the post.givers (mayor_lyra, baker_maja, merchant_pip, farmer_rosa, fairy_lily, smith_thorin) have QUEST_<ID>_OFFER in da + en [])
+  ok    quests.tracked_order_and_cap (get_tracked(max): oldest accepted first, capped, never completed or failed, stable across save / load: [])
+  ok    quests.journal_lists_api (get_active_ids (oldest first), get_completed_ids (most recent first), the two counts for 'Aktive · n' / 'Fuldført · m': [])
+  ok    quests.repeatable_reaccept_after_cooldown (meta.repeatable / cooldown_days: re-accept only after the cooldown, from zero, one history entry: [])
+  ok    quests.save_roundtrip_keeps_progress_and_definitions (to_dict / from_dict: only runtime state, any_of progress, JSON floats, definitions stay live: [])
+  ok    quests.reset_keeps_definitions (reset() forgets progress and keeps the Lua definitions)
+  ok    quests.new_game_resets_runtime_and_keeps_definitions (reset() on new_game_started: active, completed, offered, owed rewards and flags gone, definitions stay: [])
+  ok    quests.lua_probes_live_in_p10_fixtures (23 probe files + probe_expected.json in P10's tests/fixtures/lua (replayed by data.lua_probes), every quest file lints clean with the same lint_source [])
+  ok    quests.item_in_use (item_in_use(item): open have objectives, `needs` of open objectives, ingredients of an open recipe_crafted objective: [])
+  ok    quests.objective_text_cascade (get_objective_text: description_key -> OBJ_<QUEST>_<OBJ> -> OBJ_<OBJ> -> description -> id, da and en: [])
+  ok    quests.binding_lint_catches_uncompletable_objectives (unknown on / state, any_of larger than the target, have without item, missing fields, duplicates, bad rewards / tags: [])
+  ok    quests.lost_cat_keeps_guide_chips (lost_cat pays 150 guldagern + catnip_seeds x3 + hat_cat_ears + a heart with Pippin; the book shows the guide's chips, steps, title, 'Fra' line and description: [])
+  ok    quests.lost_cat_plays_through (ask three neighbours, follow the paw prints, find Morfar Mis, tell Pippin: [])
+  ok    quests.feature_quests_complete_with_rewards (lost_cat, fix_roof, birthday_cake, math_wizard_quiz, bogtraeet, moonstone_crown, snurresvampen, slotsdroemmen: accepted and completed through the real EventBus, exact gold and items [])
+  ok    quests.every_objective_completable_with_dungeon_events (40 quest files, 130 objectives driven through the signals the game sends (game_event names fed: dungeon_floor_entered, dungeon_run_ended, dungeon_runestone_activated, festival_held, plot_tilled, post_read; the dungeon payloads of ADDENDUM 8.4 reach every objective bound to them - fed to real quests: dungeon_floor_entered, dungeon_run_ended, dungeon_runestone_activated); accepted through the Lua gate: 36, started past an unknown gate: ["ghostfam_garn", "ghostfam_hittegods", "ghostfam_lygtemager", "secret_garden"]; [])
+  ok    quests.manual_objectives_have_completers (39 on = manual objectives, each named by a quest_spot marker (3 markers), a dialogue math_answer action (6) or a script: unnamed [])
+  ok    quests.quest_spot_markers_match_the_lua_needs (2 quest_spot markers of the real maps: the objective is manual and its needs / consume equal the marker's [])
+  ok    quests.intro_lottery_binds_traetoppen (plant_first_crop (crop_planted), cross_bridge (zone_entered traetoppen), talk_to_mayor (dialogue mayor_lyra): [])
+  ok    quests.no_fixed_forest_area_ids (no quest binds skovkant / dybe_bregner as an area or zone id (the generated floors have moerkeskoven_f<N> ids) [])
+  ok    quests.lost_cat_binds_pawprints_and_mis ([])
+  ok    quests.zone_entered_repeat_is_harmless (dark_forest_mining, forest_patrol, crystal_cave: repeated zone_entered / area_changed never overshoot a target of 1 and never finish the quest alone: [])
+  ok    quests.bound_quests_have_their_floor_anchors (night_flower (night_bloom, floor 2), rare_mushroom_hunt (glow_mushroom + the find_glowing quest_spot, floor 7), moonstone_crown (moonstone), the zone quests (zone ids of the floors): [])
+  ok    quests.live_generated_quest_anchors_f2_s4242 ([])
+  ok    quests.live_generated_quest_anchors_f7_s4242 ([])
+  ok    quests.live_generated_quest_anchors_f2_s8181 ([])
+  ok    quests.live_generated_quest_anchors_f7_s8181 ([])
+  ok    quests.forste_dage_vocabulary_plot_tilled_post_read (on = game_event with event plot_tilled / post_read completes objectives (the tutorial's bindings): [])
+  ok    quests.forste_dage_binds_only_known_events (every objective of lua/quests/forste_dage.lua uses a binding of the vocabulary and, for game_event, a name of the events list [])
+  --    quests: 61 checks, 0 failed, 0 skipped, 5.2 s
+== section save  (res://tests/sections/save.gd)
+  ok    save.throwaway_home (user:// is /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.NVhUEJ/Library/Application Support/Traetoppen (a throwaway HOME))
+  ok    save.saves_go_to_scratch_dir (user://save_test_31792/save_3.json)
+  ok    save.api_surface (missing [])
+  ok    save.slot_constants (six manual slots 0..5, auto slot 6, payload version 2)
+  ok    save.reset_wired_to_new_game (SaveManager.reset() is connected to new_game_started)
+  ok    save.no_parse_string (JSON.new().parse() only: [])
+  ok    save.registered_sections_follow_reset_contract (6 registered feature section(s) ["home", "furniture", "wardrobe", "loot", "dungeon", "social"]; not wired to new_game_started: [])
+  ok    save.reset_on_new_game (slot -1, pending {  }, timer 0.0)
+  ok    save.autosave_nothing_queued_at_start (a fresh SaveManager has no day-end save waiting (else the first day end of a session would never be saved))
+  ok    save.slot_helpers_bounds (manual 0..5, valid 0..6)
+  ok    save.autosave_default_interval_five_minutes (the plan: every 5 real minutes (constant 300.0 s, a fresh SaveManager starts with 300.0 s, autosave on: true))
+  ok    save.registry_valid_registration_returns_true (a good name and node: true, first time and again)
+  ok    save.registry_names_in_apply_order (["p_game", "p_time", "p_eco", "tie_a", "home", "furniture", "wardrobe", "late"])
+  ok    save.registry_core_order (game, time, economy, quests, husbandry, shops, then the features: ["game", "p_game", "time", "p_time", "economy", "p_eco", "quests", "husbandry", "shops", "tie_a", "home", "furniture", "wardrobe", "late"])
+  ok    save.registry_gather (gather = {name: node.to_dict()} for 8 registered sections)
+  ok    save.registry_save_ok (saved S1 (gold 321, day 7, regn))
+  ok    save.section_registry_order_and_reset (apply order ["apply:p_game:day=7", "apply:p_time:regn,gold=999", "apply:p_eco:gold=321", "apply:tie_a", "apply:home", "apply:furniture", "apply:wardrobe", "apply:late"] (want ["apply:p_game:day=7", "apply:p_time:regn,gold=999", "apply:p_eco:gold=321", "apply:tie_a", "apply:home", "apply:furniture", "apply:wardrobe", "apply:late"]))
+  ok    save.registry_core_applied_between_features (game before time before economy, each in front of the sections that sit between them)
+  ok    save.registry_data_arrives (from_dict got the saved dictionary, numbers as ints)
+  ok    save.missing_section_resets (late and furniture were reset (n=0), home applied, ghost ignored: ["apply:p_game:day=7", "apply:p_time:regn,gold=321", "apply:p_eco:gold=321", "apply:tie_a", "apply:home", "reset:furniture", "apply:wardrobe", "reset:late"])
+  ok    save.registry_reregister_replaces (home moved behind wardrobe: ["p_game", "p_time", "p_eco", "tie_a", "furniture", "wardrobe", "home", "late"])
+  ok    save.registry_unregister (tie_a gone)
+  ok    save.registry_freed_node_skipped (a freed node is pruned and the load still works)
+ERROR: SaveManager.register_section: 'Bad Name' is not a valid section name (a-z, 0-9, _)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] register_section (res://scripts/autoload/save_manager.gd:478)
+       [1] _test_registry_inner (res://tests/sections/save.gd:702)
+       [2] _test_registry (res://tests/sections/save.gd:606)
+       [3] run (res://tests/sections/save.gd:181)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+ERROR: SaveManager.register_section: 'world' is a built-in name
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] register_section (res://scripts/autoload/save_manager.gd:481)
+       [1] _test_registry_inner (res://tests/sections/save.gd:702)
+       [2] _test_registry (res://tests/sections/save.gd:606)
+       [3] run (res://tests/sections/save.gd:181)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+ERROR: SaveManager.register_section: 'game' is a built-in name
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] register_section (res://scripts/autoload/save_manager.gd:481)
+       [1] _test_registry_inner (res://tests/sections/save.gd:702)
+       [2] _test_registry (res://tests/sections/save.gd:606)
+       [3] run (res://tests/sections/save.gd:181)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+ERROR: SaveManager.register_section('nomethods'): the node has no to_dict()
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] register_section (res://scripts/autoload/save_manager.gd:488)
+       [1] _test_registry_inner (res://tests/sections/save.gd:702)
+       [2] _test_registry (res://tests/sections/save.gd:606)
+       [3] run (res://tests/sections/save.gd:181)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+ERROR: SaveManager.register_section('nullnode'): the node is null or freed
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] register_section (res://scripts/autoload/save_manager.gd:484)
+       [1] _test_registry_inner (res://tests/sections/save.gd:702)
+       [2] _test_registry (res://tests/sections/save.gd:606)
+       [3] run (res://tests/sections/save.gd:181)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+  ok    save.registry_refuses_bad_input (bad name, reserved name, built-in name, no methods, null: [false, false, false, false, false])
+  ok    the five refusals are reported (allowed 'SaveManager.register_section' seen 5 time(s), want >= 5)
+  ok    save.feature_orders_constants (home 10, furniture 20, wardrobe 30, loot 40, collection 50)
+  ok    save.feature_orders_apply_order (["home", "furniture", "wardrobe", "loot", "collection"])
+  ok    save.registry_equal_orders_keep_registration_order (40 sections at order 50, registered in the order tie_00, tie_17, tie_34, ...: ["tie_00", "tie_17", "tie_34", "tie_11", "tie_28"])
+  ok    save.registry_built_in_sections_win_ties (game, beside_game, time, ... quests, beside_quests: ["game", "beside_game", "time", "economy", "quests", "beside_quests", "husbandry", "shops"])
+  ok    save.registry_tests_keep_real_sections (2 feature sections detached for the registry checks (registry empty before: true, after: true), then registered again unchanged: before ["home@10#5571629557482", "social@60#5571646335128"], after ["home@10#5571629557482", "social@60#5571646335128"])
+  ok    save.json_vectors_become_arrays ([1.5, 2.0])
+  ok    save.json_names_keys_and_nonfinite (StringName -> String, int and StringName keys -> String keys, NaN/INF -> 0.0)
+  ok    save.json_save_ok
+  ok    save.json_no_stringified_vectors (no "(1.5, 2.0)" strings in the file, UTF-8 intact)
+  ok    save.json_load_ok
+  ok    save.json_ints_recoerced (whole numbers come back as int (JSON has one number type), fractions stay float: n int pos [1.5, 2])
+WARNING: SaveManager: 'jsonrules' holds a Object, which cannot be saved (written as null)
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _json_safe (res://scripts/autoload/save_manager.gd:659)
+         [1] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [2] gather_payload (res://scripts/autoload/save_manager.gd:591)
+         [3] _test_json_rules (res://tests/sections/save.gd:770)
+         [4] run (res://tests/sections/save.gd:182)
+         [5] go_menu (res://tests/lib/flow.gd:69)
+         [6] change_scene (res://tests/lib/flow.gd:57)
+         [7] frames (res://tests/lib/drive.gd:79)
+  ok    save.json_object_becomes_null (an Object is written as null)
+  ok    the Object is reported (allowed 'which cannot be saved' seen 1 time(s), want >= 1)
+  ok    save.json_floats_keep_full_precision (0.1 + 0.2 = 0.3, 1/3 = 0.33333333333333, stamp 1791901594.12346)
+  ok    save.json_keys_are_sorted_in_the_file (alpha, stamp, zeta in the text of the file)
+  ok    save.json_huge_numbers_stay_floats (1e20 and 2^53 stay float, 2.0 becomes int 2)
+ERROR: SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] gather_payload (res://scripts/autoload/save_manager.gd:589)
+       [1] _test_json_rules (res://tests/sections/save.gd:791)
+       [2] run (res://tests/sections/save.gd:182)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    save.section_with_bad_to_dict_is_left_out (gather skips it and keeps the other sections)
+  ok    the bad to_dict() is reported once (allowed 'did not return a Dictionary' seen 1 time(s), want >= 1)
+ERROR: SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] gather_payload (res://scripts/autoload/save_manager.gd:589)
+       [1] save_game (res://scripts/autoload/save_manager.gd:236)
+       [2] _test_json_rules (res://tests/sections/save.gd:794)
+       [3] run (res://tests/sections/save.gd:182)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+  ok    save.section_with_bad_to_dict_save_and_load_work (the save is still written and loads)
+WARNING: SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _json_safe (res://scripts/autoload/save_manager.gd:629)
+         [1] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [2] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [3] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [4] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [5] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [6] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [7] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [8] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [9] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [10] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [11] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [12] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [13] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [14] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [15] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [16] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [17] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [18] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [19] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [20] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [21] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [22] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [23] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [24] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [25] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [26] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [27] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [28] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [29] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [30] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [31] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [32] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [33] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [34] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [35] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [36] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [37] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [38] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [39] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [40] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [41] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [42] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [43] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [44] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [45] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [46] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [47] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [48] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [49] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [50] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [51] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [52] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [53] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [54] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [55] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [56] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [57] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [58] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [59] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [60] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [61] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [62] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [63] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [64] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [65] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [66] gather_payload (res://scripts/autoload/save_manager.gd:591)
+         [67] _test_json_rules (res://tests/sections/save.gd:807)
+         [68] run (res://tests/sections/save.gd:182)
+         [69] go_menu (res://tests/lib/flow.gd:69)
+         [70] change_scene (res://tests/lib/flow.gd:57)
+         [71] frames (res://tests/lib/drive.gd:79)
+WARNING: SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _json_safe (res://scripts/autoload/save_manager.gd:629)
+         [1] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [2] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [3] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [4] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [5] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [6] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [7] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [8] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [9] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [10] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [11] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [12] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [13] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [14] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [15] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [16] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [17] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [18] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [19] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [20] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [21] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [22] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [23] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [24] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [25] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [26] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [27] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [28] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [29] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [30] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [31] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [32] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [33] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [34] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [35] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [36] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [37] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [38] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [39] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [40] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [41] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [42] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [43] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [44] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [45] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [46] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [47] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [48] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [49] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [50] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [51] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [52] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [53] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [54] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [55] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [56] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [57] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [58] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [59] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [60] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [61] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [62] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [63] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [64] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [65] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [66] gather_payload (res://scripts/autoload/save_manager.gd:591)
+         [67] _test_json_rules (res://tests/sections/save.gd:807)
+         [68] run (res://tests/sections/save.gd:182)
+         [69] go_menu (res://tests/lib/flow.gd:69)
+         [70] change_scene (res://tests/lib/flow.gd:57)
+         [71] frames (res://tests/lib/drive.gd:79)
+  ok    save.json_depth_limit_cuts_with_a_warning (70 nested levels: 65 kept, then null (<null>))
+  ok    the cut is reported once (allowed 'nested deeper than 64' seen 2 time(s), want >= 1)
+  ok    save.validate_before_apply (30 invalid payloads: refused with the right code, nothing applied, state untouched, one notification each)
+  ok    save.validate_control_loads (gold 555, day 11, probe applied 1, load_completed once)
+  ok    save.validate_payload_is_pure (gold 42 day 3 untouched)
+  ok    save.validate_rejects_non_dictionary
+  ok    save.corrupt_and_foreign_saves (19 damaged / empty / foreign files: load returns false with feedback, state unchanged)
+  ok    save.corrupt_size_cap_is_exclusive (a file of exactly 8388608 bytes is read (and refused as no save): 'meta is missing')
+  ok    save.corrupt_details (empty: 'the file is empty' | binary: 'the file does not start with a JSON object' | oversize: 'the file is larger than 8388608 bytes' | truncated: 'JSON error at line 111: Expected key' | newer: 'the save has version 7, this build reads up to 2')
+  ok    save.unreadable_file_is_a_damaged_slot (state corrupt, detail 'cannot open (error 12)', load false with feedback, the game untouched)
+  ok    save.failed_load_does_not_soft_lock (phase 0 unchanged, tree not paused, the next valid load works)
+  ok    save.load_empty_slot_gives_feedback (slot 4 has no file)
+  ok    save.load_bad_slots (-1, 7, 99)
+  ok    save.slot_states (ok / corrupt / newer / empty)
+  ok    save.slot_from_backup_flags (ok, corrupt, newer and empty slots do not claim to come from a .bak)
+  ok    save.slot_state_codes (ok '', corrupt 'corrupt', newer 'version', empty 'missing': ["", "corrupt", "version", "missing"])
+  ok    save.atomic_setup_saved
+ERROR: fake section failure boom
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] from_dict (res://tests/sections/save.gd:64)
+       [1] _apply_payload (res://scripts/autoload/save_manager.gd:908)
+       [2] load_game (res://scripts/autoload/save_manager.gd:300)
+       [3] _test_atomic_apply (res://tests/sections/save.gd:1040)
+       [4] run (res://tests/sections/save.gd:185)
+       [5] go_menu (res://tests/lib/flow.gd:69)
+       [6] change_scene (res://tests/lib/flow.gd:57)
+       [7] frames (res://tests/lib/drive.gd:79)
+  ok    save.atomic_apply_rolls_back (a script error in section 'boom' put game, economy, quests, time and 'early_a' back (gold 999, day 9, who running): )
+  ok    save.atomic_apply_feedback (NOTIF_LOAD_FAILED_APPLY posted, current_slot not moved)
+  ok    the provoked script error is reported once (allowed 'fake section failure' seen 1 time(s), want >= 1)
+  ok    save.atomic_apply_rejection_rolls_back (from_dict returned false: section 'boom' rejected its data)
+  ok    save.atomic_apply_control_loads (gold 100 day 3, who saved)
+  ok    save.atomic_apply_keeps_pending_world (pending_world is only replaced by a successful load)
+  ok    save.apply_guard_is_removed_after_every_load (ApplyGuard instances alive after 6 loads: 0)
+ERROR: fake section failure late_boom
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] from_dict (res://tests/sections/save.gd:64)
+       [1] _apply_payload (res://scripts/autoload/save_manager.gd:908)
+       [2] load_game (res://scripts/autoload/save_manager.gd:300)
+       [3] _test_atomic_apply (res://tests/sections/save.gd:1076)
+       [4] run (res://tests/sections/save.gd:185)
+       [5] go_menu (res://tests/lib/flow.gd:69)
+       [6] change_scene (res://tests/lib/flow.gd:57)
+       [7] frames (res://tests/lib/drive.gd:79)
+  ok    save.atomic_apply_rollback_survives_live_references (the failed load put the running value back (n 2, not the saved 1))
+  ok    the provoked script error is reported once (allowed 'fake section failure' seen 2 time(s), want >= 1)
+  ok    save.section_without_to_dict_is_left_out (no 'shops' section for a stand-in without to_dict(); the others are saved)
+  ok    save.section_without_from_dict_is_skipped_on_load (the save has a 'shops' section, the stand-in cannot take it: skipped, the rest loads (gold 321))
+  ok    save.slots_six_manual_files (save_0..save_5.json, current_slot 5, save_completed [0, 1, 2, 3, 4, 5])
+  ok    save.slots_manual_save_toasts_slot_number ('Spil gemt' / 'Dit spil er gemt i slot 6')
+  ok    save.auto_slot_save (save_auto.json, silent, current_slot stays 2, save_completed [6])
+  ok    save.auto_slot_save_restarts_countdown (timer 0.0 after save_game(AUTO_SLOT))
+  ok    save.inspect_slot_invalid_slot (slot 9: slot 9 does not exist)
+  ok    save.is_auto_never_writes_a_manual_slot (save_game(2, true) wrote the auto slot only)
+  ok    save.save_invalid_slots (-1, 7, 99 create nothing)
+  ok    save.bak_not_created_by_first_save (no file to roll yet)
+  ok    save.bak_rolled_from_manual_save (save_1.bak.json holds the previous save (gold 100), save_1.json the new one (200))
+  ok    save.auto_slot_has_no_bak (two autosaves, no save_auto.bak.json)
+  ok    save.bak_survives_a_damaged_primary (the unreadable file was not copied over save_1.bak.json)
+  ok    save.no_temp_files_left (["save_1.bak.json", "save_1.json", "save_auto.json"])
+  ok    save.bak_state_and_summary (damaged primary: state backup, summary from the .bak (gold 100))
+  ok    save.bak_recovery_loads_backup (gold 100, one NOTIF_LOAD_BACKUP toast)
+  ok    save.bak_recovery_from_invalid_primary (primary without 'economy' -> .bak)
+  ok    save.bak_not_used_for_newer_version (a save of a newer build is refused, not silently replaced by an older .bak)
+  ok    save.bak_and_primary_both_damaged (state corrupt, load false with feedback, no summary, never the latest slot)
+  ok    save.delete_save_removes_all_files (primary and .bak)
+  ok    save.stale_temp_files_swept (a crash leftover (.tmp) is removed when SaveManager starts, real saves stay)
+  ok    save.backup_cache_accepts_clock_only_change
+  ok    save.backup_cache_rechecks_changed_version
+  ok    save.backup_cache_rechecks_changed_state
+  ok    save.delete_save_other_slot_keeps_current_slot (deleting slot 1 while slot 2 is current: current_slot 2, slot 2 and its .bak are still there)
+  ok    save.delete_save_removes_every_file_of_the_slot (save_2.json, save_2.bak.json and the leftover save_2.json.tmp are gone: ["save_0.bak.json", "save_0.json", "save_3.bak.json", "save_3.json", "save_auto.json"])
+  ok    save.delete_save_resets_current_slot (slot 2 was the current slot: current_slot -1)
+  ok    save.delete_save_touches_only_its_slot (slots 0 and 3 with their .bak files and the auto slot are byte for byte what they were)
+  ok    save.delete_save_auto_slot (the auto slot goes, the manual slots and current_slot stay)
+  ok    save.delete_save_invalid_slots_delete_nothing (-1, 7 and 77 leave every file (and current_slot) alone)
+  ok    save.delete_save_empty_slot_is_harmless
+  ok    save.delete_save_latest_follows (slot 0 @100 and slot 3 @400 are left: slot 3)
+  ok    save.delete_save_latest_follows_to_zero (slot 3 deleted: slot 0)
+  ok    save.delete_save_all_gone (nothing left: [])
+  ok    save.load_auto_slot_keeps_manual_slot (the auto slot loaded (gold 20, load_completed [6]), current_slot is still the manual slot 2)
+  ok    save.load_auto_slot_leaves_slot_unset (Continue from an autosave with no manual slot in this run: current_slot -1 (NO_SLOT), not 6)
+  ok    save.save_game_current_slot_after_auto_load_writes_nothing (save_game(current_slot) with current_slot -1: refused as a bad slot, the auto file and the directory are unchanged)
+  ok    save.load_manual_slot_sets_current_slot (slot 2)
+  ok    save.failed_auto_load_keeps_current_slot (slot 2, last_error corrupt)
+  ok    save.successful_load_clears_last_error (the failed load above left last_error behind, the good load after it clears it)
+  ok    save.load_restarts_autosave_countdown (a load starts the autosave countdown again (timer 0.0))
+  ok    save.write_failure_keeps_old_save (save returned false, save_3.json is byte for byte the old one, current_slot not moved, no second save_completed)
+  ok    save.write_failure_feedback (NOTIF_SAVE_FAILED posted for a manual save)
+  ok    save.write_failure_autosave_is_silent (no toast for a failed autosave)
+  ok    save.write_failure_autosave_restarts_countdown (a failed autosave does not retry every frame: the timer starts again (0.0))
+  ok    save.write_recovers_after_failure (after a failed write the next good save clears last_error)
+  ok    save.rename_failure_is_reported_and_cleaned_up (save_game(2) with a directory in the way: false, no save_2.json.tmp left, no save_completed, one NOTIF_SAVE_FAILED toast (1))
+ERROR: Failed to open '/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.NVhUEJ/Library/Application Support/Traetoppen/save_test_31792/save_4.bak.json.tmp'.
+   at: copy (core/io/dir_access.cpp:429)
+   GDScript backtrace (most recent call first):
+       [0] _roll_backup (res://scripts/autoload/save_manager.gd:1025)
+       [1] save_game (res://scripts/autoload/save_manager.gd:239)
+       [2] _test_write_failure (res://tests/sections/save.gd:1329)
+       [3] run (res://tests/sections/save.gd:191)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+  ok    the engine's own report of the copy that cannot be made (allowed 'save_4.bak.json.tmp' seen 1 time(s), want >= 1)
+  ok    save.bak_roll_failure_does_not_stop_the_save (the save is written (gold 2), no .bak, and the stuck save_4.bak.json.tmp is removed)
+  ok    save.short_write_is_caught (half of the bytes were lost without an error: save returned false, save_3.json is the old save (gold 777), no .tmp left)
+  ok    save.short_write_feedback (the player is told (NOTIF_SAVE_FAILED))
+  ok    save.short_write_autosave_leaves_no_file (a lossy autosave writes no auto slot at all (a half file would later be 'damaged') and says nothing)
+  ok    save.short_write_control_saves (the same probe with intact bytes saves (gold 555), the previous save is the .bak (777))
+  ok    save.save_recreates_missing_directory (the scratch directory was removed, save_game(1) wrote save_1.json anyway)
+  ok    save.autosave_timer_idle_in_menu (phase MENU: nothing is written)
+  ok    save.autosave_timer_idle_when_paused (phase PAUSED: nothing is written)
+  ok    save.autosave_timer_writes_auto_slot (while PLAYING the timer wrote save_auto.json (gold 9999.0); save_completed [6, 6, 6]; current_slot 2)
+  ok    save.autosave_timer_leaves_manual_slots_alone (six manual files and six .bak files are byte for byte what they were)
+  ok    save.autosave_disabled_switch (autosave_enabled = false stops the timer)
+  ok    save.autosave_day_end_is_deferred (nothing is written inside the day_ended / day_started emissions)
+  ok    save.autosave_on_day_end (one auto save of the NEW day (day 13.0, 06:00, a day_started follower already at 13.0); save_completed [6])
+  ok    save.autosave_coalesces_midnights (50 hours crossed two midnights, save_completed [6])
+  ok    save.autosave_on_the_day_end_roll (23:55 + 10 min = raw 24:05: no save; 01:55 + 10 min = the day-end roll: one auto save of day 16.0 at raw hour 2.0 (restart hour 2); save_completed [6])
+  ok    save.autosave_disabled_day_end (autosave_enabled = false: a day end while PLAYING writes nothing)
+  ok    save.autosave_disabled_day_end_is_not_queued (a day end that happened while autosave was off is not saved later)
+  ok    save.autosave_switched_off_cancels_queued_day_end_save (the queued day-end save checks the switch again when it runs)
+  ok    save.autosave_day_end_control_saves (the same day end with the switch on writes the auto slot once, so the three checks above are not vacuous)
+  ok    save.autosave_queued_save_dropped_by_new_game (day end, then New Game in the same frame (phase 2): the queued save does not run)
+  ok    save.autosave_after_dropped_save_works (the next day end saves again (the drop did not wedge the queue))
+  ok    save.autosave_day_end_by_phase (PAUSED true, CUTSCENE true, CHARACTER_SELECT false)
+  ok    save.autosave_day_end_in_menu_is_not_queued (MENU day end, PLAYING a moment later in the same frame: no save)
+  ok    save.autosave_day_end_not_in_menu (phase MENU: a day end saves nothing)
+  ok    save.autosave_never_overwrites_manual (after the timer, the day end and a multi-day skip the manual files, their .bak files and the directory listing are unchanged)
+  ok    save.summary_fields ({ "area": "hyggebyen", "character": "fairy", "character_skin": "fairy_stardust", "day": 16, "farm_name": "Rosenhaven", "gold": 1250, "hour": 14, "minute": 5, "play_time_seconds": 3725.5, "player_name": "Mia", "season": "sommer", "total_day": 156, "year": 2, "slot": 0, "is_auto": false, "from_backup": false, "timestamp": "2026-10-17T05:34:54", "saved_at": 1792208094.40817 })
+  ok    save.summary_meta (slot, is_auto, timestamp, saved_at)
+  ok    save.summary_types (ints after the JSON round trip)
+  ok    save.save_late_hour_roundtrip_and_old_midnight_save (raw 25:40 -> summary 25:40, loads back true; an old save at hour 0 loads at raw 02:40 (day 16))
+  ok    save.summary_whole_play_time_is_float (600 s -> float)
+  ok    save.inspect_slot_ok_has_no_error_code (ok slot: code '', empty slot: 'missing')
+  ok    save.summary_character_keys (["animal", "fairy", "hobbit", "ghost"])
+  ok    save.summary_auto_slot
+  ok    save.summary_empty_or_damaged_is_empty
+  ok    save.summary_damaged_and_newer_are_empty
+  ok    save.describe_slots (["ok", "ok", "empty", "newer", "corrupt", "empty", "ok"])
+  ok    save.legacy_default_arguments (has_save() / get_save_summary() read slot 0)
+  ok    save.summary_from_bare_payload_without_meta_summary
+  ok    save.summary_types_control (an unedited save keeps its own summary (13 keys))
+  ok    save.summary_wrong_types_rebuilt (98 wrong values (one key at a time): the slot stays ok and the summary is rebuilt from the data)
+  ok    save.summary_not_an_object_rebuilt (meta.summary a string, number, array, null, empty or cut down: rebuilt)
+  ok    save.summary_formats_with_percent_d (Dag 16, 1250 guld, 2. aar, Mia, 14:05)
+  ok    save.summary_valid_cache_is_used (right types: meta.summary wins over the sections)
+  ok    save.summary_wrong_types_slot_row_ok (describe_slots row 1: ok, gold 1250, and the slot loads (gold 1250))
+  ok    save.latest_none (an empty directory)
+  ok    save.latest_single_manual
+  ok    save.latest_auto_when_newest (slot 3 @1000, slot 0 @1500, auto @2000)
+  ok    save.latest_manual_newer_than_auto (a manual save at 3000 beats the auto save at 2000)
+  ok    save.latest_skips_damaged (slot 5 is damaged and has no .bak: Continue picks the auto slot)
+  ok    save.latest_uses_bak_stamp (damaged primary, .bak @2500 -> slot 5 (saved_at 2500.0))
+  ok    save.latest_skips_newer_version (a save of a newer build is never picked)
+  ok    save.latest_tie_goes_to_lowest_manual_slot (slot 4, slot 2 and auto at the same time: slot 2)
+  ok    save.latest_tie_manual_beats_auto
+  ok    save.clock_override_zero_is_used (saved_at 0.0)
+  ok    save.latest_sub_second_order (slot 1 @5000.25, slot 4 @5000.75: slot 4 is newer (file saved_at 5000.75))
+  ok    save.latest_sub_second_auto_beats_manual (manual @7000.25, auto @7000.75: the auto slot is newer, not a tie that the manual slot would win)
+  ok    save.latest_sub_second_manual_beats_older_auto (manual @7000.75, auto @7000.25: the manual slot)
+  ok    save.latest_real_clock_orders_saves_of_one_second (two real saves back to back: 1792208095.1366 then 1792208095.1406)
+  ok    save.latest_reads_v1_time_stamp (slot 2 is one second newer)
+  ok    save.world_gathered_from_group (the node in group world_2d supplies the 'world' section)
+  ok    save.world_save_ok
+  ok    save.world_load_ok
+  ok    save.world_dict_contract (the opaque dictionary came back unchanged through the file: )
+  ok    save.world_consume_once (consume_pending_world() hands it over once and clears it)
+  ok    save.world_not_applied_by_save_manager (WorldRoot2D applies it in _ready, SaveManager only hands it over)
+  ok    save.world_absent_gives_empty (a save without a world section -> pending_world == {})
+  ok    save.world_waiting_survives_a_save
+  ok    save.world_vectors_become_arrays
+  ok    save.world_file_is_readable_json (pretty-printed JSON)
+  ok    save.v1_validates_and_migrates (meta.version 1 -> 2, quest definitions dropped, runtime flags kept, saved_at from the time stamp)
+  ok    save.v1_migration_writes_the_summary (the migrated payload carries meta.summary like a v2 save: { "player_name": "Old", "farm_name": "Gamle Gaard", "character": "hobbit", "character_skin": "hobbit_pip", "day": 9, "season": "efteraar", "year": 3, "total_day": 289, "gold": 1234, "play_time_seconds": 600.0, "hour": 17, "minute": 30, "area": "" })
+  ok    save.v1_loads (gold 1234, day 9, efteraar, Old)
+  ok    save.v1_missing_sections_reset (husbandry and shops were not in a v1 save: reset(), not stale: ["reset:husbandry", "reset:shops"])
+  ok    save.v1_world_empty_and_ints (no world in a v1 save, flags back as ints)
+  ok    save.v1_summary ({ "player_name": "Old", "farm_name": "Gamle Gaard", "character": "hobbit", "character_skin": "hobbit_pip", "day": 9, "season": "efteraar", "year": 3, "total_day": 289, "gold": 1234, "play_time_seconds": 600.0, "hour": 17, "minute": 30, "area": "", "slot": 0, "is_auto": false, "from_backup": false, "timestamp": "2026-10-13T12:00:00", "saved_at": 1791885600.0 })
+  ok    save.quest_defs_survive_load (loading a save does not wipe the Lua definitions)
+  ok    save.quest_defs_survive_save_without_flags (audit T1)
+  ok    save.save_has_no_quest_defs (no def_ entries in quests.flags (0))
+  ok    save.v1_time_stamp_is_local_time (12:00 local at UTC+2 is 10:00 UTC: migrated 1791885600.0, inspected 1791885600.0, summary 1791885600.0, wanted 1791885600.0)
+  ok    save.v1_time_stamp_other_time_zones (UTC-5, UTC, UTC+5:30, UTC+12:45)
+  ok    save.v1_slot_is_older_than_a_later_autosave (v1 slot at 10:00 UTC, autosave at 10:30 UTC: the autosave is the latest, not the v1 slot (which was read as 12:00 UTC))
+  ok    save.v1_slot_is_newer_than_an_earlier_autosave (autosave at 09:30 UTC: the v1 slot at 10:00 UTC is the latest)
+  ok    save.v1_slot_west_of_greenwich_is_newer_than_an_earlier_autosave (12:00 local at UTC-5 is 17:00 UTC, the autosave is from 16:30 UTC: the v1 slot)
+  ok    save.v1_damaged_time_stamp_is_oldest_without_engine_error (16 stamps that are not a real date and time: saved_at 0.0, state ok)
+  ok    save.v1_real_time_stamps_are_read (a leap day, the last second of a year, a space as separator)
+  ok    save.v2_lost_saved_at_falls_back_to_local_time_stamp (saved_at missing: 1791885600.0, saved_at a string: 1791885600.0, wanted 1791885600.0)
+  ok    save.roundtrip_save_ok
+  ok    save.roundtrip_load_ok (load_completed(1))
+  ok    save.roundtrip_gold_items (gold 777, wood 80, carrot_seeds 5, economy dictionary )
+  ok    save.roundtrip_inventory_amounts_are_ints (no 3.0 in the backpack)
+  ok    save.roundtrip_quests (active, completed, failed, offered, objective progress: { "intro_active": true, "cat_active": true, "cookie_done": true, "completed_size": true, "failed": true, "offered": true, "progress_equal": true } )
+  ok    save.roundtrip_time_calendar (sommer day 16, Mia, weather regn, weekday 1, flags, zones, name, skin)
+  ok    save.roundtrip_calendar_types (int and StringName typed again)
+  ok    save.roundtrip_husbandry (animals 1, buildings 1, dictionary )
+  ok    save.roundtrip_husbandry_animal_fields (happiness 77.5, bond 2)
+  ok    save.roundtrip_shops (ShopSystem stock: )
+  ok    save.roundtrip_shop_stock_persists (carrot_seeds: 23 on the shelf before the save, 23 after the load)
+  ok    save.roundtrip_world_handed_over
+  ok    save.roundtrip_all_systems (gather -> JSON -> load -> gather: every section equal (identical))
+  ok    save.roundtrip_nothing_stale
+  ok    save.feedback_follows_locale (da: saved 'Dit spil er gemt i slot 1' / failed 'Gemningen er beskadiget og kan ikke læses.'; en: saved 'Your game is saved in slot 1' / failed 'The save is damaged and cannot be read.')
+  ok    save.feedback_keys_defined (all nine NOTIF_LOAD_* / NOTIF_SAVE_FAILED_* keys resolve in da and en)
+  ok    save.real_world_in_save (the live WorldRoot2D supplied the 'world' section: area farm, player_pos [1248.0, 2176.0])
+  ok    save.real_world_hand_off (load_and_enter left the world in pending_world, the new WorldRoot2D took it in _ready (pending now {  }))
+  ok    save.real_world_restored (same area, the player is 0.0 px from the saved spot)
+  ok    save.real_world_phase_playing (phase 2, slot 2)
+  ok    save.continue_without_save (false, feedback, still on the title (scene MainMenu, phase 0))
+  ok    save.continue_from_menu (Continue loaded the newest save (the auto slot: gold 888 day 6), load_completed [6], scene World, current_slot -1 (an autosave is no manual slot))
+  ok    save.continue_enters_playing (phase 2 (2 right after the call), tree not paused, no modal left)
+  ok    save.continue_does_not_replay_new_game_opening
+  ok    save.continue_world_hand_off (pending_world is empty: the world scene took it (or the save had none))
+  ok    save.load_and_enter_from_pause (slot 2 (gold 777, day 5), modals popped, phase 2, tree running)
+  ok    save.load_and_enter_failure_stays_put (scene MainMenu, phase 0)
+  ok    save.continue_skips_damaged_newest (the damaged slot 1 is skipped, slot 0 loads (gold 10))
+  ok    save.load_and_enter_missing_world_scene_changes_nothing (the scene is missing: false, code 'scene', the running game is unchanged (gold 1), still on the title, one notification)
+  ok    save.continue_uses_bak_with_feedback (gold 30 from the .bak, a NOTIF_LOAD_BACKUP toast)
+  ok    save.new_game_after_continue_start (slot 4, scene World)
+  ok    save.new_game_after_continue_keeps_slot_until_new_game (going to the menu does not reset the slot)
+  ok    save.new_game_after_continue_clean (current_slot -1, pending {  }, timer 0.0)
+  ok    save.new_game_resets_sections_once (a section that follows the reset contract is reset by new_game_started exactly once (SaveManager does not reset it a second time): 1)
+  ok    save.new_game_state_is_new (day 1, the new character, no save file touched)
+  ok    save.new_game_after_continue_gold_reset (gold 500)
+  ok    save.new_game_after_continue_quests_reset
+  ok    save.new_game_after_continue_husbandry_reset
+  ok    save.autosave_after_new_game_is_auto_only (slot 4 untouched, current_slot still -1)
+  ok    save.real_user_dir_untouched (user://saves has the same files as before the section (2))
+  --    save: 244 checks, 0 failed, 0 skipped, 5.2 s
+== section social  (res://tests/sections/social.gd)
+  ok    social.calendar_weeks_valid (28 % 7 == 0, year of 112 days, 4 seasons)
+  ok    social.calendar_weeks_invalid_when_days_per_season_is_not_a_multiple_of_7 (days_per_season 30 -> weeks_valid() false (the section would fail), restored)
+  ok    social.calendar_roundtrip_and_weekday_agree_with_core (date_of / total_day / weekday_of vs GameManager.total_day_for and TimeManager.weekday_index over 399 days: 0 mismatches)
+  ok    week index: Monday..Sunday blocks, 16 weeks a year
+  ok    weekday and weekend
+  ok    week_start is the Monday of the week
+  ok    days_until wraps the year
+  ok    next_total_day, date_key
+  ok    social.calendar_hour_in_raw_hours (22-2 = [22,26) true; 0-2 = [24,26) true; 22-6 wraps (22..25 and 2..5) true; 8-18 unchanged true; from == to always true true; 6-26 is the whole play day true)
+  ok    normalise_hour = GameManager.game_hour: 1.5 -> 25.5, 0 -> 24, 6 and 25 stay
+  ok    social.rng_matches_python_mirror (6 vectors (FNV-1a 32 + fmix32 over seed|part|part) equal the pinned values true; python equals the GDScript numbers)
+  ok    social.rng_uniform_25pct (25% roll over 10080 (npc, day) pairs: 2432 hits (python: 2432))
+  ok    same inputs, same roll; another seed, another roll
+  ok    social.rng_no_walk_across_days (consecutive days do not walk 1,2,3 (String.hash would: true): longest equal run of 4 buckets = 5)
+  ok    pick / pick_weighted edge cases
+  ok    social.data_friend_ids_sorted (34 friend ids, sorted, = friendship rows plus authored unlocks)
+  ok    a citizens row with an unlock includes the NPC exactly once (34 -> 34)
+  ok    social.data_derived_defaults_are_stable (derived row: tier C, archetype from role_archetype, birthday from the id; adding an NPC moved 0 other birthdays; the new one is a real date with archetype child)
+  ok    social.data_registry_absent_is_empty (a runtime without get_registry and an unknown id read {} (nothing is required to boot); with the design registries the readers answer (design festivals 9, events of Hoppe 1))
+  ok    social.data_role_archetype_covers_every_role (27 roles of npc_vocab.roles, missing in social.role_archetype: [])
+  SKIP  social.data_real_citizens_and_tastes: lua/social/citizens.lua and gift_tastes.lua are S-data's (wave 5): every friend here still uses the derived defaults (tier C, role archetype, derived birthday); the design rows are used where a check needs them
+  ok    social.config_defaults_equal_lua (lua/social/social.lua has 11 top-level keys, SocialData.DEFAULTS has 11; differences: [])
+  ok    an empty social table still answers every number from the code defaults
+  ok    the Lua lint is clean with lua/social/social.lua loaded (0 findings)
+  ok    AGF17: social.festival.max_attendees = 15, chat 100, belated x2
+  ok    social.autoload_registered_once (project.godot has the line 1 time(s); section `social` registered 1 time(s) for the autoload node; process mode ALWAYS)
+  ok    social.save_registry_order (order 60 (after loot 40 and collection 50: FEATURE_ORDERS { "home": 10, "furniture": 20, "wardrobe": 30, "loot": 40, "collection": 50 }), position 11 of ["game", "time", "economy", "quests", "husbandry", "shops", "home", "furniture", "wardrobe", "loot", "dungeon", "social"])
+  ok    social.daily_work_is_deferred (advance_time(50 h) emitted exactly ["midnight_passed", "midnight_passed"] synchronously (the pin of core.advance_time_multiday) and queued ONE coalesced flush (pending true))
+  ok    flush() catches up: last processed day = today (4)
+  ok    social.birthday_event_after_flush (nothing synchronous inside advance_time; after the flush birthday_today {npc: merchant_pip} once and the flag birthday_today = merchant_pip)
+  ok    a second flush the same day posts nothing more
+  ok    the next day the flag names nobody (cleared)
+  ok    social.daily_skip_no_stale_birthday_event (a skip that ends after the birthday posts no birthday_today for the skipped day (0); only today's 1 birthday(s) are announced)
+  ok    time_of_day_changed queues the (single, coalesced) flush
+  ok    social.new_game_flags_follow_the_first_flush (a new game on day 1 = Lily's birthday: no birthday_today flag at new_game_started (the flags are exactly the new game's: [&"intro_pending", &"home_tier", &"home_building", &"home_upgrade_done"]), a flush queued by reset(); the first flush writes birthday_today = fairy_lily and posts no event for the day nothing was skipped)
+  ok    a fresh game: no points, an unknown NPC has none
+  ok    40 points: no whole heart, no friend_changed
+  ok    the mirror flag holds WHOLE hearts (0 after 40 points)
+  ok    social.hearts_signal_only_on_whole_heart (110 points = 1 heart: friend_changed(mayor_lyra, 1) fired exactly once ([["mayor_lyra", 1]]), social_points twice)
+  ok    game_event social_points {npc, delta, points, hearts, source}: { "npc": "mayor_lyra", "delta": 70, "points": 110, "hearts": 1, "source": "test" }
+  ok    half hearts: 110 points = 2 half hearts (50 each)
+  ok    social.hearts_call_loot_service_after_a_heart (LootService.check_friend_gifts(npc) late bound once per whole heart gained, none for 20 points: [["mayor_lyra"]])
+  ok    social.hearts_cap_10 (20 hearts of quest reward stop at the cap: 10 hearts = 1000 points, stage bedste_ven, gained 770)
+  ok    at the cap: ok, gained 0, nothing is emitted
+  ok    social.points_never_decrease (0 and negative deltas are refused (bad_delta), debug_set_hearts never lowers: 1000 points stay)
+  ok    unknown NPC and Morfar Mis without a citizens unlock take no points (unknown_npc / locked)
+  ok    social.add_points_rejects_unknown_and_locked (locked until lost_cat is done OR day 60 (day 59 false, day 60 true, quest true); a hero twin (NpcDirector.is_absent) is refused (absent) and back when present)
+  ok    social.flag_mirror_after_every_write (friend_<npc> = whole hearts after add_points, add_hearts, debug_set_hearts, from_dict and a repair write (flag 5))
+  ok    social.zero_point_ledger_repairs_existing_mirror
+  ok    social.zero_point_ledger_load_preserves_absent_flag
+  ok    the first finished chat of the week: +1 heart, friend_last = total_day, talked today
+  ok    a second chat in the same week plays and pays nothing
+  ok    social.chat_weekly_calendar_week (Sunday of the same week: nothing; Monday: available again and the second heart comes (two hearts in two calendar weeks, never two in one))
+  ok    game_event chat_done {npc, weekly_heart} for every finished conversation: [["chat_done", { "npc": "gardener_hoppe", "weekly_heart": false }]]
+  ok    social.chat_df3_floor_day_50 (8 hearts by the weekly chat alone: earliest total_day 50 (the DF3 floor: day 50), 10 hearts after week 10)
+  ok    social.chat_esc_first_line_no_heart (an Esc after the first line (completed false) gives no heart, no chat_done, no toast and keeps the week's chat available)
+  ok    the finished conversation of the same day then pays the week's heart
+  ok    social.chat_empty_conversation_gives_nothing (a conversation with 0 lines shown gives nothing: no heart, not talked today, birthday still unknown, no event, no toast)
+  ok    a chat with an unknown NPC counts for nothing
+  ok    a conversation (even an unfinished one) marks the birthday as known
+  ok    social.chat_one_combined_toast (the first heart (fremmed -> bekendt) is ONE toast with the heart line and the stage line (1 toast(s), relationship_changed 1): Fe-barnet Lily holder lidt mere af dig nu: 1 af 10 hjerter | Dit venskab med Fe-barnet Lily: Bekendt)
+  ok    social.chat_toasts_are_rate_limited (two conversations inside the gap: 1 toast at once, 1 waiting, both posted in turn (2))
+  ok    social.stage_names_by_hearts (stages by hearts 0..10: ["fremmed", "bekendt", "nabo", "nabo", "ven", "ven", "god_ven", "god_ven", "bedste_ven", "bedste_ven", "bedste_ven"])
+  ok    a REL_STAGE_<ID> label in da and en for each of the six stages (missing [])
+  ok    social.stage_up_toast_once (one toast and one relationship_changed per stage change, none inside a stage; the toast option false keeps the toast back but not the event (toasts 2, events 3): last { "npc": "baker_maja", "stage": "nabo", "partner": false })
+  ok    S-marriage's seam: row field rs = 2 reads social.rs_stages[1] = forlovet (forlovet), 0 is the hearts stage (ven)
+  ok    social.boots_without_gift_rules (with S-gifts absent (here: pointed at a missing script) the autoload still answers: give_gift { "ok": false, "reason": "gifts_not_installed" }, gift_options 0, taste neutral, is_giftable { "ok": false, "reason": "gifts_not_installed" })
+  ok    social.gift_api_surface_late_bound (give_gift / gift_options reach the flow script, taste_of / is_giftable the rules script by path (probe scripts): flow gardener { "ok": true, "reason": "" })
+  ok    gift_limits of a fresh row: { "per_day": 1, "per_week": 2, "left_today": 1, "left_week": 2 }
+  ok    limits: 1 per day and 2 per calendar week, both reset by the calendar ({ "per_day": 1, "per_week": 2, "left_today": 0, "left_week": 0 } -> { "per_day": 1, "per_week": 2, "left_today": 1, "left_week": 2 })
+  ok    social.no_forward_class_refs (4 scripts scanned for 19 later-wave class names (GiftRules at lines 237 / 250 / 283 of the prototype made the autoload fail to boot): [])
+  ok    a bare instance answers {ok: false, reason: gifts_not_installed}
+  ok    social.birthday_state_machine (day -> celebrated -> belated (+1) -> none (+2), the year wrap and a birthday that has not come yet ([true, true, true, true, true, true, true, true, true]))
+  ok    social.birthday_derived_default_is_stable (33 derived birthdays (31 distinct days), every birthdays_on(td) agrees with the data and the derived dates repeat call after call)
+  ok    social.calendar_entries_shape ([{day, kind: birthday | festival, id, known}] sorted by day: 11 entries of foraar (["birthday", "festival"]), an unknown birthday is known = false until the first conversation, 2 festivals (Blomsterfesten, Honningdagen))
+  ok    social.festival_active_and_events (Høstfesten 12:00-20:00: today at 10:00 but not active; 11:59 no; 12:00 active + town_festival_started {id} once + flag festival_now; 19:59 still; 20:00 town_festival_ended and the flag is gone ([true, true, true, true, true, true, true]))
+  ok    social.festival_bed_hold_seam (while the festival runs sleep_from_hour = 20 (the bed is closed at 18:00: true), at 20:00 the override is removed (true); a pre-existing override of 17 is restored afterwards (true))
+  ok    social.festival_bed_hold_survives_load_and_clear (the override is a never-saved seam: after clear_config_overrides the next flush (true), an area_changed (true), a town_festival_started event (true) and a load (true) put it back)
+  ok    social.festival_shop_closure (closes = all: a shop that is not in stays_open (seed_shop, bakery) is closed from window start - 1 h (11:00) to the window end (20:00): { "10:59": [false, false, false], "11:00": [true, false, false], "12:00": [true, false, false], "19:59": [true, false, false], "20:00": [false, false, false] }; closes = none (Sofus' badedag) closes nothing true; an ordinary day closes nothing)
+  ok    when=fest:<id|any> follows the active festival
+  ok    social.festival_first_not_counted_in_cap (Trætoppen: 14 ordinary home citizens + 4 first members + the host: all 14 attend AND the 4 firsts (the ordered pool is never cut by them: if first counted inside the 15 three citizens would stay home), crowd 19 = 1 + 4 + 14, gather posts 18)
+  ok    social.festival_first_list_and_guests (Hyggebyen: 16 home citizens + the host + 4 guests of ANOTHER area: the ordered pool is cut to 15 (social.festival.max_attendees), the guests stand outside the cap: 15 + 1 + 4 = 20)
+  ok    the ordered pool = home citizens (host excluded) sorted by SocialRng.roll(seed, [festival, npc]), the first 15
+  ok    social.festival_gather_posts_deterministic (host on fest_torvet_host, first members on gather 1..4, the ordered pool after them, one post each (19 distinct posts), the same answer every call, a Hyggebyen citizen on a Trætoppen festival gets none)
+  ok    another world seed orders the pool differently; the first seed gives the same list again
+  ok    an attendee is on his post from 17:00 (window start - 1 h) to 23:00 (the end); the day before there is nothing
+  ok    social.festival_leave_early_any_attendee (meta.leave_early = {npc = hours}: a first member (21:45 on a 23:00 window), a guest (18:45 on a 20:00 window) and an ordered attendee leave that many hours before the window end, the others stay to the end)
+  ok    an absent hero twin is excluded (pool 13 of 14 minus one), the keeper of a stays_open shop stays at his shop, the host does not
+  ok    social.when_grammar_all_kinds (hearts fest hour weekday season birthday stage open + quest done flag night, `&` and `!`: [true, true, true, true, true, true, true, true, true, true, true])
+  ok    social.when_unknown_kind_is_false (an unknown kind is FALSE (the old evaluate_when answered TRUE: a typo showed the prop forever); `!unknown` is true; an empty spec holds)
+  ok    social.when_away_kind_asks_npc_director (away:<npc> asks NpcDirector.is_away, at:<npc> asks is_present (a node injected with Svc.override first, then the static facade by path); with NO director at: is true and away: is false (the D2 hub marker of Fru Ugle needs exactly that))
+  ok    social.when_director_facade_by_path (a static facade script by path answers is_absent / is_away / is_present (true), an instance method is refused with the safe default (true), a missing script and a changed path re-resolve (true true))
+  ok    social.when_isoarea_delegates_to_the_real_manager (IsoArea.evaluate_when answers the new kinds through SocialManager.eval_when, an unknown kind is false, when_errors merges the unknown kinds with when_spec_errors: ["unknown kind in \'moonphase:full\'", "hearts: unknown npc \'nobody\' in \'hearts:nobody:4\'"])
+  ok    social.when_refresh_includes_routine_changed (WHEN_REFRESH_EVENTS: ["friend_changed", "day_started", "time_of_day_changed", "town_festival_started", "town_festival_ended", "birthday_today", "relationship_changed", "routine_changed"])
+  ok    social.when_spec_errors_lists_typos (typos are listed (unknown kind, bad hearts number, unknown NPC, hour:8, weekday:9, season, stage, festival, shop, empty id, empty term), a full valid spec and "" are clean: [["unknown kind in \'moonphase:full\'"], ["hearts: \'abc\' needs hearts:<npc>:<0..10> in \'hearts:gardener_hoppe:abc\'"], ["weekday: \'9\' is not 0..6 in \'weekday:9\'"], ["open: unknown shop \'no_such_shop\' in \'open:no_such_shop\'"], ["empty term in \'hour:8-18&&night\'"], []])
+  ok    social.context_fields (context of Hoppe on his birthday at 09:00: { "hearts": 0, "stage": "fremmed", "weekday": 4, "weather": "klart", "daypart": "morgen", "birthday": true, "festival": "", "chat_open": true, "talked_today": false, "gifts_left": 2, "partner": false })
+  ok    after a chat and a gift today: hearts 1, no chat open, talked today, no gift left today ({ "hearts": 1, "stage": "bekendt", "weekday": 4, "weather": "klart", "daypart": "morgen", "birthday": true, "festival": "", "chat_open": false, "talked_today": true, "gifts_left": 0, "partner": false })
+  ok    partner is true for the engaged citizen only
+  ok    social.daypart_bands (morgen < 11 <= dag < 17 <= aften < 21 <= nat; the transient raw hours 2..5 after an autosave at 02:00 read nat, not morgen (CK-A-SC): ["nat", "nat", "nat", "nat", "morgen", "morgen", "morgen", "morgen", "morgen", "dag", "dag", "dag", "dag", "dag", "dag", "aften", "aften", "aften", "aften", "nat", "nat", "nat", "nat", "nat"])
+  ok    social.people_rows_shape (a fresh game lists nobody; after two conversations 2 rows (met citizens only) with name_key, stage, half hearts, birthday (once known), chat done this week, gifts left, known tastes, events seen / ready; a hero twin is hidden: { "id": "baker_maja", "name_key": "NPC_BAKER_MAJA", "stage": "bekendt", "hearts": 1, "half_hearts": 2, "birthday": { "season": "efteraar", "day": 10 }, "next_birthday": { "days": 56, "total_day": 66, "season": "efteraar", "day": 10 }, "chat_done": true, "gifts_left": 2, "tastes": { "carrot": "love", "stone": "dislike" }, "events_seen": 0, "events_ready": 0 })
+  ok    events_ready: none at 0 hearts, ev_hoppe_h4 (meta.hearts 4, when hearts:..:4&hour:8-18&!fest:any) at 4 hearts and 12:00, none once it is seen; seen is saved
+  ok    remember_line / last_line keep the last line id per (npc, slot)
+  ok    250 gold in the bakery = 2 points and 50 gold carried (the keeper is Maja)
+  ok    the carried gold counts: 50 + 60 = 1 more point
+  ok    social.purchase_points_capped (1 point per 100 gold, at most 10 per keeper and calendar week: 5000 gold twice = 10 / 10 points, the next week +10 = 20; the seed shop keeper has his own cap (7); no open shop and a stall without a keeper pay nothing)
+  ok    social.keeper_sample_weekly (with the weekly chat heart and hearts >= citizens.<npc>.sample.from_hearts one cheap item is handed over ([true, true, true, true, true, true, true]), once a week, in the SAME toast as the heart; below from_hearts and for citizens without a sample row nothing)
+  ok    social.save_size_budget (fresh game 92 bytes (budget 100); the order's scenario, 30 friends with 12 known tastes each: 15918 bytes pretty (budget 16000); with the talked-today stamp gt on every row 16308 bytes, with rv on every row, pc on the 10 keepers, seen / fest / partner on top 16936 bytes (the budget scenario leaves those fields out))
+  ok    social.save_roundtrip (to_dict -> JSON text -> from_dict -> to_dict is identical for every field of 30 rows (p wk gt gd gwk gw bd bk rv ls kn pc, the seed, seen, fest, partner); the numbers are ints again and the mirror flags are rewritten)
+  ok    social.save_seed_is_lazy_and_below_2_53 (the first roll creates the world seed (14192533245462 < 2^53), it is saved and the same roll answers the same again; set_seed clamps into [1, 2^53))
+WARNING: SocialManager.from_dict: unknown NPC 'retired_npc' kept in the orphans bucket
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] from_dict (res://scripts/social/social_manager.gd:1340)
+         [1] _save (res://tests/sections/social.gd:1335)
+         [2] run (res://tests/sections/social.gd:111)
+         [3] clear_scene (res://tests/lib/flow.gd:219)
+         [4] frames (res://tests/lib/drive.gd:79)
+  ok    social.save_orphan_is_warning_not_error (from_dict returns true (a push_error would reject the whole load), emits nothing, the row of the unknown NPC sits in `orphans` and survives the next save and load (allowed warnings: 1))
+  ok    the drift load logged no engine error
+  ok    an orphan is taken back when its NPC exists again: 250 points, flag friend_retired_npc 2
+  ok    social.save_old_save_reseeds_from_flags (a payload without the section calls reset(): friend_mayor_lyra 3 -> 300 points and the week of friend_last (day 29, this week) counts as chatted, a flag above the cap is clamped to 10 hearts, a flag of an unknown NPC is ignored)
+  ok    section `social` is registered
+  ok    social.save_manager_roundtrip (SaveManager.save_game / load_game with the section registered: 400 and 100 points, the seed 4242, the weekly chat of Maja still taken, the mirror flags rewritten (true true))
+  ok    social.no_new_signals_or_inputs (no `signal` line, no InputMap / Input call in the 4 social scripts; the project has 38 actions = P01's contract (38): `people` is P01's, nothing here)
+  ok    social.validator_design_data_is_clean (SV1..SV12 + SV14 on the pinned design data (30 friends, 9 festivals, 278 giftable items): 0 errors [], 29 warnings, skipped [])
+  ok    social.validator_selftest_mutants_caught (34 mutants of the pristine data, each caught by the rule it breaks; missed []; pristine errors [])
+  ok    social.validator_python_agrees_on_mutants (tools/social/core/validate_social.py: the pristine data exits 0 and each of 34 mutants exits 1 with the rule code (pristine exit 0, missed by python: []))
+  ok    social.sv14_contest_rewards_capped (first prize <= min(2 x the cheapest winning entry of the category (150 g for category:crop -> cap 300 g), 400 g: 400 g passes and 500 g fails on a 950 / 1000 g category); second <= 0.7 x first, third <= 0.4 x first, never a keepsake, rarity <= rare, the item exists; a contest with no rewards is a warning: [true, true, true, true, true, true, true, true, true])
+  ok    social.validator_festival_attendance_rules ([] first / guests / leave_early ids exist; a first member IS a home citizen of the area and a guest is NOT; no citizen twice in the roster; 15 + 1 + len(first) + len(guests) <= towns.max_live_visuals_festival (20 passes, 21 and a limit of 19 fail); without a route table the walk rule is reported as NOT evaluated: [true, true, true, true, true, true, true, true, true, true, true, true])
+  ok    social.validator_first_members_removed_from_the_ordered_pool (the validator's own ordered pool (first members removed, host excluded, by SocialRng.roll) equals SocialManager.festival_roster().pool for 4 seeds x 2 festivals, and the naive pool that keeps the first members (15 citizens instead of 14) differs, so a regression is caught)
+  ok    social.validator_leave_early_covers_1_5x_the_walk (leave_early >= 1.5 x the route time + 15 min: a 40 min walk needs 1.25 h (1.25 passes, 1.2 fails); measured from the deadline = the window end when the festival closes his shop, else the shop's opening hour (17:00 on a window to 20:00: 4.25 h pass, 4.2 and 1.25 fail))
+  ok    social.validator_festival_window_margin (a festival window may end by day_end_hour - 1 = 25.0 (CK-A-SC): 23.0 / 24.0 / 25.0 pass, 25.5 and 26.0 fail; on a 24 hour day (day_end_hour 24) the limit is 23.0 again; the shipped data still ends by 23:00)
+  ok    social.validator_real_data_clean (SV1..SV12 + SV14 on the dump of the real data (34 npcs, 34 citizens rows, 9 festivals): GDScript 0 errors [], python exit 0; 1 warnings (the derived defaults of every friend until S-data); skipped ["SV11: leave_early walk rule not evaluated (no route_minutes: the route table of the towns track, T-routes, is not available to this run)"])
+  ok    social.balance_live_input_regressions (....
+----------------------------------------------------------------------
+Ran 4 tests in 0.068s
+
+OK
+)
+  ok    social.balance_live_routines_cover_current_roster (Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+AVAILABILITY exported 34 live citizens; compile problems []
+)
+  ok    social.balance_claims_hold (variant free on the dump of the real data (100 runs x 336 days): weekly chat alone reaches 8 hearts on day 50, the fastest possible 10 hearts is day 32; a typical player (the original 2.6-talk budget scaled by the live day duration) reaches 8 hearts with a tier A citizen at median 73.0 / p90 96.0 with the lean events (<= 80 / 115) and 68.0 / 91.0 with four events (<= 75 / 110); gifts are 21 % of a dedicated player's points (<= 25), the typical player spends 20 % of a game week (<= 25))
+  ok    social.balance_claims_hold_with_availability (variant mixed (town visits half by day, half until half an hour before bedtime; public room hours and one-heart owner gates apply; table: Live Routines.timeline, exact spans; all citizens, hearts 5,): median 72.0 / p90 100.0 with the lean events (<= 80 / 115), 67.0 / 93.0 with four events (<= 75 / 110); never reaching 8 hearts: tier A / B at most 0.2 % (<= 2), the worst single tier A / B citizen never reaches 4 hearts in 0.0 % (<= 2; at 8 hearts the worst citizen 4 %, a guard of this package at <= 5))
+  ok    social.balance_bounds_ratchet (tests/lib/social/balance_bounds.json: every bound is at or under the design limit (true), the runs sit under their bounds (true) and within the margin (true: a bound cannot silently drift away from what the data does), `--check` exits 0; `--ratchet` on a copy never raises a bound (1 stays 1: true) and lowers a loose one (true))
+  ok    social.fresh_resets_social_manager (Fresh.FEATURE_NODES names SocialManager; Fresh.new_game resets it (250 points gone, flags gone) and seeds it (424242 = DEFAULT_SEED), seed_features(2024) -> 0, reset_features() listed it: ["HomeManager", "FurnitureManager", "WardrobeManager", "LootService", "SocialManager"])
+  ok    social.grant_set_hearts_uses_manager (Grant.set_hearts goes through SocialManager.debug_set_hearts: points, the mirror flag and friend_changed(mayor_lyra, 4) once (source debug), never lowers, and fairy_king 6 hearts for home_tiers.lua ([["mayor_lyra", 4], ["fairy_king", 6]]))
+  ok    social.lua_api_functions (api.get_hearts -> int (0, 2), api.add_hearts(npc, 2) -> SocialManager.add_hearts(.., &lua): 200 points, api.is_birthday -> bool (true / false), api.festival() -> the active festival id as a String (hoestfesten) or "" ())
+  ok    social.project_line_once_and_check_project_exit_0 (project.godot holds the SocialManager line 1 time(s); tests/tools/check_project.gd exits 0 with 73 PASS and 0 FAIL ids)
+  ok    social.perf_boot_ms_added (what the autoload adds to the boot: creating the node and its _ready (nine signal connections, the section registration) takes 0.12 ms (budget 5 ms); compiling the 1,250 line script costs 34.8 ms once at start-up (measured with CACHE_MODE_IGNORE on a loaded machine, reported, not asserted); the real node holds the section again)
+  ok    social.perf_lookup_p95_under_100us (lookups, median / p95 in microseconds (budget: p95 < 100 asserted; the order's 6 us for a one-term eval_when and 20 us for festival_active are quiet-machine targets, reported here, not asserted on a shared machine): hearts 2.0/2.0, stage 5.0/5.1, points 0.6/0.7, eval_when_hearts 3.0/3.0, eval_when_hour 2.0/2.0, eval_when_fest 4.5/4.7, eval_when3 9.2/9.4, festival_active 3.5/3.9, birthdays_today 4.4/4.4, daypart 0.6/0.6, shop_closed 5.7/6.0; reset() 0.04 ms)
+  ok    social.fixture_replacements_freed (uninstall frees both the current fixture and an override it replaced)
+  --    social: 136 checks, 0 failed, 1 skipped, 30.4 s
+  note  section social took 30.4 s (> 30 s): consider splitting it
+== section ui_nav  (res://tests/sections/ui_nav.gd)
+  ok    ui_nav.disabled_not_focusable (set_enabled(false) -> disabled + FOCUS_NONE, (true) restores it; a LineEdit goes read-only; first_enabled skips both)
+  ok    ui_nav.wire_helpers (L ring true, wrap marks true, no-wrap true, T row true, G grid (22 in 6, clamped short row) true, groups true, focus memory true, ring wrap marks true, Tab order true, re-wire true, a real Down press lands on C10)
+  ok    ui_nav.hover_focus_lists (mouse_entered grabs focus on the rows (true / true), not on a chip (true) or a text field (true), not on a disabled row (true); one connection per row)
+  ok    ui_nav.text_field_yields_updown (without the helper Down stays in the field (true); with it Down -> Below (true), Up -> Above (true); Enter submits (true), Tab leaves (true), typing and the caret keys work (true))
+  ok    ui_nav.no_wrap_on_echo (a held Down (echo) stops at the last item (true), a fresh press wraps (true); same at the top (true / true); an echo inside the ring still moves (true))
+  ok    ui_nav.wasd_navigates (W / S move focus in an open screen (true / true / true), never inside a text field (true), the arrows still work once (true), an echo S stops at a wrapping end and a fresh one wraps (true / true), a closed screen and the free world are left alone (true), wasd_as_arrows serves a plain scene (true))
+  ok    ui_nav.screen_lifecycle (hidden + ALWAYS after _ready (true); open() twice pushes ONCE (true) and pauses (true); close() twice pops once (true); ui_panel_toggled is answered once per request (true / true / true); a non-pausing screen is CUTSCENE (true); a dropped stack closes it (true); siblings refuse (true), a nested screen opens (true))
+  ok    ui_nav.initial_focus_and_restore (focus is still on the opener in the frame of open() (true) and on _initial_focus() one frame later (true); close() hands it back (true); a world opener leaves no owner (true); open(opener) wins (true); a freed opener leaves no owner (true))
+  ok    ui_nav.focus_loss_guard (a hidden focus owner (true), a freed one (true) and focus outside the screen (true) are replaced within a frame; hiding the last good control (true); only the TOP screen guards (true); an empty-space click keeps focus (true))
+  ok    ui_nav.wants_focus_guard (_wants_focus() = false: no initial focus (true), the guard does not refocus (true), the audit asks for no initial focus (true) and skips the walk (true); true again -> focused (true))
+  ok    ui_nav.esc_uses_input_not_unhandled (typed letters never reach _unhandled_input (true), Enter in the field is consumed (true); Esc closes the screen although the field is being edited, through _input (true / true); Start (true) and B (true) close it; PgUp / RB call _on_page(-1 / +1) (true))
+  ok    ui_nav.accept_presses_focused_button (Enter, Space and pad A press the focused Button exactly once (true) and the world sees none of interact / jump / dodge / ui_accept (true); E presses nothing (true); Esc closes without a world reaction (true); a closed screen leaves E to the world (true))
+  ok    ui_nav.closing_press_does_not_reach_the_world (the Enter / pad A that presses a row CLOSING the last modal never reaches the world (true / true); without the swallow it does (true: set_input_as_handled() in a pressed handler is not enough); the flag lasts one frame (true / true) and every TTScreen honours it, open or not (true))
+  ok    ui_nav.text_field_typing_is_inert (text_field_audit (30 keys) finds no leak (true); typing i j e h g c b 1 0 w a s d opens nothing and moves no focus (true); a closed screen does not open its hotkey while a field has focus (true); without a field the hotkey opens (true) and closes (true) it)
+  ok    ui_nav.hint_glyphs_follow_device (keyboard E / Enter / Esc true -> pad A / A / B true -> keyboard true; stick < 0.5 and a mouse jitter do not flip (true), a real mouse move (true) and stick push (true) do, an action never does (true), a click does (true); device_changed fires once per change (true); format: E for at fortsætte / E to continue)
+  ok    ui_nav.hint_bar_localized (empty bar hidden (true); da glyph + word pairs (true), KeyCap + Eyebrow labels with a separator (true); a language switch re-renders it, no raw keys in either locale (true / true); a pad swap re-renders and leaves out the key that has no pad button (true / true); passive controls (true); force_hidden sticks (true); empty list hides (true); one device connection (1))
+  ok    ui_nav.prompt_prefix_glyph (split_prompt: 'E: Sov' / 'E · Tal med X' -> key token + verb, a plain 'Sov: i sengen', a lower-case or two-letter prefix and an empty text are not keys (true); UI_SLEEP, WORLD_PROMPT_USE and UI_READ split in da and en (true); is_key (true))
+  ok    ui_nav.confirm_default_focus_and_escape (last child of the asker (true), default answer focused (true / true), pushes `confirm` without changing the pause state (true / true / true), texts (true); Esc cancels and focus returns (true); Enter yes / no, swap, B, Start, A (true true true true true true true); scrim click inert, button click answers (true / true); language switch (true); stack clean (true))
+  ok    ui_nav.confirm_traps_focus (50 random Up / Down / Left / Right / Tab / Shift+Tab / WASD presses never leave the two buttons (50 inside, 0 outside); the audit walk finds no trap and no unreachable control (true), the focusable report no defect)
+  ok    ui_nav.confirm_ask_text (ask_text shows the field with the initial text selected, max length and the field focused (true); typing + Enter returns the text (true / true); Esc returns "" (true); the cap holds (true); OK by button strips (true); an empty text and the Cancel button return "" (true / true); Tab ring field -> Fortryd -> OK -> field (true true true))
+  ok    ui_nav.freeing_modal_releases_stack (freeing a nested modal preserves the parent; freeing the last modal resumes play; removing a confirmation's asker cancels exactly once and clears its pause)
+  ok    ui_nav.toast_stack_caps_and_rarity (IGNORE / FOCUS_NONE (true); five posts leave 3, newest on top (true / true), at the top centre y = 96 (true: y 96, centre 640); counts stack (true: ["Spil gemt ×2 | Slot 1", "Fået genstand | Gulerod x1", "Fået genstand | Månesten x6"]), a repeat moves back on top (true); keys run tr() and follow the language (true), no raw keys (true); a hat_wizard_night item shows its tile of Rarity.ui (true / true), kinds without an item have none (true); item_toasts = false leaves them to the loot feed (true))
+  ok    ui_nav.prompt_pill_follows_device (hidden at first (true); 'E: Sov' -> cap E + verb Sov at the bottom centre (true / true); a pad swap flips the cap to A and back (true / true); 'E · Tal med Pippin' (true), a verb-only prompt gets the cap (true); a key is translated (true) and follows the language (true); empty hides (true); inert (true); the theme look (true); one connection (1))
+  ok    ui_nav.whisper_line (hidden at first (true); whisper_requested(key) shows tr(key) in a PanelWhisper with the Whisper italic (true) at left 40 / bottom 40, at most 360 wide (true) and wraps a long text (true), a short one hugs its text (true); a second whisper replaces it (true) and it follows the language (true); inert (true), no raw keys (true); still there after 3 s (true) and gone after 3.5 s + fade (true); one connection (1))
+  ok    ui_nav.stepper_one_stop_keys (one focus stop (true), the audit sees one focusable and no defect (true / true); Right x2 / Left (true / true), a held key repeats (true); PgUp +5 / PgDn -5 clamped (true / true / true); Enter, Space and pad A commit (true); D-pad (true); the disabled '-' is no stop and the mouse buttons work (true / true); at the end of the range a held key stays (true) and a fresh press moves on (true / true); the ring is PanelField/focus (true))
+  ok    ui_nav.engine_facts (29 engine facts of UI_NAVIGATION.md 3.1 (F1 - F14) hold on this engine (4.7.2-stable (official)); failed: [])
+  --    ui_nav: 26 checks, 0 failed, 0 skipped, 4.4 s
+== summary: 7 section(s) run, 903 checks (0 failed, 1 skipped), 0 engine error(s), 0 engine warning(s), 14 allowed message(s), 0 problem(s), 0 known-issue message(s), 70.9 s
+PLAYTEST PASS (903 checks in 7 sections, 14 allowed engine messages, 0 known-issue messages)

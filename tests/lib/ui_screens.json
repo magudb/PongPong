@@ -631,7 +631,15 @@
 				"panel_pixels",
 				"button_pixels",
 				"compare_guide"
-			]
+			],
+			"open": {
+				"driver": "res://tests/lib/ui_home_driver.gd",
+				"ctx": {
+					"screen": "animal_care_ui",
+					"area": "farm",
+					"tier": 2
+				}
+			}
 		},
 		{
 			"id": "build_menu",
@@ -662,7 +670,15 @@
 				"panel_pixels",
 				"button_pixels",
 				"compare_guide"
-			]
+			],
+			"open": {
+				"driver": "res://tests/lib/ui_home_driver.gd",
+				"ctx": {
+					"screen": "build_menu_ui",
+					"area": "farm",
+					"tier": 2
+				}
+			}
 		},
 		{
 			"id": "husbyggeri",
@@ -692,7 +708,15 @@
 				"panel_pixels",
 				"button_pixels",
 				"compare_guide"
-			]
+			],
+			"open": {
+				"driver": "res://tests/lib/ui_home_driver.gd",
+				"ctx": {
+					"screen": "husbyggeri",
+					"area": "farm",
+					"tier": 2
+				}
+			}
 		},
 		{
 			"id": "indretning",
@@ -722,7 +746,15 @@
 				"panel_pixels",
 				"button_pixels",
 				"compare_guide"
-			]
+			],
+			"open": {
+				"driver": "res://tests/lib/ui_home_driver.gd",
+				"ctx": {
+					"screen": "indretning",
+					"area": "home",
+					"tier": 2
+				}
+			}
 		},
 		{
 			"id": "home_chest",
@@ -753,7 +785,15 @@
 				"panel_pixels",
 				"button_pixels",
 				"compare_guide"
-			]
+			],
+			"open": {
+				"driver": "res://tests/lib/ui_home_driver.gd",
+				"ctx": {
+					"screen": "home_chest",
+					"area": "home",
+					"tier": 2
+				}
+			}
 		},
 		{
 			"id": "garderobe",

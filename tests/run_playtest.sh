@@ -197,6 +197,15 @@ if [ -n "$BOOT_ERRORS" ]; then
 	[ "$RC" = 0 ] && RC=1
 fi
 
+# The logger is gone when the tree/resources shut down. Engine messages after
+# the verdict still fail, including leaked ObjectDB/RID diagnostics at exit.
+SHUTDOWN_ERRORS="$(awk '/^PLAYTEST (PASS|FAIL|list end|help|usage)/ {after=1; tail=""; next} after {tail=tail $0 ORS} END {printf "%s",tail}' "$LOG" | grep -E '^(SCRIPT ERROR|ERROR|WARNING|USER ERROR|USER WARNING|SHADER ERROR):' || true)"
+if [ -n "$SHUTDOWN_ERRORS" ]; then
+	echo "run_playtest: FAIL - engine messages after the harness result (shutdown):" >&2
+	echo "$SHUTDOWN_ERRORS" >&2
+	[ "$RC" = 0 ] && RC=1
+fi
+
 if ! grep -qE '^PLAYTEST (PASS|FAIL|list end|help)' "$LOG" && ! grep -qE '^PLAYTEST usage error' "$LOG"; then
 	echo "run_playtest: the harness printed no result line (it did not compile or crashed; log: $LOG)" >&2
 	[ "$RC" = 0 ] && RC=2

@@ -342,7 +342,7 @@ config = {
       friendship = true,
       routine = true,
       age = "adult",
-      quests_offered = { "pips_runde", "forste_dage" },
+      quests_offered = { "pips_runde", "forste_dage", "forest_mother_s03", "forest_mother_s04", "forest_mother_s05", "forest_mother_s06", "forest_mother_s07", "forest_mother_s08" },
     },
     bathkeeper_sofus = {
       name_key = "NPC_BATHKEEPER_SOFUS",
@@ -548,6 +548,7 @@ config = {
       schedule = "stay",
       friendship = true,
       routine = true,
+      quests_offered = { "ghostfam_garn" },
     },
     ghostfam_gnist = {
       age = "adult", family = "natlys",
@@ -557,12 +558,14 @@ config = {
       voice = { pitch = 1.08, rate = 1.02 },
       home_area = "traetoppen",
       role = "shopkeeper",
+      shop_id = "lantern_house",
       dialogue = "ghostfam_gnist",
       wander = { radius = 0, speed = 0 },
       facing = "S",
       schedule = "stay",
       friendship = true,
       routine = true,
+      quests_offered = { "ghostfam_lygtemager" },
     },
     ghostfam_silke = {
       age = "adult", family = "natlys",
@@ -578,6 +581,7 @@ config = {
       schedule = "patrol",
       friendship = true,
       routine = true,
+      quests_offered = { "ghostfam_hittegods" },
     },
     ghostfam_blund = {
       age = "child", family = "natlys",

@@ -53,7 +53,7 @@ func _go() -> void:
 		seasons.append(String(s))
 	var data := {
 		"format": 1, "source": "live", "social": social, "citizens": lr.get_config("citizens", {}), "gift_tastes": lr.get_config("gift_tastes", {}), "npcs": npcs,
-		"time": {"days_per_season": gm.days_per_season(), "seasons": seasons, "first_weekday": int(gm.config_value("time.first_weekday", 0)), "day_start_hour": gm.day_start_hour(), "day_end_hour": gm.day_end_hour(), "weather_chances": lr.get_config("time.weather_chances", {})},
+		"time": {"minutes_per_real_second": float(gm.config_value("time.minutes_per_real_second",2.0)), "days_per_season": gm.days_per_season(), "seasons": seasons, "first_weekday": int(gm.config_value("time.first_weekday", 0)), "day_start_hour": gm.day_start_hour(), "day_end_hour": gm.day_end_hour(), "weather_chances": lr.get_config("time.weather_chances", {})},
 		"events": lr.get_registry("events"), "festivals": lr.get_registry("festivals"), "shops": shops, "items": items,
 		"towns": {"max_live_visuals_festival": int(lr.get_config("towns.max_live_visuals_festival", 20))},
 	}

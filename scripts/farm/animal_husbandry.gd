@@ -6,6 +6,8 @@ extends Node
 ## the Lua tables match). `product_interval` is the ProductType name in Lua ("daily", "every_2_days",
 ## "every_3_days", "on_bond") and is mapped onto the enum at load.
 
+signal state_changed
+
 signal animal_added(animal_id: StringName, species: StringName)
 signal animal_fed(animal_id: StringName, food_id: StringName)
 signal animal_happy(animal_id: StringName, happiness: float)
@@ -223,6 +225,8 @@ class AnimalData:
 	var last_fed_day: int = 0
 	var last_product_day: int = 0
 	var products_ready: int = 0
+	var last_played_day: int = 0
+	var last_brushed_day: int = 0
 
 	func to_dict() -> Dictionary:
 		return {
@@ -234,6 +238,7 @@ class AnimalData:
 			"last_fed_day": last_fed_day,
 			"last_product_day": last_product_day,
 			"products_ready": products_ready,
+			"last_played_day": last_played_day, "last_brushed_day": last_brushed_day,
 		}
 
 	static func from_dict(d: Dictionary) -> AnimalData:
@@ -251,6 +256,8 @@ class AnimalData:
 		a.last_fed_day = d.get("last_fed_day", 0)
 		a.last_product_day = d.get("last_product_day", 0)
 		a.products_ready = d.get("products_ready", 0)
+		a.last_played_day = int(d.get("last_played_day", 0))
+		a.last_brushed_day = int(d.get("last_brushed_day", 0))
 		return a
 
 
@@ -260,12 +267,13 @@ class BuildingData:
 	var animals_inside: Array[StringName] = []
 	var built_day: int = 0
 	var is_built: bool = false
+	var cell := Vector2i(-1, -1)
 
 	func to_dict() -> Dictionary:
 		return {
 			"id": id, "building_type": building_type,
 			"animals_inside": animals_inside.duplicate(),
-			"built_day": built_day, "is_built": is_built,
+			"built_day": built_day, "is_built": is_built, "cell": [cell.x, cell.y],
 		}
 
 	static func from_dict(d: Dictionary) -> BuildingData:
@@ -275,6 +283,8 @@ class BuildingData:
 		b.animals_inside.assign(d.get("animals_inside", []))
 		b.built_day = d.get("built_day", 0)
 		b.is_built = d.get("is_built", false)
+		var at: Array = d.get("cell", [-1,-1])
+		b.cell = Vector2i(int(at[0]),int(at[1]))
 		return b
 
 
@@ -283,6 +293,9 @@ func _ready() -> void:
 	_load_husbandry_config()
 	EventBus.day_started.connect(_on_day_started)
 	EventBus.new_game_started.connect(reset)
+	EventBus.item_purchased.connect(func(id, _amount, _total):
+		if _item_to_species(id) != &"" and _has_space_for(_item_to_species(id)):
+			adopt_animal(id))
 
 
 ## Replaces the fallback tables with lua/config/husbandry.lua (`husbandry.species` / `husbandry.buildings`).
@@ -315,6 +328,7 @@ func reset() -> void:
 	animals.clear()
 	buildings.clear()
 	_animal_counter = 0
+	state_changed.emit()
 
 
 # --- Animal management ---
@@ -353,6 +367,7 @@ func adopt_animal(item_id: StringName) -> bool:
 		animals[animal.id] = animal
 	if not EconomyManager.consume_backpack_items({item_id: 1}, commit):
 		return false
+	state_changed.emit()
 	animal_added.emit(animal.id, species)
 	EventBus.animal_adopted.emit(animal.id, species)
 
@@ -383,29 +398,59 @@ func feed_animal(animal_id: StringName, food_id: StringName) -> bool:
 		)
 		return false
 
-	EconomyManager.remove_item(food_id, 1)
+	var favorite := str(food_id) == str(spec.favorite_feed)
+	var boost := float(spec.favorite_feed_bonus) if favorite else 5.0
+	if not EconomyManager.consume_backpack_items({food_id:1},func():
+		animal.hunger = minf(animal.hunger + 30.0,100.0)
+		animal.happiness = minf(animal.happiness + boost,float(spec.max_happiness))
+		animal.last_fed_day = GameManager.total_day()):
+		return false
+	_add_bond_xp(animal,5.0)
+	if favorite:
+		EventBus.notification_posted.emit(tr("NOTIF_FAVORITE_FOOD_TITLE"),tr("NOTIF_FAVORITE_FOOD_MSG") % animal.name,"animal")
 
-	var hunger_restore := 30.0
-	var happiness_boost := 5.0
-
-	# Favorite food bonus
-	if str(food_id) == spec["favorite_feed"]:
-		happiness_boost = spec["favorite_feed_bonus"]
-		EventBus.notification_posted.emit(
-			tr("NOTIF_FAVORITE_FOOD_TITLE"),
-			tr("NOTIF_FAVORITE_FOOD_MSG") % animal.name,
-			"animal"
-		)
-
-	animal.hunger = minf(animal.hunger + hunger_restore, 100.0)
-	animal.happiness = minf(animal.happiness + happiness_boost, spec["max_happiness"])
-	animal.last_fed_day = GameManager.total_day()
-
-	_add_bond_xp(animal, 5.0)
 	animal_fed.emit(animal_id, food_id)
+	state_changed.emit()
 	animal_happy.emit(animal_id, animal.happiness)
 	EventBus.animal_fed.emit(animal_id, food_id)
 	return true
+
+
+## Household help uses actual accepted food from the backpack, with the whole
+## batch and its saved daily stamp committed before any observer is notified.
+func feed_from_supplies(commit: Callable) -> int:
+	var needs := {}
+	var planned: Array = []
+	var ids: Array = animals.keys()
+	ids.sort()
+	for id in ids:
+		var animal: AnimalData = animals[id]
+		if animal.hunger>=70.0 or animal.last_fed_day==GameManager.total_day():continue
+		var spec: Dictionary = species_data[str(animal.species)]
+		for food in spec.feed_types:
+			if EconomyManager.count_item(StringName(str(food)))>int(needs.get(str(food),0)):
+				needs[str(food)] = int(needs.get(str(food),0))+1
+				planned.append({"animal":animal,"food":str(food)})
+				break
+	if planned.is_empty():return 0
+	var ok := EconomyManager.consume_backpack_items(needs,func() -> void:
+		commit.call(planned.size())
+		for entry in planned:
+			var animal: AnimalData = entry.animal
+			var spec: Dictionary = species_data[str(animal.species)]
+			animal.hunger = minf(100.0,animal.hunger+30.0)
+			animal.happiness = minf(float(spec.max_happiness),animal.happiness+(float(spec.favorite_feed_bonus) if str(entry.food)==str(spec.favorite_feed) else 5.0))
+			animal.last_fed_day = GameManager.total_day()
+			animal.bond_xp += 5.0
+	)
+	if not ok:return 0
+	EconomyManager.after_transaction(func() -> void:
+		for entry in planned:
+			_check_bond_level(entry.animal)
+			animal_fed.emit(entry.animal.id,StringName(str(entry.food)))
+			EventBus.animal_fed.emit(entry.animal.id,StringName(str(entry.food)))
+		state_changed.emit())
+	return planned.size()
 
 
 func brush_animal(animal_id: StringName) -> bool:
@@ -413,6 +458,8 @@ func brush_animal(animal_id: StringName) -> bool:
 		return false
 	var animal: AnimalData = animals[animal_id]
 
+	if animal.last_brushed_day == GameManager.total_day():
+		return false
 	if not EconomyManager.has_item(&"brush", 1):
 		EventBus.notification_posted.emit(
 			tr("NOTIF_NO_BRUSH_TITLE"),
@@ -421,8 +468,10 @@ func brush_animal(animal_id: StringName) -> bool:
 		)
 		return false
 
+	animal.last_brushed_day = GameManager.total_day()
 	animal.happiness = minf(animal.happiness + 10.0, 100.0)
 	_add_bond_xp(animal, 8.0)
+	state_changed.emit()
 	animal_happy.emit(animal_id, animal.happiness)
 
 	EventBus.notification_posted.emit(
@@ -438,9 +487,13 @@ func play_with_animal(animal_id: StringName) -> bool:
 		return false
 	var animal: AnimalData = animals[animal_id]
 
+	if animal.last_played_day == GameManager.total_day():
+		return false
+	animal.last_played_day = GameManager.total_day()
 	animal.happiness = minf(animal.happiness + 15.0, 100.0)
 	animal.hunger = maxf(animal.hunger - 5.0, 0.0)
 	_add_bond_xp(animal, 12.0)
+	state_changed.emit()
 	animal_happy.emit(animal_id, animal.happiness)
 
 	EventBus.notification_posted.emit(
@@ -477,6 +530,7 @@ func collect_product(animal_id: StringName) -> int:
 		animal.last_product_day = previous_day
 		return 0
 
+	state_changed.emit()
 	animal_product_collected.emit(animal_id, product_id, amount)
 	EventBus.animal_product_collected.emit(animal_id, product_id, amount)
 
@@ -490,48 +544,37 @@ func collect_product(animal_id: StringName) -> int:
 
 # --- Buildings ---
 
-func build_building(building_type: StringName) -> bool:
+func build_building(building_type: StringName, free := false) -> bool:
 	var spec: Dictionary = buildings_data.get(str(building_type), {})
-	if spec.is_empty():
+	if spec.is_empty() or has_building(building_type):
 		return false
-
-	# Check cost
-	var cost: Dictionary = spec.get("build_cost", {})
-	for item_id in cost:
-		if item_id == "gold":
-			if not EconomyManager.can_afford(cost[item_id]):
-				_notify_cannot_afford()
-				return false
-		else:
-			if not EconomyManager.has_item(StringName(item_id), cost[item_id]):
-				EventBus.notification_posted.emit(
-					tr("NOTIF_MISSING_MATERIALS_TITLE"),
-					tr("NOTIF_MISSING_MATERIALS_MSG"),
-					"build"
-				)
-				return false
-
-	# Pay cost
-	for item_id in cost:
-		if item_id == "gold":
-			EconomyManager.spend_gold(cost[item_id])
-		else:
-			EconomyManager.remove_item(StringName(item_id), cost[item_id])
-
-	_animal_counter += 1
+	var cost := LuaData.int_map(spec.get("build_cost", {}))
+	var gold := int(cost.get("gold",0))
+	cost.erase("gold")
 	var building := BuildingData.new()
-	building.id = StringName("%s_%d" % [building_type, _animal_counter])
+	building.id = StringName("%s_%d" % [building_type,_animal_counter + 1])
 	building.building_type = building_type
 	building.built_day = GameManager.total_day()
 	building.is_built = true
-	buildings[building.id] = building
-	EventBus.building_built.emit(building.id, building_type)
-
-	EventBus.notification_posted.emit(
-		tr("NOTIF_BUILDING_BUILT_TITLE"),
-		tr(spec["name_key"]),
-		"build"
-	)
+	var world := get_tree().get_first_node_in_group("world_2d")
+	if world != null and world.area != null and world.area.map.id == &"farm":
+		for marker in world.area.find_markers("building_slot"):
+			if str(marker.params.get("type","")) == str(building_type):
+				building.cell = marker.cell
+	var commit := func():
+		_animal_counter += 1
+		buildings[building.id] = building
+		for animal in animals.values():
+			if animal.building_id == &"" and str(species_data[str(animal.species)].building) == str(building_type) and building.animals_inside.size() < int(spec.capacity):
+				animal.building_id = building.id
+				building.animals_inside.append(animal.id)
+	if free:
+		commit.call()
+	elif not EconomyManager.consume_backpack_items(cost,commit,gold):
+		return false
+	state_changed.emit()
+	EventBus.building_built.emit(building.id,building_type)
+	EventBus.notification_posted.emit(tr("NOTIF_BUILDING_BUILT_TITLE"),tr(str(spec.name_key)),"build")
 	return true
 
 
@@ -593,6 +636,7 @@ func _on_day_started(_day: int, _season: StringName) -> void:
 
 		# Bond level up check
 		_check_bond_level(animal)
+	state_changed.emit()
 
 
 func _add_bond_xp(animal: AnimalData, amount: float) -> void:
@@ -726,7 +770,7 @@ func validate_dict(data: Dictionary) -> bool:
 			return false
 		if not _valid_id(d.get("id", id)) or str(d.get("id", id)) != str(id):
 			return false
-		for field in ["age_days", "bond_level", "last_fed_day", "last_product_day", "products_ready"]:
+		for field in ["age_days", "bond_level", "last_fed_day", "last_product_day", "products_ready", "last_played_day", "last_brushed_day"]:
 			if not _valid_count(d.get(field, 0)):
 				return false
 		for field in ["happiness", "hunger", "bond_xp"]:
@@ -745,6 +789,9 @@ func validate_dict(data: Dictionary) -> bool:
 		if not _valid_id(d.get("id", id)) or str(d.get("id", id)) != str(id):
 			return false
 		if not _valid_count(d.get("built_day", 0)) or not (d.get("is_built", false) is bool) or not (d.get("animals_inside", []) is Array):
+			return false
+		var cell: Variant = d.get("cell",[-1,-1])
+		if not cell is Array or cell.size() != 2 or not _valid_number(cell[0]) or not _valid_number(cell[1]) or float(cell[0]) != floor(float(cell[0])) or float(cell[1]) != floor(float(cell[1])):
 			return false
 		for animal_id in d.get("animals_inside", []):
 			if not _valid_id(animal_id):
@@ -795,4 +842,7 @@ func from_dict(data: Dictionary) -> bool:
 	animals = restored_animals
 	buildings = restored_buildings
 	_animal_counter = int(data.get("counter", 0))
+	for id in animals.keys() + buildings.keys():
+		_animal_counter = maxi(_animal_counter,int(str(id).get_slice("_",1)))
+	state_changed.emit()
 	return true

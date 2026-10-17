@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 6,
+  "elapsed_s": 9.32,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "dungeon_performance": {
+      "character": "animal",
+      "checks": 6,
+      "failed": 0,
+      "ms": 4237,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

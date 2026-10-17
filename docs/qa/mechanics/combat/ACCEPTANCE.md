@@ -1,0 +1,23 @@
+# Combat and enemy performance
+
+The real combat bot drives ordinary movement, swing and dodge APIs against live physics. Its boss profile clears announced attacks and strikes during recovery; it does not trade hits through boss armor. Reaction time is N(0.40, 0.13), clamped to 0.12–0.65 seconds, with a 0.22-second attack reaction in range. No assist preset is active. Live adds and berry orbs remain enabled. Damage is counted from actual damage events before healing, rather than from net ending health.
+
+The isolated curve fixtures temporarily give the existing iron sword the exact expected damage for floors 4, 8 and 12, keep its normal sword timings, verify weapon ratio 1.0 and restore its definition afterward. Starting health includes only the permanent bonuses available from prior bosses. No health is injected during combat.
+
+| Boss | Mean seconds | Wins within damage limit | Worst gross damage (half hearts) |
+|---|---:|---:|---:|
+| `snurresvamp` | 24.939 | 60/60 | 5 |
+| `snurresvamp_gloed` | 33.989 | 60/60 | 9 |
+| `snurresvamp_konge` | 41.315 | 60/60 | 10 |
+
+All means meet the fixed 12–30 / 20–50 / 25–70 second windows. All 180 fights win within twelve gross half hearts lost. All 100 seeded ambush trials dodge the completed leap without attacking or revealing it early, exceeding the 85% requirement. These trials were rerun after the warning fixes. The bot output is retained in `bot.json`; its seven checks passed in `../integration/initial-full.json`, whose unrelated UI/town failures are subsequently fixed and covered by `full-headless.json`. The final 130-section run excludes the already completed long duel section.
+
+The warning pool retains eight rings and never replaces a live warning. Saturated ordinary attacks wait; boss sequences receive a full warning interval after a ring becomes available. Gameplay owners release warnings at impact/cancellation, so hit-stop cannot expire them early. Non-pausing dialogue freezes boss sequences and hazards, and sleeping a boss cancels its pending sequences. The focused saturation/copy regression passes 265 checks with no skips or engine messages.
+
+The 48-alive and 24-awake caps are exercised with all seven enemy kinds. Sleeping clocks remain unchanged for 120 physics ticks. Logic timing measures 180 batches of actual FSM, terrain-physics and visual-motion calls after loading all clips and six seconds of behavior warm-up (including the five-second spore cycle); the p95 remains below the 0.030 ms per-enemy cap.
+
+Native rendering uses the live default zoom (0.4), 1280×720, Compatibility on Apple M3. Three paired one-second RenderingServer CPU timing samples compare 24 animated visible actors against the same nodes hidden/disabled. The median incremental renderer CPU cost is about 0.00532 ms per enemy, below 0.018 ms. A positive-timing check prevents an unsupported zero counter from passing. Whole-frame increments are retained separately in enemy-performance-native.json; they include work outside the renderer and are not substituted for renderer time. GPU timing is unavailable in this backend. These measurements do not establish low-end-device performance.
+
+The bot results and native integration evidence are recorded with the integration acceptance after the warning fixes. Native boss warning, ordinary warning, ambush eyes and population captures have been opened and inspected; approved painted image bytes are unchanged by these repairs.
+
+The added busy-floor native probe uses 225 painted props, 24 live enemies, twelve overlapping map lights, eight warnings and fifteen orbs. It records thirteen emitting lights including the player, below sixteen. Median renderer CPU time is about 1.89 ms against 12 ms; actual HUD/reveal callback means remain below 0.4/0.3 ms. Whole-frame sample means are 13.22–20.33 ms and are retained in busy-floor.json; the renderer figure is not a claim of a locked frame rate.

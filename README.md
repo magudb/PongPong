@@ -4,6 +4,8 @@ Et Stardew Valley-inspireret 2D-isometrisk farm- og eventyrspil i **Godot 4.7**,
 
 A Stardew Valley-inspired 2D isometric farming and adventure game in **Godot 4.7**, set in an enchanted forest among cute chibi forest animals and fairies.
 
+See [Playing the game](docs/PLAYING.md) for current controls, clothing/loadout, homes, towns and the garden/forest journey. Validation and milestone evidence are tracked in [mechanics progress](docs/qa/mechanics/PROGRESS.md).
+
 ---
 
 ## 🌿 Koncept / Concept

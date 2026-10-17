@@ -1,0 +1,76 @@
+{
+  "cap_ms": 0.5,
+  "engine": {
+    "build": "official",
+    "hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+    "hex": 263938,
+    "major": 4,
+    "minor": 7,
+    "patch": 2,
+    "status": "stable",
+    "string": "4.7.2-stable (official)",
+    "timestamp": 0
+  },
+  "median_delta_ms": -0.00714042553191607,
+  "method": "median delta of three paired one-second native frame-time means after 0.25 second settling; vsync/fps caps disabled; emitter disabled versus 40 winter particles; whole-engine wall frame time, not isolated CPU or GPU time",
+  "pairs": [
+    {
+      "baseline": {
+        "cpu_render_ms": 0.0,
+        "fps": 261.208798549195,
+        "frames": 262,
+        "gpu_ms": 0.0,
+        "ms": 3.82835496183206,
+        "worst_ms": 5.074
+      },
+      "delta_ms": 0.486994176098973,
+      "enabled": {
+        "cpu_render_ms": 0.0,
+        "fps": 231.730960355028,
+        "frames": 232,
+        "gpu_ms": 0.0,
+        "ms": 4.31534913793103,
+        "worst_ms": 5.378
+      }
+    },
+    {
+      "baseline": {
+        "cpu_render_ms": 0.0,
+        "fps": 234.094755580171,
+        "frames": 235,
+        "gpu_ms": 0.0,
+        "ms": 4.27177446808511,
+        "worst_ms": 5.865
+      },
+      "delta_ms": -0.00714042553191607,
+      "enabled": {
+        "cpu_render_ms": 0.0,
+        "fps": 234.486708594886,
+        "frames": 235,
+        "gpu_ms": 0.0,
+        "ms": 4.26463404255319,
+        "worst_ms": 5.821
+      }
+    },
+    {
+      "baseline": {
+        "cpu_render_ms": 0.0,
+        "fps": 228.782427911057,
+        "frames": 229,
+        "gpu_ms": 0.0,
+        "ms": 4.37096506550218,
+        "worst_ms": 5.825
+      },
+      "delta_ms": -0.105943788906437,
+      "enabled": {
+        "cpu_render_ms": 0.0,
+        "fps": 234.465418845033,
+        "frames": 235,
+        "gpu_ms": 0.0,
+        "ms": 4.26502127659575,
+        "worst_ms": 5.636
+      }
+    }
+  ],
+  "particles": 20
+}

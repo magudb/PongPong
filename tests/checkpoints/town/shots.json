@@ -1,5 +1,21 @@
 {
-  "core": ["S01_farm_intro", "S02_farm_bridge_end", "S03_city_arrival", "S04_city_crowd_readability", "S05_dialogue_hoppe_hearts", "S06_shop_door_closed", "S07_shop_interior_noon", "S08_shop_panel", "S09_gift_picker", "S10_post_office", "S11_farm_planted_morning", "S12_city_next_morning", "S13_people_book", "S13b_calendar"],
-  "extended": {"S14_festival_day_city": "festival scene/decor attachment not installed"},
-  "note": "Fourteen CORE captures including calendar. S04 is a controlled sixteen-look crowd on the real level/nav graph. Normal ordinary-day schedules remain L02/L12. Historical UI content fixtures are additional captures, separate from the real live-room background blur proof."
+  "core": [
+    "S01_farm_intro",
+    "S02_farm_bridge_end",
+    "S03_city_arrival",
+    "S04_city_crowd_readability",
+    "S05_dialogue_hoppe_hearts",
+    "S06_shop_door_closed",
+    "S07_shop_interior_noon",
+    "S08_shop_panel",
+    "S09_gift_picker",
+    "S10_post_office",
+    "S11_farm_planted_morning",
+    "S12_city_next_morning",
+    "S13_people_book",
+    "S13b_calendar",
+    "S14_festival_day_city"
+  ],
+  "extended": {},
+  "note": "Fifteen required captures including calendar and the actual installed harvest-festival stage. S04 is a controlled sixteen-look crowd on the real level/nav graph. Normal ordinary-day schedules remain L02/L12. Historical UI content fixtures are additional captures, separate from the live-room background blur proof."
 }

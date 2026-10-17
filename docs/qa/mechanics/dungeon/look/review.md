@@ -1,0 +1,13 @@
+# Forest dressing review
+
+The native fixture, isolated graded/white actor views, lantern profile, Hulen night visit and real generated floor-two captures were opened and inspected. The actor remains legible with the cream dress, original hand/weapon attachment and fitted occluder intact. Natteblik uses the real NPC by night and the approved hanging-bat painting with a repeatable hint by day. The generated floor retains its painted crowns, mushrooms, path and cave.
+
+The fixture is a diagnostic 40×41 map with fourteen crowns, four mushroom clusters, three stones, three eye bushes, a rune, chest, pond and Hulen. Its crossing paths exercise mask intersections; it is not a claim to reproduce the prototype's curved composition exactly. Actual generated-floor art is shown separately. No approved illustration was replaced: all 2,895 ledgered visual/theme assets remain byte-identical.
+
+An initial native run exposed a freed-node reference after a ground drop was removed. The actor registry now checks validity before a typed assignment. The final native run passes all 38 checks without engine messages. Headless checks cover default and alternate bodies in each of the four hero families, outfit changes, live shader uniforms, restoration on leaving, pond collision/state and both light limits. Integration also caught and fixed the independent legacy-store migration issue; its 453-check proof is `stores-integration.json`.
+
+At lantern energy 0.10 the sampled path luminance ratios are about 1.178 / 1.140 / 1.105 / 1.047 at 160 / 240 / 320 / 480 ground pixels. The inner path meets the 1.15–1.35 lift target and the outer ring fades; the entire disk is not uniformly 1.3 times brighter. Sampled actor RGB difference between the forest grade and white ambient is about 0.00001. This is a direct same-pixel comparison, not a claim of a full-image ΔE analysis.
+
+Native performance keeps three uncapped half-second windows in the raw run log. The passing fixture remains below the six-millisecond frame and 450-draw-call limits; it renders 362 calls including the HUD. Dressing callbacks cost roughly 0.002 ms/frame; masks are built once on arrival. These are local Apple M3 Compatibility measurements, not target-device guarantees. The shader adds no per-frame mask generation.
+
+The historical `floor_patch_a/b/c` exports were discovered to contain timber. The new glow-ground overlay uses the existing effective forest-floor painting instead, so it adds no plank platforms around mushrooms. The prototype drawing informs layout and light relationships; the game's approved gouache paintings remain the visual reference. Fishing remains the explicitly documented whisper placeholder.

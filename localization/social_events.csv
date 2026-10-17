@@ -1,0 +1,28 @@
+keys,da,en
+SOC_EV_TITLE,Et øjeblik sammen,A moment together
+SOC_EV_SKIP_HINT,%s: Spring scenen over,%s: Skip scene
+SOC_EV_SKIP_QUESTION,Spring scenen over? Du beholder scenens belønninger.,Skip this scene? You keep its rewards.
+SOC_EV_SKIP,Spring over,Skip scene
+SOC_EV_CONTINUE,Fortsæt scenen,Continue scene
+SOC_EV_MISSED,Et fælles øjeblik er gået. Der kommer flere.,A shared moment has passed. There will be others.
+SOC_EV_YOU,Dig,You
+SOC_EV_PICK_FOOTER,Vælg én ting. Vigtige opgaveting og minder bliver hjemme.,Choose one item. Important quest items and keepsakes stay with you.
+SOC_EV_SELECT,Vælg,Choose
+SOC_EV_DONE,Det har du allerede været med til i år.,You have already joined in this year.
+SOC_EV_EMPTY,Du har ingen passende ting med i dag.,You have no suitable items with you today.
+SOC_EV_CONTEST_RESULT,Dit bidrag fik plads nummer %d.,Your entry placed number %d.
+SOC_EV_POTLUCK,Bordet har nu %d af 12 bidrag.,The table now has %d of 12 contributions.
+SOC_EV_WISH_PROMPT,Hvad vil du ønske for det kommende år?,What will you wish for the coming year?
+SOC_EV_WISH_HOME,Et trygt sted at komme hjem til.,A safe place to come home to.
+SOC_EV_WISH_FRIENDS,Tid sammen med vennerne.,Time together with friends.
+SOC_EV_WISH_COURAGE,Mod til at prøve noget nyt.,Courage to try something new.
+SOC_EV_WISH_REPLY,Vi lader ønsket sejle med lyset.,We send the wish on its way with the light.
+SOC_EV_FEAST,Der er plads til dig ved bordet. Spis og hvil lidt.,There is a place for you at the table. Eat and rest a while.
+SOC_EV_DANCE,Skal vi tage en lille dans sammen?,Shall we share a little dance?
+SOC_EV_DANCE_ALONE,Du følger musikken med små lette skridt.,You follow the music with small light steps.
+SOC_EV_ACTIVITY_CONTEST,Afgrødekonkurrence,Crop contest
+SOC_EV_ACTIVITY_POTLUCK,Fællesbord,Shared table
+SOC_EV_ACTIVITY_WISH,Lygteønske,Lantern wish
+SOC_EV_ACTIVITY_FEAST,Fællesmiddag,Community feast
+SOC_EV_ACTIVITY_DANCE,En lille dans,A little dance
+SOC_EV_ACTIVITY_MARKET,Festbod,Festival stall

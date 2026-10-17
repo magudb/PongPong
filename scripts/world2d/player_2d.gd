@@ -17,6 +17,8 @@ var oil_draining: bool = false
 var lantern: PointLight2D
 var ghost_light: PointLight2D
 var combat: PlayerCombat2D
+var _slow_remaining: float = 0
+var _slow_mult: float = 1
 var held_equipment: HeldEquipment2D
 var outfit_layers: WardrobeLayers
 var is_jumping: bool = false
@@ -44,13 +46,14 @@ var _oil_empty_time: float = 0.0
 var _oil_low_said: bool = false
 var _event_active: bool = false
 var _event_generation: int = 0
+var _camera_generation := 0
 var _camera_tween: Tween
 var _camera_zoom_before: float = Iso.DEFAULT_ZOOM
 var _bob_time: float = 0.0
 var _flower_time: float = 0.0
 var _flower_cell := Vector2i(-999, -999)
 const RULES := "res://scripts/dungeon_run/dungeon_run.gd"
-const GEM := "res://scripts/loot/lantern_gem.gd"
+const GEM := "res://scripts/combat/lantern_gem.gd"
 
 func _ready() -> void:
 	super._ready()
@@ -91,6 +94,9 @@ func _ready() -> void:
 	EventBus.game_event.connect(_on_game_event)
 	_emit_stats_on_bus()
 	EventBus.player_oil_changed.emit(oil, max_oil)
+	var footsteps := PlayerFootsteps.new()
+	footsteps.name = "Footsteps"
+	add_child(footsteps)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE and is_instance_valid(_marker):
@@ -130,8 +136,8 @@ func enter_area(target: IsoArea, at: Vector2) -> void:
 		_marker.get_parent().remove_child(_marker)
 	area.ground_fx.add_child(_marker)
 	_marker.projection = area.projection
-	oil_draining = _is_action_area() and area.map.ambient in [&"forest", &"cave"]
-	lantern.enabled = oil_draining
+	oil_draining = _is_action_area() and area.map.ambient in [&"forest", &"cave"] and int(area.map.extra.get("floor",0)) > 0
+	lantern.enabled = _is_action_area() and area.map.ambient in [&"forest", &"cave"]
 	_update_lantern()
 
 func world_input_allowed() -> bool:
@@ -171,6 +177,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		try_interact()
 	elif event.is_action_pressed("fly_toggle"):
 		toggle_flight()
+	elif event.is_action_pressed("use_tool"):
+		use_selected()
 	elif _is_action_area():
 		if event.is_action_pressed("attack"):
 			combat.request(&"slash")
@@ -182,8 +190,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			drink()
 	elif event.is_action_pressed("jump"):
 		hop()
-	elif event.is_action_pressed("use_tool"):
-		use_selected()
 	for action in ["zoom_in", "zoom_out", "interact", "fly_toggle", "attack", "dodge", "light", "drink", "jump", "use_tool"]:
 		if event.is_action_pressed(action):
 			get_viewport().set_input_as_handled()
@@ -234,6 +240,9 @@ func _physics_process(delta: float) -> void:
 		speed = _run * 0.9
 	elif state in [S.SWING, S.USING]:
 		speed *= 0.35
+	_slow_remaining = maxf(0,_slow_remaining-delta)
+	if _slow_remaining == 0: _slow_mult = 1
+	speed *= _slow_mult
 	if _landing:
 		direction = Iso.to_ground(_landing_at - global_position).normalized()
 		speed = minf(_walk, Iso.ground_dist(global_position, _landing_at) / maxf(delta, 0.001))
@@ -339,7 +348,7 @@ func use_selected() -> bool:
 			return combat.swing(item)
 		_:
 			if str(def.get("placeable", "")) == "farm":
-				ok = bool(Svc.static_call("res://scripts/world2d/placement_service.gd", &"place", [item, cell], false))
+				ok = bool(Svc.static_call("res://scripts/farm/placement_service.gd", &"place", [item, cell], false))
 				if not ok:
 					EventBus.whisper_requested.emit("WHISPER_NOT_YET")
 	if ok:
@@ -410,6 +419,10 @@ func heal_half(amount: int) -> void:
 	half_hearts = clampi(half_hearts + maxi(0, amount), 0, max_half_hearts)
 	_emit_stats_on_bus()
 
+func apply_slow(multiplier: float, seconds: float) -> void:
+	_slow_mult = minf(_slow_mult,clampf(multiplier,.1,1))
+	_slow_remaining = maxf(_slow_remaining,seconds)
+
 func heal_full() -> void:
 	heal_half(max_half_hearts)
 
@@ -420,7 +433,7 @@ func restore_stamina(amount: float) -> void:
 func add_oil(seconds: float) -> void:
 	var before := oil
 	oil = clampf(oil + maxf(0.0, seconds), 0.0, max_oil)
-	_oil_low_said = false
+	if DungeonFloors.inst() == null or not DungeonFloors.inst().active: _oil_low_said = false
 	_oil_empty_time = 0.0
 	_update_lantern()
 	if oil != before:
@@ -428,6 +441,11 @@ func add_oil(seconds: float) -> void:
 
 func restore_oil() -> void:
 	add_oil(max_oil)
+
+func begin_dungeon_run() -> void:
+	_oil_low_said = false
+	_oil_empty_time = 0
+	combat.begin_run()
 
 func apply_consumable(health: int, oil_seconds: float, energy: float) -> void:
 	# The inventory owner already removed the item. Commit every stat before publishing any one of them.
@@ -664,6 +682,11 @@ func event_face(direction: Vector2) -> void:
 		facing_vec = Iso.dir8_vector(facing8)
 		visual.set_facing_direction(facing_vec)
 
+func event_stand(at: Vector2, direction := "S") -> void:
+	global_position = at
+	velocity = Vector2.ZERO
+	event_face(Iso.dir8_vector(maxi(0,Iso.DIR8_NAMES.find(direction))))
+
 func event_walk_to(at: Vector2, speed: float = 185.0) -> bool:
 	var generation := _event_generation
 	var elapsed := 0.0
@@ -680,23 +703,31 @@ func event_walk_to(at: Vector2, speed: float = 185.0) -> bool:
 	return generation == _event_generation and Iso.ground_dist(global_position, at) <= 4.0
 
 func camera_focus(target: Variant, zoom: float, seconds: float = 0.25) -> void:
-	if _camera_tween != null and _camera_tween.is_running():
-		_camera_tween.kill()
+	if not is_inside_tree() or area == null: return
+	_camera_generation += 1
+	var generation := _camera_generation
+	if _camera_tween != null and _camera_tween.is_running(): _camera_tween.kill()
 	_camera_zoom_before = _target_zoom
 	var at: Vector2 = target.global_position if target is Node2D else target
 	_camera_tween = create_tween().set_parallel(true)
 	_camera_tween.tween_property(camera, "offset", at - global_position, seconds)
 	_camera_tween.tween_property(camera, "zoom", Vector2.ONE * clampf(zoom, area.zoom_range.x, area.zoom_range.y), seconds)
-	while _camera_tween != null and _camera_tween.is_running():
+	while is_inside_tree() and generation == _camera_generation and _camera_tween != null and _camera_tween.is_running():
 		await get_tree().process_frame
-	_apply_camera_limits()
+	if is_inside_tree() and generation == _camera_generation: _apply_camera_limits()
 
 func camera_release(seconds: float = 0.25) -> void:
-	if _camera_tween != null and _camera_tween.is_running():
-		_camera_tween.kill()
+	_camera_generation += 1
+	var generation := _camera_generation
+	if _camera_tween != null and _camera_tween.is_running(): _camera_tween.kill()
+	if not is_inside_tree() or area == null: return
+	if seconds <= 0.0:
+		camera.offset = Vector2.ZERO
+		_set_zoom(_camera_zoom_before)
+		return
 	_camera_tween = create_tween().set_parallel(true)
 	_camera_tween.tween_property(camera, "offset", Vector2.ZERO, seconds)
 	_camera_tween.tween_property(camera, "zoom", Vector2.ONE * _camera_zoom_before, seconds)
-	while _camera_tween != null and _camera_tween.is_running():
+	while is_inside_tree() and generation == _camera_generation and _camera_tween != null and _camera_tween.is_running():
 		await get_tree().process_frame
-	_set_zoom(_camera_zoom_before)
+	if is_inside_tree() and generation == _camera_generation: _set_zoom(_camera_zoom_before)

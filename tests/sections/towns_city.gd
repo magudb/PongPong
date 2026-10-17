@@ -37,10 +37,31 @@ func run(t) -> void:
 		var room := str(Hours.building(building).get("interior", ""))
 		if room == "" or not t.world().has_area(StringName(room)):
 			continue
-		var door := t.world().area.triggers.get_node("Door_" + building) as Door2D
+		var door := t.world().area.triggers.get_node_or_null("Door_" + building) as Door2D
+		t.check("live_door_"+building,door!=null)
+		if door==null:continue
+		var owner := str(Hours.building(building).get("owner",""))
+		if owner!="" and not Hours.building(building).has("hours"):
+			SocialManager.debug_set_hearts(owner,1)
+			var available := false
+			for quarter in range(24,104):
+				var ctx := Routines.now_ctx()
+				ctx.hour = quarter/4.0
+				var place := Routines.where_is(owner,ctx)
+				if str(place.get("place","")).begins_with(room+".") and str(place.get("act",""))!="sleep":
+					gm.hour = quarter/4
+					gm.minute = (quarter%4)*15
+					EventBus.time_of_day_changed.emit(gm.hour,gm.minute)
+					available = true
+					break
+			if not available:
+				t.check("absent_or_sleeping_owner_keeps_home_closed_"+building,not door.is_open())
+				continue
+			await t.frames(3)
 		door._on_body_entered(t.player())
-		await t.until(func(): return not t.world().traveling and str(t.world().area.map.id) == room, 8)
-		t.check("door_enters_" + building, str(t.world().area.map.id) == room)
+		var arrived: bool = await t.until(func(): return not t.world().traveling and str(t.world().area.map.id) == room,8)
+		t.check("door_enters_" + building,arrived)
+		if not arrived:continue
 		var exit: Warp2D
 		for node in t.world().area.triggers.get_children():
 			if node is Warp2D:
@@ -49,7 +70,9 @@ func run(t) -> void:
 		if exit != null:
 			exit._on_body_entered(t.player())
 			await t.until(func(): return not t.world().traveling and t.world().area.map.id == &"traetoppen", 8)
-			t.check("door_returns_" + building, t.world().area.map.id == &"traetoppen" and t.player().global_position.distance_to(t.world().area.get_spawn("from_int_" + building)) < 6)
+			# Private-home arrivals can depenetrate a few pixels at the door.
+			# Stay within one foot radius and require walkable feet on the actual deck.
+			t.check("door_returns_" + building, t.world().area.map.id == &"traetoppen" and Iso.ground_dist(t.player().global_position,t.world().area.get_spawn("from_int_" + building)) <= 25 and t.world().area.walkable_test.is_valid() and t.world().area.walkable_test.call(t.player().global_position),str([t.world().area.map.id,t.player().global_position,t.world().area.get_spawn("from_int_"+building)]))
 	# Actual arrival discovers the first signpost; destinations require discovery.
 	var signs: Array = []
 	for node in t.world().area.objects.get_children():

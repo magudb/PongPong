@@ -10,6 +10,14 @@ func count(node: Node) -> int:
 		total += count(child)
 	return total
 
+func scenery_nodes(node: Node) -> int:
+	if node.is_in_group("player") or node.is_in_group("npc"):
+		return 0
+	var total := 1
+	for child in node.get_children():
+		total += scenery_nodes(child)
+	return total
+
 func lights(node: Node) -> int:
 	if node.is_in_group("player") or node.is_in_group("npc"):
 		return 0
@@ -19,6 +27,39 @@ func lights(node: Node) -> int:
 	return total
 
 func run(t) -> void:
+	# Browsing inventory/equipment must not pin every previously shown image.
+	var icon := TTItemIcon.new()
+	icon.item_id = &"wpn_dagger_moonshard"
+	t.root.add_child(icon)
+	var icon_ref: WeakRef = weakref(icon._tex)
+	var shared := TTItemIcon.load_icon(icon.item_id)
+	t.check("visible_icon_shares_live_texture",icon._tex!=null and is_same(icon._tex,shared.tex))
+	shared.clear()
+	icon.free()
+	t.check("closed_icon_releases_texture",icon_ref.get_ref()==null)
+	var painting := HeldEquipment2D.painting_texture("res://assets/held_equipment/dungeon/wpn_club_oak.webp")
+	var painting_ref: WeakRef = weakref(painting)
+	var holder := Sprite2D.new()
+	holder.texture = painting
+	painting = null
+	t.check("visible_weapon_owns_texture",painting_ref.get_ref()!=null)
+	holder.free()
+	t.check("closed_weapon_preview_releases_texture",painting_ref.get_ref()==null)
+	await t.clear_scene()
+	var terrain := ArtCatalog.terrain(&"bog_o")
+	var terrain_ref: WeakRef = weakref(terrain.texture)
+	terrain.clear()
+	t.check("unused_terrain_lookup_releases_texture",terrain_ref.get_ref()==null)
+	var set := AreaTileSet.get_set(&"ortho")
+	var set_ref: WeakRef = weakref(set.tileset)
+	var sid := AreaTileSet.source_for(&"ortho",&"bog_o")
+	var sheet_ref: WeakRef = weakref((set.tileset.get_source(sid) as TileSetAtlasSource).texture)
+	var layer := TileMapLayer.new()
+	layer.tile_set = set.tileset
+	set.clear()
+	t.check("active_tilemap_owns_tileset_and_sheet",set_ref.get_ref()!=null and sheet_ref.get_ref()!=null)
+	layer.free()
+	t.check("last_tilemap_releases_tileset_and_sheet",set_ref.get_ref()==null and sheet_ref.get_ref()==null)
 	await t.start_world()
 	var world: WorldRoot2D = t.world()
 	var gm: Node = t.autoload("GameManager")
@@ -56,7 +97,7 @@ func run(t) -> void:
 			await t.physics(3)
 		samples.sort()
 		var warm := samples[1]
-		measurements[str(id)]={"asset_preparation_ms":preparation_ms,"cold_entry_ms":first,"warm_entry_ms":warm,"nodes":count(world.area),"scenery_lights":lights(world.area)}
+		measurements[str(id)]={"asset_preparation_ms":preparation_ms,"cold_entry_ms":first,"warm_entry_ms":warm,"nodes":count(world.area),"scenery_nodes":scenery_nodes(world.area),"scenery_lights":lights(world.area)}
 		match id:
 			&"int_froebutikken":
 				t.check("interior_cold_build", first <= 60, str(measurements[str(id)]))
@@ -80,7 +121,7 @@ func run(t) -> void:
 				for child in world.area.get_children():
 					t.info("CITY BRANCH " + str(child.name) + " " + str(count(child)))
 				t.check("city_warm_build", warm<=40, str(measurements[str(id)]))
-				t.check("city_nodes_and_lights", count(world.area)<=700 and lights(world.area)<=12, str(measurements[str(id)]))
+				t.check("city_nodes_and_lights", scenery_nodes(world.area)<=700 and lights(world.area)<=12, str(measurements[str(id)]))
 				var begin := Time.get_ticks_usec()
 				var nav := LevelNav.make()
 				t.check("nav_bake_city", Time.get_ticks_usec()-begin<=30000 and not nav.levels.is_empty(), "%.3fms" % ((Time.get_ticks_usec()-begin)/1000.0))
@@ -134,6 +175,10 @@ func _navigation(t) -> void:
 		costs.append(Time.get_ticks_usec()-start)
 	costs.sort()
 	t.check("route_plan_p95", costs[56]<=1000, str(costs[56])+"us")
+	var ctx := Routines.now_ctx()
+	var ids := SocialData.npcs().keys()
+	var batch := NpcDirector.locations(ids,ctx)
+	t.check("batch_locations_match_individual_queries",ids.all(func(id):return batch[id] == Routines.where_is(str(id),ctx)) and not ctx.has("_routine_registry"))
 	var sweeps: Array[int] = []
 	for i in 20:
 		var start := Time.get_ticks_usec()
@@ -196,6 +241,7 @@ func run_windowed(t) -> void:
 	gm.set_config_override("time.minutes_per_real_second",0.0)
 	gm.set_config_override("towns.curfew.enabled",false)
 	await LoopClock.at(t,1,10)
+	TimeManager.set_weather(&"regn") # Pin the more demanding ordinary-weather fixture.
 	var cap := Perf.uncap()
 	for row in [["int_froebutikken",4.0,60,0.7],["hyggebyen",4.0,0,0.0],["traetoppen",6.0,250,0.8],["farm",8.0,560,0.0]]:
 		var begin := Time.get_ticks_usec()
@@ -255,6 +301,7 @@ func run_windowed(t) -> void:
 			var area_calls := await _area_calls(t) if row[0] in ["int_froebutikken","farm"] else calls
 			t.check(row[0]+"_draw_calls",area_calls<=int(row[2]),"%.0f area / %.0f including HUD" % [area_calls,calls])
 		measurements[row[0]]={"frame":frames,"frame_windows":windows,"draw_calls":calls,"travel_profile":t.world().last_travel_profile,"travel_ms":travel_ms,"texture_mb":Performance.get_monitor(Performance.RENDER_TEXTURE_MEM_USED)/MB}
+		if row[0]=="hyggebyen":await _ground_batch_pixels(t)
 		if row[0]=="farm":
 			for zoom in [0.3,0.2]:
 				_zoom(t,zoom)
@@ -310,6 +357,41 @@ func run_windowed(t) -> void:
 	var file := FileAccess.open(t.out_dir.path_join("town-budgets-native-details.json"),FileAccess.WRITE)
 	file.store_string(JSON.stringify(measurements,"\t"))
 	gm.clear_config_overrides()
+
+func _ground_batch_pixels(t) -> void:
+	# Only subpixel blending at batch boundaries may differ; a gap or changed
+	# tile must fail. Keep both full native images for visual review.
+	var world: WorldRoot2D = t.world()
+	var ground := world.area.ground
+	var saved := []
+	t.tree.paused=true
+	for child in world.area.get_children():
+		if child is CanvasItem and child!=ground:
+			saved.append([child,child.visible])
+			child.hide()
+	world.weather_fx.hide()
+	world.game_ui.hide()
+	ground.rendering_quadrant_size=16
+	await t.frames(4)
+	var before: Image = await t.capture("hyggebyen_ground_quadrant_16")
+	ground.rendering_quadrant_size=8
+	await t.frames(4)
+	var after: Image = await t.capture("hyggebyen_ground_quadrant_8")
+	var a := before.get_data()
+	var b := after.get_data()
+	var total := 0
+	var maximum := 0
+	for i in a.size():
+		var difference := absi(int(a[i])-int(b[i]))
+		total += difference
+		maximum=maxi(maximum,difference)
+	var mean := float(total)/a.size()
+	measurements.ground_batch_pixels={"mean_8bit":mean,"max_8bit":maximum,"mean_limit":.001,"max_limit":16}
+	t.check("ground_batch_preserves_painted_tiles",mean<=.001 and maximum<=16,str(measurements.ground_batch_pixels))
+	for row in saved:row[0].visible=row[1]
+	world.weather_fx.show()
+	world.game_ui.show()
+	t.tree.paused=false
 
 func _renderer_arithmetic(t, paths: Array[String], label: String) -> Dictionary:
 	await t.frames(4)

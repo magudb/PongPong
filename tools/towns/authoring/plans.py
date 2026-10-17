@@ -55,7 +55,7 @@ cit("gardener_hoppe", "int_hoppe_hut.table", {
              ("22:00", "int_hoppe_hut.bed", "sleep")],
     "rest": [("07:30", "int_hoppe_hut.table", "eat"), ("09:00", T + "a_bench", "sit"), ("11:00", T + "t_fire_s", "sit"), ("13:00", "int_torvekroen.seat_a", "sit"),
              ("15:30", T + "u_terrace", "sit"), ("18:00", "int_hoppe_hut.table", "eat"), ("22:00", "int_hoppe_hut.bed", "sleep")],
-    "farm_visit": [("06:30", "int_hoppe_hut.table", "eat"), ("07:15", T + "a_beds1", "tend"), ("11:30", T + "a_bench", "sit", "13:00"), ("15:00", F + "hoppe_fence", "stand", "16:00"),
+    "farm_visit": [("06:30", "int_hoppe_hut.table", "eat"), ("07:15", T + "a_beds1", "tend"), ("11:30", T + "a_bench", "sit", "12:51"), ("15:00", F + "hoppe_fence", "stand", "16:00"),
                    (None, T + "t_fire_n", "sit", "18:06"), (None, "int_hoppe_hut.table", "eat"), ("22:00", "int_hoppe_hut.bed", "sleep")],
     "inn": [("06:30", "int_hoppe_hut.table", "eat"), ("07:15", T + "a_beds1", "tend"), ("10:30", T + "a_beds2", "tend"), ("12:30", T + "a_bench", "sit"),
             ("13:30", T + "a_beds1", "tend", "17:00"), (None, "int_hoppe_hut.table", "eat"), ("19:30", "int_torvekroen.seat_b", "sit"), ("22:45", "int_hoppe_hut.bed", "sleep")],
@@ -66,7 +66,7 @@ cit("carpenter_brumme", "int_brummes_hus.table", {
              ("19:00", "int_brummes_hus.hearth", "stand"), ("21:30", "int_brummes_hus.bed", "sleep")],
     "stall": [("06:30", "int_brummes_hus.table", "eat"), ("09:30", T + "t_stall", "work", "16:00"), (None, T + "t_fire_w", "sit", "17:30"), ("18:20", "int_torvekroen.seat_a", "sit"),
               ("21:30", "int_brummes_hus.bed", "sleep")],
-    "inn": [("06:30", "int_brummes_hus.table", "eat"), ("07:45", "int_brummes_vaerksted.counter", "work", "16:00"), (None, T + "c_bench", "sit", "17:30"), ("18:15", "int_torvekroen.seat_a", "sit"),
+    "inn": [("06:30", "int_brummes_hus.table", "eat"), ("07:45", "int_brummes_vaerksted.counter", "work", "16:00"), (None, T + "c_bench", "sit", "17:30"), ("18:21", "int_torvekroen.seat_a", "sit"),
             ("22:00", "int_brummes_hus.bed", "sleep")],
 }, [rule("stall", weekday=[5, 6]), rule("inn", weekday=[4]), rule("work")])
 
@@ -104,7 +104,7 @@ cit("guard_oak", "int_vagthytten.table", {
              (None, T + "t_fire_e", "patrol", "15:40"), (None, T + "b_lift", "guard", "17:30"), ("18:20", "int_torvekroen.seat_b", "sit"), ("21:00", "int_vagthytten.table", "eat"),
              ("22:00", "int_vagthytten.bed", "sleep")],
     "inn": [("06:30", "int_vagthytten.table", "eat"), ("07:30", T + "b_lift", "guard", "12:00"), (None, T + "b_bench", "sit", "12:45"), (None, T + "b_lift", "guard", "17:00"),
-            ("17:45", "int_torvekroen.seat_a", "sit"), ("22:30", "int_vagthytten.bed", "sleep")],
+            ("17:57", "int_torvekroen.seat_a", "sit"), ("22:30", "int_vagthytten.bed", "sleep")],
 }, [rule("inn", weekday=[5]), rule("work")])
 
 cit("cub_bamse", "int_vagthytten.table", {

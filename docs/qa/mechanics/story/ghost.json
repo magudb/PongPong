@@ -1,0 +1,29 @@
+{
+  "allowed": [],
+  "character": "ghost",
+  "checks": 80,
+  "elapsed_s": 10.02,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 828,
+      "skipped": 0
+    },
+    "forest_mother": {
+      "character": "ghost",
+      "checks": 72,
+      "failed": 0,
+      "ms": 5205,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

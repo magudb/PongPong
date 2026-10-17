@@ -417,9 +417,12 @@ func _build_checks(t) -> void:
 	t.check("structure", wrong.is_empty() and props_ok and stage.fade.targets.size() == 22 and _city.art_problems.is_empty(),
 		"the built city: 9 bridges + 2 stubs, 8 rim rails, the ladder (2 ends) and the trunk climb (2 ends), 1 Skovlift, 14 huts, 8 discs, 15 trunk segments, 32 lanterns + 14 door lamps, 3 owl holes with shelves, 3 bat houses with a hanging bat each, 2 foliage clusters, 3 signs, 2 warps, 10 landmark circles, 46 halos + 12 lights, the stall / fire pit / mailbox / log stack / notice board / seed basket / tub halves / ladder, 22 occluders; wrong %s, art problems %s" % [wrong, _city.art_problems])
 	var player_lights := _count(_world.player,"PointLight2D")
-	var point_lights: int = _count(a,"PointLight2D")-player_lights
+	var citizen_lights := 0
+	for node in _all_nodes(a):
+		if node is NpcGlow: citizen_lights += _count(node,"PointLight2D")
+	var point_lights: int = _count(a,"PointLight2D")-player_lights-citizen_lights
 	var active_lights := _all_nodes(a).filter(func(node):return node is PointLight2D and node.enabled and node.is_visible_in_tree()).size()
-	t.check("point_lights_max",point_lights<=12 and stage.glow.halos.size()==46 and stage.glow.lights.size()<=LevelGlow.MAX_LIGHTS and point_lights==stage.glow.lights.size() and active_lights<=16,
+	t.check("point_lights_max",point_lights<=12 and citizen_lights<=1 and stage.glow.halos.size()==46 and stage.glow.lights.size()<=LevelGlow.MAX_LIGHTS and point_lights==stage.glow.lights.size() and active_lights<=16,
 		"city owns %d PointLight2D /12 and %d halos; player owns %d separately (lantern/ghost/burst); %d enabled visible lights /16 for the whole area" % [point_lights,stage.glow.halos.size(),player_lights,active_lights])
 	# --- walkable_test: any level polygon
 	var rng := RandomNumberGenerator.new()
@@ -2289,7 +2292,7 @@ func _capability_summary(t) -> void:
 	for pkg in absent:
 		if not named.has(pkg):
 			unnamed.append(pkg)
-	t.check("preview_skips_are_visible", plain.is_empty() and unnamed.is_empty() and not _caps.is_empty(),
+	t.check("preview_skips_are_visible", plain.is_empty() and unnamed.is_empty() and (_caps.is_empty() == absent.is_empty()),
 		"every check that needs a package of the next milestone SKIPs with the line `capability missing: <package>`: %d lines, packages named %s, every package that is absent now (%s) is named (unnamed %s), no skip without the capability text %s" % [_caps.size(), named, absent, unnamed, plain])
 
 

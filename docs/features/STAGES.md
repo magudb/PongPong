@@ -110,3 +110,7 @@ Fix round 2 after review F1 r2 (nine more rules, same stage design): **C19** max
 **K9** loot creature name keys (a key whose owner CSV has not landed is a WARN row naming the rows, not a failure; once the owner CSV exists the row must be there), **K10** voice keys of the three dialogues, **D6** no text literal
 in F1's Lua (judged on files with origin `own` only: P13's / P14's real rewrites and the pending references are not F1's). **N1** now scans every text file of the repo (the suffixes of `rename_town.py`: .map, .svg, .tscn, .tres included),
 pruning `.git`, `.godot`, virtual envs, scratch folders and `tools/features/reports`; the user's "Style Guide" export is skipped.
+
+### Dungeon inputs
+
+All stages now require the three dungeon item files, forge recipes, smithy stock, dungeon item CSV and the four layout/combat/loot/boss config files listed in `stage.manifest`. They are real live inputs, including in the early historical stage; no pending dungeon snapshot is substituted. S5 compares their evaluated tables against LuaRuntime, and S6 checks the exact declared item count. The full stage has 125 passing rules, including W1-W5/G1-G3/M1-M2/K1/DB1-DB5 and expanded acquisition checks. P1 remains a separate mandatory model gate. Run mutation tests with `--jobs 1` to keep Godot processes sequential.

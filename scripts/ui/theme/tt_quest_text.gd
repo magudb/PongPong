@@ -179,6 +179,10 @@ static func tag_color(quest_id: StringName) -> Color:
 
 ## Text of one objective: description_key -> OBJ_<QUEST>_<OBJ> -> OBJ_<OBJ> -> description -> capitalised id.
 static func step_text(obj_id: StringName, objective_def: Variant, quest_id: StringName = &"") -> String:
+	if quest_id!=&"":
+		var keys := LuaData.dict(LuaData.dict(_progress(quest_id).get("meta",{})).get("objective_keys",{}))
+		var key := _s(keys,str(obj_id))
+		if key!="" and _has_key(key):return TranslationServer.translate(key)
 	var od := LuaData.dict(objective_def)
 	var dk := _s(od, "description_key")
 	if dk != "" and _has_key(dk):
@@ -218,7 +222,7 @@ static func steps(quest_id: StringName) -> Array:
 ## Reward chips: [{kind: "gold"|"item"|"heart", text}]
 static func rewards(quest_id: StringName) -> Array:
 	var out: Array = []
-	var r := LuaData.dict(def(quest_id).get("rewards", {}))
+	var r := preload("res://scripts/data/quest_rewards.gd").resolve(def(quest_id),LuaData.dict(_progress(quest_id).get("meta",{})))
 	if r.has("gold"):
 		out.append({"kind": "gold", "text": "%s %s" % [preload("res://scripts/ui/theme/tt_format.gd").thousands(LuaData.int_of(r["gold"])), TranslationServer.translate("UI_CURRENCY")]})
 	var items := LuaData.dict(r.get("items", {}))

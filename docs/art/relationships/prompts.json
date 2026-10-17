@@ -1,0 +1,26 @@
+{
+  "tool": "built-in imagegen",
+  "mode": "new sibling variants / style-transfer",
+  "requests": [
+    {
+      "id": "hjertebuket",
+      "reference": {
+        "path": "assets/icons/items/wild_flower.webp",
+        "role": "edit target and approved material/finish reference; output is saved under a new ID"
+      },
+      "prompt": "Use case: style-transfer. Asset type: a new sibling inventory icon for the Trætoppen painted storybook game. Image 1 is the edit target and approved finish reference: transform its wildflower cluster into the distinct Hjertebuket friendship gift, while retaining the tactile matte gouache/watercolor pigment, warm irregular brown pencil contours, softly rounded forms and slightly top-down three-quarter view. Paint one small hand-tied bouquet: three cream wildflower blossoms and one pale blue-white moonflower, sage leaves, stems bundled with a muted rose cloth ribbon and a tiny plain heart-shaped paper seal. A compact, readable silhouette at 128 and 64 pixels. Center the complete bouquet with 15 percent clear gutter. Preserve genuine transparent alpha around the object. Only the object, no holder or hands. No text, letters, numbers, logo, UI frame, rarity border, background, cast shadow, emitted aura, plastic gloss, vector geometry, photorealism or neon. Save as a new asset; the existing wildflower is the visual basis, not a file to overwrite.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/relationships/hjertebuket.png"
+    },
+    {
+      "id": "loefteagern",
+      "reference": {
+        "path": "assets/icons/wardrobe/necklace_acorn.webp",
+        "role": "edit target and approved material/finish reference; output is saved under a new ID"
+      },
+      "prompt": "Use case: style-transfer. Asset type: a new sibling inventory icon for the Trætoppen painted storybook game. Image 1 is the edit target and approved finish reference: transform the acorn pendant into one standalone Løfteagern promise gift, keeping the warm tactile matte gouache/watercolor pigment, irregular brown pencil contours, rounded acorn shape and slightly top-down three-quarter view. Remove the long necklace cord completely. Keep one honey-brown wooden acorn with a textured earthy cap; add one narrow softly hammered dull-gold band around it and a single small amber bead tied near its short stem with sage thread. It should read as a humble handmade promise token, with wood, gold and amber clearly distinct. A compact, readable silhouette at 128 and 64 pixels. Center the complete object with 15 percent clear gutter and genuine transparent alpha. No lettering, numbers, logo, hands, UI frame, rarity border, background, cast shadow, emitted aura, plastic gloss, vector geometry, photorealism, neon, diamond ring or crown. Save as a new asset; preserve the established painted finish.",
+      "transparent_background": true,
+      "source": "tools/art/drawn/sources/relationships/loefteagern.png"
+    }
+  ]
+}

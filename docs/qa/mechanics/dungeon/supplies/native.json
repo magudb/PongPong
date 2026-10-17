@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 21,
+  "elapsed_s": 5.37,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "art_dungeon_supplies": {
+      "character": "animal",
+      "checks": 21,
+      "failed": 0,
+      "ms": 969,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

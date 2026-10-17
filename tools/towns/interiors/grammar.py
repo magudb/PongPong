@@ -362,7 +362,7 @@ def build_all() -> dict[str, Room]:
     R["brummes_vaerksted"] = grammar_shop("brummes_vaerksted", back=["plank_stack", "plank_stack", "shelf_oak", "chest_oak", "workbench"],
                                           display=["table_dining_oak", "plank_stack", "chest_pine", "floor_lamp_iron", "chair_stump"], assistant=True)
     # ---- public (ext)
-    R["torvekroen"] = grammar_service("torvekroen", back=["bookshelf_pine", "fireplace_granite", "clock_pine"], centre_type="bar",
+    R["torvekroen"] = grammar_service("torvekroen", back=["fireplace_granite"], centre_type="bar",
                                       display=["table_round_pine", "table_round_pine", "chair_pine", "chair_pine", "chair_oak", "chair_oak", "piano_pine"],
                                       extra_posts=[("bed", 7, 1, "sleep", "S", "bed", 0, True), ("stage", 3, 4, "play", "N", "stage", 3, False),
                                                    ("seat_a", 1, 3, "sit", "E", "seat", 3, False, 3), ("seat_b", 6, 3, "sit", "W", "seat", 3, False, 3),

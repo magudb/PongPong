@@ -115,6 +115,7 @@ func _ready() -> void:
 	_target = _home
 	_rng.seed = hash(npc_id)
 	EventBus.time_of_day_changed.connect(func(_h, _m): _clock())
+	EventBus.modal_changed.connect(func(_stack): _update_bubble())
 	EventBus.quest_accepted.connect(func(_id): _update_bubble())
 	EventBus.quest_completed.connect(func(_id): _update_bubble())
 	EventBus.friend_changed.connect(func(_id, _hearts): _update_bubble())
@@ -208,6 +209,7 @@ func _can_stand(point: Vector2) -> bool:
 func interact(player: Node) -> void:
 	if is_talking or not _enabled or not is_inside_tree() or GameManager.is_modal_open():
 		return
+	if not bool(Svc.static_call("res://scripts/ghostfam/hook/ghostfam_hook.gd",&"before_talk",[self,player],true)):return
 	is_talking = true
 	_talk_player = player
 	_held = true
@@ -298,6 +300,16 @@ func hold(held: bool) -> void:
 	if held:
 		velocity = Vector2.ZERO
 
+## Room guests have no town driver. Keep their idle anchor with their assigned
+## floor point, including after furniture/guest layout changes.
+func set_guest_home(point: Vector2) -> void:
+	if not guest:return
+	global_position = point
+	_home = point
+	_target = point
+	velocity = Vector2.ZERO
+	face("S")
+
 func set_act(act: String) -> void:
 	var clip := StringName(act)
 	var rendered := clip if visual != null and visual.has_clip(clip) else &"idle"
@@ -313,6 +325,8 @@ func face(direction: Variant) -> void:
 
 func event_begin() -> void:
 	_event = true
+	_bubble = ""
+	_update_bubble()
 	hold(true)
 
 func event_end() -> void:
@@ -346,6 +360,12 @@ func _finish_walk(completed: bool) -> void:
 func event_face(direction: Variant) -> void:
 	face(direction)
 
+func event_stand(at: Vector2, direction := "S") -> void:
+	_finish_walk(false)
+	global_position = at
+	velocity = Vector2.ZERO
+	face(direction)
+
 func event_clip(clip: String) -> void:
 	set_act(clip)
 
@@ -359,8 +379,11 @@ func set_bubble(kind: String) -> void:
 func _update_bubble() -> void:
 	if _bubble_label == null:
 		return
+	var cinematic := GameManager.is_modal_open(&"event")
 	var kind := _bubble
-	if not guest and not QuestManager.offerable(npc_id).is_empty():
+	if cinematic:
+		if not _event:kind = ""
+	elif not guest and not QuestManager.offerable(npc_id).is_empty():
 		kind = "quest"
 	elif not SocialManager.events_ready(str(npc_id)).is_empty():
 		kind = "heart"
@@ -370,4 +393,4 @@ func _update_bubble() -> void:
 	_bubble_label.set("candle", kind == "birthday")
 	_bubble_label.add_theme_color_override("font_color", C.ROSE if kind == "heart" else C.CHALK)
 	_bubble_label.queue_redraw()
-	_bubble_label.visible = (_bubble_label.text != "" or kind == "birthday") and not is_talking
+	_bubble_label.visible = (_bubble_label.text != "" or kind == "birthday") and not is_talking and not bool(get_meta("ghostfam_hiding",false))

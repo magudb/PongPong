@@ -1144,7 +1144,7 @@ func _prompt_prefix_glyph(t) -> void:
 # ---------------------------------------------------------------------------------------------------- task 5: UiConfirm
 
 ## Runs UiConfirm.ask in the background: the result lands in box["result"] when the dialog is answered.
-func _ask_bg(asker: Control, box: Dictionary, title := "CONFIRM", text := "UI_CONFIRM_OVERWRITE", ok := "NAV_OK", default := &"cancel") -> void:
+func _ask_bg(asker: Control, box: Dictionary, title := "UI_CONFIRM_TITLE", text := "UI_CONFIRM_OVERWRITE", ok := "NAV_OK", default := &"cancel") -> void:
 	box["done"] = false
 	box["result"] = await UiConfirm.ask(asker, title, text, ok, "NAV_CANCEL", default, [2])
 	box["done"] = true
@@ -1152,7 +1152,7 @@ func _ask_bg(asker: Control, box: Dictionary, title := "CONFIRM", text := "UI_CO
 
 func _ask_text_bg(asker: Control, box: Dictionary, initial: String, max_len: int) -> void:
 	box["done"] = false
-	box["result"] = await UiConfirm.ask_text(asker, "CONFIRM", initial, max_len)
+	box["result"] = await UiConfirm.ask_text(asker, "UI_CONFIRM_TITLE", initial, max_len)
 	box["done"] = true
 
 
@@ -1186,7 +1186,7 @@ func _confirm_default_focus_and_escape(t) -> void:
 	var esc_ok: bool = bool(box["done"]) and box["result"] == false and _dialog(host) == null and (_gm.call("modal_stack") as Array).is_empty() and _owner_name(t) == "Asker" and not world.seen.has(&"pause")
 	# default OK; Enter on the focused default answers yes; the closing Enter never reaches the world
 	box = {}
-	_ask_bg(asker.get_parent(), box, "CONFIRM", "UI_CONFIRM_LOAD", "NAV_OK", &"ok")
+	_ask_bg(asker.get_parent(), box, "UI_CONFIRM_TITLE", "UI_CONFIRM_LOAD", "NAV_OK", &"ok")
 	await t.frames(2)
 	var on_ok := _owner_name(t) == "OkButton"
 	world.seen.clear()
@@ -1206,7 +1206,7 @@ func _confirm_default_focus_and_escape(t) -> void:
 	var enter_no: bool = bool(box["done"]) and box["result"] == false
 	# the gamepad: B and Start cancel, A presses the focused one
 	box = {}
-	_ask_bg(asker.get_parent(), box, "CONFIRM", "UI_CONFIRM_DELETE", "NAV_OK", &"ok")
+	_ask_bg(asker.get_parent(), box, "UI_CONFIRM_TITLE", "UI_CONFIRM_DELETE", "NAV_OK", &"ok")
 	await t.frames(2)
 	await _pad(t, JOY_BUTTON_B)
 	await t.frames(1)
@@ -1218,7 +1218,7 @@ func _confirm_default_focus_and_escape(t) -> void:
 	await t.frames(1)
 	var start_no: bool = bool(box["done"]) and box["result"] == false
 	box = {}
-	_ask_bg(asker.get_parent(), box, "CONFIRM", "UI_CONFIRM_LOAD", "NAV_OK", &"ok")
+	_ask_bg(asker.get_parent(), box, "UI_CONFIRM_TITLE", "UI_CONFIRM_LOAD", "NAV_OK", &"ok")
 	await t.frames(2)
 	await _pad(t, JOY_BUTTON_A)
 	await t.frames(1)

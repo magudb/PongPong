@@ -72,11 +72,15 @@ var equipment: Dictionary = {}
 var _misrouted: bool = false          # a furniture / clothing item may sit in the backpack (its store did not exist yet)
 var _consuming: bool = false
 var _logged: Dictionary = {}
+var arsenal: Arsenal
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	equipment = _empty_equipment()
+	arsenal = Arsenal.new()
+	arsenal.name = "Arsenal"
+	add_child(arsenal)
 	EventBus.new_game_started.connect(reset)
 
 
@@ -86,6 +90,7 @@ func _ready() -> void:
 func reset() -> void:
 	gold = _gold_of(_Svc.lua_config("economy.starting_gold", DEFAULT_STARTING_GOLD), DEFAULT_STARTING_GOLD)
 	inventory.clear()
+	if arsenal != null: arsenal.reset()
 	equipment = _empty_equipment()
 	_misrouted = false
 	for entry in _starter_kit():
@@ -284,6 +289,7 @@ func add_item(item_id: StringName, amount: int = 1, silent: bool = false) -> boo
 		if store != null and store.has_method("add"):
 			if not bool(store.call("add", item_id, amount)):
 				return false
+			_auto_equip(item_id,not silent)
 			_gained(item_id, amount, silent)
 			return true
 	if item_def(item_id).is_empty():
@@ -295,7 +301,7 @@ func add_item(item_id: StringName, amount: int = 1, silent: bool = false) -> boo
 	if kind != _Kinds.BACKPACK:
 		_misrouted = true                 # its store does not exist yet: the item waits in the backpack to be adopted
 	_stack_into_backpack(item_id, amount)
-	_auto_equip(item_id)
+	_auto_equip(item_id,not silent)
 	_gained(item_id, amount, silent)
 	return true
 
@@ -411,7 +417,7 @@ func receive_backpack_item(item_id: StringName, amount: int, commit: Callable, s
 		return false
 	_stack_into_backpack(item_id, amount)
 	commit.call()
-	_auto_equip(item_id)
+	_auto_equip(item_id,not silent)
 	_gained(item_id, amount, silent)
 	return true
 
@@ -438,13 +444,14 @@ func list_sellable() -> Array[Dictionary]:
 		var item_id := StringName(str(id))
 		if is_sellable(item_id):
 			rows.append({"id": item_id, "amount": int(inv[id]), "kind": _Kinds.storage_of(item_id), "rarity": _Kinds.rarity_of(item_id), "value": sell_value(item_id)})
-	var furniture := _store_for(_Kinds.FURNITURE)
-	if furniture != null and furniture.has_method("owned_ids") and furniture.has_method("count_stock"):
-		for id in furniture.call("owned_ids"):
+	for kind in [_Kinds.FURNITURE,_Kinds.WEAPON]:
+		var store := _store_for(kind)
+		if store == null or not store.has_method("owned_ids") or not store.has_method("count_stock"): continue
+		for id in store.call("owned_ids"):
 			var item_id := StringName(str(id))
-			var free := int(furniture.call("count_stock", item_id))
+			var free := int(store.call("count_stock", item_id))
 			if free > 0 and is_sellable(item_id):
-				rows.append({"id": item_id, "amount": free, "kind": _Kinds.FURNITURE, "rarity": _Kinds.rarity_of(item_id), "value": sell_value(item_id)})
+				rows.append({"id": item_id, "amount": free, "kind": kind, "rarity": _Kinds.rarity_of(item_id), "value": sell_value(item_id)})
 	var order: Array = []
 	for i in rows.size():
 		order.append(i)
@@ -463,7 +470,7 @@ func list_sellable() -> Array[Dictionary]:
 ## Moves furniture and clothing that fell back into the backpack (their store did not exist yet) into the stores. Items are moved
 ## with the stores' own add(); no item_gained is fired again (they were counted when they arrived). Runs by itself before every
 ## routed call and before every save, a store may also call it from its own load.
-func adopt_misrouted() -> void:
+func adopt_misrouted(only_kind: StringName = &"") -> void:
 	if not _misrouted:
 		return
 	var still := false
@@ -473,6 +480,12 @@ func adopt_misrouted() -> void:
 		var slot := inventory[i]
 		var kind := _Kinds.storage_of(slot["id"])
 		if kind != _Kinds.BACKPACK:
+			# A store adopts only its own rows while loading. Another store may
+			# still be waiting for reset/from_dict and would erase an early gift.
+			if only_kind != &"" and kind != only_kind:
+				still = true
+				i -= 1
+				continue
 			var store := _store_for(kind)
 			if store != null and store.has_method("add") and bool(store.call("add", slot["id"], int(slot["amount"]))):
 				inventory.remove_at(i)
@@ -527,6 +540,8 @@ func equip_slot_of(item_id: Variant) -> String:
 			return str(TOOL_SLOTS.get(str(d.get("tool_type", "")), ""))
 		"weapon":
 			return WEAPON_SLOT
+		"gem":
+			if LanternGem.can_equip(item_id): return ACCESSORY_SLOT
 	return ""
 
 
@@ -542,10 +557,13 @@ func equip_rank_of(item_id: Variant) -> int:
 func equip(slot: StringName, item_id: StringName) -> bool:
 	if not equipment.has(slot):
 		return false
-	if item_id != &"" and (_backpack_count(item_id) <= 0 or equip_slot_of(item_id) != str(slot)):
+	if item_id != &"" and (count_item(item_id) <= 0 or equip_slot_of(item_id) != str(slot)):
 		return false
+	var changed := str(equipment[slot])!=str(item_id)
 	equipment[slot] = item_id
 	_publish(&"player_inventory_changed", [get_inventory_dict()])
+	if changed and item_id!=&"":
+		after_transaction(func() -> void:EventBus.game_event.emit(&"equipment_changed",{"slot":str(slot),"item":str(item_id)}))
 	return true
 
 
@@ -572,21 +590,38 @@ func best_tool_id(tool_type: Variant) -> StringName:
 	var t := str(tool_type)
 	var slot := WEAPON_SLOT if t == "weapon" else str(TOOL_SLOTS.get(t, ""))
 	var best := &""
-	var best_rank := -1
-	for entry in inventory:
-		if equip_slot_of(entry["id"]) == slot and slot != "":
-			var r := equip_rank_of(entry["id"])
+	var best_rank := -1.0
+	for id in loadout_ids():
+		if equip_slot_of(id) == slot and slot != "":
+			var r := _weapon_rating(id) if t == "weapon" else float(equip_rank_of(id))
 			if r > best_rank:
-				best = entry["id"]
+				best = StringName(str(id))
 				best_rank = r
 	return best
 
+func loadout_ids() -> Array:
+	var ids := get_inventory_dict().keys()
+	if arsenal != null:
+		for id in arsenal.owned_ids():
+			if id not in ids: ids.append(id)
+	return ids
 
-func _auto_equip(item_id: StringName) -> void:
+func _weapon_rating(id: Variant) -> float:
+	return float(_Svc.static_call("res://scripts/combat/weapon_info.gd",&"rating",[id],equip_rank_of(id)))
+
+
+func _auto_equip(item_id: StringName, show_better: bool = true) -> void:
 	var slot := equip_slot_of(item_id)
 	if slot == "":
 		return
 	var current := equipped_item(StringName(slot))
+	if slot == WEAPON_SLOT:
+		if current == &"" or (str(item_def(current).get("weapon_family","sword")) == str(item_def(item_id).get("weapon_family","sword")) and _weapon_rating(item_id) > _weapon_rating(current)):
+			equipment[&"weapon"] = item_id
+		elif show_better and item_id != current and _weapon_rating(item_id) > _weapon_rating(current):
+			_publish(&"notification_posted",[tr(str(item_def(item_id).get("name_key",""))),tr("WSTAT_BETTER"),"item"])
+		return
+	if slot == ACCESSORY_SLOT: return # Gem changes are always deliberate.
 	if current == &"" or equip_rank_of(item_id) > equip_rank_of(current):
 		equipment[StringName(slot)] = item_id
 
@@ -595,7 +630,7 @@ func _auto_equip(item_id: StringName) -> void:
 func _revalidate_equipment() -> void:
 	for slot in equipment.keys():
 		var id := StringName(str(equipment[slot]))
-		if id != &"" and _backpack_count(id) <= 0:
+		if id != &"" and count_item(id) <= 0:
 			var tool_type := ""
 			for t in TOOL_SLOTS:
 				if TOOL_SLOTS[t] == str(slot):
@@ -698,13 +733,15 @@ func to_dict() -> Dictionary:
 	var equipped := {}
 	for key in equipment:
 		equipped[str(key)] = str(equipment[key])
-	return {"v": SAVE_VERSION, "gold": gold, "inventory": slots, "equipment": equipped}
+	return {"v": SAVE_VERSION, "gold": gold, "inventory": slots, "equipment": equipped, "arsenal":arsenal.to_dict() if arsenal != null else {}}
 
 
 ## Rebuilds the state after the JSON round trip (every number is a float or an int, ids are plain Strings). Invalid slots
 ## (not a dictionary, no id, an amount <= 0 after coercion) are dropped, a slot above max_stack is split, more than
 ## INVENTORY_SLOTS slots keep the first ones. Returns true.
 func from_dict(data: Dictionary) -> bool:
+	_misrouted = false
+	if arsenal != null: arsenal.from_dict(_Data.dict(data.get("arsenal",{})))
 	gold = _gold_of(data.get("gold", DEFAULT_STARTING_GOLD), DEFAULT_STARTING_GOLD)
 	inventory.clear()
 	var raw: Variant = data.get("inventory", [])
@@ -748,14 +785,15 @@ func from_dict(data: Dictionary) -> bool:
 			if not equipment.has(slot):
 				continue
 			var id := StringName(str((saved as Dictionary)[key]).strip_edges())
-			if id == &"" or (_backpack_count(id) > 0 and equip_slot_of(id) == str(slot)):
+			if id == &"" or (count_item(id) > 0 and equip_slot_of(id) == str(slot)):
 				equipment[slot] = id
 				decided[slot] = true
-	for entry in inventory:
-		var slot_of_entry := equip_slot_of(entry["id"])
+	for id in loadout_ids():
+		var slot_of_entry := equip_slot_of(id)
 		if slot_of_entry != "" and not decided.has(StringName(slot_of_entry)):
-			_auto_equip(entry["id"])
+			_auto_equip(StringName(str(id)),false)
 	_misrouted = true                          # a save made before a store existed may hold its items in the backpack
+	adopt_misrouted(_Kinds.WEAPON)
 	_publish(&"player_inventory_changed", [get_inventory_dict()])
 	_publish(&"gold_changed", [gold, 0])
 	return true
@@ -764,6 +802,8 @@ func from_dict(data: Dictionary) -> bool:
 # ================================================================================================ internals
 
 func _store_for(kind: StringName) -> Node:
+	if kind == _Kinds.WEAPON:
+		return arsenal
 	if kind == _Kinds.FURNITURE:
 		return _Svc.node("FurnitureManager")
 	if kind == _Kinds.CLOTHING:

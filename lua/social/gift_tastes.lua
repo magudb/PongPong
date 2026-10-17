@@ -52,7 +52,8 @@ config = {
       },
       child = {
         love = { "cookie", "honey_cake", "wild_flower", "strawberry" },
-        like = { "category:food", "slot:jewellery", "category:crop" },
+        -- Berries and gentle forest supplies are curiosities, unlike bitter tonics.
+        like = { "category:food", "slot:jewellery", "category:crop", "tornebaer", "lysdraabe", "svampe_eliksir" },
         dislike = { "category:consumable", "category:tool" },
         hate = { "iron_ore" },
       },
@@ -88,7 +89,8 @@ config = {
       fairy_furnisher = { archetype = "fairy", love = { "ftype:lamp", "ftype:plant", "rug_round_rose" }, like = { "ftype:wall_decor", "ftype:rug", "curtain_blue" }, dislike = { "stone" }, hate = { "egg" } },
       fairy_tailor = { archetype = "fairy", love = { "fabric_velvet", "fabric_wool", "slot:dress" }, like = { "fabric_plain", "slot:shirt", "wool" }, dislike = { "stone" }, hate = { "fertilizer" } },
       appraiser_fru_ugle = { archetype = "elder", love = { "amethyst", "moonstone", "amber", "wisdom_feather" }, like = { "category:gem", "rose_quartz", "crystal_shard", "ftype:shelf" }, dislike = { "category:crop" }, hate = { "lantern_oil", "rope" } },
-      mapseller_natteblik = { archetype = "watcher", love = { "night_bloom", "glow_mushroom", "glow_berry", "lantern_oil" }, like = { "rare_mushroom", "moss", "category:forage" }, dislike = { "slot:hat", "category:crop" }, hate = { "fairy_dust", "sunflower" } },
+      -- Natteblik appreciates woodland walking staves and light-bearing wands.
+      mapseller_natteblik = { archetype = "watcher", love = { "night_bloom", "glow_mushroom", "glow_berry", "lantern_oil" }, like = { "rare_mushroom", "moss", "category:forage", "wpn_spear_twig", "wpn_staff_branch", "wpn_staff_hazel", "wpn_staff_light", "wpn_spear_iron", "wpn_spear_thistle" }, dislike = { "slot:hat", "category:crop" }, hate = { "fairy_dust", "sunflower" } },
       fairy_king = { archetype = "elder", love = { "moonstone", "emerald", "honey_cake" }, like = { "category:gem", "ftype:decor", "set:kongelig" }, dislike = { "category:resource" }, hate = { "egg" } },
       rasmus = { archetype = "wanderer", love = { "wild_flower", "rare_mushroom", "moss", "fern" }, like = { "apple", "category:forage", "rope" }, dislike = { "ftype:grand" }, hate = { "iron_sword" } },
       lamplighter_kiki = { archetype = "wanderer", love = { "apple", "strawberry", "sunflower", "rope" }, like = { "lucky_clover", "category:forage" }, dislike = { "category:mineral" }, hate = { "iron_sword" } },

@@ -1,0 +1,7 @@
+@id int_brummes_hus
+@title BLD_BRUMMES_HUS
+@projection iso
+@ambient home
+@zone traetoppen
+@builder res://scripts/towns/interior_room.gd
+@room int_brummes_hus

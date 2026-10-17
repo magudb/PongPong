@@ -107,6 +107,10 @@ func run(t, owner) -> void:
 	await LoopClock.to(t, 18)
 	check(t, "L05", "l05_panel_closes_before_eviction", not panel.is_open() and t.world().area.map.id == &"hyggebyen" and not gm.is_modal_open())
 	await LoopClock.at(t, 6, 10)
+	# A fixed festival can share the first Sunday and owns the closure reason.
+	while sm.festival_today() != &"":
+		await LoopClock.next_day(t)
+		await LoopClock.at(t, 6, 10)
 	var sunday := Hours.state("froebutikken")
 	check(t, "L05", "l05_closed_weekday_reason", not sunday.open and sunday.reason == "day")
 	# Always-open exits and the counter barrier use the installed room geometry.
@@ -136,12 +140,16 @@ func _builder(t) -> void:
 	await t.world().travel(&"int_toemmerhandlen", &"default")
 	var opened := await host(t, "talk")
 	var choice: Dictionary = await suite._finish_dialogue(t, "home_upgrade")
-	# The talk's action opens the same event seam; close any resulting dialogue.
-	if TownProbe.dialogue(t).is_open():
+	var panel: Control = TownProbe.screens(t).get_screen(&"husbyggeri")
+	var talk_panel: bool = panel.is_open()
+	if talk_panel or TownProbe.dialogue(t).is_open():
 		t.tap_key(KEY_ESCAPE)
 		await t.frames(3)
 	var count_before: int = suite.probe.named("open_home_builder").size()
 	var desk := await host(t, "desk")
 	var events: Array = suite.probe.named("open_home_builder")
 	var tier: int = t.autoload("GameManager").flag_int(&"home_tier", 1)
-	check(t, "L06", "l06c_home_upgrade_desk_at_noon", opened and desk and str(choice.get("action", "")) == "home_upgrade" and events.size() == count_before + 1 and int(events[-1].payload.get("tier", -1)) == tier, str(choice) + " / " + str(events))
+	check(t, "L06", "l06c_home_upgrade_desk_at_noon", opened and talk_panel and desk and panel.is_open() and str(choice.get("action", "")) == "home_upgrade" and events.size() == count_before + 1 and int(events[-1].payload.get("tier", -1)) == tier, str(choice) + " / " + str(events))
+	if panel.is_open():
+		t.tap_key(KEY_ESCAPE)
+		await t.frames(3)

@@ -1,0 +1,1113 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=windowed character=animal sections=res://tests/sections only=town_loop,ui_mechanics,shop_ui,wardrobe_ui,held_equipment,home_services,voice,audio_town,forest_mother,enemies,bosses,enemy_performance,walkway_transitions
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.Dzvrcu/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native
+== section audio_town [windowed]  (res://tests/sections/audio_town.gd)
+  ok    audio_town.cue_log_ring_256
+  ok    audio_town.cue_log_snapshot_is_detached
+  ok    audio_town.cues_follow_area
+  ok    audio_town.exit_shop_bell
+  ok    audio_town.raw_midnight_is_night
+  ok    audio_town.same_state_no_repeated_ambience
+  ok    audio_town.rain_overlay
+  ok    audio_town.rain_stops_indoors
+  ok    audio_town.closed_door_knock_and_closing_bell_hooks
+  ok    audio_town.social_cues_logged
+  ok    audio_town.real_weapon_equipment_cue
+  ok    audio_town.unchanged_equipment_silent
+  ok    audio_town.festival_music_and_duck
+  ok    audio_town.festival_restores_area_score
+  ok    audio_town.surface_ground_0
+  ok    audio_town.surface_ground_1
+  ok    audio_town.surface_ground_2
+  ok    audio_town.surface_ground_3
+  ok    audio_town.surface_ground_4
+  ok    audio_town.surface_ground_5
+  ok    audio_town.surface_ground_6
+  ok    audio_town.surface_builder_wins
+  ok    audio_town.city_bridge_rope
+  ok    audio_town.city_platform_wood
+  ok    audio_town.town_bell_once_per_hour
+  ok    audio_town.footstep_interval_false ([{ "t_msec": 10833, "kind": "sfx", "id": "step_wood_1", "played": true }, { "t_msec": 10835, "kind": "sfx", "id": "step_wood_2", "played": true }, { "t_msec": 10836, "kind": "sfx", "id": "step_wood_1", "played": true }])
+  ok    audio_town.no_repeat_variants_false
+  ok    audio_town.footstep_interval_true ([{ "t_msec": 10844, "kind": "sfx", "id": "step_wood_3", "played": true }, { "t_msec": 10844, "kind": "sfx", "id": "step_wood_1", "played": true }, { "t_msec": 10844, "kind": "sfx", "id": "step_wood_3", "played": true }, { "t_msec": 10845, "kind": "sfx", "id": "step_wood_1", "played": true }])
+  ok    audio_town.no_repeat_variants_true
+  ok    audio_town.idle_silent
+  ok    audio_town.real_player_walk_emits_steps
+  ok    audio_town.rapid_fades_keep_one_final_stream
+  ok    audio_town.thirteen_plain_players
+  ok    audio_town.recipe_exports_sfx_synth.py (PASS sfx 44 placeholder recipes
+)
+  ok    audio_town.recipe_exports_ambience_synth.py (PASS amb 9 placeholder recipes
+)
+  ok    audio_town.recipe_exports_music_synth.py (PASS music 14 placeholder recipes
+)
+  ok    audio_town.menu_stops_world_audio
+  --    audio_town: 37 checks, 0 failed, 0 skipped, 6.5 s
+== section bosses [windowed]  (res://tests/sections/bosses.gd)
+  ok    bosses.spawn_snurresvamp
+  ok    bosses.hp_and_kind_snurresvamp
+  ok    bosses.sleep_until_520_snurresvamp
+  ok    bosses.bar_and_wake_snurresvamp
+  ok    bosses.dash_telegraph_snurresvamp
+  ok    bosses.dash_speed_snurresvamp
+  ok    bosses.dazed_window_snurresvamp
+  ok    bosses.first_wave_snurresvamp
+  ok    bosses.second_wave_snurresvamp
+  ok    bosses.phase_berries_once_snurresvamp
+  ok    bosses.reset_no_rewards_snurresvamp
+  ok    bosses.death_once_snurresvamp
+  ok    bosses.real_floor_chain_snurresvamp
+  ok    bosses.spawn_snurresvamp_gloed
+  ok    bosses.hp_and_kind_snurresvamp_gloed
+  ok    bosses.sleep_until_520_snurresvamp_gloed
+  ok    bosses.bar_and_wake_snurresvamp_gloed
+  ok    bosses.dash_telegraph_snurresvamp_gloed
+  ok    bosses.dash_speed_snurresvamp_gloed
+  ok    bosses.dazed_window_snurresvamp_gloed
+  ok    bosses.first_wave_snurresvamp_gloed
+  ok    bosses.second_wave_snurresvamp_gloed
+  ok    bosses.phase_berries_once_snurresvamp_gloed
+  ok    bosses.quake_radius_snurresvamp_gloed
+  ok    bosses.two_clouds_snurresvamp_gloed
+  ok    bosses.reset_no_rewards_snurresvamp_gloed
+  ok    bosses.death_once_snurresvamp_gloed
+  ok    bosses.real_floor_chain_snurresvamp_gloed
+  ok    bosses.spawn_snurresvamp_konge
+  ok    bosses.hp_and_kind_snurresvamp_konge
+  ok    bosses.sleep_until_520_snurresvamp_konge
+  ok    bosses.bar_and_wake_snurresvamp_konge
+  ok    bosses.dash_telegraph_snurresvamp_konge
+  ok    bosses.dash_speed_snurresvamp_konge
+  ok    bosses.dazed_window_snurresvamp_konge
+  ok    bosses.first_wave_snurresvamp_konge
+  ok    bosses.second_wave_snurresvamp_konge
+  ok    bosses.phase_berries_once_snurresvamp_konge
+  ok    bosses.quake_radius_snurresvamp_konge
+  ok    bosses.two_clouds_snurresvamp_konge
+  ok    bosses.nine_staggered_rain_marks
+  ok    bosses.saturated_sequence_waits_without_damage
+  ok    bosses.deferred_sequence_gets_full_warning
+  ok    bosses.nonpausing_dialogue_freezes_sequence_and_hazard
+  ok    bosses.deferred_sequence_cannot_hit_early
+  ok    bosses.sleep_resets_boss_and_cancels_pending_sequences
+  ok    bosses.reset_no_rewards_snurresvamp_konge
+  ok    bosses.death_once_snurresvamp_konge
+  ok    bosses.real_floor_chain_snurresvamp_konge
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/bosses_boss_telegraph_shot.png (1280x720)
+  --    bosses: 49 checks, 0 failed, 0 skipped, 9.1 s
+== section enemies [windowed]  (res://tests/sections/enemies.gd)
+  ok    enemies.create_marker_is_picked_entry
+  ok    enemies.spawns_bat
+  ok    enemies.hp_ladder_bat
+  ok    enemies.damage_ladder_bat
+  ok    enemies.dies_and_emits_once_bat
+  ok    enemies.spawns_ugleoje
+  ok    enemies.hp_ladder_ugleoje
+  ok    enemies.damage_ladder_ugleoje
+  ok    enemies.dies_and_emits_once_ugleoje
+  ok    enemies.spawns_tornebusk
+  ok    enemies.hp_ladder_tornebusk
+  ok    enemies.damage_ladder_tornebusk
+  ok    enemies.dies_and_emits_once_tornebusk
+  ok    enemies.spawns_lysesvamp
+  ok    enemies.hp_ladder_lysesvamp
+  ok    enemies.damage_ladder_lysesvamp
+  ok    enemies.dies_and_emits_once_lysesvamp
+  ok    enemies.spawns_mosfroe
+  ok    enemies.hp_ladder_mosfroe
+  ok    enemies.damage_ladder_mosfroe
+  ok    enemies.dies_and_emits_once_mosfroe
+  ok    enemies.spawns_sporesvamp
+  ok    enemies.hp_ladder_sporesvamp
+  ok    enemies.damage_ladder_sporesvamp
+  ok    enemies.dies_and_emits_once_sporesvamp
+  ok    enemies.spawns_krystalugle
+  ok    enemies.hp_ladder_krystalugle
+  ok    enemies.damage_ladder_krystalugle
+  ok    enemies.dies_and_emits_once_krystalugle
+  ok    enemies.telegraph_ugleoje
+  ok    enemies.telegraph_tornebusk
+  ok    enemies.stagger_cancels_windup
+  ok    enemies.armor_keeps_windup
+  ok    enemies.assist_scales_windup_and_damage
+  ok    enemies.ambush_starts_hidden
+  ok    enemies.ambush_rustle_then_leap
+  ok    enemies.ambush_leaps_once
+  ok    enemies.ambush_kind_fallback
+  ok    enemies.fairy_light_reveals_stuns
+  ok    enemies.rng_seeded_replay
+  ok    enemies.sleeping_enemy_cost_zero
+  ok    enemies.runestone_leash_blocks_aggro
+  ok    enemies.no_damage_during_dodge_iframes
+  ok    enemies.saturation_delays_attack_without_invisible_windup
+  ok    enemies.attack_retries_with_full_visible_warning
+  ok    enemies.warning_survives_hit_stop_and_modal_delay
+  ok    enemies.owner_cancellation_releases_warning
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/enemies_telegraph_ring_readable.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/enemies_ambush_eyes_visible_outside_lantern.png (1280x720)
+  --    enemies: 47 checks, 0 failed, 0 skipped, 3.3 s
+== section enemy_performance [windowed]  (res://tests/sections/enemy_performance.gd)
+  ok    enemy_performance.alive_limit_48
+  ok    enemy_performance.awake_limit_24 (24/48 awake)
+  ok    enemy_performance.sleeping_callbacks_zero
+  ok    enemy_performance.awake_callbacks_do_work
+  ok    enemy_performance.awake_logic_budget (0.02070833333333 ms p95 per enemy <=0.03)
+  ok    enemy_performance.native_uses_live_default_zoom
+  ok    enemy_performance.render_timing_is_available
+  ok    enemy_performance.animated_render_budget (0.0063079400198 ms CPU render per enemy <=0.018)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/enemy_performance_enemy_population_24.png (1280x720)
+  --    enemy_performance: 8 checks, 0 failed, 0 skipped, 12.9 s
+== section forest_mother [windowed]  (res://tests/sections/forest_mother.gd)
+  ok    forest_mother.no_inherited_evidence
+  ok    forest_mother.garden_trail_starts_investigation
+  ok    forest_mother.authored_quest_caption_is_localized
+  ok    forest_mother.future_chapters_cannot_be_offered_early
+  ok    forest_mother.all_essential_quests_have_no_paid_or_random_rewards
+  ok    forest_mother.out_of_order_evidence_is_kept
+  ok    forest_mother.finale_waits_for_real_checkpoints
+  ok    forest_mother.cancel_records_nothing_and_releases_player
+  ok    forest_mother.travel_cancels_evidence_dialogue
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/forest_mother_marked_lamp.png (1280x720)
+  ok    forest_mother.full_pack_cannot_block_evidence
+  ok    forest_mother.evidence_save_written
+  ok    forest_mother.evidence_save_loaded
+  ok    forest_mother.evidence_restored_with_quest_progress
+  ok    forest_mother.daytime_visit_does_not_consume_account
+  ok    forest_mother.night_retry_uses_real_topic
+  ok    forest_mother.first_checkpoint_completes_s03
+  ok    forest_mother.memory_clue_reachable_memory_map
+  ok    forest_mother.memory_clue_reachable_memory_basket
+  ok    forest_mother.memory_clue_reachable_memory_lamp
+  ok    forest_mother.memory_clue_reachable_memory_table
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/forest_mother_memory_clearing.png (1280x720)
+  ok    forest_mother.free_owl_topic_available_beside_services
+  ok    forest_mother.cancelled_witness_page_does_not_record
+  ok    forest_mother.free_written_owl_account_has_no_calendar_gate
+  ok    forest_mother.own_name_and_second_checkpoint_complete_s05
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/forest_mother_return_promise.png (1280x720)
+  ok    forest_mother.witness_account_completes_s06
+  ok    forest_mother.earlier_last_journey_catches_up
+  ok    forest_mother.story_sync_never_regrants_boss_hearts
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/forest_mother_mother_final_account.png (1280x720)
+  ok    forest_mother.bittersweet_truth_and_keepsake_commit_together
+  ok    forest_mother.finale_answers_fate_explicitly
+  ok    forest_mother.reread_never_duplicates_progress
+  ok    forest_mother.legacy_planted_and_story_finished
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/forest_mother_legacy_garden.png (1280x720)
+  ok    forest_mother.journal_has_all_confirmed_accounts
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/forest_mother_evidence_journal.png (1280x720)
+  ok    forest_mother.evidence_book_translates_with_locale
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/forest_mother_evidence_journal_en.png (1280x720)
+  ok    forest_mother.ending_save_written
+  ok    forest_mother.ending_save_reentered
+  ok    forest_mother.legacy_survives_world_rebuild
+  ok    forest_mother.ordinary_forest_play_remains_available
+  --    forest_mother: 37 checks, 0 failed, 0 skipped, 15.5 s
+== section held_equipment [windowed]  (res://tests/sections/held_equipment.gd)
+  ok    held_equipment.badge_cannot_take_focus_or_eat_world_input
+  ok    held_equipment.selected_tool_has_matching_picture_and_name
+  ok    held_equipment.whole_item_catalog_has_held_tool_and_weapon_art ([])
+  ok    held_equipment.every_body_frame_and_direction_has_fitted_grip (fox: 344 real body poses)
+  ok    held_equipment.altitude_spin_and_flash_follow_body_once
+  ok    held_equipment.all_items_use_dedicated_directional_paintings
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_hoe_wooden.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_hoe_iron.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_watering_can_copper.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_watering_can_gold.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_pickaxe_wooden.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_pickaxe_copper.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_pickaxe_iron.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_axe_wooden.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_scythe.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_fishing_rod.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_sword_rusty.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_iron_sword.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_brush.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_milking_pail.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_dagger_thorn.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_dagger_flint.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_dagger_moonshard.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_dagger_bee.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_sword_forest_steel.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_sword_candle.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_sword_moon.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_club_spruce.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_club_oak.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_club_mushroom.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_club_thornberry.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_club_trunk.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_spear_twig.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_spear_iron.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_spear_thistle.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_spear_owl.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_spear_root.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_staff_branch.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_staff_hazel.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_staff_light.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_staff_ember.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_catalog_wpn_staff_star.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_tool_fox.png (1280x720)
+  ok    held_equipment.real_hoe_action_starts
+  ok    held_equipment.action_readout_keeps_hoe_after_hotbar_swap
+  ok    held_equipment.next_selection_appears_after_action_finishes
+  ok    held_equipment.empty_slot_clears_attachment_and_names_empty_hands
+  ok    held_equipment.selected_sword_is_actual_weapon_in_farm_action
+  ok    held_equipment.swing_snapshot_survives_equipment_change
+  ok    held_equipment.dialogue_puts_held_item_away
+  ok    held_equipment.dialogue_release_restores_selected_tool
+  ok    held_equipment.enter_real_forest_hub
+  ok    held_equipment.forest_shows_equipped_weapon_even_with_hoe_selected
+  ok    held_equipment.forest_keeps_actual_readout_and_health_visible
+  ok    held_equipment.empty_weapon_slot_never_uses_phantom_sword
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_weapon_fox.png (1280x720)
+  ok    held_equipment.readout_follows_language_change
+  ok    held_equipment.equipment_save_written
+  ok    held_equipment.equipment_save_loaded
+  ok    held_equipment.save_rebuilds_correct_held_weapon_without_extra_state
+  ok    held_equipment.badge_cannot_take_focus_or_eat_world_input
+  ok    held_equipment.selected_tool_has_matching_picture_and_name
+  ok    held_equipment.whole_item_catalog_has_held_tool_and_weapon_art ([])
+  ok    held_equipment.every_body_frame_and_direction_has_fitted_grip (monkey: 344 real body poses)
+  ok    held_equipment.altitude_spin_and_flash_follow_body_once
+  ok    held_equipment.all_items_use_dedicated_directional_paintings
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_tool_monkey.png (1280x720)
+  ok    held_equipment.real_hoe_action_starts
+  ok    held_equipment.action_readout_keeps_hoe_after_hotbar_swap
+  ok    held_equipment.next_selection_appears_after_action_finishes
+  ok    held_equipment.empty_slot_clears_attachment_and_names_empty_hands
+  ok    held_equipment.selected_sword_is_actual_weapon_in_farm_action
+  ok    held_equipment.swing_snapshot_survives_equipment_change
+  ok    held_equipment.dialogue_puts_held_item_away
+  ok    held_equipment.dialogue_release_restores_selected_tool
+  ok    held_equipment.enter_real_forest_hub
+  ok    held_equipment.forest_shows_equipped_weapon_even_with_hoe_selected
+  ok    held_equipment.forest_keeps_actual_readout_and_health_visible
+  ok    held_equipment.empty_weapon_slot_never_uses_phantom_sword
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/held_equipment_weapon_monkey.png (1280x720)
+  ok    held_equipment.readout_follows_language_change
+  ok    held_equipment.equipment_save_written
+  ok    held_equipment.equipment_save_loaded
+  ok    held_equipment.save_rebuilds_correct_held_weapon_without_extra_state
+  --    held_equipment: 44 checks, 0 failed, 0 skipped, 11.6 s
+== section home_services [windowed]  (res://tests/sections/home_services.gd)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/home_services_kitchen_forecast_and_royal_visit.png (1280x720)
+  ok    home_services.native_home_menu
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/home_services_royal_evening_visit.png (1280x720)
+  ok    home_services.native_king_guest
+  ok    home_services.native_royal_scene_complete
+  --    home_services: 3 checks, 0 failed, 0 skipped, 2.5 s
+== section shop_ui [windowed]  (res://tests/sections/shop_ui.gd)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_shop.png (1280x720)
+  ok    shop_ui.shop_panel_fits ([P: (440.0, 60.0), S: (780.0, 600.0)])
+  ok    shop_ui.inventory_open
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_inventory.png (1280x720)
+  ok    shop_ui.inventory_panel_fits ([P: (60.0, 50.0), S: (540.0, 620.0)])
+  ok    shop_ui.all_weapon_and_gem_details_localize_da (44 cards, broken [])
+  ok    shop_ui.loadout_card_iron_sword_da
+  ok    shop_ui.loadout_card_bounds_iron_sword_da ([P: (590.0, 429.0), S: (618.0, 46.0)])
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_equipment_iron_sword_da.png (1280x720)
+  ok    shop_ui.loadout_card_wpn_staff_star_da
+  ok    shop_ui.loadout_card_bounds_wpn_staff_star_da ([P: (590.0, 406.0), S: (618.0, 69.0)])
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_equipment_wpn_staff_star_da.png (1280x720)
+  ok    shop_ui.loadout_card_gem_rune_heart_da
+  ok    shop_ui.loadout_card_bounds_gem_rune_heart_da ([P: (590.0, 337.0), S: (618.0, 138.0)])
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_equipment_gem_rune_heart_da.png (1280x720)
+  ok    shop_ui.smith_has_comparable_weapon_da
+  ok    shop_ui.shop_weapon_card_da
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_smith_weapon_card_da.png (1280x720)
+  ok    shop_ui.all_weapon_and_gem_details_localize_en (44 cards, broken [])
+  ok    shop_ui.loadout_card_iron_sword_en
+  ok    shop_ui.loadout_card_bounds_iron_sword_en ([P: (587.0, 429.0), S: (621.0, 46.0)])
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_equipment_iron_sword_en.png (1280x720)
+  ok    shop_ui.loadout_card_wpn_staff_star_en
+  ok    shop_ui.loadout_card_bounds_wpn_staff_star_en ([P: (587.0, 406.0), S: (621.0, 69.0)])
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_equipment_wpn_staff_star_en.png (1280x720)
+  ok    shop_ui.loadout_card_gem_rune_heart_en
+  ok    shop_ui.loadout_card_bounds_gem_rune_heart_en ([P: (587.0, 337.0), S: (621.0, 138.0)])
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_equipment_gem_rune_heart_en.png (1280x720)
+  ok    shop_ui.smith_has_comparable_weapon_en
+  ok    shop_ui.shop_weapon_card_en
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_smith_weapon_card_en.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_shop_fixture.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_shop_ring.png (1280x720)
+  ok    shop_ui.shop_native_focus (clean)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_shop_panel.png (1280x720)
+  ok    shop_ui.shop_native_panel (clean)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_shop_button.png (1280x720)
+  ok    shop_ui.shop_native_button (clean)
+  ok    shop_ui.shop_baseline_exists
+  ok    shop_ui.shop_reviewed_baseline ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "shop": {
+      "mean": 0.487,
+      "over40_pct": 0.355,
+      "ref": "/Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/ui_baseline/shop.png",
+      "shot": "/Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_shop_fixture.png",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  }
+}
+)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_inventory_fixture.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_inventory_ring.png (1280x720)
+  ok    shop_ui.inventory_native_focus (clean)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_inventory_panel.png (1280x720)
+  ok    shop_ui.inventory_native_panel (clean)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_inventory_button.png (1280x720)
+  ok    shop_ui.inventory_native_button (clean)
+  ok    shop_ui.inventory_baseline_exists
+  ok    shop_ui.inventory_reviewed_baseline ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "shop": {
+      "mean": 0.751,
+      "over40_pct": 0.921,
+      "ref": "/Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/ui_baseline/inventory.png",
+      "shot": "/Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/shop_ui_inventory_fixture.png",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  }
+}
+)
+  ok    shop_ui.guide_catalog_ui ({
+  "screens": {
+    "shop": {
+      "full_mean": 20.455,
+      "ui_mean": 17.155,
+      "limit": 18,
+      "masks": [
+        [
+          62,
+          342,
+          398,
+          669
+        ]
+      ],
+      "ok": true
+    },
+    "inventory": {
+      "full_mean": 17.328,
+      "ui_mean": 17.328,
+      "limit": 22,
+      "masks": [],
+      "ok": true
+    }
+  }
+}
+)
+  --    shop_ui: 32 checks, 0 failed, 0 skipped, 3.7 s
+== section town_loop [windowed]  (res://tests/sections/town_loop.gd)
+  ok    town_loop.loop_json_ids_exist ([])
+  ok    town_loop.l00_selected_race_and_skin (requested animal / actual type 0, skin animal_fox)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/town_loop_S01_farm_intro.png (1280x720)
+  ok    l15_S01_farm_intro_not_blank (2042 distinct colours, luma std 0.246)
+  ok    town_loop.l00_new_game_on_farm
+  ok    town_loop.l00_first_morning_order (["postman_pip", "fairy_king", "postman_pip"] / 3)
+  ok    town_loop.l00_no_raw_keys
+  ok    town_loop.l00_first_morning_runs_once
+  ok    town_loop.l00_hud_and_banner
+  ok    town_loop.l08_day_one_personal_delivery_no_duplicate
+  ok    town_loop.l11_mailbox_day2_completes_mail_objective ({ "current": 1, "target": 1, "done": true })
+  ok    town_loop.l08_one_letter_per_day
+  ok    town_loop.capability_probes_match_live_packages
+  ok    town_loop.capability_unknown_is_missing
+  ok    town_loop.unknown_wave_fails_closed
+  ok    town_loop.gate_includes_full_usable_towns
+  ok    town_loop.digest_volatile_paths_are_exactly_the_named_ones
+  ok    town_loop.digest_rounds_only_to_four_decimals
+  ok    town_loop.digest_has_teeth_gold
+  ok    town_loop.digest_has_teeth_flags
+  ok    town_loop.digest_stable_over_wall_clock
+  ok    town_loop.farm_bridge_warp_exists
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/town_loop_S02_farm_bridge_end.png (1280x720)
+  ok    l15_S02_farm_bridge_end_not_blank (1820 distinct colours, luma std 0.249)
+  ok    town_loop.walker_reaches_fixture_warp ({ "ok": true, "area_changed": false, "ticks": 52, "seconds": 0.86666666666667, "dist_left": 6.27819347381592, "stuck": false, "nav": true, "waypoints": 4, "waypoint_index": 3, "position": (-699.6091, 3151.336), "next": (-704.0, 3154.0), "collider": "", "interactions": 0 })
+  ok    town_loop.walker_uses_navigation_and_tick_budget ({ "ok": true, "area_changed": false, "ticks": 52, "seconds": 0.86666666666667, "dist_left": 6.27819347381592, "stuck": false, "nav": true, "waypoints": 4, "waypoint_index": 3, "position": (-699.6091, 3151.336), "next": (-704.0, 3154.0), "collider": "", "interactions": 0 })
+  ok    town_loop.l01_bridge_arrival_without_pingpong
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/town_loop_S03_city_arrival.png (1280x720)
+  ok    l15_S03_city_arrival_not_blank (1787 distinct colours, luma std 0.234)
+  ok    town_loop.l01_unlock_toast_and_objective ({ "current": 1, "target": 1, "done": true })
+  ok    town_loop.l02_population_equals_schedule (["gardener_hoppe", "bertil", "guard_oak", "lamplighter_kiki", "cub_bamse", "fiddler_strimmel"] expected=["gardener_hoppe", "bertil", "guard_oak", "lamplighter_kiki", "cub_bamse", "fiddler_strimmel"])
+  ok    town_loop.l02_visual_cap_16
+  ok    town_loop.l02_area_populated_event
+  ok    town_loop.l02_live_citizen_at_routine_post
+  ok    town_loop.l03_walk_reaches_citizen ({ "ok": true, "area_changed": false, "ticks": 1271, "seconds": 21.1833333333333, "dist_left": 38.0777282714844, "stuck": false, "nav": true, "waypoints": 117, "waypoint_index": 116, "position": (1731.664, 657.3045), "next": (1693.9, 660.2), "collider": "@CharacterBody2D@20589", "interactions": 1 })
+  ok    town_loop.l03_walk_and_talk
+  ok    town_loop.l03_first_meeting_copy
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/town_loop_S05_dialogue_hoppe_hearts.png (1280x720)
+  ok    l15_S05_dialogue_hoppe_hearts_not_blank (1977 distinct colours, luma std 0.265)
+  ok    town_loop.l03_weekly_heart_once
+  ok    town_loop.l03_repeat_chat_no_extra_heart
+  ok    town_loop.l03_esc_first_line_no_heart
+  ok    town_loop.l03_people_book_shows_heart
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/town_loop_S13_people_book.png (1280x720)
+  ok    l15_S13_people_book_not_blank (329 distinct colours, luma std 0.301)
+  ok    town_loop.l15_calendar_opens_from_journal
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/town_loop_S13b_calendar.png (1280x720)
+  ok    l15_S13b_calendar_not_blank (214 distinct colours, luma std 0.302)
+  ok    town_loop.l07_talk_menu_opens_picker
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/town_loop_S09_gift_picker.png (1280x720)
+  ok    l15_S09_gift_picker_not_blank (488 distinct colours, luma std 0.343)
+  ok    town_loop.l07_carrot_available
+  ok    town_loop.l07_item_removed_once
+  ok    town_loop.l07_one_gift_per_day
+  ok    town_loop.l05_closed_before_open
+  ok    town_loop.l05_closed_door_does_not_travel
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/town_loop_S06_shop_door_closed.png (1280x720)
+  ok    l15_S06_shop_door_closed_not_blank (2636 distinct colours, luma std 0.219)
+  ok    town_loop.l05_opens_from_registry
+  ok    town_loop.l04_door_enters ({ "ok": true, "area_changed": false, "ticks": 72, "seconds": 1.2, "dist_left": 2.85893845558167, "stuck": false, "nav": true, "waypoints": 4, "waypoint_index": 3, "position": (130.0123, 989.2058), "next": (128.0, 988.0), "collider": "", "interactions": 0 })
+  ok    town_loop.l04_iso_zone_zoom_and_budget ({ "sprites": 37, "night": 3, "bodies": 11, "lights": 2, "furniture": 13, "walls": 14, "hatch": 5, "stand_ins": 0, "placeholders": 0, "counters": 3, "handlers": 0, "pieces": 16, "accent_masks": 0, "service_lights": 0, "base_sprites": 26, "build_us": 3882, "zoom_fit": 0.75369458128079, "nodes": 104 })
+  ok    town_loop.l04_weather_curtain_hidden_indoors
+  ok    town_loop.l04_zone_and_running_clock
+  ok    town_loop.l04_room_zoom_fits ((735.6059, 621.0444))
+  ok    town_loop.l04_keeper_behind_counter
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/town_loop_S07_shop_interior_noon.png (1280x720)
+  ok    l15_S07_shop_interior_noon_not_blank (1714 distinct colours, luma std 0.290)
+  ok    town_loop.l03b_keeper_talk_host_opens_dialogue
+  ok    town_loop.l03b_keeper_weekly_heart_at_counter
+  ok    town_loop.l03b_keeper_repeat_no_extra_heart
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/town_loop_shop_backdrop.png (1280x720)
+  ok    l15_shop_backdrop_not_blank (1601 distinct colours, luma std 0.297)
+  ok    town_loop.l06_counter_opens_panel
+  ok    town_loop.l06_keeper_greeting_and_bust
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/town_loop_S08_shop_panel.png (1280x720)
+  ok    l15_S08_shop_panel_not_blank (1157 distinct colours, luma std 0.309)
+  ok    town_loop.l10_seeds_from_shop
+  ok    town_loop.l06_buy_exact (listed=60 charged=60)
+  ok    town_loop.l06_refusals_have_reasons
+  ok    town_loop.l06_escape_restores_world
+  ok    town_loop.l05_warning_thirty_minutes
+  ok    town_loop.l05_panel_closes_before_eviction
+  ok    town_loop.l05_closed_weekday_reason
+  ok    town_loop.l04_counter_is_barrier
+  ok    town_loop.l05_exit_always_open
+  ok    town_loop.l06b_keeper_weekly_heart_at_noon
+  ok    town_loop.l06c_home_upgrade_desk_at_noon ({ "id": "upgrade", "text_key": "DLG_CHOICE_HOME_UPGRADE", "action": "home_upgrade", "tier": 2 } / [{ "id": "open_home_builder", "payload": { "tier": 2 } }, { "id": "open_home_builder", "payload": { "tier": 1 } }])
+  ok    town_loop.l08_post_office_interior
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/town_loop_S10_post_office.png (1280x720)
+  ok    l15_S10_post_office_not_blank (1205 distinct colours, luma std 0.309)
+  ok    town_loop.l08_letter_of_the_day (rare_mushroom_hunt)
+  ok    town_loop.l08_office_repeat_does_not_duplicate
+  ok    town_loop.l08_parcels_honest_stub
+  ok    town_loop.l09_walk_back_to_farm ({ "ok": true, "area_changed": true, "ticks": 282, "seconds": 4.7, "dist_left": 5582.15869140625, "stuck": false, "nav": true, "waypoints": 8, "waypoint_index": 7, "position": (-512.0, 3040.0), "next": (5070.0, 3015.0), "collider": "", "interactions": 0 } area=farm travel=false)
+  ok    town_loop.l09_farm_state_intact
+  ok    town_loop.l02_citizens_freed_on_exit
+  ok    town_loop.l10_walk_to_plot_27_29
+  ok    town_loop.l10_walk_to_plot_26_29
+  ok    town_loop.l10_walk_to_plot_25_29
+  ok    town_loop.l10_till_plant_water (plant=[[&"plot_27_29", &"carrot"], [&"plot_26_29", &"carrot"], [&"plot_25_29", &"carrot"]] water=[&"plot_27_29", &"plot_26_29", &"plot_25_29"])
+  ok    town_loop.l10_energy_costs
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/town_loop_S11_farm_planted_morning.png (1280x720)
+  ok    l15_S11_farm_planted_morning_not_blank (1986 distinct colours, luma std 0.218)
+  ok    town_loop.l10_forste_dage_objectives ({ "current": 3, "target": 3, "done": true })
+  ok    town_loop.l10_hint_once_per_save
+  ok    town_loop.l11_bed_closed_before_18
+  ok    town_loop.l11_bed_opens_at_18
+  ok    town_loop.l11_sleep_rolls_day
+  ok    town_loop.l11_crops_grow
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/town_loop_S12_city_next_morning.png (1280x720)
+  ok    l15_S12_city_next_morning_not_blank (1788 distinct colours, luma std 0.245)
+  ok    town_loop.l11_no_pass_out_at_midnight
+  ok    town_loop.l11_curfew_at_the_configured_time
+  ok    town_loop.l11_pass_out_wakes_on_farm
+  ok    town_loop.l11_harvest_purchased_seed_crops
+  ok    town_loop.l11_shipping_uses_live_bin ({ "ok": true, "area_changed": false, "ticks": 273, "seconds": 4.55, "dist_left": 2.00783228874207, "stuck": false, "nav": true, "waypoints": 14, "waypoint_index": 13, "position": (769.6013, 1960.719), "next": (768.0, 1960.0), "collider": "", "interactions": 0 } selected=true amount=5 left=0)
+  ok    town_loop.l11_bin_pays_once_at_dawn
+  ok    town_loop.l11_shop_restocks_at_dawn
+  ok    town_loop.l12_citizens_moved_by_routine_postman_pip (["farm.pip_mailbox", "int_postkontoret.counter"])
+  ok    town_loop.l12_citizens_moved_by_routine_gardener_hoppe (["traetoppen.a_bench", "farm.hoppe_fence"])
+  ok    town_loop.l12_route_takes_time
+  ok    town_loop.l12_weather_override ({ "npc": "gardener_hoppe", "state": "stay", "plan": "work", "place": "int_hoppe_hut.table", "act": "sit", "area": "int_hoppe_hut" })
+  ok    town_loop.l12_weekend_variant ({ "npc": "carpenter_brumme", "state": "stay", "plan": "stall", "place": "traetoppen.t_stall", "act": "work", "area": "traetoppen" })
+  ok    town_loop.l12_pip_visits_farm_from_day_2 ({ "npc": "postman_pip", "state": "stay", "plan": "town_only", "place": "int_postkontoret.bed", "act": "sleep", "area": "int_postkontoret" } / { "npc": "postman_pip", "state": "stay", "plan": "work", "place": "farm.pip_mailbox", "act": "stand", "area": "farm" })
+  ok    town_loop.l12_hoppe_wednesday_visit ({ "npc": "gardener_hoppe", "state": "stay", "plan": "work", "place": "traetoppen.a_beds1", "act": "tend", "area": "traetoppen" } / { "npc": "gardener_hoppe", "state": "stay", "plan": "farm_visit", "place": "farm.hoppe_fence", "act": "stand", "area": "farm" })
+  ok    town_loop.l12_night_presence ([])
+  ok    town_loop.l13_save_cost (p95=17.518ms / 20454 bytes full cast 34)
+  ok    town_loop.l13_digest_roundtrip
+  ok    town_loop.l13_citizens_same_places
+  ok    town_loop.l13_social_section_order (["game", "time", "economy", "quests", "husbandry", "shops", "home", "furniture", "wardrobe", "loot", "dungeon", "social"] social=60)
+  ok    town_loop.l17_lint_clean_core (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_no_raw_keys_both_locales (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_boxes_fit (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_frozen_voice_text_hashes (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_citizen_slots_complete (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_social_voice_rows_reviewed (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_voice_assets_complete (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_voice_text_and_audio_hashes (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_observed_screens_have_no_raw_keys (3643 live labels / [])
+  ok    town_loop.l17_voice_index_and_recordings_complete (PASS voiced_index_in_sync
+)
+  ok    town_loop.x01_birthday_greeting_and_real_gift ({ "ok": true, "item": "carrot", "class": "love", "points": 160, "birthday": "day", "repeated": false, "hearts": 4, "hearts_before": 3, "stage_before": "nabo", "stage_after": &"ven" })
+  ok    town_loop.extended_scene_returns_control
+  ok    town_loop.x03_heart_event_real_scene_once
+  ok    town_loop.x08_rain_fallback (["SOC_ANY_WX_REGN_1", "DLG_MERCHANT_GREET"])
+  ok    town_loop.x05_mail_screen_live_locations
+  ok    town_loop.x05_mail_escape_restores_world
+  ok    town_loop.x04_relationship_consent_and_stage
+  ok    town_loop.x06_farm_visit_enters_home ([&"home", &"", false])
+  ok    town_loop.x06_farm_visit_named_actor_and_saved_gift
+  ok    town_loop.x07_seasonal_decor_live_painted_family
+  ok    town_loop.extended_scene_returns_control
+  ok    town_loop.x02_festival_scene_decor_hours_bed_music ({ "hosts": 3, "opening": 4, "year": 4, "sleep": false, "shop": false, "music": true })
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/town_loop_S14_festival_day_city.png (1280x720)
+  ok    l15_S14_festival_day_city_not_blank (2083 distinct colours, luma std 0.257)
+  ok    town_loop.l15_festival_capture
+  ok    town_loop.extended_scene_returns_control
+  ok    town_loop.x09_commitment_saved_safe_wedding
+  ok    town_loop.l16_shop_bell_is_logged
+  ok    town_loop.l16_missing_cue_logged_silent
+  ok    town_loop.l16_wood_surface_follows_room
+  ok    town_loop.l16_real_movement_footsteps
+  ok    town_loop.l16_stone_surface_follows_ground
+  ok    town_loop.l16_rope_surface_follows_bridge
+  ok    town_loop.l16_night_ambience_follows_clock
+  ok    town_loop.extended_legs_listed_with_reasons
+  info  Installed extended town scenarios: 10.521s
+  ok    town_loop.l18_data_only_citizen
+  ok    town_loop.l18_data_only_building
+  ok    town_loop.l18_data_only_routine_edit
+  ok    town_loop.l18_data_only_shop_hours
+  ok    town_loop.l18_data_only_festival
+  ok    town_loop.l18_data_only_event
+  ok    town_loop.l18_data_only_quest
+  ok    town_loop.l18_no_gd_changed
+  ok    town_loop.selftest_mutants_caught (Eight real producer mutants plus a clean baseline, including audio playback without logging)
+  ok    town_loop.l14_wall_time (116.332s <= 120s)
+  ok    town_loop.l14_area_switch_times ([{ "area": "farm", "ms": 79 }, { "area": "traetoppen", "ms": 18 }, { "area": "hyggebyen", "ms": 31 }, { "area": "int_froebutikken", "ms": 5 }, { "area": "int_bageriet", "ms": 4 }, { "area": "int_toemmerhandlen", "ms": 3 }, { "area": "int_postkontoret", "ms": 19 }, { "area": "int_postkontoret", "ms": 5 }, { "area": "traetoppen", "ms": 12 }, { "area": "traetoppen", "ms": 15 }, { "area": "int_froebutikken", "ms": 4 }, { "area": "home", "ms": 10 }, { "area": "farm", "ms": 97 }, { "area": "traetoppen", "ms": 14 }, { "area": "int_froebutikken", "ms": 86 }, { "area": "hyggebyen", "ms": 30 }, { "area": "traetoppen", "ms": 15 }])
+  ok    town_loop.l14_no_orphans (growth=0)
+  ok    town_loop.l14_zero_engine_messages ([])
+  ok    town_loop.gate_leg_not_skipped ([])
+  ok    town_loop.report_lists_every_required_leg (Every required wave/leg listed; missing and repeated failing checks retained.
+)
+  ok    town_loop.l15_crowd_player_on_safe_deck
+  ok    town_loop.l15_city_citizen_count (14 visible / 16 distinct looks; controlled fixture, normal schedules checked by L02/L12)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/town_loop_S04_city_crowd_readability.png (1280x720)
+  ok    l15_S04_city_crowd_readability_not_blank (2469 distinct colours, luma std 0.217)
+  FAIL  town_loop.l15_city_peak_under_320mb (329.30MB / 16 warmed looks)
+  ok    town_loop.l15_city_frame ({ "frames": 148, "fps": 292.260815131211, "ms": 3.42160135135135, "worst_ms": 8.359, "gpu_ms": 0.0, "cpu_render_ms": 0.64200001955032 })
+  ok    town_loop.l15_city_draw_calls (original city/HUD: 236 <=250; with equipment: 247)
+  ok    town_loop.l15_equipment_draw_increment (11 additional draws <=16)
+  ok    town_loop.l15_shots_not_blank ([])
+  ok    town_loop.l15_real_festival_capture
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/town_loop_guide_shop.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/town_loop_guide_dialogue_guide.png (1280x720)
+  ok    town_loop.l15_guide_and_live_blur ({"shop_guide": {"full_mean": 20.455, "mean": 17.155, "masks": [[62, 342, 398, 669]], "limit": 18, "ok": true}, "dialogue_guide": {"full_mean": 17.227, "mean": 13.866, "masks": [[34, 34, 179, 179]], "limit": 15, "ok": true}, "city_hud_date": {"full_mean": 11.255, "mean": 11.255, "masks": [], "limit": 12, "ok": true}, "city_hud_chip": {"full_mean": 13.827, "mean": 8.401, "masks": [[44, 12, 87, 36], [153, 21, 258, 28]], "limit": 12, "ok": true}, "city_hud_hotbar": {"full_mean": 21.106, "mean": 11.37, "masks": [[22, 22, 61, 61], [88, 22, 127, 61], [154, 22, 193, 61], [220, 22, 259, 61], [286, 22, 325, 61], [352, 22, 391, 61], [418, 22, 457, 61], [484, 22, 523, 61], [52, 49, 65, 67], [118, 49, 131, 67], [184, 49, 197, 67], [250, 49, 263, 67], [316, 49, 329, 67], [382, 49, 395, 67], [448, 49, 461, 67], [514, 49, 527, 67]], "limit": 12, "ok": true}, "live_interior_blur": {"box": [0, 0, 440, 720], "foreground_exclusions": [[52, 230, 408, 332], [52, 333, 408, 720], [431, 0, 440, 720]], "low_frequency_difference": 11.042, "low_limit": 12, "high_frequency_ratio": 0.103, "high_limit": 0.6, "ok": true}}
+)
+  FAIL  town_loop.l15_window_budget (original tour 110.064s <=110s; added installed social scenarios 10.521s; total 120.586s)
+  ok    town_loop.l15_free_on_exit_vram (235.99MB city -> 131.92MB farm (104.07MB freed))
+  --    town_loop: 177 checks, 2 failed, 0 skipped, 120.6 s
+  note  section town_loop took 120.6 s (> 30 s): consider splitting it
+== section ui_mechanics [windowed]  (res://tests/sections/ui_mechanics.gd)
+  ok    ui_mechanics.string_selection_does_not_exempt_gold
+  ok    ui_mechanics.calendar_card_stays_in_content ([P: (108.0, 190.0), S: (1064.0, 440.0)] contains [P: (108.0, 190.0), S: (240.0, 440.0)])
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/ui_mechanics_calendar_bounded_card.png (1280x720)
+  ok    ui_mechanics.reopened_calendar_card_stays_in_content ([P: (108.0, 190.0), S: (240.0, 440.0)])
+  ok    ui_mechanics.calendar_card_paint_stays_in_book ((0.1373, 0.1176, 0.1922, 1.0))
+  --    ui_mechanics: 4 checks, 0 failed, 0 skipped, 1.3 s
+== section voice [windowed]  (res://tests/sections/voice.gd)
+  ok    voice.manifest_in_sync (PASS manifest_in_sync 296 lines
+)
+  ok    voice.index_matches_csv (PASS voiced_index_in_sync
+)
+  ok    voice.stream_voice/appraiser_fru_ugle/farewell
+  ok    voice.stream_voice/appraiser_fru_ugle/finds
+  ok    voice.stream_voice/appraiser_fru_ugle/first_1_v
+  ok    voice.stream_voice/appraiser_fru_ugle/glass
+  ok    voice.stream_voice/appraiser_fru_ugle/greet
+  ok    voice.stream_voice/appraiser_fru_ugle/lake
+  ok    voice.stream_voice/appraiser_fru_ugle/patience
+  ok    voice.stream_voice/appraiser_fru_ugle/runes
+  ok    voice.stream_voice/appraiser_fru_ugle/window
+  ok    voice.stream_voice/baker_maja/bday_baker_maja_greet_1_v
+  ok    voice.stream_voice/baker_maja/cookie_talk
+  ok    voice.stream_voice/baker_maja/first_1_v
+  ok    voice.stream_voice/baker_maja/gift_baker_maja_dislike_1_v
+  ok    voice.stream_voice/baker_maja/gift_baker_maja_hate_1_v
+  ok    voice.stream_voice/baker_maja/gift_baker_maja_like_1_v
+  ok    voice.stream_voice/baker_maja/gift_baker_maja_love_1_v
+  ok    voice.stream_voice/baker_maja/gift_baker_maja_neutral_1_v
+  ok    voice.stream_voice/baker_maja/greet
+  ok    voice.stream_voice/baker_maja/greet_h0_1_v
+  ok    voice.stream_voice/baker_maja/math_done
+  ok    voice.stream_voice/baker_maja/math_q1
+  ok    voice.stream_voice/baker_maja/math_q2
+  ok    voice.stream_voice/baker_maja/math_q3
+  ok    voice.stream_voice/baker_maja/roof_trouble
+  ok    voice.stream_voice/baker_maja/thanks
+  ok    voice.stream_voice/bathkeeper_sofus/bday_bathkeeper_sofus_greet_1_v
+  ok    voice.stream_voice/bathkeeper_sofus/evening
+  ok    voice.stream_voice/bathkeeper_sofus/first_1_v
+  ok    voice.stream_voice/bathkeeper_sofus/gift_bathkeeper_sofus_dislike_1_v
+  ok    voice.stream_voice/bathkeeper_sofus/gift_bathkeeper_sofus_hate_1_v
+  ok    voice.stream_voice/bathkeeper_sofus/gift_bathkeeper_sofus_like_1_v
+  ok    voice.stream_voice/bathkeeper_sofus/gift_bathkeeper_sofus_love_1_v
+  ok    voice.stream_voice/bathkeeper_sofus/gift_bathkeeper_sofus_neutral_1_v
+  ok    voice.stream_voice/bathkeeper_sofus/greet
+  ok    voice.stream_voice/bathkeeper_sofus/greet_h0_1_v
+  ok    voice.stream_voice/bathkeeper_sofus/offer
+  ok    voice.stream_voice/bathkeeper_sofus/once
+  ok    voice.stream_voice/bathkeeper_sofus/orange
+  ok    voice.stream_voice/bathkeeper_sofus/steam
+  ok    voice.stream_voice/bathkeeper_sofus/tired
+  ok    voice.stream_voice/bathkeeper_sofus/towel
+  ok    voice.stream_voice/beekeeper_birk/bday_beekeeper_birk_greet_1_v
+  ok    voice.stream_voice/beekeeper_birk/bees
+  ok    voice.stream_voice/beekeeper_birk/family
+  ok    voice.stream_voice/beekeeper_birk/farewell
+  ok    voice.stream_voice/beekeeper_birk/first_1_v
+  ok    voice.stream_voice/beekeeper_birk/flowers
+  ok    voice.stream_voice/beekeeper_birk/gift_beekeeper_birk_dislike_1_v
+  ok    voice.stream_voice/beekeeper_birk/gift_beekeeper_birk_hate_1_v
+  ok    voice.stream_voice/beekeeper_birk/gift_beekeeper_birk_like_1_v
+  ok    voice.stream_voice/beekeeper_birk/gift_beekeeper_birk_love_1_v
+  ok    voice.stream_voice/beekeeper_birk/gift_beekeeper_birk_neutral_1_v
+  ok    voice.stream_voice/beekeeper_birk/greet
+  ok    voice.stream_voice/beekeeper_birk/greet_h0_1_v
+  ok    voice.stream_voice/beekeeper_birk/honey
+  ok    voice.stream_voice/beekeeper_birk/quiet
+  ok    voice.stream_voice/beekeeper_birk/wings
+  ok    voice.stream_voice/bertil/first_1_v
+  ok    voice.stream_voice/bodil/first_1_v
+  ok    voice.stream_voice/carpenter_brumme/bday_carpenter_brumme_greet_1_v
+  ok    voice.stream_voice/carpenter_brumme/first_1_v
+  ok    voice.stream_voice/carpenter_brumme/gift_carpenter_brumme_dislike_1_v
+  ok    voice.stream_voice/carpenter_brumme/gift_carpenter_brumme_hate_1_v
+  ok    voice.stream_voice/carpenter_brumme/gift_carpenter_brumme_like_1_v
+  ok    voice.stream_voice/carpenter_brumme/gift_carpenter_brumme_love_1_v
+  ok    voice.stream_voice/carpenter_brumme/gift_carpenter_brumme_neutral_1_v
+  ok    voice.stream_voice/carpenter_brumme/greet
+  ok    voice.stream_voice/carpenter_brumme/greet_h0_1_v
+  ok    voice.stream_voice/carpenter_brumme/help
+  ok    voice.stream_voice/carpenter_brumme/market
+  ok    voice.stream_voice/carpenter_brumme/rest
+  ok    voice.stream_voice/carpenter_brumme/roof
+  ok    voice.stream_voice/carpenter_brumme/slow
+  ok    voice.stream_voice/carpenter_brumme/timber
+  ok    voice.stream_voice/carpenter_brumme/tools
+  ok    voice.stream_voice/cat_morfar_mis/first_1_v
+  ok    voice.stream_voice/cat_morfar_mis/forest
+  ok    voice.stream_voice/cat_morfar_mis/home
+  ok    voice.stream_voice/clerk_fjerpen/first_1_v
+  ok    voice.stream_voice/cub_bamse/first_1_v
+  ok    voice.stream_voice/fairy_builder/first_1_v
+  ok    voice.stream_voice/fairy_builder/t01_idle
+  ok    voice.stream_voice/fairy_builder/t01_offer
+  ok    voice.stream_voice/fairy_builder/t02_building
+  ok    voice.stream_voice/fairy_builder/t02_done
+  ok    voice.stream_voice/fairy_builder/t02_idle
+  ok    voice.stream_voice/fairy_builder/t02_offer
+  ok    voice.stream_voice/fairy_builder/t03_building
+  ok    voice.stream_voice/fairy_builder/t03_done
+  ok    voice.stream_voice/fairy_builder/t03_idle
+  ok    voice.stream_voice/fairy_builder/t03_offer
+  ok    voice.stream_voice/fairy_builder/t04_building
+  ok    voice.stream_voice/fairy_builder/t04_done
+  ok    voice.stream_voice/fairy_builder/t04_idle
+  ok    voice.stream_voice/fairy_builder/t04_offer
+  ok    voice.stream_voice/fairy_builder/t05_building
+  ok    voice.stream_voice/fairy_builder/t05_done
+  ok    voice.stream_voice/fairy_builder/t05_idle
+  ok    voice.stream_voice/fairy_builder/t05_offer
+  ok    voice.stream_voice/fairy_builder/t06_building
+  ok    voice.stream_voice/fairy_builder/t06_done
+  ok    voice.stream_voice/fairy_builder/t06_idle
+  ok    voice.stream_voice/fairy_builder/t06_offer
+  ok    voice.stream_voice/fairy_builder/t07_building
+  ok    voice.stream_voice/fairy_builder/t07_done
+  ok    voice.stream_voice/fairy_builder/t07_idle
+  ok    voice.stream_voice/fairy_builder/t07_offer
+  ok    voice.stream_voice/fairy_builder/t08_building
+  ok    voice.stream_voice/fairy_builder/t08_done
+  ok    voice.stream_voice/fairy_builder/t08_idle
+  ok    voice.stream_voice/fairy_builder/t08_offer
+  ok    voice.stream_voice/fairy_builder/t09_building
+  ok    voice.stream_voice/fairy_builder/t09_done
+  ok    voice.stream_voice/fairy_builder/t09_idle
+  ok    voice.stream_voice/fairy_builder/t09_offer
+  ok    voice.stream_voice/fairy_builder/t10_building
+  ok    voice.stream_voice/fairy_builder/t10_done
+  ok    voice.stream_voice/fairy_builder/t10_idle
+  ok    voice.stream_voice/fairy_furnisher/first_1_v
+  ok    voice.stream_voice/fairy_furnisher/greet
+  ok    voice.stream_voice/fairy_king/first_1_v
+  ok    voice.stream_voice/fairy_king/greet
+  ok    voice.stream_voice/fairy_king/letter
+  ok    voice.stream_voice/fairy_king/moon_offer
+  ok    voice.stream_voice/fairy_king/moon_remind
+  ok    voice.stream_voice/fairy_king/slot_offer
+  ok    voice.stream_voice/fairy_king/slot_remind
+  ok    voice.stream_voice/fairy_lily/first_1_v
+  ok    voice.stream_voice/fairy_lily/greet
+  ok    voice.stream_voice/fairy_tailor/first_1_v
+  ok    voice.stream_voice/fairy_tailor/greet
+  ok    voice.stream_voice/fairy_wizard/bogtrae_offer
+  ok    voice.stream_voice/fairy_wizard/bogtrae_remind
+  ok    voice.stream_voice/fairy_wizard/first_1_v
+  ok    voice.stream_voice/fairy_wizard/greet
+  ok    voice.stream_voice/fairy_wizard/math_done
+  ok    voice.stream_voice/fairy_wizard/math_intro
+  ok    voice.stream_voice/fairy_wizard/math_q1
+  ok    voice.stream_voice/fairy_wizard/math_q2
+  ok    voice.stream_voice/fairy_wizard/math_q3
+  ok    voice.stream_voice/farmer_rosa/animal_talk
+  ok    voice.stream_voice/farmer_rosa/bday_farmer_rosa_greet_1_v
+  ok    voice.stream_voice/farmer_rosa/first_1_v
+  ok    voice.stream_voice/farmer_rosa/gift_farmer_rosa_dislike_1_v
+  ok    voice.stream_voice/farmer_rosa/gift_farmer_rosa_hate_1_v
+  ok    voice.stream_voice/farmer_rosa/gift_farmer_rosa_like_1_v
+  ok    voice.stream_voice/farmer_rosa/gift_farmer_rosa_love_1_v
+  ok    voice.stream_voice/farmer_rosa/gift_farmer_rosa_neutral_1_v
+  ok    voice.stream_voice/farmer_rosa/greet
+  ok    voice.stream_voice/farmer_rosa/greet_h0_1_v
+  ok    voice.stream_voice/fiddler_strimmel/first_1_v
+  ok    voice.stream_voice/gardener_hoppe/bday_gardener_hoppe_greet_1_v
+  ok    voice.stream_voice/gardener_hoppe/first_1_v
+  ok    voice.stream_voice/gardener_hoppe/gift_gardener_hoppe_dislike_1_v
+  ok    voice.stream_voice/gardener_hoppe/gift_gardener_hoppe_hate_1_v
+  ok    voice.stream_voice/gardener_hoppe/gift_gardener_hoppe_like_1_v
+  ok    voice.stream_voice/gardener_hoppe/gift_gardener_hoppe_love_1_v
+  ok    voice.stream_voice/gardener_hoppe/gift_gardener_hoppe_neutral_1_v
+  ok    voice.stream_voice/gardener_hoppe/greet
+  ok    voice.stream_voice/gardener_hoppe/greet_h0_1_v
+  ok    voice.stream_voice/gardener_hoppe/klart
+  ok    voice.stream_voice/gardener_hoppe/once
+  ok    voice.stream_voice/gardener_hoppe/regn
+  ok    voice.stream_voice/gardener_hoppe/sne
+  ok    voice.stream_voice/gardener_hoppe/sprouts
+  ok    voice.stream_voice/gardener_hoppe/swap_done
+  ok    voice.stream_voice/gardener_hoppe/swap_offer
+  ok    voice.stream_voice/gardener_hoppe/taage
+  ok    voice.stream_voice/gardener_hoppe/torden
+  ok    voice.stream_voice/ghostfam_blund/bed
+  ok    voice.stream_voice/ghostfam_blund/dawn
+  ok    voice.stream_voice/ghostfam_blund/family
+  ok    voice.stream_voice/ghostfam_blund/first_1_v
+  ok    voice.stream_voice/ghostfam_blund/greet
+  ok    voice.stream_voice/ghostfam_blund/kin1
+  ok    voice.stream_voice/ghostfam_blund/kin2
+  ok    voice.stream_voice/ghostfam_blund/kin3
+  ok    voice.stream_voice/ghostfam_blund/kin_greet
+  ok    voice.stream_voice/ghostfam_blund/kin_look_bu
+  ok    voice.stream_voice/ghostfam_blund/kin_look_hviske
+  ok    voice.stream_voice/ghostfam_blund/sleep
+  ok    voice.stream_voice/ghostfam_dyne/chat_2_1_v
+  ok    voice.stream_voice/ghostfam_dyne/chat_8_1_v
+  ok    voice.stream_voice/ghostfam_dyne/dawn
+  ok    voice.stream_voice/ghostfam_dyne/first_1_v
+  ok    voice.stream_voice/ghostfam_dyne/greet
+  ok    voice.stream_voice/ghostfam_dyne/greet_h0_1_v
+  ok    voice.stream_voice/ghostfam_dyne/greet_h1_1_v
+  ok    voice.stream_voice/ghostfam_dyne/greet_h2_1_v
+  ok    voice.stream_voice/ghostfam_dyne/greet_h3_1_v
+  ok    voice.stream_voice/ghostfam_dyne/kin1
+  ok    voice.stream_voice/ghostfam_dyne/kin2
+  ok    voice.stream_voice/ghostfam_dyne/kin3
+  ok    voice.stream_voice/ghostfam_dyne/kin4
+  ok    voice.stream_voice/ghostfam_dyne/kin5
+  ok    voice.stream_voice/ghostfam_dyne/kin_dawn
+  ok    voice.stream_voice/ghostfam_dyne/kin_greet
+  ok    voice.stream_voice/ghostfam_dyne/kin_look_bu
+  ok    voice.stream_voice/ghostfam_dyne/kin_look_hviske
+  ok    voice.stream_voice/ghostfam_dyne/midnight_0
+  ok    voice.stream_voice/ghostfam_dyne/midnight_1
+  ok    voice.stream_voice/ghostfam_dyne/midnight_2
+  ok    voice.stream_voice/ghostfam_dyne/midnight_3
+  ok    voice.stream_voice/ghostfam_dyne/midnight_4
+  ok    voice.stream_voice/ghostfam_dyne/midnight_5
+  ok    voice.stream_voice/ghostfam_dyne/midnight_6
+  ok    voice.stream_voice/ghostfam_dyne/night
+  ok    voice.stream_voice/ghostfam_gnist/closed
+  ok    voice.stream_voice/ghostfam_gnist/closed_night
+  ok    voice.stream_voice/ghostfam_gnist/early
+  ok    voice.stream_voice/ghostfam_gnist/first_1_v
+  ok    voice.stream_voice/ghostfam_gnist/greet
+  ok    voice.stream_voice/ghostfam_gnist/kin1
+  ok    voice.stream_voice/ghostfam_gnist/kin2
+  ok    voice.stream_voice/ghostfam_gnist/kin_greet
+  ok    voice.stream_voice/ghostfam_silke/dawn
+  ok    voice.stream_voice/ghostfam_silke/first_1_v
+  ok    voice.stream_voice/ghostfam_silke/greet
+  ok    voice.stream_voice/ghostfam_silke/kin1
+  ok    voice.stream_voice/ghostfam_silke/kin2
+  ok    voice.stream_voice/ghostfam_silke/kin_greet
+  ok    voice.stream_voice/ghostfam_silke/late
+  ok    voice.stream_voice/ghostfam_silke/late2
+  ok    voice.stream_voice/guard_oak/bossernes_vej_offer
+  ok    voice.stream_voice/guard_oak/first_1_v
+  ok    voice.stream_voice/guard_oak/greet
+  ok    voice.stream_voice/guard_oak/lift
+  ok    voice.stream_voice/guard_oak/skovlift_intro_offer
+  ok    voice.stream_voice/guard_oak/snurre_offer
+  ok    voice.stream_voice/guard_oak/snurre_remind
+  ok    voice.stream_voice/innkeeper_kvak/first_1_v
+  ok    voice.stream_voice/lamplighter_kiki/first_1_v
+  ok    voice.stream_voice/mapseller_natteblik/ears
+  ok    voice.stream_voice/mapseller_natteblik/farewell
+  ok    voice.stream_voice/mapseller_natteblik/first_1_v
+  ok    voice.stream_voice/mapseller_natteblik/greet
+  ok    voice.stream_voice/mapseller_natteblik/lantern
+  ok    voice.stream_voice/mapseller_natteblik/maps
+  ok    voice.stream_voice/mapseller_natteblik/night
+  ok    voice.stream_voice/mapseller_natteblik/no_maps
+  ok    voice.stream_voice/mapseller_natteblik/roots
+  ok    voice.stream_voice/mayor_lyra/bday_mayor_lyra_greet_1_v
+  ok    voice.stream_voice/mayor_lyra/farm_status
+  ok    voice.stream_voice/mayor_lyra/first_1_v
+  ok    voice.stream_voice/mayor_lyra/gift_mayor_lyra_dislike_1_v
+  ok    voice.stream_voice/mayor_lyra/gift_mayor_lyra_hate_1_v
+  ok    voice.stream_voice/mayor_lyra/gift_mayor_lyra_like_1_v
+  ok    voice.stream_voice/mayor_lyra/gift_mayor_lyra_love_1_v
+  ok    voice.stream_voice/mayor_lyra/gift_mayor_lyra_neutral_1_v
+  ok    voice.stream_voice/mayor_lyra/greet_1
+  ok    voice.stream_voice/mayor_lyra/greet_2
+  ok    voice.stream_voice/mayor_lyra/greet_h0_1_v
+  ok    voice.stream_voice/mayor_lyra/hello
+  ok    voice.stream_voice/mayor_lyra/lottery
+  ok    voice.stream_voice/merchant_pip/bday_merchant_pip_greet_1_v
+  ok    voice.stream_voice/merchant_pip/first_1_v
+  ok    voice.stream_voice/merchant_pip/gift_merchant_pip_dislike_1_v
+  ok    voice.stream_voice/merchant_pip/gift_merchant_pip_hate_1_v
+  ok    voice.stream_voice/merchant_pip/gift_merchant_pip_like_1_v
+  ok    voice.stream_voice/merchant_pip/gift_merchant_pip_love_1_v
+  ok    voice.stream_voice/merchant_pip/gift_merchant_pip_neutral_1_v
+  ok    voice.stream_voice/merchant_pip/greet_h0_1_v
+  ok    voice.stream_voice/penguin_postman/first_1_v
+  ok    voice.stream_voice/penguin_postman/hello
+  ok    voice.stream_voice/pip/greet
+  ok    voice.stream_voice/pippin_boegeknop/cat_offer
+  ok    voice.stream_voice/pippin_boegeknop/cat_remind
+  ok    voice.stream_voice/pippin_boegeknop/first_1_v
+  ok    voice.stream_voice/pippin_boegeknop/hello
+  ok    voice.stream_voice/postman_pip/bag
+  ok    voice.stream_voice/postman_pip/bday_postman_pip_greet_1_v
+  ok    voice.stream_voice/postman_pip/first_1_v
+  ok    voice.stream_voice/postman_pip/gift_postman_pip_dislike_1_v
+  ok    voice.stream_voice/postman_pip/gift_postman_pip_hate_1_v
+  ok    voice.stream_voice/postman_pip/gift_postman_pip_like_1_v
+  ok    voice.stream_voice/postman_pip/gift_postman_pip_love_1_v
+  ok    voice.stream_voice/postman_pip/gift_postman_pip_neutral_1_v
+  ok    voice.stream_voice/postman_pip/greet
+  ok    voice.stream_voice/postman_pip/greet_h0_1_v
+  ok    voice.stream_voice/postman_pip/mail
+  ok    voice.stream_voice/postman_pip/offer
+  ok    voice.stream_voice/postman_pip/remind
+  ok    voice.stream_voice/postman_pip/rest
+  ok    voice.stream_voice/postman_pip/round
+  ok    voice.stream_voice/postman_pip/thanks
+  ok    voice.stream_voice/rasmus/first_1_v
+  ok    voice.stream_voice/smith_thorin/bday_smith_thorin_greet_1_v
+  ok    voice.stream_voice/smith_thorin/first_1_v
+  ok    voice.stream_voice/smith_thorin/gift_smith_thorin_dislike_1_v
+  ok    voice.stream_voice/smith_thorin/gift_smith_thorin_hate_1_v
+  ok    voice.stream_voice/smith_thorin/gift_smith_thorin_like_1_v
+  ok    voice.stream_voice/smith_thorin/gift_smith_thorin_love_1_v
+  ok    voice.stream_voice/smith_thorin/gift_smith_thorin_neutral_1_v
+  ok    voice.stream_voice/smith_thorin/greet
+  ok    voice.stream_voice/smith_thorin/greet_h0_1_v
+  ok    voice.stream_voice/smith_thorin/mining_talk
+  ok    voice.eleven_human_recordings
+  ok    voice.complete_voice_manifest
+  ok    voice.fourteen_originals_byte_identical
+  ok    voice.missing_silent_and_logged
+  ok    voice.english_does_not_play_danish
+  ok    voice.recorded_line_plays
+  ok    voice.locale_switch_stops_voice
+  ok    voice.dialogue_voice_indicator
+  ok    voice.dialogue_close_stops_voice
+  ok    voice.volume_preserves_other_sections
+  ok    voice.volume_reloads
+  ok    voice.native_voice_mixer_non_silent (-29.0370845794678 dBFS)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/voice_danish_recording_indicator.png (1280x720)
+  --    voice: 310 checks, 0 failed, 0 skipped, 3.5 s
+== section walkway_transitions [windowed]  (res://tests/sections/walkway_transitions.gd)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b0_end0_out_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b0_end0_out_lane0.0 (a -> b0, 21 ticks, 0 stalled ticks, 3.24 ground px left; actual level b0; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b0_end0_in_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b0_end0_in_lane0.0 (b0 -> a, 23 ticks, 0 stalled ticks, 6.26 ground px left; actual level a; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b0_end1_out_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b0_end1_out_lane0.0 (upper -> b0, 21 ticks, 0 stalled ticks, 3.24 ground px left; actual level b0; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b0_end1_in_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b0_end1_in_lane0.0 (b0 -> upper, 23 ticks, 0 stalled ticks, 6.26 ground px left; actual level upper; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b1_end0_out_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b1_end0_out_lane0.0 (b -> b1, 18 ticks, 0 stalled ticks, 2.91 ground px left; actual level b1; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b1_end0_in_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b1_end0_in_lane0.0 (b1 -> b, 21 ticks, 0 stalled ticks, 6.59 ground px left; actual level b; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b1_end1_out_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b1_end1_out_lane0.0 (upper -> b1, 19 ticks, 0 stalled ticks, 2.91 ground px left; actual level b1; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b1_end1_in_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b1_end1_in_lane0.0 (b1 -> upper, 21 ticks, 0 stalled ticks, 6.59 ground px left; actual level upper; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b2_end0_out_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b2_end0_out_lane0.0 (a -> b2, 27 ticks, 0 stalled ticks, 4.87 ground px left; actual level b2; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b2_end0_in_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b2_end0_in_lane0.0 (b2 -> a, 29 ticks, 0 stalled ticks, 4.63 ground px left; actual level a; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b2_end1_out_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b2_end1_out_lane0.0 (c -> b2, 27 ticks, 0 stalled ticks, 4.87 ground px left; actual level b2; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b2_end1_in_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b2_end1_in_lane0.0 (b2 -> c, 29 ticks, 0 stalled ticks, 4.63 ground px left; actual level c; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b3_end0_out_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b3_end0_out_lane0.0 (b -> b3, 26 ticks, 0 stalled ticks, 4.79 ground px left; actual level b3; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b3_end0_in_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b3_end0_in_lane0.0 (b3 -> b, 28 ticks, 0 stalled ticks, 4.71 ground px left; actual level b; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b3_end1_out_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b3_end1_out_lane0.0 (e -> b3, 26 ticks, 0 stalled ticks, 4.79 ground px left; actual level b3; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b3_end1_in_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b3_end1_in_lane0.0 (b3 -> e, 28 ticks, 0 stalled ticks, 4.71 ground px left; actual level e; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b4_end0_out_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b4_end0_out_lane0.0 (c -> b4, 18 ticks, 0 stalled ticks, 3.75 ground px left; actual level b4; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b4_end0_in_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b4_end0_in_lane0.0 (b4 -> c, 20 ticks, 0 stalled ticks, 5.75 ground px left; actual level c; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b4_end1_out_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b4_end1_out_lane0.0 (torvet -> b4, 18 ticks, 0 stalled ticks, 3.75 ground px left; actual level b4; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b4_end1_in_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b4_end1_in_lane0.0 (b4 -> torvet, 21 ticks, 0 stalled ticks, 10.50 ground px left; actual level torvet; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b5_end0_out_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b5_end0_out_lane0.0 (e -> b5, 19 ticks, 0 stalled ticks, 1.88 ground px left; actual level b5; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b5_end0_in_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b5_end0_in_lane0.0 (b5 -> e, 20 ticks, 0 stalled ticks, 2.87 ground px left; actual level e; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b5_end1_out_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b5_end1_out_lane0.0 (torvet -> b5, 19 ticks, 0 stalled ticks, 1.88 ground px left; actual level b5; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b5_end1_in_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b5_end1_in_lane0.0 (b5 -> torvet, 22 ticks, 0 stalled ticks, 11.70 ground px left; actual level torvet; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b6_end0_out_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b6_end0_out_lane0.0 (f -> b6, 27 ticks, 0 stalled ticks, 2.65 ground px left; actual level b6; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b6_end0_in_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b6_end0_in_lane0.0 (b6 -> f, 28 ticks, 0 stalled ticks, 2.10 ground px left; actual level f; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b6_end1_out_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b6_end1_out_lane0.0 (torvet -> b6, 27 ticks, 0 stalled ticks, 2.65 ground px left; actual level b6; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b6_end1_in_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b6_end1_in_lane0.0 (b6 -> torvet, 30 ticks, 0 stalled ticks, 11.60 ground px left; actual level torvet; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b7_end0_out_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b7_end0_out_lane0.0 (g -> b7, 26 ticks, 0 stalled ticks, 3.06 ground px left; actual level b7; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b7_end0_in_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b7_end0_in_lane0.0 (b7 -> g, 28 ticks, 0 stalled ticks, 6.44 ground px left; actual level g; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b7_end1_out_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b7_end1_out_lane0.0 (torvet -> b7, 26 ticks, 0 stalled ticks, 3.06 ground px left; actual level b7; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b7_end1_in_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b7_end1_in_lane0.0 (b7 -> torvet, 29 ticks, 0 stalled ticks, 11.19 ground px left; actual level torvet; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b8_end0_out_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b8_end0_out_lane0.0 (f -> b8, 18 ticks, 0 stalled ticks, 3.93 ground px left; actual level b8; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b8_end0_in_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b8_end0_in_lane0.0 (b8 -> f, 20 ticks, 0 stalled ticks, 5.57 ground px left; actual level f; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b8_end1_out_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b8_end1_out_lane0.0 (g -> b8, 18 ticks, 0 stalled ticks, 3.93 ground px left; actual level b8; )
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_join_b8_end1_in_lane0.0.png (1280x720)
+  ok    walkway_transitions.landing_b8_end1_in_lane0.0 (b8 -> g, 20 ticks, 0 stalled ticks, 5.57 ground px left; actual level g; )
+  ok    walkway_transitions.all_boardwalk_landings_covered (36 crossings: 9 bridges x 2 ends x both directions)
+  ok    walkway_transitions.ladder_up_approach_on_boardwalk
+  ok    walkway_transitions.ladder_up_no_entry_snap (interaction displacement 0.00 world px)
+  ok    walkway_transitions.ladder_up_approach_keeps_boardwalk_level
+  ok    walkway_transitions.ladder_up_animation_starts (walk)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_up_frame_00.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_up_frame_01.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_up_frame_02.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_up_frame_03.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_up_frame_04.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_up_frame_05.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_up_mid.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_up_frame_06.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_up_frame_07.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_up_frame_08.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_up_frame_09.png (1280x720)
+  ok    walkway_transitions.ladder_up_continuous_motion (peak 826.8 ground px/s <= 950.8)
+  ok    walkway_transitions.ladder_up_animation_advances (5 distinct animation frames)
+  ok    walkway_transitions.ladder_up_lands_on_boardwalk (level upper, 0.00 world px at landing event)
+  ok    walkway_transitions.ladder_up_stride_survives_landing (walk)
+  ok    walkway_transitions.ladder_up_facing_survives_landing
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_up_landing.png (1280x720)
+  ok    walkway_transitions.ladder_up_held_input_continues (34.01 ground px on held input after landing)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_up_exit.png (1280x720)
+  ok    walkway_transitions.ladder_up_timeline_saved
+  ok    walkway_transitions.ladder_down_approach_on_boardwalk
+  ok    walkway_transitions.ladder_down_no_entry_snap (interaction displacement 0.00 world px)
+  ok    walkway_transitions.ladder_down_approach_keeps_boardwalk_level
+  ok    walkway_transitions.ladder_down_animation_starts (walk)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_down_frame_00.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_down_frame_01.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_down_frame_02.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_down_frame_03.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_down_frame_04.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_down_mid.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_down_frame_05.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_down_frame_06.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_down_frame_07.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_down_frame_08.png (1280x720)
+  ok    walkway_transitions.ladder_down_continuous_motion (peak 826.8 ground px/s <= 950.8)
+  ok    walkway_transitions.ladder_down_animation_advances (5 distinct animation frames)
+  ok    walkway_transitions.ladder_down_lands_on_boardwalk (level torvet, 0.00 world px at landing event)
+  ok    walkway_transitions.ladder_down_stride_survives_landing (walk)
+  ok    walkway_transitions.ladder_down_facing_survives_landing
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_down_landing.png (1280x720)
+  ok    walkway_transitions.ladder_down_held_input_continues (52.25 ground px on held input after landing)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/walkway_transitions_ladder_down_exit.png (1280x720)
+  ok    walkway_transitions.ladder_down_timeline_saved
+  --    walkway_transitions: 59 checks, 0 failed, 0 skipped, 26.0 s
+== section wardrobe_ui [windowed]  (res://tests/sections/wardrobe_ui.gd)
+  ok    wardrobe_ui.screen_and_live_presenter_available
+  ok    wardrobe_ui.all_96_pieces_fit_all_eight_bodies
+  ok    wardrobe_ui.opens_paused_with_live_preview
+  ok    wardrobe_ui.try_on_is_local_and_resolves_exclusions
+  ok    wardrobe_ui.closing_cancels_uncommitted_try_on
+  ok    wardrobe_ui.equip_button_commits_one_complete_dress
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/wardrobe_ui_dress_fox.png (1280x720)
+  ok    wardrobe_ui.preview_rotates_and_walks
+  ok    wardrobe_ui.unowned_piece_can_be_tried_but_not_equipped
+  ok    wardrobe_ui.remove_button_reveals_base_and_keeps_ownership
+  ok    wardrobe_ui.screen_saves_worn_outfit
+  ok    wardrobe_ui.screen_restores_outfit
+  ok    wardrobe_ui.hands_preview_uses_same_attachment_presenter
+  ok    wardrobe_ui.weapon_try_on_does_not_change_equipment
+  ok    wardrobe_ui.hands_tab_changes_real_weapon_owner
+  ok    wardrobe_ui.hands_tab_assigns_existing_hotbar
+  ok    wardrobe_ui.hands_tab_selects_ready_tool
+  ok    wardrobe_ui.hands_tab_clears_selected_slot
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/wardrobe_ui_hands_fox.png (1280x720)
+  ok    wardrobe_ui.closing_releases_pause_and_preview
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/wardrobe_ui_world_fox.png (1280x720)
+  ok    wardrobe_ui.real_save_with_clothes_and_loadout
+  ok    wardrobe_ui.real_load_rebuilds_world
+  ok    wardrobe_ui.clothing_equipment_presets_and_hotbar_survive_load
+  ok    wardrobe_ui.screen_and_live_presenter_available
+  ok    wardrobe_ui.all_96_pieces_fit_all_eight_bodies
+  ok    wardrobe_ui.opens_paused_with_live_preview
+  ok    wardrobe_ui.try_on_is_local_and_resolves_exclusions
+  ok    wardrobe_ui.closing_cancels_uncommitted_try_on
+  ok    wardrobe_ui.equip_button_commits_one_complete_dress
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/wardrobe_ui_dress_monkey.png (1280x720)
+  ok    wardrobe_ui.preview_rotates_and_walks
+  ok    wardrobe_ui.unowned_piece_can_be_tried_but_not_equipped
+  ok    wardrobe_ui.remove_button_reveals_base_and_keeps_ownership
+  ok    wardrobe_ui.screen_saves_worn_outfit
+  ok    wardrobe_ui.screen_restores_outfit
+  ok    wardrobe_ui.hands_preview_uses_same_attachment_presenter
+  ok    wardrobe_ui.weapon_try_on_does_not_change_equipment
+  ok    wardrobe_ui.hands_tab_changes_real_weapon_owner
+  ok    wardrobe_ui.hands_tab_assigns_existing_hotbar
+  ok    wardrobe_ui.hands_tab_selects_ready_tool
+  ok    wardrobe_ui.hands_tab_clears_selected_slot
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/wardrobe_ui_hands_monkey.png (1280x720)
+  ok    wardrobe_ui.closing_releases_pause_and_preview
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/final-native/wardrobe_ui_world_monkey.png (1280x720)
+  ok    wardrobe_ui.real_save_with_clothes_and_loadout
+  ok    wardrobe_ui.real_load_rebuilds_world
+  ok    wardrobe_ui.clothing_equipment_presets_and_hotbar_survive_load
+  --    wardrobe_ui: 42 checks, 0 failed, 0 skipped, 3.4 s
+== summary: 13 section(s) run, 849 checks (2 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 225.2 s
+  FAILED   town_loop.l15_city_peak_under_320mb
+  FAILED   town_loop.l15_window_budget
+PLAYTEST FAIL: 2 check failures, 0 engine errors, 0 engine warnings, 0 problems

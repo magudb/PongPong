@@ -4,6 +4,8 @@ const SECTION := "art_style_consistency"
 const TIMEOUT_S := 180.0
 const PACK := "res://assets/iso_props/zz_painted_consistency/"
 const FURN := "res://assets/iso_props/furniture/"
+const SEASONS := "res://assets/iso_props/farm_dress/"
+const STORY := "res://assets/iso_props/forest_mother/"
 const TECHNICAL := ["boss_arena_ring", "crown_spark", "dig_glimmer", "eyes_glow", "fire_flame", "fire_flame_f1", "fire_flame_f2",
 	"firefly_dot", "fx_heal_sparkle", "fx_hit_spark", "halo_amber", "halo_violet", "hulen_eyes", "lantern_light",
 	"mist_patch_a", "mist_patch_b", "paw_prints", "pond_ripple", "pond_sheen", "shadow_soft", "telegraph_line",
@@ -30,7 +32,7 @@ func run(t) -> void:
 		var path := (art["texture"] as Texture2D).resource_path
 		if not bool(art["real"]):
 			missing.append(id)
-		if not path.contains("/painted_") and not path.contains("/drawn") and not path.begins_with(PACK) and id not in TECHNICAL:
+		if not path.contains("/painted_") and not path.contains("/drawn") and not path.begins_with(PACK) and not path.begins_with(STORY) and not path.begins_with(SEASONS) and id not in TECHNICAL:
 			prototype.append(id)
 	t.check("effective_physical_props_painted", missing.is_empty() and prototype.is_empty(),
 		"357 prior IDs preserved, %d current prop IDs checked; physical props use approved paintings/materials and intentional masks are explicit: %s %s" % [ids.size(), missing, prototype])

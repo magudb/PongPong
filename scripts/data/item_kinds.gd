@@ -7,6 +7,7 @@ extends RefCounted
 const BACKPACK := &"backpack"
 const FURNITURE := &"furniture"
 const CLOTHING := &"clothing"
+const WEAPON := &"weapon"
 
 
 static func def(item_id: Variant) -> Dictionary:
@@ -21,6 +22,8 @@ static func storage_of(item_id: Variant) -> StringName:
 			return FURNITURE
 		"clothing":
 			return CLOTHING
+		"weapon":
+			return WEAPON
 	return BACKPACK
 
 

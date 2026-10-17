@@ -1,0 +1,39 @@
+extends RefCounted
+const SECTION := "ground_batch"
+const TIMEOUT_S := 120.0
+const Perf := preload("res://tests/perf_world.gd")
+func run_windowed(t) -> void:
+	await t.start_world()
+	GameManager.set_config_override("time.minutes_per_real_second",0.0)
+	GameManager.set_config_override("towns.curfew.enabled",false)
+	await LoopClock.at(t,1,10)
+	TimeManager.set_weather(&"regn")
+	await t.world().travel(&"hyggebyen",&"default")
+	await t.seconds(3.1)
+	var ground: TileMapLayer = t.world().area.ground
+	var cap := Perf.uncap()
+	var result := []
+	for size in [16,8,4,2,16]:
+		ground.rendering_quadrant_size = size
+		await t.frames(8)
+		var samples := []
+		for i in 3:samples.append(await Perf.measure_frames(t.tree,.5,t.tree.root.get_viewport_rid()))
+		var calls := Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME)
+		result.append({"quadrant":size,"draw_calls":calls,"samples":samples})
+		t.info(JSON.stringify(result.back()))
+	t.tree.paused=true
+	t.world().weather_fx.hide()
+	for child in t.world().area.get_children():
+		if child is CanvasItem and child!=ground:child.hide()
+	t.world().game_ui.hide()
+	ground.rendering_quadrant_size=16
+	await t.frames(4)
+	var before: Image = await t.capture("ground_16")
+	ground.rendering_quadrant_size=8
+	await t.frames(4)
+	var after: Image = await t.capture("ground_8")
+	t.check("quadrant_8_preserves_ground_pixels",before.get_data()==after.get_data())
+	FileAccess.open(t.out_dir.path_join("measurements.json"),FileAccess.WRITE).store_string(JSON.stringify(result,"  ")+"\n")
+	t.tree.paused=false
+	Perf.restore_cap(cap)
+	GameManager.clear_config_overrides()

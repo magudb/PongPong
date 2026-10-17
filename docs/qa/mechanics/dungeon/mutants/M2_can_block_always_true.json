@@ -1,0 +1,40 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 599,
+  "elapsed_s": 14.37,
+  "engine": [],
+  "failed": 16,
+  "failures": [
+    "dungeon_gen.gen.golden_digest_f1",
+    "dungeon_gen.gen.golden_digest_f2",
+    "dungeon_gen.gen.golden_digest_f3",
+    "dungeon_gen.gen.fallback_valid_f3",
+    "dungeon_gen.gen.golden_digest_f4",
+    "dungeon_gen.gen.golden_digest_f5",
+    "dungeon_gen.gen.fallback_valid_f5",
+    "dungeon_gen.gen.golden_digest_f6",
+    "dungeon_gen.gen.golden_digest_f7",
+    "dungeon_gen.gen.golden_digest_f8",
+    "dungeon_gen.gen.golden_digest_f9",
+    "dungeon_gen.gen.golden_digest_f10",
+    "dungeon_gen.gen.golden_digest_f11",
+    "dungeon_gen.gen.golden_digest_f12",
+    "dungeon_gen.gen.first_attempt_rate",
+    "dungeon_gen.gen.mean_attempts"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "dungeon_gen": {
+      "character": "animal",
+      "checks": 599,
+      "failed": 16,
+      "ms": 10019,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

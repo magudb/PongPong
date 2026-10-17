@@ -1,0 +1,40 @@
+{
+  "tool": "built-in imagegen",
+  "references": [
+    {
+      "path": "tools/art/drawn/sources/icons_resources.png",
+      "role": "approved object finish, pigment, warm contours"
+    },
+    {
+      "path": "tools/art/drawn/sources/icons_food.png",
+      "role": "approved edible and consumable icon style"
+    }
+  ],
+  "requests": [
+    {
+      "id": "etagekort",
+      "prompt": "Use case: production UI inventory asset. Paint one isolated icon for the Trætoppen storybook game. Match the supplied approved resource and food paintings: tactile matte gouache and watercolor, fine pigment, warm softly irregular pencil contours, readable functional silhouette at 128 and 64 pixels. References are STYLE references, not edit targets. Slightly top-down three-quarter view, a single centered object or tight natural cluster on real transparent alpha, 15 percent clear gutter. Only the object. No UI tile, frame, rarity border, cast shadow, background, emitted aura, labels, letters, numbers or watermarks. Avoid plastic gloss, vector geometry, photorealism and neon. A small partly unfolded cream paper dungeon floor map. A few muted blue-grey rectangular rooms joined by charcoal paths, one rolled corner and a sage string loop. Only abstract floor-plan marks; no readable text. Keep the overall folded paper silhouette and room plan simple.",
+      "source": "tools/art/drawn/sources/dungeon_supplies/etagekort.png"
+    },
+    {
+      "id": "lysdraabe",
+      "prompt": "Use case: production UI inventory asset. Paint one isolated icon for the Trætoppen storybook game. Match the supplied approved resource and food paintings: tactile matte gouache and watercolor, fine pigment, warm softly irregular pencil contours, readable functional silhouette at 128 and 64 pixels. References are STYLE references, not edit targets. Slightly top-down three-quarter view, a single centered object or tight natural cluster on real transparent alpha, 15 percent clear gutter. Only the object. No UI tile, frame, rarity border, cast shadow, background, emitted aura, labels, letters, numbers or watermarks. Avoid plastic gloss, vector geometry, photorealism and neon. One little round clear-glass lantern-refill ampoule containing warm pale golden oil, with a tiny cork stopper and a simple dull brass neck band. A small paper tag carries a single gold teardrop symbol. The fluid has a quiet painted catchlight without casting light. A gentle practical consumable, not an ornate treasure.",
+      "source": "tools/art/drawn/sources/dungeon_supplies/lysdraabe.png"
+    },
+    {
+      "id": "svampe_eliksir",
+      "prompt": "Use case: production UI inventory asset. Paint one isolated icon for the Trætoppen storybook game. Match the supplied approved resource and food paintings: tactile matte gouache and watercolor, fine pigment, warm softly irregular pencil contours, readable functional silhouette at 128 and 64 pixels. References are STYLE references, not edit targets. Slightly top-down three-quarter view, a single centered object or tight natural cluster on real transparent alpha, 15 percent clear gutter. Only the object. No UI tile, frame, rarity border, cast shadow, background, emitted aura, labels, letters, numbers or watermarks. Avoid plastic gloss, vector geometry, photorealism and neon. One squat rounded lavender glass mushroom-healing elixir bottle, cream cork and plain woven neck tie. A small cream paper tag shows one tiny muted purple mushroom shape without writing. Show a little pale cream liquid through the matte illustrated glass, simple physical construction and warm irregular edges.",
+      "source": "tools/art/drawn/sources/dungeon_supplies/svampe_eliksir.png"
+    },
+    {
+      "id": "tornebaer",
+      "prompt": "Use case: production UI inventory asset. Paint one isolated icon for the Trætoppen storybook game. Match the supplied approved resource and food paintings: tactile matte gouache and watercolor, fine pigment, warm softly irregular pencil contours, readable functional silhouette at 128 and 64 pixels. References are STYLE references, not edit targets. Slightly top-down three-quarter view, a single centered object or tight natural cluster on real transparent alpha, 15 percent clear gutter. Only the object. No UI tile, frame, rarity border, cast shadow, background, emitted aura, labels, letters, numbers or watermarks. Avoid plastic gloss, vector geometry, photorealism and neon. A small tight cluster of three plump dark-rose red bramble thornberries, each made of a few broad soft drupelets, attached to one short honey-brown twig with two sage leaves and one small rounded thorn. Clearly edible fruit, without a container or extra loose ingredients. Friendly botanical shapes and tactile pigment.",
+      "source": "tools/art/drawn/sources/dungeon_supplies/tornebaer.png"
+    },
+    {
+      "id": "ugle_noegle",
+      "prompt": "Use case: production UI inventory asset. Paint one isolated icon for the Trætoppen storybook game. Match the supplied approved resource and food paintings: tactile matte gouache and watercolor, fine pigment, warm softly irregular pencil contours, readable functional silhouette at 128 and 64 pixels. References are STYLE references, not edit targets. Slightly top-down three-quarter view, a single centered object or tight natural cluster on real transparent alpha, 15 percent clear gutter. Only the object. No UI tile, frame, rarity border, cast shadow, background, emitted aura, labels, letters, numbers or watermarks. Avoid plastic gloss, vector geometry, photorealism and neon. One small worn dull-brass owl key. Its bow is a simple round owl face formed by two eye-shaped holes and tiny pointed ear tufts, attached to a believable short shaft with two simple key bits. Friendly quiet proportions, warm brown pencil edge and small brass catchlights. One physical key, no chain or pedestal.",
+      "source": "tools/art/drawn/sources/dungeon_supplies/ugle_noegle.png"
+    }
+  ]
+}

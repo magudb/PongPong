@@ -13,6 +13,7 @@ shops = {
     buy_multiplier = 1.1,
     sell_multiplier = 1.0,
     stock = {
+      moonstone = { stock = 1, restock = 1 },
       fairy_dust = { stock = 5, restock = 1 },
       crystal_shard = { stock = 5, restock = 2 },
       amethyst = { stock = 3, restock = 1 },

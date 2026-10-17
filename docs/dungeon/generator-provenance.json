@@ -1,0 +1,31 @@
+{
+  "sources": [
+    {
+      "prototype": "/Users/magnusudbjorg/Documents/projects/.pongpong-build/work/design2/final_candidate/gen_check/proto/dg_rng.gd",
+      "sha256": "771503e73e6ad960c7916f6a4bfd4923f9d30c3de9604381e8697c01fff8e26c",
+      "production": "scripts/dungeon/gen/dungeon_rng.gd"
+    },
+    {
+      "prototype": "/Users/magnusudbjorg/Documents/projects/.pongpong-build/work/design2/final_candidate/gen_check/proto/dg2_gen.gd",
+      "sha256": "c4f8a6ee1893e6f942ac5034b6ddc125e7bf99e459f4e5f5ff717d6b9f8ab668",
+      "production": "scripts/dungeon/gen/dungeon_gen.gd"
+    },
+    {
+      "prototype": "/Users/magnusudbjorg/Documents/projects/.pongpong-build/work/design2/final_candidate/gen_check/proto/dg2_export.gd",
+      "sha256": "e1a011ab4af320970f8e7cb75396008190c5edc7a77def9954fa817478230d07",
+      "production": "scripts/dungeon/gen/dungeon_export.gd"
+    },
+    {
+      "prototype": "/Users/magnusudbjorg/Documents/projects/.pongpong-build/work/design2/final_candidate/gen_check/proto/dg2_verify.gd",
+      "sha256": "edfa52824750d99a3bcc8951664e24587250c11639e93a5b63466e6c82faeaf2",
+      "production": "scripts/dungeon/gen/dungeon_verify.gd"
+    }
+  ],
+  "integration_changes": [
+    "Production class names and resource paths.",
+    "Pure DungeonSpec extraction and layout hash including floors, bands, rim and limits.",
+    "Mutex around the lazily cached canopy geometry for safe concurrent generation.",
+    "Scene-free build_text entry point and an explicit unknown-floor result.",
+    "Original generation algorithm and golden map text remain unchanged."
+  ]
+}

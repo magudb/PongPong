@@ -4,7 +4,7 @@ extends Control
 ## LAST child of the control that asks, so it draws above that screen. Window-based dialogs (AcceptDialog, ConfirmationDialog, FileDialog, OptionButton popups)
 ## are banned from game UI: their focus lives in their own viewport (F12). Scene: scenes/ui/components/ui_confirm.tscn.
 ##
-##   if await UiConfirm.ask(self, "CONFIRM", "UI_CONFIRM_OVERWRITE", "NAV_OK", "NAV_CANCEL", &"cancel", [slot]):      # -> bool
+##   if await UiConfirm.ask(self, "UI_CONFIRM_TITLE", "UI_CONFIRM_OVERWRITE", "NAV_OK", "NAV_CANCEL", &"cancel", [slot]):      # -> bool
 ##   var name := await UiConfirm.ask_text(self, "UI_RENAME", old_name, 24)                                           # -> "" = cancelled
 ##
 ## Pattern C: Left / Right / Up / Down / Tab / Shift+Tab swap the two buttons, focus never leaves the dialog; `default` (&"cancel" or &"ok") picks the button

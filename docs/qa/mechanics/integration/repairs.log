@@ -1,0 +1,1048 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=art_style_consistency,art_farm_dress,cast_data,city_levels,city_life,core,menus,audio_town,voice
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.hor3Ui/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 1.0 s
+== section art_farm_dress  (res://tests/sections/art_farm_dress.gd)
+  ok    art_farm_dress.flower_box_native_dimensions
+  ok    art_farm_dress.flower_box_transparent_gutter
+  ok    art_farm_dress.flower_box_source_retained
+  ok    art_farm_dress.flower_box_catalogued
+  ok    art_farm_dress.garden_arch_native_dimensions
+  ok    art_farm_dress.garden_arch_transparent_gutter
+  ok    art_farm_dress.garden_arch_source_retained
+  ok    art_farm_dress.garden_arch_catalogued
+  ok    art_farm_dress.fountain_small_native_dimensions
+  ok    art_farm_dress.fountain_small_transparent_gutter
+  ok    art_farm_dress.fountain_small_source_retained
+  ok    art_farm_dress.fountain_small_catalogued
+  ok    art_farm_dress.royal_banner_native_dimensions
+  ok    art_farm_dress.royal_banner_transparent_gutter
+  ok    art_farm_dress.royal_banner_source_retained
+  ok    art_farm_dress.royal_banner_catalogued
+  ok    art_farm_dress.blossom_cluster_native_dimensions
+  ok    art_farm_dress.blossom_cluster_transparent_gutter
+  ok    art_farm_dress.blossom_cluster_source_retained
+  ok    art_farm_dress.blossom_cluster_catalogued
+  ok    art_farm_dress.sunflower_row_native_dimensions
+  ok    art_farm_dress.sunflower_row_transparent_gutter
+  ok    art_farm_dress.sunflower_row_source_retained
+  ok    art_farm_dress.sunflower_row_catalogued
+  ok    art_farm_dress.leaf_pile_native_dimensions
+  ok    art_farm_dress.leaf_pile_transparent_gutter
+  ok    art_farm_dress.leaf_pile_source_retained
+  ok    art_farm_dress.leaf_pile_catalogued
+  ok    art_farm_dress.pumpkin_stack_native_dimensions
+  ok    art_farm_dress.pumpkin_stack_transparent_gutter
+  ok    art_farm_dress.pumpkin_stack_source_retained
+  ok    art_farm_dress.pumpkin_stack_catalogued
+  ok    art_farm_dress.snow_patch_native_dimensions
+  ok    art_farm_dress.snow_patch_transparent_gutter
+  ok    art_farm_dress.snow_patch_source_retained
+  ok    art_farm_dress.snow_patch_catalogued
+  ok    art_farm_dress.bunting_x_native_dimensions
+  ok    art_farm_dress.bunting_x_transparent_gutter
+  ok    art_farm_dress.bunting_x_source_retained
+  ok    art_farm_dress.bunting_x_catalogued
+  ok    art_farm_dress.vine_hang_native_dimensions
+  ok    art_farm_dress.vine_hang_transparent_gutter
+  ok    art_farm_dress.vine_hang_source_retained
+  ok    art_farm_dress.vine_hang_catalogued
+  ok    art_farm_dress.pond_lily_native_dimensions
+  ok    art_farm_dress.pond_lily_transparent_gutter
+  ok    art_farm_dress.pond_lily_source_retained
+  ok    art_farm_dress.pond_lily_catalogued
+  ok    art_farm_dress.leaf_a_native_dimensions
+  ok    art_farm_dress.leaf_a_transparent_gutter
+  ok    art_farm_dress.leaf_a_source_retained
+  ok    art_farm_dress.leaf_b_native_dimensions
+  ok    art_farm_dress.leaf_b_transparent_gutter
+  ok    art_farm_dress.leaf_b_source_retained
+  ok    art_farm_dress.petal_native_dimensions
+  ok    art_farm_dress.petal_transparent_gutter
+  ok    art_farm_dress.petal_source_retained
+  ok    art_farm_dress.snowflake_native_dimensions
+  ok    art_farm_dress.snowflake_transparent_gutter
+  ok    art_farm_dress.snowflake_source_retained
+  ok    art_farm_dress.apple_tree_foraar_native_dimensions
+  ok    art_farm_dress.apple_tree_foraar_transparent_gutter
+  ok    art_farm_dress.apple_tree_foraar_source_retained
+  ok    art_farm_dress.apple_tree_foraar_catalogued
+  ok    art_farm_dress.apple_tree_efteraar_native_dimensions
+  ok    art_farm_dress.apple_tree_efteraar_transparent_gutter
+  ok    art_farm_dress.apple_tree_efteraar_source_retained
+  ok    art_farm_dress.apple_tree_efteraar_catalogued
+  ok    art_farm_dress.apple_tree_vinter_native_dimensions
+  ok    art_farm_dress.apple_tree_vinter_transparent_gutter
+  ok    art_farm_dress.apple_tree_vinter_source_retained
+  ok    art_farm_dress.apple_tree_vinter_catalogued
+  ok    art_farm_dress.nineteen_painted_assets
+  ok    art_farm_dress.vram_under_four_mib (2.35781860351562 MiB RGBA)
+  ok    art_farm_dress.packing_reproducible (Twelve dress props, three tree variants and four painted particles verified
+)
+  --    art_farm_dress: 75 checks, 0 failed, 0 skipped, 1.7 s
+== section art_style_consistency  (res://tests/sections/art_style_consistency.gd)
+  ok    art_style_consistency.effective_physical_props_painted (357 prior IDs preserved, 379 current prop IDs checked; physical props use approved paintings/materials and intentional masks are explicit: [] [])
+  ok    art_style_consistency.selected_art_is_reviewed (effective props and all outdoor sky/far layers have explicit visual review evidence: [])
+  ok    art_style_consistency.reviewed_snapshot_current (["STYLE REVIEW SNAPSHOT PASS: 2925 visual/theme assets match explicit reviewed dispositions; technical exceptions are named, not automatically approved illustrations.\n"])
+  ok    art_style_consistency.installed_ore_copper (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_ore_iron (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_ore_gold (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_marble_vein (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_slate_vein (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crystal_amethyst (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crystal_emerald (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crystal_moonstone (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_glowmush_blue (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_glowmush_pink (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_glowmush_teal (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_well (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_fountain (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_closed (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_open (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_konge (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_beehive_stand (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_mailbox_red (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_shipping_bin (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_tent (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_wheat_sack (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_build_stake (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_rope_stake_x (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_rope_stake_z (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_fence_gate_x (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_bench (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_stake_sign (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_fe (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_apple_tree (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_tornebaer (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_lantern_hand (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_market_stall (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_trae (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_jern (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_noegle (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_market_stall_furniture (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_market_stall_tailor (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_coop_small (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_barn_small (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_animal_house (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_tool_shed (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_carrot_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_carrot_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_carrot_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_carrot_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_pumpkin_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_pumpkin_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_pumpkin_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_pumpkin_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_strawberry_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_strawberry_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_strawberry_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_strawberry_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_sunflower_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_sunflower_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_sunflower_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_sunflower_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_turnip_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_turnip_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_turnip_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_turnip_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_catnip_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_catnip_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_catnip_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_catnip_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_glow_berry_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_glow_berry_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_glow_berry_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_glow_berry_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_moonflower_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_moonflower_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_moonflower_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_moonflower_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_bed (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_house_seedshop (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_house_bakery (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_house_smithy (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_house_animalstore (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_house_town_hall (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_house_king_treetop (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_tower_wizard (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_warp_gate_stone (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_tree_giant_crown (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_trunk_giant_a (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_trunk_giant_b (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_trunk_under_a (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_trunk_under_b (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_lantern_post_lavender (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_lantern_post_mint (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_lantern_post_rose (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_floor_patch_a (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_floor_patch_b (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_floor_patch_c (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_path_tile_o (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pond_water_o (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_roof_patch (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_home_rope (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_stone_path_a (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_stone_path_b (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_stone_path_c (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_blue (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_blue_f1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_gold (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_gold_f1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_mint (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_mint_f1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_pink (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_pink_f1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_backdrop_farm_far (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_backdrop_forest_far (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_backdrop_hyggebyen_far (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.replacement_scope (111 repaired props, structural surfaces and parallax entries)
+  ok    art_style_consistency.farm_parallax_painted (farm horizon shares the approved tree painting)
+  ok    art_style_consistency.furniture_gameplay_contracts (all 130 IDs, placement anchors and gameplay fields preserved; [])
+  --    art_style_consistency: 117 checks, 0 failed, 0 skipped, 2.5 s
+== section audio_town  (res://tests/sections/audio_town.gd)
+  ok    audio_town.cue_log_ring_256
+  ok    audio_town.cue_log_snapshot_is_detached
+  ok    audio_town.cues_follow_area
+  ok    audio_town.exit_shop_bell
+  ok    audio_town.raw_midnight_is_night
+  ok    audio_town.same_state_no_repeated_ambience
+  ok    audio_town.rain_overlay
+  ok    audio_town.rain_stops_indoors
+  ok    audio_town.closed_door_knock_and_closing_bell_hooks
+  ok    audio_town.social_cues_logged
+  ok    audio_town.real_weapon_equipment_cue
+  ok    audio_town.unchanged_equipment_silent
+  ok    audio_town.festival_music_and_duck
+  ok    audio_town.festival_restores_area_score
+  ok    audio_town.surface_ground_0
+  ok    audio_town.surface_ground_1
+  ok    audio_town.surface_ground_2
+  ok    audio_town.surface_ground_3
+  ok    audio_town.surface_ground_4
+  ok    audio_town.surface_ground_5
+  ok    audio_town.surface_ground_6
+  ok    audio_town.surface_builder_wins
+  ok    audio_town.city_bridge_rope
+  ok    audio_town.city_platform_wood
+  ok    audio_town.town_bell_once_per_hour
+  ok    audio_town.footstep_interval_false ([{ "t_msec": 12024, "kind": "sfx", "id": "step_wood_2", "played": true }, { "t_msec": 12025, "kind": "sfx", "id": "step_wood_3", "played": true }, { "t_msec": 12025, "kind": "sfx", "id": "step_wood_2", "played": true }])
+  ok    audio_town.no_repeat_variants_false
+  ok    audio_town.footstep_interval_true ([{ "t_msec": 12025, "kind": "sfx", "id": "step_wood_3", "played": true }, { "t_msec": 12025, "kind": "sfx", "id": "step_wood_2", "played": true }, { "t_msec": 12025, "kind": "sfx", "id": "step_wood_3", "played": true }, { "t_msec": 12026, "kind": "sfx", "id": "step_wood_2", "played": true }])
+  ok    audio_town.no_repeat_variants_true
+  ok    audio_town.idle_silent
+  ok    audio_town.real_player_walk_emits_steps
+  ok    audio_town.rapid_fades_keep_one_final_stream
+  ok    audio_town.thirteen_plain_players
+  ok    audio_town.recipe_exports_sfx_synth.py (PASS sfx 44 placeholder recipes
+)
+  ok    audio_town.recipe_exports_ambience_synth.py (PASS amb 9 placeholder recipes
+)
+  ok    audio_town.recipe_exports_music_synth.py (PASS music 14 placeholder recipes
+)
+  ok    audio_town.menu_stops_world_audio
+  --    audio_town: 37 checks, 0 failed, 0 skipped, 1.3 s
+== section cast_data  (res://tests/sections/cast_data.gd)
+  ok    cast_data.species_perk_precedence (species layer > race layer > the caller's default: Kiki 1.0 / 0.9 / 0.0 / climb 2.2 / chest 700 / crown caches, Rasmus the race baseline 1.3 / 0.75 / 0.2, every other skin through its race, unknown skins the default; SpeciesPerks.current follows GameManager.character_skin [])
+  ok    the monkey's climb_speed_mult 2.2 turns the 1.1 s ladder into 0.5 s
+  ok    cast_data.species_perks_complete (15 skins of characters.lua answer the 8 race perks through the ladder, the six heroes have a row (only Kiki lists values), no ghost rows, only documented keys [] [])
+  ok    cast_data.species_perks_only_through_the_class (301 scripts scanned: none but scripts/data/species_perks.gd reads the config key species_perks [])
+  ok    cast_data.npc_homes_match_zone_graph (npc_vocab.areas = the 4 home areas of the zone graph (farm hyggebyen traetoppen moerkeskoven; `home` is nobody's home, generated floors are never one); 15 npc markers of 31 maps stand in their NPC's home; Oak at the Skovlift, Natteblik without a shop_id, Mis in Hyggebyen [])
+  ok    cast_data.new_roles_valid (12 new roles (gardener carpenter bathkeeper appraiser mapseller beekeeper apprentice lamplighter baker_helper innkeeper clerk musician) are in npc_vocab.roles and worn by the citizens of the design [])
+  ok    cast_data.family_and_age_present (age on all 30 citizens, family on the 8 relatives (Bertil / Bodil, Kloevermynte / Birk, Lily with the mayor, Bamse with Oak), the data of D3 citizens.json []; lua/social/citizens.lua (S-data) agrees where it repeats a field)
+  ok    cast_data.postman_pip_offers_forste_dage (postman_pip offers ["pips_runde", "forste_dage", "forest_mother_s03", "forest_mother_s04", "forest_mother_s05", "forest_mother_s06", "forest_mother_s07", "forest_mother_s08"]; penguin_postman (ambient) offers none)
+  ok    forste_dage (N04) is given by postman_pip
+  ok    cast_data.pips_runde_loads_through_lua_runtime (lua/quests/pips_runde.lua: giver postman_pip, ZONE_TRAETOPPEN, FIND, help, not repeatable; reward gold 120 + friendship_token + a heart with Pip; four objectives; on_offer / on_accept / handle_event / is_available run through LuaRuntime, both toasts are translated, no lint finding [])
+  ok    cast_data.pips_runde_objectives_bind (greet_hoppe / greet_brumme / greet_sofus bind dialogue_started of gardener_hoppe / carpenter_brumme / bathkeeper_sofus, return_to_pip (after_others) binds postman_pip, all four are roster ids of the binding vocabulary, every OBJ_PIPS_RUNDE_* text in da + en [])
+  ok    cast_data.keys_da_en_complete (cast.csv: 40 keys in the five families, every key the cast data names (97 lookups: 8 hero cards, 15 NPC names, 5 skin names, the shop, the quest and its objectives, the zone names) is defined in da + en, the six hero blurbs fit two lines [] [] [])
+  ok    cast_data.hero_blurbs_verbatim_from_the_sheet (the 13 card texts (6 hero blurbs, 7 CAST_*_DESC) of cast.csv are VERBATIM the paragraphs of the Figurer v2 export (Natteblik's drawing note is dropped) [])
+  ok    cast_data.timber_yard_stock_items_exist_and_keeper (timber_yard: keeper carpenter_brumme, 7 lines (wood 60, stone 60, plank_pine 30, timber_beam 20, nails 40, rope 20, straw_bundle 20) at the item defs' own prices, buys building_material + resource, builder_yard (Hasselnoed) untouched [])
+  ok    cast_data.no_old_town_name_anywhere (2173 text files (lua, localization, data, scripts, scenes, tests, docs, tools) and every loaded key: the old town name is nowhere [])
+  ok    cast_data.no_foreign_csv_touched (ui.csv, finds.csv and furniture.csv are byte-identical to the baseline (508 keys), cast.csv / core.csv redefine none of them; CHAR_HOBBIT_NAME 'Halvling' and FIND_AREA_FARM are P26's overrides, not V1's [])
+  --    cast_data: 16 checks, 0 failed, 0 skipped, 1.6 s
+== section city_levels  (res://tests/sections/city_levels.gd)
+  ok    city_levels.data_loads (data/traetoppen/traetoppen.json: )
+  ok    city_levels.built_framework_files_untouched (sha256 of iso_area, world_2d, game_data, art_catalog, iso_chibi_sprite_2d, character_catalog is the pinned one; changed: [] (a legitimate edit by the file's owner: update PINNED))
+  ok    city_levels.registry_counts (8 platforms, 9 bridges, 2 stubs, 1 ladder, 1 lift; build notes [])
+  ok    city_levels.level_at_is_a_function_of_position (probes right ([]), keep-outs and the void answer null ([]), 600 random points give the same answer from two registries in two orders (90 on a level), equal to the brute-force definition)
+  ok    city_levels.levels_disjoint (20312 sample points: platform x platform 0, bridge x bridge 0, bridge x platform 30 (landings of their own end levels only; stray []); the ellipses of the Torvet and the Upper deck overlap by 22419 sketch px2 (design: 22,402) and the Torvet's walk region excludes that footprint)
+  ok    city_levels.physics_bits_allocated_from_first_bit (17 levels on layers 12..28, one each; without a `bit` in the data the registry allocates the same numbers in file order (FIRST_BIT = 12); project.godot is not touched)
+  ok    city_levels.rank_order (ranks 10 20 70 80 90 100 150 160 (platforms) and 30 40 50 60 110 120 130 140 170 (bridges), unique multiples of 10; B0-B3 pass behind the Upper deck and tuck under it (and under C / E), B6 / B7 tuck under F / G, B4 / B5 / B8 lie over ([]))
+  ok    city_levels.bridge_ground_lengths_match_design (B0 758, B1 611, B2 1201, B3 896, B4 435, B5 502, B6 772, B7 545, B8 816 ground px (design_v2.md 2.4) within 1 percent; off: [])
+  ok    city_levels.spawns_landmarks_ladder_lift_are_on_levels (4 spawns (default on the Torvet, from_farm on G, from_hyggebyen on F, from_skovlift on B), 10 landmark circles, the ladder (Torvet -> Upper) and the lift stand (B) lie on their levels; off: [])
+  ok    city_levels.validator_green_on_shipped_json (LevelRules.validate(data/traetoppen/traetoppen.json): [])
+  ok    city_levels.validator_mutants (14 of 14 mutants caught by the rule they break (R2 ranks, R3 bits, R4 bridge ends, R5 tuck order, R6 ladder, R7 lift, R8 spawns, R9 landmarks, R10 references, R11 lights, R12 disjoint); missed: [])
+  ok    city_levels.validator_survives_garbage (the empty document, a document of wrong types and 102 broken copies of the shipped JSON (ladder lane [1, 2] / [null, null], bridge path [1, 2], level centre 'x', bridge width 0 and -40, lights as a string, a lift that is an int, bounds as strings, a decor rank 'x' ...) each report a problem of the rule they break (R1 shapes / R6) and raise no engine message; not flagged [], wrong rule [], engine messages [])
+  ok    city_levels.validator_survives_leaf_fuzz (344 mutated copies of the shipped JSON (each leaf / container of the first two list entries replaced by a rotating piece of garbage: null, numbers, text, empty and wrong-typed lists / objects, NaN) raise no engine message (72 of them stay valid because the leaf is a free-form value such as a colour or a note); engine messages [])
+  ok    city_levels.json_source_path_exists (data/traetoppen/traetoppen.json `source` and the generator's docstring name 'docs/Trætoppen Style Guide Review/Trætoppen Miljøer v2.dc.html', and that file exists in docs/ (the style-guide export itself is not edited))
+  ok    city_levels.json_is_current_with_generator (build_traetoppen_json.py --check: exit 0, build_traetoppen_json: /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/data/traetoppen/traetoppen.json is up to date)
+  ok    city_levels.extract_snapshot_present (scripts/world2d/levels/source/v2_city_extract.json (the parsed sketch, read-only copy))
+  ok    city_levels.json_matches_extract_within_1px (333 coordinates of platforms, bridges, 13 huts + the Raadhus, ladder, lift, 32 lanterns, 14 door lamps, owl holes, bat houses, planters and 15 trunk segments agree with the parsed sketch within 1 px (worst 0.05 px); scale 3.0; off: [])
+  ok    city_levels.data_counts_match_design (14 buildings (13 huts + the lavender Raadhus), 32 hanging lanterns, 14 door lamps, 12 PointLight2D entries (<= 12), 3 owl holes, 3 bat houses, 2 foliage clusters, 10 landmarks, 4 spawns)
+  ok    city_levels.no_board_bath_mailbox_markers (markers of the data: ["npc", "seed_basket", "lift", "climb"] (RT29: board, bath and the post-office mailbox are interior handlers, the decor props stay in `props`))
+  ok    city_levels.config_numbers_documented (lua/config/traetoppen.lua: scale 3.0, post {6 givers, per_day 1}, board {max 5}, bath {30 min, once a day}, swap {2 carrots, moonflower 3 : glow berry 2}, stall weekdays 5 6, caches {5 slots, gold 20..50}, skovlift {moerkeskoven, from_traetoppen}; every key has its comment line, the fast_travel rows carry 'used only by Rejsestolpen (V6, STRETCH)', scale and lift agree with the JSON, every stop names a spawn of the JSON (numbers true, documented true, label true, agree true))
+  ok    city_levels.prompt_keys_defined_da_en (LEVEL_PROMPT_CLIMB 'Klatre' / 'Climb', LEVEL_PROMPT_LIFT 'Tag liften' / 'Take the lift' (+ LEVEL_LIFT_CLOSED) exist in da and en, levels.csv has its keep-import, every LEVEL_ key named in scripts/world2d/levels is one of them (["LEVEL_PROMPT_CLIMB", "LEVEL_PROMPT_LIFT", "LEVEL_LIFT_CLOSED"]); missing [], undefined [])
+  ok    city_levels.stage_builds_without_error (builder_error ''; bounds [P: (-600.0, 0.0), S: (6750.0, 3900.0)], zoom (0.2, 0.7) default 0.40, 4 spawns, walkable_test set (the documented IsoArea builder hook, no framework edit))
+  ok    city_levels.walkable_test_matches_levels (walkable_test = on any level (spawn yes, the void and a trunk no))
+  ok    city_levels.builder_areas_are_not_parked (a levelled area is rebuilt on every visit; the player stands in its y-sorted Objects node)
+  ok    city_levels.area_meta_holds_the_stage (LevelTracker, LevelGlow and OccluderFade are children of the area; LevelStage.of(area) finds the stage)
+  ok    city_levels.graph_api_matches_builder (levels_graph(): 8 levels with the walk polygons / holes / rank / bit of the registry the area was built with, 9 bridges whose ends and strip polygons are the built decks', the ladder lane = the two ClimbLane ends = the painted ladder, the lift basket = RopeLift's, 2 stubs; every platform reachable from the Torvet over the graph (8 of 8); a copy (editing it changes nothing); shipped_graph() agrees (levels true bridges true ladder true lift true stubs true))
+  ok    city_levels.player_gets_the_level_of_its_spawn (the world put the player at the default spawn: level torvet, z 80 (the Torvet's rank 80), shadow z 78)
+  ok    city_levels.set_level_changes_z_shadow_mask (on B: z 20, shadow z 18 (rank - 2, absolute), mask 4165 = (197 & 0x7F) | bit 13; on the Torvet: z 80, shadow 78, mask 16453 (B's bit gone, ground_block gone, the low layers kept); a null level changes nothing)
+  ok    city_levels.late_actor_gets_level_on_enter (an actor added to Objects has z 0 at once and z 80 (level torvet) after two physics frames; one on B8 got z 170, one in the void none (z 0); the tracker knows 4 actors)
+  ok    city_levels.tracker_rederives_on_move (the same actor moved to G (z 160, G's bit only), then to A (z 10): 5 level changes counted)
+  ok    city_levels.lock_blocks_the_tracker (locked on A and teleported to the Torvet: three physics frames later still A (z 10); unlocked: the Torvet (z 80))
+  ok    city_levels.void_keeps_the_old_level_and_plain_nodes_are_ignored (an actor teleported into the void keeps the Torvet; a plain Node2D in Objects is not an actor)
+  ok    city_levels.tracker_forgets_freed_actors (after the actors left Objects only the player is tracked (1))
+  ok    city_levels.bridge_strip_polygon_matches_path (9 bridges: the strip polygon = the centre line buffered by width / 2 (area within 1 percent, the line and its 2 px inner / 3 px outer offsets inside / outside), `under` ends stop 25 px (one body radius) before the rim crossing, `over` ends run to the authored end, the deck follows the authored path, one post every 46 sketch px per side (92 posts), rails on the bridge's bit; failures [])
+  ok    city_levels.railing_gap_count (gaps per platform A 2, B 2, C 2, Torvet 4 (B4 B5 B6 B7), Upper 3 (B0 B1 + the ladder), E 2, F 3 (B6 B8 + the Hyggebyen stub), G 3 (B7 B8 + the farm stub) = 21; each gap is width / 2 / rx to each side; the ring is cut exactly there; the Torvet's wall around the Upper deck's shadow has 1 gap for the ladder lane; 16 wings in all (a side each at the `under` ends of B0 B1 on the Upper deck, B2 on C, B3 on E, B6 on F, B7 on G and at the two stubs); failures [])
+  ok    city_levels.colliders_use_level_bits_only (19 bodies (8 platforms' walls + keep-outs, 9 bridges' rails, 2 stubs' rails) with 51 shapes, each on exactly ONE level bit (17 different bits, all >= 12), mask 0, never the shared world layer; the area's own Bounds ring keeps the world layer; bad: [])
+  ok    city_levels.physics_trunk_keepout_blocks_the_walker (walking north at the foot of the main trunk the walker slides along the trunk's ground ellipse (normalised radius 1.06, never below 0.97), moved 290 px, is still on a level that holds its position ([&"torvet"]))
+  ok    city_levels.physics_rim_ring_stops_the_walker (walking south on the Torvet ends at y 2373, the ring is at 2389 (minus the body half height 14.8))
+  ok    city_levels.physics_gap_leads_onto_the_bridge_and_rails_hold (from the Torvet through B7's ring gap: levels passed [&"torvet", &"b7"], now b7 (z 140, mask holds B7's bit, not the Torvet's); pushed sideways both ways the walker stays within 44 / 44 px of the centre line (half width 67))
+  ok    city_levels.physics_tuck_end_hands_over_before_the_rim (walking B6 -> F: levels [&"b6", &"f"]; the hand-over to F happened 24 px before the rim (one body radius = 25, one step is about 3 px, the strip stops there); walked 361 px without being blocked; now on F (z 150, radius 0.81 of the rim))
+  ok    city_levels.physics_other_levels_colliders_are_ignored (a walker carrying A's bit walks into the circle of platform C's hut H5 (normalised radius 0.28, inside); with C's bit the same walk never gets closer than 1.19 (the hut's collider holds it off))
+  ok    city_levels.player_crosses_a_bridge_with_real_input (holding `right` on platform C walks the real player body through B4's ring gap and onto the Torvet: levels [&"c", &"b4", &"torvet"], now z 80 at x 1930 (sketch 643))
+  ok    city_levels.ladder_climb_flips_level (E at the ladder's foot: refused at the top end (wrong level), the climb locks the actor (drawn at the higher rank 90, no level bit), 0.0 s later it stands at the top ((2506.0, 1533.0)) on the Upper deck: z 90, shadow 88, mask holds the Upper's bit, free again)
+  ok    city_levels.ladder_emits_game_event (game_event ladder_climbed {lane, from, to, seconds} once per climb (the audio cue): [[&"ladder_climbed", { "actor": "Player", "lane": "main_ladder", "from": "torvet", "to": "upper", "seconds": 1.1 }]])
+  ok    city_levels.ladder_climbs_down_too (the top end takes the actor back to the Torvet (z 80) and the tracker leaves it there)
+  ok    city_levels.ladder_prompt_is_the_verb_key (prompt key LEVEL_PROMPT_CLIMB; the player's own E query finds the foot of the ladder and try_interact() starts the climb; the prompt is the translated verb (Klatre))
+  ok    city_levels.monkey_climbs_faster (default provider (SpeciesPerks absent or baseline): x1.0, 1.1 s (measured 1.13 s); with a provider answering 2.2 for climb_speed_mult: 0.50 s (measured 0.53 s) and the actor still ends on the Upper deck)
+  ok    city_levels.climb_zone_needs_the_perk (the ring around the main trunk refuses everybody without climb_speed_mult > 1 and takes the monkey from the Torvet to the Upper deck in 0.50 s (no ladder))
+  ok    city_levels.climb_zone_is_hidden_without_the_perk (a perk-only end is disabled (hidden, not findable) when the player's species has no climb perk)
+  ok    city_levels.lift_closed_whispers_and_does_not_hide_the_player (a lift whose target area is not registered: whisper LEVEL_LIFT_CLOSED, no ride, the player stays visible and free, no area change requested)
+  ok    city_levels.lift_requests_area_change (E at the rope (the player's own E query finds the lift): the player is hidden and locked while the basket runs down the rope (1.6 s, measured 1.62 s), then EventBus.area_change_requested(_levels_lift_target, from_traetoppen) comes from lua/config/traetoppen.lua `skovlift` (overridden here to a fixture area); the world travelled (true), the player is visible and free again; game_event lift_ride fired once)
+  ok    city_levels.occluder_fade_alpha (a prop fades to 0.5 (0.50) while the actor is behind it (above the pivot, inside its x range, below its top, drawn under it) and is back to 1.0 in front (1.00), beside it (1.00), when the actor is drawn above it (1.00) or above its top (1.00); no pop: 1.00 -> 0.93 in two frames)
+  ok    city_levels.occluder_fade_on_the_main_trunk_and_huts (the Torvet's trunk segment is 0.5 with the player behind it (0.50), 1.0 in front (1.00); 22 props registered (the huts, the Raadhus and the trunk upper segments))
+  ok    city_levels.glow_follows_day_night_signal (at noon nothing glows; DayNight.glow_changed(1.0) lights 46 halos (32 lanterns + 14 door lamps) and 12 PointLight2D, 0.5 halves the alpha, 0.0 switches all off; connected to the world's DayNight)
+  ok    city_levels.point_lights_max (20 light requests give 12 PointLight2D (the 12 cap), 8 dropped; the data lists 12)
+  ok    city_levels.tracker_cost_ms (tracker tick for 20 actors that all moved: 21.0 polygon tests per tick (<= 80), best tick 0.047 ms, median 0.049 ms, average 0.050 ms (budget 0.05 estimated, asserted: the best tick <= 0.2; this machine was busy with other builds))
+  ok    city_levels.rebuild_ms_warm (IsoArea.setup of the levelled city (stand-in art): warm rebuild best 4 ms, worst 5 ms (budget 40 ms warm; the stage itself took 4.3 ms))
+  info  levelled city: 702 nodes (100 Sprite2D, 190 Line2D), stage built in 4.3 ms
+  ok    city_levels.node_budget (702 nodes in the built area (the design's stand-in measurement was 580 nodes of flat sprites; the vector stand-ins here are more, real art replaces them by sprites))
+  ok    city_levels.zone_traetoppen_entered_and_unlocked (arriving in the levelled area emits zone_entered(traetoppen) once, unlocks the zone through GameManager, emits area_changed; the tracker ticks in physics frames (3 -> 5))
+  ok    city_levels.glow_connection_released_on_leave (glow_changed connections: 1 (WorldRoot2D's own) before the city, 2 inside, 1 after leaving it: LevelGlow connects in _enter_tree and disconnects in _exit_tree)
+  ok    city_levels.rebuild_hook_fires_again (the second visit builds a NEW stage and a new area (builder areas are never parked), the first one is gone, the player gets the Torvet's z 80 again)
+  ok    city_levels.leaving_the_city_keeps_the_pond_solid (the real player body pushed from the shore into the pond of _fixture_iso (cells 2..4, rows 8..10) for up to 100 physics frames: with the mask it has after the city (197) it never stands in a water cell (ends on '.'); the control with the city mask (16453, ground_block gone) enters the water: true)
+  ok    city_levels.leaving_the_city_restores_the_player (plain player (mask 197, z 0, shadow z -5, level '') -> in the city (mask 16453, z 80, shadow z 78, level 'torvet', snapshot kept) -> back in a plain area (mask 197, z 0, shadow z -5, level ''): ground_block back in the mask, shadow z -5 absolute, no level id, no lock, no snapshot; and in the start area 'farm' (mask 197, z 0, shadow z -5, level ''))
+  ok    city_levels.actor_leaving_objects_is_restored_and_levelled_again (an NPC body on the Torvet (mask 16453, z 80, shadow z 78, level 'torvet', snapshot kept) that is locked and taken out of Objects is plain again (mask 197, z 0, shadow z -5, level ''); put back, the tracker levels it again (mask 16453, z 80, shadow z 78, level 'torvet', snapshot kept))
+  ok    city_levels.tracker_exit_tree_restores_actors_still_inside (a body inside a levelled area (mask 16453, z 80, shadow z 78, level 'torvet', snapshot kept): the area leaves the tree and the body is plain again (mask 197, z 0, shadow z -5, level ''); the area comes back and the body is levelled again (mask 16453, z 80, shadow z 78, level 'torvet', snapshot kept))
+  ok    city_levels.tracker_attach_is_idempotent (LevelTracker.attach(area, registry) called twice more on the live stage: child_entered_tree / child_exiting_tree have 1 / 1 connection(s) of the tracker (1 / 1), the 1 known actors are kept, a late actor is still levelled (z 80), no engine message [])
+  ok    city_levels.tracker_attach_to_another_area_releases_the_first (a tracker re-attached to another area lets go of the first: its body is plain again (mask 197, z 0, shadow z -5, level '', was mask 16453, z 80, shadow z 78, level 'torvet', snapshot kept), 0 connections remain on the old Objects, 2 are on the new one)
+  ok    city_levels.climb_abandoned_when_area_leaves_mid_climb (E at the ladder's foot, then the world switches to another area 3 frames into the climb: while climbing mask 69, z 90, shadow z 88, level 'torvet', LOCKED, snapshot kept (state TALKING, clip walk); at once afterwards the lane is no longer climbing, the player is FREE (state 0, clip '' = before ''), plain (mask 197, z 0, shadow z -5, level ''), and stays where the new area put it for 1.3 s (the tween is dead))
+  ok    city_levels.player_gets_a_level_when_back_after_an_abandoned_climb (the player that was cut off mid-climb is on the Torvet again after re-entering the city: mask 16453, z 80, shadow z 78, level 'torvet', snapshot kept)
+  --    city_levels: 69 checks, 0 failed, 0 skipped, 2.7 s
+== section city_life  (res://tests/sections/city_life.gd)
+  ok    city_life.handler_mailbox
+  ok    city_life.handler_board
+  ok    city_life.handler_bath
+  ok    city_life.handler_seed_basket
+  ok    city_life.handler_kiki_cache
+  ok    city_life.handler_rejsestolpe
+  ok    city_life.mailbox_places_param_prop
+  ok    city_life.day_one_mailbox_empty_no_event
+  ok    city_life.post_toast_once
+  ok    city_life.post_letter_selection ({ "quest_id": &"pips_runde", "giver": &"postman_pip" })
+  ok    city_life.letter_uses_real_dialogue
+  ok    city_life.post_accept_starts_quest
+  ok    city_life.post_once_per_day
+  ok    city_life.empty_post_still_emits_once
+  ok    city_life.board_lists_only_everyday_givers
+  ok    city_life.board_accept_starts_quest
+  ok    city_life.bath_refused_before_day_end
+  ok    city_life.bath_restores_and_costs_time
+  ok    city_life.bath_once_per_day
+  ok    city_life.daily_flags_after_bed
+  ok    city_life.daily_flags_after_roll
+  ok    city_life.disposed_bath_releases_modal
+  ok    city_life.swap_requires_carrots
+  ok    city_life.swap_atomic_before_observers
+  ok    city_life.swap_once_per_day
+  ok    city_life.full_bag_preserves_carrots_and_daily_flag
+  ok    city_life.visiting_hoppe_swaps_on_farm
+  ok    city_life.cache_excludes_animal_fox
+  ok    city_life.cache_excludes_fairy_meadow
+  ok    city_life.cache_excludes_hobbit_pip
+  ok    city_life.cache_excludes_ghost_bu
+  ok    city_life.cache_reward_is_small
+  ok    city_life.cache_once_per_day
+  ok    city_life.daily_flag_serializes_post_read_day
+  ok    city_life.daily_flag_serializes_post_toast_day
+  ok    city_life.daily_flag_serializes_bath_day
+  ok    city_life.daily_flag_serializes_swap_day
+  ok    city_life.daily_flag_serializes_cache_day
+  ok    city_life.market_weekday_1
+  ok    city_life.market_weekday_2
+  ok    city_life.market_weekday_3
+  ok    city_life.market_weekday_4
+  ok    city_life.market_weekday_5
+  ok    city_life.market_weekday_6
+  ok    city_life.market_weekday_7
+  ok    city_life.room_handler_int_postkontoret (int_postkontoret)
+  ok    city_life.post_office_counter_responds
+  ok    city_life.room_handler_int_raadhuset (int_raadhuset)
+  ok    city_life.room_handler_int_badehuset (int_badehuset)
+  ok    city_life.sofus_request_uses_live_bath
+  ok    city_life.sofus_request_completes_once
+  ok    city_life.copy_LIFE_POST_PROMPT1
+  ok    city_life.copy_LIFE_POST_PROMPT2
+  ok    city_life.copy_LIFE_POST_TOAST1
+  ok    city_life.copy_LIFE_POST_TOAST2
+  ok    city_life.copy_LIFE_POST_EMPTY1
+  ok    city_life.copy_LIFE_POST_EMPTY2
+  ok    city_life.copy_LIFE_POST_OFFICE1
+  ok    city_life.copy_LIFE_POST_OFFICE2
+  ok    city_life.copy_LIFE_ACCEPT1
+  ok    city_life.copy_LIFE_ACCEPT2
+  ok    city_life.copy_LIFE_LATER1
+  ok    city_life.copy_LIFE_LATER2
+  ok    city_life.copy_LIFE_BOARD_PROMPT1
+  ok    city_life.copy_LIFE_BOARD_PROMPT2
+  ok    city_life.copy_LIFE_BOARD_INTRO1
+  ok    city_life.copy_LIFE_BOARD_INTRO2
+  ok    city_life.copy_LIFE_BOARD_EMPTY1
+  ok    city_life.copy_LIFE_BOARD_EMPTY2
+  ok    city_life.copy_LIFE_BATH_PROMPT1
+  ok    city_life.copy_LIFE_BATH_PROMPT2
+  ok    city_life.copy_LIFE_BATH_USED1
+  ok    city_life.copy_LIFE_BATH_USED2
+  ok    city_life.copy_LIFE_BATH_LATE1
+  ok    city_life.copy_LIFE_BATH_LATE2
+  ok    city_life.copy_LIFE_BATH_DONE1
+  ok    city_life.copy_LIFE_BATH_DONE2
+  ok    city_life.copy_LIFE_SWAP_PROMPT1
+  ok    city_life.copy_LIFE_SWAP_PROMPT2
+  ok    city_life.copy_LIFE_SWAP_USED1
+  ok    city_life.copy_LIFE_SWAP_USED2
+  ok    city_life.copy_LIFE_SWAP_NEED1
+  ok    city_life.copy_LIFE_SWAP_NEED2
+  ok    city_life.copy_LIFE_SWAP_DONE1
+  ok    city_life.copy_LIFE_SWAP_DONE2
+  ok    city_life.copy_LIFE_BAG_FULL1
+  ok    city_life.copy_LIFE_BAG_FULL2
+  ok    city_life.copy_LIFE_CACHE_PROMPT1
+  ok    city_life.copy_LIFE_CACHE_PROMPT2
+  ok    city_life.copy_LIFE_CACHE_DONE1
+  ok    city_life.copy_LIFE_CACHE_DONE2
+  ok    city_life.copy_LIFE_TRAVEL_PROMPT1
+  ok    city_life.copy_LIFE_TRAVEL_PROMPT2
+  ok    city_life.copy_LIFE_TRAVEL_INTRO1
+  ok    city_life.copy_LIFE_TRAVEL_INTRO2
+  ok    city_life.copy_LIFE_STOP_FARM1
+  ok    city_life.copy_LIFE_STOP_FARM2
+  ok    city_life.copy_LIFE_STOP_TORV1
+  ok    city_life.copy_LIFE_STOP_TORV2
+  ok    city_life.copy_LIFE_STOP_HYGGEBYEN1
+  ok    city_life.copy_LIFE_STOP_HYGGEBYEN2
+  ok    city_life.copy_LIFE_STOP_SKOVLIFT1
+  ok    city_life.copy_LIFE_STOP_SKOVLIFT2
+  ok    city_life.copy_LIFE_BATH_VISIT1
+  ok    city_life.copy_LIFE_BATH_VISIT2
+  --    city_life: 105 checks, 0 failed, 0 skipped, 4.3 s
+== section core  (res://tests/sections/core.gd)
+  ok    core.signal_contract_exact (76 signals; missing [], wrong [], not in the contract [])
+  ok    core.legacy_signals_keep_arity (38 legacy signals)
+  ok    core.plan_3_5_signals (23 signals of PLAN 3.5 + R.13)
+  ok    core.feature_signals_14 (addendum 3.1)
+  ok    core.review_fix_signals (devin-review additions (flag_changed))
+  ok    core.farm_upgraded_removed (PLAN 3.5: removed, never used)
+  ok    core.r13_escape_hatch_and_hotbar_assign (R.13)
+  ok    core.player_spawned_node2d (emitted with a Node2D)
+  ok    core.signal_arity_lint (841 EventBus uses in 428 files, 0 violation(s) []; covers 14 feature signals)
+  ok    core.signal_arity_lint_covers_14_feature_signals (arity of every addendum 3.1 signal)
+  ok    core.signal_arity_lint_detects_mismatch (bad sample ["sample:1 EventBus.gold_changed.emit() has 1 argument(s), the signal has 2", "sample:2 EventBus.nope is neither a declared signal nor a member", "sample:3 EventBus.day_started.connect(func(a): pass) accepts 1..1 argument(s), the signal passes 2", "sample:4 EventBus.home_upgraded.connect(_h) accepts 3..3 argument(s), the signal passes 2", "sample:7 EventBus.save_completed.connect(_t2) accepts 0..0 argument(s), the signal passes 1", "sample:10 EventBus.item_sold.emit() has 2 argument(s), the signal has 3"], good sample [])
+  ok    core.config_literal_defaults (28 days, 4 seasons, 06:00 to 26:00 (= 02:00 at night), 2 min/s)
+  ok    core.config_read_from_lua (minutes_per_real_second 2.0 from LuaRuntime time.*)
+  ok    core.time_manager_has_no_second_copy (TimeManager delegates to GameManager)
+  ok    core.config_override_seasons (override seam)
+  ok    core.config_drives_end_day (day 7 of aa -> day 1 of bb (1 bb))
+  ok    core.config_drives_year (year 2 starts at total day 15 (15))
+  ok    core.modal_stack (push x2 / pop x2: paused true true, after first pop true, after last pop resumed true)
+  ok    core.modal_changed_signal (modal_changed payloads [[&"pause"], [&"pause", &"settings"], [&"pause"], []])
+  ok    core.modal_stack_pop_out_of_order (pop the older modal first)
+  ok    core.modal_phase_cutscene_and_restore (CUTSCENE true, shop over dialogue true, true, true, back to CUTSCENE true, PLAYING true)
+  ok    core.modal_push_is_idempotent (double push = one entry, unknown pop ignored)
+  info  expected engine error below (declared with allow): push_modal with an empty name
+ERROR: GameManager.push_modal: a modal needs a name
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] push_modal (res://scripts/autoload/game_manager.gd:261)
+       [1] _test_modal_stack (res://tests/sections/core.gd:527)
+       [2] run (res://tests/sections/core.gd:140)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    empty modal name is refused with an error (allowed 'a modal needs a name' seen 1 time(s), want >= 1)
+  ok    core.modal_empty_name_refused
+  ok    core.modal_stack_cleared_at_menu (quit to menu leaves a live, unpaused menu)
+  ok    core.modal_over_menu_restores_menu (settings over the title)
+  ok    core.phase_character_select
+  ok    core.phase_legacy_change_phase (change_phase(PAUSED/PLAYING))
+  ok    core.phase_playing_does_not_unpause_open_modal (an open modal wins over change_phase(PLAYING))
+  ok    core.phase_after_pop_all
+  ok    core.modal_changed_only_when_the_stack_changes (scene boundaries and no-op pops are silent: [])
+  ok    core.modal_never_touches_the_mouse (mouse mode stays 0)
+  ok    core.flags_json_safe_types (bool, int, float, String; StringName is stored as String)
+  info  expected engine errors below (declared with allow): set_flag with an Array, a Vector2 and NAN
+ERROR: GameManager.set_flag(bad_array): Array is not JSON-safe (use bool, int, float or String)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_flag (res://scripts/autoload/game_manager.gd:358)
+       [1] _test_flags (res://tests/sections/core.gd:574)
+       [2] run (res://tests/sections/core.gd:141)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+ERROR: GameManager.set_flag(bad_vector): Vector2 is not JSON-safe (use bool, int, float or String)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_flag (res://scripts/autoload/game_manager.gd:358)
+       [1] _test_flags (res://tests/sections/core.gd:575)
+       [2] run (res://tests/sections/core.gd:141)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+ERROR: GameManager.set_flag(bad_nan): float is not JSON-safe (use bool, int, float or String)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_flag (res://scripts/autoload/game_manager.gd:358)
+       [1] _test_flags (res://tests/sections/core.gd:576)
+       [2] run (res://tests/sections/core.gd:141)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    non JSON-safe values are refused with an error (allowed '(use bool, int, float or String)' seen 3 time(s), want >= 3)
+  ok    core.flags_unsafe_values_not_stored
+  ok    core.flags_null_clears
+  ok    core.flags_clear
+  ok    core.flag_int_defaults (absent flags: home_tier 1, home_building 0, home_upgrade_done 0)
+  ok    core.flag_int_coerces (3.0 -> 3, true -> 1, '12' -> 12, 'tre' -> default)
+  ok    core.flag_int_after_json_roundtrip (new game defaults ok true; raw value after JSON is a float true; flag_int gives ints true)
+  ok    core.new_game_signal_once_and_last (signals in order: ["modal_changed", "player_character_changed", "weather_changed", "new_game_started"])
+  ok    core.new_game_started_is_last_gm_signal (after it only the reset wave of other systems: [])
+  ok    core.new_game_skin_announced_final (player_character_changed [&"fairy_meadow"])
+  ok    core.new_game_state_reset_before_signal (day/season/year/clock, flags { &"intro_pending": true, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0 }, zones, modals gone, phase PLAYING)
+  ok    core.new_game_intro_pending (intro_pending=true, the dirty flag is gone)
+  ok    core.new_game_resets_own_state
+  ok    core.new_game_resets_time_manager (weather klart, clock running)
+  ok    core.new_game_default_and_explicit_skin (animal animal_fox hobbit hobbit_pip ghost ghost_bu explicit fairy_dusk)
+  ok    core.new_game_default_names (empty names fall back to the translated defaults (Eventyrrejsende / Min Trækronsgård))
+  ok    core.new_game_wires_EconomyManager (EconomyManager.reset() is connected to new_game_started)
+  ok    core.new_game_wires_QuestManager (QuestManager.reset() is connected to new_game_started)
+  ok    core.new_game_wires_TimeManager (TimeManager.reset() is connected to new_game_started)
+  ok    core.new_game_wires_ShopSystem (ShopSystem.reset() is connected to new_game_started)
+  ok    core.new_game_wires_AnimalHusbandry (AnimalHusbandry.reset() is connected to new_game_started)
+  ok    core.new_game_wires_SaveManager (SaveManager.reset() is connected to new_game_started)
+  ok    core.new_game_resets_gold (gold after a new game: 500)
+  ok    core.new_game_resets_all (one new_game_started per start_new_game; 6 system(s) reset through it so far)
+  ok    core.from_dict_restores_state
+  ok    core.from_dict_types_after_json (ints and StringNames come back typed)
+  ok    core.from_dict_does_not_start_playing (phase stays 0)
+  ok    core.from_dict_emits_character_changed (["player_character_changed"])
+  ok    core.to_dict_total_day (total_day 156 in the dictionary for the title screen)
+  ok    core.from_dict_empty_is_safe
+  info  expected engine warning below (declared with allow): from_dict drops an unsafe flag
+WARNING: GameManager.from_dict: world flag 'bad' is not JSON-safe and was dropped
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _sanitized_flags (res://scripts/autoload/game_manager.gd:624)
+         [1] from_dict (res://scripts/autoload/game_manager.gd:600)
+         [2] _test_from_dict (res://tests/sections/core.gd:744)
+         [3] run (res://tests/sections/core.gd:143)
+         [4] go_menu (res://tests/lib/flow.gd:69)
+         [5] change_scene (res://tests/lib/flow.gd:57)
+         [6] frames (res://tests/lib/drive.gd:79)
+  ok    an unsafe flag in a save is reported (allowed 'and was dropped' seen 1 time(s), want >= 1)
+  ok    core.from_dict_drops_unsafe_flags
+  ok    core.unlock_zone_payload (zone_unlocked(crystal_cave))
+  ok    core.unlock_zone_signals (zone_unlocked x1, zone_entered x0)
+  ok    core.unlock_zone_toast (one toast, icon zone: [["Nyt område!", "Du har låst op for: Krystalgrotten", "zone"]])
+  ok    core.unlock_toast_never_formats_a_raw_key (an untranslated key (no placeholder) is returned as it is: no String formatting error)
+  ok    core.unlock_zone_state (unlocked, not discovered)
+  ok    core.unlock_zone_twice_is_silent (no second signal, no second toast)
+  ok    core.zone_entered_discovers
+  ok    core.advance_time_25h (06:00 + 25 h = day 2 07:00)
+  ok    core.advance_time_25h_signals (["day_ended", "day_started", "game_event", "time_of_day_changed"])
+  ok    core.midnight_passed_event (game_event(midnight_passed) after day_started: [&"midnight_passed", { "day": 2, "season": "foraar" }])
+  ok    core.advance_time_multiday (50 h -> day 3 08:00 true; 18 h -> raw 24:00 of the same day true; 20 h -> day 2 02:00 true; 23:59 + 1 min -> raw 24:00 same day true; 25:59 + 1 min -> day 2 02:00 true; 29 days 90 min -> sommer day 2 07:30 true)
+  ok    core.time_of_day_changed_range (raw hour 2..25 (a signal at 24:30 carries 24: the HUD shows 00:30), minute 0..59)
+  ok    core.advance_time_zero_and_negative (0 min emits the clock once, negative minutes are ignored)
+  ok    core.season_rollover (day 28 foraar 23:00 + 2 h = still day 28 (01:00); 01:00 (raw 25:00) + 2 h = day 1 sommer 03:00: ["day_ended", "season_changed", "day_started", "game_event", "time_of_day_changed"])
+  ok    core.year_rollover (vinter 28 -> foraar day 1 of year 2)
+  ok    core.end_day_signal_order (["day_ended", "day_started", "time_of_day_changed"] (the bed emits no midnight_passed))
+  ok    core.end_day_full_year (114 end_day() calls: day 3 foraar year 2 (total 115))
+  ok    core.total_day_values (Dag 1 .. Dag 112, year 2 starts at Dag 113)
+  ok    core.total_day_current (day 9 efteraar year 1 is Dag 65)
+  ok    core.sleep_from_bed (21:30 -> next day 06:00)
+  ok    core.sleep_after_passout_no_double_day (after the 02:00 roll: wake at 06:00 of the same calendar day (day 5))
+  ok    date_text(16, foraar) in da (got Tirsdag 16. Blomstermåned, want Tirsdag 16. Blomstermåned)
+  ok    date_text(16, foraar) in en (got Tuesday 16. Month of Blooms, want Tuesday 16. Month of Blooms)
+  ok    core.calendar_names (date_text da/en, 28 weekdays true, 4 months true, 5 weather names true, en names true, defaults to today true)
+  ok    core.weekday_is_monday_on_day_one_of_every_season (Mandag = day 1 of every season)
+  ok    core.first_weekday_config (time.first_weekday=2: day 1 is Onsdag; the default is Mandag)
+  info  expected engine error below (declared with allow): set_weather with an unknown id
+ERROR: TimeManager.set_weather: unknown weather id 'hagl'
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_weather (res://scripts/autoload/time_manager.gd:146)
+       [1] _test_weather (res://tests/sections/core.gd:960)
+       [2] run (res://tests/sections/core.gd:149)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    an unknown weather id is refused (allowed 'unknown weather id' seen 1 time(s), want >= 1)
+  ok    core.weather_set_and_announced (weather_changed(regn), is_raining only for regn, unknown id refused)
+  ok    core.weather_roll_uses_config_chances (roll 0.0 -> regn, 0.30 -> taage, 0.90 -> klart)
+  ok    core.weather_snow_only_in_vinter (snow chance outside vinter is ignored)
+  ok    core.weather_weights_are_normalised (klart 6 / regn 3 / torden 1 -> { &"regn": 0.3, &"torden": 0.1, &"klart": 0.6 }; rolls 0.10 regn, 0.35 torden, 0.50 klart)
+  ok    core.weather_table_is_valid (foraar [&"regn", &"taage", &"klart"]; sommer [&"regn", &"torden", &"klart"]; efteraar [&"regn", &"taage", &"klart"]; vinter [&"taage", &"sne", &"klart"]; )
+  ok    core.is_night_from_config (20:00-05:00 by default, configurable)
+  ok    core.weather_default_rolls_are_valid (ids seen: [&"regn", &"klart", &"taage", &"torden", &"sne"])
+  ok    core.weather_rolled_before_day_started (a day_started listener already saw the roll (1), total 1)
+  ok    core.weather_rolled_once_per_day (a stray day_started of the same day does not roll again)
+  ok    core.weather_rolled_by_game_manager_before_listeners (without TimeManager's own handler a listener still saw the new roll (2, was 1))
+  ok    core.weather_one_roll_per_crossed_midnight (25 h = 1 roll, 50 h = 2 rolls)
+  ok    core.time_manager_reset
+  ok    core.time_manager_save_roundtrip (weather and the day it belongs to survive JSON)
+  ok    core.time_manager_from_dict_bad_weather (unknown saved weather falls back to klart)
+  ok    core.time_tick_rate (2 game minutes per real second: 1 s = 06:02 (06:02))
+  ok    core.pause_time_is_idempotent (pause twice, resume once: the clock runs again)
+  ok    core.resume_time_is_idempotent
+  ok    core.clock_stops_in_modals_and_menus (paused modal true, dialogue true, menu true)
+  ok    core.time_scale (time scale 2: +2 minutes for 0.5 s (06:05))
+  ok    core.tick_crosses_midnight (23:59 + 1 tick = day 1 raw 24:00 (00:00 of the same day); 01:59 + 1 tick = day 2 02:00)
+  ok    core.day_fraction (noon is half of the day)
+  ok    core.no_mouse_capture (16 autoload scripts scanned, none touches Input.mouse_mode [] (the cursor itself is menus.cursor_always_visible, P16))
+  --    core: 114 checks, 0 failed, 0 skipped, 0.9 s
+== section menus  (res://tests/sections/menus.gd)
+  ok    menus.initial_focus_title
+  ok    menus.title_esc_inert
+  ok    menus.keyboard_title_to_select
+  ok    Two authored heroes for race 0
+  ok    Hero animal_fox
+  ok    Hero blurb fits: animal_fox
+  ok    Hero animal_monkey
+  ok    Hero blurb fits: animal_monkey
+  ok    Four-card geometry 0
+  ok    Two authored heroes for race 1
+  ok    Hero fairy_meadow
+  ok    Hero blurb fits: fairy_meadow
+  ok    Hero fairy_birk
+  ok    Hero blurb fits: fairy_birk
+  ok    Four-card geometry 1
+  ok    Two authored heroes for race 2
+  ok    Hero hobbit_pip
+  ok    Hero blurb fits: hobbit_pip
+  ok    Hero hobbit_bodil
+  ok    Hero blurb fits: hobbit_bodil
+  ok    Four-card geometry 2
+  ok    Two authored heroes for race 3
+  ok    Hero ghost_bu
+  ok    Hero blurb fits: ghost_bu
+  ok    Hero ghost_hviske
+  ok    Hero blurb fits: ghost_hviske
+  ok    Four-card geometry 3
+  ok    menus.four_cards_wrap
+  ok    menus.card_up_reaches_selected_hero
+  ok    menus.select_second_page
+  ok    menus.names_survive_back
+  ok    menus.field_limits
+  ok    menus.select_rules_da ([])
+  ok    menus.select_rules_en ([])
+  ok    menus.back_restores_title_opener
+  ok    menus.settings_ui_screen_contract
+  ok    menus.settings_ui_rules ([])
+  ok    Master keyboard changes by five percent
+  ok    Music keyboard changes by five percent
+  ok    Sfx keyboard changes by five percent
+  ok    Voice keyboard changes by five percent
+  ok    menus.fullscreen_dims_size_chips
+  ok    menus.window_mode_reenables_sizes
+  ok    menus.settings_preserve_shared_file
+  ok    menus.settings_persist_across_restart (Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PASS menus.settings_persist_across_restart
+)
+  ok    menus.save_load_ui_screen_contract
+  ok    menus.save_load_ui_rules ([])
+  ok    menus.keyboard_race_0_hero_0 (expected animal_fox; actual animal_fox)
+  ok    Defaults accepted with keyboard
+  ok    menus.keyboard_race_0_hero_1 (expected animal_monkey; actual animal_monkey)
+  ok    Defaults accepted with keyboard
+  ok    menus.keyboard_race_1_hero_0 (expected fairy_meadow; actual fairy_meadow)
+  ok    Defaults accepted with keyboard
+  ok    menus.keyboard_race_1_hero_1 (expected fairy_birk; actual fairy_birk)
+  ok    Defaults accepted with keyboard
+  ok    menus.keyboard_race_2_hero_0 (expected hobbit_pip; actual hobbit_pip)
+  ok    Defaults accepted with keyboard
+  ok    menus.keyboard_race_2_hero_1 (expected hobbit_bodil; actual hobbit_bodil)
+  ok    Defaults accepted with keyboard
+  ok    menus.keyboard_race_3_hero_0 (expected ghost_bu; actual ghost_bu)
+  ok    Defaults accepted with keyboard
+  ok    menus.keyboard_race_3_hero_1 (expected ghost_hviske; actual ghost_hviske)
+  ok    Defaults accepted with keyboard
+  ok    menus.gamepad_race_0_hero_0 (expected animal_fox; actual animal_fox)
+  ok    Defaults accepted with gamepad
+  ok    menus.gamepad_race_0_hero_1 (expected animal_monkey; actual animal_monkey)
+  ok    Defaults accepted with gamepad
+  ok    menus.gamepad_race_1_hero_0 (expected fairy_meadow; actual fairy_meadow)
+  ok    Defaults accepted with gamepad
+  ok    menus.gamepad_race_1_hero_1 (expected fairy_birk; actual fairy_birk)
+  ok    Defaults accepted with gamepad
+  ok    menus.gamepad_race_2_hero_0 (expected hobbit_pip; actual hobbit_pip)
+  ok    Defaults accepted with gamepad
+  ok    menus.gamepad_race_2_hero_1 (expected hobbit_bodil; actual hobbit_bodil)
+  ok    Defaults accepted with gamepad
+  ok    menus.gamepad_race_3_hero_0 (expected ghost_bu; actual ghost_bu)
+  ok    Defaults accepted with gamepad
+  ok    menus.gamepad_race_3_hero_1 (expected ghost_hviske; actual ghost_hviske)
+  ok    Defaults accepted with gamepad
+  ok    menus.pause_opens
+  ok    menus.pause_rules ([])
+  ok    menus.pause_second_esc_resumes
+  ok    Pause refused while sleeping
+  ok    Pause refused while traveling
+  ok    menus.all_twelve_pause_rows_fit_720 ([P: (420.0, 65.0), S: (440.0, 590.0)])
+  ok    menus.save_nests_under_pause
+  ok    menus.autosave_row_read_only
+  ok    menus.empty_slot_saves_without_confirm
+  ok    menus.overwrite_asks_confirm
+  ok    menus.overwrite_cancel_keeps_file
+  ok    menus.overwrite_accept_saves_once
+  ok    menus.save_close_returns_to_pause_opener
+  ok    menus.load_in_game_asks_confirm
+  ok    menus.load_cancel_keeps_game
+  ok    menus.delete_key_asks_confirm
+  ok    menus.delete_cancel_keeps_file
+  ok    menus.delete_accept_removes_selected_only
+  ok    menus.save_load_resume_roundtrip
+  ok    menus.title_no_saves
+  ok    menus.title_one_save
+  ok    menus.title_multiple_saves_and_latest_day
+  ok    menus.title_failure_toast_visible
+  ok    menus.title_returns_focus_after_save_removal
+  --    menus: 103 checks, 0 failed, 0 skipped, 5.8 s
+== section voice  (res://tests/sections/voice.gd)
+  ok    voice.manifest_in_sync (PASS manifest_in_sync 296 lines
+)
+  ok    voice.index_matches_csv (PASS voiced_index_in_sync
+)
+  ok    voice.stream_voice/appraiser_fru_ugle/farewell
+  ok    voice.stream_voice/appraiser_fru_ugle/finds
+  ok    voice.draft_voice_explicit_voice/appraiser_fru_ugle/first_1_v
+  ok    voice.stream_voice/appraiser_fru_ugle/glass
+  ok    voice.stream_voice/appraiser_fru_ugle/greet
+  ok    voice.stream_voice/appraiser_fru_ugle/lake
+  ok    voice.stream_voice/appraiser_fru_ugle/patience
+  ok    voice.stream_voice/appraiser_fru_ugle/runes
+  ok    voice.stream_voice/appraiser_fru_ugle/window
+  ok    voice.draft_voice_explicit_voice/baker_maja/bday_baker_maja_greet_1_v
+  ok    voice.stream_voice/baker_maja/cookie_talk
+  ok    voice.draft_voice_explicit_voice/baker_maja/first_1_v
+  ok    voice.draft_voice_explicit_voice/baker_maja/gift_baker_maja_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/baker_maja/gift_baker_maja_hate_1_v
+  ok    voice.draft_voice_explicit_voice/baker_maja/gift_baker_maja_like_1_v
+  ok    voice.draft_voice_explicit_voice/baker_maja/gift_baker_maja_love_1_v
+  ok    voice.draft_voice_explicit_voice/baker_maja/gift_baker_maja_neutral_1_v
+  ok    voice.stream_voice/baker_maja/greet
+  ok    voice.draft_voice_explicit_voice/baker_maja/greet_h0_1_v
+  ok    voice.stream_voice/baker_maja/math_done
+  ok    voice.stream_voice/baker_maja/math_q1
+  ok    voice.stream_voice/baker_maja/math_q2
+  ok    voice.stream_voice/baker_maja/math_q3
+  ok    voice.stream_voice/baker_maja/roof_trouble
+  ok    voice.stream_voice/baker_maja/thanks
+  ok    voice.draft_voice_explicit_voice/bathkeeper_sofus/bday_bathkeeper_sofus_greet_1_v
+  ok    voice.stream_voice/bathkeeper_sofus/evening
+  ok    voice.draft_voice_explicit_voice/bathkeeper_sofus/first_1_v
+  ok    voice.draft_voice_explicit_voice/bathkeeper_sofus/gift_bathkeeper_sofus_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/bathkeeper_sofus/gift_bathkeeper_sofus_hate_1_v
+  ok    voice.draft_voice_explicit_voice/bathkeeper_sofus/gift_bathkeeper_sofus_like_1_v
+  ok    voice.draft_voice_explicit_voice/bathkeeper_sofus/gift_bathkeeper_sofus_love_1_v
+  ok    voice.draft_voice_explicit_voice/bathkeeper_sofus/gift_bathkeeper_sofus_neutral_1_v
+  ok    voice.stream_voice/bathkeeper_sofus/greet
+  ok    voice.draft_voice_explicit_voice/bathkeeper_sofus/greet_h0_1_v
+  ok    voice.stream_voice/bathkeeper_sofus/offer
+  ok    voice.stream_voice/bathkeeper_sofus/once
+  ok    voice.stream_voice/bathkeeper_sofus/orange
+  ok    voice.stream_voice/bathkeeper_sofus/steam
+  ok    voice.stream_voice/bathkeeper_sofus/tired
+  ok    voice.stream_voice/bathkeeper_sofus/towel
+  ok    voice.draft_voice_explicit_voice/beekeeper_birk/bday_beekeeper_birk_greet_1_v
+  ok    voice.stream_voice/beekeeper_birk/bees
+  ok    voice.stream_voice/beekeeper_birk/family
+  ok    voice.stream_voice/beekeeper_birk/farewell
+  ok    voice.draft_voice_explicit_voice/beekeeper_birk/first_1_v
+  ok    voice.stream_voice/beekeeper_birk/flowers
+  ok    voice.draft_voice_explicit_voice/beekeeper_birk/gift_beekeeper_birk_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/beekeeper_birk/gift_beekeeper_birk_hate_1_v
+  ok    voice.draft_voice_explicit_voice/beekeeper_birk/gift_beekeeper_birk_like_1_v
+  ok    voice.draft_voice_explicit_voice/beekeeper_birk/gift_beekeeper_birk_love_1_v
+  ok    voice.draft_voice_explicit_voice/beekeeper_birk/gift_beekeeper_birk_neutral_1_v
+  ok    voice.stream_voice/beekeeper_birk/greet
+  ok    voice.draft_voice_explicit_voice/beekeeper_birk/greet_h0_1_v
+  ok    voice.stream_voice/beekeeper_birk/honey
+  ok    voice.stream_voice/beekeeper_birk/quiet
+  ok    voice.stream_voice/beekeeper_birk/wings
+  ok    voice.draft_voice_explicit_voice/bertil/first_1_v
+  ok    voice.draft_voice_explicit_voice/bodil/first_1_v
+  ok    voice.draft_voice_explicit_voice/carpenter_brumme/bday_carpenter_brumme_greet_1_v
+  ok    voice.draft_voice_explicit_voice/carpenter_brumme/first_1_v
+  ok    voice.draft_voice_explicit_voice/carpenter_brumme/gift_carpenter_brumme_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/carpenter_brumme/gift_carpenter_brumme_hate_1_v
+  ok    voice.draft_voice_explicit_voice/carpenter_brumme/gift_carpenter_brumme_like_1_v
+  ok    voice.draft_voice_explicit_voice/carpenter_brumme/gift_carpenter_brumme_love_1_v
+  ok    voice.draft_voice_explicit_voice/carpenter_brumme/gift_carpenter_brumme_neutral_1_v
+  ok    voice.stream_voice/carpenter_brumme/greet
+  ok    voice.draft_voice_explicit_voice/carpenter_brumme/greet_h0_1_v
+  ok    voice.stream_voice/carpenter_brumme/help
+  ok    voice.stream_voice/carpenter_brumme/market
+  ok    voice.stream_voice/carpenter_brumme/rest
+  ok    voice.stream_voice/carpenter_brumme/roof
+  ok    voice.stream_voice/carpenter_brumme/slow
+  ok    voice.stream_voice/carpenter_brumme/timber
+  ok    voice.stream_voice/carpenter_brumme/tools
+  ok    voice.draft_voice_explicit_voice/cat_morfar_mis/first_1_v
+  ok    voice.stream_voice/cat_morfar_mis/forest
+  ok    voice.stream_voice/cat_morfar_mis/home
+  ok    voice.draft_voice_explicit_voice/clerk_fjerpen/first_1_v
+  ok    voice.draft_voice_explicit_voice/cub_bamse/first_1_v
+  ok    voice.draft_voice_explicit_voice/fairy_builder/first_1_v
+  ok    voice.stream_voice/fairy_builder/t01_idle
+  ok    voice.stream_voice/fairy_builder/t01_offer
+  ok    voice.stream_voice/fairy_builder/t02_building
+  ok    voice.stream_voice/fairy_builder/t02_done
+  ok    voice.stream_voice/fairy_builder/t02_idle
+  ok    voice.stream_voice/fairy_builder/t02_offer
+  ok    voice.stream_voice/fairy_builder/t03_building
+  ok    voice.stream_voice/fairy_builder/t03_done
+  ok    voice.stream_voice/fairy_builder/t03_idle
+  ok    voice.stream_voice/fairy_builder/t03_offer
+  ok    voice.stream_voice/fairy_builder/t04_building
+  ok    voice.stream_voice/fairy_builder/t04_done
+  ok    voice.stream_voice/fairy_builder/t04_idle
+  ok    voice.stream_voice/fairy_builder/t04_offer
+  ok    voice.stream_voice/fairy_builder/t05_building
+  ok    voice.stream_voice/fairy_builder/t05_done
+  ok    voice.stream_voice/fairy_builder/t05_idle
+  ok    voice.stream_voice/fairy_builder/t05_offer
+  ok    voice.stream_voice/fairy_builder/t06_building
+  ok    voice.stream_voice/fairy_builder/t06_done
+  ok    voice.stream_voice/fairy_builder/t06_idle
+  ok    voice.stream_voice/fairy_builder/t06_offer
+  ok    voice.stream_voice/fairy_builder/t07_building
+  ok    voice.stream_voice/fairy_builder/t07_done
+  ok    voice.stream_voice/fairy_builder/t07_idle
+  ok    voice.stream_voice/fairy_builder/t07_offer
+  ok    voice.stream_voice/fairy_builder/t08_building
+  ok    voice.stream_voice/fairy_builder/t08_done
+  ok    voice.stream_voice/fairy_builder/t08_idle
+  ok    voice.stream_voice/fairy_builder/t08_offer
+  ok    voice.stream_voice/fairy_builder/t09_building
+  ok    voice.stream_voice/fairy_builder/t09_done
+  ok    voice.stream_voice/fairy_builder/t09_idle
+  ok    voice.stream_voice/fairy_builder/t09_offer
+  ok    voice.stream_voice/fairy_builder/t10_building
+  ok    voice.stream_voice/fairy_builder/t10_done
+  ok    voice.stream_voice/fairy_builder/t10_idle
+  ok    voice.draft_voice_explicit_voice/fairy_furnisher/first_1_v
+  ok    voice.stream_voice/fairy_furnisher/greet
+  ok    voice.draft_voice_explicit_voice/fairy_king/first_1_v
+  ok    voice.stream_voice/fairy_king/greet
+  ok    voice.stream_voice/fairy_king/letter
+  ok    voice.stream_voice/fairy_king/moon_offer
+  ok    voice.stream_voice/fairy_king/moon_remind
+  ok    voice.stream_voice/fairy_king/slot_offer
+  ok    voice.stream_voice/fairy_king/slot_remind
+  ok    voice.draft_voice_explicit_voice/fairy_lily/first_1_v
+  ok    voice.stream_voice/fairy_lily/greet
+  ok    voice.draft_voice_explicit_voice/fairy_tailor/first_1_v
+  ok    voice.stream_voice/fairy_tailor/greet
+  ok    voice.stream_voice/fairy_wizard/bogtrae_offer
+  ok    voice.stream_voice/fairy_wizard/bogtrae_remind
+  ok    voice.draft_voice_explicit_voice/fairy_wizard/first_1_v
+  ok    voice.stream_voice/fairy_wizard/greet
+  ok    voice.stream_voice/fairy_wizard/math_done
+  ok    voice.stream_voice/fairy_wizard/math_intro
+  ok    voice.stream_voice/fairy_wizard/math_q1
+  ok    voice.stream_voice/fairy_wizard/math_q2
+  ok    voice.stream_voice/fairy_wizard/math_q3
+  ok    voice.stream_voice/farmer_rosa/animal_talk
+  ok    voice.draft_voice_explicit_voice/farmer_rosa/bday_farmer_rosa_greet_1_v
+  ok    voice.draft_voice_explicit_voice/farmer_rosa/first_1_v
+  ok    voice.draft_voice_explicit_voice/farmer_rosa/gift_farmer_rosa_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/farmer_rosa/gift_farmer_rosa_hate_1_v
+  ok    voice.draft_voice_explicit_voice/farmer_rosa/gift_farmer_rosa_like_1_v
+  ok    voice.draft_voice_explicit_voice/farmer_rosa/gift_farmer_rosa_love_1_v
+  ok    voice.draft_voice_explicit_voice/farmer_rosa/gift_farmer_rosa_neutral_1_v
+  ok    voice.stream_voice/farmer_rosa/greet
+  ok    voice.draft_voice_explicit_voice/farmer_rosa/greet_h0_1_v
+  ok    voice.draft_voice_explicit_voice/fiddler_strimmel/first_1_v
+  ok    voice.draft_voice_explicit_voice/gardener_hoppe/bday_gardener_hoppe_greet_1_v
+  ok    voice.draft_voice_explicit_voice/gardener_hoppe/first_1_v
+  ok    voice.draft_voice_explicit_voice/gardener_hoppe/gift_gardener_hoppe_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/gardener_hoppe/gift_gardener_hoppe_hate_1_v
+  ok    voice.draft_voice_explicit_voice/gardener_hoppe/gift_gardener_hoppe_like_1_v
+  ok    voice.draft_voice_explicit_voice/gardener_hoppe/gift_gardener_hoppe_love_1_v
+  ok    voice.draft_voice_explicit_voice/gardener_hoppe/gift_gardener_hoppe_neutral_1_v
+  ok    voice.stream_voice/gardener_hoppe/greet
+  ok    voice.draft_voice_explicit_voice/gardener_hoppe/greet_h0_1_v
+  ok    voice.stream_voice/gardener_hoppe/klart
+  ok    voice.stream_voice/gardener_hoppe/once
+  ok    voice.stream_voice/gardener_hoppe/regn
+  ok    voice.stream_voice/gardener_hoppe/sne
+  ok    voice.stream_voice/gardener_hoppe/sprouts
+  ok    voice.stream_voice/gardener_hoppe/swap_done
+  ok    voice.stream_voice/gardener_hoppe/swap_offer
+  ok    voice.stream_voice/gardener_hoppe/taage
+  ok    voice.stream_voice/gardener_hoppe/torden
+  ok    voice.stream_voice/ghostfam_blund/bed
+  ok    voice.stream_voice/ghostfam_blund/dawn
+  ok    voice.stream_voice/ghostfam_blund/family
+  ok    voice.draft_voice_explicit_voice/ghostfam_blund/first_1_v
+  ok    voice.stream_voice/ghostfam_blund/greet
+  ok    voice.stream_voice/ghostfam_blund/kin1
+  ok    voice.stream_voice/ghostfam_blund/kin2
+  ok    voice.stream_voice/ghostfam_blund/kin3
+  ok    voice.stream_voice/ghostfam_blund/kin_greet
+  ok    voice.stream_voice/ghostfam_blund/kin_look_bu
+  ok    voice.stream_voice/ghostfam_blund/kin_look_hviske
+  ok    voice.stream_voice/ghostfam_blund/sleep
+  ok    voice.draft_voice_explicit_voice/ghostfam_dyne/chat_2_1_v
+  ok    voice.draft_voice_explicit_voice/ghostfam_dyne/chat_8_1_v
+  ok    voice.stream_voice/ghostfam_dyne/dawn
+  ok    voice.draft_voice_explicit_voice/ghostfam_dyne/first_1_v
+  ok    voice.stream_voice/ghostfam_dyne/greet
+  ok    voice.draft_voice_explicit_voice/ghostfam_dyne/greet_h0_1_v
+  ok    voice.draft_voice_explicit_voice/ghostfam_dyne/greet_h1_1_v
+  ok    voice.draft_voice_explicit_voice/ghostfam_dyne/greet_h2_1_v
+  ok    voice.draft_voice_explicit_voice/ghostfam_dyne/greet_h3_1_v
+  ok    voice.stream_voice/ghostfam_dyne/kin1
+  ok    voice.stream_voice/ghostfam_dyne/kin2
+  ok    voice.stream_voice/ghostfam_dyne/kin3
+  ok    voice.stream_voice/ghostfam_dyne/kin4
+  ok    voice.stream_voice/ghostfam_dyne/kin5
+  ok    voice.stream_voice/ghostfam_dyne/kin_dawn
+  ok    voice.stream_voice/ghostfam_dyne/kin_greet
+  ok    voice.stream_voice/ghostfam_dyne/kin_look_bu
+  ok    voice.stream_voice/ghostfam_dyne/kin_look_hviske
+  ok    voice.stream_voice/ghostfam_dyne/midnight_0
+  ok    voice.stream_voice/ghostfam_dyne/midnight_1
+  ok    voice.stream_voice/ghostfam_dyne/midnight_2
+  ok    voice.stream_voice/ghostfam_dyne/midnight_3
+  ok    voice.stream_voice/ghostfam_dyne/midnight_4
+  ok    voice.stream_voice/ghostfam_dyne/midnight_5
+  ok    voice.stream_voice/ghostfam_dyne/midnight_6
+  ok    voice.stream_voice/ghostfam_dyne/night
+  ok    voice.stream_voice/ghostfam_gnist/closed
+  ok    voice.stream_voice/ghostfam_gnist/closed_night
+  ok    voice.stream_voice/ghostfam_gnist/early
+  ok    voice.draft_voice_explicit_voice/ghostfam_gnist/first_1_v
+  ok    voice.stream_voice/ghostfam_gnist/greet
+  ok    voice.stream_voice/ghostfam_gnist/kin1
+  ok    voice.stream_voice/ghostfam_gnist/kin2
+  ok    voice.stream_voice/ghostfam_gnist/kin_greet
+  ok    voice.stream_voice/ghostfam_silke/dawn
+  ok    voice.draft_voice_explicit_voice/ghostfam_silke/first_1_v
+  ok    voice.stream_voice/ghostfam_silke/greet
+  ok    voice.stream_voice/ghostfam_silke/kin1
+  ok    voice.stream_voice/ghostfam_silke/kin2
+  ok    voice.stream_voice/ghostfam_silke/kin_greet
+  ok    voice.stream_voice/ghostfam_silke/late
+  ok    voice.stream_voice/ghostfam_silke/late2
+  ok    voice.stream_voice/guard_oak/bossernes_vej_offer
+  ok    voice.draft_voice_explicit_voice/guard_oak/first_1_v
+  ok    voice.stream_voice/guard_oak/greet
+  ok    voice.stream_voice/guard_oak/lift
+  ok    voice.stream_voice/guard_oak/skovlift_intro_offer
+  ok    voice.stream_voice/guard_oak/snurre_offer
+  ok    voice.stream_voice/guard_oak/snurre_remind
+  ok    voice.draft_voice_explicit_voice/innkeeper_kvak/first_1_v
+  ok    voice.draft_voice_explicit_voice/lamplighter_kiki/first_1_v
+  ok    voice.stream_voice/mapseller_natteblik/ears
+  ok    voice.stream_voice/mapseller_natteblik/farewell
+  ok    voice.draft_voice_explicit_voice/mapseller_natteblik/first_1_v
+  ok    voice.stream_voice/mapseller_natteblik/greet
+  ok    voice.stream_voice/mapseller_natteblik/lantern
+  ok    voice.stream_voice/mapseller_natteblik/maps
+  ok    voice.stream_voice/mapseller_natteblik/night
+  ok    voice.stream_voice/mapseller_natteblik/no_maps
+  ok    voice.stream_voice/mapseller_natteblik/roots
+  ok    voice.draft_voice_explicit_voice/mayor_lyra/bday_mayor_lyra_greet_1_v
+  ok    voice.stream_voice/mayor_lyra/farm_status
+  ok    voice.draft_voice_explicit_voice/mayor_lyra/first_1_v
+  ok    voice.draft_voice_explicit_voice/mayor_lyra/gift_mayor_lyra_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/mayor_lyra/gift_mayor_lyra_hate_1_v
+  ok    voice.draft_voice_explicit_voice/mayor_lyra/gift_mayor_lyra_like_1_v
+  ok    voice.draft_voice_explicit_voice/mayor_lyra/gift_mayor_lyra_love_1_v
+  ok    voice.draft_voice_explicit_voice/mayor_lyra/gift_mayor_lyra_neutral_1_v
+  ok    voice.stream_voice/mayor_lyra/greet_1
+  ok    voice.stream_voice/mayor_lyra/greet_2
+  ok    voice.draft_voice_explicit_voice/mayor_lyra/greet_h0_1_v
+  ok    voice.stream_voice/mayor_lyra/hello
+  ok    voice.stream_voice/mayor_lyra/lottery
+  ok    voice.draft_voice_explicit_voice/merchant_pip/bday_merchant_pip_greet_1_v
+  ok    voice.draft_voice_explicit_voice/merchant_pip/first_1_v
+  ok    voice.draft_voice_explicit_voice/merchant_pip/gift_merchant_pip_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/merchant_pip/gift_merchant_pip_hate_1_v
+  ok    voice.draft_voice_explicit_voice/merchant_pip/gift_merchant_pip_like_1_v
+  ok    voice.draft_voice_explicit_voice/merchant_pip/gift_merchant_pip_love_1_v
+  ok    voice.draft_voice_explicit_voice/merchant_pip/gift_merchant_pip_neutral_1_v
+  ok    voice.draft_voice_explicit_voice/merchant_pip/greet_h0_1_v
+  ok    voice.draft_voice_explicit_voice/penguin_postman/first_1_v
+  ok    voice.stream_voice/penguin_postman/hello
+  ok    voice.stream_voice/pip/greet
+  ok    voice.stream_voice/pippin_boegeknop/cat_offer
+  ok    voice.stream_voice/pippin_boegeknop/cat_remind
+  ok    voice.draft_voice_explicit_voice/pippin_boegeknop/first_1_v
+  ok    voice.stream_voice/pippin_boegeknop/hello
+  ok    voice.stream_voice/postman_pip/bag
+  ok    voice.draft_voice_explicit_voice/postman_pip/bday_postman_pip_greet_1_v
+  ok    voice.draft_voice_explicit_voice/postman_pip/first_1_v
+  ok    voice.draft_voice_explicit_voice/postman_pip/gift_postman_pip_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/postman_pip/gift_postman_pip_hate_1_v
+  ok    voice.draft_voice_explicit_voice/postman_pip/gift_postman_pip_like_1_v
+  ok    voice.draft_voice_explicit_voice/postman_pip/gift_postman_pip_love_1_v
+  ok    voice.draft_voice_explicit_voice/postman_pip/gift_postman_pip_neutral_1_v
+  ok    voice.stream_voice/postman_pip/greet
+  ok    voice.draft_voice_explicit_voice/postman_pip/greet_h0_1_v
+  ok    voice.stream_voice/postman_pip/mail
+  ok    voice.stream_voice/postman_pip/offer
+  ok    voice.stream_voice/postman_pip/remind
+  ok    voice.stream_voice/postman_pip/rest
+  ok    voice.stream_voice/postman_pip/round
+  ok    voice.stream_voice/postman_pip/thanks
+  ok    voice.draft_voice_explicit_voice/rasmus/first_1_v
+  ok    voice.draft_voice_explicit_voice/smith_thorin/bday_smith_thorin_greet_1_v
+  ok    voice.draft_voice_explicit_voice/smith_thorin/first_1_v
+  ok    voice.draft_voice_explicit_voice/smith_thorin/gift_smith_thorin_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/smith_thorin/gift_smith_thorin_hate_1_v
+  ok    voice.draft_voice_explicit_voice/smith_thorin/gift_smith_thorin_like_1_v
+  ok    voice.draft_voice_explicit_voice/smith_thorin/gift_smith_thorin_love_1_v
+  ok    voice.draft_voice_explicit_voice/smith_thorin/gift_smith_thorin_neutral_1_v
+  ok    voice.stream_voice/smith_thorin/greet
+  ok    voice.draft_voice_explicit_voice/smith_thorin/greet_h0_1_v
+  ok    voice.stream_voice/smith_thorin/mining_talk
+  ok    voice.eleven_human_recordings
+  ok    voice.complete_voice_manifest
+  ok    voice.fourteen_originals_byte_identical
+  ok    voice.missing_silent_and_logged
+  ok    voice.english_does_not_play_danish
+  ok    voice.recorded_line_plays
+  ok    voice.locale_switch_stops_voice
+  ok    voice.dialogue_voice_indicator
+  ok    voice.dialogue_close_stops_voice
+  ok    voice.volume_preserves_other_sections
+  ok    voice.volume_reloads
+  --    voice: 309 checks, 0 failed, 0 skipped, 1.2 s
+== summary: 9 section(s) run, 953 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 6 allowed message(s), 0 problem(s), 0 known-issue message(s), 27.9 s
+PLAYTEST PASS (953 checks in 9 sections, 6 allowed engine messages, 0 known-issue messages)

@@ -1,0 +1,126 @@
+{
+  "schema": 1,
+  "branch": "codex-mechanics",
+  "base": "6cb358d",
+  "scope": "Complete the planned single-player game using the reviewed design addenda; preserve approved painted assets.",
+  "baseline": {
+    "report": "docs/qa/mechanics/integration/baseline.json",
+    "checks": 11591,
+    "failed": 16,
+    "engine_errors": 0,
+    "skipped": 163,
+    "failure_groups": [
+      "cast_data garden-area validation",
+      "home tests assume no wardrobe perks",
+      "HUD toast assertion",
+      "localization ownership fixture",
+      "social gift controller focus"
+    ]
+  },
+  "work": [
+    {
+      "system": "Core farming, shipping, travel, towns, shops, quests, social hearts and wardrobe",
+      "state": "implemented; full 130-section regression passes with 16,425 checks and zero failed checks or unexpected engine messages"
+    },
+    {
+      "system": "Furniture ownership, grid, hygge, sets and persistence (F3)",
+      "state": "implemented; 109 rule and ownership checks pass"
+    },
+    {
+      "system": "Ten painted home tiers, construction and room interactions (F6)",
+      "state": "implemented; 105 world checks pass in headless and native"
+    },
+    {
+      "system": "Builder, decorate and storage screens (F7)",
+      "state": "implemented; 22 UI checks pass in headless and native; all nine upgrades pass 73 real-owner integration checks"
+    },
+    {
+      "system": "Animal care and farm building placement (P20)",
+      "state": "implemented; native animal care, housing, quest catch-up, ten species, saved decorations and inventory handoff pass"
+    },
+    {
+      "system": "Dungeon generation, twelve floors, runestones, saving and recovery (D1/D2)",
+      "state": "implemented; 20,016 stress floors valid, 13/14 logic mutants caught, alternative floor table valid and golden outputs match ARM64/x86_64; live runestones, consumed cells, recovery and worker registration pass"
+    },
+    {
+      "system": "Dungeon exploration, enemies, combat, bosses and HUD (DR)",
+      "state": "implemented and verified: seven enemies, three bosses, resource nodes, forage, forest HUD/reveals and painted dressing; 180 seeded boss wins within time/damage limits, 100/100 ambush dodges, warning saturation and native renderer budgets pass"
+    },
+    {
+      "system": "Arsenal, weapons, gems, loot, appraisal and crafting (DL)",
+      "state": "implemented and package-verified: arsenal, 51 items, forging, shop rotation, weapon effects, lantern loadout, atomic deterministic loot and saved appraisal; painted icons and held views; 125 validator rules, 57/57 mutants caught, all nine live-data pacing gates pass"
+    },
+    {
+      "system": "Social event runner, festival activities and heart events",
+      "state": "implemented and package-verified: shared event runner, forty citizen scenes, eleven family scenes, nine festivals, eighteen fixed scenes, five markets and real activities"
+    },
+    {
+      "system": "Extended interiors, partner relationships and visits",
+      "state": "implemented and package-verified: ten rooms, seven schedules, post location UI, consent-based dating/engagement/wedding, job-preserving partners, daily chores, named weekly visits and parties"
+    },
+    {
+      "system": "Seasonal farm decoration and ambient/audio integration",
+      "state": "implemented and package-verified: nineteen painted assets, sixteen markers, bounded seasonal particles; live town/forest audio, footsteps, 296 voiced paths with zero deferred rows"
+    },
+    {
+      "system": "Dark Forest evidence chapters and return-home resolution",
+      "state": "implemented and verified for eight heroes and four native body families: chapters S03\u2013S08, mother's final account, returning her name and seeds to the restored garden; free play continues"
+    },
+    {
+      "system": "End-to-end acceptance, source-bound proofs and merge",
+      "state": "implemented and validated; full headless, focused final regression, native wave 7, combat, staged validator, source-bound proofs, strict copy/voice and art gates pass; ready for local-main merge"
+    }
+  ],
+  "explicit_design_limits": [
+    "Greenhouse remains opt-in (Q1 default no).",
+    "Children and multiplayer are later work.",
+    "Preserve frozen human recordings; 285 Sara placeholder paths plus eleven preserved human paths are complete; native-speaker and aesthetic listening review remain editorial work.",
+    "No paid appraisal, rare random loot, calendar or friendship gate may strand the mother story."
+  ],
+  "validation": {
+    "home_headless": "docs/qa/mechanics/home/headless.json",
+    "home_native": "docs/qa/mechanics/home/native.json",
+    "farm_native": "docs/qa/mechanics/animals/native.json",
+    "farm_integration": "docs/qa/mechanics/animals/integration.json",
+    "dungeon_checkpoint": "docs/qa/mechanics/dungeon/checkpoint.json",
+    "dungeon_economy": "docs/qa/mechanics/dungeon/economy.json",
+    "dungeon_native": "docs/qa/mechanics/dungeon/encounters-native.json",
+    "generator_architectures": [
+      "docs/qa/mechanics/dungeon/generator-arm64.json",
+      "docs/qa/mechanics/dungeon/generator-x86_64.json"
+    ],
+    "loot_integration": "docs/qa/mechanics/dungeon/loot/integration.json",
+    "appraisal_native": "docs/qa/mechanics/dungeon/loot/appraisal-native.json",
+    "forest_ui_integration": "docs/qa/mechanics/dungeon/hud/integration.json",
+    "forest_ui_native": "docs/qa/mechanics/dungeon/hud/interactions-native.json",
+    "forest_hud_native": "docs/qa/mechanics/dungeon/hud/hud-native.json",
+    "dungeon_weapon_art": "docs/qa/mechanics/dungeon/weapons/icons-native.json",
+    "dungeon_item_icons": "docs/qa/mechanics/dungeon/icons/native.json",
+    "forest_dressing": "docs/qa/mechanics/dungeon/look/native.json",
+    "home_services": "docs/qa/mechanics/home/SERVICES.md",
+    "integrated_ui": "docs/qa/mechanics/ui/",
+    "audio": "docs/qa/mechanics/audio/",
+    "strict_copy_voice": "docs/qa/mechanics/copy/REVIEW.md",
+    "loot_validation_pacing": "docs/qa/mechanics/loot/VALIDATION.md",
+    "social_runtime": "docs/qa/mechanics/social/",
+    "seasonal_farm": "docs/qa/mechanics/farm/",
+    "full_headless": "docs/qa/mechanics/integration/full-headless.json",
+    "combat": "docs/qa/mechanics/combat/ACCEPTANCE.md",
+    "harness_selftest": "docs/qa/mechanics/integration/harness-selftest.log",
+    "town_extension": "docs/qa/m1b-milestone/loop-extension.json",
+    "town_mutants": "docs/qa/m1b-milestone/loop-mutants.json",
+    "playing_guide": "docs/PLAYING.md",
+    "final_acceptance": "docs/qa/mechanics/integration/ACCEPTANCE.md",
+    "final_native": "docs/qa/mechanics/integration/final-native.json",
+    "native_area_budgets": "docs/qa/mechanics/integration/native-budget-final.json",
+    "town_source_binding": "b512ac867eda2b2e4e36407b5584c405b4b067c2415908b2cd7f3561665006e7"
+  },
+  "contract_additions": [
+    "QuestManager state queries buildings_owned(type) and animals_owned support accepting animal quests after building or adoption.",
+    "Animal building slots allow one coop, barn and animal house; build_building preserves the existing immediate construction contract.",
+    "Once-per-day brushing and play persist in husbandry v2; field additions are optional for old saves."
+  ],
+  "confirmed_scope": "All planned single-player mechanics",
+  "confirmed_finale": "A bittersweet discovery: learn her fate and bring her legacy home",
+  "implementation_revision": "cea0196896d2f362cb55cd18d677d4b98601c31a"
+}

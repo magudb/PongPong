@@ -1,0 +1,30 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 114,
+  "elapsed_s": 9.08,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "festival_activities": {
+      "character": "animal",
+      "checks": 59,
+      "failed": 0,
+      "ms": 3585,
+      "skipped": 0
+    },
+    "social_events": {
+      "character": "animal",
+      "checks": 55,
+      "failed": 0,
+      "ms": 1114,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

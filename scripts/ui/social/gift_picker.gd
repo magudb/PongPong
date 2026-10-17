@@ -12,6 +12,7 @@ var portrait: TextureRect
 var hearts: SocialHearts
 var footer: Label
 var detail_name: Label
+var detail_description: Label
 var detail_stock: Label
 var taste: Label
 var birthday: Label
@@ -22,6 +23,11 @@ var back: Button
 var _actor: WeakRef
 var _busy := false
 var _handoff := false
+signal selection_finished(item_id: String)
+var _selection_mode := false
+var _selection_rows: Array = []
+var _selection_title := ""
+var _selection_result := ""
 
 func _init() -> void:
 	super._init()
@@ -58,6 +64,7 @@ func _ready() -> void:
 	var details := L.box(L.margin(right, 18), true, 16)
 	detail_name = L.label(details, "", "Heavy19", true)
 	detail_stock = L.label(details, "", "Body", true)
+	detail_description = L.label(details,"","Body",true)
 	taste = L.chip(details, "", "ChipRewardRose")
 	taste.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	birthday = L.label(details, "", "Body", true)
@@ -84,6 +91,7 @@ func open_for(id: String) -> void:
 	if is_open() or GameManager.is_modal_open():
 		return
 	npc = id
+	_selection_mode = false
 	selected = 0
 	_handoff = false
 	var actor := NpcDirector.node_of(npc)
@@ -94,6 +102,21 @@ func open_for(id: String) -> void:
 	if not is_open():
 		_release_actor()
 
+## Festivals reuse the same item grid and focus paths, with their own transaction.
+func choose(title_key: String, rows: Array) -> String:
+	if is_open() or GameManager.is_modal_open(): return ""
+	_selection_mode = true
+	_selection_rows = rows.duplicate(true)
+	_selection_title = title_key
+	_selection_result = ""
+	selected = 0
+	_handoff = false
+	open()
+	if not is_open():
+		_selection_mode = false
+		return ""
+	return await selection_finished
+
 func _initial_focus() -> Control:
 	return slots[clampi(selected, 0, slots.size() - 1)] if not slots.is_empty() else back
 
@@ -103,11 +126,17 @@ func _release_actor() -> void:
 	_actor = null
 
 func close() -> void:
+	var selecting := _selection_mode
+	_selection_mode = false
 	super.close()
 	if not _handoff:
 		_release_actor()
+	if selecting: selection_finished.emit(_selection_result)
 
 func _exit_tree() -> void:
+	if _selection_mode:
+		_selection_mode = false
+		selection_finished.emit("")
 	if not _handoff:
 		_release_actor()
 	super._exit_tree()
@@ -115,7 +144,7 @@ func _exit_tree() -> void:
 func _refresh_texts() -> void:
 	if not is_node_ready():
 		return
-	options = SocialManager.gift_options(npc)
+	options = _selection_rows if _selection_mode else SocialManager.gift_options(npc)
 	var count := maxi(24, ceili(options.size() / 6.0) * 6)
 	while slots.size() < count:
 		var index := slots.size()
@@ -138,6 +167,8 @@ func _refresh_texts() -> void:
 		slots[i].setup_item(StringName(str(entry.get("id", ""))), int(entry.get("amount", 0)))
 		slots[i].tooltip_text = L.item_name(str(entry.id)) if not entry.is_empty() else tr("INV_EMPTY_SLOT")
 	title.text = tr("REL_GIFT_TITLE") % L.npc_name(npc)
+	portrait.get_parent().visible = not _selection_mode
+	hearts.visible = not _selection_mode
 	portrait.texture = L.Portraits.portrait(StringName(npc))
 	hearts.half_hearts = SocialManager.half_hearts(npc)
 	var limits := SocialManager.gift_limits(npc)
@@ -150,6 +181,12 @@ func _refresh_texts() -> void:
 	birthday.text = tr("REL_GIFT_BELATED") if state == "belated" else tr("REL_GIFT_BIRTHDAY") % int(next.days)
 	var protected := GiftFlow.hidden_quest_items(npc)
 	hidden_items.text = tr("REL_GIFT_HIDDEN") % protected if protected > 0 else ""
+	if _selection_mode:
+		title.text = tr(_selection_title)
+		footer.text = tr("SOC_EV_PICK_FOOTER")
+		give.text = tr("SOC_EV_SELECT")
+		birthday.visible = false
+		hidden_items.text = ""
 	_select(clampi(selected, 0, count - 1))
 
 func _select(index: int) -> void:
@@ -159,6 +196,12 @@ func _select(index: int) -> void:
 		slots[i].set_pressed_no_signal(i == index)
 	detail_name.text = L.item_name(str(entry.id)) if not entry.is_empty() else tr("INV_EMPTY_SLOT")
 	detail_stock.text = tr("REL_GIFT_STOCK") % [entry.amount, entry.value] if not entry.is_empty() else ""
+	var special := bool(entry.get("special",false))
+	detail_description.visible = special
+	var def := EconomyManager.item_def(str(entry.get("id",""))) if special else {}
+	detail_description.text = tr(str(def.get("description_key",""))) if special else ""
+	if special:detail_stock.text = tr("STORE_OWNED_FMT") % int(entry.amount)
+	birthday.visible = not _selection_mode and not special and SocialManager.birthday_known(npc)
 	var known := str(entry.get("known", ""))
 	taste.visible = known != ""
 	taste.text = "♥ " + tr("REL_TASTE_" + known.to_upper()) if known != "" else ""
@@ -169,6 +212,14 @@ func _select(index: int) -> void:
 		why = "REL_GIFT_LIMIT_DAY"
 	elif int(limits.left_week) <= 0 and SocialManager.birthday_state(npc) == "":
 		why = "REL_GIFT_LIMIT_WEEK"
+	if bool(entry.get("special",false)):
+		why = str(entry.get("refusal",""))
+		footer.text = tr("PARTNER_SPECIAL")
+	else:
+		footer.text = tr("REL_GIFT_LIMITS") % [2-int(limits.left_week),1-int(limits.left_today)]
+	if _selection_mode:
+		why = ""
+		footer.text = tr("SOC_EV_PICK_FOOTER")
 	reason.text = tr(why) if why != "" else ""
 	UiNav.set_enabled(give, not entry.is_empty() and why == "")
 	_wire()
@@ -192,8 +243,21 @@ func _give() -> void:
 		return
 	_busy = true
 	var item := str(options[selected].id)
+	if _selection_mode:
+		_selection_result = item
+		_busy = false
+		close()
+		return
 	var confirmed := true
-	if bool(options[selected].confirm):
+	var special := bool(options[selected].get("special",false))
+	if special:
+		var offer := RelationshipFlow.offer(npc,item)
+		if str(offer.refusal)!="":
+			_busy = false
+			_refresh_texts()
+			return
+		confirmed = await UiConfirm.ask(self,str(offer.title),str(offer.body),str(offer.ok),str(offer.cancel),&"cancel",[L.npc_name(npc)])
+	elif bool(options[selected].confirm):
 		confirmed = await UiConfirm.ask(self, "REL_GIFT_CONFIRM_TITLE", tr("REL_GIFT_CONFIRM_BODY") % L.item_name(item), "REL_GIFT_CONFIRM_YES")
 	_busy = false
 	if not is_inside_tree() or not is_open() or not confirmed:
@@ -202,13 +266,13 @@ func _give() -> void:
 	close()
 	var actor := _actor
 	_actor = null
-	var result := GiftFlow.give_gift(npc, item)
+	var result := GiftFlow.give_gift(npc, item, special and confirmed)
 	if bool(result.get("ok", false)):
 		preload("res://scripts/ui/social/gift_reaction.gd").run(npc, result, actor)
 	else:
 		if actor != null and actor.get_ref() != null:
 			actor.get_ref().hold(false)
-		EventBus.whisper_requested.emit("GIFT_REFUSE_" + str(result.get("reason", "no_item")).to_upper())
+		EventBus.whisper_requested.emit(str(result.get("message_key","GIFT_REFUSE_" + str(result.get("reason", "no_item")).to_upper())))
 
 static func fixture_setup(node: Node, _host: Node) -> void:
 	preload("res://scripts/ui/social/social_fixtures.gd").seed(true)

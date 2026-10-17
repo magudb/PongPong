@@ -1,0 +1,18 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PLAYTEST start mode=windowed character=ghost sections=res://tests/sections only=ghostfam_quests
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.z1AIk7/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/family-quests-native
+== section ghostfam_quests [windowed]  (res://tests/sections/ghostfam_quests.gd)
+  ok    ghostfam_quests.native_silke_present
+  ok    ghostfam_quests.native_real_offer_choice
+  ok    ghostfam_quests.native_parcel_accepted
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/family-quests-native/ghostfam_quests_lost_property_journal.png (1280x720)
+  ok    ghostfam_quests.native_journal_shows_errand
+  --    ghostfam_quests: 4 checks, 0 failed, 0 skipped, 1.7 s
+== summary: 1 section(s) run, 4 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 6.3 s
+PLAYTEST PASS (4 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

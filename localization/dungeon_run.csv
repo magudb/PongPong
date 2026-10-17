@@ -1,0 +1,84 @@
+keys,da,en
+DEXP_DEFEAT_TITLE,Besvimet i mørket,Passed out in the dark
+DEXP_DEFEAT_TEXT_FMT,"Ugleøjnene bar dig hjem. Du mistede %d guldagern, men beholdt alt andet.",The owl eyes carried you home. You lost %d golden acorns but kept everything else.
+DEXP_DEFEAT_TEXT_FREE,Ugleøjnene bar dig hjem. Du beholdt alt.,The owl eyes carried you home. You kept everything.
+DEXP_SUMMARY_TITLE,Tilbage fra skoven,Back from the forest
+DEXP_SUMMARY_FLOORS_FMT,%d etager · dybest: %d,%d floors · deepest: %d
+DEXP_SUMMARY_FINDS_FMT,%d fund · %d sjældne eller bedre,%d finds · %d rare or better
+DEXP_SUMMARY_BEST_FMT,Bedste fund: %s,Best find: %s
+DEXP_SUMMARY_NONE,En tur fuld af nye spor.,A journey full of new tracks.
+DEXP_OIL_LOW,Lygten blafrer. Find en runesten eller fyld olie på.,The lantern flickers. Find a runestone or refill the oil.
+DEXP_OIL_EMPTY,Mørket kryber tæt på.,The dark creeps closer.
+DEXP_OIL_AUTO_FMT,Lygten blev fyldt (+%d s).,The lantern was refilled (+%d s).
+DEXP_BACKPACK_NEAR,Rygsækken er næsten fuld.,The backpack is almost full.
+DEXP_BACKPACK_FULL,Rygsækken er fuld. Gå hjem eller gør plads.,The backpack is full. Go home or make room.
+DEXP_WEAK_HINT,Du er svækket. Hvil ved en runesten først?,You are weak. Rest at a runestone first?
+DEXP_END_WHISPER,"Stilheden vender tilbage. Et reb hænger ned i mørket. Gå hjem, når du er klar.",Silence returns. A rope hangs down in the dark. Go home when you are ready.
+DEXP_MAP_READ,Nattebliks kort lyser stierne op.,Natteblik’s map lights up the paths.
+DEXP_SKOVHJERTE,Skovens hjerte vokser: +1 hjerte.,The forest’s heart grows: +1 heart.
+DEXP_LAST_SPARK,Lygten flammer op!,The lantern flares!
+DEXP_WEAPON_RANGE_FMT,God til etage %d–%d,Good for floors %d–%d
+DEXP_SURPRISE_FIREFLIES,En sværm ildfluer lyser op i kisten! Lygten fyldes.,A swarm of fireflies lights up the chest! The lantern refills.
+DEXP_SURPRISE_PURSE_FMT,En lille agernpung med %d guldagern.,A little purse with %d golden acorns.
+DEXP_SURPRISE_COCOA,En termokande med varm kakao. Så godt!,A flask of hot cocoa. Lovely!
+DEXP_SURPRISE_NOTE_FMT,En seddel fra Pip: »%s«,A note from Pip: “%s”
+DPICK_WEAPON_FMT,Våben: %s (%d) · god til etage %d–%d,Weapon: %s (%d) · good for floors %d–%d
+DPICK_WEAPON_WEAK,Dit våben er slidt til den etage.,Your weapon is worn for that floor.
+DPICK_OIL_FMT,Lygteolie: %d,Lantern oil: %d
+DPICK_TONIC_FMT,Tonika: %d,Tonics: %d
+DPICK_PACK_FMT,Rygsæk: %d/%d,Backpack: %d/%d
+DPICK_RISK_FMT,"Besvimer du, mister du %d %% af dine guldagern (ca. %d).",If you pass out you lose %d %% of your golden acorns (about %d).
+DPICK_RISK_NONE,"Besvimer du, beholder du alt.",If you pass out you keep everything.
+ASSIST_TITLE,Hjælp i skoven,Help in the forest
+ASSIST_PRESET_NONE,Standard,Standard
+ASSIST_PRESET_LIGHT,Let,Light
+ASSIST_PRESET_COZY,Hyggelig,Cozy
+ASSIST_PRESET_CUSTOM,Egen,Custom
+ASSIST_LEVEL_0,Fra,Off
+ASSIST_LEVEL_1,Lidt,A little
+ASSIST_LEVEL_2,Meget,A lot
+ASSIST_DMG,Blidere slag,Gentler hits
+ASSIST_DMG_DESC,Skovens væsner gør mindre skade.,Forest creatures deal less damage.
+ASSIST_TELEGRAPH,Tydeligere varsler,Clearer warnings
+ASSIST_TELEGRAPH_DESC,Du får længere tid til at se et angreb komme.,You have more time to see attacks coming.
+ASSIST_HEARTS,Ekstra hjerter,Extra hearts
+ASSIST_HEARTS_DESC,Giver to eller fire ekstra halve hjerter.,Adds two or four extra half hearts.
+ASSIST_ARC,Bredere sving,Wider swing
+ASSIST_ARC_DESC,Dit våben rammer i en bredere bue.,Your weapon hits across a wider arc.
+ASSIST_DODGE,Længere undvig,Longer dodge
+ASSIST_DODGE_DESC,"Du er beskyttet lidt længere, når du undviger.",You are protected a little longer while dodging.
+ASSIST_OIL,Mildt mørke,Gentle dark
+ASSIST_OIL_DESC,Lygten bruger mindre olie eller ingen olie.,The lantern uses less oil or no oil.
+ASSIST_LAST_SPARK,Sidste gnist,Last spark
+ASSIST_LAST_SPARK_DESC,Lygten redder dig én gang på hver tur.,The lantern saves you once per journey.
+ASSIST_AUTO_SWING,Hold for at slå,Hold to swing
+ASSIST_AUTO_SWING_DESC,Hold slagknappen nede for at svinge igen.,Hold the attack button to keep swinging.
+ASSIST_AUTO_REFUEL,Fyld lygten automatisk,Refill the lantern automatically
+ASSIST_AUTO_REFUEL_DESC,"Brug olie fra rygsækken, når lygten er ved at løbe tør.",Use backpack oil when the lantern is running low.
+ASSIST_REDUCE_FLASH,Færre blink,Fewer flashes
+ASSIST_REDUCE_FLASH_DESC,Dæmper blink og rystelser.,Reduces flashes and shaking.
+ASSIST_HINTS,Hjælpetekster,Hint texts
+ASSIST_HINTS_DESC,"Vis små råd, når du lærer skoven at kende.",Show small hints as you get to know the forest.
+DTUT_HUB,"Hulen fører ind i skoven. Runen lader dig begynde ved en runesten, du har tændt.",The cave leads into the forest. The rune lets you start at a runestone you have lit.
+DTUT_LANTERN,"Lygten viser det, der er tæt på. Hold øje med olien.",The lantern shows what is near. Keep an eye on the oil.
+DTUT_ABILITIES,Klik: slå. Mellemrum: undvig. Q: fe-lys. R: drik.,Click: strike. Space: dodge. Q: fairy light. R: drink.
+DTUT_EYES,To øjne i mørket. Fe-lys lokker dem frem.,Two eyes in the dark. Fairy light brings them out.
+DTUT_RUNE,Runesten giver hvile og gemmer dit fremskridt.,Runestones offer rest and save your progress.
+DTUT_CHEST,Kister gemmer på ting. Nogle er sjældne.,Chests hide things. Some are rare.
+DTUT_BERRY,Tornebær heler lidt.,Thorn berries heal a little.
+DTUT_HULEN,"Hulen fører dybere. Den, du kom fra, fører op. Menuen tager dig hjem.",The cave leads deeper. The one you came from leads up. The menu takes you home.
+DTUT_BOSS,Vogteren er vågen. Se efter ringen på jorden.,The guardian is awake. Look for the ring on the ground.
+DTUT_WEAPON_WEAK,Dit våben er slidt hernede. Smeden kan hjælpe.,Your weapon is worn down here. The smith can help.
+DTUT_ASSIST,Lidt hjælp i skoven? Se Indstillinger › Hjælp i skoven.,A little help in the forest? See Settings › Help in the forest.
+FUND_RARE,Sjældent fund!,A rare find!
+FUND_UNIQUE,Unikt fund!,A unique find!
+FUND_LEGENDARY,Legendarisk fund!,A legendary find!
+FUND_UNIQUE_NOTE,Der findes kun én.,There is only one.
+FUND_LEGENDARY_NOTE,Skoven holdt vejret.,The forest held its breath.
+FUND_DAMAGE_FMT,Skade %d · %s,Damage %d · %s
+WEAPON_FAMILY_SWORD,Sværd,Sword
+WEAPON_FAMILY_CLUB,Kølle,Club
+WEAPON_FAMILY_SPEAR,Spyd,Spear
+WEAPON_FAMILY_DAGGER,Dolk,Dagger
+WEAPON_FAMILY_STAFF,Stav,Staff
+ASSIST_ON,Til,On

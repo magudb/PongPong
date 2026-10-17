@@ -1,0 +1,56 @@
+keys,da,en
+GF_EVENT_GHOSTFAM_DYNE_H4_TITLE,Det første garn,The first yarn
+GF_EVENT_GHOSTFAM_DYNE_H4_1,Jeg har gemt en plads i mønstret. Hvilken farve skal den have?,I saved a space in the pattern. Which colour shall it be?
+GF_EVENT_GHOSTFAM_DYNE_H4_2,Du behøver ikke vælge den samme i morgen. Garn kan godt skifte mening.,You need not choose the same one tomorrow. Yarn is allowed to change its mind.
+GF_EVENT_GHOSTFAM_DYNE_H4_3,"Se, nu drejer garnnøglet. Det kender allerede vejen gennem mine vanter.","Look, the ball is turning. It already knows the way through my mittens."
+GF_EVENT_GHOSTFAM_DYNE_H4_4,Her løber din tråd sammen med vores. Ingen af dem bliver mindre af det.,Here your thread joins ours. None of them becomes smaller for it.
+GF_EVENT_GHOSTFAM_DYNE_H6_TITLE,Familiebilledet,The family portrait
+GF_EVENT_GHOSTFAM_DYNE_H6_1,"Stil dig her ved bålet. Silke holder lyset, og Gnist forsøger at stå stille.","Stand here by the fire. Silke is holding the light, and Gnist is trying to keep still."
+GF_EVENT_GHOSTFAM_DYNE_H6_2,"Blund, du skal også med. Et tørklæde alene tæller ikke som et familiebillede.","Blund, you belong in it too. A scarf alone does not count as a family portrait."
+GF_EVENT_GHOSTFAM_DYNE_H6_3,Sådan. Et billede behøver ikke papir for at blive hos os.,There. A picture need not be on paper to stay with us.
+GF_EVENT_GHOSTFAM_DYNE_H6_4,"Når du ser bålet her, må du gerne huske, at du stod sammen med os.","When you see this fire, you may remember that you stood here with us."
+GF_EVENT_GHOSTFAM_DYNE_H8_TITLE,Den lange aften,The long evening
+GF_EVENT_GHOSTFAM_DYNE_H8_1,"De spørger somme tider, hvorfor vi stadig kalder huset Gæstehytten.",Sometimes they ask why we still call this house the guest hut.
+GF_EVENT_GHOSTFAM_DYNE_H8_2,Den første gæst kom med våde sko og blev til næste forår. Vi satte en kop mere frem.,The first guest arrived with wet shoes and stayed until spring. We set out another cup.
+GF_EVENT_GHOSTFAM_DYNE_H8_3,"Så kom der en mere. Vi fandt aldrig et bedre navn end et, der gjorde plads.",Then another arrived. We never found a better name than one that made room.
+GF_EVENT_GHOSTFAM_DYNE_H8_4,"Døren er ikke åben, fordi vi venter på nogen bestemt. Den er åben, fordi nogen kan komme.",The door is open because somebody may arrive. They need not be somebody we already know.
+GF_EVENT_GHOSTFAM_DYNE_H10_TITLE,Pladsen ved bålet,A place by the fire
+GF_EVENT_GHOSTFAM_DYNE_H10_1,"Du spørger altid, om der er plads. Nu vil jeg svare én gang for alle.",You always ask whether there is room. Let me answer once and for all.
+GF_EVENT_GHOSTFAM_DYNE_H10_2,"Den her plads er din. Også når du kommer sent, eller ikke har noget at fortælle.","This place is yours. Even when you arrive late, or have nothing to tell us."
+GF_EVENT_GHOSTFAM_DYNE_H10_3,Vi kan godt sidde stille sammen. Bålet skal nok sige lidt.,We can sit quietly together. The fire will have something to say.
+GF_EVENT_GHOSTFAM_GNIST_H4_TITLE,Lanternen over døren,The lantern above the door
+GF_EVENT_GHOSTFAM_GNIST_H4_1,"Den over døren? Den har ingen pris. Jeg har prøvet at skrive en, men skiltet falder ned.","The one above the door? It has no price. I tried writing one, but the sign falls down."
+GF_EVENT_GHOSTFAM_GNIST_H4_2,"Den var den første, jeg fik til at lyse hele natten. Nu hjælper den de andre hjem.",It was the first one I made that shone all night. Now it helps the others home.
+GF_EVENT_GHOSTFAM_GNIST_H4_3,"Der! Så du det? Den lyser lidt mere, når nogen smiler til den.",There! Did you see? It shines a little brighter when somebody smiles at it.
+GF_EVENT_GHOSTFAM_GNIST_H4_4,Tag lidt olie til din egen. Lys skal også have noget at leve af.,Take some oil for your own. Light needs something to live on too.
+GF_EVENT_GHOSTFAM_GNIST_H8_TITLE,Sidste kunde,The last customer
+GF_EVENT_GHOSTFAM_GNIST_H8_1,En halv time til lukketid. Men jeg vender skiltet nu. Du er kommet for at tale.,Half an hour until closing. But I will turn the sign now. You came to talk.
+GF_EVENT_GHOSTFAM_GNIST_H8_2,"Jeg tæller altid lygterne, før jeg går. Det er lettest at opdage den, der mangler, når alt andet er stille.",I always count the lanterns before I leave. It is easiest to notice a missing one when everything else is quiet.
+GF_EVENT_GHOSTFAM_GNIST_H8_3,"I aften mangler der ingen. Du kan låne stilheden, så længe du vil.",None is missing tonight. You can borrow the quiet for as long as you like.
+GF_EVENT_GHOSTFAM_SILKE_H4_TITLE,Runden,The round
+GF_EVENT_GHOSTFAM_SILKE_H4_1,"Vil du følges et stykke? Jeg begynder altid her, hvor pladsen er bredest.","Will you keep me company for a while? I always begin here, where the square is widest."
+GF_EVENT_GHOSTFAM_SILKE_H4_2,"Jeg ser efter løse snore og små fødder, der er trætte. De store finder som regel hjem selv.",I look for loose cords and little tired feet. The big ones usually find their own way home.
+GF_EVENT_GHOSTFAM_SILKE_H4_3,Prøv at lytte. Man hører næsten alle byens døre herfra.,Try listening. You can hear almost every door in town from here.
+GF_EVENT_GHOSTFAM_SILKE_H4_4,"Tak for selskabet. I morgen er runden den samme, men aftenen bliver en anden.","Thank you for the company. Tomorrow the round will be the same, but the evening will be different."
+GF_EVENT_GHOSTFAM_SILKE_H8_TITLE,Det sidste lys,The last light
+GF_EVENT_GHOSTFAM_SILKE_H8_1,Du nåede det. Den sidste lampe venter på solen.,You made it. The last lamp is waiting for the sun.
+GF_EVENT_GHOSTFAM_SILKE_H8_2,Vil du holde min lanterne et øjeblik? Så kan vi lade dette lys hvile.,Will you hold my lantern for a moment? Then we can let this light rest.
+GF_EVENT_GHOSTFAM_SILKE_H8_3,"Sådan. Det er også at passe på et lys: at vide, hvornår det må holde fri.",There. Caring for a light also means knowing when it may rest.
+GF_EVENT_GHOSTFAM_SILKE_H8_4,"Gå hjem til noget varmt nu. Jeg er glad for, at vi fik morgenen sammen.",Go home to something warm now. I am glad we shared the morning.
+GF_EVENT_GHOSTFAM_BLUND_H4_TITLE,Blunds hemmelige sted,Blund's secret place
+GF_EVENT_GHOSTFAM_BLUND_H4_1,"Her er mit bedste sted. Man kan høre alle på broen, men de glemmer at kigge herned.","This is my best place. You can hear everyone on the bridge, but they forget to look down here."
+GF_EVENT_GHOSTFAM_BLUND_H4_2,"Jeg gemmer mig ikke, fordi jeg vil være væk. Det bedste er, når nogen finder mig.",I do not hide because I want to be away. The best part is when somebody finds me.
+GF_EVENT_GHOSTFAM_BLUND_H4_3,Du må kende stedet. Men næste gang gør jeg mig meget lille. Mindre end en vante!,You may know the place. But next time I will make myself very small. Smaller than a mitten!
+GF_EVENT_GHOSTFAM_BLUND_H4_4,"Vil du sidde lidt? Vi kan være hemmelige sammen, indtil Gnist kalder.",Will you stay a while? We can be secret together until Gnist calls.
+GF_EVENT_GHOSTFAM_BLUND_H8_TITLE,Bu,Boo
+GF_EVENT_GHOSTFAM_BLUND_H8_1,"Jeg øver mig. Lyt nu: bu! Nej, det lød som en lille kop.","I am practising. Listen: boo! No, that sounded like a little cup."
+GF_EVENT_GHOSTFAM_BLUND_H8_2,"Vil du hjælpe dit søskendebarn? Vi siger det samtidig. En, to, bu!","Will you help your cousin? We will say it together. One, two, boo!"
+GF_EVENT_GHOSTFAM_BLUND_H8_3,Du kan også prøve. Man behøver ikke være et spøgelse for at sige bu.,You can try too. You need not be a ghost to say boo.
+GF_EVENT_GHOSTFAM_BLUND_H8_4,"Hørte du det? Nu lød vi som en kat, der nøs i en kagedåse.",Did you hear? Now we sounded like a cat sneezing in a biscuit tin.
+GF_EVENT_GHOSTFAM_BLUND_H8_5,"Det beholder vi. Alle må gerne grine, når de finder os.",We will keep that one. Everyone may laugh when they find us.
+GF_EVENT_GHOSTFAM_KIN_WELCOME_TITLE,Velkommen ved bålet,Welcome by the fire
+GF_EVENT_GHOSTFAM_KIN_WELCOME_1,"Kom her, mit barnebarn. Denne gang skal dit navn ikke vente i nogen lodtrækning.","Come here, my grandchild. This time your name need not wait in a lottery."
+GF_EVENT_GHOSTFAM_KIN_WELCOME_2,Jeg tænder lanternen. Din mor sad her også. Du må kende dine egne veje og stadig høre til hos os.,I will light the lantern. Your mother sat here too. You may find your own paths and still belong with us.
+GF_EVENT_GHOSTFAM_KIN_WELCOME_3,Her er en kop. Den er varm helt ud i hanken.,Here is a cup. It is warm all the way to the handle.
+GF_EVENT_GHOSTFAM_KIN_WELCOME_4,Bu! Det var et velkomst-bu. Lød det lidt som en kat?,Boo! That was a welcome boo. Did it sound a little like a cat?
+GF_EVENT_GHOSTFAM_KIN_WELCOME_5,"Her er din plads. Den bliver her, også når du rejser ud og kommer hjem igen.",Here is your place. It will stay here when you go away and when you come home.

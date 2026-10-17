@@ -1,0 +1,11 @@
+# Strict copy and voice completion
+
+Strict runtime localization, CSV lint and copy lint pass with zero missing product translations, zero legacy issues and zero warnings/findings. Seven bilingual offers complete the actual post/quest path for the farm tutorial and Mother chapters. Two malformed legacy item descriptions were repaired. The reference-based legacy cleanup removed 318 superseded, duplicate or unused rows; 98 remain. All 296 effective voiced texts were compared before and after cleanup in both languages and are unchanged. Every CSV uses LF line endings.
+
+The four transient guide/calendar fixture references are resolved only inside their owning setup functions, against the actual guide data or the bilingual runtime translation installer. Tests prove a product use of the same key and an unknown fixture key still fail. They are not fabricated product strings or broad prefix exemptions. The strict report and reference inventory are saved here.
+
+All 110 deferred social voice rows were read in Danish and English. Their individual AI reviews retain both text hashes, reviewer and date; the surrounding files remain drafts for native-speaker review. C8 and the generator invalidate a row approval when either translation changes. The review gate has five new negative/positive checks alongside the existing copy mutants.
+
+The voice manifest now has 296 exported paths: eleven preserved human recordings and 285 local Sara placeholders, with no deferred hooks. The bulk bake generated the 110 reviewed rows. The six audio pipeline tests pass, including real generator idempotency, preservation of every human original, bounded voice parameters, pitch/duration compensation and decoded waveform checks of every shipped voice and sound. Waveform evidence is in ../audio/waveforms.json. No fresh native-speaker or aesthetic listening review is claimed.
+
+The final UI integration uses UI_CONFIRM_TITLE in the P26 override file for the shared confirmation title. This replaces a single-word fixture key that the legacy prune could not reliably treat as a required reference; the displayed Danish/English text is unchanged. The protected ui.csv baseline is byte-identical. Current strict gates cover 4,415 keys.

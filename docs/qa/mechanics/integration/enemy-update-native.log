@@ -1,0 +1,22 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=windowed character=animal sections=res://tests/sections only=enemy_performance
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.6jr9cu/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/enemy-update-native
+== section enemy_performance [windowed]  (res://tests/sections/enemy_performance.gd)
+  ok    enemy_performance.alive_limit_48
+  ok    enemy_performance.awake_limit_24 (24/48 awake)
+  ok    enemy_performance.sleeping_callbacks_zero
+  ok    enemy_performance.awake_callbacks_do_work
+  ok    enemy_performance.awake_logic_budget (0.02370833333333 ms p95 per enemy <=0.03)
+  ok    enemy_performance.native_uses_live_default_zoom
+  ok    enemy_performance.render_timing_is_available
+  ok    enemy_performance.animated_render_budget (0.00503459681485 ms CPU render per enemy <=0.018)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/integration/enemy-update-native/enemy_performance_enemy_population_24.png (1280x720)
+  --    enemy_performance: 8 checks, 0 failed, 0 skipped, 16.7 s
+== summary: 1 section(s) run, 8 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 22.5 s
+PLAYTEST PASS (8 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

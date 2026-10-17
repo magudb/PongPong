@@ -123,7 +123,7 @@ func _starter(t, eco, lr) -> void:
 	var got: Dictionary = eco.get_inventory_dict()
 	var kit_ok: bool = not got.is_empty()
 	for id in tools:
-		if int(got.get(str(id), 0)) < int(tools[id]):
+		if eco.count_item(StringName(str(id))) < int(tools[id]):
 			kit_ok = false
 	t.check("starter_tools_come_from_lua", kit_ok,
 		"reset() hands out every Lua tool: have %s want %s" % [str(got.keys()), str(tools.keys())])

@@ -89,6 +89,7 @@ var _cfg_override: Dictionary = {}
 var _has_cfg_override: bool = false
 var _index: Dictionary = {}
 var _index_cfg: Dictionary = {}
+var _dungeon_item_facts: Dictionary = {}
 var _source: String = "pickup"
 var _cap_told_day: int = 0
 var _appraisal_ui: Node = null
@@ -139,6 +140,7 @@ func set_loot_config(cfg: Variant = null) -> void:
 func invalidate_index() -> void:
 	_index.clear()
 	_index_cfg = {}
+	_dungeon_item_facts.clear()
 
 
 func _pool_index() -> Dictionary:
@@ -294,12 +296,12 @@ func spot_state(spot_id: String) -> StringName:
 	var spot := _spot_def(spot_id)
 	if spot.is_empty():
 		return &"locked"
-	if claimed.has(spot_id):
+	if claimed.has(spot_id) or _Data.dict(dungeon.get("claimed",{})).has(spot_id) or found(str(spot.get("item",""))):
 		return &"claimed"
 	if not _requires_met(_Data.dict(spot.get("requires", {}))):
 		return &"locked"
 	if _delegate_has(&"spot_state"):
-		var v: Variant = _delegate_call(&"spot_state", [dungeon.duplicate(true), {"spot": spot_id, "day": _today(), "cfg": loot_cfg()}])
+		var v: Variant = _delegate_call(&"spot_state", [dungeon.duplicate(true), {"spot": spot_id, "day": _today(), "cfg": _delegate_config()}])
 		if typeof(v) == TYPE_STRING_NAME or typeof(v) == TYPE_STRING:
 			return StringName(str(v))
 	return &"open"
@@ -387,7 +389,7 @@ func set_capstone_granted(set_id: String) -> bool:
 ## The band and the fee of an unknown stone (rough_<band>): the delegate knows dungeon_loot.appraisal; without it {band: "", fee: 0}.
 func appraisal_quote(rough_id: String) -> Dictionary:
 	if _delegate_has(&"appraisal_quote"):
-		var v: Variant = _delegate_call(&"appraisal_quote", [loot_cfg(), rough_id])
+		var v: Variant = _delegate_call(&"appraisal_quote", [_delegate_config(), rough_id])
 		if typeof(v) == TYPE_DICTIONARY:
 			return v
 	return {"band": "", "fee": 0}
@@ -406,9 +408,12 @@ func appraise(rough_id: String, ctx: Dictionary = {}) -> Dictionary:
 	consume[rough_id] = 1
 	c["consume"] = consume
 	c["fee"] = fee
-	var res := _run_delegate(&"roll_appraisal", &"appraisal", {"kind": &"appraisal", "rough": rough_id, "band": str(quote.get("band", "")), "fee": fee}, str(c.get("uid", "")), c)
-	if bool(res["ok"]):
-		SaveManager.autosave()                                    # the stone, the fee and the band's counter are committed: saved BEFORE the result is shown (no reload re-roll)
+	var res := {}
+	# Keep item/reveal observers outside the save boundary too, not just the caller.
+	EconomyManager.defer_notifications(func() -> void:
+		res.merge(_run_delegate(&"roll_appraisal", &"appraisal", {"kind": &"appraisal", "rough": rough_id, "band": str(quote.get("band", "")), "fee": fee}, str(c.get("uid", "")), c))
+		if bool(res["ok"]) and bool(ctx.get("save",true)): SaveManager.autosave()
+	)
 	var rows: Array = res.get("results", [])
 	var first: Dictionary = rows[0] if not rows.is_empty() and typeof(rows[0]) == TYPE_DICTIONARY else {}
 	return {"ok": bool(res["ok"]), "gem": str(first.get("id", "")), "rarity": str(first.get("rarity", "")), "fee": fee if bool(res["ok"]) else 0, "reason": res["reason"]}
@@ -611,8 +616,10 @@ func _finish(source: StringName, plan: Dictionary, ctx: Dictionary, r: RandomNum
 		_commit(plan)
 	)
 	if not orbs and not out_rows.is_empty():
-		EventBus.loot_rolled.emit(source, out_rows)
+		_announce_after_transaction(&"loot_rolled",[source,out_rows])
 	_announce_cap()
+	var surprise := _Data.dict(plan.get("surprise",{}))
+	if not surprise.is_empty(): _announce_after_transaction(&"game_event",[&"dungeon_surprise",surprise.duplicate(true)])
 	var answer := _answer(true, out_rows, &"")
 	answer["sold"] = sold
 	return answer
@@ -667,10 +674,19 @@ func _commit(plan: Dictionary) -> void:
 func _run_delegate(method: StringName, source_kind: StringName, extra: Dictionary, uid: String, ctx: Dictionary) -> Dictionary:
 	var c := ctx.duplicate()
 	c.erase("odds")                                              # ctx.odds is ignored
-	var req := {"zone": str(ctx.get("band", "")), "band": str(ctx.get("band", "")), "uid": uid, "ctx": c, "luck": _luck_of(c), "day": _today(), "cfg": loot_cfg()}
+	c["uid"] = uid
+	if uid.begins_with(DUNGEON_UID_PREFIX): c["dungeon"] = true
+	var req := {"zone": str(ctx.get("band", "")), "band": str(ctx.get("band", "")), "uid": uid, "ctx": c, "luck": _luck_of(c), "day": _today(), "cfg": _delegate_config()}
 	req.merge(extra, true)
 	if str(req["zone"]) == "" and extra.has("zone"):
 		req["zone"] = extra["zone"]
+	if str(req["band"]) == "": req["band"] = req["zone"]
+	var key: Variant = uid
+	var stream := str(method)
+	if method == &"roll_appraisal":
+		stream = "appraise:"+str(req.band)
+		key = int(_Data.dict(dungeon.get("appraise",{})).get(str(req.band),0))
+	req["rng"] = c.get("rng",DungeonLootRng.keyed(stream,key))
 	var v: Variant = _delegate_call(method, [dungeon.duplicate(true), req])
 	if typeof(v) != TYPE_DICTIONARY:
 		return _answer(false, [], &"no_rules")
@@ -683,6 +699,17 @@ func _run_delegate(method: StringName, source_kind: StringName, extra: Dictionar
 	plan["results"] = typed
 	var source := StringName("%s:%s" % [source_kind, str(extra.get("container", extra.get("boss", extra.get("spot", extra.get("creature", extra.get("node_kind", ""))))))])
 	return _finish(source, plan, c, _stream(c), _stream(c).state)
+
+## Snapshot primitive item facts once per data load; the delegate never reads services.
+func _delegate_config() -> Dictionary:
+	if _dungeon_item_facts.is_empty():
+		for id in _Kinds.all_ids():
+			var def := _Kinds.def(id)
+			_dungeon_item_facts[str(id)] = {"category":str(def.get("category","")),"rarity":str(def.get("rarity","normal")),"sell_price":EconomyManager.sell_value(id),"max_stack":EconomyManager.max_stack_of(id)}
+	var cfg := loot_cfg().duplicate()
+	cfg["_items"] = _dungeon_item_facts
+	cfg["_dungeon_rules"] = _Data.dict(_Svc.lua_config("dungeon_loot",{}))
+	return cfg
 
 
 # ================================================================================================ delegate access
@@ -747,6 +774,7 @@ func _virtual_pack(consume: Dictionary = {}) -> Dictionary:
 
 func _goes_to_backpack(id: StringName) -> bool:
 	var kind := _Kinds.storage_of(id)
+	if kind == _Kinds.WEAPON: return EconomyManager.get_node_or_null("Arsenal") == null
 	if kind == _Kinds.BACKPACK:
 		return true
 	# furniture and clothing have their own stores; while the store does not exist EconomyManager keeps the item in the backpack
@@ -964,7 +992,7 @@ func _on_game_event(event_name: StringName, payload: Dictionary) -> void:
 func open_appraisal(npc_id: StringName = &"") -> bool:
 	if not ResourceLoader.exists(appraisal_scene_path):
 		return false
-	if _appraisal_ui == null or not is_instance_valid(_appraisal_ui):
+	if _appraisal_ui == null or not is_instance_valid(_appraisal_ui) or _appraisal_ui.is_queued_for_deletion():
 		var host := get_tree().get_first_node_in_group(GAME_UI_GROUP)
 		if host == null:
 			return false
@@ -973,7 +1001,9 @@ func open_appraisal(npc_id: StringName = &"") -> bool:
 			return false
 		_appraisal_ui = (scene as PackedScene).instantiate()
 		host.add_child(_appraisal_ui)
-	if _appraisal_ui.has_method("open"):
+	if _appraisal_ui.has_method("open_for_npc"):
+		_appraisal_ui.call("open_for_npc",npc_id)
+	elif _appraisal_ui.has_method("open"):
 		_appraisal_ui.call("open", npc_id)
 	return true
 
@@ -1022,6 +1052,9 @@ func from_dict(d: Dictionary) -> bool:
 			"pool_left": _Data.strings(rec2.get("pool_left", [])), "first_done": bool(rec2.get("first_done", false)), "last_uid": str(rec2.get("last_uid", "")),
 		}
 	dungeon = _Data.dict(d.get("dungeon", {})).duplicate(true)
+	if _delegate_has(&"from_dict"):
+		var normalized: Variant = _delegate_call(&"from_dict",[dungeon])
+		if normalized is Dictionary: dungeon = normalized
 	_cap_told_day = 0
 	return true
 

@@ -1,0 +1,27 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PLAYTEST start mode=windowed character=animal sections=res://tests/sections only=ghostfam_events,social_heart_content
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.Jgjres/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/hearts-native
+== section ghostfam_events [windowed]  (res://tests/sections/ghostfam_events.gd)
+  ok    ghostfam_events.native_family_stage
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/hearts-native/ghostfam_events_welcome.png (1280x720)
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.native_welcome_complete
+  --    ghostfam_events: 3 checks, 0 failed, 0 skipped, 5.2 s
+== section social_heart_content [windowed]  (res://tests/sections/social_heart_content.gd)
+  ok    social_heart_content.native_stage
+  ok    social_heart_content.native_ready
+  ok    social_heart_content.native_cinematic_hides_hud
+  ok    social_heart_content.native_speaker_has_clear_stage
+  ok    social_heart_content.native_cinematic_hides_door_signs
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/hearts-native/social_heart_content_hoppe_h4.png (1280x720)
+  ok    social_heart_content.authored_scene_finished (["", &""])
+  ok    social_heart_content.native_scene_finishes
+  --    social_heart_content: 7 checks, 0 failed, 0 skipped, 3.9 s
+== summary: 2 section(s) run, 10 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 13.5 s
+PLAYTEST PASS (10 checks in 2 sections, 0 allowed engine messages, 0 known-issue messages)

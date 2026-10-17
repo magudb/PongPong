@@ -246,6 +246,8 @@ func _make_skeleton() -> void:
 	ground.z_index = Z_GROUND
 	# no y_sort: the ground diamonds never overlap another cell; the sort pass is per-frame waste on big maps
 	ground.y_sort_enabled = false
+	# Smaller batches cull off-screen terrain in the wide painted town.
+	if map.id == &"hyggebyen":ground.rendering_quadrant_size = 8
 	ground.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	add_child(ground)
 	if projection == &"iso":

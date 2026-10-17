@@ -381,7 +381,7 @@ func unlocked(unlock_name: Variant) -> bool:
 	return false
 
 
-## real | partial | stub (home.unlock_status): what the unlock actually does today. oven, forecast and royal_visit are listed and do nothing.
+## real | partial | stub (home.unlock_status): what the unlock actually does today. all eight listed unlocks now have gameplay consumers.
 func unlock_status(unlock_name: Variant) -> String:
 	return _HomeData.unlock_status(str(unlock_name))
 
@@ -506,7 +506,7 @@ func _roll_weekly_visit() -> void:
 	_visit = {"npc": npc, "item": item, "week": week, "index": index}
 	last_visit = {"ok": true, "reason": "ok", "day": td, "npc": npc, "item": item}
 	EventBus.visitor_gift.emit(StringName(npc), StringName(item))
-	_toast("HOME_UNLOCK_GUEST_VISITS", _format(tr("FIND_UI_FOUND_FMT"), [tr("ITEM_%s" % item.to_upper())]))
+	_toast("HOME_UNLOCK_GUEST_VISITS", tr("PARTNER_VISITOR") % tr(_npc_name_key(npc)) if npc != "" else _format(tr("FIND_UI_FOUND_FMT"), [tr("ITEM_%s" % item.to_upper())]))
 
 
 func _visitor_for(week: int, index: int) -> String:
@@ -609,6 +609,10 @@ func _start_house_party() -> Array[String]:
 ##   party    the friends of today's Fe-fest (hold_festival -> SocialManager.start_house_party())
 ##   visit    the named friend who left today's weekly gift (an unnamed fairy is not a guest)
 ## Without S-marriage this is [] (honest stub, DT37).
+func party_today() -> Array:
+	return _party.duplicate() if festival_day == GameManager.total_day() else []
+
+
 func guests_today() -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var seen := {}
@@ -708,6 +712,9 @@ func to_dict() -> Dictionary:
 		"festival_day": festival_day,
 		"visit_week": visit_week,
 	}
+	if _visit_day > 0:
+		out["visit_day"] = _visit_day
+		if not _visit.is_empty():out["visit"] = _visit.duplicate()
 	if not _party.is_empty() and festival_day == GameManager.total_day():
 		out["party"] = _party.duplicate()
 	if not _pending_gifts.is_empty():
@@ -740,8 +747,13 @@ func from_dict(d: Dictionary) -> bool:
 	for id in _Data.arr(d.get("gifts_pending", [])):
 		if str(id) != "" and str(id) not in _pending_gifts:
 			_pending_gifts.append(str(id))
-	_visit_day = 0
+	_visit_day = maxi(_Codec.to_int(d.get("visit_day",0)),0)
 	_visit = {}
+	var visit := _Data.dict(d.get("visit",{}))
+	var visit_index := _Codec.to_int(visit.get("index",-1),-1)
+	var saved_week := _Codec.to_int(visit.get("week",-1),-1)
+	if _visit_day>0 and str(visit.get("item",""))!="" and visit_index>=0 and visit_index<7 and saved_week>=0:
+		_visit = {"npc":str(visit.get("npc","")),"item":str(visit.item),"week":saved_week,"index":visit_index}
 	last_visit = {}
 	_dialogue_npc = &""
 	# the `game` section (applied before this one) brought home_tier from the same moment of the same save: a usable value (1..10) is kept exactly as it was

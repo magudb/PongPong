@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "ghost",
+  "checks": 6,
+  "elapsed_s": 14.59,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "ghostfam_seek": {
+      "character": "ghost",
+      "checks": 6,
+      "failed": 0,
+      "ms": 10111,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

@@ -1,0 +1,42 @@
+keys,da,en
+ANIMAL_CARE_TITLE,Dine dyr,Your animals
+ANIMAL_CARE_PROMPT,Pas %s,Care for %s
+ANIMAL_EMPTY,Ingen dyr endnu,No animals yet
+ANIMAL_HAPPINESS,Glæde,Happiness
+ANIMAL_FULLNESS,Fylde,Fullness
+ANIMAL_BOND_FMT,Venskab %d · Alder %d dage,Bond %d · Age %d days
+ANIMAL_BABY,Unge,Baby
+ANIMAL_ADULT,Voksen,Adult
+ANIMAL_NO_FOOD,Intet passende foder i rygsækken,No suitable food in your backpack
+ANIMAL_FOOD_FMT,%s ×%d · Skift foder,%s ×%d · Change food
+ANIMAL_FEED,Giv foder,Feed
+ANIMAL_BRUSH,Børst,Brush
+ANIMAL_PLAY,Leg,Play
+ANIMAL_COLLECT,Hent produkter,Collect products
+ANIMAL_RENAME,Giv et nyt navn,Rename animal
+ANIMAL_PRODUCT_FMT,%s: %d klar,%s: %d ready
+ANIMAL_CARE_DAILY_HINT,"Børstning og leg tæller én gang om dagen. Vælg foder, som dit dyr kan lide.",Brushing and play count once each day. Choose food your animal likes.
+ANIMAL_BUILD_TITLE,Plads til dine dyr,Homes for your animals
+ANIMAL_CAPACITY_FMT,Plads til %d dyr,Room for %d animals
+ANIMAL_BUILD_HINT,Bygningen står på sin plads ved dyrefolden. Du kan derefter købe dyr hos Rosa.,The building goes in its place by the animal yard. You can then buy animals from Rosa.
+ANIMAL_BUILD,Byg,Build
+ANIMAL_BUILT,Allerede bygget,Already built
+ANIMAL_BUILD_ONLY_FARM,Du kan bygge til dyrene hjemme på gården.,Build animal homes at your farm.
+ANIMAL_BUILD_CONFIRM_FMT,Byg %s for de viste materialer og guldagern?,Build %s for the listed materials and golden acorns?
+ANIMAL_GOLD,Guldagern,Golden acorns
+ANIMAL_SPECIES_CHICKEN,Høne,Chicken
+ANIMAL_SPECIES_RABBIT,Kanin,Rabbit
+ANIMAL_SPECIES_DUCK,And,Duck
+ANIMAL_SPECIES_CAT,Kat,Cat
+ANIMAL_SPECIES_DOG,Hund,Dog
+ANIMAL_SPECIES_SHEEP,Får,Sheep
+ANIMAL_SPECIES_COW,Ko,Cow
+ANIMAL_SPECIES_DEER,Hjort,Deer
+ANIMAL_SPECIES_FOX,Ræv,Fox
+ANIMAL_SPECIES_OWL,Ugle,Owl
+BUILDING_COOP,Hønsehus,Coop
+BUILDING_BARN,Lade,Barn
+BUILDING_HOUSE,Dyrehus,Animal house
+ANIMAL_FIRST_QUEST,Mit første dyr,My first animal
+ANIMAL_PRODUCTS_QUEST,Friske æg og mælk,Fresh eggs and milk
+ANIMAL_DECOR_PICKUP,Tag dekorationen op,Pick up decoration

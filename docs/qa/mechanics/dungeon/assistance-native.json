@@ -1,0 +1,30 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 166,
+  "elapsed_s": 7.4,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "dungeon_pickups": {
+      "character": "animal",
+      "checks": 14,
+      "failed": 0,
+      "ms": 1363,
+      "skipped": 0
+    },
+    "dungeon_run": {
+      "character": "animal",
+      "checks": 152,
+      "failed": 0,
+      "ms": 1370,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

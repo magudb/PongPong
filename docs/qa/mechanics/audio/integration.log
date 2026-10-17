@@ -1,0 +1,1678 @@
+run_playtest: importing project (pass 1 of 1) ...
+run_playtest: assets changed, running tools/import/write_import_stubs.py --check
+write_import_stubs --check: ok (62 character folders, 498 sheets with the S3TC preset, 58 tile atlases, 0 wardrobe layer imports lossless, 252 painted wardrobe textures with S3TC, 251 keep files)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=audio_town,voice,core,economy,npc,ghostfam_data,dungeon_reveal,loc
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.wpBf3h/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 11.5 s
+== section audio_town  (res://tests/sections/audio_town.gd)
+  ok    audio_town.cue_log_ring_256
+  ok    audio_town.cue_log_snapshot_is_detached
+  ok    audio_town.cues_follow_area
+  ok    audio_town.exit_shop_bell
+  ok    audio_town.raw_midnight_is_night
+  ok    audio_town.same_state_no_repeated_ambience
+  ok    audio_town.rain_overlay
+  ok    audio_town.rain_stops_indoors
+  ok    audio_town.closed_door_knock_and_closing_bell_hooks
+  ok    audio_town.social_cues_logged
+  ok    audio_town.real_weapon_equipment_cue
+  ok    audio_town.unchanged_equipment_silent
+  ok    audio_town.festival_music_and_duck
+  ok    audio_town.festival_restores_area_score
+  ok    audio_town.surface_ground_0
+  ok    audio_town.surface_ground_1
+  ok    audio_town.surface_ground_2
+  ok    audio_town.surface_ground_3
+  ok    audio_town.surface_ground_4
+  ok    audio_town.surface_ground_5
+  ok    audio_town.surface_ground_6
+  ok    audio_town.surface_builder_wins
+  ok    audio_town.city_bridge_rope
+  ok    audio_town.city_platform_wood
+  ok    audio_town.town_bell_once_per_hour
+  ok    audio_town.footstep_interval_false ([{ "t_msec": 20032, "kind": "sfx", "id": "step_wood_1", "played": true }, { "t_msec": 20033, "kind": "sfx", "id": "step_wood_3", "played": true }, { "t_msec": 20034, "kind": "sfx", "id": "step_wood_2", "played": true }])
+  ok    audio_town.no_repeat_variants_false
+  ok    audio_town.footstep_interval_true ([{ "t_msec": 20034, "kind": "sfx", "id": "step_wood_3", "played": true }, { "t_msec": 20034, "kind": "sfx", "id": "step_wood_1", "played": true }, { "t_msec": 20034, "kind": "sfx", "id": "step_wood_2", "played": true }, { "t_msec": 20034, "kind": "sfx", "id": "step_wood_3", "played": true }])
+  ok    audio_town.no_repeat_variants_true
+  ok    audio_town.idle_silent
+  ok    audio_town.real_player_walk_emits_steps
+  ok    audio_town.rapid_fades_keep_one_final_stream
+  ok    audio_town.thirteen_plain_players
+  ok    audio_town.recipe_exports_sfx_synth.py (PASS sfx 44 placeholder recipes
+)
+  ok    audio_town.recipe_exports_ambience_synth.py (PASS amb 9 placeholder recipes
+)
+  ok    audio_town.recipe_exports_music_synth.py (PASS music 14 placeholder recipes
+)
+  ok    audio_town.menu_stops_world_audio
+  --    audio_town: 37 checks, 0 failed, 0 skipped, 5.0 s
+== section core  (res://tests/sections/core.gd)
+  ok    core.signal_contract_exact (76 signals; missing [], wrong [], not in the contract [])
+  ok    core.legacy_signals_keep_arity (38 legacy signals)
+  ok    core.plan_3_5_signals (23 signals of PLAN 3.5 + R.13)
+  ok    core.feature_signals_14 (addendum 3.1)
+  ok    core.review_fix_signals (devin-review additions (flag_changed))
+  ok    core.farm_upgraded_removed (PLAN 3.5: removed, never used)
+  ok    core.r13_escape_hatch_and_hotbar_assign (R.13)
+  ok    core.player_spawned_node2d (emitted with a Node2D)
+  ok    core.signal_arity_lint (841 EventBus uses in 428 files, 0 violation(s) []; covers 14 feature signals)
+  ok    core.signal_arity_lint_covers_14_feature_signals (arity of every addendum 3.1 signal)
+  ok    core.signal_arity_lint_detects_mismatch (bad sample ["sample:1 EventBus.gold_changed.emit() has 1 argument(s), the signal has 2", "sample:2 EventBus.nope is neither a declared signal nor a member", "sample:3 EventBus.day_started.connect(func(a): pass) accepts 1..1 argument(s), the signal passes 2", "sample:4 EventBus.home_upgraded.connect(_h) accepts 3..3 argument(s), the signal passes 2", "sample:7 EventBus.save_completed.connect(_t2) accepts 0..0 argument(s), the signal passes 1", "sample:10 EventBus.item_sold.emit() has 2 argument(s), the signal has 3"], good sample [])
+  ok    core.config_literal_defaults (28 days, 4 seasons, 06:00 to 26:00 (= 02:00 at night), 2 min/s)
+  ok    core.config_read_from_lua (minutes_per_real_second 2.0 from LuaRuntime time.*)
+  ok    core.time_manager_has_no_second_copy (TimeManager delegates to GameManager)
+  ok    core.config_override_seasons (override seam)
+  ok    core.config_drives_end_day (day 7 of aa -> day 1 of bb (1 bb))
+  ok    core.config_drives_year (year 2 starts at total day 15 (15))
+  ok    core.modal_stack (push x2 / pop x2: paused true true, after first pop true, after last pop resumed true)
+  ok    core.modal_changed_signal (modal_changed payloads [[&"pause"], [&"pause", &"settings"], [&"pause"], []])
+  ok    core.modal_stack_pop_out_of_order (pop the older modal first)
+  ok    core.modal_phase_cutscene_and_restore (CUTSCENE true, shop over dialogue true, true, true, back to CUTSCENE true, PLAYING true)
+  ok    core.modal_push_is_idempotent (double push = one entry, unknown pop ignored)
+  info  expected engine error below (declared with allow): push_modal with an empty name
+ERROR: GameManager.push_modal: a modal needs a name
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] push_modal (res://scripts/autoload/game_manager.gd:250)
+       [1] _test_modal_stack (res://tests/sections/core.gd:527)
+       [2] run (res://tests/sections/core.gd:140)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    empty modal name is refused with an error (allowed 'a modal needs a name' seen 1 time(s), want >= 1)
+  ok    core.modal_empty_name_refused
+  ok    core.modal_stack_cleared_at_menu (quit to menu leaves a live, unpaused menu)
+  ok    core.modal_over_menu_restores_menu (settings over the title)
+  ok    core.phase_character_select
+  ok    core.phase_legacy_change_phase (change_phase(PAUSED/PLAYING))
+  ok    core.phase_playing_does_not_unpause_open_modal (an open modal wins over change_phase(PLAYING))
+  ok    core.phase_after_pop_all
+  ok    core.modal_changed_only_when_the_stack_changes (scene boundaries and no-op pops are silent: [])
+  ok    core.modal_never_touches_the_mouse (mouse mode stays 0)
+  ok    core.flags_json_safe_types (bool, int, float, String; StringName is stored as String)
+  info  expected engine errors below (declared with allow): set_flag with an Array, a Vector2 and NAN
+ERROR: GameManager.set_flag(bad_array): Array is not JSON-safe (use bool, int, float or String)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_flag (res://scripts/autoload/game_manager.gd:347)
+       [1] _test_flags (res://tests/sections/core.gd:574)
+       [2] run (res://tests/sections/core.gd:141)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+ERROR: GameManager.set_flag(bad_vector): Vector2 is not JSON-safe (use bool, int, float or String)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_flag (res://scripts/autoload/game_manager.gd:347)
+       [1] _test_flags (res://tests/sections/core.gd:575)
+       [2] run (res://tests/sections/core.gd:141)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+ERROR: GameManager.set_flag(bad_nan): float is not JSON-safe (use bool, int, float or String)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_flag (res://scripts/autoload/game_manager.gd:347)
+       [1] _test_flags (res://tests/sections/core.gd:576)
+       [2] run (res://tests/sections/core.gd:141)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    non JSON-safe values are refused with an error (allowed '(use bool, int, float or String)' seen 3 time(s), want >= 3)
+  ok    core.flags_unsafe_values_not_stored
+  ok    core.flags_null_clears
+  ok    core.flags_clear
+  ok    core.flag_int_defaults (absent flags: home_tier 1, home_building 0, home_upgrade_done 0)
+  ok    core.flag_int_coerces (3.0 -> 3, true -> 1, '12' -> 12, 'tre' -> default)
+  ok    core.flag_int_after_json_roundtrip (new game defaults ok true; raw value after JSON is a float true; flag_int gives ints true)
+  ok    core.new_game_signal_once_and_last (signals in order: ["modal_changed", "player_character_changed", "weather_changed", "new_game_started"])
+  ok    core.new_game_started_is_last_gm_signal (after it only the reset wave of other systems: [])
+  ok    core.new_game_skin_announced_final (player_character_changed [&"fairy_meadow"])
+  ok    core.new_game_state_reset_before_signal (day/season/year/clock, flags { &"intro_pending": true, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0 }, zones, modals gone, phase PLAYING)
+  ok    core.new_game_intro_pending (intro_pending=true, the dirty flag is gone)
+  ok    core.new_game_resets_own_state
+  ok    core.new_game_resets_time_manager (weather klart, clock running)
+  ok    core.new_game_default_and_explicit_skin (animal animal_fox hobbit hobbit_pip ghost ghost_bu explicit fairy_dusk)
+  ok    core.new_game_default_names (empty names fall back to the translated defaults (Eventyrrejsende / Min Trækronsgård))
+  ok    core.new_game_wires_EconomyManager (EconomyManager.reset() is connected to new_game_started)
+  ok    core.new_game_wires_QuestManager (QuestManager.reset() is connected to new_game_started)
+  ok    core.new_game_wires_TimeManager (TimeManager.reset() is connected to new_game_started)
+  ok    core.new_game_wires_ShopSystem (ShopSystem.reset() is connected to new_game_started)
+  ok    core.new_game_wires_AnimalHusbandry (AnimalHusbandry.reset() is connected to new_game_started)
+  ok    core.new_game_wires_SaveManager (SaveManager.reset() is connected to new_game_started)
+  ok    core.new_game_resets_gold (gold after a new game: 500)
+  ok    core.new_game_resets_all (one new_game_started per start_new_game; 6 system(s) reset through it so far)
+  ok    core.from_dict_restores_state
+  ok    core.from_dict_types_after_json (ints and StringNames come back typed)
+  ok    core.from_dict_does_not_start_playing (phase stays 0)
+  ok    core.from_dict_emits_character_changed (["player_character_changed"])
+  ok    core.to_dict_total_day (total_day 156 in the dictionary for the title screen)
+  ok    core.from_dict_empty_is_safe
+  info  expected engine warning below (declared with allow): from_dict drops an unsafe flag
+WARNING: GameManager.from_dict: world flag 'bad' is not JSON-safe and was dropped
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _sanitized_flags (res://scripts/autoload/game_manager.gd:613)
+         [1] from_dict (res://scripts/autoload/game_manager.gd:589)
+         [2] _test_from_dict (res://tests/sections/core.gd:744)
+         [3] run (res://tests/sections/core.gd:143)
+         [4] go_menu (res://tests/lib/flow.gd:69)
+         [5] change_scene (res://tests/lib/flow.gd:57)
+         [6] frames (res://tests/lib/drive.gd:79)
+  ok    an unsafe flag in a save is reported (allowed 'and was dropped' seen 1 time(s), want >= 1)
+  ok    core.from_dict_drops_unsafe_flags
+  ok    core.unlock_zone_payload (zone_unlocked(crystal_cave))
+  ok    core.unlock_zone_signals (zone_unlocked x1, zone_entered x0)
+  ok    core.unlock_zone_toast (one toast, icon zone: [["Nyt område!", "Du har låst op for: Krystalgrotten", "zone"]])
+  ok    core.unlock_toast_never_formats_a_raw_key (an untranslated key (no placeholder) is returned as it is: no String formatting error)
+  ok    core.unlock_zone_state (unlocked, not discovered)
+  ok    core.unlock_zone_twice_is_silent (no second signal, no second toast)
+  ok    core.zone_entered_discovers
+  ok    core.advance_time_25h (06:00 + 25 h = day 2 07:00)
+  ok    core.advance_time_25h_signals (["day_ended", "day_started", "game_event", "time_of_day_changed"])
+  ok    core.midnight_passed_event (game_event(midnight_passed) after day_started: [&"midnight_passed", { "day": 2, "season": "foraar" }])
+  ok    core.advance_time_multiday (50 h -> day 3 08:00 true; 18 h -> raw 24:00 of the same day true; 20 h -> day 2 02:00 true; 23:59 + 1 min -> raw 24:00 same day true; 25:59 + 1 min -> day 2 02:00 true; 29 days 90 min -> sommer day 2 07:30 true)
+  ok    core.time_of_day_changed_range (raw hour 2..25 (a signal at 24:30 carries 24: the HUD shows 00:30), minute 0..59)
+  ok    core.advance_time_zero_and_negative (0 min emits the clock once, negative minutes are ignored)
+  ok    core.season_rollover (day 28 foraar 23:00 + 2 h = still day 28 (01:00); 01:00 (raw 25:00) + 2 h = day 1 sommer 03:00: ["day_ended", "season_changed", "day_started", "game_event", "time_of_day_changed"])
+  ok    core.year_rollover (vinter 28 -> foraar day 1 of year 2)
+  ok    core.end_day_signal_order (["day_ended", "day_started", "time_of_day_changed"] (the bed emits no midnight_passed))
+  ok    core.end_day_full_year (114 end_day() calls: day 3 foraar year 2 (total 115))
+  ok    core.total_day_values (Dag 1 .. Dag 112, year 2 starts at Dag 113)
+  ok    core.total_day_current (day 9 efteraar year 1 is Dag 65)
+  ok    core.sleep_from_bed (21:30 -> next day 06:00)
+  ok    core.sleep_after_passout_no_double_day (after the 02:00 roll: wake at 06:00 of the same calendar day (day 5))
+  ok    date_text(16, foraar) in da (got Tirsdag 16. Blomstermåned, want Tirsdag 16. Blomstermåned)
+  ok    date_text(16, foraar) in en (got Tuesday 16. Month of Blooms, want Tuesday 16. Month of Blooms)
+  ok    core.calendar_names (date_text da/en, 28 weekdays true, 4 months true, 5 weather names true, en names true, defaults to today true)
+  ok    core.weekday_is_monday_on_day_one_of_every_season (Mandag = day 1 of every season)
+  ok    core.first_weekday_config (time.first_weekday=2: day 1 is Onsdag; the default is Mandag)
+  info  expected engine error below (declared with allow): set_weather with an unknown id
+ERROR: TimeManager.set_weather: unknown weather id 'hagl'
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_weather (res://scripts/autoload/time_manager.gd:146)
+       [1] _test_weather (res://tests/sections/core.gd:960)
+       [2] run (res://tests/sections/core.gd:149)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    an unknown weather id is refused (allowed 'unknown weather id' seen 1 time(s), want >= 1)
+  ok    core.weather_set_and_announced (weather_changed(regn), is_raining only for regn, unknown id refused)
+  ok    core.weather_roll_uses_config_chances (roll 0.0 -> regn, 0.30 -> taage, 0.90 -> klart)
+  ok    core.weather_snow_only_in_vinter (snow chance outside vinter is ignored)
+  ok    core.weather_weights_are_normalised (klart 6 / regn 3 / torden 1 -> { &"regn": 0.3, &"torden": 0.1, &"klart": 0.6 }; rolls 0.10 regn, 0.35 torden, 0.50 klart)
+  ok    core.weather_table_is_valid (foraar [&"regn", &"taage", &"klart"]; sommer [&"regn", &"torden", &"klart"]; efteraar [&"regn", &"taage", &"klart"]; vinter [&"taage", &"sne", &"klart"]; )
+  ok    core.is_night_from_config (20:00-05:00 by default, configurable)
+  ok    core.weather_default_rolls_are_valid (ids seen: [&"klart", &"regn", &"taage", &"torden", &"sne"])
+  ok    core.weather_rolled_before_day_started (a day_started listener already saw the roll (1), total 1)
+  ok    core.weather_rolled_once_per_day (a stray day_started of the same day does not roll again)
+  ok    core.weather_rolled_by_game_manager_before_listeners (without TimeManager's own handler a listener still saw the new roll (2, was 1))
+  ok    core.weather_one_roll_per_crossed_midnight (25 h = 1 roll, 50 h = 2 rolls)
+  ok    core.time_manager_reset
+  ok    core.time_manager_save_roundtrip (weather and the day it belongs to survive JSON)
+  ok    core.time_manager_from_dict_bad_weather (unknown saved weather falls back to klart)
+  ok    core.time_tick_rate (2 game minutes per real second: 1 s = 06:02 (06:02))
+  ok    core.pause_time_is_idempotent (pause twice, resume once: the clock runs again)
+  ok    core.resume_time_is_idempotent
+  ok    core.clock_stops_in_modals_and_menus (paused modal true, dialogue true, menu true)
+  ok    core.time_scale (time scale 2: +2 minutes for 0.5 s (06:05))
+  ok    core.tick_crosses_midnight (23:59 + 1 tick = day 1 raw 24:00 (00:00 of the same day); 01:59 + 1 tick = day 2 02:00)
+  ok    core.day_fraction (noon is half of the day)
+  ok    core.no_mouse_capture (16 autoload scripts scanned, none touches Input.mouse_mode [] (the cursor itself is menus.cursor_always_visible, P16))
+  --    core: 114 checks, 0 failed, 0 skipped, 0.8 s
+== section dungeon_reveal  (res://tests/sections/dungeon_reveal.gd)
+  ok    dungeon_reveal.tier_selection_by_rank
+  ok    dungeon_reveal.item_already_in_store_before_reveal
+  ok    dungeon_reveal.unique_card_before_skip_threshold
+  ok    dungeon_reveal.unique_card_skippable
+  ok    dungeon_reveal.skip_keeps_owned_item
+  ok    dungeon_reveal.no_reveal_for_duplicate_keepsake
+  ok    dungeon_reveal.legendary_awe_stun
+  ok    dungeon_reveal.music_duck_is_temporary
+  ok    dungeon_reveal.legendary_skip_releases_only_awe
+  ok    dungeon_reveal.queue_best_rank_first
+  ok    dungeon_reveal.skip_preserves_a_later_combat_stun
+  ok    dungeon_reveal.reduce_flash_variant
+  ok    dungeon_reveal.reduce_flash_has_no_particles
+  ok    dungeon_reveal.appraisal_automatic_reveal_suppressed
+  ok    dungeon_reveal.appraisal_reveal_above_hidden_forest_hud
+  ok    dungeon_reveal.cues_by_rarity_and_directory
+  ok    dungeon_reveal.missing_audio_is_silent
+  --    dungeon_reveal: 17 checks, 0 failed, 0 skipped, 3.1 s
+== section economy  (res://tests/sections/economy.gd)
+  ok    economy.starting_gold_from_config (new game: 500 guldagern (economy.starting_gold 500))
+  ok    gold is clamped to MAX_GOLD (got 999999, want 999999)
+  ok    gold never goes below 0 (add_gold with a negative amount) (got 0, want 0)
+  ok    add_gold(0) changes nothing and fires nothing (got 2, want 2)
+  ok    spend_gold refuses more than the player has and changes nothing
+  ok    spend_gold refuses a negative amount
+  ok    spend_gold(0) is a free no-op
+  ok    spend_gold pays
+  ok    economy.gold_clamp (gold_changed deltas [999499, -999999, 100, -40])
+  ok    economy.gold_saturates (add_gold(INT64_MAX) ends at MAX_GOLD instead of wrapping to 0, add_gold(INT64_MIN) ends at 0 (0, 999999, 0, 999999, 0); deltas [-60, 60, 999939, -999999, 250, 999749, -999999])
+  ok    economy.total_of_saturates (total_of is unit x amount, 0 for nothing, and MAX_GOLD + 1 (never affordable) instead of an int64 wrap-around (4 x 2^62+1 would be 4))
+  ok    economy.buy_total_never_wraps (4 gold x (2^62 + 1) chairs is refused, no gold moves; the shop's total saturates too (carrot seeds x 2^62+1 = 1000000))
+  ok    economy.gold_load_clamped (a saved 1e30 loads as MAX_GOLD, -1e30 as 0, "1e30" as MAX_GOLD, text as the default 500 (999999, 0, 999999, 500))
+  ok    71 items are defined by the 7 item files of the economy
+  ok    economy.item_defs_complete (name/description keys, category, rarity, max_stack, prices, stamina_cost of 71 items; problems [])
+  ok    no def sets `icon`: every id has an icon of its own name (P23 bakes one per id)
+  ok    no item id is defined twice (fairy_dust only in magic.lua): []
+  ok    fairy_dust lives in magic.lua only; teleport_stone and enchanted_soil (no 2D mechanic) are cut
+  ok    economy.guide_moonstone (Månesten sells for 220, rare, 'Lyser svagt i mørke...')
+  ok    copper_ore 35 / 14 and wool 30 / 12 are the prices the content assumes
+  ok    economy.crop_prices_match_balance (8 crops: a seed item with crop_id and a harvest item that sells at crops.<id>.sell_price; wrong [])
+  ok    economy.animal_products_defined (undefined products ["baby_kitten -> companionship", "baby_puppy -> companionship"])
+  SKIP  animals.lua (P20) still lets the kitten and the puppy produce `companionship`: friendship_token exists for it
+  ok    economy.sell_below_half_of_buy (every purchasable item of the economy sells for at most half its price; over: [])
+  ok    economy.slots_are_24 (INVENTORY_SLOTS 24, 8 used after the starter kit)
+  ok    an amount <= 0 is refused everywhere (add, remove, has)
+  ok    no id and amount 0 inside has_items are refused, an empty requirement is met
+  ok    150 wood fit
+  ok    economy.stacking_max_stack (150 wood = [99, 51] (max_stack 99))
+  ok    the half-empty stack is filled first (198 wood in 2 slots)
+  ok    max_stack: tools 1, default 99, the def's own number, unknown 99
+  ok    remove_item takes from several stacks
+  ok    removing more than the player has changes nothing
+  ok    the backpack can be filled to 24 slots
+  ok    wood does not fit into a full backpack of full stacks
+  ok    a new item has no slot
+  ok    economy.backpack_full_refused (a refused add gives nothing and shows the inventory-full toast (no item_gained))
+  ok    one wood out, one wood in: still fits
+  ok    all or nothing: two do not fit into the room of one
+  ok    refusing items logs no engine warning
+  ok    buy_item with a full backpack takes no gold
+  ok    economy.new_game_resets (after a new game: 500 guldagern and { "hoe_wooden": 1, "watering_can_copper": 1, "axe_wooden": 1, "pickaxe_wooden": 1, "scythe": 1, "turnip_seeds": 5, "lantern_oil": 2, "health_tonic": 1 })
+  ok    the starter kit is given silently (no item_gained)
+  ok    the new game tells the HUD about gold and backpack
+  ok    eight backpack slots; the starter sword lives in the arsenal
+  ok    economy.starter_equipment (the kit's tools and the rusty sword are equipped: { "tool_hoe": &"hoe_wooden", "tool_watering": &"watering_can_copper", "tool_pickaxe": &"pickaxe_wooden", "tool_axe": &"axe_wooden", "tool_scythe": &"scythe", "weapon": &"sword_rusty", "accessory": &"" })
+  ok    every new game restores gold, backpack and equipment
+  ok    reset() is connected to EventBus.new_game_started
+  ok    add 150 wood
+  ok    economy.item_gained_once_per_add (one item_gained(wood, 150) for a two-stack add: [[&"wood", 150]])
+  ok    one toast and one backpack update for it
+  ok    a silent add fires neither item_gained nor a toast but still updates the backpack
+  ok    a refused add fires nothing
+  ok    economy.tool_power (wooden tools power 1, the rusty sword 5)
+  ok    a stronger tool is equipped automatically
+  ok    copper pickaxe: power 2
+  ok    iron pickaxe: power 3
+  ok    a weaker tool never replaces the better one
+  ok    the iron sword (damage 12) replaces the rusty one
+  ok    selling the best tool equips the next best
+  ok    equip() lets the player choose a weaker tool
+  ok    equip() refuses a tool of the wrong type or one the player does not own
+  ok    equip with an empty id empties the slot
+  ok    no pickaxe left: power 0
+  ok    setup: a new game in between
+  ok    from_dict accepts the saved dictionary
+  ok    economy.save_round_trip (gold 777, 12 slots, equipment kept, ids are StringName again)
+  ok    amounts and gold are ints after the JSON round trip
+  ok    to_dict writes plain Strings and keeps the slot meta
+[Economy] from_dict dropped 5 invalid or surplus slot(s)
+  ok    from_dict never throws on bad data
+  ok    economy.save_drops_invalid_slots (gold 12, wood 3, carrot 250 in 3 slots, 3 hoes in 3 slots, the 5 invalid entries dropped: { "wood": 3, "carrot": 250, "hoe_wooden": 3 })
+  ok    an equipment entry that is not owned or does not fit is ignored
+[Economy] from_dict dropped 16 invalid or surplus slot(s)
+  ok    a save with more than 24 slots keeps the first 24
+[Economy] from_dict dropped 1 invalid or surplus slot(s)
+  ok    gold is clamped on load and {id: amount} dictionaries are accepted
+  ok    an empty dictionary loads as an empty backpack
+  ok    to_dict has gold, inventory (a list) and its own version
+  ok    setup: the strongest tools and the iron sword are equipped automatically
+  ok    setup: the player picks the wooden hoe (use_item), the rusty sword and the copper pickaxe (equip) and empties the watering can slot
+  ok    setup: a new game in between equips the kit's tools
+  ok    from_dict accepts the save
+  ok    economy.equip_choice_survives_save (the weaker hoe, sword and pickaxe the player chose are NOT replaced by the best tools on load: { "tool_hoe": &"hoe_wooden", "tool_watering": &"", "tool_pickaxe": &"pickaxe_copper", "tool_axe": &"axe_wooden", "tool_scythe": &"scythe", "weapon": &"sword_rusty", "accessory": &"" })
+  ok    economy.equip_empty_slot_survives_save (a slot the player emptied stays empty (its tool is still in the backpack), the others are as saved)
+  ok    the equipped ids are StringNames again and the better tools are still owned
+  ok    a save without `equipment` equips the best owned tool of every slot
+  ok    an equipment entry that is not owned or does not fit its slot is ignored: the slot gets the best tool (or stays empty)
+  ok    to_dict writes all 7 slots, empty ones as an empty string (so `deliberately empty` can be told from `not saved`)
+  ok    storage_of: furniture -> furniture store, clothing -> wardrobe store, materials and blueprints stay in the backpack
+  ok    without the stores both items are added (to the backpack)
+  ok    the fallback copies are counted and visible
+  ok    item_gained fires for every kind of item
+  ok    economy.routing_adopts_fallback (the backpack copies moved into the stores: { &"chair_pine": 2 } / { &"shirt_linen_cream": 1 })
+  ok    count_item reads the stores
+  ok    furniture goes to the furniture store, not the backpack
+  ok    building materials and blueprints go to the backpack
+  ok    placed copies still count as owned
+  ok    remove_item never touches placed copies (only 1 of 3 is free)
+  ok    the free copy can be removed
+  ok    a second copy of a garment the wardrobe refuses is refused (false)
+  ok    furniture beyond the store's 9 copies is refused (false)
+  ok    economy.list_sellable_aggregates (backpack plus unplaced furniture (chair 2 owned, 1 placed = 1), no special items, no garments: ["blueprint_kongelig", "axe_wooden", "chair_pine", "health_tonic", "hoe_wooden", "lantern_oil", "pickaxe_wooden", "plank_pine", "scythe", "table_round_pine", "turnip_seeds", "watering_can_copper", "wood"])
+  ok    list_sellable is sorted by rarity, highest first
+  ok    economy.routing_by_category (economy.inventory keeps ONLY backpack items: ["hoe_wooden", "watering_can_copper", "axe_wooden", "pickaxe_wooden", "scythe", "turnip_seeds", "lantern_oil", "health_tonic", "plank_pine", "blueprint_kongelig", "wood", "friendship_token"])
+  ok    setup: the furniture store is missing, 3 chairs wait in the backpack
+  ok    setup: the store (8 of 9) refuses the 3 leftovers, they stay in the backpack
+  ok    count_item and has_item count the store AND the leftovers: 11
+  ok    more than owned: refused, store and backpack unchanged (all or nothing)
+  ok    economy.remove_matches_count (remove 10 of 11 = 8 from the store, then 2 of the 3 backpack leftovers (store 0, backpack 1))
+  ok    the last copy goes too
+  ok    10 of 11 owned, but 2 are placed: refused, nothing changes
+  ok    9 = the 6 free store copies + the 3 leftovers; the 2 placed copies stay
+  ok    a leftover copy can be sold while every copy in the store is placed
+  ok    the content has unique and legendary furniture and clothing (bed_moon bed_toadstool hat_wizard_zephyr hat_wizard_night)
+  ok    a legendary piece: the first copy is added, the second refused (false)
+  ok    a unique garment: second copy refused; two legendary pieces at once are refused too
+  ok    the refused copies never reached the stores
+  ok    economy.one_of_a_kind_refused (item_gained only for the two accepted adds)
+  ok    a refused keepsake logs no warning and no error (no warning in the refusal)
+  ok    a keepsake in the backpack fallback is refused the second time too
+  ok    keepsakes have no sell value and no buy value
+  ok    common and uncommon finds do not fire rare_item_found
+  ok    economy.rare_item_found (rare_item_found(id, rarity) for rank >= rare, once per add, not for silent adds: [[&"moonstone", &"rare"], [&"hat_wizard_night", &"legendary"]])
+  ok    item_gained still fires for every successful non-silent add
+  ok    a health tonic gives 4 half hearts through the player and is used up
+  ok    at full health the tonic is not used up
+  ok    lantern oil adds 60 seconds
+  ok    the oil is capped at max_oil
+  ok    with a full lantern the oil stays in the backpack
+  ok    a cookie restores 15 energy
+  ok    a honey cake restores 40 energy
+  ok    energy is capped at max_stamina
+  ok    with full energy a cookie stays in the backpack
+  ok    economy.use_item_effects (heal, oil and energy are applied through the player (group player))
+  ok    no player in the scene: the tonic is not used
+  ok    use_item on a tool equips it
+  ok    a placeable asks the hotbar to take it (slot -1 = first free) and stays in the backpack
+  ok    a baby animal is adopted by AnimalHusbandry
+  ok    animal feed raises animal_care_item_used (the care screen feeds an animal)
+  ok    items without a use do nothing
+  ok    the fixture items, shops and recipes are loaded
+  ok    economy.shops_from_lua (the hard-coded SHOPS table is gone from shop_system.gd)
+  ok    shop seed_shop is defined in lua/shops and ShopSystem knows it
+  ok    shop bakery is defined in lua/shops and ShopSystem knows it
+  ok    shop smithy is defined in lua/shops and ShopSystem knows it
+  ok    shop magic_store is defined in lua/shops and ShopSystem knows it
+  ok    shop animal_store is defined in lua/shops and ShopSystem knows it
+  ok    every shop of npcs.lua names its NPC as keeper
+  ok    every stocked item of every shop exists and none is a unique / legendary keepsake: []
+  ok    economy.seed_shop_guide_lines (Kløvermyntes Frø lists the guide's 8 lines at the guide's prices: { "carrot_seeds": 20, "pumpkin_seeds": 60, "strawberry_seeds": 45, "sunflower_seeds": 30, "catnip_seeds": 35, "moonflower_seeds": 120, "fertilizer": 15, "fairy_dust_water": 900 })
+  ok    the guide's eight lines come first, in the guide's order: ["carrot_seeds", "pumpkin_seeds", "strawberry_seeds", "sunflower_seeds", "catnip_seeds", "moonflower_seeds", "fertilizer", "fairy_dust_water"]
+  ok    name and greeting of the seed shop are the guide's Danish text
+  ok    the seed shop's tabs: Frø, Redskaber and the sell tab (["seed", "tool", "sell"])
+  ok    seeds, fertilizer and fairy dust water are in the Frø tab, tools are not (9)
+  ok    the smithy sells exactly the iron tools and the iron sword (["hoe_iron", "pickaxe_iron", "watering_can_gold", "iron_sword"])
+  ok    economy.animal_store_ids (the animal store stocks 14 ids that exist in animals.lua (baby_*, feed, treats, brush, pail), no kits: ["baby_chick", "baby_bunny", "baby_duck", "baby_kitten", "baby_puppy", "baby_lamb", "baby_calf", "baby_fawn", "baby_fox", "baby_owl", "chicken_feed", "animal_treats", "brush", "milking_pail"])
+  ok    the magic store: fairy dust, gems, lantern oil, health tonic
+  ok    the bakery sells flour, honey and cookies (["flour", "honey", "cookie"])
+  ok    shop seed_shop: name and greeting resolve in da and en
+  ok    shop bakery: name and greeting resolve in da and en
+  ok    shop smithy: name and greeting resolve in da and en
+  ok    shop magic_store: name and greeting resolve in da and en
+  ok    shop animal_store: name and greeting resolve in da and en
+  ok    open_shop emits shop_opened (the legacy id general_store opens seed_shop)
+[Shop] open_shop(no_such_shop): no such shop in lua/shops
+  ok    close_shop emits shop_closed; an unknown shop opens nothing
+  ok    get_shop_info: id, keeper (npc_id), open state
+  ok    carrot seeds are listed at 20, three cost 60
+  ok    buying three takes 60 and gives three
+  ok    item_purchased(item, 3, 60) and one item_gained
+  ok    an amount <= 0 is refused
+  ok    an item the shop does not sell and an unknown shop are refused
+  ok    not enough gold: refused, gold and backpack unchanged
+  ok    sell prices: a turnip 45, a fern 1
+  ok    selling 4 turnips pays 180 and fires item_sold(turnip, 4, 180)
+  ok    selling what you do not have is refused (not_owned)
+  ok    selling more than you have is refused and takes nothing
+  ok    economy.sell_unsellable (special and quest items and items with sell price 0 cannot be sold)
+  ok    economy.sell_min_one (a sell multiplier of 0.1 still pays at least 1 (fern 1 x 0.1, a 1-gold item), the stone is never worth 0, no shop pays 0 for a sellable item ([]), the shop's `buys` (resource, forage) excludes gems (1 / 1 / 0))
+  ok    wood (sell 2 x 0.1) and an item that sells for 1 both pay 1
+  ok    an item without sell_price sells for buy_price x economy.sell_price_ratio (40 x 0.5 = 20)
+  ok    a shop with sell_multiplier 0 buys nothing
+  ok    builder_yard buys materials and gems only: wood no, amethyst yes
+  ok    get_sell_list filters EconomyManager.list_sellable by the shop: wood is in the backpack but not on the builder yard's list, amethyst is (["amethyst"])
+  ok    the seed shop buys more of the backpack than the builder yard; an unknown shop buys nothing
+  ok    a spare axe sells for 25
+  ok    economy.no_buy_sell_loop (with the largest discount (20 percent) every shop still sells dearer than it buys back: [])
+  ok    the shelf of moonflower seeds (8) can be emptied
+  ok    sold out: refused with no_stock
+  ok    the row says stock 0, not buyable
+  ok    the next morning 4 are back (restock 4)
+  ok    economy.stock_refreshes_on_day_started (after two more mornings the shelf is full again and never above its maximum (8, fertilizer 30))
+  ok    fertilizer sold out
+  ok    fertilizer is back at 30 (restock = full)
+  ok    a new game fills every shelf
+  ok    the shelves come back from a save (pumpkin seeds 10)
+  ok    economy.shop_save_validated (counts are clamped to the shelf, unknown shops and items are dropped, missing shelves are full)
+  ok    economy.restock_on_day_started_only (passing hour 8 (the knob's value) restocks nothing, the next day_started brings the restock back (4 moonflower seeds); ShopSystem is connected to day_started and no code reads economy.shop_refresh_hour [])
+  ok    without ShopRotation only the fixed stock is listed
+  ok    lantern oil (25) x buy_multiplier 2.0 = 50
+  ok    economy.rotation_rows_listed (fixed stock, then the rotation rows; an item in both is listed once (fixed), unknown ids are not listed: ["lantern_oil", "cookie", "wood"])
+  ok    rotation prices: cookie 25 x 2.0 = 50, wood with the row's price 8 x 2.0 = 16
+  ok    economy.listed_equals_charged_with_rotation (the fallback price: listed == charged for every fixed and rotation row, rotation rows are bought too (cookie 50/50, wood 16/16, lantern_oil 50/50))
+  ok    with a price curve the charge is the listed price (35)
+  ok    the next listing already shows the surcharge; the total of two is two listed prices
+  ok    the rotation row had 2 cookies: both gone, the third is refused
+  ok    a curve source that answers null falls back to base x multiplier x discount
+  ok    an item that is still on offer keeps its bought count over the day change
+  ok    an item that left the offer comes back with its full count
+  ok    the production path (late-bound ShopRotation / PriceCurve, or their absence) lists and prices the shop (3 rows)
+  ok    the late-bound call logs no engine message
+  ok    economy.late_binding_via_svc (shop_system.gd calls ShopRotation.stock and PriceCurve.final_price through Svc.static_call (2 call sites), with no load / ResourceLoader / callv / signature helper of its own)
+  ok    economy.late_binding_real_scripts (stock(shop_id) adds the rotation rows (cookie, wood at the row's price 8) to the fixed stock; final_price(shop_id, item_id, base_price) decides every price (cookie 25 -> 76))
+  ok    listed == charged through the real static functions (cookie 76/76, wood 25/25, lantern_oil 76/76); the rotation row's stock counts down
+  ok    a missing ShopRotation / PriceCurve script: only the fixed stock, base x buy_multiplier (25 x 2.0 = 50)
+  ok    an instance method instead of a static one is not called: fixed stock and fallback price
+  ok    scripts that lack the method answer the fallback
+  ok    no engine message from any of the late-bound lookups
+  ok    set_late_scripts() without arguments restores the contract's paths (shop_rotation.gd, price_curve.gd)
+  ok    F1's flea market is open on Saturday and Sunday only (open_weekdays 5, 6)
+  ok    economy.shop_closed_weekdays (day 6 (Saturday) and 7 (Sunday) open, every other weekday closed: [[1, true, false], [2, true, false], [3, true, false], [4, true, false], [5, true, false], [6, false, true], [7, false, true], [8, true, false]])
+  ok    a closed shop refuses to sell (last_refusal closed) and changes nothing
+  ok    a closed shop refuses to buy
+  ok    the closed shop still lists its stock, but nothing is buyable
+  ok    on Saturday the same shop sells (price override 7)
+  ok    and buys
+  ok    open_shop still emits shop_opened on a closed day: the screen shows SHOP_UI_CLOSED_TODAY itself
+  ok    F1's tailor stocks shirt_linen_cream
+  ok    an unowned garment is buyable
+  ok    buying a garment puts it into the wardrobe
+  ok    economy.garment_owned_not_buyable (a garment the player owns cannot be bought again (row.already_owned, last_refusal owned, no gold taken))
+  ok    economy.keepsakes_not_in_shops (a legendary item put into a shop's stock is never listed, priced, bought or sold (hat_wizard_night))
+  ok    no shop lists a unique or legendary item: []
+  ok    economy.tabs_pass_through (furniture_types and slots tabs of the home shops filter items; the sell tab comes last)
+  ok    economy.buy_refund_on_failure (the furniture store takes no more: gold 5500 unchanged, the shelf unchanged, no item_purchased, last_refusal no_room)
+  ok    EconomyManager.buy_item refunds when the add fails
+  ok    economy.lua_amounts_validated (the Lua api refuses amounts <= 0 (add, remove, has))
+  ok    and works with real amounts
+  ok    a fox without gear pays the full 1600
+  ok    fox with gear .10: 1440
+  ok    hobbit with the same gear: 1280 (race .10 + gear .10 = the .20 cap)
+  ok    hobbit alone: 1440 - the hobbit's 10 percent is counted ONCE (not 1296)
+  ok    hobbit + gear .15 stays at the .20 cap: 1280
+  ok    economy.discount_single_owner_numeric (1600-gold rare piece: fox gear .10 + 10 hearts .05 pays 1360 (1360), the same hobbit 1280 (1280), hobbit alone 1440 (1440))
+  ok    no code line of shop_system.gd / economy_manager.gd / crafting_system.gd names a hobbit or shop_discount factor: []
+  ok    economy.listed_equals_charged_race_0 (every item of every shop: listed price == charged price (fox; 118 rows bought, 0 not buyable today); [])
+  ok    economy.listed_equals_charged_race_2 (every item of every shop: listed price == charged price (hobbit; 118 rows bought, 0 not buyable today); [])
+  ok    economy.listed_equals_charged (shop buy works: every buyable row of every shop was bought for real as a fox and as a hobbit, and the gold taken was the listed price each time (236 purchases))
+  ok    recipe mushroom_lantern is loaded from lua/recipes
+  ok    recipe scarecrow is loaded from lua/recipes
+  ok    recipe honey_cake is loaded from lua/recipes
+  ok    recipe pickaxe_copper is loaded from lua/recipes
+  ok    recipe lantern_post is loaded from lua/recipes
+  ok    recipe fence is loaded from lua/recipes
+  ok    recipe iron_ingot is loaded from lua/recipes
+  ok    recipe flower_necklace is loaded from lua/recipes
+  ok    get_recipes(category) filters (craft, bake, forge)
+  ok    economy.recipes_use_defined_items (133 recipes: every ingredient and output is a defined item, categories valid; [] [])
+  ok    honey cake with nothing in the backpack: three ingredients missing
+  ok    economy.missing_flour ('Mangler mel': [{ "item": "flour", "have": 1, "need": 2 }])
+  ok    'Mangler 2 kobber': the copper pickaxe needs 3 copper ore, 1 is there
+  ok    crafting without everything changes nothing
+  ok    an unknown recipe cannot be crafted
+  ok    the copper pickaxe is crafted
+  ok    economy.craft_exact (3 ore and 2 wood gone, one pickaxe in, recipe_crafted(pickaxe_copper, 1) once, one item_gained)
+  ok    the crafted pickaxe is equipped by its power
+  ok    fence: 4 wood make 4 fences (output amount 4)
+  ok    recipe_crafted carries the amount produced
+  ok    setup: a full backpack whose ingredient stacks stay occupied
+  ok    economy.craft_full_rolls_back (no room for the pickaxe: ingredients restored (99 / 99), nothing crafted)
+  ok    the stations unlock with the home: workbench tier 1, loom tier 3, forge bench tier 5
+  ok    F1's forge recipes carry station smedje and tier 5; get_recipes(station) filters
+  ok    a recipe with a station and no min_home_tier needs the station's tier (loom: 3)
+  ok    economy.stations_locked_by_tier (home tier 1: the forge recipe is locked {reason: tier, need: 5})
+  ok    tier 4 is still too low
+  ok    tier 5: copper plate is forged (3 ore -> 1 plate)
+  ok    a recipe with tier and blueprint lock reports the tier first
+  ok    then the blueprint flag
+  ok    F1's walnut bed: tier 5, blueprint bp_kongelig
+  ok    everything in the backpack but no blueprint: locked by the flag
+  ok    a blueprint is an ordinary backpack item
+  ok    use_item on a blueprint sets its unlock_flag and consumes it
+  ok    a game_event and a toast tell the player
+  ok    economy.stations_and_blueprints (with the flag the rare bed is crafted; the output lands in the furniture store: { &"bed_walnut": 1 })
+  ok    the second one needs new ingredients
+  ok    locked recipes and blueprints log no engine message
+  ok    the hobbit's bake_bonus is 0.25
+  ok    economy.bake_bonus_statistical (hobbit: 478 of 2000 honey cakes came out doubled = 0.239 (want 0.25 +/- 0.034))
+  ok    seed_rng makes the bake bonus repeatable
+  ok    an animal or a fairy never gets the bonus
+  ok    the bonus is for the category bake only (a hobbit's fence recipe never doubles)
+  ok    economy.item_keys_resolve (every item of the economy files has ITEM_<ID> and ITEM_<ID>_DESC in da and en; missing [])
+  SKIP  items of other packages whose keys are not defined yet (animals.lua: P20's animals.csv, wave 5): ["ITEM_BABY_FAWN_DESC(da)", "ITEM_BABY_FAWN_DESC(en)", "ITEM_BARN_KIT_DESC(da)", "ITEM_BARN_KIT_DESC(en)"]
+  ok    every recipe name resolves in da and en: []
+  ok    the four guide recipes carry the guide's Danish names
+  ok    the shop lines carry the guide's names and one-line descriptions
+  ok    economy.no_key_collisions (economy.csv: 162 keys, 0 lint errors [], only ITEM_/RECIPE_/SHOP_, no RARITY_, none of its item keys redefined elsewhere [])
+  ok    economy.csv ships its keep-import
+  ok    the rows the UI spike put into ui.csv are owned by economy.csv now: []
+  ok    economy.content_external_items_exist (the 15 ids the content assumes exist; 364 ids named by recipes, shops, loot, home tiers and quest rewards all resolve; absent [] undefined [])
+  ok    the section leaves the real data and a fresh new game behind
+  --    economy: 296 checks, 0 failed, 2 skipped, 2.0 s
+== section ghostfam_data  (res://tests/sections/ghostfam_data.gd)
+  ok    ghostfam_data.building_row_hours
+  ok    ghostfam_data.shop_loads_and_stock_exists
+  ok    ghostfam_data.room_has_family_bed_and_guest_bed
+  ok    ghostfam_data.sidecar_door_and_post_added
+  ok    ghostfam_data.ghostfam_dyne_registered
+  ok    ghostfam_data.ghostfam_dyne_visual_without_fallback
+  ok    ghostfam_data.ghostfam_dyne_plans_wrap
+  ok    ghostfam_data.ghostfam_dyne_present_for_rasmus ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_kiki ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_kloevermynte ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_birk ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_bertil ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_bodil ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_bu ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_hviske ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_registered
+  ok    ghostfam_data.ghostfam_gnist_visual_without_fallback
+  ok    ghostfam_data.ghostfam_gnist_plans_wrap
+  ok    ghostfam_data.ghostfam_gnist_present_for_rasmus ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_kiki ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_kloevermynte ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_birk ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_bertil ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_bodil ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_bu ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_hviske ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_registered
+  ok    ghostfam_data.ghostfam_silke_visual_without_fallback
+  ok    ghostfam_data.ghostfam_silke_plans_wrap
+  ok    ghostfam_data.ghostfam_silke_present_for_rasmus ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_kiki ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_kloevermynte ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_birk ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_bertil ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_bodil ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_bu ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_hviske ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_0_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_0_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_0_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_1_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_1_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_1_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_2_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_2_klart_25.0 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_2_klart_25.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_3_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_3_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_3_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_4_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_4_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_4_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_5_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_5_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_5_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_6_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_6_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_6_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_0_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_0_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_0_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_1_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_1_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_1_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_2_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_2_regn_25.0 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_2_regn_25.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_3_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_3_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_3_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_4_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_4_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_4_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_5_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_5_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_5_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_6_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_6_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_6_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.ghostfam_blund_registered
+  ok    ghostfam_data.ghostfam_blund_visual_without_fallback
+  ok    ghostfam_data.ghostfam_blund_plans_wrap
+  ok    ghostfam_data.ghostfam_blund_present_for_rasmus ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_kiki ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_kloevermynte ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_birk ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_bertil ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_bodil ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_bu ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_hviske ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_3_klart_24.5 ({ "npc": "ghostfam_blund", "state": "move", "plan": "hide_3", "place": "traetoppen.f_bench", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_mailbox", "to": "traetoppen.f_bench", "frac": 0.99757673667205, "t0": 23.5, "t1": 24.5024291497976 } })
+  ok    ghostfam_data.presence_ghostfam_blund_3_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_3", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_3_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_3", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_3_regn_24.5 ({ "npc": "ghostfam_blund", "state": "move", "plan": "hide_3", "place": "traetoppen.f_bench", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_mailbox", "to": "traetoppen.f_bench", "frac": 0.99757673667205, "t0": 23.5, "t1": 24.5024291497976 } })
+  ok    ghostfam_data.presence_ghostfam_blund_3_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_3", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_3_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_3", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.keeper_covers_hours_every_open_day ([])
+  ok    ghostfam_data.post_capacity_with_family ([])
+  ok    ghostfam_data.visual_budget_with_family ([])
+  ok    ghostfam_data.late_round_is_robust ([])
+  ok    ghostfam_data.dialogue_ghostfam_dyne_animal
+  ok    ghostfam_data.dialogue_ghostfam_dyne_fairy
+  ok    ghostfam_data.dialogue_ghostfam_dyne_hobbit
+  ok    ghostfam_data.dialogue_ghostfam_dyne_ghost
+  ok    ghostfam_data.dialogue_ghostfam_gnist_animal
+  ok    ghostfam_data.dialogue_ghostfam_gnist_fairy
+  ok    ghostfam_data.dialogue_ghostfam_gnist_hobbit
+  ok    ghostfam_data.dialogue_ghostfam_gnist_ghost
+  ok    ghostfam_data.dialogue_ghostfam_silke_animal
+  ok    ghostfam_data.dialogue_ghostfam_silke_fairy
+  ok    ghostfam_data.dialogue_ghostfam_silke_hobbit
+  ok    ghostfam_data.dialogue_ghostfam_silke_ghost
+  ok    ghostfam_data.dialogue_ghostfam_blund_animal
+  ok    ghostfam_data.dialogue_ghostfam_blund_fairy
+  ok    ghostfam_data.dialogue_ghostfam_blund_hobbit
+  ok    ghostfam_data.dialogue_ghostfam_blund_ghost
+  ok    ghostfam_data.midnight_story_0
+  ok    ghostfam_data.midnight_story_1
+  ok    ghostfam_data.midnight_story_2
+  ok    ghostfam_data.midnight_story_3
+  ok    ghostfam_data.midnight_story_4
+  ok    ghostfam_data.midnight_story_5
+  ok    ghostfam_data.midnight_story_6
+  ok    ghostfam_data.gnist_hours_equal_building_row
+  ok    ghostfam_data.no_double_reaction
+  ok    ghostfam_data.hiding_slots_0
+  ok    ghostfam_data.silke_hint_0_0
+  ok    ghostfam_data.silke_hint_0_1
+  ok    ghostfam_data.hiding_slots_1
+  ok    ghostfam_data.silke_hint_1_0
+  ok    ghostfam_data.silke_hint_1_1
+  ok    ghostfam_data.hiding_slots_3
+  ok    ghostfam_data.silke_hint_3_0
+  ok    ghostfam_data.silke_hint_3_1
+  ok    ghostfam_data.hiding_slots_4
+  ok    ghostfam_data.silke_hint_4_0
+  ok    ghostfam_data.silke_hint_4_1
+  ok    ghostfam_data.hiding_slots_5
+  ok    ghostfam_data.silke_hint_5_0
+  ok    ghostfam_data.silke_hint_5_1
+  ok    ghostfam_data.hiding_slots_6
+  ok    ghostfam_data.silke_hint_6_0
+  ok    ghostfam_data.silke_hint_6_1
+  ok    ghostfam_data.wednesday_family_evening_four_at_fire
+  ok    ghostfam_data.family_gathering_has_distinct_body_positions (minimum ground gap=84.8528137207031)
+  ok    ghostfam_data.ghostfam_dyne_live_at_dawn
+  ok    ghostfam_data.ghostfam_dyne_kin_scene_without_stranger
+  ok    ghostfam_data.ghostfam_dyne_kin_is_met_and_weekly_heart
+  ok    ghostfam_data.granny_knit_gift_once
+  ok    ghostfam_data.ghostfam_dyne_kin_once
+  ok    ghostfam_data.ghostfam_dyne_flags_json_safe
+  ok    ghostfam_data.ghostfam_gnist_live_at_dawn
+  ok    ghostfam_data.ghostfam_gnist_kin_scene_without_stranger
+  ok    ghostfam_data.ghostfam_gnist_kin_is_met_and_weekly_heart
+  ok    ghostfam_data.ghostfam_gnist_kin_once
+  ok    ghostfam_data.ghostfam_gnist_flags_json_safe
+  ok    ghostfam_data.ghostfam_silke_live_at_dawn
+  ok    ghostfam_data.ghostfam_silke_kin_scene_without_stranger
+  ok    ghostfam_data.ghostfam_silke_kin_is_met_and_weekly_heart
+  ok    ghostfam_data.ghostfam_silke_kin_once
+  ok    ghostfam_data.ghostfam_silke_flags_json_safe
+  ok    ghostfam_data.ghostfam_blund_live_at_dawn
+  ok    ghostfam_data.ghostfam_blund_kin_scene_without_stranger
+  ok    ghostfam_data.ghostfam_blund_kin_is_met_and_weekly_heart
+  ok    ghostfam_data.ghostfam_blund_kin_once
+  ok    ghostfam_data.ghostfam_blund_flags_json_safe
+  ok    ghostfam_data.hook_gardener_hoppe
+  ok    ghostfam_data.hook_ghostfam_dyne
+  ok    ghostfam_data.hook_ghostfam_gnist
+  ok    ghostfam_data.hook_ghostfam_silke
+  ok    ghostfam_data.hook_ghostfam_blund
+  ok    ghostfam_data.copy_regenerates_identically (PASS family copy regeneration (168 draft rows)
+)
+  ok    ghostfam_data.tone_gender_barks_and_literal_keys (Family copy: 168 rows, 0 problems; no tone allow-list
+)
+  --    ghostfam_data: 293 checks, 0 failed, 0 skipped, 2.8 s
+== section loc  (res://tests/sections/loc.gd)
+  ok    loc.loader_order_da_first_then_alphabetical (files ["da.csv", "animals.csv", "appraisal.csv", "areas.csv", "birthdays.csv", "cast.csv", "core.csv", "dialogue.csv", "dialogue_builder.csv", "dialogue_cast.csv", "dungeon.csv", "dungeon_items.csv", "dungeon_run.csv", "dungeon_services.csv", "economy.csv", "farm.csv", "farm_signs.csv", "farm_site.csv", "farm_tutorial.csv", "features_quests.csv", "features_ui.csv", "festivals.csv", "finds.csv", "forest.csv", "forest_mother.csv", "furniture.csv", "ghost.csv", "ghost_dialogue.csv", "ghostfamily.csv", "ghostfamily_events.csv", "ghostfamily_fest.csv", "ghostfamily_quests.csv", "ghostfamily_seek.csv", "gifts.csv", "heart_events.csv", "home.csv", "home_ui.csv", "home_world.csv", "hud.csv", "keepers.csv", "levels.csv", "life.csv", "look.csv", "loot_dungeon.csv", "materials.csv", "menus.csv", "nav.csv", "partner.csv", "post.csv", "quests.csv", "rel_ui.csv", "secret_garden.csv", "shop_ui.csv", "social_arch.csv", "social_events.csv", "social_sys.csv", "social_talk.csv", "towns.csv", "traetoppen.csv", "ui.csv", "wardrobe.csv", "wardrobe_ui.csv", "world.csv", "zz_final.csv"])
+  ok    loc.loader_has_core_and_no_legacy_en_csv (["da.csv", "animals.csv", "appraisal.csv", "areas.csv", "birthdays.csv", "cast.csv", "core.csv", "dialogue.csv", "dialogue_builder.csv", "dialogue_cast.csv", "dungeon.csv", "dungeon_items.csv", "dungeon_run.csv", "dungeon_services.csv", "economy.csv", "farm.csv", "farm_signs.csv", "farm_site.csv", "farm_tutorial.csv", "features_quests.csv", "features_ui.csv", "festivals.csv", "finds.csv", "forest.csv", "forest_mother.csv", "furniture.csv", "ghost.csv", "ghost_dialogue.csv", "ghostfamily.csv", "ghostfamily_events.csv", "ghostfamily_fest.csv", "ghostfamily_quests.csv", "ghostfamily_seek.csv", "gifts.csv", "heart_events.csv", "home.csv", "home_ui.csv", "home_world.csv", "hud.csv", "keepers.csv", "levels.csv", "life.csv", "look.csv", "loot_dungeon.csv", "materials.csv", "menus.csv", "nav.csv", "partner.csv", "post.csv", "quests.csv", "rel_ui.csv", "secret_garden.csv", "shop_ui.csv", "social_arch.csv", "social_events.csv", "social_sys.csv", "social_talk.csv", "towns.csv", "traetoppen.csv", "ui.csv", "wardrobe.csv", "wardrobe_ui.csv", "world.csv", "zz_final.csv"])
+  ok    loc.no_translation_junk_for_non_legacy_csv (found [] (a CSV without keep-import was imported))
+  ok    loc.project_has_no_translations_list (locale/translations must stay empty (runtime loader, plan D6): [])
+  ok    loc.fallback_locale_is_en
+  ok    loc.loader_finds_keys (4549 keys (floor 480))
+  ok    loc.loader_key_count_matches_independent_parser (GDScript loader 4549 keys, python csv module 4549)
+  ok    loc.reload_does_not_double (locales ["da", "en"])
+  ok    loc.core_csv_copy_in_both_languages ([])
+  ok    loc.core_csv_defines_the_roster_names ([])
+  ok    loc.core_csv_pins (ZONE_FARM 'Min Trækronsgård' / 'My Treetop Farm' (no longer 'Trætoppen'), ZONE_TRAETOPPEN, ZONE_CITY and the 15 NPC names of the v2 cast and the towns citizens, all in core.csv [])
+  ok    loc.core_csv_only_r4_families ([])
+  ok    loc.core_csv_names_the_town_hyggebyen
+  ok    loc.switch_runtime_label_da (atr='Rygsæk' chars=6)
+  ok    loc.switch_runtime_label_en (atr='Backpack' chars=8)
+  ok    loc.switch_runtime_state_and_server
+  ok    loc.locale_changed_emitted_once_per_real_change (signals ["en"])
+  ok    loc.switch_runtime_back_to_da (signals ["en", "da"])
+  ok    loc.no_raw_key_displayed_after_a_switch (label shows 'Rygsæk')
+WARNING: LocalizationManager.set_locale: unsupported locale 'xx' (supported: da, en)
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] set_locale (res://scripts/autoload/localization_manager.gd:126)
+         [1] _check_runtime_switch (res://tests/sections/loc.gd:217)
+         [2] frames (res://tests/lib/drive.gd:79)
+  ok    set_locale('xx') warns (allowed 'unsupported locale' seen 1 time(s), want >= 1)
+  ok    loc.unsupported_locale_is_rejected
+  ok    loc.locale_codes_are_normalised
+  ok    loc.fallback_locale_serves_en_text
+  ok    loc.boot_posts_no_toast_and_no_signal (toasts [])
+  ok    loc.boot_default_locale_is_da
+  ok    loc.announce_posts_one_toast_with_language_name ([["Language changed", "Language is now English.", "language"]])
+  ok    loc.locale_persisted_in_settings_cfg ([game] locale = en)
+  ok    loc.settings_cfg_other_sections_kept
+  ok    loc.announce_false_posts_no_toast
+  ok    loc.da_toast_is_danish ([["Language changed", "Language is now English.", "language"], ["Sprog ændret", "Sproget er nu dansk.", "language"]])
+  ok    loc.same_locale_posts_no_toast
+  ok    loc.boot_uses_saved_locale_silently
+  ok    loc.boot_garbage_locale_falls_back_to_da
+  ok    loc.boot_missing_locale_is_da
+ERROR: ConfigFile parse error at user://settings.cfg:0: Unexpected EOF while parsing simple tag.
+   at: _parse (core/io/config_file.cpp:293)
+   GDScript backtrace (most recent call first):
+       [0] _config (res://scripts/ui/settings_ui.gd:48)
+       [1] _refresh_texts (res://scripts/ui/settings_ui.gd:89)
+       [2] _notification (res://scripts/ui/nav/tt_screen.gd:306)
+       [3] _apply_locale (res://scripts/autoload/localization_manager.gd:92)
+       [4] set_locale (res://scripts/autoload/localization_manager.gd:129)
+       [5] _check_toast_and_persistence (res://tests/sections/loc.gd:291)
+       [6] run (res://tests/sections/loc.gd:48)
+       [7] _check_runtime_switch (res://tests/sections/loc.gd:230)
+       [8] frames (res://tests/lib/drive.gd:79)
+ERROR: ConfigFile parse error at user://settings.cfg:0: Unexpected EOF while parsing simple tag.
+   at: _parse (core/io/config_file.cpp:293)
+   GDScript backtrace (most recent call first):
+       [0] _persist_locale (res://scripts/autoload/localization_manager.gd:105)
+       [1] set_locale (res://scripts/autoload/localization_manager.gd:130)
+       [2] _check_toast_and_persistence (res://tests/sections/loc.gd:291)
+       [3] run (res://tests/sections/loc.gd:48)
+       [4] _check_runtime_switch (res://tests/sections/loc.gd:230)
+       [5] frames (res://tests/lib/drive.gd:79)
+WARNING: LocalizationManager: user://settings.cfg is unreadable (error 43); the language choice was not saved so that no other setting is destroyed
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _persist_locale (res://scripts/autoload/localization_manager.gd:107)
+         [1] set_locale (res://scripts/autoload/localization_manager.gd:130)
+         [2] _check_toast_and_persistence (res://tests/sections/loc.gd:291)
+         [3] run (res://tests/sections/loc.gd:48)
+         [4] _check_runtime_switch (res://tests/sections/loc.gd:230)
+         [5] frames (res://tests/lib/drive.gd:79)
+  ok    a corrupt settings.cfg is reported (allowed 'is unreadable' seen 1 time(s), want >= 1)
+  ok    loc.corrupt_settings_file_left_alone (file content changed)
+  ok    loc.t_formats_translated_key (Sproget er nu dansk.)
+  ok    loc.t_without_args_returns_template
+  ok    loc.t_never_formats_an_untranslated_key
+  ok    t() of an untranslated key logs nothing
+WARNING: LocalizationManager.t: 'NOTIF_LANGUAGE_CHANGED_MSG' (Sproget er nu %s.) takes 1 argument(s), got 2
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] t (res://scripts/autoload/localization_manager.gd:171)
+         [1] _check_t_and_lookups (res://tests/sections/loc.gd:312)
+         [2] run (res://tests/sections/loc.gd:49)
+         [3] _check_runtime_switch (res://tests/sections/loc.gd:230)
+         [4] frames (res://tests/lib/drive.gd:79)
+  ok    wrong argument count warns (allowed 'takes 1 argument(s)' seen 1 time(s), want >= 1)
+  ok    loc.t_wrong_argument_count_returns_the_template
+  ok    loc.has_key
+  ok    loc.all_keys_lists_core_and_legacy
+  ok    loc.language_name_in_its_own_language
+  ok    loc.file_of_reports_the_overriding_file
+  ok    loc.legacy_key_overridden_by_core_wins
+  ok    loc.lua_runtime_reload_message_is_translated
+  ok    loc.is_valid_key
+  ok    loc.format_signature
+  ok    loc.unescape_text
+  ok    loc.normalize_locale
+  ok    loc.list_csv_files_order
+  ok    loc.voice_key_for_has_no_double_prefix
+  ok    loc.lua_reader_top_level_scalars
+  ok    loc.lua_reader_items_ids (["alpha", "beta", "gamma"])
+  ok    loc.lua_reader_nested_values ({ "name_key": "ITEM_ALPHA", "n": 5, "f": 1.5, "neg": -2, "nested": { "a": ["x", "y"], "empty": [] } })
+  ok    loc.lua_reader_bracket_keys_and_strings ({ "list": [1, 2, 3], "s": "single", "t": "with, comma and } brace" })
+  ok    loc.lua_reader_skips_function_values_without_losing_the_next_key ({ "f": <null>, "after": "ok" })
+  ok    loc.lua_reader_merges_repeated_top_level_tables ({ "one": { "two": 2 }, "three": 3 })
+  ok    loc.lua_reader_terminates_on_unfinished_input
+  ok    loc.lua_reader_reads_the_real_items_file (ids ["turnip_seeds", "turnip", "carrot_seeds", "carrot"])
+  ok    loc.lint_clean_for_non_legacy_files ([])
+  ok    loc.lint_no_duplicate_errors_for_non_legacy_files (0 duplicate errors)
+  ok    loc.lint_legacy_issues_only_in_da_csv ([])
+  ok    loc.lint_strict_makes_legacy_issues_fatal
+  ok    loc.lint_reports_key_count_and_files
+  ok    loc.csv_keep_imports (without keep-import: []; da.csv.import keep=true reported=true)
+  ok    loc.fixture_clean_tree_has_no_issues ([])
+  ok    loc.fixture_override_order_later_file_wins
+  ok    loc.fixture_duplicates_same_file_and_two_non_legacy_files (["duplicate:a.csv", "duplicate:b.csv"] | ["duplicate:da.csv"])
+  ok    loc.fixture_legacy_duplicate_last_row_wins
+  ok    loc.fixture_malformed_rows_missing_text_and_header (["header:h.csv", "malformed:x.csv", "malformed:x.csv", "malformed:x.csv", "malformed:x.csv", "missing-text:x.csv"])
+  ok    loc.fixture_issue_line_numbers (lines [2, 3, 4, 5, 11])
+  ok    loc.fixture_good_rows_around_bad_ones_still_load (["H_ONE", "NO_EN", "TRAILING", "MULTI", "AFTER_MULTI"])
+  ok    loc.fixture_keep_import_missing_or_wrong_importer (["keep-import:c.csv", "keep-import:d.csv"] | ["keep-import:da.csv"] | ["junk:junk.da.translation", "ownership:"])
+  ok    loc.fixture_format_placeholders_must_match (["F_BAD", "F_FEWER"])
+  ok    loc.key_owners_table_loads (files ["forest_mother.csv", "core.csv", "ui.csv", "world.csv", "farm.csv", "areas.csv", "economy.csv", "animals.csv", "quests.csv", "dialogue.csv", "menus.csv", "hud.csv", "shop_ui.csv", "forest.csv", "dialogue_builder.csv", "features_quests.csv", "features_ui.csv", "finds.csv", "furniture.csv", "home.csv", "materials.csv", "wardrobe.csv", "home_world.csv", "home_ui.csv", "wardrobe_ui.csv", "samlerbog.csv", "dungeon.csv", "dungeon_run.csv", "dungeon_services.csv", "dungeon_items.csv", "loot_dungeon.csv", "levels.csv", "cast.csv", "dialogue_cast.csv", "life.csv", "look.csv", "traetoppen.csv", "appraisal.csv", "farm_signs.csv", "farm_site.csv", "farm_tutorial.csv", "farm_greenhouse.csv", "towns.csv", "keepers.csv", "post.csv", "social_sys.csv", "social_talk.csv", "social_arch.csv", "gifts.csv", "birthdays.csv", "rel_ui.csv", "social_events.csv", "heart_events.csv", "festivals.csv", "partner.csv", "nav.csv", "ghost.csv", "ghost_dialogue.csv", "ghostfamily.csv", "secret_garden.csv", "ghostfamily_events.csv", "ghostfamily_fest.csv", "ghostfamily_seek.csv", "ghostfamily_quests.csv"])
+  ok    loc.key_owners_every_file_has_owner_prefix_and_exact
+  ok    loc.key_owners_resolution_exact_prefix_longest ([])
+  ok    loc.key_owners_item_ids_come_from_the_lua_files ({ "furniture.csv": { "ITEM_CHAIR_A": true, "ITEM_CHAIR_A_DESC": true, "ITEM_CHAIR_A_HINT": true, "ITEM_TABLE_B": true, "ITEM_TABLE_B_DESC": true, "ITEM_TABLE_B_HINT": true } })
+  ok    loc.ownership_lint_negative_control (["error:a.csv:ITEM_CHAIR_A_DESC", "error:economy.csv:ITEM_CHAIR_A", "warning:unlisted.csv:"])
+  ok    loc.voiced_key_cannot_be_overridden_by_zz_final (["voiced:DLG_N_GREET"])
+  ok    loc.ownership_lint ([])
+  ok    loc.voice_forwarder_key_unchanged_no_double_prefix (["voice/mayor_lyra/greet", "voice/mayor_lyra/greet", "voice/oak/greet"])
+  ok    loc.voice_forwarder_has_no_second_volume_state (LocalizationManager must not keep voice volume or enable state)
+  ok    loc.voice_exists_forwards
+  ok    loc.voice_forwarder_restores_the_autoload
+  ok    loc.python_lint_parity_real_tree (gd=5 python=5 diff [[], []])
+  ok    loc.csv_lint_py_exit_code_matches_lint (exit 0)
+  ok    loc.csv_lint_py_strict_matches_lint_strict (exit 1, strict errors 5)
+  ok    loc.python_lint_parity_parity_a (gd=12 python=12 diff [[], []])
+  ok    loc.python_lint_parity_parity_b (gd=2 python=2 diff [[], []])
+  ok    loc.new_csv_creates_csv_and_keep_import
+  ok    loc.new_csv_doubles_quotes_inside_texts ("a""b"
+)
+  ok    loc.new_csv_refuses_overwrite_and_bad_names
+  ok    loc.new_csv_output_loads_and_lints_clean ([{ "cat": "ownership", "sev": "warning", "file": "", "line": 0, "key": "", "msg": "tools/loc/key_owners.json was not found below /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.wpBf3h/Library/Application Support/Traetoppen/loc_fx_newcsv/: the ownership rule was not checked" }])
+  ok    loc.prune_dry_run_lists_every_reason_and_writes_nothing
+  ok    loc.prune_apply_keeps_only_live_rows_and_drops_empty_sections
+  ok    loc.prune_needs_a_valid_reference_index
+  ok    loc.loc_check_runs_on_the_real_tree (loc_check PASS (lenient): missing=13 (da=13 en=13) lint_errors=0 legacy_issues=5 warnings=0)
+  ok    loc.loc_check_lenient_exit_follows_lint_errors (exit 0, loc_check PASS (lenient): missing=13 (da=13 en=13) lint_errors=0 legacy_issues=5 warnings=0)
+  ok    loc.loc_check_strict_exit_follows_everything (exit 1, loc_check FAIL (strict): missing=13 (da=13 en=13) lint_errors=0 legacy_issues=5 warnings=0)
+  ok    loc.loc_check_finds_literal_and_dynamic_keys
+  ok    loc.loc_check_does_not_report_defined_or_ignored_keys (wrongly reported: [])
+  ok    loc.loc_check_any_of_group_objective
+  ok    loc.loc_check_lenient_exit_0_with_misses (loc_check PASS (lenient): missing=18 (da=18 en=18) lint_errors=0 legacy_issues=0 warnings=1)
+  ok    loc.loc_check_strict_exit_1_on_a_miss (loc_check FAIL (strict): missing=18 (da=18 en=18) lint_errors=0 legacy_issues=0 warnings=1)
+  ok    loc.loc_check_strict_passes_when_everything_is_defined (loc_check PASS (strict): missing=0 (da=0 en=0) lint_errors=0 legacy_issues=0 warnings=2 [])
+  ok    loc.loc_check_lenient_exit_1_on_a_duplicate_key (loc_check FAIL (lenient): missing=26 (da=26 en=26) lint_errors=1 legacy_issues=0 warnings=2)
+  ok    loc.loc_check_dump_has_the_reference_index
+  ok    loc.loc_check_rejects_unknown_arguments
+  ok    loc.voiced_manifest_hash_matches_passes_strict (loc_check PASS (strict): missing=0 (da=0 en=0) lint_errors=0 legacy_issues=0 warnings=1)
+  ok    loc.voiced_manifest_hash_mismatch_fails_even_lenient (loc_check FAIL (lenient): missing=0 (da=0 en=0) lint_errors=1 legacy_issues=0 warnings=1)
+  ok    loc.voiced_manifest_without_text_hash_is_reported_not_guessed (loc_check PASS (strict): missing=0 (da=0 en=0) lint_errors=0 legacy_issues=0 warnings=1)
+  --    loc: 115 checks, 0 failed, 0 skipped, 27.6 s
+== section npc  (res://tests/sections/npc.gd)
+  ok    npc.real_conversation_screens
+  ok    npc.talk_roster_mayor_lyra
+  ok    npc.portrait_mayor_lyra
+  ok    At most five choices: mayor_lyra
+  ok    Esc releases mayor_lyra
+  ok    Resolved line DLG_LYRA_GREET_1 in da
+  ok    Resolved line DLG_LYRA_GREET_2 in da
+  ok    Resolved line DLG_LYRA_LOTTERY in da
+  ok    Resolved line DLG_LYRA_GREET_1 in en
+  ok    Resolved line DLG_LYRA_GREET_2 in en
+  ok    Resolved line DLG_LYRA_LOTTERY in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_baker_maja
+  ok    npc.portrait_baker_maja
+  ok    At most five choices: baker_maja
+  ok    Esc releases baker_maja
+  ok    Resolved line DLG_MAJA_GREET in da
+  ok    Resolved line DLG_MAJA_ROOF_TROUBLE in da
+  ok    Resolved line DLG_MAJA_GREET in en
+  ok    Resolved line DLG_MAJA_ROOF_TROUBLE in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_merchant_pip
+  ok    npc.portrait_merchant_pip
+  ok    At most five choices: merchant_pip
+  ok    Esc releases merchant_pip
+  ok    Resolved line DLG_MERCHANT_GREET in da
+  ok    Resolved line DLG_MERCHANT_GREET in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_pippin_boegeknop
+  ok    npc.portrait_pippin_boegeknop
+  ok    At most five choices: pippin_boegeknop
+  ok    Esc releases pippin_boegeknop
+  ok    Resolved line DLG_PIPPIN_CAT in da
+  ok    Resolved line DLG_PIPPIN_CAT in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_king
+  ok    npc.portrait_fairy_king
+  ok    At most five choices: fairy_king
+  ok    Esc releases fairy_king
+  ok    Resolved line QUEST_MOONSTONE_CROWN_OFFER in da
+  ok    Resolved line QUEST_MOONSTONE_CROWN_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_lily
+  ok    npc.portrait_fairy_lily
+  ok    At most five choices: fairy_lily
+  ok    Esc releases fairy_lily
+  ok    Resolved line DLG_LILY_GREET in da
+  ok    Resolved line DLG_LILY_GREET in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_smith_thorin
+  ok    npc.portrait_smith_thorin
+  ok    At most five choices: smith_thorin
+  ok    Esc releases smith_thorin
+  ok    Resolved line DLG_THORIN_GREET in da
+  ok    Resolved line DLG_THORIN_MINING_TALK in da
+  ok    Resolved line DLG_THORIN_GREET in en
+  ok    Resolved line DLG_THORIN_MINING_TALK in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_guard_oak
+  ok    npc.portrait_guard_oak
+  ok    At most five choices: guard_oak
+  ok    Esc releases guard_oak
+  ok    Resolved line DLG_OAK_LIFT in da
+  ok    Resolved line QUEST_SKOVLIFT_INTRO_OFFER in da
+  ok    Resolved line DLG_OAK_LIFT in en
+  ok    Resolved line QUEST_SKOVLIFT_INTRO_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_farmer_rosa
+  ok    npc.portrait_farmer_rosa
+  ok    At most five choices: farmer_rosa
+  ok    Esc releases farmer_rosa
+  ok    Resolved line DLG_ROSA_GREET in da
+  ok    Resolved line DLG_ROSA_ANIMAL_TALK in da
+  ok    Resolved line DLG_ROSA_GREET in en
+  ok    Resolved line DLG_ROSA_ANIMAL_TALK in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_wizard
+  ok    npc.portrait_fairy_wizard
+  ok    At most five choices: fairy_wizard
+  ok    Esc releases fairy_wizard
+  ok    Resolved line DLG_WIZARD_GREET in da
+  ok    Resolved line DLG_WIZARD_MATH_INTRO in da
+  ok    Resolved line DLG_WIZARD_GREET in en
+  ok    Resolved line DLG_WIZARD_MATH_INTRO in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_cat_morfar_mis
+  ok    npc.portrait_cat_morfar_mis
+  ok    At most five choices: cat_morfar_mis
+  ok    Esc releases cat_morfar_mis
+  ok    Resolved line DLG_MIS_HOME in da
+  ok    Resolved line DLG_MIS_HOME in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_penguin_postman
+  ok    npc.portrait_penguin_postman
+  ok    At most five choices: penguin_postman
+  ok    Esc releases penguin_postman
+  ok    Resolved line DLG_PENGUIN_HELLO in da
+  ok    Resolved line DLG_PENGUIN_HELLO in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_builder
+  ok    npc.portrait_fairy_builder
+  ok    At most five choices: fairy_builder
+  ok    Esc releases fairy_builder
+  ok    Resolved line DLG_BUILDER_T01_IDLE in da
+  ok    Resolved line DLG_BUILDER_T01_OFFER in da
+  ok    Resolved line DLG_BUILDER_T01_IDLE in en
+  ok    Resolved line DLG_BUILDER_T01_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_furnisher
+  ok    npc.portrait_fairy_furnisher
+  ok    At most five choices: fairy_furnisher
+  ok    Esc releases fairy_furnisher
+  ok    Resolved line DLG_FURNISHER_GREET in da
+  ok    Resolved line DLG_FURNISHER_GREET in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_tailor
+  ok    npc.portrait_fairy_tailor
+  ok    At most five choices: fairy_tailor
+  ok    Esc releases fairy_tailor
+  ok    Resolved line DLG_TAILOR_GREET in da
+  ok    Resolved line DLG_TAILOR_GREET in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_gardener_hoppe
+  ok    npc.portrait_gardener_hoppe
+  ok    At most five choices: gardener_hoppe
+  ok    Esc releases gardener_hoppe
+  ok    Resolved line DLG_HOPPE_GREET in da
+  ok    Resolved line DLG_HOPPE_KLART in da
+  ok    Resolved line DLG_HOPPE_SWAP_OFFER in da
+  ok    Resolved line DLG_HOPPE_GREET in en
+  ok    Resolved line DLG_HOPPE_KLART in en
+  ok    Resolved line DLG_HOPPE_SWAP_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_carpenter_brumme
+  ok    npc.portrait_carpenter_brumme
+  ok    At most five choices: carpenter_brumme
+  ok    Esc releases carpenter_brumme
+  ok    Resolved line DLG_BRUMME_GREET in da
+  ok    Resolved line DLG_BRUMME_SLOW in da
+  ok    Resolved line DLG_BRUMME_REST in da
+  ok    Resolved line DLG_BRUMME_GREET in en
+  ok    Resolved line DLG_BRUMME_SLOW in en
+  ok    Resolved line DLG_BRUMME_REST in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_postman_pip
+  ok    npc.portrait_postman_pip
+  ok    At most five choices: postman_pip
+  ok    Esc releases postman_pip
+  ok    Resolved line DLG_PIP_GREET in da
+  ok    Resolved line DLG_PIP_BAG in da
+  ok    Resolved line DLG_PIP_OFFER in da
+  ok    Resolved line DLG_PIP_GREET in en
+  ok    Resolved line DLG_PIP_BAG in en
+  ok    Resolved line DLG_PIP_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_bathkeeper_sofus
+  ok    npc.portrait_bathkeeper_sofus
+  ok    At most five choices: bathkeeper_sofus
+  ok    Esc releases bathkeeper_sofus
+  ok    Resolved line DLG_SOFUS_GREET in da
+  ok    Resolved line DLG_SOFUS_ORANGE in da
+  ok    Resolved line DLG_SOFUS_OFFER in da
+  ok    Resolved line DLG_SOFUS_GREET in en
+  ok    Resolved line DLG_SOFUS_ORANGE in en
+  ok    Resolved line DLG_SOFUS_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_appraiser_fru_ugle
+  ok    npc.portrait_appraiser_fru_ugle
+  ok    At most five choices: appraiser_fru_ugle
+  ok    Esc releases appraiser_fru_ugle
+  ok    Resolved line DLG_UGLE_GREET in da
+  ok    Resolved line DLG_UGLE_LAKE in da
+  ok    Resolved line DLG_UGLE_RUNES in da
+  ok    Resolved line DLG_UGLE_GREET in en
+  ok    Resolved line DLG_UGLE_LAKE in en
+  ok    Resolved line DLG_UGLE_RUNES in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_mapseller_natteblik
+  ok    npc.portrait_mapseller_natteblik
+  ok    At most five choices: mapseller_natteblik
+  ok    Esc releases mapseller_natteblik
+  ok    Resolved line DLG_NATTEBLIK_GREET in da
+  ok    Resolved line DLG_NATTEBLIK_EARS in da
+  ok    Resolved line DLG_NATTEBLIK_MAPS in da
+  ok    Resolved line DLG_NATTEBLIK_LANTERN in da
+  ok    Resolved line DLG_NATTEBLIK_GREET in en
+  ok    Resolved line DLG_NATTEBLIK_EARS in en
+  ok    Resolved line DLG_NATTEBLIK_MAPS in en
+  ok    Resolved line DLG_NATTEBLIK_LANTERN in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_beekeeper_birk
+  ok    npc.portrait_beekeeper_birk
+  ok    At most five choices: beekeeper_birk
+  ok    Esc releases beekeeper_birk
+  ok    Resolved line DLG_BIRK_GREET in da
+  ok    Resolved line DLG_BIRK_BEES in da
+  ok    Resolved line DLG_BIRK_HONEY in da
+  ok    Resolved line DLG_BIRK_QUIET in da
+  ok    Resolved line DLG_BIRK_FAREWELL in da
+  ok    Resolved line DLG_BIRK_GREET in en
+  ok    Resolved line DLG_BIRK_BEES in en
+  ok    Resolved line DLG_BIRK_HONEY in en
+  ok    Resolved line DLG_BIRK_QUIET in en
+  ok    Resolved line DLG_BIRK_FAREWELL in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_rasmus
+  ok    npc.portrait_rasmus
+  ok    At most five choices: rasmus
+  ok    Esc releases rasmus
+  ok    Resolved line DLG_NEUTRAL in da
+  ok    Resolved line DLG_NEUTRAL in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_lamplighter_kiki
+  ok    npc.portrait_lamplighter_kiki
+  ok    At most five choices: lamplighter_kiki
+  ok    Esc releases lamplighter_kiki
+  ok    Resolved line SOC_LAMPLIGHTER_KIKI_GREET_H0_1 in da
+  ok    Resolved line SOC_LAMPLIGHTER_KIKI_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_bertil
+  ok    npc.portrait_bertil
+  ok    At most five choices: bertil
+  ok    Esc releases bertil
+  ok    Resolved line SOC_BERTIL_GREET_H0_1 in da
+  ok    Resolved line SOC_BERTIL_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_bodil
+  ok    npc.portrait_bodil
+  ok    At most five choices: bodil
+  ok    Esc releases bodil
+  ok    Resolved line SOC_BODIL_GREET_H0_1 in da
+  ok    Resolved line SOC_BODIL_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_innkeeper_kvak
+  ok    npc.portrait_innkeeper_kvak
+  ok    At most five choices: innkeeper_kvak
+  ok    Esc releases innkeeper_kvak
+  ok    Resolved line SOC_ANY_SEASON_FORAAR_5 in da
+  ok    Resolved line SOC_ANY_SEASON_FORAAR_5 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_cub_bamse
+  ok    npc.portrait_cub_bamse
+  ok    At most five choices: cub_bamse
+  ok    Esc releases cub_bamse
+  ok    Resolved line SOC_CUB_BAMSE_GREET_H0_1 in da
+  ok    Resolved line SOC_CUB_BAMSE_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_clerk_fjerpen
+  ok    npc.portrait_clerk_fjerpen
+  ok    At most five choices: clerk_fjerpen
+  ok    Esc releases clerk_fjerpen
+  ok    Resolved line SOC_CLERK_FJERPEN_GREET_H0_1 in da
+  ok    Resolved line SOC_CLERK_FJERPEN_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fiddler_strimmel
+  ok    npc.portrait_fiddler_strimmel
+  ok    At most five choices: fiddler_strimmel
+  ok    Esc releases fiddler_strimmel
+  ok    Resolved line SOC_FIDDLER_STRIMMEL_GREET_H0_1 in da
+  ok    Resolved line SOC_FIDDLER_STRIMMEL_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_ghostfam_dyne
+  ok    npc.portrait_ghostfam_dyne
+  ok    At most five choices: ghostfam_dyne
+  ok    Esc releases ghostfam_dyne
+  ok    Resolved line DLG_GHOSTFAM_DYNE_DAWN_1 in da
+  ok    Resolved line DLG_GHOSTFAM_DYNE_DAWN_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_ghostfam_gnist
+  ok    npc.portrait_ghostfam_gnist
+  ok    At most five choices: ghostfam_gnist
+  ok    Esc releases ghostfam_gnist
+  ok    Resolved line DLG_GHOSTFAM_GNIST_EARLY_1 in da
+  ok    Resolved line DLG_GHOSTFAM_GNIST_EARLY_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_ghostfam_silke
+  ok    npc.portrait_ghostfam_silke
+  ok    At most five choices: ghostfam_silke
+  ok    Esc releases ghostfam_silke
+  ok    Resolved line DLG_GHOSTFAM_SILKE_DAWN_1 in da
+  ok    Resolved line DLG_GHOSTFAM_SILKE_DAWN_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_ghostfam_blund
+  ok    npc.portrait_ghostfam_blund
+  ok    At most five choices: ghostfam_blund
+  ok    Esc releases ghostfam_blund
+  ok    Resolved line DLG_GHOSTFAM_BLUND_DAWN_1 in da
+  ok    Resolved line DLG_GHOSTFAM_BLUND_DAWN_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.context_race_0_hour_24 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 24, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "animal", "hero": "rasmus", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_0_hour_25 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 25, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "animal", "hero": "rasmus", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_1_hour_24 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 24, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "fairy", "hero": "kloevermynte", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_1_hour_25 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 25, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "fairy", "hero": "kloevermynte", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_2_hour_24 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 24, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "hobbit", "hero": "bertil", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_2_hour_25 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 25, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "hobbit", "hero": "bertil", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_3_hour_24 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 24, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "ghost", "hero": "bu", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_3_hour_25 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 25, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "ghost", "hero": "bu", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    Night citizen after midnight
+  ok    Night citizen after midnight
+  ok    npc.when_night_hides_collider
+  ok    npc.text_has_no_focus
+  ok    npc.esc_first_line_no_heart
+  ok    npc.choice_focus
+  ok    npc.choice_wrap
+  ok    npc.action_transfers_to_shop
+  ok    npc.weekly_heart
+  ok    npc.pad_close_no_duplicate_heart
+  ok    npc.talk_holds_driven
+  ok    npc.temporary_actor_disposal_ends_once
+  ok    npc.dialogue_reentrant_cancels_previous_await
+  ok    npc.dialogue_reentrant_second_result
+  ok    npc.reach_override
+  ok    npc.wander_sixty_seconds_walkable
+  ok    npc.night_schedule_home_and_sleep (home distance 4.10262250900269, requested sleep, rendered idle)
+  ok    npc.unused_npc_clips_have_no_abandoned_thread_requests
+  ok    npc.emit_event_after_modal_closed ([{ "event": &"npc_extension_probe", "payload": { "answer": 42 }, "modal": &"" }])
+  ok    npc.unknown_action_forwarded
+  ok    npc.guest_has_social_but_no_shop_quest_or_routine
+  ok    Every overflow page fits five rows
+  ok    Every overflow page fits five rows
+  ok    Every overflow page fits five rows
+  ok    Every overflow page fits five rows
+  ok    Every overflow page fits five rows
+  ok    npc.overflow_keeps_all_choices_once
+  ok    npc.accept_dialogue_snurresvampen
+  ok    npc.accept_dialogue_bogtraeet
+  ok    npc.accept_dialogue_moonstone_crown
+  ok    npc.accept_dialogue_slotsdroemmen
+  ok    npc.accept_dialogue_lost_cat
+  ok    npc.accept_dialogue_cookie_delivery
+  ok    npc.accept_dialogue_fix_roof
+  ok    npc.accept_dialogue_skovlift_intro
+  ok    npc.journal_toggle_j
+  ok    npc.journal_reads_lua
+  ok    npc.journal_rules_da ([])
+  ok    npc.journal_rules_en ([])
+  ok    npc.journal_list_right_changes_tab
+  ok    npc.journal_j_closes_in_gui
+  ok    npc.cookie_delivery_dialogue_turn_in
+  ok    npc.lost_cat_real_pawprint_marker
+  ok    npc.lost_cat_dialogue_turn_in
+  ok    npc.fix_roof_transactional_action
+  ok    npc.intro_uses_real_dialogue
+  ok    npc.intro_skip_accepts_quest
+  ok    npc.intro_once
+  --    npc: 345 checks, 0 failed, 0 skipped, 1.9 s
+== section voice  (res://tests/sections/voice.gd)
+  ok    voice.manifest_in_sync (PASS manifest_in_sync 296 lines
+)
+  ok    voice.index_matches_csv (PASS voiced_index_in_sync
+)
+  ok    voice.stream_voice/appraiser_fru_ugle/farewell
+  ok    voice.stream_voice/appraiser_fru_ugle/finds
+  ok    voice.draft_voice_explicit_voice/appraiser_fru_ugle/first_1_v
+  ok    voice.stream_voice/appraiser_fru_ugle/glass
+  ok    voice.stream_voice/appraiser_fru_ugle/greet
+  ok    voice.stream_voice/appraiser_fru_ugle/lake
+  ok    voice.stream_voice/appraiser_fru_ugle/patience
+  ok    voice.stream_voice/appraiser_fru_ugle/runes
+  ok    voice.stream_voice/appraiser_fru_ugle/window
+  ok    voice.draft_voice_explicit_voice/baker_maja/bday_baker_maja_greet_1_v
+  ok    voice.stream_voice/baker_maja/cookie_talk
+  ok    voice.draft_voice_explicit_voice/baker_maja/first_1_v
+  ok    voice.draft_voice_explicit_voice/baker_maja/gift_baker_maja_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/baker_maja/gift_baker_maja_hate_1_v
+  ok    voice.draft_voice_explicit_voice/baker_maja/gift_baker_maja_like_1_v
+  ok    voice.draft_voice_explicit_voice/baker_maja/gift_baker_maja_love_1_v
+  ok    voice.draft_voice_explicit_voice/baker_maja/gift_baker_maja_neutral_1_v
+  ok    voice.stream_voice/baker_maja/greet
+  ok    voice.draft_voice_explicit_voice/baker_maja/greet_h0_1_v
+  ok    voice.stream_voice/baker_maja/math_done
+  ok    voice.stream_voice/baker_maja/math_q1
+  ok    voice.stream_voice/baker_maja/math_q2
+  ok    voice.stream_voice/baker_maja/math_q3
+  ok    voice.stream_voice/baker_maja/roof_trouble
+  ok    voice.stream_voice/baker_maja/thanks
+  ok    voice.draft_voice_explicit_voice/bathkeeper_sofus/bday_bathkeeper_sofus_greet_1_v
+  ok    voice.stream_voice/bathkeeper_sofus/evening
+  ok    voice.draft_voice_explicit_voice/bathkeeper_sofus/first_1_v
+  ok    voice.draft_voice_explicit_voice/bathkeeper_sofus/gift_bathkeeper_sofus_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/bathkeeper_sofus/gift_bathkeeper_sofus_hate_1_v
+  ok    voice.draft_voice_explicit_voice/bathkeeper_sofus/gift_bathkeeper_sofus_like_1_v
+  ok    voice.draft_voice_explicit_voice/bathkeeper_sofus/gift_bathkeeper_sofus_love_1_v
+  ok    voice.draft_voice_explicit_voice/bathkeeper_sofus/gift_bathkeeper_sofus_neutral_1_v
+  ok    voice.stream_voice/bathkeeper_sofus/greet
+  ok    voice.draft_voice_explicit_voice/bathkeeper_sofus/greet_h0_1_v
+  ok    voice.stream_voice/bathkeeper_sofus/offer
+  ok    voice.stream_voice/bathkeeper_sofus/once
+  ok    voice.stream_voice/bathkeeper_sofus/orange
+  ok    voice.stream_voice/bathkeeper_sofus/steam
+  ok    voice.stream_voice/bathkeeper_sofus/tired
+  ok    voice.stream_voice/bathkeeper_sofus/towel
+  ok    voice.draft_voice_explicit_voice/beekeeper_birk/bday_beekeeper_birk_greet_1_v
+  ok    voice.stream_voice/beekeeper_birk/bees
+  ok    voice.stream_voice/beekeeper_birk/family
+  ok    voice.stream_voice/beekeeper_birk/farewell
+  ok    voice.draft_voice_explicit_voice/beekeeper_birk/first_1_v
+  ok    voice.stream_voice/beekeeper_birk/flowers
+  ok    voice.draft_voice_explicit_voice/beekeeper_birk/gift_beekeeper_birk_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/beekeeper_birk/gift_beekeeper_birk_hate_1_v
+  ok    voice.draft_voice_explicit_voice/beekeeper_birk/gift_beekeeper_birk_like_1_v
+  ok    voice.draft_voice_explicit_voice/beekeeper_birk/gift_beekeeper_birk_love_1_v
+  ok    voice.draft_voice_explicit_voice/beekeeper_birk/gift_beekeeper_birk_neutral_1_v
+  ok    voice.stream_voice/beekeeper_birk/greet
+  ok    voice.draft_voice_explicit_voice/beekeeper_birk/greet_h0_1_v
+  ok    voice.stream_voice/beekeeper_birk/honey
+  ok    voice.stream_voice/beekeeper_birk/quiet
+  ok    voice.stream_voice/beekeeper_birk/wings
+  ok    voice.draft_voice_explicit_voice/bertil/first_1_v
+  ok    voice.draft_voice_explicit_voice/bodil/first_1_v
+  ok    voice.draft_voice_explicit_voice/carpenter_brumme/bday_carpenter_brumme_greet_1_v
+  ok    voice.draft_voice_explicit_voice/carpenter_brumme/first_1_v
+  ok    voice.draft_voice_explicit_voice/carpenter_brumme/gift_carpenter_brumme_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/carpenter_brumme/gift_carpenter_brumme_hate_1_v
+  ok    voice.draft_voice_explicit_voice/carpenter_brumme/gift_carpenter_brumme_like_1_v
+  ok    voice.draft_voice_explicit_voice/carpenter_brumme/gift_carpenter_brumme_love_1_v
+  ok    voice.draft_voice_explicit_voice/carpenter_brumme/gift_carpenter_brumme_neutral_1_v
+  ok    voice.stream_voice/carpenter_brumme/greet
+  ok    voice.draft_voice_explicit_voice/carpenter_brumme/greet_h0_1_v
+  ok    voice.stream_voice/carpenter_brumme/help
+  ok    voice.stream_voice/carpenter_brumme/market
+  ok    voice.stream_voice/carpenter_brumme/rest
+  ok    voice.stream_voice/carpenter_brumme/roof
+  ok    voice.stream_voice/carpenter_brumme/slow
+  ok    voice.stream_voice/carpenter_brumme/timber
+  ok    voice.stream_voice/carpenter_brumme/tools
+  ok    voice.draft_voice_explicit_voice/cat_morfar_mis/first_1_v
+  ok    voice.stream_voice/cat_morfar_mis/forest
+  ok    voice.stream_voice/cat_morfar_mis/home
+  ok    voice.draft_voice_explicit_voice/clerk_fjerpen/first_1_v
+  ok    voice.draft_voice_explicit_voice/cub_bamse/first_1_v
+  ok    voice.draft_voice_explicit_voice/fairy_builder/first_1_v
+  ok    voice.stream_voice/fairy_builder/t01_idle
+  ok    voice.stream_voice/fairy_builder/t01_offer
+  ok    voice.stream_voice/fairy_builder/t02_building
+  ok    voice.stream_voice/fairy_builder/t02_done
+  ok    voice.stream_voice/fairy_builder/t02_idle
+  ok    voice.stream_voice/fairy_builder/t02_offer
+  ok    voice.stream_voice/fairy_builder/t03_building
+  ok    voice.stream_voice/fairy_builder/t03_done
+  ok    voice.stream_voice/fairy_builder/t03_idle
+  ok    voice.stream_voice/fairy_builder/t03_offer
+  ok    voice.stream_voice/fairy_builder/t04_building
+  ok    voice.stream_voice/fairy_builder/t04_done
+  ok    voice.stream_voice/fairy_builder/t04_idle
+  ok    voice.stream_voice/fairy_builder/t04_offer
+  ok    voice.stream_voice/fairy_builder/t05_building
+  ok    voice.stream_voice/fairy_builder/t05_done
+  ok    voice.stream_voice/fairy_builder/t05_idle
+  ok    voice.stream_voice/fairy_builder/t05_offer
+  ok    voice.stream_voice/fairy_builder/t06_building
+  ok    voice.stream_voice/fairy_builder/t06_done
+  ok    voice.stream_voice/fairy_builder/t06_idle
+  ok    voice.stream_voice/fairy_builder/t06_offer
+  ok    voice.stream_voice/fairy_builder/t07_building
+  ok    voice.stream_voice/fairy_builder/t07_done
+  ok    voice.stream_voice/fairy_builder/t07_idle
+  ok    voice.stream_voice/fairy_builder/t07_offer
+  ok    voice.stream_voice/fairy_builder/t08_building
+  ok    voice.stream_voice/fairy_builder/t08_done
+  ok    voice.stream_voice/fairy_builder/t08_idle
+  ok    voice.stream_voice/fairy_builder/t08_offer
+  ok    voice.stream_voice/fairy_builder/t09_building
+  ok    voice.stream_voice/fairy_builder/t09_done
+  ok    voice.stream_voice/fairy_builder/t09_idle
+  ok    voice.stream_voice/fairy_builder/t09_offer
+  ok    voice.stream_voice/fairy_builder/t10_building
+  ok    voice.stream_voice/fairy_builder/t10_done
+  ok    voice.stream_voice/fairy_builder/t10_idle
+  ok    voice.draft_voice_explicit_voice/fairy_furnisher/first_1_v
+  ok    voice.stream_voice/fairy_furnisher/greet
+  ok    voice.draft_voice_explicit_voice/fairy_king/first_1_v
+  ok    voice.stream_voice/fairy_king/greet
+  ok    voice.stream_voice/fairy_king/letter
+  ok    voice.stream_voice/fairy_king/moon_offer
+  ok    voice.stream_voice/fairy_king/moon_remind
+  ok    voice.stream_voice/fairy_king/slot_offer
+  ok    voice.stream_voice/fairy_king/slot_remind
+  ok    voice.draft_voice_explicit_voice/fairy_lily/first_1_v
+  ok    voice.stream_voice/fairy_lily/greet
+  ok    voice.draft_voice_explicit_voice/fairy_tailor/first_1_v
+  ok    voice.stream_voice/fairy_tailor/greet
+  ok    voice.stream_voice/fairy_wizard/bogtrae_offer
+  ok    voice.stream_voice/fairy_wizard/bogtrae_remind
+  ok    voice.draft_voice_explicit_voice/fairy_wizard/first_1_v
+  ok    voice.stream_voice/fairy_wizard/greet
+  ok    voice.stream_voice/fairy_wizard/math_done
+  ok    voice.stream_voice/fairy_wizard/math_intro
+  ok    voice.stream_voice/fairy_wizard/math_q1
+  ok    voice.stream_voice/fairy_wizard/math_q2
+  ok    voice.stream_voice/fairy_wizard/math_q3
+  ok    voice.stream_voice/farmer_rosa/animal_talk
+  ok    voice.draft_voice_explicit_voice/farmer_rosa/bday_farmer_rosa_greet_1_v
+  ok    voice.draft_voice_explicit_voice/farmer_rosa/first_1_v
+  ok    voice.draft_voice_explicit_voice/farmer_rosa/gift_farmer_rosa_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/farmer_rosa/gift_farmer_rosa_hate_1_v
+  ok    voice.draft_voice_explicit_voice/farmer_rosa/gift_farmer_rosa_like_1_v
+  ok    voice.draft_voice_explicit_voice/farmer_rosa/gift_farmer_rosa_love_1_v
+  ok    voice.draft_voice_explicit_voice/farmer_rosa/gift_farmer_rosa_neutral_1_v
+  ok    voice.stream_voice/farmer_rosa/greet
+  ok    voice.draft_voice_explicit_voice/farmer_rosa/greet_h0_1_v
+  ok    voice.draft_voice_explicit_voice/fiddler_strimmel/first_1_v
+  ok    voice.draft_voice_explicit_voice/gardener_hoppe/bday_gardener_hoppe_greet_1_v
+  ok    voice.draft_voice_explicit_voice/gardener_hoppe/first_1_v
+  ok    voice.draft_voice_explicit_voice/gardener_hoppe/gift_gardener_hoppe_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/gardener_hoppe/gift_gardener_hoppe_hate_1_v
+  ok    voice.draft_voice_explicit_voice/gardener_hoppe/gift_gardener_hoppe_like_1_v
+  ok    voice.draft_voice_explicit_voice/gardener_hoppe/gift_gardener_hoppe_love_1_v
+  ok    voice.draft_voice_explicit_voice/gardener_hoppe/gift_gardener_hoppe_neutral_1_v
+  ok    voice.stream_voice/gardener_hoppe/greet
+  ok    voice.draft_voice_explicit_voice/gardener_hoppe/greet_h0_1_v
+  ok    voice.stream_voice/gardener_hoppe/klart
+  ok    voice.stream_voice/gardener_hoppe/once
+  ok    voice.stream_voice/gardener_hoppe/regn
+  ok    voice.stream_voice/gardener_hoppe/sne
+  ok    voice.stream_voice/gardener_hoppe/sprouts
+  ok    voice.stream_voice/gardener_hoppe/swap_done
+  ok    voice.stream_voice/gardener_hoppe/swap_offer
+  ok    voice.stream_voice/gardener_hoppe/taage
+  ok    voice.stream_voice/gardener_hoppe/torden
+  ok    voice.stream_voice/ghostfam_blund/bed
+  ok    voice.stream_voice/ghostfam_blund/dawn
+  ok    voice.stream_voice/ghostfam_blund/family
+  ok    voice.draft_voice_explicit_voice/ghostfam_blund/first_1_v
+  ok    voice.stream_voice/ghostfam_blund/greet
+  ok    voice.stream_voice/ghostfam_blund/kin1
+  ok    voice.stream_voice/ghostfam_blund/kin2
+  ok    voice.stream_voice/ghostfam_blund/kin3
+  ok    voice.stream_voice/ghostfam_blund/kin_greet
+  ok    voice.stream_voice/ghostfam_blund/kin_look_bu
+  ok    voice.stream_voice/ghostfam_blund/kin_look_hviske
+  ok    voice.stream_voice/ghostfam_blund/sleep
+  ok    voice.draft_voice_explicit_voice/ghostfam_dyne/chat_2_1_v
+  ok    voice.draft_voice_explicit_voice/ghostfam_dyne/chat_8_1_v
+  ok    voice.stream_voice/ghostfam_dyne/dawn
+  ok    voice.draft_voice_explicit_voice/ghostfam_dyne/first_1_v
+  ok    voice.stream_voice/ghostfam_dyne/greet
+  ok    voice.draft_voice_explicit_voice/ghostfam_dyne/greet_h0_1_v
+  ok    voice.draft_voice_explicit_voice/ghostfam_dyne/greet_h1_1_v
+  ok    voice.draft_voice_explicit_voice/ghostfam_dyne/greet_h2_1_v
+  ok    voice.draft_voice_explicit_voice/ghostfam_dyne/greet_h3_1_v
+  ok    voice.stream_voice/ghostfam_dyne/kin1
+  ok    voice.stream_voice/ghostfam_dyne/kin2
+  ok    voice.stream_voice/ghostfam_dyne/kin3
+  ok    voice.stream_voice/ghostfam_dyne/kin4
+  ok    voice.stream_voice/ghostfam_dyne/kin5
+  ok    voice.stream_voice/ghostfam_dyne/kin_dawn
+  ok    voice.stream_voice/ghostfam_dyne/kin_greet
+  ok    voice.stream_voice/ghostfam_dyne/kin_look_bu
+  ok    voice.stream_voice/ghostfam_dyne/kin_look_hviske
+  ok    voice.stream_voice/ghostfam_dyne/midnight_0
+  ok    voice.stream_voice/ghostfam_dyne/midnight_1
+  ok    voice.stream_voice/ghostfam_dyne/midnight_2
+  ok    voice.stream_voice/ghostfam_dyne/midnight_3
+  ok    voice.stream_voice/ghostfam_dyne/midnight_4
+  ok    voice.stream_voice/ghostfam_dyne/midnight_5
+  ok    voice.stream_voice/ghostfam_dyne/midnight_6
+  ok    voice.stream_voice/ghostfam_dyne/night
+  ok    voice.stream_voice/ghostfam_gnist/closed
+  ok    voice.stream_voice/ghostfam_gnist/closed_night
+  ok    voice.stream_voice/ghostfam_gnist/early
+  ok    voice.draft_voice_explicit_voice/ghostfam_gnist/first_1_v
+  ok    voice.stream_voice/ghostfam_gnist/greet
+  ok    voice.stream_voice/ghostfam_gnist/kin1
+  ok    voice.stream_voice/ghostfam_gnist/kin2
+  ok    voice.stream_voice/ghostfam_gnist/kin_greet
+  ok    voice.stream_voice/ghostfam_silke/dawn
+  ok    voice.draft_voice_explicit_voice/ghostfam_silke/first_1_v
+  ok    voice.stream_voice/ghostfam_silke/greet
+  ok    voice.stream_voice/ghostfam_silke/kin1
+  ok    voice.stream_voice/ghostfam_silke/kin2
+  ok    voice.stream_voice/ghostfam_silke/kin_greet
+  ok    voice.stream_voice/ghostfam_silke/late
+  ok    voice.stream_voice/ghostfam_silke/late2
+  ok    voice.stream_voice/guard_oak/bossernes_vej_offer
+  ok    voice.draft_voice_explicit_voice/guard_oak/first_1_v
+  ok    voice.stream_voice/guard_oak/greet
+  ok    voice.stream_voice/guard_oak/lift
+  ok    voice.stream_voice/guard_oak/skovlift_intro_offer
+  ok    voice.stream_voice/guard_oak/snurre_offer
+  ok    voice.stream_voice/guard_oak/snurre_remind
+  ok    voice.draft_voice_explicit_voice/innkeeper_kvak/first_1_v
+  ok    voice.draft_voice_explicit_voice/lamplighter_kiki/first_1_v
+  ok    voice.stream_voice/mapseller_natteblik/ears
+  ok    voice.stream_voice/mapseller_natteblik/farewell
+  ok    voice.draft_voice_explicit_voice/mapseller_natteblik/first_1_v
+  ok    voice.stream_voice/mapseller_natteblik/greet
+  ok    voice.stream_voice/mapseller_natteblik/lantern
+  ok    voice.stream_voice/mapseller_natteblik/maps
+  ok    voice.stream_voice/mapseller_natteblik/night
+  ok    voice.stream_voice/mapseller_natteblik/no_maps
+  ok    voice.stream_voice/mapseller_natteblik/roots
+  ok    voice.draft_voice_explicit_voice/mayor_lyra/bday_mayor_lyra_greet_1_v
+  ok    voice.stream_voice/mayor_lyra/farm_status
+  ok    voice.draft_voice_explicit_voice/mayor_lyra/first_1_v
+  ok    voice.draft_voice_explicit_voice/mayor_lyra/gift_mayor_lyra_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/mayor_lyra/gift_mayor_lyra_hate_1_v
+  ok    voice.draft_voice_explicit_voice/mayor_lyra/gift_mayor_lyra_like_1_v
+  ok    voice.draft_voice_explicit_voice/mayor_lyra/gift_mayor_lyra_love_1_v
+  ok    voice.draft_voice_explicit_voice/mayor_lyra/gift_mayor_lyra_neutral_1_v
+  ok    voice.stream_voice/mayor_lyra/greet_1
+  ok    voice.stream_voice/mayor_lyra/greet_2
+  ok    voice.draft_voice_explicit_voice/mayor_lyra/greet_h0_1_v
+  ok    voice.stream_voice/mayor_lyra/hello
+  ok    voice.stream_voice/mayor_lyra/lottery
+  ok    voice.draft_voice_explicit_voice/merchant_pip/bday_merchant_pip_greet_1_v
+  ok    voice.draft_voice_explicit_voice/merchant_pip/first_1_v
+  ok    voice.draft_voice_explicit_voice/merchant_pip/gift_merchant_pip_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/merchant_pip/gift_merchant_pip_hate_1_v
+  ok    voice.draft_voice_explicit_voice/merchant_pip/gift_merchant_pip_like_1_v
+  ok    voice.draft_voice_explicit_voice/merchant_pip/gift_merchant_pip_love_1_v
+  ok    voice.draft_voice_explicit_voice/merchant_pip/gift_merchant_pip_neutral_1_v
+  ok    voice.draft_voice_explicit_voice/merchant_pip/greet_h0_1_v
+  ok    voice.draft_voice_explicit_voice/penguin_postman/first_1_v
+  ok    voice.stream_voice/penguin_postman/hello
+  ok    voice.stream_voice/pip/greet
+  ok    voice.stream_voice/pippin_boegeknop/cat_offer
+  ok    voice.stream_voice/pippin_boegeknop/cat_remind
+  ok    voice.draft_voice_explicit_voice/pippin_boegeknop/first_1_v
+  ok    voice.stream_voice/pippin_boegeknop/hello
+  ok    voice.stream_voice/postman_pip/bag
+  ok    voice.draft_voice_explicit_voice/postman_pip/bday_postman_pip_greet_1_v
+  ok    voice.draft_voice_explicit_voice/postman_pip/first_1_v
+  ok    voice.draft_voice_explicit_voice/postman_pip/gift_postman_pip_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/postman_pip/gift_postman_pip_hate_1_v
+  ok    voice.draft_voice_explicit_voice/postman_pip/gift_postman_pip_like_1_v
+  ok    voice.draft_voice_explicit_voice/postman_pip/gift_postman_pip_love_1_v
+  ok    voice.draft_voice_explicit_voice/postman_pip/gift_postman_pip_neutral_1_v
+  ok    voice.stream_voice/postman_pip/greet
+  ok    voice.draft_voice_explicit_voice/postman_pip/greet_h0_1_v
+  ok    voice.stream_voice/postman_pip/mail
+  ok    voice.stream_voice/postman_pip/offer
+  ok    voice.stream_voice/postman_pip/remind
+  ok    voice.stream_voice/postman_pip/rest
+  ok    voice.stream_voice/postman_pip/round
+  ok    voice.stream_voice/postman_pip/thanks
+  ok    voice.draft_voice_explicit_voice/rasmus/first_1_v
+  ok    voice.draft_voice_explicit_voice/smith_thorin/bday_smith_thorin_greet_1_v
+  ok    voice.draft_voice_explicit_voice/smith_thorin/first_1_v
+  ok    voice.draft_voice_explicit_voice/smith_thorin/gift_smith_thorin_dislike_1_v
+  ok    voice.draft_voice_explicit_voice/smith_thorin/gift_smith_thorin_hate_1_v
+  ok    voice.draft_voice_explicit_voice/smith_thorin/gift_smith_thorin_like_1_v
+  ok    voice.draft_voice_explicit_voice/smith_thorin/gift_smith_thorin_love_1_v
+  ok    voice.draft_voice_explicit_voice/smith_thorin/gift_smith_thorin_neutral_1_v
+  ok    voice.stream_voice/smith_thorin/greet
+  ok    voice.draft_voice_explicit_voice/smith_thorin/greet_h0_1_v
+  ok    voice.stream_voice/smith_thorin/mining_talk
+  ok    voice.eleven_human_recordings
+  ok    voice.complete_voice_manifest
+  ok    voice.fourteen_originals_byte_identical
+  ok    voice.missing_silent_and_logged
+  ok    voice.english_does_not_play_danish
+  ok    voice.recorded_line_plays
+  ok    voice.locale_switch_stops_voice
+  ok    voice.dialogue_voice_indicator
+  ok    voice.dialogue_close_stops_voice
+  ok    voice.volume_preserves_other_sections
+  ok    voice.volume_reloads
+  --    voice: 309 checks, 0 failed, 0 skipped, 2.0 s
+== summary: 8 section(s) run, 1534 checks (0 failed, 2 skipped), 0 engine error(s), 0 engine warning(s), 11 allowed message(s), 0 problem(s), 0 known-issue message(s), 61.4 s
+PLAYTEST PASS (1534 checks in 8 sections, 11 allowed engine messages, 0 known-issue messages)

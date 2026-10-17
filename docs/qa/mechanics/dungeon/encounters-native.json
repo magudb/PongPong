@@ -1,0 +1,30 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 87,
+  "elapsed_s": 11.32,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "bosses": {
+      "character": "animal",
+      "checks": 44,
+      "failed": 0,
+      "ms": 4622,
+      "skipped": 0
+    },
+    "enemies": {
+      "character": "animal",
+      "checks": 43,
+      "failed": 0,
+      "ms": 2610,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

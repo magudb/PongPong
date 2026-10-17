@@ -1,0 +1,7 @@
+@id int_musikstuen
+@title BLD_MUSIKSTUEN
+@projection iso
+@ambient home
+@zone traetoppen
+@builder res://scripts/towns/interior_room.gd
+@room int_musikstuen

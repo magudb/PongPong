@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "size": [
+    128,
+    128
+  ],
+  "source_tool": "built-in imagegen",
+  "items": {
+    "etagekort": {
+      "file": "etagekort.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_supplies/etagekort.png",
+      "source_sha256": "668722adf85af426b2ea7a28774b523588e687cf2d0cb384b9a0b7f8a134b45d",
+      "ring": "2b2340"
+    },
+    "lysdraabe": {
+      "file": "lysdraabe.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_supplies/lysdraabe.png",
+      "source_sha256": "97d5c4203b8099393d16822014a1d203ea99b1bbbcbbc049c681e0266fa4d5f3",
+      "ring": "2b2340"
+    },
+    "svampe_eliksir": {
+      "file": "svampe_eliksir.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_supplies/svampe_eliksir.png",
+      "source_sha256": "f9f3c992c2e43a8bfcbc01d35d7cc6589d317f0a0043993f9ea5c954fac2e5e8",
+      "ring": "2b2340"
+    },
+    "tornebaer": {
+      "file": "tornebaer.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_supplies/tornebaer.png",
+      "source_sha256": "d5633dc5e21f35b32d9fe67f791e04c76531a723bb337a9eded0ef6e9bdc62ed",
+      "ring": "2b2340"
+    },
+    "ugle_noegle": {
+      "file": "ugle_noegle.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_supplies/ugle_noegle.png",
+      "source_sha256": "e48ce19df6a1e6a9607491d392557c0ead43fed1772ebc2cd5029657de60517c",
+      "ring": "2b2340"
+    }
+  }
+}

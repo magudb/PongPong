@@ -1,0 +1,242 @@
+{
+  "flower_box": {
+    "file": "flower_box.webp",
+    "size": [
+      94,
+      77
+    ],
+    "pivot": [
+      47,
+      61
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "illustration": "tools/art/drawn/sources/farm_seasons/flower_box.png"
+  },
+  "garden_arch": {
+    "file": "garden_arch.webp",
+    "size": [
+      174,
+      232
+    ],
+    "pivot": [
+      87,
+      214
+    ],
+    "footprint": [
+      2,
+      1
+    ],
+    "illustration": "tools/art/drawn/sources/farm_seasons/garden_arch.png"
+  },
+  "fountain_small": {
+    "file": "fountain_small.webp",
+    "size": [
+      208,
+      175
+    ],
+    "pivot": [
+      104,
+      135
+    ],
+    "footprint": [
+      2,
+      2
+    ],
+    "illustration": "tools/art/drawn/sources/farm_seasons/fountain_small.png"
+  },
+  "royal_banner": {
+    "file": "royal_banner.webp",
+    "size": [
+      84,
+      228
+    ],
+    "pivot": [
+      42,
+      216
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "illustration": "tools/art/drawn/sources/farm_seasons/royal_banner.png"
+  },
+  "blossom_cluster": {
+    "file": "blossom_cluster.webp",
+    "size": [
+      122,
+      75
+    ],
+    "pivot": [
+      61,
+      58
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "illustration": "tools/art/drawn/sources/farm_seasons/blossom_cluster.png"
+  },
+  "sunflower_row": {
+    "file": "sunflower_row.webp",
+    "size": [
+      136,
+      160
+    ],
+    "pivot": [
+      68,
+      144
+    ],
+    "footprint": [
+      2,
+      1
+    ],
+    "illustration": "tools/art/drawn/sources/farm_seasons/sunflower_row.png"
+  },
+  "leaf_pile": {
+    "file": "leaf_pile.webp",
+    "size": [
+      120,
+      64
+    ],
+    "pivot": [
+      60,
+      47
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "illustration": "tools/art/drawn/sources/farm_seasons/leaf_pile.png"
+  },
+  "pumpkin_stack": {
+    "file": "pumpkin_stack.webp",
+    "size": [
+      122,
+      79
+    ],
+    "pivot": [
+      61,
+      62
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "illustration": "tools/art/drawn/sources/farm_seasons/pumpkin_stack.png"
+  },
+  "snow_patch": {
+    "file": "snow_patch.webp",
+    "size": [
+      122,
+      76
+    ],
+    "pivot": [
+      61,
+      53
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "illustration": "tools/art/drawn/sources/farm_seasons/snow_patch.png"
+  },
+  "bunting_x": {
+    "file": "bunting_x.webp",
+    "size": [
+      86,
+      204
+    ],
+    "pivot": [
+      43,
+      192
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "illustration": "tools/art/drawn/sources/farm_seasons/bunting_x.png"
+  },
+  "vine_hang": {
+    "file": "vine_hang.webp",
+    "size": [
+      30,
+      158
+    ],
+    "pivot": [
+      15,
+      3
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "illustration": "tools/art/drawn/sources/farm_seasons/vine_hang.png"
+  },
+  "pond_lily_farm": {
+    "file": "pond_lily.webp",
+    "size": [
+      96,
+      56
+    ],
+    "pivot": [
+      48,
+      40
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "illustration": "tools/art/drawn/sources/farm_seasons/pond_lily.png"
+  },
+  "apple_tree_foraar": {
+    "file": "apple_tree_foraar.webp",
+    "size": [
+      359,
+      398
+    ],
+    "pivot": [
+      172,
+      355
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "illustration": "tools/art/drawn/sources/farm_seasons/apple_tree_foraar.png"
+  },
+  "apple_tree_efteraar": {
+    "file": "apple_tree_efteraar.webp",
+    "size": [
+      359,
+      398
+    ],
+    "pivot": [
+      172,
+      355
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "illustration": "tools/art/drawn/sources/farm_seasons/apple_tree_efteraar.png"
+  },
+  "apple_tree_vinter": {
+    "file": "apple_tree_vinter.webp",
+    "size": [
+      359,
+      398
+    ],
+    "pivot": [
+      172,
+      355
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "illustration": "tools/art/drawn/sources/farm_seasons/apple_tree_vinter.png"
+  }
+}

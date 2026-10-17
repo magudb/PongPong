@@ -1,0 +1,30 @@
+{
+  "tool": "built-in imagegen",
+  "sources": [
+    {
+      "id": "etagekort",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-92552bb1-fe10-4af6-92da-b10ee44a3924.png",
+      "source": "tools/art/drawn/sources/dungeon_supplies/etagekort.png"
+    },
+    {
+      "id": "lysdraabe",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-c658d22b-6046-40ff-bced-f5bfa10c457e.png",
+      "source": "tools/art/drawn/sources/dungeon_supplies/lysdraabe.png"
+    },
+    {
+      "id": "svampe_eliksir",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-4e0f9ffb-8fe7-4d59-a4ed-034981e5a4a6.png",
+      "source": "tools/art/drawn/sources/dungeon_supplies/svampe_eliksir.png"
+    },
+    {
+      "id": "tornebaer",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-cf6998a0-90f7-4370-b41e-85ff69b6f712.png",
+      "source": "tools/art/drawn/sources/dungeon_supplies/tornebaer.png"
+    },
+    {
+      "id": "ugle_noegle",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-97196aa8-9f54-4d51-a2ad-8e3dca7aa4f9.png",
+      "source": "tools/art/drawn/sources/dungeon_supplies/ugle_noegle.png"
+    }
+  ]
+}

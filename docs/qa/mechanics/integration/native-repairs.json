@@ -1,0 +1,32 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 77,
+  "elapsed_s": 44.51,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "town_budgets.hyggebyen_presented_frame_windowed"
+  ],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "bosses": {
+      "character": "animal",
+      "checks": 49,
+      "failed": 0,
+      "ms": 9968,
+      "skipped": 0
+    },
+    "town_budgets": {
+      "character": "animal",
+      "checks": 28,
+      "failed": 1,
+      "ms": 29329,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

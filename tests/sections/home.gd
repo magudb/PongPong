@@ -25,7 +25,7 @@ const GOLD := [0, 200, 300, 900, 2100, 4500, 7500, 12500, 19000, 27000]
 const DAYS := [1, 1, 2, 2, 3, 3, 4, 5, 6, 8]
 const GIFTS := {5: ["throne_root"], 6: ["clock_moon"], 7: ["piano_star"], 8: ["bookshelf_floating"], 9: ["throne_crystal"], 10: ["bed_moon", "chandelier_star"]}
 const UNLOCK_TIER := {"workbench": 1, "oven": 2, "loom": 3, "guest_visits": 4, "forge_bench": 5, "forecast": 6, "festival": 8, "royal_visit": 10}
-const UNLOCK_STATUS := {"workbench": "real", "oven": "stub", "loom": "real", "guest_visits": "partial", "forge_bench": "real", "forecast": "stub", "festival": "partial", "royal_visit": "stub"}
+const UNLOCK_STATUS := {"workbench": "real", "oven": "real", "loom": "real", "guest_visits": "real", "forge_bench": "real", "forecast": "real", "festival": "real", "royal_visit": "real"}
 ## twelve different backpack items (one slot each): the chest holds one slot per item, whatever the stack size
 const TWELVE_IDS := ["plank_pine", "plank_birch", "plank_oak", "plank_walnut", "stone_block", "slate", "brick", "lime", "nails", "glass_pane", "roof_tile", "timber_beam", "copper_plate"]
 
@@ -113,6 +113,14 @@ class LevelFake extends FakeFurnitureManager:
 
 	func hygge_level_index() -> int:
 		return forced if forced >= 0 else super()
+
+
+## The live game always has a furniture store. Model a temporarily full store
+## explicitly instead of assuming that clearing a service override removes it.
+class FullGiftStore extends FakeFurnitureManager:
+	var full := true
+	func can_add(item_id: Variant, amount: int) -> bool:
+		return not full and super.can_add(item_id,amount)
 
 
 ## hides completed quests from HomeManager (the only QuestManager call it makes is is_completed): "this quest is not done"
@@ -294,6 +302,8 @@ func _atomic_transfers(t) -> void:
 		"gold, inventory and chest listeners all see the paid construction and home_building flag together (%d snapshots)" % samples.size())
 	Fresh.new_game(t)
 	_eco.reset()
+	var chairs_before: int = _eco.count_item(&"chair_pine")
+	var chests_before: int = _eco.count_item(&"chest_pine")
 	_hm._pending_gifts = ["chair_pine", "chest_pine"] as Array[String]
 	var gift_snapshots: Array = []
 	var on_gift := func(item: StringName, _amount: int) -> void:
@@ -302,7 +312,7 @@ func _atomic_transfers(t) -> void:
 	_bus.item_gained.connect(on_gift)
 	_hm._retry_pending_gifts()
 	_bus.item_gained.disconnect(on_gift)
-	t.check("pending_gifts_safe_during_gain", gift_snapshots == [true, true] and _hm.pending_gifts().is_empty() and _eco.count_item(&"chair_pine") == 1 and _eco.count_item(&"chest_pine") == 1,
+	t.check("pending_gifts_safe_during_gain", gift_snapshots == [true, true] and _hm.pending_gifts().is_empty() and _eco.count_item(&"chair_pine") == chairs_before+1 and _eco.count_item(&"chest_pine") == chests_before+1,
 		"saving or retrying inside item_gained never leaves a delivered gift owed or grants it twice")
 
 
@@ -479,6 +489,8 @@ func _perks_and_unlocks(t) -> void:
 	var station_open := {"snedkerbord": 1, "vaev": 3, "smedje": 5}
 	var problems: Array[String] = []
 	var perk_problems: Array[String] = []
+	_hm.set_tier(1)
+	var starting_energy := Perks.total("energy")
 	for n in range(1, 11):
 		_hm.set_tier(n)
 		for station in station_open:
@@ -488,7 +500,7 @@ func _perks_and_unlocks(t) -> void:
 			if _hm.unlocked(u) != (n >= int(UNLOCK_TIER[u])):
 				problems.append("unlock %s at tier %d" % [u, n])
 		var bd: Dictionary = Perks.breakdown("energy")
-		_ck(int(bd["home"]) == int(ENERGY[n - 1]) and is_equal_approx(Perks.total("energy"), minf(float(ENERGY[n - 1]), 60.0)), "tier %d: Perks.total(\"energy\") adds the home bonus +%d (%s)" % [n, ENERGY[n - 1], str(bd["total"])], perk_problems)
+		_ck(int(bd["home"]) == int(ENERGY[n - 1]) and is_equal_approx(Perks.total("energy"), minf(starting_energy+float(ENERGY[n - 1]), 60.0)), "tier %d: Perks.total(\"energy\") adds the home bonus +%d (%s)" % [n, ENERGY[n - 1], str(bd["total"])], perk_problems)
 		_ck(_hm.max_energy_bonus() == int(ENERGY[n - 1]) and _hm.storage_slots() == int(SLOTS[n - 1]) and _hm.furniture_capacity() == int(CAPACITY[n - 1]) and _hm.guest_visits_per_week() == int(GUESTS[n - 1]) and _hm.perks().get("storage_slots") == SLOTS[n - 1] and _hm.perk_int(n, "storage_slots") == SLOTS[n - 1], "tier %d: the four perk numbers equal the addendum table" % n, perk_problems)
 	t.check("stations_by_tier", problems.is_empty() and not _hm.station_available("nonsense") and not _hm.station_available(""), "snedkerbord <- workbench (T1), vaev <- loom (T3), smedje <- forge_bench (T5) at every tier; unknown stations are closed; %s" % str(problems.slice(0, 3)))
 	t.check("perks_energy_storage_capacity", perk_problems.is_empty(), "max_energy_bonus / storage_slots / furniture_capacity / guest_visits_per_week of the ten tiers equal the addendum table, and Perks.total(\"energy\") adds the home bonus (30 at the castle)")
@@ -496,11 +508,11 @@ func _perks_and_unlocks(t) -> void:
 	t.expect(_hm.station_available("snedkerbord") and not _hm.station_available("vaev") and not _hm.station_available("smedje"), "tier 1: only the carpenter's bench")
 	_hm.set_tier(4)
 	t.expect(_hm.station_available("vaev") and not _hm.station_available("smedje") and CraftingSystem.home_tier() == 4, "tier 4: the loom is open, the forge is not; CraftingSystem reads the same tier flag")
-	# status of the unlocks: three real, two partial, three stubs
+	# status of the unlocks: five real and three separately listed stubs
 	var status_ok := true
 	for u in UNLOCK_STATUS:
 		status_ok = status_ok and _hm.unlock_status(u) == UNLOCK_STATUS[u]
-	t.check("unlock_status", status_ok and _hm.unlock_status("nonsense") == "stub", "workbench loom forge_bench real, guest_visits festival partial, oven forecast royal_visit stub (%s); an unknown unlock is a stub" % str(UNLOCK_STATUS))
+	t.check("unlock_status", status_ok and _hm.unlock_status("nonsense") == "stub", "all eight listed unlocks real (%s); an unknown unlock is a stub" % str(UNLOCK_STATUS))
 	var rows: Array[Dictionary] = _hm.unlock_rows()
 	t.expect(rows.size() == 8 and str(rows[0]["id"]) == "workbench" and str(rows[0]["name_key"]) == "HOME_UNLOCK_WORKBENCH" and str(rows[7]["desc_key"]) == "HOME_UNLOCK_ROYAL_VISIT_DESC", "unlock_rows(): eight rows in the data's order with the loc keys of the perks card")
 	var keys_ok := true
@@ -510,7 +522,7 @@ func _perks_and_unlocks(t) -> void:
 		keys_ok = keys_ok and (r["unlocked"] == (_hm.tier >= int(UNLOCK_TIER[r["id"]]))) and int(r["tier"]) == int(UNLOCK_TIER[r["id"]])
 		counts[r["status"]] = int(counts[r["status"]]) + 1
 	t.expect(keys_ok, "every unlock row has translated name and description keys, its tier and its unlocked state (tier 4)")
-	t.expect(counts == {"real": 3, "partial": 2, "stub": 3}, "three unlocks do what they say, two are partial (guest gifts, the festival button), three are listed only: oven, forecast, royal_visit (%s)" % str(counts))
+	t.expect(counts == {"real": 8, "partial": 0, "stub": 0}, "eight unlocks include kitchen, forecast, visits and celebrations (%s)" % str(counts))
 	_hm.reset()
 
 
@@ -523,6 +535,7 @@ func _ladder(t) -> void:
 	var fake := LevelFake.new(1)
 	_rec.fm = fake
 	Svc.override("FurnitureManager", fake)
+	var starting_energy := Perks.total("energy")
 	# some real furniture so "nothing placed is lost" has something to lose: three pieces placed, two chairs and a lamp in the stock
 	for id in ["bed_birch_single", "chest_pine", "table_round_pine"]:
 		_give(id)
@@ -606,7 +619,7 @@ func _ladder(t) -> void:
 	t.expect(_rec.upgraded_total == 9, "nine home_upgraded signals in total on the way from the Skur to the Slottet (%d)" % _rec.upgraded_total)
 	t.expect(bool(_gm.get_flag(&"home_castle_built", false)) and _gm.flag_int(&"home_tier", 0) == 10, "flag home_castle_built is set, home_tier is 10")
 	t.expect(days_walked == 1 + 2 + 2 + 3 + 3 + 4 + 5 + 6 + 8 and progress_expected == days_walked - 9, "the whole ladder took %d days (74,000 guldagern) with %d progress mornings" % [days_walked, progress_expected])
-	t.expect(Perks.total("energy") == 30.0 and _hm.furniture_capacity() == 74 and _hm.storage_slots() == 100 and _hm.guest_visits_per_week() == 5, "the castle: +30 energy, 74 pieces, 100 chest slots, 5 guest gifts a week")
+	t.expect(Perks.total("energy") == minf(starting_energy+30.0,60.0) and _hm.furniture_capacity() == 74 and _hm.storage_slots() == 100 and _hm.guest_visits_per_week() == 5, "the castle: +30 energy, 74 pieces, 100 chest slots, 5 guest gifts a week")
 	t.expect(fake.room.pieces.size() >= placed_start and fake.count_total("throne_root") == 1 and fake.count_total("bed_moon") == 1 and fake.count_total("chandelier_star") == 1, "the seven housewarming pieces stand in the store, the placed pieces are still placed")
 	Svc.clear_overrides()
 	_rec.fm = null
@@ -870,14 +883,16 @@ func _gifts(t) -> void:
 	_hm.start_upgrade()
 	_days(_hm.build_days(6))
 	_ck(_hm.tier == 6 and _eco.count_item(&"clock_moon") == 1 and _hm.pending_gifts().is_empty(), "tier 6: the keepsake the player already owned is not given twice and is not kept as pending", bag)
-	# a gift that cannot be delivered right now (no furniture store + full backpack): kept and retried every morning, never dropped
+	# A full furniture store defers the gift even with a full backpack; retry after space returns.
 	Svc.clear_overrides()
 	_rec.fm = null
 	Fresh.new_game(t)
 	_hm.set_tier(6)
 	_hm.construction = {"target": 7, "start_day": _gm.total_day(), "ready_day": _gm.total_day() + 1}
+	var full_store := FullGiftStore.new()
+	Svc.override("FurnitureManager",full_store)
 	_fill_backpack()
-	_ck(_eco.free_slots() == 0 and not _eco.can_add_item(&"piano_star", 1), "the backpack is full and there is no furniture store: the gift cannot be delivered", bag)
+	_ck(_eco.free_slots() == 0 and not _eco.can_add_item(&"piano_star", 1), "the furniture store and backpack are full: the gift cannot be delivered", bag)
 	_hm.finish_upgrade()
 	_ck(_hm.tier == 7 and _hm.pending_gifts() == ["piano_star"] and _eco.count_item(&"piano_star") == 0, "tier 7 flipped anyway; the Stjerneklaveret waits as a pending gift", bag)
 	_ck(_hm.to_dict().get("gifts_pending", []) == ["piano_star"], "the pending gift is saved (key gifts_pending, only present when something is pending)", bag)
@@ -888,7 +903,7 @@ func _gifts(t) -> void:
 	_ck(_hm.pending_gifts() == ["piano_star"], "and it survives a save/load", bag)
 	_days(1)
 	_ck(_hm.pending_gifts() == ["piano_star"], "still pending while there is no room", bag)
-	_eco.remove_item(&"plank_pine", _eco.count_item(&"plank_pine"))
+	full_store.full = false
 	_days(1)
 	_ck(_hm.pending_gifts().is_empty() and _eco.count_item(&"piano_star") == 1, "room again: the next morning delivers it", bag)
 	_days(1)
@@ -896,6 +911,8 @@ func _gifts(t) -> void:
 	t.check("gift_items_delivered_once", bag.is_empty(), "every tier gift arrives once through EconomyManager (the furniture store), never twice, never lost; one-of-a-kind safe: %s" % str(bag.slice(0, 3)))
 	_eco.reset()
 	_hm.reset()
+	Svc.clear_overrides()
+	full_store.free()
 	fake.free()
 
 
@@ -1027,7 +1044,7 @@ func _festival(t) -> void:
 	_ck(_hm.festival_cooldown_left() == 0, "28 days later: free again", bag)
 	var second: Dictionary = _hm.hold_festival()
 	_ck(bool(second["ok"]) and _eco.gold == 4000 and _hm.festival_day == td + 28 and _rec.events_named("festival_held").size() == 2, "the second festival: another 500, another event", bag)
-	_ck(_hm.can_hold_festival_unlock() and _hm.unlock_status("festival") == "partial", "festival is a PARTIAL unlock (a button, an event and 500 guldagern)", bag)
+	_ck(_hm.can_hold_festival_unlock() and _hm.unlock_status("festival") == "real", "festival is a real unlock with named house guests", bag)
 	# a festival never held before: no cooldown even on day 5 (festival_day 0 is "never", not "day 0")
 	Fresh.new_game(t)
 	_eco.gold = 1000

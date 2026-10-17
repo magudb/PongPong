@@ -1,0 +1,26 @@
+keys,da,en
+SEEK_GHOSTFAM_HINT_WARM,Hihi... du er tæt på nu!,Hee-hee... you are close now!
+SEEK_GHOSTFAM_HINT_HOT,Psst! Du er lige ved siden af mig!,Psst! You are right next to me!
+SEEK_GHOSTFAM_KIN_GLOW,Du kan mærke Blunds lys på lang afstand. Det er familie.,You can feel Blund's glow from far away. That is family.
+SEEK_GHOSTFAM_FOUND_1,"Åh nej, du fandt mig! Hvordan vidste du det?","Oh no, you found me! How did you know?"
+SEEK_GHOSTFAM_FOUND_2,Du er den bedste til at finde! Jeg tæller det på mit kort.,You are the best at finding! I am counting it on my card.
+SEEK_GHOSTFAM_FOUND_3,"Hihi, du kunne mærke mig! Spøgelser lugter jo af måneskin.","Hee-hee, you could feel me! Ghosts smell of moonlight, you know."
+SEEK_GHOSTFAM_FOUND_4,"Sh, de andre må ikke vide, hvor godt jeg gemte mig. Jeg tæller dit fund.","Sh, the others must not know how well I hid. I am counting your find."
+SEEK_GHOSTFAM_FOUND_AGAIN_1,Du har allerede fundet mig her i aften. Prøv at finde mig et nyt sted!,You have already found me here tonight. Try to find me in a new place!
+SEEK_GHOSTFAM_TOAST_FOUND_FMT,Du fandt Blund! Fund i alt: %d,You found Blund! Finds in total: %d
+SEEK_GHOSTFAM_TOAST_NEXT_FMT,Næste gave om %d fund,Next gift in %d finds
+SEEK_GHOSTFAM_TOAST_GIFT_FMT,Blund gav dig: %s,Blund gave you: %s
+SEEK_GHOSTFAM_TOAST_BAG_FULL,"Blund venter med gaven, til du har plads i rygsækken.",Blund keeps the gift until you have room in your backpack.
+SEEK_GHOSTFAM_GIFT_1,"Den her fandt jeg, mens jeg gemte mig. Du må få den, fordi du er så god til at finde mig.","I found this one while I was hiding. You may have it, because you are so good at finding me."
+SEEK_GHOSTFAM_GIFT_2,"Den her er min yndlings. Jeg ville egentlig beholde den, men nu er den din.","This one is my favourite. I really wanted to keep it, but now it is yours."
+SEEK_GHOSTFAM_GIFT_3,"Mormor siger, at man skal passe godt på den. Det gør jeg ikke, men det gør du nok. Værsgo!","Granny says you must take good care of it. I do not, but you probably will. Here you go!"
+SEEK_GHOSTFAM_GIFT_4,"Jeg har aldrig vist den til nogen. Den lyser, når det er allermørkest. Den skal hjem til dig.",I have never shown it to anybody. It glows when it is darkest. It belongs at your place.
+SEEK_GHOSTFAM_GIFT_5,"Den her fik Mormor af månen. Du har fundet mig så mange gange, at den hører til hos dig nu.",Granny got this from the moon. You have found me so many times that it belongs with you now.
+SEEK_GHOSTFAM_GIFT_4_OWNED,"Jeg ville give dig min allerbedste lampe, men du har den allerede. Tag den her i stedet, den lyser også rigtig fint.","I wanted to give you my very best lamp, but you already have it. Take this one instead, it glows really nicely too."
+SEEK_GHOSTFAM_GIFT_5_OWNED,"Du har allerede den allerfineste lampe, kan jeg se. Så får du den her i stedet. De kan stå sammen.","You already have the very finest lamp, I can see. So you get this one instead. They can stand together."
+SEEK_GHOSTFAM_CARD_TITLE,Blunds gemmekort,Blund's hiding card
+SEEK_GHOSTFAM_CARD_COUNT_FMT,%d fund,%d finds
+SEEK_GHOSTFAM_WHERE_HIDDEN,gemmer sig,hiding
+SEEK_GHOSTFAM_HINT_MOVING,Blund finder et nyt sted lige nu. Kom igen om lidt.,Blund is finding a new place just now. Come back in a little while.
+SEEK_GHOSTFAM_HINT_FESTIVAL,Blund er til fest i dag. Gemmelegen fortsætter en anden aften.,Blund is at the festival today. The hiding game continues another evening.
+SEEK_GHOSTFAM_HINT_REST,Blund er færdig med at gemme sig for i aften. Kig forbi en anden aften.,Blund has finished hiding for tonight. Come by another evening.

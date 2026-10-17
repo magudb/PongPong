@@ -62,6 +62,7 @@ static func now_ctx() -> Dictionary:
 	var c: Dictionary = make_ctx(0, 6.0)
 	if gm == null:
 		return c
+	c["_day_end"] = float(gm.call("day_end_hour"))
 	c["hour"] = float(gm.get("hour")) + float(gm.get("minute")) / 60.0
 	c["total_day"] = int(gm.call("total_day"))
 	c["season"] = str(gm.get("season"))
@@ -85,12 +86,12 @@ static func now_ctx() -> Dictionary:
 				c["override_fn"] = Callable(sm, "override_for")
 			if sm.has_method("shop_closed_by_festival"):
 				c["fest_closed_fn"] = Callable(sm, "shop_closed_by_festival")
+	if sm != null and sm.has_method("home_routine_context"):c.merge(sm.call("home_routine_context"))
 	return c
 
 
 static func _festival_def(fid: String) -> Dictionary:
-	var lr: Node = GameData.lua()
-	return lr.call("get_registry_entry", "festivals", fid) if lr != null and lr.has_method("get_registry_entry") else {}
+	return SocialData.festival(fid)
 
 
 ## true when the citizen is not part of the game for this player: the other hero's twin, or a gate (a quest / a day) that has not opened yet. NOT true for asleep / away / indoors.
@@ -116,7 +117,7 @@ static func festival_block(npc: String, ctx: Dictionary) -> Dictionary:
 	if not (ov is Dictionary) or str((ov as Dictionary).get("post", "")) == "" or str((ov as Dictionary).get("state", "stay")) in ["absent", "away"]:
 		return {}
 	var area: String = str((ov as Dictionary).get("area", fest.get("area", "")))
-	return {"from": float(fest["from"]), "to": float(fest["to"]), "at": "%s.%s" % [area, str((ov as Dictionary)["post"])], "area": area, "post": str((ov as Dictionary)["post"])}
+	return {"from": float(fest["from"]), "to": float((ov as Dictionary).get("until",fest["to"])), "at": "%s.%s" % [area, str((ov as Dictionary)["post"])], "area": area, "post": str((ov as Dictionary)["post"])}
 
 
 static func hearts_of(ctx: Dictionary, npc: String) -> int:
@@ -130,18 +131,32 @@ static func hearts_of(ctx: Dictionary, npc: String) -> int:
 	return int((gm as Node).call("flag_int", StringName("friend_" + npc), 0)) if gm is Node else 0
 
 
+static func _has_int(values: Variant, value: int) -> bool:
+	if not values is Array: return int(values) == value
+	for entry in values:
+		if int(entry) == value: return true
+	return false
+
+
+static func _has_string(values: Variant, value: String) -> bool:
+	if not values is Array: return str(values) == value
+	for entry in values:
+		if str(entry) == value: return true
+	return false
+
+
 static func matches(when: Dictionary, ctx: Dictionary, npc: String) -> bool:
 	for k in when:
 		var v: Variant = when[k]
 		match str(k):
 			"weekday":
-				if not (int(ctx["weekday"]) in _ints(v)):
+				if not _has_int(v, int(ctx["weekday"])):
 					return false
 			"season":
-				if not (str(ctx["season"]) in _strs(v)):
+				if not _has_string(v, str(ctx["season"])):
 					return false
 			"weather":
-				if not (str(ctx["weather"]) in _strs(v)):
+				if not _has_string(v, str(ctx["weather"])):
 					return false
 			"festival":
 				var f: String = str(ctx.get("festival", ""))
@@ -253,11 +268,15 @@ static func is_rainy(ctx: Dictionary) -> bool:
 
 ## The compiled day of one citizen: [{kind: "stay", place, act, t0, t1} | {kind: "move", from, to, t0, t1, legs: [{kind, area, from, to, t0, t1}]}], hours of the day.
 static func timeline(npc: String, plan: String, rain: bool, fb: Dictionary = {}) -> Array:
-	var key: String = "%s|%s|%s|%s|%s" % [npc, plan, rain, day_end(), "" if fb.is_empty() else "%s@%s-%s" % [fb["at"], fb["from"], fb["to"]]]
+	return _timeline(npc, plan, rain, fb, day_end())
+
+
+static func _timeline(npc: String, plan: String, rain: bool, fb: Dictionary, ending: float) -> Array:
+	var key: String = "%s|%s|%s|%s|%s" % [npc, plan, rain, ending, "" if fb.is_empty() else "%s@%s-%s" % [fb["at"], fb["from"], fb["to"]]]
 	if _tl.has(key):
 		return _tl[key]
 	if not fb.is_empty():
-		var over: Array = _overlay(timeline(npc, plan, rain), fb, "%s/%s" % [npc, plan])
+		var over: Array = _overlay(_timeline(npc, plan, rain, {}, ending), fb, "%s/%s" % [npc, plan])
 		_tl[key] = over
 		return over
 	var def: Dictionary = registry().get(npc, {})
@@ -428,7 +447,8 @@ static func _compile(npc: String, plan: String, blocks: Array) -> Array:
 ##   stay   standing / sitting at an anchor of `area`           move   walking: leg = {kind, area, from, to, frac, t0, t1}
 ##   inside in a building without a modelled room (door anchor) absent  not in the world (asleep in a bat house, away, gated, hero twin)
 static func where_is(npc: String, ctx: Dictionary) -> Dictionary:
-	var def: Dictionary = registry().get(npc, {})
+	var definitions: Dictionary = ctx["_routine_registry"] if ctx.has("_routine_registry") else registry()
+	var def: Dictionary = definitions.get(npc, {})
 	var out: Dictionary = {"npc": npc, "state": "absent", "plan": "", "place": "nowhere", "act": "", "area": ""}
 	if def.is_empty():
 		return out
@@ -447,7 +467,10 @@ static func where_is(npc: String, ctx: Dictionary) -> Dictionary:
 		if not _fb.has(fk):
 			_fb[fk] = festival_block(npc, ctx)
 		fb = _fb[fk]
-	var segs: Array = timeline(npc, plan, is_rainy(ctx), fb)
+	# Batch queries share the same clock snapshot, including the day boundary.
+	var ending := float(ctx["_day_end"]) if ctx.has("_day_end") else day_end()
+	var segs: Array = _timeline(npc, plan, is_rainy(ctx), fb, ending)
+	if npc in ctx.get("home_guests",[]):segs = Svc.static_call("res://scripts/social/relationships/farm_visits.gd",&"timeline",[npc,ctx,segs],segs)
 	if segs.is_empty():
 		return out
 	var t: float = float(ctx["hour"])
@@ -469,7 +492,7 @@ static func where_is(npc: String, ctx: Dictionary) -> Dictionary:
 		if place == "nowhere":
 			return out
 		out["area"] = place.get_slice(".", 0)
-		out["state"] = "inside" if str(s["act"]) == "inside" else "stay"
+		out["state"] = "inside" if str(s["act"]) in ["inside","home"] else "stay"
 		return out
 	for l in (s["legs"] as Array):
 		var ld: Dictionary = l

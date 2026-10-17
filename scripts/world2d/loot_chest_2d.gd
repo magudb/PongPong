@@ -287,6 +287,7 @@ func _after(res: Dictionary, player: Node) -> void:
 			_whisper_resting()
 		return                                          # full / locked / missing_items: the chest stays closed and NOT done (LootService said why)
 	is_open = true
+	EventBus.game_event.emit(&"audio_cue",{"cue":"sfx/chest_open"})
 	LootMarkers.mark_done(area, cell, ctx)
 	LootMarkers.burst(self, global_position + Vector2(0, -30))
 	LootMarkers.whisper_found(res)

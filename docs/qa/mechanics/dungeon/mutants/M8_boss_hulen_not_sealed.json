@@ -1,0 +1,28 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 599,
+  "elapsed_s": 15.26,
+  "engine": [],
+  "failed": 4,
+  "failures": [
+    "dungeon_gen.gen.golden_digest_f4",
+    "dungeon_gen.gen.golden_digest_f8",
+    "dungeon_gen.gen.inv.hulen_sealed_iff_boss_floor",
+    "dungeon_gen.gen.invariants_on_240_floors"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "dungeon_gen": {
+      "character": "animal",
+      "checks": 599,
+      "failed": 4,
+      "ms": 11039,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

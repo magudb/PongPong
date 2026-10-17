@@ -25,6 +25,7 @@ var rotate_buttons: Array[Button] = []
 var preview_state: Label
 var detail_name: Label
 var detail_desc: Label
+var equipment_stats: Label
 var status: Label
 var equip_button: Button
 var remove_button: Button
@@ -121,6 +122,9 @@ func _ready() -> void:
 	detail_name.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	detail_desc = L.label(right,"","Body",true)
 	detail_desc.max_lines_visible = 3
+	equipment_stats = L.label(right,"","Small14",true)
+	equipment_stats.name = "EquipmentStats"
+	equipment_stats.hide()
 	var actions := L.box(right,false,8)
 	equip_button = L.button(actions,"","ButtonPrimaryS")
 	remove_button = L.button(actions,"","ButtonSecondaryS")
@@ -284,7 +288,7 @@ func _build_filters() -> void:
 		for cell in CELLS:
 			specs.append([cell[0],tr("SLOTCELL_"+cell[0])])
 	else:
-		specs.append_array([["weapon",tr("HUD_ITEM_WEAPON")],["tool",tr("GARDEROBE_TOOLS")]])
+		specs.append_array([["weapon",tr("HUD_ITEM_WEAPON")],["tool",tr("GARDEROBE_TOOLS")],["gem",tr("GARDEROBE_LANTERN_GEM")]])
 	var group := ButtonGroup.new()
 	group.set_meta("tt_value_selection",true)
 	for spec in specs:
@@ -319,8 +323,6 @@ func _build_filters() -> void:
 	if tab == 1:
 		L.label(filters,tr("GARDEROBE_WORN"),"Heavy17")
 		for slot in EconomyManager.equipment:
-			if str(slot) == "accessory":
-				continue
 			var id := str(EconomyManager.equipment[slot])
 			var label := L.label(filters,_name(id),"Muted14")
 			label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
@@ -340,14 +342,14 @@ func _build_items() -> void:
 	var restore := focus in item_buttons
 	L.clear(grid)
 	item_buttons.clear()
-	var ids: Array = ItemKinds.all_ids("clothing") if tab == 0 and show_all else WardrobeManager.owned_ids() if tab == 0 else EconomyManager.get_inventory_dict().keys()
+	var ids: Array = ItemKinds.all_ids("clothing") if tab == 0 and show_all else WardrobeManager.owned_ids() if tab == 0 else EconomyManager.loadout_ids()
 	ids = Rarity.sorted(ids,func(id): return ItemKinds.rarity_of(id),func(id): return str(id))
 	var selection := ButtonGroup.new()
 	selection.set_meta("tt_value_selection",true)
 	for value in ids:
 		var id := str(value)
 		var category := str(ItemKinds.def(id).get("category",""))
-		if tab == 1 and category not in ["tool","weapon"]:
+		if tab == 1 and EconomyManager.equip_slot_of(id) == "":
 			continue
 		if filter != "" and not _matches(id):
 			continue
@@ -395,6 +397,8 @@ func _select(id: String) -> void:
 	var definition := ItemKinds.def(id)
 	detail_name.text = _name(id)
 	detail_desc.text = tr(str(definition.get("description_key","GARDEROBE_CHOOSE")))
+	equipment_stats.text = preload("res://scripts/ui/components/equipment_details.gd").text(id) if tab==1 else ""
+	equipment_stats.visible = equipment_stats.text!=""
 	var slot := WardrobeManager.slot_of(id) if tab == 0 else EconomyManager.equip_slot_of(id)
 	var worn := (str(WardrobeManager.equipped.get(slot,"")) == id if tab == 0 else str(EconomyManager.equipped_item(StringName(slot))) == id) and id != ""
 	var owned := id != "" and _owned(id)

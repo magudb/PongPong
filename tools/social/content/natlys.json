@@ -1,0 +1,360 @@
+{
+  "ev_ghostfam_dyne_h4": {
+    "npc": "ghostfam_dyne",
+    "hearts": 4,
+    "area": "traetoppen",
+    "mark": "t_fire_e",
+    "when": "hour:19-22&!fest:any&at:ghostfam_dyne",
+    "title": [
+      "Det første garn",
+      "The first yarn"
+    ],
+    "lines": [
+      [
+        "Jeg har gemt en plads i mønstret. Hvilken farve skal den have?",
+        "I saved a space in the pattern. Which colour shall it be?"
+      ],
+      [
+        "Du behøver ikke vælge den samme i morgen. Garn kan godt skifte mening.",
+        "You need not choose the same one tomorrow. Yarn is allowed to change its mind."
+      ],
+      [
+        "Se, nu drejer garnnøglet. Det kender allerede vejen gennem mine vanter.",
+        "Look, the ball is turning. It already knows the way through my mittens."
+      ],
+      [
+        "Her løber din tråd sammen med vores. Ingen af dem bliver mindre af det.",
+        "Here your thread joins ours. None of them becomes smaller for it."
+      ]
+    ]
+  },
+  "ev_ghostfam_dyne_h6": {
+    "npc": "ghostfam_dyne",
+    "hearts": 6,
+    "area": "traetoppen",
+    "mark": "t_fire_e",
+    "after": "ev_ghostfam_dyne_h4",
+    "when": "weekday:2&hour:19-22&!fest:any&at:ghostfam_dyne&at:ghostfam_gnist&at:ghostfam_silke&at:ghostfam_blund",
+    "title": [
+      "Familiebilledet",
+      "The family portrait"
+    ],
+    "lines": [
+      [
+        "Stil dig her ved bålet. Silke holder lyset, og Gnist forsøger at stå stille.",
+        "Stand here by the fire. Silke is holding the light, and Gnist is trying to keep still."
+      ],
+      [
+        "Blund, du skal også med. Et tørklæde alene tæller ikke som et familiebillede.",
+        "Blund, you belong in it too. A scarf alone does not count as a family portrait."
+      ],
+      [
+        "Sådan. Et billede behøver ikke papir for at blive hos os.",
+        "There. A picture need not be on paper to stay with us."
+      ],
+      [
+        "Når du ser bålet her, må du gerne huske, at du stod sammen med os.",
+        "When you see this fire, you may remember that you stood here with us."
+      ]
+    ],
+    "actors": [
+      "ghostfam_gnist",
+      "ghostfam_silke",
+      "ghostfam_blund"
+    ]
+  },
+  "ev_ghostfam_dyne_h8": {
+    "npc": "ghostfam_dyne",
+    "hearts": 8,
+    "area": "traetoppen",
+    "mark": "f_bench",
+    "after": "ev_ghostfam_dyne_h6",
+    "when": "hour:24-25.5&!fest:any&at:ghostfam_dyne",
+    "title": [
+      "Den lange aften",
+      "The long evening"
+    ],
+    "lines": [
+      [
+        "De spørger somme tider, hvorfor vi stadig kalder huset Gæstehytten.",
+        "Sometimes they ask why we still call this house the guest hut."
+      ],
+      [
+        "Den første gæst kom med våde sko og blev til næste forår. Vi satte en kop mere frem.",
+        "The first guest arrived with wet shoes and stayed until spring. We set out another cup."
+      ],
+      [
+        "Så kom der en mere. Vi fandt aldrig et bedre navn end et, der gjorde plads.",
+        "Then another arrived. We never found a better name than one that made room."
+      ],
+      [
+        "Døren er ikke åben, fordi vi venter på nogen bestemt. Den er åben, fordi nogen kan komme.",
+        "The door is open because somebody may arrive. They need not be somebody we already know."
+      ]
+    ]
+  },
+  "ev_ghostfam_dyne_h10": {
+    "npc": "ghostfam_dyne",
+    "hearts": 10,
+    "area": "traetoppen",
+    "mark": "t_fire_e",
+    "after": "ev_ghostfam_dyne_h8",
+    "when": "hour:19-22&!fest:any&!flag:ghostfam_kin_dyne&!flag:natlys_seat&at:ghostfam_dyne",
+    "title": [
+      "Pladsen ved bålet",
+      "A place by the fire"
+    ],
+    "points": 100,
+    "flag": "natlys_seat",
+    "lines": [
+      [
+        "Du spørger altid, om der er plads. Nu vil jeg svare én gang for alle.",
+        "You always ask whether there is room. Let me answer once and for all."
+      ],
+      [
+        "Den her plads er din. Også når du kommer sent, eller ikke har noget at fortælle.",
+        "This place is yours. Even when you arrive late, or have nothing to tell us."
+      ],
+      [
+        "Vi kan godt sidde stille sammen. Bålet skal nok sige lidt.",
+        "We can sit quietly together. The fire will have something to say."
+      ]
+    ]
+  },
+  "ev_ghostfam_gnist_h4": {
+    "npc": "ghostfam_gnist",
+    "hearts": 4,
+    "area": "int_gaestehytten",
+    "mark": "counter",
+    "when": "hour:17-25&!fest:any&at:ghostfam_gnist",
+    "title": [
+      "Lanternen over døren",
+      "The lantern above the door"
+    ],
+    "gift": {
+      "item": "lantern_oil",
+      "amount": 3
+    },
+    "lines": [
+      [
+        "Den over døren? Den har ingen pris. Jeg har prøvet at skrive en, men skiltet falder ned.",
+        "The one above the door? It has no price. I tried writing one, but the sign falls down."
+      ],
+      [
+        "Den var den første, jeg fik til at lyse hele natten. Nu hjælper den de andre hjem.",
+        "It was the first one I made that shone all night. Now it helps the others home."
+      ],
+      [
+        "Der! Så du det? Den lyser lidt mere, når nogen smiler til den.",
+        "There! Did you see? It shines a little brighter when somebody smiles at it."
+      ],
+      [
+        "Tag lidt olie til din egen. Lys skal også have noget at leve af.",
+        "Take some oil for your own. Light needs something to live on too."
+      ]
+    ]
+  },
+  "ev_ghostfam_gnist_h8": {
+    "npc": "ghostfam_gnist",
+    "hearts": 8,
+    "area": "int_gaestehytten",
+    "mark": "counter",
+    "after": "ev_ghostfam_gnist_h4",
+    "when": "hour:24.5-25&!fest:any&at:ghostfam_gnist",
+    "title": [
+      "Sidste kunde",
+      "The last customer"
+    ],
+    "lines": [
+      [
+        "En halv time til lukketid. Men jeg vender skiltet nu. Du er kommet for at tale.",
+        "Half an hour until closing. But I will turn the sign now. You came to talk."
+      ],
+      [
+        "Jeg tæller altid lygterne, før jeg går. Det er lettest at opdage den, der mangler, når alt andet er stille.",
+        "I always count the lanterns before I leave. It is easiest to notice a missing one when everything else is quiet."
+      ],
+      [
+        "I aften mangler der ingen. Du kan låne stilheden, så længe du vil.",
+        "None is missing tonight. You can borrow the quiet for as long as you like."
+      ]
+    ]
+  },
+  "ev_ghostfam_silke_h4": {
+    "npc": "ghostfam_silke",
+    "hearts": 4,
+    "area": "hyggebyen",
+    "mark": "round_s",
+    "when": "hour:20.1-20.65&!weekday:2&!fest:any&at:ghostfam_silke",
+    "title": [
+      "Runden",
+      "The round"
+    ],
+    "lines": [
+      [
+        "Vil du følges et stykke? Jeg begynder altid her, hvor pladsen er bredest.",
+        "Will you keep me company for a while? I always begin here, where the square is widest."
+      ],
+      [
+        "Jeg ser efter løse snore og små fødder, der er trætte. De store finder som regel hjem selv.",
+        "I look for loose cords and little tired feet. The big ones usually find their own way home."
+      ],
+      [
+        "Prøv at lytte. Man hører næsten alle byens døre herfra.",
+        "Try listening. You can hear almost every door in town from here."
+      ],
+      [
+        "Tak for selskabet. I morgen er runden den samme, men aftenen bliver en anden.",
+        "Thank you for the company. Tomorrow the round will be the same, but the evening will be different."
+      ]
+    ]
+  },
+  "ev_ghostfam_silke_h8": {
+    "npc": "ghostfam_silke",
+    "hearts": 8,
+    "area": "traetoppen",
+    "mark": "f_lamp",
+    "after": "ev_ghostfam_silke_h4",
+    "when": "hour:6-6.4&!fest:any&at:ghostfam_silke",
+    "title": [
+      "Det sidste lys",
+      "The last light"
+    ],
+    "lines": [
+      [
+        "Du nåede det. Den sidste lampe venter på solen.",
+        "You made it. The last lamp is waiting for the sun."
+      ],
+      [
+        "Vil du holde min lanterne et øjeblik? Så kan vi lade dette lys hvile.",
+        "Will you hold my lantern for a moment? Then we can let this light rest."
+      ],
+      [
+        "Sådan. Det er også at passe på et lys: at vide, hvornår det må holde fri.",
+        "There. Caring for a light also means knowing when it may rest."
+      ],
+      [
+        "Gå hjem til noget varmt nu. Jeg er glad for, at vi fik morgenen sammen.",
+        "Go home to something warm now. I am glad we shared the morning."
+      ]
+    ]
+  },
+  "ev_ghostfam_blund_h4": {
+    "npc": "ghostfam_blund",
+    "hearts": 4,
+    "area": "traetoppen",
+    "mark": "g_planter2",
+    "when": "weekday:0&hour:18-20.5&!fest:any&at:ghostfam_blund",
+    "title": [
+      "Blunds hemmelige sted",
+      "Blund's secret place"
+    ],
+    "lines": [
+      [
+        "Her er mit bedste sted. Man kan høre alle på broen, men de glemmer at kigge herned.",
+        "This is my best place. You can hear everyone on the bridge, but they forget to look down here."
+      ],
+      [
+        "Jeg gemmer mig ikke, fordi jeg vil være væk. Det bedste er, når nogen finder mig.",
+        "I do not hide because I want to be away. The best part is when somebody finds me."
+      ],
+      [
+        "Du må kende stedet. Men næste gang gør jeg mig meget lille. Mindre end en vante!",
+        "You may know the place. But next time I will make myself very small. Smaller than a mitten!"
+      ],
+      [
+        "Vil du sidde lidt? Vi kan være hemmelige sammen, indtil Gnist kalder.",
+        "Will you stay a while? We can be secret together until Gnist calls."
+      ]
+    ]
+  },
+  "ev_ghostfam_blund_h8": {
+    "npc": "ghostfam_blund",
+    "hearts": 8,
+    "area": "traetoppen",
+    "mark": "t_fire_s",
+    "after": "ev_ghostfam_blund_h4",
+    "when": "weekday:2&hour:19-23&!fest:any&at:ghostfam_blund",
+    "title": [
+      "Bu",
+      "Boo"
+    ],
+    "lines": [
+      [
+        "Jeg øver mig. Lyt nu: bu! Nej, det lød som en lille kop.",
+        "I am practising. Listen: boo! No, that sounded like a little cup."
+      ],
+      {
+        "when": "flag:ghostfam_kin_blund",
+        "text": [
+          "Vil du hjælpe dit søskendebarn? Vi siger det samtidig. En, to, bu!",
+          "Will you help your cousin? We will say it together. One, two, boo!"
+        ]
+      },
+      {
+        "when": "!flag:ghostfam_kin_blund",
+        "text": [
+          "Du kan også prøve. Man behøver ikke være et spøgelse for at sige bu.",
+          "You can try too. You need not be a ghost to say boo."
+        ]
+      },
+      [
+        "Hørte du det? Nu lød vi som en kat, der nøs i en kagedåse.",
+        "Did you hear? Now we sounded like a cat sneezing in a biscuit tin."
+      ],
+      [
+        "Det beholder vi. Alle må gerne grine, når de finder os.",
+        "We will keep that one. Everyone may laugh when they find us."
+      ]
+    ]
+  },
+  "ev_ghostfam_kin_welcome": {
+    "npc": "ghostfam_dyne",
+    "hearts": 2,
+    "area": "traetoppen",
+    "mark": "t_fire_e",
+    "when": "flag:ghostfam_kin_dyne&!flag:natlys_seat&weekday:2&hour:19-23&!fest:any&at:ghostfam_dyne&at:ghostfam_gnist&at:ghostfam_silke&at:ghostfam_blund",
+    "title": [
+      "Velkommen ved bålet",
+      "Welcome by the fire"
+    ],
+    "points": 100,
+    "flag": "natlys_seat",
+    "actors": [
+      "ghostfam_gnist",
+      "ghostfam_silke",
+      "ghostfam_blund"
+    ],
+    "lines": [
+      [
+        "Kom her, mit barnebarn. Denne gang skal dit navn ikke vente i nogen lodtrækning.",
+        "Come here, my grandchild. This time your name need not wait in a lottery."
+      ],
+      {
+        "who": "ghostfam_silke",
+        "text": [
+          "Jeg tænder lanternen. Din mor sad her også. Du må kende dine egne veje og stadig høre til hos os.",
+          "I will light the lantern. Your mother sat here too. You may find your own paths and still belong with us."
+        ]
+      },
+      {
+        "who": "ghostfam_gnist",
+        "text": [
+          "Her er en kop. Den er varm helt ud i hanken.",
+          "Here is a cup. It is warm all the way to the handle."
+        ]
+      },
+      {
+        "who": "ghostfam_blund",
+        "text": [
+          "Bu! Det var et velkomst-bu. Lød det lidt som en kat?",
+          "Boo! That was a welcome boo. Did it sound a little like a cat?"
+        ]
+      },
+      [
+        "Her er din plads. Den bliver her, også når du rejser ud og kommer hjem igen.",
+        "Here is your place. It will stay here when you go away and when you come home."
+      ]
+    ]
+  }
+}

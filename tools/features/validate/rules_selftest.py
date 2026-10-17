@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Self-test of the rule helpers of validate.py on small SYNTHETIC inputs: every rule must be seen failing on the defect it exists for (review F1 r1: rule N1 was vacuous for the
-default stage path and every run stayed green).  No Godot, no Lua, no art venv: about a second.  Prints one `PASS <id>` / `FAIL <id>` line per check
+default stage path and every run stayed green).  No Godot or art venv; dungeon probes evaluate the live tables with Lua 5.4.  Prints one `PASS <id>` / `FAIL <id>` line per check
 (tests/lib/t.gd expect_tool_ids reads them; tests/sections/content_features.gd runs this file as `content_features.rules_selftest_*`).
 
     python3 -I tools/features/validate/rules_selftest.py
@@ -337,6 +337,8 @@ def d6_tests() -> None:
     check('d6_single_quoted_literal_fails', bool(v.text_literal_problems({'q.lua': "title = 'Find the moon stone'\n"})), '')
     check('d6_comment_is_skipped', v.text_literal_problems({'q.lua': '-- "Find the moon stone" is in the CSV\nx = 1 -- a "quoted phrase here" in a comment\n'}) == [], '')
     check('d6_double_dash_inside_a_string_is_not_a_comment', bool(v.text_literal_problems({'q.lua': 'x = "see -- the moon stone"\n'})), '')
+    check('d6_marker_parameters_pass', not v.text_literal_problems({'lua/config/dungeon.lua':'params = "kind=night_bloom when=night"'}), '')
+    check('d6_prose_in_dungeon_config_fails', bool(v.text_literal_problems({'lua/config/dungeon.lua':'label = "Find the moon stone"'})), '')
     check('d6_short_phrases_without_letters_pass', v.text_literal_problems({'q.lua': 'x = "1 2"\ny = "a b"\n'}) == [], 'a space and three letters make a text')
 
 
@@ -354,6 +356,8 @@ def main() -> int:
     k10_tests()
     k9_tests()
     d6_tests()
+    import dungeon_selftest
+    dungeon_selftest.run(check)
     return 1 if fails else 0
 
 

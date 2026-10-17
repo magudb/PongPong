@@ -468,7 +468,7 @@ static func _node_is_selected(n: Node) -> bool:
 	if n is BaseButton and (n as BaseButton).button_pressed:
 		return true
 	for p in SELECTED_PROPS:
-		if p in n and bool(n.get(p)):
+		if p in n and n.get(p) is bool and n.get(p)==true:
 			return true
 	return false
 

@@ -178,8 +178,15 @@ static func fixture_setup(node: Node, host: Node) -> void:
 	var head := Control.new()
 	book.add_child(head)
 	L.label(head, TranslationServer.translate("DLG_JOURNAL_CALENDAR"), "Display34").position = Vector2(28, 24)
+	node.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
 	node.position = Vector2(108, 190)
 	node.size = Vector2(1064, 440)
 	node.season_index = -1
 	node.refresh()
+	# Let wrapped text settle before fitting the anchored columns. Their initial
+	# full-window minimum can otherwise leave a stale positive bottom offset.
+	await host.get_tree().process_frame
+	await host.get_tree().process_frame
+	node.get_child(1).set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	node.get_child(1).queue_sort()
 	node.initial_focus().grab_focus()

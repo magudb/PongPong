@@ -1,0 +1,29 @@
+{
+  "allowed": [],
+  "character": "hobbit",
+  "checks": 52,
+  "elapsed_s": 6.5,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 957,
+      "skipped": 0
+    },
+    "held_equipment": {
+      "character": "hobbit",
+      "checks": 44,
+      "failed": 0,
+      "ms": 1456,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

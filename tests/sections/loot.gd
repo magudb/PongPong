@@ -161,7 +161,7 @@ func _on_toast(_title: String, _message: String, icon: String) -> void:
 func _fresh(seed_value: int = 424242) -> void:
 	Svc.clear_overrides()
 	ls.set_loot_config(null)
-	ls.delegate_path = ls.DELEGATE_PATH
+	ls.delegate_path = "user://f4_fixtures/no_rules.gd" # Base algorithm and absent-package seams; real DL5 is exercised by loot_dungeon.
 	ls.dungeon_floors_path = ls.DUNGEON_FLOORS_PATH
 	ls.appraisal_scene_path = ls.APPRAISAL_SCENE
 	Engine.set_meta("f4_log", [])
@@ -267,7 +267,7 @@ func _data_shape() -> void:
 	t.check("zones_are_the_five_area_ids", zone_ids == ["dybe_bregner", "farm", "krystalgrotten", "skovkant", "svampelunden"], "config loot has the five zones %s; Hyggebyen has none (its only find is the spot kufferten)" % str(zone_ids))
 	var spots: Dictionary = cfg.get("spots", {})
 	var kufferten: Dictionary = spots.get("kufferten", {})
-	t.check("hyggebyen_has_only_the_spot_kufferten", not zones.has("hyggebyen") and str(kufferten.get("zone", "")) == "hyggebyen" and spots.size() == 15, "15 spots, kufferten in zone hyggebyen, no hyggebyen zone")
+	t.check("hyggebyen_has_only_the_spot_kufferten", not zones.has("hyggebyen") and str(kufferten.get("zone", "")) == "hyggebyen" and spots.values().filter(func(spot): return str(spot.get("zone","")) == "hyggebyen").size() == 1, "kufferten is the only Hyggebyen spot; the forest adds its own spots")
 	var ok_sum := true
 	for cid in (cfg["containers"] as Dictionary):
 		var o: Dictionary = (cfg["containers"] as Dictionary)[cid]["odds"]
@@ -474,7 +474,7 @@ func _luck() -> void:
 	gear.free()
 	var trae := LootRules.container_cfg(cfg, "skovkant", "trae")
 	var o2 := LootRules.luck_odds(trae["odds"], 0.2)
-	t.expect(is_equal_approx(float(o2["uncommon"]), 5200.0) and is_equal_approx(float(o2["rare"]), 800.0) and is_equal_approx(float(o2["normal"]), 4000.0), "trae at luck 0.2: uncommon 2600 -> 5200, rare 400 -> 800, normal absorbs 7000 -> 4000")
+	t.expect(is_equal_approx(float(o2["uncommon"]), 4200.0) and is_equal_approx(float(o2["rare"]), 200.0) and is_equal_approx(float(o2["normal"]), 5600.0), "trae at luck 0.2: uncommon 2100 -> 4200, rare 100 -> 200, normal absorbs 7800 -> 5600")
 	var konge := LootRules.container_cfg(cfg, "dybe_bregner", "konge")
 	var o3 := LootRules.luck_odds(konge["odds"], 0.2)
 	t.expect(is_equal_approx(float(o3["normal"]), 0.0) and is_equal_approx(float(o3["uncommon"]) + float(o3["rare"]), 10000.0), "the king's chest has no normal roll to give: uncommon and rare are scaled down together, the sum stays 10 000")
@@ -499,7 +499,7 @@ func _luck() -> void:
 		shares[lk] = float(counts["uncommon"]) / float(n)
 	t.check("luck_bias", worst < 3.0 and float(shares[0.2]) > float(shares[0.1]) and float(shares[0.1]) > float(shares[0.0]) and absf(float(shares[0.2]) / float(shares[0.0]) - 2.0) < 0.15, "trae, 40 000 rolls at luck 0 / 0.1 / 0.2: worst |z| %.2f; uncommon share %.3f / %.3f / %.3f (x1 / x1.5 / x2)" % [worst, shares[0.0], shares[0.1], shares[0.2]])
 	var jern := LootRules.container_cfg(cfg, "skovkant", "jern")
-	t.expect(is_equal_approx(LootRules.wander_chance_bp(jern, 0.0), 1200.0) and is_equal_approx(LootRules.wander_chance_bp(jern, 0.2), 2400.0) and LootRules.wander_chance_bp({"wander_bp": 9000}, 0.2) == 10000.0, "the wanderer chance is wander_bp x (1 + 5 L), at most 100 %: jern 1200 -> 2400 at luck 0.2")
+	t.expect(is_equal_approx(LootRules.wander_chance_bp(jern, 0.0), 300.0) and is_equal_approx(LootRules.wander_chance_bp(jern, 0.2), 600.0) and LootRules.wander_chance_bp({"wander_bp": 9000}, 0.2) == 10000.0, "the wanderer chance is wander_bp x (1 + 5 L), at most 100 %: jern 300 -> 600 at luck 0.2")
 	var hits := 0
 	for _i in 40000:
 		if LootRules.wanderer_due({"wander_bp": 1200, "pity_opens": 0}, 0.2, 0, rng):
@@ -590,7 +590,7 @@ func _creatures() -> void:
 func _wanderers() -> void:
 	_fresh()
 	var cfg: Dictionary = ls.loot_cfg()
-	var jern := LootRules.container_cfg(cfg, "skovkant", "jern")
+	var jern := LootRules.container_cfg(cfg, "skovkant", "trae")
 	var pity := int(jern["pity_opens"])
 	var p := float(jern["wander_bp"]) / 10000.0
 	var q := 1.0 - p
@@ -614,7 +614,7 @@ func _wanderers() -> void:
 		var got := false
 		while not got and opens < 40:
 			opens += 1
-			var res: Dictionary = ls.open_container("skovkant", "jern", "w%d:%d" % [s, opens], {"deliver": "orbs"})
+			var res: Dictionary = ls.open_container("skovkant", "trae", "w%d:%d" % [s, opens], {"deliver": "orbs"})
 			var uniques := 0
 			for i in (res["results"] as Array).size():
 				var row: Dictionary = res["results"][i]
@@ -632,23 +632,23 @@ func _wanderers() -> void:
 	_fresh(5)
 	var found_at := 0
 	for i in 40:
-		var r2: Dictionary = ls.open_container("skovkant", "jern", "o:%d" % i, {"deliver": "orbs"})
+		var r2: Dictionary = ls.open_container("skovkant", "trae", "o:%d" % i, {"deliver": "orbs"})
 		for row in r2["results"]:
 			if row["id"] == item:
 				found_at += 1
 	var rec: Dictionary = ls.wanderers.get("skovkant", {})
-	t.check("wanderer_found_only_once", found_at == 1 and (rec.get("found", []) as Array) == [item] and int((rec["misses"] as Dictionary).get("jern", 0)) == 0, "40 openings of one save give the wanderer exactly once (%d) and record it as found" % found_at)
+	t.check("wanderer_found_only_once", found_at == 1 and (rec.get("found", []) as Array) == [item] and int((rec["misses"] as Dictionary).get("trae", 0)) == 0, "40 openings of one save give the wanderer exactly once (%d) and record it as found" % found_at)
 	var elsewhere := 0
 	for i in 200:
-		for row in (ls.open_container("skovkant", "trae", "e:%d" % i, {"deliver": "orbs"})["results"] as Array):
+		for row in (ls.open_container("skovkant", "jern", "e:%d" % i, {"deliver": "orbs"})["results"] as Array):
 			elsewhere += 1 if row["id"] == item else 0
-	t.expect(elsewhere == 0, "the jern wanderer never shows up in a trae chest of the same zone, and no other zone has it")
+	t.expect(elsewhere == 0, "the trae wanderer never shows up in a jern chest of the same zone, and no other zone has it")
 	# a wanderer the player already owns is not offered again
 	_fresh(9)
 	eco.add_item(StringName(item), 1, true)
 	var owned_hits := 0
 	for i in 60:
-		for row in (ls.open_container("skovkant", "jern", "ow:%d" % i, {"deliver": "orbs"})["results"] as Array):
+		for row in (ls.open_container("skovkant", "trae", "ow:%d" % i, {"deliver": "orbs"})["results"] as Array):
 			owned_hits += 1 if row["id"] == item else 0
 	t.expect(owned_hits == 0, "an owned keepsake is never offered as a wanderer (60 openings)")
 
@@ -695,7 +695,7 @@ func _boss() -> void:
 	_day(10)
 	var res: Dictionary = ls.on_boss_defeated("snurresvamp", {"uid": "k1"})
 	var st: Dictionary = ls.boss_state.get("snurresvamp", {})
-	t.expect(bool(res["ok"]) and (res["results"] as Array).is_empty() and bool(st.get("first_done", false)) and int(st["kills"]) == 1 and int(st["last_day"]) == 10, "the FIRST kill is the quest reward (snurresvampen pays): LootService delivers no chest, it records the kill")
+	t.expect(bool(res["ok"]) and (res["results"] as Array).size() == 1 and eco.count_item(&"dng_rune_snurre") == 1 and bool(st.get("first_done", false)) and int(st["kills"]) == 1 and int(st["last_day"]) == 10, "the FIRST kill is the quest reward (snurresvampen pays): LootService delivers the first rune shard and records the kill")
 	var again: Dictionary = ls.on_boss_defeated("snurresvamp", {"uid": "k1"})
 	t.expect(bool(again["ok"]) and again["reason"] == &"already" and int(ls.boss_state["snurresvamp"]["kills"]) == 1, "the same uid asked twice (the kill and the opening of the sealed chest) changes nothing: idempotent per ctx.uid")
 	var early: Dictionary = ls.on_boss_defeated("snurresvamp", {"uid": "k2"})
@@ -752,14 +752,14 @@ func _boss() -> void:
 	for k in 5:
 		_day(10 + 7 * (k + 1))
 		for row in ls.on_boss_defeated("snurresvamp", {"uid": "a%d" % (k + 1)})["results"]:
-			if Rarity.rank(row["rarity"]) >= 5 or row["id"] == "fairy_dust":
+			if Rarity.rank(row["rarity"]) >= 5 or row["id"] == real["boss"]["snurresvamp"]["exhausted_item"]:
 				legends.append(row["id"])
 	var pool: Array = real["boss"]["snurresvamp"]["pool"]
 	var four := legends.slice(0, 4)
 	four.sort()
 	var pool_sorted := pool.duplicate()
 	pool_sorted.sort()
-	t.expect(four == pool_sorted and legends[4] == "fairy_dust", "bp 10 000: the four pool items arrive once each (%s) and the fifth kill pays the exhausted fairy_dust" % str(legends))
+	t.expect(four == pool_sorted and legends.size() == 5 and legends[4] == real["boss"]["snurresvamp"]["exhausted_item"], "bp 10 000: the four pool items arrive once each (%s) and the fifth kill pays the configured exhausted reward" % str(legends))
 	# the statistics of the pity itself: never more than pity_kills kills apart, the mean matches the closed form
 	var bcfg: Dictionary = {"legendary_bp": 800, "pity_kills": 10}
 	var rng := RandomNumberGenerator.new()
@@ -943,7 +943,7 @@ func _full_backpack() -> void:
 	t.check("loot_commits_before_gain_observers", bool(atomic["ok"]) and observations == [true, true, true] and reentry == [false, false, false] and eco.count_item(&"wood") == wood_before + 3,
 		"each gain observer sees all three rolls and the opened record; re-entering the same chest is refused")
 	_fresh(61)
-	var cfg := _pool_cfg(["iron_sword"], 3, "material", "normal")
+	var cfg := _pool_cfg(["pickaxe_copper"], 3, "material", "normal")
 	ls.set_loot_config(cfg)
 	_fill_backpack()
 	_free_slots_to(2)
@@ -965,7 +965,7 @@ func _full_backpack() -> void:
 	t.expect(same_results and _inventory_snapshot() == inv_before and first_try == inv_before and ls.rng.state == state_before and ls.opened.is_empty(), "1 000 retries on the full pack deliver nothing and change no state (no retry faucet, no re-roll)")
 	_free_slots_to(3)
 	var ok_res: Dictionary = ls.open_container("zz", "trae", "zz:2,2")
-	t.expect(bool(ok_res["ok"]) and (ok_res["results"] as Array).size() == 3 and eco.count_item(&"iron_sword") == 3 and ls.opened.has("zz:2,2"), "with three free slots the same chest opens and delivers all three rolls TOGETHER")
+	t.expect(bool(ok_res["ok"]) and (ok_res["results"] as Array).size() == 3 and eco.count_item(&"pickaxe_copper") == 3 and ls.opened.has("zz:2,2"), "with three free slots the same chest opens and delivers all three rolls TOGETHER")
 	# a single full roll: the container stays closed, the existing notice is posted
 	_fresh(62)
 	ls.set_loot_config(_pool_cfg(["wood"], 1, "material", "normal"))
@@ -1847,8 +1847,8 @@ func _delegate_seam() -> void:
 	_fresh(112)
 	ls.delegate_path = RULES_FIXTURE
 	Engine.set_meta("f4_log", [])
-	Engine.set_meta("f4_rows", [{"id": "iron_sword", "amount": 1, "rarity": "normal", "kind": "material"}, {"id": "copper_ore", "amount": 1, "rarity": "normal", "kind": "material"}])
-	_fill_backpack(["iron_sword", "copper_ore"])
+	Engine.set_meta("f4_rows", [{"id": "pickaxe_copper", "amount": 1, "rarity": "normal", "kind": "material"}, {"id": "copper_ore", "amount": 1, "rarity": "normal", "kind": "material"}])
+	_fill_backpack(["pickaxe_copper", "copper_ore"])
 	_free_slots_to(1)
 	var inv := _inventory_snapshot()
 	var commits_before := int(ls.dungeon.get("commits", 0))
@@ -1857,7 +1857,7 @@ func _delegate_seam() -> void:
 	t.expect(not bool(full["ok"]) and full["reason"] == &"full" and (full["results"] as Array).is_empty() and log2 == ["plan:container", "fits"] and _inventory_snapshot() == inv and int(ls.dungeon.get("commits", 0)) == commits_before,
 		"two items, one free slot: the delegate planned and fits() refused -> {false, full, []}, commit was NEVER called, the inventory is untouched (%s)" % str(log2))
 	var view: Dictionary = Engine.get_meta("f4_pack_view", {})
-	t.expect(int(view.get("free_slots", -1)) == 1 and (view.get("stack_room", {}) as Dictionary).has("iron_sword") and (view.get("max_stack", {}) as Dictionary).has("copper_ore") and (view.get("own_store", {}) as Dictionary).has("iron_sword"), "the pack_view the delegate receives: free_slots, stack_room{item}, max_stack{item}, own_store{item}")
+	t.expect(int(view.get("free_slots", -1)) == 1 and (view.get("stack_room", {}) as Dictionary).has("pickaxe_copper") and (view.get("max_stack", {}) as Dictionary).has("copper_ore") and (view.get("own_store", {}) as Dictionary).has("pickaxe_copper"), "the pack_view the delegate receives: free_slots, stack_room{item}, max_stack{item}, own_store{item}")
 	# a plan the delegate refuses (cap reached): nothing happens either
 	Engine.set_meta("f4_refuse", true)
 	var refused: Dictionary = ls.open_container("skovkant", "trae", "dg:7:2:31", {"dungeon": true, "band": "skovkant"})
@@ -1944,7 +1944,7 @@ func _appraisal_host() -> void:
 	var both: bool = ls.appraisal_available()
 	ls.appraisal_scene_path = "user://f4_fixtures/no_such_scene.tscn"
 	var rules_only: bool = ls.appraisal_available()
-	ls.delegate_path = ls.DELEGATE_PATH
+	ls.delegate_path = "user://f4_fixtures/no_rules.gd"
 	var neither: bool = ls.appraisal_available()
 	ls.appraisal_scene_path = SCENE_FIXTURE
 	t.check("appraisal_available_needs_rules_and_screen", not scene_only and both and not rules_only and not neither and ls.has_method("appraise") and ls.has_method("open_appraisal"),

@@ -1,0 +1,69 @@
+== harness self-test (log files in /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-selftest.akvQ0d)
+  info  baseline: the tree itself prints 0 engine message(s) at boot (pass cases must show exactly that many and exit 0)
+  ok    list (exit 0, 2s)
+  ok    help_exits_zero (exit 0, 2s)
+  ok    list_windowed_filters_and_opens_no_window (exit 0, 1s)
+  ok    list_count (exit 0, 2s)
+  ok    pass (exit 0, 4s)
+  ok    pass_order (exit 0, 3s)
+  ok    sections run in alphabetical order
+  ok    only_selects (exit 0, 2s)
+  ok    only_by_file_name (exit 0, 4s)
+  ok    report_file (exit 0, 3s)
+  ok    report json written and valid
+  ok    many_checks_are_counted_not_flooded (exit 1, 2s)
+  ok    1501 checks counted, the failure among them printed
+  ok    verbose_prints_every_ok_line (exit 1, 2s)
+  ok    failed_check (exit 1, 2s)
+  ok    injected_error (exit 1, 2s)
+  ok    injected_warning (exit 1, 2s)
+  ok    injected_shutdown_warning (exit 1, 2s)
+  ok    script_error_no_hang (exit 1, 2s)
+  ok    script_error_next_runs (exit 1, 2s)
+  ok    allow_ok (exit 0, 2s)
+  ok    allow_partial_fails (exit 1, 3s)
+  ok    allow_is_section_scoped (exit 1, 2s)
+  ok    known_issue_is_tolerated_and_listed (exit 0, 2s)
+  ok    known_issue_fails_in_strict_mode (exit 1, 2s)
+  ok    known_issue_without_hit_is_reported (exit 0, 3s)
+  ok    live_known_issues_file_is_empty (exit 0, 4s)
+  ok    tool_wrapping_helpers (exit 0, 4s)
+  ok    tool_ids_become_checks (exit 1, 4s)
+  ok    the wrapped tool's non-zero exit code is a failed check
+  ok    uncompilable_fails_fast (exit 1, 2s)
+  ok    uncompilable_list_flags_it (exit 1, 2s)
+  ok    uncompilable_unselected_is_noted (exit 0, 2s)
+  ok    section_timeout (exit 1, 4s)
+  ok    run_watchdog (exit 1, 4s)
+  ok    wrapper_timeout_kills_a_spinning_godot (exit 124, 6s)
+  ok    unknown_only_is_usage_error (exit 2, 2s)
+  ok    unknown_option_is_usage_error (exit 2, 2s)
+  ok    bad_character_is_usage_error (exit 2, 2s)
+  ok    harness.fast_flag_forwards_fixed_fps (exit 0, 0s)
+  ok    --fast becomes '--fixed-fps 60' ahead of the harness script
+  ok    --fast itself never reaches the harness (it would be an unknown option there)
+  ok    no_fast_flag_keeps_real_time (exit 0, 0s)
+  ok    without --fast no --fixed-fps is passed
+  ok    fast_flag_with_extra_engine_args (exit 0, 0s)
+  ok    GODOT_EXTRA_ARGS are kept next to --fixed-fps 60
+  ok    fast_flag_keeps_an_own_fixed_fps (exit 0, 0s)
+  ok    an own --fixed-fps 30 is kept and not doubled
+  ok    an own --fixed-fps 30 is not followed by a second --fixed-fps 60
+  ok    fast_flag_is_ignored_in_a_windowed_run (exit 0, 0s)
+  ok    a windowed run opens its 1280x720 window and gets no --fixed-fps
+  ok    a windowed run does not pass --fixed-fps
+  ok    a windowed run does not hand --fast to the harness either
+  ok    a windowed run says that --fast is ignored
+  ok    fast_flag_runs_physics_ahead_of_the_wall_clock (exit 0, 2s)
+  ok    5 game seconds (300 physics ticks) with --fast: 7 ms of wall time
+  ok    real_time_without_the_fast_flag (exit 0, 7s)
+  ok    the same 5 game seconds without --fast wait for the wall clock: 4974 ms (the control of the check above)
+  ok    fast_flag_with_list (exit 0, 2s)
+  ok    fast_flag_section_watchdog_counts_wall_time (exit 0, 3s)
+  ok    fast_flag_run_watchdog_counts_wall_time (exit 0, 4s)
+  ok    fast_flag_ui_audit_settle_waits_process_time (exit 0, 6s)
+  ok    fast_flag_hang_is_still_stopped (exit 1, 4s)
+  ok    fast_flag_run_watchdog_still_stops_a_hang (exit 1, 4s)
+  ok    flow_helpers (exit 0, 12s)
+  ok    boot_2d_animal (exit 0, 16s)
+== self-test: 66 ok, 0 failed

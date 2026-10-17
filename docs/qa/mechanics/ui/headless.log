@@ -1,0 +1,963 @@
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=ui_conformance,ui_foundation,npc,dungeon_hud,home_services
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.KxBZ9w/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 1.0 s
+== section dungeon_hud  (res://tests/sections/dungeon_hud.gd)
+  ok    dungeon_hud.hidden_in_farm_mode
+  ok    dungeon_hud.action_mode_shows_forest_hud
+  ok    dungeon_hud.run_watch_attached_once
+  ok    dungeon_hud.chip_text_from_header
+  ok    dungeon_hud.reacts_to_events
+  ok    dungeon_hud.hearts_scale_with_bonus
+  ok    dungeon_hud.assist_badge
+  ok    dungeon_hud.hint_pulses_ability_slot
+  ok    dungeon_hud.minimap_fog_is_per_visit
+  ok    dungeon_hud.minimap_map_reveals_whole_floor
+  ok    dungeon_hud.minimap_fog_resets_on_reentry
+  ok    dungeon_hud.undiscovered_chest_hidden_even_on_seen_terrain
+  ok    dungeon_hud.real_lantern_gem_senses_hidden_chest
+  ok    dungeon_hud.sense_respects_twelve_cell_limit
+  ok    dungeon_hud.real_proximity_discovery_keeps_chest_visible
+  ok    dungeon_hud.condition_disabled_chest_is_omitted
+  ok    dungeon_hud.opened_chest_is_omitted
+  ok    dungeon_hud.loot_feed_coalesces_without_transaction_double_count
+  ok    dungeon_hud.refused_or_sold_keepsake_has_no_feed_row
+  ok    dungeon_hud.loot_feed_caps_newest_first
+  ok    dungeon_hud.backpack_chip_full
+  ok    dungeon_hud.backpack_chip_near
+  ok    dungeon_hud.floor_banner_once_per_arrival
+  ok    dungeon_hud.floor_banner_suppressed_by_boss
+  ok    dungeon_hud.no_focusable_controls
+  ok    dungeon_hud.ability_keys_resolve_real_actions
+  ok    dungeon_hud.equipped_item_indicator_preserved
+  ok    dungeon_hud.hidden_after_return_to_farm
+  --    dungeon_hud: 28 checks, 0 failed, 0 skipped, 0.4 s
+== section home_services  (res://tests/sections/home_services.gd)
+  ok    home_services.forecast_stable_foraar
+  ok    home_services.forecast_json_roundtrip_foraar
+  ok    home_services.forecast_matches_actual_roll_foraar
+  ok    home_services.no_out_of_season_snow_foraar
+  ok    home_services.forecast_stable_sommer
+  ok    home_services.forecast_json_roundtrip_sommer
+  ok    home_services.forecast_matches_actual_roll_sommer
+  ok    home_services.no_out_of_season_snow_sommer
+  ok    home_services.forecast_stable_efteraar
+  ok    home_services.forecast_json_roundtrip_efteraar
+  ok    home_services.forecast_matches_actual_roll_efteraar
+  ok    home_services.forecast_stable_vinter
+  ok    home_services.forecast_json_roundtrip_vinter
+  ok    home_services.forecast_matches_actual_roll_vinter
+  ok    home_services.no_out_of_season_snow_vinter
+  ok    home_services.oven_recipe_locked_at_one
+  ok    home_services.oven_recipe_cooks
+  ok    home_services.kitchen_screen_opens_at_home
+  ok    home_services.forecast_locked_until_tower
+  ok    home_services.kitchen_escape_closes
+  ok    home_services.all_eight_unlocks_real
+  ok    home_services.tower_forecast_visible
+  ok    home_services.royal_consent_default_cancel
+  ok    home_services.royal_cancel_has_no_effect
+  ok    home_services.royal_respects_evening_window
+  ok    home_services.royal_available_at_palace
+  ok    home_services.royal_scene_finishes
+  ok    home_services.royal_guest_disposed
+  ok    home_services.royal_once_saved
+  ok    home_services.royal_cannot_repeat
+  --    home_services: 30 checks, 0 failed, 0 skipped, 0.4 s
+== section npc  (res://tests/sections/npc.gd)
+  ok    npc.real_conversation_screens
+  ok    npc.talk_roster_mayor_lyra
+  ok    npc.portrait_mayor_lyra
+  ok    At most five choices: mayor_lyra
+  ok    Esc releases mayor_lyra
+  ok    Resolved line DLG_LYRA_GREET_1 in da
+  ok    Resolved line DLG_LYRA_GREET_2 in da
+  ok    Resolved line DLG_LYRA_LOTTERY in da
+  ok    Resolved line DLG_LYRA_GREET_1 in en
+  ok    Resolved line DLG_LYRA_GREET_2 in en
+  ok    Resolved line DLG_LYRA_LOTTERY in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_baker_maja
+  ok    npc.portrait_baker_maja
+  ok    At most five choices: baker_maja
+  ok    Esc releases baker_maja
+  ok    Resolved line DLG_MAJA_GREET in da
+  ok    Resolved line DLG_MAJA_ROOF_TROUBLE in da
+  ok    Resolved line DLG_MAJA_GREET in en
+  ok    Resolved line DLG_MAJA_ROOF_TROUBLE in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_merchant_pip
+  ok    npc.portrait_merchant_pip
+  ok    At most five choices: merchant_pip
+  ok    Esc releases merchant_pip
+  ok    Resolved line DLG_MERCHANT_GREET in da
+  ok    Resolved line DLG_MERCHANT_GREET in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_pippin_boegeknop
+  ok    npc.portrait_pippin_boegeknop
+  ok    At most five choices: pippin_boegeknop
+  ok    Esc releases pippin_boegeknop
+  ok    Resolved line DLG_PIPPIN_CAT in da
+  ok    Resolved line DLG_PIPPIN_CAT in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_king
+  ok    npc.portrait_fairy_king
+  ok    At most five choices: fairy_king
+  ok    Esc releases fairy_king
+  ok    Resolved line QUEST_MOONSTONE_CROWN_OFFER in da
+  ok    Resolved line QUEST_MOONSTONE_CROWN_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_lily
+  ok    npc.portrait_fairy_lily
+  ok    At most five choices: fairy_lily
+  ok    Esc releases fairy_lily
+  ok    Resolved line DLG_LILY_GREET in da
+  ok    Resolved line DLG_LILY_GREET in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_smith_thorin
+  ok    npc.portrait_smith_thorin
+  ok    At most five choices: smith_thorin
+  ok    Esc releases smith_thorin
+  ok    Resolved line DLG_THORIN_GREET in da
+  ok    Resolved line DLG_THORIN_MINING_TALK in da
+  ok    Resolved line DLG_THORIN_GREET in en
+  ok    Resolved line DLG_THORIN_MINING_TALK in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_guard_oak
+  ok    npc.portrait_guard_oak
+  ok    At most five choices: guard_oak
+  ok    Esc releases guard_oak
+  ok    Resolved line DLG_OAK_LIFT in da
+  ok    Resolved line QUEST_SKOVLIFT_INTRO_OFFER in da
+  ok    Resolved line DLG_OAK_LIFT in en
+  ok    Resolved line QUEST_SKOVLIFT_INTRO_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_farmer_rosa
+  ok    npc.portrait_farmer_rosa
+  ok    At most five choices: farmer_rosa
+  ok    Esc releases farmer_rosa
+  ok    Resolved line DLG_ROSA_GREET in da
+  ok    Resolved line DLG_ROSA_ANIMAL_TALK in da
+  ok    Resolved line DLG_ROSA_GREET in en
+  ok    Resolved line DLG_ROSA_ANIMAL_TALK in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_wizard
+  ok    npc.portrait_fairy_wizard
+  ok    At most five choices: fairy_wizard
+  ok    Esc releases fairy_wizard
+  ok    Resolved line DLG_WIZARD_GREET in da
+  ok    Resolved line DLG_WIZARD_MATH_INTRO in da
+  ok    Resolved line DLG_WIZARD_GREET in en
+  ok    Resolved line DLG_WIZARD_MATH_INTRO in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_cat_morfar_mis
+  ok    npc.portrait_cat_morfar_mis
+  ok    At most five choices: cat_morfar_mis
+  ok    Esc releases cat_morfar_mis
+  ok    Resolved line DLG_MIS_HOME in da
+  ok    Resolved line DLG_MIS_HOME in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_penguin_postman
+  ok    npc.portrait_penguin_postman
+  ok    At most five choices: penguin_postman
+  ok    Esc releases penguin_postman
+  ok    Resolved line DLG_PENGUIN_HELLO in da
+  ok    Resolved line DLG_PENGUIN_HELLO in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_builder
+  ok    npc.portrait_fairy_builder
+  ok    At most five choices: fairy_builder
+  ok    Esc releases fairy_builder
+  ok    Resolved line DLG_BUILDER_T01_IDLE in da
+  ok    Resolved line DLG_BUILDER_T01_OFFER in da
+  ok    Resolved line DLG_BUILDER_T01_IDLE in en
+  ok    Resolved line DLG_BUILDER_T01_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_furnisher
+  ok    npc.portrait_fairy_furnisher
+  ok    At most five choices: fairy_furnisher
+  ok    Esc releases fairy_furnisher
+  ok    Resolved line DLG_FURNISHER_GREET in da
+  ok    Resolved line DLG_FURNISHER_GREET in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_tailor
+  ok    npc.portrait_fairy_tailor
+  ok    At most five choices: fairy_tailor
+  ok    Esc releases fairy_tailor
+  ok    Resolved line DLG_TAILOR_GREET in da
+  ok    Resolved line DLG_TAILOR_GREET in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_gardener_hoppe
+  ok    npc.portrait_gardener_hoppe
+  ok    At most five choices: gardener_hoppe
+  ok    Esc releases gardener_hoppe
+  ok    Resolved line DLG_HOPPE_GREET in da
+  ok    Resolved line DLG_HOPPE_KLART in da
+  ok    Resolved line DLG_HOPPE_SWAP_OFFER in da
+  ok    Resolved line DLG_HOPPE_GREET in en
+  ok    Resolved line DLG_HOPPE_KLART in en
+  ok    Resolved line DLG_HOPPE_SWAP_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_carpenter_brumme
+  ok    npc.portrait_carpenter_brumme
+  ok    At most five choices: carpenter_brumme
+  ok    Esc releases carpenter_brumme
+  ok    Resolved line DLG_BRUMME_GREET in da
+  ok    Resolved line DLG_BRUMME_SLOW in da
+  ok    Resolved line DLG_BRUMME_REST in da
+  ok    Resolved line DLG_BRUMME_GREET in en
+  ok    Resolved line DLG_BRUMME_SLOW in en
+  ok    Resolved line DLG_BRUMME_REST in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_postman_pip
+  ok    npc.portrait_postman_pip
+  ok    At most five choices: postman_pip
+  ok    Esc releases postman_pip
+  ok    Resolved line DLG_PIP_GREET in da
+  ok    Resolved line DLG_PIP_BAG in da
+  ok    Resolved line DLG_PIP_OFFER in da
+  ok    Resolved line DLG_PIP_GREET in en
+  ok    Resolved line DLG_PIP_BAG in en
+  ok    Resolved line DLG_PIP_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_bathkeeper_sofus
+  ok    npc.portrait_bathkeeper_sofus
+  ok    At most five choices: bathkeeper_sofus
+  ok    Esc releases bathkeeper_sofus
+  ok    Resolved line DLG_SOFUS_GREET in da
+  ok    Resolved line DLG_SOFUS_ORANGE in da
+  ok    Resolved line DLG_SOFUS_OFFER in da
+  ok    Resolved line DLG_SOFUS_GREET in en
+  ok    Resolved line DLG_SOFUS_ORANGE in en
+  ok    Resolved line DLG_SOFUS_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_appraiser_fru_ugle
+  ok    npc.portrait_appraiser_fru_ugle
+  ok    At most five choices: appraiser_fru_ugle
+  ok    Esc releases appraiser_fru_ugle
+  ok    Resolved line DLG_UGLE_GREET in da
+  ok    Resolved line DLG_UGLE_LAKE in da
+  ok    Resolved line DLG_UGLE_RUNES in da
+  ok    Resolved line DLG_UGLE_GREET in en
+  ok    Resolved line DLG_UGLE_LAKE in en
+  ok    Resolved line DLG_UGLE_RUNES in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_mapseller_natteblik
+  ok    npc.portrait_mapseller_natteblik
+  ok    At most five choices: mapseller_natteblik
+  ok    Esc releases mapseller_natteblik
+  ok    Resolved line DLG_NATTEBLIK_GREET in da
+  ok    Resolved line DLG_NATTEBLIK_EARS in da
+  ok    Resolved line DLG_NATTEBLIK_MAPS in da
+  ok    Resolved line DLG_NATTEBLIK_LANTERN in da
+  ok    Resolved line DLG_NATTEBLIK_GREET in en
+  ok    Resolved line DLG_NATTEBLIK_EARS in en
+  ok    Resolved line DLG_NATTEBLIK_MAPS in en
+  ok    Resolved line DLG_NATTEBLIK_LANTERN in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_beekeeper_birk
+  ok    npc.portrait_beekeeper_birk
+  ok    At most five choices: beekeeper_birk
+  ok    Esc releases beekeeper_birk
+  ok    Resolved line DLG_BIRK_GREET in da
+  ok    Resolved line DLG_BIRK_BEES in da
+  ok    Resolved line DLG_BIRK_HONEY in da
+  ok    Resolved line DLG_BIRK_QUIET in da
+  ok    Resolved line DLG_BIRK_FAREWELL in da
+  ok    Resolved line DLG_BIRK_GREET in en
+  ok    Resolved line DLG_BIRK_BEES in en
+  ok    Resolved line DLG_BIRK_HONEY in en
+  ok    Resolved line DLG_BIRK_QUIET in en
+  ok    Resolved line DLG_BIRK_FAREWELL in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_rasmus
+  ok    npc.portrait_rasmus
+  ok    At most five choices: rasmus
+  ok    Esc releases rasmus
+  ok    Resolved line DLG_NEUTRAL in da
+  ok    Resolved line DLG_NEUTRAL in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_lamplighter_kiki
+  ok    npc.portrait_lamplighter_kiki
+  ok    At most five choices: lamplighter_kiki
+  ok    Esc releases lamplighter_kiki
+  ok    Resolved line SOC_LAMPLIGHTER_KIKI_GREET_H0_1 in da
+  ok    Resolved line SOC_LAMPLIGHTER_KIKI_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_bertil
+  ok    npc.portrait_bertil
+  ok    At most five choices: bertil
+  ok    Esc releases bertil
+  ok    Resolved line SOC_BERTIL_GREET_H0_1 in da
+  ok    Resolved line SOC_BERTIL_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_bodil
+  ok    npc.portrait_bodil
+  ok    At most five choices: bodil
+  ok    Esc releases bodil
+  ok    Resolved line SOC_ANY_SEASON_FORAAR_5 in da
+  ok    Resolved line SOC_ANY_SEASON_FORAAR_5 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_innkeeper_kvak
+  ok    npc.portrait_innkeeper_kvak
+  ok    At most five choices: innkeeper_kvak
+  ok    Esc releases innkeeper_kvak
+  ok    Resolved line SOC_INNKEEPER_KVAK_GREET_H0_1 in da
+  ok    Resolved line SOC_INNKEEPER_KVAK_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_cub_bamse
+  ok    npc.portrait_cub_bamse
+  ok    At most five choices: cub_bamse
+  ok    Esc releases cub_bamse
+  ok    Resolved line SOC_CUB_BAMSE_GREET_H0_1 in da
+  ok    Resolved line SOC_CUB_BAMSE_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_clerk_fjerpen
+  ok    npc.portrait_clerk_fjerpen
+  ok    At most five choices: clerk_fjerpen
+  ok    Esc releases clerk_fjerpen
+  ok    Resolved line SOC_CLERK_FJERPEN_GREET_H0_1 in da
+  ok    Resolved line SOC_CLERK_FJERPEN_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fiddler_strimmel
+  ok    npc.portrait_fiddler_strimmel
+  ok    At most five choices: fiddler_strimmel
+  ok    Esc releases fiddler_strimmel
+  ok    Resolved line SOC_ANY_SEASON_FORAAR_5 in da
+  ok    Resolved line SOC_ANY_SEASON_FORAAR_5 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_ghostfam_dyne
+  ok    npc.portrait_ghostfam_dyne
+  ok    At most five choices: ghostfam_dyne
+  ok    Esc releases ghostfam_dyne
+  ok    Resolved line DLG_GHOSTFAM_DYNE_DAWN_1 in da
+  ok    Resolved line DLG_GHOSTFAM_DYNE_DAWN_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_ghostfam_gnist
+  ok    npc.portrait_ghostfam_gnist
+  ok    At most five choices: ghostfam_gnist
+  ok    Esc releases ghostfam_gnist
+  ok    Resolved line DLG_GHOSTFAM_GNIST_EARLY_1 in da
+  ok    Resolved line DLG_GHOSTFAM_GNIST_EARLY_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_ghostfam_silke
+  ok    npc.portrait_ghostfam_silke
+  ok    At most five choices: ghostfam_silke
+  ok    Esc releases ghostfam_silke
+  ok    Resolved line DLG_GHOSTFAM_SILKE_DAWN_1 in da
+  ok    Resolved line DLG_GHOSTFAM_SILKE_DAWN_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_ghostfam_blund
+  ok    npc.portrait_ghostfam_blund
+  ok    At most five choices: ghostfam_blund
+  ok    Esc releases ghostfam_blund
+  ok    Resolved line DLG_GHOSTFAM_BLUND_DAWN_1 in da
+  ok    Resolved line DLG_GHOSTFAM_BLUND_DAWN_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.context_race_0_hour_24 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 24, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "animal", "hero": "rasmus", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_0_hour_25 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 25, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "animal", "hero": "rasmus", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_1_hour_24 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 24, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "fairy", "hero": "kloevermynte", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_1_hour_25 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 25, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "fairy", "hero": "kloevermynte", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_2_hour_24 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 24, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "hobbit", "hero": "bertil", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_2_hour_25 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 25, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "hobbit", "hero": "bertil", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_3_hour_24 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 24, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "ghost", "hero": "bu", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_3_hour_25 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 25, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "ghost", "hero": "bu", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    Night citizen after midnight
+  ok    Night citizen after midnight
+  ok    npc.when_night_hides_collider
+  ok    npc.text_has_no_focus
+  ok    npc.esc_first_line_no_heart
+  ok    npc.choice_focus
+  ok    npc.choice_wrap
+  ok    npc.action_transfers_to_shop
+  ok    npc.weekly_heart
+  ok    npc.pad_close_no_duplicate_heart
+  ok    npc.talk_holds_driven
+  ok    npc.temporary_actor_disposal_ends_once
+  ok    npc.dialogue_reentrant_cancels_previous_await
+  ok    npc.dialogue_reentrant_second_result
+  ok    npc.reach_override
+  ok    npc.wander_sixty_seconds_walkable
+  ok    npc.night_schedule_home_and_sleep (home distance 3.20293688774109, requested sleep, rendered idle)
+  ok    npc.unused_npc_clips_have_no_abandoned_thread_requests
+  ok    npc.emit_event_after_modal_closed ([{ "event": &"npc_extension_probe", "payload": { "answer": 42 }, "modal": &"" }])
+  ok    npc.unknown_action_forwarded
+  ok    npc.guest_has_social_but_no_shop_quest_or_routine
+  ok    Every overflow page fits five rows
+  ok    Every overflow page fits five rows
+  ok    Every overflow page fits five rows
+  ok    Every overflow page fits five rows
+  ok    Every overflow page fits five rows
+  ok    npc.overflow_keeps_all_choices_once
+  ok    npc.accept_dialogue_snurresvampen
+  ok    npc.accept_dialogue_bogtraeet
+  ok    npc.accept_dialogue_moonstone_crown
+  ok    npc.accept_dialogue_slotsdroemmen
+  ok    npc.accept_dialogue_lost_cat
+  ok    npc.accept_dialogue_cookie_delivery
+  ok    npc.accept_dialogue_fix_roof
+  ok    npc.accept_dialogue_skovlift_intro
+  ok    npc.journal_toggle_j
+  ok    npc.journal_reads_lua
+  ok    npc.journal_rules_da ([])
+  ok    npc.journal_rules_en ([])
+  ok    npc.journal_list_right_changes_tab
+  ok    npc.journal_j_closes_in_gui
+  ok    npc.cookie_delivery_dialogue_turn_in
+  ok    npc.lost_cat_real_pawprint_marker
+  ok    npc.lost_cat_dialogue_turn_in
+  ok    npc.fix_roof_transactional_action
+  ok    npc.intro_uses_real_dialogue
+  ok    npc.intro_skip_accepts_quest
+  ok    npc.intro_once
+  --    npc: 345 checks, 0 failed, 0 skipped, 2.3 s
+== section ui_conformance  (res://tests/sections/ui_conformance.gd)
+  ok    ui_conformance.theme_no_gold_hover (strict theme scan clean (clean); the hover of ["MenuRow", "ChoiceRow", "Chip", "StepperButton", "HintButton", "PopupMenu", "PillTab", "RowButton", "CardButton"] is not gold (offenders []); focus and pressed stay gold on rows, chips, tabs (true); sliders are moss with a chalk grabber and center_grabber 0 (true), scrollbar thumbs are divider / chalk / moss with a 2 px ink outline (true), the grabber SVGs have no gold (true))
+  ok    ui_conformance.theme_no_red (no colour item or StyleBox of the theme has a red hue (170 types scanned))
+  ok    ui_conformance.theme_ink_outline (every opaque light body StyleBox outside R1_EXEMPT has a 2 px ink border: [])
+  ok    ui_conformance.theme_font_scale (every Label / Button variation is on the scale (Caprasimo >= 15, Alegreya >= 11, mono >= 9) []; Bold16 / Bold14 exist (true))
+  ok    ui_conformance.theme_focus_styles (every interactive theme type has a non-empty gold focus StyleBox []; HSlider/focus is the selection ring (3 px gold + 2 px ink, ring only: true) that TTSlider paints; PanelField/focus is the ring of the stepper (true))
+  ok    ui_conformance.theme_calcell_variations (CalCell (RowButton look, parchment-dark, radius 10, 2 px divider), CalCellFest (lavender-pale, ink border), CalCellToday (3 px ink border) exist as Button variations with every state, no gold but the focus ring [])
+  ok    ui_conformance.theme_label_variations_and_proxy (FocusProxy: six empty StyleBoxes and still focusable (true / true), PromptVerb is Heavy 18 chalk (true))
+  ok    ui_conformance.pill_heights (PillTab 33 px (>= 33), Chip 37 px (>= 37) high: the guide's heights with the 2 px border; the gallery row's temporary hit_min is gone (true))
+  ok    ui_conformance.sliders_are_ttslider (no scene of scenes/ui and no script of scripts/ui makes a plain HSlider / VSlider []; TTSlider declares tt_focus_style (true), its ring hugs the control (true) and grows by half a grabber when the grabber is centred on the ends (true))
+  ok    ui_conformance.guide_crops_pinned (1 crop(s) hash to SHA256SUMS [], no unlisted PNG [], 680 x 300 (true), .gdignore + README (true); fresh crop of the render: crop_guide_refs: 1 crop(s) identical to a fresh crop, SHA256SUMS matches)
+  ok    ui_conformance.fixtures_guide_focus_released (`<screen>_guide` fixtures release focus for RING controls (cards, buttons, chips, tabs, slots, rows: true) and keep it where the mock paints the focus look: Fortsæt (MenuRow) true, the first ChoiceRow true; the screen's focus guard is switched off so it does not put the focus back (true))
+  ok    ui_conformance.fixtures_guide_extras_hidden (the HintBar, any ToastStack and (select page) the %BackButton are hidden in the guide fixtures, which have none of them in the mock (they were all visible before: true); title_guide hides the bar and the toasts but has no %BackButton to hide (true), select_guide hides the %BackButton too (true); a hidden bar stays hidden when the device changes (true))
+  ok    ui_conformance.fixtures_all_registry_fixtures_resolve (all 42 fixture names of tests/lib/ui_screens.json (+ ui_screens.d) resolve through UiFixtures.SCREENS []; confirm / toasts / prompt are available, area_banner / animal_care / build_menu / intro / minimap are mapped (true))
+  ok    ui_conformance.mutants_baseline_gallery_is_clean (the unmutated gallery clone passes focusable_report and rule_report (clean))
+  ok    ui_conformance.mutant_gold_hover_caught (a gold hover on Chip is reported by the strict theme scan (1 defect(s): theme_gold_hover) while the real theme is clean)
+  ok    ui_conformance.mutant_focus_none_caught (an enabled Button with FOCUS_NONE: 1 defect(s): unfocusable_interactive)
+  ok    ui_conformance.mutant_override_caught (add_theme_font_size_override on a label: 1 defect(s): theme_override)
+  ok    ui_conformance.mutant_red_caught (a label coloured #ff2020: 2 defect(s): theme_override, r4_red)
+  ok    ui_conformance.mutant_plain_slider_caught (a plain HSlider: focusable_report says 1 defect(s): no_focus_style and the scene scan finds ["user://p28_mutant_slider/mutant.tscn: Volume"])
+  ok    ui_conformance.mutant_window_dialog_caught (an AcceptDialog in a screen: 2 defect(s): window_in_screen, no_focus_style)
+  ok    ui_conformance.mutant_hud_focus_caught (a focusable control in a HUD: 1 defect(s): hud_focusable (P17's hud.all_controls_focus_none will use the same report: its scene does not exist in this tree))
+  ok    ui_conformance.mutant_no_initial_focus_caught (a screen whose _initial_focus() returns null: 1 defect(s): no_initial_focus)
+  ok    ui_conformance.mutant_hotkey_in_field_caught (a screen without the text-field guard: the library's typing audit finds the leak (audit false, typed false, closed true), the guarded screen is clean (true))
+  ok    ui_conformance.mutant_tab_page_defect_caught (a red label behind the second PillTab: the single-page report misses it (clean), the page-aware report finds it (2 defect(s): theme_override, r4_red))
+  ok    ui_conformance.mutant_accept_eaten_caught (an _input that marks ui_accept handled leaves the focused Button unpressed (buttons false, rows { "enter": { "pressed": 0, "world": {  } }, "space": { "pressed": 0, "world": {  } }, "padA": { "pressed": 0, "world": {  } }, "e": { "pressed": 0, "world": {  } } }); the unmutated screen presses once per Enter / Space / pad A (true))
+  ok    ui_conformance.foundation_gallery.visible (clean)
+  ok    ui_conformance.foundation_gallery.initial_focus (clean)
+  ok    ui_conformance.foundation_gallery.focusable (19 interactive, 19 keyboard-focusable)
+  ok    ui_conformance.foundation_gallery.focus_walk (18 of 18 controls reached in 78 presses)
+  ok    ui_conformance.foundation_gallery.rules (111 nodes, 48 text, 24 boxes, 18 interactive scanned)
+  ok    ui_conformance.foundation_gallery.i18n_flip (clean)
+  ok    ui_conformance.foundation_gallery.theme (clean)
+  ok    ui_conformance.foundation_gallery_rarity.visible (clean)
+  ok    ui_conformance.foundation_gallery_rarity.focusable (10 interactive, 10 keyboard-focusable)
+  ok    ui_conformance.foundation_gallery_rarity.rules (108 nodes, 26 text, 10 boxes, 10 interactive scanned)
+  ok    ui_conformance.foundation_gallery_rarity.i18n_flip (clean)
+  ok    ui_conformance.title.visible (clean)
+  ok    ui_conformance.title.initial_focus (clean)
+  ok    ui_conformance.title.focus_walk (6 of 6 controls reached in 31 presses)
+  ok    ui_conformance.title.focusable (6 interactive, 6 keyboard-focusable)
+  ok    ui_conformance.title.rules (23 nodes, 14 text, 7 boxes, 6 interactive scanned)
+  ok    ui_conformance.title.i18n_flip (clean)
+  SKIP  ui_audit title.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit title.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit title.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit title.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.title.escape (0 modal(s) opened and closed with Esc in order)
+  ok    ui_conformance.settings.visible (clean)
+  ok    ui_conformance.settings.initial_focus (clean)
+  ok    ui_conformance.settings.focus_walk (11 of 11 controls reached in 54 presses)
+  ok    ui_conformance.settings.focusable (11 interactive, 11 keyboard-focusable)
+  ok    ui_conformance.settings.rules (34 nodes, 19 text, 12 boxes, 11 interactive scanned)
+  ok    ui_conformance.settings.i18n_flip (clean)
+  SKIP  ui_audit settings.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit settings.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit settings.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit settings.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.settings.escape (1 modal(s) opened and closed with Esc in order)
+  ok    ui_conformance.select_1.visible (clean)
+  ok    ui_conformance.select_1.initial_focus (clean)
+  ok    ui_conformance.select_1.focus_walk (8 of 8 controls reached in 166 presses)
+  ok    ui_conformance.select_1.focusable (8 interactive, 8 keyboard-focusable)
+  ok    ui_conformance.select_1.rules (57 nodes, 27 text, 8 boxes, 8 interactive scanned)
+  ok    ui_conformance.select_1.i18n_flip (clean)
+  SKIP  ui_audit select_1.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit select_1.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit select_1.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit select_1.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  SKIP  ui_audit select_1.escape: escape_chain of 'select_1' (esc_depth 1, no modal layer) needs the owner's opener: call UiAudit.escape_chain(t, opener, 1) from the owner's section (options.internal_layers for pages inside the screen)
+  ok    ui_conformance.select_2.visible (clean)
+  ok    ui_conformance.select_2.initial_focus (clean)
+  ok    ui_conformance.select_2.focus_walk (4 of 4 controls reached in 20 presses)
+  ok    ui_conformance.select_2.focusable (4 interactive, 4 keyboard-focusable)
+  ok    ui_conformance.select_2.text_fields (clean)
+  ok    ui_conformance.select_2.rules (30 nodes, 19 text, 6 boxes, 4 interactive scanned)
+  ok    ui_conformance.select_2.i18n_flip (clean)
+  SKIP  ui_audit select_2.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit select_2.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit select_2.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit select_2.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  SKIP  ui_audit select_2.escape: escape_chain of 'select_2' (esc_depth 2, no modal layer) needs the owner's opener: call UiAudit.escape_chain(t, opener, 2) from the owner's section (options.internal_layers for pages inside the screen)
+  ok    ui_conformance.saveload.visible (clean)
+  ok    ui_conformance.saveload.initial_focus (clean)
+  ok    ui_conformance.saveload.focus_walk (4 of 4 controls reached in 21 presses)
+  ok    ui_conformance.saveload.focusable (15 interactive, 4 keyboard-focusable)
+  ok    ui_conformance.saveload.rules (55 nodes, 28 text, 16 boxes, 4 interactive scanned)
+  ok    ui_conformance.saveload.i18n_flip (clean)
+  SKIP  ui_audit saveload.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit saveload.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit saveload.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit saveload.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  SKIP  ui_audit saveload.escape: escape_chain of 'saveload' (esc_depth 3) needs the owner's opener: call UiAudit.escape_chain(t, opener, 3) from the owner's section (options.internal_layers for pages inside the screen)
+  ok    ui_conformance.pause.visible (clean)
+  ok    ui_conformance.pause.initial_focus (clean)
+  ok    ui_conformance.pause.focus_walk (6 of 6 controls reached in 31 presses)
+  ok    ui_conformance.pause.focusable (6 interactive, 6 keyboard-focusable)
+  ok    ui_conformance.pause.rules (21 nodes, 15 text, 7 boxes, 6 interactive scanned)
+  ok    ui_conformance.pause.i18n_flip (clean)
+  SKIP  ui_audit pause.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit pause.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit pause.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit pause.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.pause.escape (1 modal(s) opened and closed with Esc in order)
+  ok    ui_conformance.confirm.visible (clean)
+  ok    ui_conformance.confirm.focusable (2 interactive, 2 keyboard-focusable)
+  ok    ui_conformance.confirm.rules (10 nodes, 4 text, 4 boxes, 2 interactive scanned)
+  ok    ui_conformance.confirm.i18n_flip (clean)
+  SKIP  ui_audit confirm.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit confirm.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.hud.visible (clean)
+  ok    ui_conformance.hud.focusable (8 interactive, 0 keyboard-focusable)
+  ok    ui_conformance.hud.rules (71 nodes, 22 text, 17 boxes, 8 interactive scanned)
+  ok    ui_conformance.hud.i18n_flip (clean)
+  SKIP  ui_audit hud.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit hud.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.toasts.visible (clean)
+  ok    ui_conformance.toasts.focusable (0 interactive, 0 keyboard-focusable)
+  ok    ui_conformance.toasts.rules (19 nodes, 6 text, 3 boxes, 0 interactive scanned)
+  ok    ui_conformance.toasts.i18n_flip (clean)
+  SKIP  ui_audit toasts.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit toasts.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.prompt.visible (clean)
+  ok    ui_conformance.prompt.focusable (0 interactive, 0 keyboard-focusable)
+  ok    ui_conformance.prompt.rules (5 nodes, 2 text, 1 boxes, 0 interactive scanned)
+  ok    ui_conformance.prompt.i18n_flip (clean)
+  SKIP  ui_audit prompt.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit prompt.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.area_banner.visible (clean)
+  ok    ui_conformance.area_banner.focusable (0 interactive, 0 keyboard-focusable)
+  ok    ui_conformance.area_banner.rules (3 nodes, 1 text, 0 boxes, 0 interactive scanned)
+  ok    ui_conformance.area_banner.i18n_flip (clean)
+  SKIP  ui_audit area_banner.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit area_banner.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.forest_hud.visible (clean)
+  ok    ui_conformance.forest_hud.focusable (0 interactive, 0 keyboard-focusable)
+  ok    ui_conformance.forest_hud.rules (57 nodes, 14 text, 8 boxes, 0 interactive scanned)
+  ok    ui_conformance.forest_hud.i18n_flip (clean)
+  SKIP  ui_audit forest_hud.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit forest_hud.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.minimap.visible (clean)
+  ok    ui_conformance.minimap.focusable (0 interactive, 0 keyboard-focusable)
+  ok    ui_conformance.minimap.rules (57 nodes, 14 text, 8 boxes, 0 interactive scanned)
+  ok    ui_conformance.minimap.i18n_flip (clean)
+  SKIP  ui_audit minimap.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit minimap.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.dialogue.visible (clean)
+  ok    ui_conformance.dialogue.initial_focus (clean)
+  ok    ui_conformance.dialogue.focus_walk (1 of 1 controls reached in 6 presses)
+  ok    ui_conformance.dialogue.focusable (1 interactive, 1 keyboard-focusable)
+  ok    ui_conformance.dialogue.rules (14 nodes, 3 text, 3 boxes, 1 interactive scanned)
+  ok    ui_conformance.dialogue.i18n_flip (clean)
+  SKIP  ui_audit dialogue.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit dialogue.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit dialogue.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit dialogue.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.dialogue.escape (1 modal(s) opened and closed with Esc in order)
+  ok    ui_conformance.intro.visible (clean)
+  ok    ui_conformance.intro.initial_focus (clean)
+  ok    ui_conformance.intro.focusable (0 interactive, 0 keyboard-focusable)
+  ok    ui_conformance.intro.rules (12 nodes, 2 text, 2 boxes, 0 interactive scanned)
+  ok    ui_conformance.intro.i18n_flip (clean)
+  SKIP  ui_audit intro.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit intro.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.intro.escape (1 modal(s) opened and closed with Esc in order)
+  ok    ui_conformance.shop.visible (clean)
+  ok    ui_conformance.shop.initial_focus (clean)
+  ok    ui_conformance.shop.focus_walk (37 of 37 controls reached in 196 presses)
+  ok    ui_conformance.shop.focusable (22 interactive, 37 keyboard-focusable)
+  ok    ui_conformance.shop.rules (129 nodes, 49 text, 20 boxes, 15 interactive scanned)
+  ok    ui_conformance.shop.i18n_flip (clean)
+  SKIP  ui_audit shop.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit shop.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit shop.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit shop.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.shop.escape (1 modal(s) opened and closed with Esc in order)
+  ok    ui_conformance.journal.visible (clean)
+  ok    ui_conformance.journal.initial_focus (clean)
+  ok    ui_conformance.journal.focus_walk (46 of 46 controls reached in 293 presses)
+  ok    ui_conformance.journal.focusable (37 interactive, 46 keyboard-focusable)
+  ok    ui_conformance.journal.rules (107 nodes, 40 text, 27 boxes, 11 interactive scanned)
+  ok    ui_conformance.journal.i18n_flip (clean)
+  SKIP  ui_audit journal.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit journal.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit journal.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit journal.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.journal.escape (1 modal(s) opened and closed with Esc in order)
+  ok    ui_conformance.inventory.visible (clean)
+  ok    ui_conformance.inventory.initial_focus (clean)
+  ok    ui_conformance.inventory.focus_walk (159 of 159 controls reached in 703 presses)
+  ok    ui_conformance.inventory.focusable (162 interactive, 159 keyboard-focusable)
+  ok    ui_conformance.inventory.rules (807 nodes, 311 text, 167 boxes, 159 interactive scanned)
+  ok    ui_conformance.inventory.i18n_flip (clean)
+  SKIP  ui_audit inventory.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit inventory.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit inventory.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit inventory.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.inventory.escape (1 modal(s) opened and closed with Esc in order)
+  ok    ui_conformance.animal_care.visible (clean)
+  ok    ui_conformance.animal_care.initial_focus (clean)
+  ok    ui_conformance.animal_care.focus_walk (6 of 6 controls reached in 28 presses)
+  ok    ui_conformance.animal_care.focusable (8 interactive, 6 keyboard-focusable)
+  ok    ui_conformance.animal_care.rules (34 nodes, 16 text, 12 boxes, 6 interactive scanned)
+  ok    ui_conformance.animal_care.i18n_flip (clean)
+  SKIP  ui_audit animal_care.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit animal_care.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit animal_care.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit animal_care.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.animal_care.escape (1 modal(s) opened and closed with Esc in order)
+  ok    ui_conformance.build_menu.visible (clean)
+  ok    ui_conformance.build_menu.initial_focus (clean)
+  ok    ui_conformance.build_menu.focus_walk (5 of 5 controls reached in 22 presses)
+  ok    ui_conformance.build_menu.focusable (5 interactive, 5 keyboard-focusable)
+  ok    ui_conformance.build_menu.rules (20 nodes, 10 text, 6 boxes, 5 interactive scanned)
+  ok    ui_conformance.build_menu.i18n_flip (clean)
+  SKIP  ui_audit build_menu.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit build_menu.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit build_menu.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit build_menu.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.build_menu.escape (1 modal(s) opened and closed with Esc in order)
+  ok    ui_conformance.husbyggeri.visible (clean)
+  ok    ui_conformance.husbyggeri.initial_focus (clean)
+  ok    ui_conformance.husbyggeri.focus_walk (11 of 11 controls reached in 56 presses)
+  ok    ui_conformance.husbyggeri.focusable (12 interactive, 11 keyboard-focusable)
+  ok    ui_conformance.husbyggeri.rules (36 nodes, 24 text, 13 boxes, 11 interactive scanned)
+  ok    ui_conformance.husbyggeri.i18n_flip (clean)
+  SKIP  ui_audit husbyggeri.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit husbyggeri.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit husbyggeri.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit husbyggeri.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  SKIP  ui_audit husbyggeri.escape: escape_chain of 'husbyggeri' (esc_depth 2) needs the owner's opener: call UiAudit.escape_chain(t, opener, 2) from the owner's section (options.internal_layers for pages inside the screen)
+  ok    ui_conformance.indretning.visible (clean)
+  ok    ui_conformance.indretning.initial_focus (clean)
+  ok    ui_conformance.indretning.focus_walk (18 of 18 controls reached in 84 presses)
+  ok    ui_conformance.indretning.focusable (19 interactive, 18 keyboard-focusable)
+  ok    ui_conformance.indretning.rules (42 nodes, 24 text, 20 boxes, 18 interactive scanned)
+  ok    ui_conformance.indretning.i18n_flip (clean)
+  SKIP  ui_audit indretning.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit indretning.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit indretning.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit indretning.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  SKIP  ui_audit indretning.escape: escape_chain of 'indretning' (esc_depth 2) needs the owner's opener: call UiAudit.escape_chain(t, opener, 2) from the owner's section (options.internal_layers for pages inside the screen)
+  ok    ui_conformance.home_chest.visible (clean)
+  ok    ui_conformance.home_chest.initial_focus (clean)
+  ok    ui_conformance.home_chest.focus_walk (28 of 28 controls reached in 129 presses)
+  ok    ui_conformance.home_chest.focusable (28 interactive, 28 keyboard-focusable)
+  ok    ui_conformance.home_chest.rules (86 nodes, 46 text, 29 boxes, 28 interactive scanned)
+  ok    ui_conformance.home_chest.i18n_flip (clean)
+  SKIP  ui_audit home_chest.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit home_chest.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit home_chest.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit home_chest.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.home_chest.escape (1 modal(s) opened and closed with Esc in order)
+  ok    ui_conformance.garderobe.visible (clean)
+  ok    ui_conformance.garderobe.initial_focus (clean)
+  ok    ui_conformance.garderobe.focus_walk (23 of 23 controls reached in 112 presses)
+  ok    ui_conformance.garderobe.focusable (26 interactive, 23 keyboard-focusable)
+  ok    ui_conformance.garderobe.rules (93 nodes, 41 text, 28 boxes, 23 interactive scanned)
+  ok    ui_conformance.garderobe.i18n_flip (clean)
+  SKIP  ui_audit garderobe.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit garderobe.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit garderobe.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit garderobe.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.garderobe.escape (1 modal(s) opened and closed with Esc in order)
+  ok    ui_conformance.home_amenities.visible (clean)
+  ok    ui_conformance.home_amenities.initial_focus (clean)
+  ok    ui_conformance.home_amenities.focus_walk (3 of 3 controls reached in 16 presses)
+  ok    ui_conformance.home_amenities.focusable (4 interactive, 3 keyboard-focusable)
+  ok    ui_conformance.home_amenities.rules (28 nodes, 13 text, 5 boxes, 3 interactive scanned)
+  ok    ui_conformance.home_amenities.i18n_flip (clean)
+  SKIP  ui_audit home_amenities.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit home_amenities.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit home_amenities.button_pixels: button_pixels needs a window (run_windowed)
+  ok    ui_conformance.home_amenities.escape (1 modal(s) opened and closed with Esc in order)
+  ok    ui_conformance.people.visible (clean)
+  ok    ui_conformance.people.initial_focus (clean)
+  ok    ui_conformance.people.focus_walk (12 of 12 controls reached in 99 presses)
+  ok    ui_conformance.people.focusable (12 interactive, 12 keyboard-focusable)
+  ok    ui_conformance.people.rules (49 nodes, 18 text, 15 boxes, 12 interactive scanned)
+  ok    ui_conformance.people.i18n_flip (clean)
+  SKIP  ui_audit people.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit people.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit people.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit people.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.people.escape (1 modal(s) opened and closed with Esc in order)
+  ok    ui_conformance.gift.visible (clean)
+  ok    ui_conformance.gift.initial_focus (clean)
+  ok    ui_conformance.gift.focus_walk (26 of 26 controls reached in 115 presses)
+  ok    ui_conformance.gift.focusable (26 interactive, 26 keyboard-focusable)
+  ok    ui_conformance.gift.rules (124 nodes, 34 text, 29 boxes, 26 interactive scanned)
+  ok    ui_conformance.gift.i18n_flip (clean)
+  SKIP  ui_audit gift.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit gift.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit gift.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit gift.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.gift.escape (1 modal(s) opened and closed with Esc in order)
+  ok    ui_conformance.calendar.visible (clean)
+  ok    ui_conformance.calendar.focusable (32 interactive, 32 keyboard-focusable)
+  ok    ui_conformance.calendar.rules (138 nodes, 99 text, 33 boxes, 32 interactive scanned)
+  ok    ui_conformance.calendar.i18n_flip (clean)
+  SKIP  ui_audit calendar.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit calendar.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.social_hud.visible (clean)
+  ok    ui_conformance.social_hud.focusable (0 interactive, 0 keyboard-focusable)
+  ok    ui_conformance.social_hud.rules (4 nodes, 1 text, 0 boxes, 0 interactive scanned)
+  ok    ui_conformance.social_hud.i18n_flip (clean)
+  SKIP  ui_audit social_hud.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit social_hud.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.event_overlay.visible (clean)
+  ok    ui_conformance.event_overlay.focusable (0 interactive, 0 keyboard-focusable)
+  ok    ui_conformance.event_overlay.rules (6 nodes, 1 text, 0 boxes, 0 interactive scanned)
+  ok    ui_conformance.event_overlay.i18n_flip (clean)
+  SKIP  ui_audit event_overlay.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit event_overlay.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  SKIP  ui_audit event_overlay.escape: escape_chain of 'event_overlay' (esc_depth 2) needs the owner's opener: call UiAudit.escape_chain(t, opener, 2) from the owner's section (options.internal_layers for pages inside the screen)
+  ok    ui_conformance.post.visible (clean)
+  ok    ui_conformance.post.initial_focus (clean)
+  ok    ui_conformance.post.focus_walk (35 of 35 controls reached in 188 presses)
+  ok    ui_conformance.post.focusable (20 interactive, 35 keyboard-focusable)
+  ok    ui_conformance.post.rules (31 nodes, 5 text, 21 boxes, 20 interactive scanned)
+  ok    ui_conformance.post.i18n_flip (clean)
+  SKIP  ui_audit post.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit post.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit post.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit post.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    ui_conformance.post.escape (1 modal(s) opened and closed with Esc in order)
+  ok    ui_conformance.live_screens_sweep (U1 - U6 and U9 on 33 live row(s) of UiAudit.screens() in da and en: ["foundation_gallery", "foundation_gallery_rarity", "title", "settings", "select_1", "select_2", "saveload", "pause", "confirm", "hud", "toasts", "prompt", "area_banner", "forest_hud", "minimap", "dialogue", "intro", "shop", "journal", "inventory", "animal_care", "build_menu", "husbyggeri", "indretning", "home_chest", "garderobe", "home_amenities", "people", "gift", "calendar", "social_hud", "event_overlay", "post"]; failures [], unopenable [])
+  ok    ui_conformance.p28_rows_are_live (confirm, toasts and prompt are live rows with their own scenes and fixtures)
+  ok    ui_conformance.no_legacy_screens_left (no row of UiAudit.screens() is still the legacy scaffold)
+  --    ui_conformance: 221 checks, 0 failed, 107 skipped, 15.8 s
+== section ui_foundation  (res://tests/sections/ui_foundation.gd)
+  ok    ui_foundation.theme_loaded (gui/theme/custom = assets/ui/theme.tres)
+  ok    ui_foundation.theme_type_count (170 theme types (the spike had 145; the rarity tiers and words add more))
+  ok    ui_foundation.fonts_have_aeoeaa (Æ Ø Å æ ø å in Caprasimo and Alegreya Sans)
+  ok    ui_foundation.font_licences_present (OFL texts: missing [])
+  ok    ui_foundation.noto_binary_not_shipped (TTSymbols covers every glyph; the 1.2 MB Noto binary stays out)
+  ok    ui_foundation.symbol_fallback_keeps_line_height (display font with fallbacks is 1.00 x Caprasimo's own line height)
+  ok    tools/ui/build_theme.gd regenerates the theme in a child run (exit 0)
+  ok    ui_foundation.theme_matches_builder (assets/ui/theme.tres equals what tools/ui/build_theme.gd generates (170 types) [])
+  ok    guide page: slot states, button states, hearts
+  ok    quantity_stepper clamps to its range
+  ok    ui_foundation.components (gallery guide page + rarity page: 21 RaritySlots, 4 ladder rows, 5 themed slots)
+  ok    ui_foundation.gallery_rarity_row (the gallery carries the rarity row (5 states x filled/selected/unknown, word + pips, night icon and disc cases))
+  ok    toast with an item picture
+  ok    ability_slot setup + cooldown
+  ok    pips along the ladder [0, 1, 2, 3, 4]
+  ok    four distinct pip outlines { "leaf": 18, "diamond": 4, "sparkle": 8, "star": 10 }
+  ok    shapes ["none", "leaf", "diamond", "sparkle", "star"]
+  ok    ui_foundation.rarity_slot_plan_five_states_and_selected (fill + ring + pips per rarity; selected = gold ring replaces the rarity ring)
+  ok    empty tile: the guide's empty slot, no pips
+  ok    unknown tile: dashed silhouette state
+  ok    legendary with the _night.webp file: no disc
+  ok    legendary WITHOUT the _night.webp file: the pale disc is drawn behind the icon
+  ok    no picture -> no disc; a rare tile never gets a disc
+  ok    legendary count text pale (e4eff5), pips gold (f2c14e)
+  ok    RaritySlot node: bed_moon uses its _night file, chair_pine gets the disc, selecting keeps the disc and adds gold
+  ok    show_word makes room under the tile
+  ok    ladder: locked is dashed, next has the gold chip, current the moss chip
+  ok    ladder: the selected row (and only it) has the gold ring
+  ok    ui_foundation.rarity_components (item_slot rarity property -> theme variation + pip count ["SlotFilled:0", "SlotUncommon:1", "SlotRare:2", "SlotUnique:3", "SlotLegendary:4"]; RarityPips / RaritySlot / LadderRow plans)
+  ok    RaritySlot bed_moon legendary: the _night.webp file in either assignment order (res://assets/icons/home/bed_moon_night.webp / res://assets/icons/home/bed_moon_night.webp)
+  ok    item_id before rarity: no pale disc although the night file exists (the reported defect)
+  ok    legendary -> normal after the icon was loaded: the plain icon, no disc
+  ok    normal -> legendary after the icon was loaded: back to the _night file
+  ok    item_id before rarity, no _night file: the pale disc on the plain icon
+  ok    item_slot.rarity = X updates the icon too (legendary true, normal true, legendary again true, chair_pine disc true)
+  ok    ui_foundation.rarity_order_independent (RaritySlot and item_slot resolve the legendary _night icon whatever the order of item_id / rarity assignments)
+  ok    item_slot.setup before add_child keeps the data
+  ok    item_slot built before add_child: key, count, name, icon (night variant), tile and pips are applied when it is ready
+  ok    item_slot (the 24-cell backpack pattern): instantiate, setup, add_child gives a filled cell
+  ok    toast.setup before add_child: text, picture (night variant) applied when it is ready
+  ok    toast.setup before add_child, text only: picture and empty message stay hidden
+  ok    ui_foundation.setup_before_ready (item_slot.setup / notification_toast.setup are safe before add_child (no script error, arguments applied in _ready))
+  ok    plan(): an item without a picture -> badge; with a picture or without an item -> none
+  ok    an unknown (silhouette) or empty tile never shows the badge: it must not give the item away
+  ok    RaritySlot with an unresolvable item id: badge, no disc
+  ok    legendary without any icon file: the badge, not a disc
+  ok    ...and as an unknown silhouette no badge
+  ok    an explicit `icon` picture replaces the badge
+  ok    an item with art: no badge
+  ok    no item: no badge
+  ok    ui_foundation.rarity_slot_badge (RaritySlot draws TTItemIcon's initial badge for an item whose icon file is missing (plan()['badge']))
+  ok    ability_slot.setup before add_child keeps the data
+  ok    four ability slots built before add_child: size, icon id, key cap, cooldown veil and number are applied when each is ready
+  ok    the primary attack's key cap reads the InputMap: Venstre klik
+  ok    set_cooldown before the slot is ready (no setup yet) is applied in _ready too
+  ok    two setup() calls before ready: the last one wins
+  ok    ability_slot setup / set_cooldown before add_child raise no script error
+  ok    ui_foundation.ability_slot_before_ready (ability_slot.setup / set_cooldown are safe before add_child (the forest HUD builds its four slots that way))
+  ok    label_for: ABILITY_<ID> translated; a key without a translation (or no id) gives "", never the id
+  ok    ABILITY_TESTSTRIKE exists: the slot shows its Danish word 'slag'
+  ok    no ABILITY_ key yet: the icon only - the English id 'no_such_ability_zz' is not shown ('')
+  ok    a language switch re-translates the word and the key cap (strike / Left click)
+  ok    ...and back to Danish (slag / Venstre klik)
+  ok    TTItemIcon.fallback_label: the id by default, nothing with id_fallback = false
+  ok    ...and an explicit display_name is always shown
+  ok    the real ABILITY_SLASH/DODGE/LIGHT/DRINK words (forest.csv): ["slag", "undvig", "fe-lys", "drik"]
+  ok    the ability slot tests logged no engine message
+  ok    ui_foundation.ability_slot_danish_label (ability_slot labels itself with ABILITY_<ID> (Danish / English) and never with the English icon id)
+  ok    the second setup() shows the second text
+  ok    ...and carries on from the current opacity instead of dropping to 0 (0.67 -> 0.67)
+  ok    a second setup() on a toast in the tree: the first fade's queue_free no longer removes it early
+  ok    ...it holds full opacity for its own 3 s (1.00)
+  ok    two setup() calls before add_child: the last one is shown
+  ok    ...and the toast still frees itself when its own schedule ends
+  ok    the toast tests logged no engine message
+  ok    ui_foundation.toast_second_setup (notification_toast: a second setup() replaces the running fade (one tween, no early queue_free))
+  ok    item_slot.setup(&"", 5) before ready: no count '', amount 0, tile SlotEmpty, the hotbar key cap stays
+  ok    ...filled with an item the count shows
+  ok    ...and emptied again (setup(&"", 7) after ready): count gone
+  ok    a non-stackable tool (amount 0) shows no count either
+  ok    item_slot empty-cell setup raised no engine message
+  ok    ui_foundation.empty_cell_no_count (an empty item_slot never shows a count)
+  ok    TTItemIcon has no ICON_DIR constant, only DIRS ([&"DIRS"])
+  ok    the icon directories are spelled out once (TTItemIcon.DIRS: items, home, wardrobe), nowhere else in scripts/ui ["tt_item_icon.gd x3"]
+  ok    ui_foundation.icon_dir_constant_gone (no second copy of the icon directory in scripts/ui)
+  ok    fixtures: the components gallery is always available (both pages)
+  ok    fixtures: an unknown screen is SKIP (null), never an error
+  ok    fixtures: shop_ui.tscn exists -> loaded
+  ok    fixtures: title (res://scenes/main/main_menu.tscn) counts only once it is built on the guide theme (legacy 3D scene does not count)
+  ok    fixtures: select (res://scenes/ui/character_select.tscn) counts only once it is built on the guide theme (legacy 3D scene does not count)
+  ok    fixtures: variant names resolve to their screen
+  ok    fixtures: a registered setup runs after the screen is built
+  ok    fixtures: the guide's mock copy (4 quests, 1.250 guldagern) loads
+  ok    rarity WORD labels on parchment >= 4.5:1 (worst uncommon 5.08)
+  ok    gold pips on the night tile >= 7.0:1 (7.04)
+  ok    icon rim: rim vs night 10.1:1, ink vs rim 12.7:1 (both >= 7)
+  ok    ink on the night tile alone is 1.25:1: the reason legendary icons need the rim (RV-A2)
+  ok    slot count text (ink, or the pale rim on night) reads >= 7:1 on every tile fill
+  ok    theme RarityWord<Id> label variations carry the Rarity.ui() label colours
+  ok    ui_foundation.rarity_contrast (labels >= 4.5 (worst 5.08), gold pips on night 7.04 >= 7.0, rim pairs 10.1 / 12.7)
+  ok    default lookup order = ArtCatalog.icon: items, home, wardrobe
+  ok    an item icon lives in assets/icons/items
+  ok    a furniture / material icon is found in assets/icons/home
+  ok    a garment icon is found in assets/icons/wardrobe
+  ok    the same id in all three: the FIRST directory wins (ordered lookup)
+  ok    extension order inside a directory: webp, png, svg
+  ok    no directory has it: empty path (the caller draws the badge)
+  ok    empty, path-like and spaced ids are refused
+  ok    legendary: the <id>_night.webp rim variant is used when it exists
+  ok    legendary WITHOUT the night file: the plain icon, night=false (the pale disc is drawn)
+  ok    only the dark (legendary) tile uses the night variant
+  ok    the night variant must sit beside the file that was found (items/ has the hat, wardrobe/ has the night file: not used)
+  ok    `common` is normal: no night variant
+  ok    disc radius = 0.60 x the 50 px icon edge = 30 px, centred on the icon
+  ok    the disc stays inside the tile
+  ok    an icon that fills the tile: the disc (r 34.8) is clipped to the tile rect
+  ok    disc constants: 0.60, e4eff5, alpha .92
+  ok    real files: bed_moon (A1) resolves to its _night.webp in assets/icons/home
+  ok    ui_foundation.item_icon_three_dirs_and_night (ordered items > home > wardrobe lookup, extension order, legendary _night sibling, disc fallback (49 predicate calls))
+  ok    GameUI list: hud, forest_hud ... pause_menu, save_load_ui, settings_ui (22 ids)
+  ok    the 11 base screens, the 5 addendum screens and the 5 towns / social screens (22 ids) are all in the list
+  ok    ui_foundation.game_ui_instantiates_what_exists (layer 10, ALWAYS, group game_ui; loaded [&"hud", &"forest_hud", &"social_hud", &"event_overlay", &"dialogue_ui", &"inventory_ui", &"quest_journal", &"people", &"gift_ui", &"post", &"shop_ui", &"animal_care_ui", &"build_menu_ui", &"husbyggeri", &"indretning", &"home_chest", &"home_amenities", &"garderobe", &"pause_menu", &"save_load_ui", &"settings_ui"] (none are required))
+  ok    only existing scenes load, in list order (garderobe below pause_menu): [&"hud", &"inventory_ui", &"garderobe", &"pause_menu"]
+  ok    get_screen by id or node name, null when missing
+  ok    HUD controls use focus_mode NONE
+  ok    set_mode(action) keeps fallback HUD when forest screen is missing
+  ok    a loaded forest HUD replaces the fallback
+  ok    set_mode(farm) shows it again
+  ok    ui_foundation.game_ui_no_key_handling (no key handler in game_ui.gd: [])
+  ok    SCREEN_ORDER is exactly the 22 ids of SCREEN_IDS, back to front: [&"hud", &"forest_hud", &"social_hud", &"event_overlay", &"dialogue_ui", &"inventory_ui", &"quest_journal", &"people", &"gift_ui", &"post", &"shop_ui", &"animal_care_ui", &"build_menu_ui", &"husbyggeri", &"indretning", &"home_chest", &"home_amenities", &"garderobe", &"samlerbog", &"pause_menu", &"save_load_ui", &"settings_ui"]
+  ok    no screen id twice (22 ids, 22 distinct)
+  ok    every towns / social id is below the pause menu (its Esc and its draw order)
+  ok    social_hud sits right behind the two HUDs
+  ok    event_overlay is between the HUDs and dialogue_ui: the letterbox is drawn BEHIND the dialogue
+  ok    people, gift_ui, post follow quest_journal and sit above the shops
+  ok    in the real scene folder a new id is instanced only if scenes/ui/<id>.tscn exists (loaded: [&"hud", &"forest_hud", &"social_hud", &"event_overlay", &"dialogue_ui", &"inventory_ui", &"quest_journal", &"people", &"gift_ui", &"post", &"shop_ui", &"animal_care_ui", &"build_menu_ui", &"husbyggeri", &"indretning", &"home_chest", &"home_amenities", &"garderobe", &"pause_menu", &"save_load_ui", &"settings_ui"])
+  ok    an empty folder: no id is instanced (the new ids are inert until their scene lands)
+  ok    the five new scenes land first: all five load, back to front: [&"social_hud", &"event_overlay", &"people", &"gift_ui", &"post"]
+  ok    their neighbours land later and slot in around them: tree order == list order [&"hud", &"social_hud", &"event_overlay", &"dialogue_ui", &"quest_journal", &"people", &"gift_ui", &"post", &"shop_ui", &"garderobe", &"pause_menu", &"settings_ui"]
+  ok    hud < social_hud < event_overlay < dialogue_ui in the tree (the letterbox is behind the dialogue): second load = [&"hud", &"dialogue_ui", &"quest_journal", &"shop_ui", &"garderobe", &"pause_menu", &"settings_ui"]
+  ok    people, gift_ui, post sit between quest_journal and shop_ui; settings_ui is still last
+  ok    every new screen is PROCESS_MODE_ALWAYS (set by the loader when the scene leaves it at INHERIT)
+  ok    ui_foundation.game_ui_loads_new_ids_in_order (GameUI.SCREEN_ORDER: social_hud, event_overlay, people, gift_ui, post are in place (22 ids), inert without a scene, and load back to front in any order)
+  ok    date_text = TimeManager.date_text (one calendar): Tirsdag 16. Blomstermåned
+  ok    en: Tuesday 16. Month of Blooms / 1,250
+  ok    da: thousands and clock
+  ok    mayor_lyra portrait resolves through npcs.lua + characters.lua (res://assets/isometric_characters/fairy_mayor/portrait.webp)
+  ok    the bust of the NPC's own visual wins as soon as it exists
+  ok    assets/portraits/<id>.webp before isometric_characters/<id>/portrait.webp
+  ok    fallback chain fairy_mayor -> fairy, pack folder portrait
+  ok    quest tag ids are ASCII (HØST -> HOEST)
+  ok    ui_foundation.tt_helpers (tt_format / tt_portraits / tt_quest_text answer through TimeManager, npcs.lua and characters.lua)
+  ok    the zone keys of the real quests translate (ZONE_CITY = Hyggebyen)
+  ok    meta.location = "ZONE_CITY" is shown translated: 'Fra Pippin Bøgeknop · Hyggebyen'
+  ok    ZONE_FARM and ZONE_DYBE_BREGNER too: 'Fra Pippin Bøgeknop · Min Trækronsgård' / 'Fra Pippin Bøgeknop · Dybe Bregner'
+  ok    a key-shaped location WITHOUT a translation is dropped, never printed raw: 'Fra Pippin Bøgeknop'
+  ok    plain text (not a key) is kept as it is: 'Fra Pippin Bøgeknop · Skovbrynet'
+  ok    no location: no separator; no giver: no line
+  ok    en: the same lines in English ('From Pippin Bøgeknop · Deep Ferns')
+  ok    40 real quest definitions: no from-line carries a raw translation key []
+  ok    40 real quests carry a ZONE_ key as location: each from-line ends with the translated place
+  ok    ui_foundation.quest_text_location (meta.location is a zone KEY (plan 3.12): translated in the quest book's 'Fra <giver> · <place>' line, never printed raw)
+  ok    meta / rewards / objectives that are empty tables (Array or Dictionary) or the wrong type: every reader answers with 'nothing' instead of a script error
+  ok    rewards = { gold = 5, items = {}, friendship = {} }: the gold chip only ([{ "kind": "gold", "text": "5 guldagern" }])
+  ok    meta.location = {} is no place: 'Fra Pippin Bøgeknop'
+  ok    objectives = { {}, {id = a, target = {}}, ... }: three rows with default targets ([1, 1, 2])
+  ok    ui_foundation.quest_text_hostile_definitions (tt_quest_text reads every sub-table through LuaData: empty tables never raise script errors)
+  ok    title: the Lua title, a translated title_key, QUEST_<ID>_TITLE
+  ok    a title_key without a translation falls back to QUEST_<ID>_TITLE ('Titel efter fejlnøgle')
+  ok    no title, no key, no translation: the id made readable, never a raw key ["T Bad Key", "T Missing", "T Wrong Type"]
+  ok    none of the seven titles contains a raw translation key []
+  ok    en: the same fallbacks
+  ok    40 real quest definitions: every title is real text []
+  ok    ui_foundation.quest_text_title (tt_quest_text.title() guards title_key and QUEST_<ID>_TITLE with _has_key like description() and step_text())
+  ok    ui_foundation.ui_csv_readable (localization/ui.csv has the header keys,da,en)
+  ok    no key twice inside ui.csv []
+  ok    every ui.csv key has da AND en text []
+  ok    no RECIPE_*, ITEM_*, per-shop SHOP_<id>_GREETING or INV_RARITY_* (EPIC) rows []
+  ok    the keys other packages asked for exist in ui.csv: missing []
+  ok    device-aware dialogue continuation comes from nav.csv HINT_CONTINUE
+  ok    UI_WEATHER_KLART stays in core.csv (defined there already)
+  ok    canonical copy da/en of the shared keys
+  ok    no ui.csv key is defined in another non-legacy CSV []
+  ok    the localization lint reports no error for ui.csv []
+  ok    every ui.csv key is owned by ui.csv in tools/loc/key_owners.json []
+  ok    ui.csv.import is a keep stub (R.4)
+  ok    ui_foundation.no_duplicate_keys (139 keys, 0 duplicates, no RECIPE_/ITEM_/shop-greeting/INV_RARITY_ rows, no cross-file duplicate)
+  ok    tests/checkpoints/guide_ref holds the seven pw1x_<screen>.png renders at 1280x720
+  ok    guide_ref has a .gdignore: Godot never imports the reference PNGs (python reads them)
+  ok    a bundled reference compared with itself (--ref, --no-frame-crop) is 0.00 for all seven
+  ok    negative control: the TITLE render scored against the HUD guide screen is far off (44.5)
+  ok    frame crop is the default (2 px HTML frame ignored: 0.000); --no-frame-crop keeps it (0.658)
+  ok    --region x,y,w,h: inside the patch 20.0000 (=20), outside 0.0000, whole picture 0.4340 (=0.4340)
+  ok    --ref works with any shot name: anything_at_all mean abs diff (0-255):   0.00   pixels with diff>40:  0.00%   (1280x720)
+  ok    --max N on the whole picture: mean 0.43 > 0.3 exits 1, <= 5 exits 0 (codes 1 / 0)
+  ok    usage errors exit 2 (unknown screen 2, region outside 2, --ref with two shots 2, missing file 2)
+  ok    --target hud=0.1 on a flat shot against the HUD guide screen exits 1 (hud        mean abs diff (0-255):  44.42   pixels with diff>40: 57.37%   (1280x720)   EXCEEDS limit 0.10)
+  ok    --max N: mean 20 > 10 exits 1 ('EXCEEDS'), <= 25 exits 0
+  ok    malformed --target / --max, a text file, a truncated PNG (shot or reference) and an unwritable --out all exit 2 with a 'compare_guide:' message and no traceback (codes [2, 2, 2, 2, 2, 2, 2, 2, 2])
+  ok    --frame-px: a negative number (with or without --no-frame-crop), 360+ on a 720 px picture, 5000 and text all exit 2 with the limit named, no PIL error (codes [2, 2, 2, 2, 2])
+  ok    --frame-px 0 keeps the whole 1280x720 reference, 359 is accepted ([1280.0, 720.0] / [562.0, 2.0])
+  ok    ui_foundation.compare_guide_modes (--ref / --no-frame-crop / --region / --max / --frame-px exercised on synthetic images and the seven bundled references; bad inputs exit 2)
+  ok    guide_ref/SHA256SUMS exists
+  ok    ui_foundation.guide_ref_pinned (the seven regenerated guide references still hash to SHA256SUMS [])
+  ok    ui_foundation.smoke (ui_smoke.tscn child run: exit 0, 'UI SMOKE PASS: 201 checks, 0 failures, 0 engine errors')
+  --    ui_foundation: 205 checks, 0 failed, 0 skipped, 9.6 s
+== summary: 5 section(s) run, 837 checks (0 failed, 107 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 34.2 s
+PLAYTEST PASS (837 checks in 5 sections, 0 allowed engine messages, 0 known-issue messages)

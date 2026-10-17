@@ -9,14 +9,16 @@ objectives = {
   {
     id = "build_coop",
     target = 1,
-    on = "building_built",
+    on = "state",
+    state = "buildings_owned",
     type = "coop",
     description_key = "OBJ_FIRST_ANIMAL_BUILD_COOP",
   },
   {
     id = "adopt_animal",
     target = 1,
-    on = "animal_adopted",
+    on = "state",
+    state = "animals_owned",
     description_key = "OBJ_FIRST_ANIMAL_ADOPT_ANIMAL",
   },
   {

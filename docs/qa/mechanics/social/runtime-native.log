@@ -1,0 +1,131 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PLAYTEST start mode=windowed character=animal sections=res://tests/sections only=social_events,festival_activities
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.vFm22m/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/runtime-native
+== section festival_activities [windowed]  (res://tests/sections/festival_activities.gd)
+  ok    festival_activities.normal_score_has_no_rarity_bonus
+  ok    festival_activities.uncommon_score_bonus
+  ok    festival_activities.rare_score_bonus
+  ok    festival_activities.cheapest_winning_entry_caps_prize
+  ok    festival_activities.unknown_selector_has_zero_cap
+  ok    festival_activities.legal_prizes
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "gold": 201 } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "gold": 100 }, "second": { "gold": 71 } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "gold": 100 }, "third": { "gold": 41 } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "items": { "keepsake": 1 } } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "items": { "unknown": 1 } } }
+  ok    festival_activities.deterministic_entry_seed_1
+  ok    festival_activities.deterministic_entry_seed_2
+  ok    festival_activities.deterministic_entry_seed_3
+  ok    festival_activities.deterministic_entry_seed_4
+  ok    festival_activities.deterministic_entry_seed_5
+  ok    festival_activities.deterministic_entry_seed_6
+  ok    festival_activities.deterministic_entry_seed_7
+  ok    festival_activities.deterministic_entry_seed_8
+  ok    festival_activities.deterministic_entry_seed_9
+  ok    festival_activities.deterministic_entry_seed_10
+  ok    festival_activities.deterministic_entry_seed_11
+  ok    festival_activities.deterministic_entry_seed_12
+  ok    festival_activities.deterministic_entry_seed_13
+  ok    festival_activities.deterministic_entry_seed_14
+  ok    festival_activities.deterministic_entry_seed_15
+  ok    festival_activities.deterministic_entry_seed_16
+  ok    festival_activities.deterministic_entry_seed_17
+  ok    festival_activities.deterministic_entry_seed_18
+  ok    festival_activities.deterministic_entry_seed_19
+  ok    festival_activities.deterministic_entry_seed_20
+  ok    festival_activities.wrong_entry_refused
+  ok    festival_activities.stage_attached_to_active_area (stage=FestivalStage:<Node2D#818828812904> area=hyggebyen active=activity_test)
+  ok    festival_activities.named_posts_have_no_map_errors ([])
+  ok    festival_activities.all_six_activities_enabled_in_window
+  ok    festival_activities.opening_once_per_year
+  ok    festival_activities.attendance_points_once
+  ok    festival_activities.talked_citizen_attendance_once
+  ok    festival_activities.picker_opens_contest
+  ok    festival_activities.matching_item_available_contest
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/runtime-native/festival_activities_contest_picker.png (1280x720)
+  ok    festival_activities.contest_consumes_exactly_one_entry
+  ok    festival_activities.contest_pays_bounded_prize
+  ok    festival_activities.contest_cannot_be_repeated
+  ok    festival_activities.picker_opens_potluck
+  ok    festival_activities.matching_item_available_potluck
+  ok    festival_activities.potluck_donation_is_one_item
+  ok    festival_activities.town_contributions_reach_goal
+  ok    festival_activities.feast_restores_once
+  ok    festival_activities.feast_repeat_has_no_effect
+  ok    festival_activities.wish_is_flavour_flag
+  ok    festival_activities.wish_host_points_once
+  ok    festival_activities.wish_repeat_refused
+  ok    festival_activities.dance_chooses_highest_hearts_present
+  ok    festival_activities.market_opens_existing_shop_panel
+  ok    festival_activities.stage_is_stable_across_flushes
+  ok    festival_activities.finale_once_per_year
+  ok    festival_activities.activities_disable_at_window_end
+  ok    festival_activities.outside_window_has_no_effect
+  ok    festival_activities.stage_removed_at_end
+  --    festival_activities: 59 checks, 0 failed, 0 skipped, 3.6 s
+== section social_events [windowed]  (res://tests/sections/social_events.gd)
+  ok    social_events.heart_event_only_on_talk
+  ok    social_events.automatic_events_never_appear_in_talk_choices
+  ok    social_events.queue_accepts_while_busy
+  ok    social_events.deduplicates_queued_events
+  ok    social_events.waits_for_playing_and_no_modal
+  ok    social_events.queued_talk_starts_after_modal_closes
+  ok    social_events.event_modal_is_nonpausing_cutscene
+  ok    social_events.clock_frozen
+  ok    social_events.no_save_during_event
+  ok    social_events.no_travel_or_sleep_during_event
+  ok    social_events.rewards_deferred_until_scene_end
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/runtime-native/social_events_heart_event.png (1280x720)
+  ok    social_events.overlay_follows_modal
+  ok    social_events.overlay_focus_none (0 interactive, 0 keyboard-focusable)
+  ok    social_events.overlay_rules (6 nodes, 1 text, 0 boxes, 0 interactive scanned)
+  ok    social_events.overlay_i18n (clean)
+  ok    social_events.escape_opens_one_confirm
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/runtime-native/social_events_skip_confirm.png (1280x720)
+  ok    social_events.continue_is_default
+  ok    social_events.declining_skip_keeps_scene
+  ok    social_events.skip_fast_forwards_effects
+  ok    social_events.choice_takes_option_one_on_skip
+  ok    social_events.all_point_steps_commit_once
+  ok    social_events.time_step_capped_at_two_hours
+  ok    social_events.seen_once_and_skip_recorded
+  ok    social_events.say_runs_merge_per_speaker
+  ok    social_events.actors_released_on_end
+  ok    social_events.camera_released_on_end
+  ok    social_events.seen_event_refused
+  ok    social_events.save_after_commit
+  ok    social_events.load_after_commit
+  ok    social_events.rewards_paid_once_after_load
+  ok    social_events.missing_actor_scene_can_start
+  ok    social_events.missing_actor_api_is_skipped_not_fatal
+  ok    social_events.ordinary_scene_points_paid
+  ok    social_events.yearly_scene_starts
+  ok    social_events.full_pack_reward_is_saved
+  ok    social_events.full_pack_save_valid
+  ok    social_events.full_pack_reward_loads
+  ok    social_events.owed_survives_load
+  ok    social_events.reward_claimed_when_space_opens
+  ok    social_events.reward_claim_is_idempotent
+  ok    social_events.yearly_refused_same_year
+  ok    social_events.yearly_scene_repeats_next_year
+  ok    social_events.yearly_reward_second_year
+  ok    social_events.cancel_scene_starts
+  ok    social_events.cancel_does_not_commit
+  ok    social_events.cancel_releases_modal_and_actors
+  ok    social_events.cancelled_scene_can_retry
+  ok    social_events.time_never_advances_past_2359
+  ok    social_events.queue_bound_0
+  ok    social_events.queue_bound_1
+  ok    social_events.queue_bound_2
+  ok    social_events.queue_bound_3
+  ok    social_events.queue_bound_4
+  ok    social_events.queue_bound_5
+  ok    social_events.queue_drops_after_two_days
+  --    social_events: 55 checks, 0 failed, 0 skipped, 1.1 s
+== summary: 2 section(s) run, 114 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 9.1 s
+PLAYTEST PASS (114 checks in 2 sections, 0 allowed engine messages, 0 known-issue messages)

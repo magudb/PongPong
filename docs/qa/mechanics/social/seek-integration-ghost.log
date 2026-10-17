@@ -1,0 +1,774 @@
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=ghost sections=res://tests/sections only=ghostfam_seek,ghostfam_data,ghostfam_play,ghostfam_events,furniture,social_events,social_talk,ui_nav
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.AV8i7p/Library/Application Support/Traetoppen (throwaway)
+== boot (ghost): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 3 for ghost)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 11.5 s
+== section furniture  (res://tests/sections/furniture.gd)
+  ok    furniture.cell_to_local == map_to_local - half tile (0, 0) ((64.0, 38.0) vs (0.0, 0.0))
+  ok    furniture.cell_to_local == map_to_local - half tile (3, 1) ((192.0, 190.0) vs (128.0, 152.0))
+  ok    furniture.cell_to_local == map_to_local - half tile (2, 5) ((-128.0, 304.0) vs (-192.0, 266.0))
+  ok    furniture.cell_to_local == map_to_local - half tile (8, 6) ((192.0, 570.0) vs (128.0, 532.0))
+  ok    furniture.local_to_cell roundtrip
+  ok    furniture.bed 2x3 rot0 dims
+  ok    furniture.bed rot1 dims swap
+  ok    furniture.footprint cells count rot1
+  ok    furniture.rot_vec front r1 = +x
+  ok    furniture.place sofa free
+  ok    furniture.out of room (wing is narrow)
+  ok    furniture.out of room negative
+  ok    furniture.placed uid
+  ok    furniture.overlap rejected
+  ok    furniture.adjacent ok
+  ok    furniture.door cell blocked ({ "ok": false, "reason": "door_blocked", "text_key": "FURNI_REJECT_DOOR_BLOCKED", "cells": [(2, 6)] })
+  ok    furniture.spawn cell blocked
+  ok    furniture.wardrobe in front of window rejected ({ "ok": false, "reason": "blocks_window", "text_key": "FURNI_REJECT_BLOCKS_WINDOW", "cells": [(4, 0), (5, 0)] })
+  ok    furniture.chair in front of window allowed
+  ok    furniture.fireplace mid room needs wall
+  ok    furniture.fireplace rot2 needs wall
+  ok    furniture.fireplace at back wall ok
+  ok    furniture.fireplace on left wall rot1 ok ({ "ok": true, "reason": "ok", "text_key": "", "cells": [(0, 5), (0, 6)] })
+  ok    furniture.rug ok under sofa
+  ok    furniture.rug overlap rug
+  ok    furniture.furniture on rug ok
+  ok    furniture.painting on plain segment
+  ok    furniture.painting on window segment rejected
+  ok    furniture.curtain on plain segment rejected
+  ok    furniture.curtain on window ok
+  ok    furniture.wall item rot2 invalid
+  ok    furniture.wide painting spans 2 segments
+  ok    furniture.wide painting over window seg rejected
+  ok    furniture.wall slot taken
+  ok    furniture.tall floor item under low wall item rejected ({ "ok": false, "reason": "too_tall", "text_key": "FURNI_REJECT_TOO_TALL", "cells": [(2, 0), (3, 0)] })
+  ok    furniture.x wall segment out of range
+  ok    furniture.table placed
+  ok    furniture.vase needs surface (floor cell empty)
+  ok    furniture.vase on table slot 0
+  ok    furniture.vase on table slot 1
+  ok    furniture.slot taken
+  ok    furniture.other slot still free
+  ok    furniture.chandelier ok
+  ok    furniture.chandelier overlap
+  ok    furniture.removing a table removes its vase
+  ok    furniture.table cells free again
+  ok    furniture.fireplace front is cells (2,1),(3,1) ([(2, 1), (3, 1)])
+  ok    furniture.blocking the only access to the fireplace is rejected ({ "ok": false, "reason": "blocks_path", "text_key": "FURNI_REJECT_BLOCKS_PATH", "cells": [(3, 1)], "why": "fireplace_granite@(2, 0)" })
+  ok    furniture.room capacity
+  ok    furniture.save/load roundtrip keeps every placement (rejected: [])
+  ok    furniture.catalogue_content_matches_all_painted_footprints ([])
+  ok    furniture.registered_save_section
+  ok    furniture.starter_bed_and_chest_reachable
+  ok    furniture.starter_stock
+  ok    furniture.placed_cannot_be_sold
+  ok    furniture.invalid_items_rejected
+  ok    furniture.ordinary_stack_cap
+  ok    furniture.placement_moves_stock_to_grid
+  ok    furniture.placed_copies_count_toward_cap
+  ok    furniture.failed_placement_atomic
+  ok    furniture.pickup_conserves_ownership
+  ok    furniture.unique_cap
+  ok    furniture.table_and_vase_placed
+  ok    furniture.pickup_returns_host_and_tabletop
+  ok    furniture.json_roundtrip
+  ok    furniture.bad_section_atomic
+  ok    furniture.rejected_saved_placements_return_to_stock
+  ok    furniture.loaded_unique_never_duplicates
+  ok    furniture.upgrade_1_conserves_every_piece
+  ok    furniture.tier_1_all_interactions_reachable
+  ok    furniture.tier_1_capacity_counts_all_layers
+  ok    furniture.tier_1_hygge_is_placed_decor
+  ok    furniture.upgrade_2_conserves_every_piece
+  ok    furniture.tier_2_all_interactions_reachable
+  ok    furniture.tier_2_capacity_counts_all_layers
+  ok    furniture.tier_2_hygge_is_placed_decor
+  ok    furniture.upgrade_3_conserves_every_piece
+  ok    furniture.tier_3_all_interactions_reachable
+  ok    furniture.tier_3_capacity_counts_all_layers
+  ok    furniture.tier_3_hygge_is_placed_decor
+  ok    furniture.upgrade_4_conserves_every_piece
+  ok    furniture.tier_4_all_interactions_reachable
+  ok    furniture.tier_4_capacity_counts_all_layers
+  ok    furniture.tier_4_hygge_is_placed_decor
+  ok    furniture.upgrade_5_conserves_every_piece
+  ok    furniture.tier_5_all_interactions_reachable
+  ok    furniture.tier_5_capacity_counts_all_layers
+  ok    furniture.tier_5_hygge_is_placed_decor
+  ok    furniture.upgrade_6_conserves_every_piece
+  ok    furniture.tier_6_all_interactions_reachable
+  ok    furniture.tier_6_capacity_counts_all_layers
+  ok    furniture.tier_6_hygge_is_placed_decor
+  ok    furniture.upgrade_7_conserves_every_piece
+  ok    furniture.tier_7_all_interactions_reachable
+  ok    furniture.tier_7_capacity_counts_all_layers
+  ok    furniture.tier_7_hygge_is_placed_decor
+  ok    furniture.upgrade_8_conserves_every_piece
+  ok    furniture.tier_8_all_interactions_reachable
+  ok    furniture.tier_8_capacity_counts_all_layers
+  ok    furniture.tier_8_hygge_is_placed_decor
+  ok    furniture.upgrade_9_conserves_every_piece
+  ok    furniture.tier_9_all_interactions_reachable
+  ok    furniture.tier_9_capacity_counts_all_layers
+  ok    furniture.tier_9_hygge_is_placed_decor
+  ok    furniture.upgrade_10_conserves_every_piece
+  ok    furniture.tier_10_all_interactions_reachable
+  ok    furniture.tier_10_capacity_counts_all_layers
+  ok    furniture.tier_10_hygge_is_placed_decor
+  ok    furniture.save_uses_arrays_without_runtime_uids
+  --    furniture: 109 checks, 0 failed, 0 skipped, 0.3 s
+== section ghostfam_data  (res://tests/sections/ghostfam_data.gd)
+  ok    ghostfam_data.building_row_hours
+  ok    ghostfam_data.shop_loads_and_stock_exists
+  ok    ghostfam_data.room_has_family_bed_and_guest_bed
+  ok    ghostfam_data.sidecar_door_and_post_added
+  ok    ghostfam_data.ghostfam_dyne_registered
+  ok    ghostfam_data.ghostfam_dyne_visual_without_fallback
+  ok    ghostfam_data.ghostfam_dyne_plans_wrap
+  ok    ghostfam_data.ghostfam_dyne_present_for_rasmus ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_kiki ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_kloevermynte ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_birk ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_bertil ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_bodil ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_bu ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_hviske ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_registered
+  ok    ghostfam_data.ghostfam_gnist_visual_without_fallback
+  ok    ghostfam_data.ghostfam_gnist_plans_wrap
+  ok    ghostfam_data.ghostfam_gnist_present_for_rasmus ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_kiki ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_kloevermynte ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_birk ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_bertil ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_bodil ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_bu ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_hviske ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_registered
+  ok    ghostfam_data.ghostfam_silke_visual_without_fallback
+  ok    ghostfam_data.ghostfam_silke_plans_wrap
+  ok    ghostfam_data.ghostfam_silke_present_for_rasmus ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_kiki ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_kloevermynte ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_birk ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_bertil ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_bodil ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_bu ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_hviske ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_0_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_0_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_0_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_1_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_1_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_1_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_2_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_2_klart_25.0 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_2_klart_25.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_3_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_3_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_3_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_4_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_4_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_4_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_5_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_5_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_5_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_6_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_6_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_6_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_0_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_0_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_0_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_1_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_1_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_1_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_2_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_2_regn_25.0 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_2_regn_25.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_3_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_3_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_3_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_4_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_4_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_4_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_5_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_5_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_5_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_6_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_6_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_6_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.ghostfam_blund_registered
+  ok    ghostfam_data.ghostfam_blund_visual_without_fallback
+  ok    ghostfam_data.ghostfam_blund_plans_wrap
+  ok    ghostfam_data.ghostfam_blund_present_for_rasmus ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_kiki ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_kloevermynte ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_birk ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_bertil ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_bodil ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_bu ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_hviske ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_3_klart_24.5 ({ "npc": "ghostfam_blund", "state": "move", "plan": "hide_3", "place": "traetoppen.f_bench", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_mailbox", "to": "traetoppen.f_bench", "frac": 0.99757673667205, "t0": 23.5, "t1": 24.5024291497976 } })
+  ok    ghostfam_data.presence_ghostfam_blund_3_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_3", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_3_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_3", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_3_regn_24.5 ({ "npc": "ghostfam_blund", "state": "move", "plan": "hide_3", "place": "traetoppen.f_bench", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_mailbox", "to": "traetoppen.f_bench", "frac": 0.99757673667205, "t0": 23.5, "t1": 24.5024291497976 } })
+  ok    ghostfam_data.presence_ghostfam_blund_3_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_3", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_3_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_3", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.keeper_covers_hours_every_open_day ([])
+  ok    ghostfam_data.post_capacity_with_family ([])
+  ok    ghostfam_data.visual_budget_with_family ([])
+  ok    ghostfam_data.late_round_is_robust ([])
+  ok    ghostfam_data.dialogue_ghostfam_dyne_animal
+  ok    ghostfam_data.dialogue_ghostfam_dyne_fairy
+  ok    ghostfam_data.dialogue_ghostfam_dyne_hobbit
+  ok    ghostfam_data.dialogue_ghostfam_dyne_ghost
+  ok    ghostfam_data.dialogue_ghostfam_gnist_animal
+  ok    ghostfam_data.dialogue_ghostfam_gnist_fairy
+  ok    ghostfam_data.dialogue_ghostfam_gnist_hobbit
+  ok    ghostfam_data.dialogue_ghostfam_gnist_ghost
+  ok    ghostfam_data.dialogue_ghostfam_silke_animal
+  ok    ghostfam_data.dialogue_ghostfam_silke_fairy
+  ok    ghostfam_data.dialogue_ghostfam_silke_hobbit
+  ok    ghostfam_data.dialogue_ghostfam_silke_ghost
+  ok    ghostfam_data.dialogue_ghostfam_blund_animal
+  ok    ghostfam_data.dialogue_ghostfam_blund_fairy
+  ok    ghostfam_data.dialogue_ghostfam_blund_hobbit
+  ok    ghostfam_data.dialogue_ghostfam_blund_ghost
+  ok    ghostfam_data.midnight_story_0
+  ok    ghostfam_data.midnight_story_1
+  ok    ghostfam_data.midnight_story_2
+  ok    ghostfam_data.midnight_story_3
+  ok    ghostfam_data.midnight_story_4
+  ok    ghostfam_data.midnight_story_5
+  ok    ghostfam_data.midnight_story_6
+  ok    ghostfam_data.gnist_hours_equal_building_row
+  ok    ghostfam_data.no_double_reaction
+  ok    ghostfam_data.hiding_slots_0
+  ok    ghostfam_data.silke_hint_0_0
+  ok    ghostfam_data.silke_hint_0_1
+  ok    ghostfam_data.hiding_slots_1
+  ok    ghostfam_data.silke_hint_1_0
+  ok    ghostfam_data.silke_hint_1_1
+  ok    ghostfam_data.hiding_slots_3
+  ok    ghostfam_data.silke_hint_3_0
+  ok    ghostfam_data.silke_hint_3_1
+  ok    ghostfam_data.hiding_slots_4
+  ok    ghostfam_data.silke_hint_4_0
+  ok    ghostfam_data.silke_hint_4_1
+  ok    ghostfam_data.hiding_slots_5
+  ok    ghostfam_data.silke_hint_5_0
+  ok    ghostfam_data.silke_hint_5_1
+  ok    ghostfam_data.hiding_slots_6
+  ok    ghostfam_data.silke_hint_6_0
+  ok    ghostfam_data.silke_hint_6_1
+  ok    ghostfam_data.wednesday_family_evening_four_at_fire
+  ok    ghostfam_data.family_gathering_has_distinct_body_positions (minimum ground gap=84.8528137207031)
+  ok    ghostfam_data.ghostfam_dyne_live_at_dawn
+  ok    ghostfam_data.ghostfam_dyne_kin_scene_without_stranger
+  ok    ghostfam_data.ghostfam_dyne_kin_is_met_and_weekly_heart
+  ok    ghostfam_data.granny_knit_gift_once
+  ok    ghostfam_data.ghostfam_dyne_kin_once
+  ok    ghostfam_data.ghostfam_dyne_flags_json_safe
+  ok    ghostfam_data.ghostfam_gnist_live_at_dawn
+  ok    ghostfam_data.ghostfam_gnist_kin_scene_without_stranger
+  ok    ghostfam_data.ghostfam_gnist_kin_is_met_and_weekly_heart
+  ok    ghostfam_data.ghostfam_gnist_kin_once
+  ok    ghostfam_data.ghostfam_gnist_flags_json_safe
+  ok    ghostfam_data.ghostfam_silke_live_at_dawn
+  ok    ghostfam_data.ghostfam_silke_kin_scene_without_stranger
+  ok    ghostfam_data.ghostfam_silke_kin_is_met_and_weekly_heart
+  ok    ghostfam_data.ghostfam_silke_kin_once
+  ok    ghostfam_data.ghostfam_silke_flags_json_safe
+  ok    ghostfam_data.ghostfam_blund_live_at_dawn
+  ok    ghostfam_data.ghostfam_blund_kin_scene_without_stranger
+  ok    ghostfam_data.ghostfam_blund_kin_is_met_and_weekly_heart
+  ok    ghostfam_data.ghostfam_blund_kin_once
+  ok    ghostfam_data.ghostfam_blund_flags_json_safe
+  ok    ghostfam_data.hook_gardener_hoppe
+  ok    ghostfam_data.hook_ghostfam_dyne
+  ok    ghostfam_data.hook_ghostfam_gnist
+  ok    ghostfam_data.hook_ghostfam_silke
+  ok    ghostfam_data.hook_ghostfam_blund
+  ok    ghostfam_data.copy_regenerates_identically (PASS family copy regeneration (168 draft rows)
+)
+  ok    ghostfam_data.tone_gender_barks_and_literal_keys (Family copy: 168 rows, 0 problems; no tone allow-list
+)
+  --    ghostfam_data: 293 checks, 0 failed, 0 skipped, 2.6 s
+== section ghostfam_events  (res://tests/sections/ghostfam_events.gd)
+  ok    ghostfam_events.eleven_registered
+  ok    ghostfam_events.ev_ghostfam_blund_h4_real_stage ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.g_planter2", "act": "hide", "area": "traetoppen" })
+  ok    ghostfam_events.ev_ghostfam_blund_h4_ready
+  ok    ghostfam_events.ev_ghostfam_blund_h4_mark
+  ok    ghostfam_events.ev_ghostfam_blund_h4_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_blund_h4_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_blund_h4_once
+  ok    ghostfam_events.ev_ghostfam_dyne_h4_real_stage ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.t_fire_e", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_events.ev_ghostfam_dyne_h4_ready
+  ok    ghostfam_events.ev_ghostfam_dyne_h4_mark
+  ok    ghostfam_events.ev_ghostfam_dyne_h4_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_dyne_h4_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_dyne_h4_once
+  ok    ghostfam_events.ev_ghostfam_gnist_h4_real_stage ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "int_gaestehytten.table", "act": "eat", "area": "int_gaestehytten" })
+  ok    ghostfam_events.ev_ghostfam_gnist_h4_ready
+  ok    ghostfam_events.ev_ghostfam_gnist_h4_mark
+  ok    ghostfam_events.ev_ghostfam_gnist_h4_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_gnist_h4_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_gnist_h4_once
+  ok    ghostfam_events.door_lantern_oil
+  ok    ghostfam_events.ev_ghostfam_silke_h4_real_stage ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "hyggebyen.round_s", "act": "patrol", "area": "hyggebyen" })
+  ok    ghostfam_events.ev_ghostfam_silke_h4_ready
+  ok    ghostfam_events.ev_ghostfam_silke_h4_mark
+  ok    ghostfam_events.ev_ghostfam_silke_h4_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_silke_h4_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_silke_h4_once
+  ok    ghostfam_events.ev_ghostfam_dyne_h6_real_stage ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.t_fire_e", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_events.ev_ghostfam_dyne_h6_ready
+  ok    ghostfam_events.ev_ghostfam_dyne_h6_mark
+  ok    ghostfam_events.ev_ghostfam_dyne_h6_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_dyne_h6_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_dyne_h6_once
+  ok    ghostfam_events.ev_ghostfam_blund_h8_real_stage ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.t_fire_e", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_events.ev_ghostfam_blund_h8_ready
+  ok    ghostfam_events.ev_ghostfam_blund_h8_mark
+  ok    ghostfam_events.ev_ghostfam_blund_h8_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_blund_h8_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_blund_h8_once
+  ok    ghostfam_events.ev_ghostfam_dyne_h8_real_stage ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_events.ev_ghostfam_dyne_h8_ready
+  ok    ghostfam_events.ev_ghostfam_dyne_h8_mark
+  ok    ghostfam_events.ev_ghostfam_dyne_h8_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_dyne_h8_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_dyne_h8_once
+  ok    ghostfam_events.ev_ghostfam_gnist_h8_real_stage ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_events.ev_ghostfam_gnist_h8_ready
+  ok    ghostfam_events.ev_ghostfam_gnist_h8_mark
+  ok    ghostfam_events.ev_ghostfam_gnist_h8_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_gnist_h8_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_gnist_h8_once
+  ok    ghostfam_events.ev_ghostfam_silke_h8_real_stage ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_events.ev_ghostfam_silke_h8_ready
+  ok    ghostfam_events.ev_ghostfam_silke_h8_mark
+  ok    ghostfam_events.ev_ghostfam_silke_h8_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_silke_h8_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_silke_h8_once
+  ok    ghostfam_events.ev_ghostfam_dyne_h10_real_stage ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.t_fire_e", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_events.ev_ghostfam_dyne_h10_ready
+  ok    ghostfam_events.ev_ghostfam_dyne_h10_mark
+  ok    ghostfam_events.ev_ghostfam_dyne_h10_requested
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.ev_ghostfam_dyne_h10_finished_with_actors
+  ok    ghostfam_events.ev_ghostfam_dyne_h10_once
+  ok    ghostfam_events.seat_for_friend
+  ok    ghostfam_events.save_all_ordinary_scenes
+  ok    ghostfam_events.ten_saved
+  ok    ghostfam_events.cousins_branch_only
+  ok    ghostfam_events.friends_branch_only
+  ok    ghostfam_events.welcome_real_family
+  ok    ghostfam_events.welcome_ready_for_kin
+  ok    ghostfam_events.welcome_request
+  ok    ghostfam_events.scene_finished
+  ok    ghostfam_events.cousin_kept_seat
+  ok    ghostfam_events.friend_seat_scene_not_repeated_for_kin
+  ok    ghostfam_events.FEST_AARSSKIFTET_GHOSTFAM_DYNE_1
+  ok    ghostfam_events.FEST_AARSSKIFTET_GHOSTFAM_GNIST_1
+  ok    ghostfam_events.FEST_AARSSKIFTET_GHOSTFAM_SILKE_1
+  ok    ghostfam_events.FEST_AARSSKIFTET_GHOSTFAM_BLUND_1
+  ok    ghostfam_events.FEST_BADEDAGEN_GHOSTFAM_DYNE_1
+  ok    ghostfam_events.FEST_BADEDAGEN_GHOSTFAM_GNIST_1
+  ok    ghostfam_events.FEST_BADEDAGEN_GHOSTFAM_SILKE_1
+  ok    ghostfam_events.FEST_BADEDAGEN_GHOSTFAM_BLUND_1
+  ok    ghostfam_events.FEST_BAGEDAGEN_GHOSTFAM_DYNE_1
+  ok    ghostfam_events.FEST_BAGEDAGEN_GHOSTFAM_GNIST_1
+  ok    ghostfam_events.FEST_BAGEDAGEN_GHOSTFAM_SILKE_1
+  ok    ghostfam_events.FEST_BAGEDAGEN_GHOSTFAM_BLUND_1
+  ok    ghostfam_events.FEST_BLOMSTERFESTEN_GHOSTFAM_DYNE_1
+  ok    ghostfam_events.FEST_BLOMSTERFESTEN_GHOSTFAM_GNIST_1
+  ok    ghostfam_events.FEST_BLOMSTERFESTEN_GHOSTFAM_SILKE_1
+  ok    ghostfam_events.FEST_BLOMSTERFESTEN_GHOSTFAM_BLUND_1
+  ok    ghostfam_events.FEST_HOESTFESTEN_GHOSTFAM_DYNE_1
+  ok    ghostfam_events.FEST_HOESTFESTEN_GHOSTFAM_GNIST_1
+  ok    ghostfam_events.FEST_HOESTFESTEN_GHOSTFAM_SILKE_1
+  ok    ghostfam_events.FEST_HOESTFESTEN_GHOSTFAM_BLUND_1
+  ok    ghostfam_events.FEST_HONNINGDAGEN_GHOSTFAM_DYNE_1
+  ok    ghostfam_events.FEST_HONNINGDAGEN_GHOSTFAM_GNIST_1
+  ok    ghostfam_events.FEST_HONNINGDAGEN_GHOSTFAM_SILKE_1
+  ok    ghostfam_events.FEST_HONNINGDAGEN_GHOSTFAM_BLUND_1
+  ok    ghostfam_events.FEST_MAANEMARKEDET_GHOSTFAM_DYNE_1
+  ok    ghostfam_events.FEST_MAANEMARKEDET_GHOSTFAM_GNIST_1
+  ok    ghostfam_events.FEST_MAANEMARKEDET_GHOSTFAM_SILKE_1
+  ok    ghostfam_events.FEST_MAANEMARKEDET_GHOSTFAM_BLUND_1
+  ok    ghostfam_events.FEST_MIDSOMMERLANTERNER_GHOSTFAM_DYNE_1
+  ok    ghostfam_events.FEST_MIDSOMMERLANTERNER_GHOSTFAM_GNIST_1
+  ok    ghostfam_events.FEST_MIDSOMMERLANTERNER_GHOSTFAM_SILKE_1
+  ok    ghostfam_events.FEST_MIDSOMMERLANTERNER_GHOSTFAM_BLUND_1
+  ok    ghostfam_events.FEST_VINTERLYSENE_GHOSTFAM_DYNE_1
+  ok    ghostfam_events.FEST_VINTERLYSENE_GHOSTFAM_GNIST_1
+  ok    ghostfam_events.FEST_VINTERLYSENE_GHOSTFAM_SILKE_1
+  ok    ghostfam_events.FEST_VINTERLYSENE_GHOSTFAM_BLUND_1
+  ok    ghostfam_events.thirty_six_festival_greetings
+  ok    ghostfam_events.authored_source_reproducible
+  --    ghostfam_events: 121 checks, 0 failed, 0 skipped, 21.7 s
+== section ghostfam_play  (res://tests/sections/ghostfam_play.gd)
+  ok    ghostfam_play.ghostfam_dyne_present
+  ok    ghostfam_play.ghostfam_dyne_halo_attached
+  ok    ghostfam_play.ghostfam_dyne_one_owner
+  ok    ghostfam_play.ghostfam_dyne_light_role
+  ok    ghostfam_play.ghostfam_dyne_night_halo
+  ok    ghostfam_play.ghostfam_gnist_present
+  ok    ghostfam_play.ghostfam_gnist_halo_attached
+  ok    ghostfam_play.ghostfam_gnist_one_owner
+  ok    ghostfam_play.ghostfam_gnist_light_role
+  ok    ghostfam_play.ghostfam_gnist_night_halo
+  ok    ghostfam_play.ghostfam_silke_present
+  ok    ghostfam_play.ghostfam_silke_halo_attached
+  ok    ghostfam_play.ghostfam_silke_one_owner
+  ok    ghostfam_play.ghostfam_silke_light_role
+  ok    ghostfam_play.ghostfam_silke_night_halo
+  ok    ghostfam_play.ghostfam_blund_present
+  ok    ghostfam_play.ghostfam_blund_halo_attached
+  ok    ghostfam_play.ghostfam_blund_one_owner
+  ok    ghostfam_play.ghostfam_blund_light_role
+  ok    ghostfam_play.ghostfam_blund_night_halo
+  ok    ghostfam_play.live_city_light_budget (15)
+  ok    ghostfam_play.lantern_yields_when_budget_full
+  ok    ghostfam_play.lantern_returns_when_budget_free
+  ok    ghostfam_play.noon_hides_all_halos
+  ok    ghostfam_play.noon_hides_lantern
+  ok    ghostfam_play.glow_and_light_free_with_actor
+  --    ghostfam_play: 26 checks, 0 failed, 0 skipped, 0.9 s
+== section ghostfam_seek  (res://tests/sections/ghostfam_seek.gd)
+  ok    ghostfam_seek.six_json_safe_flags
+  ok    ghostfam_seek.old_save_without_flags_is_zero
+  ok    ghostfam_seek.routine_0a
+  ok    ghostfam_seek.routine_0b
+  ok    ghostfam_seek.routine_1a
+  ok    ghostfam_seek.routine_1b
+  ok    ghostfam_seek.routine_3a
+  ok    ghostfam_seek.routine_3b
+  ok    ghostfam_seek.routine_4a
+  ok    ghostfam_seek.routine_4b
+  ok    ghostfam_seek.routine_5a
+  ok    ghostfam_seek.routine_5b
+  ok    ghostfam_seek.routine_6a
+  ok    ghostfam_seek.routine_6b
+  ok    ghostfam_seek.family_evening_has_no_seek
+  ok    ghostfam_seek.real_hidden_actor
+  ok    ghostfam_seek.three_existing_effect_dots
+  ok    ghostfam_seek.no_added_seek_lights
+  ok    ghostfam_seek.shimmer_hidden_from_far
+  ok    ghostfam_seek.cousin_range_only
+  ok    ghostfam_seek.ordinary_shimmer_range
+  ok    ghostfam_seek.warm_whisper_once
+  ok    ghostfam_seek.hot_whisper_once
+  ok    ghostfam_seek.outside_find_radius_not_counted
+  ok    ghostfam_seek.real_interaction_counts_find
+  ok    ghostfam_seek.find_pays_five_points
+  ok    ghostfam_seek.lua_found_branch_and_cleared_transients
+  ok    ghostfam_seek.dialogue_finished
+  ok    ghostfam_seek.found_actor_reappears
+  ok    ghostfam_seek.second_talk_same_slot
+  ok    ghostfam_seek.dialogue_finished
+  ok    ghostfam_seek.second_slot_counts
+  ok    ghostfam_seek.same_slot_cannot_repeat
+  ok    ghostfam_seek.midnight_keeps_same_date_mask
+  ok    ghostfam_seek.midnight_save_load
+  ok    ghostfam_seek.counter_and_mask_survive
+  ok    ghostfam_seek.new_day_has_fresh_slots
+  ok    ghostfam_seek.missing_a_slot_has_no_penalty
+  ok    ghostfam_seek.ladder_1_one_payload
+  ok    ghostfam_seek.ladder_1_no_replay
+  ok    ghostfam_seek.pace_1
+  ok    ghostfam_seek.ladder_2_one_payload
+  ok    ghostfam_seek.ladder_2_no_replay
+  ok    ghostfam_seek.pace_2
+  ok    ghostfam_seek.ladder_3_one_payload
+  ok    ghostfam_seek.ladder_3_no_replay
+  ok    ghostfam_seek.pace_3
+  ok    ghostfam_seek.ladder_4_one_payload
+  ok    ghostfam_seek.ladder_4_no_replay
+  ok    ghostfam_seek.ladder_4_registry
+  ok    ghostfam_seek.pace_4
+  ok    ghostfam_seek.ladder_5_one_payload
+  ok    ghostfam_seek.ladder_5_no_replay
+  ok    ghostfam_seek.ladder_5_registry
+  ok    ghostfam_seek.pace_5
+  ok    ghostfam_seek.owned_keepsake_fallback_3
+  ok    ghostfam_seek.registry_only_keepsake_fallback_3
+  ok    ghostfam_seek.owned_keepsake_fallback_4
+  ok    ghostfam_seek.registry_only_keepsake_fallback_4
+  ok    ghostfam_seek.full_store_defers_gift
+  ok    ghostfam_seek.retry_accepts_once
+  ok    ghostfam_seek.store_observers_see_committed_reward
+  ok    ghostfam_seek.all_keys_da_en
+  ok    ghostfam_seek.card_has_real_count_and_next_step
+  ok    ghostfam_seek.card_count_danish
+  ok    ghostfam_seek.card_count_english
+  ok    ghostfam_seek.progress_card_in_real_dialogue
+  --    ghostfam_seek: 67 checks, 0 failed, 0 skipped, 4.2 s
+== section social_events  (res://tests/sections/social_events.gd)
+  ok    social_events.heart_event_only_on_talk
+  ok    social_events.automatic_events_never_appear_in_talk_choices
+  ok    social_events.queue_accepts_while_busy
+  ok    social_events.deduplicates_queued_events
+  ok    social_events.waits_for_playing_and_no_modal
+  ok    social_events.queued_talk_starts_after_modal_closes
+  ok    social_events.event_modal_is_nonpausing_cutscene
+  ok    social_events.clock_frozen
+  ok    social_events.no_save_during_event
+  ok    social_events.no_travel_or_sleep_during_event
+  ok    social_events.rewards_deferred_until_scene_end
+  ok    social_events.overlay_follows_modal
+  ok    social_events.overlay_focus_none (0 interactive, 0 keyboard-focusable)
+  ok    social_events.overlay_rules (6 nodes, 1 text, 0 boxes, 0 interactive scanned)
+  ok    social_events.overlay_i18n (clean)
+  ok    social_events.escape_opens_one_confirm
+  ok    social_events.continue_is_default
+  ok    social_events.declining_skip_keeps_scene
+  ok    social_events.skip_fast_forwards_effects
+  ok    social_events.choice_takes_option_one_on_skip
+  ok    social_events.all_point_steps_commit_once
+  ok    social_events.time_step_capped_at_two_hours
+  ok    social_events.seen_once_and_skip_recorded
+  ok    social_events.say_runs_merge_per_speaker
+  ok    social_events.actors_released_on_end
+  ok    social_events.camera_released_on_end
+  ok    social_events.seen_event_refused
+  ok    social_events.save_after_commit
+  ok    social_events.load_after_commit
+  ok    social_events.rewards_paid_once_after_load
+  ok    social_events.missing_actor_scene_can_start
+  ok    social_events.missing_actor_api_is_skipped_not_fatal
+  ok    social_events.ordinary_scene_points_paid
+  ok    social_events.yearly_scene_starts
+  ok    social_events.full_pack_reward_is_saved
+  ok    social_events.full_pack_save_valid
+  ok    social_events.full_pack_reward_loads
+  ok    social_events.owed_survives_load
+  ok    social_events.reward_claimed_when_space_opens
+  ok    social_events.reward_claim_is_idempotent
+  ok    social_events.yearly_refused_same_year
+  ok    social_events.yearly_scene_repeats_next_year
+  ok    social_events.yearly_reward_second_year
+  ok    social_events.cancel_scene_starts
+  ok    social_events.cancel_does_not_commit
+  ok    social_events.cancel_releases_modal_and_actors
+  ok    social_events.cancelled_scene_can_retry
+  ok    social_events.time_stops_before_the_live_day_roll
+  ok    social_events.queue_bound_0
+  ok    social_events.queue_bound_1
+  ok    social_events.queue_bound_2
+  ok    social_events.queue_bound_3
+  ok    social_events.queue_bound_4
+  ok    social_events.queue_bound_5
+  ok    social_events.queue_drops_after_two_days
+  --    social_events: 55 checks, 0 failed, 0 skipped, 0.5 s
+== section social_talk  (res://tests/sections/social_talk.gd)
+  ok    social_talk.decorate_on_empty_module_has_greeting_and_close
+  ok    Voice suffix resolves to the indexed NPC path
+  ok    social=false preserves authored first-meeting scenes
+  ok    Once met today, authored pages do not get another greeting
+  ok    The next day adds one greeting before the authored page
+  ok    A data-only citizen exposes the gift picker
+  ok    social_talk.choices_limit_5
+  ok    Overflow retains its choices and a closing row
+  ok    Cancelling a topic never teaches its item
+  ok    Reading the topic commits its daily use
+  ok    social_talk.topic_reveals_taste_once
+  ok    social_talk.topics_one_per_day
+  ok    Topic day and reveal bits survive a save roundtrip
+  ok    The next day reveals the next hearts-gated preference
+  ok    Hearts band for 0
+  ok    Hearts band for 1
+  ok    Hearts band for 2
+  ok    Hearts band for 3
+  ok    Hearts band for 4
+  ok    Hearts band for 5
+  ok    Hearts band for 6
+  ok    Hearts band for 7
+  ok    Hearts band for 8
+  ok    Hearts band for 9
+  ok    Hearts band for 10
+  ok    social_talk.cascade_specificity
+  ok    Day-part authored line precedes broad band pool
+  ok    Broad band remains usable in every daypart
+  ok    Gapped numbered variants are indexed
+  ok    social_talk.no_immediate_repeat
+  ok    Corpus revision invalidates family caches
+  ok    social_talk.weather_and_season_probabilities (Deterministic weather/season sample: 383/116)
+  ok    social_talk.pick_under_20us (Cached social line pick: 14.64 us)
+  ok    Missing keeper variants fall back to the actual shop greeting
+  ok    Quest bubble has first priority
+  ok    Gift reaction uses the citizen's own line first
+  ok    A repeated gift can use the archetype pool to avoid repeating one personal line
+  ok    Birthday greeting wins over ordinary context
+  ok    A ready heart event precedes the birthday bubble
+  ok    Ready heart events get an explicit conversation choice
+  ok    Content actions fall through to Npc2D's EventBus dispatch
+  ok    social=false scenes still count their read conversation as a meeting
+  --    social_talk: 42 checks, 0 failed, 0 skipped, 0.1 s
+== section ui_nav  (res://tests/sections/ui_nav.gd)
+  ok    ui_nav.disabled_not_focusable (set_enabled(false) -> disabled + FOCUS_NONE, (true) restores it; a LineEdit goes read-only; first_enabled skips both)
+  ok    ui_nav.wire_helpers (L ring true, wrap marks true, no-wrap true, T row true, G grid (22 in 6, clamped short row) true, groups true, focus memory true, ring wrap marks true, Tab order true, re-wire true, a real Down press lands on C10)
+  ok    ui_nav.hover_focus_lists (mouse_entered grabs focus on the rows (true / true), not on a chip (true) or a text field (true), not on a disabled row (true); one connection per row)
+  ok    ui_nav.text_field_yields_updown (without the helper Down stays in the field (true); with it Down -> Below (true), Up -> Above (true); Enter submits (true), Tab leaves (true), typing and the caret keys work (true))
+  ok    ui_nav.no_wrap_on_echo (a held Down (echo) stops at the last item (true), a fresh press wraps (true); same at the top (true / true); an echo inside the ring still moves (true))
+  ok    ui_nav.wasd_navigates (W / S move focus in an open screen (true / true / true), never inside a text field (true), the arrows still work once (true), an echo S stops at a wrapping end and a fresh one wraps (true / true), a closed screen and the free world are left alone (true), wasd_as_arrows serves a plain scene (true))
+  ok    ui_nav.screen_lifecycle (hidden + ALWAYS after _ready (true); open() twice pushes ONCE (true) and pauses (true); close() twice pops once (true); ui_panel_toggled is answered once per request (true / true / true); a non-pausing screen is CUTSCENE (true); a dropped stack closes it (true); siblings refuse (true), a nested screen opens (true))
+  ok    ui_nav.initial_focus_and_restore (focus is still on the opener in the frame of open() (true) and on _initial_focus() one frame later (true); close() hands it back (true); a world opener leaves no owner (true); open(opener) wins (true); a freed opener leaves no owner (true))
+  ok    ui_nav.focus_loss_guard (a hidden focus owner (true), a freed one (true) and focus outside the screen (true) are replaced within a frame; hiding the last good control (true); only the TOP screen guards (true); an empty-space click keeps focus (true))
+  ok    ui_nav.wants_focus_guard (_wants_focus() = false: no initial focus (true), the guard does not refocus (true), the audit asks for no initial focus (true) and skips the walk (true); true again -> focused (true))
+  ok    ui_nav.esc_uses_input_not_unhandled (typed letters never reach _unhandled_input (true), Enter in the field is consumed (true); Esc closes the screen although the field is being edited, through _input (true / true); Start (true) and B (true) close it; PgUp / RB call _on_page(-1 / +1) (true))
+  ok    ui_nav.accept_presses_focused_button (Enter, Space and pad A press the focused Button exactly once (true) and the world sees none of interact / jump / dodge / ui_accept (true); E presses nothing (true); Esc closes without a world reaction (true); a closed screen leaves E to the world (true))
+  ok    ui_nav.closing_press_does_not_reach_the_world (the Enter / pad A that presses a row CLOSING the last modal never reaches the world (true / true); without the swallow it does (true: set_input_as_handled() in a pressed handler is not enough); the flag lasts one frame (true / true) and every TTScreen honours it, open or not (true))
+  ok    ui_nav.text_field_typing_is_inert (text_field_audit (30 keys) finds no leak (true); typing i j e h g c b 1 0 w a s d opens nothing and moves no focus (true); a closed screen does not open its hotkey while a field has focus (true); without a field the hotkey opens (true) and closes (true) it)
+  ok    ui_nav.hint_glyphs_follow_device (keyboard E / Enter / Esc true -> pad A / A / B true -> keyboard true; stick < 0.5 and a mouse jitter do not flip (true), a real mouse move (true) and stick push (true) do, an action never does (true), a click does (true); device_changed fires once per change (true); format: E for at fortsætte / E to continue)
+  ok    ui_nav.hint_bar_localized (empty bar hidden (true); da glyph + word pairs (true), KeyCap + Eyebrow labels with a separator (true); a language switch re-renders it, no raw keys in either locale (true / true); a pad swap re-renders and leaves out the key that has no pad button (true / true); passive controls (true); force_hidden sticks (true); empty list hides (true); one device connection (1))
+  ok    ui_nav.prompt_prefix_glyph (split_prompt: 'E: Sov' / 'E · Tal med X' -> key token + verb, a plain 'Sov: i sengen', a lower-case or two-letter prefix and an empty text are not keys (true); UI_SLEEP, WORLD_PROMPT_USE and UI_READ split in da and en (true); is_key (true))
+  ok    ui_nav.confirm_default_focus_and_escape (last child of the asker (true), default answer focused (true / true), pushes `confirm` without changing the pause state (true / true / true), texts (true); Esc cancels and focus returns (true); Enter yes / no, swap, B, Start, A (true true true true true true true); scrim click inert, button click answers (true / true); language switch (true); stack clean (true))
+  ok    ui_nav.confirm_traps_focus (50 random Up / Down / Left / Right / Tab / Shift+Tab / WASD presses never leave the two buttons (50 inside, 0 outside); the audit walk finds no trap and no unreachable control (true), the focusable report no defect)
+  ok    ui_nav.confirm_ask_text (ask_text shows the field with the initial text selected, max length and the field focused (true); typing + Enter returns the text (true / true); Esc returns "" (true); the cap holds (true); OK by button strips (true); an empty text and the Cancel button return "" (true / true); Tab ring field -> Fortryd -> OK -> field (true true true))
+  ok    ui_nav.freeing_modal_releases_stack (freeing a nested modal preserves the parent; freeing the last modal resumes play; removing a confirmation's asker cancels exactly once and clears its pause)
+  ok    ui_nav.toast_stack_caps_and_rarity (IGNORE / FOCUS_NONE (true); five posts leave 3, newest on top (true / true), at the top centre y = 96 (true: y 96, centre 640); counts stack (true: ["Spil gemt ×2 | Slot 1", "Fået genstand | Gulerod x1", "Fået genstand | Månesten x6"]), a repeat moves back on top (true); keys run tr() and follow the language (true), no raw keys (true); a hat_wizard_night item shows its tile of Rarity.ui (true / true), kinds without an item have none (true); item_toasts = false leaves them to the loot feed (true))
+  ok    ui_nav.prompt_pill_follows_device (hidden at first (true); 'E: Sov' -> cap E + verb Sov at the bottom centre (true / true); a pad swap flips the cap to A and back (true / true); 'E · Tal med Pippin' (true), a verb-only prompt gets the cap (true); a key is translated (true) and follows the language (true); empty hides (true); inert (true); the theme look (true); one connection (1))
+  ok    ui_nav.whisper_line (hidden at first (true); whisper_requested(key) shows tr(key) in a PanelWhisper with the Whisper italic (true) at left 40 / bottom 40, at most 360 wide (true) and wraps a long text (true), a short one hugs its text (true); a second whisper replaces it (true) and it follows the language (true); inert (true), no raw keys (true); still there after 3 s (true) and gone after 3.5 s + fade (true); one connection (1))
+  ok    ui_nav.stepper_one_stop_keys (one focus stop (true), the audit sees one focusable and no defect (true / true); Right x2 / Left (true / true), a held key repeats (true); PgUp +5 / PgDn -5 clamped (true / true / true); Enter, Space and pad A commit (true); D-pad (true); the disabled '-' is no stop and the mouse buttons work (true / true); at the end of the range a held key stays (true) and a fresh press moves on (true / true); the ring is PanelField/focus (true))
+  ok    ui_nav.engine_facts (29 engine facts of UI_NAVIGATION.md 3.1 (F1 - F14) hold on this engine (4.7.2-stable (official)); failed: [])
+  --    ui_nav: 26 checks, 0 failed, 0 skipped, 4.4 s
+== summary: 8 section(s) run, 747 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 50.7 s
+PLAYTEST PASS (747 checks in 8 sections, 0 allowed engine messages, 0 known-issue messages)

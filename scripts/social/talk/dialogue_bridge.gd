@@ -30,22 +30,29 @@ static func decorate(npc: String, dialogue: Dictionary, context: Dictionary = {}
 	out["lines"] = lines
 	var choices: Array = []
 	var close := {"id": "goodbye", "text_key": "REL_TALK_GOODBYE", "action": "close"}
-	for c in LuaData.arr(out.get("choices", [])):
+	for original in LuaData.arr(out.get("choices", [])):
+		var c: Dictionary = Svc.static_call("res://scripts/ghostfam/seek/hide_seek.gd",&"hint_choice",[npc,LuaData.dict(original)],LuaData.dict(original))
 		if str(c.get("action", "")) == "close":
 			close = c
 		else:
 			choices.append(c)
 	var limits: Dictionary = sm.call("gift_limits", npc)
-	if int(limits.left_today) > 0 and (int(limits.left_week) > 0 or str(sm.call("birthday_state", npc)) != "") and not LuaData.arr(sm.call("gift_options", npc)).is_empty():
+	var gift_options: Array = sm.call("gift_options",npc)
+	var special_gift := gift_options.any(func(row):return bool(row.get("special",false)))
+	if special_gift or (int(limits.left_today) > 0 and (int(limits.left_week) > 0 or str(sm.call("birthday_state", npc)) != "") and not gift_options.is_empty()):
 		choices.append({"id": "give_gift", "text_key": "REL_TALK_GIFT", "action": "give_gift"})
 	if not topics(npc).is_empty():
 		choices.append({"id": "topic", "text_key": "REL_TALK_TOPIC", "action": "social_topic"})
 	var events: Array = sm.call("events_ready", npc)
 	if not events.is_empty():
 		choices.append({"id": "event", "text_key": "REL_TALK_EVENT", "action": "start_event", "event_id": str(events[0])})
+	var seek: Dictionary = Svc.static_call("res://scripts/ghostfam/seek/hide_seek.gd",&"card_choice",[npc],{})
+	if not seek.is_empty():choices.append(seek)
 	var garden := SecretGardenStory.choice(npc)
 	if not garden.is_empty():
 		choices.append(garden)
+	var mother := MotherStory.choice(npc)
+	if not mother.is_empty(): choices.append(mother)
 	if choices.size() > 4:
 		var extra := choices.slice(3)
 		choices = choices.slice(0, 3)
@@ -88,6 +95,7 @@ static func topic_page(npc: String) -> Dictionary:
 		"topic": topic, "topic_index": all.find(topic)}
 
 static func finish_topic(npc: String, page: Dictionary, completed: bool, lines_shown: int) -> bool:
+	if MotherStory.finish_topic(npc,page,completed,lines_shown): return true
 	if SecretGardenStory.finish_topic(npc, page, completed, lines_shown):
 		return true
 	var sm := Svc.node("SocialManager")
@@ -113,6 +121,12 @@ static func finish_topic(npc: String, page: Dictionary, completed: bool, lines_s
 ## Unknown actions still reach EventBus; this layer supplies the shared action data.
 static func action(npc: String, action_id: String, data: Dictionary) -> Dictionary:
 	match action_id:
+		"seek_hint":
+			return {"handled":true,"page":Svc.static_call("res://scripts/ghostfam/seek/hide_seek.gd",&"hint_page",[],{})}
+		"seek_card":
+			return {"handled":true,"page":Svc.static_call("res://scripts/ghostfam/seek/hide_seek.gd",&"card_page",[],{})}
+		"mother_story":
+			return {"handled":true,"page":MotherStory.topic_page(npc)}
 		"garden_story":
 			return {"handled": true, "page": SecretGardenStory.topic_page(npc)}
 		"social_more":

@@ -51,6 +51,7 @@ func _service_event(id: StringName, _payload: Dictionary) -> void:
 					node.interact(world.player)
 					return
 			EventBus.whisper_requested.emit("LIFE_BATH_VISIT")
-		&"open_post_office":
-			if str(world.area.map.id) == "int_postkontoret":
-				EventBus.whisper_requested.emit("LIFE_POST_OFFICE")
+		&"open_inn_menu":
+			if str(world.area.map.id) == "int_torvekroen" and Hours.is_open("torvekroen"):
+				var keeper := NpcDirector.node_of("innkeeper_kvak",world.area)
+				if keeper != null: keeper.call("interact",world.player)

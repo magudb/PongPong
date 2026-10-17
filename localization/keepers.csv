@@ -1,0 +1,67 @@
+keys,da,en
+KEEP_SEED_SHOP_GREET_H0_1,Frøene står klar. Hvad vil du gerne dyrke?,The seeds are ready. What would you like to grow?
+KEEP_SEED_SHOP_GREET_H1_1,Der er god plads til nye spirer i dag.,There is plenty of room for new sprouts today.
+KEEP_SEED_SHOP_GREET_H2_1,Jeg gemte en solrig plads til dine haveplaner.,I saved a sunny spot for your garden plans.
+KEEP_SEED_SHOP_GREET_H3_1,Du kender snart hver frøpose her. Velkommen tilbage.,You know nearly every seed packet here. Welcome back.
+KEEP_SEED_SHOP_SAMPLE_1,Her er lidt til dit næste bed.,Here is a little something for your next garden bed.
+KEEP_BAKERY_GREET_H0_1,Kom ind. Brødet er lige kommet ud af ovnen.,Come in. The bread has just come out of the oven.
+KEEP_BAKERY_GREET_H1_1,Jeg genkender dine skridt. Ovnen er allerede varm.,I know your footsteps. The oven is already warm.
+KEEP_BAKERY_GREET_H2_1,Skal vi finde noget godt til din pause?,Shall we find something nice for your break?
+KEEP_BAKERY_GREET_H3_1,Din sædvanlige plads er fri. Bliv bare lidt.,Your usual spot is free. Stay a little while.
+KEEP_BAKERY_SAMPLE_1,Smag en lille bid fra dagens bagning.,Try a little bite from today’s baking.
+KEEP_SMITHY_GREET_H0_1,Stil dig her ved disken. Så holder vi varmen sammen.,Stand here by the counter. We can keep warm together.
+KEEP_SMITHY_GREET_H1_1,Godt at se dig. Hvad trænger til en kærlig hånd?,Good to see you. What needs a little care?
+KEEP_SMITHY_GREET_H2_1,Jeg har gjort værktøjet klar til dine næste planer.,I have prepared the tools for your next plans.
+KEEP_SMITHY_GREET_H3_1,"Du må gerne blive, selv når hammeren holder pause.",You are welcome to stay when the hammer takes a break.
+KEEP_SMITHY_SAMPLE_1,En lille rest fra værkstedet. Den kan stadig bruges.,A small workshop offcut. It can still be useful.
+KEEP_ANIMAL_STORE_GREET_H0_1,Gå stille ind. Nogle af de små sover endnu.,Come in quietly. Some of the little ones are still asleep.
+KEEP_ANIMAL_STORE_GREET_H1_1,"Der er nogen her, som har savnet dine besøg.",Someone here has missed your visits.
+KEEP_ANIMAL_STORE_GREET_H2_1,Du husker altid at hilse på de små først.,You always remember to greet the little ones first.
+KEEP_ANIMAL_STORE_GREET_H3_1,Her er plads til dig mellem alle de bløde næser.,There is room for you among all these soft noses.
+KEEP_ANIMAL_STORE_SAMPLE_1,"Lidt ekstra til et dyr, der trænger til omsorg.",A little extra for an animal that needs some care.
+KEEP_MAGIC_STORE_GREET_H0_1,Se bare efter. De stille ting er også spændende.,Take a look. The quiet things are interesting too.
+KEEP_MAGIC_STORE_GREET_H1_1,"Jeg har fundet noget, der passer til din nysgerrighed.",I found something that suits your curiosity.
+KEEP_MAGIC_STORE_GREET_H2_1,"Du spørger altid om det, jeg selv havde overset.",You always ask about something I had overlooked.
+KEEP_MAGIC_STORE_GREET_H3_1,En god ven behøver ikke et ærinde for at komme ind.,A good friend needs no errand to come inside.
+KEEP_MAGIC_STORE_SAMPLE_1,Tag denne lille undren med dig hjem.,Take this little wonder home with you.
+KEEP_FURNITURE_SHOP_GREET_H0_1,Mærk efter. Et godt møbel skal føles som hjemme.,Take your time. Good furniture should feel like home.
+KEEP_FURNITURE_SHOP_GREET_H1_1,Skal vi finde noget til dit yndlingshjørne?,Shall we find something for your favourite corner?
+KEEP_FURNITURE_SHOP_GREET_H2_1,"Jeg tænkte på din gård, da jeg stillede dette frem.",I thought of your farm when I put this on display.
+KEEP_FURNITURE_SHOP_GREET_H3_1,Du har gjort plads til så meget liv derhjemme.,You have made room for so much life at home.
+KEEP_FURNITURE_SHOP_SAMPLE_1,En lille blomst gør også et rum hyggeligt.,A little flower can make a room cosy too.
+KEEP_TAILOR_SHOP_GREET_H0_1,Velkommen. Her kan du finde noget rart at have på.,Welcome. You can find something comfortable to wear here.
+KEEP_TAILOR_SHOP_GREET_H1_1,Jeg har lagt de bløde stoffer øverst til dig.,I put the soft fabrics on top for you.
+KEEP_TAILOR_SHOP_GREET_H2_1,Farverne må gerne følge dit humør i dag.,The colours can follow your mood today.
+KEEP_TAILOR_SHOP_GREET_H3_1,Din stil er blevet helt din egen. Det gør mig glad.,Your style has become entirely your own. That makes me happy.
+KEEP_TAILOR_SHOP_SAMPLE_1,"En stofrest til noget, kun du finder på.",A fabric scrap for something only you would imagine.
+KEEP_BUILDER_YARD_GREET_H0_1,Kom nærmere. Vi kan begynde med en lille plan.,Come closer. We can begin with a small plan.
+KEEP_BUILDER_YARD_GREET_H1_1,Hvordan går det med huset på gården?,How is the farmhouse coming along?
+KEEP_BUILDER_YARD_GREET_H2_1,Jeg husker dine planer. Skal vi tage næste skridt?,I remember your plans. Shall we take the next step?
+KEEP_BUILDER_YARD_GREET_H3_1,Du bygger mere end vægge. Her bliver plads til venner.,You build more than walls. You make room for friends.
+KEEP_BUILDER_YARD_SAMPLE_1,Et par søm til den næste gode idé.,A couple of nails for the next good idea.
+KEEP_FLEA_MARKET_GREET_H0_1,Kig roligt. Alle tingene her har en lille historie.,Take a look. Everything here has a little story.
+KEEP_FLEA_MARKET_GREET_H1_1,"Jeg fandt noget, jeg troede ville få dig til at smile.",I found something I thought would make you smile.
+KEEP_FLEA_MARKET_GREET_H2_1,Du ser muligheder i selv de skæveste ting.,You see possibilities in even the oddest things.
+KEEP_FLEA_MARKET_GREET_H3_1,Du behøver ikke finde et køb. Dit besøg er nok.,You do not need to find a bargain. Your visit is enough.
+KEEP_FLEA_MARKET_SAMPLE_1,En lille godbid til turen hjem.,A little treat for the way home.
+KEEP_TIMBER_YARD_GREET_H0_1,Træet ligger tørt. Hvad vil du gerne bygge?,The timber is dry. What would you like to build?
+KEEP_TIMBER_YARD_GREET_H1_1,Der er en god planke til dine planer her.,There is a good plank for your plans here.
+KEEP_TIMBER_YARD_GREET_H2_1,Jeg har lagt de lige stykker til side til dig.,I put the straight pieces aside for you.
+KEEP_TIMBER_YARD_GREET_H3_1,"En kop honningvand og en snak, før vi måler op?",Some honey water and a chat before we measure up?
+KEEP_TIMBER_YARD_SAMPLE_1,En lille stump træ. Der er stadig noget godt i den.,A small piece of wood. There is still something good in it.
+KEEP_NATTEBLIK_MAPS_GREET_H0_1,Kom hen til vinduet. Her kan du se ruterne.,Come to the window. You can see the routes here.
+KEEP_NATTEBLIK_MAPS_GREET_H1_1,Du fandt herop igen. Hvilken vej kalder i aften?,You found your way back. Which path calls tonight?
+KEEP_NATTEBLIK_MAPS_GREET_H2_1,Jeg har foldet kortet ud ved den gode lanterne.,I unfolded the map beside the good lantern.
+KEEP_NATTEBLIK_MAPS_GREET_H3_1,Du kender nattens lyde nu. Jeg er glad for dit selskab.,You know the sounds of night now. I am glad of your company.
+KEEP_NATTEBLIK_MAPS_SAMPLE_1,"Lidt lys til hjemvejen. Følg den sti, du kender.",A little light for the way home. Follow a path you know.
+KEEP_LANTERN_HOUSE_GREET_H0_1,"Kom ind i lyset. Vi finder en lampe, der passer.",Come into the light. We will find a lamp that suits you.
+KEEP_LANTERN_HOUSE_GREET_H1_1,Jeg har pudset glasset. Nu kan flammen ses igen.,I polished the glass. Now you can see the flame again.
+KEEP_LANTERN_HOUSE_GREET_H2_1,"Godt, du kom. Jeg havde en lanterne, jeg ville vise dig.",I am glad you came. I have a lantern to show you.
+KEEP_LANTERN_HOUSE_GREET_H3_1,"Du må gerne blive, til den sidste lampe er slukket.",You are welcome to stay until the last lamp goes out.
+KEEP_LANTERN_HOUSE_SAMPLE_1,Lidt olie holder lyset med selskab.,A little oil keeps the light company.
+KEEP_ANY_THANKS,"Tak. Jeg håber, det bliver til glæde.",Thank you. I hope it brings you joy.
+KEEP_ANY_CANNOT_PAY,"Det kan vente. Kom igen, når du har mønterne.",It can wait. Come back when you have the coins.
+KEEP_ANY_SOLD_OUT,Den er der ikke flere af lige nu.,There are no more of those just now.
+KEEP_ANY_FAREWELL_1,God tur hjem.,Have a good journey home.
+KEEP_ANY_FAREWELL_2,Tak for besøget.,Thank you for visiting.
+KEEP_ANY_FAREWELL_3,Vi ses igen.,See you again.

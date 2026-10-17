@@ -135,7 +135,7 @@ func _select(index: int) -> void:
 	var description := tr(str(def.get("description_key", "")))
 	var value := EconomyManager.sell_value(_selected_id)
 	%DetailDesc.text = description + ("\n" + tr("INV_SELLS_FOR") % Fmt.thousands(value) if value > 0 else "")
-	var use := (def.has("unlock_flag") and not bool(GameManager.get_flag(StringName(str(def.unlock_flag)), false))) or float(def.get("heal_half_hearts", 0)) > 0 or float(def.get("stamina", 0)) > 0 or float(def.get("oil_seconds", 0)) > 0 or str(def.get("placeable", "")) == "farm"
+	var use := str(def.get("category", "")) in ["animal","animal_care"] or (def.has("unlock_flag") and not bool(GameManager.get_flag(StringName(str(def.unlock_flag)), false))) or float(def.get("heal_half_hearts", 0)) > 0 or float(def.get("stamina", 0)) > 0 or float(def.get("oil_seconds", 0)) > 0 or str(def.get("placeable", "")) == "farm"
 	UiNav.set_enabled(%UseButton, use)
 	UiNav.set_enabled(%EquipButton, EconomyManager.equip_slot_of(_selected_id) != "")
 	UiNav.set_enabled(%DropButton, _can_discard(_selected_id))
@@ -157,6 +157,11 @@ func _can_discard(id: StringName) -> bool:
 
 func _use() -> void:
 	if _busy or not is_open() or not is_top() or %UseButton.disabled:
+		return
+	if str(ItemKinds.def(_selected_id).get("category","")) == "animal_care":
+		var item := _selected_id
+		close()
+		EventBus.game_event.emit(&"animal_care_item_used",{"item":str(item)})
 		return
 	_busy = true
 	var used := EconomyManager.use_item(_selected_id)

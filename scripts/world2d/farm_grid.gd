@@ -238,13 +238,19 @@ func harvest(cell: Vector2i) -> int:
 	return amount
 
 func water_unwatered(max_n: int) -> int:
-	var count := 0
+	if _busy:return 0
+	var changed: Array[Vector2i] = []
 	for cell in plots:
-		if count >= max_n:
-			break
-		if plots[cell].state in [State.PLANTED, State.WATERED] and not plots[cell].watered and water(cell):
-			count += 1
-	return count
+		if changed.size() >= max_n:break
+		if plots[cell].state in [State.PLANTED,State.WATERED] and not plots[cell].watered:
+			_water(plots[cell],float(GameData.gm().hour))
+			changed.append(cell)
+	# The entire batch is visible before the first crop observer can save.
+	for cell in changed:
+		EconomyManager.after_transaction(func() -> void:
+			EventBus.crop_watered.emit(plot_id(cell))
+			plot_changed.emit(cell))
+	return changed.size()
 
 func _rain() -> bool:
 	return GameData.tm().is_raining() or GameData.tm().weather == &"torden"

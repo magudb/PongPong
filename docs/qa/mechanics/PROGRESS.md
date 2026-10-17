@@ -1,0 +1,25 @@
+# Single-player mechanics completion
+
+The authorized single-player scope is implemented on `codex-mechanics`, based on local main `6cb358d`. All gameplay, source-proof and native gates pass; local-main integration is ready. No remote push is requested.
+
+The game now includes ten home tiers with furniture/storage/services, farm buildings and ten animal species, usable towns and shops, forty citizen heart scenes, eleven family scenes, nine festivals, relationship consent/dating/engagement/weddings, household chores, named visits, parties and Natlys activities. Equipment and clothing can be changed and saved; held tools/weapons and the HUD identify the active item. All 44 weapon/cut-gem cards show localized values and effects from the actual gameplay definitions.
+
+The forest has deterministic twelve-floor generation, runestones and recovery, seven enemies, three bosses, resources, loot, appraisal, crafting, forging, weapons and lantern gems. The mother investigation resolves the chosen bittersweet ending: learn her fate, return her name and seeds to the restored garden, then continue free play. Story progress cannot be stranded behind paid appraisal, rare random drops or friendship/calendar gates.
+
+The full headless regression passes **16,425 checks across 130 sections**, with no failed checks or unexpected engine messages. The 156 explicit skips cover native-only checks, owner-specific cast palette checks, absent-service fallbacks, opt-in greenhouse content and the then-stale source proofs, now replaced by current passing evidence. Installed town-loop gameplay consumers run real flows for birthdays, festivals, heart events, relationships, post locations, visits, seasonal decoration, rain dialogue, safe weddings and audio.
+
+Combat acceptance separately runs 60 seeded real fights against each boss, with live adds and berries: all 180 win within the fixed time and gross-damage limits. All 100 ambush trials dodge the completed leap. Warning saturation never replaces a live warning; delayed attackers receive a full warning interval, hit-stop retains the warning, dialogue freezes boss sequences/hazards and sleeping cancels attacks. See [combat acceptance](combat/ACCEPTANCE.md).
+
+Dungeon authoring passes 125 staged validator rules, all 57 pipeline mutants are caught after a clean control and the live-data model passes all nine P1 pacing gates. The model is not player telemetry. The harness passes 66 self-tests, including rejection of diagnostics emitted after the result during shutdown. Eight source-binding controls prove launcher/import/review changes invalidate town evidence while generated cache copies do not.
+
+The native renderer probes meet the stated CPU budgets on Apple M3 at 1280×720 Compatibility. The 24-enemy paired probe separates renderer timing from whole-frame timing. The dense floor fixture includes 225 painted props, 24 active enemies, twelve map lights, eight warnings and fifteen orbs; its renderer/HUD/reveal budgets pass, while whole-frame variability remains recorded. GPU timing and low-end-device performance are not established.
+
+Strict copy checks cover 65 CSVs and 4,415 keys with zero missing translations, legacy issues or findings. All 296 voice paths exist: eleven preserved human recordings and 285 local Sara placeholders. The 110 new social rows have hash-bound bilingual AI review; native-speaker and aesthetic listening review remain open editorial work. Protected voiced text and the UI CSV baseline are preserved.
+
+The explicit style ledger protects **2,925 reviewed visual/theme assets**. The painted character, tile, town, forest, house, clothing and equipment designs remain consistent. New generated art retains exact prompts and raw sources; this final integration adds no new bitmap artwork. Native equipment cards, combat warnings, busy-floor/reveal views and the earlier full UI capture set were opened and inspected.
+
+Historical loadout source proofs are preserved under `docs/qa/loadout/source-proof-fc6df224/`; older archives remain intact. Current proofs belong under `docs/qa/m1b-milestone/`. The final extension refresh updates the fixture to keep its keeper until closing, use non-conflicting calendar dates and bind mailbox progress through the real `game_event` vocabulary.
+
+The [playing guide](../../PLAYING.md) documents controls and the completed systems. The greenhouse remains opt-in. Children, multiplayer, yearly birthday cards and a fifth friendship event are outside this planned single-player scope. No human play session or native-speaker sign-off is claimed by automated acceptance.
+
+Final integration passes 878 native checks across fourteen sections without failures, skips or engine messages. Wave 7 requires every installed town consumer and the real festival capture. Both source proofs use the current binding; all eight producer regressions are caught after a clean control. The final preview-cache and rainy-town batching repairs pass 531 focused headless and 29 native budget checks. See [final acceptance](integration/ACCEPTANCE.md) and [native repairs](integration/NATIVE_REPAIRS.md).
