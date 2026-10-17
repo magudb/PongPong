@@ -364,21 +364,13 @@ func _item_defs() -> void:
 		if not seed_ok or harvest.is_empty() or int(harvest.get("sell_price", -1)) != int(crops[crop].get("sell_price", -2)):
 			bad.append(str(crop))
 	t.check("crop_prices_match_balance", bad.is_empty() and crops.size() == 8, "%d crops: a seed item with crop_id and a harvest item that sells at crops.<id>.sell_price; wrong %s" % [crops.size(), str(bad)])
-	# the products the animals make exist (P20 replaces `companionship` by friendship_token in animals.lua)
+	# Every advertised animal product must resolve, including the pet bond token.
 	var missing: Array[String] = []
 	for id in _item_ids():
 		var produces := str(lr.get_item_def(id).get("produces", ""))
 		if produces != "" and lr.get_item_def(produces).is_empty():
 			missing.append("%s -> %s" % [id, produces])
-	if missing.is_empty():
-		t.check("animal_products_defined", true, "every `produces` of animals.lua is a defined item")
-	else:
-		var only_companionship := true
-		for m in missing:
-			only_companionship = only_companionship and str(m).ends_with("-> companionship")
-		t.check("animal_products_defined", only_companionship, "undefined products %s" % str(missing))
-		if only_companionship:
-			t.skip("animals.lua (P20) still lets the kitten and the puppy produce `companionship`: friendship_token exists for it")
+	t.check("animal_products_defined", missing.is_empty(), "every animal product resolves to an item: "+str(missing))
 	# a price never makes a loop: bought items sell for at most half; even the biggest discount leaves a loss
 	var loop: Array[String] = []
 	for id in mine:

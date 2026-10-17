@@ -799,7 +799,7 @@ func _acceptance_shots(t) -> void:
 	await t.frames(3)
 	var dlg := (load(UiConfirm.SCENE_PATH) as PackedScene).instantiate() as UiConfirm
 	g.add_child(dlg)
-	dlg.setup("CONFIRM", "UI_CONFIRM_OVERWRITE", "NAV_OK", "NAV_CANCEL", &"cancel", [3])
+	dlg.setup("UI_CONFIRM_TITLE", "UI_CONFIRM_OVERWRITE", "NAV_OK", "NAV_CANCEL", &"cancel", [3])
 	dlg.begin()
 	await t.frames(4)
 	var cancel: Control = dlg.get_node("%CancelButton")

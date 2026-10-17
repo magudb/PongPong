@@ -41,7 +41,7 @@ items = {
     buy_price = 350,
     sell_price = 180,
     description_key = "ITEM_BABY_KITTEN_DESC",
-    produces = "companionship",
+    produces = "friendship_token",
     care_level = 2,
   },
   baby_puppy = {
@@ -51,7 +51,7 @@ items = {
     buy_price = 350,
     sell_price = 180,
     description_key = "ITEM_BABY_PUPPY_DESC",
-    produces = "companionship",
+    produces = "friendship_token",
     care_level = 2,
   },
   baby_lamb = {

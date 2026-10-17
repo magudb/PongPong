@@ -180,7 +180,7 @@ static func _default_setup(name: String, node: Node, host: Node) -> void:
 	match base_name(name):
 		"confirm":
 			if node is UiConfirm:
-				(node as UiConfirm).setup("CONFIRM", "UI_CONFIRM_OVERWRITE", "NAV_OK", "NAV_CANCEL", &"cancel", [3])
+				(node as UiConfirm).setup("UI_CONFIRM_TITLE", "UI_CONFIRM_OVERWRITE", "NAV_OK", "NAV_CANCEL", &"cancel", [3])
 				(node as UiConfirm).begin()
 				await tree.process_frame
 		"toasts":

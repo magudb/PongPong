@@ -45,13 +45,16 @@ func _ready() -> void:
 	_root.hide()
 	set_process(false)
 func _exit_tree() -> void:
-	_release_awe()
-	_unduck()
+	pending.clear()
+	_flush_queued = false
+	finish()
 func _found(id: StringName, rarity: StringName) -> void:
+	if not is_inside_tree():return
 	if GameManager.is_modal_open(&"appraisal"): return
 	if not get_parent().is_visible_in_tree(): return
 	enqueue(id,rarity)
 func enqueue(id: StringName, rarity: StringName, appraisal := false) -> void:
+	if not is_inside_tree():return
 	if tier_for(rarity) == 0 or id == &"": return
 	pending.append({"id":id,"rarity":rarity,"appraisal":appraisal})
 	if not _flush_queued:
@@ -59,6 +62,9 @@ func enqueue(id: StringName, rarity: StringName, appraisal := false) -> void:
 		_flush.call_deferred()
 func _flush() -> void:
 	_flush_queued = false
+	if not is_inside_tree():
+		pending.clear()
+		return
 	if pending.is_empty(): return
 	pending.sort_custom(func(a,b): return Rarity.rank(a.rarity) > Rarity.rank(b.rarity))
 	if not active.is_empty(): return
@@ -145,7 +151,7 @@ func _stun_nearby() -> void:
 	var world := get_tree().get_first_node_in_group("world_2d") as WorldRoot2D
 	if world == null or world.area == null or DungeonFloors.floor_of(world.area) <= 0: return
 	for node in get_tree().get_nodes_in_group("enemy"):
-		if not node is Enemy2D or node.is_in_group("boss") or not node.is_awake() or node.state == Enemy2D.S.DEAD: continue
+		if not node is Enemy2D or node.is_boss or node.is_in_group("boss") or not node.is_awake() or node.state == Enemy2D.S.DEAD: continue
 		if Iso.ground_dist(node.global_position,world.player.global_position) > 800: continue
 		node.stun(3)
 		_awe.append({"node":weakref(node),"generation":node.stun_generation})

@@ -25,6 +25,7 @@ var rotate_buttons: Array[Button] = []
 var preview_state: Label
 var detail_name: Label
 var detail_desc: Label
+var equipment_stats: Label
 var status: Label
 var equip_button: Button
 var remove_button: Button
@@ -121,6 +122,9 @@ func _ready() -> void:
 	detail_name.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	detail_desc = L.label(right,"","Body",true)
 	detail_desc.max_lines_visible = 3
+	equipment_stats = L.label(right,"","Small14",true)
+	equipment_stats.name = "EquipmentStats"
+	equipment_stats.hide()
 	var actions := L.box(right,false,8)
 	equip_button = L.button(actions,"","ButtonPrimaryS")
 	remove_button = L.button(actions,"","ButtonSecondaryS")
@@ -393,6 +397,8 @@ func _select(id: String) -> void:
 	var definition := ItemKinds.def(id)
 	detail_name.text = _name(id)
 	detail_desc.text = tr(str(definition.get("description_key","GARDEROBE_CHOOSE")))
+	equipment_stats.text = preload("res://scripts/ui/components/equipment_details.gd").text(id) if tab==1 else ""
+	equipment_stats.visible = equipment_stats.text!=""
 	var slot := WardrobeManager.slot_of(id) if tab == 0 else EconomyManager.equip_slot_of(id)
 	var worn := (str(WardrobeManager.equipped.get(slot,"")) == id if tab == 0 else str(EconomyManager.equipped_item(StringName(slot))) == id) and id != ""
 	var owned := id != "" and _owned(id)

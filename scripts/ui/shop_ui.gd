@@ -15,6 +15,7 @@ const Talk := "res://scripts/social/talk/social_talk.gd"
 @onready var close_btn: Button = %CloseButton
 @onready var keeper_speech: Label = %KeeperSpeech
 var current_shop: StringName = &"seed_shop"
+var equipment_stats: Label
 var _tabs: Array = []
 var _tab_buttons: Array[Button] = []
 var _rows: Array[Button] = []
@@ -38,6 +39,15 @@ func _init() -> void:
 func _ready() -> void:
 	super._ready()
 	_row_group.set_meta("tt_value_selection", true)
+	equipment_stats = Label.new()
+	equipment_stats.name = "EquipmentStats"
+	equipment_stats.theme_type_variation = &"Small14"
+	equipment_stats.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	equipment_stats.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	equipment_stats.hide()
+	var details := %DetailState.get_parent()
+	details.add_child(equipment_stats)
+	details.move_child(equipment_stats,%DetailState.get_index())
 	close_btn.pressed.connect(close)
 	buy_btn.pressed.connect(_confirm)
 	stepper.value_changed.connect(func(_value): _footer())
@@ -238,6 +248,8 @@ func _detail() -> void:
 	var def := ItemKinds.def(_selected_id)
 	%DetailName.text = tr(str(def.get("name_key", "")))
 	%DetailDesc.text = tr(str(def.get("description_key", "")))
+	equipment_stats.text = preload("res://scripts/ui/components/equipment_details.gd").text(str(_selected_id))
+	equipment_stats.visible = equipment_stats.text!=""
 	%DetailIcon.item_id = _selected_id
 	%DetailIcon.rarity = ItemKinds.rarity_of(_selected_id)
 	%DetailPreview.texture = null

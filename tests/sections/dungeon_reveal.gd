@@ -11,8 +11,8 @@ func run(t) -> void:
 	await _run(t,false)
 func run_windowed(t) -> void:
 	await _run(t,true)
-func _enemy(area: IsoArea, offset: Vector2) -> Enemy2D:
-	var node: Enemy2D = Enemy2D.create_marker({"kind":"ugleoje"},offset,area.global_to_cell(offset),area)
+func _enemy(area: IsoArea, offset: Vector2, kind := "ugleoje") -> Enemy2D:
+	var node: Enemy2D = Enemy2D.create_marker({"kind":kind},offset,area.global_to_cell(offset),area)
 	area.objects.add_child(node)
 	node.set_awake(true)
 	node.set_physics_process(false)
@@ -59,8 +59,8 @@ func _run(t,native: bool) -> void:
 	var far := _enemy(area,at+Vector2(1000,0))
 	var asleep := _enemy(area,at+Vector2(350,0))
 	asleep.set_awake(false)
-	var boss := _enemy(area,at+Vector2(350,0))
-	boss.add_to_group("boss")
+	var boss := _enemy(area,at+Vector2(350,0),"snurresvamp")
+	t.check("awe_probe_uses_real_boss_flag",boss is DungeonBoss2D and boss.is_boss and not boss.is_in_group("boss"))
 	var music := AudioServer.get_bus_index("Music")
 	var gain_before := AudioServer.get_bus_volume_db(music)
 	loot.deliver(&"gem_rune_heart",1)
@@ -118,6 +118,14 @@ func _run(t,native: bool) -> void:
 	Cues.play("sfx/zz_missing_cue")
 	Cues.play("music/zz_missing_track")
 	t.check("missing_audio_is_silent",true)
+	var parent: Node = reveal.get_parent()
+	reveal.enqueue(&"iron_sword",&"rare")
+	parent.remove_child(reveal)
+	await t.frames(2)
+	t.check("detached_reveal_cancels_deferred_delivery",reveal.pending.is_empty() and reveal.active.is_empty() and not reveal._root.visible)
+	EventBus.rare_item_found.emit(&"iron_sword",&"rare")
+	t.check("detached_reveal_ignores_late_signal",reveal.pending.is_empty())
+	parent.add_child(reveal)
 func _collect_particles(node: Node, out: Array) -> void:
 	if node is CPUParticles2D: out.append(node)
 	for child in node.get_children(): _collect_particles(child,out)

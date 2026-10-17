@@ -272,7 +272,7 @@ func _buildings() -> void:
 	for wd in 7:
 		var n: int = 0
 		for s in shop_list:
-			if bool(Hours.shop_open(s, Ctx.at(wd, 12.0))):
+			if Hours.shop_open(s, Ctx.at(wd, 12.0)) == true:
 				n += 1
 		counts.append(n)
 	var want_counts: Array = [7, 8, 8, 8, 8, 10, 8]
