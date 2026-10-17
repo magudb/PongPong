@@ -33,7 +33,7 @@ def prove():
                 result=subprocess.run(['tests/run_playtest.sh','--strict','--no-boot','--sections-dir=res://tests/lib/town_loop/mutation_sections','--only=town_mutants','--report=mutant.json'],cwd=clone,env=env,stdout=log,stderr=subprocess.STDOUT)
             data=json.loads((clone/'mutant.json').read_text());(evidence/(name+'.json')).write_text(json.dumps(data,indent=2)+'\n')
             log=(evidence/(name+'.log')).read_text()
-            clean=not data.get('engine') and not data.get('problems') and 'SCRIPT ERROR' not in log and 'ERROR:' not in log
+            clean=not data.get('engine') and not data.get('problems') and 'SCRIPT ERROR' not in log and 'ERROR:' not in log and 'engine messages after the harness result' not in log
             caught=result.returncode==0 if name=='baseline' else result.returncode!=0 and ('FAIL  town_mutants.'+target) in log
             assert clean and caught,(name,'failed to catch the named regression cleanly')
             results[name]={'caught':caught,'check':target or 'all probes green'}
