@@ -27,7 +27,7 @@ objectives = {
 }
 
 rewards = {
-  gold = 230,
+  gold = 500,
   items = {
     cookie = 3,
     fairy_dust = 1,

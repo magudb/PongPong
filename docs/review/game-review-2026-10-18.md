@@ -48,28 +48,35 @@ dungeon (`dungeon.lua:79-87`), which means defeating the floor-4 *and* floor-8 b
 `snurresvampen` only requires the floor-4 boss, and t9's `moonstone_crown` needs only floor ~6 moonstone.
 **Tier 6 requires deeper progression than tiers 8–9.** A player who stalls at the floor-8 boss
 (`snurresvamp_gloed`, 176 hp) is hard-capped at home tier 5 no matter how rich they are — while a player who
-rushes combat skips ahead. The balance doc (`BALANCE.md`) calls gates at 2/4/6 "the ones that bite" —
-intentional pressure, but the *inversion* (t6 deeper than t8) looks accidental. Suggest swapping t6↔t8
-gates, or moving `crystal_cave`'s `explore_cave` to a shallower band (a crystal *vein* on floors 6–7).
+rushes combat skips ahead.
+
+*Post-review check:* this ordering is **authored, not accidental** — the t6 gate copy narrates it
+(`HOME_TIER_6_GATE`: "Spiret skal have ametyst … Krystalgrotten") and validator rule S13 pins
+"snurresvampen gates tier 8, moonstone_crown tier 9". Downgraded to a *design note*: if the deep-gate
+ever proves too steep in playtest, `explore_cave` could move to a shallower band rather than swapping
+tier gates. Left as designed.
 
 ### M2. `fish` is a dead item reference — favorite-feed bonuses unreachable
 `husbandry.lua:73,88,148`: cat/dog/fox list `feed_types`/`favorite_feed` including `"fish"`. **No `fish`
 item exists** — not in `lua/items/*`, loot tables, resource nodes, or shops. Consequences:
-- fox's *only* non-treat favorite feed is `fish` (cookie also listed for dog/fox, fine);
-- any feed UI iterating `feed_types` may offer a nonexistent item;
-- `fishing_rod` is sold (`seed_shop`, 2 stock) yet `player_2d.gd:308` swallows the use with
-  `WHISPER_FISHING_CLOSED` — a purchasable dead tool (deliberate stub, but it *costs real gold* and the
-  whisper is the only signal it does nothing).
+- cat's only non-treat feed and favorite, and fox's favorite, were `fish` — unobtainable, so the
+  `favorite_feed_bonus` (25 happiness) could never be reached for either;
+- any feed UI iterating `feed_types` may offer a nonexistent item.
 
-Either land a minimal `fish` (e.g., pond `dig_spot`-style node) or remove `fish` from feed tables and the
-rod from stock until N07+.
+**Fixed** (`husbandry.lua` + the `species_data` fallback table in `animal_husbandry.gd`): cat feeds on
+`animal_treats`/`milk` with `milk` as favorite; fox feeds on `animal_treats`/`cookie` with `cookie` as
+favorite (same diet as the dog — they were already sharing `cookie`).
 
-### M3. Ghost's run perk = literally infinite sprint
-`race_perks.lua`: `run_cost_mult` ghost 0.6 → run cost 9/s vs `stamina_regen_per_second` 12/s in
-`game_balance.lua`. Net **+3/s while sprinting** — the ghost can sprint forever (the design doc says
-"runs longer"; steady state is unbounded). All other races drain net 3/s (≈33 s sprint cap). If intended as
-"ghosts drift effortlessly," fine — but it silently erases the stamina mechanic for one of four races.
-Consider `run_cost_mult 0.9` (net −1.8/s, ~4× sprint duration, still special) or draining regen while running.
+Note: `fishing_rod` is *deliberately* sold despite the mechanic being closed — its item copy says so
+("Fiskevandet er ikke åbnet endnu, men stangen er klar" / `WHISPER_FISHING_CLOSED` on use,
+`player_2d.gd:308`). Left in stock as authored teaser; if it ever proves a kid-confusion trap, drop the
+`seed_shop` row until the fishing wave lands.
+
+### M3. ~~Ghost's run perk = literally infinite sprint~~ — RETRACTED
+**Correction (verified against `player_2d.gd:236`):** stamina regen only applies when
+`not running and not is_flying` — sprint drains flat. Ghost at `run_cost_mult 0.6` sprints 11.1 s vs
+6.7 s for the others, exactly the "runs longer" the design intends. Not a bug; the original note assumed
+regen applied mid-sprint.
 
 ### M4. Stamina is nearly non-binding everywhere else too
 Tool costs 1–4 (`tools.lua`), regen 12/s: watering the full 110-plot field ≈ 130 stamina ≈ 11 s of idle
@@ -107,7 +114,7 @@ greenhouse slips further, add one vinter crop (e.g., `frost_kale`, water_window-
 
 | quest | consumes (vendor value) | reward | net gold-ish |
 |---|---|---|---|
-| `cookie_delivery` | 12 carrots ≈ 780 g | 230 g + 3 cookies (~60 g sell) + 1 fairy_dust (~150 g) | **≈ −340 g** |
+| `cookie_delivery` | 12 carrots ≈ 780 g | ~~230 g~~ → **500 g** + 3 cookies + 1 fairy_dust | ≈ −70 g (**fixed**: gold 230 → 500, near vendor-parity while the quest still teaches "helping isn't free") |
 | `ugles_noegle` | amethyst+rose_quartz+amber ≈ 510 g | 150 g + `ugle_noegle` (dungeon key) | −360 g but buys a **gate item** — fine |
 | `birthday_cake` | 3 turnip+1 moonflower ≈ 315 g | 280 g + items | ≈ −35 g + items |
 | `animal_products` | 5 egg+3 milk ≈ 150 g | 320 g + items | +170 g ✓ |
@@ -128,10 +135,11 @@ Buying your way through adventure gates may be deliberate flexibility (money sin
 *choice*, not an accident.
 
 ### M9. Misc smaller items
-- `rare_mushroom_hunt` (giver `fairy_lily`, a *child* NPC) requires the floor-7–9 `find_glowing` quest_spot
-  (`dungeon.lua:274`) — offerable immediately, completable only deep. Either gate the offer
-  (`requires_zone = "dark_forest"` like its siblings) or accept the "quest you can't finish yet" pattern
-  deliberately. Also `meta.location = "ZONE_MUSHROOM_GROVE"` on a city NPC — display-only oddity.
+- `rare_mushroom_hunt` (giver `fairy_lily`, a *child* NPC) requires the floor-7 `find_glowing` quest_spot
+  (`dungeon.lua`) — was offerable immediately, completable only deep. **Fixed**: added
+  `requires_zone = "dark_forest"` (the same offer gate its four forest siblings carry), so the offer only
+  appears after the player's first walk into the wood. `meta.location = "ZONE_MUSHROOM_GROVE"` on a city
+  NPC stays — it labels where the quest *leads*, not where it is offered.
 - `enchanted_garden` sets `enchanted_garden_unlocked` on completion — **read nowhere**; a forward hook
   (enchanted-garden area pending?). Harmless today.
 - `sword_upgrade.is_available` checks `has_iron_sword` — a flag set only by this quest's completion, so a
@@ -206,17 +214,33 @@ cover all 8 quest-relevant CSVs; `ui_foundation` verifies no raw keys in quest t
 
 ---
 
-## 4. Prioritized recommendations
+## 4. Fix round (this review pass)
 
-1. **Gate order**: swap or rebalance the t6 `crystal_cave` gate (currently deeper than t8/t9) — M1.
-2. **Fish**: add the item + a minimal source, or strip `fish` from `feed_types`/`favorite_feed` and the
-   rod from `seed_shop` stock — M2.
-3. **Ghost sprint**: raise `run_cost_mult` to ~0.9 or disable regen while running — M3.
-4. **Winter**: interim vinter crop or land the greenhouse marker — M6.
-5. **Decide** whether adventure-gate quests should be buyable (`have=true` on `moonstone_crown`); if not,
-   restrict those objectives to `drop`-sourced gains or add `source` filters — M8.
-6. **Cookie errand** repricing (or retitle so it doesn't read as a sale) — M7.
-7. Optional: one authored S04/S07 encounter for the Root Scribe beats — S5.
+Applied and verified (`run_playtest.sh --only=quests,save`: 313 checks, 0 failures):
+
+1. **`fish` dead item** — cat favorite now `milk`, fox `cookie`; feed lists dropped `fish` in both
+   `lua/config/husbandry.lua` and the `animal_husbandry.gd` fallback table.
+2. **`cookie_delivery` reward** — gold 230 → 500 (near vendor parity for the 12 carrots).
+3. **`rare_mushroom_hunt` offer gate** — added `requires_zone = "dark_forest"`.
+
+Re-classified on verification:
+
+- **M3 ghost sprint — retracted** (regen is off while running; the perk is exactly as designed).
+- **M1 tier-gate order — authored intent** (t6 copy narrates the amethyst/spire; validator S13 pins the
+  later gates). Kept as a design note, not changed.
+- **Fishing rod** kept in `seed_shop` — authored teaser with self-aware copy.
+
+Still open (deliberate or pending-wave work):
+
+- **Winter farming dead-zone** — no `vinter` crop; `greenhouse_slot` awaits package N07. Interim option:
+  one frost crop. Not fixed here (new content, needs its own loc/validator pass).
+- **Buyable adventure-gate collects** (`moonstone_crown`, `crystal_cave` shards via `have=true`) —
+  requires_zone still forces the forest visit; the buy-out is a money sink. Flagged as a design
+  *question*, not changed.
+- **Stamina is decorative** outside the dungeon — a design choice, not a defect.
+- **Dominated crop rows** (strawberry/moonflower as gold crops) — seed prices are pinned by
+  `economy.gd:GUIDE_SHOP`; rebalancing belongs to a balance pass, not a review fix.
+- **Root Scribe as encounter** — remains a story-text entity; an authored scene is a feature, not a fix.
 
 *Not reviewed:* save/robustness internals (code review's scope), art pipeline, voice production, and the
 balance sim's assumed-income caveat (it's a model, not a playtest — but it's a *good* model and its numbers
