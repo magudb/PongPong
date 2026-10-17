@@ -1,0 +1,87 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 677,
+  "elapsed_s": 76.61,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "town_budgets.grid_parked_return"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "area": {
+      "character": "animal",
+      "checks": 240,
+      "failed": 0,
+      "ms": 19425,
+      "skipped": 1
+    },
+    "art_environment": {
+      "character": "animal",
+      "checks": 33,
+      "failed": 0,
+      "ms": 1473,
+      "skipped": 0
+    },
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 11583,
+      "skipped": 0
+    },
+    "bosses": {
+      "character": "animal",
+      "checks": 49,
+      "failed": 0,
+      "ms": 5325,
+      "skipped": 0
+    },
+    "enemies": {
+      "character": "animal",
+      "checks": 47,
+      "failed": 0,
+      "ms": 1332,
+      "skipped": 0
+    },
+    "forest_mother": {
+      "character": "animal",
+      "checks": 72,
+      "failed": 0,
+      "ms": 19480,
+      "skipped": 0
+    },
+    "shop_ui": {
+      "character": "animal",
+      "checks": 150,
+      "failed": 0,
+      "ms": 6995,
+      "skipped": 8
+    },
+    "town_budgets": {
+      "character": "animal",
+      "checks": 34,
+      "failed": 1,
+      "ms": 3751,
+      "skipped": 0
+    },
+    "ui_mechanics": {
+      "character": "animal",
+      "checks": 2,
+      "failed": 0,
+      "ms": 690,
+      "skipped": 0
+    },
+    "wardrobe_ui": {
+      "character": "animal",
+      "checks": 42,
+      "failed": 0,
+      "ms": 1577,
+      "skipped": 0
+    }
+  },
+  "skipped": 9
+}

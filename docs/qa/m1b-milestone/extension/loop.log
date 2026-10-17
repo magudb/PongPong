@@ -2,10 +2,7 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 
   info  --strict: known issues are not tolerated
 PLAYTEST start mode=headless character=animal sections=res://tests/lib/town_loop/extension_sections only=town_extension
-  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.KX6gvU/Library/Application Support/Traetoppen (throwaway)
-[Lua] 2 lint finding(s) in 2 file(s) (LuaRuntime.lint_report; run tools/lua/lint.gd for the list)
-[Lua]   res://lua/config/zz_loop_post.lua:0 [duplicate_key] config table `traetoppen` is already defined by config/traetoppen: two config files must not define the same top-level key
-[Lua]   res://lua/quests/loop_mail.lua:0 [quest_binding] quest `loop_mail`: objective `read`: on = "post_read" is not in the binding vocabulary
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.sbbYMg/Library/Application Support/Traetoppen (throwaway)
 == section town_extension  (res://tests/lib/town_loop/extension_sections/town_extension.gd)
   ok    town_extension.l18_data_only_building
   ok    town_extension.l18_data_only_door_and_keeper
@@ -15,6 +12,6 @@ PLAYTEST start mode=headless character=animal sections=res://tests/lib/town_loop
   ok    town_extension.l18_data_only_event
   ok    town_extension.l18_data_only_quest
   ok    town_extension.l18_data_only_festival
-  --    town_extension: 8 checks, 0 failed, 0 skipped, 1.1 s
-== summary: 1 section(s) run, 8 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 2.3 s
+  --    town_extension: 8 checks, 0 failed, 0 skipped, 1.6 s
+== summary: 1 section(s) run, 8 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 3.1 s
 PLAYTEST PASS (8 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

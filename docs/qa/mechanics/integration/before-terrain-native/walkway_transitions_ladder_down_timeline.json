@@ -1,0 +1,46 @@
+[
+	{
+		"file": "walkway_transitions_ladder_down_frame_00.png",
+		"time": 191.5
+	},
+	{
+		"file": "walkway_transitions_ladder_down_frame_01.png",
+		"time": 191.633333333333
+	},
+	{
+		"file": "walkway_transitions_ladder_down_frame_02.png",
+		"time": 191.766666666667
+	},
+	{
+		"file": "walkway_transitions_ladder_down_frame_03.png",
+		"time": 191.9
+	},
+	{
+		"file": "walkway_transitions_ladder_down_frame_04.png",
+		"time": 192.033333333333
+	},
+	{
+		"file": "walkway_transitions_ladder_down_frame_05.png",
+		"time": 192.3
+	},
+	{
+		"file": "walkway_transitions_ladder_down_frame_06.png",
+		"time": 192.433333333333
+	},
+	{
+		"file": "walkway_transitions_ladder_down_frame_07.png",
+		"time": 192.566666666667
+	},
+	{
+		"file": "walkway_transitions_ladder_down_frame_08.png",
+		"time": 192.7
+	},
+	{
+		"file": "walkway_transitions_ladder_down_landing.png",
+		"time": 192.833333333333
+	},
+	{
+		"file": "walkway_transitions_ladder_down_exit.png",
+		"time": 193.033333333333
+	}
+]

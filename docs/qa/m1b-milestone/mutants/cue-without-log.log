@@ -1,0 +1,19 @@
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=headless character=animal sections=res://tests/lib/town_loop/mutation_sections only=town_mutants
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.1a3wjk/Library/Application Support/Traetoppen (throwaway)
+== section town_mutants  (res://tests/lib/town_loop/mutation_sections/town_mutants.gd)
+  ok    town_mutants.l05_closed_before_open
+  ok    town_mutants.l05_closed_door_does_not_travel
+  FAIL  town_mutants.l16_shop_bell_is_logged
+  ok    town_mutants.l04_zone_and_running_clock
+  ok    town_mutants.l03_esc_first_line_no_heart
+  ok    town_mutants.l13_social_section_order
+  ok    town_mutants.digest_has_teeth_gold
+  ok    town_mutants.l02_citizens_freed_on_exit
+  --    town_mutants: 8 checks, 1 failed, 0 skipped, 2.5 s
+== summary: 1 section(s) run, 8 checks (1 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 4.0 s
+  FAILED   town_mutants.l16_shop_bell_is_logged
+PLAYTEST FAIL: 1 check failures, 0 engine errors, 0 engine warnings, 0 problems

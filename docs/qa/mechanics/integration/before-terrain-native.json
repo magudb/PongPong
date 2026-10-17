@@ -1,0 +1,110 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 849,
+  "elapsed_s": 225.17,
+  "engine": [],
+  "failed": 2,
+  "failures": [
+    "town_loop.l15_city_peak_under_320mb",
+    "town_loop.l15_window_budget"
+  ],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "audio_town": {
+      "character": "animal",
+      "checks": 37,
+      "failed": 0,
+      "ms": 6487,
+      "skipped": 0
+    },
+    "bosses": {
+      "character": "animal",
+      "checks": 49,
+      "failed": 0,
+      "ms": 9147,
+      "skipped": 0
+    },
+    "enemies": {
+      "character": "animal",
+      "checks": 47,
+      "failed": 0,
+      "ms": 3295,
+      "skipped": 0
+    },
+    "enemy_performance": {
+      "character": "animal",
+      "checks": 8,
+      "failed": 0,
+      "ms": 12935,
+      "skipped": 0
+    },
+    "forest_mother": {
+      "character": "animal",
+      "checks": 37,
+      "failed": 0,
+      "ms": 15505,
+      "skipped": 0
+    },
+    "held_equipment": {
+      "character": "animal",
+      "checks": 44,
+      "failed": 0,
+      "ms": 11575,
+      "skipped": 0
+    },
+    "home_services": {
+      "character": "animal",
+      "checks": 3,
+      "failed": 0,
+      "ms": 2517,
+      "skipped": 0
+    },
+    "shop_ui": {
+      "character": "animal",
+      "checks": 32,
+      "failed": 0,
+      "ms": 3723,
+      "skipped": 0
+    },
+    "town_loop": {
+      "character": "animal",
+      "checks": 177,
+      "failed": 2,
+      "ms": 120589,
+      "skipped": 0
+    },
+    "ui_mechanics": {
+      "character": "animal",
+      "checks": 4,
+      "failed": 0,
+      "ms": 1332,
+      "skipped": 0
+    },
+    "voice": {
+      "character": "animal",
+      "checks": 310,
+      "failed": 0,
+      "ms": 3469,
+      "skipped": 0
+    },
+    "walkway_transitions": {
+      "character": "animal",
+      "checks": 59,
+      "failed": 0,
+      "ms": 25991,
+      "skipped": 0
+    },
+    "wardrobe_ui": {
+      "character": "animal",
+      "checks": 42,
+      "failed": 0,
+      "ms": 3372,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

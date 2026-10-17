@@ -1,8 +1,8 @@
 {
   "allowed": [],
   "character": "animal",
-  "checks": 7,
-  "elapsed_s": 2.67,
+  "checks": 8,
+  "elapsed_s": 4.21,
   "engine": [],
   "failed": 2,
   "failures": [
@@ -16,9 +16,9 @@
   "sections": {
     "town_mutants": {
       "character": "animal",
-      "checks": 7,
+      "checks": 8,
       "failed": 2,
-      "ms": 1614,
+      "ms": 2732,
       "skipped": 0
     }
   },

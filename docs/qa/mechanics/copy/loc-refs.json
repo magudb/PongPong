@@ -266,11 +266,11 @@
   },
   {
    "prefix": "GARDEROBE_PRESET_",
-   "src": "scripts/ui/garderobe.gd:262"
+   "src": "scripts/ui/garderobe.gd:266"
   },
   {
    "prefix": "SLOTCELL_",
-   "src": "scripts/ui/garderobe.gd:285"
+   "src": "scripts/ui/garderobe.gd:289"
   },
   {
    "prefix": "HOME_AMENITIES_ROYAL_",
@@ -298,7 +298,7 @@
   },
   {
    "prefix": "KEEP_ANY_",
-   "src": "scripts/ui/shop_ui.gd:329"
+   "src": "scripts/ui/shop_ui.gd:341"
   },
   {
    "prefix": "ABILITY_",
@@ -307,6 +307,14 @@
   {
    "prefix": "HUD_ITEM_",
    "src": "scripts/ui/components/current_item_badge.gd:77"
+  },
+  {
+   "prefix": "WEAPON_FAMILY_",
+   "src": "scripts/ui/components/equipment_details.gd:9"
+  },
+  {
+   "prefix": "WEFFECT_",
+   "src": "scripts/ui/components/equipment_details.gd:11"
   },
   {
    "prefix": "HOME_TIER_",
@@ -346,7 +354,7 @@
   },
   {
    "prefix": "WEAPON_FAMILY_",
-   "src": "scripts/ui/dungeon/loot_reveal.gd:102"
+   "src": "scripts/ui/dungeon/loot_reveal.gd:108"
   },
   {
    "prefix": "UI_SEASON_",
@@ -897,6 +905,9 @@
   ],
   "DEXP_SURPRISE_PURSE_FMT": [
    "scripts/dungeon_run/run_watch.gd:71"
+  ],
+  "DEXP_WEAPON_RANGE_FMT": [
+   "scripts/ui/components/equipment_details.gd:9"
   ],
   "DIALOGUE_CHOICE_GOODBYE": [
    "lua/dialogue/fairy_builder.lua:34",
@@ -2648,10 +2659,10 @@
   ],
   "FUND_DAMAGE_FMT": [
    "scripts/ui/dungeon/loot_feed.gd:36",
-   "scripts/ui/dungeon/loot_reveal.gd:102"
+   "scripts/ui/dungeon/loot_reveal.gd:108"
   ],
   "FUND_LEGENDARY": [
-   "scripts/ui/dungeon/loot_reveal.gd:96"
+   "scripts/ui/dungeon/loot_reveal.gd:102"
   ],
   "FURNI_REJECT_BLOCKS_PATH": [
    "Indretning placement reasons (addendum 3.7)"
@@ -2851,82 +2862,103 @@
    "scenes/main/main_menu.tscn:43"
   ],
   "GARDEROBE_ALL": [
-   "scripts/ui/garderobe.gd:282"
+   "scripts/ui/garderobe.gd:286"
   ],
   "GARDEROBE_ASSIGN": [
-   "scripts/ui/garderobe.gd:406"
+   "scripts/ui/garderobe.gd:412"
   ],
   "GARDEROBE_CHOOSE": [
-   "scripts/ui/garderobe.gd:414"
+   "scripts/ui/garderobe.gd:420"
   ],
   "GARDEROBE_CLEAR_HOTBAR": [
-   "scripts/ui/garderobe.gd:267"
+   "scripts/ui/garderobe.gd:271"
   ],
   "GARDEROBE_CLOTHES": [
-   "scripts/ui/garderobe.gd:251"
+   "scripts/ui/garderobe.gd:255"
   ],
   "GARDEROBE_COUNT_FMT": [
-   "scripts/ui/garderobe.gd:365"
+   "scripts/ui/garderobe.gd:369"
   ],
   "GARDEROBE_CURRENT_PERKS_FMT": [
-   "scripts/ui/garderobe.gd:276"
+   "scripts/ui/garderobe.gd:280"
   ],
   "GARDEROBE_EMPTY": [
-   "scripts/ui/garderobe.gd:367"
+   "scripts/ui/garderobe.gd:371"
   ],
   "GARDEROBE_EQUIP": [
-   "scripts/ui/garderobe.gd:404"
+   "scripts/ui/garderobe.gd:410"
   ],
   "GARDEROBE_LANTERN_GEM": [
-   "scripts/ui/garderobe.gd:287"
+   "scripts/ui/garderobe.gd:291"
   ],
   "GARDEROBE_MISSING_FMT": [
-   "scripts/ui/garderobe.gd:485"
+   "scripts/ui/garderobe.gd:491"
   ],
   "GARDEROBE_NOT_OWNED": [
-   "scripts/ui/garderobe.gd:414"
+   "scripts/ui/garderobe.gd:420"
   ],
   "GARDEROBE_OWNED_ONLY": [
-   "scripts/ui/garderobe.gd:254"
-  ],
-  "GARDEROBE_PICK_HOTBAR": [
-   "scripts/ui/garderobe.gd:416",
-   "scripts/ui/garderobe.gd:451"
-  ],
-  "GARDEROBE_PREVIEW_FMT": [
-   "scripts/ui/garderobe.gd:413"
-  ],
-  "GARDEROBE_REMOVE": [
-   "scripts/ui/garderobe.gd:405"
-  ],
-  "GARDEROBE_SAVE_WORN": [
-   "scripts/ui/garderobe.gd:264"
-  ],
-  "GARDEROBE_TITLE": [
-   "scripts/ui/garderobe.gd:249"
-  ],
-  "GARDEROBE_TOOLS": [
-   "scripts/ui/garderobe.gd:287"
-  ],
-  "GARDEROBE_TRYING_FMT": [
-   "scripts/ui/garderobe.gd:413"
-  ],
-  "GARDEROBE_TURN_LEFT": [
    "scripts/ui/garderobe.gd:258"
   ],
+  "GARDEROBE_PICK_HOTBAR": [
+   "scripts/ui/garderobe.gd:422",
+   "scripts/ui/garderobe.gd:457"
+  ],
+  "GARDEROBE_PREVIEW_FMT": [
+   "scripts/ui/garderobe.gd:419"
+  ],
+  "GARDEROBE_REMOVE": [
+   "scripts/ui/garderobe.gd:411"
+  ],
+  "GARDEROBE_SAVE_WORN": [
+   "scripts/ui/garderobe.gd:268"
+  ],
+  "GARDEROBE_TITLE": [
+   "scripts/ui/garderobe.gd:253"
+  ],
+  "GARDEROBE_TOOLS": [
+   "scripts/ui/garderobe.gd:291"
+  ],
+  "GARDEROBE_TRYING_FMT": [
+   "scripts/ui/garderobe.gd:419"
+  ],
+  "GARDEROBE_TURN_LEFT": [
+   "scripts/ui/garderobe.gd:262"
+  ],
   "GARDEROBE_TURN_RIGHT": [
-   "scripts/ui/garderobe.gd:259"
+   "scripts/ui/garderobe.gd:263"
   ],
   "GARDEROBE_WALK": [
-   "scripts/ui/garderobe.gd:260"
+   "scripts/ui/garderobe.gd:264"
   ],
   "GARDEROBE_WEAR_PRESET": [
-   "scripts/ui/garderobe.gd:265"
+   "scripts/ui/garderobe.gd:269"
   ],
   "GARDEROBE_WORN": [
-   "scripts/ui/garderobe.gd:320",
-   "scripts/ui/garderobe.gd:413",
-   "scripts/ui/garderobe.gd:414"
+   "scripts/ui/garderobe.gd:324",
+   "scripts/ui/garderobe.gd:419",
+   "scripts/ui/garderobe.gd:420"
+  ],
+  "GEMFX_AMBUSH": [
+   "scripts/ui/components/equipment_details.gd:25"
+  ],
+  "GEMFX_CHEST_SENSE": [
+   "scripts/ui/components/equipment_details.gd:24"
+  ],
+  "GEMFX_LIGHT_CD": [
+   "scripts/ui/components/equipment_details.gd:23"
+  ],
+  "GEMFX_OIL": [
+   "scripts/ui/components/equipment_details.gd:21"
+  ],
+  "GEMFX_PICKUP": [
+   "scripts/ui/components/equipment_details.gd:26"
+  ],
+  "GEMFX_RADIUS": [
+   "scripts/ui/components/equipment_details.gd:22"
+  ],
+  "GEMFX_TINT_ONLY": [
+   "scripts/ui/components/equipment_details.gd:27"
   ],
   "GF_EVENT_GHOSTFAM_BLUND_H4_1": [
    "lua/events/ghostfam/natlys.lua:547"
@@ -4365,7 +4397,7 @@
    "scripts/ui/hud.gd:262"
   ],
   "HUD_ITEM_WEAPON": [
-   "scripts/ui/garderobe.gd:287"
+   "scripts/ui/garderobe.gd:291"
   ],
   "HUD_SEASON_DAY_FMT": [
    "scripts/ui/theme/tt_format.gd:28"
@@ -10250,21 +10282,21 @@
    "lua/shops/timber_yard.lua:19"
   ],
   "SHOP_TOTAL": [
-   "scripts/ui/shop_ui.gd:281",
+   "scripts/ui/shop_ui.gd:293",
    "scripts/ui/dev/components_gallery.gd:53",
    "scenes/ui/dev/components_gallery.tscn:344"
   ],
   "SHOP_UI_ALREADY_OWNED": [
-   "scripts/ui/shop_ui.gd:259"
+   "scripts/ui/shop_ui.gd:271"
   ],
   "SHOP_UI_CLOSED_TODAY": [
-   "scripts/ui/shop_ui.gd:235"
+   "scripts/ui/shop_ui.gd:245"
   ],
   "SHOP_UI_SALE_FMT": [
-   "scripts/ui/shop_ui.gd:255"
+   "scripts/ui/shop_ui.gd:267"
   ],
   "SHOP_UI_SOLD_OUT": [
-   "scripts/ui/shop_ui.gd:283"
+   "scripts/ui/shop_ui.gd:295"
   ],
   "SIGN_FARM_BRIDGE": [
    "data/maps/farm.map:67"
@@ -10774,14 +10806,14 @@
    "scripts/ui/inventory_ui.gd:185"
   ],
   "STORE_EMPTY": [
-   "scripts/ui/shop_ui.gd:128",
+   "scripts/ui/shop_ui.gd:138",
    "scenes/ui/shop_ui.tscn:259"
   ],
   "STORE_EQUIP_ITEM": [
    "scenes/ui/inventory_ui.tscn:229"
   ],
   "STORE_EQUIP_NOW": [
-   "scripts/ui/shop_ui.gd:324"
+   "scripts/ui/shop_ui.gd:336"
   ],
   "STORE_NEEDS_BLUEPRINT": [
    "scripts/ui/components/workshop_panel.gd:72"
@@ -10790,12 +10822,12 @@
    "scripts/ui/components/workshop_panel.gd:77"
   ],
   "STORE_OWNED_FMT": [
-   "scripts/ui/shop_ui.gd:251",
+   "scripts/ui/shop_ui.gd:263",
    "scripts/ui/components/shop_item_row.gd:65",
    "scripts/ui/social/gift_picker.gd:203"
   ],
   "STORE_REPEAT_FMT": [
-   "scripts/ui/shop_ui.gd:257"
+   "scripts/ui/shop_ui.gd:269"
   ],
   "STORE_USE": [
    "scenes/ui/inventory_ui.tscn:223"
@@ -10809,8 +10841,8 @@
    "scenes/ui/dev/components_gallery.tscn:350"
   ],
   "UI_CLOSE": [
-   "scripts/ui/garderobe.gd:253",
-   "scripts/ui/shop_ui.gd:129"
+   "scripts/ui/garderobe.gd:257",
+   "scripts/ui/shop_ui.gd:139"
   ],
   "UI_CURRENCY": [
    "scripts/ui/theme/tt_quest_text.gd:227"
@@ -10851,7 +10883,7 @@
    "scripts/ui/save_load_ui.gd:46"
   ],
   "UI_SELL": [
-   "scripts/ui/shop_ui.gd:279",
+   "scripts/ui/shop_ui.gd:291",
    "scenes/ui/dev/components_gallery.tscn:283"
   ],
   "UI_SLEEP": [
@@ -10958,6 +10990,15 @@
   ],
   "WSTAT_BETTER": [
    "scripts/autoload/economy_manager.gd:622"
+  ],
+  "WSTAT_DAMAGE": [
+   "scripts/ui/components/equipment_details.gd:7"
+  ],
+  "WSTAT_RATING": [
+   "scripts/ui/components/equipment_details.gd:7"
+  ],
+  "WSTAT_SPEED": [
+   "scripts/ui/components/equipment_details.gd:7"
   ],
   "ZONE_CITY": [
    "data/maps/hyggebyen.map:18",
@@ -11133,6 +11174,7 @@
   "DEXP_SURPRISE_FIREFLIES",
   "DEXP_SURPRISE_NOTE_FMT",
   "DEXP_SURPRISE_PURSE_FMT",
+  "DEXP_WEAPON_RANGE_FMT",
   "DIALOGUE_CHOICE_GOODBYE",
   "DIALOGUE_CHOICE_OPEN_SHOP",
   "DIALOGUE_VOICE_DA",
@@ -11726,6 +11768,13 @@
   "GARDEROBE_WALK",
   "GARDEROBE_WEAR_PRESET",
   "GARDEROBE_WORN",
+  "GEMFX_AMBUSH",
+  "GEMFX_CHEST_SENSE",
+  "GEMFX_LIGHT_CD",
+  "GEMFX_OIL",
+  "GEMFX_PICKUP",
+  "GEMFX_RADIUS",
+  "GEMFX_TINT_ONLY",
   "GF_EVENT_GHOSTFAM_BLUND_H4_1",
   "GF_EVENT_GHOSTFAM_BLUND_H4_2",
   "GF_EVENT_GHOSTFAM_BLUND_H4_3",
@@ -13943,6 +13992,7 @@
   "UI_BUY",
   "UI_CLOSE",
   "UI_CONFIRM_OVERWRITE",
+  "UI_CONFIRM_TITLE",
   "UI_CURRENCY",
   "UI_DAY",
   "UI_GOLD",
@@ -13988,6 +14038,9 @@
   "WORLD_PROMPT_USE",
   "WORLD_WARP_LOCKED",
   "WSTAT_BETTER",
+  "WSTAT_DAMAGE",
+  "WSTAT_RATING",
+  "WSTAT_SPEED",
   "ZONE_CITY",
   "ZONE_CRYSTAL_CAVE",
   "ZONE_DARK_FOREST",

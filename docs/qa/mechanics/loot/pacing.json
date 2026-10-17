@@ -1,5 +1,5 @@
 {
-  "source_binding": "fa4772303ef8bff88e962aab89486ae03158d4c2a4744ddf218dce84ba932fb3",
+  "source_binding": "8439489567856dec520175b467611310a95265db45a3c5905215eff52d42a309",
   "model": "Named plan assumptions; independent Python RNG; no combat, navigation or player telemetry. Eight-minute dungeon runs and ten-minute home days are modelling units. All dng_ surplus sells at its actual full sell price. Free furniture is banked once and only replaces planned furniture purchases; both hooks are off by default in the plan model.",
   "seed": "pacing 100..100+n-1, full dive 77, band sample 1",
   "pace": "plan",

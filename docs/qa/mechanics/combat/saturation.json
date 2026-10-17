@@ -1,0 +1,57 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 265,
+  "elapsed_s": 8.93,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1107,
+      "skipped": 0
+    },
+    "bosses": {
+      "character": "animal",
+      "checks": 49,
+      "failed": 0,
+      "ms": 1102,
+      "skipped": 0
+    },
+    "copy_rules": {
+      "character": "animal",
+      "checks": 142,
+      "failed": 0,
+      "ms": 707,
+      "skipped": 0
+    },
+    "dungeon_pickups": {
+      "character": "animal",
+      "checks": 15,
+      "failed": 0,
+      "ms": 181,
+      "skipped": 0
+    },
+    "enemies": {
+      "character": "animal",
+      "checks": 47,
+      "failed": 0,
+      "ms": 285,
+      "skipped": 0
+    },
+    "enemy_performance": {
+      "character": "animal",
+      "checks": 4,
+      "failed": 0,
+      "ms": 395,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

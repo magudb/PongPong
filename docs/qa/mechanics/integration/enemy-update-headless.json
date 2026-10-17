@@ -1,0 +1,43 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 109,
+  "elapsed_s": 26.61,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 11569,
+      "skipped": 0
+    },
+    "bosses": {
+      "character": "animal",
+      "checks": 49,
+      "failed": 0,
+      "ms": 5340,
+      "skipped": 0
+    },
+    "enemies": {
+      "character": "animal",
+      "checks": 47,
+      "failed": 0,
+      "ms": 1339,
+      "skipped": 0
+    },
+    "enemy_performance": {
+      "character": "animal",
+      "checks": 5,
+      "failed": 0,
+      "ms": 3470,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

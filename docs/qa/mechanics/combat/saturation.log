@@ -1,0 +1,285 @@
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=enemies,bosses,dungeon_pickups,enemy_performance,copy_rules
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.bvvl5T/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 1.1 s
+== section bosses  (res://tests/sections/bosses.gd)
+  ok    bosses.spawn_snurresvamp
+  ok    bosses.hp_and_kind_snurresvamp
+  ok    bosses.sleep_until_520_snurresvamp
+  ok    bosses.bar_and_wake_snurresvamp
+  ok    bosses.dash_telegraph_snurresvamp
+  ok    bosses.dash_speed_snurresvamp
+  ok    bosses.dazed_window_snurresvamp
+  ok    bosses.first_wave_snurresvamp
+  ok    bosses.second_wave_snurresvamp
+  ok    bosses.phase_berries_once_snurresvamp
+  ok    bosses.reset_no_rewards_snurresvamp
+  ok    bosses.death_once_snurresvamp
+  ok    bosses.real_floor_chain_snurresvamp
+  ok    bosses.spawn_snurresvamp_gloed
+  ok    bosses.hp_and_kind_snurresvamp_gloed
+  ok    bosses.sleep_until_520_snurresvamp_gloed
+  ok    bosses.bar_and_wake_snurresvamp_gloed
+  ok    bosses.dash_telegraph_snurresvamp_gloed
+  ok    bosses.dash_speed_snurresvamp_gloed
+  ok    bosses.dazed_window_snurresvamp_gloed
+  ok    bosses.first_wave_snurresvamp_gloed
+  ok    bosses.second_wave_snurresvamp_gloed
+  ok    bosses.phase_berries_once_snurresvamp_gloed
+  ok    bosses.quake_radius_snurresvamp_gloed
+  ok    bosses.two_clouds_snurresvamp_gloed
+  ok    bosses.reset_no_rewards_snurresvamp_gloed
+  ok    bosses.death_once_snurresvamp_gloed
+  ok    bosses.real_floor_chain_snurresvamp_gloed
+  ok    bosses.spawn_snurresvamp_konge
+  ok    bosses.hp_and_kind_snurresvamp_konge
+  ok    bosses.sleep_until_520_snurresvamp_konge
+  ok    bosses.bar_and_wake_snurresvamp_konge
+  ok    bosses.dash_telegraph_snurresvamp_konge
+  ok    bosses.dash_speed_snurresvamp_konge
+  ok    bosses.dazed_window_snurresvamp_konge
+  ok    bosses.first_wave_snurresvamp_konge
+  ok    bosses.second_wave_snurresvamp_konge
+  ok    bosses.phase_berries_once_snurresvamp_konge
+  ok    bosses.quake_radius_snurresvamp_konge
+  ok    bosses.two_clouds_snurresvamp_konge
+  ok    bosses.nine_staggered_rain_marks
+  ok    bosses.saturated_sequence_waits_without_damage
+  ok    bosses.deferred_sequence_gets_full_warning
+  ok    bosses.nonpausing_dialogue_freezes_sequence_and_hazard
+  ok    bosses.deferred_sequence_cannot_hit_early
+  ok    bosses.sleep_resets_boss_and_cancels_pending_sequences
+  ok    bosses.reset_no_rewards_snurresvamp_konge
+  ok    bosses.death_once_snurresvamp_konge
+  ok    bosses.real_floor_chain_snurresvamp_konge
+  --    bosses: 49 checks, 0 failed, 0 skipped, 1.1 s
+== section copy_rules  (res://tests/sections/copy_rules.gd)
+  ok    Style rule R1 is documented
+  ok    Style rule R2 is documented
+  ok    Style rule R3 is documented
+  ok    Style rule R4 is documented
+  ok    Style rule R5 is documented
+  ok    Style rule R6 is documented
+  ok    Style rule R7 is documented
+  ok    Style rule R8 is documented
+  ok    Style rule R9 is documented
+  ok    Style rule R10 is documented
+  ok    Style rule R11 is documented
+  ok    Voice sheet: child
+  ok    Voice sheet: wanderer
+  ok    Voice sheet: fairy
+  ok    Voice sheet: shopkeeper
+  ok    Voice sheet: gardener
+  ok    Voice sheet: watcher
+  ok    Voice sheet: elder
+  ok    Voice sheet: craftsman
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    copy_rules.font_budget_matches_fonts
+  ok    copy_rules.tool_printed_ids (Shipped font metrics printed 1 PASS/FAIL ids)
+  ok    copy_rules.tool_exit_code (Shipped font metrics exit code 0)
+  ok    copy_rules.valid_fixture_clean
+  ok    copy_rules.event_system_key_is_not_a_citizen
+  ok    copy_rules.unknown_citizen_still_refused
+  ok    copy_rules.stale_name
+  ok    copy_rules.long_dialogue
+  ok    copy_rules.voiced_digit
+  ok    copy_rules.missing_voice_index
+  ok    copy_rules.placeholder_parity
+  ok    copy_rules.child_safe
+  ok    copy_rules.missing_first_meeting
+  ok    copy_rules.missing_status_csv
+  ok    copy_rules.row_review_keeps_file_draft
+  ok    copy_rules.row_review_rejects_changed_da
+  ok    copy_rules.row_review_rejects_changed_en
+  ok    copy_rules.stale_row_review_lint
+  ok    copy_rules.stale_row_review_blocks_bake
+  ok    copy_rules.literal_roster_scanner
+  ok    copy_rules.tool_printed_ids (Copy mutants printed 17 PASS/FAIL ids)
+  ok    copy_rules.tool_exit_code (Copy mutants exit code 0)
+  ok    copy_rules.strict_lint_runs_clean ([]
+)
+  ok    copy_rules.legacy_copy_findings_cleared ([])
+  ok    Honest review state for localization/da.csv
+  ok    Honest review state for localization/areas.csv
+  ok    Honest review state for localization/cast.csv
+  ok    Honest review state for localization/core.csv
+  ok    Honest review state for localization/dialogue_builder.csv
+  ok    Honest review state for localization/dialogue_cast.csv
+  ok    Honest review state for localization/dungeon_services.csv
+  ok    Honest review state for localization/economy.csv
+  ok    Honest review state for localization/farm_signs.csv
+  ok    Honest review state for localization/features_quests.csv
+  ok    Honest review state for localization/features_ui.csv
+  ok    Honest review state for localization/finds.csv
+  ok    Honest review state for localization/furniture.csv
+  ok    Honest review state for localization/ghost.csv
+  ok    Honest review state for localization/home.csv
+  ok    Honest review state for localization/levels.csv
+  ok    Honest review state for localization/loot_dungeon.csv
+  ok    Honest review state for localization/materials.csv
+  ok    Honest review state for localization/nav.csv
+  ok    Honest review state for localization/quests.csv
+  ok    Honest review state for localization/social_sys.csv
+  ok    Honest review state for localization/towns.csv
+  ok    Honest review state for localization/traetoppen.csv
+  ok    Honest review state for localization/ui.csv
+  ok    Honest review state for localization/wardrobe.csv
+  ok    Honest review state for localization/world.csv
+  ok    Honest review state for localization/birthdays.csv
+  ok    Honest review state for localization/gifts.csv
+  ok    Honest review state for localization/social_arch.csv
+  ok    Honest review state for localization/social_talk.csv
+  ok    Honest review state for localization/rel_ui.csv
+  ok    Honest review state for localization/farm.csv
+  ok    Honest review state for localization/menus.csv
+  ok    Honest review state for localization/zz_final.csv
+  ok    Honest review state for localization/hud.csv
+  ok    Honest review state for localization/shop_ui.csv
+  ok    Honest review state for localization/dialogue.csv
+  ok    Honest review state for localization/farm_site.csv
+  ok    Honest review state for localization/life.csv
+  ok    Honest review state for localization/farm_tutorial.csv
+  ok    Honest review state for localization/ghost_dialogue.csv
+  ok    Honest review state for localization/ghostfamily.csv
+  ok    Honest review state for localization/secret_garden.csv
+  ok    Honest review state for localization/wardrobe_ui.csv
+  ok    Honest review state for localization/social_events.csv
+  ok    Honest review state for localization/dungeon.csv
+  ok    Honest review state for localization/forest_mother.csv
+  ok    Honest review state for localization/dungeon_items.csv
+  ok    Honest review state for localization/home_world.csv
+  ok    Honest review state for localization/dungeon_run.csv
+  ok    Honest review state for localization/home_ui.csv
+  ok    Honest review state for localization/appraisal.csv
+  ok    Honest review state for localization/forest.csv
+  ok    Honest review state for localization/animals.csv
+  ok    Honest review state for localization/look.csv
+  ok    Honest review state for localization/festivals.csv
+  ok    Honest review state for localization/post.csv
+  ok    Honest review state for localization/keepers.csv
+  ok    Honest review state for localization/heart_events.csv
+  ok    Honest review state for localization/ghostfamily_events.csv
+  ok    Honest review state for localization/ghostfamily_fest.csv
+  ok    Honest review state for localization/ghostfamily_seek.csv
+  ok    Honest review state for localization/ghostfamily_quests.csv
+  ok    Honest review state for localization/partner.csv
+  ok    Honest review state for localization/home_amenities.csv
+  --    copy_rules: 142 checks, 0 failed, 0 skipped, 0.7 s
+== section dungeon_pickups  (res://tests/sections/dungeon_pickups.gd)
+  ok    dungeon_pickups.pickup_layer_and_delay
+  ok    dungeon_pickups.orb_magnet_and_pickup
+  ok    dungeon_pickups.pickup_goes_through_loot_deliver_when_present
+  ok    dungeon_pickups.full_pack_retains_drop_and_warns_once
+  ok    dungeon_pickups.full_pack_can_retry
+  ok    dungeon_pickups.berry_heals_when_hurt
+  ok    dungeon_pickups.orb_cap_50_auto_collects
+  ok    dungeon_pickups.cap_full_pack_queues_without_loss
+  ok    dungeon_pickups.cap_pending_drop_retries
+  ok    dungeon_pickups.telegraph_ring_matches_hit_area
+  ok    dungeon_pickups.telegraph_line_matches_hit_area
+  ok    dungeon_pickups.saturated_pool_never_replaces_live_warning
+  ok    dungeon_pickups.telegraph_pool_cap_8
+  ok    dungeon_pickups.fx_pool_reuse
+  ok    dungeon_pickups.fx_idle_process_disabled
+  --    dungeon_pickups: 15 checks, 0 failed, 0 skipped, 0.2 s
+== section enemies  (res://tests/sections/enemies.gd)
+  ok    enemies.create_marker_is_picked_entry
+  ok    enemies.spawns_bat
+  ok    enemies.hp_ladder_bat
+  ok    enemies.damage_ladder_bat
+  ok    enemies.dies_and_emits_once_bat
+  ok    enemies.spawns_ugleoje
+  ok    enemies.hp_ladder_ugleoje
+  ok    enemies.damage_ladder_ugleoje
+  ok    enemies.dies_and_emits_once_ugleoje
+  ok    enemies.spawns_tornebusk
+  ok    enemies.hp_ladder_tornebusk
+  ok    enemies.damage_ladder_tornebusk
+  ok    enemies.dies_and_emits_once_tornebusk
+  ok    enemies.spawns_lysesvamp
+  ok    enemies.hp_ladder_lysesvamp
+  ok    enemies.damage_ladder_lysesvamp
+  ok    enemies.dies_and_emits_once_lysesvamp
+  ok    enemies.spawns_mosfroe
+  ok    enemies.hp_ladder_mosfroe
+  ok    enemies.damage_ladder_mosfroe
+  ok    enemies.dies_and_emits_once_mosfroe
+  ok    enemies.spawns_sporesvamp
+  ok    enemies.hp_ladder_sporesvamp
+  ok    enemies.damage_ladder_sporesvamp
+  ok    enemies.dies_and_emits_once_sporesvamp
+  ok    enemies.spawns_krystalugle
+  ok    enemies.hp_ladder_krystalugle
+  ok    enemies.damage_ladder_krystalugle
+  ok    enemies.dies_and_emits_once_krystalugle
+  ok    enemies.telegraph_ugleoje
+  ok    enemies.telegraph_tornebusk
+  ok    enemies.stagger_cancels_windup
+  ok    enemies.armor_keeps_windup
+  ok    enemies.assist_scales_windup_and_damage
+  ok    enemies.ambush_starts_hidden
+  ok    enemies.ambush_rustle_then_leap
+  ok    enemies.ambush_leaps_once
+  ok    enemies.ambush_kind_fallback
+  ok    enemies.fairy_light_reveals_stuns
+  ok    enemies.rng_seeded_replay
+  ok    enemies.sleeping_enemy_cost_zero
+  ok    enemies.runestone_leash_blocks_aggro
+  ok    enemies.no_damage_during_dodge_iframes
+  ok    enemies.saturation_delays_attack_without_invisible_windup
+  ok    enemies.attack_retries_with_full_visible_warning
+  ok    enemies.warning_survives_hit_stop_and_modal_delay
+  ok    enemies.owner_cancellation_releases_warning
+  --    enemies: 47 checks, 0 failed, 0 skipped, 0.3 s
+== section enemy_performance  (res://tests/sections/enemy_performance.gd)
+  ok    enemy_performance.alive_limit_48
+  ok    enemy_performance.awake_limit_24 (24/48 awake)
+  ok    enemy_performance.sleeping_callbacks_zero
+  ok    enemy_performance.awake_logic_budget (0.02120833333333 ms p95 per enemy <=0.03)
+  --    enemy_performance: 4 checks, 0 failed, 0 skipped, 0.4 s
+== summary: 5 section(s) run, 265 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 8.9 s
+PLAYTEST PASS (265 checks in 5 sections, 0 allowed engine messages, 0 known-issue messages)

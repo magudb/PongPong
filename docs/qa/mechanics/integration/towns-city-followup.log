@@ -1,0 +1,83 @@
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=towns_city
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.ciTbwC/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 1.0 s
+== section towns_city  (res://tests/sections/towns_city.gd)
+  ok    towns_city.real_city_populated_at_noon
+  ok    towns_city.door_approach_hoppe_hut
+  ok    towns_city.door_approach_uglehulen
+  ok    towns_city.door_approach_postkontoret
+  ok    towns_city.door_approach_vagthytten
+  ok    towns_city.door_approach_brummes_vaerksted
+  ok    towns_city.door_approach_brummes_hus
+  ok    towns_city.door_approach_kikis_hytte
+  ok    towns_city.door_approach_torvekroen
+  ok    towns_city.door_approach_fjerpens_hytte
+  ok    towns_city.door_approach_badehuset
+  ok    towns_city.door_approach_musikstuen
+  ok    towns_city.door_approach_koekkenhave_skuret
+  ok    towns_city.door_approach_raadhuset
+  ok    towns_city.door_approach_gaestehytten
+  ok    towns_city.sidecar_doors_complete
+  ok    towns_city.stall_shop_and_two_talk_hosts_timber_yard
+  ok    towns_city.stall_shop_and_two_talk_hosts_natteblik_maps
+  ok    towns_city.live_door_hoppe_hut
+  ok    towns_city.door_enters_hoppe_hut
+  ok    towns_city.door_returns_hoppe_hut ([&"traetoppen", (1056.083, 611.9243), (1053.9, 603.2)])
+  ok    towns_city.live_door_uglehulen
+  ok    towns_city.door_enters_uglehulen
+  ok    towns_city.door_returns_uglehulen ([&"traetoppen", (1853.9, 793.2), (1853.9, 793.2)])
+  ok    towns_city.live_door_postkontoret
+  ok    towns_city.door_enters_postkontoret
+  ok    towns_city.door_returns_postkontoret ([&"traetoppen", (4171.9, 867.2), (4171.9, 867.2)])
+  ok    towns_city.live_door_vagthytten
+  ok    towns_city.door_enters_vagthytten
+  ok    towns_city.door_returns_vagthytten ([&"traetoppen", (3499.9, 867.2), (3499.9, 867.2)])
+  ok    towns_city.live_door_brummes_vaerksted
+  ok    towns_city.door_enters_brummes_vaerksted
+  ok    towns_city.door_returns_brummes_vaerksted ([&"traetoppen", (449.5, 1861.2), (449.5, 1861.2)])
+  ok    towns_city.live_door_brummes_hus
+  ok    towns_city.door_enters_brummes_hus
+  ok    towns_city.door_returns_brummes_hus ([&"traetoppen", (1121.353, 2033.478), (1121.5, 2032.2)])
+  ok    towns_city.live_door_kikis_hytte
+  ok    towns_city.door_enters_kikis_hytte
+  ok    towns_city.door_returns_kikis_hytte ([&"traetoppen", (3109.4, 1749.1), (3109.4, 1749.1)])
+  ok    towns_city.live_door_torvekroen
+  ok    towns_city.door_enters_torvekroen
+  ok    towns_city.door_returns_torvekroen ([&"traetoppen", (2181.073, 1770.952), (2181.4, 1768.1)])
+  ok    towns_city.live_door_badehuset
+  ok    towns_city.door_enters_badehuset
+  ok    towns_city.door_returns_badehuset ([&"traetoppen", (4867.168, 1824.22), (4867.4, 1822.2)])
+  ok    towns_city.live_door_musikstuen
+  ok    towns_city.door_enters_musikstuen
+  ok    towns_city.door_returns_musikstuen ([&"traetoppen", (1556.219, 2930.982), (1549.5, 2930.2)])
+  ok    towns_city.live_door_raadhuset
+  ok    towns_city.door_enters_raadhuset
+  ok    towns_city.door_returns_raadhuset ([&"traetoppen", (3001.5, 1480.5), (3001.5, 1480.5)])
+  ok    towns_city.live_door_gaestehytten
+  ok    towns_city.door_enters_gaestehytten
+  ok    towns_city.door_returns_gaestehytten ([&"traetoppen", (2061.392, 3139.88), (2061.5, 3139.2)])
+  ok    towns_city.four_fast_travel_stops_installed
+  ok    towns_city.fast_travel_unlock_farm
+  ok    towns_city.fast_travel_unlock_torv
+  ok    towns_city.fast_travel_unlock_hyggebyen
+  ok    towns_city.fast_travel_unlock_skovlift
+  ok    towns_city.fast_travel_lists_discovered_stops
+  ok    towns_city.fast_travel_rebuilds_safely
+  ok    towns_city.owl_window_pose_and_safe_body
+  ok    towns_city.owl_window_retains_authored_reach
+  ok    towns_city.real_interact_reaches_window_owl
+  --    towns_city: 64 checks, 0 failed, 0 skipped, 5.4 s
+== summary: 1 section(s) run, 72 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 11.2 s
+PLAYTEST PASS (72 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

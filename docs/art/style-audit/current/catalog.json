@@ -5696,7 +5696,7 @@
         "category": "animal",
         "description_key": "ITEM_BABY_KITTEN_DESC",
         "name_key": "ITEM_BABY_KITTEN",
-        "produces": "companionship",
+        "produces": "friendship_token",
         "sell_price": 180
       },
       "id": "baby_kitten",
@@ -5751,7 +5751,7 @@
         "category": "animal",
         "description_key": "ITEM_BABY_PUPPY_DESC",
         "name_key": "ITEM_BABY_PUPPY",
-        "produces": "companionship",
+        "produces": "friendship_token",
         "sell_price": 180
       },
       "id": "baby_puppy",
@@ -9482,7 +9482,7 @@
         "set": "skovens_hjerte",
         "sources": [
           {
-            "container": "fe",
+            "container": "jern",
             "kind": "find",
             "zone": "dybe_bregner"
           }
@@ -12570,7 +12570,7 @@
         "set": "svampehytten",
         "sources": [
           {
-            "container": "fe",
+            "container": "jern",
             "kind": "find",
             "zone": "svampelunden"
           }
@@ -17255,7 +17255,7 @@
         "set": "svampehytten",
         "sources": [
           {
-            "container": "fe",
+            "container": "jern",
             "kind": "find",
             "zone": "svampelunden"
           }
@@ -18100,11 +18100,6 @@
           {
             "kind": "find",
             "zone": "skovkant"
-          },
-          {
-            "kind": "node",
-            "node": "crystal",
-            "zone": "skovkant"
           }
         ]
       },
@@ -18263,7 +18258,7 @@
         "set": "skovens_hjerte",
         "sources": [
           {
-            "container": "jern",
+            "container": "trae",
             "kind": "find",
             "zone": "skovkant"
           }
@@ -27036,6 +27031,12 @@
       "auxiliary": [],
       "id": "pond_lily",
       "path": "res://assets/iso_props/painted_world/pond_lily.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "pond_lily_farm",
+      "path": "res://assets/iso_props/farm_dress/pond_lily.webp",
       "real": true
     },
     {

@@ -1,0 +1,111 @@
+{
+  "schema": 1,
+  "result": "pass",
+  "scope": "All planned single-player mechanics",
+  "implementation_revision": "cea0196896d2f362cb55cd18d677d4b98601c31a",
+  "merge": "ready for local-main integration; no remote push",
+  "finale": "A bittersweet discovery: learn her fate and bring her legacy home",
+  "reports": {
+    "full-headless": {
+      "path": "docs/qa/mechanics/integration/full-headless.json",
+      "checks": 16425,
+      "failed": 0,
+      "skipped": 156,
+      "unexpected_engine_messages": 0,
+      "elapsed_s": 467.74
+    },
+    "texture-repair-headless": {
+      "path": "docs/qa/mechanics/integration/texture-repair-headless.json",
+      "checks": 531,
+      "failed": 0,
+      "skipped": 8,
+      "unexpected_engine_messages": 0,
+      "elapsed_s": 48.9
+    },
+    "native-budget-final": {
+      "path": "docs/qa/mechanics/integration/native-budget-final.json",
+      "checks": 29,
+      "failed": 0,
+      "skipped": 0,
+      "unexpected_engine_messages": 0,
+      "elapsed_s": 33.13
+    },
+    "terrain-lifetime-headless": {
+      "path": "docs/qa/mechanics/integration/terrain-lifetime-headless.json",
+      "checks": 677,
+      "failed": 0,
+      "skipped": 9,
+      "unexpected_engine_messages": 0,
+      "elapsed_s": 76.35
+    },
+    "enemy-update-headless": {
+      "path": "docs/qa/mechanics/integration/enemy-update-headless.json",
+      "checks": 109,
+      "failed": 0,
+      "skipped": 0,
+      "unexpected_engine_messages": 0,
+      "elapsed_s": 26.61
+    },
+    "enemy-update-native": {
+      "path": "docs/qa/mechanics/integration/enemy-update-native.json",
+      "checks": 8,
+      "failed": 0,
+      "skipped": 0,
+      "unexpected_engine_messages": 0,
+      "elapsed_s": 22.54
+    },
+    "final-native": {
+      "path": "docs/qa/mechanics/integration/final-native.json",
+      "checks": 878,
+      "failed": 0,
+      "skipped": 0,
+      "unexpected_engine_messages": 0,
+      "elapsed_s": 254.05
+    }
+  },
+  "town_source_binding": "b512ac867eda2b2e4e36407b5584c405b4b067c2415908b2cd7f3561665006e7",
+  "town_proofs": {
+    "extension_scenario_checks": 8,
+    "extension_owner_checks": 584,
+    "extension_bake_checks": 137,
+    "mutants_caught": 8,
+    "unchanged_control_passes": true,
+    "wave_7": "docs/qa/mechanics/integration/town-wave-7.json"
+  },
+  "independent_validation": {
+    "staged_rules": 125,
+    "staged_mutants_caught": 57,
+    "pacing_model_gates": 9,
+    "harness_selftests": 66,
+    "source_binding_controls": 8,
+    "reviewed_visual_theme_assets": 2925,
+    "voiced_paths": 296,
+    "human_voice_paths": 11,
+    "synthetic_voice_paths": 285,
+    "deferred_voice_paths": 0,
+    "seeded_boss_wins": 180,
+    "completed_ambush_dodges": 100
+  },
+  "limits": [
+    "Native measurements are on Apple M3 / Godot 4.7.2 Compatibility at 1280x720; GPU timing and low-end-device performance are not established.",
+    "Full headless acceptance precedes the final preview-cache and render-batching repairs; affected systems are covered by the focused headless and final native runs.",
+    "The 156 full-headless skips remain explicit; final native integration has no skips and current town proofs replace the two stale-source skips.",
+    "Danish/English copy has AI review; native-speaker copy and aesthetic listening review remain editorial work.",
+    "Children, multiplayer, yearly birthday cards and a fifth friendship event are later work; greenhouse remains opt-in.",
+    "No manual human play-session sign-off is claimed."
+  ],
+  "native_town_limits": {
+    "crowd_mb": 304.82,
+    "crowd_cap_mb": 320,
+    "original_tour_s": 108.277,
+    "original_tour_cap_s": 110,
+    "extended_scenarios_s": 10.407,
+    "total_native_tour_s": 118.684,
+    "rainy_town_frame_ms": 3.9282109375,
+    "rainy_town_frame_cap_ms": 4,
+    "enemy_logic_p95_ms": 0.0266666666666667,
+    "enemy_logic_cap_ms": 0.03,
+    "enemy_render_increment_ms": 0.00532347292830605,
+    "enemy_render_increment_cap_ms": 0.018
+  }
+}

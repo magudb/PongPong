@@ -1,0 +1,152 @@
+[
+  {
+    "draw_calls": 609.0,
+    "quadrant": 16,
+    "samples": [
+      {
+        "cpu_render_ms": 0.0,
+        "fps": 234.990948865571,
+        "frames": 118,
+        "gpu_ms": 0.0,
+        "ms": 4.25548305084746,
+        "worst_ms": 5.627
+      },
+      {
+        "cpu_render_ms": 0.0,
+        "fps": 245.811216985355,
+        "frames": 123,
+        "gpu_ms": 0.0,
+        "ms": 4.06816260162602,
+        "worst_ms": 5.16
+      },
+      {
+        "cpu_render_ms": 0.0,
+        "fps": 244.565379483947,
+        "frames": 123,
+        "gpu_ms": 0.0,
+        "ms": 4.08888617886179,
+        "worst_ms": 5.244
+      }
+    ]
+  },
+  {
+    "draw_calls": 612.0,
+    "quadrant": 8,
+    "samples": [
+      {
+        "cpu_render_ms": 0.0,
+        "fps": 258.706467661692,
+        "frames": 130,
+        "gpu_ms": 0.0,
+        "ms": 3.86538461538461,
+        "worst_ms": 5.351
+      },
+      {
+        "cpu_render_ms": 0.0,
+        "fps": 259.077683446929,
+        "frames": 130,
+        "gpu_ms": 0.0,
+        "ms": 3.85984615384615,
+        "worst_ms": 4.932
+      },
+      {
+        "cpu_render_ms": 0.0,
+        "fps": 247.038033896009,
+        "frames": 124,
+        "gpu_ms": 0.0,
+        "ms": 4.04795967741935,
+        "worst_ms": 6.365
+      }
+    ]
+  },
+  {
+    "draw_calls": 607.0,
+    "quadrant": 4,
+    "samples": [
+      {
+        "cpu_render_ms": 0.0,
+        "fps": 257.355581623614,
+        "frames": 129,
+        "gpu_ms": 0.0,
+        "ms": 3.88567441860465,
+        "worst_ms": 5.262
+      },
+      {
+        "cpu_render_ms": 0.0,
+        "fps": 245.911471870127,
+        "frames": 123,
+        "gpu_ms": 0.0,
+        "ms": 4.06650406504065,
+        "worst_ms": 10.382
+      },
+      {
+        "cpu_render_ms": 0.0,
+        "fps": 243.459034026393,
+        "frames": 122,
+        "gpu_ms": 0.0,
+        "ms": 4.10746721311475,
+        "worst_ms": 9.486
+      }
+    ]
+  },
+  {
+    "draw_calls": 593.0,
+    "quadrant": 2,
+    "samples": [
+      {
+        "cpu_render_ms": 0.0,
+        "fps": 260.680435634817,
+        "frames": 131,
+        "gpu_ms": 0.0,
+        "ms": 3.83611450381679,
+        "worst_ms": 5.429
+      },
+      {
+        "cpu_render_ms": 0.0,
+        "fps": 263.656718951925,
+        "frames": 132,
+        "gpu_ms": 0.0,
+        "ms": 3.79281060606061,
+        "worst_ms": 5.513
+      },
+      {
+        "cpu_render_ms": 0.0,
+        "fps": 250.68540573234,
+        "frames": 126,
+        "gpu_ms": 0.0,
+        "ms": 3.98906349206349,
+        "worst_ms": 6.27
+      }
+    ]
+  },
+  {
+    "draw_calls": 609.0,
+    "quadrant": 16,
+    "samples": [
+      {
+        "cpu_render_ms": 0.0,
+        "fps": 250.423334684824,
+        "frames": 126,
+        "gpu_ms": 0.0,
+        "ms": 3.9932380952381,
+        "worst_ms": 4.872
+      },
+      {
+        "cpu_render_ms": 0.0,
+        "fps": 248.105959108168,
+        "frames": 125,
+        "gpu_ms": 0.0,
+        "ms": 4.030536,
+        "worst_ms": 5.518
+      },
+      {
+        "cpu_render_ms": 0.0,
+        "fps": 238.788862887435,
+        "frames": 120,
+        "gpu_ms": 0.0,
+        "ms": 4.1878,
+        "worst_ms": 6.7
+      }
+    ]
+  }
+]

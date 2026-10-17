@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 7,
+  "elapsed_s": 17.1,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "enemy_performance": {
+      "character": "animal",
+      "checks": 7,
+      "failed": 0,
+      "ms": 12182,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

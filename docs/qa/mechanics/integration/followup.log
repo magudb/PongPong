@@ -1,0 +1,592 @@
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=enemy_performance,dungeon_reveal,home_progression,shop_ui,wardrobe_ui,towns_city,towns_data,cast_data,copy_completion
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.vRZmIl/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 1.0 s
+== section cast_data  (res://tests/sections/cast_data.gd)
+  ok    cast_data.species_perk_precedence (species layer > race layer > the caller's default: Kiki 1.0 / 0.9 / 0.0 / climb 2.2 / chest 700 / crown caches, Rasmus the race baseline 1.3 / 0.75 / 0.2, every other skin through its race, unknown skins the default; SpeciesPerks.current follows GameManager.character_skin [])
+  ok    the monkey's climb_speed_mult 2.2 turns the 1.1 s ladder into 0.5 s
+  ok    cast_data.species_perks_complete (15 skins of characters.lua answer the 8 race perks through the ladder, the six heroes have a row (only Kiki lists values), no ghost rows, only documented keys [] [])
+  ok    cast_data.species_perks_only_through_the_class (304 scripts scanned: none but scripts/data/species_perks.gd reads the config key species_perks [])
+  ok    cast_data.npc_homes_match_zone_graph (npc_vocab.areas = the 4 home areas of the zone graph (farm hyggebyen traetoppen moerkeskoven; `home` is nobody's home, generated floors are never one); 15 npc markers of 31 maps stand in their NPC's home; Oak at the Skovlift, Natteblik without a shop_id, Mis in Hyggebyen [])
+  ok    cast_data.new_roles_valid (12 new roles (gardener carpenter bathkeeper appraiser mapseller beekeeper apprentice lamplighter baker_helper innkeeper clerk musician) are in npc_vocab.roles and worn by the citizens of the design [])
+  ok    cast_data.family_and_age_present (age on all 30 citizens, family on the 8 relatives (Bertil / Bodil, Kloevermynte / Birk, Lily with the mayor, Bamse with Oak), the data of D3 citizens.json []; lua/social/citizens.lua (S-data) agrees where it repeats a field)
+  ok    cast_data.postman_pip_offers_forste_dage (postman_pip offers ["pips_runde", "forste_dage", "forest_mother_s03", "forest_mother_s04", "forest_mother_s05", "forest_mother_s06", "forest_mother_s07", "forest_mother_s08"]; penguin_postman (ambient) offers none)
+  ok    forste_dage (N04) is given by postman_pip
+  ok    cast_data.pips_runde_loads_through_lua_runtime (lua/quests/pips_runde.lua: giver postman_pip, ZONE_TRAETOPPEN, FIND, help, not repeatable; reward gold 120 + friendship_token + a heart with Pip; four objectives; on_offer / on_accept / handle_event / is_available run through LuaRuntime, both toasts are translated, no lint finding [])
+  ok    cast_data.pips_runde_objectives_bind (greet_hoppe / greet_brumme / greet_sofus bind dialogue_started of gardener_hoppe / carpenter_brumme / bathkeeper_sofus, return_to_pip (after_others) binds postman_pip, all four are roster ids of the binding vocabulary, every OBJ_PIPS_RUNDE_* text in da + en [])
+  ok    cast_data.keys_da_en_complete (cast.csv: 40 keys in the five families, every key the cast data names (97 lookups: 8 hero cards, 15 NPC names, 5 skin names, the shop, the quest and its objectives, the zone names) is defined in da + en, the six hero blurbs fit two lines [] [] [])
+  ok    cast_data.hero_blurbs_verbatim_from_the_sheet (the 13 card texts (6 hero blurbs, 7 CAST_*_DESC) of cast.csv are VERBATIM the paragraphs of the Figurer v2 export (Natteblik's drawing note is dropped) [])
+  ok    cast_data.timber_yard_stock_items_exist_and_keeper (timber_yard: keeper carpenter_brumme, 7 lines (wood 60, stone 60, plank_pine 30, timber_beam 20, nails 40, rope 20, straw_bundle 20) at the item defs' own prices, buys building_material + resource, builder_yard (Hasselnoed) untouched [])
+  ok    cast_data.no_old_town_name_anywhere (2239 text files (lua, localization, data, scripts, scenes, tests, docs, tools) and every loaded key: the old town name is nowhere [])
+  ok    cast_data.no_foreign_csv_touched (ui.csv, finds.csv and furniture.csv are byte-identical to the baseline (508 keys), cast.csv / core.csv redefine none of them; CHAR_HOBBIT_NAME 'Halvling' and FIND_AREA_FARM are P26's overrides, not V1's [])
+  --    cast_data: 16 checks, 0 failed, 0 skipped, 1.5 s
+== section copy_completion  (res://tests/sections/copy_completion.gd)
+  ok    copy_completion.strict_runtime_localization (Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+loc_check: root=res:// | scanned gd=305 tscn=45 lua=219 map=31 | CSV files: da.csv animals.csv appraisal.csv areas.csv birthdays.csv cast.csv core.csv dialogue.csv dialogue_builder.csv dialogue_cast.csv dungeon.csv dungeon_items.csv dungeon_run.csv dungeon_services.csv economy.csv farm.csv farm_signs.csv farm_site.csv farm_tutorial.csv features_quests.csv features_ui.csv festivals.csv finds.csv forest.csv forest_mother.csv furniture.csv ghost.csv ghost_dialogue.csv ghostfamily.csv ghostfamily_events.csv ghostfamily_fest.csv ghostfamily_quests.csv ghostfamily_seek.csv gifts.csv heart_events.csv home.csv home_amenities.csv home_ui.csv home_world.csv hud.csv keepers.csv levels.csv life.csv look.csv loot_dungeon.csv materials.csv menus.csv nav.csv partner.csv post.csv quests.csv rel_ui.csv secret_garden.csv shop_ui.csv social_arch.csv social_events.csv social_sys.csv social_talk.csv towns.csv traetoppen.csv ui.csv wardrobe.csv wardrobe_ui.csv world.csv zz_final.csv | keys loaded: 4415
+loc_check: referenced keys: 2885 (+0 any-of groups) | dynamic prefixes in code: 137
+loc_check PASS (strict): missing=0 (da=0 en=0) lint_errors=0 legacy_issues=0 warnings=0
+)
+  ok    copy_completion.csv_lint.py_strict (csv_lint PASS: 65 file(s), 4415 keys, 0 error(s), 0 legacy issue(s), 0 warning(s)
+)
+  ok    copy_completion.copy_lint.py_strict (copy_lint: 0 findings
+)
+  ok    copy_completion.fixture_copy_requires_its_data
+  ok    copy_completion.fixture_key_in_product_still_requires_csv
+  ok    copy_completion.unknown_fixture_key_still_fails
+  ok    copy_completion.all_reviewed_voice_assets_match (PASS manifest_in_sync 296 lines
+)
+  --    copy_completion: 7 checks, 0 failed, 0 skipped, 9.7 s
+== section dungeon_reveal  (res://tests/sections/dungeon_reveal.gd)
+  ok    dungeon_reveal.tier_selection_by_rank
+  ok    dungeon_reveal.item_already_in_store_before_reveal
+  ok    dungeon_reveal.unique_card_before_skip_threshold
+  ok    dungeon_reveal.unique_card_skippable
+  ok    dungeon_reveal.skip_keeps_owned_item
+  ok    dungeon_reveal.no_reveal_for_duplicate_keepsake
+  ok    dungeon_reveal.awe_probe_uses_real_boss_flag
+  ok    dungeon_reveal.legendary_awe_stun
+  ok    dungeon_reveal.music_duck_is_temporary
+  ok    dungeon_reveal.legendary_skip_releases_only_awe
+  ok    dungeon_reveal.queue_best_rank_first
+  ok    dungeon_reveal.skip_preserves_a_later_combat_stun
+  ok    dungeon_reveal.reduce_flash_variant
+  ok    dungeon_reveal.reduce_flash_has_no_particles
+  ok    dungeon_reveal.appraisal_automatic_reveal_suppressed
+  ok    dungeon_reveal.appraisal_reveal_above_hidden_forest_hud
+  ok    dungeon_reveal.cues_by_rarity_and_directory
+  ok    dungeon_reveal.missing_audio_is_silent
+  ok    dungeon_reveal.detached_reveal_cancels_deferred_delivery
+  ok    dungeon_reveal.detached_reveal_ignores_late_signal
+  --    dungeon_reveal: 20 checks, 0 failed, 0 skipped, 0.5 s
+== section enemy_performance  (res://tests/sections/enemy_performance.gd)
+  ok    enemy_performance.alive_limit_48
+  ok    enemy_performance.awake_limit_24 (24/48 awake)
+  ok    enemy_performance.sleeping_callbacks_zero
+  ok    enemy_performance.awake_callbacks_do_work
+  ok    enemy_performance.awake_logic_budget (0.01766666666667 ms p95 per enemy <=0.03)
+  --    enemy_performance: 5 checks, 0 failed, 0 skipped, 0.7 s
+== section home_progression  (res://tests/sections/home_progression.gd)
+  ok    home_progression.tier_2_requirements_reachable_with_real_grid ([])
+  ok    home_progression.tier_2_gate_accepts ({ "ok": true, "reason": "ok", "reasons": [], "rows": [{ "kind": "gold", "key": "HOME_UI_COST", "id": "gold", "have": 750, "need": 200, "met": true }, { "kind": "material", "key": "ITEM_PLANK_PINE", "id": "plank_pine", "have": 16, "need": 16, "met": true }, { "kind": "material", "key": "ITEM_NAILS", "id": "nails", "have": 24, "need": 24, "met": true }, { "kind": "material", "key": "ITEM_STONE_BLOCK", "id": "stone_block", "have": 6, "need": 6, "met": true }, { "kind": "days", "key": "HOME_UI_BUILD_DAYS_FMT", "id": "days", "have": 0, "need": 1, "met": true }, { "kind": "quest", "key": "HOME_GATE_QUEST_FMT", "id": "intro_lottery", "name_key": "QUEST_INTRO_LOTTERY_TITLE", "have": 1, "need": 1, "met": true }] })
+  ok    home_progression.tier_2_payment_commits
+  ok    home_progression.tier_2_mid_construction_roundtrip
+  ok    home_progression.tier_2_completes_in_absolute_days
+  ok    home_progression.tier_2_preserves_every_owned_piece
+  ok    home_progression.tier_2_storage_capacity_live
+  ok    home_progression.tier_2_hygge_perks_reach_shared_caps
+  ok    home_progression.tier_3_requirements_reachable_with_real_grid ([])
+  ok    home_progression.tier_3_gate_accepts ({ "ok": true, "reason": "ok", "reasons": [], "rows": [{ "kind": "gold", "key": "HOME_UI_COST", "id": "gold", "have": 550, "need": 300, "met": true }, { "kind": "material", "key": "ITEM_PLANK_PINE", "id": "plank_pine", "have": 20, "need": 20, "met": true }, { "kind": "material", "key": "ITEM_STRAW_BUNDLE", "id": "straw_bundle", "have": 16, "need": 16, "met": true }, { "kind": "material", "key": "ITEM_LIME", "id": "lime", "have": 8, "need": 8, "met": true }, { "kind": "material", "key": "ITEM_NAILS", "id": "nails", "have": 30, "need": 30, "met": true }, { "kind": "material", "key": "ITEM_GLASS_PANE", "id": "glass_pane", "have": 4, "need": 4, "met": true }, { "kind": "days", "key": "HOME_UI_BUILD_DAYS_FMT", "id": "days", "have": 0, "need": 2, "met": true }] })
+  ok    home_progression.tier_3_payment_commits
+  ok    home_progression.tier_3_mid_construction_roundtrip
+  ok    home_progression.tier_3_completes_in_absolute_days
+  ok    home_progression.tier_3_preserves_every_owned_piece
+  ok    home_progression.tier_3_storage_capacity_live
+  ok    home_progression.tier_3_hygge_perks_reach_shared_caps
+  ok    home_progression.tier_4_requirements_reachable_with_real_grid ([])
+  ok    home_progression.tier_4_gate_accepts ({ "ok": true, "reason": "ok", "reasons": [], "rows": [{ "kind": "gold", "key": "HOME_UI_COST", "id": "gold", "have": 900, "need": 900, "met": true }, { "kind": "material", "key": "ITEM_PLANK_OAK", "id": "plank_oak", "have": 16, "need": 16, "met": true }, { "kind": "material", "key": "ITEM_TIMBER_BEAM", "id": "timber_beam", "have": 8, "need": 8, "met": true }, { "kind": "material", "key": "ITEM_ROOF_TILE", "id": "roof_tile", "have": 24, "need": 24, "met": true }, { "kind": "material", "key": "ITEM_LIME", "id": "lime", "have": 8, "need": 8, "met": true }, { "kind": "material", "key": "ITEM_NAILS", "id": "nails", "have": 36, "need": 36, "met": true }, { "kind": "material", "key": "ITEM_GLASS_PANE", "id": "glass_pane", "have": 8, "need": 8, "met": true }, { "kind": "days", "key": "HOME_UI_BUILD_DAYS_FMT", "id": "days", "have": 0, "need": 2, "met": true }, { "kind": "friend", "key": "HOME_GATE_FRIEND_FMT", "id": "mayor_lyra", "name_key": "NPC_MAYOR_LYRA", "have": 2, "need": 2, "met": true }] })
+  ok    home_progression.tier_4_payment_commits
+  ok    home_progression.tier_4_mid_construction_roundtrip
+  ok    home_progression.tier_4_completes_in_absolute_days
+  ok    home_progression.tier_4_preserves_every_owned_piece
+  ok    home_progression.tier_4_storage_capacity_live
+  ok    home_progression.tier_4_hygge_perks_reach_shared_caps
+  ok    home_progression.tier_5_requirements_reachable_with_real_grid ([])
+  ok    home_progression.tier_5_gate_accepts ({ "ok": true, "reason": "ok", "reasons": [], "rows": [{ "kind": "gold", "key": "HOME_UI_COST", "id": "gold", "have": 2300, "need": 2100, "met": true }, { "kind": "material", "key": "ITEM_PLANK_OAK", "id": "plank_oak", "have": 24, "need": 24, "met": true }, { "kind": "material", "key": "ITEM_TIMBER_BEAM", "id": "timber_beam", "have": 12, "need": 12, "met": true }, { "kind": "material", "key": "ITEM_ROOF_TILE", "id": "roof_tile", "have": 40, "need": 40, "met": true }, { "kind": "material", "key": "ITEM_BRICK", "id": "brick", "have": 36, "need": 36, "met": true }, { "kind": "material", "key": "ITEM_GLASS_PANE", "id": "glass_pane", "have": 12, "need": 12, "met": true }, { "kind": "material", "key": "ITEM_COPPER_PLATE", "id": "copper_plate", "have": 4, "need": 4, "met": true }, { "kind": "days", "key": "HOME_UI_BUILD_DAYS_FMT", "id": "days", "have": 0, "need": 3, "met": true }, { "kind": "quest", "key": "HOME_GATE_QUEST_FMT", "id": "first_animal", "name_key": "QUEST_FIRST_ANIMAL_TITLE", "have": 1, "need": 1, "met": true }] })
+  ok    home_progression.tier_5_payment_commits
+  ok    home_progression.tier_5_mid_construction_roundtrip
+  ok    home_progression.tier_5_completes_in_absolute_days
+  ok    home_progression.tier_5_preserves_every_owned_piece
+  ok    home_progression.tier_5_storage_capacity_live
+  ok    home_progression.tier_5_hygge_perks_reach_shared_caps
+  ok    home_progression.tier_6_requirements_reachable_with_real_grid ([])
+  ok    home_progression.tier_6_gate_accepts ({ "ok": true, "reason": "ok", "reasons": [], "rows": [{ "kind": "gold", "key": "HOME_UI_COST", "id": "gold", "have": 5100, "need": 4500, "met": true }, { "kind": "material", "key": "ITEM_STONE_BLOCK", "id": "stone_block", "have": 60, "need": 60, "met": true }, { "kind": "material", "key": "ITEM_SLATE", "id": "slate", "have": 30, "need": 30, "met": true }, { "kind": "material", "key": "ITEM_GLASS_PANE", "id": "glass_pane", "have": 16, "need": 16, "met": true }, { "kind": "material", "key": "ITEM_PLANK_WALNUT", "id": "plank_walnut", "have": 12, "need": 12, "met": true }, { "kind": "material", "key": "ITEM_AMETHYST", "id": "amethyst", "have": 5, "need": 2, "met": true }, { "kind": "days", "key": "HOME_UI_BUILD_DAYS_FMT", "id": "days", "have": 0, "need": 3, "met": true }, { "kind": "quest", "key": "HOME_GATE_QUEST_FMT", "id": "crystal_cave", "name_key": "QUEST_CRYSTAL_CAVE_TITLE", "have": 1, "need": 1, "met": true }] })
+  ok    home_progression.tier_6_payment_commits
+  ok    home_progression.tier_6_mid_construction_roundtrip
+  ok    home_progression.tier_6_completes_in_absolute_days
+  ok    home_progression.tier_6_preserves_every_owned_piece
+  ok    home_progression.tier_6_storage_capacity_live
+  ok    home_progression.tier_6_hygge_perks_reach_shared_caps
+  ok    home_progression.tier_7_requirements_reachable_with_real_grid ([])
+  ok    home_progression.tier_7_gate_accepts ({ "ok": true, "reason": "ok", "reasons": [], "rows": [{ "kind": "gold", "key": "HOME_UI_COST", "id": "gold", "have": 8100, "need": 7500, "met": true }, { "kind": "material", "key": "ITEM_MARBLE_BLOCK", "id": "marble_block", "have": 16, "need": 16, "met": true }, { "kind": "material", "key": "ITEM_SLATE", "id": "slate", "have": 40, "need": 40, "met": true }, { "kind": "material", "key": "ITEM_GLASS_PANE", "id": "glass_pane", "have": 30, "need": 30, "met": true }, { "kind": "material", "key": "ITEM_PLANK_WALNUT", "id": "plank_walnut", "have": 20, "need": 20, "met": true }, { "kind": "material", "key": "ITEM_GOLD_LEAF", "id": "gold_leaf", "have": 2, "need": 2, "met": true }, { "kind": "days", "key": "HOME_UI_BUILD_DAYS_FMT", "id": "days", "have": 0, "need": 4, "met": true }, { "kind": "quest", "key": "HOME_GATE_QUEST_FMT", "id": "fairy_friendship", "name_key": "QUEST_FAIRY_FRIENDSHIP_TITLE", "have": 1, "need": 1, "met": true }, { "kind": "friend", "key": "HOME_GATE_FRIEND_FMT", "id": "mayor_lyra", "name_key": "NPC_MAYOR_LYRA", "have": 4, "need": 4, "met": true }, { "kind": "hygge", "key": "HOME_GATE_HYGGE_FMT", "id": "hyggeligt", "name_key": "HYGGE_HYGGELIGT", "have": 2, "need": 2, "met": true }] })
+  ok    home_progression.tier_7_payment_commits
+  ok    home_progression.tier_7_mid_construction_roundtrip
+  ok    home_progression.tier_7_completes_in_absolute_days
+  ok    home_progression.tier_7_preserves_every_owned_piece
+  ok    home_progression.tier_7_storage_capacity_live
+  ok    home_progression.tier_7_hygge_perks_reach_shared_caps
+  ok    home_progression.tier_8_requirements_reachable_with_real_grid ([])
+  ok    home_progression.tier_8_gate_accepts ({ "ok": true, "reason": "ok", "reasons": [], "rows": [{ "kind": "gold", "key": "HOME_UI_COST", "id": "gold", "have": 13700, "need": 12500, "met": true }, { "kind": "material", "key": "ITEM_BRICK", "id": "brick", "have": 90, "need": 90, "met": true }, { "kind": "material", "key": "ITEM_COPPER_PLATE", "id": "copper_plate", "have": 30, "need": 30, "met": true }, { "kind": "material", "key": "ITEM_GLASS_PANE", "id": "glass_pane", "have": 40, "need": 40, "met": true }, { "kind": "material", "key": "ITEM_MARBLE_BLOCK", "id": "marble_block", "have": 20, "need": 20, "met": true }, { "kind": "material", "key": "ITEM_GOLD_LEAF", "id": "gold_leaf", "have": 4, "need": 4, "met": true }, { "kind": "days", "key": "HOME_UI_BUILD_DAYS_FMT", "id": "days", "have": 0, "need": 5, "met": true }, { "kind": "quest", "key": "HOME_GATE_QUEST_FMT", "id": "snurresvampen", "name_key": "QUEST_SNURRESVAMPEN_TITLE", "have": 1, "need": 1, "met": true }, { "kind": "hygge", "key": "HOME_GATE_HYGGE_FMT", "id": "rigtig_hyggeligt", "name_key": "HYGGE_RIGTIG_HYGGELIGT", "have": 3, "need": 3, "met": true }] })
+  ok    home_progression.tier_8_payment_commits
+  ok    home_progression.tier_8_mid_construction_roundtrip
+  ok    home_progression.tier_8_completes_in_absolute_days
+  ok    home_progression.tier_8_preserves_every_owned_piece
+  ok    home_progression.tier_8_storage_capacity_live
+  ok    home_progression.tier_8_hygge_perks_reach_shared_caps
+  ok    home_progression.tier_9_requirements_reachable_with_real_grid ([])
+  ok    home_progression.tier_9_gate_accepts ({ "ok": true, "reason": "ok", "reasons": [], "rows": [{ "kind": "gold", "key": "HOME_UI_COST", "id": "gold", "have": 19800, "need": 19000, "met": true }, { "kind": "material", "key": "ITEM_STONE_BLOCK", "id": "stone_block", "have": 120, "need": 120, "met": true }, { "kind": "material", "key": "ITEM_SLATE", "id": "slate", "have": 60, "need": 60, "met": true }, { "kind": "material", "key": "ITEM_TIMBER_BEAM", "id": "timber_beam", "have": 40, "need": 40, "met": true }, { "kind": "material", "key": "ITEM_BRASS_BAR", "id": "brass_bar", "have": 12, "need": 12, "met": true }, { "kind": "material", "key": "ITEM_MOONSTONE", "id": "moonstone", "have": 2, "need": 2, "met": true }, { "kind": "days", "key": "HOME_UI_BUILD_DAYS_FMT", "id": "days", "have": 0, "need": 6, "met": true }, { "kind": "quest", "key": "HOME_GATE_QUEST_FMT", "id": "moonstone_crown", "name_key": "QUEST_MOONSTONE_CROWN_TITLE", "have": 1, "need": 1, "met": true }, { "kind": "hygge", "key": "HOME_GATE_HYGGE_FMT", "id": "rigtig_hyggeligt", "name_key": "HYGGE_RIGTIG_HYGGELIGT", "have": 3, "need": 3, "met": true }] })
+  ok    home_progression.tier_9_payment_commits
+  ok    home_progression.tier_9_mid_construction_roundtrip
+  ok    home_progression.tier_9_completes_in_absolute_days
+  ok    home_progression.tier_9_preserves_every_owned_piece
+  ok    home_progression.tier_9_storage_capacity_live
+  ok    home_progression.tier_9_hygge_perks_reach_shared_caps
+  ok    home_progression.tier_10_requirements_reachable_with_real_grid ([])
+  ok    home_progression.tier_10_gate_accepts ({ "ok": true, "reason": "ok", "reasons": [], "rows": [{ "kind": "gold", "key": "HOME_UI_COST", "id": "gold", "have": 27000, "need": 27000, "met": true }, { "kind": "material", "key": "ITEM_MARBLE_BLOCK", "id": "marble_block", "have": 40, "need": 40, "met": true }, { "kind": "material", "key": "ITEM_GLASS_PANE", "id": "glass_pane", "have": 40, "need": 40, "met": true }, { "kind": "material", "key": "ITEM_ROOF_TILE", "id": "roof_tile", "have": 80, "need": 80, "met": true }, { "kind": "material", "key": "ITEM_GOLD_LEAF", "id": "gold_leaf", "have": 12, "need": 12, "met": true }, { "kind": "material", "key": "ITEM_AMETHYST", "id": "amethyst", "have": 6, "need": 6, "met": true }, { "kind": "material", "key": "ITEM_MOONSTONE", "id": "moonstone", "have": 6, "need": 6, "met": true }, { "kind": "days", "key": "HOME_UI_BUILD_DAYS_FMT", "id": "days", "have": 0, "need": 8, "met": true }, { "kind": "friend", "key": "HOME_GATE_FRIEND_FMT", "id": "mayor_lyra", "name_key": "NPC_MAYOR_LYRA", "have": 8, "need": 8, "met": true }, { "kind": "friend", "key": "HOME_GATE_FRIEND_FMT", "id": "fairy_king", "name_key": "NPC_FAIRY_KING", "have": 2, "need": 2, "met": true }, { "kind": "hygge", "key": "HOME_GATE_HYGGE_FMT", "id": "eventyrligt", "name_key": "HYGGE_EVENTYRLIGT", "have": 4, "need": 4, "met": true }] })
+  ok    home_progression.tier_10_payment_commits
+  ok    home_progression.tier_10_mid_construction_roundtrip
+  ok    home_progression.tier_10_completes_in_absolute_days
+  ok    home_progression.tier_10_preserves_every_owned_piece
+  ok    home_progression.tier_10_storage_capacity_live
+  ok    home_progression.tier_10_hygge_perks_reach_shared_caps
+  ok    home_progression.castle_and_final_gifts_real
+  --    home_progression: 73 checks, 0 failed, 0 skipped, 1.2 s
+== section shop_ui  (res://tests/sections/shop_ui.gd)
+  ok    shop_ui.shop_scene_live
+  ok    shop_ui.shop_opens_from_real_service
+  ok    shop_ui.rules_da ([])
+  ok    shop_ui.rules_en ([])
+  ok    shop_ui.initial_focus
+  ok    shop_ui.row_accept_focuses_stepper
+  ok    shop_ui.buy_via_control
+  ok    shop_ui.esc_closes_and_restores
+  ok    shop_ui.pad_row_opens_stepper
+  ok    shop_ui.stepper_right_adds_one
+  ok    shop_ui.stepper_page_up_not_tab
+  ok    shop_ui.stepper_page_down
+  ok    shop_ui.gamepad_only_buy
+  ok    shop_ui.gamepad_close
+  ok    Every Lua shop has a usable offer: natteblik_maps
+  ok    Displayed total natteblik_maps
+  ok    shop_ui.buy_control_natteblik_maps
+  ok    shop_ui.no_sellable_natteblik_maps
+  ok    Every Lua shop has a usable offer: animal_store
+  ok    Displayed total animal_store
+  ok    shop_ui.buy_control_animal_store
+  ok    shop_ui.sell_control_animal_store
+  ok    Every Lua shop has a usable offer: bakery
+  ok    Displayed total bakery
+  ok    shop_ui.buy_control_bakery
+  ok    shop_ui.sell_control_bakery
+  ok    Every Lua shop has a usable offer: fest_flower_market
+  ok    Displayed total fest_flower_market
+  ok    shop_ui.buy_control_fest_flower_market
+  ok    shop_ui.sell_control_fest_flower_market
+  ok    Every Lua shop has a usable offer: fest_honey_market
+  ok    Displayed total fest_honey_market
+  ok    shop_ui.buy_control_fest_honey_market
+  ok    shop_ui.sell_control_fest_honey_market
+  ok    Every Lua shop has a usable offer: fest_harvest_market
+  ok    Displayed total fest_harvest_market
+  ok    shop_ui.buy_control_fest_harvest_market
+  ok    shop_ui.sell_control_fest_harvest_market
+  ok    Every Lua shop has a usable offer: fest_moon_market
+  ok    Displayed total fest_moon_market
+  ok    shop_ui.buy_control_fest_moon_market
+  ok    shop_ui.sell_control_fest_moon_market
+  ok    Every Lua shop has a usable offer: fest_bake_market
+  ok    Displayed total fest_bake_market
+  ok    shop_ui.buy_control_fest_bake_market
+  ok    shop_ui.sell_control_fest_bake_market
+  ok    Every Lua shop has a usable offer: furniture_shop
+  ok    Displayed total furniture_shop
+  ok    shop_ui.buy_control_furniture_shop
+  ok    shop_ui.sell_control_furniture_shop
+  ok    Every Lua shop has a usable offer: tailor_shop
+  ok    Displayed total tailor_shop
+  ok    shop_ui.buy_control_tailor_shop
+  ok    shop_ui.no_sellable_tailor_shop
+  ok    Every Lua shop has a usable offer: builder_yard
+  ok    Displayed total builder_yard
+  ok    shop_ui.buy_control_builder_yard
+  ok    shop_ui.sell_control_builder_yard
+  ok    Every Lua shop has a usable offer: flea_market
+  ok    Displayed total flea_market
+  ok    shop_ui.buy_control_flea_market
+  ok    shop_ui.sell_control_flea_market
+  ok    Every Lua shop has a usable offer: lantern_house
+  ok    Displayed total lantern_house
+  ok    shop_ui.buy_control_lantern_house
+  ok    shop_ui.no_sellable_lantern_house
+  ok    Every Lua shop has a usable offer: magic_store
+  ok    Displayed total magic_store
+  ok    shop_ui.buy_control_magic_store
+  ok    shop_ui.sell_control_magic_store
+  ok    Every Lua shop has a usable offer: seed_shop
+  ok    Displayed total seed_shop
+  ok    shop_ui.buy_control_seed_shop
+  ok    shop_ui.sell_control_seed_shop
+  ok    Every Lua shop has a usable offer: smithy
+  ok    Displayed total smithy
+  ok    shop_ui.buy_control_smithy
+  ok    shop_ui.sell_control_smithy
+  ok    Every Lua shop has a usable offer: timber_yard
+  ok    Displayed total timber_yard
+  ok    shop_ui.buy_control_timber_yard
+  ok    shop_ui.sell_control_timber_yard
+  ok    shop_ui.too_dear_disabled_and_styled
+  ok    shop_ui.tab_switch_page_actions
+  ok    shop_ui.hobbit_displayed_equals_charged
+  ok    shop_ui.inventory_toggle_i
+  ok    shop_ui.backpack_24_focusable_slots
+  ok    shop_ui.inventory_rules_da ([])
+  ok    shop_ui.inventory_rules_en ([])
+  ok    shop_ui.last_tool_discard_protected
+  ok    shop_ui.hotbar_assign_by_digit
+  ok    shop_ui.picker_eight_slots
+  ok    shop_ui.hotbar_assign_by_picker_pad
+  ok    shop_ui.grid_crosses_to_workshop
+  ok    shop_ui.workshop_crosses_to_grid
+  ok    Guide recipe enabled: mushroom_lantern
+  ok    shop_ui.craft_guide_mushroom_lantern
+  ok    Guide recipe enabled: scarecrow
+  ok    shop_ui.craft_guide_scarecrow
+  ok    Guide recipe enabled: honey_cake
+  ok    shop_ui.craft_guide_honey_cake
+  ok    Guide recipe enabled: pickaxe_copper
+  ok    shop_ui.craft_guide_pickaxe_copper
+  ok    shop_ui.workshop_station_locks (Kræver Gården)
+  ok    shop_ui.use_blueprint_through_control
+  ok    shop_ui.inventory_tab_closes_while_slot_focused
+  ok    shop_ui.discard_opens_confirmation
+  ok    shop_ui.discard_cancel_preserves_item
+  ok    shop_ui.discard_confirmation_present
+  ok    shop_ui.discard_confirm_removes_exactly_one
+  ok    shop_ui.equip_via_control
+  ok    shop_ui.consume_via_control
+  ok    shop_ui.closed_state_reasons (Lukket lige nu. Åbner kl. 08:00.)
+  ok    shop_ui.price_change_requires_new_confirmation
+  ok    shop_ui.price_change_charges_new_displayed_total
+  ok    shop_ui.close_request_honoured_once
+  ok    shop_ui.shop.visible (clean)
+  ok    shop_ui.shop.initial_focus (clean)
+  ok    shop_ui.shop.focus_walk (38 of 38 controls reached in 200 presses)
+  ok    shop_ui.shop.focusable (23 interactive, 38 keyboard-focusable)
+  ok    shop_ui.shop.rules (129 nodes, 49 text, 20 boxes, 15 interactive scanned)
+  ok    shop_ui.shop.i18n_flip (clean)
+  SKIP  ui_audit shop.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit shop.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit shop.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit shop.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    shop_ui.shop.escape (1 modal(s) opened and closed with Esc in order)
+  ok    shop_ui.shop_audit_live (clean)
+  ok    shop_ui.inventory.visible (clean)
+  ok    shop_ui.inventory.initial_focus (clean)
+  ok    shop_ui.inventory.focus_walk (160 of 160 controls reached in 707 presses)
+  ok    shop_ui.inventory.focusable (162 interactive, 160 keyboard-focusable)
+  ok    shop_ui.inventory.rules (807 nodes, 311 text, 167 boxes, 160 interactive scanned)
+  ok    shop_ui.inventory.i18n_flip (clean)
+  SKIP  ui_audit inventory.ring: ring needs a window (run_windowed)
+  SKIP  ui_audit inventory.panel_pixels: panel_pixels needs a window (run_windowed)
+  SKIP  ui_audit inventory.button_pixels: button_pixels needs a window (run_windowed)
+  SKIP  ui_audit inventory.compare_guide: compare_guide is the windowed python tool: tests/checkpoints/compare_guide.py (see the entry's compare field)
+  ok    shop_ui.inventory.escape (1 modal(s) opened and closed with Esc in order)
+  ok    shop_ui.inventory_audit_live (clean)
+  ok    shop_ui.loadout_card_iron_sword_da
+  ok    shop_ui.loadout_card_bounds_iron_sword_da ([P: (590.0, 429.0), S: (618.0, 46.0)])
+  ok    shop_ui.loadout_card_wpn_staff_star_da
+  ok    shop_ui.loadout_card_bounds_wpn_staff_star_da ([P: (590.0, 406.0), S: (618.0, 69.0)])
+  ok    shop_ui.loadout_card_gem_rune_heart_da
+  ok    shop_ui.loadout_card_bounds_gem_rune_heart_da ([P: (590.0, 337.0), S: (618.0, 138.0)])
+  ok    shop_ui.smith_has_comparable_weapon_da
+  ok    shop_ui.shop_weapon_card_da
+  ok    shop_ui.loadout_card_iron_sword_en
+  ok    shop_ui.loadout_card_bounds_iron_sword_en ([P: (587.0, 429.0), S: (621.0, 46.0)])
+  ok    shop_ui.loadout_card_wpn_staff_star_en
+  ok    shop_ui.loadout_card_bounds_wpn_staff_star_en ([P: (587.0, 406.0), S: (621.0, 69.0)])
+  ok    shop_ui.loadout_card_gem_rune_heart_en
+  ok    shop_ui.loadout_card_bounds_gem_rune_heart_en ([P: (587.0, 337.0), S: (621.0, 138.0)])
+  ok    shop_ui.smith_has_comparable_weapon_en
+  ok    shop_ui.shop_weapon_card_en
+  --    shop_ui: 148 checks, 0 failed, 8 skipped, 5.7 s
+== section towns_city  (res://tests/sections/towns_city.gd)
+  ok    towns_city.real_city_populated_at_noon
+  ok    towns_city.door_approach_hoppe_hut
+  ok    towns_city.door_approach_uglehulen
+  ok    towns_city.door_approach_postkontoret
+  ok    towns_city.door_approach_vagthytten
+  ok    towns_city.door_approach_brummes_vaerksted
+  ok    towns_city.door_approach_brummes_hus
+  ok    towns_city.door_approach_kikis_hytte
+  ok    towns_city.door_approach_torvekroen
+  ok    towns_city.door_approach_fjerpens_hytte
+  ok    towns_city.door_approach_badehuset
+  ok    towns_city.door_approach_musikstuen
+  ok    towns_city.door_approach_koekkenhave_skuret
+  ok    towns_city.door_approach_raadhuset
+  ok    towns_city.door_approach_gaestehytten
+  ok    towns_city.sidecar_doors_complete
+  ok    towns_city.stall_shop_and_two_talk_hosts_timber_yard
+  ok    towns_city.stall_shop_and_two_talk_hosts_natteblik_maps
+  ok    towns_city.live_door_hoppe_hut
+  ok    towns_city.door_enters_hoppe_hut
+  ok    towns_city.door_returns_hoppe_hut ([&"traetoppen", (1056.083, 611.9243), (1053.9, 603.2)])
+  ok    towns_city.live_door_uglehulen
+  ok    towns_city.door_enters_uglehulen
+  ok    towns_city.door_returns_uglehulen ([&"traetoppen", (1853.9, 793.2), (1853.9, 793.2)])
+  ok    towns_city.live_door_postkontoret
+  ok    towns_city.door_enters_postkontoret
+  ok    towns_city.door_returns_postkontoret ([&"traetoppen", (4171.9, 867.2), (4171.9, 867.2)])
+  ok    towns_city.live_door_vagthytten
+  ok    towns_city.door_enters_vagthytten
+  ok    towns_city.door_returns_vagthytten ([&"traetoppen", (3499.9, 867.2), (3499.9, 867.2)])
+  ok    towns_city.live_door_brummes_vaerksted
+  ok    towns_city.door_enters_brummes_vaerksted
+  ok    towns_city.door_returns_brummes_vaerksted ([&"traetoppen", (449.5, 1861.2), (449.5, 1861.2)])
+  ok    towns_city.live_door_brummes_hus
+  ok    towns_city.door_enters_brummes_hus
+  ok    towns_city.door_returns_brummes_hus ([&"traetoppen", (1121.353, 2033.478), (1121.5, 2032.2)])
+  ok    towns_city.live_door_kikis_hytte
+  ok    towns_city.door_enters_kikis_hytte
+  ok    towns_city.door_returns_kikis_hytte ([&"traetoppen", (3109.4, 1749.1), (3109.4, 1749.1)])
+  ok    towns_city.live_door_torvekroen
+  ok    towns_city.door_enters_torvekroen
+  ok    towns_city.door_returns_torvekroen ([&"traetoppen", (2181.073, 1770.952), (2181.4, 1768.1)])
+  ok    towns_city.live_door_badehuset
+  ok    towns_city.door_enters_badehuset
+  ok    towns_city.door_returns_badehuset ([&"traetoppen", (4867.168, 1824.22), (4867.4, 1822.2)])
+  ok    towns_city.live_door_musikstuen
+  ok    towns_city.door_enters_musikstuen
+  ok    towns_city.door_returns_musikstuen ([&"traetoppen", (1556.219, 2930.982), (1549.5, 2930.2)])
+  ok    towns_city.live_door_raadhuset
+  ok    towns_city.door_enters_raadhuset
+  ok    towns_city.door_returns_raadhuset ([&"traetoppen", (3001.5, 1480.5), (3001.5, 1480.5)])
+  ok    towns_city.live_door_gaestehytten
+  ok    towns_city.door_enters_gaestehytten
+  ok    towns_city.door_returns_gaestehytten ([&"traetoppen", (2061.392, 3139.88), (2061.5, 3139.2)])
+  ok    towns_city.four_fast_travel_stops_installed
+  ok    towns_city.fast_travel_unlock_farm
+  ok    towns_city.fast_travel_unlock_torv
+  ok    towns_city.fast_travel_unlock_hyggebyen
+  ok    towns_city.fast_travel_unlock_skovlift
+  ok    towns_city.fast_travel_lists_discovered_stops
+  ok    towns_city.fast_travel_rebuilds_safely
+  ok    towns_city.owl_window_pose_and_safe_body
+  ok    towns_city.owl_window_retains_authored_reach
+  ok    towns_city.real_interact_reaches_window_owl
+  --    towns_city: 64 checks, 0 failed, 0 skipped, 5.5 s
+== section towns_data  (res://tests/sections/towns_data.gd)
+  ok    towns_data.config_complete (npc_speed 0.65 of the player's walk speed 285.0 = 185.25 px/s (185) true; portal_seconds 0.5, max_live_visuals 16 (hard cap), plan_visual_peak 14, live_min_dwell 0.05, closing_whisper_minutes 30, carrot_max_speed 1.6, hours_enabled true, curfew enabled true; rain_shelter acts sit tend play fish from 8 to 19 true)
+  ok    towns_data.constants_keys (exactly the 11 constants ["carrot_max_speed", "closing_whisper_minutes", "curfew", "hours_enabled", "live_min_dwell", "max_live_visuals", "max_live_visuals_festival", "npc_speed", "plan_visual_peak", "portal_seconds", "rain_shelter"] (no unowned extra), the key `towns` does not collide with a registry name (get_registry("towns") is empty true))
+  ok    towns_data.festival_cap_covers_the_crowd (max_live_visuals_festival 20 = 15 attendees + the host 1 + the four family members 4 = 20 (social.festival.max_attendees 15); the ordinary day cap stays 16 and the plan peak 14)
+  ok    towns_data.curfew_config_on_the_26_hour_day (curfew whisper 25.5 (01:30) and go_home 25.75 (01:45) on the axis 6..26: the same 30 / 15 minute cushions before the 02:00 pass-out (day end 26); format 01:30 / 01:45)
+  ok    building gaestehytten (shop, room int_gaestehytten) matches the row schema
+  ok    building froebutikken (shop, room int_froebutikken) matches the row schema
+  ok    building bageriet (shop, room int_bageriet) matches the row schema
+  ok    building smedjen (shop, room int_smedjen) matches the row schema
+  ok    building dyrehuset (shop, room int_dyrehuset) matches the row schema
+  ok    building troldmandstaarnet (shop, room int_troldmandstaarnet) matches the row schema
+  ok    building moebelbutikken (shop, room int_moebelbutikken) matches the row schema
+  ok    building skraedderiet (shop, room int_skraedderiet) matches the row schema
+  ok    building toemmerhandlen (shop, room int_toemmerhandlen) matches the row schema
+  ok    building loppeloftet (shop, room int_loppeloftet) matches the row schema
+  ok    building pingvinens_hus (home, no room) matches the row schema
+  ok    building uglehulen (service, room int_uglehulen) matches the row schema
+  ok    building postkontoret (service, room int_postkontoret) matches the row schema
+  ok    building brummes_vaerksted (shop, room int_brummes_vaerksted) matches the row schema
+  ok    building fjerpens_hytte (home, no room) matches the row schema
+  ok    building badehuset (service, room int_badehuset) matches the row schema
+  ok    building koekkenhave_skuret (home, no room) matches the row schema
+  ok    building raadhuset (public, room int_raadhuset) matches the row schema
+  ok    building torvestanden (stall, no room) matches the row schema
+  ok    building natteblik_vinduet (stall, no room) matches the row schema
+  ok    towns_data.buildings_schema (the 20 CORE rows of lua/buildings/{traetoppen,hyggebyen}.lua (area, kind, name_key BLD_<ID>, interior int_<id> + size, keeper, post, emblem, hours, wave core); kinds { "shop": 11, "home": 3, "service": 3, "public": 1, "stall": 2 }, 14 with a room (15), 3 locked nameplate homes, 2 stalls, 1 decor hut; 0 schema problems [])
+  ok    towns_data.shop_ids_exist (the canonical 12 shop ids and any extensions in the registry ["animal_store", "bakery", "builder_yard", "flea_market", "furniture_shop", "lantern_house", "magic_store", "natteblik_maps", "seed_shop", "smithy", "tailor_shop", "timber_yard"]: every one except the late ids is defined by a shop file (0 problems []))
+  ok    towns_data.late_shop_ids_listed_not_failed (without the two late shop files the rule lists them by name ["natteblik_maps", "timber_yard"] and fails nothing; a missing seed_shop is the one problem ["froebutikken: shop id `seed_shop` is defined by no shop file"])
+  ok    towns_data.service_rows_have_no_shop_id (the service rows ["badehuset", "postkontoret", "uglehulen"] carry no `shop` (Uglehulen's appraisal is design2's game_event open_appraisal, not a ShopSystem shop; the draft id fru_ugle_vurdering never existed))
+  ok    towns_data.hours_consistency (hours.consistency on the real registry: every shop, service, public building and stall has hours, is open >= 6 game hours (the night window of Natteblik is short_ok), closes by 26:00, closes on weekdays 0..6, and its keeper is a citizen with a routine (0 problems []))
+  ok    7 of 10 shops are open at 12:00 on mandag (design: 7)
+  ok    8 of 10 shops are open at 12:00 on tirsdag (design: 8)
+  ok    8 of 10 shops are open at 12:00 on onsdag (design: 8)
+  ok    8 of 10 shops are open at 12:00 on torsdag (design: 8)
+  ok    8 of 10 shops are open at 12:00 on fredag (design: 8)
+  ok    10 of 10 shops are open at 12:00 on lørdag (design: 10)
+  ok    8 of 10 shops are open at 12:00 on søndag (design: 8)
+  ok    towns_data.opening_days_at_noon (open shops of 10 at 12:00 Monday .. Sunday: [7, 8, 8, 8, 8, 10, 8] (design: 7 8 8 8 8 10 8; the workshop and the Torvet stall count as ONE shop, timber_yard))
+  ok    towns_data.emblem_ids_exist_when_manifest_present (the 14 rows with an emblem name one of the 15 plates of the kit table (the 14 shop and service rooms + Brumme's stall); assets/iso_props/shops/core/emblems.json lists all 15 plates)
+  ok    hours rule: bageriet on tirsdag at 10:00 is open (as the table says)
+  ok    hours rule: bageriet on mandag at 10:00 is shut (as the table says)
+  ok    hours rule: bageriet on tirsdag at 06:30 is shut (as the table says)
+  ok    hours rule: bageriet on tirsdag at 17:00 is shut (as the table says)
+  ok    hours rule: bageriet on tirsdag at 16:59 is open (as the table says)
+  ok    hours rule: bageriet on tirsdag at 07:00 is open (as the table says)
+  ok    hours rule: froebutikken on søndag at 12:00 is shut (as the table says)
+  ok    hours rule: froebutikken on lørdag at 12:00 is open (as the table says)
+  ok    hours rule: loppeloftet on onsdag at 12:00 is shut (as the table says)
+  ok    hours rule: loppeloftet on lørdag at 12:00 is open (as the table says)
+  ok    hours rule: badehuset on torsdag at 20:30 is open (as the table says)
+  ok    hours rule: badehuset on torsdag at 21:00 is shut (as the table says)
+  ok    hours rule: raadhuset on lørdag at 10:00 is shut (as the table says)
+  ok    hours rule: raadhuset on onsdag at 10:00 is open (as the table says)
+  ok    hours rule: uglehulen on torsdag at 14:00 is shut (as the table says)
+  ok    hours rule: uglehulen on onsdag at 14:00 is open (as the table says)
+  ok    hours rule: uglehulen on onsdag at 11:54 is shut (as the table says)
+  ok    hours rule: natteblik_vinduet on torsdag at 21:00 is open (as the table says)
+  ok    hours rule: natteblik_vinduet on torsdag at 12:00 is shut (as the table says)
+  ok    hours rule: natteblik_vinduet on torsdag at 23:36 is shut (as the table says)
+  ok    hours rule: natteblik_vinduet on torsdag at 23:29 is open (as the table says)
+  ok    hours rule: torvestanden on lørdag at 12:00 is open (as the table says)
+  ok    hours rule: torvestanden on onsdag at 12:00 is shut (as the table says)
+  ok    hours rule: smedjen on søndag at 12:00 is shut (as the table says)
+  ok    hours rule: dyrehuset on torsdag at 12:00 is shut (as the table says)
+  ok    hours rule: troldmandstaarnet on tirsdag at 12:00 is shut (as the table says)
+  ok    hours rule: moebelbutikken on onsdag at 12:00 is shut (as the table says)
+  ok    hours rule: skraedderiet on mandag at 12:00 is shut (as the table says)
+  ok    hours rule: toemmerhandlen on fredag at 12:00 is shut (as the table says)
+  ok    hours rule: brummes_vaerksted on lørdag at 12:00 is shut (as the table says)
+  ok    hours rule: brummes_vaerksted on onsdag at 12:00 is open (as the table says)
+  ok    hours rule: postkontoret on søndag at 12:00 is shut (as the table says)
+  ok    hours rule: postkontoret on mandag at 09:00 is open (as the table says)
+  ok    hours rule: fjerpens_hytte on torsdag at 03:00 is open (as the table says)
+  ok    state: the bakery on a Monday is closed for the DAY and next opens Tuesday 07:00
+  ok    state: Tuesday 06:00 is closed for HOURS, opening 07:00 today
+  ok    state: Tuesday 18:00 is closed for HOURS, the next opening is Wednesday 07:00
+  ok    state: Saturday 18:00 -> next Sunday; Sunday 18:00 -> next Tuesday (Monday is the closed day)
+  ok    state: the flea loft on a Monday -> next Saturday 10:00
+  ok    state: an open bakery reports reason open and closes at 17.0
+  ok    state: a row without hours (a home) reads reason none and closes at the day end 26.0
+  ok    towns_data.hours_rule_table (34 rows over the real registry (open <= hour < close on a weekday not in `closed`; a row without hours is always open) ALL AGREE; states: Monday the bakery is closed for the DAY and next opens Tuesday 07:00 true, Tuesday 06:00 for HOURS (07:00 today) true, Tuesday 18:00 next Wednesday true, Saturday 18:00 next Sunday and Sunday 18:00 next Tuesday (Monday is closed) true, the flea loft on a Monday next Saturday 10:00 true; an open state closes at 17.0 true, a home reads reason none and closes at the day end 26.0 true)
+  ok    towns_data.hours_now_ctx_is_clock_only (now_ctx = {weekday, hour, season, total_day, weather} read from GameManager and TimeManager (Wednesday 13:30 -> weekday 2, hour 13.5) true, no hero, hearts or flags (Routines.now_ctx of T-routes extends it later) true, the festival closure only as a late-bound Callable when SocialManager exists true (answers true), the raw hour 25.5 stays 25.5 on Sunday true)
+  ok    towns_data.hours_switch_off_answers_null (towns.hours_enabled (default true): Monday 12:00 the bakery is closed true; with the switch OFF Hours.shop_open answers null on every day (<null> / <null>), the gate answers null true, ShopSystem.is_open is the def's own rule (open: true, no closed_reason: true); ON again: false true, ShopSystem closed true)
+  ok    towns_data.hours_wrap_midnight (`close < open` is the after-midnight notation of the SAME game day: open 20 close 1 reads [20.0, 25.0]; Thursday 22:00, 24:30 and 24:59 are open, 25:00 (01:00) and 25:30 shut, 19:54 shut; closed on Friday; close 0 reads 24.0 true; a plain day shop (workshop 08-16) is shut at 24:30 and 25:30 true)
+  ok    towns_data.hours_after_midnight (Hours accepts a close up to 26 as a plain interval: the stall (open 20, close 25.5) is open at 24:30 and 25:15 and shut at 25:30 (closes_at 25.5 prints 01:30), the lantern house row `close = 25` is open at 24:30 and shut at 01:00 (prints 01:00); the notation close 1.5 equals 25.5 true; `close <= day_end_hour` is the only bound)
+  ok    towns_data.hours_weekday_is_the_game_day (the weekday of the rule is TimeManager.weekday_index of the game day: Friday 24:30 (00:30) reads weekday 4 and the Friday bar (closed on Saturday) is open true; Saturday 21:00 is shut for the DAY true; the weekday steps only with the 02:00 roll (25:58 Friday -> 02:01 Saturday: 4 -> 5))
+  ok    towns_data.hours_minutes_to_close_after_midnight (d = closes_at - hour on the normalised axis: the bar that closes at 01:00 has 30 minutes at 24:30, 0 at 25:30 (the draft added 24 when negative: wrong there) and 300 at 20:00; the 25.5 stall has 30 at 25:00; the bakery 30 at 16:30; a closed building and a home 0)
+  ok    towns_data.hours_format_hour_wraps (format_hour keeps the hour part mod 24: 25.0 prints 01:00, 24.5 00:30, 24.0 00:00, 06:00, 17:30, 07:15; the door sign's compact form prints 8, 18, 23:30 and keeps the full form from midnight (01:00, 00:00) so `1` is never read as 13:00)
+  ok    towns_data.hours_validator_accepts_close_up_to_the_day_end (hours.consistency evaluates the NORMALISED close: 26, 25.5, 1, 0 and 2 (= 26.0) pass, 27 / 3 (= 27.0) and an open of 5.5 fail ALL AGREE; with a day that ends at 24 a close of 25 fails true)
+  ok    towns_data.hours_override_weekday (overrides = { { weekday = { 0 }, open = 17, close = 23 } } changes one weekday: Monday reads [17, 23] and is shut at noon (opens 17.0), open at 18:00; Tuesday keeps [11, 23] and is open at noon)
+  ok    towns_data.hours_empty_table_is_no_days (`closed = {}` arrives from Lua as Dictionary and means no closed day: the inn is open on all 7 weekdays at 18:00 true, closed_days reads [] for a Dictionary, an Array, a missing key and an empty hours table true, `{ 0, 3 }` reads [0, 3])
+  ok    towns_data.festival_closure_via_ctx (a festival closes a shop ONLY through ctx.fest_closed_fn(shop_id): the bakery reads reason festival, shop_open false, closed_info festival, the seed shop stays open true; no function = nothing closes true; production: SocialManager.shop_closed_by_festival is asked late bound (open true -> closed true -> open again true) and without a social track nothing closes true)
+  ok    towns_data.multi_building_shop (timber_yard is claimed by the workshop and the Torvet stall ["brummes_vaerksted", "torvestanden"]: open when ANY of them is (Monday noon true, Saturday noon true, Sunday 09:00 shut true); closed_info points at the building that opens first: Monday 07:00 -> 08:00 today true, Friday 17:00 -> Saturday 10:00 (the stall) true, an open day answers the open state true)
+  ok    BLD_UGLEHULEN has a Danish and an English name: Uglehulen / The Owl Hollow
+  ok    BLD_POSTKONTORET has a Danish and an English name: Postkontoret / The Post Office
+  ok    BLD_BRUMMES_VAERKSTED has a Danish and an English name: Brummes værksted / Brumme's Workshop
+  ok    BLD_FJERPENS_HYTTE has a Danish and an English name: Fjerpens hytte / Fjerpen's Hut
+  ok    BLD_BADEHUSET has a Danish and an English name: Badehuset / The Bathhouse
+  ok    BLD_GAESTEHYTTEN has a Danish and an English name: Gæstehytten / The Guest Hut
+  ok    BLD_KOEKKENHAVE_SKURET has a Danish and an English name: Køkkenhave-skuret / The Kitchen Garden Shed
+  ok    BLD_RAADHUSET has a Danish and an English name: Rådhuset / The Town Hall
+  ok    BLD_TORVESTANDEN has a Danish and an English name: Torvestanden / The Market Stall
+  ok    BLD_NATTEBLIK_VINDUET has a Danish and an English name: Natteblik-vinduet / The Bat Window
+  ok    BLD_FROEBUTIKKEN has a Danish and an English name: Kløvermyntes Frø / Kløvermynte's Seeds
+  ok    BLD_BAGERIET has a Danish and an English name: Rosmarins Bageri / Rosmarin's Bakery
+  ok    BLD_SMEDJEN has a Danish and an English name: Thorins Smedje / Thorin's Smithy
+  ok    BLD_DYREHUSET has a Danish and an English name: Dyrehuset / The Animal House
+  ok    BLD_TROLDMANDSTAARNET has a Danish and an English name: Zephyrs Tårn / Zephyr's Tower
+  ok    BLD_MOEBELBUTIKKEN has a Danish and an English name: Stokroses Møbler / Stokrose's Furniture
+  ok    BLD_SKRAEDDERIET has a Danish and an English name: Fingerbøls Skrædderi / Fingerbøl's Tailor
+  ok    BLD_TOEMMERHANDLEN has a Danish and an English name: Hasselnøds Tømmerhandel / Hasselnød's Timber Yard
+  ok    BLD_LOPPELOFTET has a Danish and an English name: Pippins Loppeloft / Pippin's Flea Loft
+  ok    BLD_PINGVINENS_HUS has a Danish and an English name: Postpingvinens hus / The Postman Penguin's House
+  ok    BLD_HOPPE_HUT has a Danish and an English name: Hoppes hytte / Hoppe's Hut
+  ok    BLD_VAGTHYTTEN has a Danish and an English name: Vagthytten / The Guard Hut
+  ok    BLD_BRUMMES_HUS has a Danish and an English name: Brummes hus / Brumme's House
+  ok    BLD_KIKIS_HYTTE has a Danish and an English name: Kikis hytte / Kiki's Hut
+  ok    BLD_TORVEKROEN has a Danish and an English name: Torvekroen / The Market Inn
+  ok    BLD_MUSIKSTUEN has a Danish and an English name: Musikstuen / The Music Parlour
+  ok    BLD_FEKONGENS_HUS has a Danish and an English name: Fekongens træhus / The Fairy King's Treehouse
+  ok    BLD_HYLDEBLOMSTS_HUS has a Danish and an English name: Hyldeblomsts hus / Hyldeblomst's House
+  ok    BLD_PIPPINS_HUS has a Danish and an English name: Pippins hus / Pippin's House
+  ok    BLD_BIRKS_BISTADE has a Danish and an English name: Birks bistade / Birk's Apiary
+  ok    towns_data.keys_da_en_complete (towns.csv holds BLD_ for all 30 buildings (30; core and ext, so the ext package adds no copy), the 11 HOURS_ whisper keys, 7 weekday names, 15 ACT_ labels, 5 COUNTER_ prompts: da and en present, the same %s placeholders in both, loaded by the game (69 keys, 0 missing in the loader), only the four families; the Danish texts of design_towns.md 4.5 are pinned true; missing [])
+  ok    towns_data.act_hide_known (ACT_HIDE reads 'gemmer sig' (Blund's hiding blocks, GHOST_FAMILY AGF4); the 14 acts of the routine vocabulary + hide = 15 labels, and they are exactly the acts a room post may carry (schema.json): true)
+  ok    towns_data.copy_lint_clean_for_towns (towns.csv: the loader's lint reports nothing for the file (0 issues []), no retired name (the retired town name, PongPong, Eventyrskoven), no stray spaces, no ASCII quote, no raw-key text (0 findings []); I1's copy lint C1-C10 ran clean)
+  ok    towns_data.fixtures_load (the fixture town loads through the registry kind (10 buildings in towns_fixture_buildings, 6 citizens in towns_fixture_citizens, every home, work place, keeper and owner resolves []) and passes the rules (0 problems []); the three sample rooms ["int_froebutikken", "int_hoppe_hut", "int_postkontoret"] parse and match data/interiors/schema.json []; FakeSocial offers festival_today, override_for and shop_closed_by_festival true; the context builder true)
+  ok    fixture mutant shop_without_hours is reported (fx_bakery: a shop must have opening hours)
+  ok    fixture mutant close_after_the_end_of_the_day is reported (fx_bakery: hours close 27 (normalised 27.0) is after the end of the game day (26.0))
+  ok    fixture mutant open_equals_close is reported (fx_bakery: hours are empty (open 7 close 7))
+  ok    fixture mutant closed_on_every_weekday is reported (fx_bakery: closed on all seven weekdays: it never opens)
+  ok    fixture mutant closed_weekday_out_of_range is reported (fx_bakery: closed weekday 7 is not 0..6)
+  ok    fixture mutant shop_id_unknown is reported (fx_bakery: shop id `no_such_shop_anywhere` is defined by no shop file)
+  ok    fixture mutant keeper_is_no_citizen is reported (fx_bakery: keeper `nobody_at_all` is not a citizen)
+  ok    fixture mutant name_key_is_not_BLD_id is reported (fx_bakery: name_key must be BLD_FX_BAKERY, got `BLD_WRONG`)
+  ok    fixture mutant interior_without_size is reported (fx_bakery: a building with an interior needs size S | M | L)
+  ok    fixture mutant unknown_field is reported (fx_bakery: unknown field `stand_in`)
+  ok    fixture mutant override_weekday_out_of_range is reported (fx_bakery: override weekday 9 is not 0..6)
+  ok    fixture mutant hours_not_numeric is reported (fx_bakery: hours need numeric open and close)
+  ok    fixture mutant service_with_a_shop_id is reported (fx_clinic: a service row has NO shop id (its appraisal / bath / post are game events, not ShopSystem shops))
+  ok    fixture mutant service_without_keeper is reported (fx_clinic: a service needs a keeper)
+  ok    fixture mutant stall_with_an_interior is reported (fx_late_stall: a stall has no interior)
+  ok    fixture mutant short_night_row_without_short_ok is reported (fx_late_stall: hours are open only 3.0 game hours (< 6.0) and the row is not short_ok)
+  ok    fixture mutant home_without_owner is reported (fx_home: a home needs an owner)
+  ok    real-registry mutant shop_without_hours is reported (gaestehytten: a shop must have opening hours)
+  ok    real-registry mutant close_after_the_end_of_the_day is reported (gaestehytten: hours close 27 (normalised 27.0) is after the end of the game day (26.0))
+  ok    real-registry mutant open_equals_close is reported (gaestehytten: hours are empty (open 17 close 17))
+  ok    real-registry mutant closed_on_every_weekday is reported (gaestehytten: closed on all seven weekdays: it never opens)
+  ok    real-registry mutant closed_weekday_out_of_range is reported (gaestehytten: closed weekday 7 is not 0..6)
+  ok    real-registry mutant shop_id_unknown is reported (gaestehytten: shop id `no_such_shop_anywhere` is defined by no shop file)
+  ok    real-registry mutant keeper_is_no_citizen is reported (gaestehytten: keeper `nobody_at_all` is not a citizen)
+  ok    real-registry mutant name_key_is_not_BLD_id is reported (gaestehytten: name_key must be BLD_GAESTEHYTTEN, got `BLD_WRONG`)
+  ok    real-registry mutant interior_without_size is reported (gaestehytten: a building with an interior needs size S | M | L)
+  ok    real-registry mutant unknown_field is reported (gaestehytten: unknown field `stand_in`)
+  ok    real-registry mutant override_weekday_out_of_range is reported (gaestehytten: override weekday 9 is not 0..6)
+  ok    real-registry mutant hours_not_numeric is reported (gaestehytten: hours need numeric open and close)
+  ok    real-registry mutant service_with_a_shop_id is reported (uglehulen: a service row has NO shop id (its appraisal / bath / post are game events, not ShopSystem shops))
+  ok    real-registry mutant service_without_keeper is reported (uglehulen: a service needs a keeper)
+  ok    real-registry mutant stall_with_an_interior is reported (torvestanden: a stall has no interior)
+  ok    real-registry mutant short_night_row_without_short_ok is reported (torvestanden: hours are open only 3.0 game hours (< 6.0) and the row is not short_ok)
+  ok    real-registry mutant home_without_owner is reported (hoppe_hut: a home needs an owner)
+  ok    towns_data.mutants_are_caught (17 mutants of the fixture registry and 17 of the real one (a shop without hours, a close after the end of the day, open == close, closed on all seven days, a weekday out of range, an unknown shop id, a keeper that is no citizen, a wrong name_key, an interior without size, an unknown field, a service with a shop id, a stall with an interior, a night row without short_ok, a home without an owner ...) are ALL reported; the unmutated registries pass; missed [] [])
+  ok    towns_data.registry_kind_loads_lints_and_claims (kind = "registry": the 20 CORE ids load from the two files (get_registry("buildings"), get_registry_entry("buildings", "bageriet") = shop bakery, keeper baker_maja), the three Lua files lint with 0 findings true, no id of the real registry is claimed twice true; a duplicate id across two files is ONE duplicate_id note naming registry:<name>, the later file wins true; a registry file without `registry = ` is the finding registry_header true; the config key `towns` collides with no registry name)
+  ok    towns_data.shop_system_hook (with the buildings registry loaded ShopSystem.is_open answers Hours.shop_open through ShopHoursGate: Tuesday 10:00 the bakery and the seed shop are open true, Monday the bakery is closed with closed_reason day, opens_at 7.0, next_open_weekday 1 true and buying is refused with reason `closed` true; Sunday the seed shop is closed (day, back on Monday) and buy_item is refused true; Tuesday 06:00 the bakery reason is hours, opens 07:00 true; open again, buying works true)
+  ok    towns_data.unclaimed_shop_keeps_weekday_rule (flea_market (open_weekdays 5, 6) is claimed by the Loppeloft: the building and the def agree on every weekday at noon true (Saturday 09:00 the building's 10:00 wins true); with no building claiming it the rule answers null true and the def's weekdays decide alone, at any hour (Saturday open, Wednesday closed, no closed_reason: true / true); with scripts/towns/hours.gd absent the gate answers no rule and nothing changes true)
+  ok    towns_data.no_forward_class_refs (none of the 6 scripts of the package names a class of a later wave outside a string or a comment (Routines, RouteTable, NavGrid, FestSet, NpcDirector, TownsValidate, TownMarks, LevelNav, TownDirector, TownMarker, CitizenStub, CityTown, GiftRules, GiftFlow, SocialTalk, and the autoloads SocialManager, LootService, HomeManager: they appear only as path strings in Svc.static_call / Svc.node): 0 hits []; the scanner finds an identifier in code (["probe:6 Routines", "probe:7 NavGrid"]) and ignores strings and comments true)
+  ok    towns_data.wave4_scripts_load_without_later_files (every script of the package loads and reloads without a parse error (6 scripts, 0 problems []); the later files of the towns track that exist in this tree: ["routines.gd", "route_table.gd", "nav_grid.gd", "npc_director.gd", "town_director.gd", "town_marker.gd"]; Routines is reached only through Hours.where_is (a path string with the default null): true)
+  --    towns_data: 166 checks, 0 failed, 0 skipped, 2.6 s
+== section wardrobe_ui  (res://tests/sections/wardrobe_ui.gd)
+  ok    wardrobe_ui.screen_and_live_presenter_available
+  ok    wardrobe_ui.all_96_pieces_fit_all_eight_bodies
+  ok    wardrobe_ui.opens_paused_with_live_preview
+  ok    wardrobe_ui.try_on_is_local_and_resolves_exclusions
+  ok    wardrobe_ui.closing_cancels_uncommitted_try_on
+  ok    wardrobe_ui.equip_button_commits_one_complete_dress
+  ok    wardrobe_ui.preview_rotates_and_walks
+  ok    wardrobe_ui.unowned_piece_can_be_tried_but_not_equipped
+  ok    wardrobe_ui.remove_button_reveals_base_and_keeps_ownership
+  ok    wardrobe_ui.screen_saves_worn_outfit
+  ok    wardrobe_ui.screen_restores_outfit
+  ok    wardrobe_ui.hands_preview_uses_same_attachment_presenter
+  ok    wardrobe_ui.weapon_try_on_does_not_change_equipment
+  ok    wardrobe_ui.hands_tab_changes_real_weapon_owner
+  ok    wardrobe_ui.hands_tab_assigns_existing_hotbar
+  ok    wardrobe_ui.hands_tab_selects_ready_tool
+  ok    wardrobe_ui.hands_tab_clears_selected_slot
+  ok    wardrobe_ui.closing_releases_pause_and_preview
+  ok    wardrobe_ui.real_save_with_clothes_and_loadout
+  ok    wardrobe_ui.real_load_rebuilds_world
+  ok    wardrobe_ui.clothing_equipment_presets_and_hotbar_survive_load
+  ok    wardrobe_ui.screen_and_live_presenter_available
+  ok    wardrobe_ui.all_96_pieces_fit_all_eight_bodies
+  ok    wardrobe_ui.opens_paused_with_live_preview
+  ok    wardrobe_ui.try_on_is_local_and_resolves_exclusions
+  ok    wardrobe_ui.closing_cancels_uncommitted_try_on
+  ok    wardrobe_ui.equip_button_commits_one_complete_dress
+  ok    wardrobe_ui.preview_rotates_and_walks
+  ok    wardrobe_ui.unowned_piece_can_be_tried_but_not_equipped
+  ok    wardrobe_ui.remove_button_reveals_base_and_keeps_ownership
+  ok    wardrobe_ui.screen_saves_worn_outfit
+  ok    wardrobe_ui.screen_restores_outfit
+  ok    wardrobe_ui.hands_preview_uses_same_attachment_presenter
+  ok    wardrobe_ui.weapon_try_on_does_not_change_equipment
+  ok    wardrobe_ui.hands_tab_changes_real_weapon_owner
+  ok    wardrobe_ui.hands_tab_assigns_existing_hotbar
+  ok    wardrobe_ui.hands_tab_selects_ready_tool
+  ok    wardrobe_ui.hands_tab_clears_selected_slot
+  ok    wardrobe_ui.closing_releases_pause_and_preview
+  ok    wardrobe_ui.real_save_with_clothes_and_loadout
+  ok    wardrobe_ui.real_load_rebuilds_world
+  ok    wardrobe_ui.clothing_equipment_presets_and_hotbar_survive_load
+  --    wardrobe_ui: 42 checks, 0 failed, 0 skipped, 1.4 s
+== summary: 9 section(s) run, 549 checks (0 failed, 8 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 34.8 s
+PLAYTEST PASS (549 checks in 9 sections, 0 allowed engine messages, 0 known-issue messages)

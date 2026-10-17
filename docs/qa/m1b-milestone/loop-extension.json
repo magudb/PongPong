@@ -1,6 +1,6 @@
 {
   "result": "pass",
-  "binding": "fc6df2244d8570a9d28203b8daad0f3bc8dceeb442567abb238f9a86eab99818",
+  "binding": "b512ac867eda2b2e4e36407b5584c405b4b067c2415908b2cd7f3561665006e7",
   "checks": {
     "l18_data_only_citizen": true,
     "l18_data_only_building": true,
@@ -11,8 +11,8 @@
     "l18_data_only_quest": true,
     "l18_no_gd_changed": true
   },
-  "code_files_unchanged": 695,
+  "code_files_unchanged": 935,
   "scenario_checks": 8,
-  "owner_checks": 588,
-  "note": "One clone, one whole extension. Production geometry/routes, door, NPC talk, shop hosts, social rules and real mailbox quest offer exercised. No .gd/.tscn/.py edit. Clone/import/bake excluded from playable-loop timing."
+  "owner_checks": 584,
+  "note": "One clone, one whole extension. Production geometry/routes, door, NPC talk, shop hosts, social rules and real mailbox quest offer exercised. No .gd/.tscn/.py/.sh edit. Clone/import/bake excluded from playable-loop timing."
 }

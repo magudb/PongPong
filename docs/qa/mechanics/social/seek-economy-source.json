@@ -130,7 +130,7 @@
       "category": "animal",
       "description_key": "ITEM_BABY_KITTEN_DESC",
       "name_key": "ITEM_BABY_KITTEN",
-      "produces": "companionship",
+      "produces": "friendship_token",
       "sell_price": 180
     },
     "baby_lamb": {
@@ -161,7 +161,7 @@
       "category": "animal",
       "description_key": "ITEM_BABY_PUPPY_DESC",
       "name_key": "ITEM_BABY_PUPPY",
-      "produces": "companionship",
+      "produces": "friendship_token",
       "sell_price": 180
     },
     "barn_kit": {
@@ -3372,7 +3372,7 @@
       "set": "skovens_hjerte",
       "sources": [
         {
-          "container": "fe",
+          "container": "jern",
           "kind": "find",
           "zone": "dybe_bregner"
         }
@@ -5940,7 +5940,7 @@
       "set": "svampehytten",
       "sources": [
         {
-          "container": "fe",
+          "container": "jern",
           "kind": "find",
           "zone": "svampelunden"
         }
@@ -7681,6 +7681,16 @@
       "sell_price": 20,
       "stamina_cost": 0
     },
+    "hjertebuket": {
+      "buy_price": 0,
+      "category": "special",
+      "description_key": "ITEM_HJERTEBUKET_DESC",
+      "max_stack": 9,
+      "name_key": "ITEM_HJERTEBUKET",
+      "rarity": "normal",
+      "relationship_gift": true,
+      "sell_price": 0
+    },
     "hoe_iron": {
       "buy_price": 400,
       "category": "tool",
@@ -7808,6 +7818,16 @@
           "zone": "skovkant"
         }
       ]
+    },
+    "loefteagern": {
+      "buy_price": 0,
+      "category": "special",
+      "description_key": "ITEM_LOEFTEAGERN_DESC",
+      "max_stack": 9,
+      "name_key": "ITEM_LOEFTEAGERN",
+      "rarity": "normal",
+      "relationship_gift": true,
+      "sell_price": 0
     },
     "lucky_clover": {
       "buy_price": 60,
@@ -9757,7 +9777,7 @@
       "set": "svampehytten",
       "sources": [
         {
-          "container": "fe",
+          "container": "jern",
           "kind": "find",
           "zone": "svampelunden"
         }
@@ -10418,11 +10438,6 @@
         {
           "kind": "find",
           "zone": "skovkant"
-        },
-        {
-          "kind": "node",
-          "node": "crystal",
-          "zone": "skovkant"
         }
       ]
     },
@@ -10557,7 +10572,7 @@
       "set": "skovens_hjerte",
       "sources": [
         {
-          "container": "jern",
+          "container": "trae",
           "kind": "find",
           "zone": "skovkant"
         }
@@ -18265,6 +18280,34 @@
       },
       "station": "snedkerbord"
     },
+    "hjertebuket": {
+      "category": "craft",
+      "id": "hjertebuket",
+      "ingredients": {
+        "honey": 1,
+        "moonflower": 1,
+        "wild_flower": 3
+      },
+      "name_key": "RECIPE_HJERTEBUKET",
+      "output": {
+        "amount": 1,
+        "item": "hjertebuket"
+      }
+    },
+    "home_cookies": {
+      "category": "bake",
+      "id": "home_cookies",
+      "ingredients": {
+        "flour": 1,
+        "honey": 1
+      },
+      "min_home_tier": 2,
+      "name_key": "HOME_AMENITIES_COOKIES",
+      "output": {
+        "amount": 2,
+        "item": "cookie"
+      }
+    },
     "honey_cake": {
       "category": "bake",
       "id": "honey_cake",
@@ -18303,6 +18346,19 @@
       "output": {
         "amount": 1,
         "item": "lantern_post"
+      }
+    },
+    "loefteagern": {
+      "category": "craft",
+      "id": "loefteagern",
+      "ingredients": {
+        "amber": 1,
+        "gold_ore": 2
+      },
+      "name_key": "RECIPE_LOEFTEAGERN",
+      "output": {
+        "amount": 1,
+        "item": "loefteagern"
       }
     },
     "lysdraabe": {

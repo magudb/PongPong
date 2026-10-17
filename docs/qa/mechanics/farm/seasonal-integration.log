@@ -96,7 +96,7 @@ PLAYTEST start mode=headless character=animal sections=res://tests/sections only
   ok    area.placeholder_boot_cost (painting the placeholders of the iso fixture from cold (0 terrains / props / backdrop painted) took 0 ms of a 24 ms build (best of 1 cold builds; budget 200 ms on an idle machine, i.e. at least 3.25x faster than the 0 ms the same set costs at full resolution, the spike's 650 ms))
   ok    area.placeholders_are_cached (a second build of the same area painted 0.00 ms more and took 4 ms (cold build 24 ms))
   ok    area.artcatalog_missing_expected (missing() lists only fixture ids without a real asset: 0 ids; unexpected [], not listed [])
-  info  ArtCatalog.missing() of the iso fixture (0): 
+  info  ArtCatalog.missing() of the iso fixture (0):
   ok    area.terrain_atlas_shape (every terrain id of the contract answers an atlas of variants x cell (placeholders 144x84 x 4x4, water 2x2, ortho 112x64))
   ok    area.prop_entry_shape (placeholder props carry texture, pivot inside the image and size like a props.json entry (unknown ids get a generic block))
   ok    area.skirt_placeholders_follow_the_real_pivots (platform_sw 79x143 pivot (73,13), platform_se pivot (6,13), platform_corner 146x146)
