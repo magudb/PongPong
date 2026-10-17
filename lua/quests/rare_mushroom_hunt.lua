@@ -46,6 +46,7 @@ rewards = {
 meta = {
   giver = "fairy_lily",
   location = "ZONE_MUSHROOM_GROVE",
+  requires_zone = "dark_forest",
   tag = "SKOV",
   category = "help",
   repeatable = true,
