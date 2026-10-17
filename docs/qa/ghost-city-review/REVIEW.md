@@ -26,3 +26,5 @@ The source-bound town extension and mutation proofs are refreshed in `docs/qa/m1
 Visual review artifacts: `ghost-outfits-before-after.png`, `city-depth-comparison.png`, the two ghost turnaround/walking sheets and all sixteen full catalogue pages under `palettes/`, plus the native city/stair and menu captures under `accepted/`. The review covers the new clothing's idle turnarounds and walking; it is not a new frame-by-frame approval of every original stock animation clip.
 
 Town proof bindings were regenerated after normalizing the new localization CSV to the repository’s LF format.
+
+Merged to local main as `55c92276d66dc620306c3ab63f1f80823e345ef1`. The post-merge native run (`main.json`) passed 65 checks with no failures, skips or engine messages. Both source-bound town proofs also pass on main with binding `56607282840d922a3f4f14148e3240e9c65cd74c3b94ed8970b4e820160f674f`.

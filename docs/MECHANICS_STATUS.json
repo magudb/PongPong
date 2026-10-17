@@ -136,6 +136,9 @@
       "F8 and pause-menu testing tools through existing gameplay owners"
     ],
     "evidence": "docs/qa/ghost-city-review/ACCEPTANCE.json",
-    "prompts": "docs/art/ghost-city-review/prompts.json"
+    "prompts": "docs/art/ghost-city-review/prompts.json",
+    "status": "verified on main",
+    "merge_commit": "55c92276d66dc620306c3ab63f1f80823e345ef1",
+    "source_binding": "56607282840d922a3f4f14148e3240e9c65cd74c3b94ed8970b4e820160f674f"
   }
 }

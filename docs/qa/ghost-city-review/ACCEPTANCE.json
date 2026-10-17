@@ -1,5 +1,5 @@
 {
-  "status": "passed in isolated worktree; local-main integration pending",
+  "status": "passed on local main",
   "date": "2026-10-17",
   "worktree": "codex-ghost-city-tools",
   "base_commit": "dc64592",
@@ -37,5 +37,19 @@
   "source_binding": "56607282840d922a3f4f14148e3240e9c65cd74c3b94ed8970b4e820160f674f",
   "prompts": "docs/art/ghost-city-review/prompts.json",
   "review": "docs/qa/ghost-city-review/REVIEW.md",
-  "generator_regeneration": "byte-identical"
+  "generator_regeneration": "byte-identical",
+  "merge_commit": "55c92276d66dc620306c3ab63f1f80823e345ef1",
+  "main_verification": {
+    "report": "main.json",
+    "checks": 65,
+    "failed": 0,
+    "skipped": 0,
+    "engine_messages": 0
+  },
+  "town_proofs": {
+    "binding": "56607282840d922a3f4f14148e3240e9c65cd74c3b94ed8970b4e820160f674f",
+    "extension": "pass; 584 owner checks",
+    "mutants": "pass; baseline and all eight mutations",
+    "check_all_on_main": "pass"
+  }
 }
