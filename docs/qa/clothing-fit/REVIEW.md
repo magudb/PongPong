@@ -31,3 +31,5 @@ python3 tools/town/prove_extension.py --check-all
 ```
 
 Fitting details and reusable future asset-repair prompts are in `docs/art/wardrobe/design.txt` and `docs/art/wardrobe/fitting-prompts.json`. This pass generated no new garment paintings.
+
+Integrated into local main by merge `91680ef` (implementation `dde0415`). The main checkout passes the same 531-check headless suite, with zero failures/skips and only the 16 expected negative-fixture messages. Its fresh source-binding, style and copy checks pass. See `main-headless.json` and `logs/main-*.{json,log}`.

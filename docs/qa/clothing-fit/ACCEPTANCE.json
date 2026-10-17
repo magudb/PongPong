@@ -1,5 +1,5 @@
 {
-  "status": "passed; ready for local main integration",
+  "status": "passed on local main",
   "date": "2026-10-17",
   "worktree": "codex-clothing-fit",
   "base_commit": "3eb4160",
@@ -123,5 +123,17 @@
     "skipped": 0,
     "engine_messages": 0,
     "scope": "Final singular/plural-neutral preview wording, independent slots, actual save/load on every hero."
+  },
+  "integration": {
+    "branch": "main",
+    "merge_commit": "91680ef780eec7368a4f8a6010ba6020510468cb",
+    "implementation_commit": "dde0415",
+    "report": "main-headless.json",
+    "checks": 531,
+    "failed": 0,
+    "skipped": 0,
+    "unexpected_engine_messages": 0,
+    "source_proof": "logs/main-source-binding.json",
+    "source_binding": "9851c7d66828e1f2376653df2e689975fcf97ce492be41876d684cb710db013e"
   }
 }
