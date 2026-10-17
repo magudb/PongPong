@@ -1,6 +1,6 @@
 {
   "result": "pass",
-  "binding": "56607282840d922a3f4f14148e3240e9c65cd74c3b94ed8970b4e820160f674f",
+  "binding": "10eb7928e425e293114473c749e070f83abff074ce792a3811d5eb0ea141e54e",
   "mutants": {
     "baseline": {
       "caught": true,

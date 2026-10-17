@@ -2,132 +2,132 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 
   info  --strict: known issues are not tolerated
 PLAYTEST start mode=headless character=animal sections=res://tests/sections only=towns_data,towns_interiors,social_data
-  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.3BKPdW/Library/Application Support/Traetoppen (throwaway)
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.jciYRG/Library/Application Support/Traetoppen (throwaway)
 == section social_data  (res://tests/sections/social_data.gd)
   ok    social_data.live_data_valid ([])
   ok    appraiser_fru_ugle has authored social facts
-  ok    appraiser_fru_ugle taste distribution: 11 loved, 30 disliked of 310
+  ok    appraiser_fru_ugle taste distribution: 11 loved, 33 disliked of 342
   ok    appraiser_fru_ugle has first meeting, hearts-band greetings and biography
   ok    baker_maja has authored social facts
-  ok    baker_maja taste distribution: 6 loved, 21 disliked of 310
+  ok    baker_maja taste distribution: 6 loved, 21 disliked of 342
   ok    baker_maja has first meeting, hearts-band greetings and biography
   ok    baker_maja is an adult partner candidate
   ok    baker_maja offers a cheap normal sample
   ok    bathkeeper_sofus has authored social facts
-  ok    bathkeeper_sofus taste distribution: 10 loved, 32 disliked of 310
+  ok    bathkeeper_sofus taste distribution: 10 loved, 35 disliked of 342
   ok    bathkeeper_sofus has first meeting, hearts-band greetings and biography
   ok    bathkeeper_sofus is an adult partner candidate
   ok    beekeeper_birk has authored social facts
-  ok    beekeeper_birk taste distribution: 11 loved, 26 disliked of 310
+  ok    beekeeper_birk taste distribution: 14 loved, 26 disliked of 342
   ok    beekeeper_birk has first meeting, hearts-band greetings and biography
   ok    beekeeper_birk is an adult partner candidate
   ok    bertil has authored social facts
-  ok    bertil taste distribution: 10 loved, 25 disliked of 310
+  ok    bertil taste distribution: 13 loved, 25 disliked of 342
   ok    bertil has first meeting, hearts-band greetings and biography
   ok    bertil is an adult partner candidate
   ok    bodil has authored social facts
-  ok    bodil taste distribution: 11 loved, 24 disliked of 310
+  ok    bodil taste distribution: 14 loved, 24 disliked of 342
   ok    bodil has first meeting, hearts-band greetings and biography
   ok    bodil is an adult partner candidate
   ok    carpenter_brumme has authored social facts
-  ok    carpenter_brumme taste distribution: 4 loved, 31 disliked of 310
+  ok    carpenter_brumme taste distribution: 4 loved, 34 disliked of 342
   ok    carpenter_brumme has first meeting, hearts-band greetings and biography
   ok    carpenter_brumme is an adult partner candidate
   ok    cat_morfar_mis has authored social facts
-  ok    cat_morfar_mis taste distribution: 8 loved, 29 disliked of 310
+  ok    cat_morfar_mis taste distribution: 8 loved, 32 disliked of 342
   ok    cat_morfar_mis has first meeting, hearts-band greetings and biography
   ok    clerk_fjerpen has authored social facts
-  ok    clerk_fjerpen taste distribution: 13 loved, 30 disliked of 310
+  ok    clerk_fjerpen taste distribution: 13 loved, 33 disliked of 342
   ok    clerk_fjerpen has first meeting, hearts-band greetings and biography
   ok    cub_bamse has authored social facts
-  ok    cub_bamse taste distribution: 4 loved, 36 disliked of 310
+  ok    cub_bamse taste distribution: 4 loved, 36 disliked of 342
   ok    cub_bamse has first meeting, hearts-band greetings and biography
   ok    fairy_builder has authored social facts
-  ok    fairy_builder taste distribution: 4 loved, 30 disliked of 310
+  ok    fairy_builder taste distribution: 4 loved, 33 disliked of 342
   ok    fairy_builder has first meeting, hearts-band greetings and biography
   ok    fairy_builder offers a cheap normal sample
   ok    fairy_furnisher has authored social facts
-  ok    fairy_furnisher taste distribution: 22 loved, 25 disliked of 310
+  ok    fairy_furnisher taste distribution: 22 loved, 25 disliked of 342
   ok    fairy_furnisher has first meeting, hearts-band greetings and biography
   ok    fairy_furnisher offers a cheap normal sample
   ok    fairy_king has authored social facts
-  ok    fairy_king taste distribution: 5 loved, 30 disliked of 310
+  ok    fairy_king taste distribution: 5 loved, 33 disliked of 342
   ok    fairy_king has first meeting, hearts-band greetings and biography
   ok    fairy_lily has authored social facts
-  ok    fairy_lily taste distribution: 4 loved, 36 disliked of 310
+  ok    fairy_lily taste distribution: 4 loved, 36 disliked of 342
   ok    fairy_lily has first meeting, hearts-band greetings and biography
   ok    fairy_tailor has authored social facts
-  ok    fairy_tailor taste distribution: 16 loved, 25 disliked of 310
+  ok    fairy_tailor taste distribution: 16 loved, 25 disliked of 342
   ok    fairy_tailor has first meeting, hearts-band greetings and biography
   ok    fairy_tailor offers a cheap normal sample
   ok    fairy_wizard has authored social facts
-  ok    fairy_wizard taste distribution: 11 loved, 30 disliked of 310
+  ok    fairy_wizard taste distribution: 11 loved, 33 disliked of 342
   ok    fairy_wizard has first meeting, hearts-band greetings and biography
   ok    fairy_wizard offers a cheap normal sample
   ok    farmer_rosa has authored social facts
-  ok    farmer_rosa taste distribution: 11 loved, 22 disliked of 310
+  ok    farmer_rosa taste distribution: 14 loved, 22 disliked of 342
   ok    farmer_rosa has first meeting, hearts-band greetings and biography
   ok    farmer_rosa offers a cheap normal sample
   ok    fiddler_strimmel has authored social facts
-  ok    fiddler_strimmel taste distribution: 18 loved, 26 disliked of 310
+  ok    fiddler_strimmel taste distribution: 18 loved, 26 disliked of 342
   ok    fiddler_strimmel has first meeting, hearts-band greetings and biography
   ok    gardener_hoppe has authored social facts
-  ok    gardener_hoppe taste distribution: 4 loved, 24 disliked of 310
+  ok    gardener_hoppe taste distribution: 4 loved, 24 disliked of 342
   ok    gardener_hoppe has first meeting, hearts-band greetings and biography
   ok    gardener_hoppe is an adult partner candidate
   ok    ghostfam_blund has authored social facts
-  ok    ghostfam_blund taste distribution: 5 loved, 36 disliked of 310
+  ok    ghostfam_blund taste distribution: 5 loved, 36 disliked of 342
   ok    ghostfam_blund has first meeting, hearts-band greetings and biography
   ok    ghostfam_dyne has authored social facts
-  ok    ghostfam_dyne taste distribution: 9 loved, 28 disliked of 310
+  ok    ghostfam_dyne taste distribution: 9 loved, 31 disliked of 342
   ok    ghostfam_dyne has first meeting, hearts-band greetings and biography
   ok    ghostfam_gnist has authored social facts
-  ok    ghostfam_gnist taste distribution: 7 loved, 22 disliked of 310
+  ok    ghostfam_gnist taste distribution: 7 loved, 22 disliked of 342
   ok    ghostfam_gnist has first meeting, hearts-band greetings and biography
   ok    ghostfam_silke has authored social facts
-  ok    ghostfam_silke taste distribution: 5 loved, 28 disliked of 310
+  ok    ghostfam_silke taste distribution: 5 loved, 31 disliked of 342
   ok    ghostfam_silke has first meeting, hearts-band greetings and biography
   ok    guard_oak has authored social facts
-  ok    guard_oak taste distribution: 6 loved, 31 disliked of 310
+  ok    guard_oak taste distribution: 6 loved, 34 disliked of 342
   ok    guard_oak has first meeting, hearts-band greetings and biography
   ok    innkeeper_kvak has authored social facts
-  ok    innkeeper_kvak taste distribution: 6 loved, 24 disliked of 310
+  ok    innkeeper_kvak taste distribution: 6 loved, 24 disliked of 342
   ok    innkeeper_kvak has first meeting, hearts-band greetings and biography
   ok    lamplighter_kiki has authored social facts
-  ok    lamplighter_kiki taste distribution: 17 loved, 26 disliked of 310
+  ok    lamplighter_kiki taste distribution: 17 loved, 26 disliked of 342
   ok    lamplighter_kiki has first meeting, hearts-band greetings and biography
   ok    lamplighter_kiki is an adult partner candidate
   ok    loop_neighbour has authored social facts
-  ok    loop_neighbour taste distribution: 3 loved, 21 disliked of 310
+  ok    loop_neighbour taste distribution: 3 loved, 21 disliked of 342
   ok    loop_neighbour has first meeting, hearts-band greetings and biography
   ok    mapseller_natteblik has authored social facts
-  ok    mapseller_natteblik taste distribution: 4 loved, 36 disliked of 310
+  ok    mapseller_natteblik taste distribution: 4 loved, 39 disliked of 342
   ok    mapseller_natteblik has first meeting, hearts-band greetings and biography
   ok    mayor_lyra has authored social facts
-  ok    mayor_lyra taste distribution: 6 loved, 26 disliked of 310
+  ok    mayor_lyra taste distribution: 6 loved, 26 disliked of 342
   ok    mayor_lyra has first meeting, hearts-band greetings and biography
   ok    merchant_pip has authored social facts
-  ok    merchant_pip taste distribution: 5 loved, 21 disliked of 310
+  ok    merchant_pip taste distribution: 5 loved, 21 disliked of 342
   ok    merchant_pip has first meeting, hearts-band greetings and biography
   ok    merchant_pip is an adult partner candidate
   ok    merchant_pip offers a cheap normal sample
   ok    penguin_postman has authored social facts
-  ok    penguin_postman taste distribution: 3 loved, 30 disliked of 310
+  ok    penguin_postman taste distribution: 3 loved, 30 disliked of 342
   ok    penguin_postman has first meeting, hearts-band greetings and biography
   ok    pippin_boegeknop has authored social facts
-  ok    pippin_boegeknop taste distribution: 15 loved, 27 disliked of 310
+  ok    pippin_boegeknop taste distribution: 15 loved, 27 disliked of 342
   ok    pippin_boegeknop has first meeting, hearts-band greetings and biography
   ok    pippin_boegeknop offers a cheap normal sample
   ok    postman_pip has authored social facts
-  ok    postman_pip taste distribution: 4 loved, 26 disliked of 310
+  ok    postman_pip taste distribution: 4 loved, 26 disliked of 342
   ok    postman_pip has first meeting, hearts-band greetings and biography
   ok    postman_pip is an adult partner candidate
   ok    rasmus has authored social facts
-  ok    rasmus taste distribution: 17 loved, 26 disliked of 310
+  ok    rasmus taste distribution: 17 loved, 26 disliked of 342
   ok    rasmus has first meeting, hearts-band greetings and biography
   ok    rasmus is an adult partner candidate
   ok    smith_thorin has authored social facts
-  ok    smith_thorin taste distribution: 6 loved, 31 disliked of 310
+  ok    smith_thorin taste distribution: 6 loved, 34 disliked of 342
   ok    smith_thorin has first meeting, hearts-band greetings and biography
   ok    smith_thorin offers a cheap normal sample
   ok    social_data.citizens_cover_friends
@@ -138,7 +138,7 @@ PLAYTEST start mode=headless character=animal sections=res://tests/sections only
   ok    social_data.tool_exit_code (Social voice index exit code 0)
   ok    social_data.new_npc_by_data_only (One roster row gets hearts, a stable birthday and the child archetype)
   ok    Derived child uses archetype taste without another row
-  --    social_data: 133 checks, 0 failed, 0 skipped, 1.4 s
+  --    social_data: 133 checks, 0 failed, 0 skipped, 1.6 s
 == section towns_data  (res://tests/sections/towns_data.gd)
   ok    towns_data.config_complete (npc_speed 0.65 of the player's walk speed 285.0 = 185.25 px/s (185) true; portal_seconds 0.5, max_live_visuals 16 (hard cap), plan_visual_peak 14, live_min_dwell 0.05, closing_whisper_minutes 30, carrot_max_speed 1.6, hours_enabled true, curfew enabled true; rain_shelter acts sit tend play fish from 8 to 19 true)
   ok    towns_data.constants_keys (exactly the 11 constants ["carrot_max_speed", "closing_whisper_minutes", "curfew", "hours_enabled", "live_min_dwell", "max_live_visuals", "max_live_visuals_festival", "npc_speed", "plan_visual_peak", "portal_seconds", "rain_shelter"] (no unowned extra), the key `towns` does not collide with a registry name (get_registry("towns") is empty true))
@@ -306,7 +306,7 @@ PLAYTEST start mode=headless character=animal sections=res://tests/sections only
   ok    towns_data.unclaimed_shop_keeps_weekday_rule (flea_market (open_weekdays 5, 6) is claimed by the Loppeloft: the building and the def agree on every weekday at noon true (Saturday 09:00 the building's 10:00 wins true); with no building claiming it the rule answers null true and the def's weekdays decide alone, at any hour (Saturday open, Wednesday closed, no closed_reason: true / true); with scripts/towns/hours.gd absent the gate answers no rule and nothing changes true)
   ok    towns_data.no_forward_class_refs (none of the 6 scripts of the package names a class of a later wave outside a string or a comment (Routines, RouteTable, NavGrid, FestSet, NpcDirector, TownsValidate, TownMarks, LevelNav, TownDirector, TownMarker, CitizenStub, CityTown, GiftRules, GiftFlow, SocialTalk, and the autoloads SocialManager, LootService, HomeManager: they appear only as path strings in Svc.static_call / Svc.node): 0 hits []; the scanner finds an identifier in code (["probe:6 Routines", "probe:7 NavGrid"]) and ignores strings and comments true)
   ok    towns_data.wave4_scripts_load_without_later_files (every script of the package loads and reloads without a parse error (6 scripts, 0 problems []); the later files of the towns track that exist in this tree: ["routines.gd", "route_table.gd", "nav_grid.gd", "npc_director.gd", "town_director.gd", "town_marker.gd"]; Routines is reached only through Hours.where_is (a path string with the default null): true)
-  --    towns_data: 166 checks, 0 failed, 0 skipped, 2.5 s
+  --    towns_data: 166 checks, 0 failed, 0 skipped, 2.6 s
 == section towns_interiors  (res://tests/sections/towns_interiors.gd)
   ok    int_froebutikken matches data/interiors/schema.json
   ok    int_postkontoret matches data/interiors/schema.json
@@ -320,55 +320,55 @@ PLAYTEST start mode=headless character=animal sections=res://tests/sections only
   ok    int_postkontoret: zoom 0.791 fits the room's 832 x 774 px visual box into 1280 x 720
   ok    int_hoppe_hut: zoom 0.877 fits the room's 704 x 698 px visual box into 1280 x 720
   ok    towns_interiors.zoom_fits_every_room (zoom_fit = 0.85 * min(1280 / (n * 64), 720 / (n * 38 + 280)), n = cols + rows: the room's visual box times the zoom fits the 1280 x 720 view, the JSON carries the same number: ["int_froebutikken 0.754", "int_postkontoret 0.791", "int_hoppe_hut 0.877"])
-  ok    int_badehuset warm build 1: 8.29 ms, 109 nodes, 38 sprites, 2 lights
-  ok    int_badehuset warm build 2: 8.31 ms, 109 nodes, 38 sprites, 2 lights
-  ok    int_bageriet warm build 1: 9.49 ms, 110 nodes, 37 sprites, 3 lights
-  ok    int_bageriet warm build 2: 9.31 ms, 110 nodes, 37 sprites, 3 lights
-  ok    int_birks_bistade warm build 1: 10.28 ms, 61 nodes, 23 sprites, 2 lights
-  ok    int_birks_bistade warm build 2: 10.65 ms, 61 nodes, 23 sprites, 2 lights
-  ok    int_brummes_hus warm build 1: 10.52 ms, 57 nodes, 21 sprites, 2 lights
-  ok    int_brummes_hus warm build 2: 10.45 ms, 57 nodes, 21 sprites, 2 lights
-  ok    int_brummes_vaerksted warm build 1: 8.62 ms, 112 nodes, 41 sprites, 2 lights
-  ok    int_brummes_vaerksted warm build 2: 8.86 ms, 112 nodes, 41 sprites, 2 lights
-  ok    int_dyrehuset warm build 1: 8.86 ms, 112 nodes, 41 sprites, 2 lights
-  ok    int_dyrehuset warm build 2: 8.60 ms, 112 nodes, 41 sprites, 2 lights
-  ok    int_fekongens_hus warm build 1: 10.31 ms, 71 nodes, 29 sprites, 2 lights
-  ok    int_fekongens_hus warm build 2: 10.54 ms, 71 nodes, 29 sprites, 2 lights
-  ok    int_froebutikken warm build 1: 10.80 ms, 103 nodes, 37 sprites, 2 lights
-  ok    int_froebutikken warm build 2: 11.33 ms, 103 nodes, 37 sprites, 2 lights
-  ok    int_hoppe_hut warm build 1: 11.66 ms, 70 nodes, 28 sprites, 2 lights
-  ok    int_hoppe_hut warm build 2: 11.66 ms, 70 nodes, 28 sprites, 2 lights
-  ok    int_hyldeblomsts_hus warm build 1: 11.42 ms, 57 nodes, 21 sprites, 2 lights
-  ok    int_hyldeblomsts_hus warm build 2: 11.23 ms, 57 nodes, 21 sprites, 2 lights
-  ok    int_kikis_hytte warm build 1: 10.25 ms, 60 nodes, 22 sprites, 2 lights
-  ok    int_kikis_hytte warm build 2: 9.84 ms, 60 nodes, 22 sprites, 2 lights
-  ok    int_loppeloftet warm build 1: 8.95 ms, 99 nodes, 33 sprites, 2 lights
-  ok    int_loppeloftet warm build 2: 8.93 ms, 99 nodes, 33 sprites, 2 lights
-  ok    int_moebelbutikken warm build 1: 14.02 ms, 113 nodes, 40 sprites, 2 lights
-  ok    int_moebelbutikken warm build 2: 13.83 ms, 113 nodes, 40 sprites, 2 lights
-  ok    int_musikstuen warm build 1: 9.85 ms, 57 nodes, 21 sprites, 2 lights
-  ok    int_musikstuen warm build 2: 9.54 ms, 57 nodes, 21 sprites, 2 lights
-  ok    int_pippins_hus warm build 1: 9.95 ms, 57 nodes, 21 sprites, 2 lights
-  ok    int_pippins_hus warm build 2: 9.74 ms, 57 nodes, 21 sprites, 2 lights
-  ok    int_postkontoret warm build 1: 6.69 ms, 101 nodes, 34 sprites, 2 lights
-  ok    int_postkontoret warm build 2: 6.51 ms, 101 nodes, 34 sprites, 2 lights
-  ok    int_raadhuset warm build 1: 12.51 ms, 114 nodes, 43 sprites, 2 lights
-  ok    int_raadhuset warm build 2: 12.28 ms, 114 nodes, 43 sprites, 2 lights
-  ok    int_skraedderiet warm build 1: 8.93 ms, 104 nodes, 36 sprites, 2 lights
-  ok    int_skraedderiet warm build 2: 8.89 ms, 104 nodes, 36 sprites, 2 lights
-  ok    int_smedjen warm build 1: 7.56 ms, 102 nodes, 36 sprites, 3 lights
-  ok    int_smedjen warm build 2: 7.15 ms, 102 nodes, 36 sprites, 3 lights
-  ok    int_toemmerhandlen warm build 1: 8.51 ms, 114 nodes, 39 sprites, 2 lights
-  ok    int_toemmerhandlen warm build 2: 8.55 ms, 114 nodes, 39 sprites, 2 lights
-  ok    int_torvekroen warm build 1: 7.62 ms, 111 nodes, 40 sprites, 2 lights
-  ok    int_torvekroen warm build 2: 7.82 ms, 111 nodes, 40 sprites, 2 lights
-  ok    int_troldmandstaarnet warm build 1: 9.60 ms, 98 nodes, 33 sprites, 3 lights
-  ok    int_troldmandstaarnet warm build 2: 9.58 ms, 98 nodes, 33 sprites, 3 lights
-  ok    int_uglehulen warm build 1: 9.12 ms, 93 nodes, 32 sprites, 2 lights
-  ok    int_uglehulen warm build 2: 8.43 ms, 93 nodes, 32 sprites, 2 lights
-  ok    int_vagthytten warm build 1: 9.71 ms, 60 nodes, 22 sprites, 2 lights
-  ok    int_vagthytten warm build 2: 9.55 ms, 60 nodes, 22 sprites, 2 lights
-  ok    towns_interiors.build_all_under_budget (72 builds (1 cold + 2 warm) of the 24 rooms the generator writes (14 CORE + 10 EXTENDED), each from its JSON: warm p50 9.58 ms (budget <= 12; design measured 6.2), worst cold 26.87 ms (the first build of a room decodes its wall and furniture textures from disk: a sanity bound of 5000 ms that only catches a runaway build, the design measured 27.5 ms with its lighter placeholder art, a quiet machine here measures 130 - 520 ms and a load average of 30 gave 1,510 ms; the user-facing number is the windowed first frame <= 250 ms), base sprites (walls, corner, doormat, room pieces; dressing and hatch art also count toward the 130-node whole-room limit) p50 25 max 31 (<= 31; design 25 / 31) plus at most 4 additive window night layers, nodes p50 101 max 114 (hard budget <= 130; design 76 / 96 was measured before the SE1 amendment added the two talk hosts of a shop band (ShopCounter + Area2D + shape + Timer = 4 nodes each)), lights max 3 (<= 4), no builder error [], no labelled box (every piece resolves to art or a stand-in) []; per room { "int_badehuset": "109 nodes 38 sprites + 4 night layers", "int_bageriet": "110 nodes 37 sprites + 3 night layers", "int_birks_bistade": "61 nodes 23 sprites + 2 night layers", "int_brummes_hus": "57 nodes 21 sprites + 2 night layers", "int_brummes_vaerksted": "112 nodes 41 sprites + 4 night layers", "int_dyrehuset": "112 nodes 41 sprites + 4 night layers", "int_fekongens_hus": "71 nodes 29 sprites + 4 night layers", "int_froebutikken": "103 nodes 37 sprites + 3 night layers", "int_hoppe_hut": "70 nodes 28 sprites + 2 night layers", "int_hyldeblomsts_hus": "57 nodes 21 sprites + 2 night layers", "int_kikis_hytte": "60 nodes 22 sprites + 2 night layers", "int_loppeloftet": "99 nodes 33 sprites + 3 night layers", "int_moebelbutikken": "113 nodes 40 sprites + 4 night layers", "int_musikstuen": "57 nodes 21 sprites + 2 night layers", "int_pippins_hus": "57 nodes 21 sprites + 2 night layers", "int_postkontoret": "101 nodes 34 sprites + 3 night layers", "int_raadhuset": "114 nodes 43 sprites + 4 night layers", "int_skraedderiet": "104 nodes 36 sprites + 3 night layers", "int_smedjen": "102 nodes 36 sprites + 3 night layers", "int_toemmerhandlen": "114 nodes 39 sprites + 3 night layers", "int_torvekroen": "111 nodes 40 sprites + 4 night layers", "int_troldmandstaarnet": "98 nodes 33 sprites + 2 night layers", "int_uglehulen": "93 nodes 32 sprites + 2 night layers", "int_vagthytten": "60 nodes 22 sprites + 2 night layers" })
+  ok    int_badehuset warm build 1: 8.09 ms, 109 nodes, 38 sprites, 2 lights
+  ok    int_badehuset warm build 2: 7.92 ms, 109 nodes, 38 sprites, 2 lights
+  ok    int_bageriet warm build 1: 9.28 ms, 110 nodes, 37 sprites, 3 lights
+  ok    int_bageriet warm build 2: 9.04 ms, 110 nodes, 37 sprites, 3 lights
+  ok    int_birks_bistade warm build 1: 10.56 ms, 61 nodes, 23 sprites, 2 lights
+  ok    int_birks_bistade warm build 2: 10.49 ms, 61 nodes, 23 sprites, 2 lights
+  ok    int_brummes_hus warm build 1: 10.92 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_brummes_hus warm build 2: 11.29 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_brummes_vaerksted warm build 1: 8.49 ms, 112 nodes, 41 sprites, 2 lights
+  ok    int_brummes_vaerksted warm build 2: 8.24 ms, 112 nodes, 41 sprites, 2 lights
+  ok    int_dyrehuset warm build 1: 8.27 ms, 112 nodes, 41 sprites, 2 lights
+  ok    int_dyrehuset warm build 2: 8.30 ms, 112 nodes, 41 sprites, 2 lights
+  ok    int_fekongens_hus warm build 1: 10.07 ms, 71 nodes, 29 sprites, 2 lights
+  ok    int_fekongens_hus warm build 2: 10.05 ms, 71 nodes, 29 sprites, 2 lights
+  ok    int_froebutikken warm build 1: 10.86 ms, 103 nodes, 37 sprites, 2 lights
+  ok    int_froebutikken warm build 2: 10.76 ms, 103 nodes, 37 sprites, 2 lights
+  ok    int_hoppe_hut warm build 1: 11.60 ms, 70 nodes, 28 sprites, 2 lights
+  ok    int_hoppe_hut warm build 2: 11.31 ms, 70 nodes, 28 sprites, 2 lights
+  ok    int_hyldeblomsts_hus warm build 1: 11.05 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_hyldeblomsts_hus warm build 2: 11.15 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_kikis_hytte warm build 1: 9.85 ms, 60 nodes, 22 sprites, 2 lights
+  ok    int_kikis_hytte warm build 2: 9.76 ms, 60 nodes, 22 sprites, 2 lights
+  ok    int_loppeloftet warm build 1: 8.67 ms, 99 nodes, 33 sprites, 2 lights
+  ok    int_loppeloftet warm build 2: 8.49 ms, 99 nodes, 33 sprites, 2 lights
+  ok    int_moebelbutikken warm build 1: 13.74 ms, 113 nodes, 40 sprites, 2 lights
+  ok    int_moebelbutikken warm build 2: 14.11 ms, 113 nodes, 40 sprites, 2 lights
+  ok    int_musikstuen warm build 1: 10.50 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_musikstuen warm build 2: 10.08 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_pippins_hus warm build 1: 10.36 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_pippins_hus warm build 2: 10.35 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_postkontoret warm build 1: 6.84 ms, 101 nodes, 34 sprites, 2 lights
+  ok    int_postkontoret warm build 2: 7.29 ms, 101 nodes, 34 sprites, 2 lights
+  ok    int_raadhuset warm build 1: 13.60 ms, 114 nodes, 43 sprites, 2 lights
+  ok    int_raadhuset warm build 2: 13.31 ms, 114 nodes, 43 sprites, 2 lights
+  ok    int_skraedderiet warm build 1: 9.95 ms, 104 nodes, 36 sprites, 2 lights
+  ok    int_skraedderiet warm build 2: 9.65 ms, 104 nodes, 36 sprites, 2 lights
+  ok    int_smedjen warm build 1: 7.36 ms, 102 nodes, 36 sprites, 3 lights
+  ok    int_smedjen warm build 2: 7.18 ms, 102 nodes, 36 sprites, 3 lights
+  ok    int_toemmerhandlen warm build 1: 8.02 ms, 114 nodes, 39 sprites, 2 lights
+  ok    int_toemmerhandlen warm build 2: 8.02 ms, 114 nodes, 39 sprites, 2 lights
+  ok    int_torvekroen warm build 1: 7.18 ms, 111 nodes, 40 sprites, 2 lights
+  ok    int_torvekroen warm build 2: 7.04 ms, 111 nodes, 40 sprites, 2 lights
+  ok    int_troldmandstaarnet warm build 1: 8.96 ms, 98 nodes, 33 sprites, 3 lights
+  ok    int_troldmandstaarnet warm build 2: 8.90 ms, 98 nodes, 33 sprites, 3 lights
+  ok    int_uglehulen warm build 1: 8.58 ms, 93 nodes, 32 sprites, 2 lights
+  ok    int_uglehulen warm build 2: 8.32 ms, 93 nodes, 32 sprites, 2 lights
+  ok    int_vagthytten warm build 1: 9.81 ms, 60 nodes, 22 sprites, 2 lights
+  ok    int_vagthytten warm build 2: 9.59 ms, 60 nodes, 22 sprites, 2 lights
+  ok    towns_interiors.build_all_under_budget (72 builds (1 cold + 2 warm) of the 24 rooms the generator writes (14 CORE + 10 EXTENDED), each from its JSON: warm p50 9.76 ms (budget <= 12; design measured 6.2), worst cold 44.30 ms (the first build of a room decodes its wall and furniture textures from disk: a sanity bound of 5000 ms that only catches a runaway build, the design measured 27.5 ms with its lighter placeholder art, a quiet machine here measures 130 - 520 ms and a load average of 30 gave 1,510 ms; the user-facing number is the windowed first frame <= 250 ms), base sprites (walls, corner, doormat, room pieces; dressing and hatch art also count toward the 130-node whole-room limit) p50 25 max 31 (<= 31; design 25 / 31) plus at most 4 additive window night layers, nodes p50 101 max 114 (hard budget <= 130; design 76 / 96 was measured before the SE1 amendment added the two talk hosts of a shop band (ShopCounter + Area2D + shape + Timer = 4 nodes each)), lights max 3 (<= 4), no builder error [], no labelled box (every piece resolves to art or a stand-in) []; per room { "int_badehuset": "109 nodes 38 sprites + 4 night layers", "int_bageriet": "110 nodes 37 sprites + 3 night layers", "int_birks_bistade": "61 nodes 23 sprites + 2 night layers", "int_brummes_hus": "57 nodes 21 sprites + 2 night layers", "int_brummes_vaerksted": "112 nodes 41 sprites + 4 night layers", "int_dyrehuset": "112 nodes 41 sprites + 4 night layers", "int_fekongens_hus": "71 nodes 29 sprites + 4 night layers", "int_froebutikken": "103 nodes 37 sprites + 3 night layers", "int_hoppe_hut": "70 nodes 28 sprites + 2 night layers", "int_hyldeblomsts_hus": "57 nodes 21 sprites + 2 night layers", "int_kikis_hytte": "60 nodes 22 sprites + 2 night layers", "int_loppeloftet": "99 nodes 33 sprites + 3 night layers", "int_moebelbutikken": "113 nodes 40 sprites + 4 night layers", "int_musikstuen": "57 nodes 21 sprites + 2 night layers", "int_pippins_hus": "57 nodes 21 sprites + 2 night layers", "int_postkontoret": "101 nodes 34 sprites + 3 night layers", "int_raadhuset": "114 nodes 43 sprites + 4 night layers", "int_skraedderiet": "104 nodes 36 sprites + 3 night layers", "int_smedjen": "102 nodes 36 sprites + 3 night layers", "int_toemmerhandlen": "114 nodes 39 sprites + 3 night layers", "int_torvekroen": "111 nodes 40 sprites + 4 night layers", "int_troldmandstaarnet": "98 nodes 33 sprites + 2 night layers", "int_uglehulen": "93 nodes 32 sprites + 2 night layers", "int_vagthytten": "60 nodes 22 sprites + 2 night layers" })
   ok    towns_interiors.rebuild_leaks_nothing (6 more builds and frees of one room change nothing: nodes +0, orphan nodes +0, time_of_day_changed connections +0 (ShopHours and the window clock disconnect when the room leaves), game_event connections +0 (the talk hosts), interactables 0 -> 0, cached textures 160, reported stand-ins 0)
   ok    int_badehuset: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
   ok    int_badehuset: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
@@ -593,6 +593,6 @@ PLAYTEST start mode=headless character=animal sections=res://tests/sections only
   ok    the generator's stub map of int_uglehulen is InteriorRoom.stub_map (zone traetoppen)
   ok    the generator's stub map of int_vagthytten is InteriorRoom.stub_map (zone traetoppen)
   ok    towns_interiors.tool_regenerates_identical_specs (tools/towns/interiors/generate.py is seed-free and deterministic: two runs write the same 24 specs byte for byte true, the three fixture rooms ARE its output true, `--check` over the fixtures and data/interiors passes true, a changed spec is noticed (exit 1) true and one marked hand_edited is skipped true; validate.py: all 24 generated rooms pass (24 PASS), `validate.py data/interiors tests/fixtures/towns/interiors` prints 0 problems true, its self-test catches 14 mutants and the clean room passes true; the 24 stub maps it writes equal InteriorRoom.stub_map true; the building table of the generator equals the Lua registry (drift []))
-  --    towns_interiors: 285 checks, 0 failed, 0 skipped, 10.9 s
-== summary: 3 section(s) run, 584 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 20.0 s
+  --    towns_interiors: 285 checks, 0 failed, 0 skipped, 10.7 s
+== summary: 3 section(s) run, 584 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 20.5 s
 PLAYTEST PASS (584 checks in 3 sections, 0 allowed engine messages, 0 known-issue messages)

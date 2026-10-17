@@ -1,15 +1,40 @@
 {
-  "status": "targeted and native checks passed; full regression running",
-  "worktree": "codex-farm-completion",
-  "integrated_main": "f3486ff",
+  "schema": 1,
+  "status": "verified on worktree; final main native check pending",
+  "branch": "main",
+  "feature_merge_commit": "81f85af",
+  "integration_fix_commit": "bf485e3",
+  "integrated_main_review": "f3486ff",
+  "source_binding": "10eb7928e425e293114473c749e070f83abff074ce792a3811d5eb0ea141e54e",
+  "regression": {
+    "result": "pass",
+    "checks": 16833,
+    "failed": 0,
+    "skipped": 163,
+    "section_count": 142,
+    "single_invocation": false
+  },
+  "regression_evidence": "regression-coverage.json",
   "native_reports": [
     "final-native.json",
     "seed-details-native.json"
   ],
-  "targeted_report": "catalog-followup.json",
-  "regression_report": "regression.json",
-  "new_painted_assets": 49,
-  "retained_masters": 12,
-  "prompts": "docs/art/farm-completion/prompts.json",
+  "town_proofs": {
+    "extension": "docs/qa/m1b-milestone/loop-extension.json",
+    "mutants": "docs/qa/m1b-milestone/loop-mutants.json",
+    "owner_checks": 584,
+    "extension_checks": 8,
+    "defect_mutants": 8,
+    "clean_baseline": true,
+    "consumer_report": "town-loop-final.json"
+  },
+  "art": {
+    "reviewed_visual_theme_assets": 2974,
+    "new_painted_assets": 49,
+    "retained_masters": 12,
+    "generation": "built-in imagegen",
+    "assets": "assets/iso_props/farm_completion/",
+    "prompts": "docs/art/farm-completion/prompts.json"
+  },
   "review": "REVIEW.md"
 }

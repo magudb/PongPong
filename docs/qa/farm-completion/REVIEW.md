@@ -28,7 +28,7 @@ The current art catalog covers 62 characters, 435 items, 29 tile sets and 396 pr
 
 ## Validation
 
-Final results and source bindings are recorded in `ACCEPTANCE.json`. The final full regression report supersedes intermediate reports made while merging crop catalogs and updating old stock fixtures. Native tests exercise actual held-tool input, planting/watering/sleep/shipping, both animal upgrade rounds, greenhouse door/exit movement, machine use, seed purchasing, the four-row upgrade menu and all ten home tiers. Test wrappers use disposable save directories.
+Final results and source bindings are recorded in `ACCEPTANCE.json`. The aggregate regression record and accepted follow-ups supersede failing integration iterations. The original full-run report is retained with its failures visible. Native tests exercise actual held-tool input, planting/watering/sleep/shipping, both animal upgrade rounds, greenhouse door/exit movement, machine use, seed purchasing, the four-row upgrade menu and all ten home tiers. Test wrappers use disposable save directories.
 
 Prior town proof reports and their raw evidence were archived in `prior-town-proofs/` before regenerating the canonical source-bound reports. Previous ghost/city acceptance therefore retains its historical proof evidence.
 
