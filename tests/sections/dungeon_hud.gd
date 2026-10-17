@@ -44,6 +44,7 @@ func _run(t,native: bool) -> void:
 	t.check("minimap_map_reveals_whole_floor",minimap.fully_revealed and minimap.is_seen(Vector2i(world.area.map.width-1,world.area.map.height-1)))
 	minimap.set_area(world.area)
 	t.check("minimap_fog_resets_on_reentry",not minimap.fully_revealed and minimap.fog.size() == revealed)
+	_test_chest_sense(t,world,minimap,eco)
 	var feed: VBoxContainer = hud.loot_feed
 	feed.clear()
 	EventBus.item_gained.emit(&"iron_ore",2)
@@ -112,6 +113,46 @@ func _run(t,native: bool) -> void:
 	await world.travel(&"farm",&"default")
 	t.check("hidden_after_return_to_farm",not hud.visible)
 	if native: await _guide(t)
+func _test_chest_sense(t,world: WorldRoot2D,minimap: Minimap2D,eco: Node) -> void:
+	var area := world.area
+	var saved_markers: Array[Dictionary] = area.markers.duplicate()
+	var saved_position := world.player.global_position
+	var saved_items: Dictionary = eco.to_dict()
+	var player_cell := Vector2i(area.map.width/2,area.map.height/2)
+	world.player.global_position = area.cell_to_global(player_cell)
+	var chest_cell := player_cell+Vector2i(DungeonRun.chest_sense_cells()+2,0)
+	var params := {"tier":"trae","hidden":1}
+	var chest := LootChest2D.create_marker(params,area.cell_to_global(chest_cell),chest_cell,area) as LootChest2D
+	area.objects.add_child(chest)
+	chest.global_position = area.cell_to_global(chest_cell)
+	area.markers.assign([{"type":"chest","params":params,"cell":chest_cell,"node":chest}])
+	minimap.set_area(area)
+	var has_chest := func(): return minimap._dots.any(func(dot): return dot.color == Minimap2D.C.GOLD and dot.radius == 3)
+	t.check("undiscovered_chest_hidden_even_on_seen_terrain",minimap.is_seen(chest_cell) and not chest.revealed and not has_chest.call())
+	eco.add_item(&"gem_rune_heart",1,true)
+	eco.equip(&"accessory",&"gem_rune_heart")
+	minimap.update_map(true)
+	t.check("real_lantern_gem_senses_hidden_chest",not chest.revealed and has_chest.call())
+	area.markers[0].cell = player_cell+Vector2i(13,0)
+	minimap.update_map(true)
+	t.check("sense_respects_twelve_cell_limit",not has_chest.call())
+	area.markers[0].cell = chest_cell
+	eco.from_dict(saved_items)
+	world.player.global_position = chest.global_position
+	chest._process(.2)
+	minimap.update_map(true)
+	t.check("real_proximity_discovery_keeps_chest_visible",chest.revealed and has_chest.call())
+	chest.set_enabled(false)
+	minimap.update_map(true)
+	t.check("condition_disabled_chest_is_omitted",not has_chest.call())
+	chest.set_enabled(true)
+	chest.is_open = true
+	minimap.update_map(true)
+	t.check("opened_chest_is_omitted",not has_chest.call())
+	area.markers.assign(saved_markers)
+	world.player.global_position = saved_position
+	chest.free()
+	minimap.set_area(area)
 func _guide(t) -> void:
 	await t.clear_scene()
 	var host := Control.new()

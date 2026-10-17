@@ -101,9 +101,11 @@ func update_map(force := false) -> void:
 		var seen := is_seen(at)
 		if kind == "chest":
 			if LootMarkers.is_done(area,at,LootMarkers.context_for(area,at)): continue
-			if not seen and Vector2(at-cell).length() > DungeonRun.chest_sense_cells(): continue
-			var node: Node = marker.get("node")
-			if node != null and bool(node.get("is_open")): continue
+			var chest := marker.get("node") as LootChest2D
+			if not is_instance_valid(chest) or not chest.is_enabled() or chest.is_open: continue
+			var sense := DungeonRun.chest_sense_cells()
+			var sensed := sense > 0 and Vector2(at-cell).length() <= sense
+			if not (seen and chest.revealed) and not sensed: continue
 			color = C.GOLD
 		elif seen and kind == "runestone": color = C.GLOWSHROOM
 		elif seen and kind == "warp": color = C.OWL_EYE if DungeonFloors.floor_of_id(params.get("to","")) > DungeonFloors.floor_of(area) else C.SKY
