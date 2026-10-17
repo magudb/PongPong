@@ -149,7 +149,6 @@ func _ready() -> void:
 	EventBus.player_inventory_changed.connect(_inventory)
 	EventBus.game_event.connect(_event)
 	EventBus.modal_changed.connect(func(_stack): toasts.visible = not GameManager.is_modal_open())
-	DungeonRun.attach(self)
 	_spawned(get_tree().get_first_node_in_group("player"))
 	_inventory({})
 	_assist()

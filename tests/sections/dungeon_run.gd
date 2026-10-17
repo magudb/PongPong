@@ -81,14 +81,14 @@ func _run(t, native: bool) -> void:
 	gm.pop_all_modals()
 	DungeonRun.apply_preset("none")
 	var watch: DungeonRunWatch = DungeonRun.attach(world.game_ui)
-	t.check("run_watch_attach_is_idempotent",DungeonRun.attach(world.game_ui) == watch)
+	t.check("run_watch_attach_is_idempotent",DungeonRun.attach(world.game_ui) == watch and DungeonRun.attach(world.game_ui.get_screen(&"forest_hud")) == watch and watch.get_parent() == world)
 	world.player.oil = 50
 	world.player.half_hearts = 3
 	var gold: int = eco.gold
 	EventBus.game_event.emit(&"dungeon_surprise",{"id":"firefly_swarm","oil_s":30})
 	EventBus.game_event.emit(&"dungeon_surprise",{"id":"acorn_purse","gold":25})
 	EventBus.game_event.emit(&"dungeon_surprise",{"id":"cocoa_thermos","heal_half_hearts":2})
-	t.check("run_watch_applies_surprises",world.player.oil == 80 and world.player.half_hearts == 5 and eco.gold == gold+25)
+	t.check("run_watch_applies_surprises",world.player.oil == 80 and world.player.half_hearts == 5 and eco.gold == gold+25,str([world.player.oil,world.player.half_hearts,eco.gold-gold,t.tree.get_nodes_in_group("player").size()]))
 	var picker: Array = DungeonRun.picker_lines(12)
 	t.check("picker_warns_for_highlighted_floor",picker[0].warn and not DungeonRun.picker_lines(1)[0].warn and picker[4].text.contains("10"))
 	eco.add_item(&"etagekort",2,true)

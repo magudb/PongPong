@@ -22,7 +22,7 @@ func _run(t,native: bool) -> void:
 	await t.until(func(): return world.area.map.id == &"moerkeskoven_f1" and not world.traveling,10.0)
 	await t.frames(3)
 	t.check("action_mode_shows_forest_hud",hud.visible and not world.game_ui.get_screen(&"hud").visible)
-	t.check("run_watch_attached_once",hud.get_node_or_null("RunWatch") != null and DungeonRun.attach(hud) == hud.get_node("RunWatch"))
+	t.check("run_watch_attached_once",world.get_node_or_null("RunWatch") != null and hud.get_node_or_null("RunWatch") == null and DungeonRun.attach(hud) == world.get_node("RunWatch"))
 	t.check("chip_text_from_header",hud.zone_label.text == TranslationServer.translate(world.area.map.title)+" · "+str(world.area.map.depth))
 	EventBus.player_health_changed.emit(7,10)
 	EventBus.player_oil_changed.emit(29,150)

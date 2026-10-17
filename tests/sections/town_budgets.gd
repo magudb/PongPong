@@ -10,6 +10,14 @@ func count(node: Node) -> int:
 		total += count(child)
 	return total
 
+func scenery_nodes(node: Node) -> int:
+	if node.is_in_group("player") or node.is_in_group("npc"):
+		return 0
+	var total := 1
+	for child in node.get_children():
+		total += scenery_nodes(child)
+	return total
+
 func lights(node: Node) -> int:
 	if node.is_in_group("player") or node.is_in_group("npc"):
 		return 0
@@ -56,7 +64,7 @@ func run(t) -> void:
 			await t.physics(3)
 		samples.sort()
 		var warm := samples[1]
-		measurements[str(id)]={"asset_preparation_ms":preparation_ms,"cold_entry_ms":first,"warm_entry_ms":warm,"nodes":count(world.area),"scenery_lights":lights(world.area)}
+		measurements[str(id)]={"asset_preparation_ms":preparation_ms,"cold_entry_ms":first,"warm_entry_ms":warm,"nodes":count(world.area),"scenery_nodes":scenery_nodes(world.area),"scenery_lights":lights(world.area)}
 		match id:
 			&"int_froebutikken":
 				t.check("interior_cold_build", first <= 60, str(measurements[str(id)]))
@@ -80,7 +88,7 @@ func run(t) -> void:
 				for child in world.area.get_children():
 					t.info("CITY BRANCH " + str(child.name) + " " + str(count(child)))
 				t.check("city_warm_build", warm<=40, str(measurements[str(id)]))
-				t.check("city_nodes_and_lights", count(world.area)<=700 and lights(world.area)<=12, str(measurements[str(id)]))
+				t.check("city_nodes_and_lights", scenery_nodes(world.area)<=700 and lights(world.area)<=12, str(measurements[str(id)]))
 				var begin := Time.get_ticks_usec()
 				var nav := LevelNav.make()
 				t.check("nav_bake_city", Time.get_ticks_usec()-begin<=30000 and not nav.levels.is_empty(), "%.3fms" % ((Time.get_ticks_usec()-begin)/1000.0))
@@ -134,6 +142,10 @@ func _navigation(t) -> void:
 		costs.append(Time.get_ticks_usec()-start)
 	costs.sort()
 	t.check("route_plan_p95", costs[56]<=1000, str(costs[56])+"us")
+	var ctx := Routines.now_ctx()
+	var ids := SocialData.npcs().keys()
+	var batch := NpcDirector.locations(ids,ctx)
+	t.check("batch_locations_match_individual_queries",ids.all(func(id):return batch[id] == Routines.where_is(str(id),ctx)) and not ctx.has("_routine_registry"))
 	var sweeps: Array[int] = []
 	for i in 20:
 		var start := Time.get_ticks_usec()

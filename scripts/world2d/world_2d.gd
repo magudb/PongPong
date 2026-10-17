@@ -190,6 +190,7 @@ func _ready() -> void:
 			game_ui = ui_scene.instantiate()
 			game_ui.name = "GameUI"
 			add_child(game_ui)
+	DungeonRun.attach(self)
 	_build_vignette()
 	_build_fade()
 	art_prefetch = AreaArtPrefetch.new()

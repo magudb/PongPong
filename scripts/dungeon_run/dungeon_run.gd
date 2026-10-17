@@ -88,9 +88,14 @@ static func tutorial_say(id: String) -> bool:
 	return DungeonTutorial.say(id)
 static func attach(host: Node) -> Node:
 	if host == null: return null
-	var existing := host.get_node_or_null("RunWatch")
+	# Gameplay effects belong to one world, independently of its HUD instances.
+	var owner := host
+	while owner != null and not owner.is_in_group("world_2d"):
+		owner = owner.get_parent()
+	if owner == null: return null
+	var existing := owner.get_node_or_null("RunWatch")
 	if existing != null: return existing
 	var watch := DungeonRunWatch.new()
 	watch.name = "RunWatch"
-	host.add_child(watch)
+	owner.add_child(watch)
 	return watch

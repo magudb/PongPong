@@ -52,7 +52,8 @@ static func where_is(npc_id: String, ctx: Dictionary = {}) -> Dictionary:
 
 ## A list/book/save probe shares one clock/social snapshot for the whole roster.
 static func locations(ids: Array, ctx: Dictionary = {}) -> Dictionary:
-	var snapshot := ctx if not ctx.is_empty() else Routines.now_ctx()
+	var snapshot := ctx.duplicate() if not ctx.is_empty() else Routines.now_ctx()
+	snapshot["_routine_registry"] = Routines.registry()
 	var result := {}
 	for id in ids:
 		result[id] = Routines.where_is(str(id), snapshot)
