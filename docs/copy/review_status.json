@@ -1104,7 +1104,7 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 112
+    "rows": 132
   },
   "localization/dungeon_items.csv": {
     "status": "draft",
@@ -1153,7 +1153,7 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 41
+    "rows": 44
   },
   "localization/look.csv": {
     "status": "draft",

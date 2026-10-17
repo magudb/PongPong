@@ -65,7 +65,7 @@ func _select(row: Dictionary) -> void:
 	_selected = str(row.id)
 	_heading.text = tr("FM_E_"+_selected.to_upper()+"_TITLE")
 	_kind.text = tr("FM_KIND_"+str(row.kind).to_upper())
-	_text.text = tr("FM_E_"+_selected.to_upper()+"_TEXT")
+	_text.text = tr(MotherStory.evidence_text_key(_selected))
 func initial_focus() -> Control:
 	for button in buttons:
 		if button.text == tr("FM_E_"+_selected.to_upper()+"_TITLE"): return button

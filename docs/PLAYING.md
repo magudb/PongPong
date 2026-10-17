@@ -19,7 +19,6 @@ Open `project.godot` with Godot 4.7 and run the main scene. Start a new game or 
 | Clothing and loadout | G |
 | Farm buildings, field expansion and house upgrades | B, while on the farm |
 | Journal | J |
-| Collection | C |
 | Hotbar slots | 1–8 |
 | Pause / close current panel | Escape |
 
@@ -37,6 +36,8 @@ Ripe crops show a harvest prompt: press E, or use the scythe for a wider sweep. 
 
 Visit the builder to upgrade the house through ten tiers and place farm buildings for animals. Feed, brush and play with animals; collect products when ready. At home, use storage and the decorating screen to place owned furniture, build sets and increase hygge. Furniture interactions include sitting, warming up, music and sleeping.
 
+Animals use food reserves overnight. Empty reserves pause new produce; animals, friendship and products already waiting stay safe. Rosa's farm feed suits chickens, ducks, rabbits and grazing animals. Brush and play for extra happiness. Sheep provide more wool per harvest than rabbits. To collect milk, keep Rosa's milking pail in the backpack and use Collect in the care screen, or assign it to the hotbar and use it beside an adult cow.
+
 Press B on the farm to open **Farm upgrades**. Its house button opens the builder's ten-tier ladder; its field button offers the east field's 42 plots for 800 golden acorns. Animal buildings have three capacity tiers: coop 4 → 8 → 12, barn 6 → 12 → 18, and animal house 3 → 6 → 9. Select an existing building to see the next capacity, materials, price and construction days. Confirming pays once; the extra space becomes available on the completion morning. Animals keep their existing housing during construction. Building tiers and construction dates survive saving and loading. Starter animal buildings retain their immediate construction rule. The greenhouse is also available here after house tier 2: it costs 1,500 golden acorns, 60 wood, 30 stone and 8 glass panes, and takes three days to build. Walk to its painted door and press E to enter; walk through the front exit to return.
 
 The home storage panel opens home services. Tier 2 unlocks oven baking, tier 6 an accurate next-day forecast, and tier 10 the royal invitation. The invitation requires confirmation, a free evening and an available guest. It can be completed once per save.
@@ -52,6 +53,8 @@ Friendship grows through conversations, gifts, birthdays, errands and events. Sp
 ## Garden and forest
 
 Restore the hidden garden and follow its clues into the mother's investigation. The journal records evidence and the next step. The twelve dungeon floors contain resources, enemies, runestones, chests and three bosses. Activated runestones preserve progress and provide a safe area. Returning home keeps delivered finds; fainting uses the game's recovery rules.
+
+In the forest, mend the lamp's three stitches to reveal a map, return a traveller's own name to a frame, and turn a route stone to match the map's visible marks. The clues remain on screen, you can retry, and partial repairs survive a saved game. Earlier boss victories count when Oak asks you to defeat the three guardians.
 
 Watch hearts, oil and the selected weapon. Dodging avoids attacks during its protection window; cream telegraphs mark the danger before an enemy strikes. Fairy light reveals ambushes. Berry drops heal on pickup, and supplies can restore health or oil. Weapons, crafting, forging, gem appraisal and lantern gems offer different loadouts.
 

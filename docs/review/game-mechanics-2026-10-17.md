@@ -2,6 +2,8 @@
 
 Reviewed 17 October 2026. Base: `abec447` on `main`. Branch/worktree: `game-mechanics` / `../PongPong-worktrees/game-mechanics`.
 
+Follow-up: [implemented fixes and current verification](../qa/game-mechanics/fixes/README.md). The review below preserves its original findings against `abec447`.
+
 The farm, towns, home progression and missing-mother story have working implementations. The most important defect found in this pass is that dungeon generation can silently omit an essential story witness. Husbandry also rewards keeping completely unfed animals happy, and sells a milking tool with no gameplay function. The larger design gap is that the forest describes restoration, recovering names and interpreting memories, but implements these principally as reading and confirming pages.
 
 This is a review with reproducible observations and recommendations. It changes no game code, balance, story copy or assets. Findings distinguish defects from authored decisions; there is no demonstrated permanent progression deadlock in this pass. Evidence and rerun instructions are in [the QA record](../qa/game-mechanics/README.md).

@@ -11,7 +11,7 @@ objectives = {
   { id = "echo_account", on = "manual", target = 1, description_key = "FM_E_ECHO_ACCOUNT_TITLE" },
 }
 rewards = {}
-meta = { giver = "postman_pip", location = "ZONE_DARK_FOREST", tag = "SKOV", category = "adventure", repeatable = false }
+meta = { source_key = "FM_INVESTIGATION", location = "ZONE_DARK_FOREST", tag = "SKOV", category = "adventure", repeatable = false }
 function is_available(context)
   return api.has_flag("forest_mother_ready_s04")
 end

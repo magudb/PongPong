@@ -6,6 +6,7 @@ extends RefCounted
 ##   title | title_key        -> else tr("QUEST_<ID>_TITLE") -> else the quest id made readable ("lost_cat" -> "Lost Cat")
 ##   description | description_key -> else tr("QUEST_<ID>_DESC") -> else tr("QUEST_<ID>_OFFER")
 ##   meta.giver               -> NPC id, shown as tr("NPC_<GIVER>")
+##   meta.source_key          -> translated attribution for a self-directed quest with no NPC giver/portrait
 ##   meta.location            -> a ZONE KEY ("ZONE_CITY", plan 3.12) shown translated ("Hyggebyen"), or plain text (optional).
 ##                               A string that looks like a key (A-Z 0-9 _) but has no translation is NOT shown: the book
 ##                               never prints a raw key.
@@ -117,6 +118,8 @@ static func giver_id(quest_id: StringName) -> String:
 
 
 static func giver_name(quest_id: StringName) -> String:
+	var source := _s(_meta(quest_id), "source_key")
+	if source != "" and _has_key(source): return TranslationServer.translate(source)
 	var g := giver_id(quest_id)
 	if g == "":
 		return ""

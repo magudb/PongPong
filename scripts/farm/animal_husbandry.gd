@@ -53,7 +53,7 @@ const SPECIES_DATA := {
 		"product_interval": ProductType.EVERY_2_DAYS,
 		"max_happiness": 100,
 		"happiness_decay_per_day": 6.0,
-		"feed_types": ["animal_treats", "carrot"],
+		"feed_types": ["chicken_feed", "animal_treats", "carrot"],
 		"favorite_feed": "carrot",
 		"favorite_feed_bonus": 20.0,
 		"building": "coop",
@@ -109,11 +109,11 @@ const SPECIES_DATA := {
 		"name_key": "ITEM_BABY_LAMB",
 		"species": Species.SHEEP,
 		"product": "wool",
-		"product_amount": [1, 2],
+		"product_amount": [3, 4],
 		"product_interval": ProductType.EVERY_3_DAYS,
 		"max_happiness": 100,
 		"happiness_decay_per_day": 6.0,
-		"feed_types": ["animal_treats", "turnip"],
+		"feed_types": ["chicken_feed", "animal_treats", "turnip"],
 		"favorite_feed": "turnip",
 		"favorite_feed_bonus": 20.0,
 		"building": "barn",
@@ -128,7 +128,7 @@ const SPECIES_DATA := {
 		"product_interval": ProductType.DAILY,
 		"max_happiness": 100,
 		"happiness_decay_per_day": 7.0,
-		"feed_types": ["animal_treats", "turnip", "carrot"],
+		"feed_types": ["chicken_feed", "animal_treats", "turnip", "carrot"],
 		"favorite_feed": "carrot",
 		"favorite_feed_bonus": 20.0,
 		"building": "barn",
@@ -143,7 +143,7 @@ const SPECIES_DATA := {
 		"product_interval": ProductType.EVERY_2_DAYS,
 		"max_happiness": 100,
 		"happiness_decay_per_day": 5.0,
-		"feed_types": ["animal_treats", "glow_berry"],
+		"feed_types": ["chicken_feed", "animal_treats", "glow_berry"],
 		"favorite_feed": "glow_berry",
 		"favorite_feed_bonus": 30.0,
 		"building": "barn",
@@ -517,6 +517,9 @@ func collect_product(animal_id: StringName) -> int:
 
 	if animal.products_ready <= 0:
 		return 0
+	if collection_reason(animal_id) != "":
+		EventBus.whisper_requested.emit(collection_reason(animal_id))
+		return 0
 
 	var product_id: StringName = StringName(spec["product"])
 	var amount: int = animal.products_ready
@@ -545,6 +548,14 @@ func collect_product(animal_id: StringName) -> int:
 		"animal"
 	)
 	return amount
+
+
+## Shared by the care screen and held tool: a missing pail never consumes milk.
+func collection_reason(animal_id: StringName) -> String:
+	var animal: AnimalData = animals.get(animal_id)
+	if animal != null and animal.products_ready > 0 and str(species_data[str(animal.species)].product) == "milk" and not EconomyManager.has_item(&"milking_pail"):
+		return "ANIMAL_NEED_PAIL"
+	return ""
 
 
 # --- Buildings ---
@@ -663,7 +674,9 @@ func _on_day_started(_day: int, _season: StringName) -> void:
 		if animal.is_baby and animal.age_days >= spec["grow_days"]:
 			animal.is_baby = false
 
-		# Hunger decay
+		# A day's ration is spent at dawn. Empty reserves pause new products;
+		# stored products, friendship and the animal itself are never lost.
+		var fed := animal.hunger >= 10.0
 		animal.hunger = maxf(animal.hunger - 10.0, 0.0)
 
 		# Happiness decay (faster if hungry)
@@ -673,7 +686,7 @@ func _on_day_started(_day: int, _season: StringName) -> void:
 		animal.happiness = maxf(animal.happiness - decay, 0.0)
 
 		# Product generation
-		if not animal.is_baby and animal.happiness >= 30.0 and animal.products_ready == 0:
+		if fed and not animal.is_baby and animal.happiness >= 30.0 and animal.products_ready == 0:
 			var interval: int = int(PRODUCT_DAYS.get(spec["product_interval"], 0))
 			if interval > 0 and today - animal.last_product_day >= interval:
 				animal.products_ready = randi_range(int(spec["product_amount"][0]), int(spec["product_amount"][1]))

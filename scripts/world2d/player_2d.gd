@@ -347,6 +347,12 @@ func use_selected() -> bool:
 	match str(def.get("category", "")):
 		"tool":
 			match str(def.get("tool_type", "")):
+				"pail":
+					var animal := nearest_interactable() as Animal2D
+					if animal != null:
+						var data: Variant = Svc.node("AnimalHusbandry").get_animal(animal.animal_id)
+						if data != null and str(data.species) == "cow":
+							ok = int(Svc.node("AnimalHusbandry").collect_product(animal.animal_id)) > 0
 				"hoe":
 					if _at_farm():
 						if str(Svc.static_call("res://scripts/farm/steading/objects/farm_reserve.gd", &"blocked", [area, cell], "")) not in ["", "field", "zone"]:

@@ -27,7 +27,7 @@ func _objective(_quest_id: StringName,_id: StringName,_current: int,_target: int
 		MotherStory.sync()
 		_refresh()
 func _event(id: StringName,_data: Dictionary) -> void:
-	if id in [&"dungeon_boss_defeated",&"forest_mother_evidence"]:
+	if id in [&"dungeon_boss_defeated",&"forest_mother_evidence",&"forest_mother_work"]:
 		MotherStory.sync()
 		_refresh()
 func _loaded(_slot: int) -> void:

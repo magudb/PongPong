@@ -11,7 +11,13 @@ var _picture: Sprite2D
 var _keepsake: Sprite2D
 var _flowers: Array[Sprite2D] = []
 var _echo: Sprite2D
+var _lamp_light: Sprite2D
+var _stitches: Array[Line2D] = []
+var _name_label: Label
+var _route_arrow: Line2D
 const ECHO_IDS := ["traveller_account", "mother_fate"]
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_TRANSLATION_CHANGED and is_node_ready(): refresh()
 func _enter_tree() -> void:
 	_leaving = false
 	if is_node_ready(): refresh.call_deferred()
@@ -33,6 +39,34 @@ func _ready() -> void:
 		_echo.scale = Vector2(1.4, 1.4)
 		_echo.position = Vector2(0, -52)
 		add_child(_echo)
+	if evidence_id == "memory_lamp":
+		_lamp_light = Sprite2D.new()
+		_lamp_light.texture = Glow.halo_texture()
+		_lamp_light.material = Glow.additive_material()
+		_lamp_light.position = Vector2(0, -45)
+		_lamp_light.modulate = Color("f5d393", 0.65)
+		add_child(_lamp_light)
+		for index in 3:
+			var stitch := Line2D.new()
+			stitch.points = PackedVector2Array([Vector2(-10, -83+index*7), Vector2(1, -89+index*7)])
+			stitch.width = 3
+			add_child(stitch)
+			_stitches.append(stitch)
+	if evidence_id == "traveller_account":
+		_name_label = Label.new()
+		_name_label.theme = load("res://assets/ui/theme.tres")
+		_name_label.theme_type_variation = &"Display20"
+		_name_label.position = Vector2(-70, -155)
+		_name_label.size.x = 140
+		_name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		add_child(_name_label)
+	if evidence_id == "route_stone":
+		_route_arrow = Line2D.new()
+		_route_arrow.points = PackedVector2Array([Vector2(-30, 0), Vector2(30, 0), Vector2(15, -12), Vector2(30, 0), Vector2(15, 12)])
+		_route_arrow.width = 4
+		_route_arrow.default_color = Color("f5d393")
+		_route_arrow.position = Vector2(0, -35)
+		add_child(_route_arrow)
 	refresh()
 func _prop(id: StringName,at: Vector2) -> Sprite2D:
 	var art := ArtCatalog.prop(id)
@@ -47,6 +81,15 @@ func refresh() -> void:
 	set_enabled(MotherStory.enabled() and (evidence_id != "legacy_home" or MotherStory.has("mother_fate")))
 	if _echo != null: _echo.visible = is_enabled()
 	if evidence_id == "echo_account": set_enabled(MotherStory.can_read(evidence_id))
+	if evidence_id == "memory_map":
+		set_enabled(MotherStory.can_read(evidence_id))
+		if _picture != null: _picture.visible = is_enabled()
+	if _lamp_light != null:
+		_lamp_light.visible = MotherMemoryWork.complete(evidence_id)
+		for index in _stitches.size():
+			_stitches[index].default_color = Color("f5d393") if MotherMemoryWork.complete(evidence_id) or MotherMemoryWork.state(evidence_id) & (1 << index) != 0 else Color("635751")
+	if _name_label != null: _name_label.text = tr("FM_WORK_NAME_IVA" if MotherMemoryWork.complete(evidence_id) else "FM_WORK_NAME_GUEST")
+	if _route_arrow != null: _route_arrow.rotation = (MotherMemoryWork.state(evidence_id) % 4 - 1) * PI / 2
 	if _keepsake != null: _keepsake.visible = not MotherStory.has("mother_fate")
 	if evidence_id == "legacy_home" and MotherStory.has("legacy_home") and _flowers.is_empty():
 		var art := ArtCatalog.prop(&"crop_moonflower_3")
@@ -64,7 +107,7 @@ func _lines() -> Array:
 		return [{"name_key":"FM_SCRIBE_NAME","text_key":"FM_SCRIBE_TRAVELLER_1"},{"name_key":"FM_SCRIBE_NAME","text_key":"FM_SCRIBE_TRAVELLER_2"},{"text_key":"FM_E_TRAVELLER_ACCOUNT_TEXT"}]
 	if evidence_id == "mother_fate":
 		return [{"name_key":"FM_SCRIBE_NAME","text_key":"FM_SCRIBE_FINAL_OFFER"},{"text_key":"FM_FINAL_ACCOUNT"},{"text_key":"FM_FINAL_TRUTH"},{"text_key":"FM_FINAL_BARGAIN"}]
-	return [{"text_key":"FM_E_"+evidence_id.to_upper()+"_TEXT"}]
+	return [{"text_key":MotherStory.evidence_text_key(evidence_id)}]
 func interact(player: Node) -> void:
 	if _busy or not is_enabled() or GameManager.is_modal_open(): return
 	_screen = LifeFlow.screen(get_tree())
@@ -72,6 +115,22 @@ func interact(player: Node) -> void:
 	_busy = true
 	_player = player
 	if _player.has_method("begin_talk"): _player.begin_talk(global_position)
+	if evidence_id in MotherMemoryWork.IDS and MotherStory.enabled() and not MotherMemoryWork.complete(evidence_id):
+		var feedback := ""
+		while not _leaving and is_inside_tree() and not MotherMemoryWork.complete(evidence_id):
+			var work_lines: Array = [{"text_key":MotherMemoryWork.instructions(evidence_id)}]
+			if feedback != "": work_lines.append({"text_key":feedback})
+			var work_portrait: Texture2D = _picture.texture if _picture != null else null
+			var work_result: Dictionary = await _screen.show_lines({"id":"", "name_key":"FM_NAME", "portrait":work_portrait}, work_lines, MotherMemoryWork.choices(evidence_id))
+			var action := str(LuaData.dict(work_result.get("choice", {})).get("action", "close"))
+			if _leaving or not is_inside_tree() or not bool(work_result.get("completed", false)) or action == "close":
+				_release()
+				return
+			feedback = MotherMemoryWork.apply(evidence_id, action)
+			refresh()
+	if _leaving or not is_inside_tree():
+		_release()
+		return
 	var may_record := MotherStory.can_read(evidence_id)
 	var choices: Array = []
 	var lines := _lines() if may_record else [{"text_key":MotherStory.next_lead()}]

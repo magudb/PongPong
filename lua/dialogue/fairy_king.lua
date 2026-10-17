@@ -9,7 +9,10 @@ function get_dialogue(context)
   if context.intro then
     return {
       speaker = "fairy_king", speaker_name_key = "NPC_FAIRY_KING", social = false,
-      lines = { { id = "letter", text_key = "DLG_KING_LETTER", voice_key = "voice/fairy_king/letter" } }, choices = {},
+      lines = {
+        { id = "letter", text_key = "DLG_KING_LETTER", voice_key = "voice/fairy_king/letter" },
+        { id = "mother_lead", text_key = "FM_OPENING_LEAD" },
+      }, choices = {},
     }
   end
   local tier = context.home_tier or home_tier or 1

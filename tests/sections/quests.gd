@@ -259,18 +259,22 @@ func _roster_and_meta() -> void:
 	for q in _all_quest_ids():
 		# the book's fields are the contract of every quest; a quest that is not P13's / F1's own (the dungeon, tutorial and town quests of other packages)
 		# is held to the giver rule only, anything else about its meta is a visible SKIP naming it (its owner fixes its own file)
-		var own: bool = q in P13_QUESTS or q in FEATURE_EIGHT or q == "pips_runde" or q == "secret_garden"
+		var own: bool = q in P13_QUESTS or q in FEATURE_EIGHT or q == "pips_runde" or q == "secret_garden" or q.begins_with("forest_mother_")
 		var found: Array[String] = problems if own else foreign
 		var meta := LuaData.dict(_def(q).get("meta", {}))
 		var giver := str(meta.get("giver", ""))
-		_need(problems, giver != "" and npcs.has(giver), "%s: giver `%s` is not an npc" % [q, giver])
+		var source := str(meta.get("source_key", ""))
+		if source != "":
+			_need(problems, giver == "" and lm.text_in(source, "da") not in ["", source] and lm.text_in(source, "en") not in ["", source], "%s: self-directed source must be translated and have no false NPC giver" % q)
+		else:
+			_need(problems, giver != "" and npcs.has(giver), "%s: giver `%s` is not an npc" % [q, giver])
 		if npcs.has(giver):
 			_need(found, q in LuaData.strings(LuaData.dict(npcs[giver]).get("quests_offered", [])), "%s: %s does not list it in quests_offered (QuestManager.offerable still finds it through meta.giver)" % [q, giver])
 			_need(problems, StringName(q) in qm.call("_quests_of_giver", giver), "%s: QuestManager.offerable(%s) can never list it" % [q, giver])
 		_need(found, str(meta.get("tag", "")) in qm.QUEST_TAGS, "%s: tag `%s` is not one of FIND HØST BYG SKOV LÆR VENSKAB" % [q, meta.get("tag", "")])
 		_need(found, str(meta.get("location", "")).begins_with("ZONE_") and lm.text_in(str(meta.get("location", "")), "da") != "", "%s: location `%s` is not a translated ZONE_ key" % [q, meta.get("location", "")])
 		_need(found, meta.has("repeatable") and meta["repeatable"] is bool, "%s: meta.repeatable is missing" % q)
-	t.check("giver_tag_location_for_every_quest", problems.is_empty(), "%d quests: giver is a roster npc that offers it, tag in the six, location a ZONE_ key %s" % [_all_quest_ids().size(), str(problems.slice(0, 4))])
+	t.check("giver_tag_location_for_every_quest", problems.is_empty(), "%d quests: roster giver or translated self-directed source, valid tag and ZONE_ location %s" % [_all_quest_ids().size(), str(problems.slice(0, 4))])
 	if not foreign.is_empty():
 		t.skip("giver_tag_location_for_every_quest: %d meta field(s) of other packages' quests are not the book's contract yet, e.g. %s" % [foreign.size(), foreign[0]])
 	var unique: Array[String] = []

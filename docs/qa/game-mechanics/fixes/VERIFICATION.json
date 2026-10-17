@@ -1,0 +1,68 @@
+{
+  "review_commit": "0d0ddd6",
+  "source_binding_at_completion": "5b5973e281fa4a8bbe371596817880b4fefdebd9c284f25d15e0eda735c8e130",
+  "generator_version": 2,
+  "reports": [
+    {
+      "file": "regression.json",
+      "checks": 2377,
+      "skipped": 0,
+      "mode": "headless",
+      "character": "animal",
+      "allowed_engine_messages": 0
+    },
+    {
+      "file": "native.json",
+      "checks": 138,
+      "skipped": 0,
+      "mode": "windowed",
+      "character": "animal",
+      "allowed_engine_messages": 0
+    },
+    {
+      "file": "story-fairy.json",
+      "checks": 206,
+      "skipped": 0,
+      "mode": "headless",
+      "character": "fairy",
+      "allowed_engine_messages": 0
+    },
+    {
+      "file": "story-hobbit.json",
+      "checks": 206,
+      "skipped": 0,
+      "mode": "headless",
+      "character": "hobbit",
+      "allowed_engine_messages": 0
+    },
+    {
+      "file": "story-ghost.json",
+      "checks": 206,
+      "skipped": 0,
+      "mode": "headless",
+      "character": "ghost",
+      "allowed_engine_messages": 0
+    },
+    {
+      "file": "integration.json",
+      "checks": 286,
+      "skipped": 4,
+      "mode": "headless",
+      "character": "animal",
+      "allowed_engine_messages": 1
+    }
+  ],
+  "town_extension": {
+    "owner_checks": 584,
+    "scenario_checks": 8,
+    "all_eight_mutants_caught": true
+  },
+  "copy_lint_findings": 0,
+  "protected_voice_audit": "pass",
+  "notes": [
+    "Counts are check executions, not unique gameplay behaviors.",
+    "The four integration skips are headless-only screenshot comparisons in farm_ui_audit. Native care and story checks are separate.",
+    "Intermediate failing metadata and frozen-voice reports remain archived under explicit first-run names.",
+    "No fresh unassisted save-to-finale or full-suite combat acceptance is claimed."
+  ]
+}

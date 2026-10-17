@@ -111,3 +111,23 @@ FM_SCRIBE_NAME,Rodskriverens ekko,The Root Scribe's echo
 FM_SCRIBE_TRAVELLER_1,"Rammen knirker. En stemme uden krop gentager den gamle sætning: »Her står én, der ikke kan sit eget navn.«","The frame creaks. A bodiless voice repeats the old line: 'Here stands one who cannot recall a name.'"
 FM_SCRIBE_TRAVELLER_2,"»Barken kalder hende Gæsten. Men på dit foldede blad står hendes underskrift, skrevet med hendes egen hånd.«","'The bark calls her the Guest. But on your folded page stands her signature, written in her own hand.'"
 FM_SCRIBE_FINAL_OFFER,"Rodskriverens ekko rejser sig fra roden. »Hun holdt vejen åben. Nu står pladsen under titlen tom. Tag den — så lader jeg hendes ekko blive ved med at lyse.«","The Root Scribe's echo rises from the root. 'She kept the way open. Now the place beneath the title stands empty. Take it — and I will keep her echo glowing.'"
+FM_INVESTIGATION,Vores undersøgelse,Our investigation
+FM_OPENING_LEAD,"Du leder også efter din mor. Du behøver ikke lede alene. Spørg Hoppe om den glemte have nord for torvet; der begynder hendes spor. Følg dem, når du er klar.",You are also searching for your mother. You do not have to search alone. Ask Hoppe about the forgotten garden north of the square; her trail begins there. Follow it when you are ready.
+FM_E_LAST_JOURNEY_OBSERVATION,Mor har underskrevet en vejviser med sin egen hånd. Skoven har skrevet Vejholderen over den. Du gemmer aftegningen; de andre spor kan hjælpe dig med at forstå ruten.,Mum signed a waymarker in her own hand. The wood has written Keeper of the Way over it. You keep a tracing; the other accounts may help you understand the route.
+FM_WORK_LAMP,"Tre skrå sting i håndtaget er gået op. Bind hvert sting igen, så lampen kan lyse på det skjulte kort. Alt, du skal bruge, ligger her.",Three diagonal stitches on the handle have come loose. Tie each stitch so the lamp can light the hidden map. Everything you need is here.
+FM_WORK_STITCH_TOP,Bind det øverste sting,Tie the upper stitch
+FM_WORK_STITCH_MIDDLE,Bind det midterste sting,Tie the middle stitch
+FM_WORK_STITCH_BOTTOM,Bind det nederste sting,Tie the lower stitch
+FM_WORK_NAME,Rammen siger Gæsten. På det foldede blad står: Jeg hedder Iva. Jeg byggede både. Hvilke ord vil du sætte i rammen?,The frame says Guest. The folded page reads: My name is Iva. I built boats. Which words will you put in the frame?
+FM_WORK_NAME_IVA,Iva,Iva
+FM_WORK_NAME_GUEST,Gæsten,Guest
+FM_WORK_NAME_KEEPER,Vejholderen,Keeper of the Way
+FM_WORK_NAME_RETRY,"Det er en rolle, som skoven har fundet på. Bladet gemmer et menneskes eget navn. Du kan prøve igen.",That is a role the wood invented. The page keeps a person’s own name. You can try again.
+FM_WORK_STONE_LEFT,Drej stenen mod venstre,Turn the stone left
+FM_WORK_STONE_RIGHT,Drej stenen mod højre,Turn the stone right
+FM_WORK_STONE_MATCH,Sammenlign med kortet,Compare with the map
+FM_WORK_STONE_RETRY,Ridserne passer ikke endnu. Kortets tre ridser peger mod solopgangen i øst. Prøv at dreje stenen igen.,The marks do not match yet. The map’s three cuts point toward sunrise in the east. Try turning the stone again.
+FM_WORK_STONE_N,"Kortets tre ridser peger mod solopgangen i øst. Stenens pil peger nu mod nord. Drej pilen, så ridserne passer sammen.",The map’s three cuts point toward sunrise in the east. The stone’s arrow now points north. Turn the arrow to match the marks.
+FM_WORK_STONE_E,"Kortets tre ridser peger mod solopgangen i øst. Stenens pil peger nu mod øst. Drej pilen, så ridserne passer sammen.",The map’s three cuts point toward sunrise in the east. The stone’s arrow now points east. Turn the arrow to match the marks.
+FM_WORK_STONE_S,"Kortets tre ridser peger mod solopgangen i øst. Stenens pil peger nu mod syd. Drej pilen, så ridserne passer sammen.",The map’s three cuts point toward sunrise in the east. The stone’s arrow now points south. Turn the arrow to match the marks.
+FM_WORK_STONE_W,"Kortets tre ridser peger mod solopgangen i øst. Stenens pil peger nu mod vest. Drej pilen, så ridserne passer sammen.",The map’s three cuts point toward sunrise in the east. The stone’s arrow now points west. Turn the arrow to match the marks.

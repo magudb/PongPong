@@ -15,7 +15,7 @@ ANIMAL_PLAY,Leg,Play
 ANIMAL_COLLECT,Hent produkter,Collect products
 ANIMAL_RENAME,Giv et nyt navn,Rename animal
 ANIMAL_PRODUCT_FMT,%s: %d klar,%s: %d ready
-ANIMAL_CARE_DAILY_HINT,"Børstning og leg tæller én gang om dagen. Vælg foder, som dit dyr kan lide.",Brushing and play count once each day. Choose food your animal likes.
+ANIMAL_CARE_DAILY_HINT,Mad i maven giver nye produkter om morgenen. Børstning og leg giver ekstra glæde én gang om dagen.,Food reserves support new products in the morning. Brushing and play add happiness once each day.
 ANIMAL_BUILD_TITLE,Plads til dine dyr,Homes for your animals
 ANIMAL_CAPACITY_FMT,Plads til %d dyr,Room for %d animals
 ANIMAL_BUILD_HINT,Bygningen står på sin plads ved dyrefolden. Du kan derefter købe dyr hos Rosa.,The building goes in its place by the animal yard. You can then buy animals from Rosa.
@@ -40,3 +40,6 @@ BUILDING_HOUSE,Dyrehus,Animal house
 ANIMAL_FIRST_QUEST,Mit første dyr,My first animal
 ANIMAL_PRODUCTS_QUEST,Friske æg og mælk,Fresh eggs and milk
 ANIMAL_DECOR_PICKUP,Tag dekorationen op,Pick up decoration
+ANIMAL_NEED_FOOD,"Giv lidt foder inden sengetid. Nye produkter venter, til der er mad igen.",Feed before bed. New products pause until food is available again.
+ANIMAL_NEED_PAIL,En mælkespand fra Rosa skal ligge i rygsækken. Mælken venter her.,Keep a milking pail from Rosa in your backpack. The milk will wait here.
+ANIMAL_CARE_BOND_HINT,"Venskab vokser, når du passer dyret. Giv foder, børst og leg lidt hver dag.","Friendship grows through care. Feed, brush and play a little each day."

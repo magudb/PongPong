@@ -16,7 +16,11 @@ function get_dialogue(context)
   if context.quest_offer_bossernes_vej then
     return {
       speaker = "guard_oak", speaker_name_key = "NPC_GUARD_OAK",
-      lines = { { id = "lift", text_key = "DLG_OAK_LIFT", voice_key = "voice/guard_oak/lift" }, { id = "bossernes_vej_offer", text_key = "QUEST_BOSSERNES_VEJ_OFFER", voice_key = "voice/guard_oak/bossernes_vej_offer" } },
+      lines = {
+        { id = "lift", text_key = "DLG_OAK_LIFT", voice_key = "voice/guard_oak/lift" },
+        { id = "bossernes_vej_offer", text_key = "QUEST_BOSSERNES_VEJ_OFFER", voice_key = "voice/guard_oak/bossernes_vej_offer" },
+        { id = "guardian_goal", text_key = "QUEST_BOSSERNES_VEJ_DESC" },
+      },
       choices = { { id = "bossernes_vej", text_key = "QUEST_BOSSERNES_VEJ_CHOICE", action = "quest_accept", quest_id = "bossernes_vej" }, { id = "bye", text_key = "DLG_CHOICE_GOODBYE", action = "close" } },
     }
   end

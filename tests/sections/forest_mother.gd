@@ -58,7 +58,10 @@ func _run(t,shots: bool,skin := "") -> void:
 	t.check("evidence_restored_with_quest_progress",MotherStory.has("marked_lamp") and qm.get_objective_progress(MotherStory.quest_id("s03"),&"marked_lamp").done)
 	gm.hour = 12
 	await _floor(t,2)
-	var sleeping: Node = world.area.find_markers("hulen_keeper")[0].node
+	var keepers := world.area.find_markers("hulen_keeper")
+	t.check("daytime_witness_marker_exists", keepers.size() == 1)
+	if keepers.is_empty(): return
+	var sleeping: Node = keepers[0].node
 	t.check("daytime_visit_does_not_consume_account",sleeping is Interactable2D and not sleeping is Npc2D and not MotherStory.has("map_account"))
 	await world.travel(&"farm",&"default")
 	gm.hour = 22
@@ -70,7 +73,7 @@ func _run(t,shots: bool,skin := "") -> void:
 	await _floor(t,5)
 	var nav := NavGrid.bake_area(world.area)
 	var start := world.area.global_to_cell(world.area.get_spawn("default"))
-	var ids := ["memory_map","memory_basket","memory_lamp","memory_table"]
+	var ids := ["memory_lamp","memory_map","memory_basket","memory_table"]
 	for id in ids:
 		var marker := _marker(id)
 		t.check("memory_clue_reachable_"+id,marker != null and not nav.astar.get_id_path(start,marker.cell).is_empty())
@@ -174,6 +177,23 @@ func _read(t,id: String,action := "mother_record") -> void:
 	world.player.camera.reset_smoothing()
 	world.player.camera.force_update_scroll()
 	marker.interact(world.player)
+	if id in MotherMemoryWork.IDS and not MotherMemoryWork.complete(id):
+		if native:
+			for index in 5:
+				await t.frames(1)
+				if ui._buttons.is_empty(): ui._advance()
+			await t.capture("work_"+id)
+			var locale := TranslationServer.get_locale()
+			TranslationServer.set_locale("en")
+			ui._refresh_texts()
+			await t.frames(2)
+			if id == "traveller_account": t.check("traveller_world_label_translates", marker._name_label.text == TranslationServer.translate("FM_WORK_NAME_GUEST"))
+			await t.capture("work_"+id+"_en")
+			TranslationServer.set_locale(locale)
+			ui._refresh_texts()
+		for work_action in {"memory_lamp":["stitch_0", "stitch_1", "stitch_2"], "traveller_account":["name_iva"], "route_stone":["stone_right", "stone_match"]}[id]:
+			await _choose(t, work_action)
+			await t.frames(2)
 	if native and id in ["marked_lamp","return_promise"]:
 		if ui._typing: ui._advance()
 		await t.frames(3)

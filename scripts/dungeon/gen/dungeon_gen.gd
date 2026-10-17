@@ -1213,6 +1213,19 @@ func _validate(fl: Fl) -> bool:
 			key += "_amb" if int(f.get("ambush", 0)) == 1 else ("_crit" if int(f.get("critter", 0)) == 1 else "")
 		counts[key] = int(counts.get(key, 0)) + 1
 	fl.stats["counts"] = counts
+	# Story witnesses are required, unlike optional forage/decor anchors. A
+	# crowded exit pocket must retry the layout rather than silently lose its NPC.
+	var expected_keepers := 0
+	for anchor in spec["anchors"]:
+		if str(anchor.get("marker", "")) == "hulen_keeper":
+			expected_keepers += int(anchor.get("count", 1))
+	var keepers := 0
+	for feature in fl.feats:
+		if str(feature.get("t", "")) == "anchor" and str(feature.get("marker", "")) == "hulen_keeper":
+			keepers += 1
+	if keepers != expected_keepers:
+		fl.stats["fail"] = "required_witness"
+		return false
 	if bool(spec["stone"]) and int(counts.get("runestone", 0)) != 1:
 		fl.stats["fail"] = "runestone"
 		return false

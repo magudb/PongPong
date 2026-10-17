@@ -21,7 +21,7 @@ QUEST_SKOVLIFT_INTRO_REMIND,Jeg glæder mig til at høre om din tur.,I look forw
 OBJ_SKOVLIFT_INTRO_GO_DOWN,Gå ned i Mørkeskoven,Enter the Dark Wood
 OBJ_SKOVLIFT_INTRO_LIGHT_RUNE,Væk en rune,Wake a rune
 OBJ_SKOVLIFT_INTRO_BRING_HOME,Kom tilbage fra skoven,Return from the wood
-OBJ_SKOVLIFT_INTRO_REPORT,Tal med Eg,Talk to Oak
+OBJ_SKOVLIFT_INTRO_REPORT,Tal med Oak,Talk to Oak
 QUEST_RUNE_VANDRING_TITLE,Runernes vej,The rune trail
 QUEST_RUNE_VANDRING_DESC,Runerne gemmer på gamle spor. Find dem længere nede i skoven.,The runes hold old trails. Find them deeper in the wood.
 QUEST_RUNE_VANDRING_OFFER,Runerne gemmer på gamle spor. Find dem længere nede i skoven.,The runes hold old trails. Find them deeper in the wood.
@@ -40,11 +40,11 @@ OBJ_UGLES_NOEGLE_ROSE_QUARTZ,Find en rosenkvarts,Find a rose quartz
 OBJ_UGLES_NOEGLE_AMBER,Find et stykke rav,Find a piece of amber
 OBJ_UGLES_NOEGLE_REPORT,Tal med Fru Ugle,Talk to Mrs Owl
 QUEST_BOSSERNES_VEJ_TITLE,Skovens tre vogtere,The three forest guardians
-QUEST_BOSSERNES_VEJ_DESC,Tre store svampe vogter skoven. Vil du finde dem?,Three great mushrooms guard the wood. Will you find them?
+QUEST_BOSSERNES_VEJ_DESC,"Overvind skovens tre svampevogtere, og fortæl Oak om det. Tidligere sejre tæller også.",Overcome the three mushroom guardians and report to Oak. Earlier victories count too.
 QUEST_BOSSERNES_VEJ_OFFER,Tre store svampe vogter skoven. Vil du finde dem?,Three great mushrooms guard the wood. Will you find them?
 QUEST_BOSSERNES_VEJ_CHOICE,Skovens tre vogtere,The three forest guardians
 QUEST_BOSSERNES_VEJ_REMIND,Jeg glæder mig til at høre om din tur.,I look forward to hearing about your trip.
-OBJ_BOSSERNES_VEJ_SNURRESVAMP,Mød Snurresvampen,Meet the Spinning Mushroom
-OBJ_BOSSERNES_VEJ_SNURRESVAMP_GLOED,Mød Glødesvampen,Meet the Ember Mushroom
-OBJ_BOSSERNES_VEJ_SNURRESVAMP_KONGE,Mød Svampekongen,Meet the Mushroom King
-OBJ_BOSSERNES_VEJ_REPORT,Tal med Eg,Talk to Oak
+OBJ_BOSSERNES_VEJ_SNURRESVAMP,Overvind Snurresvampen,Defeat the Spinning Mushroom
+OBJ_BOSSERNES_VEJ_SNURRESVAMP_GLOED,Overvind Glødesvampen,Defeat the Ember Mushroom
+OBJ_BOSSERNES_VEJ_SNURRESVAMP_KONGE,Overvind Svampekongen,Defeat the Mushroom King
+OBJ_BOSSERNES_VEJ_REPORT,Tal med Oak,Talk to Oak

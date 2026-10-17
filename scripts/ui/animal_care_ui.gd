@@ -132,11 +132,14 @@ func _refresh_texts() -> void:
 	feed_btn.disabled = _food == "" or animal.hunger >= 100
 	brush_btn.disabled = not EconomyManager.has_item(&"brush") or animal.last_brushed_day == GameManager.total_day()
 	play_btn.disabled = animal.last_played_day == GameManager.total_day()
-	collect_btn.disabled = animal.products_ready <= 0
+	var collection_reason: String = AnimalHusbandry.collection_reason(animal.id)
+	collect_btn.disabled = animal.products_ready <= 0 or collection_reason != ""
 	rename_btn.disabled = _renaming
 	for button in [feed_btn,brush_btn,play_btn,collect_btn,rename_btn,food_option]:button.focus_mode = Control.FOCUS_NONE if button.disabled else Control.FOCUS_ALL
 	product_label.text = tr("ANIMAL_PRODUCT_FMT") % [L.item_name(str(spec.product)),animal.products_ready]
-	status_label.text = tr("ANIMAL_CARE_DAILY_HINT")
+	var bond_keepsakes := int(spec.product_interval) == AnimalHusbandry.ProductType.ON_BOND
+	var hint := "ANIMAL_CARE_BOND_HINT" if bond_keepsakes else ("ANIMAL_NEED_FOOD" if animal.hunger < 10.0 else "ANIMAL_CARE_DAILY_HINT")
+	status_label.text = tr(collection_reason if collection_reason != "" else hint)
 	var options: Array = Animal2D.VISUALS[str(animal.species)]
 	var id: String = options[0 if animal.is_baby else 1]
 	if id != _preview_id:

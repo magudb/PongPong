@@ -119,7 +119,7 @@ ITEM_DNG_RUNE_GLOED_HINT,"Glødesvampen gløder rundt om et runeskår. Man får 
 ITEM_DNG_RUNE_KONGE,"Kongeruneskår","King Rune Shard"
 ITEM_DNG_RUNE_KONGE_DESC,"Et skår af en rune, der lyser violet. Det er det sidste, hvælvingen mangler.","A shard of a rune that glows violet. It is the last one the vault is missing."
 ITEM_DNG_RUNE_KONGE_HINT,"Svampekongens krone hviler på et runeskår. Det er hans, indtil han falder første gang.","The Mushroom King's crown rests on a rune shard. It is his until he falls the first time."
-WEFFECT_STUN_CHANCE,"Hvert slag svimler fjenden %d %% af gangene i %.1f sek.","Each blow dazes the enemy %d %% of the time for %.1f s"
+WEFFECT_STUN_CHANCE,"Hvert slag svimler upansrede fjender %d %% af gangene i %.1f sek.","Each blow dazes unarmored enemies %d %% of the time for %.1f s"
 WEFFECT_OIL_ON_KILL,"Hvert besejret væsen giver lygten %d sek. olie","Every defeated creature gives the lantern %d s of oil"
 WEFFECT_HEART_ON_KILL,"Hvert %d. besejret væsen heler et halvt hjerte","Every %dth defeated creature heals half a heart"
 WEFFECT_LIGHT_ARC,"Stødet lyser jorden op og afslører skjulte fjender","The thrust lights the ground and shows hidden enemies"

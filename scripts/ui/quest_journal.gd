@@ -200,7 +200,8 @@ func _show_details(id: StringName) -> void:
 	%DetailTitle.text = QText.title(id)
 	%DetailFrom.text = QText.from_line(id)
 	%DetailText.text = QText.description(id)
-	%GiverPortrait.texture = Portraits.portrait(StringName(QText.giver_id(id)))
+	var giver := StringName(QText.giver_id(id))
+	%GiverPortrait.texture = Portraits.portrait(giver) if giver != &"" else null
 	for node in [%StepList, %RewardRow]:
 		for child in node.get_children():
 			node.remove_child(child)

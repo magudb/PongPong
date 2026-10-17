@@ -1,0 +1,52 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 314,
+  "elapsed_s": 23.16,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "quests.giver_tag_location_for_every_quest"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1093,
+      "skipped": 0
+    },
+    "forest_mother": {
+      "character": "animal",
+      "checks": 74,
+      "failed": 0,
+      "ms": 5903,
+      "skipped": 0
+    },
+    "mechanics_review_fixes": {
+      "character": "animal",
+      "checks": 47,
+      "failed": 0,
+      "ms": 819,
+      "skipped": 0
+    },
+    "quests": {
+      "character": "animal",
+      "checks": 61,
+      "failed": 1,
+      "ms": 5933,
+      "skipped": 0
+    },
+    "secret_garden": {
+      "character": "animal",
+      "checks": 124,
+      "failed": 0,
+      "ms": 4258,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

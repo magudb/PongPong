@@ -27,6 +27,7 @@ extends Node
 ## Flags: `after_others = true` (a turn-in: counts only when every objective that is not itself a turn-in was done BEFORE the event),
 ## `have = true` (on = item_gained: progress = how many the player owns, stays done once reached), `needs = { item = n }` (+ `consume = true`: a
 ## delivery - the items leave the backpack in the same commit as the progress; also read by item_in_use for quest_spot objectives).
+## completed_flag names an already-earned saved achievement that also satisfies an event objective on acceptance/load.
 ## An objective without `on` is manual, except for the old id convention that review_regressions pins: harvest_<crop> / harvest_any are fed by
 ## crop_harvested and collect_<item> by item_gained or resource_node_depleted (for direct node loot).
 ##
@@ -296,6 +297,8 @@ func _lint_objective(od: Dictionary, ids: Dictionary, add: Callable) -> void:
 			add.call(oid, "objective `%s`: target %d is more than the %d npcs of any_of (each counts once)" % [oid, _Data.int_of(target_value, 1), any_of.size()])
 	if bool(od.get("have", false)) and (on != "item_gained" or str(od.get("item", "")) == ""):
 		add.call(oid, "objective `%s`: have = true belongs to on = \"item_gained\" with an item" % oid)
+	if od.has("completed_flag") and (not (od.completed_flag is String) or not _is_id(str(od.completed_flag))):
+		add.call(oid, "objective `%s`: completed_flag must name a saved flag" % oid)
 	if od.has("needs"):
 		var needs: Variant = od["needs"]
 		if not (needs is Dictionary) or (needs as Dictionary).is_empty():
@@ -996,6 +999,10 @@ func _refresh_quest(quest_id: StringName) -> void:
 			value = _state_value(od)
 		elif bool(od.get("have", false)):
 			value = _have_value(od)
+		elif str(od.get("completed_flag", "")) != "":
+			# Event objectives may also accept a permanent, previously earned
+			# achievement on acceptance/load. The original live event still counts.
+			value = int(bool(GameManager.get_flag(StringName(str(od.completed_flag)), false)))
 		if value < 0:
 			continue
 		if bool(od.get("after_others", false)) and not _non_turn_ins_done(rt, defs):

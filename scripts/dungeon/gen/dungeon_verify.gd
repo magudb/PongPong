@@ -227,6 +227,11 @@ static func verify(m: AreaMap, spec: Dictionary, cfg: Dictionary, ctx: Dictionar
 		if int(node_cnt.get(str(hk), 0)) != int((spec["nodes"] as Dictionary).get(str(hk), 0)):
 			hard_ok = false
 	_ok(T, "required_node_kinds_are_exact_(moonstone_supply)", hard_ok, str(node_cnt))
+	var expected_keepers := 0
+	for anchor in spec["anchors"]:
+		if str(anchor.get("marker", "")) == "hulen_keeper": expected_keepers += int(anchor.get("count", 1))
+	var keepers: Array = cells_of_type.get("hulen_keeper", [])
+	_ok(T, "required_story_witnesses_present", keepers.size() == expected_keepers and keepers.all(func(entry): return str(entry.m.get("npc", "")) == "mapseller_natteblik"), str(keepers))
 	# lights
 	var lights: Array = cells_of_type.get("light", []) as Array
 	_ok(T, "lights_within_budget", lights.size() <= int(spec["lights_max"]), str(lights.size()))

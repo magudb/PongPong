@@ -8,6 +8,7 @@ objectives = {
     description_key = "OBJ_BOSSERNES_VEJ_SNURRESVAMP",
     on = "enemy_defeated",
     kind = "snurresvamp",
+    completed_flag = "dungeon_boss_snurresvamp",
   },
   {
     id = "snurresvamp_gloed",
@@ -15,6 +16,7 @@ objectives = {
     description_key = "OBJ_BOSSERNES_VEJ_SNURRESVAMP_GLOED",
     on = "enemy_defeated",
     kind = "snurresvamp_gloed",
+    completed_flag = "dungeon_boss_snurresvamp_gloed",
   },
   {
     id = "snurresvamp_konge",
@@ -22,6 +24,7 @@ objectives = {
     description_key = "OBJ_BOSSERNES_VEJ_SNURRESVAMP_KONGE",
     on = "enemy_defeated",
     kind = "snurresvamp_konge",
+    completed_flag = "dungeon_boss_snurresvamp_konge",
   },
   {
     id = "report",

@@ -11,7 +11,7 @@ kind = "config"
 
 config = {
   dungeon = {
-    gen_version = 1,
+    gen_version = 2,
     max_floor = 12,
     hub = { area = "moerkeskoven", title_key = "ZONE_FOREST_EDGE", floor_prefix = "moerkeskoven_f", exit_area = "traetoppen", exit_spawn = "from_skovlift", wake_area = "farm", wake_spawn = "from_home" },
     -- retry_max: ordinary attempts per floor.  fallback: ONE pinned seed per floor (floor 1 first), the first seed of the fixed sequence hash_key("fallback", 1, floor * 1024 + k) whose single ordinary

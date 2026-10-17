@@ -2,6 +2,8 @@
 
 Base commit: `abec447`. Review: [game-mechanics-2026-10-17.md](../../review/game-mechanics-2026-10-17.md). Godot: 4.7.2, macOS, Apple M3. Worktree/branch: `game-mechanics`. Game source, balance, copy and assets were not changed.
 
+**Historical review snapshot.** Subsequent implementation and acceptance results are in [fixes/README.md](fixes/README.md). To reproduce the original observations below, use a disposable checkout of review commit `0d0ddd6`, which contains the probes and the original game code. Those probes intentionally assert the pre-fix defects and are not acceptance tests for the later implementation. The archived reports below have not been regenerated against changed game behavior.
+
 | Artifact | Mode | Checks | Result |
 |---|---|---:|---|
 | [baseline.json](baseline.json) | Headless, fast | 1,179 | Pass: core, farm lifecycle/automation, home, quests, garden, mother story |

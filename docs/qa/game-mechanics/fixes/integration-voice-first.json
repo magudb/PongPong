@@ -1,0 +1,59 @@
+{
+  "allowed": [
+    {
+      "kind": "warning",
+      "rule": "SocialManager.from_dict: unknown NPC 'loop_removed_citizen' kept in the orphans bucket",
+      "section": "town_loop",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SocialManager.from_dict: unknown NPC 'loop_removed_citizen' kept in the orphans bucket (at from_dict res://scripts/social/social_manager.gd:1392)"
+    }
+  ],
+  "character": "animal",
+  "checks": 286,
+  "elapsed_s": 29.93,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "town_loop.l17_voice_text_and_audio_hashes"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 2077,
+      "skipped": 0
+    },
+    "farm_ui_audit": {
+      "character": "animal",
+      "checks": 7,
+      "failed": 0,
+      "ms": 708,
+      "skipped": 4
+    },
+    "town_loop": {
+      "character": "animal",
+      "checks": 155,
+      "failed": 1,
+      "ms": 19522,
+      "skipped": 0
+    },
+    "wardrobe_ui": {
+      "character": "animal",
+      "checks": 58,
+      "failed": 0,
+      "ms": 1575,
+      "skipped": 0
+    },
+    "weapons": {
+      "character": "animal",
+      "checks": 58,
+      "failed": 0,
+      "ms": 206,
+      "skipped": 0
+    }
+  },
+  "skipped": 4
+}

@@ -124,6 +124,8 @@ Use restrained wind, a distant latch, an interrupted tune and the return of fami
 
 ## Implementation handoff
 
+The [mechanics follow-up](../qa/game-mechanics/fixes/README.md) adds playable lamp repair, Iva's name restoration and map/stone alignment. Work is free, retryable and saved independently of dungeon cells; previously recorded evidence does not need to be repeated. The current memory scene still uses the procedural clearing with painted props. A fully staged room and a larger Root Scribe encounter remain further presentation work.
+
 1. **Story state and journal.** Define a versioned, saved evidence record and the distinction between observation and interpretation. Extend the existing quest, dialogue and save services where appropriate; the data in this directory is an authoring contract, not a supported new Lua API.
 2. **First playable chapter, implemented.** The `secret_garden` quest integrates the first letter, Pip's account, Oak's lift record and the forest-edge trace, plus the two family copy revisions and an existing-save catch-up topic. Normal mail, family greetings, shops and the lift gate remain in place. Its runtime copy is draft, with registered key ownership.
 3. **Forest chapters.** Add guaranteed reachable clue anchors to the dungeon generator and authored encounters. Bind existing depth checkpoints to narrative progress without replacing the original boss/rune rules. Deliver S03–S07 with the persistent journal.

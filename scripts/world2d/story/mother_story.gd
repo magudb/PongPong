@@ -38,6 +38,10 @@ static func definition(id: String) -> Dictionary:
 	for row in EVIDENCE:
 		if row.id == id: return row
 	return {}
+static func evidence_text_key(id: String) -> String:
+	if id == "last_journey" and not QuestManager.is_completed(quest_id("s06")):
+		return "FM_E_LAST_JOURNEY_OBSERVATION"
+	return "FM_E_"+id.to_upper()+"_TEXT"
 static func quest_id(chapter: String) -> StringName:
 	return StringName("forest_mother_"+chapter)
 static func boss_cleared(number: int) -> bool:
@@ -50,7 +54,8 @@ static func can_read(id: String) -> bool:
 	if id == "mother_fate": return QuestManager.is_completed(quest_id("s07"))
 	if id == "legacy_home": return has("mother_fate")
 	if id == "echo_account": return has("memory_lamp") and has("memory_table") and has("memory_basket") and has("memory_map")
-	return true
+	if id == "memory_map": return has(id) or MotherMemoryWork.complete("memory_lamp")
+	return MotherMemoryWork.complete(id)
 static func record(id: String) -> bool:
 	if not can_read(id) or has(id): return false
 	var changes := {"forest_mother_version":VERSION,PREFIX+id:GameManager.total_day()}
