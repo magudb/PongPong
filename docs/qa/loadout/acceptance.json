@@ -218,8 +218,8 @@
     "intentional_negative_control_messages": 1
   },
   "source_bound_town_proofs": {
-    "extension": "../m1b-milestone/loop-extension.json",
-    "mutants": "../m1b-milestone/loop-mutants.json",
+    "extension": "source-proof-fc6df224/loop-extension.json",
+    "mutants": "source-proof-fc6df224/loop-mutants.json",
     "scenarios": 8,
     "owner_checks": 588,
     "producer_mutants_caught": 7,

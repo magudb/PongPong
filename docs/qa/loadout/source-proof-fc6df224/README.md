@@ -1,0 +1,1 @@
+Historical loadout acceptance evidence bound to source fc6df2244d8570a9d28203b8daad0f3bc8dceeb442567abb238f9a86eab99818. Preserved before refreshing the live town proofs for the completed mechanics branch. These reports describe the earlier loadout source, not the current mechanics implementation.

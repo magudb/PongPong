@@ -7,7 +7,7 @@ func run(t, suite) -> void:
 	for row in manifest.core:
 		if not suite.native_shots.has(str(row)):missing.append(str(row))
 	t.check("l15_shots_not_blank", missing.is_empty(), str(missing))
-	t.skip("S14_festival_day_city: festival scene/decor attachment is a later capability; S04 is explicitly a controlled crowd readability fixture")
+	t.check("l15_real_festival_capture",suite.native_shots.has("S14_festival_day_city"))
 	await _guide_fixtures(t, suite)
 	var python := ProjectSettings.globalize_path("res://tools/art/.venv/bin/python")
 	var result: Dictionary = t.run_tool(python,[ProjectSettings.globalize_path("res://tools/town/check_native.py"),"--shots",t.out_dir])

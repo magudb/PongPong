@@ -19,7 +19,7 @@ const PROBES := {
 	"audio": ["method", "AudioManager", "cue_log"],
 	"copy": ["file", "res://tools/copy/copy_lint.py"],
 	"festivals": ["file", "res://scripts/social/events/festival_director.gd"],
-	"birthdays": ["file", "res://scripts/social/events/birthday_content.gd"],
+	"birthdays": ["method", "SocialManager", "birthday_state"],
 	"events": ["file", "res://scenes/ui/event_overlay.tscn"],
 	"relationships": ["file", "res://scripts/social/relationships/relationship_flow.gd"],
 	"post_ui": ["file", "res://scenes/ui/post.tscn"],

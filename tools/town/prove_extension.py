@@ -16,7 +16,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 REPORT = ROOT/'docs/qa/m1b-milestone/loop-extension.json'
 BIND = ['scripts','scenes','shaders','lua','data','localization','tests','tools','assets']
-EXTRA = ['project.godot']
+EXTRA = ['project.godot','docs/copy/review_status.json','docs/art/style-audit/current/approval.json']
 
 def hashes(root, code_only=False):
     files = [root/p for p in EXTRA]

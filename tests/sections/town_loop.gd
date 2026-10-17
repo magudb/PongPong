@@ -90,7 +90,7 @@ func run(t) -> void:
 	await preload("res://tests/lib/town_loop/mail.gd").new().farm_day_two(t, self)
 	await _foundation(t)
 	await preload("res://tests/lib/town_loop/copy.gd").new().run(t, self)
-	_extended(t)
+	await _extended(t)
 	_external_proofs(t)
 	probe.dispose()
 	gm.clear_config_overrides()
@@ -109,9 +109,7 @@ func run(t) -> void:
 
 func _extended(t) -> void:
 	var legs := {"x01_birthday_content": "birthdays", "x02_festival_scene": "festivals", "x03_heart_event": "events", "x04_relationship": "relationships", "x05_mail_screen": "post_ui", "x06_farm_visit_scene": "visits", "x07_seasonal_decor": "seasonal", "x08_rain_fallback_scene": "events", "x09_commitment": "relationships", "L16": "audio"}
-	for id in legs:
-		if _leg(t, id, [legs[id]]):
-			_check(t, id, id + "_consumer_required", false, "Capability is now installed: implement this extended consumer before accepting its wave")
+	await preload("res://tests/lib/town_loop/extended.gd").new().run(t,self)
 	t.check("extended_legs_listed_with_reasons", legs.keys().all(func(id): return skipped.has(id) or ran.keys().any(func(key): return str(key).begins_with(id + "."))))
 
 func _first_morning(t) -> void:
