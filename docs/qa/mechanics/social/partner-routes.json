@@ -1,0 +1,2465 @@
+{
+  "basis": "live baked routes; raw 06:00–02:00 clock; all eleven candidates, seven weekdays, two weathers",
+  "routes": [
+    {
+      "morning_until": 6.0,
+      "npc": "baker_maja",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 0
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "baker_maja",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 0
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "baker_maja",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 1
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "baker_maja",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 1
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "baker_maja",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 2
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "baker_maja",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 2
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "baker_maja",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 3
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "baker_maja",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 3
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "baker_maja",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 4
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "baker_maja",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 4
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "baker_maja",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 5
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "baker_maja",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 5
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "baker_maja",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 6
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "baker_maja",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 6
+    },
+    {
+      "morning_until": 8.34667116509222,
+      "npc": "bathkeeper_sofus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.34667116509222
+        }
+      ],
+      "weather": "klart",
+      "weekday": 0
+    },
+    {
+      "morning_until": 8.34667116509222,
+      "npc": "bathkeeper_sofus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.34667116509222
+        }
+      ],
+      "weather": "regn",
+      "weekday": 0
+    },
+    {
+      "morning_until": 8.34667116509222,
+      "npc": "bathkeeper_sofus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.34667116509222
+        }
+      ],
+      "weather": "klart",
+      "weekday": 1
+    },
+    {
+      "morning_until": 8.34667116509222,
+      "npc": "bathkeeper_sofus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.34667116509222
+        }
+      ],
+      "weather": "regn",
+      "weekday": 1
+    },
+    {
+      "morning_until": 8.34667116509222,
+      "npc": "bathkeeper_sofus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.34667116509222
+        }
+      ],
+      "weather": "klart",
+      "weekday": 2
+    },
+    {
+      "morning_until": 8.34667116509222,
+      "npc": "bathkeeper_sofus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.34667116509222
+        }
+      ],
+      "weather": "regn",
+      "weekday": 2
+    },
+    {
+      "morning_until": 8.34667116509222,
+      "npc": "bathkeeper_sofus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.34667116509222
+        }
+      ],
+      "weather": "klart",
+      "weekday": 3
+    },
+    {
+      "morning_until": 8.34667116509222,
+      "npc": "bathkeeper_sofus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.34667116509222
+        }
+      ],
+      "weather": "regn",
+      "weekday": 3
+    },
+    {
+      "morning_until": 8.34667116509222,
+      "npc": "bathkeeper_sofus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.34667116509222
+        }
+      ],
+      "weather": "klart",
+      "weekday": 4
+    },
+    {
+      "morning_until": 8.34667116509222,
+      "npc": "bathkeeper_sofus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.34667116509222
+        }
+      ],
+      "weather": "regn",
+      "weekday": 4
+    },
+    {
+      "morning_until": 8.34667116509222,
+      "npc": "bathkeeper_sofus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.34667116509222
+        }
+      ],
+      "weather": "klart",
+      "weekday": 5
+    },
+    {
+      "morning_until": 8.34667116509222,
+      "npc": "bathkeeper_sofus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.34667116509222
+        }
+      ],
+      "weather": "regn",
+      "weekday": 5
+    },
+    {
+      "morning_until": 8.34667116509222,
+      "npc": "bathkeeper_sofus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.34667116509222
+        }
+      ],
+      "weather": "klart",
+      "weekday": 6
+    },
+    {
+      "morning_until": 8.34667116509222,
+      "npc": "bathkeeper_sofus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.34667116509222
+        }
+      ],
+      "weather": "regn",
+      "weekday": 6
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "beekeeper_birk",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 0
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "beekeeper_birk",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 0
+    },
+    {
+      "morning_until": 6.83902303193882,
+      "npc": "beekeeper_birk",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 6.83902303193882
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 1
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "beekeeper_birk",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 1
+    },
+    {
+      "morning_until": 6.83902303193882,
+      "npc": "beekeeper_birk",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 6.83902303193882
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 2
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "beekeeper_birk",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 2
+    },
+    {
+      "morning_until": 6.83902303193882,
+      "npc": "beekeeper_birk",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 6.83902303193882
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 3
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "beekeeper_birk",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 3
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "beekeeper_birk",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 4
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "beekeeper_birk",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 4
+    },
+    {
+      "morning_until": 6.83902303193882,
+      "npc": "beekeeper_birk",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 6.83902303193882
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 5
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "beekeeper_birk",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 5
+    },
+    {
+      "morning_until": 7.95301394511921,
+      "npc": "beekeeper_birk",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 7.95301394511921
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 6
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "beekeeper_birk",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 6
+    },
+    {
+      "morning_until": 6.13310841205578,
+      "npc": "bertil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 6.13310841205578
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 0
+    },
+    {
+      "morning_until": 6.13310841205578,
+      "npc": "bertil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 6.13310841205578
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.5,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 0
+    },
+    {
+      "morning_until": 6.13310841205578,
+      "npc": "bertil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 6.13310841205578
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 1
+    },
+    {
+      "morning_until": 6.13310841205578,
+      "npc": "bertil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 6.13310841205578
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.5,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 1
+    },
+    {
+      "morning_until": 6.13310841205578,
+      "npc": "bertil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 6.13310841205578
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 2
+    },
+    {
+      "morning_until": 6.13310841205578,
+      "npc": "bertil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 6.13310841205578
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.5,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 2
+    },
+    {
+      "morning_until": 6.13310841205578,
+      "npc": "bertil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 6.13310841205578
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 3
+    },
+    {
+      "morning_until": 6.13310841205578,
+      "npc": "bertil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 6.13310841205578
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.5,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 3
+    },
+    {
+      "morning_until": 6.13310841205578,
+      "npc": "bertil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 6.13310841205578
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 4
+    },
+    {
+      "morning_until": 6.13310841205578,
+      "npc": "bertil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 6.13310841205578
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.5,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 4
+    },
+    {
+      "morning_until": 6.13310841205578,
+      "npc": "bertil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 6.13310841205578
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 5
+    },
+    {
+      "morning_until": 6.13310841205578,
+      "npc": "bertil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 6.13310841205578
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.5,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 5
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "bertil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 6
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "bertil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5804093567251,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 6
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "bodil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 0
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "bodil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 0
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "bodil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 1
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "bodil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 1
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "bodil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 2
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "bodil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 2
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "bodil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 3
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "bodil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 3
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "bodil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 4
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "bodil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 4
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "bodil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 5
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "bodil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 5
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "bodil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 6
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "bodil",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 6
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "carpenter_brumme",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.151192082771,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 0
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "carpenter_brumme",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 0
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "carpenter_brumme",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.151192082771,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 1
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "carpenter_brumme",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 1
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "carpenter_brumme",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.151192082771,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 2
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "carpenter_brumme",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 2
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "carpenter_brumme",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.151192082771,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 3
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "carpenter_brumme",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 3
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "carpenter_brumme",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5239091318039,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 4
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "carpenter_brumme",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5972559604139,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 4
+    },
+    {
+      "morning_until": 8.2629779577148,
+      "npc": "carpenter_brumme",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.2629779577148
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.1199505173189,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 5
+    },
+    {
+      "morning_until": 8.2629779577148,
+      "npc": "carpenter_brumme",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.2629779577148
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5972559604139,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 5
+    },
+    {
+      "morning_until": 8.2629779577148,
+      "npc": "carpenter_brumme",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.2629779577148
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.1199505173189,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 6
+    },
+    {
+      "morning_until": 8.2629779577148,
+      "npc": "carpenter_brumme",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.2629779577148
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5972559604139,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 6
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "gardener_hoppe",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 0
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "gardener_hoppe",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 0
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "gardener_hoppe",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 1
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "gardener_hoppe",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 1
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "gardener_hoppe",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 2
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "gardener_hoppe",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 2
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "gardener_hoppe",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 3
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "gardener_hoppe",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 3
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "gardener_hoppe",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.1728969860549,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 4
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "gardener_hoppe",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 4
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "gardener_hoppe",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.1728969860549,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 5
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "gardener_hoppe",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 5
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "gardener_hoppe",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 6
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "gardener_hoppe",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 6
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "lamplighter_kiki",
+      "visits": [],
+      "weather": "klart",
+      "weekday": 0
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "lamplighter_kiki",
+      "visits": [],
+      "weather": "regn",
+      "weekday": 0
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "lamplighter_kiki",
+      "visits": [],
+      "weather": "klart",
+      "weekday": 1
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "lamplighter_kiki",
+      "visits": [],
+      "weather": "regn",
+      "weekday": 1
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "lamplighter_kiki",
+      "visits": [],
+      "weather": "klart",
+      "weekday": 2
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "lamplighter_kiki",
+      "visits": [],
+      "weather": "regn",
+      "weekday": 2
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "lamplighter_kiki",
+      "visits": [],
+      "weather": "klart",
+      "weekday": 3
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "lamplighter_kiki",
+      "visits": [],
+      "weather": "regn",
+      "weekday": 3
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "lamplighter_kiki",
+      "visits": [],
+      "weather": "klart",
+      "weekday": 4
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "lamplighter_kiki",
+      "visits": [],
+      "weather": "regn",
+      "weekday": 4
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "lamplighter_kiki",
+      "visits": [],
+      "weather": "klart",
+      "weekday": 5
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "lamplighter_kiki",
+      "visits": [],
+      "weather": "regn",
+      "weekday": 5
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "lamplighter_kiki",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 6
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "lamplighter_kiki",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 6
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "merchant_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 0
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "merchant_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 0
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "merchant_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 1
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "merchant_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 1
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "merchant_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 2
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "merchant_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 2
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "merchant_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 3
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "merchant_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 3
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "merchant_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 4
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "merchant_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 4
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "merchant_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 5
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "merchant_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 20.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 5
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "merchant_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 6
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "merchant_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 6
+    },
+    {
+      "morning_until": 7.397885739991,
+      "npc": "postman_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 7.397885739991
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 0
+    },
+    {
+      "morning_until": 7.397885739991,
+      "npc": "postman_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 7.397885739991
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 0
+    },
+    {
+      "morning_until": 7.397885739991,
+      "npc": "postman_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 7.397885739991
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 1
+    },
+    {
+      "morning_until": 7.397885739991,
+      "npc": "postman_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 7.397885739991
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 1
+    },
+    {
+      "morning_until": 7.397885739991,
+      "npc": "postman_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 7.397885739991
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 2
+    },
+    {
+      "morning_until": 7.397885739991,
+      "npc": "postman_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 7.397885739991
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 2
+    },
+    {
+      "morning_until": 7.397885739991,
+      "npc": "postman_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 7.397885739991
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 3
+    },
+    {
+      "morning_until": 7.397885739991,
+      "npc": "postman_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 7.397885739991
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 3
+    },
+    {
+      "morning_until": 7.397885739991,
+      "npc": "postman_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 7.397885739991
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 4
+    },
+    {
+      "morning_until": 7.397885739991,
+      "npc": "postman_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 7.397885739991
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 4
+    },
+    {
+      "morning_until": 7.397885739991,
+      "npc": "postman_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 7.397885739991
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 5
+    },
+    {
+      "morning_until": 7.397885739991,
+      "npc": "postman_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 7.397885739991
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 5
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "postman_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 6
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "postman_pip",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 6
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "rasmus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.1685335132704,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 0
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "rasmus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5914979757085,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 0
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "rasmus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.1685335132704,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 1
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "rasmus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5914979757085,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 1
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "rasmus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.1685335132704,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 2
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "rasmus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5914979757085,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 2
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "rasmus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.1685335132704,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 3
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "rasmus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5914979757085,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 3
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "rasmus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.1685335132704,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 4
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "rasmus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5914979757085,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 4
+    },
+    {
+      "morning_until": 8.2629779577148,
+      "npc": "rasmus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.2629779577148
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.1525191183086,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 5
+    },
+    {
+      "morning_until": 8.2629779577148,
+      "npc": "rasmus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 6.0,
+          "t1": 8.2629779577148
+        },
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.5914979757085,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 5
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "rasmus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "klart",
+      "weekday": 6
+    },
+    {
+      "morning_until": 6.0,
+      "npc": "rasmus",
+      "visits": [
+        {
+          "act": "home",
+          "kind": "stay",
+          "place": "farm.porch",
+          "t0": 19.0,
+          "t1": 22.0
+        }
+      ],
+      "weather": "regn",
+      "weekday": 6
+    }
+  ],
+  "work_coverage_errors": []
+}

@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "size": [
+    128,
+    128
+  ],
+  "source_tool": "built-in imagegen",
+  "items": {
+    "hjertebuket": {
+      "file": "hjertebuket.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/relationships/hjertebuket.png",
+      "source_sha256": "88b3935e67a49277ed830ad8953ff7d1d60259b728fd1bd84f56b8f79ad63687"
+    },
+    "loefteagern": {
+      "file": "loefteagern.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/relationships/loefteagern.png",
+      "source_sha256": "9ae72531b21a3e7e067e4dfa0f52d817d093fac5dd01da4d91f7e5092bc01e8c"
+    }
+  }
+}

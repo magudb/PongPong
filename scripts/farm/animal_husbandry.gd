@@ -416,6 +416,43 @@ func feed_animal(animal_id: StringName, food_id: StringName) -> bool:
 	return true
 
 
+## Household help uses actual accepted food from the backpack, with the whole
+## batch and its saved daily stamp committed before any observer is notified.
+func feed_from_supplies(commit: Callable) -> int:
+	var needs := {}
+	var planned: Array = []
+	var ids: Array = animals.keys()
+	ids.sort()
+	for id in ids:
+		var animal: AnimalData = animals[id]
+		if animal.hunger>=70.0 or animal.last_fed_day==GameManager.total_day():continue
+		var spec: Dictionary = species_data[str(animal.species)]
+		for food in spec.feed_types:
+			if EconomyManager.count_item(StringName(str(food)))>int(needs.get(str(food),0)):
+				needs[str(food)] = int(needs.get(str(food),0))+1
+				planned.append({"animal":animal,"food":str(food)})
+				break
+	if planned.is_empty():return 0
+	var ok := EconomyManager.consume_backpack_items(needs,func() -> void:
+		commit.call(planned.size())
+		for entry in planned:
+			var animal: AnimalData = entry.animal
+			var spec: Dictionary = species_data[str(animal.species)]
+			animal.hunger = minf(100.0,animal.hunger+30.0)
+			animal.happiness = minf(float(spec.max_happiness),animal.happiness+(float(spec.favorite_feed_bonus) if str(entry.food)==str(spec.favorite_feed) else 5.0))
+			animal.last_fed_day = GameManager.total_day()
+			animal.bond_xp += 5.0
+	)
+	if not ok:return 0
+	EconomyManager.after_transaction(func() -> void:
+		for entry in planned:
+			_check_bond_level(entry.animal)
+			animal_fed.emit(entry.animal.id,StringName(str(entry.food)))
+			EventBus.animal_fed.emit(entry.animal.id,StringName(str(entry.food)))
+		state_changed.emit())
+	return planned.size()
+
+
 func brush_animal(animal_id: StringName) -> bool:
 	if not animals.has(animal_id):
 		return false

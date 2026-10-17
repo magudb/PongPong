@@ -23,6 +23,7 @@ const DEFAULTS := {
 	},
 	"purchase": {"gold_per_point": 100, "weekly_cap": 10},
 	"festival": {"attend_points": 20, "max_attendees": 15},
+	"rs_stages": ["hjertven", "forlovet", "gift"],
 	"stage_order": ["fremmed", "bekendt", "nabo", "ven", "god_ven", "bedste_ven"],
 	"stage_hearts": {"fremmed": 0, "bekendt": 1, "nabo": 2, "ven": 4, "god_ven": 6, "bedste_ven": 8},
 	"role_archetype": {
@@ -243,6 +244,7 @@ static func festivals() -> Dictionary:
 
 
 static func festival(id: String) -> Dictionary:
+	if id == "bryllupsfesten": return Svc.static_call("res://scripts/social/relationships/relationship_flow.gd",&"wedding_definition",[],{})
 	return LuaData.dict(festivals().get(id, {}))
 
 

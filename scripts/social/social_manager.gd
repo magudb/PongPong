@@ -112,6 +112,8 @@ func _ready() -> void:
 	EventBus.shop_opened.connect(_on_shop_opened)
 	EventBus.shop_closed.connect(_on_shop_closed)
 	EventBus.item_purchased.connect(_on_item_purchased)
+	EventBus.visitor_gift.connect(func(npc,_item):
+		if str(npc)!="":mark_event_seen("home_visit:"+str(npc),week()+1))
 	EventBus.player_inventory_changed.connect(_retry_event_items)
 	var sm := Svc.node("SaveManager")
 	if sm != null and sm.has_method("register_section"):
@@ -646,6 +648,11 @@ func calendar_entries(season: Variant, year: int = 1) -> Array[Dictionary]:
 		var meta := _meta(fid)
 		if str(meta.get("season", "")) == season_id:
 			out.append({"day": LuaData.int_of(meta.get("day", 0)), "kind": "festival", "id": fid, "known": true, "attended": LuaData.int_of(_fest_year.get(fid, 0)) == year})
+	var wedding := LuaData.int_of(_partner.get("wedding",0))
+	if wedding > 0:
+		var date := CalendarUtil.date_of(wedding)
+		if str(date.season)==season_id and int(date.year)==year:
+			out.append({"day":int(date.day),"kind":"festival","id":"bryllupsfesten","known":true,"attended":int(_partner.get("stage",0))==3})
 	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		if int(a["day"]) != int(b["day"]):
 			return int(a["day"]) < int(b["day"])
@@ -656,6 +663,47 @@ func calendar_entries(season: Variant, year: int = 1) -> Array[Dictionary]:
 
 
 # ======================================================================================= festivals (state; the content is S-fest-content's)
+
+func partner() -> Dictionary:
+	return _partner.duplicate()
+
+
+## RelationshipFlow validates and commits under EconomyManager’s notification barrier.
+func commit_relationship(npc: String, rs: int, day: int, wedding: int) -> void:
+	_row(npc)["rs"] = rs
+	if rs == 1: mark_event_seen("heartfriend:" + npc, day)
+	elif rs == 2: _partner = {"id":npc,"since":day,"stage":rs,"wedding":wedding}
+	elif rs == 3:
+		_partner["stage"] = 3
+		_partner["married"] = day
+
+
+func partner_in_home() -> String:
+	return str(Svc.static_call("res://scripts/social/relationships/farm_visits.gd",&"partner_at_home",[],""))
+
+
+func home_routine_context() -> Dictionary:
+	return Svc.static_call("res://scripts/social/relationships/farm_visits.gd",&"context",[],{})
+
+
+func pick_visitor(week_id: int,index: int) -> String:
+	return str(Svc.static_call("res://scripts/social/relationships/farm_visits.gd",&"visitor",[week_id,index],""))
+
+
+func start_house_party() -> Array:
+	var ids: Array = Svc.static_call("res://scripts/social/relationships/farm_visits.gd",&"friends",[week(),"party"],[])
+	return ids.slice(0,6)
+
+
+func commit_chore(day: int,kind: String,count: int) -> void:
+	_partner["chore_day"] = day
+	_partner["chore_kind"] = kind
+	_partner["chore_count"] = count
+
+
+func reschedule_wedding(day: int) -> void:
+	_partner["wedding"] = day
+
 
 func _festival_ids() -> Array[String]:
 	var ids: Array[String] = []
@@ -686,6 +734,7 @@ func _fest_ensure() -> void:
 
 ## The festival of a total day ("" for an ordinary day).
 func festival_on(td: int) -> StringName:
+	if bool(Svc.static_call("res://scripts/social/relationships/relationship_flow.gd",&"festival_on",[td],false)): return &"bryllupsfesten"
 	_fest_ensure()
 	if _fest_index.is_empty():
 		return &""
@@ -842,7 +891,7 @@ func festival_roster(fid: Variant) -> Dictionary:
 	for npc in SocialData.npcs():
 		if _absent(str(npc)):
 			absent.append(str(npc))
-	return SocialData.festival_roster(id, _meta(id), _ensure_seed(), SocialData.npcs(), absent, SocialData.cfg_int("festival.max_attendees", 15))
+	return SocialData.festival_roster(id, _meta(id), _ensure_seed(), SocialData.npcs(), absent, 14 if id == "bryllupsfesten" else SocialData.cfg_int("festival.max_attendees", 15))
 
 
 ## override_for(npc, total_day, hour) -> {area, post, state: "stay", festival, from, to, until} | {}: the routine layer's question. {} when the citizen is not part of
@@ -866,6 +915,7 @@ func override_for(npc: Variant, td: int, hour: float = -1.0) -> Dictionary:
 		post = "fest_%s_gather_%d" % [str(meta.get("spot", "")), i + 1]
 	var w := festival_window(fid)
 	var leave := LuaData.num(LuaData.dict(meta.get("leave_early", {})).get(id, 0.0))
+	leave = float(Svc.static_call("res://scripts/social/relationships/relationship_flow.gd",&"keeper_departure",[id,td,float(w["to"]),str(meta.get("area",""))+"."+post,leave],leave))
 	var until := maxf(float(w["to"]) - leave, float(w["from"]) - TRAVEL_LEAD_HOURS)
 	if hour >= 0.0 and (hour < float(w["from"]) - TRAVEL_LEAD_HOURS or hour >= until):
 		return {}
@@ -1216,6 +1266,8 @@ func _defer() -> void:
 func flush() -> void:
 	_pending = false
 	_process_days()
+	Svc.static_call("res://scripts/social/relationships/relationship_flow.gd",&"flush",[])
+	Svc.static_call("res://scripts/social/relationships/farm_visits.gd",&"daily_chore",[])
 	_write_birthday_flag(birthdays_today())
 	_update_festival_state()
 

@@ -85,12 +85,12 @@ static func now_ctx() -> Dictionary:
 				c["override_fn"] = Callable(sm, "override_for")
 			if sm.has_method("shop_closed_by_festival"):
 				c["fest_closed_fn"] = Callable(sm, "shop_closed_by_festival")
+	if sm != null and sm.has_method("home_routine_context"):c.merge(sm.call("home_routine_context"))
 	return c
 
 
 static func _festival_def(fid: String) -> Dictionary:
-	var lr: Node = GameData.lua()
-	return lr.call("get_registry_entry", "festivals", fid) if lr != null and lr.has_method("get_registry_entry") else {}
+	return SocialData.festival(fid)
 
 
 ## true when the citizen is not part of the game for this player: the other hero's twin, or a gate (a quest / a day) that has not opened yet. NOT true for asleep / away / indoors.
@@ -116,7 +116,7 @@ static func festival_block(npc: String, ctx: Dictionary) -> Dictionary:
 	if not (ov is Dictionary) or str((ov as Dictionary).get("post", "")) == "" or str((ov as Dictionary).get("state", "stay")) in ["absent", "away"]:
 		return {}
 	var area: String = str((ov as Dictionary).get("area", fest.get("area", "")))
-	return {"from": float(fest["from"]), "to": float(fest["to"]), "at": "%s.%s" % [area, str((ov as Dictionary)["post"])], "area": area, "post": str((ov as Dictionary)["post"])}
+	return {"from": float(fest["from"]), "to": float((ov as Dictionary).get("until",fest["to"])), "at": "%s.%s" % [area, str((ov as Dictionary)["post"])], "area": area, "post": str((ov as Dictionary)["post"])}
 
 
 static func hearts_of(ctx: Dictionary, npc: String) -> int:
@@ -448,6 +448,7 @@ static func where_is(npc: String, ctx: Dictionary) -> Dictionary:
 			_fb[fk] = festival_block(npc, ctx)
 		fb = _fb[fk]
 	var segs: Array = timeline(npc, plan, is_rainy(ctx), fb)
+	if npc in ctx.get("home_guests",[]):segs = Svc.static_call("res://scripts/social/relationships/farm_visits.gd",&"timeline",[npc,ctx,segs],segs)
 	if segs.is_empty():
 		return out
 	var t: float = float(ctx["hour"])
@@ -469,7 +470,7 @@ static func where_is(npc: String, ctx: Dictionary) -> Dictionary:
 		if place == "nowhere":
 			return out
 		out["area"] = place.get_slice(".", 0)
-		out["state"] = "inside" if str(s["act"]) == "inside" else "stay"
+		out["state"] = "inside" if str(s["act"]) in ["inside","home"] else "stay"
 		return out
 	for l in (s["legs"] as Array):
 		var ld: Dictionary = l

@@ -2,6 +2,7 @@ class_name GiftFlow
 extends RefCounted
 ## Validates against live free stock immediately before handing over one item.
 ## Social state is committed before inventory or friendship observers can save/reenter.
+const RELATION := preload("res://scripts/social/relationships/relationship_flow.gd")
 const TALK := "res://scripts/social/talk/social_talk.gd"
 static var _busy := false
 
@@ -71,6 +72,13 @@ static func gift_options(npc: String) -> Array[Dictionary]:
 	for candidate in _stock():
 		var id := str(candidate.id)
 		var def: Dictionary = eco.call("item_def", id)
+		if RELATION.is_token(id) and int(candidate.get("amount",0))>0:
+			var special := candidate.duplicate()
+			special.merge(RELATION.offer(npc,id))
+			special["known"] = ""
+			special["confirm"] = true
+			out.append(special)
+			continue
 		if int(candidate.get("amount", 0)) <= 0 or not GiftRules.giftable(id, def, int(candidate.get("value", 0))).ok or protection(id, def) != "":
 			continue
 		var r := candidate.duplicate()
@@ -92,7 +100,8 @@ static func hidden_quest_items(npc: String) -> int:
 			count += int(r.amount)
 	return count
 
-static func give_gift(npc: String, item: String) -> Dictionary:
+static func give_gift(npc: String, item: String, confirmed := false) -> Dictionary:
+	if RELATION.is_token(item):return RELATION.give(npc,item,confirmed)
 	if _busy:
 		return {"ok": false, "reason": "busy"}
 	var sm := Svc.node("SocialManager")

@@ -439,5 +439,12 @@
     "date": "",
     "voice_frozen": false,
     "rows": 26
+  },
+  "localization/partner.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 54
   }
 }

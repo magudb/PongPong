@@ -12,6 +12,7 @@ var portrait: TextureRect
 var hearts: SocialHearts
 var footer: Label
 var detail_name: Label
+var detail_description: Label
 var detail_stock: Label
 var taste: Label
 var birthday: Label
@@ -63,6 +64,7 @@ func _ready() -> void:
 	var details := L.box(L.margin(right, 18), true, 16)
 	detail_name = L.label(details, "", "Heavy19", true)
 	detail_stock = L.label(details, "", "Body", true)
+	detail_description = L.label(details,"","Body",true)
 	taste = L.chip(details, "", "ChipRewardRose")
 	taste.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	birthday = L.label(details, "", "Body", true)
@@ -194,6 +196,12 @@ func _select(index: int) -> void:
 		slots[i].set_pressed_no_signal(i == index)
 	detail_name.text = L.item_name(str(entry.id)) if not entry.is_empty() else tr("INV_EMPTY_SLOT")
 	detail_stock.text = tr("REL_GIFT_STOCK") % [entry.amount, entry.value] if not entry.is_empty() else ""
+	var special := bool(entry.get("special",false))
+	detail_description.visible = special
+	var def := EconomyManager.item_def(str(entry.get("id",""))) if special else {}
+	detail_description.text = tr(str(def.get("description_key",""))) if special else ""
+	if special:detail_stock.text = tr("STORE_OWNED_FMT") % int(entry.amount)
+	birthday.visible = not _selection_mode and not special and SocialManager.birthday_known(npc)
 	var known := str(entry.get("known", ""))
 	taste.visible = known != ""
 	taste.text = "♥ " + tr("REL_TASTE_" + known.to_upper()) if known != "" else ""
@@ -204,7 +212,14 @@ func _select(index: int) -> void:
 		why = "REL_GIFT_LIMIT_DAY"
 	elif int(limits.left_week) <= 0 and SocialManager.birthday_state(npc) == "":
 		why = "REL_GIFT_LIMIT_WEEK"
-	if _selection_mode: why = ""
+	if bool(entry.get("special",false)):
+		why = str(entry.get("refusal",""))
+		footer.text = tr("PARTNER_SPECIAL")
+	else:
+		footer.text = tr("REL_GIFT_LIMITS") % [2-int(limits.left_week),1-int(limits.left_today)]
+	if _selection_mode:
+		why = ""
+		footer.text = tr("SOC_EV_PICK_FOOTER")
 	reason.text = tr(why) if why != "" else ""
 	UiNav.set_enabled(give, not entry.is_empty() and why == "")
 	_wire()
@@ -234,7 +249,15 @@ func _give() -> void:
 		close()
 		return
 	var confirmed := true
-	if bool(options[selected].confirm):
+	var special := bool(options[selected].get("special",false))
+	if special:
+		var offer := RelationshipFlow.offer(npc,item)
+		if str(offer.refusal)!="":
+			_busy = false
+			_refresh_texts()
+			return
+		confirmed = await UiConfirm.ask(self,str(offer.title),str(offer.body),str(offer.ok),str(offer.cancel),&"cancel",[L.npc_name(npc)])
+	elif bool(options[selected].confirm):
 		confirmed = await UiConfirm.ask(self, "REL_GIFT_CONFIRM_TITLE", tr("REL_GIFT_CONFIRM_BODY") % L.item_name(item), "REL_GIFT_CONFIRM_YES")
 	_busy = false
 	if not is_inside_tree() or not is_open() or not confirmed:
@@ -243,13 +266,13 @@ func _give() -> void:
 	close()
 	var actor := _actor
 	_actor = null
-	var result := GiftFlow.give_gift(npc, item)
+	var result := GiftFlow.give_gift(npc, item, special and confirmed)
 	if bool(result.get("ok", false)):
 		preload("res://scripts/ui/social/gift_reaction.gd").run(npc, result, actor)
 	else:
 		if actor != null and actor.get_ref() != null:
 			actor.get_ref().hold(false)
-		EventBus.whisper_requested.emit("GIFT_REFUSE_" + str(result.get("reason", "no_item")).to_upper())
+		EventBus.whisper_requested.emit(str(result.get("message_key","GIFT_REFUSE_" + str(result.get("reason", "no_item")).to_upper())))
 
 static func fixture_setup(node: Node, _host: Node) -> void:
 	preload("res://scripts/ui/social/social_fixtures.gd").seed(true)

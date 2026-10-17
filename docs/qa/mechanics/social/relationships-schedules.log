@@ -1,0 +1,1621 @@
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=relationships,home,social_fest_content,towns_routines,ghostfam_data,social
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.Meippi/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 1.0 s
+== section ghostfam_data  (res://tests/sections/ghostfam_data.gd)
+  ok    ghostfam_data.building_row_hours
+  ok    ghostfam_data.shop_loads_and_stock_exists
+  ok    ghostfam_data.room_has_family_bed_and_guest_bed
+  ok    ghostfam_data.sidecar_door_and_post_added
+  ok    ghostfam_data.ghostfam_dyne_registered
+  ok    ghostfam_data.ghostfam_dyne_visual_without_fallback
+  ok    ghostfam_data.ghostfam_dyne_plans_wrap
+  ok    ghostfam_data.ghostfam_dyne_present_for_rasmus ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_kiki ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_kloevermynte ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_birk ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_bertil ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_bodil ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_bu ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_dyne_present_for_hviske ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_klart_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_klart_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_klart_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_0_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_1_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_2_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "family", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_3_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_4_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_5_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_regn_24.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_regn_25.0 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_dyne_6_regn_25.5 ({ "npc": "ghostfam_dyne", "state": "stay", "plan": "work", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_registered
+  ok    ghostfam_data.ghostfam_gnist_visual_without_fallback
+  ok    ghostfam_data.ghostfam_gnist_plans_wrap
+  ok    ghostfam_data.ghostfam_gnist_present_for_rasmus ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_kiki ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_kloevermynte ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_birk ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_bertil ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_bodil ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_bu ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_gnist_present_for_hviske ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_klart_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_klart_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_klart_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_0_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_1_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_2_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_3_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_4_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_5_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_regn_24.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "int_gaestehytten.counter", "act": "work", "area": "int_gaestehytten" })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_regn_25.0 ({ "npc": "ghostfam_gnist", "state": "move", "plan": "work", "place": "traetoppen.f_porch", "act": "walk", "area": "int_gaestehytten", "leg": { "kind": "walk", "area": "int_gaestehytten", "from": "int_gaestehytten.counter", "to": "int_gaestehytten.door", "frac": 0.0, "t0": 25.0, "t1": 25.1014844804318 } })
+  ok    ghostfam_data.presence_ghostfam_gnist_6_regn_25.5 ({ "npc": "ghostfam_gnist", "state": "stay", "plan": "work", "place": "traetoppen.f_porch", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_registered
+  ok    ghostfam_data.ghostfam_silke_visual_without_fallback
+  ok    ghostfam_data.ghostfam_silke_plans_wrap
+  ok    ghostfam_data.ghostfam_silke_present_for_rasmus ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_kiki ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_kloevermynte ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_birk ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_bertil ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_bodil ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_bu ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_silke_present_for_hviske ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_0_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_0_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_0_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_1_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_1_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_1_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_2_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_2_klart_25.0 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_2_klart_25.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_3_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_3_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_3_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_4_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_4_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_4_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_5_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_5_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_5_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_6_klart_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_6_klart_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_6_klart_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_0_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_0_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_0_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_1_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_1_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_1_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_2_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_2_regn_25.0 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_2_regn_25.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "family", "place": "traetoppen.f_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_3_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_3_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_3_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_4_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_4_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_4_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_5_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_5_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_5_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_6_regn_24.5 ({ "npc": "ghostfam_silke", "state": "stay", "plan": "work", "place": "traetoppen.b_lamp", "act": "lamp", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_silke_6_regn_25.0 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.12350649971325, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.presence_ghostfam_silke_6_regn_25.5 ({ "npc": "ghostfam_silke", "state": "move", "plan": "work", "place": "traetoppen.f_lamp", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_lamp", "to": "traetoppen.f_lamp", "frac": 0.70783549990442, "t0": 24.8943176706335, "t1": 25.75 } })
+  ok    ghostfam_data.ghostfam_blund_registered
+  ok    ghostfam_data.ghostfam_blund_visual_without_fallback
+  ok    ghostfam_data.ghostfam_blund_plans_wrap
+  ok    ghostfam_data.ghostfam_blund_present_for_rasmus ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_kiki ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_kloevermynte ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_birk ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_bertil ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_bodil ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_bu ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.ghostfam_blund_present_for_hviske ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_3_klart_24.5 ({ "npc": "ghostfam_blund", "state": "move", "plan": "hide_3", "place": "traetoppen.f_bench", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_mailbox", "to": "traetoppen.f_bench", "frac": 0.99757673667205, "t0": 23.5, "t1": 24.5024291497976 } })
+  ok    ghostfam_data.presence_ghostfam_blund_3_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_3", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_3_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_3", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_klart_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_klart_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_klart_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_0_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_0", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_1_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_1", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_2_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "family", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_3_regn_24.5 ({ "npc": "ghostfam_blund", "state": "move", "plan": "hide_3", "place": "traetoppen.f_bench", "act": "walk", "area": "traetoppen", "leg": { "kind": "walk", "area": "traetoppen", "from": "traetoppen.b_mailbox", "to": "traetoppen.f_bench", "frac": 0.99757673667205, "t0": 23.5, "t1": 24.5024291497976 } })
+  ok    ghostfam_data.presence_ghostfam_blund_3_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_3", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_3_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_3", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_4_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_4", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_5_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_5", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_regn_24.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_bench", "act": "stand", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_regn_25.0 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.presence_ghostfam_blund_6_regn_25.5 ({ "npc": "ghostfam_blund", "state": "stay", "plan": "hide_6", "place": "traetoppen.f_porch", "act": "sleep", "area": "traetoppen" })
+  ok    ghostfam_data.keeper_covers_hours_every_open_day ([])
+  ok    ghostfam_data.post_capacity_with_family ([])
+  ok    ghostfam_data.visual_budget_with_family ([])
+  ok    ghostfam_data.late_round_is_robust ([])
+  ok    ghostfam_data.dialogue_ghostfam_dyne_animal
+  ok    ghostfam_data.dialogue_ghostfam_dyne_fairy
+  ok    ghostfam_data.dialogue_ghostfam_dyne_hobbit
+  ok    ghostfam_data.dialogue_ghostfam_dyne_ghost
+  ok    ghostfam_data.dialogue_ghostfam_gnist_animal
+  ok    ghostfam_data.dialogue_ghostfam_gnist_fairy
+  ok    ghostfam_data.dialogue_ghostfam_gnist_hobbit
+  ok    ghostfam_data.dialogue_ghostfam_gnist_ghost
+  ok    ghostfam_data.dialogue_ghostfam_silke_animal
+  ok    ghostfam_data.dialogue_ghostfam_silke_fairy
+  ok    ghostfam_data.dialogue_ghostfam_silke_hobbit
+  ok    ghostfam_data.dialogue_ghostfam_silke_ghost
+  ok    ghostfam_data.dialogue_ghostfam_blund_animal
+  ok    ghostfam_data.dialogue_ghostfam_blund_fairy
+  ok    ghostfam_data.dialogue_ghostfam_blund_hobbit
+  ok    ghostfam_data.dialogue_ghostfam_blund_ghost
+  ok    ghostfam_data.midnight_story_0
+  ok    ghostfam_data.midnight_story_1
+  ok    ghostfam_data.midnight_story_2
+  ok    ghostfam_data.midnight_story_3
+  ok    ghostfam_data.midnight_story_4
+  ok    ghostfam_data.midnight_story_5
+  ok    ghostfam_data.midnight_story_6
+  ok    ghostfam_data.gnist_hours_equal_building_row
+  ok    ghostfam_data.no_double_reaction
+  ok    ghostfam_data.hiding_slots_0
+  ok    ghostfam_data.silke_hint_0_0
+  ok    ghostfam_data.silke_hint_0_1
+  ok    ghostfam_data.hiding_slots_1
+  ok    ghostfam_data.silke_hint_1_0
+  ok    ghostfam_data.silke_hint_1_1
+  ok    ghostfam_data.hiding_slots_3
+  ok    ghostfam_data.silke_hint_3_0
+  ok    ghostfam_data.silke_hint_3_1
+  ok    ghostfam_data.hiding_slots_4
+  ok    ghostfam_data.silke_hint_4_0
+  ok    ghostfam_data.silke_hint_4_1
+  ok    ghostfam_data.hiding_slots_5
+  ok    ghostfam_data.silke_hint_5_0
+  ok    ghostfam_data.silke_hint_5_1
+  ok    ghostfam_data.hiding_slots_6
+  ok    ghostfam_data.silke_hint_6_0
+  ok    ghostfam_data.silke_hint_6_1
+  ok    ghostfam_data.wednesday_family_evening_four_at_fire
+  ok    ghostfam_data.family_gathering_has_distinct_body_positions (minimum ground gap=84.8528137207031)
+  ok    ghostfam_data.ghostfam_dyne_live_at_dawn
+  ok    ghostfam_data.ghostfam_dyne_kin_scene_without_stranger
+  ok    ghostfam_data.ghostfam_dyne_kin_is_met_and_weekly_heart
+  ok    ghostfam_data.granny_knit_gift_once
+  ok    ghostfam_data.ghostfam_dyne_kin_once
+  ok    ghostfam_data.ghostfam_dyne_flags_json_safe
+  ok    ghostfam_data.ghostfam_gnist_live_at_dawn
+  ok    ghostfam_data.ghostfam_gnist_kin_scene_without_stranger
+  ok    ghostfam_data.ghostfam_gnist_kin_is_met_and_weekly_heart
+  ok    ghostfam_data.ghostfam_gnist_kin_once
+  ok    ghostfam_data.ghostfam_gnist_flags_json_safe
+  ok    ghostfam_data.ghostfam_silke_live_at_dawn
+  ok    ghostfam_data.ghostfam_silke_kin_scene_without_stranger
+  ok    ghostfam_data.ghostfam_silke_kin_is_met_and_weekly_heart
+  ok    ghostfam_data.ghostfam_silke_kin_once
+  ok    ghostfam_data.ghostfam_silke_flags_json_safe
+  ok    ghostfam_data.ghostfam_blund_live_at_dawn
+  ok    ghostfam_data.ghostfam_blund_kin_scene_without_stranger
+  ok    ghostfam_data.ghostfam_blund_kin_is_met_and_weekly_heart
+  ok    ghostfam_data.ghostfam_blund_kin_once
+  ok    ghostfam_data.ghostfam_blund_flags_json_safe
+  ok    ghostfam_data.hook_gardener_hoppe
+  ok    ghostfam_data.hook_ghostfam_dyne
+  ok    ghostfam_data.hook_ghostfam_gnist
+  ok    ghostfam_data.hook_ghostfam_silke
+  ok    ghostfam_data.hook_ghostfam_blund
+  ok    ghostfam_data.copy_regenerates_identically (PASS family copy regeneration (168 draft rows)
+)
+  ok    ghostfam_data.tone_gender_barks_and_literal_keys (Family copy: 168 rows, 0 problems; no tone allow-list
+)
+  --    ghostfam_data: 293 checks, 0 failed, 0 skipped, 2.2 s
+== section home  (res://tests/sections/home.gd)
+  ok    HomeManager is the autoload of scripts/home/home_manager.gd
+  ok    SaveManager has the section `home` exactly once
+  ok    order 10: after the built-in sections
+  ok    the node behind the section is HomeManager
+  ok    reset() is wired to new_game_started by the manager itself
+  ok    the morning handler listens to day_started
+  ok    the test helper Fresh resets HomeManager with the other feature managers
+  ok    a new game starts as a Skur: tier 1, a plain int
+  ok    nothing under construction
+  ok    the door is open
+  ok    ten tiers are defined, tier 1 is not the end
+  ok    empty chest, no festival, no visit, no pending gift
+  ok    flag home_tier = 1 (an int)
+  ok    flags home_building = 0 and home_upgrade_done = 0
+  ok    no castle yet
+  ok    tier 1 and tiers outside 1..10 have no requirement rows
+  ok    tier_def: skur .. slot, {} outside
+  ok    tier 2 on day one without gold: the first blocker is gold (["gold", "materials", "gate"])
+  ok    every blocker is listed: gold, materials and the quest intro_lottery
+  ok    the 500 starting acorns cover step 2 (200): materials and the quest are what is missing (["materials", "gate"])
+  ok    only the next tier can be asked for
+  ok    start_upgrade with missing requirements changes nothing
+  ok    finish_upgrade with nothing under construction does nothing
+  ok    tier 1: record, name key HOME_TIER_1 translates
+  ok    tier 1: 0 guldagern, 1 day(s)
+  ok    tier 1: materials {  }
+  ok    tier 1 lives with +0 energy, 12 chest slots, 11 pieces, 0 guest gifts a week
+  ok    tier 1: furniture_capacity equals max_furniture of room_t01.json
+  ok    tier 1: the art record of home.json is the same tier (skur)
+  ok    tier 2: record, name key HOME_TIER_2 translates
+  ok    tier 2: 200 guldagern, 1 day(s)
+  ok    tier 2: materials { "plank_pine": 16, "nails": 24, "stone_block": 6 }
+  ok    tier 2 lives with +3 energy, 18 chest slots, 16 pieces, 0 guest gifts a week
+  ok    tier 2: furniture_capacity equals max_furniture of room_t02.json
+  ok    tier 2: the art record of home.json is the same tier (hytte)
+  ok    tier 3: record, name key HOME_TIER_3 translates
+  ok    tier 3: 300 guldagern, 2 day(s)
+  ok    tier 3: materials { "plank_pine": 20, "straw_bundle": 16, "lime": 8, "nails": 30, "glass_pane": 4 }
+  ok    tier 3 lives with +6 energy, 24 chest slots, 19 pieces, 1 guest gifts a week
+  ok    tier 3: furniture_capacity equals max_furniture of room_t03.json
+  ok    tier 3: the art record of home.json is the same tier (straatag)
+  ok    tier 4: record, name key HOME_TIER_4 translates
+  ok    tier 4: 900 guldagern, 2 day(s)
+  ok    tier 4: materials { "plank_oak": 16, "timber_beam": 8, "roof_tile": 24, "lime": 8, "nails": 36, "glass_pane": 8 }
+  ok    tier 4 lives with +9 energy, 30 chest slots, 26 pieces, 1 guest gifts a week
+  ok    tier 4: furniture_capacity equals max_furniture of room_t04.json
+  ok    tier 4: the art record of home.json is the same tier (bindingsvaerk)
+  ok    tier 5: record, name key HOME_TIER_5 translates
+  ok    tier 5: 2100 guldagern, 3 day(s)
+  ok    tier 5: materials { "plank_oak": 24, "timber_beam": 12, "roof_tile": 40, "brick": 36, "glass_pane": 12, "copper_plate": 4 }
+  ok    tier 5 lives with +12 energy, 40 chest slots, 30 pieces, 2 guest gifts a week
+  ok    tier 5: furniture_capacity equals max_furniture of room_t05.json
+  ok    tier 5: the art record of home.json is the same tier (gaarden)
+  ok    tier 6: record, name key HOME_TIER_6 translates
+  ok    tier 6: 4500 guldagern, 3 day(s)
+  ok    tier 6: materials { "stone_block": 60, "slate": 30, "glass_pane": 16, "plank_walnut": 12, "amethyst": 2 }
+  ok    tier 6 lives with +15 energy, 50 chest slots, 38 pieces, 2 guest gifts a week
+  ok    tier 6: furniture_capacity equals max_furniture of room_t06.json
+  ok    tier 6: the art record of home.json is the same tier (taarnhus)
+  ok    tier 7: record, name key HOME_TIER_7 translates
+  ok    tier 7: 7500 guldagern, 4 day(s)
+  ok    tier 7: materials { "marble_block": 16, "slate": 40, "glass_pane": 30, "plank_walnut": 20, "gold_leaf": 2 }
+  ok    tier 7 lives with +18 energy, 60 chest slots, 46 pieces, 3 guest gifts a week
+  ok    tier 7: furniture_capacity equals max_furniture of room_t07.json
+  ok    tier 7: the art record of home.json is the same tier (landsted)
+  ok    tier 8: record, name key HOME_TIER_8 translates
+  ok    tier 8: 12500 guldagern, 5 day(s)
+  ok    tier 8: materials { "brick": 90, "copper_plate": 30, "glass_pane": 40, "marble_block": 20, "gold_leaf": 4 }
+  ok    tier 8 lives with +22 energy, 72 chest slots, 57 pieces, 3 guest gifts a week
+  ok    tier 8: furniture_capacity equals max_furniture of room_t08.json
+  ok    tier 8: the art record of home.json is the same tier (herregaard)
+  ok    tier 9: record, name key HOME_TIER_9 translates
+  ok    tier 9: 19000 guldagern, 6 day(s)
+  ok    tier 9: materials { "stone_block": 120, "slate": 60, "timber_beam": 40, "brass_bar": 12, "moonstone": 2 }
+  ok    tier 9 lives with +26 energy, 84 chest slots, 65 pieces, 4 guest gifts a week
+  ok    tier 9: furniture_capacity equals max_furniture of room_t09.json
+  ok    tier 9: the art record of home.json is the same tier (borg)
+  ok    tier 10: record, name key HOME_TIER_10 translates
+  ok    tier 10: 27000 guldagern, 8 day(s)
+  ok    tier 10: materials { "marble_block": 40, "glass_pane": 40, "roof_tile": 80, "gold_leaf": 12, "amethyst": 6, "moonstone": 6 }
+  ok    tier 10 lives with +30 energy, 100 chest slots, 74 pieces, 5 guest gifts a week
+  ok    tier 10: furniture_capacity equals max_furniture of room_t10.json
+  ok    tier 10: the art record of home.json is the same tier (slot)
+  ok    the ten tiers cost 74,000 guldagern in total (74000)
+  ok    the housewarming pieces are the seven of the addendum ([])
+  ok    requires.hygge is a LEVEL INDEX: 2 hyggeligt, 3 rigtig hyggeligt, 4 eventyrligt
+  ok    the gates of the addendum are rows: quests at 2, 5-9, hearts at 4, 7, 10, hygge at 7-10
+  ok    tier 7: gold + 5 materials + days + quest + friend + hygge = 10 rows
+  ok    economy.home_cost_scale is 1.0 by default
+  ok    scale 2.0: tier 5 costs 4200 and the gold row says so
+  ok    scale 0.5: 100 and 13500
+  ok    scale 0: the price is free
+  ok    everything but the scaled gold given ([])
+  ok    start_upgrade at scale 3.0 takes 3 x 200 = 600 guldagern (900 -> 300)
+  ok    tier 3 at scale 0.5 costs 150: with 0 guldagern the gold row is unmet
+  ok    and met with exactly 150
+  ok    the override is gone: 200 again
+  ok    tier 1: Perks.total("energy") adds the home bonus +0 (2.0)
+  ok    tier 1: the four perk numbers equal the addendum table
+  ok    tier 2: Perks.total("energy") adds the home bonus +3 (5.0)
+  ok    tier 2: the four perk numbers equal the addendum table
+  ok    tier 3: Perks.total("energy") adds the home bonus +6 (8.0)
+  ok    tier 3: the four perk numbers equal the addendum table
+  ok    tier 4: Perks.total("energy") adds the home bonus +9 (11.0)
+  ok    tier 4: the four perk numbers equal the addendum table
+  ok    tier 5: Perks.total("energy") adds the home bonus +12 (14.0)
+  ok    tier 5: the four perk numbers equal the addendum table
+  ok    tier 6: Perks.total("energy") adds the home bonus +15 (17.0)
+  ok    tier 6: the four perk numbers equal the addendum table
+  ok    tier 7: Perks.total("energy") adds the home bonus +18 (20.0)
+  ok    tier 7: the four perk numbers equal the addendum table
+  ok    tier 8: Perks.total("energy") adds the home bonus +22 (24.0)
+  ok    tier 8: the four perk numbers equal the addendum table
+  ok    tier 9: Perks.total("energy") adds the home bonus +26 (28.0)
+  ok    tier 9: the four perk numbers equal the addendum table
+  ok    tier 10: Perks.total("energy") adds the home bonus +30 (32.0)
+  ok    tier 10: the four perk numbers equal the addendum table
+  ok    home.stations_by_tier (snedkerbord <- workbench (T1), vaev <- loom (T3), smedje <- forge_bench (T5) at every tier; unknown stations are closed; [])
+  ok    home.perks_energy_storage_capacity (max_energy_bonus / storage_slots / furniture_capacity / guest_visits_per_week of the ten tiers equal the addendum table, and Perks.total("energy") adds the home bonus (30 at the castle))
+  ok    tier 1: only the carpenter's bench
+  ok    tier 4: the loom is open, the forge is not; CraftingSystem reads the same tier flag
+  ok    home.unlock_status (workbench loom forge_bench real, guest_visits festival real, oven forecast royal_visit stub ({ "workbench": "real", "oven": "stub", "loom": "real", "guest_visits": "real", "forge_bench": "real", "forecast": "stub", "festival": "real", "royal_visit": "stub" }); an unknown unlock is a stub)
+  ok    unlock_rows(): eight rows in the data's order with the loc keys of the perks card
+  ok    every unlock row has translated name and description keys, its tier and its unlocked state (tier 4)
+  ok    five unlocks include named visits and house parties; three remain listed separately: oven, forecast, royal_visit ({ "real": 5, "partial": 0, "stub": 3 })
+  ok    the stand-in furniture store holds 3 placed pieces and 2 spare chairs
+  ok    tier 2: everything it asks for was given through the public APIs ([])
+  ok    tier 2: with everything given the upgrade can start
+  ok    tier 2: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 2: 'gold:gold' put back -> the upgrade can start
+  ok    tier 2: only 'material:plank_pine' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 2: 'material:plank_pine' put back -> the upgrade can start
+  ok    tier 2: only 'material:nails' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 2: 'material:nails' put back -> the upgrade can start
+  ok    tier 2: only 'material:stone_block' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 2: 'material:stone_block' put back -> the upgrade can start
+  ok    tier 2: only 'quest:intro_lottery' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 2: 'quest:intro_lottery' put back -> the upgrade can start
+  ok    tier 2: 5 single-requirement tests, restored
+  ok    tier 2: start_upgrade ok, ready on day 2
+  ok    tier 2: exactly 200 guldagern and exactly the listed materials left the backpack, nothing else
+  ok    tier 2: the house is closed while it is built
+  ok    tier 2: construction {target, start_day, ready_day} in absolute days
+  ok    tier 2: home_upgrade_started(1, 2, 2)
+  ok    tier 2: flags home_tier 1, home_building 2 while building
+  ok    tier 2: the REAL fairy_builder dialogue is in its 'building' branch (t02_building)
+  ok    tier 2: a second upgrade is refused while building, nothing is taken twice
+  ok    tier 2: one progress signal per morning before the last (0), no upgrade yet
+  ok    tier 2 reached after 1 day(s)
+  ok    tier 2: exactly 1 calendar days passed
+  ok    tier 2: home_upgraded(1, 2) emitted once
+  ok    tier 2: game_event home_upgraded {tier: 2}
+  ok    tier 2: flags home_tier 2, home_building 0, home_upgrade_done 2
+  ok    tier 2: home_castle_built is not set
+  ok    tier 2: the REAL fairy_builder dialogue celebrates (t02_done)
+  ok    tier 2: the flag stays while the dialogue with the builder is open
+  ok    tier 2: talking to another citizen keeps home_upgrade_done, talking to the builder clears it (t02_idle)
+  ok    tier 2: the perks of the new tier apply
+  ok    tier 2: the housewarming piece(s) [] arrived once, routed to the furniture store
+  ok    tier 2: no piece lost ([]), 3 placed
+  ok    tier 2: the next step is not free by itself (materials)
+  ok    tier 3: everything it asks for was given through the public APIs ([])
+  ok    tier 3: with everything given the upgrade can start
+  ok    tier 3: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 3: 'gold:gold' put back -> the upgrade can start
+  ok    tier 3: only 'material:plank_pine' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 3: 'material:plank_pine' put back -> the upgrade can start
+  ok    tier 3: only 'material:straw_bundle' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 3: 'material:straw_bundle' put back -> the upgrade can start
+  ok    tier 3: only 'material:lime' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 3: 'material:lime' put back -> the upgrade can start
+  ok    tier 3: only 'material:nails' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 3: 'material:nails' put back -> the upgrade can start
+  ok    tier 3: only 'material:glass_pane' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 3: 'material:glass_pane' put back -> the upgrade can start
+  ok    tier 3: 6 single-requirement tests, restored
+  ok    tier 3: start_upgrade ok, ready on day 4
+  ok    tier 3: exactly 300 guldagern and exactly the listed materials left the backpack, nothing else
+  ok    tier 3: the house is closed while it is built
+  ok    tier 3: construction {target, start_day, ready_day} in absolute days
+  ok    tier 3: home_upgrade_started(2, 3, 4)
+  ok    tier 3: flags home_tier 2, home_building 3 while building
+  ok    tier 3: the REAL fairy_builder dialogue is in its 'building' branch (t03_building)
+  ok    tier 3: a second upgrade is refused while building, nothing is taken twice
+  ok    tier 3: morning 1 of 2: still building, 1 day(s) left
+  ok    tier 3: the build is 1 / 2 done
+  ok    tier 3: one progress signal per morning before the last (1), no upgrade yet
+  ok    tier 3 reached after 2 day(s)
+  ok    tier 3: exactly 2 calendar days passed
+  ok    tier 3: home_upgraded(2, 3) emitted once
+  ok    tier 3: game_event home_upgraded {tier: 3}
+  ok    tier 3: flags home_tier 3, home_building 0, home_upgrade_done 3
+  ok    tier 3: home_castle_built is not set
+  ok    tier 3: the REAL fairy_builder dialogue celebrates (t03_done)
+  ok    tier 3: the flag stays while the dialogue with the builder is open
+  ok    tier 3: talking to another citizen keeps home_upgrade_done, talking to the builder clears it (t03_idle)
+  ok    tier 3: the perks of the new tier apply
+  ok    tier 3: the housewarming piece(s) [] arrived once, routed to the furniture store
+  ok    tier 3: no piece lost ([]), 3 placed
+  ok    tier 3: the next step is not free by itself (gold)
+  ok    tier 4: everything it asks for was given through the public APIs ([])
+  ok    tier 4: with everything given the upgrade can start
+  ok    tier 4: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 4: 'gold:gold' put back -> the upgrade can start
+  ok    tier 4: only 'material:plank_oak' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 4: 'material:plank_oak' put back -> the upgrade can start
+  ok    tier 4: only 'material:timber_beam' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 4: 'material:timber_beam' put back -> the upgrade can start
+  ok    tier 4: only 'material:roof_tile' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 4: 'material:roof_tile' put back -> the upgrade can start
+  ok    tier 4: only 'material:lime' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 4: 'material:lime' put back -> the upgrade can start
+  ok    tier 4: only 'material:nails' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 4: 'material:nails' put back -> the upgrade can start
+  ok    tier 4: only 'material:glass_pane' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 4: 'material:glass_pane' put back -> the upgrade can start
+  ok    tier 4: only 'friend:mayor_lyra' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 4: 'friend:mayor_lyra' put back -> the upgrade can start
+  ok    tier 4: 8 single-requirement tests, restored
+  ok    tier 4: start_upgrade ok, ready on day 6
+  ok    tier 4: exactly 900 guldagern and exactly the listed materials left the backpack, nothing else
+  ok    tier 4: the house is closed while it is built
+  ok    tier 4: construction {target, start_day, ready_day} in absolute days
+  ok    tier 4: home_upgrade_started(3, 4, 6)
+  ok    tier 4: flags home_tier 3, home_building 4 while building
+  ok    tier 4: the REAL fairy_builder dialogue is in its 'building' branch (t04_building)
+  ok    tier 4: a second upgrade is refused while building, nothing is taken twice
+  ok    tier 4: morning 1 of 2: still building, 1 day(s) left
+  ok    tier 4: the build is 1 / 2 done
+  ok    tier 4: one progress signal per morning before the last (1), no upgrade yet
+  ok    tier 4 reached after 2 day(s)
+  ok    tier 4: exactly 2 calendar days passed
+  ok    tier 4: home_upgraded(3, 4) emitted once
+  ok    tier 4: game_event home_upgraded {tier: 4}
+  ok    tier 4: flags home_tier 4, home_building 0, home_upgrade_done 4
+  ok    tier 4: home_castle_built is not set
+  ok    tier 4: the REAL fairy_builder dialogue celebrates (t04_done)
+  ok    tier 4: the flag stays while the dialogue with the builder is open
+  ok    tier 4: talking to another citizen keeps home_upgrade_done, talking to the builder clears it (t04_idle)
+  ok    tier 4: the perks of the new tier apply
+  ok    tier 4: the housewarming piece(s) [] arrived once, routed to the furniture store
+  ok    tier 4: no piece lost ([]), 3 placed
+  ok    tier 4: the next step is not free by itself (gold)
+  ok    tier 5: everything it asks for was given through the public APIs ([])
+  ok    tier 5: with everything given the upgrade can start
+  ok    tier 5: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 5: 'gold:gold' put back -> the upgrade can start
+  ok    tier 5: only 'material:plank_oak' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 5: 'material:plank_oak' put back -> the upgrade can start
+  ok    tier 5: only 'material:timber_beam' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 5: 'material:timber_beam' put back -> the upgrade can start
+  ok    tier 5: only 'material:roof_tile' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 5: 'material:roof_tile' put back -> the upgrade can start
+  ok    tier 5: only 'material:brick' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 5: 'material:brick' put back -> the upgrade can start
+  ok    tier 5: only 'material:glass_pane' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 5: 'material:glass_pane' put back -> the upgrade can start
+  ok    tier 5: only 'material:copper_plate' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 5: 'material:copper_plate' put back -> the upgrade can start
+  ok    tier 5: only 'quest:first_animal' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 5: 'quest:first_animal' put back -> the upgrade can start
+  ok    tier 5: 8 single-requirement tests, restored
+  ok    tier 5: start_upgrade ok, ready on day 9
+  ok    tier 5: exactly 2100 guldagern and exactly the listed materials left the backpack, nothing else
+  ok    tier 5: the house is closed while it is built
+  ok    tier 5: construction {target, start_day, ready_day} in absolute days
+  ok    tier 5: home_upgrade_started(4, 5, 9)
+  ok    tier 5: flags home_tier 4, home_building 5 while building
+  ok    tier 5: the REAL fairy_builder dialogue is in its 'building' branch (t05_building)
+  ok    tier 5: a second upgrade is refused while building, nothing is taken twice
+  ok    tier 5: morning 1 of 3: still building, 2 day(s) left
+  ok    tier 5: the build is 1 / 3 done
+  ok    tier 5: morning 2 of 3: still building, 1 day(s) left
+  ok    tier 5: the build is 2 / 3 done
+  ok    tier 5: one progress signal per morning before the last (2), no upgrade yet
+  ok    tier 5 reached after 3 day(s)
+  ok    tier 5: exactly 3 calendar days passed
+  ok    tier 5: home_upgraded(4, 5) emitted once
+  ok    tier 5: game_event home_upgraded {tier: 5}
+  ok    tier 5: flags home_tier 5, home_building 0, home_upgrade_done 5
+  ok    tier 5: home_castle_built is not set
+  ok    tier 5: the REAL fairy_builder dialogue celebrates (t05_done)
+  ok    tier 5: the flag stays while the dialogue with the builder is open
+  ok    tier 5: talking to another citizen keeps home_upgrade_done, talking to the builder clears it (t05_idle)
+  ok    tier 5: the perks of the new tier apply
+  ok    tier 5: the housewarming piece(s) ["throne_root"] arrived once, routed to the furniture store
+  ok    tier 5: no piece lost ([]), 3 placed
+  ok    tier 5: the next step is not free by itself (gold)
+  ok    tier 6: everything it asks for was given through the public APIs ([])
+  ok    tier 6: with everything given the upgrade can start
+  ok    tier 6: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 6: 'gold:gold' put back -> the upgrade can start
+  ok    tier 6: only 'material:stone_block' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 6: 'material:stone_block' put back -> the upgrade can start
+  ok    tier 6: only 'material:slate' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 6: 'material:slate' put back -> the upgrade can start
+  ok    tier 6: only 'material:glass_pane' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 6: 'material:glass_pane' put back -> the upgrade can start
+  ok    tier 6: only 'material:plank_walnut' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 6: 'material:plank_walnut' put back -> the upgrade can start
+  ok    tier 6: only 'material:amethyst' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 6: 'material:amethyst' put back -> the upgrade can start
+  ok    tier 6: only 'quest:crystal_cave' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 6: 'quest:crystal_cave' put back -> the upgrade can start
+  ok    tier 6: 7 single-requirement tests, restored
+  ok    tier 6: start_upgrade ok, ready on day 12
+  ok    tier 6: exactly 4500 guldagern and exactly the listed materials left the backpack, nothing else
+  ok    tier 6: the house is closed while it is built
+  ok    tier 6: construction {target, start_day, ready_day} in absolute days
+  ok    tier 6: home_upgrade_started(5, 6, 12)
+  ok    tier 6: flags home_tier 5, home_building 6 while building
+  ok    tier 6: the REAL fairy_builder dialogue is in its 'building' branch (t06_building)
+  ok    tier 6: a second upgrade is refused while building, nothing is taken twice
+  ok    tier 6: morning 1 of 3: still building, 2 day(s) left
+  ok    tier 6: the build is 1 / 3 done
+  ok    tier 6: morning 2 of 3: still building, 1 day(s) left
+  ok    tier 6: the build is 2 / 3 done
+  ok    tier 6: one progress signal per morning before the last (2), no upgrade yet
+  ok    tier 6 reached after 3 day(s)
+  ok    tier 6: exactly 3 calendar days passed
+  ok    tier 6: home_upgraded(5, 6) emitted once
+  ok    tier 6: game_event home_upgraded {tier: 6}
+  ok    tier 6: flags home_tier 6, home_building 0, home_upgrade_done 6
+  ok    tier 6: home_castle_built is not set
+  ok    tier 6: the REAL fairy_builder dialogue celebrates (t06_done)
+  ok    tier 6: the flag stays while the dialogue with the builder is open
+  ok    tier 6: talking to another citizen keeps home_upgrade_done, talking to the builder clears it (t06_idle)
+  ok    tier 6: the perks of the new tier apply
+  ok    tier 6: the housewarming piece(s) ["clock_moon"] arrived once, routed to the furniture store
+  ok    tier 6: no piece lost ([]), 3 placed
+  ok    tier 6: the next step is not free by itself (gold)
+  ok    tier 7: everything it asks for was given through the public APIs ([])
+  ok    tier 7: with everything given the upgrade can start
+  ok    tier 7: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 7: 'gold:gold' put back -> the upgrade can start
+  ok    tier 7: only 'material:marble_block' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 7: 'material:marble_block' put back -> the upgrade can start
+  ok    tier 7: only 'material:slate' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 7: 'material:slate' put back -> the upgrade can start
+  ok    tier 7: only 'material:glass_pane' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 7: 'material:glass_pane' put back -> the upgrade can start
+  ok    tier 7: only 'material:plank_walnut' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 7: 'material:plank_walnut' put back -> the upgrade can start
+  ok    tier 7: only 'material:gold_leaf' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 7: 'material:gold_leaf' put back -> the upgrade can start
+  ok    tier 7: only 'quest:fairy_friendship' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 7: 'quest:fairy_friendship' put back -> the upgrade can start
+  ok    tier 7: only 'friend:mayor_lyra' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 7: 'friend:mayor_lyra' put back -> the upgrade can start
+  ok    tier 7: only 'hygge:hyggeligt' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 7: 'hygge:hyggeligt' put back -> the upgrade can start
+  ok    tier 7: 9 single-requirement tests, restored
+  ok    tier 7: start_upgrade ok, ready on day 16
+  ok    tier 7: exactly 7500 guldagern and exactly the listed materials left the backpack, nothing else
+  ok    tier 7: the house is closed while it is built
+  ok    tier 7: construction {target, start_day, ready_day} in absolute days
+  ok    tier 7: home_upgrade_started(6, 7, 16)
+  ok    tier 7: flags home_tier 6, home_building 7 while building
+  ok    tier 7: the REAL fairy_builder dialogue is in its 'building' branch (t07_building)
+  ok    tier 7: a second upgrade is refused while building, nothing is taken twice
+  ok    tier 7: morning 1 of 4: still building, 3 day(s) left
+  ok    tier 7: the build is 1 / 4 done
+  ok    tier 7: morning 2 of 4: still building, 2 day(s) left
+  ok    tier 7: the build is 2 / 4 done
+  ok    tier 7: morning 3 of 4: still building, 1 day(s) left
+  ok    tier 7: the build is 3 / 4 done
+  ok    tier 7: one progress signal per morning before the last (3), no upgrade yet
+  ok    tier 7 reached after 4 day(s)
+  ok    tier 7: exactly 4 calendar days passed
+  ok    tier 7: home_upgraded(6, 7) emitted once
+  ok    tier 7: game_event home_upgraded {tier: 7}
+  ok    tier 7: flags home_tier 7, home_building 0, home_upgrade_done 7
+  ok    tier 7: home_castle_built is not set
+  ok    tier 7: the REAL fairy_builder dialogue celebrates (t07_done)
+  ok    tier 7: the flag stays while the dialogue with the builder is open
+  ok    tier 7: talking to another citizen keeps home_upgrade_done, talking to the builder clears it (t07_idle)
+  ok    tier 7: the perks of the new tier apply
+  ok    tier 7: the housewarming piece(s) ["piano_star"] arrived once, routed to the furniture store
+  ok    tier 7: no piece lost ([]), 6 placed
+  ok    tier 7: the next step is not free by itself (gold)
+  ok    tier 8: everything it asks for was given through the public APIs ([])
+  ok    tier 8: with everything given the upgrade can start
+  ok    tier 8: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 8: 'gold:gold' put back -> the upgrade can start
+  ok    tier 8: only 'material:brick' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 8: 'material:brick' put back -> the upgrade can start
+  ok    tier 8: only 'material:copper_plate' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 8: 'material:copper_plate' put back -> the upgrade can start
+  ok    tier 8: only 'material:glass_pane' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 8: 'material:glass_pane' put back -> the upgrade can start
+  ok    tier 8: only 'material:marble_block' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 8: 'material:marble_block' put back -> the upgrade can start
+  ok    tier 8: only 'material:gold_leaf' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 8: 'material:gold_leaf' put back -> the upgrade can start
+  ok    tier 8: only 'quest:snurresvampen' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 8: 'quest:snurresvampen' put back -> the upgrade can start
+  ok    tier 8: only 'hygge:rigtig_hyggeligt' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 8: 'hygge:rigtig_hyggeligt' put back -> the upgrade can start
+  ok    tier 8: 8 single-requirement tests, restored
+  ok    tier 8: start_upgrade ok, ready on day 21
+  ...   (319 more ok lines of home not printed; --verbose prints all)
+  --    home: 719 checks, 0 failed, 0 skipped, 5.9 s
+== section relationships  (res://tests/sections/relationships.gd)
+  ok    relationships.eleven_adult_candidates
+  ok    relationships.hjertebuket_crafted_special_icon
+  ok    relationships.loefteagern_crafted_special_icon
+  ok    relationships.hjertebuket_real_recipe_exact_consumption
+  ok    relationships.hjertebuket_never_sold_in_a_shop
+  ok    relationships.loefteagern_real_recipe_exact_consumption
+  ok    relationships.loefteagern_never_sold_in_a_shop
+  ok    relationships.baker_maja_authored_or_archetype_scene_localized
+  ok    relationships.bathkeeper_sofus_authored_or_archetype_scene_localized
+  ok    relationships.beekeeper_birk_authored_or_archetype_scene_localized
+  ok    relationships.bertil_authored_or_archetype_scene_localized
+  ok    relationships.bodil_authored_or_archetype_scene_localized
+  ok    relationships.carpenter_brumme_authored_or_archetype_scene_localized
+  ok    relationships.gardener_hoppe_authored_or_archetype_scene_localized
+  ok    relationships.lamplighter_kiki_authored_or_archetype_scene_localized
+  ok    relationships.merchant_pip_authored_or_archetype_scene_localized
+  ok    relationships.postman_pip_authored_or_archetype_scene_localized
+  ok    relationships.rasmus_authored_or_archetype_scene_localized
+  ok    relationships.child_refusal_keeps_bouquet
+  ok    relationships.low_hearts_refusal
+  ok    relationships.programmatic_gift_requires_consent
+  ok    relationships.special_shown_after_ordinary_limits
+  ok    relationships.bouquet_atomic_heartfriend
+  ok    relationships.ordinary_gift_ledger_untouched
+  ok    relationships.repeated_bouquet_not_consumed
+  ok    relationships.several_heartfriends
+  ok    relationships.seven_days_required
+  ok    relationships.home_three_required
+  ok    relationships.proposal_committed_once
+  ok    relationships.wedding_safe_sunday
+  ok    relationships.one_engagement
+  ok    relationships.calendar_dynamic_wedding
+  ok    relationships.fixed_calendar_still_nine
+  ok    relationships.real_save_reload
+  ok    relationships.proposal_dates_and_stages_saved
+  ok    relationships.missed_wedding_reschedules_without_penalty
+  ok    relationships.dynamic_wedding_roster_spouse_first
+  ok    relationships.cannot_marry_without_scene
+  ok    relationships.wedding_commits_once
+  ok    relationships.all_eleven_jobs_covered_seven_days_two_weathers ([])
+  ok    relationships.computed_early_baker_no_morning ({ "baker_maja": 6.0, "bathkeeper_sofus": 8.34667116509222, "beekeeper_birk": 6.0, "bertil": 6.13310841205578, "bodil": 6.0, "carpenter_brumme": 6.0, "gardener_hoppe": 6.0, "lamplighter_kiki": 6.0, "merchant_pip": 6.0, "postman_pip": 7.397885739991, "rasmus": 6.0 })
+  ok    relationships.computed_morning_and_evening_visits ({ "baker_maja": 6.0, "bathkeeper_sofus": 8.34667116509222, "beekeeper_birk": 6.0, "bertil": 6.13310841205578, "bodil": 6.0, "carpenter_brumme": 6.0, "gardener_hoppe": 6.0, "lamplighter_kiki": 6.0, "merchant_pip": 6.0, "postman_pip": 7.397885739991, "rasmus": 6.0 } evening=9)
+  ok    relationships.year_boundary_safe_wedding_dates ([])
+  ok    relationships.festival_keepers_physically_back_for_evening_work ([])
+  ok    relationships.daily_help_water_twelve_atomic
+  ok    relationships.daily_help_cannot_repeat
+  ok    relationships.daily_help_feeds_real_animals_from_supplies
+  ok    relationships.no_work_leaves_note
+  ok    relationships.chore_save_reload
+  ok    relationships.daily_help_saved_idempotent
+  ok    relationships.party_names_six_real_friends
+  ok    relationships.weekly_visits_deterministic_without_repeats
+  ok    relationships.new_friend_cannot_repeat_earlier_weekly_visitor
+  ok    relationships.hero_twin_not_a_partner
+  ok    relationships.authored_relationship_data_current (Relationship items, recipes, wedding template and 54 bilingual rows verified
+)
+  --    relationships: 55 checks, 0 failed, 0 skipped, 0.8 s
+== section social  (res://tests/sections/social.gd)
+  ok    social.calendar_weeks_valid (28 % 7 == 0, year of 112 days, 4 seasons)
+  ok    social.calendar_weeks_invalid_when_days_per_season_is_not_a_multiple_of_7 (days_per_season 30 -> weeks_valid() false (the section would fail), restored)
+  ok    social.calendar_roundtrip_and_weekday_agree_with_core (date_of / total_day / weekday_of vs GameManager.total_day_for and TimeManager.weekday_index over 399 days: 0 mismatches)
+  ok    week index: Monday..Sunday blocks, 16 weeks a year
+  ok    weekday and weekend
+  ok    week_start is the Monday of the week
+  ok    days_until wraps the year
+  ok    next_total_day, date_key
+  ok    social.calendar_hour_in_raw_hours (22-2 = [22,26) true; 0-2 = [24,26) true; 22-6 wraps (22..25 and 2..5) true; 8-18 unchanged true; from == to always true true; 6-26 is the whole play day true)
+  ok    normalise_hour = GameManager.game_hour: 1.5 -> 25.5, 0 -> 24, 6 and 25 stay
+  ok    social.rng_matches_python_mirror (6 vectors (FNV-1a 32 + fmix32 over seed|part|part) equal the pinned values true; python equals the GDScript numbers)
+  ok    social.rng_uniform_25pct (25% roll over 10080 (npc, day) pairs: 2432 hits (python: 2432))
+  ok    same inputs, same roll; another seed, another roll
+  ok    social.rng_no_walk_across_days (consecutive days do not walk 1,2,3 (String.hash would: true): longest equal run of 4 buckets = 5)
+  ok    pick / pick_weighted edge cases
+  ok    social.data_friend_ids_sorted (34 friend ids, sorted, = friendship rows plus authored unlocks)
+  ok    a citizens row with an unlock includes the NPC exactly once (34 -> 34)
+  ok    social.data_derived_defaults_are_stable (derived row: tier C, archetype from role_archetype, birthday from the id; adding an NPC moved 0 other birthdays; the new one is a real date with archetype child)
+  ok    social.data_registry_absent_is_empty (a runtime without get_registry and an unknown id read {} (nothing is required to boot); with the design registries the readers answer (design festivals 9, events of Hoppe 1))
+  ok    social.data_role_archetype_covers_every_role (27 roles of npc_vocab.roles, missing in social.role_archetype: [])
+  ok    social.data_real_citizens_and_tastes (The live citizens and tastes now exist; fallback coverage above explicitly installs a missing-citizens fixture.)
+  ok    social.config_defaults_equal_lua (lua/social/social.lua has 12 top-level keys, SocialData.DEFAULTS has 12; differences: [])
+  ok    an empty social table still answers every number from the code defaults
+  ok    the Lua lint is clean with lua/social/social.lua loaded (0 findings)
+  ok    AGF17: social.festival.max_attendees = 15, chat 100, belated x2
+  ok    social.autoload_registered_once (project.godot has the line 1 time(s); section `social` registered 1 time(s) for the autoload node; process mode ALWAYS)
+  ok    social.save_registry_order (order 60 (after loot 40 and collection 50: FEATURE_ORDERS { "home": 10, "furniture": 20, "wardrobe": 30, "loot": 40, "collection": 50 }), position 11 of ["game", "time", "economy", "quests", "husbandry", "shops", "home", "furniture", "wardrobe", "loot", "dungeon", "social"])
+  ok    social.daily_work_is_deferred (advance_time(50 h) emitted exactly ["midnight_passed", "midnight_passed"] synchronously (the pin of core.advance_time_multiday) and queued ONE coalesced flush (pending true))
+  ok    flush() catches up: last processed day = today (4)
+  ok    social.birthday_event_after_flush (nothing synchronous inside advance_time; after the flush birthday_today {npc: merchant_pip} once and the flag birthday_today = merchant_pip)
+  ok    a second flush the same day posts nothing more
+  ok    the next day the flag names nobody (cleared)
+  ok    social.daily_skip_no_stale_birthday_event (a skip that ends after the birthday posts no birthday_today for the skipped day (0); only today's 1 birthday(s) are announced)
+  ok    time_of_day_changed queues the (single, coalesced) flush
+  ok    social.new_game_flags_follow_the_first_flush (a new game on day 1 = Lily's birthday: no birthday_today flag at new_game_started (the flags are exactly the new game's: [&"intro_pending", &"home_tier", &"home_building", &"home_upgrade_done"]), a flush queued by reset(); the first flush writes birthday_today = fairy_lily and posts no event for the day nothing was skipped)
+  ok    a fresh game: no points, an unknown NPC has none
+  ok    40 points: no whole heart, no friend_changed
+  ok    the mirror flag holds WHOLE hearts (0 after 40 points)
+  ok    social.hearts_signal_only_on_whole_heart (110 points = 1 heart: friend_changed(mayor_lyra, 1) fired exactly once ([["mayor_lyra", 1]]), social_points twice)
+  ok    game_event social_points {npc, delta, points, hearts, source}: { "npc": "mayor_lyra", "delta": 70, "points": 110, "hearts": 1, "source": "test" }
+  ok    half hearts: 110 points = 2 half hearts (50 each)
+  ok    social.hearts_call_loot_service_after_a_heart (LootService.check_friend_gifts(npc) late bound once per whole heart gained, none for 20 points: [["mayor_lyra"]])
+  ok    social.hearts_cap_10 (20 hearts of quest reward stop at the cap: 10 hearts = 1000 points, stage bedste_ven, gained 770)
+  ok    at the cap: ok, gained 0, nothing is emitted
+  ok    social.points_never_decrease (0 and negative deltas are refused (bad_delta), debug_set_hearts never lowers: 1000 points stay)
+  ok    unknown NPC and Morfar Mis without a citizens unlock take no points (unknown_npc / locked)
+  ok    social.add_points_rejects_unknown_and_locked (locked until lost_cat is done OR day 60 (day 59 false, day 60 true, quest true); a hero twin (NpcDirector.is_absent) is refused (absent) and back when present)
+  ok    social.flag_mirror_after_every_write (friend_<npc> = whole hearts after add_points, add_hearts, debug_set_hearts, from_dict and a repair write (flag 5))
+  ok    social.zero_point_ledger_repairs_existing_mirror
+  ok    social.zero_point_ledger_load_preserves_absent_flag
+  ok    the first finished chat of the week: +1 heart, friend_last = total_day, talked today
+  ok    a second chat in the same week plays and pays nothing
+  ok    social.chat_weekly_calendar_week (Sunday of the same week: nothing; Monday: available again and the second heart comes (two hearts in two calendar weeks, never two in one))
+  ok    game_event chat_done {npc, weekly_heart} for every finished conversation: [["chat_done", { "npc": "gardener_hoppe", "weekly_heart": false }]]
+  ok    social.chat_df3_floor_day_50 (8 hearts by the weekly chat alone: earliest total_day 50 (the DF3 floor: day 50), 10 hearts after week 10)
+  ok    social.chat_esc_first_line_no_heart (an Esc after the first line (completed false) gives no heart, no chat_done, no toast and keeps the week's chat available)
+  ok    the finished conversation of the same day then pays the week's heart
+  ok    social.chat_empty_conversation_gives_nothing (a conversation with 0 lines shown gives nothing: no heart, not talked today, birthday still unknown, no event, no toast)
+  ok    a chat with an unknown NPC counts for nothing
+  ok    a conversation (even an unfinished one) marks the birthday as known
+  ok    social.chat_one_combined_toast (the first heart (fremmed -> bekendt) is ONE toast with the heart line and the stage line (1 toast(s), relationship_changed 1): Fe-barnet Lily holder lidt mere af dig nu: 1 af 10 hjerter | Dit venskab med Fe-barnet Lily: Bekendt)
+  ok    social.chat_toasts_are_rate_limited (two conversations inside the gap: 1 toast at once, 1 waiting, both posted in turn (2))
+  ok    social.stage_names_by_hearts (stages by hearts 0..10: ["fremmed", "bekendt", "nabo", "nabo", "ven", "ven", "god_ven", "god_ven", "bedste_ven", "bedste_ven", "bedste_ven"])
+  ok    a REL_STAGE_<ID> label in da and en for each of the six stages (missing [])
+  ok    social.stage_up_toast_once (one toast and one relationship_changed per stage change, none inside a stage; the toast option false keeps the toast back but not the event (toasts 2, events 3): last { "npc": "baker_maja", "stage": "nabo", "partner": false })
+  ok    S-marriage's seam: row field rs = 2 reads social.rs_stages[1] = forlovet (forlovet), 0 is the hearts stage (ven)
+  ok    social.boots_without_gift_rules (with S-gifts absent (here: pointed at a missing script) the autoload still answers: give_gift { "ok": false, "reason": "gifts_not_installed" }, gift_options 0, taste neutral, is_giftable { "ok": false, "reason": "gifts_not_installed" })
+  ok    social.gift_api_surface_late_bound (give_gift / gift_options reach the flow script, taste_of / is_giftable the rules script by path (probe scripts): flow gardener { "ok": true, "reason": "" })
+  ok    gift_limits of a fresh row: { "per_day": 1, "per_week": 2, "left_today": 1, "left_week": 2 }
+  ok    limits: 1 per day and 2 per calendar week, both reset by the calendar ({ "per_day": 1, "per_week": 2, "left_today": 0, "left_week": 0 } -> { "per_day": 1, "per_week": 2, "left_today": 1, "left_week": 2 })
+  ok    social.no_forward_class_refs (4 scripts scanned for 19 later-wave class names (GiftRules at lines 237 / 250 / 283 of the prototype made the autoload fail to boot): [])
+  ok    a bare instance answers {ok: false, reason: gifts_not_installed}
+  ok    social.birthday_state_machine (day -> celebrated -> belated (+1) -> none (+2), the year wrap and a birthday that has not come yet ([true, true, true, true, true, true, true, true, true]))
+  ok    social.birthday_derived_default_is_stable (33 derived birthdays (31 distinct days), every birthdays_on(td) agrees with the data and the derived dates repeat call after call)
+  ok    social.calendar_entries_shape ([{day, kind: birthday | festival, id, known}] sorted by day: 11 entries of foraar (["birthday", "festival"]), an unknown birthday is known = false until the first conversation, 2 festivals (Blomsterfesten, Honningdagen))
+  ok    social.festival_active_and_events (Høstfesten 12:00-20:00: today at 10:00 but not active; 11:59 no; 12:00 active + town_festival_started {id} once + flag festival_now; 19:59 still; 20:00 town_festival_ended and the flag is gone ([true, true, true, true, true, true, true]))
+  ok    social.festival_bed_hold_seam (while the festival runs sleep_from_hour = 20 (the bed is closed at 18:00: true), at 20:00 the override is removed (true); a pre-existing override of 17 is restored afterwards (true))
+  ok    social.festival_bed_hold_survives_load_and_clear (the override is a never-saved seam: after clear_config_overrides the next flush (true), an area_changed (true), a town_festival_started event (true) and a load (true) put it back)
+  ok    social.festival_shop_closure (closes = all: a shop that is not in stays_open (seed_shop, bakery) is closed from window start - 1 h (11:00) to the window end (20:00): { "10:59": [false, false, false], "11:00": [true, false, false], "12:00": [true, false, false], "19:59": [true, false, false], "20:00": [false, false, false] }; closes = none (Sofus' badedag) closes nothing true; an ordinary day closes nothing)
+  ok    when=fest:<id|any> follows the active festival
+  ok    social.festival_first_not_counted_in_cap (Trætoppen: 14 ordinary home citizens + 4 first members + the host: all 14 attend AND the 4 firsts (the ordered pool is never cut by them: if first counted inside the 15 three citizens would stay home), crowd 19 = 1 + 4 + 14, gather posts 18)
+  ok    social.festival_first_list_and_guests (Hyggebyen: 16 home citizens + the host + 4 guests of ANOTHER area: the ordered pool is cut to 15 (social.festival.max_attendees), the guests stand outside the cap: 15 + 1 + 4 = 20)
+  ok    the ordered pool = home citizens (host excluded) sorted by SocialRng.roll(seed, [festival, npc]), the first 15
+  ok    social.festival_gather_posts_deterministic (host on fest_torvet_host, first members on gather 1..4, the ordered pool after them, one post each (19 distinct posts), the same answer every call, a Hyggebyen citizen on a Trætoppen festival gets none)
+  ok    another world seed orders the pool differently; the first seed gives the same list again
+  ok    an attendee is on his post from 17:00 (window start - 1 h) to 23:00 (the end); the day before there is nothing
+  ok    social.festival_leave_early_any_attendee (meta.leave_early = {npc = hours}: a first member (21:45 on a 23:00 window), a guest (18:45 on a 20:00 window) and an ordered attendee leave that many hours before the window end, the others stay to the end)
+  ok    an absent hero twin is excluded (pool 13 of 14 minus one), the keeper of a stays_open shop stays at his shop, the host does not
+  ok    social.when_grammar_all_kinds (hearts fest hour weekday season birthday stage open + quest done flag night, `&` and `!`: [true, true, true, true, true, true, true, true, true, true, true])
+  ok    social.when_unknown_kind_is_false (an unknown kind is FALSE (the old evaluate_when answered TRUE: a typo showed the prop forever); `!unknown` is true; an empty spec holds)
+  ok    social.when_away_kind_asks_npc_director (away:<npc> asks NpcDirector.is_away, at:<npc> asks is_present (a node injected with Svc.override first, then the static facade by path); with NO director at: is true and away: is false (the D2 hub marker of Fru Ugle needs exactly that))
+  ok    social.when_director_facade_by_path (a static facade script by path answers is_absent / is_away / is_present (true), an instance method is refused with the safe default (true), a missing script and a changed path re-resolve (true true))
+  ok    social.when_isoarea_delegates_to_the_real_manager (IsoArea.evaluate_when answers the new kinds through SocialManager.eval_when, an unknown kind is false, when_errors merges the unknown kinds with when_spec_errors: ["unknown kind in \'moonphase:full\'", "hearts: unknown npc \'nobody\' in \'hearts:nobody:4\'"])
+  ok    social.when_refresh_includes_routine_changed (WHEN_REFRESH_EVENTS: ["friend_changed", "day_started", "time_of_day_changed", "town_festival_started", "town_festival_ended", "birthday_today", "relationship_changed", "routine_changed"])
+  ok    social.when_spec_errors_lists_typos (typos are listed (unknown kind, bad hearts number, unknown NPC, hour:8, weekday:9, season, stage, festival, shop, empty id, empty term), a full valid spec and "" are clean: [["unknown kind in \'moonphase:full\'"], ["hearts: \'abc\' needs hearts:<npc>:<0..10> in \'hearts:gardener_hoppe:abc\'"], ["weekday: \'9\' is not 0..6 in \'weekday:9\'"], ["open: unknown shop \'no_such_shop\' in \'open:no_such_shop\'"], ["empty term in \'hour:8-18&&night\'"], []])
+  ok    social.context_fields (context of Hoppe on his birthday at 09:00: { "hearts": 0, "stage": "fremmed", "weekday": 4, "weather": "klart", "daypart": "morgen", "birthday": true, "festival": "", "chat_open": true, "talked_today": false, "gifts_left": 2, "partner": false })
+  ok    after a chat and a gift today: hearts 1, no chat open, talked today, no gift left today ({ "hearts": 1, "stage": "bekendt", "weekday": 4, "weather": "klart", "daypart": "morgen", "birthday": true, "festival": "", "chat_open": false, "talked_today": true, "gifts_left": 0, "partner": false })
+  ok    partner is true for the engaged citizen only
+  ok    social.daypart_bands (morgen < 11 <= dag < 17 <= aften < 21 <= nat; the transient raw hours 2..5 after an autosave at 02:00 read nat, not morgen (CK-A-SC): ["nat", "nat", "nat", "nat", "morgen", "morgen", "morgen", "morgen", "morgen", "dag", "dag", "dag", "dag", "dag", "dag", "aften", "aften", "aften", "aften", "nat", "nat", "nat", "nat", "nat"])
+  ok    social.people_rows_shape (a fresh game lists nobody; after two conversations 2 rows (met citizens only) with name_key, stage, half hearts, birthday (once known), chat done this week, gifts left, known tastes, events seen / ready; a hero twin is hidden: { "id": "baker_maja", "name_key": "NPC_BAKER_MAJA", "stage": "bekendt", "hearts": 1, "half_hearts": 2, "birthday": { "season": "efteraar", "day": 10 }, "next_birthday": { "days": 56, "total_day": 66, "season": "efteraar", "day": 10 }, "chat_done": true, "gifts_left": 2, "tastes": { "carrot": "love", "stone": "dislike" }, "events_seen": 0, "events_ready": 0 })
+  ok    events_ready: none at 0 hearts, ev_hoppe_h4 (meta.hearts 4, when hearts:..:4&hour:8-18&!fest:any) at 4 hearts and 12:00, none once it is seen; seen is saved
+  ok    remember_line / last_line keep the last line id per (npc, slot)
+  ok    250 gold in the bakery = 2 points and 50 gold carried (the keeper is Maja)
+  ok    the carried gold counts: 50 + 60 = 1 more point
+  ok    social.purchase_points_capped (1 point per 100 gold, at most 10 per keeper and calendar week: 5000 gold twice = 10 / 10 points, the next week +10 = 20; the seed shop keeper has his own cap (7); no open shop and a stall without a keeper pay nothing)
+  ok    social.keeper_sample_weekly (with the weekly chat heart and hearts >= citizens.<npc>.sample.from_hearts one cheap item is handed over ([true, true, true, true, true, true, true]), once a week, in the SAME toast as the heart; below from_hearts and for citizens without a sample row nothing)
+  ok    social.save_size_budget (fresh game 92 bytes (budget 100); the order's scenario, 30 friends with 12 known tastes each: 15918 bytes pretty (budget 16000); with the talked-today stamp gt on every row 16308 bytes, with rv on every row, pc on the 10 keepers, seen / fest / partner on top 16936 bytes (the budget scenario leaves those fields out))
+  ok    social.save_roundtrip (to_dict -> JSON text -> from_dict -> to_dict is identical for every field of 30 rows (p wk gt gd gwk gw bd bk rv ls kn pc, the seed, seen, fest, partner); the numbers are ints again and the mirror flags are rewritten)
+  ok    social.save_seed_is_lazy_and_below_2_53 (the first roll creates the world seed (14192527375474 < 2^53), it is saved and the same roll answers the same again; set_seed clamps into [1, 2^53))
+WARNING: SocialManager.from_dict: unknown NPC 'retired_npc' kept in the orphans bucket
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] from_dict (res://scripts/social/social_manager.gd:1392)
+         [1] _save (res://tests/sections/social.gd:1338)
+         [2] run (res://tests/sections/social.gd:111)
+         [3] clear_scene (res://tests/lib/flow.gd:219)
+         [4] frames (res://tests/lib/drive.gd:79)
+  ok    social.save_orphan_is_warning_not_error (from_dict returns true (a push_error would reject the whole load), emits nothing, the row of the unknown NPC sits in `orphans` and survives the next save and load (allowed warnings: 1))
+  ok    the drift load logged no engine error
+  ok    an orphan is taken back when its NPC exists again: 250 points, flag friend_retired_npc 2
+  ok    social.save_old_save_reseeds_from_flags (a payload without the section calls reset(): friend_mayor_lyra 3 -> 300 points and the week of friend_last (day 29, this week) counts as chatted, a flag above the cap is clamped to 10 hearts, a flag of an unknown NPC is ignored)
+  ok    section `social` is registered
+  ok    social.save_manager_roundtrip (SaveManager.save_game / load_game with the section registered: 400 and 100 points, the seed 4242, the weekly chat of Maja still taken, the mirror flags rewritten (true true))
+  ok    social.no_new_signals_or_inputs (no `signal` line, no InputMap / Input call in the 4 social scripts; the project has 38 actions = P01's contract (38): `people` is P01's, nothing here)
+  ok    social.validator_design_data_is_clean (SV1..SV12 + SV14 on the pinned design data (30 friends, 9 festivals, 278 giftable items): 0 errors [], 29 warnings, skipped [])
+  ok    social.validator_selftest_mutants_caught (34 mutants of the pristine data, each caught by the rule it breaks; missed []; pristine errors [])
+  ok    social.validator_python_agrees_on_mutants (tools/social/core/validate_social.py: the pristine data exits 0 and each of 34 mutants exits 1 with the rule code (pristine exit 0, missed by python: []))
+  ok    social.sv14_contest_rewards_capped (first prize <= min(2 x the cheapest winning entry of the category (150 g for category:crop -> cap 300 g), 400 g: 400 g passes and 500 g fails on a 950 / 1000 g category); second <= 0.7 x first, third <= 0.4 x first, never a keepsake, rarity <= rare, the item exists; a contest with no rewards is a warning: [true, true, true, true, true, true, true, true, true])
+  ok    social.validator_festival_attendance_rules ([] first / guests / leave_early ids exist; a first member IS a home citizen of the area and a guest is NOT; no citizen twice in the roster; 15 + 1 + len(first) + len(guests) <= towns.max_live_visuals_festival (20 passes, 21 and a limit of 19 fail); without a route table the walk rule is reported as NOT evaluated: [true, true, true, true, true, true, true, true, true, true, true, true])
+  ok    social.validator_first_members_removed_from_the_ordered_pool (the validator's own ordered pool (first members removed, host excluded, by SocialRng.roll) equals SocialManager.festival_roster().pool for 4 seeds x 2 festivals, and the naive pool that keeps the first members (15 citizens instead of 14) differs, so a regression is caught)
+  ok    social.validator_leave_early_covers_1_5x_the_walk (leave_early >= 1.5 x the route time + 15 min: a 40 min walk needs 1.25 h (1.25 passes, 1.2 fails); measured from the deadline = the window end when the festival closes his shop, else the shop's opening hour (17:00 on a window to 20:00: 4.25 h pass, 4.2 and 1.25 fail))
+  ok    social.validator_festival_window_margin (a festival window may end by day_end_hour - 1 = 25.0 (CK-A-SC): 23.0 / 24.0 / 25.0 pass, 25.5 and 26.0 fail; on a 24 hour day (day_end_hour 24) the limit is 23.0 again; the shipped data still ends by 23:00)
+  ok    social.validator_real_data_clean (SV1..SV12 + SV14 on the dump of the real data (34 npcs, 34 citizens rows, 9 festivals): GDScript 0 errors [], python exit 0; 1 warnings (the derived defaults of every friend until S-data); skipped ["SV11: leave_early walk rule not evaluated (no route_minutes: the route table of the towns track, T-routes, is not available to this run)"])
+  ok    social.balance_live_input_regressions (....
+----------------------------------------------------------------------
+Ran 4 tests in 0.061s
+
+OK
+)
+  ok    social.balance_live_routines_cover_current_roster (Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+AVAILABILITY exported 34 live citizens; compile problems []
+)
+  ok    social.balance_claims_hold (variant free on the dump of the real data (100 runs x 336 days): weekly chat alone reaches 8 hearts on day 50, the fastest possible 10 hearts is day 32; a typical player (the original 2.6-talk budget scaled by the live day duration) reaches 8 hearts with a tier A citizen at median 73.0 / p90 96.0 with the lean events (<= 80 / 115) and 68.0 / 91.0 with four events (<= 75 / 110); gifts are 21 % of a dedicated player's points (<= 25), the typical player spends 20 % of a game week (<= 25))
+  ok    social.balance_claims_hold_with_availability (variant mixed (town visits half by day, half until half an hour before bedtime; public room hours and one-heart owner gates apply; table: Live Routines.timeline, exact spans; all citizens, hearts 5,): median 72.0 / p90 100.0 with the lean events (<= 80 / 115), 67.0 / 93.0 with four events (<= 75 / 110); never reaching 8 hearts: tier A / B at most 0.2 % (<= 2), the worst single tier A / B citizen never reaches 4 hearts in 0.0 % (<= 2; at 8 hearts the worst citizen 4 %, a guard of this package at <= 5))
+  ok    social.balance_bounds_ratchet (tests/lib/social/balance_bounds.json: every bound is at or under the design limit (true), the runs sit under their bounds (true) and within the margin (true: a bound cannot silently drift away from what the data does), `--check` exits 0; `--ratchet` on a copy never raises a bound (1 stays 1: true) and lowers a loose one (true))
+  ok    social.fresh_resets_social_manager (Fresh.FEATURE_NODES names SocialManager; Fresh.new_game resets it (250 points gone, flags gone) and seeds it (424242 = DEFAULT_SEED), seed_features(2024) -> 0, reset_features() listed it: ["HomeManager", "FurnitureManager", "WardrobeManager", "LootService", "SocialManager"])
+  ok    social.grant_set_hearts_uses_manager (Grant.set_hearts goes through SocialManager.debug_set_hearts: points, the mirror flag and friend_changed(mayor_lyra, 4) once (source debug), never lowers, and fairy_king 6 hearts for home_tiers.lua ([["mayor_lyra", 4], ["fairy_king", 6]]))
+  ok    social.lua_api_functions (api.get_hearts -> int (0, 2), api.add_hearts(npc, 2) -> SocialManager.add_hearts(.., &lua): 200 points, api.is_birthday -> bool (true / false), api.festival() -> the active festival id as a String (hoestfesten) or "" ())
+  ok    social.project_line_once_and_check_project_exit_0 (project.godot holds the SocialManager line 1 time(s); tests/tools/check_project.gd exits 0 with 73 PASS and 0 FAIL ids)
+  ok    social.perf_boot_ms_added (what the autoload adds to the boot: creating the node and its _ready (nine signal connections, the section registration) takes 0.16 ms (budget 5 ms); compiling the 1,250 line script costs 39.6 ms once at start-up (measured with CACHE_MODE_IGNORE on a loaded machine, reported, not asserted); the real node holds the section again)
+  ok    social.perf_lookup_p95_under_100us (lookups, median / p95 in microseconds (budget: p95 < 100 asserted; the order's 6 us for a one-term eval_when and 20 us for festival_active are quiet-machine targets, reported here, not asserted on a shared machine): hearts 2.1/2.1, stage 5.1/5.3, points 0.6/0.6, eval_when_hearts 3.0/3.0, eval_when_hour 2.0/2.1, eval_when_fest 40.7/41.5, eval_when3 45.6/46.8, festival_active 39.5/40.6, birthdays_today 4.5/4.7, daypart 0.6/0.6, shop_closed 42.8/44.6; reset() 0.07 ms)
+  ok    social.fixture_replacements_freed (uninstall frees both the current fixture and an override it replaced)
+  --    social: 137 checks, 0 failed, 0 skipped, 30.7 s
+  note  section social took 30.7 s (> 30 s): consider splitting it
+== section social_fest_content  (res://tests/sections/social_fest_content.gd)
+  ok    social_fest_content.live_social_validator_including_keeper_return_routes ([][])
+  ok    social_fest_content.blomsterfesten_unique_date_and_valid_window
+  ok    social_fest_content.blomsterfesten_existing_host
+  ok    social_fest_content.blomsterfesten_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.blomsterfesten_birthday_clear_baker_maja
+  ok    social_fest_content.blomsterfesten_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.blomsterfesten_birthday_clear_beekeeper_birk
+  ok    social_fest_content.blomsterfesten_birthday_clear_bertil
+  ok    social_fest_content.blomsterfesten_birthday_clear_bodil
+  ok    social_fest_content.blomsterfesten_birthday_clear_carpenter_brumme
+  ok    social_fest_content.blomsterfesten_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.blomsterfesten_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.blomsterfesten_birthday_clear_cub_bamse
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_builder
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_furnisher
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_king
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_lily
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_tailor
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_wizard
+  ok    social_fest_content.blomsterfesten_birthday_clear_farmer_rosa
+  ok    social_fest_content.blomsterfesten_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.blomsterfesten_birthday_clear_gardener_hoppe
+  ok    social_fest_content.blomsterfesten_birthday_clear_ghostfam_blund
+  ok    social_fest_content.blomsterfesten_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.blomsterfesten_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.blomsterfesten_birthday_clear_ghostfam_silke
+  ok    social_fest_content.blomsterfesten_birthday_clear_guard_oak
+  ok    social_fest_content.blomsterfesten_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.blomsterfesten_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.blomsterfesten_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.blomsterfesten_birthday_clear_mayor_lyra
+  ok    social_fest_content.blomsterfesten_birthday_clear_merchant_pip
+  ok    social_fest_content.blomsterfesten_birthday_clear_penguin_postman
+  ok    social_fest_content.blomsterfesten_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.blomsterfesten_birthday_clear_postman_pip
+  ok    social_fest_content.blomsterfesten_birthday_clear_rasmus
+  ok    social_fest_content.blomsterfesten_birthday_clear_smith_thorin
+  ok    social_fest_content.blomsterfesten_activity_copy_flower_contest
+  ok    social_fest_content.blomsterfesten_contest_prizes
+  ok    social_fest_content.blomsterfesten_activity_copy_seed_stall
+  ok    social_fest_content.blomsterfesten_market_definition
+  ok    social_fest_content.blomsterfesten_market_stock_carrot_seeds
+  ok    social_fest_content.blomsterfesten_market_stock_sunflower_seeds
+  ok    social_fest_content.blomsterfesten_market_stock_strawberry_seeds
+  ok    social_fest_content.blomsterfesten_activity_copy_dance
+  ok    social_fest_content.blomsterfesten_whole_family_invited
+  ok    social_fest_content.blomsterfesten_all_activity_posts_resolve ([])
+  ok    social_fest_content.blomsterfesten_opening_seen
+  ok    social_fest_content.blomsterfesten_family_present
+  ok    social_fest_content.blomsterfesten_bed_held
+  ok    social_fest_content.blomsterfesten_own_market_open
+  ok    social_fest_content.blomsterfesten_painted_decor_present (decor=FestivalDecor:<Node#2497640948015> art=FestivalArt:<Node2D#2497674502448> children=[festival_stage_stage:<Sprite2D#2497724834091>, flower_arch_centre:<Sprite2D#2497942937900>, market_stall_spring_awning:<Sprite2D#2498161041706>, @Sprite2D@10544:<Sprite2D#2498379145511>, @Sprite2D@10545:<Sprite2D#2498412699940>, @Sprite2D@10546:<Sprite2D#2498446254370>, festival_bench_bench:<Sprite2D#2498479808799>, @Sprite2D@10547:<Sprite2D#2498697912608>, banner_pole_spring_pole:<Sprite2D#2498916016414>, @Sprite2D@10548:<Sprite2D#2499134120216>, bunting_string_a_string:<Sprite2D#2499352224023>, @Sprite2D@10549:<Sprite2D#2499570327826>, @Sprite2D@10550:<Sprite2D#2499603882257>, @Sprite2D@10551:<Sprite2D#2499637436691>, door_wreath_spring_door:<Sprite2D#2499670991118>, @Sprite2D@10552:<Sprite2D#2499889094927>, @Sprite2D@10553:<Sprite2D#2499922649355>, @Sprite2D@10554:<Sprite2D#2499956203789>, @Sprite2D@10555:<Sprite2D#2499989758215>, @Sprite2D@10556:<Sprite2D#2500023312648>, @Sprite2D@10557:<Sprite2D#2500056867081>, @Sprite2D@10558:<Sprite2D#2500090421508>, @Sprite2D@10559:<Sprite2D#2500123975941>, @Sprite2D@10560:<Sprite2D#2500157530374>, @Sprite2D@10561:<Sprite2D#2500191084801>, @Sprite2D@10562:<Sprite2D#2500224639234>, @Sprite2D@10563:<Sprite2D#2500258193667>, @Sprite2D@10564:<Sprite2D#2500291748094>])
+  ok    social_fest_content.blomsterfesten_finale_pays_once
+  ok    social_fest_content.blomsterfesten_reentry_has_no_repeat_reward
+  ok    social_fest_content.blomsterfesten_own_market_closes
+  ok    social_fest_content.blomsterfesten_decor_clears_afterwards
+  ok    social_fest_content.honningdagen_unique_date_and_valid_window
+  ok    social_fest_content.honningdagen_existing_host
+  ok    social_fest_content.honningdagen_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.honningdagen_birthday_clear_baker_maja
+  ok    social_fest_content.honningdagen_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.honningdagen_birthday_clear_beekeeper_birk
+  ok    social_fest_content.honningdagen_birthday_clear_bertil
+  ok    social_fest_content.honningdagen_birthday_clear_bodil
+  ok    social_fest_content.honningdagen_birthday_clear_carpenter_brumme
+  ok    social_fest_content.honningdagen_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.honningdagen_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.honningdagen_birthday_clear_cub_bamse
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_builder
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_furnisher
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_king
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_lily
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_tailor
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_wizard
+  ok    social_fest_content.honningdagen_birthday_clear_farmer_rosa
+  ok    social_fest_content.honningdagen_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.honningdagen_birthday_clear_gardener_hoppe
+  ok    social_fest_content.honningdagen_birthday_clear_ghostfam_blund
+  ok    social_fest_content.honningdagen_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.honningdagen_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.honningdagen_birthday_clear_ghostfam_silke
+  ok    social_fest_content.honningdagen_birthday_clear_guard_oak
+  ok    social_fest_content.honningdagen_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.honningdagen_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.honningdagen_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.honningdagen_birthday_clear_mayor_lyra
+  ok    social_fest_content.honningdagen_birthday_clear_merchant_pip
+  ok    social_fest_content.honningdagen_birthday_clear_penguin_postman
+  ok    social_fest_content.honningdagen_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.honningdagen_birthday_clear_postman_pip
+  ok    social_fest_content.honningdagen_birthday_clear_rasmus
+  ok    social_fest_content.honningdagen_birthday_clear_smith_thorin
+  ok    social_fest_content.honningdagen_activity_copy_honey_contest
+  ok    social_fest_content.honningdagen_contest_prizes
+  ok    social_fest_content.honningdagen_activity_copy_picnic
+  ok    social_fest_content.honningdagen_activity_copy_honey_stall
+  ok    social_fest_content.honningdagen_market_definition
+  ok    social_fest_content.honningdagen_market_stock_honey
+  ok    social_fest_content.honningdagen_market_stock_cookie
+  ok    social_fest_content.honningdagen_market_stock_milk
+  ok    social_fest_content.honningdagen_whole_family_invited
+  ok    social_fest_content.honningdagen_all_activity_posts_resolve ([])
+  ok    social_fest_content.honningdagen_opening_seen
+  ok    social_fest_content.honningdagen_family_present
+  ok    social_fest_content.honningdagen_bed_held
+  ok    social_fest_content.honningdagen_retained_shop_covers_weekday_bakery
+  ok    social_fest_content.honningdagen_own_market_open
+  ok    social_fest_content.honningdagen_painted_decor_present (decor=FestivalDecor:<Node#2497640948015> art=FestivalArt:<Node2D#2543207866956> children=[festival_stage_stage:<Sprite2D#2543224644168>, maypole_centre:<Sprite2D#2543442747973>, market_stall_spring_awning:<Sprite2D#2543660851694>, @Sprite2D@10710:<Sprite2D#2543878955498>, @Sprite2D@10711:<Sprite2D#2543912492146>, @Sprite2D@10712:<Sprite2D#2543946064371>, festival_bench_bench:<Sprite2D#2543979618789>, @Sprite2D@10713:<Sprite2D#2544197722334>, banner_pole_spring_pole:<Sprite2D#2544415826413>, @Sprite2D@10714:<Sprite2D#2544633930212>, bunting_string_a_string:<Sprite2D#2544852033725>, @Sprite2D@10715:<Sprite2D#2545070137593>, @Sprite2D@10716:<Sprite2D#2545103691952>, @Sprite2D@10717:<Sprite2D#2545137246421>, flower_arch_accent:<Sprite2D#2545170783408>, door_wreath_spring_door:<Sprite2D#2545388904668>, @Sprite2D@10718:<Sprite2D#2545607008430>, @Sprite2D@10719:<Sprite2D#2545640562853>, @Sprite2D@10720:<Sprite2D#2545674117289>, @Sprite2D@10721:<Sprite2D#2545707671722>, @Sprite2D@10722:<Sprite2D#2545741226152>, @Sprite2D@10723:<Sprite2D#2545774780579>, @Sprite2D@10724:<Sprite2D#2545808335014>, @Sprite2D@10725:<Sprite2D#2545841889444>, @Sprite2D@10726:<Sprite2D#2545875443874>, @Sprite2D@10727:<Sprite2D#2545908998303>, @Sprite2D@10728:<Sprite2D#2545942552736>, @Sprite2D@10729:<Sprite2D#2545976107169>, @Sprite2D@10730:<Sprite2D#2546009661596>])
+  ok    social_fest_content.honningdagen_finale_pays_once
+  ok    social_fest_content.honningdagen_reentry_has_no_repeat_reward
+  ok    social_fest_content.honningdagen_own_market_closes
+  ok    social_fest_content.honningdagen_decor_clears_afterwards
+  ok    social_fest_content.midsommerlanterner_unique_date_and_valid_window
+  ok    social_fest_content.midsommerlanterner_existing_host
+  ok    social_fest_content.midsommerlanterner_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.midsommerlanterner_birthday_clear_baker_maja
+  ok    social_fest_content.midsommerlanterner_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.midsommerlanterner_birthday_clear_beekeeper_birk
+  ok    social_fest_content.midsommerlanterner_birthday_clear_bertil
+  ok    social_fest_content.midsommerlanterner_birthday_clear_bodil
+  ok    social_fest_content.midsommerlanterner_birthday_clear_carpenter_brumme
+  ok    social_fest_content.midsommerlanterner_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.midsommerlanterner_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.midsommerlanterner_birthday_clear_cub_bamse
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_builder
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_furnisher
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_king
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_lily
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_tailor
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_wizard
+  ok    social_fest_content.midsommerlanterner_birthday_clear_farmer_rosa
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.midsommerlanterner_birthday_clear_gardener_hoppe
+  ok    social_fest_content.midsommerlanterner_birthday_clear_ghostfam_blund
+  ok    social_fest_content.midsommerlanterner_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.midsommerlanterner_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.midsommerlanterner_birthday_clear_ghostfam_silke
+  ok    social_fest_content.midsommerlanterner_birthday_clear_guard_oak
+  ok    social_fest_content.midsommerlanterner_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.midsommerlanterner_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.midsommerlanterner_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.midsommerlanterner_birthday_clear_mayor_lyra
+  ok    social_fest_content.midsommerlanterner_birthday_clear_merchant_pip
+  ok    social_fest_content.midsommerlanterner_birthday_clear_penguin_postman
+  ok    social_fest_content.midsommerlanterner_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.midsommerlanterner_birthday_clear_postman_pip
+  ok    social_fest_content.midsommerlanterner_birthday_clear_rasmus
+  ok    social_fest_content.midsommerlanterner_birthday_clear_smith_thorin
+  ok    social_fest_content.midsommerlanterner_activity_copy_lantern_wish
+  ok    social_fest_content.midsommerlanterner_activity_copy_bonfire_supper
+  ok    social_fest_content.midsommerlanterner_activity_copy_dance
+  ok    social_fest_content.midsommerlanterner_whole_family_invited
+  ok    social_fest_content.midsommerlanterner_all_activity_posts_resolve ([])
+  ok    social_fest_content.midsommerlanterner_opening_seen
+  ok    social_fest_content.midsommerlanterner_family_present
+  ok    social_fest_content.midsommerlanterner_bed_held
+  ok    social_fest_content.midsommerlanterner_painted_decor_present (decor=FestivalDecor:<Node#2627697925460> art=FestivalArt:<Node2D#2627731479893> children=[festival_stage_stage:<Sprite2D#2627748257104>, bonfire_festival_centre:<Sprite2D#2627966360913>, market_stall_summer_awning:<Sprite2D#2628402568521>, @Sprite2D@11076:<Sprite2D#2628620672328>, @Sprite2D@11077:<Sprite2D#2628654226755>, @Sprite2D@11078:<Sprite2D#2628687781189>, festival_bench_bench:<Sprite2D#2628721335620>, @Sprite2D@11079:<Sprite2D#2628939439425>, banner_pole_summer_pole:<Sprite2D#2629157543229>, @Sprite2D@11080:<Sprite2D#2629375647036>, lantern_string_a_string:<Sprite2D#2629593750842>, @Sprite2D@11081:<Sprite2D#2630029958452>, @Sprite2D@11082:<Sprite2D#2630063512881>, @Sprite2D@11083:<Sprite2D#2630097067311>])
+  ok    social_fest_content.midsommerlanterner_decor_above_deck
+  ok    social_fest_content.midsommerlanterner_finale_pays_once
+  ok    social_fest_content.midsommerlanterner_reentry_has_no_repeat_reward
+  ok    social_fest_content.midsommerlanterner_decor_clears_afterwards
+  ok    social_fest_content.badedagen_unique_date_and_valid_window
+  ok    social_fest_content.badedagen_existing_host
+  ok    social_fest_content.badedagen_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.badedagen_birthday_clear_baker_maja
+  ok    social_fest_content.badedagen_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.badedagen_birthday_clear_beekeeper_birk
+  ok    social_fest_content.badedagen_birthday_clear_bertil
+  ok    social_fest_content.badedagen_birthday_clear_bodil
+  ok    social_fest_content.badedagen_birthday_clear_carpenter_brumme
+  ok    social_fest_content.badedagen_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.badedagen_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.badedagen_birthday_clear_cub_bamse
+  ok    social_fest_content.badedagen_birthday_clear_fairy_builder
+  ok    social_fest_content.badedagen_birthday_clear_fairy_furnisher
+  ok    social_fest_content.badedagen_birthday_clear_fairy_king
+  ok    social_fest_content.badedagen_birthday_clear_fairy_lily
+  ok    social_fest_content.badedagen_birthday_clear_fairy_tailor
+  ok    social_fest_content.badedagen_birthday_clear_fairy_wizard
+  ok    social_fest_content.badedagen_birthday_clear_farmer_rosa
+  ok    social_fest_content.badedagen_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.badedagen_birthday_clear_gardener_hoppe
+  ok    social_fest_content.badedagen_birthday_clear_ghostfam_blund
+  ok    social_fest_content.badedagen_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.badedagen_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.badedagen_birthday_clear_ghostfam_silke
+  ok    social_fest_content.badedagen_birthday_clear_guard_oak
+  ok    social_fest_content.badedagen_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.badedagen_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.badedagen_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.badedagen_birthday_clear_mayor_lyra
+  ok    social_fest_content.badedagen_birthday_clear_merchant_pip
+  ok    social_fest_content.badedagen_birthday_clear_penguin_postman
+  ok    social_fest_content.badedagen_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.badedagen_birthday_clear_postman_pip
+  ok    social_fest_content.badedagen_birthday_clear_rasmus
+  ok    social_fest_content.badedagen_birthday_clear_smith_thorin
+  ok    social_fest_content.badedagen_activity_copy_free_bath
+  ok    social_fest_content.badedagen_activity_copy_picnic
+  ok    social_fest_content.badedagen_activity_copy_potluck
+  ok    social_fest_content.badedagen_whole_family_invited
+  ok    social_fest_content.badedagen_all_activity_posts_resolve ([])
+  ok    social_fest_content.badedagen_opening_seen
+  ok    social_fest_content.badedagen_family_present
+  ok    social_fest_content.badedagen_bed_held
+  ok    social_fest_content.badedagen_painted_decor_present (decor=FestivalDecor:<Node#2715878972937> art=FestivalArt:<Node2D#2715912527370> children=[festival_stage_stage:<Sprite2D#2715929304583>, flower_arch_centre:<Sprite2D#2716147408392>, market_stall_summer_awning:<Sprite2D#2716365512196>, @Sprite2D@11450:<Sprite2D#2716583615999>, @Sprite2D@11451:<Sprite2D#2716617170430>, @Sprite2D@11452:<Sprite2D#2716650724864>, festival_bench_bench:<Sprite2D#2716684279291>, @Sprite2D@11453:<Sprite2D#2716902383100>, banner_pole_summer_pole:<Sprite2D#2717120487953>, @Sprite2D@11454:<Sprite2D#2717338591787>, lantern_string_a_string:<Sprite2D#2717556695559>, @Sprite2D@11455:<Sprite2D#2717992885081>, @Sprite2D@11456:<Sprite2D#2718026457545>, @Sprite2D@11457:<Sprite2D#2718060011972>])
+  ok    social_fest_content.badedagen_decor_above_deck
+  ok    social_fest_content.badedagen_finale_pays_once
+  ok    social_fest_content.badedagen_reentry_has_no_repeat_reward
+  ok    social_fest_content.badedagen_decor_clears_afterwards
+  ok    social_fest_content.hoestfesten_unique_date_and_valid_window
+  ok    social_fest_content.hoestfesten_existing_host
+  ok    social_fest_content.hoestfesten_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.hoestfesten_birthday_clear_baker_maja
+  ok    social_fest_content.hoestfesten_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.hoestfesten_birthday_clear_beekeeper_birk
+  ok    social_fest_content.hoestfesten_birthday_clear_bertil
+  ok    social_fest_content.hoestfesten_birthday_clear_bodil
+  ok    social_fest_content.hoestfesten_birthday_clear_carpenter_brumme
+  ok    social_fest_content.hoestfesten_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.hoestfesten_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.hoestfesten_birthday_clear_cub_bamse
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_builder
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_furnisher
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_king
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_lily
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_tailor
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_wizard
+  ok    social_fest_content.hoestfesten_birthday_clear_farmer_rosa
+  ok    social_fest_content.hoestfesten_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.hoestfesten_birthday_clear_gardener_hoppe
+  ok    social_fest_content.hoestfesten_birthday_clear_ghostfam_blund
+  ok    social_fest_content.hoestfesten_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.hoestfesten_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.hoestfesten_birthday_clear_ghostfam_silke
+  ok    social_fest_content.hoestfesten_birthday_clear_guard_oak
+  ok    social_fest_content.hoestfesten_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.hoestfesten_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.hoestfesten_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.hoestfesten_birthday_clear_mayor_lyra
+  ok    social_fest_content.hoestfesten_birthday_clear_merchant_pip
+  ok    social_fest_content.hoestfesten_birthday_clear_penguin_postman
+  ok    social_fest_content.hoestfesten_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.hoestfesten_birthday_clear_postman_pip
+  ok    social_fest_content.hoestfesten_birthday_clear_rasmus
+  ok    social_fest_content.hoestfesten_birthday_clear_smith_thorin
+  ok    social_fest_content.hoestfesten_activity_copy_pumpkin_contest
+  ok    social_fest_content.hoestfesten_contest_prizes
+  ok    social_fest_content.hoestfesten_activity_copy_harvest_feast
+  ok    social_fest_content.hoestfesten_activity_copy_harvest_market
+  ok    social_fest_content.hoestfesten_market_definition
+  ok    social_fest_content.hoestfesten_market_stock_pumpkin_seeds
+  ok    social_fest_content.hoestfesten_market_stock_carrot_seeds
+  ok    social_fest_content.hoestfesten_market_stock_fertilizer
+  ok    social_fest_content.hoestfesten_whole_family_invited
+  ok    social_fest_content.hoestfesten_all_activity_posts_resolve ([])
+  ok    social_fest_content.hoestfesten_opening_seen
+  ok    social_fest_content.hoestfesten_family_present
+  ok    social_fest_content.hoestfesten_bed_held
+  ok    social_fest_content.hoestfesten_retained_shop_covers_weekday_bakery
+  ok    social_fest_content.hoestfesten_own_market_open
+  ok    social_fest_content.hoestfesten_painted_decor_present (decor=FestivalDecor:<Node#2810586356164> art=FestivalArt:<Node2D#2810619910597> children=[festival_stage_stage:<Sprite2D#2810636687808>, pumpkin_pile_centre:<Sprite2D#2810854792454>, market_stall_autumn_awning:<Sprite2D#2811072897516>, @Sprite2D@11849:<Sprite2D#2811291001326>, @Sprite2D@11850:<Sprite2D#2811324555486>, @Sprite2D@11851:<Sprite2D#2811358110182>, festival_bench_bench:<Sprite2D#2811391664731>, @Sprite2D@11852:<Sprite2D#2811609768537>, banner_pole_autumn_pole:<Sprite2D#2811827872342>, @Sprite2D@11853:<Sprite2D#2812045976209>, bunting_string_b_string:<Sprite2D#2812264078529>, @Sprite2D@11854:<Sprite2D#2812482182341>, @Sprite2D@11855:<Sprite2D#2812515736818>, @Sprite2D@11856:<Sprite2D#2812549291257>, sheaf_stack_accent:<Sprite2D#2812582845635>, door_wreath_autumn_door:<Sprite2D#2812800949471>, @Sprite2D@11857:<Sprite2D#2813019053235>, @Sprite2D@11858:<Sprite2D#2813052607654>, @Sprite2D@11859:<Sprite2D#2813086162089>, @Sprite2D@11860:<Sprite2D#2813119716529>, @Sprite2D@11861:<Sprite2D#2813153270951>, @Sprite2D@11862:<Sprite2D#2813186825390>, @Sprite2D@11863:<Sprite2D#2813220379811>, @Sprite2D@11864:<Sprite2D#2813253934255>, @Sprite2D@11865:<Sprite2D#2813287488676>, @Sprite2D@11866:<Sprite2D#2813321043116>, @Sprite2D@11867:<Sprite2D#2813354597527>, @Sprite2D@11868:<Sprite2D#2813388151961>, @Sprite2D@11869:<Sprite2D#2813421706388>])
+  ok    social_fest_content.hoestfesten_decor_above_deck
+  ok    social_fest_content.hoestfesten_finale_pays_once
+  ok    social_fest_content.hoestfesten_reentry_has_no_repeat_reward
+  ok    social_fest_content.hoestfesten_own_market_closes
+  ok    social_fest_content.hoestfesten_decor_clears_afterwards
+  ok    social_fest_content.maanemarkedet_unique_date_and_valid_window
+  ok    social_fest_content.maanemarkedet_existing_host
+  ok    social_fest_content.maanemarkedet_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.maanemarkedet_birthday_clear_baker_maja
+  ok    social_fest_content.maanemarkedet_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.maanemarkedet_birthday_clear_beekeeper_birk
+  ok    social_fest_content.maanemarkedet_birthday_clear_bertil
+  ok    social_fest_content.maanemarkedet_birthday_clear_bodil
+  ok    social_fest_content.maanemarkedet_birthday_clear_carpenter_brumme
+  ok    social_fest_content.maanemarkedet_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.maanemarkedet_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.maanemarkedet_birthday_clear_cub_bamse
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_builder
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_furnisher
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_king
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_lily
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_tailor
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_wizard
+  ok    social_fest_content.maanemarkedet_birthday_clear_farmer_rosa
+  ok    social_fest_content.maanemarkedet_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.maanemarkedet_birthday_clear_gardener_hoppe
+  ok    social_fest_content.maanemarkedet_birthday_clear_ghostfam_blund
+  ok    social_fest_content.maanemarkedet_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.maanemarkedet_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.maanemarkedet_birthday_clear_ghostfam_silke
+  ok    social_fest_content.maanemarkedet_birthday_clear_guard_oak
+  ok    social_fest_content.maanemarkedet_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.maanemarkedet_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.maanemarkedet_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.maanemarkedet_birthday_clear_mayor_lyra
+  ok    social_fest_content.maanemarkedet_birthday_clear_merchant_pip
+  ok    social_fest_content.maanemarkedet_birthday_clear_penguin_postman
+  ok    social_fest_content.maanemarkedet_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.maanemarkedet_birthday_clear_postman_pip
+  ok    social_fest_content.maanemarkedet_birthday_clear_rasmus
+  ok    social_fest_content.maanemarkedet_birthday_clear_smith_thorin
+  ok    social_fest_content.maanemarkedet_activity_copy_moon_market
+  ok    social_fest_content.maanemarkedet_market_definition
+  ok    social_fest_content.maanemarkedet_market_stock_amethyst
+  ok    social_fest_content.maanemarkedet_market_stock_glow_mushroom
+  ok    social_fest_content.maanemarkedet_market_stock_lantern_oil
+  ok    social_fest_content.maanemarkedet_activity_copy_gem_show
+  ok    social_fest_content.maanemarkedet_contest_prizes
+  ok    social_fest_content.maanemarkedet_activity_copy_lantern_wish
+  ok    social_fest_content.maanemarkedet_whole_family_invited
+  ok    social_fest_content.maanemarkedet_all_activity_posts_resolve ([])
+  ok    social_fest_content.maanemarkedet_opening_seen
+  ok    social_fest_content.maanemarkedet_family_present
+  ok    social_fest_content.maanemarkedet_bed_held
+  ok    social_fest_content.maanemarkedet_retained_shop_covers_weekday_magic_store
+  ok    social_fest_content.maanemarkedet_own_market_open
+  ok    social_fest_content.maanemarkedet_painted_decor_present (decor=FestivalDecor:<Node#2497640948015> art=FestivalArt:<Node2D#2890244579787> children=[festival_stage_stage:<Sprite2D#2890261357002>, bonfire_festival_centre:<Sprite2D#2890479460812>, market_stall_autumn_awning:<Sprite2D#2890915668437>, @Sprite2D@11991:<Sprite2D#2891133772243>, @Sprite2D@11992:<Sprite2D#2891167325416>, @Sprite2D@11993:<Sprite2D#2891200881078>, festival_bench_bench:<Sprite2D#2891234417390>, @Sprite2D@11994:<Sprite2D#2891452539342>, banner_pole_autumn_pole:<Sprite2D#2891670643200>, @Sprite2D@11995:<Sprite2D#2891888746997>, bunting_string_b_string:<Sprite2D#2892106850811>, @Sprite2D@11996:<Sprite2D#2892324954305>, @Sprite2D@11997:<Sprite2D#2892358509046>, @Sprite2D@11998:<Sprite2D#2892392045364>, sheaf_stack_accent:<Sprite2D#2892425617905>])
+  ok    social_fest_content.maanemarkedet_finale_pays_once
+  ok    social_fest_content.maanemarkedet_reentry_has_no_repeat_reward
+  ok    social_fest_content.maanemarkedet_own_market_closes
+  ok    social_fest_content.maanemarkedet_decor_clears_afterwards
+  ok    social_fest_content.vinterlysene_unique_date_and_valid_window
+  ok    social_fest_content.vinterlysene_existing_host
+  ok    social_fest_content.vinterlysene_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.vinterlysene_birthday_clear_baker_maja
+  ok    social_fest_content.vinterlysene_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.vinterlysene_birthday_clear_beekeeper_birk
+  ok    social_fest_content.vinterlysene_birthday_clear_bertil
+  ok    social_fest_content.vinterlysene_birthday_clear_bodil
+  ok    social_fest_content.vinterlysene_birthday_clear_carpenter_brumme
+  ok    social_fest_content.vinterlysene_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.vinterlysene_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.vinterlysene_birthday_clear_cub_bamse
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_builder
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_furnisher
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_king
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_lily
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_tailor
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_wizard
+  ok    social_fest_content.vinterlysene_birthday_clear_farmer_rosa
+  ok    social_fest_content.vinterlysene_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.vinterlysene_birthday_clear_gardener_hoppe
+  ok    social_fest_content.vinterlysene_birthday_clear_ghostfam_blund
+  ok    social_fest_content.vinterlysene_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.vinterlysene_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.vinterlysene_birthday_clear_ghostfam_silke
+  ok    social_fest_content.vinterlysene_birthday_clear_guard_oak
+  ok    social_fest_content.vinterlysene_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.vinterlysene_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.vinterlysene_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.vinterlysene_birthday_clear_mayor_lyra
+  ok    social_fest_content.vinterlysene_birthday_clear_merchant_pip
+  ok    social_fest_content.vinterlysene_birthday_clear_penguin_postman
+  ok    social_fest_content.vinterlysene_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.vinterlysene_birthday_clear_postman_pip
+  ok    social_fest_content.vinterlysene_birthday_clear_rasmus
+  ok    social_fest_content.vinterlysene_birthday_clear_smith_thorin
+  ok    social_fest_content.vinterlysene_activity_copy_light_procession
+  ok    social_fest_content.vinterlysene_activity_copy_lantern_wish
+  ok    social_fest_content.vinterlysene_activity_copy_warm_drinks
+  ok    social_fest_content.vinterlysene_whole_family_invited
+  ok    social_fest_content.vinterlysene_all_activity_posts_resolve ([])
+  ok    social_fest_content.vinterlysene_opening_seen
+  ok    social_fest_content.vinterlysene_family_present
+  ok    social_fest_content.vinterlysene_bed_held
+  ok    social_fest_content.vinterlysene_painted_decor_present (decor=FestivalDecor:<Node#3008876274219> art=FestivalArt:<Node2D#3008909828625> children=[festival_stage_stage:<Sprite2D#3008926605834>, ice_lantern_centre:<Sprite2D#3009144708601>, market_stall_winter_awning:<Sprite2D#3009580916222>, @Sprite2D@12352:<Sprite2D#3009799020033>, @Sprite2D@12353:<Sprite2D#3009832574470>, @Sprite2D@12354:<Sprite2D#3009866128893>, festival_bench_bench:<Sprite2D#3009899683330>, @Sprite2D@12355:<Sprite2D#3010117787143>, banner_pole_winter_pole:<Sprite2D#3010335891849>, @Sprite2D@12356:<Sprite2D#3010553995694>, lantern_string_b_string:<Sprite2D#3010772099492>, @Sprite2D@12357:<Sprite2D#3011208307127>, @Sprite2D@12358:<Sprite2D#3011241861538>, @Sprite2D@12359:<Sprite2D#3011275415997>, door_wreath_winter_door:<Sprite2D#3011342523530>, @Sprite2D@12360:<Sprite2D#3011560627308>, @Sprite2D@12361:<Sprite2D#3011594181808>, @Sprite2D@12362:<Sprite2D#3011627736046>, @Sprite2D@12363:<Sprite2D#3011661290675>, @Sprite2D@12364:<Sprite2D#3011694845094>, @Sprite2D@12365:<Sprite2D#3011728399529>, @Sprite2D@12366:<Sprite2D#3011761953969>, @Sprite2D@12367:<Sprite2D#3011795508391>, @Sprite2D@12368:<Sprite2D#3011829062830>, @Sprite2D@12369:<Sprite2D#3011862617251>, @Sprite2D@12370:<Sprite2D#3011896171695>, @Sprite2D@12371:<Sprite2D#3011929726116>, @Sprite2D@12372:<Sprite2D#3011963280556>])
+  ok    social_fest_content.vinterlysene_decor_above_deck
+  ok    social_fest_content.vinterlysene_finale_pays_once
+  ok    social_fest_content.vinterlysene_reentry_has_no_repeat_reward
+  ok    social_fest_content.vinterlysene_decor_clears_afterwards
+  ok    social_fest_content.bagedagen_unique_date_and_valid_window
+  ok    social_fest_content.bagedagen_existing_host
+  ok    social_fest_content.bagedagen_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.bagedagen_birthday_clear_baker_maja
+  ok    social_fest_content.bagedagen_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.bagedagen_birthday_clear_beekeeper_birk
+  ok    social_fest_content.bagedagen_birthday_clear_bertil
+  ok    social_fest_content.bagedagen_birthday_clear_bodil
+  ok    social_fest_content.bagedagen_birthday_clear_carpenter_brumme
+  ok    social_fest_content.bagedagen_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.bagedagen_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.bagedagen_birthday_clear_cub_bamse
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_builder
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_furnisher
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_king
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_lily
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_tailor
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_wizard
+  ok    social_fest_content.bagedagen_birthday_clear_farmer_rosa
+  ok    social_fest_content.bagedagen_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.bagedagen_birthday_clear_gardener_hoppe
+  ok    social_fest_content.bagedagen_birthday_clear_ghostfam_blund
+  ok    social_fest_content.bagedagen_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.bagedagen_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.bagedagen_birthday_clear_ghostfam_silke
+  ok    social_fest_content.bagedagen_birthday_clear_guard_oak
+  ok    social_fest_content.bagedagen_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.bagedagen_birthday_clear_lamplighter_kiki
+  ...   (81 more ok lines of social_fest_content not printed; --verbose prints all)
+  --    social_fest_content: 481 checks, 0 failed, 0 skipped, 3.6 s
+== section towns_routines  (res://tests/sections/towns_routines.gd)
+  ok    towns_routines.route_table_ready
+  ok    towns_routines.core_files_load
+  ok    towns_routines.rule_routines_feasible ([])
+  ok    towns_routines.rule_places_exist ([])
+  ok    towns_routines.rule_keeper_covers_hours ([])
+  ok    towns_routines.rule_hours_consistency ([])
+  ok    towns_routines.rule_post_capacity ([])
+  ok    towns_routines.rule_visual_budget ([])
+  ok    towns_routines.rule_no_short_visits ([])
+  ok    towns_routines.rule_day_wrap ([])
+  ok    towns_routines.rule_visits_inside_hours ([])
+  ok    appraiser_fru_ugle routine schema
+  ok    appraiser_fru_ugle resolves at raw hour 2.00
+  ok    appraiser_fru_ugle resolves at raw hour 3.50
+  ok    appraiser_fru_ugle resolves at raw hour 5.99
+  ok    appraiser_fru_ugle resolves at raw hour 6.00
+  ok    appraiser_fru_ugle resolves at raw hour 24.50
+  ok    appraiser_fru_ugle resolves at raw hour 25.50
+  ok    baker_maja routine schema
+  ok    baker_maja resolves at raw hour 2.00
+  ok    baker_maja resolves at raw hour 3.50
+  ok    baker_maja resolves at raw hour 5.99
+  ok    baker_maja resolves at raw hour 6.00
+  ok    baker_maja resolves at raw hour 24.50
+  ok    baker_maja resolves at raw hour 25.50
+  ok    bathkeeper_sofus routine schema
+  ok    bathkeeper_sofus resolves at raw hour 2.00
+  ok    bathkeeper_sofus resolves at raw hour 3.50
+  ok    bathkeeper_sofus resolves at raw hour 5.99
+  ok    bathkeeper_sofus resolves at raw hour 6.00
+  ok    bathkeeper_sofus resolves at raw hour 24.50
+  ok    bathkeeper_sofus resolves at raw hour 25.50
+  ok    beekeeper_birk routine schema
+  ok    beekeeper_birk resolves at raw hour 2.00
+  ok    beekeeper_birk resolves at raw hour 3.50
+  ok    beekeeper_birk resolves at raw hour 5.99
+  ok    beekeeper_birk resolves at raw hour 6.00
+  ok    beekeeper_birk resolves at raw hour 24.50
+  ok    beekeeper_birk resolves at raw hour 25.50
+  ok    bertil routine schema
+  ok    bertil resolves at raw hour 2.00
+  ok    bertil resolves at raw hour 3.50
+  ok    bertil resolves at raw hour 5.99
+  ok    bertil resolves at raw hour 6.00
+  ok    bertil resolves at raw hour 24.50
+  ok    bertil resolves at raw hour 25.50
+  ok    bodil routine schema
+  ok    bodil resolves at raw hour 2.00
+  ok    bodil resolves at raw hour 3.50
+  ok    bodil resolves at raw hour 5.99
+  ok    bodil resolves at raw hour 6.00
+  ok    bodil resolves at raw hour 24.50
+  ok    bodil resolves at raw hour 25.50
+  ok    carpenter_brumme routine schema
+  ok    carpenter_brumme resolves at raw hour 2.00
+  ok    carpenter_brumme resolves at raw hour 3.50
+  ok    carpenter_brumme resolves at raw hour 5.99
+  ok    carpenter_brumme resolves at raw hour 6.00
+  ok    carpenter_brumme resolves at raw hour 24.50
+  ok    carpenter_brumme resolves at raw hour 25.50
+  ok    cat_morfar_mis routine schema
+  ok    cat_morfar_mis resolves at raw hour 2.00
+  ok    cat_morfar_mis resolves at raw hour 3.50
+  ok    cat_morfar_mis resolves at raw hour 5.99
+  ok    cat_morfar_mis resolves at raw hour 6.00
+  ok    cat_morfar_mis resolves at raw hour 24.50
+  ok    cat_morfar_mis resolves at raw hour 25.50
+  ok    clerk_fjerpen routine schema
+  ok    clerk_fjerpen resolves at raw hour 2.00
+  ok    clerk_fjerpen resolves at raw hour 3.50
+  ok    clerk_fjerpen resolves at raw hour 5.99
+  ok    clerk_fjerpen resolves at raw hour 6.00
+  ok    clerk_fjerpen resolves at raw hour 24.50
+  ok    clerk_fjerpen resolves at raw hour 25.50
+  ok    cub_bamse routine schema
+  ok    cub_bamse resolves at raw hour 2.00
+  ok    cub_bamse resolves at raw hour 3.50
+  ok    cub_bamse resolves at raw hour 5.99
+  ok    cub_bamse resolves at raw hour 6.00
+  ok    cub_bamse resolves at raw hour 24.50
+  ok    cub_bamse resolves at raw hour 25.50
+  ok    fairy_builder routine schema
+  ok    fairy_builder resolves at raw hour 2.00
+  ok    fairy_builder resolves at raw hour 3.50
+  ok    fairy_builder resolves at raw hour 5.99
+  ok    fairy_builder resolves at raw hour 6.00
+  ok    fairy_builder resolves at raw hour 24.50
+  ok    fairy_builder resolves at raw hour 25.50
+  ok    fairy_furnisher routine schema
+  ok    fairy_furnisher resolves at raw hour 2.00
+  ok    fairy_furnisher resolves at raw hour 3.50
+  ok    fairy_furnisher resolves at raw hour 5.99
+  ok    fairy_furnisher resolves at raw hour 6.00
+  ok    fairy_furnisher resolves at raw hour 24.50
+  ok    fairy_furnisher resolves at raw hour 25.50
+  ok    fairy_king routine schema
+  ok    fairy_king resolves at raw hour 2.00
+  ok    fairy_king resolves at raw hour 3.50
+  ok    fairy_king resolves at raw hour 5.99
+  ok    fairy_king resolves at raw hour 6.00
+  ok    fairy_king resolves at raw hour 24.50
+  ok    fairy_king resolves at raw hour 25.50
+  ok    fairy_lily routine schema
+  ok    fairy_lily resolves at raw hour 2.00
+  ok    fairy_lily resolves at raw hour 3.50
+  ok    fairy_lily resolves at raw hour 5.99
+  ok    fairy_lily resolves at raw hour 6.00
+  ok    fairy_lily resolves at raw hour 24.50
+  ok    fairy_lily resolves at raw hour 25.50
+  ok    fairy_tailor routine schema
+  ok    fairy_tailor resolves at raw hour 2.00
+  ok    fairy_tailor resolves at raw hour 3.50
+  ok    fairy_tailor resolves at raw hour 5.99
+  ok    fairy_tailor resolves at raw hour 6.00
+  ok    fairy_tailor resolves at raw hour 24.50
+  ok    fairy_tailor resolves at raw hour 25.50
+  ok    fairy_wizard routine schema
+  ok    fairy_wizard resolves at raw hour 2.00
+  ok    fairy_wizard resolves at raw hour 3.50
+  ok    fairy_wizard resolves at raw hour 5.99
+  ok    fairy_wizard resolves at raw hour 6.00
+  ok    fairy_wizard resolves at raw hour 24.50
+  ok    fairy_wizard resolves at raw hour 25.50
+  ok    farmer_rosa routine schema
+  ok    farmer_rosa resolves at raw hour 2.00
+  ok    farmer_rosa resolves at raw hour 3.50
+  ok    farmer_rosa resolves at raw hour 5.99
+  ok    farmer_rosa resolves at raw hour 6.00
+  ok    farmer_rosa resolves at raw hour 24.50
+  ok    farmer_rosa resolves at raw hour 25.50
+  ok    fiddler_strimmel routine schema
+  ok    fiddler_strimmel resolves at raw hour 2.00
+  ok    fiddler_strimmel resolves at raw hour 3.50
+  ok    fiddler_strimmel resolves at raw hour 5.99
+  ok    fiddler_strimmel resolves at raw hour 6.00
+  ok    fiddler_strimmel resolves at raw hour 24.50
+  ok    fiddler_strimmel resolves at raw hour 25.50
+  ok    gardener_hoppe routine schema
+  ok    gardener_hoppe resolves at raw hour 2.00
+  ok    gardener_hoppe resolves at raw hour 3.50
+  ok    gardener_hoppe resolves at raw hour 5.99
+  ok    gardener_hoppe resolves at raw hour 6.00
+  ok    gardener_hoppe resolves at raw hour 24.50
+  ok    gardener_hoppe resolves at raw hour 25.50
+  ok    ghostfam_blund routine schema
+  ok    ghostfam_blund resolves at raw hour 2.00
+  ok    ghostfam_blund resolves at raw hour 3.50
+  ok    ghostfam_blund resolves at raw hour 5.99
+  ok    ghostfam_blund resolves at raw hour 6.00
+  ok    ghostfam_blund resolves at raw hour 24.50
+  ok    ghostfam_blund resolves at raw hour 25.50
+  ok    ghostfam_dyne routine schema
+  ok    ghostfam_dyne resolves at raw hour 2.00
+  ok    ghostfam_dyne resolves at raw hour 3.50
+  ok    ghostfam_dyne resolves at raw hour 5.99
+  ok    ghostfam_dyne resolves at raw hour 6.00
+  ok    ghostfam_dyne resolves at raw hour 24.50
+  ok    ghostfam_dyne resolves at raw hour 25.50
+  ok    ghostfam_gnist routine schema
+  ok    ghostfam_gnist resolves at raw hour 2.00
+  ok    ghostfam_gnist resolves at raw hour 3.50
+  ok    ghostfam_gnist resolves at raw hour 5.99
+  ok    ghostfam_gnist resolves at raw hour 6.00
+  ok    ghostfam_gnist resolves at raw hour 24.50
+  ok    ghostfam_gnist resolves at raw hour 25.50
+  ok    ghostfam_silke routine schema
+  ok    ghostfam_silke resolves at raw hour 2.00
+  ok    ghostfam_silke resolves at raw hour 3.50
+  ok    ghostfam_silke resolves at raw hour 5.99
+  ok    ghostfam_silke resolves at raw hour 6.00
+  ok    ghostfam_silke resolves at raw hour 24.50
+  ok    ghostfam_silke resolves at raw hour 25.50
+  ok    guard_oak routine schema
+  ok    guard_oak resolves at raw hour 2.00
+  ok    guard_oak resolves at raw hour 3.50
+  ok    guard_oak resolves at raw hour 5.99
+  ok    guard_oak resolves at raw hour 6.00
+  ok    guard_oak resolves at raw hour 24.50
+  ok    guard_oak resolves at raw hour 25.50
+  ok    innkeeper_kvak routine schema
+  ok    innkeeper_kvak resolves at raw hour 2.00
+  ok    innkeeper_kvak resolves at raw hour 3.50
+  ok    innkeeper_kvak resolves at raw hour 5.99
+  ok    innkeeper_kvak resolves at raw hour 6.00
+  ok    innkeeper_kvak resolves at raw hour 24.50
+  ok    innkeeper_kvak resolves at raw hour 25.50
+  ok    lamplighter_kiki routine schema
+  ok    lamplighter_kiki resolves at raw hour 2.00
+  ok    lamplighter_kiki resolves at raw hour 3.50
+  ok    lamplighter_kiki resolves at raw hour 5.99
+  ok    lamplighter_kiki resolves at raw hour 6.00
+  ok    lamplighter_kiki resolves at raw hour 24.50
+  ok    lamplighter_kiki resolves at raw hour 25.50
+  ok    mapseller_natteblik routine schema
+  ok    mapseller_natteblik resolves at raw hour 2.00
+  ok    mapseller_natteblik resolves at raw hour 3.50
+  ok    mapseller_natteblik resolves at raw hour 5.99
+  ok    mapseller_natteblik resolves at raw hour 6.00
+  ok    mapseller_natteblik resolves at raw hour 24.50
+  ok    mapseller_natteblik resolves at raw hour 25.50
+  ok    mayor_lyra routine schema
+  ok    mayor_lyra resolves at raw hour 2.00
+  ok    mayor_lyra resolves at raw hour 3.50
+  ok    mayor_lyra resolves at raw hour 5.99
+  ok    mayor_lyra resolves at raw hour 6.00
+  ok    mayor_lyra resolves at raw hour 24.50
+  ok    mayor_lyra resolves at raw hour 25.50
+  ok    merchant_pip routine schema
+  ok    merchant_pip resolves at raw hour 2.00
+  ok    merchant_pip resolves at raw hour 3.50
+  ok    merchant_pip resolves at raw hour 5.99
+  ok    merchant_pip resolves at raw hour 6.00
+  ok    merchant_pip resolves at raw hour 24.50
+  ok    merchant_pip resolves at raw hour 25.50
+  ok    penguin_postman routine schema
+  ok    penguin_postman resolves at raw hour 2.00
+  ok    penguin_postman resolves at raw hour 3.50
+  ok    penguin_postman resolves at raw hour 5.99
+  ok    penguin_postman resolves at raw hour 6.00
+  ok    penguin_postman resolves at raw hour 24.50
+  ok    penguin_postman resolves at raw hour 25.50
+  ok    pippin_boegeknop routine schema
+  ok    pippin_boegeknop resolves at raw hour 2.00
+  ok    pippin_boegeknop resolves at raw hour 3.50
+  ok    pippin_boegeknop resolves at raw hour 5.99
+  ok    pippin_boegeknop resolves at raw hour 6.00
+  ok    pippin_boegeknop resolves at raw hour 24.50
+  ok    pippin_boegeknop resolves at raw hour 25.50
+  ok    postman_pip routine schema
+  ok    postman_pip resolves at raw hour 2.00
+  ok    postman_pip resolves at raw hour 3.50
+  ok    postman_pip resolves at raw hour 5.99
+  ok    postman_pip resolves at raw hour 6.00
+  ok    postman_pip resolves at raw hour 24.50
+  ok    postman_pip resolves at raw hour 25.50
+  ok    rasmus routine schema
+  ok    rasmus resolves at raw hour 2.00
+  ok    rasmus resolves at raw hour 3.50
+  ok    rasmus resolves at raw hour 5.99
+  ok    rasmus resolves at raw hour 6.00
+  ok    rasmus resolves at raw hour 24.50
+  ok    rasmus resolves at raw hour 25.50
+  ok    smith_thorin routine schema
+  ok    smith_thorin resolves at raw hour 2.00
+  ok    smith_thorin resolves at raw hour 3.50
+  ok    smith_thorin resolves at raw hour 5.99
+  ok    smith_thorin resolves at raw hour 6.00
+  ok    smith_thorin resolves at raw hour 24.50
+  ok    smith_thorin resolves at raw hour 25.50
+  ok    towns_routines.sweep_every_citizen_once (571200 citizen-minutes over the complete 20-hour day, clear and rainy)
+  ok    Hoppe visits the farm on Wednesday from two hearts
+  ok    The farm visit respects its friendship gate
+  ok    Pip's measured morning courier round on weekday 0
+  ok    Pip covers his counter at opening on weekday 0
+  ok    Pip's measured morning courier round on weekday 1
+  ok    Pip covers his counter at opening on weekday 1
+  ok    Pip's measured morning courier round on weekday 2
+  ok    Pip covers his counter at opening on weekday 2
+  ok    Pip's measured morning courier round on weekday 3
+  ok    Pip covers his counter at opening on weekday 3
+  ok    Pip's measured morning courier round on weekday 4
+  ok    Pip covers his counter at opening on weekday 4
+  ok    Pip's measured morning courier round on weekday 5
+  ok    Pip covers his counter at opening on weekday 5
+  ok    Morfar Mis is gated before the rescue/day sixty
+  ok    Morfar Mis unlocks by day sixty
+  ok    The rescue unlocks Morfar Mis earlier
+  ok    A chosen hero twin is absent
+  ok    towns_routines.where_is_under_20us (13.08 us per cached routine lookup)
+  ok    towns_routines.festival_overlay_attendee_on_post
+  ok    Festival override is resolved once per citizen and date
+  ok    towns_routines.festival_home_afterwards
+  ok    An off-stage citizen has a defined festival tail
+  ok    towns_routines.mutant_keeper_leaves_counter (["bageriet: keeper baker_maja is not at int_bageriet.counter for 07:00-17:00 on weekday 1 (klart, plan work)", "bageriet: keeper baker_maja is not at int_bageriet.counter for 07:00-17:00 on weekday 1 (regn, plan work)"])
+  ok    towns_routines.mutant_impossible_arrival (["postman_pip/work: arrives at int_postkontoret.counter 8.22 but `from` says 7.21 (late by 61 game min)"])
+  ok    towns_routines.mutant_capacity_one_post (["int_bageriet.counter: baker_maja,gardener_hoppe at once, capacity 1 (weekday 1 klart 06:40)"])
+  ok    towns_routines.mutant_unknown_post (["gardener_hoppe: place traetoppen.unknown_bed is not a baked anchor"])
+  ok    towns_routines.mutant_short_visit (["gardener_hoppe/work: only 3 game min in int_postkontoret", "gardener_hoppe/work: only 5 game min in int_hoppe_hut"])
+  ok    towns_routines.mutant_visual_cap (["hyggebyen: 15 distinct visuals live on weekday 0 at 09:45 (max 14)", "hyggebyen: 15 distinct visuals live on weekday 0 at 09:50 (max 14)"])
+  ok    towns_routines.mutant_short_shop_hours (["bageriet: open 7.0-11.0 is under 6 game hours (3 real minutes): too short to play"])
+  ok    towns_routines.mutant_day_does_not_wrap (["smith_thorin: the plans start / end in different rooms [\"hyggebyen.door_smedjen\", \"hyggebyen.door_bageriet\"]"])
+  ok    towns_routines.mutant_keeper_without_routine (["dyrehuset: keeper farmer_rosa has no routine"])
+  ok    towns_routines.mutant_customer_before_opening (["gardener_hoppe/work: customer in int_bageriet 06:00-06:12 but bageriet is open 07:00-17:00 (weekday 0)", "gardener_hoppe/work: customer in int_bageriet 06:00-06:12 but bageriet is open 07:00-17:00 (weekday 0)"])
+  ok    towns_routines.mutant_unknown_act (["gardener_hoppe/work: unknown act teleport_through_wall"])
+  ok    towns_routines.act_vocabulary_accepts_hide
+  --    towns_routines: 285 checks, 0 failed, 0 skipped, 8.0 s
+== summary: 6 section(s) run, 1978 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 1 allowed message(s), 0 problem(s), 0 known-issue message(s), 57.1 s
+PLAYTEST PASS (1978 checks in 6 sections, 1 allowed engine messages, 0 known-issue messages)

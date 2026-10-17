@@ -1,0 +1,36 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PLAYTEST start mode=windowed character=animal sections=res://tests/sections only=relationships
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.Rmm8ur/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/relationships-native
+== section relationships [windowed]  (res://tests/sections/relationships.gd)
+  ok    relationships.native_candidate_present
+  ok    relationships.native_approach_same_floor
+  ok    relationships.native_real_talk_offers_gift
+  ok    relationships.native_special_bouquet_selectable
+  ok    relationships.native_special_description_without_birthday_multiplier
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/relationships-native/relationships_relationship_bouquet_picker.png (1280x720)
+  ok    relationships.native_bouquet_default_stay_friends
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/relationships-native/relationships_relationship_bouquet_confirm.png (1280x720)
+  ok    relationships.native_decline_keeps_bouquet_and_friendship
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/relationships-native/relationships_relationship_heartfriend_scene.png (1280x720)
+  ok    relationships.native_short_authored_scene
+  ok    relationships.native_promise_acorn_selectable
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/relationships-native/relationships_relationship_acorn_picker.png (1280x720)
+  ok    relationships.native_proposal_announced
+  ok    relationships.native_wedding_scene_starts_on_arrival
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/relationships-native/relationships_relationship_wedding_scene.png (1280x720)
+  ok    relationships.native_wedding_scene_finishes_married
+  ok    relationships.native_partner_physically_home
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/relationships-native/relationships_relationship_partner_home.png (1280x720)
+  ok    relationships.native_real_house_party_names_friends
+  ok    relationships.native_party_guests_present_without_replacing_jobs
+  ok    relationships.native_home_guests_keep_assigned_positions
+  ok    relationships.native_home_guests_have_space
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/relationships-native/relationships_relationship_house_party.png (1280x720)
+  --    relationships: 17 checks, 0 failed, 0 skipped, 27.0 s
+== summary: 1 section(s) run, 17 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 31.8 s
+PLAYTEST PASS (17 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

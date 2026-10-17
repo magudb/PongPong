@@ -37,7 +37,9 @@ static func decorate(npc: String, dialogue: Dictionary, context: Dictionary = {}
 		else:
 			choices.append(c)
 	var limits: Dictionary = sm.call("gift_limits", npc)
-	if int(limits.left_today) > 0 and (int(limits.left_week) > 0 or str(sm.call("birthday_state", npc)) != "") and not LuaData.arr(sm.call("gift_options", npc)).is_empty():
+	var gift_options: Array = sm.call("gift_options",npc)
+	var special_gift := gift_options.any(func(row):return bool(row.get("special",false)))
+	if special_gift or (int(limits.left_today) > 0 and (int(limits.left_week) > 0 or str(sm.call("birthday_state", npc)) != "") and not gift_options.is_empty()):
 		choices.append({"id": "give_gift", "text_key": "REL_TALK_GIFT", "action": "give_gift"})
 	if not topics(npc).is_empty():
 		choices.append({"id": "topic", "text_key": "REL_TALK_TOPIC", "action": "social_topic"})

@@ -596,9 +596,23 @@
   "partner.csv": {
    "owner": "S-marriage",
    "prefix": [
-    "PARTNER_"
+    "PARTNER_",
+    "FEST_BRYLLUPSFESTEN_"
    ],
-   "exact": []
+   "exact": [
+    "ITEM_HJERTEBUKET",
+    "ITEM_HJERTEBUKET_DESC",
+    "ITEM_LOEFTEAGERN",
+    "ITEM_LOEFTEAGERN_DESC",
+    "RECIPE_HJERTEBUKET",
+    "RECIPE_LOEFTEAGERN",
+    "REL_STAGE_HJERTVEN",
+    "REL_STAGE_FORLOVET",
+    "REL_STAGE_GIFT"
+   ],
+   "item_files": [
+    "lua/items/relationships.lua"
+   ]
   },
   "nav.csv": {
    "owner": "P28",

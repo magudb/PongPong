@@ -1,0 +1,74 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=ghost sections=res://tests/sections only=relationships
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.scdmFR/Library/Application Support/Traetoppen (throwaway)
+== boot (ghost): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 3 for ghost)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 1.0 s
+== section relationships  (res://tests/sections/relationships.gd)
+  ok    relationships.eleven_adult_candidates
+  ok    relationships.hjertebuket_crafted_special_icon
+  ok    relationships.loefteagern_crafted_special_icon
+  ok    relationships.hjertebuket_real_recipe_exact_consumption
+  ok    relationships.hjertebuket_never_sold_in_a_shop
+  ok    relationships.loefteagern_real_recipe_exact_consumption
+  ok    relationships.loefteagern_never_sold_in_a_shop
+  ok    relationships.baker_maja_authored_or_archetype_scene_localized
+  ok    relationships.bathkeeper_sofus_authored_or_archetype_scene_localized
+  ok    relationships.beekeeper_birk_authored_or_archetype_scene_localized
+  ok    relationships.bertil_authored_or_archetype_scene_localized
+  ok    relationships.bodil_authored_or_archetype_scene_localized
+  ok    relationships.carpenter_brumme_authored_or_archetype_scene_localized
+  ok    relationships.gardener_hoppe_authored_or_archetype_scene_localized
+  ok    relationships.lamplighter_kiki_authored_or_archetype_scene_localized
+  ok    relationships.merchant_pip_authored_or_archetype_scene_localized
+  ok    relationships.postman_pip_authored_or_archetype_scene_localized
+  ok    relationships.rasmus_authored_or_archetype_scene_localized
+  ok    relationships.child_refusal_keeps_bouquet
+  ok    relationships.low_hearts_refusal
+  ok    relationships.programmatic_gift_requires_consent
+  ok    relationships.special_shown_after_ordinary_limits
+  ok    relationships.bouquet_atomic_heartfriend
+  ok    relationships.ordinary_gift_ledger_untouched
+  ok    relationships.repeated_bouquet_not_consumed
+  ok    relationships.several_heartfriends
+  ok    relationships.seven_days_required
+  ok    relationships.home_three_required
+  ok    relationships.proposal_committed_once
+  ok    relationships.wedding_safe_sunday
+  ok    relationships.one_engagement
+  ok    relationships.calendar_dynamic_wedding
+  ok    relationships.fixed_calendar_still_nine
+  ok    relationships.real_save_reload
+  ok    relationships.proposal_dates_and_stages_saved
+  ok    relationships.missed_wedding_reschedules_without_penalty
+  ok    relationships.dynamic_wedding_roster_spouse_first
+  ok    relationships.cannot_marry_without_scene
+  ok    relationships.wedding_commits_once
+  ok    relationships.all_eleven_jobs_covered_seven_days_two_weathers ([])
+  ok    relationships.computed_early_baker_no_morning ({ "baker_maja": 6.0, "bathkeeper_sofus": 8.34667116509222, "beekeeper_birk": 6.0, "bertil": 6.13310841205578, "bodil": 6.0, "carpenter_brumme": 6.0, "gardener_hoppe": 6.0, "lamplighter_kiki": 6.0, "merchant_pip": 6.0, "postman_pip": 7.397885739991, "rasmus": 6.0 })
+  ok    relationships.computed_morning_and_evening_visits ({ "baker_maja": 6.0, "bathkeeper_sofus": 8.34667116509222, "beekeeper_birk": 6.0, "bertil": 6.13310841205578, "bodil": 6.0, "carpenter_brumme": 6.0, "gardener_hoppe": 6.0, "lamplighter_kiki": 6.0, "merchant_pip": 6.0, "postman_pip": 7.397885739991, "rasmus": 6.0 } evening=9)
+  ok    relationships.year_boundary_safe_wedding_dates ([])
+  ok    relationships.festival_keepers_physically_back_for_evening_work ([])
+  ok    relationships.wedding_shops_never_open_while_keeper_is_travelling ([])
+  ok    relationships.daily_help_water_twelve_atomic
+  ok    relationships.daily_help_cannot_repeat
+  ok    relationships.daily_help_feeds_real_animals_from_supplies
+  ok    relationships.no_work_leaves_note
+  ok    relationships.chore_save_reload
+  ok    relationships.daily_help_saved_idempotent
+  ok    relationships.party_names_six_real_friends
+  ok    relationships.weekly_visits_deterministic_without_repeats
+  ok    relationships.new_friend_cannot_repeat_earlier_weekly_visitor
+  ok    relationships.authored_relationship_data_current (Relationship items, recipes, wedding template and 54 bilingual rows verified
+)
+  --    relationships: 55 checks, 0 failed, 0 skipped, 8.1 s
+== summary: 1 section(s) run, 63 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 13.7 s
+PLAYTEST PASS (63 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

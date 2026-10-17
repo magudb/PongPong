@@ -17680,6 +17680,18 @@
       "disposition": "accepted-painted",
       "role": "painted-dungeon-supply-icon",
       "evidence": "docs/qa/mechanics/dungeon/supplies/review.md"
+    },
+    "assets/icons/items/hjertebuket.webp": {
+      "sha256": "6f325cbc44a451e5f99e9450d188d98b37acabbdd7202865b106a679856a7f30",
+      "disposition": "accepted-painted",
+      "role": "relationship-gift-inventory-icon",
+      "evidence": "Source painting and native-size icon inspected; native picker/confirmation captures reviewed. docs/art/relationships/review.md"
+    },
+    "assets/icons/items/loefteagern.webp": {
+      "sha256": "0f95087c5d02917e04860054e89393b44c16d0b93b4719367295581b1a69984d",
+      "disposition": "accepted-painted",
+      "role": "relationship-gift-inventory-icon",
+      "evidence": "Source painting and native-size icon inspected; native picker/confirmation captures reviewed. docs/art/relationships/review.md"
     }
   },
   "m1b_followup": {
@@ -17746,5 +17758,11 @@
       "docs/qa/mechanics/story/review.md",
       "docs/qa/mechanics/dungeon/supplies/review.md"
     ]
+  },
+  "relationship_gifts": {
+    "date": "2026-10-17",
+    "assets_added": 2,
+    "previous_assets_preserved": 2904,
+    "review": "docs/art/relationships/review.md"
   }
 }

@@ -80,6 +80,7 @@ func _build(t: int) -> void:
 	exit.position = HomeData.cell_to_local(Vector2(grid.door_cell))
 	area.objects.add_child(exit)
 	set_night(TimeManager.is_night())
+	Svc.static_call("res://scripts/social/relationships/farm_visits.gd",&"attach",[self])
 
 func _build_collision() -> void:
 	# Solid boundary on each exposed tile edge, including the front cutaway.

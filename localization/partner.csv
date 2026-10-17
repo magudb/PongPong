@@ -1,0 +1,55 @@
+keys,da,en
+ITEM_HJERTEBUKET,Hjertebuket,Heart bouquet
+ITEM_HJERTEBUKET_DESC,"En hjemmelavet buket til en bedste ven. Giv den, hvis I skal være hjertvenner.",A handmade bouquet for a best friend. Give it to become heartfriends.
+ITEM_LOEFTEAGERN,Løfteagern,Promise acorn
+ITEM_LOEFTEAGERN_DESC,Et lille agern med guld og rav. Et løfte om at dele hjem og hverdag.,A small acorn with gold and amber. A promise to share a home and everyday life.
+RECIPE_HJERTEBUKET,Bind en hjertebuket,Tie a heart bouquet
+RECIPE_LOEFTEAGERN,Lav et løfteagern,Make a promise acorn
+REL_STAGE_HJERTVEN,Hjertven,Heartfriend
+REL_STAGE_FORLOVET,Forlovet,Engaged
+REL_STAGE_GIFT,Gift,Married
+PARTNER_GIFT_TITLE,Et særligt øjeblik,A special moment
+PARTNER_BOUQUET_CONFIRM,"Vil du give %s en hjertebuket og spørge, om I skal være hjertvenner?",Give %s a heart bouquet and ask to become heartfriends?
+PARTNER_ACORN_CONFIRM,"Vil du give %s et løfteagern og spørge, om I skal dele hjem og blive gift?",Give %s a promise acorn and ask to share a home and marry?
+PARTNER_GIVE,Giv gaven,Give the gift
+PARTNER_STAY_FRIENDS,Lad os være gode venner,Let us be good friends
+PARTNER_NOT_ADULT,Jeg er glad for vores venskab. Lad os beholde det sådan.,I am happy with our friendship. Let us keep it that way.
+PARTNER_WAIT,"Jeg er rigtig glad for dig, men lad os vente lidt.","I am very fond of you, but let us wait a little."
+PARTNER_ALREADY,Det løfte har vi allerede givet hinanden. Gem den fine gave.,We have already made that promise to each other. Keep the lovely gift.
+PARTNER_OTHER_PROMISE,Du har allerede givet et løfte om at dele hjem. Gem agernet.,You have already promised to share a home. Keep the acorn.
+PARTNER_HOME,"Lad os vente, til dit hjem har plads til os begge.",Let us wait until your home has room for both of us.
+PARTNER_DAYS,Lad os være hjertvenner lidt længere først.,Let us be heartfriends a little longer first.
+PARTNER_SPECIAL,En særlig gave · kræver ikke en almindelig gaveplads,A special gift · uses no ordinary gift allowance
+PARTNER_GENERIC_1,Du har fundet en stille plads i min hverdag. Jeg vil gerne være din hjertven.,You have found a quiet place in my everyday life. I would like to be your heartfriend.
+PARTNER_GENERIC_2,Vi behøver ikke skynde os. Der er mange gode dage foran os.,There is no hurry. We have many good days ahead of us.
+PARTNER_HOPPE_1,"Jeg troede, at jeg havde plantet alt, hvad jeg behøvede. Så kom du.",I thought I had planted everything I needed. Then you came along.
+PARTNER_HOPPE_2,"Lad os passe på det, der vokser mellem os. Jeg vil gerne være din hjertven.",Let us care for what grows between us. I would like to be your heartfriend.
+PARTNER_BRUMME_1,"Jeg kan bygge meget med træ. Men den ro, du giver mig, kan jeg ikke lave selv.",I can build many things from wood. But I cannot make the peace you bring me.
+PARTNER_BRUMME_2,"Vi tager det ét bræt ad gangen. Ja, jeg vil være din hjertven.","We will take it one board at a time. Yes, I would like to be your heartfriend."
+PARTNER_MAJA_1,"Der er altid en lun plads ved mit bord. Jeg havde håbet, du ville sætte dig der.",There is always a warm place at my table. I had hoped you would sit there.
+PARTNER_MAJA_2,"Den buket skal stå, hvor jeg kan se den, mens dejen hæver. Min hjertven.",That bouquet will stand where I can see it while the dough rises. My heartfriend.
+PARTNER_BIRK_1,"Bierne kender vejen hjem uden at tænke. Sådan føles det, når jeg ser dig.",The bees know their way home without thinking. That is how it feels when I see you.
+PARTNER_BIRK_2,Ja. Lad os dele de stille stunder. Jeg vil være din hjertven.,Yes. Let us share the quiet moments. I would like to be your heartfriend.
+PARTNER_ENGAGED_1,Ja. Jeg vil gerne dele hjem og hverdag med dig. Også de helt almindelige dage.,Yes. I would like to share a home and everyday life with you. Even the very ordinary days.
+PARTNER_ENGAGED_2,"Vi mødes ved springvandet på vores bryllupsdag. Der er ingen hast, hvis du får brug for mere tid.",We will meet by the fountain on our wedding day. There is no hurry if you need more time.
+PARTNER_DATE,"Bryllup: %s, dag %d · fra kl. 12 ved springvandet","Wedding: %s, day %d · from 12:00 by the fountain"
+PARTNER_POSTPONED,Vi venter på hinanden. Brylluppet har fået en ny dato.,We wait for each other. The wedding has a new date.
+FEST_BRYLLUPSFESTEN_NAME,Bryllupsfesten,The wedding
+FEST_BRYLLUPSFESTEN_DESC,"Et løfte, et fælles hjem og plads til venner. Kom ved springvandet inden kl. 20.","A promise, a shared home and room for friends. Come to the fountain before 20:00."
+FEST_BRYLLUPSFESTEN_DANCE,Dans sammen,Dance together
+PARTNER_WEDDING_HOST,"Her er ingen prøve, I skal bestå. Kun et løfte om at møde hinanden med omsorg.",There is no test for you to pass here. Only a promise to meet each other with care.
+PARTNER_WEDDING_1,"Jeg vælger et liv sammen med dig. Med åbne døre og plads til alt det, vi endnu ikke kender.",I choose a life with you. With open doors and room for everything we do not yet know.
+PARTNER_WEDDING_2,"Når dagen bliver svær, finder vi vejen hjem sammen.","When the day is hard, we will find our way home together."
+PARTNER_WEDDING_HOME,Jeres fælles hverdag begynder nu.,Your shared everyday life begins now.
+PARTNER_CHORE_WATER,Jeg har vandet %d afgrøder. Resten af dagen er vores.,I watered %d crops. The rest of the day is ours.
+PARTNER_CHORE_FEED,Jeg har givet dyrene morgenmad fra vores forråd.,I fed the animals breakfast from our supplies.
+PARTNER_CHORE_NOTE,Jeg glæder mig til at høre om din dag. Her er altid plads til dig.,I look forward to hearing about your day. There is always room for you here.
+PARTNER_VISITOR,%s har lagt en lille gave til dig.,%s left a small gift for you.
+PARTNER_ARCH_SHOPKEEPER_1,"Blandt alle dagens besøg er dit det, jeg glæder mig mest til.","Of all the visits in a day, yours is the one I look forward to most."
+PARTNER_ARCH_SHOPKEEPER_2,Lad os gemme en stille stund til hinanden. Jeg vil gerne være din hjertven.,Let us keep a quiet moment for each other. I would like to be your heartfriend.
+PARTNER_ARCH_WANDERER_1,Jeg kender mange stier. Den hen til dig er blevet min yndlingsvej.,I know many paths. The one that leads to you has become my favourite.
+PARTNER_ARCH_WANDERER_2,Jeg vil gerne følges lidt længere. Som din hjertven.,I would like to walk a little further together. As your heartfriend.
+PARTNER_ARCH_ELDER_1,"Det er de små stunder, jeg husker bedst. Dem vil jeg gerne dele med dig.",It is the little moments I remember best. I would like to share them with you.
+PARTNER_ARCH_ELDER_2,"Vi har god tid. Ja, jeg vil gerne være din hjertven.","We have plenty of time. Yes, I would like to be your heartfriend."
+PARTNER_ARCH_GARDENER_1,"Små ting vokser, når nogen passer på dem. Vores venskab har fået stærke rødder.",Small things grow when someone cares for them. Our friendship has grown strong roots.
+PARTNER_ARCH_GARDENER_2,Lad os give det plads til at blomstre. Jeg vil gerne være din hjertven.,Let us give it room to blossom. I would like to be your heartfriend.

@@ -1,0 +1,1278 @@
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=relationships,home,npc,social_events,art_style_consistency,art_dungeon_icons
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.pbqmBk/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 0.9 s
+== section art_dungeon_icons  (res://tests/sections/art_dungeon_icons.gd)
+  ok    art_dungeon_icons.all_51_icons
+  ok    art_dungeon_icons.definition_dng_crystal_root
+  ok    art_dungeon_icons.size_alpha_budget_dng_crystal_root
+  ok    art_dungeon_icons.rarity_rim_colour_dng_crystal_root
+  ok    art_dungeon_icons.selected_source_dng_crystal_root
+  ok    art_dungeon_icons.ui_resolves_dng_crystal_root
+  ok    art_dungeon_icons.definition_dng_forest_steel
+  ok    art_dungeon_icons.size_alpha_budget_dng_forest_steel
+  ok    art_dungeon_icons.rarity_rim_colour_dng_forest_steel
+  ok    art_dungeon_icons.selected_source_dng_forest_steel
+  ok    art_dungeon_icons.ui_resolves_dng_forest_steel
+  ok    art_dungeon_icons.definition_dng_forest_thread
+  ok    art_dungeon_icons.size_alpha_budget_dng_forest_thread
+  ok    art_dungeon_icons.rarity_rim_colour_dng_forest_thread
+  ok    art_dungeon_icons.selected_source_dng_forest_thread
+  ok    art_dungeon_icons.ui_resolves_dng_forest_thread
+  ok    art_dungeon_icons.definition_dng_glimmer_dust
+  ok    art_dungeon_icons.size_alpha_budget_dng_glimmer_dust
+  ok    art_dungeon_icons.rarity_rim_colour_dng_glimmer_dust
+  ok    art_dungeon_icons.selected_source_dng_glimmer_dust
+  ok    art_dungeon_icons.ui_resolves_dng_glimmer_dust
+  ok    art_dungeon_icons.definition_dng_moon_silver
+  ok    art_dungeon_icons.size_alpha_budget_dng_moon_silver
+  ok    art_dungeon_icons.rarity_rim_colour_dng_moon_silver
+  ok    art_dungeon_icons.selected_source_dng_moon_silver
+  ok    art_dungeon_icons.ui_resolves_dng_moon_silver
+  ok    art_dungeon_icons.definition_dng_mushroom_felt
+  ok    art_dungeon_icons.size_alpha_budget_dng_mushroom_felt
+  ok    art_dungeon_icons.rarity_rim_colour_dng_mushroom_felt
+  ok    art_dungeon_icons.selected_source_dng_mushroom_felt
+  ok    art_dungeon_icons.ui_resolves_dng_mushroom_felt
+  ok    art_dungeon_icons.definition_dng_owl_feather
+  ok    art_dungeon_icons.size_alpha_budget_dng_owl_feather
+  ok    art_dungeon_icons.rarity_rim_colour_dng_owl_feather
+  ok    art_dungeon_icons.selected_source_dng_owl_feather
+  ok    art_dungeon_icons.ui_resolves_dng_owl_feather
+  ok    art_dungeon_icons.definition_dng_resin
+  ok    art_dungeon_icons.size_alpha_budget_dng_resin
+  ok    art_dungeon_icons.rarity_rim_colour_dng_resin
+  ok    art_dungeon_icons.selected_source_dng_resin
+  ok    art_dungeon_icons.ui_resolves_dng_resin
+  ok    art_dungeon_icons.definition_dng_rune_gloed
+  ok    art_dungeon_icons.size_alpha_budget_dng_rune_gloed
+  ok    art_dungeon_icons.rarity_rim_colour_dng_rune_gloed
+  ok    art_dungeon_icons.selected_source_dng_rune_gloed
+  ok    art_dungeon_icons.ui_resolves_dng_rune_gloed
+  ok    art_dungeon_icons.definition_dng_rune_konge
+  ok    art_dungeon_icons.size_alpha_budget_dng_rune_konge
+  ok    art_dungeon_icons.rarity_rim_colour_dng_rune_konge
+  ok    art_dungeon_icons.selected_source_dng_rune_konge
+  ok    art_dungeon_icons.ui_resolves_dng_rune_konge
+  ok    art_dungeon_icons.definition_dng_rune_snurre
+  ok    art_dungeon_icons.size_alpha_budget_dng_rune_snurre
+  ok    art_dungeon_icons.rarity_rim_colour_dng_rune_snurre
+  ok    art_dungeon_icons.selected_source_dng_rune_snurre
+  ok    art_dungeon_icons.ui_resolves_dng_rune_snurre
+  ok    art_dungeon_icons.definition_gem_dewdrop
+  ok    art_dungeon_icons.size_alpha_budget_gem_dewdrop
+  ok    art_dungeon_icons.rarity_rim_colour_gem_dewdrop
+  ok    art_dungeon_icons.selected_source_gem_dewdrop
+  ok    art_dungeon_icons.ui_resolves_gem_dewdrop
+  ok    art_dungeon_icons.definition_gem_fairy_tear
+  ok    art_dungeon_icons.size_alpha_budget_gem_fairy_tear
+  ok    art_dungeon_icons.rarity_rim_colour_gem_fairy_tear
+  ok    art_dungeon_icons.selected_source_gem_fairy_tear
+  ok    art_dungeon_icons.ui_resolves_gem_fairy_tear
+  ok    art_dungeon_icons.definition_gem_forest_jade
+  ok    art_dungeon_icons.size_alpha_budget_gem_forest_jade
+  ok    art_dungeon_icons.rarity_rim_colour_gem_forest_jade
+  ok    art_dungeon_icons.selected_source_gem_forest_jade
+  ok    art_dungeon_icons.ui_resolves_gem_forest_jade
+  ok    art_dungeon_icons.definition_gem_moon_heart
+  ok    art_dungeon_icons.size_alpha_budget_gem_moon_heart
+  ok    art_dungeon_icons.rarity_rim_colour_gem_moon_heart
+  ok    art_dungeon_icons.selected_source_gem_moon_heart
+  ok    art_dungeon_icons.ui_resolves_gem_moon_heart
+  ok    art_dungeon_icons.night_variant_gem_moon_heart
+  ok    art_dungeon_icons.definition_gem_moss_agate
+  ok    art_dungeon_icons.size_alpha_budget_gem_moss_agate
+  ok    art_dungeon_icons.rarity_rim_colour_gem_moss_agate
+  ok    art_dungeon_icons.selected_source_gem_moss_agate
+  ok    art_dungeon_icons.ui_resolves_gem_moss_agate
+  ok    art_dungeon_icons.definition_gem_mushroom_opal
+  ok    art_dungeon_icons.size_alpha_budget_gem_mushroom_opal
+  ok    art_dungeon_icons.rarity_rim_colour_gem_mushroom_opal
+  ok    art_dungeon_icons.selected_source_gem_mushroom_opal
+  ok    art_dungeon_icons.ui_resolves_gem_mushroom_opal
+  ok    art_dungeon_icons.definition_gem_night_sapphire
+  ok    art_dungeon_icons.size_alpha_budget_gem_night_sapphire
+  ok    art_dungeon_icons.rarity_rim_colour_gem_night_sapphire
+  ok    art_dungeon_icons.selected_source_gem_night_sapphire
+  ok    art_dungeon_icons.ui_resolves_gem_night_sapphire
+  ok    art_dungeon_icons.definition_gem_owl_eye
+  ok    art_dungeon_icons.size_alpha_budget_gem_owl_eye
+  ok    art_dungeon_icons.rarity_rim_colour_gem_owl_eye
+  ok    art_dungeon_icons.selected_source_gem_owl_eye
+  ok    art_dungeon_icons.ui_resolves_gem_owl_eye
+  ok    art_dungeon_icons.definition_gem_rock_crystal
+  ok    art_dungeon_icons.size_alpha_budget_gem_rock_crystal
+  ok    art_dungeon_icons.rarity_rim_colour_gem_rock_crystal
+  ok    art_dungeon_icons.selected_source_gem_rock_crystal
+  ok    art_dungeon_icons.ui_resolves_gem_rock_crystal
+  ok    art_dungeon_icons.definition_gem_rune_heart
+  ok    art_dungeon_icons.size_alpha_budget_gem_rune_heart
+  ok    art_dungeon_icons.rarity_rim_colour_gem_rune_heart
+  ok    art_dungeon_icons.selected_source_gem_rune_heart
+  ok    art_dungeon_icons.ui_resolves_gem_rune_heart
+  ok    art_dungeon_icons.night_variant_gem_rune_heart
+  ok    art_dungeon_icons.definition_gem_smoky_quartz
+  ok    art_dungeon_icons.size_alpha_budget_gem_smoky_quartz
+  ok    art_dungeon_icons.rarity_rim_colour_gem_smoky_quartz
+  ok    art_dungeon_icons.selected_source_gem_smoky_quartz
+  ok    art_dungeon_icons.ui_resolves_gem_smoky_quartz
+  ok    art_dungeon_icons.definition_gem_star_tear
+  ok    art_dungeon_icons.size_alpha_budget_gem_star_tear
+  ok    art_dungeon_icons.rarity_rim_colour_gem_star_tear
+  ok    art_dungeon_icons.selected_source_gem_star_tear
+  ok    art_dungeon_icons.ui_resolves_gem_star_tear
+  ok    art_dungeon_icons.night_variant_gem_star_tear
+  ok    art_dungeon_icons.definition_gem_sunset_stone
+  ok    art_dungeon_icons.size_alpha_budget_gem_sunset_stone
+  ok    art_dungeon_icons.rarity_rim_colour_gem_sunset_stone
+  ok    art_dungeon_icons.selected_source_gem_sunset_stone
+  ok    art_dungeon_icons.ui_resolves_gem_sunset_stone
+  ok    art_dungeon_icons.definition_gem_thornberry_stone
+  ok    art_dungeon_icons.size_alpha_budget_gem_thornberry_stone
+  ok    art_dungeon_icons.rarity_rim_colour_gem_thornberry_stone
+  ok    art_dungeon_icons.selected_source_gem_thornberry_stone
+  ok    art_dungeon_icons.ui_resolves_gem_thornberry_stone
+  ok    art_dungeon_icons.definition_rough_dybe_bregner
+  ok    art_dungeon_icons.size_alpha_budget_rough_dybe_bregner
+  ok    art_dungeon_icons.rarity_rim_colour_rough_dybe_bregner
+  ok    art_dungeon_icons.selected_source_rough_dybe_bregner
+  ok    art_dungeon_icons.ui_resolves_rough_dybe_bregner
+  ok    art_dungeon_icons.definition_rough_krystalgrotten
+  ok    art_dungeon_icons.size_alpha_budget_rough_krystalgrotten
+  ok    art_dungeon_icons.rarity_rim_colour_rough_krystalgrotten
+  ok    art_dungeon_icons.selected_source_rough_krystalgrotten
+  ok    art_dungeon_icons.ui_resolves_rough_krystalgrotten
+  ok    art_dungeon_icons.definition_rough_skovkant
+  ok    art_dungeon_icons.size_alpha_budget_rough_skovkant
+  ok    art_dungeon_icons.rarity_rim_colour_rough_skovkant
+  ok    art_dungeon_icons.selected_source_rough_skovkant
+  ok    art_dungeon_icons.ui_resolves_rough_skovkant
+  ok    art_dungeon_icons.definition_rough_svampelunden
+  ok    art_dungeon_icons.size_alpha_budget_rough_svampelunden
+  ok    art_dungeon_icons.rarity_rim_colour_rough_svampelunden
+  ok    art_dungeon_icons.selected_source_rough_svampelunden
+  ok    art_dungeon_icons.ui_resolves_rough_svampelunden
+  ok    art_dungeon_icons.definition_wpn_club_mushroom
+  ok    art_dungeon_icons.size_alpha_budget_wpn_club_mushroom
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_club_mushroom
+  ok    art_dungeon_icons.selected_source_wpn_club_mushroom
+  ok    art_dungeon_icons.ui_resolves_wpn_club_mushroom
+  ok    art_dungeon_icons.definition_wpn_club_oak
+  ok    art_dungeon_icons.size_alpha_budget_wpn_club_oak
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_club_oak
+  ok    art_dungeon_icons.selected_source_wpn_club_oak
+  ok    art_dungeon_icons.ui_resolves_wpn_club_oak
+  ok    art_dungeon_icons.definition_wpn_club_spruce
+  ok    art_dungeon_icons.size_alpha_budget_wpn_club_spruce
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_club_spruce
+  ok    art_dungeon_icons.selected_source_wpn_club_spruce
+  ok    art_dungeon_icons.ui_resolves_wpn_club_spruce
+  ok    art_dungeon_icons.definition_wpn_club_thornberry
+  ok    art_dungeon_icons.size_alpha_budget_wpn_club_thornberry
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_club_thornberry
+  ok    art_dungeon_icons.selected_source_wpn_club_thornberry
+  ok    art_dungeon_icons.ui_resolves_wpn_club_thornberry
+  ok    art_dungeon_icons.definition_wpn_club_trunk
+  ok    art_dungeon_icons.size_alpha_budget_wpn_club_trunk
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_club_trunk
+  ok    art_dungeon_icons.selected_source_wpn_club_trunk
+  ok    art_dungeon_icons.ui_resolves_wpn_club_trunk
+  ok    art_dungeon_icons.night_variant_wpn_club_trunk
+  ok    art_dungeon_icons.definition_wpn_dagger_bee
+  ok    art_dungeon_icons.size_alpha_budget_wpn_dagger_bee
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_dagger_bee
+  ok    art_dungeon_icons.selected_source_wpn_dagger_bee
+  ok    art_dungeon_icons.ui_resolves_wpn_dagger_bee
+  ok    art_dungeon_icons.definition_wpn_dagger_flint
+  ok    art_dungeon_icons.size_alpha_budget_wpn_dagger_flint
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_dagger_flint
+  ok    art_dungeon_icons.selected_source_wpn_dagger_flint
+  ok    art_dungeon_icons.ui_resolves_wpn_dagger_flint
+  ok    art_dungeon_icons.definition_wpn_dagger_moonshard
+  ok    art_dungeon_icons.size_alpha_budget_wpn_dagger_moonshard
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_dagger_moonshard
+  ok    art_dungeon_icons.selected_source_wpn_dagger_moonshard
+  ok    art_dungeon_icons.ui_resolves_wpn_dagger_moonshard
+  ok    art_dungeon_icons.definition_wpn_dagger_thorn
+  ok    art_dungeon_icons.size_alpha_budget_wpn_dagger_thorn
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_dagger_thorn
+  ok    art_dungeon_icons.selected_source_wpn_dagger_thorn
+  ok    art_dungeon_icons.ui_resolves_wpn_dagger_thorn
+  ok    art_dungeon_icons.definition_wpn_spear_iron
+  ok    art_dungeon_icons.size_alpha_budget_wpn_spear_iron
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_spear_iron
+  ok    art_dungeon_icons.selected_source_wpn_spear_iron
+  ok    art_dungeon_icons.ui_resolves_wpn_spear_iron
+  ok    art_dungeon_icons.definition_wpn_spear_owl
+  ok    art_dungeon_icons.size_alpha_budget_wpn_spear_owl
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_spear_owl
+  ok    art_dungeon_icons.selected_source_wpn_spear_owl
+  ok    art_dungeon_icons.ui_resolves_wpn_spear_owl
+  ok    art_dungeon_icons.definition_wpn_spear_root
+  ok    art_dungeon_icons.size_alpha_budget_wpn_spear_root
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_spear_root
+  ok    art_dungeon_icons.selected_source_wpn_spear_root
+  ok    art_dungeon_icons.ui_resolves_wpn_spear_root
+  ok    art_dungeon_icons.night_variant_wpn_spear_root
+  ok    art_dungeon_icons.definition_wpn_spear_thistle
+  ok    art_dungeon_icons.size_alpha_budget_wpn_spear_thistle
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_spear_thistle
+  ok    art_dungeon_icons.selected_source_wpn_spear_thistle
+  ok    art_dungeon_icons.ui_resolves_wpn_spear_thistle
+  ok    art_dungeon_icons.definition_wpn_spear_twig
+  ok    art_dungeon_icons.size_alpha_budget_wpn_spear_twig
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_spear_twig
+  ok    art_dungeon_icons.selected_source_wpn_spear_twig
+  ok    art_dungeon_icons.ui_resolves_wpn_spear_twig
+  ok    art_dungeon_icons.definition_wpn_staff_branch
+  ok    art_dungeon_icons.size_alpha_budget_wpn_staff_branch
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_staff_branch
+  ok    art_dungeon_icons.selected_source_wpn_staff_branch
+  ok    art_dungeon_icons.ui_resolves_wpn_staff_branch
+  ok    art_dungeon_icons.definition_wpn_staff_ember
+  ok    art_dungeon_icons.size_alpha_budget_wpn_staff_ember
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_staff_ember
+  ok    art_dungeon_icons.selected_source_wpn_staff_ember
+  ok    art_dungeon_icons.ui_resolves_wpn_staff_ember
+  ok    art_dungeon_icons.definition_wpn_staff_hazel
+  ok    art_dungeon_icons.size_alpha_budget_wpn_staff_hazel
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_staff_hazel
+  ok    art_dungeon_icons.selected_source_wpn_staff_hazel
+  ok    art_dungeon_icons.ui_resolves_wpn_staff_hazel
+  ok    art_dungeon_icons.definition_wpn_staff_light
+  ok    art_dungeon_icons.size_alpha_budget_wpn_staff_light
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_staff_light
+  ok    art_dungeon_icons.selected_source_wpn_staff_light
+  ok    art_dungeon_icons.ui_resolves_wpn_staff_light
+  ok    art_dungeon_icons.definition_wpn_staff_star
+  ok    art_dungeon_icons.size_alpha_budget_wpn_staff_star
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_staff_star
+  ok    art_dungeon_icons.selected_source_wpn_staff_star
+  ok    art_dungeon_icons.ui_resolves_wpn_staff_star
+  ok    art_dungeon_icons.night_variant_wpn_staff_star
+  ok    art_dungeon_icons.definition_wpn_sword_candle
+  ok    art_dungeon_icons.size_alpha_budget_wpn_sword_candle
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_sword_candle
+  ok    art_dungeon_icons.selected_source_wpn_sword_candle
+  ok    art_dungeon_icons.ui_resolves_wpn_sword_candle
+  ok    art_dungeon_icons.definition_wpn_sword_forest_steel
+  ok    art_dungeon_icons.size_alpha_budget_wpn_sword_forest_steel
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_sword_forest_steel
+  ok    art_dungeon_icons.selected_source_wpn_sword_forest_steel
+  ok    art_dungeon_icons.ui_resolves_wpn_sword_forest_steel
+  ok    art_dungeon_icons.definition_wpn_sword_moon
+  ok    art_dungeon_icons.size_alpha_budget_wpn_sword_moon
+  ok    art_dungeon_icons.rarity_rim_colour_wpn_sword_moon
+  ok    art_dungeon_icons.selected_source_wpn_sword_moon
+  ok    art_dungeon_icons.ui_resolves_wpn_sword_moon
+  ok    art_dungeon_icons.night_variant_wpn_sword_moon
+  ok    art_dungeon_icons.category_coverage ({ "weapon": 22, "rough": 4, "gem": 14, "material": 11 })
+  ok    art_dungeon_icons.seven_night_variants
+  ok    art_dungeon_icons.existing_lantern_theme_icon_crystal_shard
+  ok    art_dungeon_icons.existing_lantern_theme_icon_rose_quartz
+  ok    art_dungeon_icons.existing_lantern_theme_icon_amber
+  ok    art_dungeon_icons.existing_lantern_theme_icon_amethyst
+  ok    art_dungeon_icons.existing_lantern_theme_icon_moonstone
+  ok    art_dungeon_icons.existing_lantern_theme_icon_emerald
+  --    art_dungeon_icons: 271 checks, 0 failed, 0 skipped, 0.3 s
+== section art_style_consistency  (res://tests/sections/art_style_consistency.gd)
+  ok    art_style_consistency.effective_physical_props_painted (357 prior IDs preserved, 364 current prop IDs checked; physical props use approved paintings/materials and intentional masks are explicit: [] [])
+  ok    art_style_consistency.selected_art_is_reviewed (effective props and all outdoor sky/far layers have explicit visual review evidence: [])
+  ok    art_style_consistency.reviewed_snapshot_current (["STYLE REVIEW SNAPSHOT PASS: 2906 visual/theme assets match explicit reviewed dispositions; technical exceptions are named, not automatically approved illustrations.\n"])
+  ok    art_style_consistency.installed_ore_copper (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_ore_iron (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_ore_gold (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_marble_vein (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_slate_vein (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crystal_amethyst (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crystal_emerald (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crystal_moonstone (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_glowmush_blue (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_glowmush_pink (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_glowmush_teal (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_well (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_fountain (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_closed (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_open (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_konge (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_beehive_stand (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_mailbox_red (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_shipping_bin (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_tent (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_wheat_sack (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_build_stake (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_rope_stake_x (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_rope_stake_z (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_fence_gate_x (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_bench (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_stake_sign (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_fe (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_apple_tree (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_tornebaer (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_lantern_hand (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_market_stall (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_trae (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_jern (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_noegle (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_market_stall_furniture (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_market_stall_tailor (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_coop_small (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_barn_small (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_animal_house (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_tool_shed (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_carrot_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_carrot_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_carrot_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_carrot_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_pumpkin_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_pumpkin_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_pumpkin_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_pumpkin_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_strawberry_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_strawberry_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_strawberry_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_strawberry_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_sunflower_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_sunflower_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_sunflower_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_sunflower_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_turnip_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_turnip_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_turnip_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_turnip_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_catnip_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_catnip_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_catnip_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_catnip_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_glow_berry_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_glow_berry_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_glow_berry_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_glow_berry_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_moonflower_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_moonflower_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_moonflower_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_moonflower_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_bed (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_house_seedshop (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_house_bakery (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_house_smithy (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_house_animalstore (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_house_town_hall (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_house_king_treetop (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_tower_wizard (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_warp_gate_stone (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_tree_giant_crown (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_trunk_giant_a (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_trunk_giant_b (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_trunk_under_a (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_trunk_under_b (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_lantern_post_lavender (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_lantern_post_mint (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_lantern_post_rose (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_floor_patch_a (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_floor_patch_b (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_floor_patch_c (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_path_tile_o (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pond_water_o (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_roof_patch (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_home_rope (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_stone_path_a (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_stone_path_b (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_stone_path_c (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_blue (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_blue_f1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_gold (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_gold_f1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_mint (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_mint_f1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_pink (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_pink_f1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_backdrop_farm_far (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_backdrop_forest_far (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_backdrop_hyggebyen_far (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.replacement_scope (111 repaired props, structural surfaces and parallax entries)
+  ok    art_style_consistency.farm_parallax_painted (farm horizon shares the approved tree painting)
+  ok    art_style_consistency.furniture_gameplay_contracts (all 130 IDs, placement anchors and gameplay fields preserved; [])
+  --    art_style_consistency: 117 checks, 0 failed, 0 skipped, 2.4 s
+== section home  (res://tests/sections/home.gd)
+  ok    HomeManager is the autoload of scripts/home/home_manager.gd
+  ok    SaveManager has the section `home` exactly once
+  ok    order 10: after the built-in sections
+  ok    the node behind the section is HomeManager
+  ok    reset() is wired to new_game_started by the manager itself
+  ok    the morning handler listens to day_started
+  ok    the test helper Fresh resets HomeManager with the other feature managers
+  ok    a new game starts as a Skur: tier 1, a plain int
+  ok    nothing under construction
+  ok    the door is open
+  ok    ten tiers are defined, tier 1 is not the end
+  ok    empty chest, no festival, no visit, no pending gift
+  ok    flag home_tier = 1 (an int)
+  ok    flags home_building = 0 and home_upgrade_done = 0
+  ok    no castle yet
+  ok    tier 1 and tiers outside 1..10 have no requirement rows
+  ok    tier_def: skur .. slot, {} outside
+  ok    tier 2 on day one without gold: the first blocker is gold (["gold", "materials", "gate"])
+  ok    every blocker is listed: gold, materials and the quest intro_lottery
+  ok    the 500 starting acorns cover step 2 (200): materials and the quest are what is missing (["materials", "gate"])
+  ok    only the next tier can be asked for
+  ok    start_upgrade with missing requirements changes nothing
+  ok    finish_upgrade with nothing under construction does nothing
+  ok    tier 1: record, name key HOME_TIER_1 translates
+  ok    tier 1: 0 guldagern, 1 day(s)
+  ok    tier 1: materials {  }
+  ok    tier 1 lives with +0 energy, 12 chest slots, 11 pieces, 0 guest gifts a week
+  ok    tier 1: furniture_capacity equals max_furniture of room_t01.json
+  ok    tier 1: the art record of home.json is the same tier (skur)
+  ok    tier 2: record, name key HOME_TIER_2 translates
+  ok    tier 2: 200 guldagern, 1 day(s)
+  ok    tier 2: materials { "plank_pine": 16, "nails": 24, "stone_block": 6 }
+  ok    tier 2 lives with +3 energy, 18 chest slots, 16 pieces, 0 guest gifts a week
+  ok    tier 2: furniture_capacity equals max_furniture of room_t02.json
+  ok    tier 2: the art record of home.json is the same tier (hytte)
+  ok    tier 3: record, name key HOME_TIER_3 translates
+  ok    tier 3: 300 guldagern, 2 day(s)
+  ok    tier 3: materials { "plank_pine": 20, "straw_bundle": 16, "lime": 8, "nails": 30, "glass_pane": 4 }
+  ok    tier 3 lives with +6 energy, 24 chest slots, 19 pieces, 1 guest gifts a week
+  ok    tier 3: furniture_capacity equals max_furniture of room_t03.json
+  ok    tier 3: the art record of home.json is the same tier (straatag)
+  ok    tier 4: record, name key HOME_TIER_4 translates
+  ok    tier 4: 900 guldagern, 2 day(s)
+  ok    tier 4: materials { "plank_oak": 16, "timber_beam": 8, "roof_tile": 24, "lime": 8, "nails": 36, "glass_pane": 8 }
+  ok    tier 4 lives with +9 energy, 30 chest slots, 26 pieces, 1 guest gifts a week
+  ok    tier 4: furniture_capacity equals max_furniture of room_t04.json
+  ok    tier 4: the art record of home.json is the same tier (bindingsvaerk)
+  ok    tier 5: record, name key HOME_TIER_5 translates
+  ok    tier 5: 2100 guldagern, 3 day(s)
+  ok    tier 5: materials { "plank_oak": 24, "timber_beam": 12, "roof_tile": 40, "brick": 36, "glass_pane": 12, "copper_plate": 4 }
+  ok    tier 5 lives with +12 energy, 40 chest slots, 30 pieces, 2 guest gifts a week
+  ok    tier 5: furniture_capacity equals max_furniture of room_t05.json
+  ok    tier 5: the art record of home.json is the same tier (gaarden)
+  ok    tier 6: record, name key HOME_TIER_6 translates
+  ok    tier 6: 4500 guldagern, 3 day(s)
+  ok    tier 6: materials { "stone_block": 60, "slate": 30, "glass_pane": 16, "plank_walnut": 12, "amethyst": 2 }
+  ok    tier 6 lives with +15 energy, 50 chest slots, 38 pieces, 2 guest gifts a week
+  ok    tier 6: furniture_capacity equals max_furniture of room_t06.json
+  ok    tier 6: the art record of home.json is the same tier (taarnhus)
+  ok    tier 7: record, name key HOME_TIER_7 translates
+  ok    tier 7: 7500 guldagern, 4 day(s)
+  ok    tier 7: materials { "marble_block": 16, "slate": 40, "glass_pane": 30, "plank_walnut": 20, "gold_leaf": 2 }
+  ok    tier 7 lives with +18 energy, 60 chest slots, 46 pieces, 3 guest gifts a week
+  ok    tier 7: furniture_capacity equals max_furniture of room_t07.json
+  ok    tier 7: the art record of home.json is the same tier (landsted)
+  ok    tier 8: record, name key HOME_TIER_8 translates
+  ok    tier 8: 12500 guldagern, 5 day(s)
+  ok    tier 8: materials { "brick": 90, "copper_plate": 30, "glass_pane": 40, "marble_block": 20, "gold_leaf": 4 }
+  ok    tier 8 lives with +22 energy, 72 chest slots, 57 pieces, 3 guest gifts a week
+  ok    tier 8: furniture_capacity equals max_furniture of room_t08.json
+  ok    tier 8: the art record of home.json is the same tier (herregaard)
+  ok    tier 9: record, name key HOME_TIER_9 translates
+  ok    tier 9: 19000 guldagern, 6 day(s)
+  ok    tier 9: materials { "stone_block": 120, "slate": 60, "timber_beam": 40, "brass_bar": 12, "moonstone": 2 }
+  ok    tier 9 lives with +26 energy, 84 chest slots, 65 pieces, 4 guest gifts a week
+  ok    tier 9: furniture_capacity equals max_furniture of room_t09.json
+  ok    tier 9: the art record of home.json is the same tier (borg)
+  ok    tier 10: record, name key HOME_TIER_10 translates
+  ok    tier 10: 27000 guldagern, 8 day(s)
+  ok    tier 10: materials { "marble_block": 40, "glass_pane": 40, "roof_tile": 80, "gold_leaf": 12, "amethyst": 6, "moonstone": 6 }
+  ok    tier 10 lives with +30 energy, 100 chest slots, 74 pieces, 5 guest gifts a week
+  ok    tier 10: furniture_capacity equals max_furniture of room_t10.json
+  ok    tier 10: the art record of home.json is the same tier (slot)
+  ok    the ten tiers cost 74,000 guldagern in total (74000)
+  ok    the housewarming pieces are the seven of the addendum ([])
+  ok    requires.hygge is a LEVEL INDEX: 2 hyggeligt, 3 rigtig hyggeligt, 4 eventyrligt
+  ok    the gates of the addendum are rows: quests at 2, 5-9, hearts at 4, 7, 10, hygge at 7-10
+  ok    tier 7: gold + 5 materials + days + quest + friend + hygge = 10 rows
+  ok    economy.home_cost_scale is 1.0 by default
+  ok    scale 2.0: tier 5 costs 4200 and the gold row says so
+  ok    scale 0.5: 100 and 13500
+  ok    scale 0: the price is free
+  ok    everything but the scaled gold given ([])
+  ok    start_upgrade at scale 3.0 takes 3 x 200 = 600 guldagern (900 -> 300)
+  ok    tier 3 at scale 0.5 costs 150: with 0 guldagern the gold row is unmet
+  ok    and met with exactly 150
+  ok    the override is gone: 200 again
+  ok    tier 1: Perks.total("energy") adds the home bonus +0 (2.0)
+  ok    tier 1: the four perk numbers equal the addendum table
+  ok    tier 2: Perks.total("energy") adds the home bonus +3 (5.0)
+  ok    tier 2: the four perk numbers equal the addendum table
+  ok    tier 3: Perks.total("energy") adds the home bonus +6 (8.0)
+  ok    tier 3: the four perk numbers equal the addendum table
+  ok    tier 4: Perks.total("energy") adds the home bonus +9 (11.0)
+  ok    tier 4: the four perk numbers equal the addendum table
+  ok    tier 5: Perks.total("energy") adds the home bonus +12 (14.0)
+  ok    tier 5: the four perk numbers equal the addendum table
+  ok    tier 6: Perks.total("energy") adds the home bonus +15 (17.0)
+  ok    tier 6: the four perk numbers equal the addendum table
+  ok    tier 7: Perks.total("energy") adds the home bonus +18 (20.0)
+  ok    tier 7: the four perk numbers equal the addendum table
+  ok    tier 8: Perks.total("energy") adds the home bonus +22 (24.0)
+  ok    tier 8: the four perk numbers equal the addendum table
+  ok    tier 9: Perks.total("energy") adds the home bonus +26 (28.0)
+  ok    tier 9: the four perk numbers equal the addendum table
+  ok    tier 10: Perks.total("energy") adds the home bonus +30 (32.0)
+  ok    tier 10: the four perk numbers equal the addendum table
+  ok    home.stations_by_tier (snedkerbord <- workbench (T1), vaev <- loom (T3), smedje <- forge_bench (T5) at every tier; unknown stations are closed; [])
+  ok    home.perks_energy_storage_capacity (max_energy_bonus / storage_slots / furniture_capacity / guest_visits_per_week of the ten tiers equal the addendum table, and Perks.total("energy") adds the home bonus (30 at the castle))
+  ok    tier 1: only the carpenter's bench
+  ok    tier 4: the loom is open, the forge is not; CraftingSystem reads the same tier flag
+  ok    home.unlock_status (workbench loom forge_bench real, guest_visits festival real, oven forecast royal_visit stub ({ "workbench": "real", "oven": "stub", "loom": "real", "guest_visits": "real", "forge_bench": "real", "forecast": "stub", "festival": "real", "royal_visit": "stub" }); an unknown unlock is a stub)
+  ok    unlock_rows(): eight rows in the data's order with the loc keys of the perks card
+  ok    every unlock row has translated name and description keys, its tier and its unlocked state (tier 4)
+  ok    five unlocks include named visits and house parties; three remain listed separately: oven, forecast, royal_visit ({ "real": 5, "partial": 0, "stub": 3 })
+  ok    the stand-in furniture store holds 3 placed pieces and 2 spare chairs
+  ok    tier 2: everything it asks for was given through the public APIs ([])
+  ok    tier 2: with everything given the upgrade can start
+  ok    tier 2: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 2: 'gold:gold' put back -> the upgrade can start
+  ok    tier 2: only 'material:plank_pine' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 2: 'material:plank_pine' put back -> the upgrade can start
+  ok    tier 2: only 'material:nails' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 2: 'material:nails' put back -> the upgrade can start
+  ok    tier 2: only 'material:stone_block' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 2: 'material:stone_block' put back -> the upgrade can start
+  ok    tier 2: only 'quest:intro_lottery' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 2: 'quest:intro_lottery' put back -> the upgrade can start
+  ok    tier 2: 5 single-requirement tests, restored
+  ok    tier 2: start_upgrade ok, ready on day 2
+  ok    tier 2: exactly 200 guldagern and exactly the listed materials left the backpack, nothing else
+  ok    tier 2: the house is closed while it is built
+  ok    tier 2: construction {target, start_day, ready_day} in absolute days
+  ok    tier 2: home_upgrade_started(1, 2, 2)
+  ok    tier 2: flags home_tier 1, home_building 2 while building
+  ok    tier 2: the REAL fairy_builder dialogue is in its 'building' branch (t02_building)
+  ok    tier 2: a second upgrade is refused while building, nothing is taken twice
+  ok    tier 2: one progress signal per morning before the last (0), no upgrade yet
+  ok    tier 2 reached after 1 day(s)
+  ok    tier 2: exactly 1 calendar days passed
+  ok    tier 2: home_upgraded(1, 2) emitted once
+  ok    tier 2: game_event home_upgraded {tier: 2}
+  ok    tier 2: flags home_tier 2, home_building 0, home_upgrade_done 2
+  ok    tier 2: home_castle_built is not set
+  ok    tier 2: the REAL fairy_builder dialogue celebrates (t02_done)
+  ok    tier 2: the flag stays while the dialogue with the builder is open
+  ok    tier 2: talking to another citizen keeps home_upgrade_done, talking to the builder clears it (t02_idle)
+  ok    tier 2: the perks of the new tier apply
+  ok    tier 2: the housewarming piece(s) [] arrived once, routed to the furniture store
+  ok    tier 2: no piece lost ([]), 3 placed
+  ok    tier 2: the next step is not free by itself (materials)
+  ok    tier 3: everything it asks for was given through the public APIs ([])
+  ok    tier 3: with everything given the upgrade can start
+  ok    tier 3: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 3: 'gold:gold' put back -> the upgrade can start
+  ok    tier 3: only 'material:plank_pine' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 3: 'material:plank_pine' put back -> the upgrade can start
+  ok    tier 3: only 'material:straw_bundle' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 3: 'material:straw_bundle' put back -> the upgrade can start
+  ok    tier 3: only 'material:lime' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 3: 'material:lime' put back -> the upgrade can start
+  ok    tier 3: only 'material:nails' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 3: 'material:nails' put back -> the upgrade can start
+  ok    tier 3: only 'material:glass_pane' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 3: 'material:glass_pane' put back -> the upgrade can start
+  ok    tier 3: 6 single-requirement tests, restored
+  ok    tier 3: start_upgrade ok, ready on day 4
+  ok    tier 3: exactly 300 guldagern and exactly the listed materials left the backpack, nothing else
+  ok    tier 3: the house is closed while it is built
+  ok    tier 3: construction {target, start_day, ready_day} in absolute days
+  ok    tier 3: home_upgrade_started(2, 3, 4)
+  ok    tier 3: flags home_tier 2, home_building 3 while building
+  ok    tier 3: the REAL fairy_builder dialogue is in its 'building' branch (t03_building)
+  ok    tier 3: a second upgrade is refused while building, nothing is taken twice
+  ok    tier 3: morning 1 of 2: still building, 1 day(s) left
+  ok    tier 3: the build is 1 / 2 done
+  ok    tier 3: one progress signal per morning before the last (1), no upgrade yet
+  ok    tier 3 reached after 2 day(s)
+  ok    tier 3: exactly 2 calendar days passed
+  ok    tier 3: home_upgraded(2, 3) emitted once
+  ok    tier 3: game_event home_upgraded {tier: 3}
+  ok    tier 3: flags home_tier 3, home_building 0, home_upgrade_done 3
+  ok    tier 3: home_castle_built is not set
+  ok    tier 3: the REAL fairy_builder dialogue celebrates (t03_done)
+  ok    tier 3: the flag stays while the dialogue with the builder is open
+  ok    tier 3: talking to another citizen keeps home_upgrade_done, talking to the builder clears it (t03_idle)
+  ok    tier 3: the perks of the new tier apply
+  ok    tier 3: the housewarming piece(s) [] arrived once, routed to the furniture store
+  ok    tier 3: no piece lost ([]), 3 placed
+  ok    tier 3: the next step is not free by itself (gold)
+  ok    tier 4: everything it asks for was given through the public APIs ([])
+  ok    tier 4: with everything given the upgrade can start
+  ok    tier 4: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 4: 'gold:gold' put back -> the upgrade can start
+  ok    tier 4: only 'material:plank_oak' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 4: 'material:plank_oak' put back -> the upgrade can start
+  ok    tier 4: only 'material:timber_beam' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 4: 'material:timber_beam' put back -> the upgrade can start
+  ok    tier 4: only 'material:roof_tile' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 4: 'material:roof_tile' put back -> the upgrade can start
+  ok    tier 4: only 'material:lime' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 4: 'material:lime' put back -> the upgrade can start
+  ok    tier 4: only 'material:nails' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 4: 'material:nails' put back -> the upgrade can start
+  ok    tier 4: only 'material:glass_pane' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 4: 'material:glass_pane' put back -> the upgrade can start
+  ok    tier 4: only 'friend:mayor_lyra' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 4: 'friend:mayor_lyra' put back -> the upgrade can start
+  ok    tier 4: 8 single-requirement tests, restored
+  ok    tier 4: start_upgrade ok, ready on day 6
+  ok    tier 4: exactly 900 guldagern and exactly the listed materials left the backpack, nothing else
+  ok    tier 4: the house is closed while it is built
+  ok    tier 4: construction {target, start_day, ready_day} in absolute days
+  ok    tier 4: home_upgrade_started(3, 4, 6)
+  ok    tier 4: flags home_tier 3, home_building 4 while building
+  ok    tier 4: the REAL fairy_builder dialogue is in its 'building' branch (t04_building)
+  ok    tier 4: a second upgrade is refused while building, nothing is taken twice
+  ok    tier 4: morning 1 of 2: still building, 1 day(s) left
+  ok    tier 4: the build is 1 / 2 done
+  ok    tier 4: one progress signal per morning before the last (1), no upgrade yet
+  ok    tier 4 reached after 2 day(s)
+  ok    tier 4: exactly 2 calendar days passed
+  ok    tier 4: home_upgraded(3, 4) emitted once
+  ok    tier 4: game_event home_upgraded {tier: 4}
+  ok    tier 4: flags home_tier 4, home_building 0, home_upgrade_done 4
+  ok    tier 4: home_castle_built is not set
+  ok    tier 4: the REAL fairy_builder dialogue celebrates (t04_done)
+  ok    tier 4: the flag stays while the dialogue with the builder is open
+  ok    tier 4: talking to another citizen keeps home_upgrade_done, talking to the builder clears it (t04_idle)
+  ok    tier 4: the perks of the new tier apply
+  ok    tier 4: the housewarming piece(s) [] arrived once, routed to the furniture store
+  ok    tier 4: no piece lost ([]), 3 placed
+  ok    tier 4: the next step is not free by itself (gold)
+  ok    tier 5: everything it asks for was given through the public APIs ([])
+  ok    tier 5: with everything given the upgrade can start
+  ok    tier 5: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 5: 'gold:gold' put back -> the upgrade can start
+  ok    tier 5: only 'material:plank_oak' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 5: 'material:plank_oak' put back -> the upgrade can start
+  ok    tier 5: only 'material:timber_beam' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 5: 'material:timber_beam' put back -> the upgrade can start
+  ok    tier 5: only 'material:roof_tile' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 5: 'material:roof_tile' put back -> the upgrade can start
+  ok    tier 5: only 'material:brick' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 5: 'material:brick' put back -> the upgrade can start
+  ok    tier 5: only 'material:glass_pane' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 5: 'material:glass_pane' put back -> the upgrade can start
+  ok    tier 5: only 'material:copper_plate' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 5: 'material:copper_plate' put back -> the upgrade can start
+  ok    tier 5: only 'quest:first_animal' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 5: 'quest:first_animal' put back -> the upgrade can start
+  ok    tier 5: 8 single-requirement tests, restored
+  ok    tier 5: start_upgrade ok, ready on day 9
+  ok    tier 5: exactly 2100 guldagern and exactly the listed materials left the backpack, nothing else
+  ok    tier 5: the house is closed while it is built
+  ok    tier 5: construction {target, start_day, ready_day} in absolute days
+  ok    tier 5: home_upgrade_started(4, 5, 9)
+  ok    tier 5: flags home_tier 4, home_building 5 while building
+  ok    tier 5: the REAL fairy_builder dialogue is in its 'building' branch (t05_building)
+  ok    tier 5: a second upgrade is refused while building, nothing is taken twice
+  ok    tier 5: morning 1 of 3: still building, 2 day(s) left
+  ok    tier 5: the build is 1 / 3 done
+  ok    tier 5: morning 2 of 3: still building, 1 day(s) left
+  ok    tier 5: the build is 2 / 3 done
+  ok    tier 5: one progress signal per morning before the last (2), no upgrade yet
+  ok    tier 5 reached after 3 day(s)
+  ok    tier 5: exactly 3 calendar days passed
+  ok    tier 5: home_upgraded(4, 5) emitted once
+  ok    tier 5: game_event home_upgraded {tier: 5}
+  ok    tier 5: flags home_tier 5, home_building 0, home_upgrade_done 5
+  ok    tier 5: home_castle_built is not set
+  ok    tier 5: the REAL fairy_builder dialogue celebrates (t05_done)
+  ok    tier 5: the flag stays while the dialogue with the builder is open
+  ok    tier 5: talking to another citizen keeps home_upgrade_done, talking to the builder clears it (t05_idle)
+  ok    tier 5: the perks of the new tier apply
+  ok    tier 5: the housewarming piece(s) ["throne_root"] arrived once, routed to the furniture store
+  ok    tier 5: no piece lost ([]), 3 placed
+  ok    tier 5: the next step is not free by itself (gold)
+  ok    tier 6: everything it asks for was given through the public APIs ([])
+  ok    tier 6: with everything given the upgrade can start
+  ok    tier 6: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 6: 'gold:gold' put back -> the upgrade can start
+  ok    tier 6: only 'material:stone_block' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 6: 'material:stone_block' put back -> the upgrade can start
+  ok    tier 6: only 'material:slate' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 6: 'material:slate' put back -> the upgrade can start
+  ok    tier 6: only 'material:glass_pane' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 6: 'material:glass_pane' put back -> the upgrade can start
+  ok    tier 6: only 'material:plank_walnut' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 6: 'material:plank_walnut' put back -> the upgrade can start
+  ok    tier 6: only 'material:amethyst' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 6: 'material:amethyst' put back -> the upgrade can start
+  ok    tier 6: only 'quest:crystal_cave' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 6: 'quest:crystal_cave' put back -> the upgrade can start
+  ok    tier 6: 7 single-requirement tests, restored
+  ok    tier 6: start_upgrade ok, ready on day 12
+  ok    tier 6: exactly 4500 guldagern and exactly the listed materials left the backpack, nothing else
+  ok    tier 6: the house is closed while it is built
+  ok    tier 6: construction {target, start_day, ready_day} in absolute days
+  ok    tier 6: home_upgrade_started(5, 6, 12)
+  ok    tier 6: flags home_tier 5, home_building 6 while building
+  ok    tier 6: the REAL fairy_builder dialogue is in its 'building' branch (t06_building)
+  ok    tier 6: a second upgrade is refused while building, nothing is taken twice
+  ok    tier 6: morning 1 of 3: still building, 2 day(s) left
+  ok    tier 6: the build is 1 / 3 done
+  ok    tier 6: morning 2 of 3: still building, 1 day(s) left
+  ok    tier 6: the build is 2 / 3 done
+  ok    tier 6: one progress signal per morning before the last (2), no upgrade yet
+  ok    tier 6 reached after 3 day(s)
+  ok    tier 6: exactly 3 calendar days passed
+  ok    tier 6: home_upgraded(5, 6) emitted once
+  ok    tier 6: game_event home_upgraded {tier: 6}
+  ok    tier 6: flags home_tier 6, home_building 0, home_upgrade_done 6
+  ok    tier 6: home_castle_built is not set
+  ok    tier 6: the REAL fairy_builder dialogue celebrates (t06_done)
+  ok    tier 6: the flag stays while the dialogue with the builder is open
+  ok    tier 6: talking to another citizen keeps home_upgrade_done, talking to the builder clears it (t06_idle)
+  ok    tier 6: the perks of the new tier apply
+  ok    tier 6: the housewarming piece(s) ["clock_moon"] arrived once, routed to the furniture store
+  ok    tier 6: no piece lost ([]), 3 placed
+  ok    tier 6: the next step is not free by itself (gold)
+  ok    tier 7: everything it asks for was given through the public APIs ([])
+  ok    tier 7: with everything given the upgrade can start
+  ok    tier 7: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 7: 'gold:gold' put back -> the upgrade can start
+  ok    tier 7: only 'material:marble_block' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 7: 'material:marble_block' put back -> the upgrade can start
+  ok    tier 7: only 'material:slate' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 7: 'material:slate' put back -> the upgrade can start
+  ok    tier 7: only 'material:glass_pane' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 7: 'material:glass_pane' put back -> the upgrade can start
+  ok    tier 7: only 'material:plank_walnut' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 7: 'material:plank_walnut' put back -> the upgrade can start
+  ok    tier 7: only 'material:gold_leaf' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 7: 'material:gold_leaf' put back -> the upgrade can start
+  ok    tier 7: only 'quest:fairy_friendship' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 7: 'quest:fairy_friendship' put back -> the upgrade can start
+  ok    tier 7: only 'friend:mayor_lyra' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 7: 'friend:mayor_lyra' put back -> the upgrade can start
+  ok    tier 7: only 'hygge:hyggeligt' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 7: 'hygge:hyggeligt' put back -> the upgrade can start
+  ok    tier 7: 9 single-requirement tests, restored
+  ok    tier 7: start_upgrade ok, ready on day 16
+  ok    tier 7: exactly 7500 guldagern and exactly the listed materials left the backpack, nothing else
+  ok    tier 7: the house is closed while it is built
+  ok    tier 7: construction {target, start_day, ready_day} in absolute days
+  ok    tier 7: home_upgrade_started(6, 7, 16)
+  ok    tier 7: flags home_tier 6, home_building 7 while building
+  ok    tier 7: the REAL fairy_builder dialogue is in its 'building' branch (t07_building)
+  ok    tier 7: a second upgrade is refused while building, nothing is taken twice
+  ok    tier 7: morning 1 of 4: still building, 3 day(s) left
+  ok    tier 7: the build is 1 / 4 done
+  ok    tier 7: morning 2 of 4: still building, 2 day(s) left
+  ok    tier 7: the build is 2 / 4 done
+  ok    tier 7: morning 3 of 4: still building, 1 day(s) left
+  ok    tier 7: the build is 3 / 4 done
+  ok    tier 7: one progress signal per morning before the last (3), no upgrade yet
+  ok    tier 7 reached after 4 day(s)
+  ok    tier 7: exactly 4 calendar days passed
+  ok    tier 7: home_upgraded(6, 7) emitted once
+  ok    tier 7: game_event home_upgraded {tier: 7}
+  ok    tier 7: flags home_tier 7, home_building 0, home_upgrade_done 7
+  ok    tier 7: home_castle_built is not set
+  ok    tier 7: the REAL fairy_builder dialogue celebrates (t07_done)
+  ok    tier 7: the flag stays while the dialogue with the builder is open
+  ok    tier 7: talking to another citizen keeps home_upgrade_done, talking to the builder clears it (t07_idle)
+  ok    tier 7: the perks of the new tier apply
+  ok    tier 7: the housewarming piece(s) ["piano_star"] arrived once, routed to the furniture store
+  ok    tier 7: no piece lost ([]), 6 placed
+  ok    tier 7: the next step is not free by itself (gold)
+  ok    tier 8: everything it asks for was given through the public APIs ([])
+  ok    tier 8: with everything given the upgrade can start
+  ok    tier 8: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 8: 'gold:gold' put back -> the upgrade can start
+  ok    tier 8: only 'material:brick' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 8: 'material:brick' put back -> the upgrade can start
+  ok    tier 8: only 'material:copper_plate' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 8: 'material:copper_plate' put back -> the upgrade can start
+  ok    tier 8: only 'material:glass_pane' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 8: 'material:glass_pane' put back -> the upgrade can start
+  ok    tier 8: only 'material:marble_block' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 8: 'material:marble_block' put back -> the upgrade can start
+  ok    tier 8: only 'material:gold_leaf' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 8: 'material:gold_leaf' put back -> the upgrade can start
+  ok    tier 8: only 'quest:snurresvampen' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 8: 'quest:snurresvampen' put back -> the upgrade can start
+  ok    tier 8: only 'hygge:rigtig_hyggeligt' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 8: 'hygge:rigtig_hyggeligt' put back -> the upgrade can start
+  ok    tier 8: 8 single-requirement tests, restored
+  ok    tier 8: start_upgrade ok, ready on day 21
+  ...   (319 more ok lines of home not printed; --verbose prints all)
+  --    home: 719 checks, 0 failed, 0 skipped, 5.1 s
+== section npc  (res://tests/sections/npc.gd)
+  ok    npc.real_conversation_screens
+  ok    npc.talk_roster_mayor_lyra
+  ok    npc.portrait_mayor_lyra
+  ok    At most five choices: mayor_lyra
+  ok    Esc releases mayor_lyra
+  ok    Resolved line DLG_LYRA_GREET_1 in da
+  ok    Resolved line DLG_LYRA_GREET_2 in da
+  ok    Resolved line DLG_LYRA_LOTTERY in da
+  ok    Resolved line DLG_LYRA_GREET_1 in en
+  ok    Resolved line DLG_LYRA_GREET_2 in en
+  ok    Resolved line DLG_LYRA_LOTTERY in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_baker_maja
+  ok    npc.portrait_baker_maja
+  ok    At most five choices: baker_maja
+  ok    Esc releases baker_maja
+  ok    Resolved line DLG_MAJA_GREET in da
+  ok    Resolved line DLG_MAJA_ROOF_TROUBLE in da
+  ok    Resolved line DLG_MAJA_GREET in en
+  ok    Resolved line DLG_MAJA_ROOF_TROUBLE in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_merchant_pip
+  ok    npc.portrait_merchant_pip
+  ok    At most five choices: merchant_pip
+  ok    Esc releases merchant_pip
+  ok    Resolved line DLG_MERCHANT_GREET in da
+  ok    Resolved line DLG_MERCHANT_GREET in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_pippin_boegeknop
+  ok    npc.portrait_pippin_boegeknop
+  ok    At most five choices: pippin_boegeknop
+  ok    Esc releases pippin_boegeknop
+  ok    Resolved line DLG_PIPPIN_CAT in da
+  ok    Resolved line DLG_PIPPIN_CAT in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_king
+  ok    npc.portrait_fairy_king
+  ok    At most five choices: fairy_king
+  ok    Esc releases fairy_king
+  ok    Resolved line QUEST_MOONSTONE_CROWN_OFFER in da
+  ok    Resolved line QUEST_MOONSTONE_CROWN_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_lily
+  ok    npc.portrait_fairy_lily
+  ok    At most five choices: fairy_lily
+  ok    Esc releases fairy_lily
+  ok    Resolved line DLG_LILY_GREET in da
+  ok    Resolved line DLG_LILY_GREET in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_smith_thorin
+  ok    npc.portrait_smith_thorin
+  ok    At most five choices: smith_thorin
+  ok    Esc releases smith_thorin
+  ok    Resolved line DLG_THORIN_GREET in da
+  ok    Resolved line DLG_THORIN_MINING_TALK in da
+  ok    Resolved line DLG_THORIN_GREET in en
+  ok    Resolved line DLG_THORIN_MINING_TALK in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_guard_oak
+  ok    npc.portrait_guard_oak
+  ok    At most five choices: guard_oak
+  ok    Esc releases guard_oak
+  ok    Resolved line DLG_OAK_LIFT in da
+  ok    Resolved line QUEST_SKOVLIFT_INTRO_OFFER in da
+  ok    Resolved line DLG_OAK_LIFT in en
+  ok    Resolved line QUEST_SKOVLIFT_INTRO_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_farmer_rosa
+  ok    npc.portrait_farmer_rosa
+  ok    At most five choices: farmer_rosa
+  ok    Esc releases farmer_rosa
+  ok    Resolved line DLG_ROSA_GREET in da
+  ok    Resolved line DLG_ROSA_ANIMAL_TALK in da
+  ok    Resolved line DLG_ROSA_GREET in en
+  ok    Resolved line DLG_ROSA_ANIMAL_TALK in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_wizard
+  ok    npc.portrait_fairy_wizard
+  ok    At most five choices: fairy_wizard
+  ok    Esc releases fairy_wizard
+  ok    Resolved line DLG_WIZARD_GREET in da
+  ok    Resolved line DLG_WIZARD_MATH_INTRO in da
+  ok    Resolved line DLG_WIZARD_GREET in en
+  ok    Resolved line DLG_WIZARD_MATH_INTRO in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_cat_morfar_mis
+  ok    npc.portrait_cat_morfar_mis
+  ok    At most five choices: cat_morfar_mis
+  ok    Esc releases cat_morfar_mis
+  ok    Resolved line DLG_MIS_HOME in da
+  ok    Resolved line DLG_MIS_HOME in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_penguin_postman
+  ok    npc.portrait_penguin_postman
+  ok    At most five choices: penguin_postman
+  ok    Esc releases penguin_postman
+  ok    Resolved line DLG_PENGUIN_HELLO in da
+  ok    Resolved line DLG_PENGUIN_HELLO in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_builder
+  ok    npc.portrait_fairy_builder
+  ok    At most five choices: fairy_builder
+  ok    Esc releases fairy_builder
+  ok    Resolved line DLG_BUILDER_T01_IDLE in da
+  ok    Resolved line DLG_BUILDER_T01_OFFER in da
+  ok    Resolved line DLG_BUILDER_T01_IDLE in en
+  ok    Resolved line DLG_BUILDER_T01_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_furnisher
+  ok    npc.portrait_fairy_furnisher
+  ok    At most five choices: fairy_furnisher
+  ok    Esc releases fairy_furnisher
+  ok    Resolved line DLG_FURNISHER_GREET in da
+  ok    Resolved line DLG_FURNISHER_GREET in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fairy_tailor
+  ok    npc.portrait_fairy_tailor
+  ok    At most five choices: fairy_tailor
+  ok    Esc releases fairy_tailor
+  ok    Resolved line DLG_TAILOR_GREET in da
+  ok    Resolved line DLG_TAILOR_GREET in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_gardener_hoppe
+  ok    npc.portrait_gardener_hoppe
+  ok    At most five choices: gardener_hoppe
+  ok    Esc releases gardener_hoppe
+  ok    Resolved line DLG_HOPPE_GREET in da
+  ok    Resolved line DLG_HOPPE_KLART in da
+  ok    Resolved line DLG_HOPPE_SWAP_OFFER in da
+  ok    Resolved line DLG_HOPPE_GREET in en
+  ok    Resolved line DLG_HOPPE_KLART in en
+  ok    Resolved line DLG_HOPPE_SWAP_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_carpenter_brumme
+  ok    npc.portrait_carpenter_brumme
+  ok    At most five choices: carpenter_brumme
+  ok    Esc releases carpenter_brumme
+  ok    Resolved line DLG_BRUMME_GREET in da
+  ok    Resolved line DLG_BRUMME_SLOW in da
+  ok    Resolved line DLG_BRUMME_REST in da
+  ok    Resolved line DLG_BRUMME_GREET in en
+  ok    Resolved line DLG_BRUMME_SLOW in en
+  ok    Resolved line DLG_BRUMME_REST in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_postman_pip
+  ok    npc.portrait_postman_pip
+  ok    At most five choices: postman_pip
+  ok    Esc releases postman_pip
+  ok    Resolved line DLG_PIP_GREET in da
+  ok    Resolved line DLG_PIP_BAG in da
+  ok    Resolved line DLG_PIP_OFFER in da
+  ok    Resolved line DLG_PIP_GREET in en
+  ok    Resolved line DLG_PIP_BAG in en
+  ok    Resolved line DLG_PIP_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_bathkeeper_sofus
+  ok    npc.portrait_bathkeeper_sofus
+  ok    At most five choices: bathkeeper_sofus
+  ok    Esc releases bathkeeper_sofus
+  ok    Resolved line DLG_SOFUS_GREET in da
+  ok    Resolved line DLG_SOFUS_ORANGE in da
+  ok    Resolved line DLG_SOFUS_OFFER in da
+  ok    Resolved line DLG_SOFUS_GREET in en
+  ok    Resolved line DLG_SOFUS_ORANGE in en
+  ok    Resolved line DLG_SOFUS_OFFER in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_appraiser_fru_ugle
+  ok    npc.portrait_appraiser_fru_ugle
+  ok    At most five choices: appraiser_fru_ugle
+  ok    Esc releases appraiser_fru_ugle
+  ok    Resolved line DLG_UGLE_GREET in da
+  ok    Resolved line DLG_UGLE_LAKE in da
+  ok    Resolved line DLG_UGLE_RUNES in da
+  ok    Resolved line DLG_UGLE_GREET in en
+  ok    Resolved line DLG_UGLE_LAKE in en
+  ok    Resolved line DLG_UGLE_RUNES in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_mapseller_natteblik
+  ok    npc.portrait_mapseller_natteblik
+  ok    At most five choices: mapseller_natteblik
+  ok    Esc releases mapseller_natteblik
+  ok    Resolved line DLG_NATTEBLIK_GREET in da
+  ok    Resolved line DLG_NATTEBLIK_EARS in da
+  ok    Resolved line DLG_NATTEBLIK_MAPS in da
+  ok    Resolved line DLG_NATTEBLIK_LANTERN in da
+  ok    Resolved line DLG_NATTEBLIK_GREET in en
+  ok    Resolved line DLG_NATTEBLIK_EARS in en
+  ok    Resolved line DLG_NATTEBLIK_MAPS in en
+  ok    Resolved line DLG_NATTEBLIK_LANTERN in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_beekeeper_birk
+  ok    npc.portrait_beekeeper_birk
+  ok    At most five choices: beekeeper_birk
+  ok    Esc releases beekeeper_birk
+  ok    Resolved line DLG_BIRK_GREET in da
+  ok    Resolved line DLG_BIRK_BEES in da
+  ok    Resolved line DLG_BIRK_HONEY in da
+  ok    Resolved line DLG_BIRK_QUIET in da
+  ok    Resolved line DLG_BIRK_FAREWELL in da
+  ok    Resolved line DLG_BIRK_GREET in en
+  ok    Resolved line DLG_BIRK_BEES in en
+  ok    Resolved line DLG_BIRK_HONEY in en
+  ok    Resolved line DLG_BIRK_QUIET in en
+  ok    Resolved line DLG_BIRK_FAREWELL in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_rasmus
+  ok    npc.portrait_rasmus
+  ok    At most five choices: rasmus
+  ok    Esc releases rasmus
+  ok    Resolved line DLG_NEUTRAL in da
+  ok    Resolved line DLG_NEUTRAL in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_lamplighter_kiki
+  ok    npc.portrait_lamplighter_kiki
+  ok    At most five choices: lamplighter_kiki
+  ok    Esc releases lamplighter_kiki
+  ok    Resolved line SOC_LAMPLIGHTER_KIKI_GREET_H0_1 in da
+  ok    Resolved line SOC_LAMPLIGHTER_KIKI_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_bertil
+  ok    npc.portrait_bertil
+  ok    At most five choices: bertil
+  ok    Esc releases bertil
+  ok    Resolved line SOC_BERTIL_GREET_H0_1 in da
+  ok    Resolved line SOC_BERTIL_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_bodil
+  ok    npc.portrait_bodil
+  ok    At most five choices: bodil
+  ok    Esc releases bodil
+  ok    Resolved line SOC_BODIL_GREET_H0_1 in da
+  ok    Resolved line SOC_BODIL_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_innkeeper_kvak
+  ok    npc.portrait_innkeeper_kvak
+  ok    At most five choices: innkeeper_kvak
+  ok    Esc releases innkeeper_kvak
+  ok    Resolved line SOC_ANY_SEASON_FORAAR_5 in da
+  ok    Resolved line SOC_ANY_SEASON_FORAAR_5 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_cub_bamse
+  ok    npc.portrait_cub_bamse
+  ok    At most five choices: cub_bamse
+  ok    Esc releases cub_bamse
+  ok    Resolved line SOC_CUB_BAMSE_GREET_H0_1 in da
+  ok    Resolved line SOC_CUB_BAMSE_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_clerk_fjerpen
+  ok    npc.portrait_clerk_fjerpen
+  ok    At most five choices: clerk_fjerpen
+  ok    Esc releases clerk_fjerpen
+  ok    Resolved line SOC_CLERK_FJERPEN_GREET_H0_1 in da
+  ok    Resolved line SOC_CLERK_FJERPEN_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_fiddler_strimmel
+  ok    npc.portrait_fiddler_strimmel
+  ok    At most five choices: fiddler_strimmel
+  ok    Esc releases fiddler_strimmel
+  ok    Resolved line SOC_FIDDLER_STRIMMEL_GREET_H0_1 in da
+  ok    Resolved line SOC_FIDDLER_STRIMMEL_GREET_H0_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_ghostfam_dyne
+  ok    npc.portrait_ghostfam_dyne
+  ok    At most five choices: ghostfam_dyne
+  ok    Esc releases ghostfam_dyne
+  ok    Resolved line DLG_GHOSTFAM_DYNE_DAWN_1 in da
+  ok    Resolved line DLG_GHOSTFAM_DYNE_DAWN_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_ghostfam_gnist
+  ok    npc.portrait_ghostfam_gnist
+  ok    At most five choices: ghostfam_gnist
+  ok    Esc releases ghostfam_gnist
+  ok    Resolved line DLG_GHOSTFAM_GNIST_EARLY_1 in da
+  ok    Resolved line DLG_GHOSTFAM_GNIST_EARLY_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_ghostfam_silke
+  ok    npc.portrait_ghostfam_silke
+  ok    At most five choices: ghostfam_silke
+  ok    Esc releases ghostfam_silke
+  ok    Resolved line DLG_GHOSTFAM_SILKE_DAWN_1 in da
+  ok    Resolved line DLG_GHOSTFAM_SILKE_DAWN_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.talk_roster_ghostfam_blund
+  ok    npc.portrait_ghostfam_blund
+  ok    At most five choices: ghostfam_blund
+  ok    Esc releases ghostfam_blund
+  ok    Resolved line DLG_GHOSTFAM_BLUND_DAWN_1 in da
+  ok    Resolved line DLG_GHOSTFAM_BLUND_DAWN_1 in en
+  ok    Prompt owns the verb only
+  ok    npc.context_race_0_hour_24 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 24, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "animal", "hero": "rasmus", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_0_hour_25 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 25, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "animal", "hero": "rasmus", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_1_hour_24 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 24, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "fairy", "hero": "kloevermynte", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_1_hour_25 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 25, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "fairy", "hero": "kloevermynte", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_2_hour_24 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 24, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "hobbit", "hero": "bertil", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_2_hour_25 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 25, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "hobbit", "hero": "bertil", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_3_hour_24 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 24, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "ghost", "hero": "bu", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    npc.context_race_3_hour_25 ({ &"intro_pending": false, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0, &"farm_stage": 1, &"dg_boss_clear": false, &"ghostfam_seek_gift_now": 0, "hour": 25, "day": 1, "season": "foraar", "weekday": 0, "total_day": 1, "weather": "klart", "race": "ghost", "hero": "bu", "stamina_ratio": 1.0, "zone": "farm", "quest_active_animal_products": false, "quest_done_animal_products": false, "quest_offer_animal_products": true, "quest_active_birthday_cake": false, "quest_done_birthday_cake": false, "quest_offer_birthday_cake": true, "quest_active_bogtraeet": false, "quest_done_bogtraeet": false, "quest_offer_bogtraeet": false, "quest_active_bossernes_vej": false, "quest_done_bossernes_vej": false, "quest_offer_bossernes_vej": true, "quest_active_cookie_delivery": false, "quest_done_cookie_delivery": false, "quest_offer_cookie_delivery": true, "quest_active_crystal_cave": false, "quest_done_crystal_cave": false, "quest_offer_crystal_cave": false, "quest_active_dark_forest_mining": false, "quest_done_dark_forest_mining": false, "quest_offer_dark_forest_mining": false, "quest_active_enchanted_garden": false, "quest_done_enchanted_garden": false, "quest_offer_enchanted_garden": true, "quest_active_fairy_friendship": false, "quest_done_fairy_friendship": false, "quest_offer_fairy_friendship": true, "quest_active_first_animal": false, "quest_done_first_animal": false, "quest_offer_first_animal": true, "quest_active_fix_roof": false, "quest_done_fix_roof": false, "quest_offer_fix_roof": true, "quest_active_flower_necklace": false, "quest_done_flower_necklace": false, "quest_offer_flower_necklace": true, "quest_active_forest_mother_s03": false, "quest_done_forest_mother_s03": false, "quest_offer_forest_mother_s03": false, "quest_active_forest_mother_s04": false, "quest_done_forest_mother_s04": false, "quest_offer_forest_mother_s04": false, "quest_active_forest_mother_s05": false, "quest_done_forest_mother_s05": false, "quest_offer_forest_mother_s05": false, "quest_active_forest_mother_s06": false, "quest_done_forest_mother_s06": false, "quest_offer_forest_mother_s06": false, "quest_active_forest_mother_s07": false, "quest_done_forest_mother_s07": false, "quest_offer_forest_mother_s07": false, "quest_active_forest_mother_s08": false, "quest_done_forest_mother_s08": false, "quest_offer_forest_mother_s08": false, "quest_active_forest_patrol": false, "quest_done_forest_patrol": false, "quest_offer_forest_patrol": true, "quest_active_forste_dage": false, "quest_done_forste_dage": false, "quest_offer_forste_dage": true, "quest_active_ghostfam_garn": false, "quest_done_ghostfam_garn": false, "quest_offer_ghostfam_garn": false, "quest_active_ghostfam_hittegods": false, "quest_done_ghostfam_hittegods": false, "quest_offer_ghostfam_hittegods": false, "quest_active_ghostfam_lygtemager": false, "quest_done_ghostfam_lygtemager": false, "quest_offer_ghostfam_lygtemager": false, "quest_active_intro_lottery": false, "quest_done_intro_lottery": false, "quest_offer_intro_lottery": true, "quest_active_lost_cat": false, "quest_done_lost_cat": false, "quest_offer_lost_cat": true, "quest_active_math_bakery_counts": false, "quest_done_math_bakery_counts": false, "quest_offer_math_bakery_counts": true, "quest_active_math_harvest_puzzle": false, "quest_done_math_harvest_puzzle": false, "quest_offer_math_harvest_puzzle": true, "quest_active_math_wizard_quiz": false, "quest_done_math_wizard_quiz": false, "quest_offer_math_wizard_quiz": true, "quest_active_moonstone_crown": false, "quest_done_moonstone_crown": false, "quest_offer_moonstone_crown": false, "quest_active_night_flower": false, "quest_done_night_flower": false, "quest_offer_night_flower": false, "quest_active_pips_runde": false, "quest_done_pips_runde": false, "quest_offer_pips_runde": true, "quest_active_rare_mushroom_hunt": false, "quest_done_rare_mushroom_hunt": false, "quest_offer_rare_mushroom_hunt": true, "quest_active_rune_vandring": false, "quest_done_rune_vandring": false, "quest_offer_rune_vandring": true, "quest_active_secret_garden": false, "quest_done_secret_garden": false, "quest_offer_secret_garden": true, "quest_active_skovlift_intro": false, "quest_done_skovlift_intro": false, "quest_offer_skovlift_intro": true, "quest_active_slotsdroemmen": false, "quest_done_slotsdroemmen": false, "quest_offer_slotsdroemmen": false, "quest_active_snurresvampen": false, "quest_done_snurresvampen": false, "quest_offer_snurresvampen": false, "quest_active_supply_run": false, "quest_done_supply_run": false, "quest_offer_supply_run": true, "quest_active_sword_upgrade": false, "quest_done_sword_upgrade": false, "quest_offer_sword_upgrade": false, "quest_active_ugles_noegle": false, "quest_done_ugles_noegle": false, "quest_offer_ugles_noegle": true, "friend_mayor_lyra": 0, "friend_baker_maja": 0, "friend_merchant_pip": 0, "friend_pippin_boegeknop": 0, "friend_fairy_king": 0, "friend_fairy_lily": 0, "friend_smith_thorin": 0, "friend_guard_oak": 0, "friend_farmer_rosa": 0, "friend_fairy_wizard": 0, "friend_cat_morfar_mis": 0, "friend_penguin_postman": 0, "friend_fairy_builder": 0, "friend_fairy_furnisher": 0, "friend_fairy_tailor": 0, "friend_gardener_hoppe": 0, "friend_carpenter_brumme": 0, "friend_postman_pip": 0, "friend_bathkeeper_sofus": 0, "friend_appraiser_fru_ugle": 0, "friend_mapseller_natteblik": 0, "friend_beekeeper_birk": 0, "friend_rasmus": 0, "friend_lamplighter_kiki": 0, "friend_bertil": 0, "friend_bodil": 0, "friend_innkeeper_kvak": 0, "friend_cub_bamse": 0, "friend_clerk_fjerpen": 0, "friend_fiddler_strimmel": 0, "friend_ghostfam_dyne": 0, "friend_ghostfam_gnist": 0, "friend_ghostfam_silke": 0, "friend_ghostfam_blund": 0, "shop_natteblik_maps": true, "shop_animal_store": true, "shop_bakery": true, "shop_fest_flower_market": true, "shop_fest_honey_market": true, "shop_fest_harvest_market": true, "shop_fest_moon_market": true, "shop_fest_bake_market": true, "shop_furniture_shop": true, "shop_tailor_shop": true, "shop_builder_yard": true, "shop_flea_market": true, "shop_lantern_house": true, "shop_magic_store": true, "shop_seed_shop": true, "shop_smithy": true, "shop_timber_yard": true, "hearts": 0, "stage": "fremmed", "daypart": "nat", "birthday": false, "festival": "", "chat_open": true, "talked_today": true, "gifts_left": 2, "partner": false })
+  ok    Night citizen after midnight
+  ok    Night citizen after midnight
+  ok    npc.when_night_hides_collider
+  ok    npc.text_has_no_focus
+  ok    npc.esc_first_line_no_heart
+  ok    npc.choice_focus
+  ok    npc.choice_wrap
+  ok    npc.action_transfers_to_shop
+  ok    npc.weekly_heart
+  ok    npc.pad_close_no_duplicate_heart
+  ok    npc.talk_holds_driven
+  ok    npc.temporary_actor_disposal_ends_once
+  ok    npc.dialogue_reentrant_cancels_previous_await
+  ok    npc.dialogue_reentrant_second_result
+  ok    npc.reach_override
+  ok    npc.wander_sixty_seconds_walkable
+  ok    npc.night_schedule_home_and_sleep (home distance 3.20293688774109, requested sleep, rendered idle)
+  ok    npc.unused_npc_clips_have_no_abandoned_thread_requests
+  ok    npc.emit_event_after_modal_closed ([{ "event": &"npc_extension_probe", "payload": { "answer": 42 }, "modal": &"" }])
+  ok    npc.unknown_action_forwarded
+  ok    npc.guest_has_social_but_no_shop_quest_or_routine
+  ok    Every overflow page fits five rows
+  ok    Every overflow page fits five rows
+  ok    Every overflow page fits five rows
+  ok    Every overflow page fits five rows
+  ok    Every overflow page fits five rows
+  ok    npc.overflow_keeps_all_choices_once
+  ok    npc.accept_dialogue_snurresvampen
+  ok    npc.accept_dialogue_bogtraeet
+  ok    npc.accept_dialogue_moonstone_crown
+  ok    npc.accept_dialogue_slotsdroemmen
+  ok    npc.accept_dialogue_lost_cat
+  ok    npc.accept_dialogue_cookie_delivery
+  ok    npc.accept_dialogue_fix_roof
+  ok    npc.accept_dialogue_skovlift_intro
+  ok    npc.journal_toggle_j
+  ok    npc.journal_reads_lua
+  ok    npc.journal_rules_da ([])
+  ok    npc.journal_rules_en ([])
+  ok    npc.journal_list_right_changes_tab
+  ok    npc.journal_j_closes_in_gui
+  ok    npc.cookie_delivery_dialogue_turn_in
+  ok    npc.lost_cat_real_pawprint_marker
+  ok    npc.lost_cat_dialogue_turn_in
+  ok    npc.fix_roof_transactional_action
+  ok    npc.intro_uses_real_dialogue
+  ok    npc.intro_skip_accepts_quest
+  ok    npc.intro_once
+  --    npc: 345 checks, 0 failed, 0 skipped, 1.3 s
+== section relationships  (res://tests/sections/relationships.gd)
+  ok    relationships.eleven_adult_candidates
+  ok    relationships.hjertebuket_crafted_special_icon
+  ok    relationships.loefteagern_crafted_special_icon
+  ok    relationships.hjertebuket_real_recipe_exact_consumption
+  ok    relationships.hjertebuket_never_sold_in_a_shop
+  ok    relationships.loefteagern_real_recipe_exact_consumption
+  ok    relationships.loefteagern_never_sold_in_a_shop
+  ok    relationships.baker_maja_authored_or_archetype_scene_localized
+  ok    relationships.bathkeeper_sofus_authored_or_archetype_scene_localized
+  ok    relationships.beekeeper_birk_authored_or_archetype_scene_localized
+  ok    relationships.bertil_authored_or_archetype_scene_localized
+  ok    relationships.bodil_authored_or_archetype_scene_localized
+  ok    relationships.carpenter_brumme_authored_or_archetype_scene_localized
+  ok    relationships.gardener_hoppe_authored_or_archetype_scene_localized
+  ok    relationships.lamplighter_kiki_authored_or_archetype_scene_localized
+  ok    relationships.merchant_pip_authored_or_archetype_scene_localized
+  ok    relationships.postman_pip_authored_or_archetype_scene_localized
+  ok    relationships.rasmus_authored_or_archetype_scene_localized
+  ok    relationships.child_refusal_keeps_bouquet
+  ok    relationships.low_hearts_refusal
+  ok    relationships.programmatic_gift_requires_consent
+  ok    relationships.special_shown_after_ordinary_limits
+  ok    relationships.bouquet_atomic_heartfriend
+  ok    relationships.ordinary_gift_ledger_untouched
+  ok    relationships.repeated_bouquet_not_consumed
+  ok    relationships.several_heartfriends
+  ok    relationships.seven_days_required
+  ok    relationships.home_three_required
+  ok    relationships.proposal_committed_once
+  ok    relationships.wedding_safe_sunday
+  ok    relationships.one_engagement
+  ok    relationships.calendar_dynamic_wedding
+  ok    relationships.fixed_calendar_still_nine
+  ok    relationships.real_save_reload
+  ok    relationships.proposal_dates_and_stages_saved
+  ok    relationships.missed_wedding_reschedules_without_penalty
+  ok    relationships.dynamic_wedding_roster_spouse_first
+  ok    relationships.cannot_marry_without_scene
+  ok    relationships.wedding_commits_once
+  ok    relationships.all_eleven_jobs_covered_seven_days_two_weathers ([])
+  ok    relationships.computed_early_baker_no_morning ({ "baker_maja": 6.0, "bathkeeper_sofus": 8.34667116509222, "beekeeper_birk": 6.0, "bertil": 6.13310841205578, "bodil": 6.0, "carpenter_brumme": 6.0, "gardener_hoppe": 6.0, "lamplighter_kiki": 6.0, "merchant_pip": 6.0, "postman_pip": 7.397885739991, "rasmus": 6.0 })
+  ok    relationships.computed_morning_and_evening_visits ({ "baker_maja": 6.0, "bathkeeper_sofus": 8.34667116509222, "beekeeper_birk": 6.0, "bertil": 6.13310841205578, "bodil": 6.0, "carpenter_brumme": 6.0, "gardener_hoppe": 6.0, "lamplighter_kiki": 6.0, "merchant_pip": 6.0, "postman_pip": 7.397885739991, "rasmus": 6.0 } evening=9)
+  ok    relationships.year_boundary_safe_wedding_dates ([])
+  ok    relationships.festival_keepers_physically_back_for_evening_work ([])
+  ok    relationships.wedding_shops_never_open_while_keeper_is_travelling ([])
+  ok    relationships.daily_help_water_twelve_atomic
+  ok    relationships.daily_help_cannot_repeat
+  ok    relationships.daily_help_feeds_real_animals_from_supplies
+  ok    relationships.no_work_leaves_note
+  ok    relationships.chore_save_reload
+  ok    relationships.daily_help_saved_idempotent
+  ok    relationships.party_names_six_real_friends
+  ok    relationships.weekly_visits_deterministic_without_repeats
+  ok    relationships.new_friend_cannot_repeat_earlier_weekly_visitor
+  ok    relationships.real_weekly_gift_names_a_friend
+  ok    relationships.real_weekly_gift_not_replayed
+  ok    relationships.named_visit_and_history_saved
+  ok    relationships.hero_twin_not_a_partner
+  ok    relationships.authored_relationship_data_current (Relationship items, recipes, wedding template and 54 bilingual rows verified
+)
+  --    relationships: 59 checks, 0 failed, 0 skipped, 8.2 s
+== section social_events  (res://tests/sections/social_events.gd)
+  ok    social_events.heart_event_only_on_talk
+  ok    social_events.automatic_events_never_appear_in_talk_choices
+  ok    social_events.queue_accepts_while_busy
+  ok    social_events.deduplicates_queued_events
+  ok    social_events.waits_for_playing_and_no_modal
+  ok    social_events.queued_talk_starts_after_modal_closes
+  ok    social_events.event_modal_is_nonpausing_cutscene
+  ok    social_events.clock_frozen
+  ok    social_events.no_save_during_event
+  ok    social_events.no_travel_or_sleep_during_event
+  ok    social_events.rewards_deferred_until_scene_end
+  ok    social_events.overlay_follows_modal
+  ok    social_events.overlay_focus_none (0 interactive, 0 keyboard-focusable)
+  ok    social_events.overlay_rules (6 nodes, 1 text, 0 boxes, 0 interactive scanned)
+  ok    social_events.overlay_i18n (clean)
+  ok    social_events.escape_opens_one_confirm
+  ok    social_events.continue_is_default
+  ok    social_events.declining_skip_keeps_scene
+  ok    social_events.skip_fast_forwards_effects
+  ok    social_events.choice_takes_option_one_on_skip
+  ok    social_events.all_point_steps_commit_once
+  ok    social_events.time_step_capped_at_two_hours
+  ok    social_events.seen_once_and_skip_recorded
+  ok    social_events.say_runs_merge_per_speaker
+  ok    social_events.actors_released_on_end
+  ok    social_events.camera_released_on_end
+  ok    social_events.seen_event_refused
+  ok    social_events.save_after_commit
+  ok    social_events.load_after_commit
+  ok    social_events.rewards_paid_once_after_load
+  ok    social_events.missing_actor_scene_can_start
+  ok    social_events.missing_actor_api_is_skipped_not_fatal
+  ok    social_events.ordinary_scene_points_paid
+  ok    social_events.yearly_scene_starts
+  ok    social_events.full_pack_reward_is_saved
+  ok    social_events.full_pack_save_valid
+  ok    social_events.full_pack_reward_loads
+  ok    social_events.owed_survives_load
+  ok    social_events.reward_claimed_when_space_opens
+  ok    social_events.reward_claim_is_idempotent
+  ok    social_events.yearly_refused_same_year
+  ok    social_events.yearly_scene_repeats_next_year
+  ok    social_events.yearly_reward_second_year
+  ok    social_events.cancel_scene_starts
+  ok    social_events.cancel_does_not_commit
+  ok    social_events.cancel_releases_modal_and_actors
+  ok    social_events.cancelled_scene_can_retry
+  ok    social_events.time_stops_before_the_live_day_roll
+  ok    social_events.queue_bound_0
+  ok    social_events.queue_bound_1
+  ok    social_events.queue_bound_2
+  ok    social_events.queue_bound_3
+  ok    social_events.queue_bound_4
+  ok    social_events.queue_bound_5
+  ok    social_events.queue_drops_after_two_days
+  --    social_events: 55 checks, 0 failed, 0 skipped, 0.4 s
+== summary: 6 section(s) run, 1574 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 23.1 s
+PLAYTEST PASS (1574 checks in 6 sections, 0 allowed engine messages, 0 known-issue messages)

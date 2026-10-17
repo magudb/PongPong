@@ -21,7 +21,9 @@ func _ready() -> void:
 	runner = RUNNER.new()
 	runner.name = "EventRunner"
 	add_child(runner)
-	runner.finished.connect(func(_id,_skip): _schedule())
+	runner.finished.connect(func(id,_skip):
+		if id=="ev_bryllupsfesten_open": Svc.static_call("res://scripts/social/relationships/relationship_flow.gd",&"marry",[])
+		_schedule())
 	EventBus.game_event.connect(_event)
 	EventBus.modal_changed.connect(func(_stack): _schedule())
 	EventBus.day_started.connect(func(_day,_season): _schedule())
@@ -108,7 +110,9 @@ func _sync_festival(world: Node) -> void:
 	var ending := float(GameManager.hour)+GameManager.minute/60.0 >= float(SocialManager.festival_window(id).to)-1.0
 	var suffix := "end" if ending else "open"
 	var event_id := str(scenes.get("finale" if ending else "opening","ev_"+id+"_"+suffix))
+	if id=="bryllupsfesten" and ending: return
 	var data := SocialData.event(event_id)
+	if id=="bryllupsfesten": data = Svc.static_call("res://scripts/social/relationships/relationship_flow.gd",&"wedding_scene",[],{})
 	if data.is_empty():
 		data = {"meta":{"trigger":"automatic","repeat":"year","festival":id},"steps":[{"act":"say","who":str(meta.get("host","")),"text_key":"FEST_"+id.to_upper()+"_"+suffix.to_upper()}]}
 	if ending:

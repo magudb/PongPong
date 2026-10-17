@@ -293,7 +293,9 @@ func _data() -> void:
 	var stable = bool(none["derived"]) and str(none["tier"]) == "C" and none["birthday"] == again["birthday"] and SocialData.derived_birthday("no_row_npc") == SocialData.derived_birthday("no_row_npc")
 	var real_npc := str(friends[0])
 	var role_arch: Variant = SocialData.cfg_dict("role_archetype").get(str(SocialData.npc_row(real_npc).get("role", "")), "wanderer")
-	stable = stable and str(SocialData.citizen(real_npc)["archetype"]) == str(role_arch)
+	SocialFixture.install({"citizens":{}},{})
+	stable = stable and bool(SocialData.citizen(real_npc)["derived"]) and str(SocialData.citizen(real_npc)["archetype"]) == str(role_arch)
+	SocialFixture.uninstall()
 	# adding an NPC never moves another NPC's birthday (it is derived from the id alone)
 	var before := {}
 	for id in friends:
@@ -332,7 +334,8 @@ func _data() -> void:
 		if not SocialData.cfg_dict("role_archetype").has(r):
 			missing.append(r)
 	t.check("data_role_archetype_covers_every_role", missing.is_empty() and roles.size() > 20, "%d roles of npc_vocab.roles, missing in social.role_archetype: %s" % [roles.size(), str(missing)])
-	t.skip("social.data_real_citizens_and_tastes: lua/social/citizens.lua and gift_tastes.lua are S-data's (wave 5): every friend here still uses the derived defaults (tier C, role archetype, derived birthday); the design rows are used where a check needs them")
+	var authored := SocialData.friend_ids().all(func(id):return not bool(SocialData.citizen(str(id)).get("derived",true)))
+	t.check("data_real_citizens_and_tastes",authored and not LuaData.dict(Svc.lua_config("gift_tastes",{})).is_empty(),"The live citizens and tastes now exist; fallback coverage above explicitly installs a missing-citizens fixture.")
 
 
 # ================================================================================================ task 3: the config
