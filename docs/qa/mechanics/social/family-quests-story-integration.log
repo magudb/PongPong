@@ -1,0 +1,325 @@
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=ghostfam_quests,quests,forest_mother,secret_garden
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.nTjIvI/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 11.5 s
+== section forest_mother  (res://tests/sections/forest_mother.gd)
+  ok    forest_mother.no_inherited_evidence
+  ok    forest_mother.garden_trail_starts_investigation
+  ok    forest_mother.authored_quest_caption_is_localized
+  ok    forest_mother.future_chapters_cannot_be_offered_early
+  ok    forest_mother.all_essential_quests_have_no_paid_or_random_rewards
+  ok    forest_mother.out_of_order_evidence_is_kept
+  ok    forest_mother.finale_waits_for_real_checkpoints
+  ok    forest_mother.cancel_records_nothing_and_releases_player
+  ok    forest_mother.travel_cancels_evidence_dialogue
+  ok    forest_mother.full_pack_cannot_block_evidence
+  ok    forest_mother.evidence_save_written
+  ok    forest_mother.evidence_save_loaded
+  ok    forest_mother.evidence_restored_with_quest_progress
+  ok    forest_mother.daytime_visit_does_not_consume_account
+  ok    forest_mother.night_retry_uses_real_topic
+  ok    forest_mother.first_checkpoint_completes_s03
+  ok    forest_mother.memory_clue_reachable_memory_map
+  ok    forest_mother.memory_clue_reachable_memory_basket
+  ok    forest_mother.memory_clue_reachable_memory_lamp
+  ok    forest_mother.memory_clue_reachable_memory_table
+  ok    forest_mother.free_owl_topic_available_beside_services
+  ok    forest_mother.cancelled_witness_page_does_not_record
+  ok    forest_mother.free_written_owl_account_has_no_calendar_gate
+  ok    forest_mother.own_name_and_second_checkpoint_complete_s05
+  ok    forest_mother.witness_account_completes_s06
+  ok    forest_mother.earlier_last_journey_catches_up
+  ok    forest_mother.story_sync_never_regrants_boss_hearts
+  ok    forest_mother.bittersweet_truth_and_keepsake_commit_together
+  ok    forest_mother.finale_answers_fate_explicitly
+  ok    forest_mother.reread_never_duplicates_progress
+  ok    forest_mother.legacy_planted_and_story_finished
+  ok    forest_mother.journal_has_all_confirmed_accounts
+  ok    forest_mother.ending_save_written
+  ok    forest_mother.ending_save_reentered
+  ok    forest_mother.legacy_survives_world_rebuild
+  ok    forest_mother.ordinary_forest_play_remains_available
+  ok    forest_mother.no_inherited_evidence
+  ok    forest_mother.garden_trail_starts_investigation
+  ok    forest_mother.authored_quest_caption_is_localized
+  ok    forest_mother.future_chapters_cannot_be_offered_early
+  ok    forest_mother.all_essential_quests_have_no_paid_or_random_rewards
+  ok    forest_mother.out_of_order_evidence_is_kept
+  ok    forest_mother.finale_waits_for_real_checkpoints
+  ok    forest_mother.cancel_records_nothing_and_releases_player
+  ok    forest_mother.travel_cancels_evidence_dialogue
+  ok    forest_mother.full_pack_cannot_block_evidence
+  ok    forest_mother.evidence_save_written
+  ok    forest_mother.evidence_save_loaded
+  ok    forest_mother.evidence_restored_with_quest_progress
+  ok    forest_mother.daytime_visit_does_not_consume_account
+  ok    forest_mother.night_retry_uses_real_topic
+  ok    forest_mother.first_checkpoint_completes_s03
+  ok    forest_mother.memory_clue_reachable_memory_map
+  ok    forest_mother.memory_clue_reachable_memory_basket
+  ok    forest_mother.memory_clue_reachable_memory_lamp
+  ok    forest_mother.memory_clue_reachable_memory_table
+  ok    forest_mother.free_owl_topic_available_beside_services
+  ok    forest_mother.cancelled_witness_page_does_not_record
+  ok    forest_mother.free_written_owl_account_has_no_calendar_gate
+  ok    forest_mother.own_name_and_second_checkpoint_complete_s05
+  ok    forest_mother.witness_account_completes_s06
+  ok    forest_mother.earlier_last_journey_catches_up
+  ok    forest_mother.story_sync_never_regrants_boss_hearts
+  ok    forest_mother.bittersweet_truth_and_keepsake_commit_together
+  ok    forest_mother.finale_answers_fate_explicitly
+  ok    forest_mother.reread_never_duplicates_progress
+  ok    forest_mother.legacy_planted_and_story_finished
+  ok    forest_mother.journal_has_all_confirmed_accounts
+  ok    forest_mother.ending_save_written
+  ok    forest_mother.ending_save_reentered
+  ok    forest_mother.legacy_survives_world_rebuild
+  ok    forest_mother.ordinary_forest_play_remains_available
+  --    forest_mother: 72 checks, 0 failed, 0 skipped, 19.8 s
+== section ghostfam_quests  (res://tests/sections/ghostfam_quests.gd)
+  ok    ghostfam_quests.ghostfam_garn_registered
+  ok    ghostfam_quests.ghostfam_garn_heart_gate
+  ok    ghostfam_quests.ghostfam_garn_offered_at_threshold
+  ok    ghostfam_quests.ghostfam_garn_real_dialogue_offer
+  ok    ghostfam_quests.ghostfam_lygtemager_registered
+  ok    ghostfam_quests.ghostfam_lygtemager_heart_gate
+  ok    ghostfam_quests.ghostfam_lygtemager_offered_at_threshold
+  ok    ghostfam_quests.ghostfam_lygtemager_real_dialogue_offer
+  ok    ghostfam_quests.ghostfam_hittegods_registered
+  ok    ghostfam_quests.ghostfam_hittegods_heart_gate
+  ok    ghostfam_quests.ghostfam_hittegods_offered_at_threshold
+  ok    ghostfam_quests.ghostfam_hittegods_real_dialogue_offer
+  ok    ghostfam_quests.garn_accept
+  ok    ghostfam_quests.garn_waits_for_wool
+  ok    ghostfam_quests.garn_consumes_exact_wool
+  ok    ghostfam_quests.garn_blue_shirt_and_heart
+  ok    ghostfam_quests.garn_never_repeats
+  ok    ghostfam_quests.lantern_accept
+  ok    ghostfam_quests.lantern_requires_both_ingredients
+  ok    ghostfam_quests.lantern_consumes_and_rewards
+  ok    ghostfam_quests.lantern_never_repeats
+  ok    ghostfam_quests.lost_owner_filters_absence
+  ok    ghostfam_quests.no_eligible_owner_no_offer
+  ok    ghostfam_quests.six_non_twin_owners
+  ok    ghostfam_quests.lost_accept
+  ok    ghostfam_quests.named_parcel_accepted_once
+  ok    ghostfam_quests.journal_names_owner_and_item
+  ok    ghostfam_quests.journal_shows_named_heart
+  ok    ghostfam_quests.lost_save_reload
+  ok    ghostfam_quests.lost_assignment_saved
+  ok    ghostfam_quests.wrong_owner_or_item_cannot_finish
+  ok    ghostfam_quests.real_gift_finishes_lost_property ({ "ok": true, "item": "honey", "class": "love", "points": 40, "birthday": "", "repeated": false, "hearts": 0, "hearts_before": 0, "stage_before": "fremmed", "stage_after": &"fremmed" })
+  ok    ghostfam_quests.lost_reward_cannot_replay
+  ok    ghostfam_quests.lost_seven_day_cooldown
+  ok    ghostfam_quests.lost_returns_after_week
+  ok    ghostfam_quests.full_pack_accepts_deferred_parcel
+  ok    ghostfam_quests.full_pack_has_no_phantom_parcel
+  ok    ghostfam_quests.deferred_parcel_saves
+  ok    ghostfam_quests.deferred_state_survives
+  ok    ghostfam_quests.silke_talk_hook_collects_parcel
+  ok    ghostfam_quests.deferred_parcel_no_duplicate
+  ok    ghostfam_quests.content_reproducible
+  ok    ghostfam_quests.family_lua_has_no_new_findings
+  --    ghostfam_quests: 43 checks, 0 failed, 0 skipped, 0.4 s
+== section quests  (res://tests/sections/quests.gd)
+  ok    quests.lint_report_empty (LuaRuntime.lint_report after a full reload: [])
+  ok    quests.lint_tool_clean_on_every_quest_file (tools/lua/lint.gd on lua/quests: 40 PASS of 40 files, 0 FAIL, exit 0)
+  ok    quests.every_quest_file_is_registered (40 quest files, every file registers its id with QuestManager [])
+  ok    quests.the_twenty_quests_are_there (the 20 quests of the legacy set [])
+  ok    quests.giver_tag_location_for_every_quest (40 quests: giver is a roster npc that offers it, tag in the six, location a ZONE_ key [])
+  ok    quests.every_objective_has_a_binding_and_its_own_text_key (the 20 quests: the quest book derives QUEST_<ID>_TITLE / _DESC (the schema defaults), `on` and description_key OBJ_<QUEST>_<OBJ> on every objective [])
+  ok    quests.math_objectives_renamed_unique (math_harvest_puzzle: ["math_harvest_carrot", "math_collect_stone", "math_collect_mushroom"])
+  ok    quests.no_text_literals_in_the_quest_lua (no description = / title = literal in the 20 quests of this package or the four of F1 [])
+  ok    quests.objective_references_exist (40 quests: every npc, any_of npc, item, needs item, recipe, crop, zone, area and reward a quest names exists [])
+  ok    quests.every_quest_text_key_resolves_in_da_and_en (40 quests: title, description, offer, every objective, every toast key and every reward item name in da + en [])
+  ok    quests.quests_csv_owns_only_its_families (147 rows, all QUEST_ / OBJ_ / LUANOTIF_, none of the four feature quests (features_quests.csv); QUEST_FAIRY_FRIENDSHIP_TITLE replaces the legacy typo [])
+  ok    quests.binding_vocabulary_events (item_gained crop_planted crop_watered crop_harvested zone_entered area_changed dialogue_started(any_of) animal_* building_built enemy_defeated recipe_crafted quest_completed manual amount: [])
+  ok    quests.area_changed_binding (on = area_changed binds the MAP id of EventBus.area_changed, not the zone: [])
+  ok    quests.game_event_binding_filters (event name + rarity (comma list); an unknown event and a wrong filter never count: [])
+  ok    quests.game_event_match_filter (match = { npc, item, id } compares payload entries (numbers as numbers, a missing entry never matches): [])
+  ok    quests.game_event_min_level_generic (min_level reads payload.level for dungeon_floor_entered, dungeon_runestone_activated and hygge_level alike: [])
+  ok    quests.dungeon_event_payloads_bind (dungeon_floor_entered, dungeon_runestone_activated, dungeon_boss_defeated, dungeon_run_ended: [])
+  ok    quests.state_objective_counts_standing_pieces (placed_by_rarity = pieces standing now, evaluated at accept and on furniture_changed: [])
+  ok    quests.state_friend_hearts_at_least (friend_hearts_at_least / hygge_level_at_least / home_tier_at_least read their owner, re-evaluate on friend_changed / hygge_changed / home_upgraded and stay done: [])
+  ok    quests.state_objective_reevaluated_on_load ([])
+  ok    quests.state_query_registration (register_state_query(name, Callable(def) -> count): [])
+  ok    quests.after_others_turn_in (a turn-in is judged on the state before the event: [])
+  ok    quests.have_objective_tracks_inventory (have = true: counts what you own at accept, follows add / remove (coalesced to the next frame), done stays done: [])
+  ok    quests.delivery_consumes_the_goods (needs + consume = the goods leave the backpack with the progress, a missing good blocks it with a toast: [])
+  ok    quests.resource_drop_counts_once (the resource_node_depleted special case only feeds objectives without `on`: [])
+  ok    quests.social_objective_sugar (gift_given / festival_attended / heart_event_finished are game_event sugar with npc / item / id filters: [])
+  ok    quests.friendship_reward_goes_through_social_manager (rewards.friendship -> SocialManager.add_hearts(npc, n, &quest), no flag written by the quest package: [])
+  ok    quests.friendship_reward_cap (without SocialManager: flag friend_<npc> += n capped at 10, friend_changed(npc, hearts) when the hearts changed: [])
+  ok    quests.real_managers_social_contract (rewards.friendship -> the real SocialManager.add_hearts (mirrored into friend_<npc>), friend_hearts_at_least on the real hearts / friend_changed, lost_cat pays Pippin 2 hearts: [])
+  ok    quests.real_managers_home_contract (home_tier_at_least reads the real HomeManager.tier and re-evaluates on home_upgraded: [])
+  ok    quests.real_managers_furniture_contract (FurnitureManager offers count_placed_by_rarity(rarities) and hygge_level_index() (the names on_state objectives ask))
+  ok    quests.offerable_by_giver (offerable(npc) = available now, not active, not done, in npcs.lua order: [])
+  ok    quests.offerable_for_many (offerable_for(givers) = [{quest_id, giver}] in the order of the givers, one entry per offerable quest: [])
+  ok    quests.post_givers_have_offer_text (16 quests of the post.givers (mayor_lyra, baker_maja, merchant_pip, farmer_rosa, fairy_lily, smith_thorin) have QUEST_<ID>_OFFER in da + en [])
+  ok    quests.tracked_order_and_cap (get_tracked(max): oldest accepted first, capped, never completed or failed, stable across save / load: [])
+  ok    quests.journal_lists_api (get_active_ids (oldest first), get_completed_ids (most recent first), the two counts for 'Aktive · n' / 'Fuldført · m': [])
+  ok    quests.repeatable_reaccept_after_cooldown (meta.repeatable / cooldown_days: re-accept only after the cooldown, from zero, one history entry: [])
+  ok    quests.save_roundtrip_keeps_progress_and_definitions (to_dict / from_dict: only runtime state, any_of progress, JSON floats, definitions stay live: [])
+  ok    quests.reset_keeps_definitions (reset() forgets progress and keeps the Lua definitions)
+  ok    quests.new_game_resets_runtime_and_keeps_definitions (reset() on new_game_started: active, completed, offered, owed rewards and flags gone, definitions stay: [])
+  ok    quests.lua_probes_live_in_p10_fixtures (23 probe files + probe_expected.json in P10's tests/fixtures/lua (replayed by data.lua_probes), every quest file lints clean with the same lint_source [])
+  ok    quests.item_in_use (item_in_use(item): open have objectives, `needs` of open objectives, ingredients of an open recipe_crafted objective: [])
+  ok    quests.objective_text_cascade (get_objective_text: description_key -> OBJ_<QUEST>_<OBJ> -> OBJ_<OBJ> -> description -> id, da and en: [])
+  ok    quests.binding_lint_catches_uncompletable_objectives (unknown on / state, any_of larger than the target, have without item, missing fields, duplicates, bad rewards / tags: [])
+  ok    quests.lost_cat_keeps_guide_chips (lost_cat pays 150 guldagern + catnip_seeds x3 + hat_cat_ears + a heart with Pippin; the book shows the guide's chips, steps, title, 'Fra' line and description: [])
+  ok    quests.lost_cat_plays_through (ask three neighbours, follow the paw prints, find Morfar Mis, tell Pippin: [])
+  ok    quests.feature_quests_complete_with_rewards (lost_cat, fix_roof, birthday_cake, math_wizard_quiz, bogtraeet, moonstone_crown, snurresvampen, slotsdroemmen: accepted and completed through the real EventBus, exact gold and items [])
+  ok    quests.every_objective_completable_with_dungeon_events (40 quest files, 130 objectives driven through the signals the game sends (game_event names fed: dungeon_floor_entered, dungeon_run_ended, dungeon_runestone_activated, festival_held, plot_tilled, post_read; the dungeon payloads of ADDENDUM 8.4 reach every objective bound to them - fed to real quests: dungeon_floor_entered, dungeon_run_ended, dungeon_runestone_activated); accepted through the Lua gate: 36, started past an unknown gate: ["ghostfam_garn", "ghostfam_hittegods", "ghostfam_lygtemager", "secret_garden"]; [])
+  ok    quests.manual_objectives_have_completers (39 on = manual objectives, each named by a quest_spot marker (3 markers), a dialogue math_answer action (6) or a script: unnamed [])
+  ok    quests.quest_spot_markers_match_the_lua_needs (2 quest_spot markers of the real maps: the objective is manual and its needs / consume equal the marker's [])
+  ok    quests.intro_lottery_binds_traetoppen (plant_first_crop (crop_planted), cross_bridge (zone_entered traetoppen), talk_to_mayor (dialogue mayor_lyra): [])
+  ok    quests.no_fixed_forest_area_ids (no quest binds skovkant / dybe_bregner as an area or zone id (the generated floors have moerkeskoven_f<N> ids) [])
+  ok    quests.lost_cat_binds_pawprints_and_mis ([])
+  ok    quests.zone_entered_repeat_is_harmless (dark_forest_mining, forest_patrol, crystal_cave: repeated zone_entered / area_changed never overshoot a target of 1 and never finish the quest alone: [])
+  ok    quests.bound_quests_have_their_floor_anchors (night_flower (night_bloom, floor 2), rare_mushroom_hunt (glow_mushroom + the find_glowing quest_spot, floor 7), moonstone_crown (moonstone), the zone quests (zone ids of the floors): [])
+  ok    quests.live_generated_quest_anchors_f2_s4242 ([])
+  ok    quests.live_generated_quest_anchors_f7_s4242 ([])
+  ok    quests.live_generated_quest_anchors_f2_s8181 ([])
+  ok    quests.live_generated_quest_anchors_f7_s8181 ([])
+  ok    quests.forste_dage_vocabulary_plot_tilled_post_read (on = game_event with event plot_tilled / post_read completes objectives (the tutorial's bindings): [])
+  ok    quests.forste_dage_binds_only_known_events (every objective of lua/quests/forste_dage.lua uses a binding of the vocabulary and, for game_event, a name of the events list [])
+  --    quests: 61 checks, 0 failed, 0 skipped, 4.5 s
+== section secret_garden  (res://tests/sections/secret_garden.gd)
+  ok    secret_garden.new_hero_has_no_inherited_story
+  ok    secret_garden.opening_is_not_interrupted
+  ok    secret_garden.available_to_existing_save
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.garden_map_builds ([])
+  ok    secret_garden.all_work_markers_exist
+  ok    secret_garden.all_work_reachable_with_inflated_body ([])
+  ok    secret_garden.player_can_interact_gate
+  ok    secret_garden.quest_started_through_world_dialogue
+  ok    secret_garden.later_accounts_do_not_spoil_story
+  ok    secret_garden.cancel_does_not_clear_path
+  ok    secret_garden.enter_farm
+  ok    secret_garden.leaving_cancels_work_and_releases_player
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.return_rebuilds_parked_garden
+  ok    secret_garden.out_of_order_work_refused
+  ok    secret_garden.player_can_interact_path
+  ok    secret_garden.path_is_cleared
+  ok    secret_garden.enter_traetoppen
+  ok    secret_garden.seed_help_read_in_real_conversation
+  ok    secret_garden.enter_int_brummes_vaerksted
+  ok    secret_garden.bench_help_read_in_real_conversation
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.player_can_interact_bench
+  ok    secret_garden.painted_bench_restored
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.beds_planted_and_watered
+  ok    secret_garden.flowers_need_one_morning
+  ok    secret_garden.garden_save_written
+  ok    secret_garden.garden_save_loaded
+  ok    secret_garden.watering_and_chapter_restore_together
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.garden_grows_while_away_or_asleep
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.flowers_use_approved_painting
+  ok    secret_garden.player_can_interact_letter
+  ok    secret_garden.mother_letter_persisted_as_quest_evidence
+  ok    secret_garden.kin_branch_matches_hero
+  ok    secret_garden.enter_moerkeskoven
+  ok    secret_garden.trail_hidden_until_lift_record
+  ok    secret_garden.enter_int_postkontoret
+  ok    secret_garden.post_account_persisted
+  ok    secret_garden.enter_traetoppen
+  ok    secret_garden.lift_record_persisted
+  ok    secret_garden.enter_moerkeskoven
+  ok    secret_garden.trail_revealed_at_real_forest_hub
+  ok    secret_garden.player_can_interact_trail
+  ok    secret_garden.mother_trail_recorded
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.player_can_interact_bench
+  ok    secret_garden.restoration_story_completed
+  ok    secret_garden.one_time_reward
+  ok    secret_garden.replay_cannot_pay_again
+  ok    secret_garden.evidence_can_be_reread_after_completion
+  ok    secret_garden.complete_save_written
+  ok    secret_garden.complete_save_loaded
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.completed_place_and_evidence_survive_load
+  ok    secret_garden.walk_through_gate_hyggebyen (actual hyggebyen; traveling=true)
+  ok    secret_garden.walk_through_gate_secret_garden (actual secret_garden; traveling=true)
+  ok    secret_garden.all_garden_art_is_real ([])
+  ok    secret_garden.new_hero_has_no_inherited_story
+  ok    secret_garden.opening_is_not_interrupted
+  ok    secret_garden.available_to_existing_save
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.garden_map_builds ([])
+  ok    secret_garden.all_work_markers_exist
+  ok    secret_garden.all_work_reachable_with_inflated_body ([])
+  ok    secret_garden.player_can_interact_gate
+  ok    secret_garden.quest_started_through_world_dialogue
+  ok    secret_garden.later_accounts_do_not_spoil_story
+  ok    secret_garden.cancel_does_not_clear_path
+  ok    secret_garden.enter_farm
+  ok    secret_garden.leaving_cancels_work_and_releases_player
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.return_rebuilds_parked_garden
+  ok    secret_garden.out_of_order_work_refused
+  ok    secret_garden.player_can_interact_path
+  ok    secret_garden.path_is_cleared
+  ok    secret_garden.enter_traetoppen
+  ok    secret_garden.seed_help_read_in_real_conversation
+  ok    secret_garden.enter_int_brummes_vaerksted
+  ok    secret_garden.bench_help_read_in_real_conversation
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.player_can_interact_bench
+  ok    secret_garden.painted_bench_restored
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.beds_planted_and_watered
+  ok    secret_garden.flowers_need_one_morning
+  ok    secret_garden.garden_save_written
+  ok    secret_garden.garden_save_loaded
+  ok    secret_garden.watering_and_chapter_restore_together
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.garden_grows_while_away_or_asleep
+  ok    secret_garden.player_can_interact_beds
+  ok    secret_garden.flowers_use_approved_painting
+  ok    secret_garden.player_can_interact_letter
+  ok    secret_garden.mother_letter_persisted_as_quest_evidence
+  ok    secret_garden.kin_branch_matches_hero
+  ok    secret_garden.enter_moerkeskoven
+  ok    secret_garden.trail_hidden_until_lift_record
+  ok    secret_garden.enter_int_postkontoret
+  ok    secret_garden.post_account_persisted
+  ok    secret_garden.enter_traetoppen
+  ok    secret_garden.lift_record_persisted
+  ok    secret_garden.enter_moerkeskoven
+  ok    secret_garden.trail_revealed_at_real_forest_hub
+  ok    secret_garden.player_can_interact_trail
+  ok    secret_garden.mother_trail_recorded
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.player_can_interact_bench
+  ok    secret_garden.restoration_story_completed
+  ok    secret_garden.one_time_reward
+  ok    secret_garden.replay_cannot_pay_again
+  ok    secret_garden.evidence_can_be_reread_after_completion
+  ok    secret_garden.complete_save_written
+  ok    secret_garden.complete_save_loaded
+  ok    secret_garden.enter_secret_garden
+  ok    secret_garden.completed_place_and_evidence_survive_load
+  ok    secret_garden.walk_through_gate_hyggebyen (actual hyggebyen; traveling=true)
+  ok    secret_garden.walk_through_gate_secret_garden (actual secret_garden; traveling=true)
+  ok    secret_garden.all_garden_art_is_real ([])
+  --    secret_garden: 124 checks, 0 failed, 0 skipped, 7.1 s
+== summary: 4 section(s) run, 308 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 47.7 s
+PLAYTEST PASS (308 checks in 4 sections, 0 allowed engine messages, 0 known-issue messages)

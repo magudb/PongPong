@@ -117,6 +117,7 @@ func _ready() -> void:
 	if sm != null and sm.has_method("register_section"):
 		sm.call("register_section", SECTION, self, SECTION_ORDER)
 	Svc.static_call("res://scripts/social/events/festival_director.gd", &"attach", [self])
+	Svc.static_call("res://scripts/ghostfam/quests/family_quests.gd",&"attach",[self])
 
 
 # ======================================================================================= seed / rng

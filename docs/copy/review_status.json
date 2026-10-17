@@ -432,5 +432,12 @@
     "date": "",
     "voice_frozen": false,
     "rows": 25
+  },
+  "localization/ghostfamily_quests.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 26
   }
 }

@@ -21,8 +21,8 @@ const P13_QUESTS := ["animal_products", "birthday_cake", "cookie_delivery", "cry
 	"rare_mushroom_hunt", "supply_run", "sword_upgrade"]
 ## the eight quests of acceptance row 'feature_quests_complete_with_rewards' (RV-P4 / F1)
 const FEATURE_EIGHT := ["lost_cat", "fix_roof", "birthday_cake", "math_wizard_quiz", "bogtraeet", "moonstone_crown", "snurresvampen", "slotsdroemmen"]
-## manual objectives whose completer is built by a package that has not landed: "quest.objective" -> the package (a SKIP naming it, never a failure)
-const PENDING_COMPLETERS := {"rare_mushroom_hunt.find_glowing": "D1-dungeon-gen"}
+## Every shipped manual objective now has a runtime completer.
+const PENDING_COMPLETERS := {}
 ## the game_event names the plan lets a quest bind (3.1 of the feature addendum, 8.4 of the dungeon addendum, 8.2 of the towns addendum)
 const KNOWN_EVENTS := ["furniture_placed", "hygge_level", "festival_held", "home_upgraded", "garment_equipped", "open_home_builder", "open_home_chest", "plot_tilled", "post_read",
 	"crop_ready", "field_expanded", "bin_shipped", "dungeon_floor_entered", "dungeon_runestone_activated", "dungeon_boss_defeated", "dungeon_run_ended", "floor_map_used",
@@ -1227,6 +1227,8 @@ func _drive(qid: String, events_fed: Dictionary) -> Dictionary:
 	if not accepted:
 		qm.call("_activate", qn, def)
 		forced = true
+	# A procedural errand chooses its named friendship recipient at acceptance.
+	var dynamic_hearts := LuaData.int_map(LuaData.dict(qm.get_quest_progress(qn).get("meta",{})).get("friendship_rewards",{}))
 	var completed_signals: Array = []
 	var updates := [0]
 	var on_completed := func(id: StringName) -> void: completed_signals.append(id)
@@ -1354,6 +1356,8 @@ func _drive(qid: String, events_fed: Dictionary) -> Dictionary:
 		var have: int = eco.count_item(StringName(k)) - int(base.get(k, 0))
 		_need(problems, have == expected, "%s: %s changed by %d, want %d (reward %d + given %d - delivered %d)" % [qid, k, have, expected, int(reward_items.get(k, 0)), int(added.get(k, 0)), int(consumed.get(k, 0))])
 	var hearts := LuaData.int_map(rewards.get("friendship", {}))
+	for npc in dynamic_hearts:
+		hearts[npc] = mini(10,int(hearts.get(npc,0))+clampi(int(dynamic_hearts[npc]),0,10))
 	var calls: Array = []
 	for c in social.calls:
 		calls.append([str(c[0]), int(c[1]), c[2]])
@@ -1450,6 +1454,9 @@ func _manual_completers() -> void:
 			if line.begins_with("@marker") and line.contains(" quest_spot "):
 				var kv := _marker_fields(line)
 				markers["%s.%s" % [kv.get("quest", ""), kv.get("objective", "")]] = true
+	var generated := _generated_floor(7,4242)
+	for marker in generated.markers.values():
+		if str(marker.get("marker",""))=="quest_spot":markers["%s.%s"%[marker.get("quest",""),marker.get("objective","")]] = true
 	var dialogue := {}
 	var rx_q := RegEx.new()
 	rx_q.compile("quest_id\\s*=\\s*\"([a-z0-9_]+)\"")
@@ -1467,7 +1474,7 @@ func _manual_completers() -> void:
 			if mo != null:
 				dialogue["%s.%s" % [last_quest, mo.get_string(1)]] = true
 	var scripts_text := ""
-	for dir in ["res://scripts/dungeon", "res://scripts/world2d", "res://scripts/towns", "res://scripts/loot", "res://scripts/traetoppen"]:
+	for dir in ["res://scripts/dungeon", "res://scripts/world2d", "res://scripts/towns", "res://scripts/loot", "res://scripts/traetoppen", "res://scripts/ghostfam"]:
 		scripts_text += _read_dir_text(dir)
 	var unnamed: Array[String] = []
 	var pending: Array[String] = []
@@ -1637,7 +1644,16 @@ func _dungeon_and_forest_bindings() -> void:
 				if str(od3.get("on", "")) == "zone_entered":
 					_need(problems, zones_row.contains(str(od3.get("zone", ""))), "%s.%s binds zone `%s` which no floor carries" % [q, od3["id"], od3.get("zone", "")])
 		t.check("bound_quests_have_their_floor_anchors", problems.is_empty(), "night_flower (night_bloom, floor 2), rare_mushroom_hunt (glow_mushroom + the find_glowing quest_spot, floor 7), moonstone_crown (moonstone), the zone quests (zone ids of the floors): %s" % str(problems.slice(0, 3)))
-		t.skip("bound_quests_have_their_floor_anchors: the generator-level proof (DungeonGen places the night_bloom node / the quest_spot) belongs to D1-dungeon-gen; this check reads the floor table of the design")
+		for seed_value in [4242,8181]:
+			for number in [2,7]:
+				var generated := _generated_floor(number,seed_value)
+				var markers := generated.markers.values()
+				var valid := generated.errors.is_empty()
+				if number==2:valid = valid and markers.any(func(row):return str(row.get("marker",""))=="node" and str(row.get("kind",""))=="night_bloom")
+				else:
+					valid = valid and markers.any(func(row):return str(row.get("marker",""))=="quest_spot" and str(row.get("quest",""))=="rare_mushroom_hunt" and str(row.get("objective",""))=="find_glowing")
+					for item in ["glow_mushroom","moonstone"]:valid = valid and markers.any(func(row):return str(row.get("marker",""))=="node" and str(row.get("kind",""))==item)
+				t.check("live_generated_quest_anchors_f%d_s%d"%[number,seed_value],valid,str(generated.errors))
 
 
 func _objective_by_id(q: String, oid: String) -> Dictionary:
@@ -1672,3 +1688,9 @@ func _forste_dage() -> void:
 		elif not (qm.FILTERS.has(on) or on == "manual" or on == "state" or qm.GAME_EVENT_SUGAR.has(on)):
 			bad.append("%s binds %s" % [od.get("id", ""), on])
 	t.check("forste_dage_binds_only_known_events", bad.is_empty(), "every objective of lua/quests/forste_dage.lua uses a binding of the vocabulary and, for game_event, a name of the events list %s" % str(bad))
+
+func _generated_floor(number: int,seed_value: int) -> AreaMap:
+	var cfg := LuaData.dict(Svc.lua_config("dungeon",{}))
+	var ctx := {"next_id":"moerkeskoven_f%d"%(number+1),"prev_id":"moerkeskoven_f%d"%(number-1),"day":1,"seed_text":str(seed_value),"gen_version":1,"spec_hash":"0"}
+	var result := DungeonGen.build_text(cfg,number,seed_value,ctx)
+	return AreaMap.parse_text(str(result.get("text","")))

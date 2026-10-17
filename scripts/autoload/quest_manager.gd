@@ -110,6 +110,7 @@ var _reward_claim_queued: bool = false
 var _refresh_queued: bool = false
 var _accept_counter: int = 0
 var _state_queries: Dictionary = {}      # query name -> Callable(objective def) -> int, registered by the owner of the data
+var _offer_gates: Dictionary = {} # quest id -> a static eligibility query; retained across runs
 var _objective_cache: Dictionary = {}    # quest id -> {"def": the definition it was built from, "map": {objective id: def}}
 
 
@@ -417,15 +418,24 @@ func _is_offerable_now(quest_id: StringName) -> bool:
 
 
 ## meta.requires_zone: the zone has been unlocked (entered once, or unlocked by a quest hook). Only offers read it.
+func register_offer_gate(quest_id: StringName,query: Callable) -> void:
+	if query.is_valid():_offer_gates[str(quest_id)] = query
+	else:_offer_gates.erase(str(quest_id))
+
 func _requirements_met(quest_id: StringName) -> bool:
 	var zone := str(_Data.dict(get_quest_def(quest_id).get("meta", {})).get("requires_zone", ""))
-	return zone == "" or GameManager.is_zone_unlocked(StringName(zone))
+	if zone != "" and not GameManager.is_zone_unlocked(StringName(zone)):return false
+	return _offer_allowed(quest_id)
+
+func _offer_allowed(quest_id: StringName) -> bool:
+	var query: Callable = _offer_gates.get(str(quest_id),Callable())
+	return not query.is_valid() or bool(query.call())
 
 
 # =============================================================================================== accept / progress / complete
 
 func accept_quest(quest_id: StringName) -> bool:
-	if not _can_start(quest_id):
+	if not _can_start(quest_id) or not _offer_allowed(quest_id):
 		return false
 
 	var def := get_quest_def(quest_id)
@@ -564,7 +574,8 @@ func complete_quest(quest_id: StringName) -> void:
 	if quest_id not in active_quests:
 		return
 	var def := get_quest_def(quest_id)
-	var rewards: Dictionary = _Data.dict(def.get("rewards", {}))
+	var runtime: QuestRuntime = active_quests[quest_id]
+	var rewards: Dictionary = preload("res://scripts/data/quest_rewards.gd").resolve(def,runtime.meta)
 
 	# Commit completion before grants: inventory and gold listeners may synchronously call back into the quest manager.
 	active_quests.erase(quest_id)
@@ -1118,6 +1129,10 @@ func get_current_objective(quest_id: StringName) -> StringName:
 
 ## Text of one objective: its description_key -> OBJ_<QUEST>_<OBJ> -> OBJ_<OBJ> -> the Lua `description` -> the readable id. Never a raw key.
 func get_objective_text(quest_id: StringName, objective_id: StringName) -> String:
+	if active_quests.has(quest_id):
+		var runtime: QuestRuntime = active_quests[quest_id]
+		var override_key := str(_Data.dict(runtime.meta.get("objective_keys",{})).get(str(objective_id),""))
+		if override_key!="" and _has_key(override_key):return tr(override_key)
 	var od: Dictionary = _objective_defs(quest_id).get(str(objective_id), {})
 	var described := str(od.get("description_key", ""))
 	if described != "" and _has_key(described):

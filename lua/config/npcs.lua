@@ -548,6 +548,7 @@ config = {
       schedule = "stay",
       friendship = true,
       routine = true,
+      quests_offered = { "ghostfam_garn" },
     },
     ghostfam_gnist = {
       age = "adult", family = "natlys",
@@ -564,6 +565,7 @@ config = {
       schedule = "stay",
       friendship = true,
       routine = true,
+      quests_offered = { "ghostfam_lygtemager" },
     },
     ghostfam_silke = {
       age = "adult", family = "natlys",
@@ -579,6 +581,7 @@ config = {
       schedule = "patrol",
       friendship = true,
       routine = true,
+      quests_offered = { "ghostfam_hittegods" },
     },
     ghostfam_blund = {
       age = "child", family = "natlys",

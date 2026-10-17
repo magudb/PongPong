@@ -705,6 +705,15 @@
     "SEEK_GHOSTFAM_"
    ],
    "exact": []
+  },
+  "ghostfamily_quests.csv": {
+   "owner": "GF-quests",
+   "prefix": [
+    "QUEST_GHOSTFAM_",
+    "OBJ_GHOSTFAM_",
+    "GF_QUEST_"
+   ],
+   "exact": []
   }
  },
  "notes": [

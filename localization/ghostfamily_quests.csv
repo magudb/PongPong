@@ -1,0 +1,27 @@
+keys,da,en
+QUEST_GHOSTFAM_GARN_TITLE,Garn til Dyne,Yarn for Dyne
+QUEST_GHOSTFAM_GARN_DESC,Dyne mangler tre stykker uld til en blå strikbluse.,Dyne needs three pieces of wool for a blue knitted shirt.
+QUEST_GHOSTFAM_GARN_OFFER,Vil du hente lidt uld? Så lærer garnet en ny farve.,Will you bring some wool? Then the yarn can learn a new colour.
+QUEST_GHOSTFAM_GARN_CHOICE,Hent uld til Dyne.,Bring wool to Dyne.
+OBJ_GHOSTFAM_GARN_WOOL,Saml tre stykker uld.,Collect three pieces of wool.
+OBJ_GHOSTFAM_GARN_RETURN,Tag tingene med tilbage.,Bring the items back.
+QUEST_GHOSTFAM_LYGTEMAGER_TITLE,Lygtemagerens prøve,The lantern maker’s test
+QUEST_GHOSTFAM_LYGTEMAGER_DESC,Gnist skal bruge tre lysende svampe og en natblomst.,Gnist needs three glow mushrooms and a night bloom.
+QUEST_GHOSTFAM_LYGTEMAGER_OFFER,"Vil du hjælpe med en blanding, der lyser stille?",Will you help with a mixture that shines quietly?
+QUEST_GHOSTFAM_LYGTEMAGER_CHOICE,Hjælp Gnist med lyset.,Help Gnist with the light.
+OBJ_GHOSTFAM_LYGTEMAGER_GLOW_MUSHROOM,Saml tre lysende svampe.,Collect three glow mushrooms.
+OBJ_GHOSTFAM_LYGTEMAGER_NIGHT_BLOOM,Find en natblomst.,Find a night bloom.
+OBJ_GHOSTFAM_LYGTEMAGER_RETURN,Tag tingene med tilbage.,Bring the items back.
+QUEST_GHOSTFAM_HITTEGODS_TITLE,Silkes hittegods,Silke’s lost property
+QUEST_GHOSTFAM_HITTEGODS_DESC,Silke har fundet en lille ting på sin runde. Hjælp den hjem til ejeren.,Silke found a small item on her round. Help it home to its owner.
+QUEST_GHOSTFAM_HITTEGODS_OFFER,"Der ligger noget i min kurv, som nogen savner. Vil du hjælpe?",There is something in my basket that somebody is missing. Will you help?
+QUEST_GHOSTFAM_HITTEGODS_CHOICE,Hjælp med hittegodset.,Help with the lost property.
+OBJ_GHOSTFAM_HITTEGODS_RETURN,Giv hittegodset til ejeren.,Give the lost item to its owner.
+OBJ_GHOSTFAM_HITTEGODS_RETURN_GUARD_OAK,Giv et æble fra Silke til Oak.,Give an apple from Silke to Oak.
+OBJ_GHOSTFAM_HITTEGODS_RETURN_PIPPIN_BOEGEKNOP,Giv en småkage fra Silke til Pippin.,Give a cookie from Silke to Pippin.
+OBJ_GHOSTFAM_HITTEGODS_RETURN_FAIRY_LILY,Giv en vild blomst fra Silke til Lily.,Give a wild flower from Silke to Lily.
+OBJ_GHOSTFAM_HITTEGODS_RETURN_CARPENTER_BRUMME,Giv et reb fra Silke til Brumme.,Give a rope from Silke to Brumme.
+OBJ_GHOSTFAM_HITTEGODS_RETURN_BATHKEEPER_SOFUS,Giv en krukke honning fra Silke til Sofus.,Give a jar of honey from Silke to Sofus.
+OBJ_GHOSTFAM_HITTEGODS_RETURN_APPRAISER_FRU_UGLE,Giv noget mos fra Silke til Fru Ugle.,Give some moss from Silke to Fru Ugle.
+GF_QUEST_PARCEL_WAIT,"Silke gemmer tingen, til du har plads. Tal med hende igen.",Silke keeps the item until you have room. Speak with her again.
+GF_QUEST_PARCEL_TITLE,Silkes kurv,Silke’s basket

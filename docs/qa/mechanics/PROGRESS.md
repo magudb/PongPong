@@ -12,11 +12,12 @@ The forty citizen heart scenes, eleven Natlys scenes, thirty-six family festival
 
 Counted Natlys hide-and-seek is complete: actual routine slots, saved daily/lifetime counts, distance clues, live Silke hints, the five-step lamp ladder, deferred full-store claims and keepsake ownership/registry fallbacks. Evidence: 747 integration checks, 82 focused checks per race, 543 final checks and six native checks; no failures or engine messages. All three final native captures were opened and inspected.
 
-Next work: the three family errands and remaining relationship mechanics.
+The three Natlys errands are complete, including the saved named lost-property owner/item, deferred parcel pickup, real gift completion and weekly cooldown. Acceptance: 308 quest/story/garden checks, 903 broader quest/social/NPC/registry/save/navigation checks and four native checks; no failures or engine errors/warnings. The journal capture was inspected. The two historical dungeon-completer skips now exercise real generated floors.
+
+Next work: relationship gifts/scenes, wedding and household/visitor mechanics.
 
 Still required before the full task is complete:
 
-- Finish the three planned Natlys errands.
 - Complete relationships, wedding, partner routines/chores, house parties and friend visits using the documented defaults.
 - Finish seasonal farm dressing and the planned audio integration, preserving frozen human recordings.
 - Finish dungeon item/recipe/boss validators and their mutants, larger pacing simulations and combat/performance acceptance.

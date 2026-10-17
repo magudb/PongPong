@@ -159,6 +159,9 @@ func _make_row(id: StringName) -> Button:
 	tag.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	var style := load("res://assets/ui/theme.tres").get_stylebox("panel", "TagBox").duplicate() as StyleBox
 	style.set("fill", QText.tag_color(id))
+	# Long tags such as VENSKAB need the same breathing room as short tags.
+	style.content_margin_left = 8
+	style.content_margin_right = 8
 	tag.add_theme_stylebox_override("panel", style)
 	h.add_child(tag)
 	var label := Label.new()

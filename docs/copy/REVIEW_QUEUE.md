@@ -39,6 +39,7 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | ghostfamily.csv | draft | 168 | 2440 | 6.1 |
 | ghostfamily_events.csv | draft | 55 | 648 | 1.6 |
 | ghostfamily_fest.csv | draft | 36 | 657 | 1.6 |
+| ghostfamily_quests.csv | draft | 26 | 163 | 0.4 |
 | ghostfamily_seek.csv | draft | 25 | 291 | 0.7 |
 | heart_events.csv | draft | 280 | 1987 | 5.0 |
 | home.csv | draft | 90 | 502 | 1.3 |

@@ -11,6 +11,10 @@ static func attach(npc: Node) -> void:
 		Svc.static_call(seek_path, &"attach", [npc])
 
 static func before_talk(npc: Node,player: Node) -> bool:
+	if str(npc.get("npc_id"))=="ghostfam_silke":
+		var manager := Svc.node("SocialManager")
+		var quests := manager.get_node_or_null("FamilyQuests") if manager!=null else null
+		if quests!=null:quests.collect_parcel()
 	if str(npc.get("npc_id")) != "ghostfam_blund":return true
 	var seek := npc.get_node_or_null("HideSeek")
 	return bool(seek.before_talk(player)) if seek != null else true
