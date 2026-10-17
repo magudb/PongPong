@@ -33,6 +33,7 @@ shops = {
       fertilizer = { stock = 30, restock = 30 },
       fairy_dust_water = { stock = 3, restock = 1 },
       turnip_seeds = { stock = 40, restock = 40 },
+      frost_kale_seeds = { stock = 20, restock = 20 },
       hoe_wooden = { stock = 2, restock = 1 },
       watering_can_copper = { stock = 2, restock = 1 },
       axe_wooden = { stock = 2, restock = 1 },

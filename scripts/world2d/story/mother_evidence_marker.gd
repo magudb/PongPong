@@ -10,6 +10,8 @@ var _screen: Node
 var _picture: Sprite2D
 var _keepsake: Sprite2D
 var _flowers: Array[Sprite2D] = []
+var _echo: Sprite2D
+const ECHO_IDS := ["traveller_account", "mother_fate"]
 func _enter_tree() -> void:
 	_leaving = false
 	if is_node_ready(): refresh.call_deferred()
@@ -23,6 +25,14 @@ func _ready() -> void:
 	var art_id := StringName(str(row.get("art","")))
 	if ArtCatalog.has_real_prop(art_id):
 		_picture = _prop(art_id,Vector2.ZERO)
+	if evidence_id in ECHO_IDS:
+		_echo = Sprite2D.new()
+		_echo.texture = Glow.halo_texture()
+		_echo.material = Glow.additive_material()
+		_echo.modulate = Color("8fb0e8")
+		_echo.scale = Vector2(1.4, 1.4)
+		_echo.position = Vector2(0, -52)
+		add_child(_echo)
 	refresh()
 func _prop(id: StringName,at: Vector2) -> Sprite2D:
 	var art := ArtCatalog.prop(id)
@@ -35,6 +45,7 @@ func _prop(id: StringName,at: Vector2) -> Sprite2D:
 	return sprite
 func refresh() -> void:
 	set_enabled(MotherStory.enabled() and (evidence_id != "legacy_home" or MotherStory.has("mother_fate")))
+	if _echo != null: _echo.visible = is_enabled()
 	if evidence_id == "echo_account": set_enabled(MotherStory.can_read(evidence_id))
 	if _keepsake != null: _keepsake.visible = not MotherStory.has("mother_fate")
 	if evidence_id == "legacy_home" and MotherStory.has("legacy_home") and _flowers.is_empty():
@@ -49,8 +60,10 @@ func refresh() -> void:
 			_flowers.append(flower)
 func _lines() -> Array:
 	if evidence_id == "echo_account": return [{"text_key":"FM_FIELD_NOTE"},{"text_key":"FM_E_ECHO_ACCOUNT_TEXT"}]
+	if evidence_id == "traveller_account":
+		return [{"name_key":"FM_SCRIBE_NAME","text_key":"FM_SCRIBE_TRAVELLER_1"},{"name_key":"FM_SCRIBE_NAME","text_key":"FM_SCRIBE_TRAVELLER_2"},{"text_key":"FM_E_TRAVELLER_ACCOUNT_TEXT"}]
 	if evidence_id == "mother_fate":
-		return [{"text_key":"FM_FINAL_ACCOUNT"},{"text_key":"FM_FINAL_TRUTH"},{"text_key":"FM_FINAL_BARGAIN"}]
+		return [{"name_key":"FM_SCRIBE_NAME","text_key":"FM_SCRIBE_FINAL_OFFER"},{"text_key":"FM_FINAL_ACCOUNT"},{"text_key":"FM_FINAL_TRUTH"},{"text_key":"FM_FINAL_BARGAIN"}]
 	return [{"text_key":"FM_E_"+evidence_id.to_upper()+"_TEXT"}]
 func interact(player: Node) -> void:
 	if _busy or not is_enabled() or GameManager.is_modal_open(): return

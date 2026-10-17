@@ -53,7 +53,7 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 162
+    "rows": 166
   },
   "localization/farm_signs.csv": {
     "status": "draft",
@@ -1104,7 +1104,7 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 108
+    "rows": 112
   },
   "localization/dungeon_items.csv": {
     "status": "draft",
