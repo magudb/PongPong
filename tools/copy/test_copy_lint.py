@@ -27,6 +27,10 @@ def main():
         base += [['SOC_ARCH_ELDER_BDAY_1','Du kom på min fødselsdag.','You came on my birthday.']]
         write_csv(root,base)
         failures+=check('valid_fixture_clean',not copy_lint.findings(root))
+        write_csv(root,base+[['SOC_EV_SKIP','Spring over','Skip scene']])
+        failures+=check('event_system_key_is_not_a_citizen',not copy_lint.findings(root))
+        write_csv(root,base+[['SOC_UNKNOWN_GREET_1','Hej der.','Hello there.']])
+        failures+=check('unknown_citizen_still_refused',any(r['rule']=='C6' for r in copy_lint.findings(root)))
         mutants=[('stale_name','C1',['DLG_PROBE_BAD','Lyra er her.','Lyra is here.']),('long_dialogue','C2',['DLG_PROBE_LONG','a'*300,'b'*300]),('voiced_digit','C3',['SOC_PROBE_GREET_1_V','Her er 3 frø.','Here are three seeds.']),('missing_voice_index','C10',['SOC_PROBE_GREET_1_V','Godt at se dig.','Good to see you.']),('placeholder_parity','C7',['DLG_PROBE_FMT','Du fandt %s.','You found %d.']),('child_safe','C4',['DLG_PROBE_RUDE','Du er en idiot.','You are an idiot.'])]
         for name,rule,extra in mutants:
             write_csv(root,base+[extra]);out=copy_lint.findings(root)

@@ -62,6 +62,8 @@ var _festival_active: StringName = &""
 var _pending: bool = false
 var _lines: Dictionary = {}              # remember_line memory (S-talk): npc -> {slot -> line id}; a session memory, never saved
 var _shop_now: String = ""               # the shop whose panel is open (shop friendliness)
+var _event_owed: Dictionary = {}         # item rewards waiting for backpack space
+var _retry_owed_pending := false
 
 # festival index: "season:day" -> festival id, rebuilt when the registry object changes; the festival of the last asked day and the windows of the festivals are memoised
 var _fest_src: Variant = null
@@ -110,9 +112,11 @@ func _ready() -> void:
 	EventBus.shop_opened.connect(_on_shop_opened)
 	EventBus.shop_closed.connect(_on_shop_closed)
 	EventBus.item_purchased.connect(_on_item_purchased)
+	EventBus.player_inventory_changed.connect(_retry_event_items)
 	var sm := Svc.node("SaveManager")
 	if sm != null and sm.has_method("register_section"):
 		sm.call("register_section", SECTION, self, SECTION_ORDER)
+	Svc.static_call("res://scripts/social/events/festival_director.gd", &"attach", [self])
 
 
 # ======================================================================================= seed / rng
@@ -1077,8 +1081,11 @@ func events_ready(npc: Variant) -> Array[String]:
 	ids.sort()
 	for eid in ids:
 		var meta := LuaData.dict(LuaData.dict(events[eid]).get("meta", {}))
+		if str(meta.get("trigger","talk")) != "talk": continue
 		if event_seen(str(eid)) or LuaData.int_of(meta.get("hearts", 0)) > h:
 			continue
+		var cooldown := maxi(0,LuaData.int_of(meta.get("cooldown_days",0)))
+		if cooldown > 0 and ids.any(func(other): return event_stamp("day:"+str(other)) > 0 and today()-event_stamp("day:"+str(other)) < cooldown): continue
 		var cond := str(meta.get("when", ""))
 		if cond == "" or eval_when(cond):
 			out.append(str(eid))
@@ -1087,6 +1094,37 @@ func events_ready(npc: Variant) -> Array[String]:
 
 func event_seen(event_id: String) -> bool:
 	return LuaData.int_of(_seen.get(event_id, 0)) > 0
+
+func event_stamp(event_id: String) -> int:
+	return LuaData.int_of(_seen.get(event_id,0))
+
+## Unclaimed scene rewards remain in the social save until space is available.
+## Claim before the gain signal, so an observer cannot save a duplicable reward.
+func owe_event_items(items: Dictionary) -> void:
+	for item in items:
+		if not _item_def(str(item)).is_empty() and not ItemKinds.is_one_of_a_kind(item):
+			_event_owed[str(item)] = mini(9999,int(_event_owed.get(str(item),0))+maxi(0,int(items[item])))
+	claim_event_items()
+
+func claim_event_items() -> void:
+	for item in _event_owed.keys():
+		var amount := int(_event_owed[item])
+		if amount <= 0:
+			_event_owed.erase(item)
+		elif EconomyManager.can_add_item(StringName(item),amount):
+			EconomyManager.defer_notifications(func() -> void:
+				_event_owed.erase(item)
+				EconomyManager.add_item(StringName(item),amount)
+			)
+
+func _retry_event_items(_items: Dictionary = {}) -> void:
+	if _event_owed.is_empty() or _retry_owed_pending: return
+	_retry_owed_pending = true
+	call_deferred("_claim_owed_deferred")
+
+func _claim_owed_deferred() -> void:
+	_retry_owed_pending = false
+	claim_event_items()
 
 
 ## S-events / S-heart-content: a scene was played (1 = once for good, a year number = once per year).
@@ -1139,6 +1177,7 @@ func _on_game_event(event_name: StringName, _payload: Dictionary) -> void:
 
 func _on_load_completed(_slot: int) -> void:
 	_defer()
+	_retry_event_items()
 
 
 func _defer() -> void:
@@ -1208,6 +1247,7 @@ func reset() -> void:
 	_toast_queue.clear()
 	_toast_next_ms = 0
 	_shop_now = ""
+	_event_owed.clear()
 	_release_bed_hold()
 	world_seed = 0
 	for id in SocialData.friend_ids():
@@ -1241,6 +1281,7 @@ func to_dict() -> Dictionary:
 		if not o.is_empty():
 			npcs[id] = o
 	var out := {"v": SAVE_V, "seed": world_seed, "last": _last_day, "npcs": npcs, "seen": _seen.duplicate(), "fest": _fest_year.duplicate(), "partner": _partner.duplicate()}
+	if not _event_owed.is_empty(): out["owed"] = _event_owed.duplicate()
 	if not _orphans.is_empty():
 		out["orphans"] = _orphans.duplicate(true)
 	return out
@@ -1255,6 +1296,7 @@ func from_dict(d: Dictionary) -> bool:
 	_toast_queue.clear()
 	_toast_next_ms = 0
 	_shop_now = ""
+	_event_owed = LuaData.int_map(d.get("owed",{}))
 	world_seed = LuaData.int_of(d.get("seed", 0)) & 0x1FFFFFFFFFFFFF
 	_last_day = LuaData.int_of(d.get("last", 0))
 	_seen = LuaData.int_map(d.get("seen", {}))

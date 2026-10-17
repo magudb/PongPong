@@ -200,10 +200,13 @@ func _gift_scroll(t, gift: Control) -> void:
 	gift.open_for("gardener_hoppe")
 	await t.frames(3)
 	t.check("gift_grid_scrolls_over_24_stacks", gift.options.size() > 24 and gift.slots.size() >= 30 and gift.slots.size() % 6 == 0)
-	gift.slots.back().grab_focus()
+	# The final row can contain padding. Exercise the last actual item, whose
+	# primary action is enabled, while retaining the full scrolled-grid check.
+	var last_item: Button = gift.slots[gift.options.size()-1]
+	last_item.grab_focus()
 	await t.frames(4)
 	var scroll: ScrollContainer = gift.grid.get_parent().get_parent()
-	t.check("gift_scroll_follows_last_row", scroll.scroll_vertical > 0 and _focus(t) == gift.slots.back())
+	t.check("gift_scroll_follows_last_row", scroll.scroll_vertical > 0 and _focus(t) == last_item)
 	UiAudit.press_pad(t, JOY_BUTTON_A)
 	await t.frames(3)
 	t.check("gift_pad_accept_selects_then_give", _focus(t) == gift.give)
@@ -333,7 +336,7 @@ func run_windowed(t) -> void:
 	journal._set_tab(2)
 	await t.frames(4)
 	await t.capture("journal_calendar")
-	t.check("calendar_in_real_journal", journal._calendar.is_visible_in_tree() and journal._tabs.size() == 3)
+	t.check("calendar_in_real_journal", journal._calendar.is_visible_in_tree() and journal._tabs.size() == 4 and journal._tabs[2] == journal.get_node("%TabCalendar"))
 	journal.close()
 	Fixture.cleanup()
 	t.autoload("GameManager").clear_config_overrides()

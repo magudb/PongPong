@@ -1,0 +1,128 @@
+{
+  "allowed": [
+    {
+      "kind": "error",
+      "rule": "a modal needs a name",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): GameManager.push_modal: a modal needs a name (at push_modal res://scripts/autoload/game_manager.gd:250)"
+    },
+    {
+      "kind": "error",
+      "rule": "(use bool, int, float or String)",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): GameManager.set_flag(bad_array): Array is not JSON-safe (use bool, int, float or String) (at set_flag res://scripts/autoload/game_manager.gd:347)"
+    },
+    {
+      "kind": "error",
+      "rule": "(use bool, int, float or String)",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): GameManager.set_flag(bad_vector): Vector2 is not JSON-safe (use bool, int, float or String) (at set_flag res://scripts/autoload/game_manager.gd:347)"
+    },
+    {
+      "kind": "error",
+      "rule": "(use bool, int, float or String)",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): GameManager.set_flag(bad_nan): float is not JSON-safe (use bool, int, float or String) (at set_flag res://scripts/autoload/game_manager.gd:347)"
+    },
+    {
+      "kind": "warning",
+      "rule": "and was dropped",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): GameManager.from_dict: world flag 'bad' is not JSON-safe and was dropped (at _sanitized_flags res://scripts/autoload/game_manager.gd:613)"
+    },
+    {
+      "kind": "error",
+      "rule": "unknown weather id",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): TimeManager.set_weather: unknown weather id 'hagl' (at set_weather res://scripts/autoload/time_manager.gd:146)"
+    },
+    {
+      "kind": "warning",
+      "rule": "unknown NPC 'retired_npc'",
+      "section": "social",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SocialManager.from_dict: unknown NPC 'retired_npc' kept in the orphans bucket (at from_dict res://scripts/social/social_manager.gd:1316)"
+    }
+  ],
+  "character": "animal",
+  "checks": 811,
+  "elapsed_s": 37.75,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 938,
+      "skipped": 0
+    },
+    "core": {
+      "character": "animal",
+      "checks": 114,
+      "failed": 0,
+      "ms": 772,
+      "skipped": 0
+    },
+    "festival_activities": {
+      "character": "animal",
+      "checks": 59,
+      "failed": 0,
+      "ms": 524,
+      "skipped": 0
+    },
+    "forest_mother": {
+      "character": "animal",
+      "checks": 72,
+      "failed": 0,
+      "ms": 5440,
+      "skipped": 0
+    },
+    "social": {
+      "character": "animal",
+      "checks": 134,
+      "failed": 0,
+      "ms": 20295,
+      "skipped": 3
+    },
+    "social_data": {
+      "character": "animal",
+      "checks": 130,
+      "failed": 0,
+      "ms": 1111,
+      "skipped": 0
+    },
+    "social_events": {
+      "character": "animal",
+      "checks": 55,
+      "failed": 0,
+      "ms": 406,
+      "skipped": 0
+    },
+    "social_gifts": {
+      "character": "animal",
+      "checks": 58,
+      "failed": 0,
+      "ms": 106,
+      "skipped": 0
+    },
+    "social_talk": {
+      "character": "animal",
+      "checks": 42,
+      "failed": 0,
+      "ms": 89,
+      "skipped": 0
+    },
+    "social_ui": {
+      "character": "animal",
+      "checks": 139,
+      "failed": 0,
+      "ms": 3901,
+      "skipped": 12
+    }
+  },
+  "skipped": 15
+}

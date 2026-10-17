@@ -54,7 +54,7 @@ def slot_of(key):
     if 'CHOICE' in key or re.search(r'_TOPIC_\d+$',key):return 'choice'
     if key.startswith('NPC_'):return 'name'
     if key.startswith('SHOP_') and key.endswith('_GREETING'):return 'shop'
-    if key.startswith(('DLG_','DIALOGUE_','SOC_')) and not key.startswith(('SOC_SYS_','SOC_ARCH_NAME_')):return 'dialogue'
+    if key.startswith(('DLG_','DIALOGUE_','SOC_')) and not key.startswith(('SOC_SYS_','SOC_EV_','SOC_ARCH_NAME_')):return 'dialogue'
     return ''
 
 def findings(root=ROOT,files=None):
@@ -100,7 +100,7 @@ def findings(root=ROOT,files=None):
         if missing or greetings<3:
             add('C6',{'file':'lua/config/npcs.lua','keys':npc},'Missing social cascade: '+', '.join(missing)+(f'; greetings {greetings}/3' if greetings<3 else ''))
     for key,row in effective.items():
-        if key.startswith('SOC_') and not key.startswith(('SOC_SYS_','SOC_ARCH_','SOC_ANY_')):
+        if key.startswith('SOC_') and not key.startswith(('SOC_SYS_','SOC_EV_','SOC_ARCH_','SOC_ANY_')):
             owner=next((npc for npc in sorted(npcs,key=len,reverse=True) if key.startswith('SOC_'+npc.upper()+'_')),None)
             if owner is None:add('C6',row,'Unknown citizen in social key')
             else:

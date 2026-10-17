@@ -678,6 +678,11 @@ func event_face(direction: Vector2) -> void:
 		facing_vec = Iso.dir8_vector(facing8)
 		visual.set_facing_direction(facing_vec)
 
+func event_stand(at: Vector2, direction := "S") -> void:
+	global_position = at
+	velocity = Vector2.ZERO
+	event_face(Iso.dir8_vector(maxi(0,Iso.DIR8_NAMES.find(direction))))
+
 func event_walk_to(at: Vector2, speed: float = 185.0) -> bool:
 	var generation := _event_generation
 	var elapsed := 0.0

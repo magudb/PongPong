@@ -483,6 +483,7 @@ func _on_area_change_requested(area_id: StringName, spawn_name: StringName) -> v
 
 ## Fade out, swap, warm the sprite clips behind the fade, fade in. Safe to await.
 func travel(area_id: StringName, spawn: StringName) -> void:
+	if GameManager.is_modal_open(&"event"): return
 	if traveling or not has_area(area_id):
 		if not has_area(area_id):
 			last_travel_error = "no such area: %s" % area_id
@@ -665,6 +666,7 @@ func can_sleep_now() -> bool:
 ## E on the bed: sleep clip, fade out, next day (the farm grows), fade in. Energy and hearts are restored. Before 18:00 the bed
 ## only whispers WHISPER_TOO_EARLY.
 func sleep() -> void:
+	if GameManager.is_modal_open(&"event"): return
 	if sleeping or traveling:
 		return
 	if not can_sleep_now():

@@ -346,6 +346,12 @@ func _finish_walk(completed: bool) -> void:
 func event_face(direction: Variant) -> void:
 	face(direction)
 
+func event_stand(at: Vector2, direction := "S") -> void:
+	_finish_walk(false)
+	global_position = at
+	velocity = Vector2.ZERO
+	face(direction)
+
 func event_clip(clip: String) -> void:
 	set_act(clip)
 

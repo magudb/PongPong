@@ -81,7 +81,7 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 39
+    "rows": 47
   },
   "localization/furniture.csv": {
     "status": "draft",
@@ -305,6 +305,83 @@
     "reviewed_by": "",
     "date": "",
     "voice_frozen": false,
-    "rows": 39
+    "rows": 40
+  },
+  "localization/social_events.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 27
+  },
+  "localization/dungeon.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 19
+  },
+  "localization/forest_mother.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 102
+  },
+  "localization/dungeon_items.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 157
+  },
+  "localization/home_world.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 7
+  },
+  "localization/dungeon_run.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 83
+  },
+  "localization/home_ui.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 62
+  },
+  "localization/appraisal.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 12
+  },
+  "localization/forest.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 21
+  },
+  "localization/animals.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 41
+  },
+  "localization/look.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 4
   }
 }

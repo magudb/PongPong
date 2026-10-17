@@ -169,6 +169,12 @@ func _pick(choice: Dictionary) -> void:
 func close() -> void:
 	_finish(false)
 
+func _on_cancel() -> void:
+	if GameManager.is_modal_open(&"event"):
+		EventBus.game_event.emit(&"event_skip_requested",{})
+	else:
+		close()
+
 func _finish(completed: bool, choice: Dictionary = {}) -> void:
 	if not _session:
 		return
