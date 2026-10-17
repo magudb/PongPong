@@ -1,0 +1,127 @@
+{
+  "status": "passed; ready for local main integration",
+  "date": "2026-10-17",
+  "worktree": "codex-clothing-fit",
+  "base_commit": "3eb4160",
+  "native": {
+    "reports": [
+      "final-animal.json",
+      "final-fairy.json",
+      "final-hobbit.json",
+      "final-ghost.json"
+    ],
+    "checks": 472,
+    "failed": 0,
+    "skipped": 0,
+    "unexpected_engine_messages": 0
+  },
+  "headless": {
+    "report": "regression-headless.json",
+    "checks": 531,
+    "failed": 0,
+    "skipped": 0,
+    "expected_negative_fixture_messages": 16
+  },
+  "clothing_pose_coverage": {
+    "fox": 376,
+    "monkey": 376,
+    "fairy": 528,
+    "fairy_birk": 528,
+    "hobbit_pip": 376,
+    "hobbit_bodil": 376,
+    "ghost_bu": 376,
+    "ghost_hviske": 376
+  },
+  "clothing_poses_total": 3312,
+  "catalogue": {
+    "fox": {
+      "cases": 96,
+      "max_face_mean_byte_difference": 0.323429541595925
+    },
+    "monkey": {
+      "cases": 30,
+      "max_face_mean_byte_difference": 0.279286926994907
+    },
+    "hobbit_bodil": {
+      "cases": 30,
+      "max_face_mean_byte_difference": 0.8592246745897
+    },
+    "hobbit_pip": {
+      "cases": 30,
+      "max_face_mean_byte_difference": 0.886530843237125
+    },
+    "ghost_hviske": {
+      "cases": 30,
+      "max_face_mean_byte_difference": 0.0
+    },
+    "ghost_bu": {
+      "cases": 30,
+      "max_face_mean_byte_difference": 0.0
+    },
+    "fairy_birk": {
+      "cases": 30,
+      "max_face_mean_byte_difference": 0.842388228636106
+    },
+    "fairy": {
+      "cases": 30,
+      "max_face_mean_byte_difference": 0.876485568760611
+    }
+  },
+  "catalogue_cases_total": 306,
+  "turnaround_views": 256,
+  "walking_views": 384,
+  "tailored_pose_update_p95_ms": {
+    "fox": 0.033,
+    "monkey": 0.032,
+    "fairy": 0.033,
+    "fairy_birk": 0.032,
+    "hobbit_pip": 0.033,
+    "hobbit_bodil": 0.033,
+    "ghost_bu": 0.032,
+    "ghost_hviske": 0.033
+  },
+  "pose_update_limit_ms": 0.3,
+  "art_changes": {
+    "technical_masks": 8,
+    "new_paintings": 0,
+    "painted_sources_changed": 0,
+    "garment_atlases_changed": 0,
+    "safe_body_paintings_changed": 0,
+    "reviewed_masks": [
+      "assets/wardrobe/fairy/occluder.webp",
+      "assets/wardrobe/fairy_birk/occluder.webp",
+      "assets/wardrobe/fox/occluder.webp",
+      "assets/wardrobe/ghost_bu/occluder.webp",
+      "assets/wardrobe/ghost_hviske/occluder.webp",
+      "assets/wardrobe/hobbit_bodil/occluder.webp",
+      "assets/wardrobe/hobbit_pip/occluder.webp",
+      "assets/wardrobe/monkey/occluder.webp"
+    ]
+  },
+  "source_proof": {
+    "result": "pass",
+    "binding": "9851c7d66828e1f2376653df2e689975fcf97ce492be41876d684cb710db013e",
+    "extension_owner_checks": 584,
+    "extension_scenario_checks": 8,
+    "code_files_unchanged_in_extension": 937,
+    "baseline_and_mutants": 9,
+    "all_named_regressions_caught": true,
+    "extension": "docs/qa/m1b-milestone/loop-extension.json",
+    "mutants": "docs/qa/m1b-milestone/loop-mutants.json",
+    "prior_reports": "source-proof-3eb4160/"
+  },
+  "review": "REVIEW.md",
+  "supplementary_ui": {
+    "reports": [
+      "ui-final-animal.json",
+      "ui-final-fairy.json",
+      "ui-final-ghost.json",
+      "ui-final-hobbit.json"
+    ],
+    "checks": 232,
+    "failed": 0,
+    "skipped": 0,
+    "engine_messages": 0,
+    "scope": "Final singular/plural-neutral preview wording, independent slots, actual save/load on every hero."
+  }
+}

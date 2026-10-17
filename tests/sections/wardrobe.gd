@@ -52,6 +52,7 @@ func run(t) -> void:
 	var snapshot: Dictionary = w.outfit()
 	snapshot.clear()
 	t.check("outfit_snapshot_cannot_mutate_owner", not w.outfit().is_empty())
+	t.check("explicit_empty_preview_does_not_restore_other_worn_slots", w.preview_equipping("hat_straw_plain", {}) == {"hat":"hat_straw_plain"})
 	var all_valid := true
 	for id in ItemKinds.all_ids("clothing"):
 		all_valid = all_valid and w.slot_of(id) in w.slots()

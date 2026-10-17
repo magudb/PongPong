@@ -136,31 +136,43 @@ def rect(body, family, direction):
     return [x,y,w,h]
 
 def mask_for(body,base,direction):
-    fit=FITS[body];mask=Image.new('L',(256,256));draw=ImageDraw.Draw(mask)
-    # The face opening follows the head contour. A screen-wide rectangle
-    # would slice a hood's painted rim into a straight bar across the brow.
-    hx,hy,hw,hh=fit['head'];shift=fit['centers'][direction]-128
-    draw.ellipse((hx+8+shift,fit['face']-12,hx+hw-8+shift,fit['shirt'][1]+3),fill=255)
+    fit=FITS[body]
+    anatomy=json.loads((OUT/'tailoring.json').read_text())['bodies'][body]
+    center=anatomy['centers'][direction]
+    head_center=anatomy['head_centers'][direction]
+    mask=Image.new('L',(256,256));draw=ImageDraw.Draw(mask)
+    # Face/chin follow the head, not the canvas centre or the old shirt box.
+    head_width=fit['head'][2]-16
+    draw.ellipse((head_center-head_width/2,fit['face']-12,
+                  head_center+head_width/2,anatomy['neck']+3),fill=255)
     hands=Image.new('L',(256,256));hd=ImageDraw.Draw(hands)
-    gx,gy=SAFE_GRIPS.get(body,GRIPS[body])[direction];hd.ellipse((gx-7,gy-7,gx+7,gy+7),fill=255)
-    if direction in [0,4]:hd.ellipse((249-gx,gy-7,263-gx,gy+7),fill=255)
+    gx,gy=SAFE_GRIPS.get(body,GRIPS[body])[direction]
+    if direction not in [3,4,5]:
+        hd.ellipse((gx-8,gy-8,gx+8,gy+8),fill=255)
+        if direction in [0,1,7]:
+            other=2*center-gx
+            hd.ellipse((other-8,gy-8,other+8,gy+8),fill=255)
     hand_pixels=np.array(hands)
+    rgb=np.array(base).astype(int)
     if body in SAFE_GRIPS:
-        rgb=np.array(base).astype(int)
         skin=(rgb[:,:,0]-rgb[:,:,1]>22)&(rgb[:,:,1]-rgb[:,:,2]>18)&(rgb[:,:,0]>170)
-        # Keep the warm hand outline, but never a rectangular patch of vest
-        # or shorts. The mask follows the same source pixel field at runtime.
         skin=ndimage.binary_dilation(skin,iterations=1)
         hand_pixels[~skin]=0
+    elif body=='fox':
+        # Brown paws, not a circular orange forearm cut through the fabric.
+        paw=(rgb[:,:,0]-rgb[:,:,1]>12)&(rgb[:,:,1]-rgb[:,:,2]>10)&(rgb[:,:,0]<170)
+        hand_pixels[~ndimage.binary_dilation(paw,iterations=1)]=0
     mask=Image.fromarray(np.maximum(np.array(mask),hand_pixels));draw=ImageDraw.Draw(mask)
     if body=='fox':
-        for poly in [[(62,89),(67,26),(111,73)],[(144,73),(187,26),(197,92)]]:draw.polygon(poly,fill=255)
+        cx=head_center
+        for poly in [[(cx-55,91),(cx-51,28),(cx-8,74)],[(cx+15,74),(cx+58,28),(cx+66,94)]]:
+            draw.polygon(poly,fill=255)
     if body=='monkey':
-        draw.ellipse((48,91,93,138),fill=255);draw.ellipse((162,91,207,138),fill=255)
+        for x in [head_center-56,head_center+56]:draw.ellipse((x-21,91,x+21,138),fill=255)
     if body=='fairy':draw.ellipse((139,28,176,66),fill=255)
-    rgb=np.array(base);a=np.array(mask)
+    a=np.array(mask)
     if body in ['fairy','fairy_birk'] and direction in [3,4,5]:
-        wings=(rgb[:,:,2].astype(int)>rgb[:,:,0].astype(int)+8)&(np.indices(a.shape)[0]>100)
+        wings=(rgb[:,:,2]>rgb[:,:,0]+8)&(np.indices(a.shape)[0]>100)
         a[wings]=255
     if body=='hobbit_bodil':
         yy,xx=np.indices(a.shape);braids=((xx<106)|(xx>151))&(yy>100)&(yy<187)&(rgb[:,:,0]>rgb[:,:,1]*1.16)&(rgb[:,:,0]>rgb[:,:,2]*1.25)
@@ -168,6 +180,20 @@ def mask_for(body,base,direction):
     if body.startswith('hobbit'):
         yy,xx=np.indices(a.shape);a[(yy>=193)&(xx>77)&(xx<179)]=255
     result=Image.new('RGBA',(256,256),(255,255,255,0));result.putalpha(Image.fromarray(a));return result
+
+
+def build_masks():
+    """Technical alpha masks only; never repaint the generated character art."""
+    manifest=json.loads((OUT/'manifest.json').read_text())
+    for body,record in manifest['bodies'].items():
+        path=OUT/record['base'] if record['base'] else ROOT/'assets/isometric_characters'/body/'idle.webp'
+        source=Image.open(path).convert('RGBA')
+        mask=Image.new('RGBA',(256,2048))
+        for direction in range(8):
+            base=source.crop((0,direction*256,256,direction*256+256))
+            mask.paste(mask_for(body,base,direction),(0,direction*256))
+        save(mask,OUT/record['mask'])
+        print(body,'technical face/paw/hair occlusion',flush=True)
 
 def build():
     spec=json.loads((DOC/'prompts.json').read_text())
@@ -234,4 +260,6 @@ def build():
     (OUT/'manifest.json').write_text(json.dumps(manifest,separators=(',',':'))+'\n')
     print('Packed all 30 garment families on all eight heroes; stock assets untouched.')
 
-if __name__=='__main__':build()
+if __name__=='__main__':
+    import sys
+    build_masks() if '--masks-only' in sys.argv else build()

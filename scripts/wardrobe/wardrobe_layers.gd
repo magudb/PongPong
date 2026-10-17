@@ -1,7 +1,7 @@
 class_name WardrobeLayers
 extends Node
 ## World and local preview use the same fitted paintings and the body's clock.
-## Static turnarounds share the exact stock puppet field in the canvas shaders.
+## Tailored turnarounds share the exact stock puppet field in the canvas shaders.
 const LAYER_SHADER := preload("res://shaders/wardrobe_layer.gdshader")
 const BODY_SHADER := preload("res://shaders/wardrobe_body.gdshader")
 const MOTIONS := {"idle":0, "walk":1, "run":2, "interact":3, "attack":4, "celebrate":5, "hover":6, "fly":6, "takeoff":6, "flight_land":6, "jump":7, "fall":8, "land":9, "sleep":10, "hit":11, "spin":12, "talk":13}
@@ -20,6 +20,8 @@ var _pose_key := ""
 var _applied := false
 var _body_id := ""
 var _bound_layers: Array[Sprite2D] = []
+var _families: Dictionary = {}
+var _fit_direction := -1
 
 func _ready() -> void:
 	clock = get_parent() as IsoChibiSprite2D
@@ -64,37 +66,51 @@ func set_outfit(snapshot: Dictionary) -> bool:
 	if base == null or mask == null:
 		return false
 	prepared.sort_custom(func(a,b): return _order(a) < _order(b))
-	for node in root.get_children():
-		root.remove_child(node)
-		node.queue_free()
-	layers.clear()
+	var same_body := _applied and _body_id == clock.resolved_id
+	# Keep every unchanged slot's sprite, texture and material. A shoe swap must
+	# not rebuild a hat, reset a shirt's palette or change the animation clock.
+	for slot in layers.keys():
+		if not same_body or current_outfit.get(slot) != snapshot.get(slot):
+			var old: Sprite2D = layers[slot]
+			root.remove_child(old)
+			old.queue_free()
+			layers.erase(slot)
+			_families.erase(slot)
 	_bound_layers.clear()
 	_materials.clear()
 	_body = body
 	_body_id = clock.resolved_id
 	current_outfit = snapshot.duplicate()
-	body_material = _body_mat(base, false)
-	mask_material = _body_mat(base, true)
-	mask_material.set_shader_parameter("mask_image", mask)
-	clock.sprite.material = body_material if str(body.get("base", "")) != "" else _previous_material
-	for index in 7:
-		mask_material.set_shader_parameter("garment_%d" % index, prepared[index].texture if index < prepared.size() else WardrobeCatalog.empty_texture())
+	if not same_body:
+		body_material = _body_mat(base, false)
+		mask_material = _body_mat(base, true)
+		mask_material.set_shader_parameter("mask_image", mask)
+		clock.sprite.material = body_material if str(body.get("base", "")) != "" else _previous_material
+	else:
+		_materials.append_array([body_material, mask_material])
 	for entry in prepared:
-		var sprite := _sprite(entry.slot)
-		sprite.texture = entry.texture
-		var material := ShaderMaterial.new()
-		material.shader = LAYER_SHADER
-		var palette: Array = ItemKinds.def(entry.id).get("art", {}).get("palette", [])
-		for index in 3:
-			var pigment: Array = entry.record.source_palette[index]
-			material.set_shader_parameter("source_%d" % index, Vector3(pigment[0],pigment[1],pigment[2]))
-			material.set_shader_parameter("palette_%d" % index, Color("#" + str(palette[index])) if index < palette.size() else Color(pigment[0],pigment[1],pigment[2]))
-		sprite.material = material
-		_materials.append(material)
-		layers[entry.slot] = sprite
+		var sprite: Sprite2D = layers.get(entry.slot)
+		if sprite == null:
+			sprite = _sprite(entry.slot)
+			sprite.texture = entry.texture
+			var material := ShaderMaterial.new()
+			material.shader = LAYER_SHADER
+			var palette: Array = ItemKinds.def(entry.id).get("art", {}).get("palette", [])
+			for index in 3:
+				var pigment: Array = entry.record.source_palette[index]
+				material.set_shader_parameter("source_%d" % index, Vector3(pigment[0],pigment[1],pigment[2]))
+				material.set_shader_parameter("palette_%d" % index, Color("#" + str(palette[index])) if index < palette.size() else Color(pigment[0],pigment[1],pigment[2]))
+			sprite.material = material
+			layers[entry.slot] = sprite
+			_families[entry.slot] = str(entry.record.family)
+		root.move_child(sprite, _bound_layers.size())
+		_materials.append(sprite.material as ShaderMaterial)
 		_bound_layers.append(sprite)
-	occluder = _sprite("ClothingOccluder")
+	if occluder == null:
+		occluder = _sprite("ClothingOccluder")
 	occluder.material = mask_material
+	root.move_child(occluder, root.get_child_count()-1)
+	_fit_direction = -1
 	_pose_key = ""
 	_applied = true
 	root.show()
@@ -156,6 +172,28 @@ func sync_pose() -> void:
 		sprite.offset = Vector2(-128,-200) + delta
 		# A front pendant belongs under the chin, never on the hero's back.
 		sprite.visible = not (slot == "necklace" and direction in [3,4,5])
+	if _fit_direction != direction:
+		_fit_direction = direction
+		var sources := PackedVector4Array()
+		var targets := PackedVector4Array()
+		var shapes := PackedVector4Array()
+		for sprite in _bound_layers:
+			var fit := WardrobeTailoring.pose(_body_id, _families[str(sprite.name)], direction)
+			var material := sprite.material as ShaderMaterial
+			material.set_shader_parameter("fit_source_rect", fit.source)
+			material.set_shader_parameter("fit_target_rect", fit.target)
+			material.set_shader_parameter("fit_shape", fit.shape)
+			material.set_shader_parameter("fabric_volume", fit.volume)
+			sources.append(fit.source)
+			targets.append(fit.target)
+			shapes.append(fit.shape)
+		while sources.size() < 7:
+			sources.append(Vector4(0,0,256,256))
+			targets.append(Vector4(0,0,256,256))
+			shapes.append(Vector4(1,1,1,0))
+		mask_material.set_shader_parameter("fit_sources", sources)
+		mask_material.set_shader_parameter("fit_targets", targets)
+		mask_material.set_shader_parameter("fit_shapes", shapes)
 	for index in 7:
 		var texture: Texture2D = WardrobeCatalog.empty_texture()
 		if index < _bound_layers.size() and _bound_layers[index].visible:

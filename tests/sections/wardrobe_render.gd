@@ -137,8 +137,9 @@ func _turnarounds(t, ui: Node) -> void:
 	var outfits := [
 		{"hat":"hat_hood_green","necklace":"necklace_acorn","earrings":"earrings_copper","shirt":"shirt_linen_cream","pants":"pants_dungarees_blue","bracelet":"bracelet_string","shoes":"shoes_boots_brown"},
 		{"hat":"hat_wizard_lavender","dress":"dress_gown_aurora","shoes":"shoes_slippers_cream"},
-		{"circlet":"circlet_daisy","dress":"dress_sun_cream","necklace":"necklace_beads_wood","bracelet":"bracelet_copper","shoes":"shoes_clogs_gilded"}]
-	var sheet := Image.create(1920,750,false,Image.FORMAT_RGBA8)
+		{"circlet":"circlet_daisy","dress":"dress_sun_cream","necklace":"necklace_beads_wood","bracelet":"bracelet_copper","shoes":"shoes_clogs_gilded"},
+		{"hat":"hat_straw_green","shirt":"shirt_linen_cream","pants":"pants_trousers_brown","shoes":"shoes_boots_brown"}]
+	var sheet := Image.create(1920,outfits.size()*250,false,Image.FORMAT_RGBA8)
 	sheet.fill(Color("f3e8ce"))
 	var fitted := true
 	for row in outfits.size():
@@ -155,3 +156,38 @@ func _turnarounds(t, ui: Node) -> void:
 			DirAccess.remove_absolute(t.out_dir.path_join(SECTION+"_"+id+".png"))
 	sheet.save_png(t.out_dir.path_join("turnarounds_"+clock.resolved_id+".png"))
 	t.check("mixed_seven_slot_and_dress_outfits_in_all_directions", fitted)
+	ui.preview_layers.set_outfit(outfits[0])
+	# Include a direction change on every sample, the expensive path that binds
+	# the body-specific tailoring to both fabric and skin occlusion materials.
+	var samples: Array[float] = []
+	for sample_index in 240:
+		clock.set_direction_index(sample_index%8)
+		var started := Time.get_ticks_usec()
+		ui.preview_layers.sync_pose()
+		samples.append((Time.get_ticks_usec()-started)/1000.0)
+	samples.sort()
+	var p95 := samples[floori(samples.size()*0.95)]
+	t.check("tailored_pose_update_under_equipment_budget", p95 <= 0.3, "%s p95 %.4f ms across 240 changing directions (limit 0.3 ms)" % [clock.resolved_id, p95])
+	t.check("tailoring_adds_no_extra_canvas_items", ui.preview_layers.root.get_child_count() == outfits[0].size()+1)
+
+	ui.preview_layers.set_outfit(outfits[-1])
+	clock.play_loop(&"walk")
+	ui.preview_held.preview_item = &"iron_sword"
+	var steps := int(IsoChibiSprite2D.meta_for(clock.resolved_id).animations.walk.frames)
+	var motion := Image.create(1920,steps*250,false,Image.FORMAT_RGBA8)
+	motion.fill(Color("f3e8ce"))
+	for frame in steps:
+		for direction in 8:
+			clock.direction_index = direction
+			clock._frame = frame
+			clock._sync_sprite()
+			ui.preview_layers.sync_pose()
+			ui.preview_held.sync_pose()
+			await t.frames(2)
+			var id := "motion_%s_%d_%d" % [clock.resolved_id,frame,direction]
+			var picture: Image = await t.capture(id)
+			var rect: Rect2 = ui.preview_well.get_global_rect()
+			var crop := picture.get_region(Rect2i(Vector2i(rect.get_center().x-120,rect.end.y-254),Vector2i(240,250)))
+			motion.blit_rect(crop,Rect2i(Vector2i.ZERO,crop.get_size()),Vector2i(direction*240,frame*250))
+			DirAccess.remove_absolute(t.out_dir.path_join(SECTION+"_"+id+".png"))
+	motion.save_png(t.out_dir.path_join("walking_"+clock.resolved_id+".png"))

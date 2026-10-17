@@ -35,6 +35,7 @@ func _run(t, skin := "") -> void:
 	UiAudit.press(t,&"ui_cancel")
 	await t.frames(2)
 	t.check("closing_cancels_uncommitted_try_on", w.outfit() == worn and ui.preview == null and not GameManager.is_modal_open())
+	await _independent_slots(t, ui, w, eco, p)
 	ui.open()
 	ui._activate("dress_sun_cream")
 	ui.equip_button.grab_focus()
@@ -113,3 +114,45 @@ func _run(t, skin := "") -> void:
 	if skin == "":
 		var alternate: String = {"animal":"animal_monkey","fairy":"fairy_birk","hobbit":"hobbit_bodil","ghost":"ghost_hviske"}[t.character]
 		await _run(t,alternate)
+
+func _independent_slots(t, ui: Node, w: Node, eco: Node, p: Player2D) -> void:
+	var saved: Dictionary = w.to_dict()
+	for id in [&"hat_straw_plain", &"shoes_slippers_cream", &"shirt_knit_cream"]:
+		eco.add_item(id, 1, true)
+	t.check("independent_slot_fixture_owns_all_three_pieces", w.count_total("hat_straw_plain") == 1 and w.count_total("shoes_slippers_cream") == 1 and w.count_total("shirt_knit_cream") == 1)
+	ui.open()
+	var original: Dictionary = w.outfit()
+	ui._activate("hat_straw_plain")
+	ui._filter("SHOES")
+	ui._activate("shoes_slippers_cream")
+	ui._filter("BODY")
+	ui._activate("shirt_knit_cream")
+	t.check("hat_shoes_and_body_try_ons_survive_category_changes", ui.preview_outfit.get("hat") == "hat_straw_plain" and ui.preview_outfit.get("shoes") == "shoes_slippers_cream" and ui.preview_outfit.get("shirt") == "shirt_knit_cream" and w.outfit() == original)
+	ui._equip()
+	await t.frames(2)
+	t.check("equipping_body_changes_only_body_slot", w.outfit() == w.preview_equipping("shirt_knit_cream", original))
+	t.check("other_try_ons_remain_local_after_equipping_body", ui.preview_outfit.get("hat") == "hat_straw_plain" and ui.preview_outfit.get("shoes") == "shoes_slippers_cream" and not w.equipped.has("hat") and w.equipped.shoes == original.shoes)
+	ui._activate("hat_straw_plain")
+	ui._equip()
+	await t.frames(2)
+	var shirt: Sprite2D = p.outfit_layers.layers.shirt
+	var hat: Sprite2D = p.outfit_layers.layers.hat
+	var shirt_material: Material = shirt.material
+	var before_shoes: Dictionary = w.outfit()
+	ui._activate("shoes_slippers_cream")
+	ui._equip()
+	await t.frames(2)
+	t.check("shoe_swap_preserves_hat_body_and_trousers", w.outfit() == w.preview_equipping("shoes_slippers_cream", before_shoes))
+	t.check("shoe_swap_keeps_unchanged_world_sprites_and_materials", p.outfit_layers.layers.shirt == shirt and shirt.material == shirt_material and p.outfit_layers.layers.hat == hat)
+	ui._activate("shirt_knit_cream")
+	ui._remove()
+	await t.frames(2)
+	t.check("remove_updates_preview_without_putting_piece_back", not ui.preview_layers.current_outfit.has("shirt") and not w.equipped.has("shirt") and ui.preview_outfit.get("hat") == "hat_straw_plain" and ui.preview_outfit.get("shoes") == "shoes_slippers_cream")
+	ui._activate("dress_sun_cream")
+	t.check("dress_explains_its_slot_replacement", ui.status.text.begins_with(TranslationServer.translate("GARDEROBE_REPLACES_FMT").split("%s")[0]) and ui.preview_outfit.get("hat") == "hat_straw_plain" and ui.preview_outfit.get("shoes") == "shoes_slippers_cream")
+	if native:
+		await t.frames(2)
+		await t.capture("independent_slots_"+p.visual.resolved_id)
+	ui.close()
+	w.from_dict(saved)
+	await t.frames(2)

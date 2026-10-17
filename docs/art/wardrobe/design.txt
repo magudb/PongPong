@@ -5,7 +5,9 @@ and Hands are separate pages of the existing book theme. The game pauses while
 the screen is open. Changing clothes is available anywhere; the user did not
 choose the optional home-only restriction.
 
-Select a piece to try it locally. Equip commits the complete outfit. Remove
+Select pieces to try them together locally, across clothing categories and the
+Hands page. Equip commits only the selected piece and its explicit exclusions;
+other try-ons remain local until individually equipped. Remove
 returns a worn item to owned stock. Closing discards uncommitted try-ons. Browse
 all previews the 96 authored clothing IDs without granting them. New games own
 the existing cream dress and wear the existing cream shirt, brown trousers and
@@ -78,3 +80,39 @@ hotbar assignment, legacy adoption and existing weapon/tool behavior. Frame-lock
 checks exercise all authored clip/frame/direction combinations. These are not a
 claim that every stock animation frame received a separate pixel review.
 Existing art retains its prior visual dispositions when byte-identical.
+
+Anatomical fitting follow-up (2026-10-17)
+
+The earlier rectangular fits remain the source UV coordinates, not final body
+positions. assets/wardrobe/tailoring.json now records the actual torso/head
+centres, neck, waist, ankle, shoulder/hip/foot widths and cuff drop for each hero.
+In particular, a tail offsets the fox torso from the 128-pixel ground pivot.
+The fairies and hobbits use the proportions of their safe-base paintings, whose
+waists differ from those in the older stock references. Birk has his own wider
+foot fit. The ghost adaptations retain wraps/bands/charms and a wisp silhouette.
+
+WardrobeTailoring maps each design onto those landmarks in all eight directions.
+The inverse fit shapes the shoulder/waist/hem and lowers outer sleeves instead
+of flattening the whole garment into one rectangle. The stock motion field then
+moves the fitted cloth with the body, using the same frame and direction. The
+skin occluder samples exactly the same fitted garment coverage. Face masks follow
+the actual head position; front paws/skin cover cloth without a round patch of
+fur or underclothes. Rebuild only these technical masks with:
+  tools/art/.venv/bin/python tools/art/drawn/wardrobe.py --masks-only
+
+Restrained side shading gives fabric curvature. Dye weights remain normalized
+for unusual painted pixels, and a dark reference pigment cannot wash a pale
+replacement dye's folds to white. Source paintings/garment atlases are unchanged.
+No extra animation clock, generated pose textures or drawing nodes are added.
+Only the changed slot receives a new sprite/material; unchanged clothing keeps
+its own texture, pigment and node. A body change still refits the entire outfit.
+
+Try-ons retain per-slot choices when browsing another category. The screen says
+that Equip changes only this piece, lists shirt/trouser or hat/circlet exclusions,
+and labels pending previews. Removing an item shows the result immediately.
+Closing discards pending previews. Loading a saved outfit intentionally replaces
+the whole outfit and clears previews. Ownership, perks and save schema are unchanged.
+
+Native evidence, animation sheets, per-slot regression checks and limits are in
+docs/qa/clothing-fit/. Future painting-repair prompts are saved in
+fitting-prompts.json; this fitting pass did not generate or repaint garment art.
