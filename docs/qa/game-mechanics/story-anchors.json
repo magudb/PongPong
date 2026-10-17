@@ -1,0 +1,735 @@
+{
+	"base_commit": "abec447",
+	"missing": [
+		{
+			"floor": 10,
+			"independent_verifier_failures": {},
+			"keepers": 0,
+			"sample": 35,
+			"seed": "3275138988032679373"
+		}
+	],
+	"samples": [
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 0,
+			"seed": "3288800444194261033"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 1,
+			"seed": "1509340778478911631"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 2,
+			"seed": "3800075969060720703"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 3,
+			"seed": "2850366961435540775"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 4,
+			"seed": "2337644818470226536"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 5,
+			"seed": "2892702878947068937"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 6,
+			"seed": "2057154571308158217"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 7,
+			"seed": "2108740131167538439"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 8,
+			"seed": "254290955672554400"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 9,
+			"seed": "4461497944250966265"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 10,
+			"seed": "1610171562332832578"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 11,
+			"seed": "1851774657480745823"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 12,
+			"seed": "2317893344853349144"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 13,
+			"seed": "1897341013333408836"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 14,
+			"seed": "3828238812233393750"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 15,
+			"seed": "737490962134198667"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 16,
+			"seed": "1401801400035299267"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 17,
+			"seed": "4023645465864533894"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 18,
+			"seed": "558738589458712133"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 19,
+			"seed": "671865335383235807"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 20,
+			"seed": "3394046018101941170"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 21,
+			"seed": "257742180053672770"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 22,
+			"seed": "616007105955366076"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 23,
+			"seed": "3254399713021851330"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 24,
+			"seed": "3224490701661194957"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 25,
+			"seed": "1426955791604344011"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 26,
+			"seed": "3927651108025807775"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 27,
+			"seed": "456140256107380879"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 28,
+			"seed": "2242939800529634970"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 29,
+			"seed": "4188300184931327973"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 30,
+			"seed": "149748952556441236"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 31,
+			"seed": "2376402864712368685"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 32,
+			"seed": "1452734042952697768"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 33,
+			"seed": "2050304946375061793"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 34,
+			"seed": "3029345299913992499"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 35,
+			"seed": "2709821951099121126"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 36,
+			"seed": "3382774137963095475"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 37,
+			"seed": "1899572680291343646"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 38,
+			"seed": "2480501243158702473"
+		},
+		{
+			"floor": 2,
+			"keepers": 1,
+			"sample": 39,
+			"seed": "2220772516769585928"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 0,
+			"seed": "201216583095147739"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 1,
+			"seed": "388415713463720507"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 2,
+			"seed": "3059581449077265562"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 3,
+			"seed": "1404942079428527607"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 4,
+			"seed": "2071583669157423784"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 5,
+			"seed": "1482397888976655301"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 6,
+			"seed": "3381048633614946843"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 7,
+			"seed": "3758883866236437282"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 8,
+			"seed": "145184211570766187"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 9,
+			"seed": "194742935249095462"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 10,
+			"seed": "2848270276947104950"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 11,
+			"seed": "2864603597116792161"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 12,
+			"seed": "1721744141877536135"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 13,
+			"seed": "561764250319905895"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 14,
+			"seed": "4117048300988069308"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 15,
+			"seed": "4410697726895531778"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 16,
+			"seed": "3438035657385603753"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 17,
+			"seed": "3482052089870554636"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 18,
+			"seed": "86563058145501860"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 19,
+			"seed": "1033026869214243126"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 20,
+			"seed": "4447554345284446852"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 21,
+			"seed": "4302774182867520683"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 22,
+			"seed": "2219182939866500903"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 23,
+			"seed": "3495190578091980017"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 24,
+			"seed": "1251246771892201813"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 25,
+			"seed": "2786626184365697003"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 26,
+			"seed": "970483497924202173"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 27,
+			"seed": "828617984465494697"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 28,
+			"seed": "4219560521664914135"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 29,
+			"seed": "1837101066811495889"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 30,
+			"seed": "1295170939287632126"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 31,
+			"seed": "3433039264688387919"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 32,
+			"seed": "3917101131050993252"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 33,
+			"seed": "4035717654581368809"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 34,
+			"seed": "858581447947170404"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 35,
+			"seed": "2355307077753602130"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 36,
+			"seed": "1705124032994342983"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 37,
+			"seed": "2789212463021133"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 38,
+			"seed": "2831639562628660647"
+		},
+		{
+			"floor": 6,
+			"keepers": 1,
+			"sample": 39,
+			"seed": "1885419895449383770"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 0,
+			"seed": "1972632721211444825"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 1,
+			"seed": "685900284054077266"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 2,
+			"seed": "4357378094431599516"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 3,
+			"seed": "1304465268329532237"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 4,
+			"seed": "3460914846433787333"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 5,
+			"seed": "1658846626813594698"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 6,
+			"seed": "3210807726381227133"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 7,
+			"seed": "1412467415715342032"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 8,
+			"seed": "284555388636438644"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 9,
+			"seed": "498240542514288209"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 10,
+			"seed": "3565128620014651246"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 11,
+			"seed": "1472408451270755619"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 12,
+			"seed": "4591861548234502733"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 13,
+			"seed": "1717663252147900034"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 14,
+			"seed": "1221462549093644690"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 15,
+			"seed": "126046267219318480"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 16,
+			"seed": "1632519293411825463"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 17,
+			"seed": "1923183645019793825"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 18,
+			"seed": "1472397379907439060"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 19,
+			"seed": "529490295960703585"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 20,
+			"seed": "1851436607792015256"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 21,
+			"seed": "3869428952199801441"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 22,
+			"seed": "4447600502624582654"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 23,
+			"seed": "1939526366049509020"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 24,
+			"seed": "3689186738367091186"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 25,
+			"seed": "607602643507157139"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 26,
+			"seed": "2043924998611176036"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 27,
+			"seed": "4373425072752436892"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 28,
+			"seed": "3064272363829239229"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 29,
+			"seed": "1276127727061259443"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 30,
+			"seed": "3503268592553572159"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 31,
+			"seed": "1123334414507504323"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 32,
+			"seed": "4517939270877388557"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 33,
+			"seed": "2072948240872171821"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 34,
+			"seed": "2477525780866928412"
+		},
+		{
+			"floor": 10,
+			"independent_verifier_failures": {},
+			"keepers": 0,
+			"sample": 35,
+			"seed": "3275138988032679373"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 36,
+			"seed": "3038503658924193206"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 37,
+			"seed": "3011704664213531907"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 38,
+			"seed": "4164137876673091485"
+		},
+		{
+			"floor": 10,
+			"keepers": 1,
+			"sample": 39,
+			"seed": "1974445596042862997"
+		}
+	]
+}

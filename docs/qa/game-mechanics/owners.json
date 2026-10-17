@@ -1,0 +1,92 @@
+{
+  "allowed": [
+    {
+      "kind": "warning",
+      "rule": "unknown NPC 'retired_npc'",
+      "section": "social",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SocialManager.from_dict: unknown NPC 'retired_npc' kept in the orphans bucket (at from_dict res://scripts/social/social_manager.gd:1392)"
+    }
+  ],
+  "character": "animal",
+  "checks": 856,
+  "elapsed_s": 46.52,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "animals": {
+      "character": "animal",
+      "checks": 44,
+      "failed": 0,
+      "ms": 1320,
+      "skipped": 0
+    },
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1094,
+      "skipped": 0
+    },
+    "dungeon_run": {
+      "character": "animal",
+      "checks": 152,
+      "failed": 0,
+      "ms": 637,
+      "skipped": 0
+    },
+    "economy": {
+      "character": "animal",
+      "checks": 296,
+      "failed": 0,
+      "ms": 3201,
+      "skipped": 0
+    },
+    "economy_transactions": {
+      "character": "animal",
+      "checks": 7,
+      "failed": 0,
+      "ms": 76,
+      "skipped": 0
+    },
+    "home_progression": {
+      "character": "animal",
+      "checks": 73,
+      "failed": 0,
+      "ms": 1718,
+      "skipped": 0
+    },
+    "social": {
+      "character": "animal",
+      "checks": 137,
+      "failed": 0,
+      "ms": 32227,
+      "skipped": 0
+    },
+    "social_events": {
+      "character": "animal",
+      "checks": 55,
+      "failed": 0,
+      "ms": 616,
+      "skipped": 0
+    },
+    "social_gifts": {
+      "character": "animal",
+      "checks": 58,
+      "failed": 0,
+      "ms": 101,
+      "skipped": 0
+    },
+    "wardrobe": {
+      "character": "animal",
+      "checks": 26,
+      "failed": 0,
+      "ms": 226,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

@@ -1,0 +1,36 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=windowed character=animal sections=res://tests/sections only=forest_mother
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.1gijnN/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-mechanics/docs/qa/game-mechanics/native
+== section forest_mother [windowed]  (res://tests/sections/forest_mother.gd)
+  ok    forest_mother.no_inherited_evidence
+  ok    forest_mother.garden_trail_starts_investigation
+  ok    forest_mother.authored_quest_caption_is_localized
+  ok    forest_mother.future_chapters_cannot_be_offered_early
+  ok    forest_mother.all_essential_quests_have_no_paid_or_random_rewards
+  ok    forest_mother.out_of_order_evidence_is_kept
+  ok    forest_mother.finale_waits_for_real_checkpoints
+  ok    forest_mother.cancel_records_nothing_and_releases_player
+  ok    forest_mother.travel_cancels_evidence_dialogue
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-mechanics/docs/qa/game-mechanics/native/forest_mother_marked_lamp.png (1280x720)
+  ok    forest_mother.full_pack_cannot_block_evidence
+  ok    forest_mother.evidence_save_written
+  ok    forest_mother.evidence_save_loaded
+  ok    forest_mother.evidence_restored_with_quest_progress
+SCRIPT ERROR: Out of bounds get index '0' (on base: 'Array[Dictionary]')
+          at: _run (res://tests/sections/forest_mother.gd:61)
+          GDScript backtrace (most recent call first):
+              [0] _run (res://tests/sections/forest_mother.gd:61)
+              [1] _floor (res://tests/sections/forest_mother.gd:167)
+              [2] frames (res://tests/lib/drive.gd:79)
+  note  the script error above ended this section early: the checks after it did not run
+  --    forest_mother: 13 checks, 0 failed, 0 skipped, 6.5 s
+  ENGINE [forest_mother] script error: res://tests/sections/forest_mother.gd:61 in _run(): Out of bounds get index '0' (on base: 'Array[Dictionary]') (at _run res://tests/sections/forest_mother.gd:61)
+== summary: 1 section(s) run, 13 checks (0 failed, 0 skipped), 1 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 13.5 s
+  ENGINE   [forest_mother] script error: res://tests/sections/forest_mother.gd:61 in _run(): Out of bounds get index '0' (on base: 'Array[Dictionary]') (at _run res://tests/sections/forest_mother.gd:61)
+PLAYTEST FAIL: 0 check failures, 1 engine errors, 0 engine warnings, 0 problems

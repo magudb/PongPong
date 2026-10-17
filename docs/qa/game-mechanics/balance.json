@@ -1,0 +1,286 @@
+{
+  "base_commit": "abec447",
+  "assumptions": [
+    "Day-1 runtime prices, no discount perks; ordinary shops preferred for seeds.",
+    "Plant day 1; water daily in the correct window; harvest/replant immediately through day 28.",
+    "One base crop; no race bonus. Fertilized scenario reapplies 15g fertilizer for every harvest.",
+    "Crop net excludes labour, tools, travel, limited shop stock, and unsold carryover plants.",
+    "Machines continuously supplied; added value deducts raw crop sale value, not seed cost twice.",
+    "Animal figures are mature steady-state gross averages, collected immediately at happiness >=80.",
+    "Animal figures exclude feed, building, animal purchase, and maturity; they are not net ROI.",
+    "Arbitrage scan covers current catalog offers, deterministic single-output crafts, no random Hobbit bonus.",
+    "Offers across seasonal/festival/greenhouse shops do not imply immediate day-1 access."
+  ],
+  "crops": [
+    {
+      "crop": "carrot",
+      "seasons": [
+        "foraar",
+        "sommer",
+        "efteraar"
+      ],
+      "growth_days": 4,
+      "regrow_days": 0,
+      "seed_price": 20,
+      "source": "seed_shop",
+      "greenhouse_required_for_seed": false,
+      "sell": 65,
+      "harvests_by_day_28": 6,
+      "raw_net_by_day_28": 270,
+      "fertilized_net_by_day_28": 570,
+      "jar_added_value_per_machine_day": 57.5,
+      "keg_added_value_per_machine_day": 43.333333333333336
+    },
+    {
+      "crop": "catnip",
+      "seasons": [
+        "foraar",
+        "sommer"
+      ],
+      "growth_days": 5,
+      "regrow_days": 0,
+      "seed_price": 35,
+      "source": "seed_shop",
+      "greenhouse_required_for_seed": false,
+      "sell": 55,
+      "harvests_by_day_28": 5,
+      "raw_net_by_day_28": 100,
+      "fertilized_net_by_day_28": 300,
+      "jar_added_value_per_machine_day": 52.5,
+      "keg_added_value_per_machine_day": 36.666666666666664
+    },
+    {
+      "crop": "frost_kale",
+      "seasons": [
+        "vinter"
+      ],
+      "growth_days": 4,
+      "regrow_days": 0,
+      "seed_price": 30,
+      "source": "seed_shop",
+      "greenhouse_required_for_seed": false,
+      "sell": 60,
+      "harvests_by_day_28": 6,
+      "raw_net_by_day_28": 180,
+      "fertilized_net_by_day_28": 450,
+      "jar_added_value_per_machine_day": 55.0,
+      "keg_added_value_per_machine_day": 40.0
+    },
+    {
+      "crop": "glow_berry",
+      "seasons": [
+        "sommer",
+        "efteraar"
+      ],
+      "growth_days": 10,
+      "regrow_days": 4,
+      "seed_price": 105,
+      "source": "magic_store",
+      "greenhouse_required_for_seed": false,
+      "sell": 150,
+      "harvests_by_day_28": 5,
+      "raw_net_by_day_28": 645,
+      "fertilized_net_by_day_28": 1320,
+      "jar_added_value_per_machine_day": 100.0,
+      "keg_added_value_per_machine_day": 100.0
+    },
+    {
+      "crop": "moonflower",
+      "seasons": [
+        "sommer",
+        "efteraar"
+      ],
+      "growth_days": 12,
+      "regrow_days": 0,
+      "seed_price": 120,
+      "source": "seed_shop",
+      "greenhouse_required_for_seed": false,
+      "sell": 180,
+      "harvests_by_day_28": 2,
+      "raw_net_by_day_28": 120,
+      "fertilized_net_by_day_28": 450,
+      "jar_added_value_per_machine_day": 115.0,
+      "keg_added_value_per_machine_day": 120.0
+    },
+    {
+      "crop": "pumpkin",
+      "seasons": [
+        "efteraar"
+      ],
+      "growth_days": 10,
+      "regrow_days": 0,
+      "seed_price": 60,
+      "source": "seed_shop",
+      "greenhouse_required_for_seed": false,
+      "sell": 160,
+      "harvests_by_day_28": 2,
+      "raw_net_by_day_28": 200,
+      "fertilized_net_by_day_28": 490,
+      "jar_added_value_per_machine_day": 105.0,
+      "keg_added_value_per_machine_day": 106.66666666666667
+    },
+    {
+      "crop": "snow_turnip",
+      "seasons": [
+        "vinter"
+      ],
+      "growth_days": 5,
+      "regrow_days": 0,
+      "seed_price": 25,
+      "source": "greenhouse_seeds",
+      "greenhouse_required_for_seed": true,
+      "sell": 80,
+      "harvests_by_day_28": 5,
+      "raw_net_by_day_28": 275,
+      "fertilized_net_by_day_28": 600,
+      "jar_added_value_per_machine_day": 65.0,
+      "keg_added_value_per_machine_day": 53.333333333333336
+    },
+    {
+      "crop": "snowdrop",
+      "seasons": [
+        "vinter"
+      ],
+      "growth_days": 7,
+      "regrow_days": 0,
+      "seed_price": 40,
+      "source": "greenhouse_seeds",
+      "greenhouse_required_for_seed": true,
+      "sell": 110,
+      "harvests_by_day_28": 3,
+      "raw_net_by_day_28": 210,
+      "fertilized_net_by_day_28": 495,
+      "jar_added_value_per_machine_day": 80.0,
+      "keg_added_value_per_machine_day": 73.33333333333333
+    },
+    {
+      "crop": "strawberry",
+      "seasons": [
+        "foraar"
+      ],
+      "growth_days": 4,
+      "regrow_days": 4,
+      "seed_price": 45,
+      "source": "seed_shop",
+      "greenhouse_required_for_seed": false,
+      "sell": 55,
+      "harvests_by_day_28": 6,
+      "raw_net_by_day_28": 285,
+      "fertilized_net_by_day_28": 525,
+      "jar_added_value_per_machine_day": 52.5,
+      "keg_added_value_per_machine_day": 36.666666666666664
+    },
+    {
+      "crop": "sunflower",
+      "seasons": [
+        "sommer",
+        "efteraar"
+      ],
+      "growth_days": 7,
+      "regrow_days": 0,
+      "seed_price": 30,
+      "source": "seed_shop",
+      "greenhouse_required_for_seed": false,
+      "sell": 70,
+      "harvests_by_day_28": 3,
+      "raw_net_by_day_28": 120,
+      "fertilized_net_by_day_28": 285,
+      "jar_added_value_per_machine_day": 60.0,
+      "keg_added_value_per_machine_day": 46.666666666666664
+    },
+    {
+      "crop": "turnip",
+      "seasons": [
+        "foraar",
+        "sommer"
+      ],
+      "growth_days": 4,
+      "regrow_days": 0,
+      "seed_price": 20,
+      "source": "seed_shop",
+      "greenhouse_required_for_seed": false,
+      "sell": 45,
+      "harvests_by_day_28": 6,
+      "raw_net_by_day_28": 150,
+      "fertilized_net_by_day_28": 330,
+      "jar_added_value_per_machine_day": 47.5,
+      "keg_added_value_per_machine_day": 30.0
+    }
+  ],
+  "animals": [
+    {
+      "species": "chicken",
+      "mature_days": 3,
+      "building": "coop",
+      "product": "egg",
+      "base_units_per_day": 1.5,
+      "happy_units_per_day": 2.5,
+      "happy_gross_gold_per_day": 37.5
+    },
+    {
+      "species": "cow",
+      "mature_days": 8,
+      "building": "barn",
+      "product": "milk",
+      "base_units_per_day": 1.5,
+      "happy_units_per_day": 2.5,
+      "happy_gross_gold_per_day": 87.5
+    },
+    {
+      "species": "deer",
+      "mature_days": 7,
+      "building": "barn",
+      "product": "magic_herb",
+      "base_units_per_day": 0.5,
+      "happy_units_per_day": 1.0,
+      "happy_gross_gold_per_day": 80.0
+    },
+    {
+      "species": "duck",
+      "mature_days": 3,
+      "building": "coop",
+      "product": "duck_egg",
+      "base_units_per_day": 0.5,
+      "happy_units_per_day": 1.0,
+      "happy_gross_gold_per_day": 25.0
+    },
+    {
+      "species": "fox",
+      "mature_days": 6,
+      "building": "house",
+      "product": "lucky_fur",
+      "base_units_per_day": 0.3333333333333333,
+      "happy_units_per_day": 0.6666666666666666,
+      "happy_gross_gold_per_day": 80.0
+    },
+    {
+      "species": "owl",
+      "mature_days": 8,
+      "building": "house",
+      "product": "wisdom_feather",
+      "base_units_per_day": 0.3333333333333333,
+      "happy_units_per_day": 0.6666666666666666,
+      "happy_gross_gold_per_day": 133.33333333333331
+    },
+    {
+      "species": "rabbit",
+      "mature_days": 2,
+      "building": "coop",
+      "product": "wool",
+      "base_units_per_day": 0.5,
+      "happy_units_per_day": 1.0,
+      "happy_gross_gold_per_day": 12.0
+    },
+    {
+      "species": "sheep",
+      "mature_days": 6,
+      "building": "barn",
+      "product": "wool",
+      "base_units_per_day": 0.5,
+      "happy_units_per_day": 0.8333333333333334,
+      "happy_gross_gold_per_day": 10.0
+    }
+  ],
+  "direct_resell_candidates": [],
+  "buy_craft_sell_candidates": []
+}

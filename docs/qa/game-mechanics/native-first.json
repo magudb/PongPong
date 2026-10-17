@@ -1,0 +1,29 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 13,
+  "elapsed_s": 13.46,
+  "engine": [
+    {
+      "kind": "script error",
+      "section": "forest_mother",
+      "text": "res://tests/sections/forest_mother.gd:61 in _run(): Out of bounds get index '0' (on base: 'Array[Dictionary]') (at _run res://tests/sections/forest_mother.gd:61)"
+    }
+  ],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "forest_mother": {
+      "character": "animal",
+      "checks": 13,
+      "failed": 0,
+      "ms": 6451,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}
