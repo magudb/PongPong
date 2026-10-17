@@ -1,6 +1,6 @@
 {
   "result": "pass",
-  "binding": "348a1caef1ae52e6b01d3930a09fc6ec6c8e046d29993ce8edbc6cf239eb33ad",
+  "binding": "56607282840d922a3f4f14148e3240e9c65cd74c3b94ed8970b4e820160f674f",
   "checks": {
     "l18_data_only_citizen": true,
     "l18_data_only_building": true,

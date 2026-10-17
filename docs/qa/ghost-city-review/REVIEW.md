@@ -19,8 +19,10 @@ Clean validation evidence:
 | `palettes.json` | All 96 variants on each ghost, mixed outfits in eight directions and every walking frame with a held sword | 16 checks; 192 catalogue cases; face difference 0.0 |
 | `final-regression.json` | Art consistency, cheats, city levels/map/walkthrough and clock/calendar | 351 checks; no failures, skips or engine messages |
 
-The moving 20-actor tracker remains within its existing 0.2 ms budget; the regression measured a best tick of 0.115 ms. Ghost tailoring remains within the existing 0.3 ms pose budget. No budget was relaxed. The clock regression simulates many days and took about 194 seconds; it passed.
+The moving 20-actor tracker remains within its existing 0.2 ms budget; the regression measured a best tick of 0.115 ms. Ghost tailoring remains within the existing 0.3 ms pose budget. No budget was relaxed. The refreshed town proof measured warm interior builds at 9.58 ms p50 against the unchanged 12 ms budget. Repacking the ghost atlases reproduces identical bytes. The clock regression simulates many days and took about 194 seconds; it passed.
 
 The source-bound town extension and mutation proofs are refreshed in `docs/qa/m1b-milestone/`. The extension exercises production geometry, NPC routes, shops, dialogue, social rules, doors and mailbox quest offers with 584 owner checks. Earlier reports bound to `9851c7d...` are preserved in `source-proof-9851c7d/`. Superseded development captures are outside the repository in `/tmp/ghost-city-development-20261017/`.
 
 Visual review artifacts: `ghost-outfits-before-after.png`, `city-depth-comparison.png`, the two ghost turnaround/walking sheets and all sixteen full catalogue pages under `palettes/`, plus the native city/stair and menu captures under `accepted/`. The review covers the new clothing's idle turnarounds and walking; it is not a new frame-by-frame approval of every original stock animation clip.
+
+Town proof bindings were regenerated after normalizing the new localization CSV to the repository’s LF format.

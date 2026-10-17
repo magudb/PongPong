@@ -34,7 +34,8 @@
     "ghost_hviske": 96
   },
   "changed_painted_assets": 30,
-  "source_binding": "348a1caef1ae52e6b01d3930a09fc6ec6c8e046d29993ce8edbc6cf239eb33ad",
+  "source_binding": "56607282840d922a3f4f14148e3240e9c65cd74c3b94ed8970b4e820160f674f",
   "prompts": "docs/art/ghost-city-review/prompts.json",
-  "review": "docs/qa/ghost-city-review/REVIEW.md"
+  "review": "docs/qa/ghost-city-review/REVIEW.md",
+  "generator_regeneration": "byte-identical"
 }
