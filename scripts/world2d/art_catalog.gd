@@ -202,7 +202,8 @@ static func _load_tex(path: String) -> Texture2D:
 ## Vector2i(cell.x % variants.x, cell.y % variants.y) (Iso.atlas_coords).
 static func terrain(id: StringName) -> Dictionary:
 	if _terrains.has(id):
-		return _terrains[id]
+		var cached: Variant = TextureRefs.fetch(_terrains[id])
+		if cached is Dictionary:return cached
 	_scan()
 	var res: Dictionary = {}
 	var e: Variant = _terrain_manifest.get(String(id), null)
@@ -217,7 +218,7 @@ static func terrain(id: StringName) -> Dictionary:
 	if res.is_empty():
 		res = _placeholder_terrain(id)
 		_note_missing("terrain", String(id))
-	_terrains[id] = res
+	_terrains[id] = TextureRefs.store(res)
 	return res
 
 

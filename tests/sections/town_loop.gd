@@ -363,12 +363,15 @@ func _first_citizen(t) -> void:
 	await preload("res://tests/lib/town_loop/gifts.gd").new().run(t, self)
 
 func _external_proofs(t) -> void:
-	for item in [["prove_extension.py","L18"],["prove_mutants.py","mutants"]]:
-		var result: Dictionary = t.run_tool("python3",[ProjectSettings.globalize_path("res://tools/town/"+item[0]),"--check"])
-		var proof: Variant = JSON.parse_string(str(result.output))
-		if result.code!=0 or not proof is Dictionary or str(proof.get("result",""))!="pass":
-			skipped[item[1]]=str(result.output)
-			t.skip(item[1]+": source-bound proof absent/stale; "+str(result.output))
+	# One current filesystem digest checks both saved reports without
+	# repeating the same source scan during the timed tour.
+	var result: Dictionary = t.run_tool("python3",[ProjectSettings.globalize_path("res://tools/town/prove_extension.py"),"--check-all"])
+	var combined: Variant = JSON.parse_string(str(result.output))
+	for item in [["extension","L18"],["mutants","mutants"]]:
+		var proof: Dictionary = LuaData.dict(combined.get(item[1],{})) if combined is Dictionary else {}
+		if result.code not in [0,1] or str(proof.get("result",""))!="pass":
+			skipped[item[1]]=str(proof.get("error",result.output))
+			t.skip(item[1]+": source-bound proof absent/stale; "+str(skipped[item[1]]))
 			if item[1]=="mutants" and OS.get_environment("TOWN_LOOP_WAVE")!="":
 				t.check("selftest_mutants_caught",false,str(result.output))
 			continue

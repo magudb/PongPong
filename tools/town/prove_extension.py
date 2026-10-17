@@ -104,9 +104,24 @@ def prove():
         REPORT.write_text(json.dumps(report,indent=2)+'\n')
         return report
 
+def check_proofs():
+    """Check both saved reports against one identical, freshly computed source digest."""
+    current=binding()
+    results={}
+    for name,filename in [('L18','loop-extension.json'),('mutants','loop-mutants.json')]:
+        try:
+            report=json.loads((ROOT/'docs/qa/m1b-milestone'/filename).read_text())
+            assert report['result']=='pass' and report['binding']==current, 'Source-bound proof is stale: '+filename
+            results[name]=report
+        except (OSError,ValueError,AssertionError,KeyError,TypeError) as error:
+            results[name]={'result':'fail','error':str(error)}
+    return results
+
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--check',action='store_true');args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--check',action='store_true');parser.add_argument('--check-all',action='store_true');args=parser.parse_args()
     try:
+        if args.check_all:
+            result=check_proofs();print(json.dumps(result));return int(any(row['result']!='pass' for row in result.values()))
         if args.check:
             result=json.loads(REPORT.read_text());assert result['result']=='pass' and result['binding']==binding(),'Extension proof is stale; rerun prove_extension.py'
         else:result=prove()

@@ -1,4 +1,6 @@
 """Real binding mutations: launchers/import policy count, generated copies do not."""
+import json
+from unittest.mock import patch
 import tempfile
 import unittest
 from pathlib import Path
@@ -41,6 +43,23 @@ class SourceBinding(unittest.TestCase):
         before = proof.hashes(proof.ROOT,True)
         self.write('tests/run_playtest.sh','different launcher')
         self.assertNotEqual(proof.hashes(proof.ROOT,True),before)
+
+    def saved_proof(self, name, binding):
+        self.write('docs/qa/m1b-milestone/loop-'+name+'.json',json.dumps({'result':'pass','binding':binding}))
+    def test_combined_check_hashes_once_and_accepts_both(self):
+        for name in ['extension','mutants']:self.saved_proof(name,self.baseline)
+        with patch.object(proof,'binding',wraps=proof.binding) as digest:
+            result=proof.check_proofs()
+        self.assertEqual(digest.call_count,1)
+        self.assertTrue(all(row['result']=='pass' for row in result.values()))
+    def test_combined_check_rejects_stale_and_malformed_independently(self):
+        self.saved_proof('extension',self.baseline)
+        self.saved_proof('mutants','old-source')
+        result=proof.check_proofs()
+        self.assertEqual(result['L18']['result'],'pass')
+        self.assertEqual(result['mutants']['result'],'fail')
+        self.write('docs/qa/m1b-milestone/loop-mutants.json','invalid json')
+        self.assertEqual(proof.check_proofs()['mutants']['result'],'fail')
 
 if __name__ == '__main__':
     unittest.main()

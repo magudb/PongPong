@@ -27,7 +27,7 @@ const WATER_FRAMES: Array[StringName] = [&"water_0", &"water_1", &"water_2", &"w
 ## Terrains whose tiles carry the ground_block collision polygon (only the FIRST water frame: physics on layer 0 only).
 const BLOCKING_TERRAINS: Array[StringName] = [&"water_0", &"bog_o"]
 
-static var _sets: Dictionary = {}   # projection -> {"tileset": TileSet, "sources": {id: source_id}, "projection": ..., "build_ms": int}
+static var _sets: Dictionary = {}   # projection -> {"tileset": WeakRef, "sources": {id: source_id}, "projection": ..., "build_ms": int}
 static var _blank: Dictionary = {}  # "WxH" -> ImageTexture
 
 
@@ -35,13 +35,22 @@ static var _blank: Dictionary = {}  # "WxH" -> ImageTexture
 static func get_set(projection: StringName) -> Dictionary:
 	var key: StringName = &"ortho" if projection == &"ortho" else &"iso"
 	if _sets.has(key):
-		return _sets[key]
+		var stored: Dictionary = _sets[key]
+		var live: TileSet = stored.tileset.get_ref()
+		if live != null:
+			var resident := stored.duplicate()
+			resident.tileset = live
+			return resident
 	var t0: int = Time.get_ticks_msec()
 	var ts: TileSet = _make_tileset(key)
 	var res: Dictionary = {"tileset": ts, "sources": {}, "projection": key, "build_ms": 0}
-	_sets[key] = res
 	_add_blocker(ts, key)
 	res["build_ms"] = Time.get_ticks_msec() - t0
+	# The active/parked areas own their TileMaps and atlas textures. Leaving
+	# the last area of a projection must release that biome's terrain sheets.
+	var stored := res.duplicate()
+	stored.tileset = weakref(ts)
+	_sets[key] = stored
 	return res
 
 
