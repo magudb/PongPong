@@ -17,14 +17,15 @@ ROOT = Path(__file__).resolve().parents[2]
 REPORT = ROOT/'docs/qa/m1b-milestone/loop-extension.json'
 BIND = ['scripts','scenes','shaders','lua','data','localization','tests','tools','assets']
 EXTRA = ['project.godot','docs/copy/review_status.json','docs/art/style-audit/current/approval.json']
+GENERATED = {'tools/features/_stage','tools/features/reports','tools/art/_stage','tools/dungeon/_stage','tools/dungeon_run/_stage','tools/dungeon_loot/_stage'}
 
 def hashes(root, code_only=False):
     files = [root/p for p in EXTRA]
     for folder in BIND:
         for directory, dirs, names in os.walk(root/folder):
-            dirs[:] = [name for name in dirs if name not in ('.venv','.git','.godot','__pycache__','node_modules')]
+            dirs[:] = [name for name in dirs if name not in ('.venv','.git','.godot','__pycache__','node_modules') and (Path(directory)/name).relative_to(root).as_posix() not in GENERATED]
             files.extend(Path(directory)/name for name in names)
-    return {str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(set(files)) if p.is_file() and (p.suffix in ('.gd','.tscn','.py','.gdshader','.gdshaderinc') if code_only else p.suffix in ('.gd','.tscn','.lua','.json','.map','.csv','.py','.godot','.gdshader','.gdshaderinc','.tres'))}
+    return {str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(set(files)) if p.is_file() and (p.suffix in ('.gd','.tscn','.py','.sh','.gdshader','.gdshaderinc') if code_only else p.suffix in ('.gd','.tscn','.lua','.json','.map','.csv','.py','.godot','.gdshader','.gdshaderinc','.tres','.sh','.import','.uid'))}
 
 def binding():
     return hashlib.sha256(json.dumps(hashes(ROOT),sort_keys=True).encode()).hexdigest()
