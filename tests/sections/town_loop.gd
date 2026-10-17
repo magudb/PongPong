@@ -373,4 +373,4 @@ func _external_proofs(t) -> void:
 		if item[1]=="L18":
 			for id in proof.checks:_check(t,"L18",id,bool(proof.checks[id]))
 		else:
-			t.check("selftest_mutants_caught",proof.mutants.size()==8 and proof.mutants.values().all(func(row):return row.caught),"Seven real producer mutants plus a clean baseline; audio explicitly waits for P24")
+			t.check("selftest_mutants_caught",proof.mutants.size()==9 and proof.mutants.values().all(func(row):return row.caught),"Eight real producer mutants plus a clean baseline, including audio playback without logging")

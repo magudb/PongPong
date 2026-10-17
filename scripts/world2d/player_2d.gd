@@ -94,6 +94,9 @@ func _ready() -> void:
 	EventBus.game_event.connect(_on_game_event)
 	_emit_stats_on_bus()
 	EventBus.player_oil_changed.emit(oil, max_oil)
+	var footsteps := PlayerFootsteps.new()
+	footsteps.name = "Footsteps"
+	add_child(footsteps)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE and is_instance_valid(_marker):

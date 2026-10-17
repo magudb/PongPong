@@ -113,7 +113,7 @@ func _next_line() -> void:
 	_typing = not text.is_empty()
 	_shown += 1
 	_voice_key = str(row.get("voice_key", ""))
-	_has_voice = _voice_key != "" and AudioManager.voice_exists(_voice_key)
+	_has_voice = LocalizationManager.is_da() and _voice_key != "" and AudioManager.voice_exists(_voice_key)
 	AudioManager.stop_voice()
 	if _has_voice:
 		AudioManager.play_voice(_voice_key)

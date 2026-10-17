@@ -1,0 +1,2029 @@
+{
+  "method": "ffmpeg decoded mono 22050 Hz float samples; numeric analysis, not a listening review",
+  "files": [
+    {
+      "kind": "sfx",
+      "id": "appraisal_reveal",
+      "seconds": 0.8185034013605442,
+      "peak": 0.21699020266532898,
+      "rms": 0.035314456642588456,
+      "seam_delta": 0.0003394890771108161
+    },
+    {
+      "kind": "sfx",
+      "id": "bath_splash",
+      "seconds": 0.8185034013605442,
+      "peak": 0.17838524281978607,
+      "rms": 0.02160062765124291,
+      "seam_delta": 0.0031881543983077743
+    },
+    {
+      "kind": "sfx",
+      "id": "bin_bell",
+      "seconds": 0.8185034013605442,
+      "peak": 0.22200137376785278,
+      "rms": 0.03531226535867301,
+      "seam_delta": 0.0018106492469843471
+    },
+    {
+      "kind": "sfx",
+      "id": "bush_rustle",
+      "seconds": 0.8185034013605442,
+      "peak": 0.16919589042663574,
+      "rms": 0.02106323751470762,
+      "seam_delta": 0.001050110277122429
+    },
+    {
+      "kind": "sfx",
+      "id": "chest_open",
+      "seconds": 0.8185034013605442,
+      "peak": 0.158876433968544,
+      "rms": 0.02108509333632909,
+      "seam_delta": 0.0005906802187622406
+    },
+    {
+      "kind": "sfx",
+      "id": "closing_bell",
+      "seconds": 0.8185034013605442,
+      "peak": 0.21513131260871887,
+      "rms": 0.03539438443890958,
+      "seam_delta": 0.001273985423674795
+    },
+    {
+      "kind": "sfx",
+      "id": "coin_clink",
+      "seconds": 0.8185034013605442,
+      "peak": 0.2180631309747696,
+      "rms": 0.035464400759790564,
+      "seam_delta": 0.0004204772285682362
+    },
+    {
+      "kind": "sfx",
+      "id": "door_locked_knock",
+      "seconds": 0.8185034013605442,
+      "peak": 0.19483153522014618,
+      "rms": 0.021505919291970675,
+      "seam_delta": 0.00025322179673555045
+    },
+    {
+      "kind": "sfx",
+      "id": "door_open_wood",
+      "seconds": 0.8185034013605442,
+      "peak": 0.15432128310203552,
+      "rms": 0.020823978568712986,
+      "seam_delta": 0.002972081605139898
+    },
+    {
+      "kind": "sfx",
+      "id": "enemy_notice",
+      "seconds": 0.8185034013605442,
+      "peak": 0.22200137376785278,
+      "rms": 0.03531226535867301,
+      "seam_delta": 0.0018106492469843471
+    },
+    {
+      "kind": "sfx",
+      "id": "festival_horn",
+      "seconds": 0.8185034013605442,
+      "peak": 0.21270409226417542,
+      "rms": 0.03527878138646349,
+      "seam_delta": 0.0008573469710297377
+    },
+    {
+      "kind": "sfx",
+      "id": "gem_set",
+      "seconds": 0.8185034013605442,
+      "peak": 0.21513131260871887,
+      "rms": 0.03539438443890958,
+      "seam_delta": 0.001273985423674795
+    },
+    {
+      "kind": "sfx",
+      "id": "gift_sparkle",
+      "seconds": 0.8185034013605442,
+      "peak": 0.22200137376785278,
+      "rms": 0.03531226535867301,
+      "seam_delta": 0.0018106492469843471
+    },
+    {
+      "kind": "sfx",
+      "id": "heart_up",
+      "seconds": 0.8185034013605442,
+      "peak": 0.21538960933685303,
+      "rms": 0.03540389064150131,
+      "seam_delta": 0.002166027265957382
+    },
+    {
+      "kind": "sfx",
+      "id": "hit_soft",
+      "seconds": 0.8185034013605442,
+      "peak": 0.22200137376785278,
+      "rms": 0.03531226535867301,
+      "seam_delta": 0.0018106492469843471
+    },
+    {
+      "kind": "sfx",
+      "id": "hulen_descend",
+      "seconds": 0.8185034013605442,
+      "peak": 0.2180631309747696,
+      "rms": 0.035464400759790564,
+      "seam_delta": 0.0004204772285682362
+    },
+    {
+      "kind": "sfx",
+      "id": "hurt_soft",
+      "seconds": 0.8185034013605442,
+      "peak": 0.17764128744602203,
+      "rms": 0.021721337331983424,
+      "seam_delta": 0.005810538986502967
+    },
+    {
+      "kind": "sfx",
+      "id": "lantern_low",
+      "seconds": 0.8185034013605442,
+      "peak": 0.21447353065013885,
+      "rms": 0.03543887822930975,
+      "seam_delta": 0.0008386667592762131
+    },
+    {
+      "kind": "sfx",
+      "id": "letter_rustle",
+      "seconds": 0.8185034013605442,
+      "peak": 0.18569128215312958,
+      "rms": 0.02216002202734836,
+      "seam_delta": 0.011516467403901803
+    },
+    {
+      "kind": "sfx",
+      "id": "loot_legendary",
+      "seconds": 0.8185034013605442,
+      "peak": 0.21699020266532898,
+      "rms": 0.035314456642588456,
+      "seam_delta": 0.0003394890771108161
+    },
+    {
+      "kind": "sfx",
+      "id": "loot_rare",
+      "seconds": 0.8185034013605442,
+      "peak": 0.22200137376785278,
+      "rms": 0.03531226535867301,
+      "seam_delta": 0.0018106492469843471
+    },
+    {
+      "kind": "sfx",
+      "id": "loot_unique",
+      "seconds": 0.8185034013605442,
+      "peak": 0.22205232083797455,
+      "rms": 0.03527660736203348,
+      "seam_delta": 0.0004512438358664772
+    },
+    {
+      "kind": "sfx",
+      "id": "page_turn",
+      "seconds": 0.8185034013605442,
+      "peak": 0.19495512545108795,
+      "rms": 0.02202014197581079,
+      "seam_delta": 0.011198614416800257
+    },
+    {
+      "kind": "sfx",
+      "id": "pickup_soft",
+      "seconds": 0.8185034013605442,
+      "peak": 0.21952393651008606,
+      "rms": 0.03541445210212262,
+      "seam_delta": 0.001811923402580462
+    },
+    {
+      "kind": "sfx",
+      "id": "rune_activate",
+      "seconds": 0.8185034013605442,
+      "peak": 0.21513131260871887,
+      "rms": 0.03539438443890958,
+      "seam_delta": 0.001273985423674795
+    },
+    {
+      "kind": "sfx",
+      "id": "shop_bell",
+      "seconds": 0.8185034013605442,
+      "peak": 0.21699020266532898,
+      "rms": 0.035314456642588456,
+      "seam_delta": 0.0003394890771108161
+    },
+    {
+      "kind": "sfx",
+      "id": "stage_up",
+      "seconds": 0.8185034013605442,
+      "peak": 0.22200137376785278,
+      "rms": 0.03531226535867301,
+      "seam_delta": 0.0018106492469843471
+    },
+    {
+      "kind": "sfx",
+      "id": "step_dirt_1",
+      "seconds": 0.23800453514739228,
+      "peak": 0.13676363229751587,
+      "rms": 0.019177570770042538,
+      "seam_delta": 0.0030855746139628604
+    },
+    {
+      "kind": "sfx",
+      "id": "step_dirt_2",
+      "seconds": 0.23800453514739228,
+      "peak": 0.12166395038366318,
+      "rms": 0.018782179784536068,
+      "seam_delta": 0.0010034601469867954
+    },
+    {
+      "kind": "sfx",
+      "id": "step_dirt_3",
+      "seconds": 0.23800453514739228,
+      "peak": 0.13574302196502686,
+      "rms": 0.018224338071671533,
+      "seam_delta": 0.004370005600092597
+    },
+    {
+      "kind": "sfx",
+      "id": "step_grass_1",
+      "seconds": 0.23800453514739228,
+      "peak": 0.1526031345129013,
+      "rms": 0.020651753562644367,
+      "seam_delta": 0.008276267694289852
+    },
+    {
+      "kind": "sfx",
+      "id": "step_grass_2",
+      "seconds": 0.23800453514739228,
+      "peak": 0.15359081327915192,
+      "rms": 0.01955008234630369,
+      "seam_delta": 0.00415723865701545
+    },
+    {
+      "kind": "sfx",
+      "id": "step_grass_3",
+      "seconds": 0.23800453514739228,
+      "peak": 0.1276623159646988,
+      "rms": 0.01915258309645795,
+      "seam_delta": 0.009629229191164629
+    },
+    {
+      "kind": "sfx",
+      "id": "step_rope_1",
+      "seconds": 0.23800453514739228,
+      "peak": 0.13164576888084412,
+      "rms": 0.01911448608789691,
+      "seam_delta": 0.00109444905519962
+    },
+    {
+      "kind": "sfx",
+      "id": "step_rope_2",
+      "seconds": 0.23800453514739228,
+      "peak": 0.1252181977033615,
+      "rms": 0.01810847575690736,
+      "seam_delta": 0.0014582443257599755
+    },
+    {
+      "kind": "sfx",
+      "id": "step_stone_1",
+      "seconds": 0.23800453514739228,
+      "peak": 0.16196611523628235,
+      "rms": 0.020490310416372053,
+      "seam_delta": 0.004280964260174908
+    },
+    {
+      "kind": "sfx",
+      "id": "step_stone_2",
+      "seconds": 0.23800453514739228,
+      "peak": 0.12080756574869156,
+      "rms": 0.018534665089538264,
+      "seam_delta": 0.003769676697549712
+    },
+    {
+      "kind": "sfx",
+      "id": "step_stone_3",
+      "seconds": 0.23800453514739228,
+      "peak": 0.1688782125711441,
+      "rms": 0.01831925942678638,
+      "seam_delta": 0.0042516177725135385
+    },
+    {
+      "kind": "sfx",
+      "id": "step_wood_1",
+      "seconds": 0.23800453514739228,
+      "peak": 0.12265637516975403,
+      "rms": 0.0186571572903564,
+      "seam_delta": 0.004732221714686291
+    },
+    {
+      "kind": "sfx",
+      "id": "step_wood_2",
+      "seconds": 0.23800453514739228,
+      "peak": 0.15212972462177277,
+      "rms": 0.019336266558407006,
+      "seam_delta": 0.0021981520163292245
+    },
+    {
+      "kind": "sfx",
+      "id": "step_wood_3",
+      "seconds": 0.23800453514739228,
+      "peak": 0.13041073083877563,
+      "rms": 0.018445124675895538,
+      "seam_delta": 0.0018945840898518251
+    },
+    {
+      "kind": "sfx",
+      "id": "telegraph_tick",
+      "seconds": 0.8185034013605442,
+      "peak": 0.21513131260871887,
+      "rms": 0.03539438443890958,
+      "seam_delta": 0.001273985423674795
+    },
+    {
+      "kind": "sfx",
+      "id": "town_bell",
+      "seconds": 0.8185034013605442,
+      "peak": 0.21538960933685303,
+      "rms": 0.03540389064150131,
+      "seam_delta": 0.002166027265957382
+    },
+    {
+      "kind": "sfx",
+      "id": "weapon_equip",
+      "seconds": 0.8185034013605442,
+      "peak": 0.21321949362754822,
+      "rms": 0.03539295774947018,
+      "seam_delta": 0.0008779643279456795
+    },
+    {
+      "kind": "amb",
+      "id": "cave_drip",
+      "seconds": 24.0,
+      "peak": 0.009635787457227707,
+      "rms": 0.0014268210743997854,
+      "seam_delta": 0.00011939817341044545
+    },
+    {
+      "kind": "amb",
+      "id": "farm_day",
+      "seconds": 24.0,
+      "peak": 0.03856029734015465,
+      "rms": 0.008435958946242406,
+      "seam_delta": 0.002144299738574773
+    },
+    {
+      "kind": "amb",
+      "id": "farm_night",
+      "seconds": 24.0,
+      "peak": 0.03585921600461006,
+      "rms": 0.008303305124951638,
+      "seam_delta": 0.00015134084969758987
+    },
+    {
+      "kind": "amb",
+      "id": "forest",
+      "seconds": 24.0,
+      "peak": 0.03602822497487068,
+      "rms": 0.008389342928997325,
+      "seam_delta": 0.0015877299010753632
+    },
+    {
+      "kind": "amb",
+      "id": "forest_night",
+      "seconds": 24.0,
+      "peak": 0.03652554005384445,
+      "rms": 0.008387381704434942,
+      "seam_delta": 0.0019771605730056763
+    },
+    {
+      "kind": "amb",
+      "id": "rain",
+      "seconds": 24.0,
+      "peak": 0.06545810401439667,
+      "rms": 0.014480242910472186,
+      "seam_delta": 0.00623968243598938
+    },
+    {
+      "kind": "amb",
+      "id": "shop_interior",
+      "seconds": 24.0,
+      "peak": 0.009350849315524101,
+      "rms": 0.0020643128039250706,
+      "seam_delta": 0.0001786399861885002
+    },
+    {
+      "kind": "amb",
+      "id": "town_day",
+      "seconds": 24.0,
+      "peak": 0.04006783664226532,
+      "rms": 0.008297825219558323,
+      "seam_delta": 0.0004587564617395401
+    },
+    {
+      "kind": "amb",
+      "id": "town_night",
+      "seconds": 24.0,
+      "peak": 0.037179771810770035,
+      "rms": 0.008309739655426095,
+      "seam_delta": 0.0013079607306281105
+    },
+    {
+      "kind": "music",
+      "id": "boss",
+      "seconds": 47.0,
+      "peak": 0.06429310888051987,
+      "rms": 0.01580137694959338,
+      "seam_delta": 0.00022363290190696716
+    },
+    {
+      "kind": "music",
+      "id": "boss_final",
+      "seconds": 47.0,
+      "peak": 0.06750119477510452,
+      "rms": 0.016052489440835257,
+      "seam_delta": 0.0007492173463106155
+    },
+    {
+      "kind": "music",
+      "id": "city_theme",
+      "seconds": 47.0,
+      "peak": 0.06522812694311142,
+      "rms": 0.016197280006410325,
+      "seam_delta": 0.0001240316778421402
+    },
+    {
+      "kind": "music",
+      "id": "dungeon_act1",
+      "seconds": 47.0,
+      "peak": 0.06750119477510452,
+      "rms": 0.01605186877648711,
+      "seam_delta": 0.0006842098664492369
+    },
+    {
+      "kind": "music",
+      "id": "dungeon_act2",
+      "seconds": 47.0,
+      "peak": 0.06334405392408371,
+      "rms": 0.016048092497640158,
+      "seam_delta": 0.0012930473312735558
+    },
+    {
+      "kind": "music",
+      "id": "dungeon_act3",
+      "seconds": 47.0,
+      "peak": 0.06334405392408371,
+      "rms": 0.016048092497640158,
+      "seam_delta": 0.0012930473312735558
+    },
+    {
+      "kind": "music",
+      "id": "dungeon_act4",
+      "seconds": 47.0,
+      "peak": 0.06460054963827133,
+      "rms": 0.016053661190153744,
+      "seam_delta": 0.0021984409540891647
+    },
+    {
+      "kind": "music",
+      "id": "farm_theme",
+      "seconds": 47.0,
+      "peak": 0.06334405392408371,
+      "rms": 0.016049483928078926,
+      "seam_delta": 6.0908496379852295e-05
+    },
+    {
+      "kind": "music",
+      "id": "festival_efteraar",
+      "seconds": 47.0,
+      "peak": 0.06578035652637482,
+      "rms": 0.015800078014564074,
+      "seam_delta": 0.001446903683245182
+    },
+    {
+      "kind": "music",
+      "id": "festival_foraar",
+      "seconds": 47.0,
+      "peak": 0.06430897116661072,
+      "rms": 0.016191805487024428,
+      "seam_delta": 0.0010855887085199356
+    },
+    {
+      "kind": "music",
+      "id": "festival_sommer",
+      "seconds": 47.0,
+      "peak": 0.06504678726196289,
+      "rms": 0.015800623458829714,
+      "seam_delta": 0.00023413961753249168
+    },
+    {
+      "kind": "music",
+      "id": "festival_vinter",
+      "seconds": 47.0,
+      "peak": 0.06539930403232574,
+      "rms": 0.016200653441333552,
+      "seam_delta": 0.000281771644949913
+    },
+    {
+      "kind": "music",
+      "id": "forest_theme",
+      "seconds": 47.0,
+      "peak": 0.0634487122297287,
+      "rms": 0.01565490525270133,
+      "seam_delta": 0.0014463886618614197
+    },
+    {
+      "kind": "music",
+      "id": "rune_rest",
+      "seconds": 47.0,
+      "peak": 0.06553575396537781,
+      "rms": 0.015801716235139776,
+      "seam_delta": 0.0021933363750576973
+    },
+    {
+      "kind": "voice",
+      "id": "voice/appraiser_fru_ugle/farewell",
+      "source": "placeholder",
+      "seconds": 2.5363718820861676,
+      "peak": 0.572181224822998,
+      "rms": 0.1524024561577273
+    },
+    {
+      "kind": "voice",
+      "id": "voice/appraiser_fru_ugle/finds",
+      "source": "placeholder",
+      "seconds": 3.2947845804988662,
+      "peak": 0.5879852771759033,
+      "rms": 0.15440562352693046
+    },
+    {
+      "kind": "voice",
+      "id": "voice/appraiser_fru_ugle/glass",
+      "source": "placeholder",
+      "seconds": 3.0994104308390025,
+      "peak": 0.5754351019859314,
+      "rms": 0.1396286536357457
+    },
+    {
+      "kind": "voice",
+      "id": "voice/appraiser_fru_ugle/greet",
+      "source": "placeholder",
+      "seconds": 3.7295691609977326,
+      "peak": 0.6067346930503845,
+      "rms": 0.15870165372775705
+    },
+    {
+      "kind": "voice",
+      "id": "voice/appraiser_fru_ugle/lake",
+      "source": "placeholder",
+      "seconds": 2.9696598639455782,
+      "peak": 0.6651307940483093,
+      "rms": 0.1686039239526392
+    },
+    {
+      "kind": "voice",
+      "id": "voice/appraiser_fru_ugle/patience",
+      "source": "placeholder",
+      "seconds": 3.562721088435374,
+      "peak": 0.5969076156616211,
+      "rms": 0.16751990446244341
+    },
+    {
+      "kind": "voice",
+      "id": "voice/appraiser_fru_ugle/runes",
+      "source": "placeholder",
+      "seconds": 2.9840362811791383,
+      "peak": 0.5626907348632812,
+      "rms": 0.14973289702139633
+    },
+    {
+      "kind": "voice",
+      "id": "voice/appraiser_fru_ugle/window",
+      "source": "placeholder",
+      "seconds": 2.8612698412698414,
+      "peak": 0.5506206750869751,
+      "rms": 0.17430077991957965
+    },
+    {
+      "kind": "voice",
+      "id": "voice/baker_maja/cookie_talk",
+      "source": "recorded",
+      "seconds": 4.793469387755102,
+      "peak": 0.4323113262653351,
+      "rms": 0.07832500621239157
+    },
+    {
+      "kind": "voice",
+      "id": "voice/baker_maja/greet",
+      "source": "recorded",
+      "seconds": 3.4481632653061225,
+      "peak": 0.5168150067329407,
+      "rms": 0.07087139594891137
+    },
+    {
+      "kind": "voice",
+      "id": "voice/baker_maja/math_done",
+      "source": "placeholder",
+      "seconds": 4.261043083900227,
+      "peak": 0.6075723171234131,
+      "rms": 0.1413969054342293
+    },
+    {
+      "kind": "voice",
+      "id": "voice/baker_maja/math_q1",
+      "source": "placeholder",
+      "seconds": 4.40421768707483,
+      "peak": 0.6416761875152588,
+      "rms": 0.14359482943292876
+    },
+    {
+      "kind": "voice",
+      "id": "voice/baker_maja/math_q2",
+      "source": "placeholder",
+      "seconds": 5.549115646258503,
+      "peak": 0.607536792755127,
+      "rms": 0.15654980046766512
+    },
+    {
+      "kind": "voice",
+      "id": "voice/baker_maja/math_q3",
+      "source": "placeholder",
+      "seconds": 5.35968253968254,
+      "peak": 0.5896899104118347,
+      "rms": 0.16962361733468678
+    },
+    {
+      "kind": "voice",
+      "id": "voice/baker_maja/roof_trouble",
+      "source": "recorded",
+      "seconds": 5.224489795918367,
+      "peak": 0.4467538297176361,
+      "rms": 0.07210586390651622
+    },
+    {
+      "kind": "voice",
+      "id": "voice/baker_maja/thanks",
+      "source": "recorded",
+      "seconds": 3.7166439909297053,
+      "peak": 0.5360368490219116,
+      "rms": 0.07604295442096357
+    },
+    {
+      "kind": "voice",
+      "id": "voice/bathkeeper_sofus/evening",
+      "source": "placeholder",
+      "seconds": 2.061269841269841,
+      "peak": 0.591038703918457,
+      "rms": 0.14112409403284487
+    },
+    {
+      "kind": "voice",
+      "id": "voice/bathkeeper_sofus/greet",
+      "source": "placeholder",
+      "seconds": 4.272743764172335,
+      "peak": 0.6286687850952148,
+      "rms": 0.16041863963180708
+    },
+    {
+      "kind": "voice",
+      "id": "voice/bathkeeper_sofus/offer",
+      "source": "placeholder",
+      "seconds": 3.262721088435374,
+      "peak": 0.5951716899871826,
+      "rms": 0.1264421330039796
+    },
+    {
+      "kind": "voice",
+      "id": "voice/bathkeeper_sofus/once",
+      "source": "placeholder",
+      "seconds": 3.5509297052154194,
+      "peak": 0.6395870447158813,
+      "rms": 0.15665446137473332
+    },
+    {
+      "kind": "voice",
+      "id": "voice/bathkeeper_sofus/orange",
+      "source": "placeholder",
+      "seconds": 3.922902494331066,
+      "peak": 0.5665450692176819,
+      "rms": 0.13557508412612349
+    },
+    {
+      "kind": "voice",
+      "id": "voice/bathkeeper_sofus/steam",
+      "source": "placeholder",
+      "seconds": 3.0565532879818593,
+      "peak": 0.6452134847640991,
+      "rms": 0.12537298597369836
+    },
+    {
+      "kind": "voice",
+      "id": "voice/bathkeeper_sofus/tired",
+      "source": "placeholder",
+      "seconds": 3.7429931972789117,
+      "peak": 0.5915823578834534,
+      "rms": 0.14991208247302856
+    },
+    {
+      "kind": "voice",
+      "id": "voice/bathkeeper_sofus/towel",
+      "source": "placeholder",
+      "seconds": 2.4485260770975055,
+      "peak": 0.616041898727417,
+      "rms": 0.1567225973045995
+    },
+    {
+      "kind": "voice",
+      "id": "voice/beekeeper_birk/bees",
+      "source": "placeholder",
+      "seconds": 2.4012244897959185,
+      "peak": 0.5866796374320984,
+      "rms": 0.16130709460320058
+    },
+    {
+      "kind": "voice",
+      "id": "voice/beekeeper_birk/family",
+      "source": "placeholder",
+      "seconds": 2.01578231292517,
+      "peak": 0.6025473475456238,
+      "rms": 0.19745429307622672
+    },
+    {
+      "kind": "voice",
+      "id": "voice/beekeeper_birk/farewell",
+      "source": "placeholder",
+      "seconds": 2.6142403628117914,
+      "peak": 0.5887385606765747,
+      "rms": 0.15051890068867826
+    },
+    {
+      "kind": "voice",
+      "id": "voice/beekeeper_birk/flowers",
+      "source": "placeholder",
+      "seconds": 3.149206349206349,
+      "peak": 0.604151725769043,
+      "rms": 0.16982104900720915
+    },
+    {
+      "kind": "voice",
+      "id": "voice/beekeeper_birk/greet",
+      "source": "placeholder",
+      "seconds": 3.074739229024943,
+      "peak": 0.6278917193412781,
+      "rms": 0.14734409396734974
+    },
+    {
+      "kind": "voice",
+      "id": "voice/beekeeper_birk/honey",
+      "source": "placeholder",
+      "seconds": 3.4466666666666668,
+      "peak": 0.6150160431861877,
+      "rms": 0.15364272162267048
+    },
+    {
+      "kind": "voice",
+      "id": "voice/beekeeper_birk/quiet",
+      "source": "placeholder",
+      "seconds": 3.2468027210884354,
+      "peak": 0.5817124247550964,
+      "rms": 0.15183338401243546
+    },
+    {
+      "kind": "voice",
+      "id": "voice/beekeeper_birk/wings",
+      "source": "placeholder",
+      "seconds": 1.5494784580498866,
+      "peak": 0.5841502547264099,
+      "rms": 0.16255118622822876
+    },
+    {
+      "kind": "voice",
+      "id": "voice/carpenter_brumme/greet",
+      "source": "placeholder",
+      "seconds": 2.963718820861678,
+      "peak": 0.5768343806266785,
+      "rms": 0.12341569448879705
+    },
+    {
+      "kind": "voice",
+      "id": "voice/carpenter_brumme/help",
+      "source": "placeholder",
+      "seconds": 3.3667573696145126,
+      "peak": 0.5658797025680542,
+      "rms": 0.155477652959859
+    },
+    {
+      "kind": "voice",
+      "id": "voice/carpenter_brumme/market",
+      "source": "placeholder",
+      "seconds": 3.1141496598639455,
+      "peak": 0.6232714056968689,
+      "rms": 0.16480875682689602
+    },
+    {
+      "kind": "voice",
+      "id": "voice/carpenter_brumme/rest",
+      "source": "placeholder",
+      "seconds": 2.47859410430839,
+      "peak": 0.6114652156829834,
+      "rms": 0.13678719437205852
+    },
+    {
+      "kind": "voice",
+      "id": "voice/carpenter_brumme/roof",
+      "source": "placeholder",
+      "seconds": 3.8894331065759635,
+      "peak": 0.6049171686172485,
+      "rms": 0.15357606529064344
+    },
+    {
+      "kind": "voice",
+      "id": "voice/carpenter_brumme/slow",
+      "source": "placeholder",
+      "seconds": 2.4829478458049885,
+      "peak": 0.6043132543563843,
+      "rms": 0.1434127726092449
+    },
+    {
+      "kind": "voice",
+      "id": "voice/carpenter_brumme/timber",
+      "source": "placeholder",
+      "seconds": 4.041133786848072,
+      "peak": 0.587526798248291,
+      "rms": 0.137631560344521
+    },
+    {
+      "kind": "voice",
+      "id": "voice/carpenter_brumme/tools",
+      "source": "placeholder",
+      "seconds": 3.7554195011337868,
+      "peak": 0.6200004816055298,
+      "rms": 0.16031323352228138
+    },
+    {
+      "kind": "voice",
+      "id": "voice/cat_morfar_mis/forest",
+      "source": "placeholder",
+      "seconds": 3.2790022675736963,
+      "peak": 0.6049963235855103,
+      "rms": 0.14368813967313357
+    },
+    {
+      "kind": "voice",
+      "id": "voice/cat_morfar_mis/home",
+      "source": "placeholder",
+      "seconds": 1.858049886621315,
+      "peak": 0.6049963235855103,
+      "rms": 0.1360598892374455
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t01_idle",
+      "source": "placeholder",
+      "seconds": 8.624489795918368,
+      "peak": 0.5605884790420532,
+      "rms": 0.13198725944631695
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t01_offer",
+      "source": "placeholder",
+      "seconds": 6.057278911564626,
+      "peak": 0.5832004547119141,
+      "rms": 0.1561545475553858
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t02_building",
+      "source": "placeholder",
+      "seconds": 5.2247619047619045,
+      "peak": 0.5867499709129333,
+      "rms": 0.13722408157659918
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t02_done",
+      "source": "placeholder",
+      "seconds": 6.763809523809524,
+      "peak": 0.6176810264587402,
+      "rms": 0.1373712828629351
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t02_idle",
+      "source": "placeholder",
+      "seconds": 5.559274376417234,
+      "peak": 0.6216681599617004,
+      "rms": 0.15336351338447232
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t02_offer",
+      "source": "placeholder",
+      "seconds": 6.580634920634921,
+      "peak": 0.6363138556480408,
+      "rms": 0.14225750792566477
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t03_building",
+      "source": "placeholder",
+      "seconds": 4.783673469387755,
+      "peak": 0.6221117973327637,
+      "rms": 0.12746656403328696
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t03_done",
+      "source": "placeholder",
+      "seconds": 6.658866213151928,
+      "peak": 0.6267333626747131,
+      "rms": 0.14243269897640146
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t03_idle",
+      "source": "placeholder",
+      "seconds": 6.060408163265306,
+      "peak": 0.6175949573516846,
+      "rms": 0.14874218869117445
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t03_offer",
+      "source": "placeholder",
+      "seconds": 7.952879818594104,
+      "peak": 0.6288304924964905,
+      "rms": 0.15449101321512657
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t04_building",
+      "source": "placeholder",
+      "seconds": 5.504988662131519,
+      "peak": 0.6432678699493408,
+      "rms": 0.14079509472360946
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t04_done",
+      "source": "placeholder",
+      "seconds": 6.539319727891156,
+      "peak": 0.5837158560752869,
+      "rms": 0.15281321664771993
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t04_idle",
+      "source": "placeholder",
+      "seconds": 5.074421768707483,
+      "peak": 0.5898351669311523,
+      "rms": 0.14629828677381576
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t04_offer",
+      "source": "placeholder",
+      "seconds": 7.356190476190476,
+      "peak": 0.6246930360794067,
+      "rms": 0.13625906335152346
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t05_building",
+      "source": "placeholder",
+      "seconds": 4.784580498866213,
+      "peak": 0.5941115617752075,
+      "rms": 0.13446110690388416
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t05_done",
+      "source": "placeholder",
+      "seconds": 7.528934240362812,
+      "peak": 0.6543022394180298,
+      "rms": 0.139582292204516
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t05_idle",
+      "source": "placeholder",
+      "seconds": 6.267120181405896,
+      "peak": 0.5882249474525452,
+      "rms": 0.13950850767847342
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t05_offer",
+      "source": "placeholder",
+      "seconds": 7.348299319727891,
+      "peak": 0.6383492946624756,
+      "rms": 0.1449330262393668
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t06_building",
+      "source": "placeholder",
+      "seconds": 6.401587301587302,
+      "peak": 0.6435343623161316,
+      "rms": 0.14256040360696845
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t06_done",
+      "source": "placeholder",
+      "seconds": 7.123945578231292,
+      "peak": 0.6089848875999451,
+      "rms": 0.14368580877816853
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t06_idle",
+      "source": "placeholder",
+      "seconds": 5.442358276643991,
+      "peak": 0.6295806169509888,
+      "rms": 0.14398191103940414
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t06_offer",
+      "source": "placeholder",
+      "seconds": 6.931337868480726,
+      "peak": 0.7036912441253662,
+      "rms": 0.14787134259318133
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t07_building",
+      "source": "placeholder",
+      "seconds": 5.186077097505669,
+      "peak": 0.6296395659446716,
+      "rms": 0.1464989642836733
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t07_done",
+      "source": "placeholder",
+      "seconds": 7.496598639455782,
+      "peak": 0.6096493601799011,
+      "rms": 0.14667901179556533
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t07_idle",
+      "source": "placeholder",
+      "seconds": 5.1578231292517005,
+      "peak": 0.567313015460968,
+      "rms": 0.1379727542007694
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t07_offer",
+      "source": "placeholder",
+      "seconds": 7.282675736961451,
+      "peak": 0.6176859140396118,
+      "rms": 0.14875518343320965
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t08_building",
+      "source": "placeholder",
+      "seconds": 4.596689342403628,
+      "peak": 0.6068984866142273,
+      "rms": 0.15918005031565996
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t08_done",
+      "source": "placeholder",
+      "seconds": 7.69156462585034,
+      "peak": 0.6265386343002319,
+      "rms": 0.1433749335436423
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t08_idle",
+      "source": "placeholder",
+      "seconds": 4.632743764172336,
+      "peak": 0.5693586468696594,
+      "rms": 0.135364288053753
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t08_offer",
+      "source": "placeholder",
+      "seconds": 6.430430839002268,
+      "peak": 0.6327096223831177,
+      "rms": 0.15948868435493024
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t09_building",
+      "source": "placeholder",
+      "seconds": 5.446213151927438,
+      "peak": 0.5985156297683716,
+      "rms": 0.15440239695623914
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t09_done",
+      "source": "placeholder",
+      "seconds": 8.213469387755103,
+      "peak": 0.6260972023010254,
+      "rms": 0.14237947740950074
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t09_idle",
+      "source": "placeholder",
+      "seconds": 5.4478004535147395,
+      "peak": 0.5963712930679321,
+      "rms": 0.13525000936170536
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t09_offer",
+      "source": "placeholder",
+      "seconds": 6.767074829931973,
+      "peak": 0.627345860004425,
+      "rms": 0.13809446265548594
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t10_building",
+      "source": "placeholder",
+      "seconds": 6.019546485260771,
+      "peak": 0.6102705597877502,
+      "rms": 0.14210869040933108
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t10_done",
+      "source": "placeholder",
+      "seconds": 8.3259410430839,
+      "peak": 0.6701640486717224,
+      "rms": 0.15013788100679235
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_builder/t10_idle",
+      "source": "placeholder",
+      "seconds": 5.757913832199547,
+      "peak": 0.595542311668396,
+      "rms": 0.15080479207761574
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_furnisher/greet",
+      "source": "placeholder",
+      "seconds": 6.36,
+      "peak": 0.5802428126335144,
+      "rms": 0.14897446875194062
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_king/greet",
+      "source": "placeholder",
+      "seconds": 2.2456235827664397,
+      "peak": 0.5785039067268372,
+      "rms": 0.1687888126531411
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_king/letter",
+      "source": "placeholder",
+      "seconds": 11.377052154195011,
+      "peak": 0.6043179035186768,
+      "rms": 0.15421564397469484
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_king/moon_offer",
+      "source": "placeholder",
+      "seconds": 6.868888888888889,
+      "peak": 0.6083293557167053,
+      "rms": 0.1633037496081105
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_king/moon_remind",
+      "source": "placeholder",
+      "seconds": 4.056734693877551,
+      "peak": 0.558901309967041,
+      "rms": 0.1716176938405668
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_king/slot_offer",
+      "source": "placeholder",
+      "seconds": 7.333560090702948,
+      "peak": 0.5839367508888245,
+      "rms": 0.1470169941796843
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_king/slot_remind",
+      "source": "placeholder",
+      "seconds": 5.512018140589569,
+      "peak": 0.6215975284576416,
+      "rms": 0.135747079456026
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_lily/greet",
+      "source": "recorded",
+      "seconds": 2.3248979591836734,
+      "peak": 0.7596244812011719,
+      "rms": 0.06207229763054499
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_tailor/greet",
+      "source": "placeholder",
+      "seconds": 6.175419501133787,
+      "peak": 0.565300703048706,
+      "rms": 0.1426462890893847
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_wizard/bogtrae_offer",
+      "source": "placeholder",
+      "seconds": 5.345034013605442,
+      "peak": 0.6168148517608643,
+      "rms": 0.14998945921659101
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_wizard/bogtrae_remind",
+      "source": "placeholder",
+      "seconds": 4.210113378684807,
+      "peak": 0.5976486802101135,
+      "rms": 0.12690376951854887
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_wizard/greet",
+      "source": "placeholder",
+      "seconds": 3.3892517006802723,
+      "peak": 0.5827960968017578,
+      "rms": 0.14890799876610883
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_wizard/math_done",
+      "source": "placeholder",
+      "seconds": 3.0369160997732427,
+      "peak": 0.6243920922279358,
+      "rms": 0.149812826172729
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_wizard/math_intro",
+      "source": "placeholder",
+      "seconds": 5.766621315192744,
+      "peak": 0.5777122378349304,
+      "rms": 0.14284971651377
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_wizard/math_q1",
+      "source": "placeholder",
+      "seconds": 2.745079365079365,
+      "peak": 0.5722165107727051,
+      "rms": 0.13704462620506383
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_wizard/math_q2",
+      "source": "placeholder",
+      "seconds": 2.3422222222222224,
+      "peak": 0.573587954044342,
+      "rms": 0.1699994768120449
+    },
+    {
+      "kind": "voice",
+      "id": "voice/fairy_wizard/math_q3",
+      "source": "placeholder",
+      "seconds": 2.747074829931973,
+      "peak": 0.5694659352302551,
+      "rms": 0.15089611567446096
+    },
+    {
+      "kind": "voice",
+      "id": "voice/farmer_rosa/animal_talk",
+      "source": "placeholder",
+      "seconds": 2.501859410430839,
+      "peak": 0.5972385406494141,
+      "rms": 0.17501833480964582
+    },
+    {
+      "kind": "voice",
+      "id": "voice/farmer_rosa/greet",
+      "source": "placeholder",
+      "seconds": 2.5816780045351475,
+      "peak": 0.5897976160049438,
+      "rms": 0.17600208138470197
+    },
+    {
+      "kind": "voice",
+      "id": "voice/gardener_hoppe/greet",
+      "source": "placeholder",
+      "seconds": 3.154920634920635,
+      "peak": 0.6040340065956116,
+      "rms": 0.16599123265308127
+    },
+    {
+      "kind": "voice",
+      "id": "voice/gardener_hoppe/klart",
+      "source": "placeholder",
+      "seconds": 3.091473922902494,
+      "peak": 0.6456876397132874,
+      "rms": 0.16207368244844528
+    },
+    {
+      "kind": "voice",
+      "id": "voice/gardener_hoppe/once",
+      "source": "placeholder",
+      "seconds": 2.7934693877551022,
+      "peak": 0.5723856687545776,
+      "rms": 0.16240579425279297
+    },
+    {
+      "kind": "voice",
+      "id": "voice/gardener_hoppe/regn",
+      "source": "placeholder",
+      "seconds": 2.831791383219955,
+      "peak": 0.6103854775428772,
+      "rms": 0.1388718057775829
+    },
+    {
+      "kind": "voice",
+      "id": "voice/gardener_hoppe/sne",
+      "source": "placeholder",
+      "seconds": 3.006938775510204,
+      "peak": 0.5976566672325134,
+      "rms": 0.1602848267208987
+    },
+    {
+      "kind": "voice",
+      "id": "voice/gardener_hoppe/sprouts",
+      "source": "placeholder",
+      "seconds": 2.5182766439909297,
+      "peak": 0.589018702507019,
+      "rms": 0.16556703760922115
+    },
+    {
+      "kind": "voice",
+      "id": "voice/gardener_hoppe/swap_done",
+      "source": "placeholder",
+      "seconds": 4.117959183673469,
+      "peak": 0.6391116976737976,
+      "rms": 0.1587276697305917
+    },
+    {
+      "kind": "voice",
+      "id": "voice/gardener_hoppe/swap_offer",
+      "source": "placeholder",
+      "seconds": 2.435238095238095,
+      "peak": 0.5618922710418701,
+      "rms": 0.16509606116154332
+    },
+    {
+      "kind": "voice",
+      "id": "voice/gardener_hoppe/taage",
+      "source": "placeholder",
+      "seconds": 3.9115192743764173,
+      "peak": 0.5777113437652588,
+      "rms": 0.16325634581651957
+    },
+    {
+      "kind": "voice",
+      "id": "voice/gardener_hoppe/torden",
+      "source": "placeholder",
+      "seconds": 2.928843537414966,
+      "peak": 0.5877528786659241,
+      "rms": 0.15021626307257233
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_blund/bed",
+      "source": "placeholder",
+      "seconds": 6.611972789115646,
+      "peak": 0.6445075869560242,
+      "rms": 0.1470090592320204
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_blund/dawn",
+      "source": "placeholder",
+      "seconds": 5.399047619047619,
+      "peak": 0.6345517635345459,
+      "rms": 0.14185120858824532
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_blund/family",
+      "source": "placeholder",
+      "seconds": 5.82281179138322,
+      "peak": 0.6326338052749634,
+      "rms": 0.15998970382430525
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_blund/greet",
+      "source": "placeholder",
+      "seconds": 5.1204081632653065,
+      "peak": 0.607964038848877,
+      "rms": 0.14160432773874768
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_blund/kin1",
+      "source": "placeholder",
+      "seconds": 6.443854875283447,
+      "peak": 0.6077967286109924,
+      "rms": 0.15697548312611892
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_blund/kin2",
+      "source": "placeholder",
+      "seconds": 7.924716553287982,
+      "peak": 0.6173709630966187,
+      "rms": 0.1568232542110538
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_blund/kin3",
+      "source": "placeholder",
+      "seconds": 6.9681179138322,
+      "peak": 0.6252768635749817,
+      "rms": 0.15632788323890903
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_blund/kin_greet",
+      "source": "placeholder",
+      "seconds": 5.232199546485261,
+      "peak": 0.6703578233718872,
+      "rms": 0.14959094667269907
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_blund/kin_look_bu",
+      "source": "placeholder",
+      "seconds": 6.49718820861678,
+      "peak": 0.5819554924964905,
+      "rms": 0.17067477548986026
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_blund/kin_look_hviske",
+      "source": "placeholder",
+      "seconds": 4.901133786848073,
+      "peak": 0.6113314032554626,
+      "rms": 0.16259492290606967
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_blund/sleep",
+      "source": "placeholder",
+      "seconds": 4.214467120181406,
+      "peak": 0.6049526929855347,
+      "rms": 0.14647523521898495
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/dawn",
+      "source": "placeholder",
+      "seconds": 7.753424036281179,
+      "peak": 0.6164195537567139,
+      "rms": 0.14982591962307418
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/greet",
+      "source": "placeholder",
+      "seconds": 8.760680272108843,
+      "peak": 0.6290252804756165,
+      "rms": 0.1344361337446468
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/kin1",
+      "source": "placeholder",
+      "seconds": 7.750657596371882,
+      "peak": 0.6277424693107605,
+      "rms": 0.14674408397931202
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/kin2",
+      "source": "placeholder",
+      "seconds": 9.673968253968255,
+      "peak": 0.6439947485923767,
+      "rms": 0.15130746761189842
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/kin3",
+      "source": "placeholder",
+      "seconds": 10.536507936507936,
+      "peak": 0.6191751956939697,
+      "rms": 0.14174556295255294
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/kin4",
+      "source": "placeholder",
+      "seconds": 9.721814058956916,
+      "peak": 0.6375329494476318,
+      "rms": 0.15477506981399097
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/kin5",
+      "source": "placeholder",
+      "seconds": 8.367074829931973,
+      "peak": 0.6151434779167175,
+      "rms": 0.14369253579332136
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/kin_dawn",
+      "source": "placeholder",
+      "seconds": 8.492879818594105,
+      "peak": 0.6170615553855896,
+      "rms": 0.14540408001097663
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/kin_greet",
+      "source": "placeholder",
+      "seconds": 7.476190476190476,
+      "peak": 0.6037567257881165,
+      "rms": 0.14710025559719522
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/kin_look_bu",
+      "source": "placeholder",
+      "seconds": 7.549251700680272,
+      "peak": 0.6050775051116943,
+      "rms": 0.15202249567115705
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/kin_look_hviske",
+      "source": "placeholder",
+      "seconds": 5.320045351473923,
+      "peak": 0.5804196000099182,
+      "rms": 0.15383901656477283
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/midnight_0",
+      "source": "placeholder",
+      "seconds": 14.132244897959184,
+      "peak": 0.5831067562103271,
+      "rms": 0.1478533149591112
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/midnight_1",
+      "source": "placeholder",
+      "seconds": 14.838458049886622,
+      "peak": 0.6021824479103088,
+      "rms": 0.14457956881907288
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/midnight_2",
+      "source": "placeholder",
+      "seconds": 13.881995464852608,
+      "peak": 0.5867330431938171,
+      "rms": 0.14438379130812448
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/midnight_3",
+      "source": "placeholder",
+      "seconds": 11.057414965986395,
+      "peak": 0.667823076248169,
+      "rms": 0.14975410034052555
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/midnight_4",
+      "source": "placeholder",
+      "seconds": 12.98312925170068,
+      "peak": 0.6013165712356567,
+      "rms": 0.14444144532208597
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/midnight_5",
+      "source": "placeholder",
+      "seconds": 11.969251700680273,
+      "peak": 0.6039742231369019,
+      "rms": 0.1512163725301035
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/midnight_6",
+      "source": "placeholder",
+      "seconds": 12.74326530612245,
+      "peak": 0.5840817093849182,
+      "rms": 0.14816518221476593
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_dyne/night",
+      "source": "placeholder",
+      "seconds": 6.364444444444445,
+      "peak": 0.6044243574142456,
+      "rms": 0.141226045300452
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_gnist/closed",
+      "source": "placeholder",
+      "seconds": 4.899410430839002,
+      "peak": 0.6188828349113464,
+      "rms": 0.15359128180410853
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_gnist/closed_night",
+      "source": "placeholder",
+      "seconds": 5.129795918367347,
+      "peak": 0.6211968660354614,
+      "rms": 0.15595669132641127
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_gnist/early",
+      "source": "placeholder",
+      "seconds": 7.388888888888889,
+      "peak": 0.6371198892593384,
+      "rms": 0.15037473408853125
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_gnist/greet",
+      "source": "placeholder",
+      "seconds": 5.3185487528344675,
+      "peak": 0.6384211778640747,
+      "rms": 0.15131306647427145
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_gnist/kin1",
+      "source": "placeholder",
+      "seconds": 8.915510204081633,
+      "peak": 0.6429331302642822,
+      "rms": 0.1486602393190668
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_gnist/kin2",
+      "source": "placeholder",
+      "seconds": 8.70108843537415,
+      "peak": 0.6090818047523499,
+      "rms": 0.14306442923606547
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_gnist/kin_greet",
+      "source": "placeholder",
+      "seconds": 3.955328798185941,
+      "peak": 0.586380124092102,
+      "rms": 0.15413040900361757
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_silke/dawn",
+      "source": "placeholder",
+      "seconds": 5.4491156462585035,
+      "peak": 0.6020708680152893,
+      "rms": 0.14521906063612736
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_silke/greet",
+      "source": "placeholder",
+      "seconds": 4.108526077097506,
+      "peak": 0.5758973956108093,
+      "rms": 0.154132339683303
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_silke/kin1",
+      "source": "placeholder",
+      "seconds": 8.443673469387756,
+      "peak": 0.584525465965271,
+      "rms": 0.15223702821966986
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_silke/kin2",
+      "source": "placeholder",
+      "seconds": 6.780589569160997,
+      "peak": 0.5860031843185425,
+      "rms": 0.15294416344934847
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_silke/kin_greet",
+      "source": "placeholder",
+      "seconds": 5.3053968253968256,
+      "peak": 0.6514938473701477,
+      "rms": 0.1327381158800255
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_silke/late",
+      "source": "placeholder",
+      "seconds": 4.1,
+      "peak": 0.5966068506240845,
+      "rms": 0.13879752445010782
+    },
+    {
+      "kind": "voice",
+      "id": "voice/ghostfam_silke/late2",
+      "source": "placeholder",
+      "seconds": 6.0056235827664395,
+      "peak": 0.6101308465003967,
+      "rms": 0.14554555325074922
+    },
+    {
+      "kind": "voice",
+      "id": "voice/guard_oak/bossernes_vej_offer",
+      "source": "placeholder",
+      "seconds": 3.345260770975057,
+      "peak": 0.6531639695167542,
+      "rms": 0.14423070661756382
+    },
+    {
+      "kind": "voice",
+      "id": "voice/guard_oak/greet",
+      "source": "placeholder",
+      "seconds": 3.559092970521542,
+      "peak": 0.6349705457687378,
+      "rms": 0.13190863597679395
+    },
+    {
+      "kind": "voice",
+      "id": "voice/guard_oak/lift",
+      "source": "placeholder",
+      "seconds": 3.5848979591836736,
+      "peak": 0.6360029578208923,
+      "rms": 0.1527657187451132
+    },
+    {
+      "kind": "voice",
+      "id": "voice/guard_oak/skovlift_intro_offer",
+      "source": "placeholder",
+      "seconds": 4.201224489795918,
+      "peak": 0.6142898797988892,
+      "rms": 0.1511021858874117
+    },
+    {
+      "kind": "voice",
+      "id": "voice/guard_oak/snurre_offer",
+      "source": "placeholder",
+      "seconds": 5.260226757369614,
+      "peak": 0.6045598387718201,
+      "rms": 0.15267742978982915
+    },
+    {
+      "kind": "voice",
+      "id": "voice/guard_oak/snurre_remind",
+      "source": "placeholder",
+      "seconds": 3.6730612244897958,
+      "peak": 0.5514710545539856,
+      "rms": 0.1558686314749087
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mapseller_natteblik/ears",
+      "source": "placeholder",
+      "seconds": 2.6698412698412697,
+      "peak": 0.641181468963623,
+      "rms": 0.1677761219580663
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mapseller_natteblik/farewell",
+      "source": "placeholder",
+      "seconds": 2.2397278911564626,
+      "peak": 0.6150120496749878,
+      "rms": 0.17347089699425022
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mapseller_natteblik/greet",
+      "source": "placeholder",
+      "seconds": 2.5643990929705214,
+      "peak": 0.6330671310424805,
+      "rms": 0.14760616270080262
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mapseller_natteblik/lantern",
+      "source": "placeholder",
+      "seconds": 3.2872562358276642,
+      "peak": 0.5796741247177124,
+      "rms": 0.14099860504798986
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mapseller_natteblik/maps",
+      "source": "placeholder",
+      "seconds": 2.5480725623582767,
+      "peak": 0.6043040156364441,
+      "rms": 0.1500359650250332
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mapseller_natteblik/night",
+      "source": "placeholder",
+      "seconds": 3.0605442176870747,
+      "peak": 0.6175808310508728,
+      "rms": 0.14738670088007427
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mapseller_natteblik/no_maps",
+      "source": "placeholder",
+      "seconds": 3.250566893424036,
+      "peak": 0.5907073616981506,
+      "rms": 0.15928518584931986
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mapseller_natteblik/roots",
+      "source": "placeholder",
+      "seconds": 3.0648072562358277,
+      "peak": 0.5986844897270203,
+      "rms": 0.15680337200268554
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mayor_lyra/farm_status",
+      "source": "recorded",
+      "seconds": 4.25795918367347,
+      "peak": 0.42281806468963623,
+      "rms": 0.03743908981998868
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mayor_lyra/greet_1",
+      "source": "placeholder",
+      "seconds": 3.485668934240363,
+      "peak": 0.6297352910041809,
+      "rms": 0.15796870573498203
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mayor_lyra/greet_2",
+      "source": "recorded",
+      "seconds": 4.153469387755102,
+      "peak": 0.3103007674217224,
+      "rms": 0.04039289949916512
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mayor_lyra/hello",
+      "source": "recorded",
+      "seconds": 2.0375510204081633,
+      "peak": 0.26592710614204407,
+      "rms": 0.030061782882983792
+    },
+    {
+      "kind": "voice",
+      "id": "voice/mayor_lyra/lottery",
+      "source": "recorded",
+      "seconds": 5.800634920634921,
+      "peak": 0.20048297941684723,
+      "rms": 0.026454663449510182
+    },
+    {
+      "kind": "voice",
+      "id": "voice/penguin_postman/hello",
+      "source": "placeholder",
+      "seconds": 2.2980045351473923,
+      "peak": 0.5700676441192627,
+      "rms": 0.14757735897198362
+    },
+    {
+      "kind": "voice",
+      "id": "voice/pip/greet",
+      "source": "placeholder",
+      "seconds": 2.985578231292517,
+      "peak": 0.5955357551574707,
+      "rms": 0.15645721623611847
+    },
+    {
+      "kind": "voice",
+      "id": "voice/pippin_boegeknop/cat_offer",
+      "source": "placeholder",
+      "seconds": 3.617641723356009,
+      "peak": 0.5932207703590393,
+      "rms": 0.1560170698730415
+    },
+    {
+      "kind": "voice",
+      "id": "voice/pippin_boegeknop/cat_remind",
+      "source": "placeholder",
+      "seconds": 3.155736961451247,
+      "peak": 0.6181356310844421,
+      "rms": 0.14713116942310997
+    },
+    {
+      "kind": "voice",
+      "id": "voice/pippin_boegeknop/hello",
+      "source": "placeholder",
+      "seconds": 1.6990476190476191,
+      "peak": 0.5926743745803833,
+      "rms": 0.14513892844928442
+    },
+    {
+      "kind": "voice",
+      "id": "voice/postman_pip/bag",
+      "source": "placeholder",
+      "seconds": 2.0565079365079364,
+      "peak": 0.5577725768089294,
+      "rms": 0.15058549058472498
+    },
+    {
+      "kind": "voice",
+      "id": "voice/postman_pip/greet",
+      "source": "placeholder",
+      "seconds": 4.032562358276644,
+      "peak": 0.6324278116226196,
+      "rms": 0.15232278775506003
+    },
+    {
+      "kind": "voice",
+      "id": "voice/postman_pip/mail",
+      "source": "placeholder",
+      "seconds": 2.2648979591836733,
+      "peak": 0.5897543430328369,
+      "rms": 0.14329753199964781
+    },
+    {
+      "kind": "voice",
+      "id": "voice/postman_pip/offer",
+      "source": "placeholder",
+      "seconds": 3.7389115646258504,
+      "peak": 0.664143979549408,
+      "rms": 0.14858206277167663
+    },
+    {
+      "kind": "voice",
+      "id": "voice/postman_pip/remind",
+      "source": "placeholder",
+      "seconds": 3.440090702947846,
+      "peak": 0.6008814573287964,
+      "rms": 0.15935105981275238
+    },
+    {
+      "kind": "voice",
+      "id": "voice/postman_pip/rest",
+      "source": "placeholder",
+      "seconds": 2.9693877551020407,
+      "peak": 0.5597530603408813,
+      "rms": 0.14479856462190283
+    },
+    {
+      "kind": "voice",
+      "id": "voice/postman_pip/round",
+      "source": "placeholder",
+      "seconds": 1.866439909297052,
+      "peak": 0.5804123282432556,
+      "rms": 0.17102614887918932
+    },
+    {
+      "kind": "voice",
+      "id": "voice/postman_pip/thanks",
+      "source": "placeholder",
+      "seconds": 3.565714285714286,
+      "peak": 0.5704832077026367,
+      "rms": 0.17485020838375814
+    },
+    {
+      "kind": "voice",
+      "id": "voice/smith_thorin/greet",
+      "source": "recorded",
+      "seconds": 2.813968253968254,
+      "peak": 0.4071387052536011,
+      "rms": 0.0387746255083906
+    },
+    {
+      "kind": "voice",
+      "id": "voice/smith_thorin/mining_talk",
+      "source": "recorded",
+      "seconds": 5.459591836734694,
+      "peak": 0.2824070453643799,
+      "rms": 0.03538882072735829
+    }
+  ]
+}

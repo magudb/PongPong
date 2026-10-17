@@ -1,0 +1,579 @@
+{
+  "status": "synthesized placeholder",
+  "recipes": {
+    "step_grass_1": {
+      "version": 2,
+      "seed": 5957494433790304545,
+      "kind": "sfx"
+    },
+    "step_grass_2": {
+      "version": 2,
+      "seed": 14965940201759576872,
+      "kind": "sfx"
+    },
+    "step_grass_3": {
+      "version": 2,
+      "seed": 7312405102015499743,
+      "kind": "sfx"
+    },
+    "step_dirt_1": {
+      "version": 2,
+      "seed": 6201752578182147996,
+      "kind": "sfx"
+    },
+    "step_dirt_2": {
+      "version": 2,
+      "seed": 12680776207670120891,
+      "kind": "sfx"
+    },
+    "step_dirt_3": {
+      "version": 2,
+      "seed": 17165113878994310727,
+      "kind": "sfx"
+    },
+    "step_wood_1": {
+      "version": 2,
+      "seed": 7301171211248449899,
+      "kind": "sfx"
+    },
+    "step_wood_2": {
+      "version": 2,
+      "seed": 3926882330684298352,
+      "kind": "sfx"
+    },
+    "step_wood_3": {
+      "version": 2,
+      "seed": 5620460217674300296,
+      "kind": "sfx"
+    },
+    "step_stone_1": {
+      "version": 2,
+      "seed": 7068555483620955882,
+      "kind": "sfx"
+    },
+    "step_stone_2": {
+      "version": 2,
+      "seed": 15736934299032089368,
+      "kind": "sfx"
+    },
+    "step_stone_3": {
+      "version": 2,
+      "seed": 16782320066340475203,
+      "kind": "sfx"
+    },
+    "step_rope_1": {
+      "version": 2,
+      "seed": 4385244320614595882,
+      "kind": "sfx"
+    },
+    "step_rope_2": {
+      "version": 2,
+      "seed": 8270320512563782640,
+      "kind": "sfx"
+    },
+    "shop_bell": {
+      "version": 2,
+      "seed": 15801794074988790074,
+      "kind": "sfx"
+    },
+    "door_open_wood": {
+      "version": 2,
+      "seed": 3262185325587829730,
+      "kind": "sfx"
+    },
+    "door_locked_knock": {
+      "version": 2,
+      "seed": 6331200493546192959,
+      "kind": "sfx"
+    },
+    "coin_clink": {
+      "version": 2,
+      "seed": 494052410087363326,
+      "kind": "sfx"
+    },
+    "heart_up": {
+      "version": 2,
+      "seed": 16666615163038360595,
+      "kind": "sfx"
+    },
+    "gift_sparkle": {
+      "version": 2,
+      "seed": 16568986264159240157,
+      "kind": "sfx"
+    },
+    "letter_rustle": {
+      "version": 2,
+      "seed": 3564897385692428797,
+      "kind": "sfx"
+    },
+    "page_turn": {
+      "version": 2,
+      "seed": 10536373468513904251,
+      "kind": "sfx"
+    },
+    "bath_splash": {
+      "version": 2,
+      "seed": 14959564500074199697,
+      "kind": "sfx"
+    },
+    "town_bell": {
+      "version": 2,
+      "seed": 13722074084204946563,
+      "kind": "sfx"
+    },
+    "festival_horn": {
+      "version": 2,
+      "seed": 5228504544423129064,
+      "kind": "sfx"
+    },
+    "closing_bell": {
+      "version": 2,
+      "seed": 6660205322099528377,
+      "kind": "sfx"
+    },
+    "bin_bell": {
+      "version": 2,
+      "seed": 17558650295049783029,
+      "kind": "sfx"
+    },
+    "stage_up": {
+      "version": 2,
+      "seed": 15994194356493132725,
+      "kind": "sfx"
+    },
+    "pickup_soft": {
+      "version": 2,
+      "seed": 9888228715720454191,
+      "kind": "sfx"
+    },
+    "loot_rare": {
+      "version": 2,
+      "seed": 15770204644576983833,
+      "kind": "sfx"
+    },
+    "loot_unique": {
+      "version": 2,
+      "seed": 14338314741618956679,
+      "kind": "sfx"
+    },
+    "loot_legendary": {
+      "version": 2,
+      "seed": 16198589557101105662,
+      "kind": "sfx"
+    },
+    "chest_open": {
+      "version": 2,
+      "seed": 12147454649330891997,
+      "kind": "sfx"
+    },
+    "rune_activate": {
+      "version": 2,
+      "seed": 1568531081152223905,
+      "kind": "sfx"
+    },
+    "hulen_descend": {
+      "version": 2,
+      "seed": 15030584033587934578,
+      "kind": "sfx"
+    },
+    "telegraph_tick": {
+      "version": 2,
+      "seed": 13396264876329854113,
+      "kind": "sfx"
+    },
+    "enemy_notice": {
+      "version": 2,
+      "seed": 193369899209917373,
+      "kind": "sfx"
+    },
+    "hit_soft": {
+      "version": 2,
+      "seed": 5776243106104301669,
+      "kind": "sfx"
+    },
+    "hurt_soft": {
+      "version": 2,
+      "seed": 15015890801731990011,
+      "kind": "sfx"
+    },
+    "bush_rustle": {
+      "version": 2,
+      "seed": 17901482828479954992,
+      "kind": "sfx"
+    },
+    "lantern_low": {
+      "version": 2,
+      "seed": 7426937248969828104,
+      "kind": "sfx"
+    },
+    "appraisal_reveal": {
+      "version": 2,
+      "seed": 8063659362873072074,
+      "kind": "sfx"
+    },
+    "gem_set": {
+      "version": 2,
+      "seed": 9373621087490696317,
+      "kind": "sfx"
+    },
+    "weapon_equip": {
+      "version": 2,
+      "seed": 5329733373074291934,
+      "kind": "sfx"
+    }
+  },
+  "files": {
+    "appraisal_reveal": {
+      "sha256": "2a5eafda206d06b53c53b311f94ac3aecfa7bcf6ca8bf6bba39703a641238b2e",
+      "seconds": 0.8,
+      "bytes": 5243,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "f46f3e8a72c980c19188c277bf88eb1d8342030c2d47dda6f098edc9707e47c0"
+    },
+    "bath_splash": {
+      "sha256": "bba2728e3575859830ce33b18b0608b5b4766a67e4960242da7de1220e055b65",
+      "seconds": 0.8,
+      "bytes": 6823,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "e429234fd732a9da36e970928084cca51a51bdef156af685509125df6c755171"
+    },
+    "bin_bell": {
+      "sha256": "65ab3872a64315ac79b0b1c5d7d256e9ab07ae16a7f0ab3280afdd65e3ef4c7f",
+      "seconds": 0.8,
+      "bytes": 5255,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "ad4e713edcd38efb98d4fa19007708fb11f6abf9abe541498f726c312c610036"
+    },
+    "bush_rustle": {
+      "sha256": "ad4b4af121e33d66fb6e9222532efaeeba0a2cbb19317b65b4f42cef35cac480",
+      "seconds": 0.8,
+      "bytes": 6861,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "28342bc3e9e6492b7da5b86ec681629a54d1a90b586744a20f88dfef6429bd54"
+    },
+    "chest_open": {
+      "sha256": "b099495c2e42afa8ce04dd301409dba8291939fa2b77ad6dece63fc8037e9af5",
+      "seconds": 0.8,
+      "bytes": 6844,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "4b4f4bfa22772639168a880b606e93b14a3dfd18be6c8f6ae35d08577cd13766"
+    },
+    "closing_bell": {
+      "sha256": "a6636c6a36ec0267c360d960f2087dc20c083a84437ba27b42cfee6259d7b73c",
+      "seconds": 0.8,
+      "bytes": 5278,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "07838ec36779b2ddc827ac204b770b29c5fd19b33f0aee48f5b5b2f2ee6fce5e"
+    },
+    "coin_clink": {
+      "sha256": "3ebef52af691206441bd43c46bf34089e79f04bdb70b0efbcc4b5333e41ba2d1",
+      "seconds": 0.8,
+      "bytes": 5177,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "d511cba90b2d29102d61aa822586466f81b3602659ce38f3d6d3ba698388eef1"
+    },
+    "door_locked_knock": {
+      "sha256": "8f63b9394ba6a47311d7987c8bf6a96838b9cb5b995690e2458650330f43090f",
+      "seconds": 0.8,
+      "bytes": 6838,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "057c46344a6f9d9e08b2efb0fdd4b065b6013937f534cee646fc97916bca89f9"
+    },
+    "door_open_wood": {
+      "sha256": "f07426eaaffb0b0b8c83860ead606f9bab21d4a4bf286cc2a384a4638d78b6c9",
+      "seconds": 0.8,
+      "bytes": 6853,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "3c3177a705766de50f9cabdfeadf3dd7d0d1186ab773065891f009786b4a3a94"
+    },
+    "enemy_notice": {
+      "sha256": "9894e8293fad18102c6e939556f032a9e178909f453708b90c45a3e982f37178",
+      "seconds": 0.8,
+      "bytes": 5255,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "ad4e713edcd38efb98d4fa19007708fb11f6abf9abe541498f726c312c610036"
+    },
+    "festival_horn": {
+      "sha256": "0f2943e13182372a3606f7d8d664f64cddbba114c5c850b4c65686381cdcbd5d",
+      "seconds": 0.8,
+      "bytes": 5258,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "2e6e29aaf4463b7b21fc26cb7f93ccb95b28632cc0efe8e7210f6b53b60430e1"
+    },
+    "gem_set": {
+      "sha256": "fa5dbe700b62f0373f114bd75e538711bd4e642641502712a0edac403fd8f686",
+      "seconds": 0.8,
+      "bytes": 5278,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "07838ec36779b2ddc827ac204b770b29c5fd19b33f0aee48f5b5b2f2ee6fce5e"
+    },
+    "gift_sparkle": {
+      "sha256": "ecfea17e930786c8375249c765815e262a978362dd2be36021f6c2c101d47314",
+      "seconds": 0.8,
+      "bytes": 5255,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "ad4e713edcd38efb98d4fa19007708fb11f6abf9abe541498f726c312c610036"
+    },
+    "heart_up": {
+      "sha256": "5e45a9b5526f54135e6fe181a82431757eb2115574e33c3f16f7643f0489b11c",
+      "seconds": 0.8,
+      "bytes": 5047,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "6970305f8b592b438f03bd13938762cd72fda577d031f9fce55a3d0ede390a14"
+    },
+    "hit_soft": {
+      "sha256": "e5747ca3ccb36fbf6ae3b338c97e5c584e7657b997ef91bbf5121d5e9ea562b2",
+      "seconds": 0.8,
+      "bytes": 5255,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "ad4e713edcd38efb98d4fa19007708fb11f6abf9abe541498f726c312c610036"
+    },
+    "hulen_descend": {
+      "sha256": "7a91eeb7ee61951966b0f0611cba72dd4683c1bb34ea9190e5452ead80665b5e",
+      "seconds": 0.8,
+      "bytes": 5177,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "d511cba90b2d29102d61aa822586466f81b3602659ce38f3d6d3ba698388eef1"
+    },
+    "hurt_soft": {
+      "sha256": "9bf8913f89a0228afd43d5079af2baea12747df7c120ef4f0469413142816b28",
+      "seconds": 0.8,
+      "bytes": 6877,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "140e750bf7ec9a32667d641028e1703b6e948565e99f779c938431257ad0a6c1"
+    },
+    "lantern_low": {
+      "sha256": "647b65d5e721a1b446d51bd9028c1a95d6e04465dec8c14a597552abca096c9c",
+      "seconds": 0.8,
+      "bytes": 5103,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "16c84c9122cbfa8cb389a5070754e459bc4a3f97604360655ab263aac4809cf3"
+    },
+    "letter_rustle": {
+      "sha256": "35772851ff690dc8594a1bc927dc7fd66e856519b1e0c432acfd25ef99f5f008",
+      "seconds": 0.8,
+      "bytes": 6852,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "a874e57bb4e4408ddff9551b72869a452aa979154af59b748f60e1e42958a759"
+    },
+    "loot_legendary": {
+      "sha256": "1eec809d7892d5bfa56f6c0bb1b789571c56667850c0edec0f44d0485500ea86",
+      "seconds": 0.8,
+      "bytes": 5243,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "f46f3e8a72c980c19188c277bf88eb1d8342030c2d47dda6f098edc9707e47c0"
+    },
+    "loot_rare": {
+      "sha256": "01e63c7f232b5d4c59c9c253a2a04f5cb8d9d056af04e4bcfa1d26f84ed99271",
+      "seconds": 0.8,
+      "bytes": 5255,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "ad4e713edcd38efb98d4fa19007708fb11f6abf9abe541498f726c312c610036"
+    },
+    "loot_unique": {
+      "sha256": "d4daa1bd4033c081ec19a6a2d6d528bd925ad7082f332084f37ddaf308d1d2aa",
+      "seconds": 0.8,
+      "bytes": 5249,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "6c598527c4acf2933a9c106552e084693bedf076d95ce9d73b54a8db26175e6d"
+    },
+    "page_turn": {
+      "sha256": "d92af1b946099a6c09bf420456007e7f6a3b3a0bd75a9e077e656a2dee8e73b8",
+      "seconds": 0.8,
+      "bytes": 6844,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "3ce0ce81930410d57372c7c1292e0c5527ac7f301cff45c1b4608e70a493fa04"
+    },
+    "pickup_soft": {
+      "sha256": "3e59374c200acb9ae15265c697c47cd2f6df865bd56ccfd24e20ec1b6a9f729b",
+      "seconds": 0.8,
+      "bytes": 5113,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "1f076ada93b5bb9fc8c724493aea6ab5c36efc86cf297cfac014d65f08d1a5b7"
+    },
+    "rune_activate": {
+      "sha256": "f2550c33710e74df392540eff938fe18e5e27587a6058ad2bee1c10b6c2a5228",
+      "seconds": 0.8,
+      "bytes": 5278,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "07838ec36779b2ddc827ac204b770b29c5fd19b33f0aee48f5b5b2f2ee6fce5e"
+    },
+    "shop_bell": {
+      "sha256": "88a600433b42408452ee57a24d78128f0348904c78efd8f13a57a6355f31e8b3",
+      "seconds": 0.8,
+      "bytes": 5243,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "f46f3e8a72c980c19188c277bf88eb1d8342030c2d47dda6f098edc9707e47c0"
+    },
+    "stage_up": {
+      "sha256": "b8adc41bbebfc2e85c6ae5ad03150384ad0cfc148eb5696ba60860c11bfce44f",
+      "seconds": 0.8,
+      "bytes": 5255,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "ad4e713edcd38efb98d4fa19007708fb11f6abf9abe541498f726c312c610036"
+    },
+    "step_dirt_1": {
+      "sha256": "8759e88c559171bfe6728900497ced8a52845f57690ad7505b9df6199f612a4e",
+      "seconds": 0.22,
+      "bytes": 4482,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "9fe121b11ea73c94f520953c0fedbb0f59781c4d6bca4b8d023966a6b2349fe2"
+    },
+    "step_dirt_2": {
+      "sha256": "d0f03ca1ad535577629498fdb097ec3a0ff37d058a9099976c3e46cd68187b2c",
+      "seconds": 0.22,
+      "bytes": 4463,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "75e4bbc177edc17b9999c348926030802a173421d2b89503f52cdb46672fd992"
+    },
+    "step_dirt_3": {
+      "sha256": "f0ed3ebab4369e1558d2cb9bef5f7edb89180c0533180485bbff773e9286f7ee",
+      "seconds": 0.22,
+      "bytes": 4496,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "b6ac5da6ccc1260b2d2e92bff269ca965bac7fa58a370752c692292b80b13808"
+    },
+    "step_grass_1": {
+      "sha256": "2b89d8c191cc89defeb21cf1317b2c0d6e119b46826aa1b8ad5b3fde35f43bc4",
+      "seconds": 0.22,
+      "bytes": 4475,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "6803ec510d4d872ec8a1396633ac13be479a0fc647155edddb57de7e1c34bec1"
+    },
+    "step_grass_2": {
+      "sha256": "46544ad4e3fed09d0766fb8019a05d77c56370cfae665a5a98aa0c7872cbe596",
+      "seconds": 0.22,
+      "bytes": 4477,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "d843d1dfdfdf4ac2f7c5ceec5467ebbd64632912db77165888acde4260285097"
+    },
+    "step_grass_3": {
+      "sha256": "7d747b317caa43e6f482bd7cc122f1c808d97a47a760cc53b8f3a063cacfc1de",
+      "seconds": 0.22,
+      "bytes": 4477,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "b6067e5993e477321ff07e218eb2f12b0bc4fbb965dc0ec149f58099b2a9b024"
+    },
+    "step_rope_1": {
+      "sha256": "61e3488c7632448863e7ea653d09e6d9d52f90e1c7f448ab1ce643a42c9d9af0",
+      "seconds": 0.22,
+      "bytes": 4502,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "b9156d47c6360a185033cc37debf1de2fe70b8d146a043435d0f1fcc8168242c"
+    },
+    "step_rope_2": {
+      "sha256": "32912a08f1b6d76a5c7444c697d00ab6b88bc0939ff6460bc9ef61e6322e4a46",
+      "seconds": 0.22,
+      "bytes": 4484,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "d31e9033baa8ad992a6b00d356ddd593a3699cc213d1c301614ba2e9a250f4db"
+    },
+    "step_stone_1": {
+      "sha256": "de2008b75e82464c02054e6498be91ccd2791123c692aa40c800a712328f83ce",
+      "seconds": 0.22,
+      "bytes": 4452,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "d0332b4721ec430f6370ba1f5126eff8cc83b6f3f319c7de3b3815dcda2cf5a8"
+    },
+    "step_stone_2": {
+      "sha256": "0b853199de81c7b2c6cb7b45994861fe685f9c029d59d87b6325e8e736a05ae1",
+      "seconds": 0.22,
+      "bytes": 4478,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "157601e9b79ae520021c23b3292a9339332be48c44c9e2fd784e836f5d2b173e"
+    },
+    "step_stone_3": {
+      "sha256": "7086d8a2efbabfad2fd4c0e5de37c52920cad91c39fd570de172f3bf2e9d4c42",
+      "seconds": 0.22,
+      "bytes": 4466,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "009ac2e23d2112c99cee50d03181196abe2b9104969e969c169a01f6622ee3bc"
+    },
+    "step_wood_1": {
+      "sha256": "c4d2a59250645fbe3ebee5cfa9849a6438db9e0f810374739a949c70ca3ea184",
+      "seconds": 0.22,
+      "bytes": 4451,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "a226302ac76140fabf9137469df4b7b6b420b4ce175ab0ad5a8515e6873203e8"
+    },
+    "step_wood_2": {
+      "sha256": "7cecf4589de305848a6fd45ea1445a3bf356f4beda907800ce99dbcb85d96326",
+      "seconds": 0.22,
+      "bytes": 4468,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "f6bfa1eff75b520d38d8c5c490ba141c08efd10894330650270e2cd511b067c5"
+    },
+    "step_wood_3": {
+      "sha256": "e60e2e8a51737a6f302ffc63652306d362c7f955f2642fa6bf336233ce403da3",
+      "seconds": 0.22,
+      "bytes": 4454,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "3bf937df91192f473f9bd16e58bc1502c213f333d4454a67374100bd0f62b203"
+    },
+    "telegraph_tick": {
+      "sha256": "547d3c330de0e5ff1aac5e6480831d8b0d868c21ad4cbc43f49e198bc0f3d73c",
+      "seconds": 0.8,
+      "bytes": 5278,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "07838ec36779b2ddc827ac204b770b29c5fd19b33f0aee48f5b5b2f2ee6fce5e"
+    },
+    "town_bell": {
+      "sha256": "016b2871f22b44bac5390935e82e5274132da5028a80d0ee217b79f31f48782a",
+      "seconds": 0.8,
+      "bytes": 5047,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "6970305f8b592b438f03bd13938762cd72fda577d031f9fce55a3d0ede390a14"
+    },
+    "weapon_equip": {
+      "sha256": "536f6e582e1660171b991163d318322382f13d9872b3185278c84abf44dad09c",
+      "seconds": 0.8,
+      "bytes": 5209,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "4d88a622adede55a17d257d19933ead041f71b9bf132b087892c6e280643d3d9"
+    }
+  }
+}

@@ -42,7 +42,7 @@ function get_dialogue(context)
       speaker = "ghostfam_dyne",
       speaker_name_key = "NPC_GHOSTFAM_DYNE",
       lines = {
-        { id = "midnight", text_key = "DLG_GHOSTFAM_DYNE_MIDNIGHT_0", voice_key = "voice/ghostfam_dyne/midnight" },
+        { id = "midnight", text_key = "DLG_GHOSTFAM_DYNE_MIDNIGHT_0", voice_key = "voice/ghostfam_dyne/midnight_0" },
       },
       choices = {
         { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" },
@@ -54,7 +54,7 @@ function get_dialogue(context)
       speaker = "ghostfam_dyne",
       speaker_name_key = "NPC_GHOSTFAM_DYNE",
       lines = {
-        { id = "midnight", text_key = "DLG_GHOSTFAM_DYNE_MIDNIGHT_1", voice_key = "voice/ghostfam_dyne/midnight" },
+        { id = "midnight", text_key = "DLG_GHOSTFAM_DYNE_MIDNIGHT_1", voice_key = "voice/ghostfam_dyne/midnight_1" },
       },
       choices = {
         { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" },
@@ -66,7 +66,7 @@ function get_dialogue(context)
       speaker = "ghostfam_dyne",
       speaker_name_key = "NPC_GHOSTFAM_DYNE",
       lines = {
-        { id = "midnight", text_key = "DLG_GHOSTFAM_DYNE_MIDNIGHT_2", voice_key = "voice/ghostfam_dyne/midnight" },
+        { id = "midnight", text_key = "DLG_GHOSTFAM_DYNE_MIDNIGHT_2", voice_key = "voice/ghostfam_dyne/midnight_2" },
       },
       choices = {
         { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" },
@@ -78,7 +78,7 @@ function get_dialogue(context)
       speaker = "ghostfam_dyne",
       speaker_name_key = "NPC_GHOSTFAM_DYNE",
       lines = {
-        { id = "midnight", text_key = "DLG_GHOSTFAM_DYNE_MIDNIGHT_3", voice_key = "voice/ghostfam_dyne/midnight" },
+        { id = "midnight", text_key = "DLG_GHOSTFAM_DYNE_MIDNIGHT_3", voice_key = "voice/ghostfam_dyne/midnight_3" },
       },
       choices = {
         { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" },
@@ -90,7 +90,7 @@ function get_dialogue(context)
       speaker = "ghostfam_dyne",
       speaker_name_key = "NPC_GHOSTFAM_DYNE",
       lines = {
-        { id = "midnight", text_key = "DLG_GHOSTFAM_DYNE_MIDNIGHT_4", voice_key = "voice/ghostfam_dyne/midnight" },
+        { id = "midnight", text_key = "DLG_GHOSTFAM_DYNE_MIDNIGHT_4", voice_key = "voice/ghostfam_dyne/midnight_4" },
       },
       choices = {
         { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" },
@@ -102,7 +102,7 @@ function get_dialogue(context)
       speaker = "ghostfam_dyne",
       speaker_name_key = "NPC_GHOSTFAM_DYNE",
       lines = {
-        { id = "midnight", text_key = "DLG_GHOSTFAM_DYNE_MIDNIGHT_5", voice_key = "voice/ghostfam_dyne/midnight" },
+        { id = "midnight", text_key = "DLG_GHOSTFAM_DYNE_MIDNIGHT_5", voice_key = "voice/ghostfam_dyne/midnight_5" },
       },
       choices = {
         { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" },
@@ -114,7 +114,7 @@ function get_dialogue(context)
       speaker = "ghostfam_dyne",
       speaker_name_key = "NPC_GHOSTFAM_DYNE",
       lines = {
-        { id = "midnight", text_key = "DLG_GHOSTFAM_DYNE_MIDNIGHT_6", voice_key = "voice/ghostfam_dyne/midnight" },
+        { id = "midnight", text_key = "DLG_GHOSTFAM_DYNE_MIDNIGHT_6", voice_key = "voice/ghostfam_dyne/midnight_6" },
       },
       choices = {
         { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" },
@@ -141,7 +141,7 @@ function get_dialogue(context)
       speaker_name_key = "NPC_GHOSTFAM_DYNE",
       lines = {
         { id = "kin_greet", text_key = "DLG_GHOSTFAM_DYNE_KIN_GREET_1", voice_key = "voice/ghostfam_dyne/kin_greet" },
-        { id = "kin_look", text_key = "DLG_GHOSTFAM_DYNE_KIN_LOOK_BU_1", voice_key = "voice/ghostfam_dyne/kin_look" },
+        { id = "kin_look", text_key = "DLG_GHOSTFAM_DYNE_KIN_LOOK_BU_1", voice_key = "voice/ghostfam_dyne/kin_look_bu" },
       },
       choices = {
         { id = "kin_story", text_key = "DLG_GHOSTFAM_DYNE_KIN_CHOICE_STORY", action = "show_info", info_key = "GHOSTFAM_KIN_STORY" },
@@ -156,7 +156,7 @@ function get_dialogue(context)
       speaker_name_key = "NPC_GHOSTFAM_DYNE",
       lines = {
         { id = "kin_greet", text_key = "DLG_GHOSTFAM_DYNE_KIN_GREET_1", voice_key = "voice/ghostfam_dyne/kin_greet" },
-        { id = "kin_look", text_key = "DLG_GHOSTFAM_DYNE_KIN_LOOK_HVISKE_1", voice_key = "voice/ghostfam_dyne/kin_look" },
+        { id = "kin_look", text_key = "DLG_GHOSTFAM_DYNE_KIN_LOOK_HVISKE_1", voice_key = "voice/ghostfam_dyne/kin_look_hviske" },
       },
       choices = {
         { id = "kin_story", text_key = "DLG_GHOSTFAM_DYNE_KIN_CHOICE_STORY", action = "show_info", info_key = "GHOSTFAM_KIN_STORY" },

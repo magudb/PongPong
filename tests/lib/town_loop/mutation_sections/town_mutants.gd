@@ -24,7 +24,9 @@ func run(t) -> void:
 	bus.area_change_requested.disconnect(spy)
 	bus.area_change_requested.connect(travel)
 	await LoopClock.to(t,10)
+	AudioManager.clear_cue_log()
 	await t.world().travel(&"int_froebutikken",&"default")
+	t.check("l16_shop_bell_is_logged",AudioManager.cue_log().any(func(row):return row.kind=="sfx" and row.id=="shop_bell" and row.played))
 	var now: int = gm.hour*60+gm.minute
 	gm.set_config_override("time.minutes_per_real_second",2.0)
 	t.autoload("TimeManager").tick(1.0)

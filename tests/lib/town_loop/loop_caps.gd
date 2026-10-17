@@ -23,8 +23,8 @@ const PROBES := {
 	"events": ["file", "res://scenes/ui/event_overlay.tscn"],
 	"relationships": ["file", "res://scripts/social/relationships/relationship_flow.gd"],
 	"post_ui": ["file", "res://scenes/ui/post.tscn"],
-	"visits": ["file", "res://scripts/social/visits/farm_visits.gd"],
-	"seasonal": ["file", "res://scripts/towns/decor/seasonal_decor.gd"],
+	"visits": ["file", "res://scripts/social/relationships/farm_visits.gd"],
+	"seasonal": ["file", "res://scripts/farm/steading/dress/seasonal_fx.gd"],
 	"window": ["window"],
 }
 

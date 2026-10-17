@@ -15,6 +15,7 @@ MUTANTS=[
  ('escape','scripts/social/social_manager.gd','\tif not completed:','\tif false:','l03_esc_first_line_no_heart'),
  ('digest','tests/lib/town_loop/digest_volatile.json','"/meta/summary"','"/meta/summary","/economy"','digest_has_teeth_gold'),
  ('order','scripts/social/social_manager.gd','const SECTION_ORDER := 60','const SECTION_ORDER := 10','l13_social_section_order'),
+ ('cue-without-log','scripts/autoload/audio_manager.gd','\t_cues.append({"t_msec":Time.get_ticks_msec(),"kind":kind,"id":id,"played":played})','\tpass # negative control: play without recording','l16_shop_bell_is_logged'),
  ('closed-door','scripts/towns/door_2d.gd','\tif not is_open():','\tif false:','l05_closed_door_does_not_travel')]
 
 def prove():
@@ -36,9 +37,7 @@ def prove():
             caught=result.returncode==0 if name=='baseline' else result.returncode!=0 and ('FAIL  town_mutants.'+target) in log
             assert clean and caught,(name,'failed to catch the named regression cleanly')
             results[name]={'caught':caught,'check':target or 'all probes green'}
-    # P24 does not ship with M1b. Installing its hook must add this mutant.
-    assert 'cue_log' not in (ROOT/'scripts/autoload/audio_manager.gd').read_text(), 'Audio hook installed: add cue-without-log mutant'
-    report={'result':'pass','binding':captured,'mutants':results,'skipped':{'audio':'P24 cue_log capability is not installed'},'note':'Each producer is changed on a fresh clone. The unmodified probes pass first; each mutant must fail its named behavioural check without engine errors.'}
+    report={'result':'pass','binding':captured,'mutants':results,'skipped':{},'note':'Each producer is changed on a fresh clone. The unmodified probes pass first; each mutant must fail its named behavioural check without engine errors. Audio playback without a cue log is covered.'}
     REPORT.write_text(json.dumps(report,indent=2)+'\n');return report
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--check',action='store_true');a=p.parse_args()

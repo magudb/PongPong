@@ -1,0 +1,189 @@
+{
+  "status": "synthesized placeholder",
+  "recipes": {
+    "farm_theme": {
+      "version": 2,
+      "seed": 594285159765960663,
+      "kind": "music"
+    },
+    "city_theme": {
+      "version": 2,
+      "seed": 2838272633241059878,
+      "kind": "music"
+    },
+    "forest_theme": {
+      "version": 2,
+      "seed": 11277515863791923504,
+      "kind": "music"
+    },
+    "festival_foraar": {
+      "version": 2,
+      "seed": 15174136930093789190,
+      "kind": "music"
+    },
+    "festival_sommer": {
+      "version": 2,
+      "seed": 7998561731468625289,
+      "kind": "music"
+    },
+    "festival_efteraar": {
+      "version": 2,
+      "seed": 16996586958153597949,
+      "kind": "music"
+    },
+    "festival_vinter": {
+      "version": 2,
+      "seed": 18088933977628604118,
+      "kind": "music"
+    },
+    "dungeon_act1": {
+      "version": 2,
+      "seed": 16178417719925805811,
+      "kind": "music"
+    },
+    "dungeon_act2": {
+      "version": 2,
+      "seed": 14321821411924710579,
+      "kind": "music"
+    },
+    "dungeon_act3": {
+      "version": 2,
+      "seed": 13525554828962704251,
+      "kind": "music"
+    },
+    "dungeon_act4": {
+      "version": 2,
+      "seed": 4379085550222531307,
+      "kind": "music"
+    },
+    "boss": {
+      "version": 2,
+      "seed": 14214265614154917797,
+      "kind": "music"
+    },
+    "boss_final": {
+      "version": 2,
+      "seed": 7659427271070625639,
+      "kind": "music"
+    },
+    "rune_rest": {
+      "version": 2,
+      "seed": 17753610927863659509,
+      "kind": "music"
+    }
+  },
+  "files": {
+    "boss": {
+      "sha256": "26f9596ad25586bbb3c952a7892841435ed3ae899fd4bc7710a5c4c6ff59c73d",
+      "seconds": 47.0,
+      "bytes": 91787,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "34efb61469d1dbb8b29acd92968a85cf92a015da1581e9109e83487694a3ff40"
+    },
+    "boss_final": {
+      "sha256": "768ffa5b844325d1a0a30f65fc109fd5507c07c4a269cb7047a8943511046d4b",
+      "seconds": 47.0,
+      "bytes": 92360,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "70b9e5b0e26994ed8b9adf9db8ebdbb763e12ea978a322ae3a778719309ef228"
+    },
+    "city_theme": {
+      "sha256": "d8f2b372aa7d5ad7734b7956bcb4badd3e53d2dd433b783209c2b51027e89d71",
+      "seconds": 47.0,
+      "bytes": 92762,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "3fa119db406441bc22b6e6861d5882d451c04470ce3d80782d4aad4bf0d6dfdf"
+    },
+    "dungeon_act1": {
+      "sha256": "54103cba18d08286c356e0419402347475cd2de78aed74ef1ab44f67ed3c9ea6",
+      "seconds": 47.0,
+      "bytes": 92254,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "7d3124745127254208fce2c674264ca474aeb6a7a51e435d383d95c9a733a5a2"
+    },
+    "dungeon_act2": {
+      "sha256": "97f6fe6746b2992330b72ccc9b2fddaee67c2c5b778907f0f8440088fc1dd88d",
+      "seconds": 47.0,
+      "bytes": 91094,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "b9309f13c78521dbbf9ccbd3568b1c456601426c6f5f3ad5ee57cad081e9ae7f"
+    },
+    "dungeon_act3": {
+      "sha256": "da3accb3db9f8c5b11aac98102d360e633690ff1c0d0cef10e57e5678cdf9087",
+      "seconds": 47.0,
+      "bytes": 91094,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "b9309f13c78521dbbf9ccbd3568b1c456601426c6f5f3ad5ee57cad081e9ae7f"
+    },
+    "dungeon_act4": {
+      "sha256": "0d45b8796d3f3ab7cf5858908e7ba6aacb1eac88447dc617a7590a8e8e4050e8",
+      "seconds": 47.0,
+      "bytes": 93639,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "5fe8e859f07af16f4ec26a32f0ec3662aee99dfdf26d6d70d0f711f7af74cc2e"
+    },
+    "farm_theme": {
+      "sha256": "706f298686ca50349019447e887a1ce507f1a0297e2f876b65d64097c811cbbf",
+      "seconds": 47.0,
+      "bytes": 90916,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "88b48004605a36a6dbe59d67608b1af24e8dd20d442f6fc017cc2766110711d3"
+    },
+    "festival_efteraar": {
+      "sha256": "74d76ac317fd830149b65690590dee64e6c4e61e0af63a6fe748a1ed79221ba8",
+      "seconds": 47.0,
+      "bytes": 90976,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "b21083b263bb3746dd2a9db83eb3f82102888feb0b1e5df2cb4771ef63157fed"
+    },
+    "festival_foraar": {
+      "sha256": "69b13fae5a5881c34a626ce3df934e34893de4432dd99d93453e11f7627985a2",
+      "seconds": 47.0,
+      "bytes": 90873,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "1af46b97e7b88ed15171c879aa1a69462ad476bb193f219f122d7f7b8abf5527"
+    },
+    "festival_sommer": {
+      "sha256": "0977fe13d20354e9842af2498964de93505cbb3ad9b09a88f2dc78bb5ad73ec2",
+      "seconds": 47.0,
+      "bytes": 90804,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "6ebf7ec0a5866d9838288c070caf4680787325ad11f43d24164803295afe88bf"
+    },
+    "festival_vinter": {
+      "sha256": "99f652173d45be523419f60f6c6c842e3e21d611638885c31f98fc73fb4ae016",
+      "seconds": 47.0,
+      "bytes": 91635,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "eac13bb2ebb4485beba0d8db02e6ca1f3b74b25e71da120984d6c1a0774b083b"
+    },
+    "forest_theme": {
+      "sha256": "7092ee50a328e94ef996dbca0e339b0ad99abfd62a03409c9d76324aa9022d08",
+      "seconds": 47.0,
+      "bytes": 93474,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "22c0ef2d0641185ecaa5a3f680a1473f847a610c79c6bde7edada62b80ad67f6"
+    },
+    "rune_rest": {
+      "sha256": "081f111448e7743a84ce8491c93ce7f6475a6cdec3790bea7f8ce52a8fedd7e9",
+      "seconds": 47.0,
+      "bytes": 92537,
+      "sample_rate": 22050,
+      "channels": 1,
+      "pcm_sha256": "5d001bf1cbec1caaa6a31f38479535c45e28b5d9d605dd9bc8bc4637299630f8"
+    }
+  }
+}

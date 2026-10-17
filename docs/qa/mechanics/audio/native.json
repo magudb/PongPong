@@ -1,0 +1,30 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 347,
+  "elapsed_s": 13.27,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "audio_town": {
+      "character": "animal",
+      "checks": 37,
+      "failed": 0,
+      "ms": 5477,
+      "skipped": 0
+    },
+    "voice": {
+      "character": "animal",
+      "checks": 310,
+      "failed": 0,
+      "ms": 3056,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

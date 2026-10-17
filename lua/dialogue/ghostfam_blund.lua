@@ -159,7 +159,7 @@ function get_dialogue(context)
       speaker_name_key = "NPC_GHOSTFAM_BLUND",
       lines = {
         { id = "kin_greet", text_key = "DLG_GHOSTFAM_BLUND_KIN_GREET_1", voice_key = "voice/ghostfam_blund/kin_greet" },
-        { id = "kin_look", text_key = "DLG_GHOSTFAM_BLUND_KIN_LOOK_BU_1", voice_key = "voice/ghostfam_blund/kin_look" },
+        { id = "kin_look", text_key = "DLG_GHOSTFAM_BLUND_KIN_LOOK_BU_1", voice_key = "voice/ghostfam_blund/kin_look_bu" },
       },
       choices = {
         { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" },
@@ -173,7 +173,7 @@ function get_dialogue(context)
       speaker_name_key = "NPC_GHOSTFAM_BLUND",
       lines = {
         { id = "kin_greet", text_key = "DLG_GHOSTFAM_BLUND_KIN_GREET_1", voice_key = "voice/ghostfam_blund/kin_greet" },
-        { id = "kin_look", text_key = "DLG_GHOSTFAM_BLUND_KIN_LOOK_HVISKE_1", voice_key = "voice/ghostfam_blund/kin_look" },
+        { id = "kin_look", text_key = "DLG_GHOSTFAM_BLUND_KIN_LOOK_HVISKE_1", voice_key = "voice/ghostfam_blund/kin_look_hviske" },
       },
       choices = {
         { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" },

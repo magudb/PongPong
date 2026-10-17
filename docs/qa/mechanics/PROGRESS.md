@@ -18,11 +18,13 @@ Relationships, wedding and household mechanics are complete. The special gifts r
 
 Seasonal farm dressing is complete: sixteen markers, nineteen new painted assets with saved prompts/sources, four seasonal apple trees and one bounded particle family. Acceptance: 1,026 broader checks (one existing manual-render skip), sixteen native checks, all nine captures inspected, strict 2,925-asset style ledger green and the original particle cost budget met.
 
-Next work: audio integration.
+Audio integration is implemented: bounded cue logging and pooling, area/rain/festival ambience, surfaces and footsteps, equipment/social/town hooks, 44 SFX, nine ambience loops and fourteen sparse scores. Fourteen human originals are preserved and eleven reused; 175 Sara placeholders are generated, while 110 draft social voice rows await the copy pass. Acceptance: 1,534 integration checks, six independent waveform/pipeline tests and native mixer/voice-indicator checks. Source-bound town proofs await the final source refresh.
+
+Next work: home unlock completion, dungeon validation/pacing, UI and final copy/gates.
 
 Still required before the full task is complete:
 
-- Finish the planned audio integration, preserving frozen human recordings.
+- Finish the social copy review and bake its 110 deferred voice rows; preserve frozen human recordings.
 - Resolve the separately listed home oven, forecast and royal-visit unlocks as part of the full mechanics pass.
 - Finish dungeon item/recipe/boss validators and their mutants, larger pacing simulations and combat/performance acceptance.
 - Resolve the UI sweep findings (forest HUD theme/localization, fourth journal tab navigation and real fixture setup for house/animal/building screens), the remaining baseline failures, run full headless/native regression, refresh source-bound town proofs, update completion documentation and merge finished work to local main.

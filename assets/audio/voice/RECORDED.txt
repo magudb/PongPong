@@ -1,0 +1,12 @@
+# Human recordings; never synthesize or overwrite these paths.
+voice/baker_maja/cookie_talk
+voice/baker_maja/greet
+voice/baker_maja/roof_trouble
+voice/baker_maja/thanks
+voice/fairy_lily/greet
+voice/mayor_lyra/farm_status
+voice/mayor_lyra/greet_2
+voice/mayor_lyra/hello
+voice/mayor_lyra/lottery
+voice/smith_thorin/greet
+voice/smith_thorin/mining_talk

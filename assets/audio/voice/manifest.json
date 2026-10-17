@@ -1,0 +1,4061 @@
+{
+  "lines": {
+    "voice/appraiser_fru_ugle/farewell": {
+      "text_key": "DLG_UGLE_FAREWELL",
+      "text": "Pas på dine små skatte derude.",
+      "text_sha256": "c2360e2654726987b71689147a91dfcb4a3e310b2d4b16a6a1d27d1fdfe2aed2",
+      "source": "lua/dialogue/appraiser_fru_ugle.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.83183,
+        "rate": 0.805958,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "2b9537a851432a88045af66a29c91a15d218dcc1ada991f34cfd7f56e701f1ca",
+      "audio_sha256": "e4889a94dfb9d589ff31a2e76a2736a8c86038f66d9cac9c18bf93eb68d0be30"
+    },
+    "voice/appraiser_fru_ugle/finds": {
+      "text_key": "DLG_UGLE_FINDS",
+      "text": "Læg dine fund her. Vi ser på dem sammen.",
+      "text_sha256": "097b6065695b9d3d2f582b3aa44f2b1507a4594dfb5b8180aaf03ff508cf980b",
+      "source": "lua/dialogue/appraiser_fru_ugle.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.83183,
+        "rate": 0.805958,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "249141d587b5dad7a4b5a4916c8e78a5317d3126e22afa086dd85534733eb30d",
+      "audio_sha256": "f763f19746bd733445fd5122af26a3a8c8f35790bae75b8e943c807469ce0952"
+    },
+    "voice/appraiser_fru_ugle/first_1_v": {
+      "text_key": "SOC_APPRAISER_FRU_UGLE_FIRST_1_V",
+      "text": "Fru Ugle, om jeg må bede. Lad os se på dine små skatte.",
+      "text_sha256": "bc476f9975faf2c91c0ecf4a919411487da7ab00c269144d560cb8f04bfe62ad",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/appraiser_fru_ugle/glass": {
+      "text_key": "DLG_UGLE_GLASS",
+      "text": "Mit forstørrelsesglas finder de mindste glimt.",
+      "text_sha256": "c0338bbc31fffa6f797321a02e88c573b04eb598bc9658ddc693524267adbca2",
+      "source": "lua/dialogue/appraiser_fru_ugle.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.83183,
+        "rate": 0.805958,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "64bb7dfabdb66a124df5c2d929ae60b023ff38a365fa2b2c724a971897d0b11d",
+      "audio_sha256": "150a22b138d27663c09a6525ca2931e5b00a329d655f0f3e16ed3a63b9f5ac03"
+    },
+    "voice/appraiser_fru_ugle/greet": {
+      "text_key": "DLG_UGLE_GREET",
+      "text": "Hvem kommer dér? Åh, en samler med nysgerrige øjne.",
+      "text_sha256": "4c646ea7be63c2f1d84e579e9ed2134bd68dfd31e0725a1c0d907afb92f30ded",
+      "source": "lua/dialogue/appraiser_fru_ugle.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.83183,
+        "rate": 0.805958,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "e073a3a1bf178199e4bea612131f53117ea69041212f1825dd586a4124d66008",
+      "audio_sha256": "855660668b93d3e6092e9023a185ab65115f1cdd9a75c475f1b368838b7f8ba9"
+    },
+    "voice/appraiser_fru_ugle/lake": {
+      "text_key": "DLG_UGLE_LAKE",
+      "text": "Kisten ved søen har ventet længe på sin nøgle.",
+      "text_sha256": "bc4f1734f2c67cc407c33d1f4a076d6d2e3ce167c448c5dda44343bc68951916",
+      "source": "lua/dialogue/appraiser_fru_ugle.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.83183,
+        "rate": 0.805958,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "968c4bd60909159f3665b40b6d86a40f388d52d8eac7d8e5f1b5f44c3574aaa4",
+      "audio_sha256": "aa2c12b36b8871cfe1cfdbdb7fd7db2e167d0bee2b9806944f522ccf5313e0ac"
+    },
+    "voice/appraiser_fru_ugle/patience": {
+      "text_key": "DLG_UGLE_PATIENCE",
+      "text": "Nogle sten åbner sig kun for tålmodige øjne.",
+      "text_sha256": "2a6ce66b0c34d919ba43ca71a9863280da27a14d1742159c93989315d42e4f82",
+      "source": "lua/dialogue/appraiser_fru_ugle.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.83183,
+        "rate": 0.805958,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "a558e9720313a59ba3261d9386995400aca5dd826e3b3bb87ef44da0d8a52509",
+      "audio_sha256": "daaa8975bd3e2a855fe5a5c8345055c0f62005023106a0e9a4dcc50a94240703"
+    },
+    "voice/appraiser_fru_ugle/runes": {
+      "text_key": "DLG_UGLE_RUNES",
+      "text": "Runerne husker de fødder, der går forbi.",
+      "text_sha256": "b7ad9ef5ab95991868d163ecbcf85147e2d9ddae083c056afa921b845f557fe2",
+      "source": "lua/dialogue/appraiser_fru_ugle.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.83183,
+        "rate": 0.805958,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "f0a209f42ce8c1cd641ee4fdcffd5a51aacd23b99ea0c4a5ee3383edb508eb97",
+      "audio_sha256": "28a75be59dea6fcbe349c2acd02a4e35f25ac5a71aed0e08b720698c675e80c4"
+    },
+    "voice/appraiser_fru_ugle/window": {
+      "text_key": "DLG_UGLE_WINDOW",
+      "text": "Du må gerne tale med mig gennem vinduet.",
+      "text_sha256": "83b9a7013fb49633bf56c178ec2ecd7ac7a4ca26fd56b27c8d62e7fe79d7cf86",
+      "source": "lua/dialogue/appraiser_fru_ugle.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.83183,
+        "rate": 0.805958,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "f70070712247d4225ef0b170a14363d4816cab6c5fbdc720035d2b0ed9d6b827",
+      "audio_sha256": "2a4891861109d36cdb176f4293cf1ad438a70edb4a8b368a46cc2285b984ef70"
+    },
+    "voice/baker_maja/bday_baker_maja_greet_1_v": {
+      "text_key": "BDAY_BAKER_MAJA_GREET_1_V",
+      "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
+      "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/baker_maja/cookie_talk": {
+      "text_key": "DLG_MAJA_COOKIE_TALK",
+      "text": "Jeg bager de bedste småkager i hele den magiske by.",
+      "text_sha256": "31359947443d203d142d921d0fd468ccbb1194a305b8256b839c28c0c883c2d7",
+      "source": "lua/dialogue/baker_maja.lua",
+      "kind": "recorded",
+      "audio_sha256": "158a284d1f1d0d186ea4aeaa39d39e4ed06de5b043817a879aae60de93349c7a"
+    },
+    "voice/baker_maja/first_1_v": {
+      "text_key": "SOC_BAKER_MAJA_FIRST_1_V",
+      "text": "Jeg er Rosmarin. Kom ind til duften af lune boller.",
+      "text_sha256": "d26c1ab938d4a91efdf4eed2c1bcf437e48279e0ba801bac3a92a257941f3142",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/baker_maja/gift_baker_maja_dislike_1_v": {
+      "text_key": "GIFT_BAKER_MAJA_DISLIKE_1_V",
+      "text": "Tak for tanken. En anden kan måske bruge den bedre.",
+      "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/baker_maja/gift_baker_maja_hate_1_v": {
+      "text_key": "GIFT_BAKER_MAJA_HATE_1_V",
+      "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
+      "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/baker_maja/gift_baker_maja_like_1_v": {
+      "text_key": "GIFT_BAKER_MAJA_LIKE_1_V",
+      "text": "Hvor betænksomt. Den her bliver jeg glad for.",
+      "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/baker_maja/gift_baker_maja_love_1_v": {
+      "text_key": "GIFT_BAKER_MAJA_LOVE_1_V",
+      "text": "Du har fundet noget, jeg holder særligt af. Tak!",
+      "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/baker_maja/gift_baker_maja_neutral_1_v": {
+      "text_key": "GIFT_BAKER_MAJA_NEUTRAL_1_V",
+      "text": "Tak, fordi du tænkte på mig.",
+      "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/baker_maja/greet": {
+      "text_key": "DLG_MAJA_GREET",
+      "text": "Hej der! Velkommen til mit lille bageri.",
+      "text_sha256": "7cd765545eb346f57cfe31df0358f0bf6a6b748c0f432a40b93c5a15ee8bab79",
+      "source": "lua/dialogue/baker_maja.lua",
+      "kind": "recorded",
+      "audio_sha256": "3551bcf455b8951ae4db1dbb70bde1e75ddb5571f8d3bedbfce0e994535c98a0"
+    },
+    "voice/baker_maja/greet_h0_1_v": {
+      "text_key": "SOC_BAKER_MAJA_GREET_H0_1_V",
+      "text": "Godt at se dig. Jeg tænkte netop på min surdej.",
+      "text_sha256": "5de2e3f056848786c55f25005b60caeb9e0b97167fa24eeb30aa03f3a229d323",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/baker_maja/math_done": {
+      "text_key": "DLG_MAJA_MATH_DONE",
+      "text": "Fantastisk! Nu stemmer regnskabet igen. Tak for hjælpen!",
+      "text_sha256": "aeafbb0d7714ebf6f708b7f0fe8177986368276aa0953398706ca52ef21685fd",
+      "source": "lua/dialogue/baker_maja.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.12618,
+        "rate": 1.038659,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "fa5bf88a4cbb5937e6d12745b2793c908f3b8c6829bbd015584a025b667e5c26",
+      "audio_sha256": "88f59e0173e7f8fba74a2fc22b9e745a44dd8152bcfb5beccd88e38d55e03abb"
+    },
+    "voice/baker_maja/math_q1": {
+      "text_key": "DLG_MAJA_MATH_Q1",
+      "text": "Jeg bagte 35 boller og har solgt 17. Hvor mange er tilbage?",
+      "text_sha256": "cad6e19f146c395a8658ac768885483b97bf1749ca3a7da9622116c8b518004a",
+      "source": "lua/dialogue/baker_maja.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.12618,
+        "rate": 1.038659,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "ede4a289470e453b6c09b8261a0c34d5e358e0f18d929e387d8ad950839ae063",
+      "audio_sha256": "718176915351c27217748e4a64b28684e0a1d480049a8663c0c854cc12398adf"
+    },
+    "voice/baker_maja/math_q2": {
+      "text_key": "DLG_MAJA_MATH_Q2",
+      "text": "Der er 28 småkager på hylden, og jeg bager 15 til. Hvor mange er der i alt?",
+      "text_sha256": "c3a94aded536d42ce0876b5962754884631b0b1c459d4ea39352fff5d7eb5e51",
+      "source": "lua/dialogue/baker_maja.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.12618,
+        "rate": 1.038659,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "249cea41abd9bee81a0f23528d034408d99620550592f4221f8eb0daf1ad6bfc",
+      "audio_sha256": "5b002a01039a92d91736af8e55501394d1bc2586f9dee5a7c043ce1466450e94"
+    },
+    "voice/baker_maja/math_q3": {
+      "text_key": "DLG_MAJA_MATH_Q3",
+      "text": "Skovens dyr spiste 29 af mine 64 æbler. Hvor mange er der tilbage?",
+      "text_sha256": "a726987b13e636cf590166578354309c284a0e825257386a015e0dcdae628051",
+      "source": "lua/dialogue/baker_maja.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.12618,
+        "rate": 1.038659,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "40e1bcac68027261c702bb418e297a1df6fdae5d2d33ead2117cb10a603b219d",
+      "audio_sha256": "4afa15b5b4c4ee3c07b7b0fa123efa246eff017533635187a00920b9e5d912a7"
+    },
+    "voice/baker_maja/roof_trouble": {
+      "text_key": "DLG_MAJA_ROOF_TROUBLE",
+      "text": "Åh nej, stormen i går beskadigede mit tag! Kan du hjælpe mig?",
+      "text_sha256": "63ca2e6ac0248830e41c3fb7d6398c34b9182413c1e86fa5d8b8bb50816fe34b",
+      "source": "lua/dialogue/baker_maja.lua",
+      "kind": "recorded",
+      "audio_sha256": "6440c0426bbb9421e0c54e3d3dc567298bd3c469d59d8f0c22a9fb0df6e8fd08"
+    },
+    "voice/baker_maja/thanks": {
+      "text_key": "DLG_MAJA_THANKS",
+      "text": "Tak for hjælpen! Taget er som nyt igen.",
+      "text_sha256": "b06bb212fd5d624de77cf99ef25d6dc1eb1e14b938e75f4b8b1edb91282fa725",
+      "source": "lua/dialogue/baker_maja.lua",
+      "kind": "recorded",
+      "audio_sha256": "6744c96c4cfb32d792b27a149f0d1eb54f7636ed6d21da0858f29afc2482c2d2"
+    },
+    "voice/bathkeeper_sofus/bday_bathkeeper_sofus_greet_1_v": {
+      "text_key": "BDAY_BATHKEEPER_SOFUS_GREET_1_V",
+      "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
+      "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/bathkeeper_sofus/evening": {
+      "text_key": "DLG_SOFUS_EVENING",
+      "text": "Aftenvandet er ekstra stille.",
+      "text_sha256": "b8bc72550af02cc14f7eb35460f8d6cfab8d69a49b0b16c7f2fa3a9437dc041a",
+      "source": "lua/dialogue/bathkeeper_sofus.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840453,
+        "rate": 0.807608,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "e2e4219e659efd1a5fb5517d8266f2123cf00ed6e54aeab31bc211c6ff54fc43",
+      "audio_sha256": "0ff698b6e1bfc8ef0d2927c3eaedb963fa6d0f671aa16e772e2059ecbc424c8d"
+    },
+    "voice/bathkeeper_sofus/first_1_v": {
+      "text_key": "SOC_BATHKEEPER_SOFUS_FIRST_1_V",
+      "text": "Sofus er mit navn. Her har vi god tid til at hvile.",
+      "text_sha256": "5b3eaec461ba78d0f3212efc0eab5e0557df38ca1b8de7c88c4663b2a368fbdc",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/bathkeeper_sofus/gift_bathkeeper_sofus_dislike_1_v": {
+      "text_key": "GIFT_BATHKEEPER_SOFUS_DISLIKE_1_V",
+      "text": "Tak for tanken. En anden kan måske bruge den bedre.",
+      "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/bathkeeper_sofus/gift_bathkeeper_sofus_hate_1_v": {
+      "text_key": "GIFT_BATHKEEPER_SOFUS_HATE_1_V",
+      "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
+      "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/bathkeeper_sofus/gift_bathkeeper_sofus_like_1_v": {
+      "text_key": "GIFT_BATHKEEPER_SOFUS_LIKE_1_V",
+      "text": "Hvor betænksomt. Den her bliver jeg glad for.",
+      "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/bathkeeper_sofus/gift_bathkeeper_sofus_love_1_v": {
+      "text_key": "GIFT_BATHKEEPER_SOFUS_LOVE_1_V",
+      "text": "Du har fundet noget, jeg holder særligt af. Tak!",
+      "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/bathkeeper_sofus/gift_bathkeeper_sofus_neutral_1_v": {
+      "text_key": "GIFT_BATHKEEPER_SOFUS_NEUTRAL_1_V",
+      "text": "Tak, fordi du tænkte på mig.",
+      "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/bathkeeper_sofus/greet": {
+      "text_key": "DLG_SOFUS_GREET",
+      "text": "Velkommen til det varme vand. Her må du gerne være langsom.",
+      "text_sha256": "717d951a9711c137f8bc8295cbc54c8f1242da016883b5d4fe178a4cbcd1d9bc",
+      "source": "lua/dialogue/bathkeeper_sofus.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840453,
+        "rate": 0.807608,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "23a6aa514565ade3ed6faba7e74ac9009fddd9302cb4b93521696f27c6ece2aa",
+      "audio_sha256": "3fc665b2a58e484a7b6dea7ce3ab2269dcb814218aab8394c7d8517726f74f8e"
+    },
+    "voice/bathkeeper_sofus/greet_h0_1_v": {
+      "text_key": "SOC_BATHKEEPER_SOFUS_GREET_H0_1_V",
+      "text": "Godt at se dig. Jeg tænkte netop på appelsinerne ved badet.",
+      "text_sha256": "12541e3174484566dc0bf20fee2ec1c637c387c118c6fb472da4e8a3dc5c55a8",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/bathkeeper_sofus/offer": {
+      "text_key": "DLG_SOFUS_OFFER",
+      "text": "Et bad, lidt ro, og så er du klar igen.",
+      "text_sha256": "1dc9b65da84a4cfa9222dd5b4cc34b57912ba58cebf5986f0e534fd961a4f298",
+      "source": "lua/dialogue/bathkeeper_sofus.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840453,
+        "rate": 0.807608,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "f5638bf07e202a8eaa2c0ef782e4cc0d50008cf4558c67f91639bbe1479fcd83",
+      "audio_sha256": "a3194edb1b5afd60c6ffe64313fc9038fc4483444cb2082667ca86fe2f671b6b"
+    },
+    "voice/bathkeeper_sofus/once": {
+      "text_key": "DLG_SOFUS_ONCE",
+      "text": "Du har allerede badet i dag. Kom igen i morgen.",
+      "text_sha256": "c2efbc7860b817e90d22e39cbe7f20b777ad0fc1eb05772bc56f517f24d31cfb",
+      "source": "lua/dialogue/bathkeeper_sofus.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840453,
+        "rate": 0.807608,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "51c75b801cb57cbe8e45002d9f8181a363f7b094dc9b79251562557a63fb9f65",
+      "audio_sha256": "2e0b1655b596cafe535cc37b82c757cfb54b4c647dbbc1e8b64f2b9854357b28"
+    },
+    "voice/bathkeeper_sofus/orange": {
+      "text_key": "DLG_SOFUS_ORANGE",
+      "text": "Jeg har lagt en appelsin ved kanten. Den dufter af sol.",
+      "text_sha256": "e03f835469d53bc382a86d8b147f7539e9383c190e1dc1a45d5e09a91b2a069a",
+      "source": "lua/dialogue/bathkeeper_sofus.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840453,
+        "rate": 0.807608,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "53b0a5dd475f0577634b18958fb0fc9d021e3ff05f82c063d30457727476e1e8",
+      "audio_sha256": "e500ee151620d4db97f4809adb6761522ccdfa6e931866c37a68510d77c37d1d"
+    },
+    "voice/bathkeeper_sofus/steam": {
+      "text_key": "DLG_SOFUS_STEAM",
+      "text": "Se dampen. Den har slet ikke travlt.",
+      "text_sha256": "347ecc7440d0ef0cce114b84a91317397d517c426efc27476b6750815516827d",
+      "source": "lua/dialogue/bathkeeper_sofus.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840453,
+        "rate": 0.807608,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "c3f1dc94e846e36fd670e771a62646c00a712a174421402ea3be90b775af6306",
+      "audio_sha256": "ab9e4dfe0802d23c379e4a180410592e20c62d7fc66fa26e1de8c1bd87733594"
+    },
+    "voice/bathkeeper_sofus/tired": {
+      "text_key": "DLG_SOFUS_TIRED",
+      "text": "Dine skuldre ser trætte ud. Skal vandet varme dem?",
+      "text_sha256": "3dcb4099a6454091f0a8409c8b424dcbd633a6288b8f0755678b017fe40b8303",
+      "source": "lua/dialogue/bathkeeper_sofus.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840453,
+        "rate": 0.807608,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "2e1b101065f9dbd7c4c41603110aee384c10c139182a8fe637a63ec5e04cf1e3",
+      "audio_sha256": "6ac817c27e5b1fff6241cac8ccbab729cbdcf19a643579b15856040d5032df94"
+    },
+    "voice/bathkeeper_sofus/towel": {
+      "text_key": "DLG_SOFUS_TOWEL",
+      "text": "Der ligger et rent håndklæde til dig.",
+      "text_sha256": "b4d48aae7deaf9b8d8e739c620b14900f2883ed08d732c8a3f9063c5cb7253f2",
+      "source": "lua/dialogue/bathkeeper_sofus.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840453,
+        "rate": 0.807608,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "7786b0bb07fc96902f32e72f558da0ff053891fa7e06cdaa3494e23008048192",
+      "audio_sha256": "29b64b3b056df7120e37203e15c48aa3096551d68cd06c547cb1bf89e13155bc"
+    },
+    "voice/beekeeper_birk/bday_beekeeper_birk_greet_1_v": {
+      "text_key": "BDAY_BEEKEEPER_BIRK_GREET_1_V",
+      "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
+      "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/beekeeper_birk/bees": {
+      "text_key": "DLG_BIRK_BEES",
+      "text": "De har fundet blomster ved den store bro.",
+      "text_sha256": "b678e7984d3b8802c2f3bcf1517bdd007e8e66bcfdbb4ac9cd25ab4e073dbeca",
+      "source": "lua/dialogue/beekeeper_birk.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.060502,
+        "rate": 0.973091,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "b38098560550d0fc568a1f862fd5fdbc406bdfbd176cf8d7895fa1bf79103441",
+      "audio_sha256": "3737b443eca4b4607826be0a79702fcc65b2640b98041c7a8a9cb0986823d4a3"
+    },
+    "voice/beekeeper_birk/family": {
+      "text_key": "DLG_BIRK_FAMILY",
+      "text": "Du ligner nogen fra min familie!",
+      "text_sha256": "6dc4e89b2a51f42a55ad9e88d61a609484b53fe343f4af076aecb80d7a6cf388",
+      "source": "lua/dialogue/beekeeper_birk.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.060502,
+        "rate": 0.973091,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "0186eedda706c34296789440c8fd05e96050509523f3a01dc756d69083b62e46",
+      "audio_sha256": "88f58104428db0e4d4dca4c4587aaca781c9ca722ef0c8268e34df43942ca1a5"
+    },
+    "voice/beekeeper_birk/farewell": {
+      "text_key": "DLG_BIRK_FAREWELL",
+      "text": "Vi ses, når blomsterne kalder igen.",
+      "text_sha256": "586b93645abf55de42d86866881c5f6692be63342c58209e2f90148fb0ab8229",
+      "source": "lua/dialogue/beekeeper_birk.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.060502,
+        "rate": 0.973091,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "5fe0f7c5f0d434db3317be12f76b9c68802783e01b7e23d49ae7f1dbcac84b9e",
+      "audio_sha256": "8e20d32e7344e6f4ec51b137a20a57474b0a1a37b9b972dad5e8db301ea4e0dd"
+    },
+    "voice/beekeeper_birk/first_1_v": {
+      "text_key": "SOC_BEEKEEPER_BIRK_FIRST_1_V",
+      "text": "Jeg hedder Birk. Bierne er mine flittigste naboer.",
+      "text_sha256": "f8a1c7c21758d9ebda2ace6454e9771b82cc60d980c84edd55a9ac020b28d61f",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/beekeeper_birk/flowers": {
+      "text_key": "DLG_BIRK_FLOWERS",
+      "text": "Jeg planter lidt ekstra til mine små naboer.",
+      "text_sha256": "0515d175ef2fc0c2026e3a4e76b01c9be95cb96a9f0f1dda984c0d963fb41180",
+      "source": "lua/dialogue/beekeeper_birk.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.060502,
+        "rate": 0.973091,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "db8a47aaf9a7aebe572dccac9cce6997b9412a1739cc2bfb298f351a481d6210",
+      "audio_sha256": "bf69cbb29a488082348a287628b36df2ad8f27d17797cc40babbcc92eadfac93"
+    },
+    "voice/beekeeper_birk/gift_beekeeper_birk_dislike_1_v": {
+      "text_key": "GIFT_BEEKEEPER_BIRK_DISLIKE_1_V",
+      "text": "Tak for tanken. En anden kan måske bruge den bedre.",
+      "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/beekeeper_birk/gift_beekeeper_birk_hate_1_v": {
+      "text_key": "GIFT_BEEKEEPER_BIRK_HATE_1_V",
+      "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
+      "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/beekeeper_birk/gift_beekeeper_birk_like_1_v": {
+      "text_key": "GIFT_BEEKEEPER_BIRK_LIKE_1_V",
+      "text": "Hvor betænksomt. Den her bliver jeg glad for.",
+      "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/beekeeper_birk/gift_beekeeper_birk_love_1_v": {
+      "text_key": "GIFT_BEEKEEPER_BIRK_LOVE_1_V",
+      "text": "Du har fundet noget, jeg holder særligt af. Tak!",
+      "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/beekeeper_birk/gift_beekeeper_birk_neutral_1_v": {
+      "text_key": "GIFT_BEEKEEPER_BIRK_NEUTRAL_1_V",
+      "text": "Tak, fordi du tænkte på mig.",
+      "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/beekeeper_birk/greet": {
+      "text_key": "DLG_BIRK_GREET",
+      "text": "Vær forsigtig! Bierne er i godt humør i dag.",
+      "text_sha256": "774143325861676cdd74c27b9b6bffbc5bbeb1195cc9f894d5c41d722c11c53a",
+      "source": "lua/dialogue/beekeeper_birk.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.060502,
+        "rate": 0.973091,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "2ada0386ea18c1494058cf6c842a2b5d7b93f378768f0355949277f628c3e8dc",
+      "audio_sha256": "5cb2942850ed9b8917f2636dabdd57e693e4fa28c8fbe807571fd07e16d2f4dd"
+    },
+    "voice/beekeeper_birk/greet_h0_1_v": {
+      "text_key": "SOC_BEEKEEPER_BIRK_GREET_H0_1_V",
+      "text": "Godt at se dig. Jeg tænkte netop på biernes blomster.",
+      "text_sha256": "2ae90d93174c2b25b173697e9f8fed348b5d01b1e7f5dcf4af235b1c6308d731",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/beekeeper_birk/honey": {
+      "text_key": "DLG_BIRK_HONEY",
+      "text": "Honning smager lidt af de blomster, bierne har besøgt.",
+      "text_sha256": "b4e1cee3232ba79e123c64a2264a4cf3b391f2d0ff77611cee629d9b5a40e636",
+      "source": "lua/dialogue/beekeeper_birk.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.060502,
+        "rate": 0.973091,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "0331073f3edc3412603453b5d313dba95cdbb427b6433b81466e60ba665e2d0e",
+      "audio_sha256": "e73eb646115829b621b223dbeb250cde283e5eba5108719bac1ab9ae01328a3e"
+    },
+    "voice/beekeeper_birk/quiet": {
+      "text_key": "DLG_BIRK_QUIET",
+      "text": "Stå stille et øjeblik. Kan du høre dem summe?",
+      "text_sha256": "f79dcc87d3ccfc14b36eb81fd3844efae5c814b1e2eecdb3166898e76ccc4066",
+      "source": "lua/dialogue/beekeeper_birk.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.060502,
+        "rate": 0.973091,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "caaa24e4605b05cc1cc16ca2f3782820f553dba5de502e416bbd572fc8031f64",
+      "audio_sha256": "073459840d5e1eae1259cd35cbdc5599fb4652379d06b8016360985cc2537971"
+    },
+    "voice/beekeeper_birk/wings": {
+      "text_key": "DLG_BIRK_WINGS",
+      "text": "Små vinger kan nå langt.",
+      "text_sha256": "7fd41dc2358b776e4111bcc68b4dd35613867da5ba82d91a91cf7cd0601a92ea",
+      "source": "lua/dialogue/beekeeper_birk.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.060502,
+        "rate": 0.973091,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "a055bc74d9b9f7744e713ff70e2fcfe478979f52e5e283e1396ab57f39709dae",
+      "audio_sha256": "3b510ba5f637c02283d24e6799d941f830a39633fdb36007ceb5e2ad7bb0a66e"
+    },
+    "voice/bertil/first_1_v": {
+      "text_key": "SOC_BERTIL_FIRST_1_V",
+      "text": "Bertil er mit navn. Kom og se, hvad der spirer i dag.",
+      "text_sha256": "23afcea2813aec31a9f985cebaa0028945dc8fca4746c4d6ba54e63f2c0186b0",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/bodil/first_1_v": {
+      "text_key": "SOC_BODIL_FIRST_1_V",
+      "text": "Jeg er Bodil. Der er plads til en blomst mere ved min dør.",
+      "text_sha256": "b6895e54225683d7d49a22b7071af3aae8081ea37300f1ee92c799ad168e8bb2",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/carpenter_brumme/bday_carpenter_brumme_greet_1_v": {
+      "text_key": "BDAY_CARPENTER_BRUMME_GREET_1_V",
+      "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
+      "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/carpenter_brumme/first_1_v": {
+      "text_key": "SOC_CARPENTER_BRUMME_FIRST_1_V",
+      "text": "Brumme, det er mig. Jeg giver gerne en hjælpende pote.",
+      "text_sha256": "00d16b6675d85599ab5d2621b8ff9fad2b0c3ed38f430bba8d79f1e1ca5c6c70",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/carpenter_brumme/gift_carpenter_brumme_dislike_1_v": {
+      "text_key": "GIFT_CARPENTER_BRUMME_DISLIKE_1_V",
+      "text": "Tak for tanken. En anden kan måske bruge den bedre.",
+      "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/carpenter_brumme/gift_carpenter_brumme_hate_1_v": {
+      "text_key": "GIFT_CARPENTER_BRUMME_HATE_1_V",
+      "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
+      "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/carpenter_brumme/gift_carpenter_brumme_like_1_v": {
+      "text_key": "GIFT_CARPENTER_BRUMME_LIKE_1_V",
+      "text": "Hvor betænksomt. Den her bliver jeg glad for.",
+      "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/carpenter_brumme/gift_carpenter_brumme_love_1_v": {
+      "text_key": "GIFT_CARPENTER_BRUMME_LOVE_1_V",
+      "text": "Du har fundet noget, jeg holder særligt af. Tak!",
+      "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/carpenter_brumme/gift_carpenter_brumme_neutral_1_v": {
+      "text_key": "GIFT_CARPENTER_BRUMME_NEUTRAL_1_V",
+      "text": "Tak, fordi du tænkte på mig.",
+      "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/carpenter_brumme/greet": {
+      "text_key": "DLG_BRUMME_GREET",
+      "text": "Velkommen! Her dufter af frisk træ.",
+      "text_sha256": "72ced56bb49b0b159ddd728552492a9096227e2d14f3e79a03ff767a51e43bc0",
+      "source": "lua/dialogue/carpenter_brumme.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.720098,
+        "rate": 0.8709,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "558a25082d3cff780e45b9260de0984e54dc2ff2534c10928ae97b43d5d67c48",
+      "audio_sha256": "f442c46ab60c3e58a3023734212b789762c628eab0c5969aad94da88cdba2d0a"
+    },
+    "voice/carpenter_brumme/greet_h0_1_v": {
+      "text_key": "SOC_CARPENTER_BRUMME_GREET_H0_1_V",
+      "text": "Godt at se dig. Jeg tænkte netop på træets årer.",
+      "text_sha256": "b3408c9707a8a94f9256cb38bbdc92d33cb3cfcf22192e00a125a0a74f0e0f16",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/carpenter_brumme/help": {
+      "text_key": "DLG_BRUMME_HELP",
+      "text": "Kom tilbage, hvis du mangler en hjælpende pote.",
+      "text_sha256": "da12ae27fa531508b4282cd0eb3f92e0f550f9e6f62544da04814eac1adc4fef",
+      "source": "lua/dialogue/carpenter_brumme.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.720098,
+        "rate": 0.8709,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "4cea64ae1163e6443e23802dfc0cc80f4306908ec1055439a494c2f4678afd77",
+      "audio_sha256": "4cab3ca465745bd1705457e61f096fafb8e11d7c4c9468a04e710050c80e5fc5"
+    },
+    "voice/carpenter_brumme/market": {
+      "text_key": "DLG_BRUMME_MARKET",
+      "text": "Torvedag! Jeg har taget de lige planker med.",
+      "text_sha256": "1d93e0ae5545201215046ed05d36ddad5c98803b3146eaf73478ffd21cb04757",
+      "source": "lua/dialogue/carpenter_brumme.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.720098,
+        "rate": 0.8709,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "05abeb6a304739b24fef42f22ebad8899f800f239ce83405d4e6ddfb0f6e4153",
+      "audio_sha256": "053568246e206f31052ff256fe5a179ec027b268a1b249e45938d22c1f0cb16e"
+    },
+    "voice/carpenter_brumme/rest": {
+      "text_key": "DLG_BRUMME_REST",
+      "text": "Selv en bjørn har brug for en pause.",
+      "text_sha256": "45ed5e79d2c7820f777c204e30f5c5d15d0c2fa16b4fe61993f294d222ecbbed",
+      "source": "lua/dialogue/carpenter_brumme.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.720098,
+        "rate": 0.8709,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "83b807c95e0f4d9dbf54af4bd6c25dcc66ee663affc1c0142d0ece898570b251",
+      "audio_sha256": "7ec2370646852bbcad8d3706e70e00546f9d8bfed2a9c0f172dfa5d6348858f5"
+    },
+    "voice/carpenter_brumme/roof": {
+      "text_key": "DLG_BRUMME_ROOF",
+      "text": "Feerne skal have nyt tag? Så løfter jeg bjælkerne.",
+      "text_sha256": "d15dee9d058f3906ec13202d2fbdb16081c351adf81c301f991708c67d4641df",
+      "source": "lua/dialogue/carpenter_brumme.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.720098,
+        "rate": 0.8709,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "2b592a567daf4e3ad64a966ec708b0184dcbf770a8bc0bd6c7086180c47fa34e",
+      "audio_sha256": "ede2f3bfd8507a03f223d11b0fe6da59df686fd5ee4a6437f1dfa59a5d9c1ec1"
+    },
+    "voice/carpenter_brumme/slow": {
+      "text_key": "DLG_BRUMME_SLOW",
+      "text": "Et godt hus må gerne tage lidt tid.",
+      "text_sha256": "38e1a4114297723c9d79e1d8abc006c3fa3e39d37fed7ead2dca9582368a83f0",
+      "source": "lua/dialogue/carpenter_brumme.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.720098,
+        "rate": 0.8709,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "28f8f569486ba5f84cc1fb5883509fbaacb350bedf3da281d47c6e418a722806",
+      "audio_sha256": "fcdb00ea7a0925b98b23f8966d7d5751a61c7469251a9b6894ef7b59ffab50bf"
+    },
+    "voice/carpenter_brumme/timber": {
+      "text_key": "DLG_BRUMME_TIMBER",
+      "text": "Mærk bare på træet. Hver planke har sit eget mønster.",
+      "text_sha256": "92dc0091585884ebd30e6012363e245f6b22722215c84862f15a05023a73271b",
+      "source": "lua/dialogue/carpenter_brumme.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.720098,
+        "rate": 0.8709,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "8da7eac216e1845d81babb6e50a1c789f9ef5d868adb08bbbde3f34bc6e2f5af",
+      "audio_sha256": "83d2a3537768aa5159782327b43ca943043c47fe7d8705c7674f065c8bd49447"
+    },
+    "voice/carpenter_brumme/tools": {
+      "text_key": "DLG_BRUMME_TOOLS",
+      "text": "Mit yndlingsværktøj? Det, der ligger lige ved hånden.",
+      "text_sha256": "59df846444405eb1d410ad8c5ad733e3b747aedbbd90e1f72ce4a862b8513583",
+      "source": "lua/dialogue/carpenter_brumme.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.720098,
+        "rate": 0.8709,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "546480115e90afa30f11862c202421761aee7b261ddb06fc77dc2d1bc7bdafc8",
+      "audio_sha256": "666730cc3f1610ea0c54aa50af5595b2c1c35fdc05d9d235f981868bf60c6dab"
+    },
+    "voice/cat_morfar_mis/first_1_v": {
+      "text_key": "SOC_CAT_MORFAR_MIS_FIRST_1_V",
+      "text": "Morfar Mis, det er mig. Her er en god plads i solen.",
+      "text_sha256": "d962e0730fd7fe760947eefbeaef4aba4eef38a25313f090749fe277ef0aca65",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/cat_morfar_mis/forest": {
+      "text_key": "DLG_MIS_FOREST",
+      "text": "Mjav. Jeg fulgte bare duften af sardiner.",
+      "text_sha256": "e9b3cbdb52a45b766a72e1251386ce5538772a8b305a308f2f04bbf1741e03b5",
+      "source": "lua/dialogue/cat_morfar_mis.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.865741,
+        "rate": 0.836033,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "44ba2121ee78b96884a3bbf8205743ee13d2070cfd057b21bc939c96c5788e94",
+      "audio_sha256": "1d0261798e2290d0b4810bf51786b9638aa27a000e8a812fd6550dbfd5c1b8c3"
+    },
+    "voice/cat_morfar_mis/home": {
+      "text_key": "DLG_MIS_HOME",
+      "text": "Mjav. Her er lunt.",
+      "text_sha256": "8f3f9db1da80e6daa78da6141d579f5844949abd531c95d73e7df21f64d4d13c",
+      "source": "lua/dialogue/cat_morfar_mis.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.865741,
+        "rate": 0.836033,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "bc54094569eb635c82e95e294ca64ea3793216ff3b154c9f7cf05cd591bcb6df",
+      "audio_sha256": "074d52ba6a9c266ba89eb8b712d96c12c99e80deb372947df0267e0e9319f060"
+    },
+    "voice/clerk_fjerpen/first_1_v": {
+      "text_key": "SOC_CLERK_FJERPEN_FIRST_1_V",
+      "text": "Jeg er Fjerpen. Jeg finder nok den seddel, du leder efter.",
+      "text_sha256": "67a361e9e649da739c5afacd78ff0b4723036835827e1fc604cdba519b2dfba0",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/cub_bamse/first_1_v": {
+      "text_key": "SOC_CUB_BAMSE_FIRST_1_V",
+      "text": "Jeg er Bamse. Du må gerne være med til at lege.",
+      "text_sha256": "7a0ea084ec4f3247d0da70f7ee0af06289d73a75a67c0041b587a4aa1a227cc3",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/fairy_builder/first_1_v": {
+      "text_key": "SOC_FAIRY_BUILDER_FIRST_1_V",
+      "text": "Hasselnød, til tjeneste. Et godt hjem begynder med en lille planke.",
+      "text_sha256": "8fa26572be7b192fe588a17fe4cf45fdae769fdb97de662fefd3766fb93b6e29",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/fairy_builder/t01_idle": {
+      "text_key": "DLG_BUILDER_T01_IDLE",
+      "text": "Goddag! Jeg er Hasselnød, tømrerfe af den bedste slags. Dit skur er skævt, men træet under det er stærkt.",
+      "text_sha256": "95ce88a6be571ca63de9f4e0328bb44bee64a1b7c0b981f578d4e685e2348f54",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "bb28075b56c6f338a903f1ede5fca92efe6a4225f853c217bf3562b0b3ebb999",
+      "audio_sha256": "7f638d1e1a63e9ab270bc229cbd6010575ef4343f0ccb5727b5502e2ee2c5c87"
+    },
+    "voice/fairy_builder/t01_offer": {
+      "text_key": "DLG_BUILDER_T01_OFFER",
+      "text": "Lad mig bygge dig en rigtig hytte. Det er kun nogle planker, søm og lidt tålmodighed.",
+      "text_sha256": "0f1be0de7f767c0418c8fdb1cbad74c6daaec1aa346d0e58fefa0a5f9f69a878",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "764ed49723374734e5abe715bd8ce51c4f6429d7bcf4c7cf2e57f78c5b5ad7f3",
+      "audio_sha256": "6011940868beab587f48f2fdb460d51fdb7e41b7fe7062dc9912e5a996200167"
+    },
+    "voice/fairy_builder/t02_building": {
+      "text_key": "DLG_BUILDER_T02_BUILDING",
+      "text": "Jeg er i fuld gang med hytten! Sov i teltet ved porten, mens jeg hamrer.",
+      "text_sha256": "f69538129ade0ee1ffffa42636cd2b0b477b50d3105c5f37b67d5021c55d69b4",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "9b42d0dc2521f2b7b3b6634798c8d9338612b5700632dfa784f3ca21db3d03fb",
+      "audio_sha256": "ea8691eaaba4e865c88d68e66aa3e2335e74e15490a87a703a0f909a6e65ed9c"
+    },
+    "voice/fairy_builder/t02_done": {
+      "text_key": "DLG_BUILDER_T02_DONE",
+      "text": "Se der! Kævler, skorsten og halvtag. Nu kan du endelig stå tørt, når det regner.",
+      "text_sha256": "01abe0de35df4f3316ecb3b8f69a3b4f8982425ef844dc6fd32d5cfa5fb93e74",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "2ef3578dd85ae32fe4f4eb757827bff981d9e61ce55bb39db6a9ac31c7d03666",
+      "audio_sha256": "225a4e53d0d76143eeedd1252238c05d324f9661ae0e0f9d3460558b33504f0b"
+    },
+    "voice/fairy_builder/t02_idle": {
+      "text_key": "DLG_BUILDER_T02_IDLE",
+      "text": "Hytten sidder fint. Nu har du en skorsten, og den ryger allerede af glæde.",
+      "text_sha256": "07c71dd1e36e1b836ff56b8e3169e957d2ab23632b5baa7e3cc8707f2b0a4df1",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "67443f9d3f0114922b3058734da7fa9760278f44d4fc8d0221ec4b2c328e280c",
+      "audio_sha256": "26984e7b7f9a38235652162721dc2f5a9a1e02ff148f94cf20721d6d704df9a1"
+    },
+    "voice/fairy_builder/t02_offer": {
+      "text_key": "DLG_BUILDER_T02_OFFER",
+      "text": "Er du klar til et stråtag? Det bliver hvidkalket og hyggeligt, og rosenbuskene gør resten.",
+      "text_sha256": "67fb2a9a8f8023bbc07cb4fdca70d98d6cf21d72f4f35ade2ee4685875b24efd",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "e9f3554f1fd20e53a03dd66117d5157363c94616cb6fe07e9764b069981f1725",
+      "audio_sha256": "0f88b27a589dbcc4de6b8c7cf16088836dcea72cd0bf68b2efc8611d7106320e"
+    },
+    "voice/fairy_builder/t03_building": {
+      "text_key": "DLG_BUILDER_T03_BUILDING",
+      "text": "Stråtaget kommer på i dag. Kom ikke for tæt på, det kilder.",
+      "text_sha256": "927398dcaca4979911f7b2cf3a2e8a231c8a6aa24b8a8fe778e5b23fff9229ee",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "79e9e4a5f4b8dfcee8d893cefa4c91aa27aad2c174fa98c1b1e4cfdaaf74e0e3",
+      "audio_sha256": "e871a1600b4160dff5e54fe2176a54ce6ce575bc18cd93989d67b463652c6a3f"
+    },
+    "voice/fairy_builder/t03_done": {
+      "text_key": "DLG_BUILDER_T03_DONE",
+      "text": "Så er det hvidkalket og stråtækt! Nu mangler der kun en rosenbusk og en kat på dørtrinnet.",
+      "text_sha256": "976670598a6fc9a421b414a47687d40153cc9be53aa5046201ef8d2d8bb3d6a8",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "82ee7c74fb60e1349523f627c0636a6da8e8b37b983675dcabcd5777a0d890e5",
+      "audio_sha256": "9dddd15b72ca13e6d5352666422a807a61aa870b01372e55e9b013525b817c8c"
+    },
+    "voice/fairy_builder/t03_idle": {
+      "text_key": "DLG_BUILDER_T03_IDLE",
+      "text": "Et stråtag holder i hundrede år, hvis man passer på det. Og hvis spurvene lader være.",
+      "text_sha256": "c9e6174c72b139af1fc8bb876e38914855e2a66a3c167d7d603f2a35eb94e309",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "36a2a68e562fcf69146d5292b67377331d668b8ec1646358431d0e663cbffdeb",
+      "audio_sha256": "6aeed5602f449c3067015cdce8b91db61c3cd47d6f996a909425192a5a001742"
+    },
+    "voice/fairy_builder/t03_offer": {
+      "text_key": "DLG_BUILDER_T03_OFFER",
+      "text": "Nu kan vi tale om bindingsværk. Bjælker, røde teglsten og en kvist. Kom med nogle ordentlige egeplanker.",
+      "text_sha256": "d2beb1bc1abfc3c8a9c32f5814842cb20ec20fb04d5100194034e9edd771fa41",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "4af622d2774ad4a895d51b6117086d1ce3983727ff3d3f0d752eb377d3d837b3",
+      "audio_sha256": "c3722bb7766b6911c03f0787837841e07c88ecbf95b388eb330e56fd55db8f64"
+    },
+    "voice/fairy_builder/t04_building": {
+      "text_key": "DLG_BUILDER_T04_BUILDING",
+      "text": "Bjælker og tegl er på vej op. Jeg har mel på næsen og savsmuld i håret.",
+      "text_sha256": "95238e29a9407e1ed7f2e6cbbd0b9df762be495ad4d81f68c96fe39da03be392",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "822f7c9af09da14f926e31759121891103c23663ae543208bd5bfc2618d50585",
+      "audio_sha256": "121720623694e0a684b832e7be3e1751d234d2bed6765dee37316668a655fc94"
+    },
+    "voice/fairy_builder/t04_done": {
+      "text_key": "DLG_BUILDER_T04_DONE",
+      "text": "Bjælkerne sidder, og tegltaget glimter. Bagerfeerne har allerede været forbi for at kigge.",
+      "text_sha256": "d91a47ed89a21d1540b3571b06b4dc84f549fa098e9937b3509b97cb89b8bdb2",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "9639fd1decadf3aa37cc1099ee2a6e1de9f5e8599434ce9f1b152327b99ae0fb",
+      "audio_sha256": "56204c13cb6ac95734ac33d0b727ec4aa3a3f218d87f0ae0fac613d84c868ea6"
+    },
+    "voice/fairy_builder/t04_idle": {
+      "text_key": "DLG_BUILDER_T04_IDLE",
+      "text": "Bindingsværk er som en god historie: Der skal være noget at holde fast i.",
+      "text_sha256": "f0107ecc1e6e5d83af1284a3ec93c8154abd95fdf3183ff914724b9decb37dfe",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "ed74692036235b62f5550ff217ff9992715c32143abbe49bf41686b518bc2451",
+      "audio_sha256": "c210855e753a2ba959f53893e9b2d615d62277b4e2619b088af37db57fad61f5"
+    },
+    "voice/fairy_builder/t04_offer": {
+      "text_key": "DLG_BUILDER_T04_OFFER",
+      "text": "Næste skridt er en rigtig gård. To etager, kviste og en lade. Men først skal der være liv i den.",
+      "text_sha256": "0dbd8087a083704c019c173e1340c30df5e72d1d006132a94976094d1a5a8d45",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "51dd07dfdafb99a8ca80dd29839c970aad25e814493fb65495ba268b411ba581",
+      "audio_sha256": "5b7a83f38fbb0ad25b1662cc14a60410193a7eff6fe5f12ba330eee854d61f06"
+    },
+    "voice/fairy_builder/t05_building": {
+      "text_key": "DLG_BUILDER_T05_BUILDING",
+      "text": "Gården vokser! Pas på hønsene, de bryder sig ikke om hammerslag.",
+      "text_sha256": "860f273b7dd17cb99b85f88bb2488a46d11d6e18d2ff3634453cbd16b658a08f",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "e124211bad201c4e8917076ad5b3233aade49df8092b6bba06dbe635f5e2f255",
+      "audio_sha256": "3121ec7a2ce962301e64a3f3398d0428b157cc6c41f3408f9f58bd821a6edefc"
+    },
+    "voice/fairy_builder/t05_done": {
+      "text_key": "DLG_BUILDER_T05_DONE",
+      "text": "Gården står! Og se: Træet har vokset en rodtrone til dig. Den vil gerne have, at du sidder godt.",
+      "text_sha256": "ec72c470394032e305c9101cb37219b26aad84127d6e04fa74ca3bfd3ba8a335",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "93c9aed7bb1b6cc4192b9bad3e3ea03f9d423a85d09d89f4dcdf4c63bb47089b",
+      "audio_sha256": "5185bed9ced315145a23b6296d4fcd8d04f96b9f3a816c86b7578675f615f4c7"
+    },
+    "voice/fairy_builder/t05_idle": {
+      "text_key": "DLG_BUILDER_T05_IDLE",
+      "text": "Her er plads til både høst og høns. Og til en trone, hvis man skulle få lyst.",
+      "text_sha256": "e2485c48d5abf57e1b750c988cba58ef56b14feffa2febd06a726f574a562ad6",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "ad0fdcab8dfdedd24f21e017fdc59be671b858bf648fd425197bacbf05e84fc0",
+      "audio_sha256": "12ecca55f767080eb7d7c5db600ae886a477eb50e6b36500903bf8ab65f0f7b5"
+    },
+    "voice/fairy_builder/t05_offer": {
+      "text_key": "DLG_BUILDER_T05_OFFER",
+      "text": "Nu kan vi bygge i højden: et tårn med lavendelblåt spir. Det kræver sten og skifer fra Mørkeskoven.",
+      "text_sha256": "4f5a9058c17e62695ee657d1fb558eabf36730550a7e43c53b77b2481e54d7b1",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "6941023988902600bf54a575d9a32a8cb66c7eaa2274d18367fb27bf306e1c3b",
+      "audio_sha256": "c237dadc5344e91633b0e3a98932dd4ae5e06ada9fb0e0857ec54a7076fc1be1"
+    },
+    "voice/fairy_builder/t06_building": {
+      "text_key": "DLG_BUILDER_T06_BUILDING",
+      "text": "Tårnet er svært, men jeg tager en etage ad gangen. Skiferen skal på i morgen.",
+      "text_sha256": "7ee7ebc643d4b5d035ebd016654138038fc700f6cae9996c1e096d954418a70d",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "1f5961f9f83cdf5b913b024f4b295779201140758f686360b9d3e0c47af6e4ac",
+      "audio_sha256": "0532478e0e79887de26f192113138d4b781574e43a2925c013b06eb1d21e9700"
+    },
+    "voice/fairy_builder/t06_done": {
+      "text_key": "DLG_BUILDER_T06_DONE",
+      "text": "Tårnet er oppe! Og her er et ur, der tæller månefaser. Fekongen sendte det med en spurv.",
+      "text_sha256": "55153c30b6cc274cb50fe228d4f0cd51e3b49488c6c5528c210604c7b49fe173",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "8623849e3983d03c89c7e7831ff9b1cad5d367229b4668c4d562ce6892088164",
+      "audio_sha256": "ca3765b71d17b0e3aed92e10f9803587b9effa8ef776c5bab4aa4e7fc09e2b3b"
+    },
+    "voice/fairy_builder/t06_idle": {
+      "text_key": "DLG_BUILDER_T06_IDLE",
+      "text": "Fra toppen kan man se hele skoven. Og på en klar dag helt ind til byen.",
+      "text_sha256": "5083980b12030e28315bdf8feb232b3b6bb349af61011386da9c431aef7b53ec",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "d9ee8de435efe34396228a26880410171582c3b46e0ae1641b647384ceb0cab6",
+      "audio_sha256": "52462e22e095c6d74548b5c6db28bfe7d241a7cbd0983d0418e2e1c526f04078"
+    },
+    "voice/fairy_builder/t06_offer": {
+      "text_key": "DLG_BUILDER_T06_OFFER",
+      "text": "Et landsted! Hvid villa med søjler, mansardtag og urner. Det kræver marmor og fint træ.",
+      "text_sha256": "de273894c5a1edafe9805109c60ed6907d1de754b24707c7564d03cb1c4b9cf4",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "18f4296019d47e53f25c5094b1a6209a59fe241ac639af886c4ae126cfe7d26c",
+      "audio_sha256": "3dd1294e0ccf08b3d856428e9396160a64f68b81714df3d6a5cf9d9d9460b31b"
+    },
+    "voice/fairy_builder/t07_building": {
+      "text_key": "DLG_BUILDER_T07_BUILDING",
+      "text": "Søjlerne skal stå helt lige. Jeg bruger lod, vaterpas og lidt held.",
+      "text_sha256": "8efa4bc1b7ade0ef0a3bbe6bfbf1a6f04e7fd3433d001bdb76a494e58855ec2a",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "b7e06ff567633e2f3d4700d7222c3c0c1ed7eecd96585ddda6cacd1af52e67e4",
+      "audio_sha256": "089640ba99681c7e54333b8652afea27bf741ad3905284665cde0de111b7d4c1"
+    },
+    "voice/fairy_builder/t07_done": {
+      "text_key": "DLG_BUILDER_T07_DONE",
+      "text": "Søjlerne står, og urnerne er fyldt med blomster. Der står allerede et klaver af stjerner i musikstuen.",
+      "text_sha256": "1fffe18bfb76a7cc2f00df3e7ae1e4cafa854227725b13ce3cb1ab64bab6086d",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "5c9a3a1f53369824d923a675e9b9e63c22f078c871adfbe17f8ecf6ea99f1c35",
+      "audio_sha256": "6274712697597241ce6a250fa5c7804458d5df52e04bc55b9b00b680d756634b"
+    },
+    "voice/fairy_builder/t07_idle": {
+      "text_key": "DLG_BUILDER_T07_IDLE",
+      "text": "Det er næsten for fint. Så husk at tørre fødderne, før du går ind.",
+      "text_sha256": "c7aaf79cf30830300693600a4dfad20a19385abd54933d01e63f4fba9dca4f81",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "6d01da4185fdc96d3c2e0f1a17f64bd3d851ab85286994630e8bf7acc107a4bb",
+      "audio_sha256": "98ec09edd7c5e0b82e6beb300839e86607462eb458e32026308de1a2b1b3e43e"
+    },
+    "voice/fairy_builder/t07_offer": {
+      "text_key": "DLG_BUILDER_T07_OFFER",
+      "text": "En herregård med kobbertage og tårnur. Det bliver mit livs værk. Men Snurresvampen skal først væk.",
+      "text_sha256": "a6c4ffd241930d2c5144a156523a824bd0820e715a940868e500368eae621039",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "f65f3ea8c5b32f441b24fb2796083108f93960b745d07050f39f97ef4b0332e8",
+      "audio_sha256": "d9e53980e60c5e631a56c03357d229266ff1acca937e3deb92b0610525b4b2aa"
+    },
+    "voice/fairy_builder/t08_building": {
+      "text_key": "DLG_BUILDER_T08_BUILDING",
+      "text": "Kobbertagene bliver grønne med tiden. Det er med vilje. Det lover jeg.",
+      "text_sha256": "02077ca0d48c113d8a406b2e37d598e6c322cdb7b38502343d12382637a522b3",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "d5472507bfdae401990bee4f1a5541497dfd7375e655724909a5a51d4d66755f",
+      "audio_sha256": "160e5ef4d82f19b177d8a2b4c78f8fcf9e0061d290139b9cb19dd9d1c189f1ed"
+    },
+    "voice/fairy_builder/t08_done": {
+      "text_key": "DLG_BUILDER_T08_DONE",
+      "text": "Hør, hvordan tårnuret slår! Biblioteket har fået en reol, der svæver. Jeg tør ikke røre ved den.",
+      "text_sha256": "155b68b231d7551d67b1af3da7d8b04402c8a7dc8a9d266b847f8ee25b9c052c",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "e01c1bf21132fd2d5d1fc28faeaa1427b52e047aba1e4c48d2277faaa3715a7c",
+      "audio_sha256": "bee6db945ba9b117f251590fdef77c94939a32edbb8f5e17d96b5fb0ee96a047"
+    },
+    "voice/fairy_builder/t08_idle": {
+      "text_key": "DLG_BUILDER_T08_IDLE",
+      "text": "En herregård skal ses og høres. Især høres, med det ur.",
+      "text_sha256": "f0485c8339b763507636210da0234de409159188f283d4ce22d3c78c139ee572",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "7f1d222eb1a217acfe75e20ee7f6b501c6c073621182750a9a58de1f0204c8be",
+      "audio_sha256": "70422a2b53bf7af1b5ccb47e09edb06bbce2b56a32dadaa3933c64ccc5fa075f"
+    },
+    "voice/fairy_builder/t08_offer": {
+      "text_key": "DLG_BUILDER_T08_OFFER",
+      "text": "Nu mangler kun en borg med tykke mure og to runde tårne. Og månesten, selvfølgelig.",
+      "text_sha256": "a41fcfbe3851a9ef700f2f47c7a66c93ffcca23fd6ff911ff6ebc1c4a712f635",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "7c395002fc8e733180e01beaf794c17e47526c7e4e77f2837e569ce24591bcd0",
+      "audio_sha256": "6e29c1a02906af97b88d8751f63cb99ab4f427ef9b15cfc9f292fc0dd19823d3"
+    },
+    "voice/fairy_builder/t09_building": {
+      "text_key": "DLG_BUILDER_T09_BUILDING",
+      "text": "Murene er tykke og stenene tunge. Kom tilbage, når faldgitteret hænger.",
+      "text_sha256": "1afb95e9765dc33fda39d115ef22fad470333d2d96813a0756bb0b9accefef65",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "e30dbe44f4d13552c5241ef9ca0b3fce8220e5bf0c837baa803d918f613aa0ea",
+      "audio_sha256": "709d6d8abd112e0d394ac7f13281ee8eb2a379d30310188ff4a1924e68dc1421"
+    },
+    "voice/fairy_builder/t09_done": {
+      "text_key": "DLG_BUILDER_T09_DONE",
+      "text": "Mure, tinder og faldgitter! En krystaltrone stod pludselig i riddersalen. Jeg har ikke spurgt, hvordan.",
+      "text_sha256": "a43e52c97c547c7650175bb08e03ed3b12989ba41c2c9f891b39aefd3db9314a",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "db06969306b5598f446c6ee072baee334dfd01e7c97db28dda337ac775462750",
+      "audio_sha256": "f8aeaa5e4bf60a988588a842fe5202e44920677b36a0a301d3db154eb981eeae"
+    },
+    "voice/fairy_builder/t09_idle": {
+      "text_key": "DLG_BUILDER_T09_IDLE",
+      "text": "En borg har brug for fakler. Og for en, der tør åbne porten om natten.",
+      "text_sha256": "8d692c9da22a1babafc11a90a1be2d9c6264a1280d23f0bb69d4f0e31bc6037a",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "60dac7e95a76267963fa00392cc0bfc5cdd117bf9dc15df2a329b56b56addb67",
+      "audio_sha256": "f8ad86faa44bb6140b61c804419b06c3eb32113313a2eaa424d333dd58c28aed"
+    },
+    "voice/fairy_builder/t09_offer": {
+      "text_key": "DLG_BUILDER_T09_OFFER",
+      "text": "Det sidste skridt: Slottet. Marmortårne og guldkupler. Mit mesterstykke, og dit hjem.",
+      "text_sha256": "6b4459c3fb4784069205b11df0a438c5b1b8780d4f8263f623532070ef61c04c",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "7d4fece6c9b3b11a78504b85e9514f407a6addfdaa1b8085566b1910a4c8faf1",
+      "audio_sha256": "fc21d93387380cafcfdd079ac7bd23b17f332a727bd83f0de8e9a44c7a7c42af"
+    },
+    "voice/fairy_builder/t10_building": {
+      "text_key": "DLG_BUILDER_T10_BUILDING",
+      "text": "Marmortårnene stiger. Guldkuplerne kommer sidst. Jeg synger, mens jeg arbejder.",
+      "text_sha256": "db297aa4fc94a2e9e19d2fa72ad3fa8af6e3ee99403f360f91494d52153c6c4c",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "b7cbb47370a219bd591c63d7bfc4d1b1885067d0caac6419b6d423d801236268",
+      "audio_sha256": "1ae16641d1a87ef4c971ff24b6d2c270e082e010ec8fea18dca404d991e9bd53"
+    },
+    "voice/fairy_builder/t10_done": {
+      "text_key": "DLG_BUILDER_T10_DONE",
+      "text": "Det er færdigt! Marmortårne, guldkupler og en lysekrone, der allerede hænger. Træet bærer det med et suk.",
+      "text_sha256": "b68e755ceb3198ffccb3cfcfab7ffea4c81381e2a27fde421b518ca6f14daf0f",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "0bc9cc25c8cbeec95849affc0416c2df028987f93564e7e22bde0ce0faad0bfb",
+      "audio_sha256": "59f7ecd3f6f9f341f257c419119ef1b1acb4c25e13b53ede2aeeba9a2e496d37"
+    },
+    "voice/fairy_builder/t10_idle": {
+      "text_key": "DLG_BUILDER_T10_IDLE",
+      "text": "Her står vi. Jeg har aldrig bygget noget finere. Tak, fordi du lod mig.",
+      "text_sha256": "633e634c9a4ddfe871b8f3361ab5a56af49ec6e4090cce3a8e8a0b5b8c70d763",
+      "source": "lua/dialogue/fairy_builder.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.76638,
+        "rate": 0.879,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "e535cced4b36cdd5e998ca01323952f066bf1b2cfeb28d1e129bba2f8c79d388",
+      "audio_sha256": "e03eb20ec1ba6ceb27b3fd36a4c6b7cbcf44bea81bdd4d17367d4977a9e57157"
+    },
+    "voice/fairy_furnisher/first_1_v": {
+      "text_key": "SOC_FAIRY_FURNISHER_FIRST_1_V",
+      "text": "Jeg er Stokrose. Vi kan gøre en lille stue rigtig rar.",
+      "text_sha256": "22250a49874b05985c6859b10161fa08608bdf934dd4629677fba7a05af6c0a2",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/fairy_furnisher/greet": {
+      "text_key": "DLG_FURNISHER_GREET",
+      "text": "Velkommen til Stokroses Møbler! Sæt dig, prøv en stol og find noget, der passer til din stue.",
+      "text_sha256": "0d31c02f09c5ab812d177b4143222b3a83458433de5121aa41b6d4e48a519492",
+      "source": "lua/dialogue/fairy_furnisher.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.135533,
+        "rate": 1.093391,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "906782668fff9addc9065fb50a7cf40ce212b3f23689966e3aabb975b7ee68ea",
+      "audio_sha256": "9164fbfd69b88dc9006b3959d10dd2abe0063aeaf3c3e756e7c16165dfccb002"
+    },
+    "voice/fairy_king/first_1_v": {
+      "text_key": "SOC_FAIRY_KING_FIRST_1_V",
+      "text": "Velkommen. Dit nye hjem er begyndelsen på en god historie.",
+      "text_sha256": "0a3d9e317a8ca61c59b2800276bee84e8d2c17033361bf6c99911f109216d766",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/fairy_king/greet": {
+      "text_key": "DLG_KING_GREET",
+      "text": "Hvordan går det oppe mellem bladene?",
+      "text_sha256": "70cf404ba36add610f735eb786a62c4809804ded88e5471b988c2a6958727880",
+      "source": "lua/dialogue/fairy_king.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840197,
+        "rate": 0.818529,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "eb9fd3a4b94b76e2e19150d008c77ae9acc2ce339f1967f419652864578dd369",
+      "audio_sha256": "24b57b28269793d9f141446c672c52a3c77f0b6dd20b3400b279707120bc9972"
+    },
+    "voice/fairy_king/letter": {
+      "text_key": "DLG_KING_LETTER",
+      "text": "Kære vinder. Du har vundet en gård i mit lotteri! Følg broen til dit nye hjem. Jeg håber, du vil trives blandt trækronerne. Kærlig hilsen Fekongen.",
+      "text_sha256": "6e021195fe10ef1be23062ab425e99e1a0928344838e9ad7a983f82311070eb4",
+      "source": "lua/dialogue/fairy_king.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840197,
+        "rate": 0.818529,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "9415eb2f1b23f1dc4444f4fc7ca979891002ade5aebfe9a347863aafea9ab811",
+      "audio_sha256": "32567ea2e1f981f3076f334ee67b78a548268fbf08760819449e75aeace94b69"
+    },
+    "voice/fairy_king/moon_offer": {
+      "text_key": "QUEST_MOONSTONE_CROWN_OFFER",
+      "text": "Åh, kære hjælper! Min krone mangler sin månesten. Vil du lede efter en i Mørkeskoven?",
+      "text_sha256": "e32df02f5c23327b16a12b6b097589038833c049f1a04a0b265202802afe9974",
+      "source": "lua/dialogue/fairy_king.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840197,
+        "rate": 0.818529,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "9029199ab06a7a92569fe86c36cb0cbf263b113cfa1eda7dfbdebd8a4af56066",
+      "audio_sha256": "61c80fe6e2d1c615e30db50fff83076e9deb00d127f7189d8ebb14bdb161faab"
+    },
+    "voice/fairy_king/moon_remind": {
+      "text_key": "QUEST_MOONSTONE_CROWN_REMIND",
+      "text": "Har du fundet månestenen endnu? Min krone savner den.",
+      "text_sha256": "fa46d332becb9fe9be2f3a1ce10f1f5292a2f6d9343eb3947d62858e4a1d411e",
+      "source": "lua/dialogue/fairy_king.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840197,
+        "rate": 0.818529,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "43715fbb8baedf3605c20334248029112760811e434d2696d6d3932063cb26cd",
+      "audio_sha256": "f7b23ca2814ab1171eb3f587d2ca1da2dbeeed6eaef010e065760b165da1b41a"
+    },
+    "voice/fairy_king/slot_offer": {
+      "text_key": "QUEST_SLOTSDROEMMEN_OFFER",
+      "text": "Dit slot er smukt, min ven. Men et slot uden hjerte er bare en stor sten. Vil du give det liv?",
+      "text_sha256": "215a2a99adb3725af9bd0414ba4d205c145f49ee39887351320f9b80b4995cb7",
+      "source": "lua/dialogue/fairy_king.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840197,
+        "rate": 0.818529,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "b6da99f743083ab7758f7854450d8ea7431820f9a331f0e1f6a31ca8a25dbbbc",
+      "audio_sha256": "afa1b42b8285d66185a1b8045dec261183c8ca1caf13b1239257cfdbe34117df"
+    },
+    "voice/fairy_king/slot_remind": {
+      "text_key": "QUEST_SLOTSDROEMMEN_REMIND",
+      "text": "Seks skatte, kongelig hygge og en fest i salen. Så har slottet fået liv.",
+      "text_sha256": "d5e4d222b7d25227951db6aa5b7e03d5924a8c42a3a0d41c97f2dbd894ae48a6",
+      "source": "lua/dialogue/fairy_king.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.840197,
+        "rate": 0.818529,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "10fd900f56bfc74825eba831bab5676dfe639a7b88ab58c361c8555a43d70fa4",
+      "audio_sha256": "0787c4fd303310f72fafee9c8df07063bc71e4104a255233b20a4c875bc9e6e1"
+    },
+    "voice/fairy_lily/first_1_v": {
+      "text_key": "SOC_FAIRY_LILY_FIRST_1_V",
+      "text": "Jeg er Lilje. Skal vi finde et blad, der ligner et hjerte?",
+      "text_sha256": "d2e4208d5e34899f8ee9e7253925c353b7d22037545cb50880e2d915da3a3b57",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/fairy_lily/greet": {
+      "text_key": "DLG_LILY_GREET",
+      "text": "Hej... vil du lege?",
+      "text_sha256": "d25f0fe1803e2b71f45dca04378541821195e16c13da78ed31cbde7dd919250a",
+      "source": "lua/dialogue/fairy_lily.lua",
+      "kind": "recorded",
+      "audio_sha256": "4cc5e20bb7162560fa031064c3ca98ed6a1f6da7e5b1851f35bba8dab388ddff"
+    },
+    "voice/fairy_tailor/first_1_v": {
+      "text_key": "SOC_FAIRY_TAILOR_FIRST_1_V",
+      "text": "Fingerbøl er mit navn. Jeg gemmer altid en tråd i en fin farve.",
+      "text_sha256": "9909fa468ca340bfdfc148ba101f46dc6742d6db1ecfce0b9dcf2a637d0a24a2",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/fairy_tailor/greet": {
+      "text_key": "DLG_TAILOR_GREET",
+      "text": "Goddag! Her får du alt fra hatte til tøfler. Prøv det hele, og tag mål lige så tit, du vil.",
+      "text_sha256": "d6163be9ea6f5cc4d8a1433181993c80c572f61ddbae911ac0d1e10c292be0b5",
+      "source": "lua/dialogue/fairy_tailor.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.212774,
+        "rate": 1.086467,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "de3c83102f1b8847ebb977aac23f88ef5e7da478f779586a0f5f63cfa8d52251",
+      "audio_sha256": "bd5df1bd3c496d78cef924900f06b29add59e34aedbd86da5c92b65d7714dff7"
+    },
+    "voice/fairy_wizard/bogtrae_offer": {
+      "text_key": "QUEST_BOGTRAEET_OFFER",
+      "text": "Har du løst alle tre regneprøver? Så har jeg noget helt særligt til dig!",
+      "text_sha256": "9c9b9f3bbadbb2c8680d698d708094396d161c240a0ca9de5267ecb3fccb9f10",
+      "source": "lua/dialogue/fairy_wizard.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.816527,
+        "rate": 0.822871,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "e5ea3f4aac1da86989b2f7fde4810fe97317b2249eceb5b36259cbdd993fb819",
+      "audio_sha256": "67f0f9a5dc39393faa742e523dad45fda91f38438a11904c460db7cabf447519"
+    },
+    "voice/fairy_wizard/bogtrae_remind": {
+      "text_key": "QUEST_BOGTRAEET_REMIND",
+      "text": "Fortæl mig bare, at du kan regne. Så får du dit træ.",
+      "text_sha256": "365e94b9f125f1e58db7e2d8912a6c3a152126c973709dc9d3cb18cfd58427d2",
+      "source": "lua/dialogue/fairy_wizard.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.816527,
+        "rate": 0.822871,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "b66456c7025b686f8620327c6ba1c66f7720f4cb086d17a194c26ba654e2e4a9",
+      "audio_sha256": "345374beed41c80ecfe6605286e0284f7c43c80308f970e0c015aaa6bba16080"
+    },
+    "voice/fairy_wizard/first_1_v": {
+      "text_key": "SOC_FAIRY_WIZARD_FIRST_1_V",
+      "text": "Jeg hedder Zephyr. Selv de mindste glimt kan gemme på magi.",
+      "text_sha256": "6e22385ba16cda2fa39ac19ae8f4305b1a44e083081ad1f5f852e20118e77528",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/fairy_wizard/greet": {
+      "text_key": "DLG_WIZARD_GREET",
+      "text": "Velkommen til Magibutikken! Jeg er Zephyr.",
+      "text_sha256": "6eec662172094e8ca327a2a85c876f4b8d2e9fad1d859e1b4e7e8c102c45524a",
+      "source": "lua/dialogue/fairy_wizard.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.816527,
+        "rate": 0.822871,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "1afefb0e1dc904acd3f5245a918daabc2ee052573350757ccdc1dc26c562b0e9",
+      "audio_sha256": "61da74c6782dfcb61879124303dcc6c23ebf68fc82a7893f9b40da442633ab77"
+    },
+    "voice/fairy_wizard/math_done": {
+      "text_key": "DLG_WIZARD_MATH_DONE",
+      "text": "Udmærket! Du er en rigtig tal-troldmand!",
+      "text_sha256": "a85d530313e7330310223f6a4fa4b4b1fd71d0377294cc9db4baf753c5d69a97",
+      "source": "lua/dialogue/fairy_wizard.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.816527,
+        "rate": 0.822871,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "ef33acf5cec550ab57789a3bb733c05403a5fa5a7edd3deb6455eb159dd9f591",
+      "audio_sha256": "da7949ac7b65a0dccc8156b9ae142066630a16bdec4708b94fd15eedc9d971e3"
+    },
+    "voice/fairy_wizard/math_intro": {
+      "text_key": "DLG_WIZARD_MATH_INTRO",
+      "text": "Jeg arbejder på en ny besværgelse, men først skal du bevise dit tal-snid!",
+      "text_sha256": "2ce7b3c3a8f92673b370fccf1d1bbe813c4fd02f7df26ca863d1d8dae4bbdeba",
+      "source": "lua/dialogue/fairy_wizard.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.816527,
+        "rate": 0.822871,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "7c40279c63b4124f99e2ffdba7aa0c260e8f769a0ee5892d87e4ca6a7f701951",
+      "audio_sha256": "d65c66eb77c1a1ceb96d776246395b26335d44185611e5d1c95d245bb1931522"
+    },
+    "voice/fairy_wizard/math_q1": {
+      "text_key": "DLG_WIZARD_MATH_Q1",
+      "text": "Første gåde: Hvad er 6 gange 7?",
+      "text_sha256": "6c6ec7f47f080ab1a4ba876a4950441e2028a262b4bd8fe27019ec562aeef409",
+      "source": "lua/dialogue/fairy_wizard.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.816527,
+        "rate": 0.822871,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "58d88d7aa54df0b0a7c4f228b0e22c597baf19ca4c6b3c44eecd5c670359c1df",
+      "audio_sha256": "a75459715acae93b6ee8e9ecf68b63e0c91744e5c38b5e779f6143f551d396ed"
+    },
+    "voice/fairy_wizard/math_q2": {
+      "text_key": "DLG_WIZARD_MATH_Q2",
+      "text": "Anden gåde: Hvad er 8 gange 9?",
+      "text_sha256": "3cc60105f8cf21a1b875729286b94579b578631a575d4146a300c63ac3ad2d06",
+      "source": "lua/dialogue/fairy_wizard.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.816527,
+        "rate": 0.822871,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "24ecd860e4e4ef43ba1eab2495a91807dcd4f5f660e3ec3a0a94dc6cf662a612",
+      "audio_sha256": "e55dbc13298a5fbc88d6b4d3e7d15b2d4dfa9b54aa1e20860034da3feddfcf88"
+    },
+    "voice/fairy_wizard/math_q3": {
+      "text_key": "DLG_WIZARD_MATH_Q3",
+      "text": "Sidste gåde: Hvad er 7 gange 4?",
+      "text_sha256": "6489f31a304a82be093f31d9b84b0e351cd0bd042a65eabf8aae6f2008a8ca80",
+      "source": "lua/dialogue/fairy_wizard.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.816527,
+        "rate": 0.822871,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "1f62ce12095fa6b7f11e91bc68d157be01af09f6fd6e8c1bed21b425de83eac4",
+      "audio_sha256": "04cd569427bcf658f9e457015212042f5b8a9e8353dae4b2bf456618c5a78f11"
+    },
+    "voice/farmer_rosa/animal_talk": {
+      "text_key": "DLG_ROSA_ANIMAL_TALK",
+      "text": "Alle mine dyr er opdrættet med kærlighed!",
+      "text_sha256": "8585ede04f964964c12a2c2814162dfa9bc8ad76a26136f2dd25a1872f3d1c2d",
+      "source": "lua/dialogue/farmer_rosa.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.995347,
+        "rate": 0.97402,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "b1008d6af85010ead7dc0affc9b9f44db8ccdf8c7cbbc035c2223349e24fb675",
+      "audio_sha256": "8115b3920d4d17c550427839815821be7b431e7eefce92a2f86cddf8f6dd529f"
+    },
+    "voice/farmer_rosa/bday_farmer_rosa_greet_1_v": {
+      "text_key": "BDAY_FARMER_ROSA_GREET_1_V",
+      "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
+      "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/farmer_rosa/first_1_v": {
+      "text_key": "SOC_FARMER_ROSA_FIRST_1_V",
+      "text": "Jeg er Rosa. Dyrene kommer nok hen for at hilse.",
+      "text_sha256": "b13c14a6d0d87417840ea8c31ad0948f0d543342922b1d5b08b24568c2c4d779",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/farmer_rosa/gift_farmer_rosa_dislike_1_v": {
+      "text_key": "GIFT_FARMER_ROSA_DISLIKE_1_V",
+      "text": "Tak for tanken. En anden kan måske bruge den bedre.",
+      "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/farmer_rosa/gift_farmer_rosa_hate_1_v": {
+      "text_key": "GIFT_FARMER_ROSA_HATE_1_V",
+      "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
+      "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/farmer_rosa/gift_farmer_rosa_like_1_v": {
+      "text_key": "GIFT_FARMER_ROSA_LIKE_1_V",
+      "text": "Hvor betænksomt. Den her bliver jeg glad for.",
+      "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/farmer_rosa/gift_farmer_rosa_love_1_v": {
+      "text_key": "GIFT_FARMER_ROSA_LOVE_1_V",
+      "text": "Du har fundet noget, jeg holder særligt af. Tak!",
+      "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/farmer_rosa/gift_farmer_rosa_neutral_1_v": {
+      "text_key": "GIFT_FARMER_ROSA_NEUTRAL_1_V",
+      "text": "Tak, fordi du tænkte på mig.",
+      "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/farmer_rosa/greet": {
+      "text_key": "DLG_ROSA_GREET",
+      "text": "Hej søde! Vil du se mine dejlige dyr?",
+      "text_sha256": "82cff4fd139fdff38e77d086aff4ef992d441dda23c64ca8ff897f825b146468",
+      "source": "lua/dialogue/farmer_rosa.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.995347,
+        "rate": 0.97402,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "e6bf41f45e9ad341528331fb78a4a7b5774e9d1a49907882aeb5d84ca7ee24a3",
+      "audio_sha256": "d3d568dd0435f69293852b1a4cb11ea7a8335fcbeac8c408c1ff7070c9f1bb58"
+    },
+    "voice/farmer_rosa/greet_h0_1_v": {
+      "text_key": "SOC_FARMER_ROSA_GREET_H0_1_V",
+      "text": "Godt at se dig. Jeg tænkte netop på de bløde muler.",
+      "text_sha256": "edaaeab16eed70d122362ec256b2cae93f96273a2f8637d17aacbe0b471464dd",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/fiddler_strimmel/first_1_v": {
+      "text_key": "SOC_FIDDLER_STRIMMEL_FIRST_1_V",
+      "text": "Jeg hedder Strimmel. Lyt, der er en melodi mellem bladene.",
+      "text_sha256": "979e743b3009e78659245707a81e2fe970229766244e18b70b9546bf699fdb9a",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/gardener_hoppe/bday_gardener_hoppe_greet_1_v": {
+      "text_key": "BDAY_GARDENER_HOPPE_GREET_1_V",
+      "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
+      "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/gardener_hoppe/first_1_v": {
+      "text_key": "SOC_GARDENER_HOPPE_FIRST_1_V",
+      "text": "Jeg er Hoppe. Pas på de små spirer ved dine fødder.",
+      "text_sha256": "77228d50fbb9a6309f071cc9a5a494fd6728298e60ffac73267e0b89ecea2ab8",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/gardener_hoppe/gift_gardener_hoppe_dislike_1_v": {
+      "text_key": "GIFT_GARDENER_HOPPE_DISLIKE_1_V",
+      "text": "Tak for tanken. En anden kan måske bruge den bedre.",
+      "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/gardener_hoppe/gift_gardener_hoppe_hate_1_v": {
+      "text_key": "GIFT_GARDENER_HOPPE_HATE_1_V",
+      "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
+      "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/gardener_hoppe/gift_gardener_hoppe_like_1_v": {
+      "text_key": "GIFT_GARDENER_HOPPE_LIKE_1_V",
+      "text": "Hvor betænksomt. Den her bliver jeg glad for.",
+      "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/gardener_hoppe/gift_gardener_hoppe_love_1_v": {
+      "text_key": "GIFT_GARDENER_HOPPE_LOVE_1_V",
+      "text": "Du har fundet noget, jeg holder særligt af. Tak!",
+      "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/gardener_hoppe/gift_gardener_hoppe_neutral_1_v": {
+      "text_key": "GIFT_GARDENER_HOPPE_NEUTRAL_1_V",
+      "text": "Tak, fordi du tænkte på mig.",
+      "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/gardener_hoppe/greet": {
+      "text_key": "DLG_HOPPE_GREET",
+      "text": "Kom bare nærmere. Der er plads mellem gulerødderne!",
+      "text_sha256": "79c911b1712923a8d42bae5cf02b8b65d6d8994a4db4062c1d755925559f9d21",
+      "source": "lua/dialogue/gardener_hoppe.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.047976,
+        "rate": 0.997626,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "abfffcae8248ba5cb94691de75576c3c04e1e39016b3bc05e7e1e6b0fd6f4c07",
+      "audio_sha256": "52708f1e486458ca2d21a528af5a07f9ce0b7d3f551d30a2fd4adeae0f64a719"
+    },
+    "voice/gardener_hoppe/greet_h0_1_v": {
+      "text_key": "SOC_GARDENER_HOPPE_GREET_H0_1_V",
+      "text": "Godt at se dig. Jeg tænkte netop på de skæve gulerødder.",
+      "text_sha256": "51782395cd083a32a240f880c0585e974a2c5d5c88f349331f5cdaf804e08195",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/gardener_hoppe/klart": {
+      "text_key": "DLG_HOPPE_KLART",
+      "text": "Solen er fremme. Dine spirer bliver tørstige.",
+      "text_sha256": "58af908db678f05ebedde2242e01a2f007003a5439de5737b89a37f2de6d5f93",
+      "source": "lua/dialogue/gardener_hoppe.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.047976,
+        "rate": 0.997626,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "d2f5fa68d3cf874ad50ac5fcbafdb61b515f0ffc001d621f389f2b647cd34599",
+      "audio_sha256": "422397ac0629ccbead878e215df1663fcc702be034657b51af7f4a2de74d2839"
+    },
+    "voice/gardener_hoppe/once": {
+      "text_key": "DLG_HOPPE_ONCE",
+      "text": "Min kurv rækker til én byttehandel om dagen.",
+      "text_sha256": "48e5a899e4d8746ddf38d35a176a3175845b7ec3ec3ed7f593faf8a8af5b32d1",
+      "source": "lua/dialogue/gardener_hoppe.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.047976,
+        "rate": 0.997626,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "09bf1891571963fe7bef824bc504e7377a1395ee9050c526330761d45259fdff",
+      "audio_sha256": "acfab4982280eba567479123d21deea40ad47409f038a753d2391fe0fc1fd07c"
+    },
+    "voice/gardener_hoppe/regn": {
+      "text_key": "DLG_HOPPE_REGN",
+      "text": "Hører du regnen? Så skal du ikke vande i dag.",
+      "text_sha256": "aa5d364df9b40ff6967a6f37d1fd6ee607621946c305477a2b783aac947600b0",
+      "source": "lua/dialogue/gardener_hoppe.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.047976,
+        "rate": 0.997626,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "79f78e7612be9f4fa11e5a94f6e0ab78b38012062ea78f796064681f1acb75f8",
+      "audio_sha256": "3b18b959ac9d550374e3a8a15fc63f11521960524e79cc08a5ef15689cde84d5"
+    },
+    "voice/gardener_hoppe/sne": {
+      "text_key": "DLG_HOPPE_SNE",
+      "text": "Sne er som en dyne. Frøene må vente lidt.",
+      "text_sha256": "ecf1495b47afb8d3e75e69c2dce083c8a5b69bec3fe8886df68d1dde0b5cb7ac",
+      "source": "lua/dialogue/gardener_hoppe.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.047976,
+        "rate": 0.997626,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "72bcf2c51cf7565fb6ffc4c6f5e4657a4c1c0db45174d9e1a567dad7d819b301",
+      "audio_sha256": "5d89c53f4b384ac1a18aacf5a18dcd90a8b1461ea157c1c004d617a29a84f807"
+    },
+    "voice/gardener_hoppe/sprouts": {
+      "text_key": "DLG_HOPPE_SPROUTS",
+      "text": "Små spirer kan blive til store glæder.",
+      "text_sha256": "b1693ea137e08787ae249120857c25ee9f79302c586f9f1c80ca809b8316bc25",
+      "source": "lua/dialogue/gardener_hoppe.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.047976,
+        "rate": 0.997626,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "a9d12f7c04751ee72fa768f594e9599fb8687ccd798aba618ea4a57f4335a1fc",
+      "audio_sha256": "37e31afe9b9644c5a184a354562968a7e7b4d4192713d0282f6f915b5832779c"
+    },
+    "voice/gardener_hoppe/swap_done": {
+      "text_key": "DLG_HOPPE_SWAP_DONE",
+      "text": "Tak for gulerødderne. Jeg gemmer frø til dig igen i morgen.",
+      "text_sha256": "39794eda274ec9af1438a09c932abb123dee2582990e6f8d26a43710276968b4",
+      "source": "lua/dialogue/gardener_hoppe.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.047976,
+        "rate": 0.997626,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "f2ef156a03df4e8db958959b4a1ce67d3082eec094d27992e8e11a88f133b375",
+      "audio_sha256": "e25b5fb9cd4bd2c205554dfdd0ee0a2ce255d49f14c5b39cdbd7a21710008931"
+    },
+    "voice/gardener_hoppe/swap_offer": {
+      "text_key": "DLG_HOPPE_SWAP_OFFER",
+      "text": "To gulerødder for en lille pose frø?",
+      "text_sha256": "a5b1cc1fb56ef1f6b74c433bd47d010e4bd9ec3a4b1b695f637a1b4fb3900798",
+      "source": "lua/dialogue/gardener_hoppe.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.047976,
+        "rate": 0.997626,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "04d47345a6f4b8d9d1c9d35dcb2db025d85e5796a8503f6f440df90bcf100312",
+      "audio_sha256": "b315fc55daf11790bd5177f4bdc48c38c1e080f017b9cfb63c0784f5b54d9f89"
+    },
+    "voice/gardener_hoppe/taage": {
+      "text_key": "DLG_HOPPE_TAAGE",
+      "text": "Tågen putter sig om bladene. Jeg kan næsten høre dem vokse.",
+      "text_sha256": "fcc43b900a8332c320ac27ea969923d9720800313ea39347f9d42e1be770d092",
+      "source": "lua/dialogue/gardener_hoppe.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.047976,
+        "rate": 0.997626,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "83438763f3bacf548490438f2365522f246ce40c819e5f823461f571a51ec6dd",
+      "audio_sha256": "4635e4ae31ee9ad44e82267c0f291dc56634c4cc824d28fce9bbe45635d1a519"
+    },
+    "voice/gardener_hoppe/torden": {
+      "text_key": "DLG_HOPPE_TORDEN",
+      "text": "Det buldrer! Jeg passer frøene herinde i dag.",
+      "text_sha256": "56cbfb507def632ff084a2fe88e6362717184fa076e35a728c573976c9d06927",
+      "source": "lua/dialogue/gardener_hoppe.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.047976,
+        "rate": 0.997626,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "529ad5ae2dc721d29d1cad03b61592b59c3e05fe37c39a0eae3a5bc2c83707a4",
+      "audio_sha256": "fde0a9b4dc5f32e7997236b1c7050a69711c34030138fbe65056f99c80bbbb2c"
+    },
+    "voice/ghostfam_blund/bed": {
+      "text_key": "DLG_GHOSTFAM_BLUND_BED_1",
+      "text": "Er klokken allerede så mange? Mormor siger, at jeg skal sove. Men jeg er slet ikke træt. Bare lidt.",
+      "text_sha256": "447ae4591823ad9fccfbae51fc603c3c70ae59eb4f3a6d175e3e8603bfd5dac9",
+      "source": "lua/dialogue/ghostfam_blund.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.371287,
+        "rate": 1.102668,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "d4ab229756f5b993e6ec71740d9e98212004118508fb511bd211c712eb130b68",
+      "audio_sha256": "8674912011932bc84bb1c9cde87b19068fb4e712f849190671f50f363c32d11c"
+    },
+    "voice/ghostfam_blund/dawn": {
+      "text_key": "DLG_GHOSTFAM_BLUND_DAWN_1",
+      "text": "Zzz... Hvad? Er det morgen? Jeg sov slet ikke. Jeg hvilede bare øjnene.",
+      "text_sha256": "9b7758f8401a957033b491496e30fac9c5ea4011dbfc01fa1d72b57c9d2a257a",
+      "source": "lua/dialogue/ghostfam_blund.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.371287,
+        "rate": 1.102668,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "de11d2ced618e80709e3c9d7b5f1a9c0c54a3f82e15f354adf955fd95174cc33",
+      "audio_sha256": "5fcb6597c580feae0404cd2d28f05fbabbdfde9380ecb50c8849c9db58d7afe8"
+    },
+    "voice/ghostfam_blund/family": {
+      "text_key": "DLG_GHOSTFAM_BLUND_FAMILY_1",
+      "text": "Onsdag er familieaften. Så gemmer jeg mig ikke, så sidder jeg ved bålet og lytter til Mormor.",
+      "text_sha256": "2fcf2ceb4271f47b27e76daf4e825d1f68885d25bf99021c7b65f51516fabb3c",
+      "source": "lua/dialogue/ghostfam_blund.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.371287,
+        "rate": 1.102668,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "98741fbf53e8604424caf44f56b9849de18060e5c27bce10ca2e73ab49981b99",
+      "audio_sha256": "2f8fb643b31c02066c179d91f06814bdfdad6d70f14e1f9e0b73b43a9de7d696"
+    },
+    "voice/ghostfam_blund/first_1_v": {
+      "text_key": "SOC_GHOSTFAM_BLUND_FIRST_1_V",
+      "text": "Hov! Du fandt mig! Sig det ikke til de andre. Jeg hedder Blund.",
+      "text_sha256": "b2e12c814ca80d81d58d1ed10cfbdf402de1c38c1428b62e321d9d83e7506d35",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/ghostfam_blund/greet": {
+      "text_key": "DLG_GHOSTFAM_BLUND_GREET_1",
+      "text": "Du fandt mig! Jeg har et nyt sted hver aften, og du er den første, der ser det.",
+      "text_sha256": "65c4d7d32bc589bf2713b38705b190691f39488358f3bd5ec45617b78083b88c",
+      "source": "lua/dialogue/ghostfam_blund.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.371287,
+        "rate": 1.102668,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "4842c1087610cadd3f10da8ac805c2500267924cc1a23dd493ccc25c730d3bae",
+      "audio_sha256": "e6ec98f60a7c73d36aebf36c3f3cd97dfee80e97c9bde7fbd6ba36aeebaf3cd4"
+    },
+    "voice/ghostfam_blund/kin1": {
+      "text_key": "DLG_GHOSTFAM_BLUND_KIN_1_1",
+      "text": "Du er mit søskendebarn! Mormor har sagt det hele ugen. Jeg hedder Blund, og jeg kan ikke sove om natten.",
+      "text_sha256": "4d8e8c5f219cbea1c11e56a089b63169d38a5c3f60078061c661e88c55a35ccc",
+      "source": "lua/dialogue/ghostfam_blund.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.371287,
+        "rate": 1.102668,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "fbb87cf05d331487bbed29ffb9fcccd8850a6e8271d00d06ee2c8a11d3073b46",
+      "audio_sha256": "c533f9ed9f8714da9ab89dc1828e5a486609febdc9a13db354aa01ae3cffe983"
+    },
+    "voice/ghostfam_blund/kin2": {
+      "text_key": "DLG_GHOSTFAM_BLUND_KIN_1_2",
+      "text": "Skal vi lege gemmeleg? Jeg gemmer mig to gange hver aften, undtagen onsdag. Finder du mig, tæller jeg det på mit gemmekort.",
+      "text_sha256": "01e34293fe38b4e4c0e826bc7dff160d6a2d5d63462a75c8cae75d05890ee246",
+      "source": "lua/dialogue/ghostfam_blund.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.371287,
+        "rate": 1.102668,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "8ffd84c6852ca974bc5ad6eeb2696e9e05325daa705a5f4a86d9819645507d75",
+      "audio_sha256": "85bd9869a82b103a903ae0d5cb5c6d53fbe8c6568ed06d8a36d6f3af3b135986"
+    },
+    "voice/ghostfam_blund/kin3": {
+      "text_key": "DLG_GHOSTFAM_BLUND_KIN_1_3",
+      "text": "På kortet er der gaver. Jo flere gange du finder mig, jo finere bliver de. Men jeg gemmer mig godt, så pas på!",
+      "text_sha256": "0e93840cb85412fdf40a59a6841b65cd882a4cace07ed3c445d92822797efb91",
+      "source": "lua/dialogue/ghostfam_blund.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.371287,
+        "rate": 1.102668,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "2ab75037337f4214535578cb1a054489fdbc12e2ff6f30ff71d7be8703024aa8",
+      "audio_sha256": "85bcbd0453ffb2476f6f01f77b0e5729e0803e08b98aa252b5cb6e210bd5acf5"
+    },
+    "voice/ghostfam_blund/kin_greet": {
+      "text_key": "DLG_GHOSTFAM_BLUND_KIN_GREET_1",
+      "text": "Mit søskendebarn! Find mig i aften, så får du noget. Jeg gemmer mig rigtig godt.",
+      "text_sha256": "e0b07d2702f158114262d6e4ca7c7ad140701a12c3690064c5aa1c03789a1a4f",
+      "source": "lua/dialogue/ghostfam_blund.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.371287,
+        "rate": 1.102668,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "e8b61cd645e0e1d862ab01406fa1c0ae87c0a50c46ce12955c060226d14256c8",
+      "audio_sha256": "f68f6f7fd3db5cc828aa883c28446459106f7d876216cfba7c46290c6f555494"
+    },
+    "voice/ghostfam_blund/kin_look_bu": {
+      "text_key": "DLG_GHOSTFAM_BLUND_KIN_LOOK_BU_1",
+      "text": "Du er blå, ligesom himlen lige efter solnedgang! Det er min yndlingsfarve, og nu er den også familie.",
+      "text_sha256": "140a36fd4451df43c0212c04a2d936ba20e1f2530bc1d68393106d754b7e8718",
+      "source": "lua/dialogue/ghostfam_blund.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.371287,
+        "rate": 1.102668,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "10b74cdf1a04580c949280c497548e8cd998f897cd5d5458a2238a9b98e67ac5",
+      "audio_sha256": "df5173389520ff3d78265004125dbe3c0c71d8023fa92677793f3f7047eb1a8e"
+    },
+    "voice/ghostfam_blund/kin_look_hviske": {
+      "text_key": "DLG_GHOSTFAM_BLUND_KIN_LOOK_HVISKE_1",
+      "text": "Du er lyserød, ligesom morgenrøden! Den ser jeg lige, før jeg går i seng.",
+      "text_sha256": "abacd0b986f5d8231a2c3d31ced376ed252476d08fd0a6d68a41fcfdcd8bd51e",
+      "source": "lua/dialogue/ghostfam_blund.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.371287,
+        "rate": 1.102668,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "1408186c020b663f4a795857c0a86985e5c946f12c8c764b3ae21c1440bf510a",
+      "audio_sha256": "680ba0974860ae2b3179d2e4ae13af5379b0f6440d5c0b837b64507fdd84f0fd"
+    },
+    "voice/ghostfam_blund/sleep": {
+      "text_key": "DLG_GHOSTFAM_BLUND_SLEEP_1",
+      "text": "Zzz... nej... ikke endnu... bare én gemmeleg til... zzz...",
+      "text_sha256": "f91c644dd91cfadc71da2c35ac41510bdb1bf995ba9d29202f43bef2d2d1cc49",
+      "source": "lua/dialogue/ghostfam_blund.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.371287,
+        "rate": 1.102668,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "92b512865f3445c0191a34a42ce515e133b326ab460db4468adec482ac3c1e23",
+      "audio_sha256": "de7c8916f3b0f11c07fc0cc65726925512dd3563106a13fbc10306ae2bf30a8f"
+    },
+    "voice/ghostfam_dyne/chat_2_1_v": {
+      "text_key": "SOC_GHOSTFAM_DYNE_CHAT_2_1_V",
+      "text": "Jeg er over to hundrede år, men jeg tæller ikke. Kun maskerne tæller.",
+      "text_sha256": "ef91470d2e34b2b910ff7e6967ab6eb02a561ba47df2d4c0bdbaba48a9180db0",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/ghostfam_dyne/chat_8_1_v": {
+      "text_key": "SOC_GHOSTFAM_DYNE_CHAT_8_1_V",
+      "text": "Du lyser, når du kommer, indeni. Det kan jeg se, selv uden briller.",
+      "text_sha256": "b599fdb83b0be0fb4b2535815f0652a1130f0530adb1206c3ebddd9d71977f23",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/ghostfam_dyne/dawn": {
+      "text_key": "DLG_GHOSTFAM_DYNE_DAWN_1",
+      "text": "Godnat! Eller godmorgen, hvis du er ung. Vi går i seng nu, men sæt dig et øjeblik, mens garnet hviler.",
+      "text_sha256": "bf20abea251d629f859d82c063e446d14fe0447dd7804255a5da58ec09fd7172",
+      "source": "lua/dialogue/ghostfam_dyne.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "8bda94545fd459885a9351ec783c9e69abaddb1fa35aaac179d50fa8c2839951",
+      "audio_sha256": "3de5512f27520caf4794235d5c13a384b437639cf3ae70add3266d5a419ea60c"
+    },
+    "voice/ghostfam_dyne/first_1_v": {
+      "text_key": "SOC_GHOSTFAM_DYNE_FIRST_1_V",
+      "text": "Goddag! Jeg er Dyne og strikker til alle, der fryser. Sæt dig ved bålet.",
+      "text_sha256": "822d670a32f7b04f96dd024277b4094ea0757610d7e9b0c35ef69e8542db23cb",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/ghostfam_dyne/greet": {
+      "text_key": "DLG_GHOSTFAM_DYNE_GREET_1",
+      "text": "Goddag, kære du! Sæt dig ved bålet. Jeg strikker, mens jeg fortæller, så jeg sagtens kan tale med dig imens.",
+      "text_sha256": "402da23430e74d41337df8a2a5ddc0bc6a85a11b8babc5ee947fa58808cce22f",
+      "source": "lua/dialogue/ghostfam_dyne.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "a341650318e6f27dad5bb99546e989622c16c7d102f8822804ea45b1ef5a8af7",
+      "audio_sha256": "1b3748b559eaebe38237638cecc23cd728b952f3a221d29f9e31168ba5bcf207"
+    },
+    "voice/ghostfam_dyne/greet_h0_1_v": {
+      "text_key": "SOC_GHOSTFAM_DYNE_GREET_H0_1_V",
+      "text": "Aftenen er lige begyndt. Der er plads ved bålet til en historie.",
+      "text_sha256": "8a412f71bc0adcd62ed0e5a0e5ed1b43791e60f8a358c9b279f75ea99df5d9c7",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/ghostfam_dyne/greet_h1_1_v": {
+      "text_key": "SOC_GHOSTFAM_DYNE_GREET_H1_1_V",
+      "text": "Dér er du jo! Jeg har holdt en plads varm til dig.",
+      "text_sha256": "1b95882629d6fe071827a9d7f466b5c3483fa9bb92c914b91e2fde18712a475f",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/ghostfam_dyne/greet_h2_1_v": {
+      "text_key": "SOC_GHOSTFAM_DYNE_GREET_H2_1_V",
+      "text": "Kære dig, du kommer tit nu. Jeg strikker allerede på noget i din farve.",
+      "text_sha256": "ab11e72c2d4994b3f45d4767d93f5c17fc51e53c3a744bd7d4f0286e2ab99a14",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/ghostfam_dyne/greet_h3_1_v": {
+      "text_key": "SOC_GHOSTFAM_DYNE_GREET_H3_1_V",
+      "text": "Du hører til ved bålet nu, helt som om du altid havde gjort det.",
+      "text_sha256": "c8ac4e13b76cea68e66f61eda94cfd62602e7da1ca1f48f960ca98db641e2ad4",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/ghostfam_dyne/kin1": {
+      "text_key": "DLG_GHOSTFAM_DYNE_KIN_1_1",
+      "text": "Der er du jo! Lad mig se på dig, mit barnebarn. Hele vejen fra skoven og lige ind i vores aften.",
+      "text_sha256": "a54aa4f69c7a88e5235bd339fbb764f19d1ce70a1e7e0849dbf2b21673c4bab9",
+      "source": "lua/dialogue/ghostfam_dyne.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "866089a1a091a4b4f1f68dfe2c7e0a90b3a4ce52c5d7cb6a1b8d8a0d5b2fc51e",
+      "audio_sha256": "324cd53ea116074792e1ce543833400aadcb207a65460328587e303be2f7489a"
+    },
+    "voice/ghostfam_dyne/kin2": {
+      "text_key": "DLG_GHOSTFAM_DYNE_KIN_1_2",
+      "text": "Jeg lagde dit navn i Fekongens lotteri. Fire forår i træk, med en tråd af måneskin om sedlen, så han ikke kunne overse den.",
+      "text_sha256": "c55ee8e2601a379658c3a06d0cbfbab44f2da26bca8a537c66ebcd09610a4081",
+      "source": "lua/dialogue/ghostfam_dyne.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "29d94b3246ae36a85c8f037a8588142010d45f519c6b86c7601ded331e2892f2",
+      "audio_sha256": "989764f0028b294b9eaa7531b6e894d8e8fae09c9d263d3637e8cf8ea22f516b"
+    },
+    "voice/ghostfam_dyne/kin3": {
+      "text_key": "DLG_GHOSTFAM_DYNE_KIN_1_3",
+      "text": "I år trak han netop din seddel. Han læste navnet, så på tråden og sagde: Det er en Natlys! Og så fik du gården oppe i trækronerne.",
+      "text_sha256": "9d9f6baaa66f55a4b0369d5798fe461468e2ac83e27a723c8b61fb7560338a8f",
+      "source": "lua/dialogue/ghostfam_dyne.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "9fdcccf84dd38b389d6111dbf139d87952c99afcaf919c74bbd5165a453b94b8",
+      "audio_sha256": "7f2be19260326e8d0d0921856766b4ef391b59a0f1cb69064f8fc1f9843ec493"
+    },
+    "voice/ghostfam_dyne/kin4": {
+      "text_key": "DLG_GHOSTFAM_DYNE_KIN_1_4",
+      "text": "Din mor er min yngste. Hun gik ind i Mørkeskoven. Jeg ved ikke, hvad der skete derinde. Men der er en plads til jer begge ved bålet.",
+      "text_sha256": "d8ee15d8bdcc4eaf3b225a25e511224ecd68e06019f0197519be58387fdf25bf",
+      "source": "lua/dialogue/ghostfam_dyne.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "46520b3405510cf850c2ac00ef20ed7c014657cfd4edd5d933503742b2498865",
+      "audio_sha256": "142f0919f5831a8ca6d85d16047ca3fb55cbae3a4e7fc8d537d7e798dda08c08"
+    },
+    "voice/ghostfam_dyne/kin5": {
+      "text_key": "DLG_GHOSTFAM_DYNE_KIN_1_5",
+      "text": "Her, den har jeg strikket til dig. Jeg gættede på størrelsen. Og kald mig bare Mormor, det gør alle de bedste.",
+      "text_sha256": "8eef3c62a8ce7680cb9eb0857d1fc45c11fc8ccfae28fb30942a212190fee442",
+      "source": "lua/dialogue/ghostfam_dyne.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "b06e314b25d9e132aef3eba326a0377b0cbe0f831f4ad8fff7cc3748fbace6ce",
+      "audio_sha256": "5c0180fe57303656f10026be57c57031a6f4cebc3aa628dec6504598a35429c1"
+    },
+    "voice/ghostfam_dyne/kin_dawn": {
+      "text_key": "DLG_GHOSTFAM_DYNE_KIN_DAWN_1",
+      "text": "Godmorgen, mit barnebarn. Solen er oppe, så nu går vi i seng. Men sæt dig et øjeblik, mens garnet hviler.",
+      "text_sha256": "1170209c3203a4a9775fb37db6adafc3fbc51c9bb36ee74e551221c3f2535912",
+      "source": "lua/dialogue/ghostfam_dyne.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "be1a0aeb113a27e4aae4946cafbc91ba1405d856289f8942bbe7e74e6e1096f4",
+      "audio_sha256": "2719f09d3864f805b1f442b3b27bdb7ed9000a2a6b2eede601ba014b524f2859"
+    },
+    "voice/ghostfam_dyne/kin_greet": {
+      "text_key": "DLG_GHOSTFAM_DYNE_KIN_GREET_1",
+      "text": "Mit barnebarn! Fortæl mig om gården oppe i trækronerne. Jeg vil høre alt, også det kedelige.",
+      "text_sha256": "9c7b6fd59826370641495ec2e9c67f74be301cfd29955f9c8fcd6d013771254e",
+      "source": "lua/dialogue/ghostfam_dyne.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "35d1b931bff3912fc255a57a0a37f3d288c0f41d0123cec950954797a20860c0",
+      "audio_sha256": "65c5367525aab6d17a72ed048423d257b309ec61aac8eff757f6c64132dd0741"
+    },
+    "voice/ghostfam_dyne/kin_look_bu": {
+      "text_key": "DLG_GHOSTFAM_DYNE_KIN_LOOK_BU_1",
+      "text": "Så lys og blåhvid. Du har min bedstemors lagen i farven, ved du. Den var også så fin om aftenen.",
+      "text_sha256": "f72b1ade98d6523635e5ba41fb2ca0bd617307ba92eb37c8c2ae9a71dedda960",
+      "source": "lua/dialogue/ghostfam_dyne.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "30e705117ef4390d8090b7b3984bdb6e00e20b68cb93a09d78952afb72c03980",
+      "audio_sha256": "79d3f7e9a88e4af2aa762e5a802e4d9eb91f5be881d44531212dc6120f347bc3"
+    },
+    "voice/ghostfam_dyne/kin_look_hviske": {
+      "text_key": "DLG_GHOSTFAM_DYNE_KIN_LOOK_HVISKE_1",
+      "text": "Så lyserød og blid, ligesom nattens første stjerne. Det klæder dig.",
+      "text_sha256": "274594c107c357468ba8cefd01afea49b2e3ef2d8921ab218472ed361c411513",
+      "source": "lua/dialogue/ghostfam_dyne.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "9a66cf4af1598f466315bf028568e122c034893e76e205499596d3cbbc265ff0",
+      "audio_sha256": "8b3cc7e4cf82a623537956b8bbc2e21abe0efda34e18c2be8ede0d8d4e571e34"
+    },
+    "voice/ghostfam_dyne/midnight_0": {
+      "text_key": "DLG_GHOSTFAM_DYNE_MIDNIGHT_0",
+      "text": "Mandagshistorien: Månen tabte engang en knap. Den faldt i en dam og blev til en fisk med lys i maven. Siden kigger fiskene op hver nat for at se, om månen har fået den syet på igen.",
+      "text_sha256": "00c777260558f90e2ba3247183e6a2a934c301583cffc6e3ebf2d4220b4e0958",
+      "source": "lua/dialogue/ghostfam_dyne.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "9884a2f7f9d0198be16c3bb594d1b9cd3f6c17850b59db6cc89503b31fae9b61",
+      "audio_sha256": "fe18522b4888b2bbc1a3179489c0588a01b1cfe3114525912ffd7f08b440a0c7"
+    },
+    "voice/ghostfam_dyne/midnight_1": {
+      "text_key": "DLG_GHOSTFAM_DYNE_MIDNIGHT_1",
+      "text": "Tirsdagshistorien: Et lille lys ville ikke slukkes, for det syntes, at mørket var for stort. Så lærte det, at mørket bare er en stor, stille pude. Siden sov lyset hver nat på den.",
+      "text_sha256": "35ad86ed58942e8c66641c468000864ef491e6c604a970749783fe3bf7c482eb",
+      "source": "lua/dialogue/ghostfam_dyne.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "b7af6222181a666c27067ae5196a04bb0cec9095c0b4d55282b3d733860440f9",
+      "audio_sha256": "81e995fc316a93baaf178d3c84428ac573eaaaab732c2e892c5b4974ade29dd3"
+    },
+    "voice/ghostfam_dyne/midnight_2": {
+      "text_key": "DLG_GHOSTFAM_DYNE_MIDNIGHT_2",
+      "text": "Onsdagshistorien: På en onsdag glemte alle at gå hjem, fordi bålet var så rart. Der blev fortalt så mange historier, at de måtte sidde oven på hinanden. Det er derfor, de fylder så meget.",
+      "text_sha256": "c0be70c1d65e388e51ef3f8125f914191216b4f340d930a50b3798d70a713416",
+      "source": "lua/dialogue/ghostfam_dyne.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "bd914d4ca25b3fb5a31ee48c13c81afed53f4bfbc72abbe8cf10de81f0963ac3",
+      "audio_sha256": "f8013c5221a9eec920e4bd67c59a99a05e93ea06f8510042bd5d1af8e3f7fac4"
+    },
+    "voice/ghostfam_dyne/midnight_3": {
+      "text_key": "DLG_GHOSTFAM_DYNE_MIDNIGHT_3",
+      "text": "Torsdagshistorien: Jeg strikkede engang et tæppe til en sky. Den blev så glad, at den regnede hele dagen af lykke. Siden har jeg strikket lidt løsere.",
+      "text_sha256": "4fcb575193f45d32e4b92653dfa880aaf0a2734e4b7d497fdbf04e26722066af",
+      "source": "lua/dialogue/ghostfam_dyne.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "8c1ca1c921d55af031999dc36625802519f144292878cbb834a7cddc4d85b469",
+      "audio_sha256": "793787badf1f9a55ad98176b788aada3cd8ba8ddf6e68bf7938c171e0c6380d2"
+    },
+    "voice/ghostfam_dyne/midnight_4": {
+      "text_key": "DLG_GHOSTFAM_DYNE_MIDNIGHT_4",
+      "text": "Fredagshistorien: Alle stjernerne fik fri en aften og besøgte byen. De gemte sig i lygterne, og ingen opdagede det. Kig godt efter, næste gang du ser en lygte blinke.",
+      "text_sha256": "5fc88e71cca0158fe3ad74039b3e0377f0859a4100604939604429aa630ec238",
+      "source": "lua/dialogue/ghostfam_dyne.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "8bd1e6295d47a5c987f28bc7c21636349bd95e56571f708ab35e5d5d694bb7ba",
+      "audio_sha256": "bfb9dee94a77bab687a1a95fd6eac36b0377383a7ee2af8b280fb2ce999dccb6"
+    },
+    "voice/ghostfam_dyne/midnight_5": {
+      "text_key": "DLG_GHOSTFAM_DYNE_MIDNIGHT_5",
+      "text": "Lørdagshistorien: Natten har en hemmelig dør. Man finder den kun, hvis man går baglæns med en lygte og smiler. Bagved bor alle de drømme, der endnu ikke er drømt.",
+      "text_sha256": "c008de113878fe083b4021417b8ec10f517807e9ad7f40220721185489d694aa",
+      "source": "lua/dialogue/ghostfam_dyne.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "6c195b8d09053b31047352d85b06960b7be817920bf58f33dc9140b892405682",
+      "audio_sha256": "71c418efc137cfece487c1202b46c28b498a1869bc758f06398242a05a6119b0"
+    },
+    "voice/ghostfam_dyne/midnight_6": {
+      "text_key": "DLG_GHOSTFAM_DYNE_MIDNIGHT_6",
+      "text": "Søndagshistorien: Den første lygte blev tændt af en myre, der havde fundet en gnist. Hele familien kom for at se. Siden tænder vi altid en lygte for dem, der er små.",
+      "text_sha256": "1baf99480b39e008b536386e71c90c2dc74aaf1865fc3b5defac1f41b6c5b9c9",
+      "source": "lua/dialogue/ghostfam_dyne.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "e90c341a6f1584b0560794bd14fe0aca4a5003dc5f423b68ae001c5976fc5d62",
+      "audio_sha256": "fad60ed40046b940f58aab5e4aadb466e5aeabce561abcc7d774d0054e687ede"
+    },
+    "voice/ghostfam_dyne/night": {
+      "text_key": "DLG_GHOSTFAM_DYNE_NIGHT_1",
+      "text": "Bålet er brændt ned, men bænken er varm. Sæt dig lidt, så fortæller jeg en kort en.",
+      "text_sha256": "10f60c871844464d31baeb4b85a813fd7b54d9e76ae3cf4365ff4237bc69a74b",
+      "source": "lua/dialogue/ghostfam_dyne.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.861029,
+        "rate": 0.839035,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "0987dfb65ec8f1839dbaa777dbe7ae82edb972def41a484cc1c279f98df8cf56",
+      "audio_sha256": "5f10d92d9c92bd17c0a14233582b44a681474e1784dfb8dbd0fd637d9ab40552"
+    },
+    "voice/ghostfam_gnist/closed": {
+      "text_key": "DLG_GHOSTFAM_GNIST_CLOSED_1",
+      "text": "Vi har lukket for i dag. Kom igen i morgen aften, så er der varmt på lamperne.",
+      "text_sha256": "2f79a9c29259ccce0e45d2b5d7d90990c0894568663e8ed887bacaccb32b6ff0",
+      "source": "lua/dialogue/ghostfam_gnist.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.119337,
+        "rate": 1.047059,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "81ff8ee8e8f8c2e776c6a78b75a20f9088e2549addb8957bac62ddf63a61b14e",
+      "audio_sha256": "3db3e78e28cdf4ba64a516de13b64ffebd777d935ca8b43765121545d64500de"
+    },
+    "voice/ghostfam_gnist/closed_night": {
+      "text_key": "DLG_GHOSTFAM_GNIST_CLOSED_NIGHT_1",
+      "text": "Nu er lamperne ved at være slukket. Kom igen i morgen aften, så er der varmt på dem.",
+      "text_sha256": "5d1810bca8af4e3918d3035f056a8cc113e5e427a55453eec21895b323ce6d35",
+      "source": "lua/dialogue/ghostfam_gnist.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.119337,
+        "rate": 1.047059,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "5cc04496b5359c811d58a2ad262a16865dfb03c151d6f44e01f9de6b21e3207c",
+      "audio_sha256": "54f5c62f33d39d655e5aa4e0fe12c12ff4771b7978dc9654ba43c5367a6a172c"
+    },
+    "voice/ghostfam_gnist/early": {
+      "text_key": "DLG_GHOSTFAM_GNIST_EARLY_1",
+      "text": "Godmorgen, eller godnat. Lygtehuset åbner først i aften klokken sytten. Kom igen, når lamperne er tændt.",
+      "text_sha256": "f52fc3d555df41a857d1f59d46165e9bf0ad7709304b23ca9b0a4e3851a203ab",
+      "source": "lua/dialogue/ghostfam_gnist.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.119337,
+        "rate": 1.047059,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "f64b17233579243b421daef2cb98c91cdabf8248d1203ddae1a6fa8c7fd11172",
+      "audio_sha256": "89a4f4b179f3bd45ee0d213540d0c2f247530569b44264d2d5514066ed92baad"
+    },
+    "voice/ghostfam_gnist/first_1_v": {
+      "text_key": "SOC_GHOSTFAM_GNIST_FIRST_1_V",
+      "text": "Goddag! Jeg er Gnist, lygtemageren. Skal du ud i mørket, så kig forbi.",
+      "text_sha256": "4ae352a4ee906859b911fd25a17dde3ed6da39c5a5a5ac3dd228aab4f19ed0b2",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/ghostfam_gnist/greet": {
+      "text_key": "DLG_GHOSTFAM_GNIST_GREET_1",
+      "text": "Natlys' Lygtehus. Olie, lys og gode råd til mørket. Hvad skal det være?",
+      "text_sha256": "f2cd8fc827519134a4c87bd07ac94123c2066f13f4f9e37c83214be8c8ca85b5",
+      "source": "lua/dialogue/ghostfam_gnist.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.119337,
+        "rate": 1.047059,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "c5a72d617fbd50eff7334b0adaca53051bd20789ce40f1af4158b42a3aa86bb6",
+      "audio_sha256": "f58c78a83f8912eedcf375b2c1dc772aa12859cd871d0df8e88854d3acd59032"
+    },
+    "voice/ghostfam_gnist/kin1": {
+      "text_key": "DLG_GHOSTFAM_GNIST_KIN_1_1",
+      "text": "Nåh, så er du Blunds søskendebarn! Dyne har talt om dig i fire forår. Jeg er Gnist, lygtemageren, og lygtehuset er også dit.",
+      "text_sha256": "97256c37af2ed89a3837896144486eb7c3ef794ca493e05938644b6b1b3327ee",
+      "source": "lua/dialogue/ghostfam_gnist.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.119337,
+        "rate": 1.047059,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "b7b5470d4320c61b6e01d65264cbb260ef62a6a991a28e34fefcc2a32c03e7c5",
+      "audio_sha256": "2f17ce29bbf68e28443cf301aa78d3b2bf7ca5dc01140d46d6066e42f7d96c7e"
+    },
+    "voice/ghostfam_gnist/kin2": {
+      "text_key": "DLG_GHOSTFAM_GNIST_KIN_1_2",
+      "text": "Her, to flasker olie til din første tur i mørket. Første gang er gratis i familien. Resten koster, vi er jo en forretning.",
+      "text_sha256": "f898d46cbf8b4e9dabfa5948a7afb1a0b05de4fee014a058c8f241197c6e2c8b",
+      "source": "lua/dialogue/ghostfam_gnist.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.119337,
+        "rate": 1.047059,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "f47eaca0184f9253957fd3618481868b858fe33919e85b53d6ab04dbea4d15dd",
+      "audio_sha256": "bf4179340f08924078fd26361ad818d1be47e9724b58a185935fd837a5adbed8"
+    },
+    "voice/ghostfam_gnist/kin_greet": {
+      "text_key": "DLG_GHOSTFAM_GNIST_KIN_GREET_1",
+      "text": "Familien er altid velkommen i lygtehuset. Hvad skal det være?",
+      "text_sha256": "6bd166557f6919555c07dba51d29667aff619c5628db90b62f531bb040ffb293",
+      "source": "lua/dialogue/ghostfam_gnist.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.119337,
+        "rate": 1.047059,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "d3456c4c0fdba0cf6103e8b165aa006c28a18d6547fd2147934b39fa75c6f8dd",
+      "audio_sha256": "32b670549ec01637aebe8691664f1e073fdbba7d8a8a82e8f2509225f1fd9a0e"
+    },
+    "voice/ghostfam_silke/dawn": {
+      "text_key": "DLG_GHOSTFAM_SILKE_DAWN_1",
+      "text": "Nu slukker jeg det sidste lys. Se, hvor fint det bliver, når solen overtager.",
+      "text_sha256": "9ae75b86869dcc086b14f5064e2c9db6a80121b355ade99e2df06a2a54e7c927",
+      "source": "lua/dialogue/ghostfam_silke.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.920125,
+        "rate": 0.942638,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "72eeec7f9324050a10f6c5eca70687f06ed0e9cc1ad6f7ee9bf919e6b349d758",
+      "audio_sha256": "850d27deb9a0061f3b1f118132f446a44ed6bbadb40ee74e5869dddf6ca60443"
+    },
+    "voice/ghostfam_silke/first_1_v": {
+      "text_key": "SOC_GHOSTFAM_SILKE_FIRST_1_V",
+      "text": "Hej. Jeg er Silke, nattevagten. Går du hjem sent, følger jeg dig gerne.",
+      "text_sha256": "839db4b360f97f260c32d5779648a923b0a340057237befc24415e12fa39fc07",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/ghostfam_silke/greet": {
+      "text_key": "DLG_GHOSTFAM_SILKE_GREET_1",
+      "text": "Godaften. Alt er roligt, men sig til, hvis noget generer dig.",
+      "text_sha256": "26995ce4096a67970ac4c2e65ea5ab62d45ec8668e2a25fdae103439adb14c30",
+      "source": "lua/dialogue/ghostfam_silke.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.920125,
+        "rate": 0.942638,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "1a7b35667ce0139a78b2de44638552096ad3024105a13f1d9859f8eb0a964a0c",
+      "audio_sha256": "7b8426c2ddf010b110761a4513784859129688906c3e618a9fd4073e53d2e94d"
+    },
+    "voice/ghostfam_silke/kin1": {
+      "text_key": "DLG_GHOSTFAM_SILKE_KIN_1_1",
+      "text": "Hej, familie. Jeg er Silke. Din mor og jeg er søskende. Du er Blunds søskendebarn. Jeg har glædet mig til at møde dig.",
+      "text_sha256": "9ec801da10e749f00d461ea67ead4e44620e75f220d248798847aebcd92b5b92",
+      "source": "lua/dialogue/ghostfam_silke.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.920125,
+        "rate": 0.942638,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "a771c51c2e38a6b910d71499c4cb7001266773998c608c2db35ac03a8f665ee9",
+      "audio_sha256": "8ccf1f170eac2990c572dd5294655801b40121360202ce5a2475c4a971627893"
+    },
+    "voice/ghostfam_silke/kin2": {
+      "text_key": "DLG_GHOSTFAM_SILKE_KIN_1_2",
+      "text": "Går du ud om natten, så sig til. Jeg følger dig gerne hjem, og jeg kender alle genveje og alle lygter.",
+      "text_sha256": "27a33a1af05e0c66b914fa0c67e73c5573b2670adf7d587f894ffc00bee9edde",
+      "source": "lua/dialogue/ghostfam_silke.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.920125,
+        "rate": 0.942638,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "f56f360d9ab09d210977eb6737973792bb34e715d803c8ee2ecbbfc160ccd394",
+      "audio_sha256": "bef82f8410c24e907b3610bdfaadc773d381fdc8032effc6110ec8aa41d60153"
+    },
+    "voice/ghostfam_silke/kin_greet": {
+      "text_key": "DLG_GHOSTFAM_SILKE_KIN_GREET_1",
+      "text": "Hej, familie. Alt er roligt. Hold dig bare i lyset, så er alt godt.",
+      "text_sha256": "ecc999ea78ea491197d688faf1c9e6daec57b5cad42e6c1253ed7c13cbf40deb",
+      "source": "lua/dialogue/ghostfam_silke.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.920125,
+        "rate": 0.942638,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "e40552ebffdb463fb1964f16036c03f7a2fca47f6fb6e812e867a7d2e6db3e79",
+      "audio_sha256": "ff9380fdd38784f4e3adb7a0f5117fb7ca9f40f3ee69bfe70f8a17a7442bd3f3"
+    },
+    "voice/ghostfam_silke/late": {
+      "text_key": "DLG_GHOSTFAM_SILKE_LATE_1",
+      "text": "Det er blevet sent. Skal jeg følge dig hjem, før klokken slår?",
+      "text_sha256": "1b6d1baaa2b09064ac3cdb9111446ed16bc0c761bd747352937a2c041fd087c3",
+      "source": "lua/dialogue/ghostfam_silke.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.920125,
+        "rate": 0.942638,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "1dcf134fbf41517d32313c6adc3741ecb9fecca72e57ab4987d88bca0d70e44f",
+      "audio_sha256": "17d8fe67d1ff88a051360a28a44db6bba43f0e2a6cbf849c3c9d9ef87d452583"
+    },
+    "voice/ghostfam_silke/late2": {
+      "text_key": "DLG_GHOSTFAM_SILKE_LATE_2",
+      "text": "Klokken er over midnat. Om lidt falder du om af træthed, så gå hjem og læg dig i god tid.",
+      "text_sha256": "7691090abc1cc318b02880682e1d322073c9a93fb131ab2fbdb0159612a75962",
+      "source": "lua/dialogue/ghostfam_silke.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.920125,
+        "rate": 0.942638,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "6a0f8530f0114db9205b68cf2c7c59f2876a8cea1049a9fed58bb3d021f71e0d",
+      "audio_sha256": "4cf9fb128917bafaad1d1b8873583cffc533a27fbef7e9d592110fff9014a80e"
+    },
+    "voice/guard_oak/bossernes_vej_offer": {
+      "text_key": "QUEST_BOSSERNES_VEJ_OFFER",
+      "text": "Tre store svampe vogter skoven. Vil du finde dem?",
+      "text_sha256": "53d8fa98bffdd7607ca149a51fe0850ff24121c1c0a1fdbccbc5db4487aa904d",
+      "source": "lua/dialogue/guard_oak.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.922188,
+        "rate": 0.954654,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "777ca3a684a1c1b0fb776c22a9fbef69a3b88ab3501e53d709a3c59746822fe5",
+      "audio_sha256": "80ac1835706f7aafad6485578e1fe987684df71b17a7fb8dbcced1b32983d443"
+    },
+    "voice/guard_oak/first_1_v": {
+      "text_key": "SOC_GUARD_OAK_FIRST_1_V",
+      "text": "Jeg er Eg. Jeg passer på broen, mens du finder vej.",
+      "text_sha256": "3d58fe61380ae5329f1d7537495cf2e2515e34c8c2f33fc893ed23269c5bfda3",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/guard_oak/greet": {
+      "text_key": "DLG_OAK_GREET",
+      "text": "Hold vagt! Den mørke skov er ikke sikker i aften.",
+      "text_sha256": "4d98b83317cdae6daefe6ac59ad54179dbfe975354a3e81f9e0989ca2d794099",
+      "source": "lua/dialogue/guard_oak.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.922188,
+        "rate": 0.954654,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "86049b45205fe7413db32f6f595fa3fd31c33ee715d8721ea0025b9738c0cc4a",
+      "audio_sha256": "b18ceabede13a70f56c21a760a5a8b156bda331acd10ecb45794fcb52cad643a"
+    },
+    "voice/guard_oak/lift": {
+      "text_key": "DLG_OAK_LIFT",
+      "text": "Skovliften går ned til Mørkeskoven. Husk lygten!",
+      "text_sha256": "7cb09001b86e8573aa1a26b2b8b743f72ca8dcfb1e52a9291fe4412ba4798d82",
+      "source": "lua/dialogue/guard_oak.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.922188,
+        "rate": 0.954654,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "759be4f552dd984348d5f3646ef01e2cd53d41849e5fb4c0e1b3090c695ab0c4",
+      "audio_sha256": "2b0a6b77c41c3f89b0d20d5e014b88d1e86a9a0591b5f4fb2a27a96a0392715d"
+    },
+    "voice/guard_oak/skovlift_intro_offer": {
+      "text_key": "QUEST_SKOVLIFT_INTRO_OFFER",
+      "text": "Vil du se, hvor runerne lyser? Kom hjem og fortæl mig om turen.",
+      "text_sha256": "f5514213799131c2aac15ca2aefb97f72f3bbafde5a17cdbc9478b4c5e8b2c91",
+      "source": "lua/dialogue/guard_oak.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.922188,
+        "rate": 0.954654,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "109574cadf73de31899164e25dac65ac427ece01bd508e62190ece29e3d5fddc",
+      "audio_sha256": "7436e1f1a30d69105cad61224c2e220fa366811df10bed8c0de6f80b8618aa8a"
+    },
+    "voice/guard_oak/snurre_offer": {
+      "text_key": "QUEST_SNURRESVAMPEN_OFFER",
+      "text": "Hører du det snurrende bulder? Det er Snurresvampen! Kan du få den til at holde op?",
+      "text_sha256": "6522d4016f3a9ca6c260f0910d962097b60f2a47856dbe29ad548891c54215ca",
+      "source": "lua/dialogue/guard_oak.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.922188,
+        "rate": 0.954654,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "7dc2071c311375c4acdf0b3bcde9b0780090b423fbe8236fda49a7eac0f5cba2",
+      "audio_sha256": "3f48ce191d93f13b99b6bb3037d978234fa5f565a01fc554669c516098cc9346"
+    },
+    "voice/guard_oak/snurre_remind": {
+      "text_key": "QUEST_SNURRESVAMPEN_REMIND",
+      "text": "Er Snurresvampen blevet stille? Jeg lytter efter stilhed.",
+      "text_sha256": "56ca3b9ca82ace565142977e8192eb5114e4cade6cc5eb9510d21eab29d2085a",
+      "source": "lua/dialogue/guard_oak.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.922188,
+        "rate": 0.954654,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "bbbdd28af5bd7db01876f7ba31e5ddc8719061406b8a5052bcab92d64a350148",
+      "audio_sha256": "d5667cc17d5bb1a9887bd4a4ea722ba81134a4a6468382461eeb283bb982e5b6"
+    },
+    "voice/innkeeper_kvak/first_1_v": {
+      "text_key": "SOC_INNKEEPER_KVAK_FIRST_1_V",
+      "text": "Jeg er Kvak. Der er en lun kop og en ledig stol.",
+      "text_sha256": "fa06e7ac53527e7b806dcf0e5d3b2f22aa44079436ca0268cc2ff3bf0f2f277a",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/lamplighter_kiki/first_1_v": {
+      "text_key": "SOC_LAMPLIGHTER_KIKI_FIRST_1_V",
+      "text": "Jeg er Kiki. Jeg tænder lys, når bladene bliver mørke.",
+      "text_sha256": "068a352ee043ac57f486bc59358cdb7bf2e199b7347b8e3c93abbf3f8334a4ee",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/mapseller_natteblik/ears": {
+      "text_key": "DLG_NATTEBLIK_EARS",
+      "text": "Mine ører finder vej, hvor øjnene må vente.",
+      "text_sha256": "29a3812bc4a7209a4743ff9a257ac2b480ebe482990d42d59c9e80c108aec4a2",
+      "source": "lua/dialogue/mapseller_natteblik.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.891011,
+        "rate": 0.951032,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "d3a115b20eb927dffb6bfe200f230d58378062f2759947340d9bbf2dc47bc869",
+      "audio_sha256": "2e28bf6d802563872cb8884ef4d854ed930002959ac9a0c1ece66452c2513e89"
+    },
+    "voice/mapseller_natteblik/farewell": {
+      "text_key": "DLG_NATTEBLIK_FAREWELL",
+      "text": "Må dine skridt finde en venlig sti.",
+      "text_sha256": "e131e9eb3915a89b9a0b0bc427e7726beb01a758e2f3cfade7a822bac89981d0",
+      "source": "lua/dialogue/mapseller_natteblik.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.891011,
+        "rate": 0.951032,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "8d308640c4a623032831b9fa1262ac53e405a2e47a4ad2af47d2065842c1d559",
+      "audio_sha256": "96feee1963900b9497e40af52c0deaab6b2aa8515f55f9a7d5b992e0529b92fe"
+    },
+    "voice/mapseller_natteblik/first_1_v": {
+      "text_key": "SOC_MAPSELLER_NATTEBLIK_FIRST_1_V",
+      "text": "Jeg er Natteblik. Mine kort følger røddernes hemmelige veje.",
+      "text_sha256": "6e41e1849ffe386452ead18bd731bfc9153b53e4fadbb618514793ac5c38b142",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/mapseller_natteblik/greet": {
+      "text_key": "DLG_NATTEBLIK_GREET",
+      "text": "Et kort? Jeg kender de mørke stier.",
+      "text_sha256": "2b9840105dbbae68fb89449c7353f5dc0e02962e8b02d42be483ee5b66c804f2",
+      "source": "lua/dialogue/mapseller_natteblik.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.891011,
+        "rate": 0.951032,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "7f09d50d33b46561b5e80ff9fcd09a80818bb565c8d3dfa0346cb5402df62710",
+      "audio_sha256": "012780842387535780eb1007f696f9cec7b0d50b836552f0fda18099815436cb"
+    },
+    "voice/mapseller_natteblik/lantern": {
+      "text_key": "DLG_NATTEBLIK_LANTERN",
+      "text": "Tag lygten med. Selv et kort har brug for lys.",
+      "text_sha256": "83d836ea21dbbbd06f4abeb3e17c53d2a48a27778711a6defbf8f9f12bcd8cac",
+      "source": "lua/dialogue/mapseller_natteblik.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.891011,
+        "rate": 0.951032,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "d6d1f2e0cf00b5de35696f248c6d34df5a92a9d5614cffb977d2fddf93be5a91",
+      "audio_sha256": "4ef8fe199fb45166ca8bbe9ede0bfe5ba934a98b06a867466ecfe14c21823e16"
+    },
+    "voice/mapseller_natteblik/maps": {
+      "text_key": "DLG_NATTEBLIK_MAPS",
+      "text": "Et lille kryds kan vise en stor omvej.",
+      "text_sha256": "7fba289d433a6ea9ee8aab74b1d529bd6a2e8fbf0f4af32bba3d9b9dd3b01afa",
+      "source": "lua/dialogue/mapseller_natteblik.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.891011,
+        "rate": 0.951032,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "5b2fbc647ac93c854afbec5d05690adf11479d3c8acfa223d2651df95b24b425",
+      "audio_sha256": "0f1dff1a7d2f85110924fe3c83d912b9c41afe8fc56116bf5b96c8c30aa4f760"
+    },
+    "voice/mapseller_natteblik/night": {
+      "text_key": "DLG_NATTEBLIK_NIGHT",
+      "text": "God aften. Nu vågner skovens små lys.",
+      "text_sha256": "e9e6f888f4e25485c0972b5e035e7b7ce9f7f9541a2cb2fd5e00c361252aaed9",
+      "source": "lua/dialogue/mapseller_natteblik.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.891011,
+        "rate": 0.951032,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "3c8b76d22077e7a41cf0b89c55769c6ffc9faac9cfc58ff558224750dc3ade27",
+      "audio_sha256": "54bb4ae463d9b359ed4c8718b74fdfd9ea545e76bc105ae5773f6b295791af55"
+    },
+    "voice/mapseller_natteblik/no_maps": {
+      "text_key": "DLG_NATTEBLIK_NO_MAPS",
+      "text": "Kortene er ikke tegnet endnu. Kom igen senere.",
+      "text_sha256": "921bff9e6b50cad33bd6f428c0b6adebaf5c11c399ff9b8dfda6d041c1ee3f65",
+      "source": "lua/dialogue/mapseller_natteblik.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.891011,
+        "rate": 0.951032,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "e7226a1cd1cb42f7e75ecb946f90ce3a3fb4f1d66b1fdfee5cb59e3cef8fe4b2",
+      "audio_sha256": "cc469d563a8b6f75994a53caa792cb967cb4078e3b81764b1caef67ececb6975"
+    },
+    "voice/mapseller_natteblik/roots": {
+      "text_key": "DLG_NATTEBLIK_ROOTS",
+      "text": "Rødderne flytter sig. Jeg tegner nye streger.",
+      "text_sha256": "1fdf8b6d6daadfc5aeecc3a61415d9a06829e21e5e34108f0704f24b200a89d2",
+      "source": "lua/dialogue/mapseller_natteblik.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 0.891011,
+        "rate": 0.951032,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "7c84c6587c0c5654f42e7058fda5e382ff4cecff8fb83b29e10b384212b56add",
+      "audio_sha256": "44d2a544b052418a6b69f6f3425f88b8bea7e62cf0aee6e803aaa471273f9f09"
+    },
+    "voice/mayor_lyra/bday_mayor_lyra_greet_1_v": {
+      "text_key": "BDAY_MAYOR_LYRA_GREET_1_V",
+      "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
+      "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/mayor_lyra/farm_status": {
+      "text_key": "DLG_LYRA_FARM_STATUS",
+      "text": "Din gård trives! Fortsæt det gode arbejde.",
+      "text_sha256": "e55ec8e7ce3a2a3a0aa0c1f1907d4eac8b549414c9096e4e46837018d5c6ba9b",
+      "source": "lua/dialogue/mayor_lyra.lua",
+      "kind": "recorded",
+      "audio_sha256": "f0f855675b83515fc0cf8c7d1ddb732affff1e629dd6adf20fccf7335762369c"
+    },
+    "voice/mayor_lyra/first_1_v": {
+      "text_key": "SOC_MAYOR_LYRA_FIRST_1_V",
+      "text": "Jeg er Hyldeblomst. Vi finder en plads til dig i Trætoppen.",
+      "text_sha256": "734f8733b938852f1ab3a1f2ba060708fe444959a9c65255eb9d113b00cf1c04",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/mayor_lyra/gift_mayor_lyra_dislike_1_v": {
+      "text_key": "GIFT_MAYOR_LYRA_DISLIKE_1_V",
+      "text": "Tak for tanken. En anden kan måske bruge den bedre.",
+      "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/mayor_lyra/gift_mayor_lyra_hate_1_v": {
+      "text_key": "GIFT_MAYOR_LYRA_HATE_1_V",
+      "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
+      "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/mayor_lyra/gift_mayor_lyra_like_1_v": {
+      "text_key": "GIFT_MAYOR_LYRA_LIKE_1_V",
+      "text": "Hvor betænksomt. Den her bliver jeg glad for.",
+      "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/mayor_lyra/gift_mayor_lyra_love_1_v": {
+      "text_key": "GIFT_MAYOR_LYRA_LOVE_1_V",
+      "text": "Du har fundet noget, jeg holder særligt af. Tak!",
+      "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/mayor_lyra/gift_mayor_lyra_neutral_1_v": {
+      "text_key": "GIFT_MAYOR_LYRA_NEUTRAL_1_V",
+      "text": "Tak, fordi du tænkte på mig.",
+      "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/mayor_lyra/greet_1": {
+      "text_key": "DLG_LYRA_GREET_1",
+      "text": "Velkommen til Hyggebyen! Jeg er borgmester Hyldeblomst.",
+      "text_sha256": "fbbaffba19cf7fca1a4ab5505d87ae747801376dac7b73528ac7d48483f8e903",
+      "source": "lua/dialogue/mayor_lyra.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.142938,
+        "rate": 1.111963,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "c03be52ce50d2fc70825076ccfcdefcb2205ec991b15bdcf51dd6706ac97596d",
+      "audio_sha256": "e310beede55f3d55d567172d0ecb22d9cc52d69867a5b5cae30904996657db86"
+    },
+    "voice/mayor_lyra/greet_2": {
+      "text_key": "DLG_LYRA_GREET_2",
+      "text": "Feernes Konge har udvalgt dig i det årlige lotteri!",
+      "text_sha256": "e817e79955e77876cd775d483a18e85994052dfc9971909b63dbd766d5d1cdab",
+      "source": "lua/dialogue/mayor_lyra.lua",
+      "kind": "recorded",
+      "audio_sha256": "bb58ca39b0cbe868a1ba5362f67345a6af67ac9643420a08f5a3096b370298d8"
+    },
+    "voice/mayor_lyra/greet_h0_1_v": {
+      "text_key": "SOC_MAYOR_LYRA_GREET_H0_1_V",
+      "text": "Godt at se dig. Jeg tænkte netop på de små broer.",
+      "text_sha256": "4a0fc37baf77d566c8f713b95c92fdafba3020ecba719bfe5093a0c1b0347b4d",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/mayor_lyra/hello": {
+      "text_key": "DLG_LYRA_HELLO",
+      "text": "Godt at se dig igen!",
+      "text_sha256": "f54573d8622f1a861091c1a4a2b12a1fd332596eff1a651f942f8fbbe9929f6b",
+      "source": "lua/dialogue/mayor_lyra.lua",
+      "kind": "recorded",
+      "audio_sha256": "cce404ee0d79bbbbb9787e5164f20f386a6807d72839c1a49b9cc82c41dcd7ba"
+    },
+    "voice/mayor_lyra/lottery": {
+      "text_key": "DLG_LYRA_LOTTERY",
+      "text": "Du har vundet en fortryllet trækronsgård! Den venter på dig i skovens kroner.",
+      "text_sha256": "24a7147f430390462b6b58334e90ed7c3efadfead1803d4b288ad1c379f21e29",
+      "source": "lua/dialogue/mayor_lyra.lua",
+      "kind": "recorded",
+      "audio_sha256": "a2c97147aae7cea881458dec4d60a30a3383ab909d1939b02f59ac4daf1011e6"
+    },
+    "voice/merchant_pip/bday_merchant_pip_greet_1_v": {
+      "text_key": "BDAY_MERCHANT_PIP_GREET_1_V",
+      "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
+      "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/merchant_pip/first_1_v": {
+      "text_key": "SOC_MERCHANT_PIP_FIRST_1_V",
+      "text": "Jeg hedder Kløvermynte. Her begynder de små frø deres rejse.",
+      "text_sha256": "174e0458adb1b517e5c231e5756588d733bd3cf6ea773d7f8f233ba6de241ada",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/merchant_pip/gift_merchant_pip_dislike_1_v": {
+      "text_key": "GIFT_MERCHANT_PIP_DISLIKE_1_V",
+      "text": "Tak for tanken. En anden kan måske bruge den bedre.",
+      "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/merchant_pip/gift_merchant_pip_hate_1_v": {
+      "text_key": "GIFT_MERCHANT_PIP_HATE_1_V",
+      "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
+      "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/merchant_pip/gift_merchant_pip_like_1_v": {
+      "text_key": "GIFT_MERCHANT_PIP_LIKE_1_V",
+      "text": "Hvor betænksomt. Den her bliver jeg glad for.",
+      "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/merchant_pip/gift_merchant_pip_love_1_v": {
+      "text_key": "GIFT_MERCHANT_PIP_LOVE_1_V",
+      "text": "Du har fundet noget, jeg holder særligt af. Tak!",
+      "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/merchant_pip/gift_merchant_pip_neutral_1_v": {
+      "text_key": "GIFT_MERCHANT_PIP_NEUTRAL_1_V",
+      "text": "Tak, fordi du tænkte på mig.",
+      "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/merchant_pip/greet_h0_1_v": {
+      "text_key": "SOC_MERCHANT_PIP_GREET_H0_1_V",
+      "text": "Godt at se dig. Jeg tænkte netop på mine frøposer.",
+      "text_sha256": "24060306b4ab3f74aebb6ff418df4e7c684a37a625ef97d86e132d5c5c879653",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/penguin_postman/first_1_v": {
+      "text_key": "SOC_PENGUIN_POSTMAN_FIRST_1_V",
+      "text": "Goddag! Jeg bringer post over de små broer.",
+      "text_sha256": "482ee6d3df10eb0fb3ec8cc92699972635d680e9026eaf9a7f652f4e749f82cb",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/penguin_postman/hello": {
+      "text_key": "DLG_PENGUIN_HELLO",
+      "text": "Posten skal frem, også når broen gynger!",
+      "text_sha256": "e4448d912f351eaaa2e8cfa3bd7b2b63014df5ed51726bfff1f39ac7fe59a131",
+      "source": "lua/dialogue/penguin_postman.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.254561,
+        "rate": 1.145456,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "a422f7837cb9b5ec4ba69ca2d285e73aa292cc10360069e0cac7fa797d9d05f6",
+      "audio_sha256": "a0b667806761cfb5e46f9161495044523023bc1f40478651f04097ca2c1055a9"
+    },
+    "voice/pip/greet": {
+      "text_key": "DLG_MERCHANT_GREET",
+      "text": "Velkommen til min butik! Hvad skal du bruge?",
+      "text_sha256": "1d2d1803271eb8ceac85a36c7d41c42971efde63f71b985b618a73fe4be89526",
+      "source": "lua/dialogue/merchant_pip.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.029266,
+        "rate": 0.989981,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "37dba073a627dab3139d4a2c2d3abf505e144d067f12feaffb6821cb08a7f141",
+      "audio_sha256": "6f34333de72ced9cc706b4268c4d32cdad32762bc74e7e9f7c02d50490585f60"
+    },
+    "voice/pippin_boegeknop/cat_offer": {
+      "text_key": "DLG_PIPPIN_CAT",
+      "text": "Morfar Mis er gået på tur igen. Vil du holde øje med ham?",
+      "text_sha256": "32db9d5877533e4a2e0839d24e078a9cd1a76f05e338b9855afcb3172d105bf3",
+      "source": "lua/dialogue/pippin_boegeknop.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.189914,
+        "rate": 1.18115,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "28115b19a5fd99392bd50399aae80b41f11285de47e324d4c13a1baf74ea2fc4",
+      "audio_sha256": "c79b29e8bf3efee9f5762d1bc6538f78f9a8822b6a99b1f9c3f3846aea6097cf"
+    },
+    "voice/pippin_boegeknop/cat_remind": {
+      "text_key": "DLG_PIPPIN_REMIND",
+      "text": "Prøv at spørge naboerne. Mis holder også af broen.",
+      "text_sha256": "d4bbe28125214f9b259a93f391ce9176444dff99fed16cd7c738161a10cdf975",
+      "source": "lua/dialogue/pippin_boegeknop.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.189914,
+        "rate": 1.18115,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "1e34b1d717c2f55fa393667b18519f4fa779ae614acf39360f8e236460141a5f",
+      "audio_sha256": "b3c68e39c55acfa6971144cdafd46db46406b4ed86470798f5c1ed9c33215dc6"
+    },
+    "voice/pippin_boegeknop/first_1_v": {
+      "text_key": "SOC_PIPPIN_BOEGEKNOP_FIRST_1_V",
+      "text": "Jeg hedder Pippin Bøgeknop. Vil du se, hvad jeg har fundet?",
+      "text_sha256": "74785b398625b6f7e02f214d7181f0b3519aab97b6be7565e5f156c794c49f51",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/pippin_boegeknop/hello": {
+      "text_key": "DLG_PIPPIN_HELLO",
+      "text": "Nå, hvordan går det på gården?",
+      "text_sha256": "b42d759c8060fff70f97265f5b8c8db6e756221f7be3395a842669a8a351d2ec",
+      "source": "lua/dialogue/pippin_boegeknop.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.189914,
+        "rate": 1.18115,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "db82b2520fd09e7a10e1acde7ee9720b02a412033426a3d1b36bdee9667a32c7",
+      "audio_sha256": "94bbfe13d19f9cadf89802ed45e3b525087c4d6af30e12834b545fa219356023"
+    },
+    "voice/postman_pip/bag": {
+      "text_key": "DLG_PIP_BAG",
+      "text": "Min taske er fuld af små hilsner.",
+      "text_sha256": "fc16ce788c2f3352e57f03c6cc90b8299049d6a5255d3c2ef4df64a6898acf81",
+      "source": "lua/dialogue/postman_pip.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.175571,
+        "rate": 1.154903,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "4d7c477d2b9ec901a81b2a143834d901e99cba28220ede65d2b90fbc01d26159",
+      "audio_sha256": "429880cd6010e3a3893896bd601d453a1e8b6a88a3590a7565fe0b02428b5637"
+    },
+    "voice/postman_pip/bday_postman_pip_greet_1_v": {
+      "text_key": "BDAY_POSTMAN_PIP_GREET_1_V",
+      "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
+      "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/postman_pip/first_1_v": {
+      "text_key": "SOC_POSTMAN_PIP_FIRST_1_V",
+      "text": "Jeg er Postbud Pip. Min taske er fuld af hilsner.",
+      "text_sha256": "a643ab32811e009fff930591a173cc91211aa84cb0c893962b61432d4886736c",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/postman_pip/gift_postman_pip_dislike_1_v": {
+      "text_key": "GIFT_POSTMAN_PIP_DISLIKE_1_V",
+      "text": "Tak for tanken. En anden kan måske bruge den bedre.",
+      "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/postman_pip/gift_postman_pip_hate_1_v": {
+      "text_key": "GIFT_POSTMAN_PIP_HATE_1_V",
+      "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
+      "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/postman_pip/gift_postman_pip_like_1_v": {
+      "text_key": "GIFT_POSTMAN_PIP_LIKE_1_V",
+      "text": "Hvor betænksomt. Den her bliver jeg glad for.",
+      "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/postman_pip/gift_postman_pip_love_1_v": {
+      "text_key": "GIFT_POSTMAN_PIP_LOVE_1_V",
+      "text": "Du har fundet noget, jeg holder særligt af. Tak!",
+      "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/postman_pip/gift_postman_pip_neutral_1_v": {
+      "text_key": "GIFT_POSTMAN_PIP_NEUTRAL_1_V",
+      "text": "Tak, fordi du tænkte på mig.",
+      "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/postman_pip/greet": {
+      "text_key": "DLG_PIP_GREET",
+      "text": "Godmorgen! Eller goddag. Min posttaske holder ikke øje med klokken.",
+      "text_sha256": "bfbf9f4dacedd009005f53f0a8ccda02fa156218cbe37b2bc6b568dcf0599551",
+      "source": "lua/dialogue/postman_pip.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.175571,
+        "rate": 1.154903,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "79fa57a504f9cc83fc53a415c9605add2cc65b224958aa3421415afd69bf7b24",
+      "audio_sha256": "34ebe175e4008e82b09b8f97a6c7158aa75efb7c50cfb7c5122222baff2d5e64"
+    },
+    "voice/postman_pip/greet_h0_1_v": {
+      "text_key": "SOC_POSTMAN_PIP_GREET_H0_1_V",
+      "text": "Godt at se dig. Jeg tænkte netop på de små breve.",
+      "text_sha256": "d3c59aa7b90c0254042d15dc06bdd9b308575aa5c26d574e6d4b1569e0711c10",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/postman_pip/mail": {
+      "text_key": "DLG_PIP_MAIL",
+      "text": "Der ligger post til dig i din postkasse.",
+      "text_sha256": "43f5c94207416d92bb89eca80cca50881ef33e5a261e4aa48347371a3c03666c",
+      "source": "lua/dialogue/postman_pip.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.175571,
+        "rate": 1.154903,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "ba28c645979bc91aa299eb0176de84f3f09449ca030312d6ef58cfcd28e93576",
+      "audio_sha256": "93bffcfe8c094b30bc05d81b9169334e4d69c750ecc12aad85a764e979b190cc"
+    },
+    "voice/postman_pip/offer": {
+      "text_key": "DLG_PIP_OFFER",
+      "text": "Vil du hilse på Hoppe, Brumme og Sofus? De venter på dig.",
+      "text_sha256": "401502b15d9b5c7d8d17fc0f7119e43277fa38a76b0ad609227aefde8b2f4f0e",
+      "source": "lua/dialogue/postman_pip.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.175571,
+        "rate": 1.154903,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "1b56b3df308242b86bee838516c4e0a607b04f0390eaaf11d85b1b1c21324c98",
+      "audio_sha256": "a5124e08af13b8276627780d8fbff913cc3d84d1c619b4caf94c4f2a09d208af"
+    },
+    "voice/postman_pip/remind": {
+      "text_key": "DLG_PIP_REMIND",
+      "text": "Har du hilst på mine tre venner? Jeg er lige her bagefter.",
+      "text_sha256": "c83e46289f84e367c2f280ba1529b633e7c44d248b51988b5a83698357dc2c3c",
+      "source": "lua/dialogue/postman_pip.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.175571,
+        "rate": 1.154903,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "c1c4aa401d3535d10c617c7dfb9e19c593a9bb80f866f70d2e84388fb73de7a9",
+      "audio_sha256": "dcf53f5906080d505a93b0b50fab028e381b2da3712f2945c46f5e9a70609894"
+    },
+    "voice/postman_pip/rest": {
+      "text_key": "DLG_PIP_REST",
+      "text": "Jeg tager en pause, når det sidste brev er fremme.",
+      "text_sha256": "c31f2222509c77c9e3a6ccf89f517f3f37ce5c863837cf5cda548979eda5532c",
+      "source": "lua/dialogue/postman_pip.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.175571,
+        "rate": 1.154903,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "fed9343a7788dd5ef47122496072561ce263bd2ae16c8ae08d319e69092196a1",
+      "audio_sha256": "de0397accbc4f97242d3239ac072137cc8518fda038b0d1b12d5b87098ecfbe0"
+    },
+    "voice/postman_pip/round": {
+      "text_key": "DLG_PIP_ROUND",
+      "text": "Jeg kender hver en lille bro heroppe.",
+      "text_sha256": "b3109cf2babbb6db005904324582042cb87a8c23b41fccc3f893e3f5e7554a59",
+      "source": "lua/dialogue/postman_pip.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.175571,
+        "rate": 1.154903,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "4d5e653e8da4b1d4b4979197bbc728be9dc6013de96b2434281927cce85141db",
+      "audio_sha256": "878d0a1c6bdd9e7db9096a08b81968175549d822f10062f0cecc92311f52994a"
+    },
+    "voice/postman_pip/thanks": {
+      "text_key": "DLG_PIP_THANKS",
+      "text": "Nu kender du nogle af os. Det føles allerede mere hjemligt!",
+      "text_sha256": "bb7bc1a1b5db78732d31a5d694563e019a16f4cc08808d55dd5b8d74d354a320",
+      "source": "lua/dialogue/postman_pip.lua",
+      "kind": "placeholder",
+      "params": {
+        "voice": "Sara",
+        "pitch": 1.175571,
+        "rate": 1.154903,
+        "pace": 0.88,
+        "respell": {},
+        "version": 1
+      },
+      "fingerprint": "43fcce85495ff2b897f59833a18a50f0abbc81f4c2e39ee0aa57428432b8b923",
+      "audio_sha256": "d79d7024a030b9242855b3bf60f378e85fb4d6e13cdfef8fd20bb43973bf0f93"
+    },
+    "voice/rasmus/first_1_v": {
+      "text_key": "SOC_RASMUS_FIRST_1_V",
+      "text": "Jeg er Rasmus. Jeg finder altid en lille sti mere.",
+      "text_sha256": "1c33bea2768268a9dead0e02388b0a0593819f6f9bcc38841d35e01ee029b265",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/smith_thorin/bday_smith_thorin_greet_1_v": {
+      "text_key": "BDAY_SMITH_THORIN_GREET_1_V",
+      "text": "Du kom på min fødselsdag! Det gør dagen lidt varmere.",
+      "text_sha256": "0b91dcaea6453e24ee44e64a440890cce4d357376d9cf7377f99a66b88f2cc2e",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/smith_thorin/first_1_v": {
+      "text_key": "SOC_SMITH_THORIN_FIRST_1_V",
+      "text": "Jeg er Thorin. Der er altid en lun krog ved essen.",
+      "text_sha256": "4710169d1d52d1fe3d4aee16953ff43535731364d9939976b71a22a123a2927a",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/smith_thorin/gift_smith_thorin_dislike_1_v": {
+      "text_key": "GIFT_SMITH_THORIN_DISLIKE_1_V",
+      "text": "Tak for tanken. En anden kan måske bruge den bedre.",
+      "text_sha256": "2efb53835c3103f5ac5b71f8e49db4d86cfb775dacaba35ec5dfa960b75741ca",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/smith_thorin/gift_smith_thorin_hate_1_v": {
+      "text_key": "GIFT_SMITH_THORIN_HATE_1_V",
+      "text": "Det var venligt af dig. Den her passer bare ikke helt til mig.",
+      "text_sha256": "982fd7aa38d6cb7613ec0474154b2084a5a42be6d34819cd73f5921e8a3b1e19",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/smith_thorin/gift_smith_thorin_like_1_v": {
+      "text_key": "GIFT_SMITH_THORIN_LIKE_1_V",
+      "text": "Hvor betænksomt. Den her bliver jeg glad for.",
+      "text_sha256": "bd07a828f7dce9874afe5a837d814cd8293589ed41fe9843d03f4e8ba1a9d558",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/smith_thorin/gift_smith_thorin_love_1_v": {
+      "text_key": "GIFT_SMITH_THORIN_LOVE_1_V",
+      "text": "Du har fundet noget, jeg holder særligt af. Tak!",
+      "text_sha256": "7736484efdbfef67e3eebfc51f278a1b1ff8280aec6a345df40075cdbb8e3565",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/smith_thorin/gift_smith_thorin_neutral_1_v": {
+      "text_key": "GIFT_SMITH_THORIN_NEUTRAL_1_V",
+      "text": "Tak, fordi du tænkte på mig.",
+      "text_sha256": "4a977fc2821a5268f21b663f4ee40d65b20eeb5d1820fc868c3266cf164763d0",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/smith_thorin/greet": {
+      "text_key": "DLG_THORIN_GREET",
+      "text": "Hrmf. Velkommen til smedjen.",
+      "text_sha256": "fa03ae2c072210b7815333612d93b0b70e983135aef8b54c359ed202dc7a7883",
+      "source": "lua/dialogue/smith_thorin.lua",
+      "kind": "recorded",
+      "audio_sha256": "dd8cfd317c0e530140342aa979affb2bce2360a2737581dda4413b62b4af8110"
+    },
+    "voice/smith_thorin/greet_h0_1_v": {
+      "text_key": "SOC_SMITH_THORIN_GREET_H0_1_V",
+      "text": "Godt at se dig. Jeg tænkte netop på jernets glød.",
+      "text_sha256": "3b071c72e9fa196cad2fa24c7b9c6b79500372c19bde599d8b1cf5ffb3bcb116",
+      "source": "lua/dialogue/_voiced_social.lua",
+      "kind": "missing",
+      "reason": "draft social copy; bake after copy review"
+    },
+    "voice/smith_thorin/mining_talk": {
+      "text_key": "DLG_THORIN_MINING_TALK",
+      "text": "Den mørke skov er fuld af sjældne malmsten... men også farer.",
+      "text_sha256": "b99e8eb4ab35c6ba5c1be394ecef75075b0fbe9f3ccd4c15961a3e57b4f2c148",
+      "source": "lua/dialogue/smith_thorin.lua",
+      "kind": "recorded",
+      "audio_sha256": "b0b695ba4f0439681ca57a4a35458ae786a0a46161a705679f8193680705a051"
+    }
+  },
+  "format": 1,
+  "status": "Human originals preserved; local Sara/synth placeholders; no native listening approval",
+  "missing": {
+    "voice/appraiser_fru_ugle/first_1_v": "draft social copy; bake after copy review",
+    "voice/baker_maja/bday_baker_maja_greet_1_v": "draft social copy; bake after copy review",
+    "voice/baker_maja/first_1_v": "draft social copy; bake after copy review",
+    "voice/baker_maja/gift_baker_maja_dislike_1_v": "draft social copy; bake after copy review",
+    "voice/baker_maja/gift_baker_maja_hate_1_v": "draft social copy; bake after copy review",
+    "voice/baker_maja/gift_baker_maja_like_1_v": "draft social copy; bake after copy review",
+    "voice/baker_maja/gift_baker_maja_love_1_v": "draft social copy; bake after copy review",
+    "voice/baker_maja/gift_baker_maja_neutral_1_v": "draft social copy; bake after copy review",
+    "voice/baker_maja/greet_h0_1_v": "draft social copy; bake after copy review",
+    "voice/bathkeeper_sofus/bday_bathkeeper_sofus_greet_1_v": "draft social copy; bake after copy review",
+    "voice/bathkeeper_sofus/first_1_v": "draft social copy; bake after copy review",
+    "voice/bathkeeper_sofus/gift_bathkeeper_sofus_dislike_1_v": "draft social copy; bake after copy review",
+    "voice/bathkeeper_sofus/gift_bathkeeper_sofus_hate_1_v": "draft social copy; bake after copy review",
+    "voice/bathkeeper_sofus/gift_bathkeeper_sofus_like_1_v": "draft social copy; bake after copy review",
+    "voice/bathkeeper_sofus/gift_bathkeeper_sofus_love_1_v": "draft social copy; bake after copy review",
+    "voice/bathkeeper_sofus/gift_bathkeeper_sofus_neutral_1_v": "draft social copy; bake after copy review",
+    "voice/bathkeeper_sofus/greet_h0_1_v": "draft social copy; bake after copy review",
+    "voice/beekeeper_birk/bday_beekeeper_birk_greet_1_v": "draft social copy; bake after copy review",
+    "voice/beekeeper_birk/first_1_v": "draft social copy; bake after copy review",
+    "voice/beekeeper_birk/gift_beekeeper_birk_dislike_1_v": "draft social copy; bake after copy review",
+    "voice/beekeeper_birk/gift_beekeeper_birk_hate_1_v": "draft social copy; bake after copy review",
+    "voice/beekeeper_birk/gift_beekeeper_birk_like_1_v": "draft social copy; bake after copy review",
+    "voice/beekeeper_birk/gift_beekeeper_birk_love_1_v": "draft social copy; bake after copy review",
+    "voice/beekeeper_birk/gift_beekeeper_birk_neutral_1_v": "draft social copy; bake after copy review",
+    "voice/beekeeper_birk/greet_h0_1_v": "draft social copy; bake after copy review",
+    "voice/bertil/first_1_v": "draft social copy; bake after copy review",
+    "voice/bodil/first_1_v": "draft social copy; bake after copy review",
+    "voice/carpenter_brumme/bday_carpenter_brumme_greet_1_v": "draft social copy; bake after copy review",
+    "voice/carpenter_brumme/first_1_v": "draft social copy; bake after copy review",
+    "voice/carpenter_brumme/gift_carpenter_brumme_dislike_1_v": "draft social copy; bake after copy review",
+    "voice/carpenter_brumme/gift_carpenter_brumme_hate_1_v": "draft social copy; bake after copy review",
+    "voice/carpenter_brumme/gift_carpenter_brumme_like_1_v": "draft social copy; bake after copy review",
+    "voice/carpenter_brumme/gift_carpenter_brumme_love_1_v": "draft social copy; bake after copy review",
+    "voice/carpenter_brumme/gift_carpenter_brumme_neutral_1_v": "draft social copy; bake after copy review",
+    "voice/carpenter_brumme/greet_h0_1_v": "draft social copy; bake after copy review",
+    "voice/cat_morfar_mis/first_1_v": "draft social copy; bake after copy review",
+    "voice/clerk_fjerpen/first_1_v": "draft social copy; bake after copy review",
+    "voice/cub_bamse/first_1_v": "draft social copy; bake after copy review",
+    "voice/fairy_builder/first_1_v": "draft social copy; bake after copy review",
+    "voice/fairy_furnisher/first_1_v": "draft social copy; bake after copy review",
+    "voice/fairy_king/first_1_v": "draft social copy; bake after copy review",
+    "voice/fairy_lily/first_1_v": "draft social copy; bake after copy review",
+    "voice/fairy_tailor/first_1_v": "draft social copy; bake after copy review",
+    "voice/fairy_wizard/first_1_v": "draft social copy; bake after copy review",
+    "voice/farmer_rosa/bday_farmer_rosa_greet_1_v": "draft social copy; bake after copy review",
+    "voice/farmer_rosa/first_1_v": "draft social copy; bake after copy review",
+    "voice/farmer_rosa/gift_farmer_rosa_dislike_1_v": "draft social copy; bake after copy review",
+    "voice/farmer_rosa/gift_farmer_rosa_hate_1_v": "draft social copy; bake after copy review",
+    "voice/farmer_rosa/gift_farmer_rosa_like_1_v": "draft social copy; bake after copy review",
+    "voice/farmer_rosa/gift_farmer_rosa_love_1_v": "draft social copy; bake after copy review",
+    "voice/farmer_rosa/gift_farmer_rosa_neutral_1_v": "draft social copy; bake after copy review",
+    "voice/farmer_rosa/greet_h0_1_v": "draft social copy; bake after copy review",
+    "voice/fiddler_strimmel/first_1_v": "draft social copy; bake after copy review",
+    "voice/gardener_hoppe/bday_gardener_hoppe_greet_1_v": "draft social copy; bake after copy review",
+    "voice/gardener_hoppe/first_1_v": "draft social copy; bake after copy review",
+    "voice/gardener_hoppe/gift_gardener_hoppe_dislike_1_v": "draft social copy; bake after copy review",
+    "voice/gardener_hoppe/gift_gardener_hoppe_hate_1_v": "draft social copy; bake after copy review",
+    "voice/gardener_hoppe/gift_gardener_hoppe_like_1_v": "draft social copy; bake after copy review",
+    "voice/gardener_hoppe/gift_gardener_hoppe_love_1_v": "draft social copy; bake after copy review",
+    "voice/gardener_hoppe/gift_gardener_hoppe_neutral_1_v": "draft social copy; bake after copy review",
+    "voice/gardener_hoppe/greet_h0_1_v": "draft social copy; bake after copy review",
+    "voice/ghostfam_blund/first_1_v": "draft social copy; bake after copy review",
+    "voice/ghostfam_dyne/chat_2_1_v": "draft social copy; bake after copy review",
+    "voice/ghostfam_dyne/chat_8_1_v": "draft social copy; bake after copy review",
+    "voice/ghostfam_dyne/first_1_v": "draft social copy; bake after copy review",
+    "voice/ghostfam_dyne/greet_h0_1_v": "draft social copy; bake after copy review",
+    "voice/ghostfam_dyne/greet_h1_1_v": "draft social copy; bake after copy review",
+    "voice/ghostfam_dyne/greet_h2_1_v": "draft social copy; bake after copy review",
+    "voice/ghostfam_dyne/greet_h3_1_v": "draft social copy; bake after copy review",
+    "voice/ghostfam_gnist/first_1_v": "draft social copy; bake after copy review",
+    "voice/ghostfam_silke/first_1_v": "draft social copy; bake after copy review",
+    "voice/guard_oak/first_1_v": "draft social copy; bake after copy review",
+    "voice/innkeeper_kvak/first_1_v": "draft social copy; bake after copy review",
+    "voice/lamplighter_kiki/first_1_v": "draft social copy; bake after copy review",
+    "voice/mapseller_natteblik/first_1_v": "draft social copy; bake after copy review",
+    "voice/mayor_lyra/bday_mayor_lyra_greet_1_v": "draft social copy; bake after copy review",
+    "voice/mayor_lyra/first_1_v": "draft social copy; bake after copy review",
+    "voice/mayor_lyra/gift_mayor_lyra_dislike_1_v": "draft social copy; bake after copy review",
+    "voice/mayor_lyra/gift_mayor_lyra_hate_1_v": "draft social copy; bake after copy review",
+    "voice/mayor_lyra/gift_mayor_lyra_like_1_v": "draft social copy; bake after copy review",
+    "voice/mayor_lyra/gift_mayor_lyra_love_1_v": "draft social copy; bake after copy review",
+    "voice/mayor_lyra/gift_mayor_lyra_neutral_1_v": "draft social copy; bake after copy review",
+    "voice/mayor_lyra/greet_h0_1_v": "draft social copy; bake after copy review",
+    "voice/merchant_pip/bday_merchant_pip_greet_1_v": "draft social copy; bake after copy review",
+    "voice/merchant_pip/first_1_v": "draft social copy; bake after copy review",
+    "voice/merchant_pip/gift_merchant_pip_dislike_1_v": "draft social copy; bake after copy review",
+    "voice/merchant_pip/gift_merchant_pip_hate_1_v": "draft social copy; bake after copy review",
+    "voice/merchant_pip/gift_merchant_pip_like_1_v": "draft social copy; bake after copy review",
+    "voice/merchant_pip/gift_merchant_pip_love_1_v": "draft social copy; bake after copy review",
+    "voice/merchant_pip/gift_merchant_pip_neutral_1_v": "draft social copy; bake after copy review",
+    "voice/merchant_pip/greet_h0_1_v": "draft social copy; bake after copy review",
+    "voice/penguin_postman/first_1_v": "draft social copy; bake after copy review",
+    "voice/pippin_boegeknop/first_1_v": "draft social copy; bake after copy review",
+    "voice/postman_pip/bday_postman_pip_greet_1_v": "draft social copy; bake after copy review",
+    "voice/postman_pip/first_1_v": "draft social copy; bake after copy review",
+    "voice/postman_pip/gift_postman_pip_dislike_1_v": "draft social copy; bake after copy review",
+    "voice/postman_pip/gift_postman_pip_hate_1_v": "draft social copy; bake after copy review",
+    "voice/postman_pip/gift_postman_pip_like_1_v": "draft social copy; bake after copy review",
+    "voice/postman_pip/gift_postman_pip_love_1_v": "draft social copy; bake after copy review",
+    "voice/postman_pip/gift_postman_pip_neutral_1_v": "draft social copy; bake after copy review",
+    "voice/postman_pip/greet_h0_1_v": "draft social copy; bake after copy review",
+    "voice/rasmus/first_1_v": "draft social copy; bake after copy review",
+    "voice/smith_thorin/bday_smith_thorin_greet_1_v": "draft social copy; bake after copy review",
+    "voice/smith_thorin/first_1_v": "draft social copy; bake after copy review",
+    "voice/smith_thorin/gift_smith_thorin_dislike_1_v": "draft social copy; bake after copy review",
+    "voice/smith_thorin/gift_smith_thorin_hate_1_v": "draft social copy; bake after copy review",
+    "voice/smith_thorin/gift_smith_thorin_like_1_v": "draft social copy; bake after copy review",
+    "voice/smith_thorin/gift_smith_thorin_love_1_v": "draft social copy; bake after copy review",
+    "voice/smith_thorin/gift_smith_thorin_neutral_1_v": "draft social copy; bake after copy review",
+    "voice/smith_thorin/greet_h0_1_v": "draft social copy; bake after copy review"
+  }
+}

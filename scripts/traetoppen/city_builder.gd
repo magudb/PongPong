@@ -110,6 +110,7 @@ func _build(p_area: IsoArea, _header: Dictionary, p_data: Dictionary) -> void:
 	k = CityData.scale_of(data)
 	stage = LevelStage.build(area, data, {"painter": false, "art": _stage_art()})
 	registry = stage.registry
+	area.set_meta("surface_fn",Callable(self,"surface_at"))
 	# the camera limits: the sketch's bounds plus HEADROOM_PX above (LevelStage set the bounds of the registry; the registry keeps its own for the sky etc.)
 	area.bounds = camera_bounds(registry.bounds)
 	floors = stage.floors
@@ -221,6 +222,13 @@ func _container(parent: Node, node_name: String, pos: Vector2, z: int) -> Node2D
 func _w(p: Variant) -> Vector2:
 	return CityData.world(data, p)
 
+
+func surface_at(position: Vector2) -> String:
+	var level := registry.level_at(position)
+	if level!=null:return "rope" if level.kind==&"bridge" else "wood"
+	for stub in registry.stubs:
+		if Geometry2D.is_point_in_polygon(position,stub.polygon):return "rope"
+	return "wood"
 
 func _rank(level_id: Variant) -> int:
 	return CityData.rank_of(data, level_id)

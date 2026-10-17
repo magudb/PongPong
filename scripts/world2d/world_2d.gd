@@ -216,9 +216,6 @@ func _ready() -> void:
 		_enter(FALLBACK_AREA, spawn)             # a registered default whose map file is bad must not leave the world without an area
 	if not saved.is_empty():
 		_apply_saved(saved)                      # puts the player back only when the area entered IS the saved one
-	var music: Node = GameData.autoload("AudioManager")
-	if music != null and music.has_method("play_music") and area.map.music != "":
-		music.call("play_music", area.map.music)
 	_welcome_toast(saved)
 	ContractManifest.report()
 	await warm_clips()

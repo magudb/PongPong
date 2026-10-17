@@ -1,0 +1,100 @@
+[
+  {
+    "index": 1,
+    "source": "docs/audio/1791823969398-XkYBRO2dnQbph41KDHGk.mp3",
+    "sha256": "afd56da2e2fb2860525a3f8e12c928013ab75c5721e0f6a72c1319b7a71ee87c",
+    "voice_key": "voice/mayor_lyra/greet_1",
+    "active": false
+  },
+  {
+    "index": 2,
+    "source": "docs/audio/1791824012718-XhN6eodgXp7gIt2bpHZt.mp3",
+    "sha256": "f3a115b39e2934abe101c80e16cb434287871cb07dafa5151291a3f2b517cc17",
+    "voice_key": "voice/mayor_lyra/greet_2",
+    "active": true
+  },
+  {
+    "index": 3,
+    "source": "docs/audio/1791824036719-si8CTUzlxgMGMJ72pLrA.mp3",
+    "sha256": "b2fbe01940bc0de7087b0f9e9f4b7d9b8ed84f6a59d196f10a09e2694287c743",
+    "voice_key": "voice/mayor_lyra/lottery",
+    "active": true
+  },
+  {
+    "index": 4,
+    "source": "docs/audio/1791824085445-0auAn0YGDoAXbWAscpWy.mp3",
+    "sha256": "1c1b03a5eb829ae0e3775fc097f541558ea54b6a9c271f2528b0d75ce9edb514",
+    "voice_key": "voice/mayor_lyra/hello",
+    "active": true
+  },
+  {
+    "index": 5,
+    "source": "docs/audio/1791824160309-OCNsoALeBK43huEgZvav.mp3",
+    "sha256": "dceb99cd5d969795f2f75cd5590c960dbd4b75a7ea17c290d59dfc1cd01d4b9b",
+    "voice_key": "voice/mayor_lyra/farm_status",
+    "active": true
+  },
+  {
+    "index": 6,
+    "source": "docs/audio/1791824709447-y9NVUhrYK0p0nNgPEFTK.mp3",
+    "sha256": "e34a6e4745bcd1f2cdbc099574d77a956d265b56d8795761fa79f0b0a62ca869",
+    "voice_key": "voice/baker_maja/greet",
+    "active": true
+  },
+  {
+    "index": 7,
+    "source": "docs/audio/1791824748828-z1IGw6RjwOnXdfeAxk7U.mp3",
+    "sha256": "a87eef6e3d8a2380618a75027a633dba9c348a5c280bed874671468e75b2bed8",
+    "voice_key": "voice/baker_maja/roof_trouble",
+    "active": true
+  },
+  {
+    "index": 8,
+    "source": "docs/audio/1791824782710-116CoJRbVKvq8pRTsvcL.mp3",
+    "sha256": "fb8e90ed4addcb9e528975eda60de527e7f4524e23a29989ff9cc5bbd04a63fa",
+    "voice_key": "voice/baker_maja/thanks",
+    "active": true
+  },
+  {
+    "index": 9,
+    "source": "docs/audio/1791824822587-0obK1buRXrie3XEqRKxI.mp3",
+    "sha256": "2ab8f05c3eae7863a136bbf4ab3433f3ce93ba14e37d3199d601a9e7d0d18246",
+    "voice_key": "voice/baker_maja/cookie_talk",
+    "active": true
+  },
+  {
+    "index": 10,
+    "source": "docs/audio/1791825510331-E1UqlZBqpM23D7yO2f7M.mp3",
+    "sha256": "5638e9c9190386f77ac5f5a3e46aaa77cded61034ea6adbb02fb75bb8f948f63",
+    "voice_key": "voice/fairy_lily/greet",
+    "active": true
+  },
+  {
+    "index": 11,
+    "source": "docs/audio/1791825588689-oSiDSeUVwkO8vJIykZ28.mp3",
+    "sha256": "c4a590c4b5c4e35998454645afca0eb11b64a1bb9c89f384f480762fc76dbb63",
+    "voice_key": "voice/fairy_lily/cat_missing",
+    "active": false
+  },
+  {
+    "index": 12,
+    "source": "docs/audio/1791825614243-fZKtgAGVACjRsUXoDgT7.mp3",
+    "sha256": "df66fcbef8bee88dc31356352e28f6ba0bdff7e8fb06394c5311374cac4f9df0",
+    "voice_key": "voice/fairy_lily/worried",
+    "active": false
+  },
+  {
+    "index": 13,
+    "source": "docs/audio/1791825721345-6vzCxJlAT1xu9hxZ3zIy.mp3",
+    "sha256": "5960b0829d27c044acaed038c92be60f889ce6e706ccbd445a34ba720c2c30eb",
+    "voice_key": "voice/smith_thorin/greet",
+    "active": true
+  },
+  {
+    "index": 14,
+    "source": "docs/audio/1791825762850-h0WoDjHlLe0MHokrFQeA.mp3",
+    "sha256": "3552a41b9af8564fb60557e789bb5e88fbb747fd09bc9704bdd94188b49b45f5",
+    "voice_key": "voice/smith_thorin/mining_talk",
+    "active": true
+  }
+]

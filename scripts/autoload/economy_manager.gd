@@ -559,8 +559,11 @@ func equip(slot: StringName, item_id: StringName) -> bool:
 		return false
 	if item_id != &"" and (count_item(item_id) <= 0 or equip_slot_of(item_id) != str(slot)):
 		return false
+	var changed := str(equipment[slot])!=str(item_id)
 	equipment[slot] = item_id
 	_publish(&"player_inventory_changed", [get_inventory_dict()])
+	if changed and item_id!=&"":
+		after_transaction(func() -> void:EventBus.game_event.emit(&"equipment_changed",{"slot":str(slot),"item":str(item_id)}))
 	return true
 
 
