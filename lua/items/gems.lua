@@ -20,7 +20,6 @@ items = {
     acquire = { "find" },
     sources = {
       { kind = "find", zone = "skovkant" },
-      { kind = "node", node = "crystal", zone = "skovkant" },
     },
   },
   rough_dybe_bregner = {

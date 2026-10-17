@@ -9,7 +9,12 @@
 # A missing file stops the runner ("stage p14 needs lua/dialogue/fairy_king.lua"): a stage never degrades into skipped checks.
 
 # ---- F1's own Lua: items, recipes, shop, data tables (incl. starter_kit.lua), the four feature quests, the three builder dialogues
-own    lua/items/{furniture,clothing,building_materials}.lua
+own    lua/items/{furniture,clothing,building_materials,weapons,gems,dungeon_materials}.lua
+own    lua/config/{dungeon_loot,dungeon,dungeon_run,bosses}.lua
+own    lua/recipes/dungeon.lua
+own    lua/shops/smithy.lua
+own    localization/dungeon_items.csv
+own    localization/dungeon_items.csv.import
 own    lua/recipes/{furniture,materials}.lua
 own    lua/shops/home_shops.lua
 own    lua/data/**/*.lua

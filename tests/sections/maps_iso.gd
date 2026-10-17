@@ -675,7 +675,7 @@ func _features(t) -> void:
 	for k2 in GameData.dict_of(area.get("creatures", {})):
 		want_creatures += int((area["creatures"] as Dictionary)[k2])
 	t.check("feature_markers_match_json", not area.is_empty() and spots == want_spots and spots == ["kufferten"] and chest_like == want_chest and creatures == want_creatures and _count_of(s, "mailbox") == 0,
-		"areas.hyggebyen of data/features/map_markers.json (the file also holds forest areas that DL4 trims in wave 5: only `farm` and `hyggebyen` are read, the farm entry is maps_farm's): unique spots %s == %s, containers %d == %d (chests + dig spots), creatures %d == %d, no mailbox" % [spots, want_spots, chest_like, want_chest, creatures, want_creatures])
+		"areas.hyggebyen of data/features/map_markers.json (the static list contains only `farm` and `hyggebyen`; DB1-DB5 check generated forest markers; the farm entry is maps_farm's): unique spots %s == %s, containers %d == %d (chests + dig spots), creatures %d == %d, no mailbox" % [spots, want_spots, chest_like, want_chest, creatures, want_creatures])
 	# ---- the cast and the corner scenes of the amendments
 	var cells: Dictionary = {}
 	for rec2 in _of(s, "npc"):

@@ -128,7 +128,7 @@ func _localization(t) -> void:
 		var en := str(_lm.text_in(k, "en"))
 		if da == "" or en == "" or da == k or en == k or da != _lm.unescape_text(str(r["da"])) or en != _lm.unescape_text(str(r["en"])):
 			raw.append(k)
-	t.check("loc_keys_da_en", rows.size() == 906 and raw.is_empty(), "%d rows of 8 files, %d unresolved or different from the CSV: %s" % [rows.size(), raw.size(), str(raw.slice(0, 5))])
+	t.check("loc_keys_da_en", rows.size() == 914 and raw.is_empty(), "%d rows of 8 files, %d unresolved or different from the CSV: %s" % [rows.size(), raw.size(), str(raw.slice(0, 5))])
 	# every item has its three keys in both languages through the runtime lookup (what a Label with the key shows)
 	var missing: Array[String] = []
 	for id in _feature_ids():
@@ -275,8 +275,8 @@ func _review_fix_rules(t) -> void:
 	var markers := ContentValidator.load_map_markers()
 	var loot := LuaData.dict(_lr.get_config("loot", {}))
 	var mm := ContentValidator.map_marker_problems(markers, loot)
-	t.check("map_markers_equal_loot_tables", mm.is_empty() and LuaData.dict(markers.get("areas", {})).size() == 6, "%d area(s), %d problem(s): %s" % [LuaData.dict(markers.get("areas", {})).size(), mm.size(), str(mm.slice(0, 3))])
-	for op in ["rename_area", "chest_count", "creature_count", "missing_spot", "no_boss"]:
+	t.check("map_markers_equal_loot_tables", mm.is_empty() and LuaData.dict(markers.get("areas", {} )).size() == 2, "%d area(s), %d problem(s): %s" % [LuaData.dict(markers.get("areas", {})).size(), mm.size(), str(mm.slice(0, 3))])
+	for op in ["rename_area", "chest_count", "creature_count", "missing_spot"]:
 		t.expect(not _marker_problems_after(markers, loot, op).is_empty(), "negative control: the map marker defect '%s' is reported" % op)
 
 
@@ -289,13 +289,11 @@ func _marker_problems_after(markers: Dictionary, loot: Dictionary, op: String) -
 			areas["hyggebyenx"] = areas["hyggebyen"]
 			areas.erase("hyggebyen")
 		"chest_count":
-			((areas["dybe_bregner"] as Dictionary)["containers"] as Dictionary)["dig"] = 4
+			((areas["farm"] as Dictionary)["containers"] as Dictionary)["dig"] = 4
 		"creature_count":
-			((areas["skovkant"] as Dictionary)["creatures"] as Dictionary)["bat"] = 2
+			((areas["farm"] as Dictionary)["creatures"] as Dictionary)["bat"] = 2
 		"missing_spot":
-			((areas["dybe_bregner"] as Dictionary)["unique_spots"] as Array).pop_back()
-		"no_boss":
-			(areas["dybe_bregner"] as Dictionary).erase("boss")
+			((areas["farm"] as Dictionary)["unique_spots"] as Array).pop_back()
 	return ContentValidator.map_marker_problems(m, loot)
 
 

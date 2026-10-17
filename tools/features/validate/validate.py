@@ -26,6 +26,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent / 'src'))
 sys.path.insert(0, str(HERE.parent))
 import common as cm  # constants only (areas, npc/quest/shop universes, caps)
@@ -224,7 +225,8 @@ def map_marker_problems(markers: dict, loot: dict) -> list:
     spots_by_zone: dict = defaultdict(list)
     for spot_id, sp in loot['spots'].items():
         spots_by_zone[sp['zone']].append(spot_id)
-    known = set(zones) | set(spots_by_zone)               # an area with only a hand-placed spot (Hyggebyen: the suitcase) has no loot zone of its own
+    generated = markers.get('v') == 2
+    known = ({'farm', 'hyggebyen'} if generated else set(zones) | set(spots_by_zone))
     if set(areas) != known:
         probs.append(('areas differ from loot.zones + the zones of loot.spots', sorted(set(areas) ^ known)))
     boss_area = {}
@@ -249,7 +251,7 @@ def map_marker_problems(markers: dict, loot: dict) -> list:
                 probs.append((zid, 'creature id is not in loot.creatures', cid))
         if a.get('boss'):
             boss_area.setdefault(a['boss'], []).append(zid)
-    want_boss = loot.get('boss') or {}
+    want_boss = {} if generated else loot.get('boss') or {}
     if set(boss_area) != set(want_boss) or any(len(v) != 1 for v in boss_area.values()):
         probs.append(('bosses placed in the areas differ from loot.boss', {k: v for k, v in boss_area.items()}, sorted(want_boss)))
     for bid, b in want_boss.items():
@@ -261,7 +263,7 @@ def map_marker_problems(markers: dict, loot: dict) -> list:
 
 # --------------------------------------------------------------------------------------------------------------------------------------
 # Rule helpers of the SECOND fix round (review F1 r2): reference and number fields that no validator looked at (every one was shown to pass 93/93 with a real defect in it).
-SPOT_REQUIRES_KEYS = ('quests', 'day_min', 'home_tier_min')
+SPOT_REQUIRES_KEYS = ('quests', 'day_min', 'home_tier_min', 'items')
 HEART_CAP = 10
 
 
@@ -280,7 +282,7 @@ def spot_requirement_problems(spots: dict, quest_ids, source_quest: dict, tiers:
             probs.append((sid, 'requires must be a non-empty table', req))
             continue
         for k in sorted(set(req) - set(SPOT_REQUIRES_KEYS)):
-            probs.append((sid, 'unknown requirement (the loot service reads quests, day_min and home_tier_min only)', k))
+            probs.append((sid, 'unknown requirement (unsupported by the loot service)', k))
         if 'quests' in req:
             qs = req['quests']
             if not isinstance(qs, list) or not qs or not all(isinstance(q, str) for q in qs):
@@ -462,13 +464,17 @@ def lua_string_literals(text: str) -> list:
     return out
 
 
+def marker_parameters(fname, text):
+    return fname == "lua/config/dungeon.lua" and re.fullmatch(r"[a-z_]+=[A-Za-z0-9_:.+-]+(?: [a-z_]+=[A-Za-z0-9_:.+-]+)*", text) is not None
+
+
 def text_literal_problems(texts: dict) -> list:
     """Working rule 3: Danish / English text lives in the localization CSVs, never as a literal in code or Lua.  A text literal = a string with a space and a run of 3 letters; ids, keys,
     colours, template names and paths have no spaces.  (The quests carried ten `description = "Sæt 6 unikke ..."` copies next to their description_key: dead text nobody read.)"""
     probs = []
     for fname, text in sorted(texts.items()):
         for lit in lua_string_literals(text):
-            if ' ' in lit and re.search(r'[A-Za-zæøåÆØÅ]{3}', lit):
+            if ' ' in lit and re.search(r'[A-Za-zæøåÆØÅ]{3}', lit) and not marker_parameters(fname, lit):
                 probs.append((fname, lit))
     return probs
 
@@ -633,7 +639,8 @@ def main():
                 if d:
                     diffs[f'{rel}:{name}'] = d
     R.check('S5 data parsed by the project interpreter == data of real Lua 5.4 (every table of every file)', not diffs, f'{compared} tables compared' if not diffs else dict(list(diffs.items())[:3]))
-    R.check('S6 every new item id is registered in LuaRuntime.get_item_def', not god['items_missing_in_runtime'] and god['items_declared'] >= 258,
+    expected_items = sum(len(row['globals'].get('items', {})) for rel,row in dump.items() if rel.startswith('lua/items/'))
+    R.check('S6 every new item id is registered in LuaRuntime.get_item_def', not god['items_missing_in_runtime'] and god['items_declared'] == expected_items,
             f"{god['items_declared']} declared, missing: {god['items_missing_in_runtime'][:5]}")
     R.check('S7 LuaRuntime.get_config reaches the new data (home, rarity, loot, sets)', all(v is not None for v in god['config_probe'].values()), god['config_probe'])
     qs = god['quests']
@@ -708,6 +715,7 @@ def main():
     sets_cfg = G('lua/data/sets.lua', 'config')
     rar_cfg = G('lua/config/rarity.lua', 'config')
     new_items = {**items_fur, **items_clo, **items_mat}
+    dungeon_items = {**G('lua/items/weapons.lua', 'items'), **G('lua/items/gems.lua', 'items'), **G('lua/items/dungeon_materials.lua', 'items')}
 
     # S10 (FIX ROUND): the shop buttons of the three builder dialogues open REAL shops of THEIR keeper, in every flag state the project interpreter evaluated and in every shop_id literal of the Lua text
     def _button(s):
@@ -733,6 +741,7 @@ def main():
         for i, row in load_csv(csv_path)[1]:
             if row and len(row) >= 2 and re.fullmatch(r'[A-Z0-9_]+', row[0] or ''):
                 repo_da.setdefault(row[0], row[1])
+    loot_items = {**repo_items, **new_items, **dungeon_items}
     external_items = set(cm.ITEMS_PLAN)
     all_items = set(new_items) | set(repo_items) | external_items
 
@@ -1076,6 +1085,13 @@ def main():
     R.check('C18 every item has an acquire route; every normal/uncommon/rare furniture and clothing item can be FOUND, and each family can be bought', not emptyacq and not wrong, emptyacq[:3] or cov)
     R.info('acquire coverage (buy/build/find/reward per rarity)', cov)
 
+    # Dungeon contracts include the three new item categories and live generator.
+    import dungeon_rules
+    evaluated = {rel: row["globals"] for rel, row in repo_dump.items()}
+    evaluated.update({rel: row["globals"] for rel, row in dump.items()})
+    for name, problems in dungeon_rules.validate(evaluated).items():
+        R.check(name, not problems, problems[:5])
+
     # ---------------------------------------------------------------- sources <-> loot / shops / recipes
     areas = set(cm.AREAS)                   # the area ids of PLAN 4.0; the fairy town is the area `hyggebyen` (rule N1 proves nothing else is left)
     zones = loot['zones']
@@ -1088,9 +1104,9 @@ def main():
             for rar, lst in kp.items():
                 for ent in lst:
                     pool_items[ent['item']].add(z)
-                    if ent['item'] not in new_items:
+                    if ent['item'] not in loot_items:
                         probs.append(('pool item unknown', z, ent['item']))
-                    elif new_items[ent['item']]['rarity'] != rar:
+                    elif loot_items[ent['item']]['rarity'] != rar:
                         probs.append(('pool rarity mismatch', z, ent['item'], rar))
                     if not (isinstance(ent['w'], int) and ent['w'] > 0):
                         probs.append(('weight', z, ent))
@@ -1149,7 +1165,7 @@ def main():
                 probs.append((i, 'unknown source kind', k))
     # reverse
     for sid, sp in spots.items():
-        e = new_items.get(sp['item'])
+        e = loot_items.get(sp['item'])
         if not e or not any(s['kind'] == 'spot' and s['spot'] == sid for s in e['sources']):
             probs.append(('spot without item source', sid))
         if sp['zone'] not in areas:
@@ -1398,7 +1414,7 @@ def main():
                     rar = k; break
             if rar is None:
                 tally['EMPTY'] += 1; continue
-            kd = {k: w for k, w in kinds.items() if zd['pools'][k][rar]}
+            kd = {k: w for k, w in kinds.items() if zd['pools'].get(k, {}).get(rar)}
             if not kd:
                 tally['EMPTY'] += 1; continue
             tally[rar] += 1
@@ -1418,7 +1434,7 @@ def main():
                     probs.append((z, cont, rar, w, round(got)))
             # every rarity with odds > 0 must have at least one non-empty kind pool
             for rar, w in odds.items():
-                if w > 0 and not any(zd['pools'][k][rar] for k in (ov.get('kinds') or base['kinds'])):
+                if w > 0 and not any(zd['pools'].get(k, {}).get(rar) for k in (ov.get('kinds') or base['kinds'])):
                     probs.append((z, cont, rar, 'no pool'))
     R.check('R10 realised rarity distribution of every zone x container equals the designed odds (40k simulated opens each, +-1.6 points); no empty pool is ever reached', not probs, probs[:5])
     # unique wanderers: each wanderer sits in a container of its zone with wander_bp > 0
@@ -1429,7 +1445,7 @@ def main():
                 probs.append((z, w))
     R.check('R11 every unique wanderer lives in a container of its zone that can roll wanderers', not probs, probs)
     # pool variety
-    small = [(z, k, r, len(l)) for z, zd in zones.items() for k, kp in zd['pools'].items() for r, l in kp.items() if z != 'farm' and len(l) < {'furniture': 4, 'clothing': 4, 'material': 2}[k] and any(
+    small = [(z, k, r, len(l)) for z, zd in zones.items() for k, kp in zd['pools'].items() for r, l in kp.items() if z != 'farm' and len(l) < {'furniture': 4, 'clothing': 4, 'material': 2, 'gem': 2, 'weapon': 2}[k] and any(
         (zd['containers'][c].get('odds') or loot['containers'][c]['odds']).get(r, 0) > 0 for c in zd['containers'])]
     R.check('R12 every forest zone has >= 4 furniture, >= 4 clothing and >= 2 material entries in each rarity it can roll', not small, small[:4])
     # FIX ROUND (review F1 r1): the marker list the map authors build from must stay equal to the loot tables (generation is retired, nothing else keeps them together)
@@ -1632,7 +1648,7 @@ def main():
     item_ids = {}
     for fn, spec in own.items():
         for lf in spec.get('item_files', []):
-            item_ids[fn] = set(G(lf, 'items') or {})
+            item_ids.setdefault(fn, set()).update(G(lf, 'items') or {})
     def owner_of(key):
         for fn, spec in own.items():
             if key in spec['exact']:
@@ -1715,7 +1731,7 @@ def main():
             same.append(k)
         if len(da) > 140 and not k.endswith(('_DESC', '_HINT', '_IDLE', '_OFFER', '_BUILDING', '_DONE', '_GREET', '_GREETING', '_GATE', '_FMT')) and 'OFFER' not in k:
             longs.append((k, len(da)))
-        if '%' in da and not k.endswith('_FMT'):
+        if '%' in da and not k.endswith('_FMT') and not k.startswith(('WEFFECT_', 'WSTAT_', 'GEMFX_')):
             probs.append((k, '% in a non-_FMT key'))
     R.check('D1 no TODO markers, no English words in Danish text, clean whitespace, no ASCII quotes, identical placeholders in da and en', not probs, probs[:5])
     R.check('D2 Danish text differs from English for every phrase of 3+ words', not same, same[:5])
@@ -1736,7 +1752,7 @@ def main():
     for rel in mine:
         for m in re.finditer(r'"([^"]*)"', (F / rel).read_text(encoding='utf-8')):
             t = m.group(1)
-            if ' ' in t and re.search(r'[A-Za-zæøåÆØÅ]{3}', t):
+            if ' ' in t and re.search(r'[A-Za-zæøåÆØÅ]{3}', t) and not marker_parameters(rel, t):
                 ws = re.findall(r"[a-zæøå']+", t.lower())
                 if [w for w in ws if w in eng]:
                     lit.append((rel, t))
@@ -1782,7 +1798,9 @@ def main():
             probs.append((q, 'reward quest repeatable'))
     R.check('Q2 quests that hand out unique/legendary/rare items are not repeatable; objective ids unique; givers exist', not probs, probs)
     # Q4 objective sanity (the validator feeds hand-made events, so reachability is checked by reading): every objective has a binding the PLAN's QuestManager really emits
-    MAPS = {'farm', 'hyggebyen', 'skovkant', 'dybe_bregner', 'svampelunden', 'krystalgrotten', 'home'}
+    MAPS = {'farm', 'hyggebyen', 'home'}
+    dungeon_layout = G('lua/config/dungeon.lua', 'config')['dungeon']
+    MAPS.update(dungeon_layout['hub']['floor_prefix'] + str(n) for n in range(1, dungeon_layout['max_floor'] + 1))
     ZONES = {'farm', 'city', 'dark_forest', 'crystal_cave', 'mushroom_grove'}
     STATES = {'placed_by_rarity', 'hygge_level_at_least', 'home_tier_at_least'}
     nlev = len(home['hygge_levels'])

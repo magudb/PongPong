@@ -195,6 +195,10 @@ func _run() -> void:
 	for q in flag_names:
 		c.errors.clear()
 		gm.world_flags.clear()
+		if q == "bogtraeet":
+			for flag in ["math_bakery_done", "math_harvest_done", "math_quiz_done"]:
+				gm.set_flag(StringName(flag), true)
+		if q == "slotsdroemmen": gm.set_flag(&"home_tier", 10)
 		_forget_quest(qm, q)
 		var reward_ids: Array = []
 		for rid in quests[q]["reward_items"]:

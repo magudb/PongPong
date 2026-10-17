@@ -1805,7 +1805,7 @@ items = {
     art = { template = "rug", material = "pine", fabric = "rosendamask", shape = "round", tier = 3 },
     acquire = { "find" },
     sources = {
-      { kind = "find", zone = "skovkant", container = "jern" },
+      { kind = "find", zone = "skovkant", container = "trae" },
     },
     hint_key = "ITEM_RUG_FLOWER_PETAL_HINT",
     protected = true,
@@ -1980,7 +1980,7 @@ items = {
     art = { template = "floor_lamp", material = "living", tier = 3 },
     acquire = { "find" },
     sources = {
-      { kind = "find", zone = "svampelunden", container = "fe" },
+      { kind = "find", zone = "svampelunden", container = "jern" },
     },
     hint_key = "ITEM_FLOOR_LAMP_GLOWSHROOM_HINT",
     protected = true,
@@ -2659,7 +2659,7 @@ items = {
     art = { template = "clock", material = "living", tier = 3 },
     acquire = { "find" },
     sources = {
-      { kind = "find", zone = "dybe_bregner", container = "fe" },
+      { kind = "find", zone = "dybe_bregner", container = "jern" },
     },
     hint_key = "ITEM_CLOCK_OWL_HINT",
     protected = true,
@@ -2958,7 +2958,7 @@ items = {
     art = { template = "piano", material = "oak", tier = 3 },
     acquire = { "find" },
     sources = {
-      { kind = "find", zone = "svampelunden", container = "fe" },
+      { kind = "find", zone = "svampelunden", container = "jern" },
     },
     hint_key = "ITEM_PIANO_TOADSTOOL_HINT",
     protected = true,

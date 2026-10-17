@@ -15,6 +15,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
 import sys
 from collections import OrderedDict, defaultdict
 from pathlib import Path
@@ -63,6 +64,8 @@ QUEST_ONESHOT_EXTRA = 0.0   # gold of one-shot quests is added via the quest tab
 ZONE_ORDER = ['skovkant', 'dybe_bregner', 'svampelunden', 'krystalgrotten']
 PRICES_ASSUMED = {'copper_ore': (35, 14), 'moonstone': (440, 220), 'wool': (30, 12)}   # PLAN items not yet in the repo
 HYGGE_PER_GOLD = 0.0150      # decor points per gold spent on furniture (from the shop price list: normal 17.8, uncommon 14, rare 6.1 per 1000 gold)
+FREE_FURN_REPLACES = os.getenv("FREE_FURN_REPLACES", "0") == "1"
+FREE_FURN_RATE = float(os.getenv("FREE_FURN_RATE", "0"))
 FURNITURE_SHARE = 0.55       # of the lifestyle budget
 SIM_DAYS = 1500
 QUEST_NET = 0.60             # share of a repeatable quest's gold that is NOT eaten by the goods it asks for (turnips, ore, ...)
@@ -214,7 +217,7 @@ def quests_gold(world, prof, day):
         return 0.0
     per_day = 0.0
     for qid, g in world.quests.items():
-        meta, rew = g.get('meta', {}), g.get('rewards', {})
+        meta, rew = g.get('meta') or {}, g.get('rewards') or {}
         gold = rew.get('gold', 0)
         if meta.get('repeatable'):
             if meta.get('requires_zone') and day < prof['zones']['dybe_bregner']:
@@ -242,6 +245,7 @@ def simulate(world, pname, prof, verbose=False, purchases=True):
     boss_last = -99
     spent_home = 0.0
     furn_spend = 0.0
+    free_furniture_stock = 0.0
     cum_net = 0.0
     quest_day_gold = defaultdict(float)
     ledger = defaultdict(lambda: defaultdict(float))     # tier interval -> source -> gold
@@ -277,7 +281,15 @@ def simulate(world, pname, prof, verbose=False, purchases=True):
             quests += 800
         gross_other = 0.0
         # forest run today?  (expected runs/day; the run goes to the most valuable unlocked area, rotating when its nodes have not respawned)
+        forest_day = getattr(world, 'forest_day', None)
+        find_value = 0.0
         runs_today = prof['runs']
+        if callable(forest_day):
+            found = forest_day(day)
+            forest = float(found.get('gold', 0))
+            find_value = float(found.get('furniture', 0))
+            for item, amount in found.get('kept', {}).items(): inv[item] += amount
+            runs_today = 0.0
         unlocked = [z for z in ZONE_ORDER if day >= prof['zones'][z]]
         for _ in range(1):
             if not unlocked or runs_today <= 0:
@@ -361,7 +373,11 @@ def simulate(world, pname, prof, verbose=False, purchases=True):
             if day == d:
                 gold -= g
         life = gross * prof['lifestyle']
-        gold += gross - life
+        if FREE_FURN_REPLACES: free_furniture_stock += find_value*FREE_FURN_RATE
+        replacement = min(max(life,0)*FURNITURE_SHARE,free_furniture_stock) if FREE_FURN_REPLACES else 0.0
+        free_furniture_stock -= replacement
+        stats['free_furniture_substitution'] += replacement
+        gold += gross - life + replacement
         furn_spend += life * FURNITURE_SHARE
         wealth.append(gold)
         # hygge level from furniture spend (decor points), capped by what the home can hold

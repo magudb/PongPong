@@ -1,0 +1,142 @@
+[PASS] S1 luac -p (real Lua syntax) on every new Lua file  --  35 files
+[PASS] S2 real Lua evaluates every file without error  --  35 evaluated, errors: []
+[PASS] S3 project LuaRuntime reload_scripts() logged no engine errors  --  []
+[PASS] S4 LuaRuntime detects a kind for every file  --  []
+[PASS] S5 data parsed by the project interpreter == data of real Lua 5.4 (every table of every file)  --  45 tables compared
+[PASS] S6 every new item id is registered in LuaRuntime.get_item_def  --  309 declared, missing: []
+[PASS] S7 LuaRuntime.get_config reaches the new data (home, rarity, loot, sets)  --  {'furniture_sets.bondegaard.bonuses': 3, 'home.hygge_levels': 6, 'home.max_tier': 10, 'home.tiers': 10, 'loot.boss.snurresvamp.pool': 4, 'loot.containers.trae.odds': 3, 'loot.zones.skovkant.pools.furniture.normal': 44, 'perk_caps.speed': 0.15, 'rarity_tiers.order': 5, 'wardrobe_sets.marken.capstone': 'shirt_knit_dawn'}
+[PASS] S8 the 8 quests are registered with their rewards  --  {'birthday_cake': (280, ['cookie', 'friendship_token', 'lucky_clover', 'plant_teapot_bonsai']), 'bogtraeet': (400, ['bookshelf_book_tree', 'fairy_dust']), 'fix_roof': (320, ['friendship_token', 'hat_chef_white', 'rare_mushroom']), 'lost_cat': (150, ['catnip_seeds', 'hat_cat_ears']), 'math_wizard_quiz': (120, ['fairy_dust', 'hat_wizard_zephyr', 'magic_scroll']), 'moonstone_crown': (800, ['circlet_moon_crown', 'fairy_dust']), 'slotsdroemmen': (6000, ['fireplace_moon', 'necklace_heart_of_tree']), 'snurresvampen': (1200, ['fairy_dust', 'hat_mushroom_spinner'])}
+[PASS] S12 end to end: accept + complete all 8 quests through QuestManager and the Lua hooks -> exact gold and items arrive, flags flip, no engine errors  --  8 quests
+[PASS] S9 builder dialogue: 29 flag combinations choose the right branch in the project interpreter  --  []
+[PASS] S11 quest availability hooks evaluate (slotsdroemmen needs home_tier 10; bogtraeet needs the three math flags)  --  [False, True, False, True]
+[PASS] S13 the four feature quests (snurresvampen gates tier 8, moonstone_crown tier 9, bogtraeet, slotsdroemmen = the castle finale) are offered by the dialogue of their giver at the right time only, and accepting through the choice activates them  --  4 accepted through dialogue, 13 flag states checked
+[PASS] S10 the shop buttons of the builder / furnisher / tailor dialogues open shops that exist and belong to the speaker: every flag state offers one, every shop_id literal of the Lua text is a shop  --  31 dialogue states, 31 shop_id literals
+[PASS] I1 item / recipe / shop ids are unique (textual scan: Lua itself silently merges duplicate keys) and the id count equals the evaluated count  --  258 ids
+[PASS] I2 no new item id clashes with an existing repo item id  --  []
+[PASS] I3 ids use [a-z0-9_] only
+[PASS] I4 recipe ids unique across both recipe files
+[PASS] L1 every CSV row has exactly three columns and a keep-import stub exists  --  1071 rows in 9 files
+[PASS] L2 no duplicate loc key inside the new CSV files  --  1071 unique of 1071
+[PASS] L3 no loc key of the eight F1 files collides with a key of any other CSV of the repo (da.csv legacy base, core.csv, ui.csv, ...)  --  []
+[PASS] L4 keys match ^[A-Z0-9_]+$
+[PASS] L5 the engine's own FileAccess.get_csv_line reads every new CSV with the same row count, three non-empty columns and unique keys  --  {'wardrobe.csv': {'bad': 0, 'rows': 238, 'unique': 238}, 'materials.csv': {'bad': 0, 'rows': 75, 'unique': 75}}
+[PASS] L6 P10 lint: no else/elseif/for/while/repeat/[[ ]]/local function/function M./#/string./math./table./escaped quotes/concat/arithmetic/nil outside strings in any Lua file of this package or its pending references  --  28 files; 7 real files of P13/P14 are linted by their own gate (tools/lua/lint.gd)
+[PASS] L7 top-level config keys of the new files are unique and collide neither with the PLAN keys nor with a config key that another file of the repo defines  --  {'bosses': 1, 'dungeon': 1, 'dungeon_loot': 1, 'dungeon_run': 1, 'perk_caps': 1, 'rarity_tiers': 1, 'home': 1, 'loot': 1, 'furniture_sets': 1, 'wardrobe_sets': 1, 'starter_kit': 1, 'wardrobe': 1}
+[PASS] L8 no new item id collides with an item id the PLAN gives to P12 (so the packages can merge)  --  []
+[INFO] art support read from  --  home art tables /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/tools/art/features/home/characters (live); wardrobe garments from the committed snapshot until A2 lands tools/art/features/wardrobe (wardrobe art tables not landed yet (A2, wave 4))
+[PASS] C1 furniture: >= 130 items and rarity split 45/33/24/17/11  --  {'normal': 45, 'rare': 24, 'legendary': 11, 'uncommon': 33, 'unique': 17}
+[INFO] furniture rarity x furniture_type  --  {'bed': [3, 2, 2, 1, 1, 9], 'chair': [4, 2, 1, 1, 0, 8], 'decor': [2, 2, 1, 1, 1, 7], 'grand': [1, 1, 1, 1, 1, 5], 'hearth': [1, 1, 2, 1, 1, 6], 'instrument': [1, 1, 1, 1, 1, 5], 'lamp': [6, 5, 4, 2, 2, 19], 'plant': [1, 1, 1, 1, 0, 4], 'rug': [3, 3, 2, 1, 1, 10], 'shelf': [6, 3, 2, 2, 1, 14], 'sofa': [3, 2, 2, 1, 1, 9], 'storage': [6, 4, 2, 2, 1, 15], 'table': [3, 2, 2, 1, 0, 8], 'wall_decor': [5, 4, 1, 1, 0, 11]}
+[PASS] C2 clothing: >= 96 items, slot counts 18/15/14/14/15/20  --  {'jewellery': 20, 'dress': 14, 'hat': 18, 'pants': 14, 'shirt': 15, 'shoes': 15}
+[PASS] C3 clothing rarity split 33/24/18/13/8 (same ladder as furniture)  --  {'normal': 33, 'rare': 18, 'uncommon': 24, 'unique': 13, 'legendary': 8}
+[INFO] clothing rarity x slot  --  {'dress': [4, 4, 3, 2, 1, 14], 'hat': [6, 4, 4, 2, 2, 18], 'jewellery': [8, 4, 3, 3, 2, 20], 'pants': [5, 4, 2, 2, 1, 14], 'shirt': [5, 4, 3, 2, 1, 15], 'shoes': [5, 4, 3, 2, 1, 15]}
+[PASS] C3b jewellery subslots (circlet/necklace/bracelet/earrings) all present  --  {'bracelet': 5, 'circlet': 4, 'earrings': 4, 'necklace': 7}
+[PASS] C4 every furniture/clothing item has all required fields  --  []
+[PASS] C5 every furniture art template is a template the home art tables bake (A1)  --  22 templates supported; bad: []
+[PASS] C6 every furniture material / paint / fabric / metal / crystal / stone id exists in the art palettes (A1)  --  []
+[PASS] C7 template kwargs (size/seats/shape) valid; art tier == rarity ladder position  --  []
+[PASS] C8 clothing art: existing layers are garments of the wardrobe art with the same slot; requested layers have a working fallback  --  67 existing-design items, 29 requested-design items; problems: []
+[PASS] C9 clothing palettes are three 6-digit hex colours  --  []
+[PASS] C9c clothing art.colors / art.pattern ids exist and match the palette hex values  --  []
+[PASS] C9b data/wardrobe_design_requests.json lists exactly the requested designs the catalogue uses  --  15 requested designs
+[PASS] C10 footprint / placement layer / interaction of every furniture item == what the art spike template function reports  --  130 items probed; []
+[PASS] C10b every furniture item BUILDS with the art spike's real template function and its own Style (data/furniture_art_spec.json) and yields the footprint stored in the Lua  --  130 items built; []
+[INFO] items with a glow layer in the spike build  --  33 of 130 (legendary tier + lamps)
+[PASS] C11 price monotonicity: within every furniture template and every clothing art slot, the cheapest item of a higher rarity costs more than the dearest of the lower  --  []
+[PASS] C12 mean worth strictly increases with rarity (furniture)  --  [118, 362, 1975, 6390, 24840]
+[PASS] C12 mean worth strictly increases with rarity (clothing)  --  [64, 236, 871, 2720, 7962]
+[PASS] C13 normal/uncommon/rare: buy == worth and 0 < sell < buy; unique/legendary: buy 0, sell 0, protected keepsakes  --  []
+[INFO] sell/buy ratio ranges (rounded to 5 gold)  --  {'normal': (0.33, 0.4), 'uncommon': (0.38, 0.4), 'rare': (0.38, 0.38)}
+[PASS] C14 decor score mean strictly increases with rarity  --  [2.1, 5.1, 12.2, 25.9, 47.8]
+[PASS] C19 max_stack: furniture 9 (keepsakes 1: loot.duplicates and the furniture store assume it), blueprints 1, other materials 1..99  --  130 furniture, 32 materials
+[PASS] C20 every furniture piece has decor >= 1 (integer hygge points), legendary pieces too  --  130 pieces, decor 2..63
+[PASS] C15 sets: no orphan sets, every set has >= 4 members, members/bonuses/perk keys/loc keys/capstones consistent  --  []
+[PASS] C15b 10 furniture sets and 7 wardrobe sets  --  (10, 7)
+[INFO] set sizes  --  {'F:bondegaard': 14, 'F:fe_bo': 12, 'F:hobbithulen': 10, 'F:kongelig': 14, 'F:krystalgrotten': 4, 'F:maanelys': 8, 'F:skovens_hjerte': 7, 'F:solstuen': 9, 'F:svampehytten': 5, 'F:troldmandens_taarn': 5, 'W:bageren': 6, 'W:fe_festen': 9, 'W:marken': 10, 'W:nattevandreren': 8, 'W:skovstrejfer': 8, 'W:svampesamleren': 5, 'W:troldmanden': 7}
+[PASS] C16 clothing perks follow the rarity ladder (none / 1 / 1-2 / 2 / 2) and use only speed, energy, luck, discount  --  []
+[INFO] best-in-slot perk sum without sets (one of each worn slot)  --  {'speed': 0.15, 'energy': 28.0, 'luck': 0.19, 'discount': 0.1}
+[PASS] C17 perk sums stay inside 150 percent of the caps even with the best piece in every slot (the engine clamps to the cap)  --  {}
+[PASS] C17b perk_caps in lua/config/rarity.lua match the design (speed .15, energy 20, luck .20, discount .15, energy_total 60, discount_total .20)  --  {'discount': 0.15, 'discount_total': 0.2, 'energy': 20, 'energy_total': 60, 'luck': 0.2, 'speed': 0.15}
+[INFO] sum of the top bonus of ALL sets (never reachable at once; engine clamps)  --  {'discount': 0.11, 'energy': 63.0, 'luck': 0.34, 'speed': 0.07}
+[PASS] C18 every item has an acquire route; every normal/uncommon/rare furniture and clothing item can be FOUND, and each family can be bought  --  {'furniture/normal': {'buy': 45, 'build': 42, 'find': 45, 'reward': 0, 'items': 45}, 'furniture/uncommon': {'buy': 33, 'build': 30, 'find': 33, 'reward': 0, 'items': 33}, 'furniture/rare': {'buy': 16, 'build': 23, 'find': 24, 'reward': 0, 'items': 24}, 'furniture/unique': {'buy': 0, 'build': 0, 'find': 11, 'reward': 6, 'items': 17}, 'furniture/legendary': {'buy': 0, 'build': 0, 'find': 1, 'reward': 10, 'items': 11}, 'clothing/normal': {'buy': 33, 'build': 0, 'find': 33, 'reward': 0, 'items': 33}, 'clothing/uncommon': {'buy': 24, 'build': 0, 'find': 24, 'reward': 0, 'items': 24}, 'clothing/rare': {'buy': 11, 'build': 0, 'find': 18, 'reward': 1, 'items': 18}, 'clothing/unique': {'buy': 0, 'build': 0, 'find': 9, 'reward': 4, 'items': 13}, 'clothing/legendary': {'buy': 0, 'build': 0, 'find': 0, 'reward': 8, 'items': 8}}
+[INFO] acquire coverage (buy/build/find/reward per rarity)  --  {'furniture/normal': {'buy': 45, 'build': 42, 'find': 45, 'reward': 0, 'items': 45}, 'furniture/uncommon': {'buy': 33, 'build': 30, 'find': 33, 'reward': 0, 'items': 33}, 'furniture/rare': {'buy': 16, 'build': 23, 'find': 24, 'reward': 0, 'items': 24}, 'furniture/unique': {'buy': 0, 'build': 0, 'find': 11, 'reward': 6, 'items': 17}, 'furniture/legendary': {'buy': 0, 'build': 0, 'find': 1, 'reward': 10, 'items': 11}, 'clothing/normal': {'buy': 33, 'build': 0, 'find': 33, 'reward': 0, 'items': 33}, 'clothing/uncommon': {'buy': 24, 'build': 0, 'find': 24, 'reward': 0, 'items': 24}, 'clothing/rare': {'buy': 11, 'build': 0, 'find': 18, 'reward': 1, 'items': 18}, 'clothing/unique': {'buy': 0, 'build': 0, 'find': 9, 'reward': 4, 'items': 13}, 'clothing/legendary': {'buy': 0, 'build': 0, 'find': 0, 'reward': 8, 'items': 8}}
+[PASS] W1 weapon damage follows the independent rarity/family curve  --  []
+[PASS] W2 weapon fields and effects match combat capabilities  --  []
+[PASS] W3 dungeon keepsakes are protected and never sellable  --  []
+[PASS] C13 dungeon ordinary items have valid nominal and sell prices  --  []
+[PASS] C18 every dungeon item has a usable acquire/source route  --  []
+[PASS] R1 dungeon pool ids, rarities and weights are valid  --  []
+[PASS] R2 dungeon find sources mirror the actual pools and band rough rolls  --  []
+[PASS] R3 dungeon fixed sources and boss rewards mirror both directions  --  []
+[PASS] W4 weapons and gems keep fixed rewards separate from crafting and shops  --  []
+[PASS] W5 forge recipes cost 45-85 percent with configured unbuyable valuation  --  []
+[PASS] R7 dungeon shop sources mirror stock and exclude keepsakes  --  []
+[PASS] G1 one unsellable rough gem per band  --  []
+[PASS] G2 lantern gem themes and tints are supported  --  []
+[PASS] G3 appraisal only produces ordinary cut gems with valid band odds  --  []
+[PASS] M1 node material sources resolve to placed generator nodes and real yields  --  []
+[PASS] M2 dungeon materials sell at most the configured share of nominal buy  --  []
+[PASS] K1 three first-kill shards are all required and consumed by the vault  --  []
+[PASS] DB1 all twelve floor bands agree between layout and loot  --  []
+[PASS] DB2 boss ids and floors agree across all five tables  --  []
+[PASS] DB3 each band main chest tier agrees with its generated floor  --  []
+[PASS] DB4 every forest spot has exactly one placement in its band  --  []
+[PASS] DB5 generator nodes and anchors have reachable, non-orphan yields  --  []
+[PASS] R1 loot pools reference existing items in the right rarity slot with positive integer weights  --  []
+[PASS] R2 every `find` source of an item == the zones whose loot pools contain it (and vice versa)  --  []
+[PASS] R3 every unique/legendary item has a valid fixed source (spot / gift / tier gift / quest / set reward / boss / wanderer) and every fixed source points back  --  []
+[PASS] R21 loot spot requirements: requires.quests name quest files that exist and match the quest of the item's spot source, day_min >= 1, home_tier_min 1..10, no unknown key  --  9 of 22 spots have requirements, 40 quest files known
+[INFO] primary source kind of unique / legendary items  --  {'legendary': {'tier_gift': 6, 'spot': 1, 'quest': 3, 'boss': 5, 'set_reward': 4}, 'unique': {'spot': 14, 'quest': 3, 'find': 6, 'gift': 6, 'tier_gift': 1}}
+[PASS] R4 recipes: outputs/ingredients exist, stations valid, unlock flags belong to a blueprint, names resolve  --  []
+[PASS] R5 item.recipe / sources.craft mirror lua/recipes exactly (ingredients, station, blueprint flag)  --  []
+[PASS] R6 no money loop in recipes: furniture sell < craft cost (buy prices of inputs) < buy price, cost ratio 45-87 percent; processing recipes never beat their inputs  --  95 furniture recipes, ratio min/mean/max 0.45/0.60/0.80; []
+[INFO] craftable furniture by rarity  --  {'normal': 42, 'uncommon': 30, 'rare': 23, 'unique': 0, 'legendary': 0}
+[PASS] R7 shops: keepers/loc keys exist, every stock/pool id is a real item, no keepsake is sold, stock/rotation pools match every item's `shop` sources in both directions  --  []
+[PASS] SH1 shop opening days: open_weekdays is a list of distinct weekday indices 0..6 (0 = Monday), only the flea market has any and they are exactly Saturday + Sunday (5, 6)  --  {'builder_yard': 'daily', 'flea_market': [5, 6], 'furniture_shop': 'daily', 'tailor_shop': 'daily'}
+[PASS] SH2 shop numbers: fixed stock >= 1 and restock 0..stock (ShopSystem: the most a shelf holds / the units back every morning), price >= 0, rotation period >= 1, price_mult > 0, season_boost >= 1  --  50 fixed stock rows, 11 rotation rows
+[PASS] R8 price curve: buying at the cheapest possible price (sale + friend + hobbit, total capped) always costs more than selling back  --  []
+[PASS] R7b shops: every item sits in exactly one tab, tab names resolve, every rotation slot has a positive integer qty  --  []
+[PASS] R7c wardrobe rules: every clothing item maps to exactly one of the nine equipment slots; exclusions and slot names resolve  --  []
+[PASS] R7d wardrobe equip_slots: every slot has its own integer z (draw order above the body), a name key, and a unique item_slot + subslot  --  {'bracelet': 25, 'circlet': 41, 'dress': 21, 'earrings': 35, 'hat': 40, 'necklace': 30, 'pants': 10, 'shirt': 20, 'shoes': 12}
+[PASS] R9 loot: every container / creature rarity odds sum to 10000 basis points  --  []
+[PASS] R10 realised rarity distribution of every zone x container equals the designed odds (40k simulated opens each, +-1.6 points); no empty pool is ever reached  --  []
+[PASS] R11 every unique wanderer lives in a container of its zone that can roll wanderers  --  []
+[PASS] R12 every forest zone has >= 4 furniture, >= 4 clothing and >= 2 material entries in each rarity it can roll  --  []
+[PASS] MM1 data/features/map_markers.json == lua/data/loot_tables.lua: per area the chests / digging spots per container id, the creatures per visit, the unique spots (== loot.spots of the zone) and the boss placement  --  2 areas, 2 chests + digs, 3 unique spots, 22 loot spots
+[PASS] R13 home tiers: 10 tiers whose ids/floors/walls/platform/capacity match the home art spike; gold & capacity & storage & energy increase; build days never decrease; every key/material/quest/npc resolves  --  []
+[PASS] R14 hygge levels strictly ascending in decor points, energy and luck non-decreasing, names resolve  --  [('koldt', 0), ('lunt', 15), ('hyggeligt', 45), ('rigtig_hyggeligt', 110), ('eventyrligt', 240), ('kongeligt', 420)]
+[INFO] home tiers (gold, days, capacity, storage, energy)  --  [(1, 0, 0, 11, 12, 0), (2, 200, 1, 16, 18, 3), (3, 300, 2, 19, 24, 6), (4, 900, 2, 26, 30, 9), (5, 2100, 3, 30, 40, 12), (6, 4500, 3, 38, 50, 15), (7, 7500, 4, 46, 60, 18), (8, 12500, 5, 57, 72, 22), (9, 19000, 6, 65, 84, 26), (10, 27000, 8, 74, 100, 30)]
+[PASS] SK1 starter_kit_ids_exist: every id of lua/data/starter_kit.lua exists in the right catalogue and is a normal piece; the worn pieces fill distinct equipment slots without an exclusion pair; no piece is listed twice  --  worn ['shirt_linen_cream', 'pants_trousers_brown', 'shoes_boots_brown'] owned ['dress_sun_cream'] placed ['bed_birch_single', 'chest_pine'] stock {'chair_pine': 2, 'floor_lamp_iron': 1, 'rug_runner_natural': 1, 'table_round_pine': 1}
+[PASS] SK2 starter kit fits the shed: pieces <= furniture slots of tier 1, floor footprints <= room cells, the whole kit stays below the first hygge level (the player earns Lunt by buying)  --  7 pieces of 11 slots, 7 of 20 floor cells, decor 14 < 15
+[PASS] FG1 every friendship gate of the home tiers and every friendship gift can be earned: its npc has friendship = true in npcs.lua (weekly chat heart) or a quest that pays hearts, and asks <= 10 hearts  --  10 gates/gifts, quest-paid hearts {'baker_maja': 4, 'fairy_wizard': 3, 'pippin_boegeknop': 2, 'fairy_king': 5, 'guard_oak': 2}
+[PASS] Q5 quest references: every npc a quest pays hearts to, names as giver or as an objective target exists in npcs.lua (hearts 1..10), every reward item exists, gold >= 0  --  8 quests, friendship rewards ['baker_maja', 'fairy_king', 'fairy_wizard', 'guard_oak', 'pippin_boegeknop']
+[PASS] N1 the town is Hyggebyen everywhere: the retired name is in no text file of the stage tree and of the whole repo (Lua, CSV, json, md, scripts, scenes, resources, .map text maps, .svg), the area id is hyggebyen, and the scans really visited every Lua file and CSV of the stage tree and every kind of file of the repo  --  47 of 47 Lua and 9 of 9 CSV files of the stage tree scanned; 5964 text files of the repo (35 .map, 8 .svg, 126 .tscn, 1 .tres)
+[PASS] K1 every localisation key referenced from the new Lua exists (new CSVs or legacy da.csv)  --  748 keys referenced; missing: []
+[PASS] K7 every localisation key that the addendum names in code (whispers, shop states, toasts) exists in a feature CSV  --  []
+[PASS] K8 every key of the eight feature CSVs resolves to ITS OWN file in data/loc_key_owners.json (exact keys, then ITEM ids, then longest prefix) - the table P03 lints with  --  []
+[PASS] K9 every loot creature name_key is a localisation key that a CSV defines, or whose owning CSV (tools/loc/key_owners.json) has not landed yet (listed as a warning for its owner)  --  3 of 3 defined
+[INFO] loc keys not referenced from Lua (items/hints are looked up by convention ITEM_<ID>)  --  198
+[PASS] K4 every season has >= 5 tagged items in the rotation of furniture_shop and tailor_shop (the season boost has something to boost)  --  []
+[PASS] K5 every builder voice key follows voice/fairy_builder/t<NN>_<kind> and maps to one text_key  --  39 uses of 37 distinct keys (the 28 branches repeat the same lines on purpose)
+[PASS] K10 every spoken line of the builder, furnisher and tailor dialogues has voice_key == voice/<speaker>/<line id>, a line id that matches its text key, and no voice key serves two texts  --  builder, furnisher, tailor
+[PASS] K6 every item has its own Danish and English display name (no two items share a name)  --  []
+[PASS] K3 the builder dialogue module uses all 10 + 9 + 9 + 9 = 37 builder lines  --  []
+[PASS] D1 no TODO markers, no English words in Danish text, clean whitespace, no ASCII quotes, identical placeholders in da and en  --  []
+[PASS] D2 Danish text differs from English for every phrase of 3+ words  --  []
+[INFO] D3 long Danish strings outside desc/hint/dialogue  --  []
+[PASS] D4 every character of every Danish string exists in Alegreya Sans; every heading/name character exists in Caprasimo (Æ Ø Å and „ “ » « – … render)  --  69 distinct characters; missing body [], missing heading []; fonts: 8 live ttf files in /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/assets/fonts
+[INFO] D4 special characters used  --  ÅØåæéø
+[PASS] D4b both fonts contain Æ Ø Å æ ø å and the typographic marks „ “ » « – … ’ (needed even where no current string uses them)  --  []
+[PASS] D5 Danish literals inside the Lua files contain no English words  --  []
+[PASS] D6 no text literal (a string with a space) in any Lua file of this package: Danish and English text lives in the CSVs only  --  27 files
+[PASS] Q1 the four pending (reviewed) quests differ from the legacy baseline files ONLY in rewards (lost_cat: also meta and the one objective text)  --  []
+[PASS] Q3 [full] the rewards of the four merged quests in the REAL repo equal the reviewed pending rewards (P13 merged them)  --  []
+[PASS] Q2 quests that hand out unique/legendary/rare items are not repeatable; objective ids unique; givers exist  --  []
+[PASS] Q4 feature quest objectives are completable with the events the PLAN emits (no manual, state queries known, areas/zones exist, no event counting) and toasts use loc keys  --  []
+[PASS] R19 data/content_contract.json (what A1 and A2 test their art against) equals the real Lua: 10 tiers, 130 furniture, 32 materials, 96 garments  --  []
+[PASS] R15 every wardrobe_sets bonus row can be reached by WEARING pieces (max simultaneously wearable per set)  --  {'bageren': 3, 'fe_festen': 4, 'marken': 4, 'nattevandreren': 5, 'skovstrejfer': 5, 'svampesamleren': 3, 'troldmanden': 5}
+[PASS] R16 every unlock has a status (real / partial / stub) and the Danish copy of partial and stub unlocks and of the voiced builder lines does not promise a mechanic that does not exist  --  []
+[PASS] R17 rarity UI colours: legendary is the night tile with a pale icon rim, no ring is the focus gold, no label is within CIEDE2000 10 of Tornebaer, labels >= 4.5:1, gold pips and rim >= 7:1 on night  --  []
+[PASS] R20 two garments of the same design but different rarity differ by CIEDE2000 >= 8 in at least one palette region (the rarity step is visible in the colours)  --  []
+[PASS] R18 every garment is max_stack 1 and loot.duplicates sells a copy that cannot be taken (clothing + furniture) with a message key that exists  --  {'action': 'sell', 'kinds': ['clothing', 'furniture', 'weapon'], 'message_key': 'FIND_UI_DUPLICATE_FMT'}
+
+RESULT: 125 passed, 0 failed, 0 warnings

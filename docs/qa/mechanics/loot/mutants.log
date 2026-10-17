@@ -1,0 +1,17 @@
+[CONTROL] unmutated copy: exit 0, RESULT: 124 passed, 0 failed
+[CAUGHT] W1 weapon damage thirty percent too high   (exit 1; failing: ['W1 weapon damage follows '])
+[CAUGHT] W5 forge ingredients cost the full buy price   (exit 1; failing: ['W5 forge recipes cost 45-'])
+[CAUGHT] R7 legendary enters smithy rotation   (exit 1; failing: ['R7 dungeon shop sources m'])
+[CAUGHT] G3 unique enters appraisal pool   (exit 1; failing: ['G3 appraisal only produce'])
+[CAUGHT] K1 orphan rune shard   (exit 1; failing: ['R3 dungeon fixed sources ', 'K1 three first-kill shard'])
+[CAUGHT] DB4 lake spot on wrong floor   (exit 1; failing: ['DB4 every forest spot has'])
+[CAUGHT] DB2 boss disagrees with generator floor   (exit 1; failing: ['DB2 boss ids and floors a'])
+[CAUGHT] M2 material sells above twenty-five percent   (exit 1; failing: ['M2 dungeon materials sell'])
+[CAUGHT] DB5 orphan node yield   (exit 1; failing: ['DB5 generator nodes and a'])
+[CAUGHT] R7 keepsake sold in a shop   (exit 1; failing: ['R7 shops: keepers/loc key'])
+[CAUGHT] K1 missing loc key   (exit 1; failing: ['K1 every localisation key', 'K8 every key of the eight', 'K2 ITEM_BED_PINE_DESC exi'])
+[CAUGHT] R16 implemented baking falsely marked stub   (exit 1; failing: ['R16 every unlock has a st'])
+[CAUGHT] R7 shop stock names an item that does not exist   (exit 1; failing: ['R7 shops: keepers/loc key'])
+[CAUGHT] MM1 map marker area id does not match the loot zone   (exit 1; failing: ['MM1 data/features/map_mar'])
+[CAUGHT] MM1 map marker chest count differs from the loot table   (exit 1; failing: ['MM1 data/features/map_mar'])
+MUTATION TEST: 15 of 15 mutants caught

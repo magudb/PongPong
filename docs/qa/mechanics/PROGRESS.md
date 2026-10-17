@@ -20,14 +20,15 @@ Seasonal farm dressing is complete: sixteen markers, nineteen new painted assets
 
 Audio integration is implemented: bounded cue logging and pooling, area/rain/festival ambience, surfaces and footsteps, equipment/social/town hooks, 44 SFX, nine ambience loops and fourteen sparse scores. Fourteen human originals are preserved and eleven reused; 175 Sara placeholders are generated, while 110 draft social voice rows await the copy pass. Acceptance: 1,534 integration checks, six independent waveform/pipeline tests and native mixer/voice-indicator checks. Source-bound town proofs await the final source refresh.
 
-Next work: home unlock completion, dungeon validation/pacing, UI and final copy/gates.
+Home services and the integrated UI repairs are complete (7b45bb1): real oven baking, persisted accurate forecasts, consent-gated saved royal visit, all four journal tabs, explicit focus navigation and inspected native UI/forest captures. The calendar fixture is bounded on reopen in logical and native pixel checks.
+
+Dungeon validation/pacing is implemented: 125 full-stage rules, eleven added negative probes, fifteen selected pipeline mutants caught and all nine P1 gates passed. See loot/VALIDATION.md. Remaining work is combat/performance acceptance, final copy, town-loop consumers/proofs and full integration.
 
 Still required before the full task is complete:
 
 - Finish the social copy review and bake its 110 deferred voice rows; preserve frozen human recordings.
-- Resolve the separately listed home oven, forecast and royal-visit unlocks as part of the full mechanics pass.
-- Finish dungeon item/recipe/boss validators and their mutants, larger pacing simulations and combat/performance acceptance.
-- Resolve the UI sweep findings (forest HUD theme/localization, fourth journal tab navigation and real fixture setup for house/animal/building screens), the remaining baseline failures, run full headless/native regression, refresh source-bound town proofs, update completion documentation and merge finished work to local main.
+- Finish combat/performance acceptance and the complete validator mutation pass.
+- Resolve remaining baseline integration failures and implement all installed town-loop consumers; run full headless/native regression, refresh source-bound town proofs, update completion documentation and merge finished work to local main.
 
 The greenhouse remains opt-in. Children, multiplayer, a fifth heart scene and yearly birthday cards are outside this planned single-player scope. Copy remains draft until native-speaker review; visual captures are inspected by the implementing agent.
 

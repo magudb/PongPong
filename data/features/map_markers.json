@@ -1,6 +1,6 @@
 {
- "v": 1,
- "note": "what the map authors (P11 iso maps, P19 forest maps) must place per area: chests by tier (respawn days in lua/data/loot_tables.lua), digging spots, creatures per visit, hand-placed unique spots (spot id = marker id)",
+ "v": 2,
+ "note": "Static farm/Hyggebyen markers only. Generated forest nodes, spots, lake chests and bosses are checked against lua/config/dungeon.lua by DB1-DB5.",
  "areas": {
   "farm": {
    "containers": {
@@ -10,70 +10,6 @@
    "unique_spots": [
     "fuglehuset",
     "trae_hulning"
-   ]
-  },
-  "skovkant": {
-   "containers": {
-    "trae": 3,
-    "jern": 1,
-    "dig": 6
-   },
-   "creatures": {
-    "bat": 3
-   },
-   "unique_spots": [
-    "sneglestien",
-    "mosstenen"
-   ]
-  },
-  "dybe_bregner": {
-   "containers": {
-    "trae": 2,
-    "jern": 2,
-    "fe": 1,
-    "konge": 1,
-    "dig": 5
-   },
-   "creatures": {
-    "ugleoje": 3,
-    "bat": 2
-   },
-   "unique_spots": [
-    "mis_hjoerne",
-    "hul_stamme",
-    "hekselysning",
-    "tornebaerkrattet",
-    "slyngplanterne"
-   ],
-   "boss": "snurresvamp"
-  },
-  "svampelunden": {
-   "containers": {
-    "jern": 1,
-    "fe": 2,
-    "dig": 6
-   },
-   "creatures": {
-    "lysesvamp": 3
-   },
-   "unique_spots": [
-    "svampering",
-    "lysningen",
-    "svampelysringe"
-   ]
-  },
-  "krystalgrotten": {
-   "containers": {
-    "jern": 2,
-    "fe": 2,
-    "dig": 4
-   },
-   "creatures": {
-    "ugleoje": 2
-   },
-   "unique_spots": [
-    "stjernekigger",
-    "runealteret"
    ]
   },
   "hyggebyen": {

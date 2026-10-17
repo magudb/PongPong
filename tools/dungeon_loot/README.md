@@ -1,0 +1,9 @@
+# Live dungeon economy model
+
+Run `tools/dungeon_loot/run.sh --check --report /tmp/loot-pacing.json` for P1. It evaluates this checkout's Lua with Lua 5.4, samples 64 independent saves per profile and 1,000 full dives, and writes the source binding, seed schedule, assumptions, observations and fixed budgets. `run_all.sh` adds band distributions and 200 lifetime saves per profile. `sensitivity.sh` compares the plan's progression timing with the separately authored DE30 timing; that alternative is diagnostic and has no P1 acceptance claim.
+
+`pacing.inject()` replaces the forest income/material stream in the existing `tools/features/sim/balance_sim.py`; farming, social/quest gates, spending, material purchases and house construction remain that model's. All `dng_` material surplus prices are read live (all eight ordinary materials sell at their complete real sell value). Failed crystal rolls deliver their actual fallback. Crystal aliases and node counts come from the generator table, with no obsolete floor-loot budget.
+
+Free furniture is an explicit substitution scenario. Both `FREE_FURN_REPLACES` and `FREE_FURN_RATE` default off in the plan model. The scenario banks each kept furniture item's nominal buy value once, then uses that stock only to replace future planned furniture spending. It never grants cash for a kept item or adds a second lifestyle budget. Reports expose the total substituted value.
+
+The independent Python RNG gives distributions, not the runtime's exact keyed draws. `parity.py` separately compares recorded GDScript distributions. These scripts do not simulate combat, pathfinding, inventory management, actual player choices or enjoyment. Eight minutes per dungeon run and ten minutes per home day are modelling units, not telemetry. Raw and dungeon material sale conventions and the named play profiles remain visible constants in `mc.py`.

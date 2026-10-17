@@ -14,7 +14,7 @@ from live_data import snapshot
 BANDS = ["skovkant", "dybe_bregner", "svampelunden", "krystalgrotten"]
 RARS = ["normal", "uncommon", "rare", "unique", "legendary"]
 RANK = {r: i + 1 for i, r in enumerate(RARS)}
-CRYSTAL_KINDS = {"amethyst", "emerald", "moonstone", "crystal_shard"}      # the generator's crystal node kinds: loot-bearing nodes are budgeted by dungeon_loot.floor_loot instead
+CRYSTAL_KINDS = {"amethyst", "emerald", "moonstone", "crystal_shard"}      # all art variants share the crystal yield; counts come from live floor nodes
 
 # ====================================================================================================================================
 # ASSUMPTIONS (named; the generator and experience tracks may overwrite them with their own tables)
@@ -66,8 +66,8 @@ HOME_NEEDS = {"nails", "plank_pine", "stone_block", "glass_pane", "lime", "straw
 
 
 class World:
-    def __init__(self):
-        repo = snapshot()
+    def __init__(self, repo=None):
+        repo = repo if repo is not None else snapshot()
         self.items = {}
         for f, g in repo.items():
             if f.startswith("lua/items/"):
@@ -190,6 +190,8 @@ class Run:
         self.by = collections.Counter()
         self.kept_buy = 0.0
         self.kept_buy_f = 0.0
+        self.gross_sold = 0.0
+        self.dust_sold = 0.0
         self.key_spent = 0.0
 
 
@@ -232,6 +234,8 @@ def deliver(world, st, run, item, amount, src, day, kind=None):
         # REVIEW PATCH: the dungeon materials (dng_*) have no sink but 13 one-off recipes -> DNG_SELL_SHARE (1.0 = the player sells the surplus); every other raw item keeps the loot track's 0.35
         v *= DNG_SELL_SHARE if (item.startswith("dng_") and not item.startswith("dng_rune")) else RAW_SELL_SHARE
     run.gold += v
+    run.gross_sold += v
+    if item == "dng_glimmer_dust": run.dust_sold += v
     run.by[(src, kind)] += v
     if _burns(world, src):
         st.day_value[day] += v
@@ -531,6 +535,7 @@ def lifetime(world, pname, seed, days=SIM_DAYS, mode=None, hunter=None):
     unlock = prof["zones"]
     gold_total, runs, rares, floors_total, defeats = 0.0, 0, 0, 0, 0
     runs_by_day = []
+    daily = {}
     marks = {}
     for day in range(1, days + 1):
         if rng.random() >= prof["runs"]:
@@ -562,7 +567,8 @@ def lifetime(world, pname, seed, days=SIM_DAYS, mode=None, hunter=None):
                 marks[item + "8"] = day
         defeats += 1 if rng.random() < prof["defeat"] else 0
         runs_by_day.append((day, band, run.gold))
-    return dict(st=st, gold=gold_total, runs=runs, floors=floors_total, rares=rares, defeats=defeats, by_day=runs_by_day, marks=marks)
+        daily[day] = dict(gold=run.gold, kept=dict(run.kept), furniture=run.kept_buy_f)
+    return dict(st=st, gold=gold_total, runs=runs, floors=floors_total, rares=rares, defeats=defeats, by_day=runs_by_day, marks=marks, daily=daily)
 
 
 def keepsake_universe(world):
@@ -622,10 +628,19 @@ def cmd_bands(world):
     return r
 
 
+def observed_day(value):
+    return str(int(value)) if value < 9999 else ">"+str(SIM_DAYS)
+
+
+def observed_window(values):
+    return "/".join(observed_day(v) for v in (statistics.median(values),pct(values,.1),pct(values,.9)))
+
+
 def cmd_life(world, n=200, mode="keep"):
     uni = keepsake_universe(world)
     print("== lifetime Monte Carlo: %d saves per profile, %d days, valuation '%s'.  Keepsakes with a dungeon source: %d (%d unique, %d legendary)" % (
         n, SIM_DAYS, mode, len(uni), sum(1 for i in uni if world.rarity_of(i) == "unique"), sum(1 for i in uni if world.rarity_of(i) == "legendary")))
+    print("   >%d means the milestone was not reached within the simulated horizon; it does not mean unobtainable." % SIM_DAYS)
     res = {}
     for pname in PROFILES:
         lives = [lifetime(world, pname, s, mode=mode) for s in range(n)]
@@ -646,10 +661,10 @@ def cmd_life(world, n=200, mode="keep"):
         print("\n-- %s (runs/day %.2f): median runs %d, floors %d; mean gold per run %.0f; faints %.1f" % (pname, PROFILES[pname]["runs"], statistics.median(L["runs"] for L in lives),
               statistics.median(L["floors"] for L in lives), statistics.mean(L["gold"] / max(L["runs"], 1) for L in lives), statistics.mean(L["defeats"] for L in lives)))
         print("   keepsakes found by day (mean of the %d): " % len(uni) + "  ".join("d%d: %.1f" % (T, statistics.mean(by[T])) for T in by))
-        print("   day of the k-th UNIQUE (median / p10 / p90): " + "  ".join("%d: %s" % (k, "%d/%d/%d" % (statistics.median(v), pct(v, 0.1), pct(v, 0.9)) if statistics.median(v) < 9999 else "never") for k, v in us_d.items()))
-        print("   day of the k-th LEGENDARY (median / p10 / p90): " + "  ".join("%d: %s" % (k, "%d/%d/%d" % (statistics.median(v), pct(v, 0.1), pct(v, 0.9)) if statistics.median(v) < 9999 else "never") for k, v in ls_d.items()))
+        print("   day of the k-th UNIQUE (median / p10 / p90): " + "  ".join("%d: %s" % (k, observed_window(v)) for k, v in us_d.items()))
+        print("   day of the k-th LEGENDARY (median / p10 / p90): " + "  ".join("%d: %s" % (k, observed_window(v)) for k, v in ls_d.items()))
         full = [max(L["st"].found.get(i, 9999) for i in uni) for L in lives]
-        print("   day when ALL %d are found: median %s, p10 %s, p90 %s" % (len(uni), statistics.median(full), pct(full, 0.1), pct(full, 0.9)))
+        print("   day when ALL %d are found: median %s, p10 %s, p90 %s" % (len(uni), observed_day(statistics.median(full)), observed_day(pct(full, 0.1)), observed_day(pct(full, 0.9))))
         ru = [L["runs"] / max(sum(1 for i in L["st"].found if i in uni and world.rarity_of(i) == "unique"), 1) for L in lives]
         rl = [L["runs"] / max(sum(1 for i in L["st"].found if i in uni and world.rarity_of(i) == "legendary"), 1) for L in lives]
         print("   runs per unique found %.1f, per legendary found %.1f (whole %d days)" % (statistics.mean(ru), statistics.mean(rl), SIM_DAYS))
@@ -657,7 +672,7 @@ def cmd_life(world, n=200, mode="keep"):
         print("   rare items per floor %.2f -> one rare about every %.1f floors" % (rr, 1 / rr))
         m8 = [L["marks"].get("moonstone8", 9999) for L in lives]
         a8 = [L["marks"].get("amethyst8", 9999) for L in lives]
-        print("   day with 8 moonstone in the bag: median %d (p10 %d, p90 %d); with 8 amethyst: median %d (p10 %d, p90 %d)   [the plan needs them for tiers 6 / 9 / 10: typical day 53 / 235 / 337]" % (
+        print("   day with 8 moonstone in the bag: median %d (p10 %d, p90 %d); with 8 amethyst: median %d (p10 %d, p90 %d)   [materials kept for home construction; castle timing is measured separately in pacing.py]" % (
             statistics.median(m8), pct(m8, 0.1), pct(m8, 0.9), statistics.median(a8), pct(a8, 0.1), pct(a8, 0.9)))
         runs100 = [sum(1 for (d, b, g) in L["by_day"] if d <= 100) for L in lives]
         u100 = [sum(1 for i, d in L["st"].found.items() if i in uni and d <= 100 and world.rarity_of(i) == "unique") for L in lives]
@@ -674,7 +689,7 @@ def fnv_rng(world_seed, stream, key):
     return random.Random(h)
 
 
-def full_dive(world, n, luck, cap_on, mode="sell", comp=1.0, floors_to=12):
+def full_dive(world, n, luck, cap_on, mode="sell", comp=1.0, floors_to=12, details=False):
     """one game day in which the player clears floors 1..floors_to completely: the gold-equivalent the dungeon hands out"""
     w2 = copy.copy(world)
     w2.DL = copy.deepcopy(world.DL)
@@ -685,6 +700,7 @@ def full_dive(world, n, luck, cap_on, mode="sell", comp=1.0, floors_to=12):
     prof["key_day"] = 0
     rng = random.Random(77)
     vals, rares, caps = [], [], 0
+    sold, dust = 0.0, 0.0
     for _ in range(n):
         st = State(w2)
         st.mode = mode
@@ -694,6 +710,7 @@ def full_dive(world, n, luck, cap_on, mode="sell", comp=1.0, floors_to=12):
         st.keys = 99
         st.next_key_day = 0
         tot, rr = 0.0, 0
+        early_cap = False
         for band in BANDS:
             b = w2.DL["bands"][band]
             fl = [f for f in range(b["from"], b["to"] + 1) if f <= floors_to]
@@ -701,11 +718,17 @@ def full_dive(world, n, luck, cap_on, mode="sell", comp=1.0, floors_to=12):
                 continue
             run = run_floors(w2, st, band, fl, 400, rng, prof, luck, quests={k: 0 for k in prof["quests"]})
             tot += run.gold
+            sold += run.gross_sold
+            dust += run.dust_sold
+            if max(fl) < 10 and is_capped(w2,st,400,band): early_cap = True
             rr += sum(1 for it in run.items if RANK[it[1]] == 3)
+        caps += int(early_cap)
         vals.append(tot)
         rares.append(rr)
     vals.sort()
-    return statistics.mean(vals), vals[len(vals) // 10], vals[len(vals) * 9 // 10], statistics.mean(rares)
+    summary = (statistics.mean(vals), vals[len(vals) // 10], vals[len(vals) * 9 // 10], statistics.mean(rares))
+    if details: return dict(mean=summary[0],p10=summary[1],p90=summary[2],rare=summary[3],cap_before_floor10=caps/n,dust_share=dust/max(sold,1))
+    return summary
 
 
 def cmd_abuse(world):
@@ -714,10 +737,10 @@ def cmd_abuse(world):
     for cap_on in (False, True):
         for luck in (0.0, 0.2):
             m_, lo, hi, rr = full_dive(world, 400, luck, cap_on)
-            print("%-28s %6.2f | %8.0f %8.0f %8.0f | %.1f" % ("12 floors, cap %s" % (("%s on" % w.DL["daily"]["value_cap"]) if cap_on else "off"), luck, m_, lo, hi, rr))
+            print("%-28s %6.2f | %8.0f %8.0f %8.0f | %.1f" % ("12 floors, cap %s" % (("%s on" % world.DL["daily"]["value_cap"]) if cap_on else "off"), luck, m_, lo, hi, rr))
     for ft in (3, 6, 9):
         m_, lo, hi, rr = full_dive(world, 400, 0.0, True, floors_to=ft)
-        print("%-28s %6.2f | %8.0f %8.0f %8.0f | %.1f" % ("floors 1-%d, cap %s on" % (ft, w.DL["daily"]["value_cap"]), 0.0, m_, lo, hi, rr))
+        print("%-28s %6.2f | %8.0f %8.0f %8.0f | %.1f" % ("floors 1-%d, cap %s on" % (ft, world.DL["daily"]["value_cap"]), 0.0, m_, lo, hi, rr))
     print("\n== seed scumming: the same chest uid opened 1000 times from reloads of the same save (keyed stream) -> distinct outcomes:")
     outs = set()
     for _ in range(1000):
