@@ -10877,7 +10877,7 @@
   ],
   "UI_READ": [
    "scripts/traetoppen/city_builder.gd:511",
-   "scripts/world2d/iso_area.gd:1241"
+   "scripts/world2d/iso_area.gd:1243"
   ],
   "UI_SAVE_GAME": [
    "scripts/ui/save_load_ui.gd:46"
@@ -10888,7 +10888,7 @@
   ],
   "UI_SLEEP": [
    "scripts/home/home_room.gd:318",
-   "scripts/world2d/iso_area.gd:1255"
+   "scripts/world2d/iso_area.gd:1257"
   ],
   "UI_WEATHER_KLART": [
    "weather (plan 3.9)"

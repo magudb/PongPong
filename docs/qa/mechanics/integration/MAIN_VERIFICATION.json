@@ -1,0 +1,18 @@
+{
+  "result": "pass",
+  "merge_commit": "e32e2987fc10207b8f035fc524d90cc542d8ee42",
+  "source_binding": "b512ac867eda2b2e4e36407b5584c405b4b067c2415908b2cd7f3561665006e7",
+  "smoke": {
+    "report": "main-smoke.json",
+    "checks": 715,
+    "failed": 0,
+    "unexpected_engine_messages": 0,
+    "allowed_negative_fixture_messages": 7,
+    "skipped": 1,
+    "skip_reason": "Absent-SocialManager fallback: the real autoload is installed."
+  },
+  "style_reviewed_assets": 2925,
+  "route_input_hashes_current": 57,
+  "unmerged_worktree_heads": [],
+  "integration_scope": "local main; no remote push performed by this task"
+}

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "branch": "codex-mechanics",
+  "branch": "main",
   "base": "6cb358d",
   "scope": "Complete the planned single-player game using the reviewed design addenda; preserve approved painted assets.",
   "baseline": {
@@ -68,7 +68,7 @@
     },
     {
       "system": "End-to-end acceptance, source-bound proofs and merge",
-      "state": "implemented and validated; full headless, focused final regression, native wave 7, combat, staged validator, source-bound proofs, strict copy/voice and art gates pass; ready for local-main merge"
+      "state": "complete; implemented, validated and merged into local main; post-merge smoke, style, source proofs and route hashes pass"
     }
   ],
   "explicit_design_limits": [
@@ -113,7 +113,8 @@
     "final_acceptance": "docs/qa/mechanics/integration/ACCEPTANCE.md",
     "final_native": "docs/qa/mechanics/integration/final-native.json",
     "native_area_budgets": "docs/qa/mechanics/integration/native-budget-final.json",
-    "town_source_binding": "b512ac867eda2b2e4e36407b5584c405b4b067c2415908b2cd7f3561665006e7"
+    "town_source_binding": "b512ac867eda2b2e4e36407b5584c405b4b067c2415908b2cd7f3561665006e7",
+    "main_verification": "docs/qa/mechanics/integration/MAIN_VERIFICATION.json"
   },
   "contract_additions": [
     "QuestManager state queries buildings_owned(type) and animals_owned support accepting animal quests after building or adoption.",
@@ -122,5 +123,8 @@
   ],
   "confirmed_scope": "All planned single-player mechanics",
   "confirmed_finale": "A bittersweet discovery: learn her fate and bring her legacy home",
-  "implementation_revision": "cea0196896d2f362cb55cd18d677d4b98601c31a"
+  "implementation_revision": "cea0196896d2f362cb55cd18d677d4b98601c31a",
+  "completed_in": "codex-mechanics",
+  "status": "complete",
+  "merge_commit": "e32e2987fc10207b8f035fc524d90cc542d8ee42"
 }

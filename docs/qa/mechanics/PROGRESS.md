@@ -1,6 +1,6 @@
 # Single-player mechanics completion
 
-The authorized single-player scope is implemented on `codex-mechanics`, based on local main `6cb358d`. All gameplay, source-proof and native gates pass; local-main integration is ready. No remote push is requested.
+The completed single-player milestone is merged into local `main` at `e32e298`. Work was completed in `codex-mechanics`; all gameplay, source-proof and native gates pass. No remote push was performed by this task.
 
 The game now includes ten home tiers with furniture/storage/services, farm buildings and ten animal species, usable towns and shops, forty citizen heart scenes, eleven family scenes, nine festivals, relationship consent/dating/engagement/weddings, household chores, named visits, parties and Natlys activities. Equipment and clothing can be changed and saved; held tools/weapons and the HUD identify the active item. All 44 weapon/cut-gem cards show localized values and effects from the actual gameplay definitions.
 
@@ -23,3 +23,5 @@ Historical loadout source proofs are preserved under `docs/qa/loadout/source-pro
 The [playing guide](../../PLAYING.md) documents controls and the completed systems. The greenhouse remains opt-in. Children, multiplayer, yearly birthday cards and a fifth friendship event are outside this planned single-player scope. No human play session or native-speaker sign-off is claimed by automated acceptance.
 
 Final integration passes 878 native checks across fourteen sections without failures, skips or engine messages. Wave 7 requires every installed town consumer and the real festival capture. Both source proofs use the current binding; all eight producer regressions are caught after a clean control. The final preview-cache and rainy-town batching repairs pass 531 focused headless and 29 native budget checks. See [final acceptance](integration/ACCEPTANCE.md) and [native repairs](integration/NATIVE_REPAIRS.md).
+
+Post-merge main verification passes 715 checks without failures or unexpected engine messages, plus current style/source/route-hash checks. All finished worktree heads are included in main. [Main verification](integration/MAIN_VERIFICATION.json) records the one expected absent-service fallback skip.

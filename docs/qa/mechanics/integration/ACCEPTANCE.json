@@ -3,7 +3,12 @@
   "result": "pass",
   "scope": "All planned single-player mechanics",
   "implementation_revision": "cea0196896d2f362cb55cd18d677d4b98601c31a",
-  "merge": "ready for local-main integration; no remote push",
+  "merge": {
+    "branch": "main",
+    "commit": "e32e2987fc10207b8f035fc524d90cc542d8ee42",
+    "verification": "docs/qa/mechanics/integration/MAIN_VERIFICATION.json",
+    "scope": "local integration"
+  },
   "finale": "A bittersweet discovery: learn her fate and bring her legacy home",
   "reports": {
     "full-headless": {
@@ -61,6 +66,14 @@
       "skipped": 0,
       "unexpected_engine_messages": 0,
       "elapsed_s": 254.05
+    },
+    "main-smoke": {
+      "path": "docs/qa/mechanics/integration/main-smoke.json",
+      "checks": 715,
+      "failed": 0,
+      "skipped": 1,
+      "unexpected_engine_messages": 0,
+      "elapsed_s": 190.95
     }
   },
   "town_source_binding": "b512ac867eda2b2e4e36407b5584c405b4b067c2415908b2cd7f3561665006e7",

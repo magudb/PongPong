@@ -1,0 +1,833 @@
+run_playtest: importing project (pass 1 of 1) ...
+run_playtest: assets changed, running tools/import/write_import_stubs.py --check
+write_import_stubs --check: ok (62 character folders, 498 sheets with the S3TC preset, 58 tile atlases, 0 wardrobe layer imports lossless, 252 painted wardrobe textures with S3TC, 253 keep files)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=core,copy_completion,home_services,forest_mother,town_loop,wardrobe_ui,held_equipment,area,ui_mechanics
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.1sodlt/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 12.0 s
+== section area  (res://tests/sections/area.gd)
+  ok    area.iso_constants (tile 128x76 cell 144x84 ortho 96x56)
+  ok    area.iso_zoom_and_squash (zoom 0.40 in 0.30 .. 0.70, squash 0.59375 (sin 36 = 0.5878))
+  ok    area.iso_no_sprite_scale (sprites are never scaled individually (D4); Iso.S = 1.6667 is the literal rescale helper)
+  ok    Iso.S = 1 / 0.6 (got 1.66666666666667, want 1.66666666666667 +/- 0.0001)
+  ok    area.iso_cell_roundtrip (iso_cell(iso_center(c)) == c and ortho_cell(ortho_center(c)) == c for 27 x 27 cells)
+  ok    area.iso_diamond_corners_inside (points just inside every diamond corner map back to their cell)
+  ok    area.iso_footprint_geometry (left and right corners lie on the squash slope of the bottom corner; the centre of a 1 x 1 footprint is the tile centre)
+  ok    area.iso_atlas_coords_periodic ((cell.x % 4, cell.y % 4), water 2 x 2)
+  ok    area.iso_dir8_and_steps (S row 0, E row 6, N row 4, step S (1,1))
+  ok    to_ground inverts to_screen (got 0.0, want 0.0 +/- 0.001)
+  ok    area.area_map_parse (an objects row may start with the spawn char; unknown header kept in extra, no warning)
+  ok    area.area_map_zoom_range (header zoom keys; default 0.3 .. 0.7)
+  ok    area.area_map_padding (short rows padded with # / .)
+  ok    area.area_map_missing_file_is_quiet (returns null and sets last_error, no engine error: no such map file: res://data/maps/_no_such_map.map)
+  ok    area.growth_cells_syntax (x,y lists and x0..x1,y0..y1 ranges)
+  ok    area.growth_cells_are_clipped_to_the_map (0..99999999999999999999 x 0..3 -> the 12 x 4 cells of the map, a reversed range is swapped (and adds nothing new), 'x,1' is refused, 11..30 is clipped, -5..-1 is outside (4 problems): 50 cells, 0 ms, problems ["cells part \'0..99999999999999999999,0..3\' reaches outside the 12 x 12 map (clipped to the map)", "cells part \'x,1\' is neither x,y nor x0..x1,y0..y1 (whole numbers)", "cells part \'11..30,11\' reaches outside the 12 x 12 map (clipped to the map)", "cells part \'-5..-1,2\' reaches outside the 12 x 12 map (clipped to the map)"])
+  ok    area.growth_cells_without_a_map_size_refuse_absurd_ranges (no map size known: a part naming more than 16384 cells is refused (["cells part \'0..999999,0..999999\' names more than 16384 cells (refused)"]), the rest parses)
+  ok    area.fixture_parses__fixture_iso (12x12 errors [])
+  ok    area.fixture_parses__fixture_ortho (12x10 errors [])
+  ok    area.fixture_iso_has_every_marker_type (missing [])
+  ok    area.fixture_iso_places_markers_and_props (default spawn, from_other, an enemy, the farmhouse and the mushroom house, 83 ground cells)
+  ok    area.fixture_iso_has_water_bridge_field (water, bridge planks and a field)
+  ok    area.fixture_ortho_has_walls_and_bog (12 x 10 ortho, wall tiles W, bog ~)
+  ok    area.props_lua_entries_valid (46 props, invalid: [])
+  ok    area.props_lua_collision_rules (trunk r=26, rock r=30, bushes none, houses footprint + 20 px with strips 14 / 10)
+  ok    area.ambient_lua_presets (farm / hyggebyen / forest / cave / home with ascending keyframes 0..24; home: no weather, no wind)
+  ok    area.ambient_lua_palettes (guide palettes: navy 1c2138 clear colour of the dark zones, lavender / sky blue, season and weather multipliers)
+  ok    area.world_csv_keys_exist (missing [])
+  ok    area.legacy_world_files_deleted (scripts/world/world.gd and zone_trigger.gd)
+  ok    area.world_scene_is_node2d_with_world_root (scenes/main/world.tscn: Node2D)
+  ok    area.zone_entered_only_from_world_root (other emitters: [])
+  ok    area.no_mouse_capture_in_world_scripts (world2d + ui scripts: [])
+  ok    area.no_danish_literals_in_world_scripts ([])
+  ok    area.no_danish_text_in_world_lua ([])
+  ok    area.placeholder_boot_cost (painting the placeholders of the iso fixture from cold (0 terrains / props / backdrop painted) took 0 ms of a 34 ms build (best of 1 cold builds; budget 200 ms on an idle machine, i.e. at least 3.25x faster than the 0 ms the same set costs at full resolution, the spike's 650 ms))
+  ok    area.placeholders_are_cached (a second build of the same area painted 0.00 ms more and took 3 ms (cold build 34 ms))
+  ok    area.artcatalog_missing_expected (missing() lists only fixture ids without a real asset: 0 ids; unexpected [], not listed [])
+  info  ArtCatalog.missing() of the iso fixture (0):
+  ok    area.terrain_atlas_shape (every terrain id of the contract answers an atlas of variants x cell (placeholders 144x84 x 4x4, water 2x2, ortho 112x64))
+  ok    area.prop_entry_shape (placeholder props carry texture, pivot inside the image and size like a props.json entry (unknown ids get a generic block))
+  ok    area.skirt_placeholders_follow_the_real_pivots (platform_sw 79x143 pivot (73,13), platform_se pivot (6,13), platform_corner 146x146)
+  ok    area.backdrop_has_sky_and_far (gradient sky + canopy haze when assets/backdrops is empty)
+  ok    area.icon_and_portrait_fallbacks (icon 128 and portrait badge fallbacks are recorded)
+  ok    area.character_exists (fox exists, hobbit_pip draws through its fallback chain, an unknown id does not (no warning))
+  ok    area.tileset_iso_contract (ISOMETRIC + DIAMOND_DOWN, tile 128x76, region 144x84, physics layer 0 -> 128, layer 1 -> 1)
+  ok    area.tileset_iso_periodic_tiles (4 x 4 variants per terrain, water 2 x 2)
+  ok    area.tileset_physics_water_0_only (ground_block polygons on the water_0 tiles and the invisible blocker tile only)
+  ok    area.tileset_ortho_contract (SQUARE 96 x 56 with the same two physics layers)
+  ok    area.tileset_ortho_wall_tile (wall tile: y_sort_origin +H/2 (28), solid on the world physics layer)
+  ok    area.geometry (Iso.iso_center == TileMapLayer.map_to_local and cell <-> world round-trips )
+  ok    area.geometry_random_points (Iso.iso_cell agrees with TileMapLayer.local_to_map for 300 random points)
+  ok    area.ground_layer_contract (Ground z -10 filter 2 (no mipmaps), Objects y-sorted filter 4, GroundFx z -9, Backdrop filter 4 (R.1))
+  ok    area.atlas_coords_are_periodic (atlas coords of the painted grass = Vector2i(cell.x % 4, cell.y % 4))
+  ok    area.farmable_cells ('f' ground chars are tillable: 12 cells)
+  ok    area.spawns_parsed (spawn markers + the default spawn char, unknown names fall back to default)
+  ok    area.backdrop_parallax (sky + far canopy as two Parallax2D behind the platform)
+  ok    area.player_stub_contract_class (world loads res://scenes/world2d/player_2d.tscn: CharacterBody2D)
+  ok    area.player_stub_contract (group player, in Objects, layer 2 / mask 197, camera current, IsoChibiSprite2D visual, methods; absent: [])
+  ok    area.production_player_damage_contract (production body honours damage)
+  ok    area.player_stub_camera_settings (smoothing 6, limit_smoothed, zoom 0.40)
+  ok    area.player_stub_camera_limits (limits [P: (-1536.0, 354.0), S: (3648.0, 3510.0)])
+  ok    area.camera_limits_center_small_rects (a rect smaller than the view is centred (Camera2D limits smaller than the view stick to the top-left))
+  ok    area.player_visual_from_skin_chain (visual fox_base -> art folder fox)
+  ok    area.game_data_skins_through_character_catalog (fox_base head of the chain, art folder fox, stock fox)
+  ok    area.game_data_race_and_config (race animal, player.walk_speed 285 and combat.swing_radius 197 from lua/config)
+  ok    area.registry_scans_data_maps (ids from @id: [&"_fixture_forest_fight", &"_fixture_iso", &"_fixture_ortho", &"farm", &"home", &"hyggebyen", &"int_badehuset", &"int_bageriet", &"int_birks_bistade", &"int_brummes_hus", &"int_brummes_vaerksted", &"int_dyrehuset", &"int_fekongens_hus", &"int_froebutikken", &"int_gaestehytten", &"int_hoppe_hut", &"int_hyldeblomsts_hus", &"int_kikis_hytte", &"int_loppeloftet", &"int_moebelbutikken", &"int_musikstuen", &"int_pippins_hus", &"int_postkontoret", &"int_raadhuset", &"int_skraedderiet", &"int_smedjen", &"int_toemmerhandlen", &"int_torvekroen", &"int_troldmandstaarnet", &"int_uglehulen", &"int_vagthytten", &"moerkeskoven", &"secret_garden", &"traetoppen"])
+  ok    area.registry_fixtures_are_flagged (real areas [&"farm", &"home", &"hyggebyen", &"int_badehuset", &"int_bageriet", &"int_birks_bistade", &"int_brummes_hus", &"int_brummes_vaerksted", &"int_dyrehuset", &"int_fekongens_hus", &"int_froebutikken", &"int_gaestehytten", &"int_hoppe_hut", &"int_hyldeblomsts_hus", &"int_kikis_hytte", &"int_loppeloftet", &"int_moebelbutikken", &"int_musikstuen", &"int_pippins_hus", &"int_postkontoret", &"int_raadhuset", &"int_skraedderiet", &"int_smedjen", &"int_toemmerhandlen", &"int_torvekroen", &"int_troldmandstaarnet", &"int_uglehulen", &"int_vagthytten", &"moerkeskoven", &"secret_garden", &"traetoppen"])
+  ok    area.default_area_falls_back_to_the_fixture (farm.map exists -> start area farm)
+  ok    area.travel_to_unknown_area_is_quiet (stays in farm, last_travel_error 'no such area: no_such_area' (was ''))
+  ok    area.intro_flag_waits_for_the_script (intro_pending stays set while scripts/world2d/intro_sequence.gd does not exist (P14))
+  ok    area.fixture_iso_built (18 props, 14 markers, 16 skirts, unknown chars {  }, 19 ms)
+  ok    area.trees_are_in_group_prop_tree (2 trees)
+  ok    area.solid_props_have_colliders (trunk body on layer world (1), bushes none, 14 bodies)
+  ok    area.trunk_collider_is_a_flattened_circle (ground r 26 -> screen ellipse 26.0 x 15.4)
+  ok    area.fence_collider_is_a_bar_along_the_axis (fence_x blocks along its cell axis)
+  ok    area.house_collider_is_the_padded_footprint (footprint half-width 160 + pad -> 188; the body sits at the footprint centre)
+  ok    area.sliced_house_glow_matches_windows (the sliced farmhouse light mask stays on the painted facade's image coordinates)
+  ok    area.building_contact_is_on_ground (building contact shares the collision footprint centre and draws below the y-sorted actors)
+  ok    area.building_contact_is_part_of_prop (ground contact follows the building's visibility and lifecycle, from either part)
+  ok    area.removing_building_removes_contact (removing a building also removes its ground layer, and null never matches an unrelated prop)
+  ok    area.glow_and_lights_ramp_with_night (4 additive glows and 2 PointLights: hidden at factor 0, on at 1)
+  ok    area.objects_layer_holds_props_and_player (47 children of Objects)
+  ok    area.fixture_ortho_built (44 wall tiles, bog on ground_block, no skirts, no backdrop, camera = the map [P: (0.0, 0.0), S: (1152.0, 560.0)])
+  ok    area.ortho_walls_are_ysorted_in_objects (Walls TileMapLayer y-sorted inside Objects)
+  ok    area.marker_handlers (14 marker types: []; skipped silently {  })
+  ok    area.lazy_markers_skip_while_scripts_are_missing (types whose script is absent or has no entry point are counted in skipped_markers)
+  ok    area.markers_are_recorded_for_their_consumers (animal_yard / building_slot / field_expansion stay readable through find_markers() with cell and position)
+  ok    area.warp_marker (warp to _fixture_ortho:from_iso, mask player)
+  ok    area.interactable_base (group interactable, Area2D on layer 4 (value 8), prompt key UI_READ)
+  ok    area.sign_interaction_whispers_its_key (whispers ["ZONE_FARM"])
+  ok    area.bed_marker (bed prompt UI_SLEEP)
+  ok    area.interactable_set_enabled (disabled -> layer 0, enabled -> layer 8)
+  ok    area.player_query_finds_interactables (E-query (r = 45 ground px, layer interactable) found Sign_3_6)
+  ok    area.light_marker (PointLight2D + halo under Objects/Light_lantern)
+  ok    area.quest_spot_is_an_interactable (quest_spot builds an Interactable2D)
+  ok    area.quest_spot_needs_and_consume (missing wood -> whisper and nothing taken; with wood 2 of 3 are consumed)
+  ok    area.quest_spot_reports_the_objective (short of wood: nothing reported []; with wood: complete_manual(lost_cat, follow_pawprints) once [["complete_manual", &"lost_cat", &"follow_pawprints"]], the 2 wood consumed (0 left); the legacy QuestManager gets update_objective(.., 1) [["update_objective", &"lost_cat", &"follow_pawprints", 1]])
+  ok    area.warp_req_day_and_walk_in (day 1 < req_day 5: whisper WORLD_WARP_LOCKED and no travel; day 5: area_change_requested(_fixture_ortho, from_iso))
+  ok    area.warp_when_disables_the_trigger (flag off: the warp is hidden, disarmed and not monitoring (true), walking in asks for nothing (true); flag on: armed (true) and one area_change_requested [[&"_fixture_ortho", &"from_iso"]])
+  ok    area.marker_registry_built_in_table (37 types: built in ["spawn", "warp", "sign", "bed", "quest_spot", "light", "growth"]; lazy ["npc", "enemy", "node", "whisper", "animal_yard", "building_slot", "field_expansion"])
+  ok    area.marker_registry_merges_lua_over_the_table (widget added, npc replaced, sign keeps its built-in flag, spawn untouched)
+  ok    area.marker_registry_resolution ({ "widget": "script", "npc": "script", "ghost": "none", "inert": "none", "sign": "builtin", "unknown": "none" })
+  ok    area.marker_registry_from_lua (script handlers called 2; skipped { "ghost": 1, "inert": 1, "never_heard_of": 1 }; sign built in true; node adopted into Objects at its cell true)
+  ok    area.marker_registry_override_is_removable (clearing the override restores the built-in table)
+  ok    area.legacy_create_entry_points_only_for_the_spike_types (Npc2D.create(m), Enemy2D.create(m), ResourceNode2D.create(m), WhisperZone.create(m, pos))
+  ok    area.when_conditions (hidden at build; quest active true -> done true; flag on true off true; night on true off true (init true))
+  ok    area.when_hides_collider_too (the Area2D of a hidden marker leaves the interactable layer)
+  SKIP  area.when_without_a_social_manager_is_local_and_quiet: a real SocialManager autoload exists (S-core has landed); the absent-service fallback is only exercised while it does not
+  ok    area.when_new_kinds_delegate (14 specs x true / false: every answer is the autoload's and every call asks it once (bad: []); a padded spec is trimmed (true); in a room the 3 markers are hidden true then shown true by its answers; the room has no map error ([]))
+  ok    area.when_old_kinds_unchanged (quest / done / flag / night never reach the autoload (asked []) and the real managers answer: flag true, night true / true, quest true -> true -> done true; an empty spec is true)
+  ok    area.when_unknown_kind_is_a_map_error (7 unknown specs are false and no typo is ever asked of the autoload (4); the room reports exactly 4 entries (typo, typo in a `&`, a spec the autoload's when_spec_errors rejects, a typo on a skipped marker): when_unknown_kind: when=frobnicate:x (unknown kind in 'frobnicate:x') | when_unknown_kind: when=quest:lost_cat&frobnicate:y (unknown kind in 'frobnicate:y') | when_unknown_kind: when=stage:pip (stage needs <npc>:<stage>) | when_unknown_kind: when=bogus:z (unknown kind in 'bogus:z'); the two typo signs are hidden)
+  ok    area.when_unknown_kind_is_reported_once (a refresh adds no second entry; the marker of a type nobody handles stays silently skipped ({ "nosuchtype": 1 }))
+  ok    area.when_refresh_on_hour_edge (hour:8-18 re-asked at 10:00 (edge true), not at 09:30 (true) or 10:15 (true), at 11:15 after a skip (true), at raw 24:00 (true), 25:00 (true) and 02:00 (true); start true)
+  ok    area.when_refresh_on_friend_events_and_flags (friend_changed re-asks the delegate (true), every game event of its WHEN_REFRESH_EVENTS (true), day_started (true); the flag of `hearts:..&flag:x` is polled in (true) and out (true))
+  ok    area.when_signals_hooked_in_the_tree_and_released_out_of_it (clock, friend_changed, game_event and day_started are connected while the area is in the tree (true) and none after it left (true: a parked area never refreshes))
+  ok    area.when_hides_prop_strips_and_collider (flag false: 12 of 12 sprite nodes hidden (the house alone has 7 strips) and 4 of 4 collider layers are 0; the house body no longer answers a physics point query (hit false); the un-conditioned tree stays (true))
+  ok    area.when_shows_prop_strips_and_collider_again (flag true: 12 of 12 sprite nodes visible, 4 of 4 colliders on layer 1, the house body is solid again (hit true))
+  ok    area.when_hides_props_again (flag false again: the whole prop is hidden a second time (12 / 12 sprites, 4 / 4 colliders))
+  ok    area.marker_prop_parts_are_tracked (a sign marker owns [Interactable2D + signpost sprite + signpost collider], a quest_spot [scarecrow sprite + collider + Interactable2D])
+  ok    area.strips_count_and_width (7 strips of at least 64 px cover 436 px (house_farm 436 px: asks 14 strips, STRIP_W floor 64))
+  ok    area.strips_sort (sort y = B.y - squash * |xc - B.x| clamped by L.y / R.y for all 7 strips (range 532.0 .. 646.0, B.y 646.0); offsets draw the full sprite unchanged)
+  ok    area.ysort_probes (player's feet at strip sort y - 5 draw behind and at + 5 in front of each of the 7 strips of the placed house (behind true, in front true; probe blind without y-sorting true). Pixel proof: windowed area.sort_pixels)
+  ok    area.fixture_house_is_sliced (7 strips directly under Objects for the 385 px house)
+  ok    area.fixture_mushroom_house_is_sliced (2 x 2 mushroom houses are sliced too (5 strips))
+  ok    area.single_prop_sorts_at_its_pivot (a tree is one Sprite2D, centered=false, offset=-pivot, node at the tile centre)
+  ok    area.ysort_probe_tree (player at the trunk's pivot y - 5 draws behind the tree, at + 5 in front of it (the tree is ONE sort key at its pivot))
+  ok    area.skirts_placed (10 skirts (sw 6, se 3, corner 1) = one per platform-edge cell (the two pond cells on the rim included), none for the bridge plank)
+  ok    area.skirts_node_is_not_ysorted_and_below_objects (Skirts z -9, not y-sorted, no skirt sprite inside the y-sorted Objects (a sort tie would paint it over an actor))
+  ok    area.skirts_under_rim_water_but_not_under_bridge_planks (rim pond cells (3,6) (4,6): platform_sw skirts true; inner pond cells none true; bridge plank none true)
+  ok    area.growth_stage_deck_and_skirts (stage 1/2 turn void growth cells into deck; skirts recomputed per edge cell incl. the right facade along grown rows (7 -> 8 -> 9); blockers follow; stage 0 restores the map; rows 304.0 -> 342.0 [before true deck1 true skirts1 true rim true facade true back true clamp true])
+  ok    area.growth_is_derived_state (nothing about the growth stage is saved)
+  ok    area.growth_cells_over_the_map_are_clipped_and_reported (cells=0..60,0..60 on a 7 x 4 map: 28 cells (the map), errors ["growth marker \'g\' (stage 1): cells part \'0..60,0..60\' reaches outside the 7 x 4 map (clipped to the map)", "no default spawn (an \'@\' object char or `@marker <char> spawn name=default`): the player starts on the walkable cell nearest to the middle"])
+  ok    area.growth_cells_absurd_range_does_not_freeze_the_build (0..99999999999999999999 x 0..2000000000 builds in 1 ms with 28 growth cells)
+  ok    area.map_without_default_spawn_gets_a_fallback (spawn (64.0, 266.0) = cell (3, 3) (ground '.', nothing placed), 0 free walkable cells nearer to the middle (4.0, 3.0); map.errors ["no default spawn (an \'@\' object char or `@marker <char> spawn name=default`): the player starts on the walkable cell nearest to the middle"])
+  ok    area.player_starts_on_the_walkable_fallback_spawn (the player stands at (64.0, 266.0), cell (3, 3), on the platform)
+  ok    area.map_with_a_spawn_reports_nothing (fixture: errors [])
+  ok    area.water_layers_identical_cells (4 layers x 9 cells, exactly one visible)
+  ok    area.water_frames_use_four_atlases (layer i draws water_i (2 x 2 variants))
+  ok    area.water_frames (visible layer after each 0.5 s: [1, 2, 3, 0, 1, 2] (O(1) visibility swap, no per-cell edits))
+  ok    area.water_physics_on_layer_0_only (one TileSet; collision polygons only on the water_0 tiles (tileset_physics_water_0_only))
+  ok    area.open_map_entered (player stands on the default spawn)
+  ok    area.walker_never_enters_water (walking into the pond at visible water frame 0 and 2 (physics sits on Water0 whether it is visible or not))
+  ok    area.walker_never_leaves_the_platform (the invisible blocker tiles of the void rim hold the stub on the deck)
+  ok    area.tree_trunk_is_solid (feet never closer than 49.4 ground px (ellipses 25 + 26 slide around, never through))
+  ok    area.collision_slide (slides along the diagonal wall of ground_block diamonds without sticking: 245 px vs 271 px in the open (spike at walk 170: 150 vs 162))
+  ok    area.screen_relative_movement (S moves DOWN the screen ((0.0, 130.0)); vertical screen speed is squashed, ground speed 274 px/s <= 285)
+  ok    area.area_switch_to_iso_fixture (player reparented into Objects, time runs, GameUI.set_mode(farm), clear colour sky blue)
+  ok    area.area_switch_to_ortho_fixture (spawn from_iso, time paused (lantern-oil clock), GameUI.set_mode(action), clear colour navy 1c2138)
+  ok    area.iso_areas_are_parked_in_a_cache (the left iso area stays alive (crops, props, NPC state) outside the tree)
+  ok    area.parked_area_comes_back_unchanged (same instance after the round trip, spawn from_other, time resumes)
+  ok    area.ortho_areas_are_rebuilt_each_visit (the left ortho area is freed, not parked)
+  ok    area.ortho_second_visit_is_a_new_instance (a fresh IsoArea per visit)
+  ok    area.travel_fades_and_ends_clear (fade out 0.22 s, swap, fade in 0.25 s)
+  ok    area.farm_fixture_roundtrip (farm <-> fixture switch with the real farm map)
+  ok    area.failed_enter_keeps_the_old_area (a missing and a zero-byte map file: _enter returns false and the world still stands in the old area with the player in it (_t_ghost: returned false, area _fixture_iso, error 'cannot load map of _t_ghost (no such map file: res://data/maps/_t_ghost_nofile.map)'; _t_empty: returned false, area _fixture_iso, error 'cannot load map of _t_empty (empty map file: user://_t_empty_area.map)'))
+  ok    area.failed_enter_leaves_a_saveable_world (to_dict() (autosave) after a failed _enter still works: area _fixture_iso)
+  ok    area.failed_travel_ends_clear_in_the_old_area (travel() to a map that cannot load fades out and back in and stays in _fixture_iso)
+  ok    area.failed_rebuild_keeps_the_room (rebuild_current_area() with a vanished file keeps the standing area (cannot load map of _t_rebuild (no such map file: user://_t_rebuild_area.map)))
+  ok    area.farm_sized_map_builds (44 x 44 cells, 84 tillable, 55 props, 83 skirts, built in 17 ms with the placeholders cached, 1901 ground cells, 55 physics bodies)
+  ok    area.farm_sized_map_camera_limits (camera rect [P: (-2688.0, 12.0), S: (5504.0, 3320.0)])
+  ok    area.zone_events_from_the_world_root (farm -> forest edge: [["exited", &"farm"], ["entered", &"dark_forest"], ["area", &"_fixture_ortho"]]; the zone unlocked through GameManager)
+  ok    area.zone_id_comes_from_the_map_header (@zone farm of the fixture)
+  ok    area.zone_default_from_ambient_lua (no @zone: area_zone.hyggebyen = city; theme follows the ambient)
+  ok    area.builder_header_is_header_only (@builder, @title and @ambient home are read; no @ground needed)
+  ok    area.builder_delegate_and_zoom_range (IsoArea delegates to builder.build(area, header) with ["id", "title", "projection", "ambient", "theme"]; area.zoom_range (0.35, 1.2), default 0.55 after the builder's per-tier override)
+  ok    area.builder_may_override_the_zoom_default (the header says 0.7, the builder set 0.55 (HomeRoom does this per tier))
+  ok    area.default_zoom_range_is_0_3_to_0_7 (areas without zoom keys: 0.3 - 0.7, default 0.4)
+  ok    area.missing_builder_script_is_silent (builder_error 'builder script res://scripts/home/no_such_room.gd does not exist', no engine message (F6's script lands in wave 5))
+  ok    area.home_ambient_preset (preset home: warm light, no weather overlay, no wind, lamp halos always on (glow 1))
+  ok    area.rain_overlay_only_outdoors (raining: indoors false, farm true)
+  ok    area.builder_area_is_never_parked (left the room: [&"farm", &"_fixture_iso", &"_t_warp", &"_t_open"] in cache)
+  ok    area.builder_area_is_rebuilt_on_every_enter (new instance per visit (builder called 3 times))
+  ok    area.home_ambient_and_cache_rule (stock change: no rebuild (true); home_upgraded rebuilds (true); placed / removed rebuild once per frame (true); the player moves into the new room)
+  ok    area.builder_bounds_clamp_camera (area.bounds [P: (-300.0, -200.0), S: (3000.0, 2400.0)] -> camera limits -300..2700 (view (2327.273, 1309.091)))
+  ok    area.builder_bounds_smaller_than_the_view_are_centered (limits -30800 .. 33200 around the room centre)
+  ok    area.player_zoom_follows_area_zoom_range (wheel zoom clamps to the header range 0.35 .. 1.20 (default areas 0.3 .. 0.7))
+  ok    area.default_area_zoom_range_in_the_world (fixture areas: 0.3 - 0.7, camera starts at 0.4)
+  ok    area.rebuild_queued_during_the_night (home_upgraded + 2 x furniture_changed inside the day roll of the night: the room was rebuilt exactly once (builder calls 6 -> 7), behind the black screen (fade alpha [1.0]), the player is in the new room at his old position (420.0, 310.0))
+  ok    area.rebuilt_room_leaves_the_player_awake_and_free (after the night the player is free (state 0, forced clip ''), the fade is clear)
+  ok    area.rebuild_queued_during_the_pass_out (the day roll of advance_time at the day end (before midnight_passed) queued the rebuild, the pass-out night ran it exactly once behind the black screen (builder calls 7 -> 8))
+  ok    area.rebuild_request_is_kept_while_traveling (rebuild_current_area() during a travel stays queued (true) and _flush_rebuild() runs it once afterwards)
+  ok    area.flush_without_a_request_does_nothing ('stock' is not a rebuild reason; _flush_rebuild() with nothing queued leaves the room alone)
+  ok    area.rebuild_request_dies_with_the_room_the_player_leaves (a tier change during the fade-out was queued (true); the player arrived in the parked fixture area, which was NOT rebuilt)
+  ok    area.enter_after_a_request_builds_the_room_once (_enter, request, _enter in one frame: the two _enters built the room (calls 10 -> 12), the deferred rebuild of the request found nothing left to do)
+  ok    area.rebuild_request_during_the_fade_in_runs_when_the_travel_ends (entered the room by travel (builder call 1), tier change in the fade-in, rebuilt when the travel ended (call 2): calls 12 -> 14)
+  ok    area.deferred_rebuild_does_not_run_on_detached_world (a pending tier rebuild is discarded after scene removal; no player/camera work runs outside a viewport)
+  ok    area.builder_keeps_the_saved_position (Continue inside the home keeps the saved position (450.0, 350.0) (it used to start at the door: a grid-less area reads as all void); outside the room, far away and garbage start at the spawn (300.0, 200.0): { "inside": (450.0, 350.0), "outside_walkable": (300.0, 200.0), "far_away": (300.0, 200.0), "garbage": (300.0, 200.0) })
+  ok    area.builder_without_walkable_test_clamps_into_the_bounds (no walkable_test: a position inside the bounds stays (2000.0, 1500.0), one far outside is pulled to the bounds edge (2699.0, 2199.0))
+  ok    area.builder_without_a_spawn_starts_in_the_middle_of_its_bounds (spawn (1200.0, 1000.0) = centre of [P: (-300.0, -200.0), S: (3000.0, 2400.0)]; errors ["builder area sets no default spawn (area.spawns[\"default\"]): the player starts in the middle of the bounds"])
+  ok    area.artcatalog_feature_dirs (assets/iso_props/props.json (present) UNION assets/iso_props/*/props.json: 379 ids incl. the feature props chest_fe (glow), dig_glimmer (additive), tent; home / furniture / interior jsons are not read)
+  ok    area.icon_lookup_order (["res://assets/icons/items/", "res://assets/icons/home/", "res://assets/icons/wardrobe/"])
+  ok    area.icons_found_in_the_home_dir (amber -> res://assets/icons/home/amber.webp, bed_moon night variant -> bed_moon_night.webp)
+  ok    area.night_icon_falls_back_to_the_plain_icon (no _night file -> the plain icon)
+  ok    area.game_data_merges_the_three_prop_tables (props -> props_extra -> props_features, later keys win: { "art": "a", "footprint": [2, 2], "strips": 9, "only_base": 1, "extra": 2, "feat": 3 })
+  ok    area.game_data_reads_props_features_lua (lua/config/props_features.lua (A1) and props.lua (P04) both answer through GameData.prop_def)
+  ok    area.feature_props_are_placed_with_real_art (chest_fe carries an additive halo, dig_glimmer is itself additive)
+  ok    area.real_art_is_not_listed_as_missing
+  ok    area.daynight_alias_and_default (farm_day -> farm, unknown ids use the default preset of the Lua file)
+  ok    area.daynight_farm_keyframes (noon luminance 0.98, night 0.39, dusk honey-orange, wraps at midnight)
+  ok    area.daynight_hyggebyen_lavender_rose (noon faf2ff, dusk ffb8cc)
+  ok    area.daynight_forest_is_a_fixed_navy_night (forest tint 4d5e85 at any hour, glow 1, vignette 0.78)
+  ok    area.daynight_cave_is_darker (cave 0.23 < forest 0.37)
+  ok    area.glow_curve_fades_in_at_dusk (0 at noon, ramps 17:30-19:30, 1 at night, off after 07:00)
+  ok    area.season_tints (foraar neutral, sommer warm, efteraar orange, vinter cool)
+  ok    area.target_color_includes_the_season (autumn blue 0.66 < spring blue 0.94 at noon)
+  ok    area.rain_is_the_only_weather_visual (emitting per weather on the farm: { &"klart": false, &"regn": true, &"taage": false, &"sne": false, &"torden": false } (fog, snow, thunder are label-only stubs))
+  ok    area.rain_stops_with_the_weather (weather_changed(klart) switches the overlay off)
+  ok    area.rain_overlay_is_a_particle_curtain (CPUParticles2D with a streak texture on canvas layer 6)
+  ok    area.bed_before_18_whispers_too_early (12:00 -> whisper, no day passes)
+  ok    area.bed_hours (19:00 may sleep)
+  ok    area.bed_sleeps_until_morning (19:00 -> next morning 06:00 on day 4 (was 3), energy restored, fade clear, took 477 ms at time scale 4 [sleeping true slept true stamina 102.0/102.0 fade 0.0 state 0])
+  ok    area.pass_out_at_day_end (01:50 (raw 25:50) + 20 min crosses the day end 02:00: one new day (4 -> 5), wake at 06:00, NOTIF_PASSED_OUT posted)
+  ok    area.no_pass_out_in_action_areas (midnight_passed in an ortho area is ignored)
+  ok    area.faint_returns_to_the_farm (player_defeated -> farm, whisper WHISPER_FAINT)
+  ok    area.world_to_dict (area, player_pos, placed items, area flags (JSON-safe) + crops / hotbar when P06 exists: keys ["v", "area", "player_pos", "placed", "area_flags", "farm", "hotbar"])
+  ok    area.world_from_dict_roundtrip (values survive JSON; the player is put back at his position [placed [{ "cell": [4.0, 5.0], "item": "scarecrow" }] flag 3.0 pos (-64.0, 494.0) want (-64.0, 494.0)])
+  ok    area.world_from_dict_switches_area (a saved area id enters that area (no fade) and sets the position)
+  ok    area.area_flags_can_be_cleared
+  ok    area.saved_position_of_an_unknown_area_is_not_applied (from_dict(area gone, pos 9000,9000) keeps the player at (-192.0, 418.0) inside the platform [P: (-640.0, 50.0), S: (1280.0, 812.0)] (no void))
+  ok    area.saved_position_off_the_platform_returns_to_the_spawn (far outside, on the void cell (0,0) and below the platform: the player stands on the spawn (-192.0, 418.0), not in the void [(9000.0, 9000.0) -> (-192.0, 418.0); (64.0, 38.0) -> (-192.0, 418.0); (64.0, 1174.0) -> (-192.0, 418.0)])
+  ok    area.saved_position_on_a_growth_row_is_kept (a position on the not yet grown deck row (4, 1) stays where it was saved: (256.0, 228.0))
+  ok    area.saved_position_garbage_starts_at_the_spawn (15 damaged player_pos values (null / Array / Dictionary / string / bool / short / NaN / INF elements, non-array): the player stands at the spawn (-192.0, 418.0); bad: [])
+  ok    area.saved_position_garbage_raises_no_script_error (float() of a null / Array / Dictionary element used to raise an engine (script) error in _apply_saved: [])
+  ok    area.saved_position_accepts_whole_numbers ([-64, 494] -> (-64.0, 494.0) (cell centre (-64.0, 494.0)))
+  ok    area.world_free_frees_parked_areas (deleting a WorldRoot2D frees its 2 parked areas (64 nodes: orphan count 707 -> 642, 0 still alive); the entered area stays with the tree)
+  ok    area.pending_world_is_consumed_in_ready (Continue starts the world in the saved area at the saved position; the hand-over dictionary is cleared)
+  ok    area.welcome_toast_is_not_shown_on_continue_in_the_saved_area (Continue in the area it was saved in shows no welcome toast: [])
+  ok    area.scene_change_frees_the_parked_areas (4 areas were parked outside the tree when the world scene was replaced; 0 of them are still alive (a leak per quit to menu))
+  ok    area.pending_world_of_an_unknown_area_starts_on_the_platform (area gone: the default area farm at its spawn (1152.0, 2128.0) (player at (1152.0, 2128.0)), not at 8000,8000)
+  ok    area.welcome_toast_is_the_zone_title_only (the saved area is gone, so the fallback area announces itself: [["Min Trækronsgård", ""]] (title key ZONE_FARM))
+  ok    area.welcome_toast_on_a_new_game (new game: exactly one toast, title ZONE_FARM, no second line: [["Min Trækronsgård", ""]])
+  ok    area.welcome_toast_needs_a_title (no @title -> no toast: [])
+  ok    area.pending_world_with_a_garbage_position_starts_at_the_spawn (player_pos [null, 5.0] through SaveManager.pending_world: no script error [], _ready ran to its end (warm-up reached: 1), the player stands at the spawn (-192.0, 418.0))
+  ok    area.pending_world_in_a_builder_room_keeps_the_position (Continue after saving inside the home: the player stands at (450.0, 350.0), not at the door (300.0, 200.0); no welcome toast: [])
+  ok    area.intro_hook_calls_the_script_once (IntroSequence entry point (run / start / play) called with the world, intro_pending cleared)
+  ok    area.intro_hook_does_not_repeat (second call does nothing (flag cleared))
+  ok    area.warm_jobs_player (the player's visual with ["idle", "walk", "run", "interact", "talk"])
+  ok    area.warm_jobs_visible_npcs_only (an NPC in view is warmed (true), one 9000 px away is not (false))
+  ok    area.warm_clips_skips_the_dummy_renderer (headless: no threaded sheet loads (they raced the dummy renderer in 2 of 120 runs); counted in warm_skipped)
+  ok    area.world_exit_tree_restores_and_enter_tree_reapplies_the_clear_colour (_exit_tree -> project colour a9d3e0, _enter_tree -> the forest's 1c2138 again)
+  ok    area.world_restores_the_project_clear_colour (quit to menu from the forest (clear 1c2138): the title scene shows the project colour a9d3e0 (it showed 1c2138))
+  ok    area.next_world_sets_its_own_clear_colour (farm a9d3e0, forest 1c2138)
+  --    area: 240 checks, 0 failed, 1 skipped, 19.9 s
+== section copy_completion  (res://tests/sections/copy_completion.gd)
+  ok    copy_completion.strict_runtime_localization (Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+loc_check: root=res:// | scanned gd=305 tscn=45 lua=219 map=31 | CSV files: da.csv animals.csv appraisal.csv areas.csv birthdays.csv cast.csv core.csv dialogue.csv dialogue_builder.csv dialogue_cast.csv dungeon.csv dungeon_items.csv dungeon_run.csv dungeon_services.csv economy.csv farm.csv farm_signs.csv farm_site.csv farm_tutorial.csv features_quests.csv features_ui.csv festivals.csv finds.csv forest.csv forest_mother.csv furniture.csv ghost.csv ghost_dialogue.csv ghostfamily.csv ghostfamily_events.csv ghostfamily_fest.csv ghostfamily_quests.csv ghostfamily_seek.csv gifts.csv heart_events.csv home.csv home_amenities.csv home_ui.csv home_world.csv hud.csv keepers.csv levels.csv life.csv look.csv loot_dungeon.csv materials.csv menus.csv nav.csv partner.csv post.csv quests.csv rel_ui.csv secret_garden.csv shop_ui.csv social_arch.csv social_events.csv social_sys.csv social_talk.csv towns.csv traetoppen.csv ui.csv wardrobe.csv wardrobe_ui.csv world.csv zz_final.csv | keys loaded: 4415
+loc_check: referenced keys: 2885 (+0 any-of groups) | dynamic prefixes in code: 137
+loc_check PASS (strict): missing=0 (da=0 en=0) lint_errors=0 legacy_issues=0 warnings=0
+)
+  ok    copy_completion.csv_lint.py_strict (csv_lint PASS: 65 file(s), 4415 keys, 0 error(s), 0 legacy issue(s), 0 warning(s)
+)
+  ok    copy_completion.copy_lint.py_strict (copy_lint: 0 findings
+)
+  ok    copy_completion.fixture_copy_requires_its_data
+  ok    copy_completion.fixture_key_in_product_still_requires_csv
+  ok    copy_completion.unknown_fixture_key_still_fails
+  ok    copy_completion.all_reviewed_voice_assets_match (PASS manifest_in_sync 296 lines
+)
+  --    copy_completion: 7 checks, 0 failed, 0 skipped, 10.0 s
+== section core  (res://tests/sections/core.gd)
+  ok    core.signal_contract_exact (76 signals; missing [], wrong [], not in the contract [])
+  ok    core.legacy_signals_keep_arity (38 legacy signals)
+  ok    core.plan_3_5_signals (23 signals of PLAN 3.5 + R.13)
+  ok    core.feature_signals_14 (addendum 3.1)
+  ok    core.review_fix_signals (devin-review additions (flag_changed))
+  ok    core.farm_upgraded_removed (PLAN 3.5: removed, never used)
+  ok    core.r13_escape_hatch_and_hotbar_assign (R.13)
+  ok    core.player_spawned_node2d (emitted with a Node2D)
+  ok    core.signal_arity_lint (850 EventBus uses in 437 files, 0 violation(s) []; covers 14 feature signals)
+  ok    core.signal_arity_lint_covers_14_feature_signals (arity of every addendum 3.1 signal)
+  ok    core.signal_arity_lint_detects_mismatch (bad sample ["sample:1 EventBus.gold_changed.emit() has 1 argument(s), the signal has 2", "sample:2 EventBus.nope is neither a declared signal nor a member", "sample:3 EventBus.day_started.connect(func(a): pass) accepts 1..1 argument(s), the signal passes 2", "sample:4 EventBus.home_upgraded.connect(_h) accepts 3..3 argument(s), the signal passes 2", "sample:7 EventBus.save_completed.connect(_t2) accepts 0..0 argument(s), the signal passes 1", "sample:10 EventBus.item_sold.emit() has 2 argument(s), the signal has 3"], good sample [])
+  ok    core.config_literal_defaults (28 days, 4 seasons, 06:00 to 26:00 (= 02:00 at night), 2 min/s)
+  ok    core.config_read_from_lua (minutes_per_real_second 2.0 from LuaRuntime time.*)
+  ok    core.time_manager_has_no_second_copy (TimeManager delegates to GameManager)
+  ok    core.config_override_seasons (override seam)
+  ok    core.config_drives_end_day (day 7 of aa -> day 1 of bb (1 bb))
+  ok    core.config_drives_year (year 2 starts at total day 15 (15))
+  ok    core.modal_stack (push x2 / pop x2: paused true true, after first pop true, after last pop resumed true)
+  ok    core.modal_changed_signal (modal_changed payloads [[&"pause"], [&"pause", &"settings"], [&"pause"], []])
+  ok    core.modal_stack_pop_out_of_order (pop the older modal first)
+  ok    core.modal_phase_cutscene_and_restore (CUTSCENE true, shop over dialogue true, true, true, back to CUTSCENE true, PLAYING true)
+  ok    core.modal_push_is_idempotent (double push = one entry, unknown pop ignored)
+  info  expected engine error below (declared with allow): push_modal with an empty name
+ERROR: GameManager.push_modal: a modal needs a name
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] push_modal (res://scripts/autoload/game_manager.gd:261)
+       [1] _test_modal_stack (res://tests/sections/core.gd:527)
+       [2] run (res://tests/sections/core.gd:140)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    empty modal name is refused with an error (allowed 'a modal needs a name' seen 1 time(s), want >= 1)
+  ok    core.modal_empty_name_refused
+  ok    core.modal_stack_cleared_at_menu (quit to menu leaves a live, unpaused menu)
+  ok    core.modal_over_menu_restores_menu (settings over the title)
+  ok    core.phase_character_select
+  ok    core.phase_legacy_change_phase (change_phase(PAUSED/PLAYING))
+  ok    core.phase_playing_does_not_unpause_open_modal (an open modal wins over change_phase(PLAYING))
+  ok    core.phase_after_pop_all
+  ok    core.modal_changed_only_when_the_stack_changes (scene boundaries and no-op pops are silent: [])
+  ok    core.modal_never_touches_the_mouse (mouse mode stays 0)
+  ok    core.flags_json_safe_types (bool, int, float, String; StringName is stored as String)
+  info  expected engine errors below (declared with allow): set_flag with an Array, a Vector2 and NAN
+ERROR: GameManager.set_flag(bad_array): Array is not JSON-safe (use bool, int, float or String)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_flag (res://scripts/autoload/game_manager.gd:358)
+       [1] _test_flags (res://tests/sections/core.gd:574)
+       [2] run (res://tests/sections/core.gd:141)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+ERROR: GameManager.set_flag(bad_vector): Vector2 is not JSON-safe (use bool, int, float or String)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_flag (res://scripts/autoload/game_manager.gd:358)
+       [1] _test_flags (res://tests/sections/core.gd:575)
+       [2] run (res://tests/sections/core.gd:141)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+ERROR: GameManager.set_flag(bad_nan): float is not JSON-safe (use bool, int, float or String)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_flag (res://scripts/autoload/game_manager.gd:358)
+       [1] _test_flags (res://tests/sections/core.gd:576)
+       [2] run (res://tests/sections/core.gd:141)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    non JSON-safe values are refused with an error (allowed '(use bool, int, float or String)' seen 3 time(s), want >= 3)
+  ok    core.flags_unsafe_values_not_stored
+  ok    core.flags_null_clears
+  ok    core.flags_clear
+  ok    core.flag_int_defaults (absent flags: home_tier 1, home_building 0, home_upgrade_done 0)
+  ok    core.flag_int_coerces (3.0 -> 3, true -> 1, '12' -> 12, 'tre' -> default)
+  ok    core.flag_int_after_json_roundtrip (new game defaults ok true; raw value after JSON is a float true; flag_int gives ints true)
+  ok    core.new_game_signal_once_and_last (signals in order: ["modal_changed", "player_character_changed", "weather_changed", "new_game_started"])
+  ok    core.new_game_started_is_last_gm_signal (after it only the reset wave of other systems: [])
+  ok    core.new_game_skin_announced_final (player_character_changed [&"fairy_meadow"])
+  ok    core.new_game_state_reset_before_signal (day/season/year/clock, flags { &"intro_pending": true, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0 }, zones, modals gone, phase PLAYING)
+  ok    core.new_game_intro_pending (intro_pending=true, the dirty flag is gone)
+  ok    core.new_game_resets_own_state
+  ok    core.new_game_resets_time_manager (weather klart, clock running)
+  ok    core.new_game_default_and_explicit_skin (animal animal_fox hobbit hobbit_pip ghost ghost_bu explicit fairy_dusk)
+  ok    core.new_game_default_names (empty names fall back to the translated defaults (Eventyrrejsende / Min Trækronsgård))
+  ok    core.new_game_wires_EconomyManager (EconomyManager.reset() is connected to new_game_started)
+  ok    core.new_game_wires_QuestManager (QuestManager.reset() is connected to new_game_started)
+  ok    core.new_game_wires_TimeManager (TimeManager.reset() is connected to new_game_started)
+  ok    core.new_game_wires_ShopSystem (ShopSystem.reset() is connected to new_game_started)
+  ok    core.new_game_wires_AnimalHusbandry (AnimalHusbandry.reset() is connected to new_game_started)
+  ok    core.new_game_wires_SaveManager (SaveManager.reset() is connected to new_game_started)
+  ok    core.new_game_resets_gold (gold after a new game: 500)
+  ok    core.new_game_resets_all (one new_game_started per start_new_game; 6 system(s) reset through it so far)
+  ok    core.from_dict_restores_state
+  ok    core.from_dict_types_after_json (ints and StringNames come back typed)
+  ok    core.from_dict_does_not_start_playing (phase stays 0)
+  ok    core.from_dict_emits_character_changed (["player_character_changed"])
+  ok    core.to_dict_total_day (total_day 156 in the dictionary for the title screen)
+  ok    core.from_dict_empty_is_safe
+  info  expected engine warning below (declared with allow): from_dict drops an unsafe flag
+WARNING: GameManager.from_dict: world flag 'bad' is not JSON-safe and was dropped
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _sanitized_flags (res://scripts/autoload/game_manager.gd:624)
+         [1] from_dict (res://scripts/autoload/game_manager.gd:600)
+         [2] _test_from_dict (res://tests/sections/core.gd:744)
+         [3] run (res://tests/sections/core.gd:143)
+         [4] go_menu (res://tests/lib/flow.gd:69)
+         [5] change_scene (res://tests/lib/flow.gd:57)
+         [6] frames (res://tests/lib/drive.gd:79)
+  ok    an unsafe flag in a save is reported (allowed 'and was dropped' seen 1 time(s), want >= 1)
+  ok    core.from_dict_drops_unsafe_flags
+  ok    core.unlock_zone_payload (zone_unlocked(crystal_cave))
+  ok    core.unlock_zone_signals (zone_unlocked x1, zone_entered x0)
+  ok    core.unlock_zone_toast (one toast, icon zone: [["Nyt område!", "Du har låst op for: Krystalgrotten", "zone"]])
+  ok    core.unlock_toast_never_formats_a_raw_key (an untranslated key (no placeholder) is returned as it is: no String formatting error)
+  ok    core.unlock_zone_state (unlocked, not discovered)
+  ok    core.unlock_zone_twice_is_silent (no second signal, no second toast)
+  ok    core.zone_entered_discovers
+  ok    core.advance_time_25h (06:00 + 25 h = day 2 07:00)
+  ok    core.advance_time_25h_signals (["day_ended", "day_started", "game_event", "time_of_day_changed"])
+  ok    core.midnight_passed_event (game_event(midnight_passed) after day_started: [&"midnight_passed", { "day": 2, "season": "foraar" }])
+  ok    core.advance_time_multiday (50 h -> day 3 08:00 true; 18 h -> raw 24:00 of the same day true; 20 h -> day 2 02:00 true; 23:59 + 1 min -> raw 24:00 same day true; 25:59 + 1 min -> day 2 02:00 true; 29 days 90 min -> sommer day 2 07:30 true)
+  ok    core.time_of_day_changed_range (raw hour 2..25 (a signal at 24:30 carries 24: the HUD shows 00:30), minute 0..59)
+  ok    core.advance_time_zero_and_negative (0 min emits the clock once, negative minutes are ignored)
+  ok    core.season_rollover (day 28 foraar 23:00 + 2 h = still day 28 (01:00); 01:00 (raw 25:00) + 2 h = day 1 sommer 03:00: ["day_ended", "season_changed", "day_started", "game_event", "time_of_day_changed"])
+  ok    core.year_rollover (vinter 28 -> foraar day 1 of year 2)
+  ok    core.end_day_signal_order (["day_ended", "day_started", "time_of_day_changed"] (the bed emits no midnight_passed))
+  ok    core.end_day_full_year (114 end_day() calls: day 3 foraar year 2 (total 115))
+  ok    core.total_day_values (Dag 1 .. Dag 112, year 2 starts at Dag 113)
+  ok    core.total_day_current (day 9 efteraar year 1 is Dag 65)
+  ok    core.sleep_from_bed (21:30 -> next day 06:00)
+  ok    core.sleep_after_passout_no_double_day (after the 02:00 roll: wake at 06:00 of the same calendar day (day 5))
+  ok    date_text(16, foraar) in da (got Tirsdag 16. Blomstermåned, want Tirsdag 16. Blomstermåned)
+  ok    date_text(16, foraar) in en (got Tuesday 16. Month of Blooms, want Tuesday 16. Month of Blooms)
+  ok    core.calendar_names (date_text da/en, 28 weekdays true, 4 months true, 5 weather names true, en names true, defaults to today true)
+  ok    core.weekday_is_monday_on_day_one_of_every_season (Mandag = day 1 of every season)
+  ok    core.first_weekday_config (time.first_weekday=2: day 1 is Onsdag; the default is Mandag)
+  info  expected engine error below (declared with allow): set_weather with an unknown id
+ERROR: TimeManager.set_weather: unknown weather id 'hagl'
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_weather (res://scripts/autoload/time_manager.gd:148)
+       [1] _test_weather (res://tests/sections/core.gd:960)
+       [2] run (res://tests/sections/core.gd:149)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    an unknown weather id is refused (allowed 'unknown weather id' seen 1 time(s), want >= 1)
+  ok    core.weather_set_and_announced (weather_changed(regn), is_raining only for regn, unknown id refused)
+  ok    core.weather_roll_uses_config_chances (roll 0.0 -> regn, 0.30 -> taage, 0.90 -> klart)
+  ok    core.weather_snow_only_in_vinter (snow chance outside vinter is ignored)
+  ok    core.weather_weights_are_normalised (klart 6 / regn 3 / torden 1 -> { &"regn": 0.3, &"torden": 0.1, &"klart": 0.6 }; rolls 0.10 regn, 0.35 torden, 0.50 klart)
+  ok    core.weather_table_is_valid (foraar [&"regn", &"taage", &"klart"]; sommer [&"regn", &"torden", &"klart"]; efteraar [&"regn", &"taage", &"klart"]; vinter [&"taage", &"sne", &"klart"]; )
+  ok    core.is_night_from_config (20:00-05:00 by default, configurable)
+  ok    core.weather_default_rolls_are_valid (ids seen: [&"regn", &"klart", &"taage", &"torden", &"sne"])
+  ok    core.weather_rolled_before_day_started (a day_started listener already saw the roll (1), total 1)
+  ok    core.weather_rolled_once_per_day (a stray day_started of the same day does not roll again)
+  ok    core.weather_rolled_by_game_manager_before_listeners (without TimeManager's own handler a listener still saw the new roll (2, was 1))
+  ok    core.weather_one_roll_per_crossed_midnight (25 h = 1 roll, 50 h = 2 rolls)
+  ok    core.time_manager_reset
+  ok    core.time_manager_save_roundtrip (weather and the day it belongs to survive JSON)
+  ok    core.time_manager_from_dict_bad_weather (unknown saved weather falls back to klart)
+  ok    core.time_tick_rate (2 game minutes per real second: 1 s = 06:02 (06:02))
+  ok    core.pause_time_is_idempotent (pause twice, resume once: the clock runs again)
+  ok    core.resume_time_is_idempotent
+  ok    core.clock_stops_in_modals_and_menus (paused modal true, dialogue true, menu true)
+  ok    core.time_scale (time scale 2: +2 minutes for 0.5 s (06:05))
+  ok    core.tick_crosses_midnight (23:59 + 1 tick = day 1 raw 24:00 (00:00 of the same day); 01:59 + 1 tick = day 2 02:00)
+  ok    core.day_fraction (noon is half of the day)
+  ok    core.no_mouse_capture (16 autoload scripts scanned, none touches Input.mouse_mode [] (the cursor itself is menus.cursor_always_visible, P16))
+  --    core: 114 checks, 0 failed, 0 skipped, 0.8 s
+== section forest_mother  (res://tests/sections/forest_mother.gd)
+  ok    forest_mother.no_inherited_evidence
+  ok    forest_mother.garden_trail_starts_investigation
+  ok    forest_mother.authored_quest_caption_is_localized
+  ok    forest_mother.future_chapters_cannot_be_offered_early
+  ok    forest_mother.all_essential_quests_have_no_paid_or_random_rewards
+  ok    forest_mother.out_of_order_evidence_is_kept
+  ok    forest_mother.finale_waits_for_real_checkpoints
+  ok    forest_mother.cancel_records_nothing_and_releases_player
+  ok    forest_mother.travel_cancels_evidence_dialogue
+  ok    forest_mother.full_pack_cannot_block_evidence
+  ok    forest_mother.evidence_save_written
+  ok    forest_mother.evidence_save_loaded
+  ok    forest_mother.evidence_restored_with_quest_progress
+  ok    forest_mother.daytime_visit_does_not_consume_account
+  ok    forest_mother.night_retry_uses_real_topic
+  ok    forest_mother.first_checkpoint_completes_s03
+  ok    forest_mother.memory_clue_reachable_memory_map
+  ok    forest_mother.memory_clue_reachable_memory_basket
+  ok    forest_mother.memory_clue_reachable_memory_lamp
+  ok    forest_mother.memory_clue_reachable_memory_table
+  ok    forest_mother.free_owl_topic_available_beside_services
+  ok    forest_mother.cancelled_witness_page_does_not_record
+  ok    forest_mother.free_written_owl_account_has_no_calendar_gate
+  ok    forest_mother.own_name_and_second_checkpoint_complete_s05
+  ok    forest_mother.witness_account_completes_s06
+  ok    forest_mother.earlier_last_journey_catches_up
+  ok    forest_mother.story_sync_never_regrants_boss_hearts
+  ok    forest_mother.bittersweet_truth_and_keepsake_commit_together
+  ok    forest_mother.finale_answers_fate_explicitly
+  ok    forest_mother.reread_never_duplicates_progress
+  ok    forest_mother.legacy_planted_and_story_finished
+  ok    forest_mother.journal_has_all_confirmed_accounts
+  ok    forest_mother.ending_save_written
+  ok    forest_mother.ending_save_reentered
+  ok    forest_mother.legacy_survives_world_rebuild
+  ok    forest_mother.ordinary_forest_play_remains_available
+  ok    forest_mother.no_inherited_evidence
+  ok    forest_mother.garden_trail_starts_investigation
+  ok    forest_mother.authored_quest_caption_is_localized
+  ok    forest_mother.future_chapters_cannot_be_offered_early
+  ok    forest_mother.all_essential_quests_have_no_paid_or_random_rewards
+  ok    forest_mother.out_of_order_evidence_is_kept
+  ok    forest_mother.finale_waits_for_real_checkpoints
+  ok    forest_mother.cancel_records_nothing_and_releases_player
+  ok    forest_mother.travel_cancels_evidence_dialogue
+  ok    forest_mother.full_pack_cannot_block_evidence
+  ok    forest_mother.evidence_save_written
+  ok    forest_mother.evidence_save_loaded
+  ok    forest_mother.evidence_restored_with_quest_progress
+  ok    forest_mother.daytime_visit_does_not_consume_account
+  ok    forest_mother.night_retry_uses_real_topic
+  ok    forest_mother.first_checkpoint_completes_s03
+  ok    forest_mother.memory_clue_reachable_memory_map
+  ok    forest_mother.memory_clue_reachable_memory_basket
+  ok    forest_mother.memory_clue_reachable_memory_lamp
+  ok    forest_mother.memory_clue_reachable_memory_table
+  ok    forest_mother.free_owl_topic_available_beside_services
+  ok    forest_mother.cancelled_witness_page_does_not_record
+  ok    forest_mother.free_written_owl_account_has_no_calendar_gate
+  ok    forest_mother.own_name_and_second_checkpoint_complete_s05
+  ok    forest_mother.witness_account_completes_s06
+  ok    forest_mother.earlier_last_journey_catches_up
+  ok    forest_mother.story_sync_never_regrants_boss_hearts
+  ok    forest_mother.bittersweet_truth_and_keepsake_commit_together
+  ok    forest_mother.finale_answers_fate_explicitly
+  ok    forest_mother.reread_never_duplicates_progress
+  ok    forest_mother.legacy_planted_and_story_finished
+  ok    forest_mother.journal_has_all_confirmed_accounts
+  ok    forest_mother.ending_save_written
+  ok    forest_mother.ending_save_reentered
+  ok    forest_mother.legacy_survives_world_rebuild
+  ok    forest_mother.ordinary_forest_play_remains_available
+  --    forest_mother: 72 checks, 0 failed, 0 skipped, 19.6 s
+== section held_equipment  (res://tests/sections/held_equipment.gd)
+  ok    held_equipment.badge_cannot_take_focus_or_eat_world_input
+  ok    held_equipment.selected_tool_has_matching_picture_and_name
+  ok    held_equipment.whole_item_catalog_has_held_tool_and_weapon_art ([])
+  ok    held_equipment.every_body_frame_and_direction_has_fitted_grip (fox: 344 real body poses)
+  ok    held_equipment.altitude_spin_and_flash_follow_body_once
+  ok    held_equipment.all_items_use_dedicated_directional_paintings
+  ok    held_equipment.real_hoe_action_starts
+  ok    held_equipment.action_readout_keeps_hoe_after_hotbar_swap
+  ok    held_equipment.next_selection_appears_after_action_finishes
+  ok    held_equipment.empty_slot_clears_attachment_and_names_empty_hands
+  ok    held_equipment.selected_sword_is_actual_weapon_in_farm_action
+  ok    held_equipment.swing_snapshot_survives_equipment_change
+  ok    held_equipment.dialogue_puts_held_item_away
+  ok    held_equipment.dialogue_release_restores_selected_tool
+  ok    held_equipment.enter_real_forest_hub
+  ok    held_equipment.forest_shows_equipped_weapon_even_with_hoe_selected
+  ok    held_equipment.forest_keeps_actual_readout_and_health_visible
+  ok    held_equipment.empty_weapon_slot_never_uses_phantom_sword
+  ok    held_equipment.readout_follows_language_change
+  ok    held_equipment.equipment_save_written
+  ok    held_equipment.equipment_save_loaded
+  ok    held_equipment.save_rebuilds_correct_held_weapon_without_extra_state
+  ok    held_equipment.badge_cannot_take_focus_or_eat_world_input
+  ok    held_equipment.selected_tool_has_matching_picture_and_name
+  ok    held_equipment.whole_item_catalog_has_held_tool_and_weapon_art ([])
+  ok    held_equipment.every_body_frame_and_direction_has_fitted_grip (monkey: 344 real body poses)
+  ok    held_equipment.altitude_spin_and_flash_follow_body_once
+  ok    held_equipment.all_items_use_dedicated_directional_paintings
+  ok    held_equipment.real_hoe_action_starts
+  ok    held_equipment.action_readout_keeps_hoe_after_hotbar_swap
+  ok    held_equipment.next_selection_appears_after_action_finishes
+  ok    held_equipment.empty_slot_clears_attachment_and_names_empty_hands
+  ok    held_equipment.selected_sword_is_actual_weapon_in_farm_action
+  ok    held_equipment.swing_snapshot_survives_equipment_change
+  ok    held_equipment.dialogue_puts_held_item_away
+  ok    held_equipment.dialogue_release_restores_selected_tool
+  ok    held_equipment.enter_real_forest_hub
+  ok    held_equipment.forest_shows_equipped_weapon_even_with_hoe_selected
+  ok    held_equipment.forest_keeps_actual_readout_and_health_visible
+  ok    held_equipment.empty_weapon_slot_never_uses_phantom_sword
+  ok    held_equipment.readout_follows_language_change
+  ok    held_equipment.equipment_save_written
+  ok    held_equipment.equipment_save_loaded
+  ok    held_equipment.save_rebuilds_correct_held_weapon_without_extra_state
+  --    held_equipment: 44 checks, 0 failed, 0 skipped, 2.0 s
+== section home_services  (res://tests/sections/home_services.gd)
+  ok    home_services.forecast_stable_foraar
+  ok    home_services.forecast_json_roundtrip_foraar
+  ok    home_services.forecast_matches_actual_roll_foraar
+  ok    home_services.no_out_of_season_snow_foraar
+  ok    home_services.forecast_stable_sommer
+  ok    home_services.forecast_json_roundtrip_sommer
+  ok    home_services.forecast_matches_actual_roll_sommer
+  ok    home_services.no_out_of_season_snow_sommer
+  ok    home_services.forecast_stable_efteraar
+  ok    home_services.forecast_json_roundtrip_efteraar
+  ok    home_services.forecast_matches_actual_roll_efteraar
+  ok    home_services.forecast_stable_vinter
+  ok    home_services.forecast_json_roundtrip_vinter
+  ok    home_services.forecast_matches_actual_roll_vinter
+  ok    home_services.no_out_of_season_snow_vinter
+  ok    home_services.oven_recipe_locked_at_one
+  ok    home_services.oven_recipe_cooks
+  ok    home_services.kitchen_screen_opens_at_home
+  ok    home_services.forecast_locked_until_tower
+  ok    home_services.kitchen_escape_closes
+  ok    home_services.all_eight_unlocks_real
+  ok    home_services.tower_forecast_visible
+  ok    home_services.royal_consent_default_cancel
+  ok    home_services.royal_cancel_has_no_effect
+  ok    home_services.royal_respects_evening_window
+  ok    home_services.royal_available_at_palace
+  ok    home_services.royal_scene_finishes
+  ok    home_services.royal_guest_disposed
+  ok    home_services.royal_once_saved
+  ok    home_services.royal_cannot_repeat
+  --    home_services: 30 checks, 0 failed, 0 skipped, 2.8 s
+== section town_loop  (res://tests/sections/town_loop.gd)
+  ok    town_loop.loop_json_ids_exist ([])
+  ok    town_loop.l00_selected_race_and_skin (requested animal / actual type 0, skin animal_fox)
+  ok    town_loop.l00_new_game_on_farm
+  ok    town_loop.l00_first_morning_order (["postman_pip", "fairy_king", "postman_pip"] / 3)
+  ok    town_loop.l00_no_raw_keys
+  ok    town_loop.l00_first_morning_runs_once
+  ok    town_loop.l00_hud_and_banner
+  ok    town_loop.l00_first_morning_esc_skips
+  ok    town_loop.l00_player_control_returns
+  ok    town_loop.l08_day_one_personal_delivery_no_duplicate
+  ok    town_loop.l11_mailbox_day2_completes_mail_objective ({ "current": 1, "target": 1, "done": true })
+  ok    town_loop.l08_one_letter_per_day
+  ok    town_loop.capability_probes_match_live_packages
+  ok    town_loop.capability_unknown_is_missing
+  ok    town_loop.unknown_wave_fails_closed
+  ok    town_loop.gate_includes_full_usable_towns
+  ok    town_loop.digest_volatile_paths_are_exactly_the_named_ones
+  ok    town_loop.digest_rounds_only_to_four_decimals
+  ok    town_loop.digest_has_teeth_gold
+  ok    town_loop.digest_has_teeth_flags
+  ok    town_loop.digest_stable_over_wall_clock
+  ok    town_loop.farm_bridge_warp_exists
+  ok    town_loop.walker_reaches_fixture_warp ({ "ok": true, "area_changed": false, "ticks": 644, "seconds": 10.7333333333333, "dist_left": 5.60813283920288, "stuck": false, "nav": true, "waypoints": 34, "waypoint_index": 33, "position": (-700.0344, 3151.646), "next": (-704.0, 3154.0), "collider": "", "interactions": 0 })
+  ok    town_loop.walker_uses_navigation_and_tick_budget ({ "ok": true, "area_changed": false, "ticks": 644, "seconds": 10.7333333333333, "dist_left": 5.60813283920288, "stuck": false, "nav": true, "waypoints": 34, "waypoint_index": 33, "position": (-700.0344, 3151.646), "next": (-704.0, 3154.0), "collider": "", "interactions": 0 })
+  ok    town_loop.l01_bridge_arrival_without_pingpong
+  ok    town_loop.l01_unlock_toast_and_objective ({ "current": 1, "target": 1, "done": true })
+  ok    town_loop.l02_population_equals_schedule (["gardener_hoppe", "bertil", "guard_oak", "lamplighter_kiki", "cub_bamse", "fiddler_strimmel"] expected=["gardener_hoppe", "bertil", "guard_oak", "lamplighter_kiki", "cub_bamse", "fiddler_strimmel"])
+  ok    town_loop.l02_visual_cap_16
+  ok    town_loop.l02_area_populated_event
+  ok    town_loop.l02_live_citizen_at_routine_post
+  ok    town_loop.l03_walk_reaches_citizen ({ "ok": true, "area_changed": false, "ticks": 1271, "seconds": 21.1833333333333, "dist_left": 38.0777282714844, "stuck": false, "nav": true, "waypoints": 117, "waypoint_index": 116, "position": (1731.664, 657.3045), "next": (1693.9, 660.2), "collider": "@CharacterBody2D@26501", "interactions": 1 })
+  ok    town_loop.l03_walk_and_talk
+  ok    town_loop.l03_first_meeting_copy
+  ok    town_loop.l03_weekly_heart_once
+  ok    town_loop.l03_repeat_chat_no_extra_heart
+  ok    town_loop.l03_esc_first_line_no_heart
+  ok    town_loop.l03_people_book_shows_heart
+  ok    town_loop.l07_talk_menu_opens_picker
+  ok    town_loop.l07_carrot_available
+  ok    town_loop.l07_item_removed_once
+  ok    town_loop.l07_one_gift_per_day
+  info  Gift taste transaction: { "ok": true, "item": "turnip", "class": "like", "points": 20, "birthday": "", "repeated": false, "hearts": 1, "hearts_before": 1, "stage_before": "bekendt", "stage_after": &"bekendt" }
+  info  Gift taste transaction: { "ok": true, "item": "flour", "class": "neutral", "points": 8, "birthday": "", "repeated": false, "hearts": 1, "hearts_before": 1, "stage_before": "bekendt", "stage_after": &"bekendt" }
+  info  Gift taste transaction: { "ok": true, "item": "stone", "class": "dislike", "points": 0, "birthday": "", "repeated": false, "hearts": 1, "hearts_before": 1, "stage_before": "bekendt", "stage_after": &"bekendt" }
+  info  Gift taste transaction: { "ok": true, "item": "lantern_oil", "class": "hate", "points": 0, "birthday": "", "repeated": false, "hearts": 1, "hearts_before": 1, "stage_before": "bekendt", "stage_after": &"bekendt" }
+  ok    town_loop.l07_taste_classes_and_points
+  ok    town_loop.l07_two_gifts_per_week
+  ok    town_loop.l07_birthday_multiplier
+  ok    town_loop.l07_protected_items_unchanged
+  ok    town_loop.l05_closed_before_open
+  ok    town_loop.l05_closed_door_does_not_travel
+  ok    town_loop.l05_opens_from_registry
+  ok    town_loop.l04_door_enters ({ "ok": true, "area_changed": false, "ticks": 72, "seconds": 1.2, "dist_left": 2.85893845558167, "stuck": false, "nav": true, "waypoints": 4, "waypoint_index": 3, "position": (130.0123, 989.2058), "next": (128.0, 988.0), "collider": "", "interactions": 0 })
+  ok    town_loop.l04_iso_zone_zoom_and_budget ({ "sprites": 37, "night": 3, "bodies": 11, "lights": 2, "furniture": 13, "walls": 14, "hatch": 5, "stand_ins": 0, "placeholders": 0, "counters": 3, "handlers": 0, "pieces": 16, "accent_masks": 0, "service_lights": 0, "base_sprites": 26, "build_us": 12338, "zoom_fit": 0.75369458128079, "nodes": 104 })
+  ok    town_loop.l04_weather_curtain_hidden_indoors
+  ok    town_loop.l04_zone_and_running_clock
+  ok    town_loop.l04_room_zoom_fits ((735.6059, 621.0444))
+  ok    town_loop.l04_keeper_behind_counter
+  ok    town_loop.l03b_keeper_talk_host_opens_dialogue
+  ok    town_loop.l03b_keeper_weekly_heart_at_counter
+  ok    town_loop.l03b_keeper_repeat_no_extra_heart
+  ok    town_loop.l06_counter_opens_panel
+  ok    town_loop.l06_keeper_greeting_and_bust
+  ok    town_loop.l10_seeds_from_shop
+  ok    town_loop.l06_buy_exact (listed=60 charged=60)
+  ok    town_loop.l06_refusals_have_reasons
+  ok    town_loop.l06_escape_restores_world
+  ok    town_loop.l05_warning_thirty_minutes
+  ok    town_loop.l05_panel_closes_before_eviction
+  ok    town_loop.l05_closed_weekday_reason
+  ok    town_loop.l04_counter_is_barrier
+  ok    town_loop.l05_exit_always_open
+  ok    town_loop.l06b_keeper_weekly_heart_at_noon
+  ok    town_loop.l06c_home_upgrade_desk_at_noon ({ "id": "upgrade", "text_key": "DLG_CHOICE_HOME_UPGRADE", "action": "home_upgrade", "tier": 2 } / [{ "id": "open_home_builder", "payload": { "tier": 2 } }, { "id": "open_home_builder", "payload": { "tier": 1 } }])
+  ok    town_loop.l08_post_office_interior
+  ok    town_loop.l08_letter_of_the_day (enchanted_garden)
+  ok    town_loop.l08_office_repeat_does_not_duplicate
+  ok    town_loop.l08_parcels_honest_stub
+  ok    town_loop.l09_walk_back_to_farm ({ "ok": true, "area_changed": true, "ticks": 282, "seconds": 4.7, "dist_left": 5582.15869140625, "stuck": false, "nav": true, "waypoints": 8, "waypoint_index": 7, "position": (-512.0, 3040.0), "next": (5070.0, 3015.0), "collider": "", "interactions": 0 } area=farm travel=false)
+  ok    town_loop.l09_farm_state_intact
+  ok    town_loop.l02_citizens_freed_on_exit
+  ok    town_loop.l10_walk_to_plot_27_29
+  ok    town_loop.l10_walk_to_plot_26_29
+  ok    town_loop.l10_walk_to_plot_25_29
+  ok    town_loop.l10_till_plant_water (plant=[[&"plot_27_29", &"carrot"], [&"plot_26_29", &"carrot"], [&"plot_25_29", &"carrot"]] water=[&"plot_27_29", &"plot_26_29", &"plot_25_29"])
+  ok    town_loop.l10_energy_costs
+  ok    town_loop.l10_forste_dage_objectives ({ "current": 3, "target": 3, "done": true })
+  ok    town_loop.l10_hint_once_per_save
+  ok    town_loop.l11_bed_closed_before_18
+  ok    town_loop.l11_bed_opens_at_18
+  ok    town_loop.l11_sleep_rolls_day
+  ok    town_loop.l11_crops_grow
+  ok    town_loop.l11_no_pass_out_at_midnight
+  ok    town_loop.l11_curfew_at_the_configured_time
+  ok    town_loop.l11_pass_out_wakes_on_farm
+  ok    town_loop.l11_harvest_purchased_seed_crops
+  ok    town_loop.l11_shipping_uses_live_bin ({ "ok": true, "area_changed": false, "ticks": 273, "seconds": 4.55, "dist_left": 2.00783228874207, "stuck": false, "nav": true, "waypoints": 14, "waypoint_index": 13, "position": (769.6013, 1960.719), "next": (768.0, 1960.0), "collider": "", "interactions": 0 } selected=true amount=6 left=0)
+  ok    town_loop.l11_bin_pays_once_at_dawn
+  ok    town_loop.l11_shop_restocks_at_dawn
+  ok    town_loop.l12_citizens_moved_by_routine_postman_pip (["farm.pip_mailbox", "int_postkontoret.counter"])
+  ok    town_loop.l12_citizens_moved_by_routine_gardener_hoppe (["traetoppen.a_bench", "farm.hoppe_fence"])
+  ok    town_loop.l12_route_takes_time
+  ok    town_loop.l12_weather_override ({ "npc": "gardener_hoppe", "state": "stay", "plan": "work", "place": "int_hoppe_hut.table", "act": "sit", "area": "int_hoppe_hut" })
+  ok    town_loop.l12_weekend_variant ({ "npc": "carpenter_brumme", "state": "stay", "plan": "stall", "place": "traetoppen.t_stall", "act": "work", "area": "traetoppen" })
+  ok    town_loop.l12_pip_visits_farm_from_day_2 ({ "npc": "postman_pip", "state": "stay", "plan": "town_only", "place": "int_postkontoret.bed", "act": "sleep", "area": "int_postkontoret" } / { "npc": "postman_pip", "state": "stay", "plan": "work", "place": "farm.pip_mailbox", "act": "stand", "area": "farm" })
+  ok    town_loop.l12_hoppe_wednesday_visit ({ "npc": "gardener_hoppe", "state": "stay", "plan": "work", "place": "traetoppen.a_beds1", "act": "tend", "area": "traetoppen" } / { "npc": "gardener_hoppe", "state": "stay", "plan": "farm_visit", "place": "farm.hoppe_fence", "act": "stand", "area": "farm" })
+  ok    town_loop.l12_night_presence ([])
+  ok    town_loop.l13_save_cost (p95=13.662ms / 20091 bytes full cast 34)
+  ok    town_loop.l13_digest_roundtrip
+  ok    town_loop.l13_citizens_same_places
+  ok    town_loop.l13_social_section_order (["game", "time", "economy", "quests", "husbandry", "shops", "home", "furniture", "wardrobe", "loot", "dungeon", "social"] social=60)
+  ok    town_loop.l13_old_save_without_social
+WARNING: SocialManager.from_dict: unknown NPC 'loop_removed_citizen' kept in the orphans bucket
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] from_dict (res://scripts/social/social_manager.gd:1392)
+         [1] _apply_payload (res://scripts/autoload/save_manager.gd:908)
+         [2] load_game (res://scripts/autoload/save_manager.gd:300)
+         [3] load_and_enter (res://scripts/autoload/save_manager.gd:319)
+         [4] _load (res://tests/lib/town_loop/save.gd:64)
+         [5] run (res://tests/lib/town_loop/save.gd:53)
+         [6] _load (res://tests/lib/town_loop/save.gd:70)
+         [7] physics (res://tests/lib/drive.gd:85)
+  ok    town_loop.l13_content_drift_is_warning
+  ok    town_loop.l17_lint_clean_core (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_no_raw_keys_both_locales (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_boxes_fit (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_frozen_voice_text_hashes (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_citizen_slots_complete (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_social_voice_rows_reviewed (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_voice_assets_complete (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_voice_text_and_audio_hashes (Human text/audio remains protected. New social voice rows have exact bilingual AI reviews; synthetic placeholders retain provenance. Native-language/listening approval is not asserted.)
+  ok    town_loop.l17_observed_screens_have_no_raw_keys (3885 live labels / [])
+  ok    town_loop.l17_voice_index_and_recordings_complete (PASS voiced_index_in_sync
+)
+  ok    town_loop.x01_birthday_greeting_and_real_gift ({ "ok": true, "item": "carrot", "class": "love", "points": 160, "birthday": "day", "repeated": false, "hearts": 4, "hearts_before": 3, "stage_before": "nabo", "stage_after": &"ven" })
+  ok    town_loop.extended_scene_returns_control
+  ok    town_loop.x03_heart_event_real_scene_once
+  ok    town_loop.x08_rain_fallback (["SOC_ANY_WX_REGN_1", "DLG_MERCHANT_GREET"])
+  ok    town_loop.x05_mail_screen_live_locations
+  ok    town_loop.x05_mail_escape_restores_world
+  ok    town_loop.x04_relationship_consent_and_stage
+  ok    town_loop.x06_farm_visit_enters_home ([&"home", &"", false])
+  ok    town_loop.x06_farm_visit_named_actor_and_saved_gift
+  ok    town_loop.x07_seasonal_decor_live_painted_family
+  ok    town_loop.extended_scene_returns_control
+  ok    town_loop.x02_festival_scene_decor_hours_bed_music ({ "hosts": 3, "opening": 4, "year": 4, "sleep": false, "shop": false, "music": true })
+  ok    town_loop.extended_scene_returns_control
+  ok    town_loop.x09_commitment_saved_safe_wedding
+  ok    town_loop.l16_shop_bell_is_logged
+  ok    town_loop.l16_missing_cue_logged_silent
+  ok    town_loop.l16_wood_surface_follows_room
+  ok    town_loop.l16_real_movement_footsteps
+  ok    town_loop.l16_stone_surface_follows_ground
+  ok    town_loop.l16_rope_surface_follows_bridge
+  ok    town_loop.l16_night_ambience_follows_clock
+  ok    town_loop.extended_legs_listed_with_reasons
+  info  Installed extended town scenarios: 10.276s
+  ok    town_loop.l18_data_only_citizen
+  ok    town_loop.l18_data_only_building
+  ok    town_loop.l18_data_only_routine_edit
+  ok    town_loop.l18_data_only_shop_hours
+  ok    town_loop.l18_data_only_festival
+  ok    town_loop.l18_data_only_event
+  ok    town_loop.l18_data_only_quest
+  ok    town_loop.l18_no_gd_changed
+  ok    town_loop.selftest_mutants_caught (Eight real producer mutants plus a clean baseline, including audio playback without logging)
+  ok    town_loop.l14_wall_time (115.413s <= 120s)
+  ok    town_loop.l14_area_switch_times ([{ "area": "farm", "ms": 71 }, { "area": "traetoppen", "ms": 110 }, { "area": "hyggebyen", "ms": 94 }, { "area": "int_froebutikken", "ms": 13 }, { "area": "int_bageriet", "ms": 3 }, { "area": "int_toemmerhandlen", "ms": 3 }, { "area": "int_postkontoret", "ms": 3 }, { "area": "int_postkontoret", "ms": 5 }, { "area": "traetoppen", "ms": 13 }, { "area": "traetoppen", "ms": 12 }, { "area": "int_froebutikken", "ms": 5 }, { "area": "home", "ms": 23 }, { "area": "farm", "ms": 111 }, { "area": "traetoppen", "ms": 14 }, { "area": "int_froebutikken", "ms": 4 }, { "area": "hyggebyen", "ms": 31 }, { "area": "traetoppen", "ms": 16 }])
+  ok    town_loop.l14_no_orphans (growth=0)
+  ok    town_loop.l14_zero_engine_messages ([])
+  ok    town_loop.gate_leg_not_skipped ([])
+  ok    town_loop.report_lists_every_required_leg (Every required wave/leg listed; missing and repeated failing checks retained.
+)
+  --    town_loop: 156 checks, 0 failed, 0 skipped, 115.5 s
+  note  section town_loop took 115.5 s (> 30 s): consider splitting it
+== section ui_mechanics  (res://tests/sections/ui_mechanics.gd)
+  ok    ui_mechanics.string_selection_does_not_exempt_gold
+  ok    ui_mechanics.calendar_card_stays_in_content ([P: (108.0, 190.0), S: (1064.0, 440.0)] contains [P: (108.0, 190.0), S: (240.0, 440.0)])
+  --    ui_mechanics: 2 checks, 0 failed, 0 skipped, 0.6 s
+== section wardrobe_ui  (res://tests/sections/wardrobe_ui.gd)
+  ok    wardrobe_ui.screen_and_live_presenter_available
+  ok    wardrobe_ui.all_96_pieces_fit_all_eight_bodies
+  ok    wardrobe_ui.opens_paused_with_live_preview
+  ok    wardrobe_ui.try_on_is_local_and_resolves_exclusions
+  ok    wardrobe_ui.closing_cancels_uncommitted_try_on
+  ok    wardrobe_ui.equip_button_commits_one_complete_dress
+  ok    wardrobe_ui.preview_rotates_and_walks
+  ok    wardrobe_ui.unowned_piece_can_be_tried_but_not_equipped
+  ok    wardrobe_ui.remove_button_reveals_base_and_keeps_ownership
+  ok    wardrobe_ui.screen_saves_worn_outfit
+  ok    wardrobe_ui.screen_restores_outfit
+  ok    wardrobe_ui.hands_preview_uses_same_attachment_presenter
+  ok    wardrobe_ui.weapon_try_on_does_not_change_equipment
+  ok    wardrobe_ui.hands_tab_changes_real_weapon_owner
+  ok    wardrobe_ui.hands_tab_assigns_existing_hotbar
+  ok    wardrobe_ui.hands_tab_selects_ready_tool
+  ok    wardrobe_ui.hands_tab_clears_selected_slot
+  ok    wardrobe_ui.closing_releases_pause_and_preview
+  ok    wardrobe_ui.real_save_with_clothes_and_loadout
+  ok    wardrobe_ui.real_load_rebuilds_world
+  ok    wardrobe_ui.clothing_equipment_presets_and_hotbar_survive_load
+  ok    wardrobe_ui.screen_and_live_presenter_available
+  ok    wardrobe_ui.all_96_pieces_fit_all_eight_bodies
+  ok    wardrobe_ui.opens_paused_with_live_preview
+  ok    wardrobe_ui.try_on_is_local_and_resolves_exclusions
+  ok    wardrobe_ui.closing_cancels_uncommitted_try_on
+  ok    wardrobe_ui.equip_button_commits_one_complete_dress
+  ok    wardrobe_ui.preview_rotates_and_walks
+  ok    wardrobe_ui.unowned_piece_can_be_tried_but_not_equipped
+  ok    wardrobe_ui.remove_button_reveals_base_and_keeps_ownership
+  ok    wardrobe_ui.screen_saves_worn_outfit
+  ok    wardrobe_ui.screen_restores_outfit
+  ok    wardrobe_ui.hands_preview_uses_same_attachment_presenter
+  ok    wardrobe_ui.weapon_try_on_does_not_change_equipment
+  ok    wardrobe_ui.hands_tab_changes_real_weapon_owner
+  ok    wardrobe_ui.hands_tab_assigns_existing_hotbar
+  ok    wardrobe_ui.hands_tab_selects_ready_tool
+  ok    wardrobe_ui.hands_tab_clears_selected_slot
+  ok    wardrobe_ui.closing_releases_pause_and_preview
+  ok    wardrobe_ui.real_save_with_clothes_and_loadout
+  ok    wardrobe_ui.real_load_rebuilds_world
+  ok    wardrobe_ui.clothing_equipment_presets_and_hotbar_survive_load
+  --    wardrobe_ui: 42 checks, 0 failed, 0 skipped, 2.0 s
+== summary: 9 section(s) run, 715 checks (0 failed, 1 skipped), 0 engine error(s), 0 engine warning(s), 7 allowed message(s), 0 problem(s), 0 known-issue message(s), 191.0 s
+PLAYTEST PASS (715 checks in 9 sections, 7 allowed engine messages, 0 known-issue messages)
