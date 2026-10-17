@@ -1231,5 +1231,12 @@
     "date": "",
     "voice_frozen": false,
     "rows": 20
+  },
+  "localization/cheats.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 22
   }
 }

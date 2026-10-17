@@ -42,6 +42,16 @@ static func set_level(actor: Node, level: Level) -> bool:
 	return true
 
 
+## Rendering may straddle a painted join while collision still belongs to one
+## deck. Keep the shadow with that actor and leave the collision bit untouched.
+static func set_draw_rank(actor: Node2D, rank: int) -> void:
+	actor.z_index = rank
+	var shadow := shadow_of(actor)
+	if shadow != null:
+		shadow.z_as_relative = false
+		shadow.z_index = rank + SHADOW_Z_OFFSET
+
+
 ## A level change in motion (a ladder climb): drawn at the HIGHER rank of the two levels, collides with no level (the tween ignores them).
 static func set_transit(actor: Node, from_level: Level, to_level: Level) -> void:
 	if from_level == null or to_level == null or not (actor is Node2D):

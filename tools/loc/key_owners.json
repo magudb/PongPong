@@ -736,6 +736,13 @@
     "HOME_AMENITIES_"
    ],
    "exact": []
+  },
+  "cheats.csv": {
+   "owner": "testing-menu",
+   "prefix": [
+    "CHEAT_"
+   ],
+   "exact": []
   }
  },
  "notes": [

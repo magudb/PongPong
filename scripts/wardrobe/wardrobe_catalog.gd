@@ -20,7 +20,7 @@ static func resolve(id: String, item: Variant) -> Dictionary:
 	var fitted := body(id)
 	for family in [str(art.get("layer", "")), str(art.get("fallback", ""))]:
 		if fitted.get("layers", {}).has(family):
-			return {"family": family, "file": fitted.layers[family], "source_palette": data().designs[family].source_palette}
+			return {"family": family, "file": fitted.layers[family], "source_palette": fitted.get("source_palettes", {}).get(family, data().designs[family].source_palette)}
 	return {}
 
 static func supports(id: String, item: Variant) -> bool:

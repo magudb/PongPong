@@ -1049,13 +1049,13 @@ static func _walk_once(t, root: Node, max_steps: int, options: Dictionary) -> Di
 		await _restore_member(t, g, budget, options)
 	# sliders answer the keyboard
 	for c in expected:
-		if c is Slider and is_instance_valid(c):
+		if is_instance_valid(c) and c is Slider:
 			await _slider_probe(t, root, c as Slider, budget, options, r)
 	# ui_accept activates the buttons the screen lists (options.accept = "all" | [glob patterns]; pressing runs the button's own action: list harmless ones)
 	var accept: Variant = options.get("accept", [])
 	if (accept is String and accept == "all") or (accept is Array and not (accept as Array).is_empty()):
 		for c in expected:
-			if not (c is BaseButton) or not is_instance_valid(c) or int(budget["steps"]) + 2 > int(budget["max"]):
+			if not is_instance_valid(c) or not (c is BaseButton) or int(budget["steps"]) + 2 > int(budget["max"]):
 				continue
 			var cp := _rel(root, c)
 			var wanted := accept is String

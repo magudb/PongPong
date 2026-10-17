@@ -2,7 +2,7 @@
   "status": "reviewed",
   "worktree": "codex-review",
   "guideline": "docs/art/style-guide.txt",
-  "visual_reference": "docs/Trætoppen Style Guide Review/Trætoppen Style Guide.dc.html",
+  "visual_reference": "docs/Tr\u00e6toppen Style Guide Review/Tr\u00e6toppen Style Guide.dc.html",
   "scope": "All 5,171 assets inventoried; 2,518 rasters decoded. 255 new rasters and 311 changed rasters reviewed, including 285 painted historical re-exports, 20 rebuilt home day/night textures and six normalized prop pigment variants. 1,952 byte-identical rasters retain earlier review evidence. Thirteen radial light kernels remain functional masks. No historical illustration is exempted from the painted style. Stock animation sampling scope remains the prior all-clip middle-frame/eight-idle-direction/portrait review; this is not a new frame-by-frame review of 58 stock animation sets.",
   "reviewed_assets": {
     "assets/art/watercolor_paper.png": {
@@ -16070,25 +16070,25 @@
       "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
     },
     "assets/wardrobe/ghost_bu/dress_gown.webp": {
-      "sha256": "481a37043f8bc98c8fcdc1a18cfd5c684598d0642139ec2af1a7426e58da6d7a",
+      "sha256": "11dd937c602eece77491f0a1c9e53c7268c174a62f5a3de45a65360f758cc9d2",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_bu/dress_pinafore.webp": {
-      "sha256": "fc06c360275839af576952f8cadd0d8a571e9ed4cbc045ef17b0864717e03dbd",
+      "sha256": "b1628968b508193889c143d67ec8688b120edee16e07298a38eb7951787e5ec1",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_bu/dress_sun.webp": {
-      "sha256": "31797195fad93c07119fd585bbcff4abf946a4f35c1abf1042ed75dbef3c614f",
+      "sha256": "ea7c8bd3d4fb3bc815e9c2867ad32da9a31ea68727b06cb4606c86204be4912e",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_bu/ears_hoops.webp": {
       "sha256": "651f64908ca75c2b020afdc2581c931f0fbc9ee349e6ed29dff78aaa28bd6655",
@@ -16175,88 +16175,88 @@
       "reason": "Technical alpha mask only; actual head centres and front paws/skin/hair/wings/toes restored at fitted garment overlaps. Original character and garment paintings retained."
     },
     "assets/wardrobe/ghost_bu/pants_breeches.webp": {
-      "sha256": "a3a4a10bbacbaa2ddb7093ada4bd4b5a159b630ce2e01d5680db97908066cab3",
+      "sha256": "afedb02bd6d37eb08ee12ce04ff2c5789791a47b33fbc980ad418f282199b2b8",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_bu/pants_dungarees.webp": {
-      "sha256": "5a3ec489995f321da7122a92a3576e93bc8e07269fac9114a8d17ef530a40c6d",
+      "sha256": "afedb02bd6d37eb08ee12ce04ff2c5789791a47b33fbc980ad418f282199b2b8",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_bu/pants_shorts.webp": {
-      "sha256": "1053174d74c0cb8104912bdfc5d70f47a5e579c5b74a5d8de640277c39dd0bad",
+      "sha256": "afedb02bd6d37eb08ee12ce04ff2c5789791a47b33fbc980ad418f282199b2b8",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_bu/pants_trousers.webp": {
-      "sha256": "1ee419c9b3df9978a5a5f9928a210d8b09db9e0eadc72b3a83a54691b045e6d4",
+      "sha256": "afedb02bd6d37eb08ee12ce04ff2c5789791a47b33fbc980ad418f282199b2b8",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_bu/shirt_knit.webp": {
-      "sha256": "57cc609df48e841967295ce685a4f7e69d9d5e69e5929aec854970ac30098214",
+      "sha256": "2c7620682e4c561d3d252522a1bb29ffc83920e59bf3186186e3be7a4a920bd7",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_bu/shirt_linen.webp": {
-      "sha256": "2b49821b41c7edb223eb888ee2948332f0b5b7c27cb8218d0862a3a42b616d21",
+      "sha256": "fd865fd48b19aeed7aeca5bedbaa04a7ed53dc5f751b2527a4efd8b5196f6de0",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_bu/shirt_smock.webp": {
-      "sha256": "fd6aa8ba901999db1c0a2266d4e70e046ee0a2265937c72e034d962e32b12c24",
+      "sha256": "a9e7b5719f5badc50259416d889115b2ce850fe546c0b7ed680746f34f5df72d",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_bu/shirt_vest.webp": {
-      "sha256": "fd154572203495d35c757b3bf1d2dc9b61ccc20413e4091f9fc7b3e87cc0be28",
+      "sha256": "99621dcf8473a3d194f4c5a09868abce8adc61bd5b6c47ee73a6c298810fd1ac",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_bu/shoes_boots.webp": {
-      "sha256": "b60d2835f04d1375228f3adf6d4983b1dde0f142acd78ea21adfc0a1f66e0aaf",
+      "sha256": "39c280ffb0086a0e2f4e159e2ef4bdf7e4719941d4bd639d1464a9ecd2aa826f",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_bu/shoes_clogs.webp": {
-      "sha256": "6846828a49e8f9226b6c889b98ea2c42f2de8f7f81242cd8344245980bd45166",
+      "sha256": "5ec178ff2917f552e551b24cde18cceb40f2e8a29f2bb5d2568d35b6c6589389",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_bu/shoes_slippers.webp": {
-      "sha256": "b03359780004910a358f58642c742262dcecd12e62c7e088580c424df38357c9",
+      "sha256": "1937f6f23470b995463f7ab2f9bc330dfabcafbde4e7e72080793af6e6d58b56",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_bu/shoes_wellies.webp": {
-      "sha256": "6d7327dbf398bec855baa4771fe304d04c1d874bbc1ae4aa37fd8b72c9fcbdb2",
+      "sha256": "048a397d9ee62c3cac7c6a32c393e1f3895b67cf9b9cdb9f9e3f533cd96fe4c3",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_bu/wrist_bangles.webp": {
       "sha256": "93e0d7cff923ed7cc5abdd5f5a3c1d3addc81580c8aa73c43d2d3dd35b16d692",
@@ -16287,25 +16287,25 @@
       "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
     },
     "assets/wardrobe/ghost_hviske/dress_gown.webp": {
-      "sha256": "481a37043f8bc98c8fcdc1a18cfd5c684598d0642139ec2af1a7426e58da6d7a",
+      "sha256": "11dd937c602eece77491f0a1c9e53c7268c174a62f5a3de45a65360f758cc9d2",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_hviske/dress_pinafore.webp": {
-      "sha256": "fc06c360275839af576952f8cadd0d8a571e9ed4cbc045ef17b0864717e03dbd",
+      "sha256": "b1628968b508193889c143d67ec8688b120edee16e07298a38eb7951787e5ec1",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_hviske/dress_sun.webp": {
-      "sha256": "31797195fad93c07119fd585bbcff4abf946a4f35c1abf1042ed75dbef3c614f",
+      "sha256": "ea7c8bd3d4fb3bc815e9c2867ad32da9a31ea68727b06cb4606c86204be4912e",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_hviske/ears_hoops.webp": {
       "sha256": "651f64908ca75c2b020afdc2581c931f0fbc9ee349e6ed29dff78aaa28bd6655",
@@ -16392,88 +16392,88 @@
       "reason": "Technical alpha mask only; actual head centres and front paws/skin/hair/wings/toes restored at fitted garment overlaps. Original character and garment paintings retained."
     },
     "assets/wardrobe/ghost_hviske/pants_breeches.webp": {
-      "sha256": "a3a4a10bbacbaa2ddb7093ada4bd4b5a159b630ce2e01d5680db97908066cab3",
+      "sha256": "afedb02bd6d37eb08ee12ce04ff2c5789791a47b33fbc980ad418f282199b2b8",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_hviske/pants_dungarees.webp": {
-      "sha256": "5a3ec489995f321da7122a92a3576e93bc8e07269fac9114a8d17ef530a40c6d",
+      "sha256": "afedb02bd6d37eb08ee12ce04ff2c5789791a47b33fbc980ad418f282199b2b8",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_hviske/pants_shorts.webp": {
-      "sha256": "1053174d74c0cb8104912bdfc5d70f47a5e579c5b74a5d8de640277c39dd0bad",
+      "sha256": "afedb02bd6d37eb08ee12ce04ff2c5789791a47b33fbc980ad418f282199b2b8",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_hviske/pants_trousers.webp": {
-      "sha256": "1ee419c9b3df9978a5a5f9928a210d8b09db9e0eadc72b3a83a54691b045e6d4",
+      "sha256": "afedb02bd6d37eb08ee12ce04ff2c5789791a47b33fbc980ad418f282199b2b8",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_hviske/shirt_knit.webp": {
-      "sha256": "57cc609df48e841967295ce685a4f7e69d9d5e69e5929aec854970ac30098214",
+      "sha256": "2c7620682e4c561d3d252522a1bb29ffc83920e59bf3186186e3be7a4a920bd7",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_hviske/shirt_linen.webp": {
-      "sha256": "2b49821b41c7edb223eb888ee2948332f0b5b7c27cb8218d0862a3a42b616d21",
+      "sha256": "fd865fd48b19aeed7aeca5bedbaa04a7ed53dc5f751b2527a4efd8b5196f6de0",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_hviske/shirt_smock.webp": {
-      "sha256": "fd6aa8ba901999db1c0a2266d4e70e046ee0a2265937c72e034d962e32b12c24",
+      "sha256": "a9e7b5719f5badc50259416d889115b2ce850fe546c0b7ed680746f34f5df72d",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_hviske/shirt_vest.webp": {
-      "sha256": "fd154572203495d35c757b3bf1d2dc9b61ccc20413e4091f9fc7b3e87cc0be28",
+      "sha256": "99621dcf8473a3d194f4c5a09868abce8adc61bd5b6c47ee73a6c298810fd1ac",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_hviske/shoes_boots.webp": {
-      "sha256": "b60d2835f04d1375228f3adf6d4983b1dde0f142acd78ea21adfc0a1f66e0aaf",
+      "sha256": "39c280ffb0086a0e2f4e159e2ef4bdf7e4719941d4bd639d1464a9ecd2aa826f",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_hviske/shoes_clogs.webp": {
-      "sha256": "6846828a49e8f9226b6c889b98ea2c42f2de8f7f81242cd8344245980bd45166",
+      "sha256": "5ec178ff2917f552e551b24cde18cceb40f2e8a29f2bb5d2568d35b6c6589389",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_hviske/shoes_slippers.webp": {
-      "sha256": "b03359780004910a358f58642c742262dcecd12e62c7e088580c424df38357c9",
+      "sha256": "1937f6f23470b995463f7ab2f9bc330dfabcafbde4e7e72080793af6e6d58b56",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_hviske/shoes_wellies.webp": {
-      "sha256": "6d7327dbf398bec855baa4771fe304d04c1d874bbc1ae4aa37fd8b72c9fcbdb2",
+      "sha256": "048a397d9ee62c3cac7c6a32c393e1f3895b67cf9b9cdb9f9e3f533cd96fe4c3",
       "disposition": "accepted-painted",
       "role": "fitted-painted-clothing",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
+      "evidence": "docs/qa/ghost-city-review/REVIEW.md; native ghost catalogue, eight-direction mixed outfits and walking contact sheets",
+      "reason": "Ghost-specific painted drapes wrap the wisp; separate hem charms retain painted proportions, and rear surfaces replace frontal details. Matte pigment, warm pencil edges and stock face/hands/hem reviewed in Godot."
     },
     "assets/wardrobe/ghost_hviske/wrist_bangles.webp": {
       "sha256": "93e0d7cff923ed7cc5abdd5f5a3c1d3addc81580c8aa73c43d2d3dd35b16d692",
@@ -17887,5 +17887,14 @@
     "scope": "Eight technical masks reviewed with anatomy-based live fitting. All 240 garment atlases, four safe-base paintings and original character art retain their previously approved bytes. 96 palettes rendered on fox and 30 families on each other hero; four mixed outfits in all eight directions and full walk-frame sheets with a sword for every hero. All 3312 authored clothing poses frame-lock checked; this is not a per-pixel review of every action pose.",
     "evidence": "docs/qa/clothing-fit/REVIEW.md",
     "prompts": "docs/art/wardrobe/fitting-prompts.json"
+  },
+  "ghost_drape_followup": {
+    "date": "2026-10-17",
+    "worktree": "codex-ghost-city-tools",
+    "changed_visual_assets": 30,
+    "scope": "15 ghost garment families on both ghosts; original character art and the other six bodies remain byte-identical. Native turnaround, walking and garment catalogue evidence. No new approval of all original stock animation frames.",
+    "evidence": "docs/qa/ghost-city-review/REVIEW.md",
+    "prompts": "docs/art/ghost-city-review/prompts.json",
+    "sources": "tools/art/drawn/sources/wardrobe/ghost-drape/"
   }
 }

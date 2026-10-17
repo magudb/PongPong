@@ -1,0 +1,25 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 8,
+  "elapsed_s": 4.92,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "town_mutants.l16_shop_bell_is_logged"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "town_mutants": {
+      "character": "animal",
+      "checks": 8,
+      "failed": 1,
+      "ms": 3106,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

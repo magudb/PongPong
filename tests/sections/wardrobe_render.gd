@@ -67,7 +67,7 @@ func _run(t, skin := "") -> void:
 		var ui: Node = t.world().game_ui.get_screen(&"garderobe")
 		ui.open()
 		await t.frames(3)
-		await _gallery(t,ui,skin == "" and t.character == "animal")
+		await _gallery(t,ui,t.character == "ghost" or (skin == "" and t.character == "animal"))
 		await _turnarounds(t,ui)
 		ui.close()
 	if skin == "":

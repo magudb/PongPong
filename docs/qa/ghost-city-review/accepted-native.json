@@ -1,0 +1,51 @@
+{
+  "allowed": [],
+  "character": "ghost",
+  "checks": 126,
+  "elapsed_s": 114.6,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "cheat_menu": {
+      "character": "ghost",
+      "checks": 17,
+      "failed": 0,
+      "ms": 2064,
+      "skipped": 0
+    },
+    "cheat_ui_audit": {
+      "character": "ghost",
+      "checks": 10,
+      "failed": 0,
+      "ms": 6037,
+      "skipped": 0
+    },
+    "city_depth_pixels": {
+      "character": "ghost",
+      "checks": 19,
+      "failed": 0,
+      "ms": 15102,
+      "skipped": 0
+    },
+    "city_walkthrough": {
+      "character": "ghost",
+      "checks": 64,
+      "failed": 0,
+      "ms": 68461,
+      "skipped": 0
+    },
+    "wardrobe_render": {
+      "character": "ghost",
+      "checks": 16,
+      "failed": 0,
+      "ms": 16691,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

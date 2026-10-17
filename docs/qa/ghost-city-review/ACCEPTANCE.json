@@ -1,0 +1,40 @@
+{
+  "status": "passed in isolated worktree; local-main integration pending",
+  "date": "2026-10-17",
+  "worktree": "codex-ghost-city-tools",
+  "base_commit": "dc64592",
+  "reports": {
+    "accepted-native": {
+      "checks": 126,
+      "failed": 0,
+      "skipped": 0,
+      "engine_messages": 0
+    },
+    "depth": {
+      "checks": 37,
+      "failed": 0,
+      "skipped": 0,
+      "engine_messages": 0
+    },
+    "palettes": {
+      "checks": 16,
+      "failed": 0,
+      "skipped": 0,
+      "engine_messages": 0
+    },
+    "final-regression": {
+      "checks": 351,
+      "failed": 0,
+      "skipped": 0,
+      "engine_messages": 0
+    }
+  },
+  "catalogue_cases": {
+    "ghost_bu": 96,
+    "ghost_hviske": 96
+  },
+  "changed_painted_assets": 30,
+  "source_binding": "348a1caef1ae52e6b01d3930a09fc6ec6c8e046d29993ce8edbc6cf239eb33ad",
+  "prompts": "docs/art/ghost-city-review/prompts.json",
+  "review": "docs/qa/ghost-city-review/REVIEW.md"
+}

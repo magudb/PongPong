@@ -488,6 +488,43 @@ func level_at(pos: Vector2) -> Level:
 	return null
 
 
+## Join surfaces overlap in the painting. Promote the actor BEFORE its feet
+## change collision levels, so the next deck cannot cut through its head/body.
+## Only connected bridge mouths participate; crossing bridges stay separate.
+func draw_rank(pos: Vector2, level: Level) -> int:
+	var rank := level.rank
+	const CLEARANCE := 176.0
+	for bridge in bridges:
+		if level != bridge and level.id != bridge.from_id and level.id != bridge.to_id:
+			continue
+		for end in 2:
+			var platform := get_level(bridge.from_id if end == 0 else bridge.to_id)
+			if level != bridge and level != platform: continue
+			var mouth: Vector2 = bridge.gate_path[0 if end == 0 else bridge.gate_path.size()-1]
+			var inside: Vector2 = bridge.path[0 if end == 0 else bridge.path.size()-1]
+			var closest := Geometry2D.get_closest_point_to_segment(pos, mouth, inside)
+			if pos.distance_squared_to(closest) <= CLEARANCE * CLEARANCE:
+				rank = maxi(rank, maxi(platform.rank, bridge.rank))
+	return rank
+
+
+## A body-sized clear landing for testing/teleports, never inside a planter,
+## hut or railing. Prefer the front walkway, then try the other open arcs.
+func safe_point(id: StringName) -> Variant:
+	var level := get_level(id)
+	if level == null or level.is_bridge(): return null
+	for radius in [0.72, 0.55, 0.84]:
+		for degrees in [90, 60, 120, 30, 150, 0, 180, 210, 330, 240, 300, 270]:
+			var angle := deg_to_rad(float(degrees))
+			var at: Vector2 = level.centre + Vector2(cos(angle)*level.rx, sin(angle)*level.ry)*float(radius)
+			var clear := level_id_at(at) == id
+			for edge in 8:
+				var offset := Vector2.from_angle(TAU*edge/8.0)*body_radius*1.1
+				clear = clear and level_id_at(at+offset) == id
+			if clear: return at
+	return null
+
+
 ## The id of the level at a position, &"" when there is none.
 func level_id_at(pos: Vector2) -> StringName:
 	var lv: Level = level_at(pos)
