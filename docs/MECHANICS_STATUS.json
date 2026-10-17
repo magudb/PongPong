@@ -48,7 +48,7 @@
     },
     {
       "system": "Arsenal, weapons, gems, loot, appraisal and crafting (DL)",
-      "state": "arsenal, 51 items, forging, smithy rotation, weapon effects, lantern loadout, deterministic two-phase dungeon loot and saved appraisal implemented; 22 new weapons have 176 painted held views and matching icons, native catalog and legendary cards reviewed, all eight heroes pass held-equipment regressions; remaining gem/material art, validator extensions and final loot acceptance pending"
+      "state": "arsenal, 51 items, forging, smithy rotation, weapon effects, lantern loadout, deterministic two-phase dungeon loot and saved appraisal implemented; all 51 item icons and 176 weapon held views painted and reviewed in native UI; validator extensions and final loot acceptance pending"
     },
     {
       "system": "Social event runner, festival activities and heart events",
@@ -94,7 +94,8 @@
     "forest_ui_integration": "docs/qa/mechanics/dungeon/hud/integration.json",
     "forest_ui_native": "docs/qa/mechanics/dungeon/hud/interactions-native.json",
     "forest_hud_native": "docs/qa/mechanics/dungeon/hud/hud-native.json",
-    "dungeon_weapon_art": "docs/qa/mechanics/dungeon/weapons/icons-native.json"
+    "dungeon_weapon_art": "docs/qa/mechanics/dungeon/weapons/icons-native.json",
+    "dungeon_item_icons": "docs/qa/mechanics/dungeon/icons/native.json"
   },
   "contract_additions": [
     "QuestManager state queries buildings_owned(type) and animals_owned support accepting animal quests after building or adoption.",

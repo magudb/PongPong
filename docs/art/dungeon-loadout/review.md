@@ -12,4 +12,10 @@ The legendary day/night card capture was opened and reviewed for the moon sword,
 
 Validation is in `docs/qa/mechanics/dungeon/weapons/`: 117 asset checks, the full held-equipment section for all eight heroes, a native catalog/contact sheet and native legendary cards. The style ledger adds 48 reviewed visual assets; all 2,815 previously approved visual/theme assets remain byte-identical.
 
-The remaining rough-stone, gem and material icons are still pending. They have not been marked as complete by this weapon checkpoint.
+The remaining 29 rough-stone, gem and material paintings are now complete. Their exact requests and reference roles are saved in `icon-prompts.json`, and original tool output paths in `icon-generation-record.json`. The approved `icons_resources.png` painting served as a style reference. Each asset was generated separately and its source retained under `tools/art/drawn/sources/dungeon_icons/`.
+
+I inspected all 29 source paintings, their 128/64 px contact sheet, and all six native day/night icon pages. The four rough stones retain distinguishable mineral seams; the three rune shards use different carved marks as well as green, amber and violet pigments. The 14 gems use distinct silhouettes, facets or inclusions. The source paintings retain tactile pigment and warm irregular contours. The three legendary gems use the existing technical pale rim for night readability.
+
+Native appraisal, unique-card, legendary-card and town-appraisal reveal captures were opened and reviewed in `docs/qa/mechanics/dungeon/icons/`. The unknown rough-stone rows intentionally retain silhouettes until appraisal. Actual reveals show the new paintings. The 51-item manifest records source hashes and rarity ring colors; `make_icons.py` performs contain/alpha/export manufacturing only. All 2,863 prior visual/theme assets remain byte-identical; the ledger adds only 29 icons and three technical night variants.
+
+The icon/appraisal/reveal native run passed 298 checks without engine errors or warnings. The combined headless weapon/icon/appraisal/reveal run passed 423 checks. There are no remaining missing dungeon item icons.

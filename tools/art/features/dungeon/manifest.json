@@ -1,0 +1,374 @@
+{
+  "version": 1,
+  "size": [
+    128,
+    128
+  ],
+  "source_tool": "built-in imagegen",
+  "items": {
+    "dng_crystal_root": {
+      "file": "dng_crystal_root.webp",
+      "rarity": "rare",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_crystal_root.png",
+      "source_sha256": "7d29e09243fd435ba3a2e505d16a73d56f5e645c2f5fc8ee293b1c4d86dec8db",
+      "ring": "9b86d6"
+    },
+    "dng_forest_steel": {
+      "file": "dng_forest_steel.webp",
+      "rarity": "uncommon",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_forest_steel.png",
+      "source_sha256": "7430a0bb3f9f861294a639765cfc3835c626a5397d6bffd165f48c9b0482d0a6",
+      "ring": "6b9a3e"
+    },
+    "dng_forest_thread": {
+      "file": "dng_forest_thread.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_forest_thread.png",
+      "source_sha256": "f18edffcec1fbf745e9debfad7e80304e79a07714131d7dd4a41dc723fce1283",
+      "ring": "2b2340"
+    },
+    "dng_glimmer_dust": {
+      "file": "dng_glimmer_dust.webp",
+      "rarity": "uncommon",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_glimmer_dust.png",
+      "source_sha256": "54d704985b3088b8471df2c206160fa7b981eccf5776258c61454e9237419b8d",
+      "ring": "6b9a3e"
+    },
+    "dng_moon_silver": {
+      "file": "dng_moon_silver.webp",
+      "rarity": "rare",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_moon_silver.png",
+      "source_sha256": "a00972d6caafbdcee001ffcb7ba040f2747372255b7a0d4bd0b2049e94ffb845",
+      "ring": "9b86d6"
+    },
+    "dng_mushroom_felt": {
+      "file": "dng_mushroom_felt.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_mushroom_felt.png",
+      "source_sha256": "09f5d61d96c96deecc38de437864633f1486fc1b56636348854f36a3ebc8055c",
+      "ring": "2b2340"
+    },
+    "dng_owl_feather": {
+      "file": "dng_owl_feather.webp",
+      "rarity": "uncommon",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_owl_feather.png",
+      "source_sha256": "32bef586eebd9865fca88140782d76618a3ba130da4d374baf7ac377ee66613d",
+      "ring": "6b9a3e"
+    },
+    "dng_resin": {
+      "file": "dng_resin.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_resin.png",
+      "source_sha256": "1d4d1632eab040790cbe218c2fc85c5628ec97b4795a11ac94611a6951928c2d",
+      "ring": "2b2340"
+    },
+    "dng_rune_gloed": {
+      "file": "dng_rune_gloed.webp",
+      "rarity": "unique",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_rune_gloed.png",
+      "source_sha256": "298f8ace793a2aa6e5fd797d76dbb1ed3eed17b8afc7d86deb8be72ce28b512c",
+      "ring": "e58fa6"
+    },
+    "dng_rune_konge": {
+      "file": "dng_rune_konge.webp",
+      "rarity": "unique",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_rune_konge.png",
+      "source_sha256": "28bd02683d12ecc926cf72a7ad53a78c9fd02cc079c0ca0d30688d06de8bf22d",
+      "ring": "e58fa6"
+    },
+    "dng_rune_snurre": {
+      "file": "dng_rune_snurre.webp",
+      "rarity": "unique",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_rune_snurre.png",
+      "source_sha256": "6c3a9b7bff2ec0ca65b7c81c3f559741b25c956dd8c6a3c611eec4e16aedea6c",
+      "ring": "e58fa6"
+    },
+    "gem_dewdrop": {
+      "file": "gem_dewdrop.webp",
+      "rarity": "unique",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_dewdrop.png",
+      "source_sha256": "43dc79ec5f64cd8ea1a52070b99273e2a7755e078cd3c2f7e78c224b23abed65",
+      "ring": "e58fa6"
+    },
+    "gem_fairy_tear": {
+      "file": "gem_fairy_tear.webp",
+      "rarity": "rare",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_fairy_tear.png",
+      "source_sha256": "6cf50646d2032d8d9ef5c84505b2408a53cf01f84bfb99bc136671aafefd0175",
+      "ring": "9b86d6"
+    },
+    "gem_forest_jade": {
+      "file": "gem_forest_jade.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_forest_jade.png",
+      "source_sha256": "9b4e60329162ea944cd6c1f5930faf73c01fedc5dc07d6bd8dfc926834cd876d",
+      "ring": "2b2340"
+    },
+    "gem_moon_heart": {
+      "file": "gem_moon_heart.webp",
+      "rarity": "legendary",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_moon_heart.png",
+      "source_sha256": "79ca211f4f4920fc3e281f3309711b2833f4d83560304c53bcf5cc1ea48205a3",
+      "ring": "a9d3e0",
+      "night": "gem_moon_heart_night.webp"
+    },
+    "gem_moss_agate": {
+      "file": "gem_moss_agate.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_moss_agate.png",
+      "source_sha256": "c0a35320b1fd9e8d805322ffa53dfea48968322c9911142c5e3f4fa58545f048",
+      "ring": "2b2340"
+    },
+    "gem_mushroom_opal": {
+      "file": "gem_mushroom_opal.webp",
+      "rarity": "uncommon",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_mushroom_opal.png",
+      "source_sha256": "8acab1c548b38a0995d43517bb2a7118c3b4fd57d9a213e1b69883e51f4bc25a",
+      "ring": "6b9a3e"
+    },
+    "gem_night_sapphire": {
+      "file": "gem_night_sapphire.webp",
+      "rarity": "rare",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_night_sapphire.png",
+      "source_sha256": "5a5731041efb1cf7d4bbbd062c2bdd3eb2b78e16cc9287158caad233c5953c8c",
+      "ring": "9b86d6"
+    },
+    "gem_owl_eye": {
+      "file": "gem_owl_eye.webp",
+      "rarity": "unique",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_owl_eye.png",
+      "source_sha256": "c35eaca0082cd73c5c439141461ef443a631c08b75de69960b35a5adf7f1707a",
+      "ring": "e58fa6"
+    },
+    "gem_rock_crystal": {
+      "file": "gem_rock_crystal.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_rock_crystal.png",
+      "source_sha256": "5cb55273a80d18f144d5d6735aad5f264595458478f182bf2dbe71d7cb4bc9ad",
+      "ring": "2b2340"
+    },
+    "gem_rune_heart": {
+      "file": "gem_rune_heart.webp",
+      "rarity": "legendary",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_rune_heart.png",
+      "source_sha256": "0cc3854dd7eba5aed6d38f22f12b3865ca624dd6a3447fd37ba9e035756c831b",
+      "ring": "a9d3e0",
+      "night": "gem_rune_heart_night.webp"
+    },
+    "gem_smoky_quartz": {
+      "file": "gem_smoky_quartz.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_smoky_quartz.png",
+      "source_sha256": "90df7f58bfdeb587d4733f0a5c70d6c50f001196ffccfeab5dfd12f8c3235371",
+      "ring": "2b2340"
+    },
+    "gem_star_tear": {
+      "file": "gem_star_tear.webp",
+      "rarity": "legendary",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_star_tear.png",
+      "source_sha256": "dbca624c47ba44c79ba872d7299913455bb53e1acaf9b70852954a831e984d61",
+      "ring": "a9d3e0",
+      "night": "gem_star_tear_night.webp"
+    },
+    "gem_sunset_stone": {
+      "file": "gem_sunset_stone.webp",
+      "rarity": "unique",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_sunset_stone.png",
+      "source_sha256": "67a49e0507bfa231c3c350375b5aa183fc0df0781d10b0782421f338ced47144",
+      "ring": "e58fa6"
+    },
+    "gem_thornberry_stone": {
+      "file": "gem_thornberry_stone.webp",
+      "rarity": "uncommon",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_thornberry_stone.png",
+      "source_sha256": "ecf1d74b34342c4000675ea15503060340d2afe49cbc89a0a19cee0c7505c5e3",
+      "ring": "6b9a3e"
+    },
+    "rough_dybe_bregner": {
+      "file": "rough_dybe_bregner.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_icons/rough_dybe_bregner.png",
+      "source_sha256": "9ece6acadfa71123479dfa5baddb00361e99f0cfda2ff44f12ae140842b86045",
+      "ring": "2b2340"
+    },
+    "rough_krystalgrotten": {
+      "file": "rough_krystalgrotten.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_icons/rough_krystalgrotten.png",
+      "source_sha256": "7f0041e4bf7db11ec7e4e52b26d636807ce657b01788bc585d8928d755341f6c",
+      "ring": "2b2340"
+    },
+    "rough_skovkant": {
+      "file": "rough_skovkant.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_icons/rough_skovkant.png",
+      "source_sha256": "a36fdba2145d0801aded9e4df435b76a545d8297eae3da171469df14cad7cf45",
+      "ring": "2b2340"
+    },
+    "rough_svampelunden": {
+      "file": "rough_svampelunden.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_icons/rough_svampelunden.png",
+      "source_sha256": "b54058e6bdd48585719b2413b508093a2c64874b88c1148258f6a2d5ade6a5fd",
+      "ring": "2b2340"
+    },
+    "wpn_club_mushroom": {
+      "file": "wpn_club_mushroom.webp",
+      "rarity": "rare",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_club_mushroom.png",
+      "source_sha256": "832e0fdf1003edf9ea7e1fb4a92c0fdcd4a2b1aa6cc08e8f4b7af8360fb19938",
+      "ring": "9b86d6"
+    },
+    "wpn_club_oak": {
+      "file": "wpn_club_oak.webp",
+      "rarity": "uncommon",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_club_oak.png",
+      "source_sha256": "962dc9cefa433156069831d3aa230568319d9db2038c341b01b979cf593c8f7b",
+      "ring": "6b9a3e"
+    },
+    "wpn_club_spruce": {
+      "file": "wpn_club_spruce.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_club_spruce.png",
+      "source_sha256": "56dad61114cd3407bbb0b68fc9a7e6057b3c04e9846c412419347b1ce2f1fff8",
+      "ring": "2b2340"
+    },
+    "wpn_club_thornberry": {
+      "file": "wpn_club_thornberry.webp",
+      "rarity": "unique",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_club_thornberry.png",
+      "source_sha256": "042de1da05d76a7e04f6641f78f35ca8247443b08b1fc60a9b462a8fab490034",
+      "ring": "e58fa6"
+    },
+    "wpn_club_trunk": {
+      "file": "wpn_club_trunk.webp",
+      "rarity": "legendary",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_club_trunk.png",
+      "source_sha256": "261f85bac84f7b6e1fbf7a488544285f49769d565d385f65e87436d5bf198505",
+      "ring": "a9d3e0",
+      "night": "wpn_club_trunk_night.webp"
+    },
+    "wpn_dagger_bee": {
+      "file": "wpn_dagger_bee.webp",
+      "rarity": "unique",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_dagger_bee.png",
+      "source_sha256": "f5d92e4a6355553b567aa0277ad9533cb5b0a9ea0739b6a2d81f9d7278bae9fe",
+      "ring": "e58fa6"
+    },
+    "wpn_dagger_flint": {
+      "file": "wpn_dagger_flint.webp",
+      "rarity": "uncommon",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_dagger_flint.png",
+      "source_sha256": "fb985cfb737f8ef72510175fa67bc701c987e62d2ce31922d7897d6c9342a8df",
+      "ring": "6b9a3e"
+    },
+    "wpn_dagger_moonshard": {
+      "file": "wpn_dagger_moonshard.webp",
+      "rarity": "rare",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_dagger_moonshard.png",
+      "source_sha256": "7e91c4ad7ff6c3efc2db762f02390df45a55f3878af9665912c5cd07ee5b2b39",
+      "ring": "9b86d6"
+    },
+    "wpn_dagger_thorn": {
+      "file": "wpn_dagger_thorn.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_dagger_thorn.png",
+      "source_sha256": "b3b876d1f5d46adbb423d5bda6f7921c71c827da9520ccc1905e35181070c401",
+      "ring": "2b2340"
+    },
+    "wpn_spear_iron": {
+      "file": "wpn_spear_iron.webp",
+      "rarity": "uncommon",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_spear_iron.png",
+      "source_sha256": "df33719a72354d076d4295329a31a51a25f5e4cc8b653fcd4aff58760de7fd60",
+      "ring": "6b9a3e"
+    },
+    "wpn_spear_owl": {
+      "file": "wpn_spear_owl.webp",
+      "rarity": "unique",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_spear_owl.png",
+      "source_sha256": "4ea7efc3d4ceaad66f230513652ba18747180ea7af4a1fdd4089aefa10cf4813",
+      "ring": "e58fa6"
+    },
+    "wpn_spear_root": {
+      "file": "wpn_spear_root.webp",
+      "rarity": "legendary",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_spear_root.png",
+      "source_sha256": "acd36e3a5b6490de5752a401edf38497c75afc88c8401a40648cfd8fb2a45344",
+      "ring": "a9d3e0",
+      "night": "wpn_spear_root_night.webp"
+    },
+    "wpn_spear_thistle": {
+      "file": "wpn_spear_thistle.webp",
+      "rarity": "rare",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_spear_thistle.png",
+      "source_sha256": "fd0d38029d7ca9284656f0c999abcbeae83ab81b469440d4239fa5da6d825287",
+      "ring": "9b86d6"
+    },
+    "wpn_spear_twig": {
+      "file": "wpn_spear_twig.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_spear_twig.png",
+      "source_sha256": "f7ffa086d270e680c2bf3aac5ccfe1d11c6ef35d3344de614c7b7e5196d4e585",
+      "ring": "2b2340"
+    },
+    "wpn_staff_branch": {
+      "file": "wpn_staff_branch.webp",
+      "rarity": "normal",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_staff_branch.png",
+      "source_sha256": "48ed85f28c107834b88d7809338238d81e2b2b07e19e5cfa4c04fc55dc137d1e",
+      "ring": "2b2340"
+    },
+    "wpn_staff_ember": {
+      "file": "wpn_staff_ember.webp",
+      "rarity": "unique",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_staff_ember.png",
+      "source_sha256": "e8a6989e80d8a9ce4048f208750968ef70bd6c309d5fc752954f80d663011b27",
+      "ring": "e58fa6"
+    },
+    "wpn_staff_hazel": {
+      "file": "wpn_staff_hazel.webp",
+      "rarity": "uncommon",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_staff_hazel.png",
+      "source_sha256": "c5d48d8e1f24a5da6a34d9a2cf1c6166f627ee5c6796bd030e80fc25c7ae1028",
+      "ring": "6b9a3e"
+    },
+    "wpn_staff_light": {
+      "file": "wpn_staff_light.webp",
+      "rarity": "rare",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_staff_light.png",
+      "source_sha256": "5bc692e06cdd23f86d9ae03cbbc5ef840a43ef0529520266d187d276d6a91402",
+      "ring": "9b86d6"
+    },
+    "wpn_staff_star": {
+      "file": "wpn_staff_star.webp",
+      "rarity": "legendary",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_staff_star.png",
+      "source_sha256": "2f0133272cf4dbd589055760fe5a42be5701b6a5a0b81c0a1c3a8b953c4df781",
+      "ring": "a9d3e0",
+      "night": "wpn_staff_star_night.webp"
+    },
+    "wpn_sword_candle": {
+      "file": "wpn_sword_candle.webp",
+      "rarity": "unique",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_sword_candle.png",
+      "source_sha256": "594e4a3cec56288d88b1998332a11d2333c3de35493b7ab69e4cc8978cf5bd33",
+      "ring": "e58fa6"
+    },
+    "wpn_sword_forest_steel": {
+      "file": "wpn_sword_forest_steel.webp",
+      "rarity": "rare",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_sword_forest_steel.png",
+      "source_sha256": "3b7dc8be5d6371417fd5fed3e24b704b7a8348fd240b08bdd0ca09e72731c53f",
+      "ring": "9b86d6"
+    },
+    "wpn_sword_moon": {
+      "file": "wpn_sword_moon.webp",
+      "rarity": "legendary",
+      "source": "tools/art/drawn/sources/dungeon_weapons/wpn_sword_moon.png",
+      "source_sha256": "6062c590ccbe5a489ba91b3f8345cdc2460e20870992ce541c2541423238fa02",
+      "ring": "a9d3e0",
+      "night": "wpn_sword_moon_night.webp"
+    }
+  }
+}

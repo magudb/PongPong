@@ -1,0 +1,152 @@
+{
+  "tool": "built-in imagegen",
+  "completed": 29,
+  "expected": 29,
+  "sources": [
+    {
+      "id": "rough_skovkant",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-2244873c-3697-4cfb-b780-3db0b96b1bd8.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/rough_skovkant.png"
+    },
+    {
+      "id": "rough_dybe_bregner",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-d8a01ca3-c317-4ada-b767-97ebf394fdc2.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/rough_dybe_bregner.png"
+    },
+    {
+      "id": "rough_svampelunden",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-a3444606-5095-4cd5-b089-f3fa24518f1b.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/rough_svampelunden.png"
+    },
+    {
+      "id": "rough_krystalgrotten",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-f0d9a3d6-2ecc-4dc6-924d-b42034dfbbe1.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/rough_krystalgrotten.png"
+    },
+    {
+      "id": "gem_rock_crystal",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-c3be94dc-c44a-49ed-afbe-576dfec005cb.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_rock_crystal.png"
+    },
+    {
+      "id": "gem_smoky_quartz",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-5ecb27e7-99dd-4ad3-818f-189fe9de738a.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_smoky_quartz.png"
+    },
+    {
+      "id": "gem_moss_agate",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-38f20656-28f1-43a9-9fd9-1c64759d2012.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_moss_agate.png"
+    },
+    {
+      "id": "gem_forest_jade",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-fd21ba90-ccc9-4d3a-9aa0-fb11af502ba7.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_forest_jade.png"
+    },
+    {
+      "id": "gem_thornberry_stone",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-d6e16fb6-cc06-4c95-9e7d-724375179a56.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_thornberry_stone.png"
+    },
+    {
+      "id": "gem_mushroom_opal",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-c093efba-2a4e-4d6e-8aa7-e53d6fba8f7f.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_mushroom_opal.png"
+    },
+    {
+      "id": "gem_night_sapphire",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-22a2be2b-52a0-47f7-8325-2ebdf22cd793.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_night_sapphire.png"
+    },
+    {
+      "id": "gem_fairy_tear",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-c3304d40-d0ec-41ff-bd5c-27a806c97836.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_fairy_tear.png"
+    },
+    {
+      "id": "gem_owl_eye",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-05256ced-f9e5-46e2-ba0b-015c02b6a197.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_owl_eye.png"
+    },
+    {
+      "id": "gem_dewdrop",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-b9d5a7c6-33af-422e-9e7b-c17c033d649d.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_dewdrop.png"
+    },
+    {
+      "id": "gem_sunset_stone",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-a3f7b1b5-bb4c-4782-b4f5-975b5881e6dd.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_sunset_stone.png"
+    },
+    {
+      "id": "gem_star_tear",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-c51e2d83-27d1-4945-9b54-835cd950d130.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_star_tear.png"
+    },
+    {
+      "id": "gem_moon_heart",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-257d64de-ed93-4a3e-97f2-7e1e0ca6a6b2.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_moon_heart.png"
+    },
+    {
+      "id": "gem_rune_heart",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-d32514b0-9cf7-491f-a5c7-a300b095f753.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/gem_rune_heart.png"
+    },
+    {
+      "id": "dng_resin",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-5ec6114d-617b-480a-a1a3-25ca78155c09.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_resin.png"
+    },
+    {
+      "id": "dng_mushroom_felt",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-b21dd5bb-acf4-40d0-9811-e41a7f278fd4.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_mushroom_felt.png"
+    },
+    {
+      "id": "dng_forest_thread",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-7e10b6d9-8c03-4047-9f07-73310aede943.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_forest_thread.png"
+    },
+    {
+      "id": "dng_forest_steel",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-b6bd9032-a79a-4e2f-b816-d2cf6413170b.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_forest_steel.png"
+    },
+    {
+      "id": "dng_glimmer_dust",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-ab3feac2-5e97-4c30-a6bb-f967c62bbc56.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_glimmer_dust.png"
+    },
+    {
+      "id": "dng_owl_feather",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-f04a30ab-f51d-4feb-b212-dbd6438386d9.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_owl_feather.png"
+    },
+    {
+      "id": "dng_moon_silver",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-c6a84c04-3142-40ce-9c32-67e0e6f647a4.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_moon_silver.png"
+    },
+    {
+      "id": "dng_crystal_root",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-531d2be3-c25d-4371-9a9c-69fe755fa3a5.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_crystal_root.png"
+    },
+    {
+      "id": "dng_rune_snurre",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-0d8c21e1-5787-43a0-b2e4-af64c50ce680.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_rune_snurre.png"
+    },
+    {
+      "id": "dng_rune_gloed",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-a3b0e5a4-c398-43ee-9ebd-f2c5414ce3d8.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_rune_gloed.png"
+    },
+    {
+      "id": "dng_rune_konge",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-23076b33-ea0f-4ab9-9449-ed2f8ecf5cec.png",
+      "source": "tools/art/drawn/sources/dungeon_icons/dng_rune_konge.png"
+    }
+  ]
+}
