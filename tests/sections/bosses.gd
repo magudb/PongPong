@@ -76,9 +76,10 @@ func _run(t, native: bool) -> void:
 			await t.seconds(1.1)
 			t.check("saturated_sequence_waits_without_damage",not sequence.rows[0].get("marked",false) and not sequence.rows[0].get("hit",false))
 			warnings[0].finish()
-			await t.frames(2)
+			await t.physics(2) # warning acquisition is physics-driven
 			var mark: Dictionary = sequence.rows[0]
 			t.check("deferred_sequence_gets_full_warning",bool(mark.get("marked",false)) and float(mark.get("impact_at",0))-sequence.clock>.9 and not mark.get("hit",false))
+			var ring_ref: WeakRef = mark.get("ring")
 			var clock_before := sequence.clock
 			var hazard := EnemyHazard2D.new()
 			hazard.mode = "impact"
@@ -87,7 +88,7 @@ func _run(t, native: bool) -> void:
 			var hearts: int = world.player.half_hearts
 			GameManager.push_modal(&"combat_probe",false)
 			await t.seconds(.5)
-			t.check("nonpausing_dialogue_freezes_sequence_and_hazard",is_equal_approx(sequence.clock,clock_before) and is_equal_approx(hazard.age,0) and world.player.half_hearts==hearts and mark.ring.get_ref().active)
+			t.check("nonpausing_dialogue_freezes_sequence_and_hazard",is_equal_approx(sequence.clock,clock_before) and is_equal_approx(hazard.age,0) and world.player.half_hearts==hearts and ring_ref!=null and ring_ref.get_ref()!=null and ring_ref.get_ref().active)
 			GameManager.pop_modal(&"combat_probe")
 			hazard.queue_free()
 			await t.seconds(.5)

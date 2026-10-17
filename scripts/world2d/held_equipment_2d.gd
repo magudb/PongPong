@@ -28,6 +28,15 @@ static func manifest() -> Dictionary:
 			_data.items.merge(extra.get("items",{}),false)
 	return _data
 
+## Reuse a live painting without retaining every weapon ever previewed.
+static func painting_texture(path: String) -> Texture2D:
+	if _paintings.has(path):
+		var cached: Variant = TextureRefs.fetch(_paintings[path])
+		if cached is Texture2D:return cached
+	var texture := load(path) as Texture2D
+	_paintings[path] = TextureRefs.store(texture)
+	return texture
+
 func _ready() -> void:
 	player = get_parent() as Player2D
 	clock = player.visual if player != null else get_parent() as IsoChibiSprite2D
@@ -90,8 +99,7 @@ func sync_pose() -> void:
 	var art: Dictionary = data.items[str(item_id)]
 	var painting := str(art.get("atlas",""))
 	if painting != "":
-		if not _paintings.has(painting): _paintings[painting] = load(painting)
-		tool.texture = _paintings[painting]
+		tool.texture = painting_texture(painting)
 	else: tool.texture = PAINTING
 	var view: Dictionary = art.views[direction]
 	var target := rear if str(pose.depth) == "rear" else front

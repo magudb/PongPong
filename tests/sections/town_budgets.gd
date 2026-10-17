@@ -27,6 +27,24 @@ func lights(node: Node) -> int:
 	return total
 
 func run(t) -> void:
+	# Browsing inventory/equipment must not pin every previously shown image.
+	var icon := TTItemIcon.new()
+	icon.item_id = &"wpn_dagger_moonshard"
+	t.root.add_child(icon)
+	var icon_ref: WeakRef = weakref(icon._tex)
+	var shared := TTItemIcon.load_icon(icon.item_id)
+	t.check("visible_icon_shares_live_texture",icon._tex!=null and is_same(icon._tex,shared.tex))
+	shared.clear()
+	icon.free()
+	t.check("closed_icon_releases_texture",icon_ref.get_ref()==null)
+	var painting := HeldEquipment2D.painting_texture("res://assets/held_equipment/dungeon/wpn_club_oak.webp")
+	var painting_ref: WeakRef = weakref(painting)
+	var holder := Sprite2D.new()
+	holder.texture = painting
+	painting = null
+	t.check("visible_weapon_owns_texture",painting_ref.get_ref()!=null)
+	holder.free()
+	t.check("closed_weapon_preview_releases_texture",painting_ref.get_ref()==null)
 	await t.start_world()
 	var world: WorldRoot2D = t.world()
 	var gm: Node = t.autoload("GameManager")
@@ -208,6 +226,7 @@ func run_windowed(t) -> void:
 	gm.set_config_override("time.minutes_per_real_second",0.0)
 	gm.set_config_override("towns.curfew.enabled",false)
 	await LoopClock.at(t,1,10)
+	TimeManager.set_weather(&"regn") # Pin the more demanding ordinary-weather fixture.
 	var cap := Perf.uncap()
 	for row in [["int_froebutikken",4.0,60,0.7],["hyggebyen",4.0,0,0.0],["traetoppen",6.0,250,0.8],["farm",8.0,560,0.0]]:
 		var begin := Time.get_ticks_usec()
@@ -267,6 +286,7 @@ func run_windowed(t) -> void:
 			var area_calls := await _area_calls(t) if row[0] in ["int_froebutikken","farm"] else calls
 			t.check(row[0]+"_draw_calls",area_calls<=int(row[2]),"%.0f area / %.0f including HUD" % [area_calls,calls])
 		measurements[row[0]]={"frame":frames,"frame_windows":windows,"draw_calls":calls,"travel_profile":t.world().last_travel_profile,"travel_ms":travel_ms,"texture_mb":Performance.get_monitor(Performance.RENDER_TEXTURE_MEM_USED)/MB}
+		if row[0]=="hyggebyen":await _ground_batch_pixels(t)
 		if row[0]=="farm":
 			for zoom in [0.3,0.2]:
 				_zoom(t,zoom)
@@ -322,6 +342,41 @@ func run_windowed(t) -> void:
 	var file := FileAccess.open(t.out_dir.path_join("town-budgets-native-details.json"),FileAccess.WRITE)
 	file.store_string(JSON.stringify(measurements,"\t"))
 	gm.clear_config_overrides()
+
+func _ground_batch_pixels(t) -> void:
+	# Only subpixel blending at batch boundaries may differ; a gap or changed
+	# tile must fail. Keep both full native images for visual review.
+	var world: WorldRoot2D = t.world()
+	var ground := world.area.ground
+	var saved := []
+	t.tree.paused=true
+	for child in world.area.get_children():
+		if child is CanvasItem and child!=ground:
+			saved.append([child,child.visible])
+			child.hide()
+	world.weather_fx.hide()
+	world.game_ui.hide()
+	ground.rendering_quadrant_size=16
+	await t.frames(4)
+	var before: Image = await t.capture("hyggebyen_ground_quadrant_16")
+	ground.rendering_quadrant_size=8
+	await t.frames(4)
+	var after: Image = await t.capture("hyggebyen_ground_quadrant_8")
+	var a := before.get_data()
+	var b := after.get_data()
+	var total := 0
+	var maximum := 0
+	for i in a.size():
+		var difference := absi(int(a[i])-int(b[i]))
+		total += difference
+		maximum=maxi(maximum,difference)
+	var mean := float(total)/a.size()
+	measurements.ground_batch_pixels={"mean_8bit":mean,"max_8bit":maximum,"mean_limit":.001,"max_limit":16}
+	t.check("ground_batch_preserves_painted_tiles",mean<=.001 and maximum<=16,str(measurements.ground_batch_pixels))
+	for row in saved:row[0].visible=row[1]
+	world.weather_fx.show()
+	world.game_ui.show()
+	t.tree.paused=false
 
 func _renderer_arithmetic(t, paths: Array[String], label: String) -> Dictionary:
 	await t.frames(4)

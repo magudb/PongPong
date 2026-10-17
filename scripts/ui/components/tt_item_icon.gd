@@ -34,7 +34,7 @@ const INK := Color("#2b2340")
 const MONO := preload("res://assets/fonts/IBMPlexMono-Regular.ttf")
 const DISPLAY := preload("res://assets/fonts/Caprasimo-Regular.ttf")
 
-## "id|rarity" -> {tex: Texture2D or null, path: String, night: bool}
+## "id|rarity" -> metadata with weak texture references; visible controls own residency.
 static var _cache: Dictionary = {}
 
 @export var item_id: StringName = &"":
@@ -130,11 +130,13 @@ static func _is_plain_id(sid: String) -> bool:
 static func load_icon(id: Variant, rarity_id: Variant = &"normal") -> Dictionary:
 	var key := "%s|%s" % [str(id), str(Rarity.normalize(rarity_id))]
 	if _cache.has(key):
-		return _cache[key]
+		var cached: Variant = TextureRefs.fetch(_cache[key])
+		if cached is Dictionary:
+			return cached
 	var r := resolve(id, rarity_id)
 	var tex: Texture2D = load(str(r["path"])) as Texture2D if str(r["path"]) != "" else null
 	var entry := {"tex": tex, "path": r["path"], "night": r["night"]}
-	_cache[key] = entry
+	_cache[key] = TextureRefs.store(entry)
 	return entry
 
 
