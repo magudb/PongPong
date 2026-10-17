@@ -1,0 +1,79 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=windowed character=hobbit sections=res://tests/sections only=wardrobe_ui
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.nkEPSK/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-clothing-fit/docs/qa/clothing-fit/final-hobbit
+== section wardrobe_ui [windowed]  (res://tests/sections/wardrobe_ui.gd)
+  ok    wardrobe_ui.screen_and_live_presenter_available
+  ok    wardrobe_ui.all_96_pieces_fit_all_eight_bodies
+  ok    wardrobe_ui.opens_paused_with_live_preview
+  ok    wardrobe_ui.try_on_is_local_and_resolves_exclusions
+  ok    wardrobe_ui.closing_cancels_uncommitted_try_on
+  ok    wardrobe_ui.independent_slot_fixture_owns_all_three_pieces
+  ok    wardrobe_ui.hat_shoes_and_body_try_ons_survive_category_changes
+  ok    wardrobe_ui.equipping_body_changes_only_body_slot
+  ok    wardrobe_ui.other_try_ons_remain_local_after_equipping_body
+  ok    wardrobe_ui.shoe_swap_preserves_hat_body_and_trousers
+  ok    wardrobe_ui.shoe_swap_keeps_unchanged_world_sprites_and_materials
+  ok    wardrobe_ui.remove_updates_preview_without_putting_piece_back
+  ok    wardrobe_ui.dress_explains_its_slot_replacement
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-clothing-fit/docs/qa/clothing-fit/final-hobbit/wardrobe_ui_independent_slots_hobbit_pip.png (1280x720)
+  ok    wardrobe_ui.equip_button_commits_one_complete_dress
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-clothing-fit/docs/qa/clothing-fit/final-hobbit/wardrobe_ui_dress_hobbit_pip.png (1280x720)
+  ok    wardrobe_ui.preview_rotates_and_walks
+  ok    wardrobe_ui.unowned_piece_can_be_tried_but_not_equipped
+  ok    wardrobe_ui.remove_button_reveals_base_and_keeps_ownership
+  ok    wardrobe_ui.screen_saves_worn_outfit
+  ok    wardrobe_ui.screen_restores_outfit
+  ok    wardrobe_ui.hands_preview_uses_same_attachment_presenter
+  ok    wardrobe_ui.weapon_try_on_does_not_change_equipment
+  ok    wardrobe_ui.hands_tab_changes_real_weapon_owner
+  ok    wardrobe_ui.hands_tab_assigns_existing_hotbar
+  ok    wardrobe_ui.hands_tab_selects_ready_tool
+  ok    wardrobe_ui.hands_tab_clears_selected_slot
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-clothing-fit/docs/qa/clothing-fit/final-hobbit/wardrobe_ui_hands_hobbit_pip.png (1280x720)
+  ok    wardrobe_ui.closing_releases_pause_and_preview
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-clothing-fit/docs/qa/clothing-fit/final-hobbit/wardrobe_ui_world_hobbit_pip.png (1280x720)
+  ok    wardrobe_ui.real_save_with_clothes_and_loadout
+  ok    wardrobe_ui.real_load_rebuilds_world
+  ok    wardrobe_ui.clothing_equipment_presets_and_hotbar_survive_load
+  ok    wardrobe_ui.screen_and_live_presenter_available
+  ok    wardrobe_ui.all_96_pieces_fit_all_eight_bodies
+  ok    wardrobe_ui.opens_paused_with_live_preview
+  ok    wardrobe_ui.try_on_is_local_and_resolves_exclusions
+  ok    wardrobe_ui.closing_cancels_uncommitted_try_on
+  ok    wardrobe_ui.independent_slot_fixture_owns_all_three_pieces
+  ok    wardrobe_ui.hat_shoes_and_body_try_ons_survive_category_changes
+  ok    wardrobe_ui.equipping_body_changes_only_body_slot
+  ok    wardrobe_ui.other_try_ons_remain_local_after_equipping_body
+  ok    wardrobe_ui.shoe_swap_preserves_hat_body_and_trousers
+  ok    wardrobe_ui.shoe_swap_keeps_unchanged_world_sprites_and_materials
+  ok    wardrobe_ui.remove_updates_preview_without_putting_piece_back
+  ok    wardrobe_ui.dress_explains_its_slot_replacement
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-clothing-fit/docs/qa/clothing-fit/final-hobbit/wardrobe_ui_independent_slots_hobbit_bodil.png (1280x720)
+  ok    wardrobe_ui.equip_button_commits_one_complete_dress
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-clothing-fit/docs/qa/clothing-fit/final-hobbit/wardrobe_ui_dress_hobbit_bodil.png (1280x720)
+  ok    wardrobe_ui.preview_rotates_and_walks
+  ok    wardrobe_ui.unowned_piece_can_be_tried_but_not_equipped
+  ok    wardrobe_ui.remove_button_reveals_base_and_keeps_ownership
+  ok    wardrobe_ui.screen_saves_worn_outfit
+  ok    wardrobe_ui.screen_restores_outfit
+  ok    wardrobe_ui.hands_preview_uses_same_attachment_presenter
+  ok    wardrobe_ui.weapon_try_on_does_not_change_equipment
+  ok    wardrobe_ui.hands_tab_changes_real_weapon_owner
+  ok    wardrobe_ui.hands_tab_assigns_existing_hotbar
+  ok    wardrobe_ui.hands_tab_selects_ready_tool
+  ok    wardrobe_ui.hands_tab_clears_selected_slot
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-clothing-fit/docs/qa/clothing-fit/final-hobbit/wardrobe_ui_hands_hobbit_bodil.png (1280x720)
+  ok    wardrobe_ui.closing_releases_pause_and_preview
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-clothing-fit/docs/qa/clothing-fit/final-hobbit/wardrobe_ui_world_hobbit_bodil.png (1280x720)
+  ok    wardrobe_ui.real_save_with_clothes_and_loadout
+  ok    wardrobe_ui.real_load_rebuilds_world
+  ok    wardrobe_ui.clothing_equipment_presets_and_hotbar_survive_load
+  --    wardrobe_ui: 58 checks, 0 failed, 0 skipped, 3.7 s
+== summary: 1 section(s) run, 58 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 9.0 s
+PLAYTEST PASS (58 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

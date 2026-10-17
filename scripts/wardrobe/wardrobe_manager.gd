@@ -58,8 +58,8 @@ func outfit() -> Dictionary:
 	return equipped.duplicate()
 
 ## Resolve the entire change before publishing. Displaced pieces stay owned.
-func preview_equipping(id: Variant, previous: Dictionary = {}) -> Dictionary:
-	var next := equipped.duplicate() if previous.is_empty() else previous.duplicate()
+func preview_equipping(id: Variant, previous: Dictionary) -> Dictionary:
+	var next := previous.duplicate()
 	var slot := slot_of(id)
 	if slot == "":
 		return next
@@ -76,7 +76,7 @@ func equip(id: Variant) -> bool:
 	var slot := slot_of(id)
 	if slot == "" or count_total(id) == 0:
 		return false
-	var next := preview_equipping(id)
+	var next := preview_equipping(id, equipped)
 	if next == equipped:
 		return true
 	equipped = next
@@ -107,15 +107,12 @@ func load_preset(key: String) -> Dictionary:
 	for slot in presets[key]:
 		var id := str(presets[key][slot])
 		if count_total(id) > 0 and slot_of(id) == str(slot):
-			next = preview_equipping(id, next) if not next.is_empty() else _single(id)
+			next = preview_equipping(id, next)
 		else:
 			missing.append(id)
 	equipped = next
 	_publish()
 	return {"ok": true, "missing": missing}
-
-func _single(id: Variant) -> Dictionary:
-	return {slot_of(id): str(id)}
 
 func set_bonuses() -> Array:
 	var result: Array = []
@@ -156,7 +153,7 @@ func reset() -> void:
 		if slot_of(id) != "":
 			owned[id] = 1
 	for id in LuaData.strings(kit.get("worn", [])):
-		equipped = preview_equipping(id)
+		equipped = preview_equipping(id, equipped)
 	_publish()
 	owned_changed.emit()
 	presets_changed.emit()
@@ -192,7 +189,7 @@ func _valid_outfit(raw: Dictionary, require_owned: bool) -> Dictionary:
 	for slot in slots():
 		var id := str(raw.get(slot, ""))
 		if id != "" and slot_of(id) == str(slot) and (not require_owned or count_total(id) > 0):
-			next = preview_equipping(id, next) if not next.is_empty() else _single(id)
+			next = preview_equipping(id, next)
 	return next
 
 func _publish() -> void:

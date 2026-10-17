@@ -1,0 +1,256 @@
+{
+  "version": 1,
+  "directions": [
+    "S",
+    "SW",
+    "W",
+    "NW",
+    "N",
+    "NE",
+    "E",
+    "SE"
+  ],
+  "note": "Canonical painted-body landmarks, before the shared animation field. Independent from sprite bounds, tails and wings.",
+  "bodies": {
+    "fox": {
+      "centers": [
+        111,
+        112,
+        116,
+        120,
+        145,
+        144,
+        140,
+        144
+      ],
+      "head_centers": [
+        111,
+        108,
+        105,
+        112,
+        145,
+        148,
+        151,
+        148
+      ],
+      "neck": 149,
+      "waist": 182,
+      "ankle": 198,
+      "shoulders": 92,
+      "hips": 72,
+      "feet": 76,
+      "foot_y": 189,
+      "drop": 8
+    },
+    "monkey": {
+      "centers": [
+        120,
+        116,
+        130,
+        123,
+        136,
+        140,
+        126,
+        140
+      ],
+      "head_centers": [
+        120,
+        116,
+        124,
+        119,
+        136,
+        140,
+        132,
+        140
+      ],
+      "neck": 145,
+      "waist": 181,
+      "ankle": 198,
+      "shoulders": 91,
+      "hips": 64,
+      "feet": 65,
+      "foot_y": 188,
+      "drop": 9
+    },
+    "fairy": {
+      "centers": [
+        128,
+        123,
+        128,
+        132,
+        128,
+        124,
+        128,
+        133
+      ],
+      "head_centers": [
+        128,
+        122,
+        125,
+        131,
+        128,
+        125,
+        131,
+        134
+      ],
+      "neck": 136,
+      "waist": 165,
+      "ankle": 193,
+      "shoulders": 79,
+      "hips": 47,
+      "feet": 40,
+      "foot_y": 183,
+      "drop": 9
+    },
+    "fairy_birk": {
+      "centers": [
+        128,
+        126,
+        130,
+        130,
+        128,
+        126,
+        126,
+        130
+      ],
+      "head_centers": [
+        128,
+        125,
+        124,
+        130,
+        128,
+        126,
+        132,
+        131
+      ],
+      "neck": 118,
+      "waist": 154,
+      "ankle": 193,
+      "shoulders": 77,
+      "hips": 49,
+      "feet": 58,
+      "foot_y": 183,
+      "drop": 11
+    },
+    "hobbit_pip": {
+      "centers": [
+        128,
+        126,
+        129,
+        131,
+        128,
+        125,
+        127,
+        130
+      ],
+      "head_centers": [
+        128,
+        124,
+        125,
+        130,
+        128,
+        126,
+        131,
+        132
+      ],
+      "neck": 133,
+      "waist": 164,
+      "ankle": 193,
+      "shoulders": 84,
+      "hips": 51,
+      "feet": 49,
+      "foot_y": 184,
+      "drop": 10
+    },
+    "hobbit_bodil": {
+      "centers": [
+        128,
+        126,
+        129,
+        130,
+        128,
+        126,
+        127,
+        130
+      ],
+      "head_centers": [
+        128,
+        125,
+        126,
+        130,
+        128,
+        126,
+        130,
+        131
+      ],
+      "neck": 119,
+      "waist": 154,
+      "ankle": 193,
+      "shoulders": 83,
+      "hips": 51,
+      "feet": 47,
+      "foot_y": 183,
+      "drop": 11
+    },
+    "ghost_bu": {
+      "centers": [
+        128,
+        127,
+        133,
+        133,
+        128,
+        123,
+        123,
+        129
+      ],
+      "head_centers": [
+        128,
+        125,
+        126,
+        130,
+        128,
+        126,
+        130,
+        131
+      ],
+      "neck": 143,
+      "waist": 179,
+      "ankle": 194,
+      "shoulders": 85,
+      "hips": 76,
+      "feet": 79,
+      "foot_y": 188,
+      "drop": 0
+    },
+    "ghost_hviske": {
+      "centers": [
+        128,
+        127,
+        133,
+        133,
+        128,
+        123,
+        123,
+        129
+      ],
+      "head_centers": [
+        128,
+        125,
+        126,
+        130,
+        128,
+        126,
+        130,
+        131
+      ],
+      "neck": 143,
+      "waist": 179,
+      "ankle": 194,
+      "shoulders": 85,
+      "hips": 76,
+      "feet": 79,
+      "foot_y": 188,
+      "drop": 0
+    }
+  }
+}

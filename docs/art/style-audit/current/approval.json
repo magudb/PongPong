@@ -2,7 +2,7 @@
   "status": "reviewed",
   "worktree": "codex-review",
   "guideline": "docs/art/style-guide.txt",
-  "visual_reference": "docs/Tr\u00e6toppen Style Guide Review/Tr\u00e6toppen Style Guide.dc.html",
+  "visual_reference": "docs/Trætoppen Style Guide Review/Trætoppen Style Guide.dc.html",
   "scope": "All 5,171 assets inventoried; 2,518 rasters decoded. 255 new rasters and 311 changed rasters reviewed, including 285 painted historical re-exports, 20 rebuilt home day/night textures and six normalized prop pigment variants. 1,952 byte-identical rasters retain earlier review evidence. Thirteen radial light kernels remain functional masks. No historical illustration is exempted from the painted style. Stock animation sampling scope remains the prior all-clip middle-frame/eight-idle-direction/portrait review; this is not a new frame-by-frame review of 58 stock animation sets.",
   "reviewed_assets": {
     "assets/art/watercolor_paper.png": {
@@ -15510,11 +15510,11 @@
       "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
     },
     "assets/wardrobe/fairy/occluder.webp": {
-      "sha256": "6e772622557ee145747a01257f1f55084aa720ab9335c3c5fd3a1ef482f2923e",
+      "sha256": "ee7b5d26924842ab369a8d9fde2a3d34db4fcea34362c5c39cbb965a2cbb5054",
       "disposition": "technical-exception",
       "role": "technical-clothing-occlusion-mask",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Functional alpha occlusion mask; restores matching body pigment only at garment overlaps."
+      "evidence": "docs/qa/clothing-fit/REVIEW.md; native close-ups, four outfit turnarounds and walking sheets for fairy",
+      "reason": "Technical alpha mask only; actual head centres and front paws/skin/hair/wings/toes restored at fitted garment overlaps. Original character and garment paintings retained."
     },
     "assets/wardrobe/fairy/pants_breeches.webp": {
       "sha256": "933b2e4706939684dfb94730b71302dc6f2a2914d8daa50ba61b7c406eb51d10",
@@ -15734,11 +15734,11 @@
       "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
     },
     "assets/wardrobe/fairy_birk/occluder.webp": {
-      "sha256": "f08d27727cf34b7b3403b9db1a949f2a53269ec2c9c0acf3562f6406c3cb51a9",
+      "sha256": "41b06378c694fa72014f77343db76b3d0101c562e13301e50bc90f27171218a5",
       "disposition": "technical-exception",
       "role": "technical-clothing-occlusion-mask",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Functional alpha occlusion mask; restores matching body pigment only at garment overlaps."
+      "evidence": "docs/qa/clothing-fit/REVIEW.md; native close-ups, four outfit turnarounds and walking sheets for fairy_birk",
+      "reason": "Technical alpha mask only; actual head centres and front paws/skin/hair/wings/toes restored at fitted garment overlaps. Original character and garment paintings retained."
     },
     "assets/wardrobe/fairy_birk/pants_breeches.webp": {
       "sha256": "3424c97bcdce69b3cd771e5e4b447f048b6b133a867e01836ddb0df1447779d3",
@@ -15951,11 +15951,11 @@
       "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
     },
     "assets/wardrobe/fox/occluder.webp": {
-      "sha256": "b11e0f4d6a39c69de812af5914d9019d606003a3da18f8e562a0bd68b80b122f",
+      "sha256": "160551ea90ab2378b7f2f9fce98df81e6f87f06297eb7698a93eead21fd09d03",
       "disposition": "technical-exception",
       "role": "technical-clothing-occlusion-mask",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Functional alpha occlusion mask; restores matching body pigment only at garment overlaps."
+      "evidence": "docs/qa/clothing-fit/REVIEW.md; native close-ups, four outfit turnarounds and walking sheets for fox",
+      "reason": "Technical alpha mask only; actual head centres and front paws/skin/hair/wings/toes restored at fitted garment overlaps. Original character and garment paintings retained."
     },
     "assets/wardrobe/fox/pants_breeches.webp": {
       "sha256": "1028b2b0b8a429f5bbcc7fd0865cf78ef52ec8c4613f6504b98538b965f1c193",
@@ -16168,11 +16168,11 @@
       "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
     },
     "assets/wardrobe/ghost_bu/occluder.webp": {
-      "sha256": "664557c017efcb376a3c12ab8e8a645eae5b7b5438c29775bf34880ee062dd6a",
+      "sha256": "7d806a16e72eb7e1bd1d1a2fbddc28f646f9f92b0c821934029cda37e939ea33",
       "disposition": "technical-exception",
       "role": "technical-clothing-occlusion-mask",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Functional alpha occlusion mask; restores matching body pigment only at garment overlaps."
+      "evidence": "docs/qa/clothing-fit/REVIEW.md; native close-ups, four outfit turnarounds and walking sheets for ghost_bu",
+      "reason": "Technical alpha mask only; actual head centres and front paws/skin/hair/wings/toes restored at fitted garment overlaps. Original character and garment paintings retained."
     },
     "assets/wardrobe/ghost_bu/pants_breeches.webp": {
       "sha256": "a3a4a10bbacbaa2ddb7093ada4bd4b5a159b630ce2e01d5680db97908066cab3",
@@ -16385,11 +16385,11 @@
       "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
     },
     "assets/wardrobe/ghost_hviske/occluder.webp": {
-      "sha256": "664557c017efcb376a3c12ab8e8a645eae5b7b5438c29775bf34880ee062dd6a",
+      "sha256": "7d806a16e72eb7e1bd1d1a2fbddc28f646f9f92b0c821934029cda37e939ea33",
       "disposition": "technical-exception",
       "role": "technical-clothing-occlusion-mask",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Functional alpha occlusion mask; restores matching body pigment only at garment overlaps."
+      "evidence": "docs/qa/clothing-fit/REVIEW.md; native close-ups, four outfit turnarounds and walking sheets for ghost_hviske",
+      "reason": "Technical alpha mask only; actual head centres and front paws/skin/hair/wings/toes restored at fitted garment overlaps. Original character and garment paintings retained."
     },
     "assets/wardrobe/ghost_hviske/pants_breeches.webp": {
       "sha256": "a3a4a10bbacbaa2ddb7093ada4bd4b5a159b630ce2e01d5680db97908066cab3",
@@ -16609,11 +16609,11 @@
       "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
     },
     "assets/wardrobe/hobbit_bodil/occluder.webp": {
-      "sha256": "3216dae303fde8bc96083184f14a7b2cd8ecb119d481f21fdf33e57d1aebc8af",
+      "sha256": "f1bcf80b93e79fdf3f82ff89f2fd244a7537f29d31fa9dd90469637bb96a64bc",
       "disposition": "technical-exception",
       "role": "technical-clothing-occlusion-mask",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Functional alpha occlusion mask; restores matching body pigment only at garment overlaps."
+      "evidence": "docs/qa/clothing-fit/REVIEW.md; native close-ups, four outfit turnarounds and walking sheets for hobbit_bodil",
+      "reason": "Technical alpha mask only; actual head centres and front paws/skin/hair/wings/toes restored at fitted garment overlaps. Original character and garment paintings retained."
     },
     "assets/wardrobe/hobbit_bodil/pants_breeches.webp": {
       "sha256": "2a184ac9b986051d94733614650505550be0b8959a1c612e76796753c9e32c37",
@@ -16833,11 +16833,11 @@
       "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
     },
     "assets/wardrobe/hobbit_pip/occluder.webp": {
-      "sha256": "ef0464a60421ccf1f0e731953c183e57a3e78556a8075014503827600c919737",
+      "sha256": "e488edd1b3a97e12478e9671db14a3e3aa14bba848507e5a16dce7bd8fb2bfd7",
       "disposition": "technical-exception",
       "role": "technical-clothing-occlusion-mask",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Functional alpha occlusion mask; restores matching body pigment only at garment overlaps."
+      "evidence": "docs/qa/clothing-fit/REVIEW.md; native close-ups, four outfit turnarounds and walking sheets for hobbit_pip",
+      "reason": "Technical alpha mask only; actual head centres and front paws/skin/hair/wings/toes restored at fitted garment overlaps. Original character and garment paintings retained."
     },
     "assets/wardrobe/hobbit_pip/pants_breeches.webp": {
       "sha256": "c7b7fc62703f56e6ed9da891a21b8c90840e09d917895195741f445fe398f603",
@@ -17050,11 +17050,11 @@
       "reason": "Painted source pigment, warm ink and per-body proportions reviewed in actual Godot presentation."
     },
     "assets/wardrobe/monkey/occluder.webp": {
-      "sha256": "cb9c5701092fc6a955abe8767ece6f190cc12fadb82574203fcdd39470b0f477",
+      "sha256": "6bd4f1f36d71f0dadff36b4c87ac48188a3e2e51fc010d27e611c847ab0563f9",
       "disposition": "technical-exception",
       "role": "technical-clothing-occlusion-mask",
-      "evidence": "docs/qa/loadout/acceptance.json; native catalog and eight-direction mixed-outfit captures for all eight bodies; body-specific face/hands/wings/braids/toe review",
-      "reason": "Functional alpha occlusion mask; restores matching body pigment only at garment overlaps."
+      "evidence": "docs/qa/clothing-fit/REVIEW.md; native close-ups, four outfit turnarounds and walking sheets for monkey",
+      "reason": "Technical alpha mask only; actual head centres and front paws/skin/hair/wings/toes restored at fitted garment overlaps. Original character and garment paintings retained."
     },
     "assets/wardrobe/monkey/pants_breeches.webp": {
       "sha256": "2b00a664379999f9823f92f2314e85a91edf273ee685c9494339e663b6f2a645",
@@ -17878,5 +17878,14 @@
     "assets_added": 2,
     "previous_assets_preserved": 2904,
     "review": "docs/art/relationships/review.md"
+  },
+  "wardrobe_anatomy_followup": {
+    "date": "2026-10-17",
+    "worktree": "codex-clothing-fit",
+    "changed_visual_assets": 8,
+    "new_illustrations": 0,
+    "scope": "Eight technical masks reviewed with anatomy-based live fitting. All 240 garment atlases, four safe-base paintings and original character art retain their previously approved bytes. 96 palettes rendered on fox and 30 families on each other hero; four mixed outfits in all eight directions and full walk-frame sheets with a sword for every hero. All 3312 authored clothing poses frame-lock checked; this is not a per-pixel review of every action pose.",
+    "evidence": "docs/qa/clothing-fit/REVIEW.md",
+    "prompts": "docs/art/wardrobe/fitting-prompts.json"
   }
 }

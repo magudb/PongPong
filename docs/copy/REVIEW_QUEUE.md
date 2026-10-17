@@ -66,6 +66,6 @@ Review daily town and shop dialogue first. Estimates assume 400 Danish words per
 | traetoppen.csv | draft | 21 | 58 | 0.1 |
 | ui.csv | ai_reviewed | 139 | 315 | 0.8 |
 | wardrobe.csv | draft | 238 | 1405 | 3.5 |
-| wardrobe_ui.csv | draft | 40 | 108 | 0.3 |
+| wardrobe_ui.csv | draft | 43 | 117 | 0.3 |
 | world.csv | ai_reviewed | 8 | 47 | 0.1 |
 | zz_final.csv | draft | 2 | 2 | 0.0 |

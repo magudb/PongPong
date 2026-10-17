@@ -1,0 +1,37 @@
+{
+  "allowed": [],
+  "character": "fairy",
+  "checks": 118,
+  "elapsed_s": 29.74,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "held_equipment": {
+      "character": "fairy",
+      "checks": 44,
+      "failed": 0,
+      "ms": 4255,
+      "skipped": 0
+    },
+    "wardrobe_render": {
+      "character": "fairy",
+      "checks": 16,
+      "failed": 0,
+      "ms": 17028,
+      "skipped": 0
+    },
+    "wardrobe_ui": {
+      "character": "fairy",
+      "checks": 58,
+      "failed": 0,
+      "ms": 3234,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

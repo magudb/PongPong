@@ -1,0 +1,39 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 584,
+  "elapsed_s": 23.46,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "towns_interiors.build_all_under_budget"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "social_data": {
+      "character": "animal",
+      "checks": 133,
+      "failed": 0,
+      "ms": 2180,
+      "skipped": 0
+    },
+    "towns_data": {
+      "character": "animal",
+      "checks": 166,
+      "failed": 0,
+      "ms": 3135,
+      "skipped": 0
+    },
+    "towns_interiors": {
+      "character": "animal",
+      "checks": 285,
+      "failed": 1,
+      "ms": 12338,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

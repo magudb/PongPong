@@ -12,6 +12,7 @@ var preview: IsoChibiSprite2D
 var preview_layers: WardrobeLayers
 var preview_held: HeldEquipment2D
 var preview_outfit := {}
+var _try_on := {}
 var title: Label
 var tabs: Array[Button] = []
 var close_button: Button
@@ -171,6 +172,7 @@ func open(opener: Control = null) -> void:
 func _open_for_body(body_id: String, opener: Control = null) -> void:
 	selected_id = ""
 	_assigning = ""
+	_try_on.clear()
 	preview_outfit = WardrobeManager.outfit()
 	if preview == null:
 		preview = IsoChibiSprite2D.create(body_id)
@@ -200,6 +202,7 @@ func close() -> void:
 	preview_layers = null
 	preview_held = null
 	preview_outfit.clear()
+	_try_on.clear()
 	super.close()
 
 func _initial_focus() -> Control:
@@ -213,7 +216,6 @@ func set_tab(index: int) -> void:
 	filter = ""
 	selected_id = ""
 	_assigning = ""
-	preview_outfit = WardrobeManager.outfit()
 	_refresh_texts()
 
 func _on_page(step: int) -> void:
@@ -271,7 +273,7 @@ func _refresh_texts() -> void:
 	clear_button.text = tr("GARDEROBE_CLEAR_HOTBAR")
 	_build_filters()
 	_build_items()
-	_select(selected_id)
+	_select(selected_id, false)
 	var player := _player()
 	if player != null:
 		for index in 8:
@@ -392,7 +394,7 @@ func _owned(id: String) -> bool:
 func _name(id: String) -> String:
 	return tr(str(ItemKinds.def(id).get("name_key","GARDEROBE_EMPTY_SLOT")))
 
-func _select(id: String) -> void:
+func _select(id: String, try_on := true) -> void:
 	selected_id = id
 	var definition := ItemKinds.def(id)
 	detail_name.text = _name(id)
@@ -410,14 +412,34 @@ func _select(id: String) -> void:
 	equip_button.text = tr("GARDEROBE_EQUIP")
 	remove_button.text = tr("GARDEROBE_REMOVE")
 	assign_button.text = tr("GARDEROBE_ASSIGN")
-	preview_outfit = WardrobeManager.preview_equipping(id) if tab == 0 and slot != "" else WardrobeManager.outfit()
+	if try_on and tab == 0 and slot != "":
+		_try_on = WardrobeManager.preview_equipping(id, _try_on)
+	# Rebase local slot choices on the actual owner after an equip/remove, while
+	# retaining other try-ons across filters and the Hands tab.
+	preview_outfit = WardrobeManager.outfit()
+	for pending_slot in _try_on.keys():
+		if _try_on[pending_slot] == WardrobeManager.equipped.get(pending_slot):
+			_try_on.erase(pending_slot)
+		else:
+			preview_outfit = WardrobeManager.preview_equipping(_try_on[pending_slot], preview_outfit)
 	if preview_layers != null:
 		preview_layers.set_outfit(preview_outfit)
 	if preview_held != null:
 		preview_held.preview_item = StringName(id) if tab == 1 and id != "" else EconomyManager.equipped_item(&"weapon") if tab == 1 else &""
 		preview_held.sync_pose()
 	preview_state.text = tr("GARDEROBE_PREVIEW_FMT") % _name(str(preview_held.preview_item)) if tab == 1 and preview_held != null else tr("GARDEROBE_WORN") if worn or id == "" else tr("GARDEROBE_TRYING_FMT") % _name(id)
-	status.text = tr("GARDEROBE_CHOOSE") if id == "" else tr("GARDEROBE_NOT_OWNED") if not owned else tr("GARDEROBE_WORN") if worn else ""
+	if tab == 0:
+		preview_state.text = tr("GARDEROBE_WORN") if _try_on.is_empty() else tr("GARDEROBE_TRYING_COUNT_FMT") % _try_on.size()
+	status.text = tr("GARDEROBE_CHOOSE") if id == "" else tr("GARDEROBE_NOT_OWNED") if not owned else tr("GARDEROBE_WORN") if worn else tr("GARDEROBE_SINGLE_PIECE") if tab == 0 else ""
+	if tab == 0 and id != "" and not worn:
+		var next := WardrobeManager.preview_equipping(id, WardrobeManager.outfit())
+		var displaced: Array[String] = []
+		for worn_slot in WardrobeManager.equipped:
+			if not next.has(worn_slot):
+				displaced.append(tr(str(WardrobeManager.slots()[worn_slot].name_key)))
+		if not displaced.is_empty():
+			var replacement := tr("GARDEROBE_REPLACES_FMT") % ", ".join(displaced)
+			status.text = replacement if owned else status.text+"\n"+replacement
 	if _assigning != "":
 		status.text = tr("GARDEROBE_PICK_HOTBAR")
 	for button in item_buttons:
@@ -437,6 +459,7 @@ func _equip() -> void:
 		return
 	if tab == 0:
 		WardrobeManager.equip(selected_id)
+		_try_on.erase(WardrobeManager.slot_of(selected_id))
 	else:
 		EconomyManager.equip(StringName(EconomyManager.equip_slot_of(selected_id)),StringName(selected_id))
 	_schedule_refresh()
@@ -446,6 +469,7 @@ func _remove() -> void:
 		return
 	if tab == 0:
 		WardrobeManager.unequip(WardrobeManager.slot_of(selected_id))
+		_try_on.erase(WardrobeManager.slot_of(selected_id))
 	else:
 		EconomyManager.equip(StringName(EconomyManager.equip_slot_of(selected_id)),&"")
 	_schedule_refresh()
@@ -483,6 +507,7 @@ func _save_preset() -> void:
 	_schedule_refresh()
 
 func _load_preset() -> void:
+	_try_on.clear()
 	var result := WardrobeManager.load_preset(preset)
 	selected_id = ""
 	_refresh_texts()
