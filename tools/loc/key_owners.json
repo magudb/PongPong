@@ -31,7 +31,6 @@
     "QJ_",
     "SET_",
     "KEY_",
-    "FOREST_",
     "UI_WEEKDAY_",
     "UI_MONTH_",
     "UI_WEATHER_",
@@ -48,7 +47,9 @@
     "SHOP_TAB_TOOLS",
     "SHOP_TAB_GOODS",
     "SHOP_TOTAL",
-    "SHOP_GREETING_DEFAULT"
+    "SHOP_GREETING_DEFAULT",
+    "FOREST_OIL",
+    "FOREST_WHISPER_FERNS"
    ]
   },
   "world.csv": {

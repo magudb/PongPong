@@ -1,0 +1,57 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PLAYTEST start mode=windowed character=animal sections=res://tests/sections only=forest_look
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.ufGLHH/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/dungeon/look/native
+== section forest_look [windowed]  (res://tests/sections/forest_look.gd)
+  ok    forest_look.config_numbers_present
+  ok    forest_look.lantern_ring_profile
+  ok    forest_look.registered_forest_dress
+  ok    forest_look.registered_hulen_keeper
+  ok    forest_look.localized_LOOK_NATTEBLIK_SLEEPS
+  ok    forest_look.localized_LOOK_MOONPOND_FISHING
+  ok    forest_look.localized_LOOK_HULEN_NAME
+  ok    forest_look.localized_LOOK_MOON_POND_NAME
+  ok    forest_look.farm_stays_ordinary
+  ok    forest_look.fixture_map_builds_with_every_marker ([])
+  ok    forest_look.attach_and_marker_are_equivalent
+  ok    forest_look.firefly_field_cost_free
+  ok    forest_look.soft_ground_masks_follow_cells
+  ok    forest_look.soft_ground_keeps_cells_walkable
+  ok    forest_look.pond_blocks_walkers
+  ok    forest_look.wardrobe_material_identity_preserved
+  ok    forest_look.outfit_changes_keep_pose_and_occlusion
+  ok    forest_look.new_ground_loot_keeps_visible_pigment
+  ok    forest_look.hulen_keeper_day
+  ok    forest_look.sleeping_keeper_has_honest_hint
+  ok    forest_look.keeper_hour_frozen_for_visit
+  ok    forest_look.one_trigger_per_connected_pond
+  ok    forest_look.pond_whisper_once_per_floor
+  ok    forest_look.light_budget_enforced (["forest_light_budget: refused BudgetProbe12 (map overlap <= 12, map lights <= 15)"])
+  ok    forest_look.nonoverlapping_lights_allowed
+  ok    forest_look.glow_mushroom_light_cap
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/dungeon/look/native/forest_look_sketch_layout.png (1280x720)
+  ok    forest_look.frame_budget ([{ "frames": 97, "fps": 192.627720121852, "ms": 5.19136082474227, "worst_ms": 6.281, "gpu_ms": 0.0, "cpu_render_ms": 1.14575257436516 }, { "frames": 87, "fps": 172.673522003966, "ms": 5.79127586206897, "worst_ms": 6.401, "gpu_ms": 0.0, "cpu_render_ms": 1.23214942559429 }, { "frames": 91, "fps": 180.778659377247, "ms": 5.53162637362637, "worst_ms": 6.123, "gpu_ms": 0.0, "cpu_render_ms": 1.08963736727998 }])
+  ok    forest_look.draw_call_budget (362.0)
+  ok    forest_look.dressing_update_under_point_three_ms (0.0018 ms/frame; masks built once in 9.882 ms)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/dungeon/look/native/forest_look_unshaded_actor.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/dungeon/look/native/forest_look_base_actor.png (1280x720)
+  ok    forest_look.actor_pigment_unchanged_by_grade (mean RGB difference 0.00001)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/dungeon/look/native/forest_look_lantern_profile.png (1280x720)
+  ok    forest_look.lantern_inner_path_lift (luminance ratios at 160/240/320/480 ground px: [1.17790730429152, 1.14020013975802, 1.10544882621387, 1.04709615939275])
+  ok    forest_look.lantern_lift_falls_toward_edge ([1.17790730429152, 1.14020013975802, 1.10544882621387, 1.04709615939275])
+  ok    forest_look.actors_unshaded_in_forest_only
+  ok    forest_look.hulen_keeper_night_uses_real_npc
+  ok    forest_look.pond_whisper_survives_reentry
+  ok    forest_look.lantern_energy_matches_sketch
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/dungeon/look/native/forest_look_hulen_at_night.png (1280x720)
+  ok    forest_look.alternate_hero_clothing_keeps_shaders
+  ok    forest_look.generated_floor_uses_same_dressing ([])
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/dungeon/look/native/forest_look_generated_floor_2.png (1280x720)
+  --    forest_look: 38 checks, 0 failed, 0 skipped, 9.8 s
+== summary: 1 section(s) run, 38 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 13.7 s
+PLAYTEST PASS (38 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

@@ -44,7 +44,7 @@
     },
     {
       "system": "Dungeon exploration, enemies, combat, bosses and HUD (DR)",
-      "state": "rules, accessibility, seven enemies, three bosses, resource nodes, forage, whispers and forest HUD/reveals implemented; 99 native interaction/reveal checks pass, guide fixture diff 10.17/15 and HUD cost 0.019 ms/frame; forest dressing and final combat acceptance pending"
+      "state": "rules, accessibility, seven enemies, three bosses, resource nodes, forage, whispers, forest HUD/reveals and forest dressing implemented; native dressing passes 38 checks at 362 draw calls and <=6 ms, all eight heroes retain clothing shaders; final combat acceptance pending"
     },
     {
       "system": "Arsenal, weapons, gems, loot, appraisal and crafting (DL)",
@@ -95,7 +95,8 @@
     "forest_ui_native": "docs/qa/mechanics/dungeon/hud/interactions-native.json",
     "forest_hud_native": "docs/qa/mechanics/dungeon/hud/hud-native.json",
     "dungeon_weapon_art": "docs/qa/mechanics/dungeon/weapons/icons-native.json",
-    "dungeon_item_icons": "docs/qa/mechanics/dungeon/icons/native.json"
+    "dungeon_item_icons": "docs/qa/mechanics/dungeon/icons/native.json",
+    "forest_dressing": "docs/qa/mechanics/dungeon/look/native.json"
   },
   "contract_additions": [
     "QuestManager state queries buildings_owned(type) and animals_owned support accepting animal quests after building or adoption.",
