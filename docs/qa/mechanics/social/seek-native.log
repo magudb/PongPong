@@ -1,0 +1,22 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PLAYTEST start mode=windowed character=ghost sections=res://tests/sections only=ghostfam_seek
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.0HYQR5/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/seek-native
+== section ghostfam_seek [windowed]  (res://tests/sections/ghostfam_seek.gd)
+  ok    ghostfam_seek.native_approach_on_real_floor
+  ok    ghostfam_seek.native_shimmer
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/seek-native/ghostfam_seek_shimmer.png (1280x720)
+  ok    ghostfam_seek.native_approach_on_real_floor
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/seek-native/ghostfam_seek_found_gift.png (1280x720)
+  ok    ghostfam_seek.dialogue_finished
+  ok    ghostfam_seek.native_find_and_prize
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/social/seek-native/ghostfam_seek_progress_card.png (1280x720)
+  ok    ghostfam_seek.dialogue_finished
+  --    ghostfam_seek: 6 checks, 0 failed, 0 skipped, 10.1 s
+== summary: 1 section(s) run, 6 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 14.6 s
+PLAYTEST PASS (6 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

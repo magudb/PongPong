@@ -18,6 +18,8 @@ function get_dialogue(context)
   local kin_done = context.ghostfam_kin_blund or false
   local look_done = context.ghostfam_kin_look_blund or false
   if race == "ghost" and not kin_done then
+    api.set_flag("ghostfam_seek_found_now", 0)
+    api.set_flag("ghostfam_seek_gift_now", 0)
     api.set_flag("ghostfam_kin_blund", true)
     api.add_hearts("ghostfam_blund", 2)
     return {
@@ -34,6 +36,74 @@ function get_dialogue(context)
       },
     }
   end
+  -- GF-seek: generated found/gift branches (build_blund_seek.py).
+  local found_now = context.ghostfam_seek_found_now or 0
+  local gift_now = context.ghostfam_seek_gift_now or 0
+  if found_now > 0 or gift_now > 0 then
+    api.set_flag("ghostfam_seek_found_now", 0)
+    api.set_flag("ghostfam_seek_gift_now", 0)
+  end
+  if gift_now == 1 then
+    return { speaker = "ghostfam_blund", speaker_name_key = "NPC_GHOSTFAM_BLUND",
+      lines = { { text_key = "SEEK_GHOSTFAM_FOUND_1" }, { text_key = "SEEK_GHOSTFAM_GIFT_1" } },
+      choices = { { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" } } }
+  end
+  if gift_now == 2 then
+    return { speaker = "ghostfam_blund", speaker_name_key = "NPC_GHOSTFAM_BLUND",
+      lines = { { text_key = "SEEK_GHOSTFAM_FOUND_1" }, { text_key = "SEEK_GHOSTFAM_GIFT_2" } },
+      choices = { { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" } } }
+  end
+  if gift_now == 3 then
+    return { speaker = "ghostfam_blund", speaker_name_key = "NPC_GHOSTFAM_BLUND",
+      lines = { { text_key = "SEEK_GHOSTFAM_FOUND_1" }, { text_key = "SEEK_GHOSTFAM_GIFT_3" } },
+      choices = { { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" } } }
+  end
+  if gift_now == 4 then
+    return { speaker = "ghostfam_blund", speaker_name_key = "NPC_GHOSTFAM_BLUND",
+      lines = { { text_key = "SEEK_GHOSTFAM_FOUND_1" }, { text_key = "SEEK_GHOSTFAM_GIFT_4" } },
+      choices = { { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" } } }
+  end
+  if gift_now == 5 then
+    return { speaker = "ghostfam_blund", speaker_name_key = "NPC_GHOSTFAM_BLUND",
+      lines = { { text_key = "SEEK_GHOSTFAM_FOUND_1" }, { text_key = "SEEK_GHOSTFAM_GIFT_5" } },
+      choices = { { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" } } }
+  end
+  if gift_now == 14 then
+    return { speaker = "ghostfam_blund", speaker_name_key = "NPC_GHOSTFAM_BLUND",
+      lines = { { text_key = "SEEK_GHOSTFAM_FOUND_1" }, { text_key = "SEEK_GHOSTFAM_GIFT_4_OWNED" } },
+      choices = { { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" } } }
+  end
+  if gift_now == 15 then
+    return { speaker = "ghostfam_blund", speaker_name_key = "NPC_GHOSTFAM_BLUND",
+      lines = { { text_key = "SEEK_GHOSTFAM_FOUND_1" }, { text_key = "SEEK_GHOSTFAM_GIFT_5_OWNED" } },
+      choices = { { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" } } }
+  end
+  if found_now > 0 and context.talked_today then
+    return { speaker = "ghostfam_blund", speaker_name_key = "NPC_GHOSTFAM_BLUND",
+      lines = { { text_key = "SEEK_GHOSTFAM_FOUND_4" } },
+      choices = { { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" } } }
+  end
+  if found_now > 0 and race == "ghost" then
+    return { speaker = "ghostfam_blund", speaker_name_key = "NPC_GHOSTFAM_BLUND",
+      lines = { { text_key = "SEEK_GHOSTFAM_FOUND_3" } },
+      choices = { { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" } } }
+  end
+  if found_now == 2 then
+    return { speaker = "ghostfam_blund", speaker_name_key = "NPC_GHOSTFAM_BLUND",
+      lines = { { text_key = "SEEK_GHOSTFAM_FOUND_2" } },
+      choices = { { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" } } }
+  end
+  if found_now > 0 then
+    return { speaker = "ghostfam_blund", speaker_name_key = "NPC_GHOSTFAM_BLUND",
+      lines = { { text_key = "SEEK_GHOSTFAM_FOUND_1" } },
+      choices = { { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" } } }
+  end
+  if context.ghostfam_seek_again then
+    return { speaker = "ghostfam_blund", speaker_name_key = "NPC_GHOSTFAM_BLUND",
+      lines = { { text_key = "SEEK_GHOSTFAM_FOUND_AGAIN_1" } },
+      choices = { { id = "goodbye", text_key = "DIALOGUE_CHOICE_GOODBYE", action = "close" } } }
+  end
+  -- GF-seek end.
   if hour >= 25 then
     return {
       speaker = "ghostfam_blund",

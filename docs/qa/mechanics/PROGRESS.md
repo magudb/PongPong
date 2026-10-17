@@ -10,11 +10,13 @@ The fixed-festival and extended-town package is complete: nine festivals, eighte
 
 The forty citizen heart scenes, eleven Natlys scenes, thirty-six family festival greetings and disposable family glow are complete. Acceptance includes 1,297 passing integration checks, ten native checks and inspected captures; prerequisite/conditional-step mutants are checked in both validator implementations. Staged scenes hide HUD/sign clutter and choose visible floor on the same platform.
 
-Next work: counted Natlys hide-and-seek, family errands and remaining relationship mechanics.
+Counted Natlys hide-and-seek is complete: actual routine slots, saved daily/lifetime counts, distance clues, live Silke hints, the five-step lamp ladder, deferred full-store claims and keepsake ownership/registry fallbacks. Evidence: 747 integration checks, 82 focused checks per race, 543 final checks and six native checks; no failures or engine messages. All three final native captures were opened and inspected.
+
+Next work: the three family errands and remaining relationship mechanics.
 
 Still required before the full task is complete:
 
-- Finish planned Natlys gameplay/quests and counted hide-and-seek with its saved reward ladder.
+- Finish the three planned Natlys errands.
 - Complete relationships, wedding, partner routines/chores, house parties and friend visits using the documented defaults.
 - Finish seasonal farm dressing and the planned audio integration, preserving frozen human recordings.
 - Finish dungeon item/recipe/boss validators and their mutants, larger pacing simulations and combat/performance acceptance.

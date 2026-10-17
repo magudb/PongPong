@@ -698,6 +698,13 @@
     "FEST_AARSSKIFTET_GHOSTFAM_SILKE_1",
     "FEST_AARSSKIFTET_GHOSTFAM_BLUND_1"
    ]
+  },
+  "ghostfamily_seek.csv": {
+   "owner": "GF-seek",
+   "prefix": [
+    "SEEK_GHOSTFAM_"
+   ],
+   "exact": []
   }
  },
  "notes": [

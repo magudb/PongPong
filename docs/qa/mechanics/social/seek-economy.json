@@ -1,0 +1,45 @@
+{
+  "ok": true,
+  "errors": [],
+  "items": 401,
+  "recipes": 129,
+  "sellable_gold": 370,
+  "worst_fallback_gold": 900,
+  "pace": [
+    {
+      "finds": 3,
+      "typical_game_weeks": 0.75,
+      "dedicated_game_weeks": 0.25,
+      "typical_real_hours": 0.875,
+      "dedicated_real_hours": 0.2916666666666667
+    },
+    {
+      "finds": 10,
+      "typical_game_weeks": 2.5,
+      "dedicated_game_weeks": 0.8333333333333334,
+      "typical_real_hours": 2.9166666666666665,
+      "dedicated_real_hours": 0.9722222222222222
+    },
+    {
+      "finds": 24,
+      "typical_game_weeks": 6.0,
+      "dedicated_game_weeks": 2.0,
+      "typical_real_hours": 7.0,
+      "dedicated_real_hours": 2.3333333333333335
+    },
+    {
+      "finds": 48,
+      "typical_game_weeks": 12.0,
+      "dedicated_game_weeks": 4.0,
+      "typical_real_hours": 14.0,
+      "dedicated_real_hours": 4.666666666666667
+    },
+    {
+      "finds": 80,
+      "typical_game_weeks": 20.0,
+      "dedicated_game_weeks": 6.666666666666667,
+      "typical_real_hours": 23.333333333333332,
+      "dedicated_real_hours": 7.777777777777778
+    }
+  ]
+}

@@ -30,7 +30,8 @@ static func decorate(npc: String, dialogue: Dictionary, context: Dictionary = {}
 	out["lines"] = lines
 	var choices: Array = []
 	var close := {"id": "goodbye", "text_key": "REL_TALK_GOODBYE", "action": "close"}
-	for c in LuaData.arr(out.get("choices", [])):
+	for original in LuaData.arr(out.get("choices", [])):
+		var c: Dictionary = Svc.static_call("res://scripts/ghostfam/seek/hide_seek.gd",&"hint_choice",[npc,LuaData.dict(original)],LuaData.dict(original))
 		if str(c.get("action", "")) == "close":
 			close = c
 		else:
@@ -43,6 +44,8 @@ static func decorate(npc: String, dialogue: Dictionary, context: Dictionary = {}
 	var events: Array = sm.call("events_ready", npc)
 	if not events.is_empty():
 		choices.append({"id": "event", "text_key": "REL_TALK_EVENT", "action": "start_event", "event_id": str(events[0])})
+	var seek: Dictionary = Svc.static_call("res://scripts/ghostfam/seek/hide_seek.gd",&"card_choice",[npc],{})
+	if not seek.is_empty():choices.append(seek)
 	var garden := SecretGardenStory.choice(npc)
 	if not garden.is_empty():
 		choices.append(garden)
@@ -116,6 +119,10 @@ static func finish_topic(npc: String, page: Dictionary, completed: bool, lines_s
 ## Unknown actions still reach EventBus; this layer supplies the shared action data.
 static func action(npc: String, action_id: String, data: Dictionary) -> Dictionary:
 	match action_id:
+		"seek_hint":
+			return {"handled":true,"page":Svc.static_call("res://scripts/ghostfam/seek/hide_seek.gd",&"hint_page",[],{})}
+		"seek_card":
+			return {"handled":true,"page":Svc.static_call("res://scripts/ghostfam/seek/hide_seek.gd",&"card_page",[],{})}
 		"mother_story":
 			return {"handled":true,"page":MotherStory.topic_page(npc)}
 		"garden_story":

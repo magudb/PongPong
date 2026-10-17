@@ -266,13 +266,15 @@ func from_dict(data: Dictionary) -> bool:
 	return true
 
 func _changed(reason: StringName) -> void:
-	EventBus.furniture_changed.emit(reason)
 	var score := hygge_score()
 	var level := hygge_level_index()
-	if score != _last_hygge or level != _last_level:
-		var gained := level > _last_level
-		_last_hygge = score
-		_last_level = level
-		EventBus.hygge_changed.emit(score, StringName(str(HomeData.hygge_level(level).get("id", "koldt"))))
-		if gained:
-			EventBus.game_event.emit(&"hygge_level", {"level": level})
+	var changed := score != _last_hygge or level != _last_level
+	var gained := level > _last_level
+	_last_hygge = score
+	_last_level = level
+	EconomyManager.after_transaction(func() -> void:
+		EventBus.furniture_changed.emit(reason)
+		if changed:
+			EventBus.hygge_changed.emit(score, StringName(str(HomeData.hygge_level(level).get("id", "koldt"))))
+			if gained:EventBus.game_event.emit(&"hygge_level", {"level": level})
+	)

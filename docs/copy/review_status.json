@@ -425,5 +425,12 @@
     "date": "",
     "voice_frozen": false,
     "rows": 36
+  },
+  "localization/ghostfamily_seek.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 25
   }
 }

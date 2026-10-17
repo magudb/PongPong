@@ -41,7 +41,7 @@ static func context(npc: String, player: Node = null) -> Dictionary:
 		ctx["shop_opens_at"] = float(window[0])
 		ctx["shop_closes_at"] = float(window[1])
 		ctx["shop_closed_reason"] = str(state.reason)
-	return ctx
+	return Svc.static_call("res://scripts/ghostfam/hook/ghostfam_hook.gd",&"dialogue_context",[npc,ctx],ctx)
 
 static func build(npc: String, module: String, ctx: Dictionary, guest := false) -> Dictionary:
 	var page := LuaRuntime.get_dialogue(module, ctx)
