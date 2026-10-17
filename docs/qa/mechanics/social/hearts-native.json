@@ -1,0 +1,30 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 10,
+  "elapsed_s": 13.53,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "ghostfam_events": {
+      "character": "animal",
+      "checks": 3,
+      "failed": 0,
+      "ms": 5163,
+      "skipped": 0
+    },
+    "social_heart_content": {
+      "character": "animal",
+      "checks": 7,
+      "failed": 0,
+      "ms": 3898,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

@@ -125,7 +125,7 @@ func _run(t,native: bool) -> void:
 	t.check("yearly_scene_repeats_next_year",director.request("event_yearly",true))
 	await _finish_dialogue(t)
 	t.check("yearly_reward_second_year",EconomyManager.count_item(&"wood") == 2 and SocialManager.event_stamp("event_yearly") == 2)
-	GameManager.hour = 23
+	GameManager.hour = GameManager.day_end_hour()-1
 	GameManager.minute = 50
 	definitions.event_cancel.steps.insert(0,{"act":"time","minutes":100})
 	SocialFixture.uninstall()
@@ -138,7 +138,7 @@ func _run(t,native: bool) -> void:
 	t.check("cancel_releases_modal_and_actors",not GameManager.is_modal_open() and not world.player._event_active)
 	t.check("cancelled_scene_can_retry",director.request("event_cancel"))
 	await _finish_dialogue(t)
-	t.check("time_never_advances_past_2359",GameManager.hour == 23 and GameManager.minute == 59)
+	t.check("time_stops_before_the_live_day_roll",GameManager.hour == GameManager.day_end_hour()-1 and GameManager.minute == 59)
 	GameManager.push_modal(&"test_pause",true)
 	for i in 6:
 		var id := "queued_%d" % i

@@ -47,7 +47,7 @@ func play(id: String, definition: Dictionary) -> bool:
 	_take_actor(_actor(npc))
 	var heart := str(_meta.get("trigger","talk")) == "talk" and npc != ""
 	if heart: EventBus.game_event.emit(&"heart_event_started",{"id":id,"npc":npc,"hearts":_meta.get("hearts",0)})
-	var steps := LuaData.arr(definition.get("steps",[]))
+	var steps := eligible_steps(definition)
 	var index := 0
 	while index < steps.size() and generation == _generation:
 		var step := LuaData.dict(steps[index])
@@ -99,6 +99,12 @@ func play(id: String, definition: Dictionary) -> bool:
 	SaveManager.autosave()
 	return true
 
+## Resolve conditional lines/effects once, before playback. Normal play and skip
+## consume exactly the same branch; flags still commit atomically at the ending.
+func eligible_steps(definition: Dictionary) -> Array:
+	return LuaData.arr(definition.get("steps",[])).filter(func(step):
+		return SocialManager.eval_when(str(LuaData.dict(step).get("when",""))))
+
 func _choice(option: Dictionary, who: String) -> void:
 	if int(option.get("points",0)) > 0: _effects.append({"act":"points","npc":who,"amount":int(option.points)})
 	var flag := str(option.get("flag",""))
@@ -133,8 +139,36 @@ func _point(step: Dictionary, actor: Node) -> Vector2:
 	var world := get_tree().get_first_node_in_group("world_2d")
 	var mark := str(step.get("mark",step.get("at",""))).trim_prefix("mark:")
 	var at := NpcDirector.post_ground(str(world.area.map.id),StringName(mark)) if world != null and world.area != null else Vector2.INF
-	if at != Vector2.INF: return world.area.to_global(Iso.to_screen(at))
+	if at != Vector2.INF:
+		var point: Vector2 = world.area.to_global(Iso.to_screen(at))
+		return _clear_stage(world.area,point) if bool(step.get("clear_view",false)) else point
 	return actor.global_position if actor is Node2D else Vector2.INF
+
+## A navigable foot point can still be hidden by a tall trunk or roof. Choose
+## the nearest unobscured floor cell on the SAME platform for a staged scene.
+func _clear_stage(area: IsoArea,point: Vector2) -> Vector2:
+	var city := CityBuilder.of(area)
+	var town := area.get_node_or_null("TownDirector") as TownDirector
+	if city == null or town == null or town.level_nav == null:return point
+	var level := city.registry.level_at(point)
+	if level == null or _stage_clear(city.stage.fade.targets,point,level.rank):return point
+	var chosen := point
+	var best := INF
+	for floor in town.level_nav.levels:
+		if str(floor.id)!=str(level.id):continue
+		for cell in LuaData.dict(floor.get("main",{})):
+			var ground: Vector2 = town.level_nav._centre(floor,cell)
+			var candidate := area.to_global(Iso.to_screen(ground))
+			var distance := ground.distance_squared_to(Iso.to_ground(area.to_local(point)))
+			if distance<best and distance<=600.0*600.0 and _stage_clear(city.stage.fade.targets,candidate,level.rank):
+				best = distance
+				chosen = candidate
+	return chosen
+
+func _stage_clear(targets: Array,point: Vector2,rank: int) -> bool:
+	for target in targets:
+		if rank<=int(target.rank) and point.y<float(target.pivot_y) and point.y>float(target.top_y) and point.x>=float(target.x0)-72 and point.x<=float(target.x1)+72:return false
+	return true
 
 func _directive(step: Dictionary, generation: int) -> void:
 	var act := str(step.get("act",""))
@@ -204,7 +238,7 @@ func _commit(id: String) -> void:
 		SocialManager.owe_event_items(items)
 		GameManager.set_flags(flags)
 		for npc in points: SocialManager.add_points(npc,int(points[npc]),&"event")
-		var left := maxi(0,23*60+59-GameManager.hour*60-GameManager.minute)
+		var left := maxi(0,GameManager.day_end_hour()*60-1-GameManager.hour*60-GameManager.minute)
 		if minutes > 0: GameManager.advance_time(mini(mini(minutes,120),left))
 	)
 

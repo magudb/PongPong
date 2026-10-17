@@ -1157,7 +1157,12 @@ func _context() -> void:
 	t.check("people_rows_shape", none_yet.is_empty() and rows.size() == 2 and shape and hoppe_row.size() == 1 and (hoppe_row[0]["birthday"] as Dictionary).size() == 2 and hidden, "a fresh game lists nobody; after two conversations 2 rows (met citizens only) with name_key, stage, half hearts, birthday (once known), chat done this week, gifts left, known tastes, events seen / ready; a hero twin is hidden: %s" % str(maja))
 	# the events: ready when the hearts are reached, not seen, and the when= holds; seen is saved
 	var ev_npc := "gardener_hoppe"
+	# This unit isolates hearts/when/stamping. Actual area and actor gates are
+	# exercised against every live authored scene by social_heart_content.
+	var isolated_events: Dictionary = SocialFixture.design_dump()["events"].duplicate(true)
+	isolated_events.ev_hoppe_h4.meta.erase("area")
 	var m3 := _fresh(1, 12)
+	SocialFixture.install_design_data({}, {"events":isolated_events})
 	var before: Array = m3.events_ready(ev_npc)
 	m3.debug_set_hearts(ev_npc, 4)
 	gm.hour = 12
@@ -1165,6 +1170,7 @@ func _context() -> void:
 	m3.mark_event_seen("ev_hoppe_h4")
 	var seen_state: bool = m3.event_seen("ev_hoppe_h4") and m3.events_ready(ev_npc).is_empty() and int(m3.to_dict()["seen"]["ev_hoppe_h4"]) == 1
 	t.expect(before.is_empty() and ready_now == ["ev_hoppe_h4"] and seen_state, "events_ready: none at 0 hearts, ev_hoppe_h4 (meta.hearts 4, when hearts:..:4&hour:8-18&!fest:any) at 4 hearts and 12:00, none once it is seen; seen is saved")
+	SocialFixture.install_design_data()
 	# the no-repeat memory of S-talk
 	m3.remember_line("gardener_hoppe", "greeting", "SOC_HOPPE_GREET_3")
 	t.expect(m3.last_line("gardener_hoppe", "greeting") == "SOC_HOPPE_GREET_3" and m3.last_line("gardener_hoppe", "other") == "" and m3.last_line("baker_maja", "greeting") == "", "remember_line / last_line keep the last line id per (npc, slot)")

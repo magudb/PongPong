@@ -404,5 +404,26 @@
     "date": "",
     "voice_frozen": false,
     "rows": 66
+  },
+  "localization/heart_events.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 280
+  },
+  "localization/ghostfamily_events.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 55
+  },
+  "localization/ghostfamily_fest.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 36
   }
 }

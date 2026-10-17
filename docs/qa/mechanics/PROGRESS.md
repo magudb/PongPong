@@ -8,11 +8,12 @@ The latest completed package is the social scene and festival-activity runtime (
 
 The fixed-festival and extended-town package is complete: nine festivals, eighteen scenes, five markets, live painted decoration, ten extended rooms, seven additional citizen schedules, the post-office location screen and 66 keeper greeting rows. Acceptance: 1,988 checks across 15 sections, 500 focused audit checks and 547 native checks; no failures or engine errors/warnings. Native product captures were visually inspected and the post guide fixture was pinned. The live 34-citizen social simulation meets the original limits using the full 06:00–02:00 clock; existing ratchet bounds were only tightened.
 
-Next work: the forty citizen heart scenes, eleven Natlys family scenes and remaining relationship/family mechanics.
+The forty citizen heart scenes, eleven Natlys scenes, thirty-six family festival greetings and disposable family glow are complete. Acceptance includes 1,297 passing integration checks, ten native checks and inspected captures; prerequisite/conditional-step mutants are checked in both validator implementations. Staged scenes hide HUD/sign clutter and choose visible floor on the same platform.
+
+Next work: counted Natlys hide-and-seek, family errands and remaining relationship mechanics.
 
 Still required before the full task is complete:
 
-- Author and exercise the forty citizen heart scenes and eleven Natlys family scenes, plus family festival greetings.
 - Finish planned Natlys gameplay/quests and counted hide-and-seek with its saved reward ladder.
 - Complete relationships, wedding, partner routines/chores, house parties and friend visits using the documented defaults.
 - Finish seasonal farm dressing and the planned audio integration, preserving frozen human recordings.

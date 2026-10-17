@@ -908,7 +908,7 @@ func _when_one(kind: String, arg: String, rest: String) -> bool:
 			return f != &"" if arg == "any" else String(f) == arg
 		"hour":
 			var ab := arg.split("-")
-			return ab.size() == 2 and CalendarUtil.in_window(float(GameManager.hour), GameManager.game_hour(ab[0].to_float()), GameManager.game_hour(ab[1].to_float()))
+			return ab.size() == 2 and CalendarUtil.in_window(_now_hours(), GameManager.game_hour(ab[0].to_float()), GameManager.game_hour(ab[1].to_float()))
 		"weekday":
 			var wd := CalendarUtil.weekday_of(today())
 			for w in arg.split(",", false):
@@ -1095,6 +1095,12 @@ func events_ready(npc: Variant) -> Array[String]:
 	for eid in ids:
 		var meta := LuaData.dict(LuaData.dict(events[eid]).get("meta", {}))
 		if str(meta.get("trigger","talk")) != "talk": continue
+		var area_id := str(meta.get("area",""))
+		if area_id != "":
+			var world := get_tree().get_first_node_in_group("world_2d")
+			if world == null or world.get("area") == null or str(world.area.map.id) != area_id: continue
+		var previous := str(meta.get("after",""))
+		if previous != "" and not event_seen(previous): continue
 		if event_seen(str(eid)) or LuaData.int_of(meta.get("hearts", 0)) > h:
 			continue
 		var cooldown := maxi(0,LuaData.int_of(meta.get("cooldown_days",0)))
@@ -1102,6 +1108,10 @@ func events_ready(npc: Variant) -> Array[String]:
 		var cond := str(meta.get("when", ""))
 		if cond == "" or eval_when(cond):
 			out.append(str(eid))
+	out.sort_custom(func(a,b):
+		var ah := LuaData.int_of(LuaData.dict(events[a].get("meta",{})).get("hearts",0))
+		var bh := LuaData.int_of(LuaData.dict(events[b].get("meta",{})).get("hearts",0))
+		return ah < bh if ah != bh else str(a) < str(b))
 	return out
 
 

@@ -323,6 +323,14 @@ class Validator:
         key = re.compile(r'^[A-Z0-9_]+$')
         for eid, ev in self.events.items():
             m = ev.get('meta', {})
+            chain, cursor = set(), eid
+            while cursor:
+                if cursor not in self.events:
+                    self.e('SV10', '%s: unknown prerequisite %s' % (eid,cursor)); break
+                if cursor in chain:
+                    self.e('SV10', '%s: cyclic event prerequisite %s' % (eid,cursor)); break
+                chain.add(cursor)
+                cursor = self.events[cursor].get('meta', {}).get('after', '')
             if m.get('npc') and m['npc'] not in self.npcs:
                 self.e('SV10', '%s: npc %s' % (eid, m['npc']))
             if m.get('hearts') is not None and not (1 <= int(m['hearts']) <= 10):
@@ -486,10 +494,11 @@ class Validator:
 
     def sv12(self):
         for eid, ev in self.events.items():
-            spec = str(ev.get('meta', {}).get('when', ''))
-            if spec:
-                for msg in self.when_errors(spec):
-                    self.e('SV12', '%s: when=%s: %s' % (eid, spec, msg))
+            for row in [ev.get('meta', {})] + ev.get('steps', []):
+                spec = str(row.get('when', ''))
+                if spec:
+                    for msg in self.when_errors(spec):
+                        self.e('SV12', '%s: when=%s: %s' % (eid, spec, msg))
 
     @staticmethod
     def prize_value(items, entry):

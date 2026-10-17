@@ -206,6 +206,8 @@ static func mutants(pristine: Dictionary) -> Array[Dictionary]:
 	out.append({"code": "SV10", "label": "event step outside the vocabulary", "apply": func(d: Dictionary) -> void: _first_event_steps(d).append({"act": "teleport"})})
 	out.append({"code": "SV10", "label": "event reward above one heart", "apply": func(d: Dictionary) -> void: _first_event(d)["rewards"] = {"points": 150}})
 	out.append({"code": "SV10", "label": "choice with four options", "apply": func(d: Dictionary) -> void: _first_event_steps(d).append({"act": "choice", "options": [{}, {}, {}, {}]})})
+	out.append({"code":"SV10","label":"unknown event prerequisite","apply":func(d: Dictionary) -> void: _first_event(d)["meta"]["after"] = "missing_event"})
+	out.append({"code":"SV10","label":"cyclic event prerequisite","apply":func(d: Dictionary) -> void: d["events"]["test_cycle_event"] = {"meta":{"after":"test_cycle_event"},"steps":[]}})
 	out.append({"code": "SV11", "label": "first member that is no home citizen of the area", "apply": func(d: Dictionary) -> void: _festival(d, f0)["first"] = [_outsider_of(d, f0)]})
 	out.append({"code": "SV11", "label": "guest that is a home citizen of the area", "apply": func(d: Dictionary) -> void: _festival(d, f0)["guests"] = [_insider_of(d, f0)]})
 	out.append({"code": "SV11", "label": "a citizen twice in the roster", "apply": func(d: Dictionary) -> void: _festival(d, f0)["first"] = [_insider_of(d, f0), _insider_of(d, f0)]})
@@ -213,6 +215,7 @@ static func mutants(pristine: Dictionary) -> Array[Dictionary]:
 	out.append({"code": "SV11", "label": "leave_early names an unknown citizen", "apply": func(d: Dictionary) -> void: _festival(d, f0)["leave_early"] = {"nobody_here": 1.0}})
 	out.append({"code": "SV11", "label": "leave_early shorter than 1.5 x the walk + 15 minutes", "apply": func(d: Dictionary) -> void: _leave_too_short(d, f0), "opts": {"route_minutes": func(_n: String, _a: String, _s: String) -> float: return 40.0}})
 	out.append({"code": "SV12", "label": "event when= with an unknown kind", "apply": func(d: Dictionary) -> void: (_first_event(d)["meta"] as Dictionary)["when"] = "moonphase:full"})
+	out.append({"code":"SV12","label":"conditional step with an unknown kind","apply":func(d: Dictionary) -> void: _first_event(d)["steps"].append({"act":"wait","when":"moonphase:full"})})
 	out.append({"code": "SV14", "label": "first prize above 2 x the cheapest winning entry", "apply": func(d: Dictionary) -> void: _contest(d, f0, {"item": "carrot", "amount": 100000}, "", "")})
 	out.append({"code": "SV14", "label": "second prize above 0.7 x the first", "apply": func(d: Dictionary) -> void: _contest_ladder(d, f0, 1.0, 0.9, 0.2)})
 	out.append({"code": "SV14", "label": "third prize above 0.4 x the first", "apply": func(d: Dictionary) -> void: _contest_ladder(d, f0, 1.0, 0.5, 0.6)})
@@ -665,6 +668,17 @@ class _Run extends RefCounted:
 		for eid in events:
 			var ev := LuaData.dict(events[eid])
 			var m := LuaData.dict(ev.get("meta", {}))
+			var chain := {}
+			var cursor := str(eid)
+			while cursor != "":
+				if not events.has(cursor):
+					e("SV10", "%s: unknown prerequisite %s" % [eid,cursor])
+					break
+				if chain.has(cursor):
+					e("SV10", "%s: cyclic event prerequisite %s" % [eid,cursor])
+					break
+				chain[cursor] = true
+				cursor = str(LuaData.dict(LuaData.dict(events[cursor]).get("meta",{})).get("after",""))
 			if str(m.get("npc", "")) != "" and not npcs.has(str(m["npc"])):
 				e("SV10", "%s: npc %s" % [eid, str(m["npc"])])
 			if m.has("hearts") and (LuaData.int_of(m["hearts"]) < 1 or LuaData.int_of(m["hearts"]) > 10):
@@ -791,10 +805,13 @@ class _Run extends RefCounted:
 			skipped.append("SV12: when= specs not checked (no SocialManager.when_spec_errors available)")
 			return
 		for eid in events:
-			var spec := str(LuaData.dict(LuaData.dict(events[eid]).get("meta", {})).get("when", ""))
-			if spec != "":
-				for msg in (fn as Callable).call(spec):
-					e("SV12", "%s: when=%s: %s" % [eid, spec, str(msg)])
+			var event := LuaData.dict(events[eid])
+			var guarded: Array = [LuaData.dict(event.get("meta",{}))]+LuaData.arr(event.get("steps",[]))
+			for row in guarded:
+				var spec := str(LuaData.dict(row).get("when",""))
+				if spec != "":
+					for msg in (fn as Callable).call(spec):
+						e("SV12", "%s: when=%s: %s" % [eid, spec, str(msg)])
 
 	# ---------------------------------------------------------------- SV14 contest reward caps
 
