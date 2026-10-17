@@ -1,0 +1,102 @@
+{
+  "kind": "aggregate_latest_completed_native_section_results",
+  "single_invocation": false,
+  "result": "pass",
+  "checks": 370,
+  "failed": 0,
+  "skipped": 0,
+  "section_count": 11,
+  "unexpected_engine_messages": 0,
+  "source_binding": "10eb7928e425e293114473c749e070f83abff074ce792a3811d5eb0ea141e54e",
+  "note": "The gameplay batch passed every check except the empty-slot save/load screenshot, which displayed an autosave left by the real farm sleep test. The complete menu gallery was rerun in a fresh disposable HOME and all 18 checks passed. The original report is retained; the menu section below uses that isolated result. No reference or source was changed for this rerun.",
+  "sections": {
+    "cheat_ui_audit": {
+      "character": "animal",
+      "checks": 10,
+      "failed": 0,
+      "ms": 8269,
+      "skipped": 0,
+      "report": "main-native.json"
+    },
+    "farm_automation": {
+      "character": "animal",
+      "checks": 59,
+      "failed": 0,
+      "ms": 13372,
+      "skipped": 0,
+      "report": "main-native.json"
+    },
+    "farm_controls": {
+      "character": "animal",
+      "checks": 5,
+      "failed": 0,
+      "ms": 9967,
+      "skipped": 0,
+      "report": "main-native.json"
+    },
+    "farm_playthrough": {
+      "character": "animal",
+      "checks": 31,
+      "failed": 0,
+      "ms": 26817,
+      "skipped": 0,
+      "report": "main-native.json"
+    },
+    "farm_seed_ui": {
+      "character": "animal",
+      "checks": 4,
+      "failed": 0,
+      "ms": 1703,
+      "skipped": 0,
+      "report": "main-native.json"
+    },
+    "farm_ui_audit": {
+      "character": "animal",
+      "checks": 11,
+      "failed": 0,
+      "ms": 2782,
+      "skipped": 0,
+      "report": "main-native.json"
+    },
+    "farm_upgrades": {
+      "character": "animal",
+      "checks": 73,
+      "failed": 0,
+      "ms": 1729,
+      "skipped": 0,
+      "report": "main-native.json"
+    },
+    "home_ui": {
+      "character": "animal",
+      "checks": 22,
+      "failed": 0,
+      "ms": 1751,
+      "skipped": 0,
+      "report": "main-native.json"
+    },
+    "home_world": {
+      "character": "animal",
+      "checks": 105,
+      "failed": 0,
+      "ms": 12719,
+      "skipped": 0,
+      "report": "main-native.json"
+    },
+    "menus": {
+      "character": "animal",
+      "checks": 18,
+      "failed": 0,
+      "ms": 3039,
+      "skipped": 0,
+      "report": "main-menu-native.json"
+    },
+    "shop_ui": {
+      "character": "animal",
+      "checks": 32,
+      "failed": 0,
+      "ms": 3114,
+      "skipped": 0,
+      "report": "main-native.json"
+    }
+  }
+}

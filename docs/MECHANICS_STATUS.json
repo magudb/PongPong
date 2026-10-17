@@ -145,6 +145,15 @@
     "scope": "Crop lifecycle and held tending; field and animal housing expansion; ten-tier home entry; sprinklers, preserves jars, kegs and a year-round greenhouse. Includes frost kale from the concurrent main review.",
     "review": "docs/qa/farm-completion/REVIEW.md",
     "prompts": "docs/art/farm-completion/prompts.json",
-    "status": "implemented; final integration checks in progress"
+    "status": "verified on local main",
+    "source_binding": "10eb7928e425e293114473c749e070f83abff074ce792a3811d5eb0ea141e54e",
+    "acceptance": "docs/qa/farm-completion/ACCEPTANCE.json",
+    "regression_checks": 16833,
+    "regression_sections": 142,
+    "regression_explicit_skips": 163,
+    "native_checks": 370,
+    "native_failed": 0,
+    "integration_commit": "bf485e3",
+    "merge_commit": "81f85af"
   }
 }

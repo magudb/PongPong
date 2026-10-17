@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "status": "verified on worktree; final main native check pending",
+  "status": "verified on local main",
   "branch": "main",
   "feature_merge_commit": "81f85af",
   "integration_fix_commit": "bf485e3",
@@ -36,5 +36,31 @@
     "assets": "assets/iso_props/farm_completion/",
     "prompts": "docs/art/farm-completion/prompts.json"
   },
-  "review": "REVIEW.md"
+  "review": "REVIEW.md",
+  "native_main": {
+    "result": "pass",
+    "checks": 370,
+    "failed": 0,
+    "skipped": 0,
+    "section_count": 11,
+    "single_invocation": false,
+    "unexpected_engine_messages": 0,
+    "evidence": "main-native-coverage.json",
+    "menu_fixture_isolation": "main-menu-native.json"
+  },
+  "source_proofs_checked_on_main": "main-source-proof-check.json",
+  "static_checks": {
+    "csv_files": 66,
+    "localized_keys": 4540,
+    "csv_errors": 0,
+    "copy_findings": 0,
+    "visual_snapshot_assets": 2974,
+    "import_stubs": "pass",
+    "git_diff_check": "pass"
+  },
+  "commands": {
+    "native_gameplay": "tools/dev/run_windowed.sh --strict --only=farm_controls,farm_playthrough,farm_upgrades,farm_automation,farm_ui_audit,farm_seed_ui,home_world,home_ui,shop_ui,menus,cheat_ui_audit",
+    "native_menu_fresh_profile": "tools/dev/run_windowed.sh --strict --only=menus",
+    "current_proofs": "python3 tools/town/prove_extension.py --check-all"
+  }
 }
