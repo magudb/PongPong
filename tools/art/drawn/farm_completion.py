@@ -17,15 +17,16 @@ ICONS = ROOT / 'assets/icons/items'
 def trim(image):
     return image.crop(image.getchannel('A').getbbox())
 
-def stage_sprite(image):
-    # Extract the stage's connected sprite, excluding a neighboring stage's
-    # leaf where an illustrator's wide silhouette crossed the atlas gutter.
+def stage_sprites(image):
+    # Read the four disconnected plants from the atlas; painted silhouettes can
+    # cross nominal quarter-cell gutters. Crop complete plants without repainting.
     labels,count=ndimage.label(np.asarray(image.getchannel('A'))>8)
     sizes=np.bincount(labels.ravel())
     sizes[0]=0
-    component=ndimage.find_objects(labels)[int(sizes.argmax())-1]
-    y,x=component
-    return image.crop((max(0,x.start-2),max(0,y.start-2),min(image.width,x.stop+2),min(image.height,y.stop+2)))
+    boxes=ndimage.find_objects(labels)
+    components=[boxes[int(i)-1] for i in np.argsort(sizes)[-4:]]
+    components.sort(key=lambda box:box[1].start)
+    return [image.crop((max(0,x.start-2),max(0,y.start-2),min(image.width,x.stop+2),min(image.height,y.stop+2))) for y,x in components]
 
 def save(image, path):
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -61,11 +62,11 @@ def main():
     walls=walls.resize((round(walls.width*scale_x),round(walls.height*scale_y)),Image.Resampling.LANCZOS)
     save(walls,OUT/'greenhouse_walls.webp')
     manifest['greenhouse_walls']={'file':'greenhouse_walls.webp','size':list(walls.size),'pivot':[round(768*scale_x),round(820*scale_y)],'footprint':[9,9],'elev':36.0,'illustration':'tools/art/drawn/sources/farm_completion/greenhouse_walls.png'}
-    for crop, heights in [('snow_turnip',[36,56,76,88]),('snowdrop',[40,64,98,120])]:
+    for crop, heights in [('snow_turnip',[36,56,76,88]),('snowdrop',[40,64,98,120]),('frost_kale',[36,56,80,100])]:
         strip=Image.open(SOURCE/(crop+'_stages.png')).convert('RGBA')
+        drawings=stage_sprites(strip)
         for stage,height in enumerate(heights):
-            left=round(stage*strip.width/4);right=round((stage+1)*strip.width/4)
-            drawing=stage_sprite(strip.crop((left,0,right,strip.height)))
+            drawing=drawings[stage]
             drawing.thumbnail((76,height-10),Image.Resampling.LANCZOS)
             image=Image.new('RGBA',(84,height))
             image.alpha_composite(drawing,((84-drawing.width)//2,height-drawing.height-4))
@@ -75,12 +76,12 @@ def main():
             if stage==3:
                 icon(drawing,crop)
                 icon(drawing,crop+'_seeds')
-    for crop in ['turnip','carrot','pumpkin','moonflower','glow_berry','strawberry','sunflower','catnip','snow_turnip','snowdrop']:
+    for crop in ['turnip','carrot','pumpkin','moonflower','glow_berry','strawberry','sunflower','catnip','snow_turnip','snowdrop','frost_kale']:
         icon(Image.open(SOURCE/'preserves_jar.png').convert('RGBA'),'preserve_'+crop)
         icon(Image.open(SOURCE/'juice_bottle.png').convert('RGBA'),'juice_'+crop)
-    for seed in ['snow_turnip_seeds','snowdrop_seeds']:
+    for seed in ['snow_turnip_seeds','snowdrop_seeds','frost_kale_seeds']:
         icon(Image.open(SOURCE/(seed+'_icon.png')).convert('RGBA'),seed)
     (OUT/'props.json').write_text(json.dumps(manifest,indent=2)+'\n')
-    print('Packed',len(manifest),'painted props and crop stages, 28 item icons')
+    print('Packed',len(manifest),'painted props and crop stages, 32 item icons')
 
 if __name__=='__main__':main()

@@ -36,9 +36,7 @@ var map_path := "res://data/maps/farm.map"
 var indoor := false
 
 static func crop_definitions() -> Dictionary:
-	var definitions := GameData.dict_of(GameData.cfg("crops", {})).duplicate(true)
-	definitions.merge(GameData.dict_of(GameData.cfg("crops_extra", {})), true)
-	return definitions
+	return GameData.dict_of(GameData.cfg("crops", {})).duplicate(true)
 
 func _ready() -> void:
 	crop_defs = crop_definitions()
@@ -51,6 +49,7 @@ func _ready() -> void:
 
 func configure_map(value: AreaMap) -> void:
 	map = value
+	indoor = map != null and str(map.extra.get("indoor", "false")) == "true"
 	_cells.clear()
 	_zones.clear()
 	_unlocked.clear()

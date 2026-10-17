@@ -54,6 +54,8 @@ config = {
     strawberry = { stages = 4, days_per_stage = 1, regrow_days = 4, seasons = { "foraar" }, sell_price = 55 },
     sunflower = { stages = 7, days_per_stage = 1, seasons = { "sommer", "efteraar" }, sell_price = 70 },
     catnip = { stages = 5, days_per_stage = 1, seasons = { "foraar", "sommer" }, sell_price = 55 },
+    snow_turnip = { stages = 5, days_per_stage = 1, seasons = { "vinter" }, sell_price = 80 },
+    snowdrop = { stages = 7, days_per_stage = 1, seasons = { "vinter" }, sell_price = 110 },
     frost_kale = { stages = 4, days_per_stage = 1, seasons = { "vinter" }, sell_price = 60 },
   },
 

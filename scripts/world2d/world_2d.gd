@@ -180,7 +180,6 @@ func _ready() -> void:
 	greenhouse_farm = FarmGrid.new()
 	greenhouse_farm.name = "GreenhouseFarm"
 	greenhouse_farm.map_path = "res://data/maps/greenhouse.map"
-	greenhouse_farm.indoor = true
 	add_child(greenhouse_farm)
 	day_night = DayNight.new()
 	day_night.name = "DayNight"

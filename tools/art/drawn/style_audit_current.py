@@ -54,9 +54,9 @@ def roles(catalog: dict) -> tuple[dict, dict]:
                 source = "preserves_jar"
             elif name.startswith("juice_"):
                 source = "juice_bottle"
-            elif name in ["snow_turnip", "snowdrop"]:
+            elif name in ["snow_turnip", "snowdrop", "frost_kale"]:
                 source = name + "_stages"
-            elif name in ["snow_turnip_seeds", "snowdrop_seeds"]:
+            elif name in ["snow_turnip_seeds", "snowdrop_seeds", "frost_kale_seeds"]:
                 source = name + "_icon"
             if source:
                 selected[path.resolve()] = "painted-farm-item-icon"

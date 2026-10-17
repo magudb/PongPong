@@ -1,0 +1,47 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 162,
+  "elapsed_s": 14.04,
+  "engine": [
+    {
+      "kind": "error",
+      "section": "farm_seed_ui",
+      "text": "scene/main/node.cpp:1976 in get_node(): Method/function failed. Returning: nullptr Node not found: \"%ItemScroll\" (relative to \"/root/World/GameUI/ShopUi\"). (at _run res://tests/sections/farm_seed_ui.gd:29)"
+    },
+    {
+      "kind": "script error",
+      "section": "farm_seed_ui",
+      "text": "res://tests/sections/farm_seed_ui.gd:29 in _run(): Invalid access to property or key 'size' on a base object of type 'null instance'. (at _run res://tests/sections/farm_seed_ui.gd:29)"
+    }
+  ],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1127,
+      "skipped": 0
+    },
+    "farm_seed_ui": {
+      "character": "animal",
+      "checks": 0,
+      "failed": 0,
+      "ms": 231,
+      "skipped": 0
+    },
+    "shop_ui": {
+      "character": "animal",
+      "checks": 154,
+      "failed": 0,
+      "ms": 7283,
+      "skipped": 8
+    }
+  },
+  "skipped": 8
+}

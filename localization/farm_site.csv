@@ -107,3 +107,7 @@ FARMSITE_GROWTH_FMT,Første høst: %d vandede nætter,First harvest: %d watered 
 FARMSITE_REGROW_FMT,Ny høst hver %d. vandede nat,Regrows every %d watered nights
 FARMSITE_SEEDS_INDOORS,Uden for sæsonen: dyrkes kun i drivhuset nu.,Out of season: grow these in the greenhouse now.
 FARMSITE_CONSTRUCTION_DAYS_FMT,Byggetid: %d dage,Construction: %d days
+ITEM_PRESERVE_FROST_KALE,Frostkål · på glas,Frost kale preserves
+ITEM_PRESERVE_FROST_KALE_DESC,Forædlet frostkål fra gården. Kan sælges eller sendes med salgskassen.,Processed frost kale from the farm. Sell it or put it in the shipping bin.
+ITEM_JUICE_FROST_KALE,Frostkål · saft,Frost kale juice
+ITEM_JUICE_FROST_KALE_DESC,Forædlet frostkål fra gården. Kan sælges eller sendes med salgskassen.,Processed frost kale from the farm. Sell it or put it in the shipping bin.

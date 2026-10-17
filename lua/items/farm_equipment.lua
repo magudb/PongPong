@@ -26,4 +26,6 @@ items = {
   juice_snow_turnip = { name_key = "ITEM_JUICE_SNOW_TURNIP", description_key = "ITEM_JUICE_SNOW_TURNIP_DESC", category = "product", rarity = "normal", max_stack = 99, buy_price = 0, sell_price = 240 },
   preserve_snowdrop = { name_key = "ITEM_PRESERVE_SNOWDROP", description_key = "ITEM_PRESERVE_SNOWDROP_DESC", category = "product", rarity = "normal", max_stack = 99, buy_price = 0, sell_price = 270 },
   juice_snowdrop = { name_key = "ITEM_JUICE_SNOWDROP", description_key = "ITEM_JUICE_SNOWDROP_DESC", category = "product", rarity = "normal", max_stack = 99, buy_price = 0, sell_price = 330 },
+  preserve_frost_kale = { name_key = "ITEM_PRESERVE_FROST_KALE", description_key = "ITEM_PRESERVE_FROST_KALE_DESC", category = "product", rarity = "normal", max_stack = 99, buy_price = 0, sell_price = 170 },
+  juice_frost_kale = { name_key = "ITEM_JUICE_FROST_KALE", description_key = "ITEM_JUICE_FROST_KALE_DESC", category = "product", rarity = "normal", max_stack = 99, buy_price = 0, sell_price = 180 },
 }

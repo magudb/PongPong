@@ -19,6 +19,12 @@ func _run(t) -> void:
 	tm.set_weather(&"klart")
 	for item in [&"sprinkler", &"quality_sprinkler", &"preserves_jar", &"keg"]: eco.add_item(item,2,true)
 	eco.add_item(&"carrot_seeds",20,true)
+	var missing: Array[String] = []
+	var shelf: Dictionary = t.autoload("LuaRuntime").get_shop("greenhouse_seeds").get("stock", {})
+	for crop in FarmGrid.crop_definitions():
+		if not shelf.has(str(crop)+"_seeds") or GameData.item_def(StringName("preserve_"+str(crop))).is_empty() or GameData.item_def(StringName("juice_"+str(crop))).is_empty():
+			missing.append(str(crop))
+	t.check("every_crop_has_greenhouse_seeds_and_both_processed_outputs", missing.is_empty(), str(missing))
 	var center := Vector2i(22,27)
 	var hands := preload("res://tests/lib/town_loop/farm_day.gd").new()
 	var neighbors: Array[Vector2i] = []

@@ -124,7 +124,7 @@ static func validate_placed(value: Variant) -> bool:
 		for n in cell:
 			if not (n is int or n is float) or not is_finite(float(n)) or float(n) < 0 or float(n) != floorf(float(n)) or float(n) > 1024:
 				return false
-		var key := "%s:%s" % [piece.get("area", "farm"), str(cell)]
+		var key := "%s:%d:%d" % [piece.get("area", "farm"), int(cell[0]), int(cell[1])]
 		if seen.has(key): return false
 		seen[key] = true
 		if piece.has("batch"):

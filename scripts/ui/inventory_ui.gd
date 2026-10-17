@@ -2,6 +2,7 @@ extends TTScreen
 ## Backpack presentation is separate from the data-owned crafting panel.
 const Fmt := preload("res://scripts/ui/theme/tt_format.gd")
 const Slot := preload("res://scenes/ui/components/item_slot.tscn")
+var farming_stats: Label
 var _slots: Array[Button] = []
 var _items: Array = []
 var _selected := 0
@@ -22,6 +23,7 @@ func _init() -> void:
 
 func _ready() -> void:
 	super._ready()
+	farming_stats = preload("res://scripts/ui/components/farming_details.gd").create(%DetailDesc)
 	var slot_group := ButtonGroup.new()
 	slot_group.set_meta("tt_value_selection", true)
 	for index in EconomyManager.INVENTORY_SLOTS:
@@ -134,9 +136,13 @@ func _select(index: int) -> void:
 	%DetailRarity.text = tr("RARITY_" + str(ItemKinds.rarity_of(_selected_id)).to_upper()) if _selected_id != &"" else ""
 	var description := tr(str(def.get("description_key", "")))
 	var growing := preload("res://scripts/ui/components/farming_details.gd").text(_selected_id)
-	if growing != "": description += "\n" + growing
 	var value := EconomyManager.sell_value(_selected_id)
-	%DetailDesc.text = description + ("\n" + tr("INV_SELLS_FOR") % Fmt.thousands(value) if value > 0 else "")
+	var sale := "\n" + tr("INV_SELLS_FOR") % Fmt.thousands(value) if value > 0 else ""
+	%DetailDesc.text = description + sale
+	%DetailDesc.visible = growing == ""
+	farming_stats.text = growing + sale
+	farming_stats.visible = growing != ""
+	farming_stats.tooltip_text = description
 	var use := str(def.get("category", "")) in ["animal","animal_care"] or (def.has("unlock_flag") and not bool(GameManager.get_flag(StringName(str(def.unlock_flag)), false))) or float(def.get("heal_half_hearts", 0)) > 0 or float(def.get("stamina", 0)) > 0 or float(def.get("oil_seconds", 0)) > 0 or str(def.get("placeable", "")) == "farm"
 	UiNav.set_enabled(%UseButton, use)
 	UiNav.set_enabled(%EquipButton, EconomyManager.equip_slot_of(_selected_id) != "")

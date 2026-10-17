@@ -12,6 +12,7 @@ shops = {
       strawberry_seeds = { stock = 99, restock = 99 },
       sunflower_seeds = { stock = 99, restock = 99 },
       catnip_seeds = { stock = 99, restock = 99 },
+      frost_kale_seeds = { stock = 99, restock = 99 },
       snow_turnip_seeds = { stock = 99, restock = 99 },
       snowdrop_seeds = { stock = 99, restock = 99 },
     },

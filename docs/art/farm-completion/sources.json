@@ -40,6 +40,14 @@
     "sprinkler": {
       "path": "tools/art/drawn/sources/farm_completion/sprinkler.png",
       "sha256": "82ff225cbeeb6217b6cda667eb3868761ebcee18f09185061d0c6120409eab2c"
+    },
+    "frost_kale_stages": {
+      "path": "tools/art/drawn/sources/farm_completion/frost_kale_stages.png",
+      "sha256": "fcb504e72deae6af5aeb4f957652a922ea749de752f6d445becea2bf7e92db17"
+    },
+    "frost_kale_seeds_icon": {
+      "path": "tools/art/drawn/sources/farm_completion/frost_kale_seeds_icon.png",
+      "sha256": "b4159241b7f86c334ba6de619d99ff4d8040b2d9472ea45d7ec8b3e8d67fab43"
     }
   }
 }

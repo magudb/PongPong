@@ -1,0 +1,22 @@
+run_playtest: importing project (pass 1 of 1) ...
+run_playtest: assets changed, running tools/import/write_import_stubs.py --check
+write_import_stubs --check: ok (62 character folders, 498 sheets with the S3TC preset, 58 tile atlases, 0 wardrobe layer imports lossless, 252 painted wardrobe textures with S3TC, 253 keep files)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=headless character=animal sections=res://tests/lib/town_loop/mutation_sections only=town_mutants
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.BRhOhx/Library/Application Support/Traetoppen (throwaway)
+== section town_mutants  (res://tests/lib/town_loop/mutation_sections/town_mutants.gd)
+  FAIL  town_mutants.l05_closed_before_open
+  FAIL  town_mutants.l05_closed_door_does_not_travel
+  ok    town_mutants.l16_shop_bell_is_logged
+  ok    town_mutants.l04_zone_and_running_clock
+  ok    town_mutants.l03_esc_first_line_no_heart
+  ok    town_mutants.l13_social_section_order
+  ok    town_mutants.digest_has_teeth_gold
+  ok    town_mutants.l02_citizens_freed_on_exit
+  --    town_mutants: 8 checks, 2 failed, 0 skipped, 4.1 s
+== summary: 1 section(s) run, 8 checks (2 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 5.7 s
+  FAILED   town_mutants.l05_closed_before_open
+  FAILED   town_mutants.l05_closed_door_does_not_travel
+PLAYTEST FAIL: 2 check failures, 0 engine errors, 0 engine warnings, 0 problems

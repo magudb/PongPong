@@ -15,6 +15,7 @@ const Talk := "res://scripts/social/talk/social_talk.gd"
 @onready var close_btn: Button = %CloseButton
 @onready var keeper_speech: Label = %KeeperSpeech
 var current_shop: StringName = &"seed_shop"
+var farming_stats: Label
 var equipment_stats: Label
 var _tabs: Array = []
 var _tab_buttons: Array[Button] = []
@@ -38,6 +39,7 @@ func _init() -> void:
 
 func _ready() -> void:
 	super._ready()
+	farming_stats = preload("res://scripts/ui/components/farming_details.gd").create(%DetailDesc)
 	_row_group.set_meta("tt_value_selection", true)
 	equipment_stats = Label.new()
 	equipment_stats.name = "EquipmentStats"
@@ -248,8 +250,8 @@ func _detail() -> void:
 	var def := ItemKinds.def(_selected_id)
 	%DetailName.text = tr(str(def.get("name_key", "")))
 	%DetailDesc.text = tr(str(def.get("description_key", "")))
-	var growing := preload("res://scripts/ui/components/farming_details.gd").text(_selected_id)
-	if growing != "": %DetailDesc.text += "\n" + growing
+	farming_stats.text = preload("res://scripts/ui/components/farming_details.gd").text(_selected_id)
+	farming_stats.visible = farming_stats.text != ""
 	equipment_stats.text = preload("res://scripts/ui/components/equipment_details.gd").text(str(_selected_id))
 	equipment_stats.visible = equipment_stats.text!=""
 	%DetailIcon.item_id = _selected_id

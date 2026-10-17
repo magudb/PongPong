@@ -233,5 +233,73 @@
     ],
     "elev": 36.0,
     "illustration": "tools/art/drawn/sources/farm_completion/snowdrop_stages.png"
+  },
+  "crop_frost_kale_0": {
+    "file": "crop_frost_kale_0.webp",
+    "size": [
+      84,
+      36
+    ],
+    "pivot": [
+      42,
+      26
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "illustration": "tools/art/drawn/sources/farm_completion/frost_kale_stages.png"
+  },
+  "crop_frost_kale_1": {
+    "file": "crop_frost_kale_1.webp",
+    "size": [
+      84,
+      56
+    ],
+    "pivot": [
+      42,
+      46
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "illustration": "tools/art/drawn/sources/farm_completion/frost_kale_stages.png"
+  },
+  "crop_frost_kale_2": {
+    "file": "crop_frost_kale_2.webp",
+    "size": [
+      84,
+      80
+    ],
+    "pivot": [
+      42,
+      70
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "illustration": "tools/art/drawn/sources/farm_completion/frost_kale_stages.png"
+  },
+  "crop_frost_kale_3": {
+    "file": "crop_frost_kale_3.webp",
+    "size": [
+      84,
+      100
+    ],
+    "pivot": [
+      42,
+      90
+    ],
+    "footprint": [
+      1,
+      1
+    ],
+    "elev": 36.0,
+    "illustration": "tools/art/drawn/sources/farm_completion/frost_kale_stages.png"
   }
 }

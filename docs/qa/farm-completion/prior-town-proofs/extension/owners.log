@@ -1,0 +1,598 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=towns_data,towns_interiors,social_data
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.3BKPdW/Library/Application Support/Traetoppen (throwaway)
+== section social_data  (res://tests/sections/social_data.gd)
+  ok    social_data.live_data_valid ([])
+  ok    appraiser_fru_ugle has authored social facts
+  ok    appraiser_fru_ugle taste distribution: 11 loved, 30 disliked of 310
+  ok    appraiser_fru_ugle has first meeting, hearts-band greetings and biography
+  ok    baker_maja has authored social facts
+  ok    baker_maja taste distribution: 6 loved, 21 disliked of 310
+  ok    baker_maja has first meeting, hearts-band greetings and biography
+  ok    baker_maja is an adult partner candidate
+  ok    baker_maja offers a cheap normal sample
+  ok    bathkeeper_sofus has authored social facts
+  ok    bathkeeper_sofus taste distribution: 10 loved, 32 disliked of 310
+  ok    bathkeeper_sofus has first meeting, hearts-band greetings and biography
+  ok    bathkeeper_sofus is an adult partner candidate
+  ok    beekeeper_birk has authored social facts
+  ok    beekeeper_birk taste distribution: 11 loved, 26 disliked of 310
+  ok    beekeeper_birk has first meeting, hearts-band greetings and biography
+  ok    beekeeper_birk is an adult partner candidate
+  ok    bertil has authored social facts
+  ok    bertil taste distribution: 10 loved, 25 disliked of 310
+  ok    bertil has first meeting, hearts-band greetings and biography
+  ok    bertil is an adult partner candidate
+  ok    bodil has authored social facts
+  ok    bodil taste distribution: 11 loved, 24 disliked of 310
+  ok    bodil has first meeting, hearts-band greetings and biography
+  ok    bodil is an adult partner candidate
+  ok    carpenter_brumme has authored social facts
+  ok    carpenter_brumme taste distribution: 4 loved, 31 disliked of 310
+  ok    carpenter_brumme has first meeting, hearts-band greetings and biography
+  ok    carpenter_brumme is an adult partner candidate
+  ok    cat_morfar_mis has authored social facts
+  ok    cat_morfar_mis taste distribution: 8 loved, 29 disliked of 310
+  ok    cat_morfar_mis has first meeting, hearts-band greetings and biography
+  ok    clerk_fjerpen has authored social facts
+  ok    clerk_fjerpen taste distribution: 13 loved, 30 disliked of 310
+  ok    clerk_fjerpen has first meeting, hearts-band greetings and biography
+  ok    cub_bamse has authored social facts
+  ok    cub_bamse taste distribution: 4 loved, 36 disliked of 310
+  ok    cub_bamse has first meeting, hearts-band greetings and biography
+  ok    fairy_builder has authored social facts
+  ok    fairy_builder taste distribution: 4 loved, 30 disliked of 310
+  ok    fairy_builder has first meeting, hearts-band greetings and biography
+  ok    fairy_builder offers a cheap normal sample
+  ok    fairy_furnisher has authored social facts
+  ok    fairy_furnisher taste distribution: 22 loved, 25 disliked of 310
+  ok    fairy_furnisher has first meeting, hearts-band greetings and biography
+  ok    fairy_furnisher offers a cheap normal sample
+  ok    fairy_king has authored social facts
+  ok    fairy_king taste distribution: 5 loved, 30 disliked of 310
+  ok    fairy_king has first meeting, hearts-band greetings and biography
+  ok    fairy_lily has authored social facts
+  ok    fairy_lily taste distribution: 4 loved, 36 disliked of 310
+  ok    fairy_lily has first meeting, hearts-band greetings and biography
+  ok    fairy_tailor has authored social facts
+  ok    fairy_tailor taste distribution: 16 loved, 25 disliked of 310
+  ok    fairy_tailor has first meeting, hearts-band greetings and biography
+  ok    fairy_tailor offers a cheap normal sample
+  ok    fairy_wizard has authored social facts
+  ok    fairy_wizard taste distribution: 11 loved, 30 disliked of 310
+  ok    fairy_wizard has first meeting, hearts-band greetings and biography
+  ok    fairy_wizard offers a cheap normal sample
+  ok    farmer_rosa has authored social facts
+  ok    farmer_rosa taste distribution: 11 loved, 22 disliked of 310
+  ok    farmer_rosa has first meeting, hearts-band greetings and biography
+  ok    farmer_rosa offers a cheap normal sample
+  ok    fiddler_strimmel has authored social facts
+  ok    fiddler_strimmel taste distribution: 18 loved, 26 disliked of 310
+  ok    fiddler_strimmel has first meeting, hearts-band greetings and biography
+  ok    gardener_hoppe has authored social facts
+  ok    gardener_hoppe taste distribution: 4 loved, 24 disliked of 310
+  ok    gardener_hoppe has first meeting, hearts-band greetings and biography
+  ok    gardener_hoppe is an adult partner candidate
+  ok    ghostfam_blund has authored social facts
+  ok    ghostfam_blund taste distribution: 5 loved, 36 disliked of 310
+  ok    ghostfam_blund has first meeting, hearts-band greetings and biography
+  ok    ghostfam_dyne has authored social facts
+  ok    ghostfam_dyne taste distribution: 9 loved, 28 disliked of 310
+  ok    ghostfam_dyne has first meeting, hearts-band greetings and biography
+  ok    ghostfam_gnist has authored social facts
+  ok    ghostfam_gnist taste distribution: 7 loved, 22 disliked of 310
+  ok    ghostfam_gnist has first meeting, hearts-band greetings and biography
+  ok    ghostfam_silke has authored social facts
+  ok    ghostfam_silke taste distribution: 5 loved, 28 disliked of 310
+  ok    ghostfam_silke has first meeting, hearts-band greetings and biography
+  ok    guard_oak has authored social facts
+  ok    guard_oak taste distribution: 6 loved, 31 disliked of 310
+  ok    guard_oak has first meeting, hearts-band greetings and biography
+  ok    innkeeper_kvak has authored social facts
+  ok    innkeeper_kvak taste distribution: 6 loved, 24 disliked of 310
+  ok    innkeeper_kvak has first meeting, hearts-band greetings and biography
+  ok    lamplighter_kiki has authored social facts
+  ok    lamplighter_kiki taste distribution: 17 loved, 26 disliked of 310
+  ok    lamplighter_kiki has first meeting, hearts-band greetings and biography
+  ok    lamplighter_kiki is an adult partner candidate
+  ok    loop_neighbour has authored social facts
+  ok    loop_neighbour taste distribution: 3 loved, 21 disliked of 310
+  ok    loop_neighbour has first meeting, hearts-band greetings and biography
+  ok    mapseller_natteblik has authored social facts
+  ok    mapseller_natteblik taste distribution: 4 loved, 36 disliked of 310
+  ok    mapseller_natteblik has first meeting, hearts-band greetings and biography
+  ok    mayor_lyra has authored social facts
+  ok    mayor_lyra taste distribution: 6 loved, 26 disliked of 310
+  ok    mayor_lyra has first meeting, hearts-band greetings and biography
+  ok    merchant_pip has authored social facts
+  ok    merchant_pip taste distribution: 5 loved, 21 disliked of 310
+  ok    merchant_pip has first meeting, hearts-band greetings and biography
+  ok    merchant_pip is an adult partner candidate
+  ok    merchant_pip offers a cheap normal sample
+  ok    penguin_postman has authored social facts
+  ok    penguin_postman taste distribution: 3 loved, 30 disliked of 310
+  ok    penguin_postman has first meeting, hearts-band greetings and biography
+  ok    pippin_boegeknop has authored social facts
+  ok    pippin_boegeknop taste distribution: 15 loved, 27 disliked of 310
+  ok    pippin_boegeknop has first meeting, hearts-band greetings and biography
+  ok    pippin_boegeknop offers a cheap normal sample
+  ok    postman_pip has authored social facts
+  ok    postman_pip taste distribution: 4 loved, 26 disliked of 310
+  ok    postman_pip has first meeting, hearts-band greetings and biography
+  ok    postman_pip is an adult partner candidate
+  ok    rasmus has authored social facts
+  ok    rasmus taste distribution: 17 loved, 26 disliked of 310
+  ok    rasmus has first meeting, hearts-band greetings and biography
+  ok    rasmus is an adult partner candidate
+  ok    smith_thorin has authored social facts
+  ok    smith_thorin taste distribution: 6 loved, 31 disliked of 310
+  ok    smith_thorin has first meeting, hearts-band greetings and biography
+  ok    smith_thorin offers a cheap normal sample
+  ok    social_data.citizens_cover_friends
+  ok    social_data.copy_lint_clean_on_the_social_csvs ([]
+)
+  ok    social_data.voiced_index_in_sync
+  ok    social_data.tool_printed_ids (Social voice index printed 1 PASS/FAIL ids)
+  ok    social_data.tool_exit_code (Social voice index exit code 0)
+  ok    social_data.new_npc_by_data_only (One roster row gets hearts, a stable birthday and the child archetype)
+  ok    Derived child uses archetype taste without another row
+  --    social_data: 133 checks, 0 failed, 0 skipped, 1.4 s
+== section towns_data  (res://tests/sections/towns_data.gd)
+  ok    towns_data.config_complete (npc_speed 0.65 of the player's walk speed 285.0 = 185.25 px/s (185) true; portal_seconds 0.5, max_live_visuals 16 (hard cap), plan_visual_peak 14, live_min_dwell 0.05, closing_whisper_minutes 30, carrot_max_speed 1.6, hours_enabled true, curfew enabled true; rain_shelter acts sit tend play fish from 8 to 19 true)
+  ok    towns_data.constants_keys (exactly the 11 constants ["carrot_max_speed", "closing_whisper_minutes", "curfew", "hours_enabled", "live_min_dwell", "max_live_visuals", "max_live_visuals_festival", "npc_speed", "plan_visual_peak", "portal_seconds", "rain_shelter"] (no unowned extra), the key `towns` does not collide with a registry name (get_registry("towns") is empty true))
+  ok    towns_data.festival_cap_covers_the_crowd (max_live_visuals_festival 20 = 15 attendees + the host 1 + the four family members 4 = 20 (social.festival.max_attendees 15); the ordinary day cap stays 16 and the plan peak 14)
+  ok    towns_data.curfew_config_on_the_26_hour_day (curfew whisper 25.5 (01:30) and go_home 25.75 (01:45) on the axis 6..26: the same 30 / 15 minute cushions before the 02:00 pass-out (day end 26); format 01:30 / 01:45)
+  ok    building gaestehytten (shop, room int_gaestehytten) matches the row schema
+  ok    building froebutikken (shop, room int_froebutikken) matches the row schema
+  ok    building bageriet (shop, room int_bageriet) matches the row schema
+  ok    building smedjen (shop, room int_smedjen) matches the row schema
+  ok    building dyrehuset (shop, room int_dyrehuset) matches the row schema
+  ok    building troldmandstaarnet (shop, room int_troldmandstaarnet) matches the row schema
+  ok    building moebelbutikken (shop, room int_moebelbutikken) matches the row schema
+  ok    building skraedderiet (shop, room int_skraedderiet) matches the row schema
+  ok    building toemmerhandlen (shop, room int_toemmerhandlen) matches the row schema
+  ok    building loppeloftet (shop, room int_loppeloftet) matches the row schema
+  ok    building pingvinens_hus (home, no room) matches the row schema
+  ok    building uglehulen (service, room int_uglehulen) matches the row schema
+  ok    building postkontoret (service, room int_postkontoret) matches the row schema
+  ok    building brummes_vaerksted (shop, room int_brummes_vaerksted) matches the row schema
+  ok    building fjerpens_hytte (home, no room) matches the row schema
+  ok    building badehuset (service, room int_badehuset) matches the row schema
+  ok    building koekkenhave_skuret (home, no room) matches the row schema
+  ok    building raadhuset (public, room int_raadhuset) matches the row schema
+  ok    building torvestanden (stall, no room) matches the row schema
+  ok    building natteblik_vinduet (stall, no room) matches the row schema
+  ok    towns_data.buildings_schema (the 20 CORE rows of lua/buildings/{traetoppen,hyggebyen}.lua (area, kind, name_key BLD_<ID>, interior int_<id> + size, keeper, post, emblem, hours, wave core); kinds { "shop": 11, "home": 3, "service": 3, "public": 1, "stall": 2 }, 14 with a room (15), 3 locked nameplate homes, 2 stalls, 1 decor hut; 0 schema problems [])
+  ok    towns_data.shop_ids_exist (the canonical 12 shop ids and any extensions in the registry ["animal_store", "bakery", "builder_yard", "flea_market", "furniture_shop", "lantern_house", "loop_shop", "magic_store", "natteblik_maps", "seed_shop", "smithy", "tailor_shop", "timber_yard"]: every one except the late ids is defined by a shop file (0 problems []))
+  ok    towns_data.late_shop_ids_listed_not_failed (without the two late shop files the rule lists them by name ["natteblik_maps", "timber_yard"] and fails nothing; a missing seed_shop is the one problem ["froebutikken: shop id `seed_shop` is defined by no shop file"])
+  ok    towns_data.service_rows_have_no_shop_id (the service rows ["badehuset", "postkontoret", "uglehulen"] carry no `shop` (Uglehulen's appraisal is design2's game_event open_appraisal, not a ShopSystem shop; the draft id fru_ugle_vurdering never existed))
+  ok    towns_data.hours_consistency (hours.consistency on the real registry: every shop, service, public building and stall has hours, is open >= 6 game hours (the night window of Natteblik is short_ok), closes by 26:00, closes on weekdays 0..6, and its keeper is a citizen with a routine (0 problems []))
+  ok    7 of 10 shops are open at 12:00 on mandag (design: 7)
+  ok    8 of 10 shops are open at 12:00 on tirsdag (design: 8)
+  ok    8 of 10 shops are open at 12:00 on onsdag (design: 8)
+  ok    8 of 10 shops are open at 12:00 on torsdag (design: 8)
+  ok    8 of 10 shops are open at 12:00 on fredag (design: 8)
+  ok    10 of 10 shops are open at 12:00 on lørdag (design: 10)
+  ok    8 of 10 shops are open at 12:00 on søndag (design: 8)
+  ok    towns_data.opening_days_at_noon (open shops of 10 at 12:00 Monday .. Sunday: [7, 8, 8, 8, 8, 10, 8] (design: 7 8 8 8 8 10 8; the workshop and the Torvet stall count as ONE shop, timber_yard))
+  ok    towns_data.emblem_ids_exist_when_manifest_present (the 14 rows with an emblem name one of the 15 plates of the kit table (the 14 shop and service rooms + Brumme's stall); assets/iso_props/shops/core/emblems.json lists all 15 plates)
+  ok    hours rule: bageriet on tirsdag at 10:00 is open (as the table says)
+  ok    hours rule: bageriet on mandag at 10:00 is shut (as the table says)
+  ok    hours rule: bageriet on tirsdag at 06:30 is shut (as the table says)
+  ok    hours rule: bageriet on tirsdag at 17:00 is shut (as the table says)
+  ok    hours rule: bageriet on tirsdag at 16:59 is open (as the table says)
+  ok    hours rule: bageriet on tirsdag at 07:00 is open (as the table says)
+  ok    hours rule: froebutikken on søndag at 12:00 is shut (as the table says)
+  ok    hours rule: froebutikken on lørdag at 12:00 is open (as the table says)
+  ok    hours rule: loppeloftet on onsdag at 12:00 is shut (as the table says)
+  ok    hours rule: loppeloftet on lørdag at 12:00 is open (as the table says)
+  ok    hours rule: badehuset on torsdag at 20:30 is open (as the table says)
+  ok    hours rule: badehuset on torsdag at 21:00 is shut (as the table says)
+  ok    hours rule: raadhuset on lørdag at 10:00 is shut (as the table says)
+  ok    hours rule: raadhuset on onsdag at 10:00 is open (as the table says)
+  ok    hours rule: uglehulen on torsdag at 14:00 is shut (as the table says)
+  ok    hours rule: uglehulen on onsdag at 14:00 is open (as the table says)
+  ok    hours rule: uglehulen on onsdag at 11:54 is shut (as the table says)
+  ok    hours rule: natteblik_vinduet on torsdag at 21:00 is open (as the table says)
+  ok    hours rule: natteblik_vinduet on torsdag at 12:00 is shut (as the table says)
+  ok    hours rule: natteblik_vinduet on torsdag at 23:36 is shut (as the table says)
+  ok    hours rule: natteblik_vinduet on torsdag at 23:29 is open (as the table says)
+  ok    hours rule: torvestanden on lørdag at 12:00 is open (as the table says)
+  ok    hours rule: torvestanden on onsdag at 12:00 is shut (as the table says)
+  ok    hours rule: smedjen on søndag at 12:00 is shut (as the table says)
+  ok    hours rule: dyrehuset on torsdag at 12:00 is shut (as the table says)
+  ok    hours rule: troldmandstaarnet on tirsdag at 12:00 is shut (as the table says)
+  ok    hours rule: moebelbutikken on onsdag at 12:00 is shut (as the table says)
+  ok    hours rule: skraedderiet on mandag at 12:00 is shut (as the table says)
+  ok    hours rule: toemmerhandlen on fredag at 12:00 is shut (as the table says)
+  ok    hours rule: brummes_vaerksted on lørdag at 12:00 is shut (as the table says)
+  ok    hours rule: brummes_vaerksted on onsdag at 12:00 is open (as the table says)
+  ok    hours rule: postkontoret on søndag at 12:00 is shut (as the table says)
+  ok    hours rule: postkontoret on mandag at 09:00 is open (as the table says)
+  ok    hours rule: fjerpens_hytte on torsdag at 03:00 is open (as the table says)
+  ok    state: the bakery on a Monday is closed for the DAY and next opens Tuesday 07:00
+  ok    state: Tuesday 06:00 is closed for HOURS, opening 07:00 today
+  ok    state: Tuesday 18:00 is closed for HOURS, the next opening is Wednesday 07:00
+  ok    state: Saturday 18:00 -> next Sunday; Sunday 18:00 -> next Tuesday (Monday is the closed day)
+  ok    state: the flea loft on a Monday -> next Saturday 10:00
+  ok    state: an open bakery reports reason open and closes at 17.0
+  ok    state: a row without hours (a home) reads reason none and closes at the day end 26.0
+  ok    towns_data.hours_rule_table (34 rows over the real registry (open <= hour < close on a weekday not in `closed`; a row without hours is always open) ALL AGREE; states: Monday the bakery is closed for the DAY and next opens Tuesday 07:00 true, Tuesday 06:00 for HOURS (07:00 today) true, Tuesday 18:00 next Wednesday true, Saturday 18:00 next Sunday and Sunday 18:00 next Tuesday (Monday is closed) true, the flea loft on a Monday next Saturday 10:00 true; an open state closes at 17.0 true, a home reads reason none and closes at the day end 26.0 true)
+  ok    towns_data.hours_now_ctx_is_clock_only (now_ctx = {weekday, hour, season, total_day, weather} read from GameManager and TimeManager (Wednesday 13:30 -> weekday 2, hour 13.5) true, no hero, hearts or flags (Routines.now_ctx of T-routes extends it later) true, the festival closure only as a late-bound Callable when SocialManager exists true (answers true), the raw hour 25.5 stays 25.5 on Sunday true)
+  ok    towns_data.hours_switch_off_answers_null (towns.hours_enabled (default true): Monday 12:00 the bakery is closed true; with the switch OFF Hours.shop_open answers null on every day (<null> / <null>), the gate answers null true, ShopSystem.is_open is the def's own rule (open: true, no closed_reason: true); ON again: false true, ShopSystem closed true)
+  ok    towns_data.hours_wrap_midnight (`close < open` is the after-midnight notation of the SAME game day: open 20 close 1 reads [20.0, 25.0]; Thursday 22:00, 24:30 and 24:59 are open, 25:00 (01:00) and 25:30 shut, 19:54 shut; closed on Friday; close 0 reads 24.0 true; a plain day shop (workshop 08-16) is shut at 24:30 and 25:30 true)
+  ok    towns_data.hours_after_midnight (Hours accepts a close up to 26 as a plain interval: the stall (open 20, close 25.5) is open at 24:30 and 25:15 and shut at 25:30 (closes_at 25.5 prints 01:30), the lantern house row `close = 25` is open at 24:30 and shut at 01:00 (prints 01:00); the notation close 1.5 equals 25.5 true; `close <= day_end_hour` is the only bound)
+  ok    towns_data.hours_weekday_is_the_game_day (the weekday of the rule is TimeManager.weekday_index of the game day: Friday 24:30 (00:30) reads weekday 4 and the Friday bar (closed on Saturday) is open true; Saturday 21:00 is shut for the DAY true; the weekday steps only with the 02:00 roll (25:58 Friday -> 02:01 Saturday: 4 -> 5))
+  ok    towns_data.hours_minutes_to_close_after_midnight (d = closes_at - hour on the normalised axis: the bar that closes at 01:00 has 30 minutes at 24:30, 0 at 25:30 (the draft added 24 when negative: wrong there) and 300 at 20:00; the 25.5 stall has 30 at 25:00; the bakery 30 at 16:30; a closed building and a home 0)
+  ok    towns_data.hours_format_hour_wraps (format_hour keeps the hour part mod 24: 25.0 prints 01:00, 24.5 00:30, 24.0 00:00, 06:00, 17:30, 07:15; the door sign's compact form prints 8, 18, 23:30 and keeps the full form from midnight (01:00, 00:00) so `1` is never read as 13:00)
+  ok    towns_data.hours_validator_accepts_close_up_to_the_day_end (hours.consistency evaluates the NORMALISED close: 26, 25.5, 1, 0 and 2 (= 26.0) pass, 27 / 3 (= 27.0) and an open of 5.5 fail ALL AGREE; with a day that ends at 24 a close of 25 fails true)
+  ok    towns_data.hours_override_weekday (overrides = { { weekday = { 0 }, open = 17, close = 23 } } changes one weekday: Monday reads [17, 23] and is shut at noon (opens 17.0), open at 18:00; Tuesday keeps [11, 23] and is open at noon)
+  ok    towns_data.hours_empty_table_is_no_days (`closed = {}` arrives from Lua as Dictionary and means no closed day: the inn is open on all 7 weekdays at 18:00 true, closed_days reads [] for a Dictionary, an Array, a missing key and an empty hours table true, `{ 0, 3 }` reads [0, 3])
+  ok    towns_data.festival_closure_via_ctx (a festival closes a shop ONLY through ctx.fest_closed_fn(shop_id): the bakery reads reason festival, shop_open false, closed_info festival, the seed shop stays open true; no function = nothing closes true; production: SocialManager.shop_closed_by_festival is asked late bound (open true -> closed true -> open again true) and without a social track nothing closes true)
+  ok    towns_data.multi_building_shop (timber_yard is claimed by the workshop and the Torvet stall ["brummes_vaerksted", "torvestanden"]: open when ANY of them is (Monday noon true, Saturday noon true, Sunday 09:00 shut true); closed_info points at the building that opens first: Monday 07:00 -> 08:00 today true, Friday 17:00 -> Saturday 10:00 (the stall) true, an open day answers the open state true)
+  ok    BLD_UGLEHULEN has a Danish and an English name: Uglehulen / The Owl Hollow
+  ok    BLD_POSTKONTORET has a Danish and an English name: Postkontoret / The Post Office
+  ok    BLD_BRUMMES_VAERKSTED has a Danish and an English name: Brummes værksted / Brumme's Workshop
+  ok    BLD_FJERPENS_HYTTE has a Danish and an English name: Fjerpens hytte / Fjerpen's Hut
+  ok    BLD_BADEHUSET has a Danish and an English name: Badehuset / The Bathhouse
+  ok    BLD_GAESTEHYTTEN has a Danish and an English name: Gæstehytten / The Guest Hut
+  ok    BLD_KOEKKENHAVE_SKURET has a Danish and an English name: Køkkenhave-skuret / The Kitchen Garden Shed
+  ok    BLD_RAADHUSET has a Danish and an English name: Rådhuset / The Town Hall
+  ok    BLD_TORVESTANDEN has a Danish and an English name: Torvestanden / The Market Stall
+  ok    BLD_NATTEBLIK_VINDUET has a Danish and an English name: Natteblik-vinduet / The Bat Window
+  ok    BLD_FROEBUTIKKEN has a Danish and an English name: Kløvermyntes Frø / Kløvermynte's Seeds
+  ok    BLD_BAGERIET has a Danish and an English name: Rosmarins Bageri / Rosmarin's Bakery
+  ok    BLD_SMEDJEN has a Danish and an English name: Thorins Smedje / Thorin's Smithy
+  ok    BLD_DYREHUSET has a Danish and an English name: Dyrehuset / The Animal House
+  ok    BLD_TROLDMANDSTAARNET has a Danish and an English name: Zephyrs Tårn / Zephyr's Tower
+  ok    BLD_MOEBELBUTIKKEN has a Danish and an English name: Stokroses Møbler / Stokrose's Furniture
+  ok    BLD_SKRAEDDERIET has a Danish and an English name: Fingerbøls Skrædderi / Fingerbøl's Tailor
+  ok    BLD_TOEMMERHANDLEN has a Danish and an English name: Hasselnøds Tømmerhandel / Hasselnød's Timber Yard
+  ok    BLD_LOPPELOFTET has a Danish and an English name: Pippins Loppeloft / Pippin's Flea Loft
+  ok    BLD_PINGVINENS_HUS has a Danish and an English name: Postpingvinens hus / The Postman Penguin's House
+  ok    BLD_HOPPE_HUT has a Danish and an English name: Hoppes hytte / Hoppe's Hut
+  ok    BLD_VAGTHYTTEN has a Danish and an English name: Vagthytten / The Guard Hut
+  ok    BLD_BRUMMES_HUS has a Danish and an English name: Brummes hus / Brumme's House
+  ok    BLD_KIKIS_HYTTE has a Danish and an English name: Kikis hytte / Kiki's Hut
+  ok    BLD_TORVEKROEN has a Danish and an English name: Torvekroen / The Market Inn
+  ok    BLD_MUSIKSTUEN has a Danish and an English name: Musikstuen / The Music Parlour
+  ok    BLD_FEKONGENS_HUS has a Danish and an English name: Fekongens træhus / The Fairy King's Treehouse
+  ok    BLD_HYLDEBLOMSTS_HUS has a Danish and an English name: Hyldeblomsts hus / Hyldeblomst's House
+  ok    BLD_PIPPINS_HUS has a Danish and an English name: Pippins hus / Pippin's House
+  ok    BLD_BIRKS_BISTADE has a Danish and an English name: Birks bistade / Birk's Apiary
+  ok    towns_data.keys_da_en_complete (towns.csv holds BLD_ for all 30 buildings (30; core and ext, so the ext package adds no copy), the 11 HOURS_ whisper keys, 7 weekday names, 15 ACT_ labels, 5 COUNTER_ prompts: da and en present, the same %s placeholders in both, loaded by the game (69 keys, 0 missing in the loader), only the four families; the Danish texts of design_towns.md 4.5 are pinned true; missing [])
+  ok    towns_data.act_hide_known (ACT_HIDE reads 'gemmer sig' (Blund's hiding blocks, GHOST_FAMILY AGF4); the 14 acts of the routine vocabulary + hide = 15 labels, and they are exactly the acts a room post may carry (schema.json): true)
+  ok    towns_data.copy_lint_clean_for_towns (towns.csv: the loader's lint reports nothing for the file (0 issues []), no retired name (the retired town name, PongPong, Eventyrskoven), no stray spaces, no ASCII quote, no raw-key text (0 findings []); I1's copy lint C1-C10 ran clean)
+  ok    towns_data.fixtures_load (the fixture town loads through the registry kind (10 buildings in towns_fixture_buildings, 6 citizens in towns_fixture_citizens, every home, work place, keeper and owner resolves []) and passes the rules (0 problems []); the three sample rooms ["int_froebutikken", "int_hoppe_hut", "int_postkontoret"] parse and match data/interiors/schema.json []; FakeSocial offers festival_today, override_for and shop_closed_by_festival true; the context builder true)
+  ok    fixture mutant shop_without_hours is reported (fx_bakery: a shop must have opening hours)
+  ok    fixture mutant close_after_the_end_of_the_day is reported (fx_bakery: hours close 27 (normalised 27.0) is after the end of the game day (26.0))
+  ok    fixture mutant open_equals_close is reported (fx_bakery: hours are empty (open 7 close 7))
+  ok    fixture mutant closed_on_every_weekday is reported (fx_bakery: closed on all seven weekdays: it never opens)
+  ok    fixture mutant closed_weekday_out_of_range is reported (fx_bakery: closed weekday 7 is not 0..6)
+  ok    fixture mutant shop_id_unknown is reported (fx_bakery: shop id `no_such_shop_anywhere` is defined by no shop file)
+  ok    fixture mutant keeper_is_no_citizen is reported (fx_bakery: keeper `nobody_at_all` is not a citizen)
+  ok    fixture mutant name_key_is_not_BLD_id is reported (fx_bakery: name_key must be BLD_FX_BAKERY, got `BLD_WRONG`)
+  ok    fixture mutant interior_without_size is reported (fx_bakery: a building with an interior needs size S | M | L)
+  ok    fixture mutant unknown_field is reported (fx_bakery: unknown field `stand_in`)
+  ok    fixture mutant override_weekday_out_of_range is reported (fx_bakery: override weekday 9 is not 0..6)
+  ok    fixture mutant hours_not_numeric is reported (fx_bakery: hours need numeric open and close)
+  ok    fixture mutant service_with_a_shop_id is reported (fx_clinic: a service row has NO shop id (its appraisal / bath / post are game events, not ShopSystem shops))
+  ok    fixture mutant service_without_keeper is reported (fx_clinic: a service needs a keeper)
+  ok    fixture mutant stall_with_an_interior is reported (fx_late_stall: a stall has no interior)
+  ok    fixture mutant short_night_row_without_short_ok is reported (fx_late_stall: hours are open only 3.0 game hours (< 6.0) and the row is not short_ok)
+  ok    fixture mutant home_without_owner is reported (fx_home: a home needs an owner)
+  ok    real-registry mutant shop_without_hours is reported (gaestehytten: a shop must have opening hours)
+  ok    real-registry mutant close_after_the_end_of_the_day is reported (gaestehytten: hours close 27 (normalised 27.0) is after the end of the game day (26.0))
+  ok    real-registry mutant open_equals_close is reported (gaestehytten: hours are empty (open 17 close 17))
+  ok    real-registry mutant closed_on_every_weekday is reported (gaestehytten: closed on all seven weekdays: it never opens)
+  ok    real-registry mutant closed_weekday_out_of_range is reported (gaestehytten: closed weekday 7 is not 0..6)
+  ok    real-registry mutant shop_id_unknown is reported (gaestehytten: shop id `no_such_shop_anywhere` is defined by no shop file)
+  ok    real-registry mutant keeper_is_no_citizen is reported (gaestehytten: keeper `nobody_at_all` is not a citizen)
+  ok    real-registry mutant name_key_is_not_BLD_id is reported (gaestehytten: name_key must be BLD_GAESTEHYTTEN, got `BLD_WRONG`)
+  ok    real-registry mutant interior_without_size is reported (gaestehytten: a building with an interior needs size S | M | L)
+  ok    real-registry mutant unknown_field is reported (gaestehytten: unknown field `stand_in`)
+  ok    real-registry mutant override_weekday_out_of_range is reported (gaestehytten: override weekday 9 is not 0..6)
+  ok    real-registry mutant hours_not_numeric is reported (gaestehytten: hours need numeric open and close)
+  ok    real-registry mutant service_with_a_shop_id is reported (uglehulen: a service row has NO shop id (its appraisal / bath / post are game events, not ShopSystem shops))
+  ok    real-registry mutant service_without_keeper is reported (uglehulen: a service needs a keeper)
+  ok    real-registry mutant stall_with_an_interior is reported (torvestanden: a stall has no interior)
+  ok    real-registry mutant short_night_row_without_short_ok is reported (torvestanden: hours are open only 3.0 game hours (< 6.0) and the row is not short_ok)
+  ok    real-registry mutant home_without_owner is reported (hoppe_hut: a home needs an owner)
+  ok    towns_data.mutants_are_caught (17 mutants of the fixture registry and 17 of the real one (a shop without hours, a close after the end of the day, open == close, closed on all seven days, a weekday out of range, an unknown shop id, a keeper that is no citizen, a wrong name_key, an interior without size, an unknown field, a service with a shop id, a stall with an interior, a night row without short_ok, a home without an owner ...) are ALL reported; the unmutated registries pass; missed [] [])
+  ok    towns_data.registry_kind_loads_lints_and_claims (kind = "registry": the 20 CORE ids load from the two files (get_registry("buildings"), get_registry_entry("buildings", "bageriet") = shop bakery, keeper baker_maja), the three Lua files lint with 0 findings true, no id of the real registry is claimed twice true; a duplicate id across two files is ONE duplicate_id note naming registry:<name>, the later file wins true; a registry file without `registry = ` is the finding registry_header true; the config key `towns` collides with no registry name)
+  ok    towns_data.shop_system_hook (with the buildings registry loaded ShopSystem.is_open answers Hours.shop_open through ShopHoursGate: Tuesday 10:00 the bakery and the seed shop are open true, Monday the bakery is closed with closed_reason day, opens_at 7.0, next_open_weekday 1 true and buying is refused with reason `closed` true; Sunday the seed shop is closed (day, back on Monday) and buy_item is refused true; Tuesday 06:00 the bakery reason is hours, opens 07:00 true; open again, buying works true)
+  ok    towns_data.unclaimed_shop_keeps_weekday_rule (flea_market (open_weekdays 5, 6) is claimed by the Loppeloft: the building and the def agree on every weekday at noon true (Saturday 09:00 the building's 10:00 wins true); with no building claiming it the rule answers null true and the def's weekdays decide alone, at any hour (Saturday open, Wednesday closed, no closed_reason: true / true); with scripts/towns/hours.gd absent the gate answers no rule and nothing changes true)
+  ok    towns_data.no_forward_class_refs (none of the 6 scripts of the package names a class of a later wave outside a string or a comment (Routines, RouteTable, NavGrid, FestSet, NpcDirector, TownsValidate, TownMarks, LevelNav, TownDirector, TownMarker, CitizenStub, CityTown, GiftRules, GiftFlow, SocialTalk, and the autoloads SocialManager, LootService, HomeManager: they appear only as path strings in Svc.static_call / Svc.node): 0 hits []; the scanner finds an identifier in code (["probe:6 Routines", "probe:7 NavGrid"]) and ignores strings and comments true)
+  ok    towns_data.wave4_scripts_load_without_later_files (every script of the package loads and reloads without a parse error (6 scripts, 0 problems []); the later files of the towns track that exist in this tree: ["routines.gd", "route_table.gd", "nav_grid.gd", "npc_director.gd", "town_director.gd", "town_marker.gd"]; Routines is reached only through Hours.where_is (a path string with the default null): true)
+  --    towns_data: 166 checks, 0 failed, 0 skipped, 2.5 s
+== section towns_interiors  (res://tests/sections/towns_interiors.gd)
+  ok    int_froebutikken matches data/interiors/schema.json
+  ok    int_postkontoret matches data/interiors/schema.json
+  ok    int_hoppe_hut matches data/interiors/schema.json
+  ok    towns_interiors.json_schema (the 3 fixture rooms match data/interiors/schema.json (cols, rows, wall_style, floor, door, spawn_cell, windows, exit, items [{id, cell, rot, role?, wall?}], posts, markers incl. one hatch; no stand_in field) []; its enums are the art that exists (wall styles ["plank", "paper", "marble"] of interior.json true, floors ["floor_plank", "floor_parquet", "floor_stone", "floor_marble"] of tiles_floors.json true); the interpreter reports a bad style, a stand_in field, a rotation of 4, a three-number cell and a missing key true; the Python validator says the same on the same file (clean 0 problems, broken copy refused) true)
+  ok    int_froebutikken: the stub map header is complete (zone city, title BLD_FROEBUTIKKEN, builder, room id, 7 lines)
+  ok    int_postkontoret: the stub map header is complete (zone traetoppen, title BLD_POSTKONTORET, builder, room id, 7 lines)
+  ok    int_hoppe_hut: the stub map header is complete (zone traetoppen, title BLD_HOPPE_HUT, builder, room id, 7 lines)
+  ok    towns_interiors.zone_header (the seven line stub map of a room (@id, @title BLD_<ID>, @projection iso (an ortho room would freeze the calendar), @ambient home, @zone <zone of the outer area>, @builder res://scripts/towns/interior_room.gd, @room <id>) parses without errors, the builder exists, the title key has a text, a builder room is never parked: ["int_froebutikken zone city title BLD_FROEBUTIKKEN", "int_postkontoret zone traetoppen title BLD_POSTKONTORET", "int_hoppe_hut zone traetoppen title BLD_HOPPE_HUT"])
+  ok    int_froebutikken: zoom 0.754 fits the room's 896 x 812 px visual box into 1280 x 720
+  ok    int_postkontoret: zoom 0.791 fits the room's 832 x 774 px visual box into 1280 x 720
+  ok    int_hoppe_hut: zoom 0.877 fits the room's 704 x 698 px visual box into 1280 x 720
+  ok    towns_interiors.zoom_fits_every_room (zoom_fit = 0.85 * min(1280 / (n * 64), 720 / (n * 38 + 280)), n = cols + rows: the room's visual box times the zoom fits the 1280 x 720 view, the JSON carries the same number: ["int_froebutikken 0.754", "int_postkontoret 0.791", "int_hoppe_hut 0.877"])
+  ok    int_badehuset warm build 1: 8.29 ms, 109 nodes, 38 sprites, 2 lights
+  ok    int_badehuset warm build 2: 8.31 ms, 109 nodes, 38 sprites, 2 lights
+  ok    int_bageriet warm build 1: 9.49 ms, 110 nodes, 37 sprites, 3 lights
+  ok    int_bageriet warm build 2: 9.31 ms, 110 nodes, 37 sprites, 3 lights
+  ok    int_birks_bistade warm build 1: 10.28 ms, 61 nodes, 23 sprites, 2 lights
+  ok    int_birks_bistade warm build 2: 10.65 ms, 61 nodes, 23 sprites, 2 lights
+  ok    int_brummes_hus warm build 1: 10.52 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_brummes_hus warm build 2: 10.45 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_brummes_vaerksted warm build 1: 8.62 ms, 112 nodes, 41 sprites, 2 lights
+  ok    int_brummes_vaerksted warm build 2: 8.86 ms, 112 nodes, 41 sprites, 2 lights
+  ok    int_dyrehuset warm build 1: 8.86 ms, 112 nodes, 41 sprites, 2 lights
+  ok    int_dyrehuset warm build 2: 8.60 ms, 112 nodes, 41 sprites, 2 lights
+  ok    int_fekongens_hus warm build 1: 10.31 ms, 71 nodes, 29 sprites, 2 lights
+  ok    int_fekongens_hus warm build 2: 10.54 ms, 71 nodes, 29 sprites, 2 lights
+  ok    int_froebutikken warm build 1: 10.80 ms, 103 nodes, 37 sprites, 2 lights
+  ok    int_froebutikken warm build 2: 11.33 ms, 103 nodes, 37 sprites, 2 lights
+  ok    int_hoppe_hut warm build 1: 11.66 ms, 70 nodes, 28 sprites, 2 lights
+  ok    int_hoppe_hut warm build 2: 11.66 ms, 70 nodes, 28 sprites, 2 lights
+  ok    int_hyldeblomsts_hus warm build 1: 11.42 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_hyldeblomsts_hus warm build 2: 11.23 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_kikis_hytte warm build 1: 10.25 ms, 60 nodes, 22 sprites, 2 lights
+  ok    int_kikis_hytte warm build 2: 9.84 ms, 60 nodes, 22 sprites, 2 lights
+  ok    int_loppeloftet warm build 1: 8.95 ms, 99 nodes, 33 sprites, 2 lights
+  ok    int_loppeloftet warm build 2: 8.93 ms, 99 nodes, 33 sprites, 2 lights
+  ok    int_moebelbutikken warm build 1: 14.02 ms, 113 nodes, 40 sprites, 2 lights
+  ok    int_moebelbutikken warm build 2: 13.83 ms, 113 nodes, 40 sprites, 2 lights
+  ok    int_musikstuen warm build 1: 9.85 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_musikstuen warm build 2: 9.54 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_pippins_hus warm build 1: 9.95 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_pippins_hus warm build 2: 9.74 ms, 57 nodes, 21 sprites, 2 lights
+  ok    int_postkontoret warm build 1: 6.69 ms, 101 nodes, 34 sprites, 2 lights
+  ok    int_postkontoret warm build 2: 6.51 ms, 101 nodes, 34 sprites, 2 lights
+  ok    int_raadhuset warm build 1: 12.51 ms, 114 nodes, 43 sprites, 2 lights
+  ok    int_raadhuset warm build 2: 12.28 ms, 114 nodes, 43 sprites, 2 lights
+  ok    int_skraedderiet warm build 1: 8.93 ms, 104 nodes, 36 sprites, 2 lights
+  ok    int_skraedderiet warm build 2: 8.89 ms, 104 nodes, 36 sprites, 2 lights
+  ok    int_smedjen warm build 1: 7.56 ms, 102 nodes, 36 sprites, 3 lights
+  ok    int_smedjen warm build 2: 7.15 ms, 102 nodes, 36 sprites, 3 lights
+  ok    int_toemmerhandlen warm build 1: 8.51 ms, 114 nodes, 39 sprites, 2 lights
+  ok    int_toemmerhandlen warm build 2: 8.55 ms, 114 nodes, 39 sprites, 2 lights
+  ok    int_torvekroen warm build 1: 7.62 ms, 111 nodes, 40 sprites, 2 lights
+  ok    int_torvekroen warm build 2: 7.82 ms, 111 nodes, 40 sprites, 2 lights
+  ok    int_troldmandstaarnet warm build 1: 9.60 ms, 98 nodes, 33 sprites, 3 lights
+  ok    int_troldmandstaarnet warm build 2: 9.58 ms, 98 nodes, 33 sprites, 3 lights
+  ok    int_uglehulen warm build 1: 9.12 ms, 93 nodes, 32 sprites, 2 lights
+  ok    int_uglehulen warm build 2: 8.43 ms, 93 nodes, 32 sprites, 2 lights
+  ok    int_vagthytten warm build 1: 9.71 ms, 60 nodes, 22 sprites, 2 lights
+  ok    int_vagthytten warm build 2: 9.55 ms, 60 nodes, 22 sprites, 2 lights
+  ok    towns_interiors.build_all_under_budget (72 builds (1 cold + 2 warm) of the 24 rooms the generator writes (14 CORE + 10 EXTENDED), each from its JSON: warm p50 9.58 ms (budget <= 12; design measured 6.2), worst cold 26.87 ms (the first build of a room decodes its wall and furniture textures from disk: a sanity bound of 5000 ms that only catches a runaway build, the design measured 27.5 ms with its lighter placeholder art, a quiet machine here measures 130 - 520 ms and a load average of 30 gave 1,510 ms; the user-facing number is the windowed first frame <= 250 ms), base sprites (walls, corner, doormat, room pieces; dressing and hatch art also count toward the 130-node whole-room limit) p50 25 max 31 (<= 31; design 25 / 31) plus at most 4 additive window night layers, nodes p50 101 max 114 (hard budget <= 130; design 76 / 96 was measured before the SE1 amendment added the two talk hosts of a shop band (ShopCounter + Area2D + shape + Timer = 4 nodes each)), lights max 3 (<= 4), no builder error [], no labelled box (every piece resolves to art or a stand-in) []; per room { "int_badehuset": "109 nodes 38 sprites + 4 night layers", "int_bageriet": "110 nodes 37 sprites + 3 night layers", "int_birks_bistade": "61 nodes 23 sprites + 2 night layers", "int_brummes_hus": "57 nodes 21 sprites + 2 night layers", "int_brummes_vaerksted": "112 nodes 41 sprites + 4 night layers", "int_dyrehuset": "112 nodes 41 sprites + 4 night layers", "int_fekongens_hus": "71 nodes 29 sprites + 4 night layers", "int_froebutikken": "103 nodes 37 sprites + 3 night layers", "int_hoppe_hut": "70 nodes 28 sprites + 2 night layers", "int_hyldeblomsts_hus": "57 nodes 21 sprites + 2 night layers", "int_kikis_hytte": "60 nodes 22 sprites + 2 night layers", "int_loppeloftet": "99 nodes 33 sprites + 3 night layers", "int_moebelbutikken": "113 nodes 40 sprites + 4 night layers", "int_musikstuen": "57 nodes 21 sprites + 2 night layers", "int_pippins_hus": "57 nodes 21 sprites + 2 night layers", "int_postkontoret": "101 nodes 34 sprites + 3 night layers", "int_raadhuset": "114 nodes 43 sprites + 4 night layers", "int_skraedderiet": "104 nodes 36 sprites + 3 night layers", "int_smedjen": "102 nodes 36 sprites + 3 night layers", "int_toemmerhandlen": "114 nodes 39 sprites + 3 night layers", "int_torvekroen": "111 nodes 40 sprites + 4 night layers", "int_troldmandstaarnet": "98 nodes 33 sprites + 2 night layers", "int_uglehulen": "93 nodes 32 sprites + 2 night layers", "int_vagthytten": "60 nodes 22 sprites + 2 night layers" })
+  ok    towns_interiors.rebuild_leaks_nothing (6 more builds and frees of one room change nothing: nodes +0, orphan nodes +0, time_of_day_changed connections +0 (ShopHours and the window clock disconnect when the room leaves), game_event connections +0 (the talk hosts), interactables 0 -> 0, cached textures 160, reported stand-ins 0)
+  ok    int_badehuset: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_badehuset: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_badehuset: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_badehuset: all 5 posts and the door are reachable for a citizen body
+  ok    int_badehuset: the real-collider flood fill equals the Python flood fill (player 31 cells, citizen 44 cells)
+  ok    int_bageriet: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_bageriet: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_bageriet: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_bageriet: all 5 posts and the door are reachable for a citizen body
+  ok    int_bageriet: the real-collider flood fill equals the Python flood fill (player 16 cells, citizen 23 cells)
+  ok    int_birks_bistade: all 4 posts and the door are reachable for a citizen body
+  ok    int_birks_bistade: the real-collider flood fill equals the Python flood fill (player 19 cells, citizen 19 cells)
+  ok    int_brummes_hus: all 4 posts and the door are reachable for a citizen body
+  ok    int_brummes_hus: the real-collider flood fill equals the Python flood fill (player 15 cells, citizen 15 cells)
+  ok    int_brummes_vaerksted: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_brummes_vaerksted: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_brummes_vaerksted: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_brummes_vaerksted: all 5 posts and the door are reachable for a citizen body
+  ok    int_brummes_vaerksted: the real-collider flood fill equals the Python flood fill (player 29 cells, citizen 43 cells)
+  ok    int_dyrehuset: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_dyrehuset: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_dyrehuset: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_dyrehuset: all 4 posts and the door are reachable for a citizen body
+  ok    int_dyrehuset: the real-collider flood fill equals the Python flood fill (player 28 cells, citizen 46 cells)
+  ok    int_fekongens_hus: all 4 posts and the door are reachable for a citizen body
+  ok    int_fekongens_hus: the real-collider flood fill equals the Python flood fill (player 63 cells, citizen 63 cells)
+  ok    int_froebutikken: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_froebutikken: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_froebutikken: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_froebutikken: all 4 posts and the door are reachable for a citizen body
+  ok    int_froebutikken: the real-collider flood fill equals the Python flood fill (player 20 cells, citizen 32 cells)
+  ok    int_hoppe_hut: all 4 posts and the door are reachable for a citizen body
+  ok    int_hoppe_hut: the real-collider flood fill equals the Python flood fill (player 16 cells, citizen 16 cells)
+  ok    int_hyldeblomsts_hus: all 4 posts and the door are reachable for a citizen body
+  ok    int_hyldeblomsts_hus: the real-collider flood fill equals the Python flood fill (player 14 cells, citizen 14 cells)
+  ok    int_kikis_hytte: all 4 posts and the door are reachable for a citizen body
+  ok    int_kikis_hytte: the real-collider flood fill equals the Python flood fill (player 19 cells, citizen 19 cells)
+  ok    int_loppeloftet: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_loppeloftet: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_loppeloftet: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_loppeloftet: all 4 posts and the door are reachable for a citizen body
+  ok    int_loppeloftet: the real-collider flood fill equals the Python flood fill (player 12 cells, citizen 25 cells)
+  ok    int_moebelbutikken: the two talk hosts stand on the cells 4 and 6 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_moebelbutikken: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_moebelbutikken: the keeper post (5, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_moebelbutikken: all 4 posts and the door are reachable for a citizen body
+  ok    int_moebelbutikken: the real-collider flood fill equals the Python flood fill (player 28 cells, citizen 48 cells)
+  ok    int_musikstuen: all 4 posts and the door are reachable for a citizen body
+  ok    int_musikstuen: the real-collider flood fill equals the Python flood fill (player 19 cells, citizen 19 cells)
+  ok    int_pippins_hus: all 4 posts and the door are reachable for a citizen body
+  ok    int_pippins_hus: the real-collider flood fill equals the Python flood fill (player 19 cells, citizen 19 cells)
+  ok    int_postkontoret: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_postkontoret: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_postkontoret: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_postkontoret: all 5 posts and the door are reachable for a citizen body
+  ok    int_postkontoret: the real-collider flood fill equals the Python flood fill (player 12 cells, citizen 27 cells)
+  ok    int_raadhuset: the two talk hosts stand on the cells 4 and 6 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_raadhuset: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_raadhuset: the keeper post (5, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_raadhuset: all 5 posts and the door are reachable for a citizen body
+  ok    int_raadhuset: the real-collider flood fill equals the Python flood fill (player 40 cells, citizen 59 cells)
+  ok    int_skraedderiet: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_skraedderiet: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_skraedderiet: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_skraedderiet: all 4 posts and the door are reachable for a citizen body
+  ok    int_skraedderiet: the real-collider flood fill equals the Python flood fill (player 18 cells, citizen 30 cells)
+  ok    int_smedjen: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_smedjen: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_smedjen: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_smedjen: all 4 posts and the door are reachable for a citizen body
+  ok    int_smedjen: the real-collider flood fill equals the Python flood fill (player 19 cells, citizen 31 cells)
+  ok    int_toemmerhandlen: the two talk hosts stand on the cells 3 and 5 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_toemmerhandlen: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_toemmerhandlen: the keeper post (4, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_toemmerhandlen: all 4 posts and the door are reachable for a citizen body
+  ok    int_toemmerhandlen: the real-collider flood fill equals the Python flood fill (player 22 cells, citizen 34 cells)
+  ok    int_torvekroen: the two talk hosts stand on the cells 5 and 7 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_torvekroen: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_torvekroen: the keeper post (6, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_torvekroen: all 12 posts and the door are reachable for a citizen body
+  ok    int_torvekroen: the real-collider flood fill equals the Python flood fill (player 52 cells, citizen 83 cells)
+  ok    int_troldmandstaarnet: the two talk hosts stand on the cells 2 and 4 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_troldmandstaarnet: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_troldmandstaarnet: the keeper post (3, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_troldmandstaarnet: all 4 posts and the door are reachable for a citizen body
+  ok    int_troldmandstaarnet: the real-collider flood fill equals the Python flood fill (player 18 cells, citizen 29 cells)
+  ok    int_uglehulen: the two talk hosts stand on the cells 2 and 4 of row 3 (in front of the counter ends), free, walkable, built as ShopCounters
+  ok    int_uglehulen: the player walks from the spawn to the door, the door lane, the counter front, both talk cells and every customer post
+  ok    int_uglehulen: the keeper post (3, 1) is one row behind the counter (row 2): a citizen reaches it, the player does not
+  ok    int_uglehulen: all 5 posts and the door are reachable for a citizen body
+  ok    int_uglehulen: the real-collider flood fill equals the Python flood fill (player 11 cells, citizen 21 cells)
+  ok    int_vagthytten: all 4 posts and the door are reachable for a citizen body
+  ok    int_vagthytten: the real-collider flood fill equals the Python flood fill (player 19 cells, citizen 19 cells)
+  ok    towns_interiors.talk_cells_free_and_beside_the_counter_ends (in the 24 generated rooms (15 with a counter band) the `talk` hosts stand on the cells m - 1 and m + 1 of row 3 (m = the keeper's column = the counter middle: the customer cells in front of the counter ENDS), free of items, posts and hatch bars, walkable for the real player body, and the room builds exactly two ShopCounter hosts of kind talk (ellipse 40 x 22) on them)
+  ok    towns_interiors.door_to_counter_flood_fill (flood fill with the real colliders (the player's mask: world, NPC bars, ground) in the 24 generated rooms (15 with a counter band): from the spawn the PLAYER walks to the door, the whole door lane, the counter front, both talk cells and every customer post; it agrees cell by cell with the Python flood fill in every room: ["int_badehuset player 31 / 31 cells, citizen 44 / 44 (python / godot)", "int_bageriet player 16 / 16 cells, citizen 23 / 23 (python / godot)", "int_birks_bistade player 19 / 19 cells, citizen 19 / 19 (python / godot)", "int_brummes_hus player 15 / 15 cells, citizen 15 / 15 (python / godot)"] ... 24 rooms)
+  ok    towns_interiors.keeper_behind_counter (in the 24 generated rooms (15 with a counter band) the keeper post stands one row behind the 3 x 1 counter (row 1 behind row 2): a CITIZEN reaches it through the hatch gap, the PLAYER body does not reach it nor the cell behind it)
+  ok    towns_interiors.every_post_reachable_by_citizen (in the 24 generated rooms (15 with a counter band) every post (keeper, customers, beds, seats ...) and the door are reachable for a citizen body (mask world | player | ground, not the NPC layer), customer posts also for the player)
+  ok    int_froebutikken: a citizen body walks the 8 cell path through the hatch gap to the keeper post (7 px away)
+  ok    int_froebutikken lane 0.5: the player body is stopped 398 px from the keeper post
+  ok    int_froebutikken lane 3.0: the player body is stopped 179 px from the keeper post
+  ok    int_froebutikken lane 6.5: the player body is stopped 193 px from the keeper post
+  ok    int_froebutikken lane 4.0: the player body is stopped 131 px from the keeper post
+  ok    int_postkontoret: a citizen body walks the 7 cell path through the hatch gap to the keeper post (8 px away)
+  ok    int_postkontoret lane 0.5: the player body is stopped 352 px from the keeper post
+  ok    int_postkontoret lane 3.0: the player body is stopped 179 px from the keeper post
+  ok    int_postkontoret lane 6.5: the player body is stopped 182 px from the keeper post
+  ok    int_postkontoret lane 4.0: the player body is stopped 131 px from the keeper post
+  ok    towns_interiors.hatch_stops_player_not_citizen (2 rooms x 4 lanes (8 runs) with real moving bodies: the PLAYER body (285 px/s) never reached the keeper post in 8 of 8 runs (it is stopped in front of the counter band), a CITIZEN body (185 px/s, one walk per room along its path from the spawn through the hatch gap) reached the post in 8 of 8)
+  ok    towns_interiors.piece_resolution_order (a room item id resolves: baked kit manifest > furniture.json > data/interiors/stand_ins.json > a labelled box. Without a manifest: chair_pine is furniture true, anvil is the stand-in table_stump true (placed at the KIT footprint 1 x 1 and layer floor, not the borrowed art's 2 x 1 true), a kit id without a stand-in (seed_drawers_wall) and an unknown id are boxes true; counter_pine at rotation 1 is 1 x 3 true. With a baked manifest the kit piece wins over furniture (chair_oak) and over the stand-in (anvil) true, furniture.json still beats the stand-in table (chair_pine) true)
+  ok    towns_interiors.stand_ins_listed (data/interiors/stand_ins.json holds 17 stand-ins (the 16 pieces the 14 core rooms draw as something else + counter_pine), each a kit id of the I3 package drawn by an EXISTING furniture piece true; the post office and the seed shop REPORT exactly ["counter_pine", "letter_desk", "mail_sack", "parcel_stack", "pigeonhole_wall"] when built (PieceCatalog.used_stand_ins) and the validator lists the same pieces true)
+  ok    towns_interiors.kit_table_matches_manifest (data/interiors/kit_footprints.json equals the baked manifest: id, footprint, layer and number of baked rotations of every piece (0 problems []))
+  ok    towns_interiors.dress_overlay_merged_when_present (data/interiors/dress/int_<id>.json is merged after the items of the room when the file exists: the seed shop builds 12 pieces (was 10) and 10 colliders (was 9: the plant, not the flat rug) true, the order is room items then overlay true, a room without a file is unchanged true; tools/towns/interiors/validate.py merges it too: free cells pass, a rug on the counter band and a piece on the counter are refused true)
+  ok    towns_interiors.hatch_cells_draw_counter_hatch_when_art_exists (the 5 hatch cells of the seed shop are invisible bars on the NPC layer (5) and nothing is drawn while the art is missing (sprites 32; a manifest without counter_hatch still 32); once the manifest has the piece every hatch cell gets its sprite (37 = 32 + 5) and the bars stay the collision (5 on layer NPC))
+  ok    the window night layer at 06:00 has alpha 0.67 (outdoor glow 0.74 x 0.9)
+  ok    the window night layer at 12:00 has alpha 0.00 (outdoor glow 0.00 x 0.9)
+  ok    the window night layer at 17:30 has alpha 0.00 (outdoor glow 0.00 x 0.9)
+  ok    the window night layer at 19:30 has alpha 0.90 (outdoor glow 1.00 x 0.9)
+  ok    the window night layer at 22:00 has alpha 0.90 (outdoor glow 1.00 x 0.9)
+  ok    the window night layer at 00:30 has alpha 0.90 (outdoor glow 1.00 x 0.9)
+  ok    the window night layer at 01:30 has alpha 0.90 (outdoor glow 1.00 x 0.9)
+  ok    towns_interiors.windows_fade_with_the_outdoor_hour (the additive night layers of the 3 windows fade with the OUTDOOR hour (the farm glow curve of lua/config/ambient.lua, not the room's own always-warm `home` preset): dark at 12:00 and 17:30 (alpha 0.00 / 0.00), 0.67 at dawn 06:00, lit at 19:30 (0.90), 22:00 (0.90) and through midnight 24:30 / 25:30 (0.90 / 0.90), listening to time_of_day_changed)
+  ok    towns_interiors.painted_light_masks_follow_body_and_clock (6 painted accents align with the final body offset plus the trimmed source offset, use additive blending, fade at noon/night/after midnight, and add at most one service light per room)
+  ok    towns_interiors.ceiling_dressing_stays_in_foreground (17 hanging pieces use the foreground plane above the y-sorted actors)
+  ok    towns_interiors.counter_opens_shop (E on the middle host (150 x 40, on the cell in front of the counter middle) calls ShopSystem.open_shop(seed_shop): EventBus.shop_opened(seed_shop) true, the prompt is COUNTER_SHOP "Se varer" true)
+  ok    towns_interiors.talk_inert_without_keeper (with no keeper node in the room (before the room director of T-director) both talk hosts keep their Area2D disabled, are hidden and invisible to the E-query (a physics query on their cells finds nothing) true)
+  ok    towns_interiors.talk_forwards_to_keeper_npc (once a keeper node exists (NpcDirector.node_of late bound; a test resolver here) both talk hosts wake (area_populated or the 0.5 s poll) true, read COUNTER_TALK "Tal med Butiksfe Kløvermynte" with the keeper's NPC_<ID> name true and call the keeper's own interact(player): 2 calls true, so the greeting, weekly heart, gifts, topics and quests of the Lua dialogue run unchanged; without a keeper they go inert again true)
+  ok    towns_interiors.desk_emits_open_home_builder (the builder yard's desk (40 x 22, COUNTER_DESK "Husbyggeri") emits game_event open_home_builder {tier} with the world flag home_tier (4 -> tier 4, no flag -> tier 1): the ten-step home ladder never depends on a conversation; only the builder yard's generated room carries the desk marker true)
+  ok    towns_interiors.appraisal_counter_events_and_refusals (post_counter and bar emit open_post_office / open_inn_menu {npc, building} true; Uglehulen's centre host (kind appraisal, COUNTER_APPRAISE "Vurdér fund", same geometry as the shop): Monday (field day) refused with the whisper of Hours.closed_info "Lukket i dag. Åbner igen tirsdag." true, Wednesday 11:00 refused with the opening time true, open with no LootService.appraise yet: the whisper COUNTER_APPRAISE_SOON true, with it: game_event open_appraisal {npc, building} true, closed again: refused true, switch off: not refused true)
+  ok    towns_interiors.marker_handlers_inside_room (bath / board / mailbox are built by the handler of THEIR package through IsoArea.resolve_handler inside the room (create_marker(params, pos, cell, area)): with handlers registered the room holds ["Probe_bath", "Probe_board", "Probe_mailbox"] and no counter of those kinds ([] left), the handler node sits on its cell true; without a handler each falls back to a ShopCounter that announces game_event counter_used with its kind ["bath", "board", "mailbox"])
+  ok    towns_interiors.no_forward_to_keeper_seam (ShopCounter has the SIX kinds ["shop", "post_counter", "bar", "appraisal", "desk", "talk"] and no forward_to_keeper seam and no gift shortcut: no such method or property, no such identifier in code (0 hits []): a giftable hotbar item never takes E first (it would have sent 12 of 12 tools and 8 of 8 seeds into a gift talk instead of the panel))
+  ok    towns_interiors.e_query_replay_rules_ABC (the Python replay of the BUILT E-query (circle r = 45 at the facing cell, 12-gon ellipses, the host NEAREST TO THE PLAYER wins) on the two shop bands: A standing on an end cell facing the counter selects that cell's talk host 36 of 36, B the middle cell selects the centre host 18 of 18, C a talk host is never selected from the middle cell at any of the 8 facings (0 violations): "over 2 rooms: A 36 / 36, B 18 / 18, C violations 0, keeper-direct selections 0"; on the 14 CORE layouts of the generator it reproduces the design's measurement "over 14 rooms: A 252 / 252, B 126 / 126, C violations 0, keeper-direct selections 0" true; a talk host one cell off its counter end is caught (exit 1) true)
+  ok    int_froebutikken on the real player: A 18 / 18 (end cells select their talk hosts), B 9 / 9 (the middle cell selects the centre host), C 0 (a talk host from the middle cell at any facing)
+  ok    int_postkontoret on the real player: A 18 / 18 (end cells select their talk hosts), B 9 / 9 (the middle cell selects the centre host), C 0 (a talk host from the middle cell at any facing)
+  ok    towns_interiors.talk_cells_select_keeper_real_player (the REAL player (res://scripts/world2d/player_2d.gd, nearest_interactable on the real hosts of the built rooms): E on an end cell facing the counter selects that cell's talk host 36 of 36 and calls the keeper's interact (36 calls); E on the middle cell selects the centre host 18 of 18 (it opens the panel: 9 shop_opened = the seed shop's 9 samples; the post counter only announces) and never a talk host at any facing (0 of 144 samples))
+  ok    towns_interiors.replay_matches_real_player (the Python replay and the real player agree sample by sample over every standable cell x 9 sub-positions x 8 facings of the two shop rooms: 2376 samples, 0 mismatches , host histogram { "none": 1224, "S": 514, "T0": 282, "T1": 252, "X": 104 })
+  ok    bakery door on mandag at 10:00: closed, reason day
+  ok    bakery door on tirsdag at 06:00: closed, reason hours
+  ok    bakery door on tirsdag at 17:30: closed, reason hours
+  ok    bakery door on tirsdag at 10:00: open, reason open
+  ok    bakery door on tirsdag at 07:00: open, reason open
+  ok    bakery door on tirsdag at 16:59: open, reason open
+  ok    towns_interiors.door_reasons (Door2D.is_open reasons day / hours / festival / open over 6 moments ALL AGREE; the whisper is tr(KEY) % args: "Lukket i dag. Åbner igen tirsdag." (day) and "Lukket lige nu. Åbner kl. 07:00." (hours) true, a festival refuses with HOURS_CLOSED_FESTIVAL true; a closed door whispers ONCE per approach (two entries, one whisper; leaving rearms it) true and never travels; an open door requests area_change_requested(int_bageriet, default) true; the exit door of a room is always open at 03:00 and travels out true; with the switch off the shop door is always open true)
+  ok    towns_interiors.door_runs_without_routines (scripts/towns/routines.gd (T-routes, wave 5) is reached only through Hours.where_is (a path string with the default null): without it a home door is a locked nameplate (reason locked, HOURS_HOME_LOCKED) true while a shop door needs no Routines and opens at Tuesday 10:00 true; hearts come from SocialManager and then the flag friend_<npc>, never through Routines)
+  ok    home door: 2 hearts, owner stay int_fx_home.table (eat): open, reason open
+  ok    home door: 0 hearts, owner stay int_fx_home.table (eat): closed, reason stranger
+  ok    home door: 1 hearts, owner stay int_fx_home.table (eat): open, reason open
+  ok    home door: 2 hearts, owner stay fx_town.bench (sit): closed, reason away
+  ok    home door: 2 hearts, owner stay int_fx_home.bed (sleep): closed, reason away
+  ok    home door: 2 hearts, owner inside int_fx_home.table (eat): open, reason open
+  ok    home door: 2 hearts, owner stay int_other.table (eat): closed, reason away
+  ok    towns_interiors.home_door_rules (a home door opens only while the owner is IN the house (state stay | inside, place int_<building>), AWAKE (act not sleep) and the friendship allows it (friend_<npc> >= 1): ["true open", "false stranger", "true open", "false away", "false away", "true open", "false away"]; hearts through the flag friend_<npc> without a SocialManager (0 -> stranger true, 1 -> open true), the hearts table of the routines context wins true, min_hearts is honoured true)
+  ok    fjerpens_hytte is a locked nameplate door (sign "Fjerpens hytte", whisper HOURS_HOME_LOCKED, no travel)
+  ok    koekkenhave_skuret is a locked nameplate door (sign "Køkkenhave-skuret", whisper HOURS_HOME_LOCKED, no travel)
+  ok    pingvinens_hus is a locked nameplate door (sign "Postpingvinens hus", whisper HOURS_HOME_LOCKED, no travel)
+  ok    towns_interiors.locked_nameplate_door (a building without an interior (fjerpens_hytte, koekkenhave_skuret, pingvinens_hus) are LOCKED NAMEPLATE doors: never open, the whisper is HOURS_HOME_LOCKED "Døren er låst.", the sign shows the name only (BLD_<ID>): ["fjerpens_hytte -> Fjerpens hytte", "koekkenhave_skuret -> Køkkenhave-skuret", "pingvinens_hus -> Postpingvinens hus"])
+  ok    no_such_building_xyz (no registry row) is a locked nameplate labelled BLD_NO_SUCH_BUILDING_XYZ: "BLD_NO_SUCH_BUILDING_XYZ"
+  ok    towns_interiors.door_without_registry_row_is_locked_nameplate (a door marker whose building has NO registry row at all (the four EXTENDED houses of hyggebyen.map while lua/buildings/ext.lua is absent, and an invented id) is the same locked nameplate, labelled with the convention key BLD_<BUILDING_ID> that towns.csv defines for all 30 buildings (DT49): ["no_such_building_xyz -> BLD_NO_SUCH_BUILDING_XYZ"])
+  ok    towns_interiors.door_sign_shows_emblem_when_art_exists (the door sign is a world Label that shows within 3 cells of the door (far: hidden true, two cells away: shown true, away again: hidden true), reading the name over HOURS_SIGN with today's hours and the closed days: "Kløvermyntes Frø - åbent 8-18 / Lukket: søndag" true; a night shop reads 20-23:30 true; the arrival spawn from_int_froebutikken is created one cell in front true; with no I3 manifest no bracket and no plate are drawn true, with a baked sign_bracket and an emblem plate both appear above the door true and a row whose plate is not in the manifest draws nothing true - the text stays the BLD_<ID> label either way (no glyph is ever baked into art))
+  ok    towns_interiors.every_door_round_trips (in the REAL WorldRoot2D every door round-trips: the player walks onto the door of the seed shop, the post office and a home that opens (owner at home, 1 heart, Routines stand-in) and arrives on the room's `default` spawn, walks onto the exit door (always open) and arrives on the outer area's from_int_<building> spawn, both 0.0 px from the spawn (["int_froebutikken in 0.00 px, out 0.00 px, quiet true / true", "int_postkontoret in 0.00 px, out 0.00 px, quiet true / true", "int_hoppe_hut in 0.00 px, out 0.00 px, quiet true / true"]); a closed door (Sunday) whispers once and moves nobody true)
+  ok    towns_interiors.arrival_spawn_does_not_retrigger (standing on an arrival spawn for 90 physics frames triggers nothing, inside (the room's default spawn is one cell in front of the exit door) and outside (from_int_<building> is one cell in front of the door): no area_change_requested after the arrival (["int_froebutikken in 0.00 px, out 0.00 px, quiet true / true", "int_postkontoret in 0.00 px, out 0.00 px, quiet true / true", "int_hoppe_hut in 0.00 px, out 0.00 px, quiet true / true"]))
+  ok    seed shop, Tuesday 16:00: 0 whisper(s) and 0 travel request(s) so far ([])
+  ok    seed shop, Tuesday 17:00: 0 whisper(s) and 0 travel request(s) so far ([])
+  ok    seed shop, Tuesday 17:29: 0 whisper(s) and 0 travel request(s) so far ([])
+  ok    seed shop, Tuesday 17:30: 1 whisper(s) and 0 travel request(s) so far (["HOURS_CLOSING_SOON"])
+  ok    seed shop, Tuesday 17:45: 1 whisper(s) and 0 travel request(s) so far (["HOURS_CLOSING_SOON"])
+  ok    seed shop, Tuesday 17:59: 1 whisper(s) and 0 travel request(s) so far (["HOURS_CLOSING_SOON"])
+  ok    seed shop, Tuesday 18:00: 2 whisper(s) and 1 travel request(s) so far (["HOURS_CLOSING_SOON", "HOURS_CLOSED_BELL"])
+  ok    seed shop, Tuesday 18:12: 2 whisper(s) and 1 travel request(s) so far (["HOURS_CLOSING_SOON", "HOURS_CLOSED_BELL"])
+  ok    towns_interiors.closing_sequence (the seed shop (closes 18:00): nothing at 17:00 and 17:29, at 17:30 the whisper HOURS_CLOSING_SOON and game_event closing_warning once (not again at 17:45 or 17:59), at 18:00 the whisper HOURS_CLOSED_BELL, shop_open_changed and area_change_requested(hyggebyen, from_int_froebutikken): ["HOURS_CLOSING_SOON", "HOURS_CLOSED_BELL"], then nothing more true)
+  ok    towns_interiors.events_closing_warning_and_shop_open_changed (closing_warning {shop: seed_shop, minutes_left: 30 (an int)} once per shop and day true (a new day rearms it true); shop_open_changed {shop, open: false, reason, opens_at, closes_at} (reason hours, next opening 8.0, closes 18.0) true, in the order warning then change true; closed by the weekday it says reason day true)
+  ok    towns_interiors.closing_held_during_modal (a shop panel open at closing time is asked to close first (ui_panel_toggled(shop, false)) and the player is shown out true; with a DIALOGUE open at 18:06 nothing happens (no whisper, no travel) and the bell and the travel come when it ends true true; the pause menu holds it back as well true true)
+  ok    towns_interiors.closing_waits_for_travel (a closing tick that lands in the 0.25 - 0.5 s fade of entering the room (WorldRoot2D.traveling) or in a sleep sequence is RETRIED on the next tick and never lost: held while traveling true, held while sleeping true, evicted on the first tick after true; `evicted` is set only when the area change is really requested, so the player is never left inside a closed shop)
+  ok    towns_interiors.shop_hours_runs_without_routines (ShopHours needs no Routines: the closing sequence above ran without them (its clock context is Hours.now_ctx()), and the owner check of a home goes through Hours.where_is (a path string): with no Routines there is no eviction by owner (a home at 20:00 and at 22:12 evicts nobody true))
+  ok    towns_interiors.home_eviction (a home evicts its guest when the owner goes to bed or walks out (Routines stand-in: 20:00 at the table -> stays 20.0 -> false, 20:42 out on the bench and 22:12 in bed -> shown out): ["20.0 -> false", "20.7 -> true", "22.2 -> true"]; a home sends no shop_open_changed (it is no shop) true)
+  ok    the validator passes the generated room int_badehuset (+6 dressing pieces)
+  ok    the validator passes the generated room int_bageriet (+5 dressing pieces)
+  ok    the validator passes the generated room int_birks_bistade
+  ok    the validator passes the generated room int_brummes_hus
+  ok    the validator passes the generated room int_brummes_vaerksted (+6 dressing pieces)
+  ok    the validator passes the generated room int_dyrehuset (+6 dressing pieces)
+  ok    the validator passes the generated room int_fekongens_hus
+  ok    the validator passes the generated room int_froebutikken (+2 dressing pieces)
+  ok    the validator passes the generated room int_hoppe_hut (+6 dressing pieces)
+  ok    the validator passes the generated room int_hyldeblomsts_hus
+  ok    the validator passes the generated room int_kikis_hytte
+  ok    the validator passes the generated room int_loppeloftet (+6 dressing pieces)
+  ok    the validator passes the generated room int_moebelbutikken (+2 dressing pieces)
+  ok    the validator passes the generated room int_musikstuen
+  ok    the validator passes the generated room int_pippins_hus
+  ok    the validator passes the generated room int_postkontoret (+5 dressing pieces)
+  ok    the validator passes the generated room int_raadhuset (+6 dressing pieces)
+  ok    the validator passes the generated room int_skraedderiet (+6 dressing pieces)
+  ok    the validator passes the generated room int_smedjen (+6 dressing pieces)
+  ok    the validator passes the generated room int_toemmerhandlen (+6 dressing pieces)
+  ok    the validator passes the generated room int_torvekroen
+  ok    the validator passes the generated room int_troldmandstaarnet (+6 dressing pieces)
+  ok    the validator passes the generated room int_uglehulen (+6 dressing pieces)
+  ok    the validator passes the generated room int_vagthytten
+  ok    the generator's stub map of int_badehuset is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_bageriet is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_birks_bistade is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_brummes_hus is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_brummes_vaerksted is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_dyrehuset is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_fekongens_hus is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_froebutikken is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_hoppe_hut is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_hyldeblomsts_hus is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_kikis_hytte is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_loppeloftet is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_moebelbutikken is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_musikstuen is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_pippins_hus is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_postkontoret is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_raadhuset is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_skraedderiet is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_smedjen is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_toemmerhandlen is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_torvekroen is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_troldmandstaarnet is InteriorRoom.stub_map (zone city)
+  ok    the generator's stub map of int_uglehulen is InteriorRoom.stub_map (zone traetoppen)
+  ok    the generator's stub map of int_vagthytten is InteriorRoom.stub_map (zone traetoppen)
+  ok    towns_interiors.tool_regenerates_identical_specs (tools/towns/interiors/generate.py is seed-free and deterministic: two runs write the same 24 specs byte for byte true, the three fixture rooms ARE its output true, `--check` over the fixtures and data/interiors passes true, a changed spec is noticed (exit 1) true and one marked hand_edited is skipped true; validate.py: all 24 generated rooms pass (24 PASS), `validate.py data/interiors tests/fixtures/towns/interiors` prints 0 problems true, its self-test catches 14 mutants and the clean room passes true; the 24 stub maps it writes equal InteriorRoom.stub_map true; the building table of the generator equals the Lua registry (drift []))
+  --    towns_interiors: 285 checks, 0 failed, 0 skipped, 10.9 s
+== summary: 3 section(s) run, 584 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 20.0 s
+PLAYTEST PASS (584 checks in 3 sections, 0 allowed engine messages, 0 known-issue messages)

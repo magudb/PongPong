@@ -16,3 +16,15 @@ static func text(item_id: StringName) -> String:
 	if not seasons.is_empty() and str(GameManager.season) not in row.get("seasons", []):
 		lines.append(str(TranslationServer.translate("FARMSITE_SEEDS_INDOORS")))
 	return "\n".join(lines)
+
+static func create(after: Control) -> Label:
+	var label := Label.new()
+	label.name = "FarmingDetails"
+	label.theme_type_variation = &"Muted17"
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	label.hide()
+	var parent := after.get_parent()
+	parent.add_child(label)
+	parent.move_child(label, after.get_index() + 1)
+	return label

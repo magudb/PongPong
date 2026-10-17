@@ -42,6 +42,14 @@
     {
       "id": "snowdrop_seeds_icon",
       "prompt": "Use case: stylized-concept. Production inventory icon for Trætoppen's painted storybook 2D farming game. ONE small cream folded paper seed packet with a muted sage top fold and warm pencil/gouache illustration on its front. Gentle isometric three-quarter angle, paper grain, matte watercolor, honey and cream and sage palette, soft upper-left daylight, simple readable silhouette at 64 pixels, no words, letters, label text, border, glossy rendering or pixel art. Entire packet isolated with generous padding on a truly transparent square background. The packet should resemble a hand-painted cream gardening seed envelope, never the harvested crop loose by itself. Front illustration: three little ivory hanging snowdrop flowers with narrow sage leaves."
+    },
+    {
+      "id": "frost_kale_stages",
+      "prompt": "Use case: stylized-concept. Asset type: transparent game sprite for a cozy isometric farm. Style: matte gouache and watercolor storybook painting, subtle pigment grain, warm irregular pencil contours, soft upper-left daylight, sage greens and creamy highlights. Orthographic isometric view 36 degrees. Genuine transparent alpha. No text, no pixel art, no vector outlines, no glossy 3D, no soil, no cast background. Primary request: four separate growth stages of frost kale, arranged left to right in four equal cells on a wide 3:1 horizontal sprite atlas. Stage 1 tiny two-leaf sprout, stage 2 young ruffled sage leaves, stage 3 fuller blue-green rosette, stage 4 mature silvery frost-kissed ruffled kale rosette. Keep each plant completely inside its own cell, ample transparent gaps between plants, roots meet the same baseline, consistent plant identity and scale progression. No snow piles, no pots, no labels."
+    },
+    {
+      "id": "frost_kale_seeds_icon",
+      "prompt": "Use case: stylized-concept. Asset type: transparent game sprite for a cozy isometric farm. Style: matte gouache and watercolor storybook painting, subtle pigment grain, warm irregular pencil contours, soft upper-left daylight, sage greens and creamy highlights. Orthographic isometric view 36 degrees. Genuine transparent alpha. No text, no pixel art, no vector outlines, no glossy 3D, no soil, no cast background. Primary request: one folded cream paper seed packet, centered with generous transparent margin, gently worn sage-green folded top, tiny hand-painted ruffled blue-green frost kale rosette on its front. Warm natural paper texture, clear silhouette at small inventory icon size. No writing, no numbers, no lettering. A single packet only."
     }
   ]
 }

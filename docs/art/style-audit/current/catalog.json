@@ -2944,6 +2944,26 @@
       "path": "res://assets/icons/items/friendship_token.webp"
     },
     {
+      "id": "frost_kale",
+      "night": false,
+      "path": "res://assets/icons/items/frost_kale.webp"
+    },
+    {
+      "id": "frost_kale",
+      "night": true,
+      "path": "res://assets/icons/items/frost_kale.webp"
+    },
+    {
+      "id": "frost_kale_seeds",
+      "night": false,
+      "path": "res://assets/icons/items/frost_kale_seeds.webp"
+    },
+    {
+      "id": "frost_kale_seeds",
+      "night": true,
+      "path": "res://assets/icons/items/frost_kale_seeds.webp"
+    },
+    {
       "id": "gem_bag",
       "night": false,
       "path": "res://assets/icons/items/gem_bag.webp"
@@ -3442,6 +3462,16 @@
       "id": "juice_catnip",
       "night": true,
       "path": "res://assets/icons/items/juice_catnip.webp"
+    },
+    {
+      "id": "juice_frost_kale",
+      "night": false,
+      "path": "res://assets/icons/items/juice_frost_kale.webp"
+    },
+    {
+      "id": "juice_frost_kale",
+      "night": true,
+      "path": "res://assets/icons/items/juice_frost_kale.webp"
     },
     {
       "id": "juice_glow_berry",
@@ -4222,6 +4252,16 @@
       "id": "preserve_catnip",
       "night": true,
       "path": "res://assets/icons/items/preserve_catnip.webp"
+    },
+    {
+      "id": "preserve_frost_kale",
+      "night": false,
+      "path": "res://assets/icons/items/preserve_frost_kale.webp"
+    },
+    {
+      "id": "preserve_frost_kale",
+      "night": true,
+      "path": "res://assets/icons/items/preserve_frost_kale.webp"
     },
     {
       "id": "preserve_glow_berry",
@@ -13063,6 +13103,42 @@
       "rarity": "normal"
     },
     {
+      "catalog_path": "res://assets/icons/items/frost_kale.webp",
+      "category": "crop",
+      "definition": {
+        "buy_price": 0,
+        "category": "crop",
+        "description_key": "ITEM_FROST_KALE_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_FROST_KALE",
+        "rarity": "normal",
+        "sell_price": 60
+      },
+      "id": "frost_kale",
+      "name_key": "ITEM_FROST_KALE",
+      "path": "res://assets/icons/items/frost_kale.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/frost_kale_seeds.webp",
+      "category": "seed",
+      "definition": {
+        "buy_price": 30,
+        "category": "seed",
+        "crop_id": "frost_kale",
+        "description_key": "ITEM_FROST_KALE_SEEDS_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_FROST_KALE_SEEDS",
+        "rarity": "normal",
+        "sell_price": 8,
+        "stamina_cost": 0.5
+      },
+      "id": "frost_kale_seeds",
+      "name_key": "ITEM_FROST_KALE_SEEDS",
+      "path": "res://assets/icons/items/frost_kale_seeds.webp",
+      "rarity": "normal"
+    },
+    {
       "catalog_path": "res://assets/icons/items/gem_bag.webp",
       "category": "gem",
       "definition": {
@@ -15136,6 +15212,23 @@
       "id": "juice_catnip",
       "name_key": "ITEM_JUICE_CATNIP",
       "path": "res://assets/icons/items/juice_catnip.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/juice_frost_kale.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_JUICE_FROST_KALE_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_JUICE_FROST_KALE",
+        "rarity": "normal",
+        "sell_price": 180
+      },
+      "id": "juice_frost_kale",
+      "name_key": "ITEM_JUICE_FROST_KALE",
+      "path": "res://assets/icons/items/juice_frost_kale.webp",
       "rarity": "normal"
     },
     {
@@ -18357,6 +18450,23 @@
       "id": "preserve_catnip",
       "name_key": "ITEM_PRESERVE_CATNIP",
       "path": "res://assets/icons/items/preserve_catnip.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/preserve_frost_kale.webp",
+      "category": "product",
+      "definition": {
+        "buy_price": 0,
+        "category": "product",
+        "description_key": "ITEM_PRESERVE_FROST_KALE_DESC",
+        "max_stack": 99,
+        "name_key": "ITEM_PRESERVE_FROST_KALE",
+        "rarity": "normal",
+        "sell_price": 170
+      },
+      "id": "preserve_frost_kale",
+      "name_key": "ITEM_PRESERVE_FROST_KALE",
+      "path": "res://assets/icons/items/preserve_frost_kale.webp",
       "rarity": "normal"
     },
     {
@@ -26536,6 +26646,30 @@
       "auxiliary": [],
       "id": "crop_catnip_3",
       "path": "res://assets/iso_props/zz_painted_consistency/crop_catnip_3.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "crop_frost_kale_0",
+      "path": "res://assets/iso_props/farm_completion/crop_frost_kale_0.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "crop_frost_kale_1",
+      "path": "res://assets/iso_props/farm_completion/crop_frost_kale_1.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "crop_frost_kale_2",
+      "path": "res://assets/iso_props/farm_completion/crop_frost_kale_2.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "crop_frost_kale_3",
+      "path": "res://assets/iso_props/farm_completion/crop_frost_kale_3.webp",
       "real": true
     },
     {

@@ -51,7 +51,7 @@ const PERK_KEYS := ["dig_speed", "tool_cost_mult", "harvest_bonus_chance", "can_
 	"run_cost_mult", "oil_use_mult", "dark_light_mult", "float_bob_px", "glow_energy", "glow_energy_dark", "glow_scale", "glow_color", "species", "skins", "default_skin"]
 const COMBAT_KEYS := ["max_half_hearts", "swing_time", "swing_active_start", "swing_active_end", "swing_radius", "swing_half_angle_deg", "swing_cooldown", "dodge_time", "dodge_distance", "dodge_iframes", "dodge_cooldown", "light_cooldown", "light_radius", "light_stun", "drink_heal_half_hearts", "hurt_iframes", "knockback", "oil_seconds", "oil_min_light", "oil_whisper_ratio"]
 const PLAYER_KEYS := ["walk_speed", "run_speed", "accel", "decel", "hop_impulse", "gravity", "flight_altitude", "flight_climb", "body_rx", "body_ry", "interaction_range", "max_health", "max_stamina", "stamina_regen_per_second", "run_cost_per_second", "run_recover_ratio"]
-const CROPS := ["turnip", "carrot", "pumpkin", "moonflower", "glow_berry", "strawberry", "sunflower", "catnip", "frost_kale"]
+const CROPS := ["turnip", "carrot", "pumpkin", "moonflower", "glow_berry", "strawberry", "sunflower", "catnip", "frost_kale", "snow_turnip", "snowdrop"]
 ## crops whose seed item arrives with P12 (wave 3); the entries are in game_balance.lua already
 const CROPS_WAITING_FOR_ITEMS := ["strawberry", "sunflower", "catnip"]
 
@@ -543,7 +543,7 @@ func _race_perks() -> void:
 
 func _crops() -> void:
 	var t = _t
-	var crops: Dictionary = _lr.get_config("crops", {})
+	var crops: Dictionary = FarmGrid.crop_definitions()
 	var items_by_crop := {}
 	for id in _lr.get_all_item_ids():
 		var d: Dictionary = _lr.get_item_def(id)
@@ -562,7 +562,7 @@ func _crops() -> void:
 		t.skip("crops_have_seed_items for %s: the seed items arrive with P12 (economy, wave 3)" % ", ".join(waiting))
 	for crop in items_by_crop:
 		t.expect(crops.has(crop), "the seed item %s names crop_id %s which game_balance defines" % [items_by_crop[crop], crop])
-	t.expect(crops.size() == CROPS.size() and CROPS.all(func(c: String) -> bool: return crops.has(c)), "the 4 shipped crops and glow_berry, strawberry, sunflower, catnip are defined")
+	t.expect(crops.size() == CROPS.size() and CROPS.all(func(c: String) -> bool: return crops.has(c)), "all eleven shipped and winter crops are defined")
 	var timing := {"turnip": 4, "carrot": 4, "pumpkin": 10, "moonflower": 12}
 	var grow_ok := true
 	for crop in timing:
