@@ -197,7 +197,10 @@ func run(t) -> void:
 			t.check("live_%s" % id, live.get(id, {}).get("footprint") == pieces[id]["footprint"] and live.get(id, {}).get("layer") == pieces[id]["layer"], "live towns consumer matches saved contract")
 	else:
 		t.skip("live_towns_contract: T-towns-core is unfinished on m1b; art contract and validator snapshots checked")
-	t.skip("live_hoppe_room: T-ext-content is not installed here; extended-room dressing uses its generator snapshot")
+	var probe := preload("res://tests/lib/towns/room_probe.gd").new()
+	var hoppe: IsoArea = await probe.build(t,"int_hoppe_hut")
+	t.check("live_hoppe_room",hoppe!=null and hoppe.map.errors.is_empty() and InteriorRoom.stats.get("placeholders",1)==0 and InteriorRoom.stats.get("stand_ins",1)==0,str(InteriorRoom.stats))
+	probe.dispose()
 	var old_clear := RenderingServer.get_default_clear_color()
 	var studio: Node2D = load("res://tools/art/drawn/shop_special_gallery.tscn").instantiate()
 	t.root.add_child(studio)

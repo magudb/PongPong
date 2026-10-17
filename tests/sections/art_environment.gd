@@ -6,7 +6,7 @@ extends RefCounted
 ## Headless and independent of the Python validator (tools/art/environment/validate_environment.py implements the same checks a second time):
 ##   tiles_manifest_lists_every_terrain  tiles_contract_cells_and_projection  tile_atlases_import_without_mipmaps  ortho_tiles_periodic_edges
 ##   props_manifest_sane  props_have_gameplay_rows  props_extra_ids_exist  props_extra_blueprint_ids_present  props_lua_ids_exist  map_prop_ids_exist
-##   farm_contract_props_sizes_and_footprints  farm_rows_complete  farm_ids_pending_until_n03  no_foreign_or_dropped_ids
+##   farm_contract_props_sizes_and_footprints  farm_rows_complete  farm_ids_resolved_by_installed_pack  no_foreign_or_dropped_ids
 ##   forest_art_ids_exist  forest_crowns_baked_at_36  dungeon_crowns_present_and_sized  forest_albedo_within_ambient_headroom  dungeon_prop_defs_complete
 ##   dungeon_ids_in_catalog  image_props_contract  backdrops_present  fixtures_missing_only_pending  hyggebyen_map_art_complete  ortho_decision_*  budget  readme_verdict
 ## Windowed (tests/run_playtest.sh --windowed --only=art_environment): filter_seams_mixed_terrains (grass + flowers, forest floor + glow, iso and ortho, at zoom 0.3 / 0.4 /
@@ -356,7 +356,7 @@ func _props_checks(props: Dictionary) -> void:
 		if def.has("footprint") and GameData.footprint_of(id) != _fp(e2):
 			fp_bad.append("%s row %s baked %s" % [id, str(GameData.footprint_of(id)), str(_fp(e2))])
 	t.check("props_have_gameplay_rows", rowless.is_empty() and fp_bad.is_empty(), "every baked prop has a row and the footprint of the row is the baked footprint: no row %s; mismatch %s" % [str(rowless.slice(0, 5)), str(fp_bad.slice(0, 5))])
-	# every row of props_extra has art (or an alias to art); the ten N03 rows are pending by design
+	# The original P22 manifest leaves the ten farm-kit rows to their own pack.
 	var extra: Dictionary = _lua("props_extra")
 	var no_art: Array[String] = []
 	var pend: Array[String] = []
@@ -370,9 +370,8 @@ func _props_checks(props: Dictionary) -> void:
 		else:
 			no_art.append(String(id))
 	t.check("props_extra_ids_exist", no_art.is_empty() and extra.size() >= 100, "all %d rows of lua/config/props_extra.lua resolve to real art (ids without art: %s)" % [extra.size(), str(no_art.slice(0, 6))])
-	_pending("farm_ids_pending_until_n03", "N03-farm-art (wave 5)", "%d of the 10 farm-only ids have rows here but no art yet: %s" % [pend.size(), str(pend)])
-	t.check("farm_ids_pending_until_n03", pend.size() + _count_in(N03_IDS, props) == N03_IDS.size() and _count_in(N03_IDS, props) == 0,
-		"the ten N03 ids are NOT baked by P22 (carve-out RT16): %d without art, %d in this manifest (must be 0)" % [pend.size(), _count_in(N03_IDS, props)])
+	t.check("farm_ids_resolved_by_installed_pack", N03_IDS.all(func(id):return ArtCatalog.has_real_prop(StringName(id))) and _count_in(N03_IDS,props)==0,
+		"the installed painted farm pack resolves all ten IDs; the historical P22 manifest still respects its carve-out")
 	var absent: Array[String] = []
 	for id in BLUEPRINT_IDS:
 		if not extra.has(id) and not GameData.prop_def(id).has("footprint"):
@@ -719,7 +718,7 @@ func _backdrops() -> void:
 		if top.a > 0.05:
 			bad.append("%s: far layer must be transparent at the top (the sky shows above the treetops)" % theme)
 	t.check("backdrops_present", bad.is_empty(), "hyggebyen (lavender dusk) and forest (night navy with haze): <theme>_sky.webp 1920x1080 + <theme>_far.webp 2048x1280, seamless in x, transparent top edge: %s" % str(bad))
-	_pending("backdrops_present", "N03-farm-art (wave 5)", "farm_sky / farm_far / farm_canopy (RT16 carve-out): ArtCatalog.backdrop(&\"farm\").real = %s, the painted placeholder stands in" % str(ArtCatalog.backdrop(&"farm").get("real", false)))
+	t.check("farm_backdrop_installed",bool(ArtCatalog.backdrop(&"farm").get("real",false)),"the selected painted farm backdrop is installed")
 
 
 # ---------------------------------------------------------------- worlds: fixtures, farm, Hyggebyen

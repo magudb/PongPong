@@ -45,17 +45,32 @@ func _run(t,native: bool) -> void:
 	roster.refresh()
 	awake = actors.filter(func(actor):return actor.is_awake())
 	for actor in actors:actor.set_physics_process(false)
+	# Runtime entries warm clips behind their fade. These actors are added
+	# afterwards by the fixture, so warm them and run every timed behavior
+	# once before measuring steady callbacks (including the 5 s spore timer).
+	for actor in actors:
+		var clips := Array(actor.visual.get_clip_names())
+		if DisplayServer.get_name()=="headless":
+			# preload_clips queues threaded requests; do not leave unused jobs
+			# outstanding under the dummy renderer. Load every sheet on this thread.
+			for clip in clips:
+				actor.visual._textures[StringName(str(clip))] = load(actor.visual._sheet_path(StringName(str(clip))))
+		else:await actor.visual.warm_clips(clips)
+	for frame in 360:
+		for actor in awake:actor._physics_process(1.0/60)
+		await t.frames(1)
 	var samples := []
 	for frame in 180:
 		var began := Time.get_ticks_usec()
 		for actor in awake:actor._physics_process(1.0/60)
 		samples.append((Time.get_ticks_usec()-began)/1000.0/awake.size())
 		await t.frames(1)
+	t.check("awake_callbacks_do_work",awake.all(func(actor):return actor.clock>0))
 	var sorted := samples.duplicate()
 	sorted.sort()
 	var logic := {"median_ms_per_enemy":_median(samples),"p95_ms_per_enemy":sorted[floori(sorted.size()*.95)],"cap_ms":0.03,"samples":samples}
 	t.check("awake_logic_budget",logic.p95_ms_per_enemy<=0.03,str(logic.p95_ms_per_enemy)+" ms p95 per enemy <=0.03")
-	var report := {"engine":Engine.get_version_info(),"alive":48,"awake":24,"zoom":area.zoom_default,"logic":logic,"logic_method":"180 batches of 24 real FSM/move_and_slide/visual-motion callbacks, mixed seven kinds; clock overhead amortized; sleeping callbacks verified by unchanged clocks for 120 physics ticks"}
+	var report := {"engine":Engine.get_version_info(),"alive":48,"awake":24,"zoom":area.zoom_default,"logic":logic,"logic_method":"180 batches of 24 real FSM/move_and_slide/visual-motion callbacks, mixed seven kinds, all clips loaded and six simulated seconds of behavior warmup; clock overhead amortized; sleeping callbacks verified by unchanged clocks for 120 physics ticks"}
 	if native:
 		# Hold positions and keep normal sprite animation. Measure the renderer CPU and complete
 		# frame deltas with the 24 visible animated actors versus the same nodes

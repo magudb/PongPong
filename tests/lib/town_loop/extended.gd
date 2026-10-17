@@ -141,6 +141,7 @@ func run(t,owner) -> void:
 			world.player.camera.reset_smoothing()
 			world.player.camera.force_update_scroll()
 			await suite.shot(t,"S14_festival_day_city")
+			check(t,"L15","l15_festival_capture",suite.native_shots.has("S14_festival_day_city"))
 		GameManager.hour = int(meta.to)
 		EventBus.time_of_day_changed.emit(GameManager.hour,0)
 		SocialManager.flush()

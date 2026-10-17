@@ -47,12 +47,22 @@
     ],
     "6": [
       "@5b",
-      "L16"
+      "L16",
+      "x01_birthday_content.x01_birthday_greeting_and_real_gift",
+      "x02_festival_scene.x02_festival_scene_decor_hours_bed_music",
+      "x03_heart_event.x03_heart_event_real_scene_once",
+      "x04_relationship.x04_relationship_consent_and_stage",
+      "x05_mail_screen.x05_mail_screen_live_locations",
+      "x06_farm_visit_scene.x06_farm_visit_named_actor_and_saved_gift",
+      "x07_seasonal_decor.x07_seasonal_decor_live_painted_family",
+      "x08_rain_fallback_scene.x08_rain_fallback",
+      "x09_commitment.x09_commitment_saved_safe_wedding"
     ],
     "7": [
       "@6",
-      "L15"
+      "L15",
+      "L15.l15_festival_capture"
     ]
   },
-  "note": "5b includes the M1b copy and data-only extension proofs. Later content legs remain capability guarded. A required capability skip fails the gate."
+  "note": "5b includes copy and data-only extension proofs. Wave 6 requires audio and every installed extended gameplay consumer. Wave 7 adds native captures, including the real festival. A required capability skip fails the gate."
 }
