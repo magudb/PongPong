@@ -470,7 +470,7 @@ func list_sellable() -> Array[Dictionary]:
 ## Moves furniture and clothing that fell back into the backpack (their store did not exist yet) into the stores. Items are moved
 ## with the stores' own add(); no item_gained is fired again (they were counted when they arrived). Runs by itself before every
 ## routed call and before every save, a store may also call it from its own load.
-func adopt_misrouted() -> void:
+func adopt_misrouted(only_kind: StringName = &"") -> void:
 	if not _misrouted:
 		return
 	var still := false
@@ -480,6 +480,12 @@ func adopt_misrouted() -> void:
 		var slot := inventory[i]
 		var kind := _Kinds.storage_of(slot["id"])
 		if kind != _Kinds.BACKPACK:
+			# A store adopts only its own rows while loading. Another store may
+			# still be waiting for reset/from_dict and would erase an early gift.
+			if only_kind != &"" and kind != only_kind:
+				still = true
+				i -= 1
+				continue
 			var store := _store_for(kind)
 			if store != null and store.has_method("add") and bool(store.call("add", slot["id"], int(slot["amount"]))):
 				inventory.remove_at(i)
@@ -731,6 +737,7 @@ func to_dict() -> Dictionary:
 ## (not a dictionary, no id, an amount <= 0 after coercion) are dropped, a slot above max_stack is split, more than
 ## INVENTORY_SLOTS slots keep the first ones. Returns true.
 func from_dict(data: Dictionary) -> bool:
+	_misrouted = false
 	if arsenal != null: arsenal.from_dict(_Data.dict(data.get("arsenal",{})))
 	gold = _gold_of(data.get("gold", DEFAULT_STARTING_GOLD), DEFAULT_STARTING_GOLD)
 	inventory.clear()
@@ -783,7 +790,7 @@ func from_dict(data: Dictionary) -> bool:
 		if slot_of_entry != "" and not decided.has(StringName(slot_of_entry)):
 			_auto_equip(StringName(str(id)),false)
 	_misrouted = true                          # a save made before a store existed may hold its items in the backpack
-	adopt_misrouted()
+	adopt_misrouted(_Kinds.WEAPON)
 	_publish(&"player_inventory_changed", [get_inventory_dict()])
 	_publish(&"gold_changed", [gold, 0])
 	return true

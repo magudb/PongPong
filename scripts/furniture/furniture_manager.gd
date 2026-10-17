@@ -204,7 +204,7 @@ func perk_points(kind: String) -> float:
 	return total
 
 func adopt_from_backpack() -> void:
-	EconomyManager.adopt_misrouted()
+	EconomyManager.adopt_misrouted(ItemKinds.FURNITURE)
 
 func reset() -> void:
 	stock.clear()

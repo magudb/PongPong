@@ -162,7 +162,7 @@ func reset() -> void:
 	presets_changed.emit()
 
 func adopt_from_backpack() -> void:
-	EconomyManager.adopt_misrouted()
+	EconomyManager.adopt_misrouted(ItemKinds.CLOTHING)
 
 func to_dict() -> Dictionary:
 	return {"v": 1, "owned": owned.duplicate(), "equipped": outfit(), "presets": presets.duplicate(true)}
