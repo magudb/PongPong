@@ -1,0 +1,606 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=art_style_consistency,quests,data
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.dLzzio/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 0.9 s
+== section art_style_consistency  (res://tests/sections/art_style_consistency.gd)
+  ok    art_style_consistency.effective_physical_props_painted (357 prior IDs preserved, 364 current prop IDs checked; physical props use approved paintings/materials and intentional masks are explicit: [] [])
+  ok    art_style_consistency.selected_art_is_reviewed (effective props and all outdoor sky/far layers have explicit visual review evidence: [])
+  ok    art_style_consistency.reviewed_snapshot_current (["STYLE REVIEW SNAPSHOT PASS: 2904 visual/theme assets match explicit reviewed dispositions; technical exceptions are named, not automatically approved illustrations.\n"])
+  ok    art_style_consistency.installed_ore_copper (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_ore_iron (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_ore_gold (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_marble_vein (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_slate_vein (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crystal_amethyst (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crystal_emerald (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crystal_moonstone (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_glowmush_blue (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_glowmush_pink (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_glowmush_teal (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_well (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_fountain (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_closed (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_open (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_konge (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_beehive_stand (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_mailbox_red (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_shipping_bin (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_tent (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_wheat_sack (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_build_stake (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_rope_stake_x (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_rope_stake_z (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_fence_gate_x (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_bench (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_stake_sign (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_fe (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_apple_tree (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_tornebaer (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_lantern_hand (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_market_stall (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_trae (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_jern (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_chest_noegle (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_market_stall_furniture (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_market_stall_tailor (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_coop_small (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_barn_small (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_animal_house (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_tool_shed (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_carrot_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_carrot_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_carrot_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_carrot_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_pumpkin_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_pumpkin_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_pumpkin_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_pumpkin_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_strawberry_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_strawberry_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_strawberry_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_strawberry_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_sunflower_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_sunflower_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_sunflower_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_sunflower_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_turnip_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_turnip_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_turnip_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_turnip_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_catnip_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_catnip_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_catnip_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_catnip_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_glow_berry_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_glow_berry_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_glow_berry_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_glow_berry_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_moonflower_0 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_moonflower_1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_moonflower_2 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_crop_moonflower_3 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_bed (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_house_seedshop (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_house_bakery (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_house_smithy (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_house_animalstore (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_house_town_hall (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_house_king_treetop (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_tower_wizard (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_warp_gate_stone (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_tree_giant_crown (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_trunk_giant_a (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_trunk_giant_b (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_trunk_under_a (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_trunk_under_b (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_lantern_post_lavender (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_lantern_post_mint (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_lantern_post_rose (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_floor_patch_a (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_floor_patch_b (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_floor_patch_c (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_path_tile_o (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pond_water_o (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_roof_patch (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_home_rope (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_stone_path_a (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_stone_path_b (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_stone_path_c (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_blue (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_blue_f1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_gold (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_gold_f1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_mint (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_mint_f1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_pink (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_pennant_pink_f1 (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_backdrop_farm_far (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_backdrop_forest_far (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.installed_backdrop_hyggebyen_far (effective painted texture, source, dimensions, original footprint and optional light resolve)
+  ok    art_style_consistency.replacement_scope (111 repaired props, structural surfaces and parallax entries)
+  ok    art_style_consistency.farm_parallax_painted (farm horizon shares the approved tree painting)
+  ok    art_style_consistency.furniture_gameplay_contracts (all 130 IDs, placement anchors and gameplay fields preserved; [])
+  --    art_style_consistency: 117 checks, 0 failed, 0 skipped, 3.1 s
+== section data  (res://tests/sections/data.gd)
+  ok    reload_scripts logs no engine error or warning (the untranslated-key format error of lua_runtime.gd:42 is gone)
+  ok    data.reload_idempotent (159 scripts, 401 items, 37 quests before and after)
+  ok    loading every Lua file takes 507 ms
+  ok    data.f9_only_in_debug_builds (F9 hot reload is bound only when OS.is_debug_build() (true))
+  ok    LuaRuntime exposes get_recipes, get_shop, get_npc, reload_scripts, lint_source
+  ok    reload_scripts(true) posts one toast that names the script count: [["Lua genindlæst", "159 scripts indlæst"]]
+  ok    the F9 key reloads and announces (debug build only): 1 toast(s)
+  ok    any other key does nothing
+  ok    explicit reloads log no engine error or warning
+  ok    an untranslated key is not %-formatted (got 'NOTIF_LUA_RELOADED_MSG (7)')
+  ok    a translated text with %d gets the count
+  ok    data.config_documented_keys (190 documented keys, missing: [])
+  ok    get_config answers the default for an unknown path
+  ok    get_config indexes arrays (time.seasons.1)
+  ok    data.config_plan_numbers (section 3.13 numbers: [])
+  ok    data.config_units_are_spike_over_0_6 (every distance and speed is the spike value x 1/0.6 within 2%: [])
+  ok    economy.home_cost_scale defaults to 1.0 (CD5)
+  ok    game_balance / race_perks / rarity / npcs / species_perks define disjoint top-level keys (["player", "farm", "crops", "economy", "adventure", "time", "ui", "race_perks", "combat", "rarity_tiers", "perk_caps", "npcs", "npc_vocab", "species_perks"])
+  ok    no config key is defined by two files
+  ok    data.numbers_positive (153 numbers inspected, none negative / NaN, the speeds, prices and durations > 0 [])
+  ok    data.roster_ids (the 22 required ids exist: the 8 stable ids, the 4 + 7 new ids and the 3 feature fairies (the roster has 34 rows, no size pin))
+  ok    data.roster_vocabulary_floor (npc_vocab of lua/config/npcs.lua (areas ["farm", "hyggebyen", "traetoppen", "moerkeskoven"], 27 roles, schedules ["sleep", "patrol", "stay"], ages ["adult", "child", "elder"]) holds every word of the contract floor)
+  ok    data.roster_fields (every npc row (34) has name_key NPC_<ID>, visual + fallback chain, voice, home_area, role, dialogue, wander, facing, schedule, friendship; areas, roles, schedules and ages come from npc_vocab)
+  ok    every visual resolves to real art or to a chain that ends at a pack character (the art check is P21's / V2's art_characters section)
+  ok    dialogue mayor_lyra of mayor_lyra exists
+  ok    dialogue baker_maja of baker_maja exists
+  ok    shop bakery exists and its keeper is baker_maja
+  ok    dialogue merchant_pip of merchant_pip exists
+  ok    shop seed_shop exists and its keeper is merchant_pip
+  ok    dialogue pippin_boegeknop of pippin_boegeknop exists
+  ok    shop flea_market exists and its keeper is pippin_boegeknop
+  ok    dialogue fairy_king of fairy_king exists
+  ok    dialogue fairy_lily of fairy_lily exists
+  ok    dialogue smith_thorin of smith_thorin exists
+  ok    shop smithy exists and its keeper is smith_thorin
+  ok    dialogue guard_oak of guard_oak exists
+  ok    dialogue farmer_rosa of farmer_rosa exists
+  ok    shop animal_store exists and its keeper is farmer_rosa
+  ok    dialogue fairy_wizard of fairy_wizard exists
+  ok    shop magic_store exists and its keeper is fairy_wizard
+  ok    dialogue cat_morfar_mis of cat_morfar_mis exists
+  ok    dialogue penguin_postman of penguin_postman exists
+  ok    dialogue fairy_builder of fairy_builder exists
+  ok    shop builder_yard exists and its keeper is fairy_builder
+  ok    dialogue fairy_furnisher of fairy_furnisher exists
+  ok    shop furniture_shop exists and its keeper is fairy_furnisher
+  ok    dialogue fairy_tailor of fairy_tailor exists
+  ok    shop tailor_shop exists and its keeper is fairy_tailor
+  ok    dialogue gardener_hoppe of gardener_hoppe exists
+  ok    dialogue carpenter_brumme of carpenter_brumme exists
+  ok    shop timber_yard exists and its keeper is carpenter_brumme
+  ok    dialogue postman_pip of postman_pip exists
+  ok    dialogue bathkeeper_sofus of bathkeeper_sofus exists
+  ok    dialogue appraiser_fru_ugle of appraiser_fru_ugle exists
+  ok    dialogue mapseller_natteblik of mapseller_natteblik exists
+  ok    dialogue beekeeper_birk of beekeeper_birk exists
+  ok    dialogue ghostfam_dyne of ghostfam_dyne exists
+  ok    dialogue ghostfam_gnist of ghostfam_gnist exists
+  ok    dialogue ghostfam_silke of ghostfam_silke exists
+  ok    dialogue ghostfam_blund of ghostfam_blund exists
+  ok    a quest is offered by exactly one npc
+  ok    Morfar Mis lives in Hyggebyen and is a quest NPC without hearts
+  ok    the penguin postman is ambient: no quest of his own (the postman with quests is Pip)
+  ok    get_npc(id) answers the roster entry, {} for an unknown id
+  ok    data.roster_has_feature_npcs (builder / furnisher / tailor with shops, voices and dialogue ids; guard_oak, fairy_wizard, fairy_king offer the four gating quests; friendship = true wherever hearts are reachable)
+  ok    the feature fairies live in Hyggebyen
+  ok    data.roster_30_rows_valid (30 citizens (15 + 7 + 8): every row valid as data, routine = true and an age on each, friendship = true on the eight new ones [])
+  ok    data.roster_accepts_data_only_citizen (a data-only row (new id, new role 'florist') is valid once npc_vocab names the role and invalid without it ["role florist"]; the required ids still hold with it in the table; 13 broken variants are all refused (not caught: []))
+  ok    animal: two hero chips (2 heroes in characters.lua), the skins list incl. retired rows (5), default skin among them
+  ok    fairy: two hero chips (2 heroes in characters.lua), the skins list incl. retired rows (4), default skin among them
+  ok    hobbit: two hero chips (2 heroes in characters.lua), the skins list incl. retired rows (4), default skin among them
+  ok    ghost: two hero chips (2 heroes in characters.lua), the skins list incl. retired rows (2), default skin among them
+  ok    data.race_perks_complete (animal, fairy, hobbit and ghost define every perk key (neutral values where the race has no perk), incl. the eight keys of the ghost's perk layer)
+  ok    animal: dig_speed 1.3, tool_cost_mult 0.75, harvest_bonus_chance 0.2
+  ok    fairy: can_fly, 8 s, 10 energy/s, talks_to_flowers
+  ok    hobbit: shop_discount 0.1, bake_bonus 0.25 (+25% output chance in the crafting category bake)
+  ok    ghost: run_cost_mult 0.6, oil_use_mult 0.75, dark_light_mult 1.25, float_bob_px 2.5, glow_energy 0.35, no discount, no bake bonus, no flight
+  ok    only the hobbit has discount and bake perks; the chips are Ræv/Abe, Kløvermynte/Birk, Bertil/Bodil and Bu/Hviske (two heroes per race)
+  ok    data.race_skins_match_characters (race_perks.lua skins / default_skin agree with lua/config/characters.lua (P05))
+  ok    data.crops_have_seed_items (every crop of game_balance has a seed item with crop_id; missing [])
+  ok    the seed item turnip_seeds names crop_id turnip which game_balance defines
+  ok    the seed item carrot_seeds names crop_id carrot which game_balance defines
+  ok    the seed item pumpkin_seeds names crop_id pumpkin which game_balance defines
+  ok    the seed item moonflower_seeds names crop_id moonflower which game_balance defines
+  ok    the seed item strawberry_seeds names crop_id strawberry which game_balance defines
+  ok    the seed item sunflower_seeds names crop_id sunflower which game_balance defines
+  ok    the seed item catnip_seeds names crop_id catnip which game_balance defines
+  ok    the seed item glow_berry_seeds names crop_id glow_berry which game_balance defines
+  ok    the 4 shipped crops and glow_berry, strawberry, sunflower, catnip are defined
+  ok    data.crops_complete (carrot 4 stages x 1 day, pumpkin 5 stages x 2 days = 10, turnip 4, moonflower 12 days)
+  ok    only the moonflower has a water_window (20:00-06:00)
+  ok    every crop season is one of foraar sommer efteraar vinter
+  ok    weather chances per season sum to 1 and snow only falls in vinter
+  ok    LuaParser's token constants mirror LuaTokens
+  ok    tokenizer: strings keep `--`, comments (line and block) vanish, numbers keep their exponent: ["x", "=", "a -- b", "..", "c", "y", "=", "0x1F", "+", "2.5e-3"]
+  ok    line numbers survive a block comment, and the block comment is a finding
+  ok    data.parser_literals (ints stay ints, floats floats, negative and hex numbers, `--` inside a string, an expression is not a literal)
+  ok    nested tables and arrays
+  ok    an empty table `{}` arrives as an empty Dictionary (R.2)
+  ok    arrays of tables stay intact
+  ok    negative numbers and ["key"] = value entries
+  ok    a table that mixes named and positional entries keeps the named ones (the lint reports it)
+  ok    `nil` is simply absent
+  ok    escaped quotes are decoded (the lint reports them): line "quoted"
+  ok    a non-literal value is kept as its source text (the lint reports it)
+  ok    a trailing comma is fine
+  ok    data.parser_no_hoist (rewards.items and the tables of a return are not hoisted to the top level (R.2))
+  ok    a real top-level items table is extracted
+  ok    data.parser_empty_function (an empty / comment-only function no longer swallows the next one (intro_lottery.lua))
+  ok    intro_lottery.lua: on_day_started (comment only) and is_available are separate functions: ["on_offer", "on_accept", "handle_event", "on_day_started", "is_available"]
+  ok    _find_comment skips `--` inside strings (also after an escaped quote)
+  ok    _extract_named_table keeps working for tools
+  ok    data.parser_tables_header (top-level tables named in a `tables` header are extracted)
+  ok    data.lint_rules (28 bad snippets flagged by their rule, 9 good snippets clean, 5 bad fixture files)
+  ok    a finding has path, line, rule, token and message ([{ "path": "res://some/file.lua", "line": 3, "rule": "arithmetic", "token": "+", "message": "arithmetic (`+`) is not supported in statements: compute the value into the data instead" }])
+  ok    data.lint_data_level (`epic` is a lint error (rarity ladder) and a `tables` header without its table is reported: ["rarity", "tables_header"])
+  ok    loading files with lint findings logs no engine warning
+  ok    reload_scripts clears the previous findings
+  ok    data.lint_clean (every Lua file under res://lua lints clean (159 scripts); findings: [])
+  ok    fixture lint_clean_sample.lua is inside the subset and lints clean []
+  ok    fixture flag_identifiers.lua is inside the subset and lints clean []
+  ok    fixture semantics.lua is inside the subset and lints clean []
+  ok    fixture shops_extra.lua is inside the subset and lints clean []
+  ok    fixture recipes_extra.lua is inside the subset and lints clean []
+  ok    fixture data/data_config.lua is inside the subset and lints clean []
+  ok    fixture data/data_items.lua is inside the subset and lints clean []
+  ok    fixture p01_empty_fn.lua is inside the subset and lints clean []
+  ok    fixture p04_nested_if.lua is inside the subset and lints clean []
+  ok    fixture p05_oneline_if.lua is inside the subset and lints clean []
+  ok    fixture p08_paren_in_string.lua is inside the subset and lints clean []
+  ok    fixture p09_emit_payload.lua is inside the subset and lints clean []
+  ok    fixture p14_two_ifs.lua is inside the subset and lints clean []
+  ok    fixture p18_compare_and_or.lua is inside the subset and lints clean []
+  ok    fixture p19_return_expr.lua is inside the subset and lints clean []
+  ok    fixture p20_local_in_untaken.lua is inside the subset and lints clean []
+  ok    fixture p21_multiline_api.lua is inside the subset and lints clean []
+  ok    fixture p23_stmt_around_if.lua is inside the subset and lints clean []
+  ok    data.res://lua/buildings/ghostfam.lua
+  ok    data.res://lua/buildings/hyggebyen.lua
+  ok    data.res://lua/buildings/traetoppen.lua
+  ok    data.res://lua/config/ambient.lua
+  ok    data.res://lua/config/bosses.lua
+  ok    data.res://lua/config/characters.lua
+  ok    data.res://lua/config/dungeon.lua
+  ok    data.res://lua/config/dungeon_loot.lua
+  ok    data.res://lua/config/dungeon_run.lua
+  ok    data.res://lua/config/enemies.lua
+  ok    data.res://lua/config/farm_site.lua
+  ok    data.res://lua/config/festival_decor.lua
+  ok    data.res://lua/config/forest_look.lua
+  ok    data.res://lua/config/game_balance.lua
+  ok    data.res://lua/config/husbandry.lua
+  ok    data.res://lua/config/marker_handlers.lua
+  ok    data.res://lua/config/npcs.lua
+  ok    data.res://lua/config/props.lua
+  ok    data.res://lua/config/props_extra.lua
+  ok    data.res://lua/config/props_features.lua
+  ok    data.res://lua/config/race_perks.lua
+  ok    data.res://lua/config/race_reactions.lua
+  ok    data.res://lua/config/rarity.lua
+  ok    data.res://lua/config/resource_nodes.lua
+  ok    data.res://lua/config/species_perks.lua
+  ok    data.res://lua/config/traetoppen.lua
+  ok    data.res://lua/data/home_tiers.lua
+  ok    data.res://lua/data/loot_tables.lua
+  ok    data.res://lua/data/sets.lua
+  ok    data.res://lua/data/starter_kit.lua
+  ok    data.res://lua/data/wardrobe_rules.lua
+  ok    data.res://lua/dialogue/_voiced_social.lua
+  ok    data.res://lua/dialogue/appraiser_fru_ugle.lua
+  ok    data.res://lua/dialogue/baker_maja.lua
+  ok    data.res://lua/dialogue/bathkeeper_sofus.lua
+  ok    data.res://lua/dialogue/beekeeper_birk.lua
+  ok    data.res://lua/dialogue/carpenter_brumme.lua
+  ok    data.res://lua/dialogue/cat_morfar_mis.lua
+  ok    data.res://lua/dialogue/fairy_builder.lua
+  ok    data.res://lua/dialogue/fairy_furnisher.lua
+  ok    data.res://lua/dialogue/fairy_king.lua
+  ok    data.res://lua/dialogue/fairy_lily.lua
+  ok    data.res://lua/dialogue/fairy_tailor.lua
+  ok    data.res://lua/dialogue/fairy_wizard.lua
+  ok    data.res://lua/dialogue/farmer_rosa.lua
+  ok    data.res://lua/dialogue/gardener_hoppe.lua
+  ok    data.res://lua/dialogue/ghostfam_blund.lua
+  ok    data.res://lua/dialogue/ghostfam_dyne.lua
+  ok    data.res://lua/dialogue/ghostfam_gnist.lua
+  ok    data.res://lua/dialogue/ghostfam_silke.lua
+  ok    data.res://lua/dialogue/guard_oak.lua
+  ok    data.res://lua/dialogue/mapseller_natteblik.lua
+  ok    data.res://lua/dialogue/mayor_lyra.lua
+  ok    data.res://lua/dialogue/merchant_pip.lua
+  ok    data.res://lua/dialogue/penguin_postman.lua
+  ok    data.res://lua/dialogue/pippin_boegeknop.lua
+  ok    data.res://lua/dialogue/postman_pip.lua
+  ok    data.res://lua/dialogue/smith_thorin.lua
+  ok    data.res://lua/dungeon_run/recipes.lua
+  ok    data.res://lua/dungeon_run/shops.lua
+  ok    data.res://lua/farm/farm_intro_pip.lua
+  ok    data.res://lua/farm/farm_intro_pip_bye.lua
+  ok    data.res://lua/farm/farm_tutorial.lua
+  ok    data.res://lua/items/animals.lua
+  ok    data.res://lua/items/building_materials.lua
+  ok    data.res://lua/items/clothing.lua
+  ok    data.res://lua/items/consumables.lua
+  ok    data.res://lua/items/crafted.lua
+  ok    data.res://lua/items/crops.lua
+  ok    data.res://lua/items/dungeon_materials.lua
+  ok    data.res://lua/items/dungeon_supplies.lua
+  ok    data.res://lua/items/furniture.lua
+  ok    data.res://lua/items/gems.lua
+  ok    data.res://lua/items/magic.lua
+  ok    data.res://lua/items/products.lua
+  ok    data.res://lua/items/resources.lua
+  ok    data.res://lua/items/tools.lua
+  ok    data.res://lua/items/weapons.lua
+  ok    data.res://lua/quests/animal_products.lua
+  ok    data.res://lua/quests/birthday_cake.lua
+  ok    data.res://lua/quests/bogtraeet.lua
+  ok    data.res://lua/quests/bossernes_vej.lua
+  ok    data.res://lua/quests/cookie_delivery.lua
+  ok    data.res://lua/quests/crystal_cave.lua
+  ok    data.res://lua/quests/dark_forest_mining.lua
+  ok    data.res://lua/quests/enchanted_garden.lua
+  ok    data.res://lua/quests/fairy_friendship.lua
+  ok    data.res://lua/quests/first_animal.lua
+  ok    data.res://lua/quests/fix_roof.lua
+  ok    data.res://lua/quests/flower_necklace.lua
+  ok    data.res://lua/quests/forest_mother_s03.lua
+  ok    data.res://lua/quests/forest_mother_s04.lua
+  ok    data.res://lua/quests/forest_mother_s05.lua
+  ok    data.res://lua/quests/forest_mother_s06.lua
+  ok    data.res://lua/quests/forest_mother_s07.lua
+  ok    data.res://lua/quests/forest_mother_s08.lua
+  ok    data.res://lua/quests/forest_patrol.lua
+  ok    data.res://lua/quests/forste_dage.lua
+  ok    data.res://lua/quests/intro_lottery.lua
+  ok    data.res://lua/quests/lost_cat.lua
+  ok    data.res://lua/quests/math_bakery_counts.lua
+  ok    data.res://lua/quests/math_harvest_puzzle.lua
+  ok    data.res://lua/quests/math_wizard_quiz.lua
+  ok    data.res://lua/quests/moonstone_crown.lua
+  ok    data.res://lua/quests/night_flower.lua
+  ok    data.res://lua/quests/pips_runde.lua
+  ok    data.res://lua/quests/rare_mushroom_hunt.lua
+  ok    data.res://lua/quests/rune_vandring.lua
+  ok    data.res://lua/quests/secret_garden.lua
+  ok    data.res://lua/quests/skovlift_intro.lua
+  ok    data.res://lua/quests/slotsdroemmen.lua
+  ok    data.res://lua/quests/snurresvampen.lua
+  ok    data.res://lua/quests/supply_run.lua
+  ok    data.res://lua/quests/sword_upgrade.lua
+  ok    data.res://lua/quests/ugles_noegle.lua
+  ok    data.res://lua/recipes/dungeon.lua
+  ok    data.res://lua/recipes/furniture.lua
+  ok    data.res://lua/recipes/guide_recipes.lua
+  ok    data.res://lua/recipes/materials.lua
+  ok    data.res://lua/routines/core/appraiser_fru_ugle.lua
+  ok    data.res://lua/routines/core/baker_maja.lua
+  ok    data.res://lua/routines/core/bathkeeper_sofus.lua
+  ok    data.res://lua/routines/core/beekeeper_birk.lua
+  ok    data.res://lua/routines/core/carpenter_brumme.lua
+  ok    data.res://lua/routines/core/cat_morfar_mis.lua
+  ok    data.res://lua/routines/core/clerk_fjerpen.lua
+  ok    data.res://lua/routines/core/fairy_builder.lua
+  ok    data.res://lua/routines/core/fairy_furnisher.lua
+  ok    data.res://lua/routines/core/fairy_king.lua
+  ok    data.res://lua/routines/core/fairy_lily.lua
+  ok    data.res://lua/routines/core/fairy_tailor.lua
+  ok    data.res://lua/routines/core/fairy_wizard.lua
+  ok    data.res://lua/routines/core/farmer_rosa.lua
+  ok    data.res://lua/routines/core/gardener_hoppe.lua
+  ok    data.res://lua/routines/core/guard_oak.lua
+  ok    data.res://lua/routines/core/mapseller_natteblik.lua
+  ok    data.res://lua/routines/core/mayor_lyra.lua
+  ok    data.res://lua/routines/core/merchant_pip.lua
+  ok    data.res://lua/routines/core/penguin_postman.lua
+  ok    data.res://lua/routines/core/pippin_boegeknop.lua
+  ok    data.res://lua/routines/core/postman_pip.lua
+  ok    data.res://lua/routines/core/smith_thorin.lua
+  ok    data.res://lua/routines/ghostfam/ghostfam_blund.lua
+  ok    data.res://lua/routines/ghostfam/ghostfam_dyne.lua
+  ok    data.res://lua/routines/ghostfam/ghostfam_gnist.lua
+  ok    data.res://lua/routines/ghostfam/ghostfam_silke.lua
+  ok    data.res://lua/shops/animal_store.lua
+  ok    data.res://lua/shops/bakery.lua
+  ok    data.res://lua/shops/home_shops.lua
+  ok    data.res://lua/shops/lantern_house.lua
+  ok    data.res://lua/shops/magic_store.lua
+  ok    data.res://lua/shops/seed_shop.lua
+  ok    data.res://lua/shops/smithy.lua
+  ok    data.res://lua/shops/timber_yard.lua
+  ok    data.res://lua/social/citizens.lua
+  ok    data.res://lua/social/gift_tastes.lua
+  ok    data.res://lua/social/social.lua
+  ok    data.res://lua/social/topics.lua
+  ok    data.res://lua/towns.lua
+  ok    data.tool_printed_ids (tools/lua/lint.gd printed 159 PASS/FAIL ids)
+  ok    data.tool_exit_code (tools/lua/lint.gd exit code 0)
+  ok    the tool ends with its summary line
+  ok    data.lint_tool_fails_on_bad_files (tools/lua/lint.gd exits 1 and names file:line:rule for the probes outside the subset)
+  ok    data.probe_fixture_loaded (probe_expected.json holds 70 cases generated with Lua 5.4)
+  ok    probe p01_empty_fn.a empty function returns nothing
+  ok    probe p01_empty_fn.b the function after the empty one is its own
+  ok    probe p02_else.get_dialogue x true -> then
+  ok    probe p02_else.get_dialogue x false -> else
+  ok    probe p03_elseif.get_dialogue x -> x
+  ok    probe p03_elseif.get_dialogue y -> y
+  ok    probe p03_elseif.get_dialogue none -> none
+  ok    probe p04_nested_if.get_dialogue a and b
+  ok    probe p04_nested_if.get_dialogue a only
+  ok    probe p04_nested_if.get_dialogue neither
+  ok    probe p05_oneline_if.get_dialogue x
+  ok    probe p05_oneline_if.get_dialogue no x
+[Lua] unsupported Lua construct (arithmetic) evaluates to nil: see LuaRuntime.lint_report
+  ok    probe p08_paren_in_string.on_accept paren in notification text
+  ok    probe p09_emit_payload.on_accept emit with payload table
+  ok    probe p12_block_comment.on_accept function inside a block comment is not defined
+  ok    probe p14_two_ifs.handle_event two ifs, both taken
+  ok    probe p14_two_ifs.handle_event two ifs, none taken
+  ok    probe p15_escape.get_dialogue escaped quotes in a text
+  ok    probe p17_ifelse_api.handle_event bonus branch
+  ok    probe p17_ifelse_api.handle_event else branch
+  ok    probe p18_compare_and_or.get_dialogue a and b
+  ok    probe p18_compare_and_or.get_dialogue only c
+  ok    probe p18_compare_and_or.get_dialogue only a (a and b is false, c is false)
+  ok    probe p18_compare_and_or.get_dialogue none
+  ok    probe p19_return_expr.is_available has_item and not has_flag
+  ok    probe p19_return_expr.is_available done flag set
+  ok    probe p20_local_in_untaken.get_dialogue branch not taken
+  ok    probe p20_local_in_untaken.get_dialogue branch taken
+  ok    probe p21_multiline_api.on_accept notification over three lines
+  ok    probe semantics.zero_is_true 0 is true in Lua
+  ok    probe semantics.empty_string_is_true the empty string is true in Lua
+  ok    probe semantics.nil_and_false_are_false nil and false are the only false values
+  ok    probe semantics.mixed_compare false == 3 is false, never an error
+  ok    probe semantics.precedence a or (b and c): a
+  ok    probe semantics.precedence a or (b and c): only b
+  ok    probe semantics.precedence a or (b and c): b and c
+  ok    probe semantics.precedence a or (b and c): none
+  ok    probe semantics.parentheses (a or b) and c: only a
+  ok    probe semantics.parentheses (a or b) and c: a and c
+  ok    probe semantics.parentheses (a or b) and c: b and c
+  ok    probe semantics.not_binds_tight (not a) and b: b only
+  ok    probe semantics.not_binds_tight (not a) and b: a and b
+  ok    probe semantics.compare_numbers 7 is mid
+  ok    probe semantics.compare_numbers 12 is high
+  ok    probe semantics.compare_numbers 10 is low (not > 10, not < 10)
+  ok    probe semantics.compare_numbers 2 is low
+  ok    probe semantics.compare_strings lily
+  ok    probe semantics.compare_strings oak
+  ok    probe semantics.compare_strings fox
+[Lua] hello world nil
+  ok    probe semantics.concat_in_log concat in a log call
+  ok    probe semantics.flag_value api.get_flag returns the value
+  ok    probe semantics.flag_value api.get_flag of an unset flag is nil
+  ok    probe semantics.flag_as_bare_identifier seen and not gone
+  ok    probe semantics.flag_as_bare_identifier seen and gone
+  ok    probe semantics.flag_as_bare_identifier no flags
+  ok    probe semantics.side_effects_in_order early return keeps the effects before it
+  ok    probe semantics.side_effects_in_order no early return
+[Lua] accepted nil
+  ok    probe lint_clean_sample.on_accept nested ifs, locals, comparisons
+[Lua] accepted nil
+  ok    probe lint_clean_sample.on_accept one-line if
+[Lua] accepted nil
+  ok    probe lint_clean_sample.on_accept fall through to the last return
+  ok    probe lint_clean_sample.is_available boolean expression with parentheses
+  ok    probe p23_stmt_around_if.on_accept x true
+  ok    probe p23_stmt_around_if.on_accept x false
+  ok    replaying every probe (also the ones outside the subset) raises no engine error or warning
+  ok    data.lua_probes (70 cases over 25 files: 54 exact, 9 best effort, 7 flagged-only; 0 failed)
+  ok    the inline fixture registers as dialogue flag_identifiers
+  ok    data.content_flag_identifiers (29 branch combinations x 4 sources (world flag, context, context with StringName keys, JSON float flag); 0 wrong)
+  ok    nothing set: the defaults (tier 1, no building, nothing done) give tier_1
+  ok    precedence: celebration (done) before construction before idle
+  ok    precedence: construction before idle
+  ok    the context wins over the world flag (`context.x or x`)
+  ok    a flag that is false counts as unset (`or` falls through to the default)
+  ok    0 is a number (true in Lua): tier 0 matches no branch and falls through
+  ok    an unset flag compared with a number raises no engine error
+  ok    nested arrays of tables inside the returned table are intact
+[Lua] unknown Lua function `nonexistent` evaluates to nil (api functions: add_gold add_item remove_item set_flag get_flag has_flag has_item get_gold notification unlock_zone emit log offer_quest complete_quest get_hearts add_hearts is_birthday festival)
+[Lua] unsupported Lua construct (arithmetic) evaluates to nil: see LuaRuntime.lint_report
+  ok    data.unknown_identifiers_log_once (an unknown api function is logged once (2 messages after two calls) and never as an engine warning)
+  ok    unknown api functions and unsupported constructs raise no engine error or warning
+  ok    the function still returns its table
+  ok    data.notification_through_tr (lua_notification runs title and message through tr(): [["Oversat titel", "plain text stays"]])
+  ok    lua_emit carries the payload through EventBus.lua_event
+  ok    an unknown script or function answers null / {}
+  ok    a bare identifier is the world flag of that name
+  ok    ...also a numeric (float) flag, and 1.0 is true
+  ok    quests, dialogue, items and config files of res://lua are registered by their kind header
+  ok    get_dialogue returns speaker, lines and choices
+  ok    a kind = "shops" / "recipes" file yields its `shops` / `recipes` key
+  ok    load_file(shops_extra.lua) registers the file
+  ok    load_file(recipes_extra.lua) registers the file
+  ok    load_file(data/data_config.lua) registers the file
+  ok    load_file(data/data_items.lua) registers the file
+  ok    loading the kind fixtures logs nothing
+  ok    get_shop(id) answers the def with its id, {} for an unknown shop; get_shops() lists them
+  ok    get_recipes() lists every recipe in declaration order, each with its id
+  ok    get_recipes(category) filters, get_recipe(id) answers one
+  ok    config and items files outside lua/config and lua/items are registered by their kind header
+  ok    the script id is the path below res:// (without .lua)
+  ok    data.kinds_shops_recipes (get_shop / get_recipes / generic kinds (config, items, shops, recipes) work and the fixtures lint clean)
+  ok    ItemKinds.storage_of: furniture -> furniture store, clothing -> wardrobe store, else backpack
+  ok    ItemKinds.is_one_of_a_kind: unique and legendary only (`common` is normal)
+  ...   (26 more ok lines of data not printed; --verbose prints all)
+  --    data: 426 checks, 0 failed, 0 skipped, 6.4 s
+== section quests  (res://tests/sections/quests.gd)
+  ok    quests.lint_report_empty (LuaRuntime.lint_report after a full reload: [])
+  ok    quests.lint_tool_clean_on_every_quest_file (tools/lua/lint.gd on lua/quests: 37 PASS of 37 files, 0 FAIL, exit 0)
+  ok    quests.every_quest_file_is_registered (37 quest files, every file registers its id with QuestManager [])
+  ok    quests.the_twenty_quests_are_there (the 20 quests of the legacy set [])
+  ok    quests.giver_tag_location_for_every_quest (37 quests: giver is a roster npc that offers it, tag in the six, location a ZONE_ key [])
+  ok    quests.every_objective_has_a_binding_and_its_own_text_key (the 20 quests: the quest book derives QUEST_<ID>_TITLE / _DESC (the schema defaults), `on` and description_key OBJ_<QUEST>_<OBJ> on every objective [])
+  ok    quests.math_objectives_renamed_unique (math_harvest_puzzle: ["math_harvest_carrot", "math_collect_stone", "math_collect_mushroom"])
+  ok    quests.no_text_literals_in_the_quest_lua (no description = / title = literal in the 20 quests of this package or the four of F1 [])
+  ok    quests.objective_references_exist (37 quests: every npc, any_of npc, item, needs item, recipe, crop, zone, area and reward a quest names exists [])
+  ok    quests.every_quest_text_key_resolves_in_da_and_en (37 quests: title, description, offer, every objective, every toast key and every reward item name in da + en [])
+  ok    quests.quests_csv_owns_only_its_families (147 rows, all QUEST_ / OBJ_ / LUANOTIF_, none of the four feature quests (features_quests.csv); QUEST_FAIRY_FRIENDSHIP_TITLE replaces the legacy typo [])
+  ok    quests.binding_vocabulary_events (item_gained crop_planted crop_watered crop_harvested zone_entered area_changed dialogue_started(any_of) animal_* building_built enemy_defeated recipe_crafted quest_completed manual amount: [])
+  ok    quests.area_changed_binding (on = area_changed binds the MAP id of EventBus.area_changed, not the zone: [])
+  ok    quests.game_event_binding_filters (event name + rarity (comma list); an unknown event and a wrong filter never count: [])
+  ok    quests.game_event_match_filter (match = { npc, item, id } compares payload entries (numbers as numbers, a missing entry never matches): [])
+  ok    quests.game_event_min_level_generic (min_level reads payload.level for dungeon_floor_entered, dungeon_runestone_activated and hygge_level alike: [])
+  ok    quests.dungeon_event_payloads_bind (dungeon_floor_entered, dungeon_runestone_activated, dungeon_boss_defeated, dungeon_run_ended: [])
+  ok    quests.state_objective_counts_standing_pieces (placed_by_rarity = pieces standing now, evaluated at accept and on furniture_changed: [])
+  ok    quests.state_friend_hearts_at_least (friend_hearts_at_least / hygge_level_at_least / home_tier_at_least read their owner, re-evaluate on friend_changed / hygge_changed / home_upgraded and stay done: [])
+  ok    quests.state_objective_reevaluated_on_load ([])
+  ok    quests.state_query_registration (register_state_query(name, Callable(def) -> count): [])
+  ok    quests.after_others_turn_in (a turn-in is judged on the state before the event: [])
+  ok    quests.have_objective_tracks_inventory (have = true: counts what you own at accept, follows add / remove (coalesced to the next frame), done stays done: [])
+  ok    quests.delivery_consumes_the_goods (needs + consume = the goods leave the backpack with the progress, a missing good blocks it with a toast: [])
+  ok    quests.resource_drop_counts_once (the resource_node_depleted special case only feeds objectives without `on`: [])
+  ok    quests.social_objective_sugar (gift_given / festival_attended / heart_event_finished are game_event sugar with npc / item / id filters: [])
+  ok    quests.friendship_reward_goes_through_social_manager (rewards.friendship -> SocialManager.add_hearts(npc, n, &quest), no flag written by the quest package: [])
+  ok    quests.friendship_reward_cap (without SocialManager: flag friend_<npc> += n capped at 10, friend_changed(npc, hearts) when the hearts changed: [])
+  ok    quests.real_managers_social_contract (rewards.friendship -> the real SocialManager.add_hearts (mirrored into friend_<npc>), friend_hearts_at_least on the real hearts / friend_changed, lost_cat pays Pippin 2 hearts: [])
+  ok    quests.real_managers_home_contract (home_tier_at_least reads the real HomeManager.tier and re-evaluates on home_upgraded: [])
+  ok    quests.real_managers_furniture_contract (FurnitureManager offers count_placed_by_rarity(rarities) and hygge_level_index() (the names on_state objectives ask))
+  ok    quests.offerable_by_giver (offerable(npc) = available now, not active, not done, in npcs.lua order: [])
+  ok    quests.offerable_for_many (offerable_for(givers) = [{quest_id, giver}] in the order of the givers, one entry per offerable quest: [])
+  ok    quests.post_givers_have_offer_text (16 quests of the post.givers (mayor_lyra, baker_maja, merchant_pip, farmer_rosa, fairy_lily, smith_thorin) have QUEST_<ID>_OFFER in da + en [])
+  ok    quests.tracked_order_and_cap (get_tracked(max): oldest accepted first, capped, never completed or failed, stable across save / load: [])
+  ok    quests.journal_lists_api (get_active_ids (oldest first), get_completed_ids (most recent first), the two counts for 'Aktive · n' / 'Fuldført · m': [])
+  ok    quests.repeatable_reaccept_after_cooldown (meta.repeatable / cooldown_days: re-accept only after the cooldown, from zero, one history entry: [])
+  ok    quests.save_roundtrip_keeps_progress_and_definitions (to_dict / from_dict: only runtime state, any_of progress, JSON floats, definitions stay live: [])
+  ok    quests.reset_keeps_definitions (reset() forgets progress and keeps the Lua definitions)
+  ok    quests.new_game_resets_runtime_and_keeps_definitions (reset() on new_game_started: active, completed, offered, owed rewards and flags gone, definitions stay: [])
+  ok    quests.lua_probes_live_in_p10_fixtures (23 probe files + probe_expected.json in P10's tests/fixtures/lua (replayed by data.lua_probes), every quest file lints clean with the same lint_source [])
+  ok    quests.item_in_use (item_in_use(item): open have objectives, `needs` of open objectives, ingredients of an open recipe_crafted objective: [])
+  ok    quests.objective_text_cascade (get_objective_text: description_key -> OBJ_<QUEST>_<OBJ> -> OBJ_<OBJ> -> description -> id, da and en: [])
+  ok    quests.binding_lint_catches_uncompletable_objectives (unknown on / state, any_of larger than the target, have without item, missing fields, duplicates, bad rewards / tags: [])
+  ok    quests.lost_cat_keeps_guide_chips (lost_cat pays 150 guldagern + catnip_seeds x3 + hat_cat_ears + a heart with Pippin; the book shows the guide's chips, steps, title, 'Fra' line and description: [])
+  ok    quests.lost_cat_plays_through (ask three neighbours, follow the paw prints, find Morfar Mis, tell Pippin: [])
+  ok    quests.feature_quests_complete_with_rewards (lost_cat, fix_roof, birthday_cake, math_wizard_quiz, bogtraeet, moonstone_crown, snurresvampen, slotsdroemmen: accepted and completed through the real EventBus, exact gold and items [])
+  ok    quests.every_objective_completable_with_dungeon_events (37 quest files, 124 objectives driven through the signals the game sends (game_event names fed: dungeon_floor_entered, dungeon_run_ended, dungeon_runestone_activated, festival_held, plot_tilled, post_read; the dungeon payloads of ADDENDUM 8.4 reach every objective bound to them - fed to real quests: dungeon_floor_entered, dungeon_run_ended, dungeon_runestone_activated); accepted through the Lua gate: 36, started past an unknown gate: ["secret_garden"]; [])
+  ok    quests.manual_objectives_have_completers (38 on = manual objectives, each named by a quest_spot marker (2 markers), a dialogue math_answer action (6) or a script: unnamed [])
+  SKIP  manual_objectives_have_completers: the completer of rare_mushroom_hunt.find_glowing (D1-dungeon-gen) is built by a package that has not landed (its quest_spot is generated by the dungeon generator, DUNGEON_V2_ADDENDUM 2.7)
+  ok    quests.quest_spot_markers_match_the_lua_needs (2 quest_spot markers of the real maps: the objective is manual and its needs / consume equal the marker's [])
+  ok    quests.intro_lottery_binds_traetoppen (plant_first_crop (crop_planted), cross_bridge (zone_entered traetoppen), talk_to_mayor (dialogue mayor_lyra): [])
+  ok    quests.no_fixed_forest_area_ids (no quest binds skovkant / dybe_bregner as an area or zone id (the generated floors have moerkeskoven_f<N> ids) [])
+  ok    quests.lost_cat_binds_pawprints_and_mis ([])
+  ok    quests.zone_entered_repeat_is_harmless (dark_forest_mining, forest_patrol, crystal_cave: repeated zone_entered / area_changed never overshoot a target of 1 and never finish the quest alone: [])
+  ok    quests.bound_quests_have_their_floor_anchors (night_flower (night_bloom, floor 2), rare_mushroom_hunt (glow_mushroom + the find_glowing quest_spot, floor 7), moonstone_crown (moonstone), the zone quests (zone ids of the floors): [])
+  SKIP  bound_quests_have_their_floor_anchors: the generator-level proof (DungeonGen places the night_bloom node / the quest_spot) belongs to D1-dungeon-gen; this check reads the floor table of the design
+  ok    quests.forste_dage_vocabulary_plot_tilled_post_read (on = game_event with event plot_tilled / post_read completes objectives (the tutorial's bindings): [])
+  ok    quests.forste_dage_binds_only_known_events (every objective of lua/quests/forste_dage.lua uses a binding of the vocabulary and, for game_event, a name of the events list [])
+  --    quests: 57 checks, 0 failed, 2 skipped, 4.4 s
+== summary: 3 section(s) run, 608 checks (0 failed, 2 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 18.8 s
+PLAYTEST PASS (608 checks in 3 sections, 0 allowed engine messages, 0 known-issue messages)

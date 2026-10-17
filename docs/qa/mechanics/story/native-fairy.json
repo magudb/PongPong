@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "fairy",
+  "checks": 37,
+  "elapsed_s": 19.13,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "forest_mother": {
+      "character": "fairy",
+      "checks": 37,
+      "failed": 0,
+      "ms": 14922,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

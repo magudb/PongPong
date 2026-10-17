@@ -1,0 +1,94 @@
+run_playtest: importing project (pass 1 of 1) ...
+run_playtest: assets changed, running tools/import/write_import_stubs.py --check
+write_import_stubs --check: ok (62 character folders, 498 sheets with the S3TC preset, 58 tile atlases, 0 wardrobe layer imports lossless, 252 painted wardrobe textures with S3TC, 183 keep files)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=art_dungeon_supplies,art_forest_mother,forest_mother_anchors
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.b9tdFE/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 1.7 s
+== section art_dungeon_supplies  (res://tests/sections/art_dungeon_supplies.gd)
+  ok    art_dungeon_supplies.five_supplies
+  ok    art_dungeon_supplies.live_definition_etagekort
+  ok    art_dungeon_supplies.cutout_size_budget_etagekort
+  ok    art_dungeon_supplies.selected_source_etagekort
+  ok    art_dungeon_supplies.day_and_night_resolve_etagekort
+  ok    art_dungeon_supplies.live_definition_lysdraabe
+  ok    art_dungeon_supplies.cutout_size_budget_lysdraabe
+  ok    art_dungeon_supplies.selected_source_lysdraabe
+  ok    art_dungeon_supplies.day_and_night_resolve_lysdraabe
+  ok    art_dungeon_supplies.live_definition_svampe_eliksir
+  ok    art_dungeon_supplies.cutout_size_budget_svampe_eliksir
+  ok    art_dungeon_supplies.selected_source_svampe_eliksir
+  ok    art_dungeon_supplies.day_and_night_resolve_svampe_eliksir
+  ok    art_dungeon_supplies.live_definition_tornebaer
+  ok    art_dungeon_supplies.cutout_size_budget_tornebaer
+  ok    art_dungeon_supplies.selected_source_tornebaer
+  ok    art_dungeon_supplies.day_and_night_resolve_tornebaer
+  ok    art_dungeon_supplies.live_definition_ugle_noegle
+  ok    art_dungeon_supplies.cutout_size_budget_ugle_noegle
+  ok    art_dungeon_supplies.selected_source_ugle_noegle
+  ok    art_dungeon_supplies.day_and_night_resolve_ugle_noegle
+  --    art_dungeon_supplies: 21 checks, 0 failed, 0 skipped, 0.0 s
+== section art_forest_mother  (res://tests/sections/art_forest_mother.gd)
+  ok    art_forest_mother.four_saved_paintings
+  ok    art_forest_mother.runtime_art_mother_repaired_lantern
+  ok    art_forest_mother.selected_source_mother_repaired_lantern
+  ok    art_forest_mother.cutout_mother_repaired_lantern
+  ok    art_forest_mother.runtime_art_mother_route_map
+  ok    art_forest_mother.selected_source_mother_route_map
+  ok    art_forest_mother.cutout_mother_route_map
+  ok    art_forest_mother.runtime_art_mother_seed_tin
+  ok    art_forest_mother.selected_source_mother_seed_tin
+  ok    art_forest_mother.cutout_mother_seed_tin
+  ok    art_forest_mother.runtime_art_root_scribe_waymarker
+  ok    art_forest_mother.selected_source_root_scribe_waymarker
+  ok    art_forest_mother.cutout_root_scribe_waymarker
+  ok    art_forest_mother.evidence_art_marked_lamp
+  ok    art_forest_mother.evidence_art_memory_lamp
+  ok    art_forest_mother.evidence_art_memory_table
+  ok    art_forest_mother.evidence_art_memory_basket
+  ok    art_forest_mother.evidence_art_memory_map
+  ok    art_forest_mother.evidence_art_echo_account
+  ok    art_forest_mother.evidence_art_traveller_account
+  ok    art_forest_mother.evidence_art_return_promise
+  ok    art_forest_mother.evidence_art_route_stone
+  ok    art_forest_mother.evidence_art_last_journey
+  ok    art_forest_mother.evidence_art_mother_fate
+  ok    art_forest_mother.evidence_art_legacy_home
+  ok    art_forest_mother.complete_effective_catalog ({ "code": 0, "output": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\n\nART COVERAGE 62 characters, 401 items, 29 tiles, 364 props; res://docs/art/style-audit/current/catalog.json\nART COVERAGE pass: 0 gaps\n", "lines": ["Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org", "ART COVERAGE 62 characters, 401 items, 29 tiles, 364 props; res://docs/art/style-audit/current/catalog.json", "ART COVERAGE pass: 0 gaps"] })
+  --    art_forest_mother: 26 checks, 0 failed, 0 skipped, 5.2 s
+== section forest_mother_anchors  (res://tests/sections/forest_mother_anchors.gd)
+  ok    forest_mother_anchors.reachable_clear_anchors_day_1_floor_1 (anchors=1 wanted=1 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_1_floor_5 (anchors=4 wanted=4 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_1_floor_7 (anchors=1 wanted=1 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_1_floor_9 (anchors=1 wanted=1 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_1_floor_10 (anchors=1 wanted=1 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_1_floor_11 (anchors=1 wanted=1 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_1_floor_12 (anchors=1 wanted=1 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_17_floor_1 (anchors=1 wanted=1 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_17_floor_5 (anchors=4 wanted=4 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_17_floor_7 (anchors=1 wanted=1 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_17_floor_9 (anchors=1 wanted=1 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_17_floor_10 (anchors=1 wanted=1 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_17_floor_11 (anchors=1 wanted=1 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_17_floor_12 (anchors=1 wanted=1 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_53_floor_1 (anchors=1 wanted=1 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_53_floor_5 (anchors=4 wanted=4 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_53_floor_7 (anchors=1 wanted=1 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_53_floor_9 (anchors=1 wanted=1 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_53_floor_10 (anchors=1 wanted=1 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_53_floor_11 (anchors=1 wanted=1 errors=[])
+  ok    forest_mother_anchors.reachable_clear_anchors_day_53_floor_12 (anchors=1 wanted=1 errors=[])
+  ok    forest_mother_anchors.parked_garden_reentry_never_duplicates_story_props
+  --    forest_mother_anchors: 22 checks, 0 failed, 0 skipped, 3.6 s
+== summary: 3 section(s) run, 77 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 15.1 s
+PLAYTEST PASS (77 checks in 3 sections, 0 allowed engine messages, 0 known-issue messages)

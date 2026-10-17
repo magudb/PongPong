@@ -36,6 +36,7 @@ const API_VERSION := 2
 
 const _Parser := preload("res://scripts/data/lua_parser.gd")
 const _Lint := preload("res://scripts/data/lua_lint.gd")
+const _Data := preload("res://scripts/data/lua_data.gd")
 
 const _RARITY_IDS := ["normal", "uncommon", "rare", "unique", "legendary", "common"]
 ## names the parser keeps for its own result keys: a table of that name is never extracted, so a registry cannot use them
@@ -392,6 +393,9 @@ func _register_script(sid: String) -> void:
 				# and a save may contain it, the executable part stays private to the runtime
 				var definition := script.duplicate()
 				definition.erase("functions")
+				# Scalar literals live in table_assigns in the parser. Quest
+				# captions are data too; expose them alongside literal tables.
+				definition.merge(_Data.dict(script.get("table_assigns",{})),false)
 				qm.register_quest_from_lua(definition)
 		"dialogue":
 			var did: String = str(script.get("id", "")) if str(script.get("id", "")) != "" else sid

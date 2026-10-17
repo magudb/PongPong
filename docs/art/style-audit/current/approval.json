@@ -17626,6 +17626,60 @@
       "disposition": "accepted-painted",
       "role": "painted-dungeon-loot-icon",
       "evidence": "docs/art/dungeon-loadout/review.md; source paintings, packed 128/64 px contact and six native day/night pages inspected; appraisal and unique/legendary reveal screenshots opened"
+    },
+    "assets/iso_props/forest_mother/mother_repaired_lantern.webp": {
+      "sha256": "00846396f38fc7b90c0b2d7bf9452019edbf4521455a66cd5bd7ef30ac942f9d",
+      "disposition": "accepted-painted",
+      "role": "painted-forest-story-prop",
+      "evidence": "docs/qa/mechanics/story/review.md"
+    },
+    "assets/iso_props/forest_mother/mother_route_map.webp": {
+      "sha256": "d3fd4e42ae025174c28f7a1aff67a6d8eac22b61d52b3fa9b13a6d6cb66b38c1",
+      "disposition": "accepted-painted",
+      "role": "painted-forest-story-prop",
+      "evidence": "docs/qa/mechanics/story/review.md"
+    },
+    "assets/iso_props/forest_mother/mother_seed_tin.webp": {
+      "sha256": "535a11d59bf7a1725b6186741de0067ad2145e2be2bf48ba0120d02448b0ab00",
+      "disposition": "accepted-painted",
+      "role": "painted-forest-story-prop",
+      "evidence": "docs/qa/mechanics/story/review.md"
+    },
+    "assets/iso_props/forest_mother/root_scribe_waymarker.webp": {
+      "sha256": "94e31bb217f001b11cc211aff66f6c1ab3596703233e6ef86a52ebcf7877b1f2",
+      "disposition": "accepted-painted",
+      "role": "painted-forest-story-prop",
+      "evidence": "docs/qa/mechanics/story/review.md"
+    },
+    "assets/icons/items/etagekort.webp": {
+      "sha256": "011c34c3ea00aae16656360203b941c2f8fa59dd49f23eecb235734f4456813d",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-supply-icon",
+      "evidence": "docs/qa/mechanics/dungeon/supplies/review.md"
+    },
+    "assets/icons/items/lysdraabe.webp": {
+      "sha256": "74c60f8689de00af75039a1c83527dd1614d6f8b89accea9d82b799c1037990d",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-supply-icon",
+      "evidence": "docs/qa/mechanics/dungeon/supplies/review.md"
+    },
+    "assets/icons/items/svampe_eliksir.webp": {
+      "sha256": "9c55f12ae8438fae3071df87ff925ac6d749b5025bc13310ae694197bb01323a",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-supply-icon",
+      "evidence": "docs/qa/mechanics/dungeon/supplies/review.md"
+    },
+    "assets/icons/items/tornebaer.webp": {
+      "sha256": "929a168c941608146061580772a0016408ac30e14befaed4105027ca7236199c",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-supply-icon",
+      "evidence": "docs/qa/mechanics/dungeon/supplies/review.md"
+    },
+    "assets/icons/items/ugle_noegle.webp": {
+      "sha256": "6500a98b406b43d2bd1e76d64524c5b58c1f38a495411edea7252eaf49426d32",
+      "disposition": "accepted-painted",
+      "role": "painted-dungeon-supply-icon",
+      "evidence": "docs/qa/mechanics/dungeon/supplies/review.md"
     }
   },
   "m1b_followup": {
@@ -17681,5 +17735,16 @@
     "scope": "29 separately generated painted rough-stone, gem and material icons plus three technical pale-rim legendary variants; approved resource painting used only as a style reference.",
     "evidence": "docs/art/dungeon-loadout/review.md",
     "prompts": "docs/art/dungeon-loadout/icon-prompts.json"
+  },
+  "mother_story_and_supply_review": {
+    "worktree": "codex-mechanics",
+    "date": "2026-10-17",
+    "new_visual_assets": 9,
+    "retained_visual_assets": 2895,
+    "scope": "Four story-object cutouts and five dungeon supply icons. Each source painting and native world/dialogue or day/night inventory context visually inspected. Previous approved asset bytes unchanged.",
+    "evidence": [
+      "docs/qa/mechanics/story/review.md",
+      "docs/qa/mechanics/dungeon/supplies/review.md"
+    ]
   }
 }

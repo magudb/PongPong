@@ -1,0 +1,25 @@
+{
+  "tool": "built-in imagegen",
+  "sources": [
+    {
+      "id": "mother_repaired_lantern",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-fa61ea2c-f309-4eb5-9f32-34ee6427bcdf.png",
+      "source": "tools/art/drawn/sources/forest_mother/mother_repaired_lantern.png"
+    },
+    {
+      "id": "mother_route_map",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-40dafe2a-cb44-433b-a5ba-01611ca3d6a7.png",
+      "source": "tools/art/drawn/sources/forest_mother/mother_route_map.png"
+    },
+    {
+      "id": "mother_seed_tin",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-1d2080cd-969a-4924-863a-047f16e159d7.png",
+      "source": "tools/art/drawn/sources/forest_mother/mother_seed_tin.png"
+    },
+    {
+      "id": "root_scribe_waymarker",
+      "path": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-8acf9db3-6a62-44b7-91d8-fd3b78f8f1c4.png",
+      "source": "tools/art/drawn/sources/forest_mother/root_scribe_waymarker.png"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+keys,da,en
+FM_NAME,Mors spor,Mum’s trail
+FM_TOPIC,Om mors spor,About Mum’s trail
+FM_INSPECT,E: Undersøg sporet,E: Inspect the trace
+FM_RECORD,Gem dette i sporbogen,Record this in the trail book
+FM_REFUSE_ROLE,Hendes liv var hendes. Jeg tager hendes frø med hjem.,Her life was hers. I’m taking her seeds home.
+FM_PLANT_LEGACY,Plant mors frø her,Plant Mum’s seeds here
+FM_RETURN_NAME,Læs den rejsendes eget navn højt,Read the traveller’s own name aloud
+FM_TAB,Mors spor,Mum’s trail
+FM_JOURNAL_TITLE,Det vi ved om mor,What we know about Mum
+FM_EMPTY,De første spor ligger i den glemte have. Tal med Hoppe.,The first clues lie in the forgotten garden. Speak to Hoppe.
+FM_KIND_SEEN,Set med egne øjne,Seen firsthand
+FM_KIND_MEMORY,Bevaret minde — ikke en ny besked,Preserved memory — not a new message
+FM_KIND_WITNESS,Et vidnes beretning,A witness’s account
+FM_KIND_REMEMBERED,En nedskrevet beretning,A recorded account
+FM_KIND_CONFIRMED,Bekræftet,Confirmed
+FM_NEXT_GARDEN,"Gør haven levende igen, og følg brevet til Skovkanten.",Bring the garden back to life and follow the letter to the forest edge.
+FM_NEXT_COMPLETE,Mors frø gror i haven. Hendes historie er fortalt; vores liv fortsætter.,Mum’s seeds are growing in the garden. Her story is told; our lives continue.
+FM_CHAPTER_S03_TITLE,Stien uden kort,The unmapped path
+FM_CHAPTER_S03_DESC,"Mors lygte står på den første etage. Natteblik kan læse det, der mangler på kortet.",Mum’s lamp stands on the first floor. Natteblik can read what is missing from the map.
+FM_CHAPTER_S04_TITLE,Huset der husker,The house that remembers
+FM_CHAPTER_S04_DESC,En lysning på etage fem husker et køkken. Undersøg de fire spor. Fru Ugles beretning kan høres hos hende eller læses ved havebænken.,A clearing on floor five remembers a kitchen. Inspect its four traces. Hear Fru Ugle’s account from her or read it beside the garden bench.
+FM_CHAPTER_S05_TITLE,Navne mellem rødderne,Names among the roots
+FM_CHAPTER_S05_DESC,På etage syv har skoven byttet en rejsendes navn ud med en rolle. Find den rejsendes egne ord.,On floor seven the wood has replaced a traveller’s name with a role. Find the traveller’s own words.
+FM_CHAPTER_S06_TITLE,Det hun lovede,What she promised
+FM_CHAPTER_S06_DESC,Sammenhold løftet på etage ni med rutestenen på etage ti og Nattebliks beretning.,Compare the promise on floor nine with the route stone on floor ten and Natteblik’s account.
+FM_CHAPTER_S07_TITLE,Hinsides det sidste lys,Beyond the last light
+FM_CHAPTER_S07_DESC,Den sidste rute ligger på etage elleve. Gå gennem det sidste dybdepunkt til Rodskriverens ramme.,The last route lies on floor eleven. Pass the final depth checkpoint to reach the Root Scribe’s frame.
+FM_CHAPTER_S08_TITLE,Det vi bærer hjem,What we carry home
+FM_CHAPTER_S08_DESC,"Læs mors sidste beretning, giv hende hendes eget navn tilbage, og bær frøene hjem til haven.","Read Mum’s final account, restore her own name, and carry the seeds home to the garden."
+FM_OBJ_CHECKPOINT_S03,Åbn det første dybdepunkt på etage fire,Clear the first depth checkpoint on floor four
+FM_OBJ_CHECKPOINT_S05,Åbn det andet dybdepunkt på etage otte,Clear the second depth checkpoint on floor eight
+FM_OBJ_CHECKPOINT_S07,Åbn det sidste dybdepunkt på etage tolv,Clear the final depth checkpoint on floor twelve
+FM_E_LETTER_WATERMARK_TITLE,Brevet i frøkurven,The letter in the seed basket
+FM_E_LETTER_WATERMARK_TEXT,Mors håndskrift står på et fugtigt brev i havens frøkurv. Det er et gammelt brev; datoen kan ikke læses.,Mum’s handwriting is on a damp letter in the garden’s seed basket. It is an old letter; the date cannot be read.
+FM_E_POST_ROUTE_TITLE,Pips postrute,Pip’s postal route
+FM_E_POST_ROUTE_TEXT,"Pip genkender rutemærket. Brevet kom gennem skovposten, ikke fra en ny afsender i byen.","Pip recognises the route mark. The letter came through the forest post, not from a new sender in town."
+FM_E_LIFT_RECORD_TITLE,Oaks liftbog,Oak’s lift record
+FM_E_LIFT_RECORD_TEXT,Oak husker mor med lygte og opmålingsgrej. Hun tog Skovliften ned for at kortlægge en vej hjem for andre.,Oak remembers Mum with a lantern and surveying tools. She took the forest lift down to map a way home for others.
+FM_E_GARDEN_TRAIL_TITLE,Mærket ved Skovkanten,The mark at the forest edge
+FM_E_GARDEN_TRAIL_TEXT,Sporet ved frøkassen passer til brevet. Her begyndte mors vej ind i skoven.,The trace by the seed box matches the letter. This is where Mum’s path into the wood began.
+FM_E_MARKED_LAMP_TITLE,Lygten med tre sting,The lamp with three stitches
+FM_E_MARKED_LAMP_TEXT,"Tre skrå sting holder en gammel reparation på lygtegrebet. Mors kort ligger foldet under den. Hun tegnede en vej ud af skoven, selv om skovens eget kort stopper her.","Three slanting stitches hold an old repair on the lamp’s grip. Mum’s map is folded beneath it. She drew a way out of the wood, although the wood’s own map stops here."
+FM_E_MAP_ACCOUNT_TITLE,Nattebliks manglende sti,Natteblik’s missing path
+FM_E_MAP_ACCOUNT_TEXT,"Natteblik: Vi målte stierne sammen. Den stiplede linje er hendes. Hun sagde, at et kort også skal vise vej for dem, skoven ikke vil slippe. Mit kort kunne ikke beholde den linje.",Natteblik: We surveyed the paths together. The dotted line is hers. She said a map must also guide those the wood won’t release. My map could not keep that line.
+FM_E_MEMORY_LAMP_TITLE,Lyset i det huskede køkken,The light in the remembered kitchen
+FM_E_MEMORY_LAMP_TEXT,"Du retter vægen og lukker glasset. I et kort minde ser du mor stille lygten på et bord for en rejsende. Det er noget, der skete engang; lygten sender ingen ny besked.",You straighten the wick and close the glass. A brief memory shows Mum setting the lamp on a table for a traveller. This happened in the past; the lamp is sending no new message.
+FM_E_MEMORY_TABLE_TITLE,Pladsen ved bordet,The place at the table
+FM_E_MEMORY_TABLE_TEXT,"Bordet husker to kopper og en ledig plads. I mindet lytter mor til en rejsende, som kun kan kalde sig Gæsten.",The table remembers two cups and an empty place. In the memory Mum listens to a traveller who can only call themself the Guest.
+FM_E_MEMORY_BASKET_TITLE,Kurven med den syede kant,The basket with the stitched edge
+FM_E_MEMORY_BASKET_TEXT,"I kurven ligger stof med tre skrå sting og frø til et sted uden for skoven. Mor gjorde plads til mennesker, som ikke længere kunne finde deres hjem på et kort.",The basket holds cloth with three slanting stitches and seeds for a place outside the wood. Mum made room for people who could no longer find their homes on a map.
+FM_E_MEMORY_MAP_TITLE,Det ufærdige hjemkort,The unfinished homeward map
+FM_E_MEMORY_MAP_TEXT,"Mor tegnede udgange, ikke en vej til et skjult fængsel. Ved en tom navneplads skrev hun: Et menneske er mere end den rolle, nogen giver det.","Mum drew exits, not a route to a hidden prison. Beside an empty name space she wrote: A person is more than a role someone gives them."
+FM_E_ECHO_ACCOUNT_TITLE,Fru Ugle skelner et ekko fra en besked,Fru Ugle distinguishes an echo from a message
+FM_E_ECHO_ACCOUNT_TEXT,"Fru Ugle: Et minde gentager det, der allerede er sket. Det ved ikke, at du er her nu. Lad os tage det alvorligt uden at gøre det til et løfte om, at din mor står i det næste rum.",Fru Ugle: A memory repeats what has already happened. It does not know you are here now. We can take it seriously without making it a promise that your mum is in the next room.
+FM_E_TRAVELLER_ACCOUNT_TITLE,Ivas eget navn,Iva’s own name
+FM_E_TRAVELLER_ACCOUNT_TEXT,"Rammen kalder den rejsende Gæsten. Et sammenfoldet blad siger: Jeg hedder Iva. Jeg byggede både. Hun lod mig fortælle det hele, før hun viste mig vejen hjem. Du læser Ivas eget navn højt; ordet Gæsten slipper barken.",The frame calls the traveller the Guest. A folded page says: My name is Iva. I built boats. She let me tell the whole story before showing me the way home. You read Iva’s own name aloud; the word Guest releases its hold on the bark.
+FM_E_RETURN_PROMISE_TITLE,Løftet om en åben vej,The promise of an open way
+FM_E_RETURN_PROMISE_TEXT,"Mors nedskrevne ord: Jeg holder vejen åben, til de er ude. Men I må ikke gøre mit liv til en rolle, som et andet barn skal overtage.",Mum’s recorded words: I will hold the way open until they are out. But you must not turn my life into a role another child has to inherit.
+FM_E_ROUTE_STONE_TITLE,Ruten gennem den brudte sten,The route through the broken stone
+FM_E_ROUTE_STONE_TEXT,"De tre ridser i stenen vender udad. De passer til mors rute. Stenen bekræfter retningen, men siger intet om, hvorvidt hun overlevede rejsen.",The three cuts in the stone point outward. They match Mum’s route. The stone confirms the direction but says nothing about whether she survived the journey.
+FM_E_ROUTE_WITNESS_TITLE,De hjemvendtes lys,The lights of those who returned
+FM_E_ROUTE_WITNESS_TEXT,"Natteblik: Jeg så mennesker komme ud med deres egne navne igen. Hendes lys blev bag dem, til den sidste var fri. Jeg så hende ikke vende tilbage. Jeg vil ikke gøre det, jeg håber, til noget, jeg ved.",Natteblik: I saw people come out with their own names again. Her light stayed behind them until the last was free. I did not see her return. I won’t turn what I hope into something I know.
+FM_E_LAST_JOURNEY_TITLE,Mors sidste rute,Mum’s last route
+FM_E_LAST_JOURNEY_TEXT,De sidste kortstykker passer sammen. Ruten fører til Rodskriverens tomme ramme. Mor skrev sin egen underskrift under den sidste vejviser; skoven har siden forsøgt at kalde hende Vejholderen.,The last map pieces fit together. The route leads to the Root Scribe’s empty frame. Mum signed the last waymarker in her own hand; the wood has since tried to call her the Keeper of the Way.
+FM_E_MOTHER_FATE_TITLE,Sandheden om mor,The truth about Mum
+FM_E_MOTHER_FATE_TEXT,"Mor åbnede vejen for mennesker, der var holdt fast i uafsluttede fortællinger. Det kostede hende livet. Skoven bevarede hendes sidste beretning som et ekko, ikke som en levende fange. Vi gav hende hendes egen underskrift tilbage og afviste at overtage rollen.","Mum opened the way for people held inside unfinished tales. It cost her life. The wood preserved her last account as an echo, not as a living prisoner. We restored her own signature and refused to inherit the role."
+FM_E_LEGACY_HOME_TITLE,Frøene i haven,The seeds in the garden
+FM_E_LEGACY_HOME_TEXT,"Du planter mors frø ved den genopbyggede bænk. Den lille dåse får en plads mellem blomsterne. Haven kan ikke bringe hende tilbage, men den kan være et sted, hvor andre får lov at komme som sig selv.","You plant Mum’s seeds beside the restored bench. The small tin finds a place among the flowers. The garden cannot bring her back, but it can be a place where others may arrive as themselves."
+FM_FINAL_ACCOUNT,"Mors sidste ord: De fandt deres navne. De er på vej hjem. Jeg husker dig ved køkkenbordet, med jord på hænderne og flere spørgsmål, end dagen kunne rumme. Lad der altid være en plads til den, som kommer.","Mum’s last words: They found their names. They are on their way home. I remember you at the kitchen table, with soil on your hands and more questions than a day could hold. Always leave a place for the one who arrives."
+FM_FINAL_TRUTH,"Beretningen slutter med hendes egen underskrift. Mor døde efter at have åbnet vejen. Det, skoven gentager, er et ekko af hendes sidste stund, ikke en mor, der stadig venter på at blive reddet. Heller ikke Natlys-familiens spøgelser kan hente hende tilbage.","The account ends with her own signature. Mum died after opening the way. What the wood repeats is an echo of her last moment, not a mum still waiting to be rescued. Even the Natlys family’s ghosts cannot bring her back."
+FM_FINAL_BARGAIN,"Rodskriveren lader en tom plads stå under titlen Vejholderen. Hvis du overtager rollen, lover den at beholde ekkoet. Du lægger brevet over titlen og følger mors egen underskrift. Frødåsen står fri ved rammen.","The Root Scribe leaves an empty space beneath the title Keeper of the Way. If you inherit the role, it promises to keep the echo. You lay the letter over the title and trace Mum’s own signature. The seed tin stands free beside the frame."
+FM_NPC_MAPSELLER_NATTEBLIK,"Natteblik: Jeg fortæller dig, hvad jeg selv så. Tag de spor med, du finder; vi kan læse dem sammen.",Natteblik: I’ll tell you what I saw for myself. Bring the traces you find; we can read them together.
+FM_NPC_APPRAISER_FRU_UGLE,"Fru Ugle: Du behøver hverken sten eller guld for at tale med mig om din mor. Vis mig det, skoven husker.",Fru Ugle: You need neither stones nor gold to speak to me about your mum. Show me what the wood remembers.
+FM_NPC_POSTMAN_PIP,"Pip: Jeg passer på beretningerne herhjemme. Din sporbog beholder det, du har lært, også når skoven skifter stier.","Pip: I’ll keep the accounts safe at home. Your trail book keeps what you learn, even when the wood changes its paths."
+FM_NPC_GUARD_OAK,"Oak: Brug runestenene, og kom hjem, når du har brug for ro. Ingen sandhed bliver mindre vigtig af, at du tager en pause.",Oak: Use the runestones and come home when you need rest. No truth becomes less important because you take a break.
+FM_FAMILY_KIN,"Dyne og Silke holder en plads til dig. Din mor var Dynes yngste og Silkes søskende. Det er hendes egen historie, du følger, ikke en rolle, familien forventer, du skal arve.","Dyne and Silke keep a place for you. Your mum was Dyne’s youngest and Silke’s sibling. You are following her own story, not a role your family expects you to inherit."
+FM_FAMILY_FRIEND,"Natlys-familien lader et lys brænde for din hjemkomst. De er dine venner og vil lytte, når du vender tilbage.",The Natlys family keeps a light burning for your return. They are your friends and will listen when you come home.
+FM_AFTER_MAPSELLER_NATTEBLIK,Natteblik: Nu har kortet en vej hjem og hendes egen underskrift. Vi lader titlen stå tom.,Natteblik: Now the map has a way home and her own signature. We’ll leave the title empty.
+FM_AFTER_APPRAISER_FRU_UGLE,"Fru Ugle: Vi ved nu, hvad ekkoet huskede. Du må savne hende og stadig glæde dig over det, der gror.",Fru Ugle: Now we know what the echo remembered. You may miss her and still take joy in what grows.
+FM_AFTER_POSTMAN_PIP,Pip: Jeg har gemt plads i arkivet til hendes egen beretning. Der behøver ikke komme et nyt mystisk brev.,Pip: I’ve made room in the archive for her own account. There need not be another mysterious letter.
+FM_AFTER_GUARD_OAK,"Oak: Du kom hjem med sandheden. Liften er her stadig, hvis du vil gå andre stier en anden dag.",Oak: You came home with the truth. The lift is still here if you want to walk other paths another day.
+FM_AFTER_GHOSTFAM_DYNE,"Dyne: Vi fortæller om hende, som hun var. Sæt dig lidt hos os; lyset er også dit.",Dyne: We’ll speak of her as she was. Sit with us a while; the light is yours too.
+FM_AFTER_GHOSTFAM_SILKE,"Silke: Vis mig, hvor du plantede frøene. Vi kan passe på det sted sammen.",Silke: Show me where you planted the seeds. We can care for that place together.
+FM_LEAD_MARKED_LAMP,Find lygten med de tre sting på etage 1.,Find the lamp with three stitches on floor 1.
+FM_LEAD_MAP_ACCOUNT,"Tal med Natteblik ved Hulen efter mørkets frembrud. Han findes på etage 2, 6 eller 10; en ny aftentur kan prøves igen.","Speak to Natteblik by the Hollow after dark. He appears on floor 2, 6 or 10; you can retry on a later evening visit."
+FM_LEAD_MEMORY_LAMP,Undersøg lygten i den huskede lysning på etage 5.,Inspect the lamp in the remembered clearing on floor 5.
+FM_LEAD_MEMORY_TABLE,Undersøg bordet i den huskede lysning på etage 5.,Inspect the table in the remembered clearing on floor 5.
+FM_LEAD_MEMORY_BASKET,Undersøg kurven i den huskede lysning på etage 5.,Inspect the basket in the remembered clearing on floor 5.
+FM_LEAD_MEMORY_MAP,Undersøg kortet i den huskede lysning på etage 5.,Inspect the map in the remembered clearing on floor 5.
+FM_LEAD_ECHO_ACCOUNT,"Tal med Fru Ugle, eller læs hendes feltnote ved havebænken. Det koster intet og kræver ingen åbningstid.","Speak to Fru Ugle, or read her field note by the garden bench. There is no fee or opening-hour requirement."
+FM_LEAD_TRAVELLER_ACCOUNT,Læs den rejsendes egne ord ved rodrammen på etage 7.,Read the traveller’s own words at the root frame on floor 7.
+FM_LEAD_RETURN_PROMISE,Find mors nedskrevne løfte på etage 9.,Find Mum’s recorded promise on floor 9.
+FM_LEAD_ROUTE_STONE,Undersøg den beskadigede rutesten på etage 10.,Inspect the damaged route stone on floor 10.
+FM_LEAD_ROUTE_WITNESS,Vis ruten til Natteblik ved Hulen på en aftentur.,Show the route to Natteblik by the Hollow on an evening visit.
+FM_LEAD_LAST_JOURNEY,Saml den sidste rute fra kortet på etage 11.,Assemble the final route from the map on floor 11.
+FM_LEAD_MOTHER_FATE,Læs mors sidste beretning ved Rodskriverens ramme på etage 12.,Read Mum’s final account at the Root Scribe’s frame on floor 12.
+FM_LEAD_LEGACY_HOME,"Bær frødåsen hjem til den restaurerede have, og plant frøene ved bænken.",Carry the seed tin home to the restored garden and plant the seeds beside the bench.
+FM_LEAD_CHECKPOINT_S03,Gå gennem dybdepunktet på etage 4. En tidligere sejr gælder stadig.,Clear the depth checkpoint on floor 4. An earlier victory still counts.
+FM_LEAD_CHECKPOINT_S05,Gå gennem dybdepunktet på etage 8. En tidligere sejr gælder stadig.,Clear the depth checkpoint on floor 8. An earlier victory still counts.
+FM_LEAD_CHECKPOINT_S07,Gå gennem dybdepunktet på etage 12. En tidligere sejr gælder stadig.,Clear the depth checkpoint on floor 12. An earlier victory still counts.
+FM_FIELD_NOTE,"Fru Ugles feltnote ligger ved bænken. Hun har givet haven en kopi, så den kan læses, også mens hun er væk.",Fru Ugle’s field note lies beside the bench. She gave the garden a copy to read while she is away.
+FM_RECORD_ACCOUNT,Beretningen får sin egen plads i din sporbog.,The account will have its own place in your trail book.

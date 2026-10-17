@@ -203,6 +203,7 @@
       },
       {
         "blurb_key": "HERO_BERTIL_BLURB",
+        "chip_name_key": "SELECT_HERO_BERTIL",
         "id": "bertil",
         "kind_key": "HERO_BERTIL_KIND",
         "name_key": "HERO_BERTIL_NAME",
@@ -211,6 +212,7 @@
       },
       {
         "blurb_key": "HERO_BODIL_BLURB",
+        "chip_name_key": "SELECT_HERO_BODIL",
         "id": "bodil",
         "kind_key": "HERO_BODIL_KIND",
         "name_key": "HERO_BODIL_NAME",
@@ -946,9 +948,11 @@
       "missing_sheets": []
     },
     {
+      "clips": 6,
       "id": "ghostfam_blund",
-      "clips": 6,
       "illustration": {
+        "north_source": "tools/art/ghost_family/sources/family_rears.png",
+        "opposite_views": "mirrored",
         "source": "tools/art/ghost_family/sources/family_turnarounds.png",
         "views": [
           "front",
@@ -956,16 +960,16 @@
           "left",
           "rear_left",
           "back"
-        ],
-        "opposite_views": "mirrored",
-        "north_source": "tools/art/ghost_family/sources/family_rears.png"
+        ]
       },
       "missing_sheets": []
     },
     {
+      "clips": 6,
       "id": "ghostfam_dyne",
-      "clips": 6,
       "illustration": {
+        "north_source": "tools/art/ghost_family/sources/family_rears.png",
+        "opposite_views": "mirrored",
         "source": "tools/art/ghost_family/sources/family_turnarounds.png",
         "views": [
           "front",
@@ -973,16 +977,16 @@
           "left",
           "rear_left",
           "back"
-        ],
-        "opposite_views": "mirrored",
-        "north_source": "tools/art/ghost_family/sources/family_rears.png"
+        ]
       },
       "missing_sheets": []
     },
     {
+      "clips": 6,
       "id": "ghostfam_gnist",
-      "clips": 6,
       "illustration": {
+        "north_source": "tools/art/ghost_family/sources/family_rears.png",
+        "opposite_views": "mirrored",
         "source": "tools/art/ghost_family/sources/family_turnarounds.png",
         "views": [
           "front",
@@ -990,16 +994,16 @@
           "left",
           "rear_left",
           "back"
-        ],
-        "opposite_views": "mirrored",
-        "north_source": "tools/art/ghost_family/sources/family_rears.png"
+        ]
       },
       "missing_sheets": []
     },
     {
-      "id": "ghostfam_silke",
       "clips": 6,
+      "id": "ghostfam_silke",
       "illustration": {
+        "north_source": "tools/art/ghost_family/sources/silke_refined.png",
+        "opposite_views": "mirrored",
         "source": "tools/art/ghost_family/sources/silke_refined.png",
         "views": [
           "front",
@@ -1007,9 +1011,7 @@
           "left",
           "rear_left",
           "back"
-        ],
-        "opposite_views": "mirrored",
-        "north_source": "tools/art/ghost_family/sources/silke_refined.png"
+        ]
       },
       "missing_sheets": []
     },
@@ -2362,6 +2364,116 @@
       "path": "res://assets/icons/home/curtain_red.webp"
     },
     {
+      "id": "dng_crystal_root",
+      "night": false,
+      "path": "res://assets/icons/items/dng_crystal_root.webp"
+    },
+    {
+      "id": "dng_crystal_root",
+      "night": true,
+      "path": "res://assets/icons/items/dng_crystal_root.webp"
+    },
+    {
+      "id": "dng_forest_steel",
+      "night": false,
+      "path": "res://assets/icons/items/dng_forest_steel.webp"
+    },
+    {
+      "id": "dng_forest_steel",
+      "night": true,
+      "path": "res://assets/icons/items/dng_forest_steel.webp"
+    },
+    {
+      "id": "dng_forest_thread",
+      "night": false,
+      "path": "res://assets/icons/items/dng_forest_thread.webp"
+    },
+    {
+      "id": "dng_forest_thread",
+      "night": true,
+      "path": "res://assets/icons/items/dng_forest_thread.webp"
+    },
+    {
+      "id": "dng_glimmer_dust",
+      "night": false,
+      "path": "res://assets/icons/items/dng_glimmer_dust.webp"
+    },
+    {
+      "id": "dng_glimmer_dust",
+      "night": true,
+      "path": "res://assets/icons/items/dng_glimmer_dust.webp"
+    },
+    {
+      "id": "dng_moon_silver",
+      "night": false,
+      "path": "res://assets/icons/items/dng_moon_silver.webp"
+    },
+    {
+      "id": "dng_moon_silver",
+      "night": true,
+      "path": "res://assets/icons/items/dng_moon_silver.webp"
+    },
+    {
+      "id": "dng_mushroom_felt",
+      "night": false,
+      "path": "res://assets/icons/items/dng_mushroom_felt.webp"
+    },
+    {
+      "id": "dng_mushroom_felt",
+      "night": true,
+      "path": "res://assets/icons/items/dng_mushroom_felt.webp"
+    },
+    {
+      "id": "dng_owl_feather",
+      "night": false,
+      "path": "res://assets/icons/items/dng_owl_feather.webp"
+    },
+    {
+      "id": "dng_owl_feather",
+      "night": true,
+      "path": "res://assets/icons/items/dng_owl_feather.webp"
+    },
+    {
+      "id": "dng_resin",
+      "night": false,
+      "path": "res://assets/icons/items/dng_resin.webp"
+    },
+    {
+      "id": "dng_resin",
+      "night": true,
+      "path": "res://assets/icons/items/dng_resin.webp"
+    },
+    {
+      "id": "dng_rune_gloed",
+      "night": false,
+      "path": "res://assets/icons/items/dng_rune_gloed.webp"
+    },
+    {
+      "id": "dng_rune_gloed",
+      "night": true,
+      "path": "res://assets/icons/items/dng_rune_gloed.webp"
+    },
+    {
+      "id": "dng_rune_konge",
+      "night": false,
+      "path": "res://assets/icons/items/dng_rune_konge.webp"
+    },
+    {
+      "id": "dng_rune_konge",
+      "night": true,
+      "path": "res://assets/icons/items/dng_rune_konge.webp"
+    },
+    {
+      "id": "dng_rune_snurre",
+      "night": false,
+      "path": "res://assets/icons/items/dng_rune_snurre.webp"
+    },
+    {
+      "id": "dng_rune_snurre",
+      "night": true,
+      "path": "res://assets/icons/items/dng_rune_snurre.webp"
+    },
+    {
       "id": "dress_gown_aurora",
       "night": false,
       "path": "res://assets/icons/wardrobe/dress_gown_aurora.webp"
@@ -2570,6 +2682,16 @@
       "id": "emerald",
       "night": true,
       "path": "res://assets/icons/items/emerald.webp"
+    },
+    {
+      "id": "etagekort",
+      "night": false,
+      "path": "res://assets/icons/items/etagekort.webp"
+    },
+    {
+      "id": "etagekort",
+      "night": true,
+      "path": "res://assets/icons/items/etagekort.webp"
     },
     {
       "id": "fabric_damask",
@@ -2830,6 +2952,146 @@
       "id": "gem_bag",
       "night": true,
       "path": "res://assets/icons/items/gem_bag.webp"
+    },
+    {
+      "id": "gem_dewdrop",
+      "night": false,
+      "path": "res://assets/icons/items/gem_dewdrop.webp"
+    },
+    {
+      "id": "gem_dewdrop",
+      "night": true,
+      "path": "res://assets/icons/items/gem_dewdrop.webp"
+    },
+    {
+      "id": "gem_fairy_tear",
+      "night": false,
+      "path": "res://assets/icons/items/gem_fairy_tear.webp"
+    },
+    {
+      "id": "gem_fairy_tear",
+      "night": true,
+      "path": "res://assets/icons/items/gem_fairy_tear.webp"
+    },
+    {
+      "id": "gem_forest_jade",
+      "night": false,
+      "path": "res://assets/icons/items/gem_forest_jade.webp"
+    },
+    {
+      "id": "gem_forest_jade",
+      "night": true,
+      "path": "res://assets/icons/items/gem_forest_jade.webp"
+    },
+    {
+      "id": "gem_moon_heart",
+      "night": false,
+      "path": "res://assets/icons/items/gem_moon_heart.webp"
+    },
+    {
+      "id": "gem_moon_heart",
+      "night": true,
+      "path": "res://assets/icons/items/gem_moon_heart_night.webp"
+    },
+    {
+      "id": "gem_moss_agate",
+      "night": false,
+      "path": "res://assets/icons/items/gem_moss_agate.webp"
+    },
+    {
+      "id": "gem_moss_agate",
+      "night": true,
+      "path": "res://assets/icons/items/gem_moss_agate.webp"
+    },
+    {
+      "id": "gem_mushroom_opal",
+      "night": false,
+      "path": "res://assets/icons/items/gem_mushroom_opal.webp"
+    },
+    {
+      "id": "gem_mushroom_opal",
+      "night": true,
+      "path": "res://assets/icons/items/gem_mushroom_opal.webp"
+    },
+    {
+      "id": "gem_night_sapphire",
+      "night": false,
+      "path": "res://assets/icons/items/gem_night_sapphire.webp"
+    },
+    {
+      "id": "gem_night_sapphire",
+      "night": true,
+      "path": "res://assets/icons/items/gem_night_sapphire.webp"
+    },
+    {
+      "id": "gem_owl_eye",
+      "night": false,
+      "path": "res://assets/icons/items/gem_owl_eye.webp"
+    },
+    {
+      "id": "gem_owl_eye",
+      "night": true,
+      "path": "res://assets/icons/items/gem_owl_eye.webp"
+    },
+    {
+      "id": "gem_rock_crystal",
+      "night": false,
+      "path": "res://assets/icons/items/gem_rock_crystal.webp"
+    },
+    {
+      "id": "gem_rock_crystal",
+      "night": true,
+      "path": "res://assets/icons/items/gem_rock_crystal.webp"
+    },
+    {
+      "id": "gem_rune_heart",
+      "night": false,
+      "path": "res://assets/icons/items/gem_rune_heart.webp"
+    },
+    {
+      "id": "gem_rune_heart",
+      "night": true,
+      "path": "res://assets/icons/items/gem_rune_heart_night.webp"
+    },
+    {
+      "id": "gem_smoky_quartz",
+      "night": false,
+      "path": "res://assets/icons/items/gem_smoky_quartz.webp"
+    },
+    {
+      "id": "gem_smoky_quartz",
+      "night": true,
+      "path": "res://assets/icons/items/gem_smoky_quartz.webp"
+    },
+    {
+      "id": "gem_star_tear",
+      "night": false,
+      "path": "res://assets/icons/items/gem_star_tear.webp"
+    },
+    {
+      "id": "gem_star_tear",
+      "night": true,
+      "path": "res://assets/icons/items/gem_star_tear_night.webp"
+    },
+    {
+      "id": "gem_sunset_stone",
+      "night": false,
+      "path": "res://assets/icons/items/gem_sunset_stone.webp"
+    },
+    {
+      "id": "gem_sunset_stone",
+      "night": true,
+      "path": "res://assets/icons/items/gem_sunset_stone.webp"
+    },
+    {
+      "id": "gem_thornberry_stone",
+      "night": false,
+      "path": "res://assets/icons/items/gem_thornberry_stone.webp"
+    },
+    {
+      "id": "gem_thornberry_stone",
+      "night": true,
+      "path": "res://assets/icons/items/gem_thornberry_stone.webp"
     },
     {
       "id": "glass_pane",
@@ -3200,6 +3462,16 @@
       "id": "lucky_fur",
       "night": true,
       "path": "res://assets/icons/items/lucky_fur.webp"
+    },
+    {
+      "id": "lysdraabe",
+      "night": false,
+      "path": "res://assets/icons/items/lysdraabe.webp"
+    },
+    {
+      "id": "lysdraabe",
+      "night": true,
+      "path": "res://assets/icons/items/lysdraabe.webp"
     },
     {
       "id": "magic_herb",
@@ -3860,6 +4132,46 @@
       "id": "rose_quartz",
       "night": true,
       "path": "res://assets/icons/home/rose_quartz.webp"
+    },
+    {
+      "id": "rough_dybe_bregner",
+      "night": false,
+      "path": "res://assets/icons/items/rough_dybe_bregner.webp"
+    },
+    {
+      "id": "rough_dybe_bregner",
+      "night": true,
+      "path": "res://assets/icons/items/rough_dybe_bregner.webp"
+    },
+    {
+      "id": "rough_krystalgrotten",
+      "night": false,
+      "path": "res://assets/icons/items/rough_krystalgrotten.webp"
+    },
+    {
+      "id": "rough_krystalgrotten",
+      "night": true,
+      "path": "res://assets/icons/items/rough_krystalgrotten.webp"
+    },
+    {
+      "id": "rough_skovkant",
+      "night": false,
+      "path": "res://assets/icons/items/rough_skovkant.webp"
+    },
+    {
+      "id": "rough_skovkant",
+      "night": true,
+      "path": "res://assets/icons/items/rough_skovkant.webp"
+    },
+    {
+      "id": "rough_svampelunden",
+      "night": false,
+      "path": "res://assets/icons/items/rough_svampelunden.webp"
+    },
+    {
+      "id": "rough_svampelunden",
+      "night": true,
+      "path": "res://assets/icons/items/rough_svampelunden.webp"
     },
     {
       "id": "rug_burgundy",
@@ -4532,6 +4844,16 @@
       "path": "res://assets/icons/items/sunflower_seeds.webp"
     },
     {
+      "id": "svampe_eliksir",
+      "night": false,
+      "path": "res://assets/icons/items/svampe_eliksir.webp"
+    },
+    {
+      "id": "svampe_eliksir",
+      "night": true,
+      "path": "res://assets/icons/items/svampe_eliksir.webp"
+    },
+    {
       "id": "sword_rusty",
       "night": false,
       "path": "res://assets/icons/items/sword_rusty.webp"
@@ -4712,6 +5034,16 @@
       "path": "res://assets/icons/home/timber_beam.webp"
     },
     {
+      "id": "tornebaer",
+      "night": false,
+      "path": "res://assets/icons/items/tornebaer.webp"
+    },
+    {
+      "id": "tornebaer",
+      "night": true,
+      "path": "res://assets/icons/items/tornebaer.webp"
+    },
+    {
       "id": "turnip",
       "night": false,
       "path": "res://assets/icons/items/turnip.webp"
@@ -4730,6 +5062,16 @@
       "id": "turnip_seeds",
       "night": true,
       "path": "res://assets/icons/items/turnip_seeds.webp"
+    },
+    {
+      "id": "ugle_noegle",
+      "night": false,
+      "path": "res://assets/icons/items/ugle_noegle.webp"
+    },
+    {
+      "id": "ugle_noegle",
+      "night": true,
+      "path": "res://assets/icons/items/ugle_noegle.webp"
     },
     {
       "id": "varnish",
@@ -4890,6 +5232,226 @@
       "id": "wool",
       "night": true,
       "path": "res://assets/icons/items/wool.webp"
+    },
+    {
+      "id": "wpn_club_mushroom",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_club_mushroom.webp"
+    },
+    {
+      "id": "wpn_club_mushroom",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_club_mushroom.webp"
+    },
+    {
+      "id": "wpn_club_oak",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_club_oak.webp"
+    },
+    {
+      "id": "wpn_club_oak",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_club_oak.webp"
+    },
+    {
+      "id": "wpn_club_spruce",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_club_spruce.webp"
+    },
+    {
+      "id": "wpn_club_spruce",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_club_spruce.webp"
+    },
+    {
+      "id": "wpn_club_thornberry",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_club_thornberry.webp"
+    },
+    {
+      "id": "wpn_club_thornberry",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_club_thornberry.webp"
+    },
+    {
+      "id": "wpn_club_trunk",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_club_trunk.webp"
+    },
+    {
+      "id": "wpn_club_trunk",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_club_trunk_night.webp"
+    },
+    {
+      "id": "wpn_dagger_bee",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_dagger_bee.webp"
+    },
+    {
+      "id": "wpn_dagger_bee",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_dagger_bee.webp"
+    },
+    {
+      "id": "wpn_dagger_flint",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_dagger_flint.webp"
+    },
+    {
+      "id": "wpn_dagger_flint",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_dagger_flint.webp"
+    },
+    {
+      "id": "wpn_dagger_moonshard",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_dagger_moonshard.webp"
+    },
+    {
+      "id": "wpn_dagger_moonshard",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_dagger_moonshard.webp"
+    },
+    {
+      "id": "wpn_dagger_thorn",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_dagger_thorn.webp"
+    },
+    {
+      "id": "wpn_dagger_thorn",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_dagger_thorn.webp"
+    },
+    {
+      "id": "wpn_spear_iron",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_spear_iron.webp"
+    },
+    {
+      "id": "wpn_spear_iron",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_spear_iron.webp"
+    },
+    {
+      "id": "wpn_spear_owl",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_spear_owl.webp"
+    },
+    {
+      "id": "wpn_spear_owl",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_spear_owl.webp"
+    },
+    {
+      "id": "wpn_spear_root",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_spear_root.webp"
+    },
+    {
+      "id": "wpn_spear_root",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_spear_root_night.webp"
+    },
+    {
+      "id": "wpn_spear_thistle",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_spear_thistle.webp"
+    },
+    {
+      "id": "wpn_spear_thistle",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_spear_thistle.webp"
+    },
+    {
+      "id": "wpn_spear_twig",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_spear_twig.webp"
+    },
+    {
+      "id": "wpn_spear_twig",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_spear_twig.webp"
+    },
+    {
+      "id": "wpn_staff_branch",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_staff_branch.webp"
+    },
+    {
+      "id": "wpn_staff_branch",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_staff_branch.webp"
+    },
+    {
+      "id": "wpn_staff_ember",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_staff_ember.webp"
+    },
+    {
+      "id": "wpn_staff_ember",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_staff_ember.webp"
+    },
+    {
+      "id": "wpn_staff_hazel",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_staff_hazel.webp"
+    },
+    {
+      "id": "wpn_staff_hazel",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_staff_hazel.webp"
+    },
+    {
+      "id": "wpn_staff_light",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_staff_light.webp"
+    },
+    {
+      "id": "wpn_staff_light",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_staff_light.webp"
+    },
+    {
+      "id": "wpn_staff_star",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_staff_star.webp"
+    },
+    {
+      "id": "wpn_staff_star",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_staff_star_night.webp"
+    },
+    {
+      "id": "wpn_sword_candle",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_sword_candle.webp"
+    },
+    {
+      "id": "wpn_sword_candle",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_sword_candle.webp"
+    },
+    {
+      "id": "wpn_sword_forest_steel",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_sword_forest_steel.webp"
+    },
+    {
+      "id": "wpn_sword_forest_steel",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_sword_forest_steel.webp"
+    },
+    {
+      "id": "wpn_sword_moon",
+      "night": false,
+      "path": "res://assets/icons/items/wpn_sword_moon.webp"
+    },
+    {
+      "id": "wpn_sword_moon",
+      "night": true,
+      "path": "res://assets/icons/items/wpn_sword_moon_night.webp"
     }
   ],
   "items": [
@@ -9546,6 +10108,405 @@
       "rarity": "uncommon"
     },
     {
+      "catalog_path": "res://assets/icons/items/dng_crystal_root.webp",
+      "category": "material",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 150,
+        "category": "material",
+        "description_key": "ITEM_DNG_CRYSTAL_ROOT_DESC",
+        "group": "dungeon",
+        "max_stack": 99,
+        "name_key": "ITEM_DNG_CRYSTAL_ROOT",
+        "rarity": "rare",
+        "sell_price": 21,
+        "sources": [
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          },
+          {
+            "kind": "node",
+            "node": "crystal",
+            "zone": "krystalgrotten"
+          }
+        ]
+      },
+      "id": "dng_crystal_root",
+      "name_key": "ITEM_DNG_CRYSTAL_ROOT",
+      "path": "res://assets/icons/items/dng_crystal_root.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/dng_forest_steel.webp",
+      "category": "material",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 70,
+        "category": "material",
+        "description_key": "ITEM_DNG_FOREST_STEEL_DESC",
+        "group": "dungeon",
+        "max_stack": 99,
+        "name_key": "ITEM_DNG_FOREST_STEEL",
+        "rarity": "uncommon",
+        "sell_price": 10,
+        "sources": [
+          {
+            "kind": "find",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          }
+        ]
+      },
+      "id": "dng_forest_steel",
+      "name_key": "ITEM_DNG_FOREST_STEEL",
+      "path": "res://assets/icons/items/dng_forest_steel.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/dng_forest_thread.webp",
+      "category": "material",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 10,
+        "category": "material",
+        "description_key": "ITEM_DNG_FOREST_THREAD_DESC",
+        "group": "dungeon",
+        "max_stack": 99,
+        "name_key": "ITEM_DNG_FOREST_THREAD",
+        "rarity": "normal",
+        "sell_price": 1,
+        "sources": [
+          {
+            "kind": "find",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "find",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          },
+          {
+            "enemy": "tornebusk",
+            "kind": "creature"
+          }
+        ]
+      },
+      "id": "dng_forest_thread",
+      "name_key": "ITEM_DNG_FOREST_THREAD",
+      "path": "res://assets/icons/items/dng_forest_thread.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/dng_glimmer_dust.webp",
+      "category": "material",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 55,
+        "category": "material",
+        "description_key": "ITEM_DNG_GLIMMER_DUST_DESC",
+        "group": "dungeon",
+        "max_stack": 99,
+        "name_key": "ITEM_DNG_GLIMMER_DUST",
+        "rarity": "uncommon",
+        "sell_price": 8,
+        "sources": [
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          },
+          {
+            "kind": "node",
+            "node": "crystal",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "node",
+            "node": "crystal",
+            "zone": "krystalgrotten"
+          }
+        ]
+      },
+      "id": "dng_glimmer_dust",
+      "name_key": "ITEM_DNG_GLIMMER_DUST",
+      "path": "res://assets/icons/items/dng_glimmer_dust.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/dng_moon_silver.webp",
+      "category": "material",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 170,
+        "category": "material",
+        "description_key": "ITEM_DNG_MOON_SILVER_DESC",
+        "group": "dungeon",
+        "max_stack": 99,
+        "name_key": "ITEM_DNG_MOON_SILVER",
+        "rarity": "rare",
+        "sell_price": 24,
+        "sources": [
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          }
+        ]
+      },
+      "id": "dng_moon_silver",
+      "name_key": "ITEM_DNG_MOON_SILVER",
+      "path": "res://assets/icons/items/dng_moon_silver.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/dng_mushroom_felt.webp",
+      "category": "material",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 14,
+        "category": "material",
+        "description_key": "ITEM_DNG_MUSHROOM_FELT_DESC",
+        "group": "dungeon",
+        "max_stack": 99,
+        "name_key": "ITEM_DNG_MUSHROOM_FELT",
+        "rarity": "normal",
+        "sell_price": 2,
+        "sources": [
+          {
+            "kind": "find",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          },
+          {
+            "enemy": "lysesvamp",
+            "kind": "creature"
+          }
+        ]
+      },
+      "id": "dng_mushroom_felt",
+      "name_key": "ITEM_DNG_MUSHROOM_FELT",
+      "path": "res://assets/icons/items/dng_mushroom_felt.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/dng_owl_feather.webp",
+      "category": "material",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 45,
+        "category": "material",
+        "description_key": "ITEM_DNG_OWL_FEATHER_DESC",
+        "group": "dungeon",
+        "max_stack": 99,
+        "name_key": "ITEM_DNG_OWL_FEATHER",
+        "rarity": "uncommon",
+        "sell_price": 6,
+        "sources": [
+          {
+            "kind": "find",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          },
+          {
+            "enemy": "ugleoje",
+            "kind": "creature"
+          }
+        ]
+      },
+      "id": "dng_owl_feather",
+      "name_key": "ITEM_DNG_OWL_FEATHER",
+      "path": "res://assets/icons/items/dng_owl_feather.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/dng_resin.webp",
+      "category": "material",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 12,
+        "category": "material",
+        "description_key": "ITEM_DNG_RESIN_DESC",
+        "group": "dungeon",
+        "max_stack": 99,
+        "name_key": "ITEM_DNG_RESIN",
+        "rarity": "normal",
+        "sell_price": 2,
+        "sources": [
+          {
+            "kind": "find",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "find",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          },
+          {
+            "enemy": "bat",
+            "kind": "creature"
+          }
+        ]
+      },
+      "id": "dng_resin",
+      "name_key": "ITEM_DNG_RESIN",
+      "path": "res://assets/icons/items/dng_resin.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/dng_rune_gloed.webp",
+      "category": "material",
+      "definition": {
+        "acquire": [
+          "reward"
+        ],
+        "buy_price": 0,
+        "category": "material",
+        "consumed_by": "runehvaelvingen",
+        "description_key": "ITEM_DNG_RUNE_GLOED_DESC",
+        "group": "dungeon",
+        "hint_key": "ITEM_DNG_RUNE_GLOED_HINT",
+        "max_stack": 1,
+        "name_key": "ITEM_DNG_RUNE_GLOED",
+        "protected": true,
+        "rarity": "unique",
+        "sell_price": 0,
+        "sources": [
+          {
+            "enemy": "snurresvamp_gloed",
+            "first_kill": true,
+            "kind": "boss"
+          }
+        ],
+        "worth": 600
+      },
+      "id": "dng_rune_gloed",
+      "name_key": "ITEM_DNG_RUNE_GLOED",
+      "path": "res://assets/icons/items/dng_rune_gloed.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/dng_rune_konge.webp",
+      "category": "material",
+      "definition": {
+        "acquire": [
+          "reward"
+        ],
+        "buy_price": 0,
+        "category": "material",
+        "consumed_by": "runehvaelvingen",
+        "description_key": "ITEM_DNG_RUNE_KONGE_DESC",
+        "group": "dungeon",
+        "hint_key": "ITEM_DNG_RUNE_KONGE_HINT",
+        "max_stack": 1,
+        "name_key": "ITEM_DNG_RUNE_KONGE",
+        "protected": true,
+        "rarity": "unique",
+        "sell_price": 0,
+        "sources": [
+          {
+            "enemy": "snurresvamp_konge",
+            "first_kill": true,
+            "kind": "boss"
+          }
+        ],
+        "worth": 600
+      },
+      "id": "dng_rune_konge",
+      "name_key": "ITEM_DNG_RUNE_KONGE",
+      "path": "res://assets/icons/items/dng_rune_konge.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/dng_rune_snurre.webp",
+      "category": "material",
+      "definition": {
+        "acquire": [
+          "reward"
+        ],
+        "buy_price": 0,
+        "category": "material",
+        "consumed_by": "runehvaelvingen",
+        "description_key": "ITEM_DNG_RUNE_SNURRE_DESC",
+        "group": "dungeon",
+        "hint_key": "ITEM_DNG_RUNE_SNURRE_HINT",
+        "max_stack": 1,
+        "name_key": "ITEM_DNG_RUNE_SNURRE",
+        "protected": true,
+        "rarity": "unique",
+        "sell_price": 0,
+        "sources": [
+          {
+            "enemy": "snurresvamp",
+            "first_kill": true,
+            "kind": "boss"
+          }
+        ],
+        "worth": 600
+      },
+      "id": "dng_rune_snurre",
+      "name_key": "ITEM_DNG_RUNE_SNURRE",
+      "path": "res://assets/icons/items/dng_rune_snurre.webp",
+      "rarity": "unique"
+    },
+    {
       "catalog_path": "res://assets/icons/wardrobe/dress_gown_aurora.webp",
       "category": "clothing",
       "definition": {
@@ -10683,6 +11644,25 @@
       "rarity": "rare"
     },
     {
+      "catalog_path": "res://assets/icons/items/etagekort.webp",
+      "category": "special",
+      "definition": {
+        "buy_price": 40,
+        "category": "special",
+        "description_key": "ITEM_ETAGEKORT_DESC",
+        "max_stack": 9,
+        "name_key": "ITEM_ETAGEKORT",
+        "rarity": "normal",
+        "reveal_next_floor": true,
+        "sell_price": 0,
+        "stamina_cost": 0
+      },
+      "id": "etagekort",
+      "name_key": "ITEM_ETAGEKORT",
+      "path": "res://assets/icons/items/etagekort.webp",
+      "rarity": "normal"
+    },
+    {
       "catalog_path": "res://assets/icons/home/fabric_damask.webp",
       "category": "building_material",
       "definition": {
@@ -10869,6 +11849,7 @@
         "buy_price": 900,
         "category": "farm",
         "description_key": "ITEM_FAIRY_DUST_WATER_DESC",
+        "farm_effect": "auto_water",
         "max_stack": 99,
         "name_key": "ITEM_FAIRY_DUST_WATER",
         "rarity": "uncommon",
@@ -10923,6 +11904,7 @@
         "buy_price": 15,
         "category": "farm",
         "description_key": "ITEM_FERTILIZER_DESC",
+        "farm_effect": "fertilizer",
         "max_stack": 99,
         "name_key": "ITEM_FERTILIZER",
         "rarity": "normal",
@@ -11795,6 +12777,602 @@
       "id": "gem_bag",
       "name_key": "ITEM_GEM_BAG",
       "path": "res://assets/icons/items/gem_bag.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/gem_dewdrop.webp",
+      "category": "gem",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 0,
+        "category": "gem",
+        "description_key": "ITEM_GEM_DEWDROP_DESC",
+        "group": "gem",
+        "hint_key": "ITEM_GEM_DEWDROP_HINT",
+        "lantern": {
+          "themes": [
+            "oil",
+            "light_cd",
+            "pickup"
+          ],
+          "tint": "a9e8e0"
+        },
+        "max_stack": 1,
+        "name_key": "ITEM_GEM_DEWDROP",
+        "protected": true,
+        "rarity": "unique",
+        "sell_price": 0,
+        "sources": [
+          {
+            "kind": "spot",
+            "spot": "soeskatten_skov",
+            "zone": "skovkant"
+          }
+        ],
+        "worth": 1500
+      },
+      "id": "gem_dewdrop",
+      "name_key": "ITEM_GEM_DEWDROP",
+      "path": "res://assets/icons/items/gem_dewdrop.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/gem_fairy_tear.webp",
+      "category": "gem",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 500,
+        "category": "gem",
+        "description_key": "ITEM_GEM_FAIRY_TEAR_DESC",
+        "group": "gem",
+        "lantern": {
+          "themes": [
+            "oil",
+            "light_cd"
+          ],
+          "tint": "6fd6c4"
+        },
+        "max_stack": 99,
+        "name_key": "ITEM_GEM_FAIRY_TEAR",
+        "rarity": "rare",
+        "sell_price": 220,
+        "sources": [
+          {
+            "kind": "appraisal",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "krystalgrotten"
+          }
+        ]
+      },
+      "id": "gem_fairy_tear",
+      "name_key": "ITEM_GEM_FAIRY_TEAR",
+      "path": "res://assets/icons/items/gem_fairy_tear.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/gem_forest_jade.webp",
+      "category": "gem",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 60,
+        "category": "gem",
+        "description_key": "ITEM_GEM_FOREST_JADE_DESC",
+        "group": "gem",
+        "lantern": {
+          "themes": {},
+          "tint": "6b9a3e"
+        },
+        "max_stack": 99,
+        "name_key": "ITEM_GEM_FOREST_JADE",
+        "rarity": "normal",
+        "sell_price": 27,
+        "sources": [
+          {
+            "kind": "appraisal",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "krystalgrotten"
+          }
+        ]
+      },
+      "id": "gem_forest_jade",
+      "name_key": "ITEM_GEM_FOREST_JADE",
+      "path": "res://assets/icons/items/gem_forest_jade.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/gem_moon_heart.webp",
+      "category": "gem",
+      "definition": {
+        "acquire": [
+          "reward"
+        ],
+        "buy_price": 0,
+        "category": "gem",
+        "description_key": "ITEM_GEM_MOON_HEART_DESC",
+        "group": "gem",
+        "hint_key": "ITEM_GEM_MOON_HEART_HINT",
+        "lantern": {
+          "themes": [
+            "radius",
+            "oil",
+            "light_cd",
+            "ambush",
+            "pickup"
+          ],
+          "tint": "b9c3e3"
+        },
+        "max_stack": 1,
+        "name_key": "ITEM_GEM_MOON_HEART",
+        "protected": true,
+        "rarity": "legendary",
+        "sell_price": 0,
+        "sources": [
+          {
+            "enemy": "snurresvamp_konge",
+            "kind": "boss",
+            "pool": "boss_legendary"
+          }
+        ],
+        "worth": 4500
+      },
+      "id": "gem_moon_heart",
+      "name_key": "ITEM_GEM_MOON_HEART",
+      "path": "res://assets/icons/items/gem_moon_heart_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/gem_moss_agate.webp",
+      "category": "gem",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 55,
+        "category": "gem",
+        "description_key": "ITEM_GEM_MOSS_AGATE_DESC",
+        "group": "gem",
+        "lantern": {
+          "themes": {},
+          "tint": "7fae6a"
+        },
+        "max_stack": 99,
+        "name_key": "ITEM_GEM_MOSS_AGATE",
+        "rarity": "normal",
+        "sell_price": 25,
+        "sources": [
+          {
+            "kind": "appraisal",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "krystalgrotten"
+          }
+        ]
+      },
+      "id": "gem_moss_agate",
+      "name_key": "ITEM_GEM_MOSS_AGATE",
+      "path": "res://assets/icons/items/gem_moss_agate.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/gem_mushroom_opal.webp",
+      "category": "gem",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 180,
+        "category": "gem",
+        "description_key": "ITEM_GEM_MUSHROOM_OPAL_DESC",
+        "group": "gem",
+        "lantern": {
+          "themes": [
+            "ambush",
+            "chest_sense"
+          ],
+          "tint": "cfe9e0"
+        },
+        "max_stack": 99,
+        "name_key": "ITEM_GEM_MUSHROOM_OPAL",
+        "rarity": "uncommon",
+        "sell_price": 80,
+        "sources": [
+          {
+            "kind": "appraisal",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "krystalgrotten"
+          }
+        ]
+      },
+      "id": "gem_mushroom_opal",
+      "name_key": "ITEM_GEM_MUSHROOM_OPAL",
+      "path": "res://assets/icons/items/gem_mushroom_opal.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/gem_night_sapphire.webp",
+      "category": "gem",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 480,
+        "category": "gem",
+        "description_key": "ITEM_GEM_NIGHT_SAPPHIRE_DESC",
+        "group": "gem",
+        "lantern": {
+          "themes": [
+            "radius",
+            "ambush"
+          ],
+          "tint": "6f8fd6"
+        },
+        "max_stack": 99,
+        "name_key": "ITEM_GEM_NIGHT_SAPPHIRE",
+        "rarity": "rare",
+        "sell_price": 210,
+        "sources": [
+          {
+            "kind": "appraisal",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "krystalgrotten"
+          }
+        ]
+      },
+      "id": "gem_night_sapphire",
+      "name_key": "ITEM_GEM_NIGHT_SAPPHIRE",
+      "path": "res://assets/icons/items/gem_night_sapphire.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/gem_owl_eye.webp",
+      "category": "gem",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 0,
+        "category": "gem",
+        "description_key": "ITEM_GEM_OWL_EYE_DESC",
+        "group": "gem",
+        "hint_key": "ITEM_GEM_OWL_EYE_HINT",
+        "lantern": {
+          "themes": [
+            "ambush",
+            "radius",
+            "chest_sense"
+          ],
+          "tint": "f2c14e"
+        },
+        "max_stack": 1,
+        "name_key": "ITEM_GEM_OWL_EYE",
+        "protected": true,
+        "rarity": "unique",
+        "sell_price": 0,
+        "sources": [
+          {
+            "kind": "spot",
+            "spot": "soeskatten_bregner",
+            "zone": "dybe_bregner"
+          }
+        ],
+        "worth": 1500
+      },
+      "id": "gem_owl_eye",
+      "name_key": "ITEM_GEM_OWL_EYE",
+      "path": "res://assets/icons/items/gem_owl_eye.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/gem_rock_crystal.webp",
+      "category": "gem",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 45,
+        "category": "gem",
+        "description_key": "ITEM_GEM_ROCK_CRYSTAL_DESC",
+        "group": "gem",
+        "lantern": {
+          "themes": {},
+          "tint": "d9eaf5"
+        },
+        "max_stack": 99,
+        "name_key": "ITEM_GEM_ROCK_CRYSTAL",
+        "rarity": "normal",
+        "sell_price": 20,
+        "sources": [
+          {
+            "kind": "appraisal",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "krystalgrotten"
+          }
+        ]
+      },
+      "id": "gem_rock_crystal",
+      "name_key": "ITEM_GEM_ROCK_CRYSTAL",
+      "path": "res://assets/icons/items/gem_rock_crystal.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/gem_rune_heart.webp",
+      "category": "gem",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 0,
+        "category": "gem",
+        "description_key": "ITEM_GEM_RUNE_HEART_DESC",
+        "group": "gem",
+        "hint_key": "ITEM_GEM_RUNE_HEART_HINT",
+        "lantern": {
+          "themes": [
+            "oil",
+            "radius",
+            "light_cd",
+            "chest_sense",
+            "ambush",
+            "pickup"
+          ],
+          "tint": "f0d9a0"
+        },
+        "max_stack": 1,
+        "name_key": "ITEM_GEM_RUNE_HEART",
+        "protected": true,
+        "rarity": "legendary",
+        "sell_price": 0,
+        "sources": [
+          {
+            "kind": "spot",
+            "spot": "runehvaelvingen",
+            "zone": "krystalgrotten"
+          }
+        ],
+        "worth": 4500
+      },
+      "id": "gem_rune_heart",
+      "name_key": "ITEM_GEM_RUNE_HEART",
+      "path": "res://assets/icons/items/gem_rune_heart_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/gem_smoky_quartz.webp",
+      "category": "gem",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 50,
+        "category": "gem",
+        "description_key": "ITEM_GEM_SMOKY_QUARTZ_DESC",
+        "group": "gem",
+        "lantern": {
+          "themes": {},
+          "tint": "8a7a6a"
+        },
+        "max_stack": 99,
+        "name_key": "ITEM_GEM_SMOKY_QUARTZ",
+        "rarity": "normal",
+        "sell_price": 22,
+        "sources": [
+          {
+            "kind": "appraisal",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "krystalgrotten"
+          }
+        ]
+      },
+      "id": "gem_smoky_quartz",
+      "name_key": "ITEM_GEM_SMOKY_QUARTZ",
+      "path": "res://assets/icons/items/gem_smoky_quartz.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/gem_star_tear.webp",
+      "category": "gem",
+      "definition": {
+        "acquire": [
+          "reward"
+        ],
+        "buy_price": 0,
+        "category": "gem",
+        "description_key": "ITEM_GEM_STAR_TEAR_DESC",
+        "group": "gem",
+        "hint_key": "ITEM_GEM_STAR_TEAR_HINT",
+        "lantern": {
+          "themes": [
+            "radius",
+            "oil",
+            "light_cd",
+            "chest_sense"
+          ],
+          "tint": "e4eff5"
+        },
+        "max_stack": 1,
+        "name_key": "ITEM_GEM_STAR_TEAR",
+        "protected": true,
+        "rarity": "legendary",
+        "sell_price": 0,
+        "sources": [
+          {
+            "enemy": "snurresvamp_gloed",
+            "kind": "boss",
+            "pool": "boss_legendary"
+          }
+        ],
+        "worth": 4500
+      },
+      "id": "gem_star_tear",
+      "name_key": "ITEM_GEM_STAR_TEAR",
+      "path": "res://assets/icons/items/gem_star_tear_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/gem_sunset_stone.webp",
+      "category": "gem",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 0,
+        "category": "gem",
+        "description_key": "ITEM_GEM_SUNSET_STONE_DESC",
+        "group": "gem",
+        "hint_key": "ITEM_GEM_SUNSET_STONE_HINT",
+        "lantern": {
+          "themes": [
+            "radius",
+            "pickup",
+            "oil"
+          ],
+          "tint": "e8863a"
+        },
+        "max_stack": 1,
+        "name_key": "ITEM_GEM_SUNSET_STONE",
+        "protected": true,
+        "rarity": "unique",
+        "sell_price": 0,
+        "sources": [
+          {
+            "kind": "spot",
+            "spot": "soeskatten_lund",
+            "zone": "svampelunden"
+          }
+        ],
+        "worth": 1500
+      },
+      "id": "gem_sunset_stone",
+      "name_key": "ITEM_GEM_SUNSET_STONE",
+      "path": "res://assets/icons/items/gem_sunset_stone.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/gem_thornberry_stone.webp",
+      "category": "gem",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 160,
+        "category": "gem",
+        "description_key": "ITEM_GEM_THORNBERRY_STONE_DESC",
+        "group": "gem",
+        "lantern": {
+          "themes": [
+            "pickup",
+            "oil"
+          ],
+          "tint": "e58fa6"
+        },
+        "max_stack": 99,
+        "name_key": "ITEM_GEM_THORNBERRY_STONE",
+        "rarity": "uncommon",
+        "sell_price": 70,
+        "sources": [
+          {
+            "kind": "appraisal",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "appraisal",
+            "zone": "krystalgrotten"
+          }
+        ]
+      },
+      "id": "gem_thornberry_stone",
+      "name_key": "ITEM_GEM_THORNBERRY_STONE",
+      "path": "res://assets/icons/items/gem_thornberry_stone.webp",
       "rarity": "uncommon"
     },
     {
@@ -13200,7 +14778,8 @@
         "name_key": "ITEM_IRON_SWORD",
         "rarity": "uncommon",
         "sell_price": 300,
-        "stamina_cost": 0
+        "stamina_cost": 0,
+        "weapon_family": "sword"
       },
       "id": "iron_sword",
       "name_key": "ITEM_IRON_SWORD",
@@ -13318,6 +14897,25 @@
       "name_key": "ITEM_LUCKY_FUR",
       "path": "res://assets/icons/items/lucky_fur.webp",
       "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/lysdraabe.webp",
+      "category": "consumable",
+      "definition": {
+        "buy_price": 40,
+        "category": "consumable",
+        "description_key": "ITEM_LYSDRAABE_DESC",
+        "max_stack": 20,
+        "name_key": "ITEM_LYSDRAABE",
+        "oil_seconds": 45,
+        "rarity": "normal",
+        "sell_price": 15,
+        "stamina_cost": 0
+      },
+      "id": "lysdraabe",
+      "name_key": "ITEM_LYSDRAABE",
+      "path": "res://assets/icons/items/lysdraabe.webp",
+      "rarity": "normal"
     },
     {
       "catalog_path": "res://assets/icons/items/magic_herb.webp",
@@ -16356,6 +17954,142 @@
       "name_key": "ITEM_ROSE_QUARTZ",
       "path": "res://assets/icons/home/rose_quartz.webp",
       "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/rough_dybe_bregner.webp",
+      "category": "gem",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "appraise_band": "dybe_bregner",
+        "buy_price": 0,
+        "category": "gem",
+        "description_key": "ITEM_ROUGH_DYBE_BREGNER_DESC",
+        "group": "rough",
+        "max_stack": 99,
+        "name_key": "ITEM_ROUGH_DYBE_BREGNER",
+        "rarity": "normal",
+        "rough": true,
+        "sell_price": 0,
+        "sources": [
+          {
+            "kind": "find",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "node",
+            "node": "crystal",
+            "zone": "dybe_bregner"
+          }
+        ]
+      },
+      "id": "rough_dybe_bregner",
+      "name_key": "ITEM_ROUGH_DYBE_BREGNER",
+      "path": "res://assets/icons/items/rough_dybe_bregner.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/rough_krystalgrotten.webp",
+      "category": "gem",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "appraise_band": "krystalgrotten",
+        "buy_price": 0,
+        "category": "gem",
+        "description_key": "ITEM_ROUGH_KRYSTALGROTTEN_DESC",
+        "group": "rough",
+        "max_stack": 99,
+        "name_key": "ITEM_ROUGH_KRYSTALGROTTEN",
+        "rarity": "normal",
+        "rough": true,
+        "sell_price": 0,
+        "sources": [
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          },
+          {
+            "kind": "node",
+            "node": "crystal",
+            "zone": "krystalgrotten"
+          }
+        ]
+      },
+      "id": "rough_krystalgrotten",
+      "name_key": "ITEM_ROUGH_KRYSTALGROTTEN",
+      "path": "res://assets/icons/items/rough_krystalgrotten.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/rough_skovkant.webp",
+      "category": "gem",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "appraise_band": "skovkant",
+        "buy_price": 0,
+        "category": "gem",
+        "description_key": "ITEM_ROUGH_SKOVKANT_DESC",
+        "group": "rough",
+        "max_stack": 99,
+        "name_key": "ITEM_ROUGH_SKOVKANT",
+        "rarity": "normal",
+        "rough": true,
+        "sell_price": 0,
+        "sources": [
+          {
+            "kind": "find",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "node",
+            "node": "crystal",
+            "zone": "skovkant"
+          }
+        ]
+      },
+      "id": "rough_skovkant",
+      "name_key": "ITEM_ROUGH_SKOVKANT",
+      "path": "res://assets/icons/items/rough_skovkant.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/rough_svampelunden.webp",
+      "category": "gem",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "appraise_band": "svampelunden",
+        "buy_price": 0,
+        "category": "gem",
+        "description_key": "ITEM_ROUGH_SVAMPELUNDEN_DESC",
+        "group": "rough",
+        "max_stack": 99,
+        "name_key": "ITEM_ROUGH_SVAMPELUNDEN",
+        "rarity": "normal",
+        "rough": true,
+        "sell_price": 0,
+        "sources": [
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "node",
+            "node": "crystal",
+            "zone": "svampelunden"
+          }
+        ]
+      },
+      "id": "rough_svampelunden",
+      "name_key": "ITEM_ROUGH_SVAMPELUNDEN",
+      "path": "res://assets/icons/items/rough_svampelunden.webp",
+      "rarity": "normal"
     },
     {
       "catalog_path": "res://assets/icons/home/rug_burgundy.webp",
@@ -20282,6 +22016,25 @@
       "rarity": "normal"
     },
     {
+      "catalog_path": "res://assets/icons/items/svampe_eliksir.webp",
+      "category": "consumable",
+      "definition": {
+        "buy_price": 80,
+        "category": "consumable",
+        "description_key": "ITEM_SVAMPE_ELIKSIR_DESC",
+        "heal_half_hearts": 6,
+        "max_stack": 20,
+        "name_key": "ITEM_SVAMPE_ELIKSIR",
+        "rarity": "normal",
+        "sell_price": 30,
+        "stamina_cost": 0
+      },
+      "id": "svampe_eliksir",
+      "name_key": "ITEM_SVAMPE_ELIKSIR",
+      "path": "res://assets/icons/items/svampe_eliksir.webp",
+      "rarity": "normal"
+    },
+    {
       "catalog_path": "res://assets/icons/items/sword_rusty.webp",
       "category": "weapon",
       "definition": {
@@ -20293,7 +22046,8 @@
         "name_key": "ITEM_SWORD_RUSTY",
         "rarity": "normal",
         "sell_price": 20,
-        "stamina_cost": 0
+        "stamina_cost": 0,
+        "weapon_family": "sword"
       },
       "id": "sword_rusty",
       "name_key": "ITEM_SWORD_RUSTY",
@@ -21396,6 +23150,26 @@
       "rarity": "normal"
     },
     {
+      "catalog_path": "res://assets/icons/items/tornebaer.webp",
+      "category": "consumable",
+      "definition": {
+        "buy_price": 12,
+        "category": "consumable",
+        "description_key": "ITEM_TORNEBAER_DESC",
+        "heal_half_hearts": 2,
+        "heal_on_pickup": true,
+        "max_stack": 20,
+        "name_key": "ITEM_TORNEBAER",
+        "rarity": "normal",
+        "sell_price": 4,
+        "stamina_cost": 0
+      },
+      "id": "tornebaer",
+      "name_key": "ITEM_TORNEBAER",
+      "path": "res://assets/icons/items/tornebaer.webp",
+      "rarity": "normal"
+    },
+    {
       "catalog_path": "res://assets/icons/items/turnip.webp",
       "category": "crop",
       "definition": {
@@ -21429,6 +23203,26 @@
       "id": "turnip_seeds",
       "name_key": "ITEM_TURNIP_SEEDS",
       "path": "res://assets/icons/items/turnip_seeds.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/ugle_noegle.webp",
+      "category": "quest",
+      "definition": {
+        "buy_price": 0,
+        "category": "quest",
+        "description_key": "ITEM_UGLE_NOEGLE_DESC",
+        "key_for": "ugle_noegle",
+        "max_stack": 1,
+        "name_key": "ITEM_UGLE_NOEGLE",
+        "one_use": true,
+        "rarity": "normal",
+        "sell_price": 0,
+        "stamina_cost": 0
+      },
+      "id": "ugle_noegle",
+      "name_key": "ITEM_UGLE_NOEGLE",
+      "path": "res://assets/icons/items/ugle_noegle.webp",
       "rarity": "normal"
     },
     {
@@ -22175,6 +23969,1073 @@
       "name_key": "ITEM_WOOL",
       "path": "res://assets/icons/items/wool.webp",
       "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_club_mushroom.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "buy",
+          "build",
+          "find"
+        ],
+        "buy_price": 2070,
+        "category": "weapon",
+        "damage": 30,
+        "description_key": "ITEM_WPN_CLUB_MUSHROOM_DESC",
+        "effect": {
+          "id": "stun_chance",
+          "p": 0.25,
+          "s": 0.5
+        },
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_CLUB_MUSHROOM",
+        "rarity": "rare",
+        "sell_price": 205,
+        "sources": [
+          {
+            "kind": "shop",
+            "shop": "smithy",
+            "slot": "weekly"
+          },
+          {
+            "kind": "craft",
+            "min_home_tier": 5,
+            "recipe": "dng_forge_club_mushroom",
+            "station": "smedje"
+          },
+          {
+            "kind": "find",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "find",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "club"
+      },
+      "id": "wpn_club_mushroom",
+      "name_key": "ITEM_WPN_CLUB_MUSHROOM",
+      "path": "res://assets/icons/items/wpn_club_mushroom.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_club_oak.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "buy",
+          "build",
+          "find"
+        ],
+        "buy_price": 860,
+        "category": "weapon",
+        "damage": 16,
+        "description_key": "ITEM_WPN_CLUB_OAK_DESC",
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_CLUB_OAK",
+        "rarity": "uncommon",
+        "sell_price": 105,
+        "sources": [
+          {
+            "kind": "shop",
+            "shop": "smithy",
+            "slot": "daily"
+          },
+          {
+            "kind": "craft",
+            "min_home_tier": 5,
+            "recipe": "dng_forge_club_oak",
+            "station": "smedje"
+          },
+          {
+            "kind": "find",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "find",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "club"
+      },
+      "id": "wpn_club_oak",
+      "name_key": "ITEM_WPN_CLUB_OAK",
+      "path": "res://assets/icons/items/wpn_club_oak.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_club_spruce.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "buy",
+          "build",
+          "find"
+        ],
+        "buy_price": 115,
+        "category": "weapon",
+        "damage": 7,
+        "description_key": "ITEM_WPN_CLUB_SPRUCE_DESC",
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_CLUB_SPRUCE",
+        "rarity": "normal",
+        "sell_price": 15,
+        "sources": [
+          {
+            "kind": "shop",
+            "shop": "smithy",
+            "slot": "daily"
+          },
+          {
+            "kind": "craft",
+            "min_home_tier": 1,
+            "recipe": "dng_forge_club_spruce",
+            "station": "snedkerbord"
+          },
+          {
+            "kind": "find",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "find",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "club"
+      },
+      "id": "wpn_club_spruce",
+      "name_key": "ITEM_WPN_CLUB_SPRUCE",
+      "path": "res://assets/icons/items/wpn_club_spruce.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_club_thornberry.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 0,
+        "category": "weapon",
+        "damage": 40,
+        "description_key": "ITEM_WPN_CLUB_THORNBERRY_DESC",
+        "effect": {
+          "id": "stun_chance",
+          "p": 0.5,
+          "s": 0.6
+        },
+        "hint_key": "ITEM_WPN_CLUB_THORNBERRY_HINT",
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_CLUB_THORNBERRY",
+        "protected": true,
+        "rarity": "unique",
+        "sell_price": 0,
+        "sources": [
+          {
+            "kind": "spot",
+            "spot": "tornehegnet",
+            "zone": "svampelunden"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "club",
+        "worth": 5750
+      },
+      "id": "wpn_club_thornberry",
+      "name_key": "ITEM_WPN_CLUB_THORNBERRY",
+      "path": "res://assets/icons/items/wpn_club_thornberry.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_club_trunk.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "reward"
+        ],
+        "buy_price": 0,
+        "category": "weapon",
+        "damage": 57,
+        "description_key": "ITEM_WPN_CLUB_TRUNK_DESC",
+        "effect": {
+          "every": 4,
+          "id": "quake",
+          "mult": 0.9,
+          "radius": 160
+        },
+        "hint_key": "ITEM_WPN_CLUB_TRUNK_HINT",
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_CLUB_TRUNK",
+        "protected": true,
+        "rarity": "legendary",
+        "sell_price": 0,
+        "sources": [
+          {
+            "enemy": "snurresvamp_gloed",
+            "kind": "boss",
+            "pool": "boss_legendary"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "club",
+        "worth": 13800
+      },
+      "id": "wpn_club_trunk",
+      "name_key": "ITEM_WPN_CLUB_TRUNK",
+      "path": "res://assets/icons/items/wpn_club_trunk_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_dagger_bee.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 0,
+        "category": "weapon",
+        "damage": 20,
+        "description_key": "ITEM_WPN_DAGGER_BEE_DESC",
+        "effect": {
+          "every": 4,
+          "id": "heart_on_kill"
+        },
+        "hint_key": "ITEM_WPN_DAGGER_BEE_HINT",
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_DAGGER_BEE",
+        "protected": true,
+        "rarity": "unique",
+        "sell_price": 0,
+        "sources": [
+          {
+            "container": "fe",
+            "kind": "find",
+            "zone": "krystalgrotten"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "dagger",
+        "worth": 4000
+      },
+      "id": "wpn_dagger_bee",
+      "name_key": "ITEM_WPN_DAGGER_BEE",
+      "path": "res://assets/icons/items/wpn_dagger_bee.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_dagger_flint.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "buy",
+          "build",
+          "find"
+        ],
+        "buy_price": 600,
+        "category": "weapon",
+        "damage": 8,
+        "description_key": "ITEM_WPN_DAGGER_FLINT_DESC",
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_DAGGER_FLINT",
+        "rarity": "uncommon",
+        "sell_price": 70,
+        "sources": [
+          {
+            "kind": "shop",
+            "shop": "smithy",
+            "slot": "daily"
+          },
+          {
+            "kind": "craft",
+            "min_home_tier": 5,
+            "recipe": "dng_forge_dagger_flint",
+            "station": "smedje"
+          },
+          {
+            "kind": "find",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "find",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "dagger"
+      },
+      "id": "wpn_dagger_flint",
+      "name_key": "ITEM_WPN_DAGGER_FLINT",
+      "path": "res://assets/icons/items/wpn_dagger_flint.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_dagger_moonshard.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "buy",
+          "build",
+          "find"
+        ],
+        "buy_price": 1440,
+        "category": "weapon",
+        "damage": 14,
+        "description_key": "ITEM_WPN_DAGGER_MOONSHARD_DESC",
+        "effect": {
+          "every": 8,
+          "id": "heart_on_kill"
+        },
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_DAGGER_MOONSHARD",
+        "rarity": "rare",
+        "sell_price": 145,
+        "sources": [
+          {
+            "kind": "shop",
+            "shop": "smithy",
+            "slot": "weekly"
+          },
+          {
+            "kind": "craft",
+            "min_home_tier": 5,
+            "recipe": "dng_forge_dagger_moonshard",
+            "station": "smedje"
+          },
+          {
+            "kind": "find",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "find",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "dagger"
+      },
+      "id": "wpn_dagger_moonshard",
+      "name_key": "ITEM_WPN_DAGGER_MOONSHARD",
+      "path": "res://assets/icons/items/wpn_dagger_moonshard.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_dagger_thorn.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "buy",
+          "build",
+          "find"
+        ],
+        "buy_price": 80,
+        "category": "weapon",
+        "damage": 3,
+        "description_key": "ITEM_WPN_DAGGER_THORN_DESC",
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_DAGGER_THORN",
+        "rarity": "normal",
+        "sell_price": 10,
+        "sources": [
+          {
+            "kind": "shop",
+            "shop": "smithy",
+            "slot": "daily"
+          },
+          {
+            "kind": "craft",
+            "min_home_tier": 1,
+            "recipe": "dng_forge_dagger_thorn",
+            "station": "snedkerbord"
+          },
+          {
+            "kind": "find",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "find",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "dagger"
+      },
+      "id": "wpn_dagger_thorn",
+      "name_key": "ITEM_WPN_DAGGER_THORN",
+      "path": "res://assets/icons/items/wpn_dagger_thorn.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_spear_iron.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "buy",
+          "build",
+          "find"
+        ],
+        "buy_price": 750,
+        "category": "weapon",
+        "damage": 13,
+        "description_key": "ITEM_WPN_SPEAR_IRON_DESC",
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_SPEAR_IRON",
+        "rarity": "uncommon",
+        "sell_price": 90,
+        "sources": [
+          {
+            "kind": "shop",
+            "shop": "smithy",
+            "slot": "daily"
+          },
+          {
+            "kind": "craft",
+            "min_home_tier": 5,
+            "recipe": "dng_forge_spear_iron",
+            "station": "smedje"
+          },
+          {
+            "kind": "find",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "find",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "spear"
+      },
+      "id": "wpn_spear_iron",
+      "name_key": "ITEM_WPN_SPEAR_IRON",
+      "path": "res://assets/icons/items/wpn_spear_iron.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_spear_owl.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 0,
+        "category": "weapon",
+        "damage": 32,
+        "description_key": "ITEM_WPN_SPEAR_OWL_DESC",
+        "effect": {
+          "id": "light_arc",
+          "radius_mult": 1.5
+        },
+        "hint_key": "ITEM_WPN_SPEAR_OWL_HINT",
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_SPEAR_OWL",
+        "protected": true,
+        "rarity": "unique",
+        "sell_price": 0,
+        "sources": [
+          {
+            "container": "jern",
+            "kind": "find",
+            "zone": "svampelunden"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "spear",
+        "worth": 5000
+      },
+      "id": "wpn_spear_owl",
+      "name_key": "ITEM_WPN_SPEAR_OWL",
+      "path": "res://assets/icons/items/wpn_spear_owl.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_spear_root.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "reward"
+        ],
+        "buy_price": 0,
+        "category": "weapon",
+        "damage": 45,
+        "description_key": "ITEM_WPN_SPEAR_ROOT_DESC",
+        "effect": {
+          "cells": 12,
+          "id": "reveal_chests"
+        },
+        "hint_key": "ITEM_WPN_SPEAR_ROOT_HINT",
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_SPEAR_ROOT",
+        "protected": true,
+        "rarity": "legendary",
+        "sell_price": 0,
+        "sources": [
+          {
+            "enemy": "snurresvamp_gloed",
+            "kind": "boss",
+            "pool": "boss_legendary"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "spear",
+        "worth": 12000
+      },
+      "id": "wpn_spear_root",
+      "name_key": "ITEM_WPN_SPEAR_ROOT",
+      "path": "res://assets/icons/items/wpn_spear_root_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_spear_thistle.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "buy",
+          "build",
+          "find"
+        ],
+        "buy_price": 1800,
+        "category": "weapon",
+        "damage": 24,
+        "description_key": "ITEM_WPN_SPEAR_THISTLE_DESC",
+        "effect": {
+          "id": "light_arc",
+          "radius_mult": 1
+        },
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_SPEAR_THISTLE",
+        "rarity": "rare",
+        "sell_price": 180,
+        "sources": [
+          {
+            "kind": "shop",
+            "shop": "smithy",
+            "slot": "weekly"
+          },
+          {
+            "kind": "craft",
+            "min_home_tier": 5,
+            "recipe": "dng_forge_spear_thistle",
+            "station": "smedje"
+          },
+          {
+            "kind": "find",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "find",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "spear"
+      },
+      "id": "wpn_spear_thistle",
+      "name_key": "ITEM_WPN_SPEAR_THISTLE",
+      "path": "res://assets/icons/items/wpn_spear_thistle.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_spear_twig.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "buy",
+          "build",
+          "find"
+        ],
+        "buy_price": 100,
+        "category": "weapon",
+        "damage": 5,
+        "description_key": "ITEM_WPN_SPEAR_TWIG_DESC",
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_SPEAR_TWIG",
+        "rarity": "normal",
+        "sell_price": 15,
+        "sources": [
+          {
+            "kind": "shop",
+            "shop": "smithy",
+            "slot": "daily"
+          },
+          {
+            "kind": "craft",
+            "min_home_tier": 1,
+            "recipe": "dng_forge_spear_twig",
+            "station": "snedkerbord"
+          },
+          {
+            "kind": "find",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "find",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "spear"
+      },
+      "id": "wpn_spear_twig",
+      "name_key": "ITEM_WPN_SPEAR_TWIG",
+      "path": "res://assets/icons/items/wpn_spear_twig.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_staff_branch.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "buy",
+          "build",
+          "find"
+        ],
+        "buy_price": 110,
+        "category": "weapon",
+        "damage": 6,
+        "description_key": "ITEM_WPN_STAFF_BRANCH_DESC",
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_STAFF_BRANCH",
+        "rarity": "normal",
+        "sell_price": 15,
+        "sources": [
+          {
+            "kind": "shop",
+            "shop": "smithy",
+            "slot": "daily"
+          },
+          {
+            "kind": "craft",
+            "min_home_tier": 1,
+            "recipe": "dng_forge_staff_branch",
+            "station": "snedkerbord"
+          },
+          {
+            "kind": "find",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "find",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "staff"
+      },
+      "id": "wpn_staff_branch",
+      "name_key": "ITEM_WPN_STAFF_BRANCH",
+      "path": "res://assets/icons/items/wpn_staff_branch.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_staff_ember.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 0,
+        "category": "weapon",
+        "damage": 34,
+        "description_key": "ITEM_WPN_STAFF_EMBER_DESC",
+        "effect": {
+          "cd_minus_s": 1.5,
+          "id": "light_boost",
+          "radius_mult": 1.2,
+          "stun_bonus_s": 0.4
+        },
+        "hint_key": "ITEM_WPN_STAFF_EMBER_HINT",
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_STAFF_EMBER",
+        "protected": true,
+        "rarity": "unique",
+        "sell_price": 0,
+        "sources": [
+          {
+            "kind": "spot",
+            "spot": "glodestenen",
+            "zone": "krystalgrotten"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "staff",
+        "worth": 5500
+      },
+      "id": "wpn_staff_ember",
+      "name_key": "ITEM_WPN_STAFF_EMBER",
+      "path": "res://assets/icons/items/wpn_staff_ember.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_staff_hazel.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "buy",
+          "build",
+          "find"
+        ],
+        "buy_price": 825,
+        "category": "weapon",
+        "damage": 14,
+        "description_key": "ITEM_WPN_STAFF_HAZEL_DESC",
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_STAFF_HAZEL",
+        "rarity": "uncommon",
+        "sell_price": 100,
+        "sources": [
+          {
+            "kind": "shop",
+            "shop": "smithy",
+            "slot": "daily"
+          },
+          {
+            "kind": "craft",
+            "min_home_tier": 5,
+            "recipe": "dng_forge_staff_hazel",
+            "station": "smedje"
+          },
+          {
+            "kind": "find",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "find",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "staff"
+      },
+      "id": "wpn_staff_hazel",
+      "name_key": "ITEM_WPN_STAFF_HAZEL",
+      "path": "res://assets/icons/items/wpn_staff_hazel.webp",
+      "rarity": "uncommon"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_staff_light.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "buy",
+          "build",
+          "find"
+        ],
+        "buy_price": 1980,
+        "category": "weapon",
+        "damage": 25,
+        "description_key": "ITEM_WPN_STAFF_LIGHT_DESC",
+        "effect": {
+          "cd_minus_s": 1,
+          "id": "light_boost",
+          "radius_mult": 1.1,
+          "stun_bonus_s": 0
+        },
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_STAFF_LIGHT",
+        "rarity": "rare",
+        "sell_price": 200,
+        "sources": [
+          {
+            "kind": "shop",
+            "shop": "smithy",
+            "slot": "weekly"
+          },
+          {
+            "kind": "craft",
+            "min_home_tier": 5,
+            "recipe": "dng_forge_staff_light",
+            "station": "smedje"
+          },
+          {
+            "kind": "find",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "find",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "staff"
+      },
+      "id": "wpn_staff_light",
+      "name_key": "ITEM_WPN_STAFF_LIGHT",
+      "path": "res://assets/icons/items/wpn_staff_light.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_staff_star.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "reward"
+        ],
+        "buy_price": 0,
+        "category": "weapon",
+        "damage": 47,
+        "description_key": "ITEM_WPN_STAFF_STAR_DESC",
+        "effect": {
+          "cd_minus_s": 2.5,
+          "id": "light_boost",
+          "radius_mult": 1.3,
+          "stun_bonus_s": 0.8
+        },
+        "hint_key": "ITEM_WPN_STAFF_STAR_HINT",
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_STAFF_STAR",
+        "protected": true,
+        "rarity": "legendary",
+        "sell_price": 0,
+        "sources": [
+          {
+            "enemy": "snurresvamp_konge",
+            "kind": "boss",
+            "pool": "boss_legendary"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "staff",
+        "worth": 13200
+      },
+      "id": "wpn_staff_star",
+      "name_key": "ITEM_WPN_STAFF_STAR",
+      "path": "res://assets/icons/items/wpn_staff_star_night.webp",
+      "rarity": "legendary"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_sword_candle.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "find"
+        ],
+        "buy_price": 0,
+        "category": "weapon",
+        "damage": 30,
+        "description_key": "ITEM_WPN_SWORD_CANDLE_DESC",
+        "effect": {
+          "id": "oil_on_kill",
+          "s": 4
+        },
+        "hint_key": "ITEM_WPN_SWORD_CANDLE_HINT",
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_SWORD_CANDLE",
+        "protected": true,
+        "rarity": "unique",
+        "sell_price": 0,
+        "sources": [
+          {
+            "kind": "spot",
+            "spot": "lysstubben",
+            "zone": "svampelunden"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "sword",
+        "worth": 5000
+      },
+      "id": "wpn_sword_candle",
+      "name_key": "ITEM_WPN_SWORD_CANDLE",
+      "path": "res://assets/icons/items/wpn_sword_candle.webp",
+      "rarity": "unique"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_sword_forest_steel.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "buy",
+          "build",
+          "find"
+        ],
+        "buy_price": 1800,
+        "category": "weapon",
+        "damage": 22,
+        "description_key": "ITEM_WPN_SWORD_FOREST_STEEL_DESC",
+        "effect": {
+          "id": "oil_on_kill",
+          "s": 2
+        },
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_SWORD_FOREST_STEEL",
+        "rarity": "rare",
+        "sell_price": 180,
+        "sources": [
+          {
+            "kind": "shop",
+            "shop": "smithy",
+            "slot": "weekly"
+          },
+          {
+            "kind": "craft",
+            "min_home_tier": 5,
+            "recipe": "dng_forge_sword_forest_steel",
+            "station": "smedje"
+          },
+          {
+            "kind": "find",
+            "zone": "skovkant"
+          },
+          {
+            "kind": "find",
+            "zone": "dybe_bregner"
+          },
+          {
+            "kind": "find",
+            "zone": "svampelunden"
+          },
+          {
+            "kind": "find",
+            "zone": "krystalgrotten"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "sword"
+      },
+      "id": "wpn_sword_forest_steel",
+      "name_key": "ITEM_WPN_SWORD_FOREST_STEEL",
+      "path": "res://assets/icons/items/wpn_sword_forest_steel.webp",
+      "rarity": "rare"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/wpn_sword_moon.webp",
+      "category": "weapon",
+      "definition": {
+        "acquire": [
+          "reward"
+        ],
+        "buy_price": 0,
+        "category": "weapon",
+        "damage": 42,
+        "description_key": "ITEM_WPN_SWORD_MOON_DESC",
+        "effect": {
+          "every": 5,
+          "id": "moon_wave",
+          "mult": 0.6,
+          "range": 360
+        },
+        "hint_key": "ITEM_WPN_SWORD_MOON_HINT",
+        "max_stack": 1,
+        "name_key": "ITEM_WPN_SWORD_MOON",
+        "protected": true,
+        "rarity": "legendary",
+        "sell_price": 0,
+        "sources": [
+          {
+            "enemy": "snurresvamp_konge",
+            "kind": "boss",
+            "pool": "boss_legendary"
+          }
+        ],
+        "stamina_cost": 0,
+        "weapon_family": "sword",
+        "worth": 12000
+      },
+      "id": "wpn_sword_moon",
+      "name_key": "ITEM_WPN_SWORD_MOON",
+      "path": "res://assets/icons/items/wpn_sword_moon_night.webp",
+      "rarity": "legendary"
     }
   ],
   "npcs": [
@@ -22327,6 +25188,26 @@
       "id": "fiddler_strimmel",
       "requested": "hedgehog",
       "resolved": "hedgehog"
+    },
+    {
+      "id": "ghostfam_dyne",
+      "requested": "ghostfam_dyne",
+      "resolved": "ghostfam_dyne"
+    },
+    {
+      "id": "ghostfam_gnist",
+      "requested": "ghostfam_gnist",
+      "resolved": "ghostfam_gnist"
+    },
+    {
+      "id": "ghostfam_silke",
+      "requested": "ghostfam_silke",
+      "resolved": "ghostfam_silke"
+    },
+    {
+      "id": "ghostfam_blund",
+      "requested": "ghostfam_blund",
+      "resolved": "ghostfam_blund"
     }
   ],
   "props": [
@@ -23834,6 +26715,24 @@
     },
     {
       "auxiliary": [],
+      "id": "mother_repaired_lantern",
+      "path": "res://assets/iso_props/forest_mother/mother_repaired_lantern.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "mother_route_map",
+      "path": "res://assets/iso_props/forest_mother/mother_route_map.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "mother_seed_tin",
+      "path": "res://assets/iso_props/forest_mother/mother_seed_tin.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
       "id": "notice_board",
       "path": "res://assets/iso_props/painted_world/notice_board.webp",
       "real": true
@@ -24075,6 +26974,12 @@
       "auxiliary": [],
       "id": "roof_patch",
       "path": "res://assets/iso_props/zz_painted_consistency/roof_patch.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "root_scribe_waymarker",
+      "path": "res://assets/iso_props/forest_mother/root_scribe_waymarker.webp",
       "real": true
     },
     {

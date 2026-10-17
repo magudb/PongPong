@@ -276,7 +276,8 @@ func _roster_and_meta() -> void:
 	var unique: Array[String] = []
 	for q in P13_QUESTS:
 		# the quest-level title_key / description_key are the schema DEFAULTS (PLAN 3.12: QUEST_<ID>_TITLE / _DESC, the readers derive them): a top-level
-		# `title_key = ".."` in a quest file would only land in the parser's table_assigns and be read by nobody, so no file carries one
+		# Explicit scalar captions are also exposed by LuaRuntime; these older
+		# twenty quests deliberately keep the derived-key contract.
 		_need(unique, lm.text_in("QUEST_%s_TITLE" % q.to_upper(), "da") != "" and lm.text_in("QUEST_%s_DESC" % q.to_upper(), "da") != "", "%s: QUEST_<ID>_TITLE / _DESC has no text" % q)
 		_need(unique, QuestText.title(StringName(q)) == lm.text_in("QUEST_%s_TITLE" % q.to_upper(), "da") and qm.get_title(StringName(q)) == lm.text_in("QUEST_%s_TITLE" % q.to_upper(), "da"),
 			"%s: the quest book / QuestManager.get_title do not derive QUEST_<ID>_TITLE" % q)
@@ -350,7 +351,7 @@ func _text_keys() -> void:
 	raw.compile("^[A-Z0-9_]+$")
 	for q in _all_quest_ids():
 		var up := q.to_upper()
-		var keys: Array[String] = ["QUEST_%s_TITLE" % up]
+		var keys: Array[String] = [str(_def(q).get("title_key","QUEST_%s_TITLE" % up))]
 		var own: bool = q in P13_QUESTS or q in FEATURE_EIGHT or q == "pips_runde" or q == "secret_garden"
 		if own:
 			keys.append("QUEST_%s_DESC" % up)
@@ -358,8 +359,11 @@ func _text_keys() -> void:
 				keys.append("QUEST_%s_OFFER" % up)
 		else:
 			# another package's quest: the book falls back from QUEST_<ID>_DESC to QUEST_<ID>_OFFER (TTQuestText.description), so one of the two is enough
-			_need(problems, lm.text_in("QUEST_%s_DESC" % up, "da") != "" or lm.text_in("QUEST_%s_OFFER" % up, "da") != "", "%s: neither QUEST_%s_DESC nor _OFFER has a da text" % [q, up])
-			_need(problems, lm.text_in("QUEST_%s_DESC" % up, "en") != "" or lm.text_in("QUEST_%s_OFFER" % up, "en") != "", "%s: neither QUEST_%s_DESC nor _OFFER has an en text" % [q, up])
+			var description := str(_def(q).get("description_key",""))
+			if description != "": keys.append(description)
+			else:
+				_need(problems, lm.text_in("QUEST_%s_DESC" % up, "da") != "" or lm.text_in("QUEST_%s_OFFER" % up, "da") != "", "%s: neither QUEST_%s_DESC nor _OFFER has a da text" % [q, up])
+				_need(problems, lm.text_in("QUEST_%s_DESC" % up, "en") != "" or lm.text_in("QUEST_%s_OFFER" % up, "en") != "", "%s: neither QUEST_%s_DESC nor _OFFER has an en text" % [q, up])
 		for o in _objectives(q):
 			var od := LuaData.dict(o)
 			var ok := str(od.get("description_key", ""))
@@ -1475,6 +1479,14 @@ func _manual_completers() -> void:
 				continue
 			manual_n += 1
 			var key := "%s.%s" % [q, od.get("id", "")]
+			# MotherStory dispatches from its production chapter registry rather
+			# than literal quest names. The story section exercises these real
+			# completions, including checkpoints and out-of-order catch-up.
+			var mother_bound := false
+			for chapter in MotherStory.CHAPTERS:
+				if q == str(MotherStory.quest_id(chapter.id)):
+					mother_bound = str(od.get("id","")) in chapter.needs or (str(od.get("id","")) == "checkpoint" and chapter.has("boss_floor"))
+			if mother_bound: continue
 			if markers.has(key) or dialogue.has(key) or (scripts_text.contains(str(od.get("id", ""))) and scripts_text.contains(q)):
 				continue
 			if PENDING_COMPLETERS.has(key):

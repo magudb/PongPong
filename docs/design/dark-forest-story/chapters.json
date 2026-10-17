@@ -1,13 +1,20 @@
 {
-  "status": "Initial mother evidence implemented through secret_garden; deeper forest treatment remains proposed",
+  "status": "S01–S08 implemented with the bittersweet finale; final full-game regression gate pending",
   "confirmed_by_user": {
     "date": "2026-10-16",
     "premise": "Journey into the Dark Forest to discover what happened to our mother.",
-    "creative_reference": "The Hazel Wood by Melissa Albert"
+    "creative_reference": "The Hazel Wood by Melissa Albert",
+    "finale": "Mother died opening a return path for people held inside unfinished tales. Her remaining account is an echo, not a living prisoner. Restore her name, refuse the Root Scribe role and bring her seed tin home."
   },
-  "fate_decision": "open; no answer assumed",
+  "fate_decision": "confirmed by user: a bittersweet discovery; learn her fate and bring her legacy home",
   "runtime_quest_ids": [
-    "secret_garden"
+    "secret_garden",
+    "forest_mother_s03",
+    "forest_mother_s04",
+    "forest_mother_s05",
+    "forest_mother_s06",
+    "forest_mother_s07",
+    "forest_mother_s08"
   ],
   "story_namespace": "forest_mother",
   "supported_skins": [
@@ -70,7 +77,7 @@
     },
     {
       "id": "S03",
-      "status": "proposed; not installed",
+      "status": "implemented; permanent evidence, chapter quests and journal",
       "requires": [
         "S02"
       ],
@@ -88,15 +95,15 @@
       "discovery": "She charted routes with Natteblik, but drew a path missing from his map.",
       "completion_contract": "Read the marked-lamp trace, obtain Natteblik’s account and satisfy the existing floor-four checkpoint.",
       "copy_keys": {
-        "title": "QUEST_FOREST_MOTHER_S03_TITLE",
-        "desc": "QUEST_FOREST_MOTHER_S03_DESC",
-        "lead": "OBJ_FOREST_MOTHER_S03_LEAD"
+        "title": "FM_CHAPTER_S03_TITLE",
+        "desc": "FM_CHAPTER_S03_DESC"
       },
-      "fate_dependent": false
+      "fate_dependent": false,
+      "runtime_quest_id": "forest_mother_s03"
     },
     {
       "id": "S04",
-      "status": "proposed; not installed",
+      "status": "implemented; permanent evidence, chapter quests and journal",
       "requires": [
         "S03"
       ],
@@ -110,17 +117,17 @@
       "evidence_id": "shelter_memory",
       "question": "What was she doing here?",
       "discovery": "A recorded scene shows that she gave lost travellers shelter; it does not establish her present whereabouts.",
-      "completion_contract": "Restore the lamp and inspect the objects in the authored memory clearing.",
+      "completion_contract": "Inspect the four memory-clearing objects; hear Fru Ugle’s account or read her free field note beside the garden bench.",
       "copy_keys": {
-        "title": "QUEST_FOREST_MOTHER_S04_TITLE",
-        "desc": "QUEST_FOREST_MOTHER_S04_DESC",
-        "lead": "OBJ_FOREST_MOTHER_S04_LEAD"
+        "title": "FM_CHAPTER_S04_TITLE",
+        "desc": "FM_CHAPTER_S04_DESC"
       },
-      "fate_dependent": false
+      "fate_dependent": false,
+      "runtime_quest_id": "forest_mother_s04"
     },
     {
       "id": "S05",
-      "status": "proposed; not installed",
+      "status": "implemented; permanent evidence, chapter quests and journal",
       "requires": [
         "S04"
       ],
@@ -136,15 +143,15 @@
       "discovery": "The unfinished tales replace people’s names with roles; she was trying to get those people home.",
       "completion_contract": "Recover a traveller’s account and satisfy the existing floor-eight checkpoint.",
       "copy_keys": {
-        "title": "QUEST_FOREST_MOTHER_S05_TITLE",
-        "desc": "QUEST_FOREST_MOTHER_S05_DESC",
-        "lead": "OBJ_FOREST_MOTHER_S05_LEAD"
+        "title": "FM_CHAPTER_S05_TITLE",
+        "desc": "FM_CHAPTER_S05_DESC"
       },
-      "fate_dependent": false
+      "fate_dependent": false,
+      "runtime_quest_id": "forest_mother_s05"
     },
     {
       "id": "S06",
-      "status": "proposed; not installed",
+      "status": "implemented; permanent evidence, chapter quests and journal",
       "requires": [
         "S05"
       ],
@@ -160,15 +167,15 @@
       "discovery": "She chose to keep a route home open; a condition bound her story to the wood. The surviving account stops before the outcome.",
       "completion_contract": "Compare the recorded words, route stone and witnessed account.",
       "copy_keys": {
-        "title": "QUEST_FOREST_MOTHER_S06_TITLE",
-        "desc": "QUEST_FOREST_MOTHER_S06_DESC",
-        "lead": "OBJ_FOREST_MOTHER_S06_LEAD"
+        "title": "FM_CHAPTER_S06_TITLE",
+        "desc": "FM_CHAPTER_S06_DESC"
       },
-      "fate_dependent": false
+      "fate_dependent": false,
+      "runtime_quest_id": "forest_mother_s06"
     },
     {
       "id": "S07",
-      "status": "proposed; not installed",
+      "status": "implemented; permanent evidence, chapter quests and journal",
       "requires": [
         "S06"
       ],
@@ -184,44 +191,49 @@
       "discovery": "The accounts establish the final route and the force that bound it; the mother’s fate is revealed in S08.",
       "completion_contract": "Assemble the accounts, satisfy the existing floor-twelve checkpoint and reach the final story clearing.",
       "copy_keys": {
-        "title": "QUEST_FOREST_MOTHER_S07_TITLE",
-        "desc": "QUEST_FOREST_MOTHER_S07_DESC",
-        "lead": "OBJ_FOREST_MOTHER_S07_LEAD"
+        "title": "FM_CHAPTER_S07_TITLE",
+        "desc": "FM_CHAPTER_S07_DESC"
       },
-      "fate_dependent": false
+      "fate_dependent": false,
+      "runtime_quest_id": "forest_mother_s07"
     },
     {
       "id": "S08",
-      "status": "proposed; not installed",
+      "status": "implemented; permanent evidence, chapter quests and journal",
       "requires": [
         "S07"
       ],
       "areas": [
-        "final_story_clearing",
+        "moerkeskoven_f12",
+        "secret_garden",
         "farm"
       ],
-      "target_floors": [],
+      "target_floors": [
+        12
+      ],
       "evidence_id": "mother_fate",
       "question": "What happened to our mother?",
-      "discovery": "Pending creative decision: explain what happened, why she could not return and what happens now.",
-      "completion_contract": "Author the chosen revelation and return scene; do not ship an unresolved finale.",
+      "discovery": "Mother opened the way home for people held inside unfinished tales, but the effort cost her life. The forest kept her last account as an unfinished role; it is an echo. Her message remembers the player and asks them to keep a place where people can arrive under their own names.",
+      "completion_contract": "Read the final account, refuse to inherit her unfinished role, restore her own name and plant the seeds from her tin in the restored garden. Leave free play and ordinary expeditions available.",
       "copy_keys": {
-        "title": "QUEST_FOREST_MOTHER_S08_TITLE",
-        "desc": "QUEST_FOREST_MOTHER_S08_DESC",
-        "lead": "OBJ_FOREST_MOTHER_S08_LEAD"
+        "title": "FM_CHAPTER_S08_TITLE",
+        "desc": "FM_CHAPTER_S08_DESC"
       },
-      "fate_dependent": true
+      "fate_dependent": true,
+      "runtime_quest_id": "forest_mother_s08"
     }
   ],
   "integration_notes": [
-    "area names identify the existing hub and towns; generated floor IDs remain transient.",
-    "final_story_clearing is an authoring label, not a registered runtime map.",
-    "Floor ranges are proposed narrative targets, not changes to the generator.",
-    "Initial letter, post route, lift record and garden trail persist through secret_garden quest objectives. S03–S08 evidence and authored clue anchors still require implementation.",
-    "S08 must be fully authored and integrated before the complete arc ships."
+    "S03–S08 evidence uses versioned scalar flags independent of seed/day/cell and backpack capacity.",
+    "MotherStoryDirector attaches reachable, canopy-clear anchors after real floor physics is ready; deterministic generator text and golden digests are unchanged.",
+    "The four memory objects form a pocket beside the required route. The final story frame is on floor twelve; no separate unregistered map is required.",
+    "Existing boss-kind records are read from the canonical floor table; already-cleared checkpoints catch up without granting boss hearts again.",
+    "Fru Ugle’s spoken topic remains free and separate from appraisal. Her written garden note avoids a weekday or service-hour gate.",
+    "The seed tin is saved as story evidence, followed by a permanent garden return scene and continued free play.",
+    "New text is unvoiced draft Danish/English; frozen recordings are preserved."
   ],
   "main_story_reference": "The Secret Garden by Frances Hodgson Burnett",
-  "runtime_copy": "localization/secret_garden.csv",
+  "runtime_copy": "localization/forest_mother.csv; localization/secret_garden.csv",
   "applied_runtime_key_revisions": [
     "DLG_GHOSTFAM_DYNE_KIN_1_4",
     "DLG_GHOSTFAM_SILKE_KIN_1_1"

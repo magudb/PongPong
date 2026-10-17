@@ -1,12 +1,12 @@
 {
   "status": "requires explicit visual review; scan is not an aesthetic approval",
-  "files": 5900,
-  "raster_files": 2879,
+  "files": 5919,
+  "raster_files": 2888,
   "vectors": 7,
   "fonts": 8,
   "raster_changes": {
     "unchanged": 1952,
-    "new": 616,
+    "new": 625,
     "changed": 311
   },
   "roles": {
@@ -20,6 +20,7 @@
     "fitted-held-equipment": 1,
     "item-base-or-night-icon": 377,
     "painted-dungeon-loot-icon": 32,
+    "painted-dungeon-supply-icon": 5,
     "painted-dungeon-weapon-icon": 26,
     "painted-fixture-props": 147,
     "technical-effect-or-readability-mask": 25,
@@ -29,6 +30,7 @@
     "technical-ground": 4,
     "festival-view": 53,
     "technical-painted-light-mask": 13,
+    "painted-forest-story-prop": 4,
     "furniture-view": 482,
     "legendary-overlay": 44,
     "technical-historical-light-kernel": 13,
@@ -69,6 +71,7 @@
     "docs/art/style-audit/current/painted-dungeon-held-equipment-01.webp",
     "docs/art/style-audit/current/painted-dungeon-loot-icon-01.webp",
     "docs/art/style-audit/current/painted-dungeon-loot-icon-02.webp",
+    "docs/art/style-audit/current/painted-dungeon-supply-icon-01.webp",
     "docs/art/style-audit/current/painted-dungeon-weapon-icon-01.webp",
     "docs/art/style-audit/current/painted-fixture-backdrop-01.webp",
     "docs/art/style-audit/current/painted-fixture-city-01.webp",
@@ -81,6 +84,7 @@
     "docs/art/style-audit/current/painted-fixture-props-04.webp",
     "docs/art/style-audit/current/painted-fixture-props-05.webp",
     "docs/art/style-audit/current/painted-fixture-terrain-01.webp",
+    "docs/art/style-audit/current/painted-forest-story-prop-01.webp",
     "docs/art/style-audit/current/painted-profession-emblem-01.webp",
     "docs/art/style-audit/current/painted-wardrobe-safe-body-01.webp",
     "docs/art/style-audit/current/specialist-shop-view-01.webp",

@@ -90,6 +90,18 @@ def roles(catalog: dict) -> tuple[dict, dict]:
                 path = (ROOT / "assets/icons/items" / spec[part]).resolve()
                 selected[path] = "painted-dungeon-weapon-icon" if item.startswith("wpn_") else "painted-dungeon-loot-icon"
                 sources[path] = spec["source"]
+    story = ROOT / "assets/iso_props/forest_mother"
+    if (story / "props.json").is_file():
+        for item, spec in read(story / "props.json").items():
+            path = (story / spec["file"]).resolve()
+            selected[path] = "painted-forest-story-prop"
+            sources[path] = spec["source"]
+    supplies = ROOT / "tools/art/features/dungeon/supplies.json"
+    if supplies.is_file():
+        for spec in read(supplies)["items"].values():
+            path = (ROOT / "assets/icons/items" / spec["file"]).resolve()
+            selected[path] = "painted-dungeon-supply-icon"
+            sources[path] = spec["source"]
     wardrobe = ROOT / "assets/wardrobe"
     if (wardrobe / "manifest.json").is_file():
         manifest = read(wardrobe / "manifest.json")

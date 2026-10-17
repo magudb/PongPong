@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "ghost",
+  "checks": 37,
+  "elapsed_s": 19.09,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "forest_mother": {
+      "character": "ghost",
+      "checks": 37,
+      "failed": 0,
+      "ms": 15010,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

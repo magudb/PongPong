@@ -198,6 +198,7 @@ func _ready() -> void:
 	Svc.static_call("res://scripts/farm/steading/objects/farm_stage.gd", &"attach", [self])
 	Svc.static_call("res://scripts/traetoppen/life/daily_flags.gd", &"attach_world", [self])
 	Svc.static_call("res://scripts/farm/steading/tutorial/tutorial_hints.gd", &"attach", [self])
+	Svc.static_call("res://scripts/world2d/story/mother_director.gd", &"attach", [self])
 	EventBus.area_change_requested.connect(_on_area_change_requested)
 	EventBus.game_event.connect(_on_game_event)
 	EventBus.player_defeated.connect(_on_player_defeated)

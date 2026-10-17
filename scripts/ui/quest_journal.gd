@@ -10,6 +10,8 @@ var _rows: Array[Button] = []
 var _cache: Dictionary = {}
 var _tabs: Array[Button] = []
 var _calendar: Control
+var _mother_journal: MotherJournal
+var _mother_tab: Button
 var _group := ButtonGroup.new()
 var _refresh_pending := false
 
@@ -28,6 +30,13 @@ func _ready() -> void:
 		%CalendarHost.add_child(_calendar)
 		%TabCalendar.visible = true
 		_tabs.append(%TabCalendar)
+	_mother_tab = Button.new()
+	_mother_tab.theme_type_variation = &"PillTab"
+	_mother_tab.toggle_mode = true
+	%ActiveTab.get_parent().add_child(_mother_tab)
+	_tabs.append(_mother_tab)
+	_mother_journal = MotherJournal.new()
+	%CalendarHost.add_child(_mother_journal)
 	for i in _tabs.size():
 		_tabs[i].pressed.connect(_set_tab.bind(i))
 		_tabs[i].focus_entered.connect(_set_tab.bind(i))
@@ -41,6 +50,7 @@ func _ready() -> void:
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("journal_guide", Callable(get_script(), &"fixture_guide"))
 
 func _initial_focus() -> Control:
+	if _tab == 3: return _mother_journal.initial_focus()
 	if _tab == 2 and _calendar != null:
 		return _calendar.initial_focus()
 	return _rows[0] if not _rows.is_empty() and _tab < 2 else _tabs[_tab]
@@ -85,13 +95,17 @@ func _refresh_texts() -> void:
 	%ActiveTab.text = tr("QJ_TAB_ACTIVE") % QuestManager.get_active_count()
 	%CompletedTab.text = tr("QJ_TAB_DONE") % QuestManager.get_completed_count()
 	%TabCalendar.text = tr("DLG_JOURNAL_CALENDAR")
+	_mother_tab.text = tr("FM_TAB")
 	%RewardHeader.text = tr("QJ_REWARD")
 	%EmptyLabel.text = tr("QJ_EMPTY")
 	for i in _tabs.size():
 		_tabs[i].set_pressed_no_signal(i == _tab)
-	%CalendarHost.visible = _tab == 2
-	%DetailMargin.visible = _tab != 2
-	%QuestScroll.visible = _tab != 2
+	%CalendarHost.visible = _tab in [2,3]
+	%DetailMargin.visible = _tab < 2
+	%QuestScroll.visible = _tab < 2
+	_mother_journal.visible = _tab == 3
+	if _calendar != null: _calendar.visible = _tab == 2
+	if _tab == 3: _mother_journal.refresh()
 	if _calendar != null and _tab == 2 and _calendar.has_method("refresh"):
 		_calendar.refresh()
 	for button in _cache.values():
@@ -195,6 +209,9 @@ func _show_details(id: StringName) -> void:
 
 func _wire() -> void:
 	UiNav.wire_row(_tabs + [%CloseButton])
+	if _tab == 3:
+		_mother_journal.wire_navigation(_tabs+[%CloseButton])
+		return
 	if _tab == 2 and _calendar != null:
 		_calendar.wire_navigation(_tabs + [%CloseButton])
 		return
@@ -243,3 +260,4 @@ static func fixture_guide(node: Node, _host: Node) -> void:
 	# The immutable original mock predates the calendar. Its fixture keeps the
 	# two historical tabs; the production book exposes all three.
 	node.get_node("%TabCalendar").hide()
+	node._mother_tab.hide()

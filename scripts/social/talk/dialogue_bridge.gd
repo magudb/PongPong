@@ -46,6 +46,8 @@ static func decorate(npc: String, dialogue: Dictionary, context: Dictionary = {}
 	var garden := SecretGardenStory.choice(npc)
 	if not garden.is_empty():
 		choices.append(garden)
+	var mother := MotherStory.choice(npc)
+	if not mother.is_empty(): choices.append(mother)
 	if choices.size() > 4:
 		var extra := choices.slice(3)
 		choices = choices.slice(0, 3)
@@ -88,6 +90,7 @@ static func topic_page(npc: String) -> Dictionary:
 		"topic": topic, "topic_index": all.find(topic)}
 
 static func finish_topic(npc: String, page: Dictionary, completed: bool, lines_shown: int) -> bool:
+	if MotherStory.finish_topic(npc,page,completed,lines_shown): return true
 	if SecretGardenStory.finish_topic(npc, page, completed, lines_shown):
 		return true
 	var sm := Svc.node("SocialManager")
@@ -113,6 +116,8 @@ static func finish_topic(npc: String, page: Dictionary, completed: bool, lines_s
 ## Unknown actions still reach EventBus; this layer supplies the shared action data.
 static func action(npc: String, action_id: String, data: Dictionary) -> Dictionary:
 	match action_id:
+		"mother_story":
+			return {"handled":true,"page":MotherStory.topic_page(npc)}
 		"garden_story":
 			return {"handled": true, "page": SecretGardenStory.topic_page(npc)}
 		"social_more":

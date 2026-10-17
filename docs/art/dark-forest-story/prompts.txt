@@ -1,8 +1,9 @@
 Dark Forest story art prompts
 
-Status: proposed source paintings for the mother mystery, 2026-10-16.
-These prompts have not been sent to image generation. No selected master,
-runtime export, replacement or visual approval is claimed.
+Status: original design proposals, retained for reference. Production requests
+were submitted on 2026-10-17 and are saved in production-prompts.json. Four
+paintings and their original generation paths are retained; see packing.json
+and generation-record.json. Native review is recorded separately.
 Story: docs/design/DARK_FOREST_STORY_ADDENDUM.md.
 Style: docs/art/style-guide.txt.
 

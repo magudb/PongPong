@@ -1,0 +1,35 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PLAYTEST start mode=windowed character=animal sections=res://tests/sections only=art_dungeon_supplies
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.Js8drK/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/dungeon/supplies/native
+== section art_dungeon_supplies [windowed]  (res://tests/sections/art_dungeon_supplies.gd)
+  ok    art_dungeon_supplies.five_supplies
+  ok    art_dungeon_supplies.live_definition_etagekort
+  ok    art_dungeon_supplies.cutout_size_budget_etagekort
+  ok    art_dungeon_supplies.selected_source_etagekort
+  ok    art_dungeon_supplies.day_and_night_resolve_etagekort
+  ok    art_dungeon_supplies.live_definition_lysdraabe
+  ok    art_dungeon_supplies.cutout_size_budget_lysdraabe
+  ok    art_dungeon_supplies.selected_source_lysdraabe
+  ok    art_dungeon_supplies.day_and_night_resolve_lysdraabe
+  ok    art_dungeon_supplies.live_definition_svampe_eliksir
+  ok    art_dungeon_supplies.cutout_size_budget_svampe_eliksir
+  ok    art_dungeon_supplies.selected_source_svampe_eliksir
+  ok    art_dungeon_supplies.day_and_night_resolve_svampe_eliksir
+  ok    art_dungeon_supplies.live_definition_tornebaer
+  ok    art_dungeon_supplies.cutout_size_budget_tornebaer
+  ok    art_dungeon_supplies.selected_source_tornebaer
+  ok    art_dungeon_supplies.day_and_night_resolve_tornebaer
+  ok    art_dungeon_supplies.live_definition_ugle_noegle
+  ok    art_dungeon_supplies.cutout_size_budget_ugle_noegle
+  ok    art_dungeon_supplies.selected_source_ugle_noegle
+  ok    art_dungeon_supplies.day_and_night_resolve_ugle_noegle
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/dungeon/supplies/native/art_dungeon_supplies_day.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/dungeon/supplies/native/art_dungeon_supplies_night.png (1280x720)
+  --    art_dungeon_supplies: 21 checks, 0 failed, 0 skipped, 1.0 s
+== summary: 1 section(s) run, 21 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 5.4 s
+PLAYTEST PASS (21 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

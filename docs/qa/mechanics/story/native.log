@@ -1,0 +1,57 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PLAYTEST start mode=windowed character=animal sections=res://tests/sections only=forest_mother
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.PmX62e/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/story/native
+== section forest_mother [windowed]  (res://tests/sections/forest_mother.gd)
+  ok    forest_mother.no_inherited_evidence
+  ok    forest_mother.garden_trail_starts_investigation
+  ok    forest_mother.authored_quest_caption_is_localized
+  ok    forest_mother.future_chapters_cannot_be_offered_early
+  ok    forest_mother.all_essential_quests_have_no_paid_or_random_rewards
+  ok    forest_mother.out_of_order_evidence_is_kept
+  ok    forest_mother.finale_waits_for_real_checkpoints
+  ok    forest_mother.cancel_records_nothing_and_releases_player
+  ok    forest_mother.travel_cancels_evidence_dialogue
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/story/native/forest_mother_marked_lamp.png (1280x720)
+  ok    forest_mother.full_pack_cannot_block_evidence
+  ok    forest_mother.evidence_save_written
+  ok    forest_mother.evidence_save_loaded
+  ok    forest_mother.evidence_restored_with_quest_progress
+  ok    forest_mother.daytime_visit_does_not_consume_account
+  ok    forest_mother.night_retry_uses_real_topic
+  ok    forest_mother.first_checkpoint_completes_s03
+  ok    forest_mother.memory_clue_reachable_memory_map
+  ok    forest_mother.memory_clue_reachable_memory_basket
+  ok    forest_mother.memory_clue_reachable_memory_lamp
+  ok    forest_mother.memory_clue_reachable_memory_table
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/story/native/forest_mother_memory_clearing.png (1280x720)
+  ok    forest_mother.free_owl_topic_available_beside_services
+  ok    forest_mother.cancelled_witness_page_does_not_record
+  ok    forest_mother.free_written_owl_account_has_no_calendar_gate
+  ok    forest_mother.own_name_and_second_checkpoint_complete_s05
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/story/native/forest_mother_return_promise.png (1280x720)
+  ok    forest_mother.witness_account_completes_s06
+  ok    forest_mother.earlier_last_journey_catches_up
+  ok    forest_mother.story_sync_never_regrants_boss_hearts
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/story/native/forest_mother_mother_final_account.png (1280x720)
+  ok    forest_mother.bittersweet_truth_and_keepsake_commit_together
+  ok    forest_mother.finale_answers_fate_explicitly
+  ok    forest_mother.reread_never_duplicates_progress
+  ok    forest_mother.legacy_planted_and_story_finished
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/story/native/forest_mother_legacy_garden.png (1280x720)
+  ok    forest_mother.journal_has_all_confirmed_accounts
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/story/native/forest_mother_evidence_journal.png (1280x720)
+  ok    forest_mother.evidence_book_translates_with_locale
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/story/native/forest_mother_evidence_journal_en.png (1280x720)
+  ok    forest_mother.ending_save_written
+  ok    forest_mother.ending_save_reentered
+  ok    forest_mother.legacy_survives_world_rebuild
+  ok    forest_mother.ordinary_forest_play_remains_available
+  --    forest_mother: 37 checks, 0 failed, 0 skipped, 15.2 s
+== summary: 1 section(s) run, 37 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 19.2 s
+PLAYTEST PASS (37 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

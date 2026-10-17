@@ -342,7 +342,7 @@ config = {
       friendship = true,
       routine = true,
       age = "adult",
-      quests_offered = { "pips_runde", "forste_dage" },
+      quests_offered = { "pips_runde", "forste_dage", "forest_mother_s03", "forest_mother_s04", "forest_mother_s05", "forest_mother_s06", "forest_mother_s07", "forest_mother_s08" },
     },
     bathkeeper_sofus = {
       name_key = "NPC_BATHKEEPER_SOFUS",
