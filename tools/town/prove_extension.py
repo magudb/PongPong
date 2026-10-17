@@ -32,7 +32,7 @@ def binding():
 
 def apply(project):
     source = project/'tests/fixtures/town/extension'
-    destinations = {'routine.lua':'lua/routines/zz_loop.lua','building.lua':'lua/buildings/zz_loop.lua','shop.lua':'lua/shops/zz_loop.lua','dialogue.lua':'lua/dialogue/loop_neighbour.lua','festival.lua':'lua/festivals/loop.lua','event.lua':'lua/events/loop.lua','quest.lua':'lua/quests/loop_mail.lua','config.lua':'lua/config/zz_loop_post.lua','copy.csv':'localization/loop_extension.csv','int_loop_shop.json':'data/interiors/core/int_loop_shop.json','int_loop_shop.map':'data/maps/int_loop_shop.map'}
+    destinations = {'routine.lua':'lua/routines/zz_loop.lua','building.lua':'lua/buildings/zz_loop.lua','shop.lua':'lua/shops/zz_loop.lua','dialogue.lua':'lua/dialogue/loop_neighbour.lua','festival.lua':'lua/festivals/loop.lua','event.lua':'lua/events/loop.lua','quest.lua':'lua/quests/loop_mail.lua','copy.csv':'localization/loop_extension.csv','int_loop_shop.json':'data/interiors/core/int_loop_shop.json','int_loop_shop.map':'data/maps/int_loop_shop.map'}
     for name,target in destinations.items():
         out = project/target
         out.parent.mkdir(parents=True, exist_ok=True)
@@ -47,6 +47,14 @@ def apply(project):
         text=out.read_text()
         text=re.sub(r'\b'+table+r'\s*=\s*\{',lambda match:match[0]+'\n    '+body,text,count=1)
         out.write_text(text)
+    # Edit the real mailbox configuration instead of shadowing its top-level
+    # table in a second config file (which production lint correctly rejects).
+    p=project/'lua/config/traetoppen.lua'
+    givers=re.search(r'givers\s*=\s*(\{[^}]*\})', (source/'config.lua').read_text())
+    assert givers is not None
+    text,count=re.subn(r'(\bpost\s*=\s*\{\s*givers\s*=\s*)\{[^}]*\}',lambda match:match[1]+givers[1],p.read_text(),count=1)
+    assert count==1
+    p.write_text(text)
     # This is an existing citizen's actual authored plan, not a synthetic resolver.
     p=project/'lua/routines/core/gardener_hoppe.lua'
     text=p.read_text(); old='{ from = 10.5, at = "traetoppen.a_beds2", act = "tend" }'
@@ -84,8 +92,8 @@ def prove():
             if report.exists():
                 reports[name]=json.loads(report.read_text())
                 shutil.copyfile(report,evidence/(name+'.json'))
-            if result.returncode:
-                raise RuntimeError(name+' stage failed; inspect '+str(evidence/(name+'.log')))
+            if result.returncode or ' lint finding(s)' in (evidence/(name+'.log')).read_text():
+                raise RuntimeError(name+' stage failed or has Lua lint findings; inspect '+str(evidence/(name+'.log')))
         code_same=hashes(clone,True)==before
         assert code_same
         checks={k:True for k in ['l18_data_only_citizen','l18_data_only_building','l18_data_only_routine_edit','l18_data_only_shop_hours','l18_data_only_festival','l18_data_only_event','l18_data_only_quest','l18_no_gd_changed']}
