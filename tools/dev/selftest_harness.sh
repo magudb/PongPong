@@ -116,6 +116,7 @@ run_case verbose_prints_every_ok_line 1 60 'ok line number 1499' '' --no-boot --
 run_case failed_check 1 60 'FAILED   failing\.this_one_fails' '' --no-boot --sections-dir="$ST/fail_check"
 run_case injected_error 1 60 'INJECTED-ENGINE-ERROR' '' --no-boot --sections-dir="$ST/inject_error"
 run_case injected_warning 1 60 'INJECTED-ENGINE-WARNING.*' '' --no-boot --sections-dir="$ST/inject_warning"
+run_case injected_shutdown_warning 1 60 'engine messages after the harness result.*' '' --no-boot --sections-dir="$ST/inject_shutdown_warning"
 run_case script_error_no_hang 1 60 'Invalid call|nothing|no_such_method' 'AFTER_ERROR_SHOULD_NOT_RUN' --no-boot --sections-dir="$ST/script_error"
 run_case script_error_next_runs 1 60 'next_section_still_runs' '' --no-boot --sections-dir="$ST/script_error"
 run_case allow_ok $PASS_RC 60 "\\(0 failed, [0-9]+ skipped\\), $BASE_N engine error\\(s\\), 0 engine warning\\(s\\), 4 allowed message\\(s\\), 0 problem" 'FAIL  |FAILED|ENGINE   \[allow\]' --no-boot --sections-dir="$ST/allow_ok"
