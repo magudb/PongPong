@@ -1,0 +1,81 @@
+{
+  "tool": "built-in imagegen",
+  "outputs": {
+    "flower_box": {
+      "origin": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-c542c5be-a06d-4317-8ced-aa68b18d3fe3.png",
+      "source": "tools/art/drawn/sources/farm_seasons/flower_box.png"
+    },
+    "garden_arch": {
+      "origin": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-0463da06-1676-4dfa-a91b-289b461cc9f8.png",
+      "source": "tools/art/drawn/sources/farm_seasons/garden_arch.png"
+    },
+    "fountain_small": {
+      "origin": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-8d27c26a-e06d-4a18-8d3b-98fbfd82ce86.png",
+      "source": "tools/art/drawn/sources/farm_seasons/fountain_small.png"
+    },
+    "royal_banner": {
+      "origin": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-0c937a84-5933-4b26-831a-3cc0814bb6c0.png",
+      "source": "tools/art/drawn/sources/farm_seasons/royal_banner.png"
+    },
+    "blossom_cluster": {
+      "origin": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-af643dd7-5a04-4a48-ab2f-ad82a7f27d60.png",
+      "source": "tools/art/drawn/sources/farm_seasons/blossom_cluster.png"
+    },
+    "sunflower_row": {
+      "origin": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-97cba671-2447-4142-b5d5-693cfe33c838.png",
+      "source": "tools/art/drawn/sources/farm_seasons/sunflower_row.png"
+    },
+    "leaf_pile": {
+      "origin": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-c76c6588-8eae-4066-9fba-90098d0c6d28.png",
+      "source": "tools/art/drawn/sources/farm_seasons/leaf_pile.png"
+    },
+    "pumpkin_stack": {
+      "origin": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-9d657db9-bea5-447a-abcd-839f5627ed4f.png",
+      "source": "tools/art/drawn/sources/farm_seasons/pumpkin_stack.png"
+    },
+    "snow_patch": {
+      "origin": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-72244e96-d10c-4e5c-85d0-70c98fa64002.png",
+      "source": "tools/art/drawn/sources/farm_seasons/snow_patch.png"
+    },
+    "bunting_x": {
+      "origin": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-42896a78-c74c-4e30-9530-051f68572e79.png",
+      "source": "tools/art/drawn/sources/farm_seasons/bunting_x.png"
+    },
+    "vine_hang": {
+      "origin": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-40fec968-7e38-47b9-a89b-55640d6ccf2b.png",
+      "source": "tools/art/drawn/sources/farm_seasons/vine_hang.png"
+    },
+    "pond_lily": {
+      "origin": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-e41dc279-4071-4c1e-a5ed-b2b0b518a8c1.png",
+      "source": "tools/art/drawn/sources/farm_seasons/pond_lily.png"
+    },
+    "leaf_a": {
+      "origin": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-7f68604b-88c8-4753-a60b-e28b3ffbb78f.png",
+      "source": "tools/art/drawn/sources/farm_seasons/leaf_a.png"
+    },
+    "leaf_b": {
+      "origin": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-74c6fbfe-ebe7-4756-bec2-d4932bcd4ed6.png",
+      "source": "tools/art/drawn/sources/farm_seasons/leaf_b.png"
+    },
+    "petal": {
+      "origin": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-f2293b94-d90a-4242-a7be-819ed79fa23a.png",
+      "source": "tools/art/drawn/sources/farm_seasons/petal.png"
+    },
+    "snowflake": {
+      "origin": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-bbd4e14f-84ce-43ae-b197-46e2815dfbb3.png",
+      "source": "tools/art/drawn/sources/farm_seasons/snowflake.png"
+    },
+    "apple_tree_foraar": {
+      "origin": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-e05cfcae-9729-452f-8d2a-aa02068005b3.png",
+      "source": "tools/art/drawn/sources/farm_seasons/apple_tree_foraar.png"
+    },
+    "apple_tree_efteraar": {
+      "origin": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-4af34e80-c094-4023-86b1-fa434545f930.png",
+      "source": "tools/art/drawn/sources/farm_seasons/apple_tree_efteraar.png"
+    },
+    "apple_tree_vinter": {
+      "origin": "/Users/magnusudbjorg/.codex/generated_images/01a13e40-7172-7a51-af57-985dc2ac95fc/exec-02b74afa-a9cd-4669-a3aa-8412d8a725a8.png",
+      "source": "tools/art/drawn/sources/farm_seasons/apple_tree_vinter.png"
+    }
+  }
+}

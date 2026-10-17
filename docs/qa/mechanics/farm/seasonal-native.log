@@ -1,0 +1,41 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PLAYTEST start mode=windowed character=animal sections=res://tests/sections only=farm_dress,art_farm_dress
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.fTaKxN/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/farm/seasonal-native
+== section art_farm_dress [windowed]  (res://tests/sections/art_farm_dress.gd)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/farm/seasonal-native/art_farm_dress_painted_dress_catalog.png (1280x720)
+  ok    art_farm_dress.native_twelve_dress_paintings
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/farm/seasonal-native/art_farm_dress_painted_apple_tree_seasons.png (1280x720)
+  ok    art_farm_dress.native_four_tree_paintings
+  --    art_farm_dress: 2 checks, 0 failed, 0 skipped, 1.2 s
+== section farm_dress [windowed]  (res://tests/sections/farm_dress.gd)
+  ok    farm_dress.native_foraar_painted_dress_present
+  ok    farm_dress.native_safe_approach_blossom_cluster_24_20
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/farm/seasonal-native/farm_dress_farm_season_foraar.png (1280x720)
+  ok    farm_dress.native_sommer_painted_dress_present
+  ok    farm_dress.native_safe_approach_sunflower_row_27_33
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/farm/seasonal-native/farm_dress_farm_season_sommer.png (1280x720)
+  ok    farm_dress.native_efteraar_painted_dress_present
+  ok    farm_dress.native_safe_approach_leaf_pile_41_23
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/farm/seasonal-native/farm_dress_farm_season_efteraar.png (1280x720)
+  ok    farm_dress.native_vinter_painted_dress_present
+  ok    farm_dress.native_safe_approach_snow_patch_41_21
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/farm/seasonal-native/farm_dress_farm_season_vinter.png (1280x720)
+  ok    farm_dress.native_night_fireflies
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/farm/seasonal-native/farm_dress_farm_season_sommer_night.png (1280x720)
+  ok    farm_dress.native_ten_has_two_royal_banners
+  ok    farm_dress.native_safe_approach_royal_banner_30_21
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/farm/seasonal-native/farm_dress_farm_t10.png (1280x720)
+  ok    farm_dress.native_real_festival_flag_bunting
+  ok    farm_dress.native_safe_approach_bunting_x_34_27
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/farm/seasonal-native/farm_dress_farm_festival_bunting.png (1280x720)
+  ok    farm_dress.fx_cost_under_half_ms (-0.00714042553192 ms median incremental frame time; [{ "baseline": { "frames": 262, "fps": 261.208798549195, "ms": 3.82835496183206, "worst_ms": 5.074, "gpu_ms": 0.0, "cpu_render_ms": 0.0 }, "enabled": { "frames": 232, "fps": 231.730960355028, "ms": 4.31534913793103, "worst_ms": 5.378, "gpu_ms": 0.0, "cpu_render_ms": 0.0 }, "delta_ms": 0.48699417609897 }, { "baseline": { "frames": 235, "fps": 234.094755580171, "ms": 4.27177446808511, "worst_ms": 5.865, "gpu_ms": 0.0, "cpu_render_ms": 0.0 }, "enabled": { "frames": 235, "fps": 234.486708594886, "ms": 4.26463404255319, "worst_ms": 5.821, "gpu_ms": 0.0, "cpu_render_ms": 0.0 }, "delta_ms": -0.00714042553192 }, { "baseline": { "frames": 229, "fps": 228.782427911057, "ms": 4.37096506550218, "worst_ms": 5.825, "gpu_ms": 0.0, "cpu_render_ms": 0.0 }, "enabled": { "frames": 235, "fps": 234.465418845033, "ms": 4.26502127659575, "worst_ms": 5.636, "gpu_ms": 0.0, "cpu_render_ms": 0.0 }, "delta_ms": -0.10594378890644 }])
+  --    farm_dress: 14 checks, 0 failed, 0 skipped, 40.2 s
+  note  section farm_dress took 40.2 s (> 30 s): consider splitting it
+== summary: 2 section(s) run, 16 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 46.0 s
+PLAYTEST PASS (16 checks in 2 sections, 0 allowed engine messages, 0 known-issue messages)

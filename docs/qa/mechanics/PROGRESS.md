@@ -16,11 +16,13 @@ The three Natlys errands are complete, including the saved named lost-property o
 
 Relationships, wedding and household mechanics are complete. The special gifts require explicit confirmation and preserve ordinary gift limits; the calendar uses a safe Sunday, missed weddings postpone without penalty, partners retain their jobs and perform one saved daily chore. Real weekly visitor history/guests and parties survive saves, with stable room actors. The festival planner now honours early departure times. Evidence: 1,978 schedule/social checks, 1,574 final package checks, all four playable races and inspected native captures. The two painted icons and exact prompts are saved; the art ledger contains 2,906 entries. Home fixtures were updated for real starter equipment/storage, and the obsolete social-derived-data skip was replaced by live coverage.
 
-Next work: seasonal farm dressing and audio integration.
+Seasonal farm dressing is complete: sixteen markers, nineteen new painted assets with saved prompts/sources, four seasonal apple trees and one bounded particle family. Acceptance: 1,026 broader checks (one existing manual-render skip), sixteen native checks, all nine captures inspected, strict 2,925-asset style ledger green and the original particle cost budget met.
+
+Next work: audio integration.
 
 Still required before the full task is complete:
 
-- Finish seasonal farm dressing and the planned audio integration, preserving frozen human recordings.
+- Finish the planned audio integration, preserving frozen human recordings.
 - Resolve the separately listed home oven, forecast and royal-visit unlocks as part of the full mechanics pass.
 - Finish dungeon item/recipe/boss validators and their mutants, larger pacing simulations and combat/performance acceptance.
 - Resolve the UI sweep findings (forest HUD theme/localization, fourth journal tab navigation and real fixture setup for house/animal/building screens), the remaining baseline failures, run full headless/native regression, refresh source-bound town proofs, update completion documentation and merge finished work to local main.

@@ -84,6 +84,10 @@ func _nodes(node: Node) -> int:
 
 func _lifetime(t) -> void:
 	var gm: Node = t.autoload("GameManager")
+	var previous: StringName = gm.season
+	gm.season = &"efteraar"
+	EventBus.season_changed.emit(gm.season)
+	await t.frames(2)
 	for cap in [0, 80]:
 		gm.set_config_override("farm_site.fx.leaves_max", cap)
 		var temporary := FarmAmbientFx.new()
@@ -92,6 +96,9 @@ func _lifetime(t) -> void:
 		temporary.queue_free()
 		await t.frames(2)
 	gm.clear_config_overrides()
+	gm.season = previous
+	EventBus.season_changed.emit(gm.season)
+	await t.frames(2)
 	var fx: FarmAmbientFx = _marker("ambient_fx")
 	var canopy: WeakRef = weakref(fx.canopy)
 	var leaves: WeakRef = weakref(fx.leaves)
@@ -149,6 +156,9 @@ func _bin(t) -> void:
 	_marker("tool_shed").interact(player)
 	bus.game_event.disconnect(listener)
 	t.check("shed_requests_home_chest", requests == [&"open_home_chest"] and int(t.autoload("GameManager").get_flag(&"shed_explained", 0)) == 1)
+	var chest: Node = world.game_ui.get_screen(&"home_chest")
+	if chest!=null and chest.is_open():chest.close()
+	await t.frames(2)
 
 func _expansion(t) -> void:
 	var expansion: FieldExpansion2D = _marker("field_expansion")
@@ -238,7 +248,7 @@ func _scenery(t) -> void:
 		var node: Node2D = marker.node
 		t.check("underdeck_" + str(marker.cell), node.get_parent() == world.area and node.z_index == -11)
 	var fx: FarmAmbientFx = _marker("ambient_fx")
-	t.check("bounded_painted_fx", fx.leaves.amount <= 16 and fx.canopy.texture.resource_path == "res://assets/backdrops/farm_canopy.webp")
+	t.check("bounded_painted_fx", fx.leaves.amount <= int({"foraar":20,"sommer":14,"efteraar":16,"vinter":40}.get(str(GameManager.season),16)) and fx.canopy.texture.resource_path == "res://assets/backdrops/farm_canopy.webp")
 	world.day_night.override_hour = 24
 	world.day_night.snap()
 	await t.frames(3)

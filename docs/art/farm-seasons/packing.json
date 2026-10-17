@@ -1,0 +1,178 @@
+{
+  "manufacturing": "alpha trim, uniform contain, centered placement, lossless WebP; no drawing or recolouring",
+  "sources": {
+    "flower_box": {
+      "source": "tools/art/drawn/sources/farm_seasons/flower_box.png",
+      "sha256": "f685bb7250c7dd1d47946ef7130eb66e4c34d3d5eadf8bf4b553d63693096759",
+      "size": [
+        94,
+        77
+      ],
+      "type": "prop"
+    },
+    "garden_arch": {
+      "source": "tools/art/drawn/sources/farm_seasons/garden_arch.png",
+      "sha256": "7ea89bb87091c18d2f42db256fd2243dba1a6efa482f92af074aba3d1ccb4cd4",
+      "size": [
+        174,
+        232
+      ],
+      "type": "prop"
+    },
+    "fountain_small": {
+      "source": "tools/art/drawn/sources/farm_seasons/fountain_small.png",
+      "sha256": "5d9c353bb70ea9f8343a960965c11587717b9d3605e70a1ec3f9ef1659231941",
+      "size": [
+        208,
+        175
+      ],
+      "type": "prop"
+    },
+    "royal_banner": {
+      "source": "tools/art/drawn/sources/farm_seasons/royal_banner.png",
+      "sha256": "f4e9fcdd1457d7403a96ddedb06d350526d4e834858c34e04bacc4af69096bdd",
+      "size": [
+        84,
+        228
+      ],
+      "type": "prop"
+    },
+    "blossom_cluster": {
+      "source": "tools/art/drawn/sources/farm_seasons/blossom_cluster.png",
+      "sha256": "855abb2f1cd03e8b03380f407beceb92df488fd6042b87daa8a925550808212e",
+      "size": [
+        122,
+        75
+      ],
+      "type": "prop"
+    },
+    "sunflower_row": {
+      "source": "tools/art/drawn/sources/farm_seasons/sunflower_row.png",
+      "sha256": "4f39dbdbe0c18a02b95ecbf0358bfe49a572a5f294f4f0ecdf7fff5d76e75bd2",
+      "size": [
+        136,
+        160
+      ],
+      "type": "prop"
+    },
+    "leaf_pile": {
+      "source": "tools/art/drawn/sources/farm_seasons/leaf_pile.png",
+      "sha256": "04b1d66c35da2ec91eebb84ad8c3490062802723c13ea0c41e9ccf409586161c",
+      "size": [
+        120,
+        64
+      ],
+      "type": "prop"
+    },
+    "pumpkin_stack": {
+      "source": "tools/art/drawn/sources/farm_seasons/pumpkin_stack.png",
+      "sha256": "5d9ebd078172f456c4824dfb36dc7cc59bdcae97d9dc8c100399c767928ba468",
+      "size": [
+        122,
+        79
+      ],
+      "type": "prop"
+    },
+    "snow_patch": {
+      "source": "tools/art/drawn/sources/farm_seasons/snow_patch.png",
+      "sha256": "7953c12587a29504c3bed3b7ae5520e9214c3699660e478d2233fcda3d421445",
+      "size": [
+        122,
+        76
+      ],
+      "type": "prop"
+    },
+    "bunting_x": {
+      "source": "tools/art/drawn/sources/farm_seasons/bunting_x.png",
+      "sha256": "1af5b57310b1297c68597fc93711f44f589e145dcdadfd5d9df2f71c3c1032bb",
+      "size": [
+        86,
+        204
+      ],
+      "type": "prop"
+    },
+    "vine_hang": {
+      "source": "tools/art/drawn/sources/farm_seasons/vine_hang.png",
+      "sha256": "d4f4a37693f3c7ae2889001e48999d1a63e7d202f2f242198a9b2461f226f767",
+      "size": [
+        30,
+        158
+      ],
+      "type": "prop"
+    },
+    "pond_lily": {
+      "source": "tools/art/drawn/sources/farm_seasons/pond_lily.png",
+      "sha256": "aa07506fddc3bcd3d24c35d373559619d91eb2b58e6febcda884eafcf5019164",
+      "size": [
+        96,
+        56
+      ],
+      "type": "prop"
+    },
+    "leaf_a": {
+      "source": "tools/art/drawn/sources/farm_seasons/leaf_a.png",
+      "sha256": "22f805ffc226aea170827491867b7c6b94978d443b6c71d16560d204aad2e6c8",
+      "size": [
+        24,
+        14
+      ],
+      "type": "particle"
+    },
+    "leaf_b": {
+      "source": "tools/art/drawn/sources/farm_seasons/leaf_b.png",
+      "sha256": "e1b4e25c0c43539e498abf144091cd0ec0059686b38cfa4898164f87e6919489",
+      "size": [
+        24,
+        14
+      ],
+      "type": "particle"
+    },
+    "petal": {
+      "source": "tools/art/drawn/sources/farm_seasons/petal.png",
+      "sha256": "c17c44cf285133cbc06d9bebd62ded55f488c6f149d3417b1c36f0130c26eb0c",
+      "size": [
+        16,
+        16
+      ],
+      "type": "particle"
+    },
+    "snowflake": {
+      "source": "tools/art/drawn/sources/farm_seasons/snowflake.png",
+      "sha256": "7e77f39268ea7c19e9dd4a07a4182016e4a163a019915984020569f59691821f",
+      "size": [
+        14,
+        14
+      ],
+      "type": "particle"
+    },
+    "apple_tree_foraar": {
+      "source": "tools/art/drawn/sources/farm_seasons/apple_tree_foraar.png",
+      "sha256": "42a79f3cdae439ddae4e9397b3a9126bb441d4b7e9f53a86ae1fe2cdaee88564",
+      "size": [
+        359,
+        398
+      ],
+      "type": "tree"
+    },
+    "apple_tree_efteraar": {
+      "source": "tools/art/drawn/sources/farm_seasons/apple_tree_efteraar.png",
+      "sha256": "c1bd874e261287cacee5fd662823fe496ff460add7387fec2b3c644ff232db25",
+      "size": [
+        359,
+        398
+      ],
+      "type": "tree"
+    },
+    "apple_tree_vinter": {
+      "source": "tools/art/drawn/sources/farm_seasons/apple_tree_vinter.png",
+      "sha256": "6d4f062ba171603771e281c1d48fc75e8def82b9192addb77db05fd06c3ce65e",
+      "size": [
+        359,
+        398
+      ],
+      "type": "tree"
+    }
+  },
+  "rgba_bytes": 2472352,
+  "budget_bytes": 4194304
+}

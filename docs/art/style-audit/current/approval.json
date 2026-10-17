@@ -17692,6 +17692,120 @@
       "disposition": "accepted-painted",
       "role": "relationship-gift-inventory-icon",
       "evidence": "Source painting and native-size icon inspected; native picker/confirmation captures reviewed. docs/art/relationships/review.md"
+    },
+    "assets/iso_props/farm_dress/flower_box.webp": {
+      "sha256": "5d18ee9ac0a3df46c3e61257aafb3eaba1371da504728912d49394226634a92a",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-season-prop",
+      "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
+    },
+    "assets/iso_props/farm_dress/garden_arch.webp": {
+      "sha256": "985e5d18731ad6204c5521cc5b631684f504a4ec521864a65c00091f9cfdfc1a",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-season-prop",
+      "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
+    },
+    "assets/iso_props/farm_dress/fountain_small.webp": {
+      "sha256": "20346795b233f1cff76caf29ceeca59126f7336e593ca7ccbe46d0f62845ccc8",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-season-prop",
+      "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
+    },
+    "assets/iso_props/farm_dress/royal_banner.webp": {
+      "sha256": "609f8224a97459bcbe0d7791f099ba9725760635faa884de6ad2608aad3f2d7c",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-season-prop",
+      "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
+    },
+    "assets/iso_props/farm_dress/blossom_cluster.webp": {
+      "sha256": "ab9b43de44d72492f6a16fd1cdf6d25e4d3f5951e572e7fc3cb386bda02dc8df",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-season-prop",
+      "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
+    },
+    "assets/iso_props/farm_dress/sunflower_row.webp": {
+      "sha256": "ec07ea682437f29792f6981bcf5461e565b131281d7551d0a979a4ba93fd6dfc",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-season-prop",
+      "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
+    },
+    "assets/iso_props/farm_dress/leaf_pile.webp": {
+      "sha256": "312e965e72589e5e212ccce1e55a6e2898508e180f83dc2cb097fe5feb76564e",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-season-prop",
+      "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
+    },
+    "assets/iso_props/farm_dress/pumpkin_stack.webp": {
+      "sha256": "7c750417169689cf9b1c9184fa6d08eb472af3827ed1f1703a58a84697ee0f9a",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-season-prop",
+      "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
+    },
+    "assets/iso_props/farm_dress/snow_patch.webp": {
+      "sha256": "4450fe13749e7aebbdfd92f0d9d9a66f6a616a80351ee619dba262510af630ba",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-season-prop",
+      "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
+    },
+    "assets/iso_props/farm_dress/bunting_x.webp": {
+      "sha256": "08d8571a2d59652ead309f02da31540c82d1434e341dca138692a2352635cd1c",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-season-prop",
+      "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
+    },
+    "assets/iso_props/farm_dress/vine_hang.webp": {
+      "sha256": "b803fac1e59157f8710341397c837cd9bf02a542c25dc84c6c660ee722b3f94a",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-season-prop",
+      "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
+    },
+    "assets/iso_props/farm_dress/pond_lily.webp": {
+      "sha256": "bcae5dc5be542c3cfbe628f88c08ef2044d0e89ae7064184e36c2f8861bcb3d4",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-season-prop",
+      "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
+    },
+    "assets/iso_props/farm_dress/leaf_a.webp": {
+      "sha256": "f724848ff718ea6f9f0f8cf1bc422a90b9997b0efe30ba35dffc6b76b17dc70b",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-season-particle",
+      "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
+    },
+    "assets/iso_props/farm_dress/leaf_b.webp": {
+      "sha256": "5865c7beb009ff537b25b593562425abdc19a22d03fe08e5e95856a7d25e8874",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-season-particle",
+      "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
+    },
+    "assets/iso_props/farm_dress/petal.webp": {
+      "sha256": "533dc77ca7f732f9ed15e6425f216e721cd293c23ae9e1ea35b015395aba7c9e",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-season-particle",
+      "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
+    },
+    "assets/iso_props/farm_dress/snowflake.webp": {
+      "sha256": "8fda5270a3d897c25a67c6b6bf9b429817e0a69b40766ca3460915b1d8643b40",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-season-particle",
+      "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
+    },
+    "assets/iso_props/farm_dress/apple_tree_foraar.webp": {
+      "sha256": "45f8317cbb843a08354560193616094e1486a8c1a0c6cf2c6a98304cba263228",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-season-tree",
+      "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
+    },
+    "assets/iso_props/farm_dress/apple_tree_efteraar.webp": {
+      "sha256": "bb36f63e9e9c3360b481d2ff205bc20a82fc1ed5e9b1ec2e0bc4f3bda5f9cda2",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-season-tree",
+      "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
+    },
+    "assets/iso_props/farm_dress/apple_tree_vinter.webp": {
+      "sha256": "41b085bcd072029310d393c97ec4153f87038883287ab803322b7509ddfe3d73",
+      "disposition": "accepted-painted",
+      "role": "painted-farm-season-tree",
+      "evidence": "Source painting, packed contact and native gallery inspected; farm context for four seasons, tier ten and real festival: docs/art/farm-seasons/review.md; docs/qa/mechanics/farm/seasonal-native/"
     }
   },
   "m1b_followup": {

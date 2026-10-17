@@ -42,6 +42,8 @@ func _ready() -> void:
 	_picture.centered = false
 	_picture.offset = -art.pivot
 	add_child(_picture)
+	EventBus.season_changed.connect(_season_art)
+	_season_art(GameManager.season)
 	var glow := LuaData.dict(art.get("glow",{}))
 	if not glow.is_empty():
 		_glow = Sprite2D.new()
@@ -163,3 +165,13 @@ func deplete() -> bool:
 	return true
 func _exit_tree() -> void:
 	_release_picker()
+
+## The art package is optional: an absent seasonal sibling keeps the base
+## painting without recording a missing-art fallback or changing harvest rules.
+func _season_art(season: StringName) -> void:
+	var id := str(cfg.get("art",""))+"_"+str(season)
+	if not ArtCatalog.has_real_prop(StringName(id)):id = str(cfg.get("art",""))
+	if is_instance_valid(_picture):
+		var art := ArtCatalog.prop(StringName(id))
+		_picture.texture = art.texture
+		_picture.offset = -art.pivot
