@@ -126,7 +126,7 @@ def validate(records):
         sell=output.get('sell_price',0)*r.get('output',{}).get('amount',0)
         if not (.45*buy<=cost<=.85*buy and sell<cost) or output.get('rarity') in KEEPSAKES or r.get('station') not in ('snedkerbord','smedje'):problems.append((rid,'cost/station',cost,buy,sell))
     check('W5 forge recipes cost 45-85 percent with configured unbuyable valuation',problems)
-    problems=[]
+    problems=[(i,'unknown shop',source.get('shop')) for i,e in extra.items() for source in e['sources'] if source['kind']=='shop' and source.get('shop') not in shops]
     for shop,s in shops.items():
         stock=set(s.get('stock') or {})
         for r in s.get('rotation') or []:stock.update(r.get('pool') or [])
@@ -136,9 +136,9 @@ def validate(records):
             if any(x['kind']=='shop' and x.get('shop')==shop for x in e['sources']) and i not in stock:problems.append((i,'missing shop stock',shop))
     check('R7 dungeon shop sources mirror stock and exclude keepsakes',problems)
     rough={i:e for i,e in gems.items() if e.get('rough')}
-    check('G1 one unsellable rough gem per band', [] if len(rough)==len(bands) and all(e.get('appraise_band')==b and i in rough and e.get('buy_price')==0 and e.get('sell_price')==0 for b,v in bands.items() for i,e in [(v['rough'],gems.get(v['rough'],{}))]) else ['rough/band mismatch'])
+    check('G1 one unsellable rough gem per band', [] if len(rough)==len(bands) and all(e.get('appraise_band')==b and i in rough and e.get('category')=='gem' and e.get('max_stack')==99 and e.get('buy_price')==0 and e.get('sell_price')==0 for b,v in bands.items() for i,e in [(v['rough'],gems.get(v['rough'],{}))]) else ['rough/band mismatch'])
     themes=set(dl['lantern_gem']['unit'])
-    check('G2 lantern gem themes and tints are supported', [i for i,e in gems.items() if not e.get('rough') and (not re.fullmatch('[0-9a-fA-F]{6}',e.get('lantern',{}).get('tint','')) or not set(e.get('lantern',{}).get('themes',[]))<=themes)])
+    check('G2 lantern gem themes and tints are supported', [i for i,e in gems.items() if not e.get('rough') and (e.get('category')!='gem' or e.get('max_stack')!=(1 if e.get('rarity') in KEEPSAKES else 99) or not re.fullmatch('[0-9a-fA-F]{6}',e.get('lantern',{}).get('tint','')) or not set(e.get('lantern',{}).get('themes',[]))<=themes)])
     problems=[]
     for band,odds in dl['appraisal']['odds'].items():
         if band not in bands or sum(odds.values())!=10000:problems.append((band,'odds'))
@@ -161,6 +161,7 @@ def validate(records):
                 available=floor_nodes.get(band,set())
                 can_place=node in available or any(yields.get(k,{}).get('alias')==node for k in available)
                 if not can_place or i not in yield_items(resolved(node),band):problems.append((i,source))
+    problems.extend((i,'material fields') for i,e in materials.items() if e.get('category')!='material' or e.get('group')!='dungeon' or e.get('max_stack')!=(1 if e.get('rarity') in KEEPSAKES else 99))
     check('M1 node material sources resolve to placed generator nodes and real yields',problems)
     check('M2 dungeon materials sell at most the configured share of nominal buy', [i for i,e in materials.items() if e['rarity'] in COMMON and e['sell_price']>e['buy_price']*dl['limits']['material_sell_max_pct']/100])
     shards={i for i,e in materials.items() if i.startswith('dng_rune_')}
