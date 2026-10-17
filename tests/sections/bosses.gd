@@ -50,6 +50,7 @@ func _run(t, native: bool) -> void:
 		boss._on_health_changed()
 		t.check("phase_berries_once_"+row[1],world.area.objects.get_children().filter(func(n): return n is LootDrop2D and n.item_id == &"tornebaer").size() == 2 and boss.summoned.size() == row[3])
 		if row[0] > 4:
+			await t.seconds(.7) # let the real add-spawn warnings finish
 			boss.start_pattern("quake")
 			t.check("quake_radius_"+row[1],boss.warning.radius == 260)
 			boss.start_pattern("cloud")
@@ -59,6 +60,42 @@ func _run(t, native: bool) -> void:
 			boss.start_pattern("rain")
 			var sequence: Node = boss.get_children().filter(func(n): return n.get_script() == DungeonBoss2D.Sequence).back()
 			t.check("nine_staggered_rain_marks",sequence.rows.size() == 9 and sequence.rows[8].delay == 8*.35 and sequence.rows[0].radius == 120 and sequence.rows[0].windup == DungeonRun.windup_mult())
+		if row[0]==12:
+			# Saturation must defer a hazard's complete warning, never release
+			# damage immediately when a ring finally becomes available.
+			for child in boss.get_children():
+				if child.get_script()==DungeonBoss2D.Sequence:child.queue_free()
+			await t.frames(2)
+			for ring in world.area.ground_fx.get_node("TelegraphPool").get_children():ring.finish()
+			var warnings := []
+			for i in 8:warnings.append(TelegraphRing2D.play(world.area.ground_fx,boss.home,{"radius":60,"duration":30}))
+			var sequence := DungeonBoss2D.Sequence.new()
+			sequence.boss = boss
+			sequence.rows.append({"delay":0.0,"windup":1.0,"radius":120,"kind":"rain","at":world.player.global_position})
+			boss.add_child(sequence)
+			await t.seconds(1.1)
+			t.check("saturated_sequence_waits_without_damage",not sequence.rows[0].get("marked",false) and not sequence.rows[0].get("hit",false))
+			warnings[0].finish()
+			await t.frames(2)
+			var mark: Dictionary = sequence.rows[0]
+			t.check("deferred_sequence_gets_full_warning",bool(mark.get("marked",false)) and float(mark.get("impact_at",0))-sequence.clock>.9 and not mark.get("hit",false))
+			var clock_before := sequence.clock
+			var hazard := EnemyHazard2D.new()
+			hazard.mode = "impact"
+			hazard.position = world.player.global_position
+			world.area.ground_fx.add_child(hazard)
+			var hearts: int = world.player.half_hearts
+			GameManager.push_modal(&"combat_probe",false)
+			await t.seconds(.5)
+			t.check("nonpausing_dialogue_freezes_sequence_and_hazard",is_equal_approx(sequence.clock,clock_before) and is_equal_approx(hazard.age,0) and world.player.half_hearts==hearts and mark.ring.get_ref().active)
+			GameManager.pop_modal(&"combat_probe")
+			hazard.queue_free()
+			await t.seconds(.5)
+			t.check("deferred_sequence_cannot_hit_early",not sequence.rows[0].get("hit",false))
+			boss.set_awake(false)
+			t.check("sleep_resets_boss_and_cancels_pending_sequences",not boss.awake and boss.hp==boss.max_hp and sequence.is_queued_for_deletion())
+			for ring in warnings:ring.finish()
+			await t.frames(2)
 		boss.reset_fight()
 		t.check("reset_no_rewards_"+row[1],boss.hp == boss.max_hp and not boss.awake and boss.phase == 0 and int(gm.get_flag(StringName("dungeon_boss_"+row[1]),0)) == 0)
 		await t.frames(2)

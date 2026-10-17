@@ -9,6 +9,7 @@ var speed: float = 260
 var damage: int = 1
 var age: float = 0
 func _physics_process(dt: float) -> void:
+	if GameManager.is_modal_open():return
 	age += dt
 	if age >= seconds:
 		queue_free()

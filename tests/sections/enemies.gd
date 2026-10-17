@@ -80,6 +80,22 @@ func _run(t, native: bool) -> void:
 	player.combat._iframes = 1
 	var hearts: int = player.half_hearts
 	t.check("no_damage_during_dodge_iframes",not player.take_damage(2,at) and player.half_hearts == hearts)
+	for ring in area.ground_fx.get_node("TelegraphPool").get_children():ring.finish()
+	var warnings: Array[TelegraphRing2D] = []
+	for i in 8:warnings.append(TelegraphRing2D.play(area.ground_fx,at,{"radius":100,"duration":10}))
+	normal.state = Enemy2D.S.CHASE
+	var delayed := not normal.begin_windup({"radius":100},.5,"contact")
+	t.check("saturation_delays_attack_without_invisible_windup",delayed and normal.state==Enemy2D.S.CHASE and warnings.all(func(ring):return ring.active))
+	warnings[0].finish()
+	t.check("attack_retries_with_full_visible_warning",normal.begin_windup({"radius":100},.5,"contact") and normal.warning.active and is_equal_approx(normal.remaining,.5))
+	var warning := normal.warning
+	var serial := warning.serial
+	normal.hit_stop(60)
+	await t.seconds(.6)
+	t.check("warning_survives_hit_stop_and_modal_delay",warning.active and warning.serial==serial and normal.state==Enemy2D.S.WINDUP)
+	normal._cancel_attack()
+	t.check("owner_cancellation_releases_warning",not warning.active)
+	for ring in warnings:ring.finish()
 	for node in [normal,armoured,ambusher,fallback,reveal,replay]: node.queue_free()
 	EventBus.enemy_defeated.disconnect(record)
 	await t.frames(2)

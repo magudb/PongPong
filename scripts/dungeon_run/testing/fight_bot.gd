@@ -11,11 +11,14 @@ static func steer(direction: Vector2) -> void:
 	if screen.x > .15: Input.action_press("move_right",absf(screen.x))
 	if screen.y < -.15: Input.action_press("move_forward",absf(screen.y))
 	if screen.y > .15: Input.action_press("move_back",absf(screen.y))
-static func duel(t, player: Player2D, enemy: Enemy2D, seed_value: int, limit: float = 8) -> Dictionary:
+static func duel(t, player: Player2D, enemy: Enemy2D, seed_value: int, limit: float = 8, boss_profile := false) -> Dictionary:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_value
 	var began: float = t.game_seconds()
 	var starting_hearts := player.half_hearts
+	var gross := [0]
+	var damage := func(amount): gross[0] += amount
+	player.damaged.connect(damage)
 	var dodge_at := INF
 	var previous := -1
 	var in_range_at := INF
@@ -32,14 +35,20 @@ static func duel(t, player: Player2D, enemy: Enemy2D, seed_value: int, limit: fl
 		var distance := direction.length()
 		direction = direction.normalized()
 		var radius := float(player.combat._read_weapon().get("swing_radius",197))
-		steer(direction if distance > radius*.75 else Vector2.ZERO)
+		var safe_to_attack := not boss_profile or enemy.state in [Enemy2D.S.RECOVER,Enemy2D.S.STUN]
+		# The boss profile respects the announced attack rather than trading
+		# hits through armor: clear its line/ring and punish the recovery.
+		var movement := direction if distance > radius*.75 else Vector2.ZERO
+		if boss_profile and not safe_to_attack:
+			movement = Vector2(-enemy.aim.y,enemy.aim.x) if enemy.attack_mode=="dash" else -direction
+		steer(movement)
 		player.event_face(Iso.to_screen(direction))
 		if enemy.state == Enemy2D.S.WINDUP and previous != Enemy2D.S.WINDUP: dodge_at = now+clampf(rng.randfn(.4,.13),.12,.65)
 		if now >= dodge_at:
 			steer(Vector2(-enemy.aim.y,enemy.aim.x))
 			player.combat.dodge()
 			dodge_at = INF
-		if distance <= radius*.9:
+		if safe_to_attack and distance <= radius*.9:
 			if in_range_at == INF: in_range_at = now
 			if now-in_range_at >= .22: player.combat.swing()
 		else: in_range_at = INF
@@ -47,4 +56,5 @@ static func duel(t, player: Player2D, enemy: Enemy2D, seed_value: int, limit: fl
 		await t.physics(1)
 	release()
 	player.swung.disconnect(record)
-	return {"won":is_instance_valid(enemy) and enemy.state == Enemy2D.S.DEAD,"seconds":t.game_seconds()-began,"lost":maxi(0,starting_hearts-player.half_hearts),"seed":seed_value,"swings":swings[0]}
+	player.damaged.disconnect(damage)
+	return {"won":is_instance_valid(enemy) and enemy.state == Enemy2D.S.DEAD,"seconds":t.game_seconds()-began,"lost":maxi(0,starting_hearts-player.half_hearts),"gross_lost":gross[0],"seed":seed_value,"swings":swings[0]}

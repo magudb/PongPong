@@ -22,8 +22,11 @@ func _ready() -> void:
 	halo.material = Glow.additive_material()
 	halo.position.y = -70
 	visual.add_child(halo)
+func set_awake(on: bool) -> void:
+	if not on and awake:reset_fight()
+	super.set_awake(on)
 func _physics_process(dt: float) -> void:
-	if state == S.DEAD: return
+	if state == S.DEAD or GameManager.is_modal_open(): return
 	if not is_instance_valid(player): player = get_tree().get_first_node_in_group("player") as Node2D
 	if player == null: return
 	if (player is Player2D and player.state == PlayerBody2D.S.FAINTED) or Iso.ground_dist(player.global_position,home) > 1800:
@@ -42,6 +45,7 @@ func _physics_process(dt: float) -> void:
 		start_pattern(mode)
 	super._physics_process(dt)
 func start_pattern(mode: String) -> void:
+	_cancel_attack()
 	var params := LuaData.dict(cfg.patterns)
 	var direction := Iso.to_ground(player.global_position-global_position).normalized()
 	combo_left = 2 if mode == "dash" and hp <= max_hp*float(params.get("double_below",0)) else 1

@@ -194,9 +194,9 @@ func _physics_process(dt: float) -> void:
 		_eyes.visible = distance <= 780*float(gem.ambush_mult)
 		_eyes.modulate.a = .6+.4*sin(clock*3)
 		if distance <= 330:
-			ambush_state = "rustle"
-			EventBus.game_event.emit(&"audio_cue",{"cue":"sfx/bush_rustle"})
-			begin_windup({"shape":"line","width":80,"length":speed*3.1*.3+40,"direction":direction},.6,"ambush")
+			if begin_windup({"shape":"line","width":80,"length":speed*3.1*.3+40,"direction":direction},.6,"ambush"):
+				ambush_state = "rustle"
+				EventBus.game_event.emit(&"audio_cue",{"cue":"sfx/bush_rustle"})
 		return
 	else:
 		match state:
@@ -228,18 +228,26 @@ func _physics_process(dt: float) -> void:
 	visual.set_altitude(altitude+(sin(clock*5)*6 if altitude > 0 else hop_altitude))
 	visual.update_motion(velocity,false,false,bool(cfg.get("flying",false)),Iso.to_screen(direction))
 
-func begin_windup(geometry: Dictionary, seconds: float, mode: String) -> void:
+func begin_windup(geometry: Dictionary, seconds: float, mode: String) -> bool:
 	_cancel_attack()
+	var duration := seconds*DungeonRun.windup_mult()
+	geometry["duration"] = duration+.03
+	geometry["owner"] = self
+	var origin := Vector2(geometry.get("at",global_position))
+	var ring := TelegraphRing2D.play(area.ground_fx,origin,geometry)
+	if ring == null:
+		cooldown = maxf(cooldown,.2)
+		return false
 	state = S.WINDUP
 	attack_mode = mode
-	remaining = seconds*DungeonRun.windup_mult()
-	geometry["duration"] = remaining+.03
-	attack_origin = Vector2(geometry.get("at",global_position))
+	remaining = duration
+	attack_origin = origin
 	aim = Vector2(geometry.get("direction",Vector2.RIGHT))
-	warning = TelegraphRing2D.play(area.ground_fx,attack_origin,geometry)
+	warning = ring
 	warning_serial = warning.serial
 	ground_velocity = Vector2.ZERO
 	EventBus.game_event.emit(&"audio_cue",{"cue":"sfx/telegraph_tick"})
+	return true
 
 func _windup(direction: Vector2) -> void:
 	if remaining > .2 and attack_mode in ["dash","ambush","lance"]:

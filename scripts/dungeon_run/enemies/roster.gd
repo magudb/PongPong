@@ -31,7 +31,9 @@ func refresh() -> void:
 		var was_awake: bool = enemy.process_mode != Node.PROCESS_MODE_DISABLED
 		var wake_range := float(enemy.detect)
 		if enemy.ambush_state == "hidden": wake_range = maxf(wake_range,780*float(LanternGem.effects(LanternGem.equipped()).ambush_mult))
-		if distance <= maxf(wake_range,float(enemy.detect)*1.8 if was_awake else 0): candidates.append({"node":enemy,"distance":distance})
+		var sleep_range := float(enemy.detect)*1.8 if was_awake else 0.0
+		if enemy is DungeonBoss2D and enemy.awake:sleep_range = maxf(sleep_range,1800)
+		if distance <= maxf(wake_range,sleep_range): candidates.append({"node":enemy,"distance":distance})
 	candidates.sort_custom(func(a,b): return a.distance < b.distance)
 	var awake := []
 	for i in mini(24,candidates.size()): awake.append(candidates[i].node)

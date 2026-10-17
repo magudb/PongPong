@@ -65,7 +65,9 @@ func _run(t, native: bool) -> void:
 	t.check("telegraph_ring_matches_hit_area",ring.hit_area().radius == 100 and ring.contains_ground(Vector2(99,0)) and not ring.contains_ground(Vector2(101,0)))
 	var line := TelegraphRing2D.play(parent,at,{"shape":"line","direction":Vector2.UP,"length":300,"width":60,"duration":1})
 	t.check("telegraph_line_matches_hit_area",line.contains_ground(Vector2(0,-299)) and not line.contains_ground(Vector2(31,-150)) and line.polygon().size() == 4)
+	var serial := ring.serial
 	for i in 9: TelegraphRing2D.play(parent,at,{"radius":90+i})
+	t.check("saturated_pool_never_replaces_live_warning",ring.active and ring.serial==serial and ring.radius==100 and TelegraphRing2D.play(parent,at,{"radius":999})==null)
 	t.check("telegraph_pool_cap_8",parent.get_node("TelegraphPool").get_child_count() == 8)
 	DungeonSpark2D.warm(parent)
 	var count := parent.get_node("SparkPool").get_child_count()

@@ -10,6 +10,7 @@ var direction := Vector2.RIGHT
 var duration: float = 0.5
 var elapsed: float = 0.0
 var active := false
+var _owner: WeakRef
 var serial: int = 0
 static var _serial: int = 0
 func _ready() -> void:
@@ -37,7 +38,9 @@ static func play(parent: Node, at: Vector2, params: Dictionary) -> TelegraphRing
 		if not node.active:
 			chosen = node
 			break
-		if chosen == null or node.serial < chosen.serial: chosen = node
+	# A live warning is a gameplay promise: saturation delays the producer.
+	# Reusing it early could leave its attack invisible or change its area.
+	if chosen == null: return null
 	_serial += 1
 	chosen.serial = _serial
 	chosen.global_position = at
@@ -53,6 +56,8 @@ func configure(params: Dictionary) -> void:
 	if direction == Vector2.ZERO: direction = Vector2.RIGHT
 	duration = maxf(.01,float(params.get("duration",.5)))
 	elapsed = 0
+	var owner: Node = params.get("owner")
+	_owner = weakref(owner) if owner!=null else null
 	active = true
 	visible = true
 	# The GroundFx parent already owns global z=-9; doubling it hides warnings below the tiles.
@@ -82,6 +87,13 @@ func polygon() -> PackedVector2Array:
 
 func _process(dt: float) -> void:
 	elapsed += dt
+	# Gameplay owners finish their own warning when their simulation reaches
+	# impact/cancellation. Hit-stop and modals can outlast a wall-time lease.
+	if _owner!=null:
+		var owner: Node = _owner.get_ref()
+		if owner==null or not owner.is_inside_tree():finish()
+		else:queue_redraw()
+		return
 	if elapsed >= duration:
 		finish()
 		return

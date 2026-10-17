@@ -3,17 +3,20 @@ var boss: Enemy2D
 var rows: Array[Dictionary] = []
 var clock: float = 0
 func _physics_process(dt: float) -> void:
+	if GameManager.is_modal_open():return
 	if not is_instance_valid(boss) or boss.state == Enemy2D.S.DEAD:
 		queue_free()
 		return
 	clock += dt
 	for row in rows:
 		if not row.get("marked",false) and clock >= float(row.delay):
+			var ring := TelegraphRing2D.play(boss.area.ground_fx,row.at,{"radius":row.radius,"duration":row.windup,"owner":self})
+			if ring == null: continue
 			row.marked = true
-			var ring := TelegraphRing2D.play(boss.area.ground_fx,row.at,{"radius":row.radius,"duration":row.windup})
+			row.impact_at = clock+float(row.windup)
 			row.ring = weakref(ring)
 			row.serial = ring.serial
-		if not row.get("hit",false) and clock >= float(row.delay)+float(row.windup):
+		if row.get("marked",false) and not row.get("hit",false) and clock >= float(row.impact_at):
 			row.hit = true
 			var ring: Variant = row.ring.get_ref()
 			if ring != null and ring.serial == row.serial: ring.finish()
