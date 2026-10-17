@@ -42,6 +42,7 @@ const FADE_IN := 0.25
 
 var player: Node2D
 var farm: Node
+var greenhouse_farm: FarmGrid
 var area: IsoArea
 var game_ui: Node
 var day_night: DayNight
@@ -176,6 +177,10 @@ func _ready() -> void:
 			if farm != null:
 				farm.name = "FarmGrid"
 				add_child(farm)
+	greenhouse_farm = FarmGrid.new()
+	greenhouse_farm.name = "GreenhouseFarm"
+	greenhouse_farm.map_path = "res://data/maps/greenhouse.map"
+	add_child(greenhouse_farm)
 	day_night = DayNight.new()
 	day_night.name = "DayNight"
 	add_child(day_night)
@@ -197,6 +202,7 @@ func _ready() -> void:
 	art_prefetch.world = self
 	add_child(art_prefetch)
 	Svc.static_call("res://scripts/farm/steading/objects/farm_stage.gd", &"attach", [self])
+	Svc.static_call("res://scripts/farm/farm_equipment.gd", &"attach", [self])
 	Svc.static_call("res://scripts/traetoppen/life/daily_flags.gd", &"attach_world", [self])
 	Svc.static_call("res://scripts/farm/steading/tutorial/tutorial_hints.gd", &"attach", [self])
 	Svc.static_call("res://scripts/world2d/story/mother_director.gd", &"attach", [self])
@@ -307,6 +313,9 @@ func _give_farm(p: Node) -> void:
 	if farm != null and "farm" in p:
 		p.set("farm", farm)
 
+func farm_for_area(id: StringName) -> Node:
+	return greenhouse_farm if id == &"greenhouse" else farm
+
 
 ## Opening hook (P14): on a NEW game the world calls IntroSequence once: `run(world)` (or `start` / `play`), static or on an instance,
 ## awaitable. Until scripts/world2d/intro_sequence.gd exists the flag stays set, so the intro plays as soon as it does.
@@ -411,7 +420,8 @@ func _enter(id: StringName, spawn: StringName) -> bool:
 
 ## The crop view (P06's FarmView, `setup(farm, area)`) lives in every area that has tillable cells, once the farm model exists.
 func _ensure_farm_view() -> void:
-	if farm == null or area.farmable.is_empty() or area.get_node_or_null("FarmView") != null or not ResourceLoader.exists(FARM_VIEW_PATH):
+	var model := farm_for_area(area.map.id)
+	if model == null or area.farmable.is_empty() or area.get_node_or_null("FarmView") != null or not ResourceLoader.exists(FARM_VIEW_PATH):
 		return
 	var vs: Script = load(FARM_VIEW_PATH) as Script
 	if vs == null or not vs.can_instantiate():
@@ -422,7 +432,7 @@ func _ensure_farm_view() -> void:
 	fv.name = "FarmView"
 	area.add_child(fv)
 	if fv.has_method("setup"):
-		fv.call("setup", farm, area)
+		fv.call("setup", model, area)
 
 
 ## DayNight preset, clear colour, vignette, rain, glow factor of the current area.
@@ -858,6 +868,8 @@ func to_dict() -> Dictionary:
 	}
 	if farm != null and farm.has_method("to_dict"):
 		d["farm"] = farm.call("to_dict")
+	if greenhouse_farm != null:
+		d["greenhouse_farm"] = greenhouse_farm.to_dict()
 	var hb: Variant = player.get("hotbar") if "hotbar" in player else null
 	if hb is Object and (hb as Object).has_method("to_dict"):
 		d["hotbar"] = (hb as Object).call("to_dict")
@@ -877,6 +889,8 @@ func _apply_saved(d: Dictionary) -> void:
 	area_flags = (d.get("area_flags", {}) as Dictionary).duplicate(true) if d.get("area_flags", {}) is Dictionary else {}
 	if farm != null and farm.has_method("from_dict") and d.has("farm"):
 		farm.call("from_dict", d["farm"])
+	if greenhouse_farm != null:
+		greenhouse_farm.from_dict(d.get("greenhouse_farm", {"plots": {}}))
 	var hb: Variant = player.get("hotbar") if "hotbar" in player else null
 	if hb is Object and (hb as Object).has_method("from_dict") and d.has("hotbar"):
 		(hb as Object).call("from_dict", d["hotbar"])

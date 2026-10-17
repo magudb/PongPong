@@ -845,7 +845,8 @@ func _gained(item_id: StringName, amount: int, silent: bool) -> void:
 	var rarity := _Kinds.rarity_of(item_id)
 	if _RarityScript.rank(rarity) >= RARE_RANK:
 		_publish(&"rare_item_found", [item_id, rarity])
-	_publish(&"notification_posted", [tr("NOTIF_ITEM_GAINED_TITLE"), "%s x%d" % [tr("ITEM_%s" % str(item_id).to_upper()), amount], "item"])
+	var name_key := str(_Kinds.def(item_id).get("name_key", "ITEM_%s" % str(item_id).to_upper()))
+	_publish(&"notification_posted", [tr("NOTIF_ITEM_GAINED_TITLE"), "%s x%d" % [tr(name_key), amount], "item"])
 
 
 func _log_once(message: String) -> void:

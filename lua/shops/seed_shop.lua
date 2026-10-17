@@ -12,9 +12,7 @@
 -- The first eight lines are the guide's, in the guide's order: Gulerodsfroe 20, Graeskarfroe 60, Jordbaerfroe 45, Solsikkefroe 30,
 -- Kattemyntefroe 35, Maanebonne 120 (moonflower_seeds), Goedning 15, Fe-stoev til marken 900 (fairy_dust_water).
 --
--- Carrot seeds hold 25 (restock 25): a dedicated farm (110 plots after the 800 g field expansion) plants 110 / (4 / 0.85 + 1) = 19.2 carrots a day
--- and the shop is closed on Sundays, so the 6 open days have to carry 7 days: 6 x 25 = 150 a week = 21.4 a day (6 x 20 = 17.1 left 2.1 a day short).
--- economy_hours.seed_supply_covers_a_dedicated_field buys the shelf for a week through ShopSystem and checks it against that need.
+-- Bulk shelves cover a fully watered 110-plot field, including the Sunday closure.
 
 kind = "shops"
 
@@ -26,15 +24,15 @@ shops = {
     buy_multiplier = 1.0,
     sell_multiplier = 1.0,
     stock = {
-      carrot_seeds = { stock = 25, restock = 25 },       -- RT5: 6 open days x 25 = 150 a week = 21.4 a day covers a dedicated 110 plot field (19.2 a day; the shop is closed on Sundays)
+      carrot_seeds = { stock = 40, restock = 40 },
       pumpkin_seeds = { stock = 15, restock = 15 },
       strawberry_seeds = { stock = 15, restock = 15 },
-      sunflower_seeds = { stock = 15, restock = 15 },
-      catnip_seeds = { stock = 15, restock = 15 },
+      sunflower_seeds = { stock = 20, restock = 20 },
+      catnip_seeds = { stock = 30, restock = 30 },
       moonflower_seeds = { stock = 8, restock = 4 },
       fertilizer = { stock = 30, restock = 30 },
       fairy_dust_water = { stock = 3, restock = 1 },
-      turnip_seeds = { stock = 30, restock = 30 },
+      turnip_seeds = { stock = 40, restock = 40 },
       frost_kale_seeds = { stock = 20, restock = 20 },
       hoe_wooden = { stock = 2, restock = 1 },
       watering_can_copper = { stock = 2, restock = 1 },
@@ -42,6 +40,10 @@ shops = {
       pickaxe_wooden = { stock = 2, restock = 1 },
       scythe = { stock = 2, restock = 1 },
       fishing_rod = { stock = 2, restock = 1 },
+      sprinkler = { stock = 8, restock = 4 },
+      quality_sprinkler = { stock = 4, restock = 2 },
+      preserves_jar = { stock = 6, restock = 3 },
+      keg = { stock = 6, restock = 3 },
     },
   },
 }

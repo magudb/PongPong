@@ -353,7 +353,7 @@ func _item_defs() -> void:
 	t.check("guide_moonstone", moon.get("sell_price") == 220 and moon.get("rarity") == "rare" and str(loc.text_in("ITEM_MOONSTONE_DESC", "da")).begins_with("Lyser svagt i mørke"), "Månesten sells for 220, rare, 'Lyser svagt i mørke...'")
 	t.expect(lr.get_item_def("copper_ore").get("buy_price") == 35 and lr.get_item_def("copper_ore").get("sell_price") == 14 and lr.get_item_def("wool").get("sell_price") == 12, "copper_ore 35 / 14 and wool 30 / 12 are the prices the content assumes")
 	# every crop has a seed item and a harvest item at the balance price
-	var crops: Dictionary = lr.get_config("crops", {})
+	var crops: Dictionary = FarmGrid.crop_definitions()
 	var bad: Array[String] = []
 	for crop in crops:
 		var seed_ok := false
@@ -363,7 +363,7 @@ func _item_defs() -> void:
 		var harvest: Dictionary = lr.get_item_def(str(crop))
 		if not seed_ok or harvest.is_empty() or int(harvest.get("sell_price", -1)) != int(crops[crop].get("sell_price", -2)):
 			bad.append(str(crop))
-	t.check("crop_prices_match_balance", bad.is_empty() and crops.size() == 9, "%d crops: a seed item with crop_id and a harvest item that sells at crops.<id>.sell_price; wrong %s" % [crops.size(), str(bad)])
+	t.check("crop_prices_match_balance", bad.is_empty() and crops.size() == 11, "%d crops: a seed item with crop_id and a harvest item that sells at crops.<id>.sell_price; wrong %s" % [crops.size(), str(bad)])
 	# Every advertised animal product must resolve, including the pet bond token.
 	var missing: Array[String] = []
 	for id in _item_ids():
@@ -948,7 +948,7 @@ func _shops_from_lua() -> void:
 	var tabs: Array = []
 	for tb in shop.get_shop_tabs("seed_shop"):
 		tabs.append(str(tb["id"]))
-	t.expect(tabs == ["seed", "tool", "sell"], "the seed shop's tabs: Frø, Redskaber and the sell tab (%s)" % str(tabs))
+	t.expect(tabs == ["seed", "tool", "goods", "sell"], "the seed shop's tabs: seeds, tools, farm equipment and selling (%s)" % str(tabs))
 	var in_seed_tab := 0
 	var seed_tab: Dictionary = shop.get_shop_tabs("seed_shop")[0]
 	for row in shop.get_shop_inventory("seed_shop"):
@@ -1106,7 +1106,7 @@ func _stock_and_days() -> void:
 	t.expect(int(_row("seed_shop", &"pumpkin_seeds")["stock"]) == 15, "a new game fills every shelf")
 	t.expect(shop.from_dict(parsed as Dictionary) and int(_row("seed_shop", &"pumpkin_seeds")["stock"]) == 10 and int(_row("seed_shop", &"moonflower_seeds")["stock"]) == 8, "the shelves come back from a save (pumpkin seeds 10)")
 	shop.from_dict({"stock": {"seed_shop": {"pumpkin_seeds": 999, "ghost": 3}, "no_shop": {"x": 1}}})
-	t.check("shop_save_validated", int(_row("seed_shop", &"pumpkin_seeds")["stock"]) == 15 and int(_row("seed_shop", &"carrot_seeds")["stock"]) == 25 and not shop.to_dict()["stock"].has("no_shop") and not shop.to_dict()["stock"]["seed_shop"].has("ghost"), "counts are clamped to the shelf, unknown shops and items are dropped, missing shelves are full")
+	t.check("shop_save_validated", int(_row("seed_shop", &"pumpkin_seeds")["stock"]) == 15 and int(_row("seed_shop", &"carrot_seeds")["stock"]) == 40 and not shop.to_dict()["stock"].has("no_shop") and not shop.to_dict()["stock"]["seed_shop"].has("ghost"), "counts are clamped to the shelf, unknown shops and items are dropped, missing shelves are full")
 
 	# the order's behaviour: shelves restock on day_started and on nothing else; the first plan's knob `economy.shop_refresh_hour`
 	# ("restock when this hour is reached") is read by no code, so it is a dead tuning knob that P10 deletes (handoff)

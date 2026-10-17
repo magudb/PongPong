@@ -1,0 +1,29 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 51,
+  "elapsed_s": 8.57,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1522,
+      "skipped": 0
+    },
+    "farm_automation": {
+      "character": "animal",
+      "checks": 43,
+      "failed": 0,
+      "ms": 1379,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

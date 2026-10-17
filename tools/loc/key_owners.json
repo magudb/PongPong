@@ -485,7 +485,11 @@
    "prefix": [
     "FARMSITE_"
    ],
-   "exact": []
+   "exact": [],
+   "item_files": [
+    "lua/items/farm_equipment.lua",
+    "lua/items/winter_crops.lua"
+   ]
   },
   "farm_tutorial.csv": {
    "owner": "N04-farm-first-morning",

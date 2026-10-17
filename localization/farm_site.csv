@@ -19,3 +19,95 @@ FARMSITE_SHED_PROMPT,Åbn redskabsskuret,Open the tool shed
 FARMSITE_SHED_WHISPER,"Her ligger det hele, du ikke orker at bære rundt på.",Everything you do not feel like carrying around is kept in here.
 FARMSITE_STAGE_UP_TITLE,Gården er vokset,The farm has grown
 FARMSITE_STAGE_UP,Trækronsgården er nu %s.,The Treetop Farm is now %s.
+FARMSITE_HOUSE_UPGRADES,Udvid huset,House upgrades
+FARMSITE_FIELD_UPGRADE,Udvid marken,Expand the field
+FARMSITE_FIELD_OWNED,Østmarken er allerede din.,You already own the east field.
+FARMSITE_CAPACITY_UPGRADE_FMT,Plads til %d → %d dyr,Room for %d → %d animals
+FARMSITE_UPGRADE_FMT,Opgrader til niveau %d,Upgrade to tier %d
+FARMSITE_UPGRADING_FMT,Udvides · %d dage tilbage,Expanding · %d days left
+FARMSITE_BUILD_DAYS_FMT,Byggetid: %d dage. Dyrene kan blive boende.,Construction: %d days. Animals keep their housing.
+FARMSITE_UPGRADE_DONE_FMT,%s er nu niveau %d.,%s is now tier %d.
+FARMSITE_HARVEST_FMT,Høst %s,Harvest %s
+FARMSITE_UPGRADE_CONFIRM_FMT,Udvid %s for de viste materialer og guldagern? Dyrene kan blive boende under arbejdet.,Expand %s for the listed materials and golden acorns? Animals keep their housing during construction.
+FARMSITE_UPGRADES_TITLE,Gårdens udvidelser,Farm upgrades
+FARMSITE_GREENHOUSE,Drivhus,Greenhouse
+FARMSITE_GREENHOUSE_HINT,"12 bede, som kan bruges hele året. Indendørs afgrøder skal også vandes.",12 beds for year-round growing. Indoor crops still need watering.
+FARMSITE_GREENHOUSE_ENTER,Gå ind i drivhuset,Enter the greenhouse
+FARMSITE_GREENHOUSE_TIER_FMT,Kræver husniveau %d,Requires house tier %d
+FARMSITE_GREENHOUSE_BUILD_FMT,Byg drivhuset for de viste materialer og guldagern? Det tager %d dage.,Build the greenhouse for the listed materials and golden acorns? Construction takes %d days.
+FARMSITE_GREENHOUSE_READY,Drivhuset er færdigt. Nu kan du dyrke hele året.,The greenhouse is ready. You can now grow crops all year.
+FARMSITE_GREENHOUSE_LOCKED,Åbn gårdens udvidelser med B for at bygge drivhuset.,Open Farm upgrades with B to build the greenhouse.
+FARMSITE_GREENHOUSE_EXIT,Tilbage til gården,Back to the farm
+FARMSITE_SEED_SHELF,Drivhusets frøhylde,Greenhouse seed shelf
+FARMSITE_SEED_GREETING,Pip har fyldt hylden med frø til alle årstider.,Pip has stocked the shelf with seeds for every season.
+FARMSITE_MACHINE_LOAD,Læg den valgte afgrøde i maskinen,Load the selected crop
+FARMSITE_MACHINE_READY_FMT,Hent %s,Collect %s
+FARMSITE_MACHINE_BUSY_FMT,Forædler · %d dage tilbage,Processing · %d days left
+FARMSITE_MACHINE_CROP_ONLY,Vælg en afgrøde på genvejsbjælken først.,Select a crop on the hotbar first.
+FARMSITE_MACHINE_PICKUP_BUSY,"Hent den færdige vare, før du flytter maskinen.",Collect the finished product before moving the machine.
+FARMSITE_MACHINE_PICKUP,Brug hakke eller økse for at flytte den tomme maskine.,Use a pickaxe or axe to move the empty machine.
+ITEM_SPRINKLER,Vandspreder,Sprinkler
+ITEM_SPRINKLER_DESC,Vander de fire nærmeste bede hver morgen. Sæt den på et tomt markfelt.,Waters the four adjacent beds each morning. Place it on an empty field tile.
+ITEM_QUALITY_SPRINKLER,Stor vandspreder,Quality sprinkler
+ITEM_QUALITY_SPRINKLER_DESC,Vander alle otte bede omkring sig hver morgen.,Waters all eight surrounding beds each morning.
+ITEM_PRESERVES_JAR,Syltekrukke,Preserves jar
+ITEM_PRESERVES_JAR_DESC,"Forædler en afgrøde på to dage. Brug E med afgrøden valgt, og hent varen med E.","Processes one crop in two days. Press E with a crop selected, then E to collect."
+ITEM_KEG,Safttønde,Keg
+ITEM_KEG_DESC,Laver saft af en afgrøde på tre dage. Brug E for at lægge i eller hente.,Makes juice from one crop in three days. Press E to load or collect.
+ITEM_SNOW_TURNIP_SEEDS,Sneroefrø,Snow turnip seeds
+ITEM_SNOW_TURNIP_SEEDS_DESC,Høst efter fem vandede nætter. Dyrkes om vinteren eller hele året i drivhuset.,Harvest after five watered nights. Grows in winter or year-round in the greenhouse.
+ITEM_SNOW_TURNIP,Sneroe,Snow turnip
+ITEM_SNOW_TURNIP_DESC,"En mild, lys vinterroe.","A mild, pale winter turnip."
+ITEM_SNOWDROP_SEEDS,Vintergækfrø,Snowdrop seeds
+ITEM_SNOWDROP_SEEDS_DESC,Høst efter syv vandede nætter. Dyrkes om vinteren eller hele året i drivhuset.,Harvest after seven watered nights. Grows in winter or year-round in the greenhouse.
+ITEM_SNOWDROP,Vintergæk,Snowdrop
+ITEM_SNOWDROP_DESC,"En lille, hvid vinterblomst.",A small ivory winter flower.
+ITEM_PRESERVE_TURNIP,Majroe · på glas,Turnip preserves
+ITEM_PRESERVE_TURNIP_DESC,Forædlet majroe fra gården. Kan sælges eller sendes med salgskassen.,Processed turnip from the farm. Sell it or put it in the shipping bin.
+ITEM_JUICE_TURNIP,Majroe · saft,Turnip juice
+ITEM_JUICE_TURNIP_DESC,Forædlet majroe fra gården. Kan sælges eller sendes med salgskassen.,Processed turnip from the farm. Sell it or put it in the shipping bin.
+ITEM_PRESERVE_CARROT,Gulerod · på glas,Carrot preserves
+ITEM_PRESERVE_CARROT_DESC,Forædlet gulerod fra gården. Kan sælges eller sendes med salgskassen.,Processed carrot from the farm. Sell it or put it in the shipping bin.
+ITEM_JUICE_CARROT,Gulerod · saft,Carrot juice
+ITEM_JUICE_CARROT_DESC,Forædlet gulerod fra gården. Kan sælges eller sendes med salgskassen.,Processed carrot from the farm. Sell it or put it in the shipping bin.
+ITEM_PRESERVE_PUMPKIN,Græskar · på glas,Pumpkin preserves
+ITEM_PRESERVE_PUMPKIN_DESC,Forædlet græskar fra gården. Kan sælges eller sendes med salgskassen.,Processed pumpkin from the farm. Sell it or put it in the shipping bin.
+ITEM_JUICE_PUMPKIN,Græskar · saft,Pumpkin juice
+ITEM_JUICE_PUMPKIN_DESC,Forædlet græskar fra gården. Kan sælges eller sendes med salgskassen.,Processed pumpkin from the farm. Sell it or put it in the shipping bin.
+ITEM_PRESERVE_MOONFLOWER,Måneblomst · på glas,Moonflower preserves
+ITEM_PRESERVE_MOONFLOWER_DESC,Forædlet måneblomst fra gården. Kan sælges eller sendes med salgskassen.,Processed moonflower from the farm. Sell it or put it in the shipping bin.
+ITEM_JUICE_MOONFLOWER,Måneblomst · saft,Moonflower juice
+ITEM_JUICE_MOONFLOWER_DESC,Forædlet måneblomst fra gården. Kan sælges eller sendes med salgskassen.,Processed moonflower from the farm. Sell it or put it in the shipping bin.
+ITEM_PRESERVE_GLOW_BERRY,Lysbær · på glas,Glow berry preserves
+ITEM_PRESERVE_GLOW_BERRY_DESC,Forædlet lysbær fra gården. Kan sælges eller sendes med salgskassen.,Processed glow berry from the farm. Sell it or put it in the shipping bin.
+ITEM_JUICE_GLOW_BERRY,Lysbær · saft,Glow berry juice
+ITEM_JUICE_GLOW_BERRY_DESC,Forædlet lysbær fra gården. Kan sælges eller sendes med salgskassen.,Processed glow berry from the farm. Sell it or put it in the shipping bin.
+ITEM_PRESERVE_STRAWBERRY,Jordbær · på glas,Strawberry preserves
+ITEM_PRESERVE_STRAWBERRY_DESC,Forædlet jordbær fra gården. Kan sælges eller sendes med salgskassen.,Processed strawberry from the farm. Sell it or put it in the shipping bin.
+ITEM_JUICE_STRAWBERRY,Jordbær · saft,Strawberry juice
+ITEM_JUICE_STRAWBERRY_DESC,Forædlet jordbær fra gården. Kan sælges eller sendes med salgskassen.,Processed strawberry from the farm. Sell it or put it in the shipping bin.
+ITEM_PRESERVE_SUNFLOWER,Solsikke · på glas,Sunflower preserves
+ITEM_PRESERVE_SUNFLOWER_DESC,Forædlet solsikke fra gården. Kan sælges eller sendes med salgskassen.,Processed sunflower from the farm. Sell it or put it in the shipping bin.
+ITEM_JUICE_SUNFLOWER,Solsikke · saft,Sunflower juice
+ITEM_JUICE_SUNFLOWER_DESC,Forædlet solsikke fra gården. Kan sælges eller sendes med salgskassen.,Processed sunflower from the farm. Sell it or put it in the shipping bin.
+ITEM_PRESERVE_CATNIP,Katteurt · på glas,Catnip preserves
+ITEM_PRESERVE_CATNIP_DESC,Forædlet katteurt fra gården. Kan sælges eller sendes med salgskassen.,Processed catnip from the farm. Sell it or put it in the shipping bin.
+ITEM_JUICE_CATNIP,Katteurt · saft,Catnip juice
+ITEM_JUICE_CATNIP_DESC,Forædlet katteurt fra gården. Kan sælges eller sendes med salgskassen.,Processed catnip from the farm. Sell it or put it in the shipping bin.
+ITEM_PRESERVE_SNOW_TURNIP,Sneroe · på glas,Snow turnip preserves
+ITEM_PRESERVE_SNOW_TURNIP_DESC,Forædlet sneroe fra gården. Kan sælges eller sendes med salgskassen.,Processed snow turnip from the farm. Sell it or put it in the shipping bin.
+ITEM_JUICE_SNOW_TURNIP,Sneroe · saft,Snow turnip juice
+ITEM_JUICE_SNOW_TURNIP_DESC,Forædlet sneroe fra gården. Kan sælges eller sendes med salgskassen.,Processed snow turnip from the farm. Sell it or put it in the shipping bin.
+ITEM_PRESERVE_SNOWDROP,Vintergæk · på glas,Snowdrop preserves
+ITEM_PRESERVE_SNOWDROP_DESC,Forædlet vintergæk fra gården. Kan sælges eller sendes med salgskassen.,Processed snowdrop from the farm. Sell it or put it in the shipping bin.
+ITEM_JUICE_SNOWDROP,Vintergæk · saft,Snowdrop juice
+ITEM_JUICE_SNOWDROP_DESC,Forædlet vintergæk fra gården. Kan sælges eller sendes med salgskassen.,Processed snowdrop from the farm. Sell it or put it in the shipping bin.
+FARMSITE_SEASONS_FMT,Årstider: %s,Seasons: %s
+FARMSITE_GROWTH_FMT,Første høst: %d vandede nætter,First harvest: %d watered nights
+FARMSITE_REGROW_FMT,Ny høst hver %d. vandede nat,Regrows every %d watered nights
+FARMSITE_SEEDS_INDOORS,Uden for sæsonen: dyrkes kun i drivhuset nu.,Out of season: grow these in the greenhouse now.
+FARMSITE_CONSTRUCTION_DAYS_FMT,Byggetid: %d dage,Construction: %d days
+ITEM_PRESERVE_FROST_KALE,Frostkål · på glas,Frost kale preserves
+ITEM_PRESERVE_FROST_KALE_DESC,Forædlet frostkål fra gården. Kan sælges eller sendes med salgskassen.,Processed frost kale from the farm. Sell it or put it in the shipping bin.
+ITEM_JUICE_FROST_KALE,Frostkål · saft,Frost kale juice
+ITEM_JUICE_FROST_KALE_DESC,Forædlet frostkål fra gården. Kan sælges eller sendes med salgskassen.,Processed frost kale from the farm. Sell it or put it in the shipping bin.

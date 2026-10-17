@@ -1,0 +1,25 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 8,
+  "elapsed_s": 4.81,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "town_mutants.l02_citizens_freed_on_exit"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "town_mutants": {
+      "character": "animal",
+      "checks": 8,
+      "failed": 1,
+      "ms": 3099,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

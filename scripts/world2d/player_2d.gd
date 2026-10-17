@@ -24,6 +24,9 @@ var outfit_layers: WardrobeLayers
 var is_jumping: bool = false
 var invulnerable: bool = false
 var mouse_aim: bool = false
+var _farm_use_held := false
+var _farm_use_cell := Vector2i.ZERO
+var _farm_use_item := &""
 var _marker: TargetMarker2D
 var _last_stats: Dictionary = {}
 var _stats_timer: float = 0.0
@@ -56,6 +59,9 @@ const RULES := "res://scripts/dungeon_run/dungeon_run.gd"
 const GEM := "res://scripts/combat/lantern_gem.gd"
 
 func _ready() -> void:
+	EventBus.modal_changed.connect(func(stack):
+		if not stack.is_empty():
+			_farm_use_held = false)
 	super._ready()
 	refresh_stats()
 	stamina = max_stamina
@@ -120,6 +126,10 @@ func _on_game_event(event: StringName, _data: Dictionary) -> void:
 		refresh_stats()
 
 func enter_area(target: IsoArea, at: Vector2) -> void:
+	_farm_use_held = false
+	var world := get_tree().get_first_node_in_group("world_2d")
+	if world != null and world.has_method("farm_for_area"):
+		farm = world.farm_for_area(target.map.id)
 	_event_generation += 1
 	_cancel_flight()
 	super.enter_area(target, at)
@@ -144,6 +154,8 @@ func world_input_allowed() -> bool:
 	return area != null and not GameData.gm().is_modal_open() and state not in [S.TALKING, S.FAINTED] and not _event_active
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_released("use_tool"):
+		_farm_use_held = false
 	if not world_input_allowed():
 		return
 	if event.is_action_released("attack"):
@@ -178,6 +190,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("fly_toggle"):
 		toggle_flight()
 	elif event.is_action_pressed("use_tool"):
+		_farm_use_held = _farm_repeat_allowed()
+		_farm_use_cell = target_cell()
+		_farm_use_item = hotbar.current()
 		use_selected()
 	elif _is_action_area():
 		if event.is_action_pressed("attack"):
@@ -205,9 +220,12 @@ func set_zoom(value: float) -> void:
 func _physics_process(delta: float) -> void:
 	if area == null or combat == null:
 		return
+	if not Input.is_action_pressed("use_tool"):
+		_farm_use_held = false
 	_sync_equipment_display()
 	var paused: bool = GameData.gm().is_modal_open() or state in [S.TALKING, S.FAINTED] or _event_active
 	if paused:
+		_farm_use_held = false
 		combat.attack_held = false
 		_climb_up = false
 		_climb_down = false
@@ -260,6 +278,10 @@ func _physics_process(delta: float) -> void:
 	else:
 		visual.update_motion(velocity, running, is_jumping or _landing, is_flying, direction)
 	_update_target(delta)
+	if _farm_use_held and _farm_repeat_allowed() and Input.is_action_pressed("use_tool") and state == S.FREE and (target_cell() != _farm_use_cell or hotbar.current() != _farm_use_item):
+		_farm_use_cell = target_cell()
+		_farm_use_item = hotbar.current()
+		use_selected()
 	_update_prompt(delta)
 	_update_oil(delta)
 	_update_ghost(delta)
@@ -283,17 +305,25 @@ func _update_target(delta: float = 0.0) -> void:
 					EventBus.whisper_requested.emit("WHISPER_FLOWER_%d" % (posmod(cell.x + cell.y, 6) + 1))
 					break
 
+func _farm_repeat_allowed() -> bool:
+	var def := GameData.item_def(hotbar.current())
+	return _at_farm() and (str(def.get("category", "")) in ["seed", "farm"] or str(def.get("tool_type", "")) in ["hoe", "watering", "scythe"])
+
 func _at_farm() -> bool:
 	return farm != null and area != null and farm.map != null and area.map.id == farm.map.id
+
+func interaction_text(it: Node) -> String:
+	if state == S.FREE and not is_flying and _at_farm() and farm.state_of(target_cell()) == FarmGrid.State.READY:
+		var crop: StringName = farm.get_plot(target_cell()).crop_id
+		return tr("FARMSITE_HARVEST_FMT") % tr(str(GameData.item_def(crop).get("name_key", "")))
+	return super.interaction_text(it)
 
 func try_interact() -> bool:
 	if not world_input_allowed() or state != S.FREE or is_flying:
 		return false
-	if super.try_interact():
-		return true
 	if _at_farm() and farm.state_of(target_cell()) == FarmGrid.State.READY:
 		return farm.harvest(target_cell()) > 0
-	return false
+	return super.try_interact()
 
 func use_selected() -> bool:
 	if not world_input_allowed() or state != S.FREE or is_flying:
@@ -329,11 +359,13 @@ func use_selected() -> bool:
 					if _at_farm():
 						for direction in [posmod(facing8 - 1, 8), facing8, posmod(facing8 + 1, 8)]:
 							var harvest_cell := area.global_to_cell(global_position) + area.facing_step(direction)
-							ok = farm.harvest(harvest_cell) > 0 or ok
+							ok = farm.harvest(harvest_cell) > 0 or farm.clear_crop(harvest_cell) or ok
 				"axe", "pickaxe":
-					var host := nearest_interactable()
-					if host != null and host.has_method("tool_hit"):
-						ok = bool(host.call("tool_hit", str(def.tool_type), int(def.get("power", 1)), self))
+					ok = _at_farm() and farm.clear_crop(cell, false)
+					if not ok:
+						var host := nearest_interactable()
+						if host != null and host.has_method("tool_hit"):
+							ok = bool(host.call("tool_hit", str(def.tool_type), int(def.get("power", 1)), self))
 		"seed":
 			if _at_farm():
 				var reason: String = farm.plant(cell, item)

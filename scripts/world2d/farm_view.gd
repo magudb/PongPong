@@ -58,6 +58,8 @@ func refresh_cell(cell: Vector2i) -> void:
 		spr.position = area.objects.to_local(area.cell_to_global(cell))
 	spr.texture = art.texture
 	spr.offset = -art.pivot
+	# Seasonal wilt keeps the approved painted silhouette and brushwork.
+	spr.modulate = Color("806548") if p.state == FarmGrid.State.WITHERED else Color.WHITE
 	# Reuse the approved painted glow mask; no extra dynamic lights per crop.
 	var glow: Sprite2D = spr.get_node_or_null("Glow")
 	var glow_art: Dictionary = art.get("glow", {}) if stage == 3 and p.crop_id == &"moonflower" else {}

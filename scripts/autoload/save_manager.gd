@@ -701,6 +701,10 @@ func validate_payload(data: Variant) -> Dictionary:
 	var saved_world: Dictionary = payload.get("world", {})
 	if saved_world.has("farm") and not SvcLib.static_call("res://scripts/world2d/farm_grid.gd", &"validate_dict", [saved_world.farm], true):
 		return _verdict(false, "invalid", "world contains invalid crop records")
+	if saved_world.has("greenhouse_farm") and not SvcLib.static_call("res://scripts/world2d/farm_grid.gd", &"validate_dict", [saved_world.greenhouse_farm], true):
+		return _verdict(false, "invalid", "world contains invalid greenhouse crops")
+	if not SvcLib.static_call("res://scripts/farm/farm_equipment.gd", &"validate_placed", [saved_world.get("placed", [])], true):
+		return _verdict(false, "invalid", "world contains invalid farm equipment")
 	return _verdict(true, "", "", payload)
 
 

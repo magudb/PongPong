@@ -1,0 +1,16 @@
+{
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "farm_ui_audit_panel_pixels_build_menu": {
+      "mean": 0.0,
+      "over40_pct": 0.0,
+      "ref": "docs/qa/ui_baseline/build_menu.png",
+      "shot": "docs/qa/farm-completion/menu-native/farm_ui_audit_panel_pixels_build_menu.png",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  }
+}

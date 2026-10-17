@@ -269,9 +269,11 @@ func _npc_homes() -> void:
 		var info := _map_info("res://data/maps/%s" % f)
 		map_areas[info["id"]] = true
 		markers_by_area[info["id"]] = info["npcs"]
+		if bool(info["indoor"]) and not (info["npcs"] as Array).is_empty():
+			problems.append("%s: indoor annex cannot declare NPC homes" % f)
 		var room_building := Hours.building(str(info["id"]).trim_prefix("int_"))
 		var is_room: bool = not room_building.is_empty() and str(room_building.get("interior", "")) == str(info["id"])
-		if not (str(info["id"]) in GRAPH_AREAS) and not is_room:
+		if not (str(info["id"]) in GRAPH_AREAS) and not is_room and not bool(info["indoor"]):
 			problems.append("data/maps/%s has the id %s which is no area of the zone graph" % [f, info["id"]])
 	if not FileAccess.file_exists("res://data/traetoppen/traetoppen.json"):
 		problems.append("data/traetoppen/traetoppen.json (the levelled city, V3) is missing")
@@ -309,11 +311,13 @@ func _npc_homes() -> void:
 
 
 func _map_info(path: String) -> Dictionary:
-	var out := {"id": "", "npcs": []}
+	var out := {"id": "", "npcs": [], "indoor": false}
 	for raw in FileAccess.get_file_as_string(path).split("\n"):
 		var line := raw.strip_edges()
 		if line.begins_with("@id "):
 			out["id"] = line.substr(4).strip_edges()
+		elif line == "@indoor true":
+			out["indoor"] = true
 		elif line.begins_with("@marker "):
 			var parts := line.split(" ", false)
 			if parts.size() >= 3 and parts[2] == "npc":

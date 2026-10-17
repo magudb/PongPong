@@ -64,7 +64,7 @@
     },
     {
       "system": "Dark Forest evidence chapters and return-home resolution",
-      "state": "implemented and verified for eight heroes and four native body families: chapters S03\u2013S08, mother's final account, returning her name and seeds to the restored garden; free play continues"
+      "state": "implemented and verified for eight heroes and four native body families: chapters S03–S08, mother's final account, returning her name and seeds to the restored garden; free play continues"
     },
     {
       "system": "End-to-end acceptance, source-bound proofs and merge",
@@ -72,7 +72,6 @@
     }
   ],
   "explicit_design_limits": [
-    "Greenhouse remains opt-in (Q1 default no).",
     "Children and multiplayer are later work.",
     "Preserve frozen human recordings; 285 Sara placeholder paths plus eleven preserved human paths are complete; native-speaker and aesthetic listening review remain editorial work.",
     "No paid appraisal, rare random loot, calendar or friendship gate may strand the mother story."
@@ -140,5 +139,12 @@
     "status": "verified on main",
     "merge_commit": "55c92276d66dc620306c3ab63f1f80823e345ef1",
     "source_binding": "56607282840d922a3f4f14148e3240e9c65cd74c3b94ed8970b4e820160f674f"
+  },
+  "farm_completion_followup": {
+    "worktree": "codex-farm-completion",
+    "scope": "Crop lifecycle and held tending; field and animal housing expansion; ten-tier home entry; sprinklers, preserves jars, kegs and a year-round greenhouse. Includes frost kale from the concurrent main review.",
+    "review": "docs/qa/farm-completion/REVIEW.md",
+    "prompts": "docs/art/farm-completion/prompts.json",
+    "status": "implemented; final integration checks in progress"
   }
 }

@@ -1,0 +1,25 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 8,
+  "elapsed_s": 5.09,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "town_mutants.l03_esc_first_line_no_heart"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "town_mutants": {
+      "character": "animal",
+      "checks": 8,
+      "failed": 1,
+      "ms": 3130,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

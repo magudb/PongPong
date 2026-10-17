@@ -33,6 +33,34 @@ def roles(catalog: dict) -> tuple[dict, dict]:
     from style_audit import asset_roles, local
     selected = asset_roles(catalog)
     sources = {}
+    # The seasonal emitter consumes these directly, outside ArtCatalog props.
+    for name in ["leaf_a", "leaf_b", "petal", "snowflake"]:
+        path = ROOT / "assets/iso_props/farm_dress" / (name + ".webp")
+        if path.is_file():
+            selected[path.resolve()] = "painted-farm-season-particle"
+            sources[path.resolve()] = "docs/art/farm-seasons/review.md"
+    farm = ROOT / "assets/iso_props/farm_completion"
+    if (farm / "props.json").is_file():
+        for name, spec in read(farm / "props.json").items():
+            path = (farm / spec["file"]).resolve()
+            selected[path] = "painted-farm-prop-or-crop"
+            sources[path] = spec["illustration"]
+        for path in (ROOT / "assets/icons/items").glob("*.webp"):
+            name = path.stem
+            source = ""
+            if name in ["sprinkler", "quality_sprinkler", "preserves_jar", "keg"]:
+                source = "sprinkler" if name == "quality_sprinkler" else name
+            elif name.startswith("preserve_"):
+                source = "preserves_jar"
+            elif name.startswith("juice_"):
+                source = "juice_bottle"
+            elif name in ["snow_turnip", "snowdrop", "frost_kale"]:
+                source = name + "_stages"
+            elif name in ["snow_turnip_seeds", "snowdrop_seeds", "frost_kale_seeds"]:
+                source = name + "_icon"
+            if source:
+                selected[path.resolve()] = "painted-farm-item-icon"
+                sources[path.resolve()] = "tools/art/drawn/sources/farm_completion/" + source + ".png"
     for row in catalog.get("icon_variants", []):
         selected[local(row["path"]).resolve()] = "item-base-or-night-icon"
     for row in catalog.get("backdrops", []):

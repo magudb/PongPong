@@ -268,12 +268,15 @@ class BuildingData:
 	var built_day: int = 0
 	var is_built: bool = false
 	var cell := Vector2i(-1, -1)
+	var tier: int = 1
+	var upgrade_ready_day: int = 0
 
 	func to_dict() -> Dictionary:
 		return {
 			"id": id, "building_type": building_type,
 			"animals_inside": animals_inside.duplicate(),
 			"built_day": built_day, "is_built": is_built, "cell": [cell.x, cell.y],
+			"tier": tier, "upgrade_ready_day": upgrade_ready_day,
 		}
 
 	static func from_dict(d: Dictionary) -> BuildingData:
@@ -283,6 +286,8 @@ class BuildingData:
 		b.animals_inside.assign(d.get("animals_inside", []))
 		b.built_day = d.get("built_day", 0)
 		b.is_built = d.get("is_built", false)
+		b.tier = int(d.get("tier", 1))
+		b.upgrade_ready_day = int(d.get("upgrade_ready_day", 0))
 		var at: Array = d.get("cell", [-1,-1])
 		b.cell = Vector2i(int(at[0]),int(at[1]))
 		return b
@@ -591,8 +596,42 @@ func get_building_capacity(building_type: StringName) -> int:
 	for bid in buildings:
 		var b: BuildingData = buildings[bid]
 		if b.building_type == building_type and b.is_built:
-			total += buildings_data[str(building_type)]["capacity"]
+			total += building_capacity(b)
 	return total
+
+func building_of(building_type: StringName) -> BuildingData:
+	for b in buildings.values():
+		if b.building_type == building_type and b.is_built:
+			return b
+	return null
+
+func building_capacity(b: BuildingData) -> int:
+	var spec: Dictionary = buildings_data[str(b.building_type)]
+	var upgrades := LuaData.arr(spec.get("upgrades", []))
+	return int(upgrades[b.tier - 2].capacity) if b.tier > 1 and b.tier - 2 < upgrades.size() else int(spec.capacity)
+
+## Next-tier costs and construction days; existing housing stays usable while expanding.
+func building_upgrade(building_type: StringName) -> Dictionary:
+	var b := building_of(building_type)
+	if b == null:
+		return {}
+	var upgrades := LuaData.arr(buildings_data[str(building_type)].get("upgrades", []))
+	return LuaData.dict(upgrades[b.tier - 1]) if b.tier <= upgrades.size() else {}
+
+func upgrade_building(building_type: StringName) -> bool:
+	var b := building_of(building_type)
+	var spec := building_upgrade(building_type)
+	if b == null or b.upgrade_ready_day > 0 or spec.is_empty():
+		return false
+	var cost := LuaData.int_map(spec.get("cost", {}))
+	var gold := int(cost.get("gold", 0))
+	cost.erase("gold")
+	if not EconomyManager.consume_backpack_items(cost, func():
+		b.upgrade_ready_day = GameManager.total_day() + maxi(1, int(spec.get("days", 1))), gold):
+		return false
+	state_changed.emit()
+	EventBus.game_event.emit(&"farm_building_upgrade_started", {"type": str(building_type), "tier": b.tier + 1, "ready_day": b.upgrade_ready_day})
+	return true
 
 
 func get_animals_in_building(building_id: StringName) -> Array:
@@ -609,6 +648,12 @@ func get_animals_in_building(building_id: StringName) -> Array:
 
 func _on_day_started(_day: int, _season: StringName) -> void:
 	var today := GameManager.total_day()
+	for b in buildings.values():
+		if b.upgrade_ready_day > 0 and today >= b.upgrade_ready_day:
+			b.tier += 1
+			b.upgrade_ready_day = 0
+			EventBus.game_event.emit(&"farm_building_upgraded", {"type": str(b.building_type), "tier": b.tier})
+			EventBus.notification_posted.emit(tr("ANIMAL_BUILD_TITLE"), tr("FARMSITE_UPGRADE_DONE_FMT") % [tr(str(buildings_data[str(b.building_type)].name_key)), b.tier], "build")
 	for aid in animals:
 		var animal: AnimalData = animals[aid]
 		var spec: Dictionary = species_data[str(animal.species)]
@@ -686,12 +731,11 @@ func _has_space_for(species: StringName) -> bool:
 func _find_building_with_space(species: StringName) -> StringName:
 	var spec: Dictionary = species_data[str(species)]
 	var needed_building: String = spec["building"]
-	var capacity: int = buildings_data[needed_building]["capacity"]
 
 	for bid in buildings:
 		var b: BuildingData = buildings[bid]
 		if b.building_type == StringName(needed_building) and b.is_built:
-			if b.animals_inside.size() < capacity:
+			if b.animals_inside.size() < building_capacity(b):
 				return bid
 	return &""
 
@@ -789,6 +833,11 @@ func validate_dict(data: Dictionary) -> bool:
 		if not _valid_id(d.get("id", id)) or str(d.get("id", id)) != str(id):
 			return false
 		if not _valid_count(d.get("built_day", 0)) or not (d.get("is_built", false) is bool) or not (d.get("animals_inside", []) is Array):
+			return false
+		var max_tier := 1 + LuaData.arr(buildings_data[str(d.building_type)].get("upgrades", [])).size()
+		if not _valid_count(d.get("tier", 1)) or int(d.get("tier", 1)) < 1 or int(d.get("tier", 1)) > max_tier or not _valid_count(d.get("upgrade_ready_day", 0)):
+			return false
+		if int(d.get("upgrade_ready_day", 0)) > 0 and int(d.get("tier", 1)) >= max_tier:
 			return false
 		var cell: Variant = d.get("cell",[-1,-1])
 		if not cell is Array or cell.size() != 2 or not _valid_number(cell[0]) or not _valid_number(cell[1]) or float(cell[0]) != floor(float(cell[0])) or float(cell[1]) != floor(float(cell[1])):

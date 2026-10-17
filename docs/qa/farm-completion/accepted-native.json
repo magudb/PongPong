@@ -1,0 +1,30 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 69,
+  "elapsed_s": 22.4,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "farm_automation": {
+      "character": "animal",
+      "checks": 58,
+      "failed": 0,
+      "ms": 14347,
+      "skipped": 0
+    },
+    "farm_ui_audit": {
+      "character": "animal",
+      "checks": 11,
+      "failed": 0,
+      "ms": 2489,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

@@ -1,0 +1,15 @@
+{
+  "status": "targeted and native checks passed; full regression running",
+  "worktree": "codex-farm-completion",
+  "integrated_main": "f3486ff",
+  "native_reports": [
+    "final-native.json",
+    "seed-details-native.json"
+  ],
+  "targeted_report": "catalog-followup.json",
+  "regression_report": "regression.json",
+  "new_painted_assets": 49,
+  "retained_masters": 12,
+  "prompts": "docs/art/farm-completion/prompts.json",
+  "review": "REVIEW.md"
+}
