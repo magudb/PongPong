@@ -92,7 +92,7 @@ def prove():
         # Every item above is an executed named check, not a file-presence proof.
         log=(evidence/'loop.log').read_text()
         assert all(('town_extension.'+k) in log and ('FAIL  town_extension.'+k) not in log for k in checks if k!='l18_no_gd_changed')
-        report={'result':'pass','binding':baseline_binding,'checks':checks,'code_files_unchanged':len(before),'scenario_checks':reports['loop']['checks'],'owner_checks':reports['owners']['checks'],'note':'One clone, one whole extension. Production geometry/routes, door, NPC talk, shop hosts, social rules and real mailbox quest offer exercised. No .gd/.tscn/.py edit. Clone/import/bake excluded from playable-loop timing.'}
+        report={'result':'pass','binding':baseline_binding,'checks':checks,'code_files_unchanged':len(before),'scenario_checks':reports['loop']['checks'],'owner_checks':reports['owners']['checks'],'note':'One clone, one whole extension. Production geometry/routes, door, NPC talk, shop hosts, social rules and real mailbox quest offer exercised. No .gd/.tscn/.py/.sh edit. Clone/import/bake excluded from playable-loop timing.'}
         REPORT.write_text(json.dumps(report,indent=2)+'\n')
         return report
 
