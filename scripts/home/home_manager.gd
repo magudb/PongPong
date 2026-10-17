@@ -381,7 +381,7 @@ func unlocked(unlock_name: Variant) -> bool:
 	return false
 
 
-## real | partial | stub (home.unlock_status): what the unlock actually does today. oven, forecast and royal_visit are listed and do nothing.
+## real | partial | stub (home.unlock_status): what the unlock actually does today. all eight listed unlocks now have gameplay consumers.
 func unlock_status(unlock_name: Variant) -> String:
 	return _HomeData.unlock_status(str(unlock_name))
 

@@ -31,7 +31,6 @@ func _ready() -> void:
 	var right := L.box(columns,true,14)
 	right.size_flags_horizontal = SIZE_EXPAND_FILL
 	_lead = L.label(right,"","Body",true)
-	_lead.add_theme_color_override("font_color",preload("res://scripts/ui/theme/tt_colors.gd").INK)
 	_heading = L.label(right,"","Display24",true)
 	_kind = L.label(right,"","Muted14",true)
 	_text = L.label(right,"","Body",true)
@@ -73,5 +72,6 @@ func initial_focus() -> Control:
 	return buttons[0] if not buttons.is_empty() else (_tabs[-1] if not _tabs.is_empty() else self)
 func wire_navigation(tabs: Array) -> void:
 	_tabs = tabs.duplicate()
+	UiNav.wire_row(_tabs)
 	UiNav.wire_ring(buttons)
 	UiNav.wire_groups([_tabs,buttons],true,false)

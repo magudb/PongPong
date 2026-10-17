@@ -3344,6 +3344,16 @@
       "path": "res://assets/icons/items/health_tonic.webp"
     },
     {
+      "id": "hjertebuket",
+      "night": false,
+      "path": "res://assets/icons/items/hjertebuket.webp"
+    },
+    {
+      "id": "hjertebuket",
+      "night": true,
+      "path": "res://assets/icons/items/hjertebuket.webp"
+    },
+    {
       "id": "hoe_iron",
       "night": false,
       "path": "res://assets/icons/items/hoe_iron.webp"
@@ -3442,6 +3452,16 @@
       "id": "lime",
       "night": true,
       "path": "res://assets/icons/home/lime.webp"
+    },
+    {
+      "id": "loefteagern",
+      "night": false,
+      "path": "res://assets/icons/items/loefteagern.webp"
+    },
+    {
+      "id": "loefteagern",
+      "night": true,
+      "path": "res://assets/icons/items/loefteagern.webp"
     },
     {
       "id": "lucky_clover",
@@ -14657,6 +14677,24 @@
       "rarity": "normal"
     },
     {
+      "catalog_path": "res://assets/icons/items/hjertebuket.webp",
+      "category": "special",
+      "definition": {
+        "buy_price": 0,
+        "category": "special",
+        "description_key": "ITEM_HJERTEBUKET_DESC",
+        "max_stack": 9,
+        "name_key": "ITEM_HJERTEBUKET",
+        "rarity": "normal",
+        "relationship_gift": true,
+        "sell_price": 0
+      },
+      "id": "hjertebuket",
+      "name_key": "ITEM_HJERTEBUKET",
+      "path": "res://assets/icons/items/hjertebuket.webp",
+      "rarity": "normal"
+    },
+    {
       "catalog_path": "res://assets/icons/items/hoe_iron.webp",
       "category": "tool",
       "definition": {
@@ -14862,6 +14900,24 @@
       "id": "lime",
       "name_key": "ITEM_LIME",
       "path": "res://assets/icons/home/lime.webp",
+      "rarity": "normal"
+    },
+    {
+      "catalog_path": "res://assets/icons/items/loefteagern.webp",
+      "category": "special",
+      "definition": {
+        "buy_price": 0,
+        "category": "special",
+        "description_key": "ITEM_LOEFTEAGERN_DESC",
+        "max_stack": 9,
+        "name_key": "ITEM_LOEFTEAGERN",
+        "rarity": "normal",
+        "relationship_gift": true,
+        "sell_price": 0
+      },
+      "id": "loefteagern",
+      "name_key": "ITEM_LOEFTEAGERN",
+      "path": "res://assets/icons/items/loefteagern.webp",
       "rarity": "normal"
     },
     {
@@ -25231,6 +25287,24 @@
     },
     {
       "auxiliary": [],
+      "id": "apple_tree_efteraar",
+      "path": "res://assets/iso_props/farm_dress/apple_tree_efteraar.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "apple_tree_foraar",
+      "path": "res://assets/iso_props/farm_dress/apple_tree_foraar.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "apple_tree_vinter",
+      "path": "res://assets/iso_props/farm_dress/apple_tree_vinter.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
       "id": "armchair_sage",
       "path": "res://assets/iso_props/painted_interiors/armchair_sage.webp",
       "real": true
@@ -25333,6 +25407,12 @@
     },
     {
       "auxiliary": [],
+      "id": "blossom_cluster",
+      "path": "res://assets/iso_props/farm_dress/blossom_cluster.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
       "id": "bookcase_cottage",
       "path": "res://assets/iso_props/painted_interiors/bookcase_cottage.webp",
       "real": true
@@ -25395,6 +25475,12 @@
       "auxiliary": [],
       "id": "build_stake",
       "path": "res://assets/iso_props/zz_painted_consistency/build_stake.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "bunting_x",
+      "path": "res://assets/iso_props/farm_dress/bunting_x.webp",
       "real": true
     },
     {
@@ -26122,6 +26208,12 @@
     },
     {
       "auxiliary": [],
+      "id": "flower_box",
+      "path": "res://assets/iso_props/farm_dress/flower_box.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
       "id": "flowers_cottage",
       "path": "res://assets/iso_props/painted_interiors/flowers_cottage.webp",
       "real": true
@@ -26175,6 +26267,12 @@
     },
     {
       "auxiliary": [],
+      "id": "fountain_small",
+      "path": "res://assets/iso_props/farm_dress/fountain_small.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
       "id": "fx_heal_sparkle",
       "path": "res://assets/iso_props/fx_heal_sparkle.png",
       "real": true
@@ -26183,6 +26281,12 @@
       "auxiliary": [],
       "id": "fx_hit_spark",
       "path": "res://assets/iso_props/fx_hit_spark.png",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "garden_arch",
+      "path": "res://assets/iso_props/farm_dress/garden_arch.webp",
       "real": true
     },
     {
@@ -26610,6 +26714,12 @@
     },
     {
       "auxiliary": [],
+      "id": "leaf_pile",
+      "path": "res://assets/iso_props/farm_dress/leaf_pile.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
       "id": "letter_desk",
       "path": "res://assets/iso_props/painted_interiors/letter_desk.webp",
       "real": true
@@ -26954,6 +27064,12 @@
     },
     {
       "auxiliary": [],
+      "id": "pumpkin_stack",
+      "path": "res://assets/iso_props/farm_dress/pumpkin_stack.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
       "id": "rock_dark",
       "path": "res://assets/iso_props/drawn/rock_dark.webp",
       "real": true
@@ -26998,6 +27114,12 @@
       "auxiliary": [],
       "id": "rope_tile",
       "path": "res://assets/iso_props/painted_world/rope_tile.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "royal_banner",
+      "path": "res://assets/iso_props/farm_dress/royal_banner.webp",
       "real": true
     },
     {
@@ -27086,6 +27208,12 @@
     },
     {
       "auxiliary": [],
+      "id": "snow_patch",
+      "path": "res://assets/iso_props/farm_dress/snow_patch.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
       "id": "sofa_sage",
       "path": "res://assets/iso_props/painted_interiors/sofa_sage.webp",
       "real": true
@@ -27112,6 +27240,12 @@
       "auxiliary": [],
       "id": "stone_path_c",
       "path": "res://assets/iso_props/zz_painted_consistency/stone_path_c.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "sunflower_row",
+      "path": "res://assets/iso_props/farm_dress/sunflower_row.webp",
       "real": true
     },
     {
@@ -27350,6 +27484,12 @@
       "auxiliary": [],
       "id": "unique_glimmer",
       "path": "res://assets/iso_props/features/unique_glimmer.webp",
+      "real": true
+    },
+    {
+      "auxiliary": [],
+      "id": "vine_hang",
+      "path": "res://assets/iso_props/farm_dress/vine_hang.webp",
       "real": true
     },
     {

@@ -159,6 +159,9 @@ func _labels() -> void:
 	t.set_color("font_shadow_color", "ToolName", C.INK)
 	t.set_constant("shadow_offset_y", "ToolName", 2)
 	set_label_var("CooldownNumber", f_display, 22, C.CHALK)
+	set_label_var("Display15Owl", f_display, 15, C.OWL_EYE)
+	set_label_var("RequirementMet", f_body, 14, C.MOSS_DARK)
+	set_label_var("RequirementMissing", f_body, 14, C.THORNBERRY)
 
 	# Alegreya Sans
 	set_label_var("BodyL", f_body, 22, C.INK, 10)            # 22px / 1.45
@@ -677,7 +680,7 @@ func _meters() -> void:
 	_meter("MeterRose", C.ROSE, white35)
 	_meter("MeterHoney", C.HONEY, white35)
 	_meter("MeterVertical", C.MOSS, white30, true, 15.0)
-	_meter("MeterNight", C.OWL_EYE, Color(0, 0, 0, 0), false, 6.0, C.NIGHT_TRACK, false)
+	_meter("MeterNight", C.OWL_EYE, Color(0, 0, 0, 0), false, 6.0, C.NIGHT_TRACK, true)
 	_meter("MeterBoss", C.THORNBERRY, Color(0, 0, 0, 0), false, 8.0, C.NIGHT_TRACK, true,
 		rings([C.GOLD], [2.0]))
 	for n in ["ProgressBar", "MeterGreen", "MeterRose", "MeterHoney", "MeterVertical", "MeterNight", "MeterBoss"]:

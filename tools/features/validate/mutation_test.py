@@ -59,7 +59,7 @@ MUTATIONS = [
     ('D1 TODO marker', 'localization/home.csv', sub('Skur"', 'Skur TODO"')),
     ('L6 forbidden Lua construct', 'lua/quests/bogtraeet.lua', sub('function on_accept(context)', 'function on_accept(context)\n  for i = 1, 3 do end')),
     ('R15 unreachable wardrobe set tier', 'lua/data/sets.lua', sub('{ pieces = 4, energy = 5, speed = 0.01 }', '{ pieces = 9, energy = 5, speed = 0.01 }')),
-    ('R16 stub unlock promises a mechanic', 'localization/home.csv', sub('En lun ovn i køkkenkrogen. Der dufter allerede af brød.', 'Bag brød og kager derhjemme.')),
+    ('R16 implemented baking falsely marked stub', 'lua/data/home_tiers.lua', sub('oven = "real"', 'oven = "stub"')),
     ('R17 unique label back at the damage colour', 'lua/config/rarity.lua', sub('label = "7d2e59"', 'label = "a8456a"')),
     ('R18 garment that can be owned twice', 'lua/items/clothing.lua', sub('max_stack = 1,', 'max_stack = 2,')),
     ('K7 whisper key missing', 'localization/features_ui.csv', sub('SHOP_UI_CLOSED_TODAY,', 'SHOP_UI_CLOSED_TODAYX,')),

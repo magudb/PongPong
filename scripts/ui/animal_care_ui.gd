@@ -105,16 +105,20 @@ func _refresh_texts() -> void:
 		_selected_animal = animals[0].id if not animals.is_empty() else &""
 	for animal in animals:
 		var button := L.button(animal_list,animal.name)
+		button.set_meta("tt_text_same_ok","Persisted player-chosen animal name")
 		button.toggle_mode = true
 		button.button_pressed = animal.id == _selected_animal
 		button.pressed.connect(func(): _selected_animal = animal.id; _refresh_texts())
 	var animal = AnimalHusbandry.get_animal(_selected_animal)
 	if animal == null:
 		name_label.text = tr("ANIMAL_EMPTY")
-		for button in [feed_btn,brush_btn,play_btn,collect_btn,rename_btn,food_option]: button.disabled = true
+		for button in [feed_btn,brush_btn,play_btn,collect_btn,rename_btn,food_option]:
+			button.disabled = true
+			button.focus_mode = Control.FOCUS_NONE
 		return
 	var spec: Dictionary = AnimalHusbandry.species_data[str(animal.species)]
 	name_label.text = animal.name
+	name_label.set_meta("tt_text_same_ok","Persisted player-chosen animal name")
 	species_label.text = tr("ANIMAL_SPECIES_" + str(animal.species).to_upper()) + " · " + (tr("ANIMAL_BABY") if animal.is_baby else tr("ANIMAL_ADULT"))
 	bond_label.text = tr("ANIMAL_BOND_FMT") % [animal.bond_level,animal.age_days]
 	happiness_bar.value = animal.happiness
@@ -130,6 +134,7 @@ func _refresh_texts() -> void:
 	play_btn.disabled = animal.last_played_day == GameManager.total_day()
 	collect_btn.disabled = animal.products_ready <= 0
 	rename_btn.disabled = _renaming
+	for button in [feed_btn,brush_btn,play_btn,collect_btn,rename_btn,food_option]:button.focus_mode = Control.FOCUS_NONE if button.disabled else Control.FOCUS_ALL
 	product_label.text = tr("ANIMAL_PRODUCT_FMT") % [L.item_name(str(spec.product)),animal.products_ready]
 	status_label.text = tr("ANIMAL_CARE_DAILY_HINT")
 	var options: Array = Animal2D.VISUALS[str(animal.species)]

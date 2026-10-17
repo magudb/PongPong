@@ -9,6 +9,8 @@ var second_hearts: Control
 var oil_pill: PanelContainer
 var oil_bar: ProgressBar
 var oil_count: Label
+var oil_caption: Label
+var _boss_key := ""
 var boss_box: VBoxContainer
 var boss_name: Label
 var boss_bar: ProgressBar
@@ -38,7 +40,7 @@ func _ready() -> void:
 	second_hearts.hide()
 	oil_pill = L.panel(self,"PillNight",Rect2(40,102,280,30))
 	var row := L.box(oil_pill,false,8)
-	L.label(row,tr("FOREST_OIL"),"OwlEye15")
+	oil_caption = L.label(row,"FOREST_OIL","OwlEye15")
 	oil_bar = ProgressBar.new()
 	oil_bar.theme_type_variation = &"MeterNight"
 	oil_bar.custom_minimum_size = Vector2(132,12)
@@ -47,7 +49,7 @@ func _ready() -> void:
 	oil_bar.show_percentage = false
 	oil_bar.step = 0
 	row.add_child(oil_bar)
-	oil_count = L.label(row,"","OwlEye15")
+	oil_count = L.label(row,"","Display15Owl")
 	boss_box = VBoxContainer.new()
 	add_child(boss_box)
 	boss_box.position = Vector2(428,40)
@@ -64,7 +66,7 @@ func _ready() -> void:
 	boss_box.add_child(boss_bar)
 	for fraction in [.33,.66]:
 		var tick := ColorRect.new()
-		tick.color = C.GOLD
+		tick.color = C.CHALK
 		tick.position = Vector2(424*fraction,2)
 		tick.size = Vector2(2,16)
 		tick.mouse_filter = MOUSE_FILTER_IGNORE
@@ -108,7 +110,7 @@ func _ready() -> void:
 		slot.size_flags_vertical = SIZE_SHRINK_END
 		ability_row.add_child(slot)
 		abilities[spec[0]] = slot
-	drink_count = L.label(abilities.drink.get_node("Frame/Inner"),"","OwlEye15")
+	drink_count = L.label(abilities.drink.get_node("Frame/Inner"),"","Display15Owl")
 	drink_count.set_anchors_and_offsets_preset(PRESET_BOTTOM_RIGHT)
 	drink_count.offset_left = -26
 	drink_count.offset_top = -20
@@ -179,6 +181,7 @@ func _oil(seconds: float, maximum: float) -> void:
 		_oil_pulse.tween_property(oil_pill,"modulate",Color(1,.8,.6),.65)
 		_oil_pulse.tween_property(oil_pill,"modulate",Color.WHITE,.65)
 func _boss(key: String, ratio: float, shown: bool) -> void:
+	_boss_key = key
 	boss_box.visible = shown
 	boss_name.text = tr(key)
 	boss_bar.value = clampf(ratio,0,1)*100
@@ -231,7 +234,7 @@ func pulse_ability(id: String) -> void:
 	if not abilities.has(key): return
 	var slot: Control = abilities[key]
 	if _hint_tweens.has(key) and _hint_tweens[key].is_valid(): _hint_tweens[key].kill()
-	slot.modulate = C.GOLD
+	slot.modulate = C.OWL_EYE
 	var tween := create_tween()
 	_hint_tweens[key] = tween
 	tween.tween_property(slot,"modulate",Color.WHITE,.8)
@@ -240,3 +243,13 @@ func _process(_dt: float) -> void:
 	for key in abilities:
 		var left := _player.cd_seconds(key)
 		abilities[key].set_cooldown(_player.cd_ratio(key),"%.1f" % left if left > .05 else "")
+
+func _notification(what: int) -> void:
+	if what!=NOTIFICATION_TRANSLATION_CHANGED or not is_node_ready() or oil_caption==null:return
+	oil_caption.text = tr("FOREST_OIL")
+	if _boss_key!="":boss_name.text = tr(_boss_key)
+	if minimap!=null and minimap.area!=null:
+		zone_label.text = tr(minimap.area.map.title)+" · "+str(minimap.area.map.depth)
+		_fit_zone()
+	_inventory({})
+	_assist()

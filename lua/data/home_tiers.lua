@@ -379,7 +379,7 @@ config = {
     },
     unlocks = { "workbench", "oven", "loom", "guest_visits", "forge_bench", "forecast", "festival", "royal_visit" },
     -- real = does what the text says; partial = a small real effect (weekly gift rolls, a festival button); stub = listed only.  The Danish text of partial/stub unlocks may not promise more (validator R16).
-    unlock_status = { workbench = "real", oven = "stub", loom = "real", guest_visits = "real", forge_bench = "real", forecast = "stub", festival = "real", royal_visit = "stub" },
+    unlock_status = { workbench = "real", oven = "real", loom = "real", guest_visits = "real", forge_bench = "real", forecast = "real", festival = "real", royal_visit = "real" },
     rooms = { "main", "kitchen", "loft", "pantry", "workshop", "guest_room", "tower_room", "music_room", "library", "ballroom", "great_hall", "keep", "throne_room", "royal_garden" },
   },
 }

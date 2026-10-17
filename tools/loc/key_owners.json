@@ -728,6 +728,12 @@
     "GF_QUEST_"
    ],
    "exact": []
+  },
+  "home_amenities.csv": {
+   "owner": "Home mechanics completion",
+   "prefix": [
+    "HOME_AMENITIES_"
+   ]
   }
  },
  "notes": [

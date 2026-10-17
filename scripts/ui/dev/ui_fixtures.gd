@@ -42,6 +42,7 @@ const SCREENS := {
 	"husbyggeri": "res://scenes/ui/husbyggeri.tscn",
 	"indretning": "res://scenes/ui/indretning.tscn",
 	"home_chest": "res://scenes/ui/home_chest.tscn",
+	"home_amenities": "res://scenes/ui/home_amenities.tscn",
 	"garderobe": "res://scenes/ui/garderobe.tscn",
 	"samlerbog": "res://scenes/ui/samlerbog.tscn",
 	"people": "res://scenes/ui/people.tscn",

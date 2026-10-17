@@ -25,7 +25,7 @@ const GOLD := [0, 200, 300, 900, 2100, 4500, 7500, 12500, 19000, 27000]
 const DAYS := [1, 1, 2, 2, 3, 3, 4, 5, 6, 8]
 const GIFTS := {5: ["throne_root"], 6: ["clock_moon"], 7: ["piano_star"], 8: ["bookshelf_floating"], 9: ["throne_crystal"], 10: ["bed_moon", "chandelier_star"]}
 const UNLOCK_TIER := {"workbench": 1, "oven": 2, "loom": 3, "guest_visits": 4, "forge_bench": 5, "forecast": 6, "festival": 8, "royal_visit": 10}
-const UNLOCK_STATUS := {"workbench": "real", "oven": "stub", "loom": "real", "guest_visits": "real", "forge_bench": "real", "forecast": "stub", "festival": "real", "royal_visit": "stub"}
+const UNLOCK_STATUS := {"workbench": "real", "oven": "real", "loom": "real", "guest_visits": "real", "forge_bench": "real", "forecast": "real", "festival": "real", "royal_visit": "real"}
 ## twelve different backpack items (one slot each): the chest holds one slot per item, whatever the stack size
 const TWELVE_IDS := ["plank_pine", "plank_birch", "plank_oak", "plank_walnut", "stone_block", "slate", "brick", "lime", "nails", "glass_pane", "roof_tile", "timber_beam", "copper_plate"]
 
@@ -512,7 +512,7 @@ func _perks_and_unlocks(t) -> void:
 	var status_ok := true
 	for u in UNLOCK_STATUS:
 		status_ok = status_ok and _hm.unlock_status(u) == UNLOCK_STATUS[u]
-	t.check("unlock_status", status_ok and _hm.unlock_status("nonsense") == "stub", "workbench loom forge_bench real, guest_visits festival real, oven forecast royal_visit stub (%s); an unknown unlock is a stub" % str(UNLOCK_STATUS))
+	t.check("unlock_status", status_ok and _hm.unlock_status("nonsense") == "stub", "all eight listed unlocks real (%s); an unknown unlock is a stub" % str(UNLOCK_STATUS))
 	var rows: Array[Dictionary] = _hm.unlock_rows()
 	t.expect(rows.size() == 8 and str(rows[0]["id"]) == "workbench" and str(rows[0]["name_key"]) == "HOME_UNLOCK_WORKBENCH" and str(rows[7]["desc_key"]) == "HOME_UNLOCK_ROYAL_VISIT_DESC", "unlock_rows(): eight rows in the data's order with the loc keys of the perks card")
 	var keys_ok := true
@@ -522,7 +522,7 @@ func _perks_and_unlocks(t) -> void:
 		keys_ok = keys_ok and (r["unlocked"] == (_hm.tier >= int(UNLOCK_TIER[r["id"]]))) and int(r["tier"]) == int(UNLOCK_TIER[r["id"]])
 		counts[r["status"]] = int(counts[r["status"]]) + 1
 	t.expect(keys_ok, "every unlock row has translated name and description keys, its tier and its unlocked state (tier 4)")
-	t.expect(counts == {"real": 5, "partial": 0, "stub": 3}, "five unlocks include named visits and house parties; three remain listed separately: oven, forecast, royal_visit (%s)" % str(counts))
+	t.expect(counts == {"real": 8, "partial": 0, "stub": 0}, "eight unlocks include kitchen, forecast, visits and celebrations (%s)" % str(counts))
 	_hm.reset()
 
 

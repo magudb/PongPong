@@ -34,7 +34,7 @@ func gain(id: StringName, amount: int) -> void:
 	var weapon := WeaponInfo.of(id)
 	if not weapon.is_empty():
 		var line := L.label(words,TranslationServer.translate("FUND_DAMAGE_FMT") % [int(weapon.damage),TranslationServer.translate("WEAPON_FAMILY_"+str(weapon.family).to_upper())],"Caption")
-		line.add_theme_color_override("font_color",Color("e3c372"))
+		line.add_theme_color_override("font_color",preload("res://scripts/ui/theme/tt_colors.gd").CHALK)
 	entries.push_front(entry)
 	move_child(panel,0)
 	_label(entry)

@@ -106,7 +106,7 @@ func update_map(force := false) -> void:
 			var sense := DungeonRun.chest_sense_cells()
 			var sensed := sense > 0 and Vector2(at-cell).length() <= sense
 			if not (seen and chest.revealed) and not sensed: continue
-			color = C.GOLD
+			color = C.OWL_EYE
 		elif seen and kind == "runestone": color = C.GLOWSHROOM
 		elif seen and kind == "warp": color = C.OWL_EYE if DungeonFloors.floor_of_id(params.get("to","")) > DungeonFloors.floor_of(area) else C.SKY
 		elif seen and kind == "spawn": color = C.SKY
@@ -124,7 +124,7 @@ class DotLayer extends Control:
 	var owner_map: Minimap2D
 	func _draw() -> void:
 		var center := size*.5
-		draw_arc(center,size.x*.5-2,0,TAU,96,C.GOLD,3,true)
+		draw_arc(center,size.x*.5-2,0,TAU,96,C.OWL_EYE,3,true)
 		for dot in owner_map._dots:
 			if dot.ring: draw_arc(dot.position,dot.radius,0,TAU,20,dot.color,2,true)
 			else: draw_circle(dot.position,dot.radius,dot.color)

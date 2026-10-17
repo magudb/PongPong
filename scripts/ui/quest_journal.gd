@@ -23,7 +23,6 @@ func _init() -> void:
 
 func _ready() -> void:
 	super._ready()
-	_group.set_meta("tt_value_selection", true)
 	_tabs = [%ActiveTab, %CompletedTab]
 	if ResourceLoader.exists(CALENDAR):
 		_calendar = load(CALENDAR).instantiate()
@@ -38,6 +37,7 @@ func _ready() -> void:
 	_mother_journal = MotherJournal.new()
 	%CalendarHost.add_child(_mother_journal)
 	for i in _tabs.size():
+		_tabs[i].button_group = _group
 		_tabs[i].pressed.connect(_set_tab.bind(i))
 		_tabs[i].focus_entered.connect(_set_tab.bind(i))
 	%CloseButton.pressed.connect(close)

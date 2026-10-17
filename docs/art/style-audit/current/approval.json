@@ -15204,10 +15204,10 @@
       "evidence": "byte-identical prior visual review, supplemented by current context checks"
     },
     "assets/ui/theme.tres": {
-      "sha256": "29fa8501182ad364d4380bb18fd78098fad5977b51cd4e8592a3b06d15d0c1f3",
+      "sha256": "07b054a2f6999b37b89c52bb6f1db2384fa636ebb96506d9733f53c3b6444515",
       "disposition": "accepted-theme-asset",
       "role": "import-license-or-theme-metadata",
-      "evidence": "M1b native visual review: docs/qa/m1b-completion-2026-10-15/native/ and native-tests.json; cream slider handles, moss track, ink contours, gold focus, raised buttons and parchment panels retained; UI_NAVIGATION.md hover/focus corrections."
+      "evidence": "Native mechanics UI review: docs/qa/mechanics/ui/native and layout; all 14 contact pages inspected, seven repaired screens reviewed at full resolution. Existing painted art, parchment panels, ink contours and gold focus retained. Added semantic owl-eye counts, moss/berry requirements and a two-pixel night meter border."
     },
     "assets/isometric_characters/ghostfam_dyne/celebrate.webp": {
       "sha256": "519ffeb3b368441d44501ac458dadfd418f14a3863a0457d0f84c19319cb3f47",

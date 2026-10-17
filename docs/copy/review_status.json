@@ -446,5 +446,12 @@
     "date": "",
     "voice_frozen": false,
     "rows": 54
+  },
+  "localization/home_amenities.csv": {
+    "status": "draft",
+    "reviewed_by": "",
+    "date": "",
+    "voice_frozen": false,
+    "rows": 20
   }
 }

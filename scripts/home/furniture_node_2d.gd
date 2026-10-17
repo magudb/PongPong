@@ -7,5 +7,8 @@ func interact(player: Node) -> void:
 	match kind:
 		"sleep": get_tree().call_group("world_2d", "sleep")
 		"storage": EventBus.game_event.emit(&"open_home_chest", {})
-		"sit", "warm", "play": EventBus.whisper_requested.emit("HOME_WORLD_" + kind.to_upper())
+		"warm":
+			if HomeManager.unlocked("oven"):EventBus.game_event.emit(&"open_home_amenities",{})
+			else:EventBus.whisper_requested.emit("HOME_WORLD_WARM")
+		"sit", "play": EventBus.whisper_requested.emit("HOME_WORLD_" + kind.to_upper())
 		_: super.interact(player)

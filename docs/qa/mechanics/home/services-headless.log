@@ -1,0 +1,1266 @@
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=home_services,home,home_world,core,save,home_ui
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.vlnPia/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 1.0 s
+== section core  (res://tests/sections/core.gd)
+  ok    core.signal_contract_exact (76 signals; missing [], wrong [], not in the contract [])
+  ok    core.legacy_signals_keep_arity (38 legacy signals)
+  ok    core.plan_3_5_signals (23 signals of PLAN 3.5 + R.13)
+  ok    core.feature_signals_14 (addendum 3.1)
+  ok    core.review_fix_signals (devin-review additions (flag_changed))
+  ok    core.farm_upgraded_removed (PLAN 3.5: removed, never used)
+  ok    core.r13_escape_hatch_and_hotbar_assign (R.13)
+  ok    core.player_spawned_node2d (emitted with a Node2D)
+  ok    core.signal_arity_lint (847 EventBus uses in 431 files, 0 violation(s) []; covers 14 feature signals)
+  ok    core.signal_arity_lint_covers_14_feature_signals (arity of every addendum 3.1 signal)
+  ok    core.signal_arity_lint_detects_mismatch (bad sample ["sample:1 EventBus.gold_changed.emit() has 1 argument(s), the signal has 2", "sample:2 EventBus.nope is neither a declared signal nor a member", "sample:3 EventBus.day_started.connect(func(a): pass) accepts 1..1 argument(s), the signal passes 2", "sample:4 EventBus.home_upgraded.connect(_h) accepts 3..3 argument(s), the signal passes 2", "sample:7 EventBus.save_completed.connect(_t2) accepts 0..0 argument(s), the signal passes 1", "sample:10 EventBus.item_sold.emit() has 2 argument(s), the signal has 3"], good sample [])
+  ok    core.config_literal_defaults (28 days, 4 seasons, 06:00 to 26:00 (= 02:00 at night), 2 min/s)
+  ok    core.config_read_from_lua (minutes_per_real_second 2.0 from LuaRuntime time.*)
+  ok    core.time_manager_has_no_second_copy (TimeManager delegates to GameManager)
+  ok    core.config_override_seasons (override seam)
+  ok    core.config_drives_end_day (day 7 of aa -> day 1 of bb (1 bb))
+  ok    core.config_drives_year (year 2 starts at total day 15 (15))
+  ok    core.modal_stack (push x2 / pop x2: paused true true, after first pop true, after last pop resumed true)
+  ok    core.modal_changed_signal (modal_changed payloads [[&"pause"], [&"pause", &"settings"], [&"pause"], []])
+  ok    core.modal_stack_pop_out_of_order (pop the older modal first)
+  ok    core.modal_phase_cutscene_and_restore (CUTSCENE true, shop over dialogue true, true, true, back to CUTSCENE true, PLAYING true)
+  ok    core.modal_push_is_idempotent (double push = one entry, unknown pop ignored)
+  info  expected engine error below (declared with allow): push_modal with an empty name
+ERROR: GameManager.push_modal: a modal needs a name
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] push_modal (res://scripts/autoload/game_manager.gd:261)
+       [1] _test_modal_stack (res://tests/sections/core.gd:527)
+       [2] run (res://tests/sections/core.gd:140)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    empty modal name is refused with an error (allowed 'a modal needs a name' seen 1 time(s), want >= 1)
+  ok    core.modal_empty_name_refused
+  ok    core.modal_stack_cleared_at_menu (quit to menu leaves a live, unpaused menu)
+  ok    core.modal_over_menu_restores_menu (settings over the title)
+  ok    core.phase_character_select
+  ok    core.phase_legacy_change_phase (change_phase(PAUSED/PLAYING))
+  ok    core.phase_playing_does_not_unpause_open_modal (an open modal wins over change_phase(PLAYING))
+  ok    core.phase_after_pop_all
+  ok    core.modal_changed_only_when_the_stack_changes (scene boundaries and no-op pops are silent: [])
+  ok    core.modal_never_touches_the_mouse (mouse mode stays 0)
+  ok    core.flags_json_safe_types (bool, int, float, String; StringName is stored as String)
+  info  expected engine errors below (declared with allow): set_flag with an Array, a Vector2 and NAN
+ERROR: GameManager.set_flag(bad_array): Array is not JSON-safe (use bool, int, float or String)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_flag (res://scripts/autoload/game_manager.gd:358)
+       [1] _test_flags (res://tests/sections/core.gd:574)
+       [2] run (res://tests/sections/core.gd:141)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+ERROR: GameManager.set_flag(bad_vector): Vector2 is not JSON-safe (use bool, int, float or String)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_flag (res://scripts/autoload/game_manager.gd:358)
+       [1] _test_flags (res://tests/sections/core.gd:575)
+       [2] run (res://tests/sections/core.gd:141)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+ERROR: GameManager.set_flag(bad_nan): float is not JSON-safe (use bool, int, float or String)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_flag (res://scripts/autoload/game_manager.gd:358)
+       [1] _test_flags (res://tests/sections/core.gd:576)
+       [2] run (res://tests/sections/core.gd:141)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    non JSON-safe values are refused with an error (allowed '(use bool, int, float or String)' seen 3 time(s), want >= 3)
+  ok    core.flags_unsafe_values_not_stored
+  ok    core.flags_null_clears
+  ok    core.flags_clear
+  ok    core.flag_int_defaults (absent flags: home_tier 1, home_building 0, home_upgrade_done 0)
+  ok    core.flag_int_coerces (3.0 -> 3, true -> 1, '12' -> 12, 'tre' -> default)
+  ok    core.flag_int_after_json_roundtrip (new game defaults ok true; raw value after JSON is a float true; flag_int gives ints true)
+  ok    core.new_game_signal_once_and_last (signals in order: ["modal_changed", "player_character_changed", "weather_changed", "new_game_started"])
+  ok    core.new_game_started_is_last_gm_signal (after it only the reset wave of other systems: [])
+  ok    core.new_game_skin_announced_final (player_character_changed [&"fairy_meadow"])
+  ok    core.new_game_state_reset_before_signal (day/season/year/clock, flags { &"intro_pending": true, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0 }, zones, modals gone, phase PLAYING)
+  ok    core.new_game_intro_pending (intro_pending=true, the dirty flag is gone)
+  ok    core.new_game_resets_own_state
+  ok    core.new_game_resets_time_manager (weather klart, clock running)
+  ok    core.new_game_default_and_explicit_skin (animal animal_fox hobbit hobbit_pip ghost ghost_bu explicit fairy_dusk)
+  ok    core.new_game_default_names (empty names fall back to the translated defaults (Eventyrrejsende / Min Trækronsgård))
+  ok    core.new_game_wires_EconomyManager (EconomyManager.reset() is connected to new_game_started)
+  ok    core.new_game_wires_QuestManager (QuestManager.reset() is connected to new_game_started)
+  ok    core.new_game_wires_TimeManager (TimeManager.reset() is connected to new_game_started)
+  ok    core.new_game_wires_ShopSystem (ShopSystem.reset() is connected to new_game_started)
+  ok    core.new_game_wires_AnimalHusbandry (AnimalHusbandry.reset() is connected to new_game_started)
+  ok    core.new_game_wires_SaveManager (SaveManager.reset() is connected to new_game_started)
+  ok    core.new_game_resets_gold (gold after a new game: 500)
+  ok    core.new_game_resets_all (one new_game_started per start_new_game; 6 system(s) reset through it so far)
+  ok    core.from_dict_restores_state
+  ok    core.from_dict_types_after_json (ints and StringNames come back typed)
+  ok    core.from_dict_does_not_start_playing (phase stays 0)
+  ok    core.from_dict_emits_character_changed (["player_character_changed"])
+  ok    core.to_dict_total_day (total_day 156 in the dictionary for the title screen)
+  ok    core.from_dict_empty_is_safe
+  info  expected engine warning below (declared with allow): from_dict drops an unsafe flag
+WARNING: GameManager.from_dict: world flag 'bad' is not JSON-safe and was dropped
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _sanitized_flags (res://scripts/autoload/game_manager.gd:624)
+         [1] from_dict (res://scripts/autoload/game_manager.gd:600)
+         [2] _test_from_dict (res://tests/sections/core.gd:744)
+         [3] run (res://tests/sections/core.gd:143)
+         [4] go_menu (res://tests/lib/flow.gd:69)
+         [5] change_scene (res://tests/lib/flow.gd:57)
+         [6] frames (res://tests/lib/drive.gd:79)
+  ok    an unsafe flag in a save is reported (allowed 'and was dropped' seen 1 time(s), want >= 1)
+  ok    core.from_dict_drops_unsafe_flags
+  ok    core.unlock_zone_payload (zone_unlocked(crystal_cave))
+  ok    core.unlock_zone_signals (zone_unlocked x1, zone_entered x0)
+  ok    core.unlock_zone_toast (one toast, icon zone: [["Nyt område!", "Du har låst op for: Krystalgrotten", "zone"]])
+  ok    core.unlock_toast_never_formats_a_raw_key (an untranslated key (no placeholder) is returned as it is: no String formatting error)
+  ok    core.unlock_zone_state (unlocked, not discovered)
+  ok    core.unlock_zone_twice_is_silent (no second signal, no second toast)
+  ok    core.zone_entered_discovers
+  ok    core.advance_time_25h (06:00 + 25 h = day 2 07:00)
+  ok    core.advance_time_25h_signals (["day_ended", "day_started", "game_event", "time_of_day_changed"])
+  ok    core.midnight_passed_event (game_event(midnight_passed) after day_started: [&"midnight_passed", { "day": 2, "season": "foraar" }])
+  ok    core.advance_time_multiday (50 h -> day 3 08:00 true; 18 h -> raw 24:00 of the same day true; 20 h -> day 2 02:00 true; 23:59 + 1 min -> raw 24:00 same day true; 25:59 + 1 min -> day 2 02:00 true; 29 days 90 min -> sommer day 2 07:30 true)
+  ok    core.time_of_day_changed_range (raw hour 2..25 (a signal at 24:30 carries 24: the HUD shows 00:30), minute 0..59)
+  ok    core.advance_time_zero_and_negative (0 min emits the clock once, negative minutes are ignored)
+  ok    core.season_rollover (day 28 foraar 23:00 + 2 h = still day 28 (01:00); 01:00 (raw 25:00) + 2 h = day 1 sommer 03:00: ["day_ended", "season_changed", "day_started", "game_event", "time_of_day_changed"])
+  ok    core.year_rollover (vinter 28 -> foraar day 1 of year 2)
+  ok    core.end_day_signal_order (["day_ended", "day_started", "time_of_day_changed"] (the bed emits no midnight_passed))
+  ok    core.end_day_full_year (114 end_day() calls: day 3 foraar year 2 (total 115))
+  ok    core.total_day_values (Dag 1 .. Dag 112, year 2 starts at Dag 113)
+  ok    core.total_day_current (day 9 efteraar year 1 is Dag 65)
+  ok    core.sleep_from_bed (21:30 -> next day 06:00)
+  ok    core.sleep_after_passout_no_double_day (after the 02:00 roll: wake at 06:00 of the same calendar day (day 5))
+  ok    date_text(16, foraar) in da (got Tirsdag 16. Blomstermåned, want Tirsdag 16. Blomstermåned)
+  ok    date_text(16, foraar) in en (got Tuesday 16. Month of Blooms, want Tuesday 16. Month of Blooms)
+  ok    core.calendar_names (date_text da/en, 28 weekdays true, 4 months true, 5 weather names true, en names true, defaults to today true)
+  ok    core.weekday_is_monday_on_day_one_of_every_season (Mandag = day 1 of every season)
+  ok    core.first_weekday_config (time.first_weekday=2: day 1 is Onsdag; the default is Mandag)
+  info  expected engine error below (declared with allow): set_weather with an unknown id
+ERROR: TimeManager.set_weather: unknown weather id 'hagl'
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_weather (res://scripts/autoload/time_manager.gd:148)
+       [1] _test_weather (res://tests/sections/core.gd:960)
+       [2] run (res://tests/sections/core.gd:149)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    an unknown weather id is refused (allowed 'unknown weather id' seen 1 time(s), want >= 1)
+  ok    core.weather_set_and_announced (weather_changed(regn), is_raining only for regn, unknown id refused)
+  ok    core.weather_roll_uses_config_chances (roll 0.0 -> regn, 0.30 -> taage, 0.90 -> klart)
+  ok    core.weather_snow_only_in_vinter (snow chance outside vinter is ignored)
+  ok    core.weather_weights_are_normalised (klart 6 / regn 3 / torden 1 -> { &"regn": 0.3, &"torden": 0.1, &"klart": 0.6 }; rolls 0.10 regn, 0.35 torden, 0.50 klart)
+  ok    core.weather_table_is_valid (foraar [&"regn", &"taage", &"klart"]; sommer [&"regn", &"torden", &"klart"]; efteraar [&"regn", &"taage", &"klart"]; vinter [&"taage", &"sne", &"klart"]; )
+  ok    core.is_night_from_config (20:00-05:00 by default, configurable)
+  ok    core.weather_default_rolls_are_valid (ids seen: [&"taage", &"klart", &"regn", &"torden", &"sne"])
+  ok    core.weather_rolled_before_day_started (a day_started listener already saw the roll (1), total 1)
+  ok    core.weather_rolled_once_per_day (a stray day_started of the same day does not roll again)
+  ok    core.weather_rolled_by_game_manager_before_listeners (without TimeManager's own handler a listener still saw the new roll (2, was 1))
+  ok    core.weather_one_roll_per_crossed_midnight (25 h = 1 roll, 50 h = 2 rolls)
+  ok    core.time_manager_reset
+  ok    core.time_manager_save_roundtrip (weather and the day it belongs to survive JSON)
+  ok    core.time_manager_from_dict_bad_weather (unknown saved weather falls back to klart)
+  ok    core.time_tick_rate (2 game minutes per real second: 1 s = 06:02 (06:02))
+  ok    core.pause_time_is_idempotent (pause twice, resume once: the clock runs again)
+  ok    core.resume_time_is_idempotent
+  ok    core.clock_stops_in_modals_and_menus (paused modal true, dialogue true, menu true)
+  ok    core.time_scale (time scale 2: +2 minutes for 0.5 s (06:05))
+  ok    core.tick_crosses_midnight (23:59 + 1 tick = day 1 raw 24:00 (00:00 of the same day); 01:59 + 1 tick = day 2 02:00)
+  ok    core.day_fraction (noon is half of the day)
+  ok    core.no_mouse_capture (16 autoload scripts scanned, none touches Input.mouse_mode [] (the cursor itself is menus.cursor_always_visible, P16))
+  --    core: 114 checks, 0 failed, 0 skipped, 0.8 s
+== section home  (res://tests/sections/home.gd)
+  ok    HomeManager is the autoload of scripts/home/home_manager.gd
+  ok    SaveManager has the section `home` exactly once
+  ok    order 10: after the built-in sections
+  ok    the node behind the section is HomeManager
+  ok    reset() is wired to new_game_started by the manager itself
+  ok    the morning handler listens to day_started
+  ok    the test helper Fresh resets HomeManager with the other feature managers
+  ok    a new game starts as a Skur: tier 1, a plain int
+  ok    nothing under construction
+  ok    the door is open
+  ok    ten tiers are defined, tier 1 is not the end
+  ok    empty chest, no festival, no visit, no pending gift
+  ok    flag home_tier = 1 (an int)
+  ok    flags home_building = 0 and home_upgrade_done = 0
+  ok    no castle yet
+  ok    tier 1 and tiers outside 1..10 have no requirement rows
+  ok    tier_def: skur .. slot, {} outside
+  ok    tier 2 on day one without gold: the first blocker is gold (["gold", "materials", "gate"])
+  ok    every blocker is listed: gold, materials and the quest intro_lottery
+  ok    the 500 starting acorns cover step 2 (200): materials and the quest are what is missing (["materials", "gate"])
+  ok    only the next tier can be asked for
+  ok    start_upgrade with missing requirements changes nothing
+  ok    finish_upgrade with nothing under construction does nothing
+  ok    tier 1: record, name key HOME_TIER_1 translates
+  ok    tier 1: 0 guldagern, 1 day(s)
+  ok    tier 1: materials {  }
+  ok    tier 1 lives with +0 energy, 12 chest slots, 11 pieces, 0 guest gifts a week
+  ok    tier 1: furniture_capacity equals max_furniture of room_t01.json
+  ok    tier 1: the art record of home.json is the same tier (skur)
+  ok    tier 2: record, name key HOME_TIER_2 translates
+  ok    tier 2: 200 guldagern, 1 day(s)
+  ok    tier 2: materials { "plank_pine": 16, "nails": 24, "stone_block": 6 }
+  ok    tier 2 lives with +3 energy, 18 chest slots, 16 pieces, 0 guest gifts a week
+  ok    tier 2: furniture_capacity equals max_furniture of room_t02.json
+  ok    tier 2: the art record of home.json is the same tier (hytte)
+  ok    tier 3: record, name key HOME_TIER_3 translates
+  ok    tier 3: 300 guldagern, 2 day(s)
+  ok    tier 3: materials { "plank_pine": 20, "straw_bundle": 16, "lime": 8, "nails": 30, "glass_pane": 4 }
+  ok    tier 3 lives with +6 energy, 24 chest slots, 19 pieces, 1 guest gifts a week
+  ok    tier 3: furniture_capacity equals max_furniture of room_t03.json
+  ok    tier 3: the art record of home.json is the same tier (straatag)
+  ok    tier 4: record, name key HOME_TIER_4 translates
+  ok    tier 4: 900 guldagern, 2 day(s)
+  ok    tier 4: materials { "plank_oak": 16, "timber_beam": 8, "roof_tile": 24, "lime": 8, "nails": 36, "glass_pane": 8 }
+  ok    tier 4 lives with +9 energy, 30 chest slots, 26 pieces, 1 guest gifts a week
+  ok    tier 4: furniture_capacity equals max_furniture of room_t04.json
+  ok    tier 4: the art record of home.json is the same tier (bindingsvaerk)
+  ok    tier 5: record, name key HOME_TIER_5 translates
+  ok    tier 5: 2100 guldagern, 3 day(s)
+  ok    tier 5: materials { "plank_oak": 24, "timber_beam": 12, "roof_tile": 40, "brick": 36, "glass_pane": 12, "copper_plate": 4 }
+  ok    tier 5 lives with +12 energy, 40 chest slots, 30 pieces, 2 guest gifts a week
+  ok    tier 5: furniture_capacity equals max_furniture of room_t05.json
+  ok    tier 5: the art record of home.json is the same tier (gaarden)
+  ok    tier 6: record, name key HOME_TIER_6 translates
+  ok    tier 6: 4500 guldagern, 3 day(s)
+  ok    tier 6: materials { "stone_block": 60, "slate": 30, "glass_pane": 16, "plank_walnut": 12, "amethyst": 2 }
+  ok    tier 6 lives with +15 energy, 50 chest slots, 38 pieces, 2 guest gifts a week
+  ok    tier 6: furniture_capacity equals max_furniture of room_t06.json
+  ok    tier 6: the art record of home.json is the same tier (taarnhus)
+  ok    tier 7: record, name key HOME_TIER_7 translates
+  ok    tier 7: 7500 guldagern, 4 day(s)
+  ok    tier 7: materials { "marble_block": 16, "slate": 40, "glass_pane": 30, "plank_walnut": 20, "gold_leaf": 2 }
+  ok    tier 7 lives with +18 energy, 60 chest slots, 46 pieces, 3 guest gifts a week
+  ok    tier 7: furniture_capacity equals max_furniture of room_t07.json
+  ok    tier 7: the art record of home.json is the same tier (landsted)
+  ok    tier 8: record, name key HOME_TIER_8 translates
+  ok    tier 8: 12500 guldagern, 5 day(s)
+  ok    tier 8: materials { "brick": 90, "copper_plate": 30, "glass_pane": 40, "marble_block": 20, "gold_leaf": 4 }
+  ok    tier 8 lives with +22 energy, 72 chest slots, 57 pieces, 3 guest gifts a week
+  ok    tier 8: furniture_capacity equals max_furniture of room_t08.json
+  ok    tier 8: the art record of home.json is the same tier (herregaard)
+  ok    tier 9: record, name key HOME_TIER_9 translates
+  ok    tier 9: 19000 guldagern, 6 day(s)
+  ok    tier 9: materials { "stone_block": 120, "slate": 60, "timber_beam": 40, "brass_bar": 12, "moonstone": 2 }
+  ok    tier 9 lives with +26 energy, 84 chest slots, 65 pieces, 4 guest gifts a week
+  ok    tier 9: furniture_capacity equals max_furniture of room_t09.json
+  ok    tier 9: the art record of home.json is the same tier (borg)
+  ok    tier 10: record, name key HOME_TIER_10 translates
+  ok    tier 10: 27000 guldagern, 8 day(s)
+  ok    tier 10: materials { "marble_block": 40, "glass_pane": 40, "roof_tile": 80, "gold_leaf": 12, "amethyst": 6, "moonstone": 6 }
+  ok    tier 10 lives with +30 energy, 100 chest slots, 74 pieces, 5 guest gifts a week
+  ok    tier 10: furniture_capacity equals max_furniture of room_t10.json
+  ok    tier 10: the art record of home.json is the same tier (slot)
+  ok    the ten tiers cost 74,000 guldagern in total (74000)
+  ok    the housewarming pieces are the seven of the addendum ([])
+  ok    requires.hygge is a LEVEL INDEX: 2 hyggeligt, 3 rigtig hyggeligt, 4 eventyrligt
+  ok    the gates of the addendum are rows: quests at 2, 5-9, hearts at 4, 7, 10, hygge at 7-10
+  ok    tier 7: gold + 5 materials + days + quest + friend + hygge = 10 rows
+  ok    economy.home_cost_scale is 1.0 by default
+  ok    scale 2.0: tier 5 costs 4200 and the gold row says so
+  ok    scale 0.5: 100 and 13500
+  ok    scale 0: the price is free
+  ok    everything but the scaled gold given ([])
+  ok    start_upgrade at scale 3.0 takes 3 x 200 = 600 guldagern (900 -> 300)
+  ok    tier 3 at scale 0.5 costs 150: with 0 guldagern the gold row is unmet
+  ok    and met with exactly 150
+  ok    the override is gone: 200 again
+  ok    tier 1: Perks.total("energy") adds the home bonus +0 (2.0)
+  ok    tier 1: the four perk numbers equal the addendum table
+  ok    tier 2: Perks.total("energy") adds the home bonus +3 (5.0)
+  ok    tier 2: the four perk numbers equal the addendum table
+  ok    tier 3: Perks.total("energy") adds the home bonus +6 (8.0)
+  ok    tier 3: the four perk numbers equal the addendum table
+  ok    tier 4: Perks.total("energy") adds the home bonus +9 (11.0)
+  ok    tier 4: the four perk numbers equal the addendum table
+  ok    tier 5: Perks.total("energy") adds the home bonus +12 (14.0)
+  ok    tier 5: the four perk numbers equal the addendum table
+  ok    tier 6: Perks.total("energy") adds the home bonus +15 (17.0)
+  ok    tier 6: the four perk numbers equal the addendum table
+  ok    tier 7: Perks.total("energy") adds the home bonus +18 (20.0)
+  ok    tier 7: the four perk numbers equal the addendum table
+  ok    tier 8: Perks.total("energy") adds the home bonus +22 (24.0)
+  ok    tier 8: the four perk numbers equal the addendum table
+  ok    tier 9: Perks.total("energy") adds the home bonus +26 (28.0)
+  ok    tier 9: the four perk numbers equal the addendum table
+  ok    tier 10: Perks.total("energy") adds the home bonus +30 (32.0)
+  ok    tier 10: the four perk numbers equal the addendum table
+  ok    home.stations_by_tier (snedkerbord <- workbench (T1), vaev <- loom (T3), smedje <- forge_bench (T5) at every tier; unknown stations are closed; [])
+  ok    home.perks_energy_storage_capacity (max_energy_bonus / storage_slots / furniture_capacity / guest_visits_per_week of the ten tiers equal the addendum table, and Perks.total("energy") adds the home bonus (30 at the castle))
+  ok    tier 1: only the carpenter's bench
+  ok    tier 4: the loom is open, the forge is not; CraftingSystem reads the same tier flag
+  ok    home.unlock_status (all eight listed unlocks real ({ "workbench": "real", "oven": "real", "loom": "real", "guest_visits": "real", "forge_bench": "real", "forecast": "real", "festival": "real", "royal_visit": "real" }); an unknown unlock is a stub)
+  ok    unlock_rows(): eight rows in the data's order with the loc keys of the perks card
+  ok    every unlock row has translated name and description keys, its tier and its unlocked state (tier 4)
+  ok    eight unlocks include kitchen, forecast, visits and celebrations ({ "real": 8, "partial": 0, "stub": 0 })
+  ok    the stand-in furniture store holds 3 placed pieces and 2 spare chairs
+  ok    tier 2: everything it asks for was given through the public APIs ([])
+  ok    tier 2: with everything given the upgrade can start
+  ok    tier 2: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 2: 'gold:gold' put back -> the upgrade can start
+  ok    tier 2: only 'material:plank_pine' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 2: 'material:plank_pine' put back -> the upgrade can start
+  ok    tier 2: only 'material:nails' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 2: 'material:nails' put back -> the upgrade can start
+  ok    tier 2: only 'material:stone_block' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 2: 'material:stone_block' put back -> the upgrade can start
+  ok    tier 2: only 'quest:intro_lottery' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 2: 'quest:intro_lottery' put back -> the upgrade can start
+  ok    tier 2: 5 single-requirement tests, restored
+  ok    tier 2: start_upgrade ok, ready on day 2
+  ok    tier 2: exactly 200 guldagern and exactly the listed materials left the backpack, nothing else
+  ok    tier 2: the house is closed while it is built
+  ok    tier 2: construction {target, start_day, ready_day} in absolute days
+  ok    tier 2: home_upgrade_started(1, 2, 2)
+  ok    tier 2: flags home_tier 1, home_building 2 while building
+  ok    tier 2: the REAL fairy_builder dialogue is in its 'building' branch (t02_building)
+  ok    tier 2: a second upgrade is refused while building, nothing is taken twice
+  ok    tier 2: one progress signal per morning before the last (0), no upgrade yet
+  ok    tier 2 reached after 1 day(s)
+  ok    tier 2: exactly 1 calendar days passed
+  ok    tier 2: home_upgraded(1, 2) emitted once
+  ok    tier 2: game_event home_upgraded {tier: 2}
+  ok    tier 2: flags home_tier 2, home_building 0, home_upgrade_done 2
+  ok    tier 2: home_castle_built is not set
+  ok    tier 2: the REAL fairy_builder dialogue celebrates (t02_done)
+  ok    tier 2: the flag stays while the dialogue with the builder is open
+  ok    tier 2: talking to another citizen keeps home_upgrade_done, talking to the builder clears it (t02_idle)
+  ok    tier 2: the perks of the new tier apply
+  ok    tier 2: the housewarming piece(s) [] arrived once, routed to the furniture store
+  ok    tier 2: no piece lost ([]), 3 placed
+  ok    tier 2: the next step is not free by itself (materials)
+  ok    tier 3: everything it asks for was given through the public APIs ([])
+  ok    tier 3: with everything given the upgrade can start
+  ok    tier 3: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 3: 'gold:gold' put back -> the upgrade can start
+  ok    tier 3: only 'material:plank_pine' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 3: 'material:plank_pine' put back -> the upgrade can start
+  ok    tier 3: only 'material:straw_bundle' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 3: 'material:straw_bundle' put back -> the upgrade can start
+  ok    tier 3: only 'material:lime' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 3: 'material:lime' put back -> the upgrade can start
+  ok    tier 3: only 'material:nails' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 3: 'material:nails' put back -> the upgrade can start
+  ok    tier 3: only 'material:glass_pane' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 3: 'material:glass_pane' put back -> the upgrade can start
+  ok    tier 3: 6 single-requirement tests, restored
+  ok    tier 3: start_upgrade ok, ready on day 4
+  ok    tier 3: exactly 300 guldagern and exactly the listed materials left the backpack, nothing else
+  ok    tier 3: the house is closed while it is built
+  ok    tier 3: construction {target, start_day, ready_day} in absolute days
+  ok    tier 3: home_upgrade_started(2, 3, 4)
+  ok    tier 3: flags home_tier 2, home_building 3 while building
+  ok    tier 3: the REAL fairy_builder dialogue is in its 'building' branch (t03_building)
+  ok    tier 3: a second upgrade is refused while building, nothing is taken twice
+  ok    tier 3: morning 1 of 2: still building, 1 day(s) left
+  ok    tier 3: the build is 1 / 2 done
+  ok    tier 3: one progress signal per morning before the last (1), no upgrade yet
+  ok    tier 3 reached after 2 day(s)
+  ok    tier 3: exactly 2 calendar days passed
+  ok    tier 3: home_upgraded(2, 3) emitted once
+  ok    tier 3: game_event home_upgraded {tier: 3}
+  ok    tier 3: flags home_tier 3, home_building 0, home_upgrade_done 3
+  ok    tier 3: home_castle_built is not set
+  ok    tier 3: the REAL fairy_builder dialogue celebrates (t03_done)
+  ok    tier 3: the flag stays while the dialogue with the builder is open
+  ok    tier 3: talking to another citizen keeps home_upgrade_done, talking to the builder clears it (t03_idle)
+  ok    tier 3: the perks of the new tier apply
+  ok    tier 3: the housewarming piece(s) [] arrived once, routed to the furniture store
+  ok    tier 3: no piece lost ([]), 3 placed
+  ok    tier 3: the next step is not free by itself (gold)
+  ok    tier 4: everything it asks for was given through the public APIs ([])
+  ok    tier 4: with everything given the upgrade can start
+  ok    tier 4: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 4: 'gold:gold' put back -> the upgrade can start
+  ok    tier 4: only 'material:plank_oak' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 4: 'material:plank_oak' put back -> the upgrade can start
+  ok    tier 4: only 'material:timber_beam' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 4: 'material:timber_beam' put back -> the upgrade can start
+  ok    tier 4: only 'material:roof_tile' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 4: 'material:roof_tile' put back -> the upgrade can start
+  ok    tier 4: only 'material:lime' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 4: 'material:lime' put back -> the upgrade can start
+  ok    tier 4: only 'material:nails' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 4: 'material:nails' put back -> the upgrade can start
+  ok    tier 4: only 'material:glass_pane' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 4: 'material:glass_pane' put back -> the upgrade can start
+  ok    tier 4: only 'friend:mayor_lyra' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 4: 'friend:mayor_lyra' put back -> the upgrade can start
+  ok    tier 4: 8 single-requirement tests, restored
+  ok    tier 4: start_upgrade ok, ready on day 6
+  ok    tier 4: exactly 900 guldagern and exactly the listed materials left the backpack, nothing else
+  ok    tier 4: the house is closed while it is built
+  ok    tier 4: construction {target, start_day, ready_day} in absolute days
+  ok    tier 4: home_upgrade_started(3, 4, 6)
+  ok    tier 4: flags home_tier 3, home_building 4 while building
+  ok    tier 4: the REAL fairy_builder dialogue is in its 'building' branch (t04_building)
+  ok    tier 4: a second upgrade is refused while building, nothing is taken twice
+  ok    tier 4: morning 1 of 2: still building, 1 day(s) left
+  ok    tier 4: the build is 1 / 2 done
+  ok    tier 4: one progress signal per morning before the last (1), no upgrade yet
+  ok    tier 4 reached after 2 day(s)
+  ok    tier 4: exactly 2 calendar days passed
+  ok    tier 4: home_upgraded(3, 4) emitted once
+  ok    tier 4: game_event home_upgraded {tier: 4}
+  ok    tier 4: flags home_tier 4, home_building 0, home_upgrade_done 4
+  ok    tier 4: home_castle_built is not set
+  ok    tier 4: the REAL fairy_builder dialogue celebrates (t04_done)
+  ok    tier 4: the flag stays while the dialogue with the builder is open
+  ok    tier 4: talking to another citizen keeps home_upgrade_done, talking to the builder clears it (t04_idle)
+  ok    tier 4: the perks of the new tier apply
+  ok    tier 4: the housewarming piece(s) [] arrived once, routed to the furniture store
+  ok    tier 4: no piece lost ([]), 3 placed
+  ok    tier 4: the next step is not free by itself (gold)
+  ok    tier 5: everything it asks for was given through the public APIs ([])
+  ok    tier 5: with everything given the upgrade can start
+  ok    tier 5: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 5: 'gold:gold' put back -> the upgrade can start
+  ok    tier 5: only 'material:plank_oak' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 5: 'material:plank_oak' put back -> the upgrade can start
+  ok    tier 5: only 'material:timber_beam' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 5: 'material:timber_beam' put back -> the upgrade can start
+  ok    tier 5: only 'material:roof_tile' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 5: 'material:roof_tile' put back -> the upgrade can start
+  ok    tier 5: only 'material:brick' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 5: 'material:brick' put back -> the upgrade can start
+  ok    tier 5: only 'material:glass_pane' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 5: 'material:glass_pane' put back -> the upgrade can start
+  ok    tier 5: only 'material:copper_plate' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 5: 'material:copper_plate' put back -> the upgrade can start
+  ok    tier 5: only 'quest:first_animal' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 5: 'quest:first_animal' put back -> the upgrade can start
+  ok    tier 5: 8 single-requirement tests, restored
+  ok    tier 5: start_upgrade ok, ready on day 9
+  ok    tier 5: exactly 2100 guldagern and exactly the listed materials left the backpack, nothing else
+  ok    tier 5: the house is closed while it is built
+  ok    tier 5: construction {target, start_day, ready_day} in absolute days
+  ok    tier 5: home_upgrade_started(4, 5, 9)
+  ok    tier 5: flags home_tier 4, home_building 5 while building
+  ok    tier 5: the REAL fairy_builder dialogue is in its 'building' branch (t05_building)
+  ok    tier 5: a second upgrade is refused while building, nothing is taken twice
+  ok    tier 5: morning 1 of 3: still building, 2 day(s) left
+  ok    tier 5: the build is 1 / 3 done
+  ok    tier 5: morning 2 of 3: still building, 1 day(s) left
+  ok    tier 5: the build is 2 / 3 done
+  ok    tier 5: one progress signal per morning before the last (2), no upgrade yet
+  ok    tier 5 reached after 3 day(s)
+  ok    tier 5: exactly 3 calendar days passed
+  ok    tier 5: home_upgraded(4, 5) emitted once
+  ok    tier 5: game_event home_upgraded {tier: 5}
+  ok    tier 5: flags home_tier 5, home_building 0, home_upgrade_done 5
+  ok    tier 5: home_castle_built is not set
+  ok    tier 5: the REAL fairy_builder dialogue celebrates (t05_done)
+  ok    tier 5: the flag stays while the dialogue with the builder is open
+  ok    tier 5: talking to another citizen keeps home_upgrade_done, talking to the builder clears it (t05_idle)
+  ok    tier 5: the perks of the new tier apply
+  ok    tier 5: the housewarming piece(s) ["throne_root"] arrived once, routed to the furniture store
+  ok    tier 5: no piece lost ([]), 3 placed
+  ok    tier 5: the next step is not free by itself (gold)
+  ok    tier 6: everything it asks for was given through the public APIs ([])
+  ok    tier 6: with everything given the upgrade can start
+  ok    tier 6: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 6: 'gold:gold' put back -> the upgrade can start
+  ok    tier 6: only 'material:stone_block' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 6: 'material:stone_block' put back -> the upgrade can start
+  ok    tier 6: only 'material:slate' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 6: 'material:slate' put back -> the upgrade can start
+  ok    tier 6: only 'material:glass_pane' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 6: 'material:glass_pane' put back -> the upgrade can start
+  ok    tier 6: only 'material:plank_walnut' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 6: 'material:plank_walnut' put back -> the upgrade can start
+  ok    tier 6: only 'material:amethyst' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 6: 'material:amethyst' put back -> the upgrade can start
+  ok    tier 6: only 'quest:crystal_cave' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 6: 'quest:crystal_cave' put back -> the upgrade can start
+  ok    tier 6: 7 single-requirement tests, restored
+  ok    tier 6: start_upgrade ok, ready on day 12
+  ok    tier 6: exactly 4500 guldagern and exactly the listed materials left the backpack, nothing else
+  ok    tier 6: the house is closed while it is built
+  ok    tier 6: construction {target, start_day, ready_day} in absolute days
+  ok    tier 6: home_upgrade_started(5, 6, 12)
+  ok    tier 6: flags home_tier 5, home_building 6 while building
+  ok    tier 6: the REAL fairy_builder dialogue is in its 'building' branch (t06_building)
+  ok    tier 6: a second upgrade is refused while building, nothing is taken twice
+  ok    tier 6: morning 1 of 3: still building, 2 day(s) left
+  ok    tier 6: the build is 1 / 3 done
+  ok    tier 6: morning 2 of 3: still building, 1 day(s) left
+  ok    tier 6: the build is 2 / 3 done
+  ok    tier 6: one progress signal per morning before the last (2), no upgrade yet
+  ok    tier 6 reached after 3 day(s)
+  ok    tier 6: exactly 3 calendar days passed
+  ok    tier 6: home_upgraded(5, 6) emitted once
+  ok    tier 6: game_event home_upgraded {tier: 6}
+  ok    tier 6: flags home_tier 6, home_building 0, home_upgrade_done 6
+  ok    tier 6: home_castle_built is not set
+  ok    tier 6: the REAL fairy_builder dialogue celebrates (t06_done)
+  ok    tier 6: the flag stays while the dialogue with the builder is open
+  ok    tier 6: talking to another citizen keeps home_upgrade_done, talking to the builder clears it (t06_idle)
+  ok    tier 6: the perks of the new tier apply
+  ok    tier 6: the housewarming piece(s) ["clock_moon"] arrived once, routed to the furniture store
+  ok    tier 6: no piece lost ([]), 3 placed
+  ok    tier 6: the next step is not free by itself (gold)
+  ok    tier 7: everything it asks for was given through the public APIs ([])
+  ok    tier 7: with everything given the upgrade can start
+  ok    tier 7: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 7: 'gold:gold' put back -> the upgrade can start
+  ok    tier 7: only 'material:marble_block' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 7: 'material:marble_block' put back -> the upgrade can start
+  ok    tier 7: only 'material:slate' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 7: 'material:slate' put back -> the upgrade can start
+  ok    tier 7: only 'material:glass_pane' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 7: 'material:glass_pane' put back -> the upgrade can start
+  ok    tier 7: only 'material:plank_walnut' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 7: 'material:plank_walnut' put back -> the upgrade can start
+  ok    tier 7: only 'material:gold_leaf' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 7: 'material:gold_leaf' put back -> the upgrade can start
+  ok    tier 7: only 'quest:fairy_friendship' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 7: 'quest:fairy_friendship' put back -> the upgrade can start
+  ok    tier 7: only 'friend:mayor_lyra' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 7: 'friend:mayor_lyra' put back -> the upgrade can start
+  ok    tier 7: only 'hygge:hyggeligt' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 7: 'hygge:hyggeligt' put back -> the upgrade can start
+  ok    tier 7: 9 single-requirement tests, restored
+  ok    tier 7: start_upgrade ok, ready on day 16
+  ok    tier 7: exactly 7500 guldagern and exactly the listed materials left the backpack, nothing else
+  ok    tier 7: the house is closed while it is built
+  ok    tier 7: construction {target, start_day, ready_day} in absolute days
+  ok    tier 7: home_upgrade_started(6, 7, 16)
+  ok    tier 7: flags home_tier 6, home_building 7 while building
+  ok    tier 7: the REAL fairy_builder dialogue is in its 'building' branch (t07_building)
+  ok    tier 7: a second upgrade is refused while building, nothing is taken twice
+  ok    tier 7: morning 1 of 4: still building, 3 day(s) left
+  ok    tier 7: the build is 1 / 4 done
+  ok    tier 7: morning 2 of 4: still building, 2 day(s) left
+  ok    tier 7: the build is 2 / 4 done
+  ok    tier 7: morning 3 of 4: still building, 1 day(s) left
+  ok    tier 7: the build is 3 / 4 done
+  ok    tier 7: one progress signal per morning before the last (3), no upgrade yet
+  ok    tier 7 reached after 4 day(s)
+  ok    tier 7: exactly 4 calendar days passed
+  ok    tier 7: home_upgraded(6, 7) emitted once
+  ok    tier 7: game_event home_upgraded {tier: 7}
+  ok    tier 7: flags home_tier 7, home_building 0, home_upgrade_done 7
+  ok    tier 7: home_castle_built is not set
+  ok    tier 7: the REAL fairy_builder dialogue celebrates (t07_done)
+  ok    tier 7: the flag stays while the dialogue with the builder is open
+  ok    tier 7: talking to another citizen keeps home_upgrade_done, talking to the builder clears it (t07_idle)
+  ok    tier 7: the perks of the new tier apply
+  ok    tier 7: the housewarming piece(s) ["piano_star"] arrived once, routed to the furniture store
+  ok    tier 7: no piece lost ([]), 6 placed
+  ok    tier 7: the next step is not free by itself (gold)
+  ok    tier 8: everything it asks for was given through the public APIs ([])
+  ok    tier 8: with everything given the upgrade can start
+  ok    tier 8: only 'gold:gold' missing -> blocked (["gold"]), start_upgrade refuses
+  ok    tier 8: 'gold:gold' put back -> the upgrade can start
+  ok    tier 8: only 'material:brick' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 8: 'material:brick' put back -> the upgrade can start
+  ok    tier 8: only 'material:copper_plate' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 8: 'material:copper_plate' put back -> the upgrade can start
+  ok    tier 8: only 'material:glass_pane' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 8: 'material:glass_pane' put back -> the upgrade can start
+  ok    tier 8: only 'material:marble_block' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 8: 'material:marble_block' put back -> the upgrade can start
+  ok    tier 8: only 'material:gold_leaf' missing -> blocked (["materials"]), start_upgrade refuses
+  ok    tier 8: 'material:gold_leaf' put back -> the upgrade can start
+  ok    tier 8: only 'quest:snurresvampen' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 8: 'quest:snurresvampen' put back -> the upgrade can start
+  ok    tier 8: only 'hygge:rigtig_hyggeligt' missing -> blocked (["gate"]), start_upgrade refuses
+  ok    tier 8: 'hygge:rigtig_hyggeligt' put back -> the upgrade can start
+  ok    tier 8: 8 single-requirement tests, restored
+  ok    tier 8: start_upgrade ok, ready on day 21
+  ...   (319 more ok lines of home not printed; --verbose prints all)
+  --    home: 719 checks, 0 failed, 0 skipped, 3.0 s
+== section home_services  (res://tests/sections/home_services.gd)
+  ok    home_services.forecast_stable_foraar
+  ok    home_services.forecast_json_roundtrip_foraar
+  ok    home_services.forecast_matches_actual_roll_foraar
+  ok    home_services.no_out_of_season_snow_foraar
+  ok    home_services.forecast_stable_sommer
+  ok    home_services.forecast_json_roundtrip_sommer
+  ok    home_services.forecast_matches_actual_roll_sommer
+  ok    home_services.no_out_of_season_snow_sommer
+  ok    home_services.forecast_stable_efteraar
+  ok    home_services.forecast_json_roundtrip_efteraar
+  ok    home_services.forecast_matches_actual_roll_efteraar
+  ok    home_services.forecast_stable_vinter
+  ok    home_services.forecast_json_roundtrip_vinter
+  ok    home_services.forecast_matches_actual_roll_vinter
+  ok    home_services.no_out_of_season_snow_vinter
+  ok    home_services.oven_recipe_locked_at_one
+  ok    home_services.oven_recipe_cooks
+  ok    home_services.kitchen_screen_opens_at_home
+  ok    home_services.forecast_locked_until_tower
+  ok    home_services.kitchen_escape_closes
+  ok    home_services.all_eight_unlocks_real
+  ok    home_services.tower_forecast_visible
+  ok    home_services.royal_consent_default_cancel
+  ok    home_services.royal_cancel_has_no_effect
+  ok    home_services.royal_respects_evening_window
+  ok    home_services.royal_available_at_palace
+  ok    home_services.royal_scene_finishes
+  ok    home_services.royal_guest_disposed
+  ok    home_services.royal_once_saved
+  ok    home_services.royal_cannot_repeat
+  --    home_services: 30 checks, 0 failed, 0 skipped, 0.5 s
+== section home_ui  (res://tests/sections/home_ui.gd)
+  ok    home_ui.three_real_screens_registered
+  ok    home_ui.decorate_outside_home_is_refused
+  ok    home_ui.builder_event_opens_paused
+  ok    home_ui.builder_shows_all_ten_tiers
+  ok    home_ui.missing_requirements_disable_build
+  ok    home_ui.requirements_enable_build
+  ok    home_ui.build_defaults_to_cancel
+  ok    home_ui.cancel_does_not_spend_or_build
+  ok    home_ui.confirmed_upgrade_uses_real_payment
+  ok    home_ui.builder_shows_construction
+  ok    home_ui.next_morning_finishes_tier_two
+  ok    home_ui.decorate_hotkey_pauses_with_grid
+  ok    home_ui.blocked_door_placement_keeps_stock
+  ok    home_ui.place_key_moves_one_owned_piece
+  ok    home_ui.placement_rebuild_keeps_preview_usable
+  ok    home_ui.pickup_key_returns_piece_to_store
+  ok    home_ui.rotate_key_rotates_preview
+  ok    home_ui.close_restores_world_input
+  ok    home_ui.storage_event_opens_chest
+  ok    home_ui.deposit_button_uses_chest_owner
+  ok    home_ui.withdraw_button_conserves_items
+  ok    home_ui.english_builder_uses_live_translation
+  --    home_ui: 22 checks, 0 failed, 0 skipped, 0.5 s
+== section home_world  (res://tests/sections/home_world.gd)
+  ok    home_world.home_map_registered
+  ok    home_world.real_farm_house_and_tent_handlers
+  ok    home_world.tier_1_builds_without_error
+  ok    home_world.tier_1_floor_matches_cells
+  ok    home_world.tier_1_spawn_coordinates_match
+  ok    home_world.tier_1_camera_uses_authored_zoom
+  ok    home_world.tier_1_every_placement_has_painted_node
+  ok    home_world.tier_1_boundary_is_solid
+  ok    home_world.tier_1_interaction_points_exist
+  ok    home_world.tier_1_room_uses_world_coordinate_contract
+  ok    home_world.tier_1_returns_to_farm_door
+  ok    home_world.tier_1_exterior_uses_fixed_door_anchor
+  ok    home_world.tier_2_builds_without_error
+  ok    home_world.tier_2_floor_matches_cells
+  ok    home_world.tier_2_spawn_coordinates_match
+  ok    home_world.tier_2_camera_uses_authored_zoom
+  ok    home_world.tier_2_every_placement_has_painted_node
+  ok    home_world.tier_2_boundary_is_solid
+  ok    home_world.tier_2_interaction_points_exist
+  ok    home_world.tier_2_room_uses_world_coordinate_contract
+  ok    home_world.tier_2_returns_to_farm_door
+  ok    home_world.tier_2_exterior_uses_fixed_door_anchor
+  ok    home_world.tier_3_builds_without_error
+  ok    home_world.tier_3_floor_matches_cells
+  ok    home_world.tier_3_spawn_coordinates_match
+  ok    home_world.tier_3_camera_uses_authored_zoom
+  ok    home_world.tier_3_every_placement_has_painted_node
+  ok    home_world.tier_3_boundary_is_solid
+  ok    home_world.tier_3_interaction_points_exist
+  ok    home_world.tier_3_room_uses_world_coordinate_contract
+  ok    home_world.tier_3_returns_to_farm_door
+  ok    home_world.tier_3_exterior_uses_fixed_door_anchor
+  ok    home_world.tier_4_builds_without_error
+  ok    home_world.tier_4_floor_matches_cells
+  ok    home_world.tier_4_spawn_coordinates_match
+  ok    home_world.tier_4_camera_uses_authored_zoom
+  ok    home_world.tier_4_every_placement_has_painted_node
+  ok    home_world.tier_4_boundary_is_solid
+  ok    home_world.tier_4_interaction_points_exist
+  ok    home_world.tier_4_room_uses_world_coordinate_contract
+  ok    home_world.tier_4_returns_to_farm_door
+  ok    home_world.tier_4_exterior_uses_fixed_door_anchor
+  ok    home_world.tier_5_builds_without_error
+  ok    home_world.tier_5_floor_matches_cells
+  ok    home_world.tier_5_spawn_coordinates_match
+  ok    home_world.tier_5_camera_uses_authored_zoom
+  ok    home_world.tier_5_every_placement_has_painted_node
+  ok    home_world.tier_5_boundary_is_solid
+  ok    home_world.tier_5_interaction_points_exist
+  ok    home_world.tier_5_room_uses_world_coordinate_contract
+  ok    home_world.tier_5_returns_to_farm_door
+  ok    home_world.tier_5_exterior_uses_fixed_door_anchor
+  ok    home_world.tier_6_builds_without_error
+  ok    home_world.tier_6_floor_matches_cells
+  ok    home_world.tier_6_spawn_coordinates_match
+  ok    home_world.tier_6_camera_uses_authored_zoom
+  ok    home_world.tier_6_every_placement_has_painted_node
+  ok    home_world.tier_6_boundary_is_solid
+  ok    home_world.tier_6_interaction_points_exist
+  ok    home_world.tier_6_room_uses_world_coordinate_contract
+  ok    home_world.tier_6_returns_to_farm_door
+  ok    home_world.tier_6_exterior_uses_fixed_door_anchor
+  ok    home_world.tier_7_builds_without_error
+  ok    home_world.tier_7_floor_matches_cells
+  ok    home_world.tier_7_spawn_coordinates_match
+  ok    home_world.tier_7_camera_uses_authored_zoom
+  ok    home_world.tier_7_every_placement_has_painted_node
+  ok    home_world.tier_7_boundary_is_solid
+  ok    home_world.tier_7_interaction_points_exist
+  ok    home_world.tier_7_room_uses_world_coordinate_contract
+  ok    home_world.tier_7_returns_to_farm_door
+  ok    home_world.tier_7_exterior_uses_fixed_door_anchor
+  ok    home_world.tier_8_builds_without_error
+  ok    home_world.tier_8_floor_matches_cells
+  ok    home_world.tier_8_spawn_coordinates_match
+  ok    home_world.tier_8_camera_uses_authored_zoom
+  ok    home_world.tier_8_every_placement_has_painted_node
+  ok    home_world.tier_8_boundary_is_solid
+  ok    home_world.tier_8_interaction_points_exist
+  ok    home_world.tier_8_room_uses_world_coordinate_contract
+  ok    home_world.tier_8_returns_to_farm_door
+  ok    home_world.tier_8_exterior_uses_fixed_door_anchor
+  ok    home_world.tier_9_builds_without_error
+  ok    home_world.tier_9_floor_matches_cells
+  ok    home_world.tier_9_spawn_coordinates_match
+  ok    home_world.tier_9_camera_uses_authored_zoom
+  ok    home_world.tier_9_every_placement_has_painted_node
+  ok    home_world.tier_9_boundary_is_solid
+  ok    home_world.tier_9_interaction_points_exist
+  ok    home_world.tier_9_room_uses_world_coordinate_contract
+  ok    home_world.tier_9_returns_to_farm_door
+  ok    home_world.tier_9_exterior_uses_fixed_door_anchor
+  ok    home_world.tier_10_builds_without_error
+  ok    home_world.tier_10_floor_matches_cells
+  ok    home_world.tier_10_spawn_coordinates_match
+  ok    home_world.tier_10_camera_uses_authored_zoom
+  ok    home_world.tier_10_every_placement_has_painted_node
+  ok    home_world.tier_10_boundary_is_solid
+  ok    home_world.tier_10_interaction_points_exist
+  ok    home_world.tier_10_room_uses_world_coordinate_contract
+  ok    home_world.tier_10_returns_to_farm_door
+  ok    home_world.tier_10_exterior_uses_fixed_door_anchor
+  ok    home_world.construction_keeps_old_house_and_scaffold
+  ok    home_world.construction_tent_appears
+  ok    home_world.construction_refuses_entry
+  --    home_world: 105 checks, 0 failed, 0 skipped, 1.2 s
+== section save  (res://tests/sections/save.gd)
+  ok    save.throwaway_home (user:// is /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.vlnPia/Library/Application Support/Traetoppen (a throwaway HOME))
+  ok    save.saves_go_to_scratch_dir (user://save_test_12441/save_3.json)
+  ok    save.api_surface (missing [])
+  ok    save.slot_constants (six manual slots 0..5, auto slot 6, payload version 2)
+  ok    save.reset_wired_to_new_game (SaveManager.reset() is connected to new_game_started)
+  ok    save.no_parse_string (JSON.new().parse() only: [])
+  ok    save.registered_sections_follow_reset_contract (6 registered feature section(s) ["home", "furniture", "wardrobe", "loot", "dungeon", "social"]; not wired to new_game_started: [])
+  ok    save.reset_on_new_game (slot -1, pending {  }, timer 0.0)
+  ok    save.autosave_nothing_queued_at_start (a fresh SaveManager has no day-end save waiting (else the first day end of a session would never be saved))
+  ok    save.slot_helpers_bounds (manual 0..5, valid 0..6)
+  ok    save.autosave_default_interval_five_minutes (the plan: every 5 real minutes (constant 300.0 s, a fresh SaveManager starts with 300.0 s, autosave on: true))
+  ok    save.registry_valid_registration_returns_true (a good name and node: true, first time and again)
+  ok    save.registry_names_in_apply_order (["p_game", "p_time", "p_eco", "tie_a", "home", "furniture", "wardrobe", "late"])
+  ok    save.registry_core_order (game, time, economy, quests, husbandry, shops, then the features: ["game", "p_game", "time", "p_time", "economy", "p_eco", "quests", "husbandry", "shops", "tie_a", "home", "furniture", "wardrobe", "late"])
+  ok    save.registry_gather (gather = {name: node.to_dict()} for 8 registered sections)
+  ok    save.registry_save_ok (saved S1 (gold 321, day 7, regn))
+  ok    save.section_registry_order_and_reset (apply order ["apply:p_game:day=7", "apply:p_time:regn,gold=999", "apply:p_eco:gold=321", "apply:tie_a", "apply:home", "apply:furniture", "apply:wardrobe", "apply:late"] (want ["apply:p_game:day=7", "apply:p_time:regn,gold=999", "apply:p_eco:gold=321", "apply:tie_a", "apply:home", "apply:furniture", "apply:wardrobe", "apply:late"]))
+  ok    save.registry_core_applied_between_features (game before time before economy, each in front of the sections that sit between them)
+  ok    save.registry_data_arrives (from_dict got the saved dictionary, numbers as ints)
+  ok    save.missing_section_resets (late and furniture were reset (n=0), home applied, ghost ignored: ["apply:p_game:day=7", "apply:p_time:regn,gold=321", "apply:p_eco:gold=321", "apply:tie_a", "apply:home", "reset:furniture", "apply:wardrobe", "reset:late"])
+  ok    save.registry_reregister_replaces (home moved behind wardrobe: ["p_game", "p_time", "p_eco", "tie_a", "furniture", "wardrobe", "home", "late"])
+  ok    save.registry_unregister (tie_a gone)
+  ok    save.registry_freed_node_skipped (a freed node is pruned and the load still works)
+ERROR: SaveManager.register_section: 'Bad Name' is not a valid section name (a-z, 0-9, _)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] register_section (res://scripts/autoload/save_manager.gd:478)
+       [1] _test_registry_inner (res://tests/sections/save.gd:702)
+       [2] _test_registry (res://tests/sections/save.gd:606)
+       [3] run (res://tests/sections/save.gd:181)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+ERROR: SaveManager.register_section: 'world' is a built-in name
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] register_section (res://scripts/autoload/save_manager.gd:481)
+       [1] _test_registry_inner (res://tests/sections/save.gd:702)
+       [2] _test_registry (res://tests/sections/save.gd:606)
+       [3] run (res://tests/sections/save.gd:181)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+ERROR: SaveManager.register_section: 'game' is a built-in name
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] register_section (res://scripts/autoload/save_manager.gd:481)
+       [1] _test_registry_inner (res://tests/sections/save.gd:702)
+       [2] _test_registry (res://tests/sections/save.gd:606)
+       [3] run (res://tests/sections/save.gd:181)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+ERROR: SaveManager.register_section('nomethods'): the node has no to_dict()
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] register_section (res://scripts/autoload/save_manager.gd:488)
+       [1] _test_registry_inner (res://tests/sections/save.gd:702)
+       [2] _test_registry (res://tests/sections/save.gd:606)
+       [3] run (res://tests/sections/save.gd:181)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+ERROR: SaveManager.register_section('nullnode'): the node is null or freed
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] register_section (res://scripts/autoload/save_manager.gd:484)
+       [1] _test_registry_inner (res://tests/sections/save.gd:702)
+       [2] _test_registry (res://tests/sections/save.gd:606)
+       [3] run (res://tests/sections/save.gd:181)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+  ok    save.registry_refuses_bad_input (bad name, reserved name, built-in name, no methods, null: [false, false, false, false, false])
+  ok    the five refusals are reported (allowed 'SaveManager.register_section' seen 5 time(s), want >= 5)
+  ok    save.feature_orders_constants (home 10, furniture 20, wardrobe 30, loot 40, collection 50)
+  ok    save.feature_orders_apply_order (["home", "furniture", "wardrobe", "loot", "collection"])
+  ok    save.registry_equal_orders_keep_registration_order (40 sections at order 50, registered in the order tie_00, tie_17, tie_34, ...: ["tie_00", "tie_17", "tie_34", "tie_11", "tie_28"])
+  ok    save.registry_built_in_sections_win_ties (game, beside_game, time, ... quests, beside_quests: ["game", "beside_game", "time", "economy", "quests", "beside_quests", "husbandry", "shops"])
+  ok    save.registry_tests_keep_real_sections (2 feature sections detached for the registry checks (registry empty before: true, after: true), then registered again unchanged: before ["home@10#2073345136431", "social@60#2073361914614"], after ["home@10#2073345136431", "social@60#2073361914614"])
+  ok    save.json_vectors_become_arrays ([1.5, 2.0])
+  ok    save.json_names_keys_and_nonfinite (StringName -> String, int and StringName keys -> String keys, NaN/INF -> 0.0)
+  ok    save.json_save_ok
+  ok    save.json_no_stringified_vectors (no "(1.5, 2.0)" strings in the file, UTF-8 intact)
+  ok    save.json_load_ok
+  ok    save.json_ints_recoerced (whole numbers come back as int (JSON has one number type), fractions stay float: n int pos [1.5, 2])
+WARNING: SaveManager: 'jsonrules' holds a Object, which cannot be saved (written as null)
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _json_safe (res://scripts/autoload/save_manager.gd:659)
+         [1] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [2] gather_payload (res://scripts/autoload/save_manager.gd:591)
+         [3] _test_json_rules (res://tests/sections/save.gd:770)
+         [4] run (res://tests/sections/save.gd:182)
+         [5] go_menu (res://tests/lib/flow.gd:69)
+         [6] change_scene (res://tests/lib/flow.gd:57)
+         [7] frames (res://tests/lib/drive.gd:79)
+  ok    save.json_object_becomes_null (an Object is written as null)
+  ok    the Object is reported (allowed 'which cannot be saved' seen 1 time(s), want >= 1)
+  ok    save.json_floats_keep_full_precision (0.1 + 0.2 = 0.3, 1/3 = 0.33333333333333, stamp 1791901594.12346)
+  ok    save.json_keys_are_sorted_in_the_file (alpha, stamp, zeta in the text of the file)
+  ok    save.json_huge_numbers_stay_floats (1e20 and 2^53 stay float, 2.0 becomes int 2)
+ERROR: SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] gather_payload (res://scripts/autoload/save_manager.gd:589)
+       [1] _test_json_rules (res://tests/sections/save.gd:791)
+       [2] run (res://tests/sections/save.gd:182)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    save.section_with_bad_to_dict_is_left_out (gather skips it and keeps the other sections)
+  ok    the bad to_dict() is reported once (allowed 'did not return a Dictionary' seen 1 time(s), want >= 1)
+ERROR: SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] gather_payload (res://scripts/autoload/save_manager.gd:589)
+       [1] save_game (res://scripts/autoload/save_manager.gd:236)
+       [2] _test_json_rules (res://tests/sections/save.gd:794)
+       [3] run (res://tests/sections/save.gd:182)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+  ok    save.section_with_bad_to_dict_save_and_load_work (the save is still written and loads)
+WARNING: SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _json_safe (res://scripts/autoload/save_manager.gd:629)
+         [1] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [2] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [3] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [4] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [5] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [6] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [7] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [8] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [9] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [10] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [11] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [12] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [13] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [14] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [15] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [16] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [17] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [18] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [19] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [20] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [21] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [22] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [23] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [24] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [25] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [26] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [27] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [28] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [29] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [30] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [31] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [32] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [33] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [34] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [35] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [36] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [37] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [38] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [39] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [40] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [41] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [42] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [43] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [44] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [45] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [46] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [47] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [48] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [49] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [50] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [51] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [52] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [53] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [54] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [55] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [56] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [57] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [58] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [59] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [60] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [61] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [62] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [63] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [64] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [65] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [66] gather_payload (res://scripts/autoload/save_manager.gd:591)
+         [67] _test_json_rules (res://tests/sections/save.gd:807)
+         [68] run (res://tests/sections/save.gd:182)
+         [69] go_menu (res://tests/lib/flow.gd:69)
+         [70] change_scene (res://tests/lib/flow.gd:57)
+         [71] frames (res://tests/lib/drive.gd:79)
+WARNING: SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _json_safe (res://scripts/autoload/save_manager.gd:629)
+         [1] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [2] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [3] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [4] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [5] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [6] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [7] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [8] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [9] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [10] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [11] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [12] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [13] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [14] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [15] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [16] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [17] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [18] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [19] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [20] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [21] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [22] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [23] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [24] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [25] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [26] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [27] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [28] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [29] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [30] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [31] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [32] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [33] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [34] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [35] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [36] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [37] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [38] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [39] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [40] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [41] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [42] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [43] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [44] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [45] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [46] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [47] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [48] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [49] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [50] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [51] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [52] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [53] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [54] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [55] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [56] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [57] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [58] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [59] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [60] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [61] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [62] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [63] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [64] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [65] _json_safe (res://scripts/autoload/save_manager.gd:651)
+         [66] gather_payload (res://scripts/autoload/save_manager.gd:591)
+         [67] _test_json_rules (res://tests/sections/save.gd:807)
+         [68] run (res://tests/sections/save.gd:182)
+         [69] go_menu (res://tests/lib/flow.gd:69)
+         [70] change_scene (res://tests/lib/flow.gd:57)
+         [71] frames (res://tests/lib/drive.gd:79)
+  ok    save.json_depth_limit_cuts_with_a_warning (70 nested levels: 65 kept, then null (<null>))
+  ok    the cut is reported once (allowed 'nested deeper than 64' seen 2 time(s), want >= 1)
+  ok    save.validate_before_apply (30 invalid payloads: refused with the right code, nothing applied, state untouched, one notification each)
+  ok    save.validate_control_loads (gold 555, day 11, probe applied 1, load_completed once)
+  ok    save.validate_payload_is_pure (gold 42 day 3 untouched)
+  ok    save.validate_rejects_non_dictionary
+  ok    save.corrupt_and_foreign_saves (19 damaged / empty / foreign files: load returns false with feedback, state unchanged)
+  ok    save.corrupt_size_cap_is_exclusive (a file of exactly 8388608 bytes is read (and refused as no save): 'meta is missing')
+  ok    save.corrupt_details (empty: 'the file is empty' | binary: 'the file does not start with a JSON object' | oversize: 'the file is larger than 8388608 bytes' | truncated: 'JSON error at line 111: Expected '}'' | newer: 'the save has version 7, this build reads up to 2')
+  ok    save.unreadable_file_is_a_damaged_slot (state corrupt, detail 'cannot open (error 12)', load false with feedback, the game untouched)
+  ok    save.failed_load_does_not_soft_lock (phase 0 unchanged, tree not paused, the next valid load works)
+  ok    save.load_empty_slot_gives_feedback (slot 4 has no file)
+  ok    save.load_bad_slots (-1, 7, 99)
+  ok    save.slot_states (ok / corrupt / newer / empty)
+  ok    save.slot_from_backup_flags (ok, corrupt, newer and empty slots do not claim to come from a .bak)
+  ok    save.slot_state_codes (ok '', corrupt 'corrupt', newer 'version', empty 'missing': ["", "corrupt", "version", "missing"])
+  ok    save.atomic_setup_saved
+ERROR: fake section failure boom
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] from_dict (res://tests/sections/save.gd:64)
+       [1] _apply_payload (res://scripts/autoload/save_manager.gd:908)
+       [2] load_game (res://scripts/autoload/save_manager.gd:300)
+       [3] _test_atomic_apply (res://tests/sections/save.gd:1040)
+       [4] run (res://tests/sections/save.gd:185)
+       [5] go_menu (res://tests/lib/flow.gd:69)
+       [6] change_scene (res://tests/lib/flow.gd:57)
+       [7] frames (res://tests/lib/drive.gd:79)
+  ok    save.atomic_apply_rolls_back (a script error in section 'boom' put game, economy, quests, time and 'early_a' back (gold 999, day 9, who running): )
+  ok    save.atomic_apply_feedback (NOTIF_LOAD_FAILED_APPLY posted, current_slot not moved)
+  ok    the provoked script error is reported once (allowed 'fake section failure' seen 1 time(s), want >= 1)
+  ok    save.atomic_apply_rejection_rolls_back (from_dict returned false: section 'boom' rejected its data)
+  ok    save.atomic_apply_control_loads (gold 100 day 3, who saved)
+  ok    save.atomic_apply_keeps_pending_world (pending_world is only replaced by a successful load)
+  ok    save.apply_guard_is_removed_after_every_load (ApplyGuard instances alive after 6 loads: 0)
+ERROR: fake section failure late_boom
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] from_dict (res://tests/sections/save.gd:64)
+       [1] _apply_payload (res://scripts/autoload/save_manager.gd:908)
+       [2] load_game (res://scripts/autoload/save_manager.gd:300)
+       [3] _test_atomic_apply (res://tests/sections/save.gd:1076)
+       [4] run (res://tests/sections/save.gd:185)
+       [5] go_menu (res://tests/lib/flow.gd:69)
+       [6] change_scene (res://tests/lib/flow.gd:57)
+       [7] frames (res://tests/lib/drive.gd:79)
+  ok    save.atomic_apply_rollback_survives_live_references (the failed load put the running value back (n 2, not the saved 1))
+  ok    the provoked script error is reported once (allowed 'fake section failure' seen 2 time(s), want >= 1)
+  ok    save.section_without_to_dict_is_left_out (no 'shops' section for a stand-in without to_dict(); the others are saved)
+  ok    save.section_without_from_dict_is_skipped_on_load (the save has a 'shops' section, the stand-in cannot take it: skipped, the rest loads (gold 321))
+  ok    save.slots_six_manual_files (save_0..save_5.json, current_slot 5, save_completed [0, 1, 2, 3, 4, 5])
+  ok    save.slots_manual_save_toasts_slot_number ('Spil gemt' / 'Dit spil er gemt i slot 6')
+  ok    save.auto_slot_save (save_auto.json, silent, current_slot stays 2, save_completed [6])
+  ok    save.auto_slot_save_restarts_countdown (timer 0.0 after save_game(AUTO_SLOT))
+  ok    save.inspect_slot_invalid_slot (slot 9: slot 9 does not exist)
+  ok    save.is_auto_never_writes_a_manual_slot (save_game(2, true) wrote the auto slot only)
+  ok    save.save_invalid_slots (-1, 7, 99 create nothing)
+  ok    save.bak_not_created_by_first_save (no file to roll yet)
+  ok    save.bak_rolled_from_manual_save (save_1.bak.json holds the previous save (gold 100), save_1.json the new one (200))
+  ok    save.auto_slot_has_no_bak (two autosaves, no save_auto.bak.json)
+  ok    save.bak_survives_a_damaged_primary (the unreadable file was not copied over save_1.bak.json)
+  ok    save.no_temp_files_left (["save_1.bak.json", "save_1.json", "save_auto.json"])
+  ok    save.bak_state_and_summary (damaged primary: state backup, summary from the .bak (gold 100))
+  ok    save.bak_recovery_loads_backup (gold 100, one NOTIF_LOAD_BACKUP toast)
+  ok    save.bak_recovery_from_invalid_primary (primary without 'economy' -> .bak)
+  ok    save.bak_not_used_for_newer_version (a save of a newer build is refused, not silently replaced by an older .bak)
+  ok    save.bak_and_primary_both_damaged (state corrupt, load false with feedback, no summary, never the latest slot)
+  ok    save.delete_save_removes_all_files (primary and .bak)
+  ok    save.stale_temp_files_swept (a crash leftover (.tmp) is removed when SaveManager starts, real saves stay)
+  ok    save.backup_cache_accepts_clock_only_change
+  ok    save.backup_cache_rechecks_changed_version
+  ok    save.backup_cache_rechecks_changed_state
+  ok    save.delete_save_other_slot_keeps_current_slot (deleting slot 1 while slot 2 is current: current_slot 2, slot 2 and its .bak are still there)
+  ok    save.delete_save_removes_every_file_of_the_slot (save_2.json, save_2.bak.json and the leftover save_2.json.tmp are gone: ["save_0.bak.json", "save_0.json", "save_3.bak.json", "save_3.json", "save_auto.json"])
+  ok    save.delete_save_resets_current_slot (slot 2 was the current slot: current_slot -1)
+  ok    save.delete_save_touches_only_its_slot (slots 0 and 3 with their .bak files and the auto slot are byte for byte what they were)
+  ok    save.delete_save_auto_slot (the auto slot goes, the manual slots and current_slot stay)
+  ok    save.delete_save_invalid_slots_delete_nothing (-1, 7 and 77 leave every file (and current_slot) alone)
+  ok    save.delete_save_empty_slot_is_harmless
+  ok    save.delete_save_latest_follows (slot 0 @100 and slot 3 @400 are left: slot 3)
+  ok    save.delete_save_latest_follows_to_zero (slot 3 deleted: slot 0)
+  ok    save.delete_save_all_gone (nothing left: [])
+  ok    save.load_auto_slot_keeps_manual_slot (the auto slot loaded (gold 20, load_completed [6]), current_slot is still the manual slot 2)
+  ok    save.load_auto_slot_leaves_slot_unset (Continue from an autosave with no manual slot in this run: current_slot -1 (NO_SLOT), not 6)
+  ok    save.save_game_current_slot_after_auto_load_writes_nothing (save_game(current_slot) with current_slot -1: refused as a bad slot, the auto file and the directory are unchanged)
+  ok    save.load_manual_slot_sets_current_slot (slot 2)
+  ok    save.failed_auto_load_keeps_current_slot (slot 2, last_error corrupt)
+  ok    save.successful_load_clears_last_error (the failed load above left last_error behind, the good load after it clears it)
+  ok    save.load_restarts_autosave_countdown (a load starts the autosave countdown again (timer 0.0))
+  ok    save.write_failure_keeps_old_save (save returned false, save_3.json is byte for byte the old one, current_slot not moved, no second save_completed)
+  ok    save.write_failure_feedback (NOTIF_SAVE_FAILED posted for a manual save)
+  ok    save.write_failure_autosave_is_silent (no toast for a failed autosave)
+  ok    save.write_failure_autosave_restarts_countdown (a failed autosave does not retry every frame: the timer starts again (0.0))
+  ok    save.write_recovers_after_failure (after a failed write the next good save clears last_error)
+  ok    save.rename_failure_is_reported_and_cleaned_up (save_game(2) with a directory in the way: false, no save_2.json.tmp left, no save_completed, one NOTIF_SAVE_FAILED toast (1))
+ERROR: Failed to open '/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.vlnPia/Library/Application Support/Traetoppen/save_test_12441/save_4.bak.json.tmp'.
+   at: copy (core/io/dir_access.cpp:429)
+   GDScript backtrace (most recent call first):
+       [0] _roll_backup (res://scripts/autoload/save_manager.gd:1025)
+       [1] save_game (res://scripts/autoload/save_manager.gd:239)
+       [2] _test_write_failure (res://tests/sections/save.gd:1329)
+       [3] run (res://tests/sections/save.gd:191)
+       [4] go_menu (res://tests/lib/flow.gd:69)
+       [5] change_scene (res://tests/lib/flow.gd:57)
+       [6] frames (res://tests/lib/drive.gd:79)
+  ok    the engine's own report of the copy that cannot be made (allowed 'save_4.bak.json.tmp' seen 1 time(s), want >= 1)
+  ok    save.bak_roll_failure_does_not_stop_the_save (the save is written (gold 2), no .bak, and the stuck save_4.bak.json.tmp is removed)
+  ok    save.short_write_is_caught (half of the bytes were lost without an error: save returned false, save_3.json is the old save (gold 777), no .tmp left)
+  ok    save.short_write_feedback (the player is told (NOTIF_SAVE_FAILED))
+  ok    save.short_write_autosave_leaves_no_file (a lossy autosave writes no auto slot at all (a half file would later be 'damaged') and says nothing)
+  ok    save.short_write_control_saves (the same probe with intact bytes saves (gold 555), the previous save is the .bak (777))
+  ok    save.save_recreates_missing_directory (the scratch directory was removed, save_game(1) wrote save_1.json anyway)
+  ok    save.autosave_timer_idle_in_menu (phase MENU: nothing is written)
+  ok    save.autosave_timer_idle_when_paused (phase PAUSED: nothing is written)
+  ok    save.autosave_timer_writes_auto_slot (while PLAYING the timer wrote save_auto.json (gold 9999.0); save_completed [6, 6, 6, 6]; current_slot 2)
+  ok    save.autosave_timer_leaves_manual_slots_alone (six manual files and six .bak files are byte for byte what they were)
+  ok    save.autosave_disabled_switch (autosave_enabled = false stops the timer)
+  ok    save.autosave_day_end_is_deferred (nothing is written inside the day_ended / day_started emissions)
+  ok    save.autosave_on_day_end (one auto save of the NEW day (day 13.0, 06:00, a day_started follower already at 13.0); save_completed [6])
+  ok    save.autosave_coalesces_midnights (50 hours crossed two midnights, save_completed [6])
+  ok    save.autosave_on_the_day_end_roll (23:55 + 10 min = raw 24:05: no save; 01:55 + 10 min = the day-end roll: one auto save of day 16.0 at raw hour 2.0 (restart hour 2); save_completed [6])
+  ok    save.autosave_disabled_day_end (autosave_enabled = false: a day end while PLAYING writes nothing)
+  ok    save.autosave_disabled_day_end_is_not_queued (a day end that happened while autosave was off is not saved later)
+  ok    save.autosave_switched_off_cancels_queued_day_end_save (the queued day-end save checks the switch again when it runs)
+  ok    save.autosave_day_end_control_saves (the same day end with the switch on writes the auto slot once, so the three checks above are not vacuous)
+  ok    save.autosave_queued_save_dropped_by_new_game (day end, then New Game in the same frame (phase 2): the queued save does not run)
+  ok    save.autosave_after_dropped_save_works (the next day end saves again (the drop did not wedge the queue))
+  ok    save.autosave_day_end_by_phase (PAUSED true, CUTSCENE true, CHARACTER_SELECT false)
+  ok    save.autosave_day_end_in_menu_is_not_queued (MENU day end, PLAYING a moment later in the same frame: no save)
+  ok    save.autosave_day_end_not_in_menu (phase MENU: a day end saves nothing)
+  ok    save.autosave_never_overwrites_manual (after the timer, the day end and a multi-day skip the manual files, their .bak files and the directory listing are unchanged)
+  ok    save.summary_fields ({ "area": "hyggebyen", "character": "fairy", "character_skin": "fairy_stardust", "day": 16, "farm_name": "Rosenhaven", "gold": 1250, "hour": 14, "minute": 5, "play_time_seconds": 3725.5, "player_name": "Mia", "season": "sommer", "total_day": 156, "year": 2, "slot": 0, "is_auto": false, "from_backup": false, "timestamp": "2026-10-17T07:37:12", "saved_at": 1792215432.70194 })
+  ok    save.summary_meta (slot, is_auto, timestamp, saved_at)
+  ok    save.summary_types (ints after the JSON round trip)
+  ok    save.save_late_hour_roundtrip_and_old_midnight_save (raw 25:40 -> summary 25:40, loads back true; an old save at hour 0 loads at raw 02:40 (day 16))
+  ok    save.summary_whole_play_time_is_float (600 s -> float)
+  ok    save.inspect_slot_ok_has_no_error_code (ok slot: code '', empty slot: 'missing')
+  ok    save.summary_character_keys (["animal", "fairy", "hobbit", "ghost"])
+  ok    save.summary_auto_slot
+  ok    save.summary_empty_or_damaged_is_empty
+  ok    save.summary_damaged_and_newer_are_empty
+  ok    save.describe_slots (["ok", "ok", "empty", "newer", "corrupt", "empty", "ok"])
+  ok    save.legacy_default_arguments (has_save() / get_save_summary() read slot 0)
+  ok    save.summary_from_bare_payload_without_meta_summary
+  ok    save.summary_types_control (an unedited save keeps its own summary (13 keys))
+  ok    save.summary_wrong_types_rebuilt (98 wrong values (one key at a time): the slot stays ok and the summary is rebuilt from the data)
+  ok    save.summary_not_an_object_rebuilt (meta.summary a string, number, array, null, empty or cut down: rebuilt)
+  ok    save.summary_formats_with_percent_d (Dag 16, 1250 guld, 2. aar, Mia, 14:05)
+  ok    save.summary_valid_cache_is_used (right types: meta.summary wins over the sections)
+  ok    save.summary_wrong_types_slot_row_ok (describe_slots row 1: ok, gold 1250, and the slot loads (gold 1250))
+  ok    save.latest_none (an empty directory)
+  ok    save.latest_single_manual
+  ok    save.latest_auto_when_newest (slot 3 @1000, slot 0 @1500, auto @2000)
+  ok    save.latest_manual_newer_than_auto (a manual save at 3000 beats the auto save at 2000)
+  ok    save.latest_skips_damaged (slot 5 is damaged and has no .bak: Continue picks the auto slot)
+  ok    save.latest_uses_bak_stamp (damaged primary, .bak @2500 -> slot 5 (saved_at 2500.0))
+  ok    save.latest_skips_newer_version (a save of a newer build is never picked)
+  ok    save.latest_tie_goes_to_lowest_manual_slot (slot 4, slot 2 and auto at the same time: slot 2)
+  ok    save.latest_tie_manual_beats_auto
+  ok    save.clock_override_zero_is_used (saved_at 0.0)
+  ok    save.latest_sub_second_order (slot 1 @5000.25, slot 4 @5000.75: slot 4 is newer (file saved_at 5000.75))
+  ok    save.latest_sub_second_auto_beats_manual (manual @7000.25, auto @7000.75: the auto slot is newer, not a tie that the manual slot would win)
+  ok    save.latest_sub_second_manual_beats_older_auto (manual @7000.75, auto @7000.25: the manual slot)
+  ok    save.latest_real_clock_orders_saves_of_one_second (two real saves back to back: 1792215433.2632 then 1792215433.2661)
+  ok    save.latest_reads_v1_time_stamp (slot 2 is one second newer)
+  ok    save.world_gathered_from_group (the node in group world_2d supplies the 'world' section)
+  ok    save.world_save_ok
+  ok    save.world_load_ok
+  ok    save.world_dict_contract (the opaque dictionary came back unchanged through the file: )
+  ok    save.world_consume_once (consume_pending_world() hands it over once and clears it)
+  ok    save.world_not_applied_by_save_manager (WorldRoot2D applies it in _ready, SaveManager only hands it over)
+  ok    save.world_absent_gives_empty (a save without a world section -> pending_world == {})
+  ok    save.world_waiting_survives_a_save
+  ok    save.world_vectors_become_arrays
+  ok    save.world_file_is_readable_json (pretty-printed JSON)
+  ok    save.v1_validates_and_migrates (meta.version 1 -> 2, quest definitions dropped, runtime flags kept, saved_at from the time stamp)
+  ok    save.v1_migration_writes_the_summary (the migrated payload carries meta.summary like a v2 save: { "player_name": "Old", "farm_name": "Gamle Gaard", "character": "hobbit", "character_skin": "hobbit_pip", "day": 9, "season": "efteraar", "year": 3, "total_day": 289, "gold": 1234, "play_time_seconds": 600.0, "hour": 17, "minute": 30, "area": "" })
+  ok    save.v1_loads (gold 1234, day 9, efteraar, Old)
+  ok    save.v1_missing_sections_reset (husbandry and shops were not in a v1 save: reset(), not stale: ["reset:husbandry", "reset:shops"])
+  ok    save.v1_world_empty_and_ints (no world in a v1 save, flags back as ints)
+  ok    save.v1_summary ({ "player_name": "Old", "farm_name": "Gamle Gaard", "character": "hobbit", "character_skin": "hobbit_pip", "day": 9, "season": "efteraar", "year": 3, "total_day": 289, "gold": 1234, "play_time_seconds": 600.0, "hour": 17, "minute": 30, "area": "", "slot": 0, "is_auto": false, "from_backup": false, "timestamp": "2026-10-13T12:00:00", "saved_at": 1791885600.0 })
+  ok    save.quest_defs_survive_load (loading a save does not wipe the Lua definitions)
+  ok    save.quest_defs_survive_save_without_flags (audit T1)
+  ok    save.save_has_no_quest_defs (no def_ entries in quests.flags (0))
+  ok    save.v1_time_stamp_is_local_time (12:00 local at UTC+2 is 10:00 UTC: migrated 1791885600.0, inspected 1791885600.0, summary 1791885600.0, wanted 1791885600.0)
+  ok    save.v1_time_stamp_other_time_zones (UTC-5, UTC, UTC+5:30, UTC+12:45)
+  ok    save.v1_slot_is_older_than_a_later_autosave (v1 slot at 10:00 UTC, autosave at 10:30 UTC: the autosave is the latest, not the v1 slot (which was read as 12:00 UTC))
+  ok    save.v1_slot_is_newer_than_an_earlier_autosave (autosave at 09:30 UTC: the v1 slot at 10:00 UTC is the latest)
+  ok    save.v1_slot_west_of_greenwich_is_newer_than_an_earlier_autosave (12:00 local at UTC-5 is 17:00 UTC, the autosave is from 16:30 UTC: the v1 slot)
+  ok    save.v1_damaged_time_stamp_is_oldest_without_engine_error (16 stamps that are not a real date and time: saved_at 0.0, state ok)
+  ok    save.v1_real_time_stamps_are_read (a leap day, the last second of a year, a space as separator)
+  ok    save.v2_lost_saved_at_falls_back_to_local_time_stamp (saved_at missing: 1791885600.0, saved_at a string: 1791885600.0, wanted 1791885600.0)
+  ok    save.roundtrip_save_ok
+  ok    save.roundtrip_load_ok (load_completed(1))
+  ok    save.roundtrip_gold_items (gold 777, wood 80, carrot_seeds 5, economy dictionary )
+  ok    save.roundtrip_inventory_amounts_are_ints (no 3.0 in the backpack)
+  ok    save.roundtrip_quests (active, completed, failed, offered, objective progress: { "intro_active": true, "cat_active": true, "cookie_done": true, "completed_size": true, "failed": true, "offered": true, "progress_equal": true } )
+  ok    save.roundtrip_time_calendar (sommer day 16, Mia, weather regn, weekday 1, flags, zones, name, skin)
+  ok    save.roundtrip_calendar_types (int and StringName typed again)
+  ok    save.roundtrip_husbandry (animals 1, buildings 1, dictionary )
+  ok    save.roundtrip_husbandry_animal_fields (happiness 77.5, bond 2)
+  ok    save.roundtrip_shops (ShopSystem stock: )
+  ok    save.roundtrip_shop_stock_persists (carrot_seeds: 23 on the shelf before the save, 23 after the load)
+  ok    save.roundtrip_world_handed_over
+  ok    save.roundtrip_all_systems (gather -> JSON -> load -> gather: every section equal (identical))
+  ok    save.roundtrip_nothing_stale
+  ok    save.feedback_follows_locale (da: saved 'Dit spil er gemt i slot 1' / failed 'Gemningen er beskadiget og kan ikke læses.'; en: saved 'Your game is saved in slot 1' / failed 'The save is damaged and cannot be read.')
+  ok    save.feedback_keys_defined (all nine NOTIF_LOAD_* / NOTIF_SAVE_FAILED_* keys resolve in da and en)
+  ok    save.real_world_in_save (the live WorldRoot2D supplied the 'world' section: area farm, player_pos [1248.0, 2176.0])
+  ok    save.real_world_hand_off (load_and_enter left the world in pending_world, the new WorldRoot2D took it in _ready (pending now {  }))
+  ok    save.real_world_restored (same area, the player is 0.0 px from the saved spot)
+  ok    save.real_world_phase_playing (phase 2, slot 2)
+  ok    save.continue_without_save (false, feedback, still on the title (scene MainMenu, phase 0))
+  ok    save.continue_from_menu (Continue loaded the newest save (the auto slot: gold 888 day 6), load_completed [6], scene World, current_slot -1 (an autosave is no manual slot))
+  ok    save.continue_enters_playing (phase 2 (2 right after the call), tree not paused, no modal left)
+  ok    save.continue_does_not_replay_new_game_opening
+  ok    save.continue_world_hand_off (pending_world is empty: the world scene took it (or the save had none))
+  ok    save.load_and_enter_from_pause (slot 2 (gold 777, day 5), modals popped, phase 2, tree running)
+  ok    save.load_and_enter_failure_stays_put (scene MainMenu, phase 0)
+  ok    save.continue_skips_damaged_newest (the damaged slot 1 is skipped, slot 0 loads (gold 10))
+  ok    save.load_and_enter_missing_world_scene_changes_nothing (the scene is missing: false, code 'scene', the running game is unchanged (gold 1), still on the title, one notification)
+  ok    save.continue_uses_bak_with_feedback (gold 30 from the .bak, a NOTIF_LOAD_BACKUP toast)
+  ok    save.new_game_after_continue_start (slot 4, scene World)
+  ok    save.new_game_after_continue_keeps_slot_until_new_game (going to the menu does not reset the slot)
+  ok    save.new_game_after_continue_clean (current_slot -1, pending {  }, timer 0.0)
+  ok    save.new_game_resets_sections_once (a section that follows the reset contract is reset by new_game_started exactly once (SaveManager does not reset it a second time): 1)
+  ok    save.new_game_state_is_new (day 1, the new character, no save file touched)
+  ok    save.new_game_after_continue_gold_reset (gold 500)
+  ok    save.new_game_after_continue_quests_reset
+  ok    save.new_game_after_continue_husbandry_reset
+  ok    save.autosave_after_new_game_is_auto_only (slot 4 untouched, current_slot still -1)
+  ok    save.real_user_dir_untouched (user://saves has the same files as before the section (2))
+  --    save: 244 checks, 0 failed, 0 skipped, 3.1 s
+== summary: 6 section(s) run, 1242 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 19 allowed message(s), 0 problem(s), 0 known-issue message(s), 14.8 s
+PLAYTEST PASS (1242 checks in 6 sections, 19 allowed engine messages, 0 known-issue messages)

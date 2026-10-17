@@ -1,0 +1,18 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+run_playtest: importing project (pass 1 of 1) ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PLAYTEST start mode=windowed character=animal sections=res://tests/sections only=ui_mechanics
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.3gzmRB/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/layout
+== section ui_mechanics [windowed]  (res://tests/sections/ui_mechanics.gd)
+  ok    ui_mechanics.string_selection_does_not_exempt_gold
+  ok    ui_mechanics.calendar_card_stays_in_content ([P: (108.0, 190.0), S: (1064.0, 440.0)] contains [P: (108.0, 190.0), S: (240.0, 440.0)])
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/layout/ui_mechanics_calendar_bounded_card.png (1280x720)
+  ok    ui_mechanics.reopened_calendar_card_stays_in_content ([P: (108.0, 190.0), S: (240.0, 440.0)])
+  ok    ui_mechanics.calendar_card_paint_stays_in_book ((0.1373, 0.1176, 0.1922, 1.0))
+  --    ui_mechanics: 4 checks, 0 failed, 0 skipped, 1.4 s
+== summary: 1 section(s) run, 4 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 6.4 s
+PLAYTEST PASS (4 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

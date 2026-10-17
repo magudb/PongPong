@@ -32,6 +32,7 @@ var weather_rolls: int = 0
 
 var _acc_minutes: float = 0.0
 var _weather_day: int = -1       # GameManager.total_day() the current weather belongs to
+var _weather_seed: int = 1
 
 # Crop growth modifiers by season
 var season_growth_mod: Dictionary = {
@@ -78,6 +79,7 @@ func set_time_scale(scale: float) -> void:
 
 ## New game: weather, clock accumulator and pause state back to the start of a run (day 1 is sunny).
 func reset() -> void:
+	_weather_seed = maxi(1,int(randi() & 0x7fffffff))
 	time_scale = 1.0
 	is_paused = false
 	_acc_minutes = 0.0
@@ -185,24 +187,34 @@ func roll_weather_for_day() -> void:
 		return
 	_weather_day = today
 	weather_rolls += 1
-	roll_weather()
+	_apply_weather(_weather_for_day(today))
+
+## A saved per-world seed makes tomorrow's forecast match the actual next day,
+## including season/year boundaries, without spending a global random draw.
+func forecast_weather() -> StringName:
+	return _weather_for_day(GameManager.total_day()+1)
+
+func _weather_for_day(total_day: int) -> StringName:
+	var date := CalendarUtil.date_of(total_day)
+	var random := RandomNumberGenerator.new()
+	random.seed = (_weather_seed*2654435761)^total_day
+	return _weather_at(random.randf(),StringName(str(date.season)))
+
+func _weather_at(roll: float,in_season: StringName) -> StringName:
+	var chances := weather_chances(in_season)
+	var accumulated := 0.0
+	for id in WEATHER_IDS:
+		if id==&"klart" or not chances.has(id):continue
+		accumulated += float(chances[id])
+		if roll<accumulated:return id
+	return &"klart"
 
 
 ## Always rolls (a roll value in 0..1 can be passed in to make a test deterministic). The buckets run in the order of
 ## WEATHER_IDS with klart last, so the rare weather sits at the low end of the roll.
 func roll_weather(p_roll: float = -1.0) -> void:
 	var r := randf() if p_roll < 0.0 else minf(p_roll, 0.999999)
-	var chances := weather_chances()
-	var accumulated := 0.0
-	var picked: StringName = &"klart"
-	for id in WEATHER_IDS:
-		if id == &"klart" or not chances.has(id):
-			continue
-		accumulated += float(chances[id])
-		if r < accumulated:
-			picked = id
-			break
-	_apply_weather(picked)
+	_apply_weather(_weather_at(r,GameManager.season))
 
 
 func _apply_weather(weather_id: StringName) -> void:
@@ -235,10 +247,13 @@ func to_dict() -> Dictionary:
 		"time_scale": time_scale,
 		"weather": String(weather),
 		"weather_day": _weather_day,
+		"weather_seed": _weather_seed,
 	}
 
 
 func from_dict(data: Dictionary) -> void:
+	var seed_value: Variant = data.get("weather_seed",null)
+	_weather_seed = int(seed_value) if (seed_value is int or seed_value is float) and is_finite(float(seed_value)) and float(seed_value)==floorf(float(seed_value)) and seed_value>0 and seed_value<=0x7fffffff else maxi(1,int(("weather-v1|"+GameManager.player_name+"|"+GameManager.farm_name).sha256_text().substr(0,7).hex_to_int()))
 	time_scale = maxf(float(data.get("time_scale", 1.0)), 0.1)
 	var saved := StringName(str(data.get("weather", "klart")))
 	_weather_day = int(data.get("weather_day", GameManager.total_day()))

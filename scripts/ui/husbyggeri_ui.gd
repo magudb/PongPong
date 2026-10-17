@@ -78,15 +78,17 @@ func _refresh_texts() -> void:
 			"days": text = tr("HUSBYG_DAYS_FMT") % row.need
 			_: text = "%s  %d / %d" % [tr(str(row.get("name_key",row.id))),row.have,row.need]
 		var label := L.label(detail,text,"Small14",true)
-		label.add_theme_color_override("font_color", C.MOSS_DARK if row.met else C.THORNBERRY)
+		label.theme_type_variation = &"RequirementMet" if row.met else &"RequirementMissing"
 	var check := HomeManager.can_start_upgrade(selected)
 	build_button.disabled = not check.ok or _asking
+	build_button.focus_mode = Control.FOCUS_NONE if build_button.disabled else Control.FOCUS_ALL
 	status.text = tr("HUSBYG_BLOCK_" + str(check.reason).to_upper()) if not check.ok else ""
 	if HomeManager.is_under_construction():
 		status.text = tr("HUSBYG_PROGRESS_FMT") % HomeManager.days_left()
 	if HomeManager.tier >= 8:
 		var feast := L.button(detail,tr("HUSBYG_FEAST_FMT") % HomeData.festival_cost(),"ButtonSecondary")
 		feast.disabled = not HomeManager.can_hold_festival_unlock() or EconomyManager.gold < HomeData.festival_cost() or (HomeManager.festival_cooldown_left() > 0 and not HomeManager.festival_waiver_active())
+		feast.focus_mode = Control.FOCUS_NONE if feast.disabled else Control.FOCUS_ALL
 		feast.pressed.connect(_feast)
 func _build() -> void:
 	if _asking or not HomeManager.can_start_upgrade(selected).ok:

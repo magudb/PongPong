@@ -127,7 +127,7 @@ func _test_chest_sense(t,world: WorldRoot2D,minimap: Minimap2D,eco: Node) -> voi
 	chest.global_position = area.cell_to_global(chest_cell)
 	area.markers.assign([{"type":"chest","params":params,"cell":chest_cell,"node":chest}])
 	minimap.set_area(area)
-	var has_chest := func(): return minimap._dots.any(func(dot): return dot.color == Minimap2D.C.GOLD and dot.radius == 3)
+	var has_chest := func(): return minimap._dots.any(func(dot): return dot.color == Minimap2D.C.OWL_EYE and dot.radius == 3)
 	t.check("undiscovered_chest_hidden_even_on_seen_terrain",minimap.is_seen(chest_cell) and not chest.revealed and not has_chest.call())
 	eco.add_item(&"gem_rune_heart",1,true)
 	eco.equip(&"accessory",&"gem_rune_heart")

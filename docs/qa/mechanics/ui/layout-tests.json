@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 4,
+  "elapsed_s": 6.4,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "ui_mechanics": {
+      "character": "animal",
+      "checks": 4,
+      "failed": 0,
+      "ms": 1373,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

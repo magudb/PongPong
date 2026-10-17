@@ -1,0 +1,176 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PLAYTEST start mode=windowed character=animal sections=res://tests/sections only=ui_conformance,home_services,dungeon_hud
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.h6sgNF/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native
+== section dungeon_hud [windowed]  (res://tests/sections/dungeon_hud.gd)
+  ok    dungeon_hud.hidden_in_farm_mode
+  ok    dungeon_hud.action_mode_shows_forest_hud
+  ok    dungeon_hud.run_watch_attached_once
+  ok    dungeon_hud.chip_text_from_header
+  ok    dungeon_hud.reacts_to_events
+  ok    dungeon_hud.hearts_scale_with_bonus
+  ok    dungeon_hud.assist_badge
+  ok    dungeon_hud.hint_pulses_ability_slot
+  ok    dungeon_hud.minimap_fog_is_per_visit
+  ok    dungeon_hud.minimap_map_reveals_whole_floor
+  ok    dungeon_hud.minimap_fog_resets_on_reentry
+  ok    dungeon_hud.undiscovered_chest_hidden_even_on_seen_terrain
+  ok    dungeon_hud.real_lantern_gem_senses_hidden_chest
+  ok    dungeon_hud.sense_respects_twelve_cell_limit
+  ok    dungeon_hud.real_proximity_discovery_keeps_chest_visible
+  ok    dungeon_hud.condition_disabled_chest_is_omitted
+  ok    dungeon_hud.opened_chest_is_omitted
+  ok    dungeon_hud.loot_feed_coalesces_without_transaction_double_count
+  ok    dungeon_hud.refused_or_sold_keepsake_has_no_feed_row
+  ok    dungeon_hud.loot_feed_caps_newest_first
+  ok    dungeon_hud.backpack_chip_full
+  ok    dungeon_hud.backpack_chip_near
+  ok    dungeon_hud.floor_banner_once_per_arrival
+  ok    dungeon_hud.floor_banner_suppressed_by_boss
+  ok    dungeon_hud.no_focusable_controls
+  ok    dungeon_hud.ability_keys_resolve_real_actions
+  ok    dungeon_hud.equipped_item_indicator_preserved
+  ok    dungeon_hud.hud_update_budget_under_point_four_ms (HUD 0.0035 ms + minimap 0.0854 ms at 10 Hz = 0.0177 ms/frame)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/dungeon_hud_forest_hud_default.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/dungeon_hud_hearts_9_layout.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/dungeon_hud_picker_lines.png (1280x720)
+  ok    dungeon_hud.hidden_after_return_to_farm
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/dungeon_hud_forest_guide.png (1280x720)
+  --    dungeon_hud: 29 checks, 0 failed, 0 skipped, 3.3 s
+== section home_services [windowed]  (res://tests/sections/home_services.gd)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/home_services_kitchen_forecast_and_royal_visit.png (1280x720)
+  ok    home_services.native_home_menu
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/home_services_royal_evening_visit.png (1280x720)
+  ok    home_services.native_king_guest
+  ok    home_services.native_royal_scene_complete
+  --    home_services: 3 checks, 0 failed, 0 skipped, 2.6 s
+== section ui_conformance [windowed]  (res://tests/sections/ui_conformance.gd)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_foundation_gallery.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_foundation_gallery_unfocused.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_foundation_gallery_HeartsPanel.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_button_foundation_gallery_BuyButton.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_button_foundation_gallery_AcceptButton.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_button_foundation_gallery_BackButton.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_title.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_title_unfocused.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_title_MenuPanel.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_settings.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_settings_sibling.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_settings_Panel.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_button_settings_CloseButton.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_select_1.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_select_1_sibling.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_button_select_1_BackButton.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_button_select_1_NextButton.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_select_2.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_select_2_unfocused.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_select_2_FormPanel.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_select_2_Preview.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_button_select_2_BackToRaceButton.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_button_select_2_ConfirmButton.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_saveload.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_saveload_sibling.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_saveload_Panel.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_button_saveload_CloseButton.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_pause.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_pause_sibling.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_pause_Panel.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_confirm.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_confirm_sibling.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_confirm_Panel.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_button_confirm_OkButton.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_forest_hud_@PanelContainer@2333.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_minimap_@PanelContainer@2369.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_dialogue.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_shop.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_shop_sibling.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_shop_ShopPanel.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_button_shop_BuyButton.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_journal.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_journal_sibling.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_journal_Book.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_inventory.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_inventory_sibling.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_inventory_Workshop.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_animal_care.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_animal_care_sibling.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_animal_care_@PanelContainer@3550.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_button_animal_care_BrushButton.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_build_menu.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_build_menu_sibling.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_build_menu_@PanelContainer@4549.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_husbyggeri.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_husbyggeri_sibling.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_husbyggeri_@PanelContainer@5524.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_indretning.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_indretning_sibling.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_indretning_@PanelContainer@6516.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_button_indretning_@Button@6544.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_home_chest.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_home_chest_sibling.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_home_chest_@PanelContainer@7576.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_button_home_chest_@Button@7581.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_garderobe.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_garderobe_sibling.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_garderobe_@PanelContainer@7996.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_button_garderobe_@Button@8020.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_home_amenities.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_home_amenities_sibling.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_home_amenities_@PanelContainer@8760.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_button_home_amenities_@Button@8777.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_people.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_people_sibling.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_people_@PanelContainer@9142.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_gift.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_gift_sibling.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_gift_@PanelContainer@9184.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_button_gift_GiveButton.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_button_gift_BackButton.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_calendar.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_calendar_unfocused.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_post.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_ring_post_sibling.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_panel_post_@PanelContainer@9364.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_MenuRow.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_MenuRow_unfocused.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_ChoiceRow.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_ChoiceRow_unfocused.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_Chip.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_Chip_unfocused.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_PillTab.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_PillTab_unfocused.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_CardButton.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_CardButton_unfocused.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_Primary.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_Primary_unfocused.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_Secondary.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_Secondary_unfocused.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_Tertiary.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_Tertiary_unfocused.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_slider.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_slider_unfocused.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_field.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_ring_field_unfocused.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_panel.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_button_Primary.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_button_Secondary.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_button_Tertiary.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_sheet_disabled.png (1280x720)
+  ok    ui_conformance.windowed_rings (51 focus looks sampled (gold ring 1-3 px + ink 4-5 px on all four edges, or the gold fill; the unfocused sibling shows none): foundation_gallery FocusedButton: clean; title ContinueButton: clean; settings LangDa: clean; settings LangEn unfocused: clean; select_1 AnimalButton: clean; select_1 FairyButton unfocused: clean; select_2 NameInput: clean; saveload Slot6: clean; saveload CloseButton unfocused: clean; pause ResumeButton: clean; pause SaveButton unfocused: clean; confirm CancelButton: clean; confirm OkButton unfocused: clean; dialogue Choice0: clean; shop Item_buy_fairy_dust_water: clean; shop CloseButton unfocused: clean; journal Quest_lost_cat: clean; journal ActiveTab unfocused: clean; inventory BagSlot1: clean; inventory BagSlot2 unfocused: clean; animal_care FeedButton: clean; animal_care CloseButton unfocused: clean; build_menu BuildButton: clean; build_menu CloseButton unfocused: clean; husbyggeri @Button@5529: clean; husbyggeri @Button@5864 unfocused: clean; indretning @Button@6521: clean; indretning @Button@6525 unfocused: clean; home_chest @Button@7582: clean; home_chest @Button@7581 unfocused: clean; garderobe ItemSlot: clean; garderobe @Button@8001 unfocused: clean; home_amenities @Button@8765: clean; home_amenities @Button@8777 unfocused: clean; people Citizen_gardener_hoppe: clean; people @Button@9148 unfocused: clean; gift GiftSlot1: clean; gift GiftSlot2 unfocused: clean; calendar Day9: clean; post @Button@9378: clean; post @Button@9368 unfocused: clean; sheet MenuRow fill: clean; sheet ChoiceRow fill: clean; sheet Chip ring: clean; sheet PillTab ring: clean; sheet CardButton ring: clean; sheet Primary ring: clean; sheet Secondary ring: clean; sheet Tertiary ring: clean; sheet slider: clean; sheet field: clean)
+  ok    ui_conformance.windowed_panels (24 double-edge panels (parchment, ink 2, gold 4, ink 2): foundation_gallery HeartsPanel: clean; title MenuPanel: clean; settings Panel: clean; select_2 FormPanel: clean; select_2 Preview: clean; saveload Panel: clean; pause Panel: clean; confirm Panel: clean; forest_hud @PanelContainer@2333: clean; minimap @PanelContainer@2369: clean; shop ShopPanel: clean; journal Book: clean; inventory Workshop: clean; animal_care @PanelContainer@3550: clean; build_menu @PanelContainer@4549: clean; husbyggeri @PanelContainer@5524: clean; indretning @PanelContainer@6516: clean; home_chest @PanelContainer@7576: clean; garderobe @PanelContainer@7996: clean; home_amenities @PanelContainer@8760: clean; people @PanelContainer@9142: clean; gift @PanelContainer@9184: clean; post @PanelContainer@9364: clean; sheet panel: clean)
+  ok    ui_conformance.windowed_buttons (21 raised buttons (ink border, face, band, ink border, 4 px hard underside) foundation_gallery BuyButton (ButtonPrimary): clean; foundation_gallery AcceptButton (ButtonSecondary): clean; foundation_gallery BackButton (ButtonTertiary): clean; settings CloseButton (ButtonPrimary): clean; select_1 BackButton (ButtonTertiary): clean; select_1 NextButton (ButtonPrimaryL): clean; select_2 BackToRaceButton (ButtonTertiary): clean; select_2 ConfirmButton (ButtonPrimaryL): clean; saveload CloseButton (ButtonTertiary): clean; confirm CancelButton (ButtonTertiary): skipped, the screen keeps focus on it; confirm OkButton (ButtonPrimary): clean; shop BuyButton (ButtonPrimary): clean; animal_care FeedButton (ButtonPrimaryS): skipped, the screen keeps focus on it; animal_care BrushButton (ButtonSecondaryS): clean; build_menu BuildButton (ButtonPrimary): skipped, the screen keeps focus on it; indretning @Button@6544 (ButtonSecondaryS): clean; home_chest @Button@7581 (ButtonSecondaryS): clean; garderobe @Button@8020 (ButtonSecondaryS): clean; home_amenities @Button@8777 (ButtonSecondaryS): clean; gift GiveButton (ButtonPrimary): clean; gift BackButton (ButtonTertiary): clean; sheet Primary: clean; sheet Secondary: clean; sheet Tertiary: clean; the disabled button has the dashed grey edge and no underside (true))
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_accept_gallery_guide_focus.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_accept_gallery_guide_focus_unfocused.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_accept_gallery_guide_stepper.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_accept_gallery_guide_stepper_unfocused.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_accept_gallery_rarity_focus.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_accept_gallery_rarity_focus_unfocused.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/codex-mechanics/docs/qa/mechanics/ui/native/ui_conformance_accept_gallery_confirm.png (1280x720)
+  ok    ui_conformance.windowed_acceptance_shots (the foundation gallery (guide page, rarity page) with a focused control, the stepper's own ring, a focused rarity-row slot and a UiConfirm over the gallery are captured and show their gold rings: guide page, FocusedButton: clean; guide page, stepper: clean; rarity page, ThemedSlot_rare: clean; UiConfirm over the gallery, Fortryd (modal confirm on the stack, focus on it: true): clean)
+  --    ui_conformance: 4 checks, 0 failed, 0 skipped, 10.5 s
+== summary: 3 section(s) run, 36 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 21.4 s
+PLAYTEST PASS (36 checks in 3 sections, 0 allowed engine messages, 0 known-issue messages)

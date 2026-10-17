@@ -1,0 +1,35 @@
+{
+  "screens": [
+    {
+      "id": "home_amenities",
+      "title": "Hjem og hverdag",
+      "kind": "modal",
+      "scene": "res://scenes/ui/home_amenities.tscn",
+      "fixture": "home_amenities",
+      "package": "Home mechanics completion",
+      "guide": "existing painted home and parchment UI",
+      "focus": "initial",
+      "modal": "home_amenities",
+      "esc_depth": 1,
+      "checks": [
+        "initial_focus",
+        "focus_walk",
+        "focusable_report",
+        "rule_report",
+        "i18n_flip",
+        "escape_chain",
+        "ring_pixels",
+        "panel_pixels",
+        "button_pixels"
+      ],
+      "open": {
+        "driver": "res://tests/lib/ui_home_driver.gd",
+        "ctx": {
+          "screen": "home_amenities",
+          "area": "home",
+          "tier": 10
+        }
+      }
+    }
+  ]
+}

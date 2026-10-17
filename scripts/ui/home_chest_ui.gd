@@ -4,6 +4,7 @@ var lists: Array[VBoxContainer] = []
 var counters: Array[Label] = []
 var close_button: Button
 var status: Label
+var amenities_button: Button
 func _init() -> void:
 	super._init()
 	screen_id = &"home_chest"
@@ -16,6 +17,8 @@ func _ready() -> void:
 	var header := L.box(body,false)
 	var title := L.label(header,"KISTE_TITLE","Display34")
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	amenities_button = L.button(header,"HOME_AMENITIES_TITLE","ButtonSecondaryS")
+	amenities_button.pressed.connect(func():EventBus.game_event.emit(&"open_home_amenities",{}))
 	close_button = L.button(header,"HINT_CLOSE","ButtonTertiaryS")
 	close_button.pressed.connect(close)
 	var columns := L.box(body,false,24)
@@ -43,9 +46,15 @@ func _initial_focus() -> Control:
 func _refresh_texts() -> void:
 	if lists.is_empty():
 		return
+	amenities_button.visible = HomeServices.at_home()
 	counters[0].text = tr("KISTE_BACKPACK_FMT") % [EconomyManager.used_slots(),24]
 	counters[1].text = tr("KISTE_STORAGE_FMT") % [HomeManager.chest_used(),HomeManager.chest_capacity()]
+	var groups: Array = []
+	var header: Array = [amenities_button,close_button]
+	UiNav.wire_row(header)
+	groups.append(header)
 	for index in 2:
+		var buttons: Array = []
 		L.clear(lists[index])
 		var items: Dictionary = EconomyManager.get_inventory_dict() if index == 0 else HomeManager.chest_items()
 		if items.is_empty():
@@ -62,6 +71,10 @@ func _refresh_texts() -> void:
 			for all_items in [false,true]:
 				var button := L.button(row,"KISTE_ALL" if all_items else "KISTE_ONE","ButtonTertiaryS")
 				button.pressed.connect(_transfer.bind(str(id),int(items[id]) if all_items else 1,index == 0))
+				buttons.append(button)
+		UiNav.wire_grid(buttons,2)
+		groups.append(buttons)
+	UiNav.wire_groups(groups,true,false)
 func _transfer(id: String, amount: int, deposit: bool) -> void:
 	var moved := HomeManager.deposit(StringName(id),amount) if deposit else HomeManager.withdraw(StringName(id),amount)
 	_refresh_texts()

@@ -81,6 +81,7 @@ func _refresh_texts() -> void:
 	var owned := AnimalHusbandry.has_building(_selected_building)
 	build_btn.text = tr("ANIMAL_BUILT") if owned else tr("ANIMAL_BUILD")
 	build_btn.disabled = owned or not enough or _asking
+	build_btn.focus_mode = Control.FOCUS_NONE if build_btn.disabled else Control.FOCUS_ALL
 	preview.texture = ArtCatalog.prop(StringName(PlacementService.PROPS[str(_selected_building)])).get("texture")
 func _on_build() -> void:
 	if build_btn.disabled or _asking: return

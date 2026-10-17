@@ -130,7 +130,7 @@ func _stars(slot: Control) -> void:
 	particles.lifetime = 2.8
 	particles.texture = Glow.halo_texture()
 	particles.material = Glow.additive_material()
-	particles.color = C.GOLD
+	particles.color = C.GLOWSHROOM
 	particles.emission_shape = CPUParticles2D.EMISSION_SHAPE_SPHERE
 	particles.emission_sphere_radius = 60
 	particles.initial_velocity_min = 12

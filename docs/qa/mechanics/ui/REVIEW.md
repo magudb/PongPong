@@ -1,0 +1,5 @@
+# Mechanics UI review
+
+Headless: 33 live screens, Danish/English, keyboard/pad and negative controls; 837 checks, no failures. The 107 skips require a native renderer or external guide comparison. Native: 36 checks, no failures/skips/engine messages, covering 51 focused/unfocused looks, 24 double-edge panels, 21 raised buttons, gallery acceptance, forest HUD and home services. Four additional native calendar checks cover the reopened card and pixels below the book.
+
+The calendar fixture now clears its initial full-window anchors and sorts columns after wrapped text settles; its previous transient minimum left the card taller than its parent on a second opening. layout/ui_mechanics_calendar_bounded_card.png is the final bounded capture. The native UI sweep was rerun after this correction (native-refresh.json/log: four aggregate checks, no failures/skips/engine messages); superseded captures and diagnostic contact sheets were removed. The final theme approval changes one existing theme hash; all 2,925 ledger entries remain checked. No illustration was changed for this UI package.

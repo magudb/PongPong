@@ -16,6 +16,8 @@ var choose_button: Button
 var close_button: Button
 var _preview: Node2D
 var _refreshing := false
+var _filters: Array[Button] = []
+var pickup_button: Button
 func _init() -> void:
 	super._init()
 	screen_id = &"indretning"
@@ -38,12 +40,14 @@ func _ready() -> void:
 	body.add_child(layer_row)
 	for filter in ["all","floor","wall","tabletop","ceiling","rug"]:
 		var button := L.button(layer_row,"INDRET_LAYER_" + filter.to_upper(),"ButtonTertiaryS")
+		_filters.append(button)
 		button.pressed.connect(func(): layer_filter = filter; _refresh_texts())
 	var rarity_row := GridContainer.new()
 	rarity_row.columns = 3
 	body.add_child(rarity_row)
 	for rarity in ["all","normal","uncommon","rare","unique","legendary"]:
 		var button := L.button(rarity_row,"INDRET_RARITY_" + rarity.to_upper(),"ButtonTertiaryS")
+		_filters.append(button)
 		button.pressed.connect(func(): rarity_filter = rarity; _refresh_texts())
 	var scroll := ScrollContainer.new()
 	scroll.follow_focus = true
@@ -55,7 +59,7 @@ func _ready() -> void:
 	reason = L.label(body,"","Small14",true)
 	choose_button = L.button(body,"INDRET_PLACE","ButtonPrimary")
 	choose_button.pressed.connect(_start_placing)
-	var pickup_button := L.button(body,"INDRET_PICKUP_MODE","ButtonSecondaryS")
+	pickup_button = L.button(body,"INDRET_PICKUP_MODE","ButtonSecondaryS")
 	pickup_button.pressed.connect(func(): placing = true; UiNav.release_world_focus())
 	L.label(body,"INDRET_HINT","Muted14",true)
 	EventBus.furniture_changed.connect(func(_why):
@@ -73,7 +77,9 @@ func open(opener: Control = null) -> void:
 	cell = FurnitureManager.ensure_grid().spawn_cell
 	placing = false
 	super.open(opener)
-	if is_open(): FurnitureManager.decorate_mode = true
+	if is_open():
+		FurnitureManager.decorate_mode = true
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
 func close() -> void:
 	placing = false
 	FurnitureManager.decorate_mode = false
@@ -98,6 +104,7 @@ func _refresh_texts() -> void:
 	var ids: Array = FurnitureManager.stock.keys()
 	ids.sort()
 	var shown := 0
+	var stock_buttons: Array = []
 	for id in ids:
 		var art: Dictionary = HomeData.furniture().get(id,{})
 		if (layer_filter != "all" and art.get("layer","") != layer_filter) or (rarity_filter != "all" and str(ItemKinds.rarity_of(id)) != rarity_filter): continue
@@ -109,12 +116,18 @@ func _refresh_texts() -> void:
 		row.add_child(icon)
 		var button := L.button(row,"%s ×%d" % [L.item_name(id),FurnitureManager.count_stock(id)],"ButtonTertiaryS")
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		stock_buttons.append(button)
 		button.toggle_mode = true
 		button.button_pressed = id == selected
 		button.pressed.connect(func(): selected = id; rot = 0; _start_placing(); _refresh_texts())
 	if shown == 0:
 		L.label(listing,"INDRET_EMPTY","Muted14",true)
 	choose_button.disabled = selected == "" or FurnitureManager.count_stock(selected) <= 0
+	choose_button.focus_mode = Control.FOCUS_NONE if choose_button.disabled else Control.FOCUS_ALL
+	UiNav.wire_grid(_filters,3)
+	UiNav.wire_ring(stock_buttons)
+	UiNav.wire_row([choose_button,pickup_button,close_button])
+	UiNav.wire_groups([_filters,stock_buttons,[choose_button,pickup_button,close_button]],true,false)
 func _start_placing() -> void:
 	if selected == "" or FurnitureManager.count_stock(selected) <= 0: return
 	placing = true
