@@ -37,6 +37,9 @@ The [verification manifest](VERIFICATION.json) records the report counts and fin
 | Native care, held tool and story, 3 sections | 138 | 0 |
 | Fairy / hobbit / ghost story | 206 each | 0 |
 | Town loop, weapons, wardrobe UI and farm UI audit | 286 | 4 |
+| Main checkout after merging implementation `02f29ec` | 198 | 0 |
+
+The [main-checkout run](main.json) exercises the new mechanics regression, mother story and quest contracts from the actual `main` project after its imports refresh.
 
 The four integration skips are screenshot comparisons that require windowed checkpoint runs. The native checks above separately exercise the changed care/story screens. The town extension's 584 owner checks and eight scenario checks pass, all eight deliberate town regressions are caught, and [both town proofs match the current source](town-proof-check.json). The integration run's one allowed engine message belongs to an intentional negative test.
 

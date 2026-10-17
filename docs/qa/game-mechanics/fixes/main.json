@@ -1,0 +1,43 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 198,
+  "elapsed_s": 24.49,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1599,
+      "skipped": 0
+    },
+    "forest_mother": {
+      "character": "animal",
+      "checks": 74,
+      "failed": 0,
+      "ms": 7167,
+      "skipped": 0
+    },
+    "mechanics_review_fixes": {
+      "character": "animal",
+      "checks": 55,
+      "failed": 0,
+      "ms": 1366,
+      "skipped": 0
+    },
+    "quests": {
+      "character": "animal",
+      "checks": 61,
+      "failed": 0,
+      "ms": 8263,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

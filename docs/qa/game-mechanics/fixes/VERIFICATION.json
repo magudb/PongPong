@@ -64,5 +64,13 @@
     "The four integration skips are headless-only screenshot comparisons in farm_ui_audit. Native care and story checks are separate.",
     "Intermediate failing metadata and frozen-voice reports remain archived under explicit first-run names.",
     "No fresh unassisted save-to-finale or full-suite combat acceptance is claimed."
-  ]
+  ],
+  "implementation_commit": "02f29ec",
+  "main_checkout_verification": {
+    "file": "main.json",
+    "checks": 198,
+    "failed": 0,
+    "skipped": 0,
+    "result": "pass"
+  }
 }
