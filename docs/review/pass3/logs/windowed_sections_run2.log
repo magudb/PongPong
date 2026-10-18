@@ -1,0 +1,432 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PLAYTEST start mode=windowed character=animal sections=res://tests/sections only=menus,home_world,towns_city,ghostfam_seek,festival_activities,social_ui,farm_playthrough,towns_interiors_core
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.LttP50/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections
+== section farm_playthrough [windowed]  (res://tests/sections/farm_playthrough.gd)
+  ok    farm_playthrough.walk_to_plot_(27, 24)
+  ok    farm_playthrough.hoe_input_(27, 24)
+  ok    farm_playthrough.seed_input_(27, 24)
+  ok    farm_playthrough.water_input_(27, 24)
+  ok    farm_playthrough.walk_to_plot_(27, 25)
+  ok    farm_playthrough.hoe_input_(27, 25)
+  ok    farm_playthrough.seed_input_(27, 25)
+  ok    farm_playthrough.water_input_(27, 25)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/farm_playthrough_planted_and_watered.png (1280x720)
+  ok    farm_playthrough.sleep_grows_crops_day_0
+  ok    farm_playthrough.daily_water_1_(27, 24)
+  ok    farm_playthrough.daily_water_1_(27, 25)
+  ok    farm_playthrough.sleep_grows_crops_day_1
+  ok    farm_playthrough.daily_water_2_(27, 24)
+  ok    farm_playthrough.daily_water_2_(27, 25)
+  ok    farm_playthrough.sleep_grows_crops_day_2
+  ok    farm_playthrough.daily_water_3_(27, 24)
+  ok    farm_playthrough.daily_water_3_(27, 25)
+  ok    farm_playthrough.sleep_grows_crops_day_3
+  ok    farm_playthrough.both_plots_ripe_after_real_sleep
+  ok    farm_playthrough.ripe_plot_has_harvest_prompt_(27, 24)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/farm_playthrough_ripe_crop.png (1280x720)
+  ok    farm_playthrough.interact_harvests_to_backpack_(27, 24)
+  ok    farm_playthrough.replant_input_without_retilling_(27, 24)
+  ok    farm_playthrough.ripe_plot_has_harvest_prompt_(27, 25)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/farm_playthrough_ripe_crop.png (1280x720)
+  ok    farm_playthrough.interact_harvests_to_backpack_(27, 25)
+  ok    farm_playthrough.replant_input_without_retilling_(27, 25)
+  ok    farm_playthrough.shipping_owns_full_harvest
+  ok    farm_playthrough.shipping_sleep_succeeds
+  ok    farm_playthrough.shipping_pays_once_next_morning
+  ok    farm_playthrough.save_replanted_fields
+  ok    farm_playthrough.load_replanted_fields
+  ok    farm_playthrough.real_reload_preserves_crop_state
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/farm_playthrough_farm_reloaded.png (1280x720)
+  --    farm_playthrough: 31 checks, 0 failed, 0 skipped, 27.7 s
+== section festival_activities [windowed]  (res://tests/sections/festival_activities.gd)
+  ok    festival_activities.normal_score_has_no_rarity_bonus
+  ok    festival_activities.uncommon_score_bonus
+  ok    festival_activities.rare_score_bonus
+  ok    festival_activities.cheapest_winning_entry_caps_prize
+  ok    festival_activities.unknown_selector_has_zero_cap
+  ok    festival_activities.legal_prizes
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "gold": 201 } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "gold": 100 }, "second": { "gold": 71 } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "gold": 100 }, "third": { "gold": 41 } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "items": { "keepsake": 1 } } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "items": { "unknown": 1 } } }
+  ok    festival_activities.deterministic_entry_seed_1
+  ok    festival_activities.deterministic_entry_seed_2
+  ok    festival_activities.deterministic_entry_seed_3
+  ok    festival_activities.deterministic_entry_seed_4
+  ok    festival_activities.deterministic_entry_seed_5
+  ok    festival_activities.deterministic_entry_seed_6
+  ok    festival_activities.deterministic_entry_seed_7
+  ok    festival_activities.deterministic_entry_seed_8
+  ok    festival_activities.deterministic_entry_seed_9
+  ok    festival_activities.deterministic_entry_seed_10
+  ok    festival_activities.deterministic_entry_seed_11
+  ok    festival_activities.deterministic_entry_seed_12
+  ok    festival_activities.deterministic_entry_seed_13
+  ok    festival_activities.deterministic_entry_seed_14
+  ok    festival_activities.deterministic_entry_seed_15
+  ok    festival_activities.deterministic_entry_seed_16
+  ok    festival_activities.deterministic_entry_seed_17
+  ok    festival_activities.deterministic_entry_seed_18
+  ok    festival_activities.deterministic_entry_seed_19
+  ok    festival_activities.deterministic_entry_seed_20
+  ok    festival_activities.wrong_entry_refused
+  ok    festival_activities.stage_attached_to_active_area (stage=FestivalStage:<Node2D#1440089121868> area=hyggebyen active=activity_test)
+  ok    festival_activities.named_posts_have_no_map_errors ([])
+  ok    festival_activities.all_six_activities_enabled_in_window
+  ok    festival_activities.opening_once_per_year
+  ok    festival_activities.attendance_points_once
+  ok    festival_activities.talked_citizen_attendance_once
+  ok    festival_activities.picker_opens_contest
+  ok    festival_activities.matching_item_available_contest
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/festival_activities_contest_picker.png (1280x720)
+  ok    festival_activities.contest_consumes_exactly_one_entry
+  ok    festival_activities.contest_pays_bounded_prize
+  ok    festival_activities.contest_cannot_be_repeated
+  ok    festival_activities.picker_opens_potluck
+  ok    festival_activities.matching_item_available_potluck
+  ok    festival_activities.potluck_donation_is_one_item
+  ok    festival_activities.town_contributions_reach_goal
+  ok    festival_activities.feast_restores_once
+  ok    festival_activities.feast_repeat_has_no_effect
+  ok    festival_activities.wish_is_flavour_flag
+  ok    festival_activities.wish_host_points_once
+  ok    festival_activities.wish_repeat_refused
+  ok    festival_activities.dance_chooses_highest_hearts_present
+  ok    festival_activities.market_opens_existing_shop_panel
+  ok    festival_activities.stage_is_stable_across_flushes
+  ok    festival_activities.finale_once_per_year
+  ok    festival_activities.activities_disable_at_window_end
+  ok    festival_activities.outside_window_has_no_effect
+  ok    festival_activities.stage_removed_at_end
+  --    festival_activities: 59 checks, 0 failed, 0 skipped, 3.3 s
+== section ghostfam_seek [windowed]  (res://tests/sections/ghostfam_seek.gd)
+  ok    ghostfam_seek.native_approach_on_real_floor
+  ok    ghostfam_seek.native_shimmer
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/ghostfam_seek_shimmer.png (1280x720)
+  ok    ghostfam_seek.native_approach_on_real_floor
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/ghostfam_seek_found_gift.png (1280x720)
+  ok    ghostfam_seek.dialogue_finished
+  ok    ghostfam_seek.native_find_and_prize
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/ghostfam_seek_progress_card.png (1280x720)
+  ok    ghostfam_seek.dialogue_finished
+  --    ghostfam_seek: 6 checks, 0 failed, 0 skipped, 9.8 s
+== section home_world [windowed]  (res://tests/sections/home_world.gd)
+  ok    home_world.home_map_registered
+  ok    home_world.real_farm_house_and_tent_handlers
+  ok    home_world.tier_1_builds_without_error
+  ok    home_world.tier_1_floor_matches_cells
+  ok    home_world.tier_1_spawn_coordinates_match
+  ok    home_world.tier_1_camera_uses_authored_zoom
+  ok    home_world.tier_1_every_placement_has_painted_node
+  ok    home_world.tier_1_boundary_is_solid
+  ok    home_world.tier_1_interaction_points_exist
+  ok    home_world.tier_1_room_uses_world_coordinate_contract
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/home_world_room_t01_day.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/home_world_room_t01_night.png (1280x720)
+  ok    home_world.tier_1_returns_to_farm_door
+  ok    home_world.tier_1_exterior_uses_fixed_door_anchor
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/home_world_farm_house_t01.png (1280x720)
+  ok    home_world.tier_2_builds_without_error
+  ok    home_world.tier_2_floor_matches_cells
+  ok    home_world.tier_2_spawn_coordinates_match
+  ok    home_world.tier_2_camera_uses_authored_zoom
+  ok    home_world.tier_2_every_placement_has_painted_node
+  ok    home_world.tier_2_boundary_is_solid
+  ok    home_world.tier_2_interaction_points_exist
+  ok    home_world.tier_2_room_uses_world_coordinate_contract
+  ok    home_world.tier_2_returns_to_farm_door
+  ok    home_world.tier_2_exterior_uses_fixed_door_anchor
+  ok    home_world.tier_3_builds_without_error
+  ok    home_world.tier_3_floor_matches_cells
+  ok    home_world.tier_3_spawn_coordinates_match
+  ok    home_world.tier_3_camera_uses_authored_zoom
+  ok    home_world.tier_3_every_placement_has_painted_node
+  ok    home_world.tier_3_boundary_is_solid
+  ok    home_world.tier_3_interaction_points_exist
+  ok    home_world.tier_3_room_uses_world_coordinate_contract
+  ok    home_world.tier_3_returns_to_farm_door
+  ok    home_world.tier_3_exterior_uses_fixed_door_anchor
+  ok    home_world.tier_4_builds_without_error
+  ok    home_world.tier_4_floor_matches_cells
+  ok    home_world.tier_4_spawn_coordinates_match
+  ok    home_world.tier_4_camera_uses_authored_zoom
+  ok    home_world.tier_4_every_placement_has_painted_node
+  ok    home_world.tier_4_boundary_is_solid
+  ok    home_world.tier_4_interaction_points_exist
+  ok    home_world.tier_4_room_uses_world_coordinate_contract
+  ok    home_world.tier_4_returns_to_farm_door
+  ok    home_world.tier_4_exterior_uses_fixed_door_anchor
+  ok    home_world.tier_5_builds_without_error
+  ok    home_world.tier_5_floor_matches_cells
+  ok    home_world.tier_5_spawn_coordinates_match
+  ok    home_world.tier_5_camera_uses_authored_zoom
+  ok    home_world.tier_5_every_placement_has_painted_node
+  ok    home_world.tier_5_boundary_is_solid
+  ok    home_world.tier_5_interaction_points_exist
+  ok    home_world.tier_5_room_uses_world_coordinate_contract
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/home_world_room_t05_day.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/home_world_room_t05_night.png (1280x720)
+  ok    home_world.tier_5_returns_to_farm_door
+  ok    home_world.tier_5_exterior_uses_fixed_door_anchor
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/home_world_farm_house_t05.png (1280x720)
+  ok    home_world.tier_6_builds_without_error
+  ok    home_world.tier_6_floor_matches_cells
+  ok    home_world.tier_6_spawn_coordinates_match
+  ok    home_world.tier_6_camera_uses_authored_zoom
+  ok    home_world.tier_6_every_placement_has_painted_node
+  ok    home_world.tier_6_boundary_is_solid
+  ok    home_world.tier_6_interaction_points_exist
+  ok    home_world.tier_6_room_uses_world_coordinate_contract
+  ok    home_world.tier_6_returns_to_farm_door
+  ok    home_world.tier_6_exterior_uses_fixed_door_anchor
+  ok    home_world.tier_7_builds_without_error
+  ok    home_world.tier_7_floor_matches_cells
+  ok    home_world.tier_7_spawn_coordinates_match
+  ok    home_world.tier_7_camera_uses_authored_zoom
+  ok    home_world.tier_7_every_placement_has_painted_node
+  ok    home_world.tier_7_boundary_is_solid
+  ok    home_world.tier_7_interaction_points_exist
+  ok    home_world.tier_7_room_uses_world_coordinate_contract
+  ok    home_world.tier_7_returns_to_farm_door
+  ok    home_world.tier_7_exterior_uses_fixed_door_anchor
+  ok    home_world.tier_8_builds_without_error
+  ok    home_world.tier_8_floor_matches_cells
+  ok    home_world.tier_8_spawn_coordinates_match
+  ok    home_world.tier_8_camera_uses_authored_zoom
+  ok    home_world.tier_8_every_placement_has_painted_node
+  ok    home_world.tier_8_boundary_is_solid
+  ok    home_world.tier_8_interaction_points_exist
+  ok    home_world.tier_8_room_uses_world_coordinate_contract
+  ok    home_world.tier_8_returns_to_farm_door
+  ok    home_world.tier_8_exterior_uses_fixed_door_anchor
+  ok    home_world.tier_9_builds_without_error
+  ok    home_world.tier_9_floor_matches_cells
+  ok    home_world.tier_9_spawn_coordinates_match
+  ok    home_world.tier_9_camera_uses_authored_zoom
+  ok    home_world.tier_9_every_placement_has_painted_node
+  ok    home_world.tier_9_boundary_is_solid
+  ok    home_world.tier_9_interaction_points_exist
+  ok    home_world.tier_9_room_uses_world_coordinate_contract
+  ok    home_world.tier_9_returns_to_farm_door
+  ok    home_world.tier_9_exterior_uses_fixed_door_anchor
+  ok    home_world.tier_10_builds_without_error
+  ok    home_world.tier_10_floor_matches_cells
+  ok    home_world.tier_10_spawn_coordinates_match
+  ok    home_world.tier_10_camera_uses_authored_zoom
+  ok    home_world.tier_10_every_placement_has_painted_node
+  ok    home_world.tier_10_boundary_is_solid
+  ok    home_world.tier_10_interaction_points_exist
+  ok    home_world.tier_10_room_uses_world_coordinate_contract
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/home_world_room_t10_day.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/home_world_room_t10_night.png (1280x720)
+  ok    home_world.tier_10_returns_to_farm_door
+  ok    home_world.tier_10_exterior_uses_fixed_door_anchor
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/home_world_farm_house_t10.png (1280x720)
+  ok    home_world.construction_keeps_old_house_and_scaffold
+  ok    home_world.construction_tent_appears
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/home_world_farm_house_construction.png (1280x720)
+  ok    home_world.construction_refuses_entry
+  --    home_world: 105 checks, 0 failed, 0 skipped, 12.8 s
+== section menus [windowed]  (res://tests/sections/menus.gd)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/menus_title_guide.png (1280x720)
+  FAIL  menus.title_guide_reviewed_baseline (sh: /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/tools/art/.venv/bin/python: No such file or directory
+)
+  ok    menus.title_guide_fits_viewport
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/menus_select_guide4.png (1280x720)
+  FAIL  menus.select_guide4_reviewed_baseline (sh: /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/tools/art/.venv/bin/python: No such file or directory
+)
+  ok    menus.select_guide4_fits_viewport
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/menus_select2.png (1280x720)
+  FAIL  menus.select2_reviewed_baseline (sh: /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/tools/art/.venv/bin/python: No such file or directory
+)
+  ok    menus.select2_fits_viewport
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/menus_settings.png (1280x720)
+  FAIL  menus.settings_reviewed_baseline (sh: /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/tools/art/.venv/bin/python: No such file or directory
+)
+  ok    menus.settings_fits_viewport
+  ok    menus.settings_panel_fits_720 ([P: (320.0, 101.0), S: (640.0, 519.0)])
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/menus_saveload.png (1280x720)
+  FAIL  menus.saveload_reviewed_baseline (sh: /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/tools/art/.venv/bin/python: No such file or directory
+)
+  ok    menus.saveload_fits_viewport
+  ok    menus.saveload_panel_fits_720 ([P: (170.0, 52.0), S: (940.0, 616.0)])
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/menus_pause.png (1280x720)
+  FAIL  menus.pause_reviewed_baseline (sh: /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/tools/art/.venv/bin/python: No such file or directory
+)
+  ok    menus.pause_fits_viewport
+  ok    menus.pause_panel_fits_720 ([P: (390.0, 162.5), S: (500.0, 395.0)])
+  ok    menus.full_game_pause_has_core_actions_and_test_menu (["ResumeButton", "InventoryButton", "JournalButton", "PeopleButton", "BuildButton", "WardrobeButton", "CheatButton", "SaveButton", "LoadButton", "SettingsButton", "QuitButton", "QuitGameButton"])
+  ok    menus.full_game_pause_panel_fits
+  ok    menus.last_pause_row_visible_on_focus
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/menus_pause_full_game.png (1280x720)
+  --    menus: 18 checks, 6 failed, 0 skipped, 1.8 s
+== section social_ui [windowed]  (res://tests/sections/social_ui.gd)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/social_ui_people.png (1280x720)
+  ok    social_ui.people_native_open_ms (8.778)
+  ok    social_ui.people_rules_da ([])
+  ok    social_ui.people_rules_en ([])
+  ok    social_ui.people_panel (clean)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/social_ui_people_ring.png (1280x720)
+  ok    social_ui.people_focus (clean)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/social_ui_gift.png (1280x720)
+  ok    social_ui.gift_rules_da ([])
+  ok    social_ui.gift_rules_en ([])
+  ok    social_ui.gift_panel (clean)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/social_ui_gift_ring.png (1280x720)
+  ok    social_ui.gift_focus (clean)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/social_ui_calendar.png (1280x720)
+  ok    social_ui.calendar_rules_da ([])
+  ok    social_ui.calendar_rules_en ([])
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/social_ui_calendar_ring.png (1280x720)
+  ok    social_ui.calendar_focus (clean)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/social_ui_social_hud.png (1280x720)
+  ok    social_ui.social_hud_rules_da ([])
+  ok    social_ui.social_hud_rules_en ([])
+  FAIL  social_ui.reviewed_screen_baselines (sh: /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/tools/art/.venv/bin/python: No such file or directory
+)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/social_ui_farm_social_hud.png (1280x720)
+  ok    social_ui.birthday_chips_leave_space_for_quests
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/social_ui_journal_calendar.png (1280x720)
+  ok    social_ui.calendar_in_real_journal
+  --    social_ui: 17 checks, 1 failed, 0 skipped, 4.8 s
+== section towns_city [windowed]  (res://tests/sections/towns_city.gd)
+  ok    towns_city.native_approach_door_postkontoret
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_door_postkontoret.png (1280x720)
+  ok    towns_city.native_approach_e_bat_window
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_e_bat_window.png (1280x720)
+  ok    towns_city.native_approach_door_badehuset
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_door_badehuset.png (1280x720)
+  ok    towns_city.native_approach_door_hoppe_hut
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_door_hoppe_hut.png (1280x720)
+  ok    towns_city.native_approach_door_uglehulen
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_door_uglehulen.png (1280x720)
+  ok    towns_city.native_approach_door_musikstuen
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_door_musikstuen.png (1280x720)
+  ok    towns_city.native_approach_door_raadhuset
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_door_raadhuset.png (1280x720)
+  ok    towns_city.native_approach_a_beds1
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_a_beds1.png (1280x720)
+  ok    towns_city.native_approach_a_beds2
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_a_beds2.png (1280x720)
+  ok    towns_city.native_approach_a_ugle_perch
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_a_ugle_perch.png (1280x720)
+  ok    towns_city.native_approach_t_bench2
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_t_bench2.png (1280x720)
+  ok    towns_city.native_approach_t_lamp
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_t_lamp.png (1280x720)
+  ok    towns_city.native_approach_u_terrace
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_u_terrace.png (1280x720)
+  ok    towns_city.native_approach_u_lamp
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_u_lamp.png (1280x720)
+  ok    towns_city.native_approach_e_tub
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_e_tub.png (1280x720)
+  ok    towns_city.native_approach_e_lamp
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_e_lamp.png (1280x720)
+  ok    towns_city.native_approach_f_lamp
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_f_lamp.png (1280x720)
+  ok    towns_city.native_approach_g_planter3
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_g_planter3.png (1280x720)
+  ok    towns_city.native_approach_fest_torvet_host
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_fest_torvet_host.png (1280x720)
+  ok    towns_city.native_approach_fest_raadhus_host
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_fest_raadhus_host.png (1280x720)
+  ok    towns_city.window_owl_has_live_safe_body
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_owl_window_2100.png (1280x720)
+  ok    towns_city.native_keeper_behind_counter
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_seed_shop_room.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_city_seed_shop_panel.png (1280x720)
+  ok    towns_city.native_shop_over_live_room
+  --    towns_city: 23 checks, 0 failed, 0 skipped, 8.5 s
+== section towns_interiors_core [windowed]  (res://tests/sections/towns_interiors_core.gd)
+  ok    Open staffed hours exist in int_badehuset
+  ok    Travel enters the painted room int_badehuset
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_interiors_core_core_int_badehuset.png (1280x720)
+  ok    Painted room: int_badehuset (1594 distinct colours, luma std 0.290)
+  ok    Live keeper in int_badehuset
+  ok    Open staffed hours exist in int_bageriet
+  ok    Travel enters the painted room int_bageriet
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_interiors_core_core_int_bageriet.png (1280x720)
+  ok    Painted room: int_bageriet (1875 distinct colours, luma std 0.272)
+  ok    Live keeper in int_bageriet
+  ok    Open staffed hours exist in int_brummes_vaerksted
+  ok    Travel enters the painted room int_brummes_vaerksted
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_interiors_core_core_int_brummes_vaerksted.png (1280x720)
+  ok    Painted room: int_brummes_vaerksted (1204 distinct colours, luma std 0.264)
+  ok    Live keeper in int_brummes_vaerksted
+  ok    Open staffed hours exist in int_dyrehuset
+  ok    Travel enters the painted room int_dyrehuset
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_interiors_core_core_int_dyrehuset.png (1280x720)
+  ok    Painted room: int_dyrehuset (1457 distinct colours, luma std 0.255)
+  ok    Live keeper in int_dyrehuset
+  ok    Open staffed hours exist in int_froebutikken
+  ok    Travel enters the painted room int_froebutikken
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_interiors_core_core_int_froebutikken.png (1280x720)
+  ok    Painted room: int_froebutikken (1740 distinct colours, luma std 0.249)
+  ok    Live keeper in int_froebutikken
+  ok    Open staffed hours exist in int_gaestehytten
+  ok    Travel enters the painted room int_gaestehytten
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_interiors_core_core_int_gaestehytten.png (1280x720)
+  ok    Painted room: int_gaestehytten (1614 distinct colours, luma std 0.265)
+  ok    Live keeper in int_gaestehytten
+  ok    Open staffed hours exist in int_loppeloftet
+  ok    Travel enters the painted room int_loppeloftet
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_interiors_core_core_int_loppeloftet.png (1280x720)
+  ok    Painted room: int_loppeloftet (1548 distinct colours, luma std 0.252)
+  ok    Live keeper in int_loppeloftet
+  ok    Open staffed hours exist in int_moebelbutikken
+  ok    Travel enters the painted room int_moebelbutikken
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_interiors_core_core_int_moebelbutikken.png (1280x720)
+  ok    Painted room: int_moebelbutikken (1536 distinct colours, luma std 0.262)
+  ok    Live keeper in int_moebelbutikken
+  ok    Open staffed hours exist in int_postkontoret
+  ok    Travel enters the painted room int_postkontoret
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_interiors_core_core_int_postkontoret.png (1280x720)
+  ok    Painted room: int_postkontoret (1434 distinct colours, luma std 0.243)
+  ok    Live keeper in int_postkontoret
+  ok    Open staffed hours exist in int_raadhuset
+  ok    Travel enters the painted room int_raadhuset
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_interiors_core_core_int_raadhuset.png (1280x720)
+  ok    Painted room: int_raadhuset (1636 distinct colours, luma std 0.285)
+  ok    Live keeper in int_raadhuset
+  ok    Open staffed hours exist in int_skraedderiet
+  ok    Travel enters the painted room int_skraedderiet
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_interiors_core_core_int_skraedderiet.png (1280x720)
+  ok    Painted room: int_skraedderiet (1614 distinct colours, luma std 0.264)
+  ok    Live keeper in int_skraedderiet
+  ok    Open staffed hours exist in int_smedjen
+  ok    Travel enters the painted room int_smedjen
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_interiors_core_core_int_smedjen.png (1280x720)
+  ok    Painted room: int_smedjen (1486 distinct colours, luma std 0.245)
+  ok    Live keeper in int_smedjen
+  ok    Open staffed hours exist in int_toemmerhandlen
+  ok    Travel enters the painted room int_toemmerhandlen
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_interiors_core_core_int_toemmerhandlen.png (1280x720)
+  ok    Painted room: int_toemmerhandlen (1441 distinct colours, luma std 0.253)
+  ok    Live keeper in int_toemmerhandlen
+  ok    Open staffed hours exist in int_troldmandstaarnet
+  ok    Travel enters the painted room int_troldmandstaarnet
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_interiors_core_core_int_troldmandstaarnet.png (1280x720)
+  ok    Painted room: int_troldmandstaarnet (2026 distinct colours, luma std 0.260)
+  ok    Live keeper in int_troldmandstaarnet
+  ok    Open staffed hours exist in int_uglehulen
+  ok    Travel enters the painted room int_uglehulen
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/sections/towns_interiors_core_core_int_uglehulen.png (1280x720)
+  ok    Painted room: int_uglehulen (1479 distinct colours, luma std 0.244)
+  ok    Live keeper in int_uglehulen
+  --    towns_interiors_core: 60 checks, 0 failed, 0 skipped, 16.5 s
+== summary: 8 section(s) run, 319 checks (7 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 91.3 s
+  FAILED   menus.title_guide_reviewed_baseline
+  FAILED   menus.select_guide4_reviewed_baseline
+  FAILED   menus.select2_reviewed_baseline
+  FAILED   menus.settings_reviewed_baseline
+  FAILED   menus.saveload_reviewed_baseline
+  FAILED   menus.pause_reviewed_baseline
+  FAILED   social_ui.reviewed_screen_baselines
+PLAYTEST FAIL: 7 check failures, 0 engine errors, 0 engine warnings, 0 problems
+EXIT 1

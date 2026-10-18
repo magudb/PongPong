@@ -1,0 +1,567 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PLAYTEST start mode=windowed character=animal sections=res://tests/sections only=menus,social_ui,hud,shop_ui,farm_ui_audit,npc
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.WmHoSZ/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3
+== section farm_ui_audit [windowed]  (res://tests/sections/farm_ui_audit.gd)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/farm_ui_audit_ring_build_menu.png (1280x720)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/farm_ui_audit_ring_build_menu_unfocused.png (1280x720)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/farm_ui_audit_panel_pixels_build_menu.png (1280x720)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/farm_ui_audit_button_pixels_build_menu.png (1280x720)
+  ok    farm_ui_audit.build_menu.visible (clean)
+  ok    farm_ui_audit.build_menu.initial_focus (clean)
+  ok    farm_ui_audit.build_menu.focus_walk (8 of 8 controls reached in 34 presses)
+  ok    farm_ui_audit.build_menu.focusable (8 interactive, 8 keyboard-focusable)
+  ok    farm_ui_audit.build_menu.rules (24 nodes, 13 text, 9 boxes, 8 interactive scanned)
+  ok    farm_ui_audit.build_menu.i18n_flip (clean)
+  ok    farm_ui_audit.build_menu.ring (clean)
+  ok    farm_ui_audit.build_menu.panel_pixels (clean)
+  ok    farm_ui_audit.build_menu.button_pixels (clean)
+  ok    farm_ui_audit.build_menu.escape (1 modal(s) opened and closed with Esc in order)
+  ok    farm_ui_audit.reviewed_build_menu_pixel_baseline ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "farm_ui_audit_panel_pixels_build_menu": {
+      "mean": 0.001,
+      "over40_pct": 0.0,
+      "ref": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/docs/qa/ui_baseline/build_menu.png",
+      "shot": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/farm_ui_audit_panel_pixels_build_menu.png",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  }
+}
+)
+  --    farm_ui_audit: 11 checks, 0 failed, 0 skipped, 3.2 s
+== section hud [windowed]  (res://tests/sections/hud.gd)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/hud_farm.png (1280x720)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/hud_v2.png (1280x720)
+  ok    hud.native_rules_da ([])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/hud_farm_da.png (1280x720)
+  ok    hud.date_left_anchor_da
+  ok    hud.money_right_anchor_da
+  ok    hud.native_rules_en ([])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/hud_farm_en.png (1280x720)
+  ok    hud.date_left_anchor_en
+  ok    hud.money_right_anchor_en
+  info  Banner outline 10, colour (0.1686, 0.1373, 0.251, 1.0)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/hud_area_banner.png (1280x720)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/hud_fixture.png (1280x720)
+  ok    hud.v2_reference_crops
+  ok    hud.v2_date_compare ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "comparison_date": {
+      "mean": 10.081,
+      "over40_pct": 12.703,
+      "ref": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/reference_date.png",
+      "shot": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/comparison_date.png",
+      "size": [
+        253,
+        72
+      ]
+    }
+  }
+}
+)
+  ok    hud.v2_chip_compare ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "comparison_chip": {
+      "mean": 10.337,
+      "over40_pct": 9.071,
+      "ref": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/reference_chip.png",
+      "shot": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/comparison_chip.png",
+      "size": [
+        280,
+        50
+      ]
+    }
+  }
+}
+)
+  ok    hud.v2_banner_compare ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "comparison_banner": {
+      "mean": 11.824,
+      "over40_pct": 12.992,
+      "ref": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/reference_banner.png",
+      "shot": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/comparison_banner.png",
+      "size": [
+        174,
+        33
+      ]
+    }
+  }
+}
+)
+  FAIL  hud.v2_hotbar_compare ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "comparison_hotbar": {
+      "exceeded": true,
+      "limit": 12.0,
+      "mean": 12.243,
+      "over40_pct": 13.181,
+      "ref": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/reference_hotbar.png",
+      "shot": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/comparison_hotbar.png",
+      "size": [
+        544,
+        82
+      ]
+    }
+  }
+}
+)
+  ok    hud.hud.png_reviewed_baseline ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "hud": {
+      "mean": 1.155,
+      "over40_pct": 1.598,
+      "ref": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/docs/qa/ui_baseline/hud.png",
+      "shot": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/hud_fixture.png",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  }
+}
+)
+  ok    hud.area_banner.png_reviewed_baseline ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "hud": {
+      "mean": 0.0,
+      "over40_pct": 0.0,
+      "ref": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/docs/qa/ui_baseline/area_banner.png",
+      "shot": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/hud_area_banner.png",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  }
+}
+)
+  --    hud: 13 checks, 1 failed, 0 skipped, 2.7 s
+== section menus [windowed]  (res://tests/sections/menus.gd)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/menus_title_guide.png (1280x720)
+  ok    menus.title_guide_reviewed_baseline ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "menus_title_guide": {
+      "mean": 0.0,
+      "over40_pct": 0.0,
+      "ref": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/docs/qa/ui_baseline/title.png",
+      "shot": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/menus_title_guide.png",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  }
+}
+)
+  ok    menus.title_guide_fits_viewport
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/menus_select_guide4.png (1280x720)
+  ok    menus.select_guide4_reviewed_baseline ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "menus_select_guide4": {
+      "mean": 0.0,
+      "over40_pct": 0.0,
+      "ref": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/tests/checkpoints/guide_ref_ghost/select_4cards.png",
+      "shot": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/menus_select_guide4.png",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  }
+}
+)
+  ok    menus.select_guide4_fits_viewport
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/menus_select2.png (1280x720)
+  ok    menus.select2_reviewed_baseline ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "menus_select2": {
+      "mean": 0.0,
+      "over40_pct": 0.0,
+      "ref": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/docs/qa/ui_baseline/select_2.png",
+      "shot": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/menus_select2.png",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  }
+}
+)
+  ok    menus.select2_fits_viewport
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/menus_settings.png (1280x720)
+  ok    menus.settings_reviewed_baseline ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "menus_settings": {
+      "mean": 0.0,
+      "over40_pct": 0.0,
+      "ref": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/docs/qa/ui_baseline/settings.png",
+      "shot": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/menus_settings.png",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  }
+}
+)
+  ok    menus.settings_fits_viewport
+  ok    menus.settings_panel_fits_720 ([P: (320.0, 101.0), S: (640.0, 519.0)])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/menus_saveload.png (1280x720)
+  ok    menus.saveload_reviewed_baseline ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "menus_saveload": {
+      "mean": 0.0,
+      "over40_pct": 0.0,
+      "ref": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/docs/qa/ui_baseline/saveload.png",
+      "shot": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/menus_saveload.png",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  }
+}
+)
+  ok    menus.saveload_fits_viewport
+  ok    menus.saveload_panel_fits_720 ([P: (170.0, 52.0), S: (940.0, 616.0)])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/menus_pause.png (1280x720)
+  ok    menus.pause_reviewed_baseline ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "menus_pause": {
+      "mean": 0.0,
+      "over40_pct": 0.0,
+      "ref": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/docs/qa/ui_baseline/pause.png",
+      "shot": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/menus_pause.png",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  }
+}
+)
+  ok    menus.pause_fits_viewport
+  ok    menus.pause_panel_fits_720 ([P: (390.0, 162.5), S: (500.0, 395.0)])
+  ok    menus.full_game_pause_has_core_actions_and_test_menu (["ResumeButton", "InventoryButton", "JournalButton", "PeopleButton", "BuildButton", "WardrobeButton", "CheatButton", "SaveButton", "LoadButton", "SettingsButton", "QuitButton", "QuitGameButton"])
+  ok    menus.full_game_pause_panel_fits
+  ok    menus.last_pause_row_visible_on_focus
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/menus_pause_full_game.png (1280x720)
+  --    menus: 18 checks, 0 failed, 0 skipped, 2.2 s
+== section npc [windowed]  (res://tests/sections/npc.gd)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/npc_dialogue.png (1280x720)
+  ok    npc.dialogue_baseline_exists
+  ok    npc.dialogue_reviewed_baseline ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "npc_dialogue": {
+      "mean": 0.0,
+      "over40_pct": 0.0,
+      "ref": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/docs/qa/ui_baseline/dialogue.png",
+      "shot": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/npc_dialogue.png",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  }
+}
+)
+  ok    npc.dialogue_fits_viewport ([P: (200.0, 382.0), S: (880.0, 218.0)])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/npc_dialogue_panel.png (1280x720)
+  ok    npc.dialogue_panel_pixels (clean)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/npc_dialogue_focus.png (1280x720)
+  ok    npc.dialogue_focus_pixels (clean)
+  ok    npc.dialogue_native_rules_da ([])
+  ok    npc.dialogue_native_rules_en ([])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/npc_intro.png (1280x720)
+  ok    npc.intro_baseline_exists
+  ok    npc.intro_reviewed_baseline ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "npc_intro": {
+      "mean": 0.0,
+      "over40_pct": 0.0,
+      "ref": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/docs/qa/ui_baseline/intro.png",
+      "shot": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/npc_intro.png",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  }
+}
+)
+  ok    npc.intro_fits_viewport ([P: (200.0, 420.0), S: (880.0, 180.0)])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/npc_intro_panel.png (1280x720)
+  ok    npc.intro_panel_pixels (clean)
+  ok    npc.intro_text_has_no_focus
+  ok    npc.intro_native_rules_da ([])
+  ok    npc.intro_native_rules_en ([])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/npc_journal.png (1280x720)
+  ok    npc.journal_baseline_exists
+  FAIL  npc.journal_reviewed_baseline ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "npc_journal": {
+      "exceeded": true,
+      "limit": 1.5,
+      "mean": 6.575,
+      "over40_pct": 5.29,
+      "ref": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/docs/qa/ui_baseline/journal.png",
+      "shot": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/npc_journal.png",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  }
+}
+)
+  ok    npc.journal_fits_viewport ([P: (80.0, 50.0), S: (1120.0, 620.0)])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/npc_journal_panel.png (1280x720)
+  ok    npc.journal_panel_pixels (clean)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/npc_journal_focus.png (1280x720)
+  ok    npc.journal_focus_pixels (clean)
+  ok    npc.journal_native_rules_da ([])
+  ok    npc.journal_native_rules_en ([])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/npc_dialogue_guide.png (1280x720)
+  ok    npc.dialogue_guide_fits_viewport ([P: (310.0, 323.0), S: (660.0, 277.0)])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/npc_dialogue_guide_panel.png (1280x720)
+  ok    npc.dialogue_guide_panel_pixels (clean)
+  ok    npc.dialogue_guide_native_rules_da ([])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/npc_journal_guide.png (1280x720)
+  ok    npc.journal_guide_fits_viewport ([P: (80.0, 50.0), S: (1120.0, 620.0)])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/npc_journal_guide_panel.png (1280x720)
+  ok    npc.journal_guide_panel_pixels (clean)
+  ok    npc.journal_guide_native_rules_da ([])
+  ok    npc.original_guide_conversations ({
+  "dialogue": {
+    "full_mean": 17.227,
+    "ui_mean": 13.866,
+    "limit": 15,
+    "masks": [
+      [
+        34,
+        34,
+        179,
+        179
+      ]
+    ],
+    "ok": true
+  },
+  "journal": {
+    "full_mean": 11.966,
+    "limit": 12,
+    "masks": [],
+    "ok": true
+  }
+}
+)
+  --    npc: 28 checks, 1 failed, 0 skipped, 1.5 s
+== section shop_ui [windowed]  (res://tests/sections/shop_ui.gd)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_shop.png (1280x720)
+  ok    shop_ui.shop_panel_fits ([P: (440.0, 60.0), S: (780.0, 600.0)])
+  ok    shop_ui.inventory_open
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_inventory.png (1280x720)
+  ok    shop_ui.inventory_panel_fits ([P: (60.0, 50.0), S: (540.0, 620.0)])
+  ok    shop_ui.all_weapon_and_gem_details_localize_da (44 cards, broken [])
+  ok    shop_ui.loadout_card_iron_sword_da
+  ok    shop_ui.loadout_card_bounds_iron_sword_da ([P: (590.0, 429.0), S: (618.0, 46.0)])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_equipment_iron_sword_da.png (1280x720)
+  ok    shop_ui.loadout_card_wpn_staff_star_da
+  ok    shop_ui.loadout_card_bounds_wpn_staff_star_da ([P: (590.0, 406.0), S: (618.0, 69.0)])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_equipment_wpn_staff_star_da.png (1280x720)
+  ok    shop_ui.loadout_card_gem_rune_heart_da
+  ok    shop_ui.loadout_card_bounds_gem_rune_heart_da ([P: (590.0, 337.0), S: (618.0, 138.0)])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_equipment_gem_rune_heart_da.png (1280x720)
+  ok    shop_ui.smith_has_comparable_weapon_da
+  ok    shop_ui.shop_weapon_card_da
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_smith_weapon_card_da.png (1280x720)
+  ok    shop_ui.all_weapon_and_gem_details_localize_en (44 cards, broken [])
+  ok    shop_ui.loadout_card_iron_sword_en
+  ok    shop_ui.loadout_card_bounds_iron_sword_en ([P: (587.0, 429.0), S: (621.0, 46.0)])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_equipment_iron_sword_en.png (1280x720)
+  ok    shop_ui.loadout_card_wpn_staff_star_en
+  ok    shop_ui.loadout_card_bounds_wpn_staff_star_en ([P: (587.0, 406.0), S: (621.0, 69.0)])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_equipment_wpn_staff_star_en.png (1280x720)
+  ok    shop_ui.loadout_card_gem_rune_heart_en
+  ok    shop_ui.loadout_card_bounds_gem_rune_heart_en ([P: (587.0, 337.0), S: (621.0, 138.0)])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_equipment_gem_rune_heart_en.png (1280x720)
+  ok    shop_ui.smith_has_comparable_weapon_en
+  ok    shop_ui.shop_weapon_card_en
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_smith_weapon_card_en.png (1280x720)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_shop_fixture.png (1280x720)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_shop_ring.png (1280x720)
+  ok    shop_ui.shop_native_focus (clean)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_shop_panel.png (1280x720)
+  ok    shop_ui.shop_native_panel (clean)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_shop_button.png (1280x720)
+  ok    shop_ui.shop_native_button (clean)
+  ok    shop_ui.shop_baseline_exists
+  ok    shop_ui.shop_reviewed_baseline ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "shop": {
+      "mean": 0.733,
+      "over40_pct": 0.563,
+      "ref": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/docs/qa/ui_baseline/shop.png",
+      "shot": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_shop_fixture.png",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  }
+}
+)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_inventory_fixture.png (1280x720)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_inventory_ring.png (1280x720)
+  ok    shop_ui.inventory_native_focus (clean)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_inventory_panel.png (1280x720)
+  ok    shop_ui.inventory_native_panel (clean)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_inventory_button.png (1280x720)
+  ok    shop_ui.inventory_native_button (clean)
+  ok    shop_ui.inventory_baseline_exists
+  ok    shop_ui.inventory_reviewed_baseline ({
+  "frame_crop": false,
+  "region": null,
+  "screens": {
+    "shop": {
+      "mean": 0.751,
+      "over40_pct": 0.921,
+      "ref": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/docs/qa/ui_baseline/inventory.png",
+      "shot": "/private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/shop_ui_inventory_fixture.png",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  }
+}
+)
+  ok    shop_ui.guide_catalog_ui ({
+  "screens": {
+    "shop": {
+      "full_mean": 20.555,
+      "ui_mean": 17.255,
+      "limit": 18,
+      "masks": [
+        [
+          62,
+          342,
+          398,
+          669
+        ]
+      ],
+      "ok": true
+    },
+    "inventory": {
+      "full_mean": 17.328,
+      "ui_mean": 17.328,
+      "limit": 22,
+      "masks": [],
+      "ok": true
+    }
+  }
+}
+)
+  --    shop_ui: 32 checks, 0 failed, 0 skipped, 3.4 s
+== section social_ui [windowed]  (res://tests/sections/social_ui.gd)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/social_ui_people.png (1280x720)
+  ok    social_ui.people_native_open_ms (8.333)
+  ok    social_ui.people_rules_da ([])
+  ok    social_ui.people_rules_en ([])
+  ok    social_ui.people_panel (clean)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/social_ui_people_ring.png (1280x720)
+  ok    social_ui.people_focus (clean)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/social_ui_gift.png (1280x720)
+  ok    social_ui.gift_rules_da ([])
+  ok    social_ui.gift_rules_en ([])
+  ok    social_ui.gift_panel (clean)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/social_ui_gift_ring.png (1280x720)
+  ok    social_ui.gift_focus (clean)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/social_ui_calendar.png (1280x720)
+  ok    social_ui.calendar_rules_da ([])
+  ok    social_ui.calendar_rules_en ([])
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/social_ui_calendar_ring.png (1280x720)
+  ok    social_ui.calendar_focus (clean)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/social_ui_social_hud.png (1280x720)
+  ok    social_ui.social_hud_rules_da ([])
+  ok    social_ui.social_hud_rules_en ([])
+  FAIL  social_ui.reviewed_screen_baselines ({
+  "people": {
+    "historical_full_mean": 17.029,
+    "reviewed_full_mean": 0.004,
+    "reviewed_limit": 1.5,
+    "ok": true
+  },
+  "gift": {
+    "historical_full_mean": 18.506,
+    "reviewed_full_mean": 2.892,
+    "reviewed_limit": 1.5,
+    "ok": false
+  },
+  "calendar": {
+    "historical_full_mean": 16.551,
+    "reviewed_full_mean": 1.527,
+    "reviewed_limit": 1.5,
+    "ok": false
+  },
+  "social_hud": {
+    "historical_full_mean": 4.655,
+    "reviewed_full_mean": 0.432,
+    "reviewed_limit": 1.5,
+    "ok": true
+  }
+}
+)
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/social_ui_farm_social_hud.png (1280x720)
+  ok    social_ui.birthday_chips_leave_space_for_quests
+  info  saved /private/tmp/claude-503/-Users-magnusudbjorg-Documents-projects-PongPong/e31be41e-e1d3-43e1-9699-1fe0ac5bc203/scratchpad/copies/copy-gr-shots/../../run3/social_ui_journal_calendar.png (1280x720)
+  ok    social_ui.calendar_in_real_journal
+  --    social_ui: 17 checks, 1 failed, 0 skipped, 4.9 s
+== summary: 6 section(s) run, 119 checks (3 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 24.2 s
+  FAILED   hud.v2_hotbar_compare
+  FAILED   npc.journal_reviewed_baseline
+  FAILED   social_ui.reviewed_screen_baselines
+PLAYTEST FAIL: 3 check failures, 0 engine errors, 0 engine warnings, 0 problems
+EXIT 1

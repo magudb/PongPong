@@ -1,0 +1,1014 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=city_depth_pixels,content_features,contracts,copy_completion,copy_rules,core,data,data_registry,dungeon_defeat,dungeon_fights,dungeon_floors,dungeon_gen,dungeon_hud,dungeon_items,dungeon_performance,dungeon_pickups,dungeon_reveal,dungeon_run,dungeon_services,economy,economy_hours,economy_transactions,enemies,enemy_performance,farm,farm_automation,farm_controls,farm_dress,farm_first_morning,farm_lifecycle,farm_playthrough,farm_seed_ui,farm_site,farm_ui_audit,farm_upgrades,festival_activities,forest,forest_look,forest_mother,forest_mother_anchors,furniture,ghost,ghost_data,ghost_lines,ghostfam_data,ghostfam_events,ghostfam_play,ghostfam_quests,ghostfam_seek,held_equipment,home,home_progression,home_services,home_ui,home_world,hud,journey_regressions,loc,loot,loot_dungeon,maps_farm,maps_iso,mechanics_review_fixes,menus,npc,npc_cast,player,quests,rarity,relationships,review_regressions,save,secret_garden,shop_rotation,shop_ui,social,social_data,social_events,social_fest_content,social_gifts,social_heart_content,social_talk,social_ui,town_budgets,town_loop,towns_city,towns_data,towns_director,towns_ext,towns_greetings,towns_interiors,towns_interiors_core,towns_post,towns_routes,towns_routines,ui_audit,ui_audit_blind,ui_audit_pins,ui_conformance,ui_foundation,ui_mechanics,ui_nav,voice,walkway_transitions,wardrobe,wardrobe_render,wardrobe_ui,weapons
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.vXlsSG/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 13.0 s
+== section city_depth_pixels: no run(t), skipped
+== section content_features  (res://tests/sections/content_features.gd)
+  ok    content_features.ids_load (258 ids loaded, 258 declared, { "furniture": 130, "clothing": 96, "materials": 32 })
+  ok    content_features.lint_clean (0 finding(s) in the 18 files of this package: [])
+  ok    LuaRuntime keeps a lint report
+  ok    lua/items/furniture.lua exists
+  ok    lua/items/clothing.lua exists
+  ok    lua/items/building_materials.lua exists
+  ok    lua/recipes/furniture.lua exists
+  ok    lua/recipes/materials.lua exists
+  ok    lua/shops/home_shops.lua exists
+  ok    lua/data/home_tiers.lua exists
+  ok    lua/data/loot_tables.lua exists
+  ok    lua/data/sets.lua exists
+  ok    lua/data/wardrobe_rules.lua exists
+  ok    lua/data/starter_kit.lua exists
+  ok    lua/quests/bogtraeet.lua exists
+  ok    lua/quests/moonstone_crown.lua exists
+  ok    lua/quests/snurresvampen.lua exists
+  ok    lua/quests/slotsdroemmen.lua exists
+  ok    lua/dialogue/fairy_builder.lua exists
+  ok    lua/dialogue/fairy_furnisher.lua exists
+  ok    lua/dialogue/fairy_tailor.lua exists
+  ok    content_features.loc_keys_da_en (914 rows of 8 files, 0 unresolved or different from the CSV: [])
+  ok    name and description of all 258 ids translate (missing: [])
+  ok    the Danish and the English text of an item differ after set_locale (no raw key in either language)
+  ok    content_features.loc_check_no_missing_f1_key (loc_check exit 0, 0 miss lines of other packages, F1 keys missing: [])
+  ok    content_features.art_spec_equals_lua (130 furniture + 96 garments compared; [])
+  ok    content_features.catalogue_rules (0 error(s): [])
+  ok    content_features.sources_both_ways_30_unique_19_legendary (30 unique / 19 legendary, source errors [])
+  ok    content_features.finds_and_shops_both_ways (4 shops, errors [])
+  ok    content_features.no_craft_sell_loop (95 build recipes, 0 loops, errors [])
+  ok    content_features.hearts_reachable (10 gates and gifts ask hearts, the most needs 56 days of weekly chats; [])
+  ok    negative control: a sell price above the buy price is reported (["bed_pine: prices buy 150 / sell 999999 break the ladder rule (0 < sell < buy, sell <= 40% of buy)"])
+  ok    content_features.shop_open_weekdays_valid (0 problem(s) []; flea market days [5, 6])
+  ok    negative control: open_weekdays {5, 7} (a weekday that does not exist) is reported
+  ok    negative control: a flea market without opening days (open every day) is reported
+  ok    negative control: opening days on a shop that is open daily are reported
+  ok    content_features.map_markers_equal_loot_tables (2 area(s), 0 problem(s): [])
+  ok    negative control: the map marker defect 'rename_area' is reported
+  ok    negative control: the map marker defect 'chest_count' is reported
+  ok    negative control: the map marker defect 'creature_count' is reported
+  ok    negative control: the map marker defect 'missing_spot' is reported
+  ok    content_features.spot_requirements_valid (9 of 22 spots have requirements; problems: [])
+  ok    negative control: the spot requirement defect 'unknown_quest' is reported
+  ok    negative control: the spot requirement defect 'day_zero' is reported
+  ok    negative control: the spot requirement defect 'tier_eleven' is reported
+  ok    negative control: the spot requirement defect 'unknown_key' is reported
+  ok    negative control: the spot requirement defect 'source_names_other_quest' is reported
+  ok    negative control: the spot requirement defect 'empty_quests' is reported
+  ok    negative control: the spot requirement defect 'day_text' is reported
+  ok    negative control: the spot requirement defect 'source_without_requires' is reported
+  ok    content_features.quest_references_valid (4 quests, problems: [])
+  ok    negative control: the quest reference defect 'friendship_npc' is reported
+  ok    negative control: the quest reference defect 'hearts_zero' is reported
+  ok    negative control: the quest reference defect 'hearts_eleven' is reported
+  ok    negative control: the quest reference defect 'giver' is reported
+  ok    negative control: the quest reference defect 'objective_npc' is reported
+  ok    negative control: the quest reference defect 'reward_item' is reported
+  ok    negative control: the quest reference defect 'gold_negative' is reported
+  ok    content_features.furniture_max_stack_rule (258 ids, problems: [])
+  ok    negative control: max_stack 99 on an ordinary bed is reported
+  ok    negative control: max_stack 9 on a keepsake is reported
+  ok    negative control: max_stack 8 on an ordinary bed is reported
+  ok    negative control: a legendary piece with decor 0 is reported (["bed_moon: decor must be >= 1"])
+  ok    content_features.shop_stock_numbers_valid (18 shops, problems: [])
+  ok    negative control: the shop number defect 'stock_negative' is reported
+  ok    negative control: the shop number defect 'stock_zero' is reported
+  ok    negative control: the shop number defect 'restock_above_stock' is reported
+  ok    negative control: the shop number defect 'restock_text' is reported
+  ok    negative control: the shop number defect 'period_zero' is reported
+  ok    negative control: the shop number defect 'price_mult_zero' is reported
+  ok    negative control: the shop number defect 'season_boost_half' is reported
+  ok    content_features.wardrobe_equip_slot_z_distinct (9 slots, problems: [])
+  ok    negative control: the circlet on the z of the hat is reported
+  ok    negative control: a z that is not a number is reported
+  ok    content_features.voice_keys_follow_speaker_and_line (3 dialogue files, problems: [])
+  ok    negative control: voice key voice/fairy_furnisher/gret is reported
+  ok    negative control: a spoken line without voice_key is reported
+  ok    negative control: another speaker's voice key is reported
+  ok    negative control: a line id that does not match its text key is reported
+  ok    content_features.no_text_literals_in_f1_lua (18 files, text literals: [])
+  ok    negative control: a Danish description literal in a quest is reported
+  ok    a comment is skipped, a path is not text, a literal with a space is
+  ok    content_features.creature_name_keys_defined_or_pending (3 creatures, 0 pending behind a CSV that has not landed: []; problems: [])
+  ok    negative control: a creature key that no CSV owns (typo) is reported
+  ok    negative control: a key whose owner file EXISTS but has no row is reported
+  ok    an owner CSV that has not landed makes the key PENDING, not a failure
+  ok    negative control: a name_key that is not an upper-case key is reported
+  ok    content_features.starter_kit_valid (the text of addendum 2.7: worn ["shirt_linen_cream", "pants_trousers_brown", "shoes_boots_brown"] owned ["dress_sun_cream"] placed ["bed_birch_single", "chest_pine"] stock { "table_round_pine": 1, "chair_pine": 2, "rug_runner_natural": 1, "floor_lamp_iron": 1 })
+  ok    content_features.starter_kit_places (7 of 7 pieces placed in the room of tier 1 (11 slots), decor 14 below 15)
+  ok    content_features.starter_kit_through_economy (routed true, placed 2 of 2, hygge 4 (level 1 at 15))
+  ok    tier 1 room: 20 cells, 11 slots, door (2,3), spawn (2,2)
+  ok    a bed (1x2) fits in the back-left corner
+  ok    overlap is refused (the bed covers (0,0) and (0,1))
+  ok    a cell outside the room is refused
+  ok    the door cell stays free
+  ok    the cell before the door stays free
+  ok    a wall piece in the middle of the floor is refused
+  ok    the same wall piece on the back wall is accepted
+  ok    a tabletop piece needs a surface under it
+  ok    ...and is accepted on a table
+  ok    rugs live on their own layer (one per cell)
+  ok    the tier's furniture capacity is a hard limit
+  ok    no piece may wall in the free side of an interactive piece (path rule)
+  ok    find_spot gives {cell, rot}
+  ok    content_features.builder_dialogue_29_branches (29 flag combinations, wrong: [])
+  ok    the two shopkeeper dialogues open furniture_shop and tailor_shop
+  ok    content_features.dialogue_shop_buttons_open_real_shops (31 dialogue states, 31 open_shop buttons, problems: [])
+  ok    negative control: a shop_id typo in the Lua text of the builder is reported
+  ok    negative control: a flag state whose button names a shop that does not exist is reported
+  ok    negative control: the tailor opening the furniture shop is reported
+  ok    negative control: a builder flag state without a shop button is reported
+  ok    the three pending reference dialogues load through LuaRuntime.load_file
+  ok    content_features.pending_offers_accepted_by_dialogue (accepted through the dialogue choice: { "snurresvampen": true, "moonstone_crown": true, "bogtraeet": true, "slotsdroemmen": true }; reminder-only states true/true/true)
+  ok    content_features.grant_requirements_tiers_2_to_10 (9 tiers granted through the public APIs (t2:ok, t3:ok, t4:ok, t5:ok, t6:ok, t7:hygge 48, t8:hygge 120, t9:hygge 120, t10:hygge 247); problems: [])
+  ok    a quest that no npc offers is refused by accept_via_dialogue, never granted silently
+  ok    a giver whose dialogue has no quest_accept choice for the quest does not grant it either
+  ok    content_features.fresh_resets_everything (gold 500 (start 500), flag friend_mayor_lyra gone, HomeManager.reset() called 1 time(s))
+  ok    Fresh.jump_to_total_day(225) -> total_day() 225
+  ok    content_features.auto_furnish_reaches_target (3 pieces placed (room of tier 3: 19 slots), hygge 48, stock left {  })
+  ok    filling past the capacity stops at the room limit (19 placed in total, nothing stray in the store)
+  ok    content_features.hygge_accessor_is_hygge_score (fill true (3 pieces), grant tier 7 true, legacy-only manager reported true / nothing placed true, helpers calling hygge_total: [], alias true)
+  ok    content_features.add_autoload_idempotent_and_parallel_safe (python self-test: 25 pass, fails [], missing [])
+  ok    content_features.add_autoload_result_accepted_by_check_project (tool exit 0/0, second run unchanged true, check_project: { "pass": ["p01.text_file_readable", "p01.autoloads_base_in_order_features_after"], "fail": [] })
+  ok    content_features.rename_town_refuses_blank_old_and_covers_maps (python self-test: 8 pass, fails [], missing [])
+  ok    content_features.rules_selftest_n1_scan_not_vacuous_below_stage_path (11 of 11 helper checks pass, 0 fail)
+  ok    content_features.rules_selftest_shop_opening_days (9 of 9 helper checks pass, 0 fail)
+  ok    content_features.rules_selftest_dialogue_shop_buttons (8 of 8 helper checks pass, 0 fail)
+  ok    content_features.rules_selftest_map_markers (14 of 14 helper checks pass, 0 fail)
+  ok    content_features.rules_selftest_spot_requirements (9 of 9 helper checks pass, 0 fail)
+  ok    content_features.rules_selftest_quest_references (7 of 7 helper checks pass, 0 fail)
+  ok    content_features.rules_selftest_stack_rule (7 of 7 helper checks pass, 0 fail)
+  ok    content_features.rules_selftest_decor_rule (4 of 4 helper checks pass, 0 fail)
+  ok    content_features.rules_selftest_shop_stock_numbers (9 of 9 helper checks pass, 0 fail)
+  ok    content_features.rules_selftest_equip_slot_z (5 of 4 helper checks pass, 0 fail)
+  ok    content_features.rules_selftest_voice_keys (7 of 7 helper checks pass, 0 fail)
+  ok    content_features.rules_selftest_creature_keys (7 of 7 helper checks pass, 0 fail)
+  ok    content_features.rules_selftest_text_literals (9 of 7 helper checks pass, 0 fail)
+  ok    content_features.rules_selftest_exit_code (exit 0, failing ids [])
+  ok    content_features.validator_gate_files_exist (missing: [])
+  ok    content_features.stage_manifest_covers_the_package (not named in stage.manifest: [])
+  --    content_features: 140 checks, 0 failed, 0 skipped, 13.5 s
+== section contracts  (res://tests/sections/contracts.gd)
+  ok    contracts.manifest_lists_the_late_bound_gates (ContractManifest.EXPECTED names the silent-fallback paths; unlisted: [])
+  ok    contracts.manifest_entries_are_well_formed (path/fallback/owner on every row: [])
+  ok    contracts.manifest_sees_the_wave_holes
+  ok    contracts.manifest_reports_missing_once (One diagnostic event, no package paths in player notifications)
+  ok    contracts.manifest_reset_allows_a_fresh_report
+  ok    contracts.husbandry_species_matches_lua (10 species in lua/config/husbandry.lua == the AnimalHusbandry fallback (10))
+  ok    contracts.husbandry_buildings_matches_lua (3 buildings in Lua == the fallback (3))
+  ok    contracts.husbandry_loaded_from_lua (species_data/buildings_data replaced the fallback; product_interval strings became ProductType)
+  ok    contracts.starter_tools_match_lua (lua/data/starter_kit.lua starter_kit.tools (9) == EconomyManager.STARTER_KIT (9))
+  ok    contracts.starter_tools_come_from_lua (reset() hands out every Lua tool: have [&"hoe_wooden", &"watering_can_copper", &"axe_wooden", &"pickaxe_wooden", &"scythe", &"turnip_seeds", &"lantern_oil", &"health_tonic"] want ["hoe_wooden", "watering_can_copper", "axe_wooden", "pickaxe_wooden", "sword_rusty", "scythe", "turnip_seeds", "lantern_oil", "health_tonic"])
+  --    contracts: 10 checks, 0 failed, 0 skipped, 0.0 s
+== section copy_completion  (res://tests/sections/copy_completion.gd)
+  ok    copy_completion.strict_runtime_localization (Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+loc_check: root=res:// | scanned gd=314 tscn=46 lua=224 map=32 | CSV files: da.csv animals.csv appraisal.csv areas.csv birthdays.csv cast.csv cheats.csv core.csv dialogue.csv dialogue_builder.csv dialogue_cast.csv dungeon.csv dungeon_items.csv dungeon_run.csv dungeon_services.csv economy.csv farm.csv farm_signs.csv farm_site.csv farm_tutorial.csv features_quests.csv features_ui.csv festivals.csv finds.csv forest.csv forest_mother.csv furniture.csv ghost.csv ghost_dialogue.csv ghostfamily.csv ghostfamily_events.csv ghostfamily_fest.csv ghostfamily_quests.csv ghostfamily_seek.csv gifts.csv heart_events.csv home.csv home_amenities.csv home_ui.csv home_world.csv hud.csv keepers.csv levels.csv life.csv look.csv loot_dungeon.csv materials.csv menus.csv nav.csv partner.csv post.csv quests.csv rel_ui.csv secret_garden.csv shop_ui.csv social_arch.csv social_events.csv social_sys.csv social_talk.csv towns.csv traetoppen.csv ui.csv wardrobe.csv wardrobe_ui.csv world.csv zz_final.csv | keys loaded: 4563
+loc_check: referenced keys: 2985 (+0 any-of groups) | dynamic prefixes in code: 142
+loc_check PASS (strict): missing=0 (da=0 en=0) lint_errors=0 legacy_issues=0 warnings=0
+)
+  ok    copy_completion.csv_lint.py_strict (csv_lint PASS: 66 file(s), 4563 keys, 0 error(s), 0 legacy issue(s), 0 warning(s)
+)
+  ok    copy_completion.copy_lint.py_strict (copy_lint: 0 findings
+)
+  ok    copy_completion.fixture_copy_requires_its_data
+  ok    copy_completion.fixture_key_in_product_still_requires_csv
+  ok    copy_completion.unknown_fixture_key_still_fails
+  ok    copy_completion.all_reviewed_voice_assets_match (PASS manifest_in_sync 296 lines
+)
+  --    copy_completion: 7 checks, 0 failed, 0 skipped, 12.9 s
+== section copy_rules  (res://tests/sections/copy_rules.gd)
+  ok    Style rule R1 is documented
+  ok    Style rule R2 is documented
+  ok    Style rule R3 is documented
+  ok    Style rule R4 is documented
+  ok    Style rule R5 is documented
+  ok    Style rule R6 is documented
+  ok    Style rule R7 is documented
+  ok    Style rule R8 is documented
+  ok    Style rule R9 is documented
+  ok    Style rule R10 is documented
+  ok    Style rule R11 is documented
+  ok    Voice sheet: child
+  ok    Voice sheet: wanderer
+  ok    Voice sheet: fairy
+  ok    Voice sheet: shopkeeper
+  ok    Voice sheet: gardener
+  ok    Voice sheet: watcher
+  ok    Voice sheet: elder
+  ok    Voice sheet: craftsman
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    Glossary retains every approved display name
+  ok    copy_rules.font_budget_matches_fonts
+  ok    copy_rules.tool_printed_ids (Shipped font metrics printed 1 PASS/FAIL ids)
+  ok    copy_rules.tool_exit_code (Shipped font metrics exit code 0)
+  ok    copy_rules.valid_fixture_clean
+  ok    copy_rules.event_system_key_is_not_a_citizen
+  ok    copy_rules.unknown_citizen_still_refused
+  ok    copy_rules.stale_name
+  ok    copy_rules.long_dialogue
+  ok    copy_rules.voiced_digit
+  ok    copy_rules.missing_voice_index
+  ok    copy_rules.placeholder_parity
+  ok    copy_rules.child_safe
+  ok    copy_rules.missing_first_meeting
+  ok    copy_rules.missing_status_csv
+  ok    copy_rules.row_review_keeps_file_draft
+  ok    copy_rules.row_review_rejects_changed_da
+  ok    copy_rules.row_review_rejects_changed_en
+  ok    copy_rules.stale_row_review_lint
+  ok    copy_rules.stale_row_review_blocks_bake
+  ok    copy_rules.literal_roster_scanner
+  ok    copy_rules.tool_printed_ids (Copy mutants printed 17 PASS/FAIL ids)
+  ok    copy_rules.tool_exit_code (Copy mutants exit code 0)
+  ok    copy_rules.strict_lint_runs_clean ([]
+)
+  ok    copy_rules.legacy_copy_findings_cleared ([])
+  ok    Honest review state for localization/da.csv
+  ok    Honest review state for localization/areas.csv
+  ok    Honest review state for localization/cast.csv
+  ok    Honest review state for localization/core.csv
+  ok    Honest review state for localization/dialogue_builder.csv
+  ok    Honest review state for localization/dialogue_cast.csv
+  ok    Honest review state for localization/dungeon_services.csv
+  ok    Honest review state for localization/economy.csv
+  ok    Honest review state for localization/farm_signs.csv
+  ok    Honest review state for localization/features_quests.csv
+  ok    Honest review state for localization/features_ui.csv
+  ok    Honest review state for localization/finds.csv
+  ok    Honest review state for localization/furniture.csv
+  ok    Honest review state for localization/ghost.csv
+  ok    Honest review state for localization/home.csv
+  ok    Honest review state for localization/levels.csv
+  ok    Honest review state for localization/loot_dungeon.csv
+  ok    Honest review state for localization/materials.csv
+  ok    Honest review state for localization/nav.csv
+  ok    Honest review state for localization/quests.csv
+  ok    Honest review state for localization/social_sys.csv
+  ok    Honest review state for localization/towns.csv
+  ok    Honest review state for localization/traetoppen.csv
+  ok    Honest review state for localization/ui.csv
+  ok    Honest review state for localization/wardrobe.csv
+  ok    Honest review state for localization/world.csv
+  ok    Honest review state for localization/birthdays.csv
+  ok    Honest review state for localization/gifts.csv
+  ok    Honest review state for localization/social_arch.csv
+  ok    Honest review state for localization/social_talk.csv
+  ok    Honest review state for localization/rel_ui.csv
+  ok    Honest review state for localization/farm.csv
+  ok    Honest review state for localization/menus.csv
+  ok    Honest review state for localization/zz_final.csv
+  ok    Honest review state for localization/hud.csv
+  ok    Honest review state for localization/shop_ui.csv
+  ok    Honest review state for localization/dialogue.csv
+  ok    Honest review state for localization/farm_site.csv
+  ok    Honest review state for localization/life.csv
+  ok    Honest review state for localization/farm_tutorial.csv
+  ok    Honest review state for localization/ghost_dialogue.csv
+  ok    Honest review state for localization/ghostfamily.csv
+  ok    Honest review state for localization/secret_garden.csv
+  ok    Honest review state for localization/wardrobe_ui.csv
+  ok    Honest review state for localization/social_events.csv
+  ok    Honest review state for localization/dungeon.csv
+  ok    Honest review state for localization/forest_mother.csv
+  ok    Honest review state for localization/dungeon_items.csv
+  ok    Honest review state for localization/home_world.csv
+  ok    Honest review state for localization/dungeon_run.csv
+  ok    Honest review state for localization/home_ui.csv
+  ok    Honest review state for localization/appraisal.csv
+  ok    Honest review state for localization/forest.csv
+  ok    Honest review state for localization/animals.csv
+  ok    Honest review state for localization/look.csv
+  ok    Honest review state for localization/festivals.csv
+  ok    Honest review state for localization/post.csv
+  ok    Honest review state for localization/keepers.csv
+  ok    Honest review state for localization/heart_events.csv
+  ok    Honest review state for localization/ghostfamily_events.csv
+  ok    Honest review state for localization/ghostfamily_fest.csv
+  ok    Honest review state for localization/ghostfamily_seek.csv
+  ok    Honest review state for localization/ghostfamily_quests.csv
+  ok    Honest review state for localization/partner.csv
+  ok    Honest review state for localization/home_amenities.csv
+  ok    Honest review state for localization/cheats.csv
+  --    copy_rules: 143 checks, 0 failed, 0 skipped, 1.2 s
+== section core  (res://tests/sections/core.gd)
+  ok    core.signal_contract_exact (76 signals; missing [], wrong [], not in the contract [])
+  ok    core.legacy_signals_keep_arity (38 legacy signals)
+  ok    core.plan_3_5_signals (23 signals of PLAN 3.5 + R.13)
+  ok    core.feature_signals_14 (addendum 3.1)
+  ok    core.review_fix_signals (devin-review additions (flag_changed))
+  ok    core.farm_upgraded_removed (PLAN 3.5: removed, never used)
+  ok    core.r13_escape_hatch_and_hotbar_assign (R.13)
+  ok    core.player_spawned_node2d (emitted with a Node2D)
+  ok    core.signal_arity_lint (878 EventBus uses in 459 files, 0 violation(s) []; covers 14 feature signals)
+  ok    core.signal_arity_lint_covers_14_feature_signals (arity of every addendum 3.1 signal)
+  ok    core.signal_arity_lint_detects_mismatch (bad sample ["sample:1 EventBus.gold_changed.emit() has 1 argument(s), the signal has 2", "sample:2 EventBus.nope is neither a declared signal nor a member", "sample:3 EventBus.day_started.connect(func(a): pass) accepts 1..1 argument(s), the signal passes 2", "sample:4 EventBus.home_upgraded.connect(_h) accepts 3..3 argument(s), the signal passes 2", "sample:7 EventBus.save_completed.connect(_t2) accepts 0..0 argument(s), the signal passes 1", "sample:10 EventBus.item_sold.emit() has 2 argument(s), the signal has 3"], good sample [])
+  ok    core.config_literal_defaults (28 days, 4 seasons, 06:00 to 26:00 (= 02:00 at night), 2 min/s)
+  ok    core.config_read_from_lua (minutes_per_real_second 2.0 from LuaRuntime time.*)
+  ok    core.time_manager_has_no_second_copy (TimeManager delegates to GameManager)
+  ok    core.config_override_seasons (override seam)
+  ok    core.config_drives_end_day (day 7 of aa -> day 1 of bb (1 bb))
+  ok    core.config_drives_year (year 2 starts at total day 15 (15))
+  ok    core.modal_stack (push x2 / pop x2: paused true true, after first pop true, after last pop resumed true)
+  ok    core.modal_changed_signal (modal_changed payloads [[&"pause"], [&"pause", &"settings"], [&"pause"], []])
+  ok    core.modal_stack_pop_out_of_order (pop the older modal first)
+  ok    core.modal_phase_cutscene_and_restore (CUTSCENE true, shop over dialogue true, true, true, back to CUTSCENE true, PLAYING true)
+  ok    core.modal_push_is_idempotent (double push = one entry, unknown pop ignored)
+  info  expected engine error below (declared with allow): push_modal with an empty name
+ERROR: GameManager.push_modal: a modal needs a name
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] push_modal (res://scripts/autoload/game_manager.gd:261)
+       [1] _test_modal_stack (res://tests/sections/core.gd:527)
+       [2] run (res://tests/sections/core.gd:140)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    empty modal name is refused with an error (allowed 'a modal needs a name' seen 1 time(s), want >= 1)
+  ok    core.modal_empty_name_refused
+  ok    core.modal_stack_cleared_at_menu (quit to menu leaves a live, unpaused menu)
+  ok    core.modal_over_menu_restores_menu (settings over the title)
+  ok    core.phase_character_select
+  ok    core.phase_legacy_change_phase (change_phase(PAUSED/PLAYING))
+  ok    core.phase_playing_does_not_unpause_open_modal (an open modal wins over change_phase(PLAYING))
+  ok    core.phase_after_pop_all
+  ok    core.modal_changed_only_when_the_stack_changes (scene boundaries and no-op pops are silent: [])
+  ok    core.modal_never_touches_the_mouse (mouse mode stays 0)
+  ok    core.flags_json_safe_types (bool, int, float, String; StringName is stored as String)
+  info  expected engine errors below (declared with allow): set_flag with an Array, a Vector2 and NAN
+ERROR: GameManager.set_flag(bad_array): Array is not JSON-safe (use bool, int, float or String)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_flag (res://scripts/autoload/game_manager.gd:358)
+       [1] _test_flags (res://tests/sections/core.gd:574)
+       [2] run (res://tests/sections/core.gd:141)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+ERROR: GameManager.set_flag(bad_vector): Vector2 is not JSON-safe (use bool, int, float or String)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_flag (res://scripts/autoload/game_manager.gd:358)
+       [1] _test_flags (res://tests/sections/core.gd:575)
+       [2] run (res://tests/sections/core.gd:141)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+ERROR: GameManager.set_flag(bad_nan): float is not JSON-safe (use bool, int, float or String)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_flag (res://scripts/autoload/game_manager.gd:358)
+       [1] _test_flags (res://tests/sections/core.gd:576)
+       [2] run (res://tests/sections/core.gd:141)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    non JSON-safe values are refused with an error (allowed '(use bool, int, float or String)' seen 3 time(s), want >= 3)
+  ok    core.flags_unsafe_values_not_stored
+  ok    core.flags_null_clears
+  ok    core.flags_clear
+  ok    core.flag_int_defaults (absent flags: home_tier 1, home_building 0, home_upgrade_done 0)
+  ok    core.flag_int_coerces (3.0 -> 3, true -> 1, '12' -> 12, 'tre' -> default)
+  ok    core.flag_int_after_json_roundtrip (new game defaults ok true; raw value after JSON is a float true; flag_int gives ints true)
+  ok    core.new_game_signal_once_and_last (signals in order: ["modal_changed", "player_character_changed", "weather_changed", "new_game_started"])
+  ok    core.new_game_started_is_last_gm_signal (after it only the reset wave of other systems: [])
+  ok    core.new_game_skin_announced_final (player_character_changed [&"fairy_meadow"])
+  ok    core.new_game_state_reset_before_signal (day/season/year/clock, flags { &"intro_pending": true, &"home_tier": 1, &"home_building": 0, &"home_upgrade_done": 0 }, zones, modals gone, phase PLAYING)
+  ok    core.new_game_intro_pending (intro_pending=true, the dirty flag is gone)
+  ok    core.new_game_resets_own_state
+  ok    core.new_game_resets_time_manager (weather klart, clock running)
+  ok    core.new_game_default_and_explicit_skin (animal animal_fox hobbit hobbit_pip ghost ghost_bu explicit fairy_dusk)
+  ok    core.new_game_default_names (empty names fall back to the translated defaults (Eventyrrejsende / Min Trækronsgård))
+  ok    core.new_game_wires_EconomyManager (EconomyManager.reset() is connected to new_game_started)
+  ok    core.new_game_wires_QuestManager (QuestManager.reset() is connected to new_game_started)
+  ok    core.new_game_wires_TimeManager (TimeManager.reset() is connected to new_game_started)
+  ok    core.new_game_wires_ShopSystem (ShopSystem.reset() is connected to new_game_started)
+  ok    core.new_game_wires_AnimalHusbandry (AnimalHusbandry.reset() is connected to new_game_started)
+  ok    core.new_game_wires_SaveManager (SaveManager.reset() is connected to new_game_started)
+  ok    core.new_game_resets_gold (gold after a new game: 500)
+  ok    core.new_game_resets_all (one new_game_started per start_new_game; 6 system(s) reset through it so far)
+  ok    core.from_dict_restores_state
+  ok    core.from_dict_types_after_json (ints and StringNames come back typed)
+  ok    core.from_dict_does_not_start_playing (phase stays 0)
+  ok    core.from_dict_emits_character_changed (["player_character_changed"])
+  ok    core.to_dict_total_day (total_day 156 in the dictionary for the title screen)
+  ok    core.from_dict_empty_is_safe
+  info  expected engine warning below (declared with allow): from_dict drops an unsafe flag
+WARNING: GameManager.from_dict: world flag 'bad' is not JSON-safe and was dropped
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _sanitized_flags (res://scripts/autoload/game_manager.gd:624)
+         [1] from_dict (res://scripts/autoload/game_manager.gd:600)
+         [2] _test_from_dict (res://tests/sections/core.gd:744)
+         [3] run (res://tests/sections/core.gd:143)
+         [4] go_menu (res://tests/lib/flow.gd:69)
+         [5] change_scene (res://tests/lib/flow.gd:57)
+         [6] frames (res://tests/lib/drive.gd:79)
+  ok    an unsafe flag in a save is reported (allowed 'and was dropped' seen 1 time(s), want >= 1)
+  ok    core.from_dict_drops_unsafe_flags
+  ok    core.unlock_zone_payload (zone_unlocked(crystal_cave))
+  ok    core.unlock_zone_signals (zone_unlocked x1, zone_entered x0)
+  ok    core.unlock_zone_toast (one toast, icon zone: [["Nyt område!", "Du har låst op for: Krystalgrotten", "zone"]])
+  ok    core.unlock_toast_never_formats_a_raw_key (an untranslated key (no placeholder) is returned as it is: no String formatting error)
+  ok    core.unlock_zone_state (unlocked, not discovered)
+  ok    core.unlock_zone_twice_is_silent (no second signal, no second toast)
+  ok    core.zone_entered_discovers
+  ok    core.advance_time_25h (06:00 + 25 h = day 2 07:00)
+  ok    core.advance_time_25h_signals (["day_ended", "day_started", "game_event", "time_of_day_changed"])
+  ok    core.midnight_passed_event (game_event(midnight_passed) after day_started: [&"midnight_passed", { "day": 2, "season": "foraar" }])
+  ok    core.advance_time_multiday (50 h -> day 3 08:00 true; 18 h -> raw 24:00 of the same day true; 20 h -> day 2 02:00 true; 23:59 + 1 min -> raw 24:00 same day true; 25:59 + 1 min -> day 2 02:00 true; 29 days 90 min -> sommer day 2 07:30 true)
+  ok    core.time_of_day_changed_range (raw hour 2..25 (a signal at 24:30 carries 24: the HUD shows 00:30), minute 0..59)
+  ok    core.advance_time_zero_and_negative (0 min emits the clock once, negative minutes are ignored)
+  ok    core.season_rollover (day 28 foraar 23:00 + 2 h = still day 28 (01:00); 01:00 (raw 25:00) + 2 h = day 1 sommer 03:00: ["day_ended", "season_changed", "day_started", "game_event", "time_of_day_changed"])
+  ok    core.year_rollover (vinter 28 -> foraar day 1 of year 2)
+  ok    core.end_day_signal_order (["day_ended", "day_started", "time_of_day_changed"] (the bed emits no midnight_passed))
+  ok    core.end_day_full_year (114 end_day() calls: day 3 foraar year 2 (total 115))
+  ok    core.total_day_values (Dag 1 .. Dag 112, year 2 starts at Dag 113)
+  ok    core.total_day_current (day 9 efteraar year 1 is Dag 65)
+  ok    core.sleep_from_bed (21:30 -> next day 06:00)
+  ok    core.sleep_after_passout_no_double_day (after the 02:00 roll: wake at 06:00 of the same calendar day (day 5))
+  ok    date_text(16, foraar) in da (got Tirsdag 16. Blomstermåned, want Tirsdag 16. Blomstermåned)
+  ok    date_text(16, foraar) in en (got Tuesday 16. Month of Blooms, want Tuesday 16. Month of Blooms)
+  ok    core.calendar_names (date_text da/en, 28 weekdays true, 4 months true, 5 weather names true, en names true, defaults to today true)
+  ok    core.weekday_is_monday_on_day_one_of_every_season (Mandag = day 1 of every season)
+  ok    core.first_weekday_config (time.first_weekday=2: day 1 is Onsdag; the default is Mandag)
+  info  expected engine error below (declared with allow): set_weather with an unknown id
+ERROR: TimeManager.set_weather: unknown weather id 'hagl'
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] set_weather (res://scripts/autoload/time_manager.gd:148)
+       [1] _test_weather (res://tests/sections/core.gd:960)
+       [2] run (res://tests/sections/core.gd:149)
+       [3] go_menu (res://tests/lib/flow.gd:69)
+       [4] change_scene (res://tests/lib/flow.gd:57)
+       [5] frames (res://tests/lib/drive.gd:79)
+  ok    an unknown weather id is refused (allowed 'unknown weather id' seen 1 time(s), want >= 1)
+  ok    core.weather_set_and_announced (weather_changed(regn), is_raining only for regn, unknown id refused)
+  ok    core.weather_roll_uses_config_chances (roll 0.0 -> regn, 0.30 -> taage, 0.90 -> klart)
+  ok    core.weather_snow_only_in_vinter (snow chance outside vinter is ignored)
+  ok    core.weather_weights_are_normalised (klart 6 / regn 3 / torden 1 -> { &"regn": 0.3, &"torden": 0.1, &"klart": 0.6 }; rolls 0.10 regn, 0.35 torden, 0.50 klart)
+  ok    core.weather_table_is_valid (foraar [&"regn", &"taage", &"klart"]; sommer [&"regn", &"torden", &"klart"]; efteraar [&"regn", &"taage", &"klart"]; vinter [&"taage", &"sne", &"klart"]; )
+  ok    core.is_night_from_config (20:00-05:00 by default, configurable)
+  ok    core.weather_default_rolls_are_valid (ids seen: [&"klart", &"regn", &"taage", &"torden", &"sne"])
+  ok    core.weather_rolled_before_day_started (a day_started listener already saw the roll (1), total 1)
+  ok    core.weather_rolled_once_per_day (a stray day_started of the same day does not roll again)
+  ok    core.weather_rolled_by_game_manager_before_listeners (without TimeManager's own handler a listener still saw the new roll (2, was 1))
+  ok    core.weather_one_roll_per_crossed_midnight (25 h = 1 roll, 50 h = 2 rolls)
+  ok    core.time_manager_reset
+  ok    core.time_manager_save_roundtrip (weather and the day it belongs to survive JSON)
+  ok    core.time_manager_from_dict_bad_weather (unknown saved weather falls back to klart)
+  ok    core.time_tick_rate (2 game minutes per real second: 1 s = 06:02 (06:02))
+  ok    core.pause_time_is_idempotent (pause twice, resume once: the clock runs again)
+  ok    core.resume_time_is_idempotent
+  ok    core.clock_stops_in_modals_and_menus (paused modal true, dialogue true, menu true)
+  ok    core.time_scale (time scale 2: +2 minutes for 0.5 s (06:05))
+  ok    core.tick_crosses_midnight (23:59 + 1 tick = day 1 raw 24:00 (00:00 of the same day); 01:59 + 1 tick = day 2 02:00)
+  ok    core.day_fraction (noon is half of the day)
+  ok    core.no_mouse_capture (16 autoload scripts scanned, none touches Input.mouse_mode [] (the cursor itself is menus.cursor_always_visible, P16))
+  --    core: 114 checks, 0 failed, 0 skipped, 1.2 s
+== section data  (res://tests/sections/data.gd)
+  ok    reload_scripts logs no engine error or warning (the untranslated-key format error of lua_runtime.gd:42 is gone)
+  ok    data.reload_idempotent (224 scripts, 435 items, 40 quests before and after)
+  ok    loading every Lua file takes 787 ms
+  ok    data.f9_only_in_debug_builds (F9 hot reload is bound only when OS.is_debug_build() (true))
+  ok    LuaRuntime exposes get_recipes, get_shop, get_npc, reload_scripts, lint_source
+  ok    reload_scripts(true) posts one toast that names the script count: [["Lua genindlæst", "224 scripts indlæst"]]
+  ok    the F9 key reloads and announces (debug build only): 1 toast(s)
+  ok    any other key does nothing
+  ok    explicit reloads log no engine error or warning
+  ok    an untranslated key is not %-formatted (got 'NOTIF_LUA_RELOADED_MSG (7)')
+  ok    a translated text with %d gets the count
+  ok    data.config_documented_keys (202 documented keys, missing: [])
+  ok    get_config answers the default for an unknown path
+  ok    get_config indexes arrays (time.seasons.1)
+  ok    data.config_plan_numbers (section 3.13 numbers: [])
+  ok    data.config_units_are_spike_over_0_6 (every distance and speed is the spike value x 1/0.6 within 2%: [])
+  ok    economy.home_cost_scale defaults to 1.0 (CD5)
+  ok    game_balance / race_perks / rarity / npcs / species_perks define disjoint top-level keys (["player", "farm", "crops", "economy", "adventure", "time", "ui", "race_perks", "combat", "rarity_tiers", "perk_caps", "npcs", "npc_vocab", "species_perks"])
+  ok    no config key is defined by two files
+  ok    data.numbers_positive (164 numbers inspected, none negative / NaN, the speeds, prices and durations > 0 [])
+  ok    data.roster_ids (the 22 required ids exist: the 8 stable ids, the 4 + 7 new ids and the 3 feature fairies (the roster has 34 rows, no size pin))
+  ok    data.roster_vocabulary_floor (npc_vocab of lua/config/npcs.lua (areas ["farm", "hyggebyen", "traetoppen", "moerkeskoven"], 27 roles, schedules ["sleep", "patrol", "stay"], ages ["adult", "child", "elder"]) holds every word of the contract floor)
+  ok    data.roster_fields (every npc row (34) has name_key NPC_<ID>, visual + fallback chain, voice, home_area, role, dialogue, wander, facing, schedule, friendship; areas, roles, schedules and ages come from npc_vocab)
+  ok    every visual resolves to real art or to a chain that ends at a pack character (the art check is P21's / V2's art_characters section)
+  ok    dialogue mayor_lyra of mayor_lyra exists
+  ok    dialogue baker_maja of baker_maja exists
+  ok    shop bakery exists and its keeper is baker_maja
+  ok    dialogue merchant_pip of merchant_pip exists
+  ok    shop seed_shop exists and its keeper is merchant_pip
+  ok    dialogue pippin_boegeknop of pippin_boegeknop exists
+  ok    shop flea_market exists and its keeper is pippin_boegeknop
+  ok    dialogue fairy_king of fairy_king exists
+  ok    dialogue fairy_lily of fairy_lily exists
+  ok    dialogue smith_thorin of smith_thorin exists
+  ok    shop smithy exists and its keeper is smith_thorin
+  ok    dialogue guard_oak of guard_oak exists
+  ok    dialogue farmer_rosa of farmer_rosa exists
+  ok    shop animal_store exists and its keeper is farmer_rosa
+  ok    dialogue fairy_wizard of fairy_wizard exists
+  ok    shop magic_store exists and its keeper is fairy_wizard
+  ok    dialogue cat_morfar_mis of cat_morfar_mis exists
+  ok    dialogue penguin_postman of penguin_postman exists
+  ok    dialogue fairy_builder of fairy_builder exists
+  ok    shop builder_yard exists and its keeper is fairy_builder
+  ok    dialogue fairy_furnisher of fairy_furnisher exists
+  ok    shop furniture_shop exists and its keeper is fairy_furnisher
+  ok    dialogue fairy_tailor of fairy_tailor exists
+  ok    shop tailor_shop exists and its keeper is fairy_tailor
+  ok    dialogue gardener_hoppe of gardener_hoppe exists
+  ok    dialogue carpenter_brumme of carpenter_brumme exists
+  ok    shop timber_yard exists and its keeper is carpenter_brumme
+  ok    dialogue postman_pip of postman_pip exists
+  ok    dialogue bathkeeper_sofus of bathkeeper_sofus exists
+  ok    dialogue appraiser_fru_ugle of appraiser_fru_ugle exists
+  ok    dialogue mapseller_natteblik of mapseller_natteblik exists
+  ok    dialogue beekeeper_birk of beekeeper_birk exists
+  ok    dialogue ghostfam_dyne of ghostfam_dyne exists
+  ok    dialogue ghostfam_gnist of ghostfam_gnist exists
+  ok    shop lantern_house exists and its keeper is ghostfam_gnist
+  ok    dialogue ghostfam_silke of ghostfam_silke exists
+  ok    dialogue ghostfam_blund of ghostfam_blund exists
+  ok    a quest is offered by exactly one npc
+  ok    Morfar Mis lives in Hyggebyen and is a quest NPC without hearts
+  ok    the penguin postman is ambient: no quest of his own (the postman with quests is Pip)
+  ok    get_npc(id) answers the roster entry, {} for an unknown id
+  ok    data.roster_has_feature_npcs (builder / furnisher / tailor with shops, voices and dialogue ids; guard_oak, fairy_wizard, fairy_king offer the four gating quests; friendship = true wherever hearts are reachable)
+  ok    the feature fairies live in Hyggebyen
+  ok    data.roster_30_rows_valid (30 citizens (15 + 7 + 8): every row valid as data, routine = true and an age on each, friendship = true on the eight new ones [])
+  ok    data.roster_accepts_data_only_citizen (a data-only row (new id, new role 'florist') is valid once npc_vocab names the role and invalid without it ["role florist"]; the required ids still hold with it in the table; 13 broken variants are all refused (not caught: []))
+  ok    animal: two hero chips (2 heroes in characters.lua), the skins list incl. retired rows (5), default skin among them
+  ok    fairy: two hero chips (2 heroes in characters.lua), the skins list incl. retired rows (4), default skin among them
+  ok    hobbit: two hero chips (2 heroes in characters.lua), the skins list incl. retired rows (4), default skin among them
+  ok    ghost: two hero chips (2 heroes in characters.lua), the skins list incl. retired rows (2), default skin among them
+  ok    data.race_perks_complete (animal, fairy, hobbit and ghost define every perk key (neutral values where the race has no perk), incl. the eight keys of the ghost's perk layer)
+  ok    animal: dig_speed 1.3, tool_cost_mult 0.75, harvest_bonus_chance 0.2
+  ok    fairy: can_fly, 8 s, 10 energy/s, talks_to_flowers
+  ok    hobbit: shop_discount 0.1, bake_bonus 0.25 (+25% output chance in the crafting category bake)
+  ok    ghost: run_cost_mult 0.6, oil_use_mult 0.75, dark_light_mult 1.25, float_bob_px 2.5, glow_energy 0.35, no discount, no bake bonus, no flight
+  ok    only the hobbit has discount and bake perks; the chips are Ræv/Abe, Kløvermynte/Birk, Bertil/Bodil and Bu/Hviske (two heroes per race)
+  ok    data.race_skins_match_characters (race_perks.lua skins / default_skin agree with lua/config/characters.lua (P05))
+  ok    data.crops_have_seed_items (every crop of game_balance has a seed item with crop_id; missing [])
+  ok    the seed item turnip_seeds names crop_id turnip which game_balance defines
+  ok    the seed item carrot_seeds names crop_id carrot which game_balance defines
+  ok    the seed item pumpkin_seeds names crop_id pumpkin which game_balance defines
+  ok    the seed item moonflower_seeds names crop_id moonflower which game_balance defines
+  ok    the seed item strawberry_seeds names crop_id strawberry which game_balance defines
+  ok    the seed item sunflower_seeds names crop_id sunflower which game_balance defines
+  ok    the seed item catnip_seeds names crop_id catnip which game_balance defines
+  ok    the seed item frost_kale_seeds names crop_id frost_kale which game_balance defines
+  ok    the seed item glow_berry_seeds names crop_id glow_berry which game_balance defines
+  ok    the seed item snow_turnip_seeds names crop_id snow_turnip which game_balance defines
+  ok    the seed item snowdrop_seeds names crop_id snowdrop which game_balance defines
+  ok    all eleven shipped and winter crops are defined
+  ok    data.crops_complete (carrot 4 stages x 1 day, pumpkin 5 stages x 2 days = 10, turnip 4, moonflower 12 days)
+  ok    only the moonflower has a water_window (20:00-06:00)
+  ok    every crop season is one of foraar sommer efteraar vinter
+  ok    weather chances per season sum to 1 and snow only falls in vinter
+  ok    LuaParser's token constants mirror LuaTokens
+  ok    tokenizer: strings keep `--`, comments (line and block) vanish, numbers keep their exponent: ["x", "=", "a -- b", "..", "c", "y", "=", "0x1F", "+", "2.5e-3"]
+  ok    line numbers survive a block comment, and the block comment is a finding
+  ok    data.parser_literals (ints stay ints, floats floats, negative and hex numbers, `--` inside a string, an expression is not a literal)
+  ok    nested tables and arrays
+  ok    an empty table `{}` arrives as an empty Dictionary (R.2)
+  ok    arrays of tables stay intact
+  ok    negative numbers and ["key"] = value entries
+  ok    a table that mixes named and positional entries keeps the named ones (the lint reports it)
+  ok    `nil` is simply absent
+  ok    escaped quotes are decoded (the lint reports them): line "quoted"
+  ok    a non-literal value is kept as its source text (the lint reports it)
+  ok    a trailing comma is fine
+  ok    data.parser_no_hoist (rewards.items and the tables of a return are not hoisted to the top level (R.2))
+  ok    a real top-level items table is extracted
+  ok    data.parser_empty_function (an empty / comment-only function no longer swallows the next one (intro_lottery.lua))
+  ok    intro_lottery.lua: on_day_started (comment only) and is_available are separate functions: ["on_offer", "on_accept", "handle_event", "on_day_started", "is_available"]
+  ok    _find_comment skips `--` inside strings (also after an escaped quote)
+  ok    _extract_named_table keeps working for tools
+  ok    data.parser_tables_header (top-level tables named in a `tables` header are extracted)
+  ok    data.lint_rules (28 bad snippets flagged by their rule, 9 good snippets clean, 5 bad fixture files)
+  ok    a finding has path, line, rule, token and message ([{ "path": "res://some/file.lua", "line": 3, "rule": "arithmetic", "token": "+", "message": "arithmetic (`+`) is not supported in statements: compute the value into the data instead" }])
+  ok    data.lint_data_level (`epic` is a lint error (rarity ladder) and a `tables` header without its table is reported: ["rarity", "tables_header"])
+  ok    loading files with lint findings logs no engine warning
+  ok    reload_scripts clears the previous findings
+  ok    data.lint_clean (every Lua file under res://lua lints clean (224 scripts); findings: [])
+  ok    fixture lint_clean_sample.lua is inside the subset and lints clean []
+  ok    fixture flag_identifiers.lua is inside the subset and lints clean []
+  ok    fixture semantics.lua is inside the subset and lints clean []
+  ok    fixture shops_extra.lua is inside the subset and lints clean []
+  ok    fixture recipes_extra.lua is inside the subset and lints clean []
+  ok    fixture data/data_config.lua is inside the subset and lints clean []
+  ok    fixture data/data_items.lua is inside the subset and lints clean []
+  ok    fixture p01_empty_fn.lua is inside the subset and lints clean []
+  ok    fixture p04_nested_if.lua is inside the subset and lints clean []
+  ok    fixture p05_oneline_if.lua is inside the subset and lints clean []
+  ok    fixture p08_paren_in_string.lua is inside the subset and lints clean []
+  ok    fixture p09_emit_payload.lua is inside the subset and lints clean []
+  ok    fixture p14_two_ifs.lua is inside the subset and lints clean []
+  ok    fixture p18_compare_and_or.lua is inside the subset and lints clean []
+  ok    fixture p19_return_expr.lua is inside the subset and lints clean []
+  ok    fixture p20_local_in_untaken.lua is inside the subset and lints clean []
+  ok    fixture p21_multiline_api.lua is inside the subset and lints clean []
+  ok    fixture p23_stmt_around_if.lua is inside the subset and lints clean []
+  ok    data.res://lua/buildings/ext.lua
+  ok    data.res://lua/buildings/ghostfam.lua
+  ok    data.res://lua/buildings/hyggebyen.lua
+  ok    data.res://lua/buildings/traetoppen.lua
+  ok    data.res://lua/config/ambient.lua
+  ok    data.res://lua/config/audio.lua
+  ok    data.res://lua/config/bosses.lua
+  ok    data.res://lua/config/characters.lua
+  ok    data.res://lua/config/dungeon.lua
+  ok    data.res://lua/config/dungeon_loot.lua
+  ok    data.res://lua/config/dungeon_run.lua
+  ok    data.res://lua/config/enemies.lua
+  ok    data.res://lua/config/farm_equipment.lua
+  ok    data.res://lua/config/farm_site.lua
+  ok    data.res://lua/config/festival_decor.lua
+  ok    data.res://lua/config/forest_look.lua
+  ok    data.res://lua/config/game_balance.lua
+  ok    data.res://lua/config/ghostfam_quests.lua
+  ok    data.res://lua/config/ghostfam_seek.lua
+  ok    data.res://lua/config/home_amenities.lua
+  ok    data.res://lua/config/husbandry.lua
+  ok    data.res://lua/config/marker_handlers.lua
+  ok    data.res://lua/config/npc_glow.lua
+  ok    data.res://lua/config/npcs.lua
+  ok    data.res://lua/config/props.lua
+  ok    data.res://lua/config/props_extra.lua
+  ok    data.res://lua/config/props_features.lua
+  ok    data.res://lua/config/race_perks.lua
+  ok    data.res://lua/config/race_reactions.lua
+  ok    data.res://lua/config/rarity.lua
+  ok    data.res://lua/config/resource_nodes.lua
+  ok    data.res://lua/config/species_perks.lua
+  ok    data.res://lua/config/traetoppen.lua
+  ok    data.res://lua/config/voice_presets.lua
+  ok    data.res://lua/data/home_tiers.lua
+  ok    data.res://lua/data/loot_tables.lua
+  ok    data.res://lua/data/sets.lua
+  ok    data.res://lua/data/starter_kit.lua
+  ok    data.res://lua/data/wardrobe_rules.lua
+  ok    data.res://lua/dialogue/_voiced_social.lua
+  ok    data.res://lua/dialogue/appraiser_fru_ugle.lua
+  ok    data.res://lua/dialogue/baker_maja.lua
+  ok    data.res://lua/dialogue/bathkeeper_sofus.lua
+  ok    data.res://lua/dialogue/beekeeper_birk.lua
+  ok    data.res://lua/dialogue/carpenter_brumme.lua
+  ok    data.res://lua/dialogue/cat_morfar_mis.lua
+  ok    data.res://lua/dialogue/fairy_builder.lua
+  ok    data.res://lua/dialogue/fairy_furnisher.lua
+  ok    data.res://lua/dialogue/fairy_king.lua
+  ok    data.res://lua/dialogue/fairy_lily.lua
+  ok    data.res://lua/dialogue/fairy_tailor.lua
+  ok    data.res://lua/dialogue/fairy_wizard.lua
+  ok    data.res://lua/dialogue/farmer_rosa.lua
+  ok    data.res://lua/dialogue/gardener_hoppe.lua
+  ok    data.res://lua/dialogue/ghostfam_blund.lua
+  ok    data.res://lua/dialogue/ghostfam_dyne.lua
+  ok    data.res://lua/dialogue/ghostfam_gnist.lua
+  ok    data.res://lua/dialogue/ghostfam_silke.lua
+  ok    data.res://lua/dialogue/guard_oak.lua
+  ok    data.res://lua/dialogue/mapseller_natteblik.lua
+  ok    data.res://lua/dialogue/mayor_lyra.lua
+  ok    data.res://lua/dialogue/merchant_pip.lua
+  ok    data.res://lua/dialogue/penguin_postman.lua
+  ok    data.res://lua/dialogue/pippin_boegeknop.lua
+  ok    data.res://lua/dialogue/postman_pip.lua
+  ok    data.res://lua/dialogue/smith_thorin.lua
+  ok    data.res://lua/dungeon_run/recipes.lua
+  ok    data.res://lua/dungeon_run/shops.lua
+  ok    data.res://lua/events/festivals/ev_aarsskiftet_end.lua
+  ok    data.res://lua/events/festivals/ev_aarsskiftet_open.lua
+  ok    data.res://lua/events/festivals/ev_badedagen_end.lua
+  ok    data.res://lua/events/festivals/ev_badedagen_open.lua
+  ok    data.res://lua/events/festivals/ev_bagedagen_end.lua
+  ok    data.res://lua/events/festivals/ev_bagedagen_open.lua
+  ok    data.res://lua/events/festivals/ev_blomsterfesten_end.lua
+  ok    data.res://lua/events/festivals/ev_blomsterfesten_open.lua
+  ok    data.res://lua/events/festivals/ev_hoestfesten_end.lua
+  ok    data.res://lua/events/festivals/ev_hoestfesten_open.lua
+  ok    data.res://lua/events/festivals/ev_honningdagen_end.lua
+  ok    data.res://lua/events/festivals/ev_honningdagen_open.lua
+  ok    data.res://lua/events/festivals/ev_maanemarkedet_end.lua
+  ok    data.res://lua/events/festivals/ev_maanemarkedet_open.lua
+  ok    data.res://lua/events/festivals/ev_midsommerlanterner_end.lua
+  ok    data.res://lua/events/festivals/ev_midsommerlanterner_open.lua
+  ok    data.res://lua/events/festivals/ev_vinterlysene_end.lua
+  ok    data.res://lua/events/festivals/ev_vinterlysene_open.lua
+  ok    data.res://lua/events/ghostfam/natlys.lua
+  ok    data.res://lua/events/hearts/baker_maja.lua
+  ok    data.res://lua/events/hearts/bathkeeper_sofus.lua
+  ok    data.res://lua/events/hearts/beekeeper_birk.lua
+  ok    data.res://lua/events/hearts/carpenter_brumme.lua
+  ok    data.res://lua/events/hearts/farmer_rosa.lua
+  ok    data.res://lua/events/hearts/gardener_hoppe.lua
+  ok    data.res://lua/events/hearts/mayor_lyra.lua
+  ok    data.res://lua/events/hearts/merchant_pip.lua
+  ok    data.res://lua/events/hearts/postman_pip.lua
+  ok    data.res://lua/events/hearts/smith_thorin.lua
+  ok    data.res://lua/farm/farm_intro_pip.lua
+  ok    data.res://lua/farm/farm_intro_pip_bye.lua
+  ok    data.res://lua/farm/farm_tutorial.lua
+  ok    data.res://lua/festivals/fixed/aarsskiftet.lua
+  ok    data.res://lua/festivals/fixed/badedagen.lua
+  ok    data.res://lua/festivals/fixed/bagedagen.lua
+  ok    data.res://lua/festivals/fixed/blomsterfesten.lua
+  ok    data.res://lua/festivals/fixed/hoestfesten.lua
+  ok    data.res://lua/festivals/fixed/honningdagen.lua
+  ok    data.res://lua/festivals/fixed/maanemarkedet.lua
+  ok    data.res://lua/festivals/fixed/midsommerlanterner.lua
+  ok    data.res://lua/festivals/fixed/vinterlysene.lua
+  ok    data.res://lua/items/animals.lua
+  ok    data.res://lua/items/building_materials.lua
+  ok    data.res://lua/items/clothing.lua
+  ok    data.res://lua/items/consumables.lua
+  ok    data.res://lua/items/crafted.lua
+  ok    data.res://lua/items/crops.lua
+  ok    data.res://lua/items/dungeon_materials.lua
+  ok    data.res://lua/items/dungeon_supplies.lua
+  ok    data.res://lua/items/farm_equipment.lua
+  ok    data.res://lua/items/furniture.lua
+  ok    data.res://lua/items/gems.lua
+  ok    data.res://lua/items/magic.lua
+  ok    data.res://lua/items/products.lua
+  ok    data.res://lua/items/relationships.lua
+  ok    data.res://lua/items/resources.lua
+  ok    data.res://lua/items/tools.lua
+  ok    data.res://lua/items/weapons.lua
+  ok    data.res://lua/items/winter_crops.lua
+  ok    data.res://lua/quests/animal_products.lua
+  ok    data.res://lua/quests/birthday_cake.lua
+  ok    data.res://lua/quests/bogtraeet.lua
+  ok    data.res://lua/quests/bossernes_vej.lua
+  ok    data.res://lua/quests/cookie_delivery.lua
+  ok    data.res://lua/quests/crystal_cave.lua
+  ok    data.res://lua/quests/dark_forest_mining.lua
+  ok    data.res://lua/quests/enchanted_garden.lua
+  ok    data.res://lua/quests/fairy_friendship.lua
+  ok    data.res://lua/quests/first_animal.lua
+  ok    data.res://lua/quests/fix_roof.lua
+  ok    data.res://lua/quests/flower_necklace.lua
+  ok    data.res://lua/quests/forest_mother_s03.lua
+  ok    data.res://lua/quests/forest_mother_s04.lua
+  ok    data.res://lua/quests/forest_mother_s05.lua
+  ok    data.res://lua/quests/forest_mother_s06.lua
+  ok    data.res://lua/quests/forest_mother_s07.lua
+  ok    data.res://lua/quests/forest_mother_s08.lua
+  ok    data.res://lua/quests/forest_patrol.lua
+  ok    data.res://lua/quests/forste_dage.lua
+  ok    data.res://lua/quests/ghostfam_garn.lua
+  ok    data.res://lua/quests/ghostfam_hittegods.lua
+  ok    data.res://lua/quests/ghostfam_lygtemager.lua
+  ok    data.res://lua/quests/intro_lottery.lua
+  ok    data.res://lua/quests/lost_cat.lua
+  ok    data.res://lua/quests/math_bakery_counts.lua
+  ok    data.res://lua/quests/math_harvest_puzzle.lua
+  ok    data.res://lua/quests/math_wizard_quiz.lua
+  ok    data.res://lua/quests/moonstone_crown.lua
+  ok    data.res://lua/quests/night_flower.lua
+  ok    data.res://lua/quests/pips_runde.lua
+  ok    data.res://lua/quests/rare_mushroom_hunt.lua
+  ok    data.res://lua/quests/rune_vandring.lua
+  ok    data.res://lua/quests/secret_garden.lua
+  ok    data.res://lua/quests/skovlift_intro.lua
+  ok    data.res://lua/quests/slotsdroemmen.lua
+  ok    data.res://lua/quests/snurresvampen.lua
+  ok    data.res://lua/quests/supply_run.lua
+  ok    data.res://lua/quests/sword_upgrade.lua
+  ok    data.res://lua/quests/ugles_noegle.lua
+  ok    data.res://lua/recipes/dungeon.lua
+  ok    data.res://lua/recipes/farm_equipment.lua
+  ok    data.res://lua/recipes/furniture.lua
+  ok    data.res://lua/recipes/guide_recipes.lua
+  ok    data.res://lua/recipes/home_kitchen.lua
+  ok    data.res://lua/recipes/materials.lua
+  ok    data.res://lua/recipes/social.lua
+  ok    data.res://lua/routines/core/appraiser_fru_ugle.lua
+  ok    data.res://lua/routines/core/baker_maja.lua
+  ok    data.res://lua/routines/core/bathkeeper_sofus.lua
+  ok    data.res://lua/routines/core/beekeeper_birk.lua
+  ok    data.res://lua/routines/core/carpenter_brumme.lua
+  ok    data.res://lua/routines/core/cat_morfar_mis.lua
+  ok    data.res://lua/routines/core/clerk_fjerpen.lua
+  ok    data.res://lua/routines/core/fairy_builder.lua
+  ok    data.res://lua/routines/core/fairy_furnisher.lua
+  ok    data.res://lua/routines/core/fairy_king.lua
+  ok    data.res://lua/routines/core/fairy_lily.lua
+  ok    data.res://lua/routines/core/fairy_tailor.lua
+  ok    data.res://lua/routines/core/fairy_wizard.lua
+  ok    data.res://lua/routines/core/farmer_rosa.lua
+  ok    data.res://lua/routines/core/gardener_hoppe.lua
+  ok    data.res://lua/routines/core/guard_oak.lua
+  ok    data.res://lua/routines/core/mapseller_natteblik.lua
+  ok    data.res://lua/routines/core/mayor_lyra.lua
+  ok    data.res://lua/routines/core/merchant_pip.lua
+  ok    data.res://lua/routines/core/penguin_postman.lua
+  ok    data.res://lua/routines/core/pippin_boegeknop.lua
+  ok    data.res://lua/routines/core/postman_pip.lua
+  ok    data.res://lua/routines/core/smith_thorin.lua
+  ok    data.res://lua/routines/ext/bertil.lua
+  ok    data.res://lua/routines/ext/bodil.lua
+  ok    data.res://lua/routines/ext/cub_bamse.lua
+  ok    data.res://lua/routines/ext/fiddler_strimmel.lua
+  ok    data.res://lua/routines/ext/innkeeper_kvak.lua
+  ok    data.res://lua/routines/ext/lamplighter_kiki.lua
+  ok    data.res://lua/routines/ext/rasmus.lua
+  ok    data.res://lua/routines/ghostfam/ghostfam_blund.lua
+  ok    data.res://lua/routines/ghostfam/ghostfam_dyne.lua
+  ok    data.res://lua/routines/ghostfam/ghostfam_gnist.lua
+  ok    data.res://lua/routines/ghostfam/ghostfam_silke.lua
+  ok    data.res://lua/shops/animal_store.lua
+  ok    data.res://lua/shops/bakery.lua
+  ok    data.res://lua/shops/festival_markets.lua
+  ok    data.res://lua/shops/greenhouse_seeds.lua
+  ok    data.res://lua/shops/home_shops.lua
+  ok    data.res://lua/shops/lantern_house.lua
+  ok    data.res://lua/shops/magic_store.lua
+  ok    data.res://lua/shops/seed_shop.lua
+  ok    data.res://lua/shops/smithy.lua
+  ok    data.res://lua/shops/timber_yard.lua
+  ok    data.res://lua/social/citizens.lua
+  ok    data.res://lua/social/gift_tastes.lua
+  ok    data.res://lua/social/relationships.lua
+  ok    data.res://lua/social/social.lua
+  ok    data.res://lua/social/topics.lua
+  ok    data.res://lua/towns.lua
+  ok    data.tool_printed_ids (tools/lua/lint.gd printed 224 PASS/FAIL ids)
+  ok    data.tool_exit_code (tools/lua/lint.gd exit code 0)
+  ok    the tool ends with its summary line
+  ok    data.lint_tool_fails_on_bad_files (tools/lua/lint.gd exits 1 and names file:line:rule for the probes outside the subset)
+  ok    data.probe_fixture_loaded (probe_expected.json holds 70 cases generated with Lua 5.4)
+  ok    probe p01_empty_fn.a empty function returns nothing
+  ok    probe p01_empty_fn.b the function after the empty one is its own
+  ok    probe p02_else.get_dialogue x true -> then
+  ok    probe p02_else.get_dialogue x false -> else
+  ok    probe p03_elseif.get_dialogue x -> x
+  ok    probe p03_elseif.get_dialogue y -> y
+  ok    probe p03_elseif.get_dialogue none -> none
+  ok    probe p04_nested_if.get_dialogue a and b
+  ok    probe p04_nested_if.get_dialogue a only
+  ok    probe p04_nested_if.get_dialogue neither
+  ok    probe p05_oneline_if.get_dialogue x
+  ok    probe p05_oneline_if.get_dialogue no x
+[Lua] unsupported Lua construct (arithmetic) evaluates to nil: see LuaRuntime.lint_report
+  ok    probe p08_paren_in_string.on_accept paren in notification text
+  ok    probe p09_emit_payload.on_accept emit with payload table
+  ok    probe p12_block_comment.on_accept function inside a block comment is not defined
+  ok    probe p14_two_ifs.handle_event two ifs, both taken
+  ok    probe p14_two_ifs.handle_event two ifs, none taken
+  ok    probe p15_escape.get_dialogue escaped quotes in a text
+  ok    probe p17_ifelse_api.handle_event bonus branch
+  ok    probe p17_ifelse_api.handle_event else branch
+  ok    probe p18_compare_and_or.get_dialogue a and b
+  ok    probe p18_compare_and_or.get_dialogue only c
+  ok    probe p18_compare_and_or.get_dialogue only a (a and b is false, c is false)
+  ok    probe p18_compare_and_or.get_dialogue none
+  ok    probe p19_return_expr.is_available has_item and not has_flag
+  ok    probe p19_return_expr.is_available done flag set
+  ok    probe p20_local_in_untaken.get_dialogue branch not taken
+  ok    probe p20_local_in_untaken.get_dialogue branch taken
+  ok    probe p21_multiline_api.on_accept notification over three lines
+  ok    probe semantics.zero_is_true 0 is true in Lua
+[Lua] hello world nil
+[Lua] accepted nil
+[Lua] accepted nil
+[Lua] accepted nil
+[Lua] unknown Lua function `nonexistent` evaluates to nil (api functions: add_gold add_item remove_item set_flag get_flag has_flag has_item get_gold notification unlock_zone emit log offer_quest complete_quest get_hearts add_hearts is_birthday festival)
+[Lua] unsupported Lua construct (arithmetic) evaluates to nil: see LuaRuntime.lint_report
+  ...   (95 more ok lines of data not printed; --verbose prints all)
+  --    data: 495 checks, 0 failed, 0 skipped, 10.2 s
+== section data_registry  (res://tests/sections/data_registry.gd)
+  ok    data_registry.lint_kinds_include_registry (LuaLint.KINDS has all of config items quest(s) dialogue recipes shops registry; a registry file lints clean; kind_unknown / kind_missing name `registry`: unknown kind "bogus" (expected one of: config, items, quest, dialogue, recipes, shops, registry) | no top-level `kind = "..."` header (config, items, quest, dialogue, recipes, shops or registry))
+  ok    every Lua file under res://lua still lints clean (0 findings)
+  ok    data_registry.until_key_is_flagged (`{ until = 18 }` is the finding reserved_key on its line with the routine hint, `["until"] = 18`, leave, stay and from are clean, any other reserved word as a key is flagged too: [{ "path": "inline_until.lua", "line": 3, "rule": "reserved_key", "token": "until", "message": "`until` is a reserved word of Lua and cannot name a table field (real Lua rejects `until = ...`): pick another name (routine blocks use leave / stay / from) or write `[\"until\"] = ...`" }])
+  ok    load_file(registry_routines_a.lua) registers the file as kind registry (script id tests/fixtures/lua/registry_routines_a)
+  ok    load_file(registry_routines_b.lua) registers the file as kind registry (script id tests/fixtures/lua/registry_routines_b)
+  ok    load_file(registry_buildings.lua) registers the file as kind registry (script id tests/fixtures/lua/registry_buildings)
+  ok    loading registry files logs no engine error or warning
+  ok    get_registry("fixture_routines") holds the ids of both files in load order: ["fixture_gardener", "fixture_baker", "fixture_mayor"]
+  ok    a second registry does not leak into the first: ["fixture_bakery", "fixture_night_inn"]
+  ok    an entry arrives with its nested tables intact (floats stay floats, integers integers, arrays of tables arrays, {} Dictionary): { "home": "hoppe_hut", "home_area": "traetoppen", "priority": 4, "shelter": "home.table", "plans": { "work": { "blocks": [{ "from": 6.5, "at": "home.table", "ac
+  ok    a field named `kind` inside an entry does not disturb the file's own `kind` header: { "area": "hyggebyen", "kind": "shop", "shop": "bakery", "hours": [6, 18], "closed_weekday": 1 }
+  ok    unknown registry or id: {} (a Dictionary, never null)
+  ok    writing into the answer for an unknown registry creates nothing in the runtime
+  ok    fixture registry_routines_a.lua is inside the subset and lints clean []
+  ok    fixture registry_routines_b.lua is inside the subset and lints clean []
+  ok    fixture registry_buildings.lua is inside the subset and lints clean []
+  ok    data_registry.registry_kind_loads_lints_and_claims (3 routine ids from 2 files + 2 building ids load; the fixtures lint clean (lint_report 0 findings); fixture_baker claimed twice = one duplicate_id note (1), later file wins (source b): [{ "path": "res://tests/fixtures/lua/registry_routines_b.lua", "line": 0, "rule": "duplicate_id", "token": "fixture_baker", "message": "registry:fixture_routines `fixture_baker` is already defined by tests/fixtures/lua/registry_routines_a (the later file wins)" }])
+  ok    the same id in another registry (fixture_stalls.fixture_baker) and a file loaded twice add no duplicate note: 0 new
+  ok    loading files with a bad registry header logs no engine error or warning
+  ok    data_registry.registry_header_findings (a registry file without `registry = "<name>"`, without its table, or named like a parser result key (functions) is exactly one registry_header finding each; [])
+  ok    a file with a bad header registers nothing (no registry named "", fixture_ghosts, functions or fixture_orphans)
+  ok    tools/lua/lint.gd --list-rules names registry_header and reserved_key
+  ok    precondition: registries and a finding are loaded
+  ok    data_registry.registry_reload_clears (reload_scripts() forgets every fixture registry, finding and fixture script (F9 hot reload leaves no stale ids))
+  ok    precondition: no SocialManager autoload in the tree for this leg
+  ok    the social api fixture registers and lints clean: []
+  ok    calling the social functions without a manager logs no engine error or warning
+  ok    data_registry.api_functions_nil_without_manager (without SocialManager api.get_hearts / add_hearts / is_birthday / festival answer nil (direct and from Lua), are NOT the unknown-function path, change no flag (friend_fixture_npc unset); `api.get_hearts(npc) or 0` reads 0 (stage stranger), `context.hearts or friend_x or 0` reads 6 / 0 / 5; results { "direct": [<null>, <null>, <null>, <null>], "lua": [<null>, <null>, <null>, <null>] })
+  ok    get_hearts -> int and is_birthday -> bool come from the manager: 3 0 true false
+  ok    festival() answers the String id of today's active festival (the manager's StringName becomes a String): fixture_fest (String)
+  ok    with no festival on, festival() is the empty String and `api.festival() ~= ""` is false (the empty string is TRUTHY in Lua: compare, never test)
+  ok    add_hearts(npc, n) -> SocialManager.add_hearts(npc, n, &"lua") and answers nil: ["add_hearts", "fixture_npc", 2, &"lua"]
+  ok    a missing count is 0 (the manager ignores it), "3" is 3: [["add_hearts", "fixture_npc", 0, &"lua"], ["add_hearts", "fixture_npc", 3, &"lua"]]
+  ok    from Lua: bump(npc, 2) reads 5 hearts, stage_of reads close / stranger, is_bday and festival_now answer: 5 close stranger
+  ok    the forwarded calls log no engine error or warning
+  ok    data_registry.api_functions_late_bound (with a fake SocialManager the four functions forward their arguments and type their answers (get_hearts 3, is_birthday true, festival fixture_fest, add_hearts(.., &"lua")); a manager without a method answers nil for it)
+[Lua] unknown Lua function `get_friendship` evaluates to nil (api functions: add_gold add_item remove_item set_flag get_flag has_flag has_item get_gold notification unlock_zone emit log offer_quest complete_quest get_hearts add_hearts is_birthday festival)
+  ok    data_registry.api_unknown_names_log_once (an unknown function still answers nil and is logged once; the message lists the 14 old and the 4 new names: unknown Lua function `get_friendship` evaluates to nil (api functions: add_gold add_item remove_item set_flag get_flag has_flag has_item get_gold notification unlock_zone emit log offer_quest complete_quest get_hearts add_hearts is_birthday festival))
+  ok    an unknown api function logs no engine error or warning
+  ok    the real SocialManager is back in the tree at its old place (index 12)
+  --    data_registry: 39 checks, 0 failed, 0 skipped, 9.0 s
+== section dungeon_defeat  (res://tests/sections/dungeon_defeat.gd)
+  ok    dungeon_defeat.gold_0 (10 percent rounded down, with duplicate defeat requests guarded)
+  ok    defeat advances exactly one morning
+  ok    wake at the farmhouse door
+  ok    items and equipment survive defeat
+  ok    health restored
+  ok    dungeon_defeat.gold_9 (10 percent rounded down, with duplicate defeat requests guarded)
+  ok    defeat advances exactly one morning
+  ok    wake at the farmhouse door
+  ok    items and equipment survive defeat
+  ok    health restored
+  ok    dungeon_defeat.gold_10 (10 percent rounded down, with duplicate defeat requests guarded)
+  ok    defeat advances exactly one morning
+  ok    wake at the farmhouse door
+  ok    items and equipment survive defeat
+  ok    health restored
+  ok    dungeon_defeat.gold_99 (10 percent rounded down, with duplicate defeat requests guarded)
+  ok    defeat advances exactly one morning
+  ok    wake at the farmhouse door
+  ok    items and equipment survive defeat
+  ok    health restored
+  ok    dungeon_defeat.gold_100 (10 percent rounded down, with duplicate defeat requests guarded)
+  ok    defeat advances exactly one morning
+  ok    wake at the farmhouse door
+  ok    items and equipment survive defeat
+  ok    health restored
+  ok    dungeon_defeat.gold_1999 (10 percent rounded down, with duplicate defeat requests guarded)
+  ok    defeat advances exactly one morning
+  ok    wake at the farmhouse door
+  ok    items and equipment survive defeat
+  ok    health restored
+  ok    dungeon_defeat.gold_999999 (10 percent rounded down, with duplicate defeat requests guarded)
+  ok    defeat advances exactly one morning
+  ok    wake at the farmhouse door
+  ok    items and equipment survive defeat
+  ok    health restored
+  ok    dungeon_defeat.passout_wakes_at_home_without_fee (02:00 pass-out returns home without defeat penalties)
+  ok    dungeon_defeat.boss_quest_binds_floor_four (real floor, boss and turn-in signals complete the quest)
+  --    dungeon_defeat: 37 checks, 0 failed, 0 skipped, 4.1 s
+== section dungeon_fights  (res://tests/sections/dungeon_fights.gd)
+  --    dungeon_fights: 0 checks, 0 failed, 0 skipped, 240.0 s
+  FAIL  section dungeon_fights timed out after 240 s (a coroutine is still waiting; look for an await on something that never happens)
+  note  not run because of the timeout: city_depth_pixels, dungeon_floors, dungeon_gen, dungeon_hud, dungeon_items, dungeon_performance, dungeon_pickups, dungeon_reveal, dungeon_run, dungeon_services, economy, economy_hours, economy_transactions, enemies, enemy_performance, farm, farm_automation, farm_controls, farm_dress, farm_first_morning, farm_lifecycle, farm_playthrough, farm_seed_ui, farm_site, farm_ui_audit, farm_upgrades, festival_activities, forest, forest_look, forest_mother, forest_mother_anchors, furniture, ghost, ghost_data, ghost_lines, ghostfam_data, ghostfam_events, ghostfam_play, ghostfam_quests, ghostfam_seek, held_equipment, home, home_progression, home_services, home_ui, home_world, hud, journey_regressions, loc, loot, loot_dungeon, maps_farm, maps_iso, mechanics_review_fixes, menus, npc, npc_cast, player, quests, rarity, relationships, review_regressions, save, secret_garden, shop_rotation, shop_ui, social, social_data, social_events, social_fest_content, social_gifts, social_heart_content, social_talk, social_ui, town_budgets, town_loop, towns_city, towns_data, towns_director, towns_ext, towns_greetings, towns_interiors, towns_interiors_core, towns_post, towns_routes, towns_routines, ui_audit, ui_audit_blind, ui_audit_pins, ui_conformance, ui_foundation, ui_mechanics, ui_nav, voice, walkway_transitions, wardrobe, wardrobe_render, wardrobe_ui, weapons
+== summary: 9 section(s) run, 993 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 6 allowed message(s), 1 problem(s), 0 known-issue message(s), 315.5 s
+  PROBLEM  section dungeon_fights timed out after 240 s (a coroutine is still waiting; look for an await on something that never happens)
+PLAYTEST FAIL: 0 check failures, 0 engine errors, 0 engine warnings, 1 problems
+WARNING: 15 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 6 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+run_playtest: FAIL - engine messages after the harness result (shutdown):
+WARNING: 15 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+ERROR: 6 resources still in use at exit (run with --verbose for details).
+EXIT 1

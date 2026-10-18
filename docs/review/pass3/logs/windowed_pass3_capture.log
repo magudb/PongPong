@@ -1,0 +1,61 @@
+run_windowed: waiting for the window lock (/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-windowed.lock), then opening a 1280x720 window ...
+run_playtest: importing project (pass 1 of 1) ...
+run_playtest: assets changed, running tools/import/write_import_stubs.py --check
+write_import_stubs --check: ok (62 character folders, 498 sheets with the S3TC preset, 58 tile atlases, 0 wardrobe layer imports lossless, 252 painted wardrobe textures with S3TC, 259 keep files)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 4.1 Metal - 90.5 - Compatibility - Using Device: Apple - Apple M3
+
+PLAYTEST start mode=windowed character=animal sections=res://pass3 only=pass3
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.ntMsZZ/Library/Application Support/Traetoppen (throwaway)
+  info  window 1280x720 (macOS)
+  info  screenshots go to /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots
+== section pass3 [windowed]  (res://pass3/pass3.gd)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_title.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_settings.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_select_1.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_select_2.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_saveload.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_pause.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_confirm.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_hud.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_toasts.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_prompt.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_area_banner.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_forest_hud.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_minimap.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_dialogue.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_intro.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_shop.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_journal.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_inventory.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_animal_care.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_build_menu.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_husbyggeri.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_indretning.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_home_chest.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_garderobe.png (1280x720)
+  info  pass3: could not open samlerbog
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_cheats.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_home_amenities.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_people.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_gift.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_calendar.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_social_hud.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_event_overlay.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_ui_post.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_world_intro_opening.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_farm_day_hud.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_farm_evening_2030_hud.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_farm_night_0040_hud.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_traetoppen_city.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_hyggebyen.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_interior_froebutikken.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_home_interior.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_moerkeskoven_surface.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_moerkeskoven_surface_night.png (1280x720)
+  info  saved /Users/magnusudbjorg/Documents/projects/PongPong-worktrees/game-review/docs/review/pass3/shots/pass3_dungeon_f1_hud.png (1280x720)
+  --    pass3: 0 checks, 0 failed, 0 skipped, 31.6 s
+  note  section pass3 took 31.6 s (> 30 s): consider splitting it
+== summary: 1 section(s) run, 0 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 33.8 s
+PLAYTEST PASS (0 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)
+EXIT 0

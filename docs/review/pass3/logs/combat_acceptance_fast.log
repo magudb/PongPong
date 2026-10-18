@@ -1,0 +1,40 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=combat_acceptance
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.yzQyFR/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 2.5 s
+== section combat_acceptance  (res://tests/sections/combat_acceptance.gd)
+  ok    combat_acceptance.curve_weapon_snurresvamp
+  info  snurresvamp: 15/60 seeded duels completed
+  info  snurresvamp: 30/60 seeded duels completed
+  info  snurresvamp: 45/60 seeded duels completed
+  info  snurresvamp: 60/60 seeded duels completed
+  ok    combat_acceptance.bot_beats_snurresvamp_in_window (mean 24.936s, 60/60 wins losing <=12 gross half hearts)
+  ok    combat_acceptance.curve_weapon_snurresvamp_gloed
+  info  snurresvamp_gloed: 15/60 seeded duels completed
+  info  snurresvamp_gloed: 30/60 seeded duels completed
+  info  snurresvamp_gloed: 45/60 seeded duels completed
+  info  snurresvamp_gloed: 60/60 seeded duels completed
+  ok    combat_acceptance.bot_beats_snurresvamp_gloed_in_window (mean 33.879s, 60/60 wins losing <=12 gross half hearts)
+  ok    combat_acceptance.curve_weapon_snurresvamp_konge
+  info  snurresvamp_konge: 15/60 seeded duels completed
+  info  snurresvamp_konge: 30/60 seeded duels completed
+  info  snurresvamp_konge: 45/60 seeded duels completed
+  info  snurresvamp_konge: 60/60 seeded duels completed
+  ok    combat_acceptance.bot_beats_snurresvamp_konge_in_window (mean 41.544s, 60/60 wins losing <=12 gross half hearts)
+  ok    combat_acceptance.ambush_leap_dodgeable_85_percent (100/100)
+  --    combat_acceptance: 7 checks, 0 failed, 0 skipped, 287.8 s
+  note  section combat_acceptance took 287.8 s (> 30 s): consider splitting it
+== summary: 1 section(s) run, 15 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 300.8 s
+PLAYTEST PASS (15 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)
+EXIT 0
