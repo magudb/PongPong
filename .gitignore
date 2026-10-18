@@ -9,6 +9,11 @@
 export.cfg
 .godot-bin/
 
+# Godot 3 import cache and C#/Mono leftovers (this is a GDScript project; never wanted in git)
+/.import/
+.mono/
+mono_crash.*.json
+
 # Feature tooling (addendum 4.4 / RV-P11)
 # flock file of tools/features/add_autoload.py (exception E1, repo root)
 project.godot.lock
@@ -32,16 +37,57 @@ tools/dungeon_loot/_stage/
 .mimocode/
 .playwright-mcp/
 /scratch/
+# scratch folder of tools/dev/selftest_harness.sh (removed again by its cleanup)
+.selftest/
+
+# Python (tools/loc, tools/copy, tools/voice, tools/art) - venvs anywhere, caches, packaging
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Coverage and loose logs at the repo root (QA evidence logs under docs/ ARE committed)
+.coverage
+htmlcov/
+/coverage/
+/logs/
+
+# Editor/merge leftovers
+*.tmp
+*.orig
+*.rej
+*~
 
 # OS
 .DS_Store
 Thumbs.db
+._*
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.directory
+.Trash-*
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+.vs/
+.fleet/
+*.sublime-workspace
 
 # Builds
 build/
@@ -53,10 +99,11 @@ dist/
 *.dmg
 *.apk
 *.aab
+*.pdb
+*.dSYM/
 
 # Lua hot-reload temp
 *.lua.tmp
 
 # Saves (user://)
 saves/
-.godot-bin/
