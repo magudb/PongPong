@@ -14,7 +14,7 @@ func _physics_process(dt: float) -> void:
 	if age >= seconds:
 		queue_free()
 		return
-	var player := get_tree().get_first_node_in_group("player") as Node2D
+	var player := PlayerRegistry.local_player(get_tree()) as Node2D
 	if mode == "bolt":
 		global_position += Iso.to_screen(direction*speed*dt)
 		if player != null and Iso.ground_dist(global_position,player.global_position) <= radius and player.has_method("take_damage"):

@@ -158,7 +158,7 @@ func _ready() -> void:
 	preload("res://scripts/ui/dev/ui_fixtures.gd").register_setup("garderobe",Callable(get_script(),&"fixture_setup"))
 
 func _player() -> Player2D:
-	return get_tree().get_first_node_in_group(&"player") as Player2D
+	return PlayerRegistry.local_player(get_tree()) as Player2D
 
 func _hotkey_open_allowed() -> bool:
 	var player := _player()

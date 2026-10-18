@@ -13,7 +13,7 @@ func attach(target: IsoArea) -> void:
 			_crowns.append({"cell":record.cell,"class":cls,"nodes":record.nodes,"alpha":1.0})
 func _process(dt: float) -> void:
 	_poll -= dt
-	var player := get_tree().get_first_node_in_group("player") as Node2D
+	var player := PlayerRegistry.local_player(get_tree()) as Node2D
 	if player == null or area == null: return
 	if _poll <= 0:
 		_poll = 0.1

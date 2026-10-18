@@ -86,7 +86,7 @@ func start_run(first_floor: int) -> bool:
 	floor = first_floor
 	if fresh:
 		GameManager.set_flag(&"dungeon_last_spark_used",false)
-		var player := get_tree().get_first_node_in_group("player")
+		var player := PlayerRegistry.local_player(get_tree())
 		if player != null and player.has_method("begin_dungeon_run"): player.begin_dungeon_run()
 		Svc.static_call("res://scripts/world2d/enemy_2d.gd",&"begin_run")
 	return true
@@ -189,7 +189,7 @@ func _area_changed(id: StringName) -> void:
 		seen[number] = true
 		deepest = maxi(deepest,number)
 		_restore_boss_flag()
-		var player := get_tree().get_first_node_in_group("player")
+		var player := PlayerRegistry.local_player(get_tree())
 		if first and player != null and player.has_method("restore_oil"): player.restore_oil()
 		_ensure(number-1)
 		_prefetch(number+1)

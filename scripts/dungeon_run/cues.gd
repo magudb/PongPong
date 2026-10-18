@@ -22,7 +22,7 @@ func _ready() -> void:
 		if key == "DEXP_OIL_LOW": play("sfx/lantern_low"))
 	EventBus.enemy_encountered.connect(func(_id): play("sfx/enemy_notice"))
 	EventBus.player_spawned.connect(_player)
-	_player(get_tree().get_first_node_in_group("player"))
+	_player(PlayerRegistry.local_player(get_tree()))
 func _player(node: Node) -> void:
 	if not node is Player2D or node.damaged.is_connected(_hurt): return
 	node.damaged.connect(_hurt)

@@ -44,7 +44,7 @@ static func protection(item: String, def: Dictionary) -> String:
 		if eco == null or int(eco.call("count_item", StringName(item))) <= 1:
 			return "last_tool"
 		var tree := Engine.get_main_loop() as SceneTree
-		var player := tree.get_first_node_in_group("player") if tree != null else null
+		var player := PlayerRegistry.local_player(tree) if tree != null else null
 		var hotbar: Variant = player.get("hotbar") if player != null and "hotbar" in player else null
 		if hotbar is Object and hotbar.has_method("to_dict"):
 			var slots := LuaData.arr(LuaData.dict(hotbar.call("to_dict")).get("slots", []))

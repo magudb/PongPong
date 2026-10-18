@@ -34,7 +34,7 @@ func _actor() -> Node2D:
 	if watch != null and is_instance_valid(watch):
 		return watch
 	var tree: SceneTree = get_tree()
-	return tree.get_first_node_in_group("player") as Node2D if tree != null else null
+	return PlayerRegistry.local_player(tree) as Node2D if tree != null else null
 
 
 func _process(delta: float) -> void:

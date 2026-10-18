@@ -104,7 +104,7 @@ func _refresh_all() -> void:
 	_refresh_date()
 	_refresh_quests()
 	_refresh_construction()
-	var player := get_tree().get_first_node_in_group("player")
+	var player := PlayerRegistry.local_player(get_tree())
 	if player != null:
 		_player_spawned(player)
 	else:

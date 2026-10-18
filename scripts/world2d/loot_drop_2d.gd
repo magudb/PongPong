@@ -70,7 +70,7 @@ func _ready() -> void:
 	add_child(collision)
 	var colors := {"gem":"b9c3e3","magic":"e3c372","forage":"6fd6c4","mineral":"c4bad6","crop":"e8863a"}
 	tint = Color(colors.get(str(GameData.item_def(item_id).get("category","")),"fbf5e6"))
-	_player = get_tree().get_first_node_in_group("player") as Node2D
+	_player = PlayerRegistry.local_player(get_tree()) as Node2D
 	queue_for(get_parent())
 	body_entered.connect(func(body):
 		if body.is_in_group("player") and age >= .25: collect())
@@ -85,7 +85,7 @@ func _process(dt: float) -> void:
 	age += dt
 	_retry = maxf(0,_retry-dt)
 	queue_redraw()
-	if not is_instance_valid(_player): _player = get_tree().get_first_node_in_group("player") as Node2D
+	if not is_instance_valid(_player): _player = PlayerRegistry.local_player(get_tree()) as Node2D
 	if _player == null: return
 	var offset := Iso.to_ground(_player.global_position-global_position)
 	if age >= .5 and offset.length() < 183*pickup_mult():

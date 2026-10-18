@@ -66,9 +66,9 @@ func first(group: StringName) -> Node:
 	return tree.get_first_node_in_group(group)
 
 
-## The player node (group "player"); null before the world is up.
+## The local player node (PlayerRegistry); null before the world is up.
 func player() -> Node:
-	return tree.get_first_node_in_group(&"player")
+	return PlayerRegistry.local_player(tree)
 
 
 # ---------------------------------------------------------------- time

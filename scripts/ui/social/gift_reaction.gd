@@ -6,7 +6,7 @@ static func run(npc: String, result: Dictionary, actor: WeakRef) -> void:
 	var lines := RelationshipFlow.reaction_lines(npc,result) if special else [line]
 	var tree := Engine.get_main_loop() as SceneTree
 	var screen := tree.get_first_node_in_group("dialogue_ui") if tree != null else null
-	var player := tree.get_first_node_in_group("player") if tree != null else null
+	var player := PlayerRegistry.local_player(tree) if tree != null else null
 	var player_ref: WeakRef = weakref(player) if player != null else null
 	var citizen: Node = actor.get_ref() if actor != null else null
 	if player != null and citizen != null:

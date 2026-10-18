@@ -9,6 +9,8 @@ extends Node
 
 # --- Player ---
 signal player_spawned(player: Node2D)
+## MP1: a body left the registry. Unused by single-player paths (nothing despawns the one hero).
+signal player_despawned(player_id: StringName)
 signal player_character_changed(character_id: StringName)
 signal player_inventory_changed(inventory: Dictionary)
 signal player_stats_changed(stats: Dictionary)
