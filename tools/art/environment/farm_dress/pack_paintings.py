@@ -53,6 +53,9 @@ def main():
         if a.check:
             if path.suffix=='.import' and path.exists() and path.name!='props.json.import':
                 if not all(re.search('^'+re.escape(line)+'$',path.read_text(),re.M) for line in ['compress/mode=0','mipmaps/generate=false','process/fix_alpha_border=true']):stale.append(str(path.relative_to(ROOT)))
+            elif path.suffix=='.png' and path.exists():
+                with Image.open(path) as committed, Image.open(BytesIO(data)) as fresh:
+                    if committed.mode!=fresh.mode or committed.size!=fresh.size or committed.tobytes()!=fresh.tobytes():stale.append(str(path.relative_to(ROOT)))
             elif not path.exists() or path.read_bytes()!=data:stale.append(str(path.relative_to(ROOT)))
         else:
             path.parent.mkdir(parents=True,exist_ok=True)

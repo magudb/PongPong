@@ -4,7 +4,7 @@ There is **one project**: this folder (`PongPong/`, git branch `main`). Everythi
 
 ## Branches and worktrees
 
-* `main` is always green: it imports with zero errors/warnings and `tests/run_playtest.sh --strict` passes for all four heroes
+* `main` is always green: it imports with zero errors/warnings and the complete strict CI matrix passes for all four heroes
   (`--character=animal|fairy|hobbit|ghost`).
   Nothing is committed to `main` directly except merges and small docs fixes.
 * Work happens on a branch in its **own worktree**, a sibling folder `../PongPong-worktrees/<branch>/` (override with
@@ -50,7 +50,7 @@ same walk costs about 0.05 s, because the frames run back to back and every fram
   (`t.until(cond, timeout)`) only for things outside the engine loop (a thread, a child process);
 * the harness watchdogs (`TIMEOUT_S` of a section, `--section-timeout=`, `--max-seconds=`) count wall-clock seconds in both modes;
 * `--fast` is ignored by a windowed run (a real window is watched in real time), and an own `--fixed-fps` in `GODOT_EXTRA_ARGS` is kept;
-* `--fast` is for iterating on a section, not the gate: the plain run is what has to be green. The whole harness costs about the same
+* Ordinary gameplay sections run with normal pacing in CI. The two seeded Monte Carlo sections, `combat_acceptance` and `dungeon_fights`, run with `--fast`: they measure physics-derived game time and simulate more than an hour of play per character. Their full sample counts and game-time assertions stay enabled. The ordinary harness costs about the same
   with it (most of its time is child processes and imports), and a section that times an animation with the wall clock fails under it
   (measured when the flag was added: `city_levels.monkey_climbs_faster` and `city_levels.lift_requests_area_change` read 0.01 s for 1.1 s).
 

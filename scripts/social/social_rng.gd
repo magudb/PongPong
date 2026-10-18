@@ -14,8 +14,8 @@ const M32 := 0xFFFFFFFF
 
 static func fnv1a32(text: String) -> int:
 	var h := 2166136261
-	for b in text.to_utf8_buffer():
-		h = ((h ^ int(b)) * 16777619) & M32
+	for b: int in text.to_utf8_buffer():
+		h = ((h ^ b) * 16777619) & M32
 	return h
 
 

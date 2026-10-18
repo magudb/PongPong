@@ -1,6 +1,7 @@
 extends RefCounted
 const SECTION := "dungeon_fights"
-const TIMEOUT_S := 240.0
+# One hundred real fights may each use the full eight-second bot limit.
+const TIMEOUT_S := 960.0
 func run(t) -> void:
 	await t.start_world()
 	var world: WorldRoot2D = t.world()

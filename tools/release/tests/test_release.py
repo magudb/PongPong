@@ -51,6 +51,9 @@ class CoverageTests(unittest.TestCase):
         self.assertTrue(all(groups))
         self.assertEqual(set(all_sections), expected)
         self.assertEqual(len(all_sections), len(expected))
+        paced = [name for pace in ("normal", "simulation") for group in module.partitions(4, pace) for name in group]
+        self.assertEqual(set(paced), expected)
+        self.assertEqual(len(paced), len(expected))
         for invalid in (0, -1, len(expected) + 1):
             with self.assertRaises(ValueError):
                 module.partitions(invalid)

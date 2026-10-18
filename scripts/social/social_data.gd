@@ -177,7 +177,16 @@ static func unlock_of(npc: String) -> Dictionary:
 	return LuaData.dict(LuaData.dict(citizens().get(npc, {})).get("unlock", {}))
 
 
-## The citizens row of an NPC with every derived default filled in: {tier, archetype, birthday{season,day}, partner, derived: bool, ...the authored fields}.
+## Dialogue needs only the archetype; avoid copying a full citizen and deriving its birthday.
+static func archetype_of(npc: String) -> String:
+	var authored := LuaData.dict(citizens().get(npc, {}))
+	if authored.has("archetype"):
+		return str(authored.archetype)
+	var role := str(npc_row(npc).get("role", ""))
+	return str(cfg_dict("role_archetype").get(role, "wanderer"))
+
+
+## The citizens row with derived defaults: tier, archetype, birthday, partner and derived.
 static func citizen(npc: String) -> Dictionary:
 	var rows := citizens()
 	var authored: Dictionary = LuaData.dict(rows.get(npc, {}))
@@ -186,8 +195,7 @@ static func citizen(npc: String) -> Dictionary:
 	if not row.has("tier") or str(row["tier"]) not in TIERS:
 		row["tier"] = "C"
 	if not row.has("archetype"):
-		var role := str(npc_row(npc).get("role", ""))
-		row["archetype"] = str(cfg_dict("role_archetype").get(role, "wanderer"))
+		row["archetype"] = archetype_of(npc)
 	if not row.has("birthday"):
 		row["birthday"] = derived_birthday(npc)
 		derived = true

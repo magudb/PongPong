@@ -14,6 +14,8 @@ func run(t) -> void:
 	var sm: Node = SocialFixture.fresh(t, 10)
 	var lr: Node = t.autoload("LuaRuntime")
 	var npc := "gardener_hoppe"
+	for id in SocialData.npcs().keys() + ["unknown_citizen"]:
+		t.check("archetype_lookup_" + str(id), SocialData.archetype_of(str(id)) == str(SocialData.citizen(str(id)).archetype))
 	var page := Bridge.decorate(npc, {})
 	t.check("decorate_on_empty_module_has_greeting_and_close", page.lines.size() == 1 and str(page.lines[0].text_key).begins_with("SOC_GARDENER_HOPPE_FIRST_") and page.choices[-1].action == "close")
 	t.expect(Talk.line(npc, "SOC_GARDENER_HOPPE_FIRST_1_V").voice_key == "voice/gardener_hoppe/first_1_v", "Voice suffix resolves to the indexed NPC path")
@@ -94,7 +96,15 @@ func run(t) -> void:
 	for i in 3000:
 		Talk.pick(npc, "GREET", ctx)
 	var micros := float(Time.get_ticks_usec() - start) / 3000.0
-	t.check("pick_under_20us", micros < 20.0, "Cached social line pick: %.2f us" % micros)
+	t.check("pick_under_20us", micros < t.perf_limit(20.0), "Cached social line pick: %.2f us, limit %.2f us (native reference 20)" % [micros, t.perf_limit(20.0)])
+	var saved_seed: int = sm.world_seed
+	for seed_value in [1234, 5678]:
+		sm.set_seed(seed_value)
+		for day_value in [10, 11]:
+			var reference: float = sm.roll([npc, day_value, "season"])
+			Talk._day_roll(sm, npc, day_value, "season")
+			t.check("daily_roll_%d_%d" % [seed_value, day_value], Talk._day_roll(sm, npc, day_value, "season") == reference)
+	sm.set_seed(saved_seed)
 	# Keep the fallback test independent of how much keeper copy is installed.
 	var no_keeper_keys := Keys.new()
 	Svc.override("LocalizationManager",no_keeper_keys)
