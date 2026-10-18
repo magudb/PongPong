@@ -2,6 +2,8 @@
 
 Work is based on `main` at `5fc72b2`, in the `game-mechanics` worktree.
 
+Implementation: `cb9f899`, merged to `main` as `9fb05e6`. The merged checkout passed a further [208-check normal-speed control run](main-controls.json), with no failures, skips or engine messages. Its [source proofs](main-source-bindings.json) match the worktree's validated source bytes.
+
 ## Changes found during play
 
 - Entrances accept the player only while walking freely. Dodges, swings, tool work, dialogue and knockback cannot carry the player through an entrance in the middle of an action. Walking out and back in still works. The retained [before trace](combat-stairs-before-trace.json) shows seven dodge-triggered floor changes; the associated [failed report](combat-stairs-before.json) stops at the missed route stone.
