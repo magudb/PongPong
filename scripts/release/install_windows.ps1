@@ -27,6 +27,17 @@ try {
     [IO.Compression.ZipFile]::ExtractToDirectory($Archive, $stage)
     $replacement = Join-Path $stage 'Traetoppen'
     if (!(Test-Path -LiteralPath (Join-Path $replacement 'Traetoppen.exe')) -or !(Test-Path -LiteralPath (Join-Path $replacement 'Traetoppen.pck'))) { throw 'Incomplete update package' }
+    # Setup installs this locally; release ZIPs contain only game files.
+    # Carry it through the atomic replacement so Apps & Features keeps working.
+    $uninstaller = Join-Path $Target 'Uninstall.exe'
+    if (Test-Path -LiteralPath $uninstaller -PathType Leaf) {
+        Copy-Item -LiteralPath $uninstaller -Destination (Join-Path $replacement 'Uninstall.exe')
+    }
+    # Windows locks a process's working directory. Start menu launches inherit
+    # the game directory; leave it in both PowerShell and the OS before swapping.
+    $installationParent = Split-Path -Parent $Target
+    Set-Location -LiteralPath $installationParent
+    [Environment]::CurrentDirectory = $installationParent
     [IO.File]::WriteAllText($Result + '.ready', 'ready')
     for ($attempt = 0; $attempt -lt 120; $attempt++) {
         if ($ParentProcessId -eq 0 -or !(Get-Process -Id $ParentProcessId -ErrorAction SilentlyContinue)) { break }
@@ -40,6 +51,15 @@ try {
     if (!$NoLaunch) { Start-Process -FilePath (Join-Path $Target 'Traetoppen.exe') -WorkingDirectory $Target }
     @{status='installed'} | ConvertTo-Json -Compress | Set-Content -LiteralPath $Result -Encoding UTF8
     $installed = $true
+    $registration = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\Traetoppen'
+    $packageName = [IO.Path]::GetFileName($Archive)
+    if ($packageName -cmatch '^Traetoppen-v((?:0|[1-9][0-9]{0,8})\.(?:0|[1-9][0-9]{0,8})\.(?:0|[1-9][0-9]{0,8}))-windows\.zip$') {
+        $version = $Matches[1]
+        $entry = Get-ItemProperty -LiteralPath $registration -ErrorAction SilentlyContinue
+        if ($entry -and $entry.InstallLocation -ieq $Target) {
+            Set-ItemProperty -LiteralPath $registration -Name DisplayVersion -Value $version -ErrorAction SilentlyContinue
+        }
+    }
 } catch {
     if ($moved) {
         if (Test-Path -LiteralPath $Target) { Remove-Item -LiteralPath $Target -Recurse -Force }

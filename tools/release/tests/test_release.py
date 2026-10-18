@@ -9,15 +9,25 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT / "tools/release"))
 spec = importlib.util.spec_from_file_location("release_tools", ROOT / "tools/release/release.py")
 release = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(release)
 
 
 class VersionTests(unittest.TestCase):
+    def test_partial_macos_signing_configuration_is_rejected(self):
+        keys = ("MACOS_CERTIFICATE_P12", "MACOS_CERTIFICATE_PASSWORD", "MACOS_SIGNING_IDENTITY", "APPLE_ID", "APPLE_APP_PASSWORD", "APPLE_TEAM_ID")
+        with tempfile.TemporaryDirectory() as temporary:
+            for only in ("APPLE_ID", "MACOS_CERTIFICATE_P12"):
+                with self.subTest(secret=only), mock.patch.dict(os.environ, {key: "incomplete" if key == only else "" for key in keys}):
+                    with self.assertRaises(ValueError), release.macos_signing(Path(temporary)):
+                        self.fail("Partly configured signing must not produce an unsigned installer")
+
     def test_production_tag(self):
         self.assertEqual(release.metadata("refs/tags/v12.34.56", "push")["version"], "12.34.56")
         self.assertEqual(release.metadata("refs/tags/v0.1.0", "push")["production"], "true")
@@ -82,7 +92,7 @@ class InstallerTests(unittest.TestCase):
                 package.writestr(name, value)
         digest = hashlib.sha256(archive.read_bytes()).hexdigest()
         command = [self.powershell, "-NoProfile", "-File", str(ROOT / "scripts/release/install_windows.ps1"), "-ParentProcessId", "0", "-Archive", str(archive), "-Target", str(target), "-ExpectedSha", "0" * 64 if bad_hash else digest, "-Result", str(self.result), "-NoLaunch"]
-        result = subprocess.run(command, capture_output=True, text=True, timeout=30)
+        result = subprocess.run(command, cwd=target, capture_output=True, text=True, timeout=30)
         return result, target
 
     def test_windows_replaces_complete_package(self):
@@ -95,6 +105,14 @@ class InstallerTests(unittest.TestCase):
         result, target = self.windows({"Traetoppen/Traetoppen.exe": b"bad"}, bad_hash=True)
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual((target / "Traetoppen.exe").read_bytes(), b"previous executable")
+
+    def test_windows_update_preserves_setup_uninstaller(self):
+        target = self.root / "Traetoppen"
+        target.mkdir()
+        (target / "Uninstall.exe").write_bytes(b"setup-generated uninstaller")
+        result, target = self.windows({"Traetoppen/Traetoppen.exe": b"new executable", "Traetoppen/Traetoppen.pck": b"new data"})
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual((target / "Uninstall.exe").read_bytes(), b"setup-generated uninstaller")
 
     def test_windows_missing_data_keeps_previous(self):
         result, target = self.windows({"Traetoppen/Traetoppen.exe": b"incomplete"})
