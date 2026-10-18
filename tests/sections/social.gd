@@ -1806,7 +1806,7 @@ func _perf() -> void:
 	var line: Array[String] = []
 	for name in samples:
 		line.append("%s %.1f/%.1f" % [name, float(samples[name]["median"]), float(samples[name]["p95"])])
-	t.check("perf_lookup_p95_under_100us", worst < t.perf_limit(100.0) and reset_ms < 5.0, "lookups, median / p95 in microseconds (native reference p95 < 100, runner limit %.1f; the order's 6 us for a one-term eval_when and 20 us for festival_active are quiet-machine targets, reported here, not asserted on a shared machine): %s; reset() %.2f ms" % [t.perf_limit(100.0), ", ".join(line), reset_ms])
+	t.check("perf_lookup_p95_under_100us", t.perf_ok("perf_lookup_p95_under_100us", worst, 100.0) and reset_ms < 5.0, "lookups, median / p95 in microseconds (native reference p95 < 100, runner limit %.1f; the order's 6 us for a one-term eval_when and 20 us for festival_active are quiet-machine targets, reported here, not asserted on a shared machine): %s; reset() %.2f ms" % [t.perf_limit(100.0), ", ".join(line), reset_ms])
 	_done()
 
 

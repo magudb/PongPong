@@ -96,7 +96,7 @@ func run(t) -> void:
 	for i in 3000:
 		Talk.pick(npc, "GREET", ctx)
 	var micros := float(Time.get_ticks_usec() - start) / 3000.0
-	t.check("pick_under_20us", micros < t.perf_limit(20.0), "Cached social line pick: %.2f us, limit %.2f us (native reference 20)" % [micros, t.perf_limit(20.0)])
+	t.check("pick_under_20us", t.perf_ok("pick_under_20us", micros, 20.0), "Cached social line pick: %.2f us, limit %.2f us (native reference 20)" % [micros, t.perf_limit(20.0)])
 	var saved_seed: int = sm.world_seed
 	for seed_value in [1234, 5678]:
 		sm.set_seed(seed_value)

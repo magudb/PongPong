@@ -421,6 +421,11 @@ func _finish() -> void:
 		_ran.size(), _t.checks, _t.failed, _t.skipped, errors, warnings, _catcher.allowed_entries.size(), _problems.size(), _catcher.known_entries.size(), elapsed])
 	for f in _t.failures:
 		print("  FAILED   ", f)
+	var on_actions := OS.get_environment("GITHUB_ACTIONS") == "true"
+	for s in _t.slow:
+		print("  SLOW     %s: %s, native reference %s (%.2fx, passed inside the runner limit %s)" % [s.check, s.measured, s.reference, s.ratio, s.limit])
+		if on_actions:
+			print("::notice title=Slow timing (%s)::%s took %s against a native reference of %s (%.2fx); the runner limit is %s" % [_character, s.check, s.measured, s.reference, s.ratio, s.limit])
 	for p in _problems:
 		print("  PROBLEM  ", p)
 	for rule in _catcher.known_rules:
@@ -459,6 +464,7 @@ func _write_report(passed: bool, elapsed: float) -> void:
 		"skipped": _t.skipped,
 		"sections": _t.stats,
 		"failures": _t.failures,
+		"slow": _t.slow,
 		"problems": _problems,
 		"engine": engine,
 		"allowed": _catcher.allowed_entries,

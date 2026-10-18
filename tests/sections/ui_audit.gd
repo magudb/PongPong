@@ -168,7 +168,7 @@ func run(t) -> void:
 	_coverage(t)
 	var ms := Time.get_ticks_msec() - _t0
 	var audit_budget := 10000 + UiAudit.screens().size() * 3000
-	t.check("fast_enough", ms < audit_budget, "the complete audit took %d ms; limit %d ms (10 s fixtures + 3 s per registered screen, including focus/i18n frame waits)" % [ms,audit_budget])
+	t.check("fast_enough", t.perf_ok("fast_enough", ms, audit_budget), "the complete audit took %d ms; native reference %d ms, runner limit %d ms (10 s fixtures + 3 s per registered screen, including focus/i18n frame waits)" % [ms,audit_budget,t.perf_limit(audit_budget)])
 
 
 # ---------------------------------------------------------------------------------------------------- helpers

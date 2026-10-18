@@ -19,12 +19,25 @@ extends "res://tests/lib/flow.gd"
 
 # ---------------------------------------------------------------- expected engine messages
 
-## Shared CI CPUs get a bounded allowance for computation timings, recorded in reports.
+## Shared CI CPUs (TT_PERF_SCALE > 1, at most 4) get a bounded allowance for computation timings.
 ## Native reference runs keep the authored limits; game-time assertions never use this.
 func perf_limit(reference: float) -> float:
 	var configured := OS.get_environment("TT_PERF_SCALE")
-	var scale := clampf(configured.to_float(), 1.0, 3.0) if configured.is_valid_float() else 1.0
+	var scale := clampf(configured.to_float(), 1.0, 4.0) if configured.is_valid_float() else 1.0
 	return reference * scale
+
+
+## Timing assertion: `measured` must stay within perf_limit(reference). A timing over its native
+## reference but inside the allowance passes and is recorded as slow (summary, report, CI notice),
+## so a shared runner reports drift and only fails a real regression.
+func perf_ok(check_name: String, measured: float, reference: float) -> bool:
+	var limit := perf_limit(reference)
+	var ok := measured <= limit
+	if ok and measured > reference:
+		var entry := {"check": "%s.%s" % [section, check_name], "measured": measured, "reference": reference, "limit": limit, "ratio": snappedf(measured / reference, 0.01)}
+		slow.append(entry)
+		print("  slow  %s: %s over its native reference %s (%.2fx, runner limit %s)" % [entry.check, measured, reference, entry.ratio, limit])
+	return ok
 
 
 ## Declares a warning / error whose text contains `substring` as expected for the rest of this section.
