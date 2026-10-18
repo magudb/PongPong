@@ -1,0 +1,32 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 386,
+  "elapsed_s": 120.97,
+  "engine": [],
+  "failed": 2,
+  "failures": [
+    "journey.defeated_live_enemy",
+    "journey.journey_finished"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1542,
+      "skipped": 0
+    },
+    "journey": {
+      "character": "animal",
+      "checks": 378,
+      "failed": 2,
+      "ms": 118041,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

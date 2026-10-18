@@ -1,0 +1,32 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 70,
+  "elapsed_s": 20.32,
+  "engine": [],
+  "failed": 2,
+  "failures": [
+    "journey.walk_route_secret_garden",
+    "journey.journey_finished"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1545,
+      "skipped": 0
+    },
+    "journey": {
+      "character": "animal",
+      "checks": 62,
+      "failed": 2,
+      "ms": 17418,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

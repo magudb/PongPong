@@ -1,0 +1,25 @@
+{
+  "allowed": [],
+  "character": "ghost",
+  "checks": 20,
+  "elapsed_s": 120.87,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "route_probe.walk_route_hyggebyen"
+  ],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "route_probe": {
+      "character": "ghost",
+      "checks": 20,
+      "failed": 1,
+      "ms": 119480,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

@@ -1,0 +1,31 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 147,
+  "elapsed_s": 47.25,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "journey.requested_quantity_available_turnip_seeds"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1581,
+      "skipped": 0
+    },
+    "journey": {
+      "character": "animal",
+      "checks": 139,
+      "failed": 1,
+      "ms": 44326,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

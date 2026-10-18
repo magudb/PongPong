@@ -24,6 +24,8 @@ var outfit_layers: WardrobeLayers
 var is_jumping: bool = false
 var invulnerable: bool = false
 var mouse_aim: bool = false
+## Combat keeps the precise ground direction; the painted pose has eight rows.
+var combat_aim := Vector2.DOWN
 var _farm_use_held := false
 var _farm_use_cell := Vector2i.ZERO
 var _farm_use_item := &""
@@ -270,6 +272,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	_gvel = Iso.to_ground(velocity)
 	if direction != Vector2.ZERO and state != S.DODGE:
+		combat_aim = direction.normalized()
 		facing8 = Iso.dir8_of(direction)
 		facing_vec = Iso.dir8_vector(facing8)
 	_update_vertical(delta)
@@ -716,6 +719,7 @@ func event_end() -> void:
 
 func event_face(direction: Vector2) -> void:
 	if direction.length_squared() > 0.01:
+		combat_aim = Iso.to_ground(direction).normalized()
 		facing8 = Iso.dir8_of(direction)
 		facing_vec = Iso.dir8_vector(facing8)
 		visual.set_facing_direction(facing_vec)

@@ -1,0 +1,407 @@
+{
+  "allowed": [
+    {
+      "kind": "warning",
+      "rule": "Unknown chibi character",
+      "section": "characters",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): Unknown chibi character: no_such_character (at load_character res://scripts/isometric/iso_chibi_sprite_2d.gd:235)"
+    },
+    {
+      "kind": "warning",
+      "rule": "Unknown chibi character",
+      "section": "characters",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): Unknown chibi character: ../fox (at load_character res://scripts/isometric/iso_chibi_sprite_2d.gd:235)"
+    },
+    {
+      "kind": "warning",
+      "rule": "Unknown chibi character",
+      "section": "characters",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): Unknown chibi character: FOX (at load_character res://scripts/isometric/iso_chibi_sprite_2d.gd:235)"
+    },
+    {
+      "kind": "error",
+      "rule": "a modal needs a name",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): GameManager.push_modal: a modal needs a name (at push_modal res://scripts/autoload/game_manager.gd:261)"
+    },
+    {
+      "kind": "error",
+      "rule": "(use bool, int, float or String)",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): GameManager.set_flag(bad_array): Array is not JSON-safe (use bool, int, float or String) (at set_flag res://scripts/autoload/game_manager.gd:358)"
+    },
+    {
+      "kind": "error",
+      "rule": "(use bool, int, float or String)",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): GameManager.set_flag(bad_vector): Vector2 is not JSON-safe (use bool, int, float or String) (at set_flag res://scripts/autoload/game_manager.gd:358)"
+    },
+    {
+      "kind": "error",
+      "rule": "(use bool, int, float or String)",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): GameManager.set_flag(bad_nan): float is not JSON-safe (use bool, int, float or String) (at set_flag res://scripts/autoload/game_manager.gd:358)"
+    },
+    {
+      "kind": "warning",
+      "rule": "and was dropped",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): GameManager.from_dict: world flag 'bad' is not JSON-safe and was dropped (at _sanitized_flags res://scripts/autoload/game_manager.gd:624)"
+    },
+    {
+      "kind": "error",
+      "rule": "unknown weather id",
+      "section": "core",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): TimeManager.set_weather: unknown weather id 'hagl' (at set_weather res://scripts/autoload/time_manager.gd:148)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'Bad Name' is not a valid section name (a-z, 0-9, _) (at register_section res://scripts/autoload/save_manager.gd:478)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'world' is a built-in name (at register_section res://scripts/autoload/save_manager.gd:481)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'game' is a built-in name (at register_section res://scripts/autoload/save_manager.gd:481)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section('nomethods'): the node has no to_dict() (at register_section res://scripts/autoload/save_manager.gd:488)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section('nullnode'): the node is null or freed (at register_section res://scripts/autoload/save_manager.gd:484)"
+    },
+    {
+      "kind": "warning",
+      "rule": "which cannot be saved",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'jsonrules' holds a Object, which cannot be saved (written as null) (at _json_safe res://scripts/autoload/save_manager.gd:659)"
+    },
+    {
+      "kind": "error",
+      "rule": "did not return a Dictionary",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved (at gather_payload res://scripts/autoload/save_manager.gd:589)"
+    },
+    {
+      "kind": "error",
+      "rule": "did not return a Dictionary",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved (at gather_payload res://scripts/autoload/save_manager.gd:589)"
+    },
+    {
+      "kind": "warning",
+      "rule": "nested deeper than 64",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped (at _json_safe res://scripts/autoload/save_manager.gd:629)"
+    },
+    {
+      "kind": "warning",
+      "rule": "nested deeper than 64",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped (at _json_safe res://scripts/autoload/save_manager.gd:629)"
+    },
+    {
+      "kind": "error",
+      "rule": "fake section failure",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): fake section failure boom (at from_dict res://tests/sections/save.gd:64)"
+    },
+    {
+      "kind": "error",
+      "rule": "fake section failure",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): fake section failure late_boom (at from_dict res://tests/sections/save.gd:64)"
+    },
+    {
+      "kind": "error",
+      "rule": "save_4.bak.json.tmp",
+      "section": "save",
+      "text": "core/io/dir_access.cpp:429 in copy(): Condition \"err != OK\" is true. Returning: err Failed to open '/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.usiZwP/Library/Application Support/Traetoppen/save_test_341496/save_4.bak.json.tmp'. (at _roll_backup res://scripts/autoload/save_manager.gd:1029)"
+    }
+  ],
+  "character": "animal",
+  "checks": 3121,
+  "elapsed_s": 359.55,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "area": {
+      "character": "animal",
+      "checks": 240,
+      "failed": 0,
+      "ms": 2952,
+      "skipped": 1
+    },
+    "arsenal": {
+      "character": "animal",
+      "checks": 15,
+      "failed": 0,
+      "ms": 17,
+      "skipped": 0
+    },
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1211,
+      "skipped": 0
+    },
+    "bosses": {
+      "character": "animal",
+      "checks": 49,
+      "failed": 0,
+      "ms": 1126,
+      "skipped": 0
+    },
+    "characters": {
+      "character": "animal",
+      "checks": 117,
+      "failed": 0,
+      "ms": 6555,
+      "skipped": 0
+    },
+    "city_levels": {
+      "character": "animal",
+      "checks": 69,
+      "failed": 0,
+      "ms": 2931,
+      "skipped": 0
+    },
+    "city_walkthrough": {
+      "character": "animal",
+      "checks": 65,
+      "failed": 0,
+      "ms": 2726,
+      "skipped": 0
+    },
+    "combat_acceptance": {
+      "character": "animal",
+      "checks": 7,
+      "failed": 0,
+      "ms": 254480,
+      "skipped": 0
+    },
+    "core": {
+      "character": "animal",
+      "checks": 114,
+      "failed": 0,
+      "ms": 958,
+      "skipped": 0
+    },
+    "dungeon_fights": {
+      "character": "animal",
+      "checks": 3,
+      "failed": 0,
+      "ms": 11644,
+      "skipped": 0
+    },
+    "dungeon_run": {
+      "character": "animal",
+      "checks": 152,
+      "failed": 0,
+      "ms": 590,
+      "skipped": 0
+    },
+    "economy": {
+      "character": "animal",
+      "checks": 296,
+      "failed": 0,
+      "ms": 3127,
+      "skipped": 0
+    },
+    "economy_transactions": {
+      "character": "animal",
+      "checks": 7,
+      "failed": 0,
+      "ms": 84,
+      "skipped": 0
+    },
+    "enemies": {
+      "character": "animal",
+      "checks": 47,
+      "failed": 0,
+      "ms": 390,
+      "skipped": 0
+    },
+    "farm": {
+      "character": "animal",
+      "checks": 266,
+      "failed": 0,
+      "ms": 366,
+      "skipped": 0
+    },
+    "farm_automation": {
+      "character": "animal",
+      "checks": 59,
+      "failed": 0,
+      "ms": 1677,
+      "skipped": 0
+    },
+    "farm_controls": {
+      "character": "animal",
+      "checks": 5,
+      "failed": 0,
+      "ms": 377,
+      "skipped": 0
+    },
+    "farm_first_morning": {
+      "character": "animal",
+      "checks": 98,
+      "failed": 0,
+      "ms": 3004,
+      "skipped": 0
+    },
+    "farm_lifecycle": {
+      "character": "animal",
+      "checks": 22,
+      "failed": 0,
+      "ms": 795,
+      "skipped": 0
+    },
+    "farm_upgrades": {
+      "character": "animal",
+      "checks": 73,
+      "failed": 0,
+      "ms": 609,
+      "skipped": 0
+    },
+    "forest": {
+      "character": "animal",
+      "checks": 84,
+      "failed": 0,
+      "ms": 5798,
+      "skipped": 0
+    },
+    "forest_mother": {
+      "character": "animal",
+      "checks": 74,
+      "failed": 0,
+      "ms": 7064,
+      "skipped": 0
+    },
+    "forest_mother_anchors": {
+      "character": "animal",
+      "checks": 22,
+      "failed": 0,
+      "ms": 3897,
+      "skipped": 0
+    },
+    "ghost": {
+      "character": "animal",
+      "checks": 7,
+      "failed": 0,
+      "ms": 211,
+      "skipped": 0
+    },
+    "held_equipment": {
+      "character": "animal",
+      "checks": 44,
+      "failed": 0,
+      "ms": 2295,
+      "skipped": 0
+    },
+    "home_progression": {
+      "character": "animal",
+      "checks": 73,
+      "failed": 0,
+      "ms": 1467,
+      "skipped": 0
+    },
+    "home_world": {
+      "character": "animal",
+      "checks": 105,
+      "failed": 0,
+      "ms": 1564,
+      "skipped": 0
+    },
+    "journey_regressions": {
+      "character": "animal",
+      "checks": 35,
+      "failed": 0,
+      "ms": 411,
+      "skipped": 0
+    },
+    "mechanics_review_fixes": {
+      "character": "animal",
+      "checks": 55,
+      "failed": 0,
+      "ms": 963,
+      "skipped": 0
+    },
+    "player": {
+      "character": "animal",
+      "checks": 37,
+      "failed": 0,
+      "ms": 290,
+      "skipped": 0
+    },
+    "quests": {
+      "character": "animal",
+      "checks": 61,
+      "failed": 0,
+      "ms": 6779,
+      "skipped": 0
+    },
+    "relationships": {
+      "character": "animal",
+      "checks": 59,
+      "failed": 0,
+      "ms": 8883,
+      "skipped": 0
+    },
+    "save": {
+      "character": "animal",
+      "checks": 244,
+      "failed": 0,
+      "ms": 3387,
+      "skipped": 0
+    },
+    "secret_garden": {
+      "character": "animal",
+      "checks": 124,
+      "failed": 0,
+      "ms": 3640,
+      "skipped": 0
+    },
+    "social_talk": {
+      "character": "animal",
+      "checks": 42,
+      "failed": 0,
+      "ms": 152,
+      "skipped": 0
+    },
+    "towns_interiors": {
+      "character": "animal",
+      "checks": 285,
+      "failed": 0,
+      "ms": 11431,
+      "skipped": 0
+    },
+    "weapons": {
+      "character": "animal",
+      "checks": 58,
+      "failed": 0,
+      "ms": 263,
+      "skipped": 0
+    }
+  },
+  "skipped": 1
+}

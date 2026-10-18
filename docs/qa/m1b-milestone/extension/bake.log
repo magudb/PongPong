@@ -3,12 +3,12 @@ Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 
   info  --strict: known issues are not tolerated
 PLAYTEST start mode=headless character=animal sections=res://tests/sections only=towns_routes
-  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.4dY2kq/Library/Application Support/Traetoppen (throwaway)
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.OvFqMQ/Library/Application Support/Traetoppen (throwaway)
 == section towns_routes  (res://tests/sections/towns_routes.gd)
   ok    towns_routes.bake_from_real_geometry (Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 
-BAKE hyggebyen: 42 anchors; 2666 us navigation
-BAKE farm: 6 anchors; 3225 us navigation
+BAKE hyggebyen: 42 anchors; 2614 us navigation
+BAKE farm: 6 anchors; 3191 us navigation
 SNAP door_hoppe_hut: { "ok": true, "pos": (1053.9, 1015.916), "distance": 196.085891723633 }
 SNAP door_uglehulen: { "ok": true, "pos": (1853.9, 1335.916), "distance": 133.311584472656 }
 SNAP door_musikstuen: { "ok": true, "pos": (1549.5, 4935.073), "distance": 79.1590805053711 }
@@ -26,8 +26,8 @@ SNAP f_lamp: { "ok": true, "pos": (1549.5, 4935.073), "distance": 369.4995117187
 SNAP g_planter3: { "ok": true, "pos": (3511.4, 5401.6), "distance": 114.769462585449 }
 SNAP fest_torvet_host: { "ok": true, "pos": (2725.4, 3617.853), "distance": 128.362091064453 }
 SNAP fest_raadhus_host: { "ok": true, "pos": (2489.5, 2557.474), "distance": 236.734008789062 }
-BAKE traetoppen: 57 anchors; { "bake_ms": 10.318, "solid": 11012, "cells": 15622, "gates": 20, "edges": 29, "baked_cells": true }
-PASS route_bake: 29 areas, 3083.2 ms, 58 source hashes
+BAKE traetoppen: 57 anchors; { "bake_ms": 12.813, "solid": 11012, "cells": 15622, "gates": 20, "edges": 29, "baked_cells": true }
+PASS route_bake: 29 areas, 3627.0 ms, 58 source hashes
 )
   ok    towns_routes.table_loads_and_plans
   ok    Route source inventory also catches removed inputs
@@ -165,6 +165,6 @@ PASS route_bake: 29 areas, 3083.2 ms, 58 source hashes
   ok    towns_routes.hours.visits_inside_hours
   ok    towns_routes.tool_printed_ids (Town CLI validator printed 9 PASS/FAIL ids)
   ok    towns_routes.tool_exit_code (Town CLI validator exit code 0)
-  --    towns_routes: 137 checks, 0 failed, 0 skipped, 8.4 s
-== summary: 1 section(s) run, 137 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 14.0 s
+  --    towns_routes: 137 checks, 0 failed, 0 skipped, 9.1 s
+== summary: 1 section(s) run, 137 checks (0 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 14.7 s
 PLAYTEST PASS (137 checks in 1 sections, 0 allowed engine messages, 0 known-issue messages)

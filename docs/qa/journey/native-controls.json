@@ -1,0 +1,30 @@
+{
+  "allowed": [],
+  "character": "ghost",
+  "checks": 64,
+  "elapsed_s": 39.5,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "journey_regressions": {
+      "character": "ghost",
+      "checks": 35,
+      "failed": 0,
+      "ms": 6654,
+      "skipped": 0
+    },
+    "town_budgets": {
+      "character": "ghost",
+      "checks": 29,
+      "failed": 0,
+      "ms": 27531,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

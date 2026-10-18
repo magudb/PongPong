@@ -1,0 +1,40 @@
+{
+  "allowed": [
+    {
+      "kind": "warning",
+      "rule": "SocialManager.from_dict: unknown NPC 'loop_removed_citizen' kept in the orphans bucket",
+      "section": "town_loop",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SocialManager.from_dict: unknown NPC 'loop_removed_citizen' kept in the orphans bucket (at from_dict res://scripts/social/social_manager.gd:1392)"
+    }
+  ],
+  "character": "animal",
+  "checks": 190,
+  "elapsed_s": 139.85,
+  "engine": [],
+  "failed": 2,
+  "failures": [
+    "town_budgets.grid_parked_return",
+    "town_loop.l14_wall_time"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "town_budgets": {
+      "character": "animal",
+      "checks": 34,
+      "failed": 1,
+      "ms": 7194,
+      "skipped": 0
+    },
+    "town_loop": {
+      "character": "animal",
+      "checks": 156,
+      "failed": 1,
+      "ms": 123620,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

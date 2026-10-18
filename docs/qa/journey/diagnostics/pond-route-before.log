@@ -1,0 +1,644 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=headless character=animal sections=res://tests/acceptance only=journey
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.0e4XJ1/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 1.5 s
+== section journey  (res://tests/acceptance/journey.gd)
+  ok    journey.main_menu_loaded (got MainMenu)
+  ok    journey.character_select_opened (got CharacterSelect)
+  ok    journey.world_loaded (got World)
+  ok    journey.player_present (node in group 'player')
+  ok    journey.player_name_stored (got 'Tester')
+  ok    journey.farm_name_stored (got 'Testgaarden')
+  ok    journey.character_matches (type 0 for animal)
+  ok    journey.phase_playing (phase 2)
+  info  JOURNEY {"area":"farm","chapter":"s03","day":1,"detail":{"inventory":{"axe_wooden":1,"health_tonic":1,"hoe_wooden":1,"lantern_oil":2,"pickaxe_wooden":1,"scythe":1,"turnip_seeds":5,"watering_can_copper":1}},"event":"opening","garden_step":-1,"gold":500,"hearts":10,"hour":6,"minute":17,"player_state":0}
+  ok    journey.normal_starter_wallet
+  ok    journey.normal_clock
+  ok    journey.enough_workable_plots
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  info  JOURNEY {"area":"farm","chapter":"s03","day":1,"detail":{},"event":"first_planting","garden_step":-1,"gold":500,"hearts":10,"hour":6,"minute":42,"player_state":0}
+  ok    journey.bed_available
+  info  JOURNEY {"area":"farm","chapter":"s03","day":2,"detail":{},"event":"slept","garden_step":-1,"gold":500,"hearts":10,"hour":6,"minute":3,"player_state":0}
+  ok    journey.ordinary_bed_advances_day
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.bed_available
+  info  JOURNEY {"area":"farm","chapter":"s03","day":3,"detail":{},"event":"slept","garden_step":-1,"gold":500,"hearts":10,"hour":6,"minute":3,"player_state":0}
+  ok    journey.ordinary_bed_advances_day
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.bed_available
+  info  JOURNEY {"area":"farm","chapter":"s03","day":4,"detail":{},"event":"slept","garden_step":-1,"gold":500,"hearts":10,"hour":6,"minute":3,"player_state":0}
+  ok    journey.ordinary_bed_advances_day
+  ok    journey.bed_available
+  info  JOURNEY {"area":"farm","chapter":"s03","day":5,"detail":{},"event":"slept","garden_step":-1,"gold":500,"hearts":10,"hour":6,"minute":3,"player_state":0}
+  ok    journey.ordinary_bed_advances_day
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.bed_available
+  info  JOURNEY {"area":"farm","chapter":"s03","day":6,"detail":{},"event":"slept","garden_step":-1,"gold":770,"hearts":10,"hour":6,"minute":3,"player_state":0}
+  ok    journey.ordinary_bed_advances_day
+  ok    journey.earned_shipping_income
+  info  JOURNEY {"area":"farm","chapter":"s03","day":6,"detail":{"harvest":{"turnip":6},"payout":270},"event":"harvest_paid","garden_step":-1,"gold":920,"hearts":10,"hour":6,"minute":6,"player_state":0}
+  ok    journey.route_step_available (farm -> secret_garden)
+  info  JOURNEY {"area":"farm","chapter":"s03","day":6,"detail":{"destination":"traetoppen","hearts":10,"player_state":0,"spawn":"from_farm"},"event":"area_request","garden_step":-1,"gold":920,"hearts":10,"hour":6,"minute":25,"player_state":0}
+  info  JOURNEY {"area":"farm","chapter":"s03","day":6,"detail":{"destination":"traetoppen","hearts":10,"player_state":0,"spawn":"from_farm"},"event":"area_request","garden_step":-1,"gold":920,"hearts":10,"hour":6,"minute":25,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{"route":{"area_changed":false,"collider":"","dist_left":3.59826803207397,"interactions":0,"last_advance":{"level":"","point":"(-704.0, 3154.0)","position":"(-701.4557, 3152.489)","reason":"reached"},"nav":true,"next":"(-704.0, 3154.0)","ok":true,"position":"(-701.4557, 3152.489)","seconds":9.43333333333333,"stuck":false,"ticks":566,"waypoint_index":30,"waypoints":31}},"event":"travel_traetoppen","garden_step":-1,"gold":920,"hearts":10,"hour":6,"minute":26,"player_state":0}
+  ok    journey.walked_to_traetoppen
+  ok    journey.route_step_available (traetoppen -> secret_garden)
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_traetoppen"},"event":"area_request","garden_step":-1,"gold":920,"hearts":10,"hour":6,"minute":58,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_traetoppen"},"event":"area_request","garden_step":-1,"gold":920,"hearts":10,"hour":6,"minute":59,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":6,"detail":{"route":{"area_changed":true,"collider":"","dist_left":1990.28356933594,"interactions":0,"last_advance":{"level":"f","point":"(1290.0, 3054.0)","position":"(1284.729, 3056.448)","reason":"reached"},"nav":true,"next":"(420.0, 3330.0)","ok":true,"position":"(1024.0, 2204.0)","seconds":16.4666666666667,"stuck":false,"ticks":988,"waypoint_index":146,"waypoints":147}},"event":"travel_hyggebyen","garden_step":-1,"gold":920,"hearts":10,"hour":6,"minute":59,"player_state":0}
+  ok    journey.walked_to_hyggebyen
+  ok    journey.route_step_available (hyggebyen -> secret_garden)
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":6,"detail":{"destination":"secret_garden","hearts":10,"player_state":0,"spawn":"from_town"},"event":"area_request","garden_step":-1,"gold":920,"hearts":10,"hour":7,"minute":18,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":6,"detail":{"destination":"secret_garden","hearts":10,"player_state":0,"spawn":"from_town"},"event":"area_request","garden_step":-1,"gold":920,"hearts":10,"hour":7,"minute":18,"player_state":0}
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":6,"detail":{"route":{"area_changed":false,"collider":"","dist_left":2.95343995094299,"interactions":0,"last_advance":{"level":"","point":"(576.0, 798.0)","position":"(570.5345, 801.2233)","reason":"reached"},"nav":true,"next":"(576.0, 798.0)","ok":true,"position":"(573.9045, 799.2358)","seconds":9.41666666666667,"stuck":false,"ticks":565,"waypoint_index":25,"waypoints":26}},"event":"travel_secret_garden","garden_step":-1,"gold":920,"hearts":10,"hour":7,"minute":19,"player_state":0}
+  ok    journey.walked_to_secret_garden
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":6,"detail":{},"event":"garden_started","garden_step":1,"gold":920,"hearts":10,"hour":7,"minute":20,"player_state":0}
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":6,"detail":{"act":"tend","area":"traetoppen","npc":"gardener_hoppe","place":"traetoppen.a_beds1","plan":"inn","state":"stay"},"event":"locate_gardener_hoppe","garden_step":1,"gold":920,"hearts":10,"hour":7,"minute":20,"player_state":0}
+  ok    journey.route_step_available (secret_garden -> traetoppen)
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":6,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_garden"},"event":"area_request","garden_step":1,"gold":920,"hearts":10,"hour":7,"minute":21,"player_state":0}
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":6,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_garden"},"event":"area_request","garden_step":1,"gold":920,"hearts":10,"hour":7,"minute":22,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":6,"detail":{"route":{"area_changed":false,"collider":"","dist_left":3.86250066757202,"interactions":0,"last_advance":{"level":"","point":"(-448.0, 1254.0)","position":"(-445.2689, 1252.378)","reason":"reached"},"nav":true,"next":"(-448.0, 1254.0)","ok":true,"position":"(-445.2689, 1252.378)","seconds":0.85,"stuck":false,"ticks":51,"waypoint_index":4,"waypoints":5}},"event":"travel_hyggebyen","garden_step":1,"gold":920,"hearts":10,"hour":7,"minute":22,"player_state":0}
+  ok    journey.walked_to_hyggebyen
+  ok    journey.route_step_available (hyggebyen -> traetoppen)
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":6,"detail":{"destination":"traetoppen","hearts":10,"player_state":0,"spawn":"from_hyggebyen"},"event":"area_request","garden_step":1,"gold":920,"hearts":10,"hour":7,"minute":41,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":6,"detail":{"destination":"traetoppen","hearts":10,"player_state":0,"spawn":"from_hyggebyen"},"event":"area_request","garden_step":1,"gold":920,"hearts":10,"hour":7,"minute":42,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{"route":{"area_changed":false,"collider":"","dist_left":3.49379754066467,"interactions":0,"last_advance":{"level":"","point":"(1216.0, 2318.0)","position":"(1213.529, 2316.533)","reason":"reached"},"nav":true,"next":"(1216.0, 2318.0)","ok":true,"position":"(1213.529, 2316.533)","seconds":9.65,"stuck":false,"ticks":579,"waypoint_index":26,"waypoints":27}},"event":"travel_traetoppen","garden_step":1,"gold":920,"hearts":10,"hour":7,"minute":42,"player_state":0}
+  ok    journey.walked_to_traetoppen
+  ok    journey.required_story_reply_visible_gardener_hoppe
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{"act":"eat","area":"int_brummes_hus","npc":"carpenter_brumme","place":"int_brummes_hus.table","plan":"stall","state":"stay"},"event":"locate_carpenter_brumme","garden_step":2,"gold":920,"hearts":10,"hour":8,"minute":30,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{"act":"walk","area":"traetoppen","leg":{"area":"traetoppen","frac":0.223812849162011,"from":"traetoppen.door_brummes_hus","kind":"walk","t0":8.85582546108862,"t1":9.5,"to":"traetoppen.t_stall"},"npc":"carpenter_brumme","place":"traetoppen.t_stall","plan":"stall","state":"move"},"event":"locate_carpenter_brumme","garden_step":2,"gold":920,"hearts":10,"hour":9,"minute":0,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{"act":"walk","area":"traetoppen","leg":{"area":"traetoppen","frac":0.327304469273743,"from":"traetoppen.door_brummes_hus","kind":"walk","t0":8.85582546108862,"t1":9.5,"to":"traetoppen.t_stall"},"npc":"carpenter_brumme","place":"traetoppen.t_stall","plan":"stall","state":"move"},"event":"locate_carpenter_brumme","garden_step":2,"gold":920,"hearts":10,"hour":9,"minute":4,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{"act":"walk","area":"traetoppen","leg":{"area":"traetoppen","frac":0.430796089385474,"from":"traetoppen.door_brummes_hus","kind":"walk","t0":8.85582546108862,"t1":9.5,"to":"traetoppen.t_stall"},"npc":"carpenter_brumme","place":"traetoppen.t_stall","plan":"stall","state":"move"},"event":"locate_carpenter_brumme","garden_step":2,"gold":920,"hearts":10,"hour":9,"minute":8,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{"act":"walk","area":"traetoppen","leg":{"area":"traetoppen","frac":0.534287709497205,"from":"traetoppen.door_brummes_hus","kind":"walk","t0":8.85582546108862,"t1":9.5,"to":"traetoppen.t_stall"},"npc":"carpenter_brumme","place":"traetoppen.t_stall","plan":"stall","state":"move"},"event":"locate_carpenter_brumme","garden_step":2,"gold":920,"hearts":10,"hour":9,"minute":12,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{"act":"walk","area":"traetoppen","leg":{"area":"traetoppen","frac":0.63777932960894,"from":"traetoppen.door_brummes_hus","kind":"walk","t0":8.85582546108862,"t1":9.5,"to":"traetoppen.t_stall"},"npc":"carpenter_brumme","place":"traetoppen.t_stall","plan":"stall","state":"move"},"event":"locate_carpenter_brumme","garden_step":2,"gold":920,"hearts":10,"hour":9,"minute":16,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{"act":"walk","area":"traetoppen","leg":{"area":"traetoppen","frac":0.741270949720671,"from":"traetoppen.door_brummes_hus","kind":"walk","t0":8.85582546108862,"t1":9.5,"to":"traetoppen.t_stall"},"npc":"carpenter_brumme","place":"traetoppen.t_stall","plan":"stall","state":"move"},"event":"locate_carpenter_brumme","garden_step":2,"gold":920,"hearts":10,"hour":9,"minute":20,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{"act":"walk","area":"traetoppen","leg":{"area":"traetoppen","frac":0.844762569832403,"from":"traetoppen.door_brummes_hus","kind":"walk","t0":8.85582546108862,"t1":9.5,"to":"traetoppen.t_stall"},"npc":"carpenter_brumme","place":"traetoppen.t_stall","plan":"stall","state":"move"},"event":"locate_carpenter_brumme","garden_step":2,"gold":920,"hearts":10,"hour":9,"minute":24,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{"act":"walk","area":"traetoppen","leg":{"area":"traetoppen","frac":0.948254189944134,"from":"traetoppen.door_brummes_hus","kind":"walk","t0":8.85582546108862,"t1":9.5,"to":"traetoppen.t_stall"},"npc":"carpenter_brumme","place":"traetoppen.t_stall","plan":"stall","state":"move"},"event":"locate_carpenter_brumme","garden_step":2,"gold":920,"hearts":10,"hour":9,"minute":28,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{"act":"work","area":"traetoppen","npc":"carpenter_brumme","place":"traetoppen.t_stall","plan":"stall","state":"stay"},"event":"locate_carpenter_brumme","garden_step":2,"gold":920,"hearts":10,"hour":9,"minute":32,"player_state":0}
+  ok    journey.required_story_reply_visible_carpenter_brumme
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{},"event":"garden_helpers","garden_step":3,"gold":920,"hearts":10,"hour":9,"minute":55,"player_state":0}
+  ok    journey.route_step_available (traetoppen -> secret_garden)
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_traetoppen"},"event":"area_request","garden_step":3,"gold":920,"hearts":10,"hour":10,"minute":27,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_traetoppen"},"event":"area_request","garden_step":3,"gold":920,"hearts":10,"hour":10,"minute":27,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":6,"detail":{"route":{"area_changed":true,"collider":"","dist_left":1990.28356933594,"interactions":0,"last_advance":{"level":"f","point":"(1290.0, 3054.0)","position":"(1283.733, 3055.912)","reason":"reached"},"nav":true,"next":"(420.0, 3330.0)","ok":true,"position":"(1024.0, 2204.0)","seconds":16.1833333333333,"stuck":false,"ticks":971,"waypoint_index":139,"waypoints":140}},"event":"travel_hyggebyen","garden_step":3,"gold":920,"hearts":10,"hour":10,"minute":28,"player_state":0}
+  ok    journey.walked_to_hyggebyen
+  ok    journey.route_step_available (hyggebyen -> secret_garden)
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":6,"detail":{"destination":"secret_garden","hearts":10,"player_state":0,"spawn":"from_town"},"event":"area_request","garden_step":3,"gold":920,"hearts":10,"hour":10,"minute":47,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":6,"detail":{"destination":"secret_garden","hearts":10,"player_state":0,"spawn":"from_town"},"event":"area_request","garden_step":3,"gold":920,"hearts":10,"hour":10,"minute":47,"player_state":0}
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":6,"detail":{"route":{"area_changed":false,"collider":"","dist_left":2.95343995094299,"interactions":0,"last_advance":{"level":"","point":"(576.0, 798.0)","position":"(570.5345, 801.2233)","reason":"reached"},"nav":true,"next":"(576.0, 798.0)","ok":true,"position":"(573.9045, 799.2358)","seconds":9.41666666666667,"stuck":false,"ticks":565,"waypoint_index":25,"waypoints":26}},"event":"travel_secret_garden","garden_step":3,"gold":920,"hearts":10,"hour":10,"minute":48,"player_state":0}
+  ok    journey.walked_to_secret_garden
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":6,"detail":{},"event":"garden_watered","garden_step":6,"gold":920,"hearts":10,"hour":10,"minute":55,"player_state":0}
+  ok    journey.route_step_available (secret_garden -> farm)
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":6,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_garden"},"event":"area_request","garden_step":6,"gold":920,"hearts":10,"hour":11,"minute":3,"player_state":0}
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":6,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_garden"},"event":"area_request","garden_step":6,"gold":920,"hearts":10,"hour":11,"minute":3,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":6,"detail":{"route":{"area_changed":false,"collider":"","dist_left":3.14068579673767,"interactions":0,"last_advance":{"level":"","point":"(-448.0, 1254.0)","position":"(-442.4205, 1250.687)","reason":"reached"},"nav":true,"next":"(-448.0, 1254.0)","ok":true,"position":"(-445.7792, 1252.681)","seconds":3.98333333333333,"stuck":false,"ticks":239,"waypoint_index":12,"waypoints":13}},"event":"travel_hyggebyen","garden_step":6,"gold":920,"hearts":10,"hour":11,"minute":4,"player_state":0}
+  ok    journey.walked_to_hyggebyen
+  ok    journey.route_step_available (hyggebyen -> farm)
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":6,"detail":{"destination":"traetoppen","hearts":10,"player_state":0,"spawn":"from_hyggebyen"},"event":"area_request","garden_step":6,"gold":920,"hearts":10,"hour":11,"minute":23,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":6,"detail":{"destination":"traetoppen","hearts":10,"player_state":0,"spawn":"from_hyggebyen"},"event":"area_request","garden_step":6,"gold":920,"hearts":10,"hour":11,"minute":23,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{"route":{"area_changed":false,"collider":"","dist_left":0.339120328426361,"interactions":0,"last_advance":{"level":"","point":"(1216.0, 2318.0)","position":"(1212.401, 2315.863)","reason":"reached"},"nav":true,"next":"(1216.0, 2318.0)","ok":true,"position":"(1215.76, 2317.858)","seconds":9.58333333333333,"stuck":false,"ticks":575,"waypoint_index":26,"waypoints":27}},"event":"travel_traetoppen","garden_step":6,"gold":920,"hearts":10,"hour":11,"minute":24,"player_state":0}
+  ok    journey.walked_to_traetoppen
+  ok    journey.route_step_available (traetoppen -> farm)
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{"destination":"farm","hearts":10,"player_state":0,"spawn":"from_traetoppen"},"event":"area_request","garden_step":6,"gold":920,"hearts":10,"hour":11,"minute":55,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":6,"detail":{"destination":"farm","hearts":10,"player_state":0,"spawn":"from_traetoppen"},"event":"area_request","garden_step":6,"gold":920,"hearts":10,"hour":11,"minute":55,"player_state":0}
+  info  JOURNEY {"area":"farm","chapter":"s03","day":6,"detail":{"route":{"area_changed":true,"collider":"","dist_left":5582.15869140625,"interactions":0,"last_advance":{"level":"g","point":"(4170.0, 2925.0)","position":"(4172.74, 2928.53)","reason":"reached"},"nav":true,"next":"(5070.0, 3015.0)","ok":true,"position":"(-512.0, 3040.0)","seconds":15.8333333333333,"stuck":false,"ticks":950,"waypoint_index":147,"waypoints":148}},"event":"travel_farm","garden_step":6,"gold":920,"hearts":10,"hour":11,"minute":56,"player_state":0}
+  ok    journey.walked_to_farm
+  ok    journey.bed_available
+  info  JOURNEY {"area":"farm","chapter":"s03","day":7,"detail":{},"event":"slept","garden_step":6,"gold":920,"hearts":10,"hour":6,"minute":3,"player_state":0}
+  ok    journey.ordinary_bed_advances_day
+  ok    journey.route_step_available (farm -> secret_garden)
+  info  JOURNEY {"area":"farm","chapter":"s03","day":7,"detail":{"destination":"traetoppen","hearts":10,"player_state":0,"spawn":"from_farm"},"event":"area_request","garden_step":6,"gold":920,"hearts":10,"hour":6,"minute":21,"player_state":0}
+  info  JOURNEY {"area":"farm","chapter":"s03","day":7,"detail":{"destination":"traetoppen","hearts":10,"player_state":0,"spawn":"from_farm"},"event":"area_request","garden_step":6,"gold":920,"hearts":10,"hour":6,"minute":22,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"route":{"area_changed":false,"collider":"","dist_left":2.2544093132019,"interactions":0,"last_advance":{"level":"","point":"(-704.0, 3154.0)","position":"(-699.0472, 3151.059)","reason":"reached"},"nav":true,"next":"(-704.0, 3154.0)","ok":true,"position":"(-702.4059, 3153.053)","seconds":9.21666666666667,"stuck":false,"ticks":553,"waypoint_index":29,"waypoints":30}},"event":"travel_traetoppen","garden_step":6,"gold":920,"hearts":10,"hour":6,"minute":22,"player_state":0}
+  ok    journey.walked_to_traetoppen
+  ok    journey.route_step_available (traetoppen -> secret_garden)
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_traetoppen"},"event":"area_request","garden_step":6,"gold":920,"hearts":10,"hour":6,"minute":55,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_traetoppen"},"event":"area_request","garden_step":6,"gold":920,"hearts":10,"hour":6,"minute":56,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":7,"detail":{"route":{"area_changed":true,"collider":"","dist_left":1990.28356933594,"interactions":0,"last_advance":{"level":"f","point":"(1290.0, 3054.0)","position":"(1284.721, 3056.444)","reason":"reached"},"nav":true,"next":"(420.0, 3330.0)","ok":true,"position":"(1024.0, 2204.0)","seconds":16.7333333333333,"stuck":false,"ticks":1004,"waypoint_index":146,"waypoints":147}},"event":"travel_hyggebyen","garden_step":6,"gold":920,"hearts":10,"hour":6,"minute":56,"player_state":0}
+  ok    journey.walked_to_hyggebyen
+  ok    journey.route_step_available (hyggebyen -> secret_garden)
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":7,"detail":{"destination":"secret_garden","hearts":10,"player_state":0,"spawn":"from_town"},"event":"area_request","garden_step":6,"gold":920,"hearts":10,"hour":7,"minute":15,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":7,"detail":{"destination":"secret_garden","hearts":10,"player_state":0,"spawn":"from_town"},"event":"area_request","garden_step":6,"gold":920,"hearts":10,"hour":7,"minute":15,"player_state":0}
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":7,"detail":{"route":{"area_changed":false,"collider":"","dist_left":2.95343995094299,"interactions":0,"last_advance":{"level":"","point":"(576.0, 798.0)","position":"(570.5345, 801.2233)","reason":"reached"},"nav":true,"next":"(576.0, 798.0)","ok":true,"position":"(573.9045, 799.2358)","seconds":9.41666666666667,"stuck":false,"ticks":565,"waypoint_index":25,"waypoints":26}},"event":"travel_secret_garden","garden_step":6,"gold":920,"hearts":10,"hour":7,"minute":16,"player_state":0}
+  ok    journey.walked_to_secret_garden
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":7,"detail":{"act":"walk","area":"traetoppen","leg":{"area":"traetoppen","frac":0.812424154868535,"from":"traetoppen.door_postkontoret","kind":"walk","t0":7.10044984255511,"t1":7.48967611336032,"to":"traetoppen.t_fire_n"},"npc":"postman_pip","place":"traetoppen.t_fire_n","plan":"rest","state":"move"},"event":"locate_postman_pip","garden_step":8,"gold":920,"hearts":10,"hour":7,"minute":25,"player_state":0}
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":7,"detail":{"act":"walk","area":"traetoppen","leg":{"area":"traetoppen","frac":0.983704131753828,"from":"traetoppen.door_postkontoret","kind":"walk","t0":7.10044984255511,"t1":7.48967611336032,"to":"traetoppen.t_fire_n"},"npc":"postman_pip","place":"traetoppen.t_fire_n","plan":"rest","state":"move"},"event":"locate_postman_pip","garden_step":8,"gold":920,"hearts":10,"hour":7,"minute":29,"player_state":0}
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":7,"detail":{"act":"sit","area":"traetoppen","npc":"postman_pip","place":"traetoppen.t_fire_n","plan":"rest","state":"stay"},"event":"locate_postman_pip","garden_step":8,"gold":920,"hearts":10,"hour":7,"minute":33,"player_state":0}
+  ok    journey.route_step_available (secret_garden -> traetoppen)
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":7,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_garden"},"event":"area_request","garden_step":8,"gold":920,"hearts":10,"hour":7,"minute":41,"player_state":0}
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":7,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_garden"},"event":"area_request","garden_step":8,"gold":920,"hearts":10,"hour":7,"minute":42,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":7,"detail":{"route":{"area_changed":false,"collider":"","dist_left":2.79468870162964,"interactions":0,"last_advance":{"level":"","point":"(-448.0, 1254.0)","position":"(-442.6651, 1250.832)","reason":"reached"},"nav":true,"next":"(-448.0, 1254.0)","ok":true,"position":"(-446.0239, 1252.827)","seconds":4.1,"stuck":false,"ticks":246,"waypoint_index":13,"waypoints":14}},"event":"travel_hyggebyen","garden_step":8,"gold":920,"hearts":10,"hour":7,"minute":42,"player_state":0}
+  ok    journey.walked_to_hyggebyen
+  ok    journey.route_step_available (hyggebyen -> traetoppen)
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":7,"detail":{"destination":"traetoppen","hearts":10,"player_state":0,"spawn":"from_hyggebyen"},"event":"area_request","garden_step":8,"gold":920,"hearts":10,"hour":8,"minute":1,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":7,"detail":{"destination":"traetoppen","hearts":10,"player_state":0,"spawn":"from_hyggebyen"},"event":"area_request","garden_step":8,"gold":920,"hearts":10,"hour":8,"minute":2,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"route":{"area_changed":false,"collider":"","dist_left":0.339120328426361,"interactions":0,"last_advance":{"level":"","point":"(1216.0, 2318.0)","position":"(1212.401, 2315.863)","reason":"reached"},"nav":true,"next":"(1216.0, 2318.0)","ok":true,"position":"(1215.76, 2317.858)","seconds":9.58333333333333,"stuck":false,"ticks":575,"waypoint_index":26,"waypoints":27}},"event":"travel_traetoppen","garden_step":8,"gold":920,"hearts":10,"hour":8,"minute":2,"player_state":0}
+  ok    journey.walked_to_traetoppen
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"actor_level":"torvet","approach":"(2560.0, 2128.0)","nearest":"@Node2D@4068:<Node2D#13336997537903>","query":"(2688.0, 2128.0)","route":{"area_changed":false,"collider":"","dist_left":32.0165977478027,"interactions":0,"last_advance":{"level":"torvet","point":"(2541.4, 2133.85)","position":"(2536.318, 2134.958)","reason":"reached"},"nav":true,"next":"(2557.4, 2124.35)","ok":false,"position":"(2528.037, 2126.902)","seconds":15.5,"stuck":true,"ticks":930,"waypoint_index":131,"waypoints":133},"target":"(2629.4, 2110.1)"},"event":"approach_missed_target","garden_step":8,"gold":920,"hearts":10,"hour":8,"minute":33,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"actor_level":"torvet","approach":"(2688.0, 2128.0)","nearest":"@Node2D@4068:<Node2D#13336997537903>","query":"(2688.0, 2128.0)","route":{"area_changed":false,"collider":"","dist_left":159.690673828125,"interactions":0,"last_advance":{"level":"torvet","point":"(2541.4, 2124.35)","position":"(2533.736, 2125.188)","reason":"reached"},"nav":true,"next":"(2557.4, 2124.35)","ok":false,"position":"(2528.351, 2125.832)","seconds":1.5,"stuck":true,"ticks":90,"waypoint_index":2,"waypoints":12},"target":"(2629.4, 2110.1)"},"event":"approach_missed_target","garden_step":8,"gold":920,"hearts":10,"hour":8,"minute":37,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"actor_level":"torvet","approach":"(2560.0, 2052.0)","nearest":"Lane_main_ladder_torvet:<Node2D#13323810644132>","query":"(2560.0, 2128.0)","route":{"area_changed":false,"collider":"Colliders_torvet","dist_left":57.2347869873047,"interactions":0,"last_advance":{"level":"torvet","point":"(2509.4, 2076.85)","position":"(2509.219, 2081.224)","reason":"reached"},"nav":true,"next":"(2560.0, 2052.0)","ok":false,"position":"(2540.977, 2084.051)","seconds":2.5,"stuck":true,"ticks":150,"waypoint_index":6,"waypoints":7},"target":"(2629.4, 2110.1)"},"event":"approach_missed_target","garden_step":8,"gold":920,"hearts":10,"hour":8,"minute":42,"player_state":0}
+  ok    journey.required_story_reply_visible_postman_pip
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"act":"guard","area":"traetoppen","npc":"guard_oak","place":"traetoppen.b_lift","plan":"work","state":"stay"},"event":"locate_guard_oak","garden_step":9,"gold":920,"hearts":10,"hour":8,"minute":43,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"actor_level":"torvet","approach":"(4032.0, 950.0)","route":{"area_changed":false,"collider":"","dist_left":2471.75561523438,"interactions":0,"last_advance":{},"nav":true,"next":"(2557.4, 2105.35)","ok":false,"position":"(2522.836, 2112.295)","seconds":2.0,"stuck":true,"ticks":120,"waypoint_index":1,"waypoints":114},"target":"(4107.9, 924.2)"},"event":"approach_failed","garden_step":9,"gold":920,"hearts":10,"hour":8,"minute":47,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"actor_level":"torvet","approach":"(4160.0, 950.0)","route":{"area_changed":false,"collider":"","dist_left":2561.11547851562,"interactions":0,"last_advance":{},"nav":true,"next":"(2541.4, 2114.85)","ok":false,"position":"(2523.442, 2119.701)","seconds":2.0,"stuck":true,"ticks":120,"waypoint_index":1,"waypoints":117},"target":"(4107.9, 924.2)"},"event":"approach_failed","garden_step":9,"gold":920,"hearts":10,"hour":8,"minute":51,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"actor_level":"torvet","approach":"(4032.0, 874.0)","route":{"area_changed":false,"collider":"","dist_left":2583.44580078125,"interactions":0,"last_advance":{"level":"torvet","point":"(2541.4, 2114.85)","position":"(2534.096, 2115.974)","reason":"reached"},"nav":true,"next":"(2557.4, 2114.85)","ok":false,"position":"(2525.872, 2120.277)","seconds":9.5,"stuck":true,"ticks":570,"waypoint_index":2,"waypoints":123},"target":"(4107.9, 924.2)"},"event":"approach_failed","garden_step":9,"gold":920,"hearts":10,"hour":9,"minute":10,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"actor_level":"torvet","approach":"(4160.0, 874.0)","route":{"area_changed":false,"collider":"","dist_left":2654.18408203125,"interactions":0,"last_advance":{"level":"torvet","point":"(2541.4, 2114.85)","position":"(2534.256, 2115.99)","reason":"reached"},"nav":true,"next":"(2557.4, 2114.85)","ok":false,"position":"(2531.55, 2118.447)","seconds":3.5,"stuck":true,"ticks":210,"waypoint_index":2,"waypoints":120},"target":"(4107.9, 924.2)"},"event":"approach_failed","garden_step":9,"gold":920,"hearts":10,"hour":9,"minute":17,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"actor_level":"torvet","approach":"(4096.0, 988.0)","route":{"area_changed":false,"collider":"","dist_left":2464.40673828125,"interactions":0,"last_advance":{"level":"torvet","point":"(2541.4, 2114.85)","position":"(2534.95, 2116.583)","reason":"reached"},"nav":true,"next":"(2557.4, 2114.85)","ok":false,"position":"(2530.549, 2118.102)","seconds":5.0,"stuck":true,"ticks":300,"waypoint_index":2,"waypoints":112},"target":"(4107.9, 924.2)"},"event":"approach_failed","garden_step":9,"gold":920,"hearts":10,"hour":9,"minute":27,"player_state":0}
+  ok    journey.required_story_reply_visible_guard_oak
+  ok    journey.route_step_available (traetoppen -> moerkeskoven)
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"destination":"moerkeskoven","hearts":10,"player_state":1,"spawn":"from_traetoppen"},"event":"area_request","garden_step":10,"gold":920,"hearts":10,"hour":9,"minute":57,"player_state":1}
+  info  JOURNEY {"area":"moerkeskoven","chapter":"s03","day":7,"detail":{},"event":"rode_forest_lift","garden_step":10,"gold":920,"hearts":10,"hour":9,"minute":58,"player_state":0}
+  ok    journey.rode_lift_to_forest
+  ok    journey.route_step_available (moerkeskoven -> secret_garden)
+  info  JOURNEY {"area":"moerkeskoven","chapter":"s03","day":7,"detail":{"destination":"traetoppen","hearts":10,"player_state":0,"spawn":"from_skovlift"},"event":"area_request","garden_step":11,"gold":920,"hearts":10,"hour":9,"minute":58,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven","chapter":"s03","day":7,"detail":{"destination":"traetoppen","hearts":10,"player_state":0,"spawn":"from_skovlift"},"event":"area_request","garden_step":11,"gold":920,"hearts":10,"hour":9,"minute":58,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"route":{"area_changed":false,"collider":"","dist_left":3.13930821418762,"interactions":0,"last_advance":{"level":"","point":"(2352.0, 1820.0)","position":"(2352.171, 1815.317)","reason":"reached"},"nav":true,"next":"(2352.0, 1820.0)","ok":true,"position":"(2352.068, 1818.136)","seconds":2.61666666666667,"stuck":false,"ticks":157,"waypoint_index":7,"waypoints":8}},"event":"travel_traetoppen","garden_step":11,"gold":920,"hearts":10,"hour":9,"minute":58,"player_state":0}
+  ok    journey.walked_to_traetoppen
+  ok    journey.route_step_available (traetoppen -> secret_garden)
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_traetoppen"},"event":"area_request","garden_step":11,"gold":920,"hearts":10,"hour":10,"minute":57,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_traetoppen"},"event":"area_request","garden_step":11,"gold":920,"hearts":10,"hour":10,"minute":57,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":7,"detail":{"route":{"area_changed":true,"collider":"","dist_left":1990.28356933594,"interactions":0,"last_advance":{"level":"f","point":"(1290.0, 3054.0)","position":"(1284.706, 3056.436)","reason":"reached"},"nav":true,"next":"(420.0, 3330.0)","ok":true,"position":"(1024.0, 2204.0)","seconds":29.45,"stuck":false,"ticks":1767,"waypoint_index":215,"waypoints":216}},"event":"travel_hyggebyen","garden_step":11,"gold":920,"hearts":10,"hour":10,"minute":58,"player_state":0}
+  ok    journey.walked_to_hyggebyen
+  ok    journey.route_step_available (hyggebyen -> secret_garden)
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":7,"detail":{"destination":"secret_garden","hearts":10,"player_state":0,"spawn":"from_town"},"event":"area_request","garden_step":11,"gold":920,"hearts":10,"hour":11,"minute":16,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":7,"detail":{"destination":"secret_garden","hearts":10,"player_state":0,"spawn":"from_town"},"event":"area_request","garden_step":11,"gold":920,"hearts":10,"hour":11,"minute":17,"player_state":0}
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":7,"detail":{"route":{"area_changed":false,"collider":"","dist_left":2.95343995094299,"interactions":0,"last_advance":{"level":"","point":"(576.0, 798.0)","position":"(570.5345, 801.2233)","reason":"reached"},"nav":true,"next":"(576.0, 798.0)","ok":true,"position":"(573.9045, 799.2358)","seconds":9.41666666666667,"stuck":false,"ticks":565,"waypoint_index":25,"waypoints":26}},"event":"travel_secret_garden","garden_step":11,"gold":920,"hearts":10,"hour":11,"minute":18,"player_state":0}
+  ok    journey.walked_to_secret_garden
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":7,"detail":{},"event":"garden_restored","garden_step":12,"gold":1070,"hearts":10,"hour":11,"minute":22,"player_state":0}
+  ok    journey.restored_garden_by_ordinary_interactions
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":7,"detail":{"act":"sit","area":"hyggebyen","npc":"mayor_lyra","place":"hyggebyen.blossom_bench1","plan":"rest","state":"stay"},"event":"locate_mayor_lyra","garden_step":12,"gold":1070,"hearts":10,"hour":11,"minute":22,"player_state":0}
+  ok    journey.route_step_available (secret_garden -> hyggebyen)
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":7,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_garden"},"event":"area_request","garden_step":12,"gold":1070,"hearts":10,"hour":11,"minute":28,"player_state":0}
+  info  JOURNEY {"area":"secret_garden","chapter":"s03","day":7,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_garden"},"event":"area_request","garden_step":12,"gold":1070,"hearts":10,"hour":11,"minute":28,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":7,"detail":{"route":{"area_changed":false,"collider":"","dist_left":0.212547019124031,"interactions":0,"last_advance":{"level":"","point":"(-448.0, 1254.0)","position":"(-444.7916, 1252.095)","reason":"reached"},"nav":true,"next":"(-448.0, 1254.0)","ok":true,"position":"(-448.1503, 1254.089)","seconds":2.9,"stuck":false,"ticks":174,"waypoint_index":9,"waypoints":10}},"event":"travel_hyggebyen","garden_step":12,"gold":1070,"hearts":10,"hour":11,"minute":29,"player_state":0}
+  ok    journey.walked_to_hyggebyen
+  ok    journey.lottery_completed_without_grants
+  ok    journey.deep_floor_weapon_available
+  ok    journey.route_step_available (hyggebyen -> farm)
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":7,"detail":{"destination":"traetoppen","hearts":10,"player_state":0,"spawn":"from_hyggebyen"},"event":"area_request","garden_step":12,"gold":1320,"hearts":10,"hour":11,"minute":55,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":7,"detail":{"destination":"traetoppen","hearts":10,"player_state":0,"spawn":"from_hyggebyen"},"event":"area_request","garden_step":12,"gold":1320,"hearts":10,"hour":11,"minute":55,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"route":{"area_changed":false,"collider":"","dist_left":2.73419642448425,"interactions":0,"last_advance":{"level":"","point":"(1216.0, 2318.0)","position":"(1210.708, 2314.858)","reason":"reached"},"nav":true,"next":"(1216.0, 2318.0)","ok":true,"position":"(1214.067, 2316.852)","seconds":9.66666666666667,"stuck":false,"ticks":580,"waypoint_index":28,"waypoints":29}},"event":"travel_traetoppen","garden_step":12,"gold":1320,"hearts":10,"hour":11,"minute":56,"player_state":0}
+  ok    journey.walked_to_traetoppen
+  ok    journey.route_step_available (traetoppen -> farm)
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"destination":"farm","hearts":10,"player_state":0,"spawn":"from_traetoppen"},"event":"area_request","garden_step":12,"gold":1320,"hearts":10,"hour":12,"minute":27,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":7,"detail":{"destination":"farm","hearts":10,"player_state":0,"spawn":"from_traetoppen"},"event":"area_request","garden_step":12,"gold":1320,"hearts":10,"hour":12,"minute":28,"player_state":0}
+  info  JOURNEY {"area":"farm","chapter":"s03","day":7,"detail":{"route":{"area_changed":true,"collider":"","dist_left":5582.15869140625,"interactions":0,"last_advance":{"level":"g","point":"(4170.0, 2925.0)","position":"(4172.739, 2928.53)","reason":"reached"},"nav":true,"next":"(5070.0, 3015.0)","ok":true,"position":"(-512.0, 3040.0)","seconds":15.8666666666667,"stuck":false,"ticks":952,"waypoint_index":147,"waypoints":148}},"event":"travel_farm","garden_step":12,"gold":1320,"hearts":10,"hour":12,"minute":28,"player_state":0}
+  ok    journey.walked_to_farm
+  ok    journey.enough_workable_plots
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  ok    journey.walk_to_starter_plot
+  ok    journey.starter_plot_watered
+  info  JOURNEY {"area":"farm","chapter":"s03","day":7,"detail":{},"event":"first_planting","garden_step":12,"gold":1320,"hearts":10,"hour":13,"minute":56,"player_state":0}
+  ok    journey.bed_available
+  info  JOURNEY {"area":"farm","chapter":"s03","day":8,"detail":{},"event":"slept","garden_step":12,"gold":1320,"hearts":10,"hour":6,"minute":3,"player_state":0}
+  ok    journey.ordinary_bed_advances_day
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.bed_available
+  info  JOURNEY {"area":"farm","chapter":"s03","day":9,"detail":{},"event":"slept","garden_step":12,"gold":1320,"hearts":10,"hour":6,"minute":3,"player_state":0}
+  ok    journey.ordinary_bed_advances_day
+  ok    journey.bed_available
+  info  JOURNEY {"area":"farm","chapter":"s03","day":10,"detail":{},"event":"slept","garden_step":12,"gold":1320,"hearts":10,"hour":6,"minute":3,"player_state":0}
+  ok    journey.ordinary_bed_advances_day
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.walk_to_water
+  ok    journey.bed_available
+  info  JOURNEY {"area":"farm","chapter":"s03","day":11,"detail":{},"event":"slept","garden_step":12,"gold":1320,"hearts":10,"hour":6,"minute":3,"player_state":0}
+  ok    journey.ordinary_bed_advances_day
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.starter_harvest_ripe
+  ok    journey.walk_to_harvest
+  ok    journey.bed_available
+  info  JOURNEY {"area":"farm","chapter":"s03","day":12,"detail":{},"event":"slept","garden_step":12,"gold":2600,"hearts":10,"hour":6,"minute":3,"player_state":0}
+  ok    journey.ordinary_bed_advances_day
+  ok    journey.earned_shipping_income
+  info  JOURNEY {"area":"farm","chapter":"s03","day":12,"detail":{"harvest":{"carrot":10,"turnip":14},"payout":1280},"event":"harvest_paid","garden_step":12,"gold":2600,"hearts":10,"hour":6,"minute":6,"player_state":0}
+  ok    journey.deep_floor_weapon_available
+  ok    journey.route_step_available (farm -> int_smedjen)
+  info  JOURNEY {"area":"farm","chapter":"s03","day":12,"detail":{"destination":"traetoppen","hearts":10,"player_state":0,"spawn":"from_farm"},"event":"area_request","garden_step":12,"gold":2600,"hearts":10,"hour":9,"minute":25,"player_state":0}
+  info  JOURNEY {"area":"farm","chapter":"s03","day":12,"detail":{"destination":"traetoppen","hearts":10,"player_state":0,"spawn":"from_farm"},"event":"area_request","garden_step":12,"gold":2600,"hearts":10,"hour":9,"minute":25,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":12,"detail":{"route":{"area_changed":false,"collider":"","dist_left":3.73258590698242,"interactions":0,"last_advance":{"level":"","point":"(-704.0, 3154.0)","position":"(-701.3607, 3152.433)","reason":"reached"},"nav":true,"next":"(-704.0, 3154.0)","ok":true,"position":"(-701.3607, 3152.433)","seconds":9.43333333333333,"stuck":false,"ticks":566,"waypoint_index":30,"waypoints":31}},"event":"travel_traetoppen","garden_step":12,"gold":2600,"hearts":10,"hour":9,"minute":26,"player_state":0}
+  ok    journey.walked_to_traetoppen
+  ok    journey.route_step_available (traetoppen -> int_smedjen)
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":12,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_traetoppen"},"event":"area_request","garden_step":12,"gold":2600,"hearts":10,"hour":9,"minute":58,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":12,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_traetoppen"},"event":"area_request","garden_step":12,"gold":2600,"hearts":10,"hour":9,"minute":58,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":12,"detail":{"route":{"area_changed":true,"collider":"","dist_left":1990.28356933594,"interactions":0,"last_advance":{"level":"f","point":"(1290.0, 3054.0)","position":"(1284.794, 3056.484)","reason":"reached"},"nav":true,"next":"(420.0, 3330.0)","ok":true,"position":"(1024.0, 2204.0)","seconds":16.0666666666667,"stuck":false,"ticks":964,"waypoint_index":146,"waypoints":147}},"event":"travel_hyggebyen","garden_step":12,"gold":2600,"hearts":10,"hour":9,"minute":59,"player_state":0}
+  ok    journey.walked_to_hyggebyen
+  ok    journey.route_step_available (hyggebyen -> int_smedjen)
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":12,"detail":{"destination":"int_smedjen","hearts":10,"player_state":0,"spawn":"default"},"event":"area_request","garden_step":12,"gold":2600,"hearts":10,"hour":10,"minute":13,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":12,"detail":{"destination":"int_smedjen","hearts":10,"player_state":0,"spawn":"default"},"event":"area_request","garden_step":12,"gold":2600,"hearts":10,"hour":10,"minute":14,"player_state":0}
+  info  JOURNEY {"area":"int_smedjen","chapter":"s03","day":12,"detail":{"route":{"area_changed":false,"collider":"","dist_left":0.603651821613312,"interactions":0,"last_advance":{"level":"","point":"(960.0, 1938.0)","position":"(962.2393, 1939.922)","reason":"reached"},"nav":true,"next":"(896.0, 1900.0)","ok":true,"position":"(895.5758, 1899.745)","seconds":7.46666666666667,"stuck":false,"ticks":448,"waypoint_index":21,"waypoints":22}},"event":"travel_int_smedjen","garden_step":12,"gold":2600,"hearts":10,"hour":10,"minute":15,"player_state":0}
+  ok    journey.walked_to_int_smedjen
+  ok    journey.staffed_counter_smithy
+  ok    journey.shop_opened_smithy
+  ok    journey.stock_available_wpn_spear_thistle
+  ok    journey.requested_quantity_available_wpn_spear_thistle
+  ok    journey.paid_for_wpn_spear_thistle (wallet=2600 price=1980)
+  info  JOURNEY {"area":"int_smedjen","chapter":"s03","day":12,"detail":{"amount":1,"item":"wpn_spear_thistle","paid":1980},"event":"purchase","garden_step":12,"gold":620,"hearts":10,"hour":10,"minute":15,"player_state":0}
+  ok    journey.route_step_available (int_smedjen -> int_troldmandstaarnet)
+  info  JOURNEY {"area":"int_smedjen","chapter":"s03","day":12,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_int_smedjen"},"event":"area_request","garden_step":12,"gold":620,"hearts":10,"hour":11,"minute":6,"player_state":0}
+  info  JOURNEY {"area":"int_smedjen","chapter":"s03","day":12,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_int_smedjen"},"event":"area_request","garden_step":12,"gold":620,"hearts":10,"hour":11,"minute":6,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":12,"detail":{"route":{"area_changed":true,"collider":"","dist_left":2688.603515625,"interactions":0,"last_advance":{"level":"","point":"(64.0, 418.0)","position":"(64.0, 415.526)","reason":"reached"},"nav":true,"next":"(0.0, 420.0)","ok":true,"position":"(832.0, 1938.0)","seconds":0.65,"stuck":false,"ticks":39,"waypoint_index":2,"waypoints":3}},"event":"travel_hyggebyen","garden_step":12,"gold":620,"hearts":10,"hour":11,"minute":7,"player_state":0}
+  ok    journey.walked_to_hyggebyen
+  ok    journey.route_step_available (hyggebyen -> int_troldmandstaarnet)
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":12,"detail":{"destination":"int_troldmandstaarnet","hearts":10,"player_state":0,"spawn":"default"},"event":"area_request","garden_step":12,"gold":620,"hearts":10,"hour":12,"minute":54,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":12,"detail":{"destination":"int_troldmandstaarnet","hearts":10,"player_state":0,"spawn":"default"},"event":"area_request","garden_step":12,"gold":620,"hearts":10,"hour":12,"minute":55,"player_state":0}
+  info  JOURNEY {"area":"int_troldmandstaarnet","chapter":"s03","day":12,"detail":{"route":{"area_changed":false,"collider":"","dist_left":3.21754097938538,"interactions":0,"last_advance":{"level":"","point":"(-576.0, 1102.0)","position":"(-570.5461, 1105.234)","reason":"reached"},"nav":true,"next":"(-640.0, 1064.0)","ok":true,"position":"(-637.7248, 1065.351)","seconds":53.9833333333333,"stuck":false,"ticks":3239,"waypoint_index":23,"waypoints":24}},"event":"travel_int_troldmandstaarnet","garden_step":12,"gold":620,"hearts":10,"hour":12,"minute":56,"player_state":0}
+  ok    journey.walked_to_int_troldmandstaarnet
+  ok    journey.staffed_counter_magic_store
+  ok    journey.shop_opened_magic_store
+  ok    journey.stock_available_health_tonic
+  ok    journey.requested_quantity_available_health_tonic
+  ok    journey.paid_for_health_tonic (wallet=620 price=198)
+  info  JOURNEY {"area":"int_troldmandstaarnet","chapter":"s03","day":12,"detail":{"amount":3,"item":"health_tonic","paid":198},"event":"purchase","garden_step":12,"gold":422,"hearts":10,"hour":12,"minute":56,"player_state":0}
+  info  JOURNEY {"area":"int_troldmandstaarnet","chapter":"s03","day":12,"detail":{"inventory":{"axe_wooden":1,"fertilizer":3,"health_tonic":4,"hoe_wooden":1,"lantern_oil":2,"pickaxe_wooden":1,"scythe":1,"watering_can_copper":1},"weapon":"wpn_spear_thistle"},"event":"forest_prepared","garden_step":12,"gold":422,"hearts":10,"hour":12,"minute":56,"player_state":0}
+  ok    journey.route_step_available (int_troldmandstaarnet -> traetoppen)
+  info  JOURNEY {"area":"int_troldmandstaarnet","chapter":"s03","day":12,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_int_troldmandstaarnet"},"event":"area_request","garden_step":12,"gold":422,"hearts":10,"hour":12,"minute":57,"player_state":0}
+  info  JOURNEY {"area":"int_troldmandstaarnet","chapter":"s03","day":12,"detail":{"destination":"hyggebyen","hearts":10,"player_state":0,"spawn":"from_int_troldmandstaarnet"},"event":"area_request","garden_step":12,"gold":422,"hearts":10,"hour":12,"minute":57,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":12,"detail":{"route":{"area_changed":true,"collider":"","dist_left":1371.15844726562,"interactions":0,"last_advance":{"level":"","point":"(0.0, 380.0)","position":"(0.0, 377.526)","reason":"reached"},"nav":true,"next":"(-64.0, 382.0)","ok":true,"position":"(-704.0, 1102.0)","seconds":0.65,"stuck":false,"ticks":39,"waypoint_index":2,"waypoints":3}},"event":"travel_hyggebyen","garden_step":12,"gold":422,"hearts":10,"hour":12,"minute":58,"player_state":0}
+  ok    journey.walked_to_hyggebyen
+  ok    journey.route_step_available (hyggebyen -> traetoppen)
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":12,"detail":{"destination":"traetoppen","hearts":10,"player_state":0,"spawn":"from_hyggebyen"},"event":"area_request","garden_step":12,"gold":422,"hearts":10,"hour":13,"minute":18,"player_state":0}
+  info  JOURNEY {"area":"hyggebyen","chapter":"s03","day":12,"detail":{"destination":"traetoppen","hearts":10,"player_state":0,"spawn":"from_hyggebyen"},"event":"area_request","garden_step":12,"gold":422,"hearts":10,"hour":13,"minute":18,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":12,"detail":{"route":{"area_changed":false,"collider":"","dist_left":0.347247749567032,"interactions":0,"last_advance":{"level":"","point":"(1216.0, 2318.0)","position":"(1212.887, 2316.152)","reason":"reached"},"nav":true,"next":"(1216.0, 2318.0)","ok":true,"position":"(1216.246, 2318.146)","seconds":10.0333333333333,"stuck":false,"ticks":602,"waypoint_index":32,"waypoints":33}},"event":"travel_traetoppen","garden_step":12,"gold":422,"hearts":10,"hour":13,"minute":19,"player_state":0}
+  ok    journey.walked_to_traetoppen
+  ok    journey.route_step_available (traetoppen -> moerkeskoven)
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":12,"detail":{"actor_level":"f","approach":"(4096.0, 988.0)","route":{"dist_left":4470.02294921875,"nav":true,"ok":false,"seconds":0.0,"stuck":false,"ticks":0,"waypoints":0},"target":"(4164.0, 930.0)"},"event":"approach_failed","garden_step":12,"gold":422,"hearts":10,"hour":20,"minute":19,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":12,"detail":{"actor_level":"f","approach":"(4224.0, 988.0)","route":{"dist_left":4551.4638671875,"nav":true,"ok":false,"seconds":0.0,"stuck":false,"ticks":0,"waypoints":0},"target":"(4164.0, 930.0)"},"event":"approach_failed","garden_step":12,"gold":422,"hearts":10,"hour":20,"minute":19,"player_state":0}
+  info  JOURNEY {"area":"traetoppen","chapter":"s03","day":12,"detail":{"destination":"moerkeskoven","hearts":10,"player_state":1,"spawn":"from_traetoppen"},"event":"area_request","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":1}
+  info  JOURNEY {"area":"moerkeskoven","chapter":"s03","day":12,"detail":{},"event":"rode_forest_lift","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.rode_lift_to_forest
+  info  JOURNEY {"area":"moerkeskoven","chapter":"s03","day":12,"detail":{"destination":"moerkeskoven_f1","hearts":10,"player_state":0,"spawn":"default"},"event":"area_request","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.returned_through_earned_runestone
+  info  JOURNEY {"area":"moerkeskoven_f1","chapter":"s03","day":12,"detail":{"floor":1,"hearts":10,"weapon":"wpn_spear_thistle","world_seed":"1246250461618047586"},"event":"floor_entered","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.ordinary_floor_1
+  info  JOURNEY {"area":"moerkeskoven_f1","chapter":"s03","day":12,"detail":{"kind":"bat","route":{"area_changed":false,"collider":"","dist_left":268.969146728516,"interactions":0,"last_advance":{"level":"","point":"(1488.0, 1708.0)","position":"(1488.0, 1705.018)","reason":"reached"},"nav":true,"next":"(1488.0, 1764.0)","ok":true,"position":"(1488.0, 1716.3)","seconds":4.4,"stuck":false,"ticks":264,"waypoint_index":14,"waypoints":18}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f1","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"bat","seconds":0.0833333333330302,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "bat", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "bat", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f1","chapter":"s03","day":12,"detail":{"kind":"bat","route":{"area_changed":false,"collider":"","dist_left":169.742553710938,"interactions":0,"last_advance":{},"nav":true,"next":"(1296.0, 1708.0)","ok":true,"position":"(1227.018, 1668.911)","seconds":0.0166666666666667,"stuck":false,"ticks":1,"waypoint_index":1,"waypoints":4}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f1","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"bat","seconds":0.0833333333330302,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "bat", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "bat", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f1","chapter":"s03","day":12,"detail":{"kind":"bat","route":{"area_changed":false,"collider":"","dist_left":159.164443969727,"interactions":0,"last_advance":{"level":"","point":"(2352.0, 1148.0)","position":"(2347.899, 1150.388)","reason":"reached"},"nav":true,"next":"(2448.0, 1092.0)","ok":true,"position":"(2405.427, 1045.509)","seconds":7.0,"stuck":false,"ticks":420,"waypoint_index":14,"waypoints":18}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f1","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"bat","seconds":0.0833333333339397,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "bat", "won": true, "seconds": 0.08333333333394, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "bat", "won": true, "seconds": 0.08333333333394, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f1","chapter":"s03","day":12,"detail":{"kind":"bat","route":{"area_changed":false,"collider":"","dist_left":253.778396606445,"interactions":0,"last_advance":{"level":"","point":"(2736.0, 1092.0)","position":"(2732.199, 1089.714)","reason":"reached"},"nav":true,"next":"(2832.0, 1148.0)","ok":true,"position":"(2776.223, 1115.425)","seconds":1.66666666666667,"stuck":false,"ticks":100,"waypoint_index":4,"waypoints":8}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f1","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"bat","seconds":0.0833333333330302,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "bat", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "bat", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f1","chapter":"s03","day":12,"detail":{},"event":"evidence_marked_lamp","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.recorded_marked_lamp
+  info  JOURNEY {"area":"moerkeskoven_f1","chapter":"s03","day":12,"detail":{"destination":"moerkeskoven_f2","hearts":10,"player_state":0,"spawn":"default"},"event":"area_request","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f1","chapter":"s03","day":12,"detail":{"destination":"moerkeskoven_f2","hearts":10,"player_state":0,"spawn":"default"},"event":"area_request","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f2","chapter":"s03","day":12,"detail":{"route":{"area_changed":true,"collider":"","dist_left":3473.87963867188,"interactions":0,"last_advance":{"level":"","point":"(4656.0, 924.0)","position":"(4656.103, 927.0444)","reason":"reached"},"nav":true,"next":"(4656.0, 924.0)","ok":true,"position":"(1680.0, 1988.0)","seconds":9.26666666666667,"stuck":false,"ticks":556,"waypoint_index":26,"waypoints":27}},"event":"travel_moerkeskoven_f2","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.walked_to_moerkeskoven_f2
+  info  JOURNEY {"area":"moerkeskoven_f2","chapter":"s03","day":12,"detail":{"floor":2,"hearts":10,"weapon":"wpn_spear_thistle","world_seed":"1246250461618047586"},"event":"floor_entered","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.ordinary_floor_2
+  info  JOURNEY {"area":"moerkeskoven_f2","chapter":"s03","day":12,"detail":{"kind":"bat","route":{"area_changed":false,"collider":"","dist_left":165.451690673828,"interactions":0,"last_advance":{"level":"","point":"(1776.0, 1204.0)","position":"(1779.469, 1205.901)","reason":"reached"},"nav":true,"next":"(1776.0, 1148.0)","ok":true,"position":"(1697.459, 1189.688)","seconds":6.38333333333333,"stuck":false,"ticks":383,"waypoint_index":15,"waypoints":20}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f2","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"bat","seconds":0.0833333333330302,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "bat", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "bat", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f2","chapter":"s03","day":12,"detail":{"kind":"tornebusk","route":{"area_changed":false,"collider":"","dist_left":258.602600097656,"interactions":0,"last_advance":{"level":"","point":"(1776.0, 980.0)","position":"(1776.104, 982.4672)","reason":"reached"},"nav":true,"next":"(1776.0, 924.0)","ok":true,"position":"(1776.104, 965.5453)","seconds":1.6,"stuck":false,"ticks":96,"waypoint_index":5,"waypoints":9}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f2","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"bat","seconds":0.0833333333330302,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "bat", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "bat", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f2","chapter":"s03","day":12,"detail":{"kind":"tornebusk","route":{"area_changed":false,"collider":"","dist_left":166.062728881836,"interactions":0,"last_advance":{"level":"","point":"(1776.0, 924.0)","position":"(1776.104, 927.5216)","reason":"reached"},"nav":true,"next":"(1776.0, 868.0)","ok":true,"position":"(1776.104, 910.5997)","seconds":0.466666666666667,"stuck":false,"ticks":28,"waypoint_index":2,"waypoints":5}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f2","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"tornebusk","seconds":0.0833333333330302,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "tornebusk", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "tornebusk", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f2","chapter":"s03","day":12,"detail":{"kind":"tornebusk","route":{"area_changed":false,"collider":"","dist_left":167.640014648438,"interactions":0,"last_advance":{},"nav":true,"next":"(1776.0, 756.0)","ok":true,"position":"(1757.963, 798.9584)","seconds":0.0833333333333333,"stuck":false,"ticks":5,"waypoint_index":1,"waypoints":4}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f2","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"tornebusk","seconds":0.0833333333330302,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "tornebusk", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "tornebusk", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f2","chapter":"s03","day":12,"detail":{"kind":"bat","route":{"area_changed":false,"collider":"","dist_left":275.516357421875,"interactions":0,"last_advance":{"level":"","point":"(3696.0, 644.0)","position":"(3692.319, 646.1501)","reason":"reached"},"nav":true,"next":"(3792.0, 644.0)","ok":true,"position":"(3708.503, 642.0518)","seconds":8.4,"stuck":false,"ticks":504,"waypoint_index":22,"waypoints":26}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f2","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"bat","seconds":0.0833333333339397,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "bat", "won": true, "seconds": 0.08333333333394, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "bat", "won": true, "seconds": 0.08333333333394, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f2","chapter":"s03","day":12,"detail":{"kind":"tornebusk","route":{"area_changed":false,"collider":"","dist_left":169.475799560547,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1484.0)","position":"(4944.146, 1481.272)","reason":"reached"},"nav":true,"next":"(4944.0, 1540.0)","ok":true,"position":"(4944.146, 1495.374)","seconds":7.41666666666667,"stuck":false,"ticks":445,"waypoint_index":18,"waypoints":21}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f2","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"tornebusk","seconds":0.0833333333330302,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "tornebusk", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "tornebusk", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f2","chapter":"s03","day":12,"detail":{"kind":"tornebusk","route":{"area_changed":false,"collider":"","dist_left":167.294555664062,"interactions":0,"last_advance":{},"nav":true,"next":"(4944.0, 1652.0)","ok":true,"position":"(4944.146, 1626.712)","seconds":0.183333333333333,"stuck":false,"ticks":11,"waypoint_index":1,"waypoints":4}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f2","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"tornebusk","seconds":0.0833333333330302,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "tornebusk", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "tornebusk", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  ok    journey.night_witness_present
+  ok    journey.required_story_reply_visible_mapseller_natteblik
+  info  JOURNEY {"area":"moerkeskoven_f2","chapter":"s03","day":12,"detail":{"destination":"moerkeskoven_f3","hearts":10,"player_state":0,"spawn":"default"},"event":"area_request","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f2","chapter":"s03","day":12,"detail":{"destination":"moerkeskoven_f3","hearts":10,"player_state":0,"spawn":"default"},"event":"area_request","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f3","chapter":"s03","day":12,"detail":{"route":{"area_changed":true,"collider":"","dist_left":3361.32348632812,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1036.0)","position":"(4943.888, 1038.914)","reason":"reached"},"nav":true,"next":"(4944.0, 1036.0)","ok":true,"position":"(1584.0, 980.0)","seconds":1.21666666666667,"stuck":false,"ticks":73,"waypoint_index":4,"waypoints":5}},"event":"travel_moerkeskoven_f3","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.walked_to_moerkeskoven_f3
+  info  JOURNEY {"area":"moerkeskoven_f3","chapter":"s03","day":12,"detail":{"floor":3,"hearts":10,"weapon":"wpn_spear_thistle","world_seed":"1246250461618047586"},"event":"floor_entered","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.ordinary_floor_3
+  info  JOURNEY {"area":"moerkeskoven_f3","chapter":"s03","day":12,"detail":{"kind":"bat","route":{"area_changed":false,"collider":"","dist_left":225.727066040039,"interactions":0,"last_advance":{"level":"","point":"(3024.0, 1764.0)","position":"(3019.113, 1763.899)","reason":"reached"},"nav":true,"next":"(3120.0, 1764.0)","ok":true,"position":"(3129.217, 1696.276)","seconds":11.5333333333333,"stuck":false,"ticks":692,"waypoint_index":27,"waypoints":30}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f3","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"bat","seconds":0.0833333333330302,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "bat", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "bat", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f3","chapter":"s03","day":12,"detail":{"kind":"bat","route":{"area_changed":false,"collider":"Ground","dist_left":553.443420410156,"interactions":0,"last_advance":{"level":"","point":"(3600.0, 1988.0)","position":"(3594.703, 1984.71)","reason":"reached"},"nav":true,"next":"(3696.0, 1988.0)","ok":true,"position":"(3334.999, 1862.867)","seconds":6.3,"stuck":false,"ticks":378,"waypoint_index":9,"waypoints":14}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f3","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"bat","seconds":0.0833333333339397,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "bat", "won": true, "seconds": 0.08333333333394, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "bat", "won": true, "seconds": 0.08333333333394, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f3","chapter":"s03","day":12,"detail":{"kind":"tornebusk","route":{"area_changed":false,"collider":"Ground","dist_left":93.6482543945312,"interactions":0,"last_advance":{"level":"","point":"(4272.0, 1708.0)","position":"(4273.11, 1710.886)","reason":"reached"},"nav":true,"next":"(4272.0, 1652.0)","ok":true,"position":"(4153.069, 1518.778)","seconds":6.01666666666667,"stuck":false,"ticks":361,"waypoint_index":14,"waypoints":20}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":3}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f3","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"tornebusk","seconds":0.600000000000364,"swings":2,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "tornebusk", "won": true, "seconds": 0.60000000000036, "hearts": 10, "swings": 2 })
+  ok    journey.defeated_live_enemy ({ "kind": "tornebusk", "won": true, "seconds": 0.60000000000036, "hearts": 10, "swings": 2 })
+  info  JOURNEY {"area":"moerkeskoven_f3","chapter":"s03","day":12,"detail":{"kind":"tornebusk","route":{"area_changed":false,"collider":"","dist_left":168.33317565918,"interactions":0,"last_advance":{},"nav":true,"next":"(4176.0, 1428.0)","ok":true,"position":"(4107.69, 1406.278)","seconds":0.433333333333333,"stuck":false,"ticks":26,"waypoint_index":1,"waypoints":4}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f3","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"tornebusk","seconds":0.0833333333339397,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "tornebusk", "won": true, "seconds": 0.08333333333394, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "tornebusk", "won": true, "seconds": 0.08333333333394, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f3","chapter":"s03","day":12,"detail":{"kind":"bat","route":{"area_changed":false,"collider":"Ground","dist_left":273.415893554688,"interactions":0,"last_advance":{},"nav":true,"next":"(4272.0, 1484.0)","ok":true,"position":"(4486.932, 1497.193)","seconds":0.483333333333333,"stuck":false,"ticks":29,"waypoint_index":1,"waypoints":4}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f3","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"bat","seconds":0.0833333333330302,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "bat", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "bat", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f3","chapter":"s03","day":12,"detail":{"kind":"tornebusk","route":{"area_changed":false,"collider":"","dist_left":169.330032348633,"interactions":0,"last_advance":{"level":"","point":"(4464.0, 1204.0)","position":"(4464.137, 1206.641)","reason":"reached"},"nav":true,"next":"(4464.0, 1148.0)","ok":true,"position":"(4464.137, 1192.54)","seconds":2.08333333333333,"stuck":false,"ticks":125,"waypoint_index":6,"waypoints":9}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f3","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"tornebusk","seconds":0.0833333333339397,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "tornebusk", "won": true, "seconds": 0.08333333333394, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "tornebusk", "won": true, "seconds": 0.08333333333394, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f3","chapter":"s03","day":12,"detail":{"kind":"bat","route":{"area_changed":false,"collider":"","dist_left":296.421905517578,"interactions":0,"last_advance":{"level":"","point":"(5232.0, 2268.0)","position":"(5226.584, 2268.085)","reason":"reached"},"nav":true,"next":"(5328.0, 2324.0)","ok":true,"position":"(5309.055, 2312.351)","seconds":10.35,"stuck":false,"ticks":621,"waypoint_index":27,"waypoints":31}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f3","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"bat","seconds":0.0833333333330302,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "bat", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "bat", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f3","chapter":"s03","day":12,"detail":{"destination":"moerkeskoven_f4","hearts":10,"player_state":0,"spawn":"default"},"event":"area_request","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f3","chapter":"s03","day":12,"detail":{"destination":"moerkeskoven_f4","hearts":10,"player_state":0,"spawn":"default"},"event":"area_request","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f4","chapter":"s03","day":12,"detail":{"route":{"area_changed":true,"collider":"","dist_left":3937.1298828125,"interactions":0,"last_advance":{"level":"","point":"(5232.0, 980.0)","position":"(5227.462, 982.6475)","reason":"reached"},"nav":true,"next":"(5328.0, 924.0)","ok":true,"position":"(1392.0, 980.0)","seconds":19.9333333333333,"stuck":false,"ticks":1196,"waypoint_index":52,"waypoints":54}},"event":"travel_moerkeskoven_f4","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.walked_to_moerkeskoven_f4
+  info  JOURNEY {"area":"moerkeskoven_f4","chapter":"s03","day":12,"detail":{"floor":4,"hearts":10,"weapon":"wpn_spear_thistle","world_seed":"1246250461618047586"},"event":"floor_entered","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.ordinary_floor_4
+  info  JOURNEY {"area":"moerkeskoven_f4","chapter":"s03","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"","dist_left":269.822570800781,"interactions":0,"last_advance":{"level":"","point":"(4080.0, 1036.0)","position":"(4080.107, 1039.488)","reason":"reached"},"nav":true,"next":"(4080.0, 980.0)","ok":true,"position":"(4080.107, 1028.207)","seconds":18.45,"stuck":false,"ticks":1107,"waypoint_index":50,"waypoints":54}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f4","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"ugleoje","seconds":0.0833333333339397,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "ugleoje", "won": true, "seconds": 0.08333333333394, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "ugleoje", "won": true, "seconds": 0.08333333333394, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f4","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"ugleoje","seconds":0.0833333333339397,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "ugleoje", "won": true, "seconds": 0.08333333333394, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "ugleoje", "won": true, "seconds": 0.08333333333394, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f4","chapter":"s03","day":12,"detail":{"kind":"bat","route":{"area_changed":false,"collider":"","dist_left":224.450912475586,"interactions":0,"last_advance":{},"nav":true,"next":"(4176.0, 812.0)","ok":true,"position":"(4202.152, 813.1282)","seconds":0.366666666666667,"stuck":false,"ticks":22,"waypoint_index":1,"waypoints":5}},"event":"approach_enemy","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f4","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"bat","seconds":0.0833333333330302,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":422,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "bat", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "bat", "won": true, "seconds": 0.08333333333303, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f4","chapter":"s03","day":12,"detail":{"kind":"tornebusk","route":{"area_changed":false,"collider":"","dist_left":165.662490844727,"interactions":0,"last_advance":{"level":"","point":"(4080.0, 1820.0)","position":"(4080.164, 1816.716)","reason":"reached"},"nav":true,"next":"(4080.0, 1876.0)","ok":true,"position":"(4080.164, 1833.638)","seconds":6.58333333333333,"stuck":false,"ticks":395,"waypoint_index":20,"waypoints":23}},"event":"approach_enemy","garden_step":12,"gold":449,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f4","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"tornebusk","seconds":0.0833333333339397,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":449,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "tornebusk", "won": true, "seconds": 0.08333333333394, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "tornebusk", "won": true, "seconds": 0.08333333333394, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f4","chapter":"s03","day":12,"detail":{"kind":"tornebusk","route":{"area_changed":false,"collider":"","dist_left":167.977783203125,"interactions":0,"last_advance":{"level":"","point":"(4080.0, 1876.0)","position":"(4080.164, 1871.66)","reason":"reached"},"nav":true,"next":"(4176.0, 1932.0)","ok":true,"position":"(4151.778, 1918.343)","seconds":0.75,"stuck":false,"ticks":45,"waypoint_index":2,"waypoints":5}},"event":"approach_enemy","garden_step":12,"gold":449,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f4","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"tornebusk","seconds":0.0833333333339397,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":449,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "tornebusk", "won": true, "seconds": 0.08333333333394, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "tornebusk", "won": true, "seconds": 0.08333333333394, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f4","chapter":"s03","day":12,"detail":{"kind":"tornebusk","route":{"area_changed":false,"collider":"","dist_left":165.380218505859,"interactions":0,"last_advance":{},"nav":true,"next":"(4272.0, 1932.0)","ok":true,"position":"(4202.91, 1926.184)","seconds":0.333333333333333,"stuck":false,"ticks":20,"waypoint_index":1,"waypoints":4}},"event":"approach_enemy","garden_step":12,"gold":449,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f4","chapter":"s03","day":12,"detail":{"hearts":10,"kind":"tornebusk","seconds":0.116666666665878,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":449,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "tornebusk", "won": true, "seconds": 0.11666666666588, "hearts": 10, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "tornebusk", "won": true, "seconds": 0.11666666666588, "hearts": 10, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f4","chapter":"s03","day":12,"detail":{"kind":"snurresvamp","route":{"area_changed":false,"collider":"","dist_left":354.748809814453,"interactions":0,"last_advance":{"level":"","point":"(4848.0, 1652.0)","position":"(4844.735, 1653.905)","reason":"reached"},"nav":true,"next":"(4944.0, 1596.0)","ok":true,"position":"(4782.528, 1501.854)","seconds":3.71666666666667,"stuck":false,"ticks":223,"waypoint_index":6,"waypoints":10}},"event":"approach_enemy","garden_step":12,"gold":449,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f4","chapter":"s04","day":12,"detail":{"hearts":10,"kind":"snurresvamp","seconds":6.43333333333339,"swings":4,"won":true},"event":"fight","garden_step":12,"gold":449,"hearts":10,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "snurresvamp", "won": true, "seconds": 6.43333333333339, "hearts": 10, "swings": 4 })
+  ok    journey.defeated_live_enemy ({ "kind": "snurresvamp", "won": true, "seconds": 6.43333333333339, "hearts": 10, "swings": 4 })
+  info  JOURNEY {"area":"moerkeskoven_f4","chapter":"s04","day":12,"detail":{"destination":"moerkeskoven_f5","hearts":10,"player_state":0,"spawn":"default"},"event":"area_request","garden_step":12,"gold":449,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f4","chapter":"s04","day":12,"detail":{"destination":"moerkeskoven_f5","hearts":10,"player_state":0,"spawn":"default"},"event":"area_request","garden_step":12,"gold":449,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"route":{"area_changed":true,"collider":"","dist_left":1606.23974609375,"interactions":0,"last_advance":{"level":"","point":"(5712.0, 1484.0)","position":"(5707.089, 1484.089)","reason":"reached"},"nav":true,"next":"(5712.0, 1484.0)","ok":true,"position":"(5808.0, 2436.0)","seconds":2.56666666666667,"stuck":false,"ticks":154,"waypoint_index":8,"waypoints":9}},"event":"travel_moerkeskoven_f5","garden_step":12,"gold":449,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.walked_to_moerkeskoven_f5
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"floor":5,"hearts":10,"weapon":"wpn_spear_thistle","world_seed":"1246250461618047586"},"event":"floor_entered","garden_step":12,"gold":449,"hearts":10,"hour":21,"minute":9,"player_state":0}
+  ok    journey.ordinary_floor_5
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"bat","route":{"area_changed":false,"collider":"","dist_left":252.44416809082,"interactions":0,"last_advance":{"level":"","point":"(4848.0, 2156.0)","position":"(4855.812, 2155.811)","reason":"reached"},"nav":true,"next":"(4752.0, 2100.0)","ok":true,"position":"(4697.437, 2135.856)","seconds":3.96666666666667,"stuck":false,"ticks":238,"waypoint_index":10,"waypoints":15}},"event":"approach_enemy","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":3}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"hearts":12,"kind":"bat","seconds":1.96666666666715,"swings":2,"won":true},"event":"fight","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "bat", "won": true, "seconds": 1.96666666666715, "hearts": 12, "swings": 2 })
+  ok    journey.defeated_live_enemy ({ "kind": "bat", "won": true, "seconds": 1.96666666666715, "hearts": 12, "swings": 2 })
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"tornebusk","route":{"area_changed":false,"collider":"","dist_left":207.701187133789,"interactions":0,"last_advance":{"level":"","point":"(4752.0, 2156.0)","position":"(4756.023, 2157.841)","reason":"reached"},"nav":true,"next":"(4656.0, 2100.0)","ok":true,"position":"(4708.383, 2130.292)","seconds":0.983333333333333,"stuck":false,"ticks":59,"waypoint_index":2,"waypoints":5}},"event":"approach_enemy","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"hearts":11,"kind":"bat","seconds":0.516666666666424,"swings":2,"won":true},"event":"fight","garden_step":12,"gold":449,"hearts":11,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "bat", "won": true, "seconds": 0.51666666666642, "hearts": 11, "swings": 2 })
+  ok    journey.defeated_live_enemy ({ "kind": "bat", "won": true, "seconds": 0.51666666666642, "hearts": 11, "swings": 2 })
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"tornebusk","route":{"area_changed":false,"collider":"","dist_left":168.812957763672,"interactions":0,"last_advance":{},"nav":true,"next":"(4656.0, 2100.0)","ok":true,"position":"(4676.082, 2116.774)","seconds":0.5,"stuck":false,"ticks":30,"waypoint_index":1,"waypoints":4}},"event":"approach_enemy","garden_step":12,"gold":449,"hearts":11,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"hearts":11,"kind":"tornebusk","seconds":0.566666666666606,"swings":2,"won":true},"event":"fight","garden_step":12,"gold":449,"hearts":11,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "tornebusk", "won": true, "seconds": 0.56666666666661, "hearts": 11, "swings": 2 })
+  ok    journey.defeated_live_enemy ({ "kind": "tornebusk", "won": true, "seconds": 0.56666666666661, "hearts": 11, "swings": 2 })
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"","dist_left":142.40478515625,"interactions":0,"last_advance":{"level":"","point":"(4464.0, 1932.0)","position":"(4464.795, 1935.243)","reason":"reached"},"nav":true,"next":"(4489.531, 1851.975)","ok":true,"position":"(4464.795, 1935.243)","seconds":0.366666666666667,"stuck":false,"ticks":22,"waypoint_index":2,"waypoints":3}},"event":"approach_enemy","garden_step":12,"gold":449,"hearts":11,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"hearts":11,"kind":"ugleoje","seconds":0.0833333333330302,"swings":1,"won":true},"event":"fight","garden_step":12,"gold":449,"hearts":11,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "ugleoje", "won": true, "seconds": 0.08333333333303, "hearts": 11, "swings": 1 })
+  ok    journey.defeated_live_enemy ({ "kind": "ugleoje", "won": true, "seconds": 0.08333333333303, "hearts": 11, "swings": 1 })
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"tornebusk","route":{"area_changed":false,"collider":"","dist_left":169.739791870117,"interactions":0,"last_advance":{"level":"","point":"(4656.0, 1596.0)","position":"(4656.167, 1598.885)","reason":"reached"},"nav":true,"next":"(4656.0, 1540.0)","ok":true,"position":"(4656.167, 1584.783)","seconds":2.96666666666667,"stuck":false,"ticks":178,"waypoint_index":9,"waypoints":12}},"event":"approach_enemy","garden_step":12,"gold":449,"hearts":11,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"hearts":11,"kind":"tornebusk","seconds":0.566666666666606,"swings":2,"won":true},"event":"fight","garden_step":12,"gold":449,"hearts":11,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "tornebusk", "won": true, "seconds": 0.56666666666661, "hearts": 11, "swings": 2 })
+  ok    journey.defeated_live_enemy ({ "kind": "tornebusk", "won": true, "seconds": 0.56666666666661, "hearts": 11, "swings": 2 })
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"tornebusk","route":{"area_changed":false,"collider":"","dist_left":167.837631225586,"interactions":0,"last_advance":{"level":"","point":"(4560.0, 1204.0)","position":"(4559.68, 1207.722)","reason":"reached"},"nav":true,"next":"(4464.0, 1148.0)","ok":true,"position":"(4488.424, 1161.414)","seconds":2.71666666666667,"stuck":false,"ticks":163,"waypoint_index":7,"waypoints":10}},"event":"approach_enemy","garden_step":12,"gold":449,"hearts":11,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"hearts":11,"kind":"tornebusk","seconds":0.566666666666606,"swings":2,"won":true},"event":"fight","garden_step":12,"gold":449,"hearts":11,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "tornebusk", "won": true, "seconds": 0.56666666666661, "hearts": 11, "swings": 2 })
+  ok    journey.defeated_live_enemy ({ "kind": "tornebusk", "won": true, "seconds": 0.56666666666661, "hearts": 11, "swings": 2 })
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"hearts":11,"kind":"tornebusk","seconds":0.566666666666606,"swings":2,"won":true},"event":"fight","garden_step":12,"gold":449,"hearts":11,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "tornebusk", "won": true, "seconds": 0.56666666666661, "hearts": 11, "swings": 2 })
+  ok    journey.defeated_live_enemy ({ "kind": "tornebusk", "won": true, "seconds": 0.56666666666661, "hearts": 11, "swings": 2 })
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"tornebusk","route":{"area_changed":false,"collider":"","dist_left":167.897262573242,"interactions":0,"last_advance":{"level":"","point":"(4368.0, 868.0)","position":"(4368.302, 871.8117)","reason":"reached"},"nav":true,"next":"(4464.0, 812.0)","ok":true,"position":"(4439.565, 825.4583)","seconds":2.33333333333333,"stuck":false,"ticks":140,"waypoint_index":6,"waypoints":9}},"event":"approach_enemy","garden_step":12,"gold":449,"hearts":11,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"hearts":11,"kind":"tornebusk","seconds":0.566666666666606,"swings":2,"won":true},"event":"fight","garden_step":12,"gold":449,"hearts":11,"hour":21,"minute":9,"player_state":4}
+  ok    journey.survived_real_fight ({ "kind": "tornebusk", "won": true, "seconds": 0.56666666666661, "hearts": 11, "swings": 2 })
+  ok    journey.defeated_live_enemy ({ "kind": "tornebusk", "won": true, "seconds": 0.56666666666661, "hearts": 11, "swings": 2 })
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":361.073608398438,"interactions":0,"last_advance":{"level":"","point":"(4848.0, 1092.0)","position":"(4843.785, 1091.912)","reason":"reached"},"nav":true,"next":"(4944.0, 1092.0)","ok":false,"position":"(4678.996, 1031.788)","seconds":7.5,"stuck":true,"ticks":450,"waypoint_index":13,"waypoints":18}},"event":"approach_enemy","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_approach
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":341.787445068359,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4937.98, 1092.068)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.756)","seconds":4.5,"stuck":true,"ticks":270,"waypoint_index":5,"waypoints":9}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":336.602508544922,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4939.104, 1092.048)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.294)","seconds":4.0,"stuck":true,"ticks":240,"waypoint_index":5,"waypoints":9}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":338.596496582031,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4939.553, 1092.043)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.958)","seconds":4.5,"stuck":true,"ticks":270,"waypoint_index":5,"waypoints":10}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":337.587219238281,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4938.908, 1092.049)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.28)","seconds":4.0,"stuck":true,"ticks":240,"waypoint_index":5,"waypoints":9}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":337.609985351562,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4939.551, 1092.043)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.306)","seconds":4.0,"stuck":true,"ticks":240,"waypoint_index":5,"waypoints":9}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":340.895965576172,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4939.543, 1092.043)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.306)","seconds":4.0,"stuck":true,"ticks":240,"waypoint_index":5,"waypoints":10}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":337.390075683594,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4939.534, 1092.043)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.848)","seconds":4.5,"stuck":true,"ticks":270,"waypoint_index":5,"waypoints":9}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":337.303253173828,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4939.013, 1092.05)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.283)","seconds":4.0,"stuck":true,"ticks":240,"waypoint_index":5,"waypoints":9}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":337.306823730469,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4939.551, 1092.043)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.306)","seconds":4.0,"stuck":true,"ticks":240,"waypoint_index":5,"waypoints":9}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":337.244964599609,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4939.533, 1092.043)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.302)","seconds":4.0,"stuck":true,"ticks":240,"waypoint_index":5,"waypoints":9}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":337.257263183594,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4939.534, 1092.043)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.385)","seconds":4.0,"stuck":true,"ticks":240,"waypoint_index":5,"waypoints":9}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":336.550903320312,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4939.454, 1092.045)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.299)","seconds":4.0,"stuck":true,"ticks":240,"waypoint_index":5,"waypoints":9}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":341.792999267578,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4939.545, 1092.043)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.786)","seconds":4.5,"stuck":true,"ticks":270,"waypoint_index":5,"waypoints":9}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":341.803283691406,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4939.08, 1092.049)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.84)","seconds":4.5,"stuck":true,"ticks":270,"waypoint_index":5,"waypoints":9}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":336.325317382812,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4939.021, 1092.05)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.773)","seconds":4.5,"stuck":true,"ticks":270,"waypoint_index":5,"waypoints":9}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":338.809204101562,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4939.1, 1092.048)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.949)","seconds":4.5,"stuck":true,"ticks":270,"waypoint_index":5,"waypoints":10}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":341.790435791016,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4938.927, 1092.052)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.772)","seconds":4.5,"stuck":true,"ticks":270,"waypoint_index":5,"waypoints":9}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":337.139862060547,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4939.102, 1092.048)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.84)","seconds":4.5,"stuck":true,"ticks":270,"waypoint_index":5,"waypoints":10}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":336.672302246094,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4939.02, 1092.05)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.773)","seconds":4.5,"stuck":true,"ticks":270,"waypoint_index":5,"waypoints":9}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":341.791534423828,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4939.098, 1092.048)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.778)","seconds":4.5,"stuck":true,"ticks":270,"waypoint_index":5,"waypoints":9}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"kind":"ugleoje","route":{"area_changed":false,"collider":"Ground","dist_left":341.700347900391,"interactions":0,"last_advance":{"level":"","point":"(4944.0, 1092.0)","position":"(4939.088, 1092.048)","reason":"reached"},"nav":true,"next":"(5040.0, 1092.0)","ok":false,"position":"(4678.998, 1030.287)","seconds":4.0,"stuck":true,"ticks":240,"waypoint_index":5,"waypoints":9}},"event":"combat_detour","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"hearts":12,"kind":"ugleoje","seconds":122.05,"swings":0,"won":false},"event":"fight","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  ok    journey.survived_real_fight ({ "kind": "ugleoje", "won": false, "seconds": 122.05, "hearts": 12, "swings": 0 })
+  FAIL  journey.defeated_live_enemy ({ "kind": "ugleoje", "won": false, "seconds": 122.05, "hearts": 12, "swings": 0 })
+  info  JOURNEY {"area":"moerkeskoven_f5","chapter":"s04","day":12,"detail":{"detail":"{ \"kind\": \"ugleoje\", \"won\": false, \"seconds\": 122.05, \"hearts\": 12, \"swings\": 0 }"},"event":"FAILED_defeated_live_enemy","garden_step":12,"gold":449,"hearts":12,"hour":21,"minute":9,"player_state":0}
+  FAIL  journey.journey_finished
+  --    journey: 378 checks, 2 failed, 0 skipped, 118.0 s
+  note  section journey took 118.0 s (> 30 s): consider splitting it
+== summary: 1 section(s) run, 386 checks (2 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 121.0 s
+  FAILED   journey.defeated_live_enemy
+  FAILED   journey.journey_finished
+PLAYTEST FAIL: 2 check failures, 0 engine errors, 0 engine warnings, 0 problems

@@ -1,0 +1,31 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 70,
+  "elapsed_s": 14.77,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "journey.story_marker_present_route_stone"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1727,
+      "skipped": 0
+    },
+    "journey": {
+      "character": "animal",
+      "checks": 62,
+      "failed": 1,
+      "ms": 11148,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

@@ -1,0 +1,23 @@
+{
+  "allowed": [],
+  "character": "ghost",
+  "checks": 30,
+  "elapsed_s": 68.41,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "windowed",
+  "problems": [],
+  "result": "pass",
+  "sections": {
+    "journey": {
+      "character": "ghost",
+      "checks": 30,
+      "failed": 0,
+      "ms": 67002,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

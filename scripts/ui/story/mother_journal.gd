@@ -61,6 +61,15 @@ func refresh() -> void:
 		buttons.append(button)
 		if str(row.id) == _selected: _select(row)
 	wire_navigation(_tabs)
+	_reveal_selected.call_deferred()
+func _reveal_selected() -> void:
+	if not is_visible_in_tree(): return
+	# Wait for the rebuilt rows to receive their final scroll layout.
+	await get_tree().process_frame
+	if not is_visible_in_tree(): return
+	var selected := initial_focus()
+	if selected in buttons:
+		(_rows.get_parent() as ScrollContainer).ensure_control_visible(selected)
 func _select(row: Dictionary) -> void:
 	_selected = str(row.id)
 	_heading.text = tr("FM_E_"+_selected.to_upper()+"_TITLE")

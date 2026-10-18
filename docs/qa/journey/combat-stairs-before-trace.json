@@ -1,0 +1,1426 @@
+[
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"path": "/tmp/pongpong-journey-animal-entered-10.json",
+			"sha256": "b80ae2cb3190be80d0a39252d86b9a585e20e2749a6ca69e0dc50c2f47384e34"
+		},
+		"event": "resumed_earned_save",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"inventory": {
+				"axe_wooden": 1,
+				"carrot_seeds": 10,
+				"dng_forest_thread": 7,
+				"dng_owl_feather": 3,
+				"dng_resin": 5,
+				"fern": 1,
+				"fertilizer": 3,
+				"glow_mushroom": 10,
+				"health_tonic": 4,
+				"hoe_wooden": 1,
+				"moss": 16,
+				"pickaxe_wooden": 1,
+				"scythe": 1,
+				"tornebaer": 1,
+				"turnip_seeds": 10,
+				"watering_can_copper": 1,
+				"wood": 7
+			}
+		},
+		"event": "opening",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"inventory": {
+				"axe_wooden": 1,
+				"carrot_seeds": 10,
+				"dng_forest_thread": 7,
+				"dng_owl_feather": 3,
+				"dng_resin": 5,
+				"fern": 1,
+				"fertilizer": 3,
+				"glow_mushroom": 10,
+				"health_tonic": 4,
+				"hoe_wooden": 1,
+				"moss": 16,
+				"pickaxe_wooden": 1,
+				"scythe": 1,
+				"tornebaer": 1,
+				"turnip_seeds": 10,
+				"watering_can_copper": 1,
+				"wood": 7
+			},
+			"weapon": "iron_sword"
+		},
+		"event": "forest_prepared",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"floor": 10,
+			"hearts": 14,
+			"weapon": "iron_sword",
+			"world_seed": "118775814657365017"
+		},
+		"event": "floor_entered",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 264.662689208984,
+				"interactions": 0,
+				"nav": true,
+				"next": "(6576.0, 700.0)",
+				"ok": true,
+				"position": "(6631.429, 699.7789)",
+				"seconds": 4.11666666666667,
+				"stuck": false,
+				"ticks": 247,
+				"waypoint_index": 11,
+				"waypoints": 15
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"hearts": 14,
+			"kind": "ugleoje",
+			"seconds": 3.21666666666667,
+			"swings": 3,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"hearts": 14,
+			"kind": "ugleoje",
+			"seconds": 0.599999999999998,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 204.569488525391,
+				"interactions": 0,
+				"nav": true,
+				"next": "(6192.0, 1540.0)",
+				"ok": true,
+				"position": "(6191.85, 1497.838)",
+				"seconds": 4.81666666666667,
+				"stuck": false,
+				"ticks": 289,
+				"waypoint_index": 14,
+				"waypoints": 18
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"hearts": 12,
+			"kind": "ugleoje",
+			"seconds": 5.41666666666667,
+			"swings": 4,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"kind": "krystalugle",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 7.15984582901001,
+				"interactions": 0,
+				"nav": true,
+				"next": "(5712.0, 3108.0)",
+				"ok": true,
+				"position": "(5719.158, 3108.091)",
+				"seconds": 11.8333333333333,
+				"stuck": false,
+				"ticks": 710,
+				"waypoint_index": 30,
+				"waypoints": 31
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"kind": "krystalugle",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 162.610931396484,
+				"interactions": 0,
+				"nav": true,
+				"next": "(5424.0, 3220.0)",
+				"ok": true,
+				"position": "(5521.667, 3219.778)",
+				"seconds": 1.75,
+				"stuck": false,
+				"ticks": 105,
+				"waypoint_index": 4,
+				"waypoints": 7
+			}
+		},
+		"event": "combat_detour",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"hearts": 8,
+			"kind": "krystalugle",
+			"seconds": 11.6333333333333,
+			"swings": 4,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 99.0650405883789,
+				"interactions": 0,
+				"nav": true,
+				"next": "(5712.0, 3276.0)",
+				"ok": true,
+				"position": "(5622.692, 3275.945)",
+				"seconds": 2.36666666666667,
+				"stuck": false,
+				"ticks": 142,
+				"waypoint_index": 7,
+				"waypoints": 10
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"hearts": 6,
+			"kind": "ugleoje",
+			"seconds": 4.06666666666666,
+			"swings": 4,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 246.646514892578,
+				"interactions": 0,
+				"nav": true,
+				"next": "(6960.0, 2548.0)",
+				"ok": true,
+				"position": "(6896.976, 2548.057)",
+				"seconds": 8.58333333333333,
+				"stuck": false,
+				"ticks": 515,
+				"waypoint_index": 23,
+				"waypoints": 27
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"hearts": 6,
+			"kind": "bat",
+			"seconds": 0.0666666666666771,
+			"swings": 1,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"kind": "bat",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 159.379043579102,
+				"interactions": 0,
+				"nav": true,
+				"next": "(7056.0, 2604.0)",
+				"ok": true,
+				"position": "(6965.328, 2549.204)",
+				"seconds": 0.433333333333333,
+				"stuck": false,
+				"ticks": 26,
+				"waypoint_index": 2,
+				"waypoints": 4
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"hearts": 6,
+			"kind": "bat",
+			"seconds": 0.0,
+			"swings": 0,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"kind": "tornebusk",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 159.653442382812,
+				"interactions": 0,
+				"nav": true,
+				"next": "(7152.0, 2660.0)",
+				"ok": true,
+				"position": "(7134.146, 2649.546)",
+				"seconds": 0.833333333333333,
+				"stuck": false,
+				"ticks": 50,
+				"waypoint_index": 2,
+				"waypoints": 5
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"hearts": 6,
+			"kind": "tornebusk",
+			"seconds": 2.06666666666666,
+			"swings": 4,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"hearts": 6,
+			"kind": "tornebusk",
+			"seconds": 0.533333333333331,
+			"swings": 2,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 273.517272949219,
+				"interactions": 0,
+				"nav": true,
+				"next": "(4272.0, 1036.0)",
+				"ok": true,
+				"position": "(4272.104, 1086.401)",
+				"seconds": 31.2333333333333,
+				"stuck": false,
+				"ticks": 1874,
+				"waypoint_index": 80,
+				"waypoints": 84
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"hearts": 6,
+			"kind": "ugleoje",
+			"seconds": 3.23333333333333,
+			"swings": 3,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"hearts": 6,
+			"kind": "ugleoje",
+			"seconds": 1.59999999999999,
+			"swings": 3,
+			"won": true
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 281.409759521484,
+				"interactions": 0,
+				"nav": true,
+				"next": "(1680.0, 1148.0)",
+				"ok": true,
+				"position": "(1689.062, 1152.903)",
+				"seconds": 24.2166666666667,
+				"stuck": false,
+				"ticks": 1453,
+				"waypoint_index": 61,
+				"waypoints": 65
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"destination": "moerkeskoven_f11",
+			"hearts": 8,
+			"player_state": 3,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"hearts": 8,
+			"kind": "ugleoje",
+			"seconds": 0.783333333333331,
+			"swings": 1,
+			"won": false
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"from": 10,
+			"to": 11
+		},
+		"event": "combat_stair_crossing",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"destination": "moerkeskoven_f10",
+			"hearts": 8,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"destination": "moerkeskoven_f10",
+			"hearts": 8,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 3.94761991500854,
+				"interactions": 0,
+				"nav": true,
+				"next": "(8304.0, 2156.0)",
+				"ok": true,
+				"position": "(8304.146, 2158.342)",
+				"seconds": 2.16666666666667,
+				"stuck": false,
+				"ticks": 130,
+				"waypoint_index": 7,
+				"waypoints": 8
+			}
+		},
+		"event": "travel_moerkeskoven_f10",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 242.039276123047,
+				"interactions": 0,
+				"nav": true,
+				"next": "(1680.0, 1148.0)",
+				"ok": true,
+				"position": "(1712.186, 1167.825)",
+				"seconds": 0.7,
+				"stuck": false,
+				"ticks": 42,
+				"waypoint_index": 2,
+				"waypoints": 6
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"destination": "moerkeskoven_f11",
+			"hearts": 8,
+			"player_state": 3,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"hearts": 8,
+			"kind": "ugleoje",
+			"seconds": 0.683333333333337,
+			"swings": 1,
+			"won": false
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"from": 10,
+			"to": 11
+		},
+		"event": "combat_stair_crossing",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"destination": "moerkeskoven_f10",
+			"hearts": 8,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"destination": "moerkeskoven_f10",
+			"hearts": 8,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.23581647872925,
+				"interactions": 0,
+				"nav": true,
+				"next": "(8304.0, 2156.0)",
+				"ok": true,
+				"position": "(8304.101, 2157.326)",
+				"seconds": 3.35,
+				"stuck": false,
+				"ticks": 201,
+				"waypoint_index": 7,
+				"waypoints": 8
+			}
+		},
+		"event": "travel_moerkeskoven_f10",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 242.039276123047,
+				"interactions": 0,
+				"nav": true,
+				"next": "(1680.0, 1148.0)",
+				"ok": true,
+				"position": "(1712.186, 1167.825)",
+				"seconds": 0.7,
+				"stuck": false,
+				"ticks": 42,
+				"waypoint_index": 2,
+				"waypoints": 6
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"destination": "moerkeskoven_f11",
+			"hearts": 8,
+			"player_state": 3,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"hearts": 8,
+			"kind": "ugleoje",
+			"seconds": 0.683333333333337,
+			"swings": 1,
+			"won": false
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"from": 10,
+			"to": 11
+		},
+		"event": "combat_stair_crossing",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"destination": "moerkeskoven_f10",
+			"hearts": 8,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"destination": "moerkeskoven_f10",
+			"hearts": 8,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.23581647872925,
+				"interactions": 0,
+				"nav": true,
+				"next": "(8304.0, 2156.0)",
+				"ok": true,
+				"position": "(8304.101, 2157.326)",
+				"seconds": 3.35,
+				"stuck": false,
+				"ticks": 201,
+				"waypoint_index": 7,
+				"waypoints": 8
+			}
+		},
+		"event": "travel_moerkeskoven_f10",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 242.039276123047,
+				"interactions": 0,
+				"nav": true,
+				"next": "(1680.0, 1148.0)",
+				"ok": true,
+				"position": "(1712.186, 1167.825)",
+				"seconds": 0.7,
+				"stuck": false,
+				"ticks": 42,
+				"waypoint_index": 2,
+				"waypoints": 6
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"destination": "moerkeskoven_f11",
+			"hearts": 8,
+			"player_state": 3,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"hearts": 8,
+			"kind": "ugleoje",
+			"seconds": 0.699999999999989,
+			"swings": 1,
+			"won": false
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"from": 10,
+			"to": 11
+		},
+		"event": "combat_stair_crossing",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"destination": "moerkeskoven_f10",
+			"hearts": 8,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"destination": "moerkeskoven_f10",
+			"hearts": 8,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.23581647872925,
+				"interactions": 0,
+				"nav": true,
+				"next": "(8304.0, 2156.0)",
+				"ok": true,
+				"position": "(8304.101, 2157.326)",
+				"seconds": 3.35,
+				"stuck": false,
+				"ticks": 201,
+				"waypoint_index": 7,
+				"waypoints": 8
+			}
+		},
+		"event": "travel_moerkeskoven_f10",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 242.039276123047,
+				"interactions": 0,
+				"nav": true,
+				"next": "(1680.0, 1148.0)",
+				"ok": true,
+				"position": "(1712.186, 1167.825)",
+				"seconds": 0.7,
+				"stuck": false,
+				"ticks": 42,
+				"waypoint_index": 2,
+				"waypoints": 6
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"destination": "moerkeskoven_f11",
+			"hearts": 8,
+			"player_state": 3,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"hearts": 8,
+			"kind": "ugleoje",
+			"seconds": 0.683333333333337,
+			"swings": 1,
+			"won": false
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"from": 10,
+			"to": 11
+		},
+		"event": "combat_stair_crossing",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"destination": "moerkeskoven_f10",
+			"hearts": 8,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"destination": "moerkeskoven_f10",
+			"hearts": 8,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.23581647872925,
+				"interactions": 0,
+				"nav": true,
+				"next": "(8304.0, 2156.0)",
+				"ok": true,
+				"position": "(8304.101, 2157.326)",
+				"seconds": 3.35,
+				"stuck": false,
+				"ticks": 201,
+				"waypoint_index": 7,
+				"waypoints": 8
+			}
+		},
+		"event": "travel_moerkeskoven_f10",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 242.039276123047,
+				"interactions": 0,
+				"nav": true,
+				"next": "(1680.0, 1148.0)",
+				"ok": true,
+				"position": "(1712.186, 1167.825)",
+				"seconds": 0.7,
+				"stuck": false,
+				"ticks": 42,
+				"waypoint_index": 2,
+				"waypoints": 6
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"destination": "moerkeskoven_f11",
+			"hearts": 8,
+			"player_state": 3,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"hearts": 8,
+			"kind": "ugleoje",
+			"seconds": 0.683333333333337,
+			"swings": 1,
+			"won": false
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"from": 10,
+			"to": 11
+		},
+		"event": "combat_stair_crossing",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"destination": "moerkeskoven_f10",
+			"hearts": 8,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"destination": "moerkeskoven_f10",
+			"hearts": 8,
+			"player_state": 0,
+			"spawn": "from_down"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 2.23581647872925,
+				"interactions": 0,
+				"nav": true,
+				"next": "(8304.0, 2156.0)",
+				"ok": true,
+				"position": "(8304.101, 2157.326)",
+				"seconds": 3.35,
+				"stuck": false,
+				"ticks": 201,
+				"waypoint_index": 7,
+				"waypoints": 8
+			}
+		},
+		"event": "travel_moerkeskoven_f10",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"kind": "ugleoje",
+			"route": {
+				"area_changed": false,
+				"collider": "",
+				"dist_left": 242.039276123047,
+				"interactions": 0,
+				"nav": true,
+				"next": "(1680.0, 1148.0)",
+				"ok": true,
+				"position": "(1712.186, 1167.825)",
+				"seconds": 0.7,
+				"stuck": false,
+				"ticks": 42,
+				"waypoint_index": 2,
+				"waypoints": 6
+			}
+		},
+		"event": "approach_enemy",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f10",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"destination": "moerkeskoven_f11",
+			"hearts": 8,
+			"player_state": 3,
+			"spawn": "default"
+		},
+		"event": "area_request",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"hearts": 8,
+			"kind": "ugleoje",
+			"seconds": 0.683333333333337,
+			"swings": 1,
+			"won": false
+		},
+		"event": "fight",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"from": 10,
+			"to": 11
+		},
+		"event": "combat_stair_crossing",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	},
+	{
+		"area": "moerkeskoven_f11",
+		"chapter": "s06",
+		"day": 10,
+		"detail": {
+			"detail": ""
+		},
+		"event": "FAILED_story_marker_present_route_stone",
+		"garden_step": 12,
+		"gold": 261,
+		"hour": 21,
+		"minute": 8
+	}
+]

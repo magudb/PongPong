@@ -1,0 +1,31 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 78,
+  "elapsed_s": 9.12,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "city_levels.ladder_landing_updates_combat_aim"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1092,
+      "skipped": 0
+    },
+    "city_levels": {
+      "character": "animal",
+      "checks": 70,
+      "failed": 1,
+      "ms": 2905,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

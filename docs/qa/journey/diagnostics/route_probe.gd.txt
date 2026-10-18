@@ -1,0 +1,29 @@
+extends RefCounted
+const SECTION := "route_probe"
+const TIMEOUT_S := 500.0
+var native := false
+func run(t) -> void: await _run(t)
+func run_windowed(t) -> void:
+	native = true
+	await _run(t)
+func _run(t) -> void:
+	await t.start_world()
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(SaveManager.save_dir))
+	var resume := OS.get_environment("JOURNEY_RESUME")
+	t.check("copy_earned_checkpoint",DirAccess.copy_absolute(resume,ProjectSettings.globalize_path(SaveManager.slot_path(3))) == OK)
+	var old_id: int = t.world().get_instance_id()
+	t.check("continue_earned_checkpoint",SaveManager.load_and_enter(3))
+	await t.until(func(): return t.world() != null and t.world().get_instance_id() != old_id and t.world().ready_for_play,15)
+	LoopWalker.precise_city_navigation = true
+	var journey := preload("res://tests/acceptance/journey.gd").new()
+	journey.t = t
+	journey.native = native
+	await journey._go_to("traetoppen")
+	if native: await t.capture("lift_landing")
+	var result: bool = await journey._go_to("secret_garden")
+	t.info("ROUTE "+str(result)+" pos="+str(t.player().global_position)+" level="+str(ActorLevel.level_id(t.player())))
+	if native: await t.capture("route_result")
+	if not result:
+		await journey._go_to("secret_garden")
+		if native: await t.capture("replanned_route")
+	LoopWalker.precise_city_navigation = false

@@ -149,6 +149,9 @@ func aim_ground() -> Vector2:
 		var direction := Iso.to_ground(player.get_global_mouse_position() - player.global_position - Vector2(0, -24.0 * Iso.S))
 		if direction.length() > 8.0 * Iso.S:
 			return direction.normalized()
+	var precise: Variant = player.get("combat_aim")
+	if precise is Vector2 and precise.length_squared() > .01:
+		return precise.normalized()
 	return Iso.to_ground(player.facing_vec).normalized()
 
 func swing(item: StringName = &"") -> bool:
@@ -158,7 +161,9 @@ func swing(item: StringName = &"") -> bool:
 	if _weapon.is_empty():
 		return false
 	_swing_direction = aim_ground()
-	var nudge := deg_to_rad(15.0)
+	# Eight keyboard directions need half a 45-degree sector of assistance;
+	# otherwise a 22-degree spear leaves blind angles between directions.
+	var nudge := deg_to_rad(15.0) if bool(player.get("mouse_aim")) else PI/8
 	var closest := INF
 	var target_angle := _swing_direction.angle()
 	for enemy in get_tree().get_nodes_in_group("enemy"):

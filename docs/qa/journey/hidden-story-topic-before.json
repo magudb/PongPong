@@ -1,0 +1,31 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 38,
+  "elapsed_s": 15.25,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "journey.dialogue_action_garden_story"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1211,
+      "skipped": 0
+    },
+    "journey": {
+      "character": "animal",
+      "checks": 30,
+      "failed": 1,
+      "ms": 8805,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}

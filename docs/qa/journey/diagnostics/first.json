@@ -1,0 +1,31 @@
+{
+  "allowed": [],
+  "character": "animal",
+  "checks": 61,
+  "elapsed_s": 46.02,
+  "engine": [],
+  "failed": 1,
+  "failures": [
+    "journey.walked_to_hyggebyen"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 1133,
+      "skipped": 0
+    },
+    "journey": {
+      "character": "animal",
+      "checks": 53,
+      "failed": 1,
+      "ms": 39670,
+      "skipped": 0
+    }
+  },
+  "skipped": 0
+}
