@@ -1,0 +1,875 @@
+{
+  "allowed": [
+    {
+      "kind": "warning",
+      "rule": "unsupported locale",
+      "section": "loc",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): LocalizationManager.set_locale: unsupported locale 'xx' (supported: da, en) (at set_locale res://scripts/autoload/localization_manager.gd:126)"
+    },
+    {
+      "kind": "error",
+      "rule": "ConfigFile parse error",
+      "section": "loc",
+      "text": "core/io/config_file.cpp:293 in _parse(): ConfigFile parse error at user://settings.cfg:0: Unexpected EOF while parsing simple tag. (at _config res://scripts/ui/settings_ui.gd:48)"
+    },
+    {
+      "kind": "error",
+      "rule": "ConfigFile parse error",
+      "section": "loc",
+      "text": "core/io/config_file.cpp:293 in _parse(): ConfigFile parse error at user://settings.cfg:0: Unexpected EOF while parsing simple tag. (at _persist_locale res://scripts/autoload/localization_manager.gd:105)"
+    },
+    {
+      "kind": "warning",
+      "rule": "is unreadable",
+      "section": "loc",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): LocalizationManager: user://settings.cfg is unreadable (error 43); the language choice was not saved so that no other setting is destroyed (at _persist_locale res://scripts/autoload/localization_manager.gd:107)"
+    },
+    {
+      "kind": "warning",
+      "rule": "takes 1 argument(s)",
+      "section": "loc",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): LocalizationManager.t: 'NOTIF_LANGUAGE_CHANGED_MSG' (Sproget er nu %s.) takes 1 argument(s), got 2 (at t res://scripts/autoload/localization_manager.gd:171)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'Bad Name' is not a valid section name (a-z, 0-9, _) (at register_section res://scripts/autoload/save_manager.gd:478)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'world' is a built-in name (at register_section res://scripts/autoload/save_manager.gd:481)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section: 'game' is a built-in name (at register_section res://scripts/autoload/save_manager.gd:481)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section('nomethods'): the node has no to_dict() (at register_section res://scripts/autoload/save_manager.gd:488)"
+    },
+    {
+      "kind": "error",
+      "rule": "SaveManager.register_section",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager.register_section('nullnode'): the node is null or freed (at register_section res://scripts/autoload/save_manager.gd:484)"
+    },
+    {
+      "kind": "warning",
+      "rule": "which cannot be saved",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'jsonrules' holds a Object, which cannot be saved (written as null) (at _json_safe res://scripts/autoload/save_manager.gd:659)"
+    },
+    {
+      "kind": "error",
+      "rule": "did not return a Dictionary",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved (at gather_payload res://scripts/autoload/save_manager.gd:589)"
+    },
+    {
+      "kind": "error",
+      "rule": "did not return a Dictionary",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): SaveManager: .to_dict() did not return a Dictionary, the section 'bad_dict' is not saved (at gather_payload res://scripts/autoload/save_manager.gd:589)"
+    },
+    {
+      "kind": "warning",
+      "rule": "nested deeper than 64",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped (at _json_safe res://scripts/autoload/save_manager.gd:629)"
+    },
+    {
+      "kind": "warning",
+      "rule": "nested deeper than 64",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SaveManager: 'deep' is nested deeper than 64 levels, the rest is dropped (at _json_safe res://scripts/autoload/save_manager.gd:629)"
+    },
+    {
+      "kind": "error",
+      "rule": "fake section failure",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): fake section failure boom (at from_dict res://tests/sections/save.gd:64)"
+    },
+    {
+      "kind": "error",
+      "rule": "fake section failure",
+      "section": "save",
+      "text": "core/variant/variant_utility.cpp:1023 in push_error(): fake section failure late_boom (at from_dict res://tests/sections/save.gd:64)"
+    },
+    {
+      "kind": "error",
+      "rule": "save_4.bak.json.tmp",
+      "section": "save",
+      "text": "core/io/dir_access.cpp:429 in copy(): Condition \"err != OK\" is true. Returning: err Failed to open '/var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.tie1GI/Library/Application Support/Traetoppen/save_test_466023/save_4.bak.json.tmp'. (at _roll_backup res://scripts/autoload/save_manager.gd:1029)"
+    },
+    {
+      "kind": "warning",
+      "rule": "unknown NPC 'retired_npc'",
+      "section": "social",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SocialManager.from_dict: unknown NPC 'retired_npc' kept in the orphans bucket (at from_dict res://scripts/social/social_manager.gd:1392)"
+    },
+    {
+      "kind": "warning",
+      "rule": "SocialManager.from_dict: unknown NPC 'loop_removed_citizen' kept in the orphans bucket",
+      "section": "town_loop",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): SocialManager.from_dict: unknown NPC 'loop_removed_citizen' kept in the orphans bucket (at from_dict res://scripts/social/social_manager.gd:1392)"
+    }
+  ],
+  "character": "animal",
+  "checks": 11678,
+  "elapsed_s": 1090.27,
+  "engine": [
+    {
+      "kind": "script error",
+      "section": "mechanics_review_fixes",
+      "text": "res://tests/sections/mechanics_review_fixes.gd:140 in _story_work(): Invalid call. Nonexistent function 'enter' in base 'Nil'. (at _story_work res://tests/sections/mechanics_review_fixes.gd:140)"
+    },
+    {
+      "kind": "script error",
+      "section": "social_fest_content",
+      "text": "res://tests/sections/social_fest_content.gd:84 in _run(): Cannot call method 'get_children' on a null value. (at _run res://tests/sections/social_fest_content.gd:84)"
+    }
+  ],
+  "failed": 41,
+  "failures": [
+    "festival_activities.festival scene did not release",
+    "festival_activities.dance_chooses_highest_hearts_present",
+    "festival_activities.market_opens_existing_shop_panel",
+    "festival_activities.festival scene did not release",
+    "festival_activities.stage_removed_at_end",
+    "ghost_lines.intro_line_after_the_letter",
+    "maps_farm.build_budget",
+    "maps_farm.parked_round_trip",
+    "social.perf_lookup_p95_under_100us",
+    "social_fest_content.festival scene did not finish",
+    "social_fest_content.blomsterfesten_opening_seen",
+    "social_fest_content.festival scene did not finish",
+    "social_fest_content.blomsterfesten_finale_pays_once",
+    "social_fest_content.blomsterfesten_reentry_has_no_repeat_reward",
+    "social_fest_content.festival scene did not finish",
+    "social_fest_content.honningdagen_opening_seen",
+    "social_fest_content.festival scene did not finish",
+    "social_fest_content.honningdagen_finale_pays_once",
+    "social_fest_content.honningdagen_reentry_has_no_repeat_reward",
+    "social_fest_content.midsommerlanterner_all_activity_posts_resolve",
+    "social_fest_content.midsommerlanterner_opening_seen",
+    "social_fest_content.festival scene did not finish",
+    "social_fest_content.festival scene did not finish",
+    "social_fest_content.badedagen_finale_pays_once",
+    "social_fest_content.badedagen_reentry_has_no_repeat_reward",
+    "social_fest_content.festival scene did not finish",
+    "social_fest_content.festival scene did not finish",
+    "social_fest_content.hoestfesten_finale_pays_once",
+    "social_fest_content.hoestfesten_reentry_has_no_repeat_reward",
+    "social_fest_content.maanemarkedet_all_activity_posts_resolve",
+    "social_fest_content.maanemarkedet_opening_seen",
+    "social_fest_content.festival scene did not finish",
+    "social_fest_content.vinterlysene_opening_seen",
+    "social_fest_content.festival scene did not finish",
+    "social_fest_content.vinterlysene_finale_pays_once",
+    "social_fest_content.vinterlysene_reentry_has_no_repeat_reward",
+    "social_fest_content.festival scene did not finish",
+    "social_fest_content.bagedagen_opening_seen",
+    "social_fest_content.bagedagen_family_present",
+    "social_fest_content.bagedagen_painted_decor_present",
+    "town_loop.l14_wall_time"
+  ],
+  "known": [],
+  "mode": "headless",
+  "problems": [],
+  "result": "fail",
+  "sections": {
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 11676,
+      "skipped": 0
+    },
+    "dungeon_floors": {
+      "character": "animal",
+      "checks": 28,
+      "failed": 0,
+      "ms": 5405,
+      "skipped": 0
+    },
+    "dungeon_gen": {
+      "character": "animal",
+      "checks": 627,
+      "failed": 0,
+      "ms": 21917,
+      "skipped": 0
+    },
+    "dungeon_hud": {
+      "character": "animal",
+      "checks": 28,
+      "failed": 0,
+      "ms": 1778,
+      "skipped": 0
+    },
+    "dungeon_items": {
+      "character": "animal",
+      "checks": 387,
+      "failed": 0,
+      "ms": 13347,
+      "skipped": 0
+    },
+    "dungeon_pickups": {
+      "character": "animal",
+      "checks": 15,
+      "failed": 0,
+      "ms": 564,
+      "skipped": 0
+    },
+    "dungeon_reveal": {
+      "character": "animal",
+      "checks": 20,
+      "failed": 0,
+      "ms": 3379,
+      "skipped": 0
+    },
+    "dungeon_run": {
+      "character": "animal",
+      "checks": 152,
+      "failed": 0,
+      "ms": 1478,
+      "skipped": 0
+    },
+    "dungeon_services": {
+      "character": "animal",
+      "checks": 8,
+      "failed": 0,
+      "ms": 136,
+      "skipped": 0
+    },
+    "economy": {
+      "character": "animal",
+      "checks": 296,
+      "failed": 0,
+      "ms": 4233,
+      "skipped": 0
+    },
+    "economy_hours": {
+      "character": "animal",
+      "checks": 17,
+      "failed": 0,
+      "ms": 202,
+      "skipped": 0
+    },
+    "economy_transactions": {
+      "character": "animal",
+      "checks": 7,
+      "failed": 0,
+      "ms": 103,
+      "skipped": 0
+    },
+    "enemies": {
+      "character": "animal",
+      "checks": 47,
+      "failed": 0,
+      "ms": 1577,
+      "skipped": 0
+    },
+    "enemy_performance": {
+      "character": "animal",
+      "checks": 5,
+      "failed": 0,
+      "ms": 4229,
+      "skipped": 0
+    },
+    "farm": {
+      "character": "animal",
+      "checks": 266,
+      "failed": 0,
+      "ms": 1177,
+      "skipped": 0
+    },
+    "farm_automation": {
+      "character": "animal",
+      "checks": 59,
+      "failed": 0,
+      "ms": 23806,
+      "skipped": 0
+    },
+    "farm_controls": {
+      "character": "animal",
+      "checks": 5,
+      "failed": 0,
+      "ms": 10017,
+      "skipped": 0
+    },
+    "farm_dress": {
+      "character": "animal",
+      "checks": 44,
+      "failed": 0,
+      "ms": 2286,
+      "skipped": 0
+    },
+    "farm_first_morning": {
+      "character": "animal",
+      "checks": 98,
+      "failed": 0,
+      "ms": 24856,
+      "skipped": 0
+    },
+    "farm_lifecycle": {
+      "character": "animal",
+      "checks": 22,
+      "failed": 0,
+      "ms": 2025,
+      "skipped": 0
+    },
+    "farm_playthrough": {
+      "character": "animal",
+      "checks": 31,
+      "failed": 0,
+      "ms": 26293,
+      "skipped": 0
+    },
+    "farm_seed_ui": {
+      "character": "animal",
+      "checks": 4,
+      "failed": 0,
+      "ms": 1572,
+      "skipped": 0
+    },
+    "farm_site": {
+      "character": "animal",
+      "checks": 56,
+      "failed": 0,
+      "ms": 4657,
+      "skipped": 0
+    },
+    "farm_ui_audit": {
+      "character": "animal",
+      "checks": 7,
+      "failed": 0,
+      "ms": 1142,
+      "skipped": 4
+    },
+    "farm_upgrades": {
+      "character": "animal",
+      "checks": 73,
+      "failed": 0,
+      "ms": 1271,
+      "skipped": 0
+    },
+    "festival_activities": {
+      "character": "animal",
+      "checks": 61,
+      "failed": 5,
+      "ms": 1821,
+      "skipped": 0
+    },
+    "forest": {
+      "character": "animal",
+      "checks": 84,
+      "failed": 0,
+      "ms": 11942,
+      "skipped": 0
+    },
+    "forest_look": {
+      "character": "animal",
+      "checks": 31,
+      "failed": 0,
+      "ms": 2400,
+      "skipped": 0
+    },
+    "forest_mother": {
+      "character": "animal",
+      "checks": 78,
+      "failed": 0,
+      "ms": 22604,
+      "skipped": 0
+    },
+    "forest_mother_anchors": {
+      "character": "animal",
+      "checks": 22,
+      "failed": 0,
+      "ms": 16863,
+      "skipped": 0
+    },
+    "furniture": {
+      "character": "animal",
+      "checks": 109,
+      "failed": 0,
+      "ms": 460,
+      "skipped": 0
+    },
+    "ghost": {
+      "character": "animal",
+      "checks": 7,
+      "failed": 0,
+      "ms": 398,
+      "skipped": 0
+    },
+    "ghost_data": {
+      "character": "animal",
+      "checks": 4,
+      "failed": 0,
+      "ms": 21,
+      "skipped": 0
+    },
+    "ghost_lines": {
+      "character": "animal",
+      "checks": 14,
+      "failed": 1,
+      "ms": 3720,
+      "skipped": 0
+    },
+    "ghostfam_data": {
+      "character": "animal",
+      "checks": 293,
+      "failed": 0,
+      "ms": 7851,
+      "skipped": 0
+    },
+    "ghostfam_events": {
+      "character": "animal",
+      "checks": 121,
+      "failed": 0,
+      "ms": 29123,
+      "skipped": 0
+    },
+    "ghostfam_play": {
+      "character": "animal",
+      "checks": 26,
+      "failed": 0,
+      "ms": 1743,
+      "skipped": 0
+    },
+    "ghostfam_quests": {
+      "character": "animal",
+      "checks": 44,
+      "failed": 0,
+      "ms": 1129,
+      "skipped": 0
+    },
+    "ghostfam_seek": {
+      "character": "animal",
+      "checks": 91,
+      "failed": 0,
+      "ms": 6196,
+      "skipped": 0
+    },
+    "held_equipment": {
+      "character": "animal",
+      "checks": 44,
+      "failed": 0,
+      "ms": 3756,
+      "skipped": 0
+    },
+    "home": {
+      "character": "animal",
+      "checks": 719,
+      "failed": 0,
+      "ms": 7330,
+      "skipped": 0
+    },
+    "home_progression": {
+      "character": "animal",
+      "checks": 73,
+      "failed": 0,
+      "ms": 2465,
+      "skipped": 0
+    },
+    "home_services": {
+      "character": "animal",
+      "checks": 30,
+      "failed": 0,
+      "ms": 2955,
+      "skipped": 0
+    },
+    "home_ui": {
+      "character": "animal",
+      "checks": 22,
+      "failed": 0,
+      "ms": 1336,
+      "skipped": 0
+    },
+    "home_world": {
+      "character": "animal",
+      "checks": 105,
+      "failed": 0,
+      "ms": 11231,
+      "skipped": 0
+    },
+    "hud": {
+      "character": "animal",
+      "checks": 93,
+      "failed": 0,
+      "ms": 4605,
+      "skipped": 4
+    },
+    "journey_regressions": {
+      "character": "animal",
+      "checks": 35,
+      "failed": 0,
+      "ms": 5950,
+      "skipped": 0
+    },
+    "loc": {
+      "character": "animal",
+      "checks": 115,
+      "failed": 0,
+      "ms": 48253,
+      "skipped": 0
+    },
+    "loot": {
+      "character": "animal",
+      "checks": 170,
+      "failed": 0,
+      "ms": 27264,
+      "skipped": 1
+    },
+    "loot_dungeon": {
+      "character": "animal",
+      "checks": 82,
+      "failed": 0,
+      "ms": 1357,
+      "skipped": 0
+    },
+    "maps_farm": {
+      "character": "animal",
+      "checks": 63,
+      "failed": 2,
+      "ms": 14886,
+      "skipped": 0
+    },
+    "maps_iso": {
+      "character": "animal",
+      "checks": 39,
+      "failed": 0,
+      "ms": 9550,
+      "skipped": 1
+    },
+    "mechanics_review_fixes": {
+      "character": "animal",
+      "checks": 28,
+      "failed": 0,
+      "ms": 925,
+      "skipped": 0
+    },
+    "menus": {
+      "character": "animal",
+      "checks": 103,
+      "failed": 0,
+      "ms": 11453,
+      "skipped": 0
+    },
+    "npc": {
+      "character": "animal",
+      "checks": 345,
+      "failed": 0,
+      "ms": 3639,
+      "skipped": 0
+    },
+    "npc_cast": {
+      "character": "animal",
+      "checks": 346,
+      "failed": 0,
+      "ms": 5,
+      "skipped": 0
+    },
+    "player": {
+      "character": "animal",
+      "checks": 37,
+      "failed": 0,
+      "ms": 583,
+      "skipped": 0
+    },
+    "quests": {
+      "character": "animal",
+      "checks": 61,
+      "failed": 0,
+      "ms": 8887,
+      "skipped": 0
+    },
+    "rarity": {
+      "character": "animal",
+      "checks": 73,
+      "failed": 0,
+      "ms": 63,
+      "skipped": 0
+    },
+    "relationships": {
+      "character": "animal",
+      "checks": 59,
+      "failed": 0,
+      "ms": 14571,
+      "skipped": 0
+    },
+    "review_regressions": {
+      "character": "animal",
+      "checks": 98,
+      "failed": 0,
+      "ms": 3010,
+      "skipped": 0
+    },
+    "save": {
+      "character": "animal",
+      "checks": 244,
+      "failed": 0,
+      "ms": 7772,
+      "skipped": 0
+    },
+    "secret_garden": {
+      "character": "animal",
+      "checks": 124,
+      "failed": 0,
+      "ms": 10363,
+      "skipped": 0
+    },
+    "shop_rotation": {
+      "character": "animal",
+      "checks": 51,
+      "failed": 0,
+      "ms": 2822,
+      "skipped": 0
+    },
+    "shop_ui": {
+      "character": "animal",
+      "checks": 154,
+      "failed": 0,
+      "ms": 19446,
+      "skipped": 8
+    },
+    "social": {
+      "character": "animal",
+      "checks": 137,
+      "failed": 1,
+      "ms": 82218,
+      "skipped": 0
+    },
+    "social_data": {
+      "character": "animal",
+      "checks": 130,
+      "failed": 0,
+      "ms": 4186,
+      "skipped": 0
+    },
+    "social_events": {
+      "character": "animal",
+      "checks": 55,
+      "failed": 0,
+      "ms": 2971,
+      "skipped": 0
+    },
+    "social_fest_content": {
+      "character": "animal",
+      "checks": 419,
+      "failed": 31,
+      "ms": 28932,
+      "skipped": 0
+    },
+    "social_gifts": {
+      "character": "animal",
+      "checks": 58,
+      "failed": 0,
+      "ms": 187,
+      "skipped": 0
+    },
+    "social_heart_content": {
+      "character": "animal",
+      "checks": 368,
+      "failed": 0,
+      "ms": 89544,
+      "skipped": 0
+    },
+    "social_talk": {
+      "character": "animal",
+      "checks": 42,
+      "failed": 0,
+      "ms": 109,
+      "skipped": 0
+    },
+    "social_ui": {
+      "character": "animal",
+      "checks": 139,
+      "failed": 0,
+      "ms": 7206,
+      "skipped": 12
+    },
+    "town_budgets": {
+      "character": "animal",
+      "checks": 34,
+      "failed": 0,
+      "ms": 4436,
+      "skipped": 0
+    },
+    "town_loop": {
+      "character": "animal",
+      "checks": 155,
+      "failed": 1,
+      "ms": 125439,
+      "skipped": 0
+    },
+    "towns_city": {
+      "character": "animal",
+      "checks": 64,
+      "failed": 0,
+      "ms": 14961,
+      "skipped": 0
+    },
+    "towns_data": {
+      "character": "animal",
+      "checks": 166,
+      "failed": 0,
+      "ms": 2692,
+      "skipped": 0
+    },
+    "towns_director": {
+      "character": "animal",
+      "checks": 297,
+      "failed": 0,
+      "ms": 41194,
+      "skipped": 0
+    },
+    "towns_ext": {
+      "character": "animal",
+      "checks": 57,
+      "failed": 0,
+      "ms": 8078,
+      "skipped": 0
+    },
+    "towns_greetings": {
+      "character": "animal",
+      "checks": 79,
+      "failed": 0,
+      "ms": 67,
+      "skipped": 0
+    },
+    "towns_interiors": {
+      "character": "animal",
+      "checks": 285,
+      "failed": 0,
+      "ms": 37134,
+      "skipped": 0
+    },
+    "towns_interiors_core": {
+      "character": "animal",
+      "checks": 137,
+      "failed": 0,
+      "ms": 3779,
+      "skipped": 0
+    },
+    "towns_post": {
+      "character": "animal",
+      "checks": 26,
+      "failed": 0,
+      "ms": 934,
+      "skipped": 4
+    },
+    "towns_routes": {
+      "character": "animal",
+      "checks": 133,
+      "failed": 0,
+      "ms": 3764,
+      "skipped": 0
+    },
+    "towns_routines": {
+      "character": "animal",
+      "checks": 285,
+      "failed": 0,
+      "ms": 8371,
+      "skipped": 0
+    },
+    "ui_audit": {
+      "character": "animal",
+      "checks": 466,
+      "failed": 0,
+      "ms": 6345,
+      "skipped": 11
+    },
+    "ui_audit_blind": {
+      "character": "animal",
+      "checks": 121,
+      "failed": 0,
+      "ms": 4482,
+      "skipped": 0
+    },
+    "ui_audit_pins": {
+      "character": "animal",
+      "checks": 344,
+      "failed": 0,
+      "ms": 1396,
+      "skipped": 0
+    },
+    "ui_conformance": {
+      "character": "animal",
+      "checks": 228,
+      "failed": 0,
+      "ms": 24071,
+      "skipped": 110
+    },
+    "ui_foundation": {
+      "character": "animal",
+      "checks": 205,
+      "failed": 0,
+      "ms": 13437,
+      "skipped": 0
+    },
+    "ui_mechanics": {
+      "character": "animal",
+      "checks": 2,
+      "failed": 0,
+      "ms": 672,
+      "skipped": 0
+    },
+    "ui_nav": {
+      "character": "animal",
+      "checks": 26,
+      "failed": 0,
+      "ms": 4448,
+      "skipped": 0
+    },
+    "voice": {
+      "character": "animal",
+      "checks": 309,
+      "failed": 0,
+      "ms": 1895,
+      "skipped": 0
+    },
+    "walkway_transitions": {
+      "character": "animal",
+      "checks": 153,
+      "failed": 0,
+      "ms": 59275,
+      "skipped": 0
+    },
+    "wardrobe": {
+      "character": "animal",
+      "checks": 26,
+      "failed": 0,
+      "ms": 264,
+      "skipped": 0
+    },
+    "wardrobe_render": {
+      "character": "animal",
+      "checks": 8,
+      "failed": 0,
+      "ms": 529,
+      "skipped": 0
+    },
+    "wardrobe_ui": {
+      "character": "animal",
+      "checks": 58,
+      "failed": 0,
+      "ms": 1557,
+      "skipped": 0
+    },
+    "weapons": {
+      "character": "animal",
+      "checks": 58,
+      "failed": 0,
+      "ms": 223,
+      "skipped": 0
+    }
+  },
+  "skipped": 155
+}

@@ -1,0 +1,302 @@
+{
+  "allowed": [
+    {
+      "kind": "warning",
+      "rule": "Unknown chibi character",
+      "section": "characters",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): Unknown chibi character: no_such_character (at load_character res://scripts/isometric/iso_chibi_sprite_2d.gd:235)"
+    },
+    {
+      "kind": "warning",
+      "rule": "Unknown chibi character",
+      "section": "characters",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): Unknown chibi character: ../fox (at load_character res://scripts/isometric/iso_chibi_sprite_2d.gd:235)"
+    },
+    {
+      "kind": "warning",
+      "rule": "Unknown chibi character",
+      "section": "characters",
+      "text": "core/variant/variant_utility.cpp:1033 in push_warning(): Unknown chibi character: FOX (at load_character res://scripts/isometric/iso_chibi_sprite_2d.gd:235)"
+    }
+  ],
+  "character": "animal",
+  "checks": 4180,
+  "elapsed_s": 1114.16,
+  "engine": [],
+  "failed": 0,
+  "failures": [],
+  "known": [],
+  "mode": "headless",
+  "problems": [
+    "section combat_acceptance timed out after 600 s (a coroutine is still waiting; look for an await on something that never happens)"
+  ],
+  "result": "fail",
+  "sections": {
+    "animals": {
+      "character": "animal",
+      "checks": 44,
+      "failed": 0,
+      "ms": 1454,
+      "skipped": 0
+    },
+    "appraisal": {
+      "character": "animal",
+      "checks": 10,
+      "failed": 0,
+      "ms": 330,
+      "skipped": 0
+    },
+    "area": {
+      "character": "animal",
+      "checks": 240,
+      "failed": 0,
+      "ms": 19473,
+      "skipped": 1
+    },
+    "arsenal": {
+      "character": "animal",
+      "checks": 15,
+      "failed": 0,
+      "ms": 17,
+      "skipped": 0
+    },
+    "art_cast_v2": {
+      "character": "animal",
+      "checks": 21,
+      "failed": 0,
+      "ms": 17500,
+      "skipped": 4
+    },
+    "art_characters": {
+      "character": "animal",
+      "checks": 27,
+      "failed": 0,
+      "ms": 8915,
+      "skipped": 0
+    },
+    "art_city": {
+      "character": "animal",
+      "checks": 17,
+      "failed": 0,
+      "ms": 850,
+      "skipped": 0
+    },
+    "art_dungeon_icons": {
+      "character": "animal",
+      "checks": 271,
+      "failed": 0,
+      "ms": 322,
+      "skipped": 0
+    },
+    "art_dungeon_supplies": {
+      "character": "animal",
+      "checks": 21,
+      "failed": 0,
+      "ms": 31,
+      "skipped": 0
+    },
+    "art_dungeon_weapons": {
+      "character": "animal",
+      "checks": 117,
+      "failed": 0,
+      "ms": 106,
+      "skipped": 0
+    },
+    "art_environment": {
+      "character": "animal",
+      "checks": 33,
+      "failed": 0,
+      "ms": 1457,
+      "skipped": 0
+    },
+    "art_equipment_fit": {
+      "character": "animal",
+      "checks": 745,
+      "failed": 0,
+      "ms": 602,
+      "skipped": 0
+    },
+    "art_farm": {
+      "character": "animal",
+      "checks": 23,
+      "failed": 0,
+      "ms": 644,
+      "skipped": 0
+    },
+    "art_farm_dress": {
+      "character": "animal",
+      "checks": 75,
+      "failed": 0,
+      "ms": 1834,
+      "skipped": 0
+    },
+    "art_festival": {
+      "character": "animal",
+      "checks": 299,
+      "failed": 0,
+      "ms": 196,
+      "skipped": 0
+    },
+    "art_forest_mother": {
+      "character": "animal",
+      "checks": 26,
+      "failed": 0,
+      "ms": 3397,
+      "skipped": 0
+    },
+    "art_ghost": {
+      "character": "animal",
+      "checks": 18,
+      "failed": 0,
+      "ms": 13127,
+      "skipped": 0
+    },
+    "art_ghostfam": {
+      "character": "animal",
+      "checks": 43,
+      "failed": 0,
+      "ms": 2271,
+      "skipped": 0
+    },
+    "art_home": {
+      "character": "animal",
+      "checks": 29,
+      "failed": 0,
+      "ms": 3988,
+      "skipped": 0
+    },
+    "art_interiors": {
+      "character": "animal",
+      "checks": 266,
+      "failed": 0,
+      "ms": 478,
+      "skipped": 0
+    },
+    "art_shops": {
+      "character": "animal",
+      "checks": 218,
+      "failed": 0,
+      "ms": 148,
+      "skipped": 0
+    },
+    "art_shops_b": {
+      "character": "animal",
+      "checks": 795,
+      "failed": 0,
+      "ms": 209,
+      "skipped": 0
+    },
+    "art_style_consistency": {
+      "character": "animal",
+      "checks": 117,
+      "failed": 0,
+      "ms": 2636,
+      "skipped": 0
+    },
+    "art_world_style": {
+      "character": "animal",
+      "checks": 106,
+      "failed": 0,
+      "ms": 707,
+      "skipped": 0
+    },
+    "audio_town": {
+      "character": "animal",
+      "checks": 37,
+      "failed": 0,
+      "ms": 4980,
+      "skipped": 0
+    },
+    "boot": {
+      "checks": 8,
+      "failed": 0,
+      "ms": 11633,
+      "skipped": 0
+    },
+    "bosses": {
+      "character": "animal",
+      "checks": 49,
+      "failed": 0,
+      "ms": 5283,
+      "skipped": 0
+    },
+    "cast_data": {
+      "character": "animal",
+      "checks": 16,
+      "failed": 0,
+      "ms": 2170,
+      "skipped": 0
+    },
+    "characters": {
+      "character": "animal",
+      "checks": 117,
+      "failed": 0,
+      "ms": 3155,
+      "skipped": 0
+    },
+    "cheat_menu": {
+      "character": "animal",
+      "checks": 18,
+      "failed": 0,
+      "ms": 993,
+      "skipped": 0
+    },
+    "cheat_ui_audit": {
+      "character": "animal",
+      "checks": 7,
+      "failed": 0,
+      "ms": 592,
+      "skipped": 3
+    },
+    "city_levels": {
+      "character": "animal",
+      "checks": 70,
+      "failed": 0,
+      "ms": 34217,
+      "skipped": 0
+    },
+    "city_life": {
+      "character": "animal",
+      "checks": 105,
+      "failed": 0,
+      "ms": 10914,
+      "skipped": 0
+    },
+    "city_map": {
+      "character": "animal",
+      "checks": 55,
+      "failed": 0,
+      "ms": 63706,
+      "skipped": 0
+    },
+    "city_walkthrough": {
+      "character": "animal",
+      "checks": 65,
+      "failed": 0,
+      "ms": 66930,
+      "skipped": 0
+    },
+    "clock26": {
+      "character": "animal",
+      "checks": 19,
+      "failed": 0,
+      "ms": 219046,
+      "skipped": 0
+    },
+    "codex_review": {
+      "character": "animal",
+      "checks": 37,
+      "failed": 0,
+      "ms": 4449,
+      "skipped": 0
+    },
+    "combat_acceptance": {
+      "character": "animal",
+      "checks": 1,
+      "failed": 0,
+      "ms": 600000,
+      "skipped": 0
+    }
+  },
+  "skipped": 8
+}
