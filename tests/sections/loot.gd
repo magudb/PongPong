@@ -2046,6 +2046,8 @@ func _cleanup() -> void:
 	ls.delegate_path = ls.DELEGATE_PATH
 	ls.dungeon_floors_path = ls.DUNGEON_FLOORS_PATH
 	ls.appraisal_scene_path = ls.APPRAISAL_SCENE
+	if ResourceLoader.exists(ls.DUNGEON_FLOORS_PATH):
+		t.check("real_dungeon_service_restored", ls.host_dungeon_floors() and DungeonFloors.inst() != null)
 	for engine_key in ["f4_log", "f4_rows", "f4_refuse", "f4_last_req", "f4_state_seen", "f4_pack_view", "f4_cooldown"]:
 		if Engine.has_meta(engine_key):
 			Engine.remove_meta(engine_key)

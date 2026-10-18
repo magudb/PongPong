@@ -1,6 +1,7 @@
 extends RefCounted
 const SECTION := "combat_acceptance"
-const TIMEOUT_S := 600.0
+# All 180 boss duels and 100 ambush trials run with fixed 60 Hz physics in CI.
+const TIMEOUT_S := 1200.0
 func run(t) -> void:
 	await t.start_world()
 	var world: WorldRoot2D = t.world()

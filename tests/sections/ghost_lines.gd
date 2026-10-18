@@ -98,7 +98,7 @@ func _letter(t) -> void:
 			t.tap(&"interact")
 		await t.frames(2)
 	t.autoload("EventBus").dialogue_ended.disconnect(ended)
-	t.check("intro_line_after_the_letter", seen == ["DLG_KING_LETTER", "DLG_GHOST_KING_INTRO"] and endings.size() == 1 and bool(gm.get_flag(&"intro_letter_seen", false)), str(seen))
+	t.check("intro_line_after_the_letter", seen == ["DLG_KING_LETTER", "FM_OPENING_LEAD", "DLG_GHOST_KING_INTRO"] and endings.size() == 1 and bool(gm.get_flag(&"intro_letter_seen", false)), str(seen))
 	await preload("res://scripts/world2d/intro_sequence.gd").letter(t.world())
 	t.check("intro_reaction_once", not screen.is_open())
 

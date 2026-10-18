@@ -5,10 +5,32 @@ static var _loc_id := 0
 static var _revision := -1
 static var _families: Dictionary = {}
 static var _sequence := 0
+static var _day_owner := 0
+static var _day_seed := 0
+static var _day_number := -1
+static var _day_rolls: Dictionary = {}
 
 static func invalidate() -> void:
 	_revision = -1
 	_families.clear()
+	_day_rolls.clear()
+	_day_number = -1
+
+## Weather and season choices are constant for this NPC, day and saved seed.
+static func _day_roll(sm: Node, npc: String, day: int, stream: String) -> float:
+	if not "world_seed" in sm or int(sm.get("world_seed")) == 0:
+		return float(sm.call("roll", [npc, day, stream]))
+	var seed_value := int(sm.get("world_seed"))
+	var owner_id := sm.get_instance_id()
+	if owner_id != _day_owner or seed_value != _day_seed or day != _day_number:
+		_day_rolls.clear()
+		_day_owner = owner_id
+		_day_seed = seed_value
+		_day_number = day
+	var key := npc + "|" + stream
+	if not _day_rolls.has(key):
+		_day_rolls[key] = float(sm.call("roll", [npc, day, stream]))
+	return float(_day_rolls[key])
 
 static func _ensure_index() -> void:
 	var loc := Svc.node("LocalizationManager")
@@ -53,7 +75,7 @@ static func pick(npc: String, slot: String, context: Dictionary = {}) -> String:
 		return ""
 	var ctx: Dictionary = context if not context.is_empty() else sm.call("dialogue_context", npc)
 	var heart_band := band(int(ctx.get("hearts", 0)))
-	var arch := str(SocialData.citizen(npc).archetype).to_upper()
+	var arch := SocialData.archetype_of(npc).to_upper()
 	var own := "SOC_" + npc.to_upper() + "_"
 	var shared := "SOC_ARCH_" + arch + "_"
 	var families: Array[String] = []
@@ -65,11 +87,11 @@ static func pick(npc: String, slot: String, context: Dictionary = {}) -> String:
 		if fest != "":
 			families.append_array(["FEST_" + fest.to_upper() + "_" + npc.to_upper(), shared + "FEST", "SOC_ANY_FEST"])
 		var wx := str(ctx.get("weather", "klart")).to_upper()
-		if wx != "KLART" and float(sm.call("roll", [npc, day, "weather"])) < 0.6:
+		if wx != "KLART" and _day_roll(sm, npc, day, "weather") < 0.6:
 			families.append_array([own + "GREET_WX_" + wx, shared + "WX_" + wx, "SOC_ANY_WX_" + wx])
 		var gm := Svc.node("GameManager")
 		var season := str(ctx.get("season", gm.get("season") if gm != null else "foraar")).to_upper()
-		if float(sm.call("roll", [npc, day, "season"])) < 0.2:
+		if _day_roll(sm, npc, day, "season") < 0.2:
 			families.append_array([own + "GREET_" + season, shared + "SEASON_" + season, "SOC_ANY_SEASON_" + season])
 		var part := str(ctx.get("daypart", "dag")).to_upper()
 		families.append_array([own + "GREET_H%d_%s" % [heart_band, part], own + "GREET_H%d" % heart_band, shared + "GREET_H%d" % heart_band, "SOC_ANY_GREET"])

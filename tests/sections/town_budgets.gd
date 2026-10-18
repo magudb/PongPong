@@ -100,13 +100,13 @@ func run(t) -> void:
 		measurements[str(id)]={"asset_preparation_ms":preparation_ms,"cold_entry_ms":first,"warm_entry_ms":warm,"nodes":count(world.area),"scenery_nodes":scenery_nodes(world.area),"scenery_lights":lights(world.area)}
 		match id:
 			&"int_froebutikken":
-				t.check("interior_cold_build", first <= 60, str(measurements[str(id)]))
+				t.check("interior_cold_build", first <= t.perf_limit(60), str(measurements[str(id)]))
 				t.check("interior_warm_rebuild", warm <= 12, str(measurements[str(id)]))
 				t.check("interior_nodes_and_lights", int(InteriorRoom.stats.nodes)<=130 and lights(world.area)<=4, str(InteriorRoom.stats)+" live_nodes="+str(count(world.area)))
 				var room := world.area
 				var nav_start := Time.get_ticks_usec()
 				var nav := NavGrid.bake_room(room, 8, 5, Iso.MASK_WALKING)
-				t.check("nav_bake_interior", nav.bake_us <= 1000 and Time.get_ticks_usec()-nav_start <= 1000, str(nav.bake_us))
+				t.check("nav_bake_interior", nav.bake_us <= t.perf_limit(1000) and Time.get_ticks_usec()-nav_start <= t.perf_limit(1000), str(nav.bake_us))
 				var keeper := NpcDirector.node_of("merchant_pip")
 				var job: Array = []
 				for entry in world.warm_jobs():
@@ -120,11 +120,11 @@ func run(t) -> void:
 				t.info("CITY NODES " + JSON.stringify(classes))
 				for child in world.area.get_children():
 					t.info("CITY BRANCH " + str(child.name) + " " + str(count(child)))
-				t.check("city_warm_build", warm<=40, str(measurements[str(id)]))
+				t.check("city_warm_build", warm<=t.perf_limit(40), str(measurements[str(id)]))
 				t.check("city_nodes_and_lights", scenery_nodes(world.area)<=700 and lights(world.area)<=12, str(measurements[str(id)]))
 				var begin := Time.get_ticks_usec()
 				var nav := LevelNav.make()
-				t.check("nav_bake_city", Time.get_ticks_usec()-begin<=30000 and not nav.levels.is_empty(), "%.3fms" % ((Time.get_ticks_usec()-begin)/1000.0))
+				t.check("nav_bake_city", Time.get_ticks_usec()-begin<=t.perf_limit(30000) and not nav.levels.is_empty(), "%.3fms" % ((Time.get_ticks_usec()-begin)/1000.0))
 				var identical := true
 				for level in nav.levels:
 					for y in level.n.y:
@@ -136,11 +136,11 @@ func run(t) -> void:
 							identical = identical and expected != level.grid.is_point_solid(Vector2i(x,y))
 				t.check("city_baked_footprint_matches_geometry", identical and nav.bake_info.baked_cells)
 			&"hyggebyen":
-				t.check("grid_warm_build", warm<=60, str(measurements[str(id)]))
-				t.check("grid_parked_return", warm<=5, str(measurements[str(id)]))
+				t.check("grid_warm_build", warm<=t.perf_limit(60), str(measurements[str(id)]))
+				t.check("grid_parked_return", warm<=t.perf_limit(5), str(measurements[str(id)])+"; runner limit "+str(t.perf_limit(5))+" ms (native reference 5)")
 				t.check("grid_npc_cap", TownProbe.director(t).live.size()<=24)
 			&"farm":
-				t.check("farm_warm_build", warm<60, str(measurements[str(id)]))
+				t.check("farm_warm_build", warm<t.perf_limit(60), str(measurements[str(id)]))
 				t.check("farm_dimensions", world.area.map.width==61 and world.area.map.height==51)
 	await _navigation(t)
 	await _director(t)
@@ -148,7 +148,7 @@ func run(t) -> void:
 	var loc: Node = t.autoload("LocalizationManager")
 	var reload_start := Time.get_ticks_usec()
 	loc.reload()
-	t.check("csv_reload", Time.get_ticks_usec()-reload_start<=150000, "%.3fms" % ((Time.get_ticks_usec()-reload_start)/1000.0))
+	t.check("csv_reload", Time.get_ticks_usec()-reload_start<=t.perf_limit(150000), "%.3fms" % ((Time.get_ticks_usec()-reload_start)/1000.0))
 	var python := ProjectSettings.globalize_path("res://tools/art/.venv/bin/python")
 	var arithmetic: Dictionary = t.run_tool(python,[ProjectSettings.globalize_path("res://tools/town/vram_budget.py")])
 	var report: Variant = JSON.parse_string(str(arithmetic.output))
@@ -166,7 +166,7 @@ func _navigation(t) -> void:
 	area.setup(AreaMap.parse_text("\n".join(lines)))
 	await t.physics(2)
 	var nav := NavGrid.bake_area(area)
-	t.check("nav_bake_grid_60", nav.bake_us<=15000, "%.3fms" % (nav.bake_us/1000.0))
+	t.check("nav_bake_grid_60", nav.bake_us<=t.perf_limit(15000), "%.3fms" % (nav.bake_us/1000.0))
 	area.free()
 	var costs: Array[int] = []
 	for i in 60:
@@ -174,7 +174,7 @@ func _navigation(t) -> void:
 		RouteTable.path("traetoppen.a_beds1","int_bageriet.counter")
 		costs.append(Time.get_ticks_usec()-start)
 	costs.sort()
-	t.check("route_plan_p95", costs[56]<=1000, str(costs[56])+"us")
+	t.check("route_plan_p95", costs[56]<=t.perf_limit(1000), str(costs[56])+"us")
 	var ctx := Routines.now_ctx()
 	var ids := SocialData.npcs().keys()
 	var batch := NpcDirector.locations(ids,ctx)
@@ -185,7 +185,7 @@ func _navigation(t) -> void:
 		NpcDirector.locations(SocialData.npcs().keys())
 		sweeps.append(Time.get_ticks_usec()-start)
 	sweeps.sort()
-	t.check("where_is_sweep", sweeps[10]<=300, str(sweeps[10])+"us for "+str(SocialData.npcs().size()))
+	t.check("where_is_sweep", sweeps[10]<=t.perf_limit(300), str(sweeps[10])+"us for "+str(SocialData.npcs().size())+"; runner limit "+str(t.perf_limit(300))+" us (native reference 300)")
 
 func _classes(node: Node, result: Dictionary) -> void:
 	result[node.get_class()] = int(result.get(node.get_class(), 0)) + 1

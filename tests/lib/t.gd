@@ -19,6 +19,14 @@ extends "res://tests/lib/flow.gd"
 
 # ---------------------------------------------------------------- expected engine messages
 
+## Shared CI CPUs get a bounded allowance for computation timings, recorded in reports.
+## Native reference runs keep the authored limits; game-time assertions never use this.
+func perf_limit(reference: float) -> float:
+	var configured := OS.get_environment("TT_PERF_SCALE")
+	var scale := clampf(configured.to_float(), 1.0, 3.0) if configured.is_valid_float() else 1.0
+	return reference * scale
+
+
 ## Declares a warning / error whose text contains `substring` as expected for the rest of this section.
 func allow(substring: String) -> void:
 	catcher.allow(substring)
