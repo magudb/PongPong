@@ -1,0 +1,86 @@
+extends RefCounted
+const SECTION := "pass3"
+const TIMEOUT_S := 900.0
+
+func run(t) -> void:
+	t.skip("pass3: windowed capture only")
+
+func _set_clock(t, h: int, m: int) -> void:
+	var gm: Node = t.autoload("GameManager")
+	gm.hour = h
+	gm.minute = m
+	t.autoload("EventBus").time_of_day_changed.emit(h, m)
+
+func _clear_toasts(t) -> void:
+	var gui = t.tree.get_first_node_in_group("game_ui")
+	if gui != null and gui.has_method("get_screen"):
+		var hud = gui.get_screen(&"hud")
+		if hud != null and hud.get("toasts") != null:
+			hud.toasts.clear()
+
+func _area_shot(t, area: StringName, name: String) -> void:
+	if not WorldRoot2D.has_area(area):
+		t.info("pass3: no area %s" % area)
+		return
+	await t.world().travel(area, &"default")
+	await t.until(func() -> bool: return t.world().area != null and t.world().area.map.id == area and not t.world().traveling, 15.0)
+	t.player().camera.reset_smoothing()
+	await t.world().warm_clips()
+	await t.frames(20)
+	_clear_toasts(t)
+	await t.frames(2)
+	await t.capture(name)
+
+func run_windowed(t) -> void:
+	await t.clear_scene()
+	TranslationServer.set_locale("da")
+	var skip := ["foundation_gallery", "foundation_gallery_rarity"]
+	for row in UiAudit.screens():
+		var id := str(row["id"])
+		if id in skip:
+			continue
+		var node: Node = await UiAudit.open_screen(t, id)
+		if node == null:
+			t.info("pass3: could not open %s" % id)
+			continue
+		await t.frames(8)
+		await t.capture("ui_" + id)
+		await UiAudit.close_screen(t, id)
+		await t.frames(2)
+	# the world: the production intro first
+	await t.start_world("", "Rasmus", "Trækronen", "", true)
+	await t.frames(30)
+	await t.capture("world_intro_opening")
+	await t.consume_opening()
+	await t.frames(10)
+	var gm: Node = t.autoload("GameManager")
+	gm.set_config_override("time.minutes_per_real_second", 0.0)
+	t.autoload("TimeManager").set_weather(&"klart")
+	_set_clock(t, 10, 0)
+	await t.frames(20)
+	_clear_toasts(t)
+	await t.frames(2)
+	await t.capture("farm_day_hud")
+	_set_clock(t, 20, 30)
+	await t.frames(20)
+	await t.capture("farm_evening_2030_hud")
+	_set_clock(t, 24, 40)
+	await t.frames(20)
+	await t.capture("farm_night_0040_hud")
+	_set_clock(t, 12, 0)
+	await t.frames(5)
+	await _area_shot(t, &"traetoppen", "traetoppen_city")
+	await _area_shot(t, &"hyggebyen", "hyggebyen")
+	await _area_shot(t, &"int_froebutikken", "interior_froebutikken")
+	await _area_shot(t, &"home", "home_interior")
+	await _area_shot(t, &"moerkeskoven", "moerkeskoven_surface")
+	_set_clock(t, 24, 40)
+	await t.frames(20)
+	await t.capture("moerkeskoven_surface_night")
+	_set_clock(t, 12, 0)
+	var floors := DungeonFloors.inst()
+	floors.enter(1)
+	await t.until(func() -> bool: return t.world().area.map.id == &"moerkeskoven_f1" and not t.world().traveling, 15.0)
+	t.player().camera.reset_smoothing()
+	await t.frames(30)
+	await t.capture("dungeon_f1_hud")

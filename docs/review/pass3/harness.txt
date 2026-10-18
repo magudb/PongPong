@@ -1,0 +1,85 @@
+Trætoppen - headless gate baseline, pass 3 (2026-10-18)
+================================================================
+Tree: worktree game-review, branch game-review = main f80e7aed (clean). The gate ran in an APFS clone
+(tools/dev/test_in_copy.sh gr-pass3 --no-run --docs). tools/art/.venv is symlinked from the main checkout
+because a worktree has none. Without it the Python art gates fail with "No such file or directory".
+That is an environment problem in the worktree, not a product defect.
+Command: tests/run_playtest.sh --strict --timeout=5400   (plain, not --fast, character=animal)
+Full logs and JSON reports: docs/review/pass3/logs/
+
+HEADLINE: the plain strict gate is RED and cannot finish in one run.
+  The harness stops the whole run at the first section that hits its TIMEOUT_S ("not run because of
+  the timeout: ..."). In plain (wall-clock) mode two sections always time out:
+    * combat_acceptance (TIMEOUT_S 600). It does 180 seeded boss duels plus 100 ambush trials. Plain mode
+      completed 15/60 snurresvamp duels in 600 s, so a full plain run would take about 2 h. Added 2026-10-17 (064ce4f3).
+    * dungeon_fights (TIMEOUT_S 240). It timed out at 240 s twice, once alongside another run and once alone
+      with no other Godot running.
+  Both PASS under --fast (fixed-fps): combat_acceptance 15/15 checks in 288 s, with boss means 24.9 / 33.9 / 41.5 s,
+  60/60 wins each and ambush dodge 100/100. dungeon_fights passes 3/3 checks in 12.2 s.
+  docs/DEVELOPMENT.md says "the plain run is the one that has to be green", and that is impossible right now.
+  To cover all sections I ran the gate in 3 consecutive parts, each part restarting after the section that timed out.
+
+TOTALS (145 sections, all run once; combat_acceptance and dungeon_fights pass only under --fast)
+  part 1 (boot .. combat_acceptance): 37 sections, 4180 checks, 0 failed, 8 skipped, 1 problem (combat_acceptance timeout)
+  part 2 (... dungeon_fights):         9 sections,  993 checks, 0 failed, 0 skipped, 1 problem (dungeon_fights timeout)
+  part 3 (city_depth_pixels .. end): 97 sections, 11678 checks, 41 failed, 155 skipped, 2 engine errors (script errors)
+  overall plain: 16851 checks, 41 failed, 163 skipped, 2 engine (script) errors, 2 section timeouts.
+  Every part also ends with "run_playtest: FAIL - engine messages after the harness result (shutdown):
+  15 ObjectDB instances leaked / 6 resources still in use". These come after a timeout abort.
+
+FAILING CHECKS (plain strict, part 3), grouped
+ A. Festival scenes never finish headless: 38 + 5 checks, DETERMINISTIC.
+    Reproduced in isolation: --only=festival_activities,social_fest_content,ghost_lines gives 44 failures.
+    The SAME sections PASS in a windowed run (tools/dev/run_windowed.sh, 620 checks with 0 failed in
+    logs/windowed_sections_run4.log; festival_activities passes in logs/windowed_sections_run2.log).
+    The likely cause, NOT verified: tests/sections/festival_activities.gd:146-153 _finish() waits a fixed
+    800 frames. Headless frames are uncapped, so the time-driven festival scene has not ended by then.
+    The game is probably fine. The headless gate is red either way.
+    festival_activities.festival scene did not release (x2)
+    festival_activities.dance_chooses_highest_hearts_present
+    festival_activities.market_opens_existing_shop_panel
+    festival_activities.stage_removed_at_end
+    social_fest_content.festival scene did not finish (x11)
+    social_fest_content.<fest>_opening_seen  for blomsterfesten, honningdagen, midsommerlanterner, maanemarkedet,
+       vinterlysene, bagedagen (+ badedagen, hoestfesten, aarsskiftet in the isolated run)
+    social_fest_content.<fest>_finale_pays_once  for blomsterfesten, honningdagen, badedagen, hoestfesten, vinterlysene
+       (+ aarsskiftet isolated)
+    social_fest_content.<fest>_reentry_has_no_repeat_reward  (same festivals)
+    social_fest_content.midsommerlanterner_all_activity_posts_resolve, maanemarkedet_all_activity_posts_resolve
+       (+ bagedagen isolated)
+    social_fest_content.bagedagen_family_present, bagedagen_painted_decor_present (full run only)
+    social_fest_content.save_all_nine_endings, all_finales_stay_seen (isolated run only)
+    ENGINE script error: tests/sections/social_fest_content.gd:84 "Cannot call method 'get_children' on a null value"
+    The set of failing festivals differs a little between the two runs, so part of it is also flaky.
+ B. ghost_lines.intro_line_after_the_letter: deterministic headless, passes windowed.
+    Seen ["DLG_KING_LETTER","FM_OPENING_LEAD","DLG_GHOST_KING_INTRO"], expected ["DLG_KING_LETTER","DLG_GHOST_KING_INTRO"]
+    (tests/sections/ghost_lines.gd:101). The king's letter now carries the forest-mother lead line
+    (lua/dialogue/fairy_king.lua:14 mother_lead / FM_OPENING_LEAD). Either the expectation is stale or the
+    ghost hero should not get the lead line.
+ C. mechanics_review_fixes: ENGINE script error at tests/sections/mechanics_review_fixes.gd:140
+    "Nonexistent function 'enter' in base 'Nil'" (DungeonFloors.inst() returned null in that context).
+    The section ended early after 28 checks, so the rest of it did NOT run.
+ D. Performance budgets. These depend on the machine, which was a shared box with other agents and a windowed
+    run active in part of part 3:
+    maps_farm.build_budget  (rebuild min 60.7 ms, budget < 60 ms; 559 nodes)
+    maps_farm.parked_round_trip  (min 5.15 ms, budget < 5 ms)
+    social.perf_lookup_p95_under_100us  (shop_closed p95 114.1 us, eval_when3 p95 107.0 us)
+    town_loop.l14_wall_time  (125.4 s, budget 120 s)
+
+SKIPS: 163 in total. 153 are ui_audit pixel checks that need a window (ring/panel/button pixels). The rest are
+  art_cast_v2 palette checks delegated to tools/art/features/wardrobe (4), area social-manager fallback (1),
+  ui_audit cheats pixels (3), maps_iso (1) and appraisal_ui owned by DL7 (1).
+  "Allowed" engine messages: 3 + 6 + 20, all provoked on purpose by the sections.
+
+WINDOWED RUNS (pixel/baseline gates, tools/dev/run_windowed.sh in clone copy-gr-shots)
+  menus, home_world, towns_city, ghostfam_seek, festival_activities, social_ui, farm_playthrough, towns_interiors_core
+    319 checks, 7 failed. All 7 were missing tools/art/.venv. They were rerun with the venv, see below.
+  menus, social_ui, hud, shop_ui, farm_ui_audit, npc (with venv): 119 checks, 3 failed:
+    hud.v2_hotbar_compare        hotbar vs Miljøer-v2 guide crop: mean 12.243 > limit 12.0 (over40 13.2 %)
+    npc.journal_reviewed_baseline   mean 6.575 > 1.5. The baseline is STALE: the journal gained the "Kalender" and
+                                    "Mors spor" tabs (compare docs/qa/ui_baseline/journal.png with shots/baseline_compare/npc_journal.png)
+    social_ui.reviewed_screen_baselines  gift 2.892 > 1.5 (the fixture inventory now also lists furniture, clothing,
+                                    a wand and a table), calendar 1.527 > 1.5. people 0.004 and social_hud 0.432 are ok
+    passed: title, select (4 cards), select_2, settings, saveload, pause, dialogue, intro, shop, inventory, hud, area_banner,
+            build_menu reviewed baselines
+  forest_mother, dungeon_hud, bosses, social_fest_content, relationships, ghost_lines: 620 checks, 0 failed (PASS)

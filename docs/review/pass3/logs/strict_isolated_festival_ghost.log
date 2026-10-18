@@ -1,0 +1,582 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+  info  --strict: known issues are not tolerated
+PLAYTEST start mode=headless character=animal sections=res://tests/sections only=festival_activities,social_fest_content,ghost_lines
+  info  user dir /var/folders/v9/wr4hdm8x4yjflrxg2s0wc9t80000gq/T/traetoppen-playtest.HB2V4H/Library/Application Support/Traetoppen (throwaway)
+== boot (animal): main_menu -> character_select -> world
+  ok    boot.main_menu_loaded (got MainMenu)
+  ok    boot.character_select_opened (got CharacterSelect)
+  ok    boot.world_loaded (got World)
+  ok    boot.player_present (node in group 'player')
+  ok    boot.player_name_stored (got 'Tester')
+  ok    boot.farm_name_stored (got 'Testgaarden')
+  ok    boot.character_matches (type 0 for animal)
+  ok    boot.phase_playing (phase 2)
+  --    boot: 8 checks, 0 failed, 0 skipped, 12.5 s
+== section festival_activities  (res://tests/sections/festival_activities.gd)
+  ok    festival_activities.normal_score_has_no_rarity_bonus
+  ok    festival_activities.uncommon_score_bonus
+  ok    festival_activities.rare_score_bonus
+  ok    festival_activities.cheapest_winning_entry_caps_prize
+  ok    festival_activities.unknown_selector_has_zero_cap
+  ok    festival_activities.legal_prizes
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "gold": 201 } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "gold": 100 }, "second": { "gold": 71 } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "gold": 100 }, "third": { "gold": 41 } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "items": { "keepsake": 1 } } }
+  ok    festival_activities.over_cap_or_keepsake_refused_{ "first": { "items": { "unknown": 1 } } }
+  ok    festival_activities.deterministic_entry_seed_1
+  ok    festival_activities.deterministic_entry_seed_2
+  ok    festival_activities.deterministic_entry_seed_3
+  ok    festival_activities.deterministic_entry_seed_4
+  ok    festival_activities.deterministic_entry_seed_5
+  ok    festival_activities.deterministic_entry_seed_6
+  ok    festival_activities.deterministic_entry_seed_7
+  ok    festival_activities.deterministic_entry_seed_8
+  ok    festival_activities.deterministic_entry_seed_9
+  ok    festival_activities.deterministic_entry_seed_10
+  ok    festival_activities.deterministic_entry_seed_11
+  ok    festival_activities.deterministic_entry_seed_12
+  ok    festival_activities.deterministic_entry_seed_13
+  ok    festival_activities.deterministic_entry_seed_14
+  ok    festival_activities.deterministic_entry_seed_15
+  ok    festival_activities.deterministic_entry_seed_16
+  ok    festival_activities.deterministic_entry_seed_17
+  ok    festival_activities.deterministic_entry_seed_18
+  ok    festival_activities.deterministic_entry_seed_19
+  ok    festival_activities.deterministic_entry_seed_20
+  ok    festival_activities.wrong_entry_refused
+  ok    festival_activities.stage_attached_to_active_area (stage=FestivalStage:<Node2D#4480003219456> area=hyggebyen active=activity_test)
+  ok    festival_activities.named_posts_have_no_map_errors ([])
+  ok    festival_activities.all_six_activities_enabled_in_window
+  ok    festival_activities.opening_once_per_year
+  ok    festival_activities.attendance_points_once
+  ok    festival_activities.talked_citizen_attendance_once
+  ok    festival_activities.picker_opens_contest
+  ok    festival_activities.matching_item_available_contest
+  ok    festival_activities.contest_consumes_exactly_one_entry
+  ok    festival_activities.contest_pays_bounded_prize
+  ok    festival_activities.contest_cannot_be_repeated
+  ok    festival_activities.picker_opens_potluck
+  ok    festival_activities.matching_item_available_potluck
+  ok    festival_activities.potluck_donation_is_one_item
+  ok    festival_activities.town_contributions_reach_goal
+  ok    festival_activities.feast_restores_once
+  ok    festival_activities.feast_repeat_has_no_effect
+  ok    festival_activities.wish_is_flavour_flag
+  ok    festival_activities.wish_host_points_once
+  ok    festival_activities.wish_repeat_refused
+  FAIL  festival scene did not release
+  FAIL  festival_activities.dance_chooses_highest_hearts_present
+  FAIL  festival_activities.market_opens_existing_shop_panel
+  ok    festival_activities.stage_is_stable_across_flushes
+  FAIL  festival scene did not release
+  ok    festival_activities.finale_once_per_year
+  ok    festival_activities.activities_disable_at_window_end
+  ok    festival_activities.outside_window_has_no_effect
+  FAIL  festival_activities.stage_removed_at_end
+  --    festival_activities: 61 checks, 5 failed, 0 skipped, 1.8 s
+== section ghost_lines  (res://tests/sections/ghost_lines.gd)
+  ok    ghost_lines.table_loads_through_lua_runtime
+  ok    ghost_lines.every_key_resolves_da_en
+  ok    ghost_lines.reaction_once_per_npc
+  ok    ghost_lines.no_reaction_for_other_races
+  ok    ghost_lines.tone_gate
+  ok    ghost_lines.tone_allow_list_is_minimal
+  ok    ghost_lines.king_uses_intro_only
+  ok    ghost_lines.live_citizen_present
+  ok    ghost_lines.live_reaction_precedes_social_first_meeting
+  ok    ghost_lines.escape_releases_without_weekly_heart
+  ok    ghost_lines.live_reaction_once_per_npc
+  ok    ghost_lines.reaction_flag_saved_in_game_section
+  FAIL  ghost_lines.intro_line_after_the_letter (["DLG_KING_LETTER", "FM_OPENING_LEAD", "DLG_GHOST_KING_INTRO"])
+  ok    ghost_lines.intro_reaction_once
+  --    ghost_lines: 14 checks, 1 failed, 0 skipped, 2.9 s
+== section social_fest_content  (res://tests/sections/social_fest_content.gd)
+  ok    social_fest_content.live_social_validator_including_keeper_return_routes ([][])
+  ok    social_fest_content.blomsterfesten_unique_date_and_valid_window
+  ok    social_fest_content.blomsterfesten_existing_host
+  ok    social_fest_content.blomsterfesten_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.blomsterfesten_birthday_clear_baker_maja
+  ok    social_fest_content.blomsterfesten_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.blomsterfesten_birthday_clear_beekeeper_birk
+  ok    social_fest_content.blomsterfesten_birthday_clear_bertil
+  ok    social_fest_content.blomsterfesten_birthday_clear_bodil
+  ok    social_fest_content.blomsterfesten_birthday_clear_carpenter_brumme
+  ok    social_fest_content.blomsterfesten_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.blomsterfesten_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.blomsterfesten_birthday_clear_cub_bamse
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_builder
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_furnisher
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_king
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_lily
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_tailor
+  ok    social_fest_content.blomsterfesten_birthday_clear_fairy_wizard
+  ok    social_fest_content.blomsterfesten_birthday_clear_farmer_rosa
+  ok    social_fest_content.blomsterfesten_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.blomsterfesten_birthday_clear_gardener_hoppe
+  ok    social_fest_content.blomsterfesten_birthday_clear_ghostfam_blund
+  ok    social_fest_content.blomsterfesten_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.blomsterfesten_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.blomsterfesten_birthday_clear_ghostfam_silke
+  ok    social_fest_content.blomsterfesten_birthday_clear_guard_oak
+  ok    social_fest_content.blomsterfesten_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.blomsterfesten_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.blomsterfesten_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.blomsterfesten_birthday_clear_mayor_lyra
+  ok    social_fest_content.blomsterfesten_birthday_clear_merchant_pip
+  ok    social_fest_content.blomsterfesten_birthday_clear_penguin_postman
+  ok    social_fest_content.blomsterfesten_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.blomsterfesten_birthday_clear_postman_pip
+  ok    social_fest_content.blomsterfesten_birthday_clear_rasmus
+  ok    social_fest_content.blomsterfesten_birthday_clear_smith_thorin
+  ok    social_fest_content.blomsterfesten_activity_copy_flower_contest
+  ok    social_fest_content.blomsterfesten_contest_prizes
+  ok    social_fest_content.blomsterfesten_activity_copy_seed_stall
+  ok    social_fest_content.blomsterfesten_market_definition
+  ok    social_fest_content.blomsterfesten_market_stock_carrot_seeds
+  ok    social_fest_content.blomsterfesten_market_stock_sunflower_seeds
+  ok    social_fest_content.blomsterfesten_market_stock_strawberry_seeds
+  ok    social_fest_content.blomsterfesten_activity_copy_dance
+  ok    social_fest_content.blomsterfesten_whole_family_invited
+  FAIL  festival scene did not finish
+  ok    social_fest_content.blomsterfesten_all_activity_posts_resolve ([])
+  FAIL  social_fest_content.blomsterfesten_opening_seen
+  ok    social_fest_content.blomsterfesten_family_present
+  ok    social_fest_content.blomsterfesten_bed_held
+  ok    social_fest_content.blomsterfesten_own_market_open
+  ok    social_fest_content.blomsterfesten_painted_decor_present (decor=FestivalDecor:<Node#5353760624383> art=FestivalArt:<Node2D#5353794178816> children=[festival_stage_stage:<Sprite2D#5353844510465>, flower_arch_centre:<Sprite2D#5354062614274>, market_stall_spring_awning:<Sprite2D#5354280718086>, @Sprite2D@7287:<Sprite2D#5354498821897>, @Sprite2D@7288:<Sprite2D#5354532376332>, @Sprite2D@7289:<Sprite2D#5354565930762>, festival_bench_bench:<Sprite2D#5354599485197>, @Sprite2D@7290:<Sprite2D#5354817589006>, banner_pole_spring_pole:<Sprite2D#5355035692818>, @Sprite2D@7291:<Sprite2D#5355253796629>, bunting_string_a_string:<Sprite2D#5355471900440>, @Sprite2D@7292:<Sprite2D#5355690004251>, @Sprite2D@7293:<Sprite2D#5355723558686>, @Sprite2D@7294:<Sprite2D#5355757113116>, door_wreath_spring_door:<Sprite2D#5355790667551>, @Sprite2D@7295:<Sprite2D#5356008771360>, @Sprite2D@7296:<Sprite2D#5356042325796>, @Sprite2D@7297:<Sprite2D#5356075880226>, @Sprite2D@7298:<Sprite2D#5356109434661>, @Sprite2D@7299:<Sprite2D#5356142989094>, @Sprite2D@7300:<Sprite2D#5356176543527>, @Sprite2D@7301:<Sprite2D#5356210097960>, @Sprite2D@7302:<Sprite2D#5356243652393>, @Sprite2D@7303:<Sprite2D#5356277206826>, @Sprite2D@7304:<Sprite2D#5356310761259>, @Sprite2D@7305:<Sprite2D#5356344315692>, @Sprite2D@7306:<Sprite2D#5356377870125>, @Sprite2D@7307:<Sprite2D#5356411424558>])
+  FAIL  festival scene did not finish
+  FAIL  social_fest_content.blomsterfesten_finale_pays_once
+  FAIL  social_fest_content.blomsterfesten_reentry_has_no_repeat_reward
+  ok    social_fest_content.blomsterfesten_own_market_closes
+  ok    social_fest_content.blomsterfesten_decor_clears_afterwards
+  ok    social_fest_content.honningdagen_unique_date_and_valid_window
+  ok    social_fest_content.honningdagen_existing_host
+  ok    social_fest_content.honningdagen_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.honningdagen_birthday_clear_baker_maja
+  ok    social_fest_content.honningdagen_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.honningdagen_birthday_clear_beekeeper_birk
+  ok    social_fest_content.honningdagen_birthday_clear_bertil
+  ok    social_fest_content.honningdagen_birthday_clear_bodil
+  ok    social_fest_content.honningdagen_birthday_clear_carpenter_brumme
+  ok    social_fest_content.honningdagen_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.honningdagen_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.honningdagen_birthday_clear_cub_bamse
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_builder
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_furnisher
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_king
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_lily
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_tailor
+  ok    social_fest_content.honningdagen_birthday_clear_fairy_wizard
+  ok    social_fest_content.honningdagen_birthday_clear_farmer_rosa
+  ok    social_fest_content.honningdagen_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.honningdagen_birthday_clear_gardener_hoppe
+  ok    social_fest_content.honningdagen_birthday_clear_ghostfam_blund
+  ok    social_fest_content.honningdagen_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.honningdagen_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.honningdagen_birthday_clear_ghostfam_silke
+  ok    social_fest_content.honningdagen_birthday_clear_guard_oak
+  ok    social_fest_content.honningdagen_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.honningdagen_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.honningdagen_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.honningdagen_birthday_clear_mayor_lyra
+  ok    social_fest_content.honningdagen_birthday_clear_merchant_pip
+  ok    social_fest_content.honningdagen_birthday_clear_penguin_postman
+  ok    social_fest_content.honningdagen_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.honningdagen_birthday_clear_postman_pip
+  ok    social_fest_content.honningdagen_birthday_clear_rasmus
+  ok    social_fest_content.honningdagen_birthday_clear_smith_thorin
+  ok    social_fest_content.honningdagen_activity_copy_honey_contest
+  ok    social_fest_content.honningdagen_contest_prizes
+  ok    social_fest_content.honningdagen_activity_copy_picnic
+  ok    social_fest_content.honningdagen_activity_copy_honey_stall
+  ok    social_fest_content.honningdagen_market_definition
+  ok    social_fest_content.honningdagen_market_stock_honey
+  ok    social_fest_content.honningdagen_market_stock_cookie
+  ok    social_fest_content.honningdagen_market_stock_milk
+  ok    social_fest_content.honningdagen_whole_family_invited
+  FAIL  festival scene did not finish
+  ok    social_fest_content.honningdagen_all_activity_posts_resolve ([])
+  FAIL  social_fest_content.honningdagen_opening_seen
+  ok    social_fest_content.honningdagen_family_present
+  ok    social_fest_content.honningdagen_bed_held
+  ok    social_fest_content.honningdagen_retained_shop_covers_weekday_bakery
+  ok    social_fest_content.honningdagen_own_market_open
+  ok    social_fest_content.honningdagen_painted_decor_present (decor=FestivalDecor:<Node#5353760624383> art=FestivalArt:<Node2D#5648687304562> children=[festival_stage_stage:<Sprite2D#5648704081798>, maypole_centre:<Sprite2D#5648922185597>, market_stall_spring_awning:<Sprite2D#5649140289408>, @Sprite2D@7350:<Sprite2D#5649358393229>, @Sprite2D@7351:<Sprite2D#5649391947658>, @Sprite2D@7352:<Sprite2D#5649425502092>, festival_bench_bench:<Sprite2D#5649459058537>, @Sprite2D@7353:<Sprite2D#5649677160342>, banner_pole_spring_pole:<Sprite2D#5649895264155>, @Sprite2D@7354:<Sprite2D#5650113367965>, bunting_string_a_string:<Sprite2D#5650331471772>, @Sprite2D@7355:<Sprite2D#5650549575583>, @Sprite2D@7356:<Sprite2D#5650583130025>, @Sprite2D@7357:<Sprite2D#5650616684455>, flower_arch_accent:<Sprite2D#5650650238888>, door_wreath_spring_door:<Sprite2D#5650868342699>, @Sprite2D@7358:<Sprite2D#5651086446511>, @Sprite2D@7359:<Sprite2D#5651120000944>, @Sprite2D@7360:<Sprite2D#5651153555374>, @Sprite2D@7361:<Sprite2D#5651187109811>, @Sprite2D@7362:<Sprite2D#5651220664242>, @Sprite2D@7363:<Sprite2D#5651254218677>, @Sprite2D@7364:<Sprite2D#5651287773108>, @Sprite2D@7365:<Sprite2D#5651321327543>, @Sprite2D@7366:<Sprite2D#5651354881974>, @Sprite2D@7367:<Sprite2D#5651388436409>, @Sprite2D@7368:<Sprite2D#5651421990840>, @Sprite2D@7369:<Sprite2D#5651455545277>, @Sprite2D@7370:<Sprite2D#5651489099710>])
+  FAIL  festival scene did not finish
+  FAIL  social_fest_content.honningdagen_finale_pays_once
+  FAIL  social_fest_content.honningdagen_reentry_has_no_repeat_reward
+  ok    social_fest_content.honningdagen_own_market_closes
+  ok    social_fest_content.honningdagen_decor_clears_afterwards
+  ok    social_fest_content.midsommerlanterner_unique_date_and_valid_window
+  ok    social_fest_content.midsommerlanterner_existing_host
+  ok    social_fest_content.midsommerlanterner_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.midsommerlanterner_birthday_clear_baker_maja
+  ok    social_fest_content.midsommerlanterner_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.midsommerlanterner_birthday_clear_beekeeper_birk
+  ok    social_fest_content.midsommerlanterner_birthday_clear_bertil
+  ok    social_fest_content.midsommerlanterner_birthday_clear_bodil
+  ok    social_fest_content.midsommerlanterner_birthday_clear_carpenter_brumme
+  ok    social_fest_content.midsommerlanterner_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.midsommerlanterner_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.midsommerlanterner_birthday_clear_cub_bamse
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_builder
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_furnisher
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_king
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_lily
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_tailor
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fairy_wizard
+  ok    social_fest_content.midsommerlanterner_birthday_clear_farmer_rosa
+  ok    social_fest_content.midsommerlanterner_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.midsommerlanterner_birthday_clear_gardener_hoppe
+  ok    social_fest_content.midsommerlanterner_birthday_clear_ghostfam_blund
+  ok    social_fest_content.midsommerlanterner_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.midsommerlanterner_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.midsommerlanterner_birthday_clear_ghostfam_silke
+  ok    social_fest_content.midsommerlanterner_birthday_clear_guard_oak
+  ok    social_fest_content.midsommerlanterner_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.midsommerlanterner_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.midsommerlanterner_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.midsommerlanterner_birthday_clear_mayor_lyra
+  ok    social_fest_content.midsommerlanterner_birthday_clear_merchant_pip
+  ok    social_fest_content.midsommerlanterner_birthday_clear_penguin_postman
+  ok    social_fest_content.midsommerlanterner_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.midsommerlanterner_birthday_clear_postman_pip
+  ok    social_fest_content.midsommerlanterner_birthday_clear_rasmus
+  ok    social_fest_content.midsommerlanterner_birthday_clear_smith_thorin
+  ok    social_fest_content.midsommerlanterner_activity_copy_lantern_wish
+  ok    social_fest_content.midsommerlanterner_activity_copy_bonfire_supper
+  ok    social_fest_content.midsommerlanterner_activity_copy_dance
+  ok    social_fest_content.midsommerlanterner_whole_family_invited
+  FAIL  social_fest_content.midsommerlanterner_all_activity_posts_resolve ([])
+  FAIL  social_fest_content.midsommerlanterner_opening_seen
+  ok    social_fest_content.badedagen_unique_date_and_valid_window
+  ok    social_fest_content.badedagen_existing_host
+  ok    social_fest_content.badedagen_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.badedagen_birthday_clear_baker_maja
+  ok    social_fest_content.badedagen_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.badedagen_birthday_clear_beekeeper_birk
+  ok    social_fest_content.badedagen_birthday_clear_bertil
+  ok    social_fest_content.badedagen_birthday_clear_bodil
+  ok    social_fest_content.badedagen_birthday_clear_carpenter_brumme
+  ok    social_fest_content.badedagen_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.badedagen_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.badedagen_birthday_clear_cub_bamse
+  ok    social_fest_content.badedagen_birthday_clear_fairy_builder
+  ok    social_fest_content.badedagen_birthday_clear_fairy_furnisher
+  ok    social_fest_content.badedagen_birthday_clear_fairy_king
+  ok    social_fest_content.badedagen_birthday_clear_fairy_lily
+  ok    social_fest_content.badedagen_birthday_clear_fairy_tailor
+  ok    social_fest_content.badedagen_birthday_clear_fairy_wizard
+  ok    social_fest_content.badedagen_birthday_clear_farmer_rosa
+  ok    social_fest_content.badedagen_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.badedagen_birthday_clear_gardener_hoppe
+  ok    social_fest_content.badedagen_birthday_clear_ghostfam_blund
+  ok    social_fest_content.badedagen_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.badedagen_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.badedagen_birthday_clear_ghostfam_silke
+  ok    social_fest_content.badedagen_birthday_clear_guard_oak
+  ok    social_fest_content.badedagen_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.badedagen_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.badedagen_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.badedagen_birthday_clear_mayor_lyra
+  ok    social_fest_content.badedagen_birthday_clear_merchant_pip
+  ok    social_fest_content.badedagen_birthday_clear_penguin_postman
+  ok    social_fest_content.badedagen_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.badedagen_birthday_clear_postman_pip
+  ok    social_fest_content.badedagen_birthday_clear_rasmus
+  ok    social_fest_content.badedagen_birthday_clear_smith_thorin
+  ok    social_fest_content.badedagen_activity_copy_free_bath
+  ok    social_fest_content.badedagen_activity_copy_picnic
+  ok    social_fest_content.badedagen_activity_copy_potluck
+  ok    social_fest_content.badedagen_whole_family_invited
+  FAIL  festival scene did not finish
+  ok    social_fest_content.badedagen_all_activity_posts_resolve ([])
+  FAIL  social_fest_content.badedagen_opening_seen
+  ok    social_fest_content.badedagen_family_present
+  ok    social_fest_content.badedagen_bed_held
+  ok    social_fest_content.badedagen_painted_decor_present (decor=FestivalDecor:<Node#7717183831277> art=FestivalArt:<Node2D#7717217385710> children=[festival_stage_stage:<Sprite2D#7717234162927>, flower_arch_centre:<Sprite2D#7717452266736>, market_stall_summer_awning:<Sprite2D#7717670370548>, @Sprite2D@7756:<Sprite2D#7717888474335>, @Sprite2D@7757:<Sprite2D#7717922028770>, @Sprite2D@7758:<Sprite2D#7717955583200>, festival_bench_bench:<Sprite2D#7717989137635>, @Sprite2D@7759:<Sprite2D#7718207241444>, banner_pole_summer_pole:<Sprite2D#7718425345256>, @Sprite2D@7760:<Sprite2D#7718643449043>, lantern_string_a_string:<Sprite2D#7718861552854>, @Sprite2D@7761:<Sprite2D#7719297760476>, @Sprite2D@7762:<Sprite2D#7719331314887>, @Sprite2D@7763:<Sprite2D#7719364869341>])
+  ok    social_fest_content.badedagen_decor_above_deck
+  FAIL  festival scene did not finish
+  FAIL  social_fest_content.badedagen_finale_pays_once
+  FAIL  social_fest_content.badedagen_reentry_has_no_repeat_reward
+  ok    social_fest_content.badedagen_decor_clears_afterwards
+  ok    social_fest_content.hoestfesten_unique_date_and_valid_window
+  ok    social_fest_content.hoestfesten_existing_host
+  ok    social_fest_content.hoestfesten_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.hoestfesten_birthday_clear_baker_maja
+  ok    social_fest_content.hoestfesten_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.hoestfesten_birthday_clear_beekeeper_birk
+  ok    social_fest_content.hoestfesten_birthday_clear_bertil
+  ok    social_fest_content.hoestfesten_birthday_clear_bodil
+  ok    social_fest_content.hoestfesten_birthday_clear_carpenter_brumme
+  ok    social_fest_content.hoestfesten_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.hoestfesten_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.hoestfesten_birthday_clear_cub_bamse
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_builder
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_furnisher
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_king
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_lily
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_tailor
+  ok    social_fest_content.hoestfesten_birthday_clear_fairy_wizard
+  ok    social_fest_content.hoestfesten_birthday_clear_farmer_rosa
+  ok    social_fest_content.hoestfesten_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.hoestfesten_birthday_clear_gardener_hoppe
+  ok    social_fest_content.hoestfesten_birthday_clear_ghostfam_blund
+  ok    social_fest_content.hoestfesten_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.hoestfesten_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.hoestfesten_birthday_clear_ghostfam_silke
+  ok    social_fest_content.hoestfesten_birthday_clear_guard_oak
+  ok    social_fest_content.hoestfesten_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.hoestfesten_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.hoestfesten_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.hoestfesten_birthday_clear_mayor_lyra
+  ok    social_fest_content.hoestfesten_birthday_clear_merchant_pip
+  ok    social_fest_content.hoestfesten_birthday_clear_penguin_postman
+  ok    social_fest_content.hoestfesten_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.hoestfesten_birthday_clear_postman_pip
+  ok    social_fest_content.hoestfesten_birthday_clear_rasmus
+  ok    social_fest_content.hoestfesten_birthday_clear_smith_thorin
+  ok    social_fest_content.hoestfesten_activity_copy_pumpkin_contest
+  ok    social_fest_content.hoestfesten_contest_prizes
+  ok    social_fest_content.hoestfesten_activity_copy_harvest_feast
+  ok    social_fest_content.hoestfesten_activity_copy_harvest_market
+  ok    social_fest_content.hoestfesten_market_definition
+  ok    social_fest_content.hoestfesten_market_stock_pumpkin_seeds
+  ok    social_fest_content.hoestfesten_market_stock_carrot_seeds
+  ok    social_fest_content.hoestfesten_market_stock_fertilizer
+  ok    social_fest_content.hoestfesten_whole_family_invited
+  FAIL  festival scene did not finish
+  ok    social_fest_content.hoestfesten_all_activity_posts_resolve ([])
+  FAIL  social_fest_content.hoestfesten_opening_seen
+  ok    social_fest_content.hoestfesten_family_present
+  ok    social_fest_content.hoestfesten_bed_held
+  ok    social_fest_content.hoestfesten_retained_shop_covers_weekday_bakery
+  ok    social_fest_content.hoestfesten_own_market_open
+  ok    social_fest_content.hoestfesten_painted_decor_present (decor=FestivalDecor:<Node#7717183831277> art=FestivalArt:<Node2D#8009124166770> children=[festival_stage_stage:<Sprite2D#8009140943987>, pumpkin_pile_centre:<Sprite2D#8009359047790>, market_stall_autumn_awning:<Sprite2D#8009577151596>, @Sprite2D@7809:<Sprite2D#8009795255401>, @Sprite2D@7810:<Sprite2D#8009828809830>, @Sprite2D@7811:<Sprite2D#8009862364266>, festival_bench_bench:<Sprite2D#8009895918695>, @Sprite2D@7812:<Sprite2D#8010114022498>, banner_pole_autumn_pole:<Sprite2D#8010332126304>, @Sprite2D@7813:<Sprite2D#8010550230109>, bunting_string_b_string:<Sprite2D#8010768333914>, @Sprite2D@7814:<Sprite2D#8010986437719>, @Sprite2D@7815:<Sprite2D#8011019992146>, @Sprite2D@7816:<Sprite2D#8011053546584>, sheaf_stack_accent:<Sprite2D#8011087101011>, door_wreath_autumn_door:<Sprite2D#8011305203392>, @Sprite2D@7817:<Sprite2D#8011523308625>, @Sprite2D@7818:<Sprite2D#8011556863054>, @Sprite2D@7819:<Sprite2D#8011590417484>, @Sprite2D@7820:<Sprite2D#8011623971913>, @Sprite2D@7821:<Sprite2D#8011657526346>, @Sprite2D@7822:<Sprite2D#8011691080779>, @Sprite2D@7823:<Sprite2D#8011724634722>, @Sprite2D@7824:<Sprite2D#8011758189639>, @Sprite2D@7825:<Sprite2D#8011791744070>, @Sprite2D@7826:<Sprite2D#8011825298963>, @Sprite2D@7827:<Sprite2D#8011858853396>, @Sprite2D@7828:<Sprite2D#8011892407829>, @Sprite2D@7829:<Sprite2D#8011925962262>])
+  ok    social_fest_content.hoestfesten_decor_above_deck
+  FAIL  festival scene did not finish
+  FAIL  social_fest_content.hoestfesten_finale_pays_once
+  FAIL  social_fest_content.hoestfesten_reentry_has_no_repeat_reward
+  ok    social_fest_content.hoestfesten_own_market_closes
+  ok    social_fest_content.hoestfesten_decor_clears_afterwards
+  ok    social_fest_content.maanemarkedet_unique_date_and_valid_window
+  ok    social_fest_content.maanemarkedet_existing_host
+  ok    social_fest_content.maanemarkedet_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.maanemarkedet_birthday_clear_baker_maja
+  ok    social_fest_content.maanemarkedet_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.maanemarkedet_birthday_clear_beekeeper_birk
+  ok    social_fest_content.maanemarkedet_birthday_clear_bertil
+  ok    social_fest_content.maanemarkedet_birthday_clear_bodil
+  ok    social_fest_content.maanemarkedet_birthday_clear_carpenter_brumme
+  ok    social_fest_content.maanemarkedet_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.maanemarkedet_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.maanemarkedet_birthday_clear_cub_bamse
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_builder
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_furnisher
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_king
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_lily
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_tailor
+  ok    social_fest_content.maanemarkedet_birthday_clear_fairy_wizard
+  ok    social_fest_content.maanemarkedet_birthday_clear_farmer_rosa
+  ok    social_fest_content.maanemarkedet_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.maanemarkedet_birthday_clear_gardener_hoppe
+  ok    social_fest_content.maanemarkedet_birthday_clear_ghostfam_blund
+  ok    social_fest_content.maanemarkedet_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.maanemarkedet_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.maanemarkedet_birthday_clear_ghostfam_silke
+  ok    social_fest_content.maanemarkedet_birthday_clear_guard_oak
+  ok    social_fest_content.maanemarkedet_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.maanemarkedet_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.maanemarkedet_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.maanemarkedet_birthday_clear_mayor_lyra
+  ok    social_fest_content.maanemarkedet_birthday_clear_merchant_pip
+  ok    social_fest_content.maanemarkedet_birthday_clear_penguin_postman
+  ok    social_fest_content.maanemarkedet_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.maanemarkedet_birthday_clear_postman_pip
+  ok    social_fest_content.maanemarkedet_birthday_clear_rasmus
+  ok    social_fest_content.maanemarkedet_birthday_clear_smith_thorin
+  ok    social_fest_content.maanemarkedet_activity_copy_moon_market
+  ok    social_fest_content.maanemarkedet_market_definition
+  ok    social_fest_content.maanemarkedet_market_stock_amethyst
+  ok    social_fest_content.maanemarkedet_market_stock_glow_mushroom
+  ok    social_fest_content.maanemarkedet_market_stock_lantern_oil
+  ok    social_fest_content.maanemarkedet_activity_copy_gem_show
+  ok    social_fest_content.maanemarkedet_contest_prizes
+  ok    social_fest_content.maanemarkedet_activity_copy_lantern_wish
+  ok    social_fest_content.maanemarkedet_whole_family_invited
+  FAIL  social_fest_content.maanemarkedet_all_activity_posts_resolve ([])
+  FAIL  social_fest_content.maanemarkedet_opening_seen
+  ok    social_fest_content.vinterlysene_unique_date_and_valid_window
+  ok    social_fest_content.vinterlysene_existing_host
+  ok    social_fest_content.vinterlysene_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.vinterlysene_birthday_clear_baker_maja
+  ok    social_fest_content.vinterlysene_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.vinterlysene_birthday_clear_beekeeper_birk
+  ok    social_fest_content.vinterlysene_birthday_clear_bertil
+  ok    social_fest_content.vinterlysene_birthday_clear_bodil
+  ok    social_fest_content.vinterlysene_birthday_clear_carpenter_brumme
+  ok    social_fest_content.vinterlysene_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.vinterlysene_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.vinterlysene_birthday_clear_cub_bamse
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_builder
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_furnisher
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_king
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_lily
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_tailor
+  ok    social_fest_content.vinterlysene_birthday_clear_fairy_wizard
+  ok    social_fest_content.vinterlysene_birthday_clear_farmer_rosa
+  ok    social_fest_content.vinterlysene_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.vinterlysene_birthday_clear_gardener_hoppe
+  ok    social_fest_content.vinterlysene_birthday_clear_ghostfam_blund
+  ok    social_fest_content.vinterlysene_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.vinterlysene_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.vinterlysene_birthday_clear_ghostfam_silke
+  ok    social_fest_content.vinterlysene_birthday_clear_guard_oak
+  ok    social_fest_content.vinterlysene_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.vinterlysene_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.vinterlysene_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.vinterlysene_birthday_clear_mayor_lyra
+  ok    social_fest_content.vinterlysene_birthday_clear_merchant_pip
+  ok    social_fest_content.vinterlysene_birthday_clear_penguin_postman
+  ok    social_fest_content.vinterlysene_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.vinterlysene_birthday_clear_postman_pip
+  ok    social_fest_content.vinterlysene_birthday_clear_rasmus
+  ok    social_fest_content.vinterlysene_birthday_clear_smith_thorin
+  ok    social_fest_content.vinterlysene_activity_copy_light_procession
+  ok    social_fest_content.vinterlysene_activity_copy_lantern_wish
+  ok    social_fest_content.vinterlysene_activity_copy_warm_drinks
+  ok    social_fest_content.vinterlysene_whole_family_invited
+  FAIL  festival scene did not finish
+  ok    social_fest_content.vinterlysene_all_activity_posts_resolve ([])
+  FAIL  social_fest_content.vinterlysene_opening_seen
+  ok    social_fest_content.vinterlysene_family_present
+  ok    social_fest_content.vinterlysene_bed_held
+  ok    social_fest_content.vinterlysene_painted_decor_present (decor=FestivalDecor:<Node#9578498496863> art=FestivalArt:<Node2D#9578532049175> children=[festival_stage_stage:<Sprite2D#9578548831995>, ice_lantern_centre:<Sprite2D#9578766935690>, market_stall_winter_awning:<Sprite2D#9579203143307>, @Sprite2D@8293:<Sprite2D#9579421241599>, @Sprite2D@8294:<Sprite2D#9579454798177>, @Sprite2D@8295:<Sprite2D#9579488350589>, festival_bench_bench:<Sprite2D#9579521907044>, @Sprite2D@8296:<Sprite2D#9579740013597>, banner_pole_winter_pole:<Sprite2D#9579958112561>, @Sprite2D@8297:<Sprite2D#9580176215899>, lantern_string_b_string:<Sprite2D#9580394320224>, @Sprite2D@8298:<Sprite2D#9580830527842>, @Sprite2D@8299:<Sprite2D#9580864084988>, @Sprite2D@8300:<Sprite2D#9580897636801>, door_wreath_winter_door:<Sprite2D#9580964748283>, @Sprite2D@8301:<Sprite2D#9581182852090>, @Sprite2D@8302:<Sprite2D#9581216406534>, @Sprite2D@8303:<Sprite2D#9581249957497>, @Sprite2D@8304:<Sprite2D#9581283511582>, @Sprite2D@8305:<Sprite2D#9581317066359>, @Sprite2D@8306:<Sprite2D#9581350625319>, @Sprite2D@8307:<Sprite2D#9581384189062>, @Sprite2D@8308:<Sprite2D#9581417729311>, @Sprite2D@8309:<Sprite2D#9581451297928>, @Sprite2D@8310:<Sprite2D#9581484838520>, @Sprite2D@8311:<Sprite2D#9581518398522>, @Sprite2D@8312:<Sprite2D#9581551961215>, @Sprite2D@8313:<Sprite2D#9581585505270>])
+  ok    social_fest_content.vinterlysene_decor_above_deck
+  FAIL  festival scene did not finish
+  FAIL  social_fest_content.vinterlysene_finale_pays_once
+  FAIL  social_fest_content.vinterlysene_reentry_has_no_repeat_reward
+  ok    social_fest_content.vinterlysene_decor_clears_afterwards
+  ok    social_fest_content.bagedagen_unique_date_and_valid_window
+  ok    social_fest_content.bagedagen_existing_host
+  ok    social_fest_content.bagedagen_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.bagedagen_birthday_clear_baker_maja
+  ok    social_fest_content.bagedagen_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.bagedagen_birthday_clear_beekeeper_birk
+  ok    social_fest_content.bagedagen_birthday_clear_bertil
+  ok    social_fest_content.bagedagen_birthday_clear_bodil
+  ok    social_fest_content.bagedagen_birthday_clear_carpenter_brumme
+  ok    social_fest_content.bagedagen_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.bagedagen_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.bagedagen_birthday_clear_cub_bamse
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_builder
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_furnisher
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_king
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_lily
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_tailor
+  ok    social_fest_content.bagedagen_birthday_clear_fairy_wizard
+  ok    social_fest_content.bagedagen_birthday_clear_farmer_rosa
+  ok    social_fest_content.bagedagen_birthday_clear_fiddler_strimmel
+  ok    social_fest_content.bagedagen_birthday_clear_gardener_hoppe
+  ok    social_fest_content.bagedagen_birthday_clear_ghostfam_blund
+  ok    social_fest_content.bagedagen_birthday_clear_ghostfam_dyne
+  ok    social_fest_content.bagedagen_birthday_clear_ghostfam_gnist
+  ok    social_fest_content.bagedagen_birthday_clear_ghostfam_silke
+  ok    social_fest_content.bagedagen_birthday_clear_guard_oak
+  ok    social_fest_content.bagedagen_birthday_clear_innkeeper_kvak
+  ok    social_fest_content.bagedagen_birthday_clear_lamplighter_kiki
+  ok    social_fest_content.bagedagen_birthday_clear_mapseller_natteblik
+  ok    social_fest_content.bagedagen_birthday_clear_mayor_lyra
+  ok    social_fest_content.bagedagen_birthday_clear_merchant_pip
+  ok    social_fest_content.bagedagen_birthday_clear_penguin_postman
+  ok    social_fest_content.bagedagen_birthday_clear_pippin_boegeknop
+  ok    social_fest_content.bagedagen_birthday_clear_postman_pip
+  ok    social_fest_content.bagedagen_birthday_clear_rasmus
+  ok    social_fest_content.bagedagen_birthday_clear_smith_thorin
+  ok    social_fest_content.bagedagen_activity_copy_cookie_contest
+  ok    social_fest_content.bagedagen_contest_prizes
+  ok    social_fest_content.bagedagen_activity_copy_tasting_table
+  ok    social_fest_content.bagedagen_activity_copy_bake_stall
+  ok    social_fest_content.bagedagen_market_definition
+  ok    social_fest_content.bagedagen_market_stock_cookie
+  ok    social_fest_content.bagedagen_market_stock_honey
+  ok    social_fest_content.bagedagen_market_stock_milk
+  ok    social_fest_content.bagedagen_whole_family_invited
+  FAIL  social_fest_content.bagedagen_all_activity_posts_resolve ([])
+  FAIL  social_fest_content.bagedagen_opening_seen
+  ok    social_fest_content.aarsskiftet_unique_date_and_valid_window
+  ok    social_fest_content.aarsskiftet_existing_host
+  ok    social_fest_content.aarsskiftet_birthday_clear_appraiser_fru_ugle
+  ok    social_fest_content.aarsskiftet_birthday_clear_baker_maja
+  ok    social_fest_content.aarsskiftet_birthday_clear_bathkeeper_sofus
+  ok    social_fest_content.aarsskiftet_birthday_clear_beekeeper_birk
+  ok    social_fest_content.aarsskiftet_birthday_clear_bertil
+  ok    social_fest_content.aarsskiftet_birthday_clear_bodil
+  ok    social_fest_content.aarsskiftet_birthday_clear_carpenter_brumme
+  ok    social_fest_content.aarsskiftet_birthday_clear_cat_morfar_mis
+  ok    social_fest_content.aarsskiftet_birthday_clear_clerk_fjerpen
+  ok    social_fest_content.aarsskiftet_birthday_clear_cub_bamse
+  ok    social_fest_content.aarsskiftet_birthday_clear_fairy_builder
+  ok    social_fest_content.aarsskiftet_birthday_clear_fairy_furnisher
+  ok    social_fest_content.aarsskiftet_birthday_clear_fairy_king
+  ok    social_fest_content.aarsskiftet_birthday_clear_fairy_lily
+  ok    social_fest_content.aarsskiftet_birthday_clear_fairy_tailor
+  ok    social_fest_content.aarsskiftet_birthday_clear_fairy_wizard
+  FAIL  festival scene did not finish
+  FAIL  social_fest_content.aarsskiftet_opening_seen
+  FAIL  festival scene did not finish
+  FAIL  social_fest_content.aarsskiftet_finale_pays_once
+  FAIL  social_fest_content.aarsskiftet_reentry_has_no_repeat_reward
+  FAIL  social_fest_content.save_all_nine_endings
+  FAIL  social_fest_content.all_finales_stay_seen
+  ...   (30 more ok lines of social_fest_content not printed; --verbose prints all)
+  --    social_fest_content: 468 checks, 38 failed, 0 skipped, 22.7 s
+== summary: 3 section(s) run, 551 checks (44 failed, 0 skipped), 0 engine error(s), 0 engine warning(s), 0 allowed message(s), 0 problem(s), 0 known-issue message(s), 48.2 s
+  FAILED   festival_activities.festival scene did not release
+  FAILED   festival_activities.dance_chooses_highest_hearts_present
+  FAILED   festival_activities.market_opens_existing_shop_panel
+  FAILED   festival_activities.festival scene did not release
+  FAILED   festival_activities.stage_removed_at_end
+  FAILED   ghost_lines.intro_line_after_the_letter
+  FAILED   social_fest_content.festival scene did not finish
+  FAILED   social_fest_content.blomsterfesten_opening_seen
+  FAILED   social_fest_content.festival scene did not finish
+  FAILED   social_fest_content.blomsterfesten_finale_pays_once
+  FAILED   social_fest_content.blomsterfesten_reentry_has_no_repeat_reward
+  FAILED   social_fest_content.festival scene did not finish
+  FAILED   social_fest_content.honningdagen_opening_seen
+  FAILED   social_fest_content.festival scene did not finish
+  FAILED   social_fest_content.honningdagen_finale_pays_once
+  FAILED   social_fest_content.honningdagen_reentry_has_no_repeat_reward
+  FAILED   social_fest_content.midsommerlanterner_all_activity_posts_resolve
+  FAILED   social_fest_content.midsommerlanterner_opening_seen
+  FAILED   social_fest_content.festival scene did not finish
+  FAILED   social_fest_content.badedagen_opening_seen
+  FAILED   social_fest_content.festival scene did not finish
+  FAILED   social_fest_content.badedagen_finale_pays_once
+  FAILED   social_fest_content.badedagen_reentry_has_no_repeat_reward
+  FAILED   social_fest_content.festival scene did not finish
+  FAILED   social_fest_content.hoestfesten_opening_seen
+  FAILED   social_fest_content.festival scene did not finish
+  FAILED   social_fest_content.hoestfesten_finale_pays_once
+  FAILED   social_fest_content.hoestfesten_reentry_has_no_repeat_reward
+  FAILED   social_fest_content.maanemarkedet_all_activity_posts_resolve
+  FAILED   social_fest_content.maanemarkedet_opening_seen
+  FAILED   social_fest_content.festival scene did not finish
+  FAILED   social_fest_content.vinterlysene_opening_seen
+  FAILED   social_fest_content.festival scene did not finish
+  FAILED   social_fest_content.vinterlysene_finale_pays_once
+  FAILED   social_fest_content.vinterlysene_reentry_has_no_repeat_reward
+  FAILED   social_fest_content.bagedagen_all_activity_posts_resolve
+  FAILED   social_fest_content.bagedagen_opening_seen
+  FAILED   social_fest_content.festival scene did not finish
+  FAILED   social_fest_content.aarsskiftet_opening_seen
+  FAILED   social_fest_content.festival scene did not finish
+  FAILED   social_fest_content.aarsskiftet_finale_pays_once
+  FAILED   social_fest_content.aarsskiftet_reentry_has_no_repeat_reward
+  FAILED   social_fest_content.save_all_nine_endings
+  FAILED   social_fest_content.all_finales_stay_seen
+PLAYTEST FAIL: 44 check failures, 0 engine errors, 0 engine warnings, 0 problems
+EXIT 1
