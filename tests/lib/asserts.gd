@@ -14,6 +14,8 @@ var failed: int = 0
 var skipped: int = 0
 ## "<section>.<label>" of every failed check, in order.
 var failures: Array[String] = []
+## Computation timings that passed only through the shared-CPU allowance (see t.perf_ok): information, not failures.
+var slow: Array[Dictionary] = []
 ## Per-section statistics: name -> {checks, failed, skipped, ms}.
 var stats: Dictionary = {}
 ## Print every ok line (default: stop after max_ok_lines per section and count the rest).

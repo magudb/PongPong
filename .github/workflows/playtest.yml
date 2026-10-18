@@ -35,7 +35,7 @@ jobs:
 
     env:
       PYTHONUNBUFFERED: "1"
-      TT_PERF_SCALE: "3"
+      TT_PERF_SCALE: "4"
       LIBGL_ALWAYS_SOFTWARE: "1"
       VTK_DEFAULT_OPENGL_WINDOW: vtkXOpenGLRenderWindow
 

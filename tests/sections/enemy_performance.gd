@@ -70,7 +70,7 @@ func _run(t,native: bool) -> void:
 	sorted.sort()
 	var logic := {"median_ms_per_enemy":_median(samples),"p95_ms_per_enemy":sorted[floori(sorted.size()*.95)],"cap_ms":0.03,"samples":samples}
 	var logic_budget: float = t.perf_limit(0.03)
-	t.check("awake_logic_budget",logic.p95_ms_per_enemy<=logic_budget,"%s ms p95 per enemy <= %s (native reference 0.03)" % [logic.p95_ms_per_enemy, logic_budget])
+	t.check("awake_logic_budget",t.perf_ok("awake_logic_budget",logic.p95_ms_per_enemy,0.03),"%s ms p95 per enemy <= %s (native reference 0.03)" % [logic.p95_ms_per_enemy, logic_budget])
 	var report := {"engine":Engine.get_version_info(),"alive":48,"awake":24,"zoom":area.zoom_default,"logic":logic,"logic_method":"180 batches of 24 real FSM/move_and_slide/visual-motion callbacks, mixed seven kinds, all clips loaded and six simulated seconds of behavior warmup; clock overhead amortized; sleeping callbacks verified by unchanged clocks for 120 physics ticks"}
 	if native:
 		# Hold positions and keep normal sprite animation. Measure the renderer CPU and complete

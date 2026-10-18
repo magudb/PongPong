@@ -76,7 +76,7 @@ func run(t) -> void:
 	for i in 10000:
 		Routines.where_is("gardener_hoppe", ctx)
 	var micros := float(Time.get_ticks_usec() - started) / 10000.0
-	t.check("where_is_under_20us", micros < t.perf_limit(20.0), "%.2f us per cached routine lookup, limit %.2f (native reference 20)" % [micros,t.perf_limit(20.0)])
+	t.check("where_is_under_20us", t.perf_ok("where_is_under_20us", micros, 20.0), "%.2f us per cached routine lookup, limit %.2f (native reference 20)" % [micros,t.perf_limit(20.0)])
 	_festivals(t)
 	_mutants(t, reg, buildings, visuals, lr.get_shops().keys())
 	Hours.override_registry = {}
